@@ -1,0 +1,5 @@
+MACRO CHAR x
+  PRINT x
+  EQUB x EOR VE
+ENDMACRO
+

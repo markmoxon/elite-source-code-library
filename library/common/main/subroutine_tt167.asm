@@ -1,0 +1,88 @@
+\ ******************************************************************************
+\
+\       Name: TT167
+\       Type: Subroutine
+\   Category: Market
+\    Summary: Show the Market Price screen (red key f7)
+\
+\ ******************************************************************************
+
+.TT167
+
+IF _CASSETTE_VERSION
+
+ LDA #16                \ Clear the top part of the screen, draw a white border,
+ JSR TT66               \ and set the current view type in QQ11 to 16 (Market
+                        \ Price screen)
+
+ LDA #5                 \ Move the text cursor to column 4
+ STA XC
+
+ELIF _6502SP_VERSION
+
+ LDA #16
+ JSR TRADEMODE
+
+ LDA #5                 \ Move the text cursor to column 4
+ JSR DOXC
+
+ENDIF
+
+ LDA #167               \ Print recursive token 7 token ("{current system name}
+ JSR NLIN3              \ MARKET PRICES") and draw a horizontal line at pixel
+                        \ row 19 to box in the title
+
+IF _CASSETTE_VERSION
+
+ LDA #3                 \ Move the text cursor to row 3
+ STA YC
+
+ELIF _6502SP_VERSION
+
+ LDA #3                 \ Move the text cursor to row 3
+ JSR DOYC
+
+ENDIF
+
+ JSR TT163              \ Print the column headers for the prices table
+
+IF _6502SP_VERSION
+
+ LDA #6
+ JSR DOYC
+
+ENDIF
+
+ LDA #0                 \ We're going to loop through all the available market
+ STA QQ29               \ items, so we set up a counter in QQ29 to denote the
+                        \ current item and start it at 0
+
+.TT168
+
+ LDX #%10000000         \ Set bit 7 of QQ17 to switch to Sentence Case, with the
+ STX QQ17               \ next letter in capitals
+
+ JSR TT151              \ Call TT151 to print the item name, market price and
+                        \ availability of the current item, and set QQ24 to the
+                        \ item's price / 4, QQ25 to the quantity available and
+                        \ QQ19+1 to byte #1 from the market prices table for
+                        \ this item
+
+IF _CASSETTE_VERSION
+
+ INC YC                 \ Move the text cursor down one row
+
+ELIF _6502SP_VERSION
+
+ JSR INCYC              \ Move the text cursor down one row
+
+ENDIF
+
+ INC QQ29               \ Increment QQ29 to point to the next item
+
+ LDA QQ29               \ If QQ29 >= 17 then jump to TT168 as we have done the
+ CMP #17                \ last item
+ BCC TT168
+
+ RTS                    \ Return from the subroutine
+

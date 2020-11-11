@@ -1,0 +1,26 @@
+\ ******************************************************************************
+\
+\       Name: ou2
+\       Type: Subroutine
+\   Category: Text
+\    Summary: Display "E.C.M.SYSTEM DESTROYED" as an in-flight message
+\
+\ ******************************************************************************
+
+.ou2
+
+ LDA #108               \ Set A to recursive token 108 ("E.C.M.SYSTEM")
+
+IF _CASSETTE_VERSION
+
+ EQUB &2C               \ Fall through into ou3 to print the new message, but
+                        \ skip the first instruction by turning it into
+                        \ &2C &A9 &6F, or BIT &6FA9, which does nothing bar
+                        \ affecting the flags
+
+ELIF _6502SP_VERSION
+
+ JMP MESS
+
+ENDIF
+

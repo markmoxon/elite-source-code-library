@@ -1,0 +1,1097 @@
+\ ******************************************************************************
+\       Name: LOIN (Part 1 of 7)
+\ ******************************************************************************
+
+.LOIN
+
+ LDA #128
+ STA S
+ ASL A
+ STA SWAP
+ LDA X2
+ SBC X1
+ BCS LI1
+ EOR #FF
+ ADC #1
+ SEC
+
+.LI1
+
+ STA P
+ LDA Y2
+ SBC Y1
+ BEQ HLOIN2
+ BCS LI2
+ EOR #FF
+ ADC #1
+
+.LI2
+
+ STA Q
+ CMP P
+ BCC STPX
+ JMP STPY
+
+\ ******************************************************************************
+\       Name: LOIN (Part 2 of 7)
+\ ******************************************************************************
+
+.STPX
+
+ LDX X1
+ CPX X2
+ BCC LI3
+ DEC SWAP
+ LDA X2
+ STA X1
+ STX X2
+ TAX
+ LDA Y2
+ LDY Y1
+ STA Y1
+ STY Y2
+
+.LI3
+
+ LDY Y1
+ LDA ylookup,Y
+ STA SC+1
+ LDA Y1
+ AND #7
+ TAY
+ TXA
+ AND #&FC
+ ASL A
+ STA SC
+ BCC P%+4
+ INC SC+1
+ TXA
+ AND #3
+ STA R
+ LDX Q
+ BEQ LIlog7
+ LDA logL,X
+ LDX P
+ SEC
+ SBC logL,X
+ BMI LIlog4
+ LDX Q
+ LDA log,X
+ LDX P
+ SBC log,X
+ BCS LIlog5
+ TAX
+ LDA antilog,X
+ JMP LIlog6
+
+.LIlog5
+
+ LDA #FF
+ BNE LIlog6
+
+.LIlog7
+
+ LDA #0
+ BEQ LIlog6
+
+.LIlog4
+
+ LDX Q
+ LDA log,X
+ LDX P
+ SBC log,X
+ BCS LIlog5
+ TAX
+ LDA antilogODD,X
+
+.LIlog6
+
+ STA Q
+ LDX P
+ BEQ LIEXS
+ INX
+ LDA Y2
+ CMP Y1
+ BCC P%+5
+ JMP DOWN
+
+\ ******************************************************************************
+\       Name: LOIN (Part 3 of 7)
+\ ******************************************************************************
+
+ LDA #&88
+ AND COL
+ STA LI100+1
+ LDA #&44
+ AND COL
+ STA LI110+1
+ LDA #&22
+ AND COL
+ STA LI120+1
+ LDA #&11
+ AND COL
+ STA LI130+1
+ LDA SWAP
+ BEQ LI190
+ LDA R
+ BEQ LI100+6
+ CMP #2
+ BCC LI110+6
+ CLC
+ BEQ LI120+6
+ BNE LI130+6
+
+.LI190
+
+ DEX
+ LDA R
+ BEQ LI100
+ CMP #2
+ BCC LI110
+ CLC
+ BEQ LI120
+ JMP LI130
+
+.LI100
+
+ LDA #&88
+ EOR (SC),Y
+ STA (SC),Y
+ DEX
+
+.LIEXS
+
+ BEQ LIEX
+ LDA S
+ ADC Q
+ STA S
+ BCC LI110
+ CLC
+ DEY
+ BMI LI101
+
+.LI110
+
+ LDA #&44
+ EOR (SC),Y
+ STA (SC),Y
+ DEX
+ BEQ LIEX
+ LDA S
+ ADC Q
+ STA S
+ BCC LI120
+ CLC
+ DEY
+ BMI LI111
+
+.LI120
+
+ LDA #&22
+ EOR (SC),Y
+ STA (SC),Y
+ DEX
+ BEQ LIEX
+ LDA S
+ ADC Q
+ STA S
+ BCC LI130
+ CLC
+ DEY
+ BMI LI121
+
+.LI130
+
+ LDA #&11
+ EOR (SC),Y
+ STA (SC),Y
+ LDA S
+ ADC Q
+ STA S
+ BCC LI140
+ CLC
+ DEY
+ BMI LI131
+
+.LI140
+
+ DEX
+ BEQ LIEX
+ LDA SC
+ ADC #8
+ STA SC
+ BCC LI100
+ INC SC+1
+ CLC
+ BCC LI100
+
+.LI101
+
+ DEC SC+1
+ DEC SC+1
+ LDY #7
+ BPL LI110
+
+.LI111
+
+ DEC SC+1
+ DEC SC+1
+ LDY #7
+ BPL LI120
+
+.LI121
+
+ DEC SC+1
+ DEC SC+1
+ LDY #7
+ BPL LI130
+
+.LI131
+
+ DEC SC+1
+ DEC SC+1
+ LDY #7
+ BPL LI140
+
+.LIEX
+
+ RTS
+
+\ ******************************************************************************
+\       Name: LOIN (Part 4 of 7)
+\ ******************************************************************************
+
+.DOWN
+
+ LDA #&88
+ AND COL
+ STA LI200+1
+ LDA #&44
+ AND COL
+ STA LI210+1
+ LDA #&22
+ AND COL
+ STA LI220+1
+ LDA #&11
+ AND COL
+ STA LI230+1
+ LDA SC
+ SBC #&F8
+ STA SC
+ LDA SC+1
+ SBC #0
+ STA SC+1
+ TYA
+ EOR #&F8
+ TAY
+ LDA SWAP
+ BEQ LI191
+ LDA R
+ BEQ LI200+6
+ CMP #2
+ BCC LI210+6
+ CLC
+ BEQ LI220+6
+ BNE LI230+6
+
+.LI191
+
+ DEX
+ LDA R
+ BEQ LI200
+ CMP #2
+ BCC LI210
+ CLC
+ BEQ LI220
+ BNE LI230
+
+.LI200
+
+ LDA #&88
+ EOR (SC),Y
+ STA (SC),Y
+ DEX
+ BEQ LIEX
+ LDA S
+ ADC Q
+ STA S
+ BCC LI210
+ CLC
+ INY
+ BEQ LI201
+
+.LI210
+
+ LDA #&44
+ EOR (SC),Y
+ STA (SC),Y
+ DEX
+ BEQ LIEX
+ LDA S
+ ADC Q
+ STA S
+ BCC LI220
+ CLC
+ INY
+ BEQ LI211
+
+.LI220
+
+ LDA #&22
+ EOR (SC),Y
+ STA (SC),Y
+ DEX
+ BEQ LIEX2
+ LDA S
+ ADC Q
+ STA S
+ BCC LI230
+ CLC
+ INY
+ BEQ LI221
+
+.LI230
+
+ LDA #&11
+ EOR (SC),Y
+ STA (SC),Y
+ LDA S
+ ADC Q
+ STA S
+ BCC LI240
+ CLC
+ INY
+ BEQ LI231
+
+.LI240
+
+ DEX
+ BEQ LIEX2
+ LDA SC
+ ADC #8
+ STA SC
+ BCC LI200
+ INC SC+1
+ CLC
+ BCC LI200
+
+.LI201
+
+ INC SC+1
+ INC SC+1
+ LDY #&F8
+ BNE LI210
+
+.LI211
+
+ INC SC+1
+ INC SC+1
+ LDY #&F8
+ BNE LI220
+
+.LI221
+
+ INC SC+1
+ INC SC+1
+ LDY #&F8
+ BNE LI230
+
+.LI231
+
+ INC SC+1
+ INC SC+1
+ LDY #&F8
+ BNE LI240
+
+.LIEX2
+
+ RTS
+
+\ ******************************************************************************
+\       Name: LOIN (Part 5 of 7)
+\ ******************************************************************************
+
+.STPY
+
+ LDY Y1
+ TYA
+ LDX X1
+ CPY Y2
+ BCS LI15
+ DEC SWAP
+ LDA X2
+ STA X1
+ STX X2
+ TAX
+ LDA Y2
+ STA Y1
+ STY Y2
+ TAY
+
+.LI15
+
+ LDA ylookup,Y
+ STA SC+1
+ TXA
+ AND #&FC
+ ASL A
+ STA SC
+ BCC P%+4
+ INC SC+1
+ TXA
+ AND #3
+ TAX
+ LDA TWOS,X
+ STA R
+ LDX P
+ BEQ LIfudge
+ LDA logL,X
+ LDX Q
+ SEC
+ SBC logL,X
+ BMI LIloG
+ LDX P
+ LDA log,X
+ LDX Q
+ SBC log,X
+ BCS LIlog3
+ TAX
+ LDA antilog,X
+ JMP LIlog2
+
+.LIlog3
+
+ LDA #FF
+ BNE LIlog2
+
+.LIloG
+
+ LDX P
+ LDA log,X
+ LDX Q
+ SBC log,X
+ BCS LIlog3
+ TAX
+ LDA antilogODD,X
+
+.LIlog2
+
+ STA P
+
+.LIfudge
+
+ LDX Q
+ BEQ LIEX7
+ INX
+ LDA X2
+ SEC
+ SBC X1
+ BCS P%+6
+ JMP LFT
+
+\ ******************************************************************************
+\       Name: LOIN (Part 6 of 7)
+\ ******************************************************************************
+
+.LIEX7
+
+ RTS
+ LDA SWAP
+ BEQ LI290
+ TYA
+ AND #7
+ TAY
+ BNE P%+5
+ JMP LI307+8
+ CPY #2
+ BCS P%+5
+ JMP LI306+8
+ CLC
+ BNE P%+5
+ JMP LI305+8
+ CPY #4
+ BCS P%+5
+ JMP LI304+8
+ CLC
+ BNE P%+5
+ JMP LI303+8
+ CPY #6
+ BCS P%+5
+ JMP LI302+8
+ CLC
+ BEQ P%+5
+ JMP LI300+8
+ JMP LI301+8
+
+.LI290
+
+ DEX
+ TYA
+ AND #7
+ TAY
+ BNE P%+5
+ JMP LI307
+ CPY #2
+ BCS P%+5
+ JMP LI306
+ CLC
+ BNE P%+5
+ JMP LI305
+ CPY #4
+ BCC LI304S
+ CLC
+ BEQ LI303S
+ CPY #6
+ BCC LI302S
+ CLC
+ BEQ LI301S
+ JMP LI300
+
+.LI310
+
+ LSR R
+ BCC LI301
+ LDA #&88
+ STA R
+ LDA SC
+ ADC #7
+ STA SC
+ BCC LI301
+ INC SC+1
+ CLC
+
+.LI301S
+
+ BCC LI301
+
+.LI311
+
+ LSR R
+ BCC LI302
+ LDA #&88
+ STA R
+ LDA SC
+ ADC #7
+ STA SC
+ BCC LI302
+ INC SC+1
+ CLC
+
+.LI302S
+
+ BCC LI302
+
+.LI312
+
+ LSR R
+ BCC LI303
+ LDA #&88
+ STA R
+ LDA SC
+ ADC #7
+ STA SC
+ BCC LI303
+ INC SC+1
+ CLC
+
+.LI303S
+
+ BCC LI303
+
+.LI313
+
+ LSR R
+ BCC LI304
+ LDA #&88
+ STA R
+ LDA SC
+ ADC #7
+ STA SC
+ BCC LI304
+ INC SC+1
+ CLC
+
+.LI304S
+
+ BCC LI304
+
+.LIEX3
+
+ RTS
+
+.LI300
+
+ LDA R
+ AND COL
+ EOR (SC),Y
+ STA (SC),Y
+ DEX
+ BEQ LIEX3
+ DEY
+ LDA S
+ ADC P
+ STA S
+ BCS LI310
+
+.LI301
+
+ LDA R
+ AND COL
+ EOR (SC),Y
+ STA (SC),Y
+ DEX
+ BEQ LIEX3
+ DEY
+ LDA S
+ ADC P
+ STA S
+ BCS LI311
+
+.LI302
+
+ LDA R
+ AND COL
+ EOR (SC),Y
+ STA (SC),Y
+ DEX
+ BEQ LIEX3
+ DEY
+ LDA S
+ ADC P
+ STA S
+ BCS LI312
+
+.LI303
+
+ LDA R
+ AND COL
+ EOR (SC),Y
+ STA (SC),Y
+ DEX
+ BEQ LIEX3
+ DEY
+ LDA S
+ ADC P
+ STA S
+ BCS LI313
+
+.LI304
+
+ LDA R
+ AND COL
+ EOR (SC),Y
+ STA (SC),Y
+ DEX
+ BEQ LIEX4
+ DEY
+ LDA S
+ ADC P
+ STA S
+ BCS LI314
+
+.LI305
+
+ LDA R
+ AND COL
+ EOR (SC),Y
+ STA (SC),Y
+ DEX
+ BEQ LIEX4
+ DEY
+ LDA S
+ ADC P
+ STA S
+ BCS LI315
+
+.LI306
+
+ LDA R
+ AND COL
+ EOR (SC),Y
+ STA (SC),Y
+ DEX
+ BEQ LIEX4
+ DEY
+ LDA S
+ ADC P
+ STA S
+ BCS LI316
+
+.LI307
+
+ LDA R
+ AND COL
+ EOR (SC),Y
+ STA (SC),Y
+ DEX
+ BEQ LIEX4
+ DEC SC+1
+ DEC SC+1
+ LDY #7
+ LDA S
+ ADC P
+ STA S
+ BCS P%+5
+ JMP LI300
+ LSR R
+ BCS P%+5
+ JMP LI300
+ LDA #&88
+ STA R
+ LDA SC
+ ADC #7
+ STA SC
+ BCS P%+5
+ JMP LI300
+ INC SC+1
+ CLC
+ JMP LI300
+
+.LIEX4
+
+ RTS
+
+.LI314
+
+ LSR R
+ BCC LI305
+ LDA #&88
+ STA R
+ LDA SC
+ ADC #7
+ STA SC
+ BCC LI305
+ INC SC+1
+ CLC
+ BCC LI305
+
+.LI315
+
+ LSR R
+ BCC LI306
+ LDA #&88
+ STA R
+ LDA SC
+ ADC #7
+ STA SC
+ BCC LI306
+ INC SC+1
+ CLC
+ BCC LI306
+
+.LI316
+
+ LSR R
+ BCC LI307
+ LDA #&88
+ STA R
+ LDA SC
+ ADC #7
+ STA SC
+ BCC LI307
+ INC SC+1
+ CLC
+ BCC LI307
+
+\ ******************************************************************************
+\       Name: LOIN (Part 7 of 7)
+\ ******************************************************************************
+
+.LFT
+
+ LDA SWAP
+ BEQ LI291
+ TYA
+ AND #7
+ TAY
+ BNE P%+5
+ JMP LI407+8
+ CPY #2
+ BCS P%+5
+ JMP LI406+8
+ CLC
+ BNE P%+5
+ JMP LI405+8
+ CPY #4
+ BCS P%+5
+ JMP LI404+8
+ CLC
+ BNE P%+5
+ JMP LI403+8
+ CPY #6
+ BCS P%+5
+ JMP LI402+8
+ CLC
+ BEQ P%+5
+ JMP LI400+8
+ JMP LI401+8
+
+.LI291
+
+ DEX
+ TYA
+ AND #7
+ TAY
+ BNE P%+5
+ JMP LI407
+ CPY #2
+ BCS P%+5
+ JMP LI406
+ CLC
+ BNE P%+5
+ JMP LI405
+ CPY #4
+ BCC LI404S
+ CLC
+ BEQ LI403S
+ CPY #6
+ BCC LI402S
+ CLC
+ BEQ LI401S
+ JMP LI400
+
+.LI410
+
+ ASL R
+ BCC LI401
+ LDA #&11
+ STA R
+ LDA SC
+ SBC #8
+ STA SC
+ BCS P%+4
+ DEC SC+1
+ CLC
+
+.LI401S
+
+ BCC LI401
+
+.LI411
+
+ ASL R
+ BCC LI402
+ LDA #&11
+ STA R
+ LDA SC
+ SBC #8
+ STA SC
+ BCS P%+4
+ DEC SC+1
+ CLC
+
+.LI402S
+
+ BCC LI402
+
+.LI412
+
+ ASL R
+ BCC LI403
+ LDA #&11
+ STA R
+ LDA SC
+ SBC #8
+ STA SC
+ BCS P%+4
+ DEC SC+1
+ CLC
+
+.LI403S
+
+ BCC LI403
+
+.LI413
+
+ ASL R
+ BCC LI404
+ LDA #&11
+ STA R
+ LDA SC
+ SBC #8
+ STA SC
+ BCS P%+4
+ DEC SC+1
+ CLC
+
+.LI404S
+
+ BCC LI404
+
+.LIEX5
+
+ RTS
+
+.LI400
+
+ LDA R
+ AND COL
+ EOR (SC),Y
+ STA (SC),Y
+ DEX
+ BEQ LIEX5
+ DEY
+ LDA S
+ ADC P
+ STA S
+ BCS LI410
+
+.LI401
+
+ LDA R
+ AND COL
+ EOR (SC),Y
+ STA (SC),Y
+ DEX
+ BEQ LIEX5
+ DEY
+ LDA S
+ ADC P
+ STA S
+ BCS LI411
+
+.LI402
+
+ LDA R
+ AND COL
+ EOR (SC),Y
+ STA (SC),Y
+ DEX
+ BEQ LIEX5
+ DEY
+ LDA S
+ ADC P
+ STA S
+ BCS LI412
+
+.LI403
+
+ LDA R
+ AND COL
+ EOR (SC),Y
+ STA (SC),Y
+ DEX
+ BEQ LIEX5
+ DEY
+ LDA S
+ ADC P
+ STA S
+ BCS LI413
+
+.LI404
+
+ LDA R
+ AND COL
+ EOR (SC),Y
+ STA (SC),Y
+ DEX
+ BEQ LIEX6
+ DEY
+ LDA S
+ ADC P
+ STA S
+ BCS LI414
+
+.LI405
+
+ LDA R
+ AND COL
+ EOR (SC),Y
+ STA (SC),Y
+ DEX
+ BEQ LIEX6
+ DEY
+ LDA S
+ ADC P
+ STA S
+ BCS LI415
+
+.LI406
+
+ LDA R
+ AND COL
+ EOR (SC),Y
+ STA (SC),Y
+ DEX
+ BEQ LIEX6
+ DEY
+ LDA S
+ ADC P
+ STA S
+ BCS LI416
+
+.LI407
+
+ LDA R
+ AND COL
+ EOR (SC),Y
+ STA (SC),Y
+ DEX
+ BEQ LIEX6
+ DEC SC+1
+ DEC SC+1
+ LDY #7
+ LDA S
+ ADC P
+ STA S
+ BCS P%+5
+ JMP LI400
+ ASL R
+ BCS P%+5
+ JMP LI400
+ LDA #&11
+ STA R
+ LDA SC
+ SBC #8
+ STA SC
+ BCS P%+4
+ DEC SC+1
+ CLC
+ JMP LI400
+
+.LIEX6
+
+ RTS
+
+.LI414
+
+ ASL R
+ BCC LI405
+ LDA #&11
+ STA R
+ LDA SC
+ SBC #8
+ STA SC
+ BCS P%+4
+ DEC SC+1
+ CLC
+ BCC LI405
+
+.LI415
+
+ ASL R
+ BCC LI406
+ LDA #&11
+ STA R
+ LDA SC
+ SBC #8
+ STA SC
+ BCS P%+4
+ DEC SC+1
+ CLC
+ BCC LI406
+
+.LI416
+
+ ASL R
+ BCC LI407
+ LDA #&11
+ STA R
+ LDA SC
+ SBC #8
+ STA SC
+ BCS P%+4
+ DEC SC+1
+ CLC
+ JMP LI407
+

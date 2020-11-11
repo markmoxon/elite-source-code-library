@@ -1,0 +1,653 @@
+\ ******************************************************************************
+\       Name: RUTOK
+\ ******************************************************************************
+
+.RUTOK
+
+ EQUB VE
+
+ TOKN 147
+ CHAR 'C'
+ CHAR 'O'
+ TOKN 224
+ CHAR 'N'
+ CHAR 'I'
+ TOKN 222
+ CHAR 'S'
+ CHAR ' '
+ CHAR 'H'
+ CHAR 'E'
+ TOKN 242
+ CHAR ' '
+ CHAR 'H'
+ CHAR 'A'
+ TOKN 250
+ CHAR ' '
+ CHAR 'V'
+ CHAR 'I'
+ CHAR 'O'
+ CHAR 'L'
+ TOKN 245
+ TOKN 252
+ TOKN 2
+ CHAR ' '
+ TOKN 240
+ CHAR 'T'
+ TOKN 244
+ CHAR 'G'
+ TOKN 228
+ CHAR 'A'
+ CHAR 'C'
+ TOKN 251
+ CHAR 'C'
+ CHAR ' '
+ CHAR 'C'
+ TOKN 224
+ CHAR 'N'
+ TOKN 195
+ CHAR 'P'
+ CHAR 'R'
+ CHAR 'O'
+ CHAR 'T'
+ CHAR 'O'
+ CHAR 'C'
+ CHAR 'O'
+ CHAR 'L'
+ TOKN 13
+ TOKN 178
+ CHAR 'S'
+ CHAR 'H'
+ TOKN 217
+ CHAR 'L'
+ CHAR 'D'
+ CHAR ' '
+ TOKN 247
+ CHAR ' '
+ CHAR 'A'
+ CHAR 'V'
+ CHAR 'O'
+ CHAR 'I'
+ CHAR 'D'
+ TOKN 252
+ EQUB VE
+
+ TOKN 147
+ CHAR 'C'
+ TOKN 223
+ TOKN 222
+ CHAR 'R'
+ CHAR 'I'
+ CHAR 'C'
+ CHAR 'T'
+ TOKN 253
+ CHAR ' '
+ TOKN 203
+ TOKN 242
+ TOKN 237
+ TOKN 241
+ TOKN 233
+ CHAR ','
+ CHAR ' '
+ TOKN 154
+ EQUB VE
+
+ CHAR 'A'
+ CHAR ' '
+ TOKN 114
+ CHAR ' '
+ TOKN 224
+ CHAR 'O'
+ CHAR 'K'
+ TOKN 195
+ TOKN 207
+ CHAR ' '
+ TOKN 229
+ CHAR 'F'
+ CHAR 'T'
+ CHAR ' '
+ CHAR 'H'
+ CHAR 'E'
+ TOKN 242
+ TOKN 208
+ CHAR 'W'
+ CHAR 'H'
+ CHAR 'I'
+ TOKN 229
+ CHAR ' '
+ CHAR 'B'
+ CHAR 'A'
+ CHAR 'C'
+ CHAR 'K'
+ CHAR '.'
+ CHAR ' '
+ CHAR 'L'
+ CHAR 'O'
+ CHAR 'O'
+ CHAR 'K'
+ TOKN 196
+ CHAR 'B'
+ TOKN 217
+ CHAR 'N'
+ CHAR 'D'
+ CHAR ' '
+ CHAR 'F'
+ TOKN 253
+ CHAR ' '
+ TOKN 238
+ CHAR 'E'
+ TOKN 230
+ EQUB VE
+
+ CHAR 'Y'
+ CHAR 'E'
+ CHAR 'P'
+ CHAR ','
+ TOKN 208
+ TOKN 114
+ TOKN 210
+ TOKN 207
+ CHAR ' '
+ CHAR 'H'
+ CHAR 'A'
+ CHAR 'D'
+ TOKN 208
+ CHAR 'G'
+ TOKN 228
+ CHAR 'A'
+ CHAR 'C'
+ TOKN 251
+ CHAR 'C'
+ CHAR ' '
+ CHAR 'H'
+ CHAR 'Y'
+ CHAR 'P'
+ TOKN 244
+ CHAR 'D'
+ CHAR 'R'
+ CHAR 'I'
+ TOKN 250
+ CHAR ' '
+ CHAR 'F'
+ TOKN 219
+ CHAR 'T'
+ TOKN 196
+ CHAR 'H'
+ CHAR 'E'
+ TOKN 242
+ CHAR '.'
+ CHAR ' '
+ TOKN 236
+ TOKN 196
+ TOKN 219
+ CHAR ' '
+ CHAR 'T'
+ CHAR 'O'
+ CHAR 'O'
+ EQUB VE
+
+ TOKN 148
+ CHAR ' '
+ TOKN 114
+ CHAR ' '
+ TOKN 207
+ CHAR ' '
+ CHAR 'D'
+ CHAR 'E'
+ CHAR 'H'
+ CHAR 'Y'
+ CHAR 'P'
+ TOKN 196
+ CHAR 'H'
+ CHAR 'E'
+ TOKN 242
+ CHAR ' '
+ CHAR 'F'
+ CHAR 'R'
+ CHAR 'O'
+ CHAR 'M'
+ CHAR ' '
+ TOKN 227
+ CHAR 'W'
+ CHAR 'H'
+ CHAR 'E'
+ TOKN 242
+ CHAR ','
+ CHAR ' '
+ CHAR 'S'
+ CHAR 'U'
+ CHAR 'N'
+ CHAR ' '
+ CHAR 'S'
+ CHAR 'K'
+ CHAR 'I'
+ CHAR 'M'
+ CHAR 'M'
+ TOKN 252
+ TOKN 178
+ CHAR 'J'
+ CHAR 'U'
+ CHAR 'M'
+ CHAR 'P'
+ TOKN 252
+ CHAR '.'
+ CHAR ' '
+ CHAR 'I'
+ CHAR ' '
+ CHAR 'H'
+ CHAR 'E'
+ TOKN 238
+ CHAR ' '
+ TOKN 219
+ CHAR ' '
+ CHAR 'W'
+ TOKN 246
+ CHAR 'T'
+ TOKN 201
+ TOKN 240
+ TOKN 234
+ TOKN 247
+ EQUB VE
+
+ TOKN 115
+ CHAR ' '
+ TOKN 207
+ CHAR ' '
+ CHAR 'W'
+ TOKN 246
+ CHAR 'T'
+ CHAR ' '
+ CHAR 'F'
+ TOKN 253
+ CHAR ' '
+ CHAR 'M'
+ CHAR 'E'
+ CHAR ' '
+ TOKN 245
+ CHAR ' '
+ CHAR 'A'
+ TOKN 236
+ TOKN 238
+ CHAR '.'
+ CHAR ' '
+ CHAR 'M'
+ CHAR 'Y'
+ CHAR ' '
+ TOKN 249
+ CHAR 'S'
+ TOKN 244
+ CHAR 'S'
+ CHAR ' '
+ CHAR 'D'
+ CHAR 'I'
+ CHAR 'D'
+ CHAR 'N'
+ CHAR 39
+ CHAR 'T'
+ CHAR ' '
+ CHAR 'E'
+ CHAR 'V'
+ TOKN 246
+ CHAR ' '
+ CHAR 'S'
+ CHAR 'C'
+ TOKN 248
+ CHAR 'T'
+ CHAR 'C'
+ CHAR 'H'
+ CHAR ' '
+ TOKN 147
+ TOKN 115
+ EQUB VE
+
+ CHAR 'O'
+ CHAR 'H'
+ CHAR ' '
+ CHAR 'D'
+ CHAR 'E'
+ TOKN 238
+ CHAR ' '
+ CHAR 'M'
+ CHAR 'E'
+ CHAR ' '
+ CHAR 'Y'
+ TOKN 237
+ CHAR '.'
+ TOKN 208
+ CHAR 'F'
+ CHAR 'R'
+ CHAR 'I'
+ CHAR 'G'
+ CHAR 'H'
+ CHAR 'T'
+ CHAR 'F'
+ CHAR 'U'
+ CHAR 'L'
+ CHAR ' '
+ CHAR 'R'
+ CHAR 'O'
+ CHAR 'G'
+ CHAR 'U'
+ CHAR 'E'
+ CHAR ' '
+ CHAR 'W'
+ CHAR 'I'
+ TOKN 226
+ CHAR ' '
+ CHAR 'W'
+ CHAR 'H'
+ TOKN 245
+ CHAR ' '
+ CHAR 'I'
+ CHAR ' '
+ TOKN 247
+ CHAR 'L'
+ CHAR 'I'
+ CHAR 'E'
+ TOKN 250
+ CHAR ' '
+ TOKN 179
+ CHAR ' '
+ CHAR 'P'
+ CHAR 'E'
+ CHAR 'O'
+ CHAR 'P'
+ TOKN 229
+ CHAR ' '
+ CHAR 'C'
+ TOKN 228
+ CHAR 'L'
+ TOKN 208
+ TOKN 229
+ CHAR 'A'
+ CHAR 'D'
+ CHAR ' '
+ CHAR 'P'
+ CHAR 'O'
+ TOKN 222
+ TOKN 244
+ CHAR 'I'
+ TOKN 253
+ CHAR ' '
+ CHAR 'S'
+ CHAR 'H'
+ CHAR 'O'
+ CHAR 'T'
+ CHAR ' '
+ CHAR 'U'
+ CHAR 'P'
+ CHAR ' '
+ TOKN 224
+ CHAR 'T'
+ CHAR 'S'
+ CHAR ' '
+ CHAR 'O'
+ CHAR 'F'
+ CHAR ' '
+ TOKN 226
+ CHAR 'O'
+ TOKN 218
+ CHAR ' '
+ TOKN 247
+ CHAR 'A'
+ TOKN 222
+ CHAR 'L'
+ CHAR 'Y'
+ CHAR ' '
+ CHAR 'P'
+ CHAR 'I'
+ TOKN 248
+ CHAR 'T'
+ TOKN 237
+ TOKN 178
+ CHAR 'W'
+ TOKN 246
+ CHAR 'T'
+ TOKN 201
+ TOKN 236
+ TOKN 229
+ CHAR 'R'
+ CHAR 'I'
+ EQUB VE
+
+ TOKN 179
+ CHAR ' '
+ CHAR 'C'
+ TOKN 255
+ CHAR ' '
+ CHAR 'T'
+ CHAR 'A'
+ CHAR 'C'
+ CHAR 'K'
+ TOKN 229
+ CHAR ' '
+ TOKN 147
+ TOKN 104
+ CHAR ' '
+ TOKN 115
+ CHAR ' '
+ CHAR 'I'
+ CHAR 'F'
+ CHAR ' '
+ TOKN 179
+ CHAR ' '
+ CHAR 'L'
+ CHAR 'I'
+ CHAR 'K'
+ CHAR 'E'
+ CHAR '.'
+ CHAR ' '
+ CHAR 'H'
+ CHAR 'E'
+ CHAR 39
+ CHAR 'S'
+ CHAR ' '
+ TOKN 245
+ CHAR ' '
+ TOKN 253
+ TOKN 238
+ TOKN 248
+ EQUB VE
+
+ TOKN 1
+ CHAR 'C'
+ CHAR 'O'
+ CHAR 'M'
+ TOKN 195
+ TOKN 235
+ TOKN 223
+ CHAR ':'
+ CHAR ' '
+ CHAR 'E'
+ CHAR 'L'
+ TOKN 219
+ CHAR 'E'
+ CHAR ' '
+ CHAR 'I'
+ CHAR 'I'
+ EQUB VE
+
+ TOKN 116
+ EQUB VE
+
+ TOKN 116
+ EQUB VE
+
+ TOKN 116
+ EQUB VE
+
+ TOKN 116
+ EQUB VE
+
+ TOKN 116
+ EQUB VE
+
+ TOKN 116
+ EQUB VE
+
+ TOKN 116
+ EQUB VE
+
+ TOKN 116
+ EQUB VE
+
+ TOKN 116
+ EQUB VE
+
+ TOKN 116
+ EQUB VE
+
+ TOKN 116
+ EQUB VE
+
+ TOKN 116
+ EQUB VE
+
+ TOKN 116
+ EQUB VE
+
+ CHAR 'B'
+ CHAR 'O'
+ CHAR 'Y'
+ CHAR ' '
+ CHAR 'A'
+ TOKN 242
+ CHAR ' '
+ TOKN 179
+ CHAR ' '
+ TOKN 240
+ CHAR ' '
+ TOKN 147
+ CHAR 'W'
+ CHAR 'R'
+ TOKN 223
+ CHAR 'G'
+ CHAR ' '
+ CHAR 'G'
+ TOKN 228
+ CHAR 'A'
+ CHAR 'X'
+ CHAR 'Y'
+ CHAR '!'
+ EQUB VE
+
+ TOKN 226
+ TOKN 244
+ CHAR 'E'
+ CHAR 39
+ CHAR 'S'
+ TOKN 208
+ TOKN 242
+ TOKN 228
+ CHAR ' '
+ TOKN 115
+ CHAR ' '
+ CHAR 'P'
+ CHAR 'I'
+ TOKN 248
+ CHAR 'T'
+ CHAR 'E'
+ CHAR ' '
+ TOKN 217
+ CHAR 'T'
+ CHAR ' '
+ TOKN 226
+ TOKN 244
+ CHAR 'E'
+ EQUB VE
+
+ TOKN 147
+ TOKN 193
+ CHAR 'S'
+ CHAR ' '
+ CHAR 'O'
+ CHAR 'F'
+ CHAR ' '
+ TOKN 109
+ CHAR ' '
+ CHAR 'A'
+ TOKN 242
+ CHAR ' '
+ TOKN 235
+ CHAR ' '
+ CHAR 'A'
+ TOKN 239
+ CHAR 'Z'
+ TOKN 240
+ CHAR 'G'
+ CHAR 'L'
+ CHAR 'Y'
+ CHAR ' '
+ CHAR 'P'
+ CHAR 'R'
+ CHAR 'I'
+ CHAR 'M'
+ CHAR 'I'
+ TOKN 251
+ TOKN 250
+ CHAR ' '
+ TOKN 226
+ TOKN 245
+ CHAR ' '
+ TOKN 226
+ CHAR 'E'
+ CHAR 'Y'
+ CHAR ' '
+ TOKN 222
+ TOKN 220
+ CHAR 'L'
+ CHAR ' '
+ TOKN 226
+ TOKN 240
+ CHAR 'K'
+ CHAR ' '
+ TOKN 19
+ CHAR '*'
+ CHAR '*'
+ CHAR '*'
+ CHAR '*'
+ CHAR '*'
+ CHAR ' '
+ CHAR '*'
+ CHAR '*'
+ CHAR '*'
+ CHAR '*'
+ CHAR '*'
+ CHAR '*'
+ TOKN 202
+ CHAR ' '
+ CHAR '3'
+ CHAR 'D'
+ EQUB VE
+
+ TOKN 2
+ CHAR 'B'
+ CHAR 'I'
+ CHAR 'T'
+ CHAR 'S'
+ CHAR 39
+ CHAR 'N'
+ CHAR ' '
+ CHAR 'P'
+ CHAR 'I'
+ CHAR 'E'
+ CHAR 'C'
+ CHAR 'E'
+ CHAR 'S'
+ CHAR ' '
+ CHAR '-'
+ CHAR ' '
+ CHAR 'E'
+ CHAR 'N'
+ CHAR 'D'
+ CHAR ' '
+ CHAR 'O'
+ CHAR 'F'
+ CHAR ' '
+ CHAR 'P'
+ CHAR 'A'
+ CHAR 'R'
+ CHAR 'T'
+ CHAR ' '
+ CHAR '1'
+ EQUB VE
+

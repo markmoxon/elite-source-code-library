@@ -1,0 +1,74 @@
+\ ******************************************************************************
+\
+\ 6502 SECOND PROCESSOR ELITE I/O LOADER (PART 1) SOURCE
+\
+\ 6502 Second Processor Elite was written by Ian Bell and David Braben and is
+\ copyright Acornsoft 1985
+\
+\ The code on this site is identical to the version released on Ian Bell's
+\ personal website at http://www.elitehomepage.org/
+\
+\ The commentary is copyright Mark Moxon, and any misunderstandings or mistakes
+\ in the documentation are entirely my fault
+\
+\ ******************************************************************************
+
+INCLUDE "6502sp/sources/elite-header.h.asm"
+
+_CASSETTE_VERSION       = TRUE AND (_VERSION = 1)
+_DISC_VERSION           = TRUE AND (_VERSION = 2)
+_6502SP_VERSION         = TRUE AND (_VERSION = 3)
+
+C% = &2000
+L% = C%
+D% = &D000
+LC% = &8000-C%
+svn = &7FFD
+N% = 77
+
+OSWRCH = &FFEE
+OSBYTE = &FFF4
+OSWORD = &FFF1
+SCLI = &FFF7
+IRQ1V = &204
+ZP = &90
+P = &92
+Q = &93
+YY = &94
+T = &95
+Z1 = ZP
+Z2 = P
+FF = &FF
+VIA = &FE40
+
+CODE% = &2000
+LOAD% = &2000
+
+ORG CODE%
+
+INCLUDE "library/common/loader/variable_b_per_cent.asm"
+INCLUDE "library/common/loader/variable_e_per_cent.asm"
+INCLUDE "library/common/loader/macro_fne.asm"
+INCLUDE "library/6502sp/loader1/subroutine_elite_loader.asm"
+INCLUDE "library/common/loader/subroutine_pll1.asm"
+INCLUDE "library/common/loader/subroutine_dornd.asm"
+INCLUDE "library/6502sp/loader1/variable_rand.asm"
+INCLUDE "library/common/loader/subroutine_squa2.asm"
+INCLUDE "library/common/loader/subroutine_pix.asm"
+INCLUDE "library/common/loader/variable_twos.asm"
+INCLUDE "library/common/loader/variable_cnt.asm"
+INCLUDE "library/common/loader/variable_cnt2.asm"
+INCLUDE "library/common/loader/variable_cnt3.asm"
+INCLUDE "library/common/loader/subroutine_root.asm"
+INCLUDE "library/6502sp/loader1/subroutine_osb.asm"
+INCLUDE "library/6502sp/loader1/variable_mess1.asm"
+INCLUDE "library/6502sp/loader1/variable_mess2.asm"
+
+\ ******************************************************************************
+\
+\ Save output/ELITE.bin
+\
+\ ******************************************************************************
+
+PRINT "S.ELITE ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
+SAVE "6502sp/output/ELITE.bin", CODE%, P%, LOAD%

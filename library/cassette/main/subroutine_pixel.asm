@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing pixels
 \    Summary: Draw a 1-pixel dot, 2-pixel dash or 4-pixel square
+\  Deep dive: Drawing monochrome pixels in mode 4
 \
 \ ------------------------------------------------------------------------------
 \
@@ -87,7 +88,7 @@
 
  LDY T1                 \ Restore Y from T1, so Y is preserved by the routine
 
-.^PX4
+.PX4
 
  RTS                    \ Return from the subroutine
 

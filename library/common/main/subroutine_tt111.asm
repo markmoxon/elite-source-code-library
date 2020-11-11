@@ -228,7 +228,6 @@ ENDIF
                         \ distance between the vertical y-coordinates. We will
                         \ refer to this as the y-delta
 
-
  JSR SQUA2              \ Set (A P) = A * A
                         \           = (|QQ10 - QQ1| / 2) ^ 2
                         \           = y_delta ^ 2

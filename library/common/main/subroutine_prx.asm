@@ -24,11 +24,10 @@
 \
 \ ******************************************************************************
 
-
  SEC                    \ Decrement A (for when this routine is called via
  SBC #1                 \ prx-3)
 
-.^prx
+.prx
 
  ASL A                  \ Set Y = A * 2, so it can act as an index into the
  TAY                    \ PRXS table, which has two bytes per entry
@@ -38,7 +37,7 @@
  LDA PRXS+1,Y           \ Fetch the low byte of the price into A and transfer
  TAY                    \ it to X, so the price is now in (Y X)
 
-.^c
+.c
 
  RTS                    \ Return from the subroutine
 

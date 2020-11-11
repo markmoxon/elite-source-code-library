@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing circles
 \    Summary: Draw a circle segment and add it to the ball line heap
+\  Deep dive: The ball line heap
 \
 \ ------------------------------------------------------------------------------
 \
@@ -215,7 +216,6 @@ ENDIF
  STA K5+2               \   * K5(3 2) = screen y-coordinate of this point
  LDA K6+3               \
  STA K5+3               \ They now become the "previous point" in the next call
-
 
  LDA CNT                \ Set CNT = CNT + STP
  CLC

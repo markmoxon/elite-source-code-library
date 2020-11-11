@@ -37,7 +37,7 @@
 
  BNE EE2                \ Loop back until Y is zero
 
-.^SC5
+.SC5
 
  RTS                    \ Return from the subroutine
 

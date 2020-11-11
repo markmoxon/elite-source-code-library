@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing lines
 \    Summary: Draw a line: Calculate the line gradient in the form of deltas
+\  Deep dive: Bresenham's line algorithm
 \
 \ ------------------------------------------------------------------------------
 \
@@ -46,7 +47,6 @@
  EOR #%11111111         \ Negate the result in A by flipping all the bits and
  ADC #1                 \ adding 1, i.e. using two's complement to make it
                         \ positive
-
 
  SEC                    \ Set the C flag, ready for the subtraction below
 

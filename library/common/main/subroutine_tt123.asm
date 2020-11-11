@@ -58,7 +58,7 @@
 
  STA QQ19+4             \ Store the updated coordinate in QQ19+4
 
-.^TT180
+.TT180
 
  RTS                    \ Return from the subroutine
 

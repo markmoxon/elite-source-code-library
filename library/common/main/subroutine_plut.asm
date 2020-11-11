@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Flight
 \    Summary: Flip the coordinate axes for the four different views
+\  Deep dive: Flipping axes between space views
 \
 \ ------------------------------------------------------------------------------
 \
@@ -38,7 +39,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-.^PU1
+.PU1
 
  DEX                    \ Decrement the view, so now:
                         \

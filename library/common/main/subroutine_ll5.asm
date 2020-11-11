@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Maths (Arithmetic)
 \    Summary: Calculate Q = SQRT(R Q)
+\  Deep dive: Calculating square roots
 \
 \ ------------------------------------------------------------------------------
 \

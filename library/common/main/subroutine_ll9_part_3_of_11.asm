@@ -125,7 +125,6 @@
                         \
                         \   * XX18(8 7 6) = (z_sign z_hi z_lo)
 
-
  LDA #255               \ Set the 15th byte of XX2 to 255, so that face 15 is
  STA XX2+15             \ always visible. No ship definitions actually have this
                         \ number of faces in the cassette version, but this

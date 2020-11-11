@@ -34,7 +34,7 @@
  CPY T
  BCC WPL1
 
-.^WP1
+.WP1
 
  RTS
 

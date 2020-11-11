@@ -2,12 +2,11 @@
 \       Name: TWIST
 \ ******************************************************************************
 
-
-.^TWIST2
+.TWIST2
 
  EQUB &2C
 
-.^TWIST
+.TWIST
 
  LDA #0
  STA RAT2
@@ -23,5 +22,4 @@
  LDX #19                \ Rotate (roofv_z, nosev_z) by a small angle (pitch)
  LDY #13
  JMP MVS5
-
 

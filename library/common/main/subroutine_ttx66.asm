@@ -72,7 +72,7 @@ IF _CASSETTE_VERSION
                         \ i.e. print the hyperspace countdown in the top-left
                         \ corner
 
-.^BOX
+.BOX
 
  LDY #1                 \ Move the text cursor to row 1
  STY YC
@@ -137,7 +137,6 @@ ENDIF
 
 IF _CASSETTE_VERSION
 
-
  LDX #0                 \ Set (X1, Y1) to (0, 0)
  STX X1
  STX Y1
@@ -153,7 +152,7 @@ ELIF _6502SP_VERSION
  STX QQ17
  RTS
 
-.^BOX
+.BOX
 
  LDA #YELLOW
  JSR DOCOL

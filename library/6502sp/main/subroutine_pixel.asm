@@ -19,11 +19,11 @@
  BMI PBFL
  LDY T1
 
-.^PX4
+.PX4
 
  RTS
 
-.^PBFL
+.PBFL
 
  LDA PBUP
  STA pixbl
@@ -43,7 +43,7 @@
  LDY T1
  RTS
 
-.^PBZE
+.PBZE
 
  LDA #2
  STA PBUP

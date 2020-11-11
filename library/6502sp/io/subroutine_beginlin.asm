@@ -13,7 +13,7 @@
  LDA #&82
  JMP USOSWRCH
 
-.^RTS1
+.RTS1
 
  RTS
 

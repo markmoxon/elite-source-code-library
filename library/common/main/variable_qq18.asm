@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Text
 \    Summary: Recursive token table for tokens 0-148
+\  Deep dive: Printing text tokens
 \
 \ ******************************************************************************
 

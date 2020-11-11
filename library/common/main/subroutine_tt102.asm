@@ -244,7 +244,7 @@ ENDIF
 
  RTS                    \ Return from the subroutine
 
-.^T95
+.T95
 
                         \ If we get here, "D" was pressed, so we need to show
                         \ the distance to the selected system (if we are in a

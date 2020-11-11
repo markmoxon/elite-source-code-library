@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing planets
 \    Summary: Draw the planet's equator and meridian
+\  Deep dive: Drawing meridians and equators
 \
 \ ------------------------------------------------------------------------------
 \

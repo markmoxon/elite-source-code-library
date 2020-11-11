@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing planets
 \    Summary: Draw the planet's crater
+\  Deep dive: Drawing craters
 \
 \ ------------------------------------------------------------------------------
 \

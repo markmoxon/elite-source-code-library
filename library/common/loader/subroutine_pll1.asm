@@ -306,7 +306,6 @@ ENDIF
  CMP #80                \ If A >= 80, jump down to PLC3 to skip to the next
  BCS PLC3               \ pixel
 
-
  CMP #32                \ If A < 32, jump down to PLC3 to skip to the next
  BCC PLC3               \ pixel
 

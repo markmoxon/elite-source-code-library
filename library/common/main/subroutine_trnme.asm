@@ -25,7 +25,6 @@ ELIF _6502SP_VERSION
  LDA INWK+5,X           \ Copy the X-th byte of INWK+5 to the X-th byte of NA%
  STA NA%,X
 
-
 ENDIF
 
  DEX                    \ Decrement the loop counter

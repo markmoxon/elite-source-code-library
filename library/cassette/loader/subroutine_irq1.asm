@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Screen mode
 \    Summary: The loader's screen-mode interrupt handler (IRQ1V points here)
+\  Deep dive: The split-screen mode
 \
 \ ------------------------------------------------------------------------------
 \
@@ -21,7 +22,6 @@
 \ game code.
 \
 \ ******************************************************************************
-
 
 .VIA2
 
@@ -51,7 +51,7 @@
                         \ original IRQ1V vector in part 4, so this instruction
                         \ passes control to the next interrupt handler
 
-.^IRQ1
+.IRQ1
 
  TYA                    \ Store Y on the stack
  PHA

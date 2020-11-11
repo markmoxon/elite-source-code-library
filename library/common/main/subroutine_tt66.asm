@@ -21,14 +21,13 @@
 \
 \ ******************************************************************************
 
-
 IF _CASSETTE_VERSION
 
  LDA #1
 
 ENDIF
 
-.^TT66
+.TT66
 
  STA QQ11               \ Set the current view type in QQ11 to A
 

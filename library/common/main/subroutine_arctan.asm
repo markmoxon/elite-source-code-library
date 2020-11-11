@@ -66,7 +66,6 @@
  TXA                    \ This also sets A = P (which now contains the original
                         \ argument |Q|)
 
-
  JSR ARS1               \ Call ARS1 to set the following from the lookup table:
                         \
                         \   A = arctan(A / Q)
@@ -80,7 +79,6 @@
  BCS AR4                \ Jump to AR4 to continue the calculation (this BCS is
                         \ effectively a JMP as the subtraction will never
                         \ underflow, as ARS1 returns values in the range 0-31)
-
 
 .AR2
 

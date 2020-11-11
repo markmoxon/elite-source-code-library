@@ -16,7 +16,7 @@
  STA V
  LDA #(TKN1 DIV256)
 
-.^DTEN
+.DTEN
 
  STA V+1
  LDY #0

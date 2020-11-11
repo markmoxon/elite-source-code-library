@@ -35,7 +35,7 @@
 
 IF _6502SP_VERSION
 
-.^NWDAVxx
+.NWDAVxx
 
 ENDIF
 
@@ -135,7 +135,6 @@ IF _CASSETTE_VERSION
  LDY QQ29               \ Set P to the amount of this item we have in our cargo
  LDA QQ20,Y             \ hold (which is the amount to sell)
  STA P
-
 
 ELIF _6502SP_VERSION
 

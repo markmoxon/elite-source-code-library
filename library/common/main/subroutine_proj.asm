@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing ships
 \    Summary: Project the current ship onto the screen
+\  Deep dive: Extended screen coordinates
 \
 \ ------------------------------------------------------------------------------
 \

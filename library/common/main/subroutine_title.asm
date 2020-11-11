@@ -231,7 +231,6 @@ IF _CASSETTE_VERSION
 
  LDA SHEILA+&40         \ Read 6522 System VIA input register IRB (SHEILA &40)
 
-
 ELIF _6502SP_VERSION
 
  LDA KTRAN+12

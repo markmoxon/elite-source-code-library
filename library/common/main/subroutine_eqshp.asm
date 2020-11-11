@@ -14,13 +14,12 @@
 \
 \ ******************************************************************************
 
-
 .bay
 
  JMP BAY                \ Go to the docking bay (i.e. show the Status Mode
                         \ screen)
 
-.^EQSHP
+.EQSHP
 
 IF _CASSETTE_VERSION
 
@@ -416,7 +415,7 @@ ENDIF
  LDA #31                \ Print recursive token 145 ("PRESENT")
  JSR TT27
 
-.^err
+.err
 
  JSR dn2                \ Call dn2 to make a short, high beep and delay for 1
                         \ second

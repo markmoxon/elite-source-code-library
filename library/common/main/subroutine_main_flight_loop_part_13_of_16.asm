@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Main loop
 \    Summary: Show energy bomb effect, charge shields and energy banks
+\  Deep dive: Scheduling tasks with the main loop counter
 \
 \ ------------------------------------------------------------------------------
 \

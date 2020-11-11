@@ -49,7 +49,7 @@
                         \
                         \   (Y X) = (S R) / Q
 
-.^LL122
+.LL122
 
                         \ The following calculates:
                         \

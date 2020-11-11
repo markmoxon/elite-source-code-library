@@ -31,13 +31,12 @@
  STY YSAV               \ Store Y in temporary storage, so we can restore it
                         \ later
 
-.^t
+.t
 
 IF _CASSETTE_VERSION
 
  JSR DELAY-5            \ Delay for 8 vertical syncs (8/50 = 0.16 seconds) so we
                         \ don't take up too much CPU time while looping round
-
 
 ELIF _6502SP_VERSION
 
@@ -69,7 +68,6 @@ IF _CASSETTE_VERSION
                         \ internal key values to ASCII, so this fetches the
                         \ key's ASCII code into A
 
-
 ELIF _6502SP_VERSION
 
  LDA TRANTABLE,Y        \ TRANTABLE oints to the MOS key translation table,
@@ -82,7 +80,7 @@ ENDIF
 
  TAX                    \ Copy A into X
 
-.^out
+.out
 
  RTS                    \ Return from the subroutine
 

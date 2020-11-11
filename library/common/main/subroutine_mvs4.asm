@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Moving
 \    Summary: Apply pitch and roll to an orientation vector
+\  Deep dive: Pitching and rolling
 \
 \ ------------------------------------------------------------------------------
 \

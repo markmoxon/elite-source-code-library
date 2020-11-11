@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Start and end
 \    Summary: Main entry point for the Elite game code
+\  Deep dive: Program flow of the main game loop
 \
 \ ------------------------------------------------------------------------------
 \
@@ -32,5 +33,4 @@ ELIF _6502SP_VERSION
                         \ Fall through into DEATH2 to start the game
 
 ENDIF
-
 

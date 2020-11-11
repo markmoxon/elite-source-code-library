@@ -104,7 +104,7 @@ ENDIF
                         \ perhaps the original plan was to arrive in each new
                         \ galaxy in a random place?
 
-.^zZ
+.zZ
 
  LDA #&60               \ Set (QQ9, QQ10) to (96, 96), which is where we always
  STA QQ9                \ arrive in a new galaxy (the selected system will be

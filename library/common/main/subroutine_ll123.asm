@@ -57,7 +57,7 @@
                         \
                         \   (Y X) = (S R) * Q
 
-.^LL121
+.LL121
 
                         \ The following calculates:
                         \
@@ -125,7 +125,7 @@
  BMI LL128              \ If A is negative jump to LL128 to return from the
                         \ subroutine with (Y X) as is
 
-.^LL133
+.LL133
 
  TXA                    \ Otherwise negate (Y X) using two's complement by first
  EOR #%11111111         \ setting the low byte to ~X + 1

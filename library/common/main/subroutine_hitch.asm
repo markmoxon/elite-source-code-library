@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Tactics
 \    Summary: Work out if the ship in INWK is in our crosshairs
+\  Deep dive: In the crosshairs
 \
 \ ------------------------------------------------------------------------------
 \
@@ -111,7 +112,7 @@ ENDIF
                         \
                         \   * If A < R then the C flag will be C clear
 
-.^HI1
+.HI1
 
  RTS                    \ Return from the subroutine
 

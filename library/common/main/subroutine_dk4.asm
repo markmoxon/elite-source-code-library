@@ -38,7 +38,7 @@ ENDIF
  CPX #&69               \ If COPY is not being pressed, jump to DK2 below,
  BNE DK2                \ otherwise let's process the configuration keys
 
-.^FREEZE
+.FREEZE
 
                         \ COPY is being pressed, so we enter a loop that
                         \ listens for configuration keys, and we keep looping

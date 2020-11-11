@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Maths (Geometry)
 \    Summary: Orthonormalise the orientation vectors for a ship
+\  Deep dive: Tidying orthonormal vectors
 \
 \ ------------------------------------------------------------------------------
 \
@@ -17,7 +18,6 @@
 \ routine to ensure they remain as orthonormal as possible.
 \
 \ ******************************************************************************
-
 
 .TI2
 
@@ -51,7 +51,7 @@
 
  JMP TI3                \ Jump to TI3 to keep tidying
 
-.^TIDY
+.TIDY
 
  LDA INWK+10            \ Set (XX15, XX15+1, XX15+2) = nosev
  STA XX15

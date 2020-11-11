@@ -29,7 +29,7 @@
 
  AND #15
 
-.^SPIN2
+.SPIN2
 
  STA CNT                \ Store the result in CNT, so CNT contains a random
                         \ number between 0 and the maximum number of bits of
@@ -51,7 +51,7 @@
  BNE spl+2              \ Jump back up to um (this BPL is effectively a JMP as
                         \ CNT will never be negative)
 
-.^oh
+.oh
 
  RTS
 

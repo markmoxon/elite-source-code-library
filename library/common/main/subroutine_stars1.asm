@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Stardust
 \    Summary: Process the stardust for the front view
+\  Deep dive: Stardust in the front view
 \
 \ ------------------------------------------------------------------------------
 \
@@ -17,7 +18,6 @@
 \ ******************************************************************************
 
 .STARS1
-
 
  LDY NOSTM              \ Set Y to the current number of stardust particles, so
                         \ we can use it as a counter through all the stardust
@@ -33,7 +33,7 @@
                         \ These values are stored in (SX+Y SXL+Y), (SY+Y SYL+Y)
                         \ and (SZ+Y SZL+Y) respectively
 
-.^STL1
+.STL1
 
  JSR DV42               \ Call DV42 to set the following:
                         \

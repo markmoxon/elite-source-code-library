@@ -59,7 +59,7 @@
                         \ from the subroutine back to the ESCAPE routine that
                         \ called FRS1 in the first place
 
-.^fq1
+.fq1
 
  LDA #&60               \ Set byte #14 (nosev_z_hi) to 1 (&60), so the launched
  STA INWK+14            \ ship is pointing away from us

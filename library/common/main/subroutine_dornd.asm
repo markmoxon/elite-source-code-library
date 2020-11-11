@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Utility routines
 \    Summary: Generate random numbers
+\  Deep dive: Generating random numbers
 \
 \ ------------------------------------------------------------------------------
 \
@@ -15,12 +16,11 @@
 \
 \ ******************************************************************************
 
-
-.^DORND2
+.DORND2
 
  CLC                    \ This ensures that bit 0 of r2 is 0
 
-.^DORND
+.DORND
 
  LDA RAND               \ r2´ = ((r0 << 1) mod 256) + C
  ROL A                  \ r0´ = r2´ + r2 + bit 7 of r0

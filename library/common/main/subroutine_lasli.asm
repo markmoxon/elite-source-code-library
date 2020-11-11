@@ -44,7 +44,7 @@
 
  JSR DENGY              \ Call DENGY to deplete our energy banks by 1
 
-.^LASLI2
+.LASLI2
 
 IF _CASSETTE_VERSION
 

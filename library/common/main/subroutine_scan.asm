@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Dashboard
 \    Summary: Display the current ship on the scanner
+\  Deep dive: The 3D scanner
 \
 \ ------------------------------------------------------------------------------
 \
@@ -196,7 +197,6 @@ IF _CASSETTE_VERSION
                         \ instruction isn't required as we test both the maximum
                         \ and minimum below, but it might save a few cycles)
 
-
 ELIF _6502SP_VERSION
 
  BPL FIXIT
@@ -230,7 +230,6 @@ IF _CASSETTE_VERSION
  STA Y1                 \ Store A in Y1, as it now contains the screen
                         \ y-coordinate for the ship's dot, clipped so that it
                         \ fits within the dashboard
-
 
 ELIF _6502SP_VERSION
 
@@ -421,5 +420,4 @@ ELIF _6502SP_VERSION
  JMP OSWORD
 
 ENDIF
-
 

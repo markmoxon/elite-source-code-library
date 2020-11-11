@@ -131,7 +131,7 @@
                         \ token, jump back up to TT50 to print the next
                         \ character, otherwise we are done printing
 
-.^TT48
+.TT48
 
  RTS                    \ Return from the subroutine
 

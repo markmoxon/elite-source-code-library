@@ -63,7 +63,6 @@ IF _CASSETTE_VERSION
                         \ byte, while the disc version can have 0, 1, 2, &A or
                         \ &E, so having bit 7 set is invalid anyway
 
-
 ELIF _6502SP_VERSION
 
  BCS LOR
@@ -94,7 +93,7 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
-.^LOR
+.LOR
 
  SEC
  RTS

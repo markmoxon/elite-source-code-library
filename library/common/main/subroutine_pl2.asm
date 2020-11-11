@@ -15,7 +15,6 @@
 
 .PL2
 
-
  LDA TYPE               \ Shift bit 0 of the planet/sun's type into the C flag
  LSR A
 

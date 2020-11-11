@@ -117,7 +117,6 @@ IF _CASSETTE_VERSION
                         \ also be a remnant if the code in gnum was originally
                         \ here, but got moved into the gnum subroutine
 
-
 ELIF _6502SP_VERSION
 
 {
@@ -226,7 +225,7 @@ ENDIF
  JMP TT220              \ Otherwise loop back to TT220 to print the next market
                         \ item
 
-.^BAY2
+.BAY2
 
  LDA #f9                \ Jump into the main loop at FRCE, setting the key
  JMP FRCE               \ "pressed" to red key f9 (so we show the Inventory

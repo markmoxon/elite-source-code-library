@@ -5,6 +5,7 @@
 \   Category: Main loop
 \    Summary: For each nearby ship: Move the ship in space and copy the updated
 \             INWK data block back to K%
+\  Deep dive: Program flow of the ship-moving routine
 \
 \ ------------------------------------------------------------------------------
 \

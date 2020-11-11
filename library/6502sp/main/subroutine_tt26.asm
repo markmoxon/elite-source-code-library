@@ -136,7 +136,7 @@
  DEX
  BNE DAL5
 
-.^rT9
+.rT9
 
  RTS
 

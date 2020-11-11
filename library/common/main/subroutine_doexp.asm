@@ -4,9 +4,9 @@
 \       Type: Subroutine
 \   Category: Drawing ships
 \    Summary: Draw an exploding ship
+\  Deep dive: Drawing explosion clouds
 \
 \ ******************************************************************************
-
 
 .EX2
 
@@ -16,7 +16,7 @@
 
  RTS                    \ Return from the subroutine
 
-.^DOEXP
+.DOEXP
 
  LDA INWK+31            \ If bit 6 of the ship's byte #31 is clear, then the
  AND #%01000000         \ ship is not already exploding so there is no existing

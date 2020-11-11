@@ -66,7 +66,6 @@
  ORA XX15+3             \ LL137 to return from the subroutine with the C flag
  BNE LL137              \ set, as the line doesn't fit on-screen
 
-
  LDA XX15+2             \ If y1_lo > y-coordinate of the bottom of the screen
  CMP #Y*2               \ jump to LL137 to return from the subroutine with the
  BCS LL137              \ C flag set, as the line doesn't fit on-screen

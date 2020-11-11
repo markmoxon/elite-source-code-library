@@ -171,7 +171,6 @@ IF _CASSETTE_VERSION
  EOR #%10000101         \ different signs, negative if they have the same sign
  STA INWK+29
 
-
 ELIF _6502SP_VERSION
 
  TAX
@@ -245,7 +244,7 @@ ENDIF
 
 IF _6502SP_VERSION
 
-.^TA151
+.TA151
 
  LDY #10
  JSR TAS3

@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing lines
 \    Summary: Clip line: Work out which end-points are on-screen, if any
+\  Deep dive: Line-clipping
 \
 \ ------------------------------------------------------------------------------
 \
@@ -67,7 +68,7 @@
 
  LDA XX15+5             \ Set A = x2_hi
 
-.^LL147
+.LL147
 
  LDX #Y*2-1             \ Set Y2 = #Y * 2 - 1. The constant #Y is 96, the
                         \ y-coordinate of the mid-point of the space view, so

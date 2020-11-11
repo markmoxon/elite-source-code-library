@@ -89,7 +89,6 @@
 
 IF _CASSETTE_VERSION
 
-
  LDA XX21-2,Y           \ The ship blueprints at XX21 start with a lookup
  STA XX0                \ table that points to the individual ship blueprints,
                         \ so this fetches the low byte of this particular ship
@@ -239,7 +238,6 @@ IF _CASSETTE_VERSION
 
  BMI P%+5               \ If the ship type is negative (planet or sun), then
                         \ skip the following instruction
-
 
 ELIF _6502SP_VERSION
 

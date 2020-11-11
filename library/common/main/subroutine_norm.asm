@@ -98,7 +98,7 @@
  JSR TIS2               \ with 1 being represented by 96
  STA XX15+2
 
-.^NO1
+.NO1
 
  RTS                    \ Return from the subroutine
 

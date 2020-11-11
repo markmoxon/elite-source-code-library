@@ -7,7 +7,6 @@
 \
 \ ******************************************************************************
 
-
 IF _6502SP_VERSION
 
 .wearedocked
@@ -59,7 +58,7 @@ ENDIF
                         \ Competent (this BNE is effectively a JMP as A will
                         \ never be zero)
 
-.^STATUS
+.STATUS
 
 IF _CASSETTE_VERSION
 
@@ -110,7 +109,6 @@ IF _CASSETTE_VERSION
  LDY QQ12               \ Fetch the docked status from QQ12, and if we are
  BNE st6                \ docked, jump to st6 to print "Docked" for our
                         \ ship's condition
-
 
 ELIF _6502SP_VERSION
 

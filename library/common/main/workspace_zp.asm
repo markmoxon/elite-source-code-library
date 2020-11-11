@@ -6,6 +6,7 @@
 \   Category: Workspaces
 \    Summary: Lots of important variables are stored in the zero page workspace
 \             as it is quicker and more space-efficient to access memory here
+\  Deep dive: The Elite memory map
 \
 \ ******************************************************************************
 
@@ -126,7 +127,6 @@ ENDIF
                         \ screen (the mode 4 part) has a white border that
                         \ clashes with columns 0 and 32, text is only shown
                         \ in columns 1-31
-
 
 .YC
 

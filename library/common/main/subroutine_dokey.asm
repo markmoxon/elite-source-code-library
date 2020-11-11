@@ -73,7 +73,7 @@ ELIF _6502SP_VERSION
  LDA auto
  BEQ DK15
 
-.^auton
+.auton
 
  JSR ZINF
  LDA #96

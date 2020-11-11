@@ -69,7 +69,7 @@
 
  AND #%01111111         \ Set A to the sign byte with the sign cleared
 
-.^MA9
+.MA9
 
  RTS                    \ Return from the subroutine
 

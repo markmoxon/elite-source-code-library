@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Stardust
 \    Summary: Process the stardust for the left or right view
+\  Deep dive: Stardust in the side views
 \
 \ ------------------------------------------------------------------------------
 \

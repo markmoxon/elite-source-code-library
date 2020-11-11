@@ -26,7 +26,6 @@
 \
 \ ******************************************************************************
 
-
 .LO2
 
  RTS                    \ Return from the subroutine
@@ -44,7 +43,7 @@
  JMP NWSTARS            \ Set up a new stardust field and return from the
                         \ subroutine using a tail call
 
-.^LOOK1
+.LOOK1
 
  LDA #0                 \ Set A = 0, the type number of a space view
 

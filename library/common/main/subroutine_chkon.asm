@@ -66,7 +66,6 @@
                         \
                         \   (A P+1) = K4(1 0) + K
 
-
  BMI PL21               \ If A has bit 7 set then we overflowed, so jump to
                         \ PL21 to set the C flag and return from the subroutine
 

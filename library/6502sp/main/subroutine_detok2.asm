@@ -37,7 +37,7 @@
  TAX
  LDA TKN2+1,X  \letter pair
 
-.^DTS
+.DTS
 
  CMP #&41
  BCC DT9

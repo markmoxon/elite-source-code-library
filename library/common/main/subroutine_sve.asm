@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Save and load
 \    Summary: Save the commander file
+\  Deep dive: The competition code
 \
 \ ******************************************************************************
 

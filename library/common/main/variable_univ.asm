@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Universe
 \    Summary: Table of pointers to the local universe's ship data blocks
+\  Deep dive: The local bubble of universe
 \
 \ ------------------------------------------------------------------------------
 \

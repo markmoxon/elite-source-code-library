@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Screen mode
 \    Summary: The main screen-mode interrupt handler (IRQ1V points here)
+\  Deep dive: The split-screen mode
 \
 \ ------------------------------------------------------------------------------
 \
@@ -13,7 +14,6 @@
 \ IRQ1V is set to point to IRQ1 by elite-loader.asm.
 \
 \ ******************************************************************************
-
 
 IF _CASSETTE_VERSION
 
@@ -80,7 +80,7 @@ IF _CASSETTE_VERSION
 
 ENDIF
 
-.^IRQ1
+.IRQ1
 
  TYA                    \ Store Y on the stack
  PHA
@@ -211,7 +211,7 @@ ELIF _6502SP_VERSION
  LDA #&18
  STA &FE20
 
-.^VNT3
+.VNT3
 
  LDA TVT3,Y
  STA &FE21
@@ -231,7 +231,5 @@ ELIF _6502SP_VERSION
                         \ passed on to the next interrupt handler, but instead
                         \ the interrupt terminates here
 
-
 ENDIF
-
 

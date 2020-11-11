@@ -28,7 +28,7 @@
  LDA #10
  JSR POSWRCH
 
-.^sent
+.sent
 
  LDA #3
  JSR NVOSWRCH

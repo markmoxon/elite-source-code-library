@@ -29,7 +29,6 @@ IF _CASSETTE_VERSION
  LDX #0                 \ set X = 0
  LDA (INF),Y
 
-
 ELIF _6502SP_VERSION
 
  LDX #0                 \ Fetch byte #8 (z_sign) for the ship attacking us, and

@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Moving
 \    Summary: Move current ship: Rotate ship's location by our pitch and roll
+\  Deep dive: Rotating the universe
 \
 \ ------------------------------------------------------------------------------
 \

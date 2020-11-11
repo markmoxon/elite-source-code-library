@@ -52,7 +52,7 @@
  LDA #10
  BNE BRPS
 
-.^BRIS
+.BRIS
 
  LDA #216
  JSR DETOK

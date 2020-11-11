@@ -32,7 +32,6 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-
  LDA QQ11               \ If the current view is not a space view, jump to ee5
  BNE ee5                \ to skip the following
 
@@ -99,7 +98,6 @@ ELIF _6502SP_VERSION
  BNE RTS111             \ subroutine (as RTS111 contains an RTS)
 
 ENDIF
-
 
  JSR TTX66              \ Otherwise clear the screen and draw a white border
 

@@ -90,7 +90,6 @@
  JSR FMLTU              \ Set T = A * Q / 256
  STA T                  \       = |sidev_x| * x_lo / 256
 
-
  LDA XX15+1             \ Set S to the sign of x_sign * sidev_x
  EOR XX16+1,X
  STA S

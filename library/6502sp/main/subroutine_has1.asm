@@ -60,7 +60,7 @@
  JSR TIDY
  JMP LL9
 
-.^UNWISE
+.UNWISE
 
 .HA1
 

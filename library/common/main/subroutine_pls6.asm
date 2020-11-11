@@ -74,7 +74,7 @@
  ADC #0                 \   X = ~X
  TAX
 
-.^PL44
+.PL44
 
  CLC                    \ Clear the C flag to indicate success
 

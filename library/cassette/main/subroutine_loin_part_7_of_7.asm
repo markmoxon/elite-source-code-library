@@ -78,7 +78,7 @@
 
  LDY YSAV               \ Restore Y from YSAV, so that it's preserved
 
-.^HL6
+.HL6
 
  RTS                    \ Return from the subroutine
 

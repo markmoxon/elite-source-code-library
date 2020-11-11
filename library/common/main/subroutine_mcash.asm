@@ -41,7 +41,7 @@
                         \ a failed LCASH call, the C flag correctly indicates
                         \ failure
 
-.^TT113
+.TT113
 
  RTS                    \ Return from the subroutine
 

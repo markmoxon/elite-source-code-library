@@ -11,7 +11,6 @@
 
 IF _CASSETTE_VERSION
 
-
  LDA #4                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 4 (Sell
                         \ Cargo screen)

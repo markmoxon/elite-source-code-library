@@ -8,6 +8,7 @@ ENDIF
 \       Type: Subroutine
 \   Category: Drawing circles
 \    Summary: Draw a circle (for the planet or chart)
+\  Deep dive: Drawing circles
 \
 \ ------------------------------------------------------------------------------
 \

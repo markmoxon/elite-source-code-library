@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Tactics
 \    Summary: Apply tactics: Process missiles, both enemy missiles and our own
+\  Deep dive: Program flow of the tactics routine
 \
 \ ------------------------------------------------------------------------------
 \
@@ -28,7 +29,6 @@
 \     and the ship, potentially damaging us if we are nearby
 \
 \ ******************************************************************************
-
 
 .TA34
 
@@ -92,7 +92,6 @@ IF _CASSETTE_VERSION
 
                         \ So K3 now contains the vector from the target ship to
                         \ the missile
-
 
 ELIF _6502SP_VERSION
 

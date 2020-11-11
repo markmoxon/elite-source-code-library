@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Moving
 \    Summary: Apply a 3.6 degree pitch or roll to an orientation vector
+\  Deep dive: Pitching and rolling by a fixed angle
 \
 \ ------------------------------------------------------------------------------
 \

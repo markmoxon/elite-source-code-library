@@ -19,7 +19,7 @@
 
 IF _6502SP_VERSION
 
-.^wW2
+.wW2
 
 ENDIF
 

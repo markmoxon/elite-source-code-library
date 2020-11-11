@@ -22,7 +22,6 @@
 \
 \ ******************************************************************************
 
-
 IF _CASSETTE_VERSION
 
  LDY #2                 \ Set Y to 2 vertical syncs
@@ -31,14 +30,14 @@ IF _CASSETTE_VERSION
                         \ &2C &A0 &08, or BIT &08A0, which does nothing bar
                         \ affecting the flags
 
-.^DEL8
+.DEL8
 
  LDY #8                 \ Set Y to 8 vertical syncs and fall through into DELAY
                         \ to wait for this long
 
 ENDIF
 
-.^DELAY
+.DELAY
 
  JSR WSCAN              \ Call WSCAN to wait for the vertical sync, so the whole
                         \ screen gets drawn

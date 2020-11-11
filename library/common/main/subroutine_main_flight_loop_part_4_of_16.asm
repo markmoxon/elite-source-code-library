@@ -34,7 +34,7 @@
                         \ our local bubble of universe, so set a counter in X,
                         \ starting from 0, to refer to each ship slot in turn
 
-.^MAL1
+.MAL1
 
  STX XSAV               \ Store the current slot number in XSAV
 

@@ -88,7 +88,7 @@ ELIF _6502SP_VERSION
  RTS \< = Ian = >
  JSR hm
 
-.^TTX111
+.TTX111
 
  LDA QQ8
  ORA QQ8+1

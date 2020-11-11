@@ -18,6 +18,6 @@
  LDA #0
  TAY
 
-.^SC5
+.SC5
 
  RTS

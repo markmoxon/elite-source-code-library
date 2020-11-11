@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing ships
 \    Summary: Draw ship: Check if ship is exploding, check if ship is in front
+\  Deep dive: Drawing ships
 \
 \ ------------------------------------------------------------------------------
 \
@@ -41,13 +42,12 @@
 \
 \ ******************************************************************************
 
-
 .LL25
 
  JMP PLANET             \ Jump to the PLANET routine, returning from the
                         \ subroutine using a tail call
 
-.^LL9
+.LL9
 
 IF _CASSETTE_VERSION
 
@@ -162,7 +162,7 @@ ENDIF
                         \ will remove it from the screen, returning from the
                         \ subroutine using a tail call
 
-.^EE51
+.EE51
 
  LDA #%00001000         \ If bit 3 of the ship's byte #31 is clear, then there
  BIT XX1+31             \ is already nothing being shown for this ship, so

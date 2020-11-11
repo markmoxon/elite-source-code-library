@@ -16,13 +16,12 @@
 \
 \ ******************************************************************************
 
-
  DEX                    \ Increment the shield value so that it doesn't go past
                         \ a maximum of 255
 
  RTS                    \ Return from the subroutine
 
-.^SHD
+.SHD
 
  INX                    \ Increment the shield value
 

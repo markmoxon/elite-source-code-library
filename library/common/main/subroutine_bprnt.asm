@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Text
 \    Summary: Print a 32-bit number, left-padded to n digits, and optional point
+\  Deep dive: Printing decimal numbers
 \
 \ ------------------------------------------------------------------------------
 \

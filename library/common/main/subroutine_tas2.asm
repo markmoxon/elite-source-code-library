@@ -81,7 +81,7 @@
                         \ 1, as otherwise bit 7 of A would have been a 1 and we
                         \ would have taken the BCS above)
 
-.^TA2
+.TA2
 
  LDA K3+1               \ Fetch the high byte of the x-coordinate from our left-
  LSR A                  \ shifted K3, shift it right to clear bit 7, stick the

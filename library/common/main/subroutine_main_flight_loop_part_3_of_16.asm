@@ -161,7 +161,6 @@ IF _CASSETTE_VERSION
  AND ESCP               \ fitted, keep going, otherwise skip the next
  BEQ P%+5               \ instruction
 
-
  JMP ESCAPE             \ The "launch escape pod" button is being pressed and
                         \ we have an escape pod fitted, so jump to ESCAPE to
                         \ launch it, and exit the main flight loop using a tail

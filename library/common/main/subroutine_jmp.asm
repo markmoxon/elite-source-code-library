@@ -25,7 +25,7 @@
  LDA QQ10               \ Set the current system's galactic y-coordinate to the
  STA QQ1                \ y-coordinate of the selected system
 
-.^hy5
+.hy5
 
  RTS                    \ Return from the subroutine
 

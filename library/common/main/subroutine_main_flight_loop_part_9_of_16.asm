@@ -5,6 +5,7 @@
 \   Category: Main loop
 \    Summary: For each nearby ship: If it is a space station, check whether we
 \             are successfully docking with it
+\  Deep dive: Docking checks
 \
 \ ------------------------------------------------------------------------------
 \
@@ -71,7 +72,7 @@ ENDIF
  CMP #80
  BCC MA62
 
-.^GOIN
+.GOIN
 
                         \ If we arrive here, either the docking computer has
                         \ been activated, or we just docked successfully

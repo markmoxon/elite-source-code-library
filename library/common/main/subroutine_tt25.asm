@@ -87,7 +87,7 @@ ENDIF
                         \   QQ3 = 1 or 6 prints token 11 ("AVERAGE ")
                         \   QQ3 = 2 or 7 prints token 12 ("POOR ")
 
-.^TT72
+.TT72
 
  LDA QQ3                \ Now to work out the type of economy, which is
  LSR A                  \ determined by bit 2 of QQ3, as follows:

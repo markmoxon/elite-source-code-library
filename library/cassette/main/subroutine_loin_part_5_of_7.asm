@@ -54,7 +54,6 @@
  LSR A                  \ that will contain our horizontal line
  LSR A
 
-
  ORA #&60               \ As A < 32, this effectively adds &60 to A, which gives
                         \ us the screen address of the character row (as each
                         \ character row takes up 256 bytes, and the first

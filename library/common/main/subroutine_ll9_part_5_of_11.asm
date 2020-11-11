@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing ships
 \    Summary: Draw ship: Calculate the visibility of each of the ship's faces
+\  Deep dive: Back-face culling
 \
 \ ******************************************************************************
 

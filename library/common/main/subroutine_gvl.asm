@@ -95,7 +95,7 @@
  CMP #63                \ If A < 63, jump back up to hy9 to set the availability
  BCC hy9                \ for the next market item
 
-.^hyR
+.hyR
 
  RTS                    \ Return from the subroutine
 

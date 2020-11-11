@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Dashboard
 \    Summary: Update a bar-based indicator on the dashboard
+\  Deep dive: The dashboard indicators
 \
 \ ------------------------------------------------------------------------------
 \
@@ -52,7 +53,7 @@
 
  LSR A                  \ If we call DIL-1, we set A = A / 2, so A is 0-15
 
-.^DIL
+.DIL
 
                         \ If we call DIL, we leave A alone, so A is 0-15
 

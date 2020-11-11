@@ -39,12 +39,11 @@
 \
 \ ******************************************************************************
 
-
-.^m
+.m
  LDA #0                 \ Set A = 0 and fall through into MAS2 to calculate the
                         \ OR of the three bytes at K%+2+Y, K%+5+Y and K%+8+Y
 
-.^MAS2
+.MAS2
 
  ORA K%+2,Y             \ Set A = A OR x_sign OR y_sign OR z_sign
  ORA K%+5,Y

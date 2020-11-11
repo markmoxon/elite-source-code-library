@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Drawing ships
 \    Summary: Ship blueprints lookup table
+\  Deep dive: Ship blueprints
 \
 \ ******************************************************************************
 

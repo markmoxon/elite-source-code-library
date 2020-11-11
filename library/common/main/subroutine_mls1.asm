@@ -31,7 +31,7 @@
  LDX ALP1               \ Set P to the roll angle alpha magnitude in ALP1
  STX P                  \ (0-31), so now we calculate P * A
 
-.^MULTS
+.MULTS
 
  TAX                    \ Set X = A, so now we can calculate P * X instead of
                         \ P * A to get our result, and we can use the algorithm
@@ -68,7 +68,6 @@
                         \   A = A + T1 + C
                         \     = A + X - 1 + 1
                         \     = A + X
-
 
  ROR A                  \ Shift A right to catch the next digit of our result,
                         \ which the next ROR sticks into the left end of P while

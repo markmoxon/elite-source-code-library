@@ -112,7 +112,6 @@ IF _CASSETTE_VERSION
  BNE P%+5               \ remove the sun from the screen, as we can't have both
  JSR WPLS               \ the sun and the space station at the same time
 
-
 ELIF _6502SP_VERSION
 
  JSR WPLS

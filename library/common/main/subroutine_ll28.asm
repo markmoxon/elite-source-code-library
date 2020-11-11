@@ -89,7 +89,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-.^LL31
+.LL31
 
  ASL A                  \ Shift A to the left
 

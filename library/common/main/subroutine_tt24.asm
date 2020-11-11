@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Universe
 \    Summary: Calculate system data from the system seeds
+\  Deep dive: Generating system data
 \
 \ ------------------------------------------------------------------------------
 \

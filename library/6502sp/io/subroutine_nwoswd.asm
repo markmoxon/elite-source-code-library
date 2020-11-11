@@ -27,7 +27,7 @@
  LDX OSSC
  LDY OSSC+1
 
-.^SAFE
+.SAFE
 
  RTS
 

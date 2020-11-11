@@ -196,7 +196,7 @@
 
  JMP LL75               \ Loop back to LL75 to process the next edge
 
-.^LL81
+.LL81
 
                         \ We have finished adding lines to the ship line heap,
                         \ so now we need to set the first byte of the heap to

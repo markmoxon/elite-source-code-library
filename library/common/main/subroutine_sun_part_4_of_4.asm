@@ -58,7 +58,7 @@ IF _6502SP_VERSION
 
 ENDIF
 
-.^RTS2
+.RTS2
 
  RTS                    \ Return from the subroutine
 

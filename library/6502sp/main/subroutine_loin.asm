@@ -23,7 +23,7 @@
  LDY T1
  RTS
 
-.^LBFL
+.LBFL
 
  LDY LBUP
  BEQ LBZE2

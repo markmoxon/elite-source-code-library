@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Market
 \    Summary: Print the name, price and availability of a market item
+\  Deep dive: Market item prices and availability
 \
 \ ------------------------------------------------------------------------------
 \
@@ -22,7 +23,6 @@
 \
 \ ******************************************************************************
 
-
 IF _6502SP_VERSION
 
 .TT151q
@@ -32,7 +32,7 @@ IF _6502SP_VERSION
 
 ENDIF
 
-.^TT151
+.TT151
 
  PHA                    \ Store the item number on the stack and in QQ14+4
  STA QQ19+4

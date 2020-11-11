@@ -23,7 +23,7 @@
  JSR DFAULT
  JSR SVE
 
-.^QU5
+.QU5
 
  JSR DFAULT
  JSR msblob

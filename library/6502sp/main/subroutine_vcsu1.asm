@@ -8,7 +8,7 @@
  STA V
  LDA #((K%+NI%)DIV256)
 
-.^VCSUB
+.VCSUB
 
  STA V+1
  LDY #2

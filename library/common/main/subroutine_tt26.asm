@@ -412,7 +412,7 @@ ENDIF
  JMP RR4                \ And restore the registers and return from the
                         \ subroutine
 
-.^RR3
+.RR3
 
 IF _CASSETTE_VERSION
 
@@ -446,7 +446,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-.^RREN
+.RREN
 
  STA SC+1               \ Store the page number of the destination screen
                         \ location in SC+1, so SC now points to the full screen
@@ -519,7 +519,7 @@ ENDIF
 
  BPL RRL1               \ Loop back for the next byte to print to the screen
 
-.^RR4
+.RR4
 
 IF _CASSETTE_VERSION
 
@@ -538,7 +538,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-.^rT9
+.rT9
 
  RTS                    \ Return from the subroutine
 

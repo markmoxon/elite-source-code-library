@@ -56,7 +56,6 @@
  STA QQ19+1             \ so this sets QQ19+1 to the screen pixel x-coordinate
                         \ of the crosshairs
 
-
  LDA #8                 \ Set QQ19+2 to 8 denote crosshairs of size 8
  STA QQ19+2
 

@@ -11,7 +11,6 @@
 \
 \ ******************************************************************************
 
-
 .TT126
 
  LDA #104               \ Set QQ19 = 104, for the x-coordinate of the centre of
@@ -34,7 +33,7 @@
                         \ and radius K that reflects the current fuel levels,
                         \ returning from the subroutine using a tail call
 
-.^TT14
+.TT14
 
 IF _6502SP_VERSION
 

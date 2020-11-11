@@ -336,4 +336,3 @@ ENDIF
                         \ that needs shuffling down (this BEQ is effectively a
                         \ JMP as A will always be zero)
 
-

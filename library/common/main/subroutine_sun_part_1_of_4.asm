@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing suns
 \    Summary: Draw the sun: Set up all the variables needed
+\  Deep dive: Drawing the sun
 \
 \ ------------------------------------------------------------------------------
 \
@@ -29,7 +30,6 @@
 \   RTS2                Contains an RTS
 \
 \ ******************************************************************************
-
 
  JMP WPLS               \ Jump to WPLS to remove the old sun from the screen. We
                         \ only get here via the BCS just after the SUN entry
@@ -68,7 +68,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-.^SUN
+.SUN
 
  LDA #1                 \ Set LSX = 1 to indicate the sun line heap is about to
  STA LSX                \ be filled up

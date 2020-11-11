@@ -169,7 +169,6 @@
                         \ print when we ran out of space (this BNE is
                         \ effectively a JMP as A will never be zero)
 
-
 .RR3
 
  ORA #&60               \ Add &60 to YC, giving us the page number that we want
@@ -202,7 +201,7 @@
  TAY
  LDA K3
 
-.^FOOL
+.FOOL
 
  RTS                    \ Return from the subroutine
 

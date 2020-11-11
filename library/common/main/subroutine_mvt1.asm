@@ -41,10 +41,9 @@
 \
 \ ******************************************************************************
 
-
  AND #%10000000         \ Clear bits 0-6 of A
 
-.^MVT1
+.MVT1
 
  ASL A                  \ Set the C flag to the sign bit of the delta, leaving
                         \ delta_hi << 1 in A

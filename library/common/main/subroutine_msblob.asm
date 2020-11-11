@@ -40,7 +40,6 @@ IF _CASSETTE_VERSION
  LDY #&EE               \ Draw the missile indicator at position X in green/cyan
  JSR MSBAR
 
-
 ELIF _6502SP_VERSION
 
  LDY #GREEN2            \ Draw the missile indicator at position X in green/cyan

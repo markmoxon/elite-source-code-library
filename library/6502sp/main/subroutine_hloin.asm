@@ -20,7 +20,7 @@
  LDY T1
  RTS
 
-.^HBFL
+.HBFL
 
  LDA HBUP
  STA HBUF
@@ -38,7 +38,7 @@
  LDY T1
  RTS
 
-.^HBZE
+.HBZE
 
  LDA #2
  STA HBUP

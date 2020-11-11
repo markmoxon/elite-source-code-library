@@ -40,7 +40,7 @@
  ADC #32                \ Add 32 to the character, to convert it from upper to
                         \ to lower case
 
-.^TT44
+.TT44
 
  JMP TT26               \ Print the character in A
 

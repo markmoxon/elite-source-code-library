@@ -8,7 +8,7 @@
  PHA
  LDA #SETYC
 
-.^label
+.label
 
  JSR OSWRCH
  PLA

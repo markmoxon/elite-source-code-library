@@ -45,7 +45,6 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
-
  LDX #3                 \ Set up a counter in X so we can zero the four bytes at
                         \ XX15, so we can then calculate each of the four energy
                         \ banks' values before drawing them later

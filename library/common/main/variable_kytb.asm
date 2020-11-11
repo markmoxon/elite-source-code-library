@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Keyboard
 \    Summary: Lookup table for in-flight keyboard controls
+\  Deep dive: The key logger
 \
 \ ------------------------------------------------------------------------------
 \

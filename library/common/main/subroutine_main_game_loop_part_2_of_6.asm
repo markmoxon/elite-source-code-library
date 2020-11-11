@@ -24,7 +24,7 @@
 \
 \ ******************************************************************************
 
-.^TT100
+.TT100
 
  JSR M%                 \ Call M% to iterate through the main flight loop
 
@@ -41,7 +41,7 @@
  INC DLY                \ If we get here, DLY is negative, so we have gone too
                         \ and need to increment DLY back to 0
 
-.^me3
+.me3
 
  DEC MCNT               \ Decrement the main loop counter in MCNT
 

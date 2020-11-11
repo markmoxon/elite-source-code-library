@@ -49,7 +49,7 @@
  LDX #1                 \ We have an underflow, so set X to the minimum possible
                         \ value, 1
 
-.^RE3
+.RE3
 
  BPL RE2+2              \ If X has bit 7 clear (i.e. the result < 128), then
                         \ jump to RE2+2 above to return the result as is,
@@ -63,7 +63,7 @@
 
 IF _6502SP_VERSION
 
-.^djd1
+.djd1
 
 ENDIF
 

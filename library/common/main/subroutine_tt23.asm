@@ -18,7 +18,6 @@ IF _CASSETTE_VERSION
  LDA #7                 \ Move the text cursor to column 7
  STA XC
 
-
 ELIF _6502SP_VERSION
 
  LDA #16

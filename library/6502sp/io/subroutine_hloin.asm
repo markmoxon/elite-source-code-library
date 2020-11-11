@@ -26,7 +26,7 @@
  TAY
  LDA orange,Y
 
-.^HLOIN3
+.HLOIN3
 
  STA S
  CPX X2

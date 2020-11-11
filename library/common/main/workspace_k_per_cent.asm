@@ -9,6 +9,7 @@ ELIF _6502SP_VERSION
 ENDIF
 \   Category: Workspaces
 \    Summary: Ship data blocks and ship line heaps
+\  Deep dive: Ship data blocks
 \
 \ ------------------------------------------------------------------------------
 \

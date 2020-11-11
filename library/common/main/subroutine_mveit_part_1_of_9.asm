@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Moving
 \    Summary: Move current ship: Tidy the orientation vectors
+\  Deep dive: Orientation vectors
 \
 \ ------------------------------------------------------------------------------
 \

@@ -38,10 +38,9 @@
 \
 \ ******************************************************************************
 
-
  STX Q                  \ Store X in Q
 
-.^MLTU2
+.MLTU2
 
  EOR #%11111111         \ Flip the bits in A and rotate right, storing the
  LSR A                  \ result in P+1, so we now calculate (P+1 P) * Q

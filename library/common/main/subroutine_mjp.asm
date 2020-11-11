@@ -23,14 +23,13 @@
 \
 \ ******************************************************************************
 
-
-.^ptg
+.ptg
 
  LSR COK                \ Set bit 0 of the competition flags in COK, so that the
  SEC                    \ copmpetition code will include the fact that we have
  ROL COK                \ manually forced a mis-jump into witchspace
 
-.^MJP
+.MJP
 
 IF _CASSETTE_VERSION
 
@@ -83,7 +82,7 @@ ENDIF
 
 IF _6502SP_VERSION
 
-.^RTS111
+.RTS111
 
 ENDIF
 

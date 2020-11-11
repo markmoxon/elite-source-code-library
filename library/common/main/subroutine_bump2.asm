@@ -49,7 +49,7 @@
  LDX #255               \ We have an overflow, so set X to the maximum possible
                         \ value, 255
 
-.^RE2
+.RE2
 
 IF _CASSETTE_VERSION
 

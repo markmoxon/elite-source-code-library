@@ -12,7 +12,7 @@
  JSR MCASH
  LDA #15
 
-.^BRPS
+.BRPS
 
  BNE BRP
 

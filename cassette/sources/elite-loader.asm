@@ -10,7 +10,8 @@
 \ The commentary is copyright Mark Moxon, and any misunderstandings or mistakes
 \ in the documentation are entirely my fault
 \
-\ The terminology used in this commentary is explained below
+\ The terminology and notations used in this commentary are explained at
+\ https://www.bbcelite.com/about_site/terminology_used_in_this_commentary.html
 \
 \ ------------------------------------------------------------------------------
 \

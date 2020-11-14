@@ -7,13 +7,12 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ Commander checksum byte, see elite-checksum.py for more details.
+\ Commander checksum byte. If the default commander is changed, a new checksum
+\ will be calculated and inserted by the elite-checksum.py script.
 \
 \ ******************************************************************************
 
 .CHK
 
- EQUB CH%
-
-PRINT "CH% = ", ~CH%
+ EQUB &03               \ The checksum value for the default commander
 

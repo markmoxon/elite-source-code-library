@@ -70,11 +70,7 @@ ENDIF
 
  EQUB POW+(128 AND Q%)  \ LASER = Front laser
 
-IF Q% OR _FIX_REAR_LASER
  EQUB (POW+128) AND Q%  \ LASER+1 = Rear laser, as in ELITEB source
-ELSE
- EQUB POW               \ LASER+1 = Rear laser, as in extracted ELTB binary
-ENDIF
 
  EQUB 0                 \ LASER+2 = Left laser
 

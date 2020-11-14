@@ -54,6 +54,8 @@ NOSH = 12               \ The maximum number of ships in our local bubble of
                         \ universe (counting from 0, so there are actually 13
                         \ ship slots)
 
+NTY = 13                \ The number of different ship types
+
 COPS = 2                \ Ship type for a Viper
 MAM = 3                 \ Ship type for a Mamba
 THG = 6                 \ Ship type for a Thargoid

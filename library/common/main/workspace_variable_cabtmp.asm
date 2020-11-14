@@ -15,3 +15,4 @@ ENDIF
                         \ MANY+0 would contain the number of ships of type 0,
                         \ but as there is no ship type 0 (they start at 1), MANY
                         \ is unused
+

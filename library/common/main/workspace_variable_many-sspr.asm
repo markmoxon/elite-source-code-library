@@ -1,9 +1,3 @@
-IF _CASSETTE_VERSION
- SHIPS = 14
-ELIF _6502SP_VERSION
- SHIPS = NTY+1
-ENDIF
-
 .MANY
 
  SKIP SST               \ The number of ships of each type in the local bubble
@@ -18,7 +12,7 @@ ENDIF
 
 .SSPR
 
- SKIP SHIPS - SST       \ "Space station present" flag
+ SKIP NTY + 1 - SST     \ "Space station present" flag
                         \
                         \   * Non-zero if we are inside the space station's safe
                         \     zone
@@ -29,3 +23,4 @@ ENDIF
                         \ MANY+SST is a count of how many space stations there
                         \ are in our local bubble, which is the same as saying
                         \ "space station present"
+

@@ -44,7 +44,7 @@ ENDIF
 
 IF _CASSETTE_VERSION
 
- INY                    \ Increment Y to containing &C which we use next
+ INY                    \ Increment Y to &C, which we use next
 
 ENDIF
 

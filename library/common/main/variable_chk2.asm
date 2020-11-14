@@ -7,18 +7,14 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ Second checksum byte, see elite-checksum.py for more details.
+\ Second commander checksum byte. If the default commander is changed, a new
+\ checksum will be calculated and inserted by the elite-checksum.py script.
 \
 \ ******************************************************************************
 
-IF NOT(_FIX_REAR_LASER)
- CH% = &92              \ The correct value for the released game
-ELSE
- CH% = &3               \ The figure in the ELTB binary on the source disc
-ENDIF
-
 .CHK2
 
- EQUB CH% EOR &A9       \ Commander checksum byte, EOR'd with &A9 to make it
-                        \ harder to tamper with the checksum byte
+ EQUB &03 EOR &A9       \ The checksum value for the default commander, EOR'd
+                        \ with &A9 to make it harder to tamper with the checksum
+                        \ byte
 

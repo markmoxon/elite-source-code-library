@@ -18,18 +18,23 @@
 
 .NLIN2
 
- STA Y1                 \ Set Y1 = A
+IF _CASSETTE_VERSION
 
-IF _6502SP_VERSION
+ STA Y1                 \ Set (X1, Y1) = (2, A)
+ LDX #2
+ STX X1
 
+ELIF _6502SP_VERSION
+
+ STA Y1
  STA Y2
  LDA #YELLOW
  JSR DOCOL
 
-ENDIF
-
  LDX #2                 \ Set X1 = 2, so (X1, Y1) = (2, A)
  STX X1
+
+ENDIF
 
  LDX #254               \ Set X2 = 254
  STX X2

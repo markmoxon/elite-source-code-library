@@ -268,3 +268,4 @@
 NT% = SVC + 2 - TP      \ This sets the variable NT% to the size of the current
                         \ commander data block, which starts at TP and ends at
                         \ SVC+2 (inclusive)
+

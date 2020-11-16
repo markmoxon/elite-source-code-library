@@ -22,7 +22,7 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- .dockEd
+.dockEd
 
 ENDIF
 

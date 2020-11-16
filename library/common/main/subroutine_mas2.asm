@@ -40,6 +40,7 @@
 \ ******************************************************************************
 
 .m
+
  LDA #0                 \ Set A = 0 and fall through into MAS2 to calculate the
                         \ OR of the three bytes at K%+2+Y, K%+5+Y and K%+8+Y
 

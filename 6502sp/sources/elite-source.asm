@@ -211,8 +211,8 @@ INCLUDE "library/6502sp/main/subroutine_whitetext.asm"
 INCLUDE "library/6502sp/main/subroutine_jmtb.asm"
 INCLUDE "library/6502sp/main/subroutine_tkn2.asm"
 INCLUDE "library/common/main/variable_qq16.asm"
-INCLUDE "library/6502sp/main/subroutine_shpcol.asm"
-INCLUDE "library/6502sp/main/subroutine_scacol.asm"
+INCLUDE "library/6502sp/main/variable_shpcol.asm"
+INCLUDE "library/6502sp/main/variable_scacol.asm"
 INCLUDE "library/common/main/workspace_variable_lsx2-lsy2.asm"
 
 \ ******************************************************************************

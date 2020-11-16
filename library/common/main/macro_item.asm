@@ -4,6 +4,7 @@
 \       Type: Macro
 \   Category: Market
 \    Summary: Macro definition for the market prices table
+\  Deep dive: Market item prices and availability
 \
 \ ------------------------------------------------------------------------------
 \
@@ -11,8 +12,9 @@
 \
 \   ITEM price, factor, units, quantity, mask
 \
-\ It inserts an item into the market prices table at QQ23, with the following
-\ attributes:
+\ It inserts an item into the market prices table at QQ23. See the deep dive on
+\ "Market item prices and availability" for more information on how the market
+\ system works.
 \
 \ Arguments:
 \
@@ -29,11 +31,13 @@
 \ ******************************************************************************
 
 MACRO ITEM price, factor, units, quantity, mask
+
   IF factor < 0
     s = 1 << 7
   ELSE
     s = 0
   ENDIF
+
   IF units = 't'
     u = 0
   ELIF units = 'k'
@@ -41,10 +45,13 @@ MACRO ITEM price, factor, units, quantity, mask
   ELSE
     u = 1 << 6
   ENDIF
+
   e = ABS(factor)
+
   EQUB price
   EQUB s + u + e
   EQUB quantity
   EQUB mask
+
 ENDMACRO
 

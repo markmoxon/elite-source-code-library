@@ -4,6 +4,7 @@
 \       Type: Macro
 \   Category: Text
 \    Summary: Macro definition for recursive tokens in the recursive token table
+\  Deep dive: Printing text tokens
 \
 \ ------------------------------------------------------------------------------
 \
@@ -20,9 +21,15 @@
 \ See the deep dive on "Printing text tokens" for details on how recursive
 \ tokens are stored in the recursive token table.
 \
+\ Arguments:
+\
+\   n                   The number of the recursive token to insert into the
+\                       table, in the range 0 to 145
+\
 \ ******************************************************************************
 
 MACRO RTOK n
+
   IF n >= 0 AND n <= 95
     t = n + 160
   ELIF n >= 128
@@ -30,6 +37,8 @@ MACRO RTOK n
   ELSE
     t = n
   ENDIF
+
   EQUB t EOR 35
+
 ENDMACRO
 

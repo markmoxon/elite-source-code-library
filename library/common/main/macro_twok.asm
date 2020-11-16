@@ -4,6 +4,7 @@
 \       Type: Macro
 \   Category: Text
 \    Summary: Macro definition for two-letter tokens in the token table
+\  Deep dive: Printing text tokens
 \
 \ ------------------------------------------------------------------------------
 \
@@ -14,9 +15,18 @@
 \ See the deep dive on "Printing text tokens" for details on how two-letter
 \ tokens are stored in the recursive token table.
 \
+\ Arguments:
+\
+\   'x'                 The first letter of the two-letter token to insert into
+\                       the table
+\
+\   'y'                 The second letter of the two-letter token to insert into
+\                       the table
+\
 \ ******************************************************************************
 
 MACRO TWOK t, k
+
   IF t = 'A' AND k = 'L' : EQUB 128 EOR 35 : ENDIF
   IF t = 'L' AND k = 'E' : EQUB 129 EOR 35 : ENDIF
   IF t = 'X' AND k = 'E' : EQUB 130 EOR 35 : ENDIF
@@ -49,5 +59,6 @@ MACRO TWOK t, k
   IF t = 'I' AND k = 'S' : EQUB 157 EOR 35 : ENDIF
   IF t = 'R' AND k = 'I' : EQUB 158 EOR 35 : ENDIF
   IF t = 'O' AND k = 'N' : EQUB 159 EOR 35 : ENDIF
+
 ENDMACRO
 

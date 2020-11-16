@@ -3,6 +3,7 @@
 \ ******************************************************************************
 
 MACRO MVE S%, D%, PA%
+
   LDA #(S%MOD256)
   STA Z1
   LDA #(S%DIV256)
@@ -13,5 +14,6 @@ MACRO MVE S%, D%, PA%
   STA Z2+1
   LDX #PA%
   JSR MVBL
+
 ENDMACRO
 

@@ -26,6 +26,7 @@
 \ ******************************************************************************
 
 MACRO DKS4
+
  LDX #3                 \ Set X to 3, so it's ready to send to SHEILA once
                         \ interrupts have been disabled
 
@@ -58,4 +59,5 @@ MACRO DKS4
  STX SHEILA+&40         \ to %1011 to restart auto scan of keyboard
 
  CLI                    \ Allow interrupts again
+
 ENDMACRO

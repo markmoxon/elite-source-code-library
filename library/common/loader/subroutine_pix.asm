@@ -11,8 +11,13 @@
 \ before drawing, and then the routine uses the same approach as the PIXEL
 \ routine in the main game code, except it plots a single pixel from TWOS
 \ instead of a two pixel dash from TWOS2. This applies to the top part of the
-\ screen (the monochrome mode 4 portion). See the PIXEL routine in the main game
-\ code for more details.
+IF _CASSETTE_VERSION
+\ screen (the monochrome mode 4 space view).
+ELIF _6502SP_VERSION
+\ screen (the four-colour mode 1 space view).
+ENDIF
+\
+\ See the PIXEL routine in the main game code for more details.
 \
 \ Arguments:
 \
@@ -43,19 +48,21 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LSR A
+ LSR A                  \ Set ZP+1 = &40 + A >> 4
  LSR A
  LSR A
  ASL A
  ORA #&40
  STA ZP+1
- TXA 
- EOR #128
- AND #&FC
+
+ TXA                    \ Set (C ZP) = (X >> 2) * 8
+ EOR #%10000000         \
+ AND #%11111100         \ i.e. the C flag contains bit 8 of the calculation
  ASL A
  STA ZP
- BCC P%+4
- INC ZP+1
+
+ BCC P%+4               \ If the C flag is set, i.e. bit 8 of the above
+ INC ZP+1               \ calculation was a 1, increment ZP+1
 
 ENDIF
 
@@ -75,8 +82,8 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA TWOS,X
- STA (ZP),Y
+ LDA TWOS,X             \ Otherwise fetch a pixel from TWOS and poke it into
+ STA (ZP),Y             \ ZP+Y
 
 ENDIF
 

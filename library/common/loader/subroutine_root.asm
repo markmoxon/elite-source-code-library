@@ -14,7 +14,7 @@
 \ This routine is identical to LL5 in the main game code - it even has the same
 \ label names. The only difference is that LL5 calculates Q = SQRT(R Q), but
 \ apart from the variables used, the instructions are identical, so see the LL5
-\ routine in the main game code for more details.
+\ routine in the main game code for more details on the algorithm used here.
 \
 \ ******************************************************************************
 

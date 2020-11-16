@@ -48,8 +48,19 @@
 
 .PLL1
 
+IF _CASSETTE_VERSION
+
                         \ The following loop iterates CNT(1 0) times, i.e. &500
-                        \ or 1280 times
+                        \ or 1280 times, and draws the planet part of the
+                        \ loading screen's Saturn
+
+ELIF _6502SP_VERSION
+
+                        \ The following loop iterates CNT(1 0) times, i.e. &300
+                        \ or 768 times, and draws the planet part of the
+                        \ loading screen's Saturn
+
+ENDIF
 
  LDA VIA+4              \ Read the 6522 System VIA T1C-L timer 1 low-order
  STA RAND+1             \ counter, which increments 1000 times a second so this
@@ -138,7 +149,7 @@
 
  JSR PIX                \ Draw a pixel at screen coordinate (X, -A), i.e. at
                         \
-                        \ (ZP / 2, -A)
+                        \   (ZP / 2, -A)
                         \
                         \ where ZP = SQRT(128^2 - (r1^2 + r2^2))
                         \
@@ -173,6 +184,10 @@ IF _CASSETTE_VERSION
 
 ENDIF
 
+                        \ The following loop iterates CNT2(1 0) times, i.e. &1DD
+                        \ or 477 times, and draws the background stars on the
+                        \ loading screen
+
 .PLL2
 
  JSR DORND              \ Set A and X to random numbers, say A = r3
@@ -205,9 +220,9 @@ ENDIF
  JSR PIX                \ Draw a pixel at screen coordinate (X, -A), i.e. at
                         \ (r3, -r4), where (r3^2 + r4^2) / 256 >= 17
                         \
-                        \ Negating a random number from 0 to 255 gives the same
-                        \ thing, so this is the same as plotting at (x, y)
-                        \ where:
+                        \ Negating a random number from 0 to 255 still gives a
+                        \ random number from 0 to 255, so this is the same as
+                        \ plotting at (x, y) where:
                         \
                         \   x = random number from 0 to 255
                         \   y = random number from 0 to 255
@@ -237,6 +252,16 @@ IF _CASSETTE_VERSION
  STX BLN                \ BLN(1 0) = &03C6, which we will use in the IRQ1
                         \ handler (this has nothing to do with drawing Saturn,
                         \ it's all part of the copy protection)
+
+                        \ The following loop iterates CNT3(1 0) times, i.e. &500
+                        \ or 1280 times, and draws the rings around the loading
+                        \ screen's Saturn
+
+ELIF _6502SP_VERSION
+
+                        \ The following loop iterates CNT3(1 0) times, i.e. &333
+                        \ or 819 times, and draws the rings around the loading
+                        \ screen's Saturn
 
 ENDIF
 
@@ -285,8 +310,8 @@ ENDIF
                         \   %00000000 - %00011111  = 0-31
                         \   %11100000 - %11111111  = 224-255
                         \
-                        \ In terms of signed 8-bit integers, this is from -32 to
-                        \ 31. Let's call it r7
+                        \ In terms of signed 8-bit integers, this is a random
+                        \ number from -32 to 31. Let's call it r7
 
  ADC YY                 \ Set X = A + YY
  TAX                    \       = r7 + r6
@@ -306,8 +331,8 @@ ENDIF
  CMP #80                \ If A >= 80, jump down to PLC3 to skip to the next
  BCS PLC3               \ pixel
 
- CMP #32                \ If A < 32, jump down to PLC3 to skip to the next
- BCC PLC3               \ pixel
+ CMP #32                \ If A < 32, jump down to PLC3 to skip to the next pixel
+ BCC PLC3
 
  TYA                    \ Set A = Y + T
  ADC T                  \       = r7^2 / 256 + r6^2 / 256
@@ -329,9 +354,9 @@ ENDIF
                         \   X = (random -32 to 31) + r6
                         \   A = r6
                         \
-                        \ Negating a random number from 0 to 255 gives the same
-                        \ thing, so this is the same as plotting at (x, y)
-                        \ where:
+                        \ Negating a random number from 0 to 255 still gives a
+                        \ random number from 0 to 255, so this is the same as
+                        \ plotting at (x, y) where:
                         \
                         \   r5 = random number from 0 to 255
                         \   r6 = random number from 0 to 255

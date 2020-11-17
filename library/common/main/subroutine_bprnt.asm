@@ -3,7 +3,8 @@
 \       Name: BPRNT
 \       Type: Subroutine
 \   Category: Text
-\    Summary: Print a 32-bit number, left-padded to n digits, and optional point
+\    Summary: Print a 32-bit number, left-padded to a specific number of digits,
+\             with an optional decimal point
 \  Deep dive: Printing decimal numbers
 \
 \ ------------------------------------------------------------------------------
@@ -12,24 +13,27 @@
 \ left-padding with spaces for numbers with fewer digits (so lower numbers are
 \ right-aligned). Optionally include a decimal point.
 \
+\ See the deep dive on "Printing decimal numbers" for details of the algorithm
+\ used in this routine.
+\
 \ Arguments:
 \
 \   K(0 1 2 3)          The number to print, stored with the most significant
-\                       byte in K and the least significant in K+3 (big-endian,
-\                       which is not the same way that 6502 assembler stores
-\                       addresses)
+\                       byte in K and the least significant in K+3 (i.e. as a
+\                       big-endian number, which is the opposite way to how the
+\                       6502 assembler stores addresses, for example)
 \
 \   U                   The maximum number of digits to print, including the
 \                       decimal point (spaces will be used on the left to pad
 \                       out the result to this width, so the number is right-
-\                       aligned to this width). The maximum number of characters
-\                       including any decimal point must be 11 or less
+\                       aligned to this width). U must be 11 or less
 \
 \   C flag              If set, include a decimal point followed by one
 \                       fractional digit (i.e. show the number to 1 decimal
-\                       place). In this case, the number in K to K+3 contains
+\                       place). In this case, the number in K(0 1 2 3) contains
 \                       10 * the number we end up printing, so to print 123.4,
-\                       we would pass 1234 in K to K+3 and would set the C flag
+\                       we would pass 1234 in K(0 1 2 3) and would set the C
+\                       flag to include the decimal point
 \
 \ ******************************************************************************
 
@@ -37,7 +41,7 @@
 
  LDX #11                \ Set T to the maximum number of digits allowed (11
  STX T                  \ characters, which is the number of digits in 10
-                        \ billion); we will use this as a flag when printing
+                        \ billion). We will use this as a flag when printing
                         \ characters in TT37 below
 
  PHP                    \ Make a copy of the status register (in particular
@@ -64,13 +68,12 @@
  STA U                  \ number of digits minus the number of digits we want
  INC U                  \ to display, plus 1 (so this is the number of digits
                         \ we should skip before starting to print the number
-                        \ itself, and the plus 1 is there to ensure we at least
-                        \ print one digit)
+                        \ itself, and the plus 1 is there to ensure we print at
+                        \ least one digit)
 
  LDY #0                 \ In the main loop below, we use Y to count the number
                         \ of times we subtract 10 billion to get the leftmost
-                        \ digit, so set this to zero (see below TT36 for an
-                        \ of how this algorithm works)
+                        \ digit, so set this to zero
 
  STY S                  \ In the main loop below, we use location S as an
                         \ 8-bit overflow for the 32-bit calculations, so
@@ -82,8 +85,8 @@
 .TT35
 
                         \ This subroutine multiplies K(S 0 1 2 3) by 10 and
-                        \ stores the result back in K(S 0 1 2 3), using the
-                        \ (K * 2) + (K * 2 * 2 * 2) approach described above
+                        \ stores the result back in K(S 0 1 2 3), using the fact
+                        \ that K * 10 = (K * 2) + (K * 2 * 2 * 2)
 
  ASL K+3                \ Set K(S 0 1 2 3) = K(S 0 1 2 3) * 2 by rotating left
  ROL K+2
@@ -103,19 +106,18 @@
  STA XX15,X             \ XX15(0 1 2 3), so that XX15 will contain a copy of
                         \ K(0 1 2 3) once we've copied all four bytes
 
- DEX                    \ Decrement the loop counter so we move to the next
-                        \ byte, going from least significant (3) to most
-                        \ significant (0)
+ DEX                    \ Decrement the loop counter
 
- BPL tt35               \ Loop back to copy the next byte
+ BPL tt35               \ Loop back to copy the next byte until we have copied
+                        \ all four
 
  LDA S                  \ Store the value of location S, our overflow byte, in
  STA XX15+4             \ XX15+4, so now XX15(4 0 1 2 3) contains a copy of
                         \ K(S 0 1 2 3), which is the value of (K * 2) that we
-                        \ want
+                        \ want to use in our calculation
 
  ASL K+3                \ Now to calculate the (K * 2 * 2 * 2) part. We still
- ROL K+2                \ have (K * 2) in K(S 0 1 2 3), so we just need to
+ ROL K+2                \ have (K * 2) in K(S 0 1 2 3), so we just need to shift
  ROL K+1                \ it twice. This is the first one, so we do this:
  ROL K                  \
  ROL S                  \   K(S 0 1 2 3) = K(S 0 1 2 3) * 2 = K * 4
@@ -144,11 +146,11 @@
 
  STA K,X                \ Store the result in the X-th byte of K
 
- DEX                    \ Decrement the loop counter so we move to the next
-                        \ byte, going from least significant (3) to most
-                        \ significant (0)
+ DEX                    \ Decrement the loop counter
 
- BPL tt36               \ Loop back to add the next byte
+ BPL tt36               \ Loop back to add the next byte, moving from the least
+                        \ significant byte to the most significant, until we
+                        \ have added all four
 
  LDA XX15+4             \ Finally, fetch the overflow byte from XX15(4 0 1 2 3)
 
@@ -156,19 +158,21 @@
                         \ with carry
 
  STA S                  \ And store the result in the overflow byte from
-                        \ K(S 0 1 2 3), so now we have our desired result that
-                        \ K(S 0 1 2 3) is now K(S 0 1 2 3) * 10
+                        \ K(S 0 1 2 3), so now we have our desired result, i.e.
+                        \
+                        \   K(S 0 1 2 3) = K(S 0 1 2 3) * 10
 
  LDY #0                 \ In the main loop below, we use Y to count the number
                         \ of times we subtract 10 billion to get the leftmost
-                        \ digit, so set this to zero
+                        \ digit, so set this to zero so we can rejoin the main
+                        \ loop for another subtraction process
 
 .TT36
 
                         \ This is the main loop of our digit-printing routine.
                         \ In the following loop, we are going to count the
-                        \ number of times that we can subtract 10 million in Y,
-                        \ which we have already set to 0
+                        \ number of times that we can subtract 10 million and
+                        \ store that count in Y, which we have already set to 0
 
  LDX #3                 \ Our first calculation concerns 32-bit numbers, so
                         \ set up a counter for a four-byte loop
@@ -178,7 +182,7 @@
 
 .tt37
 
-                        \ Now we loop thorough each byte in turn to do this:
+                        \ We now loop through each byte in turn to do this:
                         \
                         \   XX15(4 0 1 2 3) = K(S 0 1 2 3) - 100,000,000,000
 
@@ -187,11 +191,11 @@
 
  STA XX15,X             \ Store the result in the X-th byte of XX15
 
- DEX                    \ Decrement the loop counter so we move to the next
-                        \ byte, going from least significant (3) to most
-                        \ significant (0)
+ DEX                    \ Decrement the loop counter
 
- BPL tt37               \ Loop back to subtract from the next byte
+ BPL tt37               \ Loop back to subtract the next byte, moving from the
+                        \ least significant byte to the most significant, until
+                        \ we have subtracted all four
 
  LDA S                  \ Subtract the fifth byte of 10 billion (i.e. &17) from
  SBC #&17               \ the fifth (overflow) byte of K, which is S
@@ -201,21 +205,20 @@
  BCC TT37               \ If subtracting 10 billion took us below zero, jump to
                         \ TT37 to print out this digit, which is now in Y
 
- LDX #3                 \ We now want to copy XX15(4 0 1 2 3) back to
+ LDX #3                 \ We now want to copy XX15(4 0 1 2 3) back into
                         \ K(S 0 1 2 3), so we can loop back up to do the next
                         \ subtraction, so set up a counter for a four-byte loop
 
 .tt38
 
  LDA XX15,X             \ Copy the X-th byte of XX15(0 1 2 3) to the X-th byte
- STA K,X                \ of K(0 1 2 3), so that K will contain a copy of
-                        \ XX15(0 1 2 3) once we've copied all four bytes
+ STA K,X                \ of K(0 1 2 3), so that K(0 1 2 3) will contain a copy
+                        \ of XX15(0 1 2 3) once we've copied all four bytes
 
- DEX                    \ Decrement the loop counter so we move to the next
-                        \ byte, going from least significant (3) to most
-                        \ significant (0)
+ DEX                    \ Decrement the loop counter
 
- BPL tt38               \ Loop back to copy the next byte
+ BPL tt38               \ Loop back to copy the next byte, until we have copied
+                        \ all four
 
  LDA XX15+4             \ Store the value of location XX15+4, our overflow
  STA S                  \ byte in S, so now K(S 0 1 2 3) contains a copy of
@@ -223,7 +226,7 @@
 
  INY                    \ We have now managed to subtract 10 billion from our
                         \ number, so increment Y, which is where we are keeping
-                        \ count of the number of subtractions so far
+                        \ a count of the number of subtractions so far
 
  JMP TT36               \ Jump back to TT36 to subtract the next 10 billion
 
@@ -250,8 +253,8 @@
                         \
                         \   * If T = 0 then we have started printing digits
                         \
-                        \ We initially set T to the maximum number of
-                        \ characters allowed at, less 1 if we are printing a
+                        \ We initially set T above to the maximum number of
+                        \ characters allowed, less 1 if we are printing a
                         \ decimal point, so the first time we enter the digit
                         \ printing routine at TT37, it is definitely non-zero
 
@@ -283,8 +286,8 @@
 
 .tt34
 
- JSR TT26               \ Print the character in A and fall through into TT34
-                        \ to get things ready for the next digit
+ JSR TT26               \ Call TT26 to print the character in A and fall through
+                        \ into TT34 to get things ready for the next digit
 
 .TT34
 
@@ -292,38 +295,39 @@
  BPL P%+4               \ again if the above decrement made T negative)
  INC T
 
- DEC XX17               \ Decrement the total number of characters to print in
-                        \ XX17
+ DEC XX17               \ Decrement the total number of characters left to
+                        \ print, which we stored in XX17
 
 IF _CASSETTE_VERSION
 
- BMI RR3+1              \ If it is negative, we have printed all the characters
-                        \ so return from the subroutine (as RR3 contains an
-                        \ ORA #&60 instruction, so RR3+1 is &60, which is the
-                        \ opcode for an RTS)
+ BMI RR3+1              \ If the result is negative, we have printed all the
+                        \ characters, so return from the subroutine (as RR3
+                        \ contains an ORA #&60 instruction, so RR3+1 is &60,
+                        \ which is the opcode for an RTS)
 
 ELIF _6502SP_VERSION
 
- BMI rT10               \ If it is negative, we have printed all the characters
-                        \ so return from the subroutine (as rT10 contains an
-                        \ RTS)
+ BMI rT10               \ If the result is negative, we have printed all the
+                        \ characters, so jump down to rT10 to return from the
+                        \ subroutine
 
 ENDIF
 
- BNE P%+10              \ If it is positive (> 0) loop back to TT35 (via the
-                        \ last instruction in this subroutine) to print the
-                        \ next digit
+ BNE P%+10              \ If the result is positive (> 0) then we still have
+                        \ characters left to print, so loop back to TT35 (via
+                        \ the JMP TT35 instruction below) to print the next
+                        \ digit
 
  PLP                    \ If we get here then we have printed the exact number
                         \ of digits that we wanted to, so restore the C flag
-                        \ that we stored at the start of BPRNT
+                        \ that we stored at the start of the routine
 
  BCC P%+7               \ If the C flag is clear, we don't want a decimal point,
-                        \ so look back to TT35 (via the last instruction in this
-                        \ subroutine) to print the next digit
+                        \ so loop back to TT35 (via the JMP TT35 instruction
+                        \ below) to print the next digit
 
- LDA #'.'               \ Print the decimal point
- JSR TT26
+ LDA #'.'               \ Otherwise the C flag is set, so print the decimal
+ JSR TT26               \ point
 
  JMP TT35               \ Loop back to TT35 to print the next digit
 
@@ -331,7 +335,7 @@ IF _6502SP_VERSION
 
 .rT10
 
- RTS
+ RTS                    \ Return from the subroutine
 
 ENDIF
 

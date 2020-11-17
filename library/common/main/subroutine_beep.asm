@@ -9,12 +9,16 @@
 
 .BEEP
 
+IF _CASSETTE_VERSION
+
  LDA #32                \ Set A = 32 to denote a short, high beep, and fall
                         \ through into NOISE to make the sound
 
-IF _6502SP_VERSION
+ELIF _6502SP_VERSION
 
- BNE NOISE              \ Call NOISE, as NOISE doesn't directly follow BEEP in
-                        \ the 6502SP version
+ LDA #32                \ Call NOISE with A = 32 to make a short, high beep,
+ BNE NOISE              \ returning from the subroutine using a tail call (this
+                        \ BNE is effectively a JMP as A will never be zero)
+
 ENDIF
 

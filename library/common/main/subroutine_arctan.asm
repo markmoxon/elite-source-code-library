@@ -37,19 +37,20 @@
  ASL A
 
  CMP Q                  \ If A >= Q, i.e. |P| > |Q|, jump to AR1 to swap P
- BCS AR1                \ and Q around, so we can use the lookup table
+ BCS AR1                \ and Q around, so we can still use the lookup table
 
  JSR ARS1               \ Call ARS1 to set the following from the lookup table:
                         \
                         \   A = arctan(A / Q)
                         \     = arctan(|P / Q|)
 
- SEC                    \ Set the C flag
+ SEC                    \ Set the C flag so the SBC instruction in AR3 will be
+                        \ correct, should we jump there
 
 .AR4
 
  LDX T1                 \ If T1 is negative, i.e. P and Q have different signs,
- BMI AR3                \ jump down to AR3 to change
+ BMI AR3                \ jump down to AR3 to return arctan(-|P / Q|)
 
  RTS                    \ Otherwise P and Q have the same sign, so our result is
                         \ correct and we can return from the subroutine
@@ -57,8 +58,8 @@
 .AR1
 
                         \ We want to calculate arctan(t) where |t| > 1, so we
-                        \ can use the calculation described in the ACT
-                        \ documentation below, i.e. 64 - arctan(1 / t)
+                        \ can use the calculation described in the documentation
+                        \ for the ACT table, i.e. 64 - arctan(1 / t)
 
  LDX Q                  \ Swap the values in Q and P, using the fact that we
  STA Q                  \ called AR1 with A = P
@@ -95,8 +96,8 @@
 
                         \ A contains arctan(|P / Q|) but P and Q have different
                         \ signs, so we need to return arctan(-|P / Q|), using
-                        \ the calculation described in the ACT documentation
-                        \ below, i.e. 128 - A
+                        \ the calculation described in the documentation for the
+                        \ ACT table, i.e. 128 - A
 
  STA T                  \ Set A = 128 - A
  LDA #128               \

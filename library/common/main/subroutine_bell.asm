@@ -7,7 +7,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ This is the standard system beep as made by VDU 7.
+\ This is the standard system beep as made by the VDU 7 command in BBC BASIC.
 \
 \ ******************************************************************************
 

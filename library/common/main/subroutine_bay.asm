@@ -21,6 +21,6 @@
  STA QQ12               \ are docked
 
  LDA #f8                \ Jump into the main loop at FRCE, setting the key
- JMP FRCE               \ "pressed" to red key f8 (so we show the Status Mode
-                        \ screen)
+ JMP FRCE               \ that's "pressed" to red key f8 (so we show the Status
+                        \ Mode screen)
 

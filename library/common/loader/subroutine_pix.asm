@@ -48,7 +48,7 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LSR A                  \ Set ZP+1 = &40 + A >> 4
+ LSR A                  \ Set ZP+1 = &40 + 2 * (A >> 3)
  LSR A
  LSR A
  ASL A
@@ -62,7 +62,9 @@ ELIF _6502SP_VERSION
  STA ZP
 
  BCC P%+4               \ If the C flag is set, i.e. bit 8 of the above
- INC ZP+1               \ calculation was a 1, increment ZP+1
+ INC ZP+1               \ calculation was a 1, increment ZP+1 so that ZP(1 0)
+                        \ points to the second page in this character row (i.e.
+                        \ the right half of the row)
 
 ENDIF
 

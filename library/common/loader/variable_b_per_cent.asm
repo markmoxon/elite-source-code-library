@@ -90,8 +90,13 @@ ELIF _6502SP_VERSION
  EQUB 0, 0, 0           \
  EQUB 0, 0, 0           \ This sets 6845 registers (R12 R13) = &0800 to point
  EQUB 23, 0, 13, &00    \ to the start of screen memory in terms of character
- EQUB 0, 0, 0           \ rows
- EQUB 0, 0, 0
+ EQUB 0, 0, 0           \ rows. There are 8 pixel lines in each character row,
+ EQUB 0, 0, 0           \ so to get the actual address of the start of screen
+                        \ memory, we multiply by 8:
+                        \
+                        \   &0800 * 8 = &4000
+                        \
+                        \ So this sets the start of screen memory to &4000
 
 ENDIF
 
@@ -120,14 +125,18 @@ ELIF _6502SP_VERSION
  EQUB 0, 0, 0           \
  EQUB 0, 0, 0           \ This is the "horizontal displayed" register, which
                         \ defines the number of character blocks per horizontal
-                        \ character row
+                        \ character row. For comparison, this value is 80 for
+                        \ modes 1 and 2, but our custom screen is not as wide at
+                        \ only 64 character blocks across
 
  EQUB 23, 0, 2, 90      \ Set 6845 register R2 = 90
  EQUB 0, 0, 0           \
  EQUB 0, 0, 0           \ This is the "horizontal sync position" register, which
                         \ defines the position of the horizontal sync pulse on
                         \ the horizontal line in terms of character widths from
-                        \ the left-hand side of the screen
+                        \ the left-hand side of the screen. For comparison this
+                        \ is 98 for modes 1 and 2, but needs to be adjusted for
+                        \ our custom screen's width
 
 ENDIF
 
@@ -138,7 +147,14 @@ ENDIF
 
 IF _6502SP_VERSION
 
- EQUB 23,0,&87,34,0,0,0,0,0,0
+ EQUB 23, 0, &87, 34    \ Set 6845 register R7 = 34
+ EQUB 0, 0, 0           \
+ EQUB 0, 0, 0           \ This is the "vertical sync position" register, which
+                        \ defines the row number where the vertical sync pulse
+                        \ is fired. This is aleady set to 34 for mode 1 and 2,
+                        \ so I'm not sure what this command does, especially as
+                        \ the register number has bit 7 set (it's &87 rather
+                        \ than 7). More investigation needed!
 
 ENDIF
 

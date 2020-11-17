@@ -11,8 +11,8 @@
 \
 \ Arguments:
 \
-\   X                   The slot number of the ship in our missile lock, or &FF
-\                       to remove missile lock
+\   X                   The slot number of the ship to lock our missile onto, or
+\                       &FF to remove missile lock
 \
 \   Y                   The new colour of the missile indicator:
 \
@@ -30,8 +30,8 @@
 
  STX MSTG               \ Store the target of our missile lock in MSTG
 
- LDX NOMSL              \ Update the leftmost indicator in the dashboard's
- JSR MSBAR              \ missile bar, returns with Y = 0
+ LDX NOMSL              \ Call MSBAR to update the leftmost indicator in the
+ JSR MSBAR              \ dashboard's missile bar, which returns with Y = 0
 
  STY MSAR               \ Set MSAR = 0 to indicate that the leftmost missile
                         \ is no longer seeking a target lock

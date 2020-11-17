@@ -13,10 +13,15 @@
 \   (slaves + narcotics) * 2 + firearms
 \
 \ so slaves and narcotics are twice as illegal as firearms. The value in FIST
-\ (our legal status) is set to a minimum of this value whenever we launch from
-\ a space station, and a FIST of 50 or more is fugitive status, so leaving a
+\ (our legal status) is set to at least this value whenever we launch from a
+\ space station, and a FIST of 50 or more gives us fugitive status, so leaving a
 \ station carrying 25 tonnes of slaves/narcotics, or 50 tonnes of firearms
 \ across multiple trips, is enough to make us a fugitive.
+\
+\ Returns:
+\
+\   A                   A value that determines how bad we are from the amount
+\                       of contraband in our hold
 \
 \ ******************************************************************************
 

@@ -7,15 +7,16 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ All this actually does is set the ship's hostile flag, start it turning and
+\ All this routine does is set the ship's hostile flag, start it turning and
 \ give it a kick of acceleration - later calls to TACTICS will make the ship
-\ actually attack.
+\ start to attack us.
 \
 \ Arguments:
 \
-\   A                   The type of ship to irritate
+\   A                   The type of ship we're going to irritate
 \
-\   INF                 The address of the data block for the ship to infuriate
+\   INF                 The address of the data block for the ship we're going
+\                       to infuriate
 \
 \ ******************************************************************************
 
@@ -36,10 +37,11 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDY #36
+ LDY #36                \ Fetch the ship's byte #36
  LDA (INF),Y
- AND #32
- BEQ P%+5
+
+ AND #%00100000         \ If bit 5 of the ship's byte #36 is clear, skip the
+ BEQ P%+5               \ following instruction
 
 ENDIF
 
@@ -52,8 +54,8 @@ ENDIF
                         \ it can't get hostile, so return from the subroutine
                         \ (as HI1 contains an RTS)
 
- ORA #%10000000         \ Otherwise set bit 7 to ensure AI is definitely enabled
- STA (INF),Y
+ ORA #%10000000         \ Otherwise set bit 7 (AI enabled) to ensure AI is
+ STA (INF),Y            \ definitely enabled
 
  LDY #28                \ Set the ship's byte #28 (acceleration) to 2, so it
  LDA #2                 \ speeds up
@@ -65,12 +67,14 @@ ENDIF
 
 IF _6502SP_VERSION
 
- LDA TYPE
- CMP #CYL
- BCC AN3
- LDY #36
+ LDA TYPE               \ If the ship's type is < #CYL (i.e. a missile, Coriolis
+ CMP #CYL               \ space station, escape pod, plate, cargo canister,
+ BCC AN3                \ boulder, asteroid, splinter, shuttle or transporter),
+                        \ then jump to AN3 to skip the following
+
+ LDY #36                \ Set bit 2 of the ship's byte #36
  LDA (INF),Y
- ORA #4
+ ORA #%00000100
  STA (INF),Y
 
 .AN3
@@ -94,9 +98,10 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA K%+NI%+36
- ORA #4
- STA K%+NI%+36
+ LDA K%+NI%+36          \ Set bit 2 of byte #36 of the second ship in the ship
+ ORA #%00000100         \ data workspace at K%, which is reserved for the sun or
+ STA K%+NI%+36          \ the space station (in this case it's the latter), to
+                        \ make it hostile
 
 ENDIF
 

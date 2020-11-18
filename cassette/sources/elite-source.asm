@@ -759,21 +759,23 @@ INCLUDE "library/cassette/main/variable_checksum0.asm"
 CODE_SHIPS% = P%
 LOAD_SHIPS% = LOAD% + P% - CODE%
 
+_IS_PIRATE = FALSE
+
 INCLUDE "library/common/main/macro_vertex.asm"
 INCLUDE "library/common/main/macro_edge.asm"
 INCLUDE "library/common/main/macro_face.asm"
 INCLUDE "library/common/main/variable_xx21.asm"
-INCLUDE "library/common/main/variable_ship1.asm"
-INCLUDE "library/common/main/variable_ship2.asm"
-INCLUDE "library/common/main/variable_ship3.asm"
-INCLUDE "library/common/main/variable_ship5.asm"
-INCLUDE "library/common/main/variable_ship6.asm"
-INCLUDE "library/common/main/variable_ship8.asm"
-INCLUDE "library/common/main/variable_ship9.asm"
-INCLUDE "library/common/main/variable_ship10.asm"
-INCLUDE "library/common/main/variable_ship11.asm"
-INCLUDE "library/common/main/variable_ship12.asm"
-INCLUDE "library/common/main/variable_ship13.asm"
+INCLUDE "library/common/main/variable_ship_sidewinder.asm"
+INCLUDE "library/common/main/variable_ship_viper.asm"
+INCLUDE "library/common/main/variable_ship_mamba.asm"
+INCLUDE "library/common/main/variable_ship_cobra_mk_iii.asm"
+INCLUDE "library/common/main/variable_ship_thargoid.asm"
+INCLUDE "library/common/main/variable_ship_coriolis.asm"
+INCLUDE "library/common/main/variable_ship_missile.asm"
+INCLUDE "library/common/main/variable_ship_asteroid.asm"
+INCLUDE "library/common/main/variable_ship_canister.asm"
+INCLUDE "library/common/main/variable_ship_thargon.asm"
+INCLUDE "library/common/main/variable_ship_escape_pod.asm"
 
 \ ******************************************************************************
 \
@@ -806,7 +808,7 @@ LOAD_PYTHON% = &1B00
 
 ORG CODE_PYTHON%
 
-INCLUDE "library/common/main/variable_ship4.asm"
+INCLUDE "library/common/main/variable_ship_python.asm"
 INCLUDE "library/common/main/variable_svn.asm"
 INCLUDE "library/common/main/variable_vec.asm"
 

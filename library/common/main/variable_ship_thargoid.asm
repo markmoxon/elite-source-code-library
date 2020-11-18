@@ -1,19 +1,23 @@
 \ ******************************************************************************
 \
-\       Name: SHIP6
+\       Name: SHIP_THARGOID
 \       Type: Variable
 \   Category: Drawing ships
 \    Summary: Ship blueprint for a Thargoid mothership
 \
 \ ******************************************************************************
 
-.SHIP6
+.SHIP_THARGOID
 
  EQUB 0                 \ Max. canisters on demise = 0
  EQUW 99 * 99           \ Targetable area          = 99 * 99
  EQUB &8C               \ Edges data offset (low)  = &008C
  EQUB &F4               \ Faces data offset (low)  = &00F4
+IF _CASSETTE_VERSION
  EQUB 101               \ Max. edge count          = (101 - 1) / 4 = 25
+ELIF _6502SP_VERSION
+ EQUB 105               \ Max. edge count          = (105 - 1) / 4 = 26
+ENDIF
  EQUB 60                \ Gun vertex               = 60 / 4 = 15
  EQUB 38                \ Explosion count          = 8, as (4 * n) + 6 = 38
  EQUB 120               \ Number of vertices       = 120 / 6 = 20

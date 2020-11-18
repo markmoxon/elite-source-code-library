@@ -1,19 +1,23 @@
 \ ******************************************************************************
 \
-\       Name: SHIP11
+\       Name: SHIP_CANISTER
 \       Type: Variable
 \   Category: Drawing ships
 \    Summary: Ship blueprint for a cargo canister
 \
 \ ******************************************************************************
 
-.SHIP11
+.SHIP_CANISTER
 
  EQUB 0                 \ Max. canisters on demise = 0
  EQUW 20 * 20           \ Targetable area          = 20 * 20
  EQUB &50               \ Edges data offset (low)  = &0050
  EQUB &8C               \ Faces data offset (low)  = &008C
+IF _CASSETTE_VERSION
  EQUB 49                \ Max. edge count          = (49 - 1) / 4 = 12
+ELIF _6502SP_VERSION
+ EQUB 53                \ Max. edge count          = (53 - 1) / 4 = 13
+ENDIF
  EQUB 0                 \ Gun vertex               = 0
  EQUB 18                \ Explosion count          = 3, as (4 * n) + 6 = 18
  EQUB 60                \ Number of vertices       = 60 / 6 = 10

@@ -1,19 +1,23 @@
 \ ******************************************************************************
 \
-\       Name: SHIP1
+\       Name: SHIP_SIDEWINDER
 \       Type: Variable
 \   Category: Drawing ships
 \    Summary: Ship blueprint for a Sidewinder
 \
 \ ******************************************************************************
 
-.SHIP1
+.SHIP_SIDEWINDER
 
  EQUB 0                 \ Max. canisters on demise = 0
  EQUW 65 * 65           \ Targetable area          = 65 * 65
  EQUB &50               \ Edges data offset (low)  = &0050
  EQUB &8C               \ Faces data offset (low)  = &008C
+IF _CASSETTE_VERSION
  EQUB 61                \ Max. edge count          = (61 - 1) / 4 = 15
+ELIF _6502SP_VERSION
+ EQUB 65                \ Max. edge count          = (65 - 1) / 4 = 16
+ENDIF
  EQUB 0                 \ Gun vertex               = 0
  EQUB 30                \ Explosion count          = 6, as (4 * n) + 6 = 30
  EQUB 60                \ Number of vertices       = 60 / 6 = 10

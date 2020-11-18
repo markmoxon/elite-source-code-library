@@ -1,19 +1,23 @@
 \ ******************************************************************************
 \
-\       Name: SHIP10
+\       Name: SHIP_ASTEROID
 \       Type: Variable
 \   Category: Drawing ships
 \    Summary: Ship blueprint for an asteroid
 \
 \ ******************************************************************************
 
-.SHIP10
+.SHIP_ASTEROID
 
  EQUB 0                 \ Max. canisters on demise = 0
  EQUW 80 * 80           \ Targetable area          = 80 * 80
  EQUB &4A               \ Edges data offset (low)  = &004A
  EQUB &9E               \ Faces data offset (low)  = &009E
+IF _CASSETTE_VERSION
  EQUB 65                \ Max. edge count          = (65 - 1) / 4 = 16
+ELIF _6502SP_VERSION
+ EQUB 69                \ Max. edge count          = (69 - 1) / 4 = 17
+ENDIF
  EQUB 0                 \ Gun vertex               = 0
  EQUB 34                \ Explosion count          = 7, as (4 * n) + 6 = 34
  EQUB 54                \ Number of vertices       = 54 / 6 = 9

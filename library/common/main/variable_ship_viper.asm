@@ -1,19 +1,23 @@
 \ ******************************************************************************
 \
-\       Name: SHIP2
+\       Name: SHIP_VIPER
 \       Type: Variable
 \   Category: Drawing ships
 \    Summary: Ship blueprint for a Viper
 \
 \ ******************************************************************************
 
-.SHIP2
+.SHIP_VIPER
 
  EQUB 0                 \ Max. canisters on demise = 0
  EQUW 75 * 75           \ Targetable area          = 75 * 75
  EQUB &6E               \ Edges data offset (low)  = &006E
  EQUB &BE               \ Faces data offset (low)  = &00BE
+IF _CASSETTE_VERSION
  EQUB 77                \ Max. edge count          = (77 - 1) / 4 = 19
+ELIF _6502SP_VERSION
+ EQUB 81                \ Max. edge count          = (81 - 1) / 4 = 20
+ENDIF
  EQUB 0                 \ Gun vertex               = 0
  EQUB 42                \ Explosion count          = 9, as (4 * n) + 6 = 42
  EQUB 90                \ Number of vertices       = 90 / 6 = 15
@@ -21,7 +25,11 @@
  EQUW 0                 \ Bounty                   = 0
  EQUB 28                \ Number of faces          = 28 / 4 = 7
  EQUB 23                \ Visibility distance      = 23
+IF _CASSETTE_VERSION
  EQUB 120               \ Max. energy              = 120
+ELIF _6502SP_VERSION
+ EQUB 140               \ Max. energy              = 140
+ENDIF
  EQUB 32                \ Max. speed               = 32
  EQUB &00               \ Edges data offset (high) = &006E
  EQUB &00               \ Faces data offset (high) = &00BE

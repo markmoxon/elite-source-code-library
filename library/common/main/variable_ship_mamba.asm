@@ -1,19 +1,23 @@
 \ ******************************************************************************
 \
-\       Name: SHIP3
+\       Name: SHIP_MAMBA
 \       Type: Variable
 \   Category: Drawing ships
 \    Summary: Ship blueprint for a Mamba
 \
 \ ******************************************************************************
 
-.SHIP3
+.SHIP_MAMBA
 
  EQUB 1                 \ Max. canisters on demise = 1
  EQUW 70 * 70           \ Targetable area          = 70 * 70
  EQUB &AA               \ Edges data offset (low)  = &00AA
  EQUB &1A               \ Faces data offset (low)  = &001A
+IF _CASSETTE_VERSION
  EQUB 93                \ Max. edge count          = (93 - 1) / 4 = 23
+ELIF _6502SP_VERSION
+ EQUB 97                \ Max. edge count          = (97 - 1) / 4 = 24
+ENDIF
  EQUB 0                 \ Gun vertex               = 0
  EQUB 34                \ Explosion count          = 7, as (4 * n) + 6 = 34
  EQUB 150               \ Number of vertices       = 150 / 6 = 25

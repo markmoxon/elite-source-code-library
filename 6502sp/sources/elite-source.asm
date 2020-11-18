@@ -961,232 +961,36 @@ INCLUDE "library/common/main/macro_edge.asm"
 INCLUDE "library/common/main/macro_face.asm"
 INCLUDE "library/common/main/variable_xx21.asm"
 
-\ MSL  =  1 = Missile
-
-.SHIP1
-
- EQUB &00               \ Max. canisters on demise = 
- EQUW &0640             \ Targetable area          = 
- EQUB &7A               \ Edges data offset (low)  = &
- EQUB &DA               \ Faces data offset (low)  = &
- EQUB &55               \ Max. edge count          = ( - 1) / 4 = 
- EQUB &00               \ Gun vertex               = 
- EQUB &0A               \ Explosion count          = , as (4 * n) + 6 = 
- EQUB &66               \ Number of vertices       = 102 / 6 = 17
- EQUB &18               \ Number of edges          = 24
- EQUW &0000             \ Bounty                   = 
- EQUB &24               \ Number of faces          = 36 / 4 = 9
- EQUB &0E               \ Visibility distance      = 
- EQUB &02               \ Max. energy              = 
- EQUB &2C               \ Max. speed               = 
- EQUB &00               \ Edges data offset (high) = &
- EQUB &00               \ Faces data offset (high) = &
- EQUB &02               \ Normals are scaled by    = 2^ = 
- EQUB &00               \ Laser power              = 
-                        \ Missiles                 = 
-
- EQUB &00, &00, &44, &1F, &10, &32
- EQUB &08, &08, &24, &5F, &21, &54
- EQUB &08, &08, &24, &1F, &32, &74
- EQUB &08, &08, &24, &9F, &30, &76
- EQUB &08, &08, &24, &DF, &10, &65
- EQUB &08, &08, &2C, &3F, &74, &88
- EQUB &08, &08, &2C, &7F, &54, &88
- EQUB &08, &08, &2C, &FF, &65, &88
- EQUB &08, &08, &2C, &BF, &76, &88
- EQUB &0C, &0C, &2C, &28, &74, &88
- EQUB &0C, &0C, &2C, &68, &54, &88
- EQUB &0C, &0C, &2C, &E8, &65, &88
- EQUB &0C, &0C, &2C, &A8, &76, &88
- EQUB &08, &08, &0C, &A8, &76, &77
- EQUB &08, &08, &0C, &E8, &65, &66
- EQUB &08, &08, &0C, &28, &74, &77
- EQUB &08, &08, &0C, &68, &54, &55
-
- EQUB &1F, &21, &00, &04
- EQUB &1F, &32, &00, &08
- EQUB &1F, &30, &00, &0C
- EQUB &1F, &10, &00, &10
- EQUB &1F, &24, &04, &08
- EQUB &1F, &51, &04, &10
- EQUB &1F, &60, &0C, &10
- EQUB &1F, &73, &08, &0C
- EQUB &1F, &74, &08, &14
- EQUB &1F, &54, &04, &18
- EQUB &1F, &65, &10, &1C
- EQUB &1F, &76, &0C, &20
- EQUB &1F, &86, &1C, &20
- EQUB &1F, &87, &14, &20
- EQUB &1F, &84, &14, &18
- EQUB &1F, &85, &18, &1C
- EQUB &08, &85, &18, &28
- EQUB &08, &87, &14, &24
- EQUB &08, &87, &20, &30
- EQUB &08, &85, &1C, &2C
- EQUB &08, &74, &24, &3C
- EQUB &08, &54, &28, &40
- EQUB &08, &76, &30, &34
- EQUB &08, &65, &2C, &38
-
- EQUB &9F, &40, &00, &10
- EQUB &5F, &00, &40, &10
- EQUB &1F, &40, &00, &10
- EQUB &1F, &00, &40, &10
- EQUB &1F, &20, &00, &00
- EQUB &5F, &00, &20, &00
- EQUB &9F, &20, &00, &00
- EQUB &1F, &00, &20, &00
- EQUB &3F, &00, &00, &B0
-
-\ SST  =  2 = Coriolis space station
-
- EQUB &00               \ Max. canisters on demise = 
- EQUW &6400             \ Targetable area          = 
- EQUB &74               \ Edges data offset (low)  = &
- EQUB &E4               \ Faces data offset (low)  = &
- EQUB &59               \ Max. edge count          = ( - 1) / 4 = 
- EQUB &00               \ Gun vertex               = 
- EQUB &36               \ Explosion count          = , as (4 * n) + 6 = 
- EQUB &60               \ Number of vertices       = 96 / 6 = 16
- EQUB &1C               \ Number of edges          = 28
- EQUW &0000             \ Bounty                   = 
- EQUB &38               \ Number of faces          = 56 / 4 = 14
- EQUB &78               \ Visibility distance      = 
- EQUB &F0               \ Max. energy              = 
- EQUB &00               \ Max. speed               = 
- EQUB &00               \ Edges data offset (high) = &
- EQUB &00               \ Faces data offset (high) = &
- EQUB &00               \ Normals are scaled by    = 2^ = 
- EQUB &06               \ Laser power              = 
-                        \ Missiles                 = 
-
- EQUB &A0, &00, &A0, &1F, &10, &62
- EQUB &00, &A0, &A0, &1F, &20, &83
- EQUB &A0, &00, &A0, &9F, &30, &74
- EQUB &00, &A0, &A0, &5F, &10, &54
- EQUB &A0, &A0, &00, &5F, &51, &A6
- EQUB &A0, &A0, &00, &1F, &62, &B8
- EQUB &A0, &A0, &00, &9F, &73, &C8
- EQUB &A0, &A0, &00, &DF, &54, &97
- EQUB &A0, &00, &A0, &3F, &A6, &DB
- EQUB &00, &A0, &A0, &3F, &B8, &DC
- EQUB &A0, &00, &A0, &BF, &97, &DC
- EQUB &00, &A0, &A0, &7F, &95, &DA
- EQUB &0A, &1E, &A0, &5E, &00, &00
- EQUB &0A, &1E, &A0, &1E, &00, &00
- EQUB &0A, &1E, &A0, &9E, &00, &00
- EQUB &0A, &1E, &A0, &DE, &00, &00
-
- EQUB &1F, &10, &00, &0C
- EQUB &1F, &20, &00, &04
- EQUB &1F, &30, &04, &08
- EQUB &1F, &40, &08, &0C
- EQUB &1F, &51, &0C, &10
- EQUB &1F, &61, &00, &10
- EQUB &1F, &62, &00, &14
- EQUB &1F, &82, &14, &04
- EQUB &1F, &83, &04, &18
- EQUB &1F, &73, &08, &18
- EQUB &1F, &74, &08, &1C
- EQUB &1F, &54, &0C, &1C
- EQUB &1F, &DA, &20, &2C
- EQUB &1F, &DB, &20, &24
- EQUB &1F, &DC, &24, &28
- EQUB &1F, &D9, &28, &2C
- EQUB &1F, &A5, &10, &2C
- EQUB &1F, &A6, &10, &20
- EQUB &1F, &B6, &14, &20
- EQUB &1F, &B8, &14, &24
- EQUB &1F, &C8, &18, &24
- EQUB &1F, &C7, &18, &28
- EQUB &1F, &97, &1C, &28
- EQUB &1F, &95, &1C, &2C
- EQUB &1E, &00, &30, &34
- EQUB &1E, &00, &34, &38
- EQUB &1E, &00, &38, &3C
- EQUB &1E, &00, &3C, &30
-
- EQUB &1F, &00, &00, &A0
- EQUB &5F, &6B, &6B, &6B
- EQUB &1F, &6B, &6B, &6B
- EQUB &9F, &6B, &6B, &6B
- EQUB &DF, &6B, &6B, &6B
- EQUB &5F, &00, &A0, &00
- EQUB &1F, &A0, &00, &00
- EQUB &9F, &A0, &00, &00
- EQUB &1F, &00, &A0, &00
- EQUB &FF, &6B, &6B, &6B
- EQUB &7F, &6B, &6B, &6B
- EQUB &3F, &6B, &6B, &6B
- EQUB &BF, &6B, &6B, &6B
- EQUB &3F, &00, &00, &A0
-
-\ ESC  =  3 = Escape pod
-
- EQUB &20               \ Max. canisters on demise = 
- EQUW &0100             \ Targetable area          = 
- EQUB &2C               \ Edges data offset (low)  = &
- EQUB &44               \ Faces data offset (low)  = &
- EQUB &1D               \ Max. edge count          = ( - 1) / 4 = 
- EQUB &00               \ Gun vertex               = 
- EQUB &16               \ Explosion count          = , as (4 * n) + 6 = 
- EQUB &18               \ Number of vertices       = 24 / 6 = 4
- EQUB &06               \ Number of edges          = 6
- EQUW &0000             \ Bounty                   = 
- EQUB &10               \ Number of faces          = 16 / 4 = 4
- EQUB &08               \ Visibility distance      = 
- EQUB &11               \ Max. energy              = 
- EQUB &08               \ Max. speed               = 
- EQUB &00               \ Edges data offset (high) = &
- EQUB &00               \ Faces data offset (high) = &
- EQUB &04               \ Normals are scaled by    = 2^ = 
- EQUB &00               \ Laser power              = 
-                        \ Missiles                 = 
-
- EQUB &07, &00, &24, &9F, &12, &33
- EQUB &07, &0E, &0C, &FF, &02, &33
- EQUB &07, &0E, &0C, &BF, &01, &33
- EQUB &15, &00, &00, &1F, &01, &22
-
- EQUB &1F, &23, &00, &04
- EQUB &1F, &03, &04, &08
- EQUB &1F, &01, &08, &0C
- EQUB &1F, &12, &0C, &00
- EQUB &1F, &13, &00, &08
- EQUB &1F, &02, &0C, &04
-
- EQUB &3F, &34, &00, &7A
- EQUB &1F, &27, &67, &1E
- EQUB &5F, &27, &67, &1E
- EQUB &9F, &70, &00, &00
+INCLUDE "library/common/main/variable_ship_missile.asm"
+INCLUDE "library/common/main/variable_ship_coriolis.asm"
+INCLUDE "library/common/main/variable_ship_escape_pod.asm"
 
 \ PLT  =  4 = Plate (alloys)
 
- EQUB &80               \ Max. canisters on demise = 
- EQUW &0064             \ Targetable area          = 
- EQUB &2C               \ Edges data offset (low)  = &
- EQUB &3C               \ Faces data offset (low)  = &
- EQUB &15               \ Max. edge count          = ( - 1) / 4 = 
- EQUB &00               \ Gun vertex               = 
- EQUB &0A               \ Explosion count          = , as (4 * n) + 6 = 
- EQUB &18               \ Number of vertices       = 24 / 6 = 4
- EQUB &04               \ Number of edges          = 4
- EQUW &0000             \ Bounty                   = 
- EQUB &04               \ Number of faces          = 4 / 4 = 1
- EQUB &05               \ Visibility distance      = 
- EQUB &10               \ Max. energy              = 
- EQUB &10               \ Max. speed               = 
- EQUB &00               \ Edges data offset (high) = &
- EQUB &00               \ Faces data offset (high) = &
- EQUB &03               \ Normals are scaled by    = 2^ = 
- EQUB &00               \ Laser power              = 
-                        \ Missiles                 = 
+ EQUB &80               \ Max. canisters on demise = 0
+ EQUW 10 * 10           \ Targetable area          = 10 * 10
+ EQUB &2C               \ Edges data offset (low)  = &002C
+ EQUB &3C               \ Faces data offset (low)  = &003C
+ EQUB 21                \ Max. edge count          = (21 - 1) / 4 = 5
+ EQUB 0                 \ Gun vertex               = 0
+ EQUB 10                \ Explosion count          = 1, as (4 * n) + 6 = 10
+ EQUB 24                \ Number of vertices       = 24 / 6 = 4
+ EQUB 4                 \ Number of edges          = 4
+ EQUW 0                 \ Bounty                   = 0
+ EQUB 4                 \ Number of faces          = 4 / 4 = 1
+ EQUB 5                 \ Visibility distance      = 5
+ EQUB 16                \ Max. energy              = 16
+ EQUB 16                \ Max. speed               = 16
+ EQUB &00               \ Edges data offset (high) = &002C
+ EQUB &00               \ Faces data offset (high) = &003C
+ EQUB 3                 \ Normals are scaled by    = 2^3 = 8
+ EQUB %00000000         \ Laser power              = 0
+                        \ Missiles                 = 0
 
  EQUB &0F, &16, &09, &FF, &FF, &FF
  EQUB &0F, &26, &09, &BF, &FF, &FF
  EQUB &13, &20, &0B, &14, &FF, &FF
  EQUB &0A, &2E, &06, &54, &FF, &FF
-
 
  EQUB &1F, &FF, &00, &04
  EQUB &10, &FF, &04, &08
@@ -1195,84 +999,30 @@ INCLUDE "library/common/main/variable_xx21.asm"
 
  EQUB &00, &00, &00, &00
 
-\ OIL  =  5 = Cargo canister
+INCLUDE "library/common/main/variable_ship_canister.asm"
 
- EQUB &00               \ Max. canisters on demise = 
- EQUW &0190             \ Targetable area          = 
- EQUB &50               \ Edges data offset (low)  = &
- EQUB &8C               \ Faces data offset (low)  = &
- EQUB &35               \ Max. edge count          = ( - 1) / 4 = 
- EQUB &00               \ Gun vertex               = 
- EQUB &12               \ Explosion count          = , as (4 * n) + 6 = 
- EQUB &3C               \ Number of vertices       = 60 / 6 = 10
- EQUB &0F               \ Number of edges          = 15
- EQUW &0000             \ Bounty                   = 
- EQUB &1C               \ Number of faces          = 28 / 4 = 7
- EQUB &0C               \ Visibility distance      = 
- EQUB &11               \ Max. energy              = 
- EQUB &0F               \ Max. speed               = 
- EQUB &00               \ Edges data offset (high) = &
- EQUB &00               \ Faces data offset (high) = &
- EQUB &02               \ Normals are scaled by    = 2^ = 
- EQUB &00               \ Laser power              = 
-                        \ Missiles                 = 
-
- EQUB &18, &10, &00, &1F, &10, &55
- EQUB &18, &05, &0F, &1F, &10, &22
- EQUB &18, &0D, &09, &5F, &20, &33
- EQUB &18, &0D, &09, &7F, &30, &44
- EQUB &18, &05, &0F, &3F, &40, &55
- EQUB &18, &10, &00, &9F, &51, &66
- EQUB &18, &05, &0F, &9F, &21, &66
- EQUB &18, &0D, &09, &DF, &32, &66
- EQUB &18, &0D, &09, &FF, &43, &66
- EQUB &18, &05, &0F, &BF, &54, &66
-
- EQUB &1F, &10, &00, &04
- EQUB &1F, &20, &04, &08
- EQUB &1F, &30, &08, &0C
- EQUB &1F, &40, &0C, &10
- EQUB &1F, &50, &00, &10
- EQUB &1F, &51, &00, &14
- EQUB &1F, &21, &04, &18
- EQUB &1F, &32, &08, &1C
- EQUB &1F, &43, &0C, &20
- EQUB &1F, &54, &10, &24
- EQUB &1F, &61, &14, &18
- EQUB &1F, &62, &18, &1C
- EQUB &1F, &63, &1C, &20
- EQUB &1F, &64, &20, &24
- EQUB &1F, &65, &24, &14
-
- EQUB &1F, &60, &00, &00
- EQUB &1F, &00, &29, &1E
- EQUB &5F, &00, &12, &30
- EQUB &5F, &00, &33, &00
- EQUB &7F, &00, &12, &30
- EQUB &3F, &00, &29, &1E
- EQUB &9F, &60, &00, &00
 
 \         6 = Boulder
 
- EQUB &00               \ Max. canisters on demise = 
- EQUW &0384             \ Targetable area          = 30 * 30
+ EQUB 0                 \ Max. canisters on demise = 0
+ EQUW 30 * 30           \ Targetable area          = 30 * 30
  EQUB &3E               \ Edges data offset (low)  = &
  EQUB &7A               \ Faces data offset (low)  = &
- EQUB &31               \ Max. edge count          = ( - 1) / 4 = 
- EQUB &00               \ Gun vertex               = 
- EQUB &0E               \ Explosion count          = , as (4 * n) + 6 = 
- EQUB &2A               \ Number of vertices       = 42 / 6 = 7
- EQUB &0F               \ Number of edges          = 15
- EQUW &0001             \ Bounty                   = 
- EQUB &28               \ Number of faces          = 40 / 4 = 10
- EQUB &14               \ Visibility distance      = 
- EQUB &14               \ Max. energy              = 
- EQUB &1E               \ Max. speed               = 
- EQUB &00               \ Edges data offset (high) = &
- EQUB &00               \ Faces data offset (high) = &
- EQUB &02               \ Normals are scaled by    = 2^ = 
- EQUB &00               \ Laser power              = 
-                        \ Missiles                 = 
+ EQUB 49                \ Max. edge count          = (49 - 1) / 4 = 12
+ EQUB 0                 \ Gun vertex               = 0
+ EQUB 14                \ Explosion count          = 2, as (4 * n) + 6 = 14
+ EQUB 42                \ Number of vertices       = 42 / 6 = 7
+ EQUB 15                \ Number of edges          = 15
+ EQUW 1                 \ Bounty                   = 1
+ EQUB 40                \ Number of faces          = 40 / 4 = 10
+ EQUB 20                \ Visibility distance      = 20
+ EQUB 20                \ Max. energy              = 20
+ EQUB 30                \ Max. speed               = 30
+ EQUB &00               \ Edges data offset (high) = &00
+ EQUB &00               \ Faces data offset (high) = &00
+ EQUB 2                 \ Normals are scaled by    = 2^2 = 4
+ EQUB %00000000         \ Laser power              = 0
+                        \ Missiles                 = 0
 
  EQUB &12, &25, &0B, &BF, &01, &59
  EQUB &1E, &07, &0C, &1F, &12, &56
@@ -1309,96 +1059,29 @@ INCLUDE "library/common/main/variable_xx21.asm"
  EQUB &3F, &16, &38, &89
  EQUB &3F, &28, &6E, &26
 
-\ AST  =  7 = Asteroid
-
- EQUB &00               \ Max. canisters on demise = 
- EQUW &1900             \ Targetable area          = 
- EQUB &4A               \ Edges data offset (low)  = &
- EQUB &9E               \ Faces data offset (low)  = &
- EQUB &45               \ Max. edge count          = ( - 1) / 4 = 
- EQUB &00               \ Gun vertex               = 
- EQUB &22               \ Explosion count          = , as (4 * n) + 6 = 
- EQUB &36               \ Number of vertices       = 54 / 6 = 9
- EQUB &15               \ Number of edges          = 21
- EQUW &0005             \ Bounty                   = 
- EQUB &38               \ Number of faces          = 56 / 4 = 14
- EQUB &32               \ Visibility distance      = 
- EQUB &3C               \ Max. energy              = 
- EQUB &1E               \ Max. speed               = 
- EQUB &00               \ Edges data offset (high) = &
- EQUB &00               \ Faces data offset (high) = &
- EQUB &01               \ Normals are scaled by    = 2^ = 
- EQUB &00               \ Laser power              = 
-                        \ Missiles                 = 
-
- EQUB &00, &50, &00, &1F, &FF, &FF
- EQUB &50, &0A, &00, &DF, &FF, &FF
- EQUB &00, &50, &00, &5F, &FF, &FF
- EQUB &46, &28, &00, &5F, &FF, &FF
- EQUB &3C, &32, &00, &1F, &65, &DC
- EQUB &32, &00, &3C, &1F, &FF, &FF
- EQUB &28, &00, &46, &9F, &10, &32
- EQUB &00, &1E, &4B, &3F, &FF, &FF
- EQUB &00, &32, &3C, &7F, &98, &BA
-
- EQUB &1F, &72, &00, &04
- EQUB &1F, &D6, &00, &10
- EQUB &1F, &C5, &0C, &10
- EQUB &1F, &B4, &08, &0C
- EQUB &1F, &A3, &04, &08
- EQUB &1F, &32, &04, &18
- EQUB &1F, &31, &08, &18
- EQUB &1F, &41, &08, &14
- EQUB &1F, &10, &14, &18
- EQUB &1F, &60, &00, &14
- EQUB &1F, &54, &0C, &14
- EQUB &1F, &20, &00, &18
- EQUB &1F, &65, &10, &14
- EQUB &1F, &A8, &04, &20
- EQUB &1F, &87, &04, &1C
- EQUB &1F, &D7, &00, &1C
- EQUB &1F, &DC, &10, &1C
- EQUB &1F, &C9, &0C, &1C
- EQUB &1F, &B9, &0C, &20
- EQUB &1F, &BA, &08, &20
- EQUB &1F, &98, &1C, &20
-
- EQUB &1F, &09, &42, &51
- EQUB &5F, &09, &42, &51
- EQUB &9F, &48, &40, &1F
- EQUB &DF, &40, &49, &2F
- EQUB &5F, &2D, &4F, &41
- EQUB &1F, &87, &0F, &23
- EQUB &1F, &26, &4C, &46
- EQUB &BF, &42, &3B, &27
- EQUB &FF, &43, &0F, &50
- EQUB &7F, &42, &0E, &4B
- EQUB &FF, &46, &50, &28
- EQUB &7F, &3A, &66, &33
- EQUB &3F, &51, &09, &43
- EQUB &3F, &2F, &5E, &3F
+INCLUDE "library/common/main/variable_ship_asteroid.asm"
 
 \ SPL  =  8 = Splinter
 
- EQUB &B0               \ Max. canisters on demise = 
- EQUW &0100             \ Targetable area          = 
- EQUB &78               \ Edges data offset (low)  = &
- EQUB &44               \ Faces data offset (low)  = &
- EQUB &1D               \ Max. edge count          = ( - 1) / 4 = 
- EQUB &00               \ Gun vertex               = 
- EQUB &16               \ Explosion count          = , as (4 * n) + 6 = 
- EQUB &18               \ Number of vertices       = 24 / 6 = 4
- EQUB &06               \ Number of edges          = 6
- EQUW &0000             \ Bounty                   = 
- EQUB &10               \ Number of faces          = 16 / 4 = 4
- EQUB &08               \ Visibility distance      = 
- EQUB &14               \ Max. energy              = 
- EQUB &0A               \ Max. speed               = 
- EQUB &FD               \ Edges data offset (high) = &
- EQUB &00               \ Faces data offset (high) = &
- EQUB &05               \ Normals are scaled by    = 2^ = 
- EQUB &00               \ Laser power              = 
-                        \ Missiles                 = 
+ EQUB &B0               \ Max. canisters on demise = 0
+ EQUW 16 * 16           \ Targetable area          = 16 * 16
+ EQUB &78               \ Edges data offset (low)  = &FD78 = -648 ()
+ EQUB &44               \ Faces data offset (low)  = &0044
+ EQUB 29                \ Max. edge count          = (29 - 1) / 4 = 7
+ EQUB 0                 \ Gun vertex               = 0
+ EQUB 22                \ Explosion count          = 4, as (4 * n) + 6 = 22
+ EQUB 24                \ Number of vertices       = 24 / 6 = 4
+ EQUB 6                 \ Number of edges          = 6
+ EQUW 0                 \ Bounty                   = 0
+ EQUB 16                \ Number of faces          = 16 / 4 = 4
+ EQUB 8                 \ Visibility distance      = 8
+ EQUB 20                \ Max. energy              = 20
+ EQUB 10                \ Max. speed               = 10
+ EQUB &FD               \ Edges data offset (high) = &FD78 = -648 ()
+ EQUB &00               \ Faces data offset (high) = &0044
+ EQUB 5                 \ Normals are scaled by    = 2^5 = 32
+ EQUB %00000000         \ Laser power              = 0
+                        \ Missiles                 = 0
 
  EQUB &18, &19, &10, &DF, &12, &33
  EQUB &00, &0C, &0A, &3F, &02, &33
@@ -1412,25 +1095,25 @@ INCLUDE "library/common/main/variable_xx21.asm"
 
 \ SHU  =  9 = Shuttle
 
- EQUB &0F               \ Max. canisters on demise = 
- EQUW &09C4             \ Targetable area          = 
- EQUB &86               \ Edges data offset (low)  = &
- EQUB &FE               \ Faces data offset (low)  = &
- EQUB &71               \ Max. edge count          = ( - 1) / 4 = 
- EQUB &00               \ Gun vertex               = 
- EQUB &26               \ Explosion count          = , as (4 * n) + 6 = 
- EQUB &72               \ Number of vertices       = 114 / 6 = 19
- EQUB &1E               \ Number of edges          = 30
- EQUW &0000             \ Bounty                   = 
- EQUB &34               \ Number of faces          = 52 / 4 = 13
- EQUB &16               \ Visibility distance      = 
- EQUB &20               \ Max. energy              = 
- EQUB &08               \ Max. speed               = 
- EQUB &00               \ Edges data offset (high) = &
- EQUB &00               \ Faces data offset (high) = &
- EQUB &02               \ Normals are scaled by    = 2^ = 
- EQUB &00               \ Laser power              = 
-                        \ Missiles                 = 
+ EQUB 15                \ Max. canisters on demise = 15
+ EQUW 50 * 50           \ Targetable area          = 50 * 50
+ EQUB &86               \ Edges data offset (low)  = &0086
+ EQUB &FE               \ Faces data offset (low)  = &00FE
+ EQUB 113               \ Max. edge count          = (113 - 1) / 4 = 28
+ EQUB 0                 \ Gun vertex               = 0
+ EQUB 38                \ Explosion count          = 8, as (4 * n) + 6 = 38
+ EQUB 114               \ Number of vertices       = 114 / 6 = 19
+ EQUB 30                \ Number of edges          = 30
+ EQUW 0                 \ Bounty                   = 0
+ EQUB 52                \ Number of faces          = 52 / 4 = 13
+ EQUB 22                \ Visibility distance      = 22
+ EQUB 32                \ Max. energy              = 32
+ EQUB 8                 \ Max. speed               = 8
+ EQUB &00               \ Edges data offset (high) = &0086
+ EQUB &00               \ Faces data offset (high) = &00FE
+ EQUB 2                 \ Normals are scaled by    = 2^2 = 4
+ EQUB %00000000         \ Laser power              = 0
+                        \ Missiles                 = 0
 
  EQUB &00, &11, &17, &5F, &FF, &FF
  EQUB &11, &00, &17, &9F, &FF, &FF
@@ -1499,25 +1182,25 @@ INCLUDE "library/common/main/variable_xx21.asm"
 
 \        10 = Transporter
 
- EQUB &00               \ Max. canisters on demise = 
- EQUW &09C4             \ Targetable area          = 
- EQUB &F2               \ Edges data offset (low)  = &
- EQUB &AA               \ Faces data offset (low)  = &
- EQUB &95               \ Max. edge count          = ( - 1) / 4 = 
- EQUB &30               \ Gun vertex               = 
- EQUB &1A               \ Explosion count          = , as (4 * n) + 6 = 
- EQUB &DE               \ Number of vertices       = 222 / 6 = 37
- EQUB &2E               \ Number of edges          = 46
- EQUW &0000             \ Bounty                   = 
- EQUB &38               \ Number of faces          = 56 / 4 = 14
- EQUB &10               \ Visibility distance      = 
- EQUB &20               \ Max. energy              = 
- EQUB &0A               \ Max. speed               = 
- EQUB &00               \ Edges data offset (high) = &
- EQUB &01               \ Faces data offset (high) = &
- EQUB &02               \ Normals are scaled by    = 2^ = 
- EQUB &00               \ Laser power              = 
-                        \ Missiles                 = 
+ EQUB 0                 \ Max. canisters on demise = 0
+ EQUW 50 * 50           \ Targetable area          = 50 * 50
+ EQUB &F2               \ Edges data offset (low)  = &00F2
+ EQUB &AA               \ Faces data offset (low)  = &01AA
+ EQUB 149               \ Max. edge count          = (149 - 1) / 4 = 37
+ EQUB 48                \ Gun vertex               = 48
+ EQUB 26                \ Explosion count          = 5, as (4 * n) + 6 = 26
+ EQUB 222               \ Number of vertices       = 222 / 6 = 37
+ EQUB 46                \ Number of edges          = 46
+ EQUW 0                 \ Bounty                   = 0
+ EQUB 56                \ Number of faces          = 56 / 4 = 14
+ EQUB 16                \ Visibility distance      = 
+ EQUB 32                \ Max. energy              = 32
+ EQUB 10                \ Max. speed               = 10
+ EQUB &00               \ Edges data offset (high) = &00F2
+ EQUB &01               \ Faces data offset (high) = &01AA
+ EQUB 2                 \ Normals are scaled by    = 2^2 = 4
+ EQUB %00000000         \ Laser power              = 0
+                        \ Missiles                 = 0
 
  EQUB &00, &0A, &1A, &3F, &06, &77
  EQUB &19, &04, &1A, &BF, &01, &77
@@ -1619,206 +1302,31 @@ INCLUDE "library/common/main/variable_xx21.asm"
  EQUB &1F, &00, &26, &11
  EQUB &1F, &00, &00, &79
 
-\ CYL  = 11 = Cobra Mk III
+INCLUDE "library/common/main/variable_ship_cobra_mk_iii.asm"
+INCLUDE "library/common/main/variable_ship_python.asm"
 
- EQUB &03               \ Max. canisters on demise = 
- EQUW &2341             \ Targetable area          = 95 * 95
- EQUB &BC               \ Edges data offset (low)  = &
- EQUB &54               \ Faces data offset (low)  = &
- EQUB &9D               \ Max. edge count          = ( - 1) / 4 = 
- EQUB &54               \ Gun vertex               = 
- EQUB &2A               \ Explosion count          = , as (4 * n) + 6 = 
- EQUB &A8               \ Number of vertices       = 168 / 6 = 28
- EQUB &26               \ Number of edges          = 38
- EQUW &0000             \ Bounty                   = 
- EQUB &34               \ Number of faces          = 52 / 4 = 13
- EQUB &32               \ Visibility distance      = 
- EQUB &96               \ Max. energy              = 
- EQUB &1C               \ Max. speed               = 
- EQUB &00               \ Edges data offset (high) = &
- EQUB &01               \ Faces data offset (high) = &
- EQUB &01               \ Normals are scaled by    = 2^ = 
- EQUB &13               \ Laser power              = 
-                        \ Missiles                 = 
-
- EQUB &20, &00, &4C, &1F, &FF, &FF
- EQUB &20, &00, &4C, &9F, &FF, &FF
- EQUB &00, &1A, &18, &1F, &FF, &FF
- EQUB &78, &03, &08, &FF, &73, &AA
- EQUB &78, &03, &08, &7F, &84, &CC
- EQUB &58, &10, &28, &BF, &FF, &FF
- EQUB &58, &10, &28, &3F, &FF, &FF
- EQUB &80, &08, &28, &7F, &98, &CC
- EQUB &80, &08, &28, &FF, &97, &AA
- EQUB &00, &1A, &28, &3F, &65, &99
- EQUB &20, &18, &28, &FF, &A9, &BB
- EQUB &20, &18, &28, &7F, &B9, &CC
- EQUB &24, &08, &28, &B4, &99, &99
- EQUB &08, &0C, &28, &B4, &99, &99
- EQUB &08, &0C, &28, &34, &99, &99
- EQUB &24, &08, &28, &34, &99, &99
- EQUB &24, &0C, &28, &74, &99, &99
- EQUB &08, &10, &28, &74, &99, &99
- EQUB &08, &10, &28, &F4, &99, &99
- EQUB &24, &0C, &28, &F4, &99, &99
- EQUB &00, &00, &4C, &06, &B0, &BB
- EQUB &00, &00, &5A, &1F, &B0, &BB
- EQUB &50, &06, &28, &E8, &99, &99
- EQUB &50, &06, &28, &A8, &99, &99
- EQUB &58, &00, &28, &A6, &99, &99
- EQUB &50, &06, &28, &28, &99, &99
- EQUB &58, &00, &28, &26, &99, &99
- EQUB &50, &06, &28, &68, &99, &99
-
- EQUB &1F, &B0, &00, &04
- EQUB &1F, &C4, &00, &10
- EQUB &1F, &A3, &04, &0C
- EQUB &1F, &A7, &0C, &20
- EQUB &1F, &C8, &10, &1C
- EQUB &1F, &98, &18, &1C
- EQUB &1F, &96, &18, &24
- EQUB &1F, &95, &14, &24
- EQUB &1F, &97, &14, &20
- EQUB &1F, &51, &08, &14
- EQUB &1F, &62, &08, &18
- EQUB &1F, &73, &0C, &14
- EQUB &1F, &84, &10, &18
- EQUB &1F, &10, &04, &08
- EQUB &1F, &20, &00, &08
- EQUB &1F, &A9, &20, &28
- EQUB &1F, &B9, &28, &2C
- EQUB &1F, &C9, &1C, &2C
- EQUB &1F, &BA, &04, &28
- EQUB &1F, &CB, &00, &2C
- EQUB &1D, &31, &04, &14
- EQUB &1D, &42, &00, &18
- EQUB &06, &B0, &50, &54
- EQUB &14, &99, &30, &34
- EQUB &14, &99, &48, &4C
- EQUB &14, &99, &38, &3C
- EQUB &14, &99, &40, &44
- EQUB &13, &99, &3C, &40
- EQUB &11, &99, &38, &44
- EQUB &13, &99, &34, &48
- EQUB &13, &99, &30, &4C
- EQUB &1E, &65, &08, &24
- EQUB &06, &99, &58, &60
- EQUB &06, &99, &5C, &60
- EQUB &08, &99, &58, &5C
- EQUB &06, &99, &64, &68
- EQUB &06, &99, &68, &6C
- EQUB &08, &99, &64, &6C
-
- EQUB &1F, &00, &3E, &1F
- EQUB &9F, &12, &37, &10
- EQUB &1F, &12, &37, &10
- EQUB &9F, &10, &34, &0E
- EQUB &1F, &10, &34, &0E
- EQUB &9F, &0E, &2F, &00
- EQUB &1F, &0E, &2F, &00
- EQUB &9F, &3D, &66, &00
- EQUB &1F, &3D, &66, &00
- EQUB &3F, &00, &00, &50
- EQUB &DF, &07, &2A, &09
- EQUB &5F, &00, &1E, &06
- EQUB &5F, &07, &2A, &09
-
-\        12 = Python
-
- EQUB &05               \ Max. canisters on demise = 
- EQUW &1900             \ Targetable area          = 
- EQUB &56               \ Edges data offset (low)  = &
- EQUB &BE               \ Faces data offset (low)  = &
- EQUB &59               \ Max. edge count          = ( - 1) / 4 = 
- EQUB &00               \ Gun vertex               = 
- EQUB &2A               \ Explosion count          = , as (4 * n) + 6 = 
- EQUB &42               \ Number of vertices       = 66 / 6 = 11
- EQUB &1A               \ Number of edges          = 26
- EQUW &0000             \ Bounty                   = 
- EQUB &34               \ Number of faces          = 52 / 4 = 13
- EQUB &28               \ Visibility distance      = 
- EQUB &FA               \ Max. energy              = 
- EQUB &14               \ Max. speed               = 
- EQUB &00               \ Edges data offset (high) = &
- EQUB &00               \ Faces data offset (high) = &
- EQUB &00               \ Normals are scaled by    = 2^ = 
- EQUB &1B               \ Laser power              = 
-                        \ Missiles                 = 
-
- EQUB &00, &00, &E0, &1F, &10, &32
- EQUB &00, &30, &30, &1F, &10, &54
- EQUB &60, &00, &10, &3F, &FF, &FF
- EQUB &60, &00, &10, &BF, &FF, &FF
- EQUB &00, &30, &20, &3F, &54, &98
- EQUB &00, &18, &70, &3F, &89, &CC
- EQUB &30, &00, &70, &BF, &B8, &CC
- EQUB &30, &00, &70, &3F, &A9, &CC
- EQUB &00, &30, &30, &5F, &32, &76
- EQUB &00, &30, &20, &7F, &76, &BA
- EQUB &00, &18, &70, &7F, &BA, &CC
-
- EQUB &1F, &32, &00, &20
- EQUB &1F, &20, &00, &0C
- EQUB &1F, &31, &00, &08
- EQUB &1F, &10, &00, &04
- EQUB &1F, &59, &08, &10
- EQUB &1F, &51, &04, &08
- EQUB &1F, &37, &08, &20
- EQUB &1F, &40, &04, &0C
- EQUB &1F, &62, &0C, &20
- EQUB &1F, &A7, &08, &24
- EQUB &1F, &84, &0C, &10
- EQUB &1F, &B6, &0C, &24
- EQUB &07, &88, &0C, &14
- EQUB &07, &BB, &0C, &28
- EQUB &07, &99, &08, &14
- EQUB &07, &AA, &08, &28
- EQUB &1F, &A9, &08, &1C
- EQUB &1F, &B8, &0C, &18
- EQUB &1F, &C8, &14, &18
- EQUB &1F, &C9, &14, &1C
- EQUB &1F, &AC, &1C, &28
- EQUB &1F, &CB, &18, &28
- EQUB &1F, &98, &10, &14
- EQUB &1F, &BA, &24, &28
- EQUB &1F, &54, &04, &10
- EQUB &1F, &76, &20, &24
-
- EQUB &9F, &1B, &28, &0B
- EQUB &1F, &1B, &28, &0B
- EQUB &DF, &1B, &28, &0B
- EQUB &5F, &1B, &28, &0B
- EQUB &9F, &13, &26, &00
- EQUB &1F, &13, &26, &00
- EQUB &DF, &13, &26, &00
- EQUB &5F, &13, &26, &00
- EQUB &BF, &19, &25, &0B
- EQUB &3F, &19, &25, &0B
- EQUB &7F, &19, &25, &0B
- EQUB &FF, &19, &25, &0B
- EQUB &3F, &00, &00, &70
 
 \        13 = Boa
 
  EQUB &05               \ Max. canisters on demise = 
- EQUW &1324             \ Targetable area          = 70 * 70
- EQUB &62               \ Edges data offset (low)  = &
- EQUB &C2               \ Faces data offset (low)  = &
- EQUB &5D               \ Max. edge count          = ( - 1) / 4 = 
- EQUB &00               \ Gun vertex               = 
- EQUB &26               \ Explosion count          = , as (4 * n) + 6 = 
- EQUB &4E               \ Number of vertices       = 78 / 6 = 13
- EQUB &18               \ Number of edges          = 24
- EQUW &0000             \ Bounty                   = 
- EQUB &34               \ Number of faces          = 52 / 4 = 13
- EQUB &28               \ Visibility distance      = 
- EQUB &FA               \ Max. energy              = 
- EQUB &18               \ Max. speed               = 
- EQUB &00               \ Edges data offset (high) = &
- EQUB &00               \ Faces data offset (high) = &
- EQUB &00               \ Normals are scaled by    = 2^ = 
- EQUB &1C               \ Laser power              = 
-                        \ Missiles                 = 
+ EQUW 70 * 70           \ Targetable area          = 70 * 70
+ EQUB &62               \ Edges data offset (low)  = &0062
+ EQUB &C2               \ Faces data offset (low)  = &00C2
+ EQUB 93                \ Max. edge count          = (93 - 1) / 4 = 23
+ EQUB 0                 \ Gun vertex               = 0
+ EQUB 38                \ Explosion count          = 8, as (4 * n) + 6 = 38
+ EQUB 78                \ Number of vertices       = 78 / 6 = 13
+ EQUB 24                \ Number of edges          = 24
+ EQUW 0                 \ Bounty                   = 0
+ EQUB 52                \ Number of faces          = 52 / 4 = 13
+ EQUB 40                \ Visibility distance      = 40
+ EQUB 250               \ Max. energy              = 250
+ EQUB 24                \ Max. speed               = 24
+ EQUB &00               \ Edges data offset (high) = &0062
+ EQUB &00               \ Faces data offset (high) = &00C2
+ EQUB 0                 \ Normals are scaled by    = 2^0 = 1
+ EQUB %00011100         \ Laser power              = 3
+                        \ Missiles                 = 4
 
  EQUB &00, &00, &5D, &1F, &FF, &FF
  EQUB &00, &28, &57, &38, &02, &33
@@ -1875,25 +1383,25 @@ INCLUDE "library/common/main/variable_xx21.asm"
 
 \ ANA  = 14 = Anaconda
 
- EQUB &07               \ Max. canisters on demise = 
- EQUW &2710             \ Targetable area          = 
- EQUB &6E               \ Edges data offset (low)  = &
- EQUB &D2               \ Faces data offset (low)  = &
- EQUB &5D               \ Max. edge count          = ( - 1) / 4 = 
- EQUB &30               \ Gun vertex               = 
- EQUB &2E               \ Explosion count          = , as (4 * n) + 6 = 
- EQUB &5A               \ Number of vertices       = 90 / 6 = 15
- EQUB &19               \ Number of edges          = 25
- EQUW &0000             \ Bounty                   = 
- EQUB &30               \ Number of faces          = 48 / 4 = 12
- EQUB &24               \ Visibility distance      = 
- EQUB &FC               \ Max. energy              = 
- EQUB &0E               \ Max. speed               = 
- EQUB &00               \ Edges data offset (high) = &
- EQUB &00               \ Faces data offset (high) = &
- EQUB &01               \ Normals are scaled by    = 2^ = 
- EQUB &3F               \ Laser power              = 
-                        \ Missiles                 = 
+ EQUB 7                 \ Max. canisters on demise = 7
+ EQUW 100 * 100         \ Targetable area          = 100 * 100
+ EQUB &6E               \ Edges data offset (low)  = &006E
+ EQUB &D2               \ Faces data offset (low)  = &00D2
+ EQUB 93                \ Max. edge count          = (93 - 1) / 4 = 23
+ EQUB 48                \ Gun vertex               = 48
+ EQUB 46                \ Explosion count          = 10, as (4 * n) + 6 = 46
+ EQUB 90                \ Number of vertices       = 90 / 6 = 15
+ EQUB 25                \ Number of edges          = 25
+ EQUW 0                 \ Bounty                   = 0
+ EQUB 48                \ Number of faces          = 48 / 4 = 12
+ EQUB 36                \ Visibility distance      = 
+ EQUB 252               \ Max. energy              = 252
+ EQUB 14                \ Max. speed               = 14
+ EQUB &00               \ Edges data offset (high) = &006E
+ EQUB &00               \ Faces data offset (high) = &00D2
+ EQUB 1                 \ Normals are scaled by    = 2^1 = 2
+ EQUB %00111111         \ Laser power              = 7
+                        \ Missiles                 = 7
 
  EQUB &00, &07, &3A, &3E, &01, &55
  EQUB &2B, &0D, &25, &FE, &01, &22
@@ -1952,25 +1460,25 @@ INCLUDE "library/common/main/variable_xx21.asm"
 
 \ HER  = 15 = Rock hermit (asteroid)
 
- EQUB &07               \ Max. canisters on demise = 
- EQUW &1900             \ Targetable area          = 
- EQUB &4A               \ Edges data offset (low)  = &
- EQUB &9E               \ Faces data offset (low)  = &
- EQUB &45               \ Max. edge count          = ( - 1) / 4 = 
- EQUB &00               \ Gun vertex               = 
- EQUB &32               \ Explosion count          = , as (4 * n) + 6 = 
- EQUB &36               \ Number of vertices       = 54 / 6 = 9
- EQUB &15               \ Number of edges          = 21
- EQUW &0000             \ Bounty                   = 
- EQUB &38               \ Number of faces          = 56 / 4 = 14
- EQUB &32               \ Visibility distance      = 
- EQUB &B4               \ Max. energy              = 
- EQUB &1E               \ Max. speed               = 
- EQUB &00               \ Edges data offset (high) = &
- EQUB &00               \ Faces data offset (high) = &
- EQUB &01               \ Normals are scaled by    = 2^ = 
- EQUB &02               \ Laser power              = 
-                        \ Missiles                 = 
+ EQUB 7                 \ Max. canisters on demise = 7
+ EQUW 80 * 80           \ Targetable area          = 80 * 80
+ EQUB &4A               \ Edges data offset (low)  = &004A
+ EQUB &9E               \ Faces data offset (low)  = &009E
+ EQUB 69                \ Max. edge count          = (69 - 1) / 4 = 17
+ EQUB 0                 \ Gun vertex               = 0
+ EQUB 50                \ Explosion count          = 11, as (4 * n) + 6 = 50
+ EQUB 54                \ Number of vertices       = 54 / 6 = 9
+ EQUB 21                \ Number of edges          = 21
+ EQUW 0                 \ Bounty                   = 0
+ EQUB 56                \ Number of faces          = 56 / 4 = 14
+ EQUB 50                \ Visibility distance      = 50
+ EQUB 180               \ Max. energy              = 180
+ EQUB 30                \ Max. speed               = 30
+ EQUB &00               \ Edges data offset (high) = &004A
+ EQUB &00               \ Faces data offset (high) = &009E
+ EQUB 1                 \ Normals are scaled by    = 2^1 = 2
+ EQUB %00000010         \ Laser power              = 0
+                        \ Missiles                 = 2
 
  EQUB &00, &50, &00, &1F, &FF, &FF
  EQUB &50, &0A, &00, &DF, &FF, &FF
@@ -2019,234 +1527,31 @@ INCLUDE "library/common/main/variable_xx21.asm"
  EQUB &3F, &51, &09, &43
  EQUB &3F, &2F, &5E, &3F
 
-\ COPS = 16 = Viper
-
- EQUB &00               \ Max. canisters on demise = 
- EQUW &15F9             \ Targetable area          = 
- EQUB &6E               \ Edges data offset (low)  = &
- EQUB &BE               \ Faces data offset (low)  = &
- EQUB &51               \ Max. edge count          = ( - 1) / 4 = 
- EQUB &00               \ Gun vertex               = 
- EQUB &2A               \ Explosion count          = , as (4 * n) + 6 = 
- EQUB &5A               \ Number of vertices       = 90 / 6 = 15
- EQUB &14               \ Number of edges          = 20
- EQUW &0000             \ Bounty                   = 
- EQUB &1C               \ Number of faces          = 28 / 4 = 7
- EQUB &17               \ Visibility distance      = 
- EQUB &8C               \ Max. energy              = 
- EQUB &20               \ Max. speed               = 
- EQUB &00               \ Edges data offset (high) = &
- EQUB &00               \ Faces data offset (high) = &
- EQUB &01               \ Normals are scaled by    = 2^ = 
- EQUB &11               \ Laser power              = 
-                        \ Missiles                 = 
-
- EQUB &00, &00, &48, &1F, &21, &43
- EQUB &00, &10, &18, &1E, &10, &22
- EQUB &00, &10, &18, &5E, &43, &55
- EQUB &30, &00, &18, &3F, &42, &66
- EQUB &30, &00, &18, &BF, &31, &66
- EQUB &18, &10, &18, &7E, &54, &66
- EQUB &18, &10, &18, &FE, &35, &66
- EQUB &18, &10, &18, &3F, &20, &66
- EQUB &18, &10, &18, &BF, &10, &66
- EQUB &20, &00, &18, &B3, &66, &66
- EQUB &20, &00, &18, &33, &66, &66
- EQUB &08, &08, &18, &33, &66, &66
- EQUB &08, &08, &18, &B3, &66, &66
- EQUB &08, &08, &18, &F2, &66, &66
- EQUB &08, &08, &18, &72, &66, &66
-
- EQUB &1F, &42, &00, &0C
- EQUB &1E, &21, &00, &04
- EQUB &1E, &43, &00, &08
- EQUB &1F, &31, &00, &10
- EQUB &1E, &20, &04, &1C
- EQUB &1E, &10, &04, &20
- EQUB &1E, &54, &08, &14
- EQUB &1E, &53, &08, &18
- EQUB &1F, &60, &1C, &20
- EQUB &1E, &65, &14, &18
- EQUB &1F, &61, &10, &20
- EQUB &1E, &63, &10, &18
- EQUB &1F, &62, &0C, &1C
- EQUB &1E, &46, &0C, &14
- EQUB &13, &66, &24, &30
- EQUB &12, &66, &24, &34
- EQUB &13, &66, &28, &2C
- EQUB &12, &66, &28, &38
- EQUB &10, &66, &2C, &38
- EQUB &10, &66, &30, &34
-
- EQUB &1F, &00, &20, &00
- EQUB &9F, &16, &21, &0B
- EQUB &1F, &16, &21, &0B
- EQUB &DF, &16, &21, &0B
- EQUB &5F, &16, &21, &0B
- EQUB &5F, &00, &20, &00
- EQUB &3F, &00, &00, &30
-
-\ SH3  = 17 = Sidewinder
-
- EQUB &00               \ Max. canisters on demise = 
- EQUW &1081             \ Targetable area          = 
- EQUB &50               \ Edges data offset (low)  = &
- EQUB &8C               \ Faces data offset (low)  = &
- EQUB &41               \ Max. edge count          = ( - 1) / 4 = 
- EQUB &00               \ Gun vertex               = 
- EQUB &1E               \ Explosion count          = , as (4 * n) + 6 = 
- EQUB &3C               \ Number of vertices       = 60 / 6 = 10
- EQUB &0F               \ Number of edges          = 15
- EQUW &0032             \ Bounty                   = 
- EQUB &1C               \ Number of faces          = 28 / 4 = 7
- EQUB &14               \ Visibility distance      = 
- EQUB &46               \ Max. energy              = 
- EQUB &25               \ Max. speed               = 
- EQUB &00               \ Edges data offset (high) = &
- EQUB &00               \ Faces data offset (high) = &
- EQUB &02               \ Normals are scaled by    = 2^ = 
- EQUB &10               \ Laser power              = 
-                        \ Missiles                 = 
-
- EQUB &20, &00, &24, &9F, &10, &54
- EQUB &20, &00, &24, &1F, &20, &65
- EQUB &40, &00, &1C, &3F, &32, &66
- EQUB &40, &00, &1C, &BF, &31, &44
- EQUB &00, &10, &1C, &3F, &10, &32
- EQUB &00, &10, &1C, &7F, &43, &65
- EQUB &0C, &06, &1C, &AF, &33, &33
- EQUB &0C, &06, &1C, &2F, &33, &33
- EQUB &0C, &06, &1C, &6C, &33, &33
- EQUB &0C, &06, &1C, &EC, &33, &33
-
- EQUB &1F, &50, &00, &04
- EQUB &1F, &62, &04, &08
- EQUB &1F, &20, &04, &10
- EQUB &1F, &10, &00, &10
- EQUB &1F, &41, &00, &0C
- EQUB &1F, &31, &0C, &10
- EQUB &1F, &32, &08, &10
- EQUB &1F, &43, &0C, &14
- EQUB &1F, &63, &08, &14
- EQUB &1F, &65, &04, &14
- EQUB &1F, &54, &00, &14
- EQUB &0F, &33, &18, &1C
- EQUB &0C, &33, &1C, &20
- EQUB &0C, &33, &18, &24
- EQUB &0C, &33, &20, &24
-
- EQUB &1F, &00, &20, &08
- EQUB &9F, &0C, &2F, &06
- EQUB &1F, &0C, &2F, &06
- EQUB &3F, &00, &00, &70
- EQUB &DF, &0C, &2F, &06
- EQUB &5F, &00, &20, &08
- EQUB &5F, &0C, &2F, &06
-
-\        18 = Mamba
-
- EQUB &01               \ Max. canisters on demise = 
- EQUW &1324             \ Targetable area          = 70 * 70
- EQUB &AA               \ Edges data offset (low)  = &
- EQUB &1A               \ Faces data offset (low)  = &
- EQUB &61               \ Max. edge count          = ( - 1) / 4 = 
- EQUB &00               \ Gun vertex               = 
- EQUB &22               \ Explosion count          = , as (4 * n) + 6 = 
- EQUB &96               \ Number of vertices       = 150 / 6 = 25
- EQUB &1C               \ Number of edges          = 28
- EQUW &0096             \ Bounty                   = 
- EQUB &14               \ Number of faces          = 20 / 4 = 5
- EQUB &19               \ Visibility distance      = 
- EQUB &5A               \ Max. energy              = 
- EQUB &1E               \ Max. speed               = 
- EQUB &00               \ Edges data offset (high) = &
- EQUB &01               \ Faces data offset (high) = &
- EQUB &02               \ Normals are scaled by    = 2^ = 
- EQUB &12               \ Laser power              = 
-                        \ Missiles                 = 
-
- EQUB &00, &00, &40, &1F, &10, &32
- EQUB &40, &08, &20, &FF, &20, &44
- EQUB &20, &08, &20, &BE, &21, &44
- EQUB &20, &08, &20, &3E, &31, &44
- EQUB &40, &08, &20, &7F, &30, &44
- EQUB &04, &04, &10, &8E, &11, &11
- EQUB &04, &04, &10, &0E, &11, &11
- EQUB &08, &03, &1C, &0D, &11, &11
- EQUB &08, &03, &1C, &8D, &11, &11
- EQUB &14, &04, &10, &D4, &00, &00
- EQUB &14, &04, &10, &54, &00, &00
- EQUB &18, &07, &14, &F4, &00, &00
- EQUB &10, &07, &14, &F0, &00, &00
- EQUB &10, &07, &14, &70, &00, &00
- EQUB &18, &07, &14, &74, &00, &00
- EQUB &08, &04, &20, &AD, &44, &44
- EQUB &08, &04, &20, &2D, &44, &44
- EQUB &08, &04, &20, &6E, &44, &44
- EQUB &08, &04, &20, &EE, &44, &44
- EQUB &20, &04, &20, &A7, &44, &44
- EQUB &20, &04, &20, &27, &44, &44
- EQUB &24, &04, &20, &67, &44, &44
- EQUB &24, &04, &20, &E7, &44, &44
- EQUB &26, &00, &20, &A5, &44, &44
- EQUB &26, &00, &20, &25, &44, &44
-
- EQUB &1F, &20, &00, &04
- EQUB &1F, &30, &00, &10
- EQUB &1F, &40, &04, &10
- EQUB &1E, &42, &04, &08
- EQUB &1E, &41, &08, &0C
- EQUB &1E, &43, &0C, &10
- EQUB &0E, &11, &14, &18
- EQUB &0C, &11, &18, &1C
- EQUB &0D, &11, &1C, &20
- EQUB &0C, &11, &14, &20
- EQUB &14, &00, &24, &2C
- EQUB &10, &00, &24, &30
- EQUB &10, &00, &28, &34
- EQUB &14, &00, &28, &38
- EQUB &0E, &00, &34, &38
- EQUB &0E, &00, &2C, &30
- EQUB &0D, &44, &3C, &40
- EQUB &0E, &44, &44, &48
- EQUB &0C, &44, &3C, &48
- EQUB &0C, &44, &40, &44
- EQUB &07, &44, &50, &54
- EQUB &05, &44, &50, &60
- EQUB &05, &44, &54, &60
- EQUB &07, &44, &4C, &58
- EQUB &05, &44, &4C, &5C
- EQUB &05, &44, &58, &5C
- EQUB &1E, &21, &00, &08
- EQUB &1E, &31, &00, &0C
-
- EQUB &5E, &00, &18, &02
- EQUB &1E, &00, &18, &02
- EQUB &9E, &20, &40, &10
- EQUB &1E, &20, &40, &10
- EQUB &3E, &00, &00, &7F
+INCLUDE "library/common/main/variable_ship_viper.asm"
+INCLUDE "library/common/main/variable_ship_sidewinder.asm"
+INCLUDE "library/common/main/variable_ship_mamba.asm"
 
 \ KRA  = 19 = Krait
 
- EQUB &01               \ Max. canisters on demise = 
- EQUW &0E10             \ Targetable area          = 
- EQUB &7A               \ Edges data offset (low)  = &
- EQUB &CE               \ Faces data offset (low)  = &
- EQUB &59               \ Max. edge count          = ( - 1) / 4 = 
- EQUB &00               \ Gun vertex               = 
- EQUB &12               \ Explosion count          = , as (4 * n) + 6 = 
- EQUB &66               \ Number of vertices       = 102 / 6 = 17
- EQUB &15               \ Number of edges          = 21
- EQUW &0064             \ Bounty                   = 
- EQUB &18               \ Number of faces          = 24 / 4 = 6
- EQUB &14               \ Visibility distance      = 
- EQUB &50               \ Max. energy              = 
- EQUB &1E               \ Max. speed               = 
- EQUB &00               \ Edges data offset (high) = &
- EQUB &00               \ Faces data offset (high) = &
- EQUB &01               \ Normals are scaled by    = 2^ = 
- EQUB &10               \ Laser power              = 
-                        \ Missiles                 = 
+ EQUB 1                 \ Max. canisters on demise = 1
+ EQUW 60 * 60           \ Targetable area          = 60 * 60
+ EQUB &7A               \ Edges data offset (low)  = &007A
+ EQUB &CE               \ Faces data offset (low)  = &00CE
+ EQUB 89                \ Max. edge count          = (89 - 1) / 4 = 22
+ EQUB 0                 \ Gun vertex               = 0
+ EQUB 18                \ Explosion count          = 3, as (4 * n) + 6 = 18
+ EQUB 102               \ Number of vertices       = 102 / 6 = 17
+ EQUB 21                \ Number of edges          = 21
+ EQUW 100               \ Bounty                   = 100
+ EQUB 24                \ Number of faces          = 24 / 4 = 6
+ EQUB 20                \ Visibility distance      = 20
+ EQUB 80                \ Max. energy              = 80
+ EQUB 30                \ Max. speed               = 30
+ EQUB &00               \ Edges data offset (high) = &007A
+ EQUB &00               \ Faces data offset (high) = &00CE
+ EQUB 1                 \ Normals are scaled by    = 2^1 = 2
+ EQUB %00010000         \ Laser power              = 2
+                        \ Missiles                 = 0
 
  EQUB &00, &00, &60, &1F, &01, &23
  EQUB &00, &12, &30, &3F, &03, &45
@@ -2297,25 +1602,25 @@ INCLUDE "library/common/main/variable_xx21.asm"
 
 \ ADA  = 20 = Adder
 
- EQUB &00               \ Max. canisters on demise = 
- EQUW &09C4             \ Targetable area          = 50 * 50
- EQUB &80               \ Edges data offset (low)  = &
- EQUB &F4               \ Faces data offset (low)  = &
- EQUB &65               \ Max. edge count          = ( - 1) / 4 = 
- EQUB &00               \ Gun vertex               = 
- EQUB &16               \ Explosion count          = , as (4 * n) + 6 = 
- EQUB &6C               \ Number of vertices       = 108 / 6 = 18
- EQUB &1D               \ Number of edges          = 29
- EQUW &0028             \ Bounty                   = 
- EQUB &3C               \ Number of faces          = 60 / 4 = 15
- EQUB &14               \ Visibility distance      = 
- EQUB &55               \ Max. energy              = 
- EQUB &18               \ Max. speed               = 
- EQUB &00               \ Edges data offset (high) = &
- EQUB &00               \ Faces data offset (high) = &
- EQUB &02               \ Normals are scaled by    = 2^ = 
- EQUB &10               \ Laser power              = 
-                        \ Missiles                 = 
+ EQUB 0                 \ Max. canisters on demise = 0
+ EQUW 50 * 50           \ Targetable area          = 50 * 50
+ EQUB &80               \ Edges data offset (low)  = &0080
+ EQUB &F4               \ Faces data offset (low)  = &00F4
+ EQUB 101               \ Max. edge count          = (101 - 1) / 4 = 25
+ EQUB 0                 \ Gun vertex               = 0
+ EQUB 22                \ Explosion count          = 4, as (4 * n) + 6 = 22
+ EQUB 108               \ Number of vertices       = 108 / 6 = 18
+ EQUB 29                \ Number of edges          = 29
+ EQUW 40                \ Bounty                   = 40
+ EQUB 60                \ Number of faces          = 60 / 4 = 15
+ EQUB 20                \ Visibility distance      = 20
+ EQUB 85                \ Max. energy              = 85
+ EQUB 24                \ Max. speed               = 24
+ EQUB &00               \ Edges data offset (high) = &0080
+ EQUB &00               \ Faces data offset (high) = &00F4
+ EQUB 2                 \ Normals are scaled by    = 2^2 = 4
+ EQUB %00010000         \ Laser power              = 2
+                        \ Missiles                 = 0
 
  EQUB &12, &00, &28, &9F, &01, &BC
  EQUB &12, &00, &28, &1F, &01, &23
@@ -2384,25 +1689,25 @@ INCLUDE "library/common/main/variable_xx21.asm"
 
 \        21 = Gecko
 
- EQUB &00               \ Max. canisters on demise = 
- EQUW &2649             \ Targetable area          = 99 * 99
- EQUB &5C               \ Edges data offset (low)  = &
- EQUB &A0               \ Faces data offset (low)  = &
- EQUB &45               \ Max. edge count          = ( - 1) / 4 = 
- EQUB &00               \ Gun vertex               = 
- EQUB &1A               \ Explosion count          = , as (4 * n) + 6 = 
- EQUB &48               \ Number of vertices       = 72 / 6 = 12
- EQUB &11               \ Number of edges          = 17
+ EQUB 0                 \ Max. canisters on demise = 0
+ EQUW 99 * 99           \ Targetable area          = 99 * 99
+ EQUB &5C               \ Edges data offset (low)  = &005C
+ EQUB &A0               \ Faces data offset (low)  = &00A0
+ EQUB 69                \ Max. edge count          = (69 - 1) / 4 = 17
+ EQUB 0                 \ Gun vertex               = 0
+ EQUB 26                \ Explosion count          = 5, as (4 * n) + 6 = 26
+ EQUB 72                \ Number of vertices       = 72 / 6 = 12
+ EQUB 17                \ Number of edges          = 17
  EQUW &0037             \ Bounty                   = 
- EQUB &24               \ Number of faces          = 36 / 4 = 9
- EQUB &12               \ Visibility distance      = 
- EQUB &46               \ Max. energy              = 
- EQUB &1E               \ Max. speed               = 
- EQUB &00               \ Edges data offset (high) = &
- EQUB &00               \ Faces data offset (high) = &
- EQUB &03               \ Normals are scaled by    = 2^ = 
- EQUB &10               \ Laser power              = 
-                        \ Missiles                 = 
+ EQUB 36                \ Number of faces          = 36 / 4 = 9
+ EQUB 18                \ Visibility distance      = 
+ EQUB 70                \ Max. energy              = 
+ EQUB 30                \ Max. speed               = 30
+ EQUB &00               \ Edges data offset (high) = &005C
+ EQUB &00               \ Faces data offset (high) = &00A0
+ EQUB 3                 \ Normals are scaled by    = 2^3 = 8
+ EQUB %00010000         \ Laser power              = 2
+                        \ Missiles                 = 0
 
  EQUB &0A, &04, &2F, &DF, &03, &45
  EQUB &0A, &04, &2F, &5F, &01, &23
@@ -2447,25 +1752,25 @@ INCLUDE "library/common/main/variable_xx21.asm"
 
 \        22 = Cobra Mk I
 
- EQUB &03               \ Max. canisters on demise = 
- EQUW &2649             \ Targetable area          = 
- EQUB &56               \ Edges data offset (low)  = &
- EQUB &9E               \ Faces data offset (low)  = &
- EQUB &49               \ Max. edge count          = ( - 1) / 4 = 
- EQUB &28               \ Gun vertex               = 
- EQUB &1A               \ Explosion count          = , as (4 * n) + 6 = 
- EQUB &42               \ Number of vertices       = 66 / 6 = 11
- EQUB &12               \ Number of edges          = 18
- EQUW &004B             \ Bounty                   = 
- EQUB &28               \ Number of faces          = 40 / 4 = 10
- EQUB &13               \ Visibility distance      = 
- EQUB &5A               \ Max. energy              = 
- EQUB &1A               \ Max. speed               = 
- EQUB &00               \ Edges data offset (high) = &
- EQUB &00               \ Faces data offset (high) = &
- EQUB &02               \ Normals are scaled by    = 2^ = 
- EQUB &12               \ Laser power              = 
-                        \ Missiles                 = 
+ EQUB 3                 \ Max. canisters on demise = 3
+ EQUW 99 * 99           \ Targetable area          = 99 * 99
+ EQUB &56               \ Edges data offset (low)  = &0056
+ EQUB &9E               \ Faces data offset (low)  = &009E
+ EQUB 73                \ Max. edge count          = (73 - 1) / 4 = 18
+ EQUB 40                \ Gun vertex               = 40
+ EQUB 26                \ Explosion count          = 5, as (4 * n) + 6 = 26
+ EQUB 66                \ Number of vertices       = 66 / 6 = 11
+ EQUB 18                \ Number of edges          = 18
+ EQUW 75                \ Bounty                   = 75
+ EQUB 40                \ Number of faces          = 40 / 4 = 10
+ EQUB 19                \ Visibility distance      = 19
+ EQUB 90                \ Max. energy              = 90
+ EQUB 26                \ Max. speed               = 26
+ EQUB &00               \ Edges data offset (high) = &0056
+ EQUB &00               \ Faces data offset (high) = &009E
+ EQUB 2                 \ Normals are scaled by    = 2^2 = 4
+ EQUB %00010010         \ Laser power              = 2
+                        \ Missiles                 = 2
 
  EQUB &12, &01, &32, &DF, &01, &23
  EQUB &12, &01, &32, &5F, &01, &45
@@ -2511,25 +1816,25 @@ INCLUDE "library/common/main/variable_xx21.asm"
 
 \ WRM  = 23 = Worm
 
- EQUB &00               \ Max. canisters on demise = 
- EQUW &2649             \ Targetable area          = 99 * 99
- EQUB &50               \ Edges data offset (low)  = &
- EQUB &90               \ Faces data offset (low)  = &
- EQUB &4D               \ Max. edge count          = ( - 1) / 4 = 
- EQUB &00               \ Gun vertex               = 
- EQUB &12               \ Explosion count          = , as (4 * n) + 6 = 
- EQUB &3C               \ Number of vertices       = 60 / 6 = 10
- EQUB &10               \ Number of edges          = 16
- EQUW &0000             \ Bounty                   = 
- EQUB &20               \ Number of faces          = 32 / 4 = 8
- EQUB &13               \ Visibility distance      = 
- EQUB &1E               \ Max. energy              = 
- EQUB &17               \ Max. speed               = 
- EQUB &00               \ Edges data offset (high) = &
- EQUB &00               \ Faces data offset (high) = &
- EQUB &03               \ Normals are scaled by    = 2^ = 
- EQUB &08               \ Laser power              = 
-                        \ Missiles                 = 
+ EQUB 0                 \ Max. canisters on demise = 0
+ EQUW 99 * 99           \ Targetable area          = 99 * 99
+ EQUB &50               \ Edges data offset (low)  = &0050
+ EQUB &90               \ Faces data offset (low)  = &0090
+ EQUB 77                \ Max. edge count          = (77 - 1) / 4 = 19
+ EQUB 0                 \ Gun vertex               = 0
+ EQUB 18                \ Explosion count          = 3, as (4 * n) + 6 = 18
+ EQUB 60                \ Number of vertices       = 60 / 6 = 10
+ EQUB 16                \ Number of edges          = 16
+ EQUW 0                 \ Bounty                   = 0
+ EQUB 32                \ Number of faces          = 32 / 4 = 8
+ EQUB 19                \ Visibility distance      = 19
+ EQUB 30                \ Max. energy              = 30
+ EQUB 23                \ Max. speed               = 23
+ EQUB &00               \ Edges data offset (high) = &0050
+ EQUB &00               \ Faces data offset (high) = &0090
+ EQUB 3                 \ Normals are scaled by    = 2^3 = 8
+ EQUB %00001000         \ Laser power              = 1
+                        \ Missiles                 = 0
 
  EQUB &0A, &0A, &23, &5F, &02, &77
  EQUB &0A, &0A, &23, &DF, &03, &77
@@ -2568,131 +1873,29 @@ INCLUDE "library/common/main/variable_xx21.asm"
  EQUB &3F, &00, &00, &C8
  EQUB &5F, &00, &50, &00
 
-\ CYL2 = 24 = Cobra Mk III (pirate)
-
- EQUB &01               \ Max. canisters on demise = 
- EQUW &2341             \ Targetable area          = 95 * 95
- EQUB &BC               \ Edges data offset (low)  = &
- EQUB &54               \ Faces data offset (low)  = &
- EQUB &9D               \ Max. edge count          = ( - 1) / 4 = 
- EQUB &54               \ Gun vertex               = 
- EQUB &2A               \ Explosion count          = , as (4 * n) + 6 = 
- EQUB &A8               \ Number of vertices       = 168 / 6 = 28
- EQUB &26               \ Number of edges          = 38
- EQUW &00AF             \ Bounty                   = 
- EQUB &34               \ Number of faces          = 52 / 4 = 13
- EQUB &32               \ Visibility distance      = 
- EQUB &96               \ Max. energy              = 
- EQUB &1C               \ Max. speed               = 
- EQUB &00               \ Edges data offset (high) = &
- EQUB &01               \ Faces data offset (high) = &
- EQUB &01               \ Normals are scaled by    = 2^ = 
- EQUB &12               \ Laser power              = 
-                        \ Missiles                 = 
-
- EQUB &20, &00, &4C, &1F, &FF, &FF
- EQUB &20, &00, &4C, &9F, &FF, &FF
- EQUB &00, &1A, &18, &1F, &FF, &FF
- EQUB &78, &03, &08, &FF, &73, &AA
- EQUB &78, &03, &08, &7F, &84, &CC
- EQUB &58, &10, &28, &BF, &FF, &FF
- EQUB &58, &10, &28, &3F, &FF, &FF
- EQUB &80, &08, &28, &7F, &98, &CC
- EQUB &80, &08, &28, &FF, &97, &AA
- EQUB &00, &1A, &28, &3F, &65, &99
- EQUB &20, &18, &28, &FF, &A9, &BB
- EQUB &20, &18, &28, &7F, &B9, &CC
- EQUB &24, &08, &28, &B4, &99, &99
- EQUB &08, &0C, &28, &B4, &99, &99
- EQUB &08, &0C, &28, &34, &99, &99
- EQUB &24, &08, &28, &34, &99, &99
- EQUB &24, &0C, &28, &74, &99, &99
- EQUB &08, &10, &28, &74, &99, &99
- EQUB &08, &10, &28, &F4, &99, &99
- EQUB &24, &0C, &28, &F4, &99, &99
- EQUB &00, &00, &4C, &06, &B0, &BB
- EQUB &00, &00, &5A, &1F, &B0, &BB
- EQUB &50, &06, &28, &E8, &99, &99
- EQUB &50, &06, &28, &A8, &99, &99
- EQUB &58, &00, &28, &A6, &99, &99
- EQUB &50, &06, &28, &28, &99, &99
- EQUB &58, &00, &28, &26, &99, &99
- EQUB &50, &06, &28, &68, &99, &99
-
- EQUB &1F, &B0, &00, &04
- EQUB &1F, &C4, &00, &10
- EQUB &1F, &A3, &04, &0C
- EQUB &1F, &A7, &0C, &20
- EQUB &1F, &C8, &10, &1C
- EQUB &1F, &98, &18, &1C
- EQUB &1F, &96, &18, &24
- EQUB &1F, &95, &14, &24
- EQUB &1F, &97, &14, &20
- EQUB &1F, &51, &08, &14
- EQUB &1F, &62, &08, &18
- EQUB &1F, &73, &0C, &14
- EQUB &1F, &84, &10, &18
- EQUB &1F, &10, &04, &08
- EQUB &1F, &20, &00, &08
- EQUB &1F, &A9, &20, &28
- EQUB &1F, &B9, &28, &2C
- EQUB &1F, &C9, &1C, &2C
- EQUB &1F, &BA, &04, &28
- EQUB &1F, &CB, &00, &2C
- EQUB &1D, &31, &04, &14
- EQUB &1D, &42, &00, &18
- EQUB &06, &B0, &50, &54
- EQUB &14, &99, &30, &34
- EQUB &14, &99, &48, &4C
- EQUB &14, &99, &38, &3C
- EQUB &14, &99, &40, &44
- EQUB &13, &99, &3C, &40
- EQUB &11, &99, &38, &44
- EQUB &13, &99, &34, &48
- EQUB &13, &99, &30, &4C
- EQUB &1E, &65, &08, &24
- EQUB &06, &99, &58, &60
- EQUB &06, &99, &5C, &60
- EQUB &08, &99, &58, &5C
- EQUB &06, &99, &64, &68
- EQUB &06, &99, &68, &6C
- EQUB &08, &99, &64, &6C
-
- EQUB &1F, &00, &3E, &1F
- EQUB &9F, &12, &37, &10
- EQUB &1F, &12, &37, &10
- EQUB &9F, &10, &34, &0E
- EQUB &1F, &10, &34, &0E
- EQUB &9F, &0E, &2F, &00
- EQUB &1F, &0E, &2F, &00
- EQUB &9F, &3D, &66, &00
- EQUB &1F, &3D, &66, &00
- EQUB &3F, &00, &00, &50
- EQUB &DF, &07, &2A, &09
- EQUB &5F, &00, &1E, &06
- EQUB &5F, &07, &2A, &09
+INCLUDE "library/6502sp/main/variable_ship_cobra_mk_iii_pirate.asm"
 
 \ ASP  = 25 = Asp Mk II
 
- EQUB &00               \ Max. canisters on demise = 
- EQUW &0E10             \ Targetable area          = 
- EQUB &86               \ Edges data offset (low)  = &
- EQUB &F6               \ Faces data offset (low)  = &
- EQUB &69               \ Max. edge count          = ( - 1) / 4 = 
- EQUB &20               \ Gun vertex               = 
- EQUB &1A               \ Explosion count          = , as (4 * n) + 6 = 
- EQUB &72               \ Number of vertices       = 114 / 6 = 19
- EQUB &1C               \ Number of edges          = 28
- EQUW &00C8             \ Bounty                   = 
- EQUB &30               \ Number of faces          = 48 / 4 = 12
- EQUB &28               \ Visibility distance      = 
- EQUB &96               \ Max. energy              = 
- EQUB &28               \ Max. speed               = 
- EQUB &00               \ Edges data offset (high) = &
- EQUB &00               \ Faces data offset (high) = &
- EQUB &01               \ Normals are scaled by    = 2^ = 
- EQUB &29               \ Laser power              = 
-                        \ Missiles                 = 
+ EQUB 0                 \ Max. canisters on demise = 0
+ EQUW 60 * 60           \ Targetable area          = 60 * 60
+ EQUB &86               \ Edges data offset (low)  = &0086
+ EQUB &F6               \ Faces data offset (low)  = &00F6
+ EQUB 105               \ Max. edge count          = (105 - 1) / 4 = 26
+ EQUB 32                \ Gun vertex               = 32
+ EQUB 26                \ Explosion count          = 5, as (4 * n) + 6 = 26
+ EQUB 114               \ Number of vertices       = 114 / 6 = 19
+ EQUB 28                \ Number of edges          = 28
+ EQUW 200               \ Bounty                   = 200
+ EQUB 48                \ Number of faces          = 48 / 4 = 12
+ EQUB 40                \ Visibility distance      = 40
+ EQUB 150               \ Max. energy              = 150
+ EQUB 40                \ Max. speed               = 40
+ EQUB &00               \ Edges data offset (high) = &0086
+ EQUB &00               \ Faces data offset (high) = &00F6
+ EQUB 1                 \ Normals are scaled by    = 2^1 = 2
+ EQUB %00101001         \ Laser power              = 5
+                        \ Missiles                 = 1
 
  EQUB &00, &12, &00, &56, &01, &22
  EQUB &00, &09, &2D, &7F, &12, &BB
@@ -2762,25 +1965,25 @@ INCLUDE "library/common/main/variable_xx21.asm"
 
 \        26 = Python (pirate)
 
- EQUB &02               \ Max. canisters on demise = 
- EQUW &1900             \ Targetable area          = 80 * 80
- EQUB &56               \ Edges data offset (low)  = &
- EQUB &BE               \ Faces data offset (low)  = &
- EQUB &59               \ Max. edge count          = ( - 1) / 4 = 
- EQUB &00               \ Gun vertex               = 
- EQUB &2A               \ Explosion count          = , as (4 * n) + 6 = 
- EQUB &42               \ Number of vertices       = 66 / 6 = 11
- EQUB &1A               \ Number of edges          = 26
- EQUW &00C8             \ Bounty                   = 
- EQUB &34               \ Number of faces          = 52 / 4 = 13
- EQUB &28               \ Visibility distance      = 
- EQUB &FA               \ Max. energy              = 
+ EQUB 2                 \ Max. canisters on demise = 2
+ EQUW 80 * 80           \ Targetable area          = 80 * 80
+ EQUB &56               \ Edges data offset (low)  = &0056
+ EQUB &BE               \ Faces data offset (low)  = &00BE
+ EQUB 89                \ Max. edge count          = (89 - 1) / 4 = 22
+ EQUB 0                 \ Gun vertex               = 0
+ EQUB 42                \ Explosion count          = 9, as (4 * n) + 6 = 42
+ EQUB 66                \ Number of vertices       = 66 / 6 = 11
+ EQUB 26                \ Number of edges          = 26
+ EQUW 200               \ Bounty                   = 200
+ EQUB 52                \ Number of faces          = 52 / 4 = 13
+ EQUB 40                \ Visibility distance      = 40
+ EQUB 250               \ Max. energy              = 250
  EQUB &14               \ Max. speed               = 
- EQUB &00               \ Edges data offset (high) = &
- EQUB &00               \ Faces data offset (high) = &
- EQUB &00               \ Normals are scaled by    = 2^ = 
- EQUB &1B               \ Laser power              = 
-                        \ Missiles                 = 
+ EQUB &00               \ Edges data offset (high) = &0056
+ EQUB &00               \ Faces data offset (high) = &00BE
+ EQUB 0                 \ Normals are scaled by    = 2^0 = 1
+ EQUB %00011011         \ Laser power              = 3
+                        \ Missiles                 = 3
 
  EQUB &00, &00, &E0, &1F, &10, &32
  EQUB &00, &30, &30, &1F, &10, &54
@@ -2837,25 +2040,25 @@ INCLUDE "library/common/main/variable_xx21.asm"
 
 \        27 = Fer-de-lance
 
- EQUB &00               \ Max. canisters on demise = 
- EQUW &0640             \ Targetable area          = 40 * 40
- EQUB &86               \ Edges data offset (low)  = &
- EQUB &F2               \ Faces data offset (low)  = &
- EQUB &6D               \ Max. edge count          = ( - 1) / 4 = 
- EQUB &00               \ Gun vertex               = 
- EQUB &1A               \ Explosion count          = , as (4 * n) + 6 = 
- EQUB &72               \ Number of vertices       = 114 / 6 = 19
- EQUB &1B               \ Number of edges          = 27
- EQUW &0000             \ Bounty                   = 
- EQUB &28               \ Number of faces          = 40 / 4 = 10
- EQUB &28               \ Visibility distance      = 
- EQUB &A0               \ Max. energy              = 
- EQUB &1E               \ Max. speed               = 
- EQUB &00               \ Edges data offset (high) = &
- EQUB &00               \ Faces data offset (high) = &
- EQUB &01               \ Normals are scaled by    = 2^ = 
- EQUB &12               \ Laser power              = 
-                        \ Missiles                 = 
+ EQUB 0                 \ Max. canisters on demise = 0
+ EQUW 40 * 40           \ Targetable area          = 40 * 40
+ EQUB &86               \ Edges data offset (low)  = &0086
+ EQUB &F2               \ Faces data offset (low)  = &00F2
+ EQUB 109               \ Max. edge count          = (109 - 1) / 4 = 27
+ EQUB 0                 \ Gun vertex               = 0
+ EQUB 26                \ Explosion count          = 5, as (4 * n) + 6 = 26
+ EQUB 114               \ Number of vertices       = 114 / 6 = 19
+ EQUB 27                \ Number of edges          = 27
+ EQUW 0                 \ Bounty                   = 0
+ EQUB 40                \ Number of faces          = 40 / 4 = 10
+ EQUB 40                \ Visibility distance      = 40
+ EQUB 160               \ Max. energy              = 160
+ EQUB 30                \ Max. speed               = 30
+ EQUB &00               \ Edges data offset (high) = &0086
+ EQUB &00               \ Faces data offset (high) = &00F2
+ EQUB 1                 \ Normals are scaled by    = 2^1 = 2
+ EQUB %00010010         \ Laser power              = 2
+                        \ Missiles                 = 2
 
  EQUB &00, &0E, &6C, &5F, &01, &59
  EQUB &28, &0E, &04, &FF, &12, &99
@@ -2918,25 +2121,25 @@ INCLUDE "library/common/main/variable_xx21.asm"
 
 \        28 = Moray
 
- EQUB &01               \ Max. canisters on demise = 
- EQUW &0384             \ Targetable area          = 30 * 30
- EQUB &68               \ Edges data offset (low)  = &
- EQUB &B4               \ Faces data offset (low)  = &
- EQUB &49               \ Max. edge count          = ( - 1) / 4 = 
- EQUB &00               \ Gun vertex               = 
- EQUB &1A               \ Explosion count          = , as (4 * n) + 6 = 
- EQUB &54               \ Number of vertices       = 84 / 6 = 14
- EQUB &13               \ Number of edges          = 19
- EQUW &0032             \ Bounty                   = 
- EQUB &24               \ Number of faces          = 36 / 4 = 9
- EQUB &28               \ Visibility distance      = 
- EQUB &64               \ Max. energy              = 
- EQUB &19               \ Max. speed               = 
- EQUB &00               \ Edges data offset (high) = &
- EQUB &00               \ Faces data offset (high) = &
- EQUB &02               \ Normals are scaled by    = 2^ = 
- EQUB &10               \ Laser power              = 
-                        \ Missiles                 = 
+ EQUB 1                 \ Max. canisters on demise = 1
+ EQUW 30 * 30           \ Targetable area          = 30 * 30
+ EQUB &68               \ Edges data offset (low)  = &0068
+ EQUB &B4               \ Faces data offset (low)  = &00B4
+ EQUB 73                \ Max. edge count          = (73 - 1) / 4 = 18
+ EQUB 0                 \ Gun vertex               = 0
+ EQUB 26                \ Explosion count          = 5, as (4 * n) + 6 = 26
+ EQUB 84                \ Number of vertices       = 84 / 6 = 14
+ EQUB 19                \ Number of edges          = 19
+ EQUW 50                \ Bounty                   = 50
+ EQUB 36                \ Number of faces          = 36 / 4 = 9
+ EQUB 40                \ Visibility distance      = 40
+ EQUB 100               \ Max. energy              = 100
+ EQUB 25                \ Max. speed               = 25
+ EQUB &00               \ Edges data offset (high) = &0068
+ EQUB &00               \ Faces data offset (high) = &00B4
+ EQUB 2                 \ Normals are scaled by    = 2^2 = 4
+ EQUB %00010000         \ Laser power              = 2
+                        \ Missiles                 = 0
 
  EQUB &0F, &00, &41, &1F, &02, &78
  EQUB &0F, &00, &41, &9F, &01, &67
@@ -2983,149 +2186,30 @@ INCLUDE "library/common/main/variable_xx21.asm"
  EQUB &5F, &00, &53, &1E
  EQUB &5F, &48, &63, &32
 
-\ THG  = 29 = Thargoid
-
- EQUB &00               \ Max. canisters on demise = 
- EQUW &2649             \ Targetable area          = 99 * 99
- EQUB &8C               \ Edges data offset (low)  = &
- EQUB &F4               \ Faces data offset (low)  = &
- EQUB &69               \ Max. edge count          = ( - 1) / 4 = 
- EQUB &3C               \ Gun vertex               = 
- EQUB &26               \ Explosion count          = , as (4 * n) + 6 = 
- EQUB &78               \ Number of vertices       = 120 / 6 = 20
- EQUB &1A               \ Number of edges          = 26
- EQUW &01F4             \ Bounty                   = 
- EQUB &28               \ Number of faces          = 40 / 4 = 10
- EQUB &37               \ Visibility distance      = 
- EQUB &F0               \ Max. energy              = 
- EQUB &27               \ Max. speed               = 
- EQUB &00               \ Edges data offset (high) = &
- EQUB &00               \ Faces data offset (high) = &
- EQUB &02               \ Normals are scaled by    = 2^ = 
- EQUB &16               \ Laser power              = 
-                        \ Missiles                 = 
-
- EQUB &20, &30, &30, &5F, &40, &88
- EQUB &20, &44, &00, &5F, &10, &44
- EQUB &20, &30, &30, &7F, &21, &44
- EQUB &20, &00, &44, &3F, &32, &44
- EQUB &20, &30, &30, &3F, &43, &55
- EQUB &20, &44, &00, &1F, &54, &66
- EQUB &20, &30, &30, &1F, &64, &77
- EQUB &20, &00, &44, &1F, &74, &88
- EQUB &18, &74, &74, &DF, &80, &99
- EQUB &18, &A4, &00, &DF, &10, &99
- EQUB &18, &74, &74, &FF, &21, &99
- EQUB &18, &00, &A4, &BF, &32, &99
- EQUB &18, &74, &74, &BF, &53, &99
- EQUB &18, &A4, &00, &9F, &65, &99
- EQUB &18, &74, &74, &9F, &76, &99
- EQUB &18, &00, &A4, &9F, &87, &99
- EQUB &18, &40, &50, &9E, &99, &99
- EQUB &18, &40, &50, &BE, &99, &99
- EQUB &18, &40, &50, &FE, &99, &99
- EQUB &18, &40, &50, &DE, &99, &99
-
- EQUB &1F, &84, &00, &1C
- EQUB &1F, &40, &00, &04
- EQUB &1F, &41, &04, &08
- EQUB &1F, &42, &08, &0C
- EQUB &1F, &43, &0C, &10
- EQUB &1F, &54, &10, &14
- EQUB &1F, &64, &14, &18
- EQUB &1F, &74, &18, &1C
- EQUB &1F, &80, &00, &20
- EQUB &1F, &10, &04, &24
- EQUB &1F, &21, &08, &28
- EQUB &1F, &32, &0C, &2C
- EQUB &1F, &53, &10, &30
- EQUB &1F, &65, &14, &34
- EQUB &1F, &76, &18, &38
- EQUB &1F, &87, &1C, &3C
- EQUB &1F, &98, &20, &3C
- EQUB &1F, &90, &20, &24
- EQUB &1F, &91, &24, &28
- EQUB &1F, &92, &28, &2C
- EQUB &1F, &93, &2C, &30
- EQUB &1F, &95, &30, &34
- EQUB &1F, &96, &34, &38
- EQUB &1F, &97, &38, &3C
- EQUB &1E, &99, &40, &44
- EQUB &1E, &99, &48, &4C
-
- EQUB &5F, &67, &3C, &19
- EQUB &7F, &67, &3C, &19
- EQUB &7F, &67, &19, &3C
- EQUB &3F, &67, &19, &3C
- EQUB &1F, &40, &00, &00
- EQUB &3F, &67, &3C, &19
- EQUB &1F, &67, &3C, &19
- EQUB &1F, &67, &19, &3C
- EQUB &5F, &67, &19, &3C
- EQUB &9F, &30, &00, &00
-
-\ TGL  = 30 = Thargon
-
- EQUB &F0               \ Max. canisters on demise = 
- EQUW &0640             \ Targetable area          = 40 * 40
- EQUB &E6               \ Edges data offset (low)  = &
- EQUB &50               \ Faces data offset (low)  = &
- EQUB &45               \ Max. edge count          = ( - 1) / 4 = 
- EQUB &00               \ Gun vertex               = 
- EQUB &12               \ Explosion count          = , as (4 * n) + 6 = 
- EQUB &3C               \ Number of vertices       = 60 / 6 = 10
- EQUB &0F               \ Number of edges          = 15
- EQUW &0032             \ Bounty                   = 
- EQUB &1C               \ Number of faces          = 28 / 4 = 7
- EQUB &14               \ Visibility distance      = 
- EQUB &14               \ Max. energy              = 
- EQUB &1E               \ Max. speed               = 
- EQUB &E7               \ Edges data offset (high) = &
- EQUB &00               \ Faces data offset (high) = &
- EQUB &02               \ Normals are scaled by    = 2^ = 
- EQUB &10               \ Laser power              = 
-                        \ Missiles                 = 
-
- EQUB &09, &00, &28, &9F, &01, &55
- EQUB &09, &26, &0C, &DF, &01, &22
- EQUB &09, &18, &20, &FF, &02, &33
- EQUB &09, &18, &20, &BF, &03, &44
- EQUB &09, &26, &0C, &9F, &04, &55
- EQUB &09, &00, &08, &3F, &15, &66
- EQUB &09, &0A, &0F, &7F, &12, &66
- EQUB &09, &06, &1A, &7F, &23, &66
- EQUB &09, &06, &1A, &3F, &34, &66
- EQUB &09, &0A, &0F, &3F, &45, &66
-
- EQUB &9F, &24, &00, &00
- EQUB &5F, &14, &05, &07
- EQUB &7F, &2E, &2A, &0E
- EQUB &3F, &24, &00, &68
- EQUB &3F, &2E, &2A, &0E
- EQUB &1F, &14, &05, &07
- EQUB &1F, &24, &00, &00
+INCLUDE "library/common/main/variable_ship_thargoid.asm"
+INCLUDE "library/common/main/variable_ship_thargon.asm"
 
 \ CON  = 31 = Constrictor
 
- EQUB &03               \ Max. canisters on demise = 
- EQUW &1081             \ Targetable area          = 65 * 65
- EQUB &7A               \ Edges data offset (low)  = &
- EQUB &DA               \ Faces data offset (low)  = &
- EQUB &51               \ Max. edge count          = ( - 1) / 4 = 
- EQUB &00               \ Gun vertex               = 
- EQUB &2E               \ Explosion count          = , as (4 * n) + 6 = 
- EQUB &66               \ Number of vertices       = 102 / 6 = 17
- EQUB &18               \ Number of edges          = 24
- EQUW &0000             \ Bounty                   = 
- EQUB &28               \ Number of faces          = 40 / 4 = 10
- EQUB &2D               \ Visibility distance      = 
- EQUB &FC               \ Max. energy              = 
- EQUB &24               \ Max. speed               = 
- EQUB &00               \ Edges data offset (high) = &
- EQUB &00               \ Faces data offset (high) = &
- EQUB &02               \ Normals are scaled by    = 2^ = 
- EQUB &34               \ Laser power              = 
-                        \ Missiles                 = 
+ EQUB 3                 \ Max. canisters on demise = 3
+ EQUW 65 * 65           \ Targetable area          = 65 * 65
+ EQUB &7A               \ Edges data offset (low)  = &007A
+ EQUB &DA               \ Faces data offset (low)  = &00DA
+ EQUB 81                \ Max. edge count          = (81 - 1) / 4 = 20
+ EQUB 0                 \ Gun vertex               = 0
+ EQUB 46                \ Explosion count          = 10, as (4 * n) + 6 = 46
+ EQUB 102               \ Number of vertices       = 102 / 6 = 17
+ EQUB 24                \ Number of edges          = 24
+ EQUW 0                 \ Bounty                   = 0
+ EQUB 40                \ Number of faces          = 40 / 4 = 10
+ EQUB 45                \ Visibility distance      = 45
+ EQUB 252               \ Max. energy              = 252
+ EQUB 36                \ Max. speed               = 36
+ EQUB &00               \ Edges data offset (high) = &007A
+ EQUB &00               \ Faces data offset (high) = &00DA
+ EQUB 2                 \ Normals are scaled by    = 2^2 = 4
+ EQUB %00110100         \ Laser power              = 6
+                        \ Missiles                 = 4
 
  EQUB &14, &07, &50, &5F, &02, &99
  EQUB &14, &07, &50, &DF, &01, &99
@@ -3183,25 +2267,25 @@ INCLUDE "library/common/main/variable_xx21.asm"
 
 \ LGO  = 32 = 
 
- EQUB &00               \ Max. canisters on demise = 
- EQUW &2649             \ Targetable area          = 99 * 99
- EQUB &10               \ Edges data offset (low)  = &
- EQUB &A4               \ Faces data offset (low)  = &
- EQUB &99               \ Max. edge count          = ( - 1) / 4 = 
- EQUB &00               \ Gun vertex               = 
- EQUB &36               \ Explosion count          = , as (4 * n) + 6 = 
- EQUB &FC               \ Number of vertices       = 252 / 6 = 42
- EQUB &25               \ Number of edges          = 37
- EQUW &0000             \ Bounty                   = 
- EQUB &14               \ Number of faces          = 20 / 4 = 5
- EQUB &63               \ Visibility distance      = 
- EQUB &FC               \ Max. energy              = 
- EQUB &24               \ Max. speed               = 
- EQUB &01               \ Edges data offset (high) = &
- EQUB &01               \ Faces data offset (high) = &
- EQUB &01               \ Normals are scaled by    = 2^ = 
- EQUB &00               \ Laser power              = 
-                        \ Missiles                 = 
+ EQUB 0                 \ Max. canisters on demise = 0
+ EQUW 99 * 99           \ Targetable area          = 99 * 99
+ EQUB &10               \ Edges data offset (low)  = &0110
+ EQUB &A4               \ Faces data offset (low)  = &01A4
+ EQUB 153               \ Max. edge count          = (153 - 1) / 4 = 38
+ EQUB 0                 \ Gun vertex               = 0
+ EQUB 54                \ Explosion count          = 12, as (4 * n) + 6 = 54
+ EQUB 252               \ Number of vertices       = 252 / 6 = 42
+ EQUB 37                \ Number of edges          = 37
+ EQUW 0                 \ Bounty                   = 0
+ EQUB 20                \ Number of faces          = 20 / 4 = 5
+ EQUB 99                \ Visibility distance      = 99
+ EQUB 252               \ Max. energy              = 252
+ EQUB 36                \ Max. speed               = 36
+ EQUB &01               \ Edges data offset (high) = &0110
+ EQUB &01               \ Faces data offset (high) = &01A4
+ EQUB 1                 \ Normals are scaled by    = 2^1 = 2
+ EQUB %00000000         \ Laser power              = 0
+                        \ Missiles                 = 0
 
  EQUB &00, &09, &37, &5F, &00, &00
  EQUB &0A, &09, &1E, &DF, &00, &00
@@ -3292,25 +2376,25 @@ INCLUDE "library/common/main/variable_xx21.asm"
 
 \ COU  = 33 = Cougar
 
- EQUB &03               \ Max. canisters on demise = 
- EQUW &1324             \ Targetable area          = 70 * 70
- EQUB &86               \ Edges data offset (low)  = &
- EQUB &EA               \ Faces data offset (low)  = &
- EQUB &69               \ Max. edge count          = ( - 1) / 4 = 
- EQUB &00               \ Gun vertex               = 
- EQUB &2A               \ Explosion count          = , as (4 * n) + 6 = 
- EQUB &72               \ Number of vertices       = 114 / 6 = 19
- EQUB &19               \ Number of edges          = 25
- EQUW &0000             \ Bounty                   = 
- EQUB &18               \ Number of faces          = 24 / 4 = 6
- EQUB &22               \ Visibility distance      = 
- EQUB &FC               \ Max. energy              = 
- EQUB &28               \ Max. speed               = 
- EQUB &00               \ Edges data offset (high) = &
- EQUB &00               \ Faces data offset (high) = &
- EQUB &02               \ Normals are scaled by    = 2^ = 
- EQUB &34               \ Laser power              = 
-                        \ Missiles                 = 
+ EQUB 3                 \ Max. canisters on demise = 3
+ EQUW 70 * 70           \ Targetable area          = 70 * 70
+ EQUB &86               \ Edges data offset (low)  = &0086
+ EQUB &EA               \ Faces data offset (low)  = &00EA
+ EQUB 105               \ Max. edge count          = (105 - 1) / 4 = 26
+ EQUB 0                 \ Gun vertex               = 0
+ EQUB 42                \ Explosion count          = 9, as (4 * n) + 6 = 42
+ EQUB 114               \ Number of vertices       = 114 / 6 = 19
+ EQUB 25                \ Number of edges          = 25
+ EQUW 0                 \ Bounty                   = 0
+ EQUB 24                \ Number of faces          = 24 / 4 = 6
+ EQUB 34                \ Visibility distance      = 34
+ EQUB 252               \ Max. energy              = 252
+ EQUB 40                \ Max. speed               = 40
+ EQUB &00               \ Edges data offset (high) = &0086
+ EQUB &00               \ Faces data offset (high) = &00EA
+ EQUB 2                 \ Normals are scaled by    = 2^2 = 4
+ EQUB %00110100         \ Laser power              = 6
+                        \ Missiles                 = 4
 
  EQUB &00, &05, &43, &1F, &02, &44
  EQUB &14, &00, &28, &9F, &01, &22
@@ -3367,25 +2451,25 @@ INCLUDE "library/common/main/variable_xx21.asm"
 
 \ DOD  = 34 = Dodecahedron space station
 
- EQUB &00               \ Max. canisters on demise = 
- EQUW &7E90             \ Targetable area          = 180 * 180
- EQUB &A4               \ Edges data offset (low)  = &
- EQUB &2C               \ Faces data offset (low)  = &
- EQUB &65               \ Max. edge count          = ( - 1) / 4 = 
- EQUB &00               \ Gun vertex               = 
- EQUB &36               \ Explosion count          = , as (4 * n) + 6 = 
- EQUB &90               \ Number of vertices       = 144 / 6 = 24
- EQUB &22               \ Number of edges          = 34
- EQUW &0000             \ Bounty                   = 
- EQUB &30               \ Number of faces          = 48 / 4 = 12
- EQUB &7D               \ Visibility distance      = 
- EQUB &F0               \ Max. energy              = 
- EQUB &00               \ Max. speed               = 
- EQUB &00               \ Edges data offset (high) = &
- EQUB &01               \ Faces data offset (high) = &
- EQUB &00               \ Normals are scaled by    = 2^ = 
- EQUB &00               \ Laser power              = 
-                        \ Missiles                 = 
+ EQUB 0                 \ Max. canisters on demise = 0
+ EQUW 180 * 180         \ Targetable area          = 180 * 180
+ EQUB &A4               \ Edges data offset (low)  = &00A4
+ EQUB &2C               \ Faces data offset (low)  = &012C
+ EQUB 101               \ Max. edge count          = (101 - 1) / 4 = 25
+ EQUB 0                 \ Gun vertex               = 0
+ EQUB 54                \ Explosion count          = 12, as (4 * n) + 6 = 54
+ EQUB 144               \ Number of vertices       = 144 / 6 = 24
+ EQUB 34                \ Number of edges          = 34
+ EQUW 0                 \ Bounty                   = 0
+ EQUB 48                \ Number of faces          = 48 / 4 = 12
+ EQUB 125               \ Visibility distance      = 125
+ EQUB 240               \ Max. energy              = 240
+ EQUB 0                 \ Max. speed               = 0
+ EQUB &00               \ Edges data offset (high) = &00A4
+ EQUB &01               \ Faces data offset (high) = &012C
+ EQUB 0                 \ Normals are scaled by    = 2^0 = 1
+ EQUB %00000000         \ Laser power              = 0
+                        \ Missiles                 = 0
 
  EQUB &00, &96, &C4, &1F, &01, &55
  EQUB &8F, &2E, &C4, &1F, &01, &22

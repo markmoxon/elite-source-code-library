@@ -1,19 +1,23 @@
 \ ******************************************************************************
 \
-\       Name: SHIP8
+\       Name: SHIP_CORIOLIS
 \       Type: Variable
 \   Category: Drawing ships
 \    Summary: Ship blueprint for a Coriolis space station
 \
 \ ******************************************************************************
 
-.SHIP8
+.SHIP_CORIOLIS
 
  EQUB 0                 \ Max. canisters on demise = 0
  EQUW 160 * 160         \ Targetable area          = 160 * 160
  EQUB &74               \ Edges data offset (low)  = &0074
  EQUB &E4               \ Faces data offset (low)  = &00E4
+IF _CASSETTE_VERSION
  EQUB 85                \ Max. edge count          = (85 - 1) / 4 = 21
+ELIF _6502SP_VERSION
+ EQUB 89                \ Max. edge count          = (89 - 1) / 4 = 22
+ENDIF
  EQUB 0                 \ Gun vertex               = 0
  EQUB 54                \ Explosion count          = 12, as (4 * n) + 6 = 54
  EQUB 96                \ Number of vertices       = 96 / 6 = 16

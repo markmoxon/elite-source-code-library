@@ -1,19 +1,31 @@
 \ ******************************************************************************
 \
-\       Name: SHIP12
+\       Name: SHIP_THARGON
 \       Type: Variable
 \   Category: Drawing ships
 \    Summary: Ship blueprint for a Thargon
 \
 \ ******************************************************************************
 
-.SHIP12
+.SHIP_THARGON
 
+IF _CASSETTE_VERSION
  EQUB 0                 \ Max. canisters on demise = 0
+ELIF _6502SP_VERSION
+ EQUB &F0               \ Max. canisters on demise = 0
+ENDIF
  EQUW 40 * 40           \ Targetable area          = 40 * 40
+IF _CASSETTE_VERSION
  EQUB &A8               \ Edges data offset (low)  = &FFA8 = -88 (canister data)
+ELIF _6502SP_VERSION
+ EQUB &E6               \ Edges data offset (low)  = &E7E6 = -6170 (canister)
+ENDIF
  EQUB &50               \ Faces data offset (low)  = &0050
+IF _CASSETTE_VERSION
  EQUB 65                \ Max. edge count          = (65 - 1) / 4 = 16
+ELIF _6502SP_VERSION
+ EQUB 69                \ Max. edge count          = (69 - 1) / 4 = 17
+ENDIF
  EQUB 0                 \ Gun vertex               = 0
  EQUB 18                \ Explosion count          = 3, as (4 * n) + 6 = 18
  EQUB 60                \ Number of vertices       = 60 / 6 = 10
@@ -23,7 +35,11 @@
  EQUB 20                \ Visibility distance      = 20
  EQUB 20                \ Max. energy              = 20
  EQUB 30                \ Max. speed               = 30
+IF _CASSETTE_VERSION
  EQUB &FF               \ Edges data offset (high) = &FFA8 = -88 (canister data)
+ELIF _6502SP_VERSION
+ EQUB &E7               \ Edges data offset (high) = &E7E6 = -6170 (canister)
+ENDIF
  EQUB &00               \ Faces data offset (high) = &0050
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
  EQUB %00010000         \ Laser power              = 2

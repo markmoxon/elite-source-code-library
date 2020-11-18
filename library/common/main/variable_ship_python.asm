@@ -1,24 +1,41 @@
 \ ******************************************************************************
 \
-\       Name: SHIP4
+\       Name: SHIP_PYTHON
 \       Type: Variable
 \   Category: Drawing ships
 \    Summary: Ship blueprint for a Python
 \
 \ ******************************************************************************
 
-.SHIP4
+.SHIP_PYTHON
 
+IF _CASSETTE_VERSION
  EQUB 3                 \ Max. canisters on demise = 3
  EQUW 120 * 120         \ Targetable area          = 120 * 120
+ELIF _6502SP_VERSION
+ EQUB 5                 \ Max. canisters on demise = 5
+ EQUW 80 * 80           \ Targetable area          = 80 * 80
+ENDIF
  EQUB &56               \ Edges data offset (low)  = &0056
  EQUB &BE               \ Faces data offset (low)  = &00BE
+IF _CASSETTE_VERSION
  EQUB 85                \ Max. edge count          = (85 - 1) / 4 = 21
+ELIF _6502SP_VERSION
+ EQUB 89                \ Max. edge count          = (89 - 1) / 4 = 22
+ENDIF
  EQUB 0                 \ Gun vertex               = 0
+IF _CASSETTE_VERSION
  EQUB 46                \ Explosion count          = 10, as (4 * n) + 6 = 46
+ELIF _6502SP_VERSION
+ EQUB 42                \ Explosion count          = 9, as (4 * n) + 6 = 42
+ENDIF
  EQUB 66                \ Number of vertices       = 66 / 6 = 11
  EQUB 26                \ Number of edges          = 26
+IF _CASSETTE_VERSION
  EQUW 200               \ Bounty                   = 200
+ELIF _6502SP_VERSION
+ EQUW 0                 \ Bounty                   = 0
+ENDIF
  EQUB 52                \ Number of faces          = 52 / 4 = 13
  EQUB 40                \ Visibility distance      = 40
  EQUB 250               \ Max. energy              = 250
@@ -28,6 +45,8 @@
  EQUB 0                 \ Normals are scaled by    = 2^0 = 1
  EQUB %00011011         \ Laser power              = 3
                         \ Missiles                 = 3
+
+IF _CASSETTE_VERSION
 
 \VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX    0,    0,  224,     0,      1,    2,     3,         31    \ Vertex 0
@@ -87,3 +106,59 @@
 
  SKIP 11                \ This space is unused
 
+ELIF _6502SP_VERSION
+
+ VERTEX    0,    0,  224,     0,      1,    2,     3,         31    \ Vertex 0
+ EQUB &00, &30, &30, &1F, &10, &54
+ VERTEX   96,    0,  -16,    15,     15,   15,    15,         31    \ Vertex 2
+ VERTEX  -96,    0,  -16,    15,     15,   15,    15,         31    \ Vertex 3
+ EQUB &00, &30, &20, &3F, &54, &98
+ VERTEX    0,   24, -112,     9,      8,   12,    12,         31    \ Vertex 5
+ VERTEX  -48,    0, -112,     8,     11,   12,    12,         31    \ Vertex 6
+ VERTEX   48,    0, -112,     9,     10,   12,    12,         31    \ Vertex 7
+ EQUB &00, &30, &30, &5F, &32, &76
+ EQUB &00, &30, &20, &7F, &76, &BA
+ EQUB &00, &18, &70, &7F, &BA, &CC
+
+ EQUB &1F, &32, &00, &20
+ EQUB &1F, &20, &00, &0C
+ EQUB &1F, &31, &00, &08
+ EQUB &1F, &10, &00, &04
+ EQUB &1F, &59, &08, &10
+ EQUB &1F, &51, &04, &08
+ EQUB &1F, &37, &08, &20
+ EQUB &1F, &40, &04, &0C
+ EQUB &1F, &62, &0C, &20
+ EQUB &1F, &A7, &08, &24
+ EQUB &1F, &84, &0C, &10
+ EQUB &1F, &B6, &0C, &24
+ EQUB &07, &88, &0C, &14
+ EQUB &07, &BB, &0C, &28
+ EQUB &07, &99, &08, &14
+ EQUB &07, &AA, &08, &28
+ EQUB &1F, &A9, &08, &1C
+ EQUB &1F, &B8, &0C, &18
+ EQUB &1F, &C8, &14, &18
+ EQUB &1F, &C9, &14, &1C
+ EQUB &1F, &AC, &1C, &28
+ EQUB &1F, &CB, &18, &28
+ EQUB &1F, &98, &10, &14
+ EQUB &1F, &BA, &24, &28
+ EQUB &1F, &54, &04, &10
+ EQUB &1F, &76, &20, &24
+
+ EQUB &9F, &1B, &28, &0B
+ EQUB &1F, &1B, &28, &0B
+ EQUB &DF, &1B, &28, &0B
+ EQUB &5F, &1B, &28, &0B
+ EQUB &9F, &13, &26, &00
+ EQUB &1F, &13, &26, &00
+ EQUB &DF, &13, &26, &00
+ EQUB &5F, &13, &26, &00
+ EQUB &BF, &19, &25, &0B
+ EQUB &3F, &19, &25, &0B
+ EQUB &7F, &19, &25, &0B
+ EQUB &FF, &19, &25, &0B
+ EQUB &3F, &00, &00, &70
+
+ENDIF

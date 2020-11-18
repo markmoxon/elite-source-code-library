@@ -1,19 +1,23 @@
 \ ******************************************************************************
 \
-\       Name: SHIP9
+\       Name: SHIP_MISSILE
 \       Type: Variable
 \   Category: Drawing ships
 \    Summary: Ship blueprint for a missile
 \
 \ ******************************************************************************
 
-.SHIP9
+.SHIP_MISSILE
 
  EQUB 0                 \ Max. canisters on demise = 0
  EQUW 40 * 40           \ Targetable area          = 40 * 40
  EQUB &7A               \ Edges data offset (low)  = &007A
  EQUB &DA               \ Faces data offset (low)  = &00DA
+IF _CASSETTE_VERSION
  EQUB 81                \ Max. edge count          = (81 - 1) / 4 = 20
+ELIF _6502SP_VERSION
+ EQUB 85                \ Max. edge count          = (85 - 1) / 4 = 21
+ENDIF
  EQUB 0                 \ Gun vertex               = 0
  EQUB 10                \ Explosion count          = 1, as (4 * n) + 6 = 10
  EQUB 102               \ Number of vertices       = 102 / 6 = 17

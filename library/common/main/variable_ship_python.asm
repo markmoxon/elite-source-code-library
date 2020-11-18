@@ -108,14 +108,14 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- VERTEX    0,    0,  224,     0,      1,    2,     3,         31    \ Vertex 0
+ EQUB &00, &00, &E0, &1F, &10, &32
  EQUB &00, &30, &30, &1F, &10, &54
- VERTEX   96,    0,  -16,    15,     15,   15,    15,         31    \ Vertex 2
- VERTEX  -96,    0,  -16,    15,     15,   15,    15,         31    \ Vertex 3
+ EQUB &60, &00, &10, &3F, &FF, &FF
+ EQUB &60, &00, &10, &BF, &FF, &FF
  EQUB &00, &30, &20, &3F, &54, &98
- VERTEX    0,   24, -112,     9,      8,   12,    12,         31    \ Vertex 5
- VERTEX  -48,    0, -112,     8,     11,   12,    12,         31    \ Vertex 6
- VERTEX   48,    0, -112,     9,     10,   12,    12,         31    \ Vertex 7
+ EQUB &00, &18, &70, &3F, &89, &CC
+ EQUB &30, &00, &70, &BF, &B8, &CC
+ EQUB &30, &00, &70, &3F, &A9, &CC
  EQUB &00, &30, &30, &5F, &32, &76
  EQUB &00, &30, &20, &7F, &76, &BA
  EQUB &00, &18, &70, &7F, &BA, &CC
@@ -148,18 +148,19 @@ ELIF _6502SP_VERSION
  EDGE       1,       4,     4,     5,         31    \ Edge 
  EDGE       8,       9,     6,     7,         31    \ Edge 
 
- EQUB &9F, &1B, &28, &0B
- EQUB &1F, &1B, &28, &0B
- EQUB &DF, &1B, &28, &0B
- EQUB &5F, &1B, &28, &0B
- EQUB &9F, &13, &26, &00
- EQUB &1F, &13, &26, &00
- EQUB &DF, &13, &26, &00
- EQUB &5F, &13, &26, &00
- EQUB &BF, &19, &25, &0B
- EQUB &3F, &19, &25, &0B
- EQUB &7F, &19, &25, &0B
- EQUB &FF, &19, &25, &0B
- EQUB &3F, &00, &00, &70
+\FACE normal_x, normal_y, normal_z, visibility
+ FACE      -27,       40,       11,        31    \ Face 
+ FACE       27,       40,       11,        31    \ Face 
+ FACE      -27,      -40,       11,        31    \ Face 
+ FACE       27,      -40,       11,        31    \ Face 
+ FACE      -19,       38,        0,        31    \ Face 
+ FACE       19,       38,        0,        31    \ Face 
+ FACE      -19,      -38,        0,        31    \ Face 
+ FACE       19,      -38,        0,        31    \ Face 
+ FACE      -25,       37,      -11,        31    \ Face 
+ FACE       25,       37,      -11,        31    \ Face 
+ FACE       25,      -37,      -11,        31    \ Face 
+ FACE      -25,      -37,      -11,        31    \ Face 
+ FACE        0,        0,     -112,        31    \ Face 
 
 ENDIF

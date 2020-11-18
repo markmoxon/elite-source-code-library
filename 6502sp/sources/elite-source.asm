@@ -998,7 +998,8 @@ INCLUDE "library/common/main/variable_ship_escape_pod.asm"
  EDGE       2,       3,    15,    15,         20    \ Edge 2
  EDGE       3,       0,    15,    15,         16    \ Edge 3
 
- EQUB &00, &00, &00, &00
+\FACE normal_x, normal_y, normal_z, visibility
+ FACE        0,        0,        0,          0    \ Face 0
 
 INCLUDE "library/common/main/variable_ship_canister.asm"
 
@@ -1050,16 +1051,17 @@ INCLUDE "library/common/main/variable_ship_canister.asm"
  EDGE       3,       6,     8,     7,         31    \ Edge 14
  EDGE       4,       6,     9,     8,         31    \ Edge 15
 
- EQUB &DF, &0F, &03, &08
- EQUB &9F, &07, &0C, &1E
- EQUB &5F, &20, &2F, &18
- EQUB &FF, &03, &27, &07
- EQUB &FF, &05, &04, &01
- EQUB &1F, &31, &54, &08
- EQUB &3F, &70, &15, &15
- EQUB &7F, &4C, &23, &52
- EQUB &3F, &16, &38, &89
- EQUB &3F, &28, &6E, &26
+\FACE normal_x, normal_y, normal_z, visibility
+ FACE      -15,       -3,        8,        31    \ Face 
+ FACE       -7,       12,       30,        31    \ Face 
+ FACE       32,      -47,       24,        31    \ Face 
+ FACE       -3,      -39,       -7,        31    \ Face 
+ FACE       -5,       -4,       -1,        31    \ Face 
+ FACE       49,       84,        8,        31    \ Face 
+ FACE      112,       21,      -21,        31    \ Face 
+ FACE       76,      -35,      -82,        31    \ Face 
+ FACE       22,       56,     -137,        31    \ Face 
+ FACE       40,      110,      -38,        31    \ Face 
 
 INCLUDE "library/common/main/variable_ship_asteroid.asm"
 
@@ -1090,10 +1092,11 @@ INCLUDE "library/common/main/variable_ship_asteroid.asm"
  EQUB &0B, &06, &02, &5F, &01, &33
  EQUB &0C, &2A, &07, &1F, &01, &22
 
- EQUB &1F, &23, &00, &04
- EQUB &1F, &03, &04, &08
- EQUB &1F, &01, &08, &0C
- EQUB &1F, &12, &0C, &00
+\FACE normal_x, normal_y, normal_z, visibility
+ FACE       35,        0,        4,        31    \ Face 
+ FACE        3,        4,        8,        31    \ Face 
+ FACE        1,        8,       12,        31    \ Face 
+ FACE       18,       12,        0,        31    \ Face 
 
 \ SHU  =  9 = Shuttle
 
@@ -1169,19 +1172,20 @@ INCLUDE "library/common/main/variable_ship_asteroid.asm"
  EDGE      17,      18,    10,    10,          8    \ Edge 
  EDGE      16,      18,    10,    10,          7    \ Edge 
 
- EQUB &DF, &37, &37, &28
- EQUB &5F, &00, &4A, &04
- EQUB &DF, &33, &33, &17
- EQUB &9F, &4A, &00, &04
- EQUB &9F, &33, &33, &17
- EQUB &1F, &00, &4A, &04
- EQUB &1F, &33, &33, &17
- EQUB &1F, &4A, &00, &04
- EQUB &5F, &33, &33, &17
- EQUB &3F, &00, &00, &6B
- EQUB &9F, &29, &29, &5A
- EQUB &1F, &29, &29, &5A
- EQUB &5F, &37, &37, &28
+\FACE normal_x, normal_y, normal_z, visibility
+ FACE      -55,      -55,       40,        31    \ Face 
+ FACE        0,      -74,        4,        31    \ Face 
+ FACE      -51,      -51,       23,        31    \ Face 
+ FACE      -74,        0,        4,        31    \ Face 
+ FACE      -51,       51,       23,        31    \ Face 
+ FACE        0,       74,        4,        31    \ Face 
+ FACE       51,       51,       23,        31    \ Face 
+ FACE       74,        0,        4,        31    \ Face 
+ FACE       51,      -51,       23,        31    \ Face 
+ FACE        0,        0,     -107,        31    \ Face 
+ FACE      -41,       41,       90,        31    \ Face 
+ FACE       41,       41,       90,        31    \ Face 
+ FACE       55,      -55,       40,        31    \ Face 
 
 \        10 = Transporter
 
@@ -1291,20 +1295,21 @@ INCLUDE "library/common/main/variable_ship_asteroid.asm"
  EDGE      35,      36,     0,     0,          5    \ Edge 
  EDGE      36,      33,     0,     0,          5    \ Edge 
 
- EQUB &3F, &00, &00, &67
- EQUB &BF, &6F, &30, &07
- EQUB &FF, &69, &3F, &15
- EQUB &5F, &00, &22, &00
- EQUB &7F, &69, &3F, &15
- EQUB &3F, &6F, &30, &07
- EQUB &1F, &08, &20, &03
- EQUB &9F, &08, &20, &03
- EQUB &93, &08, &22, &0B
- EQUB &9F, &4B, &20, &4F
- EQUB &1F, &4B, &20, &4F
- EQUB &13, &08, &22, &0B
- EQUB &1F, &00, &26, &11
- EQUB &1F, &00, &00, &79
+\FACE normal_x, normal_y, normal_z, visibility
+ FACE        0,        0,     -103,        31    \ Face 
+ FACE     -111,       48,       -7,        31    \ Face 
+ FACE     -105,      -63,      -21,        31    \ Face 
+ FACE        0,      -34,        0,        31    \ Face 
+ FACE      105,      -63,      -21,        31    \ Face 
+ FACE      111,       48,       -7,        31    \ Face 
+ FACE        8,       32,        3,        31    \ Face 
+ FACE       -8,       32,        3,        31    \ Face 
+ FACE       -8,       34,       11,        19    \ Face 
+ FACE      -75,       32,       79,        31    \ Face 
+ FACE       75,       32,       79,        31    \ Face 
+ FACE        8,       34,       11,        19    \ Face 
+ FACE        0,       38,       17,        31    \ Face 
+ FACE        0,        0,      121,        31    \ Face
 
 INCLUDE "library/common/main/variable_ship_cobra_mk_iii.asm"
 INCLUDE "library/common/main/variable_ship_python.asm"
@@ -1372,19 +1377,21 @@ INCLUDE "library/common/main/variable_ship_python.asm"
  EDGE      11,      12,    12,     1,         14    \ Edge 
  EDGE      12,      10,    12,     2,         14    \ Edge 
 
- EQUB &3F, &2B, &25, &3C
- EQUB &7F, &00, &2D, &59
- EQUB &BF, &2B, &25, &3C
- EQUB &1F, &00, &28, &00
- EQUB &7F, &3E, &20, &14
- EQUB &FF, &3E, &20, &14
- EQUB &1F, &00, &17, &06
- EQUB &DF, &17, &0F, &09
- EQUB &5F, &17, &0F, &09
- EQUB &9F, &1A, &0D, &0A
- EQUB &5F, &00, &1F, &0C
- EQUB &1F, &1A, &0D, &0A
- EQUB &2E, &00, &00, &6B
+\FACE normal_x, normal_y, normal_z, visibility
+ FACE       43,       37,      -60,        31    \ Face 
+ FACE        0,      -45,      -89,        31    \ Face 
+ FACE      -43,       37,      -60,        31    \ Face 
+ FACE        0,       40,        0,        31    \ Face 
+ FACE       62,      -32,      -20,        31    \ Face 
+ FACE      -62,      -32,      -20,        31    \ Face 
+ FACE        0,       23,        6,        31    \ Face 
+ FACE      -23,      -15,        9,        31    \ Face 
+ FACE       23,      -15,        9,        31    \ Face 
+ FACE      -26,       13,       10,        31    \ Face 
+ FACE        0,      -31,       12,        31    \ Face 
+ FACE       26,       13,       10,        31    \ Face 
+ FACE        0,        0,     -107,        14    \ Face 
+
 
 \ ANA  = 14 = Anaconda
 
@@ -1451,18 +1458,19 @@ INCLUDE "library/common/main/variable_ship_python.asm"
  EDGE      12,      13,    10,     9,         31    \ Edge 
  EDGE      12,      14,    11,    10,         31    \ Edge 
 
- EQUB &7E, &00, &33, &31
- EQUB &BE, &33, &12, &57
- EQUB &FE, &4D, &39, &13
- EQUB &5F, &00, &5A, &10
- EQUB &7E, &4D, &39, &13
- EQUB &3E, &33, &12, &57
- EQUB &3E, &00, &6F, &14
- EQUB &9F, &61, &48, &18
- EQUB &DF, &6C, &44, &22
- EQUB &5F, &6C, &44, &22
- EQUB &1F, &61, &48, &18
- EQUB &1F, &00, &5E, &12
+\FACE normal_x, normal_y, normal_z, visibility
+ FACE        0,      -51,      -49,        30    \ Face 
+ FACE      -51,       18,      -87,        30    \ Face 
+ FACE      -77,      -57,      -19,        30    \ Face 
+ FACE        0,      -90,       16,        31    \ Face 
+ FACE       77,      -57,      -19,        30    \ Face 
+ FACE       51,       18,      -87,        30    \ Face 
+ FACE        0,      111,      -20,        30    \ Face 
+ FACE      -97,       72,       24,        31    \ Face 
+ FACE     -108,      -68,       34,        31    \ Face 
+ FACE      108,      -68,       34,        31    \ Face 
+ FACE       97,       72,       24,        31    \ Face 
+ FACE        0,       94,       18,        31    \ Face 
 
 \ HER  = 15 = Rock hermit (asteroid)
 
@@ -1519,20 +1527,21 @@ INCLUDE "library/common/main/variable_ship_python.asm"
  EDGE       2,       8,    10,    11,         31    \ Edge 
  EDGE       7,       8,     8,     9,         31    \ Edge 
 
- EQUB &1F, &09, &42, &51
- EQUB &5F, &09, &42, &51
- EQUB &9F, &48, &40, &1F
- EQUB &DF, &40, &49, &2F
- EQUB &5F, &2D, &4F, &41
- EQUB &1F, &87, &0F, &23
- EQUB &1F, &26, &4C, &46
- EQUB &BF, &42, &3B, &27
- EQUB &FF, &43, &0F, &50
- EQUB &7F, &42, &0E, &4B
- EQUB &FF, &46, &50, &28
- EQUB &7F, &3A, &66, &33
- EQUB &3F, &51, &09, &43
- EQUB &3F, &2F, &5E, &3F
+\FACE normal_x, normal_y, normal_z, visibility
+ FACE        9,       66,       81,        31    \ Face 
+ FACE        9,      -66,       81,        31    \ Face 
+ FACE      -72,       64,       31,        31    \ Face 
+ FACE      -64,      -73,       47,        31    \ Face 
+ FACE       45,      -79,       65,        31    \ Face 
+ FACE      135,       15,       35,        31    \ Face 
+ FACE       38,       76,       70,        31    \ Face 
+ FACE      -66,       59,      -39,        31    \ Face 
+ FACE      -67,      -15,      -80,        31    \ Face 
+ FACE       66,      -14,      -75,        31    \ Face 
+ FACE      -70,      -80,      -40,        31    \ Face 
+ FACE       58,     -102,      -51,        31    \ Face 
+ FACE       81,        9,      -67,        31    \ Face 
+ FACE       47,       94,      -63,        31    \ Face 
 
 INCLUDE "library/common/main/variable_ship_viper.asm"
 INCLUDE "library/common/main/variable_ship_sidewinder.asm"
@@ -1601,12 +1610,13 @@ INCLUDE "library/common/main/variable_ship_mamba.asm"
  EDGE      15,      16,     5,     5,          8    \ Edge 
  EDGE      16,      14,     5,     5,          8    \ Edge 
 
- EQUB &1F, &03, &18, &03
- EQUB &5F, &03, &18, &03
- EQUB &DF, &03, &18, &03
- EQUB &9F, &03, &18, &03
- EQUB &3F, &26, &00, &4D
- EQUB &BF, &26, &00, &4D
+\FACE normal_x, normal_y, normal_z, visibility
+ FACE        3,       24,        3,        31    \ Face 
+ FACE        3,      -24,        3,        31    \ Face 
+ FACE       -3,      -24,        3,        31    \ Face 
+ FACE       -3,       24,        3,        31    \ Face 
+ FACE       38,        0,      -77,        31    \ Face 
+ FACE      -38,        0,      -77,        31    \ Face 
 
 \ ADA  = 20 = Adder
 
@@ -1680,21 +1690,22 @@ INCLUDE "library/common/main/variable_ship_mamba.asm"
  EDGE      16,      17,     0,     0,          4    \ Edge 
  EDGE      17,      14,     0,     0,          3    \ Edge 
 
- EQUB &1F, &00, &27, &0A
- EQUB &5F, &00, &27, &0A
- EQUB &1F, &45, &32, &0D
- EQUB &5F, &45, &32, &0D
- EQUB &1F, &1E, &34, &00
- EQUB &5F, &1E, &34, &00
- EQUB &3F, &00, &00, &A0
- EQUB &3F, &00, &00, &A0
- EQUB &3F, &00, &00, &A0
- EQUB &9F, &1E, &34, &00
- EQUB &DF, &1E, &34, &00
- EQUB &9F, &45, &32, &0D
- EQUB &DF, &45, &32, &0D
- EQUB &1F, &00, &1C, &00
- EQUB &5F, &00, &1C, &00
+\FACE normal_x, normal_y, normal_z, visibility
+ FACE        0,       39,       10,        31    \ Face 
+ FACE        0,      -39,       10,        31    \ Face 
+ FACE       69,       50,       13,        31    \ Face 
+ FACE       69,      -50,       13,        31    \ Face 
+ FACE       30,       52,        0,        31    \ Face 
+ FACE       30,      -52,        0,        31    \ Face 
+ FACE        0,        0,     -160,        31    \ Face 
+ FACE        0,        0,     -160,        31    \ Face 
+ FACE        0,        0,     -160,        31    \ Face 
+ FACE      -30,       52,        0,        31    \ Face 
+ FACE      -30,      -52,        0,        31    \ Face 
+ FACE      -69,       50,       13,        31    \ Face 
+ FACE      -69,      -50,       13,        31    \ Face 
+ FACE        0,       28,        0,        31    \ Face 
+ FACE        0,      -28,        0,        31    \ Face 
 
 \        21 = Gecko
 
@@ -1750,15 +1761,16 @@ INCLUDE "library/common/main/variable_ship_mamba.asm"
  EDGE       8,      10,     3,     3,         16    \ Edge 
  EDGE       9,      11,     3,     3,         17    \ Edge 
 
- EQUB &1F, &00, &1F, &05
- EQUB &1F, &04, &2D, &08
- EQUB &5F, &19, &6C, &13
- EQUB &5F, &00, &54, &0C
- EQUB &DF, &19, &6C, &13
- EQUB &9F, &04, &2D, &08
- EQUB &BF, &58, &10, &D6
- EQUB &3F, &00, &00, &BB
- EQUB &3F, &58, &10, &D6
+\FACE normal_x, normal_y, normal_z, visibility
+ FACE        0,       31,        5,        31    \ Face 
+ FACE        4,       45,        8,        31    \ Face 
+ FACE       25,     -108,       19,        31    \ Face 
+ FACE        0,      -84,       12,        31    \ Face 
+ FACE      -25,     -108,       19,        31    \ Face 
+ FACE       -4,       45,        8,        31    \ Face 
+ FACE      -88,       16,     -214,        31    \ Face 
+ FACE        0,        0,     -187,        31    \ Face 
+ FACE       88,       16,     -214,        31    \ Face 
 
 \        22 = Cobra Mk I
 
@@ -1814,16 +1826,17 @@ INCLUDE "library/common/main/variable_ship_mamba.asm"
  EDGE       1,       7,     5,     1,         20    \ Edge 
  EDGE      10,       9,     1,     0,          2    \ Edge 
 
- EQUB &1F, &00, &29, &0A
- EQUB &5F, &00, &1B, &03
- EQUB &9F, &08, &2E, &08
- EQUB &DF, &0C, &39, &0C
- EQUB &1F, &08, &2E, &08
- EQUB &5F, &0C, &39, &0C
- EQUB &1F, &00, &31, &00
- EQUB &3F, &00, &00, &9A
- EQUB &BF, &79, &6F, &3E
- EQUB &3F, &79, &6F, &3E
+\FACE normal_x, normal_y, normal_z, visibility
+ FACE        0,       41,       10,        31    \ Face 
+ FACE        0,      -27,        3,        31    \ Face 
+ FACE       -8,       46,        8,        31    \ Face 
+ FACE      -12,      -57,       12,        31    \ Face 
+ FACE        8,       46,        8,        31    \ Face 
+ FACE       12,      -57,       12,        31    \ Face 
+ FACE        0,       49,        0,        31    \ Face 
+ FACE        0,        0,     -154,        31    \ Face 
+ FACE     -121,      111,      -62,        31    \ Face 
+ FACE      121,      111,      -62,        31    \ Face
 
 \ WRM  = 23 = Worm
 
@@ -1876,15 +1889,15 @@ INCLUDE "library/common/main/variable_ship_mamba.asm"
  EDGE       2,       3,     1,     0,         31    \ Edge 
  EDGE       8,       9,     6,     1,         31    \ Edge 
 
-
- EQUB &1F, &00, &58, &46
- EQUB &1F, &00, &45, &0E
- EQUB &1F, &46, &42, &23
- EQUB &9F, &46, &42, &23
- EQUB &1F, &40, &31, &0E
- EQUB &9F, &40, &31, &0E
- EQUB &3F, &00, &00, &C8
- EQUB &5F, &00, &50, &00
+\FACE normal_x, normal_y, normal_z, visibility
+ FACE        0,       88,       70,        31    \ Face 
+ FACE        0,       69,       14,        31    \ Face 
+ FACE       70,       66,       35,        31    \ Face 
+ FACE      -70,       66,       35,        31    \ Face 
+ FACE       64,       49,       14,        31    \ Face 
+ FACE      -64,       49,       14,        31    \ Face 
+ FACE        0,        0,     -200,        31    \ Face 
+ FACE        0,      -80,        0,        31    \ Face 
 
 INCLUDE "library/6502sp/main/variable_ship_cobra_mk_iii_pirate.asm"
 
@@ -1960,22 +1973,20 @@ INCLUDE "library/6502sp/main/variable_ship_cobra_mk_iii_pirate.asm"
  EDGE      16,      13,    11,    11,          8    \ Edge 
  EDGE      18,      17,     4,     0,         10    \ Edge 
 
- EQUB &5F, &00, &23, &05
- EQUB &7F, &08, &26, &07
- EQUB &FF, &08, &26, &07
- EQUB &36, &00, &18, &01
- EQUB &1F, &00, &2B, &13
- EQUB &BF, &06, &1C, &02
- EQUB &3F, &06, &1C, &02
- EQUB &5F, &3B, &40, &1F
- EQUB &DF, &3B, &40, &1F
- EQUB &1F, &50, &2E, &32
- EQUB &9F, &50, &2E, &32
- EQUB &3F, &00, &00, &5A
-
-\ ?
-
- EQUB &38, &E5, &2C, &C5
+\FACE normal_x, normal_y, normal_z, visibility
+ FACE        0,      -35,        5,        31    \ Face 
+ FACE        8,      -38,       -7,        31    \ Face 
+ FACE       -8,      -38,       -7,        31    \ Face 
+ FACE        0,       24,       -1,        22    \ Face 
+ FACE        0,       43,       19,        31    \ Face 
+ FACE       -6,       28,       -2,        31    \ Face 
+ FACE        6,       28,       -2,        31    \ Face 
+ FACE       59,      -64,       31,        31    \ Face 
+ FACE      -59,      -64,       31,        31    \ Face 
+ FACE       80,       46,       50,        31    \ Face 
+ FACE      -80,       46,       50,        31    \ Face 
+ FACE        0,        0,      -90,        31    \ Face 
+ FACE      229,       44,     -197,        24    \ Face 
 
 \        26 = Python (pirate)
 
@@ -2039,19 +2050,20 @@ INCLUDE "library/6502sp/main/variable_ship_cobra_mk_iii_pirate.asm"
  EDGE       1,       4,     4,     5,         31    \ Edge 
  EDGE       8,       9,     6,     7,         31    \ Edge 
 
- EQUB &9F, &1B, &28, &0B
- EQUB &1F, &1B, &28, &0B
- EQUB &DF, &1B, &28, &0B
- EQUB &5F, &1B, &28, &0B
- EQUB &9F, &13, &26, &00
- EQUB &1F, &13, &26, &00
- EQUB &DF, &13, &26, &00
- EQUB &5F, &13, &26, &00
- EQUB &BF, &19, &25, &0B
- EQUB &3F, &19, &25, &0B
- EQUB &7F, &19, &25, &0B
- EQUB &FF, &19, &25, &0B
- EQUB &3F, &00, &00, &70
+\FACE normal_x, normal_y, normal_z, visibility
+ FACE      -27,       40,       11,        31    \ Face 
+ FACE       27,       40,       11,        31    \ Face 
+ FACE      -27,      -40,       11,        31    \ Face 
+ FACE       27,      -40,       11,        31    \ Face 
+ FACE      -19,       38,        0,        31    \ Face 
+ FACE       19,       38,        0,        31    \ Face 
+ FACE      -19,      -38,        0,        31    \ Face 
+ FACE       19,      -38,        0,        31    \ Face 
+ FACE      -25,       37,      -11,        31    \ Face 
+ FACE       25,       37,      -11,        31    \ Face 
+ FACE       25,      -37,      -11,        31    \ Face 
+ FACE      -25,      -37,      -11,        31    \ Face 
+ FACE        0,        0,     -112,        31    \ Face 
 
 \        27 = Fer-de-lance
 
@@ -2124,16 +2136,17 @@ INCLUDE "library/6502sp/main/variable_ship_cobra_mk_iii_pirate.asm"
  EDGE      16,      18,     9,     9,         12    \ Edge 
  EDGE      17,      18,     9,     9,          8    \ Edge 
 
- EQUB &1C, &00, &18, &06
- EQUB &9F, &44, &00, &18
- EQUB &BF, &3F, &00, &25
- EQUB &3F, &00, &00, &68
- EQUB &3F, &3F, &00, &25
- EQUB &1F, &44, &00, &18
- EQUB &BC, &0C, &2E, &13
- EQUB &3C, &00, &2D, &16
- EQUB &3C, &0C, &2E, &13
- EQUB &5F, &00, &1C, &00
+\FACE normal_x, normal_y, normal_z, visibility
+ FACE        0,       24,        6,        28    \ Face 
+ FACE      -68,        0,       24,        31    \ Face 
+ FACE      -63,        0,      -37,        31    \ Face 
+ FACE        0,        0,     -104,        31    \ Face 
+ FACE       63,        0,      -37,        31    \ Face 
+ FACE       68,        0,       24,        31    \ Face 
+ FACE      -12,       46,      -19,        28    \ Face 
+ FACE        0,       45,      -22,        28    \ Face 
+ FACE       12,       46,      -19,        28    \ Face 
+ FACE        0,      -28,        0,        31    \ Face 
 
 \        28 = Moray
 
@@ -2193,16 +2206,16 @@ INCLUDE "library/6502sp/main/variable_ship_cobra_mk_iii_pirate.asm"
  EDGE      10,      11,     0,     0,          5    \ Edge 
  EDGE      12,      13,     0,     0,          5    \ Edge 
 
-
- EQUB &1F, &00, &2B, &07
- EQUB &9F, &0A, &31, &07
- EQUB &1F, &0A, &31, &07
- EQUB &F8, &3B, &1C, &65
- EQUB &78, &00, &34, &4E
- EQUB &78, &3B, &1C, &65
- EQUB &DF, &48, &63, &32
- EQUB &5F, &00, &53, &1E
- EQUB &5F, &48, &63, &32
+\FACE normal_x, normal_y, normal_z, visibility
+ FACE        0,       43,        7,        31    \ Face 
+ FACE      -10,       49,        7,        31    \ Face 
+ FACE       10,       49,        7,        31    \ Face 
+ FACE      -59,      -28,     -101,        24    \ Face 
+ FACE        0,      -52,      -78,        24    \ Face 
+ FACE       59,      -28,     -101,        24    \ Face 
+ FACE      -72,      -99,       50,        31    \ Face 
+ FACE        0,      -83,       30,        31    \ Face 
+ FACE       72,      -99,       50,        31    \ Face 
 
 INCLUDE "library/common/main/variable_ship_thargoid.asm"
 INCLUDE "library/common/main/variable_ship_thargon.asm"
@@ -2273,16 +2286,17 @@ INCLUDE "library/common/main/variable_ship_thargon.asm"
  EDGE      13,      15,     9,     9,          5    \ Edge 
  EDGE      11,      13,     9,     9,         18    \ Edge 
 
- EQUB &1F, &00, &37, &0F
- EQUB &9F, &18, &4B, &14
- EQUB &1F, &18, &4B, &14
- EQUB &1F, &2C, &4B, &00
- EQUB &9F, &2C, &4B, &00
- EQUB &9F, &2C, &4B, &00
- EQUB &1F, &00, &35, &00
- EQUB &1F, &2C, &4B, &00
- EQUB &3F, &00, &00, &A0
- EQUB &5F, &00, &1B, &00
+\FACE normal_x, normal_y, normal_z, visibility
+ FACE        0,       55,       15,        31    \ Face 
+ FACE      -24,       75,       20,        31    \ Face 
+ FACE       24,       75,       20,        31    \ Face 
+ FACE       44,       75,        0,        31    \ Face 
+ FACE      -44,       75,        0,        31    \ Face 
+ FACE      -44,       75,        0,        31    \ Face 
+ FACE        0,       53,        0,        31    \ Face 
+ FACE       44,       75,        0,        31    \ Face 
+ FACE        0,        0,     -160,        31    \ Face 
+ FACE        0,      -27,        0,        31    \ Face 
 
 \ LGO  = 32 = 
 
@@ -2388,11 +2402,12 @@ INCLUDE "library/common/main/variable_ship_thargon.asm"
  EDGE      39,      40,     0,     0,         30    \ Edge 
  EDGE      41,      38,     0,     0,         30    \ Edge 
 
- EQUB &1F, &00, &17, &00
- EQUB &1F, &00, &04, &0F
- EQUB &3F, &00, &0D, &34
- EQUB &9F, &51, &51, &00
- EQUB &1F, &51, &51, &00
+\FACE normal_x, normal_y, normal_z, visibility
+ FACE        0,       23,        0,        31    \ Face 
+ FACE        0,        4,       15,        31    \ Face 
+ FACE        0,       13,      -52,        31    \ Face 
+ FACE      -81,       81,        0,        31    \ Face 
+ FACE       81,       81,        0,        31    \ Face 
 
 \ COU  = 33 = Cougar
 
@@ -2463,12 +2478,13 @@ INCLUDE "library/common/main/variable_ship_thargon.asm"
  EDGE      18,      17,     5,     5,         18    \ Edge 
  EDGE      17,      15,     5,     5,         20    \ Edge 
 
- EQUB &9F, &10, &2E, &04
- EQUB &DF, &10, &2E, &04
- EQUB &5F, &00, &1B, &05
- EQUB &5F, &10, &2E, &04
- EQUB &1F, &10, &2E, &04
- EQUB &3E, &00, &00, &A0
+\FACE normal_x, normal_y, normal_z, visibility
+ FACE      -16,       46,        4,        31    \ Face 
+ FACE      -16,      -46,        4,        31    \ Face 
+ FACE        0,      -27,        5,        31    \ Face 
+ FACE       16,      -46,        4,        31    \ Face 
+ FACE       16,       46,        4,        31    \ Face 
+ FACE        0,        0,     -160,        30    \ Face 
 
 \ DOD  = 34 = Dodecahedron space station
 
@@ -2553,24 +2569,24 @@ INCLUDE "library/common/main/variable_ship_thargon.asm"
  EDGE      23,      22,     0,     0,         23    \ Edge 
  EDGE      22,      20,     0,     0,         20    \ Edge 
 
- EQUB &1F, &00, &00, &C4
- EQUB &1F, &67, &8E, &58
- EQUB &5F, &A9, &37, &59
- EQUB &5F, &00, &B0, &58
- EQUB &DF, &A9, &37, &59
- EQUB &9F, &67, &8E, &58
- EQUB &3F, &00, &B0, &58
- EQUB &3F, &A9, &37, &59
- EQUB &7F, &67, &8E, &58
- EQUB &FF, &67, &8E, &58
- EQUB &BF, &A9, &37, &59
- EQUB &3F, &00, &00, &C4
+\FACE normal_x, normal_y, normal_z, visibility
+ FACE        0,        0,      196,        31    \ Face 
+ FACE      103,      142,       88,        31    \ Face 
+ FACE      169,      -55,       89,        31    \ Face 
+ FACE        0,     -176,       88,        31    \ Face 
+ FACE     -169,      -55,       89,        31    \ Face 
+ FACE     -103,      142,       88,        31    \ Face 
+ FACE        0,      176,      -88,        31    \ Face 
+ FACE      169,       55,      -89,        31    \ Face 
+ FACE      103,     -142,      -88,        31    \ Face 
+ FACE     -103,     -142,      -88,        31    \ Face 
+ FACE     -169,       55,      -89,        31    \ Face 
+ FACE        0,        0,     -196,        31    \ Face 
 
 \ ?
 
- EQUB &A9, &80, &14, &2B
- EQUB &20, &FD, &B8, &90
- EQUB &01, &60
+ EQUB &A9, &80, &14, &2B, &20
+ EQUB &FD, &B8, &90, &01, &60
 
 \ ******************************************************************************
 \

@@ -65,9 +65,9 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- EQUB &3F, &34, &00, &7A
- EQUB &1F, &27, &67, &1E
- EQUB &5F, &27, &67, &1E
- EQUB &9F, &70, &00, &00
+ FACE       52,        0,     -122,         31    \ Face 0
+ FACE       39,      103,       30,         31    \ Face 1
+ FACE       39,     -103,       30,         31    \ Face 2
+ FACE     -112,        0,        0,         31    \ Face 3
 
 ENDIF

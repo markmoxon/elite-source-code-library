@@ -26,8 +26,7 @@
 \
 \ Other entry points:
 \
-\   RE2+2               Restore A from T and return from the subroutine. Used by
-\                       REDU2
+\   RE2+2               Restore A from T and return from the subroutine
 \
 \ ******************************************************************************
 
@@ -47,26 +46,29 @@
                         \ jump to RE2 to auto-recentre and return the result
 
  LDX #255               \ We have an overflow, so set X to the maximum possible
-                        \ value, 255
+                        \ value of 255
 
 .RE2
 
 IF _CASSETTE_VERSION
 
  BPL RE3+2              \ If X has bit 7 clear (i.e. the result < 128), then
-                        \ jump to RE3+2 below to do an auto-recentre, if
-                        \ configured, because the result is on the left side of
-                        \ the centre point of 128
+                        \ jump to RE3+2 in routine REDU2 to do an auto-recentre,
+                        \ if configured, because the result is on the left side
+                        \ of the centre point of 128
 
 ELIF _6502SP_VERSION
 
- BPL djd1
+ BPL djd1               \ If X has bit 7 clear (i.e. the result < 128), then
+                        \ jump to djd1 in routine REDU2 to do an auto-recentre,
+                        \ if configured, because the result is on the left side
+                        \ of the centre point of 128
 
 ENDIF
 
                         \ Jumps to RE2+2 end up here
 
- LDA T                  \ Restore the original argument A into A
+ LDA T                  \ Restore the original argument A from T into A
 
  RTS                    \ Return from the subroutine
 

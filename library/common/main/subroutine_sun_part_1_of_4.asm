@@ -73,14 +73,15 @@ ENDIF
  LDA #1                 \ Set LSX = 1 to indicate the sun line heap is about to
  STA LSX                \ be filled up
 
- JSR CHKON              \ Call CHKON to check whether the new sun's circle fits
-                        \ on-screen, and set P(2 1) to the maximum y-coordinate
-                        \ of the new sun on-screen
+ JSR CHKON              \ Call CHKON to check whether any part of the new sun's
+                        \ circle appears on-screen, and of it does, set P(2 1)
+                        \ to the maximum y-coordinate of the new sun on-screen
 
- BCS PLF3-3             \ If CHKON set the C flag then the circle does not fit
-                        \ on-screen, so jump to WPLS (via the JMP at the top of
-                        \ this routine) to remove the sun from the screen,
-                        \ returning from the subroutine using a tail call
+ BCS PLF3-3             \ If CHKON set the C flag then the new sun's circle does
+                        \ not appear on-screen, so jump to WPLS (via the JMP at
+                        \ the top of this routine) to remove the sun from the
+                        \ screen, returning from the subroutine using a tail
+                        \ call
 
  LDA #0                 \ Set A = 0
 

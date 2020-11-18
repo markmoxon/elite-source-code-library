@@ -26,8 +26,13 @@
 \
 \ Other entry points:
 \
-\   RE3+2               Auto-recentre the value in X, if configured. Used by
-\                       BUMP2
+IF _CASSETTE_VERSION
+\   RE3+2               Auto-recentre the value in X, if keyboard auto-recentre
+\                       is configured
+ELIF _6502SP_VERSION
+\   djd1                Auto-recentre the value in X, if keyboard auto-recentre
+\                       is configured
+ENDIF
 \
 \ ******************************************************************************
 
@@ -56,16 +61,18 @@
                         \ because the result is on the left side of the centre
                         \ point of 128, so we don't need to auto-centre
 
+IF _CASSETTE_VERSION
+
                         \ Jumps to RE3+2 end up here
 
-                        \ If we get here, then we need to apply auto-recentre,
-                        \ if it is configured
-
-IF _6502SP_VERSION
+ELIF _6502SP_VERSION
 
 .djd1
 
 ENDIF
+
+                        \ If we get here, then we need to apply auto-recentre,
+                        \ if it is configured
 
  LDA DJD                \ If keyboard auto-recentre is disabled, then
  BNE RE2+2              \ jump to RE2+2 to restore A and return

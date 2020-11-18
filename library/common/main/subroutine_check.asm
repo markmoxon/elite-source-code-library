@@ -7,10 +7,15 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ Calculate the checksum for the last saved commander data block, to protect
-\ against corruption and tampering. The checksum is returned in A.
+\ The checksum for the last saved commander data block is saved as part of the
+\ commander file, in two places (CHK AND CHK2), to protect against file
+\ tampering. This routine calculates the checksum and returns it in A.
 \
 \ This algorithm is also implemented in elite-checksum.py.
+\
+\ Returns:
+\
+\   A                   The checksum for the last saved commander data block
 \
 \ ******************************************************************************
 
@@ -40,7 +45,9 @@
 
  DEX                    \ Decrement the loop counter
 
- BNE QUL2               \ Loop back for the next byte in the data block
+ BNE QUL2               \ Loop back for the next byte in the calculation, until
+                        \ we have added byte #0 and EOR'd with byte #1 of the
+                        \ data block
 
  RTS                    \ Return from the subroutine
 

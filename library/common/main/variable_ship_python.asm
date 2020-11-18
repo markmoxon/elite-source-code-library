@@ -120,32 +120,33 @@ ELIF _6502SP_VERSION
  EQUB &00, &30, &20, &7F, &76, &BA
  EQUB &00, &18, &70, &7F, &BA, &CC
 
- EQUB &1F, &32, &00, &20
- EQUB &1F, &20, &00, &0C
- EQUB &1F, &31, &00, &08
- EQUB &1F, &10, &00, &04
- EQUB &1F, &59, &08, &10
- EQUB &1F, &51, &04, &08
- EQUB &1F, &37, &08, &20
- EQUB &1F, &40, &04, &0C
- EQUB &1F, &62, &0C, &20
- EQUB &1F, &A7, &08, &24
- EQUB &1F, &84, &0C, &10
- EQUB &1F, &B6, &0C, &24
- EQUB &07, &88, &0C, &14
- EQUB &07, &BB, &0C, &28
- EQUB &07, &99, &08, &14
- EQUB &07, &AA, &08, &28
- EQUB &1F, &A9, &08, &1C
- EQUB &1F, &B8, &0C, &18
- EQUB &1F, &C8, &14, &18
- EQUB &1F, &C9, &14, &1C
- EQUB &1F, &AC, &1C, &28
- EQUB &1F, &CB, &18, &28
- EQUB &1F, &98, &10, &14
- EQUB &1F, &BA, &24, &28
- EQUB &1F, &54, &04, &10
- EQUB &1F, &76, &20, &24
+\EDGE vertex1, vertex2, face1, face2, visibility
+ EDGE       0,       8,     2,     3,         31    \ Edge 
+ EDGE       0,       3,     0,     2,         31    \ Edge 
+ EDGE       0,       2,     1,     3,         31    \ Edge 
+ EDGE       0,       1,     0,     1,         31    \ Edge 
+ EDGE       2,       4,     9,     5,         31    \ Edge 
+ EDGE       1,       2,     1,     5,         31    \ Edge 
+ EDGE       2,       8,     7,     3,         31    \ Edge 
+ EDGE       1,       3,     0,     4,         31    \ Edge 
+ EDGE       3,       8,     2,     6,         31    \ Edge 
+ EDGE       2,       9,     7,    10,         31    \ Edge 
+ EDGE       3,       4,     4,     8,         31    \ Edge 
+ EDGE       3,       9,     6,    11,         31    \ Edge 
+ EDGE       3,       5,     8,     8,          7    \ Edge 
+ EDGE       3,      10,    11,    11,          7    \ Edge 
+ EDGE       2,       5,     9,     9,          7    \ Edge 
+ EDGE       2,      10,    10,    10,          7    \ Edge 
+ EDGE       2,       7,     9,    10,         31    \ Edge 
+ EDGE       3,       6,     8,    11,         31    \ Edge 
+ EDGE       5,       6,     8,    12,         31    \ Edge 
+ EDGE       5,       7,     9,    12,         31    \ Edge 
+ EDGE       7,      10,    12,    10,         31    \ Edge 
+ EDGE       6,      10,    11,    12,         31    \ Edge 
+ EDGE       4,       5,     8,     9,         31    \ Edge 
+ EDGE       9,      10,    10,    11,         31    \ Edge 
+ EDGE       1,       4,     4,     5,         31    \ Edge 
+ EDGE       8,       9,     6,     7,         31    \ Edge 
 
  EQUB &9F, &1B, &28, &0B
  EQUB &1F, &1B, &28, &0B

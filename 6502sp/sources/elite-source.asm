@@ -992,10 +992,11 @@ INCLUDE "library/common/main/variable_ship_escape_pod.asm"
  EQUB &13, &20, &0B, &14, &FF, &FF
  EQUB &0A, &2E, &06, &54, &FF, &FF
 
- EQUB &1F, &FF, &00, &04
- EQUB &10, &FF, &04, &08
- EQUB &14, &FF, &08, &0C
- EQUB &10, &FF, &0C, &00
+\EDGE vertex1, vertex2, face1, face2, visibility
+ EDGE       0,       1,    15,    15,         31    \ Edge 0
+ EDGE       1,       2,    15,    15,         16    \ Edge 1
+ EDGE       2,       3,    15,    15,         20    \ Edge 2
+ EDGE       3,       0,    15,    15,         16    \ Edge 3
 
  EQUB &00, &00, &00, &00
 
@@ -1032,21 +1033,22 @@ INCLUDE "library/common/main/variable_ship_canister.asm"
  EQUB &05, &0A, &0D, &5F, &FF, &FF
  EQUB &14, &11, &1E, &3F, &FF, &FF
 
- EQUB &1F, &15, &00, &04
- EQUB &1F, &26, &04, &08
- EQUB &1F, &37, &08, &0C
- EQUB &1F, &48, &0C, &10
- EQUB &1F, &09, &10, &00
- EQUB &1F, &01, &00, &14
- EQUB &1F, &12, &04, &14
- EQUB &1F, &23, &08, &14
- EQUB &1F, &34, &0C, &14
- EQUB &1F, &04, &10, &14
- EQUB &1F, &59, &00, &18
- EQUB &1F, &56, &04, &18
- EQUB &1F, &67, &08, &18
- EQUB &1F, &78, &0C, &18
- EQUB &1F, &89, &10, &18
+\EDGE vertex1, vertex2, face1, face2, visibility
+ EDGE       0,       1,     5,     1,         31    \ Edge 1
+ EDGE       1,       2,     6,     2,         31    \ Edge 2
+ EDGE       2,       3,     7,     3,         31    \ Edge 3
+ EDGE       3,       4,     8,     4,         31    \ Edge 4
+ EDGE       4,       0,     9,     0,         31    \ Edge 5
+ EDGE       0,       5,     1,     0,         31    \ Edge 6
+ EDGE       1,       5,     2,     1,         31    \ Edge 7
+ EDGE       2,       5,     3,     2,         31    \ Edge 8
+ EDGE       3,       5,     4,     3,         31    \ Edge 9
+ EDGE       4,       5,     4,     0,         31    \ Edge 10
+ EDGE       0,       6,     9,     5,         31    \ Edge 11
+ EDGE       1,       6,     6,     5,         31    \ Edge 12
+ EDGE       2,       6,     7,     6,         31    \ Edge 13
+ EDGE       3,       6,     8,     7,         31    \ Edge 14
+ EDGE       4,       6,     9,     8,         31    \ Edge 15
 
  EQUB &DF, &0F, &03, &08
  EQUB &9F, &07, &0C, &1E
@@ -1135,36 +1137,37 @@ INCLUDE "library/common/main/variable_ship_asteroid.asm"
  EQUB &03, &0B, &19, &88, &F8, &C0
  EQUB &0A, &04, &19, &88, &4F, &18
 
- EQUB &1F, &02, &00, &04
- EQUB &1F, &4A, &04, &08
- EQUB &1F, &6B, &08, &0C
- EQUB &1F, &8C, &00, &0C
- EQUB &1F, &18, &00, &1C
- EQUB &18, &12, &00, &10
- EQUB &1F, &23, &04, &10
- EQUB &18, &34, &04, &14
- EQUB &1F, &45, &08, &14
- EQUB &0C, &56, &08, &18
- EQUB &1F, &67, &0C, &18
- EQUB &18, &78, &0C, &1C
- EQUB &1F, &39, &10, &14
- EQUB &1F, &59, &14, &18
- EQUB &1F, &79, &18, &1C
- EQUB &1F, &19, &10, &1C
- EQUB &10, &0C, &00, &30
- EQUB &10, &0A, &04, &30
- EQUB &10, &AB, &08, &30
- EQUB &10, &BC, &0C, &30
- EQUB &10, &99, &20, &24
- EQUB &07, &99, &24, &28
- EQUB &09, &99, &28, &2C
- EQUB &07, &99, &20, &2C
- EQUB &05, &BB, &34, &38
- EQUB &08, &BB, &38, &3C
- EQUB &07, &BB, &34, &3C
- EQUB &05, &AA, &40, &44
- EQUB &08, &AA, &44, &48
- EQUB &07, &AA, &40, &48
+\EDGE vertex1, vertex2, face1, face2, visibility
+ EDGE       0,       1,     2,     0,         31    \ Edge 
+ EDGE       1,       2,    10,     4,         31    \ Edge 
+ EDGE       2,       3,    11,     6,         31    \ Edge 
+ EDGE       0,       3,    12,     8,         31    \ Edge 
+ EDGE       0,       7,     8,     1,         31    \ Edge 
+ EDGE       0,       4,     2,     1,         24    \ Edge 
+ EDGE       1,       4,     3,     2,         31    \ Edge 
+ EDGE       1,       5,     4,     3,         24    \ Edge 
+ EDGE       2,       5,     5,     4,         31    \ Edge 
+ EDGE       2,       6,     6,     5,         12    \ Edge 
+ EDGE       3,       6,     7,     6,         31    \ Edge 
+ EDGE       3,       7,     8,     7,         24    \ Edge 
+ EDGE       4,       5,     9,     3,         31    \ Edge 
+ EDGE       5,       6,     9,     5,         31    \ Edge 
+ EDGE       6,       7,     9,     7,         31    \ Edge 
+ EDGE       4,       7,     9,     1,         31    \ Edge 
+ EDGE       0,      12,    12,     0,         16    \ Edge 
+ EDGE       1,      12,    10,     0,         16    \ Edge 
+ EDGE       2,      12,    11,    10,         16    \ Edge 
+ EDGE       3,      12,    12,    11,         16    \ Edge 
+ EDGE       8,       9,     9,     9,         16    \ Edge 
+ EDGE       9,      10,     9,     9,          7    \ Edge 
+ EDGE      10,      11,     9,     9,          9    \ Edge 
+ EDGE       8,      11,     9,     9,          7    \ Edge 
+ EDGE      13,      14,    11,    11,          5    \ Edge 
+ EDGE      14,      15,    11,    11,          8    \ Edge 
+ EDGE      13,      15,    11,    11,          7    \ Edge 
+ EDGE      16,      17,    10,    10,          5    \ Edge 
+ EDGE      17,      18,    10,    10,          8    \ Edge 
+ EDGE      16,      18,    10,    10,          7    \ Edge 
 
  EQUB &DF, &37, &37, &28
  EQUB &5F, &00, &4A, &04
@@ -1240,52 +1243,53 @@ INCLUDE "library/common/main/variable_ship_asteroid.asm"
  EQUB &09, &03, &1A, &25, &00, &00
  EQUB &08, &03, &1A, &A5, &00, &00
 
- EQUB &1F, &07, &00, &04
- EQUB &1F, &01, &04, &08
- EQUB &1F, &02, &08, &0C
- EQUB &1F, &03, &0C, &10
- EQUB &1F, &04, &10, &14
- EQUB &1F, &05, &14, &18
- EQUB &1F, &06, &00, &18
- EQUB &10, &67, &00, &1C
- EQUB &1F, &17, &04, &20
- EQUB &0B, &12, &08, &24
- EQUB &1F, &23, &0C, &24
- EQUB &1F, &34, &10, &28
- EQUB &0B, &45, &14, &28
- EQUB &1F, &56, &18, &2C
- EQUB &11, &78, &1C, &20
- EQUB &11, &19, &20, &24
- EQUB &11, &5A, &28, &2C
- EQUB &11, &6B, &1C, &2C
- EQUB &13, &BC, &1C, &3C
- EQUB &13, &8C, &1C, &30
- EQUB &10, &89, &20, &30
- EQUB &1F, &39, &24, &34
- EQUB &1F, &3A, &28, &38
- EQUB &10, &AB, &2C, &3C
- EQUB &1F, &9D, &30, &34
- EQUB &1F, &3D, &34, &38
- EQUB &1F, &AD, &38, &3C
- EQUB &1F, &CD, &30, &3C
- EQUB &07, &77, &40, &44
- EQUB &07, &77, &48, &4C
- EQUB &07, &77, &4C, &50
- EQUB &07, &77, &48, &50
- EQUB &07, &77, &50, &54
- EQUB &07, &66, &58, &5C
- EQUB &07, &66, &5C, &60
- EQUB &07, &66, &60, &58
- EQUB &07, &66, &64, &68
- EQUB &07, &66, &68, &6C
- EQUB &07, &66, &64, &6C
- EQUB &07, &66, &6C, &70
- EQUB &06, &33, &74, &78
- EQUB &06, &33, &7C, &80
- EQUB &08, &00, &84, &88
- EQUB &05, &00, &88, &8C
- EQUB &05, &00, &8C, &90
- EQUB &05, &00, &90, &84
+\EDGE vertex1, vertex2, face1, face2, visibility
+ EDGE       0,       1,     7,     0,         31    \ Edge 
+ EDGE       1,       2,     1,     0,         31    \ Edge 
+ EDGE       2,       3,     2,     0,         31    \ Edge 
+ EDGE       3,       4,     3,     0,         31    \ Edge 
+ EDGE       4,       5,     4,     0,         31    \ Edge 
+ EDGE       5,       6,     5,     0,         31    \ Edge 
+ EDGE       0,       6,     6,     0,         31    \ Edge 
+ EDGE       0,       7,     7,     6,         16    \ Edge 
+ EDGE       1,       8,     7,     1,         31    \ Edge 
+ EDGE       2,       9,     2,     1,         11    \ Edge 
+ EDGE       3,       9,     3,     2,         31    \ Edge 
+ EDGE       4,      10,     4,     3,         31    \ Edge 
+ EDGE       5,      10,     5,     4,         11    \ Edge 
+ EDGE       6,      11,     6,     5,         31    \ Edge 
+ EDGE       7,       8,     8,     7,         17    \ Edge 
+ EDGE       8,       9,     9,     1,         17    \ Edge 
+ EDGE      10,      11,    10,     5,         17    \ Edge 
+ EDGE       7,      11,    11,     6,         17    \ Edge 
+ EDGE       7,      15,    12,    11,         19    \ Edge 
+ EDGE       7,      12,    12,     8,         19    \ Edge 
+ EDGE       8,      12,     9,     8,         16    \ Edge 
+ EDGE       9,      13,     9,     3,         31    \ Edge 
+ EDGE      10,      14,    10,     3,         31    \ Edge 
+ EDGE      11,      15,    11,    10,         16    \ Edge 
+ EDGE      12,      13,    13,     9,         31    \ Edge 
+ EDGE      13,      14,    13,     3,         31    \ Edge 
+ EDGE      14,      15,    13,    10,         31    \ Edge 
+ EDGE      12,      15,    13,    12,         31    \ Edge 
+ EDGE      16,      17,     7,     7,          7    \ Edge 
+ EDGE      18,      19,     7,     7,          7    \ Edge 
+ EDGE      19,      20,     7,     7,          7    \ Edge 
+ EDGE      18,      20,     7,     7,          7    \ Edge 
+ EDGE      20,      21,     7,     7,          7    \ Edge 
+ EDGE      22,      23,     6,     6,          7    \ Edge 
+ EDGE      23,      24,     6,     6,          7    \ Edge 
+ EDGE      24,      22,     6,     6,          7    \ Edge 
+ EDGE      25,      26,     6,     6,          7    \ Edge 
+ EDGE      26,      27,     6,     6,          7    \ Edge 
+ EDGE      25,      27,     6,     6,          7    \ Edge 
+ EDGE      27,      28,     6,     6,          7    \ Edge 
+ EDGE      29,      30,     3,     3,          6    \ Edge 
+ EDGE      31,      32,     3,     3,          6    \ Edge 
+ EDGE      33,      34,     0,     0,          8    \ Edge 
+ EDGE      34,      35,     0,     0,          5    \ Edge 
+ EDGE      35,      36,     0,     0,          5    \ Edge 
+ EDGE      36,      33,     0,     0,          5    \ Edge 
 
  EQUB &3F, &00, &00, &67
  EQUB &BF, &6F, &30, &07
@@ -1342,30 +1346,31 @@ INCLUDE "library/common/main/variable_ship_python.asm"
  EQUB &0D, &09, &6B, &76, &01, &AA
  EQUB &0D, &09, &6B, &F6, &12, &CC
 
- EQUB &1F, &6B, &00, &14
- EQUB &1F, &8A, &00, &1C
- EQUB &1F, &79, &00, &24
- EQUB &1D, &69, &00, &10
- EQUB &1D, &8B, &00, &18
- EQUB &1D, &7A, &00, &20
- EQUB &1F, &36, &10, &14
- EQUB &1F, &0B, &14, &18
- EQUB &1F, &48, &18, &1C
- EQUB &1F, &1A, &1C, &20
- EQUB &1F, &57, &20, &24
- EQUB &1F, &29, &10, &24
- EQUB &18, &23, &04, &10
- EQUB &18, &03, &04, &14
- EQUB &18, &25, &0C, &24
- EQUB &18, &15, &0C, &20
- EQUB &18, &04, &08, &18
- EQUB &18, &14, &08, &1C
- EQUB &16, &02, &04, &28
- EQUB &16, &01, &08, &2C
- EQUB &16, &12, &0C, &30
- EQUB &0E, &0C, &28, &2C
- EQUB &0E, &1C, &2C, &30
- EQUB &0E, &2C, &30, &28
+\EDGE vertex1, vertex2, face1, face2, visibility
+ EDGE       0,       5,    11,     6,         31    \ Edge 
+ EDGE       0,       7,    10,     8,         31    \ Edge 
+ EDGE       0,       9,     9,     7,         31    \ Edge 
+ EDGE       0,       4,     9,     6,         29    \ Edge 
+ EDGE       0,       6,    11,     8,         29    \ Edge 
+ EDGE       0,       8,    10,     7,         29    \ Edge 
+ EDGE       4,       5,     6,     3,         31    \ Edge 
+ EDGE       5,       6,    11,     0,         31    \ Edge 
+ EDGE       6,       7,     8,     4,         31    \ Edge 
+ EDGE       7,       8,    10,     1,         31    \ Edge 
+ EDGE       8,       9,     7,     5,         31    \ Edge 
+ EDGE       4,       9,     9,     2,         31    \ Edge 
+ EDGE       1,       4,     3,     2,         24    \ Edge 
+ EDGE       1,       5,     3,     0,         24    \ Edge 
+ EDGE       3,       9,     5,     2,         24    \ Edge 
+ EDGE       3,       8,     5,     1,         24    \ Edge 
+ EDGE       2,       6,     4,     0,         24    \ Edge 
+ EDGE       2,       7,     4,     1,         24    \ Edge 
+ EDGE       1,      10,     2,     0,         22    \ Edge 
+ EDGE       2,      11,     1,     0,         22    \ Edge 
+ EDGE       3,      12,     2,     1,         22    \ Edge 
+ EDGE      10,      11,    12,     0,         14    \ Edge 
+ EDGE      11,      12,    12,     1,         14    \ Edge 
+ EDGE      12,      10,    12,     2,         14    \ Edge 
 
  EQUB &3F, &2B, &25, &3C
  EQUB &7F, &00, &2D, &59
@@ -1419,31 +1424,32 @@ INCLUDE "library/common/main/variable_ship_python.asm"
  EQUB &45, &01, &20, &5F, &49, &AA
  EQUB &2B, &35, &17, &3F, &FF, &FF
 
- EQUB &1E, &01, &00, &04
- EQUB &1E, &02, &04, &08
- EQUB &1E, &03, &08, &0C
- EQUB &1E, &04, &0C, &10
- EQUB &1E, &05, &00, &10
- EQUB &1D, &15, &00, &14
- EQUB &1D, &12, &04, &18
- EQUB &1D, &23, &08, &1C
- EQUB &1D, &34, &0C, &20
- EQUB &1D, &45, &10, &24
- EQUB &1E, &16, &14, &28
- EQUB &1E, &17, &18, &28
- EQUB &1E, &27, &18, &2C
- EQUB &1E, &28, &1C, &2C
- EQUB &1F, &38, &1C, &30
- EQUB &1F, &39, &20, &30
- EQUB &1E, &49, &20, &34
- EQUB &1E, &4A, &24, &34
- EQUB &1E, &5A, &24, &38
- EQUB &1E, &56, &14, &38
- EQUB &1E, &6B, &28, &38
- EQUB &1F, &7B, &28, &30
- EQUB &1F, &78, &2C, &30
- EQUB &1F, &9A, &30, &34
- EQUB &1F, &AB, &30, &38
+\EDGE vertex1, vertex2, face1, face2, visibility
+ EDGE       0,       1,     1,     0,         30    \ Edge 
+ EDGE       1,       2,     2,     0,         30    \ Edge 
+ EDGE       2,       3,     3,     0,         30    \ Edge 
+ EDGE       3,       4,     4,     0,         30    \ Edge 
+ EDGE       0,       4,     5,     0,         30    \ Edge 
+ EDGE       0,       5,     5,     1,         29    \ Edge 
+ EDGE       1,       6,     2,     1,         29    \ Edge 
+ EDGE       2,       7,     3,     2,         29    \ Edge 
+ EDGE       3,       8,     4,     3,         29    \ Edge 
+ EDGE       4,       9,     5,     4,         29    \ Edge 
+ EDGE       5,      10,     6,     1,         30    \ Edge 
+ EDGE       6,      10,     7,     1,         30    \ Edge 
+ EDGE       6,      11,     7,     2,         30    \ Edge 
+ EDGE       7,      11,     8,     2,         30    \ Edge 
+ EDGE       7,      12,     8,     3,         31    \ Edge 
+ EDGE       8,      12,     9,     3,         31    \ Edge 
+ EDGE       8,      13,     9,     4,         30    \ Edge 
+ EDGE       9,      13,    10,     4,         30    \ Edge 
+ EDGE       9,      14,    10,     5,         30    \ Edge 
+ EDGE       5,      14,     6,     5,         30    \ Edge 
+ EDGE      10,      14,    11,     6,         30    \ Edge 
+ EDGE      10,      12,    11,     7,         31    \ Edge 
+ EDGE      11,      12,     8,     7,         31    \ Edge 
+ EDGE      12,      13,    10,     9,         31    \ Edge 
+ EDGE      12,      14,    11,    10,         31    \ Edge 
 
  EQUB &7E, &00, &33, &31
  EQUB &BE, &33, &12, &57
@@ -1490,27 +1496,28 @@ INCLUDE "library/common/main/variable_ship_python.asm"
  EQUB &00, &1E, &4B, &3F, &FF, &FF
  EQUB &00, &32, &3C, &7F, &98, &BA
 
- EQUB &1F, &72, &00, &04
- EQUB &1F, &D6, &00, &10
- EQUB &1F, &C5, &0C, &10
- EQUB &1F, &B4, &08, &0C
- EQUB &1F, &A3, &04, &08
- EQUB &1F, &32, &04, &18
- EQUB &1F, &31, &08, &18
- EQUB &1F, &41, &08, &14
- EQUB &1F, &10, &14, &18
- EQUB &1F, &60, &00, &14
- EQUB &1F, &54, &0C, &14
- EQUB &1F, &20, &00, &18
- EQUB &1F, &65, &10, &14
- EQUB &1F, &A8, &04, &20
- EQUB &1F, &87, &04, &1C
- EQUB &1F, &D7, &00, &1C
- EQUB &1F, &DC, &10, &1C
- EQUB &1F, &C9, &0C, &1C
- EQUB &1F, &B9, &0C, &20
- EQUB &1F, &BA, &08, &20
- EQUB &1F, &98, &1C, &20
+\EDGE vertex1, vertex2, face1, face2, visibility
+ EDGE       0,       1,     2,     7,         31    \ Edge 
+ EDGE       0,       4,     6,    13,         31    \ Edge 
+ EDGE       3,       4,     5,    12,         31    \ Edge 
+ EDGE       2,       3,     4,    11,         31    \ Edge 
+ EDGE       1,       2,     3,    10,         31    \ Edge 
+ EDGE       1,       6,     2,     3,         31    \ Edge 
+ EDGE       2,       6,     1,     3,         31    \ Edge 
+ EDGE       2,       5,     1,     4,         31    \ Edge 
+ EDGE       5,       6,     0,     1,         31    \ Edge 
+ EDGE       0,       5,     0,     6,         31    \ Edge 
+ EDGE       3,       5,     4,     5,         31    \ Edge 
+ EDGE       0,       6,     0,     2,         31    \ Edge 
+ EDGE       4,       5,     5,     6,         31    \ Edge 
+ EDGE       1,       8,     8,    10,         31    \ Edge 
+ EDGE       1,       7,     7,     8,         31    \ Edge 
+ EDGE       0,       7,     7,    13,         31    \ Edge 
+ EDGE       4,       7,    12,    13,         31    \ Edge 
+ EDGE       3,       7,     9,    12,         31    \ Edge 
+ EDGE       3,       8,     9,    11,         31    \ Edge 
+ EDGE       2,       8,    10,    11,         31    \ Edge 
+ EDGE       7,       8,     8,     9,         31    \ Edge 
 
  EQUB &1F, &09, &42, &51
  EQUB &5F, &09, &42, &51
@@ -1571,27 +1578,28 @@ INCLUDE "library/common/main/variable_ship_mamba.asm"
  EQUB &12, &0B, &27, &E8, &55, &55
  EQUB &24, &00, &1E, &A8, &55, &55
 
- EQUB &1F, &03, &00, &04
- EQUB &1F, &12, &00, &08
- EQUB &1F, &01, &00, &0C
- EQUB &1F, &23, &00, &10
- EQUB &1F, &35, &04, &10
- EQUB &1F, &25, &10, &08
- EQUB &1F, &14, &08, &0C
- EQUB &1F, &04, &0C, &04
- EQUB &1E, &01, &0C, &14
- EQUB &1E, &23, &10, &18
- EQUB &08, &45, &04, &08
- EQUB &09, &00, &1C, &28
- EQUB &06, &00, &20, &28
- EQUB &09, &33, &1C, &24
- EQUB &06, &33, &20, &24
- EQUB &08, &44, &2C, &34
- EQUB &08, &44, &34, &30
- EQUB &07, &44, &30, &2C
- EQUB &07, &55, &38, &3C
- EQUB &08, &55, &3C, &40
- EQUB &08, &55, &40, &38
+\EDGE vertex1, vertex2, face1, face2, visibility
+ EDGE       0,       1,     3,     0,         31    \ Edge 
+ EDGE       0,       2,     2,     1,         31    \ Edge 
+ EDGE       0,       3,     1,     0,         31    \ Edge 
+ EDGE       0,       4,     3,     2,         31    \ Edge 
+ EDGE       1,       4,     5,     3,         31    \ Edge 
+ EDGE       4,       2,     5,     2,         31    \ Edge 
+ EDGE       2,       3,     4,     1,         31    \ Edge 
+ EDGE       3,       1,     4,     0,         31    \ Edge 
+ EDGE       3,       5,     1,     0,         30    \ Edge 
+ EDGE       4,       6,     3,     2,         30    \ Edge 
+ EDGE       1,       2,     5,     4,          8    \ Edge 
+ EDGE       7,      10,     0,     0,          9    \ Edge 
+ EDGE       8,      10,     0,     0,          6    \ Edge 
+ EDGE       7,       9,     3,     3,          9    \ Edge 
+ EDGE       8,       9,     3,     3,          6    \ Edge 
+ EDGE      11,      13,     4,     4,          8    \ Edge 
+ EDGE      13,      12,     4,     4,          8    \ Edge 
+ EDGE      12,      11,     4,     4,          7    \ Edge 
+ EDGE      14,      15,     5,     5,          7    \ Edge 
+ EDGE      15,      16,     5,     5,          8    \ Edge 
+ EDGE      16,      14,     5,     5,          8    \ Edge 
 
  EQUB &1F, &03, &18, &03
  EQUB &5F, &03, &18, &03
@@ -1641,35 +1649,36 @@ INCLUDE "library/common/main/variable_ship_mamba.asm"
  EQUB &0B, &04, &18, &04, &00, &00
  EQUB &0B, &04, &18, &84, &00, &00
 
- EQUB &1F, &01, &00, &04
- EQUB &07, &23, &04, &08
- EQUB &1F, &45, &08, &0C
- EQUB &1F, &56, &0C, &10
- EQUB &1F, &7E, &10, &14
- EQUB &1F, &8A, &14, &18
- EQUB &1F, &9A, &18, &1C
- EQUB &07, &BC, &1C, &00
- EQUB &1F, &46, &0C, &24
- EQUB &1F, &7D, &24, &20
- EQUB &1F, &89, &20, &18
- EQUB &1F, &0B, &00, &28
- EQUB &1F, &9B, &1C, &28
- EQUB &1F, &02, &04, &2C
- EQUB &1F, &24, &08, &2C
- EQUB &1F, &1C, &00, &30
- EQUB &1F, &AC, &1C, &30
- EQUB &1F, &13, &04, &34
- EQUB &1F, &35, &08, &34
- EQUB &1F, &0D, &28, &2C
- EQUB &1F, &1E, &30, &34
- EQUB &1F, &9D, &20, &28
- EQUB &1F, &4D, &24, &2C
- EQUB &1F, &AE, &14, &30
- EQUB &1F, &5E, &10, &34
- EQUB &05, &00, &38, &3C
- EQUB &03, &00, &3C, &40
- EQUB &04, &00, &40, &44
- EQUB &03, &00, &44, &38
+\EDGE vertex1, vertex2, face1, face2, visibility
+ EDGE       0,       1,     1,     0,         31    \ Edge 
+ EDGE       1,       2,     3,     2,          7    \ Edge 
+ EDGE       2,       3,     5,     4,         31    \ Edge 
+ EDGE       3,       4,     6,     5,         31    \ Edge 
+ EDGE       4,       5,    14,     7,         31    \ Edge 
+ EDGE       5,       6,    10,     8,         31    \ Edge 
+ EDGE       6,       7,    10,     9,         31    \ Edge 
+ EDGE       7,       0,    12,    11,          7    \ Edge 
+ EDGE       3,       9,     6,     4,         31    \ Edge 
+ EDGE       9,       8,    13,     7,         31    \ Edge 
+ EDGE       8,       6,     9,     8,         31    \ Edge 
+ EDGE       0,      10,    11,     0,         31    \ Edge 
+ EDGE       7,      10,    11,     9,         31    \ Edge 
+ EDGE       1,      11,     2,     0,         31    \ Edge 
+ EDGE       2,      11,     4,     2,         31    \ Edge 
+ EDGE       0,      12,    12,     1,         31    \ Edge 
+ EDGE       7,      12,    12,    10,         31    \ Edge 
+ EDGE       1,      13,     3,     1,         31    \ Edge 
+ EDGE       2,      13,     5,     3,         31    \ Edge 
+ EDGE      10,      11,    13,     0,         31    \ Edge 
+ EDGE      12,      13,    14,     1,         31    \ Edge 
+ EDGE       8,      10,    13,     9,         31    \ Edge 
+ EDGE       9,      11,    13,     4,         31    \ Edge 
+ EDGE       5,      12,    14,    10,         31    \ Edge 
+ EDGE       4,      13,    14,     5,         31    \ Edge 
+ EDGE      14,      15,     0,     0,          5    \ Edge 
+ EDGE      15,      16,     0,     0,          3    \ Edge 
+ EDGE      16,      17,     0,     0,          4    \ Edge 
+ EDGE      17,      14,     0,     0,          3    \ Edge 
 
  EQUB &1F, &00, &27, &0A
  EQUB &5F, &00, &27, &0A
@@ -1722,23 +1731,24 @@ INCLUDE "library/common/main/variable_ship_mamba.asm"
  EQUB &08, &0D, &10, &F0, &33, &33
  EQUB &08, &0D, &10, &71, &33, &33
 
- EQUB &1F, &03, &00, &04
- EQUB &1F, &12, &04, &14
- EQUB &1F, &18, &14, &0C
- EQUB &1F, &07, &0C, &08
- EQUB &1F, &56, &08, &10
- EQUB &1F, &45, &10, &00
- EQUB &1F, &28, &14, &1C
- EQUB &1F, &37, &1C, &18
- EQUB &1F, &46, &18, &10
- EQUB &1D, &05, &00, &08
- EQUB &1E, &01, &04, &0C
- EQUB &1D, &34, &00, &18
- EQUB &1E, &23, &04, &1C
- EQUB &14, &67, &08, &18
- EQUB &14, &78, &0C, &1C
- EQUB &10, &33, &20, &28
- EQUB &11, &33, &24, &2C
+\EDGE vertex1, vertex2, face1, face2, visibility
+ EDGE       0,       1,     3,     0,         31    \ Edge 
+ EDGE       1,       5,     2,     1,         31    \ Edge 
+ EDGE       5,       3,     8,     1,         31    \ Edge 
+ EDGE       3,       2,     7,     0,         31    \ Edge 
+ EDGE       2,       4,     6,     5,         31    \ Edge 
+ EDGE       4,       0,     5,     4,         31    \ Edge 
+ EDGE       5,       7,     8,     2,         31    \ Edge 
+ EDGE       7,       6,     7,     3,         31    \ Edge 
+ EDGE       6,       4,     6,     4,         31    \ Edge 
+ EDGE       0,       2,     5,     0,         29    \ Edge 
+ EDGE       1,       3,     1,     0,         30    \ Edge 
+ EDGE       0,       6,     4,     3,         29    \ Edge 
+ EDGE       1,       7,     3,     2,         30    \ Edge 
+ EDGE       2,       6,     7,     6,         20    \ Edge 
+ EDGE       3,       7,     8,     7,         20    \ Edge 
+ EDGE       8,      10,     3,     3,         16    \ Edge 
+ EDGE       9,      11,     3,     3,         17    \ Edge 
 
  EQUB &1F, &00, &1F, &05
  EQUB &1F, &04, &2D, &08
@@ -1784,24 +1794,25 @@ INCLUDE "library/common/main/variable_ship_mamba.asm"
  EQUB &00, &01, &32, &42, &01, &11
  EQUB &00, &01, &3C, &5F, &01, &11
 
- EQUB &1F, &01, &04, &00
- EQUB &1F, &23, &00, &08
- EQUB &1F, &38, &08, &18
- EQUB &1F, &17, &18, &1C
- EQUB &1F, &59, &1C, &0C
- EQUB &1F, &45, &0C, &04
- EQUB &1F, &28, &08, &10
- EQUB &1F, &67, &10, &14
- EQUB &1F, &49, &14, &0C
- EQUB &14, &02, &00, &20
- EQUB &14, &04, &20, &04
- EQUB &10, &26, &10, &20
- EQUB &10, &46, &20, &14
- EQUB &1F, &78, &10, &18
- EQUB &1F, &79, &14, &1C
- EQUB &14, &13, &00, &18
- EQUB &14, &15, &04, &1C
- EQUB &02, &01, &28, &24
+\EDGE vertex1, vertex2, face1, face2, visibility
+ EDGE       1,       0,     1,     0,         31    \ Edge 
+ EDGE       0,       2,     3,     2,         31    \ Edge 
+ EDGE       2,       6,     8,     3,         31    \ Edge 
+ EDGE       6,       7,     7,     1,         31    \ Edge 
+ EDGE       7,       3,     9,     5,         31    \ Edge 
+ EDGE       3,       1,     5,     4,         31    \ Edge 
+ EDGE       2,       4,     8,     2,         31    \ Edge 
+ EDGE       4,       5,     7,     6,         31    \ Edge 
+ EDGE       5,       3,     9,     4,         31    \ Edge 
+ EDGE       0,       8,     2,     0,         20    \ Edge 
+ EDGE       8,       1,     4,     0,         20    \ Edge 
+ EDGE       4,       8,     6,     2,         16    \ Edge 
+ EDGE       8,       5,     6,     4,         16    \ Edge 
+ EDGE       4,       6,     8,     7,         31    \ Edge 
+ EDGE       5,       7,     9,     7,         31    \ Edge 
+ EDGE       0,       6,     3,     1,         20    \ Edge 
+ EDGE       1,       7,     5,     1,         20    \ Edge 
+ EDGE      10,       9,     1,     0,          2    \ Edge 
 
  EQUB &1F, &00, &29, &0A
  EQUB &5F, &00, &1B, &03
@@ -1847,22 +1858,24 @@ INCLUDE "library/common/main/variable_ship_mamba.asm"
  EQUB &08, &0E, &19, &3F, &14, &66
  EQUB &08, &0E, &19, &BF, &15, &66
 
- EQUB &1F, &07, &00, &04
- EQUB &1F, &37, &04, &14
- EQUB &1F, &57, &14, &1C
- EQUB &1F, &67, &1C, &18
- EQUB &1F, &47, &18, &10
- EQUB &1F, &27, &10, &00
- EQUB &1F, &02, &00, &08
- EQUB &1F, &03, &04, &0C
- EQUB &1F, &24, &10, &08
- EQUB &1F, &35, &14, &0C
- EQUB &1F, &14, &08, &20
- EQUB &1F, &46, &20, &18
- EQUB &1F, &15, &0C, &24
- EQUB &1F, &56, &24, &1C
- EQUB &1F, &01, &08, &0C
- EQUB &1F, &16, &20, &24
+\EDGE vertex1, vertex2, face1, face2, visibility
+ EDGE       0,       1,     7,     0,         31    \ Edge 
+ EDGE       1,       5,     7,     3,         31    \ Edge 
+ EDGE       5,       7,     7,     5,         31    \ Edge 
+ EDGE       7,       6,     7,     6,         31    \ Edge 
+ EDGE       6,       4,     7,     4,         31    \ Edge 
+ EDGE       4,       0,     7,     2,         31    \ Edge 
+ EDGE       0,       2,     2,     0,         31    \ Edge 
+ EDGE       1,       3,     3,     0,         31    \ Edge 
+ EDGE       4,       2,     4,     2,         31    \ Edge 
+ EDGE       5,       3,     5,     3,         31    \ Edge 
+ EDGE       2,       8,     4,     1,         31    \ Edge 
+ EDGE       8,       6,     6,     4,         31    \ Edge 
+ EDGE       3,       9,     5,     1,         31    \ Edge 
+ EDGE       9,       7,     6,     5,         31    \ Edge 
+ EDGE       2,       3,     1,     0,         31    \ Edge 
+ EDGE       8,       9,     6,     1,         31    \ Edge 
+
 
  EQUB &1F, &00, &58, &46
  EQUB &1F, &00, &45, &0E
@@ -1917,34 +1930,35 @@ INCLUDE "library/6502sp/main/variable_ship_cobra_mk_iii_pirate.asm"
  EQUB &00, &07, &49, &4A, &04, &04
  EQUB &00, &07, &53, &4A, &04, &04
 
- EQUB &16, &12, &00, &04
- EQUB &16, &01, &00, &10
- EQUB &16, &02, &00, &1C
- EQUB &1F, &1B, &04, &08
- EQUB &1F, &16, &08, &0C
- EQUB &10, &79, &0C, &20
- EQUB &1F, &04, &20, &24
- EQUB &10, &8A, &18, &24
- EQUB &1F, &25, &14, &18
- EQUB &1F, &2B, &04, &14
- EQUB &1F, &17, &0C, &10
- EQUB &1F, &07, &10, &20
- EQUB &1F, &28, &18, &1C
- EQUB &1F, &08, &1C, &24
- EQUB &1F, &6B, &08, &30
- EQUB &1F, &5B, &14, &30
- EQUB &16, &36, &28, &30
- EQUB &16, &35, &2C, &30
- EQUB &16, &34, &28, &2C
- EQUB &1F, &5A, &18, &2C
- EQUB &1F, &4A, &24, &2C
- EQUB &1F, &69, &0C, &28
- EQUB &1F, &49, &20, &28
- EQUB &0A, &BB, &34, &3C
- EQUB &09, &BB, &3C, &38
- EQUB &08, &BB, &38, &40
- EQUB &08, &BB, &40, &34
- EQUB &0A, &04, &48, &44
+\EDGE vertex1, vertex2, face1, face2, visibility
+ EDGE       0,       1,     2,     1,         22    \ Edge 
+ EDGE       0,       4,     1,     0,         22    \ Edge 
+ EDGE       0,       7,     2,     0,         22    \ Edge 
+ EDGE       1,       2,    11,     1,         31    \ Edge 
+ EDGE       2,       3,     6,     1,         31    \ Edge 
+ EDGE       3,       8,     9,     7,         16    \ Edge 
+ EDGE       8,       9,     4,     0,         31    \ Edge 
+ EDGE       6,       9,    10,     8,         16    \ Edge 
+ EDGE       5,       6,     5,     2,         31    \ Edge 
+ EDGE       1,       5,    11,     2,         31    \ Edge 
+ EDGE       3,       4,     7,     1,         31    \ Edge 
+ EDGE       4,       8,     7,     0,         31    \ Edge 
+ EDGE       6,       7,     8,     2,         31    \ Edge 
+ EDGE       7,       9,     8,     0,         31    \ Edge 
+ EDGE       2,      12,    11,     6,         31    \ Edge 
+ EDGE       5,      12,    11,     5,         31    \ Edge 
+ EDGE      10,      12,     6,     3,         22    \ Edge 
+ EDGE      11,      12,     5,     3,         22    \ Edge 
+ EDGE      10,      11,     4,     3,         22    \ Edge 
+ EDGE       6,      11,    10,     5,         31    \ Edge 
+ EDGE       9,      11,    10,     4,         31    \ Edge 
+ EDGE       3,      10,     9,     6,         31    \ Edge 
+ EDGE       8,      10,     9,     4,         31    \ Edge 
+ EDGE      13,      15,    11,    11,         10    \ Edge 
+ EDGE      15,      14,    11,    11,          9    \ Edge 
+ EDGE      14,      16,    11,    11,          8    \ Edge 
+ EDGE      16,      13,    11,    11,          8    \ Edge 
+ EDGE      18,      17,     4,     0,         10    \ Edge 
 
  EQUB &5F, &00, &23, &05
  EQUB &7F, &08, &26, &07
@@ -1997,32 +2011,33 @@ INCLUDE "library/6502sp/main/variable_ship_cobra_mk_iii_pirate.asm"
  EQUB &00, &30, &20, &7F, &76, &BA
  EQUB &00, &18, &70, &7F, &BA, &CC
 
- EQUB &1F, &32, &00, &20
- EQUB &1F, &20, &00, &0C
- EQUB &1F, &31, &00, &08
- EQUB &1F, &10, &00, &04
- EQUB &1F, &59, &08, &10
- EQUB &1F, &51, &04, &08
- EQUB &1F, &37, &08, &20
- EQUB &1F, &40, &04, &0C
- EQUB &1F, &62, &0C, &20
- EQUB &1F, &A7, &08, &24
- EQUB &1F, &84, &0C, &10
- EQUB &1F, &B6, &0C, &24
- EQUB &07, &88, &0C, &14
- EQUB &07, &BB, &0C, &28
- EQUB &07, &99, &08, &14
- EQUB &07, &AA, &08, &28
- EQUB &1F, &A9, &08, &1C
- EQUB &1F, &B8, &0C, &18
- EQUB &1F, &C8, &14, &18
- EQUB &1F, &C9, &14, &1C
- EQUB &1F, &AC, &1C, &28
- EQUB &1F, &CB, &18, &28
- EQUB &1F, &98, &10, &14
- EQUB &1F, &BA, &24, &28
- EQUB &1F, &54, &04, &10
- EQUB &1F, &76, &20, &24
+\EDGE vertex1, vertex2, face1, face2, visibility
+ EDGE       0,       8,     2,     3,         31    \ Edge 
+ EDGE       0,       3,     0,     2,         31    \ Edge 
+ EDGE       0,       2,     1,     3,         31    \ Edge 
+ EDGE       0,       1,     0,     1,         31    \ Edge 
+ EDGE       2,       4,     9,     5,         31    \ Edge 
+ EDGE       1,       2,     1,     5,         31    \ Edge 
+ EDGE       2,       8,     7,     3,         31    \ Edge 
+ EDGE       1,       3,     0,     4,         31    \ Edge 
+ EDGE       3,       8,     2,     6,         31    \ Edge 
+ EDGE       2,       9,     7,    10,         31    \ Edge 
+ EDGE       3,       4,     4,     8,         31    \ Edge 
+ EDGE       3,       9,     6,    11,         31    \ Edge 
+ EDGE       3,       5,     8,     8,          7    \ Edge 
+ EDGE       3,      10,    11,    11,          7    \ Edge 
+ EDGE       2,       5,     9,     9,          7    \ Edge 
+ EDGE       2,      10,    10,    10,          7    \ Edge 
+ EDGE       2,       7,     9,    10,         31    \ Edge 
+ EDGE       3,       6,     8,    11,         31    \ Edge 
+ EDGE       5,       6,     8,    12,         31    \ Edge 
+ EDGE       5,       7,     9,    12,         31    \ Edge 
+ EDGE       7,      10,    12,    10,         31    \ Edge 
+ EDGE       6,      10,    11,    12,         31    \ Edge 
+ EDGE       4,       5,     8,     9,         31    \ Edge 
+ EDGE       9,      10,    10,    11,         31    \ Edge 
+ EDGE       1,       4,     4,     5,         31    \ Edge 
+ EDGE       8,       9,     6,     7,         31    \ Edge 
 
  EQUB &9F, &1B, &28, &0B
  EQUB &1F, &1B, &28, &0B
@@ -2080,33 +2095,34 @@ INCLUDE "library/6502sp/main/variable_ship_cobra_mk_iii_pirate.asm"
  EQUB &0E, &0E, &2C, &CC, &99, &99
  EQUB &0E, &0E, &2C, &4C, &99, &99
 
- EQUB &1F, &19, &00, &04
- EQUB &1F, &29, &04, &08
- EQUB &1F, &39, &08, &0C
- EQUB &1F, &49, &0C, &10
- EQUB &1F, &59, &00, &10
- EQUB &1C, &01, &00, &14
- EQUB &1C, &26, &14, &18
- EQUB &1C, &37, &18, &1C
- EQUB &1C, &48, &1C, &20
- EQUB &1C, &05, &00, &20
- EQUB &0F, &06, &14, &24
- EQUB &0B, &67, &18, &24
- EQUB &0B, &78, &1C, &24
- EQUB &0F, &08, &20, &24
- EQUB &0E, &12, &04, &14
- EQUB &0E, &23, &08, &18
- EQUB &0E, &34, &0C, &1C
- EQUB &0E, &45, &10, &20
- EQUB &08, &00, &28, &2C
- EQUB &09, &00, &2C, &30
- EQUB &0B, &00, &28, &30
- EQUB &08, &00, &34, &38
- EQUB &09, &00, &38, &3C
- EQUB &0B, &00, &34, &3C
- EQUB &0C, &99, &40, &44
- EQUB &0C, &99, &40, &48
- EQUB &08, &99, &44, &48
+\EDGE vertex1, vertex2, face1, face2, visibility
+ EDGE       0,       1,     9,     1,         31    \ Edge 
+ EDGE       1,       2,     9,     2,         31    \ Edge 
+ EDGE       2,       3,     9,     3,         31    \ Edge 
+ EDGE       3,       4,     9,     4,         31    \ Edge 
+ EDGE       0,       4,     9,     5,         31    \ Edge 
+ EDGE       0,       5,     1,     0,         28    \ Edge 
+ EDGE       5,       6,     6,     2,         28    \ Edge 
+ EDGE       6,       7,     7,     3,         28    \ Edge 
+ EDGE       7,       8,     8,     4,         28    \ Edge 
+ EDGE       0,       8,     5,     0,         28    \ Edge 
+ EDGE       5,       9,     6,     0,         15    \ Edge 
+ EDGE       6,       9,     7,     6,         11    \ Edge 
+ EDGE       7,       9,     8,     7,         11    \ Edge 
+ EDGE       8,       9,     8,     0,         15    \ Edge 
+ EDGE       1,       5,     2,     1,         14    \ Edge 
+ EDGE       2,       6,     3,     2,         14    \ Edge 
+ EDGE       3,       7,     4,     3,         14    \ Edge 
+ EDGE       4,       8,     5,     4,         14    \ Edge 
+ EDGE      10,      11,     0,     0,          8    \ Edge 
+ EDGE      11,      12,     0,     0,          9    \ Edge 
+ EDGE      10,      12,     0,     0,         11    \ Edge 
+ EDGE      13,      14,     0,     0,          8    \ Edge 
+ EDGE      14,      15,     0,     0,          9    \ Edge 
+ EDGE      13,      15,     0,     0,         11    \ Edge 
+ EDGE      16,      17,     9,     9,         12    \ Edge 
+ EDGE      16,      18,     9,     9,         12    \ Edge 
+ EDGE      17,      18,     9,     9,          8    \ Edge 
 
  EQUB &1C, &00, &18, &06
  EQUB &9F, &44, &00, &18
@@ -2156,25 +2172,27 @@ INCLUDE "library/6502sp/main/variable_ship_cobra_mk_iii_pirate.asm"
  EQUB &0D, &03, &31, &85, &00, &00
  EQUB &06, &00, &41, &85, &00, &00
 
- EQUB &1F, &07, &00, &04
- EQUB &1F, &16, &04, &0C
- EQUB &18, &36, &0C, &18
- EQUB &18, &47, &14, &18
- EQUB &18, &58, &10, &14
- EQUB &1F, &28, &00, &10
- EQUB &0F, &67, &04, &18
- EQUB &0F, &78, &00, &14
- EQUB &0F, &02, &00, &08
- EQUB &0F, &01, &04, &08
- EQUB &11, &13, &08, &0C
- EQUB &11, &25, &08, &10
- EQUB &0D, &45, &08, &14
- EQUB &0D, &34, &08, &18
- EQUB &05, &44, &1C, &20
- EQUB &07, &44, &1C, &24
- EQUB &07, &44, &20, &24
- EQUB &05, &00, &28, &2C
- EQUB &05, &00, &30, &34
+\EDGE vertex1, vertex2, face1, face2, visibility
+ EDGE       0,       1,     7,     0,         31    \ Edge 
+ EDGE       1,       3,     6,     1,         31    \ Edge 
+ EDGE       3,       6,     6,     3,         24    \ Edge 
+ EDGE       5,       6,     7,     4,         24    \ Edge 
+ EDGE       4,       5,     8,     5,         24    \ Edge 
+ EDGE       0,       4,     8,     2,         31    \ Edge 
+ EDGE       1,       6,     7,     6,         15    \ Edge 
+ EDGE       0,       5,     8,     7,         15    \ Edge 
+ EDGE       0,       2,     2,     0,         15    \ Edge 
+ EDGE       1,       2,     1,     0,         15    \ Edge 
+ EDGE       2,       3,     3,     1,         17    \ Edge 
+ EDGE       2,       4,     5,     2,         17    \ Edge 
+ EDGE       2,       5,     5,     4,         13    \ Edge 
+ EDGE       2,       6,     4,     3,         13    \ Edge 
+ EDGE       7,       8,     4,     4,          5    \ Edge 
+ EDGE       7,       9,     4,     4,          7    \ Edge 
+ EDGE       8,       9,     4,     4,          7    \ Edge 
+ EDGE      10,      11,     0,     0,          5    \ Edge 
+ EDGE      12,      13,     0,     0,          5    \ Edge 
+
 
  EQUB &1F, &00, &2B, &07
  EQUB &9F, &0A, &31, &07
@@ -2229,30 +2247,31 @@ INCLUDE "library/common/main/variable_ship_thargon.asm"
  EQUB &0F, &07, &0F, &EA, &99, &99
  EQUB &00, &07, &00, &40, &9F, &01
 
- EQUB &1F, &09, &00, &04
- EQUB &1F, &19, &04, &08
- EQUB &1F, &01, &04, &24
- EQUB &1F, &02, &00, &20
- EQUB &1F, &29, &00, &1C
- EQUB &1F, &23, &1C, &20
- EQUB &1F, &14, &08, &24
- EQUB &1F, &49, &08, &0C
- EQUB &1F, &39, &18, &1C
- EQUB &1F, &37, &18, &20
- EQUB &1F, &67, &14, &20
- EQUB &1F, &56, &10, &24
- EQUB &1F, &45, &0C, &24
- EQUB &1F, &58, &0C, &10
- EQUB &1F, &68, &10, &14
- EQUB &1F, &78, &14, &18
- EQUB &1F, &89, &0C, &18
- EQUB &1F, &06, &20, &24
- EQUB &12, &99, &28, &30
- EQUB &05, &99, &30, &38
- EQUB &0A, &99, &38, &28
- EQUB &0A, &99, &2C, &3C
- EQUB &05, &99, &34, &3C
- EQUB &12, &99, &2C, &34
+\EDGE vertex1, vertex2, face1, face2, visibility
+ EDGE       0,       1,     9,     0,         31    \ Edge 
+ EDGE       1,       2,     9,     1,         31    \ Edge 
+ EDGE       1,       9,     1,     0,         31    \ Edge 
+ EDGE       0,       8,     2,     0,         31    \ Edge 
+ EDGE       0,       7,     9,     2,         31    \ Edge 
+ EDGE       7,       8,     3,     2,         31    \ Edge 
+ EDGE       2,       9,     4,     1,         31    \ Edge 
+ EDGE       2,       3,     9,     4,         31    \ Edge 
+ EDGE       6,       7,     9,     3,         31    \ Edge 
+ EDGE       6,       8,     7,     3,         31    \ Edge 
+ EDGE       5,       8,     7,     6,         31    \ Edge 
+ EDGE       4,       9,     6,     5,         31    \ Edge 
+ EDGE       3,       9,     5,     4,         31    \ Edge 
+ EDGE       3,       4,     8,     5,         31    \ Edge 
+ EDGE       4,       5,     8,     6,         31    \ Edge 
+ EDGE       5,       6,     8,     7,         31    \ Edge 
+ EDGE       3,       6,     9,     8,         31    \ Edge 
+ EDGE       8,       9,     6,     0,         31    \ Edge 
+ EDGE      10,      12,     9,     9,         18    \ Edge 
+ EDGE      12,      14,     9,     9,          5    \ Edge 
+ EDGE      14,      10,     9,     9,         10    \ Edge 
+ EDGE      11,      15,     9,     9,         10    \ Edge 
+ EDGE      13,      15,     9,     9,          5    \ Edge 
+ EDGE      11,      13,     9,     9,         18    \ Edge 
 
  EQUB &1F, &00, &37, &0F
  EQUB &9F, &18, &4B, &14
@@ -2330,43 +2349,44 @@ INCLUDE "library/common/main/variable_ship_thargon.asm"
  EQUB &31, &0B, &11, &3F, &00, &00
  EQUB &31, &0B, &0A, &3F, &00, &00
 
- EQUB &1F, &00, &00, &04
- EQUB &1F, &00, &04, &08
- EQUB &1F, &00, &08, &0C
- EQUB &1F, &00, &0C, &10
- EQUB &1F, &00, &10, &14
- EQUB &1F, &00, &14, &18
- EQUB &1F, &00, &18, &1C
- EQUB &1F, &00, &1C, &20
- EQUB &1F, &00, &20, &24
- EQUB &1F, &00, &24, &28
- EQUB &1F, &00, &28, &2C
- EQUB &1F, &00, &2C, &00
- EQUB &1E, &03, &38, &3C
- EQUB &1E, &01, &3C, &40
- EQUB &1E, &04, &40, &44
- EQUB &1E, &01, &44, &38
- EQUB &1E, &03, &10, &30
- EQUB &1E, &22, &30, &34
- EQUB &1E, &04, &34, &20
- EQUB &1E, &11, &20, &10
- EQUB &1E, &13, &10, &38
- EQUB &1E, &13, &30, &3C
- EQUB &1E, &24, &34, &40
- EQUB &1E, &14, &20, &44
- EQUB &1E, &00, &54, &58
- EQUB &1E, &00, &58, &60
- EQUB &1E, &00, &60, &64
- EQUB &1E, &00, &5C, &68
- EQUB &1E, &00, &6C, &70
- EQUB &1E, &00, &70, &74
- EQUB &1E, &00, &78, &7C
- EQUB &1E, &00, &80, &84
- EQUB &1E, &00, &88, &8C
- EQUB &1E, &00, &90, &94
- EQUB &1E, &00, &94, &9C
- EQUB &1E, &00, &9C, &A0
- EQUB &1E, &00, &A4, &98
+\EDGE vertex1, vertex2, face1, face2, visibility
+ EDGE       0,       1,     0,     0,         31    \ Edge 
+ EDGE       1,       2,     0,     0,         31    \ Edge 
+ EDGE       2,       3,     0,     0,         31    \ Edge 
+ EDGE       3,       4,     0,     0,         31    \ Edge 
+ EDGE       4,       5,     0,     0,         31    \ Edge 
+ EDGE       5,       6,     0,     0,         31    \ Edge 
+ EDGE       6,       7,     0,     0,         31    \ Edge 
+ EDGE       7,       8,     0,     0,         31    \ Edge 
+ EDGE       8,       9,     0,     0,         31    \ Edge 
+ EDGE       9,      10,     0,     0,         31    \ Edge 
+ EDGE      10,      11,     0,     0,         31    \ Edge 
+ EDGE      11,       0,     0,     0,         31    \ Edge 
+ EDGE      14,      15,     3,     0,         30    \ Edge 
+ EDGE      15,      16,     1,     0,         30    \ Edge 
+ EDGE      16,      17,     4,     0,         30    \ Edge 
+ EDGE      17,      14,     1,     0,         30    \ Edge 
+ EDGE       4,      12,     3,     0,         30    \ Edge 
+ EDGE      12,      13,     2,     2,         30    \ Edge 
+ EDGE      13,       8,     4,     0,         30    \ Edge 
+ EDGE       8,       4,     1,     1,         30    \ Edge 
+ EDGE       4,      14,     3,     1,         30    \ Edge 
+ EDGE      12,      15,     3,     1,         30    \ Edge 
+ EDGE      13,      16,     4,     2,         30    \ Edge 
+ EDGE       8,      17,     4,     1,         30    \ Edge 
+ EDGE      21,      22,     0,     0,         30    \ Edge 
+ EDGE      22,      24,     0,     0,         30    \ Edge 
+ EDGE      24,      25,     0,     0,         30    \ Edge 
+ EDGE      23,      26,     0,     0,         30    \ Edge 
+ EDGE      27,      28,     0,     0,         30    \ Edge 
+ EDGE      28,      29,     0,     0,         30    \ Edge 
+ EDGE      30,      31,     0,     0,         30    \ Edge 
+ EDGE      32,      33,     0,     0,         30    \ Edge 
+ EDGE      34,      35,     0,     0,         30    \ Edge 
+ EDGE      36,      37,     0,     0,         30    \ Edge 
+ EDGE      37,      39,     0,     0,         30    \ Edge 
+ EDGE      39,      40,     0,     0,         30    \ Edge 
+ EDGE      41,      38,     0,     0,         30    \ Edge 
 
  EQUB &1F, &00, &17, &00
  EQUB &1F, &00, &04, &0F
@@ -2416,31 +2436,32 @@ INCLUDE "library/common/main/variable_ship_thargon.asm"
  EQUB &0A, &06, &28, &74, &55, &55
  EQUB &0A, &06, &28, &34, &55, &55
 
- EQUB &1F, &02, &00, &04
- EQUB &1F, &01, &04, &1C
- EQUB &1F, &01, &1C, &20
- EQUB &1F, &01, &20, &08
- EQUB &1E, &05, &08, &0C
- EQUB &1E, &45, &0C, &18
- EQUB &1E, &15, &08, &10
- EQUB &1E, &35, &10, &18
- EQUB &1F, &34, &18, &28
- EQUB &1F, &34, &28, &24
- EQUB &1F, &34, &24, &14
- EQUB &1F, &24, &14, &00
- EQUB &1B, &04, &00, &0C
- EQUB &1B, &12, &04, &10
- EQUB &1B, &23, &14, &10
- EQUB &1A, &01, &04, &08
- EQUB &1A, &34, &14, &18
- EQUB &14, &00, &30, &34
- EQUB &12, &00, &34, &2C
- EQUB &12, &44, &2C, &38
- EQUB &14, &44, &38, &30
- EQUB &12, &55, &3C, &40
- EQUB &14, &55, &40, &48
- EQUB &12, &55, &48, &44
- EQUB &14, &55, &44, &3C
+\EDGE vertex1, vertex2, face1, face2, visibility
+ EDGE       0,       1,     2,     0,         31    \ Edge 
+ EDGE       1,       7,     1,     0,         31    \ Edge 
+ EDGE       7,       8,     1,     0,         31    \ Edge 
+ EDGE       8,       2,     1,     0,         31    \ Edge 
+ EDGE       2,       3,     5,     0,         30    \ Edge 
+ EDGE       3,       6,     5,     4,         30    \ Edge 
+ EDGE       2,       4,     5,     1,         30    \ Edge 
+ EDGE       4,       6,     5,     3,         30    \ Edge 
+ EDGE       6,      10,     4,     3,         31    \ Edge 
+ EDGE      10,       9,     4,     3,         31    \ Edge 
+ EDGE       9,       5,     4,     3,         31    \ Edge 
+ EDGE       5,       0,     4,     2,         31    \ Edge 
+ EDGE       0,       3,     4,     0,         27    \ Edge 
+ EDGE       1,       4,     2,     1,         27    \ Edge 
+ EDGE       5,       4,     3,     2,         27    \ Edge 
+ EDGE       1,       2,     1,     0,         26    \ Edge 
+ EDGE       5,       6,     4,     3,         26    \ Edge 
+ EDGE      12,      13,     0,     0,         20    \ Edge 
+ EDGE      13,      11,     0,     0,         18    \ Edge 
+ EDGE      11,      14,     4,     4,         18    \ Edge 
+ EDGE      14,      12,     4,     4,         20    \ Edge 
+ EDGE      15,      16,     5,     5,         18    \ Edge 
+ EDGE      16,      18,     5,     5,         20    \ Edge 
+ EDGE      18,      17,     5,     5,         18    \ Edge 
+ EDGE      17,      15,     5,     5,         20    \ Edge 
 
  EQUB &9F, &10, &2E, &04
  EQUB &DF, &10, &2E, &04
@@ -2496,40 +2517,41 @@ INCLUDE "library/common/main/variable_ship_thargon.asm"
  EQUB &10, &20, &C4, &17, &00, &00
  EQUB &10, &20, &C4, &57, &00, &00
 
- EQUB &1F, &01, &00, &04
- EQUB &1F, &02, &04, &08
- EQUB &1F, &03, &08, &0C
- EQUB &1F, &04, &0C, &10
- EQUB &1F, &05, &10, &00
- EQUB &1F, &16, &14, &28
- EQUB &1F, &17, &28, &18
- EQUB &1F, &27, &18, &2C
- EQUB &1F, &28, &2C, &1C
- EQUB &1F, &38, &1C, &30
- EQUB &1F, &39, &30, &20
- EQUB &1F, &49, &20, &34
- EQUB &1F, &4A, &34, &24
- EQUB &1F, &5A, &24, &38
- EQUB &1F, &56, &38, &14
- EQUB &1F, &7B, &3C, &40
- EQUB &1F, &8B, &40, &44
- EQUB &1F, &9B, &44, &48
- EQUB &1F, &AB, &48, &4C
- EQUB &1F, &6B, &4C, &3C
- EQUB &1F, &15, &00, &14
- EQUB &1F, &12, &04, &18
- EQUB &1F, &23, &08, &1C
- EQUB &1F, &34, &0C, &20
- EQUB &1F, &45, &10, &24
- EQUB &1F, &67, &28, &3C
- EQUB &1F, &78, &2C, &40
- EQUB &1F, &89, &30, &44
- EQUB &1F, &9A, &34, &48
- EQUB &1F, &6A, &38, &4C
- EQUB &1E, &00, &50, &54
- EQUB &14, &00, &54, &5C
- EQUB &17, &00, &5C, &58
- EQUB &14, &00, &58, &50
+\EDGE vertex1, vertex2, face1, face2, visibility
+ EDGE       0,       1,     1,     0,         31    \ Edge 
+ EDGE       1,       2,     2,     0,         31    \ Edge 
+ EDGE       2,       3,     3,     0,         31    \ Edge 
+ EDGE       3,       4,     4,     0,         31    \ Edge 
+ EDGE       4,       0,     5,     0,         31    \ Edge 
+ EDGE       5,      10,     6,     1,         31    \ Edge 
+ EDGE      10,       6,     7,     1,         31    \ Edge 
+ EDGE       6,      11,     7,     2,         31    \ Edge 
+ EDGE      11,       7,     8,     2,         31    \ Edge 
+ EDGE       7,      12,     8,     3,         31    \ Edge 
+ EDGE      12,       8,     9,     3,         31    \ Edge 
+ EDGE       8,      13,     9,     4,         31    \ Edge 
+ EDGE      13,       9,    10,     4,         31    \ Edge 
+ EDGE       9,      14,    10,     5,         31    \ Edge 
+ EDGE      14,       5,     6,     5,         31    \ Edge 
+ EDGE      15,      16,    11,     7,         31    \ Edge 
+ EDGE      16,      17,    11,     8,         31    \ Edge 
+ EDGE      17,      18,    11,     9,         31    \ Edge 
+ EDGE      18,      19,    11,    10,         31    \ Edge 
+ EDGE      19,      15,    11,     6,         31    \ Edge 
+ EDGE       0,       5,     5,     1,         31    \ Edge 
+ EDGE       1,       6,     2,     1,         31    \ Edge 
+ EDGE       2,       7,     3,     2,         31    \ Edge 
+ EDGE       3,       8,     4,     3,         31    \ Edge 
+ EDGE       4,       9,     5,     4,         31    \ Edge 
+ EDGE      10,      15,     7,     6,         31    \ Edge 
+ EDGE      11,      16,     8,     7,         31    \ Edge 
+ EDGE      12,      17,     9,     8,         31    \ Edge 
+ EDGE      13,      18,    10,     9,         31    \ Edge 
+ EDGE      14,      19,    10,     6,         31    \ Edge 
+ EDGE      20,      21,     0,     0,         30    \ Edge 
+ EDGE      21,      23,     0,     0,         20    \ Edge 
+ EDGE      23,      22,     0,     0,         23    \ Edge 
+ EDGE      22,      20,     0,     0,         20    \ Edge 
 
  EQUB &1F, &00, &00, &C4
  EQUB &1F, &67, &8E, &58

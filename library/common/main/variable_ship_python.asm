@@ -108,17 +108,18 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- EQUB &00, &00, &E0, &1F, &10, &32
- EQUB &00, &30, &30, &1F, &10, &54
- EQUB &60, &00, &10, &3F, &FF, &FF
- EQUB &60, &00, &10, &BF, &FF, &FF
- EQUB &00, &30, &20, &3F, &54, &98
- EQUB &00, &18, &70, &3F, &89, &CC
- EQUB &30, &00, &70, &BF, &B8, &CC
- EQUB &30, &00, &70, &3F, &A9, &CC
- EQUB &00, &30, &30, &5F, &32, &76
- EQUB &00, &30, &20, &7F, &76, &BA
- EQUB &00, &18, &70, &7F, &BA, &CC
+\VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
+ VERTEX    0,    0,  224,     0,      1,    2,     3,         31    \ Vertex 
+ VERTEX    0,   48,   48,     0,      1,    4,     5,         31    \ Vertex 
+ VERTEX   96,    0,  -16,    15,     15,   15,    15,         31    \ Vertex 
+ VERTEX  -96,    0,  -16,    15,     15,   15,    15,         31    \ Vertex 
+ VERTEX    0,   48,  -32,     4,      5,    8,     9,         31    \ Vertex 
+ VERTEX    0,   24, -112,     9,      8,   12,    12,         31    \ Vertex 
+ VERTEX  -48,    0, -112,     8,     11,   12,    12,         31    \ Vertex 
+ VERTEX   48,    0, -112,     9,     10,   12,    12,         31    \ Vertex 
+ VERTEX    0,  -48,   48,     2,      3,    6,     7,         31    \ Vertex 
+ VERTEX    0,  -48,  -32,     6,      7,   10,    11,         31    \ Vertex 
+ VERTEX    0,  -24, -112,    10,     11,   12,    12,         31    \ Vertex 
 
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       8,     2,     3,         31    \ Edge 

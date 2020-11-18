@@ -987,10 +987,11 @@ INCLUDE "library/common/main/variable_ship_escape_pod.asm"
  EQUB %00000000         \ Laser power              = 0
                         \ Missiles                 = 0
 
- EQUB &0F, &16, &09, &FF, &FF, &FF
- EQUB &0F, &26, &09, &BF, &FF, &FF
- EQUB &13, &20, &0B, &14, &FF, &FF
- EQUB &0A, &2E, &06, &54, &FF, &FF
+\VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
+ VERTEX  -15,  -22,   -9,    15,     15,   15,    15,         31    \ Vertex 1
+ VERTEX  -15,   38,   -9,    15,     15,   15,    15,         31    \ Vertex 2
+ VERTEX   19,   32,   11,    15,     15,   15,    15,         20    \ Vertex 3
+ VERTEX   10,  -46,    6,    15,     15,   15,    15,         20    \ Vertex 4
 
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,    15,    15,         31    \ Edge 0
@@ -999,10 +1000,9 @@ INCLUDE "library/common/main/variable_ship_escape_pod.asm"
  EDGE       3,       0,    15,    15,         16    \ Edge 3
 
 \FACE normal_x, normal_y, normal_z, visibility
- FACE        0,        0,        0,          0    \ Face 0
+ FACE        0,        0,        0,           0    \ Face 0
 
 INCLUDE "library/common/main/variable_ship_canister.asm"
-
 
 \         6 = Boulder
 
@@ -1026,13 +1026,14 @@ INCLUDE "library/common/main/variable_ship_canister.asm"
  EQUB %00000000         \ Laser power              = 0
                         \ Missiles                 = 0
 
- EQUB &12, &25, &0B, &BF, &01, &59
- EQUB &1E, &07, &0C, &1F, &12, &56
- EQUB &1C, &07, &0C, &7F, &23, &67
- EQUB &02, &00, &27, &3F, &34, &78
- EQUB &1C, &22, &1E, &BF, &04, &89
- EQUB &05, &0A, &0D, &5F, &FF, &FF
- EQUB &14, &11, &1E, &3F, &FF, &FF
+\VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
+ VERTEX  -18,   37,  -11,     1,      0,    9,     5,         31    \ Vertex 
+ VERTEX   30,    7,   12,     2,      1,    6,     5,         31    \ Vertex 
+ VERTEX   28,   -7,  -12,     3,      2,    7,     6,         31    \ Vertex 
+ VERTEX    2,    0,  -39,     4,      3,    8,     7,         31    \ Vertex 
+ VERTEX  -28,   34,  -30,     4,      0,    9,     8,         31    \ Vertex 
+ VERTEX    5,  -10,   13,    15,     15,   15,    15,         31    \ Vertex 
+ VERTEX   20,   17,  -30,    15,     15,   15,    15,         31    \ Vertex 
 
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     5,     1,         31    \ Edge 1
@@ -1052,16 +1053,16 @@ INCLUDE "library/common/main/variable_ship_canister.asm"
  EDGE       4,       6,     9,     8,         31    \ Edge 15
 
 \FACE normal_x, normal_y, normal_z, visibility
- FACE      -15,       -3,        8,        31    \ Face 
- FACE       -7,       12,       30,        31    \ Face 
- FACE       32,      -47,       24,        31    \ Face 
- FACE       -3,      -39,       -7,        31    \ Face 
- FACE       -5,       -4,       -1,        31    \ Face 
- FACE       49,       84,        8,        31    \ Face 
- FACE      112,       21,      -21,        31    \ Face 
- FACE       76,      -35,      -82,        31    \ Face 
- FACE       22,       56,     -137,        31    \ Face 
- FACE       40,      110,      -38,        31    \ Face 
+ FACE      -15,       -3,        8,         31    \ Face 
+ FACE       -7,       12,       30,         31    \ Face 
+ FACE       32,      -47,       24,         31    \ Face 
+ FACE       -3,      -39,       -7,         31    \ Face 
+ FACE       -5,       -4,       -1,         31    \ Face 
+ FACE       49,       84,        8,         31    \ Face 
+ FACE      112,       21,      -21,         31    \ Face 
+ FACE       76,      -35,      -82,         31    \ Face 
+ FACE       22,       56,     -137,         31    \ Face 
+ FACE       40,      110,      -38,         31    \ Face 
 
 INCLUDE "library/common/main/variable_ship_asteroid.asm"
 
@@ -1087,16 +1088,17 @@ INCLUDE "library/common/main/variable_ship_asteroid.asm"
  EQUB %00000000         \ Laser power              = 0
                         \ Missiles                 = 0
 
- EQUB &18, &19, &10, &DF, &12, &33
- EQUB &00, &0C, &0A, &3F, &02, &33
- EQUB &0B, &06, &02, &5F, &01, &33
- EQUB &0C, &2A, &07, &1F, &01, &22
+\VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
+ VERTEX  -24,  -25,   16,     2,      1,    3,     3,         31    \ Vertex 
+ VERTEX    0,   12,  -10,     2,      0,    3,     3,         31    \ Vertex 
+ VERTEX   11,   -6,    2,     1,      0,    3,     3,         31    \ Vertex 
+ VERTEX   12,   42,    7,     1,      0,    2,     2,         31    \ Vertex 
 
 \FACE normal_x, normal_y, normal_z, visibility
- FACE       35,        0,        4,        31    \ Face 
- FACE        3,        4,        8,        31    \ Face 
- FACE        1,        8,       12,        31    \ Face 
- FACE       18,       12,        0,        31    \ Face 
+ FACE       35,        0,        4,         31    \ Face 
+ FACE        3,        4,        8,         31    \ Face 
+ FACE        1,        8,       12,         31    \ Face 
+ FACE       18,       12,        0,         31    \ Face 
 
 \ SHU  =  9 = Shuttle
 
@@ -1120,25 +1122,26 @@ INCLUDE "library/common/main/variable_ship_asteroid.asm"
  EQUB %00000000         \ Laser power              = 0
                         \ Missiles                 = 0
 
- EQUB &00, &11, &17, &5F, &FF, &FF
- EQUB &11, &00, &17, &9F, &FF, &FF
- EQUB &00, &12, &17, &1F, &FF, &FF
- EQUB &12, &00, &17, &1F, &FF, &FF
- EQUB &14, &14, &1B, &FF, &12, &39
- EQUB &14, &14, &1B, &BF, &34, &59
- EQUB &14, &14, &1B, &3F, &56, &79
- EQUB &14, &14, &1B, &7F, &17, &89
- EQUB &05, &00, &1B, &30, &99, &99
- EQUB &00, &02, &1B, &70, &99, &99
- EQUB &05, &00, &1B, &A9, &99, &99
- EQUB &00, &03, &1B, &29, &99, &99
- EQUB &00, &09, &23, &50, &0A, &BC
- EQUB &03, &01, &1F, &47, &FF, &02
- EQUB &04, &0B, &19, &08, &01, &F4
- EQUB &0B, &04, &19, &08, &A1, &3F
- EQUB &03, &01, &1F, &C7, &6B, &23
- EQUB &03, &0B, &19, &88, &F8, &C0
- EQUB &0A, &04, &19, &88, &4F, &18
+\VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
+ VERTEX    0,  -17,   23,    15,     15,   15,    15,         31    \ Vertex 
+ VERTEX  -17,    0,   23,    15,     15,   15,    15,         31    \ Vertex 
+ VERTEX    0,   18,   23,    15,     15,   15,    15,         31    \ Vertex 
+ VERTEX   18,    0,   23,    15,     15,   15,    15,         31    \ Vertex 
+ VERTEX  -20,  -20,  -27,     2,      1,    9,     3,         31    \ Vertex 
+ VERTEX  -20,   20,  -27,     4,      3,    9,     5,         31    \ Vertex 
+ VERTEX   20,   20,  -27,     6,      5,    9,     7,         31    \ Vertex 
+ VERTEX   20,  -20,  -27,     7,      1,    9,     8,         31    \ Vertex 
+ VERTEX    5,    0,  -27,     9,      9,    9,     9,         16    \ Vertex 
+ VERTEX    0,   -2,  -27,     9,      9,    9,     9,         16    \ Vertex 
+ VERTEX   -5,    0,  -27,     9,      9,    9,     9,          9    \ Vertex 
+ VERTEX    0,    3,  -27,     9,      9,    9,     9,          9    \ Vertex 
+ VERTEX    0,   -9,   35,    10,      0,   12,    11,         16    \ Vertex 
+ VERTEX    3,   -1,   31,    15,     15,    2,     0,          7    \ Vertex 
+ VERTEX    4,   11,   25,     1,      0,    4,    15,          8    \ Vertex 
+ VERTEX   11,    4,   25,     1,     10,   15,     3,          8    \ Vertex 
+ VERTEX   -3,   -1,   31,    11,      6,    3,     2,          7    \ Vertex 
+ VERTEX   -3,   11,   25,     8,     15,    0,    12,          8    \ Vertex 
+ VERTEX  -10,    4,   25,    15,      4,    8,     1,          8    \ Vertex 
 
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     2,     0,         31    \ Edge 
@@ -1173,19 +1176,19 @@ INCLUDE "library/common/main/variable_ship_asteroid.asm"
  EDGE      16,      18,    10,    10,          7    \ Edge 
 
 \FACE normal_x, normal_y, normal_z, visibility
- FACE      -55,      -55,       40,        31    \ Face 
- FACE        0,      -74,        4,        31    \ Face 
- FACE      -51,      -51,       23,        31    \ Face 
- FACE      -74,        0,        4,        31    \ Face 
- FACE      -51,       51,       23,        31    \ Face 
- FACE        0,       74,        4,        31    \ Face 
- FACE       51,       51,       23,        31    \ Face 
- FACE       74,        0,        4,        31    \ Face 
- FACE       51,      -51,       23,        31    \ Face 
- FACE        0,        0,     -107,        31    \ Face 
- FACE      -41,       41,       90,        31    \ Face 
- FACE       41,       41,       90,        31    \ Face 
- FACE       55,      -55,       40,        31    \ Face 
+ FACE      -55,      -55,       40,         31    \ Face 
+ FACE        0,      -74,        4,         31    \ Face 
+ FACE      -51,      -51,       23,         31    \ Face 
+ FACE      -74,        0,        4,         31    \ Face 
+ FACE      -51,       51,       23,         31    \ Face 
+ FACE        0,       74,        4,         31    \ Face 
+ FACE       51,       51,       23,         31    \ Face 
+ FACE       74,        0,        4,         31    \ Face 
+ FACE       51,      -51,       23,         31    \ Face 
+ FACE        0,        0,     -107,         31    \ Face 
+ FACE      -41,       41,       90,         31    \ Face 
+ FACE       41,       41,       90,         31    \ Face 
+ FACE       55,      -55,       40,         31    \ Face 
 
 \        10 = Transporter
 
@@ -1209,43 +1212,44 @@ INCLUDE "library/common/main/variable_ship_asteroid.asm"
  EQUB %00000000         \ Laser power              = 0
                         \ Missiles                 = 0
 
- EQUB &00, &0A, &1A, &3F, &06, &77
- EQUB &19, &04, &1A, &BF, &01, &77
- EQUB &1C, &03, &1A, &FF, &01, &22
- EQUB &19, &08, &1A, &FF, &02, &33
- EQUB &1A, &08, &1A, &7F, &03, &44
- EQUB &1D, &03, &1A, &7F, &04, &55
- EQUB &1A, &04, &1A, &3F, &05, &66
- EQUB &00, &06, &0C, &13, &FF, &FF
- EQUB &1E, &01, &0C, &DF, &17, &89
- EQUB &21, &08, &0C, &DF, &12, &39
- EQUB &21, &08, &0C, &5F, &34, &5A
- EQUB &1E, &01, &0C, &5F, &56, &AB
- EQUB &0B, &02, &1E, &DF, &89, &CD
- EQUB &0D, &08, &1E, &DF, &39, &DD
- EQUB &0E, &08, &1E, &5F, &3A, &DD
- EQUB &0B, &02, &1E, &5F, &AB, &CD
- EQUB &05, &06, &02, &87, &77, &77
- EQUB &12, &03, &02, &87, &77, &77
- EQUB &05, &07, &07, &A7, &77, &77
- EQUB &12, &04, &07, &A7, &77, &77
- EQUB &0B, &06, &0E, &A7, &77, &77
- EQUB &0B, &05, &07, &A7, &77, &77
- EQUB &05, &07, &0E, &27, &66, &66
- EQUB &12, &04, &0E, &27, &66, &66
- EQUB &0B, &05, &07, &27, &66, &66
- EQUB &05, &06, &03, &27, &66, &66
- EQUB &12, &03, &03, &27, &66, &66
- EQUB &0B, &04, &08, &07, &66, &66
- EQUB &0B, &05, &03, &27, &66, &66
- EQUB &10, &08, &0D, &E6, &33, &33
- EQUB &10, &08, &10, &C6, &33, &33
- EQUB &11, &08, &0D, &66, &33, &33
- EQUB &11, &08, &10, &46, &33, &33
- EQUB &0D, &03, &1A, &E8, &00, &00
- EQUB &0D, &03, &1A, &68, &00, &00
- EQUB &09, &03, &1A, &25, &00, &00
- EQUB &08, &03, &1A, &A5, &00, &00
+\VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
+ VERTEX    0,   10,  -26,     6,      0,    7,     7,         31    \ Vertex 
+ VERTEX  -25,    4,  -26,     1,      0,    7,     7,         31    \ Vertex 
+ VERTEX  -28,   -3,  -26,     1,      0,    2,     2,         31    \ Vertex 
+ VERTEX  -25,   -8,  -26,     2,      0,    3,     3,         31    \ Vertex 
+ VERTEX   26,   -8,  -26,     3,      0,    4,     4,         31    \ Vertex 
+ VERTEX   29,   -3,  -26,     4,      0,    5,     5,         31    \ Vertex 
+ VERTEX   26,    4,  -26,     5,      0,    6,     6,         31    \ Vertex 
+ VERTEX    0,    6,   12,    15,     15,   15,    15,         19    \ Vertex 
+ VERTEX  -30,   -1,   12,     7,      1,    9,     8,         31    \ Vertex 
+ VERTEX  -33,   -8,   12,     2,      1,    9,     3,         31    \ Vertex 
+ VERTEX   33,   -8,   12,     4,      3,   10,     5,         31    \ Vertex 
+ VERTEX   30,   -1,   12,     6,      5,   11,    10,         31    \ Vertex 
+ VERTEX  -11,   -2,   30,     9,      8,   13,    12,         31    \ Vertex 
+ VERTEX  -13,   -8,   30,     9,      3,   13,    13,         31    \ Vertex 
+ VERTEX   14,   -8,   30,    10,      3,   13,    13,         31    \ Vertex 
+ VERTEX   11,   -2,   30,    11,     10,   13,    12,         31    \ Vertex 
+ VERTEX   -5,    6,    2,     7,      7,    7,     7,          7    \ Vertex 
+ VERTEX  -18,    3,    2,     7,      7,    7,     7,          7    \ Vertex 
+ VERTEX   -5,    7,   -7,     7,      7,    7,     7,          7    \ Vertex 
+ VERTEX  -18,    4,   -7,     7,      7,    7,     7,          7    \ Vertex 
+ VERTEX  -11,    6,  -14,     7,      7,    7,     7,          7    \ Vertex 
+ VERTEX  -11,    5,   -7,     7,      7,    7,     7,          7    \ Vertex 
+ VERTEX    5,    7,  -14,     6,      6,    6,     6,          7    \ Vertex 
+ VERTEX   18,    4,  -14,     6,      6,    6,     6,          7    \ Vertex 
+ VERTEX   11,    5,   -7,     6,      6,    6,     6,          7    \ Vertex 
+ VERTEX    5,    6,   -3,     6,      6,    6,     6,          7    \ Vertex 
+ VERTEX   18,    3,   -3,     6,      6,    6,     6,          7    \ Vertex 
+ VERTEX   11,    4,    8,     6,      6,    6,     6,          7    \ Vertex 
+ VERTEX   11,    5,   -3,     6,      6,    6,     6,          7    \ Vertex 
+ VERTEX  -16,   -8,  -13,     3,      3,    3,     3,          6    \ Vertex 
+ VERTEX  -16,   -8,   16,     3,      3,    3,     3,          6    \ Vertex 
+ VERTEX   17,   -8,  -13,     3,      3,    3,     3,          6    \ Vertex 
+ VERTEX   17,   -8,   16,     3,      3,    3,     3,          6    \ Vertex 
+ VERTEX  -13,   -3,  -26,     0,      0,    0,     0,          8    \ Vertex 
+ VERTEX   13,   -3,  -26,     0,      0,    0,     0,          8    \ Vertex 
+ VERTEX    9,    3,  -26,     0,      0,    0,     0,          5    \ Vertex 
+ VERTEX   -8,    3,  -26,     0,      0,    0,     0,          5    \ Vertex 
 
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     7,     0,         31    \ Edge 
@@ -1296,19 +1300,19 @@ INCLUDE "library/common/main/variable_ship_asteroid.asm"
  EDGE      36,      33,     0,     0,          5    \ Edge 
 
 \FACE normal_x, normal_y, normal_z, visibility
- FACE        0,        0,     -103,        31    \ Face 
- FACE     -111,       48,       -7,        31    \ Face 
- FACE     -105,      -63,      -21,        31    \ Face 
- FACE        0,      -34,        0,        31    \ Face 
- FACE      105,      -63,      -21,        31    \ Face 
- FACE      111,       48,       -7,        31    \ Face 
- FACE        8,       32,        3,        31    \ Face 
- FACE       -8,       32,        3,        31    \ Face 
- FACE       -8,       34,       11,        19    \ Face 
- FACE      -75,       32,       79,        31    \ Face 
- FACE       75,       32,       79,        31    \ Face 
- FACE        8,       34,       11,        19    \ Face 
- FACE        0,       38,       17,        31    \ Face 
+ FACE        0,        0,     -103,         31    \ Face 
+ FACE     -111,       48,       -7,         31    \ Face 
+ FACE     -105,      -63,      -21,         31    \ Face 
+ FACE        0,      -34,        0,         31    \ Face 
+ FACE      105,      -63,      -21,         31    \ Face 
+ FACE      111,       48,       -7,         31    \ Face 
+ FACE        8,       32,        3,         31    \ Face 
+ FACE       -8,       32,        3,         31    \ Face 
+ FACE       -8,       34,       11,         19    \ Face 
+ FACE      -75,       32,       79,         31    \ Face 
+ FACE       75,       32,       79,         31    \ Face 
+ FACE        8,       34,       11,         19    \ Face 
+ FACE        0,       38,       17,         31    \ Face 
  FACE        0,        0,      121,        31    \ Face
 
 INCLUDE "library/common/main/variable_ship_cobra_mk_iii.asm"
@@ -1337,19 +1341,20 @@ INCLUDE "library/common/main/variable_ship_python.asm"
  EQUB %00011100         \ Laser power              = 3
                         \ Missiles                 = 4
 
- EQUB &00, &00, &5D, &1F, &FF, &FF
- EQUB &00, &28, &57, &38, &02, &33
- EQUB &26, &19, &63, &78, &01, &44
- EQUB &26, &19, &63, &F8, &12, &55
- EQUB &26, &28, &3B, &BF, &23, &69
- EQUB &26, &28, &3B, &3F, &03, &6B
- EQUB &3E, &00, &43, &3F, &04, &8B
- EQUB &18, &41, &4F, &7F, &14, &8A
- EQUB &18, &41, &4F, &FF, &15, &7A
- EQUB &3E, &00, &43, &BF, &25, &79
- EQUB &00, &07, &6B, &36, &02, &AA
- EQUB &0D, &09, &6B, &76, &01, &AA
- EQUB &0D, &09, &6B, &F6, &12, &CC
+\VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
+ VERTEX    0,    0,   93,    15,     15,   15,    15,         31    \ Vertex 
+ VERTEX    0,   40,  -87,     2,      0,    3,     3,         24    \ Vertex 
+ VERTEX   38,  -25,  -99,     1,      0,    4,     4,         24    \ Vertex 
+ VERTEX  -38,  -25,  -99,     2,      1,    5,     5,         24    \ Vertex 
+ VERTEX  -38,   40,  -59,     3,      2,    9,     6,         31    \ Vertex 
+ VERTEX   38,   40,  -59,     3,      0,   11,     6,         31    \ Vertex 
+ VERTEX   62,    0,  -67,     4,      0,   11,     8,         31    \ Vertex 
+ VERTEX   24,  -65,  -79,     4,      1,   10,     8,         31    \ Vertex 
+ VERTEX  -24,  -65,  -79,     5,      1,   10,     7,         31    \ Vertex 
+ VERTEX  -62,    0,  -67,     5,      2,    9,     7,         31    \ Vertex 
+ VERTEX    0,    7, -107,     2,      0,   10,    10,         22    \ Vertex 
+ VERTEX   13,   -9, -107,     1,      0,   10,    10,         22    \ Vertex 
+ VERTEX  -13,   -9, -107,     2,      1,   12,    12,         22    \ Vertex 
 
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       5,    11,     6,         31    \ Edge 
@@ -1378,19 +1383,19 @@ INCLUDE "library/common/main/variable_ship_python.asm"
  EDGE      12,      10,    12,     2,         14    \ Edge 
 
 \FACE normal_x, normal_y, normal_z, visibility
- FACE       43,       37,      -60,        31    \ Face 
- FACE        0,      -45,      -89,        31    \ Face 
- FACE      -43,       37,      -60,        31    \ Face 
- FACE        0,       40,        0,        31    \ Face 
- FACE       62,      -32,      -20,        31    \ Face 
- FACE      -62,      -32,      -20,        31    \ Face 
- FACE        0,       23,        6,        31    \ Face 
- FACE      -23,      -15,        9,        31    \ Face 
- FACE       23,      -15,        9,        31    \ Face 
- FACE      -26,       13,       10,        31    \ Face 
- FACE        0,      -31,       12,        31    \ Face 
- FACE       26,       13,       10,        31    \ Face 
- FACE        0,        0,     -107,        14    \ Face 
+ FACE       43,       37,      -60,         31    \ Face 
+ FACE        0,      -45,      -89,         31    \ Face 
+ FACE      -43,       37,      -60,         31    \ Face 
+ FACE        0,       40,        0,         31    \ Face 
+ FACE       62,      -32,      -20,         31    \ Face 
+ FACE      -62,      -32,      -20,         31    \ Face 
+ FACE        0,       23,        6,         31    \ Face 
+ FACE      -23,      -15,        9,         31    \ Face 
+ FACE       23,      -15,        9,         31    \ Face 
+ FACE      -26,       13,       10,         31    \ Face 
+ FACE        0,      -31,       12,         31    \ Face 
+ FACE       26,       13,       10,         31    \ Face 
+ FACE        0,        0,     -107,         14    \ Face 
 
 
 \ ANA  = 14 = Anaconda
@@ -1415,21 +1420,22 @@ INCLUDE "library/common/main/variable_ship_python.asm"
  EQUB %00111111         \ Laser power              = 7
                         \ Missiles                 = 7
 
- EQUB &00, &07, &3A, &3E, &01, &55
- EQUB &2B, &0D, &25, &FE, &01, &22
- EQUB &1A, &2F, &03, &FE, &02, &33
- EQUB &1A, &2F, &03, &7E, &03, &44
- EQUB &2B, &0D, &25, &7E, &04, &55
- EQUB &00, &30, &31, &3E, &15, &66
- EQUB &45, &0F, &0F, &BE, &12, &77
- EQUB &2B, &27, &28, &DF, &23, &88
- EQUB &2B, &27, &28, &5F, &34, &99
- EQUB &45, &0F, &0F, &3E, &45, &AA
- EQUB &2B, &35, &17, &BF, &FF, &FF
- EQUB &45, &01, &20, &DF, &27, &88
- EQUB &00, &00, &FE, &1F, &FF, &FF
- EQUB &45, &01, &20, &5F, &49, &AA
- EQUB &2B, &35, &17, &3F, &FF, &FF
+\VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
+ VERTEX    0,    7,  -58,     1,      0,    5,     5,         30    \ Vertex 
+ VERTEX  -43,  -13,  -37,     1,      0,    2,     2,         30    \ Vertex 
+ VERTEX  -26,  -47,   -3,     2,      0,    3,     3,         30    \ Vertex 
+ VERTEX   26,  -47,   -3,     3,      0,    4,     4,         30    \ Vertex 
+ VERTEX   43,  -13,  -37,     4,      0,    5,     5,         30    \ Vertex 
+ VERTEX    0,   48,  -49,     5,      1,    6,     6,         30    \ Vertex 
+ VERTEX  -69,   15,  -15,     2,      1,    7,     7,         30    \ Vertex 
+ VERTEX  -43,  -39,   40,     3,      2,    8,     8,         31    \ Vertex 
+ VERTEX   43,  -39,   40,     4,      3,    9,     9,         31    \ Vertex 
+ VERTEX   69,   15,  -15,     5,      4,   10,    10,         30    \ Vertex 
+ VERTEX  -43,   53,  -23,    15,     15,   15,    15,         31    \ Vertex 
+ VERTEX  -69,   -1,   32,     7,      2,    8,     8,         31    \ Vertex 
+ VERTEX    0,    0,  254,    15,     15,   15,    15,         31    \ Vertex 
+ VERTEX   69,   -1,   32,     9,      4,   10,    10,         31    \ Vertex 
+ VERTEX   43,   53,  -23,    15,     15,   15,    15,         31    \ Vertex 
 
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     1,     0,         30    \ Edge 
@@ -1459,18 +1465,18 @@ INCLUDE "library/common/main/variable_ship_python.asm"
  EDGE      12,      14,    11,    10,         31    \ Edge 
 
 \FACE normal_x, normal_y, normal_z, visibility
- FACE        0,      -51,      -49,        30    \ Face 
- FACE      -51,       18,      -87,        30    \ Face 
- FACE      -77,      -57,      -19,        30    \ Face 
- FACE        0,      -90,       16,        31    \ Face 
- FACE       77,      -57,      -19,        30    \ Face 
- FACE       51,       18,      -87,        30    \ Face 
- FACE        0,      111,      -20,        30    \ Face 
- FACE      -97,       72,       24,        31    \ Face 
- FACE     -108,      -68,       34,        31    \ Face 
- FACE      108,      -68,       34,        31    \ Face 
- FACE       97,       72,       24,        31    \ Face 
- FACE        0,       94,       18,        31    \ Face 
+ FACE        0,      -51,      -49,         30    \ Face 
+ FACE      -51,       18,      -87,         30    \ Face 
+ FACE      -77,      -57,      -19,         30    \ Face 
+ FACE        0,      -90,       16,         31    \ Face 
+ FACE       77,      -57,      -19,         30    \ Face 
+ FACE       51,       18,      -87,         30    \ Face 
+ FACE        0,      111,      -20,         30    \ Face 
+ FACE      -97,       72,       24,         31    \ Face 
+ FACE     -108,      -68,       34,         31    \ Face 
+ FACE      108,      -68,       34,         31    \ Face 
+ FACE       97,       72,       24,         31    \ Face 
+ FACE        0,       94,       18,         31    \ Face 
 
 \ HER  = 15 = Rock hermit (asteroid)
 
@@ -1494,15 +1500,16 @@ INCLUDE "library/common/main/variable_ship_python.asm"
  EQUB %00000010         \ Laser power              = 0
                         \ Missiles                 = 2
 
- EQUB &00, &50, &00, &1F, &FF, &FF
- EQUB &50, &0A, &00, &DF, &FF, &FF
- EQUB &00, &50, &00, &5F, &FF, &FF
- EQUB &46, &28, &00, &5F, &FF, &FF
- EQUB &3C, &32, &00, &1F, &65, &DC
- EQUB &32, &00, &3C, &1F, &FF, &FF
- EQUB &28, &00, &46, &9F, &10, &32
- EQUB &00, &1E, &4B, &3F, &FF, &FF
- EQUB &00, &32, &3C, &7F, &98, &BA
+\VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
+ VERTEX    0,   80,    0,    15,     15,   15,    15,         31    \ Vertex 
+ VERTEX  -80,  -10,    0,    15,     15,   15,    15,         31    \ Vertex 
+ VERTEX    0,  -80,    0,    15,     15,   15,    15,         31    \ Vertex 
+ VERTEX   70,  -40,    0,    15,     15,   15,    15,         31    \ Vertex 
+ VERTEX   60,   50,    0,     5,      6,   12,    13,         31    \ Vertex 
+ VERTEX   50,    0,   60,    15,     15,   15,    15,         31    \ Vertex 
+ VERTEX  -40,    0,   70,     0,      1,    2,     3,         31    \ Vertex 
+ VERTEX    0,   30,  -75,    15,     15,   15,    15,         31    \ Vertex 
+ VERTEX    0,  -50,  -60,     8,      9,   10,    11,         31    \ Vertex 
 
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     2,     7,         31    \ Edge 
@@ -1528,20 +1535,20 @@ INCLUDE "library/common/main/variable_ship_python.asm"
  EDGE       7,       8,     8,     9,         31    \ Edge 
 
 \FACE normal_x, normal_y, normal_z, visibility
- FACE        9,       66,       81,        31    \ Face 
- FACE        9,      -66,       81,        31    \ Face 
- FACE      -72,       64,       31,        31    \ Face 
- FACE      -64,      -73,       47,        31    \ Face 
- FACE       45,      -79,       65,        31    \ Face 
- FACE      135,       15,       35,        31    \ Face 
- FACE       38,       76,       70,        31    \ Face 
- FACE      -66,       59,      -39,        31    \ Face 
- FACE      -67,      -15,      -80,        31    \ Face 
- FACE       66,      -14,      -75,        31    \ Face 
- FACE      -70,      -80,      -40,        31    \ Face 
- FACE       58,     -102,      -51,        31    \ Face 
- FACE       81,        9,      -67,        31    \ Face 
- FACE       47,       94,      -63,        31    \ Face 
+ FACE        9,       66,       81,         31    \ Face 
+ FACE        9,      -66,       81,         31    \ Face 
+ FACE      -72,       64,       31,         31    \ Face 
+ FACE      -64,      -73,       47,         31    \ Face 
+ FACE       45,      -79,       65,         31    \ Face 
+ FACE      135,       15,       35,         31    \ Face 
+ FACE       38,       76,       70,         31    \ Face 
+ FACE      -66,       59,      -39,         31    \ Face 
+ FACE      -67,      -15,      -80,         31    \ Face 
+ FACE       66,      -14,      -75,         31    \ Face 
+ FACE      -70,      -80,      -40,         31    \ Face 
+ FACE       58,     -102,      -51,         31    \ Face 
+ FACE       81,        9,      -67,         31    \ Face 
+ FACE       47,       94,      -63,         31    \ Face 
 
 INCLUDE "library/common/main/variable_ship_viper.asm"
 INCLUDE "library/common/main/variable_ship_sidewinder.asm"
@@ -1569,23 +1576,24 @@ INCLUDE "library/common/main/variable_ship_mamba.asm"
  EQUB %00010000         \ Laser power              = 2
                         \ Missiles                 = 0
 
- EQUB &00, &00, &60, &1F, &01, &23
- EQUB &00, &12, &30, &3F, &03, &45
- EQUB &00, &12, &30, &7F, &12, &45
- EQUB &5A, &00, &03, &3F, &01, &44
- EQUB &5A, &00, &03, &BF, &23, &55
- EQUB &5A, &00, &57, &1E, &01, &11
- EQUB &5A, &00, &57, &9E, &23, &33
- EQUB &00, &05, &35, &09, &00, &33
- EQUB &00, &07, &26, &06, &00, &33
- EQUB &12, &07, &13, &89, &33, &33
- EQUB &12, &07, &13, &09, &00, &00
- EQUB &12, &0B, &27, &28, &44, &44
- EQUB &12, &0B, &27, &68, &44, &44
- EQUB &24, &00, &1E, &28, &44, &44
- EQUB &12, &0B, &27, &A8, &55, &55
- EQUB &12, &0B, &27, &E8, &55, &55
- EQUB &24, &00, &1E, &A8, &55, &55
+\VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
+ VERTEX    0,    0,   96,     1,      0,    3,     2,         31    \ Vertex 
+ VERTEX    0,   18,  -48,     3,      0,    5,     4,         31    \ Vertex 
+ VERTEX    0,  -18,  -48,     2,      1,    5,     4,         31    \ Vertex 
+ VERTEX   90,    0,   -3,     1,      0,    4,     4,         31    \ Vertex 
+ VERTEX  -90,    0,   -3,     3,      2,    5,     5,         31    \ Vertex 
+ VERTEX   90,    0,   87,     1,      0,    1,     1,         30    \ Vertex 
+ VERTEX  -90,    0,   87,     3,      2,    3,     3,         30    \ Vertex 
+ VERTEX    0,    5,   53,     0,      0,    3,     3,          9    \ Vertex 
+ VERTEX    0,    7,   38,     0,      0,    3,     3,          6    \ Vertex 
+ VERTEX  -18,    7,   19,     3,      3,    3,     3,          9    \ Vertex 
+ VERTEX   18,    7,   19,     0,      0,    0,     0,          9    \ Vertex 
+ VERTEX   18,   11,  -39,     4,      4,    4,     4,          8    \ Vertex 
+ VERTEX   18,  -11,  -39,     4,      4,    4,     4,          8    \ Vertex 
+ VERTEX   36,    0,  -30,     4,      4,    4,     4,          8    \ Vertex 
+ VERTEX  -18,   11,  -39,     5,      5,    5,     5,          8    \ Vertex 
+ VERTEX  -18,  -11,  -39,     5,      5,    5,     5,          8    \ Vertex 
+ VERTEX  -36,    0,  -30,     5,      5,    5,     5,          8    \ Vertex 
 
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     3,     0,         31    \ Edge 
@@ -1611,12 +1619,12 @@ INCLUDE "library/common/main/variable_ship_mamba.asm"
  EDGE      16,      14,     5,     5,          8    \ Edge 
 
 \FACE normal_x, normal_y, normal_z, visibility
- FACE        3,       24,        3,        31    \ Face 
- FACE        3,      -24,        3,        31    \ Face 
- FACE       -3,      -24,        3,        31    \ Face 
- FACE       -3,       24,        3,        31    \ Face 
- FACE       38,        0,      -77,        31    \ Face 
- FACE      -38,        0,      -77,        31    \ Face 
+ FACE        3,       24,        3,         31    \ Face 
+ FACE        3,      -24,        3,         31    \ Face 
+ FACE       -3,      -24,        3,         31    \ Face 
+ FACE       -3,       24,        3,         31    \ Face 
+ FACE       38,        0,      -77,         31    \ Face 
+ FACE      -38,        0,      -77,         31    \ Face 
 
 \ ADA  = 20 = Adder
 
@@ -1640,24 +1648,25 @@ INCLUDE "library/common/main/variable_ship_mamba.asm"
  EQUB %00010000         \ Laser power              = 2
                         \ Missiles                 = 0
 
- EQUB &12, &00, &28, &9F, &01, &BC
- EQUB &12, &00, &28, &1F, &01, &23
- EQUB &1E, &00, &18, &3F, &23, &45
- EQUB &1E, &00, &28, &3F, &45, &66
- EQUB &12, &07, &28, &7F, &56, &7E
- EQUB &12, &07, &28, &FF, &78, &AE
- EQUB &1E, &00, &28, &BF, &89, &AA
- EQUB &1E, &00, &18, &BF, &9A, &BC
- EQUB &12, &07, &28, &BF, &78, &9D
- EQUB &12, &07, &28, &3F, &46, &7D
- EQUB &12, &07, &0D, &9F, &09, &BD
- EQUB &12, &07, &0D, &1F, &02, &4D
- EQUB &12, &07, &0D, &DF, &1A, &CE
- EQUB &12, &07, &0D, &5F, &13, &5E
- EQUB &0B, &03, &1D, &85, &00, &00
- EQUB &0B, &03, &1D, &05, &00, &00
- EQUB &0B, &04, &18, &04, &00, &00
- EQUB &0B, &04, &18, &84, &00, &00
+\VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
+ VERTEX  -18,    0,   40,     1,      0,   12,    11,         31    \ Vertex 
+ VERTEX   18,    0,   40,     1,      0,    3,     2,         31    \ Vertex 
+ VERTEX   30,    0,  -24,     3,      2,    5,     4,         31    \ Vertex 
+ VERTEX   30,    0,  -40,     5,      4,    6,     6,         31    \ Vertex 
+ VERTEX   18,   -7,  -40,     6,      5,   14,     7,         31    \ Vertex 
+ VERTEX  -18,   -7,  -40,     8,      7,   14,    10,         31    \ Vertex 
+ VERTEX  -30,    0,  -40,     9,      8,   10,    10,         31    \ Vertex 
+ VERTEX  -30,    0,  -24,    10,      9,   12,    11,         31    \ Vertex 
+ VERTEX  -18,    7,  -40,     8,      7,   13,     9,         31    \ Vertex 
+ VERTEX   18,    7,  -40,     6,      4,   13,     7,         31    \ Vertex 
+ VERTEX  -18,    7,   13,     9,      0,   13,    11,         31    \ Vertex 
+ VERTEX   18,    7,   13,     2,      0,   13,     4,         31    \ Vertex 
+ VERTEX  -18,   -7,   13,    10,      1,   14,    12,         31    \ Vertex 
+ VERTEX   18,   -7,   13,     3,      1,   14,     5,         31    \ Vertex 
+ VERTEX  -11,    3,   29,     0,      0,    0,     0,          5    \ Vertex 
+ VERTEX   11,    3,   29,     0,      0,    0,     0,          5    \ Vertex 
+ VERTEX   11,    4,   24,     0,      0,    0,     0,          4    \ Vertex 
+ VERTEX  -11,    4,   24,     0,      0,    0,     0,          4    \ Vertex 
 
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     1,     0,         31    \ Edge 
@@ -1691,21 +1700,21 @@ INCLUDE "library/common/main/variable_ship_mamba.asm"
  EDGE      17,      14,     0,     0,          3    \ Edge 
 
 \FACE normal_x, normal_y, normal_z, visibility
- FACE        0,       39,       10,        31    \ Face 
- FACE        0,      -39,       10,        31    \ Face 
- FACE       69,       50,       13,        31    \ Face 
- FACE       69,      -50,       13,        31    \ Face 
- FACE       30,       52,        0,        31    \ Face 
- FACE       30,      -52,        0,        31    \ Face 
- FACE        0,        0,     -160,        31    \ Face 
- FACE        0,        0,     -160,        31    \ Face 
- FACE        0,        0,     -160,        31    \ Face 
- FACE      -30,       52,        0,        31    \ Face 
- FACE      -30,      -52,        0,        31    \ Face 
- FACE      -69,       50,       13,        31    \ Face 
- FACE      -69,      -50,       13,        31    \ Face 
- FACE        0,       28,        0,        31    \ Face 
- FACE        0,      -28,        0,        31    \ Face 
+ FACE        0,       39,       10,         31    \ Face 
+ FACE        0,      -39,       10,         31    \ Face 
+ FACE       69,       50,       13,         31    \ Face 
+ FACE       69,      -50,       13,         31    \ Face 
+ FACE       30,       52,        0,         31    \ Face 
+ FACE       30,      -52,        0,         31    \ Face 
+ FACE        0,        0,     -160,         31    \ Face 
+ FACE        0,        0,     -160,         31    \ Face 
+ FACE        0,        0,     -160,         31    \ Face 
+ FACE      -30,       52,        0,         31    \ Face 
+ FACE      -30,      -52,        0,         31    \ Face 
+ FACE      -69,       50,       13,         31    \ Face 
+ FACE      -69,      -50,       13,         31    \ Face 
+ FACE        0,       28,        0,         31    \ Face 
+ FACE        0,      -28,        0,         31    \ Face 
 
 \        21 = Gecko
 
@@ -1729,18 +1738,19 @@ INCLUDE "library/common/main/variable_ship_mamba.asm"
  EQUB %00010000         \ Laser power              = 2
                         \ Missiles                 = 0
 
- EQUB &0A, &04, &2F, &DF, &03, &45
- EQUB &0A, &04, &2F, &5F, &01, &23
- EQUB &10, &08, &17, &BF, &05, &67
- EQUB &10, &08, &17, &3F, &01, &78
- EQUB &42, &00, &03, &BF, &45, &66
- EQUB &42, &00, &03, &3F, &12, &88
- EQUB &14, &0E, &17, &FF, &34, &67
- EQUB &14, &0E, &17, &7F, &23, &78
- EQUB &08, &06, &21, &D0, &33, &33
- EQUB &08, &06, &21, &51, &33, &33
- EQUB &08, &0D, &10, &F0, &33, &33
- EQUB &08, &0D, &10, &71, &33, &33
+\VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
+ VERTEX  -10,   -4,   47,     3,      0,    5,     4,         31    \ Vertex 
+ VERTEX   10,   -4,   47,     1,      0,    3,     2,         31    \ Vertex 
+ VERTEX  -16,    8,  -23,     5,      0,    7,     6,         31    \ Vertex 
+ VERTEX   16,    8,  -23,     1,      0,    8,     7,         31    \ Vertex 
+ VERTEX  -66,    0,   -3,     5,      4,    6,     6,         31    \ Vertex 
+ VERTEX   66,    0,   -3,     2,      1,    8,     8,         31    \ Vertex 
+ VERTEX  -20,  -14,  -23,     4,      3,    7,     6,         31    \ Vertex 
+ VERTEX   20,  -14,  -23,     3,      2,    8,     7,         31    \ Vertex 
+ VERTEX   -8,   -6,   33,     3,      3,    3,     3,         16    \ Vertex 
+ VERTEX    8,   -6,   33,     3,      3,    3,     3,         17    \ Vertex 
+ VERTEX   -8,  -13,  -16,     3,      3,    3,     3,         16    \ Vertex 
+ VERTEX    8,  -13,  -16,     3,      3,    3,     3,         17    \ Vertex 
 
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     3,     0,         31    \ Edge 
@@ -1762,15 +1772,15 @@ INCLUDE "library/common/main/variable_ship_mamba.asm"
  EDGE       9,      11,     3,     3,         17    \ Edge 
 
 \FACE normal_x, normal_y, normal_z, visibility
- FACE        0,       31,        5,        31    \ Face 
- FACE        4,       45,        8,        31    \ Face 
- FACE       25,     -108,       19,        31    \ Face 
- FACE        0,      -84,       12,        31    \ Face 
- FACE      -25,     -108,       19,        31    \ Face 
- FACE       -4,       45,        8,        31    \ Face 
- FACE      -88,       16,     -214,        31    \ Face 
- FACE        0,        0,     -187,        31    \ Face 
- FACE       88,       16,     -214,        31    \ Face 
+ FACE        0,       31,        5,         31    \ Face 
+ FACE        4,       45,        8,         31    \ Face 
+ FACE       25,     -108,       19,         31    \ Face 
+ FACE        0,      -84,       12,         31    \ Face 
+ FACE      -25,     -108,       19,         31    \ Face 
+ FACE       -4,       45,        8,         31    \ Face 
+ FACE      -88,       16,     -214,         31    \ Face 
+ FACE        0,        0,     -187,         31    \ Face 
+ FACE       88,       16,     -214,         31    \ Face 
 
 \        22 = Cobra Mk I
 
@@ -1794,17 +1804,18 @@ INCLUDE "library/common/main/variable_ship_mamba.asm"
  EQUB %00010010         \ Laser power              = 2
                         \ Missiles                 = 2
 
- EQUB &12, &01, &32, &DF, &01, &23
- EQUB &12, &01, &32, &5F, &01, &45
- EQUB &42, &00, &07, &9F, &23, &88
- EQUB &42, &00, &07, &1F, &45, &99
- EQUB &20, &0C, &26, &BF, &26, &78
- EQUB &20, &0C, &26, &3F, &46, &79
- EQUB &36, &0C, &26, &FF, &13, &78
- EQUB &36, &0C, &26, &7F, &15, &79
- EQUB &00, &0C, &06, &34, &02, &46
- EQUB &00, &01, &32, &42, &01, &11
- EQUB &00, &01, &3C, &5F, &01, &11
+\VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
+ VERTEX  -18,   -1,   50,     1,      0,    3,     2,         31    \ Vertex 
+ VERTEX   18,   -1,   50,     1,      0,    5,     4,         31    \ Vertex 
+ VERTEX  -66,    0,    7,     3,      2,    8,     8,         31    \ Vertex 
+ VERTEX   66,    0,    7,     5,      4,    9,     9,         31    \ Vertex 
+ VERTEX  -32,   12,  -38,     6,      2,    8,     7,         31    \ Vertex 
+ VERTEX   32,   12,  -38,     6,      4,    9,     7,         31    \ Vertex 
+ VERTEX  -54,  -12,  -38,     3,      1,    8,     7,         31    \ Vertex 
+ VERTEX   54,  -12,  -38,     5,      1,    9,     7,         31    \ Vertex 
+ VERTEX    0,   12,   -6,     2,      0,    6,     4,         20    \ Vertex 
+ VERTEX    0,   -1,   50,     1,      0,    1,     1,          2    \ Vertex 
+ VERTEX    0,   -1,   60,     1,      0,    1,     1,         31    \ Vertex 
 
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       1,       0,     1,     0,         31    \ Edge 
@@ -1827,15 +1838,15 @@ INCLUDE "library/common/main/variable_ship_mamba.asm"
  EDGE      10,       9,     1,     0,          2    \ Edge 
 
 \FACE normal_x, normal_y, normal_z, visibility
- FACE        0,       41,       10,        31    \ Face 
- FACE        0,      -27,        3,        31    \ Face 
- FACE       -8,       46,        8,        31    \ Face 
- FACE      -12,      -57,       12,        31    \ Face 
- FACE        8,       46,        8,        31    \ Face 
- FACE       12,      -57,       12,        31    \ Face 
- FACE        0,       49,        0,        31    \ Face 
- FACE        0,        0,     -154,        31    \ Face 
- FACE     -121,      111,      -62,        31    \ Face 
+ FACE        0,       41,       10,         31    \ Face 
+ FACE        0,      -27,        3,         31    \ Face 
+ FACE       -8,       46,        8,         31    \ Face 
+ FACE      -12,      -57,       12,         31    \ Face 
+ FACE        8,       46,        8,         31    \ Face 
+ FACE       12,      -57,       12,         31    \ Face 
+ FACE        0,       49,        0,         31    \ Face 
+ FACE        0,        0,     -154,         31    \ Face 
+ FACE     -121,      111,      -62,         31    \ Face 
  FACE      121,      111,      -62,        31    \ Face
 
 \ WRM  = 23 = Worm
@@ -1860,16 +1871,17 @@ INCLUDE "library/common/main/variable_ship_mamba.asm"
  EQUB %00001000         \ Laser power              = 1
                         \ Missiles                 = 0
 
- EQUB &0A, &0A, &23, &5F, &02, &77
- EQUB &0A, &0A, &23, &DF, &03, &77
- EQUB &05, &06, &0F, &1F, &01, &24
- EQUB &05, &06, &0F, &9F, &01, &35
- EQUB &0F, &0A, &19, &5F, &24, &77
- EQUB &0F, &0A, &19, &DF, &35, &77
- EQUB &1A, &0A, &19, &7F, &46, &77
- EQUB &1A, &0A, &19, &FF, &56, &77
- EQUB &08, &0E, &19, &3F, &14, &66
- EQUB &08, &0E, &19, &BF, &15, &66
+\VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
+ VERTEX   10,  -10,   35,     2,      0,    7,     7,         31    \ Vertex 
+ VERTEX  -10,  -10,   35,     3,      0,    7,     7,         31    \ Vertex 
+ VERTEX    5,    6,   15,     1,      0,    4,     2,         31    \ Vertex 
+ VERTEX   -5,    6,   15,     1,      0,    5,     3,         31    \ Vertex 
+ VERTEX   15,  -10,   25,     4,      2,    7,     7,         31    \ Vertex 
+ VERTEX  -15,  -10,   25,     5,      3,    7,     7,         31    \ Vertex 
+ VERTEX   26,  -10,  -25,     6,      4,    7,     7,         31    \ Vertex 
+ VERTEX  -26,  -10,  -25,     6,      5,    7,     7,         31    \ Vertex 
+ VERTEX    8,   14,  -25,     4,      1,    6,     6,         31    \ Vertex 
+ VERTEX   -8,   14,  -25,     5,      1,    6,     6,         31    \ Vertex 
 
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     7,     0,         31    \ Edge 
@@ -1890,14 +1902,14 @@ INCLUDE "library/common/main/variable_ship_mamba.asm"
  EDGE       8,       9,     6,     1,         31    \ Edge 
 
 \FACE normal_x, normal_y, normal_z, visibility
- FACE        0,       88,       70,        31    \ Face 
- FACE        0,       69,       14,        31    \ Face 
- FACE       70,       66,       35,        31    \ Face 
- FACE      -70,       66,       35,        31    \ Face 
- FACE       64,       49,       14,        31    \ Face 
- FACE      -64,       49,       14,        31    \ Face 
- FACE        0,        0,     -200,        31    \ Face 
- FACE        0,      -80,        0,        31    \ Face 
+ FACE        0,       88,       70,         31    \ Face 
+ FACE        0,       69,       14,         31    \ Face 
+ FACE       70,       66,       35,         31    \ Face 
+ FACE      -70,       66,       35,         31    \ Face 
+ FACE       64,       49,       14,         31    \ Face 
+ FACE      -64,       49,       14,         31    \ Face 
+ FACE        0,        0,     -200,         31    \ Face 
+ FACE        0,      -80,        0,         31    \ Face 
 
 INCLUDE "library/6502sp/main/variable_ship_cobra_mk_iii_pirate.asm"
 
@@ -1923,25 +1935,26 @@ INCLUDE "library/6502sp/main/variable_ship_cobra_mk_iii_pirate.asm"
  EQUB %00101001         \ Laser power              = 5
                         \ Missiles                 = 1
 
- EQUB &00, &12, &00, &56, &01, &22
- EQUB &00, &09, &2D, &7F, &12, &BB
- EQUB &2B, &00, &2D, &3F, &16, &BB
- EQUB &45, &03, &00, &5F, &16, &79
- EQUB &2B, &0E, &1C, &5F, &01, &77
- EQUB &2B, &00, &2D, &BF, &25, &BB
- EQUB &45, &03, &00, &DF, &25, &8A
- EQUB &2B, &0E, &1C, &DF, &02, &88
- EQUB &1A, &07, &49, &5F, &04, &79
- EQUB &1A, &07, &49, &DF, &04, &8A
- EQUB &2B, &0E, &1C, &1F, &34, &69
- EQUB &2B, &0E, &1C, &9F, &34, &5A
- EQUB &00, &09, &2D, &3F, &35, &6B
- EQUB &11, &00, &2D, &AA, &BB, &BB
- EQUB &11, &00, &2D, &29, &BB, &BB
- EQUB &00, &04, &2D, &6A, &BB, &BB
- EQUB &00, &04, &2D, &28, &BB, &BB
- EQUB &00, &07, &49, &4A, &04, &04
- EQUB &00, &07, &53, &4A, &04, &04
+\VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
+ VERTEX    0,  -18,    0,     1,      0,    2,     2,         22    \ Vertex 
+ VERTEX    0,   -9,  -45,     2,      1,   11,    11,         31    \ Vertex 
+ VERTEX   43,    0,  -45,     6,      1,   11,    11,         31    \ Vertex 
+ VERTEX   69,   -3,    0,     6,      1,    9,     7,         31    \ Vertex 
+ VERTEX   43,  -14,   28,     1,      0,    7,     7,         31    \ Vertex 
+ VERTEX  -43,    0,  -45,     5,      2,   11,    11,         31    \ Vertex 
+ VERTEX  -69,   -3,    0,     5,      2,   10,     8,         31    \ Vertex 
+ VERTEX  -43,  -14,   28,     2,      0,    8,     8,         31    \ Vertex 
+ VERTEX   26,   -7,   73,     4,      0,    9,     7,         31    \ Vertex 
+ VERTEX  -26,   -7,   73,     4,      0,   10,     8,         31    \ Vertex 
+ VERTEX   43,   14,   28,     4,      3,    9,     6,         31    \ Vertex 
+ VERTEX  -43,   14,   28,     4,      3,   10,     5,         31    \ Vertex 
+ VERTEX    0,    9,  -45,     5,      3,   11,     6,         31    \ Vertex 
+ VERTEX  -17,    0,  -45,    11,     11,   11,    11,         10    \ Vertex 
+ VERTEX   17,    0,  -45,    11,     11,   11,    11,          9    \ Vertex 
+ VERTEX    0,   -4,  -45,    11,     11,   11,    11,         10    \ Vertex 
+ VERTEX    0,    4,  -45,    11,     11,   11,    11,          8    \ Vertex 
+ VERTEX    0,   -7,   73,     4,      0,    4,     0,         10    \ Vertex 
+ VERTEX    0,   -7,   83,     4,      0,    4,     0,         10    \ Vertex
 
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     2,     1,         22    \ Edge 
@@ -1974,19 +1987,19 @@ INCLUDE "library/6502sp/main/variable_ship_cobra_mk_iii_pirate.asm"
  EDGE      18,      17,     4,     0,         10    \ Edge 
 
 \FACE normal_x, normal_y, normal_z, visibility
- FACE        0,      -35,        5,        31    \ Face 
- FACE        8,      -38,       -7,        31    \ Face 
- FACE       -8,      -38,       -7,        31    \ Face 
- FACE        0,       24,       -1,        22    \ Face 
- FACE        0,       43,       19,        31    \ Face 
- FACE       -6,       28,       -2,        31    \ Face 
- FACE        6,       28,       -2,        31    \ Face 
- FACE       59,      -64,       31,        31    \ Face 
- FACE      -59,      -64,       31,        31    \ Face 
- FACE       80,       46,       50,        31    \ Face 
- FACE      -80,       46,       50,        31    \ Face 
- FACE        0,        0,      -90,        31    \ Face 
- FACE      229,       44,     -197,        24    \ Face 
+ FACE        0,      -35,        5,         31    \ Face 
+ FACE        8,      -38,       -7,         31    \ Face 
+ FACE       -8,      -38,       -7,         31    \ Face 
+ FACE        0,       24,       -1,         22    \ Face 
+ FACE        0,       43,       19,         31    \ Face 
+ FACE       -6,       28,       -2,         31    \ Face 
+ FACE        6,       28,       -2,         31    \ Face 
+ FACE       59,      -64,       31,         31    \ Face 
+ FACE      -59,      -64,       31,         31    \ Face 
+ FACE       80,       46,       50,         31    \ Face 
+ FACE      -80,       46,       50,         31    \ Face 
+ FACE        0,        0,      -90,         31    \ Face 
+ FACE      229,       44,     -197,         24    \ Face 
 
 \        26 = Python (pirate)
 
@@ -2010,17 +2023,18 @@ INCLUDE "library/6502sp/main/variable_ship_cobra_mk_iii_pirate.asm"
  EQUB %00011011         \ Laser power              = 3
                         \ Missiles                 = 3
 
- EQUB &00, &00, &E0, &1F, &10, &32
- EQUB &00, &30, &30, &1F, &10, &54
- EQUB &60, &00, &10, &3F, &FF, &FF
- EQUB &60, &00, &10, &BF, &FF, &FF
- EQUB &00, &30, &20, &3F, &54, &98
- EQUB &00, &18, &70, &3F, &89, &CC
- EQUB &30, &00, &70, &BF, &B8, &CC
- EQUB &30, &00, &70, &3F, &A9, &CC
- EQUB &00, &30, &30, &5F, &32, &76
- EQUB &00, &30, &20, &7F, &76, &BA
- EQUB &00, &18, &70, &7F, &BA, &CC
+\VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
+ VERTEX    0,    0,  224,     0,      1,    2,     3,         31    \ Vertex 
+ VERTEX    0,   48,   48,     0,      1,    4,     5,         31    \ Vertex 
+ VERTEX   96,    0,  -16,    15,     15,   15,    15,         31    \ Vertex 
+ VERTEX  -96,    0,  -16,    15,     15,   15,    15,         31    \ Vertex 
+ VERTEX    0,   48,  -32,     4,      5,    8,     9,         31    \ Vertex 
+ VERTEX    0,   24, -112,     9,      8,   12,    12,         31    \ Vertex 
+ VERTEX  -48,    0, -112,     8,     11,   12,    12,         31    \ Vertex 
+ VERTEX   48,    0, -112,     9,     10,   12,    12,         31    \ Vertex 
+ VERTEX    0,  -48,   48,     2,      3,    6,     7,         31    \ Vertex 
+ VERTEX    0,  -48,  -32,     6,      7,   10,    11,         31    \ Vertex 
+ VERTEX    0,  -24, -112,    10,     11,   12,    12,         31    \ Vertex 
 
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       8,     2,     3,         31    \ Edge 
@@ -2051,19 +2065,19 @@ INCLUDE "library/6502sp/main/variable_ship_cobra_mk_iii_pirate.asm"
  EDGE       8,       9,     6,     7,         31    \ Edge 
 
 \FACE normal_x, normal_y, normal_z, visibility
- FACE      -27,       40,       11,        31    \ Face 
- FACE       27,       40,       11,        31    \ Face 
- FACE      -27,      -40,       11,        31    \ Face 
- FACE       27,      -40,       11,        31    \ Face 
- FACE      -19,       38,        0,        31    \ Face 
- FACE       19,       38,        0,        31    \ Face 
- FACE      -19,      -38,        0,        31    \ Face 
- FACE       19,      -38,        0,        31    \ Face 
- FACE      -25,       37,      -11,        31    \ Face 
- FACE       25,       37,      -11,        31    \ Face 
- FACE       25,      -37,      -11,        31    \ Face 
- FACE      -25,      -37,      -11,        31    \ Face 
- FACE        0,        0,     -112,        31    \ Face 
+ FACE      -27,       40,       11,         31    \ Face 
+ FACE       27,       40,       11,         31    \ Face 
+ FACE      -27,      -40,       11,         31    \ Face 
+ FACE       27,      -40,       11,         31    \ Face 
+ FACE      -19,       38,        0,         31    \ Face 
+ FACE       19,       38,        0,         31    \ Face 
+ FACE      -19,      -38,        0,         31    \ Face 
+ FACE       19,      -38,        0,         31    \ Face 
+ FACE      -25,       37,      -11,         31    \ Face 
+ FACE       25,       37,      -11,         31    \ Face 
+ FACE       25,      -37,      -11,         31    \ Face 
+ FACE      -25,      -37,      -11,         31    \ Face 
+ FACE        0,        0,     -112,         31    \ Face 
 
 \        27 = Fer-de-lance
 
@@ -2087,25 +2101,26 @@ INCLUDE "library/6502sp/main/variable_ship_cobra_mk_iii_pirate.asm"
  EQUB %00010010         \ Laser power              = 2
                         \ Missiles                 = 2
 
- EQUB &00, &0E, &6C, &5F, &01, &59
- EQUB &28, &0E, &04, &FF, &12, &99
- EQUB &0C, &0E, &34, &FF, &23, &99
- EQUB &0C, &0E, &34, &7F, &34, &99
- EQUB &28, &0E, &04, &7F, &45, &99
- EQUB &28, &0E, &04, &BC, &01, &26
- EQUB &0C, &02, &34, &BC, &23, &67
- EQUB &0C, &02, &34, &3C, &34, &78
- EQUB &28, &0E, &04, &3C, &04, &58
- EQUB &00, &12, &14, &2F, &06, &78
- EQUB &03, &0B, &61, &CB, &00, &00
- EQUB &1A, &08, &12, &89, &00, &00
- EQUB &10, &0E, &04, &AB, &00, &00
- EQUB &03, &0B, &61, &4B, &00, &00
- EQUB &1A, &08, &12, &09, &00, &00
- EQUB &10, &0E, &04, &2B, &00, &00
- EQUB &00, &0E, &14, &6C, &99, &99
- EQUB &0E, &0E, &2C, &CC, &99, &99
- EQUB &0E, &0E, &2C, &4C, &99, &99
+\VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
+ VERTEX    0,  -14,  108,     1,      0,    9,     5,         31    \ Vertex 
+ VERTEX  -40,  -14,   -4,     2,      1,    9,     9,         31    \ Vertex 
+ VERTEX  -12,  -14,  -52,     3,      2,    9,     9,         31    \ Vertex 
+ VERTEX   12,  -14,  -52,     4,      3,    9,     9,         31    \ Vertex 
+ VERTEX   40,  -14,   -4,     5,      4,    9,     9,         31    \ Vertex 
+ VERTEX  -40,   14,   -4,     1,      0,    6,     2,         28    \ Vertex 
+ VERTEX  -12,    2,  -52,     3,      2,    7,     6,         28    \ Vertex 
+ VERTEX   12,    2,  -52,     4,      3,    8,     7,         28    \ Vertex 
+ VERTEX   40,   14,   -4,     4,      0,    8,     5,         28    \ Vertex 
+ VERTEX    0,   18,  -20,     6,      0,    8,     7,         15    \ Vertex 
+ VERTEX   -3,  -11,   97,     0,      0,    0,     0,         11    \ Vertex 
+ VERTEX  -26,    8,   18,     0,      0,    0,     0,          9    \ Vertex 
+ VERTEX  -16,   14,   -4,     0,      0,    0,     0,         11    \ Vertex 
+ VERTEX    3,  -11,   97,     0,      0,    0,     0,         11    \ Vertex 
+ VERTEX   26,    8,   18,     0,      0,    0,     0,          9    \ Vertex 
+ VERTEX   16,   14,   -4,     0,      0,    0,     0,         11    \ Vertex 
+ VERTEX    0,  -14,  -20,     9,      9,    9,     9,         12    \ Vertex 
+ VERTEX  -14,  -14,   44,     9,      9,    9,     9,         12    \ Vertex 
+ VERTEX   14,  -14,   44,     9,      9,    9,     9,         12    \ Vertex 
 
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     9,     1,         31    \ Edge 
@@ -2137,16 +2152,16 @@ INCLUDE "library/6502sp/main/variable_ship_cobra_mk_iii_pirate.asm"
  EDGE      17,      18,     9,     9,          8    \ Edge 
 
 \FACE normal_x, normal_y, normal_z, visibility
- FACE        0,       24,        6,        28    \ Face 
- FACE      -68,        0,       24,        31    \ Face 
- FACE      -63,        0,      -37,        31    \ Face 
- FACE        0,        0,     -104,        31    \ Face 
- FACE       63,        0,      -37,        31    \ Face 
- FACE       68,        0,       24,        31    \ Face 
- FACE      -12,       46,      -19,        28    \ Face 
- FACE        0,       45,      -22,        28    \ Face 
- FACE       12,       46,      -19,        28    \ Face 
- FACE        0,      -28,        0,        31    \ Face 
+ FACE        0,       24,        6,         28    \ Face 
+ FACE      -68,        0,       24,         31    \ Face 
+ FACE      -63,        0,      -37,         31    \ Face 
+ FACE        0,        0,     -104,         31    \ Face 
+ FACE       63,        0,      -37,         31    \ Face 
+ FACE       68,        0,       24,         31    \ Face 
+ FACE      -12,       46,      -19,         28    \ Face 
+ FACE        0,       45,      -22,         28    \ Face 
+ FACE       12,       46,      -19,         28    \ Face 
+ FACE        0,      -28,        0,         31    \ Face 
 
 \        28 = Moray
 
@@ -2170,20 +2185,21 @@ INCLUDE "library/6502sp/main/variable_ship_cobra_mk_iii_pirate.asm"
  EQUB %00010000         \ Laser power              = 2
                         \ Missiles                 = 0
 
- EQUB &0F, &00, &41, &1F, &02, &78
- EQUB &0F, &00, &41, &9F, &01, &67
- EQUB &00, &12, &28, &31, &FF, &FF
- EQUB &3C, &00, &00, &9F, &13, &66
- EQUB &3C, &00, &00, &1F, &25, &88
- EQUB &1E, &1B, &0A, &78, &45, &78
- EQUB &1E, &1B, &0A, &F8, &34, &67
- EQUB &09, &04, &19, &E7, &44, &44
- EQUB &09, &04, &19, &67, &44, &44
- EQUB &00, &12, &10, &67, &44, &44
- EQUB &0D, &03, &31, &05, &00, &00
- EQUB &06, &00, &41, &05, &00, &00
- EQUB &0D, &03, &31, &85, &00, &00
- EQUB &06, &00, &41, &85, &00, &00
+\VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
+ VERTEX   15,    0,   65,     2,      0,    8,     7,         31    \ Vertex 
+ VERTEX  -15,    0,   65,     1,      0,    7,     6,         31    \ Vertex 
+ VERTEX    0,   18,  -40,    15,     15,   15,    15,         17    \ Vertex 
+ VERTEX  -60,    0,    0,     3,      1,    6,     6,         31    \ Vertex 
+ VERTEX   60,    0,    0,     5,      2,    8,     8,         31    \ Vertex 
+ VERTEX   30,  -27,  -10,     5,      4,    8,     7,         24    \ Vertex 
+ VERTEX  -30,  -27,  -10,     4,      3,    7,     6,         24    \ Vertex 
+ VERTEX   -9,   -4,  -25,     4,      4,    4,     4,          7    \ Vertex 
+ VERTEX    9,   -4,  -25,     4,      4,    4,     4,          7    \ Vertex 
+ VERTEX    0,  -18,  -16,     4,      4,    4,     4,          7    \ Vertex 
+ VERTEX   13,    3,   49,     0,      0,    0,     0,          5    \ Vertex 
+ VERTEX    6,    0,   65,     0,      0,    0,     0,          5    \ Vertex 
+ VERTEX  -13,    3,   49,     0,      0,    0,     0,          5    \ Vertex 
+ VERTEX   -6,    0,   65,     0,      0,    0,     0,          5    \ Vertex 
 
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     7,     0,         31    \ Edge 
@@ -2207,15 +2223,15 @@ INCLUDE "library/6502sp/main/variable_ship_cobra_mk_iii_pirate.asm"
  EDGE      12,      13,     0,     0,          5    \ Edge 
 
 \FACE normal_x, normal_y, normal_z, visibility
- FACE        0,       43,        7,        31    \ Face 
- FACE      -10,       49,        7,        31    \ Face 
- FACE       10,       49,        7,        31    \ Face 
- FACE      -59,      -28,     -101,        24    \ Face 
- FACE        0,      -52,      -78,        24    \ Face 
- FACE       59,      -28,     -101,        24    \ Face 
- FACE      -72,      -99,       50,        31    \ Face 
- FACE        0,      -83,       30,        31    \ Face 
- FACE       72,      -99,       50,        31    \ Face 
+ FACE        0,       43,        7,         31    \ Face 
+ FACE      -10,       49,        7,         31    \ Face 
+ FACE       10,       49,        7,         31    \ Face 
+ FACE      -59,      -28,     -101,         24    \ Face 
+ FACE        0,      -52,      -78,         24    \ Face 
+ FACE       59,      -28,     -101,         24    \ Face 
+ FACE      -72,      -99,       50,         31    \ Face 
+ FACE        0,      -83,       30,         31    \ Face 
+ FACE       72,      -99,       50,         31    \ Face 
 
 INCLUDE "library/common/main/variable_ship_thargoid.asm"
 INCLUDE "library/common/main/variable_ship_thargon.asm"
@@ -2242,23 +2258,24 @@ INCLUDE "library/common/main/variable_ship_thargon.asm"
  EQUB %00110100         \ Laser power              = 6
                         \ Missiles                 = 4
 
- EQUB &14, &07, &50, &5F, &02, &99
- EQUB &14, &07, &50, &DF, &01, &99
- EQUB &36, &07, &28, &DF, &14, &99
- EQUB &36, &07, &28, &FF, &45, &89
- EQUB &14, &0D, &28, &BF, &56, &88
- EQUB &14, &0D, &28, &3F, &67, &88
- EQUB &36, &07, &28, &7F, &37, &89
- EQUB &36, &07, &28, &5F, &23, &99
- EQUB &14, &0D, &05, &1F, &FF, &FF
- EQUB &14, &0D, &05, &9F, &FF, &FF
- EQUB &14, &07, &3E, &52, &99, &99
- EQUB &14, &07, &3E, &D2, &99, &99
- EQUB &19, &07, &19, &72, &99, &99
- EQUB &19, &07, &19, &F2, &99, &99
- EQUB &0F, &07, &0F, &6A, &99, &99
- EQUB &0F, &07, &0F, &EA, &99, &99
- EQUB &00, &07, &00, &40, &9F, &01
+\VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
+ VERTEX   20,   -7,   80,     2,      0,    9,     9,         31    \ Vertex 
+ VERTEX  -20,   -7,   80,     1,      0,    9,     9,         31    \ Vertex 
+ VERTEX  -54,   -7,   40,     4,      1,    9,     9,         31    \ Vertex 
+ VERTEX  -54,   -7,  -40,     5,      4,    9,     8,         31    \ Vertex 
+ VERTEX  -20,   13,  -40,     6,      5,    8,     8,         31    \ Vertex 
+ VERTEX   20,   13,  -40,     7,      6,    8,     8,         31    \ Vertex 
+ VERTEX   54,   -7,  -40,     7,      3,    9,     8,         31    \ Vertex 
+ VERTEX   54,   -7,   40,     3,      2,    9,     9,         31    \ Vertex 
+ VERTEX   20,   13,    5,    15,     15,   15,    15,         31    \ Vertex 
+ VERTEX  -20,   13,    5,    15,     15,   15,    15,         31    \ Vertex 
+ VERTEX   20,   -7,   62,     9,      9,    9,     9,         18    \ Vertex 
+ VERTEX  -20,   -7,   62,     9,      9,    9,     9,         18    \ Vertex 
+ VERTEX   25,   -7,  -25,     9,      9,    9,     9,         18    \ Vertex 
+ VERTEX  -25,   -7,  -25,     9,      9,    9,     9,         18    \ Vertex 
+ VERTEX   15,   -7,  -15,     9,      9,    9,     9,         10    \ Vertex 
+ VERTEX  -15,   -7,  -15,     9,      9,    9,     9,         10    \ Vertex 
+ VERTEX    0,   -7,    0,    15,      9,    1,     0,          0    \ Vertex 
 
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     9,     0,         31    \ Edge 
@@ -2287,16 +2304,16 @@ INCLUDE "library/common/main/variable_ship_thargon.asm"
  EDGE      11,      13,     9,     9,         18    \ Edge 
 
 \FACE normal_x, normal_y, normal_z, visibility
- FACE        0,       55,       15,        31    \ Face 
- FACE      -24,       75,       20,        31    \ Face 
- FACE       24,       75,       20,        31    \ Face 
- FACE       44,       75,        0,        31    \ Face 
- FACE      -44,       75,        0,        31    \ Face 
- FACE      -44,       75,        0,        31    \ Face 
- FACE        0,       53,        0,        31    \ Face 
- FACE       44,       75,        0,        31    \ Face 
- FACE        0,        0,     -160,        31    \ Face 
- FACE        0,      -27,        0,        31    \ Face 
+ FACE        0,       55,       15,         31    \ Face 
+ FACE      -24,       75,       20,         31    \ Face 
+ FACE       24,       75,       20,         31    \ Face 
+ FACE       44,       75,        0,         31    \ Face 
+ FACE      -44,       75,        0,         31    \ Face 
+ FACE      -44,       75,        0,         31    \ Face 
+ FACE        0,       53,        0,         31    \ Face 
+ FACE       44,       75,        0,         31    \ Face 
+ FACE        0,        0,     -160,         31    \ Face 
+ FACE        0,      -27,        0,         31    \ Face 
 
 \ LGO  = 32 = 
 
@@ -2320,48 +2337,49 @@ INCLUDE "library/common/main/variable_ship_thargon.asm"
  EQUB %00000000         \ Laser power              = 0
                         \ Missiles                 = 0
 
- EQUB &00, &09, &37, &5F, &00, &00
- EQUB &0A, &09, &1E, &DF, &00, &00
- EQUB &19, &09, &5D, &DF, &00, &00
- EQUB &96, &09, &B4, &DF, &00, &00
- EQUB &5A, &09, &0A, &DF, &00, &00
- EQUB &8C, &09, &0A, &DF, &00, &00
- EQUB &00, &09, &5F, &7F, &00, &00
- EQUB &8C, &09, &0A, &5F, &00, &00
- EQUB &5A, &09, &0A, &5F, &00, &00
- EQUB &96, &09, &B4, &5F, &00, &00
- EQUB &19, &09, &5D, &5F, &00, &00
- EQUB &0A, &09, &1E, &5F, &00, &00
- EQUB &55, &09, &1E, &FF, &02, &33
- EQUB &55, &09, &1E, &7F, &02, &44
- EQUB &46, &0B, &05, &9F, &01, &33
- EQUB &46, &0B, &19, &BF, &02, &33
- EQUB &46, &0B, &19, &3F, &02, &44
- EQUB &46, &0B, &05, &1F, &01, &44
- EQUB &00, &09, &05, &5F, &00, &00
- EQUB &00, &09, &05, &5F, &00, &00
- EQUB &00, &09, &05, &5F, &00, &00
- EQUB &1C, &0B, &02, &BF, &00, &00
- EQUB &31, &0B, &02, &BF, &00, &00
- EQUB &31, &0B, &0A, &BF, &00, &00
- EQUB &31, &0B, &11, &BF, &00, &00
- EQUB &1C, &0B, &11, &BF, &00, &00
- EQUB &1C, &0B, &0A, &BF, &00, &00
- EQUB &18, &0B, &02, &BF, &00, &00
- EQUB &18, &0B, &11, &BF, &00, &00
- EQUB &03, &0B, &11, &BF, &00, &00
- EQUB &00, &0B, &02, &3F, &00, &00
- EQUB &00, &0B, &11, &3F, &00, &00
- EQUB &04, &0B, &02, &3F, &00, &00
- EQUB &19, &0B, &02, &3F, &00, &00
- EQUB &0E, &0B, &02, &3F, &00, &00
- EQUB &0E, &0B, &11, &3F, &00, &00
- EQUB &31, &0B, &02, &3F, &00, &00
- EQUB &1C, &0B, &02, &3F, &00, &00
- EQUB &1C, &0B, &0A, &3F, &00, &00
- EQUB &1C, &0B, &11, &3F, &00, &00
- EQUB &31, &0B, &11, &3F, &00, &00
- EQUB &31, &0B, &0A, &3F, &00, &00
+\VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
+ VERTEX    0,   -9,   55,     0,      0,    0,     0,         31    \ Vertex 
+ VERTEX  -10,   -9,   30,     0,      0,    0,     0,         31    \ Vertex 
+ VERTEX  -25,   -9,   93,     0,      0,    0,     0,         31    \ Vertex 
+ VERTEX -150,   -9,  180,     0,      0,    0,     0,         31    \ Vertex 
+ VERTEX  -90,   -9,   10,     0,      0,    0,     0,         31    \ Vertex 
+ VERTEX -140,   -9,   10,     0,      0,    0,     0,         31    \ Vertex 
+ VERTEX    0,   -9,  -95,     0,      0,    0,     0,         31    \ Vertex 
+ VERTEX  140,   -9,   10,     0,      0,    0,     0,         31    \ Vertex 
+ VERTEX   90,   -9,   10,     0,      0,    0,     0,         31    \ Vertex 
+ VERTEX  150,   -9,  180,     0,      0,    0,     0,         31    \ Vertex 
+ VERTEX   25,   -9,   93,     0,      0,    0,     0,         31    \ Vertex 
+ VERTEX   10,   -9,   30,     0,      0,    0,     0,         31    \ Vertex 
+ VERTEX  -85,   -9,  -30,     2,      0,    3,     3,         31    \ Vertex 
+ VERTEX   85,   -9,  -30,     2,      0,    4,     4,         31    \ Vertex 
+ VERTEX  -70,   11,    5,     1,      0,    3,     3,         31    \ Vertex 
+ VERTEX  -70,   11,  -25,     2,      0,    3,     3,         31    \ Vertex 
+ VERTEX   70,   11,  -25,     2,      0,    4,     4,         31    \ Vertex 
+ VERTEX   70,   11,    5,     1,      0,    4,     4,         31    \ Vertex 
+ VERTEX    0,   -9,    5,     0,      0,    0,     0,         31    \ Vertex 
+ VERTEX    0,   -9,    5,     0,      0,    0,     0,         31    \ Vertex 
+ VERTEX    0,   -9,    5,     0,      0,    0,     0,         31    \ Vertex 
+ VERTEX  -28,   11,   -2,     0,      0,    0,     0,         31    \ Vertex 
+ VERTEX  -49,   11,   -2,     0,      0,    0,     0,         31    \ Vertex 
+ VERTEX  -49,   11,  -10,     0,      0,    0,     0,         31    \ Vertex 
+ VERTEX  -49,   11,  -17,     0,      0,    0,     0,         31    \ Vertex 
+ VERTEX  -28,   11,  -17,     0,      0,    0,     0,         31    \ Vertex 
+ VERTEX  -28,   11,  -10,     0,      0,    0,     0,         31    \ Vertex 
+ VERTEX  -24,   11,   -2,     0,      0,    0,     0,         31    \ Vertex 
+ VERTEX  -24,   11,  -17,     0,      0,    0,     0,         31    \ Vertex 
+ VERTEX   -3,   11,  -17,     0,      0,    0,     0,         31    \ Vertex 
+ VERTEX    0,   11,   -2,     0,      0,    0,     0,         31    \ Vertex 
+ VERTEX    0,   11,  -17,     0,      0,    0,     0,         31    \ Vertex 
+ VERTEX    4,   11,   -2,     0,      0,    0,     0,         31    \ Vertex 
+ VERTEX   25,   11,   -2,     0,      0,    0,     0,         31    \ Vertex 
+ VERTEX   14,   11,   -2,     0,      0,    0,     0,         31    \ Vertex 
+ VERTEX   14,   11,  -17,     0,      0,    0,     0,         31    \ Vertex 
+ VERTEX   49,   11,   -2,     0,      0,    0,     0,         31    \ Vertex 
+ VERTEX   28,   11,   -2,     0,      0,    0,     0,         31    \ Vertex 
+ VERTEX   28,   11,  -10,     0,      0,    0,     0,         31    \ Vertex 
+ VERTEX   28,   11,  -17,     0,      0,    0,     0,         31    \ Vertex 
+ VERTEX   49,   11,  -17,     0,      0,    0,     0,         31    \ Vertex 
+ VERTEX   49,   11,  -10,     0,      0,    0,     0,         31    \ Vertex 
 
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     0,     0,         31    \ Edge 
@@ -2403,11 +2421,11 @@ INCLUDE "library/common/main/variable_ship_thargon.asm"
  EDGE      41,      38,     0,     0,         30    \ Edge 
 
 \FACE normal_x, normal_y, normal_z, visibility
- FACE        0,       23,        0,        31    \ Face 
- FACE        0,        4,       15,        31    \ Face 
- FACE        0,       13,      -52,        31    \ Face 
- FACE      -81,       81,        0,        31    \ Face 
- FACE       81,       81,        0,        31    \ Face 
+ FACE        0,       23,        0,         31    \ Face 
+ FACE        0,        4,       15,         31    \ Face 
+ FACE        0,       13,      -52,         31    \ Face 
+ FACE      -81,       81,        0,         31    \ Face 
+ FACE       81,       81,        0,         31    \ Face 
 
 \ COU  = 33 = Cougar
 
@@ -2431,25 +2449,26 @@ INCLUDE "library/common/main/variable_ship_thargon.asm"
  EQUB %00110100         \ Laser power              = 6
                         \ Missiles                 = 4
 
- EQUB &00, &05, &43, &1F, &02, &44
- EQUB &14, &00, &28, &9F, &01, &22
- EQUB &28, &00, &28, &BF, &01, &55
- EQUB &00, &0E, &28, &3E, &04, &55
- EQUB &00, &0E, &28, &7E, &12, &35
- EQUB &14, &00, &28, &1F, &23, &44
- EQUB &28, &00, &28, &3F, &34, &55
- EQUB &24, &00, &38, &9F, &01, &11
- EQUB &3C, &00, &14, &BF, &01, &11
- EQUB &24, &00, &38, &1F, &34, &44
- EQUB &3C, &00, &14, &3F, &34, &44
- EQUB &00, &07, &23, &12, &00, &44
- EQUB &00, &08, &19, &14, &00, &44
- EQUB &0C, &02, &2D, &94, &00, &00
- EQUB &0C, &02, &2D, &14, &44, &44
- EQUB &0A, &06, &28, &B4, &55, &55
- EQUB &0A, &06, &28, &F4, &55, &55
- EQUB &0A, &06, &28, &74, &55, &55
- EQUB &0A, &06, &28, &34, &55, &55
+\VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
+ VERTEX    0,    5,   67,     2,      0,    4,     4,         31    \ Vertex 
+ VERTEX  -20,    0,   40,     1,      0,    2,     2,         31    \ Vertex 
+ VERTEX  -40,    0,  -40,     1,      0,    5,     5,         31    \ Vertex 
+ VERTEX    0,   14,  -40,     4,      0,    5,     5,         30    \ Vertex 
+ VERTEX    0,  -14,  -40,     2,      1,    5,     3,         30    \ Vertex 
+ VERTEX   20,    0,   40,     3,      2,    4,     4,         31    \ Vertex 
+ VERTEX   40,    0,  -40,     4,      3,    5,     5,         31    \ Vertex 
+ VERTEX  -36,    0,   56,     1,      0,    1,     1,         31    \ Vertex 
+ VERTEX  -60,    0,  -20,     1,      0,    1,     1,         31    \ Vertex 
+ VERTEX   36,    0,   56,     4,      3,    4,     4,         31    \ Vertex 
+ VERTEX   60,    0,  -20,     4,      3,    4,     4,         31    \ Vertex 
+ VERTEX    0,    7,   35,     0,      0,    4,     4,         18    \ Vertex 
+ VERTEX    0,    8,   25,     0,      0,    4,     4,         20    \ Vertex 
+ VERTEX  -12,    2,   45,     0,      0,    0,     0,         20    \ Vertex 
+ VERTEX   12,    2,   45,     4,      4,    4,     4,         20    \ Vertex 
+ VERTEX  -10,    6,  -40,     5,      5,    5,     5,         20    \ Vertex 
+ VERTEX  -10,   -6,  -40,     5,      5,    5,     5,         20    \ Vertex 
+ VERTEX   10,   -6,  -40,     5,      5,    5,     5,         20    \ Vertex 
+ VERTEX   10,    6,  -40,     5,      5,    5,     5,         20    \ Vertex 
 
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     2,     0,         31    \ Edge 
@@ -2479,12 +2498,12 @@ INCLUDE "library/common/main/variable_ship_thargon.asm"
  EDGE      17,      15,     5,     5,         20    \ Edge 
 
 \FACE normal_x, normal_y, normal_z, visibility
- FACE      -16,       46,        4,        31    \ Face 
- FACE      -16,      -46,        4,        31    \ Face 
- FACE        0,      -27,        5,        31    \ Face 
- FACE       16,      -46,        4,        31    \ Face 
- FACE       16,       46,        4,        31    \ Face 
- FACE        0,        0,     -160,        30    \ Face 
+ FACE      -16,       46,        4,         31    \ Face 
+ FACE      -16,      -46,        4,         31    \ Face 
+ FACE        0,      -27,        5,         31    \ Face 
+ FACE       16,      -46,        4,         31    \ Face 
+ FACE       16,       46,        4,         31    \ Face 
+ FACE        0,        0,     -160,         30    \ Face 
 
 \ DOD  = 34 = Dodecahedron space station
 
@@ -2508,30 +2527,31 @@ INCLUDE "library/common/main/variable_ship_thargon.asm"
  EQUB %00000000         \ Laser power              = 0
                         \ Missiles                 = 0
 
- EQUB &00, &96, &C4, &1F, &01, &55
- EQUB &8F, &2E, &C4, &1F, &01, &22
- EQUB &58, &79, &C4, &5F, &02, &33
- EQUB &58, &79, &C4, &DF, &03, &44
- EQUB &8F, &2E, &C4, &9F, &04, &55
- EQUB &00, &F3, &2E, &1F, &15, &66
- EQUB &E7, &4B, &2E, &1F, &12, &77
- EQUB &8F, &C4, &2E, &5F, &23, &88
- EQUB &8F, &C4, &2E, &DF, &34, &99
- EQUB &E7, &4B, &2E, &9F, &45, &AA
- EQUB &8F, &C4, &2E, &3F, &16, &77
- EQUB &E7, &4B, &2E, &7F, &27, &88
- EQUB &00, &F3, &2E, &7F, &38, &99
- EQUB &E7, &4B, &2E, &FF, &49, &AA
- EQUB &8F, &C4, &2E, &BF, &56, &AA
- EQUB &58, &79, &C4, &3F, &67, &BB
- EQUB &8F, &2E, &C4, &7F, &78, &BB
- EQUB &00, &96, &C4, &7F, &89, &BB
- EQUB &8F, &2E, &C4, &FF, &9A, &BB
- EQUB &58, &79, &C4, &BF, &6A, &BB
- EQUB &10, &20, &C4, &9E, &00, &00
- EQUB &10, &20, &C4, &DE, &00, &00
- EQUB &10, &20, &C4, &17, &00, &00
- EQUB &10, &20, &C4, &57, &00, &00
+\VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
+ VERTEX    0,  150,  196,     1,      0,    5,     5,         31    \ Vertex 
+ VERTEX  143,   46,  196,     1,      0,    2,     2,         31    \ Vertex 
+ VERTEX   88, -121,  196,     2,      0,    3,     3,         31    \ Vertex 
+ VERTEX  -88, -121,  196,     3,      0,    4,     4,         31    \ Vertex 
+ VERTEX -143,   46,  196,     4,      0,    5,     5,         31    \ Vertex 
+ VERTEX    0,  243,   46,     5,      1,    6,     6,         31    \ Vertex 
+ VERTEX  231,   75,   46,     2,      1,    7,     7,         31    \ Vertex 
+ VERTEX  143, -196,   46,     3,      2,    8,     8,         31    \ Vertex 
+ VERTEX -143, -196,   46,     4,      3,    9,     9,         31    \ Vertex 
+ VERTEX -231,   75,   46,     5,      4,   10,    10,         31    \ Vertex 
+ VERTEX  143,  196,  -46,     6,      1,    7,     7,         31    \ Vertex 
+ VERTEX  231,  -75,  -46,     7,      2,    8,     8,         31    \ Vertex 
+ VERTEX    0, -243,  -46,     8,      3,    9,     9,         31    \ Vertex 
+ VERTEX -231,  -75,  -46,     9,      4,   10,    10,         31    \ Vertex 
+ VERTEX -143,  196,  -46,     6,      5,   10,    10,         31    \ Vertex 
+ VERTEX   88,  121, -196,     7,      6,   11,    11,         31    \ Vertex 
+ VERTEX  143,  -46, -196,     8,      7,   11,    11,         31    \ Vertex 
+ VERTEX    0, -150, -196,     9,      8,   11,    11,         31    \ Vertex 
+ VERTEX -143,  -46, -196,    10,      9,   11,    11,         31    \ Vertex 
+ VERTEX  -88,  121, -196,    10,      6,   11,    11,         31    \ Vertex 
+ VERTEX  -16,   32,  196,     0,      0,    0,     0,         30    \ Vertex 
+ VERTEX  -16,  -32,  196,     0,      0,    0,     0,         30    \ Vertex 
+ VERTEX   16,   32,  196,     0,      0,    0,     0,         23    \ Vertex 
+ VERTEX   16,  -32,  196,     0,      0,    0,     0,         23    \ Vertex 
 
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     1,     0,         31    \ Edge 
@@ -2570,18 +2590,18 @@ INCLUDE "library/common/main/variable_ship_thargon.asm"
  EDGE      22,      20,     0,     0,         20    \ Edge 
 
 \FACE normal_x, normal_y, normal_z, visibility
- FACE        0,        0,      196,        31    \ Face 
- FACE      103,      142,       88,        31    \ Face 
- FACE      169,      -55,       89,        31    \ Face 
- FACE        0,     -176,       88,        31    \ Face 
- FACE     -169,      -55,       89,        31    \ Face 
- FACE     -103,      142,       88,        31    \ Face 
- FACE        0,      176,      -88,        31    \ Face 
- FACE      169,       55,      -89,        31    \ Face 
- FACE      103,     -142,      -88,        31    \ Face 
- FACE     -103,     -142,      -88,        31    \ Face 
- FACE     -169,       55,      -89,        31    \ Face 
- FACE        0,        0,     -196,        31    \ Face 
+ FACE        0,        0,      196,         31    \ Face 
+ FACE      103,      142,       88,         31    \ Face 
+ FACE      169,      -55,       89,         31    \ Face 
+ FACE        0,     -176,       88,         31    \ Face 
+ FACE     -169,      -55,       89,         31    \ Face 
+ FACE     -103,      142,       88,         31    \ Face 
+ FACE        0,      176,      -88,         31    \ Face 
+ FACE      169,       55,      -89,         31    \ Face 
+ FACE      103,     -142,      -88,         31    \ Face 
+ FACE     -103,     -142,      -88,         31    \ Face 
+ FACE     -169,       55,      -89,         31    \ Face 
+ FACE        0,        0,     -196,         31    \ Face 
 
 \ ?
 

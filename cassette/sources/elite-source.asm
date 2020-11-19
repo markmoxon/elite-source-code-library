@@ -759,8 +759,6 @@ INCLUDE "library/cassette/main/variable_checksum0.asm"
 CODE_SHIPS% = P%
 LOAD_SHIPS% = LOAD% + P% - CODE%
 
-_IS_PIRATE = FALSE
-
 INCLUDE "library/common/main/macro_vertex.asm"
 INCLUDE "library/common/main/macro_edge.asm"
 INCLUDE "library/common/main/macro_face.asm"

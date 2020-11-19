@@ -5,6 +5,11 @@
 \   Category: Drawing ships
 \    Summary: Ship blueprint for a Thargon
 \
+\ ------------------------------------------------------------------------------
+\
+\ The ship blueprint for the Thargon reuses the edges data from the cargo
+\ canister, so the edges data offset is negative.
+\
 \ ******************************************************************************
 
 .SHIP_THARGON
@@ -16,7 +21,7 @@ ELIF _6502SP_VERSION
 ENDIF
  EQUW 40 * 40           \ Targetable area          = 40 * 40
 IF _CASSETTE_VERSION
- EQUB &A8               \ Edges data offset (low)  = &FFA8 = -88 (canister data)
+ EQUB &A8               \ Edges data offset (low)  = &FFA8 = -88 (canister)
 ELIF _6502SP_VERSION
  EQUB &E6               \ Edges data offset (low)  = &E7E6 = -6170 (canister)
 ENDIF
@@ -36,7 +41,7 @@ ENDIF
  EQUB 20                \ Max. energy              = 20
  EQUB 30                \ Max. speed               = 30
 IF _CASSETTE_VERSION
- EQUB &FF               \ Edges data offset (high) = &FFA8 = -88 (canister data)
+ EQUB &FF               \ Edges data offset (high) = &FFA8 = -88 (canister)
 ELIF _6502SP_VERSION
  EQUB &E7               \ Edges data offset (high) = &E7E6 = -6170 (canister)
 ENDIF

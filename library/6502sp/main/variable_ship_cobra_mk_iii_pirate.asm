@@ -1,13 +1,13 @@
 \ ******************************************************************************
 \
-\       Name: SHIP_COBRA_3_P
+\       Name: SHIP_COBRA_MK_3_P
 \       Type: Variable
 \   Category: Drawing ships
 \    Summary: Ship blueprint for a Cobra Mk III (pirate)
 \
 \ ******************************************************************************
 
-.SHIP_COBRA_3_P
+.SHIP_COBRA_MK_3_P
 
  EQUB 1                 \ Max. canisters on demise = 1
  EQUW 95 * 95           \ Targetable area          = 95 * 95

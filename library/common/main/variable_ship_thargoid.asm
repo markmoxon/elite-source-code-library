@@ -81,7 +81,6 @@ ENDIF
  EDGE      13,      14,     6,     9,         31    \ Edge 22
  EDGE      14,      15,     7,     9,         31    \ Edge 23
  EDGE      16,      17,     9,     9,         30    \ Edge 24
-
  EDGE      18,      19,     9,     9,         30    \ Edge 25
 
 \FACE normal_x, normal_y, normal_z, visibility

@@ -20,7 +20,7 @@ build:
 	$(BEEBASM) -i 6502sp/sources/elite-loader1.asm -v >> 6502sp/output/compile.txt
 	$(BEEBASM) -i 6502sp/sources/elite-loader2.asm -v >> 6502sp/output/compile.txt
 	$(PYTHON) 6502sp/sources/elite-checksum.py -u
-	$(BEEBASM) -i 6502sp/sources/elite-disc.asm -do elite-6502sp.ssd -opt 3
+	$(BEEBASM) -i 6502sp/sources/elite-disc.asm -do elite-6502sp.ssd -boot ELITE
 
 .PHONY:encrypt
 encrypt:
@@ -41,7 +41,7 @@ encrypt:
 	$(BEEBASM) -i 6502sp/sources/elite-loader1.asm -v >> 6502sp/output/compile.txt
 	$(BEEBASM) -i 6502sp/sources/elite-loader2.asm -v >> 6502sp/output/compile.txt
 	$(PYTHON) 6502sp/sources/elite-checksum.py
-	$(BEEBASM) -i 6502sp/sources/elite-disc.asm -do elite-6502sp.ssd -opt 3
+	$(BEEBASM) -i 6502sp/sources/elite-disc.asm -do elite-6502sp.ssd -boot ELITE
 
 .PHONY:verify
 verify:

@@ -28,29 +28,29 @@ ENDIF
 
 IF _CASSETTE_VERSION
 
-INCLUDE "library/common/main/workspace_variable_frin.asm"
-INCLUDE "library/common/main/workspace_variable_cabtmp.asm"
-INCLUDE "library/common/main/workspace_variable_many-sspr.asm"
-INCLUDE "library/common/main/workspace_variable_ecmp-de.asm"
-INCLUDE "library/common/main/workspace_variable_lsx-lso.asm"
-INCLUDE "library/common/main/workspace_variable_lsx2-lsy2.asm"
-INCLUDE "library/common/main/workspace_variable_sy-sxl.asm"
-INCLUDE "library/common/main/workspace_variable_xsav2-ysav2.asm"
-INCLUDE "library/common/main/workspace_variable_mch-energy.asm"
-INCLUDE "library/common/main/workspace_variable_lasx-lasy.asm"
-INCLUDE "library/common/main/workspace_variable_comx-tek.asm"
-INCLUDE "library/common/main/workspace_variable_slsp.asm"
-INCLUDE "library/common/main/workspace_variable_xx24-altit.asm"
-INCLUDE "library/common/main/workspace_variable_qq2-nostm.asm"
+INCLUDE "library/common/main/variable_frin.asm"
+INCLUDE "library/common/main/variable_cabtmp.asm"
+INCLUDE "library/common/main/variable_many-sspr.asm"
+INCLUDE "library/common/main/variable_ecmp-de.asm"
+INCLUDE "library/common/main/variable_lsx-lso.asm"
+INCLUDE "library/common/main/variable_lsx2-lsy2.asm"
+INCLUDE "library/common/main/variable_sy-sxl.asm"
+INCLUDE "library/common/main/variable_xsav2-ysav2.asm"
+INCLUDE "library/common/main/variable_mch-energy.asm"
+INCLUDE "library/common/main/variable_lasx-lasy.asm"
+INCLUDE "library/common/main/variable_comx-tek.asm"
+INCLUDE "library/common/main/variable_slsp.asm"
+INCLUDE "library/common/main/variable_xx24-altit.asm"
+INCLUDE "library/common/main/variable_qq2-nostm.asm"
 
 ELIF _6502SP_VERSION
 
-INCLUDE "library/common/main/workspace_variable_lsx-lso.asm"
-INCLUDE "library/common/main/workspace_variable_sx-sxl.asm"
-INCLUDE "library/common/main/workspace_variable_sy-sxl.asm"
-INCLUDE "library/common/main/workspace_variable_lasx-lasy.asm"
-INCLUDE "library/common/main/workspace_variable_xx24-altit.asm"
-INCLUDE "library/common/main/workspace_variable_swap.asm"
+INCLUDE "library/common/main/variable_lsx-lso.asm"
+INCLUDE "library/common/main/variable_sx-sxl.asm"
+INCLUDE "library/common/main/variable_sy-sxl.asm"
+INCLUDE "library/common/main/variable_lasx-lasy.asm"
+INCLUDE "library/common/main/variable_xx24-altit.asm"
+INCLUDE "library/common/main/variable_swap.asm"
 
 .XP
 

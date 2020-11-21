@@ -16,7 +16,7 @@
 
 IF _6502SP_VERSION
 
-INCLUDE "library/common/main/workspace_variable_cabtmp.asm"
+INCLUDE "library/common/main/variable_cabtmp.asm"
 
 ENDIF
 

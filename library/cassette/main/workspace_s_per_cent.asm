@@ -27,4 +27,4 @@
 
  EQUW BR1               \ BRKV is set to point here by elite-loader.asm
 
-INCLUDE "library/common/main/workspace_variable_comc-jstk.asm"
+INCLUDE "library/common/main/variable_comc-jstk.asm"

@@ -164,8 +164,11 @@ ORG CODE%
 LOAD_A% = LOAD%
 
 INCLUDE "library/6502sp/main/variable_mos.asm"
-INCLUDE "library/common/main/workspace_variable_comc-jstk.asm"
-INCLUDE "library/6502sp/main/workspace_variable_bstk-s1_per_cent.asm"
+INCLUDE "library/common/main/variable_comc-jstk.asm"
+INCLUDE "library/6502sp/main/variable_bstk.asm"
+INCLUDE "library/6502sp/main/variable_catf.asm"
+INCLUDE "library/6502sp/main/variable_zip.asm"
+INCLUDE "library/6502sp/main/variable_s1_per_cent.asm"
 INCLUDE "library/common/main/variable_na_per_cent.asm"
 INCLUDE "library/common/main/variable_chk2.asm"
 INCLUDE "library/common/main/variable_chk.asm"
@@ -213,7 +216,7 @@ INCLUDE "library/6502sp/main/subroutine_tkn2.asm"
 INCLUDE "library/common/main/variable_qq16.asm"
 INCLUDE "library/6502sp/main/variable_shpcol.asm"
 INCLUDE "library/6502sp/main/variable_scacol.asm"
-INCLUDE "library/common/main/workspace_variable_lsx2-lsy2.asm"
+INCLUDE "library/common/main/variable_lsx2-lsy2.asm"
 
 \ ******************************************************************************
 \
@@ -280,7 +283,7 @@ INCLUDE "library/common/main/variable_tens.asm"
 INCLUDE "library/common/main/subroutine_pr2.asm"
 INCLUDE "library/common/main/subroutine_tt11.asm"
 INCLUDE "library/common/main/subroutine_bprnt.asm"
-INCLUDE "library/6502sp/main/variable_dtw1-dtw8.asm"
+INCLUDE "library/6502sp/main/variable_dtw.asm"
 INCLUDE "library/6502sp/main/subroutine_feed.asm"
 INCLUDE "library/6502sp/main/subroutine_mt16.asm"
 INCLUDE "library/6502sp/main/subroutine_tt26.asm"
@@ -767,7 +770,10 @@ ELSE
  ALIGN &100
 ENDIF
 
-INCLUDE "library/6502sp/main/variable_log-antilogodd.asm"
+INCLUDE "library/6502sp/main/variable_log.asm"
+INCLUDE "library/6502sp/main/variable_logl.asm"
+INCLUDE "library/6502sp/main/variable_antilog.asm"
+INCLUDE "library/6502sp/main/variable_antilogodd.asm"
 INCLUDE "library/common/main/subroutine_shppt.asm"
 INCLUDE "library/common/main/subroutine_ll5.asm"
 INCLUDE "library/common/main/subroutine_ll28.asm"
@@ -843,7 +849,12 @@ INCLUDE "library/common/main/subroutine_tt66.asm"
 INCLUDE "library/common/main/subroutine_ttx66.asm"
 INCLUDE "library/common/main/subroutine_delay.asm"
 INCLUDE "library/6502sp/main/subroutine_clyns.asm"
-INCLUDE "library/6502sp/main/variable_scanpars-scany1.asm"
+INCLUDE "library/6502sp/main/variable_scanpars.asm"
+INCLUDE "library/6502sp/main/variable_scanflg.asm"
+INCLUDE "library/6502sp/main/variable_scanlen.asm"
+INCLUDE "library/6502sp/main/variable_scancol.asm"
+INCLUDE "library/6502sp/main/variable_scanx1.asm"
+INCLUDE "library/6502sp/main/variable_scany1.asm"
 INCLUDE "library/common/main/subroutine_scan.asm"
 INCLUDE "library/6502sp/main/subroutine_wscan.asm"
 

@@ -19,8 +19,8 @@ ORG &0300
 
  SKIP 0                 \ The start of the T% workspace
 
-INCLUDE "library/common/main/workspace_variable_tp-svc.asm"
-INCLUDE "library/common/main/workspace_variable_sx-sxl.asm"
+INCLUDE "library/common/main/variable_tp-svc.asm"
+INCLUDE "library/common/main/variable_sx-sxl.asm"
 
 PRINT "T% workspace from  ", ~T%, " to ", ~P%
 

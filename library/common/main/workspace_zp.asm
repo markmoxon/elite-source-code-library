@@ -181,7 +181,7 @@ ENDIF
 
 IF _6502SP_VERSION
 
-INCLUDE "library/common/main/workspace_variable_alp1-alp2.asm"
+INCLUDE "library/common/main/variable_alp1-alp2.asm"
 
 ENDIF
 
@@ -236,7 +236,7 @@ ENDIF
 
 IF _CASSETTE_VERSION
 
-INCLUDE "library/common/main/workspace_variable_kl.asm"
+INCLUDE "library/common/main/variable_kl.asm"
 
 ENDIF
 
@@ -360,7 +360,7 @@ ENDIF
 
 IF _CASSETTE_VERSION
 
-INCLUDE "library/common/main/workspace_variable_alp1-alp2.asm"
+INCLUDE "library/common/main/variable_alp1-alp2.asm"
 
 ENDIF
 
@@ -474,7 +474,7 @@ ENDIF
 
 IF _CASSETTE_VERSION
 
-INCLUDE "library/common/main/workspace_variable_jstx-jsty.asm"
+INCLUDE "library/common/main/variable_jstx-jsty.asm"
 
 ENDIF
 
@@ -521,7 +521,7 @@ ENDIF
 
 IF _CASSETTE_VERSION
 
-INCLUDE "library/common/main/workspace_variable_swap.asm"
+INCLUDE "library/common/main/variable_swap.asm"
 
 ENDIF
 

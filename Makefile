@@ -9,7 +9,7 @@ build:
 	$(BEEBASM) -i cassette/sources/elite-bcfs.asm -v >> cassette/output/compile.txt
 	$(BEEBASM) -i cassette/sources/elite-loader.asm -v >> cassette/output/compile.txt
 	$(PYTHON) cassette/sources/elite-checksum.py -u
-	$(BEEBASM) -i cassette/sources/elite-disc.asm -do elite-cassette.ssd -boot ELTdata
+	$(BEEBASM) -i cassette/sources/elite-disc.asm -do cassette/elite-cassette.ssd -boot ELTdata
 
 	echo _VERSION=3 > 6502sp/sources/elite-header.h.asm
 	echo _REMOVE_CHECKSUMS=TRUE >> 6502sp/sources/elite-header.h.asm
@@ -20,7 +20,7 @@ build:
 	$(BEEBASM) -i 6502sp/sources/elite-loader1.asm -v >> 6502sp/output/compile.txt
 	$(BEEBASM) -i 6502sp/sources/elite-loader2.asm -v >> 6502sp/output/compile.txt
 	$(PYTHON) 6502sp/sources/elite-checksum.py -u
-	$(BEEBASM) -i 6502sp/sources/elite-disc.asm -do elite-6502sp.ssd -boot ELITE
+	$(BEEBASM) -i 6502sp/sources/elite-disc.asm -do 6502sp/elite-6502sp.ssd -boot ELITE
 
 .PHONY:encrypt
 encrypt:
@@ -30,7 +30,7 @@ encrypt:
 	$(BEEBASM) -i cassette/sources/elite-bcfs.asm -v >> cassette/output/compile.txt
 	$(BEEBASM) -i cassette/sources/elite-loader.asm -v >> cassette/output/compile.txt
 	$(PYTHON) cassette/sources/elite-checksum.py
-	$(BEEBASM) -i cassette/sources/elite-disc.asm -do elite-cassette.ssd -boot ELTdata
+	$(BEEBASM) -i cassette/sources/elite-disc.asm -do cassette/elite-cassette.ssd -boot ELTdata
 
 	echo _VERSION=3 > 6502sp/sources/elite-header.h.asm
 	echo _REMOVE_CHECKSUMS=FALSE >> 6502sp/sources/elite-header.h.asm
@@ -41,7 +41,7 @@ encrypt:
 	$(BEEBASM) -i 6502sp/sources/elite-loader1.asm -v >> 6502sp/output/compile.txt
 	$(BEEBASM) -i 6502sp/sources/elite-loader2.asm -v >> 6502sp/output/compile.txt
 	$(PYTHON) 6502sp/sources/elite-checksum.py
-	$(BEEBASM) -i 6502sp/sources/elite-disc.asm -do elite-6502sp.ssd -boot ELITE
+	$(BEEBASM) -i 6502sp/sources/elite-disc.asm -do 6502sp/elite-6502sp.ssd -boot ELITE
 
 .PHONY:verify
 verify:

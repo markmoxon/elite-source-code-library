@@ -181,7 +181,8 @@ ENDIF
 
 IF _6502SP_VERSION
 
-INCLUDE "library/common/main/variable_alp1-alp2.asm"
+INCLUDE "library/common/main/variable_alp1.asm"
+INCLUDE "library/common/main/variable_alp2.asm"
 
 ENDIF
 
@@ -237,6 +238,21 @@ ENDIF
 IF _CASSETTE_VERSION
 
 INCLUDE "library/common/main/variable_kl.asm"
+INCLUDE "library/common/main/variable_ky1.asm"
+INCLUDE "library/common/main/variable_ky2.asm"
+INCLUDE "library/common/main/variable_ky3.asm"
+INCLUDE "library/common/main/variable_ky4.asm"
+INCLUDE "library/common/main/variable_ky5.asm"
+INCLUDE "library/common/main/variable_ky6.asm"
+INCLUDE "library/common/main/variable_ky7.asm"
+INCLUDE "library/common/main/variable_ky12.asm"
+INCLUDE "library/common/main/variable_ky13.asm"
+INCLUDE "library/common/main/variable_ky14.asm"
+INCLUDE "library/common/main/variable_ky15.asm"
+INCLUDE "library/common/main/variable_ky16.asm"
+INCLUDE "library/common/main/variable_ky17.asm"
+INCLUDE "library/common/main/variable_ky18.asm"
+INCLUDE "library/common/main/variable_ky19.asm"
 
 ENDIF
 
@@ -360,7 +376,8 @@ ENDIF
 
 IF _CASSETTE_VERSION
 
-INCLUDE "library/common/main/variable_alp1-alp2.asm"
+INCLUDE "library/common/main/variable_alp1.asm"
+INCLUDE "library/common/main/variable_alp2.asm"
 
 ENDIF
 
@@ -474,7 +491,8 @@ ENDIF
 
 IF _CASSETTE_VERSION
 
-INCLUDE "library/common/main/variable_jstx-jsty.asm"
+INCLUDE "library/common/main/variable_jstx.asm"
+INCLUDE "library/common/main/variable_jsty.asm"
 
 ENDIF
 

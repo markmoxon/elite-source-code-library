@@ -1,15 +1,8 @@
 \ ******************************************************************************
-\       Name: PBUF
+\       Name: DTW8
 \ ******************************************************************************
 
-.PBUF
+.DTW8
 
- EQUB 0
- EQUB 0
-
-IF _MATCH_EXTRACTED_BINARIES
- INCBIN "6502sp/extracted/workspaces/ELTB-PBUF.bin"
-ELSE
- SKIP &100
-ENDIF
+ EQUB &FF
 

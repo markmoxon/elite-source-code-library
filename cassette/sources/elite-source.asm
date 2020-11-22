@@ -103,7 +103,7 @@ f9 = &77                \ Internal key number for red key f9 (Inventory)
 
 INCLUDE "library/common/main/workspace_zp.asm"
 INCLUDE "library/common/main/workspace_xx3.asm"
-INCLUDE "library/common/main/workspace_t_per_cent.asm"
+INCLUDE "library/cassette/main/workspace_t_per_cent.asm"
 
 \ ******************************************************************************
 \

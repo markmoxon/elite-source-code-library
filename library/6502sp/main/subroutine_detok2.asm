@@ -66,7 +66,7 @@
  LDA V
  PHA
  LDA V+1
-PHA  \Magic
+ PHA  \Magic
  TXA
  ASL A
  TAX

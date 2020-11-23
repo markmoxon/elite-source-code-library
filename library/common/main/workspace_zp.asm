@@ -61,6 +61,9 @@ INCLUDE "library/common/main/variable_x1.asm"
 INCLUDE "library/common/main/variable_y1.asm"
 INCLUDE "library/common/main/variable_x2.asm"
 INCLUDE "library/common/main/variable_y2.asm"
+
+ SKIP 2                 \ The last 2 bytes of the XX15 block
+
 INCLUDE "library/common/main/variable_xx12.asm"
 INCLUDE "library/common/main/variable_k.asm"
 

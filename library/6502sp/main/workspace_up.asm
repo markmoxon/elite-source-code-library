@@ -2,8 +2,9 @@
 \
 \       Name: UP
 \       Type: Workspace
-\    Address: &0800
+\    Address: &0800 to &0974
 \   Category: Workspaces
+\    Summary: Ship slots, variables
 \
 \ ******************************************************************************
 

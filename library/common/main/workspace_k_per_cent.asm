@@ -3,9 +3,9 @@
 \       Name: K%
 \       Type: Workspace
 IF _CASSETTE_VERSION
-\    Address: &0900 to &0D40
+\    Address: &0900 to &0D3F
 ELIF _6502SP_VERSION
-\    Address: &8200
+\    Address: &8200 to &85FF
 ENDIF
 \   Category: Workspaces
 \    Summary: Ship data blocks and ship line heaps

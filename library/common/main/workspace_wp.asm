@@ -3,12 +3,14 @@
 \       Name: WP
 \       Type: Workspace
 IF _CASSETTE_VERSION
-\    Address: &0D40 to &0F34
-ELIF _6502SP_VERSION
-\    Address: &0D00
-ENDIF
+\    Address: &0D40 to &0F33
 \   Category: Workspaces
 \    Summary: Ship slots, variables
+ELIF _6502SP_VERSION
+\    Address: &0D00 to &0E3B
+\   Category: Workspaces
+\    Summary: Variables
+ENDIF
 \
 \ ******************************************************************************
 

@@ -2,7 +2,7 @@
 \
 \       Name: LP
 \       Type: Workspace
-\    Address: &8600
+\    Address: &8600 to &91FF
 \   Category: Workspaces
 \
 \ ******************************************************************************

@@ -19,6 +19,12 @@
 \ Note that KYTB actually points to the byte before the start of the table, so
 \ the offset of the first key value is 1 (i.e. KYTB+1), not 0.
 \
+IF _6502SP_VERSION
+\ Other entry points:
+\
+\   KYTB                Contains an RTS
+\
+ENDIF
 \ ******************************************************************************
 
 IF _CASSETTE_VERSION
@@ -33,7 +39,8 @@ ENDIF
 
 IF _6502SP_VERSION
 
- RTS
+ RTS                    \ Return from the subroutine (used as an entry point and
+                        \ a fall-through from above)
 
 ENDIF
 

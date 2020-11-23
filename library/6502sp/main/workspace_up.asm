@@ -11,11 +11,15 @@ ORG &0800
 
 .UP
 
- SKIP 0
+ SKIP 0                 \ The start of the UP workspace
 
-\.QQ16 \Repeated below
+\.QQ16
 
- SKIP 65
+ SKIP 65                \ This QQ16 label is present in the original source, but
+                        \ it is overridden by the QQ16 label in the Elite A
+                        \ section, so this declaration has no effect. BeebAsm
+                        \ does not allow labels to be defined twice, so this one
+                        \ is commented out
 
 INCLUDE "library/common/main/variable_kl.asm"
 INCLUDE "library/common/main/variable_ky1.asm"
@@ -37,15 +41,8 @@ INCLUDE "library/6502sp/main/variable_ky20.asm"
 INCLUDE "library/common/main/variable_frin.asm"
 INCLUDE "library/common/main/variable_many.asm"
 INCLUDE "library/common/main/variable_sspr.asm"
-
-.JUNK
-
- SKIP 1
-
-.auto
-
- SKIP 1
-
+INCLUDE "library/6502sp/io/variable_junk.asm"
+INCLUDE "library/6502sp/io/variable_auto.asm"
 INCLUDE "library/common/main/variable_ecmp.asm"
 INCLUDE "library/common/main/variable_mj.asm"
 INCLUDE "library/common/main/variable_cabtmp.asm"
@@ -62,11 +59,7 @@ INCLUDE "library/common/main/variable_jstx.asm"
 INCLUDE "library/common/main/variable_jsty.asm"
 INCLUDE "library/common/main/variable_xsav2.asm"
 INCLUDE "library/common/main/variable_ysav2.asm"
-
-.NAME
-
- SKIP 8
-
+INCLUDE "library/6502sp/io/variable_name.asm"
 INCLUDE "library/common/main/variable_tp.asm"
 INCLUDE "library/common/main/variable_qq0.asm"
 INCLUDE "library/common/main/variable_qq1.asm"
@@ -121,7 +114,4 @@ INCLUDE "library/common/main/variable_qq8.asm"
 INCLUDE "library/common/main/variable_qq9.asm"
 INCLUDE "library/common/main/variable_qq10.asm"
 INCLUDE "library/common/main/variable_nostm.asm"
-
-.BUF
-
- SKIP 100
+INCLUDE "library/6502sp/io/variable_buf.asm"

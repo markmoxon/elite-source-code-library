@@ -96,26 +96,11 @@ INCLUDE "library/common/main/variable_lasy.asm"
 INCLUDE "library/common/main/variable_xx24.asm"
 INCLUDE "library/common/main/variable_altit.asm"
 INCLUDE "library/common/main/variable_swap.asm"
-
-.XP
-
- SKIP 1
-
-.YP
-
- SKIP 1
-
-.YS
-
- SKIP 1
-
-.BALI
-
- SKIP 1
-
-.UPO
-
- SKIP 1
+INCLUDE "library/6502sp/main/variable_xp.asm"
+INCLUDE "library/6502sp/main/variable_yp.asm"
+INCLUDE "library/6502sp/main/variable_ys.asm"
+INCLUDE "library/6502sp/main/variable_bali.asm"
+INCLUDE "library/6502sp/main/variable_upo.asm"
 
 ENDIF
 

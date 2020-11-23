@@ -2,45 +2,18 @@
 \       Name: ZP
 \ ******************************************************************************
 
-ORG &80
+ORG &0080
 
 .ZP
 
- SKIP 0
+ SKIP 0                 \ The start of the zero page workspace
 
-.P
-
- SKIP 1
-
-.Q
-
- SKIP 1
-
-.R
-
- SKIP 1
-
-.S
-
- SKIP 1
-
-.T
-
- SKIP 1
-
-.SWAP
-
- SKIP 1
-
-.T1
-
- SKIP 1
-
-.COL
-
- SKIP 1
-
-.OSSC
-
- SKIP 2
-
+INCLUDE "library/6502sp/io/variable_p.asm"
+INCLUDE "library/common/main/variable_q.asm"
+INCLUDE "library/common/main/variable_r.asm"
+INCLUDE "library/common/main/variable_s.asm"
+INCLUDE "library/common/main/variable_t.asm"
+INCLUDE "library/common/main/variable_swap.asm"
+INCLUDE "library/common/main/variable_t1.asm"
+INCLUDE "library/common/main/variable_col.asm"
+INCLUDE "library/6502sp/io/variable_ossc.asm"

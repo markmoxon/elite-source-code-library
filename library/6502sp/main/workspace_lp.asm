@@ -11,53 +11,17 @@ ORG &8600
 
 .LP
 
- SKIP 0
+ SKIP 0                 \ The start of the LP workspace
 
-.X1TB
-
- SKIP &100
-
-.Y1TB
-
- SKIP &100
-
-.X2TB
-
- SKIP &100
-
-.Y2TB
-
- SKIP &100
-
-.X1UB
-
- SKIP &100
-
-.Y1UB
-
- SKIP &100
-
-.X2UB
-
- SKIP &100
-
-.Y2UB
-
- SKIP &100
-
-.X1VB
-
- SKIP &100
-
-.Y1VB
-
- SKIP &100
-
-.X2VB
-
- SKIP &100
-
-.Y2VB
-
- SKIP &100
-
+INCLUDE "library/6502sp/main/variable_x1tb.asm"
+INCLUDE "library/6502sp/main/variable_y1tb.asm"
+INCLUDE "library/6502sp/main/variable_x2tb.asm"
+INCLUDE "library/6502sp/main/variable_y2tb.asm"
+INCLUDE "library/6502sp/main/variable_x1ub.asm"
+INCLUDE "library/6502sp/main/variable_y1ub.asm"
+INCLUDE "library/6502sp/main/variable_x2ub.asm"
+INCLUDE "library/6502sp/main/variable_y2ub.asm"
+INCLUDE "library/6502sp/main/variable_x1vb.asm"
+INCLUDE "library/6502sp/main/variable_y1vb.asm"
+INCLUDE "library/6502sp/main/variable_x2vb.asm"
+INCLUDE "library/6502sp/main/variable_y2vb.asm"

@@ -1,4 +1,0 @@
-.GNTMP
-
- BRK
-

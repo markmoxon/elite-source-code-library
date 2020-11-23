@@ -83,6 +83,9 @@ ORG F%
 
 PRINT "words = ", ~P%
 INCBIN "6502sp/extracted/WORDS.bin"
+INCLUDE "library/common/main/variable_sne.asm"
+INCLUDE "library/common/main/variable_act.asm"
+
 
 ORG F% + &400
 

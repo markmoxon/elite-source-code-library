@@ -29,13 +29,10 @@ C% = &1000
 W% = &9200
 L% = C%
 Z = 0
-SNE = &7C0
-ACT = &7E0
 NTY = 34
 D% = &D000
 E% = D%+2*NTY
 LS% = D%-1
-QQ18 = &400
 BRKV = &202
 
 Q% = _ENABLE_MAX_COMMANDER
@@ -140,6 +137,52 @@ D = 80
 
 INCLUDE "library/common/main/workspace_zp.asm"
 INCLUDE "library/common/main/workspace_xx3.asm"
+
+\ ******************************************************************************
+\
+\ ELITE RECURSIVE TEXT TOKEN FILE
+\
+\ Produces the binary file WORDS.bin that gets loaded by elite-loader.asm.
+\
+\ The recursive token table is loaded at &81B0 and is moved down to &0400 as
+\ part of elite-loader2.asm. The table binary also includes the sine and arctan
+\ tables, so the three parts end up as follows:
+\
+\   * Recursive token table:    QQ18 = &0400 to &07C0
+\   * Sine lookup table:        SNE  = &07C0 to &07DF
+\   * Arctan lookup table:      ACT  = &07E0 to &07FF
+\
+\ ******************************************************************************
+
+CODE_WORDS% = &0400
+LOAD_WORDS% = &81B0
+
+ORG CODE_WORDS%
+
+INCLUDE "library/common/main/macro_char.asm"
+INCLUDE "library/common/main/macro_twok.asm"
+INCLUDE "library/common/main/macro_ctrl.asm"
+INCLUDE "library/common/main/macro_rtok.asm"
+INCLUDE "library/common/main/variable_qq18.asm"
+INCLUDE "library/common/main/variable_sne.asm"
+INCLUDE "library/common/main/variable_act.asm"
+
+\ ******************************************************************************
+\
+\ Save output/WORDS9.bin
+\
+\ ******************************************************************************
+
+PRINT "WORDS"
+PRINT "Assembled at ", ~CODE_WORDS%
+PRINT "Ends at ", ~P%
+PRINT "Code size is ", ~(P% - CODE_WORDS%)
+PRINT "Execute at ", ~LOAD%
+PRINT "Reload at ", ~LOAD_WORDS%
+
+PRINT "S.WORDS ",~CODE%," ",~P%," ",~LOAD%," ",~LOAD_WORDS%
+SAVE "6502sp/output/WORDS.bin", CODE_WORDS%, P%, LOAD%
+
 INCLUDE "library/6502sp/main/workspace_up.asm"
 INCLUDE "library/common/main/workspace_wp.asm"
 INCLUDE "library/common/main/workspace_k_per_cent.asm"
@@ -945,7 +988,6 @@ CODE_J% = P%
 LOAD_J% = LOAD% + P% - CODE%
 
 INCLUDE "library/6502sp/main/macro_tokn.asm"
-INCLUDE "library/6502sp/main/macro_char.asm"
 INCLUDE "library/6502sp/main/variable_tkn1.asm"
 INCLUDE "library/6502sp/main/variable_rupla.asm"
 INCLUDE "library/6502sp/main/variable_rugal.asm"

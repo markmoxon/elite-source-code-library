@@ -39,6 +39,8 @@
  CTRL 3
  EQUB 0
 
+IF _CASSETTE_VERSION
+
  TWOK 'I', 'N'          \ Token 4:      "INVENTORY{crlf}"
  TWOK 'V', 'E'          \ Encoded as:   "<140><150>NT<153>Y{13}"
  CHAR 'N'
@@ -47,6 +49,19 @@
  CHAR 'Y'
  CTRL 13
  EQUB 0
+
+ELIF _6502SP_VERSION
+
+ TWOK 'I', 'N'          \ Token 4:      "INVENTORY{crlf}"
+ TWOK 'V', 'E'          \ Encoded as:   "<140><150>NT<153>Y{12}"
+ CHAR 'N'
+ CHAR 'T'
+ TWOK 'O', 'R'
+ CHAR 'Y'
+ CTRL 12
+ EQUB 0
+
+ENDIF
 
  CHAR 'S'               \ Token 5:      "SYSTEM"
  CHAR 'Y'               \ Encoded as:   "SYS<156>M"
@@ -214,6 +229,8 @@
  CHAR 'P'
  EQUB 0
 
+IF _CASSETTE_VERSION
+
  CHAR 'P'               \ Token 26:     "PRODUCT"
  CHAR 'R'               \ Encoded as:   "PRODUCT"
  CHAR 'O'
@@ -222,6 +239,18 @@
  CHAR 'C'
  CHAR 'T'
  EQUB 0
+
+ELIF _6502SP_VERSION
+
+ CHAR 'P'               \ Token 26:     "PRODUCT"
+ RTOK 94                \ Encoded as:   "P[94]]DUCT"
+ CHAR 'D'
+ CHAR 'U'
+ CHAR 'C'
+ CHAR 'T'
+ EQUB 0
+
+ENDIF
 
  CHAR ' '               \ Token 27:     " LASER"
  TWOK 'L', 'A'          \ Encoded as:   " <149>S<144>"
@@ -278,6 +307,8 @@
  TWOK 'O', 'N'
  EQUB 0
 
+IF _CASSETTE_VERSION
+
  CHAR 'G'               \ Token 33:     "GROSS PRODUCTIVITY"
  CHAR 'R'               \ Encoded as:   "GROSS [26]IVITY"
  CHAR 'O'
@@ -291,6 +322,23 @@
  CHAR 'T'
  CHAR 'Y'
  EQUB 0
+
+ELIF _6502SP_VERSION
+
+ CHAR 'G'               \ Token 33:     "GROSS PRODUCTIVITY"
+ RTOK 94                \ Encoded as:   "G[94]SS [26]IVITY"
+ CHAR 'S'
+ CHAR 'S'
+ CHAR ' '
+ RTOK 26
+ CHAR 'I'
+ CHAR 'V'
+ CHAR 'I'
+ CHAR 'T'
+ CHAR 'Y'
+ EQUB 0
+
+ENDIF
 
  CHAR 'E'               \ Token 34:     "ECONOMY"
  CHAR 'C'               \ Encoded as:   "EC<159>OMY"
@@ -328,12 +376,25 @@
  CHAR 'H'
  EQUB 0
 
+IF _CASSETTE_VERSION
+
  CHAR ' '               \ Token 38:     " BILLION"
  TWOK 'B', 'I'          \ Encoded as:   " <134>[118]I<159>"
  RTOK 118
  CHAR 'I'
  TWOK 'O', 'N'
  EQUB 0
+
+ELIF _6502SP_VERSION
+
+ CHAR ' '               \ Token 38:     " BILLION"
+ TWOK 'B', 'I'          \ Encoded as:   " <134>[129]I<159>"
+ RTOK 129
+ CHAR 'I'
+ TWOK 'O', 'N'
+ EQUB 0
+
+ENDIF
 
  RTOK 122               \ Token 39:     "GALACTIC CHART{galaxy number
  RTOK 1                 \                right-aligned to width 3}"
@@ -375,10 +436,21 @@
  CHAR ' '
  EQUB 0
 
+IF _CASSETTE_VERSION
+
  CHAR 'S'               \ Token 45:     "SELL"
  CHAR 'E'               \ Encoded as:   "SE[118]"
  RTOK 118
  EQUB 0
+
+ELIF _6502SP_VERSION
+
+ CHAR 'S'               \ Token 45:     "SELL"
+ CHAR 'E'               \ Encoded as:   "SE[129]"
+ RTOK 129
+ EQUB 0
+
+ENDIF
 
  CHAR ' '               \ Token 46:     " CARGO{switch to sentence case}"
  CHAR 'C'               \ Encoded as:   " C<138>GO{6}"
@@ -466,11 +538,25 @@
  CHAR 'Y'
  EQUB 0
 
+IF _CASSETTE_VERSION
+
  RTOK 117               \ Token 57:     "ALLOYS"
  CHAR 'O'               \ Encoded as:   "[117]OYS"
  CHAR 'Y'
  CHAR 'S'
  EQUB 0
+
+ELIF _6502SP_VERSION
+
+ CHAR 'A'               \ Token 57:     "ALLOYS"
+ CHAR 'L'               \ Encoded as:   "ALLOYS"
+ CHAR 'L'
+ CHAR 'O'
+ CHAR 'Y'
+ CHAR 'S'
+ EQUB 0
+
+ENDIF
 
  CHAR 'F'               \ Token 58:     "FIREARMS"
  CHAR 'I'               \ Encoded as:   "FI<142><138>MS"
@@ -523,6 +609,8 @@
  CHAR 'S'
  EQUB 0
 
+IF _CASSETTE_VERSION
+
  CHAR '('               \ Token 65:     "(Y/N)?"
  CHAR 'Y'               \ Encoded as:   "(Y/N)?"
  CHAR '/'
@@ -530,6 +618,18 @@
  CHAR ')'
  CHAR '?'
  EQUB 0
+
+ELIF _6502SP_VERSION
+
+ CTRL 12                \ Token 65:     "{crlf}10{cash right-aligned to width 9}
+ CHAR '1'               \                 CR5{cash right-aligned to width 9} CR"
+ CHAR '0'               \ Encoded as:   "{12}10{0}5{0}"
+ CTRL 0
+ CHAR '5'
+ CTRL 0
+ EQUB 0
+
+ENDIF
 
  CHAR ' '               \ Token 66:     " CR"
  CHAR 'C'               \ Encoded as:   " CR"
@@ -547,10 +647,21 @@
  TWOK 'C', 'E'
  EQUB 0
 
+IF _CASSETTE_VERSION
+
  CHAR 'S'               \ Token 69:     "SMALL"
  TWOK 'M', 'A'          \ Encoded as:   "S<139>[118]"
  RTOK 118
  EQUB 0
+
+ELIF _6502SP_VERSION
+
+ CHAR 'S'               \ Token 69:     "SMALL"
+ TWOK 'M', 'A'          \ Encoded as:   "S<139>[129]"
+ RTOK 129
+ EQUB 0
+
+ENDIF
 
  CHAR 'G'               \ Token 70:     "GREEN"
  TWOK 'R', 'E'          \ Encoded as:   "G<142><146>"
@@ -561,12 +672,25 @@
  TWOK 'E', 'D'          \ Encoded as:   "R<152>"
  EQUB 0
 
+IF _CASSETTE_VERSION
+
  CHAR 'Y'               \ Token 72:     "YELLOW"
  CHAR 'E'               \ Encoded as:   "YE[118]OW"
  RTOK 118
  CHAR 'O'
  CHAR 'W'
  EQUB 0
+
+ELIF _6502SP_VERSION
+
+ CHAR 'Y'               \ Token 72:     "YELLOW"
+ CHAR 'E'               \ Encoded as:   "YE[129]OW"
+ RTOK 129
+ CHAR 'O'
+ CHAR 'W'
+ EQUB 0
+
+ENDIF
 
  CHAR 'B'               \ Token 73:     "BLUE"
  CHAR 'L'               \ Encoded as:   "BLUE"
@@ -621,6 +745,8 @@
  CHAR 'Y'
  EQUB 0
 
+IF _CASSETTE_VERSION
+
  CHAR 'R'               \ Token 82:     "RODENT"
  CHAR 'O'               \ Encoded as:   "ROD<146>T"
  CHAR 'D'
@@ -633,6 +759,21 @@
  CHAR 'O'
  CHAR 'G'
  EQUB 0
+
+ELIF _6502SP_VERSION
+
+ RTOK 94                \ Token 82:     "RODENT"
+ CHAR 'D'               \ Encoded as:   "[94]D<146>T"
+ TWOK 'E', 'N'
+ CHAR 'T'
+ EQUB 0
+
+ CHAR 'F'               \ Token 83:     "FROG"
+ RTOK 94                \ Encoded as:   "F[94]G"
+ CHAR 'G'
+ EQUB 0
+
+ENDIF
 
  CHAR 'L'               \ Token 84:     "LIZARD"
  CHAR 'I'               \ Encoded as:   "LI<132>RD"
@@ -694,6 +835,8 @@
  TWOK 'E', 'R'
  EQUB 0
 
+IF _CASSETTE_VERSION
+
  CHAR ' '               \ Token 93:     " DESTROYED"
  CHAR 'D'               \ Encoded as:   " D<137>TROY<152>"
  TWOK 'E', 'S'
@@ -745,6 +888,47 @@
  CTRL 13
  CTRL 10
  EQUB 0
+
+ELIF _6502SP_VERSION
+
+ CHAR ' '               \ Token 93:     " DESTROYED"
+ CHAR 'D'               \ Encoded as:   " D<137>T[94]Y<152>"
+ TWOK 'E', 'S'
+ CHAR 'T'
+ RTOK 94
+ CHAR 'Y'
+ TWOK 'E', 'D'
+ EQUB 0
+
+ CHAR 'R'               \ Token 94:     "RO"
+ CHAR 'O'               \ Encoded as:   "RO"
+ EQUB 0
+
+ RTOK 14                \ Token 95:     "UNIT  QUANTITY{crlf} PRODUCT   UNIT
+ CHAR ' '               \                 PRICE FOR SALE{crlf}{lf}"
+ CHAR ' '               \ Encoded as:   "[14]  [16]{12} [26]   [14] [6] F<153>
+ RTOK 16                \                 SA<129>{12}{10}"
+ CTRL 12
+ CHAR ' '
+ RTOK 26
+ CHAR ' '
+ CHAR ' '
+ CHAR ' '
+ RTOK 14
+ CHAR ' '
+ RTOK 6
+ CHAR ' '
+ CHAR 'F'
+ TWOK 'O', 'R'
+ CHAR ' '
+ CHAR 'S'
+ CHAR 'A'
+ TWOK 'L', 'E'
+ CTRL 12
+ CTRL 10
+ EQUB 0
+
+ENDIF
 
  CHAR 'F'               \ Token 96:     "FRONT"
  CHAR 'R'               \ Encoded as:   "FR<159>T"
@@ -869,6 +1053,8 @@
  CHAR 'B'
  EQUB 0
 
+IF _CASSETTE_VERSION
+
  RTOK 121               \ Token 114:    "ENERGY UNIT"
  RTOK 14                \ Encoded as:   "[121][14]"
  EQUB 0
@@ -880,10 +1066,31 @@
  RTOK 55
  EQUB 0
 
+ELIF _6502SP_VERSION
+
+ RTOK 102               \ Token 114:    "EXTRA ENERGY UNIT"
+ RTOK 121                \ Encoded as:   "[102][121][14]"
+ RTOK 14
+ EQUB 0
+
+ CHAR 'D'               \ Token 115:    "DOCKING COMPUTERS"
+ CHAR 'O'               \ Encoded as:   "DOCK<140>G [55]"
+ CHAR 'C'
+ CHAR 'K'
+ TWOK 'I', 'N'
+ CHAR 'G'
+ CHAR ' '
+ RTOK 55
+ EQUB 0
+
+ENDIF
+
  RTOK 122               \ Token 116:    "GALACTIC HYPERSPACE "
  CHAR ' '               \ Encoded as:   "[122] [29]"
  RTOK 29
  EQUB 0
+
+IF _CASSETTE_VERSION
 
  CHAR 'A'               \ Token 117:    "ALL"
  RTOK 118               \ Encoded as:   "A[118]"
@@ -892,6 +1099,29 @@
  CHAR 'L'               \ Token 118:    "LL"
  CHAR 'L'               \ Encoded as:   "LL"
  EQUB 0
+
+ELIF _6502SP_VERSION
+
+ CHAR 'M'               \ Token 117:    "MILITARY  LASER"
+ CHAR 'I'               \ Encoded as:   "MILIT<138>Y [27]"
+ CHAR 'L'
+ CHAR 'I'
+ CHAR 'T'
+ TWOK 'A', 'R'
+ CHAR 'Y'
+ CHAR ' '
+ RTOK 27
+ EQUB 0
+
+ CHAR 'M'               \ Token 118:    "MINING  LASER"
+ TWOK 'I', 'N'          \ Encoded as:   "M<140><140>G [27]"
+ TWOK 'I', 'N'
+ CHAR 'G'
+ CHAR ' '
+ RTOK 27
+ EQUB 0
+
+ENDIF
 
  RTOK 37                \ Token 119:    "CASH:{cash right-aligned to width 9}
  CHAR ':'               \                 CR{crlf}"
@@ -921,6 +1151,8 @@
  CHAR 'C'
  EQUB 0
 
+IF _CASSETTE_VERSION
+
  CTRL 13                \ Token 123:    "{crlf}COMMANDER'S NAME? "
  RTOK 92                \ Encoded as:   "{13}[92]'S NAME? "
  CHAR 39                \ CHAR 39 is the apostrophe
@@ -940,6 +1172,20 @@
  CHAR 'K'
  EQUB 0
 
+ELIF _6502SP_VERSION
+
+ RTOK 115               \ Token 123:    "DOCKING COMPUTERS ON"
+ CHAR ' '               \ Encoded as:   "[115] ON"
+ CHAR 'O'
+ CHAR 'N'
+ EQUB 0
+
+ CHAR 'A'               \ Token 124:    "ALL"
+ RTOK 129               \ Encoded as:   "A[129]"
+ EQUB 0
+
+ENDIF
+
  CTRL 5                 \ Token 125:    "FUEL: {fuel level} LIGHT YEARS{crlf}
  TWOK 'L', 'E'          \                CASH:{cash right-aligned to width 9}
  CHAR 'G'               \                 CR{crlf}LEGAL STATUS:"
@@ -950,6 +1196,8 @@
  TWOK 'U', 'S'
  CHAR ':'
  EQUB 0
+
+IF _CASSETTE_VERSION
 
  RTOK 92                \ Token 126:    "COMMANDER {commander name}{crlf}{crlf}
  CHAR ' '               \                {crlf}{switch to sentence case}PRESENT
@@ -977,10 +1225,43 @@
  CTRL 9
  EQUB 0
 
+ELIF _6502SP_VERSION
+
+ RTOK 92                \ Token 126:    "COMMANDER {commander name}{crlf}{crlf}
+ CHAR ' '               \                {crlf}{switch to sentence case}PRESENT
+ CTRL 4                 \                 SYSTEM{tab to column 21}:{current
+ CTRL 12                \                system name}{crlf}HYPERSPACE SYSTEM
+ CTRL 12                \                {tab to column 21}:{selected system
+ CTRL 12                \                name}{crlf}CONDITION{tab to column
+ CTRL 6                 \                21}:"
+ RTOK 145               \ Encoded as:   "[92] {4}{12}{12}{12}{6}[145] [5]{9}{2}
+ CHAR ' '               \                {12}[29][5]{9}{3}{12}C<159><141><151>
+ RTOK 5                 \                <159>{9}"
+ CTRL 9
+ CTRL 2
+ CTRL 12
+ RTOK 29
+ RTOK 5
+ CTRL 9
+ CTRL 3
+ CTRL 12
+ CHAR 'C'
+ TWOK 'O', 'N'
+ TWOK 'D', 'I'
+ TWOK 'T', 'I'
+ TWOK 'O', 'N'
+ CTRL 9
+ EQUB 0
+
+ENDIF
+
  CHAR 'I'               \ Token 127:    "ITEM"
  TWOK 'T', 'E'          \ Encoded as:   "I<156>M"
  CHAR 'M'
  EQUB 0
+
+IF _CASSETTE_VERSION
+
 
  CHAR ' '               \ Token 128:    "  LOAD NEW COMMANDER (Y/N)?
  CHAR ' '               \                {crlf}{crlf}"
@@ -1005,6 +1286,16 @@
  TWOK 'E', 'D'
  EQUB 0
 
+ELIF _6502SP_VERSION
+
+ EQUB 0                 \ Token 128:    ""
+
+ CHAR 'L'               \ Token 129:    "LL"
+ CHAR 'L'               \ Encoded as:   "LL"
+ EQUB 0
+
+ENDIF
+
  TWOK 'R', 'A'          \ Token 130:    "RATING:"
  TWOK 'T', 'I'          \ Encoded as:   "<148><151>NG:"
  CHAR 'N'
@@ -1017,6 +1308,8 @@
  CHAR ' '
  EQUB 0
 
+IF _CASSETTE_VERSION
+
  CTRL 13                \ Token 132:    "{crlf}{switch to all caps}EQUIPMENT:
  CTRL 8                 \                {switch to sentence case}"
  RTOK 47                \ Encoded as:   "{13}{8}[47]M<146>T:{6}"
@@ -1026,6 +1319,20 @@
  CHAR ':'
  CTRL 6
  EQUB 0
+
+ELIF _6502SP_VERSION
+
+ CTRL 12                \ Token 132:    "{crlf}{switch to all caps}EQUIPMENT:
+ CTRL 8                 \                {switch to sentence case}"
+ RTOK 47                \ Encoded as:   "{12}{8}[47]M<146>T:{6}"
+ CHAR 'M'
+ TWOK 'E', 'N'
+ CHAR 'T'
+ CHAR ':'
+ CTRL 6
+ EQUB 0
+
+ENDIF
 
  CHAR 'C'               \ Token 133:    "CLEAN"
  TWOK 'L', 'E'          \ Encoded as:   "C<129><155>"
@@ -1087,6 +1394,8 @@
  CHAR 'T'
  EQUB 0
 
+IF _CASSETTE_VERSION
+
  CHAR 'D'               \ Token 142:    "DANGEROUS"
  TWOK 'A', 'N'          \ Encoded as:   "D<155><131>RO<136>"
  TWOK 'G', 'E'
@@ -1094,6 +1403,17 @@
  CHAR 'O'
  TWOK 'U', 'S'
  EQUB 0
+
+ELIF _6502SP_VERSION
+
+ CHAR 'D'               \ Token 142:    "DANGEROUS"
+ TWOK 'A', 'N'          \ Encoded as:   "D<155><131>[94]<136>"
+ TWOK 'G', 'E'
+ RTOK 94
+ TWOK 'U', 'S'
+ EQUB 0
+
+ENDIF
 
  CHAR 'D'               \ Token 143:    "DEADLY"
  CHAR 'E'               \ Encoded as:   "DEADLY"
@@ -1142,6 +1462,8 @@
  CHAR 'R'
  EQUB 0
 
+IF _CASSETTE_VERSION
+
  CHAR 'P'               \ Token 147:    "PRESS FIRE OR SPACE,COMMANDER.
  CHAR 'R'               \                {crlf}{crlf}"
  TWOK 'E', 'S'          \ Encoded as:   "PR<137>S FI<142> <153> SPA<133>,[92].
@@ -1182,3 +1504,8 @@
  CHAR '4'
  EQUB 0
 
+ELIF _6502SP_VERSION
+
+ SKIP 4                 \ These bytes are unused
+
+ENDIF

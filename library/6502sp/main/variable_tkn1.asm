@@ -1,3 +1,12 @@
+\ ******************************************************************************
+\
+\       Name: TKN1
+\       Type: Variable
+\   Category: Text
+\    Summary: The extended recursive token table for tokens ?-???
+\
+\ ******************************************************************************
+
 .TKN1
 
  EQUB VE

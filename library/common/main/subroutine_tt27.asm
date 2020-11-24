@@ -30,7 +30,7 @@
 
  BMI TT43               \ If token > 127, this is either a two-letter token
                         \ (128-159) or a recursive token (160-255), so jump
-                        \ to .TT43 to process tokens
+                        \ to TT43 to process tokens
 
  DEX                    \ If token = 1, this is control code 1 (current
  BEQ tal                \ galaxy number), so jump to tal

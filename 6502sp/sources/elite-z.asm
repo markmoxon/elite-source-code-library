@@ -155,7 +155,7 @@ INCLUDE "library/6502sp/io/subroutine_hanger.asm"
 INCLUDE "library/common/main/subroutine_dvid4.asm"
 INCLUDE "library/6502sp/io/subroutine_adparams.asm"
 INCLUDE "library/6502sp/io/subroutine_rdparams.asm"
-INCLUDE "library/6502sp/main/macro_dks4.asm"
+INCLUDE "library/6502sp/io/macro_dks4.asm"
 INCLUDE "library/6502sp/io/variable_kytb.asm"
 INCLUDE "library/6502sp/io/subroutine_keyboard.asm"
 INCLUDE "library/6502sp/io/variable_oswvecs.asm"
@@ -203,7 +203,3 @@ PRINT "protlen = ", ~protlen
 
 PRINT "S.I.CODE ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
 SAVE "6502sp/output/I.CODE.bin", CODE%, P%, LOAD%
-
-\INPUT"Insert destination disk and hit RETURN"A$
-\OSCLI("S.I.CODE "+STR$~W%+" "+STR$~O%+" FFFF"+STR$~STARTUP+" FFFF"+STR$~H%)
-\PRINT"CODE:";~C%",";~P%" (";&4000-P%" Free)  ZP:";~ZP;"Prot: ";~protlen

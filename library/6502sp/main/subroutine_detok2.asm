@@ -7,39 +7,6 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ * If bit 7 of DTW3 is set:
-\
-\   0-31            Call the corresponding JMTB routine
-\   32-255          Print standard text token with TT27
-\
-\ * If bit 7 of DTW3 is clear:
-\
-\   0-31            Call the corresponding JMTB routine
-\   32-64           Print standard text token with TT27
-\   A-Z (65-90)     * If bit 7 of DTW6 is set, OR with DTW1, AND with DTW8, print standard character with DASC
-\                   * If bit 7 of DTW2 is set, AND with DTW8, print standard character with DASC
-\                   * Otherwise print standard character with DASC
-\   91-128          Print extended recursive token with DETOK, fetching token number from MTIN table (subtract 91 to get 0-37 + random 0-4)
-\   129-215         Print extended recursive token with DETOK
-\   215-227         Print extended two-letter token from table TKN2 (subtract 215 to get 0-12)
-\
-\ DTW8 starts at FF, is either %11111111 (set at start of DASC) or %11011111 (set in MT19), so the AND can clear bit 5
-\ DTW1 starts as bit 5 set, then is either 0 (MT1) or %00100000 (MT2), so the OR sets bit 5 by default, or leaves it alone after a call to MT2
-\ DTW3 starts as 0, then is set to %11111111 by MT6 (Along with bit 7 of QQ17), 0 by MT5
-\
-\ DTW6 starts as 0 and is set to 0 by MT1/MT2 and %10000000 by MT13
-\ DTW2 starts as %11111111, is set to %11111111 by MT8 and can be set to 0 in DASC, looks like an 'in-word' flag where it is 0 if we are in a word
-\
-\ Bit 5 clear in an ASCII letter code = upper case
-\ Bit 5 set in an ASCII letter code = lower case
-\
-\ Macros:
-\
-\   DTOK 0-124 == TOKN 91-215
-\   DTWO 0-12 == TOKN 215-227
-\   JUMP 0-31 == TOKN 0-31
-\   Rest stay as CHARs, presumably
-\
 \ Arguments:
 \
 \   A                   The token to be printed
@@ -51,7 +18,14 @@
 \   Y                   Y is preserved
 \
 \   V(1 0)              V(1 0) is preserved
-\ 
+\
+\
+\ Other entry points:
+\
+\   DTS                 Print the single letter pointed to by A, where A is an
+\                       address within the extended two-letter token tables of
+\                       TKN2 and QQ16
+\
 \ ******************************************************************************
 
 .DETOK2
@@ -121,7 +95,7 @@
  TAX
 
  LDA TKN2+1,X           \ Fetch the second letter of the two-letter token from
-                        \ TKN2, which is at TKN2 + X + 1, and fall througn into
+                        \ TKN2, which is at TKN2 + X + 1, and fall through into
                         \ DTS to print it
 
 .DTS

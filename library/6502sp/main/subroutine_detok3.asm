@@ -42,7 +42,7 @@
 
  BNE DTEN               \ Call DTEN to print token number X from the RUTOK
                         \ table and restore the values of A, Y and V(1 0) from
-                        \ the stack and returning from the subroutine using a
-                        \ tail call (this BNE is effectively a JMP as A is never
+                        \ the stack, returning from the subroutine using a tail
+                        \ call (this BNE is effectively a JMP as A is never
                         \ zero)
 

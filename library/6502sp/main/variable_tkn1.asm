@@ -3,3173 +3,3118 @@
 \       Name: TKN1
 \       Type: Variable
 \   Category: Text
-\    Summary: The extended recursive token table for tokens ?-???
+\    Summary: The first extended token table for recursive tokens 0-255 (DETOK)
 \
 \ ******************************************************************************
 
 .TKN1
 
- EQUB VE
-
- TOKN 9
- TOKN 11
- TOKN 30
- TOKN 1
- TOKN 8
- TOKN ' '
- TOKN 241
- TOKN 'S'
- TOKN 'K'
- TOKN ' '
- TOKN 'A'
- TOKN 'C'
- TOKN 233
- TOKN 'S'
- TOKN 'S'
- TOKN ' '
- TOKN 'M'
- TOKN 'E'
- TOKN 225
- TOKN 215
- TOKN 10
- TOKN 2
- TOKN '1'
- TOKN '.'
- TOKN ' '
- TOKN 149
- TOKN 215
- TOKN '2'
- TOKN '.'
- TOKN ' '
- TOKN 'S'
- TOKN 'A'
- TOKN 250
- TOKN ' '
- TOKN 154
- TOKN ' '
- TOKN 4
- TOKN 215
- TOKN '3'
- TOKN '.'
- TOKN ' '
- TOKN 'C'
- TOKN 245
- TOKN 'A'
- TOKN 224
- TOKN 'G'
- TOKN 'U'
- TOKN 'E'
- TOKN 215
- TOKN '4'
- TOKN '.'
- TOKN ' '
- TOKN 'D'
- TOKN 'E'
- TOKN 'L'
- TOKN 221
- TOKN 'E'
- TOKN 208
- TOKN 'F'
- TOKN 'I'
- TOKN 229
- TOKN 215
- TOKN '5'
- TOKN '.'
- TOKN ' '
- TOKN 'E'
- TOKN 'X'
- TOKN 219
- TOKN 215
- EQUB VE
-
- TOKN 12
- TOKN 'W'
- TOKN 'H'
- TOKN 'I'
- TOKN 'C'
- TOKN 'H'
- TOKN ' '
- TOKN 151
- TOKN '?'
- EQUB VE
-
- TOKN 'C'
- TOKN 'O'
- TOKN 'M'
- TOKN 'P'
- TOKN 'E'
- TOKN 251    \ <251)
- TOKN 251
- TOKN 223
- TOKN ' '
- TOKN 225
- TOKN 'M'
- TOKN 'B'
- TOKN 244
- TOKN ':'
- EQUB VE
-
- TOKN 150
- TOKN 151
- TOKN ' '
- TOKN 16
- TOKN 152
- TOKN 215
- EQUB VE
-
- TOKN 176
- TOKN 109
- TOKN 202
- TOKN 110
- TOKN 177
- EQUB VE
-
- TOKN ' '
- TOKN ' '
- TOKN 149
- TOKN ' '
- TOKN 1
- TOKN '('
- TOKN 'Y'
- TOKN '/'
- TOKN 'N'
- TOKN ')'
- TOKN '?'
- TOKN 2
- TOKN 12
- TOKN 12
- EQUB VE
-
- TOKN 'P'
- TOKN 242
- TOKN 'S'
- TOKN 'S'
- TOKN ' '
- TOKN 'S'
- TOKN 'P'
- TOKN 'A'
- TOKN 233
- TOKN ' '
- TOKN 253
- TOKN ' '
- TOKN 'F'
- TOKN 'I'
- TOKN 242
- TOKN ','
- TOKN 154
- TOKN '.'
- TOKN 12
- TOKN 12
- EQUB VE
-
- TOKN 154
- TOKN 39
- TOKN 'S'
- TOKN 200
- EQUB VE
-
- TOKN 21
- TOKN 'F'
- TOKN 'I'
- TOKN 229
- TOKN 201
- TOKN 'D'
- TOKN 'E'
- TOKN 'L'
- TOKN 221
- TOKN 'E'
- TOKN '?'
- EQUB VE
-
- TOKN 23
- TOKN 14
- TOKN 2
- TOKN 'G'
- TOKN 242
- TOKN 221
- TOKN 240
- TOKN 'G'
- TOKN 'S'
- TOKN 213
- TOKN 178
- TOKN 19
- TOKN 'I'
- TOKN ' '
- TOKN 247
- TOKN 'G'
- TOKN 208
- TOKN 'M'
- TOKN 'O'
- TOKN 'M'
- TOKN 246
- TOKN 'T'
- TOKN ' '
- TOKN 'O'
- TOKN 'F'
- TOKN ' '
- TOKN 179
- TOKN 'R'
- TOKN ' '
- TOKN 'V'
- TOKN 228
- TOKN 'U'
- TOKN 216
- TOKN 229
- TOKN ' '
- TOKN 251
- TOKN 'M'
- TOKN 'E'
- TOKN 204
-\TOKN '#'
-\EQUB VE
-
- TOKN 'W'
- TOKN 'E'
- TOKN ' '
- TOKN 'W'
- TOKN 217
- TOKN 'L'
- TOKN 'D'
- TOKN ' '
- TOKN 'L'
- TOKN 'I'
- TOKN 'K'
- TOKN 'E'
- TOKN ' '
- TOKN 179
- TOKN 201
- TOKN 'D'
- TOKN 'O'
- TOKN 208
- TOKN 'L'
- TOKN 219
- TOKN 'T'
- TOKN 229
- TOKN ' '
- TOKN 'J'
- TOKN 'O'
- TOKN 'B'
- TOKN ' '
- TOKN 'F'
- TOKN 253
- TOKN ' '
- TOKN 236
- TOKN 204
- TOKN 147
- TOKN 207
- TOKN ' '
- TOKN 179
- TOKN ' '
- TOKN 218
- TOKN 'E'
- TOKN ' '
- TOKN 'H'
- TOKN 'E'
- TOKN 242
- TOKN 202
- TOKN 'A'
- TOKN 210
- TOKN 'M'
- TOKN 'O'
- TOKN 'D'
- TOKN 'E'
- TOKN 'L'
- TOKN ','
- TOKN ' '
- TOKN 147
- TOKN 19
- TOKN 'C'
- TOKN 223
- TOKN 222
- TOKN 'R'
- TOKN 'I'
- TOKN 'C'
- TOKN 'T'
- TOKN 253
- TOKN ','
- TOKN ' '
- TOKN 'E'
- TOKN 254
- TOKN 'I'
- TOKN 'P'
- TOKN 196
- TOKN 'W'
- TOKN 'I'
- TOKN 226
- TOKN 208
- TOKN 'T'
- TOKN 'O'
- TOKN 'P'
-\TOKN '#'
-\EQUB VE
-
- TOKN ' '
- TOKN 218
- TOKN 'C'
- TOKN 'R'
- TOKN 221
- TOKN 210
- TOKN 'S'
- TOKN 'H'
- TOKN 'I'
- TOKN 'E'
- TOKN 'L'
- TOKN 'D'
- TOKN ' '
- TOKN 'G'
- TOKN 246
- TOKN 244
- TOKN 245
- TOKN 253
- TOKN 204
- TOKN 'U'
- TOKN 'N'
- TOKN 'F'
- TOKN 253
- TOKN 'T'
- TOKN 'U'
- TOKN 'N'
- TOKN 245
- TOKN 'E'
- TOKN 'L'
- TOKN 'Y'
- TOKN ' '
- TOKN 219
- TOKN 39
- TOKN 'S'
- TOKN ' '
- TOKN 247
- TOKN 246
- TOKN ' '
- TOKN 222
- TOKN 'O'
- TOKN 'L'
- TOKN 246
- TOKN 204
- TOKN 22
-\TOKN '#'
-\EQUB VE
-
- TOKN 219
- TOKN ' '
- TOKN 'W'
- TOKN 246
- TOKN 'T'
- TOKN ' '
- TOKN 'M'
- TOKN 'I'
- TOKN 'S'
- TOKN 'S'
- TOKN 195
- TOKN 'F'
- TOKN 'R'
- TOKN 'O'
- TOKN 'M'
- TOKN ' '
- TOKN 217
- TOKN 'R'
- TOKN ' '
- TOKN 207
- TOKN ' '
- TOKN 'Y'
- TOKN 238
- TOKN 'D'
- TOKN ' '
- TOKN 223
- TOKN ' '
- TOKN 19
- TOKN 230
- TOKN 244
- TOKN ' '
- TOKN 'F'
- TOKN 'I'
- TOKN 250
- TOKN ' '
- TOKN 'M'
- TOKN 223
- TOKN 226
- TOKN 'S'
- TOKN ' '
- TOKN 'A'
- TOKN 'G'
- TOKN 'O'
- TOKN 178
- TOKN 28
- TOKN 204
- TOKN 179
- TOKN 'R'
- TOKN ' '
- TOKN 'M'
- TOKN 'I'
- TOKN 'S'
- TOKN 'S'
- TOKN 'I'
- TOKN 223
- TOKN ','
- TOKN ' '
- TOKN 'S'
- TOKN 'H'
- TOKN 217
- TOKN 'L'
- TOKN 'D'
- TOKN ' '
- TOKN 179
- TOKN ' '
- TOKN 'D'
- TOKN 'E'
- TOKN 'C'
- TOKN 'I'
- TOKN 'D'
- TOKN 'E'
- TOKN 201
- TOKN 'A'
- TOKN 'C'
- TOKN 233
- TOKN 'P'
- TOKN 'T'
- TOKN ' '
- TOKN 219
- TOKN ','
- TOKN ' '
- TOKN 'I'
- TOKN 'S'
- TOKN 201
- TOKN 218
- TOKN 'E'
- TOKN 'K'
- TOKN 178
- TOKN 'D'
- TOKN 237
- TOKN 'T'
- TOKN 'R'
- TOKN 'O'
- TOKN 'Y'
- TOKN ' '
-\TOKN '#'
-\EQUB VE
-
- TOKN 148
- TOKN 207
- TOKN 204
- TOKN 179
- TOKN ' '
- TOKN 'A'
- TOKN 242
- TOKN ' '
- TOKN 'C'
- TOKN 'A'
- TOKN 'U'
- TOKN 251
- TOKN 223
- TOKN 196
- TOKN 226
- TOKN 245
- TOKN ' '
- TOKN 223
- TOKN 'L'
- TOKN 'Y'
- TOKN ' '
- TOKN 6
- TOKN 117
- TOKN 5
- TOKN 'S'
- TOKN ' '
- TOKN 'W'
- TOKN 220
- TOKN 'L'
- TOKN ' '
- TOKN 'P'
- TOKN 246
- TOKN 221
- TOKN 248
- TOKN 'T'
- TOKN 'E'
- TOKN ' '
- TOKN 147
- TOKN 'N'
- TOKN 'E'
- TOKN 'W'
- TOKN ' '
- TOKN 'S'
- TOKN 'H'
- TOKN 'I'
- TOKN 'E'
- TOKN 'L'
- TOKN 'D'
- TOKN 'S'
- TOKN 178
- TOKN 226
- TOKN 245
- TOKN ' '
- TOKN 147
- TOKN 19
- TOKN 'C'
- TOKN 223
- TOKN 222
- TOKN 'R'
- TOKN 'I'
- TOKN 'C'
- TOKN 'T'
- TOKN 253
- TOKN 202
- TOKN 'F'
- TOKN 219
- TOKN 'T'
- TOKN 196
- TOKN 'W'
- TOKN 'I'
- TOKN 226
-\TOKN '#'
-\EQUB VE
-
- TOKN ' '
- TOKN 255
- TOKN ' '
- TOKN 6
- TOKN 108
- TOKN 5
- TOKN 177
- TOKN 2
- TOKN 8
- TOKN 'G'
- TOKN 'O'
- TOKN 'O'
- TOKN 'D'
- TOKN ' '
- TOKN 'L'
- TOKN 'U'
- TOKN 'C'
- TOKN 'K'
- TOKN ','
- TOKN ' '
- TOKN 154
- TOKN 212
- TOKN 22
- EQUB VE
-
- TOKN 25
- TOKN 9
- TOKN 30
- TOKN 23
- TOKN 14
- TOKN 2
- TOKN ' '
- TOKN ' '
- TOKN 245
- TOKN 'T'
- TOKN 246
- TOKN 251
- TOKN 223
- TOKN 213
- TOKN '.'
- TOKN ' '
- TOKN 19
- TOKN 'W'
- TOKN 'E'
- TOKN ' '
- TOKN 'H'
- TOKN 'A'
- TOKN 250
- TOKN ' '
- TOKN 'N'
- TOKN 'E'
- TOKN 196
- TOKN 'O'
- TOKN 'F'
- TOKN ' '
- TOKN 179
- TOKN 'R'
- TOKN ' '
- TOKN 218
- TOKN 'R'
- TOKN 'V'
- TOKN 'I'
- TOKN 'C'
- TOKN 237
- TOKN ' '
- TOKN 'A'
- TOKN 'G'
- TOKN 'A'
- TOKN 240
- TOKN 204
-\TOKN '#'
-\EQUB VE
-
- TOKN 'I'
- TOKN 'F'
- TOKN ' '
- TOKN 179
- TOKN ' '
- TOKN 'W'
- TOKN 217
- TOKN 'L'
- TOKN 'D'
- TOKN ' '
- TOKN 247
- TOKN ' '
- TOKN 235
- TOKN ' '
- TOKN 'G'
- TOKN 'O'
- TOKN 'O'
- TOKN 'D'
- TOKN ' '
- TOKN 'A'
- TOKN 'S'
- TOKN 201
- TOKN 'G'
- TOKN 'O'
- TOKN 201
- TOKN 19
- TOKN 233
- TOKN 244
- TOKN 241
- TOKN ' '
- TOKN 179
- TOKN ' '
- TOKN 'W'
- TOKN 220
- TOKN 'L'
- TOKN ' '
- TOKN 247
- TOKN ' '
- TOKN 'B'
- TOKN 'R'
- TOKN 'I'
- TOKN 'E'
- TOKN 'F'
- TOKN 252
- TOKN 204
- TOKN 'I'
- TOKN 'F'
- TOKN ' '
- TOKN 'S'
- TOKN 'U'
- TOKN 'C'
- TOKN 233
- TOKN 'S'
- TOKN 'S'
- TOKN 'F'
- TOKN 'U'
- TOKN 'L'
- TOKN ','
- TOKN ' '
- TOKN 179
- TOKN ' '
- TOKN 'W'
- TOKN 220
- TOKN 'L'
- TOKN ' '
- TOKN 247
- TOKN ' '
- TOKN 'W'
- TOKN 'E'
- TOKN 'L'
- TOKN 'L'
- TOKN ' '
- TOKN 242
- TOKN 'W'
- TOKN 238
- TOKN 'D'
- TOKN 252
- TOKN 212
- TOKN 24
- EQUB VE
-
- TOKN '('
- TOKN 19
- TOKN 'C'
- TOKN ')'
- TOKN ' '
- TOKN 'A'
- TOKN 'C'
- TOKN 253
- TOKN 'N'
- TOKN 235
- TOKN 'F'
- TOKN 'T'
- TOKN ' '
- TOKN '1'
- TOKN '9'
- TOKN '8'
- TOKN '4'
- EQUB VE
-
- TOKN 'B'
- TOKN 'Y'
- TOKN ' '
- TOKN 'D'
- TOKN '.'
- TOKN 'B'
- TOKN 248
- TOKN 247
- TOKN 'N'
- TOKN ' '
- TOKN '&'
- TOKN ' '
- TOKN 'I'
- TOKN '.'
- TOKN 247
- TOKN 'L'
- TOKN 'L'
- EQUB VE
-
- TOKN 21
- TOKN 145
- TOKN 200
- TOKN 26
- EQUB VE
-
- TOKN 25
- TOKN 9
- TOKN 30
- TOKN 23
- TOKN 14
- TOKN 2
- TOKN ' '
- TOKN ' '
- TOKN 'C'
- TOKN 223
- TOKN 'G'
- TOKN 248
- TOKN 'T'
- TOKN 'U'
- TOKN 249
- TOKN 251
- TOKN 223
- TOKN 'S'
- TOKN ' '
- TOKN 154
- TOKN '!'
- TOKN 12
- TOKN 12
- TOKN 226
- TOKN 244
- TOKN 'E'
- TOKN 13
- TOKN ' '
- TOKN 'W'
- TOKN 220
- TOKN 'L'
- TOKN ' '
- TOKN 228
- TOKN 'W'
- TOKN 'A'
- TOKN 'Y'
- TOKN 'S'
- TOKN ' '
- TOKN 247
- TOKN 208
- TOKN 'P'
- TOKN 249
- TOKN 233
- TOKN ' '
- TOKN 'F'
- TOKN 253
- TOKN ' '
- TOKN 179
- TOKN ' '
- TOKN 240
- TOKN 211
- TOKN 204
- TOKN 255
- TOKN 'D'
- TOKN ' '
- TOKN 239
- TOKN 'Y'
- TOKN 247
- TOKN ' '
- TOKN 235
- TOKN 223
- TOKN 244
- TOKN ' '
- TOKN 226
- TOKN 255
- TOKN ' '
- TOKN 179
- TOKN ' '
- TOKN 226
- TOKN 240
- TOKN 'K'
-\TOKN '#'
-\EQUB VE
-
- TOKN '.'
- TOKN '.'
- TOKN 212
- TOKN 24
- EQUB VE
-
- TOKN 'F'
- TOKN 216
- TOKN 229
- TOKN 'D'
- EQUB VE
-
- TOKN 227
- TOKN 'T'
- TOKN 216
- TOKN 229
- EQUB VE
-
- TOKN 'W'
- TOKN 'E'
- TOKN 'L'
- TOKN 'L'
- TOKN ' '
- TOKN 'K'
- TOKN 227
- TOKN 'W'
- TOKN 'N'
- EQUB VE
-
- TOKN 'F'
- TOKN 'A'
- TOKN 'M'
- TOKN 'O'
- TOKN 236
- EQUB VE
-
- TOKN 227
- TOKN 'T'
- TOKN 252
- EQUB VE
-
- TOKN 250
- TOKN 'R'
- TOKN 'Y'
- EQUB VE
-
- TOKN 'M'
- TOKN 220
- TOKN 'D'
- TOKN 'L'
- TOKN 'Y'
- EQUB VE
-
- TOKN 'M'
- TOKN 'O'
- TOKN 222
- EQUB VE
-
- TOKN 242
- TOKN 'A'
- TOKN 'S'
- TOKN 223
- TOKN 216
- TOKN 'L'
- TOKN 'Y'
- EQUB VE
-
-\EQUB 0 EOR VE
- EQUB VE
-
- TOKN 165
- EQUB VE
-
- TOKN 114
- EQUB VE
-
- TOKN 'G'
- TOKN 242
- TOKN 245
- EQUB VE
-
- TOKN 'V'
- TOKN 'A'
- TOKN 222
- EQUB VE
-
- TOKN 'P'
- TOKN 240
- TOKN 'K'
- EQUB VE
-
- TOKN 2
- TOKN 119
- TOKN ' '
- TOKN 118
- TOKN 13
- TOKN ' '
- TOKN 185
- TOKN 'A'
- TOKN 251
- TOKN 223
- TOKN 'S'
- EQUB VE
-
- TOKN 156
- TOKN 'S'
- EQUB VE
-
- TOKN 117
- EQUB VE
-
- TOKN 128
- TOKN ' '
- TOKN 'F'
- TOKN 253
- TOKN 237
- TOKN 'T'
- TOKN 'S'
- EQUB VE
-
- TOKN 'O'
- TOKN 233
- TOKN 255
- TOKN 'S'
- EQUB VE
-
- TOKN 'S'
- TOKN 'H'
- TOKN 'Y'
- TOKN 'N'
- TOKN 237
- TOKN 'S'
- EQUB VE
-
- TOKN 'S'
- TOKN 220
- TOKN 'L'
- TOKN 240
- TOKN 237
- TOKN 'S'
- EQUB VE
-
- TOKN 239
- TOKN 'T'
- TOKN 195
- TOKN 'T'
- TOKN 248
- TOKN 241
- TOKN 251
- TOKN 223
- TOKN 'S'
- EQUB VE
-
- TOKN 224
- TOKN 245
- TOKN 'H'
- TOKN 195
- TOKN 'O'
- TOKN 'F'
- TOKN ' '
- TOKN 100
- EQUB VE
-
- TOKN 224
- TOKN 250
- TOKN ' '
- TOKN 'F'
- TOKN 253
- TOKN ' '
- TOKN 100
- EQUB VE
-
- TOKN 'F'
- TOKN 'O'
- TOKN 'O'
- TOKN 'D'
- TOKN ' '
- TOKN 'B'
- TOKN 229
- TOKN 'N'
- TOKN 'D'
- TOKN 244
- TOKN 'S'
- EQUB VE
-
- TOKN 'T'
- TOKN 217
- TOKN 'R'
- TOKN 'I'
- TOKN 222
- TOKN 'S'
- EQUB VE
-
- TOKN 'P'
- TOKN 'O'
- TOKN 221
- TOKN 'R'
- TOKN 'Y'
- EQUB VE
-
- TOKN 241
- TOKN 'S'
- TOKN 'C'
- TOKN 'O'
- TOKN 'S'
- EQUB VE
-
- TOKN 108
- EQUB VE
-
- TOKN 'W'
- TOKN 228
- TOKN 'K'
- TOKN 195
- TOKN 158
- EQUB VE
-
- TOKN 'C'
- TOKN 248
- TOKN 'B'
- EQUB VE
-
- TOKN 'B'
- TOKN 245
- EQUB VE
-
- TOKN 224
- TOKN 'B'
- TOKN 222
- EQUB VE
-
- TOKN 18
- EQUB VE
-
- TOKN 247
- TOKN 'S'
- TOKN 221
- EQUB VE
-
- TOKN 'P'
- TOKN 249
- TOKN 'G'
- TOKN 'U'
- TOKN 252
- EQUB VE
-
- TOKN 248
- TOKN 'V'
- TOKN 'A'
- TOKN 'G'
- TOKN 252
- EQUB VE
-
- TOKN 'C'
- TOKN 'U'
- TOKN 'R'
- TOKN 'S'
- TOKN 252
- EQUB VE
-
- TOKN 'S'
- TOKN 'C'
- TOKN 217
- TOKN 'R'
- TOKN 'G'
- TOKN 252
- EQUB VE
-
- TOKN 113
- TOKN ' '
- TOKN 'C'
- TOKN 'I'
- TOKN 'V'
- TOKN 220
- TOKN ' '
- TOKN 'W'
- TOKN 238
- EQUB VE
-
- TOKN 104
- TOKN ' '
- TOKN 95
- TOKN ' '
- TOKN 96
- TOKN 'S'
- EQUB VE
-
- TOKN 'A'
- TOKN ' '
- TOKN 104
- TOKN ' '
- TOKN 241
- TOKN 218
- TOKN 'A'
- TOKN 218
- EQUB VE
-
- TOKN 113
- TOKN ' '
- TOKN 'E'
- TOKN 238
- TOKN 226
- TOKN 254
- TOKN 'A'
- TOKN 'K'
- TOKN 237
- EQUB VE
-
- TOKN 113
- TOKN ' '
- TOKN 235
- TOKN 249
- TOKN 'R'
- TOKN ' '
- TOKN 'A'
- TOKN 'C'
- TOKN 251
- TOKN 'V'
- TOKN 219
- TOKN 'Y'
- EQUB VE
-
- TOKN 175
- TOKN 93
- TOKN ' '
- TOKN 94
- EQUB VE
-
- TOKN 147
- TOKN 17
- TOKN ' '
- TOKN 95
- TOKN ' '
- TOKN 96
- EQUB VE
-
- TOKN 175
- TOKN 193
- TOKN 'S'
- TOKN 39
- TOKN ' '
- TOKN 98
- TOKN ' '
- TOKN 99
- EQUB VE
-
- TOKN 2
- TOKN 122
- TOKN 13
- EQUB VE
-
- TOKN 175
- TOKN 107
- TOKN ' '
- TOKN 108
- EQUB VE
-
- TOKN 'J'
- TOKN 'U'
- TOKN 'I'
- TOKN 233
- EQUB VE
-
- TOKN 'B'
- TOKN 248
- TOKN 'N'
- TOKN 'D'
- TOKN 'Y'
- EQUB VE
-
- TOKN 'W'
- TOKN 245
- TOKN 244
- EQUB VE
-
- TOKN 'B'
- TOKN 242
- TOKN 'W'
- EQUB VE
-
- TOKN 'G'
- TOKN 238
- TOKN 'G'
- TOKN 229
- TOKN ' '
- TOKN 'B'
- TOKN 249
- TOKN 222
- TOKN 244
- TOKN 'S'
- EQUB VE
-
- TOKN 18
- EQUB VE
-
- TOKN 17
- TOKN ' '
- TOKN 96
- EQUB VE
-
- TOKN 17
- TOKN ' '
- TOKN 18
- EQUB VE
-
- TOKN 17
- TOKN ' '
- TOKN 104
- EQUB VE
-
- TOKN 104
- TOKN ' '
- TOKN 18
- EQUB VE
-
- TOKN 'F'
- TOKN 216
- TOKN 'U'
- TOKN 224
- TOKN 236
- EQUB VE
-
- TOKN 'E'
- TOKN 'X'
- TOKN 'O'
- TOKN 251
- TOKN 'C'
- EQUB VE
-
- TOKN 'H'
- TOKN 'O'
- TOKN 'O'
- TOKN 'P'
- TOKN 'Y'
- EQUB VE
-
- TOKN 'U'
- TOKN 225
- TOKN 'S'
- TOKN 'U'
- TOKN 228
- EQUB VE
-
- TOKN 'E'
- TOKN 'X'
- TOKN 'C'
- TOKN 219
- TOKN 240
- TOKN 'G'
- EQUB VE
-
- TOKN 'C'
- TOKN 'U'
- TOKN 'I'
- TOKN 'S'
- TOKN 240
- TOKN 'E'
- EQUB VE
-
- TOKN 'N'
- TOKN 'I'
- TOKN 'G'
- TOKN 'H'
- TOKN 'T'
- TOKN ' '
- TOKN 'L'
- TOKN 'I'
- TOKN 'F'
- TOKN 'E'
- EQUB VE
-
- TOKN 'C'
- TOKN 'A'
- TOKN 'S'
- TOKN 'I'
- TOKN 227
- TOKN 'S'
- EQUB VE
-
- TOKN 'S'
- TOKN 219
- TOKN ' '
- TOKN 'C'
- TOKN 'O'
- TOKN 'M'
- TOKN 'S'
- EQUB VE
-
- TOKN 2
- TOKN 122
- TOKN 13
- EQUB VE
-
- TOKN 3
- EQUB VE
-
- TOKN 147
- TOKN 145
- TOKN ' '
- TOKN 3
- EQUB VE
-
- TOKN 147
- TOKN 146
- TOKN ' '
- TOKN 3
- EQUB VE
-
- TOKN 148
- TOKN 145
- EQUB VE
-
- TOKN 148
- TOKN 146
- EQUB VE
-
- TOKN 'S'
- TOKN 223
- TOKN ' '
- TOKN 'O'
- TOKN 'F'
- TOKN 208
- TOKN 'B'
- TOKN 219
- TOKN 'C'
- TOKN 'H'
- EQUB VE
-
- TOKN 'S'
- TOKN 'C'
- TOKN 217
- TOKN 'N'
- TOKN 'D'
- TOKN 242
- TOKN 'L'
- EQUB VE
-
- TOKN 'B'
- TOKN 249
- TOKN 'C'
- TOKN 'K'
- TOKN 'G'
- TOKN 'U'
- TOKN 238
- TOKN 'D'
- EQUB VE
-
- TOKN 'R'
- TOKN 'O'
- TOKN 'G'
- TOKN 'U'
- TOKN 'E'
- EQUB VE
-
- TOKN 'W'
- TOKN 'H'
- TOKN 253
- TOKN 237
- TOKN 223
- TOKN ' '
- TOKN 247
- TOKN 221
- TOKN 229
- TOKN ' '
- TOKN 'H'
- TOKN 'E'
- TOKN 'A'
- TOKN 'D'
- TOKN 196
- TOKN 'F'
- TOKN 249
- TOKN 'P'
- TOKN ' '
- TOKN 'E'
- TOKN 238
- TOKN 39
- TOKN 'D'
- TOKN ' '
- TOKN 'K'
- TOKN 'N'
- TOKN 'A'
- TOKN 250
- EQUB VE
-
- TOKN 'N'
- TOKN ' '
- TOKN 'U'
- TOKN 'N'
- TOKN 242
- TOKN 239
- TOKN 'R'
- TOKN 'K'
- TOKN 216
- TOKN 229
- EQUB VE
-
- TOKN ' '
- TOKN 'B'
- TOKN 253
- TOKN 240
- TOKN 'G'
- EQUB VE
-
- TOKN ' '
- TOKN 'D'
- TOKN 'U'
- TOKN 'L'
- TOKN 'L'
- EQUB VE
-
- TOKN ' '
- TOKN 'T'
- TOKN 'E'
- TOKN 241
- TOKN 'O'
- TOKN 236
- EQUB VE
-
- TOKN ' '
- TOKN 242
- TOKN 'V'
- TOKN 'O'
- TOKN 'L'
- TOKN 'T'
- TOKN 240
- TOKN 'G'
- EQUB VE
-
- TOKN 145
- EQUB VE
-
- TOKN 146
- EQUB VE
-
- TOKN 'P'
- TOKN 249
- TOKN 233
- EQUB VE
-
- TOKN 'L'
- TOKN 219
- TOKN 'T'
- TOKN 229
- TOKN ' '
- TOKN 145
- EQUB VE
-
- TOKN 'D'
- TOKN 'U'
- TOKN 'M'
- TOKN 'P'
- EQUB VE
-
- TOKN 'I'
- TOKN ' '
- TOKN 'H'
- TOKN 'E'
- TOKN 238
- TOKN 208
- TOKN 114
- TOKN ' '
- TOKN 224
- TOKN 'O'
- TOKN 'K'
- TOKN 195
- TOKN 207
- TOKN ' '
- TOKN 'A'
- TOKN 'P'
- TOKN 'P'
- TOKN 'E'
- TOKN 238
- TOKN 196
- TOKN 245
- TOKN 209
- EQUB VE
-
- TOKN 'Y'
- TOKN 'E'
- TOKN 'A'
- TOKN 'H'
- TOKN ','
- TOKN ' '
- TOKN 'I'
- TOKN ' '
- TOKN 'H'
- TOKN 'E'
- TOKN 238
- TOKN 208
- TOKN 114
- TOKN ' '
- TOKN 207
- TOKN ' '
- TOKN 229
- TOKN 'F'
- TOKN 'T'
- TOKN 209
- TOKN 208
- TOKN ' '
- TOKN 'W'
- TOKN 'H'
- TOKN 'I'
- TOKN 229
- TOKN ' '
- TOKN 'B'
- TOKN 'A'
- TOKN 'C'
- TOKN 'K'
- EQUB VE
-
- TOKN 'G'
- TOKN 221
- TOKN ' '
- TOKN 179
- TOKN 'R'
- TOKN ' '
- TOKN 'I'
- TOKN 'R'
- TOKN 223
- TOKN ' '
- TOKN 'A'
- TOKN 'S'
- TOKN 'S'
- TOKN ' '
- TOKN 'O'
- TOKN 'V'
- TOKN 244
- TOKN ' '
- TOKN 'T'
- TOKN 'O'
- TOKN 209
- EQUB VE
-
- TOKN 235
- TOKN 'M'
- TOKN 'E'
- TOKN ' '
- TOKN 115
- TOKN 210
- TOKN 207
- TOKN ' '
- TOKN 'W'
- TOKN 'A'
- TOKN 'S'
- TOKN ' '
- TOKN 218
- TOKN 246
- TOKN ' '
- TOKN 245
- TOKN 209
- EQUB VE
-
- TOKN 'T'
- TOKN 'R'
- TOKN 'Y'
- TOKN 209
- EQUB VE
-
-\EQUB 0 EOR VE
- EQUB VE
-
-\EQUB 0 EOR VE
- EQUB VE
-
-\EQUB 0 EOR VE
- EQUB VE
-
-\EQUB 0 EOR VE
- EQUB VE
-
- TOKN 'W'
- TOKN 'A'
- TOKN 'S'
- TOKN 'P'
- EQUB VE
-
- TOKN 'M'
- TOKN 'O'
- TOKN 226
- EQUB VE
-
- TOKN 'G'
- TOKN 'R'
- TOKN 'U'
- TOKN 'B'
- EQUB VE
-
- TOKN 255
- TOKN 'T'
- EQUB VE
-
- TOKN 18
- EQUB VE
-
- TOKN 'P'
- TOKN 'O'
- TOKN 221
- EQUB VE
-
- TOKN 238
- TOKN 'T'
- TOKN 'S'
- TOKN ' '
- TOKN 'G'
- TOKN 248
- TOKN 'D'
- TOKN 'U'
- TOKN 245
- TOKN 'E'
- EQUB VE
-
- TOKN 'Y'
- TOKN 'A'
- TOKN 'K'
- EQUB VE
-
- TOKN 'S'
- TOKN 'N'
- TOKN 'A'
- TOKN 220
- EQUB VE
-
- TOKN 'S'
- TOKN 'L'
- TOKN 'U'
- TOKN 'G'
- EQUB VE
-
- TOKN 'T'
- TOKN 'R'
- TOKN 'O'
- TOKN 'P'
- TOKN 'I'
- TOKN 'C'
- TOKN 228
- EQUB VE
-
- TOKN 'D'
- TOKN 246
- TOKN 218
- EQUB VE
-
- TOKN 248
- TOKN 240
- EQUB VE
-
- TOKN 'I'
- TOKN 'M'
- TOKN 'P'
- TOKN 246
- TOKN 221
- TOKN 248
- TOKN 'B'
- TOKN 229
- EQUB VE
-
- TOKN 'E'
- TOKN 'X'
- TOKN 'U'
- TOKN 247
- TOKN 248
- TOKN 'N'
- TOKN 'T'
- EQUB VE
-
- TOKN 'F'
- TOKN 'U'
- TOKN 'N'
- TOKN 'N'
- TOKN 'Y'
- EQUB VE
-
- TOKN 'W'
- TOKN 'I'
- TOKN 244
- TOKN 'D'
- EQUB VE
-
- TOKN 'U'
- TOKN 225
- TOKN 'S'
- TOKN 'U'
- TOKN 228
- EQUB VE
-
- TOKN 222
- TOKN 248
- TOKN 'N'
- TOKN 231
- EQUB VE
-
- TOKN 'P'
- TOKN 'E'
- TOKN 'C'
- TOKN 'U'
- TOKN 'L'
- TOKN 'I'
- TOKN 238
- EQUB VE
-
- TOKN 'F'
- TOKN 242
- TOKN 254
- TOKN 246
- TOKN 'T'
- EQUB VE
-
- TOKN 'O'
- TOKN 'C'
- TOKN 'C'
- TOKN 'A'
- TOKN 'S'
- TOKN 'I'
- TOKN 223
- TOKN 228
- EQUB VE
-
- TOKN 'U'
- TOKN 'N'
- TOKN 'P'
- TOKN 242
- TOKN 241
- TOKN 'C'
- TOKN 'T'
- TOKN 216
- TOKN 229
- EQUB VE
-
- TOKN 'D'
- TOKN 242
- TOKN 'A'
- TOKN 'D'
- TOKN 'F'
- TOKN 'U'
- TOKN 'L'
- EQUB VE
-
- TOKN 171
- EQUB VE
-
- TOKN 92
- TOKN ' '
- TOKN 91
- TOKN ' '
- TOKN 'F'
- TOKN 253
- TOKN ' '
- TOKN 101
- EQUB VE
-
- TOKN 140
- TOKN 178
- TOKN 101
- EQUB VE
-
- TOKN 102
- TOKN ' '
- TOKN 'B'
- TOKN 'Y'
- TOKN ' '
- TOKN 103
- EQUB VE
-
- TOKN 140
- TOKN ' '
- TOKN 'B'
- TOKN 'U'
- TOKN 'T'
- TOKN ' '
- TOKN 142
- EQUB VE
-
- TOKN ' '
- TOKN 'A'
- TOKN 111
- TOKN ' '
- TOKN 112
- EQUB VE
-
- TOKN 'P'
- TOKN 'L'
- TOKN 255
- TOKN 221
- EQUB VE
-
- TOKN 'W'
- TOKN 253
- TOKN 'L'
- TOKN 'D'
- EQUB VE
-
- TOKN 226
- TOKN 'E'
- TOKN ' '
- EQUB VE
-
- TOKN 226
- TOKN 'I'
- TOKN 'S'
- TOKN ' '
- EQUB VE
-
- TOKN 224
- TOKN 'A'
- TOKN 'D'
- TOKN 210
- TOKN 154
- EQUB VE
-
- TOKN 9
- TOKN 11
- TOKN 1
- TOKN 8
- EQUB VE
-
- TOKN 'D'
- TOKN 'R'
- TOKN 'I'
- TOKN 250
- EQUB VE
-
- TOKN ' '
- TOKN 'C'
- TOKN 245
- TOKN 'A'
- TOKN 224
- TOKN 'G'
- TOKN 'U'
- TOKN 'E'
- EQUB VE
-
- TOKN 'I'
- TOKN 255
- EQUB VE
-
- TOKN 19
- TOKN 'C'
- TOKN 'O'
- TOKN 'M'
- TOKN 'M'
- TOKN 255
- TOKN 'D'
- TOKN 244
- EQUB VE
-
- TOKN 104
- EQUB VE
-
- TOKN 'M'
- TOKN 217
- TOKN 'N'
- TOKN 'T'
- TOKN 'A'
- TOKN 240
- EQUB VE
-
- TOKN 252
- TOKN 'I'
- TOKN 'B'
- TOKN 229
- EQUB VE
-
- TOKN 'T'
- TOKN 242
- TOKN 'E'
- EQUB VE
-
- TOKN 'S'
- TOKN 'P'
- TOKN 'O'
- TOKN 'T'
- TOKN 'T'
- TOKN 252
- EQUB VE
-
- TOKN 120
- EQUB VE
-
- TOKN 121
- EQUB VE
-
- TOKN 97
- TOKN 'O'
- TOKN 'I'
- TOKN 'D'
- EQUB VE
-
- TOKN 127
- EQUB VE
-
- TOKN 126
- EQUB VE
-
- TOKN 255
- TOKN 'C'
- TOKN 'I'
- TOKN 246
- TOKN 'T'
- EQUB VE
-
- TOKN 'E'
- TOKN 'X'
- TOKN 233
- TOKN 'P'
- TOKN 251
- TOKN 223
- TOKN 228
- EQUB VE
-
- TOKN 'E'
- TOKN 'C'
- TOKN 233
- TOKN 'N'
- TOKN 'T'
- TOKN 'R'
- TOKN 'I'
- TOKN 'C'
- EQUB VE
-
- TOKN 240
- TOKN 'G'
- TOKN 248
- TOKN 240
- TOKN 252
- EQUB VE
-
- TOKN 114
- EQUB VE
-
- TOKN 'K'
- TOKN 220
- TOKN 'L'
- TOKN 244
- EQUB VE
-
- TOKN 'D'
- TOKN 'E'
- TOKN 'A'
- TOKN 'D'
- TOKN 'L'
- TOKN 'Y'
- EQUB VE
-
- TOKN 'E'
- TOKN 'V'
- TOKN 220
- EQUB VE
-
- TOKN 229
- TOKN 226
- TOKN 228
- EQUB VE
-
- TOKN 'V'
- TOKN 'I'
- TOKN 'C'
- TOKN 'I'
- TOKN 'O'
- TOKN 236
- EQUB VE
-
- TOKN 219
- TOKN 'S'
- TOKN ' '
- EQUB VE
-
- TOKN 13
- TOKN 14
- TOKN 19
- EQUB VE
-
- TOKN '.'
- TOKN 12
- TOKN 15
- EQUB VE
-
- TOKN ' '
- TOKN 255
- TOKN 'D'
- TOKN ' '
- EQUB VE
-
- TOKN 'Y'
- TOKN 217
- EQUB VE
-
- TOKN 'P'
- TOKN 238
- TOKN 'K'
- TOKN 195
- TOKN 'M'
- TOKN 221
- TOKN 244
- TOKN 'S'
- EQUB VE
-
- TOKN 'D'
- TOKN 236
- TOKN 'T'
- TOKN ' '
- TOKN 'C'
- TOKN 224
- TOKN 'U'
- TOKN 'D'
- TOKN 'S'
- EQUB VE
-
- TOKN 'I'
- TOKN 233
- TOKN ' '
- TOKN 247
- TOKN 'R'
- TOKN 'G'
- TOKN 'S'
- EQUB VE
-
- TOKN 'R'
- TOKN 'O'
- TOKN 'C'
- TOKN 'K'
- TOKN ' '
- TOKN 'F'
- TOKN 253
- TOKN 239
- TOKN 251
- TOKN 223
- TOKN 'S'
- EQUB VE
-
- TOKN 'V'
- TOKN 'O'
- TOKN 'L'
- TOKN 'C'
- TOKN 'A'
- TOKN 227
- TOKN 237
- EQUB VE
-
- TOKN 'P'
- TOKN 'L'
- TOKN 255
- TOKN 'T'
- EQUB VE
-
- TOKN 'T'
- TOKN 'U'
- TOKN 'L'
- TOKN 'I'
- TOKN 'P'
- EQUB VE
-
- TOKN 'B'
- TOKN 255
- TOKN 255
- TOKN 'A'
- EQUB VE
-
- TOKN 'C'
- TOKN 253
- TOKN 'N'
- EQUB VE
-
- TOKN 18
- TOKN 'W'
- TOKN 'E'
- TOKN 252
- EQUB VE
-
- TOKN 18
- EQUB VE
-
- TOKN 17
- TOKN ' '
- TOKN 18
- EQUB VE
-
- TOKN 17
- TOKN ' '
- TOKN 104
- EQUB VE
-
- TOKN 240
- TOKN 'H'
- TOKN 'A'
- TOKN 234
- TOKN 'T'
- TOKN 255
- TOKN 'T'
- EQUB VE
-
- TOKN 191
- EQUB VE
-
- TOKN 240
- TOKN 'G'
- TOKN ' '
- EQUB VE
-
- TOKN 252
- TOKN ' '
- EQUB VE
-
-\EQUB 0 EOR VE
- EQUB VE
-
-\EQUB 0 EOR VE
- EQUB VE
-
-\EQUB 0 EOR VE
- EQUB VE
-
- TOKN ' '
- TOKN 'N'
- TOKN 'A'
- TOKN 'M'
- TOKN 'E'
- TOKN '?'
- TOKN ' '
- EQUB VE
-
- TOKN ' '
- TOKN 'T'
- TOKN 'O'
- TOKN ' '
- EQUB VE
-
- TOKN ' '
- TOKN 'I'
- TOKN 'S'
- TOKN ' '
- EQUB VE
-
- TOKN 'W'
- TOKN 'A'
- TOKN 'S'
- TOKN ' '
- TOKN 249
- TOKN 222
- TOKN ' '
- TOKN 218
- TOKN 246
- TOKN ' '
- TOKN 245
- TOKN ' '
- TOKN 19
- EQUB VE
-
- TOKN '.'
- TOKN 12
- TOKN ' '
- TOKN 19
- EQUB VE
-
- TOKN 'D'
- TOKN 'O'
- TOKN 'C'
- TOKN 'K'
- TOKN 252
- EQUB VE
-
- TOKN 1
- TOKN '('
- TOKN 'Y'
- TOKN '/'
- TOKN 'N'
- TOKN ')'
- TOKN '?'
- EQUB VE
-
- TOKN 'S'
- TOKN 'H'
- TOKN 'I'
- TOKN 'P'
- EQUB VE
-
- TOKN ' '
- TOKN 'A'
- TOKN ' '
- EQUB VE
-
- TOKN ' '
- TOKN 244
- TOKN 'R'
- TOKN 'I'
- TOKN 236
- EQUB VE
-
- TOKN ' '
- TOKN 'N'
- TOKN 'E'
- TOKN 'W'
- TOKN ' '
- EQUB VE
-
- TOKN 2
- TOKN ' '
- TOKN 'H'
- TOKN 244
- TOKN ' '
- TOKN 239
- TOKN 'J'
- TOKN 237
- TOKN 'T'
- TOKN 'Y'
- TOKN 39
- TOKN 'S'
- TOKN ' '
- TOKN 'S'
- TOKN 'P'
- TOKN 'A'
- TOKN 233
- TOKN ' '
- TOKN 'N'
- TOKN 'A'
- TOKN 'V'
- TOKN 'Y'
- TOKN 13
- EQUB VE
-
- TOKN 177
- TOKN 8
- TOKN 1
- TOKN ' '
- TOKN ' '
- TOKN 'M'
- TOKN 237
- TOKN 'S'
- TOKN 'A'
- TOKN 231
- TOKN ' '
- TOKN 246
- TOKN 'D'
- TOKN 'S'
- EQUB VE
-
- TOKN ' '
- TOKN 154
- TOKN ' '
- TOKN 4
- TOKN ','
- TOKN ' '
- TOKN 'I'
- TOKN ' '
- TOKN 13
- TOKN 'A'
- TOKN 'M'
- TOKN 2
- TOKN ' '
- TOKN 'C'
- TOKN 'A'
- TOKN 'P'
- TOKN 'T'
- TOKN 'A'
- TOKN 240
- TOKN ' '
- TOKN 27
- TOKN ' '
- TOKN 13
- TOKN 'O'
- TOKN 'F'
- TOKN 211
- EQUB VE
-
-\EQUB 0 EOR VE
- EQUB VE
-
- TOKN 15
- TOKN ' '
- TOKN 'U'
- TOKN 'N'
- TOKN 'K'
- TOKN 227
- TOKN 'W'
- TOKN 'N'
- TOKN ' '
- TOKN 145
- EQUB VE
-
- TOKN 9
- TOKN 8
- TOKN 23
- TOKN 30
- TOKN 1
- TOKN 240
- TOKN 'C'
- TOKN 'O'
- TOKN 'M'
- TOKN 195
- TOKN 'M'
- TOKN 237
- TOKN 'S'
- TOKN 'A'
- TOKN 231
- EQUB VE
-
- TOKN 'C'
- TOKN 'U'
- TOKN 'R'
- TOKN 'R'
- TOKN 'U'
- TOKN 226
- TOKN 244
- TOKN 'S'
- EQUB VE
-
- TOKN 'F'
- TOKN 'O'
- TOKN 'S'
- TOKN 'D'
- TOKN 'Y'
- TOKN 'K'
- TOKN 'E'
- TOKN ' '
- TOKN 'S'
- TOKN 'M'
- TOKN 'Y'
- TOKN 226
- TOKN 'E'
- EQUB VE
-
- TOKN 'F'
- TOKN 253
- TOKN 'T'
- TOKN 237
- TOKN 254
- TOKN 'E'
- EQUB VE
-
- TOKN 203
- TOKN 242
- TOKN 237
- TOKN 241
- TOKN 233
- EQUB VE
-
- TOKN 'I'
- TOKN 'S'
- TOKN ' '
- TOKN 247
- TOKN 'L'
- TOKN 'I'
- TOKN 'E'
- TOKN 'V'
- TOKN 252
- TOKN 201
- TOKN 'H'
- TOKN 'A'
- TOKN 250
- TOKN ' '
- TOKN 'J'
- TOKN 'U'
- TOKN 'M'
- TOKN 'P'
- TOKN 252
- TOKN 201
- TOKN 148
- TOKN 'G'
- TOKN 228
- TOKN 'A'
- TOKN 'X'
- TOKN 'Y'
- EQUB VE
-
- TOKN 25
- TOKN 9
- TOKN 30
- TOKN 29
- TOKN 14
- TOKN 2
- TOKN 'G'
- TOKN 'O'
- TOKN 'O'
- TOKN 'D'
- TOKN ' '
- TOKN 'D'
- TOKN 'A'
- TOKN 'Y'
- TOKN ' '
- TOKN 154
- TOKN ' '
- TOKN 4
- TOKN 204
- TOKN 'I'
- TOKN 13
- TOKN ' '
- TOKN 'A'
- TOKN 'M'
- TOKN ' '
- TOKN 19
- TOKN 'A'
- TOKN 'G'
- TOKN 246
- TOKN 'T'
- TOKN ' '
- TOKN 19
- TOKN 'B'
- TOKN 249
- TOKN 'K'
- TOKN 'E'
- TOKN ' '
- TOKN 'O'
- TOKN 'F'
- TOKN ' '
- TOKN 19
- TOKN 'N'
- TOKN 'A'
- TOKN 'V'
- TOKN 'A'
- TOKN 'L'
- TOKN ' '
- TOKN 19
- TOKN 240
- TOKN 'T'
- TOKN 'E'
- TOKN 'L'
- TOKN 229
- TOKN 'G'
- TOKN 246
- TOKN 233
- TOKN 204
- TOKN 'A'
- TOKN 'S'
- TOKN ' '
- TOKN 179
- TOKN ' '
- TOKN 'K'
- TOKN 227
- TOKN 'W'
- TOKN ','
- TOKN ' '
- TOKN 147
- TOKN 19
- TOKN 'N'
- TOKN 'A'
- TOKN 'V'
- TOKN 'Y'
- TOKN ' '
- TOKN 'H'
- TOKN 'A'
- TOKN 250
- TOKN ' '
- TOKN 247
- TOKN 246
- TOKN ' '
- TOKN 'K'
- TOKN 'E'
- TOKN 'E'
- TOKN 'P'
- TOKN 195
- TOKN 147
- TOKN 19
- TOKN 226
- TOKN 238
- TOKN 'G'
- TOKN 'O'
- TOKN 'I'
- TOKN 'D'
- TOKN 'S'
-\TOKN '#'
-\EQUB VE
-
- TOKN ' '
- TOKN 'O'
- TOKN 'F'
- TOKN 'F'
- TOKN ' '
- TOKN 179
- TOKN 'R'
- TOKN ' '
- TOKN 'A'
- TOKN 'S'
- TOKN 'S'
- TOKN ' '
- TOKN 217
- TOKN 'T'
- TOKN ' '
- TOKN 240
- TOKN ' '
- TOKN 'D'
- TOKN 'E'
- TOKN 'E'
- TOKN 'P'
- TOKN ' '
- TOKN 'S'
- TOKN 'P'
- TOKN 'A'
- TOKN 233
- TOKN ' '
- TOKN 'F'
- TOKN 253
- TOKN ' '
- TOKN 239
- TOKN 'N'
- TOKN 'Y'
- TOKN ' '
- TOKN 'Y'
- TOKN 'E'
- TOKN 238
- TOKN 'S'
- TOKN ' '
- TOKN 227
- TOKN 'W'
- TOKN '.'
- TOKN ' '
- TOKN 19
- TOKN 'W'
- TOKN 'E'
- TOKN 'L'
- TOKN 'L'
- TOKN ' '
- TOKN 147
- TOKN 'S'
- TOKN 219
- TOKN 'U'
- TOKN 'A'
- TOKN 251
- TOKN 223
- TOKN ' '
- TOKN 'H'
- TOKN 'A'
- TOKN 'S'
- TOKN ' '
- TOKN 'C'
- TOKN 'H'
- TOKN 255
- TOKN 'G'
- TOKN 252
- TOKN 204
- TOKN 217
- TOKN 'R'
- TOKN ' '
- TOKN 'B'
- TOKN 'O'
- TOKN 'Y'
- TOKN 'S'
- TOKN ' '
- TOKN 238
- TOKN 'E'
- TOKN ' '
- TOKN 242
- TOKN 'A'
- TOKN 'D'
- TOKN 'Y'
- TOKN ' '
- TOKN 'F'
- TOKN 253
- TOKN 208
- TOKN 'P'
- TOKN 'U'
- TOKN 'S'
- TOKN 'H'
- TOKN ' '
- TOKN 'R'
- TOKN 'I'
- TOKN 'G'
- TOKN 'H'
- TOKN 'T'
- TOKN 201
- TOKN 147
-\TOKN '#'
-\EQUB VE
-
- TOKN 'H'
- TOKN 'O'
- TOKN 'M'
- TOKN 'E'
- TOKN ' '
- TOKN 'S'
- TOKN 'Y'
- TOKN 'S'
- TOKN 'T'
- TOKN 'E'
- TOKN 'M'
- TOKN ' '
- TOKN 'O'
- TOKN 'F'
- TOKN ' '
- TOKN 226
- TOKN 'O'
- TOKN 218
- TOKN ' '
- TOKN 'M'
- TOKN 'O'
- TOKN 226
- TOKN 244
- TOKN 'S'
- TOKN 204
- TOKN 24
- TOKN 9
- TOKN 30
- TOKN 29
- TOKN 'I'
- TOKN 13
- TOKN ' '
- TOKN 'H'
- TOKN 'A'
- TOKN 250
- TOKN ' '
- TOKN 'O'
- TOKN 'B'
- TOKN 'T'
- TOKN 'A'
- TOKN 240
- TOKN 196
- TOKN 147
- TOKN 'D'
- TOKN 'E'
- TOKN 'F'
- TOKN 246
- TOKN 233
- TOKN ' '
- TOKN 'P'
- TOKN 249
- TOKN 'N'
- TOKN 'S'
- TOKN ' '
- TOKN 'F'
- TOKN 253
- TOKN ' '
- TOKN 226
- TOKN 'E'
- TOKN 'I'
- TOKN 'R'
- TOKN ' '
- TOKN 19
- TOKN 'H'
- TOKN 'I'
- TOKN 250
- TOKN ' '
- TOKN 19
- TOKN 'W'
- TOKN 253
- TOKN 'L'
- TOKN 'D'
- TOKN 'S'
- TOKN 204
- TOKN 147
- TOKN 247
- TOKN 221
- TOKN 229
- TOKN 'S'
- TOKN ' '
- TOKN 'K'
- TOKN 227
- TOKN 'W'
- TOKN ' '
- TOKN 'W'
- TOKN 'E'
- TOKN 39
- TOKN 250
- TOKN ' '
- TOKN 'G'
- TOKN 'O'
- TOKN 'T'
- TOKN ' '
- TOKN 235
- TOKN 'M'
- TOKN 'E'
- TOKN 226
-\TOKN '#'
-\EQUB VE
-
- TOKN 195
- TOKN 'B'
- TOKN 'U'
- TOKN 'T'
- TOKN ' '
- TOKN 227
- TOKN 'T'
- TOKN ' '
- TOKN 'W'
- TOKN 'H'
- TOKN 245
- TOKN 204
- TOKN 'I'
- TOKN 'F'
- TOKN ' '
- TOKN 19
- TOKN 'I'
- TOKN ' '
- TOKN 'T'
- TOKN 248
- TOKN 'N'
- TOKN 'S'
- TOKN 'M'
- TOKN 219
- TOKN ' '
- TOKN 147
- TOKN 'P'
- TOKN 249
- TOKN 'N'
- TOKN 'S'
- TOKN 201
- TOKN 217
- TOKN 'R'
- TOKN ' '
- TOKN 'B'
- TOKN 'A'
- TOKN 218
- TOKN ' '
- TOKN 223
- TOKN ' '
- TOKN 19
- TOKN 234
- TOKN 242
- TOKN 248
- TOKN ' '
- TOKN 226
- TOKN 'E'
- TOKN 'Y'
- TOKN 39
- TOKN 'L'
- TOKN 'L'
- TOKN ' '
- TOKN 240
- TOKN 'T'
- TOKN 244
- TOKN 233
- TOKN 'P'
- TOKN 'T'
- TOKN ' '
- TOKN 147
- TOKN 'T'
- TOKN 'R'
- TOKN 255
- TOKN 'S'
- TOKN 'M'
- TOKN 'I'
- TOKN 'S'
- TOKN 'S'
- TOKN 'I'
- TOKN 223
- TOKN '.'
-\TOKN '#'
-\EQUB VE
-
- TOKN ' '
- TOKN 19
- TOKN 'I'
- TOKN ' '
- TOKN 'N'
- TOKN 'E'
- TOKN 252
- TOKN 208
- TOKN 207
- TOKN 201
- TOKN 239
- TOKN 'K'
- TOKN 'E'
- TOKN ' '
- TOKN 147
- TOKN 'R'
- TOKN 'U'
- TOKN 'N'
- TOKN 204
- TOKN 179
- TOKN 39
- TOKN 242
- TOKN ' '
- TOKN 'E'
- TOKN 229
- TOKN 'C'
- TOKN 'T'
- TOKN 252
-\TOKN '#'
-\EQUB VE
-
- TOKN 204
- TOKN 147
- TOKN 'P'
- TOKN 249
- TOKN 'N'
- TOKN 'S'
- TOKN ' '
- TOKN 'A'
- TOKN 242
- TOKN ' '
- TOKN 'U'
- TOKN 'N'
- TOKN 'I'
- TOKN 'P'
- TOKN 'U'
- TOKN 'L'
- TOKN 218
- TOKN ' '
- TOKN 'C'
- TOKN 'O'
- TOKN 'D'
- TOKN 196
- TOKN 'W'
- TOKN 'I'
- TOKN 226
- TOKN 240
- TOKN ' '
- TOKN 148
- TOKN 'T'
- TOKN 'R'
- TOKN 255
- TOKN 'S'
- TOKN 'M'
- TOKN 'I'
- TOKN 'S'
- TOKN 'S'
- TOKN 'I'
- TOKN 223
- TOKN 204
- TOKN 8
- TOKN 179
- TOKN ' '
- TOKN 'W'
- TOKN 220
- TOKN 'L'
- TOKN ' '
- TOKN 247
- TOKN ' '
- TOKN 'P'
- TOKN 'A'
- TOKN 'I'
- TOKN 'D'
- TOKN 204
- TOKN ' '
- TOKN ' '
- TOKN ' '
- TOKN ' '
- TOKN 19
- TOKN 'G'
- TOKN 'O'
- TOKN 'O'
- TOKN 'D'
- TOKN ' '
- TOKN 'L'
- TOKN 'U'
- TOKN 'C'
- TOKN 'K'
- TOKN ' '
- TOKN 154
- TOKN 212
- TOKN 24
- EQUB VE
-
- TOKN 25
- TOKN 9
- TOKN 29
- TOKN 30
- TOKN 8
- TOKN 14
- TOKN 13
- TOKN 19
- TOKN 'W'
- TOKN 'E'
- TOKN 'L'
- TOKN 'L'
- TOKN ' '
- TOKN 'D'
- TOKN 223
- TOKN 'E'
- TOKN ' '
- TOKN 154
- TOKN 204
- TOKN 179
- TOKN ' '
- TOKN 'H'
- TOKN 'A'
- TOKN 250
- TOKN ' '
- TOKN 218
- TOKN 'R'
- TOKN 'V'
- TOKN 196
- TOKN 'U'
- TOKN 'S'
- TOKN ' '
- TOKN 'W'
- TOKN 'E'
- TOKN 'L'
- TOKN 'L'
- TOKN 178
- TOKN 'W'
- TOKN 'E'
- TOKN ' '
- TOKN 'S'
- TOKN 'H'
- TOKN 228
- TOKN 'L'
- TOKN ' '
- TOKN 242
- TOKN 'M'
- TOKN 'E'
- TOKN 'M'
- TOKN 'B'
- TOKN 244
- TOKN 204
-\TOKN '#'
-\EQUB VE
-
- TOKN 'W'
- TOKN 'E'
- TOKN ' '
- TOKN 'D'
- TOKN 'I'
- TOKN 'D'
- TOKN ' '
- TOKN 227
- TOKN 'T'
- TOKN ' '
- TOKN 'E'
- TOKN 'X'
- TOKN 'P'
- TOKN 'E'
- TOKN 'C'
- TOKN 'T'
- TOKN ' '
- TOKN 147
- TOKN 19
- TOKN 226
- TOKN 238
- TOKN 'G'
- TOKN 'O'
- TOKN 'I'
- TOKN 'D'
- TOKN 'S'
- TOKN 201
- TOKN 'F'
- TOKN 240
- TOKN 'D'
- TOKN ' '
- TOKN 217
- TOKN 'T'
- TOKN ' '
- TOKN 'A'
- TOKN 'B'
- TOKN 217
- TOKN 'T'
- TOKN ' '
- TOKN 179
- TOKN 204
-\TOKN '#'
-\EQUB VE
-
- TOKN 'F'
- TOKN 253
- TOKN ' '
- TOKN 147
- TOKN 'M'
- TOKN 'O'
- TOKN 'M'
- TOKN 246
- TOKN 'T'
- TOKN ' '
- TOKN 'P'
- TOKN 229
- TOKN 'A'
- TOKN 218
- TOKN ' '
- TOKN 'A'
- TOKN 'C'
- TOKN 233
- TOKN 'P'
- TOKN 'T'
- TOKN ' '
- TOKN 148
-\TOKN '#'
-\EQUB VE
-
- TOKN 19
- TOKN 'N'
- TOKN 'A'
- TOKN 'V'
- TOKN 'Y'
- TOKN ' '
- TOKN 6
- TOKN 114
- TOKN 5
- TOKN ' '
- TOKN 'A'
- TOKN 'S'
- TOKN ' '
- TOKN 'P'
- TOKN 'A'
- TOKN 'Y'
- TOKN 'M'
- TOKN 246
- TOKN 'T'
- TOKN 212
- TOKN 24
- EQUB VE
-
-\EQUB 0 EOR VE
- EQUB VE
-
- TOKN 'S'
- TOKN 'H'
- TOKN 242
- TOKN 'W'
- EQUB VE
-
- TOKN 247
- TOKN 'A'
- TOKN 222
- EQUB VE
-
- TOKN 'B'
- TOKN 'I'
- TOKN 'S'
- TOKN 223
- EQUB VE
-
- TOKN 'S'
- TOKN 'N'
- TOKN 'A'
- TOKN 'K'
- TOKN 'E'
- EQUB VE
-
- TOKN 'W'
- TOKN 'O'
- TOKN 'L'
- TOKN 'F'
- EQUB VE
-
- TOKN 229
- TOKN 'O'
- TOKN 'P'
- TOKN 238
- TOKN 'D'
- EQUB VE
-
- TOKN 'C'
- TOKN 245
- EQUB VE
-
- TOKN 'M'
- TOKN 223
- TOKN 'K'
- TOKN 'E'
- TOKN 'Y'
- EQUB VE
-
- TOKN 'G'
- TOKN 'O'
- TOKN 245
- EQUB VE
-
- TOKN 'F'
- TOKN 'I'
- TOKN 'S'
- TOKN 'H'
- EQUB VE
-
- TOKN 106
- TOKN ' '
- TOKN 105
- EQUB VE
-
- TOKN 17
- TOKN ' '
- TOKN 120
- TOKN ' '
- TOKN 123
- EQUB VE
-
- TOKN 175
- TOKN 107
- TOKN ' '
- TOKN 121
- TOKN ' '
- TOKN 123
- EQUB VE
-
- TOKN 124
- TOKN ' '
- TOKN 125
- EQUB VE
-
- TOKN 106
- TOKN ' '
- TOKN 105
- EQUB VE
-
- TOKN 'M'
- TOKN 'E'
- TOKN 245
- EQUB VE
-
- TOKN 'C'
- TOKN 'U'
- TOKN 'T'
- TOKN 'L'
- TOKN 221
- EQUB VE
-
- TOKN 222
- TOKN 'E'
- TOKN 'A'
- TOKN 'K'
- EQUB VE
-
- TOKN 'B'
- TOKN 'U'
- TOKN 'R'
- TOKN 'G'
- TOKN 244
- TOKN 'S'
- EQUB VE
-
- TOKN 235
- TOKN 'U'
- TOKN 'P'
- EQUB VE
-
- TOKN 'I'
- TOKN 233
- EQUB VE
-
- TOKN 'M'
- TOKN 'U'
- TOKN 'D'
- EQUB VE
-
- TOKN 'Z'
- TOKN 244
- TOKN 'O'
- TOKN '-'
- TOKN 19
- TOKN 'G'
- EQUB VE
-
- TOKN 'V'
- TOKN 'A'
- TOKN 'C'
- TOKN 'U'
- TOKN 'U'
- TOKN 'M'
- EQUB VE
-
- TOKN 17
- TOKN ' '
- TOKN 'U'
- TOKN 'L'
- TOKN 'T'
- TOKN 248
- EQUB VE
-
- TOKN 'H'
- TOKN 'O'
- TOKN 'C'
- TOKN 'K'
- TOKN 'E'
- TOKN 'Y'
- EQUB VE
-
- TOKN 'C'
- TOKN 'R'
- TOKN 'I'
- TOKN 'C'
- TOKN 'K'
- TOKN 221
- EQUB VE
-
- TOKN 'K'
- TOKN 238
- TOKN 245
- TOKN 'E'
- EQUB VE
-
- TOKN 'P'
- TOKN 'O'
- TOKN 224
- EQUB VE
-
- TOKN 'T'
- TOKN 246
- TOKN 'N'
- TOKN 'I'
- TOKN 'S'
- EQUB VE
-
- EQUB VE
+ EQUB VE                \ Token 0
+
+ EJMP 9                 \ Token 1
+ EJMP 11
+ EJMP 30
+ EJMP 1
+ EJMP 8
+ ECHR ' '
+ ETWO 'D', 'I'
+ ECHR 'S'
+ ECHR 'K'
+ ECHR ' '
+ ECHR 'A'
+ ECHR 'C'
+ ETWO 'C', 'E'
+ ECHR 'S'
+ ECHR 'S'
+ ECHR ' '
+ ECHR 'M'
+ ECHR 'E'
+ ETWO 'N', 'U'
+ ETWO '-', '-'
+ EJMP 10
+ EJMP 2
+ ECHR '1'
+ ECHR '.'
+ ECHR ' '
+ ETOK 149
+ ETWO '-', '-'
+ ECHR '2'
+ ECHR '.'
+ ECHR ' '
+ ECHR 'S'
+ ECHR 'A'
+ ETWO 'V', 'E'
+ ECHR ' '
+ ETOK 154
+ ECHR ' '
+ EJMP 4
+ ETWO '-', '-'
+ ECHR '3'
+ ECHR '.'
+ ECHR ' '
+ ECHR 'C'
+ ETWO 'A', 'T'
+ ECHR 'A'
+ ETWO 'L', 'O'
+ ECHR 'G'
+ ECHR 'U'
+ ECHR 'E'
+ ETWO '-', '-'
+ ECHR '4'
+ ECHR '.'
+ ECHR ' '
+ ECHR 'D'
+ ECHR 'E'
+ ECHR 'L'
+ ETWO 'E', 'T'
+ ECHR 'E'
+ ETOK 208
+ ECHR 'F'
+ ECHR 'I'
+ ETWO 'L', 'E'
+ ETWO '-', '-'
+ ECHR '5'
+ ECHR '.'
+ ECHR ' '
+ ECHR 'E'
+ ECHR 'X'
+ ETWO 'I', 'T'
+ ETWO '-', '-'
+ EQUB VE
+
+ EJMP 12                \ Token 2
+ ECHR 'W'
+ ECHR 'H'
+ ECHR 'I'
+ ECHR 'C'
+ ECHR 'H'
+ ECHR ' '
+ ETOK 151
+ ECHR '?'
+ EQUB VE
+
+ ECHR 'C'               \ Token 3
+ ECHR 'O'
+ ECHR 'M'
+ ECHR 'P'
+ ECHR 'E'
+ ETWO 'T', 'I'
+ ETWO 'T', 'I'
+ ETWO 'O', 'N'
+ ECHR ' '
+ ETWO 'N', 'U'
+ ECHR 'M'
+ ECHR 'B'
+ ETWO 'E', 'R'
+ ECHR ':'
+ EQUB VE
+
+ ETOK 150               \ Token 4
+ ETOK 151
+ ECHR ' '
+ EJMP 16
+ ETOK 152
+ ETWO '-', '-'
+ EQUB VE
+
+ ETOK 176               \ Token 5
+ ERND 18
+ ETOK 202
+ ERND 19
+ ETOK 177
+ EQUB VE
+
+ ECHR ' '               \ Token 6
+ ECHR ' '
+ ETOK 149
+ ECHR ' '
+ EJMP 1
+ ECHR '('
+ ECHR 'Y'
+ ECHR '/'
+ ECHR 'N'
+ ECHR ')'
+ ECHR '?'
+ EJMP 2
+ EJMP 12
+ EJMP 12
+ EQUB VE
+
+ ECHR 'P'               \ Token 7
+ ETWO 'R', 'E'
+ ECHR 'S'
+ ECHR 'S'
+ ECHR ' '
+ ECHR 'S'
+ ECHR 'P'
+ ECHR 'A'
+ ETWO 'C', 'E'
+ ECHR ' '
+ ETWO 'O', 'R'
+ ECHR ' '
+ ECHR 'F'
+ ECHR 'I'
+ ETWO 'R', 'E'
+ ECHR ','
+ ETOK 154
+ ECHR '.'
+ EJMP 12
+ EJMP 12
+ EQUB VE
+
+ ETOK 154               \ Token 8
+ ETOK 39
+ ECHR 'S'
+ ETOK 200
+ EQUB VE
+
+ EJMP 21                \ Token 9
+ ECHR 'F'
+ ECHR 'I'
+ ETWO 'L', 'E'
+ ETOK 201
+ ECHR 'D'
+ ECHR 'E'
+ ECHR 'L'
+ ETWO 'E', 'T'
+ ECHR 'E'
+ ECHR '?'
+ EQUB VE
+
+ EJMP 23                \ Token 10
+ EJMP 14
+ EJMP 2
+ ECHR 'G'
+ ETWO 'R', 'E'
+ ETWO 'E', 'T'
+ ETWO 'I', 'N'
+ ECHR 'G'
+ ECHR 'S'
+ ETOK 213
+ ETOK 178
+ EJMP 19
+ ECHR 'I'
+ ECHR ' '
+ ETWO 'B', 'E'
+ ECHR 'G'
+ ETOK 208
+ ECHR 'M'
+ ECHR 'O'
+ ECHR 'M'
+ ETWO 'E', 'N'
+ ECHR 'T'
+ ECHR ' '
+ ECHR 'O'
+ ECHR 'F'
+ ECHR ' '
+ ETOK 179
+ ECHR 'R'
+ ECHR ' '
+ ECHR 'V'
+ ETWO 'A', 'L'
+ ECHR 'U'
+ ETWO 'A', 'B'
+ ETWO 'L', 'E'
+ ECHR ' '
+ ETWO 'T', 'I'
+ ECHR 'M'
+ ECHR 'E'
+ ETOK 204
+ ECHR 'W'
+ ECHR 'E'
+ ECHR ' '
+ ECHR 'W'
+ ETWO 'O', 'U'
+ ECHR 'L'
+ ECHR 'D'
+ ECHR ' '
+ ECHR 'L'
+ ECHR 'I'
+ ECHR 'K'
+ ECHR 'E'
+ ECHR ' '
+ ETOK 179
+ ETOK 201
+ ECHR 'D'
+ ECHR 'O'
+ ETOK 208
+ ECHR 'L'
+ ETWO 'I', 'T'
+ ECHR 'T'
+ ETWO 'L', 'E'
+ ECHR ' '
+ ECHR 'J'
+ ECHR 'O'
+ ECHR 'B'
+ ECHR ' '
+ ECHR 'F'
+ ETWO 'O', 'R'
+ ECHR ' '
+ ETWO 'U', 'S'
+ ETOK 204
+ ETOK 147
+ ETOK 207
+ ECHR ' '
+ ETOK 179
+ ECHR ' '
+ ETWO 'S', 'E'
+ ECHR 'E'
+ ECHR ' '
+ ECHR 'H'
+ ECHR 'E'
+ ETWO 'R', 'E'
+ ETOK 202
+ ECHR 'A'
+ ETOK 210
+ ECHR 'M'
+ ECHR 'O'
+ ECHR 'D'
+ ECHR 'E'
+ ECHR 'L'
+ ECHR ','
+ ECHR ' '
+ ETOK 147
+ EJMP 19
+ ECHR 'C'
+ ETWO 'O', 'N'
+ ETWO 'S', 'T'
+ ECHR 'R'
+ ECHR 'I'
+ ECHR 'C'
+ ECHR 'T'
+ ETWO 'O', 'R'
+ ECHR ','
+ ECHR ' '
+ ECHR 'E'
+ ETWO 'Q', 'U'
+ ECHR 'I'
+ ECHR 'P'
+ ETOK 196
+ ECHR 'W'
+ ECHR 'I'
+ ETWO 'T', 'H'
+ ETOK 208
+ ECHR 'T'
+ ECHR 'O'
+ ECHR 'P'
+ ECHR ' '
+ ETWO 'S', 'E'
+ ECHR 'C'
+ ECHR 'R'
+ ETWO 'E', 'T'
+ ETOK 210
+ ECHR 'S'
+ ECHR 'H'
+ ECHR 'I'
+ ECHR 'E'
+ ECHR 'L'
+ ECHR 'D'
+ ECHR ' '
+ ECHR 'G'
+ ETWO 'E', 'N'
+ ETWO 'E', 'R'
+ ETWO 'A', 'T'
+ ETWO 'O', 'R'
+ ETOK 204
+ ECHR 'U'
+ ECHR 'N'
+ ECHR 'F'
+ ETWO 'O', 'R'
+ ECHR 'T'
+ ECHR 'U'
+ ECHR 'N'
+ ETWO 'A', 'T'
+ ECHR 'E'
+ ECHR 'L'
+ ECHR 'Y'
+ ECHR ' '
+ ETWO 'I', 'T'
+ ETOK 39
+ ECHR 'S'
+ ECHR ' '
+ ETWO 'B', 'E'
+ ETWO 'E', 'N'
+ ECHR ' '
+ ETWO 'S', 'T'
+ ECHR 'O'
+ ECHR 'L'
+ ETWO 'E', 'N'
+ ETOK 204
+ EJMP 22
+ ETWO 'I', 'T'
+ ECHR ' '
+ ECHR 'W'
+ ETWO 'E', 'N'
+ ECHR 'T'
+ ECHR ' '
+ ECHR 'M'
+ ECHR 'I'
+ ECHR 'S'
+ ECHR 'S'
+ ETOK 195
+ ECHR 'F'
+ ECHR 'R'
+ ECHR 'O'
+ ECHR 'M'
+ ECHR ' '
+ ETWO 'O', 'U'
+ ECHR 'R'
+ ECHR ' '
+ ETOK 207
+ ECHR ' '
+ ECHR 'Y'
+ ETWO 'A', 'R'
+ ECHR 'D'
+ ECHR ' '
+ ETWO 'O', 'N'
+ ECHR ' '
+ EJMP 19
+ ETWO 'X', 'E'
+ ETWO 'E', 'R'
+ ECHR ' '
+ ECHR 'F'
+ ECHR 'I'
+ ETWO 'V', 'E'
+ ECHR ' '
+ ECHR 'M'
+ ETWO 'O', 'N'
+ ETWO 'T', 'H'
+ ECHR 'S'
+ ECHR ' '
+ ECHR 'A'
+ ECHR 'G'
+ ECHR 'O'
+ ETOK 178
+ EJMP 28
+ ETOK 204
+ ETOK 179
+ ECHR 'R'
+ ECHR ' '
+ ECHR 'M'
+ ECHR 'I'
+ ECHR 'S'
+ ECHR 'S'
+ ECHR 'I'
+ ETWO 'O', 'N'
+ ECHR ','
+ ECHR ' '
+ ECHR 'S'
+ ECHR 'H'
+ ETWO 'O', 'U'
+ ECHR 'L'
+ ECHR 'D'
+ ECHR ' '
+ ETOK 179
+ ECHR ' '
+ ECHR 'D'
+ ECHR 'E'
+ ECHR 'C'
+ ECHR 'I'
+ ECHR 'D'
+ ECHR 'E'
+ ETOK 201
+ ECHR 'A'
+ ECHR 'C'
+ ETWO 'C', 'E'
+ ECHR 'P'
+ ECHR 'T'
+ ECHR ' '
+ ETWO 'I', 'T'
+ ECHR ','
+ ECHR ' '
+ ECHR 'I'
+ ECHR 'S'
+ ETOK 201
+ ETWO 'S', 'E'
+ ECHR 'E'
+ ECHR 'K'
+ ETOK 178
+ ECHR 'D'
+ ETWO 'E', 'S'
+ ECHR 'T'
+ ECHR 'R'
+ ECHR 'O'
+ ECHR 'Y'
+ ECHR ' '
+ ETOK 148
+ ETOK 207
+ ETOK 204
+ ETOK 179
+ ECHR ' '
+ ECHR 'A'
+ ETWO 'R', 'E'
+ ECHR ' '
+ ECHR 'C'
+ ECHR 'A'
+ ECHR 'U'
+ ETWO 'T', 'I'
+ ETWO 'O', 'N'
+ ETOK 196
+ ETWO 'T', 'H'
+ ETWO 'A', 'T'
+ ECHR ' '
+ ETWO 'O', 'N'
+ ECHR 'L'
+ ECHR 'Y'
+ ECHR ' '
+ EJMP 6
+ ERND 26
+ EJMP 5
+ ECHR 'S'
+ ECHR ' '
+ ECHR 'W'
+ ETWO 'I', 'L'
+ ECHR 'L'
+ ECHR ' '
+ ECHR 'P'
+ ETWO 'E', 'N'
+ ETWO 'E', 'T'
+ ETWO 'R', 'A'
+ ECHR 'T'
+ ECHR 'E'
+ ECHR ' '
+ ETOK 147
+ ECHR 'N'
+ ECHR 'E'
+ ECHR 'W'
+ ECHR ' '
+ ECHR 'S'
+ ECHR 'H'
+ ECHR 'I'
+ ECHR 'E'
+ ECHR 'L'
+ ECHR 'D'
+ ECHR 'S'
+ ETOK 178
+ ETWO 'T', 'H'
+ ETWO 'A', 'T'
+ ECHR ' '
+ ETOK 147
+ EJMP 19
+ ECHR 'C'
+ ETWO 'O', 'N'
+ ETWO 'S', 'T'
+ ECHR 'R'
+ ECHR 'I'
+ ECHR 'C'
+ ECHR 'T'
+ ETWO 'O', 'R'
+ ETOK 202
+ ECHR 'F'
+ ETWO 'I', 'T'
+ ECHR 'T'
+ ETOK 196
+ ECHR 'W'
+ ECHR 'I'
+ ETWO 'T', 'H'
+ ECHR ' '
+ ETWO 'A', 'N'
+ ECHR ' '
+ EJMP 6
+ ERND 17
+ EJMP 5
+ ETOK 177
+ EJMP 2
+ EJMP 8
+ ECHR 'G'
+ ECHR 'O'
+ ECHR 'O'
+ ECHR 'D'
+ ECHR ' '
+ ECHR 'L'
+ ECHR 'U'
+ ECHR 'C'
+ ECHR 'K'
+ ECHR ','
+ ECHR ' '
+ ETOK 154
+ ETOK 212
+ EJMP 22
+ EQUB VE
+
+ EJMP 25                \ Token 11
+ EJMP 9
+ EJMP 30
+ EJMP 23
+ EJMP 14
+ EJMP 2
+ ECHR ' '
+ ECHR ' '
+ ETWO 'A', 'T'
+ ECHR 'T'
+ ETWO 'E', 'N'
+ ETWO 'T', 'I'
+ ETWO 'O', 'N'
+ ETOK 213
+ ECHR '.'
+ ECHR ' '
+ EJMP 19
+ ECHR 'W'
+ ECHR 'E'
+ ECHR ' '
+ ECHR 'H'
+ ECHR 'A'
+ ETWO 'V', 'E'
+ ECHR ' '
+ ECHR 'N'
+ ECHR 'E'
+ ETOK 196
+ ECHR 'O'
+ ECHR 'F'
+ ECHR ' '
+ ETOK 179
+ ECHR 'R'
+ ECHR ' '
+ ETWO 'S', 'E'
+ ECHR 'R'
+ ECHR 'V'
+ ECHR 'I'
+ ECHR 'C'
+ ETWO 'E', 'S'
+ ECHR ' '
+ ECHR 'A'
+ ECHR 'G'
+ ECHR 'A'
+ ETWO 'I', 'N'
+ ETOK 204
+ ECHR 'I'
+ ECHR 'F'
+ ECHR ' '
+ ETOK 179
+ ECHR ' '
+ ECHR 'W'
+ ETWO 'O', 'U'
+ ECHR 'L'
+ ECHR 'D'
+ ECHR ' '
+ ETWO 'B', 'E'
+ ECHR ' '
+ ETWO 'S', 'O'
+ ECHR ' '
+ ECHR 'G'
+ ECHR 'O'
+ ECHR 'O'
+ ECHR 'D'
+ ECHR ' '
+ ECHR 'A'
+ ECHR 'S'
+ ETOK 201
+ ECHR 'G'
+ ECHR 'O'
+ ETOK 201
+ EJMP 19
+ ETWO 'C', 'E'
+ ETWO 'E', 'R'
+ ETWO 'D', 'I'
+ ECHR ' '
+ ETOK 179
+ ECHR ' '
+ ECHR 'W'
+ ETWO 'I', 'L'
+ ECHR 'L'
+ ECHR ' '
+ ETWO 'B', 'E'
+ ECHR ' '
+ ECHR 'B'
+ ECHR 'R'
+ ECHR 'I'
+ ECHR 'E'
+ ECHR 'F'
+ ETWO 'E', 'D'
+ ETOK 204
+ ECHR 'I'
+ ECHR 'F'
+ ECHR ' '
+ ECHR 'S'
+ ECHR 'U'
+ ECHR 'C'
+ ETWO 'C', 'E'
+ ECHR 'S'
+ ECHR 'S'
+ ECHR 'F'
+ ECHR 'U'
+ ECHR 'L'
+ ECHR ','
+ ECHR ' '
+ ETOK 179
+ ECHR ' '
+ ECHR 'W'
+ ETWO 'I', 'L'
+ ECHR 'L'
+ ECHR ' '
+ ETWO 'B', 'E'
+ ECHR ' '
+ ECHR 'W'
+ ECHR 'E'
+ ECHR 'L'
+ ECHR 'L'
+ ECHR ' '
+ ETWO 'R', 'E'
+ ECHR 'W'
+ ETWO 'A', 'R'
+ ECHR 'D'
+ ETWO 'E', 'D'
+ ETOK 212
+ EJMP 24
+ EQUB VE
+
+ ECHR '('               \ Token 12
+ EJMP 19
+ ECHR 'C'
+ ECHR ')'
+ ECHR ' '
+ ECHR 'A'
+ ECHR 'C'
+ ETWO 'O', 'R'
+ ECHR 'N'
+ ETWO 'S', 'O'
+ ECHR 'F'
+ ECHR 'T'
+ ECHR ' '
+ ECHR '1'
+ ECHR '9'
+ ECHR '8'
+ ECHR '4'
+ EQUB VE
+
+ ECHR 'B'               \ Token 13
+ ECHR 'Y'
+ ECHR ' '
+ ECHR 'D'
+ ECHR '.'
+ ECHR 'B'
+ ETWO 'R', 'A'
+ ETWO 'B', 'E'
+ ECHR 'N'
+ ECHR ' '
+ ECHR '&'
+ ECHR ' '
+ ECHR 'I'
+ ECHR '.'
+ ETWO 'B', 'E'
+ ECHR 'L'
+ ECHR 'L'
+ EQUB VE
+
+ EJMP 21                \ Token 14
+ ETOK 145
+ ETOK 200
+ EJMP 26
+ EQUB VE
+
+ EJMP 25                \ Token 15
+ EJMP 9
+ EJMP 30
+ EJMP 23
+ EJMP 14
+ EJMP 2
+ ECHR ' '
+ ECHR ' '
+ ECHR 'C'
+ ETWO 'O', 'N'
+ ECHR 'G'
+ ETWO 'R', 'A'
+ ECHR 'T'
+ ECHR 'U'
+ ETWO 'L', 'A'
+ ETWO 'T', 'I'
+ ETWO 'O', 'N'
+ ECHR 'S'
+ ECHR ' '
+ ETOK 154
+ ECHR '!'
+ EJMP 12
+ EJMP 12
+ ETWO 'T', 'H'
+ ETWO 'E', 'R'
+ ECHR 'E'
+ EJMP 13
+ ECHR ' '
+ ECHR 'W'
+ ETWO 'I', 'L'
+ ECHR 'L'
+ ECHR ' '
+ ETWO 'A', 'L'
+ ECHR 'W'
+ ECHR 'A'
+ ECHR 'Y'
+ ECHR 'S'
+ ECHR ' '
+ ETWO 'B', 'E'
+ ETOK 208
+ ECHR 'P'
+ ETWO 'L', 'A'
+ ETWO 'C', 'E'
+ ECHR ' '
+ ECHR 'F'
+ ETWO 'O', 'R'
+ ECHR ' '
+ ETOK 179
+ ECHR ' '
+ ETWO 'I', 'N'
+ ETOK 211
+ ETOK 204
+ ETWO 'A', 'N'
+ ECHR 'D'
+ ECHR ' '
+ ETWO 'M', 'A'
+ ECHR 'Y'
+ ETWO 'B', 'E'
+ ECHR ' '
+ ETWO 'S', 'O'
+ ETWO 'O', 'N'
+ ETWO 'E', 'R'
+ ECHR ' '
+ ETWO 'T', 'H'
+ ETWO 'A', 'N'
+ ECHR ' '
+ ETOK 179
+ ECHR ' '
+ ETWO 'T', 'H'
+ ETWO 'I', 'N'
+ ECHR 'K'
+ ECHR '.'
+ ECHR '.'
+ ETOK 212
+ EJMP 24
+ EQUB VE
+
+ ECHR 'F'               \ Token 16
+ ETWO 'A', 'B'
+ ETWO 'L', 'E'
+ ECHR 'D'
+ EQUB VE
+
+ ETWO 'N', 'O'          \ Token 17
+ ECHR 'T'
+ ETWO 'A', 'B'
+ ETWO 'L', 'E'
+ EQUB VE
+
+ ECHR 'W'               \ Token 18
+ ECHR 'E'
+ ECHR 'L'
+ ECHR 'L'
+ ECHR ' '
+ ECHR 'K'
+ ETWO 'N', 'O'
+ ECHR 'W'
+ ECHR 'N'
+ EQUB VE
+
+ ECHR 'F'               \ Token 19
+ ECHR 'A'
+ ECHR 'M'
+ ECHR 'O'
+ ETWO 'U', 'S'
+ EQUB VE
+
+ ETWO 'N', 'O'          \ Token 20
+ ECHR 'T'
+ ETWO 'E', 'D'
+ EQUB VE
+
+ ETWO 'V', 'E'          \ Token 21
+ ECHR 'R'
+ ECHR 'Y'
+ EQUB VE
+
+ ECHR 'M'               \ Token 22
+ ETWO 'I', 'L'
+ ECHR 'D'
+ ECHR 'L'
+ ECHR 'Y'
+ EQUB VE
+
+ ECHR 'M'               \ Token 23
+ ECHR 'O'
+ ETWO 'S', 'T'
+ EQUB VE
+
+ ETWO 'R', 'E'          \ Token 24
+ ECHR 'A'
+ ECHR 'S'
+ ETWO 'O', 'N'
+ ETWO 'A', 'B'
+ ECHR 'L'
+ ECHR 'Y'
+ EQUB VE
+
+ EQUB VE                \ Token 25
+
+ ETOK 165               \ Token 26
+ EQUB VE
+
+ ERND 23                \ Token 27
+ EQUB VE
+
+ ECHR 'G'               \ Token 28
+ ETWO 'R', 'E'
+ ETWO 'A', 'T'
+ EQUB VE
+
+ ECHR 'V'               \ Token 29
+ ECHR 'A'
+ ETWO 'S', 'T'
+ EQUB VE
+
+ ECHR 'P'               \ Token 30
+ ETWO 'I', 'N'
+ ECHR 'K'
+ EQUB VE
+
+ EJMP 2                 \ Token 31
+ ERND 28
+ ECHR ' '
+ ERND 27
+ EJMP 13
+ ECHR ' '
+ ETOK 185
+ ECHR 'A'
+ ETWO 'T', 'I'
+ ETWO 'O', 'N'
+ ECHR 'S'
+ EQUB VE
+
+ ETOK 156               \ Token 32
+ ECHR 'S'
+ EQUB VE
+
+ ERND 26                \ Token 33
+ EQUB VE
+
+ ERND 37                \ Token 34
+ ECHR ' '
+ ECHR 'F'
+ ETWO 'O', 'R'
+ ETWO 'E', 'S'
+ ECHR 'T'
+ ECHR 'S'
+ EQUB VE
+
+ ECHR 'O'               \ Token 35
+ ETWO 'C', 'E'
+ ETWO 'A', 'N'
+ ECHR 'S'
+ EQUB VE
+
+ ECHR 'S'               \ Token 36
+ ECHR 'H'
+ ECHR 'Y'
+ ECHR 'N'
+ ETWO 'E', 'S'
+ ECHR 'S'
+ EQUB VE
+
+ ECHR 'S'               \ Token 37
+ ETWO 'I', 'L'
+ ECHR 'L'
+ ETWO 'I', 'N'
+ ETWO 'E', 'S'
+ ECHR 'S'
+ EQUB VE
+
+ ETWO 'M', 'A'          \ Token 38
+ ECHR 'T'
+ ETOK 195
+ ECHR 'T'
+ ETWO 'R', 'A'
+ ETWO 'D', 'I'
+ ETWO 'T', 'I'
+ ETWO 'O', 'N'
+ ECHR 'S'
+ EQUB VE
+
+ ETWO 'L', 'O'          \ Token 39
+ ETWO 'A', 'T'
+ ECHR 'H'
+ ETOK 195
+ ECHR 'O'
+ ECHR 'F'
+ ECHR ' '
+ ERND 9
+ EQUB VE
+
+ ETWO 'L', 'O'          \ Token 40
+ ETWO 'V', 'E'
+ ECHR ' '
+ ECHR 'F'
+ ETWO 'O', 'R'
+ ECHR ' '
+ ERND 9
+ EQUB VE
+
+ ECHR 'F'               \ Token 41
+ ECHR 'O'
+ ECHR 'O'
+ ECHR 'D'
+ ECHR ' '
+ ECHR 'B'
+ ETWO 'L', 'E'
+ ECHR 'N'
+ ECHR 'D'
+ ETWO 'E', 'R'
+ ECHR 'S'
+ EQUB VE
+
+ ECHR 'T'               \ Token 42
+ ETWO 'O', 'U'
+ ECHR 'R'
+ ECHR 'I'
+ ETWO 'S', 'T'
+ ECHR 'S'
+ EQUB VE
+
+ ECHR 'P'               \ Token 43
+ ECHR 'O'
+ ETWO 'E', 'T'
+ ECHR 'R'
+ ECHR 'Y'
+ EQUB VE
+
+ ETWO 'D', 'I'          \ Token 44
+ ECHR 'S'
+ ECHR 'C'
+ ECHR 'O'
+ ECHR 'S'
+ EQUB VE
+
+ ERND 17                \ Token 45
+ EQUB VE
+
+ ECHR 'W'               \ Token 46
+ ETWO 'A', 'L'
+ ECHR 'K'
+ ETOK 195
+ ETOK 158
+ EQUB VE
+
+ ECHR 'C'               \ Token 47
+ ETWO 'R', 'A'
+ ECHR 'B'
+ EQUB VE
+
+ ECHR 'B'               \ Token 48
+ ETWO 'A', 'T'
+ EQUB VE
+
+ ETWO 'L', 'O'          \ Token 49
+ ECHR 'B'
+ ETWO 'S', 'T'
+ EQUB VE
+
+ EJMP 18                \ Token 50
+ EQUB VE
+
+ ETWO 'B', 'E'          \ Token 51
+ ECHR 'S'
+ ETWO 'E', 'T'
+ EQUB VE
+
+ ECHR 'P'               \ Token 52
+ ETWO 'L', 'A'
+ ECHR 'G'
+ ECHR 'U'
+ ETWO 'E', 'D'
+ EQUB VE
+
+ ETWO 'R', 'A'          \ Token 53
+ ECHR 'V'
+ ECHR 'A'
+ ECHR 'G'
+ ETWO 'E', 'D'
+ EQUB VE
+
+ ECHR 'C'               \ Token 54
+ ECHR 'U'
+ ECHR 'R'
+ ECHR 'S'
+ ETWO 'E', 'D'
+ EQUB VE
+
+ ECHR 'S'               \ Token 55
+ ECHR 'C'
+ ETWO 'O', 'U'
+ ECHR 'R'
+ ECHR 'G'
+ ETWO 'E', 'D'
+ EQUB VE
+
+ ERND 22                \ Token 56
+ ECHR ' '
+ ECHR 'C'
+ ECHR 'I'
+ ECHR 'V'
+ ETWO 'I', 'L'
+ ECHR ' '
+ ECHR 'W'
+ ETWO 'A', 'R'
+ EQUB VE
+
+ ERND 13                \ Token 57
+ ECHR ' '
+ ERND 4
+ ECHR ' '
+ ERND 5
+ ECHR 'S'
+ EQUB VE
+
+ ECHR 'A'               \ Token 58
+ ECHR ' '
+ ERND 13
+ ECHR ' '
+ ETWO 'D', 'I'
+ ETWO 'S', 'E'
+ ECHR 'A'
+ ETWO 'S', 'E'
+ EQUB VE
+
+ ERND 22                \ Token 59
+ ECHR ' '
+ ECHR 'E'
+ ETWO 'A', 'R'
+ ETWO 'T', 'H'
+ ETWO 'Q', 'U'
+ ECHR 'A'
+ ECHR 'K'
+ ETWO 'E', 'S'
+ EQUB VE
+
+ ERND 22                \ Token 60
+ ECHR ' '
+ ETWO 'S', 'O'
+ ETWO 'L', 'A'
+ ECHR 'R'
+ ECHR ' '
+ ECHR 'A'
+ ECHR 'C'
+ ETWO 'T', 'I'
+ ECHR 'V'
+ ETWO 'I', 'T'
+ ECHR 'Y'
+ EQUB VE
+
+ ETOK 175               \ Token 61
+ ERND 2
+ ECHR ' '
+ ERND 3
+ EQUB VE
+
+ ETOK 147               \ Token 62
+ EJMP 17
+ ECHR ' '
+ ERND 4
+ ECHR ' '
+ ERND 5
+ EQUB VE
+
+ ETOK 175               \ Token 63
+ ETOK 193
+ ECHR 'S'
+ ETOK 39
+ ECHR ' '
+ ERND 7
+ ECHR ' '
+ ERND 8
+ EQUB VE
+
+ EJMP 2                 \ Token 64
+ ERND 31
+ EJMP 13
+ EQUB VE
+
+ ETOK 175               \ Token 65
+ ERND 16
+ ECHR ' '
+ ERND 17
+ EQUB VE
+
+ ECHR 'J'               \ Token 66
+ ECHR 'U'
+ ECHR 'I'
+ ETWO 'C', 'E'
+ EQUB VE
+
+ ECHR 'B'               \ Token 67
+ ETWO 'R', 'A'
+ ECHR 'N'
+ ECHR 'D'
+ ECHR 'Y'
+ EQUB VE
+
+ ECHR 'W'               \ Token 68
+ ETWO 'A', 'T'
+ ETWO 'E', 'R'
+ EQUB VE
+
+ ECHR 'B'               \ Token 69
+ ETWO 'R', 'E'
+ ECHR 'W'
+ EQUB VE
+
+ ECHR 'G'               \ Token 70
+ ETWO 'A', 'R'
+ ECHR 'G'
+ ETWO 'L', 'E'
+ ECHR ' '
+ ECHR 'B'
+ ETWO 'L', 'A'
+ ETWO 'S', 'T'
+ ETWO 'E', 'R'
+ ECHR 'S'
+ EQUB VE
+
+ EJMP 18                \ Token 71
+ EQUB VE
+
+ EJMP 17                \ Token 72
+ ECHR ' '
+ ERND 5
+ EQUB VE
+
+ EJMP 17                \ Token 73
+ ECHR ' '
+ EJMP 18
+ EQUB VE
+
+ EJMP 17                \ Token 74
+ ECHR ' '
+ ERND 13
+ EQUB VE
+
+ ERND 13                \ Token 75
+ ECHR ' '
+ EJMP 18
+ EQUB VE
+
+ ECHR 'F'               \ Token 76
+ ETWO 'A', 'B'
+ ECHR 'U'
+ ETWO 'L', 'O'
+ ETWO 'U', 'S'
+ EQUB VE
+
+ ECHR 'E'               \ Token 77
+ ECHR 'X'
+ ECHR 'O'
+ ETWO 'T', 'I'
+ ECHR 'C'
+ EQUB VE
+
+ ECHR 'H'               \ Token 78
+ ECHR 'O'
+ ECHR 'O'
+ ECHR 'P'
+ ECHR 'Y'
+ EQUB VE
+
+ ECHR 'U'               \ Token 79
+ ETWO 'N', 'U'
+ ECHR 'S'
+ ECHR 'U'
+ ETWO 'A', 'L'
+ EQUB VE
+
+ ECHR 'E'               \ Token 80
+ ECHR 'X'
+ ECHR 'C'
+ ETWO 'I', 'T'
+ ETWO 'I', 'N'
+ ECHR 'G'
+ EQUB VE
+
+ ECHR 'C'               \ Token 81
+ ECHR 'U'
+ ECHR 'I'
+ ECHR 'S'
+ ETWO 'I', 'N'
+ ECHR 'E'
+ EQUB VE
+
+ ECHR 'N'               \ Token 82
+ ECHR 'I'
+ ECHR 'G'
+ ECHR 'H'
+ ECHR 'T'
+ ECHR ' '
+ ECHR 'L'
+ ECHR 'I'
+ ECHR 'F'
+ ECHR 'E'
+ EQUB VE
+
+ ECHR 'C'               \ Token 83
+ ECHR 'A'
+ ECHR 'S'
+ ECHR 'I'
+ ETWO 'N', 'O'
+ ECHR 'S'
+ EQUB VE
+
+ ECHR 'S'               \ Token 84
+ ETWO 'I', 'T'
+ ECHR ' '
+ ECHR 'C'
+ ECHR 'O'
+ ECHR 'M'
+ ECHR 'S'
+ EQUB VE
+
+ EJMP 2                 \ Token 85
+ ERND 31
+ EJMP 13
+ EQUB VE
+
+ EJMP 3                 \ Token 86
+ EQUB VE
+
+ ETOK 147               \ Token 87
+ ETOK 145
+ ECHR ' '
+ EJMP 3
+ EQUB VE
+
+ ETOK 147               \ Token 88
+ ETOK 146
+ ECHR ' '
+ EJMP 3
+ EQUB VE
+
+ ETOK 148               \ Token 89
+ ETOK 145
+ EQUB VE
+
+ ETOK 148               \ Token 90
+ ETOK 146
+ EQUB VE
+
+ ECHR 'S'               \ Token 91
+ ETWO 'O', 'N'
+ ECHR ' '
+ ECHR 'O'
+ ECHR 'F'
+ ETOK 208
+ ECHR 'B'
+ ETWO 'I', 'T'
+ ECHR 'C'
+ ECHR 'H'
+ EQUB VE
+
+ ECHR 'S'               \ Token 92
+ ECHR 'C'
+ ETWO 'O', 'U'
+ ECHR 'N'
+ ECHR 'D'
+ ETWO 'R', 'E'
+ ECHR 'L'
+ EQUB VE
+
+ ECHR 'B'               \ Token 93
+ ETWO 'L', 'A'
+ ECHR 'C'
+ ECHR 'K'
+ ECHR 'G'
+ ECHR 'U'
+ ETWO 'A', 'R'
+ ECHR 'D'
+ EQUB VE
+
+ ECHR 'R'               \ Token 94
+ ECHR 'O'
+ ECHR 'G'
+ ECHR 'U'
+ ECHR 'E'
+ EQUB VE
+
+ ECHR 'W'               \ Token 95
+ ECHR 'H'
+ ETWO 'O', 'R'
+ ETWO 'E', 'S'
+ ETWO 'O', 'N'
+ ECHR ' '
+ ETWO 'B', 'E'
+ ETWO 'E', 'T'
+ ETWO 'L', 'E'
+ ECHR ' '
+ ECHR 'H'
+ ECHR 'E'
+ ECHR 'A'
+ ECHR 'D'
+ ETOK 196
+ ECHR 'F'
+ ETWO 'L', 'A'
+ ECHR 'P'
+ ECHR ' '
+ ECHR 'E'
+ ETWO 'A', 'R'
+ ETOK 39
+ ECHR 'D'
+ ECHR ' '
+ ECHR 'K'
+ ECHR 'N'
+ ECHR 'A'
+ ETWO 'V', 'E'
+ EQUB VE
+
+ ECHR 'N'               \ Token 96
+ ECHR ' '
+ ECHR 'U'
+ ECHR 'N'
+ ETWO 'R', 'E'
+ ETWO 'M', 'A'
+ ECHR 'R'
+ ECHR 'K'
+ ETWO 'A', 'B'
+ ETWO 'L', 'E'
+ EQUB VE
+
+ ECHR ' '               \ Token 97
+ ECHR 'B'
+ ETWO 'O', 'R'
+ ETWO 'I', 'N'
+ ECHR 'G'
+ EQUB VE
+
+ ECHR ' '               \ Token 98
+ ECHR 'D'
+ ECHR 'U'
+ ECHR 'L'
+ ECHR 'L'
+ EQUB VE
+
+ ECHR ' '               \ Token 99
+ ECHR 'T'
+ ECHR 'E'
+ ETWO 'D', 'I'
+ ECHR 'O'
+ ETWO 'U', 'S'
+ EQUB VE
+
+ ECHR ' '               \ Token 100
+ ETWO 'R', 'E'
+ ECHR 'V'
+ ECHR 'O'
+ ECHR 'L'
+ ECHR 'T'
+ ETWO 'I', 'N'
+ ECHR 'G'
+ EQUB VE
+
+ ETOK 145               \ Token 101
+ EQUB VE
+
+ ETOK 146               \ Token 102
+ EQUB VE
+
+ ECHR 'P'               \ Token 103
+ ETWO 'L', 'A'
+ ETWO 'C', 'E'
+ EQUB VE
+
+ ECHR 'L'               \ Token 104
+ ETWO 'I', 'T'
+ ECHR 'T'
+ ETWO 'L', 'E'
+ ECHR ' '
+ ETOK 145
+ EQUB VE
+
+ ECHR 'D'               \ Token 105
+ ECHR 'U'
+ ECHR 'M'
+ ECHR 'P'
+ EQUB VE
+
+ ECHR 'I'               \ Token 106
+ ECHR ' '
+ ECHR 'H'
+ ECHR 'E'
+ ETWO 'A', 'R'
+ ETOK 208
+ ERND 23
+ ECHR ' '
+ ETWO 'L', 'O'
+ ECHR 'O'
+ ECHR 'K'
+ ETOK 195
+ ETOK 207
+ ECHR ' '
+ ECHR 'A'
+ ECHR 'P'
+ ECHR 'P'
+ ECHR 'E'
+ ETWO 'A', 'R'
+ ETOK 196
+ ETWO 'A', 'T'
+ ETOK 209
+ EQUB VE
+
+ ECHR 'Y'               \ Token 107
+ ECHR 'E'
+ ECHR 'A'
+ ECHR 'H'
+ ECHR ','
+ ECHR ' '
+ ECHR 'I'
+ ECHR ' '
+ ECHR 'H'
+ ECHR 'E'
+ ETWO 'A', 'R'
+ ETOK 208
+ ERND 23
+ ECHR ' '
+ ETOK 207
+ ECHR ' '
+ ETWO 'L', 'E'
+ ECHR 'F'
+ ECHR 'T'
+ ETOK 209
+ ETOK 208
+ ECHR ' '
+ ECHR 'W'
+ ECHR 'H'
+ ECHR 'I'
+ ETWO 'L', 'E'
+ ECHR ' '
+ ECHR 'B'
+ ECHR 'A'
+ ECHR 'C'
+ ECHR 'K'
+ EQUB VE
+
+ ECHR 'G'               \ Token 108
+ ETWO 'E', 'T'
+ ECHR ' '
+ ETOK 179
+ ECHR 'R'
+ ECHR ' '
+ ECHR 'I'
+ ECHR 'R'
+ ETWO 'O', 'N'
+ ECHR ' '
+ ECHR 'A'
+ ECHR 'S'
+ ECHR 'S'
+ ECHR ' '
+ ECHR 'O'
+ ECHR 'V'
+ ETWO 'E', 'R'
+ ECHR ' '
+ ECHR 'T'
+ ECHR 'O'
+ ETOK 209
+ EQUB VE
+
+ ETWO 'S', 'O'          \ Token 109
+ ECHR 'M'
+ ECHR 'E'
+ ECHR ' '
+ ERND 24
+ ETOK 210
+ ETOK 207
+ ECHR ' '
+ ECHR 'W'
+ ECHR 'A'
+ ECHR 'S'
+ ECHR ' '
+ ETWO 'S', 'E'
+ ETWO 'E', 'N'
+ ECHR ' '
+ ETWO 'A', 'T'
+ ETOK 209
+ EQUB VE
+
+ ECHR 'T'               \ Token 110
+ ECHR 'R'
+ ECHR 'Y'
+ ETOK 209
+ EQUB VE
+
+ EQUB VE                \ Token 111
+
+ EQUB VE                \ Token 112
+
+ EQUB VE                \ Token 113
+
+ EQUB VE                \ Token 114
+
+ ECHR 'W'               \ Token 115
+ ECHR 'A'
+ ECHR 'S'
+ ECHR 'P'
+ EQUB VE
+
+ ECHR 'M'               \ Token 116
+ ECHR 'O'
+ ETWO 'T', 'H'
+ EQUB VE
+
+ ECHR 'G'               \ Token 117
+ ECHR 'R'
+ ECHR 'U'
+ ECHR 'B'
+ EQUB VE
+
+ ETWO 'A', 'N'          \ Token 118
+ ECHR 'T'
+ EQUB VE
+
+ EJMP 18                \ Token 119
+ EQUB VE
+
+ ECHR 'P'               \ Token 120
+ ECHR 'O'
+ ETWO 'E', 'T'
+ EQUB VE
+
+ ETWO 'A', 'R'          \ Token 121
+ ECHR 'T'
+ ECHR 'S'
+ ECHR ' '
+ ECHR 'G'
+ ETWO 'R', 'A'
+ ECHR 'D'
+ ECHR 'U'
+ ETWO 'A', 'T'
+ ECHR 'E'
+ EQUB VE
+
+ ECHR 'Y'               \ Token 122
+ ECHR 'A'
+ ECHR 'K'
+ EQUB VE
+
+ ECHR 'S'               \ Token 123
+ ECHR 'N'
+ ECHR 'A'
+ ETWO 'I', 'L'
+ EQUB VE
+
+ ECHR 'S'               \ Token 124
+ ECHR 'L'
+ ECHR 'U'
+ ECHR 'G'
+ EQUB VE
+
+ ECHR 'T'               \ Token 125
+ ECHR 'R'
+ ECHR 'O'
+ ECHR 'P'
+ ECHR 'I'
+ ECHR 'C'
+ ETWO 'A', 'L'
+ EQUB VE
+
+ ECHR 'D'               \ Token 126
+ ETWO 'E', 'N'
+ ETWO 'S', 'E'
+ EQUB VE
+
+ ETWO 'R', 'A'          \ Token 127
+ ETWO 'I', 'N'
+ EQUB VE
+
+ ECHR 'I'               \ Token 128
+ ECHR 'M'
+ ECHR 'P'
+ ETWO 'E', 'N'
+ ETWO 'E', 'T'
+ ETWO 'R', 'A'
+ ECHR 'B'
+ ETWO 'L', 'E'
+ EQUB VE
+
+ ECHR 'E'               \ Token 129
+ ECHR 'X'
+ ECHR 'U'
+ ETWO 'B', 'E'
+ ETWO 'R', 'A'
+ ECHR 'N'
+ ECHR 'T'
+ EQUB VE
+
+ ECHR 'F'               \ Token 130
+ ECHR 'U'
+ ECHR 'N'
+ ECHR 'N'
+ ECHR 'Y'
+ EQUB VE
+
+ ECHR 'W'               \ Token 131
+ ECHR 'I'
+ ETWO 'E', 'R'
+ ECHR 'D'
+ EQUB VE
+
+ ECHR 'U'               \ Token 132
+ ETWO 'N', 'U'
+ ECHR 'S'
+ ECHR 'U'
+ ETWO 'A', 'L'
+ EQUB VE
+
+ ETWO 'S', 'T'          \ Token 133
+ ETWO 'R', 'A'
+ ECHR 'N'
+ ETWO 'G', 'E'
+ EQUB VE
+
+ ECHR 'P'               \ Token 134
+ ECHR 'E'
+ ECHR 'C'
+ ECHR 'U'
+ ECHR 'L'
+ ECHR 'I'
+ ETWO 'A', 'R'
+ EQUB VE
+
+ ECHR 'F'               \ Token 135
+ ETWO 'R', 'E'
+ ETWO 'Q', 'U'
+ ETWO 'E', 'N'
+ ECHR 'T'
+ EQUB VE
+
+ ECHR 'O'               \ Token 136
+ ECHR 'C'
+ ECHR 'C'
+ ECHR 'A'
+ ECHR 'S'
+ ECHR 'I'
+ ETWO 'O', 'N'
+ ETWO 'A', 'L'
+ EQUB VE
+
+ ECHR 'U'               \ Token 137
+ ECHR 'N'
+ ECHR 'P'
+ ETWO 'R', 'E'
+ ETWO 'D', 'I'
+ ECHR 'C'
+ ECHR 'T'
+ ETWO 'A', 'B'
+ ETWO 'L', 'E'
+ EQUB VE
+
+ ECHR 'D'               \ Token 138
+ ETWO 'R', 'E'
+ ECHR 'A'
+ ECHR 'D'
+ ECHR 'F'
+ ECHR 'U'
+ ECHR 'L'
+ EQUB VE
+
+ ETOK 171               \ Token 139
+ EQUB VE
+
+ ERND 1                 \ Token 140
+ ECHR ' '
+ ERND 0
+ ECHR ' '
+ ECHR 'F'
+ ETWO 'O', 'R'
+ ECHR ' '
+ ERND 10
+ EQUB VE
+
+ ETOK 140               \ Token 141
+ ETOK 178
+ ERND 10
+ EQUB VE
+
+ ERND 11                \ Token 142
+ ECHR ' '
+ ECHR 'B'
+ ECHR 'Y'
+ ECHR ' '
+ ERND 12
+ EQUB VE
+
+ ETOK 140               \ Token 143
+ ECHR ' '
+ ECHR 'B'
+ ECHR 'U'
+ ECHR 'T'
+ ECHR ' '
+ ETOK 142
+ EQUB VE
+
+ ECHR ' '               \ Token 144
+ ECHR 'A'
+ ERND 20
+ ECHR ' '
+ ERND 21
+ EQUB VE
+
+ ECHR 'P'               \ Token 145
+ ECHR 'L'
+ ETWO 'A', 'N'
+ ETWO 'E', 'T'
+ EQUB VE
+
+ ECHR 'W'               \ Token 146
+ ETWO 'O', 'R'
+ ECHR 'L'
+ ECHR 'D'
+ EQUB VE
+
+ ETWO 'T', 'H'          \ Token 147
+ ECHR 'E'
+ ECHR ' '
+ EQUB VE
+
+ ETWO 'T', 'H'          \ Token 148
+ ECHR 'I'
+ ECHR 'S'
+ ECHR ' '
+ EQUB VE
+
+ ETWO 'L', 'O'          \ Token 149
+ ECHR 'A'
+ ECHR 'D'
+ ETOK 210
+ ETOK 154
+ EQUB VE
+
+ EJMP 9                 \ Token 150
+ EJMP 11
+ EJMP 1
+ EJMP 8
+ EQUB VE
+
+ ECHR 'D'               \ Token 151
+ ECHR 'R'
+ ECHR 'I'
+ ETWO 'V', 'E'
+ EQUB VE
+
+ ECHR ' '               \ Token 152
+ ECHR 'C'
+ ETWO 'A', 'T'
+ ECHR 'A'
+ ETWO 'L', 'O'
+ ECHR 'G'
+ ECHR 'U'
+ ECHR 'E'
+ EQUB VE
+
+ ECHR 'I'               \ Token 153
+ ETWO 'A', 'N'
+ EQUB VE
+
+ EJMP 19                \ Token 154
+ ECHR 'C'
+ ECHR 'O'
+ ECHR 'M'
+ ECHR 'M'
+ ETWO 'A', 'N'
+ ECHR 'D'
+ ETWO 'E', 'R'
+ EQUB VE
+
+ ERND 13                \ Token 155
+ EQUB VE
+
+ ECHR 'M'               \ Token 156
+ ETWO 'O', 'U'
+ ECHR 'N'
+ ECHR 'T'
+ ECHR 'A'
+ ETWO 'I', 'N'
+ EQUB VE
+
+ ETWO 'E', 'D'          \ Token 157
+ ECHR 'I'
+ ECHR 'B'
+ ETWO 'L', 'E'
+ EQUB VE
+
+ ECHR 'T'               \ Token 158
+ ETWO 'R', 'E'
+ ECHR 'E'
+ EQUB VE
+
+ ECHR 'S'               \ Token 159
+ ECHR 'P'
+ ECHR 'O'
+ ECHR 'T'
+ ECHR 'T'
+ ETWO 'E', 'D'
+ EQUB VE
+
+ ERND 29                \ Token 160
+ EQUB VE
+
+ ERND 30                \ Token 161
+ EQUB VE
+
+ ERND 6                 \ Token 162
+ ECHR 'O'
+ ECHR 'I'
+ ECHR 'D'
+ EQUB VE
+
+ ERND 36                \ Token 163
+ EQUB VE
+
+ ERND 35                \ Token 164
+ EQUB VE
+
+ ETWO 'A', 'N'          \ Token 165
+ ECHR 'C'
+ ECHR 'I'
+ ETWO 'E', 'N'
+ ECHR 'T'
+ EQUB VE
+
+ ECHR 'E'               \ Token 166
+ ECHR 'X'
+ ETWO 'C', 'E'
+ ECHR 'P'
+ ETWO 'T', 'I'
+ ETWO 'O', 'N'
+ ETWO 'A', 'L'
+ EQUB VE
+
+ ECHR 'E'               \ Token 167
+ ECHR 'C'
+ ETWO 'C', 'E'
+ ECHR 'N'
+ ECHR 'T'
+ ECHR 'R'
+ ECHR 'I'
+ ECHR 'C'
+ EQUB VE
+
+ ETWO 'I', 'N'          \ Token 168
+ ECHR 'G'
+ ETWO 'R', 'A'
+ ETWO 'I', 'N'
+ ETWO 'E', 'D'
+ EQUB VE
+
+ ERND 23                \ Token 169
+ EQUB VE
+
+ ECHR 'K'               \ Token 170
+ ETWO 'I', 'L'
+ ECHR 'L'
+ ETWO 'E', 'R'
+ EQUB VE
+
+ ECHR 'D'               \ Token 171
+ ECHR 'E'
+ ECHR 'A'
+ ECHR 'D'
+ ECHR 'L'
+ ECHR 'Y'
+ EQUB VE
+
+ ECHR 'E'               \ Token 172
+ ECHR 'V'
+ ETWO 'I', 'L'
+ EQUB VE
+
+ ETWO 'L', 'E'          \ Token 173
+ ETWO 'T', 'H'
+ ETWO 'A', 'L'
+ EQUB VE
+
+ ECHR 'V'               \ Token 174
+ ECHR 'I'
+ ECHR 'C'
+ ECHR 'I'
+ ECHR 'O'
+ ETWO 'U', 'S'
+ EQUB VE
+
+ ETWO 'I', 'T'          \ Token 175
+ ECHR 'S'
+ ECHR ' '
+ EQUB VE
+
+ EJMP 13                \ Token 176
+ EJMP 14
+ EJMP 19
+ EQUB VE
+
+ ECHR '.'               \ Token 177
+ EJMP 12
+ EJMP 15
+ EQUB VE
+
+ ECHR ' '               \ Token 178
+ ETWO 'A', 'N'
+ ECHR 'D'
+ ECHR ' '
+ EQUB VE
+
+ ECHR 'Y'               \ Token 179
+ ETWO 'O', 'U'
+ EQUB VE
+
+ ECHR 'P'               \ Token 180
+ ETWO 'A', 'R'
+ ECHR 'K'
+ ETOK 195
+ ECHR 'M'
+ ETWO 'E', 'T'
+ ETWO 'E', 'R'
+ ECHR 'S'
+ EQUB VE
+
+ ECHR 'D'               \ Token 181
+ ETWO 'U', 'S'
+ ECHR 'T'
+ ECHR ' '
+ ECHR 'C'
+ ETWO 'L', 'O'
+ ECHR 'U'
+ ECHR 'D'
+ ECHR 'S'
+ EQUB VE
+
+ ECHR 'I'               \ Token 182
+ ETWO 'C', 'E'
+ ECHR ' '
+ ETWO 'B', 'E'
+ ECHR 'R'
+ ECHR 'G'
+ ECHR 'S'
+ EQUB VE
+
+ ECHR 'R'               \ Token 183
+ ECHR 'O'
+ ECHR 'C'
+ ECHR 'K'
+ ECHR ' '
+ ECHR 'F'
+ ETWO 'O', 'R'
+ ETWO 'M', 'A'
+ ETWO 'T', 'I'
+ ETWO 'O', 'N'
+ ECHR 'S'
+ EQUB VE
+
+ ECHR 'V'               \ Token 184
+ ECHR 'O'
+ ECHR 'L'
+ ECHR 'C'
+ ECHR 'A'
+ ETWO 'N', 'O'
+ ETWO 'E', 'S'
+ EQUB VE
+
+ ECHR 'P'               \ Token 185
+ ECHR 'L'
+ ETWO 'A', 'N'
+ ECHR 'T'
+ EQUB VE
+
+ ECHR 'T'               \ Token 186
+ ECHR 'U'
+ ECHR 'L'
+ ECHR 'I'
+ ECHR 'P'
+ EQUB VE
+
+ ECHR 'B'               \ Token 187
+ ETWO 'A', 'N'
+ ETWO 'A', 'N'
+ ECHR 'A'
+ EQUB VE
+
+ ECHR 'C'               \ Token 188
+ ETWO 'O', 'R'
+ ECHR 'N'
+ EQUB VE
+
+ EJMP 18                \ Token 189
+ ECHR 'W'
+ ECHR 'E'
+ ETWO 'E', 'D'
+ EQUB VE
+
+ EJMP 18                \ Token 190
+ EQUB VE
+
+ EJMP 17                \ Token 191
+ ECHR ' '
+ EJMP 18
+ EQUB VE
+
+ EJMP 17                \ Token 192
+ ECHR ' '
+ ERND 13
+ EQUB VE
+
+ ETWO 'I', 'N'          \ Token 193
+ ECHR 'H'
+ ECHR 'A'
+ ETWO 'B', 'I'
+ ECHR 'T'
+ ETWO 'A', 'N'
+ ECHR 'T'
+ EQUB VE
+
+ ETOK 191               \ Token 194
+ EQUB VE
+
+ ETWO 'I', 'N'          \ Token 195
+ ECHR 'G'
+ ECHR ' '
+ EQUB VE
+
+ ETWO 'E', 'D'          \ Token 196
+ ECHR ' '
+ EQUB VE
+
+ EQUB VE                \ Token 197
+
+ EQUB VE                \ Token 198
+
+ EQUB VE                \ Token 199
+
+ ECHR ' '               \ Token 200
+ ECHR 'N'
+ ECHR 'A'
+ ECHR 'M'
+ ECHR 'E'
+ ECHR '?'
+ ECHR ' '
+ EQUB VE
+
+ ECHR ' '               \ Token 201
+ ECHR 'T'
+ ECHR 'O'
+ ECHR ' '
+ EQUB VE
+
+ ECHR ' '               \ Token 202
+ ECHR 'I'
+ ECHR 'S'
+ ECHR ' '
+ EQUB VE
+
+ ECHR 'W'               \ Token 203
+ ECHR 'A'
+ ECHR 'S'
+ ECHR ' '
+ ETWO 'L', 'A'
+ ETWO 'S', 'T'
+ ECHR ' '
+ ETWO 'S', 'E'
+ ETWO 'E', 'N'
+ ECHR ' '
+ ETWO 'A', 'T'
+ ECHR ' '
+ EJMP 19
+ EQUB VE
+
+ ECHR '.'               \ Token 204
+ EJMP 12
+ ECHR ' '
+ EJMP 19
+ EQUB VE
+
+ ECHR 'D'               \ Token 205
+ ECHR 'O'
+ ECHR 'C'
+ ECHR 'K'
+ ETWO 'E', 'D'
+ EQUB VE
+
+ EJMP 1                 \ Token 206
+ ECHR '('
+ ECHR 'Y'
+ ECHR '/'
+ ECHR 'N'
+ ECHR ')'
+ ECHR '?'
+ EQUB VE
+
+ ECHR 'S'               \ Token 207
+ ECHR 'H'
+ ECHR 'I'
+ ECHR 'P'
+ EQUB VE
+
+ ECHR ' '               \ Token 208
+ ECHR 'A'
+ ECHR ' '
+ EQUB VE
+
+ ECHR ' '               \ Token 209
+ ETWO 'E', 'R'
+ ECHR 'R'
+ ECHR 'I'
+ ETWO 'U', 'S'
+ EQUB VE
+
+ ECHR ' '               \ Token 210
+ ECHR 'N'
+ ECHR 'E'
+ ECHR 'W'
+ ECHR ' '
+ EQUB VE
+
+ EJMP 2                 \ Token 211
+ ECHR ' '
+ ECHR 'H'
+ ETWO 'E', 'R'
+ ECHR ' '
+ ETWO 'M', 'A'
+ ECHR 'J'
+ ETWO 'E', 'S'
+ ECHR 'T'
+ ECHR 'Y'
+ ETOK 39
+ ECHR 'S'
+ ECHR ' '
+ ECHR 'S'
+ ECHR 'P'
+ ECHR 'A'
+ ETWO 'C', 'E'
+ ECHR ' '
+ ECHR 'N'
+ ECHR 'A'
+ ECHR 'V'
+ ECHR 'Y'
+ EJMP 13
+ EQUB VE
+
+ ETOK 177               \ Token 212
+ EJMP 8
+ EJMP 1
+ ECHR ' '
+ ECHR ' '
+ ECHR 'M'
+ ETWO 'E', 'S'
+ ECHR 'S'
+ ECHR 'A'
+ ETWO 'G', 'E'
+ ECHR ' '
+ ETWO 'E', 'N'
+ ECHR 'D'
+ ECHR 'S'
+ EQUB VE
+
+ ECHR ' '               \ Token 213
+ ETOK 154
+ ECHR ' '
+ EJMP 4
+ ECHR ','
+ ECHR ' '
+ ECHR 'I'
+ ECHR ' '
+ EJMP 13
+ ECHR 'A'
+ ECHR 'M'
+ EJMP 2
+ ECHR ' '
+ ECHR 'C'
+ ECHR 'A'
+ ECHR 'P'
+ ECHR 'T'
+ ECHR 'A'
+ ETWO 'I', 'N'
+ ECHR ' '
+ EJMP 27
+ ECHR ' '
+ EJMP 13
+ ECHR 'O'
+ ECHR 'F'
+ ETOK 211
+ EQUB VE
+
+ EQUB VE                \ Token 214
+
+ EJMP 15                \ Token 215
+ ECHR ' '
+ ECHR 'U'
+ ECHR 'N'
+ ECHR 'K'
+ ETWO 'N', 'O'
+ ECHR 'W'
+ ECHR 'N'
+ ECHR ' '
+ ETOK 145
+ EQUB VE
+
+ EJMP 9                 \ Token 216
+ EJMP 8
+ EJMP 23
+ EJMP 30
+ EJMP 1
+ ETWO 'I', 'N'
+ ECHR 'C'
+ ECHR 'O'
+ ECHR 'M'
+ ETOK 195
+ ECHR 'M'
+ ETWO 'E', 'S'
+ ECHR 'S'
+ ECHR 'A'
+ ETWO 'G', 'E'
+ EQUB VE
+
+ ECHR 'C'               \ Token 217
+ ECHR 'U'
+ ECHR 'R'
+ ECHR 'R'
+ ECHR 'U'
+ ETWO 'T', 'H'
+ ETWO 'E', 'R'
+ ECHR 'S'
+ EQUB VE
+
+ ECHR 'F'               \ Token 218
+ ECHR 'O'
+ ECHR 'S'
+ ECHR 'D'
+ ECHR 'Y'
+ ECHR 'K'
+ ECHR 'E'
+ ECHR ' '
+ ECHR 'S'
+ ECHR 'M'
+ ECHR 'Y'
+ ETWO 'T', 'H'
+ ECHR 'E'
+ EQUB VE
+
+ ECHR 'F'               \ Token 219
+ ETWO 'O', 'R'
+ ECHR 'T'
+ ETWO 'E', 'S'
+ ETWO 'Q', 'U'
+ ECHR 'E'
+ EQUB VE
+
+ ETOK 203               \ Token 220
+ ETWO 'R', 'E'
+ ETWO 'E', 'S'
+ ETWO 'D', 'I'
+ ETWO 'C', 'E'
+ EQUB VE
+
+ ECHR 'I'               \ Token 221
+ ECHR 'S'
+ ECHR ' '
+ ETWO 'B', 'E'
+ ECHR 'L'
+ ECHR 'I'
+ ECHR 'E'
+ ECHR 'V'
+ ETWO 'E', 'D'
+ ETOK 201
+ ECHR 'H'
+ ECHR 'A'
+ ETWO 'V', 'E'
+ ECHR ' '
+ ECHR 'J'
+ ECHR 'U'
+ ECHR 'M'
+ ECHR 'P'
+ ETWO 'E', 'D'
+ ETOK 201
+ ETOK 148
+ ECHR 'G'
+ ETWO 'A', 'L'
+ ECHR 'A'
+ ECHR 'X'
+ ECHR 'Y'
+ EQUB VE
+
+ EJMP 25                \ Token 222
+ EJMP 9
+ EJMP 30
+ EJMP 29
+ EJMP 14
+ EJMP 2
+ ECHR 'G'
+ ECHR 'O'
+ ECHR 'O'
+ ECHR 'D'
+ ECHR ' '
+ ECHR 'D'
+ ECHR 'A'
+ ECHR 'Y'
+ ECHR ' '
+ ETOK 154
+ ECHR ' '
+ EJMP 4
+ ETOK 204
+ ECHR 'I'
+ EJMP 13
+ ECHR ' '
+ ECHR 'A'
+ ECHR 'M'
+ ECHR ' '
+ EJMP 19
+ ECHR 'A'
+ ECHR 'G'
+ ETWO 'E', 'N'
+ ECHR 'T'
+ ECHR ' '
+ EJMP 19
+ ECHR 'B'
+ ETWO 'L', 'A'
+ ECHR 'K'
+ ECHR 'E'
+ ECHR ' '
+ ECHR 'O'
+ ECHR 'F'
+ ECHR ' '
+ EJMP 19
+ ECHR 'N'
+ ECHR 'A'
+ ECHR 'V'
+ ECHR 'A'
+ ECHR 'L'
+ ECHR ' '
+ EJMP 19
+ ETWO 'I', 'N'
+ ECHR 'T'
+ ECHR 'E'
+ ECHR 'L'
+ ETWO 'L', 'E'
+ ECHR 'G'
+ ETWO 'E', 'N'
+ ETWO 'C', 'E'
+ ETOK 204
+ ECHR 'A'
+ ECHR 'S'
+ ECHR ' '
+ ETOK 179
+ ECHR ' '
+ ECHR 'K'
+ ETWO 'N', 'O'
+ ECHR 'W'
+ ECHR ','
+ ECHR ' '
+ ETOK 147
+ EJMP 19
+ ECHR 'N'
+ ECHR 'A'
+ ECHR 'V'
+ ECHR 'Y'
+ ECHR ' '
+ ECHR 'H'
+ ECHR 'A'
+ ETWO 'V', 'E'
+ ECHR ' '
+ ETWO 'B', 'E'
+ ETWO 'E', 'N'
+ ECHR ' '
+ ECHR 'K'
+ ECHR 'E'
+ ECHR 'E'
+ ECHR 'P'
+ ETOK 195
+ ETOK 147
+ EJMP 19
+ ETWO 'T', 'H'
+ ETWO 'A', 'R'
+ ECHR 'G'
+ ECHR 'O'
+ ECHR 'I'
+ ECHR 'D'
+ ECHR 'S'
+ ECHR ' '
+ ECHR 'O'
+ ECHR 'F'
+ ECHR 'F'
+ ECHR ' '
+ ETOK 179
+ ECHR 'R'
+ ECHR ' '
+ ECHR 'A'
+ ECHR 'S'
+ ECHR 'S'
+ ECHR ' '
+ ETWO 'O', 'U'
+ ECHR 'T'
+ ECHR ' '
+ ETWO 'I', 'N'
+ ECHR ' '
+ ECHR 'D'
+ ECHR 'E'
+ ECHR 'E'
+ ECHR 'P'
+ ECHR ' '
+ ECHR 'S'
+ ECHR 'P'
+ ECHR 'A'
+ ETWO 'C', 'E'
+ ECHR ' '
+ ECHR 'F'
+ ETWO 'O', 'R'
+ ECHR ' '
+ ETWO 'M', 'A'
+ ECHR 'N'
+ ECHR 'Y'
+ ECHR ' '
+ ECHR 'Y'
+ ECHR 'E'
+ ETWO 'A', 'R'
+ ECHR 'S'
+ ECHR ' '
+ ETWO 'N', 'O'
+ ECHR 'W'
+ ECHR '.'
+ ECHR ' '
+ EJMP 19
+ ECHR 'W'
+ ECHR 'E'
+ ECHR 'L'
+ ECHR 'L'
+ ECHR ' '
+ ETOK 147
+ ECHR 'S'
+ ETWO 'I', 'T'
+ ECHR 'U'
+ ECHR 'A'
+ ETWO 'T', 'I'
+ ETWO 'O', 'N'
+ ECHR ' '
+ ECHR 'H'
+ ECHR 'A'
+ ECHR 'S'
+ ECHR ' '
+ ECHR 'C'
+ ECHR 'H'
+ ETWO 'A', 'N'
+ ECHR 'G'
+ ETWO 'E', 'D'
+ ETOK 204
+ ETWO 'O', 'U'
+ ECHR 'R'
+ ECHR ' '
+ ECHR 'B'
+ ECHR 'O'
+ ECHR 'Y'
+ ECHR 'S'
+ ECHR ' '
+ ETWO 'A', 'R'
+ ECHR 'E'
+ ECHR ' '
+ ETWO 'R', 'E'
+ ECHR 'A'
+ ECHR 'D'
+ ECHR 'Y'
+ ECHR ' '
+ ECHR 'F'
+ ETWO 'O', 'R'
+ ETOK 208
+ ECHR 'P'
+ ECHR 'U'
+ ECHR 'S'
+ ECHR 'H'
+ ECHR ' '
+ ECHR 'R'
+ ECHR 'I'
+ ECHR 'G'
+ ECHR 'H'
+ ECHR 'T'
+ ETOK 201
+ ETOK 147
+ ECHR 'H'
+ ECHR 'O'
+ ECHR 'M'
+ ECHR 'E'
+ ECHR ' '
+ ECHR 'S'
+ ECHR 'Y'
+ ECHR 'S'
+ ECHR 'T'
+ ECHR 'E'
+ ECHR 'M'
+ ECHR ' '
+ ECHR 'O'
+ ECHR 'F'
+ ECHR ' '
+ ETWO 'T', 'H'
+ ECHR 'O'
+ ETWO 'S', 'E'
+ ECHR ' '
+ ECHR 'M'
+ ECHR 'O'
+ ETWO 'T', 'H'
+ ETWO 'E', 'R'
+ ECHR 'S'
+ ETOK 204
+ EJMP 24
+ EJMP 9
+ EJMP 30
+ EJMP 29
+ ECHR 'I'
+ EJMP 13
+ ECHR ' '
+ ECHR 'H'
+ ECHR 'A'
+ ETWO 'V', 'E'
+ ECHR ' '
+ ECHR 'O'
+ ECHR 'B'
+ ECHR 'T'
+ ECHR 'A'
+ ETWO 'I', 'N'
+ ETOK 196
+ ETOK 147
+ ECHR 'D'
+ ECHR 'E'
+ ECHR 'F'
+ ETWO 'E', 'N'
+ ETWO 'C', 'E'
+ ECHR ' '
+ ECHR 'P'
+ ETWO 'L', 'A'
+ ECHR 'N'
+ ECHR 'S'
+ ECHR ' '
+ ECHR 'F'
+ ETWO 'O', 'R'
+ ECHR ' '
+ ETWO 'T', 'H'
+ ECHR 'E'
+ ECHR 'I'
+ ECHR 'R'
+ ECHR ' '
+ EJMP 19
+ ECHR 'H'
+ ECHR 'I'
+ ETWO 'V', 'E'
+ ECHR ' '
+ EJMP 19
+ ECHR 'W'
+ ETWO 'O', 'R'
+ ECHR 'L'
+ ECHR 'D'
+ ECHR 'S'
+ ETOK 204
+ ETOK 147
+ ETWO 'B', 'E'
+ ETWO 'E', 'T'
+ ETWO 'L', 'E'
+ ECHR 'S'
+ ECHR ' '
+ ECHR 'K'
+ ETWO 'N', 'O'
+ ECHR 'W'
+ ECHR ' '
+ ECHR 'W'
+ ECHR 'E'
+ ETOK 39
+ ETWO 'V', 'E'
+ ECHR ' '
+ ECHR 'G'
+ ECHR 'O'
+ ECHR 'T'
+ ECHR ' '
+ ETWO 'S', 'O'
+ ECHR 'M'
+ ECHR 'E'
+ ETWO 'T', 'H'
+ ETOK 195
+ ECHR 'B'
+ ECHR 'U'
+ ECHR 'T'
+ ECHR ' '
+ ETWO 'N', 'O'
+ ECHR 'T'
+ ECHR ' '
+ ECHR 'W'
+ ECHR 'H'
+ ETWO 'A', 'T'
+ ETOK 204
+ ECHR 'I'
+ ECHR 'F'
+ ECHR ' '
+ EJMP 19
+ ECHR 'I'
+ ECHR ' '
+ ECHR 'T'
+ ETWO 'R', 'A'
+ ECHR 'N'
+ ECHR 'S'
+ ECHR 'M'
+ ETWO 'I', 'T'
+ ECHR ' '
+ ETOK 147
+ ECHR 'P'
+ ETWO 'L', 'A'
+ ECHR 'N'
+ ECHR 'S'
+ ETOK 201
+ ETWO 'O', 'U'
+ ECHR 'R'
+ ECHR ' '
+ ECHR 'B'
+ ECHR 'A'
+ ETWO 'S', 'E'
+ ECHR ' '
+ ETWO 'O', 'N'
+ ECHR ' '
+ EJMP 19
+ ETWO 'B', 'I'
+ ETWO 'R', 'E'
+ ETWO 'R', 'A'
+ ECHR ' '
+ ETWO 'T', 'H'
+ ECHR 'E'
+ ECHR 'Y'
+ ETOK 39
+ ECHR 'L'
+ ECHR 'L'
+ ECHR ' '
+ ETWO 'I', 'N'
+ ECHR 'T'
+ ETWO 'E', 'R'
+ ETWO 'C', 'E'
+ ECHR 'P'
+ ECHR 'T'
+ ECHR ' '
+ ETOK 147
+ ECHR 'T'
+ ECHR 'R'
+ ETWO 'A', 'N'
+ ECHR 'S'
+ ECHR 'M'
+ ECHR 'I'
+ ECHR 'S'
+ ECHR 'S'
+ ECHR 'I'
+ ETWO 'O', 'N'
+ ECHR '.'
+ ECHR ' '
+ EJMP 19
+ ECHR 'I'
+ ECHR ' '
+ ECHR 'N'
+ ECHR 'E'
+ ETWO 'E', 'D'
+ ETOK 208
+ ETOK 207
+ ETOK 201
+ ETWO 'M', 'A'
+ ECHR 'K'
+ ECHR 'E'
+ ECHR ' '
+ ETOK 147
+ ECHR 'R'
+ ECHR 'U'
+ ECHR 'N'
+ ETOK 204
+ ETOK 179
+ ETOK 39
+ ETWO 'R', 'E'
+ ECHR ' '
+ ECHR 'E'
+ ETWO 'L', 'E'
+ ECHR 'C'
+ ECHR 'T'
+ ETWO 'E', 'D'
+ ETOK 204
+ ETOK 147
+ ECHR 'P'
+ ETWO 'L', 'A'
+ ECHR 'N'
+ ECHR 'S'
+ ECHR ' '
+ ECHR 'A'
+ ETWO 'R', 'E'
+ ECHR ' '
+ ECHR 'U'
+ ECHR 'N'
+ ECHR 'I'
+ ECHR 'P'
+ ECHR 'U'
+ ECHR 'L'
+ ETWO 'S', 'E'
+ ECHR ' '
+ ECHR 'C'
+ ECHR 'O'
+ ECHR 'D'
+ ETOK 196
+ ECHR 'W'
+ ECHR 'I'
+ ETWO 'T', 'H'
+ ETWO 'I', 'N'
+ ECHR ' '
+ ETOK 148
+ ECHR 'T'
+ ECHR 'R'
+ ETWO 'A', 'N'
+ ECHR 'S'
+ ECHR 'M'
+ ECHR 'I'
+ ECHR 'S'
+ ECHR 'S'
+ ECHR 'I'
+ ETWO 'O', 'N'
+ ETOK 204
+ EJMP 8
+ ETOK 179
+ ECHR ' '
+ ECHR 'W'
+ ETWO 'I', 'L'
+ ECHR 'L'
+ ECHR ' '
+ ETWO 'B', 'E'
+ ECHR ' '
+ ECHR 'P'
+ ECHR 'A'
+ ECHR 'I'
+ ECHR 'D'
+ ETOK 204
+ ECHR ' '
+ ECHR ' '
+ ECHR ' '
+ ECHR ' '
+ EJMP 19
+ ECHR 'G'
+ ECHR 'O'
+ ECHR 'O'
+ ECHR 'D'
+ ECHR ' '
+ ECHR 'L'
+ ECHR 'U'
+ ECHR 'C'
+ ECHR 'K'
+ ECHR ' '
+ ETOK 154
+ ETOK 212
+ EJMP 24
+ EQUB VE
+
+ EJMP 25                \ Token 223
+ EJMP 9
+ EJMP 29
+ EJMP 30
+ EJMP 8
+ EJMP 14
+ EJMP 13
+ EJMP 19
+ ECHR 'W'
+ ECHR 'E'
+ ECHR 'L'
+ ECHR 'L'
+ ECHR ' '
+ ECHR 'D'
+ ETWO 'O', 'N'
+ ECHR 'E'
+ ECHR ' '
+ ETOK 154
+ ETOK 204
+ ETOK 179
+ ECHR ' '
+ ECHR 'H'
+ ECHR 'A'
+ ETWO 'V', 'E'
+ ECHR ' '
+ ETWO 'S', 'E'
+ ECHR 'R'
+ ECHR 'V'
+ ETOK 196
+ ECHR 'U'
+ ECHR 'S'
+ ECHR ' '
+ ECHR 'W'
+ ECHR 'E'
+ ECHR 'L'
+ ECHR 'L'
+ ETOK 178
+ ECHR 'W'
+ ECHR 'E'
+ ECHR ' '
+ ECHR 'S'
+ ECHR 'H'
+ ETWO 'A', 'L'
+ ECHR 'L'
+ ECHR ' '
+ ETWO 'R', 'E'
+ ECHR 'M'
+ ECHR 'E'
+ ECHR 'M'
+ ECHR 'B'
+ ETWO 'E', 'R'
+ ETOK 204
+ ECHR 'W'
+ ECHR 'E'
+ ECHR ' '
+ ECHR 'D'
+ ECHR 'I'
+ ECHR 'D'
+ ECHR ' '
+ ETWO 'N', 'O'
+ ECHR 'T'
+ ECHR ' '
+ ECHR 'E'
+ ECHR 'X'
+ ECHR 'P'
+ ECHR 'E'
+ ECHR 'C'
+ ECHR 'T'
+ ECHR ' '
+ ETOK 147
+ EJMP 19
+ ETWO 'T', 'H'
+ ETWO 'A', 'R'
+ ECHR 'G'
+ ECHR 'O'
+ ECHR 'I'
+ ECHR 'D'
+ ECHR 'S'
+ ETOK 201
+ ECHR 'F'
+ ETWO 'I', 'N'
+ ECHR 'D'
+ ECHR ' '
+ ETWO 'O', 'U'
+ ECHR 'T'
+ ECHR ' '
+ ECHR 'A'
+ ECHR 'B'
+ ETWO 'O', 'U'
+ ECHR 'T'
+ ECHR ' '
+ ETOK 179
+ ETOK 204
+ ECHR 'F'
+ ETWO 'O', 'R'
+ ECHR ' '
+ ETOK 147
+ ECHR 'M'
+ ECHR 'O'
+ ECHR 'M'
+ ETWO 'E', 'N'
+ ECHR 'T'
+ ECHR ' '
+ ECHR 'P'
+ ETWO 'L', 'E'
+ ECHR 'A'
+ ETWO 'S', 'E'
+ ECHR ' '
+ ECHR 'A'
+ ECHR 'C'
+ ETWO 'C', 'E'
+ ECHR 'P'
+ ECHR 'T'
+ ECHR ' '
+ ETOK 148
+ EJMP 19
+ ECHR 'N'
+ ECHR 'A'
+ ECHR 'V'
+ ECHR 'Y'
+ ECHR ' '
+ EJMP 6
+ ERND 23
+ EJMP 5
+ ECHR ' '
+ ECHR 'A'
+ ECHR 'S'
+ ECHR ' '
+ ECHR 'P'
+ ECHR 'A'
+ ECHR 'Y'
+ ECHR 'M'
+ ETWO 'E', 'N'
+ ECHR 'T'
+ ETOK 212
+ EJMP 24
+ EQUB VE
+
+ EQUB VE                \ Token 224
+
+ ECHR 'S'               \ Token 225
+ ECHR 'H'
+ ETWO 'R', 'E'
+ ECHR 'W'
+ EQUB VE
+
+ ETWO 'B', 'E'          \ Token 226
+ ECHR 'A'
+ ETWO 'S', 'T'
+ EQUB VE
+
+ ECHR 'B'               \ Token 227
+ ECHR 'I'
+ ECHR 'S'
+ ETWO 'O', 'N'
+ EQUB VE
+
+ ECHR 'S'               \ Token 228
+ ECHR 'N'
+ ECHR 'A'
+ ECHR 'K'
+ ECHR 'E'
+ EQUB VE
+
+ ECHR 'W'               \ Token 229
+ ECHR 'O'
+ ECHR 'L'
+ ECHR 'F'
+ EQUB VE
+
+ ETWO 'L', 'E'          \ Token 230
+ ECHR 'O'
+ ECHR 'P'
+ ETWO 'A', 'R'
+ ECHR 'D'
+ EQUB VE
+
+ ECHR 'C'               \ Token 231
+ ETWO 'A', 'T'
+ EQUB VE
+
+ ECHR 'M'               \ Token 232
+ ETWO 'O', 'N'
+ ECHR 'K'
+ ECHR 'E'
+ ECHR 'Y'
+ EQUB VE
+
+ ECHR 'G'               \ Token 233
+ ECHR 'O'
+ ETWO 'A', 'T'
+ EQUB VE
+
+ ECHR 'F'               \ Token 234
+ ECHR 'I'
+ ECHR 'S'
+ ECHR 'H'
+ EQUB VE
+
+ ERND 15                \ Token 235
+ ECHR ' '
+ ERND 14
+ EQUB VE
+
+ EJMP 17                \ Token 236
+ ECHR ' '
+ ERND 29
+ ECHR ' '
+ ERND 32
+ EQUB VE
+
+ ETOK 175               \ Token 237
+ ERND 16
+ ECHR ' '
+ ERND 30
+ ECHR ' '
+ ERND 32
+ EQUB VE
+
+ ERND 33                \ Token 238
+ ECHR ' '
+ ERND 34
+ EQUB VE
+
+ ERND 15                \ Token 239
+ ECHR ' '
+ ERND 14
+ EQUB VE
+
+ ECHR 'M'               \ Token 240
+ ECHR 'E'
+ ETWO 'A', 'T'
+ EQUB VE
+
+ ECHR 'C'               \ Token 241
+ ECHR 'U'
+ ECHR 'T'
+ ECHR 'L'
+ ETWO 'E', 'T'
+ EQUB VE
+
+ ETWO 'S', 'T'          \ Token 242
+ ECHR 'E'
+ ECHR 'A'
+ ECHR 'K'
+ EQUB VE
+
+ ECHR 'B'               \ Token 243
+ ECHR 'U'
+ ECHR 'R'
+ ECHR 'G'
+ ETWO 'E', 'R'
+ ECHR 'S'
+ EQUB VE
+
+ ETWO 'S', 'O'          \ Token 244
+ ECHR 'U'
+ ECHR 'P'
+ EQUB VE
+
+ ECHR 'I'               \ Token 245
+ ETWO 'C', 'E'
+ EQUB VE
+
+ ECHR 'M'               \ Token 246
+ ECHR 'U'
+ ECHR 'D'
+ EQUB VE
+
+ ECHR 'Z'               \ Token 247
+ ETWO 'E', 'R'
+ ECHR 'O'
+ ECHR '-'
+ EJMP 19
+ ECHR 'G'
+ EQUB VE
+
+ ECHR 'V'               \ Token 248
+ ECHR 'A'
+ ECHR 'C'
+ ECHR 'U'
+ ECHR 'U'
+ ECHR 'M'
+ EQUB VE
+
+ EJMP 17                \ Token 249
+ ECHR ' '
+ ECHR 'U'
+ ECHR 'L'
+ ECHR 'T'
+ ETWO 'R', 'A'
+ EQUB VE
+
+ ECHR 'H'               \ Token 250
+ ECHR 'O'
+ ECHR 'C'
+ ECHR 'K'
+ ECHR 'E'
+ ECHR 'Y'
+ EQUB VE
+
+ ECHR 'C'               \ Token 251
+ ECHR 'R'
+ ECHR 'I'
+ ECHR 'C'
+ ECHR 'K'
+ ETWO 'E', 'T'
+ EQUB VE
+
+ ECHR 'K'               \ Token 252
+ ETWO 'A', 'R'
+ ETWO 'A', 'T'
+ ECHR 'E'
+ EQUB VE
+
+ ECHR 'P'               \ Token 253
+ ECHR 'O'
+ ETWO 'L', 'O'
+ EQUB VE
+
+ ECHR 'T'               \ Token 254
+ ETWO 'E', 'N'
+ ECHR 'N'
+ ECHR 'I'
+ ECHR 'S'
+ EQUB VE
+
+ EQUB VE                \ Token 255
 

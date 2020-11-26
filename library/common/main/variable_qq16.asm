@@ -10,6 +10,13 @@
 \ Two-letter token lookup table for tokens 128-159. See the deep dive on
 \ "Printing text tokens" for details of how the two-letter token system works.
 \
+IF _6502SP_VERSION
+\ These two-letter tokens can also be used in the extended text token system, by
+\ adding 100 to the token number. So the extended two-letter token 228 is "AL",
+\ the same as the standard two-letter token 128. In this system, the last four
+\ tokens are not available, as they would have numbers greater than 255.
+\
+ENDIF
 \ ******************************************************************************
 
 .QQ16

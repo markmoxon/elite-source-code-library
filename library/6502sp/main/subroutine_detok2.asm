@@ -30,14 +30,14 @@
 
 .DETOK2
 
- CMP #32                \ If A < 32, jump to DT3
- BCC DT3
+ CMP #32                \ If A < 32 then this is a jump token, so skip to DT3 to
+ BCC DT3                \ process it
 
- BIT DTW3               \ If bit 7 of DTW3 is clear, jump to DT8
- BPL DT8
+ BIT DTW3               \ If bit 7 of DTW3 is clear, then extended tokens are
+ BPL DT8                \ enabled, so jump to DT8 to process them
 
-                        \ If we get there then the token number in A is 32 or
-                        \ more and bit 7 of DTW3 is not set, so we can call the
+                        \ If we get there then this is not a jump token and
+                        \ extended tokens are not enabled, so we can call the
                         \ standard text token routine at TT27 to print the token
 
  TAX                    \ Copy the token number from A into X
@@ -59,29 +59,29 @@
 
 .DT8
 
-                        \ If we get here then the token number in A is 32 or
-                        \ more and bit 7 of DTW3 is set
+                        \ If we get here then this is not a jump token and
+                        \ extended tokens are enabled
 
- CMP #'['               \ If A < ASCII "[" (i.e. A <= ASCII "Z") then this is a
- BCC DTS                \ printable ASCII character, so jump down to DTS to
-                        \ print it
+ CMP #'['               \ If A < ASCII "[" (i.e. A <= ASCII "Z", or 90) then
+ BCC DTS                \ this is a printable ASCII character, so jump down to
+                        \ DTS to print it
 
- CMP #129               \ If A < 129, so A is in the range 91-128 (as ASCII "["
- BCC DT6                \ is 91), jump to DT6 to print a token from the MTIN
-                        \ table
+ CMP #129               \ If A < 129, so A is in the range 91-128, jump down to
+ BCC DT6                \ DT6 to print a randomised token from the MTIN table
 
- CMP #215               \ If A < 215, so A is in the range 129-215, jump to
- BCC DETOK              \ DETOK as this is a recursive token
+ CMP #215               \ If A < 215, so A is in the range 129-214, jump to
+ BCC DETOK              \ DETOK as this is a recursive token, returning from the
+                        \ subroutine using a tail call
 
-                        \ If we get here then A >= 215, which is an extended
-                        \ two-letter token from the TKN2 table
+                        \ If we get here then A >= 215, so this is a two-letter
+                        \ token from the extended TKN2/QQ16 table
 
  SBC #215               \ Subtract 215 to get a token number in the range 0-12
                         \ (the C flag is set as we passed through the BCC above,
                         \ so this subtraction is correct)
 
  ASL A                  \ Set A = A * 2, so it can be used as a pointer into the
-                        \ two-letter token table at TKN2
+                        \ two-letter token tables at TKN2 and QQ16
 
  PHA                    \ Store A on the stack, so we can restore it for the
                         \ second letter below
@@ -124,8 +124,8 @@
 
 .DT3
 
-                        \ The token number is less than 32, so this refers to
-                        \ a value in the jump table JMTB
+                        \ The token number is in the range 1 to 32, so this
+                        \ refers to a value in the jump table JMTB
 
  TAX                    \ Copy the token number from A into X
 
@@ -140,14 +140,17 @@
  TXA                    \ Copy the token number from X back into A
 
  ASL A                  \ Set A = A * 2, so it can be used as a pointer into the
-                        \ jump table at JMTB
+                        \ jump table at JMTB, though because the original range
+                        \ of values is 1-32, so the doubled range is 2-64, we
+                        \ need to take the offset into the jump table from
+                        \ JMTB-2 rather than JMTB
 
  TAX                    \ Copy the doubled token number from A into X
 
- LDA JMTB-2,X           \ Set DTM(2 1) to the X-2-th address from the JMTB table
- STA DTM+1              \ which modifies the JSR DASC instruction at label DTM
- LDA JMTB-1,X           \ below to call the subroutine at the address from the
- STA DTM+2              \ JMTB table
+ LDA JMTB-2,X           \ Set DTM(2 1) to the X-th address from the table at
+ STA DTM+1              \ JTM-2, which modifies the JSR DASC instruction at
+ LDA JMTB-1,X           \ label DTM below so that it calls the subroutine at the
+ STA DTM+2              \ relevant address from the JMTB table
 
  TXA                    \ Copy the doubled token number from X back into A
 
@@ -191,8 +194,8 @@
  TAX
 
  LDA #0                 \ Set A to 0, so we can build a random number from 0 to
-                        \ 4 in A plus the C flag, with the higher values being
-                        \ increasingly less likely the higher they are
+                        \ 4 in A plus the C flag, with each number being equally
+                        \ likely
 
  CPX #51                \ Add 1 to A if X >= 51
  ADC #0
@@ -206,7 +209,7 @@
  CPX #204               \ Set the C flag if X >= 204
 
  LDX SC                 \ Fetch the token number from SC into X, so X is now in
-                        \ the range 92-128
+                        \ the range 91-128
 
  ADC MTIN-91,X          \ Set A = MTIN-91 + token number (91-128) + random (0-4)
                         \       = MTIN + token number (0-37) + random (0-4)

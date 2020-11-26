@@ -9,7 +9,7 @@
 \
 \ Arguments:
 \
-\   A                   The recursive token to be printed, in the range 0-255
+\   A                   The recursive token to be printed, in the range 1-???
 \
 \ Returns:
 \
@@ -74,9 +74,11 @@
                         \ in a token rather than the delimiter (which is #VE),
                         \ so jump to DT1
 
- DEX                    \ We have just scanned past another token, so decrement
- BEQ DTL2               \ X, which contains the token number we are looking for,
-                        \ and jump down to DTL2 to print the token
+ DEX                    \ We have just scanned the end of a token, so decrement
+                        \ X, which contains the token number we are looking for
+
+ BEQ DTL2               \ If X has now reached zero, then we have found the token
+                        \ we are looking for, so jump down to DTL2 to print it
 
 .DT1
 

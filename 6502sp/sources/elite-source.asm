@@ -988,7 +988,11 @@ SAVE "6502sp/output/ELTI.bin", CODE_I%, P%, LOAD%
 CODE_J% = P%
 LOAD_J% = LOAD% + P% - CODE%
 
-INCLUDE "library/6502sp/main/macro_tokn.asm"
+INCLUDE "library/6502sp/main/macro_ejmp.asm"
+INCLUDE "library/6502sp/main/macro_echr.asm"
+INCLUDE "library/6502sp/main/macro_etok.asm"
+INCLUDE "library/6502sp/main/macro_etwo.asm"
+INCLUDE "library/6502sp/main/macro_ernd.asm"
 INCLUDE "library/6502sp/main/variable_tkn1.asm"
 INCLUDE "library/6502sp/main/variable_rupla.asm"
 INCLUDE "library/6502sp/main/variable_rugal.asm"

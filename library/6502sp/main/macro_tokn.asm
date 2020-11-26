@@ -1,7 +1,0 @@
-MACRO TOKN n
-
-  PRINT n
-  EQUB n EOR VE
-
-ENDMACRO
-

@@ -9,7 +9,7 @@
 
 .TKN1
 
- EQUB VE                \ Token 0
+ EQUB VE                \ Token 0:      ""
 
  EJMP 9                 \ Token 1
  EJMP 11

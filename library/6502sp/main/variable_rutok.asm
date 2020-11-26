@@ -453,7 +453,7 @@
  ETWO 'R', 'A'
  EQUB VE
 
- EJMP 1               \ Token 9
+ EJMP 1                 \ Token 9
  ECHR 'C'
  ECHR 'O'
  ECHR 'M'

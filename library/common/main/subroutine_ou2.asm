@@ -15,8 +15,8 @@ IF _CASSETTE_VERSION
 
  EQUB &2C               \ Fall through into ou3 to print the new message, but
                         \ skip the first instruction by turning it into
-                        \ &2C &A9 &6F, or BIT &6FA9, which does nothing bar
-                        \ affecting the flags
+                        \ &2C &A9 &6F, or BIT &6FA9, which does nothing apart
+                        \ from affect the flags
 
 ELIF _6502SP_VERSION
 

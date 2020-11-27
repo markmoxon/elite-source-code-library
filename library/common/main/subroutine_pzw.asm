@@ -58,8 +58,8 @@ IF _CASSETTE_VERSION
                         \ return from the subroutine
 
  EQUB &2C               \ Skip the next instruction by turning it into
-                        \ &2C &A9 &0F, or BIT &0FA9, which does nothing bar
-                        \ affecting the flags
+                        \ &2C &A9 &0F, or BIT &0FA9, which does nothing apart
+                        \ from affect the flags
 
  LDA #&0F               \ Set A to dashboard colour 1 (red)
 

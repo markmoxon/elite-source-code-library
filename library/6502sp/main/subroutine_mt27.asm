@@ -14,6 +14,6 @@
                         \ extended token that is printed is 217-224
 
  EQUB &2C               \ Skip the next instruction by turning it into
-                        \ &2C &A9 &06, or BIT &06A9, which does nothing bar
-                        \ affecting the flags
+                        \ &2C &A9 &06, or BIT &06A9, which does nothing apart
+                        \ from affect the flags
 

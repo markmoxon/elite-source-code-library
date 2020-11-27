@@ -13,6 +13,6 @@
                         \ DTW4 gets set to %10000000
 
  EQUB &2C               \ Skip the next instruction by turning it into
-                        \ &2C &A9 &00, or BIT &00A9, which does nothing bar
-                        \ affecting the flags
+                        \ &2C &A9 &00, or BIT &00A9, which does nothing apart
+                        \ from affect the flags
 

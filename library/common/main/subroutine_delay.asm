@@ -27,8 +27,8 @@ IF _CASSETTE_VERSION
  LDY #2                 \ Set Y to 2 vertical syncs
 
  EQUB &2C               \ Skip the next instruction by turning it into
-                        \ &2C &A0 &08, or BIT &08A0, which does nothing bar
-                        \ affecting the flags
+                        \ &2C &A0 &08, or BIT &08A0, which does nothing apart
+                        \ from affect the flags
 
 .DEL8
 

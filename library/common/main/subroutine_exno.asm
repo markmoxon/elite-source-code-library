@@ -81,8 +81,8 @@ ENDIF
 IF _CASSETTE_VERSION
 
  EQUB &2C               \ Skip the next instruction by turning it into
-                        \ &2C &A9 &20, or BIT &20A9, which does nothing bar
-                        \ affecting the flags
+                        \ &2C &A9 &20, or BIT &20A9, which does nothing apart
+                        \ from affect the flags
 
 ENDIF
 

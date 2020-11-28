@@ -116,10 +116,10 @@
                         \ #VE, so we repeat the EOR to get the actual character
                         \ in this token
 
- BEQ DTEX               \ If the result is non-zero, then this is the delimiter
-                        \ at the end of the token to print (which is #VE), so
-                        \ jump to DTEX to return from the subroutine, as we are
-                        \ done printing
+ BEQ DTEX               \ If the result is zero, then this is the delimiter at
+                        \ the end of the token to print (which is #VE), so jump
+                        \ to DTEX to return from the subroutine, as we are done
+                        \ printing
 
  JSR DETOK2             \ Otherwise call DETOK2 to print this part of the token
 

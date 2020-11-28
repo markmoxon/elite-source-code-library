@@ -163,7 +163,7 @@
  EQUB VE
 
  ETOK 154               \ Token 8
- ETOK 39
+ ECHR '`'
  ECHR 'S'
  ETOK 200
  EQUB VE
@@ -329,7 +329,7 @@
  ECHR 'Y'
  ECHR ' '
  ETWO 'I', 'T'
- ETOK 39
+ ECHR '`'
  ECHR 'S'
  ECHR ' '
  ETWO 'B', 'E'
@@ -1111,7 +1111,7 @@
  ETOK 175               \ Token 63
  ETOK 193
  ECHR 'S'
- ETOK 39
+ ECHR '`'
  ECHR ' '
  ERND 7
  ECHR ' '
@@ -1347,7 +1347,7 @@
  ECHR ' '
  ECHR 'E'
  ETWO 'A', 'R'
- ETOK 39
+ ECHR '`'
  ECHR 'D'
  ECHR ' '
  ECHR 'K'
@@ -2169,7 +2169,7 @@
  ETWO 'E', 'S'
  ECHR 'T'
  ECHR 'Y'
- ETOK 39
+ ECHR '`'
  ECHR 'S'
  ECHR ' '
  ECHR 'S'
@@ -2606,7 +2606,7 @@
  ECHR ' '
  ECHR 'W'
  ECHR 'E'
- ETOK 39
+ ECHR '`'
  ETWO 'V', 'E'
  ECHR ' '
  ECHR 'G'
@@ -2665,7 +2665,7 @@
  ETWO 'T', 'H'
  ECHR 'E'
  ECHR 'Y'
- ETOK 39
+ ECHR '`'
  ECHR 'L'
  ECHR 'L'
  ECHR ' '
@@ -2708,7 +2708,7 @@
  ECHR 'N'
  ETOK 204
  ETOK 179
- ETOK 39
+ ECHR '`'
  ETWO 'R', 'E'
  ECHR ' '
  ECHR 'E'

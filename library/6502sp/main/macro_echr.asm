@@ -12,6 +12,8 @@
 \
 \   ECHR 'x'            Insert ASCII character "x"
 \
+\ To include an apostrophe, use a backtick character, as in i.e. CHAR '`'.
+\
 \ See the deep dive on "Printing extended text tokens" for details on how
 \ characters are stored in the extended token table.
 \
@@ -21,9 +23,13 @@
 \
 \ ******************************************************************************
 
-MACRO ECHR n
+MACRO ECHR x
 
-  EQUB n EOR VE
+  IF x = '`'
+    EQUB 39 EOR VE
+  ELSE
+    EQUB x EOR VE
+  ENDIF
 
 ENDMACRO
 

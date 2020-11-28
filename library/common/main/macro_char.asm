@@ -12,6 +12,8 @@
 \
 \   CHAR 'x'            Insert ASCII character "x"
 \
+\ To include an apostrophe, use a backtick character, as in i.e. CHAR '`'.
+\
 \ See the deep dive on "Printing text tokens" for details on how characters are
 \ stored in the recursive token table.
 \
@@ -23,7 +25,11 @@
 
 MACRO CHAR x
 
-  EQUB x EOR 35
+  IF x = '`'
+    EQUB 39 EOR 35
+  ELSE
+    EQUB x EOR 35
+  ENDIF
 
 ENDMACRO
 

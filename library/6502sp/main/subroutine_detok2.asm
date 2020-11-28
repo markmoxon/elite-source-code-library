@@ -3,13 +3,13 @@
 \       Name: DETOK2
 \       Type: Subroutine
 \   Category: Text
-\    Summary: Print an extended text token
+\    Summary: Print an extended text token (1-255)
 \
 \ ------------------------------------------------------------------------------
 \
 \ Arguments:
 \
-\   A                   The token to be printed
+\   A                   The token to be printed (1-255)
 \
 \ Returns:
 \

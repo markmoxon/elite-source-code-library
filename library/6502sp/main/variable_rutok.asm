@@ -286,7 +286,7 @@
  ECHR 'I'
  ECHR 'D'
  ECHR 'N'
- ETOK 39
+ ECHR '`'
  ECHR 'T'
  ECHR ' '
  ECHR 'E'
@@ -443,7 +443,7 @@
  ECHR ' '
  ECHR 'H'
  ECHR 'E'
- ETOK 39
+ ECHR '`'
  ECHR 'S'
  ECHR ' '
  ETWO 'A', 'T'
@@ -538,7 +538,7 @@
  ETWO 'T', 'H'          \ Token 24
  ETWO 'E', 'R'
  ECHR 'E'
- ETOK 39
+ ECHR '`'
  ECHR 'S'
  ETOK 208
  ETWO 'R', 'E'
@@ -629,7 +629,7 @@
  ECHR 'I'
  ECHR 'T'
  ECHR 'S'
- ETOK 39
+ ECHR '`'
  ECHR 'N'
  ECHR ' '
  ECHR 'P'

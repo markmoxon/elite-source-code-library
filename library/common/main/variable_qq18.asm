@@ -1155,7 +1155,7 @@ IF _CASSETTE_VERSION
 
  CTRL 13                \ Token 123:    "{crlf}COMMANDER'S NAME? "
  RTOK 92                \ Encoded as:   "{13}[92]'S NAME? "
- CHAR 39                \ CHAR 39 is the apostrophe
+ CHAR '`'
  CHAR 'S'
  CHAR ' '
  CHAR 'N'

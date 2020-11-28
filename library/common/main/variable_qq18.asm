@@ -1069,7 +1069,7 @@ IF _CASSETTE_VERSION
 ELIF _6502SP_VERSION
 
  RTOK 102               \ Token 114:    "EXTRA ENERGY UNIT"
- RTOK 121                \ Encoded as:   "[102][121][14]"
+ RTOK 121               \ Encoded as:   "[102][121][14]"
  RTOK 14
  EQUB 0
 

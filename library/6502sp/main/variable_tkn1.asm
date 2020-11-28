@@ -458,7 +458,7 @@
  ECHR 'Y'
  ECHR ' '
  EJMP 6
- ERND 26
+ TOKN 117
  EJMP 5
  ECHR 'S'
  ECHR ' '
@@ -511,7 +511,7 @@
  ETWO 'A', 'N'
  ECHR ' '
  EJMP 6
- ERND 17
+ TOKN 108
  EJMP 5
  ETOK 177
  EJMP 2
@@ -2911,7 +2911,7 @@
  ECHR 'Y'
  ECHR ' '
  EJMP 6
- ERND 23
+ TOKN 114
  EJMP 5
  ECHR ' '
  ECHR 'A'

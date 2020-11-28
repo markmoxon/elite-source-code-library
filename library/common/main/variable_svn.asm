@@ -1,17 +1,13 @@
+IF _CASSETTE_VERSION
+
 \ ******************************************************************************
 \
-IF _CASSETTE_VERSION
 \       Name: SVN
-ELIF _6502SP_VERSION
-\       Name: svn
-ENDIF
 \       Type: Variable
 \   Category: Save and load
 \    Summary: The "saving in progress" flag
 \
 \ ******************************************************************************
-
-IF _CASSETTE_VERSION
 
 .SVN
 

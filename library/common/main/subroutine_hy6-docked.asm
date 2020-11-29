@@ -36,9 +36,8 @@ IF _CASSETTE_VERSION
  STA XC                 \ screen), setting A to 15 at the same time for the
                         \ following call to TT27
 
- JMP TT27               \ Print recursive token 129 ("{switch to sentence case}
-                        \ DOCKED") and return from the subroutine using a tail
-                        \ call
+ JMP TT27               \ Print recursive token 129 ("sentence case}DOCKED") and
+                        \ return from the subroutine using a tail call
 
 ELIF _6502SP_VERSION
 

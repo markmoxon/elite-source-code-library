@@ -51,8 +51,8 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
- LDA #146               \ Print recursive token 146 ("{switch to all caps}GAME
- JSR ex                 \ OVER"
+ LDA #146               \ Print recursive token 146 ("{all caps}GAME OVER")
+ JSR ex
 
 .D1
 

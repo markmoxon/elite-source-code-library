@@ -101,8 +101,7 @@ ENDIF
                         \ and draw a horizontal line at pixel row 19 to box
                         \ in the title
 
- LDA #15                \ Set A to token 129 ("{switch to sentence case}
-                        \ DOCKED")
+ LDA #15                \ Set A to token 129 ("sentence case}DOCKED")
 
 IF _CASSETTE_VERSION
 
@@ -160,7 +159,7 @@ ENDIF
  JSR spc                \ three lines of the Status Mode screen:
                         \
                         \   Fuel: {fuel level} Light Years
-                        \   Cash: {cash right-aligned to width 9} Cr
+                        \   Cash: {cash} Cr
                         \   Legal Status:
                         \
                         \ followed by a space
@@ -265,9 +264,8 @@ ENDIF
  BCC P%+7               \ instructions
 
  LDA #107               \ We do have a cargo bay extension, so print recursive
- JSR plf2               \ token 107 ("LARGE CARGO{switch to sentence case}
-                        \ BAY"), followed by a newline and an indent of 6
-                        \ characters
+ JSR plf2               \ token 107 ("LARGE CARGO{sentence case} BAY"), followed
+                        \ by a newline and an indent of 6 characters
 
  LDA BST                \ If we don't have fuel scoops fitted, skip the
  BEQ P%+7               \ following two instructions

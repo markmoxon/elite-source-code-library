@@ -38,8 +38,8 @@ ENDIF
 
 IF _CASSETTE_VERSION
 
- LDA #206               \ Print recursive token 46 (" CARGO{switch to sentence
- JSR TT68               \ case}") followed by a colon
+ LDA #206               \ Print recursive token 46 (" CARGO{sentence case}")
+ JSR TT68               \ followed by a colon
 
 ELIF _6502SP_VERSION
 

@@ -247,8 +247,8 @@ ENDIF
 
 .et1
 
- LDY #107               \ Set Y to recursive token 107 ("LARGE CARGO{switch to
-                        \ sentence case} BAY")
+ LDY #107               \ Set Y to recursive token 107 ("LARGE CARGO{sentence
+                        \ case} BAY")
 
  CMP #2                 \ If A is not 2 (i.e. the item we've just bought is not
  BNE et2                \ a large cargo bay), skip to et2

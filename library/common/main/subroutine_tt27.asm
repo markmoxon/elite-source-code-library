@@ -32,8 +32,8 @@
                         \ (128-159) or a recursive token (160-255), so jump
                         \ to TT43 to process tokens
 
- DEX                    \ If token = 1, this is control code 1 (current
- BEQ tal                \ galaxy number), so jump to tal
+ DEX                    \ If token = 1, this is control code 1 (current galaxy
+ BEQ tal                \ number), so jump to tal
 
  DEX                    \ If token = 2, this is control code 2 (current system
  BEQ ypl                \ name), so jump to ypl

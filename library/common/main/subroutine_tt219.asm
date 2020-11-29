@@ -142,9 +142,8 @@ ENDIF
 
  LDY #206               \ If the C flag is set, then there is no room in the
  BCS Tc                 \ cargo hold, so set Y to the recursive token 46
-                        \ (" CARGO{switch to sentence case}") and jump up to
-                        \ Tc to print a "Cargo?" error, beep, clear the number
-                        \ and try again
+                        \ (" CARGO{sentence case}") and jump up to Tc to print a
+                        \ "Cargo?" error, beep, clear the number and try again
 
  LDA QQ24               \ There is room in the cargo hold, so now to check
  STA Q                  \ whether we have enough cash, so fetch the item's

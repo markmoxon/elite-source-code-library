@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: DOVDU19
+\       Name: DOYC
 \       Type: Subroutine
 \   Category: Text
 \    Summary: Move the text cursor to a specified row

@@ -9,17 +9,19 @@
 
 .RUTOK
 
- EQUB VE                \ Token 0
+ EQUB VE                
+                        \
+                        \ Encoded as:   ""
 
- ETOK 147               \ Token 1
- ECHR 'C'
- ECHR 'O'
- ETWO 'L', 'O'
- ECHR 'N'
- ECHR 'I'
- ETWO 'S', 'T'
- ECHR 'S'
- ECHR ' '
+ ETOK 147               \ Token 1:      "THE COLONISTS HERE HAVE VIOLATED
+ ECHR 'C'               \                {sentence case} INTERGALACTIC CLONING
+ ECHR 'O'               \                PROTOCOL{lower case} AND SHOULD BE
+ ETWO 'L', 'O'          \                AVOIDED"
+ ECHR 'N'               \
+ ECHR 'I'               \ Encoded as:   "[147]CO<224>NI<222>S HE<242> HA<250>
+ ETWO 'S', 'T'          \                 VIOL<245><252>{2} <240>T<244>G<228>AC
+ ECHR 'S'               \                <251>C C<224>N[195]PROTOCOL{13}[178]SH
+ ECHR ' '               \                <217>LD <247> AVOID<252>"
  ECHR 'H'
  ECHR 'E'
  ETWO 'R', 'E'
@@ -76,12 +78,12 @@
  ETWO 'E', 'D'
  EQUB VE
 
- ETOK 147               \ Token 2
- ECHR 'C'
- ETWO 'O', 'N'
- ETWO 'S', 'T'
- ECHR 'R'
- ECHR 'I'
+ ETOK 147               \ Token 2:      "THE CONSTRICTOR WAS LAST SEEN AT
+ ECHR 'C'               \                {single cap}REESDICE, {single cap}
+ ETWO 'O', 'N'          \                COMMANDER"
+ ETWO 'S', 'T'          \
+ ECHR 'R'               \ Encoded as:   "[147]C<223><222>RICT<253> [203]<242>
+ ECHR 'I'               \                <237><241><233>, [154]"
  ECHR 'C'
  ECHR 'T'
  ETWO 'O', 'R'
@@ -96,12 +98,12 @@
  ETOK 154
  EQUB VE
 
- ECHR 'A'               \ Token 3
- ECHR ' '
- ERND 23
- ECHR ' '
- ETWO 'L', 'O'
- ECHR 'O'
+ ECHR 'A'               \ Token 3:      "A [130-134] LOOKING SHIP LEFT HERE A
+ ECHR ' '               \                WHILE BACK. LOOKED BOUND FOR AREXE"
+ ERND 23                \
+ ECHR ' '               \ Encoded as:   "A [23?] <224>OK[195][207] <229>FT HE
+ ETWO 'L', 'O'          \                <242>[208]WHI<229> BACK. LOOK[196]B
+ ECHR 'O'               \                <217>ND F<253> <238>E<230>"
  ECHR 'K'
  ETOK 195
  ETOK 207
@@ -143,13 +145,13 @@
  ETWO 'X', 'E'
  EQUB VE
 
- ECHR 'Y'               \ Token 4
- ECHR 'E'
- ECHR 'P'
- ECHR ','
- ETOK 208
- ERND 23
- ETOK 210
+ ECHR 'Y'               \ Token 4:      "YEP, A [130-134] NEW SHIP HAD A
+ ECHR 'E'               \                GALACTIC HYPERDRIVE FITTED HERE. USED
+ ECHR 'P'               \                IT TOO"
+ ECHR ','               \
+ ETOK 208               \ Encoded as:   "YEP,[208][23?][210][207] HAD[208]G
+ ERND 23                \                <228>AC<251>C HYP<244>DRI<250> F<219>
+ ETOK 210               \                T[196]HE<242>. <236>[196]<219> TOO"
  ETOK 207
  ECHR ' '
  ECHR 'H'
@@ -190,14 +192,14 @@
  ECHR 'O'
  EQUB VE
 
- ETOK 148               \ Token 5
- ECHR ' '
- ERND 23
- ECHR ' '
- ETOK 207
- ECHR ' '
- ECHR 'D'
- ECHR 'E'
+ ETOK 148               \ Token 5:      "THIS  [130-134] SHIP DEHYPED HERE FROM
+ ECHR ' '               \                NOWHERE, SUN SKIMMED AND JUMPED. I HEAR
+ ERND 23                \                IT WENT TO INBIBE"
+ ECHR ' '               \
+ ETOK 207               \ Encoded as:   "[148] [23?] [207] DEHYP[196]HE<242> FRO
+ ECHR ' '               \                M <227>WHE<242>, SUN SKIMM<252>[178]JUM
+ ECHR 'D'               \                P<252>. I HE<238> <219> W<246>T[201]
+ ECHR 'E'               \                <240><234><247>"
  ECHR 'H'
  ECHR 'Y'
  ECHR 'P'
@@ -253,12 +255,12 @@
  ETWO 'B', 'E'
  EQUB VE
 
- ERND 24                \ Token 6
- ECHR ' '
- ETOK 207
- ECHR ' '
- ECHR 'W'
- ETWO 'E', 'N'
+ ERND 24                \ Token 6:      "[91-95] SHIP WENT FOR ME AT AUSAR. MY
+ ECHR ' '               \                LASERS DIDN'T EVEN SCRATCH THE [91-95]"
+ ETOK 207               \
+ ECHR ' '               \ Encoded as:   "[24?] [207] W<246>T F<253> ME <245>
+ ECHR 'W'               \                 A<236><238>. MY <249>S<244>S DIDN[39]T
+ ETWO 'E', 'N'          \                 EV<246> SC<248>TCH [147][24?]"
  ECHR 'T'
  ECHR ' '
  ECHR 'F'
@@ -304,18 +306,18 @@
  ERND 24
  EQUB VE
 
- ECHR 'O'               \ Token 7
- ECHR 'H'
- ECHR ' '
- ECHR 'D'
- ECHR 'E'
- ETWO 'A', 'R'
- ECHR ' '
- ECHR 'M'
- ECHR 'E'
- ECHR ' '
- ECHR 'Y'
- ETWO 'E', 'S'
+ ECHR 'O'               \ Token 7:      "OH DEAR ME YES. A FRIGHTFUL ROGUE WITH
+ ECHR 'H'               \                WHAT I BELIEVE YOU PEOPLE CALL A LEAD 
+ ECHR ' '               \                POSTERIOR SHOT UP LOTS OF THOSE BEASTLY 
+ ECHR 'D'               \                PIRATES AND WENT TO USLERI"
+ ECHR 'E'               \
+ ETWO 'A', 'R'          \ Encoded as:   "OH DE<238> ME Y<237>.[208]FRIGHTFUL ROG
+ ECHR ' '               \                UE WI<226> WH<245> I <247>LIE<250>
+ ECHR 'M'               \                 [179] PEOP<229> C<228>L[208]<229>AD PO
+ ECHR 'E'               \                <222><244>I<253> SHOT UP <224>TS OF
+ ECHR ' '               \                 <226>O<218> <247>A<222>LY PI<248>T
+ ECHR 'Y'               \                <237>[178]W<246>T[201]<236><229>RI"
+ ETWO 'E', 'S' 
  ECHR '.'
  ETOK 208
  ECHR 'F'
@@ -414,12 +416,12 @@
  ECHR 'I'
  EQUB VE
 
- ETOK 179               \ Token 8
- ECHR ' '
- ECHR 'C'
- ETWO 'A', 'N'
- ECHR ' '
- ECHR 'T'
+ ETOK 179               \ Token 8:      "YOU CAN TACKLE THE [170-174] [91-95]
+ ECHR ' '               \                IF YOU LIKE. HE'S AT ORARRA"
+ ECHR 'C'               \
+ ETWO 'A', 'N'          \ Encoded as:   "[179] C<255> TACK<229> [147][13?] [24?]
+ ECHR ' '               \                 IF [179] LIKE. HE[39]S <245> <253>
+ ECHR 'T'               \                <238><248>"
  ECHR 'A'
  ECHR 'C'
  ECHR 'K'
@@ -453,9 +455,9 @@
  ETWO 'R', 'A'
  EQUB VE
 
- EJMP 1                 \ Token 9
- ECHR 'C'
- ECHR 'O'
+ EJMP 1                 \ Token 9:      "{all caps}COMING SOON: ELITE II"
+ ECHR 'C'               \
+ ECHR 'O'               \ Encoded as:   "{1}COM[195]<235><223>: EL<219>E II"
  ECHR 'M'
  ETOK 195
  ETWO 'S', 'O'
@@ -471,49 +473,62 @@
  ECHR 'I'
  EQUB VE
 
- ERND 25                \ Token 10
- EQUB VE
+ ERND 25                \ Token 10:     "[106-110]"
+ EQUB VE                \
+                        \ Encoded as:   "[25?]"
 
- ERND 25                \ Token 11
- EQUB VE
+ ERND 25                \ Token 11:     "[106-110]"
+ EQUB VE                \
+                        \ Encoded as:   "[25?]"
 
- ERND 25                \ Token 12
- EQUB VE
+ ERND 25                \ Token 12:     "[106-110]"
+ EQUB VE                \
+                        \ Encoded as:   "[25?]"
 
- ERND 25                \ Token 13
- EQUB VE
+ ERND 25                \ Token 13:     "[106-110]"
+ EQUB VE                \
+                        \ Encoded as:   "[25?]"
 
- ERND 25                \ Token 14
- EQUB VE
+ ERND 25                \ Token 14:     "[106-110]"
+ EQUB VE                \
+                        \ Encoded as:   "[25?]"
 
- ERND 25                \ Token 15
- EQUB VE
+ ERND 25                \ Token 15:     "[106-110]"
+ EQUB VE                \
+                        \ Encoded as:   "[25?]"
 
- ERND 25                \ Token 16
- EQUB VE
+ ERND 25                \ Token 16:     "[106-110]"
+ EQUB VE                \
+                        \ Encoded as:   "[25?]"
 
- ERND 25                \ Token 17
- EQUB VE
+ ERND 25                \ Token 17:     "[106-110]"
+ EQUB VE                \
+                        \ Encoded as:   "[25?]"
 
- ERND 25                \ Token 18
- EQUB VE
+ ERND 25                \ Token 18:     "[106-110]"
+ EQUB VE                \
+                        \ Encoded as:   "[25?]"
 
- ERND 25                \ Token 19
- EQUB VE
+ ERND 25                \ Token 19:     "[106-110]"
+ EQUB VE                \
+                        \ Encoded as:   "[25?]"
 
- ERND 25                \ Token 20
- EQUB VE
+ ERND 25                \ Token 20:     "[106-110]"
+ EQUB VE                \
+                        \ Encoded as:   "[25?]"
 
- ERND 25                \ Token 21
- EQUB VE
+ ERND 25                \ Token 21:     "[106-110]"
+ EQUB VE                \
+                        \ Encoded as:   "[25?]"
 
- ERND 25                \ Token 22
- EQUB VE
+ ERND 25                \ Token 22:     "[106-110]"
+ EQUB VE                \
+                        \ Encoded as:   "[25?]"
 
- ECHR 'B'               \ Token 23
- ECHR 'O'
- ECHR 'Y'
- ECHR ' '
+ ECHR 'B'               \ Token 23:     "BOY ARE YOU IN THE WRONG GALAXY!"
+ ECHR 'O'               \
+ ECHR 'Y'               \ Encoded as:   "BOY A<242> [179] <240> [147]WR<223>G G
+ ECHR ' '               \                <228>AXY!"
  ECHR 'A'
  ETWO 'R', 'E'
  ECHR ' '
@@ -535,11 +550,11 @@
  ECHR '!'
  EQUB VE
 
- ETWO 'T', 'H'          \ Token 24
- ETWO 'E', 'R'
- ECHR 'E'
- ECHR '`'
- ECHR 'S'
+ ETWO 'T', 'H'          \ Token 24:     "THERE'S A REAL [91-95] PIRATE OUT
+ ETWO 'E', 'R'          \                THERE"
+ ECHR 'E'               \
+ ECHR '`'               \ Encoded as:   "<226><244>E[39]S[208]<242><228> [24?] P
+ ECHR 'S'               \                I<248>TE <217>T <226><244>E"
  ETOK 208
  ETWO 'R', 'E'
  ETWO 'A', 'L'
@@ -560,14 +575,14 @@
  ECHR 'E'
  EQUB VE
 
- ETOK 147               \ Token 25
- ETOK 193
- ECHR 'S'
- ECHR ' '
- ECHR 'O'
- ECHR 'F'
- ECHR ' '
- ERND 18
+ ETOK 147               \ Token 25:     "THE INHABITANTS OF [86-90] ARE SO
+ ETOK 193               \                AMAZINGLY PRIMITIVE THAT THEY STILL
+ ECHR 'S'               \                THINK {single cap}***** ****** IS  3D"
+ ECHR ' '               \
+ ECHR 'O'               \ Encoded as:   "[147][193]S OF [18?] A<242> <235> A
+ ECHR 'F'               \                <239>Z<240>GLY PRIMI<251><250> <226>
+ ECHR ' '               \                <245> <226>EY <222><220>L <226><240>K
+ ERND 18                \                 {19}***** ******[202] 3D"
  ECHR ' '
  ECHR 'A'
  ETWO 'R', 'E'
@@ -624,10 +639,10 @@
  ECHR 'D'
  EQUB VE
 
- EJMP 2                 \ Token 26
- ECHR 'B'
- ECHR 'I'
- ECHR 'T'
+ EJMP 2                 \ Token 26:     "{sentence case}BITS'N PIECES - END OF
+ ECHR 'B'               \                PART 1"
+ ECHR 'I'               \
+ ECHR 'T'               \ Encoded as:   "{2}BITS[39]N PIECES - END OF PART 1"
  ECHR 'S'
  ECHR '`'
  ECHR 'N'

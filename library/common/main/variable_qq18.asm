@@ -52,7 +52,7 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- TWOK 'I', 'N'          \ Token 4:      "INVENTORY{crlf}
+ TWOK 'I', 'N'          \ Token 4:      "INVENTORY{cr}
  TWOK 'V', 'E'          \               "
  CHAR 'N'               \
  CHAR 'T'               \ Encoded as:   "<140><150>NT<153>Y{12}"
@@ -621,7 +621,7 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- CTRL 12                \ Token 65:     "{crlf}
+ CTRL 12                \ Token 65:     "{cr}
  CHAR '1'               \                10{cash} CR5{cash} CR"
  CHAR '0'               \
  CTRL 0                 \ Encoded as:   "{12}10{0}5{0}"
@@ -905,9 +905,9 @@ ELIF _6502SP_VERSION
  CHAR 'O'               \
  EQUB 0                 \ Encoded as:   "RO"
 
- RTOK 14                \ Token 95:     "UNIT  QUANTITY{crlf}
- CHAR ' '               \                 PRODUCT   UNIT PRICE FOR SALE{crlf}
- CHAR ' '               \                                              {lf}"
+ RTOK 14                \ Token 95:     "UNIT  QUANTITY{cr}
+ CHAR ' '               \                 PRODUCT   UNIT PRICE FOR SALE{cr}{lf}
+ CHAR ' '               \               "
  RTOK 16                \
  CTRL 12                \ Encoded as:   "[14]  [16]{13} [26]   [14] [6] F<153>
  CHAR ' '               \                 SA<129>{12}{10}"
@@ -1101,6 +1101,11 @@ IF _CASSETTE_VERSION
  CHAR 'L'               \
  EQUB 0                 \ Encoded as:   "LL"
 
+ RTOK 37                \ Token 119:    "CASH:{cash} CR{crlf}
+ CHAR ':'               \               "
+ CTRL 0                 \
+ EQUB 0                 \ Encoded as:   "[37]:{0}"
+
 ELIF _6502SP_VERSION
 
  CHAR 'M'               \ Token 117:    "MILITARY  LASER"
@@ -1122,12 +1127,12 @@ ELIF _6502SP_VERSION
  RTOK 27
  EQUB 0
 
-ENDIF
-
- RTOK 37                \ Token 119:    "CASH:{cash} CR{crlf}
+ RTOK 37                \ Token 119:    "CASH:{cash} CR{cr}
  CHAR ':'               \               "
  CTRL 0                 \
  EQUB 0                 \ Encoded as:   "[37]:{0}"
+
+ENDIF
 
  TWOK 'I', 'N'          \ Token 120:    "INCOMING MISSILE"
  RTOK 91                \
@@ -1173,6 +1178,17 @@ IF _CASSETTE_VERSION
  CHAR 'K'
  EQUB 0
 
+ CTRL 5                 \ Token 125:    "FUEL: {fuel level} LIGHT YEARS{crlf}
+ TWOK 'L', 'E'          \                CASH:{cash} CR{crlf}
+ CHAR 'G'               \                LEGAL STATUS:"
+ TWOK 'A', 'L'          \
+ CHAR ' '               \ Encoded as:   "{5}<129>G<128> [43]<145><136>:"
+ RTOK 43
+ TWOK 'A', 'T'
+ TWOK 'U', 'S'
+ CHAR ':'
+ EQUB 0
+
 ELIF _6502SP_VERSION
 
  RTOK 115               \ Token 123:    "DOCKING COMPUTERS ON"
@@ -1185,10 +1201,8 @@ ELIF _6502SP_VERSION
  RTOK 129               \
  EQUB 0                 \ Encoded as:   "A[129]"
 
-ENDIF
-
- CTRL 5                 \ Token 125:    "FUEL: {fuel level} LIGHT YEARS{crlf}
- TWOK 'L', 'E'          \                CASH:{cash} CR{crlf}
+ CTRL 5                 \ Token 125:    "FUEL: {fuel level} LIGHT YEARS{cr}
+ TWOK 'L', 'E'          \                CASH:{cash} CR{cr}
  CHAR 'G'               \                LEGAL STATUS:"
  TWOK 'A', 'L'          \
  CHAR ' '               \ Encoded as:   "{5}<129>G<128> [43]<145><136>:"
@@ -1197,6 +1211,8 @@ ENDIF
  TWOK 'U', 'S'
  CHAR ':'
  EQUB 0
+
+ENDIF
 
 IF _CASSETTE_VERSION
 
@@ -1228,13 +1244,13 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- RTOK 92                \ Token 126:    "COMMANDER {commander name}{crlf}
- CHAR ' '               \                {crlf}
- CTRL 4                 \                {crlf}
+ RTOK 92                \ Token 126:    "COMMANDER {commander name}{cr}
+ CHAR ' '               \                {cr}
+ CTRL 4                 \                {cr}
  CTRL 12                \                {sentence case}PRESENT SYSTEM{tab to
- CTRL 12                \                column 21}:{current system name}{crlf}
+ CTRL 12                \                column 21}:{current system name}{cr}
  CTRL 12                \                HYPERSPACE SYSTEM{tab to column 21}:
- CTRL 6                 \                {selected system name}{crlf}
+ CTRL 6                 \                {selected system name}{cr}
  RTOK 145               \                CONDITION{tab to column 21}:"
  CHAR ' '               \
  RTOK 5                 \ Encoded as:   "[92] {4}{12}{12}{12}{6}[145] [5]{9}{2}
@@ -1325,7 +1341,7 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- CTRL 12                \ Token 132:    "{crlf}
+ CTRL 12                \ Token 132:    "{cr}
  CTRL 8                 \                {all caps}EQUIPMENT: {sentence case}"
  RTOK 47                \
  CHAR 'M'               \ Encoded as:   "{12}{8}[47]M<146>T:{6}"

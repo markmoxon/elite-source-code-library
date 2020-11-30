@@ -21,11 +21,11 @@
  EQUB 41                \ Token 9: a random extended token between 41 and 45
  EQUB 61                \ Token 10: a random extended token between 61 and 65
  EQUB 51                \ Token 11: a random extended token between 51 and 55
- EQUB 56                \ Token 12: a random extended token between 56 and 61
+ EQUB 56                \ Token 12: a random extended token between 56 and 60
  EQUB 170               \ Token 13: a random extended token between 170 and 174
  EQUB 66                \ Token 14: a random extended token between 66 and 70
  EQUB 71                \ Token 15: a random extended token between 71 and 75
- EQUB 76                \ Token 16: a random extended token between 76 and 81
+ EQUB 76                \ Token 16: a random extended token between 76 and 80
  EQUB 81                \ Token 17: a random extended token between 81 and 85
  EQUB 86                \ Token 18: a random extended token between 86 and 90
  EQUB 140               \ Token 19: a random extended token between 140 and 144

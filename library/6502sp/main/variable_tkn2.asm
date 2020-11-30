@@ -13,7 +13,7 @@
 
 .TKN2
 
- EQUB 12, 10            \ Token 215
+ EQUB 12, 10            \ Token 215 = {crlf}
  EQUS "AB"              \ Token 216
  EQUS "OU"              \ Token 217
  EQUS "SE"              \ Token 218

@@ -203,7 +203,7 @@
  ETOK 208               \                 {single cap}UNFORTUNATELY IT'S BEEN
  ECHR 'M'               \                STOLEN.{cr}
  ECHR 'O'               \                 {single cap}{display ship, wait for
- ECHR 'M'               \                keypress}IT WENT MISSING FROM OUR SHIP
+ ECHR 'M'               \                key press}IT WENT MISSING FROM OUR SHIP
  ETWO 'E', 'N'          \                YARD ON {single cap}XEER FIVE MONTHS
  ECHR 'T'               \                AGO AND {mission 1 location hint}.{cr}
  ECHR ' '               \                 {single cap}YOUR MISSION, SHOULD YOU
@@ -219,7 +219,7 @@
  ETWO 'A', 'B'          \                 {left align}{sentence case}{tab 6}GOOD
  ETWO 'L', 'E'          \                LUCK, {single cap}COMMANDER.{cr}
  ECHR ' '               \                 {left align}{tab 6}{all caps}  MESSAGE
- ETWO 'T', 'I'          \                ENDS{display ship, wait for keypress}"
+ ETWO 'T', 'I'          \                ENDS{display ship, wait for key press}"
  ECHR 'M'               \
  ECHR 'E'               \ Encoded as:   "{23}{14}{2}G<242><221><240>GS[213][178]
  ETOK 204               \                {19}I <247>G[208]MOM<246>T OF [179]R V
@@ -554,7 +554,7 @@
  EJMP 19                \                 {single cap}IF SUCCESSFUL, YOU WILL BE
  ECHR 'W'               \                WELL REWARDED.{cr}
  ECHR 'E'               \                {left align}{tab 6}{all caps}  MESSAGE
- ECHR ' '               \                ENDS{wait for keypress}"
+ ECHR ' '               \                ENDS{wait for key press}"
  ECHR 'H'               \
  ECHR 'A'               \ Encoded as:   "{25}{9}{30}{23}{14}{2}  <245>T<246>
  ETWO 'V', 'E'          \                <251><223>[213]. {19}WE HA<250> NE[196]
@@ -720,7 +720,7 @@
  ECHR 'T'               \                 {single cap}AND MAYBE SOONER THAN YOU
  ECHR 'U'               \                THINK...{cr}
  ETWO 'L', 'A'          \                {left align}{tab 6}{all caps}  MESSAGE
- ETWO 'T', 'I'          \                ENDS{wait for keypress}"
+ ETWO 'T', 'I'          \                ENDS{wait for key press}"
  ETWO 'O', 'N'          \
  ECHR 'S'               \ Encoded as:   "{25}{9}{30}{23}{14}{2}  C<223>G<248>TU
  ECHR ' '               \                <249><251><223>S [154]!{12}{12}<226>
@@ -1110,8 +1110,8 @@
  ERND 3
  EQUB VE
 
- ETOK 147               \ Token 62:     "THE {all caps, system name adjective}
- EJMP 17                \                [155-159] [160-164]"
+ ETOK 147               \ Token 62:     "THE {system name adjective} [155-159]
+ EJMP 17                \                 [160-164]"
  ECHR ' '               \
  ERND 4                 \ Encoded as:   "[147]{17} [4?] [5?]"
  ECHR ' '
@@ -1178,20 +1178,20 @@
  EQUB VE                \
                         \ Encoded as:   "{18}"
 
- EJMP 17                \ Token 72:     "{all caps, system name adjective}
- ECHR ' '               \                [160-164]"
- ERND 5                 \
- EQUB VE                \ Encoded as:   "{17} [5?]"
+ EJMP 17                \ Token 72:     "{system name adjective} [160-164]"
+ ECHR ' '               \
+ ERND 5                 \ Encoded as:   "{17} [5?]"
+ EQUB VE
 
- EJMP 17                \ Token 73:     "{all caps, system name adjective}
- ECHR ' '               \                {random 1-8 letter word}"
+ EJMP 17                \ Token 73:     "{system name adjective} {random 1-8
+ ECHR ' '               \                letter word}"
  EJMP 18                \
  EQUB VE                \ Encoded as:   "{17} {18}"
 
- EJMP 17                \ Token 74:     "{all caps, system name adjective}
- ECHR ' '               \                [170-174]"
- ERND 13                \
- EQUB VE                \ Encoded as:   "{17} [13?]"
+ EJMP 17                \ Token 74:     "{system name adjective} [170-174]"
+ ECHR ' '               \
+ ERND 13                \ Encoded as:   "{17} [13?]"
+ EQUB VE
 
  ERND 13                \ Token 75:     "[170-174] {random 1-8 letter word}"
  ECHR ' '               \
@@ -2072,15 +2072,15 @@
  EQUB VE                \
                         \ Encoded as:   "{18}"
 
- EJMP 17                \ Token 191:    "{all caps, system name adjective}
- ECHR ' '               \                {random 1-8 letter word}"
+ EJMP 17                \ Token 191:    "{system name adjective} {random 1-8
+ ECHR ' '               \                letter word}"
  EJMP 18                \
  EQUB VE                \ Encoded as:   "{17} {18}"
 
- EJMP 17                \ Token 192:    "{all caps, system name adjective}
- ECHR ' '               \                [170-174]"
- ERND 13                \
- EQUB VE                \ Encoded as:   "{17} [13?]"
+ EJMP 17                \ Token 192:    "{system name adjective} [170-174]"
+ ECHR ' '               \
+ ERND 13                \ Encoded as:   "{17} [13?]"
+ EQUB VE
 
  ETWO 'I', 'N'          \ Token 193:    "INHABITANT"
  ECHR 'H'               \
@@ -2091,8 +2091,8 @@
  ECHR 'T'
  EQUB VE
 
- ETOK 191               \ Token 194:    "{all caps, system name adjective}
- EQUB VE                \                {random 1-8 letter word}"
+ ETOK 191               \ Token 194:    "{system name adjective} {random 1-8
+ EQUB VE                \                letter word}"
                         \
                         \ Encoded as:   "[191]"
 
@@ -2243,7 +2243,7 @@
 
  ECHR ' '               \ Token 213:    " {single cap}COMMANDER {commander
  ETOK 154               \                name}, I {lower case}AM{sentence case}
- ECHR ' '               \                CAPTAIN {mission 1 captain's name}
+ ECHR ' '               \                CAPTAIN {mission captain's name}
  EJMP 4                 \                {lower case}OF{sentence case} HER
  ECHR ','               \                MAJESTY'S SPACE NAVY{lower case}"
  ECHR ' '               \
@@ -2390,7 +2390,7 @@
  EJMP 4                 \                PUSH RIGHT TO THE HOME SYSTEM OF THOSE
  ETOK 204               \                MOTHERS.{cr}
  ECHR 'I'               \                 {single cap}
- EJMP 13                \                {wait for keypress}
+ EJMP 13                \                {wait for key press}
  ECHR ' '               \                {clear screen}
  ECHR 'A'               \                {white}
  ECHR 'M'               \                {tab 6, white, lower case in words}
@@ -2411,7 +2411,7 @@
  ECHR 'F'               \                {single cap}COMMANDER.{cr}
  ECHR ' '               \                {left align}
  EJMP 19                \                {tab 6}{all caps}  MESSAGE ENDS
- ECHR 'N'               \                {wait for keypress}"
+ ECHR 'N'               \                {wait for key press}"
  ECHR 'A'               \                
  ECHR 'V'               \ Encoded as:   "{25}{9}{30}{29}{14}{2}GOOD DAY [154]
  ECHR 'A'               \                 {4}[204]I{13} AM {19}AG<246>T {19}B
@@ -2852,7 +2852,7 @@
  ETOK 154               \                UNIT{extended tokens} AS PAYMENT.{cr}
  ETOK 204               \                {left align}
  ETOK 179               \                {tab 6}{all caps}  MESSAGE ENDS
- ECHR ' '               \                {wait for keypress}"
+ ECHR ' '               \                {wait for key press}"
  ECHR 'H'               \                
  ECHR 'A'               \ Encoded as:   "{25}{9}{29}{30}{8}{14}{13}{19}WELL D
  ETWO 'V', 'E'          \                <223>E [154][204][179] HA<250> <218>RV
@@ -3038,8 +3038,8 @@
  ERND 14                \ Encoded as:   "[15?] [14?]"
  EQUB VE
 
- EJMP 17                \ Token 236:    "{all caps, system name adjective}
- ECHR ' '               \                 [225-229] [240-244]"
+ EJMP 17                \ Token 236:    "{system name adjective} [225-229]
+ ECHR ' '               \                 [240-244]"
  ERND 29                \
  ECHR ' '               \ Encoded as:   "{17} [29?] [32?]"
  ERND 32
@@ -3119,10 +3119,10 @@
  ECHR 'M'
  EQUB VE
 
- EJMP 17                \ Token 249:    "{all caps, system name adjective}
- ECHR ' '               \                 ULTRA"
- ECHR 'U'               \
- ECHR 'L'               \ Encoded as:   "{17} ULT<248>"
+ EJMP 17                \ Token 249:    "{system name adjective} ULTRA"
+ ECHR ' '               \
+ ECHR 'U'               \ Encoded as:   "{17} ULT<248>"
+ ECHR 'L'
  ECHR 'T'
  ETWO 'R', 'A'
  EQUB VE

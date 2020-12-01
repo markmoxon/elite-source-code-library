@@ -15,12 +15,11 @@
 
 .DOCOL
 
- PHA                    \ Store A on the stack
+ PHA                    \ Store A, the colour number, on the stack
 
- LDA #SETCOL            \ Set A to the character for setting the text colour
+ LDA #SETCOL            \ Set A to #SETCOL, ready to write to the I/O processor
 
- BNE label              \ Jump to label to print the character in A followed by
-                        \ the character on the stack, returning from the
-                        \ subroutine using a tail call (this BNE is effectively
-                        \ a JMP as A is never zero)
+ BNE label              \ Jump to label to write #SETCOL <colour> to the I/O
+                        \ processor, returning from the subroutine using a tail
+                        \ call (this BNE is effectively a JMP as A is never zero)
 

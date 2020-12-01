@@ -3,7 +3,15 @@
 \       Name: MT8
 \       Type: Subroutine
 \   Category: Text
-\    Summary: Tab to column 6 and set all bits on DTW2
+\    Summary: Tab to column 6 and start a new word when printing extended tokens
+\
+\ ------------------------------------------------------------------------------
+\
+\ This routine sets the following:
+\
+\   * XC = 6 (tab to column 6)
+\
+\   * DTW2 = %11111111 (we are not currently printing a word)
 \
 \ ******************************************************************************
 

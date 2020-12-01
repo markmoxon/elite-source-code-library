@@ -3,7 +3,23 @@
 \       Name: MT28
 \       Type: Subroutine
 \   Category: Text
-\    Summary: Print extended token 220-221 depending on the galaxy number (0-1)
+\    Summary: Print the location hint during the mission 1 briefing
+\
+\ ------------------------------------------------------------------------------
+\
+\ This routine prints the following tokens, depending on the galaxy number:
+\
+\   * Token 220 ("WAS LAST SEEN AT {single cap}REESDICE") in galaxy 0
+\
+\   * Token 221 ("IS BELIEVED TO HAVE JUMPED TO THIS GALAXY") in galaxy 1
+\
+\ This is used when printing extended token 10 as part of the mission 1
+\ briefing, which looks like this when printed:
+\
+\   It went missing from our ship yard on Xeer five months ago and {mission 1
+\   location hint}
+\
+\ where {mission 1 location hint} is replaced by one of the names above.
 \
 \ ******************************************************************************
 

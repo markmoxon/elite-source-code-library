@@ -3,7 +3,15 @@
 \       Name: MT14
 \       Type: Subroutine
 \   Category: Text
-\    Summary: Set bit 7 of DTW4 and set DTW5 to 0
+\    Summary: Switch to justified text when printing extended tokens
+\
+\ ------------------------------------------------------------------------------
+\
+\ This routine sets the following:
+\
+\   * DTW4 = %10000000 (justify text, print buffer on carriage return)
+\
+\   * DTW5 = 0 (reset line buffer size)
 \
 \ ******************************************************************************
 

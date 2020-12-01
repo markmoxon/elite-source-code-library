@@ -3,7 +3,15 @@
 \       Name: MT9
 \       Type: Subroutine
 \   Category: Text
-\    Summary: Tab to column 1 and set the current view type to 1
+\    Summary: Clear the screen and set the current view type to 1
+\
+\ ------------------------------------------------------------------------------
+\
+\ This routine sets the following:
+\
+\   * XC = 1 (tab to column 1)
+\
+\ before calling TT66 to clear the screen and set the view type to 1.
 \
 \ ******************************************************************************
 

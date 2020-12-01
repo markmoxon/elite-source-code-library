@@ -3,16 +3,24 @@
 \       Name: MT2
 \       Type: Subroutine
 \   Category: Text
-\    Summary: Set bit 5 of DTW1 and clear all bits of DTW6
+\    Summary: Switch to Sentence Case when printing extended tokens
+\
+\ ------------------------------------------------------------------------------
+\
+\ This routine sets the following:
+\
+\   * DTW1 = %00100000 (apply lower case to the second letter of a word onwards)
+\
+\   * DTW6 = %00000000 (lower case is not enabled)
 \
 \ ******************************************************************************
 
 .MT2
 
- LDA #%00100000         \ Set bit 5 of DTW1
+ LDA #%00100000         \ Set DTW1 = %00100000
  STA DTW1
 
- LDA #0                 \ Clear bit 7 of DTW6
+ LDA #00000000          \ Set DTW6 = %00000000
  STA DTW6
 
  RTS                    \ Return from the subroutine

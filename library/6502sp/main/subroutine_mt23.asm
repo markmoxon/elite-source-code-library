@@ -3,7 +3,8 @@
 \       Name: MT23
 \       Type: Subroutine
 \   Category: Text
-\    Summary: Move the text cursor to row 10
+\    Summary: Move to row 10, switch to white text, and switch to lower case
+\             when printing extended tokens
 \
 \ ******************************************************************************
 
@@ -15,4 +16,7 @@
  EQUB &2C               \ Skip the next instruction by turning it into
                         \ &2C &A9 &06, or BIT &06A9, which does nothing apart
                         \ from affect the flags
+
+                        \ Fall through into MT29 to move to the row in A, switch
+                        \ to white text, and switch to lower case
 

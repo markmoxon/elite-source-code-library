@@ -3,22 +3,33 @@
 \       Name: MTIN
 \       Type: Variable
 \   Category: Text
-\    Summary: Lookup table for random tokens in the extended token table
+\    Summary: Lookup table for random tokens in the extended token table (0-37)
+\
+\ ------------------------------------------------------------------------------
+\
+\ The ERND token type, which is part of the extended token system, takes an
+\ argument between 0 and 37, and returns a randomly chosen token in the range
+\ specified in this table. This is used to generate the extended description of
+\ each system.
+\
+\ For example, the entry at position 13 in this table (counting from 0) is 66,
+\ so ERND 14 will expand into a random token in the range 66-70, i.e. one of
+\ "JUICE", "BRANDY", "WATER", "BREW" and "GARGLE BLASTERS".
 \
 \ ******************************************************************************
 
 .MTIN
 
- EQUB 16                \ Token 0: a random extended token between 16 and 21
- EQUB 21                \ Token 1: a random extended token between 21 and 25
- EQUB 26                \ Token 2: a random extended token between 26 and 30
- EQUB 31                \ Token 3: a random extended token between 31 and 35
- EQUB 155               \ Token 4: a random extended token between 155 and 159
- EQUB 160               \ Token 5: a random extended token between 160 and 164
- EQUB 46                \ Token 6: a random extended token between 46 and 50
- EQUB 165               \ Token 7: a random extended token between 165 and 169
- EQUB 36                \ Token 8: a random extended token between 36 and 40
- EQUB 41                \ Token 9: a random extended token between 41 and 45
+ EQUB 16                \ Token  0: a random extended token between 16 and 21
+ EQUB 21                \ Token  1: a random extended token between 21 and 25
+ EQUB 26                \ Token  2: a random extended token between 26 and 30
+ EQUB 31                \ Token  3: a random extended token between 31 and 35
+ EQUB 155               \ Token  4: a random extended token between 155 and 159
+ EQUB 160               \ Token  5: a random extended token between 160 and 164
+ EQUB 46                \ Token  6: a random extended token between 46 and 50
+ EQUB 165               \ Token  7: a random extended token between 165 and 169
+ EQUB 36                \ Token  8: a random extended token between 36 and 40
+ EQUB 41                \ Token  9: a random extended token between 41 and 45
  EQUB 61                \ Token 10: a random extended token between 61 and 65
  EQUB 51                \ Token 11: a random extended token between 51 and 55
  EQUB 56                \ Token 12: a random extended token between 56 and 60

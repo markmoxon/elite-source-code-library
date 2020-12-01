@@ -3,8 +3,17 @@
 \       Name: MT29
 \       Type: Subroutine
 \   Category: Text
-\    Summary: Move the text cursor to row 6, white text, set bit 7 of DTW6 and
-\             bit 5 of DTW1
+\    Summary: Move to row 6, switch to white text, and switch to lower case when
+\             printing extended tokens
+\
+\ ------------------------------------------------------------------------------
+\
+\ This routine sets the following:
+\
+\   * YC = 6 (move to row 6)
+\
+\ Then it calls WHITETEXT to switch to white text, before jumping to MT13 to
+\ switch to lower case when printing extended tokens.
 \
 \ ******************************************************************************
 
@@ -13,7 +22,7 @@
  LDA #6                 \ Move the text cursor to row 6
  JSR DOYC
 
- JSR WHITETEXT          \ Set white text ????
+ JSR WHITETEXT          \ Set white text
 
  JMP MT13               \ Jump to MT13 to set bit 7 of DTW6 and bit 5 of DTW1,
                         \ returning from the subroutine using a tail call

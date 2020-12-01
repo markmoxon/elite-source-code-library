@@ -77,7 +77,7 @@
  DEX                    \ We have just scanned the end of a token, so decrement
                         \ X, which contains the token number we are looking for
 
- BEQ DTL2               \ If X has now reached zero, then we have found the token
+ BEQ DTL2               \ If X has now reached zero then we have found the token
                         \ we are looking for, so jump down to DTL2 to print it
 
 .DT1

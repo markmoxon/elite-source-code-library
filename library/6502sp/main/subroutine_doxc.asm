@@ -10,8 +10,11 @@
 .DOXC
 
  PHA
- BIT printflag
- BPL DOX1
+
+ BIT printflag          \ If bit 7 of printflag is clear (printer output is not
+ BPL DOX1               \ enabled), jump to DOX1 to skip the printer-specific
+                        \ code below
+
  CMP XC
  BCC DOXLF
  BEQ DOX1

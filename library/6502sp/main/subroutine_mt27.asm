@@ -3,7 +3,25 @@
 \       Name: MT27
 \       Type: Subroutine
 \   Category: Text
-\    Summary: Print extended token 217-219 depending on the galaxy number (0-2)
+\    Summary: Print the captain's name during mission briefings
+\
+\ ------------------------------------------------------------------------------
+\
+\ This routine prints the following tokens, depending on the galaxy number:
+\
+\   * Token 217 ("CURRUTHERS") in galaxy 0
+\
+\   * Token 218 ("FOSDYKE SMYTHE") in galaxy 1
+\
+\   * Token 219 ("FORTESQUE") in galaxy 2
+\
+\ This is used when printing extended token 213 as part of the mission
+\ briefings, which looks like this when printed:
+\
+\   Commander {commander name}, I am Captain {mission captain's name} of Her
+\   Majesty's Space Navy
+\
+\ where {mission captain's name} is replaced by one of the names above.
 \
 \ ******************************************************************************
 

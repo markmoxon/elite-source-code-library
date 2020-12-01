@@ -19,17 +19,8 @@
 
  PHA                    \ Store the row number on the stack
 
- LDA #SETYC             \ Set A to the character for moving the text cursor to
-                        \ the value in YC
+ LDA #SETYC             \ Set A to #SETYC, ready to write to the I/O processor 
 
-.label
-
- JSR OSWRCH             \ Send the character in A to the I/O processor for
-                        \ printing
-
- PLA                    \ Retrieve the row number from the stack
-
- JMP OSWRCH             \ Send the character in A to the I/O processor for
-                        \ printing, returning from the subroutine using a tail
-                        \ call
+                        \ Fall through into label to write #SETYC <row> to the
+                        \ I/O processor
 

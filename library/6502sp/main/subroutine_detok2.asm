@@ -103,19 +103,24 @@
  CMP #'A'               \ If A < ASCII "A", jump to DT9 to print this as ASCII
  BCC DT9
 
- BIT DTW6               \ If bit 7 of DTW6 is set, jump to DT10
- BMI DT10
+ BIT DTW6               \ If bit 7 of DTW6 is set, then lower case has been
+ BMI DT10               \ enabled by jump token 13, {lower case}, so jump to
+                        \ DT10 to apply the lower case and single cap masks
 
- BIT DTW2               \ If bit 7 of DTW2 is set, jump to DT5
- BMI DT5
+ BIT DTW2               \ If bit 7 of DTW2 is set, then we are not currently
+ BMI DT5                \ printing a word, so jump to DT5 so we skip the setting
+                        \ of lower case in Sentence Case (which we only want to
+                        \ do when we are already printing a word)
 
 .DT10
 
- ORA DTW1               \ Set the character value to at least DTW1
+ ORA DTW1               \ Convert the character to lower case if DTW1 is
+                        \ %00100000 (i.e. if we are in {sentence case} mode)
 
 .DT5
 
- AND DTW8               \ Mask the character value with DTW8
+ AND DTW8               \ Convert the character to upper case if DTW8 is
+                        \ %11011111 (i.e. after a {single cap} token)
 
 .DT9
 
@@ -124,8 +129,10 @@
 
 .DT3
 
-                        \ The token number is in the range 1 to 32, so this
-                        \ refers to a value in the jump table JMTB
+                        \ If we get here then the token number in A is in the
+                        \ range 1 to 32, so this is a jump token that should
+                        \ call the corresponding address in the jump table at
+                        \ JMTB
 
  TAX                    \ Copy the token number from A into X
 
@@ -158,10 +165,9 @@
 
 .DTM
 
- JSR DASC               \ Call DASC to print the ASCII character in A (or, if
-                        \ the token number is less than 32, call the relevant
-                        \ JMTB subroutine, as this instruction will have been
-                        \ modified)
+ JSR DASC               \ Call the relevant JMTB subroutine, as this instruction
+                        \ will have been modified by the above to point to the
+                        \ relevant address
 
 .DT7
 
@@ -177,8 +183,10 @@
 
 .DT6
 
-                        \ If we get here then A is in the range 91-128, so we
-                        \ print a randomly picked token from the MTIN table
+                        \ If we get here then the token number in A is in the
+                        \ range 91-128, which means we print a randomly picked
+                        \ token from the token range given in the corresponding
+                        \ entry in the MTIN table
 
  STA SC                 \ Store the token number in SC
 
@@ -217,5 +225,5 @@
  JSR DETOK              \ Call DETOK to print the extended recursive token in A
 
  JMP DT7                \ Jump to DT7 to restore V(1 0) and Y from the stack and
-                        \ return from the subroutine
+                        \ return from the subroutine using a tail call
 

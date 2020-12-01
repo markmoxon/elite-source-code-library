@@ -73,8 +73,10 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- BIT printflag
- BPL dontdolinefeedontheprinternow
+ BIT printflag          \ If bit 7 of printflag is clear (printer output is not
+ BPL dontdolinefeedontheprinternow \ enabled), jump to
+                        \ dontdolinefeedontheprinternow to skip the following
+
  LDA #prilf
  JSR OSWRCH
  JSR OSWRCH
@@ -83,15 +85,14 @@ ELIF _6502SP_VERSION
 
  STZ printflag
 
- LDA QQ11               \ If this is a space view, skip the following four
+ LDA QQ11               \ If this is a space view, skip the following five
  BEQ P%+13              \ instructions (i.e. jump to JSR TT17 below)
 
  AND PATG               \ If PATG = &FF (author names are shown on start-up)
  LSR A                  \ and bit 0 of QQ11 is 1 (the current view is type 1),
- BCS P%+7               \ then skip the following instruction
+ BCS P%+7               \ then skip the following two instructions
 
  LDY #2
-
  JSR DELAY
 
 ENDIF

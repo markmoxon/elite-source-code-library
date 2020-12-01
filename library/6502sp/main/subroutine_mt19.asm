@@ -3,14 +3,20 @@
 \       Name: MT19
 \       Type: Subroutine
 \   Category: Text
-\    Summary: Clear bit 5 of DTW8 (only)
+\    Summary: Capitalise the next letter
+\
+\ ------------------------------------------------------------------------------
+\
+\ This routine sets the following:
+\
+\   * DTW8 = %11011111 (capitalise the next letter)
 \
 \ ******************************************************************************
 
 .MT19
 
- LDA #%11011111         \ Clear bit 5 of DTW8 (only) so it can be used as a mask
- STA DTW8               \ to make letters upper case
+ LDA #%11011111         \ Set DTW8 = %11011111
+ STA DTW8
 
  RTS                    \ Return from the subroutine
 

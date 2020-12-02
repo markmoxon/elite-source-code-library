@@ -34,7 +34,7 @@ MACRO DKS4
                         \ without being hijacked
 
  STX SHEILA+&40         \ Set 6522 System VIA output register ORB (SHEILA &40)
-                        \ to %0011 to stop auto scan of keyboard
+                        \ to %00000011 to stop auto scan of keyboard
 
  LDX #%01111111         \ Set 6522 System VIA data direction register DDRA
  STX SHEILA+&43         \ (SHEILA &43) to %01111111. This sets the A registers

@@ -34,6 +34,7 @@ D% = &D000
 E% = D%+2*NTY
 LS% = D%-1
 BRKV = &202
+VEC = &7FFE
 
 Q% = _ENABLE_MAX_COMMANDER
 
@@ -61,8 +62,10 @@ CON = 31
 LGO = 32
 COU = 33
 DOD = 34
+
 NOST = 18
 NOSH = 20
+
 JL = ESC
 JH = SHU+2
 PACK = SH3
@@ -74,6 +77,7 @@ Mlas = 50
 NRU% = 0
 VE = &57
 LL = 30
+
 CYAN = &FF
 RED = &F0
 YELLOW = &F
@@ -89,34 +93,38 @@ CYAN2 = &3C
 WHITE2 = &3F
 DUST = WHITE
 FF = &FF
+
 OSWRCH = &FFEE
 OSBYTE = &FFF4
 OSWORD = &FFF1
 OSFILE = &FFDD
 SCLI = &FFF7
-\XX21 = D%
+
+DOFE21 = &83
+DOhfx = &84
 SETXC = &85
 SETYC = &86
 clyns = &87
-DODIALS = &8A
 RDPARAMS = &88
-DOmsbar = 242
-wscn = 243
-onescan = 244
-DOhfx = &84
-DOdot = 245
-DOFE21 = &83
+DODIALS = &8A
 VIAE = &8B
 DOBULB = &8C
-DODKS4 = 246
 DOCATF = &8D
 SETCOL = &8E
 SETVDU19 = &8F
 DOsvn = &90
 printcode = &92
 prilf = &93
+
+DOmsbar = 242
+wscn = 243
+onescan = 244
+DOdot = 245
+DODKS4 = 246
+
 X = 128
 Y = 96
+
 f0 = &20
 f1 = &71
 f2 = &72
@@ -127,7 +135,6 @@ f6 = &75
 f7 = &16
 f8 = &76
 f9 = &77
-VEC = &7FFE
 
 W = 5
 W2 = 16

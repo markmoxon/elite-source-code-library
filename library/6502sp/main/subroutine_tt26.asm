@@ -16,7 +16,7 @@
 \
 \   X                   X is preserved
 \
-\   C flag              C flag is cleared
+\   C flag              The C flag is cleared
 \
 \ Other entry points:
 \

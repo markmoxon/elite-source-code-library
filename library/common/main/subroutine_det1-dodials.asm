@@ -1,6 +1,10 @@
 \ ******************************************************************************
 \
+IF _CASSETTE_VERSION
 \       Name: DET1
+ELIF _6502SP_VERSION
+\       Name: DODIALS
+ENDIF
 \       Type: Subroutine
 \   Category: Screen mode
 \    Summary: Hide the dashboard (for when we die)
@@ -33,11 +37,7 @@ ELIF _6502SP_VERSION
 
 .DODIALS
 
-ENDIF
-
-IF _6502SP_VERSION
-
-TAX
+ TAX
 
 ENDIF
 
@@ -57,7 +57,8 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- JMP PUTBACK\hide dials on death
+ JMP PUTBACK            \ Jump to PUTBACK to restore the USOSWRCH handler and
+                        \ return from the subroutine using a tail call
 
 ENDIF
 

@@ -3,7 +3,7 @@
 \       Name: CHPR
 \       Type: Subroutine
 \   Category: Text
-\    Summary: Write a character to the I/O processor for processing
+\    Summary: Send a character to the I/O processor for printing or processing
 \
 \ ------------------------------------------------------------------------------
 \
@@ -40,8 +40,8 @@
 
  LDA #printcode         \ Bit 7 of printflag is set, which means we should send
  JSR OSWRCH             \ the output to the printer as well as the screen, so
-                        \ write a #printcode character to the I/O processor to
-                        \ do this
+                        \ send a #printcode command to the I/O processor to do
+                        \ this
 
 .noprinter
 

@@ -15,12 +15,13 @@
 
 .DOVDU19
 
- PHA                    \ Store A on the stack
+ PHA                    \ Store A, the colour number, on the stack
 
- LDA #SETVDU19          \ Set A to the character for doing a VDU 19
+ LDA #SETVDU19          \ Set A to #SETVDU19, ready to write to the I/O
+                        \ processor
 
- BNE label              \ Jump to label to print the character in A followed by
-                        \ the character on the stack, returning from the
-                        \ subroutine using a tail call (this BNE is effectively
-                        \ a JMP as A is never zero)
+ BNE label              \ Jump to label to write #SETVDU19 <colour> to the I/O
+                        \ processor, returning from the subroutine using a tail
+                        \ call (this BNE is effectively a JMP as A is never
+                        \ zero)
 

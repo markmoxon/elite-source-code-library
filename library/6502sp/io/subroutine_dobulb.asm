@@ -19,5 +19,7 @@
  STA (SC),Y
  DEY
  BPL BULL
- JMP PUTBACK
+
+ JMP PUTBACK            \ Jump to PUTBACK to restore the USOSWRCH handler and
+                        \ return from the subroutine using a tail call
 

@@ -1,23 +1,71 @@
 \ ******************************************************************************
+\
 \       Name: TVT3
+\       Type: Variable
+\   Category: Screen mode
+\    Summary: Palette data for the mode 1 part of the screen (the top part)
+\
+\ ------------------------------------------------------------------------------
+\
+\ The following table contains four different mode 1 palettes, each of which
+\ sets a four-colour palatte for the top part of the screen. Mode 1 supports
+\ four colours on-screen and in Elite colour 0 is always set to black, so each
+\ of the palettes in this table defines the three other colours (1 to 3).
+\
+\ The palettes are set in the IRQ1 handler that implements the split screen
+\ mode, and can be changed by the parasite sending a #SETVDU19 <offset> command
+\ to point to the offset of the new palette in this table.
+\
+\ This table must start on a page boundary (i.e. an address that ends in two
+\ zeroes in hexadecimal). In the release version of the game TVT3 is at &2C00.
+\ This is so the #SETVDU19 command can switch palettes properly, as it does this
+\ by overwriting the low byte of the palette data address with a new offset, so
+\ the low byte for first palette's address must be 0.
+\
+\ Palette data is given as a set of bytes, with each byte mapping a logical
+\ colour to a physical one. In each byte, the logical colour is given in bits
+\ 4-7 and the physical colour in bits 0-3. See p.379 of the Advanced User Guide
+\ for details of how palette mapping works, as in modes 1 and 2 we have to do
+\ multiple palette commands to change the colours correctly, and the physical
+\ colour value is EOR'd with 7, just to make things even more confusing.
+\
 \ ******************************************************************************
 
 .TVT3
 
- EQUD &17243400
- EQUD &47576474
- EQUD &8696A1B1
- EQUD &C6D6E1F1 \View  YRC
- EQUD &17243400
- EQUD &47576474
- EQUD &8696A0B0
- EQUD &C6D6E0F0 \Trade YRW
- EQUD &17243400
- EQUD &47576474
- EQUD &8090A1B1
- EQUD &C0D0E1F1 \Title YWC
- EQUD &17243400
- EQUD &47576474
- EQUD &8292A0B0
- EQUD &C2D2E0F0 \Trade YMW
+ EQUB &00, &34          \ 1 = yellow, 2 = red, 3 = cyan (space view)
+ EQUB &24, &17          \
+ EQUB &74, &64          \ Set with a #SETVDU19 0 command
+ EQUB &57, &47
+ EQUB &B1, &A1
+ EQUB &96, &86
+ EQUB &F1, &E1
+ EQUB &D6, &C6
+
+ EQUB &00, &34          \ 1 = yellow, 2 = red, 3 = white (charts)
+ EQUB &24, &17          \
+ EQUB &74, &64          \ Set with a #SETVDU19 16 command
+ EQUB &57, &47
+ EQUB &B0, &A0
+ EQUB &96, &86
+ EQUB &F0, &E0
+ EQUB &D6, &C6
+
+ EQUB &00, &34          \ 1 = yellow, 2 = white, 3 = cyan (title screen)
+ EQUB &24, &17          \
+ EQUB &74, &64          \ Set with a #SETVDU19 32 command
+ EQUB &57, &47
+ EQUB &B1, &A1
+ EQUB &90, &80
+ EQUB &F1, &E1
+ EQUB &D0, &C0
+
+ EQUB &00, &34          \ 1 = yellow, 2 = magenta, 3 = white (trading)
+ EQUB &24, &17          \
+ EQUB &74, &64          \ Set with a #SETVDU19 48 command
+ EQUB &57, &47
+ EQUB &B0, &A0
+ EQUB &92, &82
+ EQUB &F0, &E0
+ EQUB &D2, &C2
 

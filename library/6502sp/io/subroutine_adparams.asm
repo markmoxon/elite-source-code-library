@@ -11,5 +11,7 @@
  BCS P%+3
  RTS
  JSR DIALS
- JMP PUTBACK
+
+ JMP PUTBACK            \ Jump to PUTBACK to restore the USOSWRCH handler and
+                        \ return from the subroutine using a tail call
 

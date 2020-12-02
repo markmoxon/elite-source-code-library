@@ -26,7 +26,7 @@
  JSR DEL8               \ Wait for 8/50 of a second (0.16 seconds)
 
  LDA #%10000001         \ Clear 6522 System VIA interrupt enable register IER
- STA SHEILA+&4E         \ (SHEILA &4E) bit 1 (i.e. enable the CA2 interrupt
+ STA SHEILA+&4E         \ (SHEILA &4E) bit 1 (i.e. enable the CA2 interrupt,
                         \ which comes from the keyboard)
 
  LDA #15                \ Perform a *FX 15,0 command (flush all buffers)

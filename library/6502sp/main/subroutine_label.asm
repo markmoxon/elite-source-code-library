@@ -3,24 +3,27 @@
 \       Name: label
 \       Type: Subroutine
 \   Category: Text
-\    Summary: Write a two-byte sequence to the I/O processor
+\    Summary: Write a two-byte command to the I/O processor
 \
 \ ------------------------------------------------------------------------------
 \
+\ This routine sends a command to the I/O processor, along with the parameter
+\ byte from the top of the stack.
+\
 \ Arguments:
 \
-\   A                   The first character to write to the I/O processor
+\   A                   The command byte to send to the I/O processor
 \
-\   Top of stack        The second character to write to the I/O processor
+\   Top of stack        The parameter to send to the I/O processor
 \
 \ ******************************************************************************
 
 .label
 
- JSR OSWRCH             \ Write the character in A to the I/O processor
+ JSR OSWRCH             \ Send the command byte in A to the I/O processor
 
- PLA                    \ Retrieve the row number from the stack
+ PLA                    \ Retrieve the parameter from the stack
 
- JMP OSWRCH             \ Write the character in A to the I/O processor,
-                        \ returning from the subroutine using a tail call
+ JMP OSWRCH             \ Send the parameter in A to the I/O processor, and
+                        \ return from the subroutine using a tail call
 

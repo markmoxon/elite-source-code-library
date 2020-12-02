@@ -10,8 +10,11 @@
  CMP #11
  BEQ nottosend
  PHA
- LDA #2
- JSR NVOSWRCH
+
+ LDA #2                 \ Send ASCII 2 to the printer using the non-vectored
+ JSR NVOSWRCH           \ OSWRCH, which means "start sending characters to the
+                        \ printer"
+
  PLA
  PHA
  CMP #32
@@ -30,11 +33,14 @@
 
 .sent
 
- LDA #3
- JSR NVOSWRCH
+ LDA #3                 \ Send ASCII 3 to the printer using the non-vectored
+ JSR NVOSWRCH           \ OSWRCH, which means "stop sending characters to the
+                        \ printer"
+
  PLA
 
 .nottosend
 
- JMP PUTBACK
+ JMP PUTBACK            \ Jump to PUTBACK to restore the USOSWRCH handler and
+                        \ return from the subroutine using a tail call
 

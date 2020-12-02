@@ -20,10 +20,10 @@
 
 .MT26
 
- LDA #VIAE              \ Write a #VIAE character to the I/O processor
- JSR OSWRCH
-
- LDA #&81               \ Write a &81 character to the I/O processor
+ LDA #VIAE              \ Send a #VIAE %10000001 command to the I/O processor to
+ JSR OSWRCH             \ clear 6522 System VIA interrupt enable register IER
+ LDA #%10000001         \ (SHEILA &4E) bit 1 (i.e. enable the CA2 interrupt,
+                        \ which comes from the keyboard)
  JSR OSWRCH
 
  LDY #8                 \ Wait for 8/50 of a second (0.16 seconds)
@@ -43,11 +43,10 @@
  LDY #0                 \ Escape was pressed, so set Y = 0 (as the OSWORD call
                         \ returns the length of the entered string in Y)
 
- LDA #VIAE              \ Write a #VIAE character to the I/O processor
- JSR OSWRCH
-
- LDA #1                 \ Write a #1 character to the I/O processor
- JSR OSWRCH
+ LDA #VIAE              \ Send a #VIAE %00000001 command to the I/O processor to
+ JSR OSWRCH             \ set 6522 System VIA interrupt enable register IER
+ LDA #%00000001         \ (SHEILA &4E) bit 1 (i.e. disable the CA2 interrupt,
+ JSR OSWRCH             \ which comes from the keyboard)
 
  JMP FEED               \ Jump to FEED to print a newline, returning from the
                         \ subroutine using a tail call

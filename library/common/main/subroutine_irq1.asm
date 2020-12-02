@@ -206,17 +206,38 @@ ELIF _6502SP_VERSION
  STA SHEILA+&45         \ (SHEILA &45) to VSCAN (57) to start the T1 counter
                         \ counting down from 14622 at a rate of 1 MHz
 
- LDA HFX
- BNE jvec
- LDA #&18
- STA &FE20
+ LDA HFX                \ If the hyperspace effect flag in HFX is non-zero, then
+ BNE jvec               \ jump up to jvec to pass control to the next interrupt
+                        \ handler, instead of switching the palette to mode 1.
+                        \ This will have the effect of blurring and colouring
+                        \ the top screen in a mode 2 palette, making the
+                        \ hyperspace rings turn multicoloured when we do a
+                        \ hyperspace jump. This effect is triggered by the
+                        \ parasite issuing a #DOHFX 1 command in routine LL164
+                        \ and is disabled again by a #DOHFX 0 command
+
+ LDA #%00011000         \ Set Video ULA control register (SHEILA+&20) to
+ STA SHEILA+&20         \ %00011000, which is the same as switching to mode 1
+                        \ (i.e. the top part of the screen) but with no cursor
 
 .VNT3
 
- LDA TVT3,Y
- STA &FE21
- DEY
- BNE VNT3
+                        \ The following instruction gets modified in-place by
+                        \ the #SETVDU19 <offset> command, which changes the
+                        \ value of TVT3+1 (i.e. the low byte of the address in
+                        \ the LDA instruction). This changes the palette block
+                        \ that gets copied to SHEILA+&21, so a #SETVDU19 32
+                        \ command applies the third palette from TVT3 in this
+                        \ loop, for example
+
+ LDA TVT3,Y             \ Copy the Y-th palette byte from TVT3 to SHEILA+&21
+ STA SHEILA+&21         \ to map logical to actual colours for the bottom part
+                        \ of the screen (i.e. the dashboard)
+
+ DEY                    \ Decrement the palette byte counter
+
+ BNE VNT3               \ Loop back to VNT3 until we have copied all the
+                        \ palette bytes
 
  PLA                    \ Otherwise restore Y from the stack
  TAY

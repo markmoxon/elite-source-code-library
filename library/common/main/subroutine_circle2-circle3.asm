@@ -27,7 +27,7 @@ ENDIF
 \
 \ Returns:
 \
-\   C flag              The C flag is clear
+\   C flag              The C flag is cleared
 \
 \ ******************************************************************************
 

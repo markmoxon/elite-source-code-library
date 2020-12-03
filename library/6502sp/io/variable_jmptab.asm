@@ -33,6 +33,6 @@
  EQUW SETVDU19          \ #SETVDU19  = 143 (&8F)    15 = Change mode 1 palette
  EQUW DOSVN             \ #DOsvn     = 144 (&90)    16 = Set file saving flag
  EQUW DOBRK             \              145 (&91)    17 = Execute BRK instruction
- EQUW printer           \ #printcode = 146 (&92)    18 = Enable/disable printer
+ EQUW printer           \ #printcode = 146 (&92)    18 = Write to printer/screen
  EQUW prilf             \ #prilf     = 147 (&93)    19 = Blank line on printer
 

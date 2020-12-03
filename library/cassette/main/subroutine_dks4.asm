@@ -40,15 +40,15 @@
                         \ without being hijacked
 
  STA SHEILA+&40         \ Set 6522 System VIA output register ORB (SHEILA &40)
-                        \ to %0011 to stop auto scan of keyboard
+                        \ to %00000011 to stop auto scan of keyboard
 
  LDA #%01111111         \ Set 6522 System VIA data direction register DDRA
  STA SHEILA+&43         \ (SHEILA &43) to %01111111. This sets the A registers
-                        \ (IRA and ORA) so that
+                        \ (IRA and ORA) so that:
                         \
-                        \ Bits 0-6 of ORA will be sent to the keyboard
+                        \   * Bits 0-6 of ORA will be sent to the keyboard
                         \
-                        \ Bit 7 of IRA will be read from the keyboard
+                        \   * Bit 7 of IRA will be read from the keyboard
 
  STX SHEILA+&4F         \ Set 6522 System VIA output register ORA (SHEILA &4F)
                         \ to X, the key we want to scan for; bits 0-6 will be
@@ -62,11 +62,11 @@
                         \ X will be unchanged)
 
  LDA #%00001011         \ Set 6522 System VIA output register ORB (SHEILA &40)
- STA SHEILA+&40         \ to %1011 to restart auto scan of keyboard
+ STA SHEILA+&40         \ to %00001011 to restart auto scan of keyboard
 
  CLI                    \ Allow interrupts again
 
  TXA                    \ Transfer X into A
 
- RTS
+ RTS                    \ Return from the subroutine
 

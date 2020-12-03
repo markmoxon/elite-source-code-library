@@ -38,11 +38,11 @@ MACRO DKS4
 
  LDX #%01111111         \ Set 6522 System VIA data direction register DDRA
  STX SHEILA+&43         \ (SHEILA &43) to %01111111. This sets the A registers
-                        \ (IRA and ORA) so that
+                        \ (IRA and ORA) so that:
                         \
-                        \ Bits 0-6 of ORA will be sent to the keyboard
+                        \   * Bits 0-6 of ORA will be sent to the keyboard
                         \
-                        \ Bit 7 of IRA will be read from the keyboard
+                        \   * Bit 7 of IRA will be read from the keyboard
 
  STA SHEILA+&4F         \ Set 6522 System VIA output register ORA (SHEILA &4F)
                         \ to X, the key we want to scan for; bits 0-6 will be
@@ -56,7 +56,7 @@ MACRO DKS4
                         \ A will be unchanged)
 
  LDX #%00001011         \ Set 6522 System VIA output register ORB (SHEILA &40)
- STX SHEILA+&40         \ to %1011 to restart auto scan of keyboard
+ STX SHEILA+&40         \ to %00001011 to restart auto scan of keyboard
 
  CLI                    \ Allow interrupts again
 

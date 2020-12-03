@@ -3,8 +3,7 @@
 \       Name: tosend
 \       Type: Subroutine
 \   Category: Text
-\    Summary: Print a character to the printer only, and restore the USOSWRCH
-\             handler
+\    Summary: Print a printable character and return to the printer routine
 \
 \ ******************************************************************************
 

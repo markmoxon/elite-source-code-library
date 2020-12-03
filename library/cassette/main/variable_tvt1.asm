@@ -20,7 +20,7 @@
 \ Similarly, the palette at TVT1+16 is for the monochrome space view, where
 \ logical colour 1 is mapped to physical colour 0 EOR 7 = 7 (white), and
 \ logical colour 0 is mapped to physical colour 7 EOR 7 = 0 (black). Each of
-\ these mappings requires six calls to SHEILA+&21 - see p.379 of the Advanced
+\ these mappings requires six calls to SHEILA &21 - see p.379 of the Advanced
 \ User Guide for an explanation.
 \
 \ The mode 5 palette table has two blocks which overlap. The block used depends

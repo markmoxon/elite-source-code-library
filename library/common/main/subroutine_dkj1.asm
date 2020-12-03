@@ -25,7 +25,7 @@ IF _CASSETTE_VERSION
  INY                    \ Update the key logger for key 2 in the KYTB table, so
  JSR DKS1               \ KY2 will be &FF if Space (speed up) is being pressed
 
- LDA SHEILA+&40         \ Read 6522 System VIA input register IRB (SHEILA &40)
+ LDA VIA+&40            \ Read 6522 System VIA input register IRB (SHEILA &40)
 
 ELIF _6502SP_VERSION
 

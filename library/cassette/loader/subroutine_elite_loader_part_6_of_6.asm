@@ -13,17 +13,17 @@
 \
 \ ******************************************************************************
 
- LDA VIA+4              \ Read the 6522 System VIA T1C-L timer 1 low-order
- STA 1                  \ counter, which increments 1000 times a second so this
-                        \ will be pretty random, and store it in location 1,
-                        \ which is among the main game code's random seeds in
-                        \ RAND (so this seeds the random numbers for the main
-                        \ game)
+ LDA VIA+&44            \ Read the 6522 System VIA T1C-L timer 1 low-order
+ STA 1                  \ counter (SHEILA &44) which increments 1000 times a
+                        \ second so this will be pretty random, and store it in
+                        \ location 1, which is among the main game code's random
+                        \ seeds in RAND (so this seeds the random numbers for
+                        \ the main game)
 
  SEI                    \ Disable all interrupts
 
  LDA #%00111001         \ Set 6522 System VIA interrupt enable register IER
- STA VIA+&E             \ (SHEILA &4E) bits 0 and 3-5 (i.e. disable the Timer1,
+ STA VIA+&4E            \ (SHEILA &4E) bits 0 and 3-5 (i.e. disable the Timer1,
                         \ CB1, CB2 and CA2 interrupts from the System VIA)
 
 \LDA #&7F               \ These instructions are commented out in the original
@@ -39,7 +39,7 @@
  STA IRQ1V+1
 
  LDA #VSCAN             \ Set 6522 System VIA T1C-L timer 1 high-order counter
- STA USVIA+5            \ (SHEILA &45) to VSCAN (56) to start the T1 counter
+ STA VIA+&45            \ (SHEILA &45) to VSCAN (56) to start the T1 counter
                         \ counting down from 14080 at a rate of 1 MHz (this is
                         \ a different value to the main game code)
 

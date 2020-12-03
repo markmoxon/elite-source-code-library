@@ -62,10 +62,10 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
- LDA VIA+4              \ Read the 6522 System VIA T1C-L timer 1 low-order
- STA RAND+1             \ counter, which increments 1000 times a second so this
-                        \ will be pretty random, and store it in RAND+1 among
-                        \ the hard-coded random seeds in RAND
+ LDA VIA+&44            \ Read the 6522 System VIA T1C-L timer 1 low-order
+ STA RAND+1             \ counter (SHEILA &44), which increments 1000 times a
+                        \ second so this will be pretty random, and store it in
+                        \ RAND+1 among the hard-coded random seeds in RAND
 
  JSR DORND              \ Set A and X to random numbers, say A = r1
 

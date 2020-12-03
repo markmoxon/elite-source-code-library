@@ -20,7 +20,7 @@
 
 .DOVIAE
 
- STA VIA+&E             \ Store A in SHEILA &4E
+ STA VIA+&4E            \ Store A in SHEILA &4E
 
  JMP PUTBACK            \ Jump to PUTBACK to restore the USOSWRCH handler and
                         \ return from the subroutine using a tail call

@@ -114,9 +114,9 @@ OSWORD = &FFF1          \ The address for the OSWORD routine
 
 OSPRNT = &234           \ The address for the OSPRNT vector
 
-VIA = &FE40             \ Memory-mapped space for accessing the 6845 CRTC
-
-USVIA = VIA             \ Memory-mapped space for accessing the 6845 CRTC
+VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
+                        \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
+                        \ known as SHEILA)
 
 VSCAN = 57-1            \ Defines the split position in the split-screen mode
 

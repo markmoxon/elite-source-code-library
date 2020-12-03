@@ -156,7 +156,7 @@ ENDIF
 IF _CASSETTE_VERSION
 
  LDA #%10000001         \ Clear 6522 System VIA interrupt enable register IER
- STA SHEILA+&4E         \ (SHEILA &4E) bit 1 (i.e. enable the CA2 interrupt,
+ STA VIA+&4E            \ (SHEILA &4E) bit 1 (i.e. enable the CA2 interrupt,
                         \ which comes from the keyboard)
 
  INC SVN                \ Increment SVN to indicate we are about to start saving
@@ -171,7 +171,7 @@ IF _CASSETTE_VERSION
 
  LDX #0                 \ Set X = 0 for storing in SVN below
 
-\STX SHEILA+&4E         \ This instruction is commented out in the original
+\STX VIA+&4E            \ This instruction is commented out in the original
                         \ source. It would affect the 6522 System VIA interrupt
                         \ enable register IER (SHEILA &4E) if any of bits 0-6
                         \ of X were set, but they aren't, so this instruction

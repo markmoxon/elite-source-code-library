@@ -47,9 +47,11 @@ OSBYTE = &FFF4
 OSWORD = &FFF1
 OSFILE = &FFDD
 SCLI = &FFF7
-SHEILA = &FE00
-VIA = &FE40
-USVIA = VIA
+
+VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
+                        \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
+                        \ known as SHEILA)
+
 IRQ1V = &204
 VSCAN = 57
 XX21 = D%

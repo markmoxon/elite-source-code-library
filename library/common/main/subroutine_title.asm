@@ -229,7 +229,7 @@ IF _CASSETTE_VERSION
 
  DEC MCNT               \ Decrement the main loop counter
 
- LDA SHEILA+&40         \ Read 6522 System VIA input register IRB (SHEILA &40)
+ LDA VIA+&40            \ Read 6522 System VIA input register IRB (SHEILA &40)
 
 ELIF _6502SP_VERSION
 

@@ -37,8 +37,8 @@
 
 IF _CASSETTE_VERSION
 
- LDA #%00110000         \ Set the palette byte at SHEILA+&21 to map logical
- STA SHEILA+&21         \ colour 0 to physical colour 7 (white), but with only
+ LDA #%00110000         \ Set the palette byte at SHEILA &21 to map logical
+ STA VIA+&21            \ colour 0 to physical colour 7 (white), but with only
                         \ one mapping (rather than the 7 mappings requires to
                         \ do the mapping properly). This makes the space screen
                         \ flash with black and white stripes. See p.382 of the

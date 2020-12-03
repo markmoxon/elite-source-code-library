@@ -30,7 +30,7 @@
 IF _CASSETTE_VERSION
 
  LDA #%00000001         \ Set 6522 System VIA interrupt enable register IER
- STA SHEILA+&4E         \ (SHEILA &4E) bit 1 (i.e. disable the CA2 interrupt,
+ STA VIA+&4E            \ (SHEILA &4E) bit 1 (i.e. disable the CA2 interrupt,
                         \ which comes from the keyboard)
 
 ENDIF

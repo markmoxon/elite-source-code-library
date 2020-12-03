@@ -45,8 +45,8 @@ ENDIF
 
  SEI                    \ Disable interrupts so we can update the 6845
 
- STA SHEILA+&00         \ Set 6845 register R6 to the value in X. Register R6
- STX SHEILA+&01         \ is the "vertical displayed" register, which sets the
+ STA VIA+&00            \ Set 6845 register R6 to the value in X. Register R6
+ STX VIA+&01            \ is the "vertical displayed" register, which sets the
                         \ number of rows shown on the screen
 
  CLI                    \ Re-enable interrupts

@@ -25,7 +25,7 @@
 
 .VIA2
 
- LDA #%00000100         \ Set Video ULA control register (SHEILA+&20) to
+ LDA #%00000100         \ Set the Video ULA control register (SHEILA &20) to
  STA &FE20              \ %00000100, which is the same as switching to mode 5,
                         \ (i.e. the bottom part of the screen) but with no
                         \ cursor
@@ -35,7 +35,7 @@
 
 .inlp1
 
- LDA block1,Y           \ Copy the Y-th palette byte from block1 to SHEILA+&21
+ LDA block1,Y           \ Copy the Y-th palette byte from block1 to SHEILA &21
  STA &FE21              \ to map logical to actual colours for the bottom part
                         \ of the screen (i.e. the dashboard)
 
@@ -131,8 +131,9 @@ IF PROT AND DISC = 0
 
 ENDIF
 
- LDA VIA+&D             \ Read the 6522 System VIA status byte bit 1, which is
- BIT M2                 \ set if vertical sync has occurred on the video system
+ LDA VIA+&4D            \ Read the 6522 System VIA status byte bit 1 (SHEILA
+ BIT M2                 \ &4D), which is set if vertical sync has occurred on
+                        \ the video system
 
  BNE LINSCN             \ If we are on the vertical sync pulse, jump to LINSCN
                         \ to set up the timers to enable us to switch the
@@ -151,13 +152,13 @@ ENDIF
 .LINSCN
 
  LDA #50                \ Set 6522 System VIA T1C-L timer 1 low-order counter
- STA USVIA+4            \ (SHEILA &44) to 50
+ STA VIA+&44            \ (SHEILA &44) to 50
 
  LDA #VSCAN             \ Set 6522 System VIA T1C-L timer 1 high-order counter
- STA USVIA+5            \ (SHEILA &45) to VSCAN (56) to start the T1 counter
+ STA VIA+&45            \ (SHEILA &45) to VSCAN (56) to start the T1 counter
                         \ counting down from 14386 at a rate of 1 MHz
 
- LDA #8                 \ Set Video ULA control register (SHEILA+&20) to
+ LDA #8                 \ Set the Video ULA control register (SHEILA &20) to
  STA &FE20              \ %00001000, which is the same as switching to mode 4
                         \ (i.e. the top part of the screen) but with no cursor
 
@@ -166,7 +167,7 @@ ENDIF
 
 .inlp2
 
- LDA block2,Y           \ Copy the Y-th palette byte from block2 to SHEILA+&21
+ LDA block2,Y           \ Copy the Y-th palette byte from block2 to SHEILA &21
  STA &FE21              \ to map logical to actual colours for the top part of
                         \ the screen (i.e. the space view)
 

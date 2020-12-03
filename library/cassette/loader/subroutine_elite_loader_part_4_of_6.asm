@@ -127,7 +127,7 @@
                         \ handler to support the split-screen mode
 
  LDA #%11000010         \ Clear 6522 System VIA interrupt enable register IER
- STA VIA+&E             \ (SHEILA &4E) bits 1 and 7 (i.e. enable CA1 and TIMER1
+ STA VIA+&4E            \ (SHEILA &4E) bits 1 and 7 (i.e. enable CA1 and TIMER1
                         \ interrupts from the System VIA, which enable vertical
                         \ sync and the 1 MHz timer, which we need enabled for
                         \ the split-screen interrupt code to work)
@@ -154,7 +154,7 @@
  STA IRQ1V
 
  LDA #VSCAN             \ Set 6522 System VIA T1C-L timer 1 high-order counter
- STA USVIA+5            \ (SHEILA &45) to VSCAN (56) to start the T1 counter
+ STA VIA+&45            \ (SHEILA &45) to VSCAN (56) to start the T1 counter
                         \ counting down from 14080 at a rate of 1 MHz (this is
                         \ a different value to the main game code)
 

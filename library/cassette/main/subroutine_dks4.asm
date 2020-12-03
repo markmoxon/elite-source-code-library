@@ -39,30 +39,30 @@
  SEI                    \ Disable interrupts so we can scan the keyboard
                         \ without being hijacked
 
- STA SHEILA+&40         \ Set 6522 System VIA output register ORB (SHEILA &40)
+ STA VIA+&40            \ Set 6522 System VIA output register ORB (SHEILA &40)
                         \ to %00000011 to stop auto scan of keyboard
 
  LDA #%01111111         \ Set 6522 System VIA data direction register DDRA
- STA SHEILA+&43         \ (SHEILA &43) to %01111111. This sets the A registers
+ STA VIA+&43            \ (SHEILA &43) to %01111111. This sets the A registers
                         \ (IRA and ORA) so that:
                         \
                         \   * Bits 0-6 of ORA will be sent to the keyboard
                         \
                         \   * Bit 7 of IRA will be read from the keyboard
 
- STX SHEILA+&4F         \ Set 6522 System VIA output register ORA (SHEILA &4F)
+ STX VIA+&4F            \ Set 6522 System VIA output register ORA (SHEILA &4F)
                         \ to X, the key we want to scan for; bits 0-6 will be
                         \ sent to the keyboard, of which bits 0-3 determine the
                         \ keyboard column, and bits 4-6 the keyboard row
 
- LDX SHEILA+&4F         \ Read 6522 System VIA output register IRA (SHEILA &4F)
+ LDX VIA+&4F            \ Read 6522 System VIA output register IRA (SHEILA &4F)
                         \ into X; bit 7 is the only bit that will have changed.
                         \ If the key is pressed, then bit 7 will be set (so X
                         \ will contain 128 + X), otherwise it will be clear (so
                         \ X will be unchanged)
 
  LDA #%00001011         \ Set 6522 System VIA output register ORB (SHEILA &40)
- STA SHEILA+&40         \ to %00001011 to restart auto scan of keyboard
+ STA VIA+&40            \ to %00001011 to restart auto scan of keyboard
 
  CLI                    \ Allow interrupts again
 

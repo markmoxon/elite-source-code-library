@@ -27,11 +27,11 @@ IF _CASSETTE_VERSION
  STA DL                 \ routines like WSCAN can set DL to 0 and then wait for
                         \ it to change to non-zero to catch the vertical sync
 
- STA SHEILA+&44         \ Set 6522 System VIA T1C-L timer 1 low-order counter
+ STA VIA+&44            \ Set 6522 System VIA T1C-L timer 1 low-order counter
                         \ (SHEILA &44) to 30
 
  LDA #VSCAN             \ Set 6522 System VIA T1C-L timer 1 high-order counter
- STA SHEILA+&45         \ (SHEILA &45) to VSCAN (57) to start the T1 counter
+ STA VIA+&45            \ (SHEILA &45) to VSCAN (57) to start the T1 counter
                         \ counting down from 14622 at a rate of 1 MHz
 
  LDA HFX                \ If HFX is non-zero, jump to VNT1 to set the mode 5
@@ -41,14 +41,14 @@ IF _CASSETTE_VERSION
                         \ to colour when we do a hyperspace jump, and is
                         \ triggered by setting HFX to 1 in routine LL164
 
- LDA #%00001000         \ Set Video ULA control register (SHEILA+&20) to
- STA SHEILA+&20         \ %00001000, which is the same as switching to mode 4
+ LDA #%00001000         \ Set the Video ULA control register (SHEILA &20) to
+ STA VIA+&20            \ %00001000, which is the same as switching to mode 4
                         \ (i.e. the top part of the screen) but with no cursor
 
 .VNT3
 
- LDA TVT1+16,Y          \ Copy the Y-th palette byte from TVT1+16 to SHEILA+&21
- STA SHEILA+&21         \ to map logical to actual colours for the bottom part
+ LDA TVT1+16,Y          \ Copy the Y-th palette byte from TVT1+16 to SHEILA &21
+ STA VIA+&21            \ to map logical to actual colours for the bottom part
                         \ of the screen (i.e. the dashboard)
 
  DEY                    \ Decrement the palette byte counter
@@ -68,7 +68,7 @@ IF _CASSETTE_VERSION
  PLA                    \ Otherwise restore Y from the stack
  TAY
 
- LDA SHEILA+&41         \ Read 6522 System VIA input register IRA (SHEILA &41)
+ LDA VIA+&41            \ Read 6522 System VIA input register IRA (SHEILA &41)
 
  LDA &FC                \ Set A to the interrupt accumulator save register,
                         \ which restores A to the value it had on entering the
@@ -96,8 +96,9 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
- LDA #%00000010         \ Read the 6522 System VIA status byte bit 1, which is
- BIT SHEILA+&4D         \ set if vertical sync has occurred on the video system
+ LDA #%00000010         \ Read the 6522 System VIA status byte bit 1 (SHEILA
+ BIT VIA+&4D            \ &4D), which is set if vertical sync has occurred on
+                        \ the video system
 
  BNE LINSCN             \ If we are on the vertical sync pulse, jump to LINSCN
                         \ to set up the timers to enable us to switch the
@@ -122,7 +123,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
- STA SHEILA+&20         \ Set Video ULA control register (SHEILA+&20) to
+ STA VIA+&20            \ Set the Video ULA control register (SHEILA &20) to
                         \ %00000100, which is the same as switching to mode 5,
                         \ (i.e. the bottom part of the screen) but with no
                         \ cursor
@@ -133,8 +134,8 @@ IF _CASSETTE_VERSION
  BNE VNT1               \ palette differently (so the dashboard is a different
                         \ colour if we have an escape pod)
 
- LDA TVT1,Y             \ Copy the Y-th palette byte from TVT1 to SHEILA+&21
- STA SHEILA+&21         \ to map logical to actual colours for the bottom part
+ LDA TVT1,Y             \ Copy the Y-th palette byte from TVT1 to SHEILA &21
+ STA VIA+&21            \ to map logical to actual colours for the bottom part
                         \ of the screen (i.e. the dashboard)
 
  DEY                    \ Decrement the palette byte counter
@@ -174,8 +175,8 @@ IF _CASSETTE_VERSION
 
  LDY #7                 \ Set Y as a counter for 8 bytes
 
- LDA TVT1+8,Y           \ Copy the Y-th palette byte from TVT1+8 to SHEILA+&21
- STA SHEILA+&21         \ to map logical to actual colours for the bottom part
+ LDA TVT1+8,Y           \ Copy the Y-th palette byte from TVT1+8 to SHEILA &21
+ STA VIA+&21            \ to map logical to actual colours for the bottom part
                         \ of the screen (i.e. the dashboard)
 
  DEY                    \ Decrement the palette byte counter
@@ -199,11 +200,11 @@ ELIF _6502SP_VERSION
  STA DL                 \ routines like WSCAN can set DL to 0 and then wait for
                         \ it to change to non-zero to catch the vertical sync
 
- STA SHEILA+&44         \ Set 6522 System VIA T1C-L timer 1 low-order counter
+ STA VIA+&44            \ Set 6522 System VIA T1C-L timer 1 low-order counter
                         \ (SHEILA &44) to 30
 
  LDA #VSCAN             \ Set 6522 System VIA T1C-L timer 1 high-order counter
- STA SHEILA+&45         \ (SHEILA &45) to VSCAN (57) to start the T1 counter
+ STA VIA+&45            \ (SHEILA &45) to VSCAN (57) to start the T1 counter
                         \ counting down from 14622 at a rate of 1 MHz
 
  LDA HFX                \ If the hyperspace effect flag in HFX is non-zero, then
@@ -216,8 +217,8 @@ ELIF _6502SP_VERSION
                         \ parasite issuing a #DOHFX 1 command in routine LL164
                         \ and is disabled again by a #DOHFX 0 command
 
- LDA #%00011000         \ Set Video ULA control register (SHEILA+&20) to
- STA SHEILA+&20         \ %00011000, which is the same as switching to mode 1
+ LDA #%00011000         \ Set the Video ULA control register (SHEILA &20) to
+ STA VIA+&20            \ %00011000, which is the same as switching to mode 1
                         \ (i.e. the top part of the screen) but with no cursor
 
 .VNT3
@@ -226,12 +227,12 @@ ELIF _6502SP_VERSION
                         \ the #SETVDU19 <offset> command, which changes the
                         \ value of TVT3+1 (i.e. the low byte of the address in
                         \ the LDA instruction). This changes the palette block
-                        \ that gets copied to SHEILA+&21, so a #SETVDU19 32
+                        \ that gets copied to SHEILA &21, so a #SETVDU19 32
                         \ command applies the third palette from TVT3 in this
                         \ loop, for example
 
- LDA TVT3,Y             \ Copy the Y-th palette byte from TVT3 to SHEILA+&21
- STA SHEILA+&21         \ to map logical to actual colours for the bottom part
+ LDA TVT3,Y             \ Copy the Y-th palette byte from TVT3 to SHEILA &21
+ STA VIA+&21            \ to map logical to actual colours for the bottom part
                         \ of the screen (i.e. the dashboard)
 
  DEY                    \ Decrement the palette byte counter
@@ -242,7 +243,7 @@ ELIF _6502SP_VERSION
  PLA                    \ Otherwise restore Y from the stack
  TAY
 
- LDA SHEILA+&41         \ Read 6522 System VIA input register IRA (SHEILA &41)
+ LDA VIA+&41            \ Read 6522 System VIA input register IRA (SHEILA &41)
 
  LDA &FC                \ Set A to the interrupt accumulator save register,
                         \ which restores A to the value it had on entering the

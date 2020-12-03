@@ -81,8 +81,9 @@ OSWORD = &FFF1          \ The address for the OSWORD routine, which is used
 OSFILE = &FFDD          \ The address for the OSFILE routine, which is used
                         \ once in the main game code
 
-SHEILA = &FE00          \ Memory-mapped space for accessing internal hardware,
-                        \ such as the video ULA, 6845 CRTC and 6522 VIAs
+VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
+                        \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
+                        \ known as SHEILA)
 
 VSCAN = 57              \ Defines the split position in the split-screen mode
 

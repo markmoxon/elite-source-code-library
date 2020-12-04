@@ -7,8 +7,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ Scan the keyboard to see if the key specified in A is currently being
-\ pressed.
+\ Scan the keyboard to see if the key specified in A is currently being pressed.
 \
 \ Arguments:
 \
@@ -51,9 +50,8 @@ MACRO DKS4
 
  LDA VIA+&4F            \ Read 6522 System VIA output register IRA (SHEILA &4F)
                         \ into A; bit 7 is the only bit that will have changed.
-                        \ If the key is pressed, then bit 7 will be set (so A
-                        \ will contain 128 + A), otherwise it will be clear (so
-                        \ A will be unchanged)
+                        \ If the key is pressed, then bit 7 will be set,
+                        \ otherwise it will be clear
 
  LDX #%00001011         \ Set 6522 System VIA output register ORB (SHEILA &40)
  STX VIA+&40            \ to %00001011 to restart auto scan of keyboard

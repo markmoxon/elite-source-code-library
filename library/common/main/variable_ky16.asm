@@ -1,6 +1,6 @@
 .KY16
 
- SKIP 1                 \ "M" has been pressed
+ SKIP 1                 \ "M" is being pressed
                         \
                         \   * 0 = no
                         \

@@ -57,9 +57,8 @@
 
  LDX VIA+&4F            \ Read 6522 System VIA output register IRA (SHEILA &4F)
                         \ into X; bit 7 is the only bit that will have changed.
-                        \ If the key is pressed, then bit 7 will be set (so X
-                        \ will contain 128 + X), otherwise it will be clear (so
-                        \ X will be unchanged)
+                        \ If the key is pressed, then bit 7 will be set,
+                        \ otherwise it will be clear
 
  LDA #%00001011         \ Set 6522 System VIA output register ORB (SHEILA &40)
  STA VIA+&40            \ to %00001011 to restart auto scan of keyboard

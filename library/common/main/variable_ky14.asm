@@ -1,6 +1,6 @@
 .KY14
 
- SKIP 1                 \ "T" has been pressed
+ SKIP 1                 \ "T" is being pressed
                         \
                         \   * 0 = no
                         \

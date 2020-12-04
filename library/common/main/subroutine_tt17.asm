@@ -38,9 +38,11 @@
 
 IF _6502SP_VERSION
 
- LDX #0
- JSR DKS4
- STA newlocn
+ LDX #0                 \ Call DKS4 to check whether the Shift key is being
+ JSR DKS4               \ pressed
+
+ STA newlocn            \ Store the result (which will have bit 7 set if Shift
+                        \ is being pressed) in newlocn
 
 ENDIF
 
@@ -62,9 +64,13 @@ ENDIF
 
 IF _6502SP_VERSION
 
- BIT newlocn
- BPL P%+3
- ASL A
+ BIT newlocn            \ If bit 7 of newlocn is clear - in other words, if
+ BPL P%+3               \ Shift is not being pressed - then skip the following
+                        \ instruction
+
+ ASL A                  \ Shift is being held down, so double the value of A
+                        \ (i.e. Shift moves the cursor at double the speed
+                        \ when using the joystick)
 
 ENDIF
 
@@ -102,9 +108,13 @@ ENDIF
 
 IF _6502SP_VERSION
 
- BIT newlocn
- BPL P%+3
- ASL A
+ BIT newlocn            \ If bit 7 of newlocn is clear - in other words, if
+ BPL P%+3               \ Shift is not being pressed - then skip the following
+                        \ instruction
+
+ ASL A                  \ Shift is being held down, so double the value of A
+                        \ (i.e. Shift moves the cursor at double the speed
+                        \ when using the joystick
 
 ENDIF
 
@@ -118,7 +128,8 @@ IF _6502SP_VERSION
 
 .newlocn
 
- BRK
+ EQUB 0                 \ The current key press is stored here in the above code
+                        \ when we check whether Shift is being held down
 
 ENDIF
 
@@ -147,19 +158,31 @@ ENDIF
 
 IF _6502SP_VERSION
 
- TXA
- BIT newlocn
- BPL P%+4
- ASL A
- ASL A
- TAX
- TYA
- BIT newlocn
- BPL P%+4
- ASL A
- ASL A
- TAY
- LDA KL
+ TXA                    \ Transfer the value of X into A
+
+ BIT newlocn            \ If bit 7 of newlocn is clear - in other words, if
+ BPL P%+4               \ Shift is not being pressed - then skip the following
+                        \ two instructions
+
+ ASL A                  \ Shift is being held down, so quadruple the value of A
+ ASL A                  \ (i.e. Shift moves the cursor at four times the speed
+                        \ when using the keyboard)
+
+ TAX                    \ Transfer the amended value of A back into X
+
+ TYA                    \ Transfer the value of Y into A
+
+ BIT newlocn            \ If bit 7 of newlocn is clear - in other words, if
+ BPL P%+4               \ Shift is not being pressed - then skip the following
+                        \ two instructions
+
+ ASL A                  \ Shift is being held down, so quadruple the value of A
+ ASL A                  \ (i.e. Shift moves the cursor at four times the speed
+                        \ when using the keyboard)
+
+ TAY                    \ Transfer the amended value of A back into Y
+
+ LDA KL                 \ Set A to the value of KL (the key pressed)
 
 ENDIF
 

@@ -1,6 +1,6 @@
 .KY3
 
- SKIP 1                 \ "<" has been pressed
+ SKIP 1                 \ "<" is being pressed
                         \
                         \   * 0 = no
                         \

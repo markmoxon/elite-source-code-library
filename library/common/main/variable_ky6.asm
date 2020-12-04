@@ -1,6 +1,6 @@
 .KY6
 
- SKIP 1                 \ "S" has been pressed
+ SKIP 1                 \ "S" is being pressed
                         \
                         \   * 0 = no
                         \

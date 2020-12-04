@@ -1,6 +1,6 @@
 .KY2
 
- SKIP 1                 \ Space has been pressed
+ SKIP 1                 \ Space is being pressed
                         \
                         \   * 0 = no
                         \

@@ -1,6 +1,6 @@
 .KY19
 
- SKIP 1                 \ "C" has been pressed
+ SKIP 1                 \ "C" is being pressed
                         \
                         \   * 0 = no
                         \

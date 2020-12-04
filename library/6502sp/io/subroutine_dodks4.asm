@@ -25,10 +25,10 @@
 \
 \   OSSC(1 0)           A parameter block as follows:
 \
-\                         * Byte #0 = If the key is being pressed, it contains
-\                           the original argument from byte #2, but with bit 7
-\                           set (i.e. byte #2 + 128). If the key is not being
-\                           pressed, it contains the value in byte #0 unchanged
+\                         * Byte #2 = If the key is being pressed, it contains
+\                           the original key number from byte #2, but with bit 7
+\                           set (i.e. key number + 128). If the key is not being
+\                           pressed, it contains the unchanged key number
 \                       
 \ ******************************************************************************
 
@@ -40,7 +40,7 @@
  DKS4                   \ Include macro DKS4 to check whether the key in A is
                         \ being pressed, and if it is, set bit 7 of A
 
- STA (OSSC),Y           \ Store the updated A in byte #0 of the block pointed to
+ STA (OSSC),Y           \ Store the updated A in byte #2 of the block pointed to
                         \ by OSSC
 
  RTS                    \ Return from the subroutine

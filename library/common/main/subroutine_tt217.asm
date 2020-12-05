@@ -70,7 +70,7 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA TRANTABLE,Y        \ TRANTABLE oints to the MOS key translation table,
+ LDA TRANTABLE,Y        \ TRANTABLE points to the MOS key translation table,
                         \ which is used to translate internal key values to
                         \ ASCII, so this fetches the key's ASCII code into A
 

@@ -27,11 +27,11 @@
  EQUW HANGER            \            248 (&F8)     8 = Display the hanger
  EQUW SOMEPROT          \            249 (&F9)     9 = Copy protection
  EQUW SAFE              \            250 (&FA)    10 = Do nothing
- EQUW SAFE              \            251 (&FB)    10 = Do nothing
- EQUW SAFE              \            252 (&FC)    10 = Do nothing
- EQUW SAFE              \            253 (&FD)    10 = Do nothing
- EQUW SAFE              \            254 (&FE)    10 = Do nothing
- EQUW SAFE              \            255 (&FF)    10 = Do nothing
+ EQUW SAFE              \            251 (&FB)    11 = Do nothing
+ EQUW SAFE              \            252 (&FC)    12 = Do nothing
+ EQUW SAFE              \            253 (&FD)    13 = Do nothing
+ EQUW SAFE              \            254 (&FE)    14 = Do nothing
+ EQUW SAFE              \            255 (&FF)    15 = Do nothing
 
  EQUW SAFE              \ These addresses are never used and have no effect, as
  EQUW SAFE              \ they are out of range for one-byte OSWORD numbers

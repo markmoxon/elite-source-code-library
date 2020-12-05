@@ -162,8 +162,8 @@
 
  TAX                    \ Copy the key press result into X
 
- BMI DK1                \ If bit 7 is set, i.e. the key is being pressed, skip to
-                        \ DK1
+ BMI DK1                \ If bit 7 is set, i.e. the key is being pressed, skip
+                        \ to DK1
 
  CLC                    \ Otherwise this key is not being pressed, so increment
  ADC #1                 \ the loop counter in A. We couldn't use an INX or INY

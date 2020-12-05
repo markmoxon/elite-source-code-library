@@ -802,7 +802,6 @@ INCLUDE "library/common/main/subroutine_tidy.asm"
 INCLUDE "library/common/main/subroutine_tis2.asm"
 INCLUDE "library/common/main/subroutine_tis3.asm"
 INCLUDE "library/common/main/subroutine_dvidt.asm"
-INCLUDE "library/6502sp/main/variable_buf.asm"
 INCLUDE "library/6502sp/main/variable_ktran.asm"
 INCLUDE "library/6502sp/main/variable_trantable.asm"
 

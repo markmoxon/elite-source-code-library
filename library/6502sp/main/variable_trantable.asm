@@ -1,5 +1,19 @@
 \ ******************************************************************************
+\
 \       Name: TRANTABLE
+\       Type: Variable
+\   Category: Keyboard
+\    Summary: Translation table from internal key number to ASCII
+\
+\ ------------------------------------------------------------------------------
+\
+\ This is a copy of the MOS keyboard translation table. The value at offset n is
+\ the ASCII value of the key with internal key number n, so for example the
+\ value at offset 16 is &41 (65), or ASCII "A".
+\
+\ It is slightly quicker to do a table lookup in user RAM than in the MOS ROM,
+\ which is probably why we have the table below.
+\
 \ ******************************************************************************
 
 .TRANTABLE

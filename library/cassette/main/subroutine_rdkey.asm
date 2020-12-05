@@ -3,7 +3,7 @@
 \       Name: RDKEY
 \       Type: Subroutine
 \   Category: Keyboard
-\    Summary: Scan the keyboard for a specific key
+\    Summary: Scan the keyboard for key presses
 \
 \ ------------------------------------------------------------------------------
 \

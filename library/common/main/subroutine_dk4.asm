@@ -29,7 +29,7 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDX KTRAN
+ LDX KTRAN              \ Fetch the current key press into X
 
 ENDIF
 

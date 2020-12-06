@@ -4,9 +4,11 @@
 
 .PAUSE2
 
- JSR RDKEY
+ JSR RDKEY              \ Scan the keyboard for a key press
  BNE PAUSE2
- JSR RDKEY
+
+ JSR RDKEY              \ Scan the keyboard for a key press
  BEQ PAUSE2
+
  RTS
 

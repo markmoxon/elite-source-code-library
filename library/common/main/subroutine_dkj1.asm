@@ -20,7 +20,7 @@
 IF _CASSETTE_VERSION
 
  LDY #1                 \ Update the key logger for key 1 in the KYTB table, so
- JSR DKS1               \ KY1 will be &FF if ? (slow down) is being pressed
+ JSR DKS1               \ KY1 will be &FF if "?" (slow down) is being pressed
 
  INY                    \ Update the key logger for key 2 in the KYTB table, so
  JSR DKS1               \ KY2 will be &FF if Space (speed up) is being pressed

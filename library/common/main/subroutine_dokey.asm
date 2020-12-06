@@ -30,7 +30,9 @@ IF _6502SP_VERSION
 
  LDA NEEDKEY
  BEQ P%+5
- JSR RDKEY
+
+ JSR RDKEY              \ Scan the keyboard for a key press
+
  LDA #FF
  STA NEEDKEY
 

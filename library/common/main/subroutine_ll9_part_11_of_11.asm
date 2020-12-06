@@ -34,7 +34,8 @@ ELIF _6502SP_VERSION
  LDA NEEDKEY
  BEQ notneed
  STZ NEEDKEY \++
- JSR RDKEY
+
+ JSR RDKEY              \ Scan the keyboard for a key press
 
 .notneed
 

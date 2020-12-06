@@ -28,8 +28,8 @@
 
  LDA #&F0               \ Send an OSWORD &F0 command to the I/O processor to
  LDY #HI(buf)           \ scan the keyboard and joysticks, and populate the key
- LDX #LO(buf)           \ buffer in KTRAN, which is the buffer just after the
- JSR OSWORD             \ size configuration bytes in buf
+ LDX #LO(buf)           \ buffer in KTRAN, which is the part of the buf buffer
+ JSR OSWORD             \ just after the two size configuration bytes
 
  LDX KTRAN              \ Fetch the internal key number of the key being pressed
                         \ into X

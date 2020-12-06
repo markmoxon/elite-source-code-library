@@ -7,11 +7,19 @@
 \
 \ ------------------------------------------------------------------------------
 \
+\ KTRAN us populated by the KEYBOARD routine in the I/O processor. It contains
+\ details of keys being pressed, with KTRAN corresponding to byte #2 of the
+\ table returned by KEYBOARD.
+\
+\   KTRAN + 0           Non-primary flight control key
+\
+\   KTRAN + 2
+\
 \ Other entry points:
 \
 \   buf                 The two OSWORD size configuration bytes for transmitting
 \                       the key logger from the I/O processor to the parasite
-\                       
+\
 \ ******************************************************************************
 
 .buf

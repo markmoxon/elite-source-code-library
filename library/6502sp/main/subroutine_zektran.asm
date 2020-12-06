@@ -3,7 +3,7 @@
 \       Name: ZEKTRAN
 \       Type: Subroutine
 \   Category: Keyboard
-\    Summary: Reset the key logger table that is populated by the I/O processor
+\    Summary: Reset the I/O processor's key logger table at KTRAN
 \
 \ ******************************************************************************
 
@@ -16,7 +16,8 @@
 
 .ZEKLOOP
 
- STA KTRAN,X            \ Reset the X-th byte of the key logger in KTRAN to 0
+ STA KTRAN,X            \ Reset the X-th byte of the I/O processor's key logger
+                        \ in KTRAN to 0
 
  DEX                    \ Decrement the loop counter
 

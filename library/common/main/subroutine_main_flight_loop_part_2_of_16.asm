@@ -153,7 +153,10 @@ IF _6502SP_VERSION
 
  LDA BSTK
  BEQ BS2
- LDA KTRAN+10  \ADCno.3
+
+ LDA KTRAN+10           \ Fetch the Bitstik rotation value (high byte) from the
+                        \ key logger buffer
+
  LSR A
  LSR A
  CMP #40

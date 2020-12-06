@@ -13,7 +13,7 @@
  LDY #0
  DEC LINMAX
  LDA TABLE+3
- CMP #FF
+ CMP #&FF
  BEQ doalaser
 
 .LL27

@@ -4,7 +4,9 @@
 
 .BR1
 
- JSR ZEKTRAN
+ JSR ZEKTRAN            \ Reset the key logger buffer that gets returned from
+                        \ the I/O processor
+
  LDA #3
  JSR DOXC
  LDX #3

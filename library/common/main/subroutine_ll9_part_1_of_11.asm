@@ -30,6 +30,14 @@
 \
 \   XX0                 The address of the blueprint for this ship
 \
+IF _6502SP_VERSION
+\ Returns:
+\
+\   X                   If NEEDKEY is non-zero, scan the keyboard for a key
+\                       press and return the internal key number in X (or 0 for
+\                       no key press)
+\
+ENDIF
 \ Other entry points:
 \
 \   EE51                Remove the current ship from the screen, called from

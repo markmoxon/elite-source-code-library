@@ -10,6 +10,11 @@
 \ This part draws the lines in the ship line heap, which is used both to draw
 \ the ship, and to remove it from the screen.
 \
+IF _6502SP_VERSION
+\ If NEEDKEY is non-zero, then this routine also scans the keyboard for a key
+\ press and returns the internal key number in X (or 0 for no key press).
+\
+ENDIF
 \ ******************************************************************************
 
 .LL155
@@ -31,11 +36,14 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA NEEDKEY
- BEQ notneed
- STZ NEEDKEY \++
+ LDA NEEDKEY            \ If NEEDKEY is zero, jump to notneed to skip the next
+ BEQ notneed            \ two instructions, so we only read the keyboard if
+                        \ NEEDKEY is non-zero
 
- JSR RDKEY              \ Scan the keyboard for a key press
+ STZ NEEDKEY            \ Set NEEDKEY = 0
+
+ JSR RDKEY              \ Scan the keyboard for a key press and return the
+                        \ internal key number in X (or 0 for no key press)
 
 .notneed
 

@@ -24,12 +24,13 @@
 
 IF _CASSETTE_VERSION
 
- JSR RDKEY              \ Scan the keyboard from Q upwards and fetch any key
-                        \ press into X
+ JSR RDKEY              \ Scan the keyboard for a key press and return the
+                        \ internal key number in X (or 0 for no key press)
 
 ELIF _6502SP_VERSION
 
- LDX KTRAN              \ Fetch the current key press into X
+ LDX KTRAN              \ Fetch the internal key number of the current key
+                        \ press from the key logger buffer
 
 ENDIF
 
@@ -49,8 +50,8 @@ ENDIF
  JSR WSCAN              \ Call WSCAN to wait for the vertical sync, so the whole
                         \ screen gets drawn
 
- JSR RDKEY              \ Scan the keyboard from Q upwards and fetch any key
-                        \ press into X
+ JSR RDKEY              \ Scan the keyboard for a key press and return the
+                        \ internal key number in X (or 0 for no key press)
 
  CPX #&51               \ If S is not being pressed, skip to DK6
  BNE DK6
@@ -103,7 +104,7 @@ IF _6502SP_VERSION
  CPX #&64
  BNE nobit
  LDA BSTK
- EOR #FF
+ EOR #&FF
  STA BSTK
  STA JSTK
  STA JSTE
@@ -143,7 +144,7 @@ ELIF _6502SP_VERSION
  LDA QQ11
  BNE out
  LDY #16
- LDA #FF
+ LDA #&FF
 
 ENDIF
 

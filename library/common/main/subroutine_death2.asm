@@ -11,7 +11,7 @@
 
 IF _6502SP_VERSION
 
- LDX #FF
+ LDX #&FF
  TXS
 
 ENDIF

@@ -32,9 +32,12 @@
 
 IF _6502SP_VERSION
 
- JSR ZEKTRAN
- LDA #32
- JSR DOVDU19
+ JSR ZEKTRAN            \ Reset the key logger buffer that gets returned from
+                        \ the I/O processor
+
+ LDA #32                \ Send a #SETVDU19 32 command to the I/O processor to
+ JSR DOVDU19            \ set the mode 1 palette to yellow (colour 1), white
+                        \ (colour 2) and cyan (colour 3)
 
 ENDIF
 
@@ -214,7 +217,9 @@ ELIF _6502SP_VERSION
  LDA MCNT
  AND #3
  BNE nodesire
- STX NEEDKEY
+
+ STX NEEDKEY            \ Set NEEDKEY = 128, so calls to LL9 to draw the ship
+                        \ also scan for key presses
 
 .nodesire
 
@@ -233,7 +238,10 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA KTRAN+12
+ LDA KTRAN+12           \ Fetch the key press state for the joystick 1 fire
+                        \ button from the key logger buffer, which contains
+                        \ the value of the 6522 System VIA input register IRB
+                        \ (SHEILA &40)
 
 ENDIF
 
@@ -265,12 +273,17 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA KTRAN
- BNE TL3
+ LDA KTRAN              \ Fetch the internal key number of the current key
+                        \ press from the key logger buffer
+
+ BNE TL3                \ If a key is being pressed, jump to TL3
+
  DEC MCNT
  BNE TLL2
+
  DEC CNT2
  BNE TLL2
+
  JMP DEMON
 
 ENDIF

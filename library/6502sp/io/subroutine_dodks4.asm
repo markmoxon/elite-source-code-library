@@ -9,8 +9,8 @@
 \ ------------------------------------------------------------------------------
 \
 \ This routine is run when the parasite sends a #DODKS4 command with parameters
-\ in the block at OSSC(1 0). It scans the keyboard to see if a specified key is
-\ being pressed.
+\ in the block at OSSC(1 0). It scans the keyboard to see if the specified key
+\ is being pressed.
 \
 \ Arguments:
 \

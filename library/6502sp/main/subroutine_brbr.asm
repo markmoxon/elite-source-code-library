@@ -5,7 +5,7 @@
 .BRBR
 
  DEC brkd
- LDX #FF
+ LDX #&FF
  TXS
  JSR backtonormal
  TAY

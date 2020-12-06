@@ -29,16 +29,22 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA auto
- BNE auton
- LDA KTRAN+1
- STA KL+1
- LDA KTRAN+2
- STA KL+2
+ LDA auto               \ If auto is non-zero, then the docking computer is
+ BNE auton              \ currently activated, so jump to auton in DOKEY so the
+                        \ docking computer can "press" the flight keys for us
+
+ LDA KTRAN+1            \ Copy the key press state for the "?" key from the
+ STA KL+1               \ key logger buffer to the key logger
+
+ LDA KTRAN+2            \ Copy the key press state for the Space key from the
+ STA KL+2               \ key logger buffer to the key logger
 
 .BS1
 
- LDA KTRAN+12\&FE40
+ LDA KTRAN+12           \ Fetch the key press state for the joystick 1 fire
+                        \ button from the key logger buffer, which contains
+                        \ the value of the 6522 System VIA input register IRB
+                        \ (SHEILA &40)
 
 ENDIF
 

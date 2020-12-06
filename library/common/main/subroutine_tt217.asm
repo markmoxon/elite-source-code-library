@@ -45,7 +45,8 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
- JSR RDKEY              \ Scan the keyboard, starting from Q
+ JSR RDKEY              \ Scan the keyboard for a key press and return the
+                        \ internal key number in X (or 0 for no key press)
 
  BNE t                  \ If a key was already being held down when we entered
                         \ this routine, keep looping back up to t, until the
@@ -54,7 +55,8 @@ ENDIF
 .t2
 
  JSR RDKEY              \ Any pre-existing key press is now gone, so we can
-                        \ start scanning the keyboard again, starting from Q
+                        \ start scanning the keyboard again, returning the
+                        \ internal key number in X (or 0 for no key press)
 
  BEQ t2                 \ Keep looping up to t2 until a key is pressed
 

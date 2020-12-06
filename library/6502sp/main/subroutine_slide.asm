@@ -62,7 +62,7 @@
  LDA X1TB,Y
  EOR #128
  BPL GR2
- EOR #FF
+ EOR #&FF
  INA \++
 
 .GR2
@@ -107,7 +107,7 @@
  LDA X2TB,Y
  EOR #128
  BPL GR3
- EOR #FF
+ EOR #&FF
  INA \++
 
 .GR3

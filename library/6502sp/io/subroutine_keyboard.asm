@@ -7,8 +7,10 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ This routine scans the keyboard and joystick and stores the results in the
-\ key logger table pointed to by OSSC. 
+\ This routine is run when the parasite sends an OSWORD &F0 command. It scans
+\ the keyboard and joystick and stores the results in the key logger buffer
+\ pointed to by OSSC, which is then sent across the Tube to the parasite's own
+\ key logger buffer at KTRAN.
 \
 \ First, it scans the keyboard for the primary flight keys. If any of the
 \ primary flight keys are pressed, the corresponding byte in the key logger is
@@ -35,47 +37,19 @@
 \                         * Byte #2: If a non-primary flight control key is
 \                           being pressed, its internal key number is put here
 \
-\                         * Byte #3: "?" is being pressed
+\                         * Byte #3: "?" is being pressed (0 = no, &FF = yes)
 \
-\                             * 0 = no
+\                         * Byte #4: Space is being pressed (0 = no, &FF = yes)
 \
-\                             * &FF = yes
+\                         * Byte #5: "<" is being pressed (0 = no, &FF = yes)
 \
-\                         * Byte #4: Space is being pressed
+\                         * Byte #6: ">" is being pressed (0 = no, &FF = yes)
 \
-\                             * 0 = no
+\                         * Byte #7: "X" is being pressed (0 = no, &FF = yes)
 \
-\                             * &FF = yes
+\                         * Byte #8: "S" is being pressed (0 = no, &FF = yes)
 \
-\                         * Byte #5: "<" is being pressed
-\
-\                             * 0 = no
-\
-\                             * &FF = yes
-\
-\                         * Byte #6: ">" is being pressed
-\
-\                             * 0 = no
-\
-\                             * &FF = yes
-\
-\                         * Byte #7: "X" is being pressed
-\
-\                             * 0 = no
-\
-\                             * &FF = yes
-\
-\                         * Byte #8: "S" is being pressed
-\
-\                             * 0 = no
-\
-\                             * &FF = yes
-\
-\                         * Byte #9: "A" is being pressed
-\
-\                             * 0 = no
-\
-\                             * &FF = yes
+\                         * Byte #9: "A" is being pressed (0 = no, &FF = yes)
 \
 \                         * Byte #10: Joystick X value (high byte)
 \
@@ -84,10 +58,7 @@
 \                         * Byte #12: Bitstik rotation value (high byte)
 \
 \                         * Byte #14: Joystick 1 fire button is being pressed
-\
-\                             * Bit 4 set = no
-\
-\                             * Bit 4 clear = yes
+\                           (Bit 4 set = no, Bit 4 clear = yes)
 \
 \ ******************************************************************************
 
@@ -108,9 +79,8 @@
                         \ is looping from 9 down to 3, so this grabs the key
                         \ numbers from 7 to 1, i.e. from "A" to "?"
 
- DKS4                   \ Include the DKS4 subroutine, which sets bit 7 of A if
-                        \ the key in A is being pressed, or clears it if it
-                        \ isn't being pressed
+ DKS4                   \ Include macro DKS4 to check whether the key in A is
+                        \ being pressed, and if it is, set bit 7 of A
 
  ASL A                  \ Shift bit 7 of A into the C flag
 
@@ -156,9 +126,8 @@
 
 .DKL3
 
- DKS4                   \ Include the DKS4 subroutine, which sets bit 7 of A if
-                        \ the key in A is being pressed, or clears it if it
-                        \ isn't being pressed
+ DKS4                   \ Include macro DKS4 to check whether the key in A is
+                        \ being pressed, and if it is, set bit 7 of A
 
  TAX                    \ Copy the key press result into X
 
@@ -204,7 +173,7 @@
 
  TYA                    \ Copy Y to A, so the result is now in (A X)
 
- LDY #11                \ Store the high byte of the joystick X value in byte
+ LDY #11                \ Store the high byte of the joystick Y value in byte
  STA (OSSC),Y           \ #11 of the block pointed to by OSSC
 
  LDX #3                 \ Call OSBYTE 128 to fetch the 16-bit value from ADC

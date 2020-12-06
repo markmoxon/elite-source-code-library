@@ -11,7 +11,7 @@
  STZ QQ22+1 \<<
  STZ GNTMP
 \++
- LDA #FF
+ LDA #&FF
  STA FSH
  STA ASH
  STA ENERGY

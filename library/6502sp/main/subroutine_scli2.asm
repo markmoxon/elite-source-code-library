@@ -4,7 +4,7 @@
 
 .SCLI2
 
- LDA #FF
+ LDA #&FF
  JSR DODOSVN
  JSR SCLI
  LDA #0

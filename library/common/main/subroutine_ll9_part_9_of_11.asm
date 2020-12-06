@@ -181,7 +181,7 @@ ELIF _6502SP_VERSION
  LDA U
  ADC #3
  TAY
- LDA #FF
+ LDA #&FF
  STA (XX19),Y
  INY \Red laser
 

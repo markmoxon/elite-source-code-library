@@ -52,7 +52,7 @@
 
 .LIlog5
 
- LDA #FF
+ LDA #&FF
  BNE LIlog6
 
 .LIlog7

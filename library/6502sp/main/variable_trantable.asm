@@ -79,7 +79,7 @@
  EQUB &6B, &40          \ K             @
  EQUB &3A, &0D          \ :             Return
 
- EQUB &00, &FF, &01
+ EQUB &00, &FF, &01     \ MOS code
  EQUB &02, &09, &0A
 
                         \ Internal key numbers &50 to &59:

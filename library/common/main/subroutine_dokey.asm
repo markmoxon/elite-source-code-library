@@ -28,13 +28,15 @@
 
 IF _6502SP_VERSION
 
- LDA NEEDKEY
+ LDA NEEDKEY            \ If NEEDKEY is zero, skip the next insruction
  BEQ P%+5
 
- JSR RDKEY              \ Scan the keyboard for a key press
+ JSR RDKEY              \ NEEDKEY is non-zero, so call RDKEY to ask the I/O
+                        \ processor to scan the keyboard for key presses and
+                        \ update the key logger buffer at KTRAN
 
- LDA #FF
- STA NEEDKEY
+ LDA #&FF               \ Set NEEDKEY to &FF, so the next call to DOKEY updates
+ STA NEEDKEY            \ the key logger buffer
 
 ENDIF
 
@@ -63,17 +65,26 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- STA BSTK
- LDX #7
+ STA BSTK               \ Set BTSK = 0
+
+ LDX #7                 \ We're now going to copy key press data for the primary
+                        \ flight keys from the key logger buffer at KTRAN to the
+                        \ key logger at KL, so set a loop counter in X so we can
+                        \ count down from KTRAN + 7 to KTRAN + 1
 
 .DKL2
 
- LDA KTRAN,X
+ LDA KTRAN,X            \ Copy the X-th byte of KTRAN to the X-th byte of KL
  STA KL,X
- DEX
- BNE DKL2
- LDA auto
- BEQ DK15
+
+ DEX                    \ Decrement the loop counter
+
+ BNE DKL2               \ Loop back until we have copied all seven primary
+                        \ flight control key presses to KL
+
+ LDA auto               \ If auto is 0, then the docking computer is not
+ BEQ DK15               \ currently activated, so jump to DK15 to skip the
+                        \ docking computer manoeuvring code below
 
 .auton
 
@@ -91,7 +102,7 @@ ELIF _6502SP_VERSION
  BCC P%+4
  LDA #22
  STA DELTA
- LDA #FF
+ LDA #&FF
  LDX #0
  LDY INWK+28
  BEQ DK11

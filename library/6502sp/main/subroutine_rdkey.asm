@@ -10,7 +10,8 @@
 \ This routine sends an OSWORD &F0 command to the I/O processor to ask it to
 \ scan the keyboard, starting with internal key number 16 ("Q") and working
 \ through the set of internal key numbers (see p.142 of the Advanced User Guide
-\ for a list of internal key numbers).
+\ for a list of internal key numbers). The results are copied from the I/O
+\ processor into the key logger buffer at KTRAN.
 \
 \ This routine is effectively the same as OSBYTE &7A, though the OSBYTE call
 \ preserves A, unlike this routine.
@@ -28,11 +29,12 @@
 
  LDA #&F0               \ Send an OSWORD &F0 command to the I/O processor to
  LDY #HI(buf)           \ scan the keyboard and joysticks, and populate the key
- LDX #LO(buf)           \ buffer in KTRAN, which is the part of the buf buffer
- JSR OSWORD             \ just after the two size configuration bytes
+ LDX #LO(buf)           \ logger buffer in KTRAN, which is the part of the buf
+ JSR OSWORD             \ buffer just after the two size configuration bytes
 
- LDX KTRAN              \ Fetch the internal key number of the key being pressed
-                        \ into X
+ LDX KTRAN              \ Set X to the first byte of the updated KTRAN, which
+                        \ contains the internal key number of the key being
+                        \ pressed, or 0 if there is no keypress
 
  TXA                    \ Copy X into A
 

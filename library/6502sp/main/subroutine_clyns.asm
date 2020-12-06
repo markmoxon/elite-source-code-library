@@ -4,7 +4,7 @@
 
 .CLYNS
 
- LDA #FF
+ LDA #&FF
  STA DTW2
  LDA #128
  STA QQ17

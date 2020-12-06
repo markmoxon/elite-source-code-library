@@ -11,7 +11,7 @@
  LDA X2
  SBC X1
  BCS LI1
- EOR #FF
+ EOR #&FF
  ADC #1
  SEC
 
@@ -22,7 +22,7 @@
  SBC Y1
  BEQ HLOIN2
  BCS LI2
- EOR #FF
+ EOR #&FF
  ADC #1
 
 .LI2

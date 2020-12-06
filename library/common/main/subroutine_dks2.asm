@@ -39,7 +39,9 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA KTRAN+7,X
+ LDA KTRAN+7,X          \ Fetch either the joystick X value or joystick Y value 
+                        \ from the key logger buffer, depending on the value of
+                        \ X (i.e. fetch either KTRAN+8 or KTRAN+0)
 
 ENDIF
 

@@ -27,12 +27,12 @@
 
  EQUW BR1               \ BRKV is set to point here by elite-loader.asm
 
-INCLUDE "library/common/main/variable_comc.asm"
-INCLUDE "library/common/main/variable_dnoiz.asm"
-INCLUDE "library/common/main/variable_damp.asm"
-INCLUDE "library/common/main/variable_djd.asm"
-INCLUDE "library/common/main/variable_patg.asm"
-INCLUDE "library/common/main/variable_flh.asm"
-INCLUDE "library/common/main/variable_jstgy.asm"
-INCLUDE "library/common/main/variable_jste.asm"
-INCLUDE "library/common/main/variable_jstk.asm"
+INCLUDE "library/common/main/variable/comc.asm"
+INCLUDE "library/common/main/variable/dnoiz.asm"
+INCLUDE "library/common/main/variable/damp.asm"
+INCLUDE "library/common/main/variable/djd.asm"
+INCLUDE "library/common/main/variable/patg.asm"
+INCLUDE "library/common/main/variable/flh.asm"
+INCLUDE "library/common/main/variable/jstgy.asm"
+INCLUDE "library/common/main/variable/jste.asm"
+INCLUDE "library/common/main/variable/jstk.asm"

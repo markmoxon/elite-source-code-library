@@ -37,12 +37,12 @@ LOAD% = &2000
 
 ORG CODE%
 
-INCLUDE "library/6502sp/loader2/macro_mve.asm"
-INCLUDE "library/6502sp/loader2/subroutine_elite_loader_part_1_of_2.asm"
-INCLUDE "library/6502sp/loader2/variable_mess2.asm"
-INCLUDE "library/6502sp/loader2/variable_mess3.asm"
-INCLUDE "library/6502sp/loader2/subroutine_mvbl.asm"
-INCLUDE "library/6502sp/loader2/subroutine_elite_loader_part_2_of_2.asm"
+INCLUDE "library/6502sp/loader2/macro/mve.asm"
+INCLUDE "library/6502sp/loader2/subroutine/elite_loader_part_1_of_2.asm"
+INCLUDE "library/6502sp/loader2/variable/mess2.asm"
+INCLUDE "library/6502sp/loader2/variable/mess3.asm"
+INCLUDE "library/6502sp/loader2/subroutine/mvbl.asm"
+INCLUDE "library/6502sp/loader2/subroutine/elite_loader_part_2_of_2.asm"
 
 \ ******************************************************************************
 \

@@ -55,7 +55,7 @@ ORG &1100               \ The load address of the main game code file ("ELTcode"
                         \ for loading from disc, "ELITEcode" for loading from
                         \ tape)
 
-INCLUDE "library/cassette/bcfs/subroutine_lbl.asm"
+INCLUDE "library/cassette/bcfs/subroutine/lbl.asm"
 
 \ ******************************************************************************
 \

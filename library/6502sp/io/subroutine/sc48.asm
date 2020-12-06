@@ -1,5 +1,5 @@
 \ ******************************************************************************
-\       Name: SC48 - is like the last half of common/subroutine_scan.asm
+\       Name: SC48 - is like the last half of common/subroutine/scan.asm
 \ ******************************************************************************
 
 \  ...................... Scanners  ..............................

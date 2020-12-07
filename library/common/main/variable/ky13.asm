@@ -1,6 +1,6 @@
 .KY13
 
- SKIP 1                 \ Escape key is being pressed
+ SKIP 1                 \ ESCAPE is being pressed
                         \
                         \   * 0 = no
                         \

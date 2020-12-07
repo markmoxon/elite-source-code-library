@@ -16,7 +16,7 @@
  LDX #3                 \ Set XC = 3 (set text cursor to column 3)
  STX XC
 
- JSR FX200              \ Disable the Escape key and clear memory if the Break
+ JSR FX200              \ Disable the ESCAPE key and clear memory if the BREAK
                         \ key is pressed (*FX 200, 3)
 
  LDX #CYL               \ Call the TITLE subroutine to show the rotating ship
@@ -45,7 +45,7 @@
 \JSR TT214              \ pressed "Y". This may be a bit of testing code, as the
 \BCC QU5                \ first line is a commented label, BR1, which is where
                         \ BRKV points, so when this is uncommented, pressing
-                        \ the Break key should jump straight to the load screen
+                        \ the BREAK key should jump straight to the load screen
 
  JSR GTNME              \ We want to load a new commander, so we need to get
                         \ the commander name to load

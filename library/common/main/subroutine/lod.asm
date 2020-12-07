@@ -15,7 +15,7 @@
 
 IF _CASSETTE_VERSION
 
- LDX #2                 \ Enable the Escape key and clear memory if the Break
+ LDX #2                 \ Enable the ESCAPE key and clear memory if the BREAK
  JSR FX200              \ key is pressed (*FX 200,2)
 
  JSR ZERO               \ Zero-fill pages &9, &A, &B, &C and &D, which clears
@@ -87,8 +87,8 @@ ENDIF
 
 IF _CASSETTE_VERSION
 
- LDX #3                 \ Fall through into FX200 to disable the Escape key and
-                        \ clear memory if the Break key is pressed (*FX 200,3)
+ LDX #3                 \ Fall through into FX200 to disable the ESCAPE key and
+                        \ clear memory if the BREAK key is pressed (*FX 200,3)
                         \ and return from the subroutine there
 
 ELIF _6502SP_VERSION

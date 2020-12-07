@@ -10,7 +10,7 @@
 \ Get the commander's name for loading or saving a commander file. The name is
 \ stored at INWK, terminated by a return character (13).
 \
-\ If Escape is pressed or a blank name is entered, then INWK is set to the name
+\ If ESCAPE is pressed or a blank name is entered, then INWK is set to the name
 \ from the last saved commander block.
 \
 \ ******************************************************************************
@@ -43,7 +43,7 @@
                         \ enable register IER (SHEILA &4E) bit 1 (i.e. disable
                         \ the CA2 interrupt, which comes from the keyboard)
 
- BCS TR1                \ The C flag will be set if we pressed Escape when
+ BCS TR1                \ The C flag will be set if we pressed ESCAPE when
                         \ entering the name, in which case jump to TR1 to copy
                         \ the last saved commander's name from NA% to INWK
                         \ and return from the subroutine there

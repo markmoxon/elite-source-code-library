@@ -48,7 +48,7 @@ ENDIF
                         \ speed and lasers):
 
  EQUB &68 + 128         \ ?         KYTB+1      Slow down
- EQUB &62 + 128         \ Space     KYTB+2      Speed up
+ EQUB &62 + 128         \ SPACE     KYTB+2      Speed up
  EQUB &66 + 128         \ <         KYTB+3      Roll left
  EQUB &67 + 128         \ >         KYTB+4      Roll right
  EQUB &42 + 128         \ X         KYTB+5      Pitch up
@@ -57,8 +57,8 @@ ENDIF
 
                         \ These are the secondary flight controls:
 
- EQUB &60               \ Tab       KYTB+8      Energy bomb
- EQUB &70               \ Escape    KYTB+9      Launch escape pod
+ EQUB &60               \ TAB       KYTB+8      Energy bomb
+ EQUB &70               \ ESCAPE    KYTB+9      Launch escape pod
  EQUB &23               \ T         KYTB+10     Arm missile
  EQUB &35               \ U         KYTB+11     Unarm missile
  EQUB &65               \ M         KYTB+12     Fire missile

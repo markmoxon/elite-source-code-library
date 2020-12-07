@@ -187,7 +187,7 @@ ENDIF
  JSR OSB                \ the "output buffer empty" event
 
  LDA #225               \ Call OSBYTE with A = 225, X = 128 and Y = 0 to set
- LDX #128               \ the function keys to return ASCII codes for Shift-fn
+ LDX #128               \ the function keys to return ASCII codes for SHIFT-fn
  JSR OSB                \ keys (i.e. add 128)
 
  LDA #172               \ Call OSBYTE 172 to read the address of the MOS
@@ -199,12 +199,12 @@ ENDIF
  STY TRTB%+1            \ TRTB%(1 0)
 
  LDA #200               \ Call OSBYTE with A = 200, X = 3 and Y = 0 to disable
- LDX #3                 \ the Escape key and clear memory if the Break key is
+ LDX #3                 \ the ESCAPE key and clear memory if the BREAK key is
  JSR OSB                \ pressed
 
 IF PROT AND DISC = 0
  CPX #3                 \ If the previous value of X from the call to OSBYTE 200
- BNE abrk+1             \ was not 3 (Escape disabled, clear memory), jump to
+ BNE abrk+1             \ was not 3 (ESCAPE disabled, clear memory), jump to
                         \ abrk+1, which contains a BRK instruction which will
                         \ reset the computer (as we set BRKV to point to the
                         \ reset address above)

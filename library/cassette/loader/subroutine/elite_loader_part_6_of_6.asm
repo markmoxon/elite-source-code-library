@@ -55,7 +55,7 @@
 \BMI BLAST
 
  LDY #0                 \ Call OSBYTE with A = 200, X = 3 and Y = 0 to disable
- LDA #200               \ the Escape key and clear memory if the Break key is
+ LDA #200               \ the ESCAPE key and clear memory if the BREAK key is
  LDX #3                 \ pressed
  JSR OSBYTE
 

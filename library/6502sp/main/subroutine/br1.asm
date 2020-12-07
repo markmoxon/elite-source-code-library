@@ -15,7 +15,7 @@
  LDA #3                 \ Move the text cursor to column 3
  JSR DOXC
                         
- LDX #3                 \ Disable the Escape key and clear memory if the Break
+ LDX #3                 \ Disable the ESCAPE key and clear memory if the BREAK
  JSR FX200              \ key is pressed (*FX 200, 3)
 
  LDX #CYL               \ Call the TITLE subroutine to show the rotating ship
@@ -31,12 +31,12 @@
                         \ of the key pressed in A (see p.142 of the Advanced
                         \ User Guide for a list of internal key number)
 
- CMP #&60               \ Did we press Tab? If not, skip the following
+ CMP #&60               \ Did we press TAB? If not, skip the following
  BNE P%+5               \ instruction
 
 .BRGO
 
- JMP DEMON              \ We pressed Tab, so jump to DEMON to show the demo
+ JMP DEMON              \ We pressed TAB, so jump to DEMON to show the demo
 
  CMP #&44               \ Did we press "Y"? If not, jump to QU5, otherwise
  BNE QU5                \ continue on to load a new commander

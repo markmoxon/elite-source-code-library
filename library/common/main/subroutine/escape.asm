@@ -8,7 +8,7 @@
 \ ------------------------------------------------------------------------------
 \
 \ This routine displays our doomed Cobra Mk III disappearing off into the ether
-\ before arranging our replacement ship. Called when we press Escape during
+\ before arranging our replacement ship. Called when we press ESCAPE during
 \ flight and have an escape pod fitted.
 \
 \ ******************************************************************************

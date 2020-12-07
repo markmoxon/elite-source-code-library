@@ -38,8 +38,8 @@
 
                         \ These are the secondary flight controls:
 
- EQUB &60               \ Tab       KYTB+8      Energy bomb
- EQUB &70               \ Escape    KYTB+9      Launch escape pod
+ EQUB &60               \ TAB       KYTB+8      Energy bomb
+ EQUB &70               \ ESCAPE    KYTB+9      Launch escape pod
  EQUB &23               \ T         KYTB+10     Arm missile
  EQUB &35               \ U         KYTB+11     Unarm missile
  EQUB &65               \ M         KYTB+12     Fire missile

@@ -21,11 +21,13 @@
 
 .NA%
 
- EQUS "JAMESON"         \ Default commander name
- EQUB 13                \ Terminated by a carriage return; commander name can
-                        \ be up to 7 characters (the DFS limit for file names)
+ EQUS "JAMESON"         \ The current commander name, which defaults to JAMESON
+ EQUB 13                \
+                        \ The commander name can be up to 7 characters (the DFS
+                        \ limit for file names), and is terminated by a carriage
+                        \ return
 
-                        \ NA%+8 - the start of the commander data block
+                        \ NA%+8 is the start of the commander data block
                         \
                         \ This block contains the last saved commander data
                         \ block. As the game is played it uses an identical

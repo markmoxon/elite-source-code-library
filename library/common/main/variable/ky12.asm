@@ -1,6 +1,6 @@
 .KY12
 
- SKIP 1                 \ Tab key is being pressed
+ SKIP 1                 \ TAB is being pressed
                         \
                         \   * 0 = no
                         \

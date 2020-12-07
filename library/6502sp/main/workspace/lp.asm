@@ -4,6 +4,7 @@
 \       Type: Workspace
 \    Address: &8600 to &91FF
 \   Category: Workspaces
+\    Summary: Variables used for displaying the scrolling text in the demo
 \
 \ ******************************************************************************
 

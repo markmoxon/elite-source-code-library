@@ -18,10 +18,10 @@
 \
 \ The key presses that are processed are as follows:
 \
-\   * Space and "?" to speed up and slow down
+\   * SPACE and "?" to speed up and slow down
 \   * "U", "T" and "M" to disarm, arm and fire missiles
-\   * Tab to fire an energy bomb
-\   * Escape to launch an escape pod
+\   * TAB to fire an energy bomb
+\   * ESCAPE to launch an escape pod
 \   * "J" to initiate an in-system jump
 \   * "E" to deploy E.C.M. anti-missile countermeasures
 \   * "C" to use the docking computer
@@ -133,7 +133,7 @@ ENDIF
 
  LDA MSTG               \ If MSTG = &FF then there is no target lock, so jump to
  BMI MA64               \ MA64 to skip the following (also skipping the checks
-                        \ for Tab, Escape, "J" and "E")
+                        \ for TAB, ESCAPE, "J" and "E")
 
  JSR FRMIS              \ The "fire missile" key is being pressed and we have
                         \ a missile lock, so call the FRMIS routine to fire
@@ -141,7 +141,7 @@ ENDIF
 
 .MA24
 
- LDA KY12               \ If Tab is being pressed, keep going, otherwise jump
+ LDA KY12               \ If TAB is being pressed, keep going, otherwise jump
  BEQ MA76               \ jump down to MA76 to skip the following
 
  ASL BOMB               \ The "energy bomb" key is being pressed, so double
@@ -157,7 +157,7 @@ ENDIF
 
 IF _CASSETTE_VERSION
 
- LDA KY13               \ If Escape is being pressed and we have an escape pod
+ LDA KY13               \ If ESCAPE is being pressed and we have an escape pod
  AND ESCP               \ fitted, keep going, otherwise skip the next
  BEQ P%+5               \ instruction
 

@@ -38,10 +38,10 @@
 
 IF _6502SP_VERSION
 
- LDX #0                 \ Call DKS4 to check whether the Shift key is being
+ LDX #0                 \ Call DKS4 to check whether the SHIFT key is being
  JSR DKS4               \ pressed
 
- STA newlocn            \ Store the result (which will have bit 7 set if Shift
+ STA newlocn            \ Store the result (which will have bit 7 set if SHIFT
                         \ is being pressed) in newlocn
 
 ENDIF
@@ -65,11 +65,11 @@ ENDIF
 IF _6502SP_VERSION
 
  BIT newlocn            \ If bit 7 of newlocn is clear - in other words, if
- BPL P%+3               \ Shift is not being pressed - then skip the following
+ BPL P%+3               \ SHIFT is not being pressed - then skip the following
                         \ instruction
 
- ASL A                  \ Shift is being held down, so double the value of A
-                        \ (i.e. Shift moves the cursor at double the speed
+ ASL A                  \ SHIFT is being held down, so double the value of A
+                        \ (i.e. SHIFT moves the cursor at double the speed
                         \ when using the joystick)
 
 ENDIF
@@ -109,11 +109,11 @@ ENDIF
 IF _6502SP_VERSION
 
  BIT newlocn            \ If bit 7 of newlocn is clear - in other words, if
- BPL P%+3               \ Shift is not being pressed - then skip the following
+ BPL P%+3               \ SHIFT is not being pressed - then skip the following
                         \ instruction
 
- ASL A                  \ Shift is being held down, so double the value of A
-                        \ (i.e. Shift moves the cursor at double the speed
+ ASL A                  \ SHIFT is being held down, so double the value of A
+                        \ (i.e. SHIFT moves the cursor at double the speed
                         \ when using the joystick
 
 ENDIF
@@ -129,7 +129,7 @@ IF _6502SP_VERSION
 .newlocn
 
  EQUB 0                 \ The current key press is stored here in the above code
-                        \ when we check whether Shift is being held down
+                        \ when we check whether SHIFT is being held down
 
 ENDIF
 
@@ -161,11 +161,11 @@ IF _6502SP_VERSION
  TXA                    \ Transfer the value of X into A
 
  BIT newlocn            \ If bit 7 of newlocn is clear - in other words, if
- BPL P%+4               \ Shift is not being pressed - then skip the following
+ BPL P%+4               \ SHIFT is not being pressed - then skip the following
                         \ two instructions
 
- ASL A                  \ Shift is being held down, so quadruple the value of A
- ASL A                  \ (i.e. Shift moves the cursor at four times the speed
+ ASL A                  \ SHIFT is being held down, so quadruple the value of A
+ ASL A                  \ (i.e. SHIFT moves the cursor at four times the speed
                         \ when using the keyboard)
 
  TAX                    \ Transfer the amended value of A back into X
@@ -173,11 +173,11 @@ IF _6502SP_VERSION
  TYA                    \ Transfer the value of Y into A
 
  BIT newlocn            \ If bit 7 of newlocn is clear - in other words, if
- BPL P%+4               \ Shift is not being pressed - then skip the following
+ BPL P%+4               \ SHIFT is not being pressed - then skip the following
                         \ two instructions
 
- ASL A                  \ Shift is being held down, so quadruple the value of A
- ASL A                  \ (i.e. Shift moves the cursor at four times the speed
+ ASL A                  \ SHIFT is being held down, so quadruple the value of A
+ ASL A                  \ (i.e. SHIFT moves the cursor at four times the speed
                         \ when using the keyboard)
 
  TAY                    \ Transfer the amended value of A back into Y

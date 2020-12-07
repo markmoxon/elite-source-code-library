@@ -13,7 +13,7 @@
 \ Specifically, this routine toggles the configuration settings for the
 \ following keys:
 \
-\   * Caps Lock toggles keyboard flight damping (&40)
+\   * CAPS LOCK toggles keyboard flight damping (&40)
 \   * A toggles keyboard auto-recentre (&41)
 \   * X toggles author names on start-up screen (&42)
 \   * F toggles flashing console bars (&43)
@@ -45,7 +45,7 @@
  BNE Dk3
 
                         \ We have a match between X and Y, so now to toggle
-                        \ the relevant configuration byte. Caps Lock has a key
+                        \ the relevant configuration byte. CAPS LOCK has a key
                         \ value of &40 and has its configuration byte at
                         \ location DAMP, A has a value of &41 and has its byte
                         \ at location DJD, which is DAMP+1, and so on. So we

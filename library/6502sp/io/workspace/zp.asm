@@ -1,5 +1,11 @@
 \ ******************************************************************************
+\
 \       Name: ZP
+\       Type: Workspace
+\    Address: &0080 to &0089
+\   Category: Workspaces
+\    Summary: Important variables used by the I/O processor
+\
 \ ******************************************************************************
 
 ORG &0080

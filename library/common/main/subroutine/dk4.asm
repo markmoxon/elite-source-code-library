@@ -85,10 +85,10 @@ IF _CASSETTE_VERSION
 
 ENDIF
 
- CPX #&10               \ If Q is not being pressed, skip to DK7
+ CPX #&10               \ If "Q" is not being pressed, skip to DK7
  BNE DK7
 
- STX DNOIZ              \ S is being pressed, so set DNOIZ to X, which is
+ STX DNOIZ              \ "Q" is being pressed, so set DNOIZ to X, which is
                         \ non-zero (&10), so this will turn the sound off
 
 .DK7
@@ -101,8 +101,9 @@ ENDIF
 
 IF _6502SP_VERSION
 
- CPX #&64
+ CPX #&64               \ If "B" is not being pressed, skip to DK7
  BNE nobit
+
  LDA BSTK
  EOR #&FF
  STA BSTK

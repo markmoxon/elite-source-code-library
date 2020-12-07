@@ -73,40 +73,40 @@
 
                         \ Internal key numbers &40 to &49:
                         \
- EQUB &01, &61          \ Caps Lock     A
+ EQUB &01, &61          \ CAPS LOCK     A
  EQUB &78, &66          \ X             F
  EQUB &79, &6A          \ Y             J
  EQUB &6B, &40          \ K             @
- EQUB &3A, &0D          \ :             Return
+ EQUB &3A, &0D          \ :             RETURN
 
  EQUB &00, &FF, &01     \ MOS code
  EQUB &02, &09, &0A
 
                         \ Internal key numbers &50 to &59:
                         \
- EQUB &02, &73          \ Shift Lock    S
+ EQUB &02, &73          \ SHIFT LOCK    S
  EQUB &63, &67          \ C             G
  EQUB &68, &6E          \ H             N
  EQUB &6C, &3B          \ L             ;
- EQUB &5D, &7F          \ ]             Delete
+ EQUB &5D, &7F          \ ]             DELETE
 
  EQUB &AC, &44, &02     \ MOS code
  EQUB &A2, &00, &60
 
                         \ Internal key numbers &60 to &69:
                         \
- EQUB &00, &7A          \ Tab           Z
- EQUB &20, &76          \ Space         V
+ EQUB &00, &7A          \ TAB           Z
+ EQUB &20, &76          \ SPACE         V
  EQUB &62, &6D          \ B             M
  EQUB &2C, &2E          \ ,             .
- EQUB &2F, &8B          \ /             Copy
+ EQUB &2F, &8B          \ /             COPY
 
  EQUB &AE, &41, &02     \ MOS code
  EQUB &4C, &AD, &E1
 
                         \ Internal key numbers &70 to &79:
                         \
- EQUB &1B, &81          \ Escape        f1
+ EQUB &1B, &81          \ ESCAPE        f1
  EQUB &82, &83          \ f2            f3
  EQUB &85, &86          \ f5            f6
  EQUB &88, &89          \ f8            f9

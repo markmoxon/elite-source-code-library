@@ -19,7 +19,7 @@
 \
 \ ******************************************************************************
 
- LDA BOMB               \ If we set off our energy bomb by pressing Tab (see
+ LDA BOMB               \ If we set off our energy bomb by pressing TAB (see
  BPL MA21               \ MA24 above), then BOMB is now negative, so this skips
                         \ to MA21 if our energy bomb is not going off
 

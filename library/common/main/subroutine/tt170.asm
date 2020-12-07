@@ -9,7 +9,7 @@
 \ ------------------------------------------------------------------------------
 \
 \ This is the main entry point for a the main game coce. It is also called
-\ following death, and when the game is quit by pressing Escape when paused.
+\ following death, and when the game is quit by pressing ESCAPE when paused.
 \
 \ ******************************************************************************
 

@@ -7,12 +7,12 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ If Escape is pressed or a blank name is entered, then an empty string is
+\ If ESCAPE is pressed or a blank name is entered, then an empty string is
 \ returned.
 \
 \ Returns:
 \
-\   Y                   The size of the entered text, or 0 if Escape was pressed
+\   Y                   The size of the entered text, or 0 if ESCAPE was pressed
 \
 \   INWK+5              The entered text, terminated by a carriage return
 \
@@ -36,11 +36,11 @@
  LDA #0                 \ the current input stream (i.e. the keyboard)
  JSR OSWORD
 
- BCC P%+4               \ The C flag will be set if we pressed Escape when
+ BCC P%+4               \ The C flag will be set if we pressed ESCAPE when
                         \ entering the name, otherwise it will be clear, so
-                        \ skip the next instruction is Escape is not pressed
+                        \ skip the next instruction is ESCAPE is not pressed
 
- LDY #0                 \ Escape was pressed, so set Y = 0 (as the OSWORD call
+ LDY #0                 \ ESCAPE was pressed, so set Y = 0 (as the OSWORD call
                         \ returns the length of the entered string in Y)
 
  LDA #VIAE              \ Send a #VIAE %00000001 command to the I/O processor to

@@ -6,6 +6,6 @@
                         \
                         \   * &FF = damping is disabled
                         \
-                        \ Toggled by pressing Caps Lock when paused, see the
+                        \ Toggled by pressing CAPS LOCK when paused, see the
                         \ DKS3 routine for details
 

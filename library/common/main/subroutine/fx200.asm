@@ -3,12 +3,12 @@
 \       Name: FX200
 \       Type: Subroutine
 \   Category: Utility routines
-\    Summary: Set the behaviour of the Escape and Break keys
+\    Summary: Set the behaviour of the ESCAPE and BREAK keys
 \
 \ ------------------------------------------------------------------------------
 \
-\ Performs a *FX 200, X command, which controls the behaviour of the Escape and
-\ Break keys.
+\ Performs a *FX 200, X command, which controls the behaviour of the ESCAPE and
+\ BREAK keys.
 \
 \ ******************************************************************************
 

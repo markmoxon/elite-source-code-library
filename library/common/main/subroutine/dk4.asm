@@ -63,9 +63,9 @@ ENDIF
 
  LDY #&40               \ We now want to loop through the keys that toggle
                         \ various settings. These have internal key numbers
-                        \ between &40 (Caps Lock) and &46 (K), so we set up the
-                        \ first key number in Y to act as a loop counter. See
-                        \ subroutine DKS3 for more details on this
+                        \ between &40 (CAPS LOCK) and &46 ("K"), so we set up
+                        \ the first key number in Y to act as a loop counter.
+                        \ See subroutine DKS3 for more details on this
 
 .DKL4
 
@@ -93,10 +93,10 @@ ENDIF
 
 .DK7
 
- CPX #&70               \ If Escape is not being pressed, skip over the next
+ CPX #&70               \ If ESCAPE is not being pressed, skip over the next
  BNE P%+5               \ instruction
 
- JMP DEATH2             \ Escape is being pressed, so jump to DEATH2 to end
+ JMP DEATH2             \ ESCAPE is being pressed, so jump to DEATH2 to end
                         \ the game
 
 IF _6502SP_VERSION

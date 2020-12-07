@@ -3,7 +3,7 @@
 \       Name: BELL
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: Make a beep sound
+\    Summary: Make a standard system beep
 \
 \ ------------------------------------------------------------------------------
 \

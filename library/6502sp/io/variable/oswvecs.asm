@@ -19,7 +19,7 @@
  EQUW KEYBOARD          \            240 (&F0)     0 = Scan the keyboard
  EQUW PIXEL             \            241 (&F1)     1 = Draw a pixel
  EQUW MSBAR             \ #DOmsbar = 242 (&F2)     2 = Update missile indicators
- EQUW WSCAN             \ #wscn    = 243 (&F3)     3 = Remove ship from scanner
+ EQUW WSCAN             \ #wscn    = 243 (&F3)     3 = Wait for vertical sync
  EQUW SC48              \ #onescan = 244 (&F4)     4 = Update the 3D scanner
  EQUW DOT               \ #DOdot   = 245 (&F5)     5 = Draw a dot
  EQUW DODKS4            \ #DODKS4  = 246 (&F6)     6 = Scan for a specific key

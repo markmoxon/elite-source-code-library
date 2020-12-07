@@ -1,5 +1,10 @@
 \ ******************************************************************************
+\
 \       Name: LS2FL
+\       Type: Subroutine
+\   Category: Drawing circles
+\    Summary: Send the ball line heap to the I/O processor for drawing
+\
 \ ******************************************************************************
 
 .LS2FL

@@ -27,13 +27,14 @@
                         \ debris shown when the ship is destroyed, and AND
                         \ with the random number we just fetched
 
- AND #15
+ AND #15                \ Reduce the random number in A to the range 0-15
 
 .SPIN2
 
  STA CNT                \ Store the result in CNT, so CNT contains a random
                         \ number between 0 and the maximum number of bits of
                         \ debris that this ship will release when destroyed
+                        \ (to a maximum of 15 bits of debris)
 
 .spl
 
@@ -48,10 +49,10 @@
 
  DEC CNT                \ Decrease the loop counter
 
- BNE spl+2              \ Jump back up to um (this BPL is effectively a JMP as
-                        \ CNT will never be negative)
+ BNE spl+2              \ Jump back up to the LDA &0 instruction above (this BPL
+                        \ is effectively a JMP as CNT will never be negative)
 
 .oh
 
- RTS
+ RTS                    \ Return from the subroutine
 

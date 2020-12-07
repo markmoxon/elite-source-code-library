@@ -75,8 +75,10 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- JSR tnpr1
-
+ JSR tnpr1              \ Call tnpr1 to with the scooped cargo type stored in A
+                        \ to work out whether we have room in the hold for one
+                        \ tonne of this cargo (A is set to 1 by this call, and
+                        \ the C flag contains the result)
 ENDIF
 
  LDY #78                \ This instruction has no effect, so presumably it used

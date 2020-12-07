@@ -313,8 +313,9 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA #POW
- JSR refund
+ LDA #POW               \ Call refund with A set to the power of the new pulse
+ JSR refund             \ laser to install the new laser and process a refund if
+                        \ we already have a laser fitted to this view
 
 ENDIF
 
@@ -342,7 +343,7 @@ IF _CASSETTE_VERSION
                         \ statements for all the other equipment
 
  LDY LASER,X            \ If there is no laser mounted in the chosen view (i.e.
- BEQ ed5                \ LASER+X, which contains the laser power for mount X,
+ BEQ ed5                \ LASER+X, which contains the laser power for view X,
                         \ is zero), jump to ed5 to buy a beam laser
 
 \BPL P%+4               \ This instruction is commented out in the original
@@ -368,15 +369,16 @@ IF _CASSETTE_VERSION
 .ed5
 
  LDA #POW+128           \ We just bought a beam laser for view X, so we need
- LDX T1                 \ to mount it by storing the laser power for a beam
- STA LASER,X            \ laser (given in POW+128) in LASER+X, using the view
-                        \ number we stored in T1 earlier, as the call to prx
-                        \ will have overwritten the original value in X
+ LDX T1                 \ to fit it by storing the laser power for a beam laser
+ STA LASER,X            \ (given in POW+128) in LASER+X, using the view number
+                        \ we stored in T1 earlier, as the call to prx will have
+                        \ overwritten the original value in X
 
 ELIF _6502SP_VERSION
 
- LDA #POW+128
- JSR refund
+ LDA #POW+128           \ Call refund with A set to the power of the new beam
+ JSR refund             \ laser to install the new laser and process a refund if
+                        \ we already have a laser fitted to this view
 
 ENDIF
 
@@ -515,8 +517,10 @@ IF _6502SP_VERSION
  CMP #12
  BNE et10
  JSR qv
- LDA #Armlas
- JSR refund
+
+ LDA #Armlas            \ Call refund with A set to the power of the new
+ JSR refund             \ military laser to install the new laser and process a
+                        \ refund if we already have a laser fitted to this view
 
 .et10
 
@@ -524,8 +528,10 @@ IF _6502SP_VERSION
  CMP #13
  BNE et11
  JSR qv
- LDA #Mlas
- JSR refund
+
+ LDA #Mlas              \ Call refund with A set to the power of the new mining
+ JSR refund             \ laser to install the new laser and process a refund if
+                        \ we already have a laser fitted to this view
 
 .et11
 

@@ -1,10 +1,6 @@
 \ ******************************************************************************
 \
-IF _CASSETTE_VERSION
 \       Name: CIRCLE2
-ELIF _6502SP_VERSION
-\       Name: CIRCLE3
-ENDIF
 \       Type: Subroutine
 \   Category: Drawing circles
 \    Summary: Draw a circle (for the planet or chart)
@@ -38,6 +34,10 @@ IF _CASSETTE_VERSION
 ELIF _6502SP_VERSION
 
 .CIRCLE3
+
+                        \ This gets called from CIRCLE2 below to calculate the
+                        \ line segments, which CIRCLE2 then sends to the I/O
+                        \ processor for drawing
 
 ENDIF
 
@@ -146,4 +146,20 @@ ENDIF
  CLC                    \ Clear the C flag to indicate success
 
  RTS                    \ Return from the subroutine
+
+IF _6502SP_VERSION
+
+.CIRCLE2
+
+                        \ This is the entry point for this subroutine
+
+ STZ LSP                \ Reset the ball line heap by setting the ball line heap
+                        \ pointer to 0
+
+ JSR CIRCLE3            \ Call CIRCLE3 to draw the circle
+
+                        \ Fall through into LS2FL to send the ball line heap to
+                        \ the I/O processor for drawing
+
+ENDIF
 

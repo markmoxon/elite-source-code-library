@@ -17,12 +17,12 @@
  STX XC
 
  JSR FX200              \ Disable the Escape key and clear memory if the Break
-                        \ key is pressed (*FX 200,3)
+                        \ key is pressed (*FX 200, 3)
 
  LDX #CYL               \ Call the TITLE subroutine to show the rotating ship
  LDA #128               \ and load prompt. The arguments sent to TITLE are:
  JSR TITLE              \
-                        \   X = type of ship to show, CYL is Cobra Mk III
+                        \   X = type of ship to show, #CYL is a Cobra Mk III
                         \
                         \   A = text token to show below the rotating ship, 128
                         \       is "  LOAD NEW COMMANDER (Y/N)?{crlf}{crlf}"
@@ -95,7 +95,8 @@
 
  DEX                    \ Decrement the loop counter
 
- BNE QUL1               \ Loop back for the next byte of the commander file
+ BNE QUL1               \ Loop back for the next byte of the commander data
+                        \ block
 
  STX QQ11               \ X is 0 by the end of the above loop, so this sets QQ11
                         \ to 0, which means we will be showing a view without a

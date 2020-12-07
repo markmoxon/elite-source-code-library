@@ -73,7 +73,7 @@ NI% = 37
 POW = 15
 B = &30
 Armlas = INT(128.5+1.5*POW)
-Mlas = 50
+Mlas = 50               \ Mining laser
 NRU% = 0
 VE = &57
 LL = 30
@@ -656,8 +656,7 @@ INCLUDE "library/common/main/subroutine/sun_part_2_of_4.asm"
 INCLUDE "library/common/main/subroutine/sun_part_3_of_4.asm"
 INCLUDE "library/common/main/subroutine/sun_part_4_of_4.asm"
 INCLUDE "library/common/main/subroutine/circle.asm"
-INCLUDE "library/common/main/subroutine/circle2-circle3.asm"
-INCLUDE "library/6502sp/main/subroutine/circle2.asm"
+INCLUDE "library/common/main/subroutine/circle2.asm"
 INCLUDE "library/6502sp/main/subroutine/ls2fl.asm"
 INCLUDE "library/common/main/subroutine/wpls.asm"
 INCLUDE "library/common/main/subroutine/edges.asm"

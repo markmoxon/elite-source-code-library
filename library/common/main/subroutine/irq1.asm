@@ -92,7 +92,8 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDY #15
+ LDY #15                \ Set Y as a counter for 16 bytes, to use when setting
+                        \ the dashboard palette below
 
 ENDIF
 
@@ -117,16 +118,19 @@ IF _CASSETTE_VERSION
 
  ASL A                  \ Double the value in A to 4
 
-ELIF _6502SP_VERSION
-
- LDA #&14
-
-ENDIF
-
  STA VIA+&20            \ Set the Video ULA control register (SHEILA &20) to
                         \ %00000100, which is the same as switching to mode 5,
                         \ (i.e. the bottom part of the screen) but with no
                         \ cursor
+
+ELIF _6502SP_VERSION
+
+ LDA #%00010100         \ Set the Video ULA control register (SHEILA &20) to
+ STA VIA+&20            \ %00010100, which is the same as switching to mode 2,
+                        \ (i.e. the bottom part of the screen) but with no
+                        \ cursor
+
+ENDIF
 
 IF _CASSETTE_VERSION
 
@@ -145,17 +149,33 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA ESCP
- AND #4
- EOR #&34
- STA &FE21\ESCP
+ LDA ESCP               \ Set A = ESCP, which is &FF if we have an escape pod
+                        \ fitted, or 0 if we don't
+
+ AND #4                 \ Set A = 4 if we have an escape pod fitted, or 0 if we
+                        \ don't
+ 
+ EOR #&34               \ Set A = &30 if we have an escape pod fitted, or &34 if
+                        \ we don't
+
+ STA &FE21              \ Store A in SHEILA &21 to map logical colour 3 to
+                        \ actual colour 0 (black) if we have an escape pod
+                        \ fitted, or actual colour 4 (blue) if we don't
+
+                        \ The following loop copies bytes #15 to #1 from TVT1 to
+                        \ SHEILA &21, but not byte #0, as we just did that
+                        \ colour mapping
 
 .VNT2
 
- LDA TVT1,Y
- STA &FE21
- DEY
- BNE VNT2
+ LDA TVT1,Y             \ Copy the Y-th palette byte from TVT1 to SHEILA &21
+ STA &FE21              \ to map logical to actual colours for the bottom part
+                        \ of the screen (i.e. the dashboard)
+
+ DEY                    \ Decrement the palette byte counter
+
+ BNE VNT2               \ Loop back to VNT2 until we have copied all the palette
+                        \ bytes bar the first one
 
 ENDIF
 

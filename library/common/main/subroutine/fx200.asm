@@ -7,14 +7,14 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ Performs a *FX 200,X command, which controls the behaviour of the Escape and
+\ Performs a *FX 200, X command, which controls the behaviour of the Escape and
 \ Break keys.
 \
 \ ******************************************************************************
 
 .FX200
 
- LDY #0                 \ Call OSBYTE &C8 (200) with Y = 0, so new value is
+ LDY #0                 \ Call OSBYTE &C8 (200) with Y = 0, so the new value is
  LDA #200               \ set to X, and return from the subroutine using a tail
  JMP OSBYTE             \ call
 

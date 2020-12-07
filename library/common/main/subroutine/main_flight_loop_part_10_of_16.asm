@@ -50,6 +50,7 @@
 
  LDA #1                 \ Set the speed in DELTA to 1 (i.e. a sudden stop)
  STA DELTA
+
  LDA #5                 \ Set the amount of damage in A to 5 (a small dent) and
  BNE MA63               \ jump down to MA63 to process the damage (this BNE is
                         \ effectively a JMP as A will never be zero)

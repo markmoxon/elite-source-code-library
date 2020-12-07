@@ -65,7 +65,7 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- STA BSTK               \ Set BSTK = 0
+ STA BSTK               \ Set BSTK = 0 to disable the Bitstik
 
  LDX #7                 \ We're now going to copy key press data for the primary
                         \ flight keys from the key logger buffer at KTRAN to the

@@ -104,16 +104,21 @@ IF _6502SP_VERSION
  CPX #&64               \ If "B" is not being pressed, skip to DK7
  BNE nobit
 
- LDA BSTK
+ LDA BSTK               \ Toggle the value of BSTK between 0 and &FF
  EOR #&FF
  STA BSTK
- STA JSTK
- STA JSTE
+
+ STA JSTK               \ Configure JSTK to the same value, so when the Bitstik
+                        \ is enabled, so is the joystick
+
+ STA JSTE               \ Configure JSTE to the same value, so when the Bitstik
+                        \ is enabled, the joystick is configured with reversed
+                        \ channels
 
 .nobit
 
- CPX #&32
- BEQ savscr
+ CPX #&32               \ If "D" is being pressed, jump to savscr to save a
+ BEQ savscr             \ screenshot
 
 ENDIF
 
@@ -137,17 +142,23 @@ IF _CASSETTE_VERSION
                         \ to KL+15. So set a decreasing counter in Y for the
                         \ index, starting at 15, so we can loop through them
 
- LDA #&FF               \ Set A to &FF so we can store this in the keyboard
-                        \ logger for keys that are being pressed
-
 ELIF _6502SP_VERSION
 
- LDA QQ11
- BNE out
- LDY #16
- LDA #&FF
+ LDA QQ11               \ If the current view is non-zero (i.e. not a space
+ BNE out                \ view), return from the subroutine (as out contains
+                        \ an RTS)
+
+ LDY #16                \ This is a space view, so now we want to check for all
+                        \ the secondary flight keys. The internal key numbers
+                        \ are in the keyboard table KYTB from KYTB+8 to
+                        \ KYTB+16, and their key logger locations are from KL+8
+                        \ to KL+16. So set a decreasing counter in Y for the
+                        \ index, starting at 16, so we can loop through them
 
 ENDIF
+
+ LDA #&FF               \ Set A to &FF so we can store this in the keyboard
+                        \ logger for keys that are being pressed
 
 .DKL1
 

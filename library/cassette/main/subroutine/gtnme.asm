@@ -29,7 +29,7 @@
  STA VIA+&4E            \ (SHEILA &4E) bit 1 (i.e. enable the CA2 interrupt,
                         \ which comes from the keyboard)
 
- LDA #15                \ Perform a *FX 15,0 command (flush all buffers)
+ LDA #15                \ Call OSBYTE with A = 15 (flush all buffers)
  TAX
  JSR OSBYTE
 

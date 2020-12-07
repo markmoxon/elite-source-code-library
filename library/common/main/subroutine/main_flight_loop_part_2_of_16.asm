@@ -66,15 +66,18 @@ IF _CASSETTE_VERSION
  CMP #8                 \ If A >= 8, skip the following two instructions
  BCS P%+4
 
- LSR A                  \ A < 8, so halve A again and clear the C flag, so we
- CLC                    \ can do addition later without the C flag affecting
-                        \ the result
+ LSR A                  \ A < 8, so halve A again
+
+ CLC                    \ This instruction has no effect, as we only get here
+                        \ if the C flag is clear (if it is set, we skip this
+                        \ instruction)
 
 ELIF _6502SP_VERSION
 
- CMP #8
+ CMP #8                 \ If A >= 8, skip the following instruction
  BCS P%+3
- LSR A
+
+ LSR A                  \ A < 8, so halve A again
 
 ENDIF
 
@@ -151,19 +154,27 @@ ENDIF
 
 IF _6502SP_VERSION
 
- LDA BSTK
- BEQ BS2
+ LDA BSTK               \ If BSTK = 0 then the Bitstik is not configured, so
+ BEQ BS2                \ jump to BS2 to skip the following
 
  LDA KTRAN+10           \ Fetch the Bitstik rotation value (high byte) from the
                         \ key logger buffer
 
+ LSR A                  \ Divide A by 4
  LSR A
- LSR A
- CMP #40
+
+ CMP #40                \ If A < 40, skip the following instruction
  BCC P%+4
- LDA #40
- STA DELTA
- BNE MA4
+
+ LDA #40                \ Set A = 40, which ensures a maximum speed of 40
+
+ STA DELTA              \ Update our speed in DELTA
+
+ BNE MA4                \ If the speed we just set is non-zero, then jump to MA4
+                        \ to skip the following, as we don't need to check the
+                        \ keyboard for speed keys, otherwise do check the
+                        \ keyboard (so Bitstik users can still use the keyboard
+                        \ for speed adjustments if they twist the stick to zero)
 
 .BS2
 

@@ -17,7 +17,7 @@
 \ This block will be passed to OSWORD 7 to make the sound, which expects the
 \ four sound attributes as 16-bit big-endian values - in other words, with the
 \ low byte first. So the above block would pass the values &0013, &00F4, &000C
-\ and &0008 to the SOUND command when used with OSWORD 7, or:
+\ and &0008 to the SOUND statement when used with OSWORD 7, or:
 \
 \   SOUND &13, &F4, &0C, &08
 \

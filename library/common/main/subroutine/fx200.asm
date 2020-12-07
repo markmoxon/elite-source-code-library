@@ -7,8 +7,8 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ Performs a *FX 200, X command, which controls the behaviour of the ESCAPE and
-\ BREAK keys.
+\ This is the equivalent of a *FX 200 command, which controls the behaviour of
+\ the ESCAPE and BREAK keys.
 \
 \ ******************************************************************************
 

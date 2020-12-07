@@ -60,7 +60,7 @@ ENDIF
                         \ not affect A, while AND'ing with 7 will clear bit
                         \ 3, reducing the maximum value in A to 7
 
- ORA #%11110001         \ The SOUND command's amplitude ranges from 0 (for no
+ ORA #%11110001         \ The SOUND statement's amplitude ranges from 0 (for no
                         \ sound) to -15 (full volume), so we can set bits 0 and
                         \ 4-7 in A, and keep bits 1-3 from the above to get
                         \ a value between -15 (%11110001) and -1 (%11111111),

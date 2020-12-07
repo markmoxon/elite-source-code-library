@@ -1,19 +1,28 @@
 \ ******************************************************************************
-\       Name: BEGINLIN   see LL155 in tape
+\
+\       Name: BEGINLIN
+\       Type: Subroutine
+\   Category: Drawing lines
+\    Summary: Implement the OSWRCH &81 command (start receiving a new line to
+\             draw)
+\
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   A                   The number of points in the new line
+\
 \ ******************************************************************************
-
-\.............Empty Linestore after copying over Tube .........
 
 .BEGINLIN
 
-\was LL155 -CLEAR LINEstr
- STA LINMAX
- LDA #0
- STA LINTAB
- LDA #&82
- JMP USOSWRCH
+ STA LINMAX             \ Set LINMAX to the number of points in the new line
 
-.RTS1
+ LDA #0                 \ Set LINTAB = 0 to point to the position of the next
+ STA LINTAB             \ free byte in the TABLE buffer (i.e. the first byte, as
+                        \ we have just reset the buffer)
 
- RTS
+ LDA #&82               \ Call USOSWRCH to run an #ADDBYT command, so subsequent
+ JMP USOSWRCH           \ OSWRCH calls by the I/O processor get added to TABLE,
+                        \ and return from the subroutine using a tail call
 

@@ -26,7 +26,6 @@ _6502SP_VERSION         = TRUE AND (_VERSION = 3)
 
 CODE% = &2400
 LOAD% = &2400
-TABLE = &2300
 
 C% = &2400
 L% = C%
@@ -76,6 +75,7 @@ GREEN2 = &C
 STRIPE = &23
 
 INCLUDE "library/6502sp/io/workspace/zp.asm"
+INCLUDE "library/6502sp/io/variable/table.asm"
 INCLUDE "library/6502sp/io/workspace/font_per_cent.asm"
 INCLUDE "library/6502sp/io/variable/log.asm"
 INCLUDE "library/6502sp/io/variable/logl.asm"

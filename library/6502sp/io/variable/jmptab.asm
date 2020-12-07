@@ -17,7 +17,7 @@
 
  EQUW USOSWRCH          \              128 (&80)     0 = Put back to USOSWRCH
  EQUW BEGINLIN          \              129 (&81)     1 = Begin drawing a line
- EQUW ADDBYT            \              130 (&82)     2 = Add a byte to a line
+ EQUW ADDBYT            \              130 (&82)     2 = Add line byte/draw line
  EQUW DOFE21            \ #DOFE21    = 131 (&83)     3 = Show energy bomb effect
  EQUW DOHFX             \ #DOhfx     = 132 (&84)     4 = Show hyperspace colours
  EQUW SETXC             \ #SETXC     = 133 (&85)     5 = Set text cursor column

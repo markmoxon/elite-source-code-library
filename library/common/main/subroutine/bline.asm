@@ -148,7 +148,7 @@ IF _CASSETTE_VERSION
  BEQ BL9                \ coordinates around during the clipping process, so
                         \ jump to BL9 to skip the following swap
 
- LDA X1                 \ Otherwise the coordinates were swapped by the call to,
+ LDA X1                 \ Otherwise the coordinates were swapped by the call to
  LDY X2                 \ LL145 above, so we swap (X1, Y1) and (X2, Y2) back
  STA X2                 \ again
  STY X1

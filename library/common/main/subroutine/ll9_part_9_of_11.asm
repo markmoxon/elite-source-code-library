@@ -52,7 +52,10 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- TSB XX1+31
+ TSB XX1+31             \ Apply bit 3 of A to the ship's byte #31, so if there
+                        \ was no ship already on screen, the bit is clear,
+                        \ otherwise it is set (the TSB instruction applies the
+                        \ accumulator to the memory location using an OR)
 
 ENDIF
 
@@ -72,8 +75,10 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- STZ U
- STZ XX17
+ STZ U                  \ Set U = 0 (though we increment it to 1 below)
+
+ STZ XX17               \ Set XX17 = 0, which we are going to use as a counter
+                        \ for stepping through the ship's edges
 
 ENDIF
 
@@ -97,8 +102,10 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA #64
- TRB XX1+31
+ LDA #%01000000         \ Clear bit 6 of the ship's byte #31 so the ship doesn't
+ TRB XX1+31             \ keep firing endlessly (the TRB instruction applies the
+                        \ inverse of the accumulator, %10111111, to the memory
+                        \ location using an AND)
 
 ENDIF
 
@@ -178,12 +185,18 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA U
- ADC #3
- TAY
- LDA #&FF
- STA (XX19),Y
- INY \Red laser
+ LDA U                  \ Fetch the ship line heap pointer, which points to the
+                        \ next free byte on the heap, into A
+
+ ADC #3                 \ Set Y = A + 3, so Y now points to the fourth byte in
+ TAY                    \ this coordinate
+
+ LDA #255               \ Set the fourth byte to 255 to act as a flag to the I/O
+ STA (XX19),Y           \ processor to draw the following line in red, as it is
+                        \ a laser (this flag is read and acted on in the ADDBYT
+                        \ routine in the I/O processor
+
+ INY                    \ Increment Y to point to the next coordinate block
 
 ENDIF
 

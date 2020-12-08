@@ -13,6 +13,9 @@ ELIF _6502SP_VERSION
                         \
                         \   * Bit 0 set = mission 1 in progress
                         \   * Bit 1 set = mission 1 completed
+                        \
+                        \   * Bit 2 set = mission 2 in progress
+                        \   * Bit 3 set = mission 2 completed
 
 ENDIF
 

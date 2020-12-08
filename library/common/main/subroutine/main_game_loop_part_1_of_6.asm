@@ -14,12 +14,20 @@
 \
 \ This section covers the following:
 \
-\   * Spawn a trader, i.e. a Cobra Mk III that isn't attacking anyone, with one
-\     missile and a 50% chance of having an E.C.M., a speed between 16 and 31,
-\     and a clockwise roll
+IF _CASSETTE_VERSION
+\   * Spawn a trader, i.e. a Cobra Mk III that isn't hostile, with one missile,
+\     a 50% chance of having an E.C.M., a speed between 16 and 31, and a gentle
+\     clockwise roll
 \
 \ We call this from within the main loop, with A set to a random number and the
 \ C flag set.
+ELIF _6502SP_VERSION
+\   * Spawn a trader, i.e. a Cobra Mk III, Python, Boa or Anaconda, with one
+\     missile, a 50% chance of having an E.C.M., a 50% chance of being hostile,
+\     a speed between 16 and 31, and a gentle clockwise roll
+\
+\ We call this from within the main loop.
+ENDIF
 \
 \ ******************************************************************************
 
@@ -27,7 +35,7 @@
 
 IF _6502SP_VERSION
 
- JSR DORND
+ JSR DORND              \ Set A and X to random numbers
 
 ENDIF
 
@@ -49,26 +57,41 @@ ENDIF
 
 IF _CASSETTE_VERSION
 
- LDA #CYL               \ Add a new Cobra Mk III to the local universe and fall
+ LDA #CYL               \ Add a new Cobra Mk III to the local bubble and fall
  JSR NWSHP              \ through into the main game loop again
 
 ELIF _6502SP_VERSION
 
- JSR DORND
- BMI nodo
- LDA INWK+32
- ORA #&C0
+ JSR DORND              \ Set A and X to random numbers, plus the C flag
+
+ BMI nodo               \ If A is negative (50% chance), jump to nodo to skip
+                        \ the following
+
+ LDA INWK+32            \ Set bits 6 and 7 of the ship's AI flag, to make it
+ ORA #%11000000         \ hostile and with AI enabled
  STA INWK+32
- LDX #16
+
+ LDX #%00010000         \ Set bit 4 of the ship's NEWB flag
  STX NEWB
 
 .nodo
 
- AND #2
- ADC #CYL
- CMP #HER
- BEQ TT100
- JSR NWSHP\trader
+ AND #2                 \ If we jumped here with a random value of A from the
+                        \ BMI above, then this reduces A to a random value of
+                        \ either 0 or 2; if we didn't take the BMI and made the
+                        \ ship hostile, then A will be 0
+
+ ADC #CYL               \ Set A = A + C + #CYL
+                        \
+                        \ where A is 0 or 2 and C is 0 or 1, so this gives us a
+                        \ ship type from the following: Cobra Mk III, Python,
+                        \ Boa or Anaconda
+
+ CMP #HER               \ If A is now the ship type of a rock hermit, jump to
+ BEQ TT100              \ TT100 to skip the following instruction
+
+ JSR NWSHP              \ Add a new ship of type A to the local bubble and fall
+                        \ through into the main game loop again
 
 ENDIF
 

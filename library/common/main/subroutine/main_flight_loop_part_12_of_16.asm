@@ -33,8 +33,8 @@
 
 IF _6502SP_VERSION
 
- LDA NEWB
- BMI KS1S
+ LDA NEWB               \ If bit 7 of the ship's NEWB is set, jump to KS1S to
+ BMI KS1S               \ skip the following
 
 ENDIF
 
@@ -60,12 +60,16 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- AND #&20
- BEQ MAC1
- LDA NEWB
- AND #64
- ORA FIST
- STA FIST
+ AND #%00100000         \ If bit 5 of the ship's byte #31 is clear then the
+ BEQ MAC1               \ ship is no longer exploding, so jump to MAC1 to skip
+                        \ the following
+
+ LDA NEWB               \ Extract bit 6 of NEWB, so A = 64 if bit 6 is set, 0
+ AND #%01000000         \ if it is clear
+
+ ORA FIST               \ We shot the sheriff, so update our FIST flag
+ STA FIST               \ ("fugitive/innocent status") to at least 64, which
+                        \ will instantly make us a fugitive
 
 ENDIF
 

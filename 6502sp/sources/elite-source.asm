@@ -66,8 +66,13 @@ DOD = 34
 NOST = 18
 NOSH = 20
 
-JL = ESC
-JH = SHU+2
+JL = ESC                \ Junk low = Escape pod
+
+JH = SHU+2              \ Junk high = Cobra Mk III
+
+                        \ So junk is escape pod, alloy plate, cargo canister,
+                        \ asteroid, splinter, shuttle, transporter
+
 PACK = SH3
 NI% = 37
 POW = 15

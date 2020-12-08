@@ -17,7 +17,8 @@
 IF _CASSETTE_VERSION
  EQUB 0                 \ Max. canisters on demise = 0
 ELIF _6502SP_VERSION
- EQUB &F0               \ Max. canisters on demise = 0
+ EQUB 0 + (15 << 4)     \ Max. canisters on demise = 0
+                        \ Market item when scooped = 15 + 1 = 16 (Alien items)
 ENDIF
  EQUW 40 * 40           \ Targetable area          = 40 * 40
 IF _CASSETTE_VERSION

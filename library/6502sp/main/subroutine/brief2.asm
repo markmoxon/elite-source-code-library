@@ -4,8 +4,9 @@
 
 .BRIEF2
 
- LDA TP
- ORA #4
+ LDA TP                 \ Set bit 2 of TP to indicate mission 2 is in progress
+ ORA #%00000100
  STA TP
+
  LDA #11
 

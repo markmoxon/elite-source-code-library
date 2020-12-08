@@ -107,10 +107,10 @@ IF _6502SP_VERSION
 
 ENDIF
 
- ROR A                  \ C is random from above call to Ze, so this sets A to a
- AND #%10000111         \ number between -7 and +7, which we store in byte #30
- STA INWK+30            \ (pitch counter) to give our ship a very gentle pitch
-                        \ with damping
+ ROR A                  \ The C flag is randomly set from the above call to Ze,
+ AND #%10000111         \ so this sets A to a number between -7 and +7, which
+ STA INWK+30            \ we store in byte #30 (the pitch counter) to give our
+                        \ ship a very gentle pitch with damping
 
 IF _CASSETTE_VERSION
 
@@ -142,16 +142,23 @@ ELIF _6502SP_VERSION
 
  LDA XX21-1+2*PLT       \ Fetch the byte from location XX21 - 1 + 2 * PLT, which
                         \ equates to XX21 + 7 (the high byte of the address of
-                        \ SHIP_PLATE), which seems a bit odd. It would make more
+                        \ SHIP_PLATE), which seems a bit odd. It might make more
                         \ sense to do LDA (XX21-2+2*PLT) as this would fetch the
-                        \ first byte of the alloy plate's blueprint (which is a
-                        \ negative value), but there aren't any brackets, so
-                        \ instead this always returns &D0, which is always
-                        \ negative, so we only ever show plate alloys when we
-                        \ die, irrespective of bit 7 in byte #0 of the blueprint
+                        \ first byte of the alloy plate's blueprint (which
+                        \ determines what happens when alloys are destroyed),
+                        \ but there aren't any brackets, so instead this always
+                        \ returns &D0, which is never zero, so the following
+                        \ BEQ is never true. (If the brackets were there, then
+                        \ we could stop plates from spawning on death by setting
+                        \ byte #0 of the blueprint to 0... but then scooping
+                        \ plates wouldn't give us alloys, so who knows what this
+                        \ is all about?)
 
- BEQ D3                 \ If A <= 0, jump to D3 to skip the following
- BCC D3                 \ instruction
+ BEQ D3                 \ If A = 0, jump to D3 to skip the following instruction
+
+ BCC D3                 \ If the C flag is clear, which will be random following
+                        \ the above call to Ze, jump to D3 to skip the following
+                        \ instruction
 
  DEX                    \ Decrement X, which sets it to #PLT, the ship type for
                         \ an alloy plate

@@ -117,7 +117,7 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDY #YELLOW2           \ Change the leftmost missile indicator to yellow/white
+ LDY #YELLOW2           \ Change the leftmost missile indicator to yellow
  JSR MSBAR              \ on the missile bar (this call changes the leftmost
                         \ indicator because we set X to the number of missiles
                         \ in NOMSL above, and the indicators are numbered from
@@ -168,19 +168,25 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA KY20
- BEQ MA78
- LDA #0
- STA auto
+ LDA KY20               \ If "P" is being pressed, keep going, otherwise skip 
+ BEQ MA78               \ the next two instructions
+
+ LDA #0                 \ The "cancel docking computer" key is bring pressed,
+ STA auto               \ so turn it off by setting auto to 0
 
 .MA78
 
- LDA KY13
- AND ESCP
- BEQ noescp
- LDA MJ
- BNE noescp
- JMP ESCAPE
+ LDA KY13               \ If ESCAPE is being pressed and we have an escape pod
+ AND ESCP               \ fitted, keep going, otherwise jump to noescp to skip
+ BEQ noescp             \ the following instructions
+
+ LDA MJ                 \ If we are in witchspace, we can't launch our escape
+ BNE noescp             \ pod, so jump down to noescp
+
+ JMP ESCAPE             \ The "launch escape pod" button is being pressed and
+                        \ we have an escape pod fitted, so jump to ESCAPE to
+                        \ launch it, and exit the main flight loop using a tail
+                        \ call
 
 .noescp
 
@@ -235,10 +241,12 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA KY19
- AND DKCMP
- BEQ MA68
- STA auto
+ LDA KY19               \ If "C" is being pressed, and we have a docking
+ AND DKCMP              \ computer fitted, keep going, otherwise jump down to
+ BEQ MA68               \ MA68 to skip the following
+
+ STA auto               \ Set auto to the non-zero value of A, so the docking
+                        \ computer is activated
 
 ENDIF
 

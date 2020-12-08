@@ -34,17 +34,21 @@ ENDIF
 
 IF _6502SP_VERSION
 
- LDA TP
- AND #&C
- CMP #8
- BNE nopl
- JSR DORND
- CMP #200
- BCC nopl
+ LDA TP                 \ Fetch bits 2 and 3 of TP, which contain the status of
+ AND #%00001100         \ mission 2
+
+ CMP #%00001000         \ If bit 3 is set and bit 2 is clear, keep going,
+ BNE nopl               \ otherwise jump to nopl to avoid spawning a Thargoid
+
+ JSR DORND              \ Set A and X to random numbers
+
+ CMP #200               \ If the random number in A < 200 (78% chance), jump to
+ BCC nopl               \ nopl to avoid spawning a Thargoid
 
 .fothg2
 
- JSR GTHG
+ JSR GTHG               \ Call GTHG to spawn a Thargoid ship and a Thargon
+                        \ companion
 
 .nopl
 
@@ -145,23 +149,26 @@ ELIF _6502SP_VERSION
  BCC NOCON              \ If the C flag is clear then we are not in the
                         \ Constrictor's system, so skip to NOCON
 
- LDA #&F9
- STA INWK+32
+ LDA #%11111001         \ Set the AI flag of this ship so that it has E.C.M.,
+ STA INWK+32            \ has a very high aggression level of 28 out of 31, is
+                        \ hostile, and has AI enabled - nasty stuff!
 
- LDA TP                 \ Fetch bits 0 and 1 of TP which contain the status of
+ LDA TP                 \ Fetch bits 0 and 1 of TP, which contain the status of
  AND #%00000011         \ mission 1
 
  LSR A                  \ Shift bit 0 into the C flag
 
- BCC NOCON              \ If bit 0 is clear, skip to NOCON as we are not
-                        \ currently doing mission 1
+ BCC NOCON              \ If bit 0 is clear, skip to NOCON as mission 1 is not
+                        \ in progress
 
- ORA MANY+CON           \ Bit 0 of A is set if we have already completed mission
-                        \ 1, so this OR will be non-zero if we have either
-                        \ completed mission 1, or there is already a Constrictor
-                        \ in our local bubble of universe
+ ORA MANY+CON           \ Bit 0 of A now contains bit 1 of TP, so this will be
+                        \ set if we have already completed mission 1, so this OR
+                        \ will be non-zero if we have either completed mission
+                        \ 1, or there is already a Constrictor in our local
+                        \ bubble of universe (in which case MANY+CON will be
+                        \ non-zero)
 
- BEQ YESCON             \ If A = 0 then we are doing mission 1, we haven't
+ BEQ YESCON             \ If A = 0 then mission 1 is in progress, we haven't
                         \ completed it yet, and there is no Constrictor in the
                         \ vicinity, so jump to YESCON to spawn the Constrictor
 

@@ -26,9 +26,11 @@
 
 IF _6502SP_VERSION
 
- LDA NEWB
- BPL P%+5
- JSR SCAN
+ LDA NEWB               \ If bit 7 of the ship's NEWB byte is clear, skip the
+ BPL P%+5               \ following instruction
+
+ JSR SCAN               \ Draw the ship on the scanner, which has the effect of
+                        \ removing it
 
 ENDIF
 
@@ -85,16 +87,27 @@ ENDIF
 
 IF _6502SP_VERSION
 
- LDA TYPE
- CMP #SST
- BEQ MA14+2
- CMP #CON
- BCC BURN
- LDA LAS
- CMP #(Armlas AND127)
- BNE MA14+2
- LSR LAS
- LSR LAS
+ LDA TYPE               \ Did we just hit the space station? If so, jump to
+ CMP #SST               \ MA14+2 to make the station hostile, skipping the
+ BEQ MA14+2             \ following as we can't destroy a space station
+
+ CMP #CON               \ If the ship we hit is less than #CON - i.e. it's not
+ BCC BURN               \ a Constrictor, Cougar, Dodo station or the Elite logo,
+                        \ jump to BURN to skip the following
+
+ LDA LAS                \ Set A to the power of the laser we just used to hit
+                        \ the ship (i.e. the laser in the current view)
+
+ CMP #(Armlas AND 127)  \ If the laser is not a military laser, jump to MA14+2
+ BNE MA14+2             \ to skip the following, as only military lasers have
+                        \ any effect on the Constrictor or Cougar (or the Elite
+                        \ logo, should you ever bump into one of those out there
+                        \ in the black...)
+
+ LSR LAS                \ Divide the laser power of the current view by 4, so
+ LSR LAS                \ the damage inflicted on the super-ship is a quarter of
+                        \ the damage our military lasers would inflict on a
+                        \ normal ship
 
 .BURN
 
@@ -151,25 +164,33 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- ASL INWK+31
- SEC
+ ASL INWK+31            \ Set bit 7 of the ship byte #31 to indicate that it has
+ SEC                    \ now been killed
  ROR INWK+31
- LDA TYPE
- CMP #AST
+
+ LDA TYPE               \ Did we just kill an asteroid? If not, jump to nosp,
+ CMP #AST               \ otherwise keep going
  BNE nosp
- LDA LAS
- CMP #Mlas
+
+ LDA LAS                \ Did we kill the asteroid using mining lasers? If not,
+ CMP #Mlas              \ jump to nosp, otherwise keep going
  BNE nosp
- JSR DORND
- LDX #SPL
- AND #3
- JSR SPIN2
+
+ JSR DORND              \ Set A and X to random numbers
+
+ LDX #SPL               \ Set X to the ship type for a splinter
+
+ AND #3                 \ Reduce the random number in A to the range 0-3
+
+ JSR SPIN2              \ Call SPIN2 to spawn A items of type X (i.e. spawn
+                        \ 0-3 spliters)
 
 .nosp
 
- LDY #PLT
+ LDY #PLT               \ Randomly spawn some alloy plates
  JSR SPIN
- LDY #OIL
+
+ LDY #OIL               \ Randomly spawn some cargo canisters
  JSR SPIN
 
 ENDIF

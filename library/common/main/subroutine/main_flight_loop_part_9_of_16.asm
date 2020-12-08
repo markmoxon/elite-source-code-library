@@ -38,9 +38,13 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA K%+NI%+36
- AND #4
- BNE MA62
+ LDA K%+NI%+36          \ 1. Fetch the NEWB (byte #36) of the second ship in the
+ AND #%00000100         \ ship data workspace at K%, which is reserved for the
+ BNE MA62               \ sun or the space station (in this case it's the
+                        \ latter), and if bit 2 is set, meaning the station is
+                        \ hostile, jump down to MA62 to fail docking (so trying
+                        \ to dock at a station that we have annoyed does not end
+                        \ well)
 
 ENDIF
 
@@ -59,8 +63,10 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- JSR SPS1
- LDA XX15+2
+ JSR SPS1               \ Call SPS1 to calculate the vector to the planet and
+                        \ store it in XX15
+
+ LDA XX15+2             \ Set A to the z-axis of the vector
 
 ENDIF
 
@@ -95,7 +101,7 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- JMP DOENTRY
+ JMP DOENTRY            \ Go to the docking bay (i.e. show the ship hanger)
 
 ENDIF
 

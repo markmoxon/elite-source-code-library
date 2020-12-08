@@ -64,7 +64,8 @@ ENDIF
  BNE ESL1               \ Loop back to keep moving the Cobra until the AI flag
                         \ is 0, which gives it time to drift away from our pod
 
- JSR SCAN               \ Call SCAN to remove all ships from the scanner
+ JSR SCAN               \ Call SCAN to remove the Cobra from the scanner (by
+                        \ redrawing it)
 
 IF _CASSETTE_VERSION
 

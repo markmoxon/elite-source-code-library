@@ -18,9 +18,11 @@
  JSR HALL
  LDY #44
  JSR DELAY
- LDA TP
- AND #3
- BNE EN1
+
+ LDA TP                 \ Fetch bits 0 and 1 of TP, and is they are non-zero
+ AND #%00000011         \ (i.e. mission 1 is either in progress or has been
+ BNE EN1                \ completed), skip to EN1
+
  LDA TALLY+1
  BEQ EN4
  LDA GCNT

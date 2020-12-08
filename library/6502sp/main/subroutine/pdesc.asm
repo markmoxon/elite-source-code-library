@@ -23,10 +23,13 @@
  BNE PD2
  LDA RUGAL-1,Y
  BMI PD3
- LDA TP
- LSR A
+
+ LDA TP                 \ Fetch bit 0 of TP into the C flag, and skip to PD1 if
+ LSR A                  \ it is clear (i.e. if mission 1 is not in progress)
  BCC PD1
- JSR MT14
+
+ JSR MT14               \ Mission 1 is in progress, so call MT14
+
  LDA #1
  EQUB &2C
 

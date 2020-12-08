@@ -12,7 +12,8 @@
 
 .SHIP_SPLINTER
 
- EQUB &B0               \ Max. canisters on demise = 0
+ EQUB 0 + (11 << 4)     \ Max. canisters on demise = 0
+                        \ Market item when scooped = 11 + 1 = 12 (Minerals)
  EQUW 16 * 16           \ Targetable area          = 16 * 16
  EQUB &78               \ Edges data offset (low)  = &FD78 = -648 (Escape pod)
  EQUB &44               \ Faces data offset (low)  = &0044

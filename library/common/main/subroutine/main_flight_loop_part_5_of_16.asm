@@ -28,8 +28,11 @@
 
 IF _6502SP_VERSION
 
- CPY #2*CON
- BCS MA21
+ CPY #2*CON             \ If the ship in Y is the Constrictor, jump to BA21
+ BCS MA21               \ as energy bombs are useless against the Constrictor
+                        \ (the Constrictor is the target of mission 1, and it
+                        \ would be too easy if it could just be blown out of
+                        \ the sky with a single key press)
 
 ENDIF
 
@@ -45,9 +48,9 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- ASL INWK+31
- SEC
- ROR INWK+31
+ ASL INWK+31            \ The energy bomb is killing this ship, so set bit 7 of
+ SEC                    \ the ship byte #31 to indicate that it has now been
+ ROR INWK+31            \ killed
 
 ENDIF
 

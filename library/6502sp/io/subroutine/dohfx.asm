@@ -13,7 +13,11 @@
 \
 \ Arguments:
 \
-\   A                   The new value of the hyperspace effect flag
+\   A                   The new value of the hyperspace effect flag:
+\
+\                         * 0 = no colour effect
+\
+\                         * Non-zero = enable hyperspace colour effect
 \                       
 \ ******************************************************************************
 

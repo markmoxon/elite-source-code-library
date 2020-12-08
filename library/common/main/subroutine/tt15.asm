@@ -10,6 +10,12 @@
 \ For all views except the Short-range Chart, the centre is drawn 24 pixels to
 \ the right of the y-coordinate given.
 \
+IF _6502SP_VERSION
+\ The crosshairs are drawn in colour 3, which is white in the chart view and
+\ cyan elsewhere. We can draw them in the current colour by calling the TT15b
+\ entry point.
+\
+ENDIF
 \ Arguments:
 \
 \   QQ19                The pixel x-coordinate of the centre of the crosshairs
@@ -18,14 +24,20 @@
 \
 \   QQ19+2              The size of the crosshairs
 \
+IF _6502SP_VERSION
+\ Other entry points:
+\
+\   TT15b               Draw the crosshairs in the current colour
+ENDIF
 \ ******************************************************************************
 
 .TT15
 
 IF _6502SP_VERSION
 
- LDA #CYAN
- JSR DOCOL
+ LDA #CYAN              \ Send a #SETCOL CYAN command to the I/O processor to
+ JSR DOCOL              \ switch to colour 3, which is white in the chart view
+                        \ and cyan elsewhere
 
 .TT15b
 
@@ -46,9 +58,12 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDX QQ11
- BPL TT178
- LDA #0
+ LDX QQ11               \ If the current view is not the Short-range Chart,
+ BPL TT178              \ which is the only view with bit 7 set, then jump to
+                        \ TT178 to skip the following instruction
+
+ LDA #0                 \ This is the Short-range Chart, so set A to 0, so the
+                        \ crosshairs can go right up against the screen edges
 
 .TT178
 
@@ -102,8 +117,13 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- BCC TT85
- LDA #255
+ BCC TT85               \ If the above addition didn't overflow, then A is
+                        \ correct, so jump to TT85 to skip the next instruction
+
+ LDA #255               \ The addition overflowed, so set A to 255 so the
+                        \ crosshairs don't spill out of the right of the screen
+                        \ (as 255 is the x-coordinate of the rightmost pixel
+                        \ on-screen)
 
 .TT85
 
@@ -126,9 +146,9 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- STA XX15+3
+ STA XX15+3             \ Set XX15+3 (Y2) = crosshairs y-coordinate + indent
 
- JSR LL30               \ Draw a horizontal line from (X1, Y1) to (X2, Y1),
+ JSR LL30               \ Draw a line from (X1, Y1) to (X2, Y2), where Y1 = Y2,
                         \ which will draw from the left edge of the crosshairs
                         \ to the right edge, through the centre of the
                         \ crosshairs

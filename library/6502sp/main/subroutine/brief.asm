@@ -4,9 +4,10 @@
 
 .BRIEF
 
- LSR TP
+ LSR TP                 \ Set bit 0 of TP to indicate mission 1 is in progress
  SEC
  ROL TP
+
  JSR BRIS
  JSR ZINF
  LDA #CON

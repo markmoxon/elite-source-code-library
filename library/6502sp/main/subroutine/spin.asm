@@ -12,6 +12,11 @@
 \   Y                   The type of cargo to consider spawning (typically #PLT
 \                       or #OIL)
 \
+\ Other entry points:
+\
+\   SPIN2               Remove any randomness: spawn cargo of a specific type
+\                       (given in X), and always spawn the number given in A
+\
 \ ******************************************************************************
 
 .SPIN

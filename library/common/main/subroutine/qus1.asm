@@ -32,15 +32,19 @@ ENDIF
 
 IF _6502SP_VERSION
 
- PHA
+ PHA                    \ Store A on the stack so we can restore it after the
+                        \ call to GTDRV
+
  JSR GTDRV
+
  STA INWK+1
  PLA
  BCS QUR
  PHA
  LDA #&FF
  JSR DODOSVN
- PLA
+
+ PLA                    \ Restore A from the stack
 
 ENDIF
 

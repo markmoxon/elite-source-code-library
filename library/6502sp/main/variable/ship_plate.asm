@@ -9,7 +9,8 @@
 
 .SHIP_PLATE
 
- EQUB &80               \ Max. canisters on demise = 0
+ EQUB 0 + (8 << 4)      \ Max. canisters on demise = 0
+                        \ Market item when scooped = 8 + 1 = 9 (Alloys)
  EQUW 10 * 10           \ Targetable area          = 10 * 10
  EQUB &2C               \ Edges data offset (low)  = &002C
  EQUB &3C               \ Faces data offset (low)  = &003C

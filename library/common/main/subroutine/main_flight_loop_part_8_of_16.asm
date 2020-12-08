@@ -35,17 +35,30 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- CPX #OIL
- BEQ oily
- LDY #0
+ CPX #OIL               \ If this is a cargo canister, jump to oily to randomly
+ BEQ oily               \ decide the canister's contents
+
+ LDY #0                 \ Fetch byte #0 of the ship's blueprint
  LDA (XX0),Y
+
+ LSR A                  \ Shift it right four times, so A now contains the high
+ LSR A                  \ nibble (i.e. bits 4-7)
  LSR A
  LSR A
- LSR A
- LSR A
- BEQ MA58
- ADC #1
- BNE slvy2
+
+ BEQ MA58               \ If A = 0, jump to MA58 to skip all the docking and
+                        \ scooping checks
+
+                        \ Only the Thargon, alloy plate, splinter and escape pod
+                        \ have non-zero upper nibbles in their blueprint byte #0
+                        \ so if we get here, our ship is one of those, and the
+                        \ upper nibble gives the market item number of the item
+                        \ when scooped, less 1
+
+ ADC #1                 \ Add 1 to the upper nibble to get the market item
+                        \ number
+
+ BNE slvy2              \ Skip to slvy2 so we scoop the ship as a market item
 
 ENDIF
 
@@ -108,7 +121,7 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- ASL NEWB
+ ASL NEWB               \ Set bit 7 of the ship's NEWB
  SEC
  ROR NEWB
 

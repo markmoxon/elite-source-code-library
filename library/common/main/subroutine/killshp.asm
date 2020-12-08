@@ -81,21 +81,23 @@ IF _6502SP_VERSION
  BNE lll                \ not, jump to lll
 
  LDA TP                 \ We just killed the Constrictor from mission 1, so set
- ORA #%00000010         \ bit 1 of TP
- STA TP
+ ORA #%00000010         \ bit 1 of TP to indicate that we have successfully
+ STA TP                 \ completed mission 1
 
 .lll
 
- CPX #HER
- BEQ blacksuspenders
- CPX #JL
- BCC KS7
- CPX #JH
- BCS KS7
+ CPX #HER               \ Did we just kill a rock hermit? If we did, jump to
+ BEQ blacksuspenders    \ blacksuspenders
+
+ CPX #JL                \ If JL <= X < JH, i.e. the type of ship we killed in X 
+ BCC KS7                \ is junk (escape pod, alloy plate, cargo canister,
+ CPX #JH                \ asteroid, splinter, shuttle or transporter), then keep
+ BCS KS7                \ going, otherwise jump to KS7
 
 .blacksuspenders
 
- DEC JUNK
+ DEC JUNK               \ We just killed junk, or a rock hermit, so decrease the
+                        \ junk counter
 
 .KS7
 
@@ -185,8 +187,11 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- BNE P%+5
- JMP KS2
+ BNE P%+5               \ If the slot we just shuffled down is not empty, then
+                        \ skip the following instruction
+
+ JMP KS2                \ The source slot is empty and we are done shuffling,
+                        \ so jump to KS2 to move on to processing missiles
 
 ENDIF
 
@@ -253,18 +258,28 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDY #36
- LDA (SC),Y
- STA (INF),Y
- DEY
+ LDY #36                \ We are going to be using Y as a counter for the 37
+                        \ bytes of ship data we want to copy from the source
+                        \ to the destination, so we set it to 36 to start things
+                        \ off, and will decrement Y for each byte we copy
+
+ LDA (SC),Y             \ Fetch byte #36 of the source's ship data block at SC,
+ STA (INF),Y            \ and store it in byte #36 of the destination's block
+ DEY                    \ at INF, so that's the ship's NEWB copied from the
+                        \ source to the destination. One down, quite a few to
+                        \ go...
 
 ENDIF
 
  LDA (SC),Y             \ Fetch byte #35 of the source's ship data block at SC,
  STA (INF),Y            \ and store it in byte #35 of the destination's block
                         \ at INF, so that's the ship's energy copied from the
+IF _CASSETTE_VERSION
                         \ source to the destination. One down, quite a few to
                         \ go...
+ELIF _6502SP_VERSION
+                        \ source to the destination
+ENDIF
 
  DEY                    \ Fetch byte #34 of the source ship, which is the
  LDA (SC),Y             \ high byte of the source ship's line heap, and store

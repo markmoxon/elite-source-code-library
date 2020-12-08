@@ -49,7 +49,10 @@
 
 IF _6502SP_VERSION
 
- JSR DOVDU19
+ JSR DOVDU19            \ Send a #SETVDU19 0 command to the I/O processor to
+                        \ switch to the mode 1 palette for the space view,
+                        \ which is yellow (colour 1), red (colour 2) and cyan
+                        \ (colour 3)
 
 ENDIF
 
@@ -81,8 +84,8 @@ ENDIF
 
 IF _6502SP_VERSION
 
- LDA #YELLOW
- JSR DOCOL
+ LDA #YELLOW            \ Send a #SETCOL YELLOW command to the I/O processor to
+ JSR DOCOL              \ switch to colour 1, which is yellow in the space view
 
 ENDIF
 
@@ -103,7 +106,9 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- JSR TT15b
+ JSR TT15b              \ Call TT15b to draw crosshairs of size 20 just to the
+                        \ left of the middle of the screen, in the current
+                        \ colour (yellow)
 
 ENDIF
 
@@ -119,7 +124,10 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- JMP TT15b
+ JMP TT15b              \ Call TT15b to draw crosshairs of size 10 at the same
+                        \ location, which will remove the centre part from the
+                        \ laser crosshairs, leaving a gap in the middle, and
+                        \ return from the subroutine using a tail call
 
 ENDIF
 

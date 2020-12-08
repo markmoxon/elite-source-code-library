@@ -58,8 +58,8 @@ ELIF _6502SP_VERSION
  BNE LASLI-1            \ then jump to MA9 to return from the main flight loop
                         \ (as LASLI-1 is an RTS)
 
-  LDA #RED
-  JSR DOCOL
+ LDA #RED               \ Send a #SETCOL RED command to the I/O processor to
+ JSR DOCOL              \ switch to colour 2, which is red in the space view
 
 ENDIF
 

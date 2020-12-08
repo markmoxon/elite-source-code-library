@@ -143,10 +143,12 @@
 
 IF _6502SP_VERSION
 
- LDA SWAP
- BEQ noswap
- LDA X1
- LDY X2
+ LDA SWAP               \ If SWAP = 0, then we didn't have to swap the line
+ BEQ noswap             \ coordinates around during the clipping process, so
+                        \ jump to noswap to skip the following swap
+
+ LDA X1                 \ Otherwise the coordinates were swapped above,
+ LDY X2                 \ so we swap (X1, Y1) and (X2, Y2) back again
  STA X2
  STY X1
  LDA Y1

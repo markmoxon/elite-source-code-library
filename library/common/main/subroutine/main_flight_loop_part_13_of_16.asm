@@ -39,7 +39,7 @@ IF _CASSETTE_VERSION
 
  LDA #%00110000         \ Set the palette byte at SHEILA &21 to map logical
  STA VIA+&21            \ colour 0 to physical colour 7 (white), but with only
-                        \ one mapping (rather than the 7 mappings requires to
+                        \ one mapping (rather than the 7 mappings required to
                         \ do the mapping properly). This makes the space screen
                         \ flash with black and white stripes. See p.382 of the
                         \ Advanced User Guide for details of why this single
@@ -47,10 +47,14 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA #DOFE21
- JSR OSWRCH
- LDA #&30
- JSR OSWRCH
+ LDA #DOFE21            \ Send a #DOFE21 %00110000 command to the I/O processor
+ JSR OSWRCH             \ to map logical colour 0 to physical colour 7 (white),
+ LDA #%00110000         \ but with only one mapping (rather than the 7
+ JSR OSWRCH             \ mappings required to do the mapping properly). This
+                        \ makes the space screen flash with coloured stripes.
+                        \ See p.382 of the Advanced User Guide for details of
+                        \ why this single palette change creates a special
+                        \ effect
 
 ENDIF
 

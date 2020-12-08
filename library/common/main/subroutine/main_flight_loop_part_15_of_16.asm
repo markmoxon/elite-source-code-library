@@ -28,8 +28,9 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA MJ
- BNE MA23S
+ LDA MJ                 \ If we are in witchspace, jump down to MA23S to skip
+ BNE MA23S              \ the following, as there are no planets or suns to
+                        \ bump into in witchspace
 
 ENDIF
 
@@ -108,12 +109,16 @@ ENDIF
 
 IF _6502SP_VERSION
 
- CMP #15
- BNE MA33
- LDA auto
- BEQ MA23
- LDA #123
- BNE MA34
+ CMP #15                \ If this is the 15th iteration in this block of 32,
+ BNE MA33               \ do the following, otherwise jump to MA33 to skip the
+                        \ docking computer manoeuvring
+
+ LDA auto               \ If auto is zero, then the docking computer is not
+ BEQ MA23               \ activated, so jump to MA33 to skip the
+                        \ docking computer manoeuvring
+
+ LDA #123               \ Set A = 123 and jump down to MA34 to print token 123
+ BNE MA34               \ ("DOCKING COMPUTERS ON") as an in-flight message
 
 .MA33
 
@@ -199,11 +204,11 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA #160
+ LDA #160               \ Set A to token 160 ("FUEL SCOOPS ON")
 
 .MA34
 
- JSR MESS
+ JSR MESS               \ Print the token in A as an in-flight message
 
 ENDIF
 

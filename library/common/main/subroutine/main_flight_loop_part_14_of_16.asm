@@ -108,15 +108,15 @@
 
 IF _CASSETTE_VERSION
 
- LDA QQ11               \ If the current view is a space view, call WPLS to
- BNE P%+5               \ remove the sun from the screen, as we can't have both
- JSR WPLS               \ the sun and the space station at the same time
-
-ELIF _6502SP_VERSION
-
- JSR WPLS
+ LDA QQ11               \ If the current view is not a space view, skip the
+ BNE P%+5               \ following instruction (so we only remove the sun from
+                        \ the screen if we are potentially looking at it)
 
 ENDIF
+
+ JSR WPLS               \ Call WPLS to remove the sun from the screen, as we
+                        \ can't have both the sun and the space station at the
+                        \ same time
 
  JSR NWSPS              \ Add a new space station to our local bubble of
                         \ universe

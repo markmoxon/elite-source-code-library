@@ -47,15 +47,24 @@ ELIF _6502SP_VERSION
 
 .notneed
 
- LDA (XX19)
- CMP #5
- BCC nolines
- LDA #&81
- JSR OSWRCH
-\ CLEAR LINEstr
- LDY #0
- LDA (XX19),Y
- STA XX20
+ LDA (XX19)             \ Fetch the first byte from the ship line heap into A,
+                        \ which contains the number of bytes in the heap
+
+ CMP #5                 \ If the heap size is less than 5, there is nothing to
+ BCC nolines            \ draw, so return from the subroutine (as nolines
+                        \ contains an RTS)
+
+ LDA #&81               \ Send an OSWRCH &81 command to the I/O processor to
+ JSR OSWRCH             \ tell it to start receiving a new line to draw (so
+                        \ when we send it OSWRCH commands from now on, the I/O
+                        \ processor will add these bytes to this line until
+                        \ they are all sent, at which point it will draw the
+                        \ line)
+
+ LDY #0                 \ Fetch the first byte from the ship line heap into A,
+ LDA (XX19),Y           \ which contains the number of bytes in the heap
+
+ STA XX20               \ Store the heap size in XX20
 
 ENDIF
 
@@ -85,8 +94,8 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA (XX19),Y
- JSR OSWRCH
+ LDA (XX19),Y           \ Fetch the Y-th line coordinate from the heap and send
+ JSR OSWRCH             \ it to the I/O processor to add to the line buffer
 
 ENDIF
 
@@ -100,6 +109,10 @@ IF _CASSETTE_VERSION
 \LL82                   \ This label is commented out in the original source
 
 ELIF _6502SP_VERSION
+
+                        \ By the time we get here, we have sent all the line
+                        \ coordinates to the I/O processor, so it will have
+                        \ drawn the line after we sent the last one
 
 .nolines
 

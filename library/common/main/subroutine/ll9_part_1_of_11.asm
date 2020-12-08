@@ -64,10 +64,14 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDX TYPE
- BMI LL25
- LDA shpcol,X
- JSR DOCOL
+ LDX TYPE               \ If the ship type is negative then this indicates a
+ BMI LL25               \ planet or sun, so jump to PLANET via LL25 above
+
+ LDA shpcol,X           \ Set A to the ship colour for this type, from the X-th
+                        \ entry in the shpcol table
+
+ JSR DOCOL              \ Send a #SETCOL command to the I/O processor to switch
+                        \ to this colour
 
 ENDIF
 
@@ -78,8 +82,9 @@ ENDIF
 
 IF _6502SP_VERSION
 
- LDA NEWB
- BMI EE51
+ LDA NEWB               \ If bit 7 of the ship's NEWB is set, then the ship
+ BMI EE51               \ is already on-screen, so jump down to EE51 to redraw
+                        \ its wireframe, which removes it from the screen
 
 ENDIF
 

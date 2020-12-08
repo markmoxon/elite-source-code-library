@@ -12,7 +12,8 @@
 IF _CASSETTE_VERSION
  EQUB 0                 \ Max. canisters on demise = 0
 ELIF _6502SP_VERSION
- EQUB 32                \ Max. canisters on demise = 32
+ EQUB 0 + (2 << 4)      \ Max. canisters on demise = 0
+                        \ Market item when scooped = 2 + 1 = 3 (Slaves)
 ENDIF
  EQUW 16 * 16           \ Targetable area          = 16 * 16
  EQUB &2C               \ Edges data offset (low)  = &002C

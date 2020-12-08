@@ -89,10 +89,16 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA QQ11
- BNE oh
- JSR STARS
- JMP PBFL
+ LDA QQ11               \ If this is not a space view (i.e. QQ11 is non-zero)
+ BNE oh                 \ then jump to oh to return from the main flight loop
+                        \ (as oh is an RTS)
+
+ JSR STARS              \ This is a space view, so call the STARS routine to
+                        \ process the stardust
+
+ JMP PBFL               \ And call PBFL to ask the I/O processor to draw the
+                        \ dust particles, returning from the main flight loop
+                        \ using a tail call
 
 ENDIF
 

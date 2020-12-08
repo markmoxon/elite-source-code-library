@@ -120,8 +120,10 @@ IF _6502SP_VERSION
 
 .TN10
 
- CLC
- RTS
+ CLC                    \ Clear the C flag to indicate the ship is not in our
+                        \ crosshairs
+
+ RTS                    \ Return from the subroutine
 
 ENDIF
 

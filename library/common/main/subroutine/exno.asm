@@ -38,11 +38,24 @@
 
 IF _6502SP_VERSION
 
- LDA INWK+8
- ASL A
- BEQ P%+5
- LDA #0
- EQUB &2C
+ LDA INWK+8             \ Fetch z_sign, the distance of the ship being hit in
+ ASL A                  \ terms of the z-axis (in and out of the screen), and
+                        \ shift it left by 1 to get rid of the sign bit
+
+ BEQ P%+5               \ If the result is 0, skip the next two instructions
+                        \ so that we load A with z_hi below
+
+ LDA #0                 \ Set A = 0
+
+ EQUB &2C               \ Skip the next instruction by turning it into
+                        \ &2C &A5 &4C, or BIT &4CA5, which does nothing apart
+                        \ from affect the flags
+
+                        \ So, by this point, if any of bits 0-6 of z_sign are
+                        \ non-zero, which means the ship is a long way away,
+                        \ then A will be set to 0 rather than z_hi, and the
+                        \ SOUND amplitude below will be -15 (%11110001), or
+                        \ full volume... which seems a little odd
 
 ENDIF
 
@@ -65,8 +78,9 @@ ENDIF
                         \ 4-7 in A, and keep bits 1-3 from the above to get
                         \ a value between -15 (%11110001) and -1 (%11111111),
                         \ with lower values of z_hi and argument X leading
-                        \ to a more negative number (so the closer the ship or
-                        \ the smaller the value of X, the louder the sound)
+                        \ to a more negative, or quieter number (so the closer
+                        \ the ship, i.e. the smaller the value of X, the louder
+                        \ the sound)
 
  STA XX16+2             \ The amplitude byte of the sound block in XX16 is in
                         \ byte #3 (where it's the low byte of the amplitude), so

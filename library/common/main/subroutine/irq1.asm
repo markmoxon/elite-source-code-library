@@ -134,9 +134,9 @@ ENDIF
 
 IF _CASSETTE_VERSION
 
- LDA ESCP               \ If escape pod fitted, jump to VNT1 to set the mode 5
- BNE VNT1               \ palette differently (so the dashboard is a different
-                        \ colour if we have an escape pod)
+ LDA ESCP               \ If an escape pod is fitted, jump to VNT1 to set the
+ BNE VNT1               \ mode 5 palette differently (so the dashboard is a
+                        \ different colour if we have an escape pod)
 
  LDA TVT1,Y             \ Copy the Y-th palette byte from TVT1 to SHEILA &21
  STA VIA+&21            \ to map logical to actual colours for the bottom part
@@ -158,9 +158,10 @@ ELIF _6502SP_VERSION
  EOR #&34               \ Set A = &30 if we have an escape pod fitted, or &34 if
                         \ we don't
 
- STA &FE21              \ Store A in SHEILA &21 to map logical colour 3 to
-                        \ actual colour 0 (black) if we have an escape pod
-                        \ fitted, or actual colour 4 (blue) if we don't
+ STA &FE21              \ Store A in SHEILA &21 to map colour 3 (#YELLOW2) to
+                        \ white if we have an escape pod fitted, or yellow if we
+                        \ don't, so the outline colour of the dashboard changes
+                        \ from yellow to white if we have an escape pod fitted
 
                         \ The following loop copies bytes #15 to #1 from TVT1 to
                         \ SHEILA &21, but not byte #0, as we just did that

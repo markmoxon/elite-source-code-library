@@ -139,30 +139,50 @@ ELIF _6502SP_VERSION
  ADC #CYL2              \ we will use to determine the type of ship
  TAY
 
- JSR THERE
- BCC NOCON
+ JSR THERE              \ Call THERE to see if we are in the Constrictor's
+                        \ system in mission 1
+
+ BCC NOCON              \ If the C flag is clear then we are not in the
+                        \ Constrictor's system, so skip to NOCON
+
  LDA #&F9
  STA INWK+32
- LDA TP
- AND #3
- LSR A
- BCC NOCON
- ORA MANY+CON
- BEQ YESCON
+
+ LDA TP                 \ Fetch bits 0 and 1 of TP which contain the status of
+ AND #%00000011         \ mission 1
+
+ LSR A                  \ Shift bit 0 into the C flag
+
+ BCC NOCON              \ If bit 0 is clear, skip to NOCON as we are not
+                        \ currently doing mission 1
+
+ ORA MANY+CON           \ Bit 0 of A is set if we have already completed mission
+                        \ 1, so this OR will be non-zero if we have either
+                        \ completed mission 1, or there is already a Constrictor
+                        \ in our local bubble of universe
+
+ BEQ YESCON             \ If A = 0 then we are doing mission 1, we haven't
+                        \ completed it yet, and there is no Constrictor in the
+                        \ vicinity, so jump to YESCON to spawn the Constrictor
+
 
 .NOCON
 
- LDA #4
- STA NEWB
- JSR DORND
- CMP #200
+ LDA #%00000100         \ Set bit 2 of NEWB and clear all other bits, so the
+ STA NEWB               \ ship we are about to spawn is hostile
+
+                        \ We now build the AI flag for this ship in A
+
+ JSR DORND              \ Set A and X to random numbers
+
+ CMP #200               \ First, set the C flag if X >= 200 (22% chance)
 
 ENDIF
 
  ROL A                  \ Set bit 0 of A to the C flag (i.e. there's a 22%
                         \ chance of this ship having E.C.M.)
 
- ORA #%11000000         \ Set bits 6 and 7 of A, so the ship is hostile (bit 6
+ ORA #%11000000         \ Set bits 6 and 7 of A, so the ship is hostile (bit 6)
                         \ and has AI (bit 7)
 
 IF _CASSETTE_VERSION

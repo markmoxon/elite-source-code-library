@@ -12,6 +12,18 @@
 \ four colours on-screen and in Elite colour 0 is always set to black, so each
 \ of the palettes in this table defines the three other colours (1 to 3).
 \
+\ There is some consistency between the palettes:
+\
+\   * Colour 0 is always black
+\   * Colour 1 (#YELLOW) is always yellow
+\   * Colour 2 (#RED) is normally red-like (i.e. red or magenta)
+\              ... except in the title screen palette, when it is white
+\   * Colour 3 (#CYAN) is always cyan-like (i.e. white or cyan)
+\
+\ The configuration variables of #YELLOW, #RED and #CYAN are a bit misleading,
+\ but if you think of them in terms of hue rather than specific colours, they
+\ work reasonably well (outside of the title screen palette, anyway).
+\
 \ The palettes are set in the IRQ1 handler that implements the split screen
 \ mode, and can be changed by the parasite sending a #SETVDU19 <offset> command
 \ to point to the offset of the new palette in this table.
@@ -35,37 +47,41 @@
 
  EQUB &00, &34          \ 1 = yellow, 2 = red, 3 = cyan (space view)
  EQUB &24, &17          \
- EQUB &74, &64          \ Set with a #SETVDU19 0 command
- EQUB &57, &47
- EQUB &B1, &A1
- EQUB &96, &86
- EQUB &F1, &E1
- EQUB &D6, &C6
+ EQUB &74, &64          \ Set with a #SETVDU19 0 command, after which:
+ EQUB &57, &47          \
+ EQUB &B1, &A1          \   #YELLOW = yellow
+ EQUB &96, &86          \   #RED    = red
+ EQUB &F1, &E1          \   #CYAN   = cyan
+ EQUB &D6, &C6          \   #GREEN  = cyan/yellow stripe
+                        \   #WHITE  = cyan/red stripe
 
- EQUB &00, &34          \ 1 = yellow, 2 = red, 3 = white (charts)
+ EQUB &00, &34          \ 1 = yellow, 2 = red, 3 = white (chart view)
  EQUB &24, &17          \
- EQUB &74, &64          \ Set with a #SETVDU19 16 command
- EQUB &57, &47
- EQUB &B0, &A0
- EQUB &96, &86
- EQUB &F0, &E0
- EQUB &D6, &C6
+ EQUB &74, &64          \ Set with a #SETVDU19 16 command, after which:
+ EQUB &57, &47          \
+ EQUB &B0, &A0          \   #YELLOW = yellow
+ EQUB &96, &86          \   #RED    = red
+ EQUB &F0, &E0          \   #CYAN   = white
+ EQUB &D6, &C6          \   #GREEN  = white/yellow stripe
+                        \   #WHITE  = white/red stripe
 
  EQUB &00, &34          \ 1 = yellow, 2 = white, 3 = cyan (title screen)
  EQUB &24, &17          \
- EQUB &74, &64          \ Set with a #SETVDU19 32 command
- EQUB &57, &47
- EQUB &B1, &A1
- EQUB &90, &80
- EQUB &F1, &E1
- EQUB &D0, &C0
+ EQUB &74, &64          \ Set with a #SETVDU19 32 command, after which:
+ EQUB &57, &47          \
+ EQUB &B1, &A1          \   #YELLOW = yellow
+ EQUB &90, &80          \   #RED    = white
+ EQUB &F1, &E1          \   #CYAN   = cyan
+ EQUB &D0, &C0          \   #GREEN  = cyan/yellow stripe
+                        \   #WHITE  = cyan/white stripe
 
- EQUB &00, &34          \ 1 = yellow, 2 = magenta, 3 = white (trading)
+ EQUB &00, &34          \ 1 = yellow, 2 = magenta, 3 = white (trade view)
  EQUB &24, &17          \
- EQUB &74, &64          \ Set with a #SETVDU19 48 command
- EQUB &57, &47
- EQUB &B0, &A0
- EQUB &92, &82
- EQUB &F0, &E0
- EQUB &D2, &C2
+ EQUB &74, &64          \ Set with a #SETVDU19 48 command, after which:
+ EQUB &57, &47          \
+ EQUB &B0, &A0          \   #YELLOW = yellow
+ EQUB &92, &82          \   #RED    = magenta
+ EQUB &F0, &E0          \   #CYAN   = white
+ EQUB &D2, &C2          \   #GREEN  = white/yellow stripe
+                        \   #WHITE  = white/magenta stripe
 

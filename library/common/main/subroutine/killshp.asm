@@ -58,7 +58,7 @@ ELIF _6502SP_VERSION
 
  LDY #GREEN2            \ Otherwise we need to remove our missile lock, so call
  JSR ABORT              \ ABORT to disarm the missile and update the missile
-                        \ indicators on the dashboard to green/cyan (Y = &EE)
+                        \ indicators on the dashboard to green (Y = #GREEN2)
 
 ENDIF
 
@@ -77,10 +77,11 @@ ENDIF
 
 IF _6502SP_VERSION
 
- CPX #CON
- BNE lll
- LDA TP
- ORA #2
+ CPX #CON               \ Did we just kill the Constrictor from mission 1? If
+ BNE lll                \ not, jump to lll
+
+ LDA TP                 \ We just killed the Constrictor from mission 1, so set
+ ORA #%00000010         \ bit 1 of TP
  STA TP
 
 .lll

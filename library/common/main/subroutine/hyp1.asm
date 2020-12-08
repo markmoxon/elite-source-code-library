@@ -48,13 +48,21 @@
 
 IF _CASSETTE_VERSION
 
- LDA QQ15,X             \ Copy the X-th byte in QQ15 to the X-th byte in QQ2,
- STA QQ2,X
+ LDA QQ15,X             \ Copy the X-th byte in QQ15 to the X-th byte in QQ2, to
+ STA QQ2,X              \ update the selected system to the new one. Note that
+                        \ this approach has a minor bug associated with it: if
+                        \ your hyperspace counter hits 0 just as you're docking,
+                        \ then you will magically appear in the station in your
+                        \ hyperspace destination, without having to go to the
+                        \ effort of actually flying there. This bug was fixed in
+                        \ later versions by saving the destination seeds in a
+                        \ separate location called safehouse, and using those
+                        \ instead... but that isn't the case in this version
 
 ELIF _6502SP_VERSION
 
- LDA safehouse,X
- STA QQ2,X
+ LDA safehouse,X        \ Copy the X-th byte in safehouse to the X-th byte in
+ STA QQ2,X              \ QQ2
 
 ENDIF
 

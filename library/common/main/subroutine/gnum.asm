@@ -31,8 +31,8 @@
 
 IF _6502SP_VERSION
 
- LDA #MAGENTA
- JSR DOCOL
+ LDA #MAGENTA           \ Send a #SETCOL MAGENTA command to the I/O processor to
+ JSR DOCOL              \ switch to colour 2, which is magenta in the trade view
 
 ENDIF
 

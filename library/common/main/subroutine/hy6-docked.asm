@@ -36,17 +36,20 @@ IF _CASSETTE_VERSION
  STA XC                 \ screen), setting A to 15 at the same time for the
                         \ following call to TT27
 
- JMP TT27               \ Print recursive token 129 ("sentence case}DOCKED") and
-                        \ return from the subroutine using a tail call
+ JMP TT27               \ Print recursive token 129 ("{sentence case}DOCKED")
+                        \ and return from the subroutine using a tail call
 
 ELIF _6502SP_VERSION
 
- LDA #15
+ LDA #15                \ Move the text cursor to column 15
  JSR DOXC
- LDA #RED
- JSR DOCOL
- LDA #205
- JMP DETOK
+
+ LDA #RED               \ Send a #SETCOL RED command to the I/O processor to
+ JSR DOCOL              \ switch to colour 2, which is magenta in the trade view
+                        \ or red in the chart view
+
+ LDA #205               \ Print recursive token 205 ("DOCKED") and return from
+ JMP DETOK              \ the subroutine using a tail call
 
 ENDIF
 

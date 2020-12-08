@@ -10,6 +10,12 @@
 \ Start the hyperspace countdown (for both inter-system hyperspace and the
 \ galactic hyperdrive).
 \
+IF _6502SP_VERSION
+\ Other entry points:
+\
+\   wW2                 Start the hyperspace countdown, starting the countdown
+\                       from the value in A
+ENDIF
 \ ******************************************************************************
 
 .wW

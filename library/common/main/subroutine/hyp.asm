@@ -23,6 +23,12 @@
 \ and if all the pre-jump checks are passed, we print the destination on-screen
 \ and start the countdown.
 \
+IF _6502SP_VERSION
+\ Other entry points:
+\
+\   TTX111              Used to rejoin this routine from the call to TTX110
+\
+ENDIF
 \ ******************************************************************************
 
 .hyp
@@ -52,10 +58,13 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- BEQ P%+3
- RTS
- LDA #CYAN
- JSR DOCOL
+ BEQ P%+3               \ If it is zero, skip the next instruction
+
+ RTS                    \ The count is non-zero, so return from the subroutine
+
+ LDA #CYAN              \ The count is zero, send a #SETCOL CYAN command to the
+ JSR DOCOL              \ I/O processor to switch to colour 3, which is cyan in
+                        \ the space view
 
 ENDIF
 
@@ -81,27 +90,45 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA QQ11
- BEQ TTX110
- AND #192
- BNE P%+3
- RTS \< = Ian = >
- JSR hm
+ LDA QQ11               \ If the current view is 0 (i.e. the space view) then
+ BEQ TTX110             \ jump to TTX110, which calls TT111 to set the current
+                        \ system to the nearest system to (QQ9, QQ10), and jumps
+                        \ back into this routine at TTX111 below
+
+ AND #%11000000         \ If either bits 6 or 7 of the view number are set - so
+ BNE P%+3               \ this is either the Short-range or Long-range Chart -
+                        \ then skip the following instruction
+
+ RTS                    \ This is not a chart view, so return from the
+                        \ subroutine
+
+ JSR hm                 \ This is a chart view, so call hm to redraw the chart
+                        \ crosshairs
 
 .TTX111
 
- LDA QQ8
- ORA QQ8+1
- BNE P%+3
- RTS
- LDX #5
+                        \ If we get here then the current view is either the
+                        \ space view or a chart
+
+ LDA QQ8                \ If either byte of the distance to the selected system
+ ORA QQ8+1              \ in QQ8 are zero, skip the next instruction to make a
+ BNE P%+3               \ copy of the destination seeds in safehouse
+
+ RTS                    \ The selected system is the same as the current system,
+                        \ so return from the subroutine
+
+ LDX #5                 \ We now want to copy those seeds into safehouse, so we
+                        \ so set a counter in Xto copy 6 bytes
 
 .sob
 
- LDA QQ15,X
- STA safehouse,X
- DEX
- BPL sob
+ LDA QQ15,X             \ Copy the X-th byte of QQ15 into the X-th byte of
+ STA safehouse,X        \ safehouse
+
+ DEX                    \ Decrement the loop counter
+
+ BPL sob                \ Loop back to copy the next byte until we have copied
+                        \ all six seed bytes
 
  LDA #7                 \ Move the text cursor to column 7, row 23 (in the
  JSR DOXC               \ middle of the bottom text row)
@@ -121,7 +148,7 @@ IF _CASSETTE_VERSION
  LDA QQ8+1              \ If the high byte of the distance to the selected
  BNE TT147              \ system in QQ8 is > 0, then it is definitely too far to
                         \ jump (as our maximum range is 7.0 light years, or a
-                        \ value of 70 in QQ8(1 0), so jump to TT147 to print
+                        \ value of 70 in QQ8(1 0)), so jump to TT147 to print
                         \ "RANGE?" and return from the subroutine using a tail
                         \ call
 
@@ -134,16 +161,23 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA QQ8+1
- BNE goTT147
+ LDA QQ8+1              \ If the high byte of the distance to the selected
+ BNE goTT147            \ system in QQ8 is > 0, then it is definitely too far to
+                        \ jump (as our maximum range is 7.0 light years, or a
+                        \ value of 70 in QQ8(1 0)), so jump to goTT147 below
 
- LDA QQ14
- CMP QQ8
- BCS P%+5
+ LDA QQ14               \ Fetch our current fuel level from Q114 into A
+
+ CMP QQ8                \ If our fuel reserves are greater then or equal to the
+ BCS P%+5               \ distance to the selected system, then we have enough
+                        \ fuel for this jump, so skip the following instruction
+                        \ to start the hyperspace countdown
 
 .goTT147
 
- JMP TT147
+ JMP TT147              \ We don't have enough fuel to reach the destination, so
+                        \ jump to TT147 to print "RANGE?" and return from the
+                        \ subroutine using a tail call
 
 ENDIF
 
@@ -152,6 +186,5 @@ ENDIF
 
  JSR cpl                \ Call cpl to print the name of the selected system
 
-                        \ Fall through into wW to start the hyperspace
-                        \ countdown
+                        \ Fall through into wW to start the hyperspace countdown
 

@@ -101,7 +101,7 @@ ENDIF
                         \ and draw a horizontal line at pixel row 19 to box
                         \ in the title
 
- LDA #15                \ Set A to token 129 ("sentence case}DOCKED")
+ LDA #15                \ Set A to token 129 ("{sentence case}DOCKED")
 
 IF _CASSETTE_VERSION
 

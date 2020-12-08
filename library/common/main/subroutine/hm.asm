@@ -36,7 +36,11 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- JMP CLYNS
+ JMP CLYNS              \ Clear the bottom three text rows of the upper screen,
+                        \ and move the text cursor to column 1 on row 21, i.e.
+                        \ the start of the top row of the three bottom rows
+
+                        \ Return from the subroutine using a tail call
 
 ENDIF
 

@@ -45,7 +45,7 @@ IF _CASSETTE_VERSION
  INX                    \ We own a galactic hyperdrive, so X is &FF, so this
                         \ instruction sets X = 0
 
- STX QQ8                \ Set the distance to the selected system in (QQ8+1 QQ8)
+ STX QQ8                \ Set the distance to the selected system in QQ8(1 0)
  STX QQ8+1              \ to 0
 
 ELIF _6502SP_VERSION
@@ -71,8 +71,8 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA #2
- JSR wW2
+ LDA #2                 \ Call wW2 with A = 2 to start the hyperspace countdown,
+ JSR wW2                \ but starting the countdown from 2 
 
 ENDIF
 
@@ -114,17 +114,25 @@ ENDIF
 
 IF _6502SP_VERSION
 
- JSR TT111
- LDX #5
+ JSR TT111              \ Call TT111 to set the current system to the nearest
+                        \ system to (QQ9, QQ10), and put the seeds of the
+                        \ nearest system into QQ15 to QQ15+5
+
+ LDX #5                 \ We now want to copy those seeds into safehouse, so we
+                        \ so set a counter in Xto copy 6 bytes
 
 .dumdeedum
 
- LDA QQ15,X
- STA safehouse,X
- DEX
- BPL dumdeedum
- LDX #0
- STX QQ8
+ LDA QQ15,X             \ Copy the X-th byte of QQ15 into the X-th byte of
+ STA safehouse,X        \ safehouse
+
+ DEX                    \ Decrement the loop counter
+
+ BPL dumdeedum          \ Loop back to copy the next byte until we have copied
+                        \ all six seed bytes
+
+ LDX #0                 \ Set the distance to the selected system in QQ8(1 0)
+ STX QQ8                \ to 0
  STX QQ8+1
 
 ENDIF

@@ -33,9 +33,12 @@ ENDIF
 
 IF _6502SP_VERSION
 
- LDA #YELLOW2
- STA K
- STA K+1
+ LDA #YELLOW2           \ Set K (the colour we should show for high values) to
+ STA K                  \ yellow
+
+ STA K+1                \ Set K+1 (the colour we should show for low values) to
+                        \ yellow, so the fuel indicator always shows in this
+                        \ colour
 
 ENDIF
 
@@ -50,14 +53,16 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- JSR PZW2
+ JSR PZW2               \ Call PZW2 to set A to the colour for dangerous values
+                        \ and X to the colour for safe values, suitable for
+                        \ non-striped indicators
 
 ENDIF
 
  STX K+1                \ Set K+1 (the colour we should show for low values) to
                         \ X (the colour to use for safe values)
 
- STA K                  \ Set K+1 (the colour we should show for high values) to
+ STA K                  \ Set K (the colour we should show for high values) to
                         \ A (the colour to use for dangerous values)
 
                         \ The above sets the following indicators to show red
@@ -82,18 +87,11 @@ ENDIF
                         \ 15 and 16, so this effectively switches off the colour
                         \ change for the altitude indicator
 
-IF _6502SP_VERSION
-
- LDA #YELLOW2
- STA K
-
-ENDIF
+IF _CASSETTE_VERSION
 
  STA K+1                \ Set K+1 (the colour we should show for low values) to
                         \ 240, or &F0 (dashboard colour 2, yellow/white), so the
                         \ altitude indicator always shows in this colour
-
-IF _CASSETTE_VERSION
 
  LDA ALTIT              \ Draw the altitude indicator using a range of 0-255
  JSR DILX
@@ -103,6 +101,13 @@ IF _CASSETTE_VERSION
                         \ subroutine using a tail call
 
 ELIF _6502SP_VERSION
+
+ LDA #YELLOW2           \ Set K (the colour we should show for high values) to
+ STA K                  \ yellow
+
+ STA K+1                \ Set K+1 (the colour we should show for low values) to
+                        \ yellow, so the altitude indicator always shows in this
+                        \ colour
 
  LDA ALTIT              \ Draw the altitude indicator using a range of 0-255,
  JMP DILX               \ returning from the subroutine using a tail call

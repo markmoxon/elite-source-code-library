@@ -34,8 +34,9 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA #32
- JSR TRADEMODE
+ LDA #32                \ Call TRADEMODE to clear the top part of the screen and
+ JSR TRADEMODE          \ set up a printable trading screen with a view type in
+                        \ QQ11 of 32 (Equip Ship screen)
 
  LDA #12                \ Move the text cursor to column 12
  JSR DOXC
@@ -177,17 +178,22 @@ ENDIF
 
 IF _CASSETTE_VERSION
 
- LDX #2                 \ Move the text cursor to column 2 on the next line
+ LDX #2                 \ Move the text cursor to column 2
  STX XC
- INC YC
+
+ INC YC                 \ Move the text cursor down one line
 
 ELIF _6502SP_VERSION
 
- PHA
- LDA #2
+ PHA                    \ Store A on the stack so we can restore it after the
+                        \ following call to DOXC
+
+ LDA #2                 \ Move the text cursor to column 2 
  JSR DOXC
- JSR INCYC
- PLA
+
+ JSR INCYC              \ Move the text cursor down one line
+
+ PLA                    \ Restore A from the stack
 
 ENDIF
 
@@ -224,7 +230,7 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDY #124
+ LDY #124               \ Set Y to recursive token 124 ("ALL")
 
 ENDIF
 
@@ -241,7 +247,10 @@ ENDIF
 
 IF _6502SP_VERSION
 
- LDA #1
+ LDA #1                 \ Set A to 5 as the call to msblob will have overwritten
+                        \ the original value, and we still need it set
+                        \ correctly so we can continue through the conditional
+                        \ statements for all the other equipment
 
 ENDIF
 
@@ -513,10 +522,14 @@ ENDIF
 
 IF _6502SP_VERSION
 
- INY
- CMP #12
- BNE et10
- JSR qv
+ INY                    \ Increment Y to recursive token 117 ("MILITARY  LASER")
+
+ CMP #12                \ If A is not 12 (i.e. the item we've just bought is not
+ BNE et10               \ a military laser), skip to et10
+
+ JSR qv                 \ Print a menu listing the four views, with a "View ?"
+                        \ prompt, and ask for a view number, which is returned
+                        \ in X (which now contains 0-3)
 
  LDA #Armlas            \ Call refund with A set to the power of the new
  JSR refund             \ military laser to install the new laser and process a
@@ -524,10 +537,14 @@ IF _6502SP_VERSION
 
 .et10
 
- INY
- CMP #13
- BNE et11
- JSR qv
+ INY                    \ Increment Y to recursive token 118 ("MINING  LASER")
+
+ CMP #13                \ If A is not 13 (i.e. the item we've just bought is not
+ BNE et11               \ a mining laser), skip to et11
+
+ JSR qv                 \ Print a menu listing the four views, with a "View ?"
+                        \ prompt, and ask for a view number, which is returned
+                        \ in X (which now contains 0-3)
 
  LDA #Mlas              \ Call refund with A set to the power of the new mining
  JSR refund             \ laser to install the new laser and process a refund if

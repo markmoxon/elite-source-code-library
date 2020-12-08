@@ -52,8 +52,8 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- SEC
- LDA Q
+ SEC                    \ Set A = Q - 2, so that A contains the offset of the
+ LDA Q                  \ vertical bar from the start of this character block
  SBC #2
 
 ENDIF

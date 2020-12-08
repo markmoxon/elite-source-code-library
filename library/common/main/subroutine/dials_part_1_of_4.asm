@@ -30,13 +30,18 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA #1
- STA VIA+&4E
- LDA #&A0
- STA SC
- LDA #&71
- STA SC+1
- JSR PZW2
+ LDA #%00000001         \ Set 6522 System VIA interrupt enable register IER
+ STA VIA+&4E            \ (SHEILA &4E) bit 1 (i.e. disable the CA2 interrupt,
+                        \ which comes from the keyboard)
+
+ LDA #&A0               \ Set SC(1 0) = &71A0, which is the screen address for
+ STA SC                 \ the character block containing the left end of the
+ LDA #&71               \ top indicator in the right part of the dashboard, the
+ STA SC+1               \ one showing our speed
+
+ JSR PZW2               \ Call PZW2 to set A to the colour for dangerous values
+                        \ and X to the colour for safe values, suitable for
+                        \ non-striped indicators
 
 ENDIF
 

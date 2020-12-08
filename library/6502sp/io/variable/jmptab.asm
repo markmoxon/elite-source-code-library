@@ -25,7 +25,7 @@
  EQUW CLYNS             \ #clyns     = 135 (&87)     7 = Clear bottom of screen
  EQUW RDPARAMS          \ #RDPARAMS  = 136 (&88)     8 = Reset dashboard params
  EQUW ADPARAMS          \              137 (&89)     9 = Add dashboard parameter
- EQUW DODIALS           \ #DODIALS   = 138 (&8A)    10 = Hide dials on death
+ EQUW DODIALS           \ #DODIALS   = 138 (&8A)    10 = Show or hide dashboard
  EQUW DOVIAE            \ #VIAE      = 139 (&8B)    11 = Set 6522 System VIA IER
  EQUW DOBULB            \ #DOBULB    = 140 (&8C)    12 = Toggle dashboard bulb
  EQUW DOCATF            \ #DOCATF    = 141 (&8D)    13 = Set disc catalogue flag

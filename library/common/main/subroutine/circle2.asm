@@ -156,7 +156,7 @@ IF _6502SP_VERSION
  STZ LSP                \ Reset the ball line heap by setting the ball line heap
                         \ pointer to 0
 
- JSR CIRCLE3            \ Call CIRCLE3 to draw the circle
+ JSR CIRCLE3            \ Call CIRCLE3 to populate the ball line heap
 
                         \ Fall through into LS2FL to send the ball line heap to
                         \ the I/O processor for drawing

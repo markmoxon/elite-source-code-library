@@ -14,12 +14,14 @@
 \
 \   Y                   The number of vertical sync events to wait for
 \
+IF _CASSETTE_VERSION
 \ Other entry points:
 \
 \   DEL8                Wait for 8/50 of a second (0.16 seconds)
 \
 \   DELAY-5             Wait for 2/50 of a second (0.04 seconds).
 \
+ENDIF
 \ ******************************************************************************
 
 IF _CASSETTE_VERSION

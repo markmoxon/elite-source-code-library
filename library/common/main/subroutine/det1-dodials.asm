@@ -2,12 +2,15 @@
 \
 IF _CASSETTE_VERSION
 \       Name: DET1
-ELIF _6502SP_VERSION
-\       Name: DODIALS
-ENDIF
 \       Type: Subroutine
 \   Category: Screen mode
-\    Summary: Hide the dashboard (for when we die)
+\    Summary: Show or hide the dashboard (for when we die)
+ELIF _6502SP_VERSION
+\       Name: DODIALS
+\       Type: Subroutine
+\   Category: Screen mode
+\    Summary: Implement the #DODIALS <rows> command (show or hide the dashboard)
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
@@ -20,7 +23,11 @@ ENDIF
 \
 \ Arguments:
 \
+IF _CASSETTE_VERSION
 \   X                   The number of text rows to display on the screen (24
+ELIF _6502SP_VERSION
+\   A                   The number of text rows to display on the screen (24
+ENDIF
 \                       will hide the dashboard, 31 will make it reappear)
 \
 \ Returns
@@ -37,7 +44,7 @@ ELIF _6502SP_VERSION
 
 .DODIALS
 
- TAX
+ TAX                    \ Copy the number of rows to display into X
 
 ENDIF
 

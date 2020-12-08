@@ -43,11 +43,12 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA #12
+ LDA #12                \ Move the text cursor to column 12 on row 12
  JSR DOYC
  JSR DOXC
- LDA #YELLOW
- JSR DOCOL
+
+ LDA #YELLOW            \ Send a #SETCOL YELLOW command to the I/O processor to
+ JSR DOCOL              \ change the current colour to yellow
 
 ENDIF
 
@@ -99,8 +100,10 @@ ENDIF
 
 IF _6502SP_VERSION
 
- STY LASCT
- LSR LASCT
+ STY LASCT              \ Set the laser count to 127 to act as a counter in the
+ LSR LASCT              \ D2 loop below, so this setting determines how long the
+                        \ death animation lasts (it's 127 iterations of the main
+                        \ flight loop)
 
 ENDIF
 
@@ -113,11 +116,11 @@ IF _CASSETTE_VERSION
 
  PHP                    \ Store the processor flags
 
- LDX #OIL               \ Call fq1 with X set to OIL, which adds a new cargo
+ LDX #OIL               \ Call fq1 with X set to #OIL, which adds a new cargo
  JSR fq1                \ canister to our local bubble of universe and points it
                         \ away from us with double DELTA speed (i.e. 6, as DELTA
                         \ was set to 3 by the call to RES2 above). INF is set to
-                        \ point to the ship's data block in K%
+                        \ point to the canister's ship data block in K%
 
  PLP                    \ Restore the processor flags, including our random C
                         \ flag from before
@@ -135,21 +138,45 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDX #OIL
- LDA XX21-1+2*PLT
- BEQ D3
- BCC D3
- DEX
+ LDX #OIL               \ Set X to #OIL, the ship type for a cargo canister
+
+ LDA XX21-1+2*PLT       \ Fetch the byte from location XX21 - 1 + 2 * PLT, which
+                        \ equates to XX21 + 7 (the high byte of the address of
+                        \ SHIP_PLATE), which seems a bit odd. It would make more
+                        \ sense to do LDA (XX21-2+2*PLT) as this would fetch the
+                        \ first byte of the alloy plate's blueprint (which is a
+                        \ negative value), but there aren't any brackets, so
+                        \ instead this always returns &D0, which is always
+                        \ negative, so we only ever show plate alloys when we
+                        \ die, irrespective of bit 7 in byte #0 of the blueprint
+
+ BEQ D3                 \ If A <= 0, jump to D3 to skip the following
+ BCC D3                 \ instruction
+
+ DEX                    \ Decrement X, which sets it to #PLT, the ship type for
+                        \ an alloy plate
 
 .D3
 
- JSR fq1
- JSR DORND
- AND #128
- LDY #31
- STA (INF),Y
- LDA FRIN+4
- BEQ D1
+ JSR fq1                \ Call fq1 with X set to #OIL or #PLT, which adds a new
+                        \ cargo canister or alloy plate to our local bubble of
+                        \ universe and points it away from us with double DELTA
+                        \ speed (i.e. 6, as DELTA was set to 3 by the call to
+                        \ RES2 above). INF is set to point to the new arrival's
+                        \ ship data block in K%
+
+ JSR DORND              \ Set A and X to random numbers and extract bit 7 from A
+ AND #%10000000
+
+ LDY #31                \ Store this in byte #31 of the ship's data block, so it
+ STA (INF),Y            \ has a 50% chance of marking our new arrival as being
+                        \ killed (so it will explode)
+
+ LDA FRIN+4             \ The call we made to RES2 before we entered the loop at
+ BEQ D1                 \ D1 will have reset all the ship slots at FRIN, so this
+                        \ checks to see if the fifth slot is empty, and if it
+                        \ is we loop back to D1 to add another canister, until
+                        \ we have added five of them
 
 ENDIF
 
@@ -171,16 +198,22 @@ IF _CASSETTE_VERSION
                         \ explained above)
 
  LDX #31                \ Set the screen to show all 31 text rows, which shows
- JSR DET1               \ the dashboard, and fall through into DEATH2 to reset
-                        \ and restart the game
+ JSR DET1               \ the dashboard
+
+                        \ Fall through into DEATH2 to reset and restart the game
 
 ELIF _6502SP_VERSION
 
- DEC LASCT
- BNE D2
- LDX #31
- JSR DET1
- JMP DEATH2
+ DEC LASCT              \ Decrement the counter in LASCT, which we set above
+
+ BNE D2                 \ Loop back to call the main flight loop again, until we
+                        \ have called it 127 times
+
+ LDX #31                \ Set the screen to show all 31 text rows, which shows
+ JSR DET1               \ the dashboard, and fall through into DEATH2 to reset
+                        \ and restart the game
+
+ JMP DEATH2             \ Jump to DEATH2 to reset and restart the game
 
 ENDIF
 

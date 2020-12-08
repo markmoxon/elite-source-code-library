@@ -31,6 +31,7 @@
  TAY                    \ Store the y-coordinate in Y
 
 IF _CASSETTE_VERSION
+
  LSR A                  \ Set A = A / 8, so A now contains the character row we
  LSR A                  \ need to draw in (as each character row contains 8
  LSR A                  \ pixel rows)

@@ -8,7 +8,13 @@
 \
 \ ------------------------------------------------------------------------------
 \
+IF _CASSETTE_VERSION
 \ Draw a single segment of a circle, adding the point to the ball line heap.
+ELIF _6502SP_VERSION
+\ Draw a single segment of a circle by adding the point to the ball line heap,
+\ so it can be sent to the I/O processor for drawing once the whole circle has
+\ been added to the heap.
+ENDIF
 \
 \ Arguments:
 \
@@ -94,7 +100,11 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- BEQ BL5
+ BEQ BL5                \ This is the first call to BLINE, so we don't need to
+                        \ to copy the previous point to XX15 as there isn't one,
+                        \ so we jump to BL5 to tidy up and return from the
+                        \ subroutine (this BEQ is effectively a JMP, as we just
+                        \ incremented FLAG to 0)
 
 ENDIF
 
@@ -159,10 +169,10 @@ IF _CASSETTE_VERSION
  CMP #&FF               \ to skip the following (X1, Y1) code
  BNE BL8
 
-ENDIF
-
                         \ Byte LSP-1 of LSY2 is &FF, which indicates that we
                         \ need to store (X1, Y1) in the heap
+
+ENDIF
 
  LDA X1                 \ Store X1 in the LSP-th byte of LSX2
  STA LSX2,Y

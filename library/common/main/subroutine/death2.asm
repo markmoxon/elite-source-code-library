@@ -11,7 +11,7 @@
 
 IF _6502SP_VERSION
 
- LDX #&FF
+ LDX #&FF               \ Reset the 6502 stack pointer, which clears the stack
  TXS
 
 ENDIF

@@ -25,8 +25,9 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA auto
- BNE cnt2
+ LDA auto               \ If the docking computer is currently activated, jump
+ BNE cnt2               \ to cnt2 to skip the following as we always want to
+                        \ enable damping for the docking computer
 
  LDA DAMP               \ If DAMP is non-zero, then keyboard damping is not
  BNE RE1                \ enabled, so jump to RE1 to return from the subroutine

@@ -74,7 +74,7 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- RTS
+ RTS                    \ Return from the subroutine
 
 ENDIF
 

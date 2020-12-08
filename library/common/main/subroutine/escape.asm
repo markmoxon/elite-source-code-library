@@ -33,9 +33,11 @@ ENDIF
 
 IF _6502SP_VERSION
 
- BCS ES1
- LDX #CYL2
- JSR FRS1
+ BCS ES1                \ If the Cobra was successfully added to the local
+                        \ bubble, jump to ES1 to skip the following instructions
+
+ LDX #CYL2              \ The Cobra wasn't added to the local bubble for some
+ JSR FRS1               \ reason, so try launching a pirate Cobra Mk III instead
 
 .ES1
 
@@ -78,7 +80,8 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA #0
+ LDA #0                 \ Set A = 0 so we can use it to zero the contents of
+                        \ the cargo hold
 
 ENDIF
 
@@ -88,9 +91,18 @@ ENDIF
 
 .ESL2
 
+IF _CASSETTE_VERSION
+
  STA QQ20,X             \ Set the X-th byte of QQ20 to zero (as we know A = 0
                         \ from the BEQ above), so we no longer have any of item
                         \ type X in the cargo hold
+
+ELIF _6502SP_VERSION
+
+ STA QQ20,X             \ Set the X-th byte of QQ20 to zero, so we no longer
+                        \ have any of item type X in the cargo hold
+
+ENDIF
 
  DEX                    \ Decrement the counter
 
@@ -115,7 +127,9 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- JMP GOIN
+ JMP GOIN               \ Go to the docking bay (i.e. show the ship hanger
+                        \ screen) and return from the subroutine with a tail
+                        \ call
 
 ENDIF
 

@@ -21,22 +21,25 @@
 
 IF _CASSETTE_VERSION
 
- LDY #1                 \ Set YC = 1 (first row)
+ LDY #1                 \ Move the text cursor to row 1
  STY YC
 
- DEY                    \ Set XC = 0 (first character)
+ DEY                    \ Move the text cursor to column 0
  STY XC
 
 ELIF _6502SP_VERSION
 
- LDA #RED
- JSR DOCOL
- LDA #1
+ LDA #RED               \ Send a #SETCOL RED command to the I/O processor to
+ JSR DOCOL              \ switch to colour 2, which is red in the space view
+
+ LDA #1                 \ Move the text cursor to column 1 on row 1
  JSR DOXC
  JSR DOYC
- LDY #0
+
+ LDY #0                 \ Set Y = 0 for the high byte in pr6
 
 ENDIF
 
-                        \ Fall through into pr6 to print X to 5 digits
+                        \ Fall through into pr6 to print X to 5 digits, as the
+                        \ high byte in Y is 0
 

@@ -95,15 +95,26 @@ IF _CASSETTE_VERSION
                         \ type's blueprint and stores it in XX0
 
  LDA XX21-1,Y           \ Fetch the high byte of this particular ship type's
- STA XX0+1              \ blueprint and store it in XX0+1
+ STA XX0+1              \ blueprint and store it in XX0+1, so XX0(1 0) now
+                        \ contains the address of this ship's blueprint
 
 ELIF _6502SP_VERSION
 
- LDA XX21-1,Y
- BEQ NW3
- STA XX0+1
- LDA XX21-2,Y
- STA XX0
+ LDA XX21-1,Y           \ The ship blueprints at XX21 start with a lookup
+                        \ table that points to the individual ship blueprints,
+                        \ so this fetches the high byte of this particular ship
+                        \ type's blueprint
+
+ BEQ NW3                \ If the high byte is 0 then this is not a valid ship
+                        \ type, so jump to NW3 to clear the C flag and return
+                        \ from the subroutine
+
+ STA XX0+1              \ This is a valid ship type, so store the high byte in
+                        \ XX0+1
+
+ LDA XX21-2,Y           \ Fetch the low byte of this particular ship type's
+ STA XX0                \ blueprint and store it in XX0, so XX0(1 0) now
+                        \ contains the address of this ship's blueprint
 
 ENDIF
 
@@ -191,8 +202,8 @@ ENDIF
 
  BCC NW3+1              \ If we have an underflow from the subtraction, then
                         \ INF > INWK+33 and we definitely don't have enough
-                        \ room for this ship, so jump to NW3+1, which clears
-                        \ the C flag and returns from the subroutine
+                        \ room for this ship, so jump to NW3+1, which returns
+                        \ from the subroutine (with the C flag already cleared)
 
  BNE NW4                \ If the subtraction of the high bytes in A is not
                         \ zero, and we don't have underflow, then we definitely
@@ -204,8 +215,8 @@ ENDIF
                         \ result (which is in Y) with NI%. This is the same as
                         \ doing INWK+33 - INF > NI% (see above). If this isn't
                         \ true, the C flag will be clear and we don't have
-                        \ enough space, so we jump to NW3+1, which clears the
-                        \ C flag and returns from the subroutine
+                        \ enough space, so we jump to NW3+1, which returns
+                        \ from the subroutine (with the C flag already cleared)
 
 .NW4
 
@@ -241,17 +252,21 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- BMI NW8
- CPX #HER
- BEQ gangbang
- CPX #JL
- BCC NW7
- CPX #JH
- BCS NW7
+ BMI NW8                \ If the ship type is negative (planet or sun), then
+                        \ jump to NW8 to skip the following instructions
+
+ CPX #HER               \ If the ship type is a rock hermit, jump to gangbang
+ BEQ gangbang           \ to increase the junk count
+
+ CPX #JL                \ If JL <= X < JH, i.e. the type of ship we killed in X 
+ BCC NW7                \ is junk (escape pod, alloy plate, cargo canister,
+ CPX #JH                \ asteroid, splinter, shuttle or transporter), then keep
+ BCS NW7                \ going, otherwise jump to NW7
 
 .gangbang
 
- INC JUNK
+ INC JUNK               \ We're adding junk, or a rock hermit, so increase the
+                        \ junk counter
 
 .NW7
 
@@ -263,11 +278,14 @@ IF _6502SP_VERSION
 
 .NW8
 
- LDY T
- LDA E%-1,Y
- AND #&6F
- ORA NEWB
- STA NEWB
+ LDY T                  \ Restore the ship type we stored above
+
+ LDA E%-1,Y             \ Fetch the E% byte for this ship
+
+ AND #%01101111         \ Zero bits 4 and 7
+
+ ORA NEWB               \ Apply the result to the ship's NEWB, which sets bits
+ STA NEWB               \ 0-3 and 5-6 in NEWB if they are set in the E% byte
 
 ENDIF
 

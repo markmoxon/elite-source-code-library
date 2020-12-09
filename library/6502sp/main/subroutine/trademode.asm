@@ -42,6 +42,6 @@
                         \ white (colour 3)
 
  LDA #CYAN              \ Send a #SETCOL CYAN command to the I/O processor to
- JMP DOCOL              \ switch to colour 3, which is now white, and return
-                        \ from the subroutine using a tail call
+ JMP DOCOL              \ switch to colour 3, which is white in the trade view,
+                        \ and return from the subroutine using a tail call
 

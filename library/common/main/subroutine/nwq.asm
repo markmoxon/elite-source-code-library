@@ -55,7 +55,8 @@
 
 IF _6502SP_VERSION
 
- JSR PBFL
+ JSR PBFL               \ Call PBFL to send the contents of the pixel buffer to
+                        \ the I/O processor for plotting on-screen
 
 ENDIF
 

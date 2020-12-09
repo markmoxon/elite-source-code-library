@@ -7,7 +7,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ This routine is run when the parasite sends an OSWORD &F0 command. It scans
+\ This routine is run when the parasite sends an OSWORD 240 command. It scans
 \ the keyboard and joystick and stores the results in the key logger buffer
 \ pointed to by OSSC, which is then sent across the Tube to the parasite's own
 \ key logger buffer at KTRAN.

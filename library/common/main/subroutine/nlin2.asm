@@ -24,22 +24,8 @@ IF _CASSETTE_VERSION
  LDX #2
  STX X1
 
-ELIF _6502SP_VERSION
-
- STA Y1
- STA Y2
- LDA #YELLOW
- JSR DOCOL
-
- LDX #2                 \ Set X1 = 2, so (X1, Y1) = (2, A)
- STX X1
-
-ENDIF
-
  LDX #254               \ Set X2 = 254
  STX X2
-
-IF _CASSETTE_VERSION
 
  BNE HLOIN              \ Call HLOIN to draw a horizontal line from (2, A) to
                         \ (254, A) and return from the subroutine (this BNE is
@@ -47,9 +33,23 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- JSR LL30
- LDA #CYAN
- JMP DOCOL
+ STA Y1                 \ Set Y1 = A
+
+ STA Y2                 \ Set Y2 = A
+
+ LDA #YELLOW            \ Send a #SETCOL YELLOW command to the I/O processor to
+ JSR DOCOL              \ switch to colour 1, which is yellow
+
+ LDX #2                 \ Set X1 = 2, so (X1, Y1) = (2, A)
+ STX X1
+
+ LDX #254               \ Set X2 = 254, so (X2, Y2) = (254, A)
+ STX X2
+
+ JSR LL30               \ Call LL30 to draw a line from (2, A) to (254, A)
+
+ LDA #CYAN              \ Send a #SETCOL CYAN command to the I/O processor to
+ JMP DOCOL              \ switch to colour 3, which is cyan or white
 
 ENDIF
 

@@ -3,7 +3,7 @@
 \       Name: KTRAN
 \       Type: Variable
 \   Category: Keyboard
-\    Summary: The key logger buffer that gets updated by the OSWORD &F0 command
+\    Summary: The key logger buffer that gets updated by the OSWORD 240 command
 \
 \ ------------------------------------------------------------------------------
 \
@@ -44,8 +44,8 @@
 \
 \ Other entry points:
 \
-\   buf                 The two OSWORD size configuration bytes for transmitting
-\                       the key logger from the I/O processor to the parasite
+\   buf                 The two OSWORD size bytes for transmitting the key 
+\                       logger from the I/O processor to the parasite
 \
 \ ******************************************************************************
 

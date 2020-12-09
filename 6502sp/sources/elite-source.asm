@@ -31,7 +31,7 @@ L% = C%
 Z = 0
 NTY = 34
 D% = &D000
-E% = D%+2*NTY
+\E% = D%+2*NTY
 LS% = D%-1
 BRKV = &202
 VEC = &7FFE
@@ -345,7 +345,6 @@ INCLUDE "library/common/main/subroutine/pix1.asm"
 INCLUDE "library/common/main/subroutine/pixel2.asm"
 INCLUDE "library/6502sp/main/subroutine/pixel.asm"
 INCLUDE "library/6502sp/main/subroutine/pixel3.asm"
-INCLUDE "library/6502sp/main/variable/pixbl.asm"
 INCLUDE "library/6502sp/main/variable/pbuf.asm"
 INCLUDE "library/common/main/subroutine/bline.asm"
 INCLUDE "library/common/main/subroutine/flip.asm"
@@ -1061,6 +1060,7 @@ INCLUDE "library/common/main/macro/vertex.asm"
 INCLUDE "library/common/main/macro/edge.asm"
 INCLUDE "library/common/main/macro/face.asm"
 INCLUDE "library/common/main/variable/xx21.asm"
+INCLUDE "library/6502sp/main/variable/e_per_cent.asm"
 INCLUDE "library/common/main/variable/ship_missile.asm"
 INCLUDE "library/common/main/variable/ship_coriolis.asm"
 INCLUDE "library/common/main/variable/ship_escape_pod.asm"

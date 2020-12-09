@@ -31,7 +31,7 @@ ELIF _6502SP_VERSION
  EQUW SHIP_MISSILE      \ MSL  =  1 = Missile
  EQUW SHIP_CORIOLIS     \ SST  =  2 = Coriolis space station
  EQUW SHIP_ESCAPE_POD   \ ESC  =  3 = Escape pod
- EQUW SHIP_PLATE        \ PLT  =  4 = Plate (alloys)
+ EQUW SHIP_PLATE        \ PLT  =  4 = Alloy plate
  EQUW SHIP_CANISTER     \ OIL  =  5 = Cargo canister
  EQUW SHIP_BOULDER      \         6 = Boulder
  EQUW SHIP_ASTEROID     \ AST  =  7 = Asteroid
@@ -62,11 +62,5 @@ ELIF _6502SP_VERSION
  EQUW SHIP_LOGO         \ LGO  = 32 = The Elite logo
  EQUW SHIP_COUGAR       \ COU  = 33 = Cougar
  EQUW SHIP_DODO         \ DOD  = 34 = Dodecahedron ("Dodo") space station
-
- EQUB &00, &00, &01, &00, &00, &00, &00, &00
- EQUB &21, &61, &A0, &A0, &A0, &A1, &A1, &C2
- EQUB &0C, &8C, &8C, &8C, &0C, &8C, &05, &8C
- EQUB &8C, &8C, &82, &0C, &0C, &04, &04, &00
- EQUB &20, &00
 
 ENDIF

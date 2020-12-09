@@ -11,7 +11,7 @@
 \ through the set of internal key numbers (see p.142 of the Advanced User Guide
 \ for a list of internal key numbers).
 \
-\ This routine is effectively the same as OSBYTE &7A, though the OSBYTE call
+\ This routine is effectively the same as OSBYTE 122, though the OSBYTE call
 \ preserves A, unlike this routine.
 \
 \ Returns:

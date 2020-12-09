@@ -16,7 +16,7 @@
 
  JSR TT27               \ Call TT27 to print the text token in A
 
- LSR de                 \ If bit 1 of location de is clear, return from the
+ LSR de                 \ If bit 1 of variable de is clear, return from the
  BCC out                \ subroutine (as out contains an RTS)
 
  LDA #253               \ Print recursive token 93 (" DESTROYED") and return

@@ -162,7 +162,7 @@ ENDIF
                         \ It's a long way from 10 PRINT "Hello world!":GOTO 10
 
 \LDX #LO(K3)            \ These instructions are commented out in the original
-\INX                    \ source, but they call OSWORD &A, which reads the
+\INX                    \ source, but they call OSWORD 10, which reads the
 \STX P+1                \ character bitmap for the character number in K3 and
 \DEX                    \ stores it in the block at K3+1, while also setting
 \LDY #HI(K3)            \ P+1 to point to the character definition. This is

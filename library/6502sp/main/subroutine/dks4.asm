@@ -42,9 +42,9 @@
 
 .DKS4pars
 
- EQUB 3                 \ Transmit 3 bytes as part of this command
+ EQUB 3                 \ The number of bytes to transmit with this command
 
- EQUB 3                 \ Receive 3 bytes as part of this command
+ EQUB 3                 \ The number of bytes to receive with this command
 
  EQUB 0                 \ The key number to check
 

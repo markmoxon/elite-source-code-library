@@ -15,6 +15,7 @@
                         \ (colour 3)
 
  LDA #RED               \ Send a #SETCOL RED command to the I/O processor to
- JMP DOCOL              \ switch to colour 2, which is now white, and return
-                        \ from the subroutine using a tail call
+ JMP DOCOL              \ switch to colour 2, which is white in the title
+                        \ screen, and return from the subroutine using a tail
+                        \ call
 

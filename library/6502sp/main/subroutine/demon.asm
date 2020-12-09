@@ -122,7 +122,10 @@
  INC INWK
  JSR LL9
  JSR STORE
- JSR PBFL
+
+ JSR PBFL               \ Call PBFL to send the contents of the pixel buffer to
+                        \ the I/O processor for plotting on-screen
+
  LDA INWK+31
  AND #&A0
  CMP #&A0

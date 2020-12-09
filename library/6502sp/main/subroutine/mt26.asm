@@ -3,7 +3,7 @@
 \       Name: MT26
 \       Type: Subroutine
 \   Category: Text
-\    Summary: Fetch a line of text from keyboard
+\    Summary: Fetch a line of text from the keyboard
 \
 \ ------------------------------------------------------------------------------
 \

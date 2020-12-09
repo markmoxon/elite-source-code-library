@@ -145,7 +145,8 @@ ELIF _6502SP_VERSION
                         \ starting with the low bytes (which we don't keep)
                         \
                         \ The CLC has no effect because MULT3 clears the C
-                        \ flag, so this instruction could be removed
+                        \ flag, so this instruction could be removed (as it is
+                        \ in the cassette version, for example)
 
 ENDIF
 

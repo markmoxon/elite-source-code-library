@@ -38,8 +38,9 @@
 
 IF _6502SP_VERSION
 
- STA BETA
- STA BET1
+ STA BETA               \ Reset BETA (pitch angle alpha) to 0
+
+ STA BET1               \ Reset BET1 (magnitude of the pitch angle) to 0
 
 ENDIF
 

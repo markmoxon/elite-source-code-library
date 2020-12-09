@@ -22,15 +22,15 @@
 
 IF _CASSETTE_VERSION
 
- LDX #6                 \ Set the text cursor to column 6
+ LDX #6                 \ Move the text cursor to column 6
  STX XC
 
  RTS                    \ Return from the subroutine
 
 ELIF _6502SP_VERSION
 
- LDA #6
- JMP DOXC
+ LDA #6                 \ Move the text cursor to column 6 and return from the
+ JMP DOXC               \ subroutine using a tail call
 
 ENDIF
 

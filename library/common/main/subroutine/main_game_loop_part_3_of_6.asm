@@ -13,6 +13,9 @@
 \     more often if have been naughty, and very often if we have been properly
 \     bad
 \
+IF _6502SP_VERSION
+\   * Very rarely, consider spawning a Thargoid, or vanishingly rarely, a Cougar
+ENDIF
 \ ******************************************************************************
 
 .MTT1
@@ -24,12 +27,12 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA SSPR
- BEQ P%+5
+ LDA SSPR               \ If we are outside the space station's safe zone, skip
+ BEQ P%+5               \ the following instruction
 
 .MLOOPS
 
- JMP MLOOP
+ JMP MLOOP              \ Jump to MLOOP to skip the following
 
 ENDIF
 
@@ -52,13 +55,13 @@ ENDIF
  STA T                  \ Store our badness level in T
 
  JSR Ze                 \ Call Ze to initialise INWK to a potentially hostile
-                        \ ship, and set X to a random value and A to a random
-                        \ value between 192 and 255
+                        \ ship, and set A and X to random values
 
 IF _6502SP_VERSION
 
- CMP #136
- BEQ fothg
+ CMP #136               \ If the random number in A = 136 (0.4% chance), jump
+ BEQ fothg              \ to fothg in part 4 to spawn either a Thargoid or, very
+                        \ rarely, a Cougar
 
 ENDIF
 

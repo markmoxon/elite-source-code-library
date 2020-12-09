@@ -35,7 +35,9 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- BEQ PU2-1
+ BEQ PU2-1              \ If the current view is the front view, return from the
+                        \ subroutine (PU2-1 contains an RTS), as the geometry in
+                        \ INWK is already correct
 
 ENDIF
 

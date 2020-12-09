@@ -57,11 +57,10 @@ ENDIF
 
 .D1
 
- JSR Ze                 \ Initialise INWK workspace, set X and T1 to a random
-                        \ value, and A to a random value between 192 and 255 and
-                        \ the C flag randomly
+ JSR Ze                 \ Call Ze to initialise INWK to a potentially hostile
+                        \ ship, and set A and X to random values
 
- LSR A                  \ Set A = A / 4, so A is now between 48 and 63, and
+ LSR A                  \ Set A = A / 4, so A is now between 0 and 63, and
  LSR A                  \ store in byte #0 (x_lo)
  STA INWK
 

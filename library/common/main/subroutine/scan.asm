@@ -199,7 +199,11 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- BPL FIXIT
+ BPL FIXIT              \ If the result has bit 0 clear, then the result has
+                        \ overflowed and is bigger than 256, so jump to FIXIT to
+                        \ set A to the maximum allowed value of 246 (this
+                        \ instruction isn't required as we test both the maximum
+                        \ and minimum below, but it might save a few cycles)
 
 ENDIF
 

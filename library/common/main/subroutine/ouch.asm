@@ -76,7 +76,10 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- JMP MESS
+ JMP MESS               \ Print recursive token A ("ENERGY BOMB", "ENERGY UNIT"
+                        \ or "DOCKING COMPUTERS") as an in-flight message,
+                        \ followed by " DESTROYED", and return from the
+                        \ subroutine using a tail call
 
 ENDIF
 

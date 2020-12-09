@@ -8,7 +8,11 @@
                         \         Data on System screen (red key f6)
                         \         Get commander name ("@", save/load commander)
                         \         In-system jump just arrived ("J")
+IF _CASSETTE_VERSION
                         \         Mis-jump just arrived (witchspace)
+ELIF _6502SP_VERSION
+                        \   3   = Mis-jump just arrived (witchspace)
+ENDIF
                         \   4   = Sell Cargo screen (red key f2)
                         \   6   = Death screen
                         \   8   = Status Mode screen (red key f8)

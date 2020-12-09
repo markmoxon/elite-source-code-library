@@ -21,6 +21,10 @@
 \
 \   ptg                 Called when the user manually forces a mis-jump
 \
+IF _6502SP_VERSION
+\   RTS111              Contains an RTS
+\
+ENDIF
 \ ******************************************************************************
 
 .ptg
@@ -45,8 +49,8 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA #3
- JSR TT66
+ LDA #3                 \ Clear the top part of the screen, draw a white border,
+ JSR TT66               \ and set the current view type in QQ11 to 3
 
 ENDIF
 

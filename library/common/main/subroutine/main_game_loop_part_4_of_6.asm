@@ -9,9 +9,19 @@
 \
 \ This section covers the following:
 \
+IF _CASSETTE_VERSION
 \   * Potentially spawn (35% chance) either a lone bounty hunter (a Mamba,
 \     Python or Cobra Mk III), a Thargoid, or a group of up to 4 pirates
 \     (Sidewinders and/or Mambas)
+ELIF _6502SP_VERSION
+\   * Potentially spawn (35% chance) either a lone bounty hunter (a Cobra Mk
+\     III, Asp Mk II, Python or Fer-de-lance), a Thargoid, or a group of up to 4
+\     pirates (a mix of Sidewinders, Mambas, Kraits, Adders, Geckos, Cobras Mk I
+\     and III, and Worms)
+\
+\   * Also potentially spawn a Constrictor if this is the mission 1 endgame, or
+\     Thargoids if mission 2 is in progress
+ENDIF
 \
 \ ******************************************************************************
 
@@ -37,13 +47,14 @@ IF _6502SP_VERSION
  LDA TP                 \ Fetch bits 2 and 3 of TP, which contain the status of
  AND #%00001100         \ mission 2
 
- CMP #%00001000         \ If bit 3 is set and bit 2 is clear, keep going,
- BNE nopl               \ otherwise jump to nopl to avoid spawning a Thargoid
+ CMP #%00001000         \ If bit 3 is set and bit 2 is clear, keep going to
+ BNE nopl               \ spawn a Thargoid as we are in mission 2, otherwise
+                        \ jump to nopl to skip spawning a Thargoid
 
  JSR DORND              \ Set A and X to random numbers
 
  CMP #200               \ If the random number in A < 200 (78% chance), jump to
- BCC nopl               \ nopl to avoid spawning a Thargoid
+ BCC nopl               \ nopl to skip spawning a Thargoid
 
 .fothg2
 
@@ -106,8 +117,7 @@ ENDIF
                         \ group of pirates
 
  JSR Ze                 \ Call Ze to initialise INWK to a potentially hostile
-                        \ ship, and set X to a random value and A to a random
-                        \ value between 192 and 255
+                        \ ship, and set A and X to random values
 
 IF _CASSETTE_VERSION
 
@@ -139,9 +149,15 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- AND #3                 \ Set A = Y = random number in the range 3-6, which
- ADC #CYL2              \ we will use to determine the type of ship
- TAY
+ AND #3                 \ Set A = random number in the range 0-3, which we
+                        \ will now use to determine the type of ship
+
+ ADC #CYL2              \ Add A to #CYL2 (we know the C flag is clear as we
+                        \ passed through the BCS above), so A is now one of the
+                        \ lone bounty hunter ships, i.e. Cobra Mk III (pirate),
+                        \ Asp Mk II, Python (pirate) or Fer-de-lance
+
+ TAY                    \ Copy the new ship type to Y
 
  JSR THERE              \ Call THERE to see if we are in the Constrictor's
                         \ system in mission 1
@@ -171,7 +187,6 @@ ELIF _6502SP_VERSION
  BEQ YESCON             \ If A = 0 then mission 1 is in progress, we haven't
                         \ completed it yet, and there is no Constrictor in the
                         \ vicinity, so jump to YESCON to spawn the Constrictor
-
 
 .NOCON
 
@@ -208,15 +223,21 @@ ELIF _6502SP_VERSION
  STA INWK+32            \ Store A in the AI flag of this ship
 
  TYA
- EQUB &2C
+
+ EQUB &2C               \ Skip the next instruction by turning it into
+                        \ &2C &A9 &1F, or BIT &1FA9, which does nothing apart
+                        \ from affect the flags
 
 .YESCON
 
- LDA #CON
+ LDA #CON               \ If we jump straight here, we are in the mission 1
+                        \ endgame and it's time to spawn the Constrictor, so
+                        \ set A to the Constrictor's type
 
 .focoug
 
- JSR NWSHP
+ JSR NWSHP              \ Spawn the new ship, whether it's a pirate, Thargoid,
+                        \ Cougar or Constrictor
 
 ENDIF
 
@@ -228,15 +249,32 @@ IF _6502SP_VERSION
 
 .fothg
 
- LDA K%+6
- AND #&3E
- BNE fothg2
- LDA #18
+ LDA K%+6               \ Fetch the z_lo coordinate of the first ship in the K%
+ AND #%00111110         \ block (i.e. the planet) and extract bits 1-5
+
+ BNE fothg2             \ If any of bits 1-5 are set (96.8% chance), jump up to
+                        \ fothg2 to spawn a Thargoid
+
+                        \ If we get here then we're going to spawn a Cougar, a
+                        \ very rare event indeed. How rare? Well, all the
+                        \ following have to happen in sequence:
+                        \
+                        \  * Main loop iteration = 0 (1 in 256 iterations)
+                        \  * Skip asteroid spawning (87% chance)
+                        \  * Skip cop spawning (0.4% chance)
+                        \  * Skip Thargoid spawning (3.2% chance)
+                        \
+                        \ so the chances of spawning a Cougar on any single main
+                        \ loop iteration are slim, to say the least
+
+ LDA #18                \ Give the ship we're about to spawn a speed of 27
  STA INWK+27
- LDA #&79
- STA INWK+32
- LDA #COU
- BNE focoug
+
+ LDA #%01111001         \ Give it an E.C.M., and make it hostile and pretty
+ STA INWK+32            \ aggressive (though don't give it AI)
+
+ LDA #COU               \ Set the ship type to a Cougar and jump up to focoug
+ BNE focoug             \ to spawn it
 
 ENDIF
 
@@ -263,11 +301,21 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- STA T
- JSR DORND
- AND T
- AND #7
- ADC #PACK
+ STA T                  \ Set T to a random number
+
+ JSR DORND              \ Set A and X to random numbers
+
+ AND T                  \ Set A to the AND of two random numbers, so each bit
+                        \ has 25% chance of being set which makes the chances
+                        \ of a smaller number higher
+
+ AND #7                 \ Reduce A to a random number in the range 0-7, though
+                        \ with a bigger chance of a smaller number in this range
+
+ ADC #PACK              \ #PACK is set to #SH3, the ship type for a Sidewinder,
+                        \ so this sets our new ship type to one of the pack
+                        \ hunters, namely a Sidewinder, Mamba, Krait, Adder,
+                        \ Gecko, Cobra Mk I, Worm or Cobra Mk III (pirate)
 
 ENDIF
 

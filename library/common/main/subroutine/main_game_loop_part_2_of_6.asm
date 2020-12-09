@@ -86,9 +86,9 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA JUNK
- CMP #3
- BCS MTT1
+ LDA JUNK               \ If we already have 3 or more bits of junk in the local
+ CMP #3                 \ bubble, jump down to MTT1 to skip the following and
+ BCS MTT1               \ potentially spawn something else
 
 ENDIF
 
@@ -157,23 +157,34 @@ IF _CASSETTE_VERSION
 
  CMP #5                 \ Set A to the ship number of an asteroid, and keep
  LDA #AST               \ this value for 98.5% of the time (i.e. if random
- BCS P%+4               \ A >= 5 skip the following instruction)
+ BCS P%+4               \ A >= 5 then skip the following instruction)
 
  LDA #OIL               \ Set A to the ship number of a cargo canister
 
 ELIF _6502SP_VERSION
 
- CMP #252
- BCC thongs
- LDA #HER
- STA INWK+32
- BNE whips
+ CMP #252               \ If random A < 252 (98.8% of the time), jump to thongs
+ BCC thongs             \ to skip the following
+
+ LDA #HER               \ Set A to #HER so we spawn a rock hermit 1.2% of the
+                        \ time
+ 
+ STA INWK+32            \ Set byte #32 to %00001111 to give the rock hermit an
+                        \ E.C.M.
+
+ BNE whips              \ Jump to whips (this BNE is effectively a JMP as A will
+                        \ never be zero)
 
 .thongs
 
- CMP #10
- AND #1
- ADC #OIL
+ CMP #10                \ If random A >= 10 (96% of the time), set the C flag
+
+ AND #1                 \ Reduce A to a random number that's 0 or 1
+ 
+ ADC #OIL               \ Set A = #OIL + A + C, so there's a tiny chance of us
+                        \ spawning a cargo canister (#OIL) and an even chance of
+                        \ us spawning either a boulder (#OIL + 1) or an asteroid
+                        \ (#OIL + 2)
 
 .whips
 

@@ -7,7 +7,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ Specifically:
+\ Specifically, this routine does the following:
 \
 \   * Reset the INWK ship workspace
 \
@@ -18,8 +18,7 @@
 \
 \   * Set the ship to hostile, with AI enabled
 \
-\ Also sets X and T1 to a random value, and A to a random value between 192 and
-\ 255,and the C flag randomly.
+\ This routine also sets A, X, T1 and the C flag to random values.
 \
 \ ******************************************************************************
 
@@ -64,4 +63,7 @@ ENDIF
                         \ and has AI (bit 7)
 
  STA INWK+32            \ Store A in the AI flag of this ship
+
+                        \ Fall through into DORND2 to set A, X and the C flag
+                        \ randomly
 

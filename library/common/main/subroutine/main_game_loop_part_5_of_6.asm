@@ -46,12 +46,19 @@ ENDIF
 
 IF _6502SP_VERSION
 
- LDX LASCT
- BEQ NOLASCT
- DEX
- BEQ P%+3
- DEX
- STX LASCT
+ LDX LASCT              \ Set X to the value of LASCT, the laser pulse count
+ 
+ BEQ NOLASCT            \ If X = 0 then jump to NOLASCT to skip reducing LASCT,
+                        \ as it can't be reduced any further
+
+ DEX                    \ Decrement the value of LASCT in X
+
+ BEQ P%+3               \ If X = 0, skip the next instruction
+
+ DEX                    \ Decrement the value of LASCT in X again
+ 
+ STX LASCT              \ Store the decremented value of X in LASCT, so LASCT
+                        \ gets reduced by 2, but not into negative territory
 
 .NOLASCT
 
@@ -74,16 +81,22 @@ IF _CASSETTE_VERSION
 ELIF _6502SP_VERSION
 
  BIT printflag          \ If bit 7 of printflag is clear (printer output is not
- BPL dontdolinefeedontheprinternow \ enabled), jump to
-                        \ dontdolinefeedontheprinternow to skip the following
+                        \ enabled), jump to dontdolinefeedontheprinternow to
+                        \ skip the following (and en route, why not take a
+                        \ short moment to admire this, the longest label name in
+                        \ the original Elite source code - presumably they got
+                        \ longer when development moved to a 6502 second
+                        \ processor system, with all that extra memory...)
 
- LDA #prilf
- JSR OSWRCH
+ BPL dontdolinefeedontheprinternow
+
+ LDA #prilf             \ Send two #prilf commands to the I/O processor to spit
+ JSR OSWRCH             \ out two blank lines on the printer
  JSR OSWRCH
 
 .dontdolinefeedontheprinternow
 
- STZ printflag
+ STZ printflag          \ Set the printflag to 0 to disable printing
 
  LDA QQ11               \ If this is a space view, skip the following five
  BEQ P%+13              \ instructions (i.e. jump to JSR TT17 below)
@@ -92,8 +105,8 @@ ELIF _6502SP_VERSION
  LSR A                  \ and bit 0 of QQ11 is 1 (the current view is type 1),
  BCS P%+7               \ then skip the following two instructions
 
- LDY #2
- JSR DELAY
+ LDY #2                 \ Wait for 2/50 of a second (0.04 seconds), to slow the
+ JSR DELAY              \ main loop down a bit
 
 ENDIF
 

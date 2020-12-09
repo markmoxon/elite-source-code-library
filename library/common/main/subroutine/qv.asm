@@ -71,11 +71,11 @@ ENDIF
 
 IF _CASSETTE_VERSION
 
- INC YC                 \ Move the text cursor down a row)
+ INC YC                 \ Move the text cursor down a row
 
 ELIF _6502SP_VERSION
 
- JSR INCYC              \ Move the text cursor down a row)
+ JSR INCYC              \ Move the text cursor down a row
 
 ENDIF
 

@@ -37,9 +37,13 @@ ELIF _6502SP_VERSION
                         \ the sun, jump to PL57 to skip the following
                         \ instructions
 
- JSR LS2FL
- STZ LSP
- RTS
+ JSR LS2FL              \ Call LS2FL to send the ball line heap to the I/O
+                        \ processor for drawing on-screen
+
+ STZ LSP                \ Reset the ball line heap by setting the ball line heap
+                        \ pointer to 0
+
+ RTS                    \ Return from the subroutine
 
 .PL57
 

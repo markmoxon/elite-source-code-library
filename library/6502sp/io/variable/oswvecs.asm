@@ -20,7 +20,7 @@
  EQUW PIXEL             \            241 (&F1)     1 = Draw a pixel
  EQUW MSBAR             \ #DOmsbar = 242 (&F2)     2 = Update missile indicators
  EQUW WSCAN             \ #wscn    = 243 (&F3)     3 = Wait for vertical sync
- EQUW SC48              \ #onescan = 244 (&F4)     4 = Update the 3D scanner
+ EQUW SC48              \ #onescan = 244 (&F4)     4 = Draw ship on 3D scanner
  EQUW DOT               \ #DOdot   = 245 (&F5)     5 = Draw a dot
  EQUW DODKS4            \ #DODKS4  = 246 (&F6)     6 = Scan for a specific key
  EQUW HLOIN             \            247 (&F7)     7 = Draw a horizontal line

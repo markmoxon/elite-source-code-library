@@ -22,12 +22,12 @@
 IF _CASSETTE_VERSION
 
  JMP SP2                \ Jump to SP2 to draw XX15 on the compass, returning
-                        \ from the subroutine with a tail call
+                        \ from the subroutine using a tail call
 
 ELIF _6502SP_VERSION
 
  BRA SP2                \ Jump to SP2 to draw XX15 on the compass, returning
-                        \ from the subroutine with a tail call
+                        \ from the subroutine using a tail call
 
 ENDIF
 

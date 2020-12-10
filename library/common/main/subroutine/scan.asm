@@ -66,8 +66,11 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA scacol,x
- STA SCANcol
+ LDA scacol,X           \ Set A to the scanner colour for this ship type from
+                        \ the X-th entry in the scacol table 
+
+ STA SCANcol            \ Store the scanner colour in SCANcol so it can be sent
+                        \ to the I/O processor with the #onescan command
 
 ENDIF
 
@@ -82,7 +85,8 @@ ENDIF
 
                         \ Now, we convert the x_hi coordinate of the ship into
                         \ the screen x-coordinate of the dot on the scanner,
-                        \ using the following (see above for an explanation):
+                        \ using the following (see the deep dive on "The 3D
+                        \ scanner" for an explanation):
                         \
                         \   X1 = 123 + (x_sign x_hi)
 
@@ -109,14 +113,17 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- ADC #123
- STA SCANx1
+ ADC #123               \ Set A = 123 + x_hi
+ 
+ STA SCANx1             \ Store the x-coordinate in SCANx1 so it can be sent
+                        \ to the I/O processor with the #onescan command
 
 ENDIF
 
                         \ Next, we convert the z_hi coordinate of the ship into
                         \ the y-coordinate of the base of the ship's stick,
-                        \ like this (see above for an explanation):
+                        \ like this (see the deep dive on "The 3D scanner" for
+                        \ an explanation):
                         \
                         \   SC = 220 - (z_sign z_hi) / 4
                         \
@@ -148,7 +155,8 @@ ENDIF
  STA SC                 \ range 205 to 235, with a higher z_hi giving a lower SC
 
                         \ Now for the stick height, which we calculate using the
-                        \ following (see above for an explanation):
+                        \ following (see the deep dive on "The 3D scanner" for
+                        \ an explanation):
                         \
                         \ A = - (y_sign y_hi) / 2
 
@@ -237,7 +245,8 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- STA SCANy1
+ STA SCANy1             \ Store the y-coordinate in SCANy1 so it can be sent
+                        \ to the I/O processor with the #onescan command
 
 ENDIF
 
@@ -265,6 +274,7 @@ ENDIF
                         \   C = 0 if A is negative, 1 if A is positive
                         \
                         \ and we can get on with drawing the dot and stick
+
 IF _CASSETTE_VERSION
 
  PHP                    \ Store the flags (specifically the C flag) from the
@@ -413,14 +423,17 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- STA SCANlen
- ROR SCANflg
+ STA SCANlen            \ Store the stick height in SCANlen so it can be sent
+                        \ to the I/O processor with the #onescan command
+
+ ROR SCANflg            \ Rotate the C flag into bit 7 of SCANflg, so bit 7 is
+                        \ the sign bit of the stick length
 
 .SC48
 
- LDX #(SCANpars MOD256)
- LDY #(SCANpars DIV256)
- LDA #onescan
+ LDX #LO(SCANpars)      \ Send a #onescan command to the I/O processor to draw
+ LDY #HI(SCANpars)      \ the ship on the scanner, returning from the subroutine
+ LDA #onescan           \ using a tail call
  JMP OSWORD
 
 ENDIF

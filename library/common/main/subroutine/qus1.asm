@@ -64,7 +64,10 @@ ELIF _6502SP_VERSION
 
  LDX #0                 \ Set (Y X) = &0C00
  LDY #&C
- JSR OSFILE
+
+ JSR OSFILE             \ Call OSFILE to do the file operation specified in
+                        \ &0C00
+
  JSR CLDELAY
  LDA #0
  JSR DODOSVN

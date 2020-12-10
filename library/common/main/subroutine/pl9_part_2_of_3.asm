@@ -86,12 +86,15 @@
 IF _CASSETTE_VERSION
 
  JMP PLS2               \ Jump to PLS2 to draw the second meridian, returning
-                        \ from the subroutine with a tail call
+                        \ from the subroutine using a tail call
 
 ELIF _6502SP_VERSION
 
- JSR PLS2
- JMP LS2FL
+ JSR PLS2               \ Call PLS2 to draw the second meridian
+
+ JMP LS2FL              \ Jump to LS2FL to send the ball line heap to the I/O
+                        \ processor for drawing on-screen, returning from the
+                        \ subroutine using a tail call
 
 ENDIF
 

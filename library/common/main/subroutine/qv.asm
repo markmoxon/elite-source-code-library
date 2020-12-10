@@ -33,13 +33,16 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA tek
- CMP #8
+ LDA tek                \ If the current system's tech level is less than 8,
+ CMP #8                 \ skip the next two instructions
  BCC P%+7
- LDA #32
- JSR TT66
- LDA #16
- TAY
+
+ LDA #32                \ Clear the top part of the screen, draw a white border,
+ JSR TT66               \ and set the current view type in QQ11 to 32 (Equip
+                        \ Ship screen)
+
+ LDA #16                \ Move the text cursor to row 16, and at the same time
+ TAY                    \ set Y to a counter going from 16-20 in the loop below
  JSR DOYC
 
 ENDIF
@@ -112,10 +115,14 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- CMP #4
- BCC qv3
- JSR CLYNS
- JMP qv2
+ CMP #4                 \ If the number entered in A < 4, then it is a valid
+ BCC qv3                \ view number, so jump down to qv3 as we are done
+
+ JSR CLYNS              \ Otherwise we didn't get a valid view number, so clear
+                        \ the bottom three text rows of the upper screen, and
+                        \ move the text cursor to column 1 on row 21
+
+ JMP qv2                \ Jump back to qv2 to try again
 
 .qv3
 

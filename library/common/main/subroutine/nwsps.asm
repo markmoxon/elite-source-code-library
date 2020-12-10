@@ -13,21 +13,21 @@
 
 IF _CASSETTE_VERSION
 
- LDX #1                 \ Set the AI flag in byte #32 to 1 (friendly, no AI, has
- STX INWK+32            \ E.C.M.)
+ LDX #%00000001         \ Set the AI flag in byte #32 to %00000001 (friendly, no
+ STX INWK+32            \ AI, has an E.C.M.)
 
  DEX                    \ Set pitch counter to 0 (no pitch, roll only)
  STX INWK+30
 
 ELIF _6502SP_VERSION
 
- LDX #&81
- STX INWK+32
+ LDX #%10000001         \ Set the AI flag in byte #32 to %10000001 (hostile,
+ STX INWK+32            \ no AI, has an E.C.M.)
 
  LDX #0                 \ Set pitch counter to 0 (no pitch, roll only)
  STX INWK+30
 
- STX NEWB
+ STX NEWB               \ Set NEWB to %00000000
 
 ENDIF
 
@@ -51,17 +51,19 @@ ENDIF
 
 IF _6502SP_VERSION
 
- LDA spasto
- STA XX21+2*SST-2
- LDA spasto+1
- STA XX21+2*SST-1
- LDA tek
- CMP #10
- BCC notadodo
- LDA XX21+2*DOD-2
- STA XX21+2*SST-2
- LDA XX21+2*DOD-1
- STA XX21+2*SST-1
+ LDA spasto             \ Copy the address of the Coriolis space station's ship
+ STA XX21+2*SST-2       \ blueprint from spasto to the #SST entry in the
+ LDA spasto+1           \ blueprint lookup table at XX21, so when we spawn a
+ STA XX21+2*SST-1       \ ship of type #SST, it will be a Coriolis station
+
+ LDA tek                \ If the system's tech level in tek is less than 10,
+ CMP #10                \ jump to notadodo, so tech levels 0 to 9 have Coriolis
+ BCC notadodo           \ stations, while 10 and above will have Dodo stations
+
+ LDA XX21+2*DOD-2       \ Copy the address of the Dodo space station's ship
+ STA XX21+2*SST-2       \ blueprint from spasto to the #SST entry in the
+ LDA XX21+2*DOD-1       \ blueprint lookup table at XX21, so when we spawn a
+ STA XX21+2*SST-1       \ ship of type #SST, it will be a Dodo station
 
 .notadodo
 

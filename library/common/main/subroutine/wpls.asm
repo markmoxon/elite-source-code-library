@@ -68,7 +68,9 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- JMP HBFL
+ JMP HBFL               \ Call HBFL to send the contents of the horizontal line
+                        \ buffer to the I/O processor for drawing on-screen,
+                        \ returning from the subroutine using a tail call
 
 ENDIF
 

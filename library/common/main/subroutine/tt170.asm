@@ -8,8 +8,16 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ This is the main entry point for a the main game coce. It is also called
-\ following death, and when the game is quit by pressing ESCAPE when paused.
+IF _CASSETTE_VERSION
+\ This is the main entry point for the main game code.
+ELIF _6502SP_VERSION
+\ This is the main entry point for the main game code. It is called after the
+\ various setup, decryption and checksum routines in S%, G% and BEGIN have
+\ successfully completed.
+ENDIF
+\
+\ It is also called following death, and when the game is quit by pressing
+\ ESCAPE when paused.
 \
 \ ******************************************************************************
 
@@ -28,7 +36,7 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- JSR RESET
+ JSR RESET              \ Call RESET to initialise most of the game variables
 
                         \ Fall through into DEATH2 to start the game
 

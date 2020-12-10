@@ -54,7 +54,8 @@
 
 IF _6502SP_VERSION
 
- JSR HBFL
+ JSR HBFL               \ Call HBFL to send the contents of the horizontal line
+                        \ buffer to the I/O processor for drawing on-screen
 
 ENDIF
 

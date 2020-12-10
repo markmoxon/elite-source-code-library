@@ -80,5 +80,5 @@
  LDX SC                 \ Retrieve X from SC
 
  JMP TT26               \ Jump to TT26 to print the character in A, returning
-                        \ from the subroutine with a tail call
+                        \ from the subroutine using a tail call
 

@@ -159,7 +159,7 @@ IF _6502SP_VERSION
  JSR CIRCLE3            \ Call CIRCLE3 to populate the ball line heap
 
                         \ Fall through into LS2FL to send the ball line heap to
-                        \ the I/O processor for drawing
+                        \ the I/O processor for drawing on-screen
 
 ENDIF
 

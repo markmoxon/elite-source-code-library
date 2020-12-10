@@ -30,8 +30,12 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- JSR LS2FL
- STZ LSP
+ JSR LS2FL              \ Call LS2FL to send the ball line heap to the I/O
+                        \ processor for drawing on-screen, which will erase the
+                        \ planet from the screen
+
+ STZ LSP                \ Reset the ball line heap by setting the ball line heap
+                        \ pointer to 0
 
 ENDIF
 
@@ -53,7 +57,10 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- JMP LS2FL
+ JMP LS2FL              \ The planet doesn't fit on-screen, so jump to LS2FL to
+                        \ send the ball line heap to the I/O processor for
+                        \ drawing on-screen, returning from the subroutine using
+                        \ a tail call
 
 ENDIF
 

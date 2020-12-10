@@ -32,7 +32,7 @@
  AND #%01111111
 
  BEQ MU5                \ If |Q| = 0, jump to MU5 to set K(3 2 1 0) to 0,
-                        \ returning from the subroutine with a tail call
+                        \ returning from the subroutine using a tail call
 
  SEC                    \ Set T = |Q| - 1
  SBC #1

@@ -27,7 +27,7 @@
  STA INWK+31
 
  JMP SCAN               \ Display the ship on the scanner, returning from the
-                        \ subroutine with a tail call
+                        \ subroutine using a tail call
 
 .MVD1
 

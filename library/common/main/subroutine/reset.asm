@@ -7,8 +7,13 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ Reset our ship and various controls, then fall through into RES4 to restore
+IF _CASSETTE_VERSION
+\ Reset our ship and various controls, then fall through into RES4 to recharge
 \ shields and energy, and reset the stardust and the ship workspace at INWK.
+ELIF _6502SP_VERSION
+\ Reset our ship and various controls, recharge shields and energy, and then
+\ fall through into RES2 to reset the stardust and the ship workspace at INWK.
+ENDIF
 \
 \ In this subroutine, this means zero-filling the following locations:
 \
@@ -24,8 +29,13 @@
 \
 \     * ECMA - Turn E.C.M. off
 \
+IF _CASSETTE_VERSION
 \ It also sets QQ12 to &FF, to indicate we are docked, and then falls through
 \ into RES4.
+ELIF _6502SP_VERSION
+\ It also sets QQ12 to &FF, to indicate we are docked, recharges the shields and
+\ energy banks, and then falls through into RES2.
+ENDIF
 \
 \ ******************************************************************************
 
@@ -51,20 +61,31 @@ IF _CASSETTE_VERSION
  STX QQ12               \ X is now negative - i.e. &FF - so this sets QQ12 to
                         \ &FF to indicate we are docked
 
+                        \ Fall through into RES4 to restore shields and energy,
+                        \ and reset the stardust and ship workspace at INWK
+
 ELIF _6502SP_VERSION
 
- TXA
- STA QQ12
- LDX #2
+ TXA                    \ X is now negative - i.e. &FF - so this sets A and QQ12
+ STA QQ12               \ to &FF to indicate we are docked
+
+ LDX #2                 \ We're now going to recharge both shields and the
+                        \ energy bank, which live in the three bytes at FSH,
+                        \ ASH (FSH+1) and ENERGY (FSH+2), so set a loop counter
+                        \ in X for 3 bytes
 
 .REL5
 
- STA FSH,X
- DEX
- BPL REL5
+ STA FSH,X              \ Set the X-th byte of FSH to &FF to charge up that
+                        \ shield/bank
+
+ DEX                    \ Decrement the lopp counter 
+
+ BPL REL5               \ Loop back to REL5 until we have recharged both shields
+                        \ and the energy bank
+
+                        \ Fall through into RES2 to reset the stardust and ship
+                        \ workspace at INWK
 
 ENDIF
-
-                        \ Fall through into RES4 to restore shields and energy,
-                        \ and reset the stardust and ship workspace at INWK
 

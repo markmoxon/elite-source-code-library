@@ -195,7 +195,7 @@ ENDIF
 
  LDX VIEW               \ Set X to the current view (front, rear, left or right)
  JMP LOOK1              \ and jump to LOOK1 to initialise that view, returning
-                        \ from the subroutine with a tail call
+                        \ from the subroutine using a tail call
 
 .WA1
 

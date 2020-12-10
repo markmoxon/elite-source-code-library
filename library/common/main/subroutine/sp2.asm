@@ -76,7 +76,9 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA #GREEN2
+ LDA #GREEN2            \ The z-coordinate of XX15 is negative, so the planet or
+                        \ station is behind us and the compass dot should be in
+                        \ green, so set A accordingly
 
 ENDIF
 

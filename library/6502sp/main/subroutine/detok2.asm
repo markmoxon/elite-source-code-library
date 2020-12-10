@@ -125,7 +125,7 @@
 .DT9
 
  JMP DASC               \ Jump to DASC to print the ASCII character in A,
-                        \ returning from the routine with a tail call
+                        \ returning from the routine using a tail call
 
 .DT3
 

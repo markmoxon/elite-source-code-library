@@ -53,7 +53,7 @@
                         \ to the last saved commander
 
  JSR msblob             \ Reset the dashboard's missile indicators to all be
-                        \ green/cyan
+                        \ green
 
  LDA #7                 \ Call the TITLE subroutine to show the rotating ship
  LDX #ASP               \ and load prompt. The arguments sent to TITLE are:

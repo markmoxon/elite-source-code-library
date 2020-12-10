@@ -126,13 +126,18 @@ IF _CASSETTE_VERSION
  STA CNT2               \ don't need to apply an offset
 
  JMP PLS22              \ Jump to PLS22 to draw the crater, returning from the
-                        \ subroutine with a tail call
+                        \ subroutine using a tail call
 
 ELIF _6502SP_VERSION
 
- STZ CNT2
- JSR PLS22
- JMP LS2FL
+ STZ CNT2               \ Set CNT2 = 0 as we are drawing a full circle, so we
+                        \ don't need to apply an offset
+
+ JSR PLS22              \ Call PLS22 to draw the crater
+
+ JMP LS2FL              \ Jump to LS2FL to send the ball line heap to the I/O
+                        \ processor for drawing on-screen, returning from the
+                        \ subroutine using a tail call
 
 ENDIF
 

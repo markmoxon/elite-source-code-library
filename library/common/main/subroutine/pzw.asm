@@ -38,7 +38,8 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDX #STRIPE
+ LDX #STRIPE            \ Set X to the dashboard stripe colour, which is stripe
+                        \ 5-1 (magenta/red)
 
 ENDIF
 
@@ -65,10 +66,14 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- BEQ P%+5
- LDA #GREEN2
- RTS
- LDA #RED2
+ BEQ P%+5               \ If A is zero, skip the next two instructions
+
+ LDA #GREEN2            \ Otherwise flashing colours are enabled and it's the
+ RTS                    \ main loop iteration where we flash them, so set A to
+                        \ dashboard colour 2 (green) and return from the
+                        \ subroutine
+
+ LDA #RED2              \ Set A to dashboard colour 1 (red)
 
 ENDIF
 

@@ -69,7 +69,7 @@ ELIF _6502SP_VERSION
 
  LDY #GREEN2            \ The "disarm missiles" key is being pressed, so call
  JSR ABORT              \ ABORT to disarm the missile and update the missile
-                        \ indicators on the dashboard to green/cyan (Y = &EE)
+                        \ indicators on the dashboard to green (Y = &EE)
 
 ENDIF
 

@@ -17,8 +17,9 @@
 
 IF _6502SP_VERSION
 
- LDA #GREEN
- JSR DOCOL
+ LDA #GREEN             \ Send a #SETCOL GREEN command to the I/O processor to
+ JSR DOCOL              \ switch to stripe 3-1-3-1, which is cyan/yellow in the
+                        \ space view
 
 ENDIF
 
@@ -33,7 +34,9 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
-\BMI PL2
+\BMI PL2                \ This instruction is commented out in the original
+                        \ source. It would remove the planet from the screen
+                        \ when it's behind us
 
 ENDIF
 

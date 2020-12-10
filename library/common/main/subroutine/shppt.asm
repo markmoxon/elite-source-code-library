@@ -60,7 +60,7 @@ ELIF _6502SP_VERSION
 ENDIF
 
  JMP LL81+2             \ Call LL81+2 to draw the ship's dot, returning from the
-                        \ subroutine with a tail call
+                        \ subroutine using a tail call
 
  PLA                    \ Pull the return address from the stack, so the RTS
  PLA                    \ below actually returns from the subroutine that called

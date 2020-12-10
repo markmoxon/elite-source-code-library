@@ -109,10 +109,9 @@ ENDIF
                         \ set if timer 1 has timed out. We set the timer in
                         \ LINSCN above, so this means we only run the next bit
                         \ if the screen redraw has reached the boundary between
-                        \ the mode 4 and mode 5 screens (i.e. the top of the
-                        \ dashboard). Otherwise bit 6 is clear and we aren't at
-                        \ the boundary, so we jump to jvec to pass control to
-                        \ the next interrupt handler
+                        \ the space view and the dashboard. Otherwise bit 6 is
+                        \ clear and we aren't at the boundary, so we jump to
+                        \ jvec to pass control to the next interrupt handler
 
 IF _CASSETTE_VERSION
 

@@ -1,4 +1,4 @@
 .MOS
 
- BRK
+ EQUB 0
 

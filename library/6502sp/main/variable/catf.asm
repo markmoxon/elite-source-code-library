@@ -1,4 +1,4 @@
 .CATF
 
- BRK
+ EQUB 0
 

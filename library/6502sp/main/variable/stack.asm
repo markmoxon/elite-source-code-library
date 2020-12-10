@@ -4,5 +4,5 @@
 
 .stack
 
- BRK
+ EQUB 0
 

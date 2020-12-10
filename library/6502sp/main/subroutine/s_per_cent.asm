@@ -35,11 +35,13 @@
  PHA
  LDX #0
  RTS
+
  BRK
  EQUS "ELITE - By Ian Bell & David Braben"
  EQUB 10
  EQUB 13
  BRK
+
  LDA SC
  ADC 2
  CMP F%-1

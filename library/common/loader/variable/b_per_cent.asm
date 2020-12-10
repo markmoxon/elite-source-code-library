@@ -3,7 +3,11 @@
 \       Name: B%
 \       Type: Variable
 \   Category: Screen mode
+IF _CASSETTE_VERSION
 \    Summary: VDU commands for setting the square mode 4 screen
+ELIF _6502SP_VERSION
+\    Summary: VDU commands for setting the square mode 1 screen
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

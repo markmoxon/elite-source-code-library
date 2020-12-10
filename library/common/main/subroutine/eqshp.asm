@@ -242,8 +242,8 @@ ENDIF
 
  STX NOMSL              \ Otherwise update the number of missiles in NOMSL
 
- JSR msblob             \ And call msblob to update the dashboard's missile
-                        \ indicators with our new purchase
+ JSR msblob             \ Reset the dashboard's missile indicators so none of
+                        \ them are targeted
 
 IF _6502SP_VERSION
 

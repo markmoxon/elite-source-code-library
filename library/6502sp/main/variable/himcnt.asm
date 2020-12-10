@@ -4,5 +4,5 @@
 
 .HIMCNT
 
- BRK
+ EQUB 0
 

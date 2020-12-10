@@ -24,7 +24,11 @@
 \
 \                         * &E0 = yellow/white (armed)
 \
+IF _CASSETTE_VERSION
 \                         * &EE = green/cyan (disarmed)
+ELIF _6502SP_VERSION
+\                         * &EE = green (disarmed)
+ENDIF
 \
 \ Returns:
 \

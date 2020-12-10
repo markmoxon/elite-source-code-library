@@ -118,9 +118,9 @@ ENDIF
                         \ new sun, given that P(2 1) contains the 16-bit maximum
                         \ y-coordinate of the new sun on-screen
 
- LDA #2*Y-1             \ #Y is the y-coordinate of the centre of the mode 4
-                        \ space view, so this sets Y to the y-coordinate of the
-                        \ bottom of the space view, i.e. 191
+ LDA #2*Y-1             \ #Y is the y-coordinate of the centre of the space
+                        \ view, so this sets Y to the y-coordinate of the bottom
+                        \ of the space view, i.e. 191
 
  LDX P+2                \ If P+2 is non-zero, the maximum y-coordinate is off
  BNE PLF2               \ the bottom of the screen, so skip to PLF2 with A = 191

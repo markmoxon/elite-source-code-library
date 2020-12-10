@@ -22,14 +22,14 @@
 
 .DOTX1
 
- BRK
+ EQUB 0
 
 .DOTY1
 
- BRK
+ EQUB 0
 
 .DOTCOL
 
- BRK
+ EQUB 0
  RTS
 

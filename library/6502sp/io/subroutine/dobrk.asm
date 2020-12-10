@@ -4,7 +4,7 @@
 
 .DOBRK
 
- BRK
+ EQUB 0
  EQUS "TTEST"
  EQUW 13
 

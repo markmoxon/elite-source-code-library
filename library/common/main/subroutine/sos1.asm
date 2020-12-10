@@ -14,8 +14,8 @@
 
 .SOS1
 
- JSR msblob             \ Update the dashboard's missile indicators to all be
-                        \ green/cyan
+ JSR msblob             \ Reset the dashboard's missile indicators so none of
+                        \ them are targeted
 
  LDA #127               \ Set the pitch and roll counters to 127 (no damping
  STA INWK+29            \ so the planet's rotation doesn't slow down)

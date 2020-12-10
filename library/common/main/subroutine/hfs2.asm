@@ -17,9 +17,15 @@
 \ This has the effect of making the tunnel appear to be racing towards us as we
 \ hurtle out into hyperspace or through the space station's docking tunnel.
 \
+IF _CASSETTE_VERSION
 \ The hyperspace effect is done in a full mode 5 screen, which makes the rings
 \ all coloured and zig-zaggy, while the launch screen is in the normal
 \ monochrome mode 4 screen.
+ELIF _6502SP_VERSION
+\ The hyperspace effect is done in a full mode 2 screen, which makes the rings
+\ all coloured and zig-zaggy, while the launch screen is in the normal
+\ four-colour mode 1 screen.
+ENDIF
 \
 \ Arguments:
 \

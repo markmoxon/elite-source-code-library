@@ -7,7 +7,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ Clear the top part of the screen (the mode 4 part) and draw a white border
+\ Clear the top part of the screen (the spaced view) and draw a white border
 \ along the top and sides.
 \
 \ Other entry points:
@@ -59,7 +59,7 @@ IF _CASSETTE_VERSION
 
  CPX #&78               \ Loop back to BOL1 until we have cleared page &7700,
  BNE BOL1               \ the last character row in the space view part of the
-                        \ screen (the mode 4 part)
+                        \ screen (the space view)
 
  LDX QQ22+1             \ Fetch into X the number that's shown on-screen during
                         \ the hyperspace countdown
@@ -195,8 +195,8 @@ ENDIF
                         \   (254, 0) to (254, 191)
                         \
                         \ So that's a 2-pixel wide vertical border along the
-                        \ left edge of the upper, mode 4 part of the screen, and
-                        \ a 2-pixel wide vertical border along the right edge
+                        \ left edge of the upper part of the screen, and a
+                        \ 2-pixel wide vertical border along the right edge
 
 .BOS2
 

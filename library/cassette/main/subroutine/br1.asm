@@ -150,8 +150,8 @@ ENDIF
 
  STA COK                \ Store the updated competition flags in COK
 
- JSR msblob             \ Reset the dashboard's missile indicators to all be
-                        \ green/cyan
+ JSR msblob             \ Reset the dashboard's missile indicators so none of
+                        \ them are targeted
 
  LDA #147               \ Call the TITLE subroutine to show the rotating ship
  LDX #3                 \ and fire/space prompt. The arguments sent to TITLE

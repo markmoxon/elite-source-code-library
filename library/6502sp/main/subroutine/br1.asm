@@ -52,8 +52,8 @@
  JSR DFAULT             \ Call DFAULT to reset the current commander data block
                         \ to the last saved commander
 
- JSR msblob             \ Reset the dashboard's missile indicators to all be
-                        \ green
+ JSR msblob             \ Reset the dashboard's missile indicators so none of
+                        \ them are targeted
 
  LDA #7                 \ Call the TITLE subroutine to show the rotating ship
  LDX #ASP               \ and load prompt. The arguments sent to TITLE are:

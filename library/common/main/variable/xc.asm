@@ -5,7 +5,7 @@
                         \
                         \ A value of 0 denotes the leftmost column and 32 the
                         \ rightmost column, but because the top part of the
-                        \ screen (the mode 4 part) has a white border that
+                        \ screen (the space view) has a white border that
                         \ clashes with columns 0 and 32, text is only shown
                         \ in columns 1-31
 

@@ -72,7 +72,7 @@
                         \ first doing the low bytes
 
  TXA                    \ And then the high bytes. #X is the x-coordinate of
- ADC #0                 \ the centre of the mode 4 screen, so this converts the
+ ADC #0                 \ the centre of the space view, so this converts the
  STA K3+1               \ space x-coordinate into a screen x-coordinate
 
  LDA INWK+3             \ Set P(1 0) = (y_hi y_lo)
@@ -100,7 +100,7 @@
                         \ first doing the low bytes
 
  TXA                    \ And then the high bytes. #Y is the y-coordinate of
- ADC #0                 \ the centre of the mode 4 screen, so this converts the
+ ADC #0                 \ the centre of the space view, so this converts the
  STA K4+1               \ space x-coordinate into a screen y-coordinate
 
  CLC                    \ Clear the C flag to indicate success

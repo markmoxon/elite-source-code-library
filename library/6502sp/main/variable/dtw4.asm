@@ -37,5 +37,5 @@
 
 .DTW4
 
- BRK
+ EQUB 0
 

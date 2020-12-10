@@ -35,10 +35,10 @@ ENDIF
  LDA SUNX+1             \ screen
  STA YY+1
 
- LDY #2*Y-1             \ #Y is the y-coordinate of the centre of the mode 4
-                        \ space view, so this sets Y as a counter for the number
-                        \ of lines in the space view (i.e. 191), which is also
-                        \ the number of lines in the LSO block
+ LDY #2*Y-1             \ #Y is the y-coordinate of the centre of the space
+                        \ view, so this sets Y as a counter for the number of
+                        \ lines in the space view (i.e. 191), which is also the
+                        \ number of lines in the LSO block
 
 .WPL2
 

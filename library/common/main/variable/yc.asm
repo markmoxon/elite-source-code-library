@@ -4,10 +4,10 @@
                         \ row), which can be from 0 to 23
                         \
                         \ The screen actually has 31 character rows if you
-                        \ include the mode 5 dashboard, but the text printing
-                        \ routines only work on the mode 4 part (the space
-                        \ view), so the text cursor only goes up to a maximum of
-                        \ 23, the row just before the screen split
+                        \ include the dashboard, but the text printing routines
+                        \ only work on the top part (the space view), so the
+                        \ text cursor only goes up to a maximum of 23, the row
+                        \ just before the screen splits
                         \
                         \ A value of 0 denotes the top row, but because the
                         \ top part of the screen has a white border that clashes

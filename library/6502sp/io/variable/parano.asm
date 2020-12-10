@@ -1,4 +1,4 @@
 .PARANO
 
- BRK
+ EQUB 0
 

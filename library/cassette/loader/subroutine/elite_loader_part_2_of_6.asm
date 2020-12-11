@@ -203,11 +203,13 @@ ENDIF
  JSR OSB                \ pressed
 
 IF PROT AND DISC = 0
+
  CPX #3                 \ If the previous value of X from the call to OSBYTE 200
  BNE abrk+1             \ was not 3 (ESCAPE disabled, clear memory), jump to
                         \ abrk+1, which contains a BRK instruction which will
                         \ reset the computer (as we set BRKV to point to the
                         \ reset address above)
+
 ENDIF
 
  LDA #13                \ Call OSBYTE with A = 13, X = 2 and Y = 0 to disable
@@ -216,9 +218,9 @@ ENDIF
 
 .OS01                   \ Reset stack
 
- LDX #&FF               \ Set stack pointer to &01FF, as stack is in page 1
- TXS                    \ (this is the standard location for the 6502 stack,
-                        \ so this instruction effectively resets the stack)
+ LDX #&FF               \ Set the stack pointer to &01FF, which is the standard
+ TXS                    \ location for the 6502 stack, so this instruction
+                        \ effectively resets the stack
 
  INX                    \ Set X = 0, to use as a counter in the following loop
 

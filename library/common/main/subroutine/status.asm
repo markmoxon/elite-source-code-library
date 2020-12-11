@@ -11,10 +11,15 @@ IF _6502SP_VERSION
 
 .wearedocked
 
- LDA #205
- JSR DETOK
- JSR TT67
- JMP st6+3
+                        \ We call this from STATUS below if we are docked
+
+ LDA #205               \ Print extended token 205 ("DOCKED") and return from
+ JSR DETOK              \ the subroutine using a tail call
+
+ JSR TT67               \ Print a newline
+
+ JMP st6+3              \ Jump down to st6+3, to print recursive token 125 and
+                        \ continue to the rest of the Status Mode screen
 
 ENDIF
 
@@ -68,8 +73,9 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA #8
- JSR TRADEMODE
+ LDA #8                 \ Clear the top part of the screen, draw a white border,
+ JSR TRADEMODE          \ and set up a printable trading screen with a view type
+                        \ in QQ11 of 8 (Status Mode screen)
 
 ENDIF
 
@@ -126,7 +132,9 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDY JUNK
+ LDY JUNK               \ Set Y to the number of junk items in our local bubble
+                        \ of universe (where junk is asteroids, canisters,
+                        \ escape pods and so on)
 
 ENDIF
 
@@ -239,7 +247,9 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- BNE P%-2
+ BNE P%-2               \ Keep looping back two instructions (i.e. to the INX
+                        \ instruction) until A = 0, which means there are no set
+                        \ bits left in A
 
 ENDIF
 
@@ -341,17 +351,26 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDX CNT
- LDY LASER,X
- CPY #128+POW
- BNE P%+4
- LDA #104
- CPY #Armlas
- BNE P%+4
- LDA #117
- CPY #Mlas
- BNE P%+4
- LDA #118
+ LDX CNT                \ Set Y = the laser power for view X
+ LDY LASER,X 
+
+ CPY #128+POW           \ If the laser power for view X is not #POW+128 (beam
+ BNE P%+4               \ laser), skip the next LDA instruction
+
+ LDA #104               \ This sets A = 104 if the laser in view X is a beam
+                        \ laser (token 104 is "BEAM LASER")
+
+ CPY #Armlas            \ If the laser power for view X is not #Armlas (military
+ BNE P%+4               \ laser), skip the next LDA instruction
+
+ LDA #117               \ This sets A = 117 if the laser in view X is a military
+                        \ laser (token 117 is "MILITARY  LASER")
+
+ CPY #Mlas              \ If the laser power for view X is not #Mlas (mining
+ BNE P%+4               \ laser), skip the next LDA instruction
+
+ LDA #118               \ This sets A = 118 if the laser in view X is a mining
+                        \ laser (token 118 is "MINING  LASER")
 
 ENDIF
 

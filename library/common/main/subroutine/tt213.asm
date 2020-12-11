@@ -20,11 +20,12 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA #8
- JSR TRADEMODE
+ LDA #8                 \ Clear the top part of the screen, draw a white border,
+ JSR TRADEMODE          \ and set up a printable trading screen with a view type
+                        \ in QQ11 of 4 (Inventory screen)
 
- LDA #11
- JSR DOXC
+ LDA #11                \ Move the text cursor to column 11 to print the screen
+ JSR DOXC               \ title
 
 ENDIF
 

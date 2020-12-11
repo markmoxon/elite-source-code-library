@@ -20,17 +20,18 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA #16
- JSR TRADEMODE
+ LDA #16                \ Clear the top part of the screen, draw a white border,
+ JSR TRADEMODE          \ and set up a printable trading screen with a view type
+                        \ in QQ11 of 32 (Market Price screen)
 
  LDA #5                 \ Move the text cursor to column 4
  JSR DOXC
 
 ENDIF
 
- LDA #167               \ Print recursive token 7 token ("{current system name}
- JSR NLIN3              \ MARKET PRICES") and draw a horizontal line at pixel
-                        \ row 19 to box in the title
+ LDA #167               \ Print recursive token 7 ("{current system name} MARKET
+ JSR NLIN3              \ PRICES") and draw a horizontal line at pixel row 19
+                        \ to box in the title
 
 IF _CASSETTE_VERSION
 
@@ -48,7 +49,7 @@ ENDIF
 
 IF _6502SP_VERSION
 
- LDA #6
+ LDA #6                 \ Move the text cursor to row 6
  JSR DOYC
 
 ENDIF

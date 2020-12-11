@@ -34,9 +34,9 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA #32                \ Call TRADEMODE to clear the top part of the screen and
- JSR TRADEMODE          \ set up a printable trading screen with a view type in
-                        \ QQ11 of 32 (Equip Ship screen)
+ LDA #32                \ Clear the top part of the screen, draw a white border,
+ JSR TRADEMODE          \ and set up a printable trading screen with a view type
+                        \ in QQ11 of 32 (Equip Ship screen)
 
  LDA #12                \ Move the text cursor to column 12
  JSR DOXC

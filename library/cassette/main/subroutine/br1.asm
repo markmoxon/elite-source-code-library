@@ -38,7 +38,7 @@
 \LDX #3                 \ source. This block starts with the same *FX call as
 \STX XC                 \ above, then clears the screen, calls a routine to
 \JSR FX200              \ flush the keyboard buffer (FLKB) that isn't present
-\LDA #1                 \ in the cassette version but is in the disc version,
+\LDA #1                 \ in the cassette version but is in other versions,
 \JSR TT66               \ and then it displays "LOAD NEW COMMANDER (Y/N)?" and
 \JSR FLKB               \ lists the current cargo, before falling straight into
 \LDA #14                \ the load routine below, whether or not we have

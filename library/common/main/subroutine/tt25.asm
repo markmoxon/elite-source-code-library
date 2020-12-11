@@ -21,7 +21,7 @@ IF _CASSETTE_VERSION
  JSR TT66-2             \ Clear the top part of the screen, draw a white border,
                         \ and set the current view type in QQ11 to 1
 
- LDA #9                 \ Set the text cursor XC to column 9
+ LDA #9                 \ Move the text cursor to column 9
  STA XC
 
  LDA #163               \ Print recursive token 3 as a title in capitals at
@@ -35,15 +35,18 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA #1
- JSR TRADEMODE
+ LDA #1                 \ Clear the top part of the screen, draw a white border,
+ JSR TRADEMODE          \ and set up a printable trading screen with a view type
+                        \ in QQ11 of 1
 
- LDA #9                 \ Set the text cursor XC to column 9
+ LDA #9                 \ Move the text cursor to column 9
  JSR DOXC
 
- LDA #163
- JSR NLIN3
- JSR TTX69
+ LDA #163               \ Print recursive token 3 ("DATA ON {selected system
+ JSR NLIN3              \ name}" and draw a horizontal line at pixel row 19
+                        \ to box in the title
+
+ JSR TTX69              \ Print a paragraph break and set Sentence Case
 
 ENDIF
 
@@ -318,31 +321,43 @@ ELIF _6502SP_VERSION
  LDA #'m'
  JSR TT26
 
- JSR TTX69
- JMP PDESC
- LDX ZZ
-\LDY#PTEXT MOD256
-\STYINWK
-\LDY#(PTEXT DIV256)-1
-\STYINWK+1
-\LDY#&FF
-\.PDT1 INY
-\BNEP%+4
-\INCINWK+1
-\LDA(INWK),Y
-\BNEPDT1
+ JSR TTX69              \ Print a paragraph break and set Sentence Case
+
+ JMP PDESC              \ Jump to PDESC to print the system's extended
+                        \ description, returning from the subroutine using a
+                        \ tail call
+
+                        \ The following code doesn't appear to be called from
+                        \ anywhere, so it's presumably a remnant of code from
+                        \ an earlier version of the extended description code
+
+ LDX ZZ                 \ Fetch the system number from ZZ into X
+
+\LDY #LO(PTEXT)         \ These instructions are commented out in the original
+\STY INWK               \ source. The variable PTEXT doesn't exist, so it isn't
+\LDY #HI(PTEXT)-1       \ entirely obvious what this code does, though it looks
+\STY INWK+1             \ like it loops through a table of text tokens in PTEXT
+\LDY #&FF               \ until we get to the entry for the current system,
+\.PDT1                  \ which it prints out as text tokens (so perhaps PTEXT
+\INY                    \ used to be a token table for the system's extended
+\BNE P%+4               \ descriptions before PDESC took over)
+\INC INWK+1
+\LDA (INWK),Y
+\BNE PDT1
 \DEX
-\BNEPDT1
-\.PDT2 INY
-\BNEP%+4
-\INCINWK+1
-\STYINWK+2
-\LDA(INWK),Y
-\BEQTT24-1
-\JSRTT27
-\LDYINWK+2
-\JMPPDT2
- RTS
+\BNE PDT1
+\.PDT2
+\INY
+\BNE P%+4
+\INC INWK+1
+\STY INWK+2
+\LDA (INWK),Y
+\BEQ TT24-1
+\JSR TT27
+\LDY INWK+2
+\JMP PDT2
+
+ RTS                    \ Return from the subroutine
 
 ENDIF
 

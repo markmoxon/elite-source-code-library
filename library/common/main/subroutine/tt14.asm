@@ -37,8 +37,8 @@
 
 IF _6502SP_VERSION
 
- LDA #CYAN
- JSR DOCOL
+ LDA #CYAN              \ Send a #SETCOL CYAN command to the I/O processor to
+ JSR DOCOL              \ switch to colour 3, which is white in the chart view
 
 ENDIF
 

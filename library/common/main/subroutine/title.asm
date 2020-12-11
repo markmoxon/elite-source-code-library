@@ -7,14 +7,20 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ Display a title screen, with a rotating ship and a recursive text token at the
-\ bottom of the screen.
+\ Display the title screen, with a rotating ship and a text token at the bottom
+\ of the screen.
 \
 \ Arguments:
 \
+IF _CASSETTE_VERSION
 \   A                   The number of the recursive token to show below the
 \                       rotating ship (see variable QQ18 for details of
 \                       recursive tokens)
+ELIF _6502SP_VERSION
+\   A                   The number of the extended token to show below the
+\                       rotating ship (see variable TKN1 for details of
+\                       recursive tokens)
+ENDIF
 \
 \   X                   The type of the ship to show (see variable XX21 for a
 \                       list of ship types)
@@ -51,9 +57,11 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA #RED
- JSR DOCOL
- STZ QQ11
+ LDA #RED               \ Send a #SETCOL RED command to the I/O processor to
+ JSR DOCOL              \ switch to colour 2, which is white in the title screen
+
+ STZ QQ11               \ Set QQ11 to 0, so from here on we are using a space
+                        \ view
 
 ENDIF
 
@@ -81,14 +89,14 @@ ENDIF
 
 IF _CASSETTE_VERSION
 
- LDY #6                 \ Set the text cursor to column 6
+ LDY #6                 \ Move the text cursor to column 6
  STY XC
 
  JSR DELAY              \ Delay for 6 vertical syncs (6/50 = 0.12 seconds)
 
 ELIF _6502SP_VERSION
 
- LDA #6
+ LDA #6                 \ Move the text cursor to column 6
  JSR DOXC
 
 ENDIF
@@ -98,16 +106,17 @@ ENDIF
 
 IF _CASSETTE_VERSION
 
- LDY #6                 \ Set the text cursor to column 6 again
+ LDY #6                 \ Move the text cursor to column 6 again
  STY XC
 
  INC YC                 \ Move the text cursor down a row
 
 ELIF _6502SP_VERSION
 
- LDA #10
+ LDA #10                \ Print a line feed to move the text cursor down a line
  JSR TT26
- LDA #6
+
+ LDA #6                 \ Move the text cursor to column 6 again
  JSR DOXC
 
 ENDIF
@@ -118,12 +127,12 @@ ENDIF
 
 IF _CASSETTE_VERSION
 
- LDA #254               \ Print recursive token 94, "BY D.BRABEN & I.BELL"
+ LDA #254               \ Print recursive token 94 ("BY D.BRABEN & I.BELL")
  JSR TT27
 
 ELIF _6502SP_VERSION
 
- LDA #13
+ LDA #13                \ Print extended token 13 ("BY D.BRABEN & I.BELL")
  JSR DETOK
 
 ENDIF
@@ -132,18 +141,38 @@ ENDIF
 
 IF _6502SP_VERSION
 
- LDA brkd
- BEQ BRBR2
- INC brkd
- LDA #7
+ LDA brkd               \ If brkd = 0, jump to BRBR2 to skip printing the MOS
+ BEQ BRBR2              \ error message
+
+ INC brkd               \ Increment brkd
+
+ LDA #7                 \ Move the text cursor to column 7
  JSR DOXC
- LDA #10
+
+ LDA #10                \ Move the text cursor to row 10
  JSR DOYC
- LDY #0
- JSR OSWRCH
- INY
- LDA (&FD),Y
- BNE P%-6
+
+                        \ The following loop prints out the null-terminated
+                        \ message pointed to by (&FD &FE), which is the MOS
+                        \ error message pointer - so this prints the error
+                        \ message on the next line
+
+ LDY #0                 \ Set Y = 0 to act as a character counter
+
+ JSR OSWRCH             \ Print the character in A (which contains a line feed
+                        \ on the first loop iteration, and then any non-zero
+                        \ characters we fetch from the error message
+
+ INY                    \ Increment the loop counter
+
+ LDA (&FD),Y            \ Fetch the Y-th byte of the block pointed to by
+                        \ (&FD &FE), so that's the Y-th character of the message
+                        \ pointed to by the MOS error message pointer
+
+ BNE P%-6               \ If the fetched character is non-zero, loop back to the
+                        \ JSR OSWRCH above to print the it, and keep looping
+                        \ until we fetch a zero (which marks the end of the
+                        \ message)
 
 .BRBR2
 
@@ -171,17 +200,25 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- PLA
-\JSRex
- JSR DETOK
- LDA #7
+ PLA                    \ Restore the recursive token number we stored on the
+                        \ stack at the start of this subroutine
+
+\JSR ex                 \ This instruction is commented out in the original
+                        \ source (it would print the recursive token in A)
+
+ JSR DETOK              \ Print the extended token in A
+
+ LDA #7                 \ Move the text cursor to column 7
  JSR DOXC
- LDA #12
- JSR DETOK
- LDA #12
- STA CNT2
- LDA #5
- STA MCNT
+
+ LDA #12                \ Print extended token 12 ("({single cap}C) ACORNSOFT
+ JSR DETOK              \ 1984")
+
+ LDA #12                \ Set CNT2 = 12 as the outer loop counter for the loop
+ STA CNT2               \ starting at TLL2
+
+ LDA #5                 \ Set the main loop counter in MCNT to 5, to act as the
+ STA MCNT               \ inner loop counter for the loop starting at TLL2
 
 ENDIF
 
@@ -206,25 +243,29 @@ IF _CASSETTE_VERSION
 
  ASL A                  \ Set A = 0
 
- STA INWK               \ Set x_lo = 0, so ship remains in the screen centre
+ STA INWK               \ Set x_lo = 0, so the ship remains in the screen centre
 
- STA INWK+3             \ Set y_lo = 0, so ship remains in the screen centre
+ STA INWK+3             \ Set y_lo = 0, so the ship remains in the screen centre
 
 ELIF _6502SP_VERSION
 
- LDX #128
- STX INWK+6
- LDA MCNT
- AND #3
- BNE nodesire
+ LDX #128               \ Set z_lo = 128 (so the closest the ship gets to us is
+ STX INWK+6             \ z_hi = 1, z_lo = 128, or 256 + 128 = 384
 
- STX NEEDKEY            \ Set NEEDKEY = 128, so calls to LL9 to draw the ship
-                        \ also scan for key presses
+ LDA MCNT               \ This value will be zero on one out of every four
+ AND #3                 \ iterations, so for the other three, skip to nodesire
+ BNE nodesire           \ so we only scan for key presses once every four loops
+
+ STX NEEDKEY            \ Set NEEDKEY = 128, so the call to LL9 below draw the
+                        \ ship and scans for key presses (LL9 resets NEEDKEY to
+                        \ 0 so we have to reset NEEDKEY every four iterations
+                        \ round the inner loop)
 
 .nodesire
 
- STZ INWK
- STZ INWK+3
+ STZ INWK               \ Set x_lo = 0, so the ship remains in the screen centre
+
+ STZ INWK+3             \ Set y_lo = 0, so the ship remains in the screen centre
 
 ENDIF
 
@@ -256,7 +297,7 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- TAX
+ TAX                    \ Copy the joystick fire button state to X
 
 ENDIF
 
@@ -278,13 +319,18 @@ ELIF _6502SP_VERSION
 
  BNE TL3                \ If a key is being pressed, jump to TL3
 
- DEC MCNT
- BNE TLL2
+ DEC MCNT               \ Decrement the inner loop counter
 
- DEC CNT2
- BNE TLL2
+ BNE TLL2               \ Loop back to keep the ship rotating, until the inner
+                        \ loop counter is zero
 
- JMP DEMON
+ DEC CNT2               \ Decrement the outer loop counter in CNT2
+
+ BNE TLL2               \ Loop back to keep the ship rotating, until the outer
+                        \ loop counter is zero 
+
+ JMP DEMON              \ Once we have iterated through CNT2 iterations of MCNT,
+                        \ jump to DEMON to start the demo
 
 ENDIF
 

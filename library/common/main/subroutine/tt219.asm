@@ -30,8 +30,9 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA #2
- JSR TRADEMODE
+ LDA #2                 \ Clear the top part of the screen, draw a white border,
+ JSR TRADEMODE          \ and set up a printable trading screen with a view type
+                        \ in QQ11 of 2 (Buy Cargo screen)
 
 ENDIF
 
@@ -43,7 +44,7 @@ ENDIF
 \JSR FLKB               \ This instruction is commented out in the original
                         \ source. It calls a routine to flush the keyboard
                         \ buffer (FLKB) that isn't present in the cassette
-                        \ version but is in the disc version
+                        \ version but is in other versions
 
  LDA #0                 \ We're going to loop through all the available market
  STA QQ29               \ items, so we set up a counter in QQ29 to denote the
@@ -120,7 +121,13 @@ IF _CASSETTE_VERSION
 ELIF _6502SP_VERSION
 
 {
-.TT223
+.TT223                  \ This label is a duplicate of a label in gnum (which is
+                        \ why we need to surround it with braces, as BeebAsm
+                        \ doesn't allow us to redefine labels). This could be
+                        \ a remnant if the code in gnum was originally here, but
+                        \ got moved into the gnum subroutine without removing
+                        \ the original
+
 }
 
 ENDIF

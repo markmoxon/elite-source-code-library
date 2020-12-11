@@ -14,23 +14,21 @@
 
 .TT18
 
-IF _CASSETTE_VERSION
-
  LDA QQ14               \ Subtract the distance to the selected system (in QQ8)
- SEC                    \ from the amount of fuel in our tank (in QQ14)
+ SEC                    \ from the amount of fuel in our tank (in QQ14) into A
  SBC QQ8
- STA QQ14
 
-ELIF _6502SP_VERSION
+IF _6502SP_VERSION
 
- LDA QQ14
- SEC
- SBC QQ8
- BCS P%+4
- LDA #0
- STA QQ14
+ BCS P%+4               \ If the subtraction didn't overflow, skip the next
+                        \ instruction
+
+ LDA #0                 \ The subtraction overflowed, so set A = 0 so we don't
+                        \ end up with a negative amount of fuel
 
 ENDIF
+
+ STA QQ14               \ Store the updated fuel amount in QQ14
 
  LDA QQ11               \ If the current view is not a space view, jump to ee5
  BNE ee5                \ to skip the following

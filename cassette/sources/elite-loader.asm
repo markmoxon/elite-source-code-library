@@ -99,10 +99,14 @@ LE% = &0B00             \ LE% is the address to which the code from UU% onwards
                         \   * The variables used by the above
 
 IF DISC
+
  CODE% = &E00+&300      \ CODE% is set to the assembly address of the loader
                         \ code file that we assemble in this file ("ELITE")
+
 ELSE
+
  CODE% = &E00
+
 ENDIF
 
 NETV = &224             \ MOS vectors that we want to intercept
@@ -111,7 +115,6 @@ IRQ1V = &204
 OSWRCH = &FFEE          \ The address for the OSWRCH routine
 OSBYTE = &FFF4          \ The address for the OSBYTE routine
 OSWORD = &FFF1          \ The address for the OSWORD routine
-
 OSPRNT = &234           \ The address for the OSPRNT vector
 
 VIA = &FE00             \ Memory-mapped space for accessing internal hardware,

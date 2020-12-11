@@ -20,11 +20,15 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA #16
- JSR DOVDU19
- LDA #CYAN
- JSR DOCOL
- LDA #7
+ LDA #16                \ Send a #SETVDU19 16 command to the I/O processor to
+ JSR DOVDU19            \ switch to the mode 1 palette for the trade view, which
+                        \ is yellow (colour 1), magenta (colour 2) and white
+                        \ (colour 3)
+
+ LDA #CYAN              \ Send a #SETCOL CYAN command to the I/O processor to
+ JSR DOCOL              \ switch to colour 3, which is white in the chart view
+
+ LDA #7                 \ Move the text cursor to column 7
  JSR DOXC
 
 ENDIF
@@ -44,8 +48,8 @@ ENDIF
 
 IF _6502SP_VERSION
 
- LDA #CYAN
- JSR DOCOL
+ LDA #CYAN              \ Send a #SETCOL CYAN command to the I/O processor to
+ JSR DOCOL              \ switch to colour 3, which is white in the chart view
 
 ENDIF
 
@@ -213,8 +217,9 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- TYA
- JSR DOYC
+ TYA                    \ Now to print the label, so move the text cursor to row
+ JSR DOYC               \ Y (which contains the row where we can print this
+                        \ system's label)
 
 ENDIF
 
@@ -230,8 +235,9 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA #&FF
- STA INWK,Y
+ LDA #&FF               \ Store &FF in INWK+Y, to denote that this row is now
+ STA INWK,Y             \ occupied so we don't try to print another system's
+                        \ label on this row
 
 ENDIF
 
@@ -293,8 +299,10 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- BNE P%+5
- JMP HBFL
+ BNE P%+5               \ If X = 0 then we have done all 256 systems, so jump
+ JMP HBFL               \ to HBFL to send the contents of the horizontal line
+                        \ buffer to the I/O processor for drawing on-screen,
+                        \ returning from the subroutine using a tail call
 
 ENDIF
 

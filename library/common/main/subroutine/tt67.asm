@@ -15,8 +15,9 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- INC YC
- LDA #12
+ INC YC                 \ Move the text cursor counter in YC down a line
+
+ LDA #12                \ Load a newline character into A
 
 ENDIF
 

@@ -38,11 +38,16 @@ IF _6502SP_VERSION
  JSR GTDRV
 
  STA INWK+1
- PLA
+
+ PLA                    \ Restore A from the stack
+
  BCS QUR
- PHA
- LDA #&FF
- JSR DODOSVN
+
+ PHA                    \ Store A on the stack so we can restore it after the
+                        \ call to DODOSVN
+
+ LDA #255               \ Set the SVN flag to 255 to indicate that disc access
+ JSR DODOSVN            \ is in progress
 
  PLA                    \ Restore A from the stack
 
@@ -68,14 +73,16 @@ ELIF _6502SP_VERSION
  JSR OSFILE             \ Call OSFILE to do the file operation specified in
                         \ &0C00
 
- JSR CLDELAY
- LDA #0
- JSR DODOSVN
- CLC
+ JSR CLDELAY            \ Pause for 1280 empty loops
+
+ LDA #0                 \ Set the SVN flag to 0 indicate that disc access has
+ JSR DODOSVN            \ finished
+
+ CLC                    \ Clear the C flag
 
 .QUR
 
- RTS
+ RTS                    \ Return from the subroutine
 
 ENDIF
 

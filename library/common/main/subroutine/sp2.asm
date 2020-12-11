@@ -60,7 +60,8 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA #WHITE2
+ LDA #WHITE2            \ Set A to white, the colour for when the planet or
+                        \ station in the compass is in front of us
 
 ENDIF
 

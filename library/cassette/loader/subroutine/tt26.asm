@@ -162,7 +162,7 @@
  BPL David1             \ Loop back to David1 until we have done 14 character
                         \ rows (the height of the small text window)
 
- LDA #5                 \ Set the text row to 5
+ LDA #5                 \ Move the text cursor to row 5
  STA YC
 
  BNE rr                 \ Jump to rr to print the character we were about to

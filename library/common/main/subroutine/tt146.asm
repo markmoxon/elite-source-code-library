@@ -30,7 +30,8 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- JMP INCYC
+ JMP INCYC              \ Move the text cursor down by one line and return from
+                        \ the subroutine using a tail call
 
 ENDIF
 

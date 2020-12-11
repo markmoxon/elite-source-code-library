@@ -38,7 +38,7 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA #206
+ LDA #206               \ Print extended token 206 ("{all caps}(Y/N)?")
  JSR DETOK
 
 ENDIF

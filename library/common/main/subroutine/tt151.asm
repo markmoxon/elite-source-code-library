@@ -27,8 +27,11 @@ IF _6502SP_VERSION
 
 .TT151q
 
- PLA
- RTS \no trade items in MJ
+                        \ We jump here from below if we are in witchspace
+
+ PLA                    \ Restore the item number from the stack
+
+ RTS                    \ Return from the subroutine
 
 ENDIF
 
@@ -43,15 +46,15 @@ ENDIF
 
 IF _CASSETTE_VERSION
 
- LDA #1                 \ Set the text cursor to column 1, for the item's name
+ LDA #1                 \ Move the text cursor to column 1, for the item's name
  STA XC
 
 ELIF _6502SP_VERSION
 
- LDA MJ
- BNE TT151q
+ LDA MJ                 \ If we are in witchspace, we can't trade items, so jump
+ BNE TT151q             \ up to TT151q to return from the subroutine
 
- LDA #1                 \ Set the text cursor to column 1, for the item's name
+ LDA #1                 \ Move the text cursor to column 1, for the item's name
  JSR DOXC
 
 ENDIF
@@ -64,12 +67,12 @@ ENDIF
 
 IF _CASSETTE_VERSION
 
- LDA #14                \ Set the text cursor to column 14, for the price
+ LDA #14                \ Move the text cursor to column 14, for the price
  STA XC
 
 ELIF _6502SP_VERSION
 
- LDA #14                \ Set the text cursor to column 14, for the price
+ LDA #14                \ Move the text cursor to column 14, for the price
  JSR DOXC
 
 ENDIF
@@ -167,7 +170,7 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA #25
+ LDA #25                \ Move the text cursor to column 25
  JSR DOXC
 
 ENDIF

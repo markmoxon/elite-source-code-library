@@ -40,8 +40,8 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDY #2
- JSR DELAY
+ LDY #2                 \ Delay for 2 vertical syncs (2/50 = 0.04 seconds) so we
+ JSR DELAY              \ don't take up too much CPU time while looping round
 
 ENDIF
 

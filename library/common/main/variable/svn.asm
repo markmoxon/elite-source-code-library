@@ -19,5 +19,12 @@ ENDIF
 
  EQUB 0                 \ "Saving in progress" flag
                         \
-                        \ Set to 1 while we are saving a commander, 0 otherwise
+IF _CASSETTE_VERSION
+                        \   * Non-zero while we are saving a commander
+ELIF _6502SP_VERSION
+                        \   * Non-zero while the disc is being accessed (so this
+                        \     is also the case for cataloguing, loading etc.)
+ENDIF
+                        \
+                        \   * 0 otherwise
 

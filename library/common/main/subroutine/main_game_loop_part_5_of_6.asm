@@ -35,8 +35,9 @@ IF _CASSETTE_VERSION
 
 ENDIF
 
- LDX #&FF               \ Reset the 6502 stack pointer, which clears the stack
- TXS
+ LDX #&FF               \ Set the stack pointer to &01FF, which is the standard
+ TXS                    \ location for the 6502 stack, so this instruction
+                        \ effectively resets the stack
 
  LDX GNTMP              \ If the laser temperature in GNTMP is non-zero,
  BEQ EE20               \ decrement it (i.e. cool it down a bit)

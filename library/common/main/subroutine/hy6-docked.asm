@@ -48,7 +48,7 @@ ELIF _6502SP_VERSION
  JSR DOCOL              \ switch to colour 2, which is magenta in the trade view
                         \ or red in the chart view
 
- LDA #205               \ Print recursive token 205 ("DOCKED") and return from
+ LDA #205               \ Print extended token 205 ("DOCKED") and return from
  JMP DETOK              \ the subroutine using a tail call
 
 ENDIF

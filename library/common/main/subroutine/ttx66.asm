@@ -7,7 +7,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ Clear the top part of the screen (the spaced view) and draw a white border
+\ Clear the top part of the screen (the space view) and draw a white border
 \ along the top and sides.
 \
 \ Other entry points:
@@ -22,11 +22,15 @@
 
 IF _6502SP_VERSION
 
- JSR MT2
- JSR PBZE
- JSR HBZE
- STZ LBUP
- STZ LSP
+ JSR MT2                \ Switch to Sentence Case when printing extended tokens
+
+ JSR PBZE               \ Reset the pixel buffer size in PBUP
+
+ JSR HBZE               \ Reset the horizontal line buffer size in HBUP
+
+ STZ LBUP               \ Reset the line buffer size at LBUP
+
+ STZ LSP                \ Reset the ball line heap pointer at LSP
 
 ENDIF
 
@@ -36,7 +40,7 @@ ENDIF
 IF _CASSETTE_VERSION
 
  ASL A                  \ Set LASCT to 0, as 128 << 1 = %10000000 << 1 = 0. This
- STA LASCT              \ stops any laser pulsing. This instruction is STA LS2
+ STA LASCT              \ stops any laser pulsing. This instruction is STA LAS2
                         \ in the text source file ELITEC.TXT
 
  STA DLY                \ Set the delay in DLY to 0, to indicate that we are
@@ -79,22 +83,40 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- STA DTW2
- JSR FLFLLS
- LDA #YELLOW
- JSR DOCOL
- STZ LAS2
- STZ DLY
- STZ de\+++
- LDA #11
- JSR OSWRCH
- LDX QQ22+1
- BEQ OLDBOX
- JSR ee3
+ STA DTW2               \ Set bit 7 of DTW2 to indicate we are not currently
+                        \ printing a word
+
+ JSR FLFLLS             \ Call FLFLLS to reset the LSO block
+
+ LDA #YELLOW            \ Send a #SETCOL YELLOW command to the I/O processor to
+ JSR DOCOL              \ switch to colour 2, which is yellow
+
+ STZ LAS2               \ Set LAS2 = 0 to stop any laser pulsing
+
+ STZ DLY                \ Set the delay in DLY to 0, to indicate that we are
+                        \ no longer showing an in-flight message, so any new
+                        \ in-flight messages will be shown instantly
+
+ STZ de                 \ Clear de, the flag that appends " DESTROYED" to the
+                        \ end of the next text token, so that it doesn't
+
+ LDA #11                \ Write ASCII character 11, to move the system cursor up
+ JSR OSWRCH             \ one line
+
+ LDX QQ22+1             \ Fetch into X the number that's shown on-screen during
+                        \ the hyperspace countdown
+
+ BEQ OLDBOX             \ If the counter is zero then we are not counting down
+                        \ to hyperspace, so jump to OLDBOX to skip the next
+                        \ instruction
+
+ JSR ee3                \ Print the 8-bit number in X at text location (0, 1),
+                        \ i.e. print the hyperspace countdown in the top-left
+                        \ corner
 
 .OLDBOX
 
- LDA #1
+ LDA #1                 \ Move the text cursor to column 1
  JSR DOYC
 
 ENDIF
@@ -109,10 +131,11 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA #11
+ LDA #11                \ Move the text cursor to row 11
  JSR DOXC
- LDA #CYAN
- JSR DOCOL
+
+ LDA #CYAN              \ Send a #SETCOL CYAN command to the I/O processor to
+ JSR DOCOL              \ switch to colour 3, which is cyan in the space view
 
 ENDIF
 
@@ -145,22 +168,27 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA #1
+ LDA #1                 \ Move the text cursor to column 1, row 1
  JSR DOXC
  JSR DOYC
- LDX #0
+
+ LDX #0                 \ Set QQ17 = 0 to switch to ALL CAPS
  STX QQ17
- RTS
+
+ RTS                    \ Return from the subroutine
 
 .BOX
 
- LDA #YELLOW
- JSR DOCOL
- LDX #0
+ LDA #YELLOW            \ Send a #SETCOL YELLOW command to the I/O processor to
+ JSR DOCOL              \ switch to colour 2, which is yellow
+
+ LDX #0                 \ Set QQ17 = 0 to switch to ALL CAPS
  STX QQ17
- STX X1
+
+ STX X1                 \ Set (X1, Y1) to (0, 0)
  STX Y1
- STX Y2
+
+ STX Y2                 \ Set Y2 = 0
 
 ENDIF
 
@@ -175,7 +203,8 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- JSR LL30
+ JSR LL30               \ Draw a line from (X1, Y1) to (X2, Y2), so that's
+                        \ (0, 0) to (255, 0), along the very top of the screen
 
 ENDIF
 

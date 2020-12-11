@@ -25,7 +25,8 @@ ENDIF
 
 IF _CASSETTE_VERSION
 
- LDA #1
+ LDA #1                 \ Set the view type to 1 when this is called via the
+                        \ TT66-2 entry point
 
 ENDIF
 

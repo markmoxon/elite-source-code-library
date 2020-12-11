@@ -52,9 +52,12 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA #RED
- JSR DOCOL
- JMP CIRCLE2
+ LDA #RED               \ Send a #SETCOL RED command to the I/O processor to
+ JSR DOCOL              \ switch to colour 2, which is red in the chart view
+
+ JMP CIRCLE2            \ Jump to CIRCLE2 to draw a circle with the centre at
+                        \ (K3(1 0), K4(1 0)) and radius K, returning from the
+                        \ subroutine using a tail call
 
 ENDIF
 

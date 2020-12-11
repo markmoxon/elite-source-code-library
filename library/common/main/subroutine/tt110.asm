@@ -61,9 +61,10 @@
 
 IF _6502SP_VERSION
 
- LDA #&FF
+ LDA #255               \ Set the view number in QQ11 to 255
  STA QQ11
- JSR HFS1
+
+ JSR HFS1               \ Call HFS1 to draw 8 concentric rings
 
 ENDIF
 

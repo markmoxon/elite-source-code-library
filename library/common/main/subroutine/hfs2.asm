@@ -10,7 +10,7 @@
 \ The animation gets drawn like this. First, we draw a circle of radius 8 at the
 \ centre, and then double the radius, draw another circle, double the radius
 \ again and draw a circle, and we keep doing this until the radius is bigger
-\ than160 (which goes beyond the edge of the screen, which is 256 pixels wide,
+\ than 160 (which goes beyond the edge of the screen, which is 256 pixels wide,
 \ equivalent to a radius of 128). We then repeat this whole process for an
 \ initial circle of radius 9, then radius 10, all the way up to radius 15.
 \
@@ -32,6 +32,12 @@ ENDIF
 \   A                   The step size of the straight lines making up the rings
 \                       (4 for launch, 8 for hyperspace)
 \
+IF _6502SP_VERSION
+\ Other entry points:
+\
+\   HFS1                Don't clear the screen, and draw 8 concentric rings
+\                       with the step size in STP
+ENDIF
 \ ******************************************************************************
 
 .HFS2

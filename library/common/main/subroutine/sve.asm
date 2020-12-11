@@ -3,7 +3,11 @@
 \       Name: SVE
 \       Type: Subroutine
 \   Category: Save and load
+IF _CASSETTE_VERSION
 \    Summary: Save the commander file
+ELIF _6502SP_VERSION
+\    Summary: Show the disc menu to save or load the commander file
+ENDIF
 \  Deep dive: The competition code
 \
 \ ******************************************************************************

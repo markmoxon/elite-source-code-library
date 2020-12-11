@@ -81,12 +81,17 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- CMP #&47
+ CMP #&47               \ If "@" was not pressed, skip to nosave
  BNE nosave
- JSR SVE
- BCC P%+5
- JMP QU5
- JMP BAY
+
+ JSR SVE                \ "@" was pressed, so call SVE to show the disc menu
+
+ BCC P%+5               \ If the C flag was set by SVE, then we loaded a new
+ JMP QU5                \ commander file, so jump to QU5 to restart the game
+                        \ with the newly loaded commander
+
+ JMP BAY                \ Otherwise the C flag was clear, so jump to BAY to go
+                        \ to the docking bay (i.e. show the Status Mode screen)
 
 .nosave
 
@@ -129,25 +134,30 @@ ENDIF
  BNE P%+5               \ jump (if we are in space), returning from the
  JMP hyp                \ subroutine using a tail call
 
-IF _CASSETTE_VERSION
+IF _6502SP_VERSION
+
+.NWDAV5
+
+ENDIF
 
  CMP #&32               \ If "D" was pressed, jump to T95 to print the distance
  BEQ T95                \ to a system (if we are in one of the chart screens)
 
-ELIF _6502SP_VERSION
+IF _6502SP_VERSION
 
-.NWDAV5
+ CMP #&43               \ If "F" was not pressed, jump down to HME1, otherwise
+ BNE HME1               \ keep going to process searching for systems
 
- CMP #&32
- BEQ T95
- CMP #&43\Find
- BNE HME1
- LDA QQ12
- BEQ t95
- LDA QQ11
- AND #192
- BEQ t95
- JMP HME2
+ LDA QQ12               \ If QQ12 = 0 (we are not docked), we can't search for
+ BEQ t95                \ systems, so return from the subroutine (as t95
+                        \ contains an RTS)
+
+ LDA QQ11               \ If the current view is a chart (QQ11 = 64 or 128),
+ AND #%11000000         \ keep going, otherwise return from the subroutine (as
+ BEQ t95                \ t95 contains an RTS)
+
+ JMP HME2               \ Jump to HME2 to let us search for a system, returning
+                        \ from the subroutine using a tail call
 
 .HME1
 
@@ -184,7 +194,10 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- JMP TT103
+ JMP TT103              \ Draw small crosshairs at coordinates (QQ9, QQ10),
+                        \ which will draw the crosshairs at our current home
+                        \ system, and return from the subroutine using a tail
+                        \ call
 
 ENDIF
 
@@ -256,8 +269,8 @@ ENDIF
 
 IF _6502SP_VERSION
 
- LDA #CYAN
- JSR DOCOL
+ LDA #CYAN              \ Send a #SETCOL CYAN command to the I/O processor to
+ JSR DOCOL              \ switch to colour 3, which is white in the chart view
 
 ENDIF
 
@@ -279,12 +292,13 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA #10
+ LDA #10                \ Print a line feed to move the text cursor down a line
  JSR TT26
 
- LDA #1
+ LDA #1                 \ Move the text cursor to column 1
  JSR DOXC
- JSR INCYC
+
+ JSR INCYC              \ Move the text cursor down one line
 
 ENDIF
 

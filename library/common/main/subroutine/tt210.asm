@@ -65,12 +65,12 @@ ENDIF
 
 IF _CASSETTE_VERSION
 
- LDA #14                \ Set the text cursor to column 14, for the item's
+ LDA #14                \ Move the text cursor to column 14, for the item's
  STA XC                 \ quantity
 
 ELIF _6502SP_VERSION
 
- LDA #14                \ Set the text cursor to column 14, for the item's
+ LDA #14                \ Move the text cursor to column 14, for the item's
  JSR DOXC               \ quantity
 
 ENDIF
@@ -80,7 +80,7 @@ ENDIF
 
 IF _6502SP_VERSION
 
- STA QQ25
+ STA QQ25               \ Store the amount of this item in the hold in QQ25
 
 ENDIF
 
@@ -109,14 +109,24 @@ ELIF _6502SP_VERSION
 
 \JSRTT162
 
- LDA #205               \ Set A to recursive token 45 ("SELL")
-
+ LDA #205               \ Print recursive token 45 ("SELL")
  JSR TT27
- LDA #206
+
+ LDA #206               \ Print extended token 206 ("{all caps}(Y/N)?")
  JSR DETOK
- JSR gnum
- BEQ TT212
- BCS NWDAV4
+
+ JSR gnum               \ Call gnum to get a number from the keyboard, which
+                        \ will be the number of the item we want to sell,
+                        \ returning the number entered in A and R, and setting
+                        \ the C flag if the number is bigger than the available
+                        \ amount of this item in QQ25
+
+ BEQ TT212              \ If no number was entered, jump to TT212 to move on to
+                        \ the next item
+
+ BCS NWDAV4             \ If the number entered was too big, jump to NWDAV4 to
+                        \ print an "ITEM?" error, make a beep and rejoin the
+                        \ routine at NWDAVxx above
 
 ENDIF
 
@@ -138,12 +148,13 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDY QQ29
- LDA QQ20,Y
- SEC
+ LDY QQ29               \ Subtract R (the number of items we just asked to buy)
+ LDA QQ20,Y             \ from the available amount of this item in QQ20, as we
+ SEC                    \ just bought them
  SBC R
  STA QQ20,Y
- LDA R
+
+ LDA R                  \ Set P to the amount of this item we just bought
  STA P
 
 ENDIF
@@ -182,7 +193,7 @@ ENDIF
 
 IF _CASSETTE_VERSION
 
- CPY #17                \ If A >= 17 then skip the next instruction as we have
+ CPY #17                \ If Y >= 17 then skip the next instruction as we have
  BCS P%+5               \ done the last item
 
  JMP TT211              \ Otherwise loop back to TT211 to print the next item
@@ -190,8 +201,9 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- CPY #17
- BCC TT211
+ CPY #17                \ Loop back to TT211 to print the next item in the hold
+ BCC TT211              \ until Y = 17 (at which point we have done the last
+                        \ item)
 
 ENDIF
 

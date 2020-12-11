@@ -113,7 +113,7 @@
 
 IF _6502SP_VERSION
 
- NOP
+ NOP                    \ This instruction appears to have no effect
 
 ENDIF
 

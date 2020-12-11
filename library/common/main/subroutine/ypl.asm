@@ -22,8 +22,10 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- BIT MJ
- BMI ypl16
+ BIT MJ                 \ Check the mis-jump flag at MJ, and if bit 7 is set
+ BMI ypl16              \ then we are in witchspace, and witchspace doesn't have
+                        \ a system name, so jump to ypl16 to return from the
+                        \ subroutine
 
 ENDIF
 

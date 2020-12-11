@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: XX21
+\       Name: E%
 \       Type: Variable
 \   Category: Drawing ships
 \    Summary: Ship blueprints NEWB table

@@ -3,7 +3,11 @@
 \       Name: ZERO
 \       Type: Subroutine
 \   Category: Utility routines
+IF _CASSETTE_VERSION
 \    Summary: Zero-fill pages &9, &A, &B, &C and &D
+ELIF _6502SP_VERSION
+\    Summary: Reset the local bubble of universe and ship status
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
@@ -14,10 +18,13 @@ IF _CASSETTE_VERSION
 \
 \   * The ship line heap descending from WP at &0D40
 \
-ENDIF
 \   * WP workspace variables from FRIN to de, which include the ship slots for
 \     the local bubble of universe, and various flight and ship status variables
 \     (only a portion of the LSX/LSO sun line heap is cleared)
+ELIF _6502SP_VERSION
+\   * UP workspace variables from FRIN to de, which include the ship slots for
+\     the local bubble of universe, and various flight and ship status variables
+ENDIF
 \
 \ ******************************************************************************
 
@@ -41,15 +48,22 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDX #(de-FRIN)
- LDA #0
+ LDX #(de-FRIN)         \ We're going to zero the UP workspace variables from
+                        \ FRIN to de, so set a counter in X for the correct
+                        \ number of bytes
+
+ LDA #0                 \ Set A = 0 so we can zero the variables
 
 .ZEL2
 
- STA FRIN,X
- DEX
- BPL ZEL2
- RTS
+ STA FRIN,X             \ Zero the X-th byte of FRIN to de
+
+ DEX                    \ Decrement the loop counter
+
+ BPL ZEL2               \ Loop back to zero the next variable until we have done
+                        \ them all
+
+ RTS                    \ Return from the subroutine
 
 ENDIF
 

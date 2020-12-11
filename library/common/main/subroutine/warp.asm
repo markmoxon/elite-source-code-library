@@ -41,7 +41,9 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDX JUNK
+ LDX JUNK               \ Set X to the total number of junk items in the
+                        \ vicinity (e.g. asteroids, escape pods, cargo
+                        \ canisters, shuttles, transportes and so pn)
 
 ENDIF
 

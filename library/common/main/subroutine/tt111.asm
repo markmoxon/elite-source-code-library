@@ -30,6 +30,10 @@
 \   QQ15 to QQ15+5      The three 16-bit seeds of the nearest system to the
 \                       original coordinates
 \
+IF _6502SP_VERSION
+\   ZZ                  The system number of the nearest system
+\
+ENDIF
 \ Other entry points:
 \
 \   TT111-1             Contains an RTS
@@ -129,8 +133,9 @@
 
 IF _6502SP_VERSION
 
- LDA U
- STA ZZ
+ LDA U                  \ Store the system number U in ZZ, so when we are done
+ STA ZZ                 \ looping through all the candidates, the winner's
+                        \ number will be in ZZ
 
 ENDIF
 

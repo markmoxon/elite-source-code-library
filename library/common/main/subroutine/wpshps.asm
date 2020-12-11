@@ -77,8 +77,10 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- STZ LSP
- LDX #&FF
+ STZ LSP                \ Reset the ball line heap by setting the ball line heap
+                        \ pointer to 0
+
+ LDX #&FF               \ Set X = &FF (though this appears not to be used)
 
 ENDIF
 

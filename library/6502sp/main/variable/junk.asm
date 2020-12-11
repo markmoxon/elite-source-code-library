@@ -6,7 +6,7 @@
                         \
                         \   * Escape pod
                         \   * Alloy plate
-                        \   * cargo canister
+                        \   * Cargo canister
                         \   * Asteroid
                         \   * Splinter
                         \   * Shuttle

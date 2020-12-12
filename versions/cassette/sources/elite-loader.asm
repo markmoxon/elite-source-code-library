@@ -30,7 +30,7 @@
 \
 \ ******************************************************************************
 
-INCLUDE "cassette/sources/elite-header.h.asm"
+INCLUDE "versions/cassette/sources/elite-header.h.asm"
 
 _CASSETTE_VERSION       = TRUE AND (_VERSION = 1)
 _DISC_VERSION           = TRUE AND (_VERSION = 2)
@@ -216,4 +216,4 @@ PRINT "Memory usage: ", ~LE%, " - ",~P%
 PRINT "Stack: ",LEN + ENDBLOCK - BLOCK
 
 PRINT "S. ELITE ", ~CODE%, " ", ~UU% + (P% - LE%), " ", ~run, " ", ~CODE%
-SAVE "cassette/output/ELITE.unprot.bin", CODE%, UU% + (P% - LE%), run, CODE%
+SAVE "versions/cassette/output/ELITE.unprot.bin", CODE%, UU% + (P% - LE%), run, CODE%

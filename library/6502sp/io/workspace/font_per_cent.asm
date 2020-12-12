@@ -6,5 +6,5 @@ ORG CODE%
 
 FONT% = P% DIV 256
 
-INCBIN "6502sp/binaries/P.FONT.bin"
+INCBIN "versions/6502sp/binaries/P.FONT.bin"
 

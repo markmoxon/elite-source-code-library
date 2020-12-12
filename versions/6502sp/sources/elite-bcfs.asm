@@ -21,57 +21,57 @@ LOAD% = &1000
 
 ORG CODE%
 
-INCBIN "6502sp/extracted/workspaces/BCFS-MOS.bin"
+INCBIN "versions/6502sp/extracted/workspaces/BCFS-MOS.bin"
 
 .elitea
 
 PRINT "elitea = ", ~P%
-INCBIN "6502sp/output/ELTA.bin"
+INCBIN "versions/6502sp/output/ELTA.bin"
 
 .eliteb
 
 PRINT "eliteb = ", ~P%
-INCBIN "6502sp/output/ELTB.bin"
+INCBIN "versions/6502sp/output/ELTB.bin"
 
 .elitec
 
 PRINT "elitec = ", ~P%
-INCBIN "6502sp/output/ELTC.bin"
+INCBIN "versions/6502sp/output/ELTC.bin"
 
 .elited
 
 PRINT "elited = ", ~P%
-INCBIN "6502sp/output/ELTD.bin"
+INCBIN "versions/6502sp/output/ELTD.bin"
 
 .elitee
 
 PRINT "elitee = ", ~P%
-INCBIN "6502sp/output/ELTE.bin"
+INCBIN "versions/6502sp/output/ELTE.bin"
 
 .elitef
 
 PRINT "elitef = ", ~P%
-INCBIN "6502sp/output/ELTF.bin"
+INCBIN "versions/6502sp/output/ELTF.bin"
 
 .eliteg
 
 PRINT "eliteg = ", ~P%
-INCBIN "6502sp/output/ELTG.bin"
+INCBIN "versions/6502sp/output/ELTG.bin"
 
 .eliteh
 
 PRINT "eliteh = ", ~P%
-INCBIN "6502sp/output/ELTH.bin"
+INCBIN "versions/6502sp/output/ELTH.bin"
 
 .elitei
 
 PRINT "elitei = ", ~P%
-INCBIN "6502sp/output/ELTI.bin"
+INCBIN "versions/6502sp/output/ELTI.bin"
 
 .elitej
 
 PRINT "elitej = ", ~P%
-INCBIN "6502sp/output/ELTJ.bin"
+INCBIN "versions/6502sp/output/ELTJ.bin"
 
 F% = P%
 PRINT "F% = ", ~F%
@@ -82,15 +82,15 @@ ORG F%
 .words
 
 PRINT "words = ", ~P%
-INCBIN "6502sp/output/WORDS.bin"
+INCBIN "versions/6502sp/output/WORDS.bin"
 
 ORG F% + &400
 
 .ships
 
 PRINT "ships = ", ~P%
-INCBIN "6502sp/output/SHIPS.bin"
-INCBIN "6502sp/extracted/workspaces/BCFS-SHIPS.bin"
+INCBIN "versions/6502sp/output/SHIPS.bin"
+INCBIN "versions/6502sp/extracted/workspaces/BCFS-SHIPS.bin"
 
 .end
 
@@ -102,4 +102,4 @@ INCBIN "6502sp/extracted/workspaces/BCFS-SHIPS.bin"
 
 PRINT "P% = ", ~P%
 PRINT "S.P.CODE ", ~LOAD%, ~(F% + &400 + &2200), " ", ~LOAD%, ~LOAD%
-SAVE "6502sp/output/CODE.unprot.bin", CODE%, (F% + &400 + &2200), LOAD%
+SAVE "versions/6502sp/output/CODE.unprot.bin", CODE%, (F% + &400 + &2200), LOAD%

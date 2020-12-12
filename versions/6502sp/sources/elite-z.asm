@@ -16,7 +16,7 @@
 \
 \ ******************************************************************************
 
-INCLUDE "6502sp/sources/elite-header.h.asm"
+INCLUDE "versions/6502sp/sources/elite-header.h.asm"
 
 CPU 1
 
@@ -197,4 +197,4 @@ PRINT "Reload at ", ~LOAD%
 PRINT "protlen = ", ~protlen
 
 PRINT "S.I.CODE ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "6502sp/output/I.CODE.bin", CODE%, P%, LOAD%
+SAVE "versions/6502sp/output/I.CODE.bin", CODE%, P%, LOAD%

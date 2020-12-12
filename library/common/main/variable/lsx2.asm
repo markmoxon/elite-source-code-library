@@ -14,7 +14,7 @@ ELIF _6502SP_VERSION
 .LSX2
 
 IF _MATCH_EXTRACTED_BINARIES
- INCBIN "6502sp/extracted/workspaces/ELTA-LSX2.bin"
+ INCBIN "versions/6502sp/extracted/workspaces/ELTA-LSX2.bin"
 ELSE
  SKIP &100
 ENDIF

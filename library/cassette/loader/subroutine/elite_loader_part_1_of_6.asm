@@ -44,27 +44,27 @@
 
 ORG CODE%
 PRINT "WORDS9 = ",~P%
-INCBIN "cassette/output/WORDS9.bin"
+INCBIN "versions/cassette/output/WORDS9.bin"
 
 ORG CODE% + &400
 PRINT "P.DIALS = ",~P%
-INCBIN "cassette/binaries/P.DIALS.bin"
+INCBIN "versions/cassette/binaries/P.DIALS.bin"
 
 ORG CODE% + &B00
 PRINT "PYTHON = ",~P%
-INCBIN "cassette/output/PYTHON.bin"
+INCBIN "versions/cassette/output/PYTHON.bin"
 
 ORG CODE% + &C00
 PRINT "P.ELITE = ",~P%
-INCBIN "cassette/binaries/P.ELITE.bin"
+INCBIN "versions/cassette/binaries/P.ELITE.bin"
 
 ORG CODE% + &D00
 PRINT "P.A-SOFT = ",~P%
-INCBIN "cassette/binaries/P.A-SOFT.bin"
+INCBIN "versions/cassette/binaries/P.A-SOFT.bin"
 
 ORG CODE% + &E00
 PRINT "P.(C)ASFT = ",~P%
-INCBIN "cassette/binaries/P.(C)ASFT.bin"
+INCBIN "versions/cassette/binaries/P.(C)ASFT.bin"
 
 O% = CODE% + &400 + &800 + &300
 ORG O%

@@ -51,4 +51,4 @@ INCLUDE "library/6502sp/loader2/subroutine/elite_loader_part_2_of_2.asm"
 \ ******************************************************************************
 
 PRINT "S.ELITEa ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "6502sp/output/ELITEa.bin", CODE%, P%, LOAD%
+SAVE "versions/6502sp/output/ELITEa.bin", CODE%, P%, LOAD%

@@ -5,7 +5,7 @@
 .logL
 
 IF _MATCH_EXTRACTED_BINARIES
- INCBIN "6502sp/extracted/workspaces/ELTG-logL.bin"
+ INCBIN "versions/6502sp/extracted/workspaces/ELTG-logL.bin"
 ELSE
  SKIP 1
  FOR I%, 1, 255

@@ -31,7 +31,7 @@ data_block = bytearray()
 
 # Load assembled code file
 
-elite_file = open('6502sp/output/CODE.unprot.bin', 'rb')
+elite_file = open('versions/6502sp/output/CODE.unprot.bin', 'rb')
 data_block.extend(elite_file.read())
 elite_file.close()
 
@@ -113,6 +113,6 @@ if Encrypt:
 
 # Write output file for 'ELTcode'
 
-output_file = open('6502sp/output/P.CODE.bin', 'wb')
+output_file = open('versions/6502sp/output/P.CODE.bin', 'wb')
 output_file.write(data_block)
 output_file.close()

@@ -16,7 +16,7 @@
 \
 \ ******************************************************************************
 
-INCLUDE "6502sp/sources/elite-header.h.asm"
+INCLUDE "versions/6502sp/sources/elite-header.h.asm"
 
 _CASSETTE_VERSION       = TRUE AND (_VERSION = 1)
 _DISC_VERSION           = TRUE AND (_VERSION = 2)
@@ -76,4 +76,4 @@ INCLUDE "library/6502sp/loader1/variable/mess2.asm"
 \ ******************************************************************************
 
 PRINT "S.ELITE ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "6502sp/output/ELITE.bin", CODE%, P%, LOAD%
+SAVE "versions/6502sp/output/ELITE.bin", CODE%, P%, LOAD%

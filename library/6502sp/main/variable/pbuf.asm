@@ -22,7 +22,7 @@
 
 IF _MATCH_EXTRACTED_BINARIES
 
- INCBIN "6502sp/extracted/workspaces/ELTB-PBUF.bin"
+ INCBIN "versions/6502sp/extracted/workspaces/ELTB-PBUF.bin"
 
 ELSE
 

@@ -33,7 +33,7 @@
 \
 \ ******************************************************************************
 
-INCLUDE "cassette/sources/elite-header.h.asm"
+INCLUDE "versions/cassette/sources/elite-header.h.asm"
 
 _CASSETTE_VERSION       = TRUE AND (_VERSION = 1)
 _DISC_VERSION           = TRUE AND (_VERSION = 2)
@@ -66,37 +66,37 @@ INCLUDE "library/cassette/bcfs/subroutine/lbl.asm"
 .elitea
 
 PRINT "elitea = ", ~P%
-INCBIN "cassette/output/ELTA.bin"
+INCBIN "versions/cassette/output/ELTA.bin"
 
 .eliteb
 
 PRINT "eliteb = ", ~P%
-INCBIN "cassette/output/ELTB.bin"
+INCBIN "versions/cassette/output/ELTB.bin"
 
 .elitec
 
 PRINT "elitec = ", ~P%
-INCBIN "cassette/output/ELTC.bin"
+INCBIN "versions/cassette/output/ELTC.bin"
 
 .elited
 
 PRINT "elited = ", ~P%
-INCBIN "cassette/output/ELTD.bin"
+INCBIN "versions/cassette/output/ELTD.bin"
 
 .elitee
 
 PRINT "elitee = ", ~P%
-INCBIN "cassette/output/ELTE.bin"
+INCBIN "versions/cassette/output/ELTE.bin"
 
 .elitef
 
 PRINT "elitef = ", ~P%
-INCBIN "cassette/output/ELTF.bin"
+INCBIN "versions/cassette/output/ELTF.bin"
 
 .eliteg
 
 PRINT "eliteg = ", ~P%
-INCBIN "cassette/output/ELTG.bin"
+INCBIN "versions/cassette/output/ELTG.bin"
 
 .checksum0
 
@@ -108,7 +108,7 @@ PRINT "checksum0 = ", ~P%
 .ships
 
 PRINT "ships = ", ~P%
-INCBIN "cassette/output/SHIPS.bin"
+INCBIN "versions/cassette/output/SHIPS.bin"
 
 .end
 
@@ -120,5 +120,5 @@ INCBIN "cassette/output/SHIPS.bin"
 
 PRINT "P% = ", ~P%
 PRINT "S.ELTcode 1100 ", ~(LOAD% + &6000 - CODE%), " ", ~LOAD%, ~LOAD%
-SAVE "cassette/output/ELTcode.unprot.bin", &1100, (LOAD% + &6000 - CODE%), LOAD%
-SAVE "cassette/output/ELThead.bin", &1100, elitea, &1100
+SAVE "versions/cassette/output/ELTcode.unprot.bin", &1100, (LOAD% + &6000 - CODE%), LOAD%
+SAVE "versions/cassette/output/ELThead.bin", &1100, elitea, &1100

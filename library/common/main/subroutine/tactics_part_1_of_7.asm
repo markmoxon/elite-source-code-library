@@ -90,18 +90,28 @@ IF _CASSETTE_VERSION
  LDY #8                 \ K3(8 7 6) = (z_sign z_hi z_lo) - z-coordinate of
  JSR TAS1               \ target ship
 
-                        \ So K3 now contains the vector from the target ship to
-                        \ the missile
-
 ELIF _6502SP_VERSION
 
- TAX
- LDA UNIV,X
+ TAX                    \ Copy the address of the target ship's data block from
+ LDA UNIV,X             \ UNIV(X+1 X) to (A V)
  STA V
  LDA UNIV+1,X
- JSR VCSUB
+
+ JSR VCSUB              \ Calculate vector K3 as follows:
+                        \
+                        \ K3(2 1 0) = (x_sign x_hi x_lo) - x-coordinate of
+                        \ target ship
+                        \
+                        \ K3(5 4 3) = (y_sign y_hi z_lo) - y-coordinate of
+                        \ target ship
+                        \
+                        \ K3(8 7 6) = (z_sign z_hi z_lo) - z-coordinate of
+                        \ target ship
 
 ENDIF
+
+                        \ So K3 now contains the vector from the target ship to
+                        \ the missile
 
  LDA K3+2               \ Set A = OR of all the sign and high bytes of the
  ORA K3+5               \ above, clearing bit 7 (i.e. ignore the signs)
@@ -194,11 +204,14 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- BCS P%+5
+ BCS P%+5               \ If the C flag is set then the target has E.C.M.
+                        \ fitted, so skip the next instruction
 
 .TA19S
 
- JMP TA19
+ JMP TA19               \ The target does not have E.C.M. fitted, so jump down
+                        \ to TA19 with the vector from the target to the missile
+                        \ in K3
 
 ENDIF
 

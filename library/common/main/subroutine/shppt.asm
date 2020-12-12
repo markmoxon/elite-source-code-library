@@ -55,7 +55,9 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA #9
+ LDA #9                 \ Set A = 9 so when we call LL18+2 next, byte #0 of the
+                        \ heap gets set to 9, to cover the 8 bytes we just stuck
+                        \ on the heap
 
 ENDIF
 

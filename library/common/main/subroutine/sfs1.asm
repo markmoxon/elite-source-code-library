@@ -34,6 +34,10 @@
 \
 \   INWK                The whole INWK workspace is preserved
 \
+IF _6502SP_VERSION
+\   X                   X is preserved
+\
+ENDIF
 \ ******************************************************************************
 
 .SFS1
@@ -47,8 +51,8 @@
 
 IF _6502SP_VERSION
 
- TXA
- PHA
+ TXA                    \ Store X, the ship type to spawn, on the stack so we
+ PHA                    \ can preserve it through the routine
 
 ENDIF
 
@@ -141,11 +145,14 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- CMP #SPL+1
- BCS NOIL
- CMP #PLT
- BCC NOIL
- PHA
+ CMP #SPL+1             \ If the type of the child we are spawning is less than
+ BCS NOIL               \ #PLT or greater than #SPL - i.e. not an alloy plate,
+ CMP #PLT               \ cargo canister, boulder, asteroid or splinter - then
+ BCC NOIL               \ jump to NOIL to skip us setting up some pitch and roll
+                        \ for it
+
+ PHA                    \ Store the child's ship type on the stack so we can
+                        \ retrieve it below
 
 ENDIF
 
@@ -169,7 +176,7 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- PLA
+ PLA                    \ Retrieve the child's ship type from the stack 
 
 ENDIF
 
@@ -207,8 +214,8 @@ ENDIF
 
 IF _6502SP_VERSION
 
- PLA
- TAX
+ PLA                    \ Retrieve the ship type to spawn from the stack into X
+ TAX                    \ so it is preserved through calls to this routine
 
 ENDIF
 

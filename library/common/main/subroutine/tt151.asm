@@ -13,7 +13,7 @@
 \   A                   The number of the market item to print, 0-16 (see QQ23
 \                       for details of item numbers)
 \
-\ Results:
+\ Returns:
 \
 \   QQ19+1              Byte #1 from the market prices table for this item
 \

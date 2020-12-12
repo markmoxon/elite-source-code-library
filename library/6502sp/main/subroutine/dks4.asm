@@ -3,7 +3,8 @@
 \       Name: DKS4
 \       Type: Subroutine
 \   Category: Keyboard
-\    Summary: Ask the I/O processor to scan for a particular key press
+\    Summary: Scan for a particular key press by sending a #DODKS4 command to
+\             the I/O processor
 \
 \ ------------------------------------------------------------------------------
 \

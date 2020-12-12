@@ -3,7 +3,7 @@
 \       Name: label
 \       Type: Subroutine
 \   Category: Text
-\    Summary: Write a two-byte command to the I/O processor
+\    Summary: Send a two-byte OSWRCH command to the I/O processor
 \
 \ ------------------------------------------------------------------------------
 \

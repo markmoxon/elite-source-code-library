@@ -3,7 +3,8 @@
 \       Name: DODOSVN
 \       Type: Subroutine
 \   Category: Save and load
-\    Summary: Set the SVN ("save in progress") flag
+\    Summary: Set the SVN ("save in progress") flag by sending a #DOsvn command
+\             to the I/O processor
 \
 \ ------------------------------------------------------------------------------
 \

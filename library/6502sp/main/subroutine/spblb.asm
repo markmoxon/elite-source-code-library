@@ -3,7 +3,8 @@
 \       Name: SPBLB
 \       Type: Subroutine
 \   Category: Dashboard
-\    Summary: Light up the space station indicator ("S") on the dashboard
+\    Summary: Light up the space station indicator ("S") on the dashboard by
+\             sending a #DOBULB command to the I/O processor
 \
 \ ------------------------------------------------------------------------------
 \

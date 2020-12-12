@@ -3,7 +3,8 @@
 \       Name: WSCAN
 \       Type: Subroutine
 \   Category: Screen mode
-\    Summary: Ask the I/O processor to wait for the vertical sync
+\    Summary: Ask the I/O processor to wait for the vertical sync by sending a
+\             #wscn command to the I/O processor
 \
 \ ------------------------------------------------------------------------------
 \
@@ -26,7 +27,7 @@
  PHX                    \ Store X and Y on the stack so we can restore them
  PHY                    \ later
 
- LDA #wscn
+ LDA #wscn              \ Set A in preparation for sending a #wscn command
 
  LDX #LO(WSCpars)       \ Set (Y X) to point to the parameter block above
  LDY #HI(WSCpars)

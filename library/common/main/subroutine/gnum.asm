@@ -7,11 +7,18 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ Get a number from the keyboard, up to the maximum number in QQ25. Pressing a
-\ key with an ASCII code less than ASCII "0" will return a 0 in A (so that
-\ includes pressing Space or Return), while pressing a key with an ASCII code
-\ greater than ASCII "9" will jump to the Inventory screen (so that includes
-\ all letters and most punctuation).
+\ Get a number from the keyboard, up to the maximum number in QQ25, for the
+\ buying and selling of cargo and equipment.
+\
+IF _6502SP_VERSION
+\ Pressing "Y" will return the maximum number (i.e. buy/sell all items), while
+\ pressing "N" will abort the sale and return a 0.
+\
+ENDIF
+\ Pressing a key with an ASCII code less than ASCII "0" will return a 0 in A (so
+\ that includes pressing Space or Return), while pressing a key with an ASCII
+\ code greater than ASCII "9" will jump to the Inventory screen (so that
+\ includes all letters and most punctuation).
 \
 \ Arguments:
 \
@@ -49,12 +56,14 @@ ENDIF
 
 IF _6502SP_VERSION
 
- LDX R
- BNE NWDAV2
- CMP #'y'
- BEQ NWDAV1
- CMP #'n'
- BEQ NWDAV3
+ LDX R                  \ If R is non-zero then skip to NWDAV2, as we are
+ BNE NWDAV2             \ already building a number
+
+ CMP #'y'               \ If "Y" was pressed, jump to NWDAV1 to return the
+ BEQ NWDAV1             \ maximum number allowed (i.e. buy/sell the whole stock)
+
+ CMP #'n'               \ If "N" was pressed, jump to NWDAV3 to return from the
+ BEQ NWDAV3             \ subroutine with a result of 0 (i.e. abort transaction)
 
 .NWDAV2
 
@@ -113,10 +122,13 @@ ENDIF
 
 IF _6502SP_VERSION
 
- PHP
- LDA #CYAN
- JSR DOCOL
- PLP
+ PHP                    \ Store the processor flags, so we can return the C flag
+                        \ without the call to DOCOL corrupting it
+
+ LDA #CYAN              \ Send a #SETCOL CYAN command to the I/O processor to
+ JSR DOCOL              \ switch to colour 3, which is white in the trade view
+
+ PLP                    \ Restore the processor flags, in particular the C flag
 
 ENDIF
 
@@ -128,17 +140,26 @@ IF _6502SP_VERSION
 
 .NWDAV1
 
- JSR TT26
- LDA QQ25
+                        \ If we get here then "Y" was pressed, so we return the
+                        \ maximum number allowed, which is in QQ25
+
+ JSR TT26               \ Print the character for the key that was pressed
+
+ LDA QQ25               \ Set R = QQ25, so we return the maximum value allowed
  STA R
- BRA OUT\++
+
+ BRA OUT                \ Jump to OUT to return from the subroutine
 
 .NWDAV3
 
- JSR TT26
- LDA #0
+                        \ If we get here then "N" was pressed, so we return 0
+
+ JSR TT26               \ Print the character for the key that was pressed
+
+ LDA #0                 \ Set R = 0, so we return 0
  STA R
- BRA OUT\++
+
+ BRA OUT                \ Jump to OUT to return from the subroutine
 
 ENDIF
 

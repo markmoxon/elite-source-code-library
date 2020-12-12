@@ -3,7 +3,8 @@
 \       Name: LS2FL
 \       Type: Subroutine
 \   Category: Drawing circles
-\    Summary: Send the ball line heap to the I/O processor for drawing
+\    Summary: Draw the contents of the ball line heap by sending an OSWRCH 129
+\             command to the I/O processor
 \
 \ ******************************************************************************
 
@@ -24,7 +25,7 @@
  BEQ WP1                \ If there are no points in the heap, jump down to WP1
                         \ to return from the subroutine
 
- LDA #&81               \ Send an OSWRCH &81 command to the I/O processor to
+ LDA #129               \ Send an OSWRCH 129 command to the I/O processor to
  JSR OSWRCH             \ tell it to start drawing a new line. This means the
                         \ next byte we send to OSWRCH 
 

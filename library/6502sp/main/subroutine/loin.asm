@@ -1,5 +1,6 @@
 \ ******************************************************************************
 \       Name: LOIN
+\ by sending an OSWRCH 129 command to the I/O processor
 \ ******************************************************************************
 
 .LOIN
@@ -28,7 +29,7 @@
  LDY LBUP
  BEQ LBZE2
  INY
- LDA #&81
+ LDA #129
  JSR OSWRCH
  TYA
  JSR OSWRCH

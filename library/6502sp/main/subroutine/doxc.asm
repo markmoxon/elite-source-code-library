@@ -3,7 +3,8 @@
 \       Name: DOXC
 \       Type: Subroutine
 \   Category: Text
-\    Summary: Move the text cursor to a specified column
+\    Summary: Move the text cursor to a specified column by sending a #SETXC
+\             command to the I/O processor
 \
 \ ------------------------------------------------------------------------------
 \

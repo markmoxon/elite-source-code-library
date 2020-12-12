@@ -3,7 +3,8 @@
 \       Name: DOVDU19
 \       Type: Subroutine
 \   Category: Text
-\    Summary: Define a logical colour
+\    Summary: Change the mode 1 palette by sending a #SETVDU19 command to the
+\             I/O processor
 \
 \ ------------------------------------------------------------------------------
 \

@@ -8,7 +8,7 @@
 \ ------------------------------------------------------------------------------
 \
 \ Lines are drawn by sending the line coordinates one byte at a time from the
-\ parasite, using the OSWRCH &81 and &82 commands. As they are sent, they are
+\ parasite, using the OSWRCH 129 and 130 commands. As they are sent, they are
 \ stored in the TABLE buffer, until all the points have been received, at which
 \ point the line is drawn.
 \

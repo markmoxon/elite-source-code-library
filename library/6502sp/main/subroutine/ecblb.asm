@@ -3,7 +3,8 @@
 \       Name: ECBLB
 \       Type: Subroutine
 \   Category: Dashboard
-\    Summary: Light up the E.C.M. indicator bulb ("E") on the dashboard
+\    Summary: Light up the E.C.M. indicator bulb ("E") on the dashboard by
+\             sending a #DOBULB command to the I/O processor
 \
 \ ------------------------------------------------------------------------------
 \

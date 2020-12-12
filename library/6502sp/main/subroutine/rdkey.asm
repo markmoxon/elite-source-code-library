@@ -3,7 +3,8 @@
 \       Name: RDKEY
 \       Type: Subroutine
 \   Category: Keyboard
-\    Summary: Ask the I/O processor to scan the keyboard for key presses
+\    Summary: Scan the keyboard for key presses by sending an OSWORD 240 command
+\             to the I/O processor
 \
 \ ------------------------------------------------------------------------------
 \

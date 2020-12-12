@@ -95,8 +95,9 @@ ELIF _6502SP_VERSION
 
 .LOR
 
- SEC
- RTS
+ SEC                    \ Set the C flag to indicate a file has been loaded
+
+ RTS                    \ Return from the subroutine
 
 .ELT2F
 

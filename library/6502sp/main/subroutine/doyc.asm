@@ -3,7 +3,8 @@
 \       Name: DOYC
 \       Type: Subroutine
 \   Category: Text
-\    Summary: Move the text cursor to a specified row
+\    Summary: Move the text cursor to a specified row by sending a #SETYC
+\             command to the I/O processor
 \
 \ ------------------------------------------------------------------------------
 \

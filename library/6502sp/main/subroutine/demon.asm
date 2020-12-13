@@ -17,7 +17,10 @@
  LDX #(acorn MOD256)
  LDY #(acorn DIV256)
  JSR SLIDE
- JSR ZINF2
+
+ JSR ZINF2              \ Call ZINF2 to reset INWK and the orientation vectors,
+                        \ with nosev pointing out of the screen
+
  LDA #128
  STA INWK+5
  LDA #100
@@ -56,8 +59,13 @@
  JSR LL9
  LDA INWK+14
  BPL FLYL2
- JSR STORE
- JSR ZINF2
+
+ JSR STORE              \ Call STORE to copy the ship data block at INWK back to
+                        \ the K% workspace
+
+ JSR ZINF2              \ Call ZINF2 to reset INWK and the orientation vectors,
+                        \ with nosev pointing out of the screen
+
  LDA #108
  STA INWK+3
  LDA #40
@@ -95,7 +103,10 @@
  STA INWK+27
  LDA #&87
  STA INWK+30
- JSR STORE
+
+ JSR STORE              \ Call STORE to copy the ship data block at INWK back to
+                        \ the K% workspace
+
  LDA #128
  TSB K%+31 \++
  JSR EXNO3
@@ -121,7 +132,9 @@
  STA TYPE
  INC INWK
  JSR LL9
- JSR STORE
+
+ JSR STORE              \ Call STORE to copy the ship data block at INWK back to
+                        \ the K% workspace
 
  JSR PBFL               \ Call PBFL to send the contents of the pixel buffer to
                         \ the I/O processor for plotting on-screen
@@ -148,7 +161,10 @@
  STA TYPE
  JSR MVEIT
  JSR LL9
- JSR STORE
+
+ JSR STORE              \ Call STORE to copy the ship data block at INWK back to
+                        \ the K% workspace
+
  PLP
  BNE FLYL5
  LDA #14

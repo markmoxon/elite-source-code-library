@@ -141,10 +141,10 @@ ENDIF
 
 IF _6502SP_VERSION
 
- LDA brkd               \ If brkd = 0, jump to BRBR2 to skip printing the MOS
- BEQ BRBR2              \ error message
+ LDA brkd               \ If brkd = 0, jump to BRBR2 to skip the following, we
+ BEQ BRBR2              \ we do not have a system error message to display
 
- INC brkd               \ Increment brkd
+ INC brkd               \ Increment the brkd counter
 
  LDA #7                 \ Move the text cursor to column 7
  JSR DOXC

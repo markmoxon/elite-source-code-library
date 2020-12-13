@@ -3,11 +3,12 @@
 \       Name: ZINF
 \       Type: Subroutine
 \   Category: Utility routines
-\    Summary: Reset the INWK workspace
+\    Summary: Reset the INWK workspace and orientation vectors
 \
 \ ------------------------------------------------------------------------------
 \
-\ Zero-fill the INWK ship workspace and reset the orientation vectors.
+\ Zero-fill the INWK ship workspace and reset the orientation vectors, with
+\ nosev pointing into the screen.
 \
 \ Returns:
 \
@@ -38,20 +39,21 @@
                         \   roofv = (0,  1,  0)
                         \   nosev = (0,  0, -1)
                         \
-                        \ &6000 represents 1 in the orientation vectors, while
-                        \ &E000 represents -1. We already set the vectors to
-                        \ zero above, so we just need to set up the diagonal
-                        \ values and we're done
+                        \ 96 * 256 (&6000) represents 1 in the orientation
+                        \ vectors, while -96 * 256 (&E000) represents -1. We
+                        \ already set the vectors to zero above, so we just
+                        \ need to set up the high bytes of the diagonal values
+                        \ and we're done
 
- LDA #&60               \ Set A to represent a 1
+ LDA #96                \ Set A to represent a 1 (in vector terms)
 
- STA INWK+18            \ Set byte #18 = roofv_y_hi = &60 = 1
+ STA INWK+18            \ Set byte #18 = roofv_y_hi = 96 = 1
 
- STA INWK+22            \ Set byte #22 = sidev_x_hi = &60 = 1
+ STA INWK+22            \ Set byte #22 = sidev_x_hi = 96 = 1
 
  ORA #128               \ Flip the sign of A to represent a -1
 
- STA INWK+14            \ Set byte #14 = nosev_z_hi = &E0 = -1
+ STA INWK+14            \ Set byte #14 = nosev_z_hi = -96 = -1
 
  RTS                    \ Return from the subroutine
 

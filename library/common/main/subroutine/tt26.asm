@@ -74,19 +74,28 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- STA K3
- TYA
- PHA
+ STA K3                 \ Store the A, X and Y registers, so we can restore
+ TYA                    \ them at the end (so they don't get changed by this
+ PHA                    \ routine)
  TXA
  PHA
  LDA K3
- TAY
- BEQ RR4S
- CMP #11
- BEQ cls
- CMP #7
- BNE P%+5
- JMP R5
+
+ TAY                    \ Set Y = the character to be printed
+
+ BEQ RR4S               \ If the character is zero, jump down to RR4 (via the
+                        \ JMP in RR4S) to restore the registers and return from
+                        \ the subroutine using a tail call
+
+ CMP #11                \ If this is control code 11 (line feed), jump to cls to
+ BEQ cls                \ clear the top part of the screen, draw a white border
+                        \ and return from the subroutine via RR4
+
+ CMP #7                 \ If this is not control code 7 (beep), skip the next
+ BNE P%+5               \ instruction
+
+ JMP R5                 \ This is control code 7 (beep), so jump to R5 to make
+                        \ a beep and return from the subroutine via RR4
 
 ENDIF
 
@@ -120,13 +129,17 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- CMP #13
- BEQ RR4S
- INC YC
+ CMP #13                \ If this is control code 13 (carriage return) then jump
+ BEQ RR4S               \ to RR4 (via the JMP in RR4S) to restore the registers
+                        \ and return from the subroutine using a tail call
+
+ INC YC                 \ Increment the text cursor y-coordinate to move it
+                        \ down one row
 
 .RR4S
 
- JMP RR4
+ JMP RR4                \ Jump to RR4 to restore the registers and return from
+                        \ the subroutine using a tail call
 
 ENDIF
 

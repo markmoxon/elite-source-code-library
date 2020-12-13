@@ -6,10 +6,18 @@
 IF _CASSETTE_VERSION
 \    Summary: Save the commander file
 ELIF _6502SP_VERSION
-\    Summary: Show the disc menu to save or load the commander file
+\    Summary: Display the disc access menu and process saving of commander files
 ENDIF
 \  Deep dive: The competition code
 \
+IF _6502SP_VERSION
+\ ------------------------------------------------------------------------------
+\
+\ Returns:
+\
+\   C flag              Set if we loaded a new file, clear otherwise
+\
+ENDIF
 \ ******************************************************************************
 
 .SVE
@@ -21,35 +29,64 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- JSR ZEBC
- TSX
- STX stack
- LDA #(MEBRK MOD256)
- SEI
- STA BRKV
- LDA #(MEBRK DIV256)
- STA BRKV+1
+ JSR ZEBC               \ Call ZEBC to zero-fill pages &B and &C
+
+ TSX                    \ Transfer the stack pointer to X and store it in stack,
+ STX stack              \ so we can restore it in the MRBRK routine
+
+ LDA #LO(MEBRK)         \ Set BRKV to point to the MEBRK routine, disabling
+ SEI                    \ while we make the change and re-enabling them once we
+ STA BRKV               \ are done. MEBRK is the BRKV handler for disc access
+ LDA #HI(MEBRK)         \ operations, and replaces the standard BRKV handler in
+ STA BRKV+1             \ BRBR while disc access operations are happening
  CLI
- LDA #1
- JSR DETOK
- JSR t
- CMP #&31
- BCC SVEX
- CMP #&34
- BEQ DELT
- BCS SVEX
- CMP #&32
- BCS SV1
- JSR GTNMEW
- JSR LOD
- JSR TRNME
- SEC
- BCS SVEX+1
+
+ LDA #1                 \ Print extended token 1, the disc access menu, which
+ JSR DETOK              \ presents these options:
+                        \
+                        \   1. Load New Commander
+                        \   2. Save Commander {commander name}
+                        \   3. Catalogue
+                        \   4. Delete A File
+                        \   5. Exit
+
+ JSR t                  \ Scan the keyboard until a key is pressed, returning
+                        \ the ASCII code in A and X
+
+ CMP #'1'               \ If A < ASCII "1", jump to SVEX to exit as the key
+ BCC SVEX               \ press doesn't match a menu option
+
+ CMP #'4'               \ If "4" was pressed, jump to DELT to process option 4
+ BEQ DELT               \ (delete a file)
+
+ BCS SVEX               \ If A >= ASCII "4", jump to SVEX to exit as the key
+                        \ press is either option 5 (exit), or it doesn't match a
+                        \ menu option (as we already checked for "4" above)
+
+ CMP #'2'               \ If A >= ASCII "2" (i.e. save or catalogue), skip to
+ BCS SV1                \ SV1
+
+ JSR GTNMEW             \ If we get here then option 1 (load) was chosen, so
+                        \ call GTNMEW to fetch the name of the commander file
+                        \ to load
+
+ JSR LOD                \ Call LOD to load the commander file
+
+ JSR TRNME              \ Transfer the commander filename from INWK to NA%
+
+ SEC                    \ Set the C flag to indicate we loaded a new commander
+ BCS SVEX+1             \ file, and return from the subroutine (as SVEX+1
+                        \ contains an RTS)
 
 .SV1
 
- BNE CAT
- JSR GTNMEW
+ BNE CAT                \ We get here following the CMP #'2' above, so this
+                        \ jumps to CAT if option 2 was not chosen - in other
+                        \ words, if option 3 (catalogue) was chosen
+
+ JSR GTNMEW             \ If we get here then option 2 (save) was chosen, so
+                        \ call GTNMEW to fetch the name of the commander file
+                        \ to save
 
 ENDIF
 
@@ -203,8 +240,12 @@ ELIF _6502SP_VERSION
 
 .SVEX
 
- CLC
- JMP BRKBK
+ CLC                    \ Clear the C flag to indicate we didn't just load a new
+                        \ commander file
+
+ JMP BRKBK              \ Jump to BRKBK to set BRKV back to the standard BRKV
+                        \ handler for the game, and return from the subroutine
+                        \ using a tail call
 
 ENDIF
 

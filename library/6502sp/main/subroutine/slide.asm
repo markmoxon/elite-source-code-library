@@ -5,7 +5,9 @@
 .SLIDE
 
  JSR GRIDSET
- JSR ZEVB
+
+ JSR ZEVB               \ Call ZEVB to zero-fill the Y1VB variable
+
  LDA #YELLOW
  JSR DOCOL
  LDA #254
@@ -20,7 +22,8 @@
 
 .SL1
 
- JSR ZEVB
+ JSR ZEVB               \ Call ZEVB to zero-fill the Y1VB variable
+
  LDA #2
  STA BALI
 

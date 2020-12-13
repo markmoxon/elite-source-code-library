@@ -9,6 +9,12 @@
 \
 \ The filename should be stored at INWK, terminated with a carriage return (13).
 \
+IF _6502SP_VERSION
+\ Other entry points:
+\
+\   LOR                 Set the C flag and return from the subroutine
+\
+ENDIF
 \ ******************************************************************************
 
 .LOD
@@ -16,7 +22,7 @@
 IF _CASSETTE_VERSION
 
  LDX #2                 \ Enable the ESCAPE key and clear memory if the BREAK
- JSR FX200              \ key is pressed (*FX 200,2)
+ JSR FX200              \ key is pressed (*FX 200, 2)
 
  JSR ZERO               \ Zero-fill pages &9, &A, &B, &C and &D, which clears
                         \ the ship data blocks, the ship line heap, the ship
@@ -25,12 +31,14 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
-\LDX #LO(MINI)
-\LDY #HI(MINI)
-\JSR SCLI
-\JMP LOL1-2
-\LDX #2
-\JSR FX200
+\LDX #LO(MINI)          \ These instructions are commented out in the original
+\LDY #HI(MINI)          \ source, but they would load a commander file called
+\JSR SCLI               \ "E.MINING" and continue below, so presumably this is
+\JMP LOL1-2             \ code for loading a test commander file
+
+\LDX #2                 \ These instructions are commented out in the original
+\JSR FX200              \ source, but they would enable the ESCAPE key and clear
+                        \ memory if the BREAK key is pressed (*FX 200, 2)
 
  JSR ZEBC               \ Call ZEBC to zero-fill pages &B and &C
 
@@ -60,14 +68,21 @@ IF _CASSETTE_VERSION
                         \ to BR1... so this instruction restarts the game from
                         \ the title screen. Valid commander files for the
                         \ cassette version of Elite only have 0 for the first
-                        \ byte, while the disc version can have 0, 1, 2, &A or
-                        \ &E, so having bit 7 set is invalid anyway
+                        \ byte, as there are no missions in this version, so
+                        \ having bit 7 set is invalid anyway
 
 ELIF _6502SP_VERSION
 
- BCS LOR
- LDA &B00
- BMI ELT2F
+ BCS LOR                \ If the C flag is set then an invalid drive number was
+                        \ entered during the call to QUS1 and the file wasn't
+                        \ loaded, so jump to LOR to return from the subroutine
+
+ LDA &B00               \ If the first byte of the loaded file has bit 7 set,
+ BMI ELT2F              \ jump to ELT2F, as this is an invalid commander file
+                        \
+                        \ ELT2F contains a BRK instruction, which will force an
+                        \ interrupt to call the address in BRKV, which will
+                        \ print out the system error at ELT2F
 
 ENDIF
 
@@ -95,16 +110,20 @@ ELIF _6502SP_VERSION
 
 .LOR
 
- SEC                    \ Set the C flag to indicate a file has been loaded
+ SEC                    \ Set the C flag
 
  RTS                    \ Return from the subroutine
 
 .ELT2F
 
+ BRK                    \ The error that is printed if we try to load an
+ EQUS "IIllegal "       \ invalid commander file with bit 7 of byte #0 set
+ EQUS "ELITE II file"   \ (the spelling mistake is in the original source)
  BRK
- EQUS "IIllegal ELITE II file"
- BRK
-\.MINI \EQUS("L.E.MINING B00")\EQUB13
+ 
+\.MINI                  \ These instructions are commented out in the original
+\EQUS "L.E.MINING B00"  \ source, and form part of the commented section above
+\EQUB 13
 
 ENDIF
 

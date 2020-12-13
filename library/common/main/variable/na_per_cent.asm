@@ -41,15 +41,14 @@
                         \ commander. Q% can be set to TRUE to give the default
                         \ commander lots of credits and equipment
 
- EQUB 0                 \ Mission status. The disc version of the game has two
-                        \ missions, and this byte contains the status of those
-                        \ missions (the possible values are 0, 1, 2, &A, &E). As
-                        \ the cassette version doesn't have missions, this byte
-                        \ will always be zero, which means no missions have been
-                        \ started
+ EQUB 0                 \ TP = Mission status
                         \
                         \ Note that this byte must not have bit 7 set, or
+IF _CASSETTE_VERSION
                         \ loading this commander will cause the game to restart
+ELIF _6502SP_VERSION
+                        \ loading this commander will give an error
+ENDIF
 
  EQUB 20                \ QQ0 = current system X-coordinate (Lave)
  EQUB 173               \ QQ1 = current system Y-coordinate (Lave)

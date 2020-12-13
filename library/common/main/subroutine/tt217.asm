@@ -24,6 +24,10 @@
 \
 \   out                 Contains an RTS
 \
+IF _6502SP_VERSION
+\   t                   As TT217 but don't preserve Y, set it to YSAV instead
+\
+ENDIF
 \ ******************************************************************************
 
 .TT217

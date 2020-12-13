@@ -88,12 +88,14 @@
 IF _CASSETTE_VERSION
 
  LDX #3                 \ Set up a counter in X for the width of the indicator,
-                        \ which is 4 characters (each of which is 4 pixel wide,
+                        \ which is 4 characters (each of which is 4 pixels wide,
                         \ to give a total width of 16 pixels)
 
 ELIF _6502SP_VERSION
 
- LDX #7
+ LDX #7                 \ Set up a counter in X for the width of the indicator,
+                        \ which is 8 characters (each of which is 2 pixels wide,
+                        \ to give a total width of 16 pixels)
 
 ENDIF
 
@@ -113,10 +115,13 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- CMP #2
- BCC DL2
- SBC #2
- STA Q
+ CMP #2                 \ If Q < 2, then we need to draw the end cap of the
+ BCC DL2                \ indicator, which is less than a full character's
+                        \ width, so jump down to DL2 to do this
+
+ SBC #2                 \ Otherwise we can draw a 2-pixel wide block, so
+ STA Q                  \ subtract 2 from Q so it contains the amount of the
+                        \ indicator that's left to draw after this character
 
 ENDIF
 
@@ -170,8 +175,13 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- EOR #1
- STA Q
+ EOR #1                 \ If we get here then we are drawing the indicator's
+ STA Q                  \ end cap, so Q is < 2, and this EOR flips the bits, so
+                        \ instead of containing the number of indicator columns
+                        \ we need to fill in on the left side of the cap's
+                        \ character block, Q now contains the number of blank
+                        \ columns there should be on the right side of the cap's
+                        \ character block
 
 ENDIF
 
@@ -184,16 +194,19 @@ ENDIF
 
 IF _CASSETTE_VERSION
 
- ASL A                  \ Shift the mask left and clear bits 0 and 4, which has
- AND #%11101111         \ the effect of shifting zeroes from the left into each
-                        \ nibble (i.e. xxxx xxxx becomes xxx0 xxx0, which blanks
-                        \ out the last column in the 4-pixel mode 5 character
-                        \ block)
+ ASL A                  \ Shift the mask left so bit 0 is cleared, and then
+ AND #%11101111         \ clear bit 4, which has the effect of shifting zeroes
+                        \ from the left into each nibble (i.e. xxxx xxxx becomes
+                        \ xxx0 xxx0, which blanks out the last column in the
+                        \ 4-pixel mode 5 character block)
 
 ELIF _6502SP_VERSION
 
- ASL A
- AND #&AA
+ ASL A                  \ Shift the mask left and clear bits 0, 2, 4 and 8,
+ AND #%10101010         \ which has the effect of shifting zeroes from the left
+                        \ into each two-bit segment (i.e. xx xx xx xx becomes
+                        \ x0 x0 x0 x0, which blanks out the last column in the
+                        \ 2-pixel mode 2 character block)
 
 ENDIF
 
@@ -221,15 +234,21 @@ ENDIF
 
 .DL6
 
+IF _CASSETTE_VERSION
+
  INC SC+1               \ Increment the high byte of SC to point to the next
                         \ character row on-screen (as each row takes up exactly
                         \ one page of 256 bytes) - so this sets up SC to point
                         \ to the next indicator, i.e. the one below the one we
                         \ just drew
 
-IF _6502SP_VERSION
+ELIF _6502SP_VERSION
 
- INC SC+1
+ INC SC+1               \ Increment the high byte of SC to point to the next
+ INC SC+1               \ character row on-screen (as each row takes up exactly
+                        \ two pages of 256 bytes) - so this sets up SC to point
+                        \ to the next indicator, i.e. the one below the one we
+                        \ just drew
 
 ENDIF
 

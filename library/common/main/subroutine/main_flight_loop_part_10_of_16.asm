@@ -35,9 +35,7 @@
  SEC                    \ that it has been killed and should be removed from
  ROR INWK+31            \ the local bubble
 
-.MA61
-
-                        \ This label is not used but is in the original source
+.MA61                   \ This label is not used but is in the original source
 
  BNE MA26               \ Jump to MA26 to skip over the collision routines and
                         \ to move on to missile targeting (this BNE is

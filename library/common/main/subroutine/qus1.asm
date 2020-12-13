@@ -7,8 +7,13 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ The filename should be stored at INWK, terminated with a carriage return (13),
-\ and the routine should be called with Y set to &C.
+\ The filename should be stored at INWK, terminated with a carriage return (13).
+IF _CASSETTE_VERSION
+\ The routine should be called with Y set to &C.
+ELIF _6502SP_VERSION
+\ The routine asks for a drive number and updates the filename accordingly
+\ before performing the load or save.
+ENDIF
 \
 \ Arguments:
 \
@@ -25,6 +30,11 @@ IF _CASSETTE_VERSION
 \                       filename in INWK is stored below (by the STX &C00
 \                       instruction)
 \
+ELIF _6502SP_VERSION
+\ Returns:
+\
+\   C flag              Set if an invalid drive number was entered
+\
 ENDIF
 \ ******************************************************************************
 
@@ -35,13 +45,17 @@ IF _6502SP_VERSION
  PHA                    \ Store A on the stack so we can restore it after the
                         \ call to GTDRV
 
- JSR GTDRV
+ JSR GTDRV              \ Get an ASCII disc drive drive number from the keyboard
+                        \ in A, setting the C flag if an invalid drive number
+                        \ was entered
 
- STA INWK+1
+ STA INWK+1             \ Store the ASCII drive number in INWK+1, which is the
+                        \ drive character of the filename string ":0.E."
 
  PLA                    \ Restore A from the stack
 
- BCS QUR
+ BCS QUR                \ If the C flag is set, then an invalid drive number was
+                        \ entered, so jump to QUR to return from the subroutine
 
  PHA                    \ Store A on the stack so we can restore it after the
                         \ call to DODOSVN
@@ -62,8 +76,8 @@ IF _CASSETTE_VERSION
  LDX #0                 \ Set X to 0 so (Y X) = &0C00
 
  JMP OSFILE             \ Jump to OSFILE to do the file operation specified in
-                        \ &0C00, returning from the subroutine using a tail
-                        \ call
+                        \ &0C00 (i.e. save or load a file depending on the value
+                        \ of A), returning from the subroutine using a tail call
 
 ELIF _6502SP_VERSION
 
@@ -71,7 +85,8 @@ ELIF _6502SP_VERSION
  LDY #&C
 
  JSR OSFILE             \ Call OSFILE to do the file operation specified in
-                        \ &0C00
+                        \ &0C00 (i.e. save or load a file depending on the value
+                        \ of A)
 
  JSR CLDELAY            \ Pause for 1280 empty loops
 

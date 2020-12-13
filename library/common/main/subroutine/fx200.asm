@@ -10,6 +10,22 @@
 \ This is the equivalent of a *FX 200 command, which controls the behaviour of
 \ the ESCAPE and BREAK keys.
 \
+\ Arguments:
+\
+\   X                   Controls the behaviour as follows:
+\
+\                         * 0 = Enable ESCAPE key
+\                               Normal BREAK key action
+\
+\                         * 1 = Disable ESCAPE key
+\                               Normal BREAK key action
+\
+\                         * 2 = Enable ESCAPE key
+\                               Clear memory if the BREAK key is pressed
+\
+\                         * 3 = Disable ESCAPE key
+\                               Clear memory if the BREAK key is pressed
+\
 \ ******************************************************************************
 
 .FX200

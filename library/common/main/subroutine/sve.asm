@@ -68,7 +68,7 @@ ENDIF
 
 IF _6502SP_VERSION
 
- LDA #3
+ LDA #3                 \ Print extended token 3 ("COMPETITION NUMBER:")
  JSR DETOK
 
 ENDIF
@@ -123,16 +123,26 @@ IF _CASSETTE_VERSION
                         \ variable in zero page, so isn't reset by ZERO). I
                         \ wonder if the competition number can ever get printed
                         \ out incorrectly, with a decimal point and the wrong
-                        \ number of digits?
+                        \ number of digits? Other versions of Elite have a CLC
+                        \ instruction before the call to BPRNT, presumably to
+                        \ fix this issue
 
  JSR TT67               \ Call TT67 twice to print two newlines
  JSR TT67
 
 ELIF _6502SP_VERSION
 
- CLC
- JSR BPRNT
- JSR TT67
+ CLC                    \ Clear the C flag so the call to BPRNT does not include
+                        \ a decimal point
+ 
+ JSR BPRNT              \ Print the competition number stored in K to K+3. The
+                        \ value of U might affect how this is printed, and as
+                        \ it's a temporary variable in zero page that isn't
+                        \ reset by ZERO, it might have any value, but as the
+                        \ competition code is a 10-digit number, this just means
+                        \ it may or may not have an extra space of padding
+
+ JSR TT67               \ Print a newline
 
 ENDIF
 

@@ -16,6 +16,9 @@ ELIF _6502SP_VERSION
                         \
                         \   * Bit 2 set = mission 2 in progress
                         \   * Bit 3 set = mission 2 completed
+                        \
+                        \ Bit 7 must not be set, as otherwise commander files
+                        \ saved with this value will give an error when loaded
 
 ENDIF
 

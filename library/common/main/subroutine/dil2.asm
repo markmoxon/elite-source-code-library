@@ -40,7 +40,7 @@
                         \ a pixel row counter to work our way through the
                         \ character blocks, so each time we draw a character
                         \ block, we will increment Y by 8 to move on to the next
-                        \ block
+                        \ block (as each character block contains 8 rows)
 
 .DLL10
 
@@ -50,22 +50,26 @@ IF _CASSETTE_VERSION
  LDA Q                  \ vertical bar from the start of this character block
  SBC #4
 
+ BCS DLL11              \ If Q >= 4 then the character block we are drawing does
+                        \ not contain the vertical indicator bar, so jump to
+                        \ DLL11 to draw a blank character block
+
 ELIF _6502SP_VERSION
 
  SEC                    \ Set A = Q - 2, so that A contains the offset of the
  LDA Q                  \ vertical bar from the start of this character block
  SBC #2
 
-ENDIF
-
- BCS DLL11              \ If Q >= 4 then the character block we are drawing does
+ BCS DLL11              \ If Q >= 2 then the character block we are drawing does
                         \ not contain the vertical indicator bar, so jump to
                         \ DLL11 to draw a blank character block
 
+ENDIF
+
  LDA #&FF               \ Set A to a high number (and &FF is as high as they go)
 
- LDX Q                  \ Set X to the offset of the vertical bar, which is
-                        \ within this character block as Q < 4
+ LDX Q                  \ Set X to the offset of the vertical bar, which we know
+                        \ is within this character block
 
  STA Q                  \ Set Q to a high number (&FF, why not) so we will keep
                         \ drawing blank characters after this one until we reach
@@ -90,7 +94,12 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- AND #WHITE2
+ AND #WHITE2            \ The 2-pixel mode 2 byte in #WHITE2 represents two
+                        \ pixels of colour %0111 (7), which is white in both
+                        \ dashboard palettes. We AND this with A so that we only
+                        \ keep the pixel that matches the position of the
+                        \ vertical bar (i.e. A is acting as a mask on the
+                        \ 2-pixel colour byte)
 
 ENDIF
 
@@ -135,23 +144,23 @@ IF _CASSETTE_VERSION
  BCC DLL10              \ blocks to draw, so loop back to DLL10 to display the
                         \ next one along
 
-ELIF _6502SP_VERSION
-
- CPY #60                \ If Y < 60 then we still have some more character
- BCC DLL10              \ blocks to draw, so loop back to DLL10 to display the
-                        \ next one along
-
-ENDIF
-
  INC SC+1               \ Increment the high byte of SC to point to the next
                         \ character row on-screen (as each row takes up exactly
                         \ one page of 256 bytes) - so this sets up SC to point
                         \ to the next indicator, i.e. the one below the one we
                         \ just drew
 
-IF _6502SP_VERSION
+ELIF _6502SP_VERSION
 
- INC SC+1
+ CPY #60                \ If Y < 60 then we still have some more character
+ BCC DLL10              \ blocks to draw, so loop back to DLL10 to display the
+                        \ next one along
+
+ INC SC+1               \ Increment the high byte of SC to point to the next
+ INC SC+1               \ character row on-screen (as each row takes up exactly
+                        \ two pages of 256 bytes) - so this sets up SC to point
+                        \ to the next indicator, i.e. the one below the one we
+                        \ just drew
 
 ENDIF
 

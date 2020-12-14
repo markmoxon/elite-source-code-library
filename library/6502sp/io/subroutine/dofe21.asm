@@ -2,7 +2,7 @@
 \
 \       Name: DOFE21
 \       Type: Subroutine
-\   Category: Drawing circles
+\   Category: Flight
 \    Summary: Implement the #DOFE21 <flag> command (show the energy bomb effect)
 \
 \ ------------------------------------------------------------------------------

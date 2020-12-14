@@ -3,7 +3,8 @@
 \       Name: DOCOL
 \       Type: Subroutine
 \   Category: Text
-\    Summary: Set the text colour
+\    Summary: Set the text colour by sending a #SETCOL command to the I/O
+\             processor
 \
 \ ------------------------------------------------------------------------------
 \

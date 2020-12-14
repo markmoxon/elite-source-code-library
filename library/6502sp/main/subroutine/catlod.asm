@@ -1,20 +1,22 @@
 
-\CATLOD
-\DECCTLDL+8
-\JSRCATLODS
-\INCCTLDL+8
+\CATLOD                 \ These instructions are commented out in the original
+\DEC CTLDL+8            \ source
+\JSR CATLODS
+\INC CTLDL+8
+
 \.CATLODS
-\LDA#&7F
-\LDX#(CTLDL MOD256)
-\LDY#(CTLDL DIV256)
-\JMPOSWORD
+\LDA #127
+\LDX #LO(CTLDL)
+\LDY #HI(CTLDL)
+\JMP OSWORD
 
 \CTLDL
-\EQUB0
-\EQUD&E00
-\EQUB3
-\EQUB&53
-\EQUB0
-\EQUB1
-\EQUB&21
-\EQUB0
+\EQUB 0
+\EQUD &0E00
+\EQUB 3
+\EQUB &53
+\EQUB 0
+\EQUB 1
+\EQUB &21
+\EQUB 0
+

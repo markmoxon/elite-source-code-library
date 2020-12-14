@@ -3,15 +3,17 @@
 \       Name: TT26
 \       Type: Subroutine
 \   Category: Text
-\    Summary: Print a character at the text cursor (WRCHV points here)
+\    Summary: Print a character at the text cursor by poking into screen memory
 \
 \ ------------------------------------------------------------------------------
 \
 \ Print a character at the text cursor (XC, YC), do a beep, print a newline,
 \ or delete left (backspace).
 \
+IF _CASSETTE_VERSION
 \ WRCHV is set to point here by elite-loader.asm.
 \
+ENDIF
 \ Arguments:
 \
 \   A                   The character to be printed. Can be one of the
@@ -39,6 +41,7 @@
 \
 \   Y                   Y is preserved
 \
+IF _CASSETTE_VERSION
 \   C flag              The C flag is cleared
 \
 \ Other entry points:
@@ -51,6 +54,7 @@
 \
 \   rT9                 Contains an RTS
 \
+ENDIF
 \ ******************************************************************************
 
 .TT26
@@ -83,9 +87,10 @@ ELIF _6502SP_VERSION
 
  TAY                    \ Set Y = the character to be printed
 
- BEQ RR4S               \ If the character is zero, jump down to RR4 (via the
-                        \ JMP in RR4S) to restore the registers and return from
-                        \ the subroutine using a tail call
+ BEQ RR4S               \ If the character is zero, which is typically a string
+                        \ terminator character jump down to RR4 (via the JMP in
+                        \ RR4S) to restore the registers and return from the
+                        \ subroutine using a tail call
 
  CMP #11                \ If this is control code 11 (line feed), jump to cls to
  BEQ cls                \ clear the top part of the screen, draw a white border
@@ -107,7 +112,11 @@ ENDIF
  BEQ RRX1               \ RRX1, which will move down a line, restore the
                         \ registers and return from the subroutine
 
+IF _CASSETTE_VERSION
  LDX #1                 \ If we get here, then this is control code 11-13, of
+ELIF _6502SP_VERSION
+ LDX #1                 \ If we get here, then this is control code 12 or 13, of
+ENDIF
  STX XC                 \ which only 13 is used. This code prints a newline,
                         \ which we can achieve by moving the text cursor
                         \ to the start of the line (carriage return) and down
@@ -154,25 +163,40 @@ ENDIF
                         \ The first step, then, is to get hold of the bitmap
                         \ definition for the character we want to draw on the
                         \ screen (i.e. we need the pixel shape of this
-                        \ character). The OS ROM contains bitmap definitions
+                        \ character). The MOS ROM contains bitmap definitions
                         \ of the BBC's ASCII characters, starting from &C000
                         \ for space (ASCII 32) and ending with the £ symbol
                         \ (ASCII 126)
+IF _6502SP_VERSION
                         \
-                        \ There are 32 characters' definitions in each page of
-                        \ memory, as each definition takes up 8 bytes (8 rows
-                        \ of 8 pixels) and 32 * 8 = 256 bytes = 1 page. So:
+                        \ To save time looking this information up from the MOS
+                        \ ROM a copy of these bitmap definitions is embedded
+                        \ into this source code at page FONT%, so page 0 of the
+                        \ font is at FONT%, page 1 is at FONT%+1, and page 2 at
+                        \ FONT%+3
+ENDIF
                         \
-                        \   ASCII 32-63  are defined in &C000-&C0FF (page &C0)
-                        \   ASCII 64-95  are defined in &C100-&C1FF (page &C1)
-                        \   ASCII 96-126 are defined in &C200-&C2F0 (page &C2)
+                        \ There are definitions for 32 chracters in each of the
+                        \ three pages of MOS memory, as each definition takes up
+                        \ 8 bytes (8 rows of 8 pixels) and 32 * 8 = 256 bytes =
+                        \ 1 page. So:
+                        \
+                        \   ASCII 32-63  are defined in &C000-&C0FF (page 0)
+                        \   ASCII 64-95  are defined in &C100-&C1FF (page 1)
+                        \   ASCII 96-126 are defined in &C200-&C2F0 (page 2)
                         \
                         \ The following code reads the relevant character
+IF _CASSETTE_VERSION
                         \ bitmap from the above locations in ROM and pokes
+ELIF _6502SP_VERSION
+                        \ bitmap from the copied MOS bitmaps at FONT% and pokes
+ENDIF
                         \ those values into the correct position in screen
                         \ memory, thus printing the character on-screen
                         \
                         \ It's a long way from 10 PRINT "Hello world!":GOTO 10
+
+IF _CASSETTE_VERSION
 
 \LDX #LO(K3)            \ These instructions are commented out in the original
 \INX                    \ source, but they call OSWORD 10, which reads the
@@ -195,24 +219,31 @@ ENDIF
                         \ memory. To be honest I can't see a massive difference
                         \ in speed, but there you go
 
+ENDIF
+
  TAY                    \ Copy the character number from A to Y, as we are
                         \ about to pull A apart to work out where this
-                        \ character definition lives in the ROM
+                        \ character definition lives in memory
 
                         \ Now we want to set X to point to the relevant page
+IF _CASSETTE_VERSION
                         \ number for this character - i.e. &C0, &C1 or &C2.
+ELIF _6502SP_VERSION
+                        \ number for this character - i.e. FONT% to FONT%+2
+ENDIF
+
                         \ The following logic is easier to follow if we look
                         \ at the three character number ranges in binary:
                         \
                         \   Bit #  76543210
                         \
-                        \   32  = %00100000     Page &C0
+                        \   32  = %00100000     Page 0 of bitmap definitions
                         \   63  = %00111111
                         \
-                        \   64  = %01000000     Page &C1
+                        \   64  = %01000000     Page 1 of bitmap definitions
                         \   95  = %01011111
                         \
-                        \   96  = %01100000     Page &C2
+                        \   96  = %01100000     Page 2 of bitmap definitions
                         \   125 = %01111101
                         \
                         \ We'll refer to this below
@@ -224,9 +255,18 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- BPL P%+5
- JMP RR4
- LDX #(FONT%-1)
+\BEQ RR4                \ This instruction is commented out in the original
+                        \ source, but it would return from the subroutine if A
+                        \ is zero
+
+ BPL P%+5               \ If the character number is positive (i.e. A < 128)
+                        \ then skip the following instruction
+
+ JMP RR4                \ A >= 128, so jump to RR4 to restore the registers and
+                        \ return from the subroutine using a tail call
+
+ LDX #(FONT%-1)         \ Set X to point to the page before the first font page,
+                        \ which is FONT% - 1
 
 ENDIF
 
@@ -240,7 +280,7 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDX #(FONT%+1)
+ LDX #(FONT%+1)         \ A is 64-126, so set X to point to page FONT% + 1
 
 ENDIF
 
@@ -249,6 +289,7 @@ ENDIF
 
  INX                    \ Increment X
                         \
+IF _CASSETTE_VERSION
                         \ By this point, we started with X = &BF, and then
                         \ we did the following:
                         \
@@ -256,6 +297,15 @@ ENDIF
                         \   If A = 64-95:   X = &C1 then skip so X = &C1
                         \   If A = 96-126:  X = &C1 then INX  so X = &C2
                         \
+ELIF _6502SP_VERSION
+                        \ By this point, we started with X = FONT%-1, and then
+                        \ we did the following:
+                        \
+                        \   If A = 32-63:   skip        then INX  so X = FONT%
+                        \   If A = 64-95:   X = FONT%+1 then skip so X = FONT%+1
+                        \   If A = 96-126:  X = FONT%+1 then INX  so X = FONT%+2
+                        \
+ENDIF
                         \ In other words, X points to the relevant page. But
                         \ what about the value of A? That gets shifted to the
                         \ left three times during the above code, which
@@ -282,39 +332,54 @@ IF _CASSETTE_VERSION
  LDA XC                 \ Fetch XC, the x-coordinate (column) of the text cursor
                         \ into A
 
-ELIF _6502SP_VERSION
-
- STA Q
- STX R
- LDA XC
- LDX CATF
- BEQ RR5
- CPY #32
- BNE RR5
- CMP #17
- BEQ RR4
-
-.RR5
-
-ENDIF
-
- ASL A                  \ Multiply A by 8, and store in SC. As each
- ASL A                  \ character is 8 bits wide, and the special screen mode
- ASL A                  \ Elite uses for the top part of the screen is 256
- STA SC                 \ bits across with one bit per pixel, this value is
-                        \ not only the screen address offset of the text cursor
-                        \ from the left side of the screen, it's also the least
-                        \ significant byte of the screen address where we want
-                        \ to print this character, as each row of on-screen
-                        \ pixels corresponds to one page. To put this more
-                        \ explicitly, the screen starts at &6000, so the
-                        \ text rows are stored in screen memory like this:
+ ASL A                  \ Multiply A by 8, and store in SC. As each character is
+ ASL A                  \ 8 pixels wide, and the special screen mode Elite uses
+ ASL A                  \ for the top part of the screen is 256 pixels across
+ STA SC                 \ with one bit per pixel, this value is not only the
+                        \ screen address offset of the text cursor from the left
+                        \ side of the screen, it's also the least significant
+                        \ byte of the screen address where we want to print this
+                        \ character, as each row of on-screen pixels corresponds
+                        \ to one page. To put this more explicitly, the screen
+                        \ starts at &6000, so the text rows are stored in screen
+                        \ memory like this:
                         \
                         \   Row 1: &6000 - &60FF    YC = 1, XC = 0 to 31
                         \   Row 2: &6100 - &61FF    YC = 2, XC = 0 to 31
                         \   Row 3: &6200 - &62FF    YC = 3, XC = 0 to 31
                         \
                         \ and so on
+
+ELIF _6502SP_VERSION
+
+ STA Q                  \ R is the same location as Q+1, so this stores the
+ STX R                  \ address of this character's definition in Q(1 0)
+
+ LDA XC                 \ Fetch XC, the x-coordinate (column) of the text cursor
+                        \ into A
+
+ LDX CATF               \ If CATF = 0, jump to RR5, otherwise we are printing a
+ BEQ RR5                \ disc catalogue
+
+ CPY #' '               \ If the character we want to print in Y is a space,
+ BNE RR5                \ jump to RR5
+ 
+                        \ If we get here, then CATF is non-zero, so we are
+                        \ printing a disc catalogue and we are not printing a
+                        \ space
+
+ CMP #17                \ If A = 17, i.e. the text cursor is in column 17, jump
+ BEQ RR4                \ to RR4 to restore the registers and return from the
+                        \ subroutine
+
+.RR5
+
+ ASL A                  \ Multiply A by 8, and store in SC, so we now have:
+ ASL A                  \
+ ASL A                  \   SC = XC * 8
+ STA SC
+
+ENDIF
 
  LDA YC                 \ Fetch YC, the y-coordinate (row) of the text cursor
 
@@ -339,15 +404,39 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- ASL A
- ASL SC
- ADC #&3F
- TAX
+ ASL A                  \ A contains YC (from above), so this sets A = YC * 2
+
+ ASL SC                 \ Double the low byte of SC(1 0), catching bit 7 in the
+                        \ C flag. As each character is 8 pixels wide, and the
+                        \ special screen mode Elite uses for the top part of the
+                        \ screen is 256 pixels across with two bits per pixel,
+                        \ this value is not only double the screen address
+                        \ offset of the text cursor from the left side of the
+                        \ screen, it's also the least significant byte of the
+                        \ screen address where we want to print this character,
+                        \ as each row of on-screen pixels corresponds to two
+                        \ pages. To put this more explicitly, the screen starts
+                        \ at &4000, so the text rows are stored in screen
+                        \ memory like this:
+                        \
+                        \   Row 1: &4000 - &41FF    YC = 1, XC = 0 to 31
+                        \   Row 2: &4200 - &43FF    YC = 2, XC = 0 to 31
+                        \   Row 3: &4400 - &45FF    YC = 3, XC = 0 to 31
+                        \
+                        \ and so on
+
+ ADC #&3F               \ Set X = A
+ TAX                    \       = A + &3F + C
+                        \       = YC * 2 + &3F + C
 
 ENDIF
 
                         \ Because YC starts at 0 for the first text row, this
+IF _CASSETTE_VERSION
                         \ means that X will be &5F for row 0, &60 for row 1 and
+ELIF _6502SP_VERSION
+                        \ means that X will be &3F for row 0, &41 for row 1 and
+ENDIF
                         \ so on. In other words, X is now set to the page number
                         \ for the row before the one containing the text cursor,
                         \ and given that we set SC above to point to the offset
@@ -362,14 +451,19 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDY #&F0
+ LDY #&F0               \ Set Y = &F0, so the following call to ZES2 will count
+                        \ Y upwards from &F0 to &FF
 
 ENDIF
 
  JSR ZES2               \ Call ZES2, which zero-fills from address (X SC) + Y to
                         \ (X SC) + &FF. (X SC) points to the character above the
                         \ text cursor, and adding &FF to this would point to the
+IF _CASSETTE_VERSION
                         \ cursor, so adding &F8 points to the character before
+ELIF _6502SP_VERSION
+                        \ cursor, so adding &F0 points to the character before
+ENDIF
                         \ the cursor, which is the one we want to delete. So
                         \ this call zero-fills the character to the left of the
                         \ cursor, which erases it from the screen
@@ -389,6 +483,8 @@ ENDIF
                         \ the cursor so it's in the right position following
                         \ the print
 
+IF _CASSETTE_VERSION
+
 \LDA YC                 \ This instruction is commented out in the original
                         \ source. It isn't required because we only just did a
                         \ LDA YC before jumping to RR2, so this is presumably
@@ -399,13 +495,15 @@ ENDIF
                         \ start of this routine, you should uncomment this
                         \ instruction as well
 
+ENDIF
+
  CMP #24                \ If the text cursor is on the screen (i.e. YC < 24, so
  BCC RR3                \ we are on rows 1-23), then jump to RR3 to print the
                         \ character
 
 IF _6502SP_VERSION
 
- PHA
+ PHA                    \ Store A on the stack so we can retrieve it below
 
 ENDIF
 
@@ -414,11 +512,17 @@ ENDIF
 
 IF _6502SP_VERSION
 
- LDA #1
- STA XC
+ LDA #1                 \ Otherwise we are off the bottom of the screen, so move
+ STA XC                 \ the text cursor to column 1, row 1
  STA YC
- PLA
- LDA K3
+
+ PLA                    \ Retrieve A from the stack... only to overwrite it with
+                        \ the next instruction, so presumably we didn't need to
+                        \ preserve it and this and the PHA above have no effect
+
+ LDA K3                 \ Set A to the character to be printed, though again
+                        \ this has no effect, as the following call to RR4 does
+                        \ the exact same thing
 
 ENDIF
 
@@ -427,13 +531,15 @@ ENDIF
 
 .RR3
 
-IF _CASSETTE_VERSION
-
- ORA #&60               \ A contains the value of YC - the screen row where we
+                        \ A contains the value of YC - the screen row where we
                         \ want to print this character - so now we need to
                         \ convert this into a screen address, so we can poke
                         \ the character data to the right place in screen
-                        \ memory. We already stored the least significant byte
+                        \ memory
+
+IF _CASSETTE_VERSION
+
+ ORA #&60               \ We already stored the least significant byte
                         \ of this screen address in SC above (see the STA SC
                         \ instruction above), so all we need is the most
                         \ significant byte. As mentioned above, in Elite's
@@ -453,9 +559,28 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- ASL A
- ASL SC
- ADC #&40
+ ASL A                  \ Set A = 2 * A
+                        \       = 2 * YC
+
+ ASL SC                 \ Back in RR5 we set SC = XC * 8, so this does the
+                        \ following:
+                        \
+                        \   SC = SC * 2
+                        \      = XC * 16
+                        \
+                        \ so SC contains the low byte of the screen address we
+                        \ want to poke the character into, as each text
+                        \ character is 8 pixels wide, and there are four pixels
+                        \ per byte, so the offset within the row's 512 bytes
+                        \ is XC * 8 pixels * 2 bytes for each 8 pixels = XC * 16
+
+ ADC #&40               \ Set A = &40 + A
+                        \       = &40 + (2 * YC)
+                        \
+                        \ so A contains the high byte of the screen address we
+                        \ want to poke the character into, as screen memory
+                        \ starts at &4000 (page &40) and each screen row takes
+                        \ up 2 pages (512 bytes)
 
 ENDIF
 
@@ -467,12 +592,16 @@ ENDIF
 
 IF _6502SP_VERSION
 
- LDA SC
- CLC
- ADC #8
+ LDA SC                 \ Set (T S) = SC(1 0) + 8
+ CLC                    \
+ ADC #8                 \ starting with the low bytes
  STA S
- LDA SC+1
- STA T
+
+ LDA SC+1               \ And then adding the high bytes, so (T S) points to the
+ STA T                  \ character block after the one pointed to by SC(1 0),
+                        \ and because T = S+1, we have:
+                        \
+                        \   S(1 0) = SC(1 0) + 8
 
 ENDIF
 
@@ -485,19 +614,36 @@ ENDIF
 IF _CASSETTE_VERSION
 
  LDA (P+1),Y            \ The character definition is at P(2 1) - we set this up
-                        \ above -  so load the Y-th byte from P(2 1)
+                        \ above - so load the Y-th byte from P(2 1), which will
+                        \ contain the bitmap for the Y-th row of the character
 
 ELIF _6502SP_VERSION
 
- LDA (Q),Y
- AND #&F0
- STA U
- LSR A
- LSR A
- LSR A
+                        \ We print the character's 8-pixel row in two parts,
+                        \ starting with the first four pixels (one byte of
+                        \ screen memory), and then the second four (a second
+                        \ byte of screen memory)
+
+ LDA (Q),Y              \ The character definition is at Q(1 0) - we set this up
+                        \ above - so load the Y-th byte from Q(1 0), which will
+                        \ contain the bitmap for the Y-th row of the character
+
+ AND #%11110000         \ Extract the top nibble of the character definition
+                        \ byte, so the first four pixels on this row of the
+                        \ character are in the first nibble, i.e. xxxx 0000
+                        \ where xxxx is the pattern of those four pixels in the
+                        \ character
+
+ STA U                  \ Set A = (A >> 4) OR A
+ LSR A                  \
+ LSR A                  \ which duplicates the top nibble into the bottom nibble
+ LSR A                  \ to give xxxx xxxx
  LSR A
  ORA U
- AND COL
+
+ AND COL                \ AND with the colour byte so that the pixels take on
+                        \ the colour we want to draw (i.e. A is acting as a mask
+                        \ on the colour byte)
 
 ENDIF
 
@@ -514,17 +660,33 @@ ENDIF
 
 IF _6502SP_VERSION
 
- LDA (Q),Y
- AND #&F
- STA U
- ASL A
- ASL A
- ASL A
+                        \ We now repeat the process for the second batch of four
+                        \ pixels in this character row
+
+ LDA (Q),Y              \ Fetch the the bitmap for the Y-th row of the character
+                        \ again
+
+ AND #%00001111         \ This time we extract the bottom nibble of the
+                        \ character definition, to get 0000 xxxx
+ 
+ STA U                  \ Set A = (A << 4) OR A
+ ASL A                  \
+ ASL A                  \ which duplicates the bottom nibble into the top nibble
+ ASL A                  \ to give xxxx xxxx
  ASL A
  ORA U
- AND COL
- EOR (S),Y
- STA (S),Y
+
+ AND COL                \ AND with the colour byte so that the pixels take on
+                        \ the colour we want to draw (i.e. A is acting as a mask
+                        \ on the colour byte)
+
+ EOR (S),Y              \ EOR this value with the existing screen contents of
+                        \ S(1 0), which is equal to SC(1 0) + 8, the next four
+                        \ pixels along from the first four pixels we just
+                        \ plotted in SC(1 0)
+
+ STA (S),Y              \ Store the Y-th byte at the screen address for this
+                        \ character location
 
 ENDIF
 
@@ -543,9 +705,9 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- PLA
- TAX
- PLA
+ PLA                    \ We're done printing, so restore the values of the
+ TAX                    \ A, X and Y registers that we saved above, so
+ PLA                    \ everything is back to how it was
  TAY
  LDA K3
 
@@ -566,17 +728,24 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDX #(BELI MOD256)
- LDY #(BELI DIV256)
- JSR OSWORD
- JMP RR4
+ LDX #LO(BELI)          \ We call this from above with A = 7, so this calls
+ LDY #HI(BELI)          \ OSWORD 7 with (Y X) pointing to the BELI parameter
+ JSR OSWORD             \ block below, which makes a short, high beep
+
+ JMP RR4                \ Jump to RR4 to restore the registers and return from
+                        \ the subroutine using a tail call
 
 .BELI
 
- EQUW &12
- EQUW &FFF1
- EQUW 200
- EQUW 2
+ EQUW &0012             \ The SOUND block for a short, high beep:
+ EQUW &FFF1             \
+ EQUW &00C8             \   SOUND &12, -15, &C8, &02
+ EQUW &0002             \
+                        \ This makes a sound with flush control 1 on channel 2,
+                        \ and with amplitude &F1 (-15), pitch &C8 (200) and
+                        \ duration &02 (2). This is a louder, higher and longer
+                        \ beep than that generated by the NOISE routine with
+                        \ A = 32 (a short, high beep)
 
 ENDIF
 

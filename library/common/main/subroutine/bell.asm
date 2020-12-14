@@ -17,7 +17,7 @@
 
 IF _CASSETTE_VERSION
 
-                        \ Fall through into the TT27 print routine to
+                        \ Fall through into the TT26 print routine to
                         \ actually make the sound
 
 ELIF _6502SP_VERSION

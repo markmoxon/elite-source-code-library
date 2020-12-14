@@ -10,7 +10,9 @@
 
 .CAT
 
- JSR CATS               \ Call CATS to catalogue a disc
+ JSR CATS               \ Call CATS to ask for a drive number, catalogue that
+                        \ disc and update the catalogue command at CTLI
 
                         \ Fall through into retry to wait for a key press and
                         \ display the disc access menu
+

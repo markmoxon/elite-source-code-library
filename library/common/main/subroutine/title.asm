@@ -141,7 +141,7 @@ ENDIF
 
 IF _6502SP_VERSION
 
- LDA brkd               \ If brkd = 0, jump to BRBR2 to skip the following, we
+ LDA brkd               \ If brkd = 0, jump to BRBR2 to skip the following, as
  BEQ BRBR2              \ we do not have a system error message to display
 
  INC brkd               \ Increment the brkd counter

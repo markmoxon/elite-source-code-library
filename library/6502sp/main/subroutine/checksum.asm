@@ -18,11 +18,16 @@
  ADC (V),Y
  EOR T
  SBC V+1
+
  DEY
+
  BNE CHKLoop
+
  INX
+
  CPX #&A0
  BCC CHKLoop
+
  CMP S%-1
 
 IF _REMOVE_CHECKSUMS

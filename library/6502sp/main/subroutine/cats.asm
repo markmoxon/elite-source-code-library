@@ -3,7 +3,19 @@
 \       Name: CATS
 \       Type: Subroutine
 \   Category: Save and load
-\    Summary: Catalogue a disc by sending a #DOCATF command to the I/O processor
+\    Summary: Ask for a disc drive number and print a catalogue of that drive
+\
+\ ------------------------------------------------------------------------------
+\
+\ This routine asks for a disc drive number, and if it is a valid number (0-3)
+\ it displays a catalogue of the disc in that drive. It also updates the OS
+\ command at CTLI so that when that command is run, it catalogues the correct
+\ drive.
+\
+\ Returns:
+\
+\   C flag              Clear if a valid drive number was entered (0-3), set
+\                       otherwise
 \
 \ ******************************************************************************
 

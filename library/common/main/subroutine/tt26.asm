@@ -366,11 +366,18 @@ ELIF _6502SP_VERSION
  
                         \ If we get here, then CATF is non-zero, so we are
                         \ printing a disc catalogue and we are not printing a
-                        \ space
+                        \ space, so we drop column 17 from the output so the
+                        \ catalogue will fit on-screen (column 17 is a blank
+                        \ column in the middle of the catalogue, between the
+                        \ two lists of filenames, so it can be dropped without
+                        \ affecting the layout). Without this, the catalogue
+                        \ would be one character too wide for the square screen
+                        \ mode (it's 34 characters wide, while the screen mode
+                        \ is only 33 characters across)
 
  CMP #17                \ If A = 17, i.e. the text cursor is in column 17, jump
  BEQ RR4                \ to RR4 to restore the registers and return from the
-                        \ subroutine
+                        \ subroutine, thus omitting this column
 
 .RR5
 

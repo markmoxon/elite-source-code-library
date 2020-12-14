@@ -1,5 +1,10 @@
 \ ******************************************************************************
+\
 \       Name: DELI
+\       Type: Variable
+\   Category: Save and load
+\    Summary: The OS command string for deleting a file
+\
 \ ******************************************************************************
 
 .DELI

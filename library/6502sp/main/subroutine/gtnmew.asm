@@ -4,7 +4,8 @@
 
 .GTNMEW
 
-\LDY#8\JSRDELAY
+\LDY #8
+\JSR DELAY
 
 .GTNME
 

@@ -68,7 +68,8 @@ ELIF _6502SP_VERSION
 
  JSR GTNMEW             \ If we get here then option 1 (load) was chosen, so
                         \ call GTNMEW to fetch the name of the commander file
-                        \ to load
+                        \ to load (including drive number and directory) into
+                        \ INWK
 
  JSR LOD                \ Call LOD to load the commander file
 
@@ -86,7 +87,8 @@ ELIF _6502SP_VERSION
 
  JSR GTNMEW             \ If we get here then option 2 (save) was chosen, so
                         \ call GTNMEW to fetch the name of the commander file
-                        \ to save
+                        \ to save (including drive number and directory) into
+                        \ INWK
 
 ENDIF
 

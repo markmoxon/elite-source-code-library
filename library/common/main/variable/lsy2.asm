@@ -8,15 +8,25 @@ IF _CASSETTE_VERSION
 ELIF _6502SP_VERSION
 
 \ ******************************************************************************
+\
 \       Name: LSY2
+\       Type: Variable
+\   Category: Drawing lines
+\    Summary: The ball line heap for storing y-coordinates
+\  Deep dive: The ball line heap
+\
 \ ******************************************************************************
 
 .LSY2
 
 IF _MATCH_EXTRACTED_BINARIES
+
  INCBIN "versions/6502sp/extracted/workspaces/ELTA-LSY2.bin"
+
 ELSE
+
  SKIP &100
+
 ENDIF
 
 ENDIF

@@ -176,7 +176,7 @@ IF _6502SP_VERSION
                         \ FONT%+3
 ENDIF
                         \
-                        \ There are definitions for 32 chracters in each of the
+                        \ There are definitions for 32 characters in each of the
                         \ three pages of MOS memory, as each definition takes up
                         \ 8 bytes (8 rows of 8 pixels) and 32 * 8 = 256 bytes =
                         \ 1 page. So:

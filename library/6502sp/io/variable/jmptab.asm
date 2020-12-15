@@ -23,7 +23,7 @@
  EQUW SETXC             \ #SETXC     = 133 (&85)     5 = Set text cursor column
  EQUW SETYC             \ #SETYC     = 134 (&86)     6 = Set text cursor row
  EQUW CLYNS             \ #clyns     = 135 (&87)     7 = Clear bottom of screen
- EQUW RDPARAMS          \ #RDPARAMS  = 136 (&88)     8 = Reset dashboard params
+ EQUW RDPARAMS          \ #RDPARAMS  = 136 (&88)     8 = Update dashboard
  EQUW ADPARAMS          \              137 (&89)     9 = Add dashboard parameter
  EQUW DODIALS           \ #DODIALS   = 138 (&8A)    10 = Show or hide dashboard
  EQUW DOVIAE            \ #VIAE      = 139 (&8B)    11 = Set 6522 System VIA IER

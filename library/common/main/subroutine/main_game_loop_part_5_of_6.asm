@@ -91,8 +91,8 @@ ELIF _6502SP_VERSION
 
  BPL dontdolinefeedontheprinternow
 
- LDA #prilf             \ Send two #prilf commands to the I/O processor to spit
- JSR OSWRCH             \ out two blank lines on the printer
+ LDA #prilf             \ Send a #prilf command to the I/O processor to print a
+ JSR OSWRCH             \ blank line on the printer
  JSR OSWRCH
 
 .dontdolinefeedontheprinternow

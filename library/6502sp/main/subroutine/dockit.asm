@@ -118,8 +118,9 @@
 
  LDA K3+10
  BNE TNRTS
- ASL NEWB
- SEC
+
+ ASL NEWB               \ Set bit 7 of the ship's NEWB flags to indicate that
+ SEC                    \ the ship has now docked
  ROR NEWB
 
 .TNRTS

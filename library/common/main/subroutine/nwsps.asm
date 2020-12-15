@@ -27,7 +27,8 @@ ELIF _6502SP_VERSION
  LDX #0                 \ Set pitch counter to 0 (no pitch, roll only)
  STX INWK+30
 
- STX NEWB               \ Set NEWB to %00000000
+ STX NEWB               \ Set NEWB to %00000000, though this gets overridden by
+                        \ the default flags from E% in NWSHP below
 
 ENDIF
 

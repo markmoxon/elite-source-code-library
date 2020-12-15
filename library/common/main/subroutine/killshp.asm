@@ -265,9 +265,9 @@ ELIF _6502SP_VERSION
 
  LDA (SC),Y             \ Fetch byte #36 of the source's ship data block at SC,
  STA (INF),Y            \ and store it in byte #36 of the destination's block
- DEY                    \ at INF, so that's the ship's NEWB copied from the
-                        \ source to the destination. One down, quite a few to
-                        \ go...
+ DEY                    \ at INF, so that's the ship's NEWB flags copied from
+                        \ the source to the destination. One down, quite a few
+                        \ to go...
 
 ENDIF
 

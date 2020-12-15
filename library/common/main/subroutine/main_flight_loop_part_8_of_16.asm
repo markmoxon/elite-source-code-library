@@ -121,8 +121,8 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- ASL NEWB               \ Set bit 7 of the ship's NEWB
- SEC
+ ASL NEWB               \ The item has now been scooped, so set bit 7 of its
+ SEC                    \ NEWB flags to indicate this
  ROR NEWB
 
 ENDIF

@@ -67,12 +67,15 @@ ELIF _6502SP_VERSION
  BMI nodo               \ If A is negative (50% chance), jump to nodo to skip
                         \ the following
 
+                        \ If we get here then we are going to spawn a ship that
+                        \ is minding its own business and trying to dock
+
  LDA INWK+32            \ Set bits 6 and 7 of the ship's AI flag, to make it
- ORA #%11000000         \ hostile and with AI enabled
+ ORA #%11000000         \ aggressive if attacked, and enable its AI
  STA INWK+32
 
- LDX #%00010000         \ Set bit 4 of the ship's NEWB flag
- STX NEWB
+ LDX #%00010000         \ Set bit 4 of the ship's NEWB flags, to indicate that
+ STX NEWB               \ this ship is docking
 
 .nodo
 

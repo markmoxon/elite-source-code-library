@@ -85,9 +85,10 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDX TYPE
- LDA E%-1,X
- BPL ta3
+ LDX TYPE               \ Fetch the ship blueprint's default NEWB flags from the
+ LDA E%-1,X             \ table at E%, and if bit 7 is clear (i.e. this ship
+ BPL ta3                \ does not have an escape pod), jump to ta3 to skip the
+                        \ spawning of an escape pod
 
 ENDIF
 

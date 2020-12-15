@@ -37,11 +37,13 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDY #36                \ Fetch the ship's byte #36
+ LDY #36                \ Fetch the ship's NEWB flags from byte #36
  LDA (INF),Y
 
- AND #%00100000         \ If bit 5 of the ship's byte #36 is clear, skip the
- BEQ P%+5               \ following instruction
+ AND #%00100000         \ If bit 5 of the ship's NEWB flags is clear, skip the
+ BEQ P%+5               \ following instruction, otherwise bit 5 is set, meaning
+                        \ this ship is an innocent bystander, and attacking it
+                        \ will annoy the space station
 
 ENDIF
 
@@ -72,8 +74,8 @@ IF _6502SP_VERSION
  BCC AN3                \ boulder, asteroid, splinter, shuttle or transporter),
                         \ then jump to AN3 to skip the following
 
- LDY #36                \ Set bit 2 of the ship's byte #36
- LDA (INF),Y
+ LDY #36                \ Set bit 2 of the ship's NEWB flags in byte #36 to
+ LDA (INF),Y            \ make this ship hostile
  ORA #%00000100
  STA (INF),Y
 
@@ -98,7 +100,7 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA K%+NI%+36          \ Set bit 2 of byte #36 of the second ship in the ship
+ LDA K%+NI%+36          \ Set bit 2 of the NEWB flags in byte #36 of the second ship in the ship
  ORA #%00000100         \ data workspace at K%, which is reserved for the sun or
  STA K%+NI%+36          \ the space station (in this case it's the latter), to
                         \ make it hostile

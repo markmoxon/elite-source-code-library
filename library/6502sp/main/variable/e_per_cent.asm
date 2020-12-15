@@ -3,71 +3,122 @@
 \       Name: E%
 \       Type: Variable
 \   Category: Drawing ships
-\    Summary: Ship blueprints NEWB table
+\    Summary: Ship blueprints default NEWB flags
 \
 \ ------------------------------------------------------------------------------
 \
+\ When spawning a new ship, bits 0-3 and 5-6 from the relevant byte in this
+\ table are applied to the new ship's NEWB flags in byte #36 (i.e. a set bit in
+\ this table will set that bit in the NEWB flags). In other words, if a ship
+\ blueprint is one of the following, then all spawned ships of that type will be
+\ too: trader, bounty hunter, hostile, pirate, innocent, cop.
+\
+\ Bit 4 (docking) is set randomly on spawning for traders only, so 50% of
+\ traders are trying to dock, while the other 50% fly towards the planet.
+\
+\ Bit 7 (has been scooped/has docked) is set when the ship docks or is scooped.
+\
+\ Bit 7 in the blueprint (as opposed to the spawned ship) is looked up during
+\ tactics, for when the ship is about to die, to see if that ship type has an
+\ escape pod. If it does, then the ship can launch an escape pod before dying.
+\
+\ Here's a breakdown of the NEWB flags:
+\
 \    * Bit 0: Trader flag (0 = not a trader, 1 = trader)
+\
+\             ???
+\
+\             Escape pod, Shuttle, Transporter, Anaconda, Rock hermit, Worm
 \
 \    * Bit 1: Bounty hunter flag (0 = not a bounty hunter, 1 = bounty hunter)
 \
+\             ???
+\
+\             Viper, Fer-de-lance
+\
 \    * Bit 2: Hostile flag (0 = not hostile, 1 = hostile)
-\             (replaces bit 7 of INWK+32, in ANGRY and ISDK, at least)
+\
+\             ???
+\
+\             Sidewinder, Mamba, Krait, Adder, Gecko, Cobra Mk I, Worm,
+\             Cobra Mk III, Asp Mk II, Python (pirate), Moray, Thargoid,
+\             Thargon, Constrictor
 \
 \    * Bit 3: Pirate flag (0 = not a pirate, 1 = pirate)
 \
-\    * Bit 4: Docking flag (0 = not docking, 1 = docking)
-\             but gets randomly set in main game loop 1
+\             ???
 \
-\    * Bit 5: Innocent flag?
-\             (in ANGRY if it's clear, this is not the space station)
+\             Sidewinder, Mamba, Krait, Adder, Gecko, Cobra Mk I, Cobra Mk III,
+\             Asp Mk II, Python (pirate), Moray, Thargoid
+\
+\    * Bit 4: Docking flag (0 = not docking, 1 = docking)
+\
+\             Traders with a set docking flag fly towards the space station to
+\             try to dock, otherwise they aim for the planet
+\
+\             This flag is randomly set for traders when they are spawned
+\
+\    * Bit 5: Innocent bystander (0 = normal, 1 = innocent bystander)
+\
+\             If we attack an innocent ship within the space station safe zone,
+\             then the station will get angry with us and start spawning cops
+\
+\             Shuttle, Transporter, Cobra Mk III, Python, Boa, Anaconda,
+\             Rock hermit, Cougar
 \
 \    * Bit 6: Cop flag (0 = not a cop, 1 = cop)
 \
-\    * Bit 7: Ship has been scooped/docked/disappeared, so remove with no explosion
-\             LL9 1,  it calls EE51 to remove itself
-\             gets set in main flight 8 when we scoop an item
-\             gets removed from the scanner in main flight 11
-\             skips legal checks
-\             Maybe also "has Escape pod" flag?
+\             If we destroy a cop ship, then we instantly becoime a fugitive
+\             (the transporter isn't actually a cop ship, but it's clearly under
+\             police protection)
+\
+\             Viper, Transporter
+\
+\    * Bit 7: For spawned ships, indicates that the ship been scooped or has
+\             docked (bit 7 is always clear on spawning)
+\
+\             For blueprints, indicates the ship type has an escape pod fitted
+\
+\             Cobra Mk III, Python, Boa, Anaconda, Rock hermit, Viper, Mamba,
+\             Krait, Adder, Cobra Mk I, Cobra Mk III (pirate), Asp Mk II,
+\             Python (pirate), Fer-de-lance
 \
 \ ******************************************************************************
 
 .E%
 
- EQUB 0
-
  EQUB %00000000         \ Missile
- EQUB %00000001         \ Coriolis space station
- EQUB %00000000         \ Escape pod
+ EQUB %00000000         \ Coriolis space station
+ EQUB %00000001         \ Escape pod                                      Trader
  EQUB %00000000         \ Alloy plate
  EQUB %00000000         \ Cargo canister
  EQUB %00000000         \ Boulder
  EQUB %00000000         \ Asteroid
- EQUB %00100001         \ Splinter
- EQUB %01100001         \ Shuttle
- EQUB %10100000         \ Transporter
- EQUB %10100000         \ Cobra Mk III
- EQUB %10100000         \ Python
- EQUB %10100001         \ Boa
- EQUB %10100001         \ Anaconda
- EQUB %11000010         \ Rock hermit (asteroid)
- EQUB %00001100         \ Viper
- EQUB %10001100         \ Sidewinder
- EQUB %10001100         \ Mamba
- EQUB %10001100         \ Krait
- EQUB %00001100         \ Adder
- EQUB %10001100         \ Gecko
- EQUB %00000101         \ Cobra Mk I
- EQUB %10001100         \ Worm
- EQUB %10001100         \ Cobra Mk III (pirate)
- EQUB %10001100         \ Asp Mk II
- EQUB %10000010         \ Python (pirate)
- EQUB %00001100         \ Fer-de-lance
- EQUB %00001100         \ Moray
- EQUB %00000100         \ Thargoid
- EQUB %00000100         \ Thargon
- EQUB %00000000         \ Constrictor
- EQUB %00100000         \ The Elite logo
- EQUB %00000000         \ Cougar
+ EQUB %00000000         \ Splinter
+ EQUB %00100001         \ Shuttle                               Trader, innocent
+ EQUB %01100001         \ Transporter                      Trader, innocent, cop
+ EQUB %10100000         \ Cobra Mk III                      Innocent, escape pod
+ EQUB %10100000         \ Python                            Innocent, escape pod
+ EQUB %10100000         \ Boa                               Innocent, escape pod
+ EQUB %10100001         \ Anaconda                  Trader, innocent, escape pod
+ EQUB %10100001         \ Rock hermit (asteroid)    Trader, innocent, escape pod
+ EQUB %11000010         \ Viper                   Bounty hunter, cop, escape pod 
+ EQUB %00001100         \ Sidewinder                             Hostile, pirate
+ EQUB %10001100         \ Mamba                      Hostile, pirate, escape pod
+ EQUB %10001100         \ Krait                      Hostile, pirate, escape pod
+ EQUB %10001100         \ Adder                      Hostile, pirate, escape pod
+ EQUB %00001100         \ Gecko                                  Hostile, pirate
+ EQUB %10001100         \ Cobra Mk I                 Hostile, pirate, escape pod
+ EQUB %00000101         \ Worm                                   Hostile, trader
+ EQUB %10001100         \ Cobra Mk III (pirate)      Hostile, pirate, escape pod
+ EQUB %10001100         \ Asp Mk II                  Hostile, pirate, escape pod
+ EQUB %10001100         \ Python (pirate)            Hostile, pirate, escape pod
+ EQUB %10000010         \ Fer-de-lance                 Bounty hunter, escape pod
+ EQUB %00001100         \ Moray                                  Hostile, pirate
+ EQUB %00001100         \ Thargoid                               Hostile, pirate
+ EQUB %00000100         \ Thargon                                        Hostile
+ EQUB %00000100         \ Constrictor                                    Hostile
+ EQUB %00000000         \ The Elite logo
+ EQUB %00100000         \ Cougar                                        Innocent
+ EQUB %00000000         \ 
 

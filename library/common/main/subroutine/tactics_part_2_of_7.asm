@@ -36,11 +36,13 @@
 
 IF _6502SP_VERSION
 
- LDA #3
+ LDA #3                 \ Set RAT = 3
  STA RAT
- LDA #4
+
+ LDA #4                 \ Set RAT2 = 4
  STA RAT2
- LDA #22
+
+ LDA #22                \ Set CNT = 22
  STA CNT2
 
 ENDIF
@@ -116,51 +118,85 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA NEWB
- AND #4
- BNE TN5
- LDA MANY+SHU+1
- BNE TA1
- JSR DORND
- CMP #253
- BCC TA1
- AND #1
- ADC #SHU-1
- TAX
- BNE TN6
+ LDA NEWB               \ This is the space station, so check whether bit 2 of
+ AND #%00000100         \ the ship's NEWB flags is set, and if it is (i.e. the
+ BNE TN5                \ station is hostile), jump to TN5 to spawn some cops
+
+ LDA MANY+SHU+1         \ The station is not hostile, so check how many
+ BNE TA1                \ transporters there are in the vicinity, and if we
+                        \ already have one, return from the subroutine (as TA1
+                        \ contains an RTS)
+
+                        \ If we get here then the station is not hostile, so we
+                        \ can consider spawning a transporter or shuttle
+
+ JSR DORND              \ Set A and X to random numbers
+
+ CMP #253               \ If A < 253 (99.2% chance), return from the subroutine
+ BCC TA1                \ (as TA1 contains an RTS)
+
+ AND #1                 \ Set A = a random number that's either 0 or 1
+
+ ADC #SHU-1             \ The C flag is set (as we didn't take the BCC above),
+ TAX                    \ so this sets X to a value of either #SHU or #SHU + 1,
+                        \ which is the ship type for a shuttle or a transporter
+
+ BNE TN6                \ Jump to TN6 to spawn this ship type (this BNE is
+                        \ effectively a JMP as A is never zero)
 
 .TN5
 
- JSR DORND
- CMP #240
- BCC TA1
- LDA MANY+COPS
- CMP #7\!!
- BCS TA22
- LDX #COPS
+                        \ If we get here then the station is hostile and we need
+                        \ to spawn some cops
+
+ JSR DORND              \ Set A and X to random numbers
+
+ CMP #240               \ If A < 240 (93.8% chance), return from the subroutine
+ BCC TA1                \ (as TA1 contains an RTS)
+
+ LDA MANY+COPS          \ Check how many cops there are in the vicinity already,
+ CMP #7                 \ and if there are 7 or more, return from the subroutine
+ BCS TA22               \ (as TA22 contains an RTS)
+
+ LDX #COPS              \ Set X to the ship type for a cop
 
 .TN6
 
- LDA #&F1
- JMP SFS1
+ LDA #%11110001         \ Set the AI flag to give the ship E.C.M., enable AI and
+                        \ make it very aggressive (56 out of 63)
+
+ JMP SFS1               \ Jump to SFS1 to spawn the ship, returning from the
+                        \ subroutine using a tail call
 
 .TA13
 
- CPX #HER
+ CPX #HER               \ If this is not a rock hermit, jump down to TA17
  BNE TA17
- JSR DORND
- CMP #200
- BCC TA22
- LDX #0
- STX INWK+32
- STX NEWB
- AND #3
- ADC #SH3
- TAX
- JSR TN6
- LDA #0
- STA INWK+32
- RTS
+
+ JSR DORND              \ Set A and X to random numbers
+
+ CMP #200               \ If A < 200 (78% chance), return from the subroutine
+ BCC TA22               \ (as TA22 contains an RTS)
+
+ LDX #0                 \ Set byte #32 to %00000000 to disable AI, aggression
+ STX INWK+32            \ and E.C.M.
+
+ STX NEWB               \ Set the ship's NEWB flags to %00000000
+
+ AND #3                 \ Set A = a random number that's in the range 0-3
+
+ ADC #SH3               \ The C flag is set (as we didn't take the BCC above),
+ TAX                    \ so this sets X to a random value between #SH3 + 1 and
+                        \ #SH3 + 4, so that's a Sidewinder, Mamba, Krait, Adder
+                        \ or Gecko
+
+ JSR TN6                \ Call TN6 to spawn this ship with E.C.M., AI and a high
+                        \ aggression (56 out of 63)
+
+ LDA #0                 \ Set byte #32 to %00000000 to disable AI, aggression
+ STA INWK+32            \ and E.C.M.
+
+ RTS                    \ Return from the subroutine
 
 .TA17
 

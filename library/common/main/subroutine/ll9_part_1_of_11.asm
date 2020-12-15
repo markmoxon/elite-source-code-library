@@ -82,9 +82,10 @@ ENDIF
 
 IF _6502SP_VERSION
 
- LDA NEWB               \ If bit 7 of the ship's NEWB is set, then the ship
- BMI EE51               \ is already on-screen, so jump down to EE51 to redraw
-                        \ its wireframe, which removes it from the screen
+ LDA NEWB               \ If bit 7 of the ship's NEWB flags is set, then the
+ BMI EE51               \ ship has been scooped or has docked, so jump down to
+                        \ EE51 to redraw its wireframe, to remove it from the
+                        \ screen
 
 ENDIF
 

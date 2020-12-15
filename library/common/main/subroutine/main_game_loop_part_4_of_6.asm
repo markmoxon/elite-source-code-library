@@ -190,8 +190,8 @@ ELIF _6502SP_VERSION
 
 .NOCON
 
- LDA #%00000100         \ Set bit 2 of NEWB and clear all other bits, so the
- STA NEWB               \ ship we are about to spawn is hostile
+ LDA #%00000100         \ Set bit 2 of the NEWB flags and clear all other bits,
+ STA NEWB               \ so the ship we are about to spawn is hostile
 
                         \ We now build the AI flag for this ship in A
 

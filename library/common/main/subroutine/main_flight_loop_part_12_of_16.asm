@@ -33,8 +33,10 @@
 
 IF _6502SP_VERSION
 
- LDA NEWB               \ If bit 7 of the ship's NEWB is set, jump to KS1S to
- BMI KS1S               \ skip the following
+ LDA NEWB               \ If bit 7 of the ship's NEWB flags is set, which means
+ BMI KS1S               \ the ship has docked or been scooped, jump to KS1S to
+                        \ skip the following, as we can't get a bounty for a
+                        \ ship that's no longer around
 
 ENDIF
 
@@ -64,12 +66,15 @@ ELIF _6502SP_VERSION
  BEQ MAC1               \ ship is no longer exploding, so jump to MAC1 to skip
                         \ the following
 
- LDA NEWB               \ Extract bit 6 of NEWB, so A = 64 if bit 6 is set, 0
- AND #%01000000         \ if it is clear
+ LDA NEWB               \ Extract bit 6 of the ship's NEWB flags, so A = 64 if
+ AND #%01000000         \ bit 6 is set, or 0 if it is clear. Bit 6 is set if
+                        \ this ship is a cop, so A = 64 if we just killed a
+                        \ policeman, otherwise it is 0
 
- ORA FIST               \ We shot the sheriff, so update our FIST flag
- STA FIST               \ ("fugitive/innocent status") to at least 64, which
-                        \ will instantly make us a fugitive
+ ORA FIST               \ Update our FIST flag ("fugitive/innocent status") to
+ STA FIST               \ at least the value in A, which will instantly make us
+                        \ a fugitive if we just shot the sheriff, but won't
+                        \ affect our status if the enemy wasn't a copper
 
 ENDIF
 

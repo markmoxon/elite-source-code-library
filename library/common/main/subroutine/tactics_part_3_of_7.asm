@@ -20,62 +20,85 @@
 
 IF _6502SP_VERSION
 
- CPX #TGL
+ CPX #TGL               \ If this is not a Thargon, jump down to TA14
  BNE TA14
- LDA MANY+THG
- BNE TA14
- LSR INWK+32
- ASL INWK+32
- LSR INWK+27
+
+ LDA MANY+THG           \ If there is at least one Thargoid in the vicinity,
+ BNE TA14               \ jump down to TA14
+
+ LSR INWK+32            \ This is a Thargon but there is no Thargoid mothership,
+ ASL INWK+32            \ so clear bit 0 of the AI flag to disable its E.C.M.
+
+ LSR INWK+27            \ And halve the Thargon's speed
+
 
 .TA22
 
- RTS
+ RTS                    \ Return from the subroutine
 
 .TA14
 
  JSR DORND
- LDA NEWB
- LSR A
- BCC TN1
- CPX #50
- BCS TA22
+
+ LDA NEWB               \ Extract bit 0 of the ship's NEWB flags into the C flag
+ LSR A                  \ and jump to TN1 if it is clear (i.e. if this is not a
+ BCC TN1                \ trader)
+
+ CPX #50                \ This is a trader, so if X >= 50 (80% chance), return
+ BCS TA22               \ from the subroutine (as TA22 contains an RTS)
 
 .TN1
 
- LSR A
- BCC TN2
- LDX FIST
- CPX #40
- BCC TN2
- LDA NEWB
- ORA #4
- STA NEWB
- LSR A
- LSR A
+ LSR A                  \ Extract bit 1 of the ship's NEWB flags into the C flag
+ BCC TN2                \ and jump to TN2 if it is clear (i.e. if this is not a
+                        \ bounty hunter)
+
+ LDX FIST               \ This is a bounty hunter, so check whether our FIST
+ CPX #40                \ rating is < 40 (where 50 is a fugitive), and jump to
+ BCC TN2                \ TN2 if we are not 100% evil
+
+ LDA NEWB               \ We are a fugitive or a bad offender, and this ship is
+ ORA #%00000100         \ a bounty hunter, so set bit 2 of the ship's NEWB flags
+ STA NEWB               \ to make it hostile
+
+ LSR A                  \ Shift A right twice so the next test in TN2 will check
+ LSR A                  \ bit 2
 
 .TN2
 
- LSR A
- BCS TN3
- LSR A
- LSR A
- BCC GOPL
- JMP DOCKIT
+ LSR A                  \ Extract bit 2 of the ship's NEWB flags into the C flag
+ BCS TN3                \ and jump to TN3 if it is set (i.e. if this ship is
+                        \ hostile)
+
+ LSR A                  \ The ship is not hostile, so extract bit 4 of the
+ LSR A                  \ ship's NEWB flags into the C flag, and jump to GOPL if
+ BCC GOPL               \ it is clear (i.e. if this ship is not docking)
+
+ JMP DOCKIT             \ The ship is not hostile and is docking, so jump to
+                        \ DOCKIT to apply the docking algorithm to this ship
 
 .GOPL
 
- JSR SPS1
- JMP TA151
+ JSR SPS1               \ The ship is not hostile and it is not docking, so call
+                        \ SPS1 to calculate the vector to the planet and store it
+                        \ in XX15
+
+ JMP TA151              \ Jump to TA151 to make the ship head towards the planet
 
 .TN3
 
- LSR A
- BCC TN4
- LDA SSPR
- BEQ TN4
- LDA INWK+32
- AND #129
+ LSR A                  \ Extract bit 2 of the ship's NEWB flags into the C flag
+ BCC TN4                \ and jump to TN4 if it is clear (i.e. if this ship is
+                        \ not a pirate)
+
+ LDA SSPR               \ If we are not inside the space station safe zone, jump
+ BEQ TN4                \ to TN4
+
+                        \ If we get here then this is a pirate and we are inside
+                        \ the space station safe zone
+
+ LDA INWK+32            \ Set bits 0 and 7 of the AI flag in byte #32 (has AI
+ AND #%10000001         \ enabled E.C.M.)
  STA INWK+32
 
 .TN4

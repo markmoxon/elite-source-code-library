@@ -26,11 +26,12 @@
 
 IF _6502SP_VERSION
 
- LDA NEWB               \ If bit 7 of the ship's NEWB byte is clear, skip the
+ LDA NEWB               \ If bit 7 of the ship's NEWB flags is clear, skip the
  BPL P%+5               \ following instruction
 
- JSR SCAN               \ Draw the ship on the scanner, which has the effect of
-                        \ removing it
+ JSR SCAN               \ Bit 7 of the ship's NEWB flags is set, which means the
+                        \ ship has docked or been scooped, so we draw the ship
+                        \ on the scanner, which has the effect of removing it
 
 ENDIF
 

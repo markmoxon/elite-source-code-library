@@ -89,39 +89,59 @@ ELIF _6502SP_VERSION
 .auton
 
  JSR ZINF
+
  LDA #96
  STA INWK+14
+
  ORA #128
  STA INWK+22
+
  STA TYPE
+
  LDA DELTA
  STA INWK+27
+
  JSR DOCKIT
+
  LDA INWK+27
  CMP #22
  BCC P%+4
+
  LDA #22
+ 
  STA DELTA
+
  LDA #&FF
  LDX #0
+
  LDY INWK+28
  BEQ DK11
+
  BMI P%+3
+
  INX
+
  STA KY1,X
 
 .DK11
 
  LDA #128
  LDX #0
+
  ASL INWK+29
+
  BEQ DK12
+
  BCC P%+3
+
  INX
+
  BIT INWK+29
  BPL DK14
+
  LDA #64
  STA JSTX
+
  LDA #0
 
 .DK14
@@ -132,13 +152,20 @@ ELIF _6502SP_VERSION
 .DK12
 
  STA JSTX
+
  LDA #128
  LDX #0
+
  ASL INWK+30
+
  BEQ DK13
+
  BCS P%+3
+
  INX
+
  STA KY5,X
+
  LDA JSTY
 
 .DK13
@@ -155,11 +182,11 @@ ENDIF
  LDA #7                 \ Set A to 7, which is the amount we want to alter the
                         \ roll rate by if the roll keys are being pressed
 
- LDY KL+3               \ If the < key is being pressed, then call the BUMP2
+ LDY KL+3               \ If the "<" key is being pressed, then call the BUMP2
  BEQ P%+5               \ routine to increase the roll rate in X by A
  JSR BUMP2
 
- LDY KL+4               \ If the > key is being pressed, then call the REDU2
+ LDY KL+4               \ If the ">" key is being pressed, then call the REDU2
  BEQ P%+5               \ routine to decrease the roll rate in X by A, taking
  JSR REDU2              \ the keyboard auto re-centre setting into account
 
@@ -170,11 +197,11 @@ ENDIF
  LDX JSTY               \ Set X = JSTY, the current pitch rate (as shown in the
                         \ DC indicator on the dashboard)
 
- LDY KL+5               \ If the > key is being pressed, then call the REDU2
+ LDY KL+5               \ If the "X" key is being pressed, then call the REDU2
  BEQ P%+5               \ routine to decrease the pitch rate in X by A, taking
  JSR REDU2              \ the keyboard auto re-centre setting into account
 
- LDY KL+6               \ If the S key is being pressed, then call the BUMP2
+ LDY KL+6               \ If the "S" key is being pressed, then call the BUMP2
  BEQ P%+5               \ routine to increase the pitch rate in X by A
  JSR BUMP2
 

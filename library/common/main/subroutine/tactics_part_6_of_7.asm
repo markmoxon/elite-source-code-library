@@ -30,8 +30,8 @@
  JSR MAS4
 
  AND #%11100000         \ If any of the hi bytes have any of bits 5-7 set, then
- BNE TA4                \ jump to TA4 to skip the laser, as the ship is too far
-                        \ away from us to hit us with a laser
+ BNE TA4                \ jump to TA4 to skip the laser checks, as the ship is
+                        \ too far away from us to hit us with a laser
 
  LDX CNT                \ Set X = the dot product set above in CNT. If this is
                         \ positive, this ship and our ship are facing in similar
@@ -54,14 +54,19 @@
                         \       shoot us, they can hit us
 
  CPX #160               \ If X < 160, i.e. X > -32, then we are not in the enemy
- BCC TA4                \ ship's line of fire, so jump to TA4
+ BCC TA4                \ ship's line of fire, so jump to TA4 to skip the laser
+                        \ checks
 
 IF _6502SP_VERSION
 
- LDY #19
- LDA (XX0),Y
- AND #&F8
- BEQ TA4
+ LDY #19                \ Fetch the enemy ship's byte #19 from their ship's
+ LDA (XX0),Y            \ blueprint into A
+
+ AND #%11111000         \ Extract bits 3-7, which contain the enemy's laser
+                        \ power
+
+ BEQ TA4                \ If the enemy has no laser power, jump to TA4 to skip
+                        \ the laser checks
 
 ENDIF
 
@@ -70,31 +75,33 @@ ENDIF
  STA INWK+31
 
  CPX #163               \ If X < 163, i.e. X > -35, then we are not in the enemy
- BCC TA4                \ ship's crosshairs, so jump to TA4
+ BCC TA4                \ ship's crosshairs, so jump to TA4 to skip the laser
 
 IF _CASSETTE_VERSION
 
 .HIT
 
  LDY #19                \ We are being hit by enemy laser fire, so fetch the
- LDA (XX0),Y            \ enemy ship's laser power from their ship's blueprint
+ LDA (XX0),Y            \ enemy ship's byte #19 from their ship's blueprint
                         \ into A
 
 ELIF _6502SP_VERSION
 
- LDA (XX0),Y
+ LDA (XX0),Y            \ Fetch the enemy ship's byte #19 from their ship's
+                        \ blueprint into A
 
 ENDIF
 
- LSR A                  \ Halve their laser power to get the amount of damage we
-                        \ should take
+ LSR A                  \ Halve the enemy ship's byte #19 (which contains both
+                        \ the laser power and number of missiles) to get the
+                        \ amount of damage we should take
 
  JSR OOPS               \ Call OOPS to take some damage, which could do anything
                         \ from reducing the shields and energy, all the way to
                         \ losing cargo or dying (if the latter, we don't come
                         \ back from this subroutine)
 
- DEC INWK+28            \ Halve the attacking ship's acceleration in byte #28,
+ DEC INWK+28            \ Halve the attacking ship's acceleration in byte #28
 
 IF _CASSETTE_VERSION
 

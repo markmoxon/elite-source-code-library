@@ -77,14 +77,16 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- JSR TAS6
+ JSR TAS6               \ Call TAS6 to negate the vector in XX15 so it points in
+                        \ the opposite direction
 
- LDA CNT
- EOR #%10000000
+ LDA CNT                \ Change the sign of the dot product in CNT, so now it's
+ EOR #%10000000         \ positive if the ships are facing each other, and
+                        \ negative if they are facing the same way
 
 .TA152
 
- STA CNT
+ STA CNT                \ Update CNT with the new value in A
 
 ENDIF
 
@@ -135,25 +137,31 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- TAX
+ TAX                    \ Copy A into X so we can retrieve it below
 
- EOR #%10000000
- AND #%10000000
+ EOR #%10000000         \ Give the ship's pitch counter the opposite sign to the
+ AND #%10000000         \ dot product result, with a value of 0
  STA INWK+30
- TXA
- ASL A
- CMP RAT2
- BCC TA11
- LDA RAT
- ORA INWK+30
+
+ TXA                    \ Retrieve the original value of A from X
+
+ ASL A                  \ Shift A left to double it and drop the sign bit
+
+ CMP RAT2               \ If A < RAT2, skip to TA11 (so if RAT2 = 0, we always
+ BCC TA11               \ set the pitch counter to RAT)
+
+ LDA RAT                \ Set the magnitude of the ship's pitch counter to RAT
+ ORA INWK+30            \ (we already set the sign above)
  STA INWK+30
 
 .TA11
 
- LDA INWK+29
- ASL A
- CMP #32
- BCS TA6
+ LDA INWK+29            \ Fetch the roll counter from byte #29 into A
+
+ ASL A                  \ Shift A left to double it and drop the sign bit
+
+ CMP #32                \ If A >= 32 then jump to TA6, as the ship is already
+ BCS TA6                \ in the process of rolling
 
 ENDIF
 
@@ -173,18 +181,22 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- TAX
+ TAX                    \ Copy A into X so we can retrieve it below
 
- EOR INWK+30
- AND #%10000000
- EOR #%10000000
+ EOR INWK+30            \ Give the ship's roll counter a positive sign if the
+ AND #%10000000         \ pitch counter and dot product have different signs,
+ EOR #%10000000         \ negative if they have the same sign, with a value of 0
  STA INWK+29
- TXA
- ASL A
- CMP RAT2
- BCC TA12
- LDA RAT
- ORA INWK+29
+
+ TXA                    \ Retrieve the original value of A from X
+
+ ASL A                  \ Shift A left to double it and drop the sign bit
+
+ CMP RAT2               \ If A < RAT2, skip to TA12 (so if RAT2 = 0, we always
+ BCC TA12               \ set the roll counter to RAT)
+
+ LDA RAT                \ Set the magnitude of the ship's roll counter to RAT
+ ORA INWK+29            \ (we already set the sign above)
  STA INWK+29
 
 .TA12
@@ -206,8 +218,10 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- CMP CNT2
- BCC TA9
+ CMP CNT2               \ The dot product is positive, so the ships are facing
+ BCC TA9                \ each other. If A < CNT2 then the ships are not heading
+                        \ directly towards each other, so jump to TA9 to slow
+                        \ down
 
 .PH10E
 
@@ -236,7 +250,7 @@ ENDIF
  ASL A                  \ This is a missile, so set A = -2, as missiles are more
                         \ nimble and can brake more quickly
 
- STA INWK+28            \ Ser the ship's acceleration to A
+ STA INWK+28            \ Set the ship's acceleration to A
 
 .TA10
 
@@ -246,16 +260,33 @@ IF _6502SP_VERSION
 
 .TA151
 
- LDY #10
- JSR TAS3
- CMP #&98
+                        \ This is called from part 3 with the vector to the
+                        \ planet in XX15, when we want the ship to turn towards
+                        \ the planet. It does the same dot product calculation
+                        \ as part 3, but it can also change the value of RAT2
+                        \ so that roll and pitch is always applied
+
+ LDY #10                \ Set (A X) = nosev . XX15
+ JSR TAS3               \
+                        \ The bigger the value of the dot product, the more
+                        \ aligned the two vectors are, with a maximum magnitude
+                        \ in A of 36 (96 * 96 >> 8). If A is positive, the
+                        \ vectors are facing in a similar direction, if it's
+                        \ negative they are facing in opposite directions
+
+ CMP #&98               \ If A is positive or A <= -24, jump to ttt
  BCC ttt
- LDX #0
- STX RAT2
+
+ LDX #0                 \ A > -24, which means the vectors are facing in
+ STX RAT2               \ opposite directions but are quite aligned, so set
+                        \ RAT2 = 0 instead of the default value of 4, so we
+                        \ always apply roll and pitch when we turn the ship
+                        \ towards the planet
 
 .ttt
 
- JMP TA152
+ JMP TA152              \ Jump to TA152 to store A in CNT and move the ship in
+                        \ the direction of XX15
 
 ENDIF
 

@@ -9,6 +9,25 @@
 \
 \ This section sets up some vectors and calculates dot products. Specifically:
 \
+IF _6502SP_VERSION
+\   * If this is a lone Thargon without a mothership, set it adrift aimlessly
+\     and we're done
+\
+\   * If this is a trader, 80% of the time we're done, 20% of the time the
+\     trader performs the same checks as the bounty hunter
+\
+\   * If this is a bounty hunter (or one of the 20% of traders) and we have been
+\     really bad (i.e. a fugitive or serious offender), the ship becomes hostile
+\     (if it isn't already)
+\
+\   * If the ship is not hostile, then either perform docking manouevres (if
+\     it's docking) or fly towards the planet (if it isn't docking) and we're
+\     done
+\
+\   * If the ship is hostile, and a pirate, and we are within the space station
+\     safe zone, stop the pirate from attacking by removing all its aggression
+\
+ENDIF
 \   * Calculate the dot product of the ship's nose vector (i.e. the direction it
 \     is pointing) with the vector between us and the ship. This value will help
 \     us work out later on whether the enemy ship is pointing towards us, and
@@ -38,7 +57,7 @@ IF _6502SP_VERSION
 
 .TA14
 
- JSR DORND
+ JSR DORND              \ Set A and X to random numbers
 
  LDA NEWB               \ Extract bit 0 of the ship's NEWB flags into the C flag
  LSR A                  \ and jump to TN1 if it is clear (i.e. if this is not a
@@ -80,8 +99,8 @@ IF _6502SP_VERSION
 .GOPL
 
  JSR SPS1               \ The ship is not hostile and it is not docking, so call
-                        \ SPS1 to calculate the vector to the planet and store it
-                        \ in XX15
+                        \ SPS1 to calculate the vector to the planet and store
+                        \ it in XX15
 
  JMP TA151              \ Jump to TA151 to make the ship head towards the planet
 
@@ -98,7 +117,7 @@ IF _6502SP_VERSION
                         \ the space station safe zone
 
  LDA INWK+32            \ Set bits 0 and 7 of the AI flag in byte #32 (has AI
- AND #%10000001         \ enabled E.C.M.)
+ AND #%10000001         \ enabled and has an E.C.M.)
  STA INWK+32
 
 .TN4

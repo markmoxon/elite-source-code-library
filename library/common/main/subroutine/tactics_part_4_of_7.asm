@@ -9,16 +9,27 @@
 \
 \ This section works out what kind of condition the ship is in. Specifically:
 \
+IF _6502SP_VERSION
+\   * If this is an Anaconda, consider spawning (22% chance) a Worm (61% of the
+\     time) or a Sidewinder (39% of the time)
+\
+ENDIF
 \   * Rarely (2.5% chance) roll the ship by a noticeable amount
 \
 \   * If the ship has at least half its energy banks full, jump to part 6 to
 \     consider firing the lasers
 \
-\   * If the ship isn't really low on energy, jump to part 5 to consider firing
-\     a missile
+\   * If the ship is not into the last 1/8th of its energy, jump to part 5 to
+\     consider firing a missile
 \
-\   * Rarely (10% chance) the ship runs out of both energy and luck, and bails,
-\     launching an escape pod and drifting in space
+IF _CASSETTE_VERSION
+\   * If the ship is into the last 1/8th of its energy, then rarely (10% chance)
+\     the ship launches an escape pod and is left drifting in space
+ELIF _6502SP_VERSION
+\   * If the ship is into the last 1/8th of its energy, and this ship type has
+\     an escape pod fitted, then rarely (10% chance) the ship launches an escape
+\     pod and is left drifting in space
+ENDIF
 \
 \ ******************************************************************************
 
@@ -31,17 +42,25 @@
 
 IF _6502SP_VERSION
 
- CMP #ANA
- BNE TN7
- JSR DORND
- CMP #200
- BCC TN7
- JSR DORND
- LDX #WRM
- CMP #100
- BCS P%+4
- LDX #SH3
- JMP TN6
+ CMP #ANA               \ If this is not an Anaconda, jump down to TN7 to skip
+ BNE TN7                \ the following
+
+ JSR DORND              \ Set A and X to random numbers
+
+ CMP #200               \ If A < 200 (78% chance), jump down to TN7 to skip the
+ BCC TN7                \ following
+
+ JSR DORND              \ Set A and X to random numbers
+
+ LDX #WRM               \ Set X to the ship type for a Worm
+ 
+ CMP #100               \ If A >= 100 (61% chance), skip the following
+ BCS P%+4               \ instruction
+
+ LDX #SH3               \ Set X to the ship type for a Sidewinder
+
+ JMP TN6                \ Jump to TN6 to spawn the Worm or Sidewinder and return
+                        \ from the subroutine using a tail call
 
 .TN7
 

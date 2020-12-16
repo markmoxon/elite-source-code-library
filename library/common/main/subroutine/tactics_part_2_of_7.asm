@@ -13,17 +13,32 @@
 \
 \   * If this is a missile, jump up to the missile code in part 1
 \
+IF _CASSETTE_VERSION
 \   * If this is an escape pod, point it at the planet and jump to the
 \     manoeuvring code in part 7
 \
-\   * If this is the space station and it is hostile, spawn a cop and we're done
+\   * If this is the space station and it is hostile, consider spawning a cop
+\     (45% chance, up to a maximum of four) and we're done
 \
 \   * If this is a lone Thargon without a mothership, set it adrift aimlessly
 \     and we're done
 \
 \   * If this is a pirate and we are within the space station safe zone, stop
-\     the pirate from attacking
+\     the pirate from attacking by removing all its aggression
 \
+ELIF _6502SP_VERSION
+\   * If this is the space station and it is hostile, consider spawning a cop
+\     (6.2% chance, up to a maximum of seven) and we're done
+\
+\   * If this is the space station and it is not hostile, consider spawning
+\     (0.8% chance if there are no transporters around) a transporter or shuttle
+\     (equal odds of each type) and we're done
+\
+\   * If this is a rock hermit, consider spawning (22% chance) a highly
+\     aggressive and hostile Sidewinder, Mamba, Krait, Adder or Gecko (equal
+\     odds of each type) and we're done
+\
+ENDIF
 \   * Recharge the ship's energy banks by 1
 \
 \ Arguments:
@@ -36,14 +51,29 @@
 
 IF _6502SP_VERSION
 
- LDA #3                 \ Set RAT = 3
- STA RAT
+ LDA #3                 \ Set RAT = 3, which is the magnitude we set the pitch
+ STA RAT                \ or roll counter to in part 7 when turning a ship
+                        \ towards a vector (a higher value giving a longer
+                        \ turn). This value is not changed in the TACTICS
+                        \ routine, but it is set to different values by the
+                        \ DOCKIT routine
 
- LDA #4                 \ Set RAT2 = 4
- STA RAT2
+ LDA #4                 \ Set RAT2 = 4, which is the threshold below which we
+ STA RAT2               \ don't apply pitch and roll to the ship (so a lower
+                        \ value means we apply pitch and roll more often, and a
+                        \ value of 0 means we always apply them). The value is
+                        \ compared with double the high byte of sidev . XX15,
+                        \ where XX15 is the vector from the ship to the enemy
+                        \ or planet. This value is set to different values by
+                        \ both the TACTICS and DOCKIT routines
 
- LDA #22                \ Set CNT = 22
- STA CNT2
+ LDA #22                \ Set CNT2 = 22, which is the maximum angle beyond which
+ STA CNT2               \ a ship will slow down to start turning towards its
+                        \ prey (a lower value means a ship will start to slow
+                        \ down even if its angle with the enemy ship is large,
+                        \ which gives a tighter turn). This value is not changed
+                        \ in the TACTICS routine, but it is set to different
+                        \ values by the DOCKIT routine
 
 ENDIF
 
@@ -68,7 +98,9 @@ ENDIF
 IF _CASSETTE_VERSION
 
  JSR DORND              \ This is the space station, so set A and X to random
- CMP #140               \ numbers and if A < 140 (55% chance) return from the
+                        \ numbers
+
+ CMP #140               \ If A < 140 (55% chance) then return from the
  BCC TA14-1             \ subroutine (as TA14-1 contains an RTS)
 
  LDA MANY+COPS          \ We only call the tactics routine for the space station
@@ -141,7 +173,8 @@ ELIF _6502SP_VERSION
  TAX                    \ so this sets X to a value of either #SHU or #SHU + 1,
                         \ which is the ship type for a shuttle or a transporter
 
- BNE TN6                \ Jump to TN6 to spawn this ship type (this BNE is
+ BNE TN6                \ Jump to TN6 to spawn this ship type and return from
+                        \ the subroutine using a tail call (this BNE is
                         \ effectively a JMP as A is never zero)
 
 .TN5
@@ -181,7 +214,8 @@ ELIF _6502SP_VERSION
  LDX #0                 \ Set byte #32 to %00000000 to disable AI, aggression
  STX INWK+32            \ and E.C.M.
 
- STX NEWB               \ Set the ship's NEWB flags to %00000000
+ STX NEWB               \ Set the ship's NEWB flags to %00000000 so the ship we
+                        \ spawn below will inherit the default values from E%
 
  AND #3                 \ Set A = a random number that's in the range 0-3
 
@@ -194,7 +228,7 @@ ELIF _6502SP_VERSION
                         \ aggression (56 out of 63)
 
  LDA #0                 \ Set byte #32 to %00000000 to disable AI, aggression
- STA INWK+32            \ and E.C.M.
+ STA INWK+32            \ and E.C.M. (for the rock hermit)
 
  RTS                    \ Return from the subroutine
 

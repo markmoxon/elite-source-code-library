@@ -2,8 +2,8 @@
 \
 \       Name: BEGIN
 \       Type: Subroutine
-\   Category: Start and end
-\    Summary: Reset the configuration variables and start the game
+\   Category: Loader
+\    Summary: Initialise the configuration variables and start the game
 \
 \ ******************************************************************************
 

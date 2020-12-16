@@ -26,19 +26,22 @@
 \
 \    * Bit 0: Trader flag (0 = not a trader, 1 = trader)
 \
-\             ???
+\             80% of traders are peaceful and mind their own business plying
+\             their trade between the planet and space station, but 20% of them
+\             moonlight as bounty hunters
 \
 \             Escape pod, Shuttle, Transporter, Anaconda, Rock hermit, Worm
 \
 \    * Bit 1: Bounty hunter flag (0 = not a bounty hunter, 1 = bounty hunter)
 \
-\             ???
+\             If we are a fugitive or a serious offender and we bump into a
+\             bounty hunter, they will become hostile and attack us
 \
 \             Viper, Fer-de-lance
 \
 \    * Bit 2: Hostile flag (0 = not hostile, 1 = hostile)
 \
-\             ???
+\             Hostile ships will attack us on sight
 \
 \             Sidewinder, Mamba, Krait, Adder, Gecko, Cobra Mk I, Worm,
 \             Cobra Mk III, Asp Mk II, Python (pirate), Moray, Thargoid,
@@ -46,15 +49,16 @@
 \
 \    * Bit 3: Pirate flag (0 = not a pirate, 1 = pirate)
 \
-\             ???
+\             Hostile pirates will attack us on sight, but once we get inside
+\             the space station safe zone, they will stop
 \
 \             Sidewinder, Mamba, Krait, Adder, Gecko, Cobra Mk I, Cobra Mk III,
 \             Asp Mk II, Python (pirate), Moray, Thargoid
 \
 \    * Bit 4: Docking flag (0 = not docking, 1 = docking)
 \
-\             Traders with a set docking flag fly towards the space station to
-\             try to dock, otherwise they aim for the planet
+\             Traders with their docking flag set fly towards the space station
+\             to try to dock, otherwise they aim for the planet
 \
 \             This flag is randomly set for traders when they are spawned
 \
@@ -68,16 +72,17 @@
 \
 \    * Bit 6: Cop flag (0 = not a cop, 1 = cop)
 \
-\             If we destroy a cop ship, then we instantly becoime a fugitive
-\             (the transporter isn't actually a cop ship, but it's clearly under
-\             police protection)
+\             If we destroy a cop, then we instantly becoime a fugitive (the
+\             transporter isn't actually a cop, but it's clearly under police
+\             protection)
 \
 \             Viper, Transporter
 \
-\    * Bit 7: For spawned ships, indicates that the ship been scooped or has
-\             docked (bit 7 is always clear on spawning)
+\    * Bit 7: For spawned ships, this flag indicates that the ship been scooped
+\             or has docked (bit 7 is always clear on spawning)
 \
-\             For blueprints, indicates the ship type has an escape pod fitted
+\             For blueprints, this flag indicates whether the ship type has an
+\             escape pod fitted, so it can launch it when in dire straits
 \
 \             Cobra Mk III, Python, Boa, Anaconda, Rock hermit, Viper, Mamba,
 \             Krait, Adder, Cobra Mk I, Cobra Mk III (pirate), Asp Mk II,

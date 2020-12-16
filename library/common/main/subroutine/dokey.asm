@@ -88,89 +88,139 @@ ELIF _6502SP_VERSION
 
 .auton
 
- JSR ZINF
+ JSR ZINF               \ Call ZINF to reset the INWK ship workspace
 
- LDA #96
+ LDA #96                \ Set nosev_z_hi = 96
  STA INWK+14
 
- ORA #128
+ ORA #%10000000         \ Set sidev_x_hi = -96
  STA INWK+22
 
- STA TYPE
+ STA TYPE               \ Set the ship type to 224
 
- LDA DELTA
+ LDA DELTA              \ Set the ship speed to DELTA (our speed)
  STA INWK+27
 
- JSR DOCKIT
+ JSR DOCKIT             \ Call DOCKIT to calculate the docking computer's moves
+                        \ and update INWK with the results
 
- LDA INWK+27
- CMP #22
+                        \ We now "press" the relevant flight keys, depending on
+                        \ the results from DOCKIT, starting with the pitch keys
+
+ LDA INWK+27            \ Fetch the updated ship speed from byte #27 into A
+
+ CMP #22                \ If A < 22, skip the next instruction
  BCC P%+4
 
- LDA #22
- 
- STA DELTA
+ LDA #22                \ Set A = 22, so the maximum speed during docking is 22
 
- LDA #&FF
- LDX #0
+ STA DELTA              \ Update DELTA to the new value in A
 
- LDY INWK+28
- BEQ DK11
+ LDA #&FF               \ Set A = &FF, which we can insert into the key logger
+                        \ to "fake" the docking computer working the keyboard
 
- BMI P%+3
+ LDX #0                 \ Set X = 0, so we "press" KY1 below ("?", slow down)
 
- INX
+ LDY INWK+28            \ If the updated acceleration in byte #28 is zero, skip
+ BEQ DK11               \ to DK11
 
- STA KY1,X
+ BMI P%+3               \ If the updated acceleration is negative, skip the
+                        \ following instruction
+
+ INX                    \ The updated acceleration is positive, so increment X
+                        \ to 1, so we "press" KY2 below (Space, speed up)
+
+ STA KY1,X              \ Store &FF in either KY1 or KY2 to "press" the relevant
+                        \ key, depending on whether the updated acceleration is
+                        \ negative (in which case we "press" KY1, "?", to slow
+                        \ down) or positive (in which case we "press" KY2,
+                        \ Space, to speed up)
 
 .DK11
 
- LDA #128
- LDX #0
+                        \ We now "press" the relevant roll keys, depending on
+                        \ the results from DOCKIT
 
- ASL INWK+29
+ LDA #128               \ Set A = 128, which indicates no change in roll when
+                        \ stored in JSTX (i.e. the centre of the roll indicator)
 
- BEQ DK12
+ LDX #0                 \ Set X = 0, so we "press" KY3 below ("<", increase
+                        \ roll)
 
- BCC P%+3
+ ASL INWK+29            \ Shift ship byte #29 left, which shifts bit 7 of the
+                        \ updated roll counter (i.e. the roll direction) into
+                        \ the C flag
 
- INX
+ BEQ DK12               \ If the remains of byte #29 is zero, then the updated
+                        \ roll counter is zero, so jump to DK12 set JSTX to 128,
+                        \ to indicate there's no change in the roll
 
- BIT INWK+29
- BPL DK14
+ BCC P%+3               \ If the C flag is clear, skip the following instruction
 
- LDA #64
- STA JSTX
+ INX                    \ The C flag is set, i.e. the direction of the updated
+                        \ roll counter is negative, so increment X to 1 so we
+                        \ "press" KY4 below (">", decrease roll)
 
- LDA #0
+ BIT INWK+29            \ We shifted the updated roll counter to the left above,
+ BPL DK14               \ so this tests bit 6 of the original value, and if it
+                        \ is is clear (i.e. the magnitude is less than 64), jump
+                        \ to DK14 to "press" the key and leave JSTX unchanged
+
+ LDA #64                \ The magnitude of the updated roll is 64 or more, so
+ STA JSTX               \ set JSTX to 64 (so the roll decreases at half the
+                        \ maximum rate)
+
+ LDA #0                 \ And set A = 0 so we do not "press" any keys (so if the
+                        \ docking computer needs to make a serious roll, it does
+                        \ so by setting JSTX directly rather than by "pressing"
+                        \ a key)
 
 .DK14
 
- STA KY3,X
- LDA JSTX
+ STA KY3,X              \ Store A in either KY3 or KY4, depending on whether
+                        \ the updated roll rate is increasing (KY3) or decreasing
+                        \ (KY4)
+
+ LDA JSTX               \ Fetch A from JSTX so the next instruction has no effect
 
 .DK12
 
- STA JSTX
+ STA JSTX               \ Store A in JSTX to update the current roll rate
 
- LDA #128
- LDX #0
+                        \ We now "press" the relevant pitch keys, depending on
+                        \ the results from DOCKIT
 
- ASL INWK+30
+ LDA #128               \ Set A = 128, which indicates no change in pitch when
+                        \ stored in JSTX (i.e. the centre of the pitch indicator)
 
- BEQ DK13
+ LDX #0                 \ Set X = 0, so we "press" KY5 below ("X", decrease
+                        \ pitch)
 
- BCS P%+3
+ ASL INWK+30            \ Shift ship byte #30 left, which shifts bit 7 of the
+                        \ updated pitch counter (i.e. the pitch direction) into
+                        \ the C flag
 
- INX
+ BEQ DK13               \ If the remains of byte #30 is zero, then the updated
+                        \ pitch counter is zero, so jump to DK13 set JSTY to
+                        \ 128, to indicate there's no change in the pitch
 
- STA KY5,X
+ BCS P%+3               \ If the C flag is set, skip the following instruction
 
- LDA JSTY
+ INX                    \ The C flag is clear, i.e. the direction of the updated
+                        \ pitch counter is positive, so increment X to 1 so we
+                        \ "press" KY6 below ("S", increase pitch)
+
+ STA KY5,X              \ Store 128 in either KY5 or KY6 to "press" the relevant
+                        \ key, depending on whether the pitch direction is
+                        \ negative (in which case we "press" KY5, "X", to
+                        \ decrease the pitch) or positive (in which case we
+                        \ "press" KY6, "S", to increase the pitch)
+
+ LDA JSTY               \ Fetch A from JSTY so the next instruction has no effect
 
 .DK13
 
- STA JSTY
+ STA JSTY               \ Store A in JSTY to update the current pitch rate
 
 .DK15
 

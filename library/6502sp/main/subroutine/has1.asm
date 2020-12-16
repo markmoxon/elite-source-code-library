@@ -4,7 +4,8 @@
 
 .HAS1
 
- JSR ZINF
+ JSR ZINF               \ Call ZINF to reset the INWK ship workspace
+
  LDA XX15
  STA INWK+6
  LSR A

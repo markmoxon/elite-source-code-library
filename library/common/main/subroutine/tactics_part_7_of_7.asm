@@ -9,9 +9,15 @@
 \
 \ This section looks at manoeuvring the ship. Specifically:
 \
+IF _CASSETTE_VERSION
 \   * Work out which direction the ship should be moving, depending on whether
 \     it's an escape pod, where it is, which direction it is pointing, and how
 \     aggressive it is
+ELIF _6502SP_VERSION
+\   * Work out which direction the ship should be moving, depending on the type
+\     of ship, where it is, which direction it is pointing, and how aggressive
+\     it is
+ENDIF
 \
 \   * Set the pitch and roll counters to head in that direction
 \
@@ -94,8 +100,13 @@ ENDIF
 
                         \ If we get here, then one of the following is true:
                         \
+IF _CASSETTE_VERSION
                         \   * This is an escape pod and XX15 is pointing towards
                         \     the planet
+ELIF _6502SP_VERSION
+                        \   * This is a trader and XX15 is pointing towards the
+                        \     planet
+ENDIF
                         \
                         \   * The ship is pretty close to us, or it's just not
                         \     very aggressive (though there is a random factor
@@ -111,7 +122,11 @@ ENDIF
                         \
                         \ We now want to move the ship in the direction of XX15,
                         \ which will make aggressive ships head towards us, and
+IF _CASSETTE_VERSION
                         \ ships that are too close turn away. Escape pods,
+ELIF _6502SP_VERSION
+                        \ ships that are too close turn away. Peaceful traders,
+ENDIF
                         \ meanwhile, head off towards the planet in search of a
                         \ space station, and missiles home in on their targets
 

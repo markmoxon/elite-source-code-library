@@ -9,7 +9,9 @@
  ROL TP
 
  JSR BRIS
- JSR ZINF
+
+ JSR ZINF               \ Call ZINF to reset the INWK ship workspace
+
  LDA #CON
  STA TYPE
  JSR NWSHP

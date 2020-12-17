@@ -61,7 +61,8 @@
  STY HANG+2
  JSR UNWISE
  LDA #248
- LDX #(HANG MOD256)
- LDY #(HANG DIV256)
- JMP OSWORD \ =  =
+
+ LDX #LO(HANG)          \ Set (Y X) to point to the HANG parameter block
+ LDY #HI(HANG)
+ JMP OSWORD
 

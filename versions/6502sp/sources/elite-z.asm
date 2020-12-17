@@ -62,34 +62,21 @@ Y = 96
 \protlen = 0
 PARMAX = 15
 
-YELLOW = %00001111      \ Four mode 1 pixels of colour 1 (yellow)
-
-RED    = %11110000      \ Four mode 1 pixels of colour 2 (red, magenta or white)
-
-CYAN   = %11111111      \ Four mode 1 pixels of colour 3 (cyan or white)
-
-GREEN  = %10101111      \ Four mode 1 pixels of colour 3, 1, 3, 1 (cyan/yellow)
-
-WHITE  = %11111010      \ Four mode 1 pixels of colour 3, 2, 3, 2 (cyan/red)
-
+YELLOW  = %00001111     \ Four mode 1 pixels of colour 1 (yellow)
+RED     = %11110000     \ Four mode 1 pixels of colour 2 (red, magenta or white)
+CYAN    = %11111111     \ Four mode 1 pixels of colour 3 (cyan or white)
+GREEN   = %10101111     \ Four mode 1 pixels of colour 3, 1, 3, 1 (cyan/yellow)
+WHITE   = %11111010     \ Four mode 1 pixels of colour 3, 2, 3, 2 (cyan/red)
 MAGENTA = RED
-
-DUST = WHITE
+DUST    = WHITE
 
 RED2    = %00000011     \ Two mode 2 pixels of colour 1    (red)
-
 GREEN2  = %00001100     \ Two mode 2 pixels of colour 2    (green)
-
 YELLOW2 = %00001111     \ Two mode 2 pixels of colour 3    (yellow)
-
 BLUE2   = %00110000     \ Two mode 2 pixels of colour 4    (blue)
-
 MAG2    = %00110011     \ Two mode 2 pixels of colour 5    (magenta)
-
 CYAN2   = %00111100     \ Two mode 2 pixels of colour 6    (cyan)
-
 WHITE2  = %00111111     \ Two mode 2 pixels of colour 7    (white)
-
 STRIPE  = %00100011     \ Two mode 2 pixels of colour 5, 1 (magenta/red)
 
 INCLUDE "library/6502sp/io/workspace/zp.asm"

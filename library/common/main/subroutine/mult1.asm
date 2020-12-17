@@ -56,33 +56,37 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- TAX \just in case
-\MUL4 BCCP%+4\ADCT1\RORA\RORP\DEX\BNEMUL4\LSRA\RORP\ORAT\RTS\.mu10 STAP\RTS
- BCC P%+4
- ADC T1
- ROR A
- ROR P\6
- BCC P%+4
- ADC T1
- ROR A
- ROR P\5
- BCC P%+4
- ADC T1
- ROR A
- ROR P\4
- BCC P%+4
- ADC T1
- ROR A
- ROR P\3
- BCC P%+4
- ADC T1
- ROR A
- ROR P\2
- BCC P%+4
- ADC T1
- ROR A
- ROR P\1
+ TAX                    \ Copy A into X. There is a comment in the original
+                        \ source here that says "just in case", which refers to
+                        \ the MULT1 routine in the cassette and disc versions,
+                        \ which set X to 0 (as they use X as a loop counter).
+                        \ The version here doesn't use a loop, but this
+                        \ instruction makes sure the unrolled version returns
+                        \ the same results as the loop versions, just in case
+                        \ something out there relies on MULT1 returning X = 0
 
+\MUL4                   \ These instructions are commented out in the original
+\BCC P%+4               \ source. They contain the original loop version of the
+\ADC T1                 \ code that's used in the disc and cassette versions
+\ROR A
+\ROR P
+\DEX
+\BNE MUL4
+\LSR A
+\ROR P
+\ORA T
+\RTS
+\.mu10
+\STA P
+\RTS
+
+                        \ We now repeat the following four instruction block
+                        \ seven times, one for each remaining bit in P. In the
+                        \ cassette and disc versions of Elite the following is
+                        \ done with a loop, but it is marginally faster to
+                        \ unroll the loop and have seven copies of the code,
+                        \ though it does take up a bit more memory (though that
+                        \ isn't a concern when you have a 6502 Second Processor)
 ENDIF
 
  BCC P%+4               \ If C (i.e. the next bit from P) is set, do the
@@ -101,6 +105,40 @@ ENDIF
  ROR P                  \ Add the overspill from shifting A to the right onto
                         \ the start of P, and shift P right to fetch the next
                         \ bit for the calculation
+
+IF _6502SP_VERSION
+
+ BCC P%+4               \ Repeat for the second time
+ ADC T1
+ ROR A
+ ROR P
+
+ BCC P%+4               \ Repeat for the third time
+ ADC T1
+ ROR A
+ ROR P
+
+ BCC P%+4               \ Repeat for the fourth time
+ ADC T1
+ ROR A
+ ROR P
+
+ BCC P%+4               \ Repeat for the fifth time
+ ADC T1
+ ROR A
+ ROR P
+
+ BCC P%+4               \ Repeat for the sixth time
+ ADC T1
+ ROR A
+ ROR P
+
+ BCC P%+4               \ Repeat for the seventh time
+ ADC T1
+ ROR A
+ ROR P
+
+ENDIF
 
 IF _CASSETTE_VERSION
 

@@ -7,7 +7,11 @@
 \
 \ ------------------------------------------------------------------------------
 \
+IF _CASSETTE_VERSION
 \ Draw a double-height mode 5 dot (2 pixels high, 2 pixels wide).
+ELIF _6502SP_VERSION
+\ Draw a double-height mode 2 dot (2 pixels high, 2 pixels wide).
+ENDIF
 \
 \ Arguments:
 \
@@ -17,7 +21,11 @@
 \   Y1                  The screen pixel y-coordinate of the bottom-left corner
 \                       of the dot
 \
+IF _CASSETTE_VERSION
 \   COL                 The colour of the dot as a mode 5 character row byte
+ELIF _6502SP_VERSION
+\   COL                 The colour of the dot as a mode 2 character row byte
+ENDIF
 \
 \ ******************************************************************************
 

@@ -163,7 +163,8 @@
  STA X2
  LDA Y2VB,Y
  STA Y2
- JSR LOIN
+
+ JSR LOIN               \ Draw a line from (X1, Y1) to (X2, Y2)
 
 .GR4
 
@@ -179,7 +180,9 @@
  LDA Y2UB,Y
  STA Y2
  STA Y2VB,Y
- JSR LOIN
+
+ JSR LOIN               \ Draw a line from (X1, Y1) to (X2, Y2)
+
  DEY
  BNE GRL2
  JSR LBFL

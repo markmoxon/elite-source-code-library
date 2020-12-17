@@ -7,20 +7,23 @@
 
  CLD
  SEC
- LDA #G%MOD256
+ LDA #LO(G%)
  STA 0
  STA SC
- LDA #G%DIV256
+ LDA #HI(G%)
  STA 1
  STA SC+1
- LDA #(F%-1)MOD256
+ LDA #LO(F%-1)
  STA 2
- LDA #(F%-1)DIV256
+ LDA #HI(F%-1)
  STA 3
- LDX #prtblock MOD256
- LDY #prtblock DIV256
- LDA #249
+
+ LDX #LO(prtblock)      \ Set (Y X) to point to the prtblock parameter block
+ LDY #HI(prtblock)
+
+ LDA #249               \ Send an OSWORD 249 command to the I/O processor
  JSR OSWORD
+
  LDX #SC
  EQUB &AD  \&8D
 

@@ -3,7 +3,12 @@
 \       Name: TTX66
 \       Type: Subroutine
 \   Category: Utility routines
+IF _CASSETTE_VERSION
 \    Summary: Clear the top part of the screen and draw a white border
+ELIF _6502SP_VERSION
+\    Summary: Send control code 11 to the I/O processor to clear the top part
+\             of the screen and draw a white border
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
@@ -100,7 +105,7 @@ ELIF _6502SP_VERSION
  STZ de                 \ Clear de, the flag that appends " DESTROYED" to the
                         \ end of the next text token, so that it doesn't
 
- LDA #11                \ Write control code 11 to OSWRCH, to instruct the I/O
+ LDA #11                \ Send control code 11 to OSWRCH, to instruct the I/O
  JSR OSWRCH             \ processor to clear the top part of the screen
 
  LDX QQ22+1             \ Fetch into X the number that's shown on-screen during

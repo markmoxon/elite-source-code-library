@@ -7,8 +7,14 @@
 \
 \ ------------------------------------------------------------------------------
 \
+IF _CASSETTE_VERSION
 \ Ready-made bytes for plotting one-pixel points in mode 4 (the top part of the
 \ split screen). See the PIXEL routine for details.
+ELIF _6502SP_VERSION
+\ This table is not used by the 6502 Second Processor version of Elite. Instead,
+\ the TWOS table in the I/O processor code is used, which contains single-pixel
+\ character row bytes for the mode 1 screen.
+ENDIF
 \
 \ ******************************************************************************
 

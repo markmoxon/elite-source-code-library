@@ -373,7 +373,7 @@ IF _CASSETTE_VERSION
  INY                    \ We want to draw the stick downwards, so we first
                         \ increment the row counter so that it's pointing to the
                         \ bottom-right pixel in the dot (as opposed to the top-
-                        \ right pixel that the call to CPIX2 finished on)
+                        \ right pixel that the call to CPIX4 finished on)
 
  CPY #8                 \ If the row number in Y is less than 8, then it
  BNE P%+6               \ correctly points at the next line down, so jump to
@@ -431,10 +431,12 @@ ELIF _6502SP_VERSION
 
 .SC48
 
- LDX #LO(SCANpars)      \ Send a #onescan command to the I/O processor to draw
- LDY #HI(SCANpars)      \ the ship on the scanner, returning from the subroutine
- LDA #onescan           \ using a tail call
- JMP OSWORD
+ LDX #LO(SCANpars)      \ Set (Y X) to point to the SCANpars parameter block
+ LDY #HI(SCANpars)      
+
+ LDA #onescan           \ Send a #onescan command to the I/O processor to draw
+ JMP OSWORD             \ the ship on the scanner, returning from the subroutine
+                        \ using a tail call
 
 ENDIF
 

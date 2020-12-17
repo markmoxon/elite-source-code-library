@@ -28,10 +28,15 @@
 
 .RDKEY
 
- LDA #240               \ Send an OSWORD 240 command to the I/O processor to
- LDY #HI(buf)           \ scan the keyboard and joysticks, and populate the key
- LDX #LO(buf)           \ logger buffer in KTRAN, which is the part of the buf
- JSR OSWORD             \ buffer just after the two OSWORD size bytes
+ LDA #240               \ Set A in preparation for sending an OSWORD 240 command
+
+ LDY #HI(buf)           \ Set (Y X) to point to the parameter block at buf
+ LDX #LO(buf)
+
+ JSR OSWORD             \ Send an OSWORD 240 command to the I/O processor to
+                        \ scan the keyboard and joysticks, and populate the key
+                        \ logger buffer in KTRAN, which is the part of the buf
+                        \ buffer just after the two OSWORD size bytes
 
  LDX KTRAN              \ Set X to the first byte of the updated KTRAN, which
                         \ contains the internal key number of the key being

@@ -98,8 +98,13 @@ ENDIF
  EQUB 0, 0, 0           \
  EQUB 0, 0, 0           \ This is the "vertical displayed" register, and sets
                         \ the number of displayed character rows to 31. For
+IF _CASSETTE_VERSION
                         \ comparison, this value is 32 for standard modes 4 and
                         \ 5, but we claw back the last row for storing code just
+ELIF _6502SP_VERSION
+                        \ comparison, this value is 32 for standard modes 1 and
+                        \ 2, but we claw back the last row for storing code just
+ENDIF
                         \ above the end of screen memory
 
 IF _CASSETTE_VERSION

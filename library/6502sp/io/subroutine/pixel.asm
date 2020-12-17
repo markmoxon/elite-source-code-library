@@ -27,8 +27,11 @@
  LDA (OSSC),Y
  STY T1
  TAY
- LDA ylookup,Y
- STA SC+1
+
+ LDA ylookup,Y          \ Look up the page number of the character row that
+ STA SC+1               \ contains the pixel with the y-coordinate in Y, and
+                        \ store it in the high byte of SC(1 0) at SC+1
+
  TXA
  AND #&FC
  ASL A
@@ -95,8 +98,11 @@
  LDA (OSSC),Y
  STY T1
  TAY
- LDA ylookup,Y
- STA SC+1
+
+ LDA ylookup,Y          \ Look up the page number of the character row that
+ STA SC+1               \ contains the pixel with the y-coordinate in Y, and
+                        \ store it in the high byte of SC(1 0) at SC+1
+
  TXA
  AND #&FC
  ASL A

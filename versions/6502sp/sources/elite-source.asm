@@ -38,42 +38,48 @@ VEC = &7FFE
 
 Q% = _ENABLE_MAX_COMMANDER
 
-MSL = 1
-SST = 2
-ESC = 3
-PLT = 4
-OIL = 5
-AST = 7
-SPL = 8
-SHU = 9
-CYL = 11
-ANA = 14
-HER = 15
-COPS = 16
-SH3 = 17
-KRA = 19
-ADA = 20
-WRM = 23
-CYL2 = 24
-ASP = 25
-THG = 29
-TGL = 30
-CON = 31
-LGO = 32
-COU = 33
-DOD = 34
+NOST = 18               \ The number of stardust particles in normal space (this
+                        \ goes down to 3 in witchspace)
 
-NOST = 18
-NOSH = 20
+NOSH = 20               \ The maximum number of ships in our local bubble of
+                        \ universe (counting from 0, so there are actually 21
+                        \ ship slots)
 
-JL = ESC                \ Junk low = Escape pod
+MSL = 1                 \ Ship type for a missile
+SST = 2                 \ Ship type for a Coriolis space station
+ESC = 3                 \ Ship type for an escape pod
+PLT = 4                 \ Ship type for an alloy plate
+OIL = 5                 \ Ship type for a cargo canister
+AST = 7                 \ Ship type for an asteroid
+SPL = 8                 \ Ship type for a splinter
+SHU = 9                 \ Ship type for a shuttle
+CYL = 11                \ Ship type for a Cobra Mk III
+ANA = 14                \ Ship type for an Anaconda
+HER = 15                \ Ship type for a rock hermit (asteroid)
+COPS = 16               \ Ship type for a Viper
+SH3 = 17                \ Ship type for a Sidewinder
+KRA = 19                \ Ship type for a Krait
+ADA = 20                \ Ship type for a Adder
+WRM = 23                \ Ship type for a Worm
+CYL2 = 24               \ Ship type for a Cobra Mk III (pirate)
+ASP = 25                \ Ship type for an Asp Mk II
+THG = 29                \ Ship type for a Thargoid
+TGL = 30                \ Ship type for a Thargon
+CON = 31                \ Ship type for a Constrictor
+LGO = 32                \ Ship type for the Elite logo
+COU = 33                \ Ship type for a Cougar
+DOD = 34                \ Ship type for a Dodecahedron ("Dodo") space station
 
-JH = SHU+2              \ Junk high = Cobra Mk III
+JL = ESC                \ Junk is defined as starting from the escape pod
 
-                        \ So junk is escape pod, alloy plate, cargo canister,
-                        \ asteroid, splinter, shuttle, transporter
+JH = SHU+2              \ Junk is defined as ending before the Cobra Mk III
+                        \
+                        \ So junk is defined as the following: escape pod,
+                        \ alloy plate, cargo canister, asteroid, splinter,
+                        \ shuttle, transporter
 
 PACK = SH3
+
 NI% = 37
 POW = 15
 B = &30
@@ -83,34 +89,21 @@ NRU% = 0
 VE = &57
 LL = 30
 
-YELLOW = %00001111      \ Four mode 1 pixels of colour 1 (yellow)
-
-RED    = %11110000      \ Four mode 1 pixels of colour 2 (red, magenta or white)
-
-CYAN   = %11111111      \ Four mode 1 pixels of colour 3 (cyan or white)
-
-GREEN  = %10101111      \ Four mode 1 pixels of colour 3, 1, 3, 1 (cyan/yellow)
-
-WHITE  = %11111010      \ Four mode 1 pixels of colour 3, 2, 3, 2 (cyan/red)
-
+YELLOW  = %00001111     \ Four mode 1 pixels of colour 1 (yellow)
+RED     = %11110000     \ Four mode 1 pixels of colour 2 (red, magenta or white)
+CYAN    = %11111111     \ Four mode 1 pixels of colour 3 (cyan or white)
+GREEN   = %10101111     \ Four mode 1 pixels of colour 3, 1, 3, 1 (cyan/yellow)
+WHITE   = %11111010     \ Four mode 1 pixels of colour 3, 2, 3, 2 (cyan/red)
 MAGENTA = RED
-
-DUST = WHITE
+DUST    = WHITE
 
 RED2    = %00000011     \ Two mode 2 pixels of colour 1    (red)
-
 GREEN2  = %00001100     \ Two mode 2 pixels of colour 2    (green)
-
 YELLOW2 = %00001111     \ Two mode 2 pixels of colour 3    (yellow)
-
 BLUE2   = %00110000     \ Two mode 2 pixels of colour 4    (blue)
-
 MAG2    = %00110011     \ Two mode 2 pixels of colour 5    (magenta)
-
 CYAN2   = %00111100     \ Two mode 2 pixels of colour 6    (cyan)
-
 WHITE2  = %00111111     \ Two mode 2 pixels of colour 7    (white)
-
 STRIPE  = %00100011     \ Two mode 2 pixels of colour 5, 1 (magenta/red)
 
 OSWRCH = &FFEE

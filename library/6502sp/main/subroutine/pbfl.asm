@@ -18,10 +18,13 @@
  JSR DOCOL              \ switch to stripe 3-2-3-2, which is cyan/red in the
                         \ space view
 
- LDA #241               \ Send an OSWORD 241 command to the I/O processor to
- LDX #LO(pixbl)         \ draw the pixel described in the pixbl block
+ LDA #241               \ Set A in preparation for sending an OSWORD 241 command
+
+ LDX #LO(pixbl)         \ Set (Y X) to point to the pixbl parameter block
  LDY #HI(pixbl)
- JSR OSWORD
+
+ JSR OSWORD             \ Send an OSWORD 241 command to the I/O processor to
+                        \ draw the pixel described in the pixbl block
 
 .PBZE2
 

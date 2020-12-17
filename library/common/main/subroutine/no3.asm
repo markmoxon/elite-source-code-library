@@ -28,8 +28,10 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
- LDX #LO(XX16)          \ Otherwise call OSWORD 7, with (Y X) pointing to the
- LDY #HI(XX16)          \ sound block in XX16. This makes the sound as
- LDA #7                 \ described in the documentation for variable SFX,
- JMP OSWORD             \ and returns from the subroutine using a tail call
+ LDX #LO(XX16)          \ Otherwise set (Y X) to point to the sound block in
+ LDY #HI(XX16)          \ XX16
+
+ LDA #7                 \ Call OSWORD 7 to makes the sound, as described in the
+ JMP OSWORD             \ documentation for variable SFX, and return from the
+                        \ subroutine using a tail call
 

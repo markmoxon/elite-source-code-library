@@ -7,7 +7,7 @@ IF _CASSETTE_VERSION
 \    Summary: Draw a specific indicator in the dashboard's missile bar
 ELIF _6502SP_VERSION
 \    Summary: Implement the #DOmsbar command (draw a specific indicator in the
-\             dashboard's missile bar
+\             dashboard's missile bar)
 ENDIF
 \
 \ ------------------------------------------------------------------------------
@@ -15,6 +15,7 @@ ENDIF
 \ Each indicator is a rectangle that's 3 pixels wide and 5 pixels high. If the
 \ indicator is set to black, this effectively removes a missile.
 \
+IF _CASSETTE_VERSION
 \ Arguments:
 \
 \   X                   The number of the missile indicator to update (counting
@@ -29,10 +30,30 @@ ENDIF
 \
 \                         * &E0 = yellow/white (armed)
 \
-IF _CASSETTE_VERSION
 \                         * &EE = green/cyan (disarmed)
 ELIF _6502SP_VERSION
-\                         * &EE = green (disarmed)
+\ This routine is run when the parasite sends a #DOmsbar command with parameters
+\ in the block at OSSC(1 0). It draws a specific indicator in the dashboard's
+\ missile bar. The parameters match those put into the msbpars block in the
+\ parasite.
+\
+\ Arguments:
+\
+\   OSSC(1 0)           A parameter block as follows:
+\
+\                         * Byte #2 = The number of the missile indicator to
+\                           update (counting from right to left, so indicator
+\                           NOMSL is the leftmost indicator)
+\
+\                         * Byte #3 = The colour of the missile indicator:
+\
+\                           * &00 = black (no missile)
+\
+\                           * #RED2 = red (armed and locked)
+\
+\                           * #YELLOW2 = yellow/white (armed)
+\
+\                           * #GREEN2 = green (disarmed)
 ENDIF
 \
 \ Returns:
@@ -59,16 +80,17 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDY #2
- LDA (OSSC),Y
- ASL A
+ LDY #2                 \ Fetch byte #2 from the parameter block (the number of
+ LDA (OSSC),Y           \ the missile indicator) into A
+
+ ASL A                  \ Set T = A * 8
  ASL A
  ASL A
  ASL A
  STA T
 
- LDA #97
- SBC T
+ LDA #97                \ Set SC = 97 - T
+ SBC T                  \        = 96 + 1 - (X * 8)
  STA SC
 
 ENDIF
@@ -77,8 +99,12 @@ ENDIF
                         \ for the rightmost missile indicator, made up as
                         \ follows:
                         \
-                        \   * 48 (character block 7, or byte #7 * 8 = 48, which
-                        \     is the character block of the rightmost missile
+IF _CASSETTE_VERSION
+                        \   * 48 (character block 7, as byte #7 * 8 = 48), the
+ELIF _6502SP_VERSION
+                        \   * 96 (character block 14, as byte #14 * 8 = 96), the
+ENDIF
+                        \     character block of the rightmost missile
                         \
                         \   * 1 (so we start drawing on the second row of the
                         \     character block)
@@ -102,24 +128,43 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA #&7C
- STA SCH
- LDY #3
- LDA (OSSC),Y
- LDY #5
+ LDA #&7C               \ Set the high byte of SC(1 0) to &7C, the character row
+ STA SCH                \ that contains the missile indicators (i.e. the bottom
+                        \ row of the screen)
+
+ LDY #3                 \ Fetch byte #2 from the parameter block (the indicator
+ LDA (OSSC),Y           \ colour) into A. This is one of #GREEN2, #YELLOW2 or
+                        \ #RED2, or 0 for black, so this is a 2-pixel wide mode
+                        \ 2 character row byte in the specified colour
+
+ LDY #5                 \ We now want to draw this line five times to do the
+                        \ left two pixels of the indicator, so set a counter in
+                        \ Y
 
 .MBL1
 
- STA (SC),Y
- DEY
- BNE MBL1
- PHA
- LDA SC
- CLC
- ADC #8
- STA SC
- PLA
- AND #&AA
+ STA (SC),Y             \ Draw the 3-pixel row, and as we do not use EOR logic,
+                        \ this will overwrite anything that is already there
+                        \ (so drawing a black missile will delete what's there)
+
+ DEY                    \ Decrement the counter for the next row
+
+ BNE MBL1               \ Loop back to MBL1 if have more rows to draw
+
+ PHA                    \ Store the value of A on the stack so we can retrieve
+                        \ it after the following addition
+
+ LDA SC                 \ Set SC = SC + 8
+ CLC                    \
+ ADC #8                 \ so SC(1 0) now points to the next character block on
+ STA SC                 \ the row (for the right half of the indicator)
+
+ PLA                    \ Retrieve A from the stack
+
+ AND #%10101010         \ Mask the character row to plot just the first pixel
+                        \ in the next character block, as we already did a
+                        \ two-pixel wide band in the previous character block,
+                        \ so we need to plot just one more pixel, width-wise
 
 ENDIF
 
@@ -130,13 +175,13 @@ IF _CASSETTE_VERSION
 
 .MBL1
 
+ STA (SC),Y             \ Draw the 3-pixel row, and as we do not use EOR logic,
 ELIF _6502SP_VERSION
 
 .MBL2
 
+ STA (SC),Y             \ Draw the 1-pixel row, and as we do not use EOR logic,
 ENDIF
-
- STA (SC),Y             \ Draw the 3-pixel row, and as we do not use EOR logic,
                         \ this will overwrite anything that is already there
                         \ (so drawing a black missile will delete what's there)
 
@@ -148,7 +193,7 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- BNE MBL2
+ BNE MBL2               \ Loop back to MBL2 if have more rows to draw
 
 ENDIF
 

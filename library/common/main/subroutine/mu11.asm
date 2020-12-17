@@ -63,37 +63,72 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- TAX \just in case
- LSR P
- BCC P%+4
+ TAX                    \ Copy A into X. There is a comment in the original
+                        \ source here that says "just in case", which refers to
+                        \ the MU11 routine in the cassette and disc versions,
+                        \ which set X to 0 (as they use X as a loop counter).
+                        \ The version here doesn't use a loop, but this
+                        \ instruction makes sure the unrolled version returns
+                        \ the same results as the loop versions, just in case
+                        \ something out there relies on MU11 returning X = 0
+
+ LSR P                  \ Set P = P >> 1
+                        \ and C flag = bit 0 of P
+
+                        \ We now repeat the following four instruction block
+                        \ eight times, one for each bit in P. In the cassette
+                        \ and disc versions of Elite the following is done with
+                        \ a loop, but it is marginally faster to unroll the loop
+                        \ and have eight copies of the code, though it does take
+                        \ up a bit more memory (though that isn't a concern when
+                        \ you have a 6502 Second Processor)
+
+ BCC P%+4               \ If C (i.e. bit 0 of P) is set, do the
+ ADC T                  \ addition for this bit of P:
+                        \
+                        \   A = A + T + C
+                        \     = A + X - 1 + 1
+                        \     = A + X
+
+ ROR A                  \ Shift A right to catch the next digit of our result,
+                        \ which the next ROR sticks into the left end of P while
+                        \ also extracting the next bit of P
+
+ ROR P                  \ Add the overspill from shifting A to the right onto
+                        \ the start of P, and shift P right to fetch the next
+                        \ bit for the calculation into the C flag
+
+ BCC P%+4               \ Repeat for the second time
  ADC T
  ROR A
- ROR P\7
- BCC P%+4
+ ROR P
+
+ BCC P%+4               \ Repeat for the third time
  ADC T
  ROR A
- ROR P\6
- BCC P%+4
+ ROR P
+
+ BCC P%+4               \ Repeat for the fourth time
  ADC T
  ROR A
- ROR P\5
- BCC P%+4
+ ROR P
+
+ BCC P%+4               \ Repeat for the fifth time
  ADC T
  ROR A
- ROR P\4
- BCC P%+4
+ ROR P
+
+ BCC P%+4               \ Repeat for the sixth time
  ADC T
  ROR A
- ROR P\3
- BCC P%+4
+ ROR P
+
+ BCC P%+4               \ Repeat for the seventh time
  ADC T
  ROR A
- ROR P\2
- BCC P%+4
- ADC T
- ROR A
- ROR P\1
- BCC P%+4
+ ROR P
+ 
+ BCC P%+4               \ Repeat for the eighth time
  ADC T
  ROR A
  ROR P

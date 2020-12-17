@@ -31,10 +31,11 @@
 
  JSR FLKB               \ Call FLKB to flush the keyboard buffer
 
- LDX #LO(RLINE)         \ Call OSWORD with A = 0 and (Y X) pointing to the
- LDY #HI(RLINE)         \ configuration block in RLINE, which reads a line from
- LDA #0                 \ the current input stream (i.e. the keyboard)
- JSR OSWORD
+ LDX #LO(RLINE)         \ Set (Y X) to point to the RLINE parameter block
+ LDY #HI(RLINE)
+
+ LDA #0                 \ Call OSWORD with A = 0 to read a line from the current
+ JSR OSWORD             \ input stream (i.e. the keyboard)
 
  BCC P%+4               \ The C flag will be set if we pressed ESCAPE when
                         \ entering the name, otherwise it will be clear, so

@@ -33,10 +33,11 @@
  TAX
  JSR OSBYTE
 
- LDX #LO(RLINE)         \ Call OSWORD with A = 0 and (Y X) pointing to the
+ LDX #LO(RLINE)         \ Set (Y X) to point to the RLINE parameter block
  LDY #HI(RLINE)         \ configuration block below, which reads a line from
- LDA #0                 \ the current input stream (i.e. the keyboard)
- JSR OSWORD
+
+ LDA #0                 \ Call OSWORD with A = 0 to read a line from the current
+ JSR OSWORD             \ input stream (i.e. the keyboard)
 
 \LDA #%00000001         \ These instructions are commented out in the original
 \STA VIA+&4E            \ source, but they would set 6522 System VIA interrupt

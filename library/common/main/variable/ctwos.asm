@@ -7,6 +7,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
+IF _CASSETTE_VERSION
 \ Ready-made bytes for plotting one-pixel points in mode 5 (the bottom part of
 \ the split screen). See the dashboard routines SCAN, DIL2 and CPIX2 for
 \ details.
@@ -16,6 +17,11 @@
 \ to work out whether CTWOS+1+X needs to be wrapped around when drawing a
 \ two-pixel dash that crosses from one character block into another. See CPIX2
 \ for more details.
+ELIF _6502SP_VERSION
+\ This table is not used by the 6502 Second Processor version of Elite. Instead,
+\ the CTWOS table in the I/O processor code is used, which contains single-pixel
+\ character row bytes for the mode 2 dashboard.
+ENDIF
 \
 \ ******************************************************************************
 

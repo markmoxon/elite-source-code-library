@@ -18,14 +18,18 @@
 \
 \                         * &00 = black (no missile)
 \
+IF _CASSETTE_VERSION
 \                         * &0E = red (armed and locked)
 \
 \                         * &E0 = yellow/white (armed)
 \
-IF _CASSETTE_VERSION
 \                         * &EE = green/cyan (disarmed)
 ELIF _6502SP_VERSION
-\                         * &EE = green (disarmed)
+\                         * #RED2 = red (armed and locked)
+\
+\                         * #YELLOW2 = yellow/white (armed)
+\
+\                         * #GREEN2 = green (disarmed)
 ENDIF
 \
 \ ******************************************************************************

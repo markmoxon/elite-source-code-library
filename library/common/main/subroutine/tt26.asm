@@ -748,9 +748,11 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDX #LO(BELI)          \ We call this from above with A = 7, so this calls
- LDY #HI(BELI)          \ OSWORD 7 with (Y X) pointing to the BELI parameter
- JSR OSWORD             \ block below, which makes a short, high beep
+ LDX #LO(BELI)          \ Set (Y X) to point to the parameter block below
+ LDY #HI(BELI)
+
+ JSR OSWORD             \ We call this from above with A = 7, so this calls
+                        \ OSWORD 7 to make a short, high beep
 
  JMP RR4                \ Jump to RR4 to restore the registers and return from
                         \ the subroutine using a tail call

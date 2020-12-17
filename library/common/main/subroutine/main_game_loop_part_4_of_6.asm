@@ -105,7 +105,7 @@ ENDIF
 
 IF _6502SP_VERSION
 
-                        \ In the 6502 second processor version, the LABEL_2
+                        \ In the 6502 Second Processor version, the LABEL_2
                         \ label is actually ` (a backtick), but that doesn't
                         \ compile in BeebAsm and it's pretty cryptic, so
                         \ instead this version sticks with the label LABEL_2

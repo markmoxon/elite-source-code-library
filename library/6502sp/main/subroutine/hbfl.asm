@@ -12,8 +12,10 @@
  LDA #2
  STA HBUP
  LDA #247
- LDX #(HBUF MOD256)
- LDY #(HBUF DIV256)
+
+ LDX #LO(HBUF)          \ Set (Y X) to point to the HBUF parameter block
+ LDY #HI(HBUF)
+
  JSR OSWORD
 
 .HBZE2

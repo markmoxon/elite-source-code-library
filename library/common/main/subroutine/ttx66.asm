@@ -100,8 +100,8 @@ ELIF _6502SP_VERSION
  STZ de                 \ Clear de, the flag that appends " DESTROYED" to the
                         \ end of the next text token, so that it doesn't
 
- LDA #11                \ Write ASCII character 11, to move the system cursor up
- JSR OSWRCH             \ one line
+ LDA #11                \ Write control code 11 to OSWRCH, to instruct the I/O
+ JSR OSWRCH             \ processor to clear the top part of the screen
 
  LDX QQ22+1             \ Fetch into X the number that's shown on-screen during
                         \ the hyperspace countdown

@@ -3,8 +3,8 @@
 \       Name: ADDBYT
 \       Type: Subroutine
 \   Category: Drawing lines
-\    Summary: Implement the OSWRCH 130 command (add a byte to a line
-\             and draw it when all bytes are received)
+\    Summary: Implement the OSWRCH 130 <byte> command (add a byte to a line and
+\             draw it when all bytes are received)
 \
 \ ------------------------------------------------------------------------------
 \

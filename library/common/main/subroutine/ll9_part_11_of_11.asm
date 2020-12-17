@@ -54,7 +54,7 @@ ELIF _6502SP_VERSION
  BCC nolines            \ draw, so return from the subroutine (as nolines
                         \ contains an RTS)
 
- LDA #&81               \ Send an OSWRCH &81 command to the I/O processor to
+ LDA #129               \ Send an OSWRCH 129 command to the I/O processor to
  JSR OSWRCH             \ tell it to start receiving a new line to draw (so
                         \ when we send it OSWRCH commands from now on, the I/O
                         \ processor will add these bytes to this line until

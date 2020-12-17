@@ -12,8 +12,11 @@
 \
 IF _CASSETTE_VERSION
 \ WRCHV is set to point here by elite-loader.asm.
-\
+ELIF _6502SP_VERSION
+\ Calls to OSWRCH will end up here when A is not in the range 128-147, as those
+\ are reserved for the special jump table OSWRCH commands.
 ENDIF
+\
 \ Arguments:
 \
 \   A                   The character to be printed. Can be one of the
@@ -21,7 +24,16 @@ ENDIF
 \
 \                         * 7 (beep)
 \
+IF _CASSETTE_VERSION
 \                         * 10-13 (line feeds and carriage returns)
+ELIF _6502SP_VERSION
+\                         * 10 (line feed)
+\
+\                         * 11 (clear the top part of the screen and draw a
+\                           border)
+\
+\                         * 12-13 (carriage return)
+ENDIF
 \
 \                         * 32-95 (ASCII capital letters, numbers and
 \                           punctuation)
@@ -92,9 +104,9 @@ ELIF _6502SP_VERSION
                         \ RR4S) to restore the registers and return from the
                         \ subroutine using a tail call
 
- CMP #11                \ If this is control code 11 (line feed), jump to cls to
- BEQ cls                \ clear the top part of the screen, draw a white border
-                        \ and return from the subroutine via RR4
+ CMP #11                \ If this is control code 11 (clear screen), jump to cls
+ BEQ cls                \ ro clear the top part of the screen, draw a white
+                        \ border and return from the subroutine via RR4
 
  CMP #7                 \ If this is not control code 7 (beep), skip the next
  BNE P%+5               \ instruction
@@ -114,10 +126,11 @@ ENDIF
 
 IF _CASSETTE_VERSION
  LDX #1                 \ If we get here, then this is control code 11-13, of
-ELIF _6502SP_VERSION
- LDX #1                 \ If we get here, then this is control code 12 or 13, of
-ENDIF
  STX XC                 \ which only 13 is used. This code prints a newline,
+ELIF _6502SP_VERSION
+ LDX #1                 \ If we get here, then this is control code 12 or 13,
+ STX XC                 \ both of which are used. This code prints a newline,
+ENDIF
                         \ which we can achieve by moving the text cursor
                         \ to the start of the line (carriage return) and down
                         \ one line (line feed). These two lines do the first

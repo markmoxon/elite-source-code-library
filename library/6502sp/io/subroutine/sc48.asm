@@ -1,5 +1,6 @@
 \ ******************************************************************************
 \       Name: SC48 - is like the last half of common/subroutine/scan.asm
+\    Summary: Implement the #onescan command (draw a ship on the 3D scanner)
 \ ******************************************************************************
 
 \  ...................... Scanners  ..............................

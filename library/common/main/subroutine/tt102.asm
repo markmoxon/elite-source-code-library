@@ -23,6 +23,12 @@
 \
 \   Y                   The amount to move the crosshairs in the y-axis
 \
+IF _6502SP_VERSION
+\ Other entry points:
+\
+\   T95                 Print the distance to the selected system
+\
+ENDIF
 \ ******************************************************************************
 
 .TT102

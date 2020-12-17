@@ -3,8 +3,8 @@
 \       Name: ADPARAMS
 \       Type: Subroutine
 \   Category: Dashboard
-\    Summary: Implement the OSWRCH 137 command (add a dashboard parameter and
-\             update the dashboard when all parameters are received)
+\    Summary: Implement the OSWRCH 137 <param> command (add a dashboard
+\             parameter and update the dashboard when all are received)
 \
 \ ******************************************************************************
 

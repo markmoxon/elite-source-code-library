@@ -3,8 +3,8 @@
 \       Name: BEGINLIN
 \       Type: Subroutine
 \   Category: Drawing lines
-\    Summary: Implement the OSWRCH 129 command (start receiving a new line to
-\             draw)
+\    Summary: Implement the OSWRCH 129 <size> command (start receiving a new
+\             line to draw)
 \
 \ ------------------------------------------------------------------------------
 \

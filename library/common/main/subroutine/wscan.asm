@@ -3,7 +3,11 @@
 \       Name: WSCAN
 \       Type: Subroutine
 \   Category: Screen mode
+IF _CASSETTE_VERSION
 \    Summary: Wait for the vertical sync
+ELIF _6502SP_VERSION
+\    Summary: Implement the #wscn command (wait for the vertical sync)
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

@@ -3,7 +3,12 @@
 \       Name: MSBAR
 \       Type: Subroutine
 \   Category: Dashboard
+IF _CASSETTE_VERSION
 \    Summary: Draw a specific indicator in the dashboard's missile bar
+ELIF _6502SP_VERSION
+\    Summary: Implement the #DOmsbar command (draw a specific indicator in the
+\             dashboard's missile bar
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

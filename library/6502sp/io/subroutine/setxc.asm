@@ -3,7 +3,7 @@
 \       Name: SETXC
 \       Type: Subroutine
 \   Category: Text
-\    Summary: Implement the #SETXC <column> command (move text cursor to a
+\    Summary: Implement the #SETXC <column> command (move the text cursor to a
 \             specific column)
 \
 \ ------------------------------------------------------------------------------

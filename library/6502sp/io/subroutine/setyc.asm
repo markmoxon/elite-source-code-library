@@ -3,8 +3,8 @@
 \       Name: SETYC
 \       Type: Subroutine
 \   Category: Text
-\    Summary: Implement the #SETYC <row> command (move text cursor to a specific
-\             row)
+\    Summary: Implement the #SETYC <row> command (move the text cursor to a
+\             specific row)
 \
 \ ------------------------------------------------------------------------------
 \

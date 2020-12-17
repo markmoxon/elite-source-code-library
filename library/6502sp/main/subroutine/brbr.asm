@@ -44,7 +44,7 @@
 
 .BRBRLOOP
 
- JSR OSWRCH             \ Print the character in A (which contains a line feed
+ JSR OSWRCH             \ Print the character in A, which contains a line feed
                         \ on the first loop iteration, and then any non-zero
                         \ characters we fetch from the error message
 

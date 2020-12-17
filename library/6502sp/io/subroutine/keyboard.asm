@@ -3,7 +3,8 @@
 \       Name: KEYBOARD
 \       Type: Subroutine
 \   Category: Keyboard
-\    Summary: Scan the keyboard and joystick key presses and log the results
+\    Summary: Implement the OSWORD 240 command (scan the keyboard and joystick
+\             and log the results)
 \
 \ ------------------------------------------------------------------------------
 \

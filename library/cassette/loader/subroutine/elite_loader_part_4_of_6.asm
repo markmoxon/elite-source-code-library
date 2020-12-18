@@ -168,20 +168,20 @@ IF DISC
 
  LDY #20                \ Set Y = 20 for the following OSBYTE call
 
- IF _REMOVE_CHECKSUMS
+IF _REMOVE_CHECKSUMS
 
-  NOP                   \ Skip the OSBYTE call if checksums are disabled
-  NOP
-  NOP
+ NOP                    \ Skip the OSBYTE call if checksums are disabled
+ NOP
+ NOP
 
- ELSE
+ELSE
 
-  JSR OSBYTE            \ A was set to 129 above, so this calls OSBYTE with
+ JSR OSBYTE             \ A was set to 129 above, so this calls OSBYTE with
                         \ A = 129 and Y = 20, which reads the keyboard with a
                         \ time limit, in this case 20 centiseconds, or 0.2
                         \ seconds
 
- ENDIF
+ENDIF
 
  LDA #%00000001         \ Set 6522 System VIA interrupt enable register IER
  STA &FE4E              \ (SHEILA &4E) bit 1 (i.e. disable the CA2 interrupt,

@@ -65,7 +65,7 @@ INCLUDE "library/common/loader/variable/cnt.asm"
 INCLUDE "library/common/loader/variable/cnt2.asm"
 INCLUDE "library/common/loader/variable/cnt3.asm"
 INCLUDE "library/common/loader/subroutine/root.asm"
-INCLUDE "library/6502sp/loader1/subroutine/osb.asm"
+INCLUDE "library/common/loader/subroutine/osb.asm"
 INCLUDE "library/6502sp/loader1/variable/mess1.asm"
 INCLUDE "library/6502sp/loader1/variable/mess2.asm"
 

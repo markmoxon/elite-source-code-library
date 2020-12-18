@@ -1,6 +1,6 @@
 .CATF
 
- EQUB 0                 \ The disc catalogue flag
+ SKIP 1                 \ The disc catalogue flag
                         \
                         \ Determines whether a disc catalogue is currently in
                         \ progress, so the TT26 print routine can format the

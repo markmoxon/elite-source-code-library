@@ -1,6 +1,6 @@
 .DNOIZ
 
- EQUB 0                 \ Sound on/off configuration setting
+ SKIP 1                 \ Sound on/off configuration setting
                         \
                         \   * 0 = sound is on (default)
                         \

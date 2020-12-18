@@ -31,7 +31,7 @@
 .BULL2
 
  LDA ECBT,Y             \ Fetch the Y-th byte of the bulb bitmap
- 
+
  EOR (SC),Y             \ EOR the byte with the current contents of screen
                         \ memory, so drawing the bulb when it is already
                         \ on-screen will erase it

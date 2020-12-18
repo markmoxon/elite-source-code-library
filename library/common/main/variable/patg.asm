@@ -1,6 +1,6 @@
 .PATG
 
- EQUB 0                 \ Configuration setting to show the author names on the
+ SKIP 1                 \ Configuration setting to show the author names on the
                         \ start-up screen and enable manual hyperspace mis-jumps
                         \
                         \   * 0 = no author names or manual mis-jumps (default)

@@ -1,4 +1,4 @@
 .K3
 
- EQUB 0                 \ Temporary storage, used in a number of places
+ SKIP 1                 \ Temporary storage, used in a number of places
 

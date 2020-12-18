@@ -3,8 +3,13 @@
 \       Name: DIALS
 \       Type: Subroutine
 \   Category: Utility routines
-\    Summary: Update the dashboard indicators by sending a #RDPARAMS command to
-\             the I/O processor
+\    Summary: Update the dashboard indicators and flight variables by sending a
+\             #RDPARAMS command to the I/O processor
+\
+\ ------------------------------------------------------------------------------
+\
+\ The paramaters sent by this command not only update the dashboard, they also
+\ update all the flight variables in the I/O processor, from ENERGY to ESCP.
 \
 \ ******************************************************************************
 
@@ -63,7 +68,7 @@
  AND #3                 \ iterations of the main loop, so skip the following
  BEQ P%+3               \ instruction when that happens (so we only update the
                         \ compass once every four iterations of the main loop)
- 
+
  RTS                    \ Return from the subroutine
 
  JMP COMPAS             \ Jump to COMPAS to update the compass, returning from

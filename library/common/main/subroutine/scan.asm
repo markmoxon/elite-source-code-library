@@ -67,7 +67,7 @@ IF _CASSETTE_VERSION
 ELIF _6502SP_VERSION
 
  LDA scacol,X           \ Set A to the scanner colour for this ship type from
-                        \ the X-th entry in the scacol table 
+                        \ the X-th entry in the scacol table
 
  STA SCANcol            \ Store the scanner colour in SCANcol so it can be sent
                         \ to the I/O processor with the #onescan command
@@ -114,7 +114,7 @@ IF _CASSETTE_VERSION
 ELIF _6502SP_VERSION
 
  ADC #123               \ Set A = 123 + x_hi
- 
+
  STA SCANx1             \ Store the x-coordinate in SCANx1 so it can be sent
                         \ to the I/O processor with the #onescan command
 
@@ -432,7 +432,7 @@ ELIF _6502SP_VERSION
 .SC48
 
  LDX #LO(SCANpars)      \ Set (Y X) to point to the SCANpars parameter block
- LDY #HI(SCANpars)      
+ LDY #HI(SCANpars)
 
  LDA #onescan           \ Send a #onescan command to the I/O processor to draw
  JMP OSWORD             \ the ship on the scanner, returning from the subroutine

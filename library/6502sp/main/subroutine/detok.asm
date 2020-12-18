@@ -24,7 +24,7 @@
 \   DTEN                Print recursive token number X from the token table
 \                       pointed to by (A V), used to print tokens from the RUTOK
 \                       table via calls to DETOK3
-\ 
+\
 \ ******************************************************************************
 
 .DETOK

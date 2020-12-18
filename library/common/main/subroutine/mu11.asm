@@ -127,7 +127,7 @@ ELIF _6502SP_VERSION
  ADC T
  ROR A
  ROR P
- 
+
  BCC P%+4               \ Repeat for the eighth time
  ADC T
  ROR A

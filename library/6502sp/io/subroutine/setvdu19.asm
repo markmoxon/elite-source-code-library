@@ -15,7 +15,7 @@
 \ Arguments:
 \
 \   A                   The offset within the TVT3 table of palettes:
-\                     
+\
 \                         * 0 = Yellow, red, cyan palette (space view)
 \
 \                         * 16 = Yellow, red, white palette (charts)

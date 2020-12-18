@@ -9,7 +9,7 @@
 
 .RUTOK
 
- EQUB VE                
+ EQUB VE                \ Token 0:      ""
                         \
                         \ Encoded as:   ""
 
@@ -307,8 +307,8 @@
  EQUB VE
 
  ECHR 'O'               \ Token 7:      "OH DEAR ME YES. A FRIGHTFUL ROGUE WITH
- ECHR 'H'               \                WHAT I BELIEVE YOU PEOPLE CALL A LEAD 
- ECHR ' '               \                POSTERIOR SHOT UP LOTS OF THOSE BEASTLY 
+ ECHR 'H'               \                WHAT I BELIEVE YOU PEOPLE CALL A LEAD
+ ECHR ' '               \                POSTERIOR SHOT UP LOTS OF THOSE BEASTLY
  ECHR 'D'               \                PIRATES AND WENT TO USLERI"
  ECHR 'E'               \
  ETWO 'A', 'R'          \ Encoded as:   "OH DE<238> ME Y<237>.[208]FRIGHTFUL ROG
@@ -317,7 +317,7 @@
  ECHR 'E'               \                <222><244>I<253> SHOT UP <224>TS OF
  ECHR ' '               \                 <226>O<218> <247>A<222>LY PI<248>T
  ECHR 'Y'               \                <237>[178]W<246>T[201]<236><229>RI"
- ETWO 'E', 'S' 
+ ETWO 'E', 'S'
  ECHR '.'
  ETOK 208
  ECHR 'F'

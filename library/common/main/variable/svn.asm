@@ -17,7 +17,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
- EQUB 0                 \ "Saving in progress" flag
+ SKIP 1                 \ "Saving in progress" flag
                         \
 IF _CASSETTE_VERSION
                         \   * Non-zero while we are saving a commander

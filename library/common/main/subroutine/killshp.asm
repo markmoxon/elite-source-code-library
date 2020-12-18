@@ -89,7 +89,7 @@ IF _6502SP_VERSION
  CPX #HER               \ Did we just kill a rock hermit? If we did, jump to
  BEQ blacksuspenders    \ blacksuspenders to increase the junk count
 
- CPX #JL                \ If JL <= X < JH, i.e. the type of ship we killed in X 
+ CPX #JL                \ If JL <= X < JH, i.e. the type of ship we killed in X
  BCC KS7                \ is junk (escape pod, alloy plate, cargo canister,
  CPX #JH                \ asteroid, splinter, shuttle or transporter), then keep
  BCS KS7                \ going, otherwise jump to KS7

@@ -327,7 +327,7 @@ ELIF _6502SP_VERSION
  DEC CNT2               \ Decrement the outer loop counter in CNT2
 
  BNE TLL2               \ Loop back to keep the ship rotating, until the outer
-                        \ loop counter is zero 
+                        \ loop counter is zero
 
  JMP DEMON              \ Once we have iterated through CNT2 iterations of MCNT,
                         \ jump to DEMON to start the demo

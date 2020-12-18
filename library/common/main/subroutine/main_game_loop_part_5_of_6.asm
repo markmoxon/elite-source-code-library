@@ -48,7 +48,7 @@ ENDIF
 IF _6502SP_VERSION
 
  LDX LASCT              \ Set X to the value of LASCT, the laser pulse count
- 
+
  BEQ NOLASCT            \ If X = 0 then jump to NOLASCT to skip reducing LASCT,
                         \ as it can't be reduced any further
 
@@ -57,7 +57,7 @@ IF _6502SP_VERSION
  BEQ P%+3               \ If X = 0, skip the next instruction
 
  DEX                    \ Decrement the value of LASCT in X again
- 
+
  STX LASCT              \ Store the decremented value of X in LASCT, so LASCT
                         \ gets reduced by 2, but not into negative territory
 

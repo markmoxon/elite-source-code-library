@@ -107,7 +107,7 @@
  EQUB %10100000         \ Boa                               Innocent, escape pod
  EQUB %10100001         \ Anaconda                  Trader, innocent, escape pod
  EQUB %10100001         \ Rock hermit (asteroid)    Trader, innocent, escape pod
- EQUB %11000010         \ Viper                   Bounty hunter, cop, escape pod 
+ EQUB %11000010         \ Viper                   Bounty hunter, cop, escape pod
  EQUB %00001100         \ Sidewinder                             Hostile, pirate
  EQUB %10001100         \ Mamba                      Hostile, pirate, escape pod
  EQUB %10001100         \ Krait                      Hostile, pirate, escape pod
@@ -125,5 +125,6 @@
  EQUB %00000100         \ Constrictor                                    Hostile
  EQUB %00000000         \ The Elite logo
  EQUB %00100000         \ Cougar                                        Innocent
- EQUB %00000000         \ 
+
+ EQUB 0
 

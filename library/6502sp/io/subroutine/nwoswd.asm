@@ -13,7 +13,7 @@
 \ Arguments:
 \
 \   A                   The OSWORD call to perform:
-\                       
+\
 \                         * 240-255: Run the jump command in A (see OSWVECS)
 \
 \                         * All others: Call the standard OSWORD routine

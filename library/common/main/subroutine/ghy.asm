@@ -72,7 +72,7 @@ IF _CASSETTE_VERSION
 ELIF _6502SP_VERSION
 
  LDA #2                 \ Call wW2 with A = 2 to start the hyperspace countdown,
- JSR wW2                \ but starting the countdown from 2 
+ JSR wW2                \ but starting the countdown from 2
 
 ENDIF
 

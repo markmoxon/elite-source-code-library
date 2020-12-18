@@ -20,7 +20,7 @@
 
  PHA                    \ Store the new row number on the stack
 
- LDA #SETYC             \ Set A to #SETYC, ready to send to the I/O processor 
+ LDA #SETYC             \ Set A to #SETYC, ready to send to the I/O processor
 
                         \ Fall through into label to send a #SETYC <row> command
                         \ to the I/O processor

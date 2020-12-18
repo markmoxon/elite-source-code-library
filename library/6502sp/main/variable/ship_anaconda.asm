@@ -20,7 +20,7 @@
  EQUB 25                \ Number of edges          = 25
  EQUW 0                 \ Bounty                   = 0
  EQUB 48                \ Number of faces          = 48 / 4 = 12
- EQUB 36                \ Visibility distance      = 
+ EQUB 36                \ Visibility distance      = 36
  EQUB 252               \ Max. energy              = 252
  EQUB 14                \ Max. speed               = 14
  EQUB &00               \ Edges data offset (high) = &006E

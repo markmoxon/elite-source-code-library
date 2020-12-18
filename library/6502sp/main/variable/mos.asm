@@ -1,4 +1,4 @@
 .MOS
 
- EQUB 0
+ SKIP 1                 \ This variable appears to be unused
 

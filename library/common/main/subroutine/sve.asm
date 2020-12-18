@@ -173,7 +173,7 @@ ELIF _6502SP_VERSION
 
  CLC                    \ Clear the C flag so the call to BPRNT does not include
                         \ a decimal point
- 
+
  JSR BPRNT              \ Print the competition number stored in K to K+3. The
                         \ value of U might affect how this is printed, and as
                         \ it's a temporary variable in zero page that isn't

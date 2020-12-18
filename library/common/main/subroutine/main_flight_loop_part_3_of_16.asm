@@ -168,7 +168,7 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA KY20               \ If "P" is being pressed, keep going, otherwise skip 
+ LDA KY20               \ If "P" is being pressed, keep going, otherwise skip
  BEQ MA78               \ the next two instructions
 
  LDA #0                 \ The "cancel docking computer" key is bring pressed,

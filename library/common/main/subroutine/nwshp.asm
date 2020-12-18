@@ -258,7 +258,7 @@ ELIF _6502SP_VERSION
  CPX #HER               \ If the ship type is a rock hermit, jump to gangbang
  BEQ gangbang           \ to increase the junk count
 
- CPX #JL                \ If JL <= X < JH, i.e. the type of ship we killed in X 
+ CPX #JL                \ If JL <= X < JH, i.e. the type of ship we killed in X
  BCC NW7                \ is junk (escape pod, alloy plate, cargo canister,
  CPX #JH                \ asteroid, splinter, shuttle or transporter), then keep
  BCS NW7                \ going, otherwise jump to NW7

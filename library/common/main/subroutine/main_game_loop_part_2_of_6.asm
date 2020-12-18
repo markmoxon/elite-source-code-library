@@ -168,7 +168,7 @@ ELIF _6502SP_VERSION
 
  LDA #HER               \ Set A to #HER so we spawn a rock hermit 1.2% of the
                         \ time
- 
+
  STA INWK+32            \ Set byte #32 to %00001111 to give the rock hermit an
                         \ E.C.M.
 
@@ -180,7 +180,7 @@ ELIF _6502SP_VERSION
  CMP #10                \ If random A >= 10 (96% of the time), set the C flag
 
  AND #1                 \ Reduce A to a random number that's 0 or 1
- 
+
  ADC #OIL               \ Set A = #OIL + A + C, so there's a tiny chance of us
                         \ spawning a cargo canister (#OIL) and an even chance of
                         \ us spawning either a boulder (#OIL + 1) or an asteroid

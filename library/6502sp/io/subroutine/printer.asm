@@ -18,7 +18,7 @@
 
  PHA                    \ Store A on the stack so we can retrieve it after the
                         \ following call to TT26
- 
+
  JSR TT26               \ Call TT26 to print the character in A on-screen
 
  PLA                    \ Retrieve A from the stack
@@ -27,7 +27,7 @@
  BEQ nottosend          \ one line", jump to nottosend to skip sending this
                         \ character to the printer, as you can't roll back time
                         \ when you're printing hard copy
- 
+
  PHA                    \ Store A on the stack so we can retrieve it after the
                         \ following call to NVOSWRCH
 
@@ -38,10 +38,10 @@
  PLA                    \ Retrieve A from the stack, though this is a bit
                         \ pointless given the next instruction, as they cancel
                         \ each other out
- 
+
  PHA                    \ Store A on the stack so we can retrieve it after the
                         \ following calls to POSWRCH and/or NVOSWRCH
- 
+
  CMP #' '               \ If A is greater than ASCII " ", then it's a printable
  BCS tosend             \ character, so jump to tosend to print the character
                         \ and jump back to sent to turn the printer off and

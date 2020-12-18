@@ -352,7 +352,7 @@ IF _CASSETTE_VERSION
 ELIF _6502SP_VERSION
 
  LDX CNT                \ Set Y = the laser power for view X
- LDY LASER,X 
+ LDY LASER,X
 
  CPY #128+POW           \ If the laser power for view X is not #POW+128 (beam
  BNE P%+4               \ laser), skip the next LDA instruction

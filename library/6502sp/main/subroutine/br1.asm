@@ -14,9 +14,9 @@
 
  LDA #3                 \ Move the text cursor to column 3
  JSR DOXC
-                        
+
  LDX #3                 \ Disable the ESCAPE key and clear memory if the BREAK
- JSR FX200              \ key is pressed (*FX 200, 3)
+ JSR FX200              \ key is pressed (*FX 200,3)
 
  LDX #CYL               \ Call the TITLE subroutine to show the rotating ship
  LDA #6                 \ and load prompt. The arguments sent to TITLE are:
@@ -79,7 +79,7 @@
                         \ in QQ15 into QQ2, where we store the seeds for the
                         \ current system, so set up a counter in X for copying
                         \ 6 bytes (for three 16-bit seeds)
-                        
+
                         \ The label below is called likeTT112 because this code
                         \ is almost identical to the TT112 loop in the hyp
                         \ routine in the cassette version

@@ -1,6 +1,6 @@
 .FLH
 
- EQUB 0                 \ Flashing console bars configuration setting
+ SKIP 1                 \ Flashing console bars configuration setting
                         \
                         \   * 0 = static bars (default)
                         \

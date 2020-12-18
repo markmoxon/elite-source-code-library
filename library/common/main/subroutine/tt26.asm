@@ -376,7 +376,7 @@ ELIF _6502SP_VERSION
 
  CPY #' '               \ If the character we want to print in Y is a space,
  BNE RR5                \ jump to RR5
- 
+
                         \ If we get here, then CATF is non-zero, so we are
                         \ printing a disc catalogue and we are not printing a
                         \ space, so we drop column 17 from the output so the
@@ -688,7 +688,7 @@ IF _6502SP_VERSION
 
  AND #%00001111         \ This time we extract the bottom nibble of the
                         \ character definition, to get 0000 xxxx
- 
+
  STA U                  \ Set A = (A << 4) OR A
  ASL A                  \
  ASL A                  \ which duplicates the bottom nibble into the top nibble

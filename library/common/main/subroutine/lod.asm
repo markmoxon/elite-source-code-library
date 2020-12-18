@@ -22,7 +22,7 @@ ENDIF
 IF _CASSETTE_VERSION
 
  LDX #2                 \ Enable the ESCAPE key and clear memory if the BREAK
- JSR FX200              \ key is pressed (*FX 200, 2)
+ JSR FX200              \ key is pressed (*FX 200,2)
 
  JSR ZERO               \ Zero-fill pages &9, &A, &B, &C and &D, which clears
                         \ the ship data blocks, the ship line heap, the ship
@@ -38,7 +38,7 @@ ELIF _6502SP_VERSION
 
 \LDX #2                 \ These instructions are commented out in the original
 \JSR FX200              \ source, but they would enable the ESCAPE key and clear
-                        \ memory if the BREAK key is pressed (*FX 200, 2)
+                        \ memory if the BREAK key is pressed (*FX 200,2)
 
  JSR ZEBC               \ Call ZEBC to zero-fill pages &B and &C
 
@@ -120,7 +120,7 @@ ELIF _6502SP_VERSION
  EQUS "IIllegal "       \ invalid commander file with bit 7 of byte #0 set
  EQUS "ELITE II file"   \ (the spelling mistake is in the original source)
  BRK
- 
+
 \.MINI                  \ These instructions are commented out in the original
 \EQUS "L.E.MINING B00"  \ source, and form part of the commented section above
 \EQUB 13

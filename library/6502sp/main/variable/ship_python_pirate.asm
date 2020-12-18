@@ -22,7 +22,7 @@
  EQUB 52                \ Number of faces          = 52 / 4 = 13
  EQUB 40                \ Visibility distance      = 40
  EQUB 250               \ Max. energy              = 250
- EQUB &14               \ Max. speed               = 
+ EQUB 20                \ Max. speed               = 20
  EQUB &00               \ Edges data offset (high) = &0056
  EQUB &00               \ Faces data offset (high) = &00BE
  EQUB 0                 \ Normals are scaled by    = 2^0 = 1

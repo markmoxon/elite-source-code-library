@@ -14,7 +14,7 @@
 \ Arguments:
 \
 \   A                   The new value of the "save in progress" flag
-\                       
+\
 \ ******************************************************************************
 
 .DOSVN

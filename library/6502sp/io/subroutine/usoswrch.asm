@@ -31,7 +31,7 @@
 \ Arguments:
 \
 \   A                   The character to print:
-\                       
+\
 \                         * 128-147: Run the jump command in A (see JMPTAB)
 \
 \                         * All others: Print the character in A
@@ -65,7 +65,7 @@
  SEI                    \ Disable interrupts while we update the WRCHV vector
 
  STA WRCHV              \ Store the low byte of the jump table entry in the low
-                        \ byte of WRCHV 
+                        \ byte of WRCHV
 
  LDA JMPTAB+1,X         \ Fetch the high byte of the jump table address pointed
  STA WRCHV+1            \ to by X from JMPTAB+1 + X, and store it in the high

@@ -176,7 +176,7 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- PLA                    \ Retrieve the child's ship type from the stack 
+ PLA                    \ Retrieve the child's ship type from the stack
 
 ENDIF
 

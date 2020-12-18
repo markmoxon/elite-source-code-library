@@ -46,9 +46,9 @@
  CLI                    \ Re-enable interrupts
 
 \LDA #129               \ These instructions are commented out in the original
-\LDY #&FF               \ source. They read the keyboard with a time limit, and
-\LDX #1                 \ there's a comment "FF if MOS0.1 else 0", so this might
-\JSR OSBYTE             \ be another way of detecting the MOS version
+\LDY #&FF               \ source. They call OSBYTE with A = 129, X = 0 and
+\LDX #1                 \ Y = &FF, which returns the machine type in X, so
+\JSR OSBYTE             \ this code would detect the MOS version
 \TXA
 \EOR #&FF
 \STA MOS

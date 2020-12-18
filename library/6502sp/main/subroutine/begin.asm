@@ -23,7 +23,7 @@
  STA COMC,X             \ Zero the X-th configuration variable
 
  DEX                    \ Decrement the loop counter
- 
+
  BPL BEL1               \ Loop back to BEL1 to zero the next byte, until we have
                         \ zeroed them all
 

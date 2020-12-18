@@ -79,7 +79,7 @@ ELIF _6502SP_VERSION
  STA FSH,X              \ Set the X-th byte of FSH to &FF to charge up that
                         \ shield/bank
 
- DEX                    \ Decrement the lopp counter 
+ DEX                    \ Decrement the lopp counter
 
  BPL REL5               \ Loop back to REL5 until we have recharged both shields
                         \ and the energy bank

@@ -1,6 +1,6 @@
 .BSTK
 
- EQUB 0                 \ Bitstik configuration setting
+ SKIP 1                 \ Bitstik configuration setting
                         \
                         \   * 0 = keyboard or joystick (default)
                         \

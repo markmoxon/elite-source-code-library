@@ -1,6 +1,6 @@
 .DAMP
 
- EQUB 0                 \ Keyboard damping configuration setting
+ SKIP 1                 \ Keyboard damping configuration setting
                         \
                         \   * 0 = damping is enabled (default)
                         \

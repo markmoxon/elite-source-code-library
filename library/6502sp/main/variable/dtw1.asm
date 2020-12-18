@@ -27,7 +27,7 @@
 \ by setting bit 5 (if DTW1 is %00100000). However, this OR is only done if bit
 \ 7 of DTW2 is clear, i.e. we are printing a word, so this doesn't affect the
 \ first letter of the word, which remains capitalised.
-\ 
+\
 \ ******************************************************************************
 
 .DTW1

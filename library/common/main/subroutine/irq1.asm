@@ -153,7 +153,7 @@ ELIF _6502SP_VERSION
 
  AND #4                 \ Set A = 4 if we have an escape pod fitted, or 0 if we
                         \ don't
- 
+
  EOR #&34               \ Set A = &30 if we have an escape pod fitted, or &34 if
                         \ we don't
 

@@ -26,7 +26,7 @@
 
  LDA #LO(K%+NI%)        \ Set the low byte of V(1 0) to point to the coordinates
  STA V                  \ of the sun or space station
- 
+
 
  LDA #HI(K%+NI%)        \ Set A to the high byte of the address of the
                         \ coordinates of the sun or space station

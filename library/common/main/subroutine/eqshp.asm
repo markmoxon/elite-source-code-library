@@ -188,7 +188,7 @@ ELIF _6502SP_VERSION
  PHA                    \ Store A on the stack so we can restore it after the
                         \ following call to DOXC
 
- LDA #2                 \ Move the text cursor to column 2 
+ LDA #2                 \ Move the text cursor to column 2
  JSR DOXC
 
  JSR INCYC              \ Move the text cursor down one line

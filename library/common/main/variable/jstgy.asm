@@ -1,6 +1,6 @@
 .JSTGY
 
- EQUB 0                 \ Reverse joystick Y-channel configuration setting
+ SKIP 1                 \ Reverse joystick Y-channel configuration setting
                         \
                         \   * 0 = standard Y-channel (default)
                         \

@@ -18,10 +18,10 @@
 \
 \   COMC                The colour and thickness of the dot:
 \
-\                         * &F0 = a double-height dot in white, for when the
+\                         * #WHITE2 = a double-height dot in white, for when the
 \                           object in the compass is in front of us
 \
-\                         * &FF = a single-height dot in green, for when the
+\                         * #GREEN2 = a single-height dot in green, for when the
 \                           object in the compass is behind us
 \
 \ ******************************************************************************

@@ -1,6 +1,6 @@
 .DJD
 
- EQUB 0                 \ Keyboard auto-recentre configuration setting
+ SKIP 1                 \ Keyboard auto-recentre configuration setting
                         \
                         \   * 0 = auto-recentre is enabled (default)
                         \

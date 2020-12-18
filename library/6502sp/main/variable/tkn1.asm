@@ -187,7 +187,7 @@
  EJMP 23                \ Token 10:     "{move to row 10, white, lower case}
  EJMP 14                \                {justify}
  EJMP 2                 \                {sentence case}
- ECHR 'G'               \                GREETINGS {single cap}COMMANDER 
+ ECHR 'G'               \                GREETINGS {single cap}COMMANDER
  ETWO 'R', 'E'          \                {commander name}, I {lower case}AM
  ETWO 'E', 'T'          \                {sentence case} CAPTAIN {mission 1
  ETWO 'I', 'N'          \                captain's name} {lower case}OF{sentence
@@ -2407,12 +2407,12 @@
  ECHR 'K'               \                 {single cap}THE PLANS ARE UNIPULSE
  ECHR 'E'               \                CODED WITHIN THIS TRANSMISSION.{cr}
  ECHR ' '               \                 {single cap}{tab 6}YOU WILL BE PAID.{cr}
- ECHR 'O'               \                 {single cap}    {single cap}GOOD LUCK 
+ ECHR 'O'               \                 {single cap}    {single cap}GOOD LUCK
  ECHR 'F'               \                {single cap}COMMANDER.{cr}
  ECHR ' '               \                {left align}
  EJMP 19                \                {tab 6}{all caps}  MESSAGE ENDS
  ECHR 'N'               \                {wait for key press}"
- ECHR 'A'               \                
+ ECHR 'A'               \
  ECHR 'V'               \ Encoded as:   "{25}{9}{30}{29}{14}{2}GOOD DAY [154]
  ECHR 'A'               \                 {4}[204]I{13} AM {19}AG<246>T {19}B
  ECHR 'L'               \                <249>KE OF {19}NAVAL {19}<240>TEL<229>
@@ -2853,7 +2853,7 @@
  ETOK 204               \                {left align}
  ETOK 179               \                {tab 6}{all caps}  MESSAGE ENDS
  ECHR ' '               \                {wait for key press}"
- ECHR 'H'               \                
+ ECHR 'H'               \
  ECHR 'A'               \ Encoded as:   "{25}{9}{29}{30}{8}{14}{13}{19}WELL D
  ETWO 'V', 'E'          \                <223>E [154][204][179] HA<250> <218>RV
  ECHR ' '               \                [196]US WELL[178]WE SH<228>L <242>MEMB

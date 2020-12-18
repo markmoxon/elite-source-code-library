@@ -53,7 +53,7 @@ IF _6502SP_VERSION
  JSR DORND              \ Set A and X to random numbers
 
  LDX #WRM               \ Set X to the ship type for a Worm
- 
+
  CMP #100               \ If A >= 100 (61% chance), skip the following
  BCS P%+4               \ instruction
 

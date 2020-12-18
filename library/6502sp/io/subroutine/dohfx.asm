@@ -18,7 +18,7 @@
 \                         * 0 = no colour effect
 \
 \                         * Non-zero = enable hyperspace colour effect
-\                       
+\
 \ ******************************************************************************
 
 .DOHFX

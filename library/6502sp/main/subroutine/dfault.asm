@@ -77,6 +77,6 @@ ENDIF
                         \ disc version)
 
  STA COK                \ Store the updated competition flags in COK
- 
+
  RTS                    \ Retirn from the subroutine
 

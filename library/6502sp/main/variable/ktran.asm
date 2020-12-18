@@ -44,7 +44,7 @@
 \
 \ Other entry points:
 \
-\   buf                 The two OSWORD size bytes for transmitting the key 
+\   buf                 The two OSWORD size bytes for transmitting the key
 \                       logger from the I/O processor to the parasite
 \
 \ ******************************************************************************

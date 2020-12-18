@@ -18,7 +18,7 @@
 \                         * 0 = disc is not currently being catalogued
 \
 \                         * 1 = disc is currently being catalogued
-\                       
+\
 \ ******************************************************************************
 
 .DOCATF

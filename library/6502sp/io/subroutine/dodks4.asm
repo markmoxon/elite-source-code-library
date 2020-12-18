@@ -29,7 +29,7 @@
 \                           the original key number from byte #2, but with bit 7
 \                           set (i.e. key number + 128). If the key is not being
 \                           pressed, it contains the unchanged key number
-\                       
+\
 \ ******************************************************************************
 
 .DODKS4

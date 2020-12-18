@@ -1,6 +1,6 @@
 .JSTK
 
- EQUB 0                 \ Keyboard or joystick configuration setting
+ SKIP 1                 \ Keyboard or joystick configuration setting
                         \
                         \   * 0 = keyboard (default)
                         \

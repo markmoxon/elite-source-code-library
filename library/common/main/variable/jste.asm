@@ -1,6 +1,6 @@
 .JSTE
 
- EQUB 0                 \ Reverse both joystick channels configuration setting
+ SKIP 1                 \ Reverse both joystick channels configuration setting
                         \
                         \   * 0 = standard channels (default)
                         \

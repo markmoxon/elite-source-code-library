@@ -18,10 +18,10 @@
  EQUB 26                \ Explosion count          = 5, as (4 * n) + 6 = 26
  EQUB 72                \ Number of vertices       = 72 / 6 = 12
  EQUB 17                \ Number of edges          = 17
- EQUW &0037             \ Bounty                   = 
+ EQUW 55                \ Bounty                   = 55
  EQUB 36                \ Number of faces          = 36 / 4 = 9
- EQUB 18                \ Visibility distance      = 
- EQUB 70                \ Max. energy              = 
+ EQUB 18                \ Visibility distance      = 18
+ EQUB 70                \ Max. energy              = 70
  EQUB 30                \ Max. speed               = 30
  EQUB &00               \ Edges data offset (high) = &005C
  EQUB &00               \ Faces data offset (high) = &00A0

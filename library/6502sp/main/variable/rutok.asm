@@ -5,6 +5,11 @@
 \   Category: Text
 \    Summary: The second extended token table for recursive tokens 0-26 (DETOK3)
 \
+\ ------------------------------------------------------------------------------
+\
+\ Contains the tokens for special extended descriptions of systems that match
+\ the system number in RUPLA and the conditions in RUGAL.
+\
 \ ******************************************************************************
 
 .RUTOK

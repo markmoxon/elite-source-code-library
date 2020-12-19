@@ -123,10 +123,10 @@ ELIF _6502SP_VERSION
 {
 .TT223                  \ This label is a duplicate of a label in gnum (which is
                         \ why we need to surround it with braces, as BeebAsm
-                        \ doesn't allow us to redefine labels). This could be
-                        \ a remnant if the code in gnum was originally here, but
-                        \ got moved into the gnum subroutine without removing
-                        \ the original
+                        \ doesn't allow us to redefine labels, unlike BBC
+                        \ BASIC). This could be a remnant if the code in gnum
+                        \ was originally here, but got moved into the gnum
+                        \ subroutine without removing the original
 
 }
 

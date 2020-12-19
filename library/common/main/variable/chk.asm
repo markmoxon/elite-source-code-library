@@ -10,9 +10,12 @@
 \ Commander checksum byte. If the default commander is changed, a new checksum
 \ will be calculated and inserted by the elite-checksum.py script.
 \
+\ The offset of this byte within a saved commander file is also shown (it's at
+\ byte #75).
+\
 \ ******************************************************************************
 
 .CHK
 
- EQUB &03               \ The checksum value for the default commander
+ EQUB &03               \ The checksum value for the default commander, #75
 

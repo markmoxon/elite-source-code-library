@@ -7,5 +7,5 @@
                         \ them in the hyp1 routine. This fixes a bug in an
                         \ earlier version where you could hyperspace while
                         \ docking and magically appear in your destination
-                        \station
+                        \ station
 

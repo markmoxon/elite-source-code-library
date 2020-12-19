@@ -1,5 +1,15 @@
 \ ******************************************************************************
+\
 \       Name: RUPLA
+\       Type: Variable
+\   Category: Text
+\    Summary: System numbers that have special extended decriptions
+\
+\ ------------------------------------------------------------------------------
+\
+\ Contains system numbers that potentially have special tokens for their
+\ extended descriptions.
+\
 \ ******************************************************************************
 
 .RUPLA

@@ -12,11 +12,11 @@
 \ string by Ian Bell on his website (where he also refers to the species string
 \ as the "pink felines" string).
 \
-\ For some special systems the procedurally generated extended description is
-\ overridden and a text token from the RUTOK table is shown instead. If mission
-\ 1 is in progress, then a number of systems along the route of that mission's
-\ story will show custom mission-related directives in place of that system's
-\ normal "goat soup" phrase.
+\ For some special systems, when you are docked at them, the procedurally
+\ generated extended description is overridden and a text token from the RUTOK
+\ table is shown instead. If mission 1 is in progress, then a number of systems
+\ along the route of that mission's story will show custom mission-related
+\ directives in place of that system's normal "goat soup" phrase.
 \
 \ Arguments:
 \
@@ -41,11 +41,14 @@
                         \ system
 
  LDY #NRU%              \ Set Y as a loop counter as we work our way through the
-                        \ system numbers in RUPLA, starting at NRU%
+                        \ system numbers in RUPLA, starting at NRU% (which is
+                        \ the number of entries in RUPLA, 26) and working our
+                        \ way down to 1
 
 .PDL1
 
- LDA RUPLA-1,Y          \ Fetch the Y-th byte from RUPLA-1 into A
+ LDA RUPLA-1,Y          \ Fetch the Y-th byte from RUPLA-1 into A (we use
+                        \ RUPLA-1 because Y is looping from 26 to 1
 
  CMP ZZ                 \ If A doesn't match the system whose description we
  BNE PD2                \ are printing (in ZZ), junp to PD2 to keep looping

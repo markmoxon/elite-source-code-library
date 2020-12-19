@@ -10,6 +10,17 @@
 \ Contains the tokens for special extended descriptions of systems that match
 \ the system number in RUPLA and the conditions in RUGAL.
 \
+\ The three variables work as follows:
+\
+\   * The RUPLA table contains the system numbers
+\
+\   * The RUGAL table contains the galaxy numbers and mission criteria
+\
+\   * The RUTOK table contains the extended token to display instead of the
+\     normal extended description if the criteria in RUPLA and RUGAL are met
+\
+\ See the PDESC routine for details of how extended system descriptions work.
+\
 \ ******************************************************************************
 
 .RUTOK

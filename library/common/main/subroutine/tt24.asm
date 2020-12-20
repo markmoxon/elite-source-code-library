@@ -10,7 +10,7 @@
 \
 \ Calculate system data from the seeds in QQ15 and store them in the relevant
 \ locations. Specifically, this routine calculates the following from the three
-\ 16-bit seeds in QQ15 (using only w0_hi, w1_hi and w1_lo):
+\ 16-bit seeds in QQ15 (using only s0_hi, s1_hi and s1_lo):
 \
 \   QQ3 = economy (0-7)
 \   QQ4 = government (0-7)
@@ -26,11 +26,11 @@
 
 .TT24
 
- LDA QQ15+1             \ Fetch w0_hi and extract bits 0-2 to determine the
+ LDA QQ15+1             \ Fetch s0_hi and extract bits 0-2 to determine the
  AND #%00000111         \ system's economy, and store in QQ3
  STA QQ3
 
- LDA QQ15+2             \ Fetch w1_lo and extract bits 3-5 to determine the
+ LDA QQ15+2             \ Fetch s1_lo and extract bits 3-5 to determine the
  LSR A                  \ system's government, and store in QQ4
  LSR A
  LSR A
@@ -49,7 +49,7 @@
 
  LDA QQ3                \ Now to work out the tech level, which we do like this:
  EOR #%00000111         \
- CLC                    \   flipped_economy + (w1_hi AND %11) + (government / 2)
+ CLC                    \   flipped_economy + (s1_hi AND %11) + (government / 2)
  STA QQ5                \
                         \ or, in terms of memory locations:
                         \
@@ -57,7 +57,7 @@
                         \
                         \ We start by setting QQ5 = QQ3 EOR %111
 
- LDA QQ15+3             \ We then take the first 2 bits of w1_hi (QQ15+3) and
+ LDA QQ15+3             \ We then take the first 2 bits of s1_hi (QQ15+3) and
  AND #%00000011         \ add it into QQ5
  ADC QQ5
  STA QQ5

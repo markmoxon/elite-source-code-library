@@ -37,7 +37,7 @@
                         \ need to loop three or four times, so for now set
                         \ up a counter in Y to loop four times
 
- BIT QQ15               \ Check bit 6 of w0_lo, which is stored in QQ15
+ BIT QQ15               \ Check bit 6 of s0_lo, which is stored in QQ15
 
  BVS P%+3               \ If bit 6 is set then skip over the next instruction
 
@@ -48,7 +48,7 @@
 
 .TT55
 
- LDA QQ15+5             \ Step 2: Load w2_hi, which is stored in QQ15+5, and
+ LDA QQ15+5             \ Step 2: Load s2_hi, which is stored in QQ15+5, and
  AND #%00011111         \ extract bits 0-4 by AND'ing with %11111
 
  BEQ P%+7               \ If all those bits are zero, then skip the following

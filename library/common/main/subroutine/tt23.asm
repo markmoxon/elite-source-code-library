@@ -79,25 +79,25 @@ ENDIF
                         \ coordinates of each system from the system's seeds,
                         \ like this:
                         \
-                        \   x = w1_hi (which is stored in QQ15+3)
-                        \   y = w0_hi (which is stored in QQ15+1)
+                        \   x = s1_hi (which is stored in QQ15+3)
+                        \   y = s0_hi (which is stored in QQ15+1)
                         \
                         \ so the following loops through each system in the
                         \ galaxy in turn and calculates the distance between
-                        \ (QQ0, QQ1) and (w1_hi, w0_hi) to find the closest one
+                        \ (QQ0, QQ1) and (s1_hi, s0_hi) to find the closest one
 
 .TT182
 
- LDA QQ15+3             \ Set A = w1_hi - QQ0, the horizontal distance between
- SEC                    \ (w1_hi, w0_hi) and (QQ0, QQ1)
+ LDA QQ15+3             \ Set A = s1_hi - QQ0, the horizontal distance between
+ SEC                    \ (s1_hi, s0_hi) and (QQ0, QQ1)
  SBC QQ0
 
- BCS TT184              \ If a borrow didn't occur, i.e. w1_hi >= QQ0, then the
+ BCS TT184              \ If a borrow didn't occur, i.e. s1_hi >= QQ0, then the
                         \ result is positive, so jump to TT184 and skip the
                         \ following two instructions
 
  EOR #&FF               \ Otherwise negate the result in A, so A is always
- ADC #1                 \ positive (i.e. A = |w1_hi - QQ0|)
+ ADC #1                 \ positive (i.e. A = |s1_hi - QQ0|)
 
 .TT184
 
@@ -106,16 +106,16 @@ ENDIF
                         \ appear in the Short-range Chart, so jump to TT187 to
                         \ move on to the next system
 
- LDA QQ15+1             \ Set A = w0_hi - QQ1, the vertical distance between
- SEC                    \ (w1_hi, w0_hi) and (QQ0, QQ1)
+ LDA QQ15+1             \ Set A = s0_hi - QQ1, the vertical distance between
+ SEC                    \ (s1_hi, s0_hi) and (QQ0, QQ1)
  SBC QQ1
 
- BCS TT186              \ If a borrow didn't occur, i.e. w0_hi >= QQ1, then the
+ BCS TT186              \ If a borrow didn't occur, i.e. s0_hi >= QQ1, then the
                         \ result is positive, so jump to TT186 and skip the
                         \ following two instructions
 
  EOR #&FF               \ Otherwise negate the result in A, so A is always
- ADC #1                 \ positive (i.e. A = |w0_hi - QQ1|)
+ ADC #1                 \ positive (i.e. A = |s0_hi - QQ1|)
 
 .TT186
 
@@ -129,7 +129,7 @@ ENDIF
                         \ and set up the various variables we need to draw the
                         \ system's filled circle on the chart
 
- LDA QQ15+3             \ Set A = w1_hi - QQ0, the horizontal distance between
+ LDA QQ15+3             \ Set A = s1_hi - QQ0, the horizontal distance between
  SEC                    \ this system and the current system, where |A| < 20.
  SBC QQ0                \ Let's call this the x-delta, as it's the horizontal
                         \ difference between the current system at the centre of
@@ -162,7 +162,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
- LDA QQ15+1             \ Set A = w0_hi - QQ1, the vertical distance between
+ LDA QQ15+1             \ Set A = s0_hi - QQ1, the vertical distance between
  SEC                    \ this system and the current system, where |A| < 38.
  SBC QQ1                \ Let's call this the y-delta, as it's the vertical
                         \ difference between the current system at the centre of
@@ -258,13 +258,13 @@ ENDIF
  LDA XX12               \ Set the low byte of K3 to XX12, the pixel x-coordinate
  STA K3                 \ of this system
 
- LDA QQ15+5             \ Fetch w2_hi for this system from QQ15+5, extract bit 0
+ LDA QQ15+5             \ Fetch s2_hi for this system from QQ15+5, extract bit 0
  AND #1                 \ and add 2 to get the size of the star, which we store
  ADC #2                 \ in K. This will be either 2, 3 or 4, depending on the
  STA K                  \ value of bit 0, and whether the C flag is set (which
                         \ will vary depending on what happens in the above call
                         \ to cpl). Incidentally, the planet's average radius
-                        \ also uses w2_hi, bits 0-3 to be precise, but that
+                        \ also uses s2_hi, bits 0-3 to be precise, but that
                         \ doesn't mean the two sizes affect each other
 
                         \ We now have the following:

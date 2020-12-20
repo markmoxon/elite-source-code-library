@@ -115,7 +115,7 @@
                         \ We now print the "goat soup" extended description
 
  LDX #3                 \ We now want to seed the random number generator with
-                        \ the w1 and w2 16-bit seeds from the current system, so
+                        \ the s1 and s2 16-bit seeds from the current system, so
                         \ we get the same extended description for each system
                         \ every time we call PDESC, so set a counter in X for
                         \ copying 4 bytes
@@ -125,7 +125,7 @@
                         \ why we need to surround it with braces, as BeebAsm
                         \ doesn't allow us to redefine labels, unlike BBC BASIC)
 
- LDA QQ15+2,X           \ Copy QQ15+2 to QQ15+5 (w1 and w2) to RAND to RAND+3
+ LDA QQ15+2,X           \ Copy QQ15+2 to QQ15+5 (s1 and s2) to RAND to RAND+3
  STA RAND,X
 
  DEX                    \ Decrement the loop counter

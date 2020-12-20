@@ -153,10 +153,10 @@ ENDIF
  JSR TT27
 
  LDA QQ15+4             \ Now to calculate the species, so first check bit 7 of
- BMI TT75               \ w2_lo, and if it is set, jump to TT75 as this is an
+ BMI TT75               \ s2_lo, and if it is set, jump to TT75 as this is an
                         \ alien species
 
- LDA #188               \ Bit 7 of w2_lo is clear, so print recursive token 28
+ LDA #188               \ Bit 7 of s2_lo is clear, so print recursive token 28
  JSR TT27               \ ("HUMAN COLONIAL")
 
  JMP TT76               \ Jump to TT76 to print "S)" and a paragraph break, so
@@ -165,11 +165,11 @@ ENDIF
 .TT75
 
  LDA QQ15+5             \ This is an alien species, and we start with the first
- LSR A                  \ adjective, so fetch bits 2-7 of w2_hi into A and push
+ LSR A                  \ adjective, so fetch bits 2-7 of s2_hi into A and push
  LSR A                  \ onto the stack so we can use this later
  PHA
 
- AND #%00000111         \ Set A = bits 0-2 of A (so that's bits 2-4 of w2_hi)
+ AND #%00000111         \ Set A = bits 0-2 of A (so that's bits 2-4 of s2_hi)
 
  CMP #3                 \ If A >= 3, jump to TT205 to skip the first adjective,
  BCS TT205
@@ -184,8 +184,8 @@ ENDIF
 .TT205
 
  PLA                    \ Now for the second adjective, so restore A to bits
- LSR A                  \ 2-7 of w2_hi, and throw away bits 2-4 to leave
- LSR A                  \ A = bits 5-7 of w2_hi
+ LSR A                  \ 2-7 of s2_hi, and throw away bits 2-4 to leave
+ LSR A                  \ A = bits 5-7 of s2_hi
  LSR A
 
  CMP #6                 \ If A >= 6, jump to TT206 to skip the second adjective
@@ -204,9 +204,9 @@ ENDIF
 .TT206
 
  LDA QQ15+3             \ Now for the third adjective, so EOR the high bytes of
- EOR QQ15+1             \ w0 and w1 and extract bits 0-2 of the result:
+ EOR QQ15+1             \ s0 and s1 and extract bits 0-2 of the result:
  AND #%00000111         \
- STA QQ19               \   A = (w0_hi EOR w1_hi) AND %111
+ STA QQ19               \   A = (s0_hi EOR s1_hi) AND %111
                         \
                         \ storing the result in QQ19 so we can use it later
 
@@ -226,7 +226,7 @@ ENDIF
 .TT207
 
  LDA QQ15+5             \ Now for the actual species, so take bits 0-1 of
- AND #%00000011         \ w2_hi, add this to the value of A that we used for
+ AND #%00000011         \ s2_hi, add this to the value of A that we used for
  CLC                    \ the third adjective, and take bits 0-2 of the result
  ADC QQ19
  AND #%00000111
@@ -275,7 +275,7 @@ ENDIF
 
                         \ The average radius is calculated like this:
                         \
-                        \   ((w2_hi AND %1111) + 11) * 256 + w1_hi
+                        \   ((s2_hi AND %1111) + 11) * 256 + s1_hi
                         \
                         \ or, in terms of memory locations:
                         \

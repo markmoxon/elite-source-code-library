@@ -59,10 +59,10 @@ ENDIF
 
  STX XSAV               \ Store the counter in XSAV
 
- LDX QQ15+3             \ Fetch the w1_hi seed into X, which gives us the
+ LDX QQ15+3             \ Fetch the s1_hi seed into X, which gives us the
                         \ galactic x-coordinate of this system
 
- LDY QQ15+4             \ Fetch the w2_lo seed and clear all the bits apart
+ LDY QQ15+4             \ Fetch the s2_lo seed and clear all the bits apart
  TYA                    \ from bits 4 and 6, storing the result in ZZ to give a
  ORA #%01010000         \ random number out of 0, &10, &40 or &50 (but which
  STA ZZ                 \ will always be the same for this system). We use this
@@ -70,7 +70,7 @@ ENDIF
                         \ system on the chart by passing it as the distance
                         \ argument to the PIXEL routine below
 
- LDA QQ15+1             \ Fetch the w0_hi seed into A, which gives us the
+ LDA QQ15+1             \ Fetch the s0_hi seed into A, which gives us the
                         \ galactic y-coordinate of this system
 
  LSR A                  \ We halve the y-coordinate because the galaxy in

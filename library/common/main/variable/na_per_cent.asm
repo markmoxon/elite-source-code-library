@@ -58,9 +58,9 @@ ENDIF
  EQUB 20                \ QQ0 = current system X-coordinate (Lave), #1
  EQUB 173               \ QQ1 = current system Y-coordinate (Lave), #2
 
- EQUW &5A4A             \ QQ21 = Seed w0 for system 0, galaxy 0 (Tibedied), #3-4
- EQUW &0248             \ QQ21 = Seed w1 for system 0, galaxy 0 (Tibedied), #5-6
- EQUW &B753             \ QQ21 = Seed w2 for system 0, galaxy 0 (Tibedied), #7-8
+ EQUW &5A4A             \ QQ21 = Seed s0 for system 0, galaxy 0 (Tibedied), #3-4
+ EQUW &0248             \ QQ21 = Seed s1 for system 0, galaxy 0 (Tibedied), #5-6
+ EQUW &B753             \ QQ21 = Seed s2 for system 0, galaxy 0 (Tibedied), #7-8
 
 IF Q%
  EQUD &00CA9A3B         \ CASH = Amount of cash (100,000,000 Cr), #9-12

@@ -105,11 +105,11 @@
                         \ entered search
 
  LDA QQ15+3             \ The x-coordinate of the system described by the seeds
- STA QQ9                \ in QQ15 is in QQ15+3 (w1_hi), so we copy this to QQ9
+ STA QQ9                \ in QQ15 is in QQ15+3 (s1_hi), so we copy this to QQ9
                         \ as the x-coordinate of the search result
 
  LDA QQ15+1             \ The y-coordinate of the system described by the seeds
- STA QQ10               \ in QQ15 is in QQ15+1 (w0_hi), so we copy this to QQ10
+ STA QQ10               \ in QQ15 is in QQ15+1 (s0_hi), so we copy this to QQ10
                         \ as the y-coordinate of the search result
 
  JSR TT111              \ Select the system closest to galactic coordinates

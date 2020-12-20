@@ -50,12 +50,12 @@ ENDIF
                         \ galactic coordinates of each system from the system's
                         \ seeds, like this:
                         \
-                        \   x = w1_hi (which is stored in QQ15+3)
-                        \   y = w0_hi (which is stored in QQ15+1)
+                        \   x = s1_hi (which is stored in QQ15+3)
+                        \   y = s0_hi (which is stored in QQ15+1)
                         \
                         \ so the following loops through each system in the
                         \ galaxy in turn and calculates the distance between
-                        \ (QQ9, QQ10) and (w1_hi, w0_hi) to find the closest one
+                        \ (QQ9, QQ10) and (s1_hi, s0_hi) to find the closest one
 
  LDY #127               \ Set Y = T = 127 to hold the shortest distance we've
  STY T                  \ found so far, which we initially set to half the
@@ -68,37 +68,37 @@ ENDIF
 
 .TT130
 
- LDA QQ15+3             \ Set A = w1_hi - QQ9, the horizontal distance between
- SEC                    \ (w1_hi, w0_hi) and (QQ9, QQ10)
+ LDA QQ15+3             \ Set A = s1_hi - QQ9, the horizontal distance between
+ SEC                    \ (s1_hi, s0_hi) and (QQ9, QQ10)
  SBC QQ9
 
- BCS TT132              \ If a borrow didn't occur, i.e. w1_hi >= QQ9, then the
+ BCS TT132              \ If a borrow didn't occur, i.e. s1_hi >= QQ9, then the
                         \ result is positive, so jump to TT132 and skip the
                         \ following two instructions
 
  EOR #&FF               \ Otherwise negate the result in A, so A is always
- ADC #1                 \ positive (i.e. A = |w1_hi - QQ9|)
+ ADC #1                 \ positive (i.e. A = |s1_hi - QQ9|)
 
 .TT132
 
  LSR A                  \ Set S = A / 2
- STA S                  \       = |w1_hi - QQ9| / 2
+ STA S                  \       = |s1_hi - QQ9| / 2
 
- LDA QQ15+1             \ Set A = w0_hi - QQ10, the vertical distance between
- SEC                    \ (w1_hi, w0_hi) and (QQ9, QQ10)
+ LDA QQ15+1             \ Set A = s0_hi - QQ10, the vertical distance between
+ SEC                    \ (s1_hi, s0_hi) and (QQ9, QQ10)
  SBC QQ10
 
- BCS TT134              \ If a borrow didn't occur, i.e. w0_hi >= QQ10, then the
+ BCS TT134              \ If a borrow didn't occur, i.e. s0_hi >= QQ10, then the
                         \ result is positive, so jump to TT134 and skip the
                         \ following two instructions
 
  EOR #&FF               \ Otherwise negate the result in A, so A is always
- ADC #1                 \ positive (i.e. A = |w0_hi - QQ10|)
+ ADC #1                 \ positive (i.e. A = |s0_hi - QQ10|)
 
 .TT134
 
  LSR A                  \ Set A = S + A / 2
- CLC                    \       = |w1_hi - QQ9| / 2 + |w0_hi - QQ10| / 2
+ CLC                    \       = |s1_hi - QQ9| / 2 + |s0_hi - QQ10| / 2
  ADC S                  \
                         \ So A now contains the sum of the horizontal and
                         \ vertical distances, both divided by 2 so the result
@@ -168,12 +168,12 @@ ENDIF
                         \ copy
 
  LDA QQ15+1             \ The y-coordinate of the system described by the seeds
- STA QQ10               \ in QQ15 is in QQ15+1 (w0_hi), so we copy this to QQ10
+ STA QQ10               \ in QQ15 is in QQ15+1 (s0_hi), so we copy this to QQ10
                         \ as this is where we store the selected system's
                         \ y-coordinate
 
  LDA QQ15+3             \ The x-coordinate of the system described by the seeds
- STA QQ9                \ in QQ15 is in QQ15+3 (w1_hi), so we copy this to QQ9
+ STA QQ9                \ in QQ15 is in QQ15+3 (s1_hi), so we copy this to QQ9
                         \ as this is where we store the selected system's
                         \ x-coordinate
 

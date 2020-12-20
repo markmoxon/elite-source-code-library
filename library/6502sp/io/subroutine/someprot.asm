@@ -1,6 +1,10 @@
 \ ******************************************************************************
+\
 \       Name: SOMEPROT
+\       Type: Subroutine
+\   Category: Copy protection
 \    Summary: Implement the OSWORD 249 command (some copy protection)
+\
 \ ******************************************************************************
 
 .SOMEPROT

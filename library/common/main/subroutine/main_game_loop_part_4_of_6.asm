@@ -48,8 +48,9 @@ IF _6502SP_VERSION
  AND #%00001100         \ mission 2
 
  CMP #%00001000         \ If bit 3 is set and bit 2 is clear, keep going to
- BNE nopl               \ spawn a Thargoid as we are in mission 2, otherwise
-                        \ jump to nopl to skip spawning a Thargoid
+ BNE nopl               \ spawn a Thargoid as we are transporting the plans in
+                        \ mission 2 and the Thargoids are trying to stop us,
+                        \ otherwise jump to nopl to skip spawning a Thargoid
 
  JSR DORND              \ Set A and X to random numbers
 

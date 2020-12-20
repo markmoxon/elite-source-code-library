@@ -9,16 +9,19 @@ ELIF _6502SP_VERSION
 
  SKIP 1                 \ The current mission status:
                         \
-                        \   * 0 = no missions started
+                        \   * Bits 0-1 = Mission 1 status
                         \
-                        \   * Bit 0 set = mission 1 in progress
-                        \   * Bit 1 set = mission 1 completed
+                        \     * %00 = Mission not started
+                        \     * %01 = Mission in progress, hunting for ship
+                        \     * %11 = Constrictor killed, not debriefed yet
+                        \     * %10 = Mission and debrief complete
                         \
-                        \   * Bit 2 set = mission 2 in progress
-                        \   * Bit 3 set = mission 2 completed
+                        \   * Bits 2-3 = Mission 2 status
                         \
-                        \ Bit 7 must not be set, as otherwise commander files
-                        \ saved with this value will give an error when loaded
+                        \     * %00 = Mission not started
+                        \     * %01 = Mission in progress, plans not picked up
+                        \     * %10 = Mission in progress, plans picked up
+                        \     * %11 = Mission complete
 
 ENDIF
 

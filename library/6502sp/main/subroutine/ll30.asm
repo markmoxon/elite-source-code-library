@@ -1,6 +1,10 @@
 \ ******************************************************************************
+\
 \       Name: LL30
-\ by sending an OSWRCH 129 command to the I/O processor
+\       Type: Subroutine
+\   Category: Drawing lines
+\    Summary: Draw a line by sending an OSWRCH 129 command to the I/O processor
+\
 \ ******************************************************************************
 
 .LL30

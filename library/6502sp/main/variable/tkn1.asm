@@ -2406,42 +2406,42 @@
  ETWO 'L', 'A'          \                 {single cap}YOU'RE ELECTED.{cr}
  ECHR 'K'               \                 {single cap}THE PLANS ARE UNIPULSE
  ECHR 'E'               \                CODED WITHIN THIS TRANSMISSION.{cr}
- ECHR ' '               \                 {single cap}{tab 6}YOU WILL BE PAID.{cr}
- ECHR 'O'               \                 {single cap}    {single cap}GOOD LUCK
- ECHR 'F'               \                {single cap}COMMANDER.{cr}
- ECHR ' '               \                {left align}
- EJMP 19                \                {tab 6}{all caps}  MESSAGE ENDS
- ECHR 'N'               \                {wait for key press}"
- ECHR 'A'               \
- ECHR 'V'               \ Encoded as:   "{25}{9}{30}{29}{14}{2}GOOD DAY [154]
- ECHR 'A'               \                 {4}[204]I{13} AM {19}AG<246>T {19}B
- ECHR 'L'               \                <249>KE OF {19}NAVAL {19}<240>TEL<229>
- ECHR ' '               \                G<246><233>[204]AS [179] K<227>W, [147]
- EJMP 19                \                {19}NAVY HA<250> <247><246> KEEP[195]
- ETWO 'I', 'N'          \                [147]{19}<226><238>GOIDS OFF [179]R ASS
- ECHR 'T'               \                 <217>T <240> DEEP SPA<233> F<253>
- ECHR 'E'               \                 <239>NY YE<238>S <227>W. {19}WELL
- ECHR 'L'               \                 [147]S<219>UA<251><223> HAS CH<255>G
- ETWO 'L', 'E'          \                <252>[204]<217>R BOYS <238>E <242>ADY F
- ECHR 'G'               \                <253>[208]PUSH RIGHT[201][147]HOME
- ETWO 'E', 'N'          \                 SYSTEM OF <226>O<218> MO<226><244>S
- ETWO 'C', 'E'          \                [204]{24}{9}{30}{29}I{13} HA<250> OBTA
- ETOK 204               \                <240>[196][147]DEF<246><233> P<249>NS F
- ECHR 'A'               \                <253> <226>EIR {19}HI<250> {19}W<253>LD
- ECHR 'S'               \                S[204][147]<247><221><229>S K<227>W WE
- ECHR ' '               \                [39]<250> GOT <235>ME<226>[195]BUT
- ETOK 179               \                 <227>T WH<245>[204]IF {19}I T<248>NSM
- ECHR ' '               \                <219> [147]P<249>NS[201]<217>R BA<218>
- ECHR 'K'               \                 <223> {19}<234><242><248> <226>EY[39]L
- ETWO 'N', 'O'          \                L <240>T<244><233>PT [147]TR<255>SMISSI
- ECHR 'W'               \                <223>. {19}I NE<252>[208][207][201]
- ECHR ','               \                <239>KE [147]RUN[204][179][39]<242> E
- ECHR ' '               \                <229>CT<252>[204][147]P<249>NS A<242>
- ETOK 147               \                 UNIPUL<218> COD[196]WI<226><240> [148]
- EJMP 19                \                TR<255>SMISSI<223>[204]{8}[179] W<220>L
- ECHR 'N'               \                 <247> PAID[204]    {19}GOOD LUCK [154]
- ECHR 'A'               \                [212]{24}"
- ECHR 'V'
+ ECHR ' '               \                 {single cap}{tab 6}YOU WILL BE
+ ECHR 'O'               \                PAID.{cr}
+ ECHR 'F'               \                 {single cap}    {single cap}GOOD LUCK
+ ECHR ' '               \                {single cap}COMMANDER.{cr}
+ EJMP 19                \                {left align}
+ ECHR 'N'               \                {tab 6}{all caps}  MESSAGE ENDS
+ ECHR 'A'               \                {wait for key press}"
+ ECHR 'V'               \
+ ECHR 'A'               \ Encoded as:   "{25}{9}{30}{29}{14}{2}GOOD DAY [154]
+ ECHR 'L'               \                 {4}[204]I{13} AM {19}AG<246>T {19}B
+ ECHR ' '               \                <249>KE OF {19}NAVAL {19}<240>TEL<229>
+ EJMP 19                \                G<246><233>[204]AS [179] K<227>W, [147]
+ ETWO 'I', 'N'          \                {19}NAVY HA<250> <247><246> KEEP[195]
+ ECHR 'T'               \                [147]{19}<226><238>GOIDS OFF [179]R ASS
+ ECHR 'E'               \                 <217>T <240> DEEP SPA<233> F<253>
+ ECHR 'L'               \                 <239>NY YE<238>S <227>W. {19}WELL
+ ETWO 'L', 'E'          \                 [147]S<219>UA<251><223> HAS CH<255>G
+ ECHR 'G'               \                <252>[204]<217>R BOYS <238>E <242>ADY F
+ ETWO 'E', 'N'          \                <253>[208]PUSH RIGHT[201][147]HOME
+ ETWO 'C', 'E'          \                 SYSTEM OF <226>O<218> MO<226><244>S
+ ETOK 204               \                [204]{24}{9}{30}{29}I{13} HA<250> OBTA
+ ECHR 'A'               \                <240>[196][147]DEF<246><233> P<249>NS F
+ ECHR 'S'               \                <253> <226>EIR {19}HI<250> {19}W<253>LD
+ ECHR ' '               \                S[204][147]<247><221><229>S K<227>W WE
+ ETOK 179               \                [39]<250> GOT <235>ME<226>[195]BUT
+ ECHR ' '               \                 <227>T WH<245>[204]IF {19}I T<248>NSM
+ ECHR 'K'               \                <219> [147]P<249>NS[201]<217>R BA<218>
+ ETWO 'N', 'O'          \                 <223> {19}<234><242><248> <226>EY[39]L
+ ECHR 'W'               \                L <240>T<244><233>PT [147]TR<255>SMISSI
+ ECHR ','               \                <223>. {19}I NE<252>[208][207][201]
+ ECHR ' '               \                <239>KE [147]RUN[204][179][39]<242> E
+ ETOK 147               \                <229>CT<252>[204][147]P<249>NS A<242>
+ EJMP 19                \                 UNIPUL<218> COD[196]WI<226><240> [148]
+ ECHR 'N'               \                TR<255>SMISSI<223>[204]{8}[179] W<220>L
+ ECHR 'A'               \                 <247> PAID[204]    {19}GOOD LUCK [154]
+ ECHR 'V'               \                [212]{24}"
  ECHR 'Y'
  ECHR ' '
  ECHR 'H'

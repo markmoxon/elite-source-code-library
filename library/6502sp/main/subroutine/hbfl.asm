@@ -1,6 +1,11 @@
 \ ******************************************************************************
+\
 \       Name: HBFL
-\ by sending an OSWORD 247 command to the I/O processor
+\       Type: Subroutine
+\   Category: Drawing lines
+\    Summary: Draw a horizontal line by sending an OSWORD 247 command to the I/O
+\             processor
+\
 \ ******************************************************************************
 
 .HBFL

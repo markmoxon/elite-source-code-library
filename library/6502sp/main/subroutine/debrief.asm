@@ -1,5 +1,10 @@
 \ ******************************************************************************
+\
 \       Name: DEBRIEF
+\       Type: Subroutine
+\   Category: Missions
+\    Summary: Finish mission 1
+\
 \ ******************************************************************************
 
 .DEBRIEF
@@ -7,15 +12,19 @@
  LSR TP                 \ Clear bit 0 of TP to indicate that mission 1 is no
  ASL TP                 \ longer in progress, as we have completed it
 
- INC TALLY+1            \ Award a single kill for the Constrictor
+ INC TALLY+1            \ Award 256 kill points for completing the mission
 
- LDX #LO(50000)
- LDY #HI(50000)
+ LDX #LO(50000)         \ Increase our cash reserves by the generous mission
+ LDY #HI(50000)         \ reward of 50,000 CR
  JSR MCASH
 
- LDA #15
+ LDA #15                \ Set A = 15 so the call to BRP prints extended token 15
+                        \ (the thank you message at the end of mission 1)
 
 .BRPS
 
- BNE BRP
+ BNE BRP                \ Jump to BRP to print the extended token in A and show
+                        \ the Status Mode screen), returning from the subroutine
+                        \ using a tail call (this BNE is effectively a JMP as A
+                        \ is never zero)
 

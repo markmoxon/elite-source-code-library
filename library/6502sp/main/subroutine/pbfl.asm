@@ -1,6 +1,10 @@
 \ ******************************************************************************
+\
 \       Name: PBFL
-\ by sending an OSWORD 241 command to the I/O processor
+\       Type: Subroutine
+\   Category: Drawing pixels
+\    Summary: Draw a pixel by sending an OSWORD 241 command to the I/O processor
+\
 \ ******************************************************************************
 
 .PBFL

@@ -13,7 +13,7 @@
 \ in the table below), or all of the time (bit 7 is set, i.e. a value of &8x in
 \ the table below).
 \
-\ In other words, Teorge, Dimabion, Edatreed and Lave have special extended
+\ In other words, Teorge, Arredi, Anreer and Lave have special extended
 \ descriptions that are always shown, while the rest only appear when mission 1
 \ is in progress.
 \
@@ -32,29 +32,30 @@
 
 .RUGAL
 
- EQUB &80                \ Token  1, system 211, galaxy 0                 Teorge
- EQUB &00                \ Token  2, system 150, galaxy 0, mission 1        Xeer
- EQUB &00                \ Token  3, system 36 , galaxy 0, mission 1    Reesdice
- EQUB &00                \ Token  4, system 28 , galaxy 0, mission 1       Arexe
- EQUB &01                \ Token  5, system 253, galaxy 1, mission 1      Orleso
- EQUB &01                \ Token  6, system 79 , galaxy 1, mission 1      Raaran
- EQUB &01                \ Token  7, system 53 , galaxy 1, mission 1      Soisqu
- EQUB &01                \ Token  8, system 118, galaxy 1, mission 1     Arustea
- EQUB &82                \ Token  9, system 100, galaxy 2               Dimabion
- EQUB &01                \ Token 10, system 32 , galaxy 1, mission 1    Dieranor
- EQUB &01                \ Token 11, system 68 , galaxy 1, mission 1       Aanra
- EQUB &01                \ Token 12, system 164, galaxy 1, mission 1      Diquus
- EQUB &01                \ Token 13, system 220, galaxy 1, mission 1        Esdi
- EQUB &01                \ Token 14, system 106, galaxy 1, mission 1      Tetete
- EQUB &01                \ Token 15, system 16 , galaxy 1, mission 1    Teescear
- EQUB &01                \ Token 16, system 162, galaxy 1, mission 1    Ususoner
- EQUB &01                \ Token 17, system 3  , galaxy 1, mission 1    Leatanre
- EQUB &01                \ Token 18, system 107, galaxy 1, mission 1    Diriledi
- EQUB &01                \ Token 19, system 26 , galaxy 1, mission 1    Titiridi
- EQUB &01                \ Token 20, system 192, galaxy 1, mission 1       Biabi
- EQUB &01                \ Token 21, system 184, galaxy 1, mission 1     Maarabi
- EQUB &01                \ Token 22, system 5  , galaxy 1, mission 1      Revequ
- EQUB &02                \ Token 23, system 101, galaxy 2, mission 1    Attisoer
- EQUB &01                \ Token 24, system 193, galaxy 1, mission 1      Atbele
- EQUB &82                \ Token 25, system 41 , galaxy 2               Edatreed
- EQUB &80                \ Token 26, system 7  , galaxy 0                   Lave
+ EQUB &80                \ System 211, Galaxy 0                Teorge = Token  1
+ EQUB &00                \ System 150, Galaxy 0, Mission 1       Xeer = Token  2
+ EQUB &00                \ System  36, Galaxy 0, Mission 1   Reesdice = Token  3
+ EQUB &00                \ System  28, Galaxy 0, Mission 1      Arexe = Token  4
+ EQUB &01                \ System 253, Galaxy 1, Mission 1     Errius = Token  5
+ EQUB &01                \ System  79, Galaxy 1, Mission 1     Inbibe = Token  6
+ EQUB &01                \ System  53, Galaxy 1, Mission 1      Ausar = Token  7
+ EQUB &01                \ System 118, Galaxy 1, Mission 1     Usleri = Token  8
+ EQUB &82                \ System 100, Galaxy 2                Arredi = Token  9
+ EQUB &01                \ System  32, Galaxy 1, Mission 1     Bebege = Token 10
+ EQUB &01                \ System  68, Galaxy 1, Mission 1     Cearso = Token 11
+ EQUB &01                \ System 164, Galaxy 1, Mission 1     Dicela = Token 12
+ EQUB &01                \ System 220, Galaxy 1, Mission 1     Eringe = Token 13
+ EQUB &01                \ System 106, Galaxy 1, Mission 1     Gexein = Token 14
+ EQUB &01                \ System  16, Galaxy 1, Mission 1     Isarin = Token 15
+ EQUB &01                \ System 162, Galaxy 1, Mission 1   Letibema = Token 16
+ EQUB &01                \ System   3, Galaxy 1, Mission 1     Maisso = Token 17
+ EQUB &01                \ System 107, Galaxy 1, Mission 1       Onen = Token 18
+ EQUB &01                \ System  26, Galaxy 1, Mission 1     Ramaza = Token 19
+ EQUB &01                \ System 192, Galaxy 1, Mission 1     Sosole = Token 20
+ EQUB &01                \ System 184, Galaxy 1, Mission 1     Tivere = Token 21
+ EQUB &01                \ System   5, Galaxy 1, Mission 1     Veriar = Token 22
+ EQUB &02                \ System 101, Galaxy 2, Mission 1     Xeveon = Token 23
+ EQUB &01                \ System 193, Galaxy 1, Mission 1     Orarra = Token 24
+ EQUB &82                \ System  41, Galaxy 2                Anreer = Token 25
+ EQUB &80                \ System   7, Galaxy 0                  Lave = Token 26
+

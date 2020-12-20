@@ -1,6 +1,10 @@
 \ ******************************************************************************
+\
 \       Name: PIXEL
+\       Type: Subroutine
+\   Category: Drawing pixels
 \    Summary: Implement the OSWORD 240 command (draw a pixel)
+\
 \ ******************************************************************************
 
 .PIXEL

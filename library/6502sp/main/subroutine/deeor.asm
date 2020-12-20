@@ -1,5 +1,10 @@
 \ ******************************************************************************
+\
 \       Name: DEEOR
+\       Type: Subroutine
+\   Category: Copy protection
+\    Summary: 
+\
 \ ******************************************************************************
 
 .DEEOR
@@ -14,12 +19,18 @@
  TYA
  EOR (SC),Y
  EOR #&75
+
 IF _REMOVE_CHECKSUMS
+
  NOP
  NOP
+
 ELSE
+
  STA (SC),Y
+
 ENDIF
+
  DEY
  BNE DEEL
  INX

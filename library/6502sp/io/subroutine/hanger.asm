@@ -1,6 +1,10 @@
 \ ******************************************************************************
+\
 \       Name: HANGER
-\    Summary: Implement the OSWORD 248 command (display the ship hanger
+\       Type: Subroutine
+\   Category: Ship hanger
+\    Summary: Implement the OSWORD 248 command (display the ship hanger)
+\
 \ ******************************************************************************
 
 .HANGER

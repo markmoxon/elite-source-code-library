@@ -1,6 +1,10 @@
 \ ******************************************************************************
+\
 \       Name: DOT
+\       Type: Subroutine
+\   Category: Drawing pixels
 \    Summary: Implement the #DOdot command (draw a dot)
+\
 \ ******************************************************************************
 
 .DOT

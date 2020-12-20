@@ -1,6 +1,11 @@
 \ ******************************************************************************
+\
 \       Name: HALL
-\ by sending an OSWORD 248 command to the I/O processor
+\       Type: Subroutine
+\   Category: Ship hanger
+\    Summary: Draw the ship hanger by sending an OSWORD 248 command to the I/O
+\             processor
+\
 \ ******************************************************************************
 
 .HALL

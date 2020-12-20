@@ -1,6 +1,10 @@
 \ ******************************************************************************
+\
 \       Name: HLOIN
+\       Type: Subroutine
+\   Category: Drawing lines
 \    Summary: Implement the OSWORD 247 command (draw a horizontal line)
+\
 \ ******************************************************************************
 
 .HLOIN

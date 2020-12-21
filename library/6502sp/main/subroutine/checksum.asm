@@ -1,8 +1,8 @@
 \ ******************************************************************************
 \
-\       Name: 
+\       Name: Checksum
 \       Type: Subroutine
-\   Category: Save and load
+\   Category: Copy protection
 \    Summary: 
 \
 \ ******************************************************************************
@@ -13,7 +13,7 @@
  LDY #0
  STY V
  LDX #&10
- LDA (SC)\++RH
+ LDA (SC)
  TXA
 
 .CHKLoop

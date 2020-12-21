@@ -12,6 +12,7 @@
  LDY #0
  LDA (OSSC),Y
  STA Q
+
  INY
  INY
 
@@ -19,8 +20,10 @@
 
  LDA (OSSC),Y
  STA P
+
  AND #7
  BEQ PX5
+
  TAX
  LDA PXCL,X
  STA S

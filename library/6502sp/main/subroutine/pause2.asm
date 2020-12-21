@@ -2,8 +2,8 @@
 \
 \       Name: PAUSE2
 \       Type: Subroutine
-\   Category: Missions
-\    Summary: 
+\   Category: Keyboard
+\    Summary: Wait until a key is pressed, ignoring any existing key press
 \
 \ ******************************************************************************
 

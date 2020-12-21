@@ -2,7 +2,7 @@
 \
 \       Name: RDLI
 \       Type: Variable
-\   Category: Utitlity routines
+\   Category: Utility routines
 \    Summary: The OS command string for loading the docked code in the disc
 \             version of Elite
 \

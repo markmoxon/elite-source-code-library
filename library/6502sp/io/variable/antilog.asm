@@ -3,7 +3,17 @@
 \       Name: antilog
 \       Type: Variable
 \   Category: Maths (Arithmetic)
-\    Summary: 
+\    Summary: Binary antilogarithm table
+\
+\ ------------------------------------------------------------------------------
+\
+\ At byte n, the table contains:
+\
+\   2^((n / 2 + 128) / 16) / 256
+\
+\ which equals:
+\
+\   2^(n / 32 + 8) / 256
 \
 \ ******************************************************************************
 

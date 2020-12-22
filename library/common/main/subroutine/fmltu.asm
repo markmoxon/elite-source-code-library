@@ -16,6 +16,66 @@
 \
 \   A = A * Q / 256
 \
+IF _6502SP_VERSION
+\ Let La be the x-th entry in the 16-bit log/logL table, so:
+\
+\   La = 32 * log(a) * 256
+\
+\ Let Ar be the r-th entry in the antilog table
+\
+\   Ar = 2^(r / 32 + 8) / 256
+\
+\ These are all logarithms to base 2, so this is true:
+\
+\   x * y = 2^(log(a) + log(q))
+\
+\ Let's reduce this. First, we have the following:
+\
+\   log(a) + log(q) = (log(a) + log(q)) * 1
+\                   = (log(a) + log(q)) * (32 * 256) / (32 * 256)
+\                   = (32 * log(a) * 256 + 32 * log(q) * 256) / (32 * 256)
+\                   = (La + Lq) / (32 * 256)
+\
+\ Now we calculate La + Lq.
+\
+\ * If La + Lq < 256, then
+\
+\     log(a) + log(q) < 256 / (32 * 256) = 1/32
+\
+\   So:
+\
+\     x * y = 2^(log(a) + log(q))
+\           < 2^(1/32)
+\           < 1
+\
+\   so, because this routine returns A = x * y / 256, we return A = 0
+\
+\ * If La + Lq >= 256, then
+\
+\     La + Lq >= 256
+\
+\   so:
+\
+\     La + Lq = r + 256
+\
+\   for some value of r > 0. Plugging this into the above gives:
+\
+\   log(a) + log(q) = (La + Lq) / (32 * 256)
+\                   = (r + 256) / (32 * 256)
+\                   = (r / 32 + 8) / 256
+\
+\   And plugging this into the above gives:
+\
+\     x * y = 2^(log(a) + log(q))
+\           = 2^((r / 32 + 8) / 256)
+\           = Ar
+\
+\   so we return A = Ar
+\
+\ In summary, given two numbers A and Q, we can calculate A * Q / 256 by adding
+\ La and Lq, subtracting 256 to get R, and then looking up the result in Ar.
+\
+ENDIF
 \ ******************************************************************************
 
 .FMLTU
@@ -73,44 +133,86 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- STX P
- STA widget
- TAX
- BEQ MU3
- LDA logL,X
- LDX Q
- BEQ MU3again
- CLC
- ADC logL,X
- BMI oddlog
- LDA log,X
- LDX widget
- ADC log,X
- BCC MU3again
- TAX
- LDA antilog,X
- LDX P
- RTS
+ STX P                  \ Store X in P so we can preserve it through the call to
+                        \ FMULTU
+
+ STA widget             \ Store A in widget, so now widget = argument A
+
+ TAX                    \ Transfer A into X, so now X = argument A
+
+ BEQ MU3                \ If A = 0, jump to MU3 to return a result of 0, as
+                        \ 0 * Q / 256 is always 0
+
+                        \ We now want to calculate La + Lq, first adding the low
+                        \ bytes (from the logL table), and then the high bytes
+                        \ (from the log table)
+
+ LDA logL,X             \ Set A = low byte of La
+                        \       = low byte of La (as we set X to A above)
+
+ LDX Q                  \ Set X = Q
+
+ BEQ MU3again           \ If X = 0, jump to MU3again to return a result of 0, as
+                        \ A * 0 / 256 is always 0
+
+ CLC                    \ Set A = A + low byte of Lq
+ ADC logL,X             \       = low byte of La + low byte of Lq
+
+ BMI oddlog             \ If A > 127, jump to oddlog
+
+ LDA log,X              \ Set A = high byte of Lq
+
+ LDX widget             \ Set A = A + C + high byte of La
+ ADC log,X              \       = high byte of Lq + high byte of La + C
+                        \
+                        \ so we now have:
+                        \
+                        \   A = high byte of (La + Lq)
+
+ BCC MU3again           \ If the addition fitted into one byte and didn't carry,
+                        \ then La + Lq < 256, so we jump to MU3again to return a
+                        \ result of 0
+
+ TAX                    \ Otherwise La + Lq >= 256, so we return the A-th entry
+ LDA antilog,X          \ from the antilog table
+
+ LDX P                  \ Restore X from P so it is preserved
+
+ RTS                    \ Return from the subroutine
 
 .oddlog
 
- LDA log,X
- LDX widget
- ADC log,X
- BCC MU3again
- TAX
- LDA antilogODD,X
+ LDA log,X              \ Set A = high byte of Lq
+
+ LDX widget             \ Set A = A + C + high byte of La
+ ADC log,X              \       = high byte of Lq + high byte of La + C
+                        \
+                        \ so we now have:
+                        \
+                        \   A = high byte of (La + Lq)
+
+ BCC MU3again           \ If the addition fitted into one byte and didn't carry,
+                        \ then La + Lq < 256, so we jump to MU3again to return a
+                        \ result of 0
+
+ TAX                    \ Otherwise La + Lq >= 256, so we return the A-th entry
+ LDA antilogODD,X       \ from the antilogODD table
 
 .MU3
 
- LDX P
- RTS
+                        \ If we get here then A (our result) is already 0
+
+ LDX P                  \ Restore X from P so it is preserved
+
+ RTS                    \ Return from the subroutine
 
 .MU3again
 
- LDA #0
- LDX P
- RTS
+ LDA #0                 \ Set A = 0
+
+ LDX P                  \ Restore X from P so it is preserved
+
+ RTS                    \ Return from the subroutine
 
 ENDIF
 

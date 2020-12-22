@@ -19,8 +19,14 @@
 \ The result is returned in one byte as the result of the division multiplied
 \ by 256, so we can return fractional results using integers.
 \
+IF _CASSETTE_VERSION
 \ This routine uses the same shift-and-subtract algorithm that's documented in
 \ TIS2, but it leaves the fractional result in the integer range 0-255.
+ELIF _6502SP_VERSION
+\ This routine uses the same logarithm algorithm that's documented in FMLTU,
+\ except it subtracts the logarithm values, to do a division instead of a
+\ multiplication.
+ENDIF
 \
 \ Returns:
 \
@@ -54,38 +60,60 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- STA widget
- TAX
- BEQ LLfix
- LDA logL,X
- LDX Q
- SEC
- SBC logL,X
- BMI noddlog
- LDX widget
+ STA widget             \ Store A in widget, so now widget = argument A
+
+ TAX                    \ Transfer A into X, so now X = argument A
+
+ BEQ LLfix              \ If A = 0, jump to LLfix to return a result of 0, as
+                        \ 0 * Q / 256 is always 0
+
+                        \ We now want to calculate La + Lq, first adding the low
+                        \ bytes (from the logL table), and then the high bytes
+                        \ (from the log table)
+
+ LDA logL,X             \ Set A = low byte of La
+                        \       = low byte of La (as we set X to A above)
+
+ LDX Q                  \ Set X = Q
+
+ SEC                    \ Set A = A - low byte of Lq
+ SBC logL,X             \       = low byte of La - low byte of Lq
+
+ BMI noddlog            \ If the subtraction is negative, jump to noddlog
+
+ LDX widget             \ Set A = high byte of La - high byte of Lq
  LDA log,X
  LDX Q
  SBC log,X
- BCS LL2
- TAX
- LDA antilog,X
+
+ BCS LL2                \ If the subtraction underflowed, the result is too big,
+                        \ so jump to LL2 to return 255
+
+ TAX                    \ Otherwise we return the A-th entry from the antilog
+ LDA antilog,X          \ table
 
 .LLfix
 
- STA R
- RTS
+ STA R                  \ Set the result in R to the value of A
+
+ RTS                    \ Return from the subroutine
 
 .noddlog
 
- LDX widget
+ LDX widget             \ Set A = high byte of La - high byte of Lq
  LDA log,X
  LDX Q
  SBC log,X
- BCS LL2
- TAX
- LDA antilogODD,X
- STA R
- RTS
+
+ BCS LL2                \ If the subtraction underflowed, the result is too big,
+                        \ so jump to LL2 to return 255
+
+ TAX                    \ Otherwise we return the A-th entry from the antilogODD
+ LDA antilogODD,X       \ table
+
+ STA R                  \ Set the result in R to the value of A
+
+ RTS                    \ Return from the subroutine
 
 ENDIF
 
@@ -125,7 +153,7 @@ ENDIF
 
 IF _6502SP_VERSION
 
- LDA R
+ LDA R                  \ Set A to the remainder in R
 
 ENDIF
 

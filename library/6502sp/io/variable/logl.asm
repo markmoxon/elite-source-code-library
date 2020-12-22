@@ -3,7 +3,21 @@
 \       Name: logL
 \       Type: Variable
 \   Category: Maths (Arithmetic)
-\    Summary: 
+\    Summary: Binary logarithm table (low byte)
+\
+\ ------------------------------------------------------------------------------
+\
+\ At byte n, the table contains the high byte of:
+\
+\   &2000 * log10(n) / log10(2) = 32 * 256 * log10(n) / log10(2)
+\
+\ where log10 is the logarithm to base 10. The change-of-base formula says that:
+\
+\   log2(n) = log10(n) / log10(2)
+\
+\ so byte n contains the low byte of:
+\
+\   32 * log2(n) * 256
 \
 \ ******************************************************************************
 

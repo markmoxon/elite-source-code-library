@@ -3,7 +3,13 @@
 \       Name: logL
 \       Type: Variable
 \   Category: Maths (Arithmetic)
-\    Summary: 
+\    Summary: Binary logarithm table (low byte)
+\
+\ ------------------------------------------------------------------------------
+\
+\ Byte n contains the low byte of:
+\
+\   32 * log2(n) * 256
 \
 \ ******************************************************************************
 

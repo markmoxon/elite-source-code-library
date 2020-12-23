@@ -38,6 +38,14 @@
 \
 \   K3                  The vector from the station to the ship
 \
+\ Returns:
+\
+\   K3                  The vector from the ship to the ideal docking position
+\                       (4 unit vectors from the centre of the station for each
+\                       call to DCS1, so two calls will return the vector to a
+\                       point that's 8 unit vectors from the centre of the
+\                       station)
+\
 \ ******************************************************************************
 
 .DCS1
@@ -126,16 +134,18 @@
                         \ result we want, so jump to TS72 to return from the
                         \ subroutine
 
- LDA K3,X
- EOR #&FF
- ADC #1
- STA K3,X
- LDA K3+1,X
- EOR #&FF
+ LDA K3,X               \ Negate the result in K3(2 1 0) by flipping all the
+ EOR #%11111111         \ bits and adding 1, i.e. using two's complement to
+ ADC #1                 \ give it the opposite sign, starting with the low
+ STA K3,X               \ bytes
+
+ LDA K3+1,X             \ Then doing the high bytes
+ EOR #%11111111
  ADC #0
  STA K3+1,X
- LDA K3+2,X
- EOR #128
+
+ LDA K3+2,X             \ And finally, flipping the sign bit
+ EOR #%10000000
  STA K3+2,X
 
  JMP TS72               \ Jump to TS72 to return from the subroutine

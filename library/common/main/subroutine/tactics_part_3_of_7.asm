@@ -33,6 +33,12 @@ ENDIF
 \     us work out later on whether the enemy ship is pointing towards us, and
 \     therefore whether it can hit us with its lasers.
 \
+IF _6502SP_VERSION
+\ Other entry points:
+\
+\   GOPL                Make the ship head towards the planet
+\
+ENDIF
 \ ******************************************************************************
 
 .TA21

@@ -41,6 +41,11 @@
 \
 \                         * The z-coordinate in XX15+2
 \
+\ Other entry points:
+\
+\   TA2                 Calculate the length of the vector in XX15 (ignoring the
+\                       low coordinates), returning it in Q
+\
 \ ******************************************************************************
 
 .TAS2

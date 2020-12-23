@@ -27,6 +27,8 @@
 \
 \   XX15                The normalised vector
 \
+\   Q                   The length of the original XX15 vector
+\
 \ Other entry points:
 \
 \   NO1                 Contains an RTS

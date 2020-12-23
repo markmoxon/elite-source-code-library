@@ -96,7 +96,10 @@ ELIF _6502SP_VERSION
  ORA #%10000000         \ Set sidev_x_hi = -96
  STA INWK+22
 
- STA TYPE               \ Set the ship type to 224
+ STA TYPE               \ Set the ship type to -96, so the negative value will
+                        \ let us check in the DOCKIT routine whether this is our
+                        \ ship that is activating its docking computer, rather
+                        \ than an NPC ship docking
 
  LDA DELTA              \ Set the ship speed to DELTA (our speed)
  STA INWK+27

@@ -41,11 +41,13 @@
 \
 \                         * The z-coordinate in XX15+2
 \
+IF _6502SP_VERSION
 \ Other entry points:
 \
 \   TA2                 Calculate the length of the vector in XX15 (ignoring the
 \                       low coordinates), returning it in Q
 \
+ENDIF
 \ ******************************************************************************
 
 .TAS2

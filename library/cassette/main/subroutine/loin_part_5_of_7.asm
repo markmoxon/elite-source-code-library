@@ -7,6 +7,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
+\ This routine draws a line from (X1, Y1) to (X2, Y2). It has multiple stages.
 \ If we get here, then:
 \
 \   * |delta_y| >= |delta_x|

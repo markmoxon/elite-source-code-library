@@ -8,7 +8,8 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ This routine has multiple stages. This stage calculates the line deltas.
+\ This routine draws a line from (X1, Y1) to (X2, Y2). It has multiple stages.
+\ This stage calculates the line deltas.
 \
 \ Arguments:
 \

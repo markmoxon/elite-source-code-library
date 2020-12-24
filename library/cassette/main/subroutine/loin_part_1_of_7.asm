@@ -10,6 +10,16 @@
 \
 \ This routine has multiple stages. This stage calculates the line deltas.
 \
+\ Arguments:
+\
+\   X1                  The screen x-coordinate of the start of the line
+\
+\   Y1                  The screen y-coordinate of the start of the line
+\
+\   X2                  The screen x-coordinate of the end of the line
+\
+\   Y2                  The screen y-coordinate of the end of the line
+\
 \ Returns:
 \
 \   Y                   Y is preserved

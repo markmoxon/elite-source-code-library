@@ -9,36 +9,42 @@
 \
 \ The docking computer does the following:
 \
-\ * If we are outside the space station safe zone, head for the planet and we're
-\   done for this iteration
+\   * If we are outside the space station safe zone, head for the planet and
+\     we're done for this iteration
 \
-\ * If we are a long way away from the station, head for the planet and we're
-\   done
+\   * If we are a long way away from the station, head for the planet and we're
+\     done
 \
-\ * If we're approaching the station from behind or the side, aim for the docking
-\   point and we're done
+\   * If we're approaching the station from behind or the side, aim for the
+\     docking point and we're done
 \
-\ * If we're approaching the station from the front, then:
+\   * If we're approaching the station from the front, then:
 \
-\   * If we are pointing towards the station, refine our approach  and we're done
+\     * If we are pointing towards the station, refine our approach and we're
+\       done
 \
-\   * If we are not pointing towards the station, then check our distance to the
-\     station
+\     * If we are not pointing towards the station, then check our distance to
+\       the station
 \
-\     * If we're too close, turn away and we're done
+\       * If we're too close, turn away and we're done
 \
-\     * Otherwise if this is us docking, refine our approach and we're done
+\       * Otherwise if this is us docking, refine our approach and we're done
 \
-\     * Otherwise this is an NPC, so turn away from station and we're done
+\       * Otherwise this is an NPC, so turn away from station and we're done
 \ 
-\ Refine our approach means:
+\ "Refine our approach" means:
 \
 \   * If this is us docking (rather than an NPC), apply pitch and roll to get
 \     the station in our sights
 \
-\   * Once the station is in our sights, match roll with station
+\   * Once the station is in our sights, match roll with the station to get a
+\     horizontal slot
 \
-\   * Once we are matching the station roll, accelerate into slot
+\   * Once we are matching the station roll, accelerate into the slot
+\
+\ The docking point is 8 unit vector lengths from the centre of the space
+\ station, through the slot and out into space, so it's a good starting point
+\ for the final approach towards the slot.
 \
 \ ******************************************************************************
 
@@ -129,10 +135,12 @@
 
  CMP #35                \ If the dot product < 35, jump to PH1 to fly towards
  BCC PH1                \ the ideal docking position, some way in front of the
-                        \ slot, as there is a large angle between the vector from
-                        \ the station to the ship and the station's nosev, so the
-                        \ angle of approach is not very optimal. Specifically, as
-                        \ the unit vector length is 96 in our vector system,
+                        \ slot, as there is a large angle between the vector
+                        \ from the station to the ship and the station's nosev,
+                        \ so the angle of approach is not very optimal.
+                        \
+                        \ Specifically, as the unit vector length is 96 in our
+                        \ vector system,
                         \
                         \   (A X) = cos(t) < 35 / 96
                         \
@@ -338,14 +346,25 @@
 
                         \ If we get here, we check to see if we have docked
 
- LDA K3+10              \ If K3+10 is non-zero, skip to TNRTS to return from the
- BNE TNRTS              \ subroutine
+ LDA K3+10              \ If K3+10 is non-zero, skip to TNRTS, to return from
+ BNE TNRTS              \ the subroutine
+                        \
+                        \ I have to say I have no idea what K3+10 contains, as
+                        \ it isn't mentioned anywhere in the whole codebase
+                        \ apart from here, but it does share a location with
+                        \ XX2+10, so it will sometimes be non-zero (specifically
+                        \ when face #10 in the ship we're drawing is visible,
+                        \ which probably happens quite a lot). This would seem
+                        \ to affect whether an NPC ship can dock, as that's the
+                        \ code that gets skipped if K3+10 is non-zero, but as
+                        \ to what this means... that's not yet clear
 
  ASL NEWB               \ Set bit 7 of the ship's NEWB flags to indicate that
- SEC                    \ the ship has now docked
- ROR NEWB
+ SEC                    \ the ship has now docked, which only has meaning if
+ ROR NEWB               \ this is an NPC trying to dock
 
 .TNRTS
 
  RTS                    \ Return from the subroutine
+
 

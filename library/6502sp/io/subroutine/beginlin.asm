@@ -8,10 +8,11 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ We draw line by first sending an OSWRCH 129 command to the I/O processor to
-\ tell it to start receiving a new line to draw. The parameter to this call
-\ (sent with the next OSWRCH) contains the number of bytes we are going to send
-\ containing the line's coordinates.
+\ The parasite asks the I/O processor to draw a line by first sending an OSWRCH
+\ 129 command to the I/O processor, to tell it to start receiving a new line to
+\ draw. That call runs this routine on the receiving I/O processor. The next
+\ parameter to this call (sent with the next OSWRCH) contains the number of
+\ bytes we are going to send containing the line's coordinates, plus 1.
 \
 \ This routine then executes an OSWRCH 130 command, which calls the ADDBYT
 \ routine to start the I/O processor listening for more bytes from the parasite.

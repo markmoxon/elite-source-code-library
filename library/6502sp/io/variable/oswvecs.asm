@@ -17,11 +17,11 @@
 .OSWVECS
 
  EQUW KEYBOARD          \            240 (&F0)     0 = Scan the keyboard
- EQUW PIXEL             \            241 (&F1)     1 = Draw a pixel
+ EQUW PIXEL             \            241 (&F1)     1 = Draw space view pixels
  EQUW MSBAR             \ #DOmsbar = 242 (&F2)     2 = Update missile indicators
  EQUW WSCAN             \ #wscn    = 243 (&F3)     3 = Wait for vertical sync
  EQUW SC48              \ #onescan = 244 (&F4)     4 = Draw ship on 3D scanner
- EQUW DOT               \ #DOdot   = 245 (&F5)     5 = Draw a dot
+ EQUW DOT               \ #DOdot   = 245 (&F5)     5 = Draw a dot on the compass
  EQUW DODKS4            \ #DODKS4  = 246 (&F6)     6 = Scan for a specific key
  EQUW HLOIN             \            247 (&F7)     7 = Draw a horizontal line
  EQUW HANGER            \            248 (&F8)     8 = Display the hanger

@@ -3,13 +3,13 @@
 \       Name: PIXEL3
 \       Type: Subroutine
 \   Category: Drawing pixels
-\    Summary: Add a 1-pixel dot, 2-pixel dash or 4-pixel square to the pixel
-\             buffer
+\    Summary: Add a coloured dot at a specific distance to the pixel buffer
+\             (1-pixel dot, 2-pixel dash or 4-pixel square)
 \
 \ ------------------------------------------------------------------------------
 \
-\ Draw a point at screen coordinate (X, A) with the point size determined by the
-\ distance in ZZ, by adding it to the pixel buffer.
+\ Draw a point at screen coordinate (X, A), with the point size and colour being
+\ determined by the distance in ZZ, by adding it to the pixel buffer.
 \
 \ Arguments:
 \
@@ -37,9 +37,10 @@
  TXA                    \ Store the x-coordinate in PBUF+2
  STA PBUF+1,Y
 
- LDA ZZ                 \ Store the distance in PBUF, making sure it is at
- ORA #1                 \ least 1
- STA PBUF,Y
+ LDA ZZ                 \ Store the distance in PBUF, making sure bit 0 is set
+ ORA #1                 \ so the parasite's PIXEL routine will draw this dot
+ STA PBUF,Y             \ using the distance to determine the dot's size and
+                        \ colour
 
  TYA                    \ Set A = Y + 3
  CLC                    \       = PBUP + 3

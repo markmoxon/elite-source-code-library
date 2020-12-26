@@ -3,13 +3,13 @@
 \       Name: PIXEL
 \       Type: Subroutine
 \   Category: Drawing pixels
-\    Summary: Add a 1-pixel dot, 2-pixel dash or 4-pixel square to the pixel
-\             buffer, with distance a multiple of 8
+\    Summary: Add a white dot at a specific distance to the pixel buffer
+\             (2-pixel dash or 4-pixel square)
 \
 \ ------------------------------------------------------------------------------
 \
-\ Draw a point at screen coordinate (X, A) with the point size determined by the
-\ distance in ZZ, by adding it to the pixel buffer.
+\ Draw a point in white (cyan/red) at screen coordinate (X, A), with the point
+\ size determined by the distance in ZZ, by adding it to the pixel buffer.
 \
 \ Arguments:
 \
@@ -38,12 +38,12 @@
 
  STA PBUF+2,Y           \ Store the y-coordinate in PBUF+2
 
- TXA                    \ Store the x-coordinate in PBUF+2
+ TXA                    \ Store the x-coordinate in PBUF+1
  STA PBUF+1,Y
 
- LDA ZZ                 \ Store the distance in PBUF, with bits 0-2 cleared to
- AND #%11111000         \ make ZZ a multiple of 8
- STA PBUF,Y
+ LDA ZZ                 \ Store the distance in PBUF, with bits 0-2 cleared so
+ AND #%11111000         \ the parasite's PIXEL routine will draw this point as a
+ STA PBUF,Y             \ white 2-pixel dash or 4-pixel square
 
  TYA                    \ Set A = Y + 3
  CLC                    \       = PBUP + 3

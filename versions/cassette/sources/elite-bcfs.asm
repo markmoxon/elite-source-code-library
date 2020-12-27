@@ -35,6 +35,12 @@
 
 INCLUDE "versions/cassette/sources/elite-header.h.asm"
 
+\ ******************************************************************************
+\
+\ Configuration variables
+\
+\ ******************************************************************************
+
 _CASSETTE_VERSION       = TRUE AND (_VERSION = 1)
 _DISC_VERSION           = TRUE AND (_VERSION = 2)
 _6502SP_VERSION         = TRUE AND (_VERSION = 3)
@@ -51,17 +57,17 @@ D% = &563A              \ D% is set to the size of the main game code
 ZP = &70                \ ZP is a zero page variable used in the checksum
                         \ routine at LBL
 
-ORG &1100               \ The load address of the main game code file ("ELTcode"
-                        \ for loading from disc, "ELITEcode" for loading from
-                        \ tape)
-
-INCLUDE "library/cassette/bcfs/subroutine/lbl.asm"
-
 \ ******************************************************************************
 \
 \ Load the compiled binaries to create the Big Code File
 \
 \ ******************************************************************************
+
+ORG &1100               \ The load address of the main game code file ("ELTcode"
+                        \ for loading from disc, "ELITEcode" for loading from
+                        \ tape)
+
+INCLUDE "library/cassette/bcfs/subroutine/lbl.asm"
 
 .elitea
 

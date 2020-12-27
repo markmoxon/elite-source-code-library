@@ -23,3 +23,16 @@ INCLUDE "library/common/main/variable/swap.asm"
 INCLUDE "library/common/main/variable/t1.asm"
 INCLUDE "library/common/main/variable/col.asm"
 INCLUDE "library/6502sp/io/variable/ossc.asm"
+
+ORG &0090
+
+INCLUDE "library/common/main/variable/xx15.asm"
+INCLUDE "library/common/main/variable/x1.asm"
+INCLUDE "library/common/main/variable/y1.asm"
+INCLUDE "library/common/main/variable/x2.asm"
+INCLUDE "library/common/main/variable/y2.asm"
+
+ SKIP 2                 \ The last 2 bytes of the XX15 block
+
+INCLUDE "library/common/main/variable/sc.asm"
+INCLUDE "library/common/main/variable/sch.asm"

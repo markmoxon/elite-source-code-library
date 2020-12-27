@@ -14,6 +14,23 @@
 \ The terminology and notations used in this commentary are explained at
 \ https://www.bbcelite.com/about_site/terminology_used_in_this_commentary.html
 \
+\ ------------------------------------------------------------------------------
+\
+\ This source file produces the following binary files:
+\
+\   * output/ELTA.bin
+\   * output/ELTB.bin
+\   * output/ELTC.bin
+\   * output/ELTD.bin
+\   * output/ELTE.bin
+\   * output/ELTF.bin
+\   * output/ELTG.bin
+\   * output/ELTH.bin
+\   * output/ELTI.bin
+\   * output/ELTJ.bin
+\   * output/SHIPS.bin
+\   * output/WORDS.bin
+\
 \ ******************************************************************************
 
 INCLUDE "versions/6502sp/sources/elite-header.h.asm"
@@ -25,18 +42,19 @@ _CASSETTE_VERSION       = TRUE AND (_VERSION = 1)
 _DISC_VERSION           = TRUE AND (_VERSION = 2)
 _6502SP_VERSION         = TRUE AND (_VERSION = 3)
 
-C% = &1000
-W% = &9200
-L% = C%
-Z = 0
-NTY = 34
-D% = &D000
-\E% = D%+2*NTY
-LS% = D%-1
-BRKV = &202
-VEC = &7FFE
+\ ******************************************************************************
+\
+\ Configuration variables
+\
+\ ******************************************************************************
 
-Q% = _ENABLE_MAX_COMMANDER
+D% = &D000              \ The address where the ship blueprints get moved to
+                        \ after loading, so they go from &D000 to &F200
+
+LS% = D%-1              \ The start of the descending ship line heap
+
+BRKV = &202             \ The break vector that we intercept to enable us to
+                        \ handle and display system errors
 
 NOST = 18               \ The number of stardust particles in normal space (this
                         \ goes down to 3 in witchspace)
@@ -44,6 +62,8 @@ NOST = 18               \ The number of stardust particles in normal space (this
 NOSH = 20               \ The maximum number of ships in our local bubble of
                         \ universe (counting from 0, so there are actually 21
                         \ ship slots)
+
+NTY = 34                \ The number of different ship types
 
 MSL = 1                 \ Ship type for a missile
 SST = 2                 \ Ship type for a Coriolis space station
@@ -78,16 +98,61 @@ JH = SHU+2              \ Junk is defined as ending before the Cobra Mk III
                         \ alloy plate, cargo canister, asteroid, splinter,
                         \ shuttle, transporter
 
-PACK = SH3
+PACK = SH3              \ The first of the eight pack-hunter ships, which tend
+                        \ to spawn in groups. With the default value of PACK the
+                        \ pack-hunters are the Sidewinder, Mamba, Krait, Adder,
+                        \ Gecko, Cobra Mk I, Worm and Cobra Mk III (pirate)
 
-NI% = 37
-POW = 15
-B = &30
-Armlas = INT(128.5+1.5*POW)
-Mlas = 50               \ Mining laser
-NRU% = 0
-VE = &57
-LL = 30
+POW = 15                \ Pulse laser power
+
+Mlas = 50               \ Mining laser power
+
+Armlas = INT(128.5+1.5*POW) \ Military laser power
+
+NI% = 37                \ The number of bytes in each ship's data block (as
+                        \ stored in INWK and K%)
+
+OSWRCH = &FFEE          \ The address for the OSWRCH routine
+OSBYTE = &FFF4          \ The address for the OSBYTE routine
+OSWORD = &FFF1          \ The address for the OSWORD routine
+OSFILE = &FFDD          \ The address for the OSFILE routine
+SCLI = &FFF7            \ The address for the OSCLI routine
+
+DOFE21 = 131            \ The OSBYTE number for the #DOFE21 command
+DOhfx = 132             \ The OSBYTE number for the #DOhfx command
+SETXC = 133             \ The OSBYTE number for the #SETXC command
+SETYC = 134             \ The OSBYTE number for the #SETYC command
+clyns = 135             \ The OSBYTE number for the #clyns command
+RDPARAMS = 136          \ The OSBYTE number for the #RDPARAMS command
+DODIALS = 138           \ The OSBYTE number for the #DODIALS command
+VIAE = 139              \ The OSBYTE number for the #VIAE command
+DOBULB = 140            \ The OSBYTE number for the #DOBULB command
+DOCATF = 141            \ The OSBYTE number for the #DOCATF command
+SETCOL = 142            \ The OSBYTE number for the #SETCOL command
+SETVDU19 = 143          \ The OSBYTE number for the #SETVDU19 command
+DOsvn = 144             \ The OSBYTE number for the #DOsvn command
+printcode = 146         \ The OSBYTE number for the #printcode command
+prilf = 147             \ The OSBYTE number for the #prilf command
+
+DOmsbar = 242           \ The OSWORD number for the #DOmsbar command
+wscn = 243              \ The OSWORD number for the #wscn command
+onescan = 244           \ The OSWORD number for the #onescan command
+DOdot = 245             \ The OSWORD number for the #DOdot command
+DODKS4 = 246            \ The OSWORD number for the #DODKS4 command
+
+X = 128                 \ The centre x-coordinate of the 256 x 192 space view
+Y = 96                  \ The centre y-coordinate of the 256 x 192 space view
+
+f0 = &20                \ Internal key number for red key f0 (Launch, Front)
+f1 = &71                \ Internal key number for red key f1 (Buy Cargo, Rear)
+f2 = &72                \ Internal key number for red key f2 (Sell Cargo, Left)
+f3 = &73                \ Internal key number for red key f3 (Equip Ship, Right)
+f4 = &14                \ Internal key number for red key f4 (Long-range Chart)
+f5 = &74                \ Internal key number for red key f5 (Short-range Chart)
+f6 = &75                \ Internal key number for red key f6 (Data on System)
+f7 = &16                \ Internal key number for red key f7 (Market Price)
+f8 = &76                \ Internal key number for red key f8 (Status Mode)
+f9 = &77                \ Internal key number for red key f9 (Inventory)
 
 YELLOW  = %00001111     \ Four mode 1 pixels of colour 1 (yellow)
 RED     = %11110000     \ Four mode 1 pixels of colour 2 (red, magenta or white)
@@ -106,49 +171,18 @@ CYAN2   = %00111100     \ Two mode 2 pixels of colour 6    (cyan)
 WHITE2  = %00111111     \ Two mode 2 pixels of colour 7    (white)
 STRIPE  = %00100011     \ Two mode 2 pixels of colour 5, 1 (magenta/red)
 
-OSWRCH = &FFEE
-OSBYTE = &FFF4
-OSWORD = &FFF1
-OSFILE = &FFDD
-SCLI = &FFF7
+NRU% = 0                \ The number of planetary systems with special extended
+                        \ descriptions in the RUTOK table. The value of this
+                        \ variable is 0 in the original source, but this appears
+                        \ to be a bug, as it should be 26
 
-DOFE21 = &83
-DOhfx = &84
-SETXC = &85
-SETYC = &86
-clyns = &87
-RDPARAMS = &88
-DODIALS = &8A
-VIAE = &8B
-DOBULB = &8C
-DOCATF = &8D
-SETCOL = &8E
-SETVDU19 = &8F
-DOsvn = &90
-printcode = &92
-prilf = &93
+VE = &57                \ The obfuscation byte used to hide the extended tokens
+                        \ table from crackers viewing the binary code
 
-DOmsbar = 242
-wscn = 243
-onescan = 244
-DOdot = 245
-DODKS4 = 246
+LL = 30                 \ The length of lines (in characters) of justified text
+                        \ in the extended tokens system
 
-X = 128
-Y = 96
-
-f0 = &20
-f1 = &71
-f2 = &72
-f3 = &73
-f4 = &14
-f5 = &74
-f6 = &75
-f7 = &16
-f8 = &76
-f9 = &77
-
-W = 5
+W = 5                   \ Configuration variables for the demo
 W2 = 16
 WY = 12
 W2Y = 2.5*WY
@@ -188,7 +222,7 @@ INCLUDE "library/common/main/variable/act.asm"
 
 \ ******************************************************************************
 \
-\ Save output/WORDS9.bin
+\ Save output/WORDS.bin
 \
 \ ******************************************************************************
 

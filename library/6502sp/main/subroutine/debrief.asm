@@ -15,7 +15,7 @@
  INC TALLY+1            \ Award 256 kill points for completing the mission
 
  LDX #LO(50000)         \ Increase our cash reserves by the generous mission
- LDY #HI(50000)         \ reward of 50,000 CR
+ LDY #HI(50000)         \ reward of 5,000 CR
  JSR MCASH
 
  LDA #15                \ Set A = 15 so the call to BRP prints extended token 15

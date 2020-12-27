@@ -14,6 +14,12 @@
 \ The terminology and notations used in this commentary are explained at
 \ https://www.bbcelite.com/about_site/terminology_used_in_this_commentary.html
 \
+\ ------------------------------------------------------------------------------
+\
+\ This source file produces the following binary file:
+\
+\   * output/I.CODE.bin
+\
 \ ******************************************************************************
 
 INCLUDE "versions/6502sp/sources/elite-header.h.asm"
@@ -24,43 +30,46 @@ _CASSETTE_VERSION       = TRUE AND (_VERSION = 1)
 _DISC_VERSION           = TRUE AND (_VERSION = 2)
 _6502SP_VERSION         = TRUE AND (_VERSION = 3)
 
-CODE% = &2400
-LOAD% = &2400
+\ ******************************************************************************
+\
+\ Configuration variables
+\
+\ ******************************************************************************
 
-C% = &2400
-L% = C%
-D% = &D000
+CODE% = &2400           \ The assembly address of the main I/O processor code
+LOAD% = &2400           \ The load address of the main I/O processor code
 
-Z = 0
-XX15 = &90
-X1 = XX15
-Y1 = XX15+1
-X2 = XX15+2
-Y2 = XX15+3
-SC = XX15+6
-SCH = SC+1
-OSTP = SC
-OSWRCH = &FFEE
-OSBYTE = &FFF4
-OSWORD = &FFF1
-OSFILE = &FFDD
-SCLI = &FFF7
+D% = &D000              \ The address where the ship blueprints get moved to
+                        \ after loading, so they go from &D000 to &F200
+
+OSWRCH = &FFEE          \ The address for the OSWRCH routine
+OSBYTE = &FFF4          \ The address for the OSBYTE routine
+OSWORD = &FFF1          \ The address for the OSWORD routine
+OSFILE = &FFDD          \ The address for the OSFILE routine
+SCLI = &FFF7            \ The address for the OSCLI routine
+NVOSWRCH = &FFCB        \ The address for the non-vectored OSWRCH routine
 
 VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
                         \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
                         \ known as SHEILA)
 
-IRQ1V = &204
-VSCAN = 57
-XX21 = D%
-WRCHV = &20E
-WORDV = &20C
-RDCHV = &210
-NVOSWRCH = &FFCB
-Tina = &B00
-Y = 96
-\protlen = 0
-PARMAX = 15
+IRQ1V = &204            \ The IRQ1V vector that we intercept to implement the
+                        \ split-sceen mode
+
+WRCHV = &20E            \ The WRCHV vector that we intercept to implement our
+                        \ own custom OSWRCH commands for communicating over the
+                        \ Tube
+
+WORDV = &20C            \ The WORDV vector that we intercept to implement our
+                        \ own custom OSWORD commands for communicating over the
+                        \ Tube
+
+RDCHV = &210            \ The RDCHV vector that we intercept to add validation
+                        \ when reading characters using OSRDCH
+
+VSCAN = 57              \ Defines the split position in the split-screen mode
+
+Y = 96                  \ The centre y-coordinate of the 256 x 192 space view
 
 YELLOW  = %00001111     \ Four mode 1 pixels of colour 1 (yellow)
 RED     = %11110000     \ Four mode 1 pixels of colour 2 (red, magenta or white)
@@ -78,6 +87,14 @@ MAG2    = %00110011     \ Two mode 2 pixels of colour 5    (magenta)
 CYAN2   = %00111100     \ Two mode 2 pixels of colour 6    (cyan)
 WHITE2  = %00111111     \ Two mode 2 pixels of colour 7    (white)
 STRIPE  = %00100011     \ Two mode 2 pixels of colour 5, 1 (magenta/red)
+
+Tina = &0B00            \ The address of the code block for the TINA command,
+                        \ which should start with "TINA" and then be followed by
+                        \ code that executes on the I/O processor before the
+                        \ main game code terminates
+
+PARMAX = 15             \ The number of dashboard parameters transmitted with
+                        \ the #RDPARAMS and OSWRCH 137 <param> commands
 
 INCLUDE "library/6502sp/io/workspace/zp.asm"
 INCLUDE "library/6502sp/io/variable/table.asm"

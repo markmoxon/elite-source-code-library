@@ -88,7 +88,6 @@ VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
 VSCAN = 57              \ Defines the split position in the split-screen mode
 
 X = 128                 \ The centre x-coordinate of the 256 x 192 space view
-
 Y = 96                  \ The centre y-coordinate of the 256 x 192 space view
 
 f0 = &20                \ Internal key number for red key f0 (Launch, Front)
@@ -227,7 +226,6 @@ SAVE "versions/cassette/output/ELTA.bin", CODE%, P%, LOAD%
 
 CODE_B% = P%
 LOAD_B% = LOAD% + P% - CODE%
-Q% = _ENABLE_MAX_COMMANDER
 
 INCLUDE "library/common/main/variable/na_per_cent.asm"
 INCLUDE "library/common/main/variable/chk2.asm"

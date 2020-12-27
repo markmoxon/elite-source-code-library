@@ -14,6 +14,8 @@
 \
 \ Other entry points:
 \
+\   oh                  Contains an RTS
+\
 \   SPIN2               Remove any randomness: spawn cargo of a specific type
 \                       (given in X), and always spawn the number given in A
 \

@@ -9,11 +9,14 @@
 \
 \ Set A and X to the colours we should use for indicators showing dangerous and
 \ safe values respectively. This enables us to implement flashing indicators,
-\ which is one of the game's configurable options. If flashing is enabled, the
-\ colour returned in A (dangerous values) will be red for 8 iterations of the
-\ main loop, and yellow/white for the next 8, before going back to red. If we
-\ always use PZW to decide which colours we should use when updating indicators,
-\ flashing colours will be automatically taken care of for us.
+\ which is one of the game's configurable options.
+\
+IF _CASSETTE_VERSION
+\ If flashing is enabled, the colour returned in A (dangerous values) will be
+\ red for 8 iterations of the main loop, and yellow/white for the next 8, before
+\ going back to red. If we always use PZW to decide which colours we should use
+\ when updating indicators, flashing colours will be automatically taken care of
+\ for us.
 \
 \ The values returned are &F0 for yellow/white and &0F for red. These are mode 5
 \ bytes that contain 4 pixels, with the colour of each pixel given in two bits,
@@ -21,6 +24,16 @@
 \ nibble (bits 0-3). So in &F0 each pixel is %10, or colour 2 (yellow or white,
 \ depending on the dashboard palette), while in &0F each pixel is %01, or colour
 \ 1 (red).
+ELIF _6502SP_VERSION
+\ If flashing is enabled, the colour returned in A (dangerous values) will be
+\ red for 8 iterations of the main loop, and green for the next 8, before
+\ going back to red. If we always use PZW to decide which colours we should use
+\ when updating indicators, flashing colours will be automatically taken care of
+\ for us.
+\
+\ The values returned are #GREEN2 for green and #RED2 for red. These are mode 2
+\ bytes that contain 2 pixels, with the colour of each pixel given in four bits.
+ENDIF
 \
 \ Returns:
 \

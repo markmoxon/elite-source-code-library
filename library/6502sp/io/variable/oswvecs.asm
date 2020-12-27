@@ -2,7 +2,7 @@
 \
 \       Name: OSWVECS
 \       Type: Variable
-\   Category: Text
+\   Category: Tube
 \    Summary: The lookup table for OSWORD jump commands (240-255)
 \
 \ ------------------------------------------------------------------------------

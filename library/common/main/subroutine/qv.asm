@@ -34,8 +34,9 @@ IF _CASSETTE_VERSION
 ELIF _6502SP_VERSION
 
  LDA tek                \ If the current system's tech level is less than 8,
- CMP #8                 \ skip the next two instructions
- BCC P%+7
+ CMP #8                 \ skip the next two instructions, otherwise we clear the
+ BCC P%+7               \ screen to prevent the view menu from clashing with the
+                        \ longer equipment menu available in higher tech systems
 
  LDA #32                \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 32 (Equip

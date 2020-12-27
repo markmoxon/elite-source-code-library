@@ -12,6 +12,11 @@
 \
 \   A                   The character to print on the printer and screen
 \
+\ Other entry points:
+\
+\   sent                Turn the printer off and restore the USOSWRCH handler,
+\                       returning from the subroutine using a tail call   
+\
 \ ******************************************************************************
 
 .printer

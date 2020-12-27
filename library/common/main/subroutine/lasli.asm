@@ -11,7 +11,6 @@
 \ they appear to flicker and dance. Also heat up the laser temperature and drain
 \ some energy.
 \
-\
 \ Other entry points:
 \
 \   LASLI2              Just draw the current laser lines without moving the

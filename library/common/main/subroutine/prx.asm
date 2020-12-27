@@ -22,6 +22,8 @@
 \
 \   prx-3               Return the price of the item with number A - 1
 \
+\   c                   Contains an RTS
+\
 \ ******************************************************************************
 
  SEC                    \ Decrement A (for when this routine is called via

@@ -23,6 +23,12 @@ ENDIF
 \
 \   * Speed up or slow down, depending on where the ship is in relation to us
 \
+IF _6502SP_VERSION
+\ Other entry points:
+\
+\   TA151               Make the ship head towards the planet
+\
+ENDIF
 \ ******************************************************************************
 
 .TA4

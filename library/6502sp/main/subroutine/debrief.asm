@@ -5,6 +5,13 @@
 \   Category: Missions
 \    Summary: Finish mission 1
 \
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   BRPS                Print the extended token in A, show the Status Mode
+\                       screen and return from the subroutine
+\
 \ ******************************************************************************
 
 .DEBRIEF
@@ -24,7 +31,7 @@
 .BRPS
 
  BNE BRP                \ Jump to BRP to print the extended token in A and show
-                        \ the Status Mode screen), returning from the subroutine
+                        \ the Status Mode screen, returning from the subroutine
                         \ using a tail call (this BNE is effectively a JMP as A
                         \ is never zero)
 

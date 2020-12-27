@@ -5,6 +5,13 @@
 \   Category: Start and end
 \    Summary: Restart the game
 \
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   QU5                 Restart the game using the last saved commander without
+\                       asking whether to load a new commander file
+\
 \ ******************************************************************************
 
 .BR1

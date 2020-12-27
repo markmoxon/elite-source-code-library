@@ -65,8 +65,12 @@ IF _CASSETTE_VERSION
 \                       BULB routine
 \
 \   rT9                 Contains an RTS
+ELIF _6502SP_VERSION
+\ Other entry points:
 \
+\   RR4                 Restore the registers and return from the subroutine
 ENDIF
+\
 \ ******************************************************************************
 
 .TT26

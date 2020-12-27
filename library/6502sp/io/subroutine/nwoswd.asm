@@ -20,6 +20,10 @@
 \
 \  (Y X)                The address of the associated OSWORD parameter block
 \
+\ Other entry points:
+\
+\   SAFE                Contains an RTS   
+\
 \ ******************************************************************************
 
 .NWOSWD

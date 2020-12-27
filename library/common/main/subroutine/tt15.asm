@@ -28,6 +28,7 @@ IF _6502SP_VERSION
 \ Other entry points:
 \
 \   TT15b               Draw the crosshairs in the current colour
+\
 ENDIF
 \ ******************************************************************************
 

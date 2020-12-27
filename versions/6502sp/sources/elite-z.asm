@@ -24,8 +24,6 @@
 
 INCLUDE "versions/6502sp/sources/elite-header.h.asm"
 
-CPU 1
-
 _CASSETTE_VERSION       = TRUE AND (_VERSION = 1)
 _DISC_VERSION           = TRUE AND (_VERSION = 2)
 _6502SP_VERSION         = TRUE AND (_VERSION = 3)
@@ -76,8 +74,8 @@ RED     = %11110000     \ Four mode 1 pixels of colour 2 (red, magenta or white)
 CYAN    = %11111111     \ Four mode 1 pixels of colour 3 (cyan or white)
 GREEN   = %10101111     \ Four mode 1 pixels of colour 3, 1, 3, 1 (cyan/yellow)
 WHITE   = %11111010     \ Four mode 1 pixels of colour 3, 2, 3, 2 (cyan/red)
-MAGENTA = RED
-DUST    = WHITE
+MAGENTA = RED           \ Four mode 1 pixels of colour 2 (red, magenta or white)
+DUST    = WHITE         \ Four mode 1 pixels of colour 3, 2, 3, 2 (cyan/red)
 
 RED2    = %00000011     \ Two mode 2 pixels of colour 1    (red)
 GREEN2  = %00001100     \ Two mode 2 pixels of colour 2    (green)

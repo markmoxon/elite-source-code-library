@@ -22,6 +22,13 @@
 \ Both options end up at DK4 to scan for other keys, beyond the seven primary
 \ flight controls.
 \
+IF _6502SP_VERSION
+\ Other entry points:
+\
+\   auton               Get the docking computer to "press" the flight keys to
+\                       dock the ship
+\
+ENDIF
 \ ******************************************************************************
 
 .DOKEY

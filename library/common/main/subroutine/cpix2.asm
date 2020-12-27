@@ -4,7 +4,9 @@
 \       Type: Subroutine
 \   Category: Drawing pixels
 \    Summary: Draw a single-height dot on the dashboard
+IF _CASSETTE_VERSION
 \  Deep dive: Drawing colour pixels in mode 5
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

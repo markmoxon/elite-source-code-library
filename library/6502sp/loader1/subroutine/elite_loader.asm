@@ -173,7 +173,7 @@
  STA ZP+1
 
  LDY #0                 \ We are now going to send the 67 VDU bytes in the table
-                        \ at B% to OSWRCH to set up the special mode 4 screen
+                        \ at B% to OSWRCH to set up the special mode 1 screen
                         \ that forms the basis for the split-screen mode
 
 .LOOP

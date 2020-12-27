@@ -19,6 +19,12 @@
 \
 \                           * 8 = Inventory
 \
+IF _6502SP_VERSION
+\ Other entry points:
+\
+\   NWDAVxx             Used to rejoin this routine from the call to NWDAV4
+\
+ENDIF
 \ ******************************************************************************
 
 .TT210

@@ -22,11 +22,19 @@
 \                       threshold is in pixels, so it should have a value from
 \                       0-16, as each bar indicator is 16 pixels wide
 \
+IF _CASSETTE_VERSION
 \   K                   The colour to use when A is a high value, as a 4-pixel
 \                       mode 5 character row byte
 \
 \   K+1                 The colour to use when A is a low value, as a 4-pixel
 \                       mode 5 character row byte
+ELIF _6502SP_VERSION
+\   K                   The colour to use when A is a high value, as a 2-pixel
+\                       mode 2 character row byte
+\
+\   K+1                 The colour to use when A is a low value, as a 2-pixel
+\                       mode 2 character row byte
+ENDIF
 \
 \   SC(1 0)             The screen address of the first character block in the
 \                       indicator
@@ -132,9 +140,19 @@ ENDIF
 
 .DL5
 
+IF _CASSETTE_VERSION
+
  AND COL                \ Fetch the 4-pixel mode 5 colour byte from COL, and
                         \ only keep pixels that have their equivalent bits set
                         \ in the mask byte in A
+
+ELIF _6502SP_VERSION
+
+ AND COL                \ Fetch the 2-pixel mode 2 colour byte from COL, and
+                        \ only keep pixels that have their equivalent bits set
+                        \ in the mask byte in A
+
+ENDIF
 
  STA (SC),Y             \ Draw the shape of the mask on pixel row Y of the
                         \ character block we are processing

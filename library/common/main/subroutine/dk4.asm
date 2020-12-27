@@ -18,6 +18,12 @@
 \   * If this is a space view, scan for secondary flight keys and update the
 \     relevant bytes in the key logger
 \
+IF _6502SP_VERSION
+\ Other entry points:
+\
+\   FREEZE              Rejoin the pause routine after processing a screen save
+\
+ENDIF
 \ ******************************************************************************
 
 .DK4

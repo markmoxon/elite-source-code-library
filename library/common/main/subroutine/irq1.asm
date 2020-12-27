@@ -13,6 +13,14 @@
 \
 \ IRQ1V is set to point to IRQ1 by elite-loader.asm.
 \
+IF _6502SP_VERSION
+\ Other entry points:
+\
+\   VNT3+1              Changing this byte modifies the palette-loading
+\                       instruction at VNT3, to support the #SETVDU19 <offset>
+\                       command for changing the mode 1 palette
+\
+ENDIF
 \ ******************************************************************************
 
 IF _CASSETTE_VERSION

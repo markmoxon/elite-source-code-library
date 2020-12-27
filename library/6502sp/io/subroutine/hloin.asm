@@ -5,6 +5,12 @@
 \   Category: Drawing lines
 \    Summary: Implement the OSWORD 247 command (draw a horizontal line)
 \
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   HLOIN3              
+\
 \ ******************************************************************************
 
 .HLOIN

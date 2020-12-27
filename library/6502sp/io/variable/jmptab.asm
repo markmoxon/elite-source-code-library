@@ -2,7 +2,7 @@
 \
 \       Name: JMPTAB
 \       Type: Variable
-\   Category: Text
+\   Category: Tube
 \    Summary: The lookup table for OSWRCH jump commands (128-147)
 \
 \ ------------------------------------------------------------------------------

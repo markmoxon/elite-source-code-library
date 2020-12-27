@@ -75,14 +75,14 @@ ENDIF
                         \ drawing blank characters after this one until we reach
                         \ the end of the indicator row
 
+IF _CASSETTE_VERSION
+
  LDA CTWOS,X            \ CTWOS is a table of ready-made 1-pixel mode 5 bytes,
                         \ just like the TWOS and TWOS2 tables for mode 4 (see
                         \ the PIXEL routine for details of how they work). This
                         \ fetches a mode 5 1-pixel byte with the pixel position
                         \ at X, so the pixel is at the offset that we want for
                         \ our vertical bar
-
-IF _CASSETTE_VERSION
 
  AND #&F0               \ The 4-pixel mode 5 colour byte &F0 represents four
                         \ pixels of colour %10 (3), which is yellow in the
@@ -93,6 +93,13 @@ IF _CASSETTE_VERSION
                         \ 4-pixel colour byte)
 
 ELIF _6502SP_VERSION
+
+ LDA CTWOS,X            \ CTWOS is a table of ready-made 1-pixel mode 2 bytes,
+                        \ just like the TWOS and TWOS2 tables for mode 1 (see
+                        \ the PIXEL routine for details of how they work). This
+                        \ fetches a mode 2 1-pixel byte with the pixel position
+                        \ at X, so the pixel is at the offset that we want for
+                        \ our vertical bar
 
  AND #WHITE2            \ The 2-pixel mode 2 byte in #WHITE2 represents two
                         \ pixels of colour %0111 (7), which is white in both

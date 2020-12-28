@@ -441,7 +441,6 @@ LOAD_C% = LOAD% +P% - CODE%
 
 INCLUDE "library/6502sp/main/variable/hatb.asm"
 INCLUDE "library/6502sp/main/subroutine/hall.asm"
-INCLUDE "library/6502sp/main/variable/hang.asm"
 INCLUDE "library/6502sp/main/subroutine/has1.asm"
 INCLUDE "library/common/main/subroutine/tactics_part_1_of_7.asm"
 INCLUDE "library/common/main/subroutine/tactics_part_2_of_7.asm"

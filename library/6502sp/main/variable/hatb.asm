@@ -48,7 +48,7 @@
  EQUB %01000000         \ x_hi = %01000000 = 64, z_hi   = 1     -> x = +64
  EQUB %00000110         \ z_lo =  %0000110 = 6,  x_sign = 0        z = +262
 
-                        \ Hanger group for X = 18: Viper, Krait
+                        \ Hanger group for X = 18: Viper and Krait
                         \ (Transporter and Cobra Mk III in the disc version)
 
  EQUB COPS              \ Ship type = COPS = Viper
@@ -63,7 +63,7 @@
  EQUB 0
  EQUB 0
 
-                        \ Hanger group for X = 27: Viper, Krait
+                        \ Hanger group for X = 27: Viper and Krait
 
  EQUB 16                \ Ship type = 16 = Viper
  EQUB %01010001         \ x_hi = %01010001 =  81, z_hi  = 2     -> x = -81

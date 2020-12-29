@@ -3,21 +3,62 @@
 \       Name: HLOIN
 \       Type: Subroutine
 \   Category: Drawing lines
+IF _CASSETTE_VERSION
 \    Summary: Draw a horizontal line from (X1, Y1) to (X2, Y1)
+ELIF _6502SP_VERSION
+\    Summary: Implement the OSWORD 247 command (draw a horizontal line)
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
+IF _CASSETTE_VERSION
 \ We do not draw a pixel at the end point (X2, X1).
 \
 \ To understand how this routine works, you might find it helpful to read the
 \ deep dive on "Drawing monochrome pixels in mode 4".
 \
-IF _CASSETTE_VERSION
 \ Returns:
 \
 \   Y                   Y is preserved
+ELIF _6502SP_VERSION
+\ This routine is run when the parasite sends an OSWORD 247 command with
+\ parameters in the block at OSSC(1 0). It draws a horizontal line (or a
+\ collection of lines) in the space view.
 \
+\ The parameters match those put into the HBUF block in the parasite. Each line
+\ is drawn from (X1, Y1) to (X2, Y1), and lines are drawn in orange.
+\
+\ Arguments:
+\
+\   OSSC(1 0)           A parameter block as follows:
+\
+\                         * Byte #0 = The size of the parameter block being sent
+\
+\                         * Byte #2 = The x-coordinate of the first line's
+\                                     starting point
+\
+\                         * Byte #3 = The x-coordinate of the first line's end
+\                                     point
+\
+\                         * Byte #4 = The y-coordinate of the first line
+\
+\                         * Byte #5 = The x-coordinate of the second line's
+\                                     starting point
+\
+\                         * Byte #6 = The x-coordinate of the second line's end
+\                                     point
+\
+\                         * Byte #7 = The y-coordinate of the second line
+\
+\                       and so on
+\
+\ Other entry points:
+\
+\   HLOIN3              Draw a line from (X, Y1) to (X2, Y1) in the colour given
+\                       in A (we also need to set Q = Y2 + 1 before calling so
+\                       only one line is drawn)
 ENDIF
+\
 \ ******************************************************************************
 
 .HLOIN
@@ -31,31 +72,38 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDY #0
- LDA (OSSC),Y
+ LDY #0                 \ Fetch byte #0 from the parameter block (size of the
+ LDA (OSSC),Y           \ parameter block) and store it in Q
  STA Q
- INY
+
+ INY                    \ Increment Y to point to byte #2
  INY
 
 .HLLO
 
- LDA (OSSC),Y
- STA X1
+ LDA (OSSC),Y           \ Fetch the Y-th byte from the parameter block (the
+ STA X1                 \ line's X1 coordinate) and store it in X1 and X
  TAX
- INY
- LDA (OSSC),Y
+
+ INY                    \ Fetch the Y+1-th byte from the parameter block (the
+ LDA (OSSC),Y           \ line's X2 coordinate) and store it in X2
  STA X2
- INY
- LDA (OSSC),Y
+
+ INY                    \ Fetch the Y+2-th byte from the parameter block (the
+ LDA (OSSC),Y           \ line's Y1 coordinate) and store it in Y1
  STA Y1
- STY Y2
+
+ STY Y2                 \ Store the parameter block offset for this line in Y2,
+                        \ so we know where to fetch the next line from in the
+                        \ parameter block once we have drawn this one
+
  AND #3
  TAY
  LDA orange,Y
 
 .HLOIN3
 
- STA S
+ STA S                  \ Store the line colour in S
 
 ENDIF
 

@@ -38,6 +38,16 @@ IF _CASSETTE_VERSION
 
 .LL30
 
+                        \ In the cassette and disc versions of Elite, LL30 and
+                        \ LOIN are synonyms for the same routine, presumably
+                        \ because the two developers each had their own line
+                        \ routines to start with, and then chose one of them for
+                        \ the final game
+                        \
+                        \ In the 6502 Second Processor version, they are quite
+                        \ different: LL30 draws a one-segment line, while LOIN
+                        \ draws multi-segment lines
+
 ENDIF
 
 .LOIN

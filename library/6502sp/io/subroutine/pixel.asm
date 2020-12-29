@@ -23,7 +23,6 @@
 \     is actually a cyan/red stripe). These kinds of dot are sent by the PIXEL
 \     routine in the parasite.
 \
-\
 \ The parameters match those put into the PBUF/pixbl block in the parasite.
 \
 \ Arguments:

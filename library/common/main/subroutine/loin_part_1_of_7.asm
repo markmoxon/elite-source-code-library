@@ -34,11 +34,20 @@
 \
 \ ******************************************************************************
 
+IF _CASSETTE_VERSION
+
 .LL30
+
+ENDIF
+
 .LOIN
+
+IF _CASSETTE_VERSION
 
  STY YSAV               \ Store Y into YSAV, so we can preserve it across the
                         \ call to this subroutine
+
+ENDIF
 
  LDA #128               \ Set S = 128, which is the starting point for the
  STA S                  \ slope error (representing half a pixel)
@@ -70,6 +79,12 @@
                         \
                         \ This subtraction works as we either set the C flag
                         \ above, or we skipped that SEC instruction with a BCS
+
+IF _6502SP_VERSION
+
+ BEQ HLOIN2
+
+ENDIF
 
  BCS LI2                \ If Y2 > Y1 then A is already positive and we can skip
                         \ the next two instructions

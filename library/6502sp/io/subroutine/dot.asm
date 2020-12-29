@@ -45,3 +45,4 @@
                         \ Otherwise the dot is white, which is in front of us,
                         \ so fall through into CPIX4 to draw a double-height
                         \ dot in the compass
+

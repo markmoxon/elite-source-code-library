@@ -12,18 +12,52 @@
 \ To understand how this routine works, you might find it helpful to read the
 \ deep dive on "Drawing monochrome pixels in mode 4".
 \
+IF _CASSETTE_VERSION
 \ Returns:
 \
 \   Y                   Y is preserved
 \
+ENDIF
 \ ******************************************************************************
 
 .HLOIN
+
+IF _CASSETTE_VERSION
 
  STY YSAV               \ Store Y into YSAV, so we can preserve it across the
                         \ call to this subroutine
 
  LDX X1                 \ Set X = X1
+
+ELIF _6502SP_VERSION
+
+ LDY #0
+ LDA (OSSC),Y
+ STA Q
+ INY
+ INY
+
+.HLLO
+
+ LDA (OSSC),Y
+ STA X1
+ TAX
+ INY
+ LDA (OSSC),Y
+ STA X2
+ INY
+ LDA (OSSC),Y
+ STA Y1
+ STY Y2
+ AND #3
+ TAY
+ LDA orange,Y
+
+.HLOIN3
+
+ STA S
+
+ENDIF
 
  CPX X2                 \ If X1 = X2 then the start and end points are the same,
  BEQ HL6                \ so return from the subroutine (as HL6 contains an RTS)
@@ -40,6 +74,8 @@
 .HL5
 
  DEC X2                 \ Decrement X2
+
+IF _CASSETTE_VERSION
 
  LDA Y1                 \ Set A = Y1 / 8, so A now contains the character row
  LSR A                  \ that will contain our horizontal line
@@ -59,16 +95,44 @@
  AND #7                 \ character block at which we want to draw our line (as
                         \ each character block has 8 rows)
 
+ELIF _6502SP_VERSION
+
+ LDY Y1
+
+ LDA ylookup,Y          \ Look up the page number of the character row that
+ STA SC+1               \ contains the pixel with the y-coordinate in Y, and
+                        \ store it in the high byte of SC(1 0) at SC+1
+
+ TYA
+ AND #7
+
+ENDIF
+
  STA SC                 \ Store this value in SC, so SC(1 0) now contains the
                         \ screen address of the far left end (x-coordinate = 0)
                         \ of the horizontal pixel row that we want to draw our
                         \ horizontal line on
 
+IF _CASSETTE_VERSION
+
  TXA                    \ Set Y = bits 3-7 of X1
  AND #%11111000
  TAY
 
+ELIF _6502SP_VERSION
+
+ TXA
+ AND #&FC
+ ASL A
+ TAY
+ BCC P%+4
+ INC SC+1
+
+ENDIF
+
 .HL1
+
+IF _CASSETTE_VERSION
 
  TXA                    \ Set T = bits 3-7 of X1, which will contain the
  AND #%11111000         \ the character number of the start of the line * 8
@@ -76,6 +140,16 @@
 
  LDA X2                 \ Set A = bits 3-7 of X2, which will contain the
  AND #%11111000         \ the character number of the end of the line * 8
+
+ELIF _6502SP_VERSION
+
+ TXA
+ AND #&FC
+ STA T
+ LDA X2
+ AND #&FC
+
+ENDIF
 
  SEC                    \ Set A = A - T, which will contain the number of
  SBC T                  \ character blocks we need to fill - 1 * 8
@@ -88,6 +162,8 @@
                         \ start with the left character, then do any characters
                         \ in the middle, and finish with the right character
 
+IF _CASSETTE_VERSION
+
  LSR A                  \ Set R = A / 8, so R now contains the number of
  LSR A                  \ character blocks we need to fill - 1
  LSR A
@@ -98,11 +174,28 @@
  TAX                    \ each pixel line in the character block is 8 pixels
                         \ wide)
 
+ELIF _6502SP_VERSION
+
+ LSR A
+ LSR A
+ STA R
+ LDA X1
+ AND #3
+ TAX
+
+ENDIF
+
  LDA TWFR,X             \ Fetch a ready-made byte with X pixels filled in at the
                         \ right end of the byte (so the filled pixels start at
                         \ point X and go all the way to the end of the byte),
                         \ which is the shape we want for the left end of the
                         \ line
+
+IF _6502SP_VERSION
+
+ AND S
+
+ENDIF
 
  EOR (SC),Y             \ Store this into screen memory at SC(1 0), using EOR
  STA (SC),Y             \ logic so it merges with whatever is already on-screen,
@@ -111,6 +204,14 @@
  TYA                    \ Set Y = Y + 8 so (SC),Y points to the next character
  ADC #8                 \ block along, on the same pixel row as before
  TAY
+
+IF _6502SP_VERSION
+
+ BCS HL7
+
+.HL8
+
+ENDIF
 
  LDX R                  \ Fetch the number of character blocks we need to fill
                         \ from R
@@ -126,13 +227,31 @@
 
 .HLL1
 
+IF _CASSETTE_VERSION
+
  LDA #%11111111         \ Store a full-width 8-pixel horizontal line in SC(1 0)
  EOR (SC),Y             \ so that it draws the line on-screen, using EOR logic
  STA (SC),Y             \ so it merges with whatever is already on-screen
 
+ELIF _6502SP_VERSION
+
+ LDA S
+ EOR (SC),Y
+ STA (SC),Y
+
+ENDIF
+
  TYA                    \ Set Y = Y + 8 so (SC),Y points to the next character
  ADC #8                 \ block along, on the same pixel row as before
  TAY
+
+IF _6502SP_VERSION
+
+ BCS HL9
+
+.HL10
+
+ENDIF
 
  DEX                    \ Decrement the number of character blocks in X
 
@@ -141,21 +260,51 @@
 
 .HL3
 
+IF _CASSETTE_VERSION
+
  LDA X2                 \ Now to draw the last character block at the right end
  AND #7                 \ of the line, so set X = X2 mod 8, which is the
  TAX                    \ horizontal pixel number where the line ends
+
+ELIF _6502SP_VERSION
+
+ LDA X2
+ AND #3
+ TAX
+
+ENDIF
 
  LDA TWFL,X             \ Fetch a ready-made byte with X pixels filled in at the
                         \ left end of the byte (so the filled pixels start at
                         \ the left edge and go up to point X), which is the
                         \ shape we want for the right end of the line
 
+IF _6502SP_VERSION
+
+ AND S
+
+ENDIF
+
  EOR (SC),Y             \ Store this into screen memory at SC(1 0), using EOR
  STA (SC),Y             \ logic so it merges with whatever is already on-screen,
                         \ so we have now drawn the line's right cap
 
+IF _CASSETTE_VERSION
+
  LDY YSAV               \ Restore Y from YSAV, so that it's preserved across the
                         \ call to this subroutine
+
+ELIF _6502SP_VERSION
+
+.HL6
+
+ LDY Y2
+ INY
+ CPY Q
+ BEQ P%+5
+ JMP HLLO
+
+ENDIF
 
  RTS                    \ Return from the subroutine
 
@@ -164,18 +313,38 @@
                         \ If we get here then the entire horizontal line fits
                         \ into one character block
 
+IF _CASSETTE_VERSION
+
  LDA X1                 \ Set X = X1 mod 8, which is the horizontal pixel number
  AND #7                 \ within the character block where the line starts (as
  TAX                    \ each pixel line in the character block is 8 pixels
                         \ wide)
 
+ELIF _6502SP_VERSION
+
+ LDA X1
+ AND #3
+ TAX
+
+ENDIF
+
  LDA TWFR,X             \ Fetch a ready-made byte with X pixels filled in at the
  STA T                  \ right end of the byte (so the filled pixels start at
                         \ point X and go all the way to the end of the byte)
 
+IF _CASSETTE_VERSION
+
  LDA X2                 \ Set X = X2 mod 8, which is the horizontal pixel number
  AND #7                 \ where the line ends
  TAX
+
+ELIF _6502SP_VERSION
+
+ LDA X2
+ AND #3
+ TAX
+
+ENDIF
 
  LDA TWFL,X             \ Fetch a ready-made byte with X pixels filled in at the
                         \ left end of the byte (so the filled pixels start at
@@ -195,11 +364,44 @@
                         \ so if we stick T AND A in screen memory, that's what
                         \ we do here, setting A = A AND T
 
+IF _6502SP_VERSION
+
+ AND S
+
+ENDIF
+
  EOR (SC),Y             \ Store our horizontal line byte into screen memory at
  STA (SC),Y             \ SC(1 0), using EOR logic so it merges with whatever is
                         \ already on-screen
 
+IF _CASSETTE_VERSION
+
  LDY YSAV               \ Restore Y from YSAV, so that it's preserved
+
+ELIF _6502SP_VERSION
+
+ LDY Y2
+ INY
+ CPY Q
+ BEQ P%+5
+ JMP HLLO
+
+ENDIF
 
  RTS                    \ Return from the subroutine
 
+IF _6502SP_VERSION
+
+.HL7
+
+ INC SC+1
+ CLC
+ JMP HL8
+
+.HL9
+
+ INC SC+1
+ CLC
+ JMP HL10
+
+ENDIF

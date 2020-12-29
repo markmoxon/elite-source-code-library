@@ -47,6 +47,8 @@
                         \ X1 < X2, so we're going from left to right as we go
                         \ from X1 to X2
 
+IF _CASSETTE_VERSION
+
  LDA Y1                 \ Set A = Y1 / 8, so A now contains the character row
  LSR A                  \ that will contain our horizontal line
  LSR A
@@ -61,17 +63,38 @@
                         \ the high byte of SC is set correctly for drawing the
                         \ start of our line
 
+ELIF _6502SP_VERSION
+
+ LDY Y1
+
+ LDA ylookup,Y          \ Look up the page number of the character row that
+ STA SC+1               \ contains the pixel with the y-coordinate in Y, and
+                        \ store it in the high byte of SC(1 0) at SC+1
+ENDIF
+
  LDA Y1                 \ Set Y = Y1 mod 8, which is the pixel row within the
  AND #7                 \ character block at which we want to draw the start of
  TAY                    \ our line (as each character block has 8 rows)
 
+IF _CASSETTE_VERSION
+
  TXA                    \ Set A = bits 3-7 of X1
  AND #%11111000
+
+ELIF _6502SP_VERSION
+
+ TXA
+ AND #&FC
+ ASL A
+
+ENDIF
 
  STA SC                 \ Store this value in SC, so SC(1 0) now contains the
                         \ screen address of the far left end (x-coordinate = 0)
                         \ of the horizontal pixel row that we want to draw the
                         \ start of our line on
+
+IF _CASSETTE_VERSION
 
  TXA                    \ Set X = X1 mod 8, which is the horizontal pixel number
  AND #7                 \ within the character block where the line starts (as
@@ -140,3 +163,60 @@
  BCS DOWN               \ If Y2 >= Y1 - 1 then jump to DOWN, as we need to draw
                         \ the line to the right and down
 
+
+ELIF _6502SP_VERSION
+
+ BCC P%+4
+ INC SC+1
+
+ TXA
+ AND #3
+ STA R
+ LDX Q
+ BEQ LIlog7
+ LDA logL,X
+ LDX P
+ SEC
+ SBC logL,X
+ BMI LIlog4
+ LDX Q
+ LDA log,X
+ LDX P
+ SBC log,X
+ BCS LIlog5
+ TAX
+ LDA antilog,X
+ JMP LIlog6
+
+.LIlog5
+
+ LDA #&FF
+ BNE LIlog6
+
+.LIlog7
+
+ LDA #0
+ BEQ LIlog6
+
+.LIlog4
+
+ LDX Q
+ LDA log,X
+ LDX P
+ SBC log,X
+ BCS LIlog5
+ TAX
+ LDA antilogODD,X
+
+.LIlog6
+
+ STA Q
+ LDX P
+ BEQ LIEXS
+ INX
+ LDA Y2
+ CMP Y1
+ BCC P%+5
+ JMP DOWN
+
+ENDIF

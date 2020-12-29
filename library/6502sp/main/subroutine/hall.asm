@@ -6,6 +6,18 @@
 \    Summary: Draw the ships in the ship hanger, them draw the hanger by sending
 \             an OSWORD 248 command to the I/O processor
 \
+\ ------------------------------------------------------------------------------
+\
+\ Half the time this will draw one of the four pre-defined ship hanger groups in
+\ HATB, and half the time this will draw a solitary Sidewinder, Mamba, Krait or
+\ Adder on a random position. In all cases, the ships will be randomly spun
+\ around on the ground so they can face in any dirction, and larger ships are
+\ drawn higher up off the ground than smaller ships.
+\
+\ The ships are drawn by the HAS1 routine, which uses the normal ship-drawing
+\ routine in LL9, and then the hanger background is drawn by sending an OSWORD
+\ 248 command to the I/O processor.
+\
 \ ******************************************************************************
 
 .HALL
@@ -99,10 +111,12 @@
 
  DEC CNT2               \ Decrement the outer loop counter in CNT2
 
- BNE HAL8               \ Loop back to HAL8 to do it 3 times
+ BNE HAL8               \ Loop back to HAL8 to do it 3 times, once for each ship
+                        \ in the HATB table
 
  LDY #128               \ Set Y = 128 to send as byte #2 of the parameter block
-                        \ to the OSWORD 248 command below
+                        \ to the OSWORD 248 command below, to tell the I/O
+                        \ processor that there are multiple ships in the hanger
 
  BNE HA9                \ Jump to HA9 to display the ship hanger (this BNE is
                         \ effectively a JMP as Y is never zero)
@@ -123,16 +137,25 @@
  ADC #SH3               \ which is the ship type of a Sidewinder, Mamba, Krait
  STA XX15+2             \ or Adder
 
- JSR HAS1               \ Call HAS1 to draw this ship in the hanger
+ JSR HAS1               \ Call HAS1 to draw this ship in the hanger, with the
+                        \ the following properties:
+                        \
+                        \   * Random x-coordinate from -63 to +63
+                        \
+                        \   * Randomly chosen Sidewinder, Mamba, Krait or Adder
+                        \
+                        \   * Random z-coordinate from +256 to +639
 
  LDY #0                 \ Set Y = 0 to send as byte #2 of the parameter block to
-                        \ the OSWORD 248 command below
+                        \ the OSWORD 248 command below, to tell the I/O
+                        \ processor that there is just one ship in the hanger
 
 .HA9
 
  STY HANG+2             \ Store Y in byte #2 of the parameter block below
 
- JSR UNWISE
+ JSR UNWISE             \ Call UNWISE, which (as noted above) does nothing in
+                        \ the 6502 Second Processor version of Elite
 
  LDA #248               \ Set A in preparation for sending an OSWORD 248 command
 
@@ -149,5 +172,9 @@
 
  EQUB 0                 \ The number of bytes to receive with this command
 
- EQUB 0                 \ The ????
+ EQUB 0                 \ Multiple ship flag:
+                        \
+                        \   * 0 = there is just one ship in the hanger
+                        \
+                        \   * 128 = there are multiple ships in the hanger
 

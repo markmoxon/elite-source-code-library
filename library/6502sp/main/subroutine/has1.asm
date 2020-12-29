@@ -21,14 +21,14 @@
 \
 \ Arguments:
 \
-\   XX15                Bits 0-6 = Ship's z_lo
-\                       Bit 7    = Ship's x_sign
+\   XX15                Bits 0-7 = Ship's z_lo
+\                       Bit 0    = Ship's x_sign
 \
 \   XX15+1              Bits 0-7 = Ship's x_hi
 \                       Bit 0    = Ship's z_hi (1 if clear, or 2 if set)
 \
 \   XX15+2              Non-zero = Ship type to draw
-\                       0        = don't draw anything
+\                       0        = Don't draw anything
 \
 \ Other entry points:
 \
@@ -72,7 +72,8 @@
                         \ keeping it flat on the deck (a bit like spinning a
                         \ bottle), so we set XSAV to a random number between 0
                         \ and 255 for the number of small yaw rotations to
-                        \ peform, so the ship could be pointing in any direction
+                        \ perform, so the ship could be pointing in any
+                        \ direction by the time we're done
 
 .HAL5
 

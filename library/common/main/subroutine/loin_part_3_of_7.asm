@@ -20,18 +20,35 @@
 
 IF _6502SP_VERSION
 
- LDA #&88
- AND COL
- STA LI100+1
- LDA #&44
- AND COL
- STA LI110+1
- LDA #&22
- AND COL
- STA LI120+1
- LDA #&11
- AND COL
- STA LI130+1
+ LDA #%10001000         \ Set a mask in A to the first pixel in the 4-pixel byte
+
+ AND COL                \ Apply the pixel mask in A to the colour byte in COL
+
+ STA LI100+1            \ Modify the value in the LDA instruction at LI100 below
+                        \ so that it draws in the correct colour
+
+ LDA #%01000100         \ Set a mask in A to the second pixel in the 4-pixel
+                        \ byte
+
+ AND COL                \ Apply the pixel mask in A to the colour byte in COL
+
+ STA LI110+1            \ Modify the value in the LDA instruction at LI110 below
+                        \ so that it draws in the correct colour
+
+ LDA #%00100010         \ Set a mask in A to the third pixel in the 4-pixel byte
+
+ AND COL                \ Apply the pixel mask in A to the colour byte in COL
+
+ STA LI120+1            \ Modify the value in the LDA instruction at LI120 below
+                        \ so that it draws in the correct colour
+
+ LDA #%00010001         \ Set a mask in A to the fourth pixel in the 4-pixel
+                        \ byte
+
+ AND COL                \ Apply the pixel mask in A to the colour byte in COL
+
+ STA LI130+1            \ Modify the value in the LDA instruction at LI130 below
+                        \ so that it draws in the correct colour
 
 ENDIF
 
@@ -101,127 +118,236 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA SWAP
- BEQ LI190
- LDA R
- BEQ LI100+6
- CMP #2
- BCC LI110+6
- CLC
- BEQ LI120+6
- BNE LI130+6
+                        \ We now work our way along the line from left to right,
+                        \ using X as a decreasing counter, and at each count we
+                        \ plot a single pixel using the pixel mask in R
+
+ LDA SWAP               \ If SWAP = 0 then we didn't swap the coordinates above,
+ BEQ LI190              \ so jump down to LI190 to plot the first pixel
+
+                        \ If we get here then we want to omit the first pixel
+
+ LDA R                  \ Fetch the pixel byte from R, which we set in part 2 to
+                        \ the horizontal pixel number within the character block
+                        \ where the line starts (so it's 0, 1, 2 or 3)
+
+ BEQ LI100+6            \ If R = 0, jump to LI100+6 to start plotting from the
+                        \ second pixel in this byte (LI100+6 points to the DEX
+                        \ instruction after the EOR/STA instructions, so the
+                        \ pixel doesn't get plotted but we join at the right
+                        \ point to decrement X correctly to plot the next three)
+
+ CMP #2                 \ If R < 2 (i.e. R = 1), jump to LI110+6 to skip the
+ BCC LI110+6            \ first two pixels but plot the next two
+
+ CLC                    \ Clear the C flag so it doesn't affect the additions
+                        \ below
+
+ BEQ LI120+6            \ If R = 2, jump to LI120+6 to to skip the first three
+                        \ pixels but plot the last one
+
+ BNE LI130+6            \ If we get here then R must be 3, so jump to LI130+6 to
+                        \ skip plotting any of the pixels, but making sure we 
+                        \ join the routine just after the plotting instructions
 
 .LI190
 
- DEX
- LDA R
- BEQ LI100
- CMP #2
- BCC LI110
- CLC
- BEQ LI120
- JMP LI130
+ DEX                    \ Decrement the counter in X because we're about to plot
+                        \ the first pixel
+
+ LDA R                  \ Fetch the pixel byte from R, which we set in part 2 to
+                        \ the horizontal pixel number within the character block
+                        \ where the line starts (so it's 0, 1, 2 or 3)
+
+ BEQ LI100              \ If R = 0, jump to LI100 to start plotting from the
+                        \ first pixel in this byte
+
+ CMP #2                 \ If R < 2 (i.e. R = 1), jump to LI110 to start plotting
+ BCC LI110              \ from the second pixel in this byte
+
+ CLC                    \ Clear the C flag so it doesn't affect the additions
+                        \ below
+
+ BEQ LI120              \ If R = 2, jump to LI120 to start plotting from the
+                        \ third pixel in this byte
+
+ JMP LI130              \ If we get here then R must be 3, so jump to LI130 to
+                        \ start plotting from the fourth pixel in this byte
 
 .LI100
 
- LDA #&88
- EOR (SC),Y
- STA (SC),Y
- DEX
+ LDA #%10001000         \ Set a mask in A to the first pixel in the 4-pixel byte
+                        \ (note that this value is modified by the code at the
+                        \ start of this section to be a bit mask for the colour
+                        \ in COL)
+
+ EOR (SC),Y             \ Store A into screen memory at SC(1 0), using EOR
+ STA (SC),Y             \ logic so it merges with whatever is already on-screen
+
+ DEX                    \ Decrement the counter in X
 
 .LIEXS
 
- BEQ LIEX
- LDA S
+ BEQ LIEX               \ If we have just reached the right end of the line,
+                        \ jump to LIEX to return from the subroutine
+
+ LDA S                  \ Set S = S + Q
  ADC Q
  STA S
- BCC LI110
- CLC
- DEY
- BMI LI101
+
+ BCC LI110              \ If the addition didn't overflow, jump to LI110
+
+ CLC                    \ Otherwise we just overflowed, so clear the C flag and
+ DEY                    \ decrement Y to move to the pixel line above
+
+ BMI LI101              \ If Y is negative we need to move up into the character
+                        \ block above, so jump to LI101 to decrement the screen
+                        \ address accordingly (jumping back to LI110 afterwards)
 
 .LI110
 
- LDA #&44
- EOR (SC),Y
- STA (SC),Y
- DEX
- BEQ LIEX
- LDA S
+ LDA #%01000100         \ Set a mask in A to the second pixel in the 4-pixel
+                        \ byte (note that this value is modified by the code at
+                        \ the start of this section to be a bit mask for the
+                        \ colour in COL)
+
+ EOR (SC),Y             \ Store A into screen memory at SC(1 0), using EOR
+ STA (SC),Y             \ logic so it merges with whatever is already on-screen
+
+ DEX                    \ Decrement the counter in X
+
+ BEQ LIEX               \ If we have just reached the right end of the line,
+                        \ jump to LIEX to return from the subroutine
+
+ LDA S                  \ Set S = S + Q
  ADC Q
  STA S
- BCC LI120
- CLC
- DEY
- BMI LI111
+
+ BCC LI120              \ If the addition didn't overflow, jump to LI120
+
+ CLC                    \ Otherwise we just overflowed, so clear the C flag and
+ DEY                    \ decrement Y to move to the pixel line above
+
+ BMI LI111              \ If Y is negative we need to move up into the character
+                        \ block above, so jump to LI111 to decrement the screen
+                        \ address accordingly (jumping back to LI120 afterwards)
 
 .LI120
 
- LDA #&22
- EOR (SC),Y
- STA (SC),Y
- DEX
- BEQ LIEX
- LDA S
+ LDA #%00100010         \ Set a mask in A to the third pixel in the 4-pixel byte
+                        \ (note that this value is modified by the code at the
+                        \ start of this section to be a bit mask for the colour
+                        \ in COL)
+
+ EOR (SC),Y             \ Store A into screen memory at SC(1 0), using EOR
+ STA (SC),Y             \ logic so it merges with whatever is already on-screen
+
+ DEX                    \ Decrement the counter in X
+
+ BEQ LIEX               \ If we have just reached the right end of the line,
+                        \ jump to LIEX to return from the subroutine
+
+ LDA S                  \ Set S = S + Q
  ADC Q
  STA S
- BCC LI130
- CLC
- DEY
- BMI LI121
+
+ BCC LI130              \ If the addition didn't overflow, jump to LI130
+
+ CLC                    \ Otherwise we just overflowed, so clear the C flag and
+ DEY                    \ decrement Y to move to the pixel line above
+
+ BMI LI121              \ If Y is negative we need to move up into the character
+                        \ block above, so jump to LI121 to decrement the screen
+                        \ address accordingly (jumping back to LI130 afterwards)
 
 .LI130
 
- LDA #&11
- EOR (SC),Y
- STA (SC),Y
- LDA S
+ LDA #%00010001         \ Set a mask in A to the fourth pixel in the 4-pixel
+                        \ byte (note that this value is modified by the code at
+                        \ the start of this section to be a bit mask for the
+                        \ colour in COL)
+
+ EOR (SC),Y             \ Store A into screen memory at SC(1 0), using EOR
+ STA (SC),Y             \ logic so it merges with whatever is already on-screen
+
+ LDA S                  \ Set S = S + Q
  ADC Q
  STA S
- BCC LI140
- CLC
- DEY
- BMI LI131
+
+ BCC LI140              \ If the addition didn't overflow, jump to LI140
+
+ CLC                    \ Otherwise we just overflowed, so clear the C flag and
+ DEY                    \ decrement Y to move to the pixel line above
+
+ BMI LI131              \ If Y is negative we need to move up into the character
+                        \ block above, so jump to LI131 to decrement the screen
+                        \ address accordingly (jumping back to LI140 afterwards)
 
 .LI140
 
- DEX
- BEQ LIEX
- LDA SC
- ADC #8
+ DEX                    \ Decrement the counter in X
+
+ BEQ LIEX               \ If we have just reached the right end of the line,
+                        \ jump to LIEX to return from the subroutine
+
+ LDA SC                 \ Add 8 to SC, so SC(1 0) now points to the next
+ ADC #8                 \ character along to the right
  STA SC
- BCC LI100
- INC SC+1
- CLC
- BCC LI100
+
+ BCC LI100              \ If the addition didn't overflow, jump back to LI100
+                        \ to plot the next pixel
+
+ INC SC+1               \ Otherwise the low byte of SC(1 0) just overflowed, so
+                        \ increment the high byte SC+1 as we just crossed over
+                        \ into the right half of the screen
+
+ CLC                    \ Clear the C flag to avoid breaking any arithmetic
+
+ BCC LI100              \ Jump back to LI100 to plot the next pixel
 
 .LI101
 
- DEC SC+1
- DEC SC+1
- LDY #7
- BPL LI110
+ DEC SC+1               \ If we get here then we need to move up into the
+ DEC SC+1               \ character block above, so we decrement the high byte
+ LDY #7                 \ of the screen twice (as there are two pages per screen
+                        \ row) and set the pixel line to the last line in
+                        \ that character block
+
+ BPL LI110              \ Jump back to the instruction after the BMI that called
+                        \ this routine
 
 .LI111
 
- DEC SC+1
- DEC SC+1
- LDY #7
- BPL LI120
+ DEC SC+1               \ If we get here then we need to move up into the
+ DEC SC+1               \ character block above, so we decrement the high byte
+ LDY #7                 \ of the screen twice (as there are two pages per screen
+                        \ row) and set the pixel line to the last line in
+                        \ that character block
+
+ BPL LI120              \ Jump back to the instruction after the BMI that called
+                        \ this routine
 
 .LI121
 
- DEC SC+1
- DEC SC+1
- LDY #7
- BPL LI130
+ DEC SC+1               \ If we get here then we need to move up into the
+ DEC SC+1               \ character block above, so we decrement the high byte
+ LDY #7                 \ of the screen twice (as there are two pages per screen
+                        \ row) and set the pixel line to the last line in
+                        \ that character block
+
+ BPL LI130              \ Jump back to the instruction after the BMI that called
+                        \ this routine
 
 .LI131
 
- DEC SC+1
- DEC SC+1
- LDY #7
- BPL LI140
+ DEC SC+1               \ If we get here then we need to move up into the
+ DEC SC+1               \ character block above, so we decrement the high byte
+ LDY #7                 \ of the screen twice (as there are two pages per screen
+                        \ row) and set the pixel line to the last line in
+                        \ that character block
+
+ BPL LI140              \ Jump back to the instruction after the BMI that called
+                        \ this routine
 
 .LIEX
 

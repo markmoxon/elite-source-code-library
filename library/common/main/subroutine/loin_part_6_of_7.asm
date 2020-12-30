@@ -87,9 +87,6 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
-.LIEX7
-
- RTS
  LDA SWAP
  BEQ LI290
  TYA
@@ -145,7 +142,7 @@ ELIF _6502SP_VERSION
 
  LSR R
  BCC LI301
- LDA #&88
+ LDA #%10001000         \ Set a mask in A to the first pixel in the 4-pixel byte
  STA R
  LDA SC
  ADC #7
@@ -162,7 +159,7 @@ ELIF _6502SP_VERSION
 
  LSR R
  BCC LI302
- LDA #&88
+ LDA #%10001000         \ Set a mask in A to the first pixel in the 4-pixel byte
  STA R
  LDA SC
  ADC #7
@@ -179,7 +176,7 @@ ELIF _6502SP_VERSION
 
  LSR R
  BCC LI303
- LDA #&88
+ LDA #%10001000         \ Set a mask in A to the first pixel in the 4-pixel byte
  STA R
  LDA SC
  ADC #7
@@ -196,7 +193,7 @@ ELIF _6502SP_VERSION
 
  LSR R
  BCC LI304
- LDA #&88
+ LDA #%10001000         \ Set a mask in A to the first pixel in the 4-pixel byte
  STA R
  LDA SC
  ADC #7
@@ -216,7 +213,9 @@ ELIF _6502SP_VERSION
 .LI300
 
  LDA R
- AND COL
+
+ AND COL                \ Apply the pixel mask in A to the colour byte in COL
+
  EOR (SC),Y
  STA (SC),Y
  DEX
@@ -230,7 +229,9 @@ ELIF _6502SP_VERSION
 .LI301
 
  LDA R
- AND COL
+
+ AND COL                \ Apply the pixel mask in A to the colour byte in COL
+
  EOR (SC),Y
  STA (SC),Y
  DEX
@@ -244,7 +245,9 @@ ELIF _6502SP_VERSION
 .LI302
 
  LDA R
- AND COL
+
+ AND COL                \ Apply the pixel mask in A to the colour byte in COL
+
  EOR (SC),Y
  STA (SC),Y
  DEX
@@ -258,7 +261,9 @@ ELIF _6502SP_VERSION
 .LI303
 
  LDA R
- AND COL
+
+ AND COL                \ Apply the pixel mask in A to the colour byte in COL
+
  EOR (SC),Y
  STA (SC),Y
  DEX
@@ -272,7 +277,9 @@ ELIF _6502SP_VERSION
 .LI304
 
  LDA R
- AND COL
+
+ AND COL                \ Apply the pixel mask in A to the colour byte in COL
+
  EOR (SC),Y
  STA (SC),Y
  DEX
@@ -286,7 +293,9 @@ ELIF _6502SP_VERSION
 .LI305
 
  LDA R
- AND COL
+
+ AND COL                \ Apply the pixel mask in A to the colour byte in COL
+
  EOR (SC),Y
  STA (SC),Y
  DEX
@@ -300,7 +309,9 @@ ELIF _6502SP_VERSION
 .LI306
 
  LDA R
- AND COL
+
+ AND COL                \ Apply the pixel mask in A to the colour byte in COL
+
  EOR (SC),Y
  STA (SC),Y
  DEX
@@ -314,7 +325,9 @@ ELIF _6502SP_VERSION
 .LI307
 
  LDA R
- AND COL
+
+ AND COL                \ Apply the pixel mask in A to the colour byte in COL
+
  EOR (SC),Y
  STA (SC),Y
  DEX
@@ -330,8 +343,10 @@ ELIF _6502SP_VERSION
  LSR R
  BCS P%+5
  JMP LI300
- LDA #&88
+
+ LDA #%10001000         \ Set a mask in R to the first pixel in the 4-pixel byte
  STA R
+
  LDA SC
  ADC #7
  STA SC
@@ -349,8 +364,10 @@ ELIF _6502SP_VERSION
 
  LSR R
  BCC LI305
- LDA #&88
+
+ LDA #%10001000         \ Set a mask in R to the first pixel in the 4-pixel byte
  STA R
+
  LDA SC
  ADC #7
  STA SC
@@ -363,8 +380,10 @@ ELIF _6502SP_VERSION
 
  LSR R
  BCC LI306
- LDA #&88
+
+ LDA #%10001000         \ Set a mask in R to the first pixel in the 4-pixel byte
  STA R
+
  LDA SC
  ADC #7
  STA SC
@@ -377,8 +396,10 @@ ELIF _6502SP_VERSION
 
  LSR R
  BCC LI307
- LDA #&88
+
+ LDA #%10001000         \ Set a mask in R to the first pixel in the 4-pixel byte
  STA R
+
  LDA SC
  ADC #7
  STA SC

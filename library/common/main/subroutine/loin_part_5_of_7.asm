@@ -72,12 +72,13 @@ IF _CASSETTE_VERSION
 ELIF _6502SP_VERSION
 
  LDA ylookup,Y          \ Look up the page number of the character row that
- STA SC+1               \ contains the pixel with the y-coordinate in Y, and
-                        \ store it in the high byte of SC(1 0) at SC+1
+ STA SC+1               \ contains the pixel with the y-coordinate in Y1, and
+                        \ store it in the high byte of SC(1 0) at SC+1, so the
+                        \ high byte of SC is set correctly for drawing our line
 
- TXA
- AND #&FC
- ASL A
+ TXA                    \ Set A = 2 * bits 2-6 of X1
+ AND #%11111100         \
+ ASL A                  \ and shift bit 7 of X1 into the C flag
 
 ENDIF
 
@@ -95,12 +96,15 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- BCC P%+4
- INC SC+1
+ BCC P%+4               \ If bit 7 of X1 was set, so X1 > 127, increment the
+ INC SC+1               \ high byte of SC(1 0) to point to the second page on
+                        \ this screen row, as this page contains the right half
+                        \ of the row
 
- TXA
- AND #3
- TAX
+ TXA                    \ Set X = X1 mod 4, which is the horizontal pixel number
+ AND #3                 \ within the character block where the line starts (as
+ TAX                    \ each pixel line in the character block is 4 pixels
+                        \ wide)
 
 ENDIF
 
@@ -166,58 +170,108 @@ IF _CASSETTE_VERSION
                         \ We add 1 so we can skip the first pixel plot if the
                         \ line is being drawn with swapped coordinates
 
- LDA X2                 \ Set A = X2 - X1 - 1 (as the C flag is clear following
- SBC X1                 \ the above division)
+ LDA X2                 \ Set A = X2 - X1 (the C flag is set as we didn't take
+ SBC X1                 \ the above BCC)
 
- BCC LFT                \ If X2 < X1 - 1 then jump to LFT, as we need to draw
-                        \ the line to the left and down
+ BCC LFT                \ If X2 < X1 then jump to LFT, as we need to draw the
+                        \ line to the left and down
 
 ELIF _6502SP_VERSION
 
- LDX P
- BEQ LIfudge
- LDA logL,X
- LDX Q
- SEC
- SBC logL,X
- BMI LIloG
- LDX P
- LDA log,X
+                        \ The following section calculates:
+                        \
+                        \   P = P / Q
+                        \     = |delta_x| / |delta_y|
+                        \
+                        \ using the log tables at logL and log to calculate:
+                        \
+                        \   A = log(P) - log(Q)
+                        \     = log(|delta_x|) - log(|delta_y|)
+                        \
+                        \ by first subtracting the low bytes of the logarithms
+                        \ from the table at LogL, and then subtracting the high
+                        \ bytes from the table at log, before applying the
+                        \ antilog to get the result of the division and putting
+                        \ it in P
+
+ LDX P                  \ Set X = |delta_x|
+
+ BEQ LIfudge            \ If |delta_x| = 0, jump to LIfudge to return 0 as the
+                        \ result of the division
+
+ LDA logL,X             \ Set A = log(P) - log(Q)
+ LDX Q                  \       = log(|delta_x|) - log(|delta_y|)
+ SEC                    \
+ SBC logL,X             \ by first subtracting the low bytes of log(P) - log(Q)
+
+ BMI LIloG              \ If A > 127, jump to LIloG
+
+ LDX P                  \ And then subtracting the high bytes of log(P) - log(Q)
+ LDA log,X              \ so now A contains the high byte of log(P) - log(Q)
  LDX Q
  SBC log,X
- BCS LIlog3
- TAX
- LDA antilog,X
- JMP LIlog2
+
+ BCS LIlog3             \ If the subtraction fitted into one byte and didn't
+                        \ underflow, then log(P) - log(Q) < 256, so we jump to
+                        \ LIlog3 to return a result of 255
+
+ TAX                    \ Otherwise we set A to the A-th entry from the antilog
+ LDA antilog,X          \ table so the result of the division is now in A
+
+ JMP LIlog2             \ Jump to LIlog2 to return the result
 
 .LIlog3
 
- LDA #&FF
- BNE LIlog2
+ LDA #255               \ The division is very close to 1, so set A to the
+ BNE LIlog2             \ closest possible answer to 256, i.e. 255, and jump to
+                        \ LIlog2 to return the result (this BNE is effectively a
+                        \ JMP as A is never zero)
 
 .LIloG
 
- LDX P
- LDA log,X
+ LDX P                  \ Subtract the high bytes of log(P) - log(Q) so now A
+ LDA log,X              \ contains the high byte of log(P) - log(Q)
  LDX Q
  SBC log,X
- BCS LIlog3
- TAX
- LDA antilogODD,X
+
+ BCS LIlog3             \ If the subtraction fitted into one byte and didn't
+                        \ underflow, then log(P) - log(Q) < 256, so we jump to
+                        \ LIlog3 to return a result of 255
+
+ TAX                    \ Otherwise we set A to the A-th entry from the
+ LDA antilogODD,X       \ antilogODD so the result of the division is now in A
 
 .LIlog2
 
- STA P
+ STA P                  \ Store the result of the division in P, so we have:
+                        \
+                        \   P = |delta_x| / |delta_y|
 
 .LIfudge
 
- LDX Q
- BEQ LIEX7
- INX
- LDA X2
+ LDX Q                  \ Set X = Q
+                        \       = |delta_y|
+
+ BEQ LIEX7              \ If |delta_y| = 0, jump down to LIEX7 to return from
+                        \ the subroutine
+
+ INX                    \ Set X = Q + 1
+                        \       = |delta_y| + 1
+                        \
+                        \ We add 1 so we can skip the first pixel plot if the
+                        \ line is being drawn with swapped coordinates
+
+ LDA X2                 \ Set A = X2 - X1
  SEC
  SBC X1
- BCS P%+6
- JMP LFT
+
+ BCS P%+6               \ If X2 >= X1 then skip the following two instructions
+
+ JMP LFT                \ If X2 < X1 then jump to LFT, as we need to draw the
+                        \ line to the left and down
+
+.LIEX7
+
+ RTS                    \ Return from the subroutine
 
 ENDIF

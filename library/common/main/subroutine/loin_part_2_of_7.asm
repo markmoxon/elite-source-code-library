@@ -175,9 +175,7 @@ ELIF _6502SP_VERSION
  STA R                  \ each pixel line in the character block is 4 pixels
                         \ wide)
 
- LDX Q                  \ Set X = |delta_y|
-
-                        \ The following calculates:
+                        \ The following section calculates:
                         \
                         \   Q = Q / P
                         \     = |delta_y| / |delta_x|
@@ -192,6 +190,8 @@ ELIF _6502SP_VERSION
                         \ bytes from the table at log, before applying the
                         \ antilog to get the result of the division and putting
                         \ it in Q
+
+ LDX Q                  \ Set X = |delta_y|
 
  BEQ LIlog7             \ If |delta_y| = 0, jump to LIlog7 to return 0 as the
                         \ result of the division
@@ -209,8 +209,8 @@ ELIF _6502SP_VERSION
  SBC log,X
 
  BCS LIlog5             \ If the subtraction fitted into one byte and didn't
-                        \ underflow, then Lq - Lp < 256, so we jump to LIlog5 to
-                        \ return a result of 255
+                        \ underflow, then log(Q) - log(P) < 256, so we jump to
+                        \ LIlog5 to return a result of 255
 
  TAX                    \ Otherwise we set A to the A-th entry from the antilog
  LDA antilog,X          \ table so the result of the division is now in A
@@ -238,8 +238,8 @@ ELIF _6502SP_VERSION
  SBC log,X
 
  BCS LIlog5             \ If the subtraction fitted into one byte and didn't
-                        \ underflow, then Lq - Lp < 256, so we jump to LIlog5 to
-                        \ return a result of 255
+                        \ underflow, then log(Q) - log(P) < 256, so we jump to
+                        \ LIlog5 to return a result of 255
 
  TAX                    \ Otherwise we set A to the A-th entry from the
  LDA antilogODD,X       \ antilogODD so the result of the division is now in A

@@ -142,8 +142,10 @@ ELIF _6502SP_VERSION
 
  ASL R
  BCC LI401
- LDA #&11
- STA R
+
+ LDA #%00010001         \ Set a mask in R to the fourth pixel in the 4-pixel
+ STA R                  \ byte
+
  LDA SC
  SBC #8
  STA SC
@@ -159,8 +161,10 @@ ELIF _6502SP_VERSION
 
  ASL R
  BCC LI402
- LDA #&11
- STA R
+
+ LDA #%00010001         \ Set a mask in R to the fourth pixel in the 4-pixel
+ STA R                  \ byte
+
  LDA SC
  SBC #8
  STA SC
@@ -176,8 +180,10 @@ ELIF _6502SP_VERSION
 
  ASL R
  BCC LI403
- LDA #&11
- STA R
+
+ LDA #%00010001         \ Set a mask in R to the fourth pixel in the 4-pixel
+ STA R                  \ byte
+
  LDA SC
  SBC #8
  STA SC
@@ -193,8 +199,10 @@ ELIF _6502SP_VERSION
 
  ASL R
  BCC LI404
- LDA #&11
- STA R
+
+ LDA #%00010001         \ Set a mask in R to the fourth pixel in the 4-pixel
+ STA R                  \ byte
+
  LDA SC
  SBC #8
  STA SC
@@ -327,8 +335,10 @@ ELIF _6502SP_VERSION
  ASL R
  BCS P%+5
  JMP LI400
- LDA #&11
- STA R
+
+ LDA #%00010001         \ Set a mask in R to the fourth pixel in the 4-pixel
+ STA R                  \ byte
+
  LDA SC
  SBC #8
  STA SC
@@ -345,8 +355,10 @@ ELIF _6502SP_VERSION
 
  ASL R
  BCC LI405
- LDA #&11
- STA R
+
+ LDA #%00010001         \ Set a mask in R to the fourth pixel in the 4-pixel
+ STA R                  \ byte
+
  LDA SC
  SBC #8
  STA SC
@@ -359,8 +371,10 @@ ELIF _6502SP_VERSION
 
  ASL R
  BCC LI406
- LDA #&11
- STA R
+
+ LDA #%00010001         \ Set a mask in R to the fourth pixel in the 4-pixel
+ STA R                  \ byte
+
  LDA SC
  SBC #8
  STA SC
@@ -373,8 +387,10 @@ ELIF _6502SP_VERSION
 
  ASL R
  BCC LI407
- LDA #&11
- STA R
+
+ LDA #%00010001         \ Set a mask in R to the fourth pixel in the 4-pixel
+ STA R                  \ byte
+
  LDA SC
  SBC #8
  STA SC

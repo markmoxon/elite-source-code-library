@@ -65,11 +65,11 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDY Y1
+ LDY Y1                 \ Look up the page number of the character row that
+ LDA ylookup,Y          \ contains the pixel with the y-coordinate in Y1, and
+ STA SC+1               \ store it in SC+1, so the high byte of SC is set
+                        \ correctly for drawing our line
 
- LDA ylookup,Y          \ Look up the page number of the character row that
- STA SC+1               \ contains the pixel with the y-coordinate in Y, and
-                        \ store it in the high byte of SC(1 0) at SC+1
 ENDIF
 
  LDA Y1                 \ Set Y = Y1 mod 8, which is the pixel row within the
@@ -83,9 +83,9 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- TXA
- AND #&FC
- ASL A
+ TXA                    \ Set A = 2 * bits 2-6 of X1
+ AND #%11111100         \
+ ASL A                  \ and shift bit 7 of X1 into the C flag
 
 ENDIF
 
@@ -163,60 +163,111 @@ IF _CASSETTE_VERSION
  BCS DOWN               \ If Y2 >= Y1 - 1 then jump to DOWN, as we need to draw
                         \ the line to the right and down
 
-
 ELIF _6502SP_VERSION
 
- BCC P%+4
- INC SC+1
+ BCC P%+4               \ If bit 7 of X1 was set, so X1 > 127, increment the
+ INC SC+1               \ high byte of SC(1 0) to point to the second page on
+                        \ this screen row, as this page contains the right half
+                        \ of the row
 
- TXA
- AND #3
- STA R
- LDX Q
- BEQ LIlog7
- LDA logL,X
- LDX P
- SEC
- SBC logL,X
- BMI LIlog4
- LDX Q
- LDA log,X
+ TXA                    \ Set R = X1 mod 4, which is the horizontal pixel number
+ AND #3                 \ within the character block where the line starts (as
+ STA R                  \ each pixel line in the character block is 4 pixels
+                        \ wide)
+
+ LDX Q                  \ Set X = |delta_y|
+
+                        \ The following calculates:
+                        \
+                        \   Q = Q / P
+                        \     = |delta_y| / |delta_x|
+                        \
+                        \ using the log tables at logL and log to calculate:
+                        \
+                        \   A = log(Q) - log(P)
+                        \     = log(|delta_y|) - log(|delta_x|)
+                        \
+                        \ by first subtracting the low bytes of the logarithms
+                        \ from the table at LogL, and then subtracting the high
+                        \ bytes from the table at log, before applying the
+                        \ antilog to get the result of the division and putting
+                        \ it in Q
+
+ BEQ LIlog7             \ If |delta_y| = 0, jump to LIlog7 to return 0 as the
+                        \ result of the division
+
+ LDA logL,X             \ Set A = log(Q) - log(P)
+ LDX P                  \       = log(|delta_y|) - log(|delta_x|)
+ SEC                    \
+ SBC logL,X             \ by first subtracting the low bytes of log(Q) - log(P)
+
+ BMI LIlog4             \ If A > 127, jump to LIlog4
+
+ LDX Q                  \ And then subtracting the high bytes of log(Q) - log(P)
+ LDA log,X              \ so now A contains the high byte of log(Q) - log(P)
  LDX P
  SBC log,X
- BCS LIlog5
- TAX
- LDA antilog,X
- JMP LIlog6
+
+ BCS LIlog5             \ If the subtraction fitted into one byte and didn't
+                        \ underflow, then Lq - Lp < 256, so we jump to LIlog5 to
+                        \ return a result of 255
+
+ TAX                    \ Otherwise we set A to the A-th entry from the antilog
+ LDA antilog,X          \ table so the result of the division is now in A
+
+ JMP LIlog6             \ Jump to LIlog6 to return the result
 
 .LIlog5
 
- LDA #&FF
- BNE LIlog6
-
+ LDA #255               \ The division is very close to 1, so set A to the
+ BNE LIlog6             \ closest possible answer to 256, i.e. 255, and jump to
+                        \ LIlog6 to return the result (this BNE is effectively a
+                        \ JMP as A is never zero)
+ 
 .LIlog7
 
- LDA #0
- BEQ LIlog6
+ LDA #0                 \ The numerator in the division is 0, so set A to 0 and
+ BEQ LIlog6             \ jump to LIlog6 to return the result (this BEQ is
+                        \ effectively a JMP as A is always zero)
 
 .LIlog4
 
- LDX Q
- LDA log,X
+ LDX Q                  \ Subtract the high bytes of log(Q) - log(P) so now A
+ LDA log,X              \ contains the high byte of log(Q) - log(P)
  LDX P
  SBC log,X
- BCS LIlog5
- TAX
- LDA antilogODD,X
+
+ BCS LIlog5             \ If the subtraction fitted into one byte and didn't
+                        \ underflow, then Lq - Lp < 256, so we jump to LIlog5 to
+                        \ return a result of 255
+
+ TAX                    \ Otherwise we set A to the A-th entry from the
+ LDA antilogODD,X       \ antilogODD so the result of the division is now in A
 
 .LIlog6
 
- STA Q
- LDX P
- BEQ LIEXS
- INX
- LDA Y2
+ STA Q                  \ Store the result of the division in Q, so we have:
+                        \
+                        \   Q = |delta_y| / |delta_x|
+
+ LDX P                  \ Set X = P
+                        \       = |delta_x|
+
+ BEQ LIEXS              \ If |delta_x| = 0, return from the subroutine, as LIEXS
+                        \ contains a BEQ LIEX instruction, and LIEX contains an
+                        \ RTS
+
+ INX                    \ Set X = P + 1
+                        \       = |delta_x| + 1
+                        \
+                        \ We add 1 so we can skip the first pixel plot if the
+                        \ line is being drawn with swapped coordinates
+
+ LDA Y2                 \ If Y2 < Y1 then skip the following instruction
  CMP Y1
  BCC P%+5
- JMP DOWN
+
+ JMP DOWN               \ Y2 >= Y1 - 1, so jump to DOWN, as we need to draw the
+                        \ line to the right and down
 
 ENDIF

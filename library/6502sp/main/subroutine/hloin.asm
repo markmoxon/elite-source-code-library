@@ -3,17 +3,17 @@
 \       Name: HLOIN
 \       Type: Subroutine
 \   Category: Drawing lines
-\    Summary: Add a horizontal line segment to the horizontal line buffer
+\    Summary: Add a sun line to the horizontal line buffer
 \
 \ ------------------------------------------------------------------------------
 \
 \ Arguments:
 \
-\   X1                  The screen x-coordinate of the start of the segment
+\   X1                  The screen x-coordinate of the start of the line
 \
-\   X2                  The screen x-coordinate of the end of the segment
+\   X2                  The screen x-coordinate of the end of the line
 \
-\   Y1                  The screen y-coordinate of the segment
+\   Y1                  The screen y-coordinate of the line
 \
 \ Returns:
 \
@@ -40,8 +40,8 @@
  ADC #3
  STA HBUP
 
- BMI HBFL               \ If A > 127, jump to HBFL to draw the line in the
-                        \ horizontal line buffer
+ BMI HBFL               \ If A > 127, jump to HBFL to draw the lines in the
+                        \ horizontal line buffer as the buffer is full
 
  LDY T1                 \ Restore the value of Y from T1, so it is preserved
 

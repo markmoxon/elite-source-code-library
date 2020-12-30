@@ -3,8 +3,8 @@
 \       Name: HBFL
 \       Type: Subroutine
 \   Category: Drawing lines
-\    Summary: Draw the line in the horizontal line buffer by sending an OSWORD
-\             247 command to the I/O processor
+\    Summary: Draw the sun lines in the horizontal line buffer in orange by
+\             sending an OSWORD 247 command to the I/O processor
 \
 \ ******************************************************************************
 
@@ -26,7 +26,8 @@
  LDY #HI(HBUF)
 
  JSR OSWORD             \ Send an OSWORD 247 command to the I/O processor to
-                        \ draw the horizontal line described in the HBUF block
+                        \ draw the horizontal lines described in the HBUF block,
+                        \ in orange
 
 .HBZE2
 

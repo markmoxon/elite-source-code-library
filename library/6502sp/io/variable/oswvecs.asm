@@ -23,7 +23,7 @@
  EQUW SC48              \ #onescan = 244 (&F4)     4 = Draw ship on 3D scanner
  EQUW DOT               \ #DOdot   = 245 (&F5)     5 = Draw a dot on the compass
  EQUW DODKS4            \ #DODKS4  = 246 (&F6)     6 = Scan for a specific key
- EQUW HLOIN             \            247 (&F7)     7 = Draw a horizontal line
+ EQUW HLOIN             \            247 (&F7)     7 = Draw orange sun lines
  EQUW HANGER            \            248 (&F8)     8 = Display the hanger
  EQUW SOMEPROT          \            249 (&F9)     9 = Copy protection
  EQUW SAFE              \            250 (&FA)    10 = Do nothing

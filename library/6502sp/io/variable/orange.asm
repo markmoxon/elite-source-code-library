@@ -3,7 +3,7 @@
 \       Name: orange
 \       Type: Variable
 \   Category: Drawing pixels
-\    Summary: Lookup table for 2-pixel mode 1 orange pixels
+\    Summary: Lookup table for 2-pixel mode 1 orange pixels for the sun
 \
 \ ------------------------------------------------------------------------------
 \

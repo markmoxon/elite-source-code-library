@@ -74,7 +74,7 @@
 
  STA R                  \ Also store the page number in R
 
- LDA P                  \ Set the low byte of SC(1 0) to the y-coordinate MOD 7,
+ LDA P                  \ Set the low byte of SC(1 0) to the y-coordinate mod 7,
  AND #7                 \ which determines the pixel row in the character block
  STA SC                 \ we need to draw in (as each character row is 8 pixels
                         \ high), so SC(1 0) now points to the address of the
@@ -187,7 +187,7 @@
 
  AND #%11111100         \ A contains the x-coordinate of the line to draw, and
  STA SC                 \ each character block is 4 pixels wide, so setting the
-                        \ low byte of SC(1 0) to A MOD 4 points SC(1 0) to the
+                        \ low byte of SC(1 0) to A mod 4 points SC(1 0) to the
                         \ correct character block on the top screen row for this
                         \ x-coordinate
 
@@ -404,7 +404,7 @@
  SBC #8                 \ to the next character block to the left
  TAY
 
- LDA #%00010000         \ Set A to 
+ LDA #%00010000         \ Set a mask in A to the last pixel in the 4-pixel byte
 
  BCS HAS3               \ If the above subtraction didn't underflow, jump back
                         \ to HAS3 to keep drawing the line in the next character

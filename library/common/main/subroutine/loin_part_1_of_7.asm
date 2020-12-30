@@ -21,6 +21,7 @@
 \
 \   Y2                  The screen y-coordinate of the end of the line
 \
+IF _CASSETTE_VERSION
 \ Returns:
 \
 \   Y                   Y is preserved
@@ -32,22 +33,31 @@
 \
 \   HL6                 Contains an RTS
 \
+ENDIF
 \ ******************************************************************************
 
 IF _CASSETTE_VERSION
 
 .LL30
 
+ENDIF
+
                         \ In the cassette and disc versions of Elite, LL30 and
                         \ LOIN are synonyms for the same routine, presumably
                         \ because the two developers each had their own line
                         \ routines to start with, and then chose one of them for
                         \ the final game
+IF _6502SP_VERSION
                         \
-                        \ In the 6502 Second Processor version, they are quite
-                        \ different: LL30 draws a one-segment line, while LOIN
-                        \ draws multi-segment lines
-
+                        \ In the 6502 Second Processor version, there are three
+                        \ different routines. In the parasite, LL30 draws a
+                        \ one-segment line, while LOIN draws multi-segment
+                        \ lines. Both of these ask the I/O processor to do the
+                        \ actual drawing, and it uses a routine called... wait
+                        \ for it... LOIN
+                        \
+                        \ This, then, is the I/O processor's LOIN routine, which
+                        \ is not the same as LL30, or the other LOIN. Got that?
 ENDIF
 
 .LOIN
@@ -92,7 +102,9 @@ ENDIF
 
 IF _6502SP_VERSION
 
- BEQ HLOIN2
+ BEQ HLOIN2             \ If A = 0 then Y1 = Y2, which means the line is
+                        \ horizontal, so jump to HLOIN2 to draw a horizontal
+                        \ line instead of applying Bresenham's line algorithm
 
 ENDIF
 

@@ -20,6 +20,12 @@ ENDIF
 \
 \   * Draw from (X1, Y1) at top left to (X2, Y2) at bottom right
 \
+IF _6502SP_VERSION
+\ This routine looks complex, but that's because the loop that's used in the
+\ cassette and disc versions has been unrolled to speed it up. The algorithm is
+\ unchanged, it's just a lot longer.
+\
+ENDIF
 \ ******************************************************************************
 
 .DOWN

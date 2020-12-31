@@ -16,6 +16,12 @@
 \
 \   * Draw from (X1, Y1) at top left to (X2, Y2) at bottom right
 \
+IF _6502SP_VERSION
+\ This routine looks complex, but that's because the loop that's used in the
+\ cassette and disc versions has been unrolled to speed it up. The algorithm is
+\ unchanged, it's just a lot longer.
+\
+ENDIF
 \ ******************************************************************************
 
 IF _CASSETTE_VERSION
@@ -87,55 +93,81 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- LDA SWAP
- BEQ LI290
- TYA
- AND #7
+ LDA SWAP               \ If SWAP = 0 then we didn't swap the coordinates above,
+ BEQ LI290              \ so jump down to LI290 to plot the first pixel
+
+ TYA                    \ Fetch bits 0-2 of the y-coordinate, so Y contains the
+ AND #7                 \ y-coordinate mod 8
  TAY
+
  BNE P%+5
  JMP LI307+8
+
  CPY #2
+
  BCS P%+5
  JMP LI306+8
+
  CLC
+
  BNE P%+5
+
  JMP LI305+8
+
  CPY #4
  BCS P%+5
  JMP LI304+8
+
  CLC
+
  BNE P%+5
  JMP LI303+8
+
  CPY #6
  BCS P%+5
  JMP LI302+8
+
  CLC
+
  BEQ P%+5
  JMP LI300+8
+
  JMP LI301+8
 
 .LI290
 
  DEX
+
  TYA
  AND #7
  TAY
+
  BNE P%+5
  JMP LI307
+
  CPY #2
  BCS P%+5
  JMP LI306
+
  CLC
+
  BNE P%+5
  JMP LI305
+
  CPY #4
  BCC LI304S
+
  CLC
+
  BEQ LI303S
+
  CPY #6
  BCC LI302S
+
  CLC
+
  BEQ LI301S
+
  JMP LI300
 
 .LI310
@@ -358,7 +390,7 @@ ELIF _6502SP_VERSION
 
 .LIEX4
 
- RTS
+ RTS                    \ Return from the subroutine
 
 .LI314
 

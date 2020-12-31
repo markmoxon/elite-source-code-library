@@ -8,7 +8,7 @@
 \ ------------------------------------------------------------------------------
 \
 \ Zero-fill the INWK ship workspace and reset the orientation vectors, with
-\ nosev pointing out of the screen.
+\ nosev pointing into the screen.
 \
 \ ******************************************************************************
 

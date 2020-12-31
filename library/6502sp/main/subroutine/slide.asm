@@ -3,7 +3,13 @@
 \       Name: SLIDE
 \       Type: Subroutine
 \   Category: Demo
-\    Summary: 
+\    Summary: Display a Star Wars scroll text
+\
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   (Y X)               The contents of the first slide
 \
 \ ******************************************************************************
 

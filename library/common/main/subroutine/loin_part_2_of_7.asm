@@ -267,7 +267,7 @@ ELIF _6502SP_VERSION
  CMP Y1
  BCC P%+5
 
- JMP DOWN               \ Y2 >= Y1 - 1, so jump to DOWN, as we need to draw the
-                        \ line to the right and down
+ JMP DOWN               \ Y2 >= Y1, so jump to DOWN, as we need to draw the line
+                        \ to the right and down
 
 ENDIF

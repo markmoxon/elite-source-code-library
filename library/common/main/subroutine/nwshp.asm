@@ -22,6 +22,8 @@
 \   C flag              Set if the ship was successfully added, clear if it
 \                       wasn't (as there wasn't enough free memory)
 \
+\   INF                 Points to the new ship's data block in K%
+\
 \ ******************************************************************************
 
 .NWSHP

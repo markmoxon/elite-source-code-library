@@ -12,7 +12,11 @@
 \
 \   * The line is going right and down (no swap) or left and up (swap)
 \
+IF _CASSETTE_VERSION
 \   * X1 < X2 and Y1-1 <= Y2
+ELIF _6502SP_VERSION
+\   * X1 < X2 and Y1 <= Y2
+ENDIF
 \
 \   * Draw from (X1, Y1) at top left to (X2, Y2) at bottom right
 \
@@ -22,46 +26,49 @@
 
 IF _6502SP_VERSION
 
- LDA #%10001000         \ Set a mask in A to the first pixel in the 4-pixel byte
+ LDA #%10001000         \ Modify the value in the LDA instruction at LI200 below
+ AND COL                \ to contain a pixel mask for the first pixel in the
+ STA LI200+1            \ 4-pixel byte, in the colour COL, so that it draws in
+                        \ the correct colour
 
- AND COL                \ Apply the pixel mask in A to the colour byte in COL
+ LDA #%01000100         \ Modify the value in the LDA instruction at LI210 below
+ AND COL                \ to contain a pixel mask for the second pixel in the
+ STA LI210+1            \ 4-pixel byte, in the colour COL, so that it draws in
+                        \ the correct colour
 
- STA LI200+1            \ Modify the value in the LDA instruction at LI200 below
-                        \ so that it draws in the correct colour
+ LDA #%00100010         \ Modify the value in the LDA instruction at LI220 below
+ AND COL                \ to contain a pixel mask for the third pixel in the
+ STA LI220+1            \ 4-pixel byte, in the colour COL, so that it draws in
+                        \ the correct colour
 
- LDA #%01000100         \ Set a mask in A to the second pixel in the 4-pixel
-                        \ byte
-
- AND COL                \ Apply the pixel mask in A to the colour byte in COL
-
- STA LI210+1            \ Modify the value in the LDA instruction at LI210 below
-                        \ so that it draws in the correct colour
-
- LDA #%00100010         \ Set a mask in A to the third pixel in the 4-pixel byte
-
- AND COL                \ Apply the pixel mask in A to the colour byte in COL
-
- STA LI220+1            \ Modify the value in the LDA instruction at LI220 below
-                        \ so that it draws in the correct colour
-
- LDA #%00010001         \ Set a mask in A to the fourth pixel in the 4-pixel
-                        \ byte
-
- AND COL                \ Apply the pixel mask in A to the colour byte in COL
-
- STA LI230+1            \ Modify the value in the LDA instruction at LI230 below
-                        \ so that it draws in the correct colour
+ LDA #%00010001         \ Modify the value in the LDA instruction at LI230 below
+ AND COL                \ to contain a pixel mask for the fourth pixel in the
+ STA LI230+1            \ 4-pixel byte, in the colour COL, so that it draws in
+                        \ the correct colour
 
  LDA SC                 \ Set SC(1 0) = SC(1 0) - 248
- SBC #248               \
- STA SC                 \ so SC points to the last character block in the
- LDA SC+1               \ previous page in memory
+ SBC #248
+ STA SC
+ LDA SC+1
  SBC #0
  STA SC+1
 
- TYA                    \ Flip the character row number in Y
- EOR #%11111000
- TAY
+ TYA                    \ Set bits 3-7 of Y, which contains the pixel row within
+ EOR #%11111000         \ the character, and is therefore in the range 0-7, so
+ TAY                    \ this does Y = 248 + Y
+                        \
+                        \ We therefore have the following:
+                        \
+                        \   SC(1 0) + Y = SC(1 0) - 248 + 248 + Y
+                        \               = SC(1 0) + Y
+                        \
+                        \ so the screen location we poke hasn't changed, but Y
+                        \ is now a larger number and SC is smaller. This means
+                        \ we can increment Y to move down a line, as per usual,
+                        \ but we can test for when it reaches the bottom of the
+                        \ character block with a simple BEQ rather than checking
+                        \ whether it's reached 8, so this appears to be a code
+                        \ optimisation
 
 ENDIF
 
@@ -103,7 +110,7 @@ IF _CASSETTE_VERSION
 
 .LI10
 
- LDA S                  \ Set S = S + Q
+ LDA S                  \ Set S = S + Q to update the slope error
  ADC Q
  STA S
 
@@ -204,7 +211,7 @@ ELIF _6502SP_VERSION
  BEQ LIEX               \ If we have just reached the right end of the line,
                         \ jump to LIEX to return from the subroutine
 
- LDA S                  \ Set S = S + Q
+ LDA S                  \ Set S = S + Q to update the slope error
  ADC Q
  STA S
 
@@ -232,7 +239,7 @@ ELIF _6502SP_VERSION
  BEQ LIEX               \ If we have just reached the right end of the line,
                         \ jump to LIEX to return from the subroutine
 
- LDA S                  \ Set S = S + Q
+ LDA S                  \ Set S = S + Q to update the slope error
  ADC Q
  STA S
 
@@ -260,7 +267,7 @@ ELIF _6502SP_VERSION
  BEQ LIEX2              \ If we have just reached the right end of the line,
                         \ jump to LIEX2 to return from the subroutine
 
- LDA S                  \ Set S = S + Q
+ LDA S                  \ Set S = S + Q to update the slope error
  ADC Q
  STA S
 
@@ -283,7 +290,7 @@ ELIF _6502SP_VERSION
  EOR (SC),Y             \ Store A into screen memory at SC(1 0), using EOR
  STA (SC),Y             \ logic so it merges with whatever is already on-screen
 
- LDA S                  \ Set S = S + Q
+ LDA S                  \ Set S = S + Q to update the slope error
  ADC Q
  STA S
 
@@ -323,8 +330,9 @@ ELIF _6502SP_VERSION
  INC SC+1               \ If we get here then we need to move down into the
  INC SC+1               \ character block below, so we increment the high byte
  LDY #248               \ of the screen twice (as there are two pages per screen
-                        \ row) and set the pixel line to the first line in
-                        \ that character block
+                        \ row) and set the pixel line to the first line in that
+                        \ character block (as we subtracted 248 from SC above)
+
 
  BNE LI210              \ Jump back to the instruction after the BMI that called
                         \ this routine
@@ -334,8 +342,8 @@ ELIF _6502SP_VERSION
  INC SC+1               \ If we get here then we need to move down into the
  INC SC+1               \ character block below, so we increment the high byte
  LDY #248               \ of the screen twice (as there are two pages per screen
-                        \ row) and set the pixel line to the first line in
-                        \ that character block
+                        \ row) and set the pixel line to the first line in that
+                        \ character block (as we subtracted 248 from SC above)
 
  BNE LI220              \ Jump back to the instruction after the BMI that called
                         \ this routine
@@ -345,8 +353,8 @@ ELIF _6502SP_VERSION
  INC SC+1               \ If we get here then we need to move down into the
  INC SC+1               \ character block below, so we increment the high byte
  LDY #248               \ of the screen twice (as there are two pages per screen
-                        \ row) and set the pixel line to the first line in
-                        \ that character block
+                        \ row) and set the pixel line to the first line in that
+                        \ character block (as we subtracted 248 from SC above)
 
  BNE LI230              \ Jump back to the instruction after the BMI that called
                         \ this routine
@@ -356,8 +364,8 @@ ELIF _6502SP_VERSION
  INC SC+1               \ If we get here then we need to move down into the
  INC SC+1               \ character block below, so we increment the high byte
  LDY #248               \ of the screen twice (as there are two pages per screen
-                        \ row) and set the pixel line to the first line in
-                        \ that character block
+                        \ row) and set the pixel line to the first line in that
+                        \ character block (as we subtracted 248 from SC above)
 
  BNE LI240              \ Jump back to the instruction after the BMI that called
                         \ this routine

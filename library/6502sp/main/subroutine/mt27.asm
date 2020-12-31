@@ -33,6 +33,6 @@
                         \ only called in galaxies 0 through 2)
 
  EQUB &2C               \ Skip the next instruction by turning it into
-                        \ &2C &A9 &06, or BIT &06A9, which does nothing apart
+                        \ &2C &A9 &DC, or BIT &DCA9, which does nothing apart
                         \ from affect the flags
 

@@ -49,7 +49,7 @@ IF _CASSETTE_VERSION
 
 .LI19
 
- LDA S                  \ Set S = S + P
+ LDA S                  \ Set S = S + P to update the slope error
  ADC P
  STA S
 
@@ -227,9 +227,11 @@ ELIF _6502SP_VERSION
  DEX
  BEQ LIEX5
  DEY
- LDA S
+
+ LDA S                  \ Set S = S + P to update the slope error
  ADC P
  STA S
+
  BCS LI410
 
 .LI401
@@ -241,9 +243,11 @@ ELIF _6502SP_VERSION
  DEX
  BEQ LIEX5
  DEY
- LDA S
+
+ LDA S                  \ Set S = S + P to update the slope error
  ADC P
  STA S
+
  BCS LI411
 
 .LI402
@@ -255,9 +259,11 @@ ELIF _6502SP_VERSION
  DEX
  BEQ LIEX5
  DEY
- LDA S
+
+ LDA S                  \ Set S = S + P to update the slope error
  ADC P
  STA S
+
  BCS LI412
 
 .LI403
@@ -269,9 +275,11 @@ ELIF _6502SP_VERSION
  DEX
  BEQ LIEX5
  DEY
- LDA S
+
+ LDA S                  \ Set S = S + P to update the slope error
  ADC P
  STA S
+
  BCS LI413
 
 .LI404
@@ -283,9 +291,11 @@ ELIF _6502SP_VERSION
  DEX
  BEQ LIEX6
  DEY
- LDA S
+
+ LDA S                  \ Set S = S + P to update the slope error
  ADC P
  STA S
+
  BCS LI414
 
 .LI405
@@ -297,9 +307,11 @@ ELIF _6502SP_VERSION
  DEX
  BEQ LIEX6
  DEY
- LDA S
+
+ LDA S                  \ Set S = S + P to update the slope error
  ADC P
  STA S
+
  BCS LI415
 
 .LI406
@@ -311,9 +323,11 @@ ELIF _6502SP_VERSION
  DEX
  BEQ LIEX6
  DEY
- LDA S
+
+ LDA S                  \ Set S = S + P to update the slope error
  ADC P
  STA S
+
  BCS LI416
 
 .LI407
@@ -327,9 +341,11 @@ ELIF _6502SP_VERSION
  DEC SC+1
  DEC SC+1
  LDY #7
- LDA S
+
+ LDA S                  \ Set S = S + P to update the slope error
  ADC P
  STA S
+
  BCS P%+5
  JMP LI400
  ASL R

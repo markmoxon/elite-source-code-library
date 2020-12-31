@@ -12,7 +12,11 @@
 \
 \   * The line is going right and up (no swap) or left and down (swap)
 \
+IF _CASSETTE_VERSION
 \   * X1 < X2 and Y1-1 > Y2
+ELIF _6502SP_VERSION
+\   * X1 < X2 and Y1 > Y2
+ENDIF
 \
 \   * Draw from (X1, Y1) at bottom left to (X2, Y2) at top right
 \
@@ -20,35 +24,25 @@
 
 IF _6502SP_VERSION
 
- LDA #%10001000         \ Set a mask in A to the first pixel in the 4-pixel byte
+ LDA #%10001000         \ Modify the value in the LDA instruction at LI100 below
+ AND COL                \ to contain a pixel mask for the first pixel in the
+ STA LI100+1            \ 4-pixel byte, in the colour COL, so that it draws in
+                        \ the correct colour
 
- AND COL                \ Apply the pixel mask in A to the colour byte in COL
+ LDA #%01000100         \ Modify the value in the LDA instruction at LI110 below
+ AND COL                \ to contain a pixel mask for the second pixel in the
+ STA LI110+1            \ 4-pixel byte, in the colour COL, so that it draws in
+                        \ the correct colour
 
- STA LI100+1            \ Modify the value in the LDA instruction at LI100 below
-                        \ so that it draws in the correct colour
+ LDA #%00100010         \ Modify the value in the LDA instruction at LI120 below
+ AND COL                \ to contain a pixel mask for the third pixel in the
+ STA LI120+1            \ 4-pixel byte, in the colour COL, so that it draws in
+                        \ the correct colour
 
- LDA #%01000100         \ Set a mask in A to the second pixel in the 4-pixel
-                        \ byte
-
- AND COL                \ Apply the pixel mask in A to the colour byte in COL
-
- STA LI110+1            \ Modify the value in the LDA instruction at LI110 below
-                        \ so that it draws in the correct colour
-
- LDA #%00100010         \ Set a mask in A to the third pixel in the 4-pixel byte
-
- AND COL                \ Apply the pixel mask in A to the colour byte in COL
-
- STA LI120+1            \ Modify the value in the LDA instruction at LI120 below
-                        \ so that it draws in the correct colour
-
- LDA #%00010001         \ Set a mask in A to the fourth pixel in the 4-pixel
-                        \ byte
-
- AND COL                \ Apply the pixel mask in A to the colour byte in COL
-
- STA LI130+1            \ Modify the value in the LDA instruction at LI130 below
-                        \ so that it draws in the correct colour
+ LDA #%00010001         \ Modify the value in the LDA instruction at LI130 below
+ AND COL                \ to contain a pixel mask for the fourth pixel in the
+ STA LI130+1            \ 4-pixel byte, in the colour COL, so that it draws in
+                        \ the correct colour
 
 ENDIF
 
@@ -90,7 +84,7 @@ IF _CASSETTE_VERSION
 
 .LI7
 
- LDA S                  \ Set S = S + Q
+ LDA S                  \ Set S = S + Q to update the slope error
  ADC Q
  STA S
 
@@ -191,7 +185,7 @@ ELIF _6502SP_VERSION
  BEQ LIEX               \ If we have just reached the right end of the line,
                         \ jump to LIEX to return from the subroutine
 
- LDA S                  \ Set S = S + Q
+ LDA S                  \ Set S = S + Q to update the slope error
  ADC Q
  STA S
 
@@ -219,7 +213,7 @@ ELIF _6502SP_VERSION
  BEQ LIEX               \ If we have just reached the right end of the line,
                         \ jump to LIEX to return from the subroutine
 
- LDA S                  \ Set S = S + Q
+ LDA S                  \ Set S = S + Q to update the slope error
  ADC Q
  STA S
 
@@ -247,7 +241,7 @@ ELIF _6502SP_VERSION
  BEQ LIEX               \ If we have just reached the right end of the line,
                         \ jump to LIEX to return from the subroutine
 
- LDA S                  \ Set S = S + Q
+ LDA S                  \ Set S = S + Q to update the slope error
  ADC Q
  STA S
 
@@ -270,7 +264,7 @@ ELIF _6502SP_VERSION
  EOR (SC),Y             \ Store A into screen memory at SC(1 0), using EOR
  STA (SC),Y             \ logic so it merges with whatever is already on-screen
 
- LDA S                  \ Set S = S + Q
+ LDA S                  \ Set S = S + Q to update the slope error
  ADC Q
  STA S
 

@@ -53,7 +53,7 @@ IF _CASSETTE_VERSION
 
 .LI16
 
- LDA S                  \ Set S = S + P
+ LDA S                  \ Set S = S + Q to update the slope error
  ADC P
  STA S
 

@@ -7,15 +7,17 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ This routine populates the X-th byte in the X1TB/Y1TB/X2TB/Y2TB tables with a
-\ line segment.
+\ This routine populates the X-th byte in the X1TB/Y1TB/X2TB/Y2TB tables with
+\ the coordinates for the line segments that make up the character whose
+\ definition is given in A.
 \
 \ Arguments:
 \
-\   A                   The value from the LTDEF table to add
+\   A                   The value from the LTDEF table for the character
 \
 \   (XP, YP)            The origin coordinate for this character
 \
+\   X                   The index of the character within the scroll text
 \
 \ Returns:
 \

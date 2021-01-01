@@ -3,7 +3,7 @@
 \       Name: NOFX
 \       Type: Variable
 \   Category: Demo
-\    Summary: 
+\    Summary: The x-coordinates of the scroll text letter grid
 \
 \ ******************************************************************************
 

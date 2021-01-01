@@ -183,10 +183,15 @@ VE = &57                \ The obfuscation byte used to hide the extended tokens
 LL = 30                 \ The length of lines (in characters) of justified text
                         \ in the extended tokens system
 
-W = 5                   \ Configuration variables for the demo
+W = 5
+
 W2 = 16
-WY = 12
+
+WY = 12                 \ Vertical spacing between points in the scroll text
+                        \ letter grid
+
 W2Y = 2.5*WY
+
 D = 80
 
 INCLUDE "library/common/main/workspace/zp.asm"

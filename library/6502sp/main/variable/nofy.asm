@@ -3,7 +3,7 @@
 \       Name: NOFY
 \       Type: Variable
 \   Category: Demo
-\    Summary: 
+\    Summary: The y-coordinates of the scroll text letter grid
 \
 \ ******************************************************************************
 

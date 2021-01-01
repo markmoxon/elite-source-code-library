@@ -1,0 +1,79 @@
+\ ******************************************************************************
+\
+\       Name: GRS1
+\       Type: Subroutine
+\   Category: Demo
+\    Summary: Populate the coordinate tables for a scroll text letter
+\
+\ ------------------------------------------------------------------------------
+\
+\ This routine populates the X-th byte in the X1TB/Y1TB/X2TB/Y2TB tables with a
+\ line segment.
+\
+\ Arguments:
+\
+\   A                   The value from the LTDEF table to add
+\
+\   (XP, YP)            The origin coordinate for this character
+\
+\
+\ Returns:
+\
+\   X                   X gets incremented to point to the next byte to populate
+\                       in X1TB/Y1TB/X2TB/Y2TB
+\
+\   Y                   Y is preserved
+\
+\ ******************************************************************************
+
+.GRS1
+
+ BEQ GRR1               \ If A = 0, jump to GRR1 to return from the subroutine
+                        \ as 0 denotes no line segment
+
+ STA R                  \ Store the value from the LTDEF table in R
+
+ AND #%00001111         \ Set A to bits 0-3 of the LTDEF table value, i.e the
+                        \ bottom nibble
+
+ STY P                  \ Store the offset in P, so we can preserve it through
+                        \ calls to GRS1
+
+ TAY                    \ Set Y = A
+
+ LDA NOFX,Y             \ Set X1TB+X = XP + NOFX+Y
+ CLC                    \
+ ADC XP                 \ so the X1 coordinate is XP + the NOFX entry given by
+ STA X1TB,X             \ the bottom nibble of the LTDEF table value
+
+ LDA YP                 \ Set Y1TB+X = YP - NOFY+Y
+ SEC                    \
+ SBC NOFY,Y             \ so the Y1 coordinate is YP - the NOFY entry given by
+ STA Y1TB,X             \ the bottom nibble of the LTDEF table value
+
+ LDA R                  \ Set Y to bits 4-7 of the LTDEF table value, i.e. the
+ LSR A                  \ top nibble
+ LSR A
+ LSR A
+ LSR A
+ TAY
+
+ LDA NOFX,Y             \ Set X2TB+X = XP + NOFX+Y
+ CLC                    \
+ ADC XP                 \ so the X2 coordinate is XP + the NOFX entry given by
+ STA X2TB,X             \ the top nibble of the LTDEF table value
+
+ LDA YP                 \ Set Y2TB+X = YP - NOFY+Y
+ SEC                    \
+ SBC NOFY,Y             \ so the Y2 coordinate is YP - the NOFY entry given by
+ STA Y2TB,X             \ the top nibble of the LTDEF table value
+
+ INX                    \ Increment the byte pointer in X
+
+ LDY P                  \ Restore Y from P so it gets preserved through calls to
+                        \ GRS1
+
+.GRR1
+
+ RTS                    \ Return from the subroutine
+

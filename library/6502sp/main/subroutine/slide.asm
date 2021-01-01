@@ -9,7 +9,7 @@
 \
 \ Arguments:
 \
-\   (Y X)               The contents of the first slide
+\   (Y X)               The contents of the scroll text to display
 \
 \ ******************************************************************************
 
@@ -19,45 +19,61 @@
 
  JSR ZEVB               \ Call ZEVB to zero-fill the Y1VB variable
 
- LDA #YELLOW
- JSR DOCOL
- LDA #254
- STA BALI
+ LDA #YELLOW            \ Send a #SETCOL YELLOW command to the I/O processor to
+ JSR DOCOL              \ switch to colour 2, which is yellow
+
+ LDA #254               \ Set BALI = 254 to act as a counter from 254 to 2,
+ STA BALI               \ decreasing by 2 each iteration
 
 .SLL2
 
- JSR GRID
+ JSR GRID               \ Call GRID
+
+ DEC BALI               \ Set BALI = BALI - 2
  DEC BALI
- DEC BALI
- BNE SLL2
+
+ BNE SLL2               \ Loop back to SLL2 until the loop counter is 0 (so GRID
+                        \ was last called with BALI = 2)
 
 .SL1
 
  JSR ZEVB               \ Call ZEVB to zero-fill the Y1VB variable
 
- LDA #2
+ LDA #2                 \ Set BALI = 2 and fall into GRID below
  STA BALI
 
 .GRID
 
- LDY #0
+ LDY #0                 \ Set UPO = 0
  STY UPO
- STY INWK+8
- STY INWK+1
- STY INWK+4
- DEY
+
+ STY INWK+8             \ Set z_sign = 0
+
+ STY INWK+1             \ Set x_hi = 0
+
+ STY INWK+4             \ Set y_hi = 0
+
+ DEY                    \ Decrement Y to 255, so the following loop starts with
+                        \ the first byte from Y1TB
 
 .GRIDL
 
- INY
- STZ INWK+7 \++
- LDA Y1TB,Y
- BNE P%+5
+ INY                    \ Increment Y
+
+ STZ INWK+7             \ Set z_hi = 0
+
+ LDA Y1TB,Y             \ Set A = the Y-th byte from Y1TB
+
+ BNE P%+5               \ If A = 0, jump to GREX
  JMP GREX
+
  SEC
  SBC BALI
+
  BCC GRIDL
+
  STA R
+
  ASL A
  ROL INWK+7
  ASL A
@@ -67,17 +83,21 @@
  LDA INWK+7
  ADC #0
  STA INWK+7
- STZ S
+
+ STZ S                  \ Set S = 0
+
  LDA #128
  STA P
- JSR ADD
+
+ JSR ADD                \ Set (A X) = (A P) + (S R)
+
  STA INWK+5
  STX INWK+3
  LDA X1TB,Y
  EOR #128
  BPL GR2
  EOR #&FF
- INA \++
+ INA
 
 .GR2
 

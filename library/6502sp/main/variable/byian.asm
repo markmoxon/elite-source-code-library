@@ -3,12 +3,15 @@
 \       Name: byian
 \       Type: Variable
 \   Category: Demo
-\    Summary: 
+\    Summary: The text for the demo's second scroll text
 \
 \ ******************************************************************************
 
 .byian
 
- EQUS "::::::BY:;::::::;;;;IAN;BELL;;;;::::::AND:::::::;;DAVID;BRABEN"
+ EQUS "::::::BY:;::::::"
+ EQUS ";;;;IAN;BELL;;;;"
+ EQUS "::::::AND:::::::"
+ EQUS ";;DAVID;BRABEN"
  EQUB 0
 

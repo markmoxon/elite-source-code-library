@@ -3,26 +3,26 @@
 \       Name: GRS1
 \       Type: Subroutine
 \   Category: Demo
-\    Summary: Populate the coordinate tables for a scroll text letter
+\    Summary: Populate the line coordinate tables with the lines for a single
+\             scroll text character
 \
 \ ------------------------------------------------------------------------------
 \
-\ This routine populates the X-th byte in the X1TB/Y1TB/X2TB/Y2TB tables with
-\ the coordinates for the line segments that make up the character whose
-\ definition is given in A.
+\ This routine populates the X-th byte in the X1TB, Y1TB, X2TB and Y2TB tables
+\ (the TB tables) with the coordinates for the lines that make up the character
+\ whose definition is given in A.
 \
 \ Arguments:
 \
 \   A                   The value from the LTDEF table for the character
 \
-\   (XP, YP)            The origin coordinate for this character
+\   (XP, YP)            The coordinate where we should draw this character
 \
 \   X                   The index of the character within the scroll text
 \
 \ Returns:
 \
-\   X                   X gets incremented to point to the next byte to populate
-\                       in X1TB/Y1TB/X2TB/Y2TB
+\   X                   X gets incremented to point to the next character
 \
 \   Y                   Y is preserved
 \

@@ -130,8 +130,13 @@ ENDIF
                         \ can easily be erased from the screen again). SLSP
                         \ points to the start of the current heap space, and we
                         \ can extend it downwards with the heap for our new ship
+IF _CASSETTE_VERSION
                         \ (as the heap space always ends just before the WP
                         \ workspace)
+ELIF _6502SP_VERSION
+                        \ (as the heap space always ends just before the ship
+                        \ blueprints at D%)
+ENDIF
 
  LDY #5                 \ Fetch ship blueprint byte #5, which contains the
  LDA (XX0),Y            \ maximum heap size required for plotting the new ship,
@@ -150,6 +155,7 @@ ENDIF
                         \ for our ship. In memory, this is the layout of the
                         \ ship data blocks and ship line heaps:
                         \
+IF _CASSETTE_VERSION
                         \   +-----------------------------------+   &0F34
                         \   |                                   |
                         \   | WP workspace                      |
@@ -158,6 +164,16 @@ ENDIF
                         \   |                                   |
                         \   | Current ship line heap            |
                         \   |                                   |
+ELIF _6502SP_VERSION
+                        \   +-----------------------------------+
+                        \   |                                   |
+                        \   | Ship blueprints                   |
+                        \   |                                   |
+                        \   +-----------------------------------+   &D000 = D%
+                        \   |                                   |   
+                        \   | Current ship line heap            |
+                        \   |                                   |
+ENDIF
                         \   +-----------------------------------+   SLSP
                         \   |                                   |
                         \   | Proposed heap for new ship        |
@@ -178,7 +194,11 @@ ENDIF
                         \   |                                   |
                         \   | Existing ship data blocks         |
                         \   |                                   |
+IF _CASSETTE_VERSION
                         \   +-----------------------------------+   &0900 = K%
+ELIF _6502SP_VERSION
+                        \   +-----------------------------------+   &8200 = K%
+ENDIF
                         \
                         \ So, to work out if we have enough space, we have to
                         \ make sure there is room between the end of our new

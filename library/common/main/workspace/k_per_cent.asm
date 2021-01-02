@@ -8,18 +8,30 @@ ELIF _6502SP_VERSION
 \    Address: &8200 to &85FF
 ENDIF
 \   Category: Workspaces
+IF _CASSETTE_VERSION
 \    Summary: Ship data blocks and ship line heaps
+ELIF _6502SP_VERSION
+\    Summary: Ship data blocks
+ENDIF
 \  Deep dive: Ship data blocks
 \
 \ ------------------------------------------------------------------------------
 \
 \ Contains ship data for all the ships, planets, suns and space stations in our
+IF _CASSETTE_VERSION
 \ local bubble of universe, along with their corresponding ship line heaps.
+ELIF _6502SP_VERSION
+\ local bubble of universe.
+ENDIF
 \
 \ The blocks are pointed to by the lookup table at location UNIV. The first 468
 \ bytes of the K% workspace hold ship data on up to 13 ships, with 36 (NI%)
+IF _CASSETTE_VERSION
 \ bytes per ship, and the ship line heap grows downwards from WP at the end of
 \ the K% workspace.
+ELIF _6502SP_VERSION
+\ bytes per ship.
+ENDIF
 \
 \ See the deep dive on "Ship data blocks" for details on ship data blocks, and
 \ the deep dive on "The local bubble of universe" for details of how Elite

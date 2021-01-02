@@ -9,16 +9,19 @@
 
 .NOFX
 
- EQUB 4
+ EQUB 4                 \ Grid points 0-2
  EQUB 8
  EQUB 12
- EQUB 4
+
+ EQUB 4                 \ Grid points 3-5
  EQUB 8
  EQUB 12
- EQUB 4
+
+ EQUB 4                 \ Grid points 6-8
  EQUB 8
  EQUB 12
- EQUB 4
+
+ EQUB 4                 \ Grid points 9-B
  EQUB 8
  EQUB 12
 

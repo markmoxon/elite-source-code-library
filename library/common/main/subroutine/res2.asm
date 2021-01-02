@@ -85,8 +85,8 @@ IF _CASSETTE_VERSION
 ELIF _6502SP_VERSION
 
  LDA #LO(LS%)           \ We have reset the ship line heap, so we now point
- STA SLSP               \ SLSP to LS% to indicate that the heap is empty
- LDA #HI(LS%)
+ STA SLSP               \ SLSP to LS% (the byte below the ship blueprints at D%)
+ LDA #HI(LS%)           \ to indicate that the heap is empty
  STA SLSP+1
 
 ENDIF

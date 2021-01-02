@@ -183,16 +183,20 @@ VE = &57                \ The obfuscation byte used to hide the extended tokens
 LL = 30                 \ The length of lines (in characters) of justified text
                         \ in the extended tokens system
 
-W = 5
+W2 = 16                 \ The horizontal character spacing in the scroll text
+                        \ (i.e. the difference in x-coordinate between the
+                        \ left edges of adjacent characters in words)
 
-W2 = 16
+WY = 12                 \ The vertical spacing between points in the scroll text
+                        \ grid for each character
 
-WY = 12                 \ Vertical spacing between points in the scroll text
-                        \ letter grid
+W2Y = 2.5*WY            \ The vertical line spacing in the scroll text (i.e. the
+                        \ difference in y-coordinate between the tops of the
+                        \ characters in adjacent lines)
 
-W2Y = 2.5*WY
-
-D = 80
+D = 80                  \ The distance from the camera (z-coordinate) of the
+                        \ bottom of the visible part of the Star Wars scroll
+                        \ text
 
 INCLUDE "library/common/main/workspace/zp.asm"
 INCLUDE "library/common/main/workspace/xx3.asm"

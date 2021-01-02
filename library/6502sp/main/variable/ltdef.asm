@@ -3,11 +3,11 @@
 \       Name: LTDEF
 \       Type: Variable
 \   Category: Demo
-\    Summary: Letter definitions for the Star Wars scroll text
+\    Summary: Line definitions for characters in the Star Wars scroll text
 \
 \ ------------------------------------------------------------------------------
 \
-\ Letters in the scroll text are drawn on a 3x6 grid like this:
+\ Characters in the scroll text are drawn using lines on a 3x6 grid like this:
 \
 \   .   .   .
 \   .   .   .
@@ -16,7 +16,8 @@
 \   .   .   .
 \   .   .   .
 \
-\ The spacing is configured like this:
+\ The spacing of the grid points is configured like this (in terms of space
+\ coordinates):
 \
 \   0           .   .   .
 \   0.5 * WY    .   .   .
@@ -28,8 +29,8 @@
 \               4   8   12
 \
 \ so the vertical spacing is controlled by configuration variable WY. The
-\ x-coordinate of point n is given by the n-th entry in NOFX, while the
-\ y-coordinate is given by the n-th entry in NOFY.
+\ default value of WY is 12, so the vertical grid spacing is 6, while the
+\ horizontal grid spacing is 4.
 \
 \ When drawing letters, only 12 of the 18 points can be used. They are numbered
 \ as follows:
@@ -41,14 +42,19 @@
 \   6   7   8
 \   9   A   B
 \
+\ The x-coordinate of point n within the grid (relative to the top-left corner)
+\ is given by the n-th entry in the NOFX table, while the y-coordinate is given
+\ by the n-th entry in NOFY. So point 0 is at (NOFX+0, NOFX+0) = (4, 0), and
+\ point 8 is at (NOFX+8, NOFX+8) = (12, 2 * WY).
+\
 \ The LTDEF table contains definitions for all the letters and some punctuation
 \ characters. Each definition consists of 5 bytes, with each byte describing one
 \ line in the character's shape (bytes with value 0 are ignored, so each
-\ character consists of up to five lines).
+\ character consists of up to five lines but can contain fewer lines).
 \
 \ The bottom nibble of each byte is the starting point for that line segment,
 \ and the top nibble is the end point, so a value of &28, for example, means
-\ "draw a line from point 8 to point 2").
+\ "draw a line from point 8 to point 2".
 \
 \ Let's look at a few examples to make this clearer.
 \
@@ -113,7 +119,14 @@
 \   +---+   .
 \   |   |   .
 \   +---/   .
-\   ..-´    .
+\   _.-´.   .
+\
+\ Colons and semi-colons are shown as spaces (as their LTDEF definitions are
+\ all zeroes), so when a string like "TURMOIL,THE:NAVY" is displayed, the comma
+\ is shown as a comma, but the colon is shown as a space.
+\
+\ The scroll text has 16 characters per line, as the character width in #W2 is
+\ set to 16 by default, and the width of the whole scroll text is 256.
 \
 \ ******************************************************************************
 

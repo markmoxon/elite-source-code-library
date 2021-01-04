@@ -2,7 +2,7 @@
 \
 \       Name: DIALS
 \       Type: Subroutine
-\   Category: Utility routines
+\   Category: Dashboard
 \    Summary: Update the dashboard indicators and flight variables by sending a
 \             #RDPARAMS command to the I/O processor
 \

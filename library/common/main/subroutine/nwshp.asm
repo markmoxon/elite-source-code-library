@@ -52,7 +52,11 @@
  INX                    \ Otherwise increment X to point to the next slot
 
  CPX #NOSH              \ If we haven't reached the last slot yet, loop back up
- BCC NWL1               \ to NWL1 to check the next slot
+ BCC NWL1               \ to NWL1 to check the next slot (note that this means
+                        \ only slots from 0 to #NOSH - 1 are populated by this
+                        \ routine, but there is one more slot reserved in FRIN,
+                        \ which is used to identify the end of the slot list
+                        \ when shuffling the slots down in the KILLSHP routine)
 
 .NW3
 

@@ -2,7 +2,7 @@
 \
 \       Name: STORE
 \       Type: Subroutine
-\   Category: Utility routines
+\   Category: Universe
 \    Summary: Copy the ship data block at INWK back to the K% workspace
 \
 \ ------------------------------------------------------------------------------

@@ -2,7 +2,7 @@
 \
 \       Name: Ze
 \       Type: Subroutine
-\   Category: Utility routines
+\   Category: Universe
 \    Summary: Initialise the INWK workspace to a hostile ship
 \
 \ ------------------------------------------------------------------------------

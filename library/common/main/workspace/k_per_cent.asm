@@ -24,12 +24,14 @@ ELIF _6502SP_VERSION
 \ local bubble of universe.
 ENDIF
 \
-\ The blocks are pointed to by the lookup table at location UNIV. The first 468
-\ bytes of the K% workspace hold ship data on up to 13 ships, with 36 (NI%)
 IF _CASSETTE_VERSION
+\ The blocks are pointed to by the lookup table at location UNIV. The first 432
+\ bytes of the K% workspace hold ship data on up to 12 ships, with 36 (NI%)
 \ bytes per ship, and the ship line heap grows downwards from WP at the end of
 \ the K% workspace.
 ELIF _6502SP_VERSION
+\ The blocks are pointed to by the lookup table at location UNIV. The first 720
+\ bytes of the K% workspace hold ship data on up to 20 ships, with 36 (NI%)
 \ bytes per ship.
 ENDIF
 \

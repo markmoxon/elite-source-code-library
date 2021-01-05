@@ -19,7 +19,6 @@
 \
 \   V(1 0)              V(1 0) is preserved
 \
-\
 \ Other entry points:
 \
 \   DTS                 Print the single letter pointed to by A, where A is an

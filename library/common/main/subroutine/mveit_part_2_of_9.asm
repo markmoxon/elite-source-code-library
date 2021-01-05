@@ -43,14 +43,14 @@
  AND #7                 \ with the loop counter and apply mod 8 to the result.
  BNE MV30               \ The result will be zero when "counter mod 8" matches
                         \ the slot number mod 8, so this makes sure we call
-                        \ TACTICS 13 times every 8 main loop iteration, like
+                        \ TACTICS 12 times every 8 main loop iterations, like
                         \ this:
                         \
                         \   Iteration 0, apply tactics to slots 0 and 8
                         \   Iteration 1, apply tactics to slots 1 and 9
                         \   Iteration 2, apply tactics to slots 2 and 10
                         \   Iteration 3, apply tactics to slots 3 and 11
-                        \   Iteration 4, apply tactics to slots 4 and 12
+                        \   Iteration 4, apply tactics to slot 4
                         \   Iteration 5, apply tactics to slot 5
                         \   Iteration 6, apply tactics to slot 6
                         \   Iteration 7, apply tactics to slot 7

@@ -5,6 +5,8 @@
 \   Category: Drawing pixels
 \    Summary: The pixel buffer to send with the OSWORD 241 command
 \
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   pixbl               Points to the first byte of the PBUF block, which is

@@ -20,11 +20,11 @@
 \
 \ Other entry points:
 \
-\  DASC                 DASC does exactly the same as TT26 and prints a
+\   DASC                DASC does exactly the same as TT26 and prints a
 \                       character at the text cursor, with support for verified
 \                       text in extended tokens
 \
-\  rT9                  Contains an RTS
+\   rT9                 Contains an RTS
 \
 \ ******************************************************************************
 

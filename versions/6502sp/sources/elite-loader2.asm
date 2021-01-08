@@ -36,6 +36,18 @@ _CASSETTE_VERSION       = TRUE AND (_VERSION = 1)
 _DISC_VERSION           = TRUE AND (_VERSION = 2)
 _6502SP_VERSION         = TRUE AND (_VERSION = 3)
 
+IF _6502SP_VERSION
+
+ _SNG45                 = (_SUBVERSION = 1)
+ _SOURCE_DISC           = (_SUBVERSION = 2)
+
+ELSE
+
+ _SNG45                 = FALSE
+ _SOURCE_DISC           = FALSE
+
+ENDIF
+
 \ ******************************************************************************
 \
 \ Configuration variables

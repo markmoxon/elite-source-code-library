@@ -43,6 +43,18 @@ _CASSETTE_VERSION       = TRUE AND (_VERSION = 1)
 _DISC_VERSION           = TRUE AND (_VERSION = 2)
 _6502SP_VERSION         = TRUE AND (_VERSION = 3)
 
+IF _6502SP_VERSION
+
+ _SNG45                 = TRUE AND (_SUBVERSION = 1)
+ _SOURCE_DISC           = TRUE AND (_SUBVERSION = 2)
+
+ELSE
+
+ _SNG45                 = FALSE
+ _SOURCE_DISC           = FALSE
+
+ENDIF
+
 \ ******************************************************************************
 \
 \ Configuration variables
@@ -894,7 +906,13 @@ CODE_G% = P%
 LOAD_G% = LOAD% + P% - CODE%
 
 IF _MATCH_EXTRACTED_BINARIES
- INCBIN "versions/6502sp/extracted/workspaces/ELTG-align.bin"
+
+ IF _SNG45
+  INCBIN "versions/6502sp/extracted/workspaces-SNG45/ELTG-align.bin"
+ ELIF _SOURCE_DISC
+  INCBIN "versions/6502sp/extracted/workspaces/ELTG-align.bin"
+ ENDIF
+
 ELSE
  ALIGN &100
 ENDIF

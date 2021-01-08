@@ -38,6 +38,18 @@ _CASSETTE_VERSION       = TRUE AND (_VERSION = 1)
 _DISC_VERSION           = TRUE AND (_VERSION = 2)
 _6502SP_VERSION         = TRUE AND (_VERSION = 3)
 
+IF _6502SP_VERSION
+
+ _SNG45                 = TRUE AND (_SUBVERSION = 1)
+ _SOURCE_DISC           = TRUE AND (_SUBVERSION = 2)
+
+ELSE
+
+ _SNG45                 = FALSE
+ _SOURCE_DISC           = FALSE
+
+ENDIF
+
 GUARD &6000             \ Screen memory starts here
 GUARD &8000             \ Paged ROMS start here
 

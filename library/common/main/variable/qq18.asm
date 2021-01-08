@@ -1069,7 +1069,7 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- RTOK 102               \ Token 114:    "EXTRA ENERGY UNIT"
+\SNG45 RTOK 102               \ Token 114:    "EXTRA ENERGY UNIT"
  RTOK 121               \
  RTOK 14                \ Encoded as:   "[102][121][14]"
  EQUB 0
@@ -1527,6 +1527,8 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
- SKIP 4                 \ These bytes are unused
+\ SKIP 4                 \ These bytes are unused
+
+EQUB 0, 0, &E4, &63, &A5 \SNG45
 
 ENDIF

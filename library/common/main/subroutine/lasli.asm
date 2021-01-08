@@ -64,7 +64,24 @@ ENDIF
 
  LDA #32                \ Call las with A = 32 and Y = 224 to draw one set of
  LDY #224               \ laser lines
+
+IF _6502SP_VERSION
+IF _SNG45
+
+ DEC LASY
+
+ENDIF
+ENDIF
+
  JSR las
+
+IF _6502SP_VERSION
+IF _SNG45
+
+ INC LASY
+
+ENDIF
+ENDIF
 
  LDA #48                \ Fall through into las with A = 48 and Y = 208 to draw
  LDY #208               \ a second set of lines

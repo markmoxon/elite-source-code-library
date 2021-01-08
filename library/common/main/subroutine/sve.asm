@@ -240,6 +240,12 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
+IF _SNG45
+
+ JSR DFAULT
+
+ENDIF
+
 .SVEX
 
  CLC                    \ Clear the C flag to indicate we didn't just load a new

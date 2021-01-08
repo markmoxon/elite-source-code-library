@@ -16,7 +16,13 @@
 .logL
 
 IF _MATCH_EXTRACTED_BINARIES
- INCBIN "versions/6502sp/extracted/workspaces/ELTG-logL.bin"
+
+ IF _SNG45
+  INCBIN "versions/6502sp/extracted/workspaces-SNG45/ELTG-logL.bin"
+ ELIF _SOURCE_DISC
+  INCBIN "versions/6502sp/extracted/workspaces/ELTG-logL.bin"
+ ENDIF
+
 ELSE
  SKIP 1
  FOR I%, 1, 255

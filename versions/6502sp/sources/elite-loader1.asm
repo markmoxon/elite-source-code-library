@@ -61,10 +61,25 @@ YY = &94                \ Temporary storage, used when drawing Saturn
 
 T = &95                 \ Temporary storage, used all over the place
 
-CODE% = &2000
-LOAD% = &2000
+IF _SNG45
+
+ CODE% = &1FDC
+ LOAD% = &1FDC
+
+ELIF _SOURCE_DISC
+
+ CODE% = &2000
+ LOAD% = &2000
+
+ENDIF
 
 ORG CODE%
+
+IF _SNG45
+
+ EQUS "Copyright (c) Acornsoft Limited 1985"
+
+ENDIF
 
 INCLUDE "library/common/loader/variable/b_per_cent.asm"
 INCLUDE "library/common/loader/variable/e_per_cent.asm"

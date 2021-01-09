@@ -12,6 +12,40 @@
 
  CLD                    \ Clear the decimal flag, so we're not in decimal mode
 
+IF _SNG45
+
+ NOP                    \ In SNG45, the release version of 6502 Second Processor
+ NOP                    \ Elite, the detection code from the original source is
+ NOP                    \ disabled and replaced by NOPs
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+
+ LDA #&EA               \ Call OSBYTE with A = 0, X = 0 and Y = &FF to detect
+ LDX #0                 \ the presence of the Tube
+ LDY #&FF
+ JSR OSBYTE
+
+ELIF _SOURCE_DISC
+
  LDA #129               \ Call OSBYTE with A = 129, X = 0 and Y = &FF to detect
  LDX #0                 \ the machine type. This call is undocumented and is not
  LDY #&FF               \ the recommended way to determine the machine type
@@ -72,6 +106,8 @@
  DEY                    \ detects whether Tube hardware is present, returning
  JSR OSBYTE             \ X = 0 (not present) or X = &FF (present)
 
+ENDIF
+
  TXA                    \ If X is non-zero (Tube is present) then jump to happy
  BNE happy              \ to continue the loading process
 
@@ -82,8 +118,23 @@
                         \ system error, and stop everything
 
  BRK
+
+IF _SNG45
+
+ EQUB &0A               \ Print a line feed
+
+ EQUB &16, &07          \ VDU 22, 7 (change to mode 7)
+
+ EQUS "This program needs a 6502 2nd Processor"
+
+ELIF _SOURCE_DISC
+
  EQUS "This program needs a 6502 Second Processor"
- EQUW &0D0A
+
+ENDIF
+
+ EQUW &0D0A             \ Print a line feed and a carriage return
+
  BRK
 
 .ZZZAP

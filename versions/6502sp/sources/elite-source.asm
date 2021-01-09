@@ -50,7 +50,9 @@ _SNG45                  = (_RELEASE = 2)
 \
 \ ******************************************************************************
 
-Q% = _REMOVE_CHECKSUMS  \ Set Q% to TRUE for the maximum commander
+Q% = _REMOVE_CHECKSUMS  \ Set Q% to TRUE to max out the default commander, FALSE
+                        \ for the standard default commander (this is set to
+                        \ TRUE if checksums are disabled, just for convenience)
 
 D% = &D000              \ The address where the ship blueprints get moved to
                         \ after loading, so they go from &D000 to &F200

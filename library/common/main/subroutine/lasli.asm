@@ -62,29 +62,33 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
- LDA #32                \ Call las with A = 32 and Y = 224 to draw one set of
- LDY #224               \ laser lines
+ LDA #32                \ Set A = 32 and Y = 224 for the first set of laser
+ LDY #224               \ lines (the wider pair of lines)
 
 IF _6502SP_VERSION
 IF _SNG45
 
- DEC LASY
+ DEC LASY               \ Decrement the y-coordinate of the centre point to move
+                        \ it up the screen by a line for the first set of lines,
+                        \ so the wider set of lines aim slightly higher than the
+                        \ narrower set
 
 ENDIF
 ENDIF
 
- JSR las
+ JSR las                \ Call las below to draw the first set of laser lines
 
 IF _6502SP_VERSION
 IF _SNG45
 
- INC LASY
+ INC LASY               \ Increment the y-coordinate of the centre point to put
+                        \ it back to the original position
 
 ENDIF
 ENDIF
 
  LDA #48                \ Fall through into las with A = 48 and Y = 208 to draw
- LDY #208               \ a second set of lines
+ LDY #208               \ a second set of lines (the narrower pair)
 
                         \ The following routine draws two laser lines, one from
                         \ the centre point down to point A on the bottom row,

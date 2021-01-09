@@ -39,9 +39,9 @@ IF _SNG45
  NOP
  NOP
 
- LDA #&EA               \ Call OSBYTE with A = 0, X = 0 and Y = &FF to detect
- LDX #0                 \ the presence of the Tube
- LDY #&FF
+ LDA #234               \ Call OSBYTE with A = 234, X = 0 and Y = &FF, which
+ LDX #0                 \ detects whether Tube hardware is present, returning
+ LDY #&FF               \ X = 0 (not present) or X = &FF (present)
  JSR OSBYTE
 
 ELIF _SOURCE_DISC

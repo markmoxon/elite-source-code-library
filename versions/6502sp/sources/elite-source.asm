@@ -38,28 +38,19 @@ INCLUDE "versions/6502sp/sources/elite-header.h.asm"
 CPU 1                   \ Switch to 65C02 assembly, as this code runs on the
                         \ 6502 Second Processor
 
-_ENABLE_MAX_COMMANDER   = TRUE AND _REMOVE_CHECKSUMS
-_CASSETTE_VERSION       = TRUE AND (_VERSION = 1)
-_DISC_VERSION           = TRUE AND (_VERSION = 2)
-_6502SP_VERSION         = TRUE AND (_VERSION = 3)
-
-IF _6502SP_VERSION
-
- _SNG45                 = TRUE AND (_SUBVERSION = 1)
- _SOURCE_DISC           = TRUE AND (_SUBVERSION = 2)
-
-ELSE
-
- _SNG45                 = FALSE
- _SOURCE_DISC           = FALSE
-
-ENDIF
+_CASSETTE_VERSION       = (_VERSION = 1)
+_DISC_VERSION           = (_VERSION = 2)
+_6502SP_VERSION         = (_VERSION = 3)
+_SOURCE_DISC            = (_RELEASE = 1)
+_SNG45                  = (_RELEASE = 2)
 
 \ ******************************************************************************
 \
 \ Configuration variables
 \
 \ ******************************************************************************
+
+Q% = _REMOVE_CHECKSUMS  \ Set Q% to TRUE for the maximum commander
 
 D% = &D000              \ The address where the ship blueprints get moved to
                         \ after loading, so they go from &D000 to &F200
@@ -908,9 +899,9 @@ LOAD_G% = LOAD% + P% - CODE%
 IF _MATCH_EXTRACTED_BINARIES
 
  IF _SNG45
-  INCBIN "versions/6502sp/extracted/workspaces-SNG45/ELTG-align.bin"
+  INCBIN "versions/6502sp/extracted/sng45/workspaces/ELTG-align.bin"
  ELIF _SOURCE_DISC
-  INCBIN "versions/6502sp/extracted/workspaces/ELTG-align.bin"
+  INCBIN "versions/6502sp/extracted/source-disc/workspaces/ELTG-align.bin"
  ENDIF
 
 ELSE

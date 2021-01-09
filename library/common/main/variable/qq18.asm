@@ -1069,10 +1069,20 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
-\SNG45 RTOK 102               \ Token 114:    "EXTRA ENERGY UNIT"
+IF _SNG45
+
+ RTOK 121               \ Token 114:    "ENERGY UNIT"
+ RTOK 14                \
+ EQUB 0                 \ Encoded as:   "[121][14]"
+
+ELIF _SOURCE_DISC
+
+ RTOK 102               \ Token 114:    "EXTRA ENERGY UNIT"
  RTOK 121               \
  RTOK 14                \ Encoded as:   "[102][121][14]"
  EQUB 0
+
+ENDIF
 
  CHAR 'D'               \ Token 115:    "DOCKING COMPUTERS"
  CHAR 'O'               \
@@ -1527,8 +1537,15 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION
 
-\ SKIP 4                 \ These bytes are unused
+IF _SNG45
 
-EQUB 0, 0, &E4, &63, &A5 \SNG45
+ EQUB 0, 0              \ These bytes are unused and just contain noise
+ EQUB &E4, &63, &A5
+
+ELIF _SOURCE_DISC
+
+ SKIP 4                 \ These bytes are unused
+
+ENDIF
 
 ENDIF

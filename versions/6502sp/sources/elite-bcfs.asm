@@ -39,21 +39,11 @@
 
 INCLUDE "versions/6502sp/sources/elite-header.h.asm"
 
-_CASSETTE_VERSION       = TRUE AND (_VERSION = 1)
-_DISC_VERSION           = TRUE AND (_VERSION = 2)
-_6502SP_VERSION         = TRUE AND (_VERSION = 3)
-
-IF _6502SP_VERSION
-
- _SNG45                 = (_SUBVERSION = 1)
- _SOURCE_DISC           = (_SUBVERSION = 2)
-
-ELSE
-
- _SNG45                 = FALSE
- _SOURCE_DISC           = FALSE
-
-ENDIF
+_CASSETTE_VERSION       = (_VERSION = 1)
+_DISC_VERSION           = (_VERSION = 2)
+_6502SP_VERSION         = (_VERSION = 3)
+_SOURCE_DISC            = (_RELEASE = 1)
+_SNG45                  = (_RELEASE = 2)
 
 \ ******************************************************************************
 \
@@ -77,9 +67,9 @@ LOAD% = &1000           \ The load address of the main game code file, which is
 ORG CODE%
 
 IF _SNG45
- INCBIN "versions/6502sp/extracted/workspaces-SNG45/BCFS-MOS.bin"
+ INCBIN "versions/6502sp/extracted/sng45/workspaces/BCFS-MOS.bin"
 ELIF _SOURCE_DISC
- INCBIN "versions/6502sp/extracted/workspaces/BCFS-MOS.bin"
+ INCBIN "versions/6502sp/extracted/source-disc/workspaces/BCFS-MOS.bin"
 ENDIF
 
 .elitea
@@ -151,9 +141,9 @@ PRINT "ships = ", ~P%
 INCBIN "versions/6502sp/output/SHIPS.bin"
 
 IF _SNG45
- INCBIN "versions/6502sp/extracted/workspaces-SNG45/BCFS-SHIPS.bin"
+ INCBIN "versions/6502sp/extracted/sng45/workspaces/BCFS-SHIPS.bin"
 ELIF _SOURCE_DISC
- INCBIN "versions/6502sp/extracted/workspaces/BCFS-SHIPS.bin"
+ INCBIN "versions/6502sp/extracted/source-disc/workspaces/BCFS-SHIPS.bin"
 ENDIF
 
 .end

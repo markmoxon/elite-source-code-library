@@ -24,12 +24,21 @@
 .logL
 
 IF _MATCH_EXTRACTED_BINARIES
- INCBIN "versions/6502sp/extracted/workspaces/ICODE-logL.bin"
+
+ IF _SNG45
+  INCBIN "versions/6502sp/extracted/sng45/workspaces/ICODE-logL.bin"
+ ELIF _SOURCE_DISC
+  INCBIN "versions/6502sp/extracted/source-disc/workspaces/ICODE-logL.bin"
+ ENDIF
+
 ELSE
+
  SKIP 1
+
  FOR I%, 1, 255
    B% = INT(&2000 * LOG(I%) / LOG(2) + 0.5)
    EQUB B% MOD 256
  NEXT
+
 ENDIF
 

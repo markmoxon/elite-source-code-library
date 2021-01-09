@@ -32,21 +32,11 @@
 
 INCLUDE "versions/6502sp/sources/elite-header.h.asm"
 
-_CASSETTE_VERSION       = TRUE AND (_VERSION = 1)
-_DISC_VERSION           = TRUE AND (_VERSION = 2)
-_6502SP_VERSION         = TRUE AND (_VERSION = 3)
-
-IF _6502SP_VERSION
-
- _SNG45                 = (_SUBVERSION = 1)
- _SOURCE_DISC           = (_SUBVERSION = 2)
-
-ELSE
-
- _SNG45                 = FALSE
- _SOURCE_DISC           = FALSE
-
-ENDIF
+_CASSETTE_VERSION       = (_VERSION = 1)
+_DISC_VERSION           = (_VERSION = 2)
+_6502SP_VERSION         = (_VERSION = 3)
+_SOURCE_DISC            = (_RELEASE = 1)
+_SNG45                  = (_RELEASE = 2)
 
 \ ******************************************************************************
 \

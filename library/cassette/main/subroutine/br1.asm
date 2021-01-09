@@ -112,7 +112,7 @@
 
  CMP CHK                \ Test the calculated checksum against CHK
 
-IF _REMOVE_COMMANDER_CHECK
+IF _REMOVE_CHECKSUMS
 
  NOP                    \ If we have disabled the commander check, then ignore
  NOP                    \ the checksum and fall through into the next part

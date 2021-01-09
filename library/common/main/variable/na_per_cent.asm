@@ -24,8 +24,6 @@
 \
 \ ******************************************************************************
 
-Q% = _ENABLE_MAX_COMMANDER
-
 .NA%
 
  EQUS "JAMESON"         \ The current commander name, which defaults to JAMESON

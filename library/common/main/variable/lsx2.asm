@@ -21,7 +21,11 @@ ELIF _6502SP_VERSION
 
 IF _MATCH_EXTRACTED_BINARIES
 
- INCBIN "versions/6502sp/extracted/workspaces/ELTA-LSX2.bin"
+ IF _SNG45
+  INCBIN "versions/6502sp/extracted/sng45/workspaces/ELTA-LSX2.bin"
+ ELIF _SOURCE_DISC
+  INCBIN "versions/6502sp/extracted/source-disc/workspaces/ELTA-LSX2.bin"
+ ENDIF
 
 ELSE
 

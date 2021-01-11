@@ -72,6 +72,11 @@ encrypt:
 	$(PYTHON) versions/cassette/sources/elite-checksum.py
 	$(BEEBASM) -i versions/cassette/sources/elite-disc.asm -do versions/cassette/elite-cassette.ssd -boot ELTdata
 
+	echo _VERSION=2 > versions/disc/sources/elite-header.h.asm
+	echo _REMOVE_CHECKSUMS=TRUE >> versions/disc/sources/elite-header.h.asm
+	$(BEEBASM) -i versions/disc/sources/elite-source-d.asm -v > versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-source-t.asm -v > versions/disc/output/compile.txt
+
 	echo _VERSION=3 > versions/6502sp/sources/elite-header.h.asm
 	echo _RELEASE=$(rel) >> versions/6502sp/sources/elite-header.h.asm
 	echo _REMOVE_CHECKSUMS=FALSE >> versions/6502sp/sources/elite-header.h.asm
@@ -87,4 +92,5 @@ encrypt:
 .PHONY:verify
 verify:
 	@$(PYTHON) versions/cassette/sources/crc32.py versions/cassette/extracted versions/cassette/output
+	@$(PYTHON) versions/disc/sources/crc32.py versions/disc/extracted versions/disc/output
 	@$(PYTHON) versions/6502sp/sources/crc32.py versions/6502sp/extracted$(folder) versions/6502sp/output

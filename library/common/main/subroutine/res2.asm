@@ -75,7 +75,7 @@ ENDIF
                         \ slots for the local bubble of universe, and various
                         \ flight and ship status variables
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA #LO(WP-1)          \ We have reset the ship line heap, so we now point
  STA SLSP               \ SLSP to the byte before the WP workspace to indicate

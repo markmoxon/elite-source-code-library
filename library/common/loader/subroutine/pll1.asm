@@ -48,7 +48,7 @@
 
 .PLL1
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
                         \ The following loop iterates CNT(1 0) times, i.e. &500
                         \ or 1280 times, and draws the planet part of the
@@ -175,7 +175,7 @@ ENDIF
 
  BNE PLL1               \ Loop back to PLL1 until CNT+1 = 0
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDX #&C2               \ Set the low byte of EXCN(1 0) to &C2, so we now have
  STX EXCN               \ EXCN(1 0) = &03C2, which we will use in the IRQ1
@@ -240,7 +240,7 @@ ENDIF
 
  BNE PLL2               \ Loop back to PLL2 until CNT2+1 = 0
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDX MHCA               \ Set the low byte of BLPTR(1 0) to the contents of MHCA
  STX BLPTR              \ (which is &CA), so we now have BLPTR(1 0) = &03CA,

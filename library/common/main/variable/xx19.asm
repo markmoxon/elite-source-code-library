@@ -1,6 +1,6 @@
 .XX19
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  SKIP NI% - 33          \ XX19(1 0) shares its location with INWK(34 33), which
                         \ contains the address of the ship line heap

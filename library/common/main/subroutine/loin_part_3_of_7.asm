@@ -12,7 +12,7 @@
 \
 \   * The line is going right and up (no swap) or left and down (swap)
 \
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 \   * X1 < X2 and Y1-1 > Y2
 ELIF _6502SP_VERSION
 \   * X1 < X2 and Y1 > Y2
@@ -52,7 +52,7 @@ IF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA SWAP               \ If SWAP > 0 then we swapped the coordinates above, so
  BNE LI6                \ jump down to LI6 to skip plotting the first pixel

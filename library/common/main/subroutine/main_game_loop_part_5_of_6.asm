@@ -27,7 +27,7 @@
 
 .MLOOP
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA #%00000001         \ Set 6522 System VIA interrupt enable register IER
  STA VIA+&4E            \ (SHEILA &4E) bit 1 (i.e. disable the CA2 interrupt,
@@ -67,7 +67,7 @@ ENDIF
 
  JSR DIALS              \ Call DIALS to update the dashboard
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA QQ11               \ If this is a space view, skip the following four
  BEQ P%+11              \ instructions (i.e. jump to JSR TT17 below)

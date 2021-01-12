@@ -19,7 +19,7 @@ ENDIF
 
 .LOD
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDX #2                 \ Enable the ESCAPE key and clear memory if the BREAK
  JSR FX200              \ key is pressed (*FX 200,2)
@@ -50,7 +50,7 @@ ENDIF
                         \
                         \ Length of file = &00000100 in &0C0A to &0C0D
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  INY                    \ Increment Y to &C, which we use next
 
@@ -59,7 +59,7 @@ ENDIF
  LDA #&FF               \ Call QUS1 with A = &FF, Y = &C to load the commander
  JSR QUS1               \ file at address &0B00
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA &B00               \ If the first byte of the loaded file has bit 7 set,
  BMI SPS1+1             \ jump to SPS+1, which is the second byte of an LDA #0
@@ -100,7 +100,7 @@ ENDIF
 
  BPL LOL1               \ Loop back until we have copied all NT% bytes
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDX #3                 \ Fall through into FX200 to disable the ESCAPE key and
                         \ clear memory if the BREAK key is pressed (*FX 200,3)

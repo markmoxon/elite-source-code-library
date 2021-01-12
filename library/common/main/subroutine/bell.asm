@@ -15,7 +15,7 @@
 
  LDA #7                 \ Control code 7 makes a beep, so load this into A
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
                         \ Fall through into the TT26 print routine to
                         \ actually make the sound

@@ -18,7 +18,7 @@
 
 .cntr
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA DAMP               \ If DAMP is non-zero, then keyboard damping is not
  BNE RE1                \ enabled, so jump to RE1 to return from the subroutine

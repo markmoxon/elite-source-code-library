@@ -18,7 +18,7 @@
 
 .WPLS
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA LSX                \ If LSX < 0, the sun line heap is empty, so return from
  BMI WPLS-1             \ the subroutine (as WPLS-1 contains an RTS)
@@ -62,7 +62,7 @@ ENDIF
 
  STY LSX                \ Set LSX to &FF to indicate the sun line heap is empty
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  RTS                    \ Return from the subroutine
 

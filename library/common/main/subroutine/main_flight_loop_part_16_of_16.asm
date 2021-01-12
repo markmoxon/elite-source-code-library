@@ -77,7 +77,7 @@
 
 .MA66
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA QQ11               \ If this is not a space view (i.e. QQ11 is non-zero)
  BNE MA9                \ then jump to MA9 to return from the main flight loop

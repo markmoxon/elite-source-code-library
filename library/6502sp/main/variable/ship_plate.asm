@@ -14,7 +14,11 @@
  EQUW 10 * 10           \ Targetable area          = 10 * 10
  EQUB &2C               \ Edges data offset (low)  = &002C
  EQUB &3C               \ Faces data offset (low)  = &003C
+IF _DISC_VERSION
+ EQUB 17                \ Max. edge count          = (17 - 1) / 4 = 4
+ELIF _6502SP_VERSION
  EQUB 21                \ Max. edge count          = (21 - 1) / 4 = 5
+ENDIF
  EQUB 0                 \ Gun vertex               = 0
  EQUB 10                \ Explosion count          = 1, as (4 * n) + 6 = 10
  EQUB 24                \ Number of vertices       = 24 / 6 = 4

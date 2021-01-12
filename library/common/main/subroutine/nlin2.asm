@@ -18,7 +18,7 @@
 
 .NLIN2
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  STA Y1                 \ Set (X1, Y1) = (2, A)
  LDX #2

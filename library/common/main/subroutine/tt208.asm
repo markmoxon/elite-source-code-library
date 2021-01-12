@@ -9,7 +9,7 @@
 
 .TT208
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA #4                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 4 (Sell
@@ -38,7 +38,7 @@ ENDIF
  LDA #205               \ Print recursive token 45 ("SELL")
  JSR TT27
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA #206               \ Print recursive token 46 (" CARGO{sentence case}")
  JSR TT68               \ followed by a colon

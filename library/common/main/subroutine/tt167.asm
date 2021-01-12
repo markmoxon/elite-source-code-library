@@ -9,7 +9,7 @@
 
 .TT167
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA #16                \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 16 (Market
@@ -33,7 +33,7 @@ ENDIF
  JSR NLIN3              \ PRICES") and draw a horizontal line at pixel row 19
                         \ to box in the title
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA #3                 \ Move the text cursor to row 3
  STA YC
@@ -69,7 +69,7 @@ ENDIF
                         \ QQ19+1 to byte #1 from the market prices table for
                         \ this item
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  INC YC                 \ Move the text cursor down one row
 

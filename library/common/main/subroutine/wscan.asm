@@ -3,7 +3,7 @@
 \       Name: WSCAN
 \       Type: Subroutine
 \   Category: Screen mode
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 \    Summary: Wait for the vertical sync
 ELIF _6502SP_VERSION
 \    Summary: Implement the #wscn command (wait for the vertical sync)
@@ -22,7 +22,7 @@ ENDIF
  LDA #0                 \ Set DL to 0
  STA DL
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA DL                 \ Loop round these two instructions until DL is no
  BEQ P%-2               \ longer 0 (DL gets set to 30 in the LINSCN routine,

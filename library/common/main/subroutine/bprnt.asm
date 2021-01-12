@@ -298,7 +298,7 @@
  DEC XX17               \ Decrement the total number of characters left to
                         \ print, which we stored in XX17
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  BMI RR3+1              \ If the result is negative, we have printed all the
                         \ characters, so return from the subroutine (as RR3

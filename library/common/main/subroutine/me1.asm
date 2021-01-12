@@ -29,7 +29,7 @@
 
  PLA                    \ Restore the new message token
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  EQUB &2C               \ Fall through into me1 to print the new message, but
                         \ skip the first instruction by turning it into

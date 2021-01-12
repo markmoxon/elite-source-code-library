@@ -33,7 +33,7 @@ ENDIF
  LDX #0                 \ Set QQ17 = 0 to switch to ALL CAPS
  STX QQ17
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDY #9                 \ Move the text cursor to column 9, row 22, at the
  STY XC                 \ bottom middle of the screen, and set Y = 22

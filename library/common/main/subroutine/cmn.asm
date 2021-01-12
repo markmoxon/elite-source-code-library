@@ -21,7 +21,7 @@
 
 .QUL4
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA NA%,Y              \ The commander's name is stored at NA%, so load the
                         \ Y-th character from NA%

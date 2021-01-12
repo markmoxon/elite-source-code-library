@@ -57,7 +57,7 @@
 
  LDA #&FF               \ Set A = &FF
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  JMP PLF5               \ Jump to PLF5
 

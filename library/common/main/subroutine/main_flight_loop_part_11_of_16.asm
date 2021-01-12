@@ -54,7 +54,7 @@ ENDIF
  JSR BEEP               \ We have missile lock and an armed missile, so call
                         \ the BEEP subroutine to make a short, high beep
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDX XSAV               \ Call ABORT2 to store the details of this missile
  LDY #&0E               \ lock, with the targeted ship's slot number in X
@@ -119,7 +119,7 @@ ENDIF
  SBC LAS                \ than zero, the other ship has survived the hit, so
  BCS MA14               \ jump down to MA14
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA TYPE               \ Did we just hit the space station? If so, jump to
  CMP #SST               \ MA14+2 to make the station hostile, skipping the

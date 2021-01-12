@@ -48,7 +48,7 @@ ENDIF
                         \ screen indent for the crosshairs (i.e. the minimum
                         \ distance from the top-left corner of the screen)
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDX QQ11               \ If the current view is not the Short-range Chart,
  BPL P%+4               \ which is the only view with bit 7 set, then skip the
@@ -106,7 +106,7 @@ ENDIF
  CLC                    \ to get the x-coordinate of the right edge of the
  ADC QQ19+2             \ crosshairs
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  BCC P%+4               \ If the above addition didn't overflow, then A is
                         \ correct, so skip the next instruction
@@ -138,7 +138,7 @@ ENDIF
  ADC QQ19+5             \ crosshairs
  STA XX15+1
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  JSR HLOIN              \ Draw a horizontal line from (X1, Y1) to (X2, Y1),
                         \ which will draw from the left edge of the crosshairs

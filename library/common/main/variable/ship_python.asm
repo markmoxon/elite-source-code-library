@@ -12,13 +12,13 @@
 IF _CASSETTE_VERSION
  EQUB 3                 \ Max. canisters on demise = 3
  EQUW 120 * 120         \ Targetable area          = 120 * 120
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
  EQUB 5                 \ Max. canisters on demise = 5
  EQUW 80 * 80           \ Targetable area          = 80 * 80
 ENDIF
  EQUB &56               \ Edges data offset (low)  = &0056
  EQUB &BE               \ Faces data offset (low)  = &00BE
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
  EQUB 85                \ Max. edge count          = (85 - 1) / 4 = 21
 ELIF _6502SP_VERSION
  EQUB 89                \ Max. edge count          = (89 - 1) / 4 = 22
@@ -26,14 +26,14 @@ ENDIF
  EQUB 0                 \ Gun vertex               = 0
 IF _CASSETTE_VERSION
  EQUB 46                \ Explosion count          = 10, as (4 * n) + 6 = 46
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
  EQUB 42                \ Explosion count          = 9, as (4 * n) + 6 = 42
 ENDIF
  EQUB 66                \ Number of vertices       = 66 / 6 = 11
  EQUB 26                \ Number of edges          = 26
 IF _CASSETTE_VERSION
  EQUW 200               \ Bounty                   = 200
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
  EQUW 0                 \ Bounty                   = 0
 ENDIF
  EQUB 52                \ Number of faces          = 52 / 4 = 13
@@ -104,9 +104,7 @@ IF _CASSETTE_VERSION
  FACE      -25,      -37,      -11,         30    \ Face 11
  FACE        0,        0,     -112,         30    \ Face 12
 
- SKIP 11                \ This space is unused
-
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
 \VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX    0,    0,  224,     0,      1,    2,     3,         31    \ Vertex 0
@@ -163,5 +161,11 @@ ELIF _6502SP_VERSION
  FACE       25,      -37,      -11,        31    \ Face 10
  FACE      -25,      -37,      -11,        31    \ Face 11
  FACE        0,        0,     -112,        31    \ Face 12
+
+ENDIF
+
+IF _CASSETTE_VERSION
+
+ SKIP 11                \ This space is unused
 
 ENDIF

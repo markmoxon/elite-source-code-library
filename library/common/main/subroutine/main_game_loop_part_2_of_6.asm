@@ -78,7 +78,7 @@
  BCS MTT1               \ the spawning of an asteroid or cargo canister and
                         \ potentially spawn something else
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA MANY+AST           \ If we already have 3 or more asteroids in the local
  CMP #3                 \ bubble, jump down to MTT1 to skip the following and
@@ -153,7 +153,7 @@ ENDIF
 
  JSR DORND              \ Set A and X to random numbers
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  CMP #5                 \ Set A to the ship number of an asteroid, and keep
  LDA #AST               \ this value for 98.5% of the time (i.e. if random

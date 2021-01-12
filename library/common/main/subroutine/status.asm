@@ -65,7 +65,7 @@ ENDIF
 
 .STATUS
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA #8                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 8 (Status
@@ -82,7 +82,7 @@ ENDIF
  JSR TT111              \ Select the system closest to galactic coordinates
                         \ (QQ9, QQ10)
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA #7                 \ Move the text cursor to column 7
  STA XC
@@ -109,7 +109,7 @@ ENDIF
 
  LDA #15                \ Set A to token 129 ("{sentence case}DOCKED")
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDY QQ12               \ Fetch the docked status from QQ12, and if we are
  BNE st6                \ docked, jump to st6 to print "Docked" for our
@@ -125,7 +125,7 @@ ENDIF
  LDA #230               \ Otherwise we are in space, so start off by setting A
                         \ to token 70 ("GREEN")
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDY MANY+AST           \ Set Y to the number of asteroids in our local bubble
                         \ of universe
@@ -209,7 +209,7 @@ ENDIF
  LSR A
  LSR A
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
 .st5L
 
@@ -240,7 +240,7 @@ ENDIF
 
  LSR A                  \ Shift A to the right
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  BNE st5L               \ Keep looping around until A = 0, which means there are
                         \ no set bits left in A
@@ -341,7 +341,7 @@ ENDIF
 
  LDA #103               \ Set A to token 103 ("PULSE LASER")
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDX CNT                \ If the laser power for view X has bit 7 clear, then it
  LDY LASER,X            \ is a pulse laser, so skip the following instruction

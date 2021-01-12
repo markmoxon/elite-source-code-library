@@ -69,7 +69,7 @@ ENDIF
  ADC #208               \ prints the current item's name
  JSR TT27
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA #14                \ Move the text cursor to column 14, for the item's
  STA XC                 \ quantity
@@ -101,7 +101,7 @@ ENDIF
  CMP #4                 \ screen), jump to TT212 to skip the option to sell
  BNE TT212              \ items
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA #205               \ Set A to recursive token 45 ("SELL")
 
@@ -146,7 +146,7 @@ ENDIF
                         \ routine doesn't print the item details, as we just
                         \ disabled printing)
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDY QQ29               \ Set P to the amount of this item we have in our cargo
  LDA QQ20,Y             \ hold (which is the amount to sell)
@@ -178,7 +178,7 @@ ENDIF
 
  JSR MCASH              \ Add (Y X) cash to the cash pot in CASH
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA #0                 \ We've made the sale, so set the amount
  LDY QQ29
@@ -197,7 +197,7 @@ ENDIF
  LDY QQ29               \ Fetch the item number from QQ29 into Y, and increment
  INY                    \ Y to point to the next item
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  CPY #17                \ If Y >= 17 then skip the next instruction as we have
  BCS P%+5               \ done the last item

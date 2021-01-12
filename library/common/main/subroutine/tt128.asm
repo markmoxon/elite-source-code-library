@@ -40,7 +40,7 @@
  LDX #2                 \ Set STP = 2, the step size for the circle
  STX STP
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  JSR CIRCLE2            \ Call CIRCLE2 to draw a circle with the centre at
                         \ (K3(1 0), K4(1 0)) and radius K

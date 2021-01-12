@@ -18,7 +18,7 @@
                         \     * Bits 0-6 contain the laser's power
                         \
                         \     * Bit 7 determines whether or not the laser pulses
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
                         \       (0 = pulse laser) or is always on (1 = beam
                         \       laser)
 ELIF _6502SP_VERSION

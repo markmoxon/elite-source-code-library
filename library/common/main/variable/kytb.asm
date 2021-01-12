@@ -27,7 +27,7 @@ IF _6502SP_VERSION
 ENDIF
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
 KYTB = P% - 1           \ Point KYTB to the byte before the start of the table
 

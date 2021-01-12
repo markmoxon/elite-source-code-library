@@ -19,7 +19,7 @@
 
 .ee3
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDY #1                 \ Move the text cursor to row 1
  STY YC

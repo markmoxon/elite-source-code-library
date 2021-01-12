@@ -13,7 +13,7 @@
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA MCNT               \ Fetch the main loop counter and calculate MCNT mod 4,
  AND #3                 \ jumping to rT9 if it is non-zero. rT9 contains an RTS,
@@ -37,7 +37,7 @@ ENDIF
                         \ we use not only for the energy banks, but also for the
                         \ shield levels and current fuel
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDX #3                 \ Set up a counter in X so we can zero the four bytes at
                         \ XX12, so we can then calculate each of the four energy
@@ -56,7 +56,7 @@ ENDIF
 
 .DLL23
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  STY XX12,X             \ Set the X-th byte of XX12 to 0
 
@@ -95,7 +95,7 @@ ENDIF
  STA Q                  \ This bank is full, so update Q with the energy of the
                         \ remaining banks
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA #16                \ Store this bank's level in XX12 as 16, as it is full,
  STA XX12,X             \ with XX12+3 for the bottom bank and XX12+0 for the top
@@ -121,7 +121,7 @@ ENDIF
 
 .DLL26
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA Q                  \ If we get here then the bank we just checked is not
  STA XX12,X             \ fully charged, so store its value in XX12 (using Q,
@@ -144,7 +144,7 @@ ENDIF
 
 .DLL9
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA XX12,Y             \ Fetch the value of the Y-th indicator, starting from
                         \ the top

@@ -11,7 +11,7 @@
 \ before drawing, and then the routine uses the same approach as the PIXEL
 \ routine in the main game code, except it plots a single pixel from TWOS
 \ instead of a two pixel dash from TWOS2. This applies to the top part of the
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 \ screen (the monochrome mode 4 space view).
 ELIF _6502SP_VERSION
 \ screen (the four-colour mode 1 space view).
@@ -33,7 +33,7 @@ ENDIF
 
  EOR #%10000000         \ Flip the sign of A
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LSR A                  \ Set ZP+1 = &60 + A >> 3
  LSR A
@@ -76,7 +76,7 @@ ENDIF
  AND #%00000111
  TAX
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA TWOS,X             \ Otherwise fetch a pixel from TWOS and OR it into ZP+Y
  ORA (ZP),Y

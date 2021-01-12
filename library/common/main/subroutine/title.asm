@@ -12,7 +12,7 @@
 \
 \ Arguments:
 \
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 \   A                   The number of the recursive token to show below the
 \                       rotating ship (see variable QQ18 for details of
 \                       recursive tokens)
@@ -50,7 +50,7 @@ ENDIF
  LDA #1                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 1
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  DEC QQ11               \ Decrement QQ11 to 0, so from here on we are using a
                         \ space view
@@ -87,7 +87,7 @@ ENDIF
  LDA TYPE               \ Set up a new ship, using the ship type in TYPE
  JSR NWSHP
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDY #6                 \ Move the text cursor to column 6
  STY XC
@@ -104,7 +104,7 @@ ENDIF
  LDA #30                \ Print recursive token 144 ("---- E L I T E ----")
  JSR plf                \ followed by a newline
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDY #6                 \ Move the text cursor to column 6 again
  STY XC
@@ -125,7 +125,7 @@ ENDIF
  BEQ awe                \ print the author credits (PATG can be toggled by
                         \ pausing the game and pressing "X")
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA #254               \ Print recursive token 94 ("BY D.BRABEN & I.BELL")
  JSR TT27
@@ -187,7 +187,7 @@ ENDIF
 
  STY JSTK               \ Set KSTK = 0 (i.e. keyboard, not joystick)
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  PLA                    \ Restore the recursive token number we stored on the
  JSR ex                 \ stack at the start of this subroutine, and print that
@@ -236,7 +236,7 @@ ENDIF
  JSR MVEIT              \ Move the ship in space according to the orientation
                         \ vectors and the new value in z_hi
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA #128               \ Set z_lo = 128 (so the closest the ship gets to us is
  STA INWK+6             \ z_hi = 1, z_lo = 128, or 256 + 128 = 384
@@ -271,7 +271,7 @@ ENDIF
 
  JSR LL9                \ Call LL9 to display the ship
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  DEC MCNT               \ Decrement the main loop counter
 
@@ -290,7 +290,7 @@ ENDIF
                         \ button is pressed, otherwise it is set, so AND'ing
                         \ the value of IRB with %10000 extracts this bit
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
 \TAX                    \ This instruction is commented out in the original
                         \ source
@@ -303,7 +303,7 @@ ENDIF
 
  BEQ TL2                \ If the joystick fire button is pressed, jump to BL2
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  JSR RDKEY              \ Scan the keyboard for a key press
 

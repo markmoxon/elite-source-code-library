@@ -28,7 +28,7 @@ ENDIF
 
 .DK4
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  JSR RDKEY              \ Scan the keyboard for a key press and return the
                         \ internal key number in X (or 0 for no key press)
@@ -85,7 +85,7 @@ ENDIF
 
  BNE DKL4               \ If not, loop back to check for the next toggle key
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
 .DK55
 
@@ -135,7 +135,7 @@ ENDIF
 
 .DK2
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA QQ11               \ If the current view is non-zero (i.e. not a space
  BNE DK5                \ view), return from the subroutine (as DK5 contains
@@ -188,7 +188,7 @@ ENDIF
 
  BNE DKL1               \ If not, loop back to process the next key
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
 .DK5
 

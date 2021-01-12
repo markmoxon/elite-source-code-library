@@ -17,7 +17,7 @@
 
 .TT219
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
 \LDA#2                  \ This instruction is commented out in the original
                         \ source. Perhaps this view originally had a QQ11 value
@@ -111,7 +111,7 @@ ENDIF
  LDX #12                \ Perhaps they were left behind when code was moved from
  STX T1                 \ here into gnum, and weren't deleted?
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
 \.TT223                 \ This label is commented out in the original source,
                         \ and is a duplicate of a label in gnum, so this could
@@ -200,7 +200,7 @@ ENDIF
 
 .TT222
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA QQ29               \ Move the text cursor to row QQ29 + 5 (where QQ29 is
  CLC                    \ the item number, starting from 0)

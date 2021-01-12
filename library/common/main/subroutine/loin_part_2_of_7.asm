@@ -47,7 +47,7 @@
                         \ X1 < X2, so we're going from left to right as we go
                         \ from X1 to X2
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA Y1                 \ Set A = Y1 / 8, so A now contains the character row
  LSR A                  \ that will contain our horizontal line
@@ -76,7 +76,7 @@ ENDIF
  AND #7                 \ character block at which we want to draw the start of
  TAY                    \ our line (as each character block has 8 rows)
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  TXA                    \ Set A = bits 3-7 of X1
  AND #%11111000
@@ -94,7 +94,7 @@ ENDIF
                         \ of the horizontal pixel row that we want to draw the
                         \ start of our line on
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  TXA                    \ Set X = X1 mod 8, which is the horizontal pixel number
  AND #7                 \ within the character block where the line starts (as

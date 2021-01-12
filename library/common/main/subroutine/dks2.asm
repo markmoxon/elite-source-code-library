@@ -29,7 +29,7 @@
 
 .DKS2
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA #128               \ Call OSBYTE 128 to fetch the 16-bit value from ADC
  JSR OSBYTE             \ channel X, returning (Y X), i.e. the high byte in Y

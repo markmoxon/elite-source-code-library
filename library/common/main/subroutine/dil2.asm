@@ -44,7 +44,7 @@
 
 .DLL10
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  SEC                    \ Set A = Q - 4, so that A contains the offset of the
  LDA Q                  \ vertical bar from the start of this character block
@@ -75,7 +75,7 @@ ENDIF
                         \ drawing blank characters after this one until we reach
                         \ the end of the indicator row
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA CTWOS,X            \ CTWOS is a table of ready-made 1-pixel mode 5 bytes,
                         \ just like the TWOS and TWOS2 tables for mode 4 (see
@@ -145,7 +145,7 @@ ENDIF
  TAY                    \ character block (as each character is 8 bytes of
                         \ screen memory)
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  CPY #30                \ If Y < 30 then we still have some more character
  BCC DLL10              \ blocks to draw, so loop back to DLL10 to display the

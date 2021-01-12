@@ -44,7 +44,7 @@
 
 .LL74
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  ORA XX1+31             \ Apply bit 3 of A to the ship's byte #31, so if there
  STA XX1+31             \ was no ship already on screen, the bit is clear,
@@ -63,7 +63,7 @@ ENDIF
  LDA (XX0),Y            \ number of edges, and store it in XX20
  STA XX20
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDY #0                 \ We are about to step through all the edges, using Y
                         \ as a counter
@@ -94,7 +94,7 @@ ENDIF
                         \ The ship is firing its laser at us, so we need to draw
                         \ the laser lines
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA XX1+31             \ Clear bit 6 of the ship's byte #31 so the ship doesn't
  AND #%10111111         \ keep firing endlessly
@@ -178,7 +178,7 @@ ENDIF
                         \ screen, so jump to LL170 so we don't store this line
                         \ in the ship line heap
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDY U                  \ Fetch the ship line heap pointer, which points to the
                         \ next free byte on the heap, into Y

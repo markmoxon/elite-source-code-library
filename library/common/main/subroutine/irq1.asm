@@ -23,7 +23,7 @@ IF _6502SP_VERSION
 ENDIF
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
 .LINSCN
 
@@ -93,7 +93,7 @@ ENDIF
  TYA                    \ Store Y on the stack
  PHA
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDY #11                \ Set Y as a counter for 12 bytes, to use when setting
                         \ the dashboard palette below
@@ -121,7 +121,7 @@ ENDIF
                         \ clear and we aren't at the boundary, so we jump to
                         \ jvec to pass control to the next interrupt handler
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  ASL A                  \ Double the value in A to 4
 
@@ -139,7 +139,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA ESCP               \ If an escape pod is fitted, jump to VNT1 to set the
  BNE VNT1               \ mode 5 palette differently (so the dashboard is a
@@ -197,7 +197,7 @@ ENDIF
                         \ instruction passes control to the next interrupt
                         \ handler
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
 .VNT1
 

@@ -21,7 +21,7 @@
 
 .EQSHP
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  JSR DIALS              \ Call DIALS to update the dashboard
 
@@ -52,7 +52,7 @@ ENDIF
  LDA #%10000000         \ Set bit 7 of QQ17 to switch to Sentence Case, with the
  STA QQ17               \ next letter in capitals
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  INC YC                 \ Move the text cursor down one line
 
@@ -66,7 +66,7 @@ ENDIF
  CLC                    \ and add 3 (the tech level is stored as 0-14, so A is
  ADC #3                 \ now set to between 3 and 17)
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  CMP #12                \ If A >= 12 then set A = 12, so A is now set to between
  BCC P%+4               \ 3 and 12
@@ -128,7 +128,7 @@ ENDIF
  SEC                    \ Set the C flag so we will print a decimal point when
                         \ we print the price
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA #25                \ Move the text cursor to column 25
  STA XC
@@ -176,7 +176,7 @@ ENDIF
                         \ clear), which will be the actual item number we want
                         \ to buy
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDX #2                 \ Move the text cursor to column 2
  STX XC
@@ -206,7 +206,7 @@ ENDIF
  BNE et0                \ If A is not 0 (i.e. the item we've just bought is not
                         \ fuel), skip to et0
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  STA MCNT               \ We just bought fuel, so we zero the main loop counter
 
@@ -224,7 +224,7 @@ ENDIF
 
  INX                    \ Increment X to the new number of missiles
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDY #117               \ Set Y to recursive token 117 ("ALL")
 
@@ -296,7 +296,7 @@ ENDIF
                         \ prompt, and ask for a view number, which is returned
                         \ in X (which now contains 0-3)
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA #4                 \ This instruction doesn't appear to do anything, as we
                         \ either don't need it (if we already have this laser)
@@ -342,7 +342,7 @@ ENDIF
                         \ prompt, and ask for a view number, which is returned
                         \ in X (which now contains 0-3)
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  STX T1                 \ Store the view in T1 so we can retrieve it below
 

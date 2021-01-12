@@ -18,7 +18,7 @@
 \
 \                         * &00 = black (no missile)
 \
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 \                         * &0E = red (armed and locked)
 \
 \                         * &E0 = yellow/white (armed)

@@ -35,7 +35,7 @@
  JSR nWq                \ Create a cloud of stardust containing the correct
                         \ number of dust particles (i.e. NOSTM of them)
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA #12                \ Move the text cursor to column 12 on row 12
  STA YC
@@ -76,7 +76,7 @@ ENDIF
  STY MCNT               \ Reset the main loop counter to 255, so all timer-based
                         \ calls will be stopped
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  STY LASCT              \ Set the laser count to 255 to act as a counter in the
                         \ D2 loop below, so this setting determines how long the
@@ -111,7 +111,7 @@ ENDIF
  STA INWK+30            \ we store in byte #30 (the pitch counter) to give our
                         \ ship a very gentle pitch with damping
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  PHP                    \ Store the processor flags
 
@@ -197,7 +197,7 @@ ENDIF
                         \ which will display our exploding canister scene and
                         \ move everything about
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA LASCT              \ Loop back to D2 to run the main flight loop until
  BNE D2                 \ LASCT reaches zero (which will take 5.1 seconds, as

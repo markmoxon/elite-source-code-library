@@ -15,7 +15,7 @@
 
 .GTL2
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA NA%,X              \ Copy the X-th byte of NA% to the X-th byte of INWK
  STA INWK,X

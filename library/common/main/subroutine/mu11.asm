@@ -26,7 +26,7 @@
 
  LDA #0                 \ Set A = 0 so we can start building the answer in A
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDX #8                 \ Set up a counter in X to count the 8 bits in P
 

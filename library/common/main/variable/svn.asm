@@ -1,4 +1,4 @@
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
 \ ******************************************************************************
 \
@@ -19,7 +19,7 @@ ENDIF
 
  SKIP 1                 \ "Saving in progress" flag
                         \
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
                         \   * Non-zero while we are saving a commander
 ELIF _6502SP_VERSION
                         \   * Non-zero while the disc is being accessed (so this

@@ -10,7 +10,7 @@
 \ Print a character at the text cursor (XC, YC), do a beep, print a newline,
 \ or delete left (backspace).
 \
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 \ WRCHV is set to point here by elite-loader.asm.
 ELIF _6502SP_VERSION
 \ Calls to OSWRCH will end up here when A is not in the range 128-147, as those
@@ -24,7 +24,7 @@ ENDIF
 \
 \                         * 7 (beep)
 \
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 \                         * 10-13 (line feeds and carriage returns)
 ELIF _6502SP_VERSION
 \                         * 10 (line feed)
@@ -53,7 +53,7 @@ ENDIF
 \
 \   Y                   Y is preserved
 \
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 \   C flag              The C flag is cleared
 \
 \ Other entry points:
@@ -75,7 +75,7 @@ ENDIF
 
 .TT26
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  STA K3                 \ Store the A, X and Y registers, so we can restore
  STY YSAV2              \ them at the end (so they don't get changed by this
@@ -128,7 +128,7 @@ ENDIF
  BEQ RRX1               \ RRX1, which will move down a line, restore the
                         \ registers and return from the subroutine
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
  LDX #1                 \ If we get here, then this is control code 11-13, of
  STX XC                 \ which only 13 is used. This code prints a newline,
 ELIF _6502SP_VERSION
@@ -143,7 +143,7 @@ ENDIF
 
 .RRX1
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  INC YC                 \ Print a line feed, simply by incrementing the row
                         \ number (y-coordinate) of the text cursor, which is
@@ -203,7 +203,7 @@ ENDIF
                         \   ASCII 96-126 are defined in &C200-&C2F0 (page 2)
                         \
                         \ The following code reads the relevant character
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
                         \ bitmap from the above locations in ROM and pokes
 ELIF _6502SP_VERSION
                         \ bitmap from the copied MOS bitmaps at FONT% and pokes
@@ -213,7 +213,7 @@ ENDIF
                         \
                         \ It's a long way from 10 PRINT "Hello world!":GOTO 10
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
 \LDX #LO(K3)            \ These instructions are commented out in the original
 \INX                    \ source, but they call OSWORD 10, which reads the
@@ -243,7 +243,7 @@ ENDIF
                         \ character definition lives in memory
 
                         \ Now we want to set X to point to the relevant page
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
                         \ number for this character - i.e. &C0, &C1 or &C2.
 ELIF _6502SP_VERSION
                         \ number for this character - i.e. FONT% to FONT%+2
@@ -265,7 +265,7 @@ ENDIF
                         \
                         \ We'll refer to this below
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDX #&BF               \ Set X to point to the first font page in ROM minus 1,
                         \ which is &C0 - 1, or &BF
@@ -291,7 +291,7 @@ ENDIF
  ASL A                  \ then skip the following instruction
  BCC P%+4
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDX #&C1               \ A is 64-126, so set X to point to page &C1
 
@@ -306,7 +306,7 @@ ENDIF
 
  INX                    \ Increment X
                         \
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
                         \ By this point, we started with X = &BF, and then
                         \ we did the following:
                         \
@@ -341,7 +341,7 @@ ENDIF
                         \ want, while A contains the low byte (the offset into
                         \ the page) of the address
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  STA P+1                \ Store the address of this character's definition in
  STX P+2                \ P(2 1)
@@ -418,7 +418,7 @@ ENDIF
                         \ we're just updating the cursor so it's in the right
                         \ position following the deletion
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  ADC #&5E               \ A contains YC (from above) and the C flag is set (from
  TAX                    \ the CPY #127 above), so these instructions do this:
@@ -456,7 +456,7 @@ ELIF _6502SP_VERSION
 ENDIF
 
                         \ Because YC starts at 0 for the first text row, this
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
                         \ means that X will be &5F for row 0, &60 for row 1 and
 ELIF _6502SP_VERSION
                         \ means that X will be &3F for row 0, &41 for row 1 and
@@ -468,7 +468,7 @@ ENDIF
                         \ this means that (X SC) now points to the character
                         \ above the text cursor
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDY #&F8               \ Set Y = &F8, so the following call to ZES2 will count
                         \ Y upwards from &F8 to &FF
@@ -483,7 +483,7 @@ ENDIF
  JSR ZES2               \ Call ZES2, which zero-fills from address (X SC) + Y to
                         \ (X SC) + &FF. (X SC) points to the character above the
                         \ text cursor, and adding &FF to this would point to the
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
                         \ cursor, so adding &F8 points to the character before
 ELIF _6502SP_VERSION
                         \ cursor, so adding &F0 points to the character before
@@ -507,7 +507,7 @@ ENDIF
                         \ the cursor so it's in the right position following
                         \ the print
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
 \LDA YC                 \ This instruction is commented out in the original
                         \ source. It isn't required because we only just did a
@@ -561,7 +561,7 @@ ENDIF
                         \ the character data to the right place in screen
                         \ memory
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  ORA #&60               \ We already stored the least significant byte
                         \ of this screen address in SC above (see the STA SC
@@ -635,7 +635,7 @@ ENDIF
 
 .RRL1
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA (P+1),Y            \ The character definition is at P(2 1) - we set this up
                         \ above - so load the Y-th byte from P(2 1), which will
@@ -720,7 +720,7 @@ ENDIF
 
 .RR4
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDY YSAV2              \ We're done printing, so restore the values of the
  LDX XSAV2              \ A, X and Y registers that we saved above and clear
@@ -743,7 +743,7 @@ ENDIF
 
 .R5
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  JSR BEEP               \ Call the BEEP subroutine to make a short, high beep
 

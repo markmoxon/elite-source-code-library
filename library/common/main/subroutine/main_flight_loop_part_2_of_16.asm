@@ -61,7 +61,7 @@
  LSR A                  \ Divide the (positive) roll rate in A by 4
  LSR A
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  CMP #8                 \ If A >= 8, skip the following two instructions
  BCS P%+4

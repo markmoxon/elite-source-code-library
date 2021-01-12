@@ -18,7 +18,7 @@
 
 .DIALS
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA #&D0               \ Set SC(1 0) = &78D0, which is the screen address for
  STA SC                 \ the character block containing the left end of the

@@ -13,7 +13,7 @@
  JSR TT66               \ and set the current view type in QQ11 to 128 (Short-
                         \ range Chart)
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA #7                 \ Move the text cursor to column 7
  STA XC
@@ -144,7 +144,7 @@ ENDIF
  STA XX12               \ so this sets XX12 to the centre 104 +/- 76, the pixel
                         \ x-coordinate of this system
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LSR A                  \ Move the text cursor to column x-delta / 2 + 1
  LSR A                  \ which will be in the range 1-10
@@ -209,7 +209,7 @@ ENDIF
 
 .EE4
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  STY YC                 \ Now to print the label, so move the text cursor to row
                         \ Y (which contains the row where we can print this
@@ -226,7 +226,7 @@ ENDIF
  CPY #3                 \ If Y < 3, then the label would clash with the chart
  BCC TT187              \ title, so jump to TT187 to skip printing the label
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  DEX                    \ We entered the EE4 routine with X = 0, so this stores
  STX INWK,Y             \ &FF in INWK+Y, to denote that this row is now occupied
@@ -292,7 +292,7 @@ ENDIF
 
  INC XX20               \ Increment the counter
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  BEQ TT111-1            \ If X = 0 then we have done all 256 systems, so return
                         \ from the subroutine (as TT111-1 contains an RTS)

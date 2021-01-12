@@ -8,7 +8,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 \ Ready-made bytes for plotting horizontal line end caps in mode 4 (the top part
 \ of the split screen). This table provides a byte with pixels at the right end,
 \ which is used for the left end of the line.

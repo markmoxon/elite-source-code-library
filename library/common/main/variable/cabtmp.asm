@@ -1,6 +1,6 @@
 .CABTMP
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
  SKIP 0                 \ Cabin temperature
 ELIF _6502SP_VERSION
  SKIP 1                 \ Cabin temperature

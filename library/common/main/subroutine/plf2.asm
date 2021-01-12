@@ -20,7 +20,7 @@
 
  JSR plf                \ Print the text token in A followed by a newline
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDX #6                 \ Move the text cursor to column 6
  STX XC

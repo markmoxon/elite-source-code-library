@@ -10,7 +10,7 @@
 \ The character bitmap for the E.C.M. indicator's "E" bulb that gets displayed
 \ on the dashboard.
 \
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 \ The E.C.M. indicator uses the first 5 rows of the space station's "S" bulb
 \ below, as the bottom 5 rows of the "E" match the top 5 rows of the "S".
 \
@@ -26,7 +26,7 @@ ENDIF
 
 .ECBT
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  EQUB %11100000         \ x x x .
  EQUB %11100000         \ x x x .

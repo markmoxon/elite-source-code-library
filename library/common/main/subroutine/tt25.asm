@@ -16,7 +16,7 @@
 
 .TT25
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  JSR TT66-2             \ Clear the top part of the screen, draw a white border,
                         \ and set the current view type in QQ11 to 1
@@ -307,7 +307,7 @@ ENDIF
 
  JSR TT162              \ Print a space
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA #'k'               \ Print "km", returning from the subroutine using a
  JSR TT26               \ tail call

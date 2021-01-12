@@ -14,7 +14,7 @@
 
 .TT163
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA #17                \ Move the text cursor in XC to column 17
  STA XC

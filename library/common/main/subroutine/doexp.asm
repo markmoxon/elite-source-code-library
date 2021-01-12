@@ -306,7 +306,7 @@ ENDIF
 
  LDA Y1                 \ Set A = our random y-coordinate within the cloud
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  JSR PIXEL              \ Draw a point at screen coordinate (X, A) with the
                         \ point size determined by the distance in ZZ

@@ -13,7 +13,7 @@
  EQUW 160 * 160         \ Targetable area          = 160 * 160
  EQUB &74               \ Edges data offset (low)  = &0074
  EQUB &E4               \ Faces data offset (low)  = &00E4
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
  EQUB 85                \ Max. edge count          = (85 - 1) / 4 = 21
 ELIF _6502SP_VERSION
  EQUB 89                \ Max. edge count          = (89 - 1) / 4 = 22

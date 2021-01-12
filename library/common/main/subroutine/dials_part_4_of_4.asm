@@ -7,7 +7,7 @@
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA #&78               \ Set SC(1 0) = &7810, which is the screen address for
  STA SC+1               \ the character block containing the left end of the
@@ -46,7 +46,7 @@ ENDIF
  JSR DILX+2             \ and increment SC to point to the next indicator (the
                         \ cabin temperature)
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  JSR PZW                \ Call PZW to set A to the colour for dangerous values
                         \ and X to the colour for safe values
@@ -87,7 +87,7 @@ ENDIF
                         \ 15 and 16, so this effectively switches off the colour
                         \ change for the altitude indicator
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  STA K+1                \ Set K+1 (the colour we should show for low values) to
                         \ 240, or &F0 (dashboard colour 2, yellow/white), so the

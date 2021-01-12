@@ -9,7 +9,7 @@
 \
 \ This section looks at manoeuvring the ship. Specifically:
 \
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 \   * Work out which direction the ship should be moving, depending on whether
 \     it's an escape pod, where it is, which direction it is pointing, and how
 \     aggressive it is
@@ -69,7 +69,7 @@ ENDIF
                         \ here, but we also get here if the ship is either far
                         \ away and aggressive, or not too close
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA XX15               \ Reverse the signs of XX15 and the dot product in CNT,
  EOR #%10000000         \ starting with the x-coordinate
@@ -106,7 +106,7 @@ ENDIF
 
                         \ If we get here, then one of the following is true:
                         \
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
                         \   * This is an escape pod and XX15 is pointing towards
                         \     the planet
 ELIF _6502SP_VERSION
@@ -128,7 +128,7 @@ ENDIF
                         \
                         \ We now want to move the ship in the direction of XX15,
                         \ which will make aggressive ships head towards us, and
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
                         \ ships that are too close turn away. Escape pods,
 ELIF _6502SP_VERSION
                         \ ships that are too close turn away. Peaceful traders,
@@ -143,7 +143,7 @@ ENDIF
                         \ other words if the ship should pull up to head in the
                         \ direction of XX15
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  EOR #%10000000         \ Set the ship's pitch counter to 3, with the opposite
  AND #%10000000         \ sign to the dot product result, which gently pitches
@@ -193,7 +193,7 @@ ENDIF
                         \ ship, in other words if the ship should roll right to
                         \ head in the direction of XX15
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  EOR INWK+30            \ Set the ship's roll counter to 5, with the sign set to
  AND #%10000000         \ positive if the pitch counter and dot product have
@@ -230,7 +230,7 @@ ENDIF
  BMI TA9                \ TA9, as the ships are facing away from each other and
                         \ the ship might want to slow down to take another shot
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  CMP #22                \ The dot product is positive, so the ships are facing
  BCC TA9                \ each other. If A < 22 then the ships are not heading

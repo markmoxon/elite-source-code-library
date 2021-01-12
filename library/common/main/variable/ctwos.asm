@@ -7,7 +7,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 \ Ready-made bytes for plotting one-pixel points in mode 5 (the bottom part of
 \ the split screen). See the dashboard routines SCAN, DIL2 and CPIX2 for
 \ details.

@@ -35,7 +35,7 @@ ENDIF
 
 .MJP
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
 \LDA #1                 \ This instruction is commented out in the original
                         \ source - it is not required as a call to TT66-2 sets

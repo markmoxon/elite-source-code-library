@@ -15,7 +15,7 @@
 
 .ESCAPE
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA MJ                 \ Store the value of MJ on the stack (the "are we in
  PHA                    \ witchspace?" flag)
@@ -67,7 +67,7 @@ ENDIF
  JSR SCAN               \ Call SCAN to remove the Cobra from the scanner (by
                         \ redrawing it)
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  JSR RESET              \ Call RESET to reset our ship and various controls
 
@@ -92,7 +92,7 @@ ENDIF
 
 .ESL2
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  STA QQ20,X             \ Set the X-th byte of QQ20 to zero (as we know A = 0
                         \ from the BEQ above), so we no longer have any of item
@@ -120,7 +120,7 @@ ENDIF
  STA QQ14               \ fuel, so set the current fuel level in QQ14 to 70, or
                         \ 7.0 light years
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  JMP BAY                \ Go to the docking bay (i.e. show the Status Mode
                         \ screen) and return from the subroutine with a tail

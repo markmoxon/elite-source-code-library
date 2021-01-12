@@ -11,7 +11,7 @@
 
  JSR SPBLB              \ Light up the space station bulb on the dashboard
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDX #%00000001         \ Set the AI flag in byte #32 to %00000001 (friendly, no
  STX INWK+32            \ AI, has an E.C.M.)

@@ -50,7 +50,7 @@
 
 .RE2
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  BPL RE3+2              \ If X has bit 7 clear (i.e. the result < 128), then
                         \ jump to RE3+2 in routine REDU2 to do an auto-recentre,

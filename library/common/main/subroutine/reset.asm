@@ -7,7 +7,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 \ Reset our ship and various controls, then fall through into RES4 to recharge
 \ shields and energy, and reset the stardust and the ship workspace at INWK.
 ELIF _6502SP_VERSION
@@ -29,7 +29,7 @@ ENDIF
 \
 \     * ECMA - Turn E.C.M. off
 \
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 \ It also sets QQ12 to &FF, to indicate we are docked, and then falls through
 \ into RES4.
 ELIF _6502SP_VERSION
@@ -56,7 +56,7 @@ ENDIF
 
  BPL SAL3               \ Loop back for the next byte to zero
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  STX QQ12               \ X is now negative - i.e. &FF - so this sets QQ12 to
                         \ &FF to indicate we are docked

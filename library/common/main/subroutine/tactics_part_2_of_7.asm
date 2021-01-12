@@ -13,7 +13,7 @@
 \
 \   * If this is a missile, jump up to the missile code in part 1
 \
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 \   * If this is an escape pod, point it at the planet and jump to the
 \     manoeuvring code in part 7
 \
@@ -80,7 +80,7 @@ ENDIF
  CPX #MSL               \ If this is a missile, jump up to TA18 to implement
  BEQ TA18               \ missile tactics
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  CPX #ESC               \ If this is not an escape pod, skip the following two
  BNE P%+8               \ instructions
@@ -95,7 +95,7 @@ ENDIF
  CPX #SST               \ If this is not the space station, jump down to TA13
  BNE TA13
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  JSR DORND              \ This is the space station, so set A and X to random
                         \ numbers

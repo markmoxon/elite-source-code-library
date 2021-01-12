@@ -49,7 +49,7 @@
  EQUB 0                 \ TP = Mission status, #0
                         \
                         \ Note that this byte must not have bit 7 set, or
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
                         \ loading this commander will cause the game to restart
 ELIF _6502SP_VERSION
                         \ loading this commander will give an error

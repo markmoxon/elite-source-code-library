@@ -26,7 +26,7 @@ ENDIF
 
 .LFT
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA SWAP               \ If SWAP = 0 then we didn't swap the coordinates above,
  BEQ LI18               \ jump down to LI18 to skip plotting the first pixel

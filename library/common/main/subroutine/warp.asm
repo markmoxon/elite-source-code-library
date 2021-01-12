@@ -27,7 +27,7 @@
 
 .WARP
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA MANY+AST           \ Set X to the total number of asteroids, escape pods
  CLC                    \ and cargo canisters in the vicinity
@@ -201,7 +201,7 @@ ENDIF
 
 .WA1
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA #40                \ If we get here then we can't do an in-system jump, so
  JMP NOISE              \ call the NOISE routine with A = 40 to make a long, low

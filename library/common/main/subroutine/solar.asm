@@ -24,7 +24,7 @@
 
  LDA QQ15+1             \ Fetch s0_hi
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  AND #%00000111         \ Extract bits 0-2 (which also happen to determine the
                         \ economy), which will be between 0 and 7

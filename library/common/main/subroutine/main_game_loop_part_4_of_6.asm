@@ -9,7 +9,7 @@
 \
 \ This section covers the following:
 \
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 \   * Potentially spawn (35% chance) either a lone bounty hunter (a Mamba,
 \     Python or Cobra Mk III), a Thargoid, or a group of up to 4 pirates
 \     (Sidewinders and/or Mambas)
@@ -25,7 +25,7 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  DEC EV                 \ Decrement EV, the extra vessels spawning delay, and
  BPL MLOOP              \ jump to MLOOP if it is still positive, so we only
@@ -72,7 +72,7 @@ ENDIF
  BEQ LABEL_2            \ straight to LABEL_2 to start spawning pirates or a
                         \ lone bounty hunter
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  CMP #90                \ If the random number in A >= 90 (65% chance), jump to
  BCS MLOOP              \ MLOOP to stop spawning (so there's a 35% chance of
@@ -120,7 +120,7 @@ ENDIF
  JSR Ze                 \ Call Ze to initialise INWK to a potentially hostile
                         \ ship, and set A and X to random values
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  CMP #200               \ If the random number in A >= 200 (13% chance), jump
  BCS mt1                \ to mt1 to spawn pirates, otherwise keep going to
@@ -137,7 +137,7 @@ ENDIF
  INC EV                 \ Increase the extra vessels spawning counter, to
                         \ prevent the next attempt to spawn extra vessels
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  AND #3                 \ Set A = Y = random number in the range 3-6, which
  ADC #3                 \ we will use to determine the type of ship
@@ -208,7 +208,7 @@ ENDIF
  ORA #%11000000         \ Set bits 6 and 7 of A, so the ship is hostile (bit 6)
                         \ and has AI (bit 7)
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  CPY #6                 \ If Y = 6 (i.e. a Thargoid), jump down to the tha
  BEQ tha                \ routine to decide whether or not to spawn it (where
@@ -294,7 +294,7 @@ ENDIF
 
  JSR DORND              \ Set A and X to random numbers
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  AND #3                 \ Set A to a random number in the range 0-3
 

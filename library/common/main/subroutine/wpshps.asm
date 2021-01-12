@@ -69,7 +69,7 @@
 
 .WS2
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDX #&FF               \ Set LSX2 = LSY2 = &FF to clear the ball line heap
  STX LSX2

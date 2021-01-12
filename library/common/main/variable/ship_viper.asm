@@ -13,7 +13,7 @@
  EQUW 75 * 75           \ Targetable area          = 75 * 75
  EQUB &6E               \ Edges data offset (low)  = &006E
  EQUB &BE               \ Faces data offset (low)  = &00BE
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
  EQUB 77                \ Max. edge count          = (77 - 1) / 4 = 19
 ELIF _6502SP_VERSION
  EQUB 81                \ Max. edge count          = (81 - 1) / 4 = 20
@@ -27,6 +27,8 @@ ENDIF
  EQUB 23                \ Visibility distance      = 23
 IF _CASSETTE_VERSION
  EQUB 120               \ Max. energy              = 120
+ELIF _DISC_VERSION
+ EQUB 100               \ Max. energy              = 100
 ELIF _6502SP_VERSION
  EQUB 140               \ Max. energy              = 140
 ENDIF

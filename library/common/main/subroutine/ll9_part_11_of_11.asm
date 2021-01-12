@@ -19,7 +19,7 @@ ENDIF
 
 .LL155
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDY #0                 \ Fetch the first byte from the ship line heap into A,
  LDA (XX19),Y           \ which contains the number of bytes in the heap
@@ -70,7 +70,7 @@ ENDIF
 
 .LL27
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA (XX19),Y           \ Fetch the X1 line coordinate from the heap and store
  STA XX15               \ it in XX15
@@ -104,7 +104,7 @@ ENDIF
  CPY XX20               \ If the heap counter is less than the size of the heap,
  BCC LL27               \ loop back to LL27 to draw the next line from the heap
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
 \LL82                   \ This label is commented out in the original source
 

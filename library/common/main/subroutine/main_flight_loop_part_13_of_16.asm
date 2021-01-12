@@ -35,7 +35,7 @@
                         \ screen gets drawn and the following palette change
                         \ won't kick in while the screen is still refreshing
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA #%00110000         \ Set the palette byte at SHEILA &21 to map logical
  STA VIA+&21            \ colour 0 to physical colour 7 (white), but with only

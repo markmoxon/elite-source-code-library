@@ -13,7 +13,7 @@
 
 .ypl
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA MJ                 \ Check the mis-jump flag at MJ, and if it is non-zero
  BNE cmn-1              \ then we are in witchspace, and witchspace doesn't have

@@ -79,7 +79,7 @@ ENDIF
  BNE P%+5               \ Buy Cargo screen, returning from the subroutine using
  JMP TT219              \ a tail call
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  CMP #&47               \ If "@" was pressed, jump to SVE to save the commander
  BNE P%+5               \ file, returning from the subroutine using a tail call
@@ -192,7 +192,7 @@ ENDIF
                         \ will move the location in (QQ9, QQ10) to the current
                         \ home system
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  JSR TT103              \ Draw small crosshairs at coordinates (QQ9, QQ10),
                         \ which will draw the crosshairs at our current home
@@ -290,7 +290,7 @@ ENDIF
  LDA #%10000000         \ Set bit 7 of QQ17 to switch to Sentence Case, with the
  STA QQ17               \ next letter in capitals
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA #1                 \ Move the text cursor to column 1 and down one line
  STA XC                 \ (in other words, to the start of the next line)

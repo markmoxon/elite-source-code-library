@@ -21,7 +21,7 @@
 \
 \   Y2                  The screen y-coordinate of the end of the line
 \
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 \ Returns:
 \
 \   Y                   Y is preserved
@@ -36,7 +36,7 @@ IF _CASSETTE_VERSION
 ENDIF
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
 .LL30
 
@@ -62,7 +62,7 @@ ENDIF
 
 .LOIN
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  STY YSAV               \ Store Y into YSAV, so we can preserve it across the
                         \ call to this subroutine

@@ -206,7 +206,7 @@
                         \ points to the end of the heap, and therefore contains
                         \ the heap size
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDY #0                 \ Store A as the first byte of the ship line heap, so
  STA (XX19),Y           \ the heap is now correctly set up

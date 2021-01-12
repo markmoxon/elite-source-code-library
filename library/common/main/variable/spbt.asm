@@ -10,7 +10,7 @@
 \ The bitmap definition for the space station indicator's "S" bulb that gets
 \ displayed on the dashboard.
 \
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 \ Each pixel is in mode 5 colour 2 (%10), which is yellow/white.
 ELIF _6502SP_VERSION
 \ The bulb is four pixels wide, so it covers two mode 2 character blocks, one
@@ -23,7 +23,7 @@ ENDIF
 
 .SPBT
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  EQUB %11100000         \ x x x .
  EQUB %11100000         \ x x x .

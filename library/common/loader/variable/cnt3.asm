@@ -14,7 +14,7 @@
 
 .CNT3
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  EQUW &0500             \ The number of iterations of the PLL3 loop (1280)
 

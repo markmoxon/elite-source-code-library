@@ -71,7 +71,7 @@
                         \
                         \   (A R) = (S R) + (A P) = x_lo^2 + y_lo^2
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  BCS FR1-2              \ If the addition just overflowed then there is no way
                         \ our crosshairs are within the ship's targetable area,

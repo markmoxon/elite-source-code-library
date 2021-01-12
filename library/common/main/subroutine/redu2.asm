@@ -26,7 +26,7 @@
 \
 \ Other entry points:
 \
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 \   RE3+2               Auto-recentre the value in X, if keyboard auto-recentre
 \                       is configured
 ELIF _6502SP_VERSION
@@ -61,7 +61,7 @@ ENDIF
                         \ because the result is on the left side of the centre
                         \ point of 128, so we don't need to auto-centre
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
                         \ Jumps to RE3+2 end up here
 

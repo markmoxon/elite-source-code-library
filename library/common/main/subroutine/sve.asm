@@ -3,7 +3,7 @@
 \       Name: SVE
 \       Type: Subroutine
 \   Category: Save and load
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 \    Summary: Save the commander file
 ELIF _6502SP_VERSION
 \    Summary: Display the disc access menu and process saving of commander files
@@ -22,7 +22,7 @@ ENDIF
 
 .SVE
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  JSR GTNME              \ Clear the screen and ask for the commander filename
                         \ to save, storing the name at INWK
@@ -94,7 +94,7 @@ ENDIF
 
  JSR TRNME              \ Transfer the commander filename from INWK to NA%
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  JSR ZERO               \ Zero-fill pages &9, &A, &B, &C and &D, which clears
                         \ the ship data blocks, the ship line heap, the ship
@@ -152,7 +152,7 @@ ENDIF
  EOR TALLY+1            \ the kill tally)
  STA K+3
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  JSR BPRNT              \ Print the competition number stored in K to K+3. The
                         \ values of the C flag and U will affect how this is
@@ -206,7 +206,7 @@ ENDIF
                         \
                         \ Y is left containing &C which we use below
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA #%10000001         \ Clear 6522 System VIA interrupt enable register IER
  STA VIA+&4E            \ (SHEILA &4E) bit 1 (i.e. enable the CA2 interrupt,
@@ -220,7 +220,7 @@ ENDIF
  JSR QUS1               \ file with the filename we copied to INWK at the start
                         \ of this routine
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDX #0                 \ Set X = 0 for storing in SVN below
 

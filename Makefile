@@ -75,7 +75,8 @@ encrypt:
 	echo _VERSION=2 > versions/disc/sources/elite-header.h.asm
 	echo _REMOVE_CHECKSUMS=TRUE >> versions/disc/sources/elite-header.h.asm
 	$(BEEBASM) -i versions/disc/sources/elite-source-d.asm -v > versions/disc/output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-source-t.asm -v > versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-source-t.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-doa.asm -v >> versions/disc/output/compile.txt
 	$(PYTHON) versions/disc/sources/elite-checksum.py
 	$(BEEBASM) -i versions/disc/sources/elite-disc.asm -do versions/disc/elite-disc.ssd -boot ELITE2
 

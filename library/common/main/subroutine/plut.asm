@@ -28,7 +28,7 @@
                         \   2 = left
                         \   3 = right
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  BNE PU1                \ If the current view is the front view, return from the
  RTS                    \ subroutine, as the geometry in INWK is already correct

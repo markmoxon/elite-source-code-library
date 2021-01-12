@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 \       Name: DET1
 \       Type: Subroutine
 \   Category: Screen mode
@@ -23,7 +23,7 @@ ENDIF
 \
 \ Arguments:
 \
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 \   X                   The number of text rows to display on the screen (24
 ELIF _6502SP_VERSION
 \   A                   The number of text rows to display on the screen (24
@@ -36,7 +36,7 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
 .DET1
 
@@ -58,7 +58,7 @@ ENDIF
 
  CLI                    \ Re-enable interrupts
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  RTS                    \ Return from the subroutine
 

@@ -28,7 +28,7 @@
                         \ on-screen, so return from the subroutine (as RTS2
                         \ contains an RTS)
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA #0                 \ Set LSX2 = 0
  STA LSX2
@@ -39,7 +39,7 @@ ENDIF
 
  LDA #8                 \ Set A = 8
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  CPX #8                 \ If the radius < 8, skip to PL89
  BCC PL89
@@ -53,7 +53,7 @@ ENDIF
 
  LSR A                  \ Halve A so A = 4
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  CPX #60                \ If the radius < 60, skip to PL89
  BCC PL89

@@ -23,7 +23,7 @@
 
  STA T                  \ Store the amount of damage in T
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDY #8                 \ Fetch byte #8 (z_sign) for the ship attacking us, and
  LDX #0                 \ set X = 0
@@ -54,7 +54,7 @@ ENDIF
 
 .OO2
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
 \LDX #0                 \ This instruction is commented out in the original
                         \ source, and isn't required as X is set to 0 above
@@ -87,7 +87,7 @@ ENDIF
 
 .OO5
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
 \LDX #0                 \ This instruction is commented out in the original
                         \ source, and isn't required as X is set to 0 above

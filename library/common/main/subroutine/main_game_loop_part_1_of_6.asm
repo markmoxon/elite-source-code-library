@@ -14,7 +14,7 @@
 \
 \ This section covers the following:
 \
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 \   * Spawn a trader, i.e. a Cobra Mk III that isn't hostile, with one missile,
 \     a 50% chance of having an E.C.M., a speed between 16 and 31, and a gentle
 \     clockwise roll
@@ -55,7 +55,7 @@ ENDIF
  ORA #16                \ minimum of 16 and a maximum of 31
  STA INWK+27
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA #CYL               \ Add a new Cobra Mk III to the local bubble and fall
  JSR NWSHP              \ through into the main game loop again

@@ -44,7 +44,7 @@ ENDIF
  ASL A                  \ an index into the market prices table at QQ23 for this
  STA QQ19               \ item (as there are four bytes per item in the table)
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA #1                 \ Move the text cursor to column 1, for the item's name
  STA XC
@@ -65,7 +65,7 @@ ENDIF
  JSR TT27               \ range 48 ("FOOD") to 64 ("ALIEN ITEMS"), so this
                         \ prints the item's name
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA #14                \ Move the text cursor to column 14, for the price
  STA XC
@@ -162,7 +162,7 @@ ENDIF
 
 .TT172
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA XC                 \ Move the text cursor in XC to the right by 4 columns,
  ADC #4                 \ so the cursor is where the last digit would be if we

@@ -81,7 +81,7 @@ ENDIF
 
 .FMLTU
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  EOR #%11111111         \ Flip the bits in A, set the C flag and rotate right,
  SEC                    \ so the C flag now contains bit 0 of A inverted, and P

@@ -15,7 +15,7 @@
 
 .crlf
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA #21                \ Set the X-column in XC to 21
  STA XC

@@ -16,7 +16,7 @@
 
  LDA QQ11               \ Fetch the current view type into A
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  BEQ TT180              \ If this is a space view, return from the subroutine
                         \ (as TT180 contains an RTS), as there are no moveable

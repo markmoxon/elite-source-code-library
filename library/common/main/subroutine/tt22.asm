@@ -13,7 +13,7 @@
  JSR TT66               \ and set the current view type in QQ11 to 32 (Long-
                         \ range Chart)
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA #7                 \ Move the text cursor to column 7
  STA XC

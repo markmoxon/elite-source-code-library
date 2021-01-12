@@ -56,7 +56,7 @@
                         \ missile, and it has its own dedicated collision
                         \ checks in the TACTICS routine
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  CPX #OIL               \ If ship type >= OIL (i.e. it's a cargo canister,
  BCS P%+5               \ Thargon or escape pod), skip the JMP instruction and

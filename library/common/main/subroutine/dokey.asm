@@ -54,7 +54,7 @@ ENDIF
                         \ to read the joystick flight controls, before jumping
                         \ to DK4 below
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDY #7                 \ We're going to work our way through the primary flight
                         \ control keys (pitch, roll, speed and laser), so set a

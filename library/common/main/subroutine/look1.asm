@@ -99,7 +99,7 @@ ENDIF
  LDA #20                \ Set QQ19+2 to size 20 for the crosshairs size
  STA QQ19+2
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  JSR TT15               \ Call TT15 to draw crosshairs of size 20 just to the
                         \ left of the middle of the screen
@@ -115,7 +115,7 @@ ENDIF
  LDA #10                \ Set QQ19+2 to size 10 for the crosshairs size
  STA QQ19+2
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  JMP TT15               \ Call TT15 to draw crosshairs of size 10 at the same
                         \ location, which will remove the centre part from the

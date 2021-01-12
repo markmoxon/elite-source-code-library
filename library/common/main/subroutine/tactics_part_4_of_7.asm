@@ -22,7 +22,7 @@ ENDIF
 \   * If the ship is not into the last 1/8th of its energy, jump to part 5 to
 \     consider firing a missile
 \
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 \   * If the ship is into the last 1/8th of its energy, then rarely (10% chance)
 \     the ship launches an escape pod and is left drifting in space
 ELIF _6502SP_VERSION
@@ -96,7 +96,7 @@ ENDIF
  CMP #230               \ If A < 230 (90% chance), jump down to ta3 to consider
  BCC ta3                \ firing a missile
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA TYPE               \ If this is a Thargoid, jump down to ta3 to consider
  CMP #THG               \ launching a Thargon

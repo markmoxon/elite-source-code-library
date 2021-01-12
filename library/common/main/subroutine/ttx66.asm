@@ -3,7 +3,7 @@
 \       Name: TTX66
 \       Type: Subroutine
 \   Category: Utility routines
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 \    Summary: Clear the top part of the screen and draw a white border
 ELIF _6502SP_VERSION
 \    Summary: Send control code 11 to the I/O processor to clear the top part
@@ -42,7 +42,7 @@ ENDIF
  LDA #%10000000         \ Set bit 7 of QQ17 to switch to Sentence Case
  STA QQ17
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  ASL A                  \ Set LASCT to 0, as 128 << 1 = %10000000 << 1 = 0. This
  STA LASCT              \ stops any laser pulsing. This instruction is STA LAS2
@@ -129,7 +129,7 @@ ENDIF
  LDA QQ11               \ If this is not a space view, jump to tt66 to skip
  BNE tt66               \ displaying the view name
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDY #11                \ Move the text cursor to row 11
  STY XC
@@ -163,7 +163,7 @@ ENDIF
 
 .tt66
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDX #0                 \ Set (X1, Y1) to (0, 0)
  STX X1
@@ -200,7 +200,7 @@ ENDIF
  DEX                    \ Set X2 = 255
  STX X2
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  JSR HLOIN              \ Draw a horizontal line from (X1, Y1) to (X2, Y1), so
                         \ that's (0, 0) to (255, 0), along the very top of the
@@ -252,7 +252,7 @@ ENDIF
  DEC X1                 \ Decrement X1 and X2
  DEC X2
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  JMP LOIN               \ Draw a line from (X1, Y1) to (X2, Y2), and return from
                         \ the subroutine using a tail call

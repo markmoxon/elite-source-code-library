@@ -19,7 +19,7 @@
                         \ so first call SPS1 to calculate the vector to the
                         \ planet and store it in XX15
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  JMP SP2                \ Jump to SP2 to draw XX15 on the compass, returning
                         \ from the subroutine using a tail call

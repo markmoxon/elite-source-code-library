@@ -51,7 +51,7 @@
                         \ Y1 >= Y2, so we're going from top to bottom as we go
                         \ from Y1 to Y2
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LSR A                  \ Set A = Y1 / 8, so A now contains the character row
  LSR A                  \ that will contain our horizontal line
@@ -87,7 +87,7 @@ ENDIF
                         \ of the horizontal pixel row that we want to draw the
                         \ start of our line on
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  TXA                    \ Set X = X1 mod 8, which is the horizontal pixel number
  AND #7                 \ within the character block where the line starts (as
@@ -111,7 +111,7 @@ ENDIF
  LDA TWOS,X             \ Fetch a 1-pixel byte from TWOS where pixel X is set,
  STA R                  \ and store it in R
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA Y1                 \ Set Y = Y1 mod 8, which is the pixel row within the
  AND #7                 \ character block at which we want to draw the start of

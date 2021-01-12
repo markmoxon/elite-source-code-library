@@ -18,7 +18,7 @@ ORG &0000
 
 INCLUDE "library/common/main/variable/rand.asm"
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
 INCLUDE "library/cassette/main/variable/trtb_per_cent.asm"
 
@@ -67,7 +67,7 @@ INCLUDE "library/common/main/variable/y2.asm"
 INCLUDE "library/common/main/variable/xx12.asm"
 INCLUDE "library/common/main/variable/k.asm"
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
 INCLUDE "library/common/main/variable/kl.asm"
 INCLUDE "library/common/main/variable/ky1.asm"
@@ -109,7 +109,7 @@ INCLUDE "library/common/main/variable/qq17.asm"
 INCLUDE "library/common/main/variable/qq19.asm"
 INCLUDE "library/common/main/variable/k6.asm"
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
 INCLUDE "library/common/main/variable/alp1.asm"
 INCLUDE "library/common/main/variable/alp2.asm"
@@ -133,7 +133,7 @@ INCLUDE "library/common/main/variable/mcnt.asm"
 INCLUDE "library/common/main/variable/dl.asm"
 INCLUDE "library/common/main/variable/type.asm"
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
 INCLUDE "library/common/main/variable/jstx.asm"
 INCLUDE "library/common/main/variable/jsty.asm"
@@ -153,7 +153,7 @@ ENDIF
 INCLUDE "library/common/main/variable/qq12.asm"
 INCLUDE "library/common/main/variable/tgt.asm"
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
 INCLUDE "library/common/main/variable/swap.asm"
 

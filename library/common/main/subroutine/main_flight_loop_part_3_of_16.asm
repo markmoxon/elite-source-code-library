@@ -59,7 +59,7 @@
  AND NOMSL              \ in NOMSL is non-zero, keep going, otherwise jump down
  BEQ MA20               \ to MA20 to skip the following
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDY #&EE               \ The "disarm missiles" key is being pressed, so call
  JSR ABORT              \ ABORT to disarm the missile and update the missile
@@ -76,7 +76,7 @@ ENDIF
  LDA #40                \ Call the NOISE routine with A = 40 to make a low,
  JSR NOISE              \ long beep to indicate the missile is now disarmed
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
 .MA31
 
@@ -106,7 +106,7 @@ ENDIF
                         \ value &FF, as we just loaded it from MSTG and checked
                         \ that it was negative)
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDY #&E0               \ Change the leftmost missile indicator to yellow/white
  JSR MSBAR              \ on the missile bar (this call changes the leftmost
@@ -155,7 +155,7 @@ ENDIF
 
 .MA76
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA KY13               \ If ESCAPE is being pressed and we have an escape pod
  AND ESCP               \ fitted, keep going, otherwise skip the next
@@ -218,7 +218,7 @@ ENDIF
 
 .MA64
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA KY19               \ If "C" is being pressed, and we have a docking
  AND DKCMP              \ computer fitted, and we are inside the space station's

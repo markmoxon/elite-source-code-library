@@ -3,7 +3,7 @@
 \       Name: MSBAR
 \       Type: Subroutine
 \   Category: Dashboard
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 \    Summary: Draw a specific indicator in the dashboard's missile bar
 ELIF _6502SP_VERSION
 \    Summary: Implement the #DOmsbar command (draw a specific indicator in the
@@ -15,7 +15,7 @@ ENDIF
 \ Each indicator is a rectangle that's 3 pixels wide and 5 pixels high. If the
 \ indicator is set to black, this effectively removes a missile.
 \
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 \ Arguments:
 \
 \   X                   The number of the missile indicator to update (counting
@@ -66,7 +66,7 @@ ENDIF
 
 .MSBAR
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  TXA                    \ Set T = X * 8
  ASL A
@@ -99,7 +99,7 @@ ENDIF
                         \ for the rightmost missile indicator, made up as
                         \ follows:
                         \
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
                         \   * 48 (character block 7, as byte #7 * 8 = 48), the
 ELIF _6502SP_VERSION
                         \   * 96 (character block 14, as byte #14 * 8 = 96), the
@@ -114,7 +114,7 @@ ENDIF
                         \     missile, for X = 1 we hop to the left by one
                         \     character, and so on
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA #&7E               \ Set the high byte of SC(1 0) to &7E, the character row
  STA SCH                \ that contains the missile indicators (i.e. the bottom
@@ -171,7 +171,7 @@ ENDIF
  LDY #5                 \ We now want to draw this line five times, so set a
                         \ counter in Y
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
 .MBL1
 
@@ -187,7 +187,7 @@ ENDIF
 
  DEY                    \ Decrement the counter for the next row
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  BNE MBL1               \ Loop back to MBL1 if have more rows to draw
 

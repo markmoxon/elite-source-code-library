@@ -33,7 +33,7 @@ ENDIF
 
 .hyp
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA QQ12               \ If we are docked (QQ12 = &FF) then jump to hy6 to
  BNE hy6                \ print an error message and return from the subroutine
@@ -50,7 +50,7 @@ ENDIF
  LDA QQ22+1             \ Fetch QQ22+1, which contains the number that's shown
                         \ on-screen during hyperspace countdown
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  BNE zZ+1               \ If it is non-zero, return from the subroutine (as zZ+1
                         \ contains an RTS), as there is already a countdown in
@@ -73,7 +73,7 @@ ENDIF
  BMI Ghy                \ If it is, then the galactic hyperdrive has been
                         \ activated, so jump to Ghy to process it
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  JSR hm                 \ Set the system closest to galactic coordinates (QQ9,
                         \ QQ10) as the selected system
@@ -143,7 +143,7 @@ ENDIF
  LDA #189               \ Print recursive token 29 ("HYPERSPACE ")
  JSR TT27
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA QQ8+1              \ If the high byte of the distance to the selected
  BNE TT147              \ system in QQ8 is > 0, then it is definitely too far to

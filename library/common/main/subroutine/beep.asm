@@ -9,7 +9,7 @@
 
 .BEEP
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA #32                \ Set A = 32 to denote a short, high beep, and fall
                         \ through into NOISE to make the sound

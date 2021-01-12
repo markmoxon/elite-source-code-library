@@ -36,7 +36,7 @@
                         \ source disc (ELITED). It finds the closest system to
                         \ coordinates (QQ9, QQ10)
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDX GHYP               \ Fetch GHYP, which tells us whether we own a galactic
  BEQ hy5                \ hyperdrive, and if it is zero, which means we don't,
@@ -65,7 +65,7 @@ ENDIF
  STX FIST               \ Changing galaxy also clears our criminal record, so
                         \ set our legal status in FIST to 0 ("clean")
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  JSR wW                 \ Call wW to start the hyperspace countdown
 

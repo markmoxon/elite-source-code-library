@@ -14,7 +14,7 @@
 
 .CNT
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  EQUW &0500             \ The number of iterations of the PLL1 loop (1280)
 

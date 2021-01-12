@@ -26,7 +26,7 @@
 
 .ISDK
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA K%+NI%+32          \ 1. Fetch the AI counter (byte #32) of the second ship
  BMI MA62               \ in the ship data workspace at K%, which is reserved
@@ -52,7 +52,7 @@ ENDIF
  CMP #214               \ docking, as the angle of approach is greater than 26
  BCC MA62               \ degrees
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  JSR SPS4               \ Call SPS4 to get the vector to the space station
                         \ into XX15
@@ -83,7 +83,7 @@ ENDIF
                         \ If we arrive here, either the docking computer has
                         \ been activated, or we just docked successfully
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA #0                 \ Set the on-screen hyperspace counter to 0
  STA QQ22+1

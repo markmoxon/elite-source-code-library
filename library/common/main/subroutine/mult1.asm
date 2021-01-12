@@ -47,7 +47,7 @@
 
  LDA #0                 \ Set A = 0 so we can start building the answer in A
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDX #7                 \ Set up a counter in X to count the 7 bits remaining
                         \ in P
@@ -140,7 +140,7 @@ IF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  DEX                    \ Decrement the loop counter
 

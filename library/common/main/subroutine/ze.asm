@@ -37,7 +37,7 @@
  AND #%10000000
  STA INWK+5
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA #32                \ Set x_hi = y_hi = z_hi = 32, a fair distance away
  STA INWK+1

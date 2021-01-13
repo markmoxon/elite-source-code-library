@@ -2,10 +2,14 @@
 \
 \       Name: WP
 \       Type: Workspace
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 \    Address: &0D40 to &0F33
 \   Category: Workspaces
 \    Summary: Ship slots, variables
+ELIF _DISC_VERSION
+\    Address: &0E00 to &0E3B
+\   Category: Workspaces
+\    Summary: Variables
 ELIF _6502SP_VERSION
 \    Address: &0D00 to &0E3B
 \   Category: Workspaces
@@ -14,9 +18,13 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
 ORG &0D40
+
+ELIF _DISC_VERSION
+
+ORG &0E00
 
 ELIF _6502SP_VERSION
 
@@ -28,7 +36,7 @@ ENDIF
 
  SKIP 0                 \ The start of the WP workspace
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
 INCLUDE "library/common/main/variable/frin.asm"
 INCLUDE "library/common/main/variable/cabtmp.asm"
@@ -82,6 +90,24 @@ INCLUDE "library/common/main/variable/qq8.asm"
 INCLUDE "library/common/main/variable/qq9.asm"
 INCLUDE "library/common/main/variable/qq10.asm"
 INCLUDE "library/common/main/variable/nostm.asm"
+
+ELIF _DISC_VERSION
+
+INCLUDE "library/common/main/variable/lsx.asm"
+INCLUDE "library/common/main/variable/lso.asm"
+INCLUDE "library/common/main/variable/lsx2.asm"
+INCLUDE "library/common/main/variable/lsy2.asm"
+INCLUDE "library/common/main/variable/sx.asm"
+INCLUDE "library/common/main/variable/sxl.asm"
+INCLUDE "library/common/main/variable/sy.asm"
+INCLUDE "library/common/main/variable/syl.asm"
+INCLUDE "library/common/main/variable/sz.asm"
+INCLUDE "library/common/main/variable/szl.asm"
+INCLUDE "library/common/main/variable/lasx.asm"
+INCLUDE "library/common/main/variable/lasy.asm"
+INCLUDE "library/common/main/variable/xx24.asm"
+INCLUDE "library/common/main/variable/altit.asm"
+INCLUDE "library/disc/main/variable/cpir.asm"
 
 ELIF _6502SP_VERSION
 

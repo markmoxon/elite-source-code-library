@@ -8,6 +8,12 @@
 \
 \ ******************************************************************************
 
+IF _DISC_VERSION
+
+ORG &0300
+
+ELIF _6502SP_VERSION
+
 ORG &0800
 
 .UP
@@ -21,6 +27,8 @@ ORG &0800
                         \ section, so this declaration has no effect. BeebAsm
                         \ does not allow labels to be defined twice, so this one
                         \ is commented out
+
+ENDIF
 
 INCLUDE "library/common/main/variable/kl.asm"
 INCLUDE "library/common/main/variable/ky1.asm"
@@ -115,4 +123,25 @@ INCLUDE "library/common/main/variable/qq8.asm"
 INCLUDE "library/common/main/variable/qq9.asm"
 INCLUDE "library/common/main/variable/qq10.asm"
 INCLUDE "library/common/main/variable/nostm.asm"
+
+IF _DISC_VERSION
+
+ SKIP 1                 \ This byte is unused
+
+INCLUDE "library/common/main/variable/comc.asm"
+INCLUDE "library/common/main/variable/dnoiz.asm"
+INCLUDE "library/common/main/variable/damp.asm"
+INCLUDE "library/common/main/variable/djd.asm"
+INCLUDE "library/common/main/variable/patg.asm"
+INCLUDE "library/common/main/variable/flh.asm"
+INCLUDE "library/common/main/variable/jstgy.asm"
+INCLUDE "library/common/main/variable/jste.asm"
+INCLUDE "library/common/main/variable/jstk.asm"
+INCLUDE "library/6502sp/main/variable/bstk.asm"
+INCLUDE "library/6502sp/main/variable/catf.asm"
+
+ELIF _6502SP_VERSION
+
 INCLUDE "library/6502sp/main/variable/buf.asm"
+
+ENDIF

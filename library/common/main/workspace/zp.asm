@@ -49,7 +49,7 @@ INCLUDE "library/common/main/variable/yc.asm"
 INCLUDE "library/common/main/variable/qq22.asm"
 INCLUDE "library/common/main/variable/ecma.asm"
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION OR _DISC_VERSION
 
 INCLUDE "library/common/main/variable/alp1.asm"
 INCLUDE "library/common/main/variable/alp2.asm"
@@ -67,7 +67,7 @@ INCLUDE "library/common/main/variable/y2.asm"
 INCLUDE "library/common/main/variable/xx12.asm"
 INCLUDE "library/common/main/variable/k.asm"
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
 INCLUDE "library/common/main/variable/kl.asm"
 INCLUDE "library/common/main/variable/ky1.asm"
@@ -94,7 +94,7 @@ INCLUDE "library/common/main/variable/xx1.asm"
 INCLUDE "library/common/main/variable/inwk.asm"
 INCLUDE "library/common/main/variable/xx19.asm"
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION OR _DISC_VERSION
 
 INCLUDE "library/6502sp/main/variable/newb.asm"
 
@@ -105,11 +105,10 @@ INCLUDE "library/common/main/variable/qq15.asm"
 INCLUDE "library/common/main/variable/k5.asm"
 INCLUDE "library/common/main/variable/xx18.asm"
 INCLUDE "library/common/main/variable/qq17.asm"
-
 INCLUDE "library/common/main/variable/qq19.asm"
 INCLUDE "library/common/main/variable/k6.asm"
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
 INCLUDE "library/common/main/variable/alp1.asm"
 INCLUDE "library/common/main/variable/alp2.asm"
@@ -133,7 +132,7 @@ INCLUDE "library/common/main/variable/mcnt.asm"
 INCLUDE "library/common/main/variable/dl.asm"
 INCLUDE "library/common/main/variable/type.asm"
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
 INCLUDE "library/common/main/variable/jstx.asm"
 INCLUDE "library/common/main/variable/jsty.asm"

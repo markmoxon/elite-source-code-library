@@ -1,237 +1,122 @@
-BeebDisStartAddr = $11E3
+INCLUDE "versions/disc/sources/elite-header.h.asm"
 
-ZP = &0000
-RAND = &0000
-TRTB% = &0004
-T1 = &0006
-SC = &0007
-SCH = &0008
-XX16 = &0009
-P = &001B
-XX0 = &001E
-INF = &0020
-V = &0022
-XX = &0024
-YY = &0026
-SUNX = &0028
-BETA = &002A
-BET1 = &002B
-XC = &002C
-YC = &002D
-QQ22 = &002E
-ECMA = &0030
-ALP1 = &0031
-ALP2 = &0032
-XX15 = &0034
-X1 = &0034
-Y1 = &0035
-X2 = &0036
-Y2 = &0037
-XX12 = &003A
-K = &0040
-LAS = &0044
-MSTG = &0045
-XX1 = &0046
-INWK = &0046
-XX19 = &0067
-NEWB = &006A
-LSP = &006B
-QQ15 = &006C
-K5 = &0072
-XX18 = &0072
-QQ17 = &0072
-QQ19 = &0073
-K6 = &0076
-BET2 = &007B
-DELTA = &007D
-DELT4 = &007E
-U = &0080
-Q = &0081
-R = &0082
-S = &0083
-XSAV = &0084
-YSAV = &0085
-XX17 = &0086
-QQ11 = &0087
-ZZ = &0088
-XX13 = &0089
-MCNT = &008A
-DL = &008B
-TYPE = &008C
-ALPHA = &008D
-QQ12 = &008E
-TGT = &008F
-SWAP = &0090
-COL = &0091
-FLAG = &0092
-CNT = &0093
-CNT2 = &0094
-STP = &0095
-XX4 = &0096
-XX20 = &0097
-XX14 = &0098
-RAT = &0099
-RAT2 = &009A
-K2 = &009B
+_CASSETTE_VERSION       = (_VERSION = 1)
+_DISC_VERSION           = (_VERSION = 2)
+_6502SP_VERSION         = (_VERSION = 3)
 
-T = &00D1
-K3 = &00D2
-XX2 = &00D2
-K4 = &00E0
+\ ******************************************************************************
+\
+\ Configuration variables
+\
+\ ******************************************************************************
 
-XX3 = &0100
+Q% = _REMOVE_CHECKSUMS  \ Set Q% to TRUE to max out the default commander, FALSE
+                        \ for the standard default commander (this is set to
+                        \ TRUE if checksums are disabled, just for convenience)
 
-KL = &0300
-KY1 = &0301
-KY2 = &0302
-KY3 = &0303
-KY4 = &0304
-KY5 = &0305
-KY6 = &0306
-KY7 = &0307
-KY12 = &0308
-KY13 = &0309
-KY14 = &030A
-KY15 = &030B
-KY16 = &030C
-KY17 = &030D
-KY18 = &030E
-KY19 = &030F
-KY20 = &0310
-FRIN = &0311
-MANY = &031E
-SSPR = &0320
-JUNK = &033E
-auto = &033F
-ECMP = &0340
-MJ = &0341
-CABTMP = &0342
-LAS2 = &0343
-MSAR = &0344
-VIEW = &0345
-LASCT = &0346
-GNTMP = &0347
-HFX = &0348
-EV = &0349
-DLY = &034A
-de = &034B
-JSTX = &034C
-JSTY = &034D
-XSAV2 = &034E
-YSAV2 = &034F
-NAME = &0350
-TP = &0358
-QQ0 = &0359
-QQ1 = &035A
-QQ21 = &035B
-CASH = &0361
-QQ14 = &0365
-COK = &0366
-GCNT = &0367
-LASER = &0368
-CRGO = &036E
-QQ20 = &036F
-ECM = &0380
-BST = &0381
-BOMB = &0382
-ENGY = &0383
-DKCMP = &0384
-GHYP = &0385
-ESCP = &0386
-NOMSL = &038B
-FIST = &038C
-AVL = &038D
-QQ26 = &039E
-TALLY = &039F
-SVC = &03A1
-MCH = &03A4
-FSH = &03A5
-ASH = &03A6
-ENERGY = &03A7
-COMX = &03A8
-COMY = &03A9
-QQ24 = &03AA
-QQ25 = &03AB
-QQ28 = &03AC
-QQ29 = &03AD
-gov = &03AE
-tek = &03AF
-SLSP = &03B0
-QQ2 = &03B2
-QQ3 = &03B8
-QQ4 = &03B9
-QQ5 = &03BA
-QQ6 = &03BB
-QQ7 = &03BD
-QQ8 = &03BF
-QQ9 = &03C1
-QQ10 = &03C2
-NOSTM = &03C3
-COMC = &03C5
-DNOIZ = &03C6
-DAMP = &03C7
-DJD = &03C8
-PATG = &03C9
-FLH = &03CA
-JSTGY = &03CB
-JSTE = &03CC
-JSTK = &03CD
-BTSK = &03CE
-CATF = &03CF
+LS% = &0CFF             \ The start of the descending ship line heap
+
+NOST = 18               \ The number of stardust particles in normal space (this
+                        \ goes down to 3 in witchspace)
+
+NOSH = 12               \ The maximum number of ships in our local bubble of
+                        \ universe (counting from 0, so there are actually 13
+                        \ ship slots)
+
+NTY = 31                \ The number of different ship types
+
+MSL = 1                 \ Ship type for a missile
+SST = 2                 \ Ship type for a Coriolis space station
+ESC = 3                 \ Ship type for an escape pod
+PLT = 4                 \ Ship type for an alloy plate
+OIL = 5                 \ Ship type for a cargo canister
+AST = 7                 \ Ship type for an asteroid
+SPL = 8                 \ Ship type for a splinter
+SHU = 9                 \ Ship type for a shuttle
+CYL = 11                \ Ship type for a Cobra Mk III
+ANA = 14                \ Ship type for an Anaconda
+HER = 15                \ Ship type for a rock hermit (asteroid)
+COPS = 16               \ Ship type for a Viper
+SH3 = 17                \ Ship type for a Sidewinder
+KRA = 19                \ Ship type for a Krait
+ADA = 20                \ Ship type for a Adder
+WRM = 23                \ Ship type for a Worm
+CYL2 = 24               \ Ship type for a Cobra Mk III (pirate)
+ASP = 25                \ Ship type for an Asp Mk II
+THG = 29                \ Ship type for a Thargoid
+TGL = 30                \ Ship type for a Thargon
+CON = 31                \ Ship type for a Constrictor
+LGO = 32                \ Ship type for the Elite logo
+COU = 33                \ Ship type for a Cougar
+DOD = 34                \ Ship type for a Dodecahedron ("Dodo") space station
+
+JL = ESC                \ Junk is defined as starting from the escape pod
+
+JH = SHU+2              \ Junk is defined as ending before the Cobra Mk III
+                        \
+                        \ So junk is defined as the following: escape pod,
+                        \ alloy plate, cargo canister, asteroid, splinter,
+                        \ shuttle, transporter
+
+PACK = SH3              \ The first of the eight pack-hunter ships, which tend
+                        \ to spawn in groups. With the default value of PACK the
+                        \ pack-hunters are the Sidewinder, Mamba, Krait, Adder,
+                        \ Gecko, Cobra Mk I, Worm and Cobra Mk III (pirate)
+
+POW = 15                \ Pulse laser power
+
+Mlas = 50               \ Mining laser power
+
+Armlas = INT(128.5+1.5*POW) \ Military laser power
+
+NI% = 36                \ The number of bytes in each ship's data block (as
+                        \ stored in INWK and K%)
+
+OSBYTE = &FFF4          \ The address for the OSBYTE routine
+OSWORD = &FFF1          \ The address for the OSWORD routine
+OSFILE = &FFDD          \ The address for the OSFILE routine
+SCLI = &FFF7            \ The address for the OSCLI routine
+
+VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
+                        \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
+                        \ known as SHEILA)
+
+VSCAN = 57              \ Defines the split position in the split-screen mode
+
+X = 128                 \ The centre x-coordinate of the 256 x 192 space view
+Y = 96                  \ The centre y-coordinate of the 256 x 192 space view
+
+f0 = &20                \ Internal key number for red key f0 (Launch, Front)
+f1 = &71                \ Internal key number for red key f1 (Buy Cargo, Rear)
+f2 = &72                \ Internal key number for red key f2 (Sell Cargo, Left)
+f3 = &73                \ Internal key number for red key f3 (Equip Ship, Right)
+f4 = &14                \ Internal key number for red key f4 (Long-range Chart)
+f5 = &74                \ Internal key number for red key f5 (Short-range Chart)
+f6 = &75                \ Internal key number for red key f6 (Data on System)
+f7 = &16                \ Internal key number for red key f7 (Market Price)
+f8 = &76                \ Internal key number for red key f8 (Status Mode)
+f9 = &77                \ Internal key number for red key f9 (Inventory)
+
+INCLUDE "library/common/main/workspace/zp.asm"
+INCLUDE "library/common/main/workspace/xx3.asm"
+INCLUDE "library/6502sp/main/workspace/up.asm"
+
 QQ18 = &0400
+SNE = &07C0
+ACT = &07E0
+QQ16 = &0880
 
-SNE = &07C0 \ NEW
-ACT = &07E0 \ NEW
-
-QQ16 = &0880 \ NEW
-
-K% = &0900
-
-LS% = &0CFF
-LSX = &0E00
-LSO = &0E00
-LSX2 = &0EC0
-LSY2 = &0F0E
-SX = &0F5C
-SXL = &0F6F
-SY = &0F82
-SYL = &0F95
-SZ = &0FA8
-SZL = &0FBB
-LASX = &0FCE
-LASY = &0FCF
-ALTIT = &0FD1
-CPIR = &0FD2
+INCLUDE "library/common/main/workspace/k_per_cent.asm"
+INCLUDE "library/common/main/workspace/wp.asm"
 
 L0D7A = &0D7A
 L11D5 = &11D5
 L5607 = &5607
-L563D   = $563D
-L6CA9   = $6CA9
-L6FA9   = $6FA9
+L563D = &563D
+L6CA9 = &6CA9
+L6FA9 = &6FA9
 
-VIA = $FE00
-OSWRSC  = $FFB3
-OSRDSC  = $FFB9
-OSEVEN  = $FFBF
-GSINIT  = $FFC2
-GSREAD  = $FFC5
-NVRDCH  = $FFC8
-NNWRCH  = $FFCB
-OSFIND  = $FFCE
-OSGBPB  = $FFD1
-OSBPUT  = $FFD4
-OSBGET  = $FFD7
-OSARGS  = $FFDA
-OSFILE  = $FFDD
-OSRDCH  = $FFE0
-OSASCI  = $FFE3
-OSNEWL  = $FFE7
-OSWRCH  = $FFEE
-OSWORD  = $FFF1
-OSBYTE  = $FFF4
-OSCLI   = $FFF7
-LFFFD   = $FFFD
+LFFFD = &FFFD
 
         org     $11E3
 .x11E3
@@ -249,7 +134,7 @@ LFFFD   = $FFFD
 .L11F1
         LDX     #$F8
         LDY     #$11
-        JSR     OSCLI
+        JSR     SCLI
 
 .L11F8
         EQUS    "L.T.CODE"
@@ -347,7 +232,7 @@ LFFFD   = $FFFD
         STA     BET1
         ORA     BET2
         STA     BETA
-        LDA     BTSK
+        LDA     BSTK
         BEQ     L129E
 
         LDX     #$03
@@ -8705,7 +8590,7 @@ L40AA = L40A9+1
 
         LDX     #$8E
         LDY     #$42
-        JMP     OSCLI
+        JMP     SCLI
 
 .L428E
         EQUS    "L.D.MO"
@@ -9076,7 +8961,7 @@ NOISFR = L42C9+1
         LDA     JSTK
         BNE     L4473
 
-        STA     BTSK
+        STA     BSTK
         LDY     #$07
 .L44BC
         JSR     DKS1
@@ -9221,9 +9106,9 @@ NOISFR = L42C9+1
         CPX     #$64
         BNE     L4598
 
-        LDA     BTSK
+        LDA     BSTK
         EOR     #$FF
-        STA     BTSK
+        STA     BSTK
         STA     JSTK
         STA     JSTE
 .L4598
@@ -11969,4 +11854,4 @@ L55FE = L55FD+1
 
 
 
-SAVE "versions/disc/output/D.CODE.unprot.bin",BeebDisStartAddr,BeebDisEndAddr
+SAVE "versions/disc/output/D.CODE.unprot.bin", &11E3, BeebDisEndAddr

@@ -7,11 +7,6 @@
 \ ******************************************************************************
 
 INCLUDE "versions/disc/sources/elite-header.h.asm"
-
-INCLUDE "library/common/main/macro/vertex.asm"
-INCLUDE "library/common/main/macro/edge.asm"
-INCLUDE "library/common/main/macro/face.asm"
-
 _CASSETTE_VERSION       = (_VERSION = 1)
 _DISC_VERSION           = (_VERSION = 2)
 _6502SP_VERSION         = (_VERSION = 3)
@@ -100,6 +95,10 @@ ORG &5600
  EQUB 0
  EQUB 0
  EQUB 0
+
+INCLUDE "library/common/main/macro/vertex.asm"
+INCLUDE "library/common/main/macro/edge.asm"
+INCLUDE "library/common/main/macro/face.asm"
 
 INCLUDE "library/common/main/variable/ship_coriolis.asm"
 INCLUDE "library/common/main/variable/ship_escape_pod.asm"

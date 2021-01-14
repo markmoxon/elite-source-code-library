@@ -9,11 +9,11 @@
 \
 \ This section looks at manoeuvring the ship. Specifically:
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 \   * Work out which direction the ship should be moving, depending on whether
 \     it's an escape pod, where it is, which direction it is pointing, and how
 \     aggressive it is
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 \   * Work out which direction the ship should be moving, depending on the type
 \     of ship, where it is, which direction it is pointing, and how aggressive
 \     it is
@@ -23,7 +23,7 @@ ENDIF
 \
 \   * Speed up or slow down, depending on where the ship is in relation to us
 \
-IF _6502SP_VERSION
+IF _6502SP_VERSION OR _DISC_VERSION
 \ Other entry points:
 \
 \   TA151               Make the ship head towards the planet
@@ -69,7 +69,7 @@ ENDIF
                         \ here, but we also get here if the ship is either far
                         \ away and aggressive, or not too close
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDA XX15               \ Reverse the signs of XX15 and the dot product in CNT,
  EOR #%10000000         \ starting with the x-coordinate
@@ -87,7 +87,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
  EOR #%10000000         \ so now it's positive if the ships are facing each
  STA CNT                \ other, and negative if they are facing the same way
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  JSR TAS6               \ Call TAS6 to negate the vector in XX15 so it points in
                         \ the opposite direction
@@ -106,10 +106,10 @@ ENDIF
 
                         \ If we get here, then one of the following is true:
                         \
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
                         \   * This is an escape pod and XX15 is pointing towards
                         \     the planet
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
                         \   * This is a trader and XX15 is pointing towards the
                         \     planet
 ENDIF
@@ -128,9 +128,9 @@ ENDIF
                         \
                         \ We now want to move the ship in the direction of XX15,
                         \ which will make aggressive ships head towards us, and
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
                         \ ships that are too close turn away. Escape pods,
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
                         \ ships that are too close turn away. Peaceful traders,
 ENDIF
                         \ meanwhile, head off towards the planet in search of a
@@ -143,7 +143,7 @@ ENDIF
                         \ other words if the ship should pull up to head in the
                         \ direction of XX15
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  EOR #%10000000         \ Set the ship's pitch counter to 3, with the opposite
  AND #%10000000         \ sign to the dot product result, which gently pitches
@@ -155,6 +155,13 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
 
  CMP #16                \ If A >= 16 then jump to TA6, as the ship is already
  BCS TA6                \ in the process of rolling
+
+ELIF _DISC_VERSION
+
+ TAX                    \ Copy A into X so we can retrieve it below
+
+ JSR nroll              \ ????
+ STA INWK+30
 
 ELIF _6502SP_VERSION
 
@@ -175,6 +182,10 @@ ELIF _6502SP_VERSION
  ORA INWK+30            \ (we already set the sign above)
  STA INWK+30
 
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_VERSION
+
 .TA11
 
  LDA INWK+29            \ Fetch the roll counter from byte #29 into A
@@ -193,12 +204,23 @@ ENDIF
                         \ ship, in other words if the ship should roll right to
                         \ head in the direction of XX15
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  EOR INWK+30            \ Set the ship's roll counter to 5, with the sign set to
  AND #%10000000         \ positive if the pitch counter and dot product have
  EOR #%10000101         \ different signs, negative if they have the same sign
  STA INWK+29
+
+ELIF _DISC_VERSION
+
+ TAX                    \ Copy A into X so we can retrieve it below
+
+ EOR INWK+30
+ JSR nroll              \ ????
+
+ STA INWK+29
+
+.TA12
 
 ELIF _6502SP_VERSION
 
@@ -230,14 +252,14 @@ ENDIF
  BMI TA9                \ TA9, as the ships are facing away from each other and
                         \ the ship might want to slow down to take another shot
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  CMP #22                \ The dot product is positive, so the ships are facing
  BCC TA9                \ each other. If A < 22 then the ships are not heading
                         \ directly towards each other, so jump to TA9 to slow
                         \ down
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  CMP CNT2               \ The dot product is positive, so the ships are facing
  BCC TA9                \ each other. If A < CNT2 then the ships are not heading
@@ -277,7 +299,25 @@ ENDIF
 
  RTS                    \ Return from the subroutine
 
-IF _6502SP_VERSION
+IF _DISC_VERSION
+
+.TA151
+
+                        \ This is called from part 3 with the vector to the
+                        \ planet in XX15, when we want the ship to turn towards
+                        \ the planet. It does the same dot product calculation
+                        \ as part 3, but it can also change the value of RAT2
+                        \ so that roll and pitch is always applied
+
+ JSR TAS3-2             \ Set (A X) = nosev . XX15
+                        \
+                        \ The bigger the value of the dot product, the more
+                        \ aligned the two vectors are, with a maximum magnitude
+                        \ in A of 36 (96 * 96 >> 8). If A is positive, the
+                        \ vectors are facing in a similar direction, if it's
+                        \ negative they are facing in opposite directions
+
+ELIF _6502SP_VERSION
 
 .TA151
 
@@ -295,6 +335,10 @@ IF _6502SP_VERSION
                         \ vectors are facing in a similar direction, if it's
                         \ negative they are facing in opposite directions
 
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_VERSION
+
  CMP #&98               \ If A is positive or A <= -24, jump to ttt
  BCC ttt
 
@@ -308,6 +352,27 @@ IF _6502SP_VERSION
 
  JMP TA152              \ Jump to TA152 to store A in CNT and move the ship in
                         \ the direction of XX15
+
+ENDIF
+
+IF _DISC_VERSION
+
+.nroll
+        EOR     #$80
+        AND     #$80
+        STA     T
+        TXA
+        ASL     A
+        CMP     RAT2
+        BCC     nroll2
+
+        LDA     RAT
+        ORA     T
+        RTS
+
+.nroll2
+        LDA     T
+        RTS
 
 ENDIF
 

@@ -46,7 +46,7 @@ ENDIF
 
  JSR TTX66              \ Clear the screen and draw a white border
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  JSR HFS1               \ Call HFS1 below and then fall through into the same
                         \ routine, so this effectively runs HFS1 twice, and as
@@ -57,12 +57,12 @@ ENDIF
 
 .HFS1
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDA #128               \ Set K3 = 128 (the x-coordinate of the centre of the
  STA K3                 \ screen)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  LDX #X                 \ Set K3 = #X (the x-coordinate of the centre of the
  STX K3                 \ screen)
@@ -72,7 +72,7 @@ ENDIF
  LDX #Y                 \ Set K4 = #Y (the y-coordinate of the centre of the
  STX K4                 \ screen)
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  ASL A                  \ Set A = 0
 
@@ -82,7 +82,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
  STA K3+1               \ Set the high bytes of K3(1 0) and K4(1 0) to 0
  STA K4+1
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  LDX #0                 \ Set X = 0
 

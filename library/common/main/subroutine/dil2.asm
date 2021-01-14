@@ -110,9 +110,18 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION
+
  BNE DLL12              \ If A is non-zero then we have something to draw, so
                         \ jump to DLL12 to skip the following and move on to the
                         \ drawing
+
+ELIF _DISC_VERSION
+
+ JMP DLL12              \ Jump to DLL12 to skip the following and move on to the
+                        \ drawing ????
+
+ENDIF
 
 .DLL11
 

@@ -13,7 +13,7 @@
 \
 \   * If this is a missile, jump up to the missile code in part 1
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 \   * If this is an escape pod, point it at the planet and jump to the
 \     manoeuvring code in part 7
 \
@@ -26,7 +26,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
 \   * If this is a pirate and we are within the space station safe zone, stop
 \     the pirate from attacking by removing all its aggression
 \
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 \   * If this is the space station and it is hostile, consider spawning a cop
 \     (6.2% chance, up to a maximum of seven) and we're done
 \
@@ -49,7 +49,33 @@ ENDIF
 
 .TACTICS
 
-IF _6502SP_VERSION
+IF _DISC_VERSION
+
+ LDY #3                 \ Set RAT = 3, which is the magnitude we set the pitch
+ STY RAT                \ or roll counter to in part 7 when turning a ship
+                        \ towards a vector (a higher value giving a longer
+                        \ turn). This value is not changed in the TACTICS
+                        \ routine, but it is set to different values by the
+                        \ DOCKIT routine
+
+ INY                    \ Set RAT2 = 4, which is the threshold below which we
+ STY RAT2               \ don't apply pitch and roll to the ship (so a lower
+                        \ value means we apply pitch and roll more often, and a
+                        \ value of 0 means we always apply them). The value is
+                        \ compared with double the high byte of sidev . XX15,
+                        \ where XX15 is the vector from the ship to the enemy
+                        \ or planet. This value is set to different values by
+                        \ both the TACTICS and DOCKIT routines
+
+ LDA #22                \ Set CNT2 = 22, which is the maximum angle beyond which
+ STA CNT2               \ a ship will slow down to start turning towards its
+                        \ prey (a lower value means a ship will start to slow
+                        \ down even if its angle with the enemy ship is large,
+                        \ which gives a tighter turn). This value is not changed
+                        \ in the TACTICS routine, but it is set to different
+                        \ values by the DOCKIT routine
+
+ELIF _6502SP_VERSION
 
  LDA #3                 \ Set RAT = 3, which is the magnitude we set the pitch
  STA RAT                \ or roll counter to in part 7 when turning a ship
@@ -80,7 +106,7 @@ ENDIF
  CPX #MSL               \ If this is a missile, jump up to TA18 to implement
  BEQ TA18               \ missile tactics
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  CPX #ESC               \ If this is not an escape pod, skip the following two
  BNE P%+8               \ instructions
@@ -95,7 +121,7 @@ ENDIF
  CPX #SST               \ If this is not the space station, jump down to TA13
  BNE TA13
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  JSR DORND              \ This is the space station, so set A and X to random
                         \ numbers
@@ -148,7 +174,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
 
 .TA62
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  LDA NEWB               \ This is the space station, so check whether bit 2 of
  AND #%00000100         \ the ship's NEWB flags is set, and if it is (i.e. the
@@ -187,9 +213,23 @@ ELIF _6502SP_VERSION
  CMP #240               \ If A < 240 (93.8% chance), return from the subroutine
  BCC TA1                \ (as TA1 contains an RTS)
 
+ENDIF
+
+IF _DISC_VERSION
+
+ LDA MANY+COPS          \ Check how many cops there are in the vicinity already,
+ CMP #4                 \ and if there are 4 or more, return from the subroutine
+ BCS TA22               \ (as TA22 contains an RTS)
+
+ELIF _6502SP_VERSION
+
  LDA MANY+COPS          \ Check how many cops there are in the vicinity already,
  CMP #7                 \ and if there are 7 or more, return from the subroutine
  BCS TA22               \ (as TA22 contains an RTS)
+
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_VERSION
 
  LDX #COPS              \ Set X to the ship type for a cop
 
@@ -202,6 +242,10 @@ ELIF _6502SP_VERSION
                         \ subroutine using a tail call
 
 .TA13
+
+ENDIF
+
+IF _6502SP_VERSION
 
  CPX #HER               \ If this is not a rock hermit, jump down to TA17
  BNE TA17

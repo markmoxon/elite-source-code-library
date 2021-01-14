@@ -9,7 +9,10 @@
 \
 \ This section works out what kind of condition the ship is in. Specifically:
 \
-IF _6502SP_VERSION
+IF _DISC_VERSION
+\   * If this is an Anaconda, consider spawning (22% chance) a Worm
+\
+ELIF _6502SP_VERSION
 \   * If this is an Anaconda, consider spawning (22% chance) a Worm (61% of the
 \     time) or a Sidewinder (39% of the time)
 \
@@ -22,10 +25,10 @@ ENDIF
 \   * If the ship is not into the last 1/8th of its energy, jump to part 5 to
 \     consider firing a missile
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 \   * If the ship is into the last 1/8th of its energy, then rarely (10% chance)
 \     the ship launches an escape pod and is left drifting in space
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 \   * If the ship is into the last 1/8th of its energy, and this ship type has
 \     an escape pod fitted, then rarely (10% chance) the ship launches an escape
 \     pod and is left drifting in space
@@ -40,7 +43,24 @@ ENDIF
  JMP TA20               \ This is a missile, so jump down to TA20 to get
                         \ straight into some aggressive manoeuvring
 
-IF _6502SP_VERSION
+IF _DISC_VERSION
+
+ CMP #ANA               \ If this is not an Anaconda, jump down to TN7 to skip
+ BNE TN7                \ the following
+
+ JSR DORND              \ Set A and X to random numbers
+
+ CMP #200               \ If A < 200 (78% chance), jump down to TN7 to skip the
+ BCC TN7                \ following
+
+ LDX #WRM               \ Set X to the ship type for a Worm
+
+ JMP TN6                \ Jump to TN6 to spawn the Worm and return from
+                        \ the subroutine using a tail call
+
+.TN7
+
+ELIF _6502SP_VERSION
 
  CMP #ANA               \ If this is not an Anaconda, jump down to TN7 to skip
  BNE TN7                \ the following
@@ -96,13 +116,13 @@ ENDIF
  CMP #230               \ If A < 230 (90% chance), jump down to ta3 to consider
  BCC ta3                \ firing a missile
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDA TYPE               \ If this is a Thargoid, jump down to ta3 to consider
  CMP #THG               \ launching a Thargon
  BEQ ta3
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  LDX TYPE               \ Fetch the ship blueprint's default NEWB flags from the
  LDA E%-1,X             \ table at E%, and if bit 7 is clear (i.e. this ship

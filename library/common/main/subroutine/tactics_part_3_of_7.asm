@@ -9,7 +9,7 @@
 \
 \ This section sets up some vectors and calculates dot products. Specifically:
 \
-IF _6502SP_VERSION
+IF _6502SP_VERSION OR _DISC_VERSION
 \   * If this is a lone Thargon without a mothership, set it adrift aimlessly
 \     and we're done
 \
@@ -33,7 +33,7 @@ ENDIF
 \     us work out later on whether the enemy ship is pointing towards us, and
 \     therefore whether it can hit us with its lasers.
 \
-IF _6502SP_VERSION
+IF _6502SP_VERSION OR _DISC_VERSION
 \ Other entry points:
 \
 \   GOPL                Make the ship head towards the planet
@@ -43,7 +43,7 @@ ENDIF
 
 .TA21
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION OR _DISC_VERSION
 
  CPX #TGL               \ If this is not a Thargon, jump down to TA14
  BNE TA14
@@ -69,8 +69,21 @@ IF _6502SP_VERSION
  LSR A                  \ and jump to TN1 if it is clear (i.e. if this is not a
  BCC TN1                \ trader)
 
+ENDIF
+
+IF _DISC_VERSION
+
+ CPX #100               \ This is a trader, so if X >= 100 (61% chance), return
+ BCS TA22               \ from the subroutine (as TA22 contains an RTS)
+
+ELIF _6502SP_VERSION
+
  CPX #50                \ This is a trader, so if X >= 50 (80% chance), return
  BCS TA22               \ from the subroutine (as TA22 contains an RTS)
+
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_VERSION
 
 .TN1
 
@@ -156,8 +169,16 @@ ENDIF
                         \ to the missile - in both cases it's the vector from
                         \ the potential victim to the attacker)
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION
+
  LDY #10                \ Set (A X) = nosev . XX15
  JSR TAS3
+
+ELIF _DISC_VERSION
+
+ JSR TAS3-2             \ Set (A X) = nosev . XX15
+
+ENDIF
 
  STA CNT                \ Store the high byte of the dot product in CNT. The
                         \ bigger the value, the more aligned the two ships are,

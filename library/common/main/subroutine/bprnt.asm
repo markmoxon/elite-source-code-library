@@ -298,12 +298,18 @@
  DEC XX17               \ Decrement the total number of characters left to
                         \ print, which we stored in XX17
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  BMI RR3+1              \ If the result is negative, we have printed all the
                         \ characters, so return from the subroutine (as RR3
                         \ contains an ORA #&60 instruction, so RR3+1 is &60,
                         \ which is the opcode for an RTS)
+
+ELIF _DISC_VERSION
+
+ BMI rT9                \ If the result is negative, we have printed all the
+                        \ characters, so jump down to rT9 to return from the
+                        \ subroutine
 
 ELIF _6502SP_VERSION
 

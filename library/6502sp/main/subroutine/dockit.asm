@@ -157,8 +157,15 @@
                         \ degrees, so we're heading in pretty much the correct
                         \ direction for a good approach to the docking slot
 
+IF _DISC_VERSION
+
+ JSR TAS3-2             \ Call TAS3-2 to calculate:
+                        \
+ELIF _6502SP_VERSION
+
  LDY #10                \ Call TAS3 to calculate:
  JSR TAS3               \
+ENDIF
                         \   (A X) = nosev . XX15
                         \
                         \ where nosev is the nose vector of the ship, so this is

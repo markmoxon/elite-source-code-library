@@ -129,9 +129,11 @@ ENDIF
                         \ registers and return from the subroutine
 
 IF _CASSETTE_VERSION OR _DISC_VERSION
+
  LDX #1                 \ If we get here, then this is control code 11-13, of
  STX XC                 \ which only 13 is used. This code prints a newline,
 ELIF _6502SP_VERSION
+
  LDX #1                 \ If we get here, then this is control code 12 or 13,
  STX XC                 \ both of which are used. This code prints a newline,
 ENDIF
@@ -213,7 +215,7 @@ ENDIF
                         \
                         \ It's a long way from 10 PRINT "Hello world!":GOTO 10
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
 \LDX #LO(K3)            \ These instructions are commented out in the original
 \INX                    \ source, but they call OSWORD 10, which reads the
@@ -238,9 +240,13 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION
+
  TAY                    \ Copy the character number from A to Y, as we are
                         \ about to pull A apart to work out where this
                         \ character definition lives in memory
+
+ENDIF
 
                         \ Now we want to set X to point to the relevant page
 IF _CASSETTE_VERSION OR _DISC_VERSION
@@ -405,7 +411,15 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
+IF _DISC_VERSION
+
+ INC XC                 \ ????
+
+ENDIF
+
  LDA YC                 \ Fetch YC, the y-coordinate (row) of the text cursor
+
+IF _CASSETTE_VERSION OR _6502SP_VERSION
 
  CPY #127               \ If the character number (which is in Y) <> 127, then
  BNE RR2                \ skip to RR2 to print that character, otherwise this is
@@ -418,7 +432,9 @@ ENDIF
                         \ we're just updating the cursor so it's in the right
                         \ position following the deletion
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+ENDIF
+
+IF _CASSETTE_VERSION
 
  ADC #&5E               \ A contains YC (from above) and the C flag is set (from
  TAX                    \ the CPY #127 above), so these instructions do this:
@@ -455,12 +471,10 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION
+
                         \ Because YC starts at 0 for the first text row, this
-IF _CASSETTE_VERSION OR _DISC_VERSION
                         \ means that X will be &5F for row 0, &60 for row 1 and
-ELIF _6502SP_VERSION
-                        \ means that X will be &3F for row 0, &41 for row 1 and
-ENDIF
                         \ so on. In other words, X is now set to the page number
                         \ for the row before the one containing the text cursor,
                         \ and given that we set SC above to point to the offset
@@ -468,29 +482,41 @@ ENDIF
                         \ this means that (X SC) now points to the character
                         \ above the text cursor
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
-
  LDY #&F8               \ Set Y = &F8, so the following call to ZES2 will count
                         \ Y upwards from &F8 to &FF
-
-ELIF _6502SP_VERSION
-
- LDY #&F0               \ Set Y = &F0, so the following call to ZES2 will count
-                        \ Y upwards from &F0 to &FF
-
-ENDIF
 
  JSR ZES2               \ Call ZES2, which zero-fills from address (X SC) + Y to
                         \ (X SC) + &FF. (X SC) points to the character above the
                         \ text cursor, and adding &FF to this would point to the
-IF _CASSETTE_VERSION OR _DISC_VERSION
                         \ cursor, so adding &F8 points to the character before
-ELIF _6502SP_VERSION
-                        \ cursor, so adding &F0 points to the character before
-ENDIF
                         \ the cursor, which is the one we want to delete. So
                         \ this call zero-fills the character to the left of the
                         \ cursor, which erases it from the screen
+
+ELIF _6502SP_VERSION
+                        \ Because YC starts at 0 for the first text row, this
+                        \ means that X will be &3F for row 0, &41 for row 1 and
+                        \ so on. In other words, X is now set to the page number
+                        \ for the row before the one containing the text cursor,
+                        \ and given that we set SC above to point to the offset
+                        \ in memory of the text cursor within the row's page,
+                        \ this means that (X SC) now points to the character
+                        \ above the text cursor
+
+ LDY #&F0               \ Set Y = &F0, so the following call to ZES2 will count
+                        \ Y upwards from &F0 to &FF
+
+ JSR ZES2               \ Call ZES2, which zero-fills from address (X SC) + Y to
+                        \ (X SC) + &FF. (X SC) points to the character above the
+                        \ text cursor, and adding &FF to this would point to the
+                        \ cursor, so adding &F0 points to the character before
+                        \ the cursor, which is the one we want to delete. So
+                        \ this call zero-fills the character to the left of the
+                        \ cursor, which erases it from the screen
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _6502SP_VERSION
 
  BEQ RR4                \ We are done deleting, so restore the registers and
                         \ return from the subroutine (this BNE is effectively
@@ -507,7 +533,9 @@ ENDIF
                         \ the cursor so it's in the right position following
                         \ the print
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+ENDIF
+
+IF _CASSETTE_VERSION
 
 \LDA YC                 \ This instruction is commented out in the original
                         \ source. It isn't required because we only just did a
@@ -525,16 +553,22 @@ ENDIF
  BCC RR3                \ we are on rows 1-23), then jump to RR3 to print the
                         \ character
 
-IF _6502SP_VERSION
-
- PHA                    \ Store A on the stack so we can retrieve it below
-
-ENDIF
+IF _CASSETTE_VERSION
 
  JSR TTX66              \ Otherwise we are off the bottom of the screen, so
                         \ clear the screen and draw a white border
 
-IF _6502SP_VERSION
+ELIF _DISC_VERSION
+
+ JSR TT66               \ Otherwise we are off the bottom of the screen, so
+                        \ clear the screen and draw a white border
+
+ELIF _6502SP_VERSION
+
+ PHA                    \ Store A on the stack so we can retrieve it below
+
+ JSR TTX66              \ Otherwise we are off the bottom of the screen, so
+                        \ clear the screen and draw a white border
 
  LDA #1                 \ Otherwise we are off the bottom of the screen, so move
  STA XC                 \ the text cursor to column 1, row 1

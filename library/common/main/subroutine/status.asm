@@ -107,15 +107,17 @@ ENDIF
                         \ and draw a horizontal line at pixel row 19 to box
                         \ in the title
 
- LDA #15                \ Set A to token 129 ("{sentence case}DOCKED")
+IF _CASSETTE_VERSION
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+ LDA #15                \ Set A to token 129 ("{sentence case}DOCKED")
 
  LDY QQ12               \ Fetch the docked status from QQ12, and if we are
  BNE st6                \ docked, jump to st6 to print "Docked" for our
                         \ ship's condition
 
 ELIF _6502SP_VERSION
+
+ LDA #15                \ Set A to token 129 ("{sentence case}DOCKED")
 
  LDY QQ12               \ Fetch the docked status from QQ12, and if we are
  BNE wearedocked        \ docked, jump to wearedocked
@@ -125,12 +127,12 @@ ENDIF
  LDA #230               \ Otherwise we are in space, so start off by setting A
                         \ to token 70 ("GREEN")
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDY MANY+AST           \ Set Y to the number of asteroids in our local bubble
                         \ of universe
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  LDY JUNK               \ Set Y to the number of junk items in our local bubble
                         \ of universe (where junk is asteroids, canisters,
@@ -341,7 +343,7 @@ ENDIF
 
  LDA #103               \ Set A to token 103 ("PULSE LASER")
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDX CNT                \ If the laser power for view X has bit 7 clear, then it
  LDY LASER,X            \ is a pulse laser, so skip the following instruction
@@ -349,7 +351,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA #104               \ Set A to token 104 ("BEAM LASER")
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  LDX CNT                \ Set Y = the laser power for view X
  LDY LASER,X

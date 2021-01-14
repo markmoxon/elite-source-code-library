@@ -73,7 +73,7 @@
                         \ can use it as an index for the two-byte address table
                         \ at UNIV
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  TAX                    \ Copy the address of the target ship's data block from
  LDA UNIV,X             \ UNIV(X+1 X) to V(1 0)
@@ -90,7 +90,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
  LDY #8                 \ K3(8 7 6) = (z_sign z_hi z_lo) - z-coordinate of
  JSR TAS1               \ target ship
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  TAX                    \ Copy the address of the target ship's data block from
  LDA UNIV,X             \ UNIV(X+1 X) to (A V)
@@ -178,12 +178,12 @@ ENDIF
 
  JSR DORND              \ Set A and X to random numbers
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  CMP #16                \ If A >= 16 (94% chance), jump down to TA19 with the
  BCS TA19               \ vector from the target to the missile in K3
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  CMP #16                \ If A >= 16 (94% chance), jump down to TA19S with the
  BCS TA19S              \ vector from the target to the missile in K3
@@ -196,13 +196,13 @@ ENDIF
  LDA (V),Y              \ into the C flag
  LSR A
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  BCC TA19               \ If the C flag is clear then the target does not have
                         \ E.C.M. fitted, so jump down to TA19 with the vector
                         \ from the target to the missile in K3
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  BCS P%+5               \ If the C flag is set then the target has E.C.M.
                         \ fitted, so skip the next instruction

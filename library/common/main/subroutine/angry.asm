@@ -25,7 +25,7 @@
  CMP #SST               \ If this is the space station, jump to AN2 to make the
  BEQ AN2                \ space station hostile
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  BCS HI1                \ If A >= #SST then this is a missile, asteroid, cargo
                         \ canister, Thargon or escape pod, and they can't get
@@ -35,7 +35,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
  CMP #CYL               \ If this is not a Cobra Mk III trader, skip the
  BNE P%+5               \ following instruction
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  LDY #36                \ Fetch the ship's NEWB flags from byte #36
  LDA (INF),Y
@@ -67,7 +67,7 @@ ENDIF
  LDY #30                \ starts pitching
  STA (INF),Y
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION OR _DISC_VERSION
 
  LDA TYPE               \ If the ship's type is < #CYL (i.e. a missile, Coriolis
  CMP #CYL               \ space station, escape pod, plate, cargo canister,
@@ -87,7 +87,7 @@ ENDIF
 
 .AN2
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  ASL K%+NI%+32          \ Fetch the AI counter (byte #32) of the second ship
  SEC                    \ in the ship data workspace at K%, which is reserved
@@ -98,7 +98,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
                         \ routine, but it does set up the entry point FR1-2
                         \ so that it clears the C flag and does an RTS
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  LDA K%+NI%+36          \ Set bit 2 of the NEWB flags in byte #36 of the second ship in the ship
  ORA #%00000100         \ data workspace at K%, which is reserved for the sun or

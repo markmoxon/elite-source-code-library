@@ -34,7 +34,7 @@
 \
 \   INWK                The whole INWK workspace is preserved
 \
-IF _6502SP_VERSION
+IF _6502SP_VERSION OR _DISC_VERSION
 \   X                   X is preserved
 \
 ENDIF
@@ -49,7 +49,7 @@ ENDIF
                         \ so we can restore them later when returning from the
                         \ subroutine
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION OR _DISC_VERSION
 
  TXA                    \ Store X, the ship type to spawn, on the stack so we
  PHA                    \ can preserve it through the routine
@@ -90,6 +90,14 @@ ENDIF
                         \ so now we need to tweak the data before creating the
                         \ new child ship (in this way, the child inherits things
                         \ like location from the parent)
+
+IF _DISC_VERSION
+
+        LDA     NEWB    \ ????
+        AND     #$1C
+        STA     NEWB
+
+ENDIF
 
  LDA TYPE               \ Fetch the ship type of the parent into A
 
@@ -137,13 +145,13 @@ ENDIF
 
  TXA                    \ Copy the child's ship type from X into A
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  CMP #OIL               \ If the child we are spawning is not a cargo canister,
  BNE NOIL               \ jump to NOIL to skip us setting up the pitch and roll
                         \ for the canister
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  CMP #SPL+1             \ If the type of the child we are spawning is less than
  BCS NOIL               \ #PLT or greater than #SPL - i.e. not an alloy plate,
@@ -170,11 +178,11 @@ ENDIF
  STA INWK+29            \ damping randomly enabled or disabled, depending on the
                         \ C flag from above
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDA #OIL               \ Set A to the ship type of a cargo canister
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  PLA                    \ Retrieve the child's ship type from the stack
 
@@ -212,7 +220,7 @@ ENDIF
  PLA
  STA XX0
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION OR _DISC_VERSION
 
  PLA                    \ Retrieve the ship type to spawn from the stack into X
  TAX                    \ so it is preserved through calls to this routine

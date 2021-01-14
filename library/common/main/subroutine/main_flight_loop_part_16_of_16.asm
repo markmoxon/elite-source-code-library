@@ -77,11 +77,21 @@
 
 .MA66
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDA QQ11               \ If this is not a space view (i.e. QQ11 is non-zero)
  BNE MA9                \ then jump to MA9 to return from the main flight loop
                         \ (as MA9 is an RTS)
+
+ JMP STARS              \ This is a space view, so jump to the STARS routine to
+                        \ process the stardust, and return from the main flight
+                        \ loop using a tail call
+
+ELIF _DISC_VERSION
+
+ LDA QQ11               \ If this is not a space view (i.e. QQ11 is non-zero)
+ BNE oh                 \ then jump to oh to return from the main flight loop
+                        \ (as oh is an RTS)
 
  JMP STARS              \ This is a space view, so jump to the STARS routine to
                         \ process the stardust, and return from the main flight

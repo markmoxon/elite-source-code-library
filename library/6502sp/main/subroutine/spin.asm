@@ -26,8 +26,21 @@
  JSR DORND              \ Fetch a random number, and jump to oh if it is
  BPL oh                 \ positive (50% chance)
 
+IF _DISC_VERSION
+
+ PHA                    \ Store A on the stack so we can restore it after the
+                        \ following transfers
+
+ENDIF
+
  TYA                    \ Copy the cargo type from Y into A and X
  TAX
+
+IF _DISC_VERSION
+
+ PLA                    \ Restore A from the stack
+
+ENDIF
 
  LDY #0                 \ Fetch the first byte of the hit ship's blueprint,
  AND (XX0),Y            \ which determines the maximum number of bits of

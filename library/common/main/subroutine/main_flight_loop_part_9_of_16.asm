@@ -26,7 +26,7 @@
 
 .ISDK
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDA K%+NI%+32          \ 1. Fetch the AI counter (byte #32) of the second ship
  BMI MA62               \ in the ship data workspace at K%, which is reserved
@@ -36,7 +36,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
                         \ fail docking (so trying to dock at a station that we
                         \ have annoyed does not end well)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  LDA K%+NI%+36          \ 1. Fetch the NEWB flags (byte #36) of the second ship
  AND #%00000100         \ in the ship data workspace at K%, which is reserved
@@ -52,7 +52,7 @@ ENDIF
  CMP #214               \ docking, as the angle of approach is greater than 26
  BCC MA62               \ degrees
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  JSR SPS4               \ Call SPS4 to get the vector to the space station
                         \ into XX15
@@ -61,7 +61,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
  BMI MA62               \ if it is negative, we are facing away from the
                         \ station, so jump to MA62 to fail docking
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  JSR SPS1               \ Call SPS1 to calculate the vector to the planet and
                         \ store it in XX15
@@ -70,8 +70,17 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION
+
  CMP #89                \ 4. If z-axis < 89, jump to MA62 to fail docking, as
  BCC MA62               \ we are not in the 22.0 degree safe cone of approach
+
+ELIF _DISC_VERSION
+
+ CMP #86                \ 4. If z-axis < 86, jump to MA62 to fail docking, as
+ BCC MA62               \ we are not in the ???? degree safe cone of approach
+
+ENDIF
 
  LDA INWK+16            \ 5. If |roofv_x_hi| < 80, jump to MA62 to fail docking,
  AND #%01111111         \ as the slot is more than 36.6 degrees from horizontal
@@ -83,7 +92,7 @@ ENDIF
                         \ If we arrive here, either the docking computer has
                         \ been activated, or we just docked successfully
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDA #0                 \ Set the on-screen hyperspace counter to 0
  STA QQ22+1
@@ -98,6 +107,15 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
 
  JMP BAY                \ Go to the docking bay (i.e. show the Status Mode
                         \ screen)
+
+ELIF _DISC_VERSION
+
+        JSR     RES2   \????
+
+        LDA     #&08
+        JSR     HFS2
+
+ JMP DOENTRY            \ Go to the docking bay (i.e. show the ship hanger)
 
 ELIF _6502SP_VERSION
 

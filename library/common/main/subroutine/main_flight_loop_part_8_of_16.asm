@@ -17,7 +17,7 @@
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDA #3                 \ Set A to 3 to denote we may be scooping an escape pod
 
@@ -33,7 +33,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
                         \ (this BNE is effectively a JMP as A will never be
                         \ zero)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  CPX #OIL               \ If this is a cargo canister, jump to oily to randomly
  BEQ oily               \ decide the canister's contents
@@ -79,19 +79,26 @@ ENDIF
                         \ computers, while escape pods contain slaves, and
                         \ Thargons become alien items when scooped
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  STA QQ29               \ Call tnpr with the scooped cargo type stored in QQ29
  LDA #1                 \ and A set to 1, to work out whether we have room in
  JSR tnpr               \ the hold for the scooped item (A is preserved by this
                         \ call, and the C flag contains the result)
 
+ELIF _DISC_VERSION
+
+ JSR tnpr               \ Call tnpr with the scooped cargo type stored in A
+                        \ to work out whether we have room in the hold for A
+                        \ ???? tonnes of this cargo (the C flag contains the result)
+
 ELIF _6502SP_VERSION
 
- JSR tnpr1              \ Call tnpr1 to with the scooped cargo type stored in A
+ JSR tnpr1              \ Call tnpr1 with the scooped cargo type stored in A
                         \ to work out whether we have room in the hold for one
                         \ tonne of this cargo (A is set to 1 by this call, and
                         \ the C flag contains the result)
+
 ENDIF
 
  LDY #78                \ This instruction has no effect, so presumably it used
@@ -113,13 +120,13 @@ ENDIF
  ADC #208               \ which will be in the range 48 ("FOOD") to 64 ("ALIEN
  JSR MESS               \ ITEMS"), so this prints the scooped item's name
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  JMP MA60               \ We are done scooping, so jump down to MA60 to set the
                         \ kill flag on the canister, as it no longer exists in
                         \ the local bubble
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  ASL NEWB               \ The item has now been scooped, so set bit 7 of its
  SEC                    \ NEWB flags to indicate this

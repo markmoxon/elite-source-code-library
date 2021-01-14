@@ -61,7 +61,7 @@
  LSR A                  \ Divide the (positive) roll rate in A by 4
  LSR A
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  CMP #8                 \ If A >= 8, skip the following two instructions
  BCS P%+4
@@ -72,7 +72,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
                         \ if the C flag is clear (if it is set, we skip this
                         \ instruction)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  CMP #8                 \ If A >= 8, skip the following instruction
  BCS P%+3
@@ -152,7 +152,35 @@ ENDIF
  ORA BET2               \ Store A in BETA, but with the sign set to BET2 (so
  STA BETA               \ BETA has the same sign as the actual pitch rate)
 
-IF _6502SP_VERSION
+IF _DISC_VERSION
+
+ LDA BSTK               \ If BSTK = 0 then the Bitstik is not configured, so
+ BEQ BS2                \ jump to BS2 to skip the following
+
+        LDX     #$03        \ ????
+        LDA     #$80
+        JSR     OSBYTE
+        TYA
+
+ LSR A                  \ Divide A by 4
+ LSR A
+
+ CMP #40                \ If A < 40, skip the following instruction
+ BCC P%+4
+
+ LDA #40                \ Set A = 40, which ensures a maximum speed of 40
+
+ STA DELTA              \ Update our speed in DELTA
+
+ BNE MA4                \ If the speed we just set is non-zero, then jump to MA4
+                        \ to skip the following, as we don't need to check the
+                        \ keyboard for speed keys, otherwise do check the
+                        \ keyboard (so Bitstik users can still use the keyboard
+                        \ for speed adjustments if they twist the stick to zero)
+
+.BS2
+
+ELIF _6502SP_VERSION
 
  LDA BSTK               \ If BSTK = 0 then the Bitstik is not configured, so
  BEQ BS2                \ jump to BS2 to skip the following

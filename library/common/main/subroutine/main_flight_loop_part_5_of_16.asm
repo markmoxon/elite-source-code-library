@@ -40,13 +40,13 @@ ENDIF
  AND #%00100000         \ byte #31, then it is already exploding, so jump to
  BNE MA21               \ BA21 as ships can't explode more than once
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDA INWK+31            \ The energy bomb is killing this ship, so set bit 7 of
  ORA #%10000000         \ the ship byte #31 to indicate that it has now been
  STA INWK+31            \ killed
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  ASL INWK+31            \ The energy bomb is killing this ship, so set bit 7 of
  SEC                    \ the ship byte #31 to indicate that it has now been

@@ -31,7 +31,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
 \ the K% workspace.
 ELIF _6502SP_VERSION
 \ The blocks are pointed to by the lookup table at location UNIV. The first 720
-\ bytes of the K% workspace hold ship data on up to 20 ships, with 36 (NI%)
+\ bytes of the K% workspace hold ship data on up to 20 ships, with 37 (NI%)
 \ bytes per ship.
 ENDIF
 \

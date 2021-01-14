@@ -155,7 +155,7 @@ ENDIF
 
 .MA76
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDA KY13               \ If ESCAPE is being pressed and we have an escape pod
  AND ESCP               \ fitted, keep going, otherwise skip the next
@@ -166,7 +166,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
                         \ launch it, and exit the main flight loop using a tail
                         \ call
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  LDA KY20               \ If "P" is being pressed, keep going, otherwise skip
  BEQ MA78               \ the next two instructions
@@ -180,8 +180,16 @@ ELIF _6502SP_VERSION
  AND ESCP               \ fitted, keep going, otherwise jump to noescp to skip
  BEQ noescp             \ the following instructions
 
+ENDIF
+
+IF _6502SP_VERSION
+
  LDA MJ                 \ If we are in witchspace, we can't launch our escape
  BNE noescp             \ pod, so jump down to noescp
+
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_VERSION
 
  JMP ESCAPE             \ The "launch escape pod" button is being pressed and
                         \ we have an escape pod fitted, so jump to ESCAPE to
@@ -218,7 +226,7 @@ ENDIF
 
 .MA64
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDA KY19               \ If "C" is being pressed, and we have a docking
  AND DKCMP              \ computer fitted, and we are inside the space station's
@@ -239,7 +247,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
                         \ GOIN to dock (or "go in"), and exit the main flight
                         \ loop using a tail call
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  LDA KY19               \ If "C" is being pressed, and we have a docking
  AND DKCMP              \ computer fitted, keep going, otherwise jump down to

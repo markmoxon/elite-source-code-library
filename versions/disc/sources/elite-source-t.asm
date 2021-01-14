@@ -69,7 +69,7 @@ Mlas = 50               \ Mining laser power
 
 Armlas = INT(128.5+1.5*POW) \ Military laser power
 
-NI% = 36                \ The number of bytes in each ship's data block (as
+NI% = 37                \ The number of bytes in each ship's data block (as
                         \ stored in INWK and K%)
 
 OSBYTE = &FFF4          \ The address for the OSBYTE routine

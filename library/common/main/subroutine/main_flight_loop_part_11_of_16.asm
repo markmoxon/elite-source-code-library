@@ -24,7 +24,7 @@
 
 .MA26
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION OR _DISC_VERSION
 
  LDA NEWB               \ If bit 7 of the ship's NEWB flags is clear, skip the
  BPL P%+5               \ following instruction
@@ -38,8 +38,23 @@ ENDIF
  LDA QQ11               \ If this is not a space view, jump to MA15 to skip
  BNE MA15               \ missile and laser locking
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION
+
  JSR PLUT               \ Call PLUT to update the geometric axes in INWK to
                         \ match the view (front, rear, left, right)
+
+ELIF _DISC_VERSION
+
+ LDX VIEW               \ Load the current view into X
+
+ BEQ P%+5               \ If the current view is the front view, skip the
+                        \ following instruction, as the geometry in INWK is
+                        \ already correct
+
+ JSR PU1                \ Call PU1 to update the geometric axes in INWK to
+                        \ match the view (front, rear, left, right)
+
+ENDIF
 
  JSR HITCH              \ Call HITCH to see if this ship is in the crosshairs,
  BCC MA8                \ in which case the C flag will be set (so if there is
@@ -86,7 +101,30 @@ ENDIF
  JSR EXNO               \ the crosshairs, so call EXNO to make the sound of
                         \ us making a laser strike on another ship
 
-IF _6502SP_VERSION
+IF _DISC_VERSION
+
+ LDA TYPE               \ Did we just hit the space station? If so, jump to
+ CMP #SST               \ MA14+2 to make the station hostile, skipping the
+ BEQ MA14+2             \ following as we can't destroy a space station
+
+ CMP #CON               \ If the ship we hit is not a Constrictor, jump tp BURN
+ BNE BURN               \ to skip the following
+
+ LDA LAS                \ Set A to the power of the laser we just used to hit
+                        \ the ship (i.e. the laser in the current view)
+
+ CMP #(Armlas AND 127)  \ If the laser is not a military laser, jump to MA8
+ BNE MA8                \ to skip the following, as only military lasers have
+                        \ any effect on the Constrictor
+
+ LSR LAS                \ Divide the laser power of the current view by 4, so
+ LSR LAS                \ the damage inflicted on the super-ship is a quarter of
+                        \ the damage our military lasers would inflict on a
+                        \ normal ship
+
+.BURN
+
+ELIF _6502SP_VERSION
 
  LDA TYPE               \ Did we just hit the space station? If so, jump to
  CMP #SST               \ MA14+2 to make the station hostile, skipping the
@@ -119,7 +157,7 @@ ENDIF
  SBC LAS                \ than zero, the other ship has survived the hit, so
  BCS MA14               \ jump down to MA14
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDA TYPE               \ Did we just hit the space station? If so, jump to
  CMP #SST               \ MA14+2 to make the station hostile, skipping the
@@ -163,7 +201,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
 
 .oh
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  ASL INWK+31            \ Set bit 7 of the ship byte #31 to indicate that it has
  SEC                    \ now been killed

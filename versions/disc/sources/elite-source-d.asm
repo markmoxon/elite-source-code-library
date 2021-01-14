@@ -69,7 +69,7 @@ Mlas = 50               \ Mining laser power
 
 Armlas = INT(128.5+1.5*POW) \ Military laser power
 
-NI% = 36                \ The number of bytes in each ship's data block (as
+NI% = 37                \ The number of bytes in each ship's data block (as
                         \ stored in INWK and K%)
 
 OSBYTE = &FFF4          \ The address for the OSBYTE routine
@@ -105,6 +105,7 @@ QQ18 = &0400
 SNE = &07C0
 ACT = &07E0
 QQ16 = &0880
+XX21 = &5600
 
 INCLUDE "library/common/main/workspace/k_per_cent.asm"
 INCLUDE "library/common/main/workspace/wp.asm"
@@ -170,801 +171,29 @@ LFFFD = &FFFD
 
         BNE     L11F1
 
-.MPERC
-        LDA     K%
-        STA     ZP
-        LDX     JSTX
-        JSR     cntr
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_1_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_2_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_3_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_4_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_5_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_6_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_7_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_8_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_9_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_10_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_11_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_12_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_13_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_14_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_15_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_16_of_16.asm"
+INCLUDE "library/6502sp/main/subroutine/spin.asm"
+INCLUDE "library/common/main/variable/univ.asm"
+INCLUDE "library/common/main/variable/twos.asm"
+INCLUDE "library/common/main/variable/twos2.asm"
+INCLUDE "library/common/main/variable/ctwos.asm"
 
-        JSR     cntr
 
-        TXA
-        EOR     #$80
-        TAY
-        AND     #$80
-        STA     ALP2
-        STX     JSTX
-        EOR     #$80
-        STA     ALP2+1
-        TYA
-        BPL     L124D
-
-        EOR     #$FF
-        CLC
-        ADC     #$01
-.L124D
-        LSR     A
-        LSR     A
-        CMP     #$08
-        BCS     L1254
-
-        LSR     A
-.L1254
-        STA     ALP1
-        ORA     ALP2
-        STA     ALPHA
-        LDX     JSTY
-        JSR     cntr
-
-        TXA
-        EOR     #$80
-        TAY
-        AND     #$80
-        STX     JSTY
-        STA     BET2+1
-        EOR     #$80
-        STA     BET2
-        TYA
-        BPL     L1274
-
-        EOR     #$FF
-.L1274
-        ADC     #$04
-        LSR     A
-        LSR     A
-        LSR     A
-        LSR     A
-        CMP     #$03
-        BCS     L127F
-
-        LSR     A
-.L127F
-        STA     BET1
-        ORA     BET2
-        STA     BETA
-        LDA     BSTK
-        BEQ     L129E
-
-        LDX     #$03
-        LDA     #$80
-        JSR     OSBYTE
-
-        TYA
-        LSR     A
-        LSR     A
-        CMP     #$28
-        BCC     L129A
-
-        LDA     #$28
-.L129A
-        STA     DELTA
-        BNE     L12B6
-
-.L129E
-        LDA     KY2
-        BEQ     L12AB
-
-        LDA     DELTA
-        CMP     #$28
-        BCS     L12AB
-
-        INC     DELTA
-.L12AB
-        LDA     KY1
-        BEQ     L12B6
-
-        DEC     DELTA
-        BNE     L12B6
-
-        INC     DELTA
-.L12B6
-        LDA     KY15
-        AND     NOMSL
-        BEQ     L12CD
-
-        LDY     #$EE
-        JSR     ABORT
-
-        LDA     #$28
-        JSR     NOISE
-
-        LDA     #$00
-        STA     MSAR
-.L12CD
-        LDA     MSTG
-        BPL     L12E3
-
-        LDA     KY14
-        BEQ     L12E3
-
-        LDX     NOMSL
-        BEQ     L12E3
-
-        STA     MSAR
-        LDY     #$E0
-        JSR     MSBAR
-
-.L12E3
-        LDA     KY16
-        BEQ     L12EF
-
-        LDA     MSTG
-        BMI     L1326
-
-        JSR     FRMIS
-
-.L12EF
-        LDA     KY12
-        BEQ     L12F7
-
-        ASL     BOMB
-.L12F7
-        LDA     KY20
-        BEQ     L1301
-
-        LDA     #$00
-        STA     auto
-.L1301
-        LDA     KY13
-        AND     ESCP
-        BEQ     L130C
-
-        JMP     ESCAPE
-
-.L130C
-        LDA     KY18
-        BEQ     L1314
-
-        JSR     WARP
-
-.L1314
-        LDA     KY17
-        AND     ECM
-        BEQ     L1326
-
-        LDA     ECMA
-        BNE     L1326
-
-        DEC     ECMP
-        JSR     ECBLB2
-
-.L1326
-        LDA     KY19
-        AND     DKCMP
-        BEQ     L1331
-
-        STA     auto
-.L1331
-        LDA     #$00
-        STA     LAS
-        STA     DELT4
-        LDA     DELTA
-        LSR     A
-        ROR     DELT4
-        LSR     A
-        ROR     DELT4
-        STA     DELT4+1
-        LDA     LASCT
-        BNE     L1374
-
-        LDA     KY7
-        BEQ     L1374
-
-        LDA     GNTMP
-        CMP     #$F2
-        BCS     L1374
-
-        LDX     VIEW
-        LDA     LASER,X
-        BEQ     L1374
-
-        PHA
-        AND     #$7F
-        STA     LAS
-        STA     LAS2
-        LDA     #$00
-        JSR     NOISE
-
-        JSR     LASLI
-
-        PLA
-        BPL     L136F
-
-        LDA     #$00
-.L136F
-        AND     #$FA
-        STA     LASCT
-.L1374
-        LDX     #$00
-.MAL1
-        STX     XSAV
-        LDA     FRIN,X
-        BNE     L1380
-
-        JMP     MA18
-
-.L1380
-        STA     TYPE
-        JSR     GINF
-
-        LDY     #$24
-.L1387
-        LDA     (INF),Y
-        STA     XX1,Y
-        DEY
-        BPL     L1387
-
-        LDA     TYPE
-        BMI     L13B6
-
-        ASL     A
-        TAY
-        LDA     L55FE,Y
-        STA     XX0
-        LDA     L55FF,Y
-        STA     XX0+1
-        LDA     BOMB
-        BPL     L13B6
-
-        CPY     #$04
-        BEQ     L13B6
-
-        LDA     INWK+31
-        AND     #$20
-        BNE     L13B6
-
-        ASL     INWK+31
-        SEC
-        ROR     INWK+31
-        JSR     EXNO2
-
-.L13B6
-        JSR     MVEIT
-
-        LDY     #$24
-.L13BB
-        LDA     XX1,Y
-        STA     (INF),Y
-        DEY
-        BPL     L13BB
-
-        LDA     INWK+31
-        AND     #$A0
-        JSR     MAS4
-
-        BNE     L141D
-
-        LDA     XX1
-        ORA     INWK+3
-        ORA     INWK+6
-        BMI     L141D
-
-        LDX     TYPE
-        BMI     L141D
-
-        CPX     #$02
-        BEQ     L1420
-
-        AND     #$C0
-        BNE     L141D
-
-        CPX     #$01
-        BEQ     L141D
-
-        LDA     BST
-        AND     INWK+5
-        BPL     MA58
-
-        CPX     #$05
-        BEQ     L13FD
-
-        LDY     #$00
-        LDA     (XX0),Y
-        LSR     A
-        LSR     A
-        LSR     A
-        LSR     A
-        BEQ     MA58
-
-        ADC     #$01
-        BNE     L1402
-
-.L13FD
-        JSR     DORND
-
-        AND     #$07
-.L1402
-        JSR     tnpr
-
-        LDY     #$4E
-        BCS     MA59
-
-        LDY     QQ29
-        ADC     QQ20,Y
-        STA     QQ20,Y
-        TYA
-        ADC     #$D0
-        JSR     MESS
-
-        ASL     NEWB
-        SEC
-        ROR     NEWB
-.L141D
-        JMP     MA26
-
-.L1420
-        LDA     K%+$49
-        AND     #$04
-        BNE     L1449
-
-        LDA     INWK+14
-        CMP     #$D6
-        BCC     L1449
-
-        JSR     SPS1
-
-        LDA     X2
-        CMP     #$56
-        BCC     L1449
-
-        LDA     INWK+16
-        AND     #$7F
-        CMP     #$50
-        BCC     L1449
-
-.GOIN
-        JSR     RES2
-
-        LDA     #$08
-        JSR     HFS2
-
-        JMP     DOENTRY
-
-.L1449
-        LDA     DELTA
-        CMP     #$05
-        BCC     L145C
-
-        JMP     DEATH
-
-.MA59
-        JSR     EXNO3
-
-        ASL     INWK+31
-        SEC
-        ROR     INWK+31
-        BNE     MA26
-
-.L145C
-        LDA     #$01
-        STA     DELTA
-        LDA     #$05
-        BNE     L146D
-
-.MA58
-        ASL     INWK+31
-        SEC
-        ROR     INWK+31
-        LDA     INWK+35
-        SEC
-        ROR     A
-.L146D
-        JSR     OOPS
-
-        JSR     EXNO3
-
-.MA26
-        LDA     NEWB
-        BPL     L147A
-
-        JSR     SCAN
-
-.L147A
-        LDA     QQ11
-        BNE     L14F0
-
-        LDX     VIEW
-        BEQ     L1486
-
-        JSR     PU1
-
-.L1486
-        JSR     L24C7
-
-        BCC     L14ED
-
-        LDA     MSAR
-        BEQ     L149A
-
-        JSR     BEEP
-
-        LDX     XSAV
-        LDY     #$0E
-        JSR     ABORT2
-
-.L149A
-        LDA     LAS
-        BEQ     L14ED
-
-        LDX     #$0F
-        JSR     EXNO
-
-        LDA     TYPE
-        CMP     #$02
-        BEQ     L14E8
-
-        CMP     #$1F
-        BNE     L14B7
-
-        LDA     LAS
-        CMP     #$17
-        BNE     L14ED
-
-        LSR     LAS
-        LSR     LAS
-.L14B7
-        LDA     INWK+35
-        SEC
-        SBC     LAS
-        BCS     L14E6
-
-        ASL     INWK+31
-        SEC
-        ROR     INWK+31
-        LDA     TYPE
-        CMP     #$07
-        BNE     L14D9
-
-        LDA     LAS
-        CMP     #$32
-        BNE     L14D9
-
-        JSR     DORND
-
-        LDX     #$08
-        AND     #$03
-        JSR     SPIN2
-
-.L14D9
-        LDY     #$04
-        JSR     SPIN
-
-        LDY     #$05
-        JSR     SPIN
-
-        JSR     EXNO2
-
-.L14E6
-        STA     INWK+35
-.L14E8
-        LDA     TYPE
-        JSR     ANGRY
-
-.L14ED
-        JSR     LL9
-
-.L14F0
-        LDY     #$23
-        LDA     INWK+35
-        STA     (INF),Y
-        LDA     NEWB
-        BMI     L1527
-
-        LDA     INWK+31
-        BPL     L152A
-
-        AND     #$20
-        BEQ     L152A
-
-        LDA     NEWB
-        AND     #$40
-        ORA     FIST
-        STA     FIST
-        LDA     DLY
-        ORA     MJ
-        BNE     L1527
-
-        LDY     #$0A
-        LDA     (XX0),Y
-        BEQ     L1527
-
-        TAX
-        INY
-        LDA     (XX0),Y
-        TAY
-        JSR     MCASH
-
-        LDA     #$00
-        JSR     MESS
-
-.L1527
-        JMP     L3D7F
-
-.L152A
-        LDA     TYPE
-        BMI     L1533
-
-        JSR     FAROF
-
-        BCC     L1527
-
-.L1533
-        LDY     #$1F
-        LDA     INWK+31
-        STA     (INF),Y
-        LDX     XSAV
-        INX
-        JMP     MAL1
-
-.MA18
-        LDA     BOMB
-        BPL     L154F
-
-        ASL     BOMB
-        JSR     WSCAN
-
-        LDA     #$30
-        STA     VIA+$21
-.L154F
-        LDA     MCNT
-        AND     #$07
-        BNE     L15C2
-
-        LDX     ENERGY
-        BPL     L156C
-
-        LDX     ASH
-        JSR     SHD
-
-        STX     ASH
-        LDX     FSH
-        JSR     SHD
-
-        STX     FSH
-.L156C
-        SEC
-        LDA     ENGY
-        ADC     ENERGY
-        BCS     L1578
-
-        STA     ENERGY
-.L1578
-        LDA     MJ
-        BNE     L15BF
-
-        LDA     MCNT
-        AND     #$1F
-        BNE     L15CB
-
-        LDA     SSPR
-        BNE     L15BF
-
-        TAY
-        JSR     MAS2
-
-        BNE     L15BF
-
-        LDX     #$1C
-.L1590
-        LDA     K%,X
-        STA     XX1,X
-        DEX
-        BPL     L1590
-
-        INX
-        LDY     #$09
-        JSR     MAS1
-
-        BNE     L15BF
-
-        LDX     #$03
-        LDY     #$0B
-        JSR     MAS1
-
-        BNE     L15BF
-
-        LDX     #$06
-        LDY     #$0D
-        JSR     MAS1
-
-        BNE     L15BF
-
-        LDA     #$C0
-        JSR     FAROF2
-
-        BCC     L15BF
-
-        JSR     WPLS
-
-        JSR     NWSPS
-
-.L15BF
-        JMP     MA23
-
-.L15C2
-        LDA     MJ
-        BNE     L15BF
-
-        LDA     MCNT
-        AND     #$1F
-.L15CB
-        CMP     #$0A
-        BNE     L15FD
-
-        LDA     #$32
-        CMP     ENERGY
-        BCC     L15DA
-
-        ASL     A
-        JSR     MESS
-
-.L15DA
-        LDY     #$FF
-        STY     ALTIT
-        INY
-        JSR     m
-
-        BNE     MA23
-
-        JSR     MAS3
-
-        BCS     MA23
-
-        SBC     #$24
-        BCC     L15FA
-
-        STA     R
-        JSR     LL5
-
-        LDA     Q
-        STA     ALTIT
-        BNE     MA23
-
-.L15FA
-        JMP     DEATH
-
-.L15FD
-        CMP     #$0F
-        BNE     L160A
-
-        LDA     auto
-        BEQ     MA23
-
-        LDA     #$7B
-        BNE     L1645
-
-.L160A
-        CMP     #$14
-        BNE     MA23
-
-        LDA     #$1E
-        STA     CABTMP
-        LDA     SSPR
-        BNE     MA23
-
-        LDY     #$25
-        JSR     MAS2
-
-        BNE     MA23
-
-        JSR     MAS3
-
-        EOR     #$FF
-        ADC     #$1E
-        STA     CABTMP
-        BCS     L15FA
-
-        CMP     #$E0
-        BCC     MA23
-
-        LDA     BST
-        BEQ     MA23
-
-        LDA     DELT4+1
-        LSR     A
-        ADC     QQ14
-        CMP     #$46
-        BCC     L1640
-
-        LDA     #$46
-.L1640
-        STA     QQ14
-        LDA     #$A0
-.L1645
-        JSR     MESS
-
-.MA23
-        LDA     LAS2
-        BEQ     L165C
-
-        LDA     LASCT
-        CMP     #$08
-        BCS     L165C
-
-        JSR     LASLI2
-
-        LDA     #$00
-        STA     LAS2
-.L165C
-        LDA     ECMP
-        BEQ     L1666
-
-        JSR     DENGY
-
-        BEQ     L166E
-
-.L1666
-        LDA     ECMA
-        BEQ     L1671
-
-        DEC     ECMA
-        BNE     L1671
-
-.L166E
-        JSR     ECMOF
-
-.L1671
-        LDA     QQ11
-        BNE     L1694
-
-        JMP     STARS
-
-.SPIN
-        JSR     DORND
-
-        BPL     L1694
-
-        PHA
-        TYA
-        TAX
-        PLA
-        LDY     #$00
-        AND     (XX0),Y
-        AND     #$0F
-.SPIN2
-        STA     CNT
-        BEQ     L1694
-
-.L168B
-        LDA     #$00
-        JSR     SFS1
-
-        DEC     CNT
-        BNE     L168B
-
-.L1694
-        RTS
-
-.L1695
-        EQUB    $00
-
-.L1696
-        EQUB    $09,$25,$09,$4A,$09,$6F,$09,$94
-        EQUB    $09,$B9,$09,$DE,$09,$03,$0A,$28
-        EQUB    $0A,$4D,$0A,$72,$0A,$97,$0A,$BC
-        EQUB    $0A
-
-.L16AF
-        EQUB    $80,$40,$20,$10,$08,$04,$02,$01
-
-.L16B7
-        EQUB    $C0,$60,$30,$18,$0C,$06,$03,$03
-
-.L16BF
-        EQUB    $88
-
-.L16C0
-        EQUB    $44,$22,$11,$88
 
 .LOIN
         STY     YSAV
@@ -1024,7 +253,7 @@ LFFFD = &FFFD
         TXA
         AND     #$07
         TAX
-        LDA     L16AF,X
+        LDA     TWOS,X
         STA     R
         LDA     Q
         LDX     #$FE
@@ -1147,7 +376,7 @@ LFFFD = &FFFD
         TXA
         AND     #$07
         TAX
-        LDA     L16AF,X
+        LDA     TWOS,X
         STA     R
         LDA     Y1
         AND     #$07
@@ -1371,7 +600,7 @@ LFFFD = &FFFD
         EQUB    $FF,$7F,$3F,$1F,$0F,$07,$03,$01
 
 .L18FD
-        LDA     L16AF,X
+        LDA     TWOS,X
         EOR     (SC),Y
         STA     (SC),Y
         LDY     T1
@@ -1428,7 +657,7 @@ LFFFD = &FFFD
         CMP     #$90
         BCS     L18FD
 
-        LDA     L16B7,X
+        LDA     TWOS2,X
         EOR     (SC),Y
         STA     (SC),Y
         LDA     ZZ
@@ -1440,7 +669,7 @@ LFFFD = &FFFD
 
         LDY     #$01
 .L1961
-        LDA     L16B7,X
+        LDA     TWOS2,X
         EOR     (SC),Y
         STA     (SC),Y
 .L1968
@@ -2622,7 +1851,7 @@ L2033 = L2032+1
         LDA     #$FF
         LDX     Q
         STA     Q
-        LDA     L16BF,X
+        LDA     CTWOS,X
         AND     #$F0
         JMP     DLL12
 
@@ -2715,9 +1944,9 @@ L2033 = L2032+1
 
         LSR     A
         TAX
-        LDA     L1695,X
+        LDA     UNIV,X
         STA     V
-        LDA     L1696,X
+        LDA     UNIV+1,X
         JSR     VCSUB
 
         LDA     K3+2
@@ -3373,7 +2602,7 @@ L216E = M32+1
         STA     K3+2,X
         JMP     TS72
 
-.L24C7
+.HITCH
         CLC
         LDA     INWK+8
         BNE     L2505
@@ -6541,17 +5770,17 @@ L3085 = L3084+1
         AND     #$06
         LSR     A
         TAX
-        LDA     L16BF,X
+        LDA     CTWOS,X
         AND     COL
         EOR     (SC),Y
         STA     (SC),Y
-        LDA     L16C0,X
+        LDA     CTWOS+1,X
         BPL     L36DD
 
         LDA     SC
         ADC     #$08
         STA     SC
-        LDA     L16C0,X
+        LDA     CTWOS+1,X
 .L36DD
         AND     COL
 .L36DF
@@ -6619,9 +5848,9 @@ TT27 = L36DF+1
         TXA
         ASL     A
         TAY
-        LDA     L1695,Y
+        LDA     UNIV,Y
         STA     INF
-        LDA     L1696,Y
+        LDA     UNIV+1,Y
         STA     INF+1
         RTS
 
@@ -7726,6 +6955,7 @@ TT27 = L36DF+1
         STA     SLSP+1
         RTS
 
+.KS1
 .L3D7F
         LDX     XSAV
         JSR     KILLSHP
@@ -7760,9 +6990,9 @@ TT27 = L36DF+1
         TXA
         ASL     A
         TAY
-        LDA     L1695,Y
+        LDA     UNIV,Y
         STA     SC
-        LDA     L1696,Y
+        LDA     UNIV+1,Y
         STA     SCH
         LDY     #$20
         LDA     (SC),Y
@@ -7858,9 +7088,9 @@ TT27 = L36DF+1
         TXA
         ASL     A
         TAY
-        LDA     L1695,Y
+        LDA     UNIV,Y
         STA     SC
-        LDA     L1696,Y
+        LDA     UNIV+1,Y
         STA     SCH
         LDY     #$24
         LDA     (SC),Y
@@ -8087,7 +7317,7 @@ TT27 = L36DF+1
         JSR     NWSHP
 
 .TT100
-        JSR     MPERC
+        JSR     M%
 
         DEC     DLY
         BEQ     L3F54
@@ -8534,7 +7764,7 @@ L40AA = L40A9+1
 
         STA     DELTA
 .L4234
-        JSR     MPERC
+        JSR     M%
 
         LDA     LASCT
         BNE     L4234
@@ -11787,7 +11017,7 @@ LL155 = L46F2+1
         PHA
         JSR     L36A7
 
-        LDA     L16C0,X
+        LDA     CTWOS+1,X
         AND     COL
         STA     XX15
         PLA

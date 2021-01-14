@@ -86,13 +86,7 @@ IF _CASSETTE_VERSION
  JSR tnpr               \ the hold for the scooped item (A is preserved by this
                         \ call, and the C flag contains the result)
 
-ELIF _DISC_VERSION
-
- JSR tnpr               \ Call tnpr with the scooped cargo type stored in A
-                        \ to work out whether we have room in the hold for A
-                        \ ???? tonnes of this cargo (the C flag contains the result)
-
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  JSR tnpr1              \ Call tnpr1 with the scooped cargo type stored in A
                         \ to work out whether we have room in the hold for one

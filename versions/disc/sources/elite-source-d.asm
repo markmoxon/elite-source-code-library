@@ -310,9 +310,9 @@ INCLUDE "library/common/main/subroutine/lasli.asm"
         EQUB    $C8,$8B,$E0,$8A,$E6,$D6,$C5,$C6
         EQUB    $C1,$CA,$95,$9D,$9C,$97
 
+INCLUDE "library/6502sp/main/subroutine/tnpr1.asm"
+
 .tnpr
-        STA     QQ29
-        LDA     #$01
         PHA
         LDX     #$0C
         CPX     QQ29

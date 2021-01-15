@@ -23,13 +23,13 @@
 
  STA T                  \ Store the amount of damage in T
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDY #8                 \ Fetch byte #8 (z_sign) for the ship attacking us, and
  LDX #0                 \ set X = 0
  LDA (INF),Y
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  LDX #0                 \ Fetch byte #8 (z_sign) for the ship attacking us, and
  LDY #8                 \ set X = 0

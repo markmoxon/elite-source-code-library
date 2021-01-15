@@ -36,7 +36,7 @@
                         \ source disc (ELITED). It finds the closest system to
                         \ coordinates (QQ9, QQ10)
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDX GHYP               \ Fetch GHYP, which tells us whether we own a galactic
  BEQ hy5                \ hyperdrive, and if it is zero, which means we don't,
@@ -48,7 +48,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
  STX QQ8                \ Set the distance to the selected system in QQ8(1 0)
  STX QQ8+1              \ to 0
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  LDX GHYP               \ Fetch GHYP, which tells us whether we own a galactic
  BEQ zZ+1               \ hyperdrive, and if it is zero, which means we don't,
@@ -112,7 +112,17 @@ ENDIF
 
  JSR TT110              \ Call TT110 to show the front space view
 
-IF _6502SP_VERSION
+IF _DISC_VERSION
+
+ JSR TT111              \ Call TT111 to set the current system to the nearest
+                        \ system to (QQ9, QQ10), and put the seeds of the
+                        \ nearest system into QQ15 to QQ15+5
+
+ LDX #0                 \ Set the distance to the selected system in QQ8(1 0)
+ STX QQ8                \ to 0
+ STX QQ8+1
+
+ELIF _6502SP_VERSION
 
  JSR TT111              \ Call TT111 to set the current system to the nearest
                         \ system to (QQ9, QQ10), and put the seeds of the

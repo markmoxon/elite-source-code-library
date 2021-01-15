@@ -97,11 +97,15 @@ ENDIF
                         \ whose byte #1 from the market prices table is in
                         \ QQ19+1 (which we set up above)
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION
+
  LDA QQ11               \ If the current view type in QQ11 is not 4 (Sell Cargo
  CMP #4                 \ screen), jump to TT212 to skip the option to sell
  BNE TT212              \ items
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+ENDIF
+
+IF _CASSETTE_VERSION
 
  LDA #205               \ Set A to recursive token 45 ("SELL")
 
@@ -113,7 +117,8 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
 
 ELIF _6502SP_VERSION
 
-\JSRTT162
+\JSRTT162               \ This instruction is commented out in the original
+                        \ source
 
  LDA #205               \ Print recursive token 45 ("SELL")
  JSR TT27
@@ -136,6 +141,8 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION
+
  LDA QQ29               \ We are selling this item, so fetch the item number
                         \ from QQ29
 
@@ -146,7 +153,9 @@ ENDIF
                         \ routine doesn't print the item details, as we just
                         \ disabled printing)
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+ENDIF
+
+IF _CASSETTE_VERSION
 
  LDY QQ29               \ Set P to the amount of this item we have in our cargo
  LDA QQ20,Y             \ hold (which is the amount to sell)
@@ -165,6 +174,8 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION
+
  LDA QQ24               \ Set Q to the item's price / 4
  STA Q
 
@@ -178,32 +189,43 @@ ENDIF
 
  JSR MCASH              \ Add (Y X) cash to the cash pot in CASH
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+ENDIF
+
+IF _CASSETTE_VERSION
 
  LDA #0                 \ We've made the sale, so set the amount
  LDY QQ29
  STA QQ20,Y
 
+ STA QQ17               \ Set QQ17 = 0, which enables printing again
+
 ELIF _6502SP_VERSION
 
  LDA #0                 \ We've made the sale, so set the amount
 
-ENDIF
-
  STA QQ17               \ Set QQ17 = 0, which enables printing again
+
+ENDIF
 
 .TT212
 
  LDY QQ29               \ Fetch the item number from QQ29 into Y, and increment
  INY                    \ Y to point to the next item
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  CPY #17                \ If Y >= 17 then skip the next instruction as we have
  BCS P%+5               \ done the last item
 
  JMP TT211              \ Otherwise loop back to TT211 to print the next item
                         \ in the hold
+
+ELIF _DISC_VERSION
+
+ CPY #17                \ If Y < 17 then loop back to TT211 to print the next
+ BCC TT211              \ item in the hold
+
+ RTS                    \ Otherwise return from the subroutine
 
 ELIF _6502SP_VERSION
 
@@ -212,6 +234,8 @@ ELIF _6502SP_VERSION
                         \ item)
 
 ENDIF
+
+IF _CASSETTE_VERSION OR _6502SP_VERSION
 
  LDA QQ11               \ If the current view type in QQ11 is not 4 (Sell Cargo
  CMP #4                 \ screen), skip the next two instructions and just
@@ -224,4 +248,6 @@ ENDIF
                         \ screen, as we have finished selling cargo
 
  RTS                    \ Return from the subroutine
+
+ENDIF
 

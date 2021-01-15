@@ -26,7 +26,7 @@
                         \ which will draw the crosshairs at our current home
                         \ system
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDA QQ11               \ If this is a space view, return from the subroutine
  BEQ SC5                \ (as SC5 contains an RTS)
@@ -34,7 +34,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
                         \ Otherwise fall through into CLYNS to clear space at
                         \ the bottom of the screen
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  JMP CLYNS              \ Clear the bottom three text rows of the upper screen,
                         \ and move the text cursor to column 1 on row 21, i.e.

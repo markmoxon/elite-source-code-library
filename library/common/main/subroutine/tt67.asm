@@ -9,9 +9,13 @@
 
 .TT67
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDA #13                \ Load a newline character into A
+
+ELIF _DISC_VERSION
+
+ LDA #12                \ Load a newline character into A
 
 ELIF _6502SP_VERSION
 

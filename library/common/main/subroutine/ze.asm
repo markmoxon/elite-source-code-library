@@ -37,14 +37,14 @@
  AND #%10000000
  STA INWK+5
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDA #32                \ Set x_hi = y_hi = z_hi = 32, a fair distance away
  STA INWK+1
  STA INWK+4
  STA INWK+7
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  LDA #25                \ Set x_hi = y_hi = z_hi = 25, a fair distance away
  STA INWK+1
@@ -53,8 +53,18 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION
+
  TXA                    \ Set the C flag if X >= 245 (4% chance)
  CMP #245
+
+ELIF _DISC_VERSION
+
+ JSR DORND              \ Set A and X to random numbers
+
+ CMP #245               \ Set the C flag if X >= 245 (4% chance)
+
+ENDIF
 
  ROL A                  \ Set bit 0 of A to the C flag (i.e. there's a 4%
                         \ chance of this ship having E.C.M.)

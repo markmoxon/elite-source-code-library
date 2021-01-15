@@ -93,7 +93,7 @@
  ASL A                  \ Set Y = ship type * 2
  TAY
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDA XX21-2,Y           \ The ship blueprints at XX21 start with a lookup
  STA XX0                \ table that points to the individual ship blueprints,
@@ -104,7 +104,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
  STA XX0+1              \ blueprint and store it in XX0+1, so XX0(1 0) now
                         \ contains the address of this ship's blueprint
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  LDA XX21-1,Y           \ The ship blueprints at XX21 start with a lookup
                         \ table that points to the individual ship blueprints,
@@ -271,10 +271,15 @@ ENDIF
 
  TAX                    \ Copy the ship type into X
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  BMI P%+5               \ If the ship type is negative (planet or sun), then
                         \ skip the following instruction
+
+ELIF _DISC_VERSION
+
+ BMI NW8                \ If the ship type is negative (planet or sun), then
+                        \ jump to NW8 to skip the following instructions
 
 ELIF _6502SP_VERSION
 
@@ -283,6 +288,10 @@ ELIF _6502SP_VERSION
 
  CPX #HER               \ If the ship type is a rock hermit, jump to gangbang
  BEQ gangbang           \ to increase the junk count
+
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_VERSION
 
  CPX #JL                \ If JL <= X < JH, i.e. the type of ship we killed in X
  BCC NW7                \ is junk (escape pod, alloy plate, cargo canister,
@@ -300,7 +309,7 @@ ENDIF
 
  INC MANY,X             \ Increment the total number of ships of type X
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION OR _DISC_VERSION
 
 .NW8
 

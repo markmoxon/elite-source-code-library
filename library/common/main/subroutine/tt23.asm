@@ -226,14 +226,14 @@ ENDIF
  CPY #3                 \ If Y < 3, then the label would clash with the chart
  BCC TT187              \ title, so jump to TT187 to skip printing the label
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  DEX                    \ We entered the EE4 routine with X = 0, so this stores
  STX INWK,Y             \ &FF in INWK+Y, to denote that this row is now occupied
                         \ so we don't try to print another system's label on
                         \ this row
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  LDA #&FF               \ Store &FF in INWK+Y, to denote that this row is now
  STA INWK,Y             \ occupied so we don't try to print another system's

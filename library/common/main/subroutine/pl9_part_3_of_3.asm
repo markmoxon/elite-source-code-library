@@ -120,13 +120,22 @@
  LDA #64                \ Set TGT = 64, so we draw a full circle in the call to
  STA TGT                \ PLS22 below
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDA #0                 \ Set CNT2 = 0 as we are drawing a full circle, so we
  STA CNT2               \ don't need to apply an offset
 
  JMP PLS22              \ Jump to PLS22 to draw the crater, returning from the
                         \ subroutine using a tail call
+
+ELIF _DISC_VERSION
+
+ LDA #0                 \ Set CNT2 = 0 as we are drawing a full circle, so we
+ STA CNT2               \ don't need to apply an offset
+
+ BEQ PLS22              \ Jump to PLS22 to draw the crater, returning from the
+                        \ subroutine using a tail call (this BEQ is effectively
+                        \ a JMP as A is always zero)
 
 ELIF _6502SP_VERSION
 

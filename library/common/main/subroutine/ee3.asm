@@ -7,7 +7,11 @@
 \
 \ ------------------------------------------------------------------------------
 \
+IF _CASSETTE_VERSION
 \ Print the 8-bit number in X at text location (0, 1). Print the number to
+ELIF _DISC_VERSION OR _6502SP_VERSION
+\ Print the 8-bit number in X at text location (1, 1). Print the number to
+ENDIF
 \ 5 digits, left-padding with spaces for numbers with fewer than 3 digits (so
 \ numbers < 10000 are right-aligned), with no decimal point.
 \
@@ -19,13 +23,23 @@
 
 .ee3
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDY #1                 \ Move the text cursor to row 1
  STY YC
 
- DEY                    \ Move the text cursor to column 0
+ DEY                    \ Decrement Y to 0 for the high byte in pr6
+
+ STY XC                 \ Move the text cursor to column 0
+
+ELIF _DISC_VERSION
+
+ LDY #1                 \ Move the text cursor to column 1
  STY XC
+
+ STY YC                 \ Move the text cursor to row 1
+ 
+ DEY                    \ Decrement Y to 0 for the high byte in pr6
 
 ELIF _6502SP_VERSION
 

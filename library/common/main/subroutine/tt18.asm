@@ -70,7 +70,7 @@ ENDIF
  JSR hyp1+3             \ Jump straight to the system at (QQ9, QQ10) without
                         \ first calculating which system is closest
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  JSR GVL                \ Calculate the availability for each market item in the
                         \ new system
@@ -83,11 +83,23 @@ ENDIF
                         \ and set up data blocks and slots for the planet and
                         \ sun
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _DISC_VERSION
+
+ JSR LSHIPS             \ ????
+
+ENDIF
+
+IF _CASSETTE_VERSION
 
  LDA QQ11               \ If the current view in QQ11 is not a space view (0) or
  AND #%00111111         \ one of the charts (64 or 128), return from the
  BNE hyR                \ subroutine (as hyR contains an RTS)
+
+ELIF _DISC_VERSION
+
+ LDA QQ11               \ If the current view in QQ11 is not a space view (0) or
+ AND #%00111111         \ one of the charts (64 or 128), return from the
+ BNE TT113              \ subroutine (as TT113 contains an RTS)
 
 ELIF _6502SP_VERSION
 

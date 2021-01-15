@@ -59,7 +59,7 @@
 
  STA FIST               \ Update our legal status with the new value
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION OR _DISC_VERSION
 
  LDA #255               \ Set the view number in QQ11 to 255
  STA QQ11

@@ -57,11 +57,11 @@
 
  LDA #&FF               \ Set A = &FF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  JMP PLF5               \ Jump to PLF5
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  BNE PLF5               \ Jump to PLF5 (this BNE is effectively a JMP as A is
                         \ never zero)

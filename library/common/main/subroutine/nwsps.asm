@@ -11,7 +11,7 @@
 
  JSR SPBLB              \ Light up the space station bulb on the dashboard
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDX #%00000001         \ Set the AI flag in byte #32 to %00000001 (friendly, no
  STX INWK+32            \ AI, has an E.C.M.)
@@ -19,7 +19,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
  DEX                    \ Set pitch counter to 0 (no pitch, roll only)
  STX INWK+30
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  LDX #%10000001         \ Set the AI flag in byte #32 to %10000001 (hostile,
  STX INWK+32            \ no AI, has an E.C.M.)

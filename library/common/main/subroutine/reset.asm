@@ -19,7 +19,11 @@ ENDIF
 \
 \   * Pages &9, &A, &B, &C and &D
 \
+IF _CASSETTE_VERSION OR _6502SP_VERSION
 \   * BETA to BETA+6, which covers the following:
+ELIF _DISC_VERSION
+\   * BETA to BETA+8, which covers the following:
+ENDIF
 \
 \     * BETA, BET1 - Set pitch to 0
 \
@@ -29,9 +33,15 @@ ENDIF
 \
 \     * ECMA - Turn E.C.M. off
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _DISC_VERSION
+\
+\     * ALP1, ALP2 - Set roll signs to 0
+ENDIF
+IF _CASSETTE_VERSION
 \ It also sets QQ12 to &FF, to indicate we are docked, and then falls through
 \ into RES4.
+ELIF _DISC_VERSION
+\ It then recharges the shields and energy banks, and falls through into RES2.
 ELIF _6502SP_VERSION
 \ It also sets QQ12 to &FF, to indicate we are docked, recharges the shields and
 \ energy banks, and then falls through into RES2.
@@ -46,7 +56,15 @@ ENDIF
                         \ slots for the local bubble of universe, and various
                         \ flight and ship status variables
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION
+
  LDX #6                 \ Set up a counter for zeroing BETA through BETA+6
+
+ELIF _DISC_VERSION
+
+ LDX #8                 \ Set up a counter for zeroing BETA through BETA+8
+
+ENDIF
 
 .SAL3
 
@@ -56,7 +74,7 @@ ENDIF
 
  BPL SAL3               \ Loop back for the next byte to zero
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  STX QQ12               \ X is now negative - i.e. &FF - so this sets QQ12 to
                         \ &FF to indicate we are docked
@@ -64,10 +82,18 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
                         \ Fall through into RES4 to restore shields and energy,
                         \ and reset the stardust and ship workspace at INWK
 
+ELIF _DISC_VERSION
+
+ TXA                    \ X is now negative - i.e. &FF - so this sets A to &FF
+
 ELIF _6502SP_VERSION
 
  TXA                    \ X is now negative - i.e. &FF - so this sets A and QQ12
  STA QQ12               \ to &FF to indicate we are docked
+
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_VERSION
 
  LDX #2                 \ We're now going to recharge both shields and the
                         \ energy bank, which live in the three bytes at FSH,

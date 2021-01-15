@@ -16,10 +16,19 @@
 
 .TT25
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  JSR TT66-2             \ Clear the top part of the screen, draw a white border,
                         \ and set the current view type in QQ11 to 1
+
+ELIF _DISC_VERSION
+
+ LDA #1                 \ Clear the top part of the screen, draw a white border,
+ JSR TT66               \ and set the current view type in QQ11 to 1
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA #9                 \ Move the text cursor to column 9
  STA XC

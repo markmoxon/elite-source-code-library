@@ -18,6 +18,8 @@
                         \ low byte of the screen address of the character block
                         \ we want to draw to
 
+IF _CASSETTE_VERSION
+
  LDX #LO(ECBT)          \ Set (Y X) to point to the character definition in
  LDY #HI(ECBT)          \ ECBT. The LDY has no effect, as we overwrite Y with
                         \ the jump to BULB-2, which writes the high byte of SPBT
@@ -26,6 +28,14 @@
                         \ changed from BULB to BULB-2 so they could remove the
                         \ LDY, but for some reason it didn't get culled? Who
                         \ knows...
+
+ELIF _DISC_VERSION
+
+ LDX #LO(ECBT)          \ Set (Y X) to point to the character definition in
+                        \ ECBT (we set Y below with the jump to BULB-2, which
+                        \ writes the high byte of SPBT into Y
+
+ENDIF
 
  BNE BULB-2             \ Jump down to BULB-2 (this BNE is effectively a JMP as
                         \ A will never be zero)

@@ -24,7 +24,7 @@
 
  LDA QQ15+1             \ Fetch s0_hi
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  AND #%00000111         \ Extract bits 0-2 (which also happen to determine the
                         \ economy), which will be between 0 and 7
@@ -32,7 +32,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
  ADC #6                 \ Add 6 + C, and divide by 2, to get a result between 3
  LSR A                  \ and 7
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  AND #%00000011         \ Extract bits 0-1 (which also help to determine the
                         \ economy), which will be between 0 and 3

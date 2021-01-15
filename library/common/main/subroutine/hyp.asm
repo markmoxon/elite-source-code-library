@@ -23,7 +23,7 @@
 \ and if all the pre-jump checks are passed, we print the destination on-screen
 \ and start the countdown.
 \
-IF _6502SP_VERSION
+IF _6502SP_VERSION OR _DISC_VERSION
 \ Other entry points:
 \
 \   TTX111              Used to rejoin this routine from the call to TTX110
@@ -33,11 +33,29 @@ ENDIF
 
 .hyp
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDA QQ12               \ If we are docked (QQ12 = &FF) then jump to hy6 to
  BNE hy6                \ print an error message and return from the subroutine
                         \ using a tail call (as we can't hyperspace when docked)
+
+ LDA QQ22+1             \ Fetch QQ22+1, which contains the number that's shown
+                        \ on-screen during hyperspace countdown
+
+ BNE zZ+1               \ If it is non-zero, return from the subroutine (as zZ+1
+                        \ contains an RTS), as there is already a countdown in
+                        \ progress
+
+ELIF _DISC_VERSION
+
+ LDA QQ22+1             \ Fetch QQ22+1, which contains the number that's shown
+                        \ on-screen during hyperspace countdown
+
+ ORA QQ12               \ If we are docked (QQ12 = &FF) or there is already a
+ BNE zZ+1               \ countdown in progress, then return from the subroutine
+                        \ using a tail call (as zZ+1 contains an RTS), as we
+                        \ can't hyperspace when docked, or there is already a
+                        \ countdown in progress
 
 ELIF _6502SP_VERSION
 
@@ -45,18 +63,8 @@ ELIF _6502SP_VERSION
  BNE dockEd             \ print an error message and return from the subroutine
                         \ using a tail call (as we can't hyperspace when docked)
 
-ENDIF
-
  LDA QQ22+1             \ Fetch QQ22+1, which contains the number that's shown
                         \ on-screen during hyperspace countdown
-
-IF _CASSETTE_VERSION OR _DISC_VERSION
-
- BNE zZ+1               \ If it is non-zero, return from the subroutine (as zZ+1
-                        \ contains an RTS), as there is already a countdown in
-                        \ progress
-
-ELIF _6502SP_VERSION
 
  BEQ P%+3               \ If it is zero, skip the next instruction
 
@@ -73,10 +81,26 @@ ENDIF
  BMI Ghy                \ If it is, then the galactic hyperdrive has been
                         \ activated, so jump to Ghy to process it
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  JSR hm                 \ Set the system closest to galactic coordinates (QQ9,
                         \ QQ10) as the selected system
+
+ELIF _DISC_VERSION
+
+        LDA     QQ11
+        BNE     P%+5
+
+        JMP     TTH111
+
+ JSR hm                 \ Set the system closest to galactic coordinates (QQ9,
+                        \ QQ10) as the selected system
+
+.TTX111
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA QQ8                \ If both bytes of the distance to the selected system
  ORA QQ8+1              \ in QQ8 are zero, return from the subroutine (as zZ+1

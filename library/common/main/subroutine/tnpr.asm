@@ -96,8 +96,17 @@
 
  LDY QQ29               \ Set Y to the item number we want to add
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION
+
  ADC QQ20,Y             \ Set A = A + the number of units of this item that we
                         \ already have in the hold
+
+ELIF _DISC_VERSION
+
+ LDA QQ20,Y             \ Set A to the number of units of this item that we
+                        \ already have in the hold
+
+ENDIF
 
  CMP #200               \ Is the result greater than 200 (the limit on
                         \ individual stocks of gold, platinum, gem-stones and

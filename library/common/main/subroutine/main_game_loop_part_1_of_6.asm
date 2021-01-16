@@ -14,14 +14,14 @@
 \
 \ This section covers the following:
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 \   * Spawn a trader, i.e. a Cobra Mk III that isn't hostile, with one missile,
 \     a 50% chance of having an E.C.M., a speed between 16 and 31, and a gentle
 \     clockwise roll
 \
 \ We call this from within the main loop, with A set to a random number and the
 \ C flag set.
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 \   * Spawn a trader, i.e. a Cobra Mk III, Python, Boa or Anaconda, with one
 \     missile, a 50% chance of having an E.C.M., a 50% chance of being hostile,
 \     a speed between 16 and 31, and a gentle clockwise roll
@@ -33,7 +33,7 @@ ENDIF
 
 .MTT4
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION OR _DISC_VERSION
 
  JSR DORND              \ Set A and X to random numbers
 
@@ -51,16 +51,26 @@ ENDIF
  ROL INWK+31            \ Set bit 0 of missile count (as we know the C flag is
                         \ set), giving the ship one missile
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION
+
  AND #31                \ Set the ship speed to our random number, set to a
  ORA #16                \ minimum of 16 and a maximum of 31
  STA INWK+27
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+ELIF _DISC_VERSION
+
+ AND #15                \ Set the ship speed to our random number, set to a
+ ORA #16                \ minimum of 16 and a maximum of 15 ????
+ STA INWK+27
+
+ENDIF
+
+IF _CASSETTE_VERSION
 
  LDA #CYL               \ Add a new Cobra Mk III to the local bubble and fall
  JSR NWSHP              \ through into the main game loop again
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  JSR DORND              \ Set A and X to random numbers, plus the C flag
 
@@ -90,8 +100,16 @@ ELIF _6502SP_VERSION
                         \ ship type from the following: Cobra Mk III, Python,
                         \ Boa or Anaconda
 
+ENDIF
+
+IF _6502SP_VERSION
+
  CMP #HER               \ If A is now the ship type of a rock hermit, jump to
  BEQ TT100              \ TT100 to skip the following instruction
+
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_VERSION
 
  JSR NWSHP              \ Add a new ship of type A to the local bubble and fall
                         \ through into the main game loop again

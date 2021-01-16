@@ -78,13 +78,13 @@
  BCS MTT1               \ the spawning of an asteroid or cargo canister and
                         \ potentially spawn something else
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDA MANY+AST           \ If we already have 3 or more asteroids in the local
  CMP #3                 \ bubble, jump down to MTT1 to skip the following and
  BCS MTT1               \ potentially spawn something else
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  LDA JUNK               \ If we already have 3 or more bits of junk in the local
  CMP #3                 \ bubble, jump down to MTT1 to skip the following and
@@ -117,6 +117,14 @@ ENDIF
 
  BVS MTT4               \ If V flag is set (50% chance), jump up to MTT4 to
                         \ spawn a trader
+
+IF _DISC_VERSION
+
+ NOP                    \ ????
+ NOP
+ NOP
+
+ENDIF
 
  ORA #%01101111         \ Take the random number in A and set bits 0-3 and 5-6,
  STA INWK+29            \ so the result has a 50% chance of being positive or
@@ -153,7 +161,7 @@ ENDIF
 
  JSR DORND              \ Set A and X to random numbers
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  CMP #5                 \ Set A to the ship number of an asteroid, and keep
  LDA #AST               \ this value for 98.5% of the time (i.e. if random
@@ -177,6 +185,10 @@ ELIF _6502SP_VERSION
 
 .thongs
 
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_VERSION
+
  CMP #10                \ If random A >= 10 (96% of the time), set the C flag
 
  AND #1                 \ Reduce A to a random number that's 0 or 1
@@ -185,6 +197,10 @@ ELIF _6502SP_VERSION
                         \ spawning a cargo canister (#OIL) and an even chance of
                         \ us spawning either a boulder (#OIL + 1) or an asteroid
                         \ (#OIL + 2)
+
+ENDIF
+
+IF _6502SP_VERSION
 
 .whips
 

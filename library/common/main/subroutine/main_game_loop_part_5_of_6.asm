@@ -27,7 +27,7 @@
 
 .MLOOP
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDA #%00000001         \ Set 6522 System VIA interrupt enable register IER
  STA VIA+&4E            \ (SHEILA &4E) bit 1 (i.e. disable the CA2 interrupt,
@@ -67,7 +67,7 @@ ENDIF
 
  JSR DIALS              \ Call DIALS to update the dashboard
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDA QQ11               \ If this is a space view, skip the following four
  BEQ P%+11              \ instructions (i.e. jump to JSR TT17 below)
@@ -78,6 +78,18 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
 
  JSR DELAY-5            \ Delay for 8 vertical syncs (8/50 = 0.16 seconds), to
                         \ slow the main loop down a bit
+
+ELIF _DISC_VERSION
+
+ LDA QQ11               \ If this is a space view, skip the following five
+ BEQ P%+13              \ instructions (i.e. jump to JSR TT17 below)
+
+ AND PATG               \ If PATG = &FF (author names are shown on start-up)
+ LSR A                  \ and bit 0 of QQ11 is 1 (the current view is type 1),
+ BCS P%+7               \ then skip the following two instructions
+
+ LDY #2                 \ ????
+ JSR DELAY
 
 ELIF _6502SP_VERSION
 

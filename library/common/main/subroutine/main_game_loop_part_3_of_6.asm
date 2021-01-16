@@ -20,12 +20,12 @@ ENDIF
 
 .MTT1
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDA SSPR               \ If we are inside the space station's safe zone, jump
  BNE MLOOP              \ to MLOOP to skip the following
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  LDA SSPR               \ If we are outside the space station's safe zone, skip
  BEQ P%+5               \ the following instruction
@@ -75,13 +75,13 @@ ENDIF
  LDA #COPS              \ Add a new police ship to the local bubble
  JSR NWSHP
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDA MANY+COPS          \ If we now have at least one cop in the local bubble,
  BNE MLOOP              \ jump down to MLOOP, otherwise fall through into the
                         \ next part to look at spawning something else
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  LDA MANY+COPS          \ If we now have at least one cop in the local bubble,
  BNE MLOOPS             \ jump down to MLOOPS, otherwise fall through into the

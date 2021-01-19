@@ -21,7 +21,7 @@
 
 .FAROF2
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  CMP INWK+1             \ If A < x_hi, C will be clear so jump to MA34 to
  BCC MA34               \ return from the subroutine with C clear, otherwise
@@ -35,7 +35,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
 
 .MA34
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  CMP INWK+1             \ If A < x_hi, C will be clear so jump to FA1 to
  BCC FA1                \ return from the subroutine with C clear, otherwise

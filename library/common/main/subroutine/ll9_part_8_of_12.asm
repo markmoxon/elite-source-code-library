@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: LL9 (Part 8 of 11)
+\       Name: LL9 (Part 8 of 12)
 \       Type: Subroutine
 \   Category: Drawing ships
 \    Summary: Draw ship: Calculate the screen coordinates of visible vertices

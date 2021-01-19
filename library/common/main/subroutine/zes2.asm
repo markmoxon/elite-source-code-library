@@ -28,6 +28,8 @@
 
 .ZES2
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION
+
  LDA #0                 \ Load A with the byte we want to fill the memory block
                         \ with - i.e. zero
 
@@ -35,12 +37,22 @@
                         \ high byte of SC, so the 16-bit address in SC and
                         \ SC+1 is now pointing to the SC-th byte of page X
 
+ENDIF
+
 .ZEL1
 
  STA (SC),Y             \ Zero the Y-th byte of the block pointed to by SC,
                         \ so that's effectively the Y-th byte before SC
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION
+
  INY                    \ Increment the loop counter
+
+ELIF _DISC_VERSION
+
+ DEY                    \ ????
+
+ENDIF
 
  BNE ZEL1               \ Loop back to zero the next byte
 

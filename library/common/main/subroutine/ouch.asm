@@ -16,6 +16,8 @@
 
  JSR DORND              \ Set A and X to random numbers
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION
+
  BMI out                \ If A < 0 (50% chance), return from the subroutine
                         \ (as out contains an RTS)
 
@@ -30,6 +32,25 @@
 
  LDA DLY                \ If there is already an in-flight message on-screen,
  BNE out                \ return from the subroutine (as out contains an RTS)
+
+ELIF _DISC_VERSION
+
+ BMI DK5                \ If A < 0 (50% chance), return from the subroutine
+                        \ (as DK5 contains an RTS)
+
+ CPX #22                \ If X >= 22 (89% chance), return from the subroutine
+ BCS DK5                \ (as DK5 contains an RTS)
+
+ LDA QQ20,X             \ If we do not have any of item QQ20+X, return from the
+ BEQ DK5                \ subroutine (as DK5 contains an RTS). X is in the range
+                        \ 0-21, so this not only checks for cargo, but also for
+                        \ E.C.M., fuel scoops, energy bomb, energy unit and
+                        \ docking computer, all of which can be destroyed
+
+ LDA DLY                \ If there is already an in-flight message on-screen,
+ BNE DK5                \ return from the subroutine (as DK5 contains an RTS)
+
+ENDIF
 
  LDY #3                 \ Set bit 1 of de, the equipment destruction flag, so
  STY de                 \ that when we call MESS below, " DESTROYED" is appended

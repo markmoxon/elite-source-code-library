@@ -8,7 +8,7 @@
 \ ------------------------------------------------------------------------------
 \
 \ This part calculates which edges are visible - in other words, which lines we
-\ should draw - and adds them to the ship line heap.
+\ should draw - and clips them to fit on the screen.
 \
 \ When we get here, the heap at XX3 contains all the visible vertex screen
 \ coordinates.
@@ -45,10 +45,22 @@
                         \ visibility distance for this edge, beyond which the
                         \ edge is not shown
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION
+
  CMP XX4                \ If XX4 > the visibility distance, where XX4 contains
  BCC LL78               \ the ship's z-distance reduced to 0-31 (which we set in
                         \ part 2), then this edge is too far away to be visible,
                         \ so jump down to LL78 to move on to the next edge
+
+ELIF _DISC_VERSION
+
+ CMP XX4                \ If XX4 > the visibility distance, where XX4 contains
+ BCC LL79-3             \ the ship's z-distance reduced to 0-31 (which we set in
+                        \ part 2), then this edge is too far away to be visible,
+                        \ so jump down to LL78 (via LL79-3) to move on to the next
+                        \ edge
+
+ENDIF
 
  INY                    \ Increment Y to point to byte #1
 
@@ -78,8 +90,19 @@
  LSR A
  TAX
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION
+
  LDA XX2,X              \ If XX2+X is zero then we decided in part 5 that
  BEQ LL78               \ face 2 is hidden, so jump to LL78
+
+ELIF _DISC_VERSION
+
+ LDA XX2,X              \ If XX2+X is non-zero then we decided in part 5 that
+ BNE LL79               \ face 2 is visible, so skip the following instruction
+
+ JMP LL78               \ Face 2 is hidden, so jump to LL78
+
+ENDIF
 
 .LL79
 
@@ -137,84 +160,19 @@
                         \ clipped to fit on-screen, returning the clipped line's
                         \ end-points in (X1, Y1) and (X2, Y2)
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION
+
  BCS LL78               \ If the C flag is set then the line is not visible on
                         \ screen, so jump to LL78 so we don't store this line
                         \ in the ship line heap
 
-.LL80
+ELIF _DISC_VERSION
 
- LDY U                  \ Fetch the ship line heap pointer, which points to the
-                        \ next free byte on the heap, into Y
+ BCS LL79-3             \ If the C flag is set then the line is not visible on
+                        \ screen, so jump to LL78 (via LL79-3) so we don't store
+                        \ this line in the ship line heap
 
- LDA XX15               \ Add X1 to the end of the heap
- STA (XX19),Y
-
- INY                    \ Increment the heap pointer
-
- LDA XX15+1             \ Add Y1 to the end of the heap
- STA (XX19),Y
-
- INY                    \ Increment the heap pointer
-
- LDA XX15+2             \ Add X2 to the end of the heap
- STA (XX19),Y
-
- INY                    \ Increment the heap pointer
-
- LDA XX15+3             \ Add Y2 to the end of the heap
- STA (XX19),Y
-
- INY                    \ Increment the heap pointer
-
- STY U                  \ Store the updated ship line heap pointer in U
-
- CPY T1                 \ If Y >= T1 then we have reached the maximum number of
- BCS LL81               \ edge lines that we can store in the ship line heap, so
-                        \ skip to LL81 so we don't loop back for the next edge
-
-.LL78
-
- INC XX17               \ Increment the edge counter to point to the next edge
-
- LDY XX17               \ If Y >= XX20, which contains the number of edges in
- CPY XX20               \ the blueprint, jump to LL81 as we have processed all
- BCS LL81               \ the edges
-
- LDY #0                 \ Set Y to point to byte #0 again, ready for the next
-                        \ edge
-
- LDA V                  \ Increment V by 4 so V(1 0) points to the data for the
- ADC #4                 \ next edge
- STA V
-
- BCC ll81               \ If the above addition didn't overflow, jump to ll81
-
- INC V+1                \ Otherwise increment the high byte of V(1 0), as we
-                        \ just moved the V(1 0) pointer past a page boundary
-
-.ll81
-
- JMP LL75               \ Loop back to LL75 to process the next edge
-
-.LL81
-
-                        \ We have finished adding lines to the ship line heap,
-                        \ so now we need to set the first byte of the heap to
-                        \ the number of bytes stored there
-
- LDA U                  \ Fetch the ship line heap pointer from U into A, which
-                        \ points to the end of the heap, and therefore contains
-                        \ the heap size
-
-IF _CASSETTE_VERSION OR _DISC_VERSION
-
- LDY #0                 \ Store A as the first byte of the ship line heap, so
- STA (XX19),Y           \ the heap is now correctly set up
-
-ELIF _6502SP_VERSION
-
- STA (XX19)             \ Store A as the first byte of the ship line heap, so
-                        \ the heap is now correctly set up
+ JMP LL80               \ Jump down to part 11 to draw this edge
 
 ENDIF
 

@@ -31,7 +31,7 @@
 
 IF _CASSETTE_VERSION OR _DISC_VERSION
 
- EQUB &2C               \ Fall through into me1 to print the new message, but
+ EQUB &2C               \ Fall through into ou2 to print the new message, but
                         \ skip the first instruction by turning it into
                         \ &2C &A9 &6C, or BIT &6CA9, which does nothing apart
                         \ from affect the flags

@@ -14,7 +14,7 @@
 \
 \   Y                   The number of vertical sync events to wait for
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 \ Other entry points:
 \
 \   DEL8                Wait for 8/50 of a second (0.16 seconds)
@@ -24,7 +24,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
 ENDIF
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDY #2                 \ Set Y to 2 vertical syncs
 

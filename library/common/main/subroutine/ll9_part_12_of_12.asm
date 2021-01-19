@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: LL9 (Part 11 of 11)
+\       Name: LL9 (Part 11 of 12)
 \       Type: Subroutine
 \   Category: Drawing ships
 \    Summary: Draw ship: Draw all the visible edges from the ship line heap

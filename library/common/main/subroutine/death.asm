@@ -111,7 +111,7 @@ ENDIF
  STA INWK+30            \ we store in byte #30 (the pitch counter) to give our
                         \ ship a very gentle pitch with damping
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  PHP                    \ Store the processor flags
 
@@ -135,7 +135,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
                         \ is we loop back to D1 to add another canister, until
                         \ we have added four of them
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  LDX #OIL               \ Set X to #OIL, the ship type for a cargo canister
 
@@ -218,6 +218,10 @@ ELIF _6502SP_VERSION
  LDX #31                \ Set the screen to show all 31 text rows, which shows
  JSR DET1               \ the dashboard, and fall through into DEATH2 to reset
                         \ and restart the game
+
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_VERSION
 
  JMP DEATH2             \ Jump to DEATH2 to reset and restart the game
 

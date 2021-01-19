@@ -42,11 +42,21 @@ ENDIF
  LDA #%10000000         \ Set bit 7 of QQ17 to switch to Sentence Case
  STA QQ17
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  ASL A                  \ Set LASCT to 0, as 128 << 1 = %10000000 << 1 = 0. This
  STA LASCT              \ stops any laser pulsing. This instruction is STA LAS2
                         \ in the text source file ELITEC.TXT
+
+ELIF _DISC_VERSION
+
+        JSR     FLFLLS  \ ????
+
+        STA     LAS2
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  STA DLY                \ Set the delay in DLY to 0, to indicate that we are
                         \ no longer showing an in-flight message, so any new

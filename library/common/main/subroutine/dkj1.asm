@@ -17,6 +17,14 @@
 
 .DKJ1
 
+IF _6502SP_VERSION OR _DISC_VERSION
+
+ LDA auto               \ If auto is non-zero, then the docking computer is
+ BNE auton              \ currently activated, so jump to auton in DOKEY so the
+                        \ docking computer can "press" the flight keys for us
+
+ENDIF
+
 IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDY #1                 \ Update the key logger for key 1 in the KYTB table, so
@@ -28,10 +36,6 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
  LDA VIA+&40            \ Read 6522 System VIA input register IRB (SHEILA &40)
 
 ELIF _6502SP_VERSION
-
- LDA auto               \ If auto is non-zero, then the docking computer is
- BNE auton              \ currently activated, so jump to auton in DOKEY so the
-                        \ docking computer can "press" the flight keys for us
 
  LDA KTRAN+1            \ Copy the key press state for the "?" key from the
  STA KL+1               \ key logger buffer to the key logger

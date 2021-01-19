@@ -92,7 +92,7 @@ ENDIF
                         \ (part 2 of the explosion), and fall through into NOISE
                         \ to make the sound
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  EQUB &2C               \ Skip the next instruction by turning it into
                         \ &2C &A9 &20, or BIT &20A9, which does nothing apart

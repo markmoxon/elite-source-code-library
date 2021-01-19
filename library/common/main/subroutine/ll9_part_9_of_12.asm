@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: LL9 (Part 9 of 11)
+\       Name: LL9 (Part 9 of 12)
 \       Type: Subroutine
 \   Category: Drawing ships
 \    Summary: Draw ship: Draw laser beams if the ship is firing its laser at us

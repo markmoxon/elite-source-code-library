@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: LL9 (Part 2 of 11)
+\       Name: LL9 (Part 2 of 12)
 \       Type: Subroutine
 \   Category: Drawing ships
 \    Summary: Draw ship: Check if ship is in field of view, close enough to draw

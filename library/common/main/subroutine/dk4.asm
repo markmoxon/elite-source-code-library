@@ -105,7 +105,7 @@ ENDIF
  JMP DEATH2             \ ESCAPE is being pressed, so jump to DEATH2 to end
                         \ the game
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION OR _DISC_VERSION
 
  CPX #&64               \ If "B" is not being pressed, skip to DK7
  BNE nobit
@@ -123,6 +123,10 @@ IF _6502SP_VERSION
 
 .nobit
 
+ENDIF
+
+IF _6502SP_VERSION
+
  CPX #&32               \ If "D" is being pressed, jump to savscr to save a
  BEQ savscr             \ screenshot
 
@@ -135,7 +139,7 @@ ENDIF
 
 .DK2
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDA QQ11               \ If the current view is non-zero (i.e. not a space
  BNE DK5                \ view), return from the subroutine (as DK5 contains
@@ -147,6 +151,19 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
                         \ KYTB+15, and their key logger locations are from KL+8
                         \ to KL+15. So set a decreasing counter in Y for the
                         \ index, starting at 15, so we can loop through them
+
+ELIF _DISC_VERSION
+
+ LDA QQ11               \ If the current view is non-zero (i.e. not a space
+ BNE DK5                \ view), return from the subroutine (as DK5 contains
+                        \ an RTS)
+
+ LDY #16                \ This is a space view, so now we want to check for all
+                        \ the secondary flight keys. The internal key numbers
+                        \ are in the keyboard table KYTB from KYTB+8 to
+                        \ KYTB+16, and their key logger locations are from KL+8
+                        \ to KL+16. So set a decreasing counter in Y for the
+                        \ index, starting at 16, so we can loop through them
 
 ELIF _6502SP_VERSION
 

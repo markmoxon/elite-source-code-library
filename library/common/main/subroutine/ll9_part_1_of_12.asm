@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: LL9 (Part 1 of 11)
+\       Name: LL9 (Part 1 of 12)
 \       Type: Subroutine
 \   Category: Drawing ships
 \    Summary: Draw ship: Check if ship is exploding, check if ship is in front
@@ -80,7 +80,7 @@ ENDIF
                         \ update this value below with the actual ship's
                         \ distance if it turns out to be visible on-screen
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION OR _DISC_VERSION
 
  LDA NEWB               \ If bit 7 of the ship's NEWB flags is set, then the
  BMI EE51               \ ship has been scooped or has docked, so jump down to

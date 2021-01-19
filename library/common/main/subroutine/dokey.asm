@@ -22,7 +22,7 @@
 \ Both options end up at DK4 to scan for other keys, beyond the seven primary
 \ flight controls.
 \
-IF _6502SP_VERSION
+IF _6502SP_VERSION OR _DISC_VERSION
 \ Other entry points:
 \
 \   auton               Get the docking computer to "press" the flight keys to
@@ -54,6 +54,12 @@ ENDIF
                         \ to read the joystick flight controls, before jumping
                         \ to DK4 below
 
+IF _6502SP_VERSION OR _DISC_VERSION
+
+ STA BSTK               \ Set BSTK = 0 to disable the Bitstik
+
+ENDIF
+
 IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDY #7                 \ We're going to work our way through the primary flight
@@ -72,8 +78,6 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
 
 ELIF _6502SP_VERSION
 
- STA BSTK               \ Set BSTK = 0 to disable the Bitstik
-
  LDX #7                 \ We're now going to copy key press data for the primary
                         \ flight keys from the key logger buffer at KTRAN to the
                         \ key logger at KL, so set a loop counter in X so we can
@@ -88,6 +92,10 @@ ELIF _6502SP_VERSION
 
  BNE DKL2               \ Loop back until we have copied all seven primary
                         \ flight control key presses to KL
+
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_VERSION
 
  LDA auto               \ If auto is 0, then the docking computer is not
  BEQ DK15               \ currently activated, so jump to DK15 to skip the

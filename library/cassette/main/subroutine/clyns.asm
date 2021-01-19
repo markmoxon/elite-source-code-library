@@ -44,9 +44,13 @@
 
  INC SC+1               \ Increment SC+1 so SC points to &7607
 
+IF _CASSETTE_VERSION
+
  JSR LYN                \ Call LYN to clear the pixels from &7607 to &76F0
 
  INC SC+1               \ Increment SC+1 so SC points to &7707
+
+ENDIF
 
  INY                    \ Move the text cursor to column 1 (as LYN sets Y to 0)
  STY XC

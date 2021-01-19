@@ -67,6 +67,8 @@ ENDIF
 
 .fvw
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION
+
  BIT QQ12               \ If bit 7 of QQ12 is clear (i.e. we are not docked, but
  BPL INSP               \ in space), jump to INSP to skip the following checks
                         \ for f1-f3 and "@" (save commander file) key presses
@@ -79,7 +81,9 @@ ENDIF
  BNE P%+5               \ Buy Cargo screen, returning from the subroutine using
  JMP TT219              \ a tail call
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+ENDIF
+
+IF _CASSETTE_VERSION
 
  CMP #&47               \ If "@" was pressed, jump to SVE to save the commander
  BNE P%+5               \ file, returning from the subroutine using a tail call
@@ -103,11 +107,15 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION
+
  CMP #f2                \ If red key f2 was pressed, jump to TT208 to show the
  BNE LABEL_3            \ Sell Cargo screen, returning from the subroutine using
  JMP TT208              \ a tail call
 
 .INSP
+
+ENDIF
 
  CMP #f1                \ If the key pressed is < red key f1 or > red key f3,
  BCC LABEL_3            \ jump to LABEL_3 (so only do the following if the key

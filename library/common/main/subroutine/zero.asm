@@ -30,7 +30,7 @@ ENDIF
 
 .ZERO
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDX #&D                \ Point X to page &D
 
@@ -46,7 +46,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
                         \ Then fall through into ZES1 with X set to 9, so we
                         \ clear page &9 too
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  LDX #(de-FRIN)         \ We're going to zero the UP workspace variables from
                         \ FRIN to de, so set a counter in X for the correct

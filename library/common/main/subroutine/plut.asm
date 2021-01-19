@@ -1,6 +1,10 @@
 \ ******************************************************************************
 \
+IF _CASSETTE_VERSION OR _6502SP_VERSION
 \       Name: PLUT
+ELIF _DISC_VERSION
+\       Name: PU1
+ENDIF
 \       Type: Subroutine
 \   Category: Flight
 \    Summary: Flip the coordinate axes for the four different views
@@ -15,9 +19,13 @@
 \
 \   LO2                 Contains an RTS
 \
+IF _CASSETTE_VERSION OR _6502SP_VERSION
 \   PU1-1               Contains an RTS
 \
+ENDIF
 \ ******************************************************************************
+
+IF _CASSETTE_VERSION OR _6502SP_VERSION
 
 .PLUT
 
@@ -28,7 +36,9 @@
                         \   2 = left
                         \   3 = right
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+ENDIF
+
+IF _CASSETTE_VERSION
 
  BNE PU1                \ If the current view is the front view, return from the
  RTS                    \ subroutine, as the geometry in INWK is already correct

@@ -57,11 +57,11 @@
 
  BPL NOL1               \ Loop back for the next source byte
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  RTS                    \ Return from the subroutine
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
                         \ Fall through into KYTB to return from the subroutine,
                         \ as the first byte of KYTB is an RTS

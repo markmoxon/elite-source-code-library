@@ -123,7 +123,7 @@
                         \ add them together to get the result we're after, and
                         \ then set the sign afterwards
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDA K                  \ We now do the following sum:
 \CLC                    \
@@ -136,7 +136,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
                         \ flag, so this is an example of the authors finding
                         \ one more precious byte to save
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  LDA K                  \ We now do the following sum:
  CLC                    \

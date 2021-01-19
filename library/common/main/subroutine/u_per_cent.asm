@@ -18,12 +18,12 @@
  LDA #0                 \ Set A to 0, as this means "key not pressed" in the
                         \ key logger at KL
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDY #15                \ We want to clear the 15 key logger locations from
                         \ KY1 to KY19, so set a counter in Y
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  LDY #16                \ We want to clear the 16 key logger locations from
                         \ KY1 to KY19, so set a counter in Y

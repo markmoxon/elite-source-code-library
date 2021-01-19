@@ -27,7 +27,7 @@
 
 .WARP
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDA MANY+AST           \ Set X to the total number of asteroids, escape pods
  CLC                    \ and cargo canisters in the vicinity
@@ -39,7 +39,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
                         \ number escape pods will cause a carry, so presumably
                         \ it got removed at some point
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  LDX JUNK               \ Set X to the total number of junk items in the
                         \ vicinity (e.g. asteroids, escape pods, cargo
@@ -90,9 +90,19 @@ ENDIF
                         \ memory (as LSR A is a one-byte opcode, while CMP #2
                         \ takes up two bytes)
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION
+
  CMP #2                 \ If A < 2 then jump to WA1 to abort the in-system jump
  BCC WA1                \ with a low beep, as we are facing the planet and are
                         \ too close to jump in that direction
+
+ELIF _DISC_VERSION
+
+ LSR A                  \ If A < 2 then jump to WA1 to abort the in-system jump
+ BEQ WA1                \ with a low beep, as we are facing the planet and are
+                        \ too close to jump in that direction
+
+ENDIF
 
 .WA3
 
@@ -123,9 +133,19 @@ ENDIF
                         \ memory (as LSR A is a one-byte opcode, while CMP #2
                         \ takes up two bytes)
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION
+
  CMP #2                 \ If A < 2 then jump to WA1 to abort the in-system jump
  BCC WA1                \ with a low beep, as we are facing the sun and are too
                         \ close to jump in that direction
+
+ELIF _DISC_VERSION
+
+ LSR A                  \ If A < 2 then jump to WA1 to abort the in-system jump
+ BEQ WA1                \ with a low beep, as we are facing the sun and are too
+                        \ close to jump in that direction
+
+ENDIF
 
 .WA2
 
@@ -201,13 +221,13 @@ ENDIF
 
 .WA1
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDA #40                \ If we get here then we can't do an in-system jump, so
  JMP NOISE              \ call the NOISE routine with A = 40 to make a long, low
                         \ beep and return from the subroutine using a tail call
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  LDA #40                \ If we get here then we can't do an in-system jump, so
  BNE NOISE              \ call the NOISE routine with A = 40 to make a long, low

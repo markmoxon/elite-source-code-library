@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: LL9 (Part 5 of 11)
+\       Name: LL9 (Part 5 of 12)
 \       Type: Subroutine
 \   Category: Drawing ships
 \    Summary: Draw ship: Calculate the visibility of each of the ship's faces

@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: LL9 (Part 3 of 11)
+\       Name: LL9 (Part 3 of 12)
 \       Type: Subroutine
 \   Category: Drawing ships
 \    Summary: Draw ship: Set up orientation vector, ship coordinate variables

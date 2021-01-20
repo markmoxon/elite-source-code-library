@@ -17,8 +17,17 @@
 
 .MT9
 
+IF _DISC_VERSION
+
+ LDA #1                 \ Move the text cursor to column 1
+ STA XC
+
+ELIF _6502SP_VERSION
+
  LDA #1                 \ Call DOXC to move the text cursor to column 1
  JSR DOXC
+
+ENDIF
 
  JMP TT66               \ Jump to TT66 to clear the screen and set the current
                         \ view type to 1, returning from the subroutine using a

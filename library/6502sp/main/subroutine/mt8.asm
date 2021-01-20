@@ -17,8 +17,17 @@
 
 .MT8
 
+IF _DISC_VERSION
+
+ LDA #6                 \ Move the text cursor to column 6
+ STA XC
+
+ELIF _6502SP_VERSION
+
  LDA #6                 \ Move the text cursor to column 6
  JSR DOXC
+
+ENDIF
 
  LDA #%11111111         \ Set all the bits in DTW2
  STA DTW2

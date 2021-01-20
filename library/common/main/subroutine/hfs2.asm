@@ -37,6 +37,7 @@ IF _6502SP_VERSION
 \
 \   HFS1                Don't clear the screen, and draw 8 concentric rings
 \                       with the step size in STP
+\
 ENDIF
 \ ******************************************************************************
 

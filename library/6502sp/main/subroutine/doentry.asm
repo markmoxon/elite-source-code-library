@@ -10,6 +10,16 @@
 
 .DOENTRY
 
+IF _DISC_VERSION
+
+ JSR scramble           \ ????
+
+ JSR RES2               \ Reset a number of flight variables and workspaces
+
+ JSR HFS1               \ Show the space station docking tunnel
+
+ELIF _6502SP_VERSION
+
  JSR RES2               \ Reset a number of flight variables and workspaces
 
  JSR LAUN               \ Show the space station docking tunnel
@@ -25,6 +35,8 @@
  STA ASH
 
  STA ENERGY             \ Recharge the energy banks
+
+ENDIF
 
  JSR HALL               \ Show the ship hanger
 
@@ -67,11 +79,15 @@
                         \ Mission 1 has been completed, so now to check for
                         \ mission 2
 
+IF _6502SP_VERSION
+
  LDA GCNT               \ Fetch the galaxy number into A
 
  CMP #2                 \ If this is not galaxy 2 (shown in-game as galaxy 3),
  BNE EN4                \ jump to EN4 as we can only start mission 2 in the
                         \ third galaxy
+
+ENDIF
 
  LDA TP                 \ Extract bits 0-3 of TP into A
  AND #%00001111
@@ -85,6 +101,16 @@
  CMP #5                 \ rank that is less than 3/8 of the way from Dangerous
  BCC EN4                \ to Deadly), jump to EN4 as our rank isn't high enough
                         \ for mission 2
+
+IF _DISC_VERSION
+
+ LDA GCNT               \ Fetch the galaxy number into A
+
+ CMP #2                 \ If this is not galaxy 2 (shown in-game as galaxy 3),
+ BNE EN4                \ jump to EN4 as we can only start mission 2 in the
+                        \ third galaxy
+
+ENDIF
 
  JMP BRIEF2             \ If we get here, mission 1 is complete and no longer in
                         \ progress, mission 2 hasn't started, we have reached a
@@ -100,6 +126,16 @@
                         \ briefed and picked up the plans, then bits 0-3 of TP
                         \ will be %0110, so this jumps to EN5 if this is not the
                         \ case
+
+IF _DISC_VERSION
+
+ LDA GCNT               \ Fetch the galaxy number into A
+
+ CMP #2                 \ If this is not galaxy 2 (shown in-game as galaxy 3),
+ BNE EN4                \ jump to EN4 as we can only start mission 2 in the
+                        \ third galaxy
+
+ENDIF
 
  LDA QQ0                \ Set A = the current system's galactic x-coordinate
 
@@ -124,6 +160,16 @@
  BNE EN4                \ and mission 2 has started and we have picked up the
                         \ plans, then bits 0-3 of TP will be %1010, so this
                         \ jumps to EN5 if this is not the case
+
+IF _DISC_VERSION
+
+ LDA GCNT               \ Fetch the galaxy number into A
+
+ CMP #2                 \ If this is not galaxy 2 (shown in-game as galaxy 3),
+ BNE EN4                \ jump to EN4 as we can only start mission 2 in the
+                        \ third galaxy
+
+ENDIF
 
  LDA QQ0                \ Set A = the current system's galactic x-coordinate
 

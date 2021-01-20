@@ -38,7 +38,11 @@
  EQUW MT27              \ Token 27: Print mission 1 captain's name (217-219)
  EQUW MT28              \ Token 28: Print mission 1 location hint (220-221)
  EQUW MT29              \ Token 29: Column 6, white text, lower case in words
+IF _DISC_VERSION
+ EQUW DASC              \ Token 30: Unused
+ELIF _6502SP_VERSION
  EQUW WHITETEXT         \ Token 30: White text
+ENDIF
  EQUW DASC              \ Token 31: Unused
  EQUW DASC              \ Token 32: Unused
 

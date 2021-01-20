@@ -9,8 +9,12 @@
 
 .HME2
 
+IF _6502SP_VERSION
+
  LDA #CYAN              \ Send a #SETCOL CYAN command to the I/O processor to
  JSR DOCOL              \ switch to colour 3, which is white in the chart view
+
+ENDIF
 
  LDA #14                \ Print extended token 14 ("{clear bottom of screen}
  JSR DETOK              \ PLANET NAME?{fetch line input from keyboard}"). The

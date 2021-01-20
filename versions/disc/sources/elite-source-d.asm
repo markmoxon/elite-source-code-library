@@ -3,6 +3,8 @@ INCLUDE "versions/disc/sources/elite-header.h.asm"
 _CASSETTE_VERSION       = (_VERSION = 1)
 _DISC_VERSION           = (_VERSION = 2)
 _6502SP_VERSION         = (_VERSION = 3)
+_DISC_DOCKED            = FALSE
+_DISC_FLIGHT            = TRUE
 
 \ ******************************************************************************
 \
@@ -195,6 +197,7 @@ INCLUDE "library/common/main/subroutine/loin_part_5_of_7.asm"
 INCLUDE "library/common/main/subroutine/loin_part_6_of_7.asm"
 INCLUDE "library/common/main/subroutine/loin_part_7_of_7.asm"
 
+.FLKB
         LDA     #$0F
         TAX
         JMP     OSBYTE

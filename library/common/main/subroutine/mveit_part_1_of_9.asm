@@ -24,9 +24,20 @@
 
 .MVEIT
 
- LDA INWK+31            \ If bits 5 or 7 are set, jump to MV30 as the ship is
- AND #%10100000         \ either exploding or has been killed, so we don't need
- BNE MV30               \ to tidy its orientation vectors or apply tactics
+IF _DISC_DOCKED
+
+ LDA INWK+31            \ If bit 5 of ship byte #31 is set, jump to MV3 as the
+ AND #%00100000         \ ship is exploding, so we don't need to tidy its
+ BNE MV3                \ orientation vectors
+
+ELIF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+
+ LDA INWK+31            \ If bits 5 or 7 of ship byte #31 are set, jump to MV30
+ AND #%10100000         \ as the ship is either exploding or has been killed, so
+ BNE MV30               \ we don't need to tidy its orientation vectors or apply
+                        \ tactics
+
+ENDIF
 
  LDA MCNT               \ Fetch the main loop counter
 
@@ -54,4 +65,10 @@
                         \ prevent the ship from getting elongated and out of
                         \ shape due to the imprecise nature of trigonometry
                         \ in assembly language
+
+IF _DISC_DOCKED
+
+.MV3
+
+ENDIF
 

@@ -73,9 +73,13 @@
                         \ we need to buffer the text until we reach the end of
                         \ the paragraph, so we can then pad it out with spaces
 
+IF _6502SP_VERSION OR _DISC_FLIGHT
+
  BVS P%+6               \ If bit 6 of DTW4 is set, then this is an in-flight
                         \ message and we should buffer the carriage return
                         \ character {12}, so skip the following two instructions
+
+ENDIF
 
  CMP #12                \ If the character in A is a carriage return, then we
  BEQ DA1                \ have reached the end of the paragraph, so jump down to

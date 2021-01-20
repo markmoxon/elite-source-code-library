@@ -124,21 +124,27 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+
  LDA #230               \ Otherwise we are in space, so start off by setting A
                         \ to token 70 ("GREEN")
+
+ENDIF
 
 IF _CASSETTE_VERSION
 
  LDY MANY+AST           \ Set Y to the number of asteroids in our local bubble
                         \ of universe
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
  LDY JUNK               \ Set Y to the number of junk items in our local bubble
                         \ of universe (where junk is asteroids, canisters,
                         \ escape pods and so on)
 
 ENDIF
+
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
 
  LDX FRIN+2,Y           \ The ship slots at FRIN are ordered with the first two
                         \ slots reserved for the planet and sun/space station,
@@ -164,6 +170,15 @@ ENDIF
 
  JSR plf                \ Print the text token in A (which contains our ship's
                         \ condition) followed by a newline
+
+ELIF _DISC_DOCKED
+
+ LDA #205               \ ????
+ JSR DETOK
+
+ JSR TT67
+
+ENDIF
 
  LDA #125               \ Print recursive token 125, which prints the next
  JSR spc                \ three lines of the Status Mode screen:

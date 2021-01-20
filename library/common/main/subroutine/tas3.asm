@@ -28,7 +28,7 @@
 \
 \   (A X)               The result of the dot product
 \
-IF _DISC_VERSION
+IF _DISC_FLIGHT
 \ Other entry points:
 \
 \   TAS3-2              Calculate nosev . XX15
@@ -36,7 +36,7 @@ IF _DISC_VERSION
 ENDIF
 \ ******************************************************************************
 
-IF _DISC_VERSION
+IF _DISC_FLIGHT
 
  LDY #10                \ Set Y = 10 so we calculate nosev . XX15
 

@@ -19,15 +19,28 @@
 
  LDA INWK+31            \ Fetch the ship's exploding/killed state from byte #31
 
+IF _DISC_DOCKED
+
+ AND #%00100000         \ If we are exploding then jump to MVD1 to remove it from
+ BNE MVD1               \ the scanner permanently
+
+ELIF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+
  AND #%10100000         \ If we are exploding or removing this ship then jump to
  BNE MVD1               \ MVD1 to remove it from the scanner permanently
+
+ENDIF
 
  LDA INWK+31            \ Set bit 4 to keep the ship visible on the scanner
  ORA #%00010000
  STA INWK+31
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+
  JMP SCAN               \ Display the ship on the scanner, returning from the
                         \ subroutine using a tail call
+
+ENDIF
 
 .MVD1
 

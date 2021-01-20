@@ -87,7 +87,7 @@ ENDIF
                         \ 15 and 16, so this effectively switches off the colour
                         \ change for the altitude indicator
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT
 
  STA K+1                \ Set K+1 (the colour we should show for low values) to
                         \ 240, or &F0 (dashboard colour 2, yellow/white), so the
@@ -99,6 +99,15 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
  JMP COMPAS             \ We have now drawn all the indicators, so jump to
                         \ COMPAS to draw the compass, returning from the
                         \ subroutine using a tail call
+
+ELIF _DISC_DOCKED
+
+ STA K+1                \ Set K+1 (the colour we should show for low values) to
+                        \ 240, or &F0 (dashboard colour 2, yellow/white), so the
+                        \ altitude indicator always shows in this colour
+
+ LDA ALTIT              \ Draw the altitude indicator using a range of 0-255,
+ JMP DILX               \ returning from the subroutine using a tail call
 
 ELIF _6502SP_VERSION
 

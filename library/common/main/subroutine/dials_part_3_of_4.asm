@@ -13,12 +13,20 @@
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT
 
  LDA MCNT               \ Fetch the main loop counter and calculate MCNT mod 4,
  AND #3                 \ jumping to rT9 if it is non-zero. rT9 contains an RTS,
  BNE rT9                \ so the following code only runs every 4 iterations of
                         \ the main loop, otherwise we return from the subroutine
+
+ELIF _DISC_DOCKED
+
+ LDA MCNT               \ Fetch the main loop counter and calculate MCNT mod 4,
+ AND #3                 \ jumping to rT9 if it is non-zero. R5-1 contains an RTS,
+ BNE R5-1               \ so the following code only runs every 4 iterations of
+                        \ the main loop, otherwise we return from the subroutine
+
 ENDIF
 
  LDY #0                 \ Set Y = 0, for use in various places below

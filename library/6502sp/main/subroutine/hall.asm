@@ -22,6 +22,8 @@
 
 .HALL
 
+IF _6502SP_VERSION
+
  LDA #0                 \ Send a #SETVDU19 0 command to the I/O processor to
  JSR DOVDU19            \ switch to the mode 1 palette for the space view,
                         \ which is yellow (colour 1), red (colour 2) and cyan
@@ -32,6 +34,12 @@
                         \ function in the disc version but isn't required here,
                         \ so the authors presumably just cleared out the UNWISE
                         \ routine rather than unplumbing it from the code)
+
+ELIF _DISC_VERSION
+
+ JSR UNWISE             \ Call UNWISE to ????
+
+ENDIF
 
  LDA #0                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 0 (space
@@ -152,6 +160,8 @@
 
 .HA9
 
+IF _6502SP_VERSION
+
  STY HANG+2             \ Store Y in byte #2 of the parameter block below
 
  JSR UNWISE             \ Call UNWISE, which (as noted above) does nothing in
@@ -177,4 +187,12 @@
                         \   * 0 = there is just one ship in the hanger
                         \
                         \   * 128 = there are multiple ships in the hanger
+
+ELIF _DISC_VERSION
+
+ STY YSAV               \ ????
+
+ JSR UNWISE             \ Call UNWISE to ????
+
+ENDIF
 

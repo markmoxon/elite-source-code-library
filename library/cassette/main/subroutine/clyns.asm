@@ -28,23 +28,41 @@
 
 .CLYNS
 
+IF _DISC_DOCKED
+
+        LDA     #$FF    \ ????
+        STA     DTW2
+
+ENDIF
+
  LDA #20                \ Move the text cursor to row 20, near the bottom of
  STA YC                 \ the screen
+
+IF _DISC_DOCKED
+
+ JSR TT67               \ Print a newline, which will move the text cursor down
+                        \ a line (to row 21) and back to column 1
+
+ENDIF
 
  LDA #&75               \ Set the two-byte value in SC to &7507
  STA SC+1
  LDA #7
  STA SC
 
+IF _CASSETTE_VERSION OR _DISC_FLIGHT
+
  JSR TT67               \ Print a newline, which will move the text cursor down
                         \ a line (to row 21) and back to column 1
+
+ENDIF
 
  LDA #0                 \ Call LYN to clear the pixels from &7507 to &75F0
  JSR LYN
 
  INC SC+1               \ Increment SC+1 so SC points to &7607
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED
 
  JSR LYN                \ Call LYN to clear the pixels from &7607 to &76F0
 

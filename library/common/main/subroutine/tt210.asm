@@ -39,7 +39,7 @@ ENDIF
 
  STY QQ29               \ Store the current item number in QQ29
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION OR _DISC_DOCKED
 
 .NWDAVxx
 
@@ -84,7 +84,7 @@ ENDIF
  PLA                    \ Restore the amount of item in the hold into X
  TAX
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION OR _DISC_DOCKED
 
  STA QQ25               \ Store the amount of this item in the hold in QQ25
 
@@ -97,7 +97,7 @@ ENDIF
                         \ whose byte #1 from the market prices table is in
                         \ QQ19+1 (which we set up above)
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED
 
  LDA QQ11               \ If the current view type in QQ11 is not 4 (Sell Cargo
  CMP #4                 \ screen), jump to TT212 to skip the option to sell
@@ -115,7 +115,7 @@ IF _CASSETTE_VERSION
  BCC TT212              \ If the response was "no", jump to TT212 to move on to
                         \ the next item
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED
 
 \JSRTT162               \ This instruction is commented out in the original
                         \ source
@@ -141,7 +141,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED
 
  LDA QQ29               \ We are selling this item, so fetch the item number
                         \ from QQ29
@@ -161,7 +161,7 @@ IF _CASSETTE_VERSION
  LDA QQ20,Y             \ hold (which is the amount to sell)
  STA P
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED
 
  LDY QQ29               \ Subtract R (the number of items we just asked to buy)
  LDA QQ20,Y             \ from the available amount of this item in QQ20, as we
@@ -174,7 +174,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED
 
  LDA QQ24               \ Set Q to the item's price / 4
  STA Q
@@ -199,7 +199,7 @@ IF _CASSETTE_VERSION
 
  STA QQ17               \ Set QQ17 = 0, which enables printing again
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED
 
  LDA #0                 \ We've made the sale, so set the amount
 
@@ -220,14 +220,14 @@ IF _CASSETTE_VERSION
  JMP TT211              \ Otherwise loop back to TT211 to print the next item
                         \ in the hold
 
-ELIF _DISC_VERSION
+ELIF _DISC_FLIGHT
 
  CPY #17                \ If Y < 17 then loop back to TT211 to print the next
  BCC TT211              \ item in the hold
 
  RTS                    \ Otherwise return from the subroutine
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED
 
  CPY #17                \ Loop back to TT211 to print the next item in the hold
  BCC TT211              \ until Y = 17 (at which point we have done the last
@@ -235,7 +235,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED
 
  LDA QQ11               \ If the current view type in QQ11 is not 4 (Sell Cargo
  CMP #4                 \ screen), skip the next two instructions and just

@@ -19,7 +19,7 @@
 
 .TT214
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT
 
  PHA                    \ Print a space, using the stack to preserve the value
  JSR TT162              \ of A
@@ -31,12 +31,12 @@ ENDIF
 
  JSR TT27               \ Print the text token in A
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT
 
  LDA #225               \ Print recursive token 65 ("(Y/N)?")
  JSR TT27
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED
 
  LDA #206               \ Print extended token 206 ("{all caps}(Y/N)?")
  JSR DETOK

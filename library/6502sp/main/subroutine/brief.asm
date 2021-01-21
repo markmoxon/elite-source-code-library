@@ -41,8 +41,17 @@
  JSR NWSHP              \ Add a new Constrictor to the local bubble (in this
                         \ case, the briefing screen)
 
+IF _DISC_VERSION
+
+ LDA #1                 \ Move the text cursor to column 1
+ STA XC
+
+ELIF _6502SP_VERSION
+
  LDA #1                 \ Move the text cursor to column 1
  JSR DOXC
+
+ENDIF
 
  STA INWK+7             \ Set z_hi = 1, the distance at which we show the
                         \ rotating ship

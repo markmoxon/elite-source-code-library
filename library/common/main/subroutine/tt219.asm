@@ -17,9 +17,9 @@
 
 .TT219
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT
 
-\LDA#2                  \ This instruction is commented out in the original
+\LDA #2                 \ This instruction is commented out in the original
                         \ source. Perhaps this view originally had a QQ11 value
                         \ of 2, but it turned out not to need its own unique ID,
                         \ so the authors found they could just use a view value
@@ -27,6 +27,12 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
 
  JSR TT66-2             \ Clear the top part of the screen, draw a white border,
                         \ and set the current view type in QQ11 to 1
+
+ELIF _DISC_DOCKED
+
+ LDA #2                 \ Clear the top part of the screen, draw a white border,
+ JSR TT66               \ Clear the top part of the screen, draw a white border,
+                        \ and set the current view type in QQ11 to 2
 
 ELIF _6502SP_VERSION
 
@@ -41,10 +47,18 @@ ENDIF
  LDA #%10000000         \ Set bit 7 of QQ17 to switch to Sentence Case, with the
  STA QQ17               \ next letter in capitals
 
+IF _CASSETTE_VERSION
+
 \JSR FLKB               \ This instruction is commented out in the original
                         \ source. It calls a routine to flush the keyboard
                         \ buffer (FLKB) that isn't present in the cassette
                         \ version but is in other versions
+
+ELIF _DISC_DOCKED
+
+ JSR FLKB               \ Flush the keyboard buffer
+
+ENDIF
 
  LDA #0                 \ We're going to loop through all the available market
  STA QQ29               \ items, so we set up a counter in QQ29 to denote the

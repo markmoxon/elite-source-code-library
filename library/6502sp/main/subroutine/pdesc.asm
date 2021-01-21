@@ -31,9 +31,13 @@
  BNE PD1                \ is non-zero, jump to PD1 to show the standard "goat
                         \ soup" description
 
+IF _6502SP_VERSION
+
  LDA QQ12               \ If QQ12 does not have bit 7 set, which means we are
  BPL PD1                \ not docked, jump to PD1 to show the standard "goat
                         \ soup" description
+
+ENDIF
 
                         \ If we get here, then the current system is the same as
                         \ the selected system and we are docked, so now to check

@@ -40,7 +40,7 @@
  LDX #2                 \ Set STP = 2, the step size for the circle
  STX STP
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT
 
  JSR CIRCLE2            \ Call CIRCLE2 to draw a circle with the centre at
                         \ (K3(1 0), K4(1 0)) and radius K
@@ -49,6 +49,12 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
 \STA LSX                \ source
 
  RTS                    \ Return from the subroutine
+
+ELIF _DISC_DOCKED
+
+ JMP CIRCLE2            \ Jump to CIRCLE2 to draw a circle with the centre at
+                        \ (K3(1 0), K4(1 0)) and radius K, returning from the
+                        \ subroutine using a tail call
 
 ELIF _6502SP_VERSION
 

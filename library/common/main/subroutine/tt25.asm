@@ -26,6 +26,12 @@ ELIF _DISC_VERSION
  LDA #1                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 1
 
+ELIF _6502SP_VERSION
+
+ LDA #1                 \ Clear the top part of the screen, draw a white border,
+ JSR TRADEMODE          \ and set up a printable trading screen with a view type
+                        \ in QQ11 of 1
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION
@@ -33,29 +39,33 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
  LDA #9                 \ Move the text cursor to column 9
  STA XC
 
+ELIF _6502SP_VERSION
+
+ LDA #9                 \ Move the text cursor to column 9
+ JSR DOXC
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_FLIGHT
+
  LDA #163               \ Print recursive token 3 as a title in capitals at
  JSR TT27               \ the top ("DATA ON {selected system name}")
 
  JSR NLIN               \ Draw a horizontal line underneath the title
 
- JSR TTX69              \ Print a paragraph break and set Sentence Case
-
- INC YC                 \ Move the text cursor down one more line
-
-ELIF _6502SP_VERSION
-
- LDA #1                 \ Clear the top part of the screen, draw a white border,
- JSR TRADEMODE          \ and set up a printable trading screen with a view type
-                        \ in QQ11 of 1
-
- LDA #9                 \ Move the text cursor to column 9
- JSR DOXC
+ELIF _6502SP_VERSION OR _DISC_DOCKED
 
  LDA #163               \ Print recursive token 3 ("DATA ON {selected system
  JSR NLIN3              \ name}" and draw a horizontal line at pixel row 19
                         \ to box in the title
 
+ENDIF
+
  JSR TTX69              \ Print a paragraph break and set Sentence Case
+
+IF _CASSETTE_VERSION OR _DISC_FLIGHT
+
+ INC YC                 \ Move the text cursor down one more line
 
 ENDIF
 
@@ -316,14 +326,14 @@ ENDIF
 
  JSR TT162              \ Print a space
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT
 
  LDA #'k'               \ Print "km", returning from the subroutine using a
  JSR TT26               \ tail call
  LDA #'m'
  JMP TT26
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED
 
  LDA #'k'               \ Print "km"
  JSR TT26

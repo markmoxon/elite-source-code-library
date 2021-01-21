@@ -21,13 +21,21 @@ ENDIF
 \                       view name. This can be used to remove the border and
 \                       view name, as it is drawn using EOR logic
 \
+IF _DISC_DOCKED
+\   BOL1-1              Contains an RTS
+\
+ENDIF
 \ ******************************************************************************
 
 .TTX66
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION OR _DISC_DOCKED
 
  JSR MT2                \ Switch to Sentence Case when printing extended tokens
+
+ENDIF
+
+IF _6502SP_VERSION
 
  JSR PBZE               \ Reset the pixel buffer size in PBUP
 
@@ -48,11 +56,20 @@ IF _CASSETTE_VERSION
  STA LASCT              \ stops any laser pulsing. This instruction is STA LAS2
                         \ in the text source file ELITEC.TXT
 
-ELIF _DISC_VERSION
+ELIF _DISC_FLIGHT
 
-        JSR     FLFLLS  \ ????
+ JSR FLFLLS             \ Call FLFLLS to reset the LSO block
 
-        STA     LAS2
+ STA LAS2               \ Set LAS2 = 0 to stop any laser pulsing
+
+ELIF _DISC_DOCKED
+
+ STA DTW2               \ Set bit 7 of DTW2 to indicate we are not currently
+                        \ printing a word
+
+ ASL A                  \ Set LASCT to 0, as 128 << 1 = %10000000 << 1 = 0. This
+ STA LASCT              \ stops any laser pulsing. This instruction is STA LAS2
+                        \ in the text source file ELITEC.TXT
 
 ENDIF
 
@@ -80,22 +97,6 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
  BNE BOL1               \ the last character row in the space view part of the
                         \ screen (the space view)
 
- LDX QQ22+1             \ Fetch into X the number that's shown on-screen during
-                        \ the hyperspace countdown
-
- BEQ BOX                \ If the counter is zero then we are not counting down
-                        \ to hyperspace, so jump to BOX to skip the next
-                        \ instruction
-
- JSR ee3                \ Print the 8-bit number in X at text location (0, 1),
-                        \ i.e. print the hyperspace countdown in the top-left
-                        \ corner
-
-.BOX
-
- LDY #1                 \ Move the text cursor to row 1
- STY YC
-
 ELIF _6502SP_VERSION
 
  STA DTW2               \ Set bit 7 of DTW2 to indicate we are not currently
@@ -118,6 +119,23 @@ ELIF _6502SP_VERSION
  LDA #11                \ Send control code 11 to OSWRCH, to instruct the I/O
  JSR OSWRCH             \ processor to clear the top part of the screen
 
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_FLIGHT
+
+ LDX QQ22+1             \ Fetch into X the number that's shown on-screen during
+                        \ the hyperspace countdown
+
+ BEQ BOX                \ If the counter is zero then we are not counting down
+                        \ to hyperspace, so jump to BOX to skip the next
+                        \ instruction
+
+ JSR ee3                \ Print the 8-bit number in X at text location (0, 1),
+                        \ i.e. print the hyperspace countdown in the top-left
+                        \ corner
+
+ELIF _6502SP_VERSION
+
  LDX QQ22+1             \ Fetch into X the number that's shown on-screen during
                         \ the hyperspace countdown
 
@@ -128,6 +146,17 @@ ELIF _6502SP_VERSION
  JSR ee3                \ Print the 8-bit number in X at text location (0, 1),
                         \ i.e. print the hyperspace countdown in the top-left
                         \ corner
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION
+
+.BOX
+
+ LDY #1                 \ Move the text cursor to row 1
+ STY YC
+
+ELIF _6502SP_VERSION
 
 .OLDBOX
 

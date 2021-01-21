@@ -140,10 +140,20 @@ ENDIF
  JSR DORND              \ Set XX15 = random number 0-255
  STA XX15
 
+IF _DISC_VERSION
+
+ JSR DORND              \ Set XX15+2 = random number 0-7
+ AND #7                 \
+ STA XX15+2             \ which is the ship type of ????
+
+ELIF _6502SP_VERSION
+
  JSR DORND              \ Set XX15+2 = #SH3 + random number 0-3
  AND #3                 \
  ADC #SH3               \ which is the ship type of a Sidewinder, Mamba, Krait
  STA XX15+2             \ or Adder
+
+ENDIF
 
  JSR HAS1               \ Call HAS1 to draw this ship in the hanger, with the
                         \ the following properties:

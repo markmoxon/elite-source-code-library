@@ -47,7 +47,7 @@ ENDIF
 
  JSR TTX66              \ Clear the screen and draw a white border
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED
 
  JSR HFS1               \ Call HFS1 below and then fall through into the same
                         \ routine, so this effectively runs HFS1 twice, and as

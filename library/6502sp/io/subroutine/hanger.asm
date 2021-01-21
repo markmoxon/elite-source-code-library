@@ -28,6 +28,12 @@
 \ the hanger, this also means drawing lines between the ships, as well as in
 \ from each side.
 \
+IF _6502SP_VERSION
+\ Other entry points:
+\
+\   HA3                 Contains an RTS
+\
+ENDIF
 \ ******************************************************************************
 
 .HANGER
@@ -40,9 +46,23 @@
 
 .HAL1
 
+IF _DISC_VERSION
+
+ STX XSAV               \ Store the loop counter in XSAV
+
+ELIF _6502SP_VERSION
+
  STX T                  \ Store the loop counter in T
 
+ENDIF
+
  LDA #130               \ Set A = 130
+
+IF _DISC_VERSION
+
+ LDX XSAV               \ Retrieve the loop counter from XSAV
+
+ENDIF
 
  STX Q                  \ Set Q = T
 
@@ -62,6 +82,23 @@
                         \ the screen) and bunching up towards the horizon (low
                         \ value of P, low y-coordinate, higher up the screen)
 
+IF _DISC_VERSION
+
+ LDA P                  \ Set Y = #Y + P
+ CLC                    \
+ ADC #Y                 \ where #Y is the y-coordinate of the centre of the
+                        \ screen, so Y is now the horizontal pixel row of the
+                        \ line we want to draw to display the hanger floor
+
+ LSR A                  \ ????
+ LSR A
+ LSR A
+
+        ORA     #$60
+        STA     SCH
+
+ELIF _6502SP_VERSION
+
  LDA P                  \ Set Y = #Y + P
  CLC                    \
  ADC #Y                 \ where #Y is the y-coordinate of the centre of the
@@ -73,6 +110,8 @@
                         \ store it in the high byte of SC(1 0) at SC+1
 
  STA R                  \ Also store the page number in R
+
+ENDIF
 
  LDA P                  \ Set the low byte of SC(1 0) to the y-coordinate mod 7,
  AND #7                 \ which determines the pixel row in the character block
@@ -88,6 +127,12 @@
                         \ screen, going right until we bump into something
                         \ already on-screen, at which point stop drawing
 
+IF _DISC_VERSION
+
+ LDA     #$04           \ ????
+
+ELIF _6502SP_VERSION
+
  LDY R                  \ Fetch the page number of the line from R, increment it
  INY                    \ so it points to the right half of the character row
  STY SC+1               \ (as each row takes up 2 pages), and store it in the
@@ -98,6 +143,8 @@
                         \ second pixel of the last byte, so we skip the 2-pixel
                         \ scren border at the right edge of the screen
 
+ENDIF
+
  LDY #248               \ Set Y = 248 so the call to HAS3 starts drawing the
                         \ line in the last byte of the screen row, at the right
                         \ edge of the screen
@@ -106,9 +153,17 @@
                         \ screen, going left until we bump into something
                         \ already on-screen, at which point stop drawing
 
+IF _DISC_VERSION
+
+ LDY     YSAV           \ ????
+
+ELIF _6502SP_VERSION
+
  LDY #2                 \ Fetch byte #2 from the parameter block, which tells us
  LDA (OSSC),Y           \ whether the ship hanger contains just one ship, or
  TAY                    \ multiple ships
+
+ENDIF
 
  BEQ HA2                \ If byte #2 is zero, jump to HA2 to skip the following
                         \ as there is only one ship in the hanger
@@ -116,6 +171,16 @@
                         \ If we get here then there are multiple ships in the
                         \ hanger, so we also need to draw the horizontal line in
                         \ the gap between the ships
+
+IF _DISC_VERSION
+
+        JSR HAS2
+
+        LDY     #$80
+        LDA     #$40
+        JSR HAS3
+
+ELIF _6502SP_VERSION
 
  LDY #0                 \ First we draw the line from the centre of the screen
                         \ to the right. SC(1 0) points to the start address of
@@ -149,18 +214,31 @@
                         \ we bump into something already on-screen, at which
                         \ point it stops drawing
 
+ENDIF
+
 .HA2
 
                         \ We have finished threading our horizontal line behind
                         \ the ships already on-screen, so now for the next line
 
+IF _DISC_VERSION
+
+ LDX XSAV               \ Fetch the loop counter from XSAV and increment it
+ INX
+
+ELIF _6502SP_VERSION
+
  LDX T                  \ Fetch the loop counter from T and increment it
  INX
+
+ENDIF
 
  CPX #13                \ If the loop counter is less than 13 (i.e. T = 2 to 12)
  BCC HAL1               \ then loop back to HAL1 to draw the next line
 
                         \ The floor is done, so now we move on to the back wall
+
+IF _6502SP_VERSION
 
  LDA #60                \ Set S = 60, so we run the following 60 times (though I
  STA S                  \ have no idea why it's 60 times, when it should be 15,
@@ -168,17 +246,36 @@
                         \ four times, each time starting one character row lower
                         \ on-screen)
 
+ENDIF
+
  LDA #16                \ We want to draw 15 vertical lines, one every 16 pixels
                         \ across the screen, with the first at x-coordinate 16,
                         \ so set this in A to act as the x-coordinate of each
                         \ line as we work our way through them from left to
                         \ right, incrementing by 16 for each new line
 
+IF _6502SP_VERSION
+
  LDX #&40               \ Set X = &40, the high byte of the start of screen
  STX R                  \ memory (the screen starts at location &4000) and the
                         \ page number of the first screen row
 
+ENDIF
+
 .HAL6
+
+IF _DISC_VERSION
+
+        LDX     #$60    \ ????
+        STX     SCH
+        STA     XSAV
+
+ AND #%11111000         \ 
+ STA SC                 \ ????
+
+ LDX #%10000000         \ Set a mask in X to the first pixel in ????
+
+ELIF _6502SP_VERSION
 
  LDX R                  \ Set the high byte of SC(1 0) to R
  STX SC+1
@@ -192,6 +289,8 @@
                         \ x-coordinate
 
  LDX #%10001000         \ Set a mask in X to the first pixel in the 4-pixel byte
+
+ENDIF
 
  LDY #1                 \ We are going to start drawing the line from the second
                         \ pixel from the top (to avoid drawing on the 1-pixel
@@ -208,9 +307,13 @@
 
  TXA                    \ Copy the pixel mask to A again
 
+IF _6502SP_VERSION
+
  AND #RED               \ Apply the pixel mask in A to a four-pixel block of
                         \ red pixels, so we now know which bits to set in screen
                         \ memory
+
+ENDIF
 
  ORA (SC),Y             \ OR the byte with the current contents of screen
                         \ memory, so the pixel we want is set to red (because
@@ -224,9 +327,17 @@
  CPY #8                 \ Loop back to HAL7 to draw this next pixel until we
  BNE HAL7               \ have drawn all 8 in the character block
 
+IF _DISC_VERSION
+
+ INC SC+1               \ ????
+
+ELIF _6502SP_VERSION
+
  INC SC+1               \ There are two pages of memory for each character row,
  INC SC+1               \ so we increment the high byte of SC(1 0) twice to
                         \ point to the same character but in the next row down
+
+ENDIF
 
  LDY #0                 \ Set Y = 0 to point to the first row in this character
                         \ block
@@ -235,6 +346,14 @@
                         \ BEQ is effectively a JMP as Y is always zero)
 
 .HA6
+
+IF _DISC_VERSION
+
+ LDA XSAV               \ Fetch the x-coordinate of the line we just drew from
+ CLC                    \ XSAV into A, and add 16 so that A contains the
+ ADC #16                \ x-coordinate of the next line to draw
+
+ELIF _6502SP_VERSION
 
  LDA T                  \ Fetch the x-coordinate of the line we just drew from T
  CLC                    \ into A, and add 16 so that A contains the x-coordinate
@@ -245,170 +364,16 @@
 
  DEC S                  \ Decrement the loop counter in S
 
+ENDIF
+
  BNE HAL6               \ Loop back to HAL6 until we have run through the loop
                         \ 60 times, by which point we are most definitely done
 
+IF _6502SP_VERSION
+
 .HA3
 
- RTS                    \ Return from the subroutine
-
-.HAS2
-
-                        \ This routine draws a line to the right, starting with
-                        \ the third pixel of the pixel row at screen address
-                        \ SC(1 0), and aborting if we bump into something that's
-                        \ already on-screen. HAL2 draws from the left edge of
-                        \ the screen to the halfway point, and then HAL3 takes
-                        \ over to draw from the halfway point across the right
-                        \ half of the screen
-
- LDA #%00100010         \ Set A to the pixel pattern for a mode 1 character row
-                        \ byte with the third pixel set, so we start drawing the
-                        \ horizontal line just to the right of the 2-pixel
-                        \ border along the edge of the screen
-
-.HAL2
-
- TAX                    \ Store A in X so we can retrieve it after the following
-                        \ check and again after updating screen memory
-
- AND (SC),Y             \ If the pixel we want to draw is non-zero (using A as a
- BNE HA3                \ mask), then this means it already contains something,
-                        \ so we stop drawing because we have run into something
-                        \ that's already on-screen, and return from the
-                        \ subroutine (as HA3 contains an RTS)
-
- TXA                    \ Retrieve the value of A we stored above, so A now
-                        \ contains the pixel mask again
- 
- AND #RED               \ Apply the pixel mask in A to a four-pixel block of
-                        \ red pixels, so we now know which bits to set in screen
-                        \ memory
-
- ORA (SC),Y             \ OR the byte with the current contents of screen
-                        \ memory, so the pixel we want is set to red (because
-                        \ we know the bits are already 0 from the above test)
-
- STA (SC),Y             \ Store the updated pixel in screen memory
-
- TXA                    \ Retrieve the value of A we stored above, so A now
-                        \ contains the pixel mask again
-
- LSR A                  \ Shift A to the right to move on to the next pixel
-
- BCC HAL2               \ If bit 0 before the shift was clear (i.e. we didn't
-                        \ just do the fourth pixel in this block), loop back to
-                        \ HAL2 to check and draw the next pixel
-
- TYA                    \ Set Y = Y + 8 (as we know the C flag is set) to point
- ADC #7                 \ to the next character block along
- TAY
-
- LDA #%10001000         \ Reset the pixel mask in A to the first pixel in the
-                        \ new 4-pixel character block
-
- BCC HAL2               \ If the above addition didn't overflow, jump back to
-                        \ HAL2 to keep drawing the line in the next character
-                        \ block
-
- INC SC+1               \ The addition overflowed, so we have reached the last
-                        \ character block in this page of memory, so increment
-                        \ the high byte of SC(1 0) in SC+1 to point to the next
-                        \ page (i.e. the right half of this screen row) and fall
-                        \ into HAL3 to repeat the performamce
-
-.HAL3
-
- TAX                    \ Store A in X so we can retrieve it after the following
-                        \ check and again after updating screen memory
-
- AND (SC),Y             \ If the pixel we want to draw is non-zero (using A as a
- BNE HA3                \ mask), then this means it already contains something,
-                        \ so we stop drawing because we have run into something
-                        \ that's already on-screen, and return from the
-                        \ subroutine (as HA3 contains an RTS)
-
- TXA                    \ Retrieve the value of A we stored above, so A now
-                        \ contains the pixel mask again
- 
- AND #RED               \ Apply the pixel mask in A to a four-pixel block of
-                        \ red pixels, so we now know which bits to set in screen
-                        \ memory
-
- ORA (SC),Y             \ OR the byte with the current contents of screen
-                        \ memory, so the pixel we want is set to red (because
-                        \ we know the bits are already 0 from the above test)
-
- STA (SC),Y             \ Store the updated pixel in screen memory
-
- TXA                    \ Retrieve the value of A we stored above, so A now
-                        \ contains the pixel mask again
-
- LSR A                  \ Shift A to the right to move on to the next pixel
-
- BCC HAL3               \ If bit 0 before the shift was clear (i.e. we didn't
-                        \ just do the fourth pixel in this block), loop back to
-                        \ HAL3 to check and draw the next pixel
-
- TYA                    \ Set Y = Y + 8 (as we know the C flag is set) to point
- ADC #7                 \ to the next character block along
- TAY
-
- LDA #%10001000         \ Reset the pixel mask in A to the first pixel in the
-                        \ new 4-pixel character block
-
- BCC HAL3               \ If the above addition didn't overflow, jump back to
-                        \ HAL3 to keep drawing the line in the next character
-                        \ block
-
- RTS                    \ The addition overflowed, so we have reached the last
-                        \ character block in this page of memory, which is the
-                        \ end of the line, so we return from the subroutine
-
-.HAS3
-
-                        \ This routine draws a line to the left, starting with
-                        \ the pixel mask in A at screen address SC(1 0) and
-                        \ character block offset Y, and aborting if we bump into
-                        \ something that's already on-screen
-
- TAX                    \ Store A in X so we can retrieve it after the following
-                        \ check and again after updating screen memory
-
- AND (SC),Y             \ If the pixel we want to draw is non-zero (using A as a
- BNE HA3                \ mask), then this means it already contains something,
-                        \ so we stop drawing because we have run into something
-                        \ that's already on-screen, and return from the
-                        \ subroutine (as HA3 contains an RTS)
-
- TXA                    \ Retrieve the value of A we stored above, so A now
-                        \ contains the pixel mask again
-
- ORA (SC),Y             \ OR the byte with the current contents of screen
-                        \ memory, so the pixel we want is set to red (because
-                        \ we know the bits are already 0 from the above test)
-
- STA (SC),Y             \ Store the updated pixel in screen memory
-
- TXA                    \ Retrieve the value of A we stored above, so A now
-                        \ contains the pixel mask again
-
- ASL A                  \ Shift A to the left to move to the next pixel to the
-                        \ left
-
- BCC HAS3               \ If bit 7 before the shift was clear (i.e. we didn't
-                        \ just do the first pixel in this block), loop back to
-                        \ HAS3 to check and draw the next pixel to the left
-
- TYA                    \ Set Y = Y - 8 (as we know the C flag is set) to point
- SBC #8                 \ to the next character block to the left
- TAY
-
- LDA #%00010000         \ Set a mask in A to the last pixel in the 4-pixel byte
-
- BCS HAS3               \ If the above subtraction didn't underflow, jump back
-                        \ to HAS3 to keep drawing the line in the next character
-                        \ block to the left
+ENDIF
 
  RTS                    \ Return from the subroutine
 

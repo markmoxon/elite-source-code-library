@@ -54,7 +54,7 @@ ENDIF
  JSR TT217              \ Scan the keyboard until a key is pressed, and return
                         \ the key's ASCII code in A (and X)
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION OR _DISC_DOCKED
 
  LDX R                  \ If R is non-zero then skip to NWDAV2, as we are
  BNE NWDAV2             \ already building a number
@@ -136,7 +136,7 @@ ENDIF
 
  RTS                    \ Return from the subroutine
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION OR _DISC_DOCKED
 
 .NWDAV1
 
@@ -148,7 +148,19 @@ IF _6502SP_VERSION
  LDA QQ25               \ Set R = QQ25, so we return the maximum value allowed
  STA R
 
+ENDIF
+
+IF _DISC_DOCKED
+
+ RTS                    \ Return from the subroutine
+
+ELIF _6502SP_VERSION
+
  BRA OUT                \ Jump to OUT to return from the subroutine
+
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_DOCKED
 
 .NWDAV3
 
@@ -158,6 +170,14 @@ IF _6502SP_VERSION
 
  LDA #0                 \ Set R = 0, so we return 0
  STA R
+
+ENDIF
+
+IF _DISC_DOCKED
+
+ RTS                    \ Return from the subroutine
+
+ELIF _6502SP_VERSION
 
  BRA OUT                \ Jump to OUT to return from the subroutine
 

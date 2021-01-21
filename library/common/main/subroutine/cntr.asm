@@ -18,12 +18,12 @@
 
 .cntr
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED
 
  LDA DAMP               \ If DAMP is non-zero, then keyboard damping is not
  BNE RE1                \ enabled, so jump to RE1 to return from the subroutine
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
  LDA auto               \ If the docking computer is currently activated, jump
  BNE cnt2               \ to cnt2 to skip the following as we always want to

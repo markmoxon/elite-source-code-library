@@ -30,10 +30,6 @@
 \   XX15+2              Non-zero = Ship type to draw
 \                       0        = Don't draw anything
 \
-\ Other entry points:
-\
-\   UNWISE              Contains an RTS
-\
 \ ******************************************************************************
 
 .HAS1
@@ -100,18 +96,42 @@
  BEQ HA1                \ If Y = 0, return from the subroutine (as HA1 contains
                         \ an RTS)
 
+IF _DISC_VERSION
+
+        LDX     #$04    \ ????
+.HAL51                  \ My label name
+        INX
+        INX
+
+ELIF _6502SP_VERSION
+
  TYA                    \ Set X = 2 * Y
  ASL A
  TAX
+
+ENDIF
 
  LDA XX21-2,X           \ Set XX0(1 0) to the X-th address in the ship blueprint
  STA XX0                \ address lookup table at XX21, so XX0(1 0) now points
  LDA XX21-1,X           \ to the blueprint for the ship we need to draw
  STA XX0+1
 
+IF _DISC_VERSION
+
+ BEQ HAL51              \ If the high byte of the blueprint address is 0, then
+                        \ ????
+
+
+        DEY             \ ????
+        BNE     HAL51
+
+ELIF _6502SP_VERSION
+
  BEQ HA1                \ If the high byte of the blueprint address is 0, then
                         \ this is not a valid blueprint address, so return from
                         \ the subroutine (as HA1 contains an RTS)
+
+ENDIF
 
  LDY #1                 \ Set Q = ship byte #1
  LDA (XX0),Y
@@ -139,10 +159,4 @@
 
  JMP LL9                \ Jump to LL9 to display the ship and return from the
                         \ subroutine using a tail call
-
-.UNWISE
-
-.HA1
-
- RTS                    \ Return from the subroutine
 

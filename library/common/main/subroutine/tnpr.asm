@@ -96,12 +96,12 @@
 
  LDY QQ29               \ Set Y to the item number we want to add
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED
 
  ADC QQ20,Y             \ Set A = A + the number of units of this item that we
                         \ already have in the hold
 
-ELIF _DISC_VERSION
+ELIF _DISC_FLIGHT
 
  LDA QQ20,Y             \ Set A to the number of units of this item that we
                         \ already have in the hold

@@ -22,11 +22,15 @@
 
 .CIRCLE
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+
  JSR CHKON              \ Call CHKON to check whether the circle fits on-screen
 
  BCS RTS2               \ If CHKON set the C flag then the circle does not fit
                         \ on-screen, so return from the subroutine (as RTS2
                         \ contains an RTS)
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION
 

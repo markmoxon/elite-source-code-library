@@ -25,14 +25,14 @@
 
 INCLUDE "versions/disc/sources/elite-header.h.asm"
 
-PUTFILE "versions/disc/extracted/ELITE2.bin", "ELITE2", &2F00, &2F00
-PUTFILE "versions/disc/extracted/ELITE3.bin", "ELITE3", &5700, &5700
-PUTFILE "versions/disc/extracted/ELITE4.bin", "ELITE4", &1900, &197B
+PUTFILE "versions/disc/output/ELITE2.bin", "ELITE2", &2F00, &2F00
+PUTFILE "versions/disc/output/ELITE3.bin", "ELITE3", &5700, &5700
+PUTFILE "versions/disc/output/ELITE4.bin", "ELITE4", &1900, &197B
 
 PUTFILE "versions/disc/output/D.CODE.bin", "D.CODE", &11E3, &11E3
 PUTFILE "versions/disc/output/T.CODE.bin", "T.CODE", &11E3, &11E3
 
-PUTFILE "versions/disc/extracted/D.MOA.bin", "D.MOA", &5600, &5600
+PUTFILE "versions/disc/output/D.MOA.bin", "D.MOA", &5600, &5600
 PUTFILE "versions/disc/extracted/D.MOB.bin", "D.MOB", &5600, &5600
 PUTFILE "versions/disc/extracted/D.MOC.bin", "D.MOC", &5600, &5600
 PUTFILE "versions/disc/extracted/D.MOD.bin", "D.MOD", &5600, &5600

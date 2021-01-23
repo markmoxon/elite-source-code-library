@@ -74,6 +74,9 @@ encrypt:
 
 	echo _VERSION=2 > versions/disc/sources/elite-header.h.asm
 	echo _REMOVE_CHECKSUMS=TRUE >> versions/disc/sources/elite-header.h.asm
+	$(BEEBASM) -i versions/disc/sources/elite-2.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-3.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-4.asm -v >> versions/disc/output/compile.txt
 	$(BEEBASM) -i versions/disc/sources/elite-source-d.asm -v > versions/disc/output/compile.txt
 	$(BEEBASM) -i versions/disc/sources/elite-source-t.asm -v >> versions/disc/output/compile.txt
 	$(BEEBASM) -i versions/disc/sources/elite-doa.asm -v >> versions/disc/output/compile.txt

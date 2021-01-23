@@ -18,10 +18,15 @@
 
 .WPLS
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT
 
  LDA LSX                \ If LSX < 0, the sun line heap is empty, so return from
  BMI WPLS-1             \ the subroutine (as WPLS-1 contains an RTS)
+
+ELIF _DISC_DOCKED
+
+ LDA LSX                \ If LSX < 0, the sun line heap is empty, so return from
+ BMI PL44               \ the subroutine (as PL44 contains a CLC and RTS)
 
 ELIF _6502SP_VERSION
 

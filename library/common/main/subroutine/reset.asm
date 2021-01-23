@@ -56,11 +56,11 @@ ENDIF
                         \ slots for the local bubble of universe, and various
                         \ flight and ship status variables
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED
 
  LDX #6                 \ Set up a counter for zeroing BETA through BETA+6
 
-ELIF _DISC_VERSION
+ELIF _DISC_FLIGHT
 
  LDX #8                 \ Set up a counter for zeroing BETA through BETA+8
 
@@ -82,11 +82,11 @@ IF _CASSETTE_VERSION
                         \ Fall through into RES4 to restore shields and energy,
                         \ and reset the stardust and ship workspace at INWK
 
-ELIF _DISC_VERSION
+ELIF _DISC_FLIGHT
 
  TXA                    \ X is now negative - i.e. &FF - so this sets A to &FF
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED
 
  TXA                    \ X is now negative - i.e. &FF - so this sets A and QQ12
  STA QQ12               \ to &FF to indicate we are docked

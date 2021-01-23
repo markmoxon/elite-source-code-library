@@ -79,7 +79,7 @@ IF _CASSETTE_VERSION
  JSR DELAY-5            \ Delay for 8 vertical syncs (8/50 = 0.16 seconds), to
                         \ slow the main loop down a bit
 
-ELIF _DISC_VERSION
+ELIF _DISC_FLIGHT
 
  LDA QQ11               \ If this is a space view, skip the following five
  BEQ P%+13              \ instructions (i.e. jump to JSR TT17 below)
@@ -87,6 +87,14 @@ ELIF _DISC_VERSION
  AND PATG               \ If PATG = &FF (author names are shown on start-up)
  LSR A                  \ and bit 0 of QQ11 is 1 (the current view is type 1),
  BCS P%+7               \ then skip the following two instructions
+
+ LDY #2                 \ ????
+ JSR DELAY
+
+ELIF _DISC_DOCKED
+
+ LDA QQ11               \ If this is a space view, skip the following two
+ BEQ P%+7               \ instructions (i.e. jump to JSR TT17 below)
 
  LDY #2                 \ ????
  JSR DELAY

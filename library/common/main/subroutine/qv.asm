@@ -26,12 +26,7 @@
 
 .qv
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
-
- LDY #16                \ Move the text cursor to row 16, and at the same time
- STY YC                 \ set Y to a counter going from 16-20 in the loop below
-
-ELIF _6502SP_VERSION
+IF _DISC_VERSION OR _6502SP_VERSION
 
  LDA tek                \ If the current system's tech level is less than 8,
  CMP #8                 \ skip the next two instructions, otherwise we clear the
@@ -41,6 +36,15 @@ ELIF _6502SP_VERSION
  LDA #32                \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 32 (Equip
                         \ Ship screen)
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION
+
+ LDY #16                \ Move the text cursor to row 16, and at the same time
+ STY YC                 \ set Y to a counter going from 16-20 in the loop below
+
+ELIF _6502SP_VERSION
 
  LDA #16                \ Move the text cursor to row 16, and at the same time
  TAY                    \ set Y to a counter going from 16-20 in the loop below
@@ -88,7 +92,7 @@ ENDIF
  CPY #20                \ If Y < 20 then loop back up to qv1 to print the next
  BCC qv1                \ view in the menu
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
 .qv3
 
@@ -109,12 +113,12 @@ ENDIF
  SEC                    \ Subtract ASCII '0' from the key pressed, to leave the
  SBC #'0'               \ numeric value of the key in A (if it was a number key)
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  CMP #4                 \ If the number entered in A >= 4, then it is not a
  BCS qv3                \ valid view number, so jump back to qv3 to try again
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  CMP #4                 \ If the number entered in A < 4, then it is a valid
  BCC qv3                \ view number, so jump down to qv3 as we are done

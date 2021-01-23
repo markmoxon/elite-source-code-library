@@ -81,38 +81,31 @@ ENDIF
  BMI Ghy                \ If it is, then the galactic hyperdrive has been
                         \ activated, so jump to Ghy to process it
 
-IF _CASSETTE_VERSION
-
- JSR hm                 \ Set the system closest to galactic coordinates (QQ9,
-                        \ QQ10) as the selected system
-
-ELIF _DISC_VERSION
+IF _DISC_FLIGHT
 
         LDA     QQ11
         BNE     P%+5
 
         JMP     TTH111
 
- JSR hm                 \ Set the system closest to galactic coordinates (QQ9,
-                        \ QQ10) as the selected system
+ELIF _DISC_DOCKED
 
-.TTX111
+        LDA     QQ11
+        BEQ     TTC111
+
+        AND     #$C0
+        BEQ     zZ+1
 
 ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION
 
- LDA QQ8                \ If both bytes of the distance to the selected system
- ORA QQ8+1              \ in QQ8 are zero, return from the subroutine (as zZ+1
- BEQ zZ+1               \ contains an RTS), as the selected system is the
-                        \ current system
+ JSR hm                 \ Set the system closest to galactic coordinates (QQ9,
+                        \ QQ10) as the selected system
 
- LDA #7                 \ Move the text cursor to column 7, row 23 (in the
- STA XC                 \ middle of the bottom text row)
- LDA #23
- STA YC
+ENDIF
 
-ELIF _6502SP_VERSION
+IF _6502SP_VERSION
 
  LDA QQ11               \ If the current view is 0 (i.e. the space view) then
  BEQ TTX110             \ jump to TTX110, which calls TT111 to set the current
@@ -129,10 +122,45 @@ ELIF _6502SP_VERSION
  JSR hm                 \ This is a chart view, so call hm to redraw the chart
                         \ crosshairs
 
+ENDIF
+
+IF _DISC_VERSION
+
+.TTX111
+
+ELIF _6502SP_VERSION
+
 .TTX111
 
                         \ If we get here then the current view is either the
                         \ space view or a chart
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_FLIGHT
+
+ LDA QQ8                \ If both bytes of the distance to the selected system
+ ORA QQ8+1              \ in QQ8 are zero, return from the subroutine (as zZ+1
+ BEQ zZ+1               \ contains an RTS), as the selected system is the
+                        \ current system
+
+ LDA #7                 \ Move the text cursor to column 7, row 23 (in the
+ STA XC                 \ middle of the bottom text row)
+ LDA #23
+ STA YC
+
+ELIF _DISC_DOCKED
+
+ LDA QQ8                \ If both bytes of the distance to the selected system
+ ORA QQ8+1              \ in QQ8 are zero, return from the subroutine (as zZ+1
+ BEQ zZ+1               \ contains an RTS), as the selected system is the
+                        \ current system
+
+ LDA #7                 \ Move the text cursor to column 7, row 22 (in the
+ STA XC                 \ middle of the bottom text row)
+ LDA #22
+ STA YC
+
+ELIF _6502SP_VERSION
 
  LDA QQ8                \ If either byte of the distance to the selected system
  ORA QQ8+1              \ in QQ8 are zero, skip the next instruction to make a

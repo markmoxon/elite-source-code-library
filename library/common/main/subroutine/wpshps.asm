@@ -31,7 +31,11 @@
                         \ to skip this slot, as the planet and sun don't appear
                         \ on the scanner
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+
  STA TYPE               \ Store the ship type in TYPE
+
+ENDIF
 
  JSR GINF               \ Call GINF to get the address of the data block for
                         \ ship slot X and store it in INF
@@ -50,8 +54,12 @@
 
  STX XSAV               \ Store the ship slot number in XSAV while we call SCAN
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+
  JSR SCAN               \ Call SCAN to plot this ship on the scanner, which will
                         \ remove it as it's plotted with EOR logic
+
+ENDIF
 
  LDX XSAV               \ Restore the ship slot number from XSAV into X
 

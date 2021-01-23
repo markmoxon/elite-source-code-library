@@ -26,7 +26,11 @@
 
 .TT100
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+
  JSR M%                 \ Call M% to iterate through the main flight loop
+
+ENDIF
 
  DEC DLY                \ Decrement the delay counter in DLY, so any in-flight
                         \ messages get removed once the counter reaches zero
@@ -74,9 +78,18 @@
 
  JSR DORND              \ Set A and X to random numbers
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+
  CMP #35                \ If A >= 35 (87% chance), jump down to MTT1 to skip
  BCS MTT1               \ the spawning of an asteroid or cargo canister and
                         \ potentially spawn something else
+
+ELIF _DISC_DOCKED
+
+ CMP #35                \ If A >= 35 (87% chance), jump down to MLOOP to skip
+ BCS MLOOP              \ the following
+
+ENDIF
 
 IF _CASSETTE_VERSION
 
@@ -84,7 +97,13 @@ IF _CASSETTE_VERSION
  CMP #3                 \ bubble, jump down to MTT1 to skip the following and
  BCS MTT1               \ potentially spawn something else
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _DISC_DOCKED
+
+ LDA MANY+AST           \ If we already have 3 or more asteroids in the local
+ CMP #3                 \ bubble, jump down to MLOOP to skip the following
+ BCS MLOOP
+
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
  LDA JUNK               \ If we already have 3 or more bits of junk in the local
  CMP #3                 \ bubble, jump down to MTT1 to skip the following and
@@ -113,18 +132,24 @@ ENDIF
  ROL INWK+1             \ Set bit 2 of x_hi to the C flag, which is random, so
  ROL INWK+1             \ this randomly moves us slightly off-centre
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+
  JSR DORND              \ Set A, X and V flag to random numbers
 
  BVS MTT4               \ If V flag is set (50% chance), jump up to MTT4 to
                         \ spawn a trader
 
-IF _DISC_VERSION
+ENDIF
+
+IF _DISC_FLIGHT
 
  NOP                    \ ????
  NOP
  NOP
 
 ENDIF
+
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
 
  ORA #%01101111         \ Take the random number in A and set bits 0-3 and 5-6,
  STA INWK+29            \ so the result has a 50% chance of being positive or
@@ -161,6 +186,8 @@ ENDIF
 
  JSR DORND              \ Set A and X to random numbers
 
+ENDIF
+
 IF _CASSETTE_VERSION
 
  CMP #5                 \ Set A to the ship number of an asteroid, and keep
@@ -187,7 +214,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_FLIGHT
 
  CMP #10                \ If random A >= 10 (96% of the time), set the C flag
 
@@ -206,5 +233,9 @@ IF _6502SP_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+
  JSR NWSHP              \ Add our new asteroid or canister to the universe
+
+ENDIF
 

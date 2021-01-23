@@ -44,10 +44,14 @@ ENDIF
                         \ left corner of the screen, and return from the
                         \ subroutine using a tail call
 
+IF _CASSETTE_VERSION
+
 \hy5                    \ This instruction and the hy5 label are commented out
 \RTS                    \ in the original - they can actually be found at the
                         \ end of the jmp routine below, so perhaps this is where
                         \ they were originally, but the authors realised they
                         \ could save a byte by using a tail call instead of an
                         \ RTS?
+
+ENDIF
 

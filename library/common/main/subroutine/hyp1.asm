@@ -86,7 +86,7 @@ ENDIF
  LDA QQ4                \ Set the current system's government in gov to the
  STA gov                \ selected system's government from QQ4
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED
 
  RTS                    \ Return from the subroutine
 

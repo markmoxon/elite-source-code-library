@@ -21,13 +21,24 @@
 
 .EQSHP
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  JSR DIALS              \ Call DIALS to update the dashboard
 
  LDA #32                \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 32 (Equip
                         \ Ship screen)
+
+ LDA #12                \ Move the text cursor to column 12
+ STA XC
+
+ELIF _DISC_VERSION
+
+ LDA #32                \ Clear the top part of the screen, draw a white border,
+ JSR TT66               \ and set the current view type in QQ11 to 32 (Equip
+                        \ Ship screen)
+
+ JSR FLKB               \ Flush the keyboard buffer
 
  LDA #12                \ Move the text cursor to column 12
  STA XC
@@ -66,13 +77,13 @@ ENDIF
  CLC                    \ and add 3 (the tech level is stored as 0-14, so A is
  ADC #3                 \ now set to between 3 and 17)
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  CMP #12                \ If A >= 12 then set A = 12, so A is now set to between
  BCC P%+4               \ 3 and 12
  LDA #12
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  CMP #12                \ If A >= 12 then set A = 14, so A is now set to between
  BCC P%+4               \ 3 and 14
@@ -206,7 +217,7 @@ ENDIF
  BNE et0                \ If A is not 0 (i.e. the item we've just bought is not
                         \ fuel), skip to et0
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  STA MCNT               \ We just bought fuel, so we zero the main loop counter
 
@@ -224,11 +235,11 @@ ENDIF
 
  INX                    \ Increment X to the new number of missiles
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDY #117               \ Set Y to recursive token 117 ("ALL")
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  LDY #124               \ Set Y to recursive token 124 ("ALL")
 
@@ -296,7 +307,7 @@ ENDIF
                         \ prompt, and ask for a view number, which is returned
                         \ in X (which now contains 0-3)
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDA #4                 \ This instruction doesn't appear to do anything, as we
                         \ either don't need it (if we already have this laser)
@@ -320,7 +331,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
  STA LASER,X            \ to fit it by storing the laser power for a pulse laser
                         \ (given in POW) in LASER+X
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  LDA #POW               \ Call refund with A set to the power of the new pulse
  JSR refund             \ laser to install the new laser and process a refund if
@@ -342,7 +353,7 @@ ENDIF
                         \ prompt, and ask for a view number, which is returned
                         \ in X (which now contains 0-3)
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  STX T1                 \ Store the view in T1 so we can retrieve it below
 
@@ -383,7 +394,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
                         \ we stored in T1 earlier, as the call to prx will have
                         \ overwritten the original value in X
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  LDA #POW+128           \ Call refund with A set to the power of the new beam
  JSR refund             \ laser to install the new laser and process a refund if
@@ -520,7 +531,7 @@ ENDIF
 
 .et9
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION OR _DISC_VERSION
 
  INY                    \ Increment Y to recursive token 117 ("MILITARY  LASER")
 

@@ -86,7 +86,7 @@ ENDIF
 
  LDA #0                 \ Set the result, A = 0
 
- CPY #&10               \ If Y >= &10 set the C flag, so A = A - 1
+ CPY #16                \ If Y >= 16 set the C flag, so A = A - 1
  SBC #0
 
 \CPY #&20               \ These instructions are commented out in the original
@@ -156,7 +156,31 @@ ENDIF
  BNE P%+3
  DEY
 
-IF _6502SP_VERSION
+IF _DISC_DOCKED
+
+ STX T                  \ ????
+
+ LDX #0
+ JSR DKS4
+ BPL TJe
+
+ ASL T
+ ASL T
+ TYA
+
+ ASL A                  \ SHIFT is being held down, so quadruple the value of A
+ ASL A                  \ (i.e. SHIFT moves the cursor at four times the speed
+                        \ when using the keyboard)
+
+ TAY                    \ Transfer the amended value of A back into Y
+
+.TJe
+
+ LDX T
+
+ LDA KL                 \ Set A to the value of KL (the key pressed)
+
+ELIF _6502SP_VERSION
 
  TXA                    \ Transfer the value of X into A
 

@@ -31,7 +31,7 @@
 
  JSR TT102              \ Call TT102 to process the key pressed in A
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED
 
  LDA QQ12               \ Fetch the docked flag from QQ12 into A
 

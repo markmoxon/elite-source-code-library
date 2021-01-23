@@ -131,7 +131,7 @@ ENDIF
  BPL TT136              \ Loop back to TT136 if we still have more bytes to
                         \ copy
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION OR _DISC_DOCKED
 
  LDA U                  \ Store the system number U in ZZ, so when we are done
  STA ZZ                 \ looping through all the candidates, the winner's

@@ -35,6 +35,12 @@
 \
 \   Y                   Y is preserved
 \
+IF _DISC_DOCKED
+\ Other entry points:
+\
+\   PL44                Clear the C flag and return from the subroutine
+\
+ENDIF
 \ ******************************************************************************
 
 .EDGES
@@ -90,6 +96,12 @@
  STA X1                 \ past the left edge of the screen, so clip X1 to the
                         \ y-coordinate of the left edge of the screen
 
+IF _DISC_DOCKED
+
+.PL44
+
+ENDIF
+
  CLC                    \ The line does fit on-screen, so clear the C flag to
                         \ indicate success
 
@@ -100,8 +112,17 @@
  LDA #0                 \ Set the Y-th byte of the LSO block to 0
  STA LSO,Y
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+
  SEC                    \ The line does not fit on the screen, so set the C flag
                         \ to indicate this result
 
  RTS                    \ Return from the subroutine
+
+ELIF _DISC_DOCKED
+
+                        \ The line does not fit on the screen, so fall through
+                        \ into PL21 to set the C flag to indicate this result
+
+ENDIF
 

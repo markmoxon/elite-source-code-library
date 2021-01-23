@@ -30,13 +30,13 @@
 
 .Ghy
 
+IF _CASSETTE_VERSION
+
 \JSR TT111              \ This instruction is commented out in the original
                         \ source, and appears in the text cassette code source
                         \ (ELITED.TXT) but not in the BASIC source file on the
                         \ source disc (ELITED). It finds the closest system to
                         \ coordinates (QQ9, QQ10)
-
-IF _CASSETTE_VERSION
 
  LDX GHYP               \ Fetch GHYP, which tells us whether we own a galactic
  BEQ hy5                \ hyperdrive, and if it is zero, which means we don't,
@@ -48,10 +48,19 @@ IF _CASSETTE_VERSION
  STX QQ8                \ Set the distance to the selected system in QQ8(1 0)
  STX QQ8+1              \ to 0
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
  LDX GHYP               \ Fetch GHYP, which tells us whether we own a galactic
  BEQ zZ+1               \ hyperdrive, and if it is zero, which means we don't,
+                        \ return from the subroutine (as zZ+1 contains an RTS)
+
+ INX                    \ We own a galactic hyperdrive, so X is &FF, so this
+                        \ instruction sets X = 0
+
+ELIF _DISC_DOCKED
+
+ LDX GHYP               \ Fetch GHYP, which tells us whether we own a galactic
+ BEQ hy5                \ hyperdrive, and if it is zero, which means we don't,
                         \ return from the subroutine (as hy5 contains an RTS)
 
  INX                    \ We own a galactic hyperdrive, so X is &FF, so this

@@ -81,6 +81,16 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION
  BNE P%+5               \ Buy Cargo screen, returning from the subroutine using
  JMP TT219              \ a tail call
 
+ELIF _DISC_DOCKED
+
+ CMP #f3                \ If red key f3 was pressed, jump to EQSHP to show the
+ BNE P%+5               \ Equip Ship screen, returning from the subroutine using
+ JMP EQSHP              \ a tail call
+
+ CMP #f1                \ If red key f1 was pressed, jump to TT219 to show the
+ BNE P%+5               \ Buy Cargo screen, returning from the subroutine using
+ JMP TT219              \ a tail call
+
 ENDIF
 
 IF _CASSETTE_VERSION
@@ -89,7 +99,7 @@ IF _CASSETTE_VERSION
  BNE P%+5               \ file, returning from the subroutine using a tail call
  JMP SVE
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED
 
  CMP #&47               \ If "@" was not pressed, skip to nosave
  BNE nosave
@@ -107,7 +117,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED
 
  CMP #f2                \ If red key f2 was pressed, jump to TT208 to show the
  BNE LABEL_3            \ Sell Cargo screen, returning from the subroutine using

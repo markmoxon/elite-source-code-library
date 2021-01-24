@@ -18,7 +18,11 @@
  STA ECMA               \ currently running
  STA ECMP
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+
  JSR ECBLB              \ Update the E.C.M. indicator bulb on the dashboard
+
+ENDIF
 
  LDA #72                \ Call the NOISE routine with A = 72 to make the sound
  BNE NOISE              \ of the E.C.M. being turned off and return from the

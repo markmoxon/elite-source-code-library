@@ -102,8 +102,16 @@ ENDIF
  CPX #&70               \ If ESCAPE is not being pressed, skip over the next
  BNE P%+5               \ instruction
 
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
+
  JMP DEATH2             \ ESCAPE is being pressed, so jump to DEATH2 to end
                         \ the game
+
+ELIF _DISC_DOCKED
+
+ JMP BR1                \ ????
+
+ENDIF
 
 IF _6502SP_VERSION OR _DISC_VERSION
 
@@ -152,7 +160,7 @@ IF _CASSETTE_VERSION
                         \ to KL+15. So set a decreasing counter in Y for the
                         \ index, starting at 15, so we can loop through them
 
-ELIF _DISC_VERSION
+ELIF _DISC_FLIGHT
 
  LDA QQ11               \ If the current view is non-zero (i.e. not a space
  BNE DK5                \ view), return from the subroutine (as DK5 contains
@@ -165,7 +173,7 @@ ELIF _DISC_VERSION
                         \ to KL+16. So set a decreasing counter in Y for the
                         \ index, starting at 16, so we can loop through them
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED
 
  LDA QQ11               \ If the current view is non-zero (i.e. not a space
  BNE out                \ view), return from the subroutine (as out contains
@@ -182,6 +190,8 @@ ENDIF
 
  LDA #&FF               \ Set A to &FF so we can store this in the keyboard
                         \ logger for keys that are being pressed
+
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
 
 .DKL1
 
@@ -204,6 +214,8 @@ ENDIF
  CPY #7                 \ Have we just done the last key?
 
  BNE DKL1               \ If not, loop back to process the next key
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION
 

@@ -42,10 +42,19 @@
  JSR DETOK              \ prints the boxed-out title "DRIVE {drive number}
                         \ CATALOGUE"
 
+IF _DISC_VERSION
+
+ LDA #1                 \ ????
+ STA CATF
+
+ELIF _6502SP_VERSION
+
  LDA #DOCATF            \ Send a #DOCATF 1 command to the I/O processor to set
  JSR OSWRCH             \ the CATF flag to 1, so that the TT26 routine on the
  LDA #1                 \ I/O processor prints out the disc catalogue correctly
  JSR OSWRCH
+
+ENDIF
 
  STA XC                 \ Move the text cursor to column 1
 
@@ -53,6 +62,15 @@
  LDY #HI(CTLI)          \ contains a dot and the drive number, which is the
                         \ DFS command for cataloguing that drive (*. being short
                         \ for *CAT)
+
+IF _DISC_VERSION
+
+ JSR OSCLI              \ Call OSCLI to execute the OS command at (Y X), which
+                        \ catalogues the disc
+
+ DEC CATF               \ ????
+
+ELIF _6502SP_VERSION
 
  JSR SCLI2              \ Call SCLI2 to execute the OS command at (Y X), which
                         \ catalogues the disc, setting the SVN flag while it's
@@ -62,6 +80,8 @@
  JSR OSWRCH             \ the CATF flag to 0, so that TT26 returns to normal
  LDA #0                 \ printing
  JSR OSWRCH
+
+ENDIF
 
  CLC                    \ Clear the C flag
 

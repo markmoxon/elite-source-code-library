@@ -17,7 +17,7 @@
 
 .DKJ1
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_FLIGHT
 
  LDA auto               \ If auto is non-zero, then the docking computer is
  BNE auton              \ currently activated, so jump to auton in DOKEY so the
@@ -25,13 +25,17 @@ IF _6502SP_VERSION OR _DISC_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT
 
  LDY #1                 \ Update the key logger for key 1 in the KYTB table, so
  JSR DKS1               \ KY1 will be &FF if "?" (slow down) is being pressed
 
  INY                    \ Update the key logger for key 2 in the KYTB table, so
  JSR DKS1               \ KY2 will be &FF if Space (speed up) is being pressed
+
+ LDA VIA+&40            \ Read 6522 System VIA input register IRB (SHEILA &40)
+
+ELIF _DISC_DOCKED
 
  LDA VIA+&40            \ Read 6522 System VIA input register IRB (SHEILA &40)
 

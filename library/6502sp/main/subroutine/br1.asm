@@ -25,18 +25,10 @@
  LDX #3                 \ Disable the ESCAPE key and clear memory if the BREAK
  JSR FX200              \ key is pressed (*FX 200,3)
 
- LDX #CYL               \ Call the TITLE subroutine to show the rotating ship
- LDA #6                 \ and load prompt. The arguments sent to TITLE are:
- JSR TITLE              \
-                        \   X = type of ship to show, #CYL is a Cobra Mk III
-                        \
-                        \   A = text token to show below the rotating ship, 6
-                        \       is "LOAD NEW {single cap}COMMANDER {all caps}
-                        \       (Y/N)?{sentence case}{cr}{cr}"
-                        \
-                        \ The TITLE subroutine returns with the internal number
-                        \ of the key pressed in A (see p.142 of the Advanced
-                        \ User Guide for a list of internal key number)
+ LDX #CYL               \ Call TITLE to show a rotating Cobra Mk III (#CYL) and
+ LDA #6                 \ token 6 ("LOAD NEW {single cap}COMMANDER {all caps}
+ JSR TITLE              \ (Y/N)?{sentence case}{cr}{cr}"), returning with the
+                        \ internal number of the key pressed in A
 
  CMP #&60               \ Did we press TAB? If not, skip the following
  BNE P%+5               \ instruction
@@ -62,14 +54,10 @@
  JSR msblob             \ Reset the dashboard's missile indicators so none of
                         \ them are targeted
 
- LDA #7                 \ Call the TITLE subroutine to show the rotating ship
- LDX #ASP               \ and load prompt. The arguments sent to TITLE are:
- JSR TITLE              \
-                        \   X = type of ship to show, #ASP is an Asp Mk II
-                        \
-                        \   A = text token to show below the rotating ship, 6
-                        \       is "LOAD NEW {single cap}COMMANDER {all caps}
-                        \       (Y/N)?{sentence case}{cr}{cr}"
+ LDA #7                 \ Call TITLE to show a rotating Asp Mk II (#ASP) and
+ LDX #ASP               \ token 7 ("LOAD NEW {single cap}COMMANDER {all caps}
+ JSR TITLE              \ (Y/N)?{sentence case}{cr}{cr}""), returning with the
+                        \ internal number of the key pressed in A
 
  JSR ping               \ Set the target system coordinates (QQ9, QQ10) to the
                         \ current system coordinates (QQ0, QQ1) we just loaded

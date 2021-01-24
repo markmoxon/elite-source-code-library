@@ -68,6 +68,21 @@ ENDIF
  LDA #96                \ Set nosev_z hi = 96 (96 is the value of unity in the
  STA INWK+14            \ rotation vector)
 
+IF _DISC_VERSION
+
+        LDA     K2+4    \ ????
+        CMP     #&DB
+        BEQ     tiwe
+
+        LDA     #$10
+        STA     &36B8
+        LDA     #$FE
+        STA     &36B9
+
+.tiwe
+
+ENDIF
+
 \LSR A                  \ This instruction is commented out in the original
                         \ source. It would halve the value of z_hi to 48, so the
                         \ ship would start off closer to the viewer
@@ -87,12 +102,17 @@ ENDIF
  LDA TYPE               \ Set up a new ship, using the ship type in TYPE
  JSR NWSHP
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDY #6                 \ Move the text cursor to column 6
  STY XC
 
  JSR DELAY              \ Delay for 6 vertical syncs (6/50 = 0.12 seconds)
+
+ELIF _DISC_VERSION
+
+ LDY #6                 \ Move the text cursor to column 6
+ STY XC
 
 ELIF _6502SP_VERSION
 
@@ -125,12 +145,12 @@ ENDIF
  BEQ awe                \ print the author credits (PATG can be toggled by
                         \ pausing the game and pressing "X")
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDA #254               \ Print recursive token 94 ("BY D.BRABEN & I.BELL")
  JSR TT27
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  LDA #13                \ Print extended token 13 ("BY D.BRABEN & I.BELL")
  JSR DETOK
@@ -139,18 +159,34 @@ ENDIF
 
 .awe
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION OR _DISC_VERSION
 
  LDA brkd               \ If brkd = 0, jump to BRBR2 to skip the following, as
  BEQ BRBR2              \ we do not have a system error message to display
 
  INC brkd               \ Increment the brkd counter
 
+ENDIF
+
+IF _DISC_VERSION
+
+ LDA #7                 \ Move the text cursor to column 7
+ STA XC
+
+ LDA #10                \ Move the text cursor to row 10
+ STA YC
+
+ELIF _6502SP_VERSION
+
  LDA #7                 \ Move the text cursor to column 7
  JSR DOXC
 
  LDA #10                \ Move the text cursor to row 10
  JSR DOYC
+
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_VERSION
 
                         \ The following loop prints out the null-terminated
                         \ message pointed to by (&FD &FE), which is the MOS
@@ -187,7 +223,7 @@ ENDIF
 
  STY JSTK               \ Set KSTK = 0 (i.e. keyboard, not joystick)
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  PLA                    \ Restore the recursive token number we stored on the
  JSR ex                 \ stack at the start of this subroutine, and print that
@@ -197,6 +233,24 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
  LDX #7                 \ token 148 ("(C) ACORNSOFT 1984")
  STX XC
  JSR ex
+
+ELIF _DISC_VERSION
+
+ PLA                    \ Restore the recursive token number we stored on the
+                        \ stack at the start of this subroutine
+
+\JSR ex                 \ This instruction is commented out in the original
+                        \ source (it would print the recursive token in A)
+
+ JSR DETOK              \ Print the extended token in A
+
+ LDA #12                \ Set A to extended token 12
+
+ LDX #7                 \ Move the text cursor to column 7
+ STX XC
+
+ JSR DETOK              \ Print extended token 12 ("({single cap}C) ACORNSOFT
+                        \ 1984")
 
 ELIF _6502SP_VERSION
 

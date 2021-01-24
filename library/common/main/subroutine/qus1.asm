@@ -40,7 +40,7 @@ ENDIF
 
 .QUS1
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION OR _DISC_VERSION
 
  PHA                    \ Store A on the stack so we can restore it after the
                         \ call to GTDRV
@@ -57,6 +57,10 @@ IF _6502SP_VERSION
  BCS QUR                \ If the C flag is set, then an invalid drive number was
                         \ entered, so jump to QUR to return from the subroutine
 
+ENDIF
+
+IF _6502SP_VERSION
+
  PHA                    \ Store A on the stack so we can restore it after the
                         \ call to DODOSVN
 
@@ -71,7 +75,7 @@ ENDIF
  STX &0C00              \ &0C00, storing #INWK in the low byte because INWK is
                         \ in zero page
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDX #0                 \ Set X to 0 so (Y X) = &0C00
 
@@ -79,7 +83,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
                         \ &0C00 (i.e. save or load a file depending on the value
                         \ of A), returning from the subroutine using a tail call
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  LDX #0                 \ Set (Y X) = &0C00
  LDY #&C
@@ -88,10 +92,18 @@ ELIF _6502SP_VERSION
                         \ &0C00 (i.e. save or load a file depending on the value
                         \ of A)
 
+ENDIF
+
+IF _6502SP_VERSION
+
  JSR CLDELAY            \ Pause for 1280 empty loops
 
  LDA #0                 \ Set the SVN flag to 0 indicate that disc access has
  JSR DODOSVN            \ finished
+
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_VERSION
 
  CLC                    \ Clear the C flag
 

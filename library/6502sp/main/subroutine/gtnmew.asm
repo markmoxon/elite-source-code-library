@@ -16,8 +16,17 @@
 
 .GTNMEW
 
+IF _DISC_VERSION
+
+ LDY #8                 \ ????
+ JSR DELAY
+
+ELIF _6502SP_VERSION
+
 \LDY #8                 \ These instructions are commented out in the original
 \JSR DELAY              \ source
+
+ENDIF
 
 .GTNME
 

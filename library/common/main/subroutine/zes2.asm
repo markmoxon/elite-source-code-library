@@ -28,7 +28,7 @@
 
 .ZES2
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED
 
  LDA #0                 \ Load A with the byte we want to fill the memory block
                         \ with - i.e. zero
@@ -44,11 +44,11 @@ ENDIF
  STA (SC),Y             \ Zero the Y-th byte of the block pointed to by SC,
                         \ so that's effectively the Y-th byte before SC
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED
 
  INY                    \ Increment the loop counter
 
-ELIF _DISC_VERSION
+ELIF _DISC_FLIGHT
 
  DEY                    \ ????
 

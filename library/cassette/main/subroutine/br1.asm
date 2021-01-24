@@ -19,20 +19,26 @@
  JSR FX200              \ Disable the ESCAPE key and clear memory if the BREAK
                         \ key is pressed (*FX 200,3)
 
- LDX #CYL               \ Call the TITLE subroutine to show the rotating ship
- LDA #128               \ and load prompt. The arguments sent to TITLE are:
- JSR TITLE              \
-                        \   X = type of ship to show, #CYL is a Cobra Mk III
-                        \
-                        \   A = text token to show below the rotating ship, 128
-                        \       is "  LOAD NEW COMMANDER (Y/N)?{crlf}{crlf}"
-                        \
-                        \ The TITLE subroutine returns with the internal number
-                        \ of the key pressed in A (see p.142 of the Advanced
-                        \ User Guide for a list of internal key number)
+IF _CASSETTE_VERSION
+
+ LDX #CYL               \ Call TITLE to show a rotating Cobra Mk III (#CYL) and
+ LDA #128               \ token 128 ("  LOAD NEW COMMANDER (Y/N)?{crlf}{crlf}"),
+ JSR TITLE              \ returning with the internal number of the key pressed
+                        \ in A
+
+ELIF _DISC_VERSION
+
+ LDX #CYL               \ Call TITLE to show a rotating Cobra Mk III (#CYL) and
+ LDA #6                 \ token 6 ("LOAD NEW {single cap}COMMANDER {all caps}
+ JSR TITLE              \ (Y/N)?{sentence case}{cr}{cr}"), returning with the
+                        \ internal number of the key pressed in A
+
+ENDIF
 
  CMP #&44               \ Did we press "Y"? If not, jump to QU5, otherwise
  BNE QU5                \ continue on to load a new commander
+
+IF _CASSETTE_VERSION
 
 \BR1                    \ These instructions are commented out in the original
 \LDX #3                 \ source. This block starts with the same *FX call as
@@ -59,7 +65,17 @@
  JSR TTX66              \ And we clear the top part of the screen and draw a
                         \ white border
 
+ELIF _DISC_VERSION
+
+ JSR DFAULT             \ ????
+
+ JSR SVE
+
+ENDIF
+
 .QU5
+
+IF _CASSETTE_VERSION
 
                         \ By the time we get here, the correct commander name
                         \ is at NA% and the correct commander data is at NA%+8.
@@ -150,17 +166,30 @@ ENDIF
 
  STA COK                \ Store the updated competition flags in COK
 
+ELIF _DISC_VERSION
+
+ JSR DFAULT             \ ????
+
+ENDIF
+
  JSR msblob             \ Reset the dashboard's missile indicators so none of
                         \ them are targeted
 
- LDA #147               \ Call the TITLE subroutine to show the rotating ship
- LDX #3                 \ and fire/space prompt. The arguments sent to TITLE
- JSR TITLE              \ are:
-                        \
-                        \   X = type of ship to show, #3 is a Mamba
-                        \
-                        \   A = text token to show below the rotating ship, 147
-                        \       is "PRESS FIRE OR SPACE,COMMANDER.{crlf}{crlf}"
+IF _CASSETTE_VERSION
+
+ LDA #147               \ Call TITLE to show a rotating Mamba (#3) and token
+ LDX #3                 \ 147 ("PRESS FIRE OR SPACE,COMMANDER.{crlf}{crlf}"),
+ JSR TITLE              \ returning with the internal number of the key pressed
+                        \ in A
+
+ELIF _DISC_VERSION
+
+ LDA #7                 \ Call TITLE to show a rotating Krait (#KRA) and token
+ LDX #KRA               \ 7 ("LOAD NEW {single cap}COMMANDER {all caps}(Y/N)?
+ JSR TITLE              \ {sentence case}{cr}{cr}""), returning with the
+                        \ internal number of the key pressed in A
+
+ENDIF
 
  JSR ping               \ Set the target system coordinates (QQ9, QQ10) to the
                         \ current system coordinates (QQ0, QQ1) we just loaded

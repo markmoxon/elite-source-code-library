@@ -15,12 +15,12 @@
 
 .GTL1
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDA INWK,X             \ Copy the X-th byte of INWK to the X-th byte of NA%
  STA NA%,X
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  LDA INWK+5,X           \ Copy the X-th byte of INWK+5 to the X-th byte of NA%
  STA NA%,X

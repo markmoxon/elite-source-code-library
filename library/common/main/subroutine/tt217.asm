@@ -37,12 +37,12 @@ ENDIF
 
 .t
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  JSR DELAY-5            \ Delay for 8 vertical syncs (8/50 = 0.16 seconds) so we
                         \ don't take up too much CPU time while looping round
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  LDY #2                 \ Delay for 2 vertical syncs (2/50 = 0.04 seconds) so we
  JSR DELAY              \ don't take up too much CPU time while looping round

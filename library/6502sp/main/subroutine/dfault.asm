@@ -72,9 +72,19 @@ ENDIF
 
 .tZ
 
- ORA #4                 \ Set bit 2 of A to denote this is the 6502 second
+IF _DISC_VERSION
+
+ ORA #32                \ Set bit 5 of A to denote thet this is the disc version
+                        \ with the refund bug fixed (before the bug was fixed
+                        \ the version number was 4)
+
+ELIF _6502SP_VERSION
+
+ ORA #4                 \ Set bit 2 of A to denote that this is the 6502 second
                         \ processor version (which is the same bit as for the
                         \ disc version)
+
+ENDIF
 
  STA COK                \ Store the updated competition flags in COK
 

@@ -127,6 +127,8 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+
  CMP #f1                \ If the key pressed is < red key f1 or > red key f3,
  BCC LABEL_3            \ jump to LABEL_3 (so only do the following if the key
  CMP #f3+1              \ pressed is f1, f2 or f3)
@@ -142,6 +144,8 @@ ENDIF
                         \ to switch to view X (back, left or right), returning
                         \ from the subroutine using a tail call
 
+ENDIF
+
 .LABEL_3
 
 IF _6502SP_VERSION
@@ -154,11 +158,26 @@ IF _6502SP_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+
  CMP #&54               \ If "H" was pressed, jump to hyp to do a hyperspace
  BNE P%+5               \ jump (if we are in space), returning from the
  JMP hyp                \ subroutine using a tail call
 
-IF _6502SP_VERSION
+ELIF _DISC_DOCKED
+
+ CMP #&54               \ If "H" was not pressed, jump to NWDAV5 to skip the
+ BNE NWDAV5             \ following
+
+ JSR CLYNS              \ ????
+ LDA #$0F
+ STA XC
+ LDA #$CD
+ JMP DETOK
+
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_DOCKED
 
 .NWDAV5
 
@@ -167,14 +186,22 @@ ENDIF
  CMP #&32               \ If "D" was pressed, jump to T95 to print the distance
  BEQ T95                \ to a system (if we are in one of the chart screens)
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION OR _DISC_DOCKED
 
  CMP #&43               \ If "F" was not pressed, jump down to HME1, otherwise
  BNE HME1               \ keep going to process searching for systems
 
+ENDIF
+
+IF _6502SP_VERSION
+
  LDA QQ12               \ If QQ12 = 0 (we are not docked), we can't search for
  BEQ t95                \ systems, so return from the subroutine (as t95
                         \ contains an RTS)
+
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_DOCKED
 
  LDA QQ11               \ If the current view is a chart (QQ11 = 64 or 128),
  AND #%11000000         \ keep going, otherwise return from the subroutine (as
@@ -189,6 +216,8 @@ ENDIF
 
  STA T1                 \ Store A (the key that's been pressed) in T1
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+
  LDA QQ11               \ If the current view is a chart (QQ11 = 64 or 128),
  AND #%11000000         \ keep going, otherwise jump down to TT107 to skip the
  BEQ TT107              \ following
@@ -196,6 +225,18 @@ ENDIF
  LDA QQ22+1             \ If the on-screen hyperspace counter is non-zero,
  BNE TT107              \ then we are already counting down, so jump to TT107
                         \ to skip the following
+
+ELIF _DISC_DOCKED
+
+ LDA QQ11               \ If the current view is a chart (QQ11 = 64 or 128),
+ AND #%11000000         \ keep going, otherwise jump down to t95 to return from
+ BEQ t95                \ the subroutine
+
+ LDA QQ22+1             \ If the on-screen hyperspace counter is non-zero,
+ BNE t95                \ then we are already counting down, so jump down to t95
+                        \ to return from the subroutine
+
+ENDIF
 
  LDA T1                 \ Restore the original value of A (the key that's been
                         \ pressed) from T1
@@ -230,6 +271,8 @@ ENDIF
  JSR TT16               \ Call TT16 to move the crosshairs by the amount in X
                         \ and Y, which were passed to this subroutine as
                         \ arguments
+
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
 
 .TT107
 
@@ -276,6 +319,8 @@ ENDIF
  JMP TT18               \ Otherwise the countdown has finished, so jump to TT18
                         \ to do a hyperspace jump, returning from the subroutine
                         \ using a tail call
+
+ENDIF
 
 .t95
 

@@ -9,8 +9,16 @@
 
 .BEGIN
 
+IF _DISC_VERSION
+
+ JSR BRKBK              \ ????
+
+ELIF _6502SP_VERSION
+
 \JSR BRKBK              \ This instruction is commented out in the original
                         \ source
+
+ENDIF
 
  LDX #(CATF-COMC)       \ We start by zeroing all the configuration variables
                         \ between COMC and CATF, to set them to their default
@@ -27,10 +35,14 @@
  BPL BEL1               \ Loop back to BEL1 to zero the next byte, until we have
                         \ zeroed them all
 
+IF _6502SP_VERSION
+
  LDA XX21+SST*2-2       \ Set spasto(1 0) to the Coriolis space station entry
  STA spasto             \ from the ship blueprint lookup table at XX21 (so
  LDA XX21+SST*2-1       \ spasto(1 0) points to the Coriolis blueprint)
  STA spasto+1
+
+ENDIF
 
                         \ Fall through into TT170 to start the game
 

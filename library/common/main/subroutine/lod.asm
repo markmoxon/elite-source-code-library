@@ -19,7 +19,7 @@ ENDIF
 
 .LOD
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDX #2                 \ Enable the ESCAPE key and clear memory if the BREAK
  JSR FX200              \ key is pressed (*FX 200,2)
@@ -29,7 +29,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
                         \ slots for the local bubble of universe, and various
                         \ flight and ship status variables
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
 \LDX #LO(MINI)          \ These instructions are commented out in the original
 \LDY #HI(MINI)          \ source, but they would load a commander file called
@@ -50,7 +50,7 @@ ENDIF
                         \
                         \ Length of file = &00000100 in &0C0A to &0C0D
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  INY                    \ Increment Y to &C, which we use next
 
@@ -59,7 +59,7 @@ ENDIF
  LDA #&FF               \ Call QUS1 with A = &FF, Y = &C to load the commander
  JSR QUS1               \ file at address &0B00
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDA &B00               \ If the first byte of the loaded file has bit 7 set,
  BMI SPS1+1             \ jump to SPS+1, which is the second byte of an LDA #0
@@ -71,7 +71,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
                         \ byte, as there are no missions in this version, so
                         \ having bit 7 set is invalid anyway
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  BCS LOR                \ If the C flag is set then an invalid drive number was
                         \ entered during the call to QUS1 and the file wasn't
@@ -100,13 +100,13 @@ ENDIF
 
  BPL LOL1               \ Loop back until we have copied all NT% bytes
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDX #3                 \ Fall through into FX200 to disable the ESCAPE key and
                         \ clear memory if the BREAK key is pressed (*FX 200,3)
                         \ and return from the subroutine there
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
 .LOR
 

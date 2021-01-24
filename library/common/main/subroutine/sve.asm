@@ -22,17 +22,28 @@ ENDIF
 
 .SVE
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  JSR GTNME              \ Clear the screen and ask for the commander filename
                         \ to save, storing the name at INWK
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  JSR ZEBC               \ Call ZEBC to zero-fill pages &B and &C
 
  TSX                    \ Transfer the stack pointer to X and store it in stack,
  STX stack              \ so we can restore it in the MRBRK routine
+
+ENDIF
+
+IF _DISC_VERSION
+
+ LDA #LO(MEBRK)         \ Set BRKV to point to the MEBRK routine, which is the
+ STA BRKV               \ BRKV handler for disc access operations, and replaces
+ LDA #HI(MEBRK)         \ the standard BRKV handler in BRBR while disc access
+ STA BRKV+1             \ operations are happening
+
+ELIF _6502SP_VERSION
 
  LDA #LO(MEBRK)         \ Set BRKV to point to the MEBRK routine, disabling
  SEI                    \ while we make the change and re-enabling them once we
@@ -40,6 +51,10 @@ ELIF _6502SP_VERSION
  LDA #HI(MEBRK)         \ operations, and replaces the standard BRKV handler in
  STA BRKV+1             \ BRBR while disc access operations are happening
  CLI
+
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_VERSION
 
  LDA #1                 \ Print extended token 1, the disc access menu, which
  JSR DETOK              \ presents these options:
@@ -94,7 +109,7 @@ ENDIF
 
  JSR TRNME              \ Transfer the commander filename from INWK to NA%
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  JSR ZERO               \ Zero-fill pages &9, &A, &B, &C and &D, which clears
                         \ the ship data blocks, the ship line heap, the ship
@@ -105,7 +120,7 @@ ENDIF
 
  LSR SVC                \ Halve the save count value in SVC
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION OR _DISC_VERSION
 
  LDA #3                 \ Print extended token 3 ("COMPETITION NUMBER:")
  JSR DETOK
@@ -152,7 +167,7 @@ ENDIF
  EOR TALLY+1            \ the kill tally)
  STA K+3
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  JSR BPRNT              \ Print the competition number stored in K to K+3. The
                         \ values of the C flag and U will affect how this is
@@ -169,7 +184,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
  JSR TT67               \ Call TT67 twice to print two newlines
  JSR TT67
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  CLC                    \ Clear the C flag so the call to BPRNT does not include
                         \ a decimal point
@@ -206,7 +221,7 @@ ENDIF
                         \
                         \ Y is left containing &C which we use below
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDA #%10000001         \ Clear 6522 System VIA interrupt enable register IER
  STA VIA+&4E            \ (SHEILA &4E) bit 1 (i.e. enable the CA2 interrupt,
@@ -220,7 +235,7 @@ ENDIF
  JSR QUS1               \ file with the filename we copied to INWK at the start
                         \ of this routine
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDX #0                 \ Set X = 0 for storing in SVN below
 
@@ -246,6 +261,10 @@ IF _SNG45
                         \ to the last saved commander
 
 ENDIF
+
+ENDIF
+
+IF _DISC_VERSION OR _6502SP_VERSION
 
 .SVEX
 

@@ -30,6 +30,12 @@
 
  DEC brkd               \ Decrement the brkd counter
 
+IF _DISC_VERSION
+
+ BNE BR1                \ ????
+
+ELIF _6502SP_VERSION
+
  LDX #&FF               \ Set the stack pointer to &01FF, which is the standard
  TXS                    \ location for the 6502 stack, so this instruction
                         \ effectively resets the stack
@@ -60,4 +66,6 @@
                         \ message)
 
  JMP BR1                \ Jump to BR1 to restart the game
+
+ENDIF
 

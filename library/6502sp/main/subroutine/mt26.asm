@@ -20,6 +20,13 @@
 
 .MT26
 
+IF _DISC_VERSION
+
+ LDA #&81               \ ????
+ STA VIA+&4E
+
+ELIF _6502SP_VERSION
+
  LDA #VIAE              \ Send a #VIAE %10000001 command to the I/O processor to
  JSR OSWRCH             \ clear 6522 System VIA interrupt enable register IER
  LDA #%10000001         \ (SHEILA &4E) bit 1 (i.e. enable the CA2 interrupt,
@@ -28,6 +35,8 @@
 
  LDY #8                 \ Wait for 8/50 of a second (0.16 seconds)
  JSR DELAY
+
+ENDIF
 
  JSR FLKB               \ Call FLKB to flush the keyboard buffer
 
@@ -44,10 +53,19 @@
  LDY #0                 \ ESCAPE was pressed, so set Y = 0 (as the OSWORD call
                         \ returns the length of the entered string in Y)
 
+IF _DISC_VERSION
+
+ LDA #&01               \ ????
+ STA VIA+&4E
+
+ELIF _6502SP_VERSION
+
  LDA #VIAE              \ Send a #VIAE %00000001 command to the I/O processor to
  JSR OSWRCH             \ set 6522 System VIA interrupt enable register IER
  LDA #%00000001         \ (SHEILA &4E) bit 1 (i.e. disable the CA2 interrupt,
  JSR OSWRCH             \ which comes from the keyboard)
+
+ENDIF
 
  JMP FEED               \ Jump to FEED to print a newline, returning from the
                         \ subroutine using a tail call

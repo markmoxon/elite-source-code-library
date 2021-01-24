@@ -27,15 +27,10 @@ ENDIF
 
 .QUL4
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED
 
  LDA NA%,Y              \ The commander's name is stored at NA%, so load the
                         \ Y-th character from NA%
-
-ELIF _DISC_DOCKED
-
- LDA NAME_DOCKED,Y      \ The commander's name is stored at NAME_DOCKED, so
-                        \ load the Y-th character from NAME_DOCKED
 
 ELIF _6502SP_VERSION OR _DISC_FLIGHT
 

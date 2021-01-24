@@ -28,10 +28,21 @@
                         \ entered as part of the catalogue process, so jump to
                         \ SVE to display the disc access menu
 
+IF _DISC_VERSION
+
+ LDA CTLI+1             \ The call to CATS above put the drive number into
+ STA DELI+4             \ CTLI+1, so copy the drive number into DELI+4 so that
+                        \ the drive number in the "DE.:0.E.1234567" string
+                        \ gets updated (i.e. the number after the colon)
+
+ELIF _6502SP_VERSION
+
  LDA CTLI+1             \ The call to CATS above put the drive number into
  STA DELI+7             \ CTLI+1, so copy the drive number into DELI+7 so that
                         \ the drive number in the "DELETE:0.E.1234567" string
                         \ gets updated (i.e. the number after the colon)
+
+ENDIF
 
  LDA #9                 \ Print extended token 9 ("{clear bottom of screen}FILE
  JSR DETOK              \ TO DELETE?")
@@ -48,12 +59,25 @@
 
  LDX #9                 \ Set up a counter in X to count from 9 to 1, so that we
                         \ copy the string starting at INWK+4+1 (i.e. INWK+5) to
+IF _DISC_VERSION
+                        \ DELI+5+1 (i.e. DELI+6 onwards, or "E.1234567")
+ELIF _6502SP_VERSION
                         \ DELI+8+1 (i.e. DELI+9 onwards, or "E.1234567")
+ENDIF
 
 .DELL1
 
+IF _DISC_VERSION
+
+ LDA INWK+4,X           \ Copy the X-th byte of INWK+4 to the X-th byte of
+ STA DELI+5,X           \ DELI+5
+
+ELIF _6502SP_VERSION
+
  LDA INWK+4,X           \ Copy the X-th byte of INWK+4 to the X-th byte of
  STA DELI+8,X           \ DELI+8
+
+ENDIF
 
  DEX                    \ Decrement the loop counter
 
@@ -63,9 +87,19 @@
  LDX #LO(DELI)          \ Set (Y X) to point to the OS command at DELI, which
  LDY #HI(DELI)          \ contains the DFS command for deleting this file
 
+
+IF _DISC_VERSION
+
+ JSR OSCLI              \ Call OSCLI to execute the OS command at (Y X), which
+                        \ catalogues the disc
+
+ELIF _6502SP_VERSION
+
  JSR SCLI2              \ Call SCLI2 to execute the OS command at (Y X), which
                         \ deletes the file, setting the SVN flag while it's
                         \ running to indicate disc access is in progress
+
+ENDIF
 
  JMP SVE                \ Jump to SVE to display the disc access menu and return
                         \ from the subroutine using a tail call

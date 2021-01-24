@@ -48,7 +48,7 @@ OSWRCH = &FFEE          \ The address for the OSWRCH routine
 OSBYTE = &FFF4          \ The address for the OSBYTE routine
 OSWORD = &FFF1          \ The address for the OSWORD routine
 OSFILE = &FFDD          \ The address for the OSFILE routine
-SCLI = &FFF7            \ The address for the OSCLI routine
+OSCLI = &FFF7           \ The address for the OSCLI routine
 NVOSWRCH = &FFCB        \ The address for the non-vectored OSWRCH routine
 
 VIA = &FE00             \ Memory-mapped space for accessing internal hardware,

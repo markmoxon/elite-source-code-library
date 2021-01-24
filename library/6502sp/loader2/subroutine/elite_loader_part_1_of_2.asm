@@ -32,13 +32,13 @@
  LDX #LO(MESS2)         \ Set (Y X) to point to MESS2 ("R.I.CODE")
  LDY #HI(MESS2)
 
- JSR SCLI               \ Call SCLI to run the OS command in MESS2, which *RUNs
+ JSR OSCLI              \ Call OSCLI to run the OS command in MESS2, which *RUNs
                         \ the main I/O processor game code in I.CODE
 
  LDX #LO(MESS3)         \ Set (Y X) to point to MESS3 ("R.P.CODE")
  LDY #HI(MESS3)
 
- JMP SCLI               \ Call SCLI to run the OS command in MESS3, which *RUNs
+ JMP OSCLI              \ Call OSCLI to run the OS command in MESS3, which *RUNs
                         \ the main parasite game code in P.CODE, returning from
                         \ the subroutine using a tail call
 

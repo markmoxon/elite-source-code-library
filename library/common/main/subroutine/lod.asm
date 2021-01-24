@@ -33,7 +33,7 @@ ELIF _6502SP_VERSION
 
 \LDX #LO(MINI)          \ These instructions are commented out in the original
 \LDY #HI(MINI)          \ source, but they would load a commander file called
-\JSR SCLI               \ "E.MINING" and continue below, so presumably this is
+\JSR OSCLI              \ "E.MINING" and continue below, so presumably this is
 \JMP LOL1-2             \ code for loading a test commander file
 
 \LDX #2                 \ These instructions are commented out in the original

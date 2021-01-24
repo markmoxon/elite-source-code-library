@@ -22,7 +22,7 @@
  LDA #255               \ Set the SVN flag to 255
  JSR DODOSVN
 
- JSR SCLI               \ Call OSCLI to execute the OS command at (Y X)
+ JSR OSCLI              \ Call OSCLI to execute the OS command at (Y X)
 
  LDA #0                 \ Set A = 0 for the new value of the SVN flag
 

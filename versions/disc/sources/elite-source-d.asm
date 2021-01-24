@@ -77,7 +77,7 @@ NI% = 37                \ The number of bytes in each ship's data block (as
 OSBYTE = &FFF4          \ The address for the OSBYTE routine
 OSWORD = &FFF1          \ The address for the OSWORD routine
 OSFILE = &FFDD          \ The address for the OSFILE routine
-SCLI = &FFF7            \ The address for the OSCLI routine
+OSCLI = &FFF7           \ The address for the OSCLI routine
 
 VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
                         \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
@@ -135,7 +135,7 @@ CODE% = &11E3
 .L11F1
         LDX     #$F8
         LDY     #$11
-        JSR     SCLI
+        JSR     OSCLI
 
 .L11F8
         EQUS    "L.T.CODE"
@@ -522,7 +522,7 @@ INCLUDE "library/common/main/subroutine/death.asm"
 
         LDX     #$8E
         LDY     #$42
-        JMP     SCLI
+        JMP     OSCLI
 
 .L428E
         EQUS    "L.D.MO"

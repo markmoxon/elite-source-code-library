@@ -79,7 +79,7 @@ OSBYTE = &FFF4          \ The address for the OSBYTE routine
 OSWORD = &FFF1          \ The address for the OSWORD routine
 OSFILE = &FFDD          \ The address for the OSFILE routine
 OSWRCH = &FFEE          \ The address for the OSWRCH routine
-SCLI = &FFF7            \ The address for the OSCLI routine
+OSCLI = &FFF7           \ The address for the OSCLI routine
 
 VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
                         \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
@@ -435,7 +435,7 @@ INCLUDE "library/common/main/subroutine/hyp1.asm"
 
         LDX     #$FC
         LDY     #$2E
-        JMP     SCLI
+        JMP     OSCLI
 
 INCLUDE "library/common/main/subroutine/lcash.asm"
 INCLUDE "library/common/main/subroutine/mcash.asm"
@@ -1072,7 +1072,7 @@ INCLUDE "library/common/main/subroutine/main_game_loop_part_6_of_6.asm"
         STA     XC
         LDX     #$0D
         LDY     #$3A
-        JSR     SCLI
+        JSR     OSCLI
 
         DEC     CATF
         CLC
@@ -1105,7 +1105,7 @@ INCLUDE "library/common/main/subroutine/main_game_loop_part_6_of_6.asm"
 
         LDX     #$10
         LDY     #$3A
-        JSR     SCLI
+        JSR     OSCLI
 
         JMP     &3A86
 

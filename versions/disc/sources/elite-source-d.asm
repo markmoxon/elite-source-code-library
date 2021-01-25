@@ -139,57 +139,63 @@ INCLUDE "library/common/main/workspace/wp.asm"
 L0D7A = &0D7A
 L11D5 = &11D5
 
-
 CODE% = &11E3
 
+ ORG CODE%
 
+ JMP scramble
+ JMP scramble
+ JMP TT26
 
-        ORG     CODE%
-.x11E3
-        JMP     scramble
-        JMP     scramble
-        JMP     TT26
-
-        EQUB    $4B,$11
+ EQUB &4B, &11
 
 .L11EE
-        JMP     L11D5
+
+ JMP L11D5
 
 .L11F1
-        LDX     #$F8
-        LDY     #$11
-        JSR     OSCLI
+
+ LDX #&F8
+ LDY #&11
+ JSR OSCLI
 
 .L11F8
-        EQUS    "L.T.CODE"
-        EQUB    $0D
+
+ EQUS "L.T.CODE"
+ EQUB 13
 
 .scramble
-        LDY     #$00
-        STY     SC
-        LDX     #$13
+
+ LDY #&00
+ STY SC
+ LDX #&13
+
 .L1207
-        STX     SCH
-        TYA
-        EOR     (SC),Y
-        EOR     #$33
-        STA     (SC),Y
-        DEY
-        BNE     L1207
 
-        INX
-        CPX     #$56
-        BNE     L1207
+ STX SCH
+ TYA
+ EOR (SC),Y
+ EOR #&33
+ STA (SC),Y
+ DEY
+ BNE L1207
 
-        JMP     RSHIPS
+ INX
+ CPX #&56
+ BNE L1207
+
+ JMP RSHIPS
 
 .DOENTRY
-        LDA     #$52
-        STA     L11F8
+
+ LDA #&52
+ STA L11F8
+
 .DEATH2
-        JSR     RES2
-        JSR     L0D7A
-        BNE     L11F1
+
+ JSR RES2
+ JSR L0D7A
+ BNE L11F1
 
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_1_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_2_of_16.asm"
@@ -221,9 +227,10 @@ INCLUDE "library/common/main/subroutine/loin_part_6_of_7.asm"
 INCLUDE "library/common/main/subroutine/loin_part_7_of_7.asm"
 
 .FLKB
-        LDA     #$0F
-        TAX
-        JMP     OSBYTE
+
+ LDA #&0F
+ TAX
+ JMP OSBYTE
 
 INCLUDE "library/common/main/subroutine/nlin3.asm"
 INCLUDE "library/common/main/subroutine/nlin4.asm"
@@ -324,10 +331,9 @@ INCLUDE "library/common/main/subroutine/redu2.asm"
 INCLUDE "library/common/main/subroutine/arctan.asm"
 INCLUDE "library/common/main/subroutine/lasli.asm"
 
-
-        EQUB    $8C,$E7,$8D,$ED,$8A,$E6,$C1,$C8
-        EQUB    $C8,$8B,$E0,$8A,$E6,$D6,$C5,$C6
-        EQUB    $C1,$CA,$95,$9D,$9C,$97
+ EQUB &8C, &E7, &8D, &ED, &8A, &E6, &C1, &C8
+ EQUB &C8, &8B, &E0, &8A, &E6, &D6, &C5, &C6
+ EQUB &C1, &CA, &95, &9D, &9C, &97
 
 INCLUDE "library/6502sp/main/subroutine/tnpr1.asm"
 INCLUDE "library/common/main/subroutine/tnpr.asm"
@@ -366,9 +372,9 @@ INCLUDE "library/common/main/subroutine/tt147.asm"
 INCLUDE "library/common/main/subroutine/prq.asm"
 
 .TTH111
-        JSR     TT111
 
-        JMP     TTX111
+ JSR TT111
+ JMP TTX111
 
 INCLUDE "library/common/main/subroutine/tt151.asm"
 INCLUDE "library/common/main/subroutine/tt152.asm"
@@ -478,7 +484,7 @@ INCLUDE "library/6502sp/main/subroutine/there.asm"
 INCLUDE "library/common/main/subroutine/reset.asm"
 INCLUDE "library/common/main/subroutine/res2.asm"
 
-        JSR     U%
+ JSR U%
 
 INCLUDE "library/common/main/subroutine/zinf.asm"
 INCLUDE "library/common/main/subroutine/msblob.asm"
@@ -498,61 +504,64 @@ INCLUDE "library/common/main/subroutine/farof2.asm"
 INCLUDE "library/common/main/subroutine/mas4.asm"
 INCLUDE "library/common/main/subroutine/death.asm"
 
-
 .RSHIPS
-        JSR     LSHIPS
 
-        JSR     RESET
+ JSR LSHIPS
 
-        LDA     #$FF
-        STA     QQ12
-        STA     QQ11
-        LDA     #$20
-        JMP     FRCE
+ JSR RESET
+
+ LDA #&FF
+ STA QQ12
+ STA QQ11
+ LDA #&20
+ JMP FRCE
 
 .LSHIPS
-        JSR     THERE
 
-        LDA     #$06
-        BCS     SHIPinA
+ JSR THERE
 
-        JSR     DORND
+ LDA #&06
+ BCS SHIPinA
 
-        AND     #$03
-        LDX     gov
-        CPX     #$03
-        ROL     A
-        LDX     tek
-        CPX     #$0A
-        ROL     A
-        TAX
-        LDA     TP
-        AND     #$0C
-        CMP     #$08
-        BNE     L427D
+ JSR DORND
 
-        TXA
-        AND     #$01
-        ORA     #$02
-        TAX
+ AND #&03
+ LDX gov
+ CPX #&03
+ ROL A
+ LDX tek
+ CPX #&0A
+ ROL A
+ TAX
+ LDA TP
+ AND #&0C
+ CMP #&08
+ BNE L427D
+
+ TXA
+ AND #&01
+ ORA #&02
+ TAX
+
 .L427D
-        TXA
-.SHIPinA
-        CLC
-        ADC     #$41
-        STA     L4294
-        JSR     L0D7A
 
-        LDX     #$8E
-        LDY     #$42
-        JMP     OSCLI
+ TXA
+
+.SHIPinA
+
+ CLC
+ ADC #&41
+ STA L428E+6
+ JSR L0D7A
+
+ LDX #&8E
+ LDY #&42
+ JMP OSCLI
 
 .L428E
-        EQUS    "L.D.MO"
 
-.L4294
-        EQUS    "0"
-        EQUB    $0D
+ EQUS "L.D.MO0"
+ EQUB 13
 
 INCLUDE "library/common/main/subroutine/zero.asm"
 INCLUDE "library/common/main/subroutine/zes1.asm"

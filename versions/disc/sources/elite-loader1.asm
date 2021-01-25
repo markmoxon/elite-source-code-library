@@ -21,6 +21,14 @@
 \
 \ ******************************************************************************
 
+INCLUDE "versions/disc/sources/elite-header.h.asm"
+
+_CASSETTE_VERSION       = (_VERSION = 1)
+_DISC_VERSION           = (_VERSION = 2)
+_6502SP_VERSION         = (_VERSION = 3)
+_DISC_DOCKED            = FALSE
+_DISC_FLIGHT            = TRUE
+
 ZP = &01                \ Temporary storage, used all over the place
 
 OSWRCH = &FFEE          \ The address for the OSWRCH routine
@@ -225,23 +233,24 @@ ORG CODE%
 
  JSR L2FB8
 
- JMP command
+ JMP command            \ Jump to command to load and run the next part of the
+                        \ loader
 
- LDA #2             \ Set PARAMS1+8 = 2, so the next OSWORD command seeks track
- STA PARAMS1+8      \ 2 on the disc
+ LDA #2                 \ Set PARAMS1+8 = 2, so the next OSWORD command seeks
+ STA PARAMS1+8          \ track 2 on the disc
 
- LDA #127           \ Call OSWORD with A = 127 and (Y X) = PARAMS1
+ LDA #127               \ Call OSWORD with A = 127 and (Y X) = PARAMS1
  LDX #LO(PARAMS1)
  LDY #HI(PARAMS1)
  JMP OSWORD
 
 .L2FB8
 
- STA PARAMS2+7      \ Set PARAMS2+7 = A, so the next OSWORD command seeks track
-                    \ A on the disc
+ STA PARAMS2+7          \ Set PARAMS2+7 = A, so the next OSWORD command seeks
+                        \ track A on the disc
 
- LDA #127           \ Call OSWORD with A = 127 and (Y X) = PARAMS2
- LDX #LO(PARAMS2)   \ 
+ LDA #127               \ Call OSWORD with A = 127 and (Y X) = PARAMS2
+ LDX #LO(PARAMS2)
  LDY #HI(PARAMS2)
  JMP OSWORD
 

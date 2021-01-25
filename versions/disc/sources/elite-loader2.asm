@@ -1,3 +1,36 @@
+\ ******************************************************************************
+\
+\ DISC ELITE LOADER (PART 2) SOURCE
+\
+\ Elite was written by Ian Bell and David Braben and is copyright Acornsoft 1984
+\
+\ The code on this site is identical to the version released on Ian Bell's
+\ personal website at http://www.elitehomepage.org/
+\
+\ The commentary is copyright Mark Moxon, and any misunderstandings or mistakes
+\ in the documentation are entirely my fault
+\
+\ The terminology and notations used in this commentary are explained at
+\ https://www.bbcelite.com/about_site/terminology_used_in_this_commentary.html
+\
+\ ------------------------------------------------------------------------------
+\
+\ This source file produces the following binary file:
+\
+\   * output/ELITE3.bin
+\
+\ ******************************************************************************
+
+INCLUDE "versions/disc/sources/elite-header.h.asm"
+
+_CASSETTE_VERSION       = (_VERSION = 1)
+_DISC_VERSION           = (_VERSION = 2)
+_6502SP_VERSION         = (_VERSION = 3)
+_DISC_DOCKED            = FALSE
+_DISC_FLIGHT            = TRUE
+
+TRTB% = &04             \ TRTB%(1 0) points to the keyboard translation table
+
 L0004   = $0004
 L0005   = $0005
 L0012   = $0012
@@ -83,7 +116,6 @@ L0700   = $0700
 L0AC1   = $0AC1
 L1000   = $1000
 L197B   = $197B
-L2F00   = $2F00
 L373D   = $373D
 L3FFF   = $3FFF
 L4953   = $4953
@@ -116,83 +148,97 @@ OSWORD  = $FFF1
 OSBYTE  = $FFF4
 OSCLI   = $FFF7
 
- org $5700
+CODE% = &5700
+LOAD% = &5700
 
-.BeebDisStartAddr
+ORG CODE%
 
- LDA #&00
- TAY
+ LDA #0                 \ We start by deleting the first loader from memory, so
+                        \ it doesn't leave any clues for the crackers, so set A
+                        \ to 0 so we can zero the memory
+
+ TAY                    \ Set Y to 0 to act as an index in the following loop
 
 .L5703
 
- STA L2F00,Y
- INY
- BNE L5703
+ STA &2F00,Y            \ Zero the Y-th byte of &2F00, which is where the first
+                        \ loader was running before it loaded this one
 
- LDA #&00
+ INY                    \ Increment the loop counter
+
+ BNE L5703              \ Loop back until we have zeroed all 256 bytes from
+                        \ &2F00 to &2FFF, leaving Y = 0
+
+ LDA #0                 \ Set L3FFF = 0
  STA L3FFF
- LDA #&40
+
+ LDA #64                \ Set L7FFF = 64 
  STA L7FFF
- EOR L3FFF
- CLC
- ADC #&40
- PHA
- TAX
- LDA #&FE
- LDY #&00
+
+ EOR L3FFF              \ Set A = 64 EOR L3FFF
+                        \       = 64 EOR 0
+                        \       = 64
+
+ CLC                    \ Set A = A + 64
+ ADC #64                \       = 64 + 64
+                        \       = 128
+
+ PHA                    \ Push 128 on the stack
+
+ TAX                    \ Set X = 128
+
+ LDA #254               \ Call OSBYTE with A = 254, X = 128 and Y = 0 to set
+ LDY #0                 \ the available RAM to 32K
  JSR OSBYTE
 
- PLA
- AND L5973
+ PLA                    \ Pull 128 from the stack into A
+
+ AND &5973              \ &5973 contains 128, so set A = 128 AND 128 = 128
 
 .L5726
 
- BEQ L5726
+ BEQ L5726              \ If A = 0 then enter an infinite loop with L5726,
+                        \ which hangs the computer
 
  JSR L5DE0
 
- LDA #&AC
- LDX #&00
+ LDA #172               \ Call OSBYTE 172 to read the address of the MOS
+ LDX #0                 \ keyboard translation table into (Y X)
  LDY #&FF
  JSR OSBYTE
 
- STX L0004
- STY L0005
- LDA #&EA
- LDX #&00
- LDY #&FF
+ STX TRTB%              \ Store the address of the keyboard translation table in
+ STY TRTB%+1            \ TRTB%(1 0)
+
+ LDA #234               \ Call OSBYTE with A = 234, X = 0 and Y = &FF, which
+ LDX #0                 \ detects whether Tube hardware is present, returning
+ LDY #&FF               \ X = 0 (not present) or X = &FF (present)
  JSR OSBYTE
 
- CPX #&FF
- BNE L574D
+ CPX #&FF               \ If X is not &FF, i.e. we are not running this over the
+ BNE L574D              \ Tube, then jump to L574D
 
- LDA L5A00
+ LDA &5A00              \ &5A00 contains 0, so set A = 0
 
 .L5748
 
- BEQ L5748
+ BEQ L5748              \ If A = 0 then enter an infinite loop with L5748,
+                        \ which hangs the computer
 
- JMP L5A00
+ JMP &5A00              \ Otherwise jump to &5A00, which will execute a BRK to
+                        \ terminate the program
 
 .L574D
 
- LDA L5800
+ LDA MPL                \ Set A = &A0, as MPL contains an LDY #0 instruction
+
  NOP
  NOP
  NOP
- JMP L5800
 
- BRK
- EQUB &00
+ JMP MPL                \ Jump to MPL to copy 512 bytes to &0400
 
- BRK
- EQUB &00
-
- BRK
- EQUB &00
-
- BRK
- EQUB &00
+ EQUB &00, &00, &00, &00, &00, &00, &00, &00
 
  NOP
  NOP
@@ -206,47 +252,50 @@ OSCLI   = $FFF7
  NOP
  NOP
 
-.L5767
+.command
 
- LDX #&90
- LDY #&57
- JSR OSCLI
+ LDX #LO(MESS1)         \ Set (Y X) to point to MESS1 ("LOAD Elite4")
+ LDY #HI(MESS1)
 
- LDA #&15
- LDX #&00
+ JSR OSCLI              \ Call OSCLI to run the OS command in MESS1, which loads
+                        \ the ELITE4 binary to its load address of &1900
+
+ LDA #21                \ Call OSBYTE with A = 21 and X = 0 to flush the
+ LDX #0                 \ keyboard buffer
  JSR OSBYTE
 
- LDA #&C9
- LDX #&01
- LDY #&01
+ LDA #201               \ Call OSBYTE with A = 201, X = 1 and Y = 1 to re-enable
+ LDX #1                 \ the keyboard, which we disabled in the first loader
+ LDY #1
  JSR OSBYTE
 
- JMP L197B
+ JMP &197B              \ Jump to the start of the ELITE3 loader code at &197B
 
  EQUB &00, &00, &00, &00, &00, &00, &00, &00
  EQUB &00, &00, &00, &00, &00, &00, &00
 
- EQUS "LOAD Elite4"
+.MESS1
 
+ EQUS "LOAD Elite4"
  EQUB 13
 
  EQUB &00, &00, &00, &00
 
 .L57A0
 
- LDA #&81
- LDY #&02
+ LDA #129               \ Call OSBYTE with A = 129, X = &FF and Y = 2 to scan
+ LDY #2                 \ the keyboard for &2FF centiseconds (7.67 seconds)
  LDX #&FF
  JSR OSBYTE
 
- LDA #&0F
- LDY #&00
+ LDA #15                \ Call OSBYTE with A = 129 and Y = 0 to flush the input
+ LDY #0                 \ buffer
  JSR OSBYTE
 
- JMP L5767
+ JMP command            \ Jump to command to load and run the next part of the
+                        \ loader
 
  EQUB &00
-
  EQUB &00, &00, &00, &00, &00, &00, &00, &00
  EQUB &00, &00, &00, &00, &00, &00, &00, &00
  EQUB &00, &00, &00, &00, &00, &00, &00, &00
@@ -258,31 +307,42 @@ OSCLI   = $FFF7
  EQUB &00, &00, &00, &00, &00, &00, &00, &00
  EQUB &00, &00, &00, &00
 
-.L5800
+\ ******************************************************************************
+\
+\       Name: MPL
+\       Type: Subroutine
+\   Category: Utility routines
+\    Summary: Move 512 bytes from &5819 to &0400
+\
+\ ******************************************************************************
 
- LDY #&00
- LDX #&02
+.MPL
 
-.L5804
+ LDY #0                 \ Move &5819 onwards to &0400
 
- LDA L5819,Y
-L5806 = L5804+2
+ LDX #2                 \ 2 * 256 bytes
 
-.L5807
+.MVBL
 
- STA L0400,Y
-L5809 = L5807+2
+ LDA &5819,Y
+ STA &0400,Y
+
  INY
- BNE L5804
 
- INC L5806
- INC L5809
+ BNE MVBL
+
+ INC MVBL+2
+ INC MVBL+5
+
  DEX
- BNE L5804
+
+ BNE MVBL
 
  JMP L5760
 
-.L5819
+
+
+.L5819                  \ Moved to &0400 from &5819-&5A19
 
  JSR L04B8
 
@@ -461,10 +521,9 @@ L5809 = L5807+2
  EQUB &FF, &03, &5B, &00, &00, &0A, &00, &44
  EQUB &52, &2E, &32, &0D, &03, &00, &00
 
-.L5973
-
- EQUB &80, &FF, &00, &00, &00, &00, &00, &00
- EQUB &00
+ EQUB &80 \ location &5973
+ 
+ EQUB &FF, &00, &00, &00, &00, &00, &00, &00
 
  EQUB &00, &00, &00, &00
 
@@ -485,9 +544,7 @@ L5809 = L5807+2
  EQUB &00, &00, &00, &00, &00, &00, &00, &00
  EQUB &00, &00, &00, &00, &00, &00, &00, &00
 
-.L5A00
-
- EQUB &00
+ EQUB &00 \ location &5A00
 
  EQUB &00, &00, &00, &00, &00, &00, &00, &00
  EQUB &00, &00, &00, &00, &00, &00, &00, &00
@@ -620,29 +677,33 @@ L5809 = L5807+2
 
 .L5DE0
 
- LDA #&68
- STA L0100
- STA L0103
- LDA #&85
- STA L0101
- STA L0104
- LDX #&71
- STX L0107
- STX L0102
- INX
+ LDA #&68               \ Poke the following routine into &0100 to &0108:
+ STA L0100              \
+ STA L0103              \   0100 : &68            PLA
+ LDA #&85               \   0101 : &85 &71        STA &71
+ STA L0101              \   0103 : &68            PLA
+ STA L0104              \   0104 : &85 &72        STA &72
+ LDX #&71               \   0106 : &6C &71 &00    JMP (&7100)
+ STX L0107              \
+ STX L0102              \ This routine pulls an address off the stack into a
+ INX                    \ location in zero page, and then jumps to that address
  STX L0105
  LDA #&6C
  STA L0106
  LDA #&00
  STA L0108
- JSR L0100
+
+ JSR L0100              \ Call the subroutine at &0100, so this first puts the
+                        \ return address (the next location) on the stack, then
+                        \ jumps to &0100, which jumps to the return address
 
  BRK
- EQUB &A5
-
- ADC (L0038),Y
+ 
+ LDA &71
+ SEC
  SBC #&28
  STA L0071
+
  LDA L0072
  SBC #&00
  STA L0072
@@ -1072,7 +1133,13 @@ L5809 = L5807+2
  LDA L0044
  STA L004C
 
-.BeebDisEndAddr
 
-SAVE "versions/disc/output/ELITE3.bin",BeebDisStartAddr,BeebDisEndAddr
+\ ******************************************************************************
+\
+\ Save output/ELITE2.bin
+\
+\ ******************************************************************************
+
+PRINT "S.ELITE3 ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
+SAVE "versions/disc/output/ELITE3.bin", CODE%, P%, LOAD%
 

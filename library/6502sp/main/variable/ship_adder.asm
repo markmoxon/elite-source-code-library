@@ -13,14 +13,22 @@
  EQUW 50 * 50           \ Targetable area          = 50 * 50
  EQUB &80               \ Edges data offset (low)  = &0080
  EQUB &F4               \ Faces data offset (low)  = &00F4
+IF _DISC_VERSION
+ EQUB 97                \ Max. edge count          = (97 - 1) / 4 = 24
+ELIF _6502SP_VERSION
  EQUB 101               \ Max. edge count          = (101 - 1) / 4 = 25
+ENDIF
  EQUB 0                 \ Gun vertex               = 0
  EQUB 22                \ Explosion count          = 4, as (4 * n) + 6 = 22
  EQUB 108               \ Number of vertices       = 108 / 6 = 18
  EQUB 29                \ Number of edges          = 29
  EQUW 40                \ Bounty                   = 40
  EQUB 60                \ Number of faces          = 60 / 4 = 15
+IF _DISC_VERSION
+ EQUB 23                \ Visibility distance      = 23
+ELIF _6502SP_VERSION
  EQUB 20                \ Visibility distance      = 20
+ENDIF
  EQUB 85                \ Max. energy              = 85
  EQUB 24                \ Max. speed               = 24
  EQUB &00               \ Edges data offset (high) = &0080

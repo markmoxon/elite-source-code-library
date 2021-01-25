@@ -21,7 +21,9 @@ ELIF _6502SP_VERSION OR _DISC_VERSION
                         \ Market item when scooped = 15 + 1 = 16 (Alien items)
 ENDIF
  EQUW 40 * 40           \ Targetable area          = 40 * 40
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _DISC_FLIGHT = 3
+ EQUB &94               \ Edges data offset (low)  = &F894 = -1900 (canister)
+ELIF _CASSETTE_VERSION OR _DISC_VERSION
  EQUB &A8               \ Edges data offset (low)  = &FFA8 = -88 (canister)
 ELIF _6502SP_VERSION
  EQUB &E6               \ Edges data offset (low)  = &E7E6 = -6170 (canister)
@@ -41,7 +43,9 @@ ENDIF
  EQUB 20                \ Visibility distance      = 20
  EQUB 20                \ Max. energy              = 20
  EQUB 30                \ Max. speed               = 30
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _DISC_FLIGHT = 3
+ EQUB &F8               \ Edges data offset (high) = &F894 = -1900 (canister)
+ELIF _CASSETTE_VERSION OR _DISC_VERSION
  EQUB &FF               \ Edges data offset (high) = &FFA8 = -88 (canister)
 ELIF _6502SP_VERSION
  EQUB &E7               \ Edges data offset (high) = &E7E6 = -6170 (canister)

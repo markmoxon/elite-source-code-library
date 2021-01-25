@@ -11,9 +11,13 @@
 
  EQUB 0                 \ Max. canisters on demise = 0
  EQUW 30 * 30           \ Targetable area          = 30 * 30
- EQUB &3E               \ Edges data offset (low)  = &
- EQUB &7A               \ Faces data offset (low)  = &
+ EQUB &3E               \ Edges data offset (low)  = &003E
+ EQUB &7A               \ Faces data offset (low)  = &007A
+IF _DISC_VERSION
+ EQUB 45                \ Max. edge count          = (45 - 1) / 4 = 11
+ELIF _6502SP_VERSION
  EQUB 49                \ Max. edge count          = (49 - 1) / 4 = 12
+ENDIF
  EQUB 0                 \ Gun vertex               = 0
  EQUB 14                \ Explosion count          = 2, as (4 * n) + 6 = 14
  EQUB 42                \ Number of vertices       = 42 / 6 = 7
@@ -23,8 +27,8 @@
  EQUB 20                \ Visibility distance      = 20
  EQUB 20                \ Max. energy              = 20
  EQUB 30                \ Max. speed               = 30
- EQUB &00               \ Edges data offset (high) = &00
- EQUB &00               \ Faces data offset (high) = &00
+ EQUB &00               \ Edges data offset (high) = &003E
+ EQUB &00               \ Faces data offset (high) = &007A
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
  EQUB %00000000         \ Laser power              = 0
                         \ Missiles                 = 0

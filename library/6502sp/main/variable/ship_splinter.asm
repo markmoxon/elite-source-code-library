@@ -15,9 +15,17 @@
  EQUB 0 + (11 << 4)     \ Max. canisters on demise = 0
                         \ Market item when scooped = 11 + 1 = 12 (Minerals)
  EQUW 16 * 16           \ Targetable area          = 16 * 16
+IF _DISC_FLIGHT = 3
+ EQUB &5A               \ Edges data offset (low)  = &FE5A = -417 (Escape pod)
+ELSE
  EQUB &78               \ Edges data offset (low)  = &FD78 = -648 (Escape pod)
+ENDIF
  EQUB &44               \ Faces data offset (low)  = &0044
+IF _DISC_VERSION
+ EQUB 25                \ Max. edge count          = (25 - 1) / 4 = 6
+ELIF _6502SP_VERSION
  EQUB 29                \ Max. edge count          = (29 - 1) / 4 = 7
+ENDIF
  EQUB 0                 \ Gun vertex               = 0
  EQUB 22                \ Explosion count          = 4, as (4 * n) + 6 = 22
  EQUB 24                \ Number of vertices       = 24 / 6 = 4
@@ -27,7 +35,11 @@
  EQUB 8                 \ Visibility distance      = 8
  EQUB 20                \ Max. energy              = 20
  EQUB 10                \ Max. speed               = 10
+IF _DISC_FLIGHT = 3
+ EQUB &FE               \ Edges data offset (high) = &FE5A = -417 (Escape pod)
+ELSE
  EQUB &FD               \ Edges data offset (high) = &FD78 = -648 (Escape pod)
+ENDIF
  EQUB &00               \ Faces data offset (high) = &0044
  EQUB 5                 \ Normals are scaled by    = 2^5 = 32
  EQUB %00000000         \ Laser power              = 0

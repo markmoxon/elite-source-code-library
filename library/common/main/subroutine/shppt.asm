@@ -12,6 +12,8 @@
  JSR EE51               \ Call EE51 to remove the ship's wireframe from the
                         \ screen, if there is one
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+
  JSR PROJ               \ Project the ship onto the screen, returning:
                         \
                         \   * K3(1 0) = the screen x-coordinate
@@ -36,6 +38,24 @@
 
  LDA K4                 \ Set A = y-coordinate of dot + 1 (so this is the second
  ADC #1                 \ row of the two-pixel-high dot)
+
+ELIF _DISC_DOCKED
+
+ LDA #&60               \ ????
+ CMP #&BE
+ BCS nono
+
+ LDY #2                 \ Call Shpt with Y = 2 to set up bytes 1-4 in the ship
+ JSR Shpt               \ lines space, aborting the call to LL9 if the dot is
+                        \ off the side of the screen. This call sets up the
+                        \ first row of the dot (i.e. a four-pixel dash)
+
+ LDY #6                 \ Set Y to 6 for the next call to Shpt
+
+ LDA #&60
+ ADC #1
+
+ENDIF
 
  JSR Shpt               \ Call Shpt with Y = 6 to set up bytes 5-8 in the ship
                         \ lines space, aborting the call to LL9 if the dot is
@@ -90,7 +110,15 @@ ENDIF
  INY
  STA (XX19),Y
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+
  LDA K3                 \ Set A = screen x-coordinate of the ship dot
+
+ELIF _DISC_DOCKED
+
+ LDA #&80               \ ????
+
+ENDIF
 
  DEY                    \ Store A in byte Y+1 of the ship line heap
  STA (XX19),Y

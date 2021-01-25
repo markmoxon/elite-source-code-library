@@ -50,14 +50,18 @@ ENDIF
 \
 \ ******************************************************************************
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+
 .LL25
 
  JMP PLANET             \ Jump to the PLANET routine, returning from the
                         \ subroutine using a tail call
 
+ENDIF
+
 .LL9
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT
 
  LDA TYPE               \ If the ship type is negative then this indicates a
  BMI LL25               \ planet or sun, so jump to PLANET via LL25 above
@@ -80,7 +84,7 @@ ENDIF
                         \ update this value below with the actual ship's
                         \ distance if it turns out to be visible on-screen
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_FLIGHT
 
  LDA NEWB               \ If bit 7 of the ship's NEWB flags is set, then the
  BMI EE51               \ ship has been scooped or has docked, so jump down to
@@ -172,9 +176,19 @@ ENDIF
  AND #%11110111         \ byte #31 to denote that the ship is no longer being
  STA XX1+31             \ drawn on-screen
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+
  JMP DOEXP              \ Jump to DOEXP to display the explosion cloud, which
                         \ will remove it from the screen, returning from the
                         \ subroutine using a tail call
+
+ELIF _DISC_DOCKED
+
+ JMP DOEXP              \ Jump to DOEXP to return from the subroutine using a
+                        \ tail call, as in the docked code DOEXP just contains
+                        \ an RTS
+
+ENDIF
 
 .EE51
 

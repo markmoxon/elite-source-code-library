@@ -18,6 +18,8 @@
 
 .DOEXP
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+
  LDA INWK+31            \ If bit 6 of the ship's byte #31 is clear, then the
  AND #%01000000         \ ship is not already exploding so there is no existing
  BEQ P%+5               \ explosion cloud to remove, so skip the following
@@ -100,6 +102,8 @@
 
 .LABEL_1
 
+ENDIF
+
 IF _6502SP_VERSION
 
                         \ In the 6502 Second Processor version, the LABEL_1
@@ -108,6 +112,8 @@ IF _6502SP_VERSION
                         \ it's pretty cryptic, so instead this version sticks
                         \ with the label LABEL_1 from the cassette version
 ENDIF
+
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
 
  DEY                    \ Decrement Y to 0
 
@@ -306,7 +312,9 @@ ENDIF
 
  LDA Y1                 \ Set A = our random y-coordinate within the cloud
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_FLIGHT
 
  JSR PIXEL              \ Draw a point at screen coordinate (X, A) with the
                         \ point size determined by the distance in ZZ
@@ -317,6 +325,8 @@ ELIF _6502SP_VERSION
                         \ point size determined by the distance in ZZ
 
 ENDIF
+
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
 
 .EX4
 
@@ -392,6 +402,8 @@ ENDIF
 
  LDA S                  \ And then the high bytes
  SBC #0
+
+ENDIF
 
  RTS                    \ Return from the subroutine
 

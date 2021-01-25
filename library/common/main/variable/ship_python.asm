@@ -46,7 +46,7 @@ ENDIF
  EQUB %00011011         \ Laser power              = 3
                         \ Missiles                 = 3
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED
 
 \VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX    0,    0,  224,     0,      1,    2,     3,         31    \ Vertex 0
@@ -104,7 +104,7 @@ IF _CASSETTE_VERSION
  FACE      -25,      -37,      -11,         30    \ Face 11
  FACE        0,        0,     -112,         30    \ Face 12
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
 \VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX    0,    0,  224,     0,      1,    2,     3,         31    \ Vertex 0

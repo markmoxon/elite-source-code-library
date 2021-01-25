@@ -48,6 +48,8 @@ ENDIF
  VERTEX   -7,   14,  -12,     1,      0,    3,     3,         31    \ Vertex 2
  VERTEX   21,    0,    0,     1,      0,    2,     2,         31    \ Vertex 3
 
+.SHIP_ESCAPE_POD_EDGES
+
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     3,     2,         31    \ Edge 0
  EDGE       1,       2,     3,     0,         31    \ Edge 1

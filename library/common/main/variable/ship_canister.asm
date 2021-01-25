@@ -45,6 +45,8 @@ ENDIF
  VERTEX  -24,  -13,   -9,     3,      4,    6,     6,         31    \ Vertex 8
  VERTEX  -24,    5,  -15,     4,      5,    6,     6,         31    \ Vertex 9
 
+.SHIP_CANISTER_EDGES
+
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     0,     1,         31    \ Edge 0
  EDGE       1,       2,     0,     2,         31    \ Edge 1

@@ -15,11 +15,7 @@
  EQUB 0 + (11 << 4)     \ Max. canisters on demise = 0
                         \ Market item when scooped = 11 + 1 = 12 (Minerals)
  EQUW 16 * 16           \ Targetable area          = 16 * 16
-IF _DISC_FLIGHT = 3
- EQUB &5A               \ Edges data offset (low)  = &FE5A = -417 (Escape pod)
-ELSE
- EQUB &78               \ Edges data offset (low)  = &FD78 = -648 (Escape pod)
-ENDIF
+ EQUB LO(SHIP_ESCAPE_POD_EDGES - SHIP_SPLINTER)   \ Edges data = escape pod
  EQUB &44               \ Faces data offset (low)  = &0044
 IF _DISC_VERSION
  EQUB 25                \ Max. edge count          = (25 - 1) / 4 = 6
@@ -35,11 +31,7 @@ ENDIF
  EQUB 8                 \ Visibility distance      = 8
  EQUB 20                \ Max. energy              = 20
  EQUB 10                \ Max. speed               = 10
-IF _DISC_FLIGHT = 3
- EQUB &FE               \ Edges data offset (high) = &FE5A = -417 (Escape pod)
-ELSE
- EQUB &FD               \ Edges data offset (high) = &FD78 = -648 (Escape pod)
-ENDIF
+ EQUB HI(SHIP_ESCAPE_POD_EDGES - SHIP_SPLINTER)   \ Edges data = escape pod
  EQUB &00               \ Faces data offset (high) = &0044
  EQUB 5                 \ Normals are scaled by    = 2^5 = 32
  EQUB %00000000         \ Laser power              = 0

@@ -136,6 +136,12 @@ E% = &563E
 INCLUDE "library/common/main/workspace/k_per_cent.asm"
 INCLUDE "library/common/main/workspace/wp.asm"
 
+\ ******************************************************************************
+\
+\ ELITE A FILE
+\
+\ ******************************************************************************
+
 L0D7A = &0D7A
 L11D5 = &11D5
 
@@ -215,6 +221,13 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_14_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_15_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_16_of_16.asm"
 INCLUDE "library/6502sp/main/subroutine/spin.asm"
+
+\ ******************************************************************************
+\
+\ ELITE B FILE
+\
+\ ******************************************************************************
+
 INCLUDE "library/common/main/variable/univ.asm"
 INCLUDE "library/common/main/variable/twos.asm"
 INCLUDE "library/common/main/variable/twos2.asm"
@@ -271,6 +284,13 @@ INCLUDE "library/common/main/subroutine/pzw.asm"
 INCLUDE "library/common/main/subroutine/dilx.asm"
 INCLUDE "library/common/main/subroutine/dil2.asm"
 INCLUDE "library/common/main/subroutine/escape.asm"
+
+\ ******************************************************************************
+\
+\ ELITE C FILE
+\
+\ ******************************************************************************
+
 INCLUDE "library/common/main/subroutine/tactics_part_1_of_7.asm"
 INCLUDE "library/common/main/subroutine/tactics_part_2_of_7.asm"
 INCLUDE "library/common/main/subroutine/tactics_part_3_of_7.asm"
@@ -336,6 +356,12 @@ INCLUDE "library/common/main/subroutine/lasli.asm"
  EQUB &C8, &8B, &E0, &8A, &E6, &D6, &C5, &C6
  EQUB &C1, &CA, &95, &9D, &9C, &97
 
+\ ******************************************************************************
+\
+\ ELITE D FILE
+\
+\ ******************************************************************************
+
 INCLUDE "library/6502sp/main/subroutine/tnpr1.asm"
 INCLUDE "library/common/main/subroutine/tnpr.asm"
 INCLUDE "library/common/main/subroutine/tt20.asm"
@@ -397,6 +423,13 @@ INCLUDE "library/common/main/subroutine/mcash.asm"
 INCLUDE "library/common/main/subroutine/gcash.asm"
 INCLUDE "library/common/main/subroutine/gc2.asm"
 INCLUDE "library/common/main/subroutine/hm.asm"
+
+\ ******************************************************************************
+\
+\ ELITE E FILE
+\
+\ ******************************************************************************
+
 INCLUDE "library/common/main/subroutine/cpl.asm"
 INCLUDE "library/common/main/subroutine/cmn.asm"
 INCLUDE "library/common/main/subroutine/ypl.asm"
@@ -480,6 +513,13 @@ INCLUDE "library/common/main/subroutine/ks1.asm"
 INCLUDE "library/common/main/subroutine/ks4.asm"
 INCLUDE "library/common/main/subroutine/ks2.asm"
 INCLUDE "library/common/main/subroutine/killshp.asm"
+
+\ ******************************************************************************
+\
+\ ELITE F FILE
+\
+\ ******************************************************************************
+
 INCLUDE "library/common/main/variable/sfx.asm"
 INCLUDE "library/6502sp/main/subroutine/there.asm"
 INCLUDE "library/common/main/subroutine/reset.asm"
@@ -603,6 +643,13 @@ INCLUDE "library/common/main/subroutine/tidy.asm"
 INCLUDE "library/common/main/subroutine/tis2.asm"
 INCLUDE "library/common/main/subroutine/tis3.asm"
 INCLUDE "library/common/main/subroutine/dvidt.asm"
+
+\ ******************************************************************************
+\
+\ ELITE G FILE
+\
+\ ******************************************************************************
+
 INCLUDE "library/common/main/subroutine/shppt.asm"
 INCLUDE "library/common/main/subroutine/ll5.asm"
 INCLUDE "library/common/main/subroutine/ll28.asm"
@@ -630,6 +677,13 @@ INCLUDE "library/common/main/subroutine/ll118.asm"
 INCLUDE "library/common/main/subroutine/ll120.asm"
 INCLUDE "library/common/main/subroutine/ll123.asm"
 INCLUDE "library/common/main/subroutine/ll129.asm"
+
+\ ******************************************************************************
+\
+\ ELITE J FILE
+\
+\ ******************************************************************************
+
 INCLUDE "library/common/main/subroutine/mveit_part_1_of_9.asm"
 INCLUDE "library/common/main/subroutine/mveit_part_2_of_9.asm"
 INCLUDE "library/common/main/subroutine/mveit_part_3_of_9.asm"

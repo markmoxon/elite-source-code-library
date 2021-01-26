@@ -147,6 +147,12 @@ CHK = &11D4
 INCLUDE "library/common/main/workspace/k_per_cent.asm"
 INCLUDE "library/common/main/workspace/wp.asm"
 
+\ ******************************************************************************
+\
+\ ELITE A FILE
+\
+\ ******************************************************************************
+
 CODE% = &11E3
 LOAD% = &11E3
 
@@ -241,6 +247,13 @@ INCLUDE "library/common/main/subroutine/mvs4.asm"
 INCLUDE "library/common/main/subroutine/mvs5.asm"
 INCLUDE "library/common/main/subroutine/mvt6.asm"
 INCLUDE "library/common/main/variable/univ.asm"
+
+\ ******************************************************************************
+\
+\ ELITE B FILE
+\
+\ ******************************************************************************
+
 INCLUDE "library/common/main/variable/twos.asm"
 INCLUDE "library/common/main/variable/twos2.asm"
 INCLUDE "library/common/main/variable/ctwos.asm"
@@ -299,6 +312,13 @@ INCLUDE "library/common/main/subroutine/pzw.asm"
 INCLUDE "library/common/main/subroutine/dilx.asm"
 INCLUDE "library/common/main/subroutine/dil2.asm"
 INCLUDE "library/6502sp/main/subroutine/hme2.asm"
+
+\ ******************************************************************************
+\
+\ ELITE C FILE
+\
+\ ******************************************************************************
+
 INCLUDE "library/6502sp/main/variable/hatb.asm"
 INCLUDE "library/6502sp/main/subroutine/hall.asm"
 INCLUDE "library/6502sp/io/subroutine/hanger.asm"
@@ -374,6 +394,13 @@ INCLUDE "library/cassette/main/subroutine/lyn.asm"
 INCLUDE "library/common/main/subroutine/cpix4.asm"
 INCLUDE "library/common/main/subroutine/cpix2.asm"
 INCLUDE "library/common/main/subroutine/wscan.asm"
+
+\ ******************************************************************************
+\
+\ ELITE D FILE
+\
+\ ******************************************************************************
+
 INCLUDE "library/common/main/subroutine/tnpr.asm"
 INCLUDE "library/common/main/subroutine/tt20.asm"
 INCLUDE "library/common/main/subroutine/tt54.asm"
@@ -478,6 +505,13 @@ INCLUDE "library/common/main/subroutine/hm.asm"
  NOP
 
 INCLUDE "library/6502sp/main/subroutine/refund.asm"
+
+\ ******************************************************************************
+\
+\ ELITE E FILE
+\
+\ ******************************************************************************
+
 INCLUDE "library/common/main/subroutine/cpl.asm"
 INCLUDE "library/common/main/subroutine/cmn.asm"
 INCLUDE "library/common/main/subroutine/ypl.asm"
@@ -646,6 +680,13 @@ INCLUDE "library/common/main/subroutine/tidy.asm"
 INCLUDE "library/common/main/subroutine/tis2.asm"
 INCLUDE "library/common/main/subroutine/tis3.asm"
 INCLUDE "library/common/main/subroutine/dvidt.asm"
+
+\ ******************************************************************************
+\
+\ ELITE G FILE
+\
+\ ******************************************************************************
+
 INCLUDE "library/common/main/subroutine/shppt.asm"
 INCLUDE "library/common/main/subroutine/ll5.asm"
 INCLUDE "library/common/main/subroutine/ll28.asm"
@@ -673,6 +714,12 @@ INCLUDE "library/common/main/subroutine/ll118.asm"
 INCLUDE "library/common/main/subroutine/ll120.asm"
 INCLUDE "library/common/main/subroutine/ll123.asm"
 INCLUDE "library/common/main/subroutine/ll129.asm"
+
+\ ******************************************************************************
+\
+\ ELITE H FILE
+\
+\ ******************************************************************************
 
 .TKN1
 

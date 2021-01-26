@@ -24,16 +24,20 @@ ENDIF
  EQUB 21                \ Number of edges          = 21
  EQUW 100               \ Bounty                   = 100
  EQUB 24                \ Number of faces          = 24 / 4 = 6
-IF _DISC_VERSION
+IF _DISC_FLIGHT
  EQUB 25                \ Visibility distance      = 25
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED
  EQUB 20                \ Visibility distance      = 20
 ENDIF
  EQUB 80                \ Max. energy              = 80
  EQUB 30                \ Max. speed               = 30
  EQUB &00               \ Edges data offset (high) = &007A
  EQUB &00               \ Faces data offset (high) = &00CE
+IF _6502SP_VERSION OR _DISC_FLIGHT
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
+ELIF _DISC_DOCKED
+ EQUB 2                 \ Normals are scaled by    = 2^2 = 4
+ENDIF
  EQUB %00010000         \ Laser power              = 2
                         \ Missiles                 = 0
 
@@ -79,6 +83,8 @@ ENDIF
  EDGE      15,      16,     5,     5,          8    \ Edge 19
  EDGE      16,      14,     5,     5,          8    \ Edge 20
 
+IF _6502SP_VERSION OR _DISC_FLIGHT
+
 \FACE normal_x, normal_y, normal_z, visibility
  FACE        3,       24,        3,         31    \ Face 0
  FACE        3,      -24,        3,         31    \ Face 1
@@ -86,4 +92,16 @@ ENDIF
  FACE       -3,       24,        3,         31    \ Face 3
  FACE       38,        0,      -77,         31    \ Face 4
  FACE      -38,        0,      -77,         31    \ Face 5
+
+ELIF _DISC_DOCKED
+
+\FACE normal_x, normal_y, normal_z, visibility
+ FACE        3,       24,        3,         31    \ Face 0
+ FACE        3,      -24,        3,         31    \ Face 1
+ FACE       -3,      -24,        3,         31    \ Face 2
+ FACE       -3,       24,        3,         31    \ Face 3
+ FACE       38,        0,      -77,         31    \ Face 4
+ FACE      -38,        0,      -77,         31    \ Face 5
+
+ENDIF
 

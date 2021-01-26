@@ -9,8 +9,14 @@
 
 .SHIP_CONSTRICTOR
 
+IF _6502SP_VERSION OR _DISC_FLIGHT
  EQUB 3                 \ Max. canisters on demise = 3
  EQUW 65 * 65           \ Targetable area          = 65 * 65
+ELIF _DISC_DOCKED
+ EQUB 3 + (15 << 4)     \ Max. canisters on demise = 3
+                        \ Market item when scooped = 15 + 1 = 16 (Alien items)
+ EQUW 99 * 99           \ Targetable area          = 99 * 99
+ENDIF
  EQUB &7A               \ Edges data offset (low)  = &007A
  EQUB &DA               \ Faces data offset (low)  = &00DA
 IF _DISC_VERSION
@@ -25,13 +31,23 @@ ENDIF
  EQUW 0                 \ Bounty                   = 0
  EQUB 40                \ Number of faces          = 40 / 4 = 10
  EQUB 45                \ Visibility distance      = 45
+IF _6502SP_VERSION OR _DISC_FLIGHT
  EQUB 252               \ Max. energy              = 252
  EQUB 36                \ Max. speed               = 36
+ELIF _DISC_DOCKED
+ EQUB 200               \ Max. energy              = 200
+ EQUB 55                \ Max. speed               = 55
+ENDIF
  EQUB &00               \ Edges data offset (high) = &007A
  EQUB &00               \ Faces data offset (high) = &00DA
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
+IF _6502SP_VERSION OR _DISC_FLIGHT
  EQUB %00110100         \ Laser power              = 6
                         \ Missiles                 = 4
+ELIF _DISC_DOCKED
+ EQUB %00101111         \ Laser power              = 2
+                        \ Missiles                 = 7
+ENDIF
 
 \VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX   20,   -7,   80,     2,      0,    9,     9,         31    \ Vertex 0

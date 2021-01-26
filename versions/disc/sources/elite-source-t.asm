@@ -143,6 +143,7 @@ QQ16_FLIGHT = &0880
 NA% = &1181
 CHK2 = &11D3
 CHK = &11D4
+SHIP_MISSILE = &7F00
 
 INCLUDE "library/common/main/workspace/k_per_cent.asm"
 INCLUDE "library/common/main/workspace/wp.asm"
@@ -721,6 +722,13 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
 \
 \ ******************************************************************************
 
+INCLUDE "library/6502sp/main/macro/ejmp.asm"
+INCLUDE "library/6502sp/main/macro/echr.asm"
+INCLUDE "library/6502sp/main/macro/etok.asm"
+INCLUDE "library/6502sp/main/macro/etwo.asm"
+INCLUDE "library/6502sp/main/macro/ernd.asm"
+INCLUDE "library/6502sp/main/macro/tokn.asm"
+
 .TKN1
 
  EQUB &57
@@ -1084,20 +1092,9 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
 
  EQUB &57
 
-.RUPLA
+INCLUDE "library/6502sp/main/variable/rupla.asm"
+INCLUDE "library/6502sp/main/variable/rugal.asm"
 
- EQUB &D3, &96, &24, &1C, &FD, &4F, &35, &76
- EQUB &64, &20, &44, &A4, &DC, &6A, &10, &A2
- EQUB &03, &6B, &1A, &C0, &B8, &05, &65, &C1
-
- EQUB &29
-
-.RUGAL
-
- EQUB &80, &00, &00, &00, &01, &01, &01, &01
- EQUB &82, &01, &01, &01, &01, &01, &01, &01
- EQUB &01, &01, &01, &01, &01, &01, &02, &01
- EQUB &82
 
 .RUTOK
 
@@ -1166,8 +1163,6 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  EQUB &B3, &16, &0F, &0E, &76, &57, &B5, &A3
  EQUB &12, &70
 
-.L5565
-
  EQUB &04, &87, &A5, &B3, &77, &24, &77, &07
  EQUB &1E, &AF, &03, &12, &77, &8E, &03, &77
  EQUB &B5, &A3, &12, &57, &C4, &96, &04, &77
@@ -1181,53 +1176,106 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  EQUB &0E, &77, &19, &12, &A2, &77, &10, &16
  EQUB &1A, &12, &57
 
-.MTIN
+INCLUDE "library/6502sp/main/variable/mtin.asm"
 
- EQUB &10, &15, &1A, &1F, &9B, &A0, &2E, &A5
- EQUB &24, &29, &3D, &33, &38, &AA, &42, &47
- EQUB &4C, &51, &56, &8C, &60, &65, &87, &82
- EQUB &5B, &6A, &B4, &B9, &BE, &E1, &E6, &EB
- EQUB &F0, &F5, &FA, &73, &78, &7D
-        
  EQUB &45, &4E
  EQUB &44, &2D, &45, &4E, &44, &2D, &45, &4E
  EQUB &44, &52, &50, &53, &00, &8E, &11, &D8
- EQUB &00, &00, &06, &56, &52, &49
-
-.L55FE
-
- EQUB &45
-
-.L55FF
-
- EQUB &E6
+ EQUB &00, &00, &06, &56, &52, &49, &45, &E6
 
 INCLUDE "library/common/main/macro/vertex.asm"
 INCLUDE "library/common/main/macro/edge.asm"
 INCLUDE "library/common/main/macro/face.asm"
 
+\ ******************************************************************************
+\
+\       Name: XX21
+\       Type: Variable
+\   Category: Drawing ships
+\    Summary: Ship blueprints lookup table for the ship hanger
+\  Deep dive: Ship blueprints
+\
+\ ******************************************************************************
+
 .XX21
 
- EQUB &00, &7F, &00, &00, &00, &00, &00, &00
- EQUB &5D, &56, &00, &00, &00, &00, &00, &00
- EQUB &05, &57, &37, &58, &19, &5A, &A1, &5B
- EQUB &00, &00, &00, &00, &00, &00, &93, &5C
- EQUB &00, &00, &00, &00, &6D, &5D, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &53, &5E
+ EQUW SHIP_MISSILE      \ MSL  =  1 = Missile
+ EQUW 0
+ EQUW 0
+ EQUW 0
+ EQUW SHIP_CANISTER     \ OIL  =  5 = Cargo canister
+ EQUW 0
+ EQUW 0
+ EQUW 0
+ EQUW SHIP_SHUTTLE      \ SHU  =  9 = Shuttle
+ EQUW SHIP_TRANSPORTER  \        10 = Transporter
+ EQUW SHIP_COBRA_MK_3   \ CYL  = 11 = Cobra Mk III
+ EQUW SHIP_PYTHON       \        12 = Python
+ EQUW 0
+ EQUW 0
+ EQUW 0
+ EQUW SHIP_VIPER        \ COPS = 16 = Viper
+ EQUW 0
+ EQUW 0
+ EQUW SHIP_KRAIT        \ KRA  = 19 = Krait
+ EQUW 0
+ EQUW 0
+ EQUW 0
+ EQUW 0
+ EQUW 0
+ EQUW 0
+ EQUW 0
+ EQUW 0
+ EQUW 0
+ EQUW 0
+ EQUW 0
+ EQUW SHIP_CONSTRICTOR  \ CON  = 31 = Constrictor
 
-.E%
+\ ******************************************************************************
+\
+\       Name: E%
+\       Type: Variable
+\   Category: Drawing ships
+\    Summary: Ship blueprints default NEWB flags for the ship hanger
+\
+\ ******************************************************************************
 
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &21, &61, &A0, &A0, &00, &00, &00, &C2
- EQUB &00, &00, &8C, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &8C
+ EQUB %00000000         \ Missile
+ EQUB 0
+ EQUB 0
+ EQUB 0
+ EQUB %00000000         \ Cargo canister
+ EQUB 0
+ EQUB 0
+ EQUB 0
+ EQUB %00100001         \ Shuttle                               Trader, innocent
+ EQUB %01100001         \ Transporter                      Trader, innocent, cop
+ EQUB %10100000         \ Cobra Mk III                      Innocent, escape pod
+ EQUB %10100000         \ Python                            Innocent, escape pod
+ EQUB 0
+ EQUB 0
+ EQUB 0
+ EQUB %11000010         \ Viper                   Bounty hunter, cop, escape pod
+ EQUB 0
+ EQUB 0
+ EQUB %10001100         \ Krait                      Hostile, pirate, escape pod
+ EQUB 0
+ EQUB 0
+ EQUB 0
+ EQUB 0
+ EQUB 0
+ EQUB 0
+ EQUB 0
+ EQUB 0
+ EQUB 0
+ EQUB 0
+ EQUB 0
+ EQUB %10001100         \ Constrictor                Hostile, pirate, escape pod
 
 INCLUDE "library/common/main/variable/ship_canister.asm"
-
         
-\ Shuttle
+.SHIP_SHUTTLE
+
  EQUB &0F
  EQUB &C4, &09, &86, &FE, &6D, &00, &26, &72
  EQUB &1E, &00, &00, &34, &16, &20, &08, &00
@@ -1269,7 +1317,8 @@ INCLUDE "library/common/main/variable/ship_canister.asm"
  EQUB &B1, &1F, &51, &51, &B1, &5F, &6E, &6E
  EQUB &50
         
-\ Transporter
+.SHIP_TRANSPORTER
+
  EQUB &00, &C4, &09, &F2, &AA, &91, &30
  EQUB &1A, &DE, &2E, &00, &00, &38, &10, &20
  EQUB &0A, &00, &01, &01, &00, &00, &13, &33
@@ -1334,11 +1383,10 @@ INCLUDE "library/common/main/variable/ship_canister.asm"
         
 INCLUDE "library/common/main/variable/ship_cobra_mk_iii.asm"
 INCLUDE "library/common/main/variable/ship_python.asm"
-
 INCLUDE "library/common/main/variable/ship_viper.asm"
+ 
+.SHIP_KRAIT
 
-        
-\ Krait
  EQUB &01
  EQUB &10, &0E, &7A, &CE, &55, &00, &12, &66
  EQUB &15, &64, &00, &18, &14, &50, &1E, &00
@@ -1370,41 +1418,8 @@ INCLUDE "library/common/main/variable/ship_viper.asm"
  EQUB &06, &9F, &07, &30, &06, &3F, &4D, &00
  EQUB &9A, &BF, &4D, &00, &9A
         
-\ Constrictor
- EQUB &F3, &49, &26
- EQUB &7A, &DA, &4D, &00, &2E, &66, &18, &00
- EQUB &00, &28, &2D, &C8, &37, &00, &00, &02
- EQUB &2F, &14, &07, &50, &5F, &02, &99, &14
- EQUB &07, &50, &DF, &01, &99, &36, &07, &28
- EQUB &DF, &14, &99, &36, &07, &28, &FF, &45
- EQUB &89, &14, &0D, &28, &BF, &56, &88, &14
- EQUB &0D, &28, &3F, &67, &88, &36, &07, &28
- EQUB &7F, &37, &89, &36, &07, &28, &5F, &23
- EQUB &99, &14, &0D, &05, &1F, &FF, &FF, &14
- EQUB &0D, &05, &9F, &FF, &FF, &14, &07, &3E
- EQUB &52, &99, &99, &14, &07, &3E, &D2, &99
- EQUB &99, &19, &07, &19, &72, &99, &99, &19
- EQUB &07, &19, &F2, &99, &99, &0F, &07, &0F
- EQUB &6A, &99, &99, &0F, &07, &0F, &EA, &99
- EQUB &99, &00, &07, &00, &40, &9F, &01, &1F
- EQUB &09, &00, &04, &1F, &19, &04, &08, &1F
- EQUB &01, &04, &24, &1F, &02, &00, &20, &1F
- EQUB &29, &00, &1C, &1F, &23, &1C, &20, &1F
- EQUB &14, &08, &24, &1F, &49, &08, &0C, &1F
- EQUB &39, &18, &1C, &1F, &37, &18, &20, &1F
- EQUB &67, &14, &20, &1F, &56, &10, &24, &1F
- EQUB &45, &0C, &24, &1F, &58, &0C, &10, &1F
- EQUB &68, &10, &14, &1F, &78, &14, &18, &1F
- EQUB &89, &0C, &18, &1F, &06, &20, &24, &12
- EQUB &99, &28, &30, &05, &99, &30, &38, &0A
- EQUB &99, &38, &28, &0A, &99, &2C, &3C, &05
- EQUB &99, &34, &3C, &12, &99, &2C, &34, &1F
- EQUB &00, &37, &0F, &9F, &18, &4B, &14, &1F
- EQUB &18, &4B, &14, &1F, &2C, &4B, &00, &9F
- EQUB &2C, &4B, &00, &9F, &2C, &4B, &00, &1F
- EQUB &00, &35, &00, &1F, &2C, &4B, &00, &3F
- EQUB &00, &00, &A0, &5F, &00, &1B, &00
-        
+INCLUDE "library/6502sp/main/variable/ship_constrictor.asm"
+
  SKIP 171
 
 \ ******************************************************************************

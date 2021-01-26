@@ -51,9 +51,13 @@
  EQUB 193                \ System 193, Galaxy 1, Mission 1     Orarra = Token 24
  EQUB 41                 \ System  41, Galaxy 2                Anreer = Token 25
 
+IF _6502SP_VERSION
+
 IF _SOURCE_DISC
 
  EQUB 7                  \ System   7, Galaxy 0                  Lave = Token 26
+
+ENDIF
 
 ENDIF
 

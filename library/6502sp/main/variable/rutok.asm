@@ -655,6 +655,8 @@
  ECHR 'D'
  EQUB VE
 
+IF _6502SP_VERSION
+
 IF _SOURCE_DISC
 
  EJMP 2                 \ Token 26:     "{sentence case}BITS'N PIECES - END OF
@@ -688,6 +690,8 @@ IF _SOURCE_DISC
  ECHR ' '
  ECHR '1'
  EQUB VE
+
+ENDIF
 
 ENDIF
 

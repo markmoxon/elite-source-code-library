@@ -89,13 +89,8 @@ CNPV = $022E
 INDV1   = $0230
 INDV2   = $0232
 INDV3   = $0234
-L0400   = $0400
-L0462   = $0462
-L04A0   = $04A0
-L04B8   = $04B8
-L04C7   = $04C7
-L04D5   = $04D5
-L04FA   = $04FA
+
+
 L04FB   = $04FB
 L0509   = $0509
 L050A   = $050A
@@ -331,8 +326,8 @@ ORG CODE%
 
  BNE MVBL
 
- INC MVBL+2
- INC MVBL+5
+ INC MVBL+2             \ High byte of LDA
+ INC MVBL+5             \ High byte of STA
 
  DEX
 
@@ -340,9 +335,11 @@ ORG CODE%
 
  JMP L5760
 
+CODE_LOAD% = P%
 
+ORG &0400
 
-.L5819                  \ Moved to &0400 from &5819-&5A19
+.LOADER                \ Moved to &0400-&05FF from &5819-&5A18
 
  JSR L04B8
 
@@ -358,42 +355,42 @@ ORG CODE%
  STA L0559
  PLA
  STA L0558
- BEQ L583E
+ BEQ LOAD2
 
-.L5836
+.LOAD1
 
  JSR L0462
 
  DEC L0558
- BNE L5836
+ BNE LOAD1
 
-.L583E
+.LOAD2
 
  LDA L0559
- BEQ L584B
+ BEQ LOAD3
 
  ORA #&20
  STA L0511
  JSR L0462
 
-.L584B
+.LOAD3
 
  LDA L051A
- BEQ L585B
+ BEQ LOAD5
 
  LDY #&00
 
-.L5852
+.LOAD4
 
  LDA L0700,Y
  STA L1000,Y
  INY
- BNE L5852
+ BNE LOAD4
 
-.L585B
+.LOAD5
 
  LDX L055B
- BEQ L5869
+ BEQ LOAD6
 
  LDX #&52
  LDY #&05
@@ -401,7 +398,7 @@ ORG CODE%
 
  LDX #&02
 
-.L5869
+.LOAD6
 
  STX L0076
  LDA #&15
@@ -412,6 +409,8 @@ ORG CODE%
  LDX #&01
  LDY #&01
  JMP OSBYTE
+
+.L0462
 
  JSR L04C7
 
@@ -425,7 +424,7 @@ ORG CODE%
 
  LDA L050A
  CMP #&0E
- BNE L58B4
+ BNE LOAD7
 
  LDA L050F
  STA L051A
@@ -442,10 +441,12 @@ ORG CODE%
 
  JMP L04A0
 
-.L58B4
+.LOAD7
 
  LDA #&03
  JSR L04D5
+
+.L04A0
 
  LDA L053B
  STA L0545
@@ -459,6 +460,8 @@ ORG CODE%
  INC L0557
  RTS
 
+.L04B8
+
  JSR L04C7
 
  LDA L053B
@@ -468,19 +471,24 @@ ORG CODE%
 
  RTS
 
+.L04C7
+
  LDA L0557
  LDX L055B
- BEQ L58E9
+ BEQ LOAD8
 
  ASL A
 
-.L58E9
+.LOAD8
 
  STA L053B
  LDA #&00
+
+.L04D5
+
  STA L0075
 
-.L58F0
+.LOAD9
 
  LDA L0075
  ASL A
@@ -495,16 +503,18 @@ ORG CODE%
 
  LDA L0075
  CMP #&03
- BCC L5912
+ BCC LOAD10
 
  LDY #&0A
  LDA (L0073),Y
  AND #&DF
- BNE L58F0
+ BNE LOAD9
 
-.L5912
+.LOAD10
 
  RTS
+
+.L04FA
 
  EQUB &34
 
@@ -548,7 +558,14 @@ ORG CODE%
 
  EQUB &00, &00, &00, &00, &00, &00, &00, &00
  EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
+ EQUB &00, &00, &00, &00, &00, &00, &00, &00 \ 5A18
+ 
+COPYBLOCK LOADER, P%, CODE_LOAD%
+
+ORG CODE_LOAD% + P% - LOADER
+
+.L5A19
+
  EQUB &00, &00, &00, &00, &00, &00, &00, &00
  EQUB &00, &00, &00, &00, &00, &00, &00, &00
  EQUB &00, &00, &00, &00, &00, &00, &00, &00
@@ -1132,7 +1149,6 @@ ORG CODE%
 
  LDA L0044
  STA L004C
-
 
 \ ******************************************************************************
 \

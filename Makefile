@@ -79,9 +79,22 @@ encrypt:
 	$(BEEBASM) -i versions/disc/sources/elite-loader3.asm -v >> versions/disc/output/compile.txt
 	$(BEEBASM) -i versions/disc/sources/elite-source-d.asm -v >> versions/disc/output/compile.txt
 	$(BEEBASM) -i versions/disc/sources/elite-source-t.asm -v >> versions/disc/output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-doa.asm -v >> versions/disc/output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-dob.asm -v >> versions/disc/output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-doc.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-moa.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-mob.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-moc.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-mod.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-moe.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-mof.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-mog.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-moh.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-moi.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-moj.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-mok.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-mol.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-mom.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-mon.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-moo.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-mop.asm -v >> versions/disc/output/compile.txt
 	$(PYTHON) versions/disc/sources/elite-checksum.py
 	$(BEEBASM) -i versions/disc/sources/elite-disc.asm -do versions/disc/elite-disc.ssd -boot ELITE2
 

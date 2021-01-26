@@ -140,6 +140,7 @@ L0D7A = &0D7A
 L11D5 = &11D5
 
 CODE% = &11E3
+LOAD% = &11E3
 
  ORG CODE%
 
@@ -653,4 +654,11 @@ INCLUDE "library/cassette/main/subroutine/lyn.asm"
 INCLUDE "library/common/main/subroutine/scan.asm"
 INCLUDE "library/common/main/subroutine/wscan.asm"
 
+\ ******************************************************************************
+\
+\ Save output/D.CODE.unprot.bin
+\
+\ ******************************************************************************
+
+PRINT "S.D.CODE ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
 SAVE "versions/disc/output/D.CODE.unprot.bin", CODE%, P%

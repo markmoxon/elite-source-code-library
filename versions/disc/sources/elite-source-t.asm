@@ -148,6 +148,7 @@ INCLUDE "library/common/main/workspace/k_per_cent.asm"
 INCLUDE "library/common/main/workspace/wp.asm"
 
 CODE% = &11E3
+LOAD% = &11E3
 
  ORG CODE%
 
@@ -1359,5 +1360,12 @@ INCLUDE "library/common/main/variable/ship_viper.asm"
         
  SKIP 171
 
+\ ******************************************************************************
+\
+\ Save output/T.CODE.unprot.bin
+\
+\ ******************************************************************************
+
+PRINT "S.T.CODE ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
 SAVE "versions/disc/output/T.CODE.unprot.bin", CODE%, P%
 

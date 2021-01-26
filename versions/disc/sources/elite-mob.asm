@@ -14,7 +14,12 @@ _6502SP_VERSION         = (_VERSION = 3)
 _DISC_DOCKED            = FALSE
 _DISC_FLIGHT            = TRUE
 
-ORG &5600
+SHIP_MISSILE = &7F00
+
+CODE% = &5600
+LOAD% = &5600
+
+ORG CODE%
 
 \ ******************************************************************************
 \
@@ -26,7 +31,7 @@ ORG &5600
 \
 \ ******************************************************************************
 
- EQUW &7F00             \ MSL  =  1 = Missile
+ EQUW SHIP_MISSILE      \ MSL  =  1 = Missile
  EQUW SHIP_DODO         \ SST  =  2 = Dodo space station
  EQUW SHIP_ESCAPE_POD   \ ESC  =  3 = Escape pod
  EQUW SHIP_PLATE        \ PLT  =  4 = Alloy plate
@@ -115,4 +120,12 @@ INCLUDE "library/6502sp/main/variable/ship_krait.asm"
 INCLUDE "library/6502sp/main/variable/ship_adder.asm"
 INCLUDE "library/6502sp/main/variable/ship_worm.asm"
 
-SAVE "versions/disc/output/D.MOB.bin", &5600, &6000
+\ ******************************************************************************
+\
+\ Save output/D.MOB.bin
+\
+\ ******************************************************************************
+
+PRINT "S.D.MOB ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
+SAVE "versions/disc/output/D.MOB.bin", CODE%, CODE% + &A00
+

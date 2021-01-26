@@ -13,7 +13,11 @@
  EQUW 65 * 65           \ Targetable area          = 65 * 65
  EQUB &7A               \ Edges data offset (low)  = &007A
  EQUB &DA               \ Faces data offset (low)  = &00DA
+IF _DISC_VERSION
+ EQUB 77                \ Max. edge count          = (77 - 1) / 4 = 19
+ELIF _6502SP_VERSION
  EQUB 81                \ Max. edge count          = (81 - 1) / 4 = 20
+ENDIF
  EQUB 0                 \ Gun vertex               = 0
  EQUB 46                \ Explosion count          = 10, as (4 * n) + 6 = 46
  EQUB 102               \ Number of vertices       = 102 / 6 = 17

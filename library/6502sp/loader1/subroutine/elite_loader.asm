@@ -258,7 +258,7 @@ ENDIF
  FNE 2
  FNE 3
 
- LDX #LO(MESS1)         \ Set (Y X) to point to MESS2 ("DIR E")
+ LDX #LO(MESS1)         \ Set (Y X) to point to MESS1 ("DIR E")
  LDY #HI(MESS1)
 
  JSR OSCLI              \ Call OSCLI to run the OS command in MESS1, which

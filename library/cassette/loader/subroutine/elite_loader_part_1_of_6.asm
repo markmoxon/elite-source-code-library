@@ -12,8 +12,8 @@
 \
 \ There are two files containing code:
 \
-\   * WORDS9.bin contains the recursive token table, which moved to &0400 before
-\     the main game is loaded
+\   * WORDS9.bin contains the recursive token table, which is moved to &0400
+\     before the main game is loaded
 \
 \   * PYTHON.bin contains the Python ship blueprint, which gets moved to &7F00
 \     before the main game is loaded

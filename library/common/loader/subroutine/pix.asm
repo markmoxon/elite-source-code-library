@@ -25,6 +25,12 @@ ENDIF
 \
 \   A                   The screen y-coordinate of the pixel to draw, negated
 \
+IF _DISC_VERSION
+\ Other entry points:
+\
+\   out                 Contains an RTS
+\
+ENDIF
 \ ******************************************************************************
 
 .PIX
@@ -33,12 +39,28 @@ ENDIF
 
  EOR #%10000000         \ Flip the sign of A
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LSR A                  \ Set ZP+1 = &60 + A >> 3
  LSR A
  LSR A
  ORA #&60
+ STA ZP+1
+
+ TXA                    \ Set ZP = (X >> 3) * 8
+ EOR #%10000000
+ AND #%11111000
+ STA ZP
+
+ELIF _DISC_VERSION
+
+ LSR A                  \ Set A = A >> 3
+ LSR A
+ LSR A
+
+ LSR BLPTR+1            \ ????
+
+ ORA #&60               \ Set ZP+1 = &60 + A >> 3
  STA ZP+1
 
  TXA                    \ Set ZP = (X >> 3) * 8
@@ -76,16 +98,22 @@ ENDIF
  AND #%00000111
  TAX
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDA TWOS,X             \ Otherwise fetch a pixel from TWOS and OR it into ZP+Y
  ORA (ZP),Y
  STA (ZP),Y
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  LDA TWOS,X             \ Otherwise fetch a pixel from TWOS and poke it into
  STA (ZP),Y             \ ZP+Y
+
+ENDIF
+
+IF _DISC_VERSION
+
+.out
 
 ENDIF
 

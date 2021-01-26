@@ -48,13 +48,13 @@
 
 .PLL1
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
                         \ The following loop iterates CNT(1 0) times, i.e. &500
                         \ or 1280 times, and draws the planet part of the
                         \ loading screen's Saturn
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
                         \ The following loop iterates CNT(1 0) times, i.e. &300
                         \ or 768 times, and draws the planet part of the
@@ -75,6 +75,13 @@ ENDIF
  STA ZP+1               \ Set ZP(1 0) = (A P)
  LDA P                  \             = r1^2
  STA ZP
+
+IF _DISC_VERSION
+
+ LDA #&4B               \ ????
+ STA L19D2+1
+
+ENDIF
 
  JSR DORND              \ Set A and X to random numbers, say A = r2
 
@@ -175,7 +182,7 @@ ENDIF
 
  BNE PLL1               \ Loop back to PLL1 until CNT+1 = 0
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDX #&C2               \ Set the low byte of EXCN(1 0) to &C2, so we now have
  STX EXCN               \ EXCN(1 0) = &03C2, which we will use in the IRQ1
@@ -240,7 +247,7 @@ ENDIF
 
  BNE PLL2               \ Loop back to PLL2 until CNT2+1 = 0
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  LDX MHCA               \ Set the low byte of BLPTR(1 0) to the contents of MHCA
  STX BLPTR              \ (which is &CA), so we now have BLPTR(1 0) = &03CA,
@@ -257,7 +264,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
                         \ or 1280 times, and draws the rings around the loading
                         \ screen's Saturn
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
                         \ The following loop iterates CNT3(1 0) times, i.e. &333
                         \ or 819 times, and draws the rings around the loading
@@ -276,6 +283,13 @@ ENDIF
 
  STA ZP+1               \ Set ZP+1 = A
                         \          = r5^2 / 256
+
+IF _DISC_VERSION
+
+ LDA #&29               \ ????
+ STA L19D2+2
+
+ENDIF
 
  JSR DORND              \ Set A and X to random numbers, say A = r6
 
@@ -379,4 +393,19 @@ ENDIF
  DEC CNT3+1             \ Decrement the counter in CNT3+1 (the high byte)
 
  BNE PLL3               \ Loop back to PLL3 until CNT3+1 = 0
+
+IF _DISC_VERSION
+
+ LDA #&00               \ ????
+ STA ZP
+ LDA #&63
+ STA ZP+1
+ LDA #&62
+ STA P
+ LDA #&2A
+ STA P+1
+ LDX #&08
+ JSR MVPG
+
+ENDIF
 

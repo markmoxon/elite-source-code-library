@@ -31,7 +31,6 @@ _DISC_FLIGHT            = TRUE
 
 TRTB% = &04             \ TRTB%(1 0) points to the keyboard translation table
 
-L0004   = $0004
 L0005   = $0005
 L0012   = $0012
 L0013   = $0013
@@ -52,67 +51,9 @@ L0075   = $0075
 L0076   = $0076
 L0081   = $0081
 L0082   = $0082
-L0100   = $0100
-L0101   = $0101
-L0102   = $0102
-L0103   = $0103
-L0104   = $0104
-L0105   = $0105
-L0106   = $0106
-L0107   = $0107
-L0108   = $0108
-L01B7   = $01B7
-USERV   = $0200
-BRKV = $0202
-IRQ1V   = $0204
-IRQ2V   = $0206
-CLIV = $0208
-BYTEV   = $020A
-WORDV   = $020C
-WRCHV   = $020E
-RDCHV   = $0210
-FILEV   = $0212
-ARGSV   = $0214
-BGETV   = $0216
-BPUTV   = $0218
-GBPBV   = $021A
-FINDV   = $021C
-FSCV = $021E
-EVENTV  = $0220
-UPTV = $0222
-NETV = $0224
-VDUV = $0226
-KEYV = $0228
-INSV = $022A
-REMV = $022C
-CNPV = $022E
-INDV1   = $0230
-INDV2   = $0232
-INDV3   = $0234
 
-
-L04FB   = $04FB
-L0509   = $0509
-L050A   = $050A
-L050F   = $050F
-L0511   = $0511
-L051A   = $051A
-L0525   = $0525
-L0530   = $0530
-L053B   = $053B
-L0545   = $0545
-L054E   = $054E
-L0551   = $0551
-L0557   = $0557
-L0558   = $0558
-L0559   = $0559
-L055B   = $055B
-L0700   = $0700
 L0AC1   = $0AC1
-L1000   = $1000
-L197B   = $197B
 L373D   = $373D
-L3FFF   = $3FFF
 L4953   = $4953
 L495C   = $495C
 L499C   = $499C
@@ -120,24 +61,8 @@ L49D6   = $49D6
 L4BBA   = $4BBA
 L4BC3   = $4BC3
 L4BCC   = $4BCC
-L7FFF   = $7FFF
+
 VIA = $FE00
-OSWRSC  = $FFB3
-OSRDSC  = $FFB9
-OSEVEN  = $FFBF
-GSINIT  = $FFC2
-GSREAD  = $FFC5
-NVRDCH  = $FFC8
-NNWRCH  = $FFCB
-OSFIND  = $FFCE
-OSGBPB  = $FFD1
-OSBPUT  = $FFD4
-OSBGET  = $FFD7
-OSARGS  = $FFDA
-OSFILE  = $FFDD
-OSRDCH  = $FFE0
-OSASCI  = $FFE3
-OSNEWL  = $FFE7
 OSWRCH  = $FFEE
 OSWORD  = $FFF1
 OSBYTE  = $FFF4
@@ -164,13 +89,13 @@ ORG CODE%
  BNE L5703              \ Loop back until we have zeroed all 256 bytes from
                         \ &2F00 to &2FFF, leaving Y = 0
 
- LDA #0                 \ Set L3FFF = 0
- STA L3FFF
+ LDA #0                 \ Set &3FFF = 0
+ STA &3FFF
 
- LDA #64                \ Set L7FFF = 64 
- STA L7FFF
+ LDA #64                \ Set &7FFF = 64 
+ STA &7FFF
 
- EOR L3FFF              \ Set A = 64 EOR L3FFF
+ EOR &3FFF              \ Set A = 64 EOR &3FFF
                         \       = 64 EOR 0
                         \       = 64
 
@@ -319,8 +244,8 @@ ORG CODE%
 
 .MVBL
 
- LDA &5819,Y
- STA &0400,Y
+ LDA L5819,Y
+ STA LOADER,Y
 
  INY
 
@@ -335,7 +260,9 @@ ORG CODE%
 
  JMP L5760
 
-CODE_LOAD% = P%
+\ Gets copied from &5819 to &0400 (512 bytes)
+
+.L5819
 
 ORG &0400
 
@@ -382,8 +309,8 @@ ORG &0400
 
 .LOAD4
 
- LDA L0700,Y
- STA L1000,Y
+ LDA &0700,Y
+ STA &1000,Y
  INY
  BNE LOAD4
 
@@ -494,11 +421,11 @@ ORG &0400
  ASL A
  TAX
  LDA L04FA,X
- LDY L04FB,X
+ LDY L04FA+1,X
  TAX
  STX L0073
  STY L0074
- LDA #&7F
+ LDA #127
  JSR OSWORD
 
  LDA L0075
@@ -519,20 +446,78 @@ ORG &0400
  EQUB &34
 
  EQUB &05, &3D, &05, &47, &05, &08, &05, &13
- EQUB &05, &1E, &05, &29, &05, &FF, &00, &0A
- EQUB &FF, &FF, &03, &57, &00, &F6, &2A, &00
- EQUB &FF, &00, &0E, &FF, &FF, &03, &57, &00
+ EQUB &05, &1E, &05, &29, &05, &FF
+
+.L0509
+
+ EQUB &00
+
+.L050A
+
+ EQUB &0A
+
+ EQUB &FF, &FF, &03, &57
+
+.L050F
+
+ EQUB &00, &F6
+
+.L0511
+
+ EQUB &2A, &00
+ EQUB &FF, &00, &0E, &FF, &FF, &03, &57
+
+.L051A
+ 
+ EQUB &00
  EQUB &F6, &22, &00, &FF, &00, &07, &FF, &FF
- EQUB &03, &57, &00, &F8, &21, &00, &FF, &00
- EQUB &11, &FF, &FF, &03, &57, &00, &F9, &27
+ EQUB &03, &57
+
+.L0525
+
+ EQUB &00, &F8, &21, &00, &FF, &00
+ EQUB &11, &FF, &FF, &03, &57
+
+.L0530
+
+ EQUB &00, &F9, &27
  EQUB &00, &FF, &FF, &FF, &FF, &FF, &01, &69
+
+.L053B
+
  EQUB &00, &00, &FF, &FF, &FF, &FF, &FF, &02
- EQUB &7A, &12, &00, &00, &FF, &00, &07, &FF
- EQUB &FF, &03, &5B, &00, &00, &0A, &00, &44
- EQUB &52, &2E, &32, &0D, &03, &00, &00
+ EQUB &7A, &12
+
+.L0545
+
+ EQUB &00, &00, &FF, &00, &07, &FF
+ EQUB &FF, &03, &5B
+
+.L054E
+
+ EQUB &00, &00, &0A
+
+.L0551
+
+ EQUB &00, &44
+ EQUB &52, &2E, &32, &0D
+
+.L0557
+
+ EQUB &03
+
+.L0558
+
+ EQUB &00
+
+.L0559
+
+ EQUB &00
 
  EQUB &80 \ location &5973
- 
+
+.L055B
+
  EQUB &FF, &00, &00, &00, &00, &00, &00, &00
 
  EQUB &00, &00, &00, &00
@@ -559,10 +544,10 @@ ORG &0400
  EQUB &00, &00, &00, &00, &00, &00, &00, &00
  EQUB &00, &00, &00, &00, &00, &00, &00, &00
  EQUB &00, &00, &00, &00, &00, &00, &00, &00 \ 5A18
- 
-COPYBLOCK LOADER, P%, CODE_LOAD%
 
-ORG CODE_LOAD% + P% - LOADER
+COPYBLOCK LOADER, P%, L5819
+
+ORG L5819 + P% - LOADER
 
 .L5A19
 
@@ -695,22 +680,22 @@ ORG CODE_LOAD% + P% - LOADER
 .L5DE0
 
  LDA #&68               \ Poke the following routine into &0100 to &0108:
- STA L0100              \
- STA L0103              \   0100 : &68            PLA
+ STA &0100              \
+ STA &0103              \   0100 : &68            PLA
  LDA #&85               \   0101 : &85 &71        STA &71
- STA L0101              \   0103 : &68            PLA
- STA L0104              \   0104 : &85 &72        STA &72
+ STA &0101              \   0103 : &68            PLA
+ STA &0104              \   0104 : &85 &72        STA &72
  LDX #&71               \   0106 : &6C &71 &00    JMP (&7100)
- STX L0107              \
- STX L0102              \ This routine pulls an address off the stack into a
+ STX &0107              \
+ STX &0102              \ This routine pulls an address off the stack into a
  INX                    \ location in zero page, and then jumps to that address
- STX L0105
+ STX &0105
  LDA #&6C
- STA L0106
+ STA &0106
  LDA #&00
- STA L0108
+ STA &0108
 
- JSR L0100              \ Call the subroutine at &0100, so this first puts the
+ JSR &0100              \ Call the subroutine at &0100, so this first puts the
                         \ return address (the next location) on the stack, then
                         \ jumps to &0100, which jumps to the return address
 
@@ -827,7 +812,7 @@ ORG CODE_LOAD% + P% - LOADER
  LDA #&07
  JSR OSWRCH
 
- JSR L01B7
+ JSR &01B7
 
  EQUB &17, &00, &0A, &20, &00, &00, &00, &00
  EQUB &00, &00
@@ -1143,7 +1128,7 @@ ORG CODE_LOAD% + P% - LOADER
  STA L0051
  JSR L373D
 
-.L61FB
+.L61FB  
 
  RTS
 

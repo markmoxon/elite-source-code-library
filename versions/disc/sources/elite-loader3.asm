@@ -29,87 +29,53 @@ _6502SP_VERSION         = (_VERSION = 3)
 _DISC_DOCKED            = FALSE
 _DISC_FLIGHT            = TRUE
 
-L0001   = $0001
-ZP = $0070
-P = $0072
-Q = $0073
-YY = $0074
-T = $0075
-L0076   = $0076
-L0078   = $0078
-L0079   = $0079
-USERV   = $0200
-BRKV = $0202
-IRQ1V   = $0204
-L0205   = $0205
-IRQ2V   = $0206
-CLIV = $0208
-BYTEV   = $020A
-WORDV   = $020C
-WRCHV   = $020E
-RDCHV   = $0210
-FILEV   = $0212
-ARGSV   = $0214
-BGETV   = $0216
-BPUTV   = $0218
-GBPBV   = $021A
-FINDV   = $021C
-FSCV = $021E
-EVENTV  = $0220
-UPTV = $0222
-NETV = $0224
-L0225   = $0225
-VDUV = $0226
-KEYV = $0228
-INSV = $022A
-REMV = $022C
-CNPV = $022E
-INDV1   = $0230
-INDV2   = $0232
-INDV3   = $0234
-L0B00   = $0B00
-L0D7A   = $0D7A
-L0D92   = $0D92
-L7FFE   = $7FFE
-L7FFF   = $7FFF
-VIA = $FE00
-LFE45   = $FE45
-LFE6E   = $FE6E
-OSWRSC  = $FFB3
-OSRDSC  = $FFB9
-OSEVEN  = $FFBF
-GSINIT  = $FFC2
-GSREAD  = $FFC5
-NVRDCH  = $FFC8
-NNWRCH  = $FFCB
-OSFIND  = $FFCE
-OSGBPB  = $FFD1
-OSBPUT  = $FFD4
-OSBGET  = $FFD7
-OSARGS  = $FFDA
-OSFILE  = $FFDD
-OSRDCH  = $FFE0
-OSASCI  = $FFE3
-OSNEWL  = $FFE7
-OSWRCH  = $FFEE
-OSWORD  = $FFF1
-OSBYTE  = $FFF4
-OSCLI   = $FFF7
-
 CODE% = &1900
 LOAD% = &1900
 
+NETV = &224             \ The NETV vector that we intercept as part of the copy
+                        \ protection
+
+IRQ1V = &204            \ The IRQ1V vector that we intercept to implement the
+                        \ split-sceen mode
+
+INDV2 = &0232
+
+OSWRCH = &FFEE          \ The address for the OSWRCH routine
+OSBYTE = &FFF4          \ The address for the OSBYTE routine
+OSWORD = &FFF1          \ The address for the OSWORD routine
+OSCLI = &FFF7           \ The address for the OSCLI vector
+
+VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
+                        \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
+                        \ known as SHEILA)
+
+N% = 67                 \ N% is set to the number of bytes in the VDU table, so
+                        \ we can loop through them below
+
+VEC = &7FFE             \ VEC is where we store the original value of the IRQ1
+                        \ vector, and it matches the value in elite-source.asm
+
+L0001   = $0001
+
+ZP = &70                \ Temporary storage, used all over the place
+
+P = &72                 \ Temporary storage, used all over the place
+
+Q = &73                 \ Temporary storage, used all over the place
+
+YY = &74                \ Temporary storage, used when drawing Saturn
+
+T = &75                 \ Temporary storage, used all over the place
+
+SC = &76                \ Used to store the screen address while plotting pixels
+
+BLPTR = &78             \ Gets set as part of the obfuscation code
+
 ORG CODE%
 
- EQUB &16, &04, &1C, &02, &11, &0F, &10, &17
- EQUB &00, &06, &1F, &00, &00, &00, &00, &00
- EQUB &00, &17, &00, &0C, &0C, &00, &00, &00
- EQUB &00, &00, &00, &17, &00, &0D, &00, &00
- EQUB &00, &00, &00, &00, &00, &17, &00, &01
- EQUB &20, &00, &00, &00, &00, &00, &00, &17
- EQUB &00, &02, &2D, &00, &00, &00, &00, &00
- EQUB &00, &17, &00, &0A, &20, &00, &00, &00
- EQUB &00, &00, &00, &01, &01, &00, &6F, &F8
+INCLUDE "library/common/loader/variable/b_per_cent.asm"
+
+ EQUB &01, &01, &00, &6F, &F8
  EQUB &04, &01, &08, &08, &FE, &00, &FF, &7E
  EQUB &2C, &02, &01, &0E, &EE, &FF, &2C, &20
  EQUB &32, &06, &01, &00, &FE, &78, &7E, &03
@@ -122,72 +88,76 @@ ORG CODE%
 
  JSR L1B72
 
- LDA #&90
- LDX #&FF
+ LDA #144
+ LDX #255
  JSR OSB
 
- LDA #&00
- STA ZP
- LDA #&19
- STA ZP+1
- LDY #&00
+ LDA #LO(B%)            \ Set the low byte of ZP(1 0) to point to the VDU code
+ STA ZP                 \ table at B%
 
-.L198F
+ LDA #HI(B%)            \ Set the high byte of ZP(1 0) to point to the VDU code
+ STA ZP+1               \ table at B%
 
- LDA (ZP),Y
+ LDY #0                 \ We are now going to send the 67 VDU bytes in the table
+                        \ at B% to OSWRCH to set up the special mode 4 screen
+                        \ that forms the basis for the split-screen mode
+
+.LOOP
+
+ LDA (ZP),Y             \ Pass the Y-th byte of the B% table to OSWRCH
  JSR OSWRCH
 
- INY
- CPY #&43
- BNE L198F
+ INY                    \ Increment the loop counter
 
- JSR PLL1
+ CPY #N%                \ Loop back for the next byte until we have done them
+ BNE LOOP               \ all (the number of bytes was set in N% above)
 
- LDA #&10
- LDX #&03
+ JSR PLL1               \ Call PLL1 to draw Saturn
+
+ LDA #16
+ LDX #3
  JSR OSBYTE
 
  LDA #&60
  STA INDV2
  LDA #&02
- STA L0225
+ STA NETV+1
  LDA #&32
  STA NETV
- LDA #&BE
- LDX #&08
+
+ LDA #190
+ LDX #8
  JSR OSB
 
- LDA #&C8
- LDX #&00
+ LDA #200
+ LDX #0
  JSR OSB
 
- LDA #&0D
- LDX #&00
+ LDA #13
+ LDX #0
  JSR OSB
 
- LDA #&E1
- LDX #&80
+ LDA #225
+ LDX #128
  JSR OSB
 
- LDA #&0C
- LDX #&00
+ LDA #12
+ LDX #0
 
 .L19D2
 
  JSR OSB
 
-L19D3 = L19D2+1
-L19D4 = L19D2+2
- LDA #&0D
- LDX #&02
+ LDA #13
+ LDX #2
  JSR OSB
 
- LDA #&04
- LDX #&01
+ LDA #4
+ LDX #1
  JSR OSB
 
- LDA #&09
- LDX #&00
+ LDA #9
+ LDX #0
  JSR OSB
 
  JSR L1CE2
@@ -199,8 +169,8 @@ L19D4 = L19D2+2
  LDA #&62
  STA P
  LDA #&29
- STA Q
- JSR L1D2C
+ STA P+1
+ JSR MVPG
 
  LDA #&00
  STA ZP
@@ -209,9 +179,9 @@ L19D4 = L19D2+2
  LDA #&4B
  STA P
  LDA #&1D
- STA Q
+ STA P+1
  LDX #&08
- JSR L1D39
+ JSR MVBL
 
  SEI
  LDA VIA+$44
@@ -219,17 +189,17 @@ L19D4 = L19D2+2
  LDA #&39
  STA VIA+$4E
  LDA #&7F
- STA LFE6E
+ STA VIA+&6E
  LDA IRQ1V
- STA L7FFE
- LDA L0205
- STA L7FFF
+ STA VEC
+ LDA IRQ1V+1
+ STA VEC+1
  LDA #&4B
  STA IRQ1V
  LDA #&11
- STA L0205
+ STA IRQ1V+1
  LDA #&39
- STA LFE45
+ STA VIA+&45
  CLI
  LDA #&00
  STA ZP
@@ -238,24 +208,24 @@ L19D4 = L19D2+2
  LDA #&62
  STA P
  LDA #&2B
- STA Q
- JSR L1D2C
+ STA P+1
+ JSR MVPG
 
  LDA #&63
  STA ZP+1
  LDA #&62
  STA P
  LDA #&2A
- STA Q
- JSR L1D2C
+ STA P+1
+ JSR MVPG
 
  LDA #&76
  STA ZP+1
  LDA #&62
  STA P
  LDA #&2C
- STA Q
- JSR L1D2C
+ STA P+1
+ JSR MVPG
 
  LDA #&00
  STA ZP
@@ -264,11 +234,11 @@ L19D4 = L19D2+2
  LDA #&4B
  STA P
  LDA #&25
- STA Q
+ STA P+1
  LDX #&04
- JSR L1D39
+ JSR MVBL
 
- LDX #&23
+ LDX #35
 
 .L1A89
 
@@ -277,26 +247,27 @@ L19D4 = L19D2+2
  DEX
  BPL L1A89
 
- LDA L0076
+ LDA SC
  STA L0D92
+
  LDX #&43
  LDY #&19
- LDA #&08
+ LDA #8
  JSR OSWORD
 
  LDX #&51
  LDY #&19
- LDA #&08
+ LDA #8
  JSR OSWORD
 
  LDX #&5F
  LDY #&19
- LDA #&08
+ LDA #8
  JSR OSWORD
 
  LDX #&6D
  LDY #&19
- LDA #&08
+ LDA #8
  JSR OSWORD
 
  LDX #&44
@@ -310,7 +281,8 @@ L19D4 = L19D2+2
  LDA #&ED
  STA P
  LDA #&1A
- STA Q
+ STA P+1
+
  LDY #&00
 
 .L1AD4
@@ -321,7 +293,7 @@ L19D4 = L19D2+2
  DEY
  BNE L1AD4
 
- JMP L0B00
+ JMP &0B00
 
 .L1AE0
 
@@ -352,13 +324,44 @@ L19D4 = L19D2+2
  EQUB &76, &77, &6F, &38, &61, &77, &6D, &38
  EQUB &7C, &77, &38, &6C, &70, &71, &6B, &27
 
+\ Gets copied from &1B4F to &0D7A by loop at L1A89 (35 bytes),
+\ is called by D and T to load from disc
+
 .L1B4F
 
- EQUB &CE, &9A, &0D, &CE, &94, &0D, &20, &89
- EQUB &0D, &EE, &9A, &0D, &EE, &94, &0D, &A9
- EQUB &7F, &A2, &92, &A0, &0D, &4C, &F1, &FF
- EQUB &00, &00, &0F, &00, &00, &03, &53, &00
- EQUB &01, &21, &00
+ORG &0D7A
+
+.L0D7A
+
+ DEC L0D92+8            \ Decrement sector number from 1 to 0
+ DEC L0D92+2            \ Decrement load address from &0F00 to &0E00
+
+ JSR L0D89
+
+ INC L0D92+8            \ Increment sector number back to 1
+ INC L0D92+2            \ Increment load address back to &0F00
+
+.L0D89
+
+ LDA #127
+ LDX #LO(L0D92)
+ LDY #HI(L0D92)
+ JMP OSWORD
+
+.L0D92
+
+ EQUB 0                 \ 0 = Drive = 0
+ EQUD &00000F00         \ 1 = Data address = &0F00
+ EQUB 3                 \ 5 = Number of parameters = 3
+ EQUB &53               \ 6 = Command = &53 (read data)
+ EQUB 0                 \ 7 = Track = 0
+ EQUB 1                 \ 8 = Sector = 1
+ EQUB %00100001         \ 9 = Load 1 sector of 256 bytes
+ EQUB 0
+
+COPYBLOCK L0D7A, P%, L1B4F
+
+ORG L1B4F + P% - L0D7A
 
 .L1B72
 
@@ -372,11 +375,11 @@ L19D4 = L19D2+2
  DEX
  BPL L1B76
 
- STA L1C87
+ STA RAND+2
  ORA #&00
  BPL L1B85
 
- LSR L0078
+ LSR BLPTR
 
 .L1B85
 
@@ -384,376 +387,114 @@ L19D4 = L19D2+2
 
  EQUB &AC
 
-.PLL1
-
- LDA VIA+$44
- STA L1C86
- JSR DORND
-
- JSR SQUA2
-
- STA ZP+1
- LDA P
- STA ZP
- LDA #&4B
- STA L19D3
- JSR DORND
-
- STA YY
- JSR SQUA2
-
- TAX
- LDA P
- ADC ZP
- STA ZP
- TXA
- ADC ZP+1
- BCS PLC1
-
- STA ZP+1
- LDA #&01
- SBC ZP
- STA ZP
- LDA #&40
- SBC ZP+1
- STA ZP+1
- BCC PLC1
-
- JSR ROOT
-
- LDA ZP
- LSR A
- TAX
- LDA YY
- CMP #&80
- ROR A
- JSR PIX
-
-.PLC1
-
- DEC CNT
- BNE PLL1
-
- DEC L1CDD
- BNE PLL1
-
-.PLL2
-
- JSR DORND
-
- TAX
- JSR SQUA2
-
- STA ZP+1
- JSR DORND
-
- STA YY
- JSR SQUA2
-
- ADC ZP+1
- CMP #&11
- BCC PLC2
-
- LDA YY
- JSR PIX
-
-.PLC2
-
- DEC CNT2
- BNE PLL2
-
- DEC L1CDF
- BNE PLL2
-
-.PLL3
-
- JSR DORND
-
- STA ZP
- JSR SQUA2
-
- STA ZP+1
- LDA #&29
- STA L19D4
- JSR DORND
-
- STA YY
- JSR SQUA2
-
- STA T
- ADC ZP+1
- STA ZP+1
- LDA ZP
- CMP #&80
- ROR A
- CMP #&80
- ROR A
- ADC YY
- TAX
- JSR SQUA2
-
- TAY
- ADC ZP+1
- BCS PLC3
-
- CMP #&50
- BCS PLC3
-
- CMP #&20
- BCC PLC3
-
- TYA
- ADC T
- CMP #&10
- BCS PL1
-
- LDA ZP
- BPL PLC3
-
-.PL1
-
- LDA YY
- JSR PIX
-
-.PLC3
-
- DEC CNT3
- BNE PLL3
-
- DEC L1CE1
- BNE PLL3
-
- LDA #&00
- STA ZP
- LDA #&63
- STA ZP+1
- LDA #&62
- STA P
- LDA #&2A
- STA Q
- LDX #&08
- JSR L1D2C
-
-.DORND
-
- LDA L1C86
- TAX
- ADC L1C88
- STA L1C86
- STX L1C88
- LDA L1C85
- TAX
- ADC L1C87
- STA L1C85
- STX L1C87
- RTS
-
-.L1C85
-
- EQUB &49
-
-.L1C86
-
- EQUB &53
-
-.L1C87
-
- EQUB &78
-
-.L1C88
-
- EQUB &34
-
-.SQUA2
-
- BPL SQUA
-
-.L1C8B
-
- EOR #&FF
- CLC
- ADC #&01
-
-.SQUA
-
- STA Q
- STA P
- LDA #&00
- LDY #&08
- LSR P
-
-.SQL1
-
- BCC SQ1
-
- CLC
- ADC Q
-
-.SQ1
-
- ROR A
- ROR P
- DEY
- BNE SQL1
-
- RTS
-
-.PIX
-
- TAY
- EOR #&80
- LSR A
- LSR A
- LSR A
- LSR L0079
- ORA #&60
- STA ZP+1
- TXA
- EOR #&80
- AND #&F8
- STA ZP
- TYA
- AND #&07
- TAY
- TXA
- AND #&07
- TAX
- LDA L1CC7,X
- STA (ZP),Y
-
-.L1CC6
-
- RTS
-
-.L1CC7
-
- EQUB &80, &40, &20, &10, &08, &04, &02, &01
+INCLUDE "library/common/loader/subroutine/pll1.asm"
+INCLUDE "library/common/loader/subroutine/dornd.asm"
+INCLUDE "library/6502sp/loader1/variable/rand.asm"
+INCLUDE "library/common/loader/subroutine/squa2.asm"
+INCLUDE "library/common/loader/subroutine/pix.asm"
+INCLUDE "library/common/loader/variable/twos.asm"
 
 .L1CCF
 
- LDA L1C87
- EOR L0078
+ LDA RAND+2
+ EOR BLPTR
  ASL A
  CMP #&93
  ROR A
- STA L0078
- BCC L1CC6
+ STA BLPTR
+ BCC out
 
-.CNT
-
- BRK
-
-.L1CDD
-
- EQUB &03
-
-.CNT2
-
- EQUB &DD
-
-.L1CDF
-
- EQUB &01
-
-.CNT3
-
- EQUB &33
-
-.L1CE1
-
- EQUB &03
+INCLUDE "library/common/loader/variable/cnt.asm"
+INCLUDE "library/common/loader/variable/cnt2.asm"
+INCLUDE "library/common/loader/variable/cnt3.asm"
 
 .L1CE2
 
- LDA L0078
- AND L0079
+ LDA BLPTR
+ AND BLPTR+1
  ORA #&0C
  ASL A
- STA L0078
+ STA BLPTR
  RTS
 
 .L1CEC
 
  JMP L1CEC
 
-.ROOT
-
- LDY ZP+1
- LDA ZP
- STA Q
- LDX #&00
- STX ZP
- LDA #&08
- STA P
-
-.LL6
-
- CPX ZP
- BCC LL7
-
- BNE LL8
-
- CPY #&40
- BCC LL7
-
-.LL8
-
- TYA
- SBC #&40
- TAY
- TXA
- SBC ZP
- TAX
-
-.LL7
-
- ROL ZP
- ASL Q
- TYA
- ROL A
- TAY
- TXA
- ROL A
- TAX
- ASL Q
- TYA
- ROL A
- TAY
- TXA
- ROL A
- TAX
- DEC P
- BNE LL6
-
- RTS
-
-.OSB
-
- LDY #&00
- JMP OSBYTE
+INCLUDE "library/common/loader/subroutine/root.asm"
+INCLUDE "library/common/loader/subroutine/osb.asm"
 
  EQUB &0E
 
-.L1D2C
+\ ******************************************************************************
+\
+\       Name: MVPG
+\       Type: Subroutine
+\   Category: Utility routines
+\    Summary: Move and decrypt a multi-page block of memory from one location to
+\             another
+\
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   P(1 0)              The source address of the block to move
+\
+\   ZP(1 0)             The destination address of the block to move
+\
+\   X                   Number of pages of memory to move (1 page = 256 bytes)
+\
+\ ******************************************************************************
 
- LDY #&00
+.MVPG
 
-.L1D2E
+                        \ This subroutine is called from below to copy one page
+                        \ of memory from the address in P(1 0) to the address
+                        \ in ZP(1 0)
 
- LDA (P),Y
- EOR #&A5
- STA (ZP),Y
- DEY
- BNE L1D2E
+ LDY #0                 \ We want to move one page of memory, so set Y as a byte
+                        \ counter
 
- RTS
+.MPL
+
+ LDA (P),Y              \ Fetch the Y-th byte of the P(1 0) memory block
+
+ EOR #&A5               \ Decrypt it by EOR'ing with &A5
+
+ STA (ZP),Y             \ Store the decrypted result in the Y-th byte of the
+                        \ ZP(1 0) memory block
+
+ DEY                    \ Decrement the byte counter
+
+ BNE MPL                \ Loop back to copy the next byte until we have done a
+                        \ whole page of 256 bytes
+
+ RTS                    \ Return from the subroutine
 
  EQUB &0E
 
-.L1D39
+.MVBL
 
- EQUB &20, &2C, &1D, &E6, &71, &E6, &73, &CA
- EQUB &D0, &F6, &60, &2A, &44, &49, &52, &20
+ JSR MVPG               \ Call MVPG above to copy one page of memory from the
+                        \ address in P(1 0) to the address in ZP(1 0)
+
+ INC ZP+1               \ Increment the high byte of the source address to point
+                        \ to the next page
+
+ INC P+1                \ Increment the high byte of the destination address to
+                        \ point to the next page
+
+ DEX                    \ Decrement the page counter
+
+ BNE MVBL               \ Loop back to copy the next page until we have done X
+                        \ pages
+
+ RTS                    \ Return from the subroutine
+
+
+
+
+ EQUB &2A, &44, &49, &52, &20
  EQUB &45, &0D, &55, &25, &22, &21, &22, &21
  EQUB &21, &25, &55, &A5, &A3, &A1, &A3, &A7
  EQUB &A3, &A5, &55, &A5, &A5, &A5, &A5, &A5

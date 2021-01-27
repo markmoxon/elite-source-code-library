@@ -1,8 +1,23 @@
 \ ******************************************************************************
 \
-\ ELITE SHIP BLUEPRINTS FILE P
+\ DISC ELITE SHIP BLUEPRINTS FILE P
 \
-\ Produces the binary file D.MOP.bin that gets loaded by the game on launching.
+\ Elite was written by Ian Bell and David Braben and is copyright Acornsoft 1984
+\
+\ The code on this site has been disassembled from the version released on Ian
+\ Bell's personal website at http://www.elitehomepage.org/
+\
+\ The commentary is copyright Mark Moxon, and any misunderstandings or mistakes
+\ in the documentation are entirely my fault
+\
+\ The terminology and notations used in this commentary are explained at
+\ https://www.bbcelite.com/about_site/terminology_used_in_this_commentary.html
+\
+\ ------------------------------------------------------------------------------
+\
+\ This source file produces the following binary file:
+\
+\   * output/D.MOP.bin
 \
 \ ******************************************************************************
 

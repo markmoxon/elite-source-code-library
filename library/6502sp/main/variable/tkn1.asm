@@ -15,7 +15,9 @@
 
  EJMP 9                 \ Token 1:      "{clear screen}
  EJMP 11                \                {draw box around title}
+IF _6502SP_VERSION
  EJMP 30                \                {white}
+ENDIF
  EJMP 1                 \                {all caps}
  EJMP 8                 \                {tab 6} DISK ACCESS MENU{crlf}
  ECHR ' '               \                {lf}
@@ -28,7 +30,11 @@
  ETWO 'C', 'E'          \                5. EXIT{crlf}
  ECHR 'S'               \               "
  ECHR 'S'               \
+IF _DISC_VERSION
+ ECHR ' '               \ Encoded as:   "{9}{11}{1}{8} <241>SK AC<233>SS ME
+ELIF _6502SP_VERSION
  ECHR ' '               \ Encoded as:   "{9}{11}{30}{1}{8} <241>SK AC<233>SS ME
+ENDIF
  ECHR 'M'               \                <225><215>{10}{2}1. [149]<215>2. SA
  ECHR 'E'               \                <250> [154] {4}<215>3. C<245>A<224>GUE
  ETWO 'N', 'U'          \                <215>4. DEL<221>E[208]FI<229><215>5. EX
@@ -537,7 +543,9 @@
 
  EJMP 25                \ Token 11:     "{incoming message screen, wait 2s}
  EJMP 9                 \                {clear screen}
+IF _6502SP_VERSION
  EJMP 30                \                {white}
+ENDIF
  EJMP 23                \                {move to row 10, white, lower case}
  EJMP 14                \                {justify}
  EJMP 2                 \                {sentence case}
@@ -556,7 +564,11 @@
  ECHR 'E'               \                {left align}{tab 6}{all caps}  MESSAGE
  ECHR ' '               \                ENDS{wait for key press}"
  ECHR 'H'               \
+IF _DISC_VERSION
+ ECHR 'A'               \ Encoded as:   "{25}{9}{23}{14}{2}  <245>T<246>
+ELIF _6502SP_VERSION
  ECHR 'A'               \ Encoded as:   "{25}{9}{30}{23}{14}{2}  <245>T<246>
+ENDIF
  ETWO 'V', 'E'          \                <251><223>[213]. {19}WE HA<250> NE[196]
  ECHR ' '               \                OF [179]R <218>RVIC<237> AGA<240>[204]
  ECHR 'N'               \                IF [179] W<217>LD <247> <235> GOOD AS
@@ -707,7 +719,9 @@
 
  EJMP 25                \ Token 15:     "{incoming message screen, wait 2s}
  EJMP 9                 \                {clear screen}
+IF _6502SP_VERSION
  EJMP 30                \                {white}
+ENDIF
  EJMP 23                \                {move to row 10, white, lower case}
  EJMP 14                \                {justify}
  EJMP 2                 \                {sentence case}
@@ -722,7 +736,11 @@
  ETWO 'L', 'A'          \                {left align}{tab 6}{all caps}  MESSAGE
  ETWO 'T', 'I'          \                ENDS{wait for key press}"
  ETWO 'O', 'N'          \
+IF _DISC_VERSION
+ ECHR 'S'               \ Encoded as:   "{25}{9}{23}{14}{2}  C<223>G<248>TU
+ELIF _6502SP_VERSION
  ECHR 'S'               \ Encoded as:   "{25}{9}{30}{23}{14}{2}  C<223>G<248>TU
+ENDIF
  ECHR ' '               \                <249><251><223>S [154]!{12}{12}<226>
  ETOK 154               \                <244>E{13} W<220>L <228>WAYS <247>[208]
  ECHR '!'               \                P<249><233> F<253> [179] <240>[211]
@@ -1338,11 +1356,19 @@
  ECHR 'E'
  EQUB VE
 
+IF _DISC_VERSION
+ ECHR 'W'               \ Token 95:     "WHORESON BEETLE HEAD FLAP EAR'D
+ELIF _6502SP_VERSION
  ECHR 'W'               \ Token 95:     "WHORESON BEETLE HEADED FLAP EAR'D
+ENDIF
  ECHR 'H'               \                KNAVE"
  ETWO 'O', 'R'          \
  ETWO 'E', 'S'          \ Encoded as:   "WH<253><237><223> <247><221><229> HEAD
+IF _DISC_VERSION
+ ETWO 'O', 'N'          \                [198]F<249>P E<238>[39]D KNA<250>"
+ELIF _6502SP_VERSION
  ETWO 'O', 'N'          \                [196]F<249>P E<238>[39]D KNA<250>"
+ENDIF
  ECHR ' '
  ETWO 'B', 'E'
  ETWO 'E', 'T'
@@ -1352,7 +1378,11 @@
  ECHR 'E'
  ECHR 'A'
  ECHR 'D'
+IF _DISC_VERSION
+ ETOK 198
+ELIF _6502SP_VERSION
  ETOK 196
+ENDIF
  ECHR 'F'
  ETWO 'L', 'A'
  ECHR 'P'
@@ -2288,11 +2318,17 @@
  EJMP 9                 \ Token 216:    "{clear screen}
  EJMP 8                 \                {tab 6}
  EJMP 23                \                {move to row 10, white, lower case}
+IF _6502SP_VERSION
  EJMP 30                \                {white}
+ENDIF
  EJMP 1                 \                {all caps}
  ETWO 'I', 'N'          \                INCOMING MESSAGE"
  ECHR 'C'               \
+IF _DISC_VERSION
+ ECHR 'O'               \ Encoded as:   "{9}{8}{23}{1}<240>COM[195]M<237>SA
+ELIF _6502SP_VERSION
  ECHR 'O'               \ Encoded as:   "{9}{8}{23}{30}{1}<240>COM[195]M<237>SA
+ENDIF
  ECHR 'M'               \                <231>"
  ETOK 195
  ECHR 'M'
@@ -2372,7 +2408,9 @@
 
  EJMP 25                \ Token 222:    "{incoming message screen, wait 2s}
  EJMP 9                 \                {clear screen}
+IF _6502SP_VERSION
  EJMP 30                \                {white}
+ENDIF
  EJMP 29                \                {tab 6, white, lower case in words}
  EJMP 14                \                {justify}
  EJMP 2                 \                {sentence case}
@@ -2414,7 +2452,11 @@
  ECHR 'N'               \                {tab 6}{all caps}  MESSAGE ENDS
  ECHR 'A'               \                {wait for key press}"
  ECHR 'V'               \
+IF _DISC_VERSION
+ ECHR 'A'               \ Encoded as:   "{25}{9}{29}{14}{2}GOOD DAY [154]
+ELIF _6502SP_VERSION
  ECHR 'A'               \ Encoded as:   "{25}{9}{30}{29}{14}{2}GOOD DAY [154]
+ENDIF
  ECHR 'L'               \                 {4}[204]I{13} AM {19}AG<246>T {19}B
  ECHR ' '               \                <249>KE OF {19}NAVAL {19}<240>TEL<229>
  EJMP 19                \                G<246><233>[204]AS [179] K<227>W, [147]
@@ -2426,7 +2468,11 @@
  ECHR 'G'               \                <252>[204]<217>R BOYS <238>E <242>ADY F
  ETWO 'E', 'N'          \                <253>[208]PUSH RIGHT[201][147]HOME
  ETWO 'C', 'E'          \                 SYSTEM OF <226>O<218> MO<226><244>S
+IF _DISC_VERSION
+ ETOK 204               \                [204]{24}{9}{29}I{13} HA<250> OBTA
+ELIF _6502SP_VERSION
  ETOK 204               \                [204]{24}{9}{30}{29}I{13} HA<250> OBTA
+ENDIF
  ECHR 'A'               \                <240>[196][147]DEF<246><233> P<249>NS F
  ECHR 'S'               \                <253> <226>EIR {19}HI<250> {19}W<253>LD
  ECHR ' '               \                S[204][147]<247><221><229>S K<227>W WE
@@ -2590,7 +2636,9 @@
  ETOK 204
  EJMP 24
  EJMP 9
+IF _6502SP_VERSION
  EJMP 30
+ENDIF
  EJMP 29
  ECHR 'I'
  EJMP 13
@@ -2835,7 +2883,9 @@
  EJMP 25                \ Token 223:    "{incoming message screen, wait 2s}
  EJMP 9                 \                {clear screen}
  EJMP 29                \                {tab 6, white, lower case in words}
+IF _6502SP_VERSION
  EJMP 30                \                {white}
+ENDIF
  EJMP 8                 \                {tab 6}
  EJMP 14                \                {justify}
  EJMP 13                \                {lower case}
@@ -2854,7 +2904,11 @@
  ETOK 179               \                {tab 6}{all caps}  MESSAGE ENDS
  ECHR ' '               \                {wait for key press}"
  ECHR 'H'               \
+IF _DISC_VERSION
+ ECHR 'A'               \ Encoded as:   "{25}{9}{29}{8}{14}{13}{19}WELL D
+ELIF _6502SP_VERSION
  ECHR 'A'               \ Encoded as:   "{25}{9}{29}{30}{8}{14}{13}{19}WELL D
+ENDIF
  ETWO 'V', 'E'          \                <223>E [154][204][179] HA<250> <218>RV
  ECHR ' '               \                [196]US WELL[178]WE SH<228>L <242>MEMB
  ETWO 'S', 'E'          \                <244>[204]WE DID <227>T EXPECT [147]

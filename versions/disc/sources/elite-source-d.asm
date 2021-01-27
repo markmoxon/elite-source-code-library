@@ -4,8 +4,8 @@
 \
 \ Elite was written by Ian Bell and David Braben and is copyright Acornsoft 1984
 \
-\ The code on this site is identical to the version released on Ian Bell's
-\ personal website at http://www.elitehomepage.org/
+\ The code on this site has been disassembled from the version released on Ian
+\ Bell's personal website at http://www.elitehomepage.org/
 \
 \ The commentary is copyright Mark Moxon, and any misunderstandings or mistakes
 \ in the documentation are entirely my fault
@@ -351,6 +351,8 @@ INCLUDE "library/common/main/subroutine/bump2.asm"
 INCLUDE "library/common/main/subroutine/redu2.asm"
 INCLUDE "library/common/main/subroutine/arctan.asm"
 INCLUDE "library/common/main/subroutine/lasli.asm"
+
+\ Junk, same as in T.CODE
 
  EQUB &8C, &E7, &8D, &ED, &8A, &E6, &C1, &C8
  EQUB &C8, &8B, &E0, &8A, &E6, &D6, &C5, &C6

@@ -591,6 +591,18 @@
  ECHR 'E'
  EQUB VE
 
+IF _DISC_VERSION
+ ETOK 147               \ Token 25:     "THE INHABITANTS OF [86-90] ARE SO
+ ETOK 193               \                AMAZINGLY PRIMITIVE THAT THEY STILL
+ ECHR 'S'               \                THINK {single cap}STILL THINK A*****R
+ ECHR ' '               \                IS A PRETTY NEAT GAME"
+ ECHR 'O'               \
+ ECHR 'F'               \ Encoded as:   "[147][193]S OF [18?] A<242> <235> A
+ ECHR ' '               \                <239>Z<240>GLY PRIMI<251><250> <226>
+ ERND 18                \                <245> <226>EY <222><220>L <226><240>K
+ ECHR ' '               \                 {19}A*****R[202]A P<242>TTY NE<245>
+ ECHR 'A'               \                 GAME"
+ELIF _6502SP_VERSION
  ETOK 147               \ Token 25:     "THE INHABITANTS OF [86-90] ARE SO
  ETOK 193               \                AMAZINGLY PRIMITIVE THAT THEY STILL
  ECHR 'S'               \                THINK {single cap}***** ****** IS  3D"
@@ -601,6 +613,7 @@
  ERND 18                \                 {19}***** ******[202] 3D"
  ECHR ' '
  ECHR 'A'
+ENDIF
  ETWO 'R', 'E'
  ECHR ' '
  ETWO 'S', 'O'
@@ -637,6 +650,33 @@
  ECHR 'K'
  ECHR ' '
  EJMP 19
+IF _DISC_VERSION
+ ECHR 'A'
+ ECHR '*'
+ ECHR '*'
+ ECHR '*'
+ ECHR '*'
+ ECHR '*'
+ ECHR 'R'
+ ETOK 202
+ ECHR 'A'
+ ECHR ' '
+ ECHR 'P'
+ ETWO 'R', 'E'
+ ECHR 'T'
+ ECHR 'T'
+ ECHR 'Y'
+ ECHR ' '
+ ECHR 'N'
+ ECHR 'E'
+ ETWO 'A', 'T'
+ ECHR ' '
+ ECHR 'G'
+ ECHR 'A'
+ ECHR 'M'
+ ECHR 'E'
+ EQUB VE
+ELIF _6502SP_VERSION
  ECHR '*'
  ECHR '*'
  ECHR '*'
@@ -654,6 +694,8 @@
  ECHR '3'
  ECHR 'D'
  EQUB VE
+
+ENDIF
 
 IF _6502SP_VERSION
 

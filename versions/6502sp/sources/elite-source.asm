@@ -1112,11 +1112,11 @@ LOAD_SHIPS% = &D000
 
 ORG CODE_SHIPS%
 
+INCLUDE "library/common/main/variable/xx21.asm"
+INCLUDE "library/6502sp/main/variable/e_per_cent.asm"
 INCLUDE "library/common/main/macro/vertex.asm"
 INCLUDE "library/common/main/macro/edge.asm"
 INCLUDE "library/common/main/macro/face.asm"
-INCLUDE "library/common/main/variable/xx21.asm"
-INCLUDE "library/6502sp/main/variable/e_per_cent.asm"
 INCLUDE "library/common/main/variable/ship_missile.asm"
 INCLUDE "library/common/main/variable/ship_coriolis.asm"
 INCLUDE "library/common/main/variable/ship_escape_pod.asm"

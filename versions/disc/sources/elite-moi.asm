@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\ ELITE SHIP BLUEPRINTS FILE
+\ ELITE SHIP BLUEPRINTS FILE I
 \
 \ Produces the binary file D.MOI.bin that gets loaded by the game on launching.
 \
@@ -107,7 +107,6 @@ ORG CODE%
 INCLUDE "library/common/main/macro/vertex.asm"
 INCLUDE "library/common/main/macro/edge.asm"
 INCLUDE "library/common/main/macro/face.asm"
-
 INCLUDE "library/common/main/variable/ship_coriolis.asm"
 INCLUDE "library/common/main/variable/ship_escape_pod.asm"
 INCLUDE "library/6502sp/main/variable/ship_plate.asm"

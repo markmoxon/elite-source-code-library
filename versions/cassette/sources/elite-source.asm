@@ -770,10 +770,10 @@ INCLUDE "library/cassette/main/variable/checksum0.asm"
 CODE_SHIPS% = P%
 LOAD_SHIPS% = LOAD% + P% - CODE%
 
+INCLUDE "library/common/main/variable/xx21.asm"
 INCLUDE "library/common/main/macro/vertex.asm"
 INCLUDE "library/common/main/macro/edge.asm"
 INCLUDE "library/common/main/macro/face.asm"
-INCLUDE "library/common/main/variable/xx21.asm"
 INCLUDE "library/common/main/variable/ship_sidewinder.asm"
 INCLUDE "library/common/main/variable/ship_viper.asm"
 INCLUDE "library/common/main/variable/ship_mamba.asm"

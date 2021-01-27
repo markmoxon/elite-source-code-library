@@ -9,8 +9,10 @@
 \
 \ This section covers the following:
 \
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
 \   * Call M% to do the main flight loop
 \
+ENDIF
 \   * Potentially spawn a trader (Cobra Mk III), asteroid or cargo canister
 \
 \ Other entry points:

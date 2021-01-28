@@ -100,10 +100,10 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION OR _DISC_VERSION
 
- LDA K%+NI%+36          \ Set bit 2 of the NEWB flags in byte #36 of the second ship in the ship
- ORA #%00000100         \ data workspace at K%, which is reserved for the sun or
- STA K%+NI%+36          \ the space station (in this case it's the latter), to
-                        \ make it hostile
+ LDA K%+NI%+36          \ Set bit 2 of the NEWB flags in byte #36 of the second
+ ORA #%00000100         \ ship in the ship data workspace at K%, which is
+ STA K%+NI%+36          \ reserved for the sun or the space station (in this
+                        \ case it's the latter), to make it hostile
 
 ENDIF
 

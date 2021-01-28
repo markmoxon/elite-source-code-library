@@ -17,6 +17,8 @@
 
 .TT110
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+
  LDX QQ12               \ If we are not docked (QQ12 = 0) then jump to NLUNCH
  BEQ NLUNCH
 
@@ -59,7 +61,26 @@
 
  STA FIST               \ Update our legal status with the new value
 
-IF _6502SP_VERSION OR _DISC_VERSION
+ELIF _DISC_DOCKED
+
+ LDX #&3F               \ ????
+
+.L2E94
+
+ LDA QQ16,X
+ STA QQ16_FLIGHT,X
+ DEX
+ BPL &2E94
+
+ JSR &0D7A
+
+ LDX #LO(RDLI)
+ LDY #HI(RDLI)
+ JMP OSCLI
+
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_FLIGHT
 
  LDA #255               \ Set the view number in QQ11 to 255
  STA QQ11
@@ -68,6 +89,8 @@ IF _6502SP_VERSION OR _DISC_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+
 .NLUNCH
 
  LDX #0                 \ Set QQ12 to 0 to indicate we are not docked
@@ -75,4 +98,6 @@ ENDIF
 
  JMP LOOK1              \ Jump to LOOK1 to switch to the front view (X = 0),
                         \ returning from the subroutine using a tail call
+
+ENDIF
 

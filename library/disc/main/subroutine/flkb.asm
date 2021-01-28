@@ -1,0 +1,5 @@
+.FLKB
+
+ LDA #15
+ TAX
+ JMP OSBYTE

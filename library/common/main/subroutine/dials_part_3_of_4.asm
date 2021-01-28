@@ -23,9 +23,10 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT
 ELIF _DISC_DOCKED
 
  LDA MCNT               \ Fetch the main loop counter and calculate MCNT mod 4,
- AND #3                 \ jumping to rT9 if it is non-zero. R5-1 contains an RTS,
- BNE R5-1               \ so the following code only runs every 4 iterations of
-                        \ the main loop, otherwise we return from the subroutine
+ AND #3                 \ jumping to R5-1 if it is non-zero. R5-1 contains an
+ BNE R5-1               \ RTS, so the following code only runs every 4
+                        \ iterations of the main loop, otherwise we return from
+                        \ the subroutine
 
 ENDIF
 

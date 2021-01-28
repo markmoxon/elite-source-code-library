@@ -3,8 +3,13 @@
 \       Name: DOKEY
 \       Type: Subroutine
 \   Category: Keyboard
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
 \    Summary: Scan for the seven primary flight controls
+ELIF _DISC_DOCKED
+\    Summary: Scan for the joystick
+ENDIF
 \
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
 \ ------------------------------------------------------------------------------
 \
 \ Scan for the seven primary flight controls (or the equivalent on joystick),
@@ -22,7 +27,8 @@
 \ Both options end up at DK4 to scan for other keys, beyond the seven primary
 \ flight controls.
 \
-IF _6502SP_VERSION OR _DISC_VERSION
+ENDIF
+IF _6502SP_VERSION OR _DISC_FLIGHT
 \ Other entry points:
 \
 \   auton               Get the docking computer to "press" the flight keys to
@@ -45,7 +51,25 @@ IF _6502SP_VERSION
  LDA #&FF               \ Set NEEDKEY to &FF, so the next call to DOKEY updates
  STA NEEDKEY            \ the key logger buffer
 
+ELIF _DISC_DOCKED
+
+ LDA JSTK               \ ????
+ BEQ DK9
+
+ LDX #1
+ JSR DKS2
+
+ ORA #1
+ STA JSTX
+ LDX #2
+ JSR DKS2
+
+ EOR JSTGY
+ STA JSTY
+
 ENDIF
+
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
 
  JSR U%                 \ Call U% to clear the key logger
 
@@ -54,13 +78,15 @@ ENDIF
                         \ to read the joystick flight controls, before jumping
                         \ to DK4 below
 
-IF _6502SP_VERSION OR _DISC_VERSION
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_FLIGHT
 
  STA BSTK               \ Set BSTK = 0 to disable the Bitstik
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT
 
  LDY #7                 \ We're going to work our way through the primary flight
                         \ control keys (pitch, roll, speed and laser), so set a
@@ -95,7 +121,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_FLIGHT
 
  LDA auto               \ If auto is 0, then the docking computer is not
  BEQ DK15               \ currently activated, so jump to DK15 to skip the
@@ -196,10 +222,11 @@ IF _6502SP_VERSION OR _DISC_VERSION
 .DK14
 
  STA KY3,X              \ Store A in either KY3 or KY4, depending on whether
-                        \ the updated roll rate is increasing (KY3) or decreasing
-                        \ (KY4)
+                        \ the updated roll rate is increasing (KY3) or
+                        \ decreasing (KY4)
 
- LDA JSTX               \ Fetch A from JSTX so the next instruction has no effect
+ LDA JSTX               \ Fetch A from JSTX so the next instruction has no
+                        \ effect
 
 .DK12
 
@@ -209,7 +236,8 @@ IF _6502SP_VERSION OR _DISC_VERSION
                         \ the results from DOCKIT
 
  LDA #128               \ Set A = 128, which indicates no change in pitch when
-                        \ stored in JSTX (i.e. the centre of the pitch indicator)
+                        \ stored in JSTX (i.e. the centre of the pitch
+                        \ indicator)
 
  LDX #0                 \ Set X = 0, so we "press" KY5 below ("X", decrease
                         \ pitch)
@@ -234,7 +262,8 @@ IF _6502SP_VERSION OR _DISC_VERSION
                         \ decrease the pitch) or positive (in which case we
                         \ "press" KY6, "S", to increase the pitch)
 
- LDA JSTY               \ Fetch A from JSTY so the next instruction has no effect
+ LDA JSTY               \ Fetch A from JSTY so the next instruction has no
+                        \ effect
 
 .DK13
 
@@ -243,6 +272,8 @@ IF _6502SP_VERSION OR _DISC_VERSION
 .DK15
 
 ENDIF
+
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
 
  LDX JSTX               \ Set X = JSTX, the current roll rate (as shown in the
                         \ RL indicator on the dashboard)
@@ -274,6 +305,8 @@ ENDIF
  JSR BUMP2
 
  STX JSTY               \ Store the updated roll rate in JSTY
+
+ENDIF
 
                         \ Fall through into DK4 to scan for other keys
 

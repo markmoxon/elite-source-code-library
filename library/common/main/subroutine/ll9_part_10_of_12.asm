@@ -57,8 +57,8 @@ ELIF _DISC_VERSION
  CMP XX4                \ If XX4 > the visibility distance, where XX4 contains
  BCC LL79-3             \ the ship's z-distance reduced to 0-31 (which we set in
                         \ part 2), then this edge is too far away to be visible,
-                        \ so jump down to LL78 (via LL79-3) to move on to the next
-                        \ edge
+                        \ so jump down to LL78 (via LL79-3) to move on to the
+                        \ next edge
 
 ENDIF
 

@@ -26,5 +26,12 @@
  LDX XX+1               \ And then doing the high bytes
  STX S
 
+IF _DISC_DOCKED
+
+ LDX ALP1               \ ???? Has no effect, as P is about to be overwritten
+ STX P
+
+ENDIF
+
                         \ Fall through into MLS1 to calculate (A P) = A * ALP1
 

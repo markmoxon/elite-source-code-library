@@ -7,6 +7,11 @@
 \
 \ ------------------------------------------------------------------------------
 \
+IF _DISC_DOCKED
+\ In the docked code, we start the main game loop at part 2 and then jump
+\ straight to part 5, as parts 1, 3 and 4 are not required when we are docked.
+\
+ENDIF
 \ This section covers the following:
 \
 IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
@@ -238,6 +243,13 @@ ENDIF
 IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
 
  JSR NWSHP              \ Add our new asteroid or canister to the universe
+
+ENDIF
+
+IF _DISC_DOCKED
+
+                        \ Fall through into part 5 (parts 3 and 4 are not
+                        \ required when we are docked)
 
 ENDIF
 

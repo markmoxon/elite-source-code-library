@@ -32,7 +32,8 @@
  CPY LSP                \ If Y >= LSP then we have reached the end of the line
  BCS WP1                \ heap and have finished redrawing the planet (as LSP
                         \ points to the end of the heap), so jump to WP1 to
-                        \ reset the line heap
+                        \ reset the line heap, returning from the subroutine
+                        \ using a tail call
 
  LDA LSY2,Y             \ Set A to the y-coordinate of the current heap entry
 
@@ -71,14 +72,3 @@
  INY                    \ Increment the loop counter to point to the next point
 
  JMP WPL1               \ Loop back to WPL1 for the next point in the heap
-
-.WP1
-
- LDA #1                 \ Set LSP = 1 to reset the ball line heap pointer
- STA LSP
-
- LDA #&FF               \ Set LSX2 = &FF to indicate the ball line heap is empty
- STA LSX2
-
- RTS                    \ Return from the subroutine
-

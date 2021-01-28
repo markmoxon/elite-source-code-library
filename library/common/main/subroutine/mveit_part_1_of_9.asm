@@ -70,5 +70,8 @@ IF _DISC_DOCKED
 
 .MV3
 
+                        \ Fall through into part 7 (parts 2-6 are not required
+                        \ when we are docked)
+
 ENDIF
 

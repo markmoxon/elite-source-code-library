@@ -1772,10 +1772,10 @@ ENDIF
  ERND 10
  EQUB VE
 
- ETOK 140               \ Token 141:    "[21-25] [16-21] FOR [61-65] AND [61-65]"
- ETOK 178               \
- ERND 10                \ Encoded as:   "[140][178][10?]"
- EQUB VE
+ ETOK 140               \ Token 141:    "[21-25] [16-21] FOR [61-65] AND
+ ETOK 178               \                [61-65]"
+ ERND 10                \
+ EQUB VE                \ Encoded as:   "[140][178][10?]"
 
  ERND 11                \ Token 142:    "[51-55] BY [56-60]"
  ECHR ' '               \

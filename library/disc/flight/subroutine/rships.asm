@@ -1,0 +1,58 @@
+.RSHIPS
+
+ JSR LSHIPS
+
+ JSR RESET
+
+ LDA #&FF
+ STA QQ12
+ STA QQ11
+ LDA #&20
+ JMP FRCE
+
+.LSHIPS
+
+ JSR THERE
+
+ LDA #&06
+ BCS SHIPinA
+
+ JSR DORND
+
+ AND #&03
+ LDX gov
+ CPX #&03
+ ROL A
+ LDX tek
+ CPX #&0A
+ ROL A
+ TAX
+ LDA TP
+ AND #&0C
+ CMP #&08
+ BNE L427D
+
+ TXA
+ AND #&01
+ ORA #&02
+ TAX
+
+.L427D
+
+ TXA
+
+.SHIPinA
+
+ CLC
+ ADC #&41
+ STA L428E+6
+ JSR L0D7A
+
+ LDX #&8E
+ LDY #&42
+ JMP OSCLI
+
+.L428E
+
+ EQUS "L.D.MO0"
+ EQUB 13

@@ -21,6 +21,20 @@
 \
 \ ******************************************************************************
 
+IF _DISC_DOCKED
+
+ NOP                    \ ????
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+
+ENDIF
+
 \.ref2                  \ These instructions are commented out in the original
 \LDY #18                \ source, but they would jump to pres in the EQSHP
 \JMP pres               \ routine with Y = 18, which would show the error:

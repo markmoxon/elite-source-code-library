@@ -29,9 +29,15 @@ ENDIF
  EQUB 10                \ Max. speed               = 10
  EQUB &00               \ Edges data offset (high) = &00F2
  EQUB &01               \ Faces data offset (high) = &01AA
+IF _6502SP_VERSION OR _DISC_FLIGHT
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
+ELIF _DISC_DOCKED
+ EQUB 1                 \ Normals are scaled by    = 2^1 = 2
+ENDIF
  EQUB %00000000         \ Laser power              = 0
                         \ Missiles                 = 0
+
+IF _6502SP_VERSION OR _DISC_FLIGHT
 
 \VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX    0,   10,  -26,     6,      0,    7,     7,         31    \ Vertex 0
@@ -72,6 +78,49 @@ ENDIF
  VERTEX    9,    3,  -26,     0,      0,    0,     0,          5    \ Vertex 35
  VERTEX   -8,    3,  -26,     0,      0,    0,     0,          5    \ Vertex 36
 
+ELIF _DISC_DOCKED
+
+\VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
+ VERTEX    0,   19,  -51,     6,     0,     7,     7,         31     \ Vertex 0
+ VERTEX  -51,    7,  -51,     1,     0,     7,     7,         31     \ Vertex 1
+ VERTEX  -57,   -7,  -51,     1,     0,     2,     2,         31     \ Vertex 2
+ VERTEX  -51,  -17,  -51,     2,     0,     3,     3,         31     \ Vertex 3
+ VERTEX   51,  -17,  -51,     3,     0,     4,     4,         31     \ Vertex 4
+ VERTEX   57,   -7,  -51,     4,     0,     5,     5,         31     \ Vertex 5
+ VERTEX   51,    7,  -51,     5,     0,     6,     6,         31     \ Vertex 6
+ VERTEX    0,   12,   24,    15,    15,    15,    15,         18     \ Vertex 7
+ VERTEX  -60,   -2,   24,     7,     1,     9,     8,         31     \ Vertex 8
+ VERTEX  -66,  -17,   24,     2,     1,     9,     3,         31     \ Vertex 9
+ VERTEX   66,  -17,   24,     4,     3,    10,     5,         31     \ Vertex 10
+ VERTEX   60,   -2,   24,     6,     5,    11,    10,         31     \ Vertex 11
+ VERTEX  -22,   -5,   61,     9,     8,    13,    12,         31     \ Vertex 12
+ VERTEX  -27,  -17,   61,     9,     3,    13,    13,         31     \ Vertex 13
+ VERTEX   27,  -17,   61,    10,     3,    13,    13,         31     \ Vertex 14
+ VERTEX   22,   -5,   61,    11,    10,    13,    12,         31     \ Vertex 15
+ VERTEX  -10,   11,    5,     7,     7,     7,     7,          6     \ Vertex 16
+ VERTEX  -36,    5,    5,     7,     7,     7,     7,          6     \ Vertex 17
+ VERTEX  -10,   13,  -14,     7,     7,     7,     7,          6     \ Vertex 18
+ VERTEX  -36,    7,  -14,     7,     7,     7,     7,          6     \ Vertex 19
+ VERTEX  -23,   12,  -29,     7,     7,     7,     7,          6     \ Vertex 20
+ VERTEX  -23,   10,  -14,     7,     7,     7,     7,          6     \ Vertex 21
+ VERTEX   10,   15,  -29,     6,     6,     6,     6,          6     \ Vertex 22
+ VERTEX   36,    9,  -29,     6,     6,     6,     6,          6     \ Vertex 23
+ VERTEX   23,   10,  -14,     6,     6,     6,     6,          6     \ Vertex 24
+ VERTEX   10,   12,   -6,     6,     6,     6,     6,          6     \ Vertex 25
+ VERTEX   36,    6,   -6,     6,     6,     6,     6,          6     \ Vertex 26
+ VERTEX   23,    7,   16,     6,     6,     6,     6,          6     \ Vertex 27
+ VERTEX   23,    9,   -6,     6,     6,     6,     6,          6     \ Vertex 28
+ VERTEX  -33,  -17,  -26,     3,     3,     3,     3,          5     \ Vertex 29
+ VERTEX  -33,  -17,   33,     3,     3,     3,     3,          5     \ Vertex 30
+ VERTEX   33,  -17,  -26,     3,     3,     3,     3,          5     \ Vertex 31
+ VERTEX   33,  -17,   33,     3,     3,     3,     3,          5     \ Vertex 32
+ VERTEX  -25,   -6,  -51,     0,     0,     0,     0,          7     \ Vertex 33
+ VERTEX   26,   -6,  -51,     0,     0,     0,     0,          7     \ Vertex 34
+ VERTEX   17,    6,  -51,     0,     0,     0,     0,          4     \ Vertex 35
+ VERTEX  -17,    6,  -51,     0,     0,     0,     0,          4     \ Vertex 36
+
+ENDIF
+
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     7,     0,         31    \ Edge 0
  EDGE       1,       2,     1,     0,         31    \ Edge 1
@@ -80,19 +129,40 @@ ENDIF
  EDGE       4,       5,     4,     0,         31    \ Edge 4
  EDGE       5,       6,     5,     0,         31    \ Edge 5
  EDGE       0,       6,     6,     0,         31    \ Edge 6
+IF _6502SP_VERSION OR _DISC_FLIGHT
  EDGE       0,       7,     7,     6,         16    \ Edge 7
+ELIF _DISC_DOCKED
+ EDGE       0,       7,     7,     6,         15    \ Edge 7
+ENDIF
  EDGE       1,       8,     7,     1,         31    \ Edge 8
+IF _6502SP_VERSION OR _DISC_FLIGHT
  EDGE       2,       9,     2,     1,         11    \ Edge 9
+ELIF _DISC_DOCKED
+ EDGE       2,       9,     2,     1,         10    \ Edge 9
+ENDIF
  EDGE       3,       9,     3,     2,         31    \ Edge 10
  EDGE       4,      10,     4,     3,         31    \ Edge 11
+IF _6502SP_VERSION OR _DISC_FLIGHT
  EDGE       5,      10,     5,     4,         11    \ Edge 12
+ELIF _DISC_DOCKED
+ EDGE       5,      10,     5,     4,         10    \ Edge 12
+ENDIF
  EDGE       6,      11,     6,     5,         31    \ Edge 13
+IF _6502SP_VERSION OR _DISC_FLIGHT
  EDGE       7,       8,     8,     7,         17    \ Edge 14
  EDGE       8,       9,     9,     1,         17    \ Edge 15
  EDGE      10,      11,    10,     5,         17    \ Edge 16
  EDGE       7,      11,    11,     6,         17    \ Edge 17
  EDGE       7,      15,    12,    11,         19    \ Edge 18
  EDGE       7,      12,    12,     8,         19    \ Edge 19
+ELIF _DISC_DOCKED
+ EDGE       7,       8,     8,     7,         16    \ Edge 14
+ EDGE       8,       9,     9,     1,         16    \ Edge 15
+ EDGE      10,      11,    10,     5,         16    \ Edge 16
+ EDGE       7,      11,    11,     6,         16    \ Edge 17
+ EDGE       7,      15,    12,    11,         18    \ Edge 18
+ EDGE       7,      12,    12,     8,         18    \ Edge 19
+ENDIF
  EDGE       8,      12,     9,     8,         16    \ Edge 20
  EDGE       9,      13,     9,     3,         31    \ Edge 21
  EDGE      10,      14,    10,     3,         31    \ Edge 22
@@ -101,6 +171,7 @@ ENDIF
  EDGE      13,      14,    13,     3,         31    \ Edge 25
  EDGE      14,      15,    13,    10,         31    \ Edge 26
  EDGE      12,      15,    13,    12,         31    \ Edge 27
+IF _6502SP_VERSION OR _DISC_FLIGHT
  EDGE      16,      17,     7,     7,          7    \ Edge 28
  EDGE      18,      19,     7,     7,          7    \ Edge 29
  EDGE      19,      20,     7,     7,          7    \ Edge 30
@@ -119,6 +190,26 @@ ENDIF
  EDGE      34,      35,     0,     0,          5    \ Edge 43
  EDGE      35,      36,     0,     0,          5    \ Edge 44
  EDGE      36,      33,     0,     0,          5    \ Edge 45
+ELIF _DISC_DOCKED
+ EDGE      16,      17,     7,     7,          6    \ Edge 28
+ EDGE      18,      19,     7,     7,          6    \ Edge 29
+ EDGE      19,      20,     7,     7,          6    \ Edge 30
+ EDGE      18,      20,     7,     7,          6    \ Edge 31
+ EDGE      20,      21,     7,     7,          6    \ Edge 32
+ EDGE      22,      23,     6,     6,          6    \ Edge 33
+ EDGE      23,      24,     6,     6,          6    \ Edge 34
+ EDGE      24,      22,     6,     6,          6    \ Edge 35
+ EDGE      25,      26,     6,     6,          6    \ Edge 36
+ EDGE      26,      27,     6,     6,          6    \ Edge 37
+ EDGE      25,      27,     6,     6,          6    \ Edge 38
+ EDGE      27,      28,     6,     6,          6    \ Edge 39
+ EDGE      29,      30,     3,     3,          5    \ Edge 40
+ EDGE      31,      32,     3,     3,          5    \ Edge 41
+ EDGE      33,      34,     0,     0,          7    \ Edge 42
+ EDGE      34,      35,     0,     0,          4    \ Edge 43
+ EDGE      35,      36,     0,     0,          4    \ Edge 44
+ EDGE      36,      33,     0,     0,          4    \ Edge 45
+ENDIF
 
 \FACE normal_x, normal_y, normal_z, visibility
  FACE        0,        0,     -103,         31    \ Face 0
@@ -129,10 +220,18 @@ ENDIF
  FACE      111,       48,       -7,         31    \ Face 5
  FACE        8,       32,        3,         31    \ Face 6
  FACE       -8,       32,        3,         31    \ Face 7
+IF _6502SP_VERSION OR _DISC_FLIGHT
  FACE       -8,       34,       11,         19    \ Face 8
+ELIF _DISC_DOCKED
+ FACE       -8,       34,       11,         18    \ Face 8
+ENDIF
  FACE      -75,       32,       79,         31    \ Face 9
  FACE       75,       32,       79,         31    \ Face 10
+IF _6502SP_VERSION OR _DISC_FLIGHT
  FACE        8,       34,       11,         19    \ Face 11
+ELIF _DISC_DOCKED
+ FACE        8,       34,       11,         18    \ Face 11
+ENDIF
  FACE        0,       38,       17,         31    \ Face 12
  FACE        0,        0,      121,         31    \ Face 13
 

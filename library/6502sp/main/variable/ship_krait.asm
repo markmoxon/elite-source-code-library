@@ -47,8 +47,13 @@ ENDIF
  VERTEX    0,  -18,  -48,     2,      1,    5,     4,         31    \ Vertex 2
  VERTEX   90,    0,   -3,     1,      0,    4,     4,         31    \ Vertex 3
  VERTEX  -90,    0,   -3,     3,      2,    5,     5,         31    \ Vertex 4
+IF _6502SP_VERSION OR _DISC_FLIGHT
  VERTEX   90,    0,   87,     1,      0,    1,     1,         30    \ Vertex 5
  VERTEX  -90,    0,   87,     3,      2,    3,     3,         30    \ Vertex 6
+ELIF _DISC_DOCKED
+ VERTEX   90,    0,   87,     1,     0,     1,     1,         28     \ Vertex 5
+ VERTEX  -90,    0,   87,     3,     2,     3,     3,         28     \ Vertex 6
+ENDIF
  VERTEX    0,    5,   53,     0,      0,    3,     3,          9    \ Vertex 7
  VERTEX    0,    7,   38,     0,      0,    3,     3,          6    \ Vertex 8
  VERTEX  -18,    7,   19,     3,      3,    3,     3,          9    \ Vertex 9
@@ -69,9 +74,15 @@ ENDIF
  EDGE       4,       2,     5,     2,         31    \ Edge 5
  EDGE       2,       3,     4,     1,         31    \ Edge 6
  EDGE       3,       1,     4,     0,         31    \ Edge 7
+IF _6502SP_VERSION OR _DISC_FLIGHT
  EDGE       3,       5,     1,     0,         30    \ Edge 8
  EDGE       4,       6,     3,     2,         30    \ Edge 9
  EDGE       1,       2,     5,     4,          8    \ Edge 10
+ELIF _DISC_DOCKED
+ EDGE       3,       5,     1,     0,         28    \ Edge 8
+ EDGE       4,       6,     3,     2,         28    \ Edge 9
+ EDGE       1,       2,     5,     4,          5    \ Edge 10
+ENDIF
  EDGE       7,      10,     0,     0,          9    \ Edge 11
  EDGE       8,      10,     0,     0,          6    \ Edge 12
  EDGE       7,       9,     3,     3,          9    \ Edge 13
@@ -96,12 +107,12 @@ IF _6502SP_VERSION OR _DISC_FLIGHT
 ELIF _DISC_DOCKED
 
 \FACE normal_x, normal_y, normal_z, visibility
- FACE        3,       24,        3,         31    \ Face 0
- FACE        3,      -24,        3,         31    \ Face 1
- FACE       -3,      -24,        3,         31    \ Face 2
- FACE       -3,       24,        3,         31    \ Face 3
- FACE       38,        0,      -77,         31    \ Face 4
- FACE      -38,        0,      -77,         31    \ Face 5
+ FACE        7,       48,        6,         31    \ Face 0
+ FACE        7,      -48,        6,         31    \ Face 1
+ FACE       -7,      -48,        6,         31    \ Face 2
+ FACE       -7,       48,        6,         31    \ Face 3
+ FACE       77,        0,     -154,         31    \ Face 4
+ FACE      -77,        0,     -154,         31    \ Face 5
 
 ENDIF
 

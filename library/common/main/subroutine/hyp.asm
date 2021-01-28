@@ -91,7 +91,7 @@ IF _DISC_FLIGHT
 ELIF _DISC_DOCKED
 
         LDA     QQ11
-        BEQ     TTC111
+        BEQ     TTH111
 
         AND     #$C0
         BEQ     zZ+1

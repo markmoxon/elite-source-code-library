@@ -157,9 +157,7 @@ INCLUDE "library/common/main/workspace/wp.asm"
 CODE% = &11E3
 LOAD% = &11E3
 
- ORG CODE%
-
-.x11E3
+ORG CODE%
 
  JMP DOENTRY
  JMP DOBEGIN
@@ -170,13 +168,12 @@ LOAD% = &11E3
 
 .BRKV
 
- EQUB &D5
- EQUB &11
+ EQUW &11D5
 
 .INBAY
 
- LDX #&00
- LDY #&00
+ LDX #0
+ LDY #0
  JSR &8888
  JMP SCRAM
 
@@ -187,7 +184,7 @@ LOAD% = &11E3
 
 .scramble
 
- LDY #&00
+ LDY #0
  STY SC
  LDX #&13
 
@@ -200,9 +197,11 @@ LOAD% = &11E3
  STA (SC),Y
  DEY
  BNE &1207
+
  INX
  CPX #&60
  BNE &1207
+
  JMP BRKBK
 
 INCLUDE "library/6502sp/main/subroutine/doentry.asm"
@@ -236,9 +235,6 @@ INCLUDE "library/6502sp/main/variable/jmtb.asm"
 INCLUDE "library/6502sp/main/variable/tkn2.asm"
 INCLUDE "library/common/main/variable/qq16.asm"
 INCLUDE "library/common/main/subroutine/mveit_part_1_of_9.asm"
-
-\ MVEIT Parts 2 to 6 not required when docked
-
 INCLUDE "library/common/main/subroutine/mveit_part_7_of_9.asm"
 INCLUDE "library/common/main/subroutine/mveit_part_8_of_9.asm"
 INCLUDE "library/common/main/subroutine/mveit_part_9_of_9.asm"
@@ -265,13 +261,7 @@ INCLUDE "library/common/main/subroutine/loin_part_4_of_7.asm"
 INCLUDE "library/common/main/subroutine/loin_part_5_of_7.asm"
 INCLUDE "library/common/main/subroutine/loin_part_6_of_7.asm"
 INCLUDE "library/common/main/subroutine/loin_part_7_of_7.asm"
-
-.FLKB
-
- LDA #&0F
- TAX
- JMP OSBYTE
-
+INCLUDE "library/disc/main/subroutine/flkb.asm"
 INCLUDE "library/common/main/subroutine/nlin3.asm"
 INCLUDE "library/common/main/subroutine/nlin4.asm"
 INCLUDE "library/common/main/subroutine/nlin.asm"
@@ -331,20 +321,20 @@ INCLUDE "library/common/main/subroutine/ll164.asm"
 INCLUDE "library/common/main/subroutine/laun.asm"
 INCLUDE "library/common/main/subroutine/hfs2.asm"
 
-\ Junk, same as in D.CODE
-
- EQUB &8C, &E7, &8D, &ED, &8A, &E6, &C1, &C8
- EQUB &C8, &8B, &E0, &8A, &E6, &D6, &C5, &C6
- EQUB &C1, &CA, &95, &9D, &9C, &97
+ EQUB &8C, &E7          \ This data appears to be unused (the same block appears
+ EQUB &8D, &ED          \ in the flight code)
+ EQUB &8A, &E6
+ EQUB &C1, &C8
+ EQUB &C8, &8B
+ EQUB &E0, &8A
+ EQUB &E6, &D6
+ EQUB &C5, &C6
+ EQUB &C1, &CA
+ EQUB &95, &9D
+ EQUB &9C, &97
 
 INCLUDE "library/common/main/subroutine/mu5.asm"
 INCLUDE "library/common/main/subroutine/mls2.asm"
-
-\ Start of .MLS1?
-
- LDX ALP1
- STX P
-
 INCLUDE "library/common/main/subroutine/squa.asm"
 INCLUDE "library/common/main/subroutine/squa2.asm"
 INCLUDE "library/common/main/subroutine/mu1.asm"
@@ -434,12 +424,7 @@ INCLUDE "library/common/main/subroutine/tt81.asm"
 INCLUDE "library/common/main/subroutine/tt111.asm"
 INCLUDE "library/common/main/subroutine/hyp.asm"
 INCLUDE "library/common/main/subroutine/ww.asm"
-
-.TTC111
-
- JSR TT111
- JMP TTX111
-
+INCLUDE "library/disc/main/subroutine/tth111.asm"
 INCLUDE "library/common/main/subroutine/ghy.asm"
 INCLUDE "library/common/main/subroutine/jmp.asm"
 INCLUDE "library/common/main/subroutine/ee3.asm"
@@ -457,36 +442,12 @@ INCLUDE "library/common/main/subroutine/tt163.asm"
 INCLUDE "library/common/main/subroutine/tt167.asm"
 INCLUDE "library/common/main/subroutine/var.asm"
 INCLUDE "library/common/main/subroutine/hyp1.asm"
-
-\ Start loading Flight code as key #f0 hit
-
-.TT110
-
- LDX #&3F
-
-.L2E94
-
- LDA QQ16,X
- STA QQ16_FLIGHT,X
- DEX
- BPL &2E94
-
- JSR &0D7A
-
- LDX #LO(RDLI)
- LDY #HI(RDLI)
- JMP OSCLI
-
+INCLUDE "library/common/main/subroutine/tt110.asm"
 INCLUDE "library/common/main/subroutine/lcash.asm"
 INCLUDE "library/common/main/subroutine/mcash.asm"
 INCLUDE "library/common/main/subroutine/gcash.asm"
 INCLUDE "library/common/main/subroutine/gc2.asm"
-
-.RDLI
-
- EQUS "R.D.CODE"
- EQUB 13
-
+INCLUDE "library/disc/docked/variable/rdli.asm"
 INCLUDE "library/common/main/subroutine/eqshp.asm"
 INCLUDE "library/common/main/subroutine/dn.asm"
 INCLUDE "library/common/main/subroutine/dn2.asm"
@@ -494,17 +455,6 @@ INCLUDE "library/common/main/subroutine/eq.asm"
 INCLUDE "library/common/main/subroutine/prx.asm"
 INCLUDE "library/common/main/subroutine/qv.asm"
 INCLUDE "library/common/main/subroutine/hm.asm"
-
- NOP
- NOP
- NOP
- NOP
- NOP
- NOP
- NOP
- NOP
- NOP
-
 INCLUDE "library/6502sp/main/subroutine/refund.asm"
 
 \ ******************************************************************************
@@ -554,17 +504,7 @@ INCLUDE "library/common/main/subroutine/sun_part_3_of_4.asm"
 INCLUDE "library/common/main/subroutine/sun_part_4_of_4.asm"
 INCLUDE "library/common/main/subroutine/circle.asm"
 INCLUDE "library/common/main/subroutine/circle2.asm"
-
-\ Last bit of WPLS2 - split out? is it used?
-
-.WP1
-
- LDA #&01
- STA LSP
- LDA #&FF
- STA LSX2
- RTS
-
+INCLUDE "library/cassette/main/subroutine/wp1.asm"
 INCLUDE "library/common/main/subroutine/wpls.asm"
 INCLUDE "library/common/main/subroutine/edges.asm"
 INCLUDE "library/common/main/subroutine/pl21.asm"
@@ -586,13 +526,7 @@ INCLUDE "library/common/main/subroutine/msblob.asm"
 INCLUDE "library/common/main/subroutine/me2.asm"
 INCLUDE "library/common/main/subroutine/ze.asm"
 INCLUDE "library/common/main/subroutine/dornd.asm"
-
-\ No main game loop 1
-
 INCLUDE "library/common/main/subroutine/main_game_loop_part_2_of_6.asm"
-
-\ No main game loop 3, 4
-
 INCLUDE "library/common/main/subroutine/main_game_loop_part_5_of_6.asm"
 INCLUDE "library/common/main/subroutine/main_game_loop_part_6_of_6.asm"
 INCLUDE "library/common/main/subroutine/tt102.asm"
@@ -630,9 +564,7 @@ INCLUDE "library/6502sp/main/subroutine/gtdrv.asm"
 INCLUDE "library/common/main/subroutine/lod.asm"
 INCLUDE "library/common/main/subroutine/fx200.asm"
 
-\?
- JSR GTNME
-
+ JSR GTNME              \ This code appears to be unused
  RTS
 
 INCLUDE "library/common/main/subroutine/sps1.asm"
@@ -652,32 +584,8 @@ INCLUDE "library/cassette/main/subroutine/dks4.asm"
 INCLUDE "library/common/main/subroutine/dks2.asm"
 INCLUDE "library/common/main/subroutine/dks3.asm"
 INCLUDE "library/common/main/subroutine/dkj1.asm"
-
-\ Very different DOKEY
-
-.DOKEY
-
- LDA JSTK
- BEQ DK9
-
- LDX #&01
- JSR DKS2
-
- ORA #&01
- STA JSTX
- LDX #&02
- JSR DKS2
-
- EOR JSTGY
- STA JSTY
-
+INCLUDE "library/common/main/subroutine/dokey.asm"
 INCLUDE "library/common/main/subroutine/dk4.asm"
-
-.DK9
-
- STA BSTK
- BEQ DK4
-
 INCLUDE "library/common/main/subroutine/tt217.asm"
 INCLUDE "library/common/main/subroutine/me1.asm"
 INCLUDE "library/common/main/subroutine/mess.asm"
@@ -741,440 +649,38 @@ INCLUDE "library/6502sp/main/variable/rugal.asm"
 INCLUDE "library/6502sp/main/variable/rutok.asm"
 INCLUDE "library/6502sp/main/variable/mtin.asm"
 
+ EQUB &45, &4E          \ This data appears to be unused
+ EQUB &44, &2D
  EQUB &45, &4E
- EQUB &44, &2D, &45, &4E, &44, &2D, &45, &4E
- EQUB &44, &52, &50, &53, &00, &8E, &11, &D8
- EQUB &00, &00, &06, &56, &52, &49, &45, &E6
+ EQUB &44, &2D
+ EQUB &45, &4E
+ EQUB &44, &52
+ EQUB &50, &53
+ EQUB &00, &8E
+ EQUB &11, &D8
+ EQUB &00, &00
+ EQUB &06, &56
+ EQUB &52, &49
+ EQUB &45, &E6
 
 \ ******************************************************************************
 \
-\ ELITE SHIP BLUEPRINTS FILE
+\ ELITE SHIP HANGER BLUEPRINTS FILE
 \
 \ ******************************************************************************
 
-\ ******************************************************************************
-\
-\       Name: XX21
-\       Type: Variable
-\   Category: Drawing ships
-\    Summary: Ship blueprints lookup table for the ship hanger
-\  Deep dive: Ship blueprints
-\
-\ ******************************************************************************
-
-.XX21
-
- EQUW SHIP_MISSILE      \ MSL  =  1 = Missile
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW SHIP_CANISTER     \ OIL  =  5 = Cargo canister
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW SHIP_SHUTTLE      \ SHU  =  9 = Shuttle
- EQUW SHIP_TRANSPORTER  \        10 = Transporter
- EQUW SHIP_COBRA_MK_3   \ CYL  = 11 = Cobra Mk III
- EQUW SHIP_PYTHON       \        12 = Python
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW SHIP_VIPER        \ COPS = 16 = Viper
- EQUW 0
- EQUW 0
- EQUW SHIP_KRAIT        \ KRA  = 19 = Krait
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW SHIP_CONSTRICTOR  \ CON  = 31 = Constrictor
-
-\ ******************************************************************************
-\
-\       Name: E%
-\       Type: Variable
-\   Category: Drawing ships
-\    Summary: Ship blueprints default NEWB flags for the ship hanger
-\
-\ ******************************************************************************
-
- EQUB %00000000         \ Missile
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB %00000000         \ Cargo canister
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB %00100001         \ Shuttle                               Trader, innocent
- EQUB %01100001         \ Transporter                      Trader, innocent, cop
- EQUB %10100000         \ Cobra Mk III                      Innocent, escape pod
- EQUB %10100000         \ Python                            Innocent, escape pod
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB %11000010         \ Viper                   Bounty hunter, cop, escape pod
- EQUB 0
- EQUB 0
- EQUB %10001100         \ Krait                      Hostile, pirate, escape pod
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB %10001100         \ Constrictor                Hostile, pirate, escape pod
-
+INCLUDE "library/disc/docked/variable/xx21.asm"
+INCLUDE "library/disc/docked/variable/e_per_cent.asm"
 INCLUDE "library/common/main/macro/vertex.asm"
 INCLUDE "library/common/main/macro/edge.asm"
 INCLUDE "library/common/main/macro/face.asm"
 INCLUDE "library/common/main/variable/ship_canister.asm"
-        
-.SHIP_SHUTTLE
-
- EQUB &0F
- EQUB &C4, &09
- EQUB &86
- EQUB &FE
- EQUB &6D
- EQUB &00
- EQUB &26
- EQUB &72
- EQUB &1E
- EQUB &00, &00
- EQUB &34
- EQUB &16
- EQUB &20
- EQUB &08
- EQUB &00
- EQUB &00
- EQUB &02
- EQUB &00
- 
-\ Vertices
-
- EQUB &00, &23, &2F, &5F, &FF, &FF
- EQUB &23, &00, &2F, &9F, &FF, &FF
- EQUB &00, &23, &2F, &1F, &FF, &FF
- EQUB &23, &00, &2F, &1F, &FF, &FF
- EQUB &28, &28, &35, &FF, &12, &39
-
- EQUB &28, &28, &35, &BF, &34, &59
- EQUB &28, &28, &35, &3F, &56, &79
- EQUB &28, &28, &35, &7F, &17, &89
- EQUB &0A, &00, &35, &30, &99, &99
- EQUB &00, &05, &35, &70, &99, &99
-
- EQUB &0A, &00, &35, &A8, &99, &99
- EQUB &00, &05, &35, &28, &99, &99
- EQUB &00, &11, &47, &50, &0A, &BC
- EQUB &05, &02, &3D, &46, &FF, &02
- EQUB &07, &17, &31, &07, &01, &F4
-
- EQUB &15, &09, &31, &07, &A1, &3F
- EQUB &05, &02, &3D, &C6, &6B, &23
- EQUB &07, &17, &31, &87, &F8, &C0
- EQUB &15, &09, &31, &87, &4F, &18
-
-\ Edges
-
- EQUB &1F, &02, &00, &04
- EQUB &1F, &4A, &04, &08
- EQUB &1F, &6B, &08, &0C
- EQUB &1F, &8C, &00, &0C
- EQUB &1F, &18, &00, &1C
-
- EQUB &18, &12, &00, &10
- EQUB &1F, &23, &04, &10
- EQUB &18, &34, &04, &14
- EQUB &1F, &45, &08, &14
- EQUB &0C, &56, &08, &18
-
- EQUB &1F, &67, &0C, &18
- EQUB &18, &78, &0C, &1C
- EQUB &1F, &39, &10, &14
- EQUB &1F, &59, &14, &18
- EQUB &1F, &79, &18, &1C
-
- EQUB &1F, &19, &10, &1C
- EQUB &10, &0C, &00, &30
- EQUB &10, &0A, &04, &30
- EQUB &10, &AB, &08, &30
- EQUB &10, &BC, &0C, &30
-
- EQUB &10, &99, &20, &24
- EQUB &06, &99, &24, &28
- EQUB &08, &99, &28, &2C
- EQUB &06, &99, &20, &2C
- EQUB &04, &BB, &34, &38
-
- EQUB &07, &BB, &38, &3C
- EQUB &06, &BB, &34, &3C
- EQUB &04, &AA, &40, &44
- EQUB &07, &AA, &44, &48
- EQUB &06, &AA, &40, &48
-
-\ Faces
-
- EQUB &DF, &6E, &6E, &50
- EQUB &5F, &00, &95, &07
- EQUB &DF, &66, &66, &2E
- EQUB &9F, &95, &00, &07
- EQUB &9F, &66, &66, &2E
-
- EQUB &1F, &00, &95, &07
- EQUB &1F, &66, &66, &2E
- EQUB &1F, &95, &00, &07
- EQUB &5F, &66, &66, &2E
- EQUB &3F, &00, &00, &D5
-
- EQUB &9F, &51, &51, &B1
- EQUB &1F, &51, &51, &B1
- EQUB &5F, &6E, &6E, &50
-        
-.SHIP_TRANSPORTER
-
- EQUB &00
- EQUB &C4, &09
- EQUB &F2
- EQUB &AA
- EQUB &91
- EQUB &30
- EQUB &1A
- EQUB &DE
- EQUB &2E
- EQUB &00, &00
- EQUB &38
- EQUB &10
- EQUB &20
- EQUB &0A
- EQUB &00
- EQUB &01
- EQUB &01 \ is 2 in include
- EQUB &00
- 
- \ Vertices
-
- EQUB &00, &13, &33, &3F, &06, &77
- EQUB &33, &07, &33, &BF, &01, &77
- EQUB &39, &07, &33, &FF, &01, &22
- EQUB &33, &11, &33, &FF, &02, &33
- EQUB &33, &11, &33, &7F, &03, &44
-
- EQUB &39, &07, &33, &7F, &04, &55
- EQUB &33, &07, &33, &3F, &05, &66
- EQUB &00, &0C, &18, &12, &FF, &FF
- EQUB &3C, &02, &18, &DF, &17, &89
- EQUB &42, &11, &18, &DF, &12, &39
-
- EQUB &42, &11, &18, &5F, &34, &5A
- EQUB &3C, &02, &18, &5F, &56, &AB
- EQUB &16, &05, &3D, &DF, &89, &CD
- EQUB &1B, &11, &3D, &DF, &39, &DD
- EQUB &1B, &11, &3D, &5F, &3A, &DD
-
- EQUB &16, &05, &3D, &5F, &AB, &CD
- EQUB &0A, &0B, &05, &86, &77, &77
- EQUB &24, &05, &05, &86, &77, &77
- EQUB &0A, &0D, &0E, &A6, &77, &77
- EQUB &24, &07, &0E, &A6, &77, &77
-
- EQUB &17, &0C, &1D, &A6, &77, &77
- EQUB &17, &0A, &0E, &A6, &77, &77
- EQUB &0A, &0F, &1D, &26, &66, &66
- EQUB &24, &09, &1D, &26, &66, &66
- EQUB &17, &0A, &0E, &26, &66, &66
-
- EQUB &0A, &0C, &06, &26, &66, &66
- EQUB &24, &06, &06, &26, &66, &66
- EQUB &17, &07, &10, &06, &66, &66
- EQUB &17, &09, &06, &26, &66, &66
- EQUB &21, &11, &1A, &E5, &33, &33
-
- EQUB &21, &11, &21, &C5, &33, &33
- EQUB &21, &11, &1A, &65, &33, &33
- EQUB &21, &11, &21, &45, &33, &33
- EQUB &19, &06, &33, &E7, &00, &00
- EQUB &1A, &06, &33, &67, &00, &00
-
- EQUB &11, &06, &33, &24, &00, &00
- EQUB &11, &06, &33, &A4, &00, &00
-
-\ Edges
-
- EQUB &1F, &07, &00, &04
- EQUB &1F, &01, &04, &08
- EQUB &1F, &02, &08, &0C
- EQUB &1F, &03, &0C, &10
- EQUB &1F, &04, &10, &14
-
- EQUB &1F, &05, &14, &18
- EQUB &1F, &06, &00, &18
- EQUB &0F, &67, &00, &1C
- EQUB &1F, &17, &04, &20
- EQUB &0A, &12, &08, &24
-
- EQUB &1F, &23, &0C, &24
- EQUB &1F, &34, &10, &28
- EQUB &0A, &45, &14, &28
- EQUB &1F, &56, &18, &2C
- EQUB &10, &78, &1C, &20
-
- EQUB &10, &19, &20, &24
- EQUB &10, &5A, &28, &2C
- EQUB &10, &6B, &1C, &2C
- EQUB &12, &BC, &1C, &3C
- EQUB &12, &8C, &1C, &30
-
- EQUB &10, &89, &20, &30
- EQUB &1F, &39, &24, &34
- EQUB &1F, &3A, &28, &38
- EQUB &10, &AB, &2C, &3C
- EQUB &1F, &9D, &30, &34
-
- EQUB &1F, &3D, &34, &38
- EQUB &1F, &AD, &38, &3C
- EQUB &1F, &CD, &30, &3C
- EQUB &06, &77, &40, &44
- EQUB &06, &77, &48, &4C
-
- EQUB &06, &77, &4C, &50
- EQUB &06, &77, &48, &50
- EQUB &06, &77, &50, &54
- EQUB &06, &66, &58, &5C
- EQUB &06, &66, &5C, &60
-
- EQUB &06, &66, &60, &58
- EQUB &06, &66, &64, &68
- EQUB &06, &66, &68, &6C
- EQUB &06, &66, &64, &6C
- EQUB &06, &66, &6C, &70
-
- EQUB &05, &33, &74, &78
- EQUB &05, &33, &7C, &80
- EQUB &07, &00, &84, &88
- EQUB &04, &00, &88, &8C
- EQUB &04, &00, &8C, &90
-
- EQUB &04, &00, &90, &84
-
-\ Faces
-
- EQUB &3F, &00, &00, &67
- EQUB &BF, &6F, &30, &07
- EQUB &FF, &69, &3F, &15
- EQUB &5F, &00, &22, &00
- EQUB &7F, &69, &3F, &15
-
- EQUB &3F, &6F, &30, &07
- EQUB &1F, &08, &20, &03
- EQUB &9F, &08, &20, &03
- EQUB &92, &08, &22, &0B
- EQUB &9F, &4B, &20, &4F
-
- EQUB &1F, &4B, &20, &4F
- EQUB &12, &08, &22, &0B
- EQUB &1F, &00, &26, &11
- EQUB &1F, &00, &00, &79
-        
+INCLUDE "library/6502sp/main/variable/ship_shuttle.asm"
+INCLUDE "library/6502sp/main/variable/ship_transporter.asm"
 INCLUDE "library/common/main/variable/ship_cobra_mk_iii.asm"
 INCLUDE "library/common/main/variable/ship_python.asm"
 INCLUDE "library/common/main/variable/ship_viper.asm"
- 
-.SHIP_KRAIT
-
- EQUB &01
- EQUB &10, &0E
- EQUB &7A
- EQUB &CE
- EQUB &55
- EQUB &00
- EQUB &12
- EQUB &66
- EQUB &15
- EQUB &64, &00
- EQUB &18
- EQUB &14
- EQUB &50
- EQUB &1E
- EQUB &00
- EQUB &00
- EQUB &02 \ is 1 in include
- EQUB &10
- 
-\ Vertices
-
- EQUB &00, &00, &60, &1F, &01, &23
- EQUB &00, &12, &30, &3F, &03, &45
- EQUB &00, &12, &30, &7F, &12, &45
- EQUB &5A, &00, &03, &3F, &01, &44
- EQUB &5A, &00, &03, &BF, &23, &55
-
- EQUB &5A, &00, &57, &1C, &01, &11
- EQUB &5A, &00, &57, &9C, &23, &33
- EQUB &00, &05, &35, &09, &00, &33
- EQUB &00, &07, &26, &06, &00, &33
- EQUB &12, &07, &13, &89, &33, &33
-
- EQUB &12, &07, &13, &09, &00, &00
- EQUB &12, &0B, &27, &28, &44, &44
- EQUB &12, &0B, &27, &68, &44, &44
- EQUB &24, &00, &1E, &28, &44, &44
- EQUB &12, &0B, &27, &A8, &55, &55
-
- EQUB &12, &0B, &27, &E8, &55, &55
- EQUB &24, &00, &1E, &A8, &55, &55
-
-\ Edges
-
- EQUB &1F, &03, &00, &04
- EQUB &1F, &12, &00, &08
- EQUB &1F, &01, &00, &0C
- EQUB &1F, &23, &00, &10
- EQUB &1F, &35, &04, &10
-
- EQUB &1F, &25, &10, &08
- EQUB &1F, &14, &08, &0C
- EQUB &1F, &04, &0C, &04
- EQUB &1C, &01, &0C, &14
- EQUB &1C, &23, &10, &18
-
- EQUB &05, &45, &04, &08
- EQUB &09, &00, &1C, &28
- EQUB &06, &00, &20, &28
- EQUB &09, &33, &1C, &24
- EQUB &06, &33, &20, &24
-
- EQUB &08, &44, &2C, &34
- EQUB &08, &44, &34, &30
- EQUB &07, &44, &30, &2C
- EQUB &07, &55, &38, &3C
- EQUB &08, &55, &3C, &40
-
- EQUB &08, &55, &40, &38
-
-\ Faces
-
- EQUB &1F, &07, &30, &06
- EQUB &5F, &07, &30, &06
- EQUB &DF, &07, &30, &06
- EQUB &9F, &07, &30, &06
- EQUB &3F, &4D, &00, &9A
-
- EQUB &BF, &4D, &00, &9A
-        
+INCLUDE "library/6502sp/main/variable/ship_krait.asm"
 INCLUDE "library/6502sp/main/variable/ship_constrictor.asm"
 
  SKIP 171

@@ -156,8 +156,6 @@ LOAD% = &11E3
 
  EQUB &4B, &11
 
-.L11EE
-
  JMP L11D5
 
 .L11F1
@@ -239,13 +237,7 @@ INCLUDE "library/common/main/subroutine/loin_part_4_of_7.asm"
 INCLUDE "library/common/main/subroutine/loin_part_5_of_7.asm"
 INCLUDE "library/common/main/subroutine/loin_part_6_of_7.asm"
 INCLUDE "library/common/main/subroutine/loin_part_7_of_7.asm"
-
-.FLKB
-
- LDA #&0F
- TAX
- JMP OSBYTE
-
+INCLUDE "library/disc/main/subroutine/flkb.asm"
 INCLUDE "library/common/main/subroutine/nlin3.asm"
 INCLUDE "library/common/main/subroutine/nlin4.asm"
 INCLUDE "library/common/main/subroutine/nlin.asm"
@@ -352,11 +344,17 @@ INCLUDE "library/common/main/subroutine/redu2.asm"
 INCLUDE "library/common/main/subroutine/arctan.asm"
 INCLUDE "library/common/main/subroutine/lasli.asm"
 
-\ Junk, same as in T.CODE
-
- EQUB &8C, &E7, &8D, &ED, &8A, &E6, &C1, &C8
- EQUB &C8, &8B, &E0, &8A, &E6, &D6, &C5, &C6
- EQUB &C1, &CA, &95, &9D, &9C, &97
+ EQUB &8C, &E7          \ This data appears to be unused (the same block appears
+ EQUB &8D, &ED          \ in the docked code)
+ EQUB &8A, &E6
+ EQUB &C1, &C8
+ EQUB &C8, &8B
+ EQUB &E0, &8A
+ EQUB &E6, &D6
+ EQUB &C5, &C6
+ EQUB &C1, &CA
+ EQUB &95, &9D
+ EQUB &9C, &97
 
 \ ******************************************************************************
 \
@@ -399,12 +397,7 @@ INCLUDE "library/common/main/subroutine/pr6.asm"
 INCLUDE "library/common/main/subroutine/pr5.asm"
 INCLUDE "library/common/main/subroutine/tt147.asm"
 INCLUDE "library/common/main/subroutine/prq.asm"
-
-.TTH111
-
- JSR TT111
- JMP TTX111
-
+INCLUDE "library/disc/main/subroutine/tth111.asm"
 INCLUDE "library/common/main/subroutine/tt151.asm"
 INCLUDE "library/common/main/subroutine/tt152.asm"
 INCLUDE "library/common/main/subroutine/tt162.asm"
@@ -500,6 +493,7 @@ INCLUDE "library/common/main/subroutine/sun_part_4_of_4.asm"
 INCLUDE "library/common/main/subroutine/circle.asm"
 INCLUDE "library/common/main/subroutine/circle2.asm"
 INCLUDE "library/cassette/main/subroutine/wpls2.asm"
+INCLUDE "library/cassette/main/subroutine/wp1.asm"
 INCLUDE "library/common/main/subroutine/wpls.asm"
 INCLUDE "library/common/main/subroutine/edges.asm"
 INCLUDE "library/common/main/subroutine/chkon.asm"
@@ -526,9 +520,6 @@ INCLUDE "library/common/main/variable/sfx.asm"
 INCLUDE "library/6502sp/main/subroutine/there.asm"
 INCLUDE "library/common/main/subroutine/reset.asm"
 INCLUDE "library/common/main/subroutine/res2.asm"
-
- JSR U%
-
 INCLUDE "library/common/main/subroutine/zinf.asm"
 INCLUDE "library/common/main/subroutine/msblob.asm"
 INCLUDE "library/common/main/subroutine/me2.asm"
@@ -546,66 +537,7 @@ INCLUDE "library/common/main/subroutine/farof.asm"
 INCLUDE "library/common/main/subroutine/farof2.asm"
 INCLUDE "library/common/main/subroutine/mas4.asm"
 INCLUDE "library/common/main/subroutine/death.asm"
-
-.RSHIPS
-
- JSR LSHIPS
-
- JSR RESET
-
- LDA #&FF
- STA QQ12
- STA QQ11
- LDA #&20
- JMP FRCE
-
-.LSHIPS
-
- JSR THERE
-
- LDA #&06
- BCS SHIPinA
-
- JSR DORND
-
- AND #&03
- LDX gov
- CPX #&03
- ROL A
- LDX tek
- CPX #&0A
- ROL A
- TAX
- LDA TP
- AND #&0C
- CMP #&08
- BNE L427D
-
- TXA
- AND #&01
- ORA #&02
- TAX
-
-.L427D
-
- TXA
-
-.SHIPinA
-
- CLC
- ADC #&41
- STA L428E+6
- JSR L0D7A
-
- LDX #&8E
- LDY #&42
- JMP OSCLI
-
-.L428E
-
- EQUS "L.D.MO0"
- EQUB 13
-
+INCLUDE "library/disc/flight/subroutine/rships.asm"
 INCLUDE "library/common/main/subroutine/zero.asm"
 INCLUDE "library/common/main/subroutine/zes1.asm"
 INCLUDE "library/common/main/subroutine/zes2.asm"

@@ -23,6 +23,11 @@ IF _6502SP_VERSION
 \
 \   FREEZE              Rejoin the pause routine after processing a screen save
 \
+ELIF _DISC_DOCKED
+\ Other entry points:
+\
+\   DK9                 Set the Bitstik configuration option to the value in A
+\
 ENDIF
 \ ******************************************************************************
 
@@ -224,4 +229,13 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
 ENDIF
 
  RTS                    \ Return from the subroutine
+
+IF _DISC_DOCKED
+
+.DK9
+
+ STA BSTK               \ ????
+ BEQ DK4
+
+ENDIF
 

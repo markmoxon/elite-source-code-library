@@ -287,7 +287,8 @@
                         \ single pixel
 
  LDA TWOS2,X            \ Fetch a mode 1 2-pixel byte with the pixels set as in
- AND #WHITE             \ X, and AND with #WHITE to make it white (i.e. cyan/red)
+ AND #WHITE             \ X, and AND with #WHITE to make it white (i.e.
+                        \ cyan/red)
 
  EOR (SC),Y             \ Draw the pixel on-screen using EOR logic, so we can
  STA (SC),Y             \ remove it later without ruining the background that's
@@ -306,7 +307,8 @@
 .PX6
 
  LDA TWOS2,X            \ Fetch a mode 1 2-pixel byte with the pixels set as in
- AND #WHITE             \ X, and AND with #WHITE to make it white (i.e. cyan/red)
+ AND #WHITE             \ X, and AND with #WHITE to make it white (i.e.
+                        \ cyan/red)
 
  EOR (SC),Y             \ Draw the pixel on-screen using EOR logic, so we can
  STA (SC),Y             \ remove it later without ruining the background that's

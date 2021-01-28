@@ -124,3 +124,9 @@ ENDIF
                         \ Finally, fall through into ZINF to reset the INWK
                         \ ship workspace
 
+IF _DISC_FLIGHT
+
+ JSR U%                 \ ????
+
+ENDIF
+

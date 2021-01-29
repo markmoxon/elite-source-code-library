@@ -29,10 +29,16 @@ _6502SP_VERSION         = (_VERSION = 3)
 _DISC_DOCKED            = FALSE
 _DISC_FLIGHT            = TRUE
 
-SHIP_MISSILE = &7F00
+\ ******************************************************************************
+\
+\ Configuration variables
+\
+\ ******************************************************************************
 
-CODE% = &5600
-LOAD% = &5600
+SHIP_MISSILE = &7F00    \ The address of the missile ship blueprint
+
+CODE% = &5600           \ The flight code loads this file at address &5600, at
+LOAD% = &5600           \ label XX21
 
 ORG CODE%
 
@@ -45,6 +51,8 @@ ORG CODE%
 \  Deep dive: Ship blueprints
 \
 \ ******************************************************************************
+
+.XX21
 
  EQUW SHIP_MISSILE      \ MSL  =  1 = Missile
  EQUW SHIP_DODO         \ SST  =  2 = Dodo space station
@@ -86,6 +94,8 @@ ORG CODE%
 \    Summary: Ship blueprints default NEWB flags for the D.MOL file
 \
 \ ******************************************************************************
+
+.E%
 
  EQUB %00000000         \ Missile
  EQUB %00000000         \ Dodo space station

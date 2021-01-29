@@ -1,13 +1,17 @@
 \ ******************************************************************************
 \
-\       Name: RDLI
-\       Type: Variable
+\       Name: Main entry point
+\       Type: Subroutine
 \   Category: Loader
-\    Summary: 
+\    Summary: Decrypt and run the flight code
 \
 \ ******************************************************************************
 
-.RDLI
+ JMP scramble
+ JMP scramble
+ JMP TT26
 
- EQUS "R.D.CODE"
- EQUB 13
+ EQUW &114B
+
+ JMP &11D5
+

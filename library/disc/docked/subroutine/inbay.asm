@@ -1,13 +1,16 @@
 \ ******************************************************************************
 \
-\       Name: RDLI
-\       Type: Variable
+\       Name: INBAY
+\       Type: Subroutine
 \   Category: Loader
 \    Summary: 
 \
 \ ******************************************************************************
 
-.RDLI
+.INBAY
 
- EQUS "R.D.CODE"
- EQUB 13
+ LDX #0
+ LDY #0
+ JSR &8888
+ JMP SCRAM
+

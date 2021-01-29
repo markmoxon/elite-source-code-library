@@ -20,7 +20,7 @@
 IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
 
  LDX QQ12               \ If we are not docked (QQ12 = 0) then jump to NLUNCH
- BEQ NLUNCH
+ BEQ NLUNCH             \ to skip the launch tunnel and setup process
 
  JSR LAUN               \ Show the space station launch tunnel
 

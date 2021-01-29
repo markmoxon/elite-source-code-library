@@ -1,13 +1,14 @@
 \ ******************************************************************************
 \
-\       Name: RDLI
+\       Name: SHIPI
 \       Type: Variable
 \   Category: Loader
-\    Summary: 
+\    Summary: The OS command string for loading a ship blueprints file
 \
 \ ******************************************************************************
 
-.RDLI
+.SHIPI
 
- EQUS "R.D.CODE"
+ EQUS "L.D.MO0"
  EQUB 13
+

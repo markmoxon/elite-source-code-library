@@ -1,13 +1,14 @@
 \ ******************************************************************************
 \
-\       Name: RDLI
-\       Type: Variable
+\       Name: DOBEGIN
+\       Type: Subroutine
 \   Category: Loader
 \    Summary: 
 \
 \ ******************************************************************************
 
-.RDLI
+.DOBEGIN
 
- EQUS "R.D.CODE"
- EQUB 13
+ JSR scramble
+ JMP BEGIN
+

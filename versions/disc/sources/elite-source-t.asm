@@ -132,19 +132,28 @@ VE = &57                \ The obfuscation byte used to hide the extended tokens
 LL = 30                 \ The length of lines (in characters) of justified text
                         \ in the extended tokens system
 
+QQ18 = &0400            \ The address of the text token table
+
+SNE = &07C0             \ The address of the sine lookup table
+
+ACT = &07E0             \ The address of the arctan lookup table
+
+QQ16_FLIGHT = &0880     \ The address of the two-letter text token table in the
+                        \ flight code
+
+NA% = &1181             \ The address of data block for the last saved commander
+
+CHK2 = &11D3            \ The address of the second checksum byte for the saved
+                        \ commander data file
+
+CHK = &11D4             \ The address of the first checksum byte for the saved
+                        \ commander data file
+
+SHIP_MISSILE = &7F00    \ The address of the missile ship blueprint
+
 INCLUDE "library/common/main/workspace/zp.asm"
 INCLUDE "library/common/main/workspace/xx3.asm"
 INCLUDE "library/6502sp/main/workspace/up.asm"
-
-QQ18 = &0400
-SNE = &07C0
-ACT = &07E0
-QQ16_FLIGHT = &0880
-NA% = &1181
-CHK2 = &11D3
-CHK = &11D4
-SHIP_MISSILE = &7F00
-
 INCLUDE "library/common/main/workspace/k_per_cent.asm"
 INCLUDE "library/common/main/workspace/wp.asm"
 
@@ -159,59 +168,14 @@ LOAD% = &11E3
 
 ORG CODE%
 
- JMP DOENTRY
- JMP DOBEGIN
- JMP CHPR
+LOAD_A% = LOAD%
 
- EQUB &4B, &11
- EQUB &4C
-
-.BRKV
-
- EQUW &11D5
-
-.INBAY
-
- LDX #0
- LDY #0
- JSR &8888
- JMP SCRAM
-
-.DOBEGIN
-
- JSR scramble
- JMP BEGIN
-
-.scramble
-
- LDY #0
- STY SC
- LDX #&13
-
-.L1207
-
- STX SCH
- TYA
- EOR (SC),Y
- EOR #&33
- STA (SC),Y
- DEY
- BNE &1207
-
- INX
- CPX #&60
- BNE &1207
-
- JMP BRKBK
-
+INCLUDE "library/disc/docked/subroutine/main_entry_point.asm"
+INCLUDE "library/disc/docked/subroutine/inbay.asm"
+INCLUDE "library/disc/docked/subroutine/dobegin.asm"
+INCLUDE "library/disc/main/subroutine/scramble.asm"
 INCLUDE "library/6502sp/main/subroutine/doentry.asm"
-
-.SCRAM
-
- JSR scramble
- JSR RES2
- JMP TT170
-
+INCLUDE "library/disc/docked/subroutine/scram.asm"
 INCLUDE "library/6502sp/main/subroutine/brkbk.asm"
 INCLUDE "library/6502sp/main/subroutine/mt27.asm"
 INCLUDE "library/6502sp/main/subroutine/mt28.asm"
@@ -247,9 +211,28 @@ INCLUDE "library/common/main/variable/univ.asm"
 
 \ ******************************************************************************
 \
+\ Save output/ELTA.bin
+\
+\ ******************************************************************************
+
+PRINT "ELITE A"
+PRINT "Assembled at ", ~CODE%
+PRINT "Ends at ", ~P%
+PRINT "Code size is ", ~(P% - CODE%)
+PRINT "Execute at ", ~LOAD%
+PRINT "Reload at ", ~LOAD_A%
+
+PRINT "S.ELTA ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_A%
+\SAVE "versions/disc/output/T.ELTA.bin", CODE%, P%, LOAD%
+
+\ ******************************************************************************
+\
 \ ELITE B FILE
 \
 \ ******************************************************************************
+
+CODE_B% = P%
+LOAD_B% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/variable/twos.asm"
 INCLUDE "library/common/main/variable/twos2.asm"
@@ -306,9 +289,28 @@ INCLUDE "library/6502sp/main/subroutine/hme2.asm"
 
 \ ******************************************************************************
 \
+\ Save output/ELTB.bin
+\
+\ ******************************************************************************
+
+PRINT "ELITE B"
+PRINT "Assembled at ", ~CODE_B%
+PRINT "Ends at ", ~P%
+PRINT "Code size is ", ~(P% - CODE_B%)
+PRINT "Execute at ", ~LOAD%
+PRINT "Reload at ", ~LOAD_B%
+
+PRINT "S.ELTB ", ~CODE_B%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_B%
+\SAVE "versions/cassette/output/T.ELTB.bin", CODE_B%, P%, LOAD%
+
+\ ******************************************************************************
+\
 \ ELITE C FILE
 \
 \ ******************************************************************************
+
+CODE_C% = P%
+LOAD_C% = LOAD% +P% - CODE%
 
 INCLUDE "library/6502sp/main/variable/hatb.asm"
 INCLUDE "library/6502sp/main/subroutine/hall.asm"
@@ -320,19 +322,7 @@ INCLUDE "library/6502sp/main/subroutine/unwise.asm"
 INCLUDE "library/common/main/subroutine/ll164.asm"
 INCLUDE "library/common/main/subroutine/laun.asm"
 INCLUDE "library/common/main/subroutine/hfs2.asm"
-
- EQUB &8C, &E7          \ This data appears to be unused (the same block appears
- EQUB &8D, &ED          \ in the flight code)
- EQUB &8A, &E6
- EQUB &C1, &C8
- EQUB &C8, &8B
- EQUB &E0, &8A
- EQUB &E6, &D6
- EQUB &C5, &C6
- EQUB &C1, &CA
- EQUB &95, &9D
- EQUB &9C, &97
-
+INCLUDE "library/disc/main/variable/unused_block.asm"
 INCLUDE "library/common/main/subroutine/mu5.asm"
 INCLUDE "library/common/main/subroutine/mls2.asm"
 INCLUDE "library/common/main/subroutine/squa.asm"
@@ -388,9 +378,28 @@ INCLUDE "library/common/main/subroutine/wscan.asm"
 
 \ ******************************************************************************
 \
+\ Save output/ELTC.bin
+\
+\ ******************************************************************************
+
+PRINT "ELITE C"
+PRINT "Assembled at ", ~CODE_C%
+PRINT "Ends at ", ~P%
+PRINT "Code size is ", ~(P% - CODE_C%)
+PRINT "Execute at ", ~LOAD%
+PRINT "Reload at ", ~LOAD_C%
+
+PRINT "S.ELTC ", ~CODE_C%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_C%
+\SAVE "versions/disc/output/T.ELTC.bin", CODE_C%, P%, LOAD%
+
+\ ******************************************************************************
+\
 \ ELITE D FILE
 \
 \ ******************************************************************************
+
+CODE_D% = P%
+LOAD_D% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/tnpr.asm"
 INCLUDE "library/common/main/subroutine/tt20.asm"
@@ -459,9 +468,28 @@ INCLUDE "library/6502sp/main/subroutine/refund.asm"
 
 \ ******************************************************************************
 \
+\ Save output/ELTD.bin
+\
+\ ******************************************************************************
+
+PRINT "ELITE D"
+PRINT "Assembled at ", ~CODE_D%
+PRINT "Ends at ", ~P%
+PRINT "Code size is ", ~(P% - CODE_D%)
+PRINT "Execute at ", ~LOAD%
+PRINT "Reload at ", ~LOAD_D%
+
+PRINT "S.ELTD ", ~CODE_D%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_D%
+\SAVE "versions/disc/output/T.ELTD.bin", CODE_D%, P%, LOAD%
+
+\ ******************************************************************************
+\
 \ ELITE E FILE
 \
 \ ******************************************************************************
+
+CODE_E% = P%
+LOAD_E% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/cpl.asm"
 INCLUDE "library/common/main/subroutine/cmn.asm"
@@ -514,9 +542,28 @@ INCLUDE "library/common/main/subroutine/ping.asm"
 
 \ ******************************************************************************
 \
+\ Save output/ELTE.bin
+\
+\ ******************************************************************************
+
+PRINT "ELITE E"
+PRINT "Assembled at ", ~CODE_E%
+PRINT "Ends at ", ~P%
+PRINT "Code size is ", ~(P% - CODE_E%)
+PRINT "Execute at ", ~LOAD%
+PRINT "Reload at ", ~LOAD_E%
+
+PRINT "S.ELTE ", ~CODE_E%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_E%
+\SAVE "versions/disc/output/T.ELTE.bin", CODE_E%, P%, LOAD%
+
+\ ******************************************************************************
+\
 \ ELITE F FILE
 \
 \ ******************************************************************************
+
+CODE_F% = P%
+LOAD_F% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/variable/sfx.asm"
 INCLUDE "library/common/main/subroutine/reset.asm"
@@ -599,9 +646,28 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
 
 \ ******************************************************************************
 \
+\ Save output/ELTF.bin
+\
+\ ******************************************************************************
+
+PRINT "ELITE F"
+PRINT "Assembled at ", ~CODE_F%
+PRINT "Ends at ", ~P%
+PRINT "Code size is ", ~(P% - CODE_F%)
+PRINT "Execute at ", ~LOAD%
+PRINT "Reload at ", ~LOAD_F%
+
+PRINT "S.ELTF ", ~CODE_F%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_F%
+\SAVE "versions/disc/output/T.ELTF.bin", CODE_F%, P%, LOAD%
+
+\ ******************************************************************************
+\
 \ ELITE G FILE
 \
 \ ******************************************************************************
+
+CODE_G% = P%
+LOAD_G% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/shppt.asm"
 INCLUDE "library/common/main/subroutine/ll5.asm"
@@ -633,9 +699,28 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
 
 \ ******************************************************************************
 \
+\ Save output/ELTG.bin
+\
+\ ******************************************************************************
+
+PRINT "ELITE G"
+PRINT "Assembled at ", ~CODE_G%
+PRINT "Ends at ", ~P%
+PRINT "Code size is ", ~(P% - CODE_G%)
+PRINT "Execute at ", ~LOAD%
+PRINT "Reload at ", ~LOAD_G%
+
+PRINT "S.ELTG ", ~CODE_G%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_G%
+\SAVE "versions/disc/output/T.ELTG.bin", CODE_G%, P%, LOAD%
+
+\ ******************************************************************************
+\
 \ ELITE H FILE
 \
 \ ******************************************************************************
+
+CODE_H% = P%
+LOAD_H% = LOAD% + P% - CODE%
 
 INCLUDE "library/6502sp/main/macro/ejmp.asm"
 INCLUDE "library/6502sp/main/macro/echr.asm"
@@ -665,9 +750,28 @@ INCLUDE "library/6502sp/main/variable/mtin.asm"
 
 \ ******************************************************************************
 \
+\ Save output/ELTH.bin
+\
+\ ******************************************************************************
+
+PRINT "ELITE H"
+PRINT "Assembled at ", ~CODE_H%
+PRINT "Ends at ", ~P%
+PRINT "Code size is ", ~(P% - CODE_H%)
+PRINT "Execute at ", ~LOAD%
+PRINT "Reload at ", ~LOAD_H%
+
+PRINT "S.ELTH ", ~CODE_H%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_H%
+\SAVE "versions/disc/output/T.ELTH.bin", CODE_H%, P%, LOAD%
+
+\ ******************************************************************************
+\
 \ ELITE SHIP HANGER BLUEPRINTS FILE
 \
 \ ******************************************************************************
+
+CODE_SHIPS% = P%
+LOAD_SHIPS% = LOAD% + P% - CODE%
 
 INCLUDE "library/disc/docked/variable/xx21.asm"
 INCLUDE "library/disc/docked/variable/e_per_cent.asm"
@@ -684,6 +788,22 @@ INCLUDE "library/6502sp/main/variable/ship_krait.asm"
 INCLUDE "library/6502sp/main/variable/ship_constrictor.asm"
 
  SKIP 171
+
+\ ******************************************************************************
+\
+\ Save output/SHIPS.bin
+\
+\ ******************************************************************************
+
+PRINT "SHIPS"
+PRINT "Assembled at ", ~CODE_SHIPS%
+PRINT "Ends at ", ~P%
+PRINT "Code size is ", ~(P% - CODE_SHIPS%)
+PRINT "Execute at ", ~LOAD%
+PRINT "Reload at ", ~LOAD_SHIPS%
+
+PRINT "S.SHIPS ", ~CODE_B%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_SHIPS%
+\SAVE "versions/disc/output/SHIPS.bin", CODE_SHIPS%, P%, LOAD%
 
 \ ******************************************************************************
 \

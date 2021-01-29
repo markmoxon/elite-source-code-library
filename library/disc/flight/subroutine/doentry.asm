@@ -1,13 +1,14 @@
 \ ******************************************************************************
 \
-\       Name: RDLI
-\       Type: Variable
+\       Name: DOENTRY
+\       Type: Subroutine
 \   Category: Loader
 \    Summary: 
 \
 \ ******************************************************************************
 
-.RDLI
+.DOENTRY
 
- EQUS "R.D.CODE"
- EQUB 13
+ LDA #&52
+ STA LTLI
+

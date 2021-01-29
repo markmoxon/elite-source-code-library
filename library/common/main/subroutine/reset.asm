@@ -34,8 +34,8 @@ ENDIF
 \     * ECMA - Turn E.C.M. off
 \
 IF _DISC_VERSION
-\
 \     * ALP1, ALP2 - Set roll signs to 0
+\
 ENDIF
 IF _CASSETTE_VERSION
 \ It also sets QQ12 to &FF, to indicate we are docked, and then falls through

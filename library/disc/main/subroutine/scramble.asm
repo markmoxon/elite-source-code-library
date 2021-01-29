@@ -1,0 +1,42 @@
+
+
+.scramble
+
+ LDY #0
+ STY SC
+ LDX #&13
+
+.scrl
+
+ STX SCH
+ TYA
+ EOR (SC),Y
+ EOR #&33
+ STA (SC),Y
+ DEY
+ BNE scrl
+
+ INX
+ 
+IF _DISC_FLIGHT
+ 
+ CPX #&56
+ 
+ELIF _DISC_DOCKED
+ 
+ CPX #&60
+  
+ENDIF
+ 
+ BNE scrl
+
+IF _DISC_FLIGHT
+ 
+ JMP RSHIPS
+
+ELIF _DISC_DOCKED
+
+ JMP BRKBK
+
+ENDIF
+

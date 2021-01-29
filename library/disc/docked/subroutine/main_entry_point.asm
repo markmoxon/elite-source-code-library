@@ -1,13 +1,21 @@
 \ ******************************************************************************
 \
-\       Name: RDLI
-\       Type: Variable
+\       Name: Main entry point
+\       Type: Subroutine
 \   Category: Loader
-\    Summary: 
+\    Summary: Decrypt and run the docked code
 \
 \ ******************************************************************************
 
-.RDLI
+ JMP DOENTRY
+ JMP DOBEGIN
+ JMP CHPR
 
- EQUS "R.D.CODE"
- EQUB 13
+ EQUW &114B
+
+ EQUB &4C
+
+.BRKV
+
+ EQUW &11D5
+

@@ -21,3 +21,10 @@ ENDIF
                         \ and fall through into the entry code for the game
                         \ to restart from the title screen
 
+IF _DISC_FLIGHT
+
+ JSR CATD               \ ????
+ BNE INBAY
+
+ENDIF
+

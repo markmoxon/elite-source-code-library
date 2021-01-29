@@ -1,13 +1,15 @@
 \ ******************************************************************************
 \
-\       Name: RDLI
-\       Type: Variable
+\       Name: SCRAM
+\       Type: Subroutine
 \   Category: Loader
 \    Summary: 
 \
 \ ******************************************************************************
 
-.RDLI
+.SCRAM
 
- EQUS "R.D.CODE"
- EQUB 13
+ JSR scramble
+ JSR RES2
+ JMP TT170
+

@@ -30,8 +30,6 @@ _DISC_DOCKED            = FALSE
 _DISC_FLIGHT            = TRUE
 
 TRTB% = &04             \ TRTB%(1 0) points to the keyboard translation table
-
-L0005   = $0005
 L0012   = $0012
 L0013   = $0013
 L0038   = $0038
@@ -62,13 +60,16 @@ L4BBA   = $4BBA
 L4BC3   = $4BC3
 L4BCC   = $4BCC
 
-VIA = $FE00
-OSWRCH  = $FFEE
-OSWORD  = $FFF1
-OSBYTE  = $FFF4
-OSCLI   = $FFF7
+OSWRCH = &FFEE          \ The address for the OSWRCH routine
+OSBYTE = &FFF4          \ The address for the OSBYTE routine
+OSWORD = &FFF1          \ The address for the OSWORD routine
+OSCLI = &FFF7           \ The address for the OSCLI vector
 
-CODE% = &5700
+VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
+                        \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
+                        \ known as SHEILA)
+
+CODE% = &5700           \ The address where this file (the third loader) loads
 LOAD% = &5700
 
 ORG CODE%

@@ -150,9 +150,13 @@ ENDIF
 
 IF _DISC_FLIGHT
 
- NOP                    \ ????
- NOP
- NOP
+ NOP                    \ In the first version of disc Elite, asteroids never
+ NOP                    \ appeared. It turned out that the authors had put in a
+ NOP                    \ jump to force traders to spawn, so they could test
+                        \ that part of the code, but had forgotten to remove it,
+                        \ so this was fixed in later versions by replacing the
+                        \ JMP instruction with NOPs... and this is where that
+                        \ was done
 
 ENDIF
 

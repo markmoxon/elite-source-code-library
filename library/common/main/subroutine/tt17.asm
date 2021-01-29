@@ -74,7 +74,7 @@ IF _6502SP_VERSION
 
 ENDIF
 
- TAX                    \ Copy A to X
+ TAX                    \ Copy A to X, to X contains the joystick roll value
 
  LDA JSTY               \ Fetch the joystick pitch, ranging from 1 to 255 with
                         \ 128 as the centre point, and fall through into TJS1 to
@@ -158,25 +158,29 @@ ENDIF
 
 IF _DISC_DOCKED
 
- STX T                  \ ????
+ STX T                  \ Set T to the value of X, which contains the joystick
+                        \ roll value
 
- LDX #0
- JSR DKS4
- BPL TJe
+ LDX #0                 \ Scan the keyboard to see if the SHIFT key is currently
+ JSR DKS4               \ being pressed, returning the result in A and X
 
- ASL T
- ASL T
- TYA
+ BPL TJe                \ If SHIFT is not being pressed, skip to TJe
+
+ ASL T                  \ SHIFT is being held down, so quadruple the value of T
+ ASL T                  \ (i.e. SHIFT moves the cursor at four times the speed
+                        \ when using the joystick)
+
+ TYA                    \ Fetch the joystick pitch value from Y into A
 
  ASL A                  \ SHIFT is being held down, so quadruple the value of A
  ASL A                  \ (i.e. SHIFT moves the cursor at four times the speed
-                        \ when using the keyboard)
+                        \ when using the joystick)
 
  TAY                    \ Transfer the amended value of A back into Y
 
 .TJe
 
- LDX T
+ LDX T                  \ Fetch the amended value of T back into X
 
  LDA KL                 \ Set A to the value of KL (the key pressed)
 

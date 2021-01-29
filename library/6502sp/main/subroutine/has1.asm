@@ -98,10 +98,22 @@
 
 IF _DISC_VERSION
 
-        LDX     #$04    \ ????
-.HAL51                  \ My label name
-        INX
-        INX
+                        \ We now work our way through the ship blueprints table
+                        \ for the hanger, counting valid blueprints until we
+                        \ have found the Y-th valid blueprint (we do this as the
+                        \ hanger blueprint table at XX21 is not fully populated,
+                        \ so the Y-th ship is not necessarily at position Y)
+
+ LDX #4                 \ We can start looking from ship blueprint 3, because we
+                        \ don't show ship 1 (missile) or ship 2 (space station)
+                        \ in the hanger. Setting X to 4, which then gets
+                        \ incremented to 6, will start us at XX21(5 4), which is
+                        \ the address of ship blueprint 3 (escape pod)
+
+.hloop
+
+ INX                    \ Increment X by 2 to point to the next blueprint in the
+ INX                    \ table
 
 ELIF _6502SP_VERSION
 
@@ -118,12 +130,16 @@ ENDIF
 
 IF _DISC_VERSION
 
- BEQ HAL51              \ If the high byte of the blueprint address is 0, then
-                        \ ????
+ BEQ hloop              \ If the high byte of the blueprint address is 0, then
+                        \ the blueprint for this ship is not available, so jump
+                        \ back to hloop to try the next ship along in the table
 
+ DEY                    \ We have found a valid blueprint, so decrement the ship
+                        \ number that we are looking for in Y
 
-        DEY             \ ????
-        BNE     HAL51
+ BNE hloop              \ If Y is not yet zero, we still haven't found the Y-th
+                        \ valid blueprint, so loop back to hloop to try the next
+                        \ ship along in the table
 
 ELIF _6502SP_VERSION
 

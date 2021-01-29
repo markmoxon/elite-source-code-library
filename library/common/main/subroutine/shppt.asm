@@ -3,7 +3,11 @@
 \       Name: SHPPT
 \       Type: Subroutine
 \   Category: Drawing ships
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
 \    Summary: Draw a distant ship as a point rather than a full wireframe
+ELIF _DISC_DOCKED
+\    Summary: Draw a distant ship as a point in the middle of the screen
+ENDIF
 \
 \ ******************************************************************************
 
@@ -41,9 +45,14 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
 
 ELIF _DISC_DOCKED
 
- LDA #&60               \ ????
- CMP #&BE
- BCS nono
+ LDA #Y                 \ Set A = the y-coordinate of a dot halfway down the
+                        \ screen
+
+ CMP #Y*2-2             \ If the y-coordinate is bigger than the y-coordinate of
+ BCS nono               \ the bottom of the screen, jump to nono as the ship's
+                        \ dot is off the bottom of the space view. This will
+                        \ never happen, but this code is copied from the flight
+                        \ code, where A can contain any y-coordinate
 
  LDY #2                 \ Call Shpt with Y = 2 to set up bytes 1-4 in the ship
  JSR Shpt               \ lines space, aborting the call to LL9 if the dot is
@@ -52,8 +61,8 @@ ELIF _DISC_DOCKED
 
  LDY #6                 \ Set Y to 6 for the next call to Shpt
 
- LDA #&60
- ADC #1
+ LDA #Y                 \ Set A = #Y + 1 (so this is the second row of the
+ ADC #1                 \ two-pixel-high dot halfway down the screen)
 
 ENDIF
 
@@ -116,7 +125,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
 
 ELIF _DISC_DOCKED
 
- LDA #&80               \ ????
+ LDA #X                 \ Set A = x-coordinate of the middle of the screen
 
 ENDIF
 

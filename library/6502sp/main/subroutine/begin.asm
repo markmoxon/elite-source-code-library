@@ -11,7 +11,7 @@
 
 IF _DISC_VERSION
 
- JSR BRKBK              \ ????
+ JSR BRKBK              \ Call BRKBK to set BRKV to point to the BRBR routine
 
 ELIF _6502SP_VERSION
 

@@ -112,14 +112,14 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _6502SP_VERSION
 
- BNE DLL12              \ If A is non-zero then we have something to draw, so
-                        \ jump to DLL12 to skip the following and move on to the
-                        \ drawing
+ BNE DLL12              \ Jump to DLL12 to skip the code for drawing a blank,
+                        \ and move on to drawing the indicator (this BNE is
+                        \ effectively a JMP as A is always non-zero)
 
 ELIF _DISC_VERSION
 
- JMP DLL12              \ Jump to DLL12 to skip the following and move on to the
-                        \ drawing ????
+ JMP DLL12              \ Jump to DLL12 to skip the code for drawing a blank,
+                        \ and move on to drawing the indicator
 
 ENDIF
 

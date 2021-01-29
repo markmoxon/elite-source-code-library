@@ -25,7 +25,10 @@ ENDIF
 
 IF _DISC_VERSION
 
- LDA #%00100000         \ Set A to ????
+ LDA #%00100000         \ Set A to the pixel pattern for a mode 4 character row
+                        \ byte with the third pixel set, so we start drawing the
+                        \ horizontal line just to the right of the 2-pixel
+                        \ border along the edge of the screen
 
 ELIF _6502SP_VERSION
 
@@ -79,7 +82,8 @@ ENDIF
 
 IF _DISC_VERSION
 
- LDA #%10000000         \ Reset the pixel mask in A to ????
+ LDA #%10000000         \ Reset the pixel mask in A to the first pixel in the
+                        \ new 8-pixel character block
 
 ELIF _6502SP_VERSION
 

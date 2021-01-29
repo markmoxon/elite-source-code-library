@@ -3,8 +3,12 @@
 \       Name: HALL
 \       Type: Subroutine
 \   Category: Ship hanger
+IF _DISC_VERSION
+\    Summary: Draw the ships in the ship hanger, then draw the hanger
+ELIF _6502SP_VERSION
 \    Summary: Draw the ships in the ship hanger, then draw the hanger by sending
 \             an OSWORD 248 command to the I/O processor
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
@@ -37,7 +41,10 @@ IF _6502SP_VERSION
 
 ELIF _DISC_VERSION
 
- JSR UNWISE             \ Call UNWISE to ????
+ JSR UNWISE             \ Call UNWISE to switch the main line-drawing routine
+                        \ between EOR and OR logic (in this case, switching it
+                        \ to OR logic so that it overwrites anything that's
+                        \ on-screen)
 
 ENDIF
 
@@ -144,7 +151,10 @@ IF _DISC_VERSION
 
  JSR DORND              \ Set XX15+2 = random number 0-7
  AND #7                 \
- STA XX15+2             \ which is the ship type of ????
+ STA XX15+2             \ which is either 0 (no ships in the hanger) or one of
+                        \ the first 7 ship types in the ship hanger blueprints
+                        \ table, i.e. a cargo canister, shuttle, transporter,
+                        \ Cobra Mk III, Python, Viper or Krait
 
 ELIF _6502SP_VERSION
 
@@ -160,7 +170,12 @@ ENDIF
                         \
                         \   * Random x-coordinate from -63 to +63
                         \
+IF _DISC_VERSION
+                        \   * Randomly chosen cargo canister, shuttle,
+                        \     transporter, Cobra Mk III, Python, Viper or Krait
+ELIF _6502SP_VERSION
                         \   * Randomly chosen Sidewinder, Mamba, Krait or Adder
+ENDIF
                         \
                         \   * Random z-coordinate from +256 to +639
 
@@ -200,9 +215,16 @@ IF _6502SP_VERSION
 
 ELIF _DISC_VERSION
 
- STY YSAV               \ ????
+ STY YSAV               \ Set YSAV = 0 to indicate that there is only one ship
+                        \ (so the HANGER routine knows not to draw between the
+                        \ ships)
 
- JSR UNWISE             \ Call UNWISE to ????
+ JSR UNWISE             \ Call UNWISE to switch the main line-drawing routine
+                        \ between EOR and OR logic (in this case, switching it
+                        \ back to EOR logic so that we can erase anything we
+                        \ draw on-screen)
+
+                        \ Fall through into HANGER to draw the hanger background
 
 ENDIF
 

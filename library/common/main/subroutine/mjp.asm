@@ -49,8 +49,8 @@ IF _CASSETTE_VERSION
 
 ELIF _DISC_VERSION
 
- LDA #3                 \ ????
- JSR SHIPinA
+ LDA #3                 \ Call SHIPinA to load ship blueprints file D, which is
+ JSR SHIPinA            \ one of the two files that contain Thargoids
 
  LDA #3                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 3

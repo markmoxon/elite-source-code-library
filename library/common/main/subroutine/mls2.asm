@@ -28,8 +28,8 @@
 
 IF _DISC_DOCKED
 
- LDX ALP1               \ ???? Has no effect, as P is about to be overwritten
- STX P
+ LDX ALP1               \ This repeats the first two instructions of MLS1, which
+ STX P                  \ is presumably unintentional (though it has no effect)
 
 ENDIF
 

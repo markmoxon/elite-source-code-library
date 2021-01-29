@@ -83,18 +83,18 @@ ENDIF
 
 IF _DISC_FLIGHT
 
-        LDA     QQ11
-        BNE     P%+5
+ LDA QQ11
+ BNE P%+5
 
-        JMP     TTH111
+ JMP TTH111
 
 ELIF _DISC_DOCKED
 
-        LDA     QQ11
-        BEQ     TTH111
+ LDA QQ11
+ BEQ TTH111
 
-        AND     #$C0
-        BEQ     zZ+1
+ AND #&C0
+ BEQ zZ+1
 
 ENDIF
 

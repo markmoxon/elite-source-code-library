@@ -169,11 +169,16 @@ ELIF _DISC_DOCKED
  CMP #&54               \ If "H" was not pressed, jump to NWDAV5 to skip the
  BNE NWDAV5             \ following
 
- JSR CLYNS              \ ????
- LDA #$0F
- STA XC
- LDA #$CD
- JMP DETOK
+ JSR CLYNS              \ "H" was pressed, so clear the bottom three text rows
+                        \ of the upper screen, and move the text cursor to
+                        \ column 1 on row 21, i.e. the start of the top row of
+                        \ the three bottom rows
+
+ LDA #15                \ Move the text cursor to column 15 (the middle of the
+ STA XC                 \ screen)
+
+ LDA #205               \ Print extended token 205 ("DOCKED") and return from
+ JMP DETOK              \ the subroutine using a tail call
 
 ENDIF
 

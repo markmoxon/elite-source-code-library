@@ -63,20 +63,28 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
 
 ELIF _DISC_DOCKED
 
- LDX #&3F               \ ????
+ LDX #63                \ Before loading the flight code, we need to copy the
+                        \ two-letter token table from QQ16 to QQ16_FLIGHT, so
+                        \ we set a counter in X for the 64 bytes in the table
 
-.L2E94
+.eny1
 
- LDA QQ16,X
- STA QQ16_FLIGHT,X
- DEX
- BPL &2E94
+ LDA QQ16,X             \ Copy the X-th byte of QQ16 to the X-th byte of
+ STA QQ16_FLIGHT,X      \ QQ16_FLIGHT
 
- JSR &0D7A
+ DEX                    \ Decrement the loop counter
 
- LDX #LO(RDLI)
+ BPL eny1               \ Loop back to copy the next byte until we have copied
+                        \ the whole table
+
+ JSR CATD               \ Call CATD to reload the disc catalogue
+
+ LDX #LO(RDLI)          \ Set (Y X) to point to RDLI ("R.D.CODE")
  LDY #HI(RDLI)
- JMP OSCLI
+
+ JMP OSCLI              \ Call OSCLI to run the OS command in RDLI, which *RUNs
+                        \ the main flight code in D.CODE, returning from the
+                        \ subroutine using a tail call
 
 ENDIF
 

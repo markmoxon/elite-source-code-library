@@ -23,8 +23,10 @@ ENDIF
 
 IF _DISC_FLIGHT
 
- JSR CATD               \ ????
- BNE INBAY
+ JSR CATD               \ Call CATD to reload the disc catalogue
+
+ BNE INBAY              \ Jump to INBAY to load the docked code (this BNE is
+                        \ effectively a JMP)
 
 ENDIF
 

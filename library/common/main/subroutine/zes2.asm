@@ -7,7 +7,11 @@
 \
 \ ------------------------------------------------------------------------------
 \
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED
 \ Zero-fill from address (X SC) + Y to (X SC) + &FF.
+ELIF _DISC_FLIGHT
+\ Zero-fill from address (X SC) to (X SC) + Y.
+ENDIF
 \
 \ Arguments:
 \
@@ -15,7 +19,11 @@
 \                       the zero-fill
 \
 \   Y                   The offset from (X SC) where we start zeroing, counting
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED
 \                       up to to &FF
+ELIF _DISC_FLIGHT
+\                       down to 0
+ENDIF
 \
 \   SC                  The low byte (i.e. the offset into the page) of the
 \                       starting point of the zero-fill
@@ -50,7 +58,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED
 
 ELIF _DISC_FLIGHT
 
- DEY                    \ ????
+ DEY                    \ Decrement the loop counter
 
 ENDIF
 

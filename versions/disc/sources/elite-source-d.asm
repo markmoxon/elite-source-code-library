@@ -130,14 +130,14 @@ ACT = &07E0             \ The address of the arctan lookup table
 
 QQ16 = &0880            \ The address of the two-letter text token table
 
+CATD = &0D7A            \ The address of the CATD routine that is put in place
+                        \ by the third loader
+
 XX21 = &5600            \ The address of the ship blueprints lookup table, where
                         \ the chosen ship blueprints file is loaded
 
 E% = &563E              \ The address of the default NEWB ship bytes within the
                         \ loaded ship blueprints file
-
-CATD = &0D7A            \ The address of the CATD routine that is put in place
-                        \ by the third loader
 
 INCLUDE "library/common/main/workspace/zp.asm"
 INCLUDE "library/common/main/workspace/xx3.asm"

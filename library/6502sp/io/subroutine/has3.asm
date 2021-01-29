@@ -49,7 +49,7 @@
 
 IF _DISC_VERSION
 
- LDA #%00000001         \ Set a mask in A to ????
+ LDA #%00000001         \ Set a mask in A to the last pixel in the 8-pixel byte
 
 ELIF _6502SP_VERSION
 

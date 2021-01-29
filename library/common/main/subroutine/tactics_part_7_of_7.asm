@@ -160,8 +160,10 @@ ELIF _DISC_VERSION
 
  TAX                    \ Copy A into X so we can retrieve it below
 
- JSR nroll              \ ????
- STA INWK+30
+ JSR nroll              \ Call nroll to calculate the value of the ship's pitch
+                        \ counter
+
+ STA INWK+30            \ Store the result in the ship's pitch counter
 
 ELIF _6502SP_VERSION
 
@@ -215,10 +217,15 @@ ELIF _DISC_VERSION
 
  TAX                    \ Copy A into X so we can retrieve it below
 
- EOR INWK+30
- JSR nroll              \ ????
+ EOR INWK+30            \ Give A the correct sign of the dot product * the
+                        \ current pitch direction (i.e. the sign is negative if
+                        \ the pitch counter and dot product have different
+                        \ signs, positive if they have the same sign)
 
- STA INWK+29
+ JSR nroll              \ Call nroll to calculate the value of the ship's pitch
+                        \ counter
+
+ STA INWK+29            \ Store the result in the ship's roll counter
 
 .TA12
 
@@ -358,21 +365,30 @@ ENDIF
 IF _DISC_VERSION
 
 .nroll
-        EOR     #$80
-        AND     #$80
-        STA     T
-        TXA
-        ASL     A
-        CMP     RAT2
-        BCC     nroll2
 
-        LDA     RAT
-        ORA     T
-        RTS
+ EOR #%10000000         \ Give the ship's pitch counter the opposite sign to the
+ AND #%10000000         \ dot product result, with a value of 0, and store it in
+ STA T                  \ T
+
+ TXA                    \ Retrieve the original value of A from X
+
+ ASL A                  \ Shift A left to double it and drop the sign bit
+
+ CMP RAT2               \ If A < RAT2, skip to nroll2 (so if RAT2 = 0, we always
+ BCC nroll2             \ set the pitch counter to RAT)
+
+ LDA RAT                \ Set the magnitude of the ship's pitch counter to RAT
+ ORA T                  \ (we already set the sign above and stored it in T)
+
+ RTS                    \ Return from the subroutine
 
 .nroll2
-        LDA     T
-        RTS
+
+ LDA T                  \ Set A to the value we stored in T above, which has a
+                        \ value of 0 and the opposite sign to the dot product
+                        \ result
+
+ RTS                    \ Return from the subroutine
 
 ENDIF
 

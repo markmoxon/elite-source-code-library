@@ -67,9 +67,11 @@ IF _CASSETTE_VERSION
 
 ELIF _DISC_VERSION
 
- JSR DFAULT             \ ????
+ JSR DFAULT             \ Call DFAULT to reset the current commander data block
+                        \ to the last saved commander
 
- JSR SVE
+ JSR SVE                \ Call SVE to load a new commander into the last saved
+                        \ commander data block
 
 ENDIF
 
@@ -168,7 +170,8 @@ ENDIF
 
 ELIF _DISC_VERSION
 
- JSR DFAULT             \ ????
+ JSR DFAULT             \ Call DFAULT to reset the current commander data block
+                        \ to the last saved commander
 
 ENDIF
 

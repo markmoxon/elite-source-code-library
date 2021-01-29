@@ -25,6 +25,20 @@
 \ Ths ship's y-coordinate is calculated in the has1 routine from the size of
 \ its targetable area. Ships of type 0 are not shown.
 \
+IF _DISC_VERSION
+\ Note that ship numbers are for the ship hanger blueprints at XX21 in the
+\ docked code, rather than the full set of ships in the flight code. They are:
+\
+\   1 = Cargo canister
+\   2 = Shuttle
+\   3 = Transporter
+\   4 = Cobra Mk III
+\   5 = Python
+\   6 = Viper
+\   7 = Krait
+\   8 = Constrictor
+\
+ENDIF
 \ ******************************************************************************
 
 .HATB
@@ -34,7 +48,7 @@
                         \ Shuttle (left) and Transporter (right)
 
 IF _DISC_VERSION
- EQUB 2                 \ Ship type = 2 = ????
+ EQUB 2                 \ Ship type in the hanger = 2 = Shuttle
 ELIF _6502SP_VERSION
  EQUB 9                 \ Ship type = 9 = Shuttle
 ENDIF
@@ -42,7 +56,7 @@ ENDIF
  EQUB %00111011         \ z_lo = %00111011 = 59, x_sign = 1        z = +315
 
 IF _DISC_VERSION
- EQUB 3                 \ Ship type = 3 = ????
+ EQUB 3                 \ Ship type in the hanger = 3 = Transporter
 ELIF _6502SP_VERSION
  EQUB 10                \ Ship type = 10 = Transporter
 ENDIF
@@ -59,7 +73,7 @@ ENDIF
                         \ right)
 
 IF _DISC_VERSION
- EQUB 1                 \ Ship type = 1 = ????
+ EQUB 1                 \ Ship type in the hanger = 1 = Cargo canister
 ELIF _6502SP_VERSION
  EQUB OIL               \ Ship type = OIL = Cargo canister
 ENDIF
@@ -67,7 +81,7 @@ ENDIF
  EQUB %00010001         \ z_lo = %00010001 = 17, x_sign = 1        z = +273
 
 IF _DISC_VERSION
- EQUB 1                 \ Ship type = 1 = ????
+ EQUB 1                 \ Ship type in the hanger = 1 = Cargo canister
 ELIF _6502SP_VERSION
  EQUB OIL               \ Ship type = OIL = Cargo canister
 ENDIF
@@ -75,7 +89,7 @@ ENDIF
  EQUB %00101000         \ z_lo = %00101000 =  40, x_sign = 0       z = +552
 
 IF _DISC_VERSION
- EQUB 1                 \ Ship type = 1 = ????
+ EQUB 1                 \ Ship type in the hanger = 1 = Cargo canister
 ELIF _6502SP_VERSION
  EQUB OIL               \ Ship type = OIL = Cargo canister
 ENDIF
@@ -84,13 +98,17 @@ ENDIF
 
                         \ Hanger group for X = 18
                         \
+IF _DISC_VERSION
+                        \ Transporter (right) and Cobra Mk III (left)
+ELIF _6502SP_VERSION
                         \ Viper (right) and Krait (left)
+ENDIF
                         \
                         \ (This group consists of a Transporter and Cobra Mk III
                         \ in the disc version)
 
 IF _DISC_VERSION
- EQUB 3                 \ Ship type = 3 = ????
+ EQUB 3                 \ Ship type in the hanger = 3 = Transporter
 ELIF _6502SP_VERSION
  EQUB COPS              \ Ship type = COPS = Viper
 ENDIF
@@ -98,7 +116,7 @@ ENDIF
  EQUB %10010000         \ z_lo = %10010000 = 144, x_sign = 0       z = +400
 
 IF _DISC_VERSION
- EQUB 4                 \ Ship type = 4 = ????
+ EQUB 4                 \ Ship type in the hanger = 4 = Cobra Mk III
 ELIF _6502SP_VERSION
  EQUB KRA               \ Ship type = KRA = Krait
 ENDIF
@@ -114,7 +132,7 @@ ENDIF
                         \ Viper (right and forward) and Krait (left)
 
 IF _DISC_VERSION
- EQUB 6                 \ Ship type = 6 = ????
+ EQUB 6                 \ Ship type in the hanger = 6 = Viper
 ELIF _6502SP_VERSION
  EQUB 16                \ Ship type = 16 = Viper
 ENDIF
@@ -122,7 +140,7 @@ ENDIF
  EQUB %11111000         \ z_lo = %11111000 = 248, x_sign = 0       z = +760
 
 IF _DISC_VERSION
- EQUB 7                 \ Ship type = 7 = ????
+ EQUB 7                 \ Ship type in the hanger = 7 = Krait
 ELIF _6502SP_VERSION
  EQUB 19                \ Ship type = 19 = Krait
 ENDIF

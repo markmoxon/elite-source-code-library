@@ -53,19 +53,21 @@ IF _6502SP_VERSION
 
 ELIF _DISC_DOCKED
 
- LDA JSTK               \ ????
- BEQ DK9
+ LDA JSTK               \ If JSTK is zero, then we are configured to use the
+ BEQ DK9                \ keyboard rather than the joystick, so jump to DK9 to
+                        \ make sure the Bitstik is disabled as well (DK9 then
+                        \ jumps to DK4 below)
 
- LDX #1
- JSR DKS2
+ LDX #1                 \ Call DKS2 to fetch the value of ADC channel 1 (the
+ JSR DKS2               \ joystick X value) into (A X), and OR A with 1. This
+ ORA #1                 \ ensures that the high byte is at least 1, and then we
+ STA JSTX               \ store the result in JSTX
 
- ORA #1
- STA JSTX
- LDX #2
- JSR DKS2
-
- EOR JSTGY
- STA JSTY
+ LDX #2                 \ Call DKS2 to fetch the value of ADC channel 2 (the
+ JSR DKS2               \ joystick Y value) into (A X), and EOR A with JSTGY.
+ EOR JSTGY              \ JSTGY will be &FF if the game is configured to
+ STA JSTY               \ reverse the joystick Y channel, so this EOR does
+                        \ exactly that, and then we store the result in JSTY
 
 ENDIF
 

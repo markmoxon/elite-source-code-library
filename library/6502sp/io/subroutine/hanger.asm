@@ -3,12 +3,21 @@
 \       Name: HANGER
 \       Type: Subroutine
 \   Category: Ship hanger
+IF _DISC_VERSION
+\    Summary: Display the ship hanger
+ELIF _6502SP_VERSION
 \    Summary: Implement the OSWORD 248 command (display the ship hanger)
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
+IF _DISC_VERSION
+\ This routine is called after the ships in the hanger have been drawn, so all
+\ it has to do is draw the hanger's background.
+ELIF _6502SP_VERSION
 \ This command is sent after the ships in the hanger have been drawn, so all it
 \ has to do is draw the hanger's background.
+ENDIF
 \
 \ The hanger background is made up of two parts:
 \
@@ -90,12 +99,15 @@ IF _DISC_VERSION
                         \ screen, so Y is now the horizontal pixel row of the
                         \ line we want to draw to display the hanger floor
 
- LSR A                  \ ????
+ LSR A                  \ Set A = A >> 3
  LSR A
  LSR A
 
-        ORA     #$60
-        STA     SCH
+ ORA #&60               \ Each character row in Elite's screen mode takes up one
+                        \ page in memory (256 bytes), so we now OR with &60 to
+                        \ get the page containing the line
+
+ STA SCH                \ Store the screen page in the high byte of SC(1 0)
 
 ELIF _6502SP_VERSION
 
@@ -129,7 +141,10 @@ ENDIF
 
 IF _DISC_VERSION
 
- LDA     #$04           \ ????
+ LDA #%00000100         \ Now to draw the same line but from the right edge of
+                        \ the screen, so set a pixel mask in A to check the
+                        \ sixth pixel of the last byte, so we skip the 2-pixel
+                        \ scren border at the right edge of the screen
 
 ELIF _6502SP_VERSION
 
@@ -155,7 +170,11 @@ ENDIF
 
 IF _DISC_VERSION
 
- LDY     YSAV           \ ????
+ LDY YSAV               \ Fetch the value of YSAV, which gets set to 0 in the
+                        \ HALL routine above if there is only one ship
+
+ BEQ HA2                \ If YSAV is zero, jump to HA2 to skip the following
+                        \ as there is only one ship in the hanger
 
 ELIF _6502SP_VERSION
 
@@ -163,10 +182,10 @@ ELIF _6502SP_VERSION
  LDA (OSSC),Y           \ whether the ship hanger contains just one ship, or
  TAY                    \ multiple ships
 
-ENDIF
-
  BEQ HA2                \ If byte #2 is zero, jump to HA2 to skip the following
                         \ as there is only one ship in the hanger
+
+ENDIF
                         
                         \ If we get here then there are multiple ships in the
                         \ hanger, so we also need to draw the horizontal line in
@@ -174,11 +193,22 @@ ENDIF
 
 IF _DISC_VERSION
 
-        JSR HAS2
+ JSR HAS2               \ Call HAS2 to a line to the right, starting with the
+                        \ third pixel of the pixel row at screen address SC(1 0)
 
-        LDY     #$80
-        LDA     #$40
-        JSR HAS3
+ LDY #128               \ We now draw the line from the centre of the screen
+                        \ to the left. SC(1 0) points to the start address of
+                        \ the screen row, so we set Y to 128 so the call to
+                        \ HAS3 starts drawing from halfway along the row (i.e.
+                        \ from the centre of the screen)
+
+ LDA #%01000000         \ We want to start drawing from the second pixel, to
+                        \ avoid the border, so we set a pixel mask accordingly
+
+ JSR HAS3               \ Call HAS3, which draws a line from the halfway point
+                        \ across the left half of the screen, going left until
+                        \ we bump into something already on-screen, at which
+                        \ point it stops drawing
 
 ELIF _6502SP_VERSION
 
@@ -203,7 +233,7 @@ ELIF _6502SP_VERSION
  LDY #248               \ We now draw the line from the centre of the screen
                         \ to the left. SC(1 0) points to the start address of
                         \ the first half of the screen row, so we set Y to 248
-                        \ so the call to HAL3 starts drawing from the last
+                        \ so the call to HAS3 starts drawing from the last
                         \ character in that first half
 
  LDA #%00010000         \ We want to start drawing from the last pixel, so we
@@ -266,14 +296,20 @@ ENDIF
 
 IF _DISC_VERSION
 
-        LDX     #$60    \ ????
-        STX     SCH
-        STA     XSAV
+ LDX #&60               \ Set the high byte of SC(1 0) to &60, the high byte of
+ STX SCH                \ the start of screen
 
- AND #%11111000         \ 
- STA SC                 \ ????
+ STA XSAV               \ Store this value in XSAV, so we can retrieve it later
 
- LDX #%10000000         \ Set a mask in X to the first pixel in ????
+ AND #%11111000         \ Each character block contains 8 pixel rows, so to get
+                        \ the address of the first byte in the character block
+                        \ that we need to draw into, as an offset from the start
+                        \ of the row, we clear bits 0-2
+
+ STA SC                 \ Set the low byte of SC(1 0) to this value, so SC(1 0)
+                        \ now points to the address where the line starts
+
+ LDX #%10000000         \ Set a mask in X to the first pixel the 8-pixel byte
 
 ELIF _6502SP_VERSION
 
@@ -307,17 +343,22 @@ ENDIF
 
  TXA                    \ Copy the pixel mask to A again
 
-IF _6502SP_VERSION
+IF _DISC_VERSION
+
+ ORA (SC),Y             \ OR the byte with the current contents of screen
+                        \ memory, so the pixel we want is set
+
+ELIF _6502SP_VERSION
 
  AND #RED               \ Apply the pixel mask in A to a four-pixel block of
                         \ red pixels, so we now know which bits to set in screen
                         \ memory
 
-ENDIF
-
  ORA (SC),Y             \ OR the byte with the current contents of screen
                         \ memory, so the pixel we want is set to red (because
                         \ we know the bits are already 0 from the above test)
+
+ENDIF
 
  STA (SC),Y             \ Store the updated pixel in screen memory
 
@@ -329,7 +370,8 @@ ENDIF
 
 IF _DISC_VERSION
 
- INC SC+1               \ ????
+ INC SC+1               \ Point SC(1 0) to the next page in memory, i.e. the
+                        \ next character row
 
 ELIF _6502SP_VERSION
 

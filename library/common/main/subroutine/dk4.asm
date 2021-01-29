@@ -114,7 +114,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
 
 ELIF _DISC_DOCKED
 
- JMP BR1                \ ????
+ JMP BR1                \ Jump to BR1 to restart the game
 
 ENDIF
 
@@ -234,8 +234,12 @@ IF _DISC_DOCKED
 
 .DK9
 
- STA BSTK               \ ????
- BEQ DK4
+ STA BSTK               \ DK9 is called from DOKEY using a BEQ, so we know A is
+                        \ 0, so this disables the Bitstik and switched to
+                        \ keyboard or joystick
+
+ BEQ DK4                \ Jump back to DK4 in DOKEY (this BEQ is effectively a
+                        \ JMP as A is always zero)
 
 ENDIF
 

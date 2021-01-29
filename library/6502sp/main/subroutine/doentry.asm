@@ -12,7 +12,7 @@
 
 IF _DISC_VERSION
 
- JSR scramble           \ ????
+ JSR scramble           \ Decrypt the newly loaded code
 
  JSR RES2               \ Reset a number of flight variables and workspaces
 

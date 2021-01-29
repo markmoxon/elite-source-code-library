@@ -18,7 +18,7 @@
 
 IF _DISC_VERSION
 
- LDY #8                 \ ????
+ LDY #8                 \ Wait for 8/50 of a second (0.16 seconds)
  JSR DELAY
 
 ELIF _6502SP_VERSION

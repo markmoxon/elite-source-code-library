@@ -93,9 +93,12 @@ ENDIF
 
 IF _DISC_VERSION
 
-        LDA     NEWB    \ ????
-        AND     #$1C
-        STA     NEWB
+ LDA NEWB               \ Clear bits 0-1 and 5-7 of the ship's NEWB flags,
+ AND #%00011100         \ leaving only the hostile, pirate and docking flags
+ STA NEWB               \ (so the child inherits these flags from the parent,
+                        \ meaning pirates spawn pirates, angry ships spawn
+                        \ angry ships, and ships that are docking spawn ships
+                        \ that are also docking)
 
 ENDIF
 

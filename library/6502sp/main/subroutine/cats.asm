@@ -44,8 +44,8 @@
 
 IF _DISC_VERSION
 
- LDA #1                 \ ????
- STA CATF
+ LDA #1                 \ Set the CATF flag to 1, so that the TT26 routine will
+ STA CATF               \ print out the disc catalogue correctly
 
 ELIF _6502SP_VERSION
 
@@ -68,7 +68,8 @@ IF _DISC_VERSION
  JSR OSCLI              \ Call OSCLI to execute the OS command at (Y X), which
                         \ catalogues the disc
 
- DEC CATF               \ ????
+ DEC CATF               \ Decrement the CATF flag back to 0, so the TT26 routine
+                        \ reverts to standard formatting
 
 ELIF _6502SP_VERSION
 

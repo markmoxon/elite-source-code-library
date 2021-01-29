@@ -78,7 +78,7 @@ ENDIF
 
 IF _DISC_VERSION
 
- LDA #&4B               \ ????
+ LDA #&4B               \ ???? Copy protection
  STA L19D2+1
 
 ENDIF
@@ -286,7 +286,7 @@ ENDIF
 
 IF _DISC_VERSION
 
- LDA #&29               \ ????
+ LDA #&29               \ ???? Copy protection
  STA L19D2+2
 
 ENDIF
@@ -396,16 +396,18 @@ ENDIF
 
 IF _DISC_VERSION
 
- LDA #&00               \ ????
+ LDA #&00               \ Set ZP(1 0) = &6300
  STA ZP
  LDA #&63
  STA ZP+1
- LDA #&62
+
+ LDA #&62               \ Set P(1 0) = &2A62
  STA P
  LDA #&2A
  STA P+1
- LDX #&08
- JSR MVPG
+
+ LDX #8                 \ Call MVPG with X = 8 to copy 8 pages of memory from
+ JSR MVPG               \ the address in P(1 0) to the address in ZP(1 0)
 
 ENDIF
 

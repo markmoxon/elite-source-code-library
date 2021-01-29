@@ -88,16 +88,16 @@ ELIF _DISC_FLIGHT
  LSR A                  \ and bit 0 of QQ11 is 1 (the current view is type 1),
  BCS P%+7               \ then skip the following two instructions
 
- LDY #2                 \ ????
- JSR DELAY
+ LDY #2                 \ Wait for 2/50 of a second (0.04 seconds), to slow the
+ JSR DELAY              \ main loop down a bit
 
 ELIF _DISC_DOCKED
 
  LDA QQ11               \ If this is a space view, skip the following two
  BEQ P%+7               \ instructions (i.e. jump to JSR TT17 below)
 
- LDY #2                 \ ????
- JSR DELAY
+ LDY #2                 \ Wait for 2/50 of a second (0.04 seconds), to slow the
+ JSR DELAY              \ main loop down a bit
 
 ELIF _6502SP_VERSION
 

@@ -23,13 +23,13 @@
 
 IF _DISC_DOCKED
 
- NOP                    \ ????
- NOP
- NOP
- NOP
- NOP
- NOP
- NOP
+ NOP                    \ In the first version of disc Elite, there was a nasty
+ NOP                    \ bug where buying a laser that you already owned gave
+ NOP                    \ you a refund of the laser's worth without removing the
+ NOP                    \ laser, so you could keep doing this to get as many
+ NOP                    \ credits as you liked. This was quickly fixed by
+ NOP                    \ replacing the incorrect code with NOPs, which is what
+ NOP                    \ we have here
  NOP
  NOP
 

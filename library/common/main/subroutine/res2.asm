@@ -65,7 +65,7 @@ ENDIF
 
 IF _DISC_FLIGHT
 
- STA QQ22+1             \ ????
+ STA QQ22+1             \ Set the on-screen hyperspace counter to 0
 
 ENDIF
 
@@ -126,7 +126,7 @@ ENDIF
 
 IF _DISC_FLIGHT
 
- JSR U%                 \ ????
+ JSR U%                 \ Call U% to clear the key logger
 
 ENDIF
 

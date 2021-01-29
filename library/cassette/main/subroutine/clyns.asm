@@ -30,8 +30,8 @@
 
 IF _DISC_DOCKED
 
-        LDA     #$FF    \ ????
-        STA     DTW2
+ LDA #%11111111         \ Set DTW2 = %11111111 to denote that we are not
+ STA DTW2               \ currently printing a word
 
 ENDIF
 

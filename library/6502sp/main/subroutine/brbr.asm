@@ -32,7 +32,8 @@
 
 IF _DISC_VERSION
 
- BNE BR1                \ ????
+ BNE BR1                \ If the brkd counter is non-zero, jump to BR1 to
+                        \ restart the game
 
 ELIF _6502SP_VERSION
 

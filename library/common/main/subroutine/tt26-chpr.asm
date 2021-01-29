@@ -107,7 +107,7 @@ ELIF _DISC_DOCKED
  STY YSAV2              \ them at the end (so they don't get changed by this
  STX XSAV2              \ routine)
 
-.CHPR2
+.RRNEW
 
  LDY QQ17               \ Load the QQ17 flag, which contains the text printing
                         \ flags
@@ -466,7 +466,7 @@ ENDIF
 
 IF _DISC_FLIGHT
 
- INC XC                 \ ????
+ INC XC                 \ Move the text cursor to the right by 1 column
 
 ENDIF
 
@@ -633,11 +633,9 @@ ELIF _DISC_DOCKED
                         \ the next instruction, so presumably we didn't need to
                         \ preserve it and this and the PHA above have no effect
 
- LDA K3                 \ Set A to the character to be printed, though again
-                        \ this has no effect, as the following call to RR4 does
-                        \ the exact same thing
+ LDA K3                 \ Set A to the character to be printed
 
- JMP CHPR2              \ ???? I added this label myself
+ JMP RRNEW              \ Jump back to RRNEW to print the character
 
 ELIF _6502SP_VERSION
 
@@ -793,7 +791,8 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
 
 ELIF _DISC_DOCKED
 
- ORA (SC),Y             \ ????
+ ORA (SC),Y             \ OR this value with the current contents of screen
+                        \ memory, so the pixels we want to draw are set
 
 ENDIF
 

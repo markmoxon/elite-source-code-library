@@ -50,7 +50,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
                         \ page in memory (256 bytes), so we now OR with &60 to
                         \ get the page containing the dash (see the comments in
                         \ routine TT26 for more discussion about calculating
-                        \ screen memory addresses
+                        \ screen memory addresses)
 
  STA SCH                \ Store the screen page in the high byte of SC(1 0)
 

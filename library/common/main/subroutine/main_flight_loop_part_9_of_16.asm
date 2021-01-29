@@ -78,7 +78,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION
 ELIF _DISC_VERSION
 
  CMP #86                \ 4. If z-axis < 86, jump to MA62 to fail docking, as
- BCC MA62               \ we are not in the ???? degree safe cone of approach
+ BCC MA62               \ we are not in the 26.3 degree safe cone of approach
 
 ENDIF
 
@@ -110,10 +110,14 @@ IF _CASSETTE_VERSION
 
 ELIF _DISC_VERSION
 
-        JSR     RES2   \????
+ JSR RES2               \ Reset a number of flight variables and workspaces
 
-        LDA     #&08
-        JSR     HFS2
+ LDA #8                 \ Set the step size for the launch tunnel rings to 8, so
+                        \ there are fewer sections in the rings and they are
+                        \ quite polygonal (compared to the step size of 4 used
+                        \ in the much rounder hyperspace rings)
+
+ JSR HFS2               \ Call HFS2 to draw the launch tunnel rings
 
  JMP DOENTRY            \ Go to the docking bay (i.e. show the ship hanger)
 

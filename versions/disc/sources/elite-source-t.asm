@@ -141,6 +141,9 @@ ACT = &07E0             \ The address of the arctan lookup table
 QQ16_FLIGHT = &0880     \ The address of the two-letter text token table in the
                         \ flight code
 
+CATD = &0D7A            \ The address of the CATD routine that is put in place
+                        \ by the third loader
+
 NA% = &1181             \ The address of data block for the last saved commander
 
 CHK2 = &11D3            \ The address of the second checksum byte for the saved
@@ -456,7 +459,7 @@ INCLUDE "library/common/main/subroutine/lcash.asm"
 INCLUDE "library/common/main/subroutine/mcash.asm"
 INCLUDE "library/common/main/subroutine/gcash.asm"
 INCLUDE "library/common/main/subroutine/gc2.asm"
-INCLUDE "library/disc/docked/variable/rdli.asm"
+INCLUDE "library/6502sp/main/variable/rdli.asm"
 INCLUDE "library/common/main/subroutine/eqshp.asm"
 INCLUDE "library/common/main/subroutine/dn.asm"
 INCLUDE "library/common/main/subroutine/dn2.asm"

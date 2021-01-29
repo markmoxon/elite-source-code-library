@@ -70,14 +70,14 @@ ENDIF
 
 IF _DISC_VERSION
 
-        LDA     K2+4    \ ????
-        CMP     #&DB
-        BEQ     tiwe
+ LDA K2+4               \ ????
+ CMP #&DB
+ BEQ tiwe
 
-        LDA     #$10
-        STA     &36B8
-        LDA     #$FE
-        STA     &36B9
+ LDA #&10
+ STA &36B8
+ LDA #&FE
+ STA &36B9
 
 .tiwe
 

@@ -343,23 +343,36 @@ ENDIF
 
 IF _DISC_VERSION
 
-        STA     CPIR    \ ????
-.L40C8
-        LDA     CPIR
- ADC #PACK              \ #PACK is set to #SH3, the ship type for a Sidewinder,
-                        \ so this sets our new ship type to one of the pack
+ STA CPIR               \ Set CPIR to this random number in the range 0-7
+
+.more
+
+ LDA CPIR               \ #PACK is set to #SH3, the ship type for a Sidewinder,
+ ADC #PACK              \ so this sets our new ship type to one of the pack
                         \ hunters, namely a Sidewinder, Mamba, Krait, Adder,
                         \ Gecko, Cobra Mk I, Worm or Cobra Mk III (pirate)
-        JSR     NWSHP
 
-        BCS     L40D7
+ JSR NWSHP              \ Try adding a new ship of type A to the local bubble
 
-        DEC     CPIR
-        BPL     L40C8
+ BCS P%+7               \ If the ship was successfully added, skip the following
+                        \ two instructions
 
-.L40D7
-        DEC     XX13
-        BPL     mt3
+ DEC CPIR               \ The ship wasn't added, which might be because the ship
+                        \ blueprint for this ship type isn't in the currently
+                        \ loaded ship blueprints file, so decrement CPIR to
+                        \ point to the previous ship type, so we can try
+                        \ spawning that type of pirate instead
+
+ BPL more               \ Loop back to more to have another go at spawning this
+                        \ pirate, until we have tried spawning a Sidewinder
+                        \ CPIR is 0, in which case give up and move on to the
+                        \ next pirate to spawn
+
+ DEC XX13               \ Decrement the pirate counter
+
+ BPL mt3                \ If we need more pirates, loop back up to mt3,
+                        \ otherwise we are done spawning, so fall through into
+                        \ the end of the main loop at MLOOP
 
 ELIF _6502SP_VERSION
 

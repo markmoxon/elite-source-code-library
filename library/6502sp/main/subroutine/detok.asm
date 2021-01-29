@@ -9,7 +9,7 @@
 \
 \ Arguments:
 \
-\   A                   The recursive token to be printed, in the range 1-???
+\   A                   The recursive token to be printed, in the range 1-255
 \
 \ Returns:
 \

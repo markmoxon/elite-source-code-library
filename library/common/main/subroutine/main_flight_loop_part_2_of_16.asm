@@ -157,10 +157,11 @@ IF _DISC_VERSION
  LDA BSTK               \ If BSTK = 0 then the Bitstik is not configured, so
  BEQ BS2                \ jump to BS2 to skip the following
 
-        LDX     #$03        \ ????
-        LDA     #$80
-        JSR     OSBYTE
-        TYA
+ LDX #3                 \ Call OSBYTE 128 to fetch the 16-bit value from ADC
+ LDA #128               \ channel 3 (the Bitstik rotation value), returning the
+ JSR OSBYTE             \ value in (Y X)
+
+ TYA                    \ Copy Y to A, so the result is now in (A X)
 
  LSR A                  \ Divide A by 4
  LSR A

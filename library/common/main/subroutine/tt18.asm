@@ -85,7 +85,7 @@ ENDIF
 
 IF _DISC_VERSION
 
- JSR LSHIPS             \ ????
+ JSR LSHIPS             \ Call LSHIPS to load a new ship blueprints file
 
 ENDIF
 

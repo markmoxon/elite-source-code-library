@@ -60,7 +60,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION
 ELIF _DISC_VERSION
 
  AND #15                \ Set the ship speed to our random number, set to a
- ORA #16                \ minimum of 16 and a maximum of 15 ????
+ ORA #16                \ minimum of 16 and a maximum of 31
  STA INWK+27
 
 ENDIF

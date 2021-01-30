@@ -77,8 +77,8 @@ encrypt:
 	$(BEEBASM) -i versions/disc/sources/elite-loader1.asm -v > versions/disc/output/compile.txt
 	$(BEEBASM) -i versions/disc/sources/elite-loader2.asm -v >> versions/disc/output/compile.txt
 	$(BEEBASM) -i versions/disc/sources/elite-loader3.asm -v >> versions/disc/output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-source-d.asm -v >> versions/disc/output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-source-t.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-source-flight.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-source-docked.asm -v >> versions/disc/output/compile.txt
 	$(BEEBASM) -i versions/disc/sources/elite-ships-a.asm -v >> versions/disc/output/compile.txt
 	$(BEEBASM) -i versions/disc/sources/elite-ships-b.asm -v >> versions/disc/output/compile.txt
 	$(BEEBASM) -i versions/disc/sources/elite-ships-c.asm -v >> versions/disc/output/compile.txt

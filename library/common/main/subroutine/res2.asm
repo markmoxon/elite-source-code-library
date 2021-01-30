@@ -69,6 +69,12 @@ IF _DISC_FLIGHT
 
 ENDIF
 
+IF _DISC_DOCKED
+
+.modify
+
+ENDIF
+
  LDA #3                 \ Reset DELTA (speed) to 3
  STA DELTA
 

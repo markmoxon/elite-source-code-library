@@ -70,14 +70,14 @@ ENDIF
 
 IF _DISC_VERSION
 
- LDA K2+4               \ ????
- CMP #&DB
+ LDA K2+4               \ ???? Copy protection, checks location &9F for the
+ CMP #&DB               \ value &DB and crashes the game if it doesn't match
  BEQ tiwe
 
- LDA #&10
- STA &36B8
- LDA #&FE
- STA &36B9
+ LDA #&10               \ Modify the STA DELTA instruction in RES2 to &10 &FE,
+ STA modify+2           \ which is a BPL P%-2 instruction, to create an infinite
+ LDA #&FE               \ loop and hang the game
+ STA modify+3
 
 .tiwe
 

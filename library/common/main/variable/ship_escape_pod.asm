@@ -68,6 +68,7 @@ IF _CASSETTE_VERSION
 
 ELIF _6502SP_VERSION OR _DISC_VERSION
 
+\FACE normal_x, normal_y, normal_z, visibility
  FACE       52,        0,     -122,         31    \ Face 0
  FACE       39,      103,       30,         31    \ Face 1
  FACE       39,     -103,       30,         31    \ Face 2

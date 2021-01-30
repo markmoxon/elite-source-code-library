@@ -28,6 +28,8 @@ _DISC_VERSION           = (_VERSION = 2)
 _6502SP_VERSION         = (_VERSION = 3)
 _DISC_DOCKED            = TRUE
 _DISC_FLIGHT            = FALSE
+_IB_DISC                = (_RELEASE = 1)
+_STH_DISC               = (_RELEASE = 2)
 
 \ ******************************************************************************
 \
@@ -737,6 +739,8 @@ INCLUDE "library/6502sp/main/variable/rugal.asm"
 INCLUDE "library/6502sp/main/variable/rutok.asm"
 INCLUDE "library/6502sp/main/variable/mtin.asm"
 
+IF _STH_DISC
+
  EQUB &45, &4E          \ This data appears to be unused
  EQUB &44, &2D
  EQUB &45, &4E
@@ -750,6 +754,24 @@ INCLUDE "library/6502sp/main/variable/mtin.asm"
  EQUB &06, &56
  EQUB &52, &49
  EQUB &45, &E6
+
+ELIF _IB_DISC
+
+ EQUB &45, &4E          \ This data appears to be unused
+ EQUB &44, &2D
+ EQUB &45, &4E
+ EQUB &44, &2D
+ EQUB &45, &4E
+ EQUB &44, &8E
+ EQUB &13, &1C
+ EQUB &00, &00
+ EQUB &73, &56
+ EQUB &52, &49
+ EQUB &53, &00
+ EQUB &8E, &13
+ EQUB &34, &B3
+
+ENDIF
 
 \ ******************************************************************************
 \

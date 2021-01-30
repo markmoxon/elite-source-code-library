@@ -1,22 +1,40 @@
 BEEBASM?=beebasm
 PYTHON?=python
 
-# Change the release by adding 'release=source-disc' to the make command, e.g.
+# Change the release by adding 'release-6502sp=source-disc' to the make command, e.g.
 #
 #   make encrypt verify
 #
 # will build the SNG45 version of 6502SP Elite, while:
 #
-#   make encrypt verify release=source-disc
+#   make encrypt verify release-6502sp=source-disc
 #
 # will build the version from the source disc
 
-ifeq ($(release), source-disc)
-  rel=1
-  folder='/source-disc'
+ifeq ($(release-6502sp), source-disc)
+  rel-6502sp=1
+  folder-6502sp='/source-disc'
 else
-  rel=2
-  folder='/sng45'
+  rel-6502sp=2
+  folder-6502sp='/sng45'
+endif
+
+# Change the release by adding 'release-disc=ib-disc' to the make command, e.g.
+#
+#   make encrypt verify
+#
+# will build the Stairway to Hell version of Disc Elite, while:
+#
+#   make encrypt verify release-disc=ib-disc
+#
+# will build the version from the game disc on Ian Bell's site
+
+ifeq ($(release-disc), ib-disc)
+  rel-disc=1
+  folder-disc='/ib-disc'
+else
+  rel-disc=2
+  folder-disc='/sth'
 endif
 
 # The following variables are written into elite-header.h.asm so they can be
@@ -35,6 +53,10 @@ endif
 #   2 = Disc
 #   3 = 6502 Second Processor
 #
+# _RELEASE (for Disc version only)
+#   1 = Ian Bell's game disc
+#   2 = Stairway to Hell version (default)
+#
 # _RELEASE (for 6502SP version only)
 #   1 = source disc
 #   2 = SNG45 (default)
@@ -50,8 +72,35 @@ build:
 	$(PYTHON) versions/cassette/sources/elite-checksum.py -u
 	$(BEEBASM) -i versions/cassette/sources/elite-disc.asm -do versions/cassette/elite-cassette.ssd -boot ELTdata
 
+	echo _VERSION=2 > versions/disc/sources/elite-header.h.asm
+	echo _RELEASE=$(rel-disc) >> versions/disc/sources/elite-header.h.asm
+	echo _REMOVE_CHECKSUMS=TRUE >> versions/disc/sources/elite-header.h.asm
+	$(BEEBASM) -i versions/disc/sources/elite-loader1.asm -v > versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-loader2.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-loader3.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-source-flight.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-source-docked.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-ships-a.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-ships-b.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-ships-c.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-ships-d.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-ships-e.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-ships-f.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-ships-g.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-ships-h.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-ships-i.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-ships-j.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-ships-k.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-ships-l.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-ships-m.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-ships-n.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-ships-o.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-ships-p.asm -v >> versions/disc/output/compile.txt
+	$(PYTHON) versions/disc/sources/elite-checksum.py -u
+	$(BEEBASM) -i versions/disc/sources/elite-disc.asm -do versions/disc/elite-disc.ssd -boot ELITE2
+
 	echo _VERSION=3 > versions/6502sp/sources/elite-header.h.asm
-	echo _RELEASE=$(rel) >> versions/6502sp/sources/elite-header.h.asm
+	echo _RELEASE=$(rel-6502sp) >> versions/6502sp/sources/elite-header.h.asm
 	echo _REMOVE_CHECKSUMS=TRUE >> versions/6502sp/sources/elite-header.h.asm
 	echo _MATCH_EXTRACTED_BINARIES=FALSE >> versions/6502sp/sources/elite-header.h.asm
 	$(BEEBASM) -i versions/6502sp/sources/elite-source.asm -v > versions/6502sp/output/compile.txt
@@ -59,7 +108,7 @@ build:
 	$(BEEBASM) -i versions/6502sp/sources/elite-z.asm -v >> versions/6502sp/output/compile.txt
 	$(BEEBASM) -i versions/6502sp/sources/elite-loader1.asm -v >> versions/6502sp/output/compile.txt
 	$(BEEBASM) -i versions/6502sp/sources/elite-loader2.asm -v >> versions/6502sp/output/compile.txt
-	$(PYTHON) versions/6502sp/sources/elite-checksum.py -u -rel$(rel)
+	$(PYTHON) versions/6502sp/sources/elite-checksum.py -u -rel$(rel-6502sp)
 	$(BEEBASM) -i versions/6502sp/sources/elite-disc.asm -do versions/6502sp/elite-6502sp.ssd -boot ELITE
 
 .PHONY:encrypt
@@ -73,6 +122,7 @@ encrypt:
 	$(BEEBASM) -i versions/cassette/sources/elite-disc.asm -do versions/cassette/elite-cassette.ssd -boot ELTdata
 
 	echo _VERSION=2 > versions/disc/sources/elite-header.h.asm
+	echo _RELEASE=$(rel-disc) >> versions/disc/sources/elite-header.h.asm
 	echo _REMOVE_CHECKSUMS=FALSE >> versions/disc/sources/elite-header.h.asm
 	$(BEEBASM) -i versions/disc/sources/elite-loader1.asm -v > versions/disc/output/compile.txt
 	$(BEEBASM) -i versions/disc/sources/elite-loader2.asm -v >> versions/disc/output/compile.txt
@@ -99,7 +149,7 @@ encrypt:
 	$(BEEBASM) -i versions/disc/sources/elite-disc.asm -do versions/disc/elite-disc.ssd -boot ELITE2
 
 	echo _VERSION=3 > versions/6502sp/sources/elite-header.h.asm
-	echo _RELEASE=$(rel) >> versions/6502sp/sources/elite-header.h.asm
+	echo _RELEASE=$(rel-6502sp) >> versions/6502sp/sources/elite-header.h.asm
 	echo _REMOVE_CHECKSUMS=FALSE >> versions/6502sp/sources/elite-header.h.asm
 	echo _MATCH_EXTRACTED_BINARIES=TRUE >> versions/6502sp/sources/elite-header.h.asm
 	$(BEEBASM) -i versions/6502sp/sources/elite-source.asm -v > versions/6502sp/output/compile.txt
@@ -107,11 +157,11 @@ encrypt:
 	$(BEEBASM) -i versions/6502sp/sources/elite-z.asm -v >> versions/6502sp/output/compile.txt
 	$(BEEBASM) -i versions/6502sp/sources/elite-loader1.asm -v >> versions/6502sp/output/compile.txt
 	$(BEEBASM) -i versions/6502sp/sources/elite-loader2.asm -v >> versions/6502sp/output/compile.txt
-	$(PYTHON) versions/6502sp/sources/elite-checksum.py -rel$(rel)
+	$(PYTHON) versions/6502sp/sources/elite-checksum.py -rel$(rel-6502sp)
 	$(BEEBASM) -i versions/6502sp/sources/elite-disc.asm -do versions/6502sp/elite-6502sp.ssd -boot ELITE
 
 .PHONY:verify
 verify:
 	@$(PYTHON) versions/cassette/sources/crc32.py versions/cassette/extracted versions/cassette/output
-	@$(PYTHON) versions/disc/sources/crc32.py versions/disc/extracted versions/disc/output
-	@$(PYTHON) versions/6502sp/sources/crc32.py versions/6502sp/extracted$(folder) versions/6502sp/output
+	@$(PYTHON) versions/disc/sources/crc32.py versions/disc/extracted$(folder-disc) versions/disc/output
+	@$(PYTHON) versions/6502sp/sources/crc32.py versions/6502sp/extracted$(folder-6502sp) versions/6502sp/output

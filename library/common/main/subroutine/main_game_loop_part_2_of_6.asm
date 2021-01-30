@@ -150,6 +150,8 @@ ENDIF
 
 IF _DISC_FLIGHT
 
+IF _STH_DISC
+
  NOP                    \ In the first version of disc Elite, asteroids never
  NOP                    \ appeared. It turned out that the authors had put in a
  NOP                    \ jump to force traders to spawn, so they could test
@@ -157,6 +159,19 @@ IF _DISC_FLIGHT
                         \ so this was fixed in later versions by replacing the
                         \ JMP instruction with NOPs... and this is where that
                         \ was done
+
+ELIF _IB_DISC
+
+ JMP MTT4               \ In the first version of disc Elite, asteroids never
+                        \ appeared. It turned out that the authors had put in a
+                        \ jump to force traders to spawn, so they could test
+                        \ that part of the code, but had forgotten to remove it,
+                        \ so this was fixed in later versions by replacing the
+                        \ JMP instruction with NOPs. The version on Ian Bell's
+                        \ site still contains the test jump, so asteroids never
+                        \ appear in this version
+
+ENDIF
 
 ENDIF
 

@@ -23,6 +23,8 @@
 
 IF _DISC_DOCKED
 
+IF _STH_DISC
+
  NOP                    \ In the first version of disc Elite, there was a nasty
  NOP                    \ bug where buying a laser that you already owned gave
  NOP                    \ you a refund of the laser's worth without removing the
@@ -33,12 +35,29 @@ IF _DISC_DOCKED
  NOP
  NOP
 
-ENDIF
+.refund
 
-\.ref2                  \ These instructions are commented out in the original
-\LDY #18                \ source, but they would jump to pres in the EQSHP
-\JMP pres               \ routine with Y = 18, which would show the error:
-                        \ "{cr}all caps}EQUIPMENT: {sentence case} PRESENT"
+ STA T1                 \ Store A in T1 so we can retrieve it later
+
+ LDA LASER,X            \ If there is no laser in view X (i.e. the laser power
+ BEQ ref3               \ is zero), jump to ref3 to skip the refund code
+
+ELIF _IB_DISC
+
+                        \ In the first version of disc Elite, there was a nasty
+                        \ bug where buying a laser that you already owned gave
+                        \ you a refund of the laser's worth without removing the
+                        \ laser, so you could keep doing this to get as many
+                        \ credits as you liked. This was quickly fixed by
+                        \ replacing the incorrect code with NOPs, but the
+                        \ version on Ian Bell's website contains this bug, and
+                        \ this is the section responsible for the problem
+
+.ref2
+
+ LDY #187               \ Print out the error: "LASER PRESENT" and refund the
+ JMP pres               \ value of the laser (which we shouldn't do, so this is
+                        \ the main cause of the refund bug)
 
 .refund
 
@@ -47,9 +66,34 @@ ENDIF
  LDA LASER,X            \ If there is no laser in view X (i.e. the laser power
  BEQ ref3               \ is zero), jump to ref3 to skip the refund code
 
- \CMP T1                \ These instructions are commented out in the original
- \BEQ ref2              \ source, but they would jump to ref2 above if we were
+ CMP T1                 \ If we are trying to replace a laser with one of the
+ BEQ ref2               \ same type, jump up ref2 above
+
+ENDIF
+
+ELIF _6502SP_VERSION
+
+\.ref2                  \ These instructions are commented out in the original
+\LDY #187               \ source, but they would jump to pres in the EQSHP
+\JMP pres               \ routine with Y = 187, which would show the error:
+                        \ "LASER PRESENT" (this code was part of the refund
+                        \ bug in the disc version of Elite, which is why it is
+                        \ commented out)
+
+.refund
+
+ STA T1                 \ Store A in T1 so we can retrieve it later
+
+ LDA LASER,X            \ If there is no laser in view X (i.e. the laser power
+ BEQ ref3               \ is zero), jump to ref3 to skip the refund code
+
+\CMP T1                 \ These instructions are commented out in the original
+\BEQ ref2               \ source, but they would jump to ref2 above if we were
                         \ trying to replace a laser with one of the same type
+                        \ (this code was part of the refund bug in the disc
+                        \ version of Elite, which is why it is commented out)
+
+ENDIF
 
  LDY #4                 \ If the current laser has power #POW (pulse laser),
  CMP #POW               \ jump to ref1 with Y = 4 (the item number of a pulse

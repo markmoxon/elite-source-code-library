@@ -74,9 +74,19 @@ ENDIF
 
 IF _DISC_VERSION
 
+IF _STH_DISC
+
  ORA #32                \ Set bit 5 of A to denote thet this is the disc version
                         \ with the refund bug fixed (before the bug was fixed
                         \ the version number was 4)
+
+ELIF _IB_DISC
+
+ ORA #4                 \ Set bit 2 of A to denote thet this is the disc version
+                        \ but before the refund bug was fixed (after the bug was
+                        \ fixed the version number was changed to 32)
+
+ENDIF
 
 ELIF _6502SP_VERSION
 

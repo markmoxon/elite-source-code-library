@@ -158,7 +158,7 @@ LOAD% = &11E3
 
 LOAD_A% = LOAD%
 
-INCLUDE "library/disc/flight/subroutine/main_entry_point.asm"
+INCLUDE "library/disc/flight/subroutine/s_per_cent.asm"
 INCLUDE "library/disc/flight/subroutine/inbay.asm"
 INCLUDE "library/disc/flight/variable/ltli.asm"
 INCLUDE "library/disc/main/subroutine/scramble.asm"
@@ -405,7 +405,7 @@ INCLUDE "library/common/main/subroutine/pr6.asm"
 INCLUDE "library/common/main/subroutine/pr5.asm"
 INCLUDE "library/common/main/subroutine/tt147.asm"
 INCLUDE "library/common/main/subroutine/prq.asm"
-INCLUDE "library/disc/main/subroutine/tth111.asm"
+INCLUDE "library/6502sp/main/subroutine/ttx110.asm"
 INCLUDE "library/common/main/subroutine/tt151.asm"
 INCLUDE "library/common/main/subroutine/tt152.asm"
 INCLUDE "library/common/main/subroutine/tt162.asm"

@@ -79,22 +79,22 @@ encrypt:
 	$(BEEBASM) -i versions/disc/sources/elite-loader3.asm -v >> versions/disc/output/compile.txt
 	$(BEEBASM) -i versions/disc/sources/elite-source-d.asm -v >> versions/disc/output/compile.txt
 	$(BEEBASM) -i versions/disc/sources/elite-source-t.asm -v >> versions/disc/output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-moa.asm -v >> versions/disc/output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-mob.asm -v >> versions/disc/output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-moc.asm -v >> versions/disc/output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-mod.asm -v >> versions/disc/output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-moe.asm -v >> versions/disc/output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-mof.asm -v >> versions/disc/output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-mog.asm -v >> versions/disc/output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-moh.asm -v >> versions/disc/output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-moi.asm -v >> versions/disc/output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-moj.asm -v >> versions/disc/output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-mok.asm -v >> versions/disc/output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-mol.asm -v >> versions/disc/output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-mom.asm -v >> versions/disc/output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-mon.asm -v >> versions/disc/output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-moo.asm -v >> versions/disc/output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-mop.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-ships-a.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-ships-b.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-ships-c.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-ships-d.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-ships-e.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-ships-f.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-ships-g.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-ships-h.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-ships-i.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-ships-j.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-ships-k.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-ships-l.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-ships-m.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-ships-n.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-ships-o.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-ships-p.asm -v >> versions/disc/output/compile.txt
 	$(PYTHON) versions/disc/sources/elite-checksum.py
 	$(BEEBASM) -i versions/disc/sources/elite-disc.asm -do versions/disc/elite-disc.ssd -boot ELITE2
 

@@ -2,9 +2,11 @@
 \
 \       Name: RDLI
 \       Type: Variable
-\   Category: Utility routines
-\    Summary: The OS command string for loading the docked code in the disc
-\             version of Elite
+\   Category: Loader
+\    Summary: The OS command string for loading the flight code file D.CODE
+IF _6502SP_VERSION
+\             in the disc version of Elite
+ENDIF
 \
 IF _6502SP_VERSION
 \ ------------------------------------------------------------------------------

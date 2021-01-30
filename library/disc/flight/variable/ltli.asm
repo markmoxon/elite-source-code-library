@@ -3,7 +3,7 @@
 \       Name: LTLI
 \       Type: Variable
 \   Category: Loader
-\    Summary: 
+\    Summary: The OS command string for loading the docked code file T.CODE
 \
 \ ******************************************************************************
 

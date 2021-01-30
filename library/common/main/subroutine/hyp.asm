@@ -83,18 +83,22 @@ ENDIF
 
 IF _DISC_FLIGHT
 
- LDA QQ11
- BNE P%+5
-
- JMP TTH111
+ LDA QQ11               \ If the current view is 0 (i.e. the space view) then
+ BNE P%+5               \ jump to TTX110, which calls TT111 to set the current
+ JMP TTX110             \ system to the nearest system to (QQ9, QQ10), and jumps
+                        \ back into this routine at TTX111 below
 
 ELIF _DISC_DOCKED
 
- LDA QQ11
- BEQ TTH111
+ LDA QQ11               \ If the current view is 0 (i.e. the space view) then
+ BEQ TTX110             \ jump to TTX110, which calls TT111 to set the current
+                        \ system to the nearest system to (QQ9, QQ10), and jumps
+                        \ back into this routine at TTX111 below
 
- AND #&C0
- BEQ zZ+1
+ AND #%11000000         \ If neither bits 6 or 7 of the view number are set - so
+ BEQ zZ+1               \ this is neither the Short-range or Long-range Chart -
+                        \ then return from the subroutine (as zZ+1 contains an
+                        \ RTS)
 
 ENDIF
 
@@ -124,11 +128,7 @@ IF _6502SP_VERSION
 
 ENDIF
 
-IF _DISC_VERSION
-
-.TTX111
-
-ELIF _6502SP_VERSION
+IF _DISC_VERSION OR _6502SP_VERSION
 
 .TTX111
 

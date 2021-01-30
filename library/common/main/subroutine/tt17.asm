@@ -74,7 +74,7 @@ IF _6502SP_VERSION
 
 ENDIF
 
- TAX                    \ Copy A to X, to X contains the joystick roll value
+ TAX                    \ Copy A to X, so X contains the joystick roll value
 
  LDA JSTY               \ Fetch the joystick pitch, ranging from 1 to 255 with
                         \ 128 as the centre point, and fall through into TJS1 to

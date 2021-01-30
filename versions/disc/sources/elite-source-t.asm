@@ -173,7 +173,7 @@ ORG CODE%
 
 LOAD_A% = LOAD%
 
-INCLUDE "library/disc/docked/subroutine/main_entry_point.asm"
+INCLUDE "library/disc/docked/subroutine/s_per_cent.asm"
 INCLUDE "library/disc/docked/subroutine/inbay.asm"
 INCLUDE "library/disc/docked/subroutine/dobegin.asm"
 INCLUDE "library/disc/main/subroutine/scramble.asm"
@@ -436,7 +436,7 @@ INCLUDE "library/common/main/subroutine/tt81.asm"
 INCLUDE "library/common/main/subroutine/tt111.asm"
 INCLUDE "library/common/main/subroutine/hyp.asm"
 INCLUDE "library/common/main/subroutine/ww.asm"
-INCLUDE "library/disc/main/subroutine/tth111.asm"
+INCLUDE "library/6502sp/main/subroutine/ttx110.asm"
 INCLUDE "library/common/main/subroutine/ghy.asm"
 INCLUDE "library/common/main/subroutine/jmp.asm"
 INCLUDE "library/common/main/subroutine/ee3.asm"

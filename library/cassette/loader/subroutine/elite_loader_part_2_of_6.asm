@@ -95,10 +95,10 @@ ENDIF
 
  BPL purge              \ Loop back until we have done all the vectors
 
- LDA #&60               \ Store an RTS instruction in location &232 NETV
+ LDA #&60               \ Store an RTS instruction in location &232
  STA &232
 
- LDA #&2                \ Point the NETV vector at &232, which we just filled
+ LDA #&2                \ Point the NETV vector to &232, which we just filled
  STA NETV+1             \ with an RTS
  LDA #&32
  STA NETV
@@ -281,8 +281,8 @@ ENDIF
  JSR OSB                \ cursor editing, so the cursor keys return ASCII values
                         \ and can therefore be used in-game
 
- LDA #9                 \ Disable flashing colours (via OSBYTE 9)
- LDX #0
+ LDA #9                 \ Call OSBYTE with A = 9, X = 0 and Y = 0 to disable
+ LDX #0                 \ flashing colours
  JSR OSB
 
  LDA #&6C               \ Poke &6C into crunchit after EOR'ing it first (which

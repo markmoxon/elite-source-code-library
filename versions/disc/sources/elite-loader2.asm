@@ -30,25 +30,22 @@ _DISC_DOCKED            = FALSE
 _DISC_FLIGHT            = TRUE
 
 TRTB% = &04             \ TRTB%(1 0) points to the keyboard translation table
-L0012   = $0012
-L0013   = $0013
-L0038   = $0038
-L0044   = $0044
-L004C   = $004C
-L004D   = $004D
-L004E   = $004E
-L004F   = $004F
-L0050   = $0050
-L0051   = $0051
-L0070   = $0070
-L0071   = $0071
-L0072   = $0072
-L0073   = $0073
-L0074   = $0074
-L0075   = $0075
-L0076   = $0076
-L0081   = $0081
-L0082   = $0082
+K1   = $0012
+K2   = $0013
+K3   = $0044
+K4   = $004C
+K5   = $004D
+K6   = $004E
+K7   = $004F
+K8   = $0050
+K9   = $0051
+
+Q   = $0070
+ZP   = $0071
+P   = $0073
+R   = $0075
+T   = $0076
+SC   = $0081
 
 L0AC1   = $0AC1
 L373D   = $373D
@@ -74,20 +71,31 @@ LOAD% = &5700
 
 ORG CODE%
 
+\ ******************************************************************************
+\
+\       Name: Elite loader (Part 1 of 4)
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: 
+\
+\ ******************************************************************************
+
+.ENTRY
+
  LDA #0                 \ We start by deleting the first loader from memory, so
                         \ it doesn't leave any clues for the crackers, so set A
                         \ to 0 so we can zero the memory
 
  TAY                    \ Set Y to 0 to act as an index in the following loop
 
-.L5703
+.LOOP1
 
  STA &2F00,Y            \ Zero the Y-th byte of &2F00, which is where the first
                         \ loader was running before it loaded this one
 
  INY                    \ Increment the loop counter
 
- BNE L5703              \ Loop back until we have zeroed all 256 bytes from
+ BNE LOOP1              \ Loop back until we have zeroed all 256 bytes from
                         \ &2F00 to &2FFF, leaving Y = 0
 
  LDA #0                 \ Set &3FFF = 0
@@ -116,12 +124,12 @@ ORG CODE%
 
  AND &5973              \ &5973 contains 128, so set A = 128 AND 128 = 128
 
-.L5726
+.LOOP2
 
- BEQ L5726              \ If A = 0 then enter an infinite loop with L5726,
+ BEQ LOOP2              \ If A = 0 then enter an infinite loop with LOOP2,
                         \ which hangs the computer
 
- JSR L5DE0
+ JSR PROT1
 
  LDA #172               \ Call OSBYTE 172 to read the address of the MOS
  LDX #0                 \ keyboard translation table into (Y X)
@@ -137,19 +145,19 @@ ORG CODE%
  JSR OSBYTE
 
  CPX #&FF               \ If X is not &FF, i.e. we are not running this over the
- BNE L574D              \ Tube, then jump to L574D
+ BNE notube             \ Tube, then jump to notube
 
  LDA &5A00              \ &5A00 contains 0, so set A = 0
 
-.L5748
+.LOOP3
 
- BEQ L5748              \ If A = 0 then enter an infinite loop with L5748,
+ BEQ LOOP3              \ If A = 0 then enter an infinite loop with LOOP3,
                         \ which hangs the computer
 
  JMP &5A00              \ Otherwise jump to &5A00, which will execute a BRK to
                         \ terminate the program
 
-.L574D
+.notube
 
  LDA MPL                \ Set A = &A0, as MPL contains an LDY #0 instruction
 
@@ -157,23 +165,42 @@ ORG CODE%
  NOP
  NOP
 
- JMP MPL                \ Jump to MPL to copy 512 bytes to &0400
+ JMP MPL                \ Jump to MPL to copy 512 bytes to &0400 and jump to
+                        \ ENTRY2
 
  EQUB &00, &00, &00, &00, &00, &00, &00, &00
 
  NOP
  NOP
 
-.L5760
+\ ******************************************************************************
+\
+\       Name: Elite loader (Part 2 of 4)
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: 
+\
+\ ******************************************************************************
 
- JMP L57A0
+.ENTRY2
+
+ JMP ENTRY3
 
  NOP
  NOP
  NOP
  NOP
 
-.command
+\ ******************************************************************************
+\
+\       Name: Elite loader (Part 4 of 4)
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: 
+\
+\ ******************************************************************************
+
+.ENTRY4
 
  LDX #LO(MESS1)         \ Set (Y X) to point to MESS1 ("LOAD Elite4")
  LDY #HI(MESS1)
@@ -195,14 +222,32 @@ ORG CODE%
  EQUB &00, &00, &00, &00, &00, &00, &00, &00
  EQUB &00, &00, &00, &00, &00, &00, &00
 
+\ ******************************************************************************
+\
+\       Name: MESS1
+\       Type: Variable
+\   Category: Loader
+\    Summary: The OS command string for loading the third loader
+\
+\ ******************************************************************************
+
 .MESS1
 
  EQUS "LOAD Elite4"
  EQUB 13
 
- EQUB &00, &00, &00, &00
+ SKIP 4
 
-.L57A0
+\ ******************************************************************************
+\
+\       Name: Elite loader (Part 3 of 4)
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: 
+\
+\ ******************************************************************************
+
+.ENTRY3
 
  LDA #129               \ Call OSBYTE with A = 129, X = &FF and Y = 2 to scan
  LDY #2                 \ the keyboard for &2FF centiseconds (7.67 seconds)
@@ -213,10 +258,9 @@ ORG CODE%
  LDY #0                 \ buffer
  JSR OSBYTE
 
- JMP command            \ Jump to command to load and run the next part of the
+ JMP ENTRY4             \ Jump to ENTRY4 to load and run the next part of the
                         \ loader
 
- EQUB &00
  EQUB &00, &00, &00, &00, &00, &00, &00, &00
  EQUB &00, &00, &00, &00, &00, &00, &00, &00
  EQUB &00, &00, &00, &00, &00, &00, &00, &00
@@ -224,16 +268,19 @@ ORG CODE%
  EQUB &00, &00, &00, &00, &00, &00, &00, &00
  EQUB &00, &00, &00, &00, &00, &00, &00, &00
  EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &32, &00
+ EQUB &00, &00, &00, &00, &00, &00, &00
+ 
+ EQUB &32
+
  EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00
+ EQUB &00, &00, &00, &00, &00
 
 \ ******************************************************************************
 \
 \       Name: MPL
 \       Type: Subroutine
 \   Category: Utility routines
-\    Summary: Move 512 bytes from &5819 to &0400
+\    Summary: Move 512 bytes from &5819 to &0400 and jump to ENTRY2
 \
 \ ******************************************************************************
 
@@ -245,7 +292,7 @@ ORG CODE%
 
 .MVBL
 
- LDA L5819,Y
+ LDA LOD,Y
  STA LOADER,Y
 
  INY
@@ -259,17 +306,27 @@ ORG CODE%
 
  BNE MVBL
 
- JMP L5760
+ JMP ENTRY2
+
+\ ******************************************************************************
+\
+\       Name: LOD
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: 
+\
+\ ******************************************************************************
 
 \ Gets copied from &5819 to &0400 (512 bytes)
 
-.L5819
+.LOD
 
 ORG &0400
 
-.LOADER                \ Moved to &0400-&05FF from &5819-&5A18
+.LOADER                 \ Moved to &0400-&05FF from &5819-&5A18
+                        \ Gets replaced by QQ18 tokens at some point
 
- JSR L04B8
+ JSR LOAD10
 
  PLA
  STA L0509
@@ -287,7 +344,7 @@ ORG &0400
 
 .LOAD1
 
- JSR L0462
+ JSR LOAD7
 
  DEC L0558
  BNE LOAD1
@@ -299,7 +356,7 @@ ORG &0400
 
  ORA #&20
  STA L0511
- JSR L0462
+ JSR LOAD7
 
 .LOAD3
 
@@ -328,7 +385,7 @@ ORG &0400
 
 .LOAD6
 
- STX L0076
+ STX T
  LDA #&15
  LDX #&00
  JSR OSBYTE
@@ -338,9 +395,9 @@ ORG &0400
  LDY #&01
  JMP OSBYTE
 
-.L0462
+.LOAD7
 
- JSR L04C7
+ JSR LOAD11
 
  LDA #&28
  SEC
@@ -348,38 +405,38 @@ ORG &0400
  STA L0545
  STA L050F
  LDA #&01
- JSR L04D5
+ JSR LOAD13
 
  LDA L050A
  CMP #&0E
- BNE LOAD7
+ BNE LOAD8
 
  LDA L050F
  STA L051A
  STA L0525
  STA L0530
  LDA #&04
- JSR L04D5
+ JSR LOAD13
 
  LDA #&05
- JSR L04D5
+ JSR LOAD13
 
  LDA #&06
- JSR L04D5
+ JSR LOAD13
 
- JMP L04A0
+ JMP LOAD9
 
-.LOAD7
+.LOAD8
 
  LDA #&03
- JSR L04D5
+ JSR LOAD13
 
-.L04A0
+.LOAD9
 
  LDA L053B
  STA L0545
  LDA #&01
- JSR L04D5
+ JSR LOAD13
 
  LDA L050A
  CLC
@@ -388,57 +445,57 @@ ORG &0400
  INC L0557
  RTS
 
-.L04B8
+.LOAD10
 
- JSR L04C7
+ JSR LOAD11
 
  LDA L053B
  STA L054E
  LDA #&02
- JSR L04D5
+ JSR LOAD13
 
  RTS
 
-.L04C7
+.LOAD11
 
  LDA L0557
  LDX L055B
- BEQ LOAD8
+ BEQ LOAD12
 
  ASL A
 
-.LOAD8
+.LOAD12
 
  STA L053B
  LDA #&00
 
-.L04D5
+.LOAD13
 
- STA L0075
+ STA R
 
-.LOAD9
+.LOAD14
 
- LDA L0075
+ LDA R
  ASL A
  TAX
  LDA L04FA,X
  LDY L04FA+1,X
  TAX
- STX L0073
- STY L0074
+ STX P
+ STY P+1
  LDA #127
  JSR OSWORD
 
- LDA L0075
+ LDA R
  CMP #&03
- BCC LOAD10
+ BCC LOAD15
 
  LDY #&0A
- LDA (L0073),Y
+ LDA (P),Y
  AND #&DF
- BNE LOAD9
+ BNE LOAD14
 
-.LOAD10
+.LOAD15
 
  RTS
 
@@ -546,9 +603,18 @@ ORG &0400
  EQUB &00, &00, &00, &00, &00, &00, &00, &00
  EQUB &00, &00, &00, &00, &00, &00, &00, &00 \ 5A18
 
-COPYBLOCK LOADER, P%, L5819
+COPYBLOCK LOADER, P%, LOD
 
-ORG L5819 + P% - LOADER
+ORG LOD + P% - LOADER
+
+\ ******************************************************************************
+\
+\       Name: 
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: 
+\
+\ ******************************************************************************
 
 .L5A19
 
@@ -678,15 +744,24 @@ ORG L5819 + P% - LOADER
  EQUB &00, &00, &00, &02, &0D, &00, &00, &00
  EQUB &00, &00, &00, &00, &00
 
-.L5DE0
+\ ******************************************************************************
+\
+\       Name: 
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: 
+\
+\ ******************************************************************************
+
+.PROT1
 
  LDA #&68               \ Poke the following routine into &0100 to &0108:
  STA &0100              \
  STA &0103              \   0100 : &68            PLA
- LDA #&85               \   0101 : &85 &71        STA &71
+ LDA #&85               \   0101 : &85 &71        STA ZP
  STA &0101              \   0103 : &68            PLA
- STA &0104              \   0104 : &85 &72        STA &72
- LDX #&71               \   0106 : &6C &71 &00    JMP (&7100)
+ STA &0104              \   0104 : &85 &72        STA ZP+1
+ LDX #&71               \   0106 : &6C &71 &00    JMP (ZP)
  STX &0107              \
  STX &0102              \ This routine pulls an address off the stack into a
  INX                    \ location in zero page, and then jumps to that address
@@ -696,52 +771,78 @@ ORG L5819 + P% - LOADER
  LDA #&00
  STA &0108
 
- JSR &0100              \ Call the subroutine at &0100, so this first puts the
-                        \ return address (the next location) on the stack, then
-                        \ jumps to &0100, which jumps to the return address
+.do
 
- BRK
- 
- LDA &71
+ JSR &0100              \ Call the subroutine at &0100, which does the
+ EQUB 0                 \ following:
+                        \
+                        \   * The JSR puts the address of the last byte of the
+                        \     JSR instruction on the stack (i.e. the address of
+                        \     the &01), pushing the high byte first
+                        \
+                        \   * It then jumps to &0100, which pulls the address
+                        \     off the stack and puts it in ZP(1 0)
+                        \
+                        \   * The final instruction of the routine at &0100
+                        \     jumps to the address in ZP(1 0), i.e. it jumps to
+                        \     the &01 of the JSR instruction. The &01 byte is
+                        \     followed by a &00 byte, and &01 &00 is the opcode
+                        \     for ORA ($00,X), which doesn't do anything apart
+                        \     from affect the value of the accumulator
+                        \
+                        \ In other words, this whole routine is a complicated
+                        \ way of pointing ZP(1 0) to the &01 byte in the JSR
+                        \ instruction above
+
+ LDA ZP                 \ Set ZP(1 0) = ZP(1 0) - 40, so ZP now points to PROT1
  SEC
- SBC #&28
- STA L0071
-
- LDA L0072
+ SBC #(2 + do - PROT1)
+ STA ZP
+ LDA ZP+1
  SBC #&00
- STA L0072
- LDY #&63
+ STA ZP+1
 
-.L5E19
+ LDY #&63               \ Is this TABLE - PROT1? Looks close, if so this loop
+                        \ works through the words in TABLE
 
- LDA (L0071),Y
- CLC
- ADC L0071
- STA L0081
+.PROT2
+
+ LDA (ZP),Y             \ Set SC(1 0) = ZP(1 0) + Y-th word from TABLE
+ CLC                    \
+ ADC ZP                 \ so the first table entry makes SC point to the &D0-th
+ STA SC                 \ byte of PROT1
  INY
- LDA (L0071),Y
- ADC L0072
- STA L0082
- LDX #&00
- LDA (L0081,X)
- CLC
- ADC L0071
- STA (L0081,X)
- INC L0081
- BNE L5E36
+ LDA (ZP),Y
+ ADC ZP+1
+ STA SC+1
 
- INC L0082
+ LDX #0                 \ Add ZP(1 0), i.e. PROT1, to the word at SC(1 0)
+ LDA (SC,X)             \
+ CLC                    \ so the first table entry adds PROT1 to the address in
+ ADC ZP                 \ PROT1+&D0
+ STA (SC,X)
 
-.L5E36
+ INC SC
 
- LDA (L0081,X)
- ADC L0072
- STA (L0081,X)
- INY
- CPY #&7D
- BNE L5E19
+ BNE PROT3
 
- BEQ L5E5D
+ INC SC+1
+
+.PROT3
+
+ LDA (SC,X)
+ ADC ZP+1
+ STA (SC,X)
+
+ INY                    \ Increment Y to point to the next word in TABLE
+
+ CPY #&7D               \ Loop until we have done them all
+ BNE PROT2
+
+ BEQ PROT4              \ Jump to PROT4 (this BEQ is effectively a JMP as we
+                        \ didn't just take the BNE branch)
+
+.TABLE
 
  EQUB &D0, &00, &E2, &00, &E9, &00, &37, &01
  EQUB &64, &01
@@ -749,71 +850,99 @@ ORG L5819 + P% - LOADER
  EQUB &6D, &01, &00, &00, &00, &00, &00, &00
  EQUB &00, &00, &00, &00, &00, &00, &00, &00
 
-.L5E5D
+\ ******************************************************************************
+\
+\       Name: 
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: Show the mode 7 Acornsoft loading screen
+\
+\ ******************************************************************************
 
- LDA L0071
+.PROT4
+
+ LDA ZP                 \ Set ZP(1 0) = ZP(1 0) - &01E0
  SEC
  SBC #&E0
- STA L0071
- LDA L0072
+ STA ZP
+ LDA ZP+1
  SBC #&01
- STA L0072
- LDX #&00
- STX L0070
- LDY #&FF
- LDA #&81
- JSR OSBYTE
+ STA ZP+1
 
- CPX #&01
- BNE L5E9A
+ LDX #0                 \ Set Q = 0
+ STX Q
+                        
+ LDY #&FF               \ Call OSBYTE with A = 129, X = 0 and Y = &FF to detect
+ LDA #129               \ the machine type. This call is undocumented and is not
+ JSR OSBYTE             \ the recommended way to determine the machine type
+                        \ (OSBYTE 0 is the correct way), but this call returns
+                        \ the following:
+                        \
+                        \   * X = Y = 0   if this is a BBC Micro with MOS 0.1
+                        \   * X = Y = 1   if this is an Acorn Electron
+                        \   * X = Y = &FF if this is a BBC Micro with MOS 1.20
 
- DEC L0070
- LDY #&00
+ CPX #1                 \ If X is not 1, then this is not an Acorn Electron,
+ BNE bbc                \ so jump to bbc
 
-.L5E7D
+ DEC Q                  \ Decrement Q to &FF
 
- LDX #&07
- LDA #&17
+ LDY #0
+
+.LOOP4
+
+ LDX #7
+
+ LDA #&17               \ VDU 23
  JSR OSWRCH
 
- TYA
+ TYA                    \ VDU Y/8 EOR &E0
  LSR A
  LSR A
  LSR A
  ORA #&E0
  JSR OSWRCH
 
-.L5E8D
+.LOOP5
 
- LDA (L0071),Y
+ LDA (ZP),Y
  JSR OSWRCH
 
  INY
  DEX
- BPL L5E8D
+ BPL LOOP5
 
  CPY #&E0
- BNE L5E7D
+ BNE LOOP4
 
-.L5E9A
+.bbc
 
- LDA L0071
+ LDA ZP                 \ Set ZP(1 0) = ZP(1 0) + &E0
  CLC
  ADC #&E0
- STA L0071
- BCC L5EA5
+ STA ZP
 
- INC L0072
+ BCC mode7
 
-.L5EA5
+ INC ZP+1
 
- LDA #&16
+.mode7
+
+ LDA #22                \ Switch to mode 7 using a VDU 22, 7 command
  JSR OSWRCH
-
- LDA #&07
+ LDA #7
  JSR OSWRCH
 
  JSR &01B7
+
+\ ******************************************************************************
+\
+\       Name: 
+\       Type: Variable
+\   Category: Loader
+\    Summary: 
+\
+\ ******************************************************************************
 
  EQUB &17, &00, &0A, &20, &00, &00, &00, &00
  EQUB &00, &00
@@ -898,21 +1027,30 @@ ORG L5819 + P% - LOADER
  EQUB &00, &00, &00, &00, &00, &00, &00, &00
  EQUB &00, &00, &00, &00, &00
 
+\ ******************************************************************************
+\
+\       Name: 
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: 
+\
+\ ******************************************************************************
+
 .L6100
 
  BNE L6106
 
- LDA L0050
- CMP L004E
+ LDA K8
+ CMP K6
 
 .L6106
 
  BNE L6113
 
  LDA #&00
- STA L004E
+ STA K6
  LDA #&00
- STA L004F
+ STA K7
  JMP L4953
 
 .L6113
@@ -924,49 +1062,49 @@ ORG L5819 + P% - LOADER
 
 .L6119
 
- LDA L004F
+ LDA K7
  BNE L6120
 
  JSR L4BBA
 
 .L6120
 
- LDA L004D
+ LDA K5
  BNE L6132
 
  JSR L4BC3
 
  LDA #&00
- STA L004E
+ STA K6
  LDA #&00
- STA L004F
+ STA K7
  JMP L4953
 
 .L6132
 
- LDA L004D
- CMP L004F
+ LDA K5
+ CMP K7
  BCC L613E
 
  BNE L613E
 
- LDA L004C
- CMP L004E
+ LDA K4
+ CMP K6
 
 .L613E
 
  BCC L6153
 
- LDA L004C
- STA L0012
- LDA L004D
- STA L0013
+ LDA K4
+ STA K1
+ LDA K5
+ STA K2
  JSR L4BC3
 
- LDA L0012
- STA L004E
- LDA L0013
- STA L004F
+ LDA K1
+ STA K6
+ LDA K2
+ STA K7
 
 .L6153
 
@@ -981,19 +1119,28 @@ ORG L5819 + P% - LOADER
 
  EQUB &00
 
+\ ******************************************************************************
+\
+\       Name: 
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: 
+\
+\ ******************************************************************************
+
 .L615D
 
- LDA L004F
+ LDA K7
  BEQ L6172
 
- LDA L004F
- CMP L0051
+ LDA K7
+ CMP K9
  BCC L616D
 
  BNE L616D
 
- LDA L004E
- CMP L0050
+ LDA K6
+ CMP K8
 
 .L616D
 
@@ -1003,17 +1150,17 @@ ORG L5819 + P% - LOADER
 
 .L6172
 
- LDA L004D
+ LDA K5
  BEQ L6187
 
- LDA L004D
- CMP L0051
+ LDA K5
+ CMP K9
  BCC L6182
 
  BNE L6182
 
- LDA L004C
- CMP L0050
+ LDA K4
+ CMP K8
 
 .L6182
 
@@ -1025,17 +1172,17 @@ ORG L5819 + P% - LOADER
 
  RTS
 
- LDA L004D
+ LDA K5
  BEQ L61C2
 
- LDA L004D
- CMP L0051
+ LDA K5
+ CMP K9
  BCC L6198
 
  BNE L6198
 
- LDA L004C
- CMP L0050
+ LDA K4
+ CMP K8
 
 .L6198
 
@@ -1046,23 +1193,23 @@ ORG L5819 + P% - LOADER
  BIT L0AC1
  BEQ L61BB
 
- LDA L004F
- CMP L0051
+ LDA K7
+ CMP K9
  BCC L61AD
 
  BNE L61AD
 
- LDA L004E
- CMP L0050
+ LDA K6
+ CMP K8
 
 .L61AD
 
  BEQ L61BA
 
- LDA L0050
- STA L004C
- LDA L0051
- STA L004D
+ LDA K8
+ STA K4
+ LDA K9
+ STA K5
  JSR L373D
 
 .L61BA
@@ -1079,17 +1226,17 @@ ORG L5819 + P% - LOADER
 
 .L61C2
 
- LDA L004F
+ LDA K7
  BEQ L61FB
 
- LDA L004F
- CMP L0051
+ LDA K7
+ CMP K9
  BCC L61D2
 
  BNE L61D2
 
- LDA L004E
- CMP L0050
+ LDA K6
+ CMP K8
 
 .L61D2
 
@@ -1100,14 +1247,14 @@ ORG L5819 + P% - LOADER
  BIT L0AC1
  BEQ L61F0
 
- LDA L004D
- CMP L0051
+ LDA K5
+ CMP K9
  BCC L61E7
 
  BNE L61E7
 
- LDA L004C
- CMP L0050
+ LDA K4
+ CMP K8
 
 .L61E7
 
@@ -1123,18 +1270,18 @@ ORG L5819 + P% - LOADER
 
 .L61F0
 
- LDA L004E
- STA L0050
- LDA L004F
- STA L0051
+ LDA K6
+ STA K8
+ LDA K7
+ STA K9
  JSR L373D
 
 .L61FB  
 
  RTS
 
- LDA L0044
- STA L004C
+ LDA K3
+ STA K4
 
 \ ******************************************************************************
 \

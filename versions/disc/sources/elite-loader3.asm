@@ -35,8 +35,6 @@ NETV = &224             \ The NETV vector that we intercept as part of the copy
 IRQ1V = &204            \ The IRQ1V vector that we intercept to implement the
                         \ split-sceen mode
 
-INDV2 = &0232
-
 OSWRCH = &FFEE          \ The address for the OSWRCH routine
 OSBYTE = &FFF4          \ The address for the OSBYTE routine
 OSWORD = &FFF1          \ The address for the OSWORD routine
@@ -48,6 +46,8 @@ VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
 
 N% = 67                 \ N% is set to the number of bytes in the VDU table, so
                         \ we can loop through them below
+
+VSCAN = 57              \ Defines the split position in the split-screen mode
 
 VEC = &7FFE             \ VEC is where we store the original value of the IRQ1
                         \ vector, and it matches the value in elite-source.asm
@@ -66,29 +66,35 @@ SC = &76                \ Used to store the screen address while plotting pixels
 
 BLPTR = &78             \ Gets set as part of the obfuscation code
 
+IRQ1 = &114B
+
+L19D2 = &19D2           \ Used in PLL1
+
 CODE% = &1900           \ The address where this file (the third loader) loads
 LOAD% = &1900
 
 ORG CODE%
 
 INCLUDE "library/common/loader/variable/b_per_cent.asm"
+INCLUDE "library/common/loader/variable/e_per_cent.asm"
+INCLUDE "library/common/loader/macro/fne.asm"
 
- EQUB &01, &01, &00, &6F, &F8
- EQUB &04, &01, &08, &08, &FE, &00, &FF, &7E
- EQUB &2C, &02, &01, &0E, &EE, &FF, &2C, &20
- EQUB &32, &06, &01, &00, &FE, &78, &7E, &03
- EQUB &01, &01, &FF, &FD, &11, &20, &80, &01
- EQUB &00, &00, &FF, &01, &01, &04, &01, &04
- EQUB &F8, &2C, &04, &06, &08, &16, &00, &00
- EQUB &81, &7E, &00
+\ ******************************************************************************
+\
+\       Name: Elite loader (Part 1 of 2)
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: 
+\
+\ ******************************************************************************
 
-.L197B
+.ENTRY
 
- JSR L1B72
+ JSR PROT1              \ ???? Copy protection
 
- LDA #144
- LDX #255
- JSR OSB
+ LDA #144               \ Call OSBYTE with A = 144 and Y = 255 to turn the
+ LDX #255               \ screen interlace off (equivalent to a *TV 255, 255
+ JSR OSB                \ command)
 
  LDA #LO(B%)            \ Set the low byte of ZP(1 0) to point to the VDU code
  STA ZP                 \ table at B%
@@ -112,200 +118,248 @@ INCLUDE "library/common/loader/variable/b_per_cent.asm"
 
  JSR PLL1               \ Call PLL1 to draw Saturn
 
- LDA #16
- LDX #3
+ LDA #16                \ Call OSBYTE with A = 16 and X = 3 to set the ADC to
+ LDX #3                 \ sample 3 channels from the joystick/Bitstik
  JSR OSBYTE
 
- LDA #&60
- STA INDV2
- LDA #&02
- STA NETV+1
+ LDA #&60               \ Store an RTS instruction in location &232
+ STA &232
+
+ LDA #&2                \ Point the NETV vector to &232, which we just filled
+ STA NETV+1             \ with an RTS
  LDA #&32
  STA NETV
 
- LDA #190
- LDX #8
+ LDA #190               \ Call OSBYTE with A = 190, X = 8 and Y = 0 to set the
+ LDX #8                 \ ADC conversion type to 8 bits, for the joystick
  JSR OSB
 
- LDA #200
- LDX #0
+ LDA #200               \ Call OSBYTE with A = 200, X = 0 and Y = 0 to enable
+ LDX #0                 \ the ESCAPE key and disable memory clearing if the
+ JSR OSB                \ BREAK key is pressed
+
+ LDA #13                \ Call OSBYTE with A = 13, X = 0 and Y = 0 to disable
+ LDX #0                 \ the "output buffer empty" event
  JSR OSB
 
- LDA #13
- LDX #0
+ LDA #225               \ Call OSBYTE with A = 225, X = 128 and Y = 0 to set
+ LDX #128               \ the function keys to return ASCII codes for SHIFT-fn
+ JSR OSB                \ keys (i.e. add 128)
+
+ LDA #12                \ Call OSBYTE with A = 12, X = 0 and Y = 0 to reset the
+ LDX #0                 \ keyboard delay and auto-repeat rate to the default
+ JSR OSB                \ values
+
+ LDA #13                \ Call OSBYTE with A = 13, X = 2 and Y = 0 to disable
+ LDX #2                 \ the "character entering buffer" event
  JSR OSB
 
- LDA #225
- LDX #128
+ LDA #4                 \ Call OSBYTE with A = 4, X = 1 and Y = 0 to disable
+ LDX #1                 \ cursor editing, so the cursor keys return ASCII values
+ JSR OSB                \ and can therefore be used in-game
+
+ LDA #9                 \ Call OSBYTE with A = 9, X = 0 and Y = 0 to disable
+ LDX #0                 \ flashing colours
  JSR OSB
 
- LDA #12
- LDX #0
+ JSR PROT5              \ ???? Copy protection
 
-.L19D2
-
- JSR OSB
-
- LDA #13
- LDX #2
- JSR OSB
-
- LDA #4
- LDX #1
- JSR OSB
-
- LDA #9
- LDX #0
- JSR OSB
-
- JSR L1CE2
-
- LDA #&00
- STA ZP
- LDA #&11
- STA ZP+1
+ LDA #&00               \ Set the following:
+ STA ZP                 \
+ LDA #&11               \   ZP(1 0) = &1100
+ STA ZP+1               \   P(1 0) = &2962 IRQ1 etc.
  LDA #&62
  STA P
  LDA #&29
  STA P+1
- JSR MVPG
 
- LDA #&00
- STA ZP
- LDA #&78
- STA ZP+1
- LDA #&4B
+ JSR MVPG               \ Call MVPG to move and decrypt a page of memory from
+                        \ &2962-&2A61 to &1100-&11FF
+
+ LDA #&00               \ Set the following:
+ STA ZP                 \
+ LDA #&78               \   ZP(1 0) = &7800
+ STA ZP+1               \   P(1 0) = &1D4B DIALS
+ LDA #&4B               \   X = 8
  STA P
  LDA #&1D
  STA P+1
- LDX #&08
- JSR MVBL
+ LDX #8
 
- SEI
- LDA VIA+$44
- STA &0001
- LDA #&39
- STA VIA+$4E
- LDA #&7F
- STA VIA+&6E
- LDA IRQ1V
+ JSR MVBL               \ Call MVBL to move and decrypt 8 pages of memory from
+                        \ &1D4B-&254A to &7800-&7FFF
+
+ SEI                    \ Disable interrupts while we set up our interrupt
+                        \ handler to support the split-screen mode
+
+ LDA VIA+&44            \ Read the 6522 System VIA T1C-L timer 1 low-order
+ STA &0001              \ counter (SHEILA &44), which increments 1000 times a
+                        \ second so this will be pretty random, and store it in
+                        \ &0001 among the random number seeds at &0000
+
+ LDA #%00111001         \ Set 6522 System VIA interrupt enable register IER
+ STA VIA+&4E            \ (SHEILA &4E) bits 0 and 3-5 (i.e. disable the Timer1,
+                        \ CB1, CB2 and CA2 interrupts from the System VIA)
+
+ LDA #%01111111         \ Set 6522 User VIA interrupt enable register IER
+ STA VIA+&6E            \ (SHEILA &6E) bits 0-7 (i.e. disable all hardware
+                        \ interrupts from the User VIA)
+
+ LDA IRQ1V              \ Copy the current IRQ1V vector address into VEC(1 0)
  STA VEC
  LDA IRQ1V+1
  STA VEC+1
- LDA #&4B
- STA IRQ1V
- LDA #&11
+
+ LDA #LO(IRQ1)          \ Set the IRQ1V vector to IRQ1, so IRQ1 is now the
+ STA IRQ1V              \ interrupt handler
+ LDA #HI(IRQ1)
  STA IRQ1V+1
- LDA #&39
- STA VIA+&45
- CLI
- LDA #&00
- STA ZP
- LDA #&61
- STA ZP+1
+
+ LDA #VSCAN             \ Set 6522 System VIA T1C-L timer 1 high-order counter
+ STA VIA+&45            \ (SHEILA &45) to VSCAN (57) to start the T1 counter
+                        \ counting down from 14622 at a rate of 1 MHz
+
+ CLI                    \ Re-enable interrupts
+
+ LDA #&00               \ Set the following:
+ STA ZP                 \
+ LDA #&61               \   ZP(1 0) = &6100
+ STA ZP+1               \   P(1 0) = &2B62 ASOFT
  LDA #&62
  STA P
  LDA #&2B
  STA P+1
- JSR MVPG
 
- LDA #&63
- STA ZP+1
- LDA #&62
- STA P
+ JSR MVPG               \ Call MVPG to move and decrypt a page of memory from
+                        \ &2B62-&2C61 to &6100-&61FF
+
+ LDA #&63               \ Set the following:
+ STA ZP+1               \
+ LDA #&62               \   ZP(1 0) = &6300
+ STA P                  \   P(1 0) = &2A62 ELITE
  LDA #&2A
  STA P+1
- JSR MVPG
 
- LDA #&76
- STA ZP+1
- LDA #&62
- STA P
+ JSR MVPG               \ Call MVPG to move and decrypt a page of memory from
+                        \ &2A62-&2B61 to &6300-&63FF
+
+ LDA #&76               \ Set the following:
+ STA ZP+1               \
+ LDA #&62               \   ZP(1 0) = &7600
+ STA P                  \   P(1 0) = &2C62 CpASOFT
  LDA #&2C
  STA P+1
- JSR MVPG
 
- LDA #&00
- STA ZP
- LDA #&04
- STA ZP+1
- LDA #&4B
+ JSR MVPG               \ Call MVPG to move and decrypt a page of memory from
+                        \ &2C62-&2D61 to &7600-&76FF
+
+ LDA #&00               \ Set the following:
+ STA ZP                 \
+ LDA #&04               \   ZP(1 0) = &0400
+ STA ZP+1               \   P(1 0) = &254B WORDS9
+ LDA #&4B               \   X = 4
  STA P
  LDA #&25
  STA P+1
- LDX #&04
- JSR MVBL
+ LDX #4
 
- LDX #35
+ JSR MVBL               \ Call MVBL to move and decrypt 4 pages of memory from
+                        \ &254B-&294A to &0400-&07FF
 
-.L1A89
+ LDX #35                \ We now want to copy the disc catalogue routine from
+                        \ CATDISC to CATD, so set a counter in X for the 36
+                        \ bytes to copy
 
- LDA CATDISC,X
+.LOOP2
+
+ LDA CATDISC,X          \ Copy the X-th byte of CATDISC to the X-th byte of CATD
  STA CATD,X
- DEX
- BPL L1A89
 
- LDA SC
+ DEX                    \ Decrement the loop counter
+
+ BPL LOOP2              \ Loop back to copy the next byte until they are all
+                        \ done
+
+ LDA SC                 \ ????
  STA CATBLOCK
 
- LDX #&43
- LDY #&19
- LDA #8
- JSR OSWORD
+ FNE 0                  \ Set up sound envelopes 0-3 using the FNE macro
+ FNE 1
+ FNE 2
+ FNE 3
 
- LDX #&51
- LDY #&19
- LDA #8
- JSR OSWORD
+ LDX #LO(MESS1)         \ Set (Y X) to point to MESS1 ("DIR E")
+ LDY #HI(MESS1)
 
- LDX #&5F
- LDY #&19
- LDA #8
- JSR OSWORD
+ JSR OSCLI              \ Call OSCLI to run the OS command in MESS1, which
+                        \ changes the disc directory to E
 
- LDX #&6D
- LDY #&19
- LDA #8
- JSR OSWORD
-
- LDX #&44
- LDY #&1D
- JSR OSCLI
-
- LDA #&00
- STA ZP
- LDA #&0B
- STA ZP+1
+ LDA #&00               \ Set the following:
+ STA ZP                 \
+ LDA #&0B               \   ZP(1 0) = &0B00
+ STA ZP+1               \   P(1 0) = &1AED L1AED
  LDA #&ED
  STA P
  LDA #&1A
  STA P+1
 
- LDY #&00
+ LDY #0                 \ We want to move one page of memory, so set Y as a byte
+                        \ counter
 
-.L1AD4
+.LOOP3
 
- LDA (P),Y
- EOR #&18
- STA (ZP),Y
- DEY
- BNE L1AD4
+ LDA (P),Y              \ Fetch the Y-th byte of the P(1 0) memory block
 
- JMP &0B00
+ EOR #&18               \ Decrypt it by EOR'ing with &18
 
-.L1AE0
+ STA (ZP),Y             \ Store the decrypted result in the Y-th byte of the
+                        \ ZP(1 0) memory block
+
+ DEY                    \ Decrement the byte counter
+
+ BNE LOOP3              \ Loop back to copy the next byte until we have done a
+                        \ whole page of 256 bytes
+
+ JMP &0B00              \ Jump to the start of the routine we just decrypted
+
+\ ******************************************************************************
+\
+\       Name: PROT2
+\       Type: Subroutine
+\   Category: Copy protection
+\    Summary: 
+\
+\ ******************************************************************************
+
+.PROT2
 
  CLC
  LDY #&00
 
-.L1AE3
+.PROTL2
 
  ADC PLL1,Y
- EOR L197B,Y
+ EOR ENTRY,Y
  DEY
- BNE L1AE3
+ BNE PROTL2
 
  RTS
+
+\ ******************************************************************************
+\
+\       Name: 
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: 
+\
+\ ******************************************************************************
+
+\ORG &0B00
+
+\ code block, org &0B00, eor'd with &18, gets copied to &0B00 by above, called
+\ at end of this loader
+
+.L1AED
 
  EQUB &BA, &2F, &B8, &13, &38, &EF, &E7, &B1
  EQUB &F6, &95
@@ -322,6 +376,15 @@ INCLUDE "library/common/loader/variable/b_per_cent.asm"
  EQUB &76, &77, &6F, &38, &61, &77, &6D, &38
  EQUB &7C, &77, &38, &6C, &70, &71, &6B, &27
 
+\ ******************************************************************************
+\
+\       Name: CATDISC
+\       Type: Subroutine
+\   Category: Copy protection
+\    Summary: Load disc sectors 0 and 1 to &0E00 and &0F00 respectively
+\
+\ ******************************************************************************
+
 \ Gets copied from &1B4F to &0D7A by loop at L1A89 (35 bytes),
 \ is called by D and T to load from disc
 
@@ -331,18 +394,18 @@ ORG &0D7A
 
 .CATD
 
- DEC CATBLOCK+8            \ Decrement sector number from 1 to 0
- DEC CATBLOCK+2            \ Decrement load address from &0F00 to &0E00
+ DEC CATBLOCK+8         \ Decrement sector number from 1 to 0
+ DEC CATBLOCK+2         \ Decrement load address from &0F00 to &0E00
 
- JSR CATL
+ JSR CATL               \ Call CATL to load disc sector 1 to &0E00
 
- INC CATBLOCK+8            \ Increment sector number back to 1
- INC CATBLOCK+2            \ Increment load address back to &0F00
+ INC CATBLOCK+8         \ Increment sector number back to 1
+ INC CATBLOCK+2         \ Increment load address back to &0F00
 
 .CATL
 
- LDA #127
- LDX #LO(CATBLOCK)
+ LDA #127               \ Call OSWORD with A = 127 and (Y X) = CATBLOCK to
+ LDX #LO(CATBLOCK)      \ load disc sector 1 to &0F00
  LDY #HI(CATBLOCK)
  JMP OSWORD
 
@@ -361,27 +424,36 @@ COPYBLOCK CATD, P%, CATDISC
 
 ORG CATDISC + P% - CATD
 
-.L1B72
+\ ******************************************************************************
+\
+\       Name: PROT1
+\       Type: Subroutine
+\   Category: Copy protection
+\    Summary: 
+\
+\ ******************************************************************************
+
+.PROT1
 
  LDA #&55
  LDX #&40
 
-.L1B76
+.PROTL1
 
- JSR L1AE0
+ JSR PROT2
 
  DEX
- BPL L1B76
+ BPL PROTL1
 
  STA RAND+2
  ORA #&00
- BPL L1B85
+ BPL PROT3
 
  LSR BLPTR
 
-.L1B85
+.PROT3
 
- JMP L1CCF
+ JMP PROT4
 
  EQUB &AC
 
@@ -392,7 +464,16 @@ INCLUDE "library/common/loader/subroutine/squa2.asm"
 INCLUDE "library/common/loader/subroutine/pix.asm"
 INCLUDE "library/common/loader/variable/twos.asm"
 
-.L1CCF
+\ ******************************************************************************
+\
+\       Name: PROT4
+\       Type: Subroutine
+\   Category: Copy protection
+\    Summary: 
+\
+\ ******************************************************************************
+
+.PROT4
 
  LDA RAND+2
  EOR BLPTR
@@ -406,7 +487,16 @@ INCLUDE "library/common/loader/variable/cnt.asm"
 INCLUDE "library/common/loader/variable/cnt2.asm"
 INCLUDE "library/common/loader/variable/cnt3.asm"
 
-.L1CE2
+\ ******************************************************************************
+\
+\       Name: PROT5
+\       Type: Subroutine
+\   Category: Copy protection
+\    Summary: 
+\
+\ ******************************************************************************
+
+.PROT5
 
  LDA BLPTR
  AND BLPTR+1
@@ -415,40 +505,42 @@ INCLUDE "library/common/loader/variable/cnt3.asm"
  STA BLPTR
  RTS
 
-.L1CEC
+\ ******************************************************************************
+\
+\       Name: PROT6
+\       Type: Subroutine
+\   Category: Copy protection
+\    Summary: 
+\
+\ ******************************************************************************
 
- JMP L1CEC
+.PROT6
+
+ JMP PROT6
 
 INCLUDE "library/common/loader/subroutine/root.asm"
 INCLUDE "library/common/loader/subroutine/osb.asm"
 
- EQUB &0E
+ EQUB &0E               \ This byte appears to be unused
 
 \ ******************************************************************************
 \
 \       Name: MVPG
 \       Type: Subroutine
 \   Category: Utility routines
-\    Summary: Move and decrypt a multi-page block of memory from one location to
-\             another
+\    Summary: Decrypt and move a page of memory
 \
 \ ------------------------------------------------------------------------------
 \
 \ Arguments:
 \
-\   P(1 0)              The source address of the block to move
+\   P(1 0)              The source address of the page to move
 \
-\   ZP(1 0)             The destination address of the block to move
-\
-\   X                   Number of pages of memory to move (1 page = 256 bytes)
+\   ZP(1 0)             The destination address of the page to move
 \
 \ ******************************************************************************
 
 .MVPG
-
-                        \ This subroutine is called from below to copy one page
-                        \ of memory from the address in P(1 0) to the address
-                        \ in ZP(1 0)
 
  LDY #0                 \ We want to move one page of memory, so set Y as a byte
                         \ counter
@@ -469,7 +561,26 @@ INCLUDE "library/common/loader/subroutine/osb.asm"
 
  RTS                    \ Return from the subroutine
 
- EQUB &0E
+ EQUB &0E               \ This byte appears to be unused
+
+\ ******************************************************************************
+\
+\       Name: MVBL
+\       Type: Subroutine
+\   Category: Utility routines
+\    Summary: Decrypt and move a multi-page block of memory
+\
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   P(1 0)              The source address of the block to move
+\
+\   ZP(1 0)             The destination address of the block to move
+\
+\   X                   Number of pages of memory to move (1 page = 256 bytes)
+\
+\ ******************************************************************************
 
 .MVBL
 
@@ -489,11 +600,64 @@ INCLUDE "library/common/loader/subroutine/osb.asm"
 
  RTS                    \ Return from the subroutine
 
+\ ******************************************************************************
+\
+\       Name: MESS1
+\       Type: Variable
+\   Category: Loader
+\    Summary: The OS command string for changing the disc directory to E
+\
+\ ******************************************************************************
 
+.MESS1
 
+ EQUS "*DIR E"
+ EQUB 13
 
- EQUB &2A, &44, &49, &52, &20
- EQUB &45, &0D, &55, &25, &22, &21, &22, &21
+\ ******************************************************************************
+\
+\       Name: Elite loader (Part 2 of 2)
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: Include binaries for recursive tokens, Missile blueprint and
+\             images
+\
+\ ******************************************************************************
+
+\&1d4B
+
+.DIALS
+
+\ &1D4B-&254A to &7800-&7FFF
+\INCBIN "binaries/P.DIALS.bin"
+\INCBIN "output/MISSILE.bin"
+
+.WORDS9
+
+\ &254B-&294A to &0400-&07FF
+\INCBIN "output/WORDS9.bin"
+
+\ Gap
+
+\ &2962-&2A61 to &1100-&11FF
+\ IRQ1 etc. - code
+
+.ELITE
+
+\ &2A62-&2B61 to &6300-&63FF
+\INCBIN "binaries/P.ELITE.bin"
+
+.ASOFT
+
+\ &2B62-&2C61 to &6100-&61FF
+\INCBIN "binaries/P.A-SOFT.bin"
+
+.CpASOFT
+
+\ &2C62-&2D61 to &7600-&76FF
+\INCBIN "binaries/P.(C)ASFT.bin"
+
+ EQUB &55, &25, &22, &21, &22, &21
  EQUB &21, &25, &55, &A5, &A3, &A1, &A3, &A7
  EQUB &A3, &A5, &55, &A5, &A5, &A5, &A5, &A5
  EQUB &A5, &5A, &55, &A5, &A5, &A5, &A5, &A5

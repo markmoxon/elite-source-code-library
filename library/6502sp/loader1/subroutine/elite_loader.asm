@@ -206,7 +206,7 @@ ENDIF
  JSR OSB                \ pressed
 
 \LDA #144               \ These instructions are commented out in the original
-\LDX #255               \ source, but they would Call OSBYTE with A = 144 and
+\LDX #255               \ source, but they would call OSBYTE with A = 144 and
 \JSR OSB                \ Y = 255 to turn the screen interlace off (equivalent
                         \ to a *TV 255, 255 command)
 
@@ -215,7 +215,7 @@ ENDIF
  JSR OSB                \ keys (i.e. add 128)
 
  LDA #13                \ Call OSBYTE with A = 13, X = 2 and Y = 0 to disable
- LDX #2                 \ the "character entering u=buffer" event
+ LDX #2                 \ the "character entering buffer" event
  JSR OSB
 
  LDA #LO(B%)            \ Set ZP(1 0) to point to the VDU code table at B%

@@ -167,27 +167,27 @@ INCLUDE "library/common/loader/macro/fne.asm"
  LDA #&00               \ Set the following:
  STA ZP                 \
  LDA #&11               \   ZP(1 0) = &1100
- STA ZP+1               \   P(1 0) = &2962 IRQ1 etc.
- LDA #&62
+ STA ZP+1               \   P(1 0) = BEGIN
+ LDA #LO(BEGIN)
  STA P
- LDA #&29
+ LDA #HI(BEGIN)
  STA P+1
 
  JSR MVPG               \ Call MVPG to move and decrypt a page of memory from
-                        \ &2962-&2A61 to &1100-&11FF
+                        \ BEGIN to &1100-&11FF
 
  LDA #&00               \ Set the following:
  STA ZP                 \
  LDA #&78               \   ZP(1 0) = &7800
- STA ZP+1               \   P(1 0) = &1D4B DIALS
- LDA #&4B               \   X = 8
+ STA ZP+1               \   P(1 0) = DIALS
+ LDA #LO(DIALS)         \   X = 8
  STA P
- LDA #&1D
+ LDA #HI(DIALS)
  STA P+1
  LDX #8
 
  JSR MVBL               \ Call MVBL to move and decrypt 8 pages of memory from
-                        \ &1D4B-&254A to &7800-&7FFF
+                        \ DIALS to &7800-&7FFF
 
  SEI                    \ Disable interrupts while we set up our interrupt
                         \ handler to support the split-screen mode
@@ -224,47 +224,47 @@ INCLUDE "library/common/loader/macro/fne.asm"
  LDA #&00               \ Set the following:
  STA ZP                 \
  LDA #&61               \   ZP(1 0) = &6100
- STA ZP+1               \   P(1 0) = &2B62 ASOFT
- LDA #&62
+ STA ZP+1               \   P(1 0) = ASOFT
+ LDA #LO(ASOFT)
  STA P
- LDA #&2B
+ LDA #HI(ASOFT)
  STA P+1
 
  JSR MVPG               \ Call MVPG to move and decrypt a page of memory from
-                        \ &2B62-&2C61 to &6100-&61FF
+                        \ ASOFT to &6100-&61FF
 
  LDA #&63               \ Set the following:
  STA ZP+1               \
- LDA #&62               \   ZP(1 0) = &6300
- STA P                  \   P(1 0) = &2A62 ELITE
- LDA #&2A
+ LDA #LO(ELITE)         \   ZP(1 0) = &6300
+ STA P                  \   P(1 0) = ELITE
+ LDA #HI(ELITE)
  STA P+1
 
  JSR MVPG               \ Call MVPG to move and decrypt a page of memory from
-                        \ &2A62-&2B61 to &6300-&63FF
+                        \ ELITE to &6300-&63FF
 
  LDA #&76               \ Set the following:
  STA ZP+1               \
- LDA #&62               \   ZP(1 0) = &7600
- STA P                  \   P(1 0) = &2C62 CpASOFT
- LDA #&2C
+ LDA #LO(CpASOFT)       \   ZP(1 0) = &7600
+ STA P                  \   P(1 0) = CpASOFT
+ LDA #HI(CpASOFT)
  STA P+1
 
  JSR MVPG               \ Call MVPG to move and decrypt a page of memory from
-                        \ &2C62-&2D61 to &7600-&76FF
+                        \ CpASOFT to &7600-&76FF
 
  LDA #&00               \ Set the following:
  STA ZP                 \
  LDA #&04               \   ZP(1 0) = &0400
- STA ZP+1               \   P(1 0) = &254B WORDS9
- LDA #&4B               \   X = 4
+ STA ZP+1               \   P(1 0) = WORDS
+ LDA #LO(WORDS)         \   X = 4
  STA P
- LDA #&25
+ LDA #HI(WORDS)
  STA P+1
  LDX #4
 
  JSR MVBL               \ Call MVBL to move and decrypt 4 pages of memory from
-                        \ &254B-&294A to &0400-&07FF
+                        \ WORDS to &0400-&07FF
 
  LDX #35                \ We now want to copy the disc catalogue routine from
                         \ CATDISC to CATD, so set a counter in X for the 36
@@ -354,16 +354,104 @@ INCLUDE "library/common/loader/macro/fne.asm"
 \
 \ ******************************************************************************
 
-\ORG &0B00
+.LOD2
+
+IF FALSE
+
+ORG &0B00
+
+\ This block (LOD2 &1AED to &1B4E) needs EOR'ing with &18 by elite-checksum.py
 
 \ code block, org &0B00, eor'd with &18, gets copied to &0B00 by above, called
 \ at end of this loader
 
-.L1AED
+.LOADER2
+
+ LDX #$37
+ LDY #$0B
+ JSR $FFF7
+ LDA #$EE
+ STA $0202
+ LDA #$11
+ STA $0203
+ LDA #$E9
+ STA $020E
+ LDA #$11
+ STA $020F
+ SEC
+ LDY #$00
+ STY $70
+ LDX #$11
+ TXA
+
+.l1
+
+ STX $71
+ ADC ($70),Y
+ DEY
+ BNE l1
+ INX
+ CPX #$54
+ BCC l1
+ CMP &55FF
+
+.l2
+
+ BNE l2
+ JMP &11E6
+
+.L0B37
+
+ EQUB &4C, &2E, &54
+ EQUB &2E, &43, &4F
+ EQUB &44
+ EQUB &45, &0D
+ EQUB &44
+ EQUB &6F
+ EQUB &65, &73
+ EQUB &20, &79, &6F
+ EQUB &75, &72
+ EQUB &20, &6D, &6F
+ EQUB &74
+ EQUB &68
+ EQUB &65, &72
+ EQUB &20, &6B, &6E
+ EQUB &6F
+ EQUB &77
+ EQUB &20, &79, &6F
+ EQUB &75, &20
+ EQUB &64
+ EQUB &6F
+ EQUB &20, &74, &68
+ EQUB &69, &73
+ EQUB &3F
+
+COPYBLOCK LOADER2, P%, LOD2
+
+ORG LOD2 + P% - LOADER2
+
+\ Used to generate the above disassembly
+
+\ EQUB &BA EOR &18, &2F EOR &18, &B8 EOR &18, &13 EOR &18, &38 EOR &18, &EF EOR &18, &E7 EOR &18, &B1 EOR &18
+\ EQUB &F6 EOR &18, &95 EOR &18
+\ EQUB &1A EOR &18, &1A EOR &18, &B1 EOR &18, &09 EOR &18, &95 EOR &18, &1B EOR &18, &1A EOR &18, &B1 EOR &18
+\ EQUB &F1 EOR &18, &95 EOR &18, &16 EOR &18, &1A EOR &18, &B1 EOR &18, &09 EOR &18, &95 EOR &18, &17 EOR &18
+\ EQUB &1A EOR &18, &20 EOR &18, &B8 EOR &18, &18 EOR &18, &9C EOR &18, &68 EOR &18, &BA EOR &18, &09 EOR &18
+\ EQUB &92 EOR &18, &9E EOR &18, &69 EOR &18, &69 EOR &18, &68 EOR &18, &90 EOR &18, &C8 EOR &18, &E1 EOR &18
+\ EQUB &F0 EOR &18, &F8 EOR &18, &4C EOR &18, &88 EOR &18, &EC EOR &18, &D5 EOR &18, &E7 EOR &18, &4D EOR &18
+\ EQUB &C8 EOR &18, &E6 EOR &18, &54 EOR &18, &FE EOR &18, &09 EOR &18, &54 EOR &18, &36 EOR &18, &4C EOR &18
+\ EQUB &36 EOR &18, &5B EOR &18, &57 EOR &18, &5C EOR &18, &5D EOR &18, &15 EOR &18, &5C EOR &18, &77 EOR &18
+\ EQUB &7D EOR &18, &6B EOR &18, &38 EOR &18, &61 EOR &18, &77 EOR &18, &6D EOR &18, &6A EOR &18, &38 EOR &18
+\ EQUB &75 EOR &18, &77 EOR &18, &6C EOR &18, &70 EOR &18, &7D EOR &18, &6A EOR &18, &38 EOR &18, &73 EOR &18
+\ EQUB &76 EOR &18, &77 EOR &18, &6F EOR &18, &38 EOR &18, &61 EOR &18, &77 EOR &18, &6D EOR &18, &38 EOR &18
+\ EQUB &7C EOR &18, &77 EOR &18, &38 EOR &18, &6C EOR &18, &70 EOR &18, &71 EOR &18, &6B EOR &18, &27 EOR &18
+
+ELSE
+
+\ Original bytes from the binary
 
  EQUB &BA, &2F, &B8, &13, &38, &EF, &E7, &B1
  EQUB &F6, &95
-
  EQUB &1A, &1A, &B1, &09, &95, &1B, &1A, &B1
  EQUB &F1, &95, &16, &1A, &B1, &09, &95, &17
  EQUB &1A, &20, &B8, &18, &9C, &68, &BA, &09
@@ -375,6 +463,8 @@ INCLUDE "library/common/loader/macro/fne.asm"
  EQUB &75, &77, &6C, &70, &7D, &6A, &38, &73
  EQUB &76, &77, &6F, &38, &61, &77, &6D, &38
  EQUB &7C, &77, &38, &6C, &70, &71, &6B, &27
+
+ENDIF
 
 \ ******************************************************************************
 \
@@ -624,38 +714,12 @@ INCLUDE "library/common/loader/subroutine/osb.asm"
 \
 \ ******************************************************************************
 
-\&1d4B
-
 .DIALS
 
 \ &1D4B-&254A to &7800-&7FFF
-\INCBIN "binaries/P.DIALS.bin"
-\INCBIN "output/MISSILE.bin"
-
-.WORDS9
-
-\ &254B-&294A to &0400-&07FF
-\INCBIN "output/WORDS9.bin"
-
-\ Gap
-
-\ &2962-&2A61 to &1100-&11FF
-\ IRQ1 etc. - code
-
-.ELITE
-
-\ &2A62-&2B61 to &6300-&63FF
-\INCBIN "binaries/P.ELITE.bin"
-
-.ASOFT
-
-\ &2B62-&2C61 to &6100-&61FF
-\INCBIN "binaries/P.A-SOFT.bin"
-
-.CpASOFT
-
-\ &2C62-&2D61 to &7600-&76FF
-\INCBIN "binaries/P.(C)ASFT.bin"
+\ INCBIN "binaries/P.DIALS.bin" \ &7800
+\ INCBIN "output/MISSILE.bin" \ &7F00
+\ EOR with &A5
 
  EQUB &55, &25, &22, &21, &22, &21
  EQUB &21, &25, &55, &A5, &A3, &A1, &A3, &A7
@@ -668,7 +732,6 @@ INCLUDE "library/common/loader/subroutine/osb.asm"
  EQUB &A5, &A5, &55, &A5, &A5, &A5, &A5, &A5
  EQUB &A5, &A5, &55, &A5, &A5, &A5, &A5, &A5
  EQUB &A5, &A5, &55
-
  EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &55
  EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &55
  EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &55
@@ -914,7 +977,15 @@ INCLUDE "library/common/loader/subroutine/osb.asm"
  EQUB &B5, &BA, &E5, &A5, &B5, &BA, &A5, &E5
  EQUB &B5, &BA, &85, &A5, &A5, &FA, &A5, &85
  EQUB &A5, &3A, &85, &A5, &A5, &BA, &A5, &05
- EQUB &CB, &A5, &A5, &E5, &A1, &A1, &A5, &E9
+ EQUB &CB, &A5, &A5, &E5, &A1, &A1, &A5
+
+.WORDS
+
+\ &254B-&294A to &0400-&07FF
+\ INCBIN "output/WORDS.bin"
+\ EOR with &A5
+
+ EQUB &E9
  EQUB &97, &81, &A5, &A6, &C5, &CE, &0C, &D2
  EQUB &A5, &C1, &C9, &10, &D4, &C8, &CB, &14
  EQUB &D2, &A5, &C2, &17, &C7, &97, &85, &A5
@@ -1045,11 +1116,15 @@ INCLUDE "library/common/loader/subroutine/osb.asm"
  EQUB &BE, &B9, &B8, &B8, &BB, &BA, &BA, &38
  EQUB &A0, &00, &84, &70, &A9, &0F, &85, &71
  EQUB &71, &70, &C8, &D0, &FB, &C9, &CF, &EA
- EQUB &EA, &A9, &DB, &85
+ EQUB &EA, &A9, &DB, &85, &9F, &60
 
- EQUB &9F
+.BEGIN
 
- EQUB &60, &71, &61, &31, &21, &50, &40, &10
+\ &2962-&2A61 to &1100-&11FF
+\ IRQ1 etc. - this is code
+\ EOR with &A5
+
+ EQUB &71, &61, &31, &21, &50, &40, &10
  EQUB &00, &D3, &C3, &93, &83, &44, &54, &14
  EQUB &04, &55, &45, &15, &05, &75, &65, &35
  EQUB &25, &D2, &C2, &92, &82, &0C, &BB, &20
@@ -1081,7 +1156,15 @@ INCLUDE "library/common/loader/subroutine/osb.asm"
  EQUB &D1, &D7, &CC, &C7, &D0, &D1, &C0, &D6
  EQUB &A5, &61, &81, &CF, &E6, &C2, &C0, &D1
  EQUB &D7, &C1, &CC, &D6, &C6, &A5, &13, &99
- EQUB &63, &A5, &A5, &A5, &A5, &A5, &A5, &A2
+ EQUB &63
+
+.ELITE
+
+\ &2A62-&2B61 to &6300-&63FF
+\ INCBIN "binaries/P.ELITE.bin"
+\ EOR with &A5
+
+ EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A2
  EQUB &9A, &A5, &A5, &A5, &A6, &BA, &5A, &5A
  EQUB &5A, &A5, &AA, &DA, &5A, &5A, &5A, &5A
  EQUB &5A, &A5, &5A, &5A, &5A, &5A, &45, &25
@@ -1113,7 +1196,15 @@ INCLUDE "library/common/loader/subroutine/osb.asm"
  EQUB &5A, &A5, &A5, &A5, &A5, &25, &A5, &A5
  EQUB &5A, &A5, &A5, &A5, &A5, &A5, &A5, &A5
  EQUB &5B, &A5, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &A5
+ EQUB &A5
+
+.ASOFT
+
+\ &2B62-&2C61 to &6100-&61FF
+\ INCBIN "binaries/P.A-SOFT.bin"
+\ EOR with &A5
+
+ EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5
  EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &A5
  EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &A5
  EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &A5
@@ -1145,7 +1236,15 @@ INCLUDE "library/common/loader/subroutine/osb.asm"
  EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &A5
  EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &A5
  EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &A5
+ EQUB &A5
+
+.CpASOFT
+
+\ &2C62-&2D61 to &7600-&76FF
+\ INCBIN "binaries/P.(C)ASFT.bin"
+\ EOR with &A5
+
+ EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5
  EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &A5
  EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &A5
  EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &A5

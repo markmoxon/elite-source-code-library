@@ -40,9 +40,10 @@ K7   = $004F
 K8   = $0050
 K9   = $0051
 
-Q   = $0070
+S   = $0070
 ZP   = $0071
 P   = $0073
+Q   = $0074
 R   = $0075
 T   = $0076
 SC   = $0081
@@ -57,6 +58,7 @@ L4BBA   = $4BBA
 L4BC3   = $4BC3
 L4BCC   = $4BCC
 
+OSNEWL = &FFE7          \ The address for the OSNEWL routine
 OSWRCH = &FFEE          \ The address for the OSWRCH routine
 OSBYTE = &FFF4          \ The address for the OSBYTE routine
 OSWORD = &FFF1          \ The address for the OSWORD routine
@@ -168,7 +170,7 @@ ORG CODE%
  JMP MPL                \ Jump to MPL to copy 512 bytes to &0400 and jump to
                         \ ENTRY2
 
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
+ SKIP 8
 
  NOP
  NOP
@@ -219,8 +221,7 @@ ORG CODE%
 
  JMP &197B              \ Jump to the start of the ELITE3 loader code at &197B
 
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00
+ SKIP 15
 
 \ ******************************************************************************
 \
@@ -261,19 +262,9 @@ ORG CODE%
  JMP ENTRY4             \ Jump to ENTRY4 to load and run the next part of the
                         \ loader
 
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00
- 
+ SKIP 63
  EQUB &32
-
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00
+ SKIP 13
 
 \ ******************************************************************************
 \
@@ -802,33 +793,35 @@ ORG LOD + P% - LOADER
  SBC #&00
  STA ZP+1
 
- LDY #&63               \ Is this TABLE - PROT1? Looks close, if so this loop
-                        \ works through the words in TABLE
+ LDY #(TABLE - PROT1)   \ We're now going to loop through the words in TABLE, so
+                        \ set Y as an index we can add to PROT1 (i.e. ZP) to
+                        \ reach TABLE
 
-.PROT2
+.PROT1a
 
  LDA (ZP),Y             \ Set SC(1 0) = ZP(1 0) + Y-th word from TABLE
  CLC                    \
- ADC ZP                 \ so the first table entry makes SC point to the &D0-th
- STA SC                 \ byte of PROT1
- INY
- LDA (ZP),Y
- ADC ZP+1
- STA SC+1
+ ADC ZP                 \ so, for example, the first entry in TABLE points SC to:
+ STA SC                 \
+ INY                    \     ZP + first word from TABLE
+ LDA (ZP),Y             \   = PROT1 + modify1 + 1 - PROT1
+ ADC ZP+1               \   = modify + 1
+ STA SC+1               \
+                        \ which is the address of the JSR at modify1
 
  LDX #0                 \ Add ZP(1 0), i.e. PROT1, to the word at SC(1 0)
  LDA (SC,X)             \
- CLC                    \ so the first table entry adds PROT1 to the address in
- ADC ZP                 \ PROT1+&D0
+ CLC                    \ so, for example, the first entry in TABLE modifies the
+ ADC ZP                 \ address of the JSR at modify1 by adding PROT1 to it
  STA (SC,X)
 
  INC SC
 
- BNE PROT3
+ BNE PROT1b
 
  INC SC+1
 
-.PROT3
+.PROT1b
 
  LDA (SC,X)
  ADC ZP+1
@@ -837,18 +830,21 @@ ORG LOD + P% - LOADER
  INY                    \ Increment Y to point to the next word in TABLE
 
  CPY #&7D               \ Loop until we have done them all
- BNE PROT2
+ BNE PROT1a
 
- BEQ PROT4              \ Jump to PROT4 (this BEQ is effectively a JMP as we
+ BEQ PROT2              \ Jump to PROT2 (this BEQ is effectively a JMP as we
                         \ didn't just take the BNE branch)
 
 .TABLE
 
- EQUB &D0, &00, &E2, &00, &E9, &00, &37, &01
- EQUB &64, &01
+ EQUW modify1 + 1 - PROT1
+ EQUW modify2 + 1 - PROT1
+ EQUW modify3 + 1 - PROT1
+ EQUW modify4 + 1 - PROT1
+ EQUW modify5 + 1 - PROT1
+ EQUW modify6 + 1 - PROT1
 
- EQUB &6D, &01, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
+ SKIP 14
 
 \ ******************************************************************************
 \
@@ -859,7 +855,7 @@ ORG LOD + P% - LOADER
 \
 \ ******************************************************************************
 
-.PROT4
+.PROT2
 
  LDA ZP                 \ Set ZP(1 0) = ZP(1 0) - &01E0
  SEC
@@ -869,8 +865,8 @@ ORG LOD + P% - LOADER
  SBC #&01
  STA ZP+1
 
- LDX #0                 \ Set Q = 0
- STX Q
+ LDX #0                 \ Set S = 0
+ STX S
                         
  LDY #&FF               \ Call OSBYTE with A = 129, X = 0 and Y = &FF to detect
  LDA #129               \ the machine type. This call is undocumented and is not
@@ -885,11 +881,11 @@ ORG LOD + P% - LOADER
  CPX #1                 \ If X is not 1, then this is not an Acorn Electron,
  BNE bbc                \ so jump to bbc
 
- DEC Q                  \ Decrement Q to &FF
+ DEC S                  \ Decrement S to &FF
 
  LDY #0
 
-.LOOP4
+.PROT2a
 
  LDX #7
 
@@ -903,17 +899,17 @@ ORG LOD + P% - LOADER
  ORA #&E0
  JSR OSWRCH
 
-.LOOP5
+.PROT2b
 
  LDA (ZP),Y
  JSR OSWRCH
 
  INY
  DEX
- BPL LOOP5
+ BPL PROT2b
 
  CPY #&E0
- BNE LOOP4
+ BNE PROT2a
 
 .bbc
 
@@ -933,103 +929,236 @@ ORG LOD + P% - LOADER
  LDA #7
  JSR OSWRCH
 
- JSR &01B7
+.modify1
 
-\ ******************************************************************************
-\
-\       Name: 
-\       Type: Variable
-\   Category: Loader
-\    Summary: 
-\
-\ ******************************************************************************
+ JSR dest1 - PROT1      \ Call dest1 to write the following characters,
+                        \ restarting with the NOP instruction
 
- EQUB &17, &00, &0A, &20, &00, &00, &00, &00
- EQUB &00, &00
+.wrch1
 
- EQUB &EA, &A9, &91, &85, &76, &20, &63, &01
- EQUB &24, &70, &30, &4E, &20, &B7, &01, &1C
- EQUB &0D, &0D, &19, &0A, &0C, &0A, &87, &8D
- EQUB &45, &20, &4C, &20, &49, &20, &54, &20
- EQUB &45, &8C, &92, &87, &8D, &45, &20, &4C
- EQUB &20, &49, &20, &54, &20, &45, &EA, &60
+ EQUB 23, 0, 10, 32     \ Set 6845 register R10 = 32
+ EQUB 0, 0, 0           \
+ EQUB 0, 0, 0           \ This is the "cursor start" register, which sets the
+                        \ cursor start line at 0, so it turns the cursor off
+
+ NOP                    \ Marks the end of the VDU block
+
+ LDA #&91               \ Set T = &91
+ STA T
+
+.modify2
+
+ JSR modify5 - PROT1    \ Call modify5 -> modify6 -> dest2
+
+ BIT S
+ BMI modify4
+
+.modify3
+
+ JSR dest1 - PROT1      \ Call dest1 to write the following characters,
+                        \ restarting with the NOP instruction
+
+.wrch2
+
+ EQUB 28                \ Define a text window as follows:
+ EQUB 13, 13, 25, 10    \
+                        \   * Left = 13
+                        \   * Right = 25
+                        \   * Top = 10
+                        \   * Bottom = 13
+                        \
+                        \ i.e. 3 rows high, 12 columns wide at (13, 10)
+
+ EQUB 12                \ Clear the text area
+
+ EQUB 10                \ Move the cursor down one row
+
+ EQUB 135               \ Select white text (teletext control code)
+
+ EQUB 141               \ Double height (teletext control code)
+
+ EQUS "E L I T E"
+
+ EQUB 140               \ Turn off double height
+
+ EQUB 146               \ Select green graphics (teletext control code)
+
+ EQUB 135               \ Select white text (teletext control code)
+
+ EQUB 141               \ Double height (teletext control code)
+
+ EQUS "E L I T E"
+
+ NOP
+ RTS                    \ Return from the subroutine
+
  EQUB &20, &20, &20, &20, &20, &20, &8C, &92
  EQUB &87, &8D, &20, &20, &20, &20, &20, &20
  EQUB &20, &20, &20, &20, &20, &20, &20, &20
  EQUB &20, &20, &20, &20, &20, &20, &20, &20
  EQUB &20, &20, &20, &20, &20, &20, &20, &20
- EQUB &EA, &60, &20, &B7, &01, &1C, &0D, &0C
- EQUB &19, &0A, &0C, &1A, &1F, &0F, &0B, &45
- EQUB &20, &4C, &20, &49, &20, &54, &20, &45
- EQUB &EA, &60, &20, &20, &20, &20, &20, &20
- EQUB &20, &20, &20, &20, &20, &20, &20, &20
- EQUB &20, &20, &20, &20, &20, &EA, &60, &20
- EQUB &6C, &01, &20, &E7, &FF, &20, &E7, &FF
- EQUB &20, &72, &01, &20, &E7, &FF, &A0, &1C
- EQUB &A2, &26, &24, &70, &30, &0D, &A5, &76
- EQUB &20, &EE, &FF, &A9, &9A, &20, &EE, &FF
- EQUB &18, &90, &05, &A9, &20, &20, &EE, &FF
- EQUB &B1, &71, &24, &70, &30, &09, &84, &73
- EQUB &A8, &B1, &71, &A4, &73, &D0, &02, &09
- EQUB &E0, &20, &EE, &FF, &C8, &C0, &FF, &F0
- EQUB &0F, &CA, &D0, &E4, &24, &70, &10, &05
- EQUB &A9, &20, &20, &EE, &FF, &18, &90, &C0
- EQUB &E6, &76, &60, &68, &85, &74, &68, &85
- EQUB &75, &E6, &74, &D0, &02, &E6, &75, &A0
- EQUB &00, &B1, &74, &C9, &EA, &F0, &06, &20
- EQUB &EE, &FF, &18, &90, &EC, &6C
 
- EQUB &74
+ NOP
+ RTS
 
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &FF, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00
+.modify4
 
- EQUB &00
+ JSR dest1 - PROT1
 
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00
+ EQUB 28                \ Define a text window as follows:
+ EQUB 13, 12, 25, 10    \
+                        \   * Left = 13
+                        \   * Right = 25
+                        \   * Top = 10
+                        \   * Bottom = 12
+                        \
+                        \ i.e. 2 rows high, 12 columns wide at (13, 10)
+
+ EQUB 12                \ Clear the text area
+
+ EQUB 26                \ Restore default windows
+
+ EQUB 31, 15, 11        \ Move text cursor to 15, 11
+
+ EQUS "E L I T E"
+
+ NOP
+ RTS
+
+ EQUS "                   "
+
+ NOP
+ RTS
+
+.modify5
+
+ JSR modify6 - PROT1        \ Call modify6 -> dest2
+
+ JSR OSNEWL
+ JSR OSNEWL
+
+.modify6
+
+ JSR dest2 - PROT1          \ Call dest2
+
+ JSR OSNEWL
 
 \ ******************************************************************************
 \
-\       Name: 
+\       Name: dest2
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: 
+\
+\ ******************************************************************************
+
+.dest2
+
+ LDY #&1C
+
+.dest2q
+
+ LDX #&26
+ BIT S
+ BMI dest2a
+
+ LDA T
+ JSR OSWRCH
+
+ LDA #&9A
+ JSR OSWRCH
+
+ CLC
+ BCC P%+7
+
+.dest2a
+
+ LDA #' '
+ JSR OSWRCH
+
+.dest2r
+
+ LDA (ZP),Y
+ BIT S
+ BMI dest2b
+ STY P
+ TAY
+ LDA (ZP),Y
+ LDY P
+ BNE P%+4
+
+.dest2b
+
+ ORA #&E0
+
+ JSR OSWRCH
+
+ INY
+ CPY #&FF
+ BEQ dest2c
+
+ DEX
+ BNE dest2r
+
+ BIT S
+ BPL P%+7
+
+ LDA #&20
+ JSR OSWRCH
+
+ CLC
+ BCC dest2q
+
+.dest2c
+
+ INC T
+
+ RTS
+
+\ ******************************************************************************
+\
+\       Name: dest1
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: 
+\
+\ ******************************************************************************
+
+.dest1
+
+ PLA                    \ Pull the RTS address (wrch1 - 1) into Q(1 0)
+ STA Q
+ PLA
+ STA Q+1
+
+.dest1a
+
+ INC Q                  \ Increment Q(1 0) to point to the next character
+ BNE P%+4
+ INC Q+1
+
+ LDY #0                 \ Write the characters in wrch1 until we reach
+ LDA (Q),Y              \ the NOP instruction (&EA), when we jump to dest1b
+ CMP #&EA
+ BEQ dest1b
+
+ JSR OSWRCH
+
+ CLC
+ BCC dest1a
+
+.dest1b
+
+ JMP (Q)                \ Jump to the address in Q(1 0) - i.e. to the NOP
+
+
+ SKIP 76
+ EQUB &FF
+ SKIP 255
+
+\ ******************************************************************************
+\
+\       Name: L6100
 \       Type: Subroutine
 \   Category: Loader
 \    Summary: 
@@ -1117,11 +1246,11 @@ ORG LOD + P% - LOADER
 
  RTS
 
- EQUB &00
+ SKIP 1
 
 \ ******************************************************************************
 \
-\       Name: 
+\       Name: L615D
 \       Type: Subroutine
 \   Category: Loader
 \    Summary: 

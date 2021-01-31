@@ -240,7 +240,7 @@ ORG CODE%
 
 .PROT2
 
- JSR PROT3
+ JSR PROT2a
 
  JMP command            \ Jump to command to load and run the next part of the
                         \ loader
@@ -253,7 +253,7 @@ ORG CODE%
  LDY #HI(PARAMS1)
  JMP OSWORD
 
-.PROT3
+.PROT2a
 
  STA PARAMS2+7          \ Set PARAMS2+7 = A, which is the track number in the
                         \ OSWORD parameter block
@@ -279,7 +279,7 @@ ORG CODE%
  EQUB 23, 0, 10, 32     \ Set 6845 register R10 = 32
  EQUB 0, 0, 0           \
  EQUB 0, 0, 0           \ This is the "cursor start" register, which sets the
-                        \ cursor start line at 0 with a fast blink rate
+                        \ cursor start line at 0, so it turns the cursor off
 
 \ ******************************************************************************
 \

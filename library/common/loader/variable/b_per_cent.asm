@@ -180,7 +180,7 @@ ENDIF
  EQUB 23, 0, 10, 32     \ Set 6845 register R10 = 32
  EQUB 0, 0, 0           \
  EQUB 0, 0, 0           \ This is the "cursor start" register, which sets the
-                        \ cursor start line at 0 with a fast blink rate
+                        \ cursor start line at 0, so it turns the cursor off
 
 IF _6502SP_VERSION
 

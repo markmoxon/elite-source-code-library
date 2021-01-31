@@ -30,33 +30,33 @@ _DISC_DOCKED            = FALSE
 _DISC_FLIGHT            = TRUE
 
 TRTB% = &04             \ TRTB%(1 0) points to the keyboard translation table
-K1   = $0012
-K2   = $0013
-K3   = $0044
-K4   = $004C
-K5   = $004D
-K6   = $004E
-K7   = $004F
-K8   = $0050
-K9   = $0051
+K1   = &0012
+K2   = &0013
+K3   = &0044
+K4   = &004C
+K5   = &004D
+K6   = &004E
+K7   = &004F
+K8   = &0050
+K9   = &0051
 
-S   = $0070
-ZP   = $0071
-P   = $0073
-Q   = $0074
-R   = $0075
-T   = $0076
-SC   = $0081
+S   = &0070
+ZP   = &0071
+P   = &0073
+Q   = &0074
+R   = &0075
+T   = &0076
+SC   = &0081
 
-L0AC1   = $0AC1
-L373D   = $373D
-L4953   = $4953
-L495C   = $495C
-L499C   = $499C
-L49D6   = $49D6
-L4BBA   = $4BBA
-L4BC3   = $4BC3
-L4BCC   = $4BCC
+L0AC1   = &0AC1
+L373D   = &373D
+L4953   = &4953
+L495C   = &495C
+L499C   = &499C
+L49D6   = &49D6
+L4BBA   = &4BBA
+L4BC3   = &4BC3
+L4BCC   = &4BCC
 
 OSNEWL = &FFE7          \ The address for the OSNEWL routine
 OSWRCH = &FFEE          \ The address for the OSWRCH routine
@@ -778,7 +778,7 @@ ORG LOD + P% - LOADER
                         \     jumps to the address in ZP(1 0), i.e. it jumps to
                         \     the &01 of the JSR instruction. The &01 byte is
                         \     followed by a &00 byte, and &01 &00 is the opcode
-                        \     for ORA ($00,X), which doesn't do anything apart
+                        \     for ORA (&00,X), which doesn't do anything apart
                         \     from affect the value of the accumulator
                         \
                         \ In other words, this whole routine is a complicated

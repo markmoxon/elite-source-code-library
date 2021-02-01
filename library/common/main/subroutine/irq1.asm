@@ -68,7 +68,9 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
  BEQ P%+5               \ and it becomes negative, bump it back up again (this
  DEC LASCT              \ controls the pulsing of pulse lasers)
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION
+ENDIF
+
+IF _CASSETTE_VERSION
 
  LDA SVN                \ If SVN is non-zero, we are in the process of saving
  BNE jvec               \ the commander file, so jump to jvec to pass control
@@ -76,6 +78,8 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION
                         \ saving by blocking the interrupt chain
 
 ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  PLA                    \ Otherwise restore Y from the stack
  TAY

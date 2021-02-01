@@ -18,9 +18,27 @@ from __future__ import print_function
 # Configuration variables for ELITE4
 
 load_address = 0x1900
-scramble_from = 0x2962
-scramble_to = 0x2A62
-scramble_eor = 0xa5
+
+# BEGIN block
+scramble1_from = 0x2962
+scramble1_to = 0x2A62
+scramble1_eor = 0xa5
+
+# LOD2 block
+scramble2_from = 0x1AED
+scramble2_to = 0x1B4F
+scramble2_eor = 0x18
+
+# DIALS, SHIP_MISSILE blocks
+scramble3_from = 0x1D4B
+#scramble3_to = 0x244B
+scramble3_to = 0x254B
+scramble3_eor = 0xa5
+
+# ELITE, ASOFT, CpASOFT blocks
+scramble4_from = 0x2A62
+scramble4_to = 0x2D62
+scramble4_eor = 0xa5
 
 data_block = bytearray()
 
@@ -30,10 +48,19 @@ elite_file = open('versions/disc/output/ELITE4.unprot.bin', 'rb')
 data_block.extend(elite_file.read())
 elite_file.close()
 
-# EOR bytes between &2962 and &2A61
+# EOR bytes in the various blocks
 
-for n in range(scramble_from, scramble_to):
-    data_block[n - load_address] = data_block[n - load_address] ^ scramble_eor
+for n in range(scramble1_from, scramble1_to):
+    data_block[n - load_address] = data_block[n - load_address] ^ scramble1_eor
+
+for n in range(scramble2_from, scramble2_to):
+    data_block[n - load_address] = data_block[n - load_address] ^ scramble2_eor
+
+for n in range(scramble3_from, scramble3_to):
+    data_block[n - load_address] = data_block[n - load_address] ^ scramble3_eor
+
+for n in range(scramble4_from, scramble4_to):
+    data_block[n - load_address] = data_block[n - load_address] ^ scramble4_eor
 
 # Write output file for 'ELITE4.bin'
 

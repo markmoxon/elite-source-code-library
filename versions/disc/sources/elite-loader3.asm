@@ -371,18 +371,16 @@ INCLUDE "library/common/loader/macro/fne.asm"
 \   Category: Loader
 \    Summary: 
 \
+\ This block (LOD2 &1AED to &1B4E) needs EOR'ing with &18 by elite-checksum.py
+\
+\ code block, org &0B00, eor'd with &18, gets copied to &0B00 by above, called
+\ at end of this loader
+\
 \ ******************************************************************************
 
 .LOD2
 
-IF FALSE
-
 ORG &0B00
-
-\ This block (LOD2 &1AED to &1B4E) needs EOR'ing with &18 by elite-checksum.py
-
-\ code block, org &0B00, eor'd with &18, gets copied to &0B00 by above, called
-\ at end of this loader
 
 .LOADER2
 
@@ -448,42 +446,6 @@ ORG &0B00
 COPYBLOCK LOADER2, P%, LOD2
 
 ORG LOD2 + P% - LOADER2
-
-\ Used to generate the above disassembly
-
-\ EQUB &BA EOR &18, &2F EOR &18, &B8 EOR &18, &13 EOR &18, &38 EOR &18, &EF EOR &18, &E7 EOR &18, &B1 EOR &18
-\ EQUB &F6 EOR &18, &95 EOR &18
-\ EQUB &1A EOR &18, &1A EOR &18, &B1 EOR &18, &09 EOR &18, &95 EOR &18, &1B EOR &18, &1A EOR &18, &B1 EOR &18
-\ EQUB &F1 EOR &18, &95 EOR &18, &16 EOR &18, &1A EOR &18, &B1 EOR &18, &09 EOR &18, &95 EOR &18, &17 EOR &18
-\ EQUB &1A EOR &18, &20 EOR &18, &B8 EOR &18, &18 EOR &18, &9C EOR &18, &68 EOR &18, &BA EOR &18, &09 EOR &18
-\ EQUB &92 EOR &18, &9E EOR &18, &69 EOR &18, &69 EOR &18, &68 EOR &18, &90 EOR &18, &C8 EOR &18, &E1 EOR &18
-\ EQUB &F0 EOR &18, &F8 EOR &18, &4C EOR &18, &88 EOR &18, &EC EOR &18, &D5 EOR &18, &E7 EOR &18, &4D EOR &18
-\ EQUB &C8 EOR &18, &E6 EOR &18, &54 EOR &18, &FE EOR &18, &09 EOR &18, &54 EOR &18, &36 EOR &18, &4C EOR &18
-\ EQUB &36 EOR &18, &5B EOR &18, &57 EOR &18, &5C EOR &18, &5D EOR &18, &15 EOR &18, &5C EOR &18, &77 EOR &18
-\ EQUB &7D EOR &18, &6B EOR &18, &38 EOR &18, &61 EOR &18, &77 EOR &18, &6D EOR &18, &6A EOR &18, &38 EOR &18
-\ EQUB &75 EOR &18, &77 EOR &18, &6C EOR &18, &70 EOR &18, &7D EOR &18, &6A EOR &18, &38 EOR &18, &73 EOR &18
-\ EQUB &76 EOR &18, &77 EOR &18, &6F EOR &18, &38 EOR &18, &61 EOR &18, &77 EOR &18, &6D EOR &18, &38 EOR &18
-\ EQUB &7C EOR &18, &77 EOR &18, &38 EOR &18, &6C EOR &18, &70 EOR &18, &71 EOR &18, &6B EOR &18, &27 EOR &18
-
-ELSE
-
-\ Original bytes from the binary
-
- EQUB &BA, &2F, &B8, &13, &38, &EF, &E7, &B1
- EQUB &F6, &95
- EQUB &1A, &1A, &B1, &09, &95, &1B, &1A, &B1
- EQUB &F1, &95, &16, &1A, &B1, &09, &95, &17
- EQUB &1A, &20, &B8, &18, &9C, &68, &BA, &09
- EQUB &92, &9E, &69, &69, &68, &90, &C8, &E1
- EQUB &F0, &F8, &4C, &88, &EC, &D5, &E7, &4D
- EQUB &C8, &E6, &54, &FE, &09, &54, &36, &4C
- EQUB &36, &5B, &57, &5C, &5D, &15, &5C, &77
- EQUB &7D, &6B, &38, &61, &77, &6D, &6A, &38
- EQUB &75, &77, &6C, &70, &7D, &6A, &38, &73
- EQUB &76, &77, &6F, &38, &61, &77, &6D, &38
- EQUB &7C, &77, &38, &6C, &70, &71, &6B, &27
-
-ENDIF
 
 \ ******************************************************************************
 \
@@ -736,272 +698,21 @@ INCLUDE "library/common/loader/subroutine/osb.asm"
 .DIALS
 
 \ &1D4B-&254A to &7800-&7FFF
-\ INCBIN "binaries/P.DIALS.bin" \ &7800
+ INCBIN "versions/disc/binaries/P.DIALS.bin" \ &7800
 \ INCBIN "output/MISSILE.bin" \ &7F00, or inline it as this is the loader
 \ EOR with &A5
 
- EQUB &55, &25, &22, &21, &22, &21
- EQUB &21, &25, &55, &A5, &A3, &A1, &A3, &A7
- EQUB &A3, &A5, &55, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &5A, &55, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &5A, &55, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &5A, &55, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &5A, &55, &33, &01, &65, &25, &25
- EQUB &25, &25, &55, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &55, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &55, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &55
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &55
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &55
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &55
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &55
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &55
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &55
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &55
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &55
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &55
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &55
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &55
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &55
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &55
- EQUB &33, &01, &65, &65, &65, &65, &25, &55
- EQUB &A7, &A5, &A3, &A5, &A3, &A5, &A3, &55
- EQUB &33, &F7, &D5, &95, &95, &B5, &B5, &55
- EQUB &A5, &A5, &A5, &A5, &A5, &F0, &5A, &55
- EQUB &A5, &A5, &A5, &A5, &A5, &F0, &5A, &55
- EQUB &A5, &A5, &A5, &A5, &A5, &F0, &5A, &55
- EQUB &A5, &A5, &A5, &A5, &A5, &F0, &5A, &55
- EQUB &A5, &A3, &A1, &A3, &A7, &A3, &A5, &55
- EQUB &B5, &BB, &BF, &BB, &BD, &BD, &B5, &25
- EQUB &22, &20, &20, &22, &20, &25, &25, &A5
- EQUB &A3, &A1, &A3, &A7, &A3, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &5A, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &5A, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &5A, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &5A, &25
- EQUB &25, &25, &25, &25, &25, &25, &25, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A4, &A3, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A3, &A5, &A5
- EQUB &A5, &A5, &A5, &A4, &A9, &A7, &A5, &A5
- EQUB &A5, &A5, &A5, &A3, &2D, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &AE, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &A2, &A5, &A7, &A5, &A5
- EQUB &A5, &A5, &A5, &AF, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &A8, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &A1, &2F, &A7, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A9, &A4, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &AD, &A6, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &25
- EQUB &25, &27, &25, &25, &25, &25, &65, &A5
- EQUB &A5, &AC, &A5, &A5, &A3, &A5, &A3, &B5
- EQUB &B5, &B1, &B5, &B5, &B5, &B5, &B5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &87, &5A, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &0F, &5A, &2D
- EQUB &2D, &A5, &A5, &A5, &2D, &0F, &5A, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &0F, &5A, &A5
- EQUB &A5, &A3, &A0, &A2, &A3, &A0, &A5, &B5
- EQUB &B5, &B1, &B1, &B1, &B1, &B3, &B5, &25
- EQUB &23, &21, &23, &21, &21, &25, &25, &A5
- EQUB &AF, &AF, &AF, &AF, &A1, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &3C, &5A, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &87, &5A, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &E1, &5A, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &3C, &5A, &25
- EQUB &25, &25, &25, &25, &25, &25, &25, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A4, &A7, &A5
- EQUB &A5, &A5, &A6, &A1, &AD, &A5, &A5, &A4
- EQUB &A3, &AD, &A7, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &AF, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &AF, &A4, &A5, &A7, &A5, &A1
- EQUB &A5, &AD, &AF, &A5, &A5, &A5, &A5, &87
- EQUB &A5, &A5, &AF, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &2F, &A5, &A5, &87, &A5, &A7
- EQUB &A5, &A7, &AD, &A7, &A5, &A7, &A5, &A5
- EQUB &A5, &A5, &AF, &A5, &A5, &87, &A5, &87
- EQUB &A5, &A5, &2F, &A5, &A5, &A5, &A5, &A4
- EQUB &A5, &A5, &AF, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &AD, &A7, &A1, &A5, &A7, &A5, &A5
- EQUB &A5, &A5, &AF, &A5, &A5, &A5, &A5, &AD
- EQUB &A6, &A5, &AF, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &AD, &A3, &A4, &A5, &A5, &A5, &E5
- EQUB &E5, &C5, &85, &95, &BD, &A1, &A7, &A5
- EQUB &A3, &A5, &A3, &A5, &55, &A5, &A5, &95
- EQUB &95, &F7, &F7, &33, &55, &B5, &B5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &87, &5A, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &E1, &5A, &2D
- EQUB &2D, &A5, &A5, &A5, &2D, &3C, &5A, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &87, &5A, &A5
- EQUB &A3, &A0, &A0, &A0, &A3, &A5, &A5, &B5
- EQUB &B3, &B1, &B1, &B1, &B3, &B5, &B5, &25
- EQUB &23, &21, &21, &21, &23, &25, &25, &A5
- EQUB &AB, &A1, &A1, &A1, &A1, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &2D, &5A, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &2D, &5A, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &2D, &5A, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &2D, &5A, &25
- EQUB &25, &25, &25, &25, &25, &25, &25, &A5
- EQUB &A1, &A1, &AD, &AF, &A5, &AD, &A5, &A5
- EQUB &A5, &A5, &A5, &AF, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &AF, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &AF, &A5, &A7, &A5, &A1
- EQUB &A5, &AD, &A5, &AF, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &AF, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &AF, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &AF, &A5, &A5, &A5, &A7
- EQUB &2D, &A7, &A5, &8D, &D5, &A7, &A5, &A5
- EQUB &2D, &A5, &A5, &AF, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &AF, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &AF, &A5, &A5, &A5, &A4
- EQUB &A5, &A5, &A5, &AF, &A5, &A5, &A5, &A5
- EQUB &A5, &AD, &A5, &AF, &A5, &A7, &A5, &A5
- EQUB &A5, &A5, &A5, &AF, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &AF, &A5, &A5, &A5, &A7
- EQUB &A4, &A4, &A5, &AF, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &AD, &A5, &AD, &A5, &AD, &B5
- EQUB &B5, &B5, &B5, &B5, &B5, &B5, &B5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &5A, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &5A, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &5A, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &5A, &A5
- EQUB &A4, &A6, &A4, &A4, &A6, &A5, &A5, &B5
- EQUB &B5, &B5, &B5, &B5, &BD, &B5, &B5, &25
- EQUB &21, &21, &21, &21, &23, &25, &25, &A5
- EQUB &AB, &A1, &A1, &A1, &A1, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &3C, &5A, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &87, &5A, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &E1, &5A, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &2D, &5A, &25
- EQUB &25, &25, &25, &25, &25, &25, &25, &AD
- EQUB &A1, &A1, &A7, &A7, &A4, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &AD, &AF, &A1, &A5
- EQUB &A5, &A5, &A5, &A4, &A5, &AF, &A5, &A1
- EQUB &A5, &AD, &A5, &A5, &A5, &AF, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &AF, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &AF, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &AF, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &AF, &A5, &A7
- EQUB &A5, &A7, &A5, &A7, &A5, &AF, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &AF, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &AF, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &AF, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &AF, &A5, &A4
- EQUB &A5, &A5, &A5, &A5, &A5, &AF, &A5, &A5
- EQUB &A5, &AD, &A5, &A1, &A5, &AF, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &AF, &A4, &A5
- EQUB &A4, &A4, &A6, &A7, &A1, &AD, &A5, &AD
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &B5
- EQUB &B5, &B5, &B5, &B5, &B5, &B5, &B5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &5A, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &5A, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &5A, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &5A, &A6
- EQUB &A5, &A6, &A7, &A6, &A5, &A5, &A5, &BD
- EQUB &BD, &BD, &B5, &BD, &B5, &B5, &B5, &25
- EQUB &22, &20, &22, &20, &20, &25, &25, &A5
- EQUB &A1, &A1, &A1, &A1, &A3, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &3C, &5A, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &B4, &5A, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &B4, &5A, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &5A, &25
- EQUB &25, &25, &25, &25, &25, &25, &25, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &A7
- EQUB &A4, &A5, &A5, &A5, &A5, &A5, &A5, &A1
- EQUB &AD, &A1, &A4, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &AD, &A3, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A9, &A4, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &AF, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A8, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A3, &A7
- EQUB &A5, &A7, &A5, &A7, &A5, &A7, &AE, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A0, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &AF, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A0, &AD, &A5
- EQUB &A5, &A5, &A5, &A5, &A6, &AD, &A5, &A5
- EQUB &A5, &A5, &A5, &A3, &A5, &A5, &A5, &A4
- EQUB &A5, &A6, &A9, &A5, &A5, &A5, &A5, &A7
- EQUB &AD, &A5, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &B5
- EQUB &B5, &B5, &B5, &B5, &B5, &B5, &B5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &5A, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &5A, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &5A, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &5A, &A6
- EQUB &A5, &A6, &A5, &A6, &A5, &A5, &A7, &BD
- EQUB &BD, &BD, &BD, &BD, &B5, &B5, &B5, &25
- EQUB &25, &75, &22, &20, &25, &25, &55, &A5
- EQUB &A5, &65, &89, &A9, &A5, &A5, &55, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &55, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &55, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &55, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &55, &25
- EQUB &25, &25, &25, &65, &01, &33, &55, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &55, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &55, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &55, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &55, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &55, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &55, &A5
- EQUB &96, &87, &96, &87, &96, &A5, &55, &A5
- EQUB &0F, &87, &87, &87, &1E, &A5, &55, &A5
- EQUB &87, &87, &87, &87, &0F, &A5, &55, &A5
- EQUB &4B, &E1, &E1, &E1, &E1, &A5, &55, &A5
- EQUB &4B, &2D, &69, &2D, &4B, &A5, &55, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &55, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &55, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &55, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &55, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &55, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &55, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &55, &B5
- EQUB &B5, &B5, &B5, &95, &F7, &33, &55, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &55, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &55, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &55, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &55, &A7
- EQUB &A7, &A7, &A6, &A5, &A5, &A5, &55, &B5
- EQUB &BD, &BD, &BD, &BD, &B5, &B5, &55, &A5
- EQUB &E5, &A3, &DF, &7F, &F4, &A5, &AF, &C3
- EQUB &BD, &A5, &A5, &81, &AB, &A7, &89, &A5
- EQUB &A5, &A7, &A5, &A5, &A5, &E1, &BA, &B5
- EQUB &97, &AD, &AD, &81, &FA, &84, &F1, &AD
- EQUB &AD, &81, &BA, &97, &D1, &AD, &AD, &81
- EQUB &3A, &95, &D3, &AD, &AD, &81, &7A, &B5
- EQUB &C0, &AD, &AD, &89, &9A, &D1, &2D, &AD
- EQUB &AD, &89, &DA, &F1, &2D, &AD, &AD, &89
- EQUB &5A, &C0, &2D, &AD, &AD, &89, &1A, &D3
- EQUB &2D, &A9, &A9, &89, &8D, &D1, &2D, &A9
- EQUB &A9, &89, &CD, &F1, &2D, &A9, &A9, &89
- EQUB &4D, &C0, &2D, &A9, &A9, &89, &0D, &D3
- EQUB &2D, &AD, &AD, &A9, &0D, &D3, &D2, &AD
- EQUB &AD, &A9, &4D, &C0, &C3, &AD, &AD, &A9
- EQUB &8D, &D1, &D2, &AD, &AD, &A9, &CD, &F1
- EQUB &F0, &BA, &84, &A5, &A1, &BA, &97, &A5
- EQUB &AD, &BA, &95, &A5, &A9, &BA, &B5, &A5
- EQUB &B5, &BA, &81, &A1, &AD, &BA, &F4, &A1
- EQUB &B5, &BA, &C5, &A9, &B5, &BA, &D6, &AD
- EQUB &A9, &BA, &D1, &AD, &B1, &BA, &F1, &A1
- EQUB &BD, &BA, &C0, &B5, &B9, &BA, &D3, &A9
- EQUB &85, &BA, &23, &B9, &85, &BA, &22, &B1
- EQUB &85, &BA, &21, &B1, &BD, &BA, &20, &BD
- EQUB &B9, &AD, &20, &BD, &8D, &AD, &22, &B1
- EQUB &81, &AD, &22, &85, &95, &AD, &20, &B9
- EQUB &89, &AD, &D1, &81, &99, &AD, &F1, &8D
- EQUB &E5, &AD, &D3, &95, &91, &AD, &C0, &89
- EQUB &9D, &3A, &E5, &A5, &B5, &FA, &A5, &E5
- EQUB &B5, &BA, &E5, &A5, &B5, &BA, &A5, &E5
- EQUB &B5, &BA, &85, &A5, &A5, &FA, &A5, &85
- EQUB &A5, &3A, &85, &A5, &A5, &BA, &A5, &05
- EQUB &CB, &A5, &A5, &E5, &A1, &A1, &A5
+INCLUDE "library/common/main/macro/vertex.asm"
+INCLUDE "library/common/main/macro/edge.asm"
+INCLUDE "library/common/main/macro/face.asm"
+INCLUDE "library/common/main/variable/ship_missile.asm"
+
+EQUB &04, &00
 
 .WORDS
 
 \ &254B-&294A to &0400-&07FF
-\ INCBIN "output/WORDS.bin"
+\ INCBIN "versions/disc/output/WORDS.bin"
 \ EOR with &A5
 
  EQUB &E9
@@ -1257,125 +968,22 @@ ORG COMMON + P% - TVT1
 
 .ELITE
 
-\ &2A62-&2B61 to &6300-&63FF
-\ INCBIN "binaries/P.ELITE.bin"
-\ EOR with &A5
-
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A2
- EQUB &9A, &A5, &A5, &A5, &A6, &BA, &5A, &5A
- EQUB &5A, &A5, &AA, &DA, &5A, &5A, &5A, &5A
- EQUB &5A, &A5, &5A, &5A, &5A, &5A, &45, &25
- EQUB &5A, &A5, &5A, &45, &A5, &5A, &A5, &A5
- EQUB &5A, &A5, &5A, &A5, &A5, &5B, &A5, &A5
- EQUB &5B, &A5, &5A, &A5, &A5, &A5, &A5, &A6
- EQUB &AA, &A5, &44, &A2, &AA, &9A, &5A, &5A
- EQUB &5A, &A5, &5A, &5A, &5A, &5A, &5A, &5A
- EQUB &5A, &A5, &5A, &5B, &59, &55, &45, &65
- EQUB &5A, &A5, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &5A, &A5, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &5A, &A5, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &26, &A5, &9A, &A5, &A5, &A5, &A5, &A5
- EQUB &5A, &A5, &5A, &AA, &AA, &AA, &AA, &BA
- EQUB &5A, &A5, &5A, &5A, &5A, &5A, &5A, &5A
- EQUB &5A, &A5, &5A, &59, &59, &59, &59, &5B
- EQUB &5A, &A5, &5A, &A5, &A5, &A5, &A5, &A5
- EQUB &5A, &A5, &22, &A5, &A5, &A5, &A5, &A5
- EQUB &45, &A5, &5A, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &5A, &DA, &DA, &9A, &BA, &AA
- EQUB &A2, &A5, &5A, &5A, &5A, &5A, &5A, &5A
- EQUB &5A, &A5, &5A, &65, &45, &5D, &59, &5B
- EQUB &5A, &A5, &45, &A5, &A5, &A5, &A5, &A5
- EQUB &25, &A5, &5A, &9A, &BA, &A2, &A4, &A5
- EQUB &A5, &A5, &5A, &5A, &5A, &5A, &5A, &DA
- EQUB &BA, &A5, &5A, &45, &5D, &5A, &5A, &5A
- EQUB &5A, &A5, &5A, &A5, &A5, &5A, &65, &55
- EQUB &5A, &A5, &59, &A5, &A5, &5A, &A5, &A5
- EQUB &5A, &A5, &A5, &A5, &A5, &25, &A5, &A5
- EQUB &5A, &A5, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &5B, &A5, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5
+ INCBIN "versions/disc/binaries/P.ELITE.bin"
 
 .ASOFT
 
-\ &2B62-&2C61 to &6100-&61FF
-\ INCBIN "binaries/P.A-SOFT.bin"
-\ EOR with &A5
-
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A2, &A5, &A5, &A5, &A5, &A6, &BA, &5D
- EQUB &66, &A5, &A5, &AA, &D9, &5A, &AA, &D9
- EQUB &55, &A5, &9A, &2A, &D9, &54, &2A, &9A
- EQUB &9A, &A5, &65, &2A, &D9, &55, &65, &BA
- EQUB &55, &A5, &5A, &3A, &A5, &A5, &A6, &2A
- EQUB &A2, &A5, &A4, &BA, &D9, &5D, &44, &62
- EQUB &5B, &A5, &5B, &BA, &D9, &5D, &54, &46
- EQUB &A2, &A5, &BA, &9B, &D9, &5A, &5E, &55
- EQUB &44, &A5, &59, &9B, &D9, &55, &45, &5D
- EQUB &5D, &A5, &9B, &9B, &DA, &DA, &D9, &D9
- EQUB &59, &A5, &D9, &D9, &1B, &5B, &5B, &9B
- EQUB &9A, &A5, &9A, &D9, &9B, &AA, &A5, &BA
- EQUB &A6, &A5, &45, &D9, &A5, &5D, &BA, &AA
- EQUB &5A, &A5, &DA, &5D, &9B, &BA, &2A, &62
- EQUB &A5, &A5, &26, &5D, &9B, &BA, &22, &46
- EQUB &DA, &A5, &5A, &5D, &9B, &AA, &62, &54
- EQUB &45, &A5, &6A, &A5, &A5, &5B, &45, &5D
- EQUB &DB, &A5, &5A, &BA, &A6, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &45, &D9, &BA, &A6
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &25, &55
- EQUB &DB, &A5, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5
+ INCBIN "versions/disc/binaries/P.A-SOFT.bin"
 
 .CpASOFT
 
-\ &2C62-&2D61 to &7600-&76FF
-\ INCBIN "binaries/P.(C)ASFT.bin"
-\ EOR with &A5
+ INCBIN "versions/disc/binaries/P.(C)ASFT.bin"
 
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A4, &A6
- EQUB &A2, &A5, &A5, &A4, &AB, &9D, &45, &66
- EQUB &22, &A5, &9D, &66, &AB, &9D, &45, &39
- EQUB &44, &A5, &D9, &1D, &A5, &A6, &A2, &9D
- EQUB &65, &A5, &D5, &D5, &45, &65, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A4, &A6, &AA, &B9
- EQUB &9C, &A5, &9A, &42, &7B, &58, &D6, &42
- EQUB &62, &A5, &A5, &A5, &DB, &6B, &24, &9C
- EQUB &44, &A5, &A5, &A5, &9A, &42, &4B, &7B
- EQUB &5D, &A5, &A5, &A5, &9A, &DA, &D5, &55
- EQUB &45, &A5, &A5, &A5, &3A, &38, &98, &98
- EQUB &9C, &A5, &A5, &A5, &62, &4B, &42, &65
- EQUB &6A, &A5, &A5, &A5, &56, &A2, &42, &D6
- EQUB &44, &A5, &A5, &A4, &54, &1C, &19, &19
- EQUB &5D, &A5, &54, &65, &44, &5D, &55, &D5
- EQUB &DD, &A5, &65, &45, &59, &D5, &9D, &99
- EQUB &AA, &A5, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &25, &A5, &D5, &D9, &AB, &A2, &A6, &A4
- EQUB &A6, &A5, &D9, &D2, &98, &A2, &25, &45
- EQUB &59, &A5, &DB, &1E, &7B, &56, &9C, &99
- EQUB &D9, &A5, &AB, &22, &46, &56, &7B, &52
- EQUB &BA, &A5, &A5, &25, &45, &5D, &5A, &26
- EQUB &25, &A5, &A5, &A5, &A5, &A5, &A5, &25
- EQUB &45, &A5, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &A5
+\ Is the following EOR'd with &A5 too? Looks like it
+
+ EQUB &55, &A5, &A5, &A5, &A5, &A5, &A5
  EQUB &A5, &55, &A5, &A5, &A5, &A5, &A5, &A5
  EQUB &A5, &55, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &55, &A5, &A5, &A5, &A5, &A5, &A5
+
  EQUB &A5, &55, &25, &25, &25, &25, &65, &01
  EQUB &33, &55, &A5, &A5, &A5, &A5, &A5, &A5
  EQUB &A5, &55, &A5, &A5, &A5, &A5, &A5, &A5

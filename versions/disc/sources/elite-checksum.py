@@ -15,6 +15,40 @@
 
 from __future__ import print_function
 
+# Configuration variables for ELITE4
+
+load_address = 0x1900
+scramble_from = 0x2962
+scramble_to = 0x2A62
+scramble_eor = 0xa5
+
+data_block = bytearray()
+
+# Load assembled code file
+
+elite_file = open('versions/disc/output/ELITE4.unprot.bin', 'rb')
+data_block.extend(elite_file.read())
+elite_file.close()
+
+# EOR bytes between &2962 and &2A61
+
+for n in range(scramble_from, scramble_to):
+    data_block[n - load_address] = data_block[n - load_address] ^ scramble_eor
+
+# Write output file for 'ELITE4.bin'
+
+output_file = open('versions/disc/output/ELITE4.bin', 'wb')
+output_file.write(data_block)
+output_file.close()
+
+print('"output/ELITE4.bin" file saved')
+
+
+
+
+
+
+
 # Configuration variables for D.CODE
 
 load_address = 0x11E3

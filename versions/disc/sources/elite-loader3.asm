@@ -186,14 +186,14 @@ INCLUDE "library/common/loader/macro/fne.asm"
  LDA #&00               \ Set the following:
  STA ZP                 \
  LDA #&11               \   ZP(1 0) = &1100
- STA ZP+1               \   P(1 0) = BEGIN
- LDA #LO(BEGIN)
+ STA ZP+1               \   P(1 0) = COMMON
+ LDA #LO(COMMON)
  STA P
- LDA #HI(BEGIN)
+ LDA #HI(COMMON)
  STA P+1
 
  JSR MVPG               \ Call MVPG to move and decrypt a page of memory from
-                        \ BEGIN to &1100-&11FF
+                        \ COMMON to &1100-&11FF
 
  LDA #&00               \ Set the following:
  STA ZP                 \
@@ -1183,20 +1183,18 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: BEGIN
+\       Name: COMMON
 \       Type: Subroutine
 \   Category: Loader
 \    Summary: 
 \
-\ ******************************************************************************
-
-.BEGIN
-
-IF FALSE
-
 \ &2962-&2A61 to &1100-&11FF
 \ IRQ1 etc. - this is code
 \ Need to EOR this, commander file and BRBR1 with &A5 in elite-checksum.py
+\
+\ ******************************************************************************
+
+.COMMON
 
 ORG &1100
 
@@ -1206,7 +1204,6 @@ INCLUDE "library/6502sp/main/variable/s1_per_cent.asm"
 INCLUDE "library/common/main/variable/na_per_cent.asm"
 INCLUDE "library/common/main/variable/chk2.asm"
 INCLUDE "library/common/main/variable/chk.asm"
-\INCLUDE "library/6502sp/main/subroutine/brbr.asm"
 
 \ ******************************************************************************
 \
@@ -1234,357 +1231,20 @@ INCLUDE "library/common/main/variable/chk.asm"
 
  BEQ BRBR1a
 
-COPYBLOCK TVT1, P%, BEGIN
-
-ORG BEGIN + P% - TVT1
-
-ELIF FALSE
-
-ORG &1100
-
-\ Palette data, change var names to TVT1 etc
-
-.BEG
-
- EQUB &D4
- EQUB &C4, &94
- EQUB &84, &F5
- EQUB &E5, &B5
- EQUB &A5
-
-.BEG2
-
- EQUB &76
- EQUB &66, &36
- EQUB &26, &E1
- EQUB &F1, &B1
- EQUB &A1
-
-.BEG3
-
- EQUB &F0
- EQUB &E0, &B0
- EQUB &A0, &D0
- EQUB &C0, &90
- EQUB &80
- EQUB &77
- EQUB &67
- EQUB &37
- EQUB &27
-
-.top
-
- LDA #30
- STA &8B
- STA VIA+&44
- LDA #&39
- STA VIA+&45
- LDA &0348
- BNE l1
- LDA #&08
- STA VIA+&20
-
-.l2
-
- LDA BEG3,Y
- STA VIA+&21
- DEY
- BPL l2
-
- LDA &0346
- BEQ l3
- DEC &0346
-
-.l3
-
- PLA
- TAY
- LDA &FE41
- LDA &FC
- RTI
-
-.IRQ1
-
- TYA
- PHA
- LDY #&0B
- LDA #&02
- BIT &FE4D
- BNE top
-
- BVC l4
- ASL A
- STA VIA+&20
- LDA &0386
- BNE l1
-
-.l6
-
- LDA BEG,Y
- STA VIA+&21
- DEY
- BPL l6
-
-.l4
-
- PLA
- TAY
- JMP (&7FFE)
-
-.l1
-
- LDY #&07
-
-.l5
-
- LDA BEG2,Y
- STA VIA+&21
- DEY
- BPL l5
- BMI l4
-
-\ Commander file
-
-.S1%
-
- EQUB &3A
- EQUB &30, &2E
- EQUB &45, &2E
-
-.NA%
-
- EQUB &4A
- EQUB &41, &4D
- EQUB &45, &53
- EQUB &4F
- EQUB &4E, &0D
-
- EQUB &00
- EQUB &14
- EQUB &AD, &4A, &5A
- EQUB &48
- EQUB &02
- EQUB &53
- EQUB &B7
- EQUB &00
- EQUB &00
- EQUB &03
- EQUB &E8
- EQUB &46, &00
- EQUB &00
- EQUB &0F
- EQUB &00
- EQUB &00
- EQUB &00
- EQUB &00
- EQUB &00
- EQUB &16, &00
- EQUB &00
- EQUB &00
- EQUB &00
- EQUB &00
- EQUB &00
- EQUB &00
- EQUB &00
- EQUB &00
- EQUB &00
- EQUB &00
- EQUB &00
- EQUB &00
- EQUB &00
- EQUB &00
- EQUB &00
- EQUB &00
- EQUB &00
- EQUB &00
- EQUB &00
- EQUB &00
- EQUB &00
- EQUB &00
- EQUB &00
- EQUB &00
- EQUB &00
- EQUB &00
- EQUB &00
- EQUB &03
- EQUB &00
- EQUB &10, &0F
- EQUB &11, &00
- EQUB &03
- EQUB &1C
- EQUB &0E, &00, &00
- EQUB &0A
- EQUB &00
- EQUB &11, &3A
- EQUB &07
- EQUB &09, &08
- EQUB &00
- EQUB &00
- EQUB &00
- EQUB &00
- EQUB &80
-
-.CHK2
-
- EQUB &AA
-
-.CHK
-
- EQUB &03
-
-\ ******************************************************************************
-\
-\       Name: BRBR1
-\       Type: Subroutine
-\   Category: Loader
-\    Summary: Break handler: prints newline, error and hangs
-\
-\ ******************************************************************************
-
-.BRBR1
-
-\DISASSEMBLE 11D5, EOR along with above
-
-IF FALSE
-
- LDY #0
-
- LDA #13
-
-.BRBRLOOP
-
- JSR OSWRCH
- INY
- LDA (&FD),Y
- BNE BRBRLOOP
-
-.BRBR1a
-
- BEQ BRBR1a
-
-ELSE
-
- EQUB &A0, &00
- EQUB &A9, &0D
- EQUB &20, &EE, &FF
- EQUB &C8
- EQUB &B1, &FD
- EQUB &D0, &F8
- EQUB &F0, &FE
- 
-ENDIF
-
- EQUB &64
- EQUB &5F
- EQUB &61, &74
- EQUB &74
- EQUB &72
- EQUB &69, &62
- EQUB &75, &74
- EQUB &65, &73
- EQUB &00
- EQUB &C4, &24
- EQUB &6A
- EQUB &43
- EQUB &67
- EQUB &65, &74
- EQUB &72
- EQUB &64
- EQUB &69, &73
- EQUB &63
- EQUB &00
- EQUB &B6, &3C
- EQUB &C6
-
-\ END EORing in checksum.py
-
-COPYBLOCK BEG, P%, BEGIN
-
-ORG BEGIN + P% - BEG
-
-ELIF FALSE
-
-ORG &1100
-
-.BEG
-
- EQUB &71 EOR &A5, &61 EOR &A5, &31 EOR &A5, &21 EOR &A5, &50 EOR &A5, &40 EOR &A5, &10 EOR &A5
- EQUB &00 EOR &A5, &D3 EOR &A5, &C3 EOR &A5, &93 EOR &A5, &83 EOR &A5, &44 EOR &A5, &54 EOR &A5, &14 EOR &A5
- EQUB &04 EOR &A5, &55 EOR &A5, &45 EOR &A5, &15 EOR &A5, &05 EOR &A5, &75 EOR &A5, &65 EOR &A5, &35 EOR &A5
- EQUB &25 EOR &A5, &D2 EOR &A5, &C2 EOR &A5, &92 EOR &A5, &82 EOR &A5, &0C EOR &A5, &BB EOR &A5, &20 EOR &A5
- EQUB &2E EOR &A5, &28 EOR &A5, &E1 EOR &A5, &5B EOR &A5, &0C EOR &A5, &9C EOR &A5, &28 EOR &A5, &E0 EOR &A5
- EQUB &5B EOR &A5, &08 EOR &A5, &ED EOR &A5, &A6 EOR &A5, &75 EOR &A5, &E7 EOR &A5, &0C EOR &A5, &AD EOR &A5
- EQUB &28 EOR &A5, &85 EOR &A5, &5B EOR &A5, &1C EOR &A5, &B5 EOR &A5, &B4 EOR &A5, &28 EOR &A5, &84 EOR &A5
- EQUB &5B EOR &A5, &2D EOR &A5, &B5 EOR &A5, &52 EOR &A5, &08 EOR &A5, &E3 EOR &A5, &A6 EOR &A5, &55 EOR &A5
- EQUB &A6 EOR &A5, &6B EOR &A5, &E3 EOR &A5, &A6 EOR &A5, &CD EOR &A5, &0D EOR &A5, &08 EOR &A5, &E4 EOR &A5
- EQUB &5B EOR &A5, &00 EOR &A5, &59 EOR &A5, &E5 EOR &A5, &3D EOR &A5, &ED EOR &A5, &05 EOR &A5, &AE EOR &A5
- EQUB &0C EOR &A5, &A7 EOR &A5, &89 EOR &A5, &E8 EOR &A5, &5B EOR &A5, &75 EOR &A5, &63 EOR &A5, &F5 EOR &A5
- EQUB &B7 EOR &A5, &AF EOR &A5, &28 EOR &A5, &85 EOR &A5, &5B EOR &A5, &08 EOR &A5, &23 EOR &A5, &A6 EOR &A5
- EQUB &75 EOR &A5, &AB EOR &A5, &1C EOR &A5, &A5 EOR &A5, &B4 EOR &A5, &28 EOR &A5, &84 EOR &A5, &5B EOR &A5
- EQUB &2D EOR &A5, &B5 EOR &A5, &52 EOR &A5, &CD EOR &A5, &0D EOR &A5, &C9 EOR &A5, &5B EOR &A5, &DA EOR &A5
- EQUB &05 EOR &A5, &A2 EOR &A5, &1C EOR &A5, &AD EOR &A5, &B4 EOR &A5, &28 EOR &A5, &84 EOR &A5, &5B EOR &A5
- EQUB &2D EOR &A5, &B5 EOR &A5, &52 EOR &A5, &95 EOR &A5, &4B EOR &A5, &9F EOR &A5, &95 EOR &A5, &8B EOR &A5
- EQUB &E0 EOR &A5, &8B EOR &A5, &EF EOR &A5, &E4 EOR &A5, &E8 EOR &A5, &E0 EOR &A5, &F6 EOR &A5, &EA EOR &A5
- EQUB &EB EOR &A5, &A8 EOR &A5, &A5 EOR &A5, &B1 EOR &A5, &08 EOR &A5, &EF EOR &A5, &FF EOR &A5, &ED EOR &A5
- EQUB &A7 EOR &A5, &F6 EOR &A5, &12 EOR &A5, &A5 EOR &A5, &A5 EOR &A5, &A6 EOR &A5, &4D EOR &A5, &E3 EOR &A5
- EQUB &A5 EOR &A5, &A5 EOR &A5, &AA EOR &A5, &A5 EOR &A5, &A5 EOR &A5, &A5 EOR &A5, &A5 EOR &A5, &A5 EOR &A5
- EQUB &B3 EOR &A5, &A5 EOR &A5, &A5 EOR &A5, &A5 EOR &A5, &A5 EOR &A5, &A5 EOR &A5, &A5 EOR &A5, &A5 EOR &A5
- EQUB &A5 EOR &A5, &A5 EOR &A5, &A5 EOR &A5, &A5 EOR &A5, &A5 EOR &A5, &A5 EOR &A5, &A5 EOR &A5, &A5 EOR &A5
- EQUB &A5 EOR &A5, &A5 EOR &A5, &A5 EOR &A5, &A5 EOR &A5, &A5 EOR &A5, &A5 EOR &A5, &A5 EOR &A5, &A5 EOR &A5
- EQUB &A5 EOR &A5, &A5 EOR &A5, &A5 EOR &A5, &A5 EOR &A5, &A5 EOR &A5, &A6 EOR &A5, &A5 EOR &A5, &B5 EOR &A5
- EQUB &AA EOR &A5, &B4 EOR &A5, &A5 EOR &A5, &A6 EOR &A5, &B9 EOR &A5, &AB EOR &A5, &A5 EOR &A5, &A5 EOR &A5
- EQUB &AF EOR &A5, &A5 EOR &A5, &B4 EOR &A5, &9F EOR &A5, &A2 EOR &A5, &AC EOR &A5, &AD EOR &A5, &A5 EOR &A5
- EQUB &A5 EOR &A5, &A5 EOR &A5, &A5 EOR &A5, &25 EOR &A5, &0F EOR &A5, &A6 EOR &A5, &05 EOR &A5, &A5 EOR &A5
- EQUB &0C EOR &A5, &A8 EOR &A5, &85 EOR &A5, &4B EOR &A5, &5A EOR &A5, &6D EOR &A5, &14 EOR &A5, &58 EOR &A5
- EQUB &75 EOR &A5, &5D EOR &A5, &55 EOR &A5, &5B EOR &A5, &C1 EOR &A5, &FA EOR &A5, &C4 EOR &A5, &D1 EOR &A5
- EQUB &D1 EOR &A5, &D7 EOR &A5, &CC EOR &A5, &C7 EOR &A5, &D0 EOR &A5, &D1 EOR &A5, &C0 EOR &A5, &D6 EOR &A5
- EQUB &A5 EOR &A5, &61 EOR &A5, &81 EOR &A5, &CF EOR &A5, &E6 EOR &A5, &C2 EOR &A5, &C0 EOR &A5, &D1 EOR &A5
- EQUB &D7 EOR &A5, &C1 EOR &A5, &CC EOR &A5, &D6 EOR &A5, &C6 EOR &A5, &A5 EOR &A5, &13 EOR &A5, &99 EOR &A5
- EQUB &63 EOR &A5
-
-COPYBLOCK BEG, P%, BEGIN
-
-ORG BEGIN + P% - BEG
-
-ELSE
-
-IRQ1 = &114B
-
- EQUB &71, &61, &31, &21, &50, &40, &10
- EQUB &00, &D3, &C3, &93, &83, &44, &54, &14
- EQUB &04, &55, &45, &15, &05, &75, &65, &35
- EQUB &25, &D2, &C2, &92, &82, &0C, &BB, &20
- EQUB &2E, &28, &E1, &5B, &0C, &9C, &28, &E0
- EQUB &5B, &08, &ED, &A6, &75, &E7, &0C, &AD
- EQUB &28, &85, &5B, &1C, &B5, &B4, &28, &84
- EQUB &5B, &2D, &B5, &52, &08, &E3, &A6, &55
- EQUB &A6, &6B, &E3, &A6, &CD, &0D, &08, &E4
- EQUB &5B, &00, &59, &E5, &3D, &ED, &05, &AE
- EQUB &0C, &A7, &89, &E8, &5B, &75, &63, &F5
- EQUB &B7, &AF, &28, &85, &5B, &08, &23, &A6
- EQUB &75, &AB, &1C, &A5, &B4, &28, &84, &5B
- EQUB &2D, &B5, &52, &CD, &0D, &C9, &5B, &DA
- EQUB &05, &A2, &1C, &AD, &B4, &28, &84, &5B
- EQUB &2D, &B5, &52, &95, &4B, &9F, &95, &8B
- EQUB &E0, &8B, &EF, &E4, &E8, &E0, &F6, &EA
- EQUB &EB, &A8, &A5, &B1, &08, &EF, &FF, &ED
- EQUB &A7, &F6, &12, &A5, &A5, &A6, &4D, &E3
- EQUB &A5, &A5, &AA, &A5, &A5, &A5, &A5, &A5
- EQUB &B3, &A5, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &A5, &A5, &A5, &A5, &A6, &A5, &B5
- EQUB &AA, &B4, &A5, &A6, &B9, &AB, &A5, &A5
- EQUB &AF, &A5, &B4, &9F, &A2, &AC, &AD, &A5
- EQUB &A5, &A5, &A5, &25, &0F, &A6, &05, &A5
- EQUB &0C, &A8, &85, &4B, &5A, &6D, &14, &58
- EQUB &75, &5D, &55, &5B, &C1, &FA, &C4, &D1
- EQUB &D1, &D7, &CC, &C7, &D0, &D1, &C0, &D6
- EQUB &A5, &61, &81, &CF, &E6, &C2, &C0, &D1
- EQUB &D7, &C1, &CC, &D6, &C6, &A5, &13, &99
- EQUB &63
-
-ENDIF
+ EQUB &64, &5F, &61
+ EQUB &74, &74, &72
+ EQUB &69, &62, &75
+ EQUB &74, &65, &73
+ EQUB &00, &C4, &24
+ EQUB &6A, &43, &67
+ EQUB &65, &74, &72
+ EQUB &64, &69, &73
+ EQUB &63, &00, &B6
+ EQUB &3C, &C6
+
+COPYBLOCK TVT1, P%, COMMON
+
+ORG COMMON + P% - TVT1
 
 \ ******************************************************************************
 \
@@ -1736,10 +1396,10 @@ ENDIF
 
 \ ******************************************************************************
 \
-\ Save output/ELITE4.bin
+\ Save output/ELITE4.unprot.bin
 \
 \ ******************************************************************************
 
 PRINT "S.ELITE4 ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/disc/output/ELITE4.bin", CODE%, P%, LOAD%
+SAVE "versions/disc/output/ELITE4.unprot.bin", CODE%, P%, LOAD%
 

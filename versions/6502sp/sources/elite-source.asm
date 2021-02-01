@@ -247,11 +247,11 @@ PRINT "WORDS"
 PRINT "Assembled at ", ~CODE_WORDS%
 PRINT "Ends at ", ~P%
 PRINT "Code size is ", ~(P% - CODE_WORDS%)
-PRINT "Execute at ", ~LOAD%
+PRINT "Execute at ", ~LOAD_WORDS%
 PRINT "Reload at ", ~LOAD_WORDS%
 
-PRINT "S.WORDS ",~CODE%," ",~P%," ",~LOAD%," ",~LOAD_WORDS%
-SAVE "versions/6502sp/output/WORDS.bin", CODE_WORDS%, P%, LOAD%
+PRINT "S.WORDS ",~CODE_WORDS%," ",~P%," ",~LOAD_WORDS%," ",~LOAD_WORDS%
+SAVE "versions/6502sp/output/WORDS.bin", CODE_WORDS%, P%, LOAD_WORDS%
 
 INCLUDE "library/6502sp/main/workspace/up.asm"
 INCLUDE "library/common/main/workspace/wp.asm"

@@ -31,8 +31,8 @@ scramble2_eor = 0x18
 
 # DIALS, SHIP_MISSILE blocks
 scramble3_from = 0x1D4B
-#scramble3_to = 0x244B
-scramble3_to = 0x254B
+#scramble3_to = 0x254B
+scramble3_to = 0x294B
 scramble3_eor = 0xa5
 
 # ELITE, ASOFT, CpASOFT blocks

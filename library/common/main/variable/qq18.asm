@@ -39,7 +39,7 @@
  CTRL 3
  EQUB 0
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  TWOK 'I', 'N'          \ Token 4:      "INVENTORY{crlf}
  TWOK 'V', 'E'          \               "
@@ -50,7 +50,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
  CTRL 13
  EQUB 0
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  TWOK 'I', 'N'          \ Token 4:      "INVENTORY{cr}
  TWOK 'V', 'E'          \               "
@@ -229,7 +229,7 @@ ENDIF
  CHAR 'P'
  EQUB 0
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  CHAR 'P'               \ Token 26:     "PRODUCT"
  CHAR 'R'               \
@@ -240,7 +240,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
  CHAR 'T'
  EQUB 0
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  CHAR 'P'               \ Token 26:     "PRODUCT"
  RTOK 94                \
@@ -307,7 +307,7 @@ ENDIF
  TWOK 'O', 'N'
  EQUB 0
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  CHAR 'G'               \ Token 33:     "GROSS PRODUCTIVITY"
  CHAR 'R'               \
@@ -323,7 +323,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
  CHAR 'Y'
  EQUB 0
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  CHAR 'G'               \ Token 33:     "GROSS PRODUCTIVITY"
  RTOK 94                \
@@ -376,7 +376,7 @@ ENDIF
  CHAR 'H'
  EQUB 0
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  CHAR ' '               \ Token 38:     " BILLION"
  TWOK 'B', 'I'          \
@@ -385,7 +385,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
  TWOK 'O', 'N'
  EQUB 0
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  CHAR ' '               \ Token 38:     " BILLION"
  TWOK 'B', 'I'          \
@@ -436,14 +436,14 @@ ENDIF
  CHAR ' '
  EQUB 0
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  CHAR 'S'               \ Token 45:     "SELL"
  CHAR 'E'               \
  RTOK 118               \ Encoded as:   "SE[118]"
  EQUB 0
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  CHAR 'S'               \ Token 45:     "SELL"
  CHAR 'E'               \
@@ -538,7 +538,7 @@ ENDIF
  CHAR 'Y'
  EQUB 0
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  RTOK 117               \ Token 57:     "ALLOYS"
  CHAR 'O'               \
@@ -546,7 +546,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
  CHAR 'S'
  EQUB 0
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  CHAR 'A'               \ Token 57:     "ALLOYS"
  CHAR 'L'               \
@@ -609,7 +609,7 @@ ENDIF
  CHAR 'S'
  EQUB 0
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  CHAR '('               \ Token 65:     "(Y/N)?"
  CHAR 'Y'               \
@@ -619,7 +619,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
  CHAR '?'
  EQUB 0
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  CTRL 12                \ Token 65:     "{cr}
  CHAR '1'               \                10{cash} CR5{cash} CR"
@@ -647,14 +647,14 @@ ENDIF
  TWOK 'C', 'E'
  EQUB 0
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  CHAR 'S'               \ Token 69:     "SMALL"
  TWOK 'M', 'A'          \
  RTOK 118               \ Encoded as:   "S<139>[118]"
  EQUB 0
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  CHAR 'S'               \ Token 69:     "SMALL"
  TWOK 'M', 'A'          \
@@ -672,7 +672,7 @@ ENDIF
  TWOK 'E', 'D'          \
  EQUB 0                 \ Encoded as:   "R<152>"
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  CHAR 'Y'               \ Token 72:     "YELLOW"
  CHAR 'E'               \
@@ -681,7 +681,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
  CHAR 'W'
  EQUB 0
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  CHAR 'Y'               \ Token 72:     "YELLOW"
  CHAR 'E'               \
@@ -746,7 +746,7 @@ ENDIF
  CHAR 'Y'
  EQUB 0
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  CHAR 'R'               \ Token 82:     "RODENT"
  CHAR 'O'               \
@@ -761,7 +761,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
  CHAR 'G'
  EQUB 0
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  RTOK 94                \ Token 82:     "RODENT"
  CHAR 'D'               \
@@ -836,7 +836,7 @@ ENDIF
  TWOK 'E', 'R'
  EQUB 0
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  CHAR ' '               \ Token 93:     " DESTROYED"
  CHAR 'D'               \
@@ -890,7 +890,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
  CTRL 10
  EQUB 0
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  CHAR ' '               \ Token 93:     " DESTROYED"
  CHAR 'D'               \
@@ -1054,7 +1054,7 @@ ENDIF
  CHAR 'B'
  EQUB 0
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  RTOK 121               \ Token 114:    "ENERGY UNIT"
  RTOK 14                \
@@ -1063,6 +1063,23 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
  RTOK 124               \ Token 115:    "DOCKING COMPUTERS"
  TWOK 'I', 'N'          \
  CHAR 'G'               \ Encoded as:   "[124]<140>G [55]"
+ CHAR ' '
+ RTOK 55
+ EQUB 0
+
+ELIF _DISC_VERSION
+
+ RTOK 121               \ Token 114:    "ENERGY UNIT"
+ RTOK 14                \
+ EQUB 0                 \ Encoded as:   "[121][14]"
+
+
+ CHAR 'D'               \ Token 115:    "DOCKING COMPUTERS"
+ CHAR 'O'               \
+ CHAR 'C'               \ Encoded as:   "DOCK<140>G [55]"
+ CHAR 'K'
+ TWOK 'I', 'N'
+ CHAR 'G'
  CHAR ' '
  RTOK 55
  EQUB 0
@@ -1101,7 +1118,7 @@ ENDIF
  RTOK 29                \ Encoded as:   "[122] [29]"
  EQUB 0
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  CHAR 'A'               \ Token 117:    "ALL"
  RTOK 118               \
@@ -1116,7 +1133,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
  CTRL 0                 \
  EQUB 0                 \ Encoded as:   "[37]:{0}"
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  CHAR 'M'               \ Token 117:    "MILITARY  LASER"
  CHAR 'I'               \
@@ -1167,7 +1184,7 @@ ENDIF
  CHAR 'C'
  EQUB 0
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  CTRL 13                \ Token 123:    "{crlf}
  RTOK 92                \                COMMANDER'S NAME? "
@@ -1199,7 +1216,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
  CHAR ':'
  EQUB 0
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  RTOK 115               \ Token 123:    "DOCKING COMPUTERS ON"
  CHAR ' '               \
@@ -1224,7 +1241,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  RTOK 92                \ Token 126:    "COMMANDER {commander name}{crlf}
  CHAR ' '               \                {crlf}
@@ -1252,7 +1269,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
  CTRL 9
  EQUB 0
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  RTOK 92                \ Token 126:    "COMMANDER {commander name}{cr}
  CHAR ' '               \                {cr}
@@ -1287,7 +1304,7 @@ ENDIF
  CHAR 'M'               \ Encoded as:   "I<156>M"
  EQUB 0
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
 
  CHAR ' '               \ Token 128:    "  LOAD NEW COMMANDER (Y/N)?{crlf}
@@ -1313,7 +1330,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
  TWOK 'E', 'D'          \ Encoded as:   "{6}[124]<152>"
  EQUB 0
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  EQUB 0                 \ Token 128:    ""
                         \
@@ -1337,7 +1354,7 @@ ENDIF
  CHAR ' '               \ Encoded as:   " <159> "
  EQUB 0
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  CTRL 13                \ Token 132:    "{crlf}
  CTRL 8                 \                {all caps}EQUIPMENT: {sentence case}"
@@ -1349,7 +1366,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
  CTRL 6
  EQUB 0
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  CTRL 12                \ Token 132:    "{cr}
  CTRL 8                 \                {all caps}EQUIPMENT: {sentence case}"
@@ -1425,7 +1442,7 @@ ENDIF
  CHAR 'T'
  EQUB 0
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  CHAR 'D'               \ Token 142:    "DANGEROUS"
  TWOK 'A', 'N'          \
@@ -1435,7 +1452,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
  TWOK 'U', 'S'
  EQUB 0
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  CHAR 'D'               \ Token 142:    "DANGEROUS"
  TWOK 'A', 'N'          \
@@ -1493,7 +1510,7 @@ ENDIF
  CHAR 'R'
  EQUB 0
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  CHAR 'P'               \ Token 147:    "PRESS FIRE OR SPACE,COMMANDER.{crlf}
  CHAR 'R'               \                {crlf}
@@ -1534,6 +1551,10 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
  CHAR '8'
  CHAR '4'
  EQUB 0
+
+ELIF _DISC_VERSION
+
+ SKIP 5                 \ These bytes are unused
 
 ELIF _6502SP_VERSION
 

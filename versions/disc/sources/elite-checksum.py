@@ -22,7 +22,7 @@ load_address = 0x1900
 # BEGIN block
 scramble1_from = 0x2962
 scramble1_to = 0x2A62
-scramble1_eor = 0xa5
+scramble1_eor = 0xA5
 
 # LOD2 block
 scramble2_from = 0x1AED
@@ -33,12 +33,12 @@ scramble2_eor = 0x18
 scramble3_from = 0x1D4B
 #scramble3_to = 0x254B
 scramble3_to = 0x294B
-scramble3_eor = 0xa5
+scramble3_eor = 0xA5
 
 # ELITE, ASOFT, CpASOFT blocks
 scramble4_from = 0x2A62
 scramble4_to = 0x2D62
-scramble4_eor = 0xa5
+scramble4_eor = 0xA5
 
 data_block = bytearray()
 

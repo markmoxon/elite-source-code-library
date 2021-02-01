@@ -38,7 +38,7 @@
 \     &7800, which is the starting point of the four-colour mode 5 portion at
 \     the bottom of the split screen
 \
-\  The routine ends with a jump to the start of the loader code at ENTRY.
+\ The routine ends with a jump to the start of the loader code at ENTRY.
 \
 \ ******************************************************************************
 

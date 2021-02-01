@@ -693,21 +693,38 @@ INCLUDE "library/common/loader/subroutine/osb.asm"
 \    Summary: Include binaries for recursive tokens, Missile blueprint and
 \             images
 \
+\ ------------------------------------------------------------------------------
+\
+\ The loader bundles a number of binary files in with the loader code, and moves
+\ them to their correct memory locations in part 1 above.
+\
+\ There are two files containing code:
+\
+\   * WORDS.bin contains the recursive token table, which is moved to &0400
+\     before the main game is loaded
+\
+\   * MISSILE.bin contains the missile ship blueprint, which gets moved to &7F00
+\     before the main game is loaded
+\
+\ and one file containing an image, which is moved into screen memory by the
+\ loader:
+\
+\   * P.DIALS.bin contains the dashboard, which gets moved to screen address
+\     &7800, which is the starting point of the four-colour mode 5 portion at
+\     the bottom of the split screen
+\
+\ There are three other image binaries bundled into the loder, which are
+\ described in part 3 below.
+\
 \ ******************************************************************************
 
 .DIALS
 
-\ &1D4B-&254A to &7800-&7FFF
- INCBIN "versions/disc/binaries/P.DIALS.bin" \ &7800
-\ INCBIN "output/MISSILE.bin" \ &7F00, or inline it as this is the loader
-\ EOR with &A5
+ INCBIN "versions/disc/binaries/P.DIALS.bin"
 
-INCLUDE "library/common/main/macro/vertex.asm"
-INCLUDE "library/common/main/macro/edge.asm"
-INCLUDE "library/common/main/macro/face.asm"
-INCLUDE "library/common/main/variable/ship_missile.asm"
+.SHIP_MISSILE
 
-EQUB &04, &00
+ INCBIN "versions/disc/output/MISSILE.bin"
 
 .WORDS
 
@@ -725,8 +742,6 @@ EQUB &04, &00
 \ &294B, JSR OSB above gets modified to jump here, so disassemble
 
 .OSBmod
-
-IF FALSE
 
  SEC
  LDY #0
@@ -750,15 +765,6 @@ IF FALSE
                         \ copy protection (the game hangs if it doesn't match)
 
  RTS
-
-ELSE
-
- EQUB &38
- EQUB &A0, &00, &84, &70, &A9, &0F, &85, &71
- EQUB &71, &70, &C8, &D0, &FB, &C9, &CF, &EA
- EQUB &EA, &A9, &DB, &85, &9F, &60
-
-ENDIF
 
 \ ******************************************************************************
 \
@@ -789,7 +795,8 @@ INCLUDE "library/common/main/variable/chk.asm"
 \       Name: BRBR1
 \       Type: Subroutine
 \   Category: Loader
-\    Summary: Break handler: prints newline, error and hangs
+\    Summary: Common break handler: prints a newline and the error message and
+\             hangs
 \
 \ ******************************************************************************
 
@@ -830,7 +837,30 @@ ORG COMMON + P% - TVT1
 \       Name: Elite loader (Part 3 of 3)
 \       Type: Subroutine
 \   Category: Loader
-\    Summary: 
+\    Summary: Include binaries for the loading screen images
+\
+\ ------------------------------------------------------------------------------
+\
+\ The loader bundles a number of binary files in with the loader code, and moves
+\ them to their correct memory locations in part 1 above.
+\
+\ This part includes three files containing images, which are all moved into
+\ screen memory by the loader:
+\
+\   * P.A-SOFT.bin contains the "ACORNSOFT" title across the top of the loading
+\     screen, which gets moved to screen address &6100, on the second character
+\     row of the monochrome mode 4 screen
+\
+\   * P.ELITE.bin contains the "ELITE" title across the top of the loading
+\     screen, which gets moved to screen address &6300, on the fourth character
+\     row of the monochrome mode 4 screen
+\
+\   * P.(C)ASFT.bin contains the "(C) Acornsoft 1984" title across the bottom
+\     of the loading screen, which gets moved to screen address &7600, the
+\     penultimate character row of the monochrome mode 4 screen, just above the
+\     dashboard
+\
+\ There are three other binaries bundled into the loder, which are part 2 above.
 \
 \ ******************************************************************************
 
@@ -846,7 +876,7 @@ ORG COMMON + P% - TVT1
 
  INCBIN "versions/disc/binaries/P.(C)ASFT.bin"
 
-\ Is the following EOR'd with &A5 too? Looks like it
+\ Is the following EOR'd with &A5 too? Looks like it, so EOR and add into checksum?
 
  EQUB &55, &A5, &A5, &A5, &A5, &A5, &A5
  EQUB &A5, &55, &A5, &A5, &A5, &A5, &A5, &A5

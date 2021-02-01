@@ -28,6 +28,8 @@ _DISC_VERSION           = (_VERSION = 2)
 _6502SP_VERSION         = (_VERSION = 3)
 _DISC_DOCKED            = FALSE
 _DISC_FLIGHT            = TRUE
+_IB_DISC                = (_RELEASE = 1)
+_STH_DISC               = (_RELEASE = 2)
 
 TRTB% = &04             \ TRTB%(1 0) points to the keyboard translation table
 K1   = &0012

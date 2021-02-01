@@ -28,6 +28,8 @@ _DISC_VERSION           = (_VERSION = 2)
 _6502SP_VERSION         = (_VERSION = 3)
 _DISC_DOCKED            = FALSE
 _DISC_FLIGHT            = TRUE
+_IB_DISC                = (_RELEASE = 1)
+_STH_DISC               = (_RELEASE = 2)
 
 Q% = _REMOVE_CHECKSUMS  \ Set Q% to TRUE to max out the default commander, FALSE
                         \ for the standard default commander (this is set to
@@ -876,29 +878,19 @@ ORG COMMON + P% - TVT1
 
  INCBIN "versions/disc/binaries/P.(C)ASFT.bin"
 
-\ Is the following EOR'd with &A5 too? Looks like it, so EOR and add into checksum?
+IF _MATCH_EXTRACTED_BINARIES
 
- EQUB &55, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &55, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &55, &A5, &A5, &A5, &A5, &A5, &A5
+IF _STH_DISC
+ INCBIN "versions/disc/extracted/sth/workspaces/loader3.bin"
+ELIF _IB_DISC
+ SKIP 158
+ENDIF
 
- EQUB &A5, &55, &25, &25, &25, &25, &65, &01
- EQUB &33, &55, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &55, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &55, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &55, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &55, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &55, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &55, &A5, &96, &87, &96, &87, &96
- EQUB &A5, &55, &A5, &0F, &87, &87, &87, &1E
- EQUB &A5, &55, &A5, &87, &87, &87, &87, &0F
- EQUB &A5, &55, &A5, &4B, &E1, &E1, &E1, &E1
- EQUB &A5, &55, &A5, &4B, &2D, &69, &2D, &4B
- EQUB &A5, &55, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &55, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &55, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &55, &A5, &A5, &A5, &A5, &A5, &A5
- EQUB &A5, &55, &A5, &A5, &A5, &A5, &A5
+ELSE
+
+ SKIP 158               \ These bytes are unused
+
+ENDIF
 
 \ ******************************************************************************
 \

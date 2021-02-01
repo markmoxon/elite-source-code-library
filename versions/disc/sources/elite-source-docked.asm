@@ -181,7 +181,7 @@ ORG CODE%
 
 LOAD_A% = LOAD%
 
-INCLUDE "library/disc/docked/subroutine/s_per_cent.asm"
+INCLUDE "library/disc/docked/workspace/s_per_cent.asm"
 INCLUDE "library/disc/docked/subroutine/inbay.asm"
 INCLUDE "library/disc/docked/subroutine/dobegin.asm"
 INCLUDE "library/disc/main/subroutine/scramble.asm"

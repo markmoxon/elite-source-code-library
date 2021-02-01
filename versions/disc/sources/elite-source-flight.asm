@@ -166,7 +166,7 @@ LOAD% = &11E3
 
 LOAD_A% = LOAD%
 
-INCLUDE "library/disc/flight/subroutine/s_per_cent.asm"
+INCLUDE "library/disc/flight/workspace/s_per_cent.asm"
 INCLUDE "library/disc/flight/subroutine/inbay.asm"
 INCLUDE "library/disc/flight/variable/ltli.asm"
 INCLUDE "library/disc/main/subroutine/scramble.asm"

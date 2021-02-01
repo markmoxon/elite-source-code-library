@@ -29,15 +29,14 @@ scramble2_from = 0x1AED
 scramble2_to = 0x1B4F
 scramble2_eor = 0x18
 
-# DIALS, SHIP_MISSILE blocks
+# DIALS and SHIP_MISSILE blocks
 scramble3_from = 0x1D4B
-#scramble3_to = 0x254B
 scramble3_to = 0x294B
 scramble3_eor = 0xA5
 
-# ELITE, ASOFT, CpASOFT blocks
+# ELITE, ASOFT, CpASOFT blocks and padding to the end of the file
 scramble4_from = 0x2A62
-scramble4_to = 0x2D62
+scramble4_to = 0x2E00
 scramble4_eor = 0xA5
 
 data_block = bytearray()
@@ -69,12 +68,6 @@ output_file.write(data_block)
 output_file.close()
 
 print('"output/ELITE4.bin" file saved')
-
-
-
-
-
-
 
 # Configuration variables for D.CODE
 

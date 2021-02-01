@@ -29,6 +29,10 @@ _6502SP_VERSION         = (_VERSION = 3)
 _DISC_DOCKED            = FALSE
 _DISC_FLIGHT            = TRUE
 
+Q% = _REMOVE_CHECKSUMS  \ Set Q% to TRUE to max out the default commander, FALSE
+                        \ for the standard default commander (this is set to
+                        \ TRUE if checksums are disabled, just for convenience)
+
 NETV = &224             \ The NETV vector that we intercept as part of the copy
                         \ protection
 
@@ -49,6 +53,17 @@ N% = 67                 \ N% is set to the number of bytes in the VDU table, so
 
 VSCAN = 57              \ Defines the split position in the split-screen mode
 
+POW = 15                \ Pulse laser power
+
+Mlas = 50               \ Mining laser power
+
+Armlas = INT(128.5+1.5*POW) \ Military laser power
+
+DL = &8B
+LASCT = &0346
+HFX = &0348
+ESCP = &0386
+
 VEC = &7FFE             \ VEC is where we store the original value of the IRQ1
                         \ vector, and it matches the value in elite-source.asm
 
@@ -66,10 +81,6 @@ SC = &76                \ Used to store the screen address while plotting pixels
 
 BLPTR = &78             \ Gets set as part of the obfuscation code
 
-IRQ1 = &114B
-
-L19D2 = &19D2           \ Used in PLL1
-
 CODE% = &1900           \ The address where this file (the third loader) loads
 LOAD% = &1900
 
@@ -81,7 +92,7 @@ INCLUDE "library/common/loader/macro/fne.asm"
 
 \ ******************************************************************************
 \
-\       Name: Elite loader (Part 1 of 2)
+\       Name: Elite loader (Part 1 of 3)
 \       Type: Subroutine
 \   Category: Loader
 \    Summary: 
@@ -146,9 +157,17 @@ INCLUDE "library/common/loader/macro/fne.asm"
  LDX #128               \ the function keys to return ASCII codes for SHIFT-fn
  JSR OSB                \ keys (i.e. add 128)
 
- LDA #12                \ Call OSBYTE with A = 12, X = 0 and Y = 0 to reset the
- LDX #0                 \ keyboard delay and auto-repeat rate to the default
- JSR OSB                \ values
+ LDA #12                \ Set A = 12 and  X = 0 to pretend that this is an to
+ LDX #0                 \ innocent call to OSBYTE to reset the keyboard delay
+                        \ and auto-repeat rate to the default, when in reality
+                        \ the OSB address in the next instruction gets modified
+                        \ to point to OSBmod
+
+.OSBjsr
+
+ JSR OSB                \ This JSR gets modified by code inserted into PLL1 so
+                        \ that it points to OSBmod instead of OSB, so this
+                        \ actually calls OSBmod to calculate some checksums
 
  LDA #13                \ Call OSBYTE with A = 13, X = 2 and Y = 0 to disable
  LDX #2                 \ the "character entering buffer" event
@@ -297,10 +316,10 @@ INCLUDE "library/common/loader/macro/fne.asm"
  LDA #&00               \ Set the following:
  STA ZP                 \
  LDA #&0B               \   ZP(1 0) = &0B00
- STA ZP+1               \   P(1 0) = &1AED L1AED
- LDA #&ED
+ STA ZP+1               \   P(1 0) = &1AED LOD2
+ LDA #LO(LOD2)
  STA P
- LDA #&1A
+ LDA #HI(LOD2)
  STA P+1
 
  LDY #0                 \ We want to move one page of memory, so set Y as a byte
@@ -334,14 +353,14 @@ INCLUDE "library/common/loader/macro/fne.asm"
 .PROT2
 
  CLC
- LDY #&00
+ LDY #0
 
-.PROTL2
+.PROT2a
 
  ADC PLL1,Y
  EOR ENTRY,Y
  DEY
- BNE PROTL2
+ BNE PROT2a
 
  RTS
 
@@ -528,20 +547,20 @@ ORG CATDISC + P% - CATD
  LDA #&55
  LDX #&40
 
-.PROTL1
+.PROT1a
 
  JSR PROT2
 
  DEX
- BPL PROTL1
+ BPL PROT1a
 
  STA RAND+2
  ORA #&00
- BPL PROT3
+ BPL PROT1b
 
  LSR BLPTR
 
-.PROT3
+.PROT1b
 
  JMP PROT4
 
@@ -706,7 +725,7 @@ INCLUDE "library/common/loader/subroutine/osb.asm"
 
 \ ******************************************************************************
 \
-\       Name: Elite loader (Part 2 of 2)
+\       Name: Elite loader (Part 2 of 3)
 \       Type: Subroutine
 \   Category: Loader
 \    Summary: Include binaries for recursive tokens, Missile blueprint and
@@ -718,7 +737,7 @@ INCLUDE "library/common/loader/subroutine/osb.asm"
 
 \ &1D4B-&254A to &7800-&7FFF
 \ INCBIN "binaries/P.DIALS.bin" \ &7800
-\ INCBIN "output/MISSILE.bin" \ &7F00
+\ INCBIN "output/MISSILE.bin" \ &7F00, or inline it as this is the loader
 \ EOR with &A5
 
  EQUB &55, &25, &22, &21, &22, &21
@@ -1113,10 +1132,63 @@ INCLUDE "library/common/loader/subroutine/osb.asm"
  EQUB &A4, &A6, &A1, &A0, &A3, &AD, &AC, &AF
  EQUB &AE, &A9, &A8, &AA, &B5, &B4, &B7, &B6
  EQUB &B1, &B0, &B3, &B2, &BD, &BC, &BC, &BF
- EQUB &BE, &B9, &B8, &B8, &BB, &BA, &BA, &38
+ EQUB &BE, &B9, &B8, &B8, &BB, &BA, &BA
+
+\ ******************************************************************************
+\
+\       Name: OSBmod
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: 
+\
+\ ******************************************************************************
+
+\ &294B, JSR OSB above gets modified to jump here, so disassemble
+
+.OSBmod
+
+IF FALSE
+
+ SEC
+ LDY #0
+ STY &70
+ LDA #$0F
+ STA &71
+
+.L2954
+
+ ADC (&70),Y
+ INY
+ BNE L2954
+
+ CMP #&CF
+
+ NOP
+ NOP
+
+ LDA #219               \ Store 219 in location &9F. This gets checked by the
+ STA &9F                \ TITLE routine in the main docked code as part of the
+                        \ copy protection (the game hangs if it doesn't match)
+
+ RTS
+
+ELSE
+
+ EQUB &38
  EQUB &A0, &00, &84, &70, &A9, &0F, &85, &71
  EQUB &71, &70, &C8, &D0, &FB, &C9, &CF, &EA
  EQUB &EA, &A9, &DB, &85, &9F, &60
+
+ENDIF
+
+\ ******************************************************************************
+\
+\       Name: BEGIN
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: 
+\
+\ ******************************************************************************
 
 .BEGIN
 
@@ -1124,9 +1196,53 @@ IF FALSE
 
 \ &2962-&2A61 to &1100-&11FF
 \ IRQ1 etc. - this is code
-\ Need to EOR with &A5 in elite-checksum.pl
+\ Need to EOR this, commander file and BRBR1 with &A5 in elite-checksum.py
 
 ORG &1100
+
+INCLUDE "library/cassette/main/variable/tvt1.asm"
+INCLUDE "library/common/main/subroutine/irq1.asm"
+INCLUDE "library/6502sp/main/variable/s1_per_cent.asm"
+INCLUDE "library/common/main/variable/na_per_cent.asm"
+INCLUDE "library/common/main/variable/chk2.asm"
+INCLUDE "library/common/main/variable/chk.asm"
+\INCLUDE "library/6502sp/main/subroutine/brbr.asm"
+
+\ ******************************************************************************
+\
+\       Name: BRBR1
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: Break handler: prints newline, error and hangs
+\
+\ ******************************************************************************
+
+.BRBR1
+
+ LDY #0
+
+ LDA #13
+
+.BRBRLOOP
+
+ JSR OSWRCH
+ INY
+ LDA (&FD),Y
+ BNE BRBRLOOP
+
+.BRBR1a
+
+ BEQ BRBR1a
+
+COPYBLOCK TVT1, P%, BEGIN
+
+ORG BEGIN + P% - TVT1
+
+ELIF FALSE
+
+ORG &1100
+
+\ Palette data, change var names to TVT1 etc
 
 .BEG
 
@@ -1158,7 +1274,7 @@ ORG &1100
 
 .top
 
- LDA #&1E
+ LDA #30
  STA &8B
  STA VIA+&44
  LDA #&39
@@ -1186,6 +1302,9 @@ ORG &1100
  LDA &FE41
  LDA &FC
  RTI
+
+.IRQ1
+
  TYA
  PHA
  LDY #&0B
@@ -1224,14 +1343,23 @@ ORG &1100
  BPL l5
  BMI l4
 
+\ Commander file
+
+.S1%
+
  EQUB &3A
  EQUB &30, &2E
  EQUB &45, &2E
+
+.NA%
+
  EQUB &4A
  EQUB &41, &4D
  EQUB &45, &53
  EQUB &4F
- EQUB &4E, &0D, &00
+ EQUB &4E, &0D
+
+ EQUB &00
  EQUB &14
  EQUB &AD, &4A, &5A
  EQUB &48
@@ -1295,8 +1423,47 @@ ORG &1100
  EQUB &00
  EQUB &00
  EQUB &80
+
+.CHK2
+
  EQUB &AA
+
+.CHK
+
  EQUB &03
+
+\ ******************************************************************************
+\
+\       Name: BRBR1
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: Break handler: prints newline, error and hangs
+\
+\ ******************************************************************************
+
+.BRBR1
+
+\DISASSEMBLE 11D5, EOR along with above
+
+IF FALSE
+
+ LDY #0
+
+ LDA #13
+
+.BRBRLOOP
+
+ JSR OSWRCH
+ INY
+ LDA (&FD),Y
+ BNE BRBRLOOP
+
+.BRBR1a
+
+ BEQ BRBR1a
+
+ELSE
+
  EQUB &A0, &00
  EQUB &A9, &0D
  EQUB &20, &EE, &FF
@@ -1304,6 +1471,9 @@ ORG &1100
  EQUB &B1, &FD
  EQUB &D0, &F8
  EQUB &F0, &FE
+ 
+ENDIF
+
  EQUB &64
  EQUB &5F
  EQUB &61, &74
@@ -1325,6 +1495,8 @@ ORG &1100
  EQUB &00
  EQUB &B6, &3C
  EQUB &C6
+
+\ END EORing in checksum.py
 
 COPYBLOCK BEG, P%, BEGIN
 
@@ -1376,6 +1548,8 @@ ORG BEGIN + P% - BEG
 
 ELSE
 
+IRQ1 = &114B
+
  EQUB &71, &61, &31, &21, &50, &40, &10
  EQUB &00, &D3, &C3, &93, &83, &44, &54, &14
  EQUB &04, &55, &45, &15, &05, &75, &65, &35
@@ -1411,6 +1585,15 @@ ELSE
  EQUB &63
 
 ENDIF
+
+\ ******************************************************************************
+\
+\       Name: Elite loader (Part 3 of 3)
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: 
+\
+\ ******************************************************************************
 
 .ELITE
 

@@ -15,9 +15,9 @@
 
  JMP scramble           \ Decrypt the main flight code and start a new game
 
- JMP TT26               \ WRCHV handler
+ JMP TT26               \ WRCHV is set to point here by elite-loader3.asm
 
- EQUW &114B             \ IRQ1 handler
+ EQUW IRQ1              \ IRQ1V is set to point here by elite-loader3.asm
 
- JMP &11D5              \ BRBR handler
+ JMP BRBR1              \ BRKV is set to point here by elite-loader3.asm
 

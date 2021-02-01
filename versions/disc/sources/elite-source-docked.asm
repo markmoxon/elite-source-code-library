@@ -146,6 +146,12 @@ QQ16_FLIGHT = &0880     \ The address of the two-letter text token table in the
 CATD = &0D7A            \ The address of the CATD routine that is put in place
                         \ by the third loader
 
+IRQ1 = &114B            \ The address of the IRQ1 routine that implements the
+                        \ split screen interrupt handler, which IRQ1V points to
+
+BRBR1 = &11D5           \ The address of the main break handler, which BRKV
+                        \ points to
+
 NA% = &1181             \ The address of data block for the last saved commander
 
 CHK2 = &11D3            \ The address of the second checksum byte for the saved

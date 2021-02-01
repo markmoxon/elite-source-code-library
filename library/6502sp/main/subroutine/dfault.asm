@@ -76,23 +76,24 @@ IF _DISC_VERSION
 
 IF _STH_DISC
 
- ORA #32                \ Set bit 5 of A to denote thet this is the disc version
-                        \ with the refund bug fixed (before the bug was fixed
-                        \ the version number was 4)
+ ORA #%00100000         \ Set bit 5 of A to denote that this is the disc version
+                        \ with the refund bug fixed (in versions before the bug
+                        \ was fixed, bit 2 is set)
 
 ELIF _IB_DISC
 
- ORA #4                 \ Set bit 2 of A to denote thet this is the disc version
-                        \ but before the refund bug was fixed (after the bug was
-                        \ fixed the version number was changed to 32)
+ ORA #%00000100         \ Set bit 2 of A to denote that this is the disc version
+                        \ but before the refund bug was fixed (in versions after
+                        \ the bug was fixed, bit 5 is set)
 
 ENDIF
 
 ELIF _6502SP_VERSION
 
- ORA #4                 \ Set bit 2 of A to denote that this is the 6502 second
+ ORA #%00000100         \ Set bit 2 of A to denote that this is the 6502 second
                         \ processor version (which is the same bit as for the
-                        \ disc version)
+                        \ original disc version, before the refund bug was
+                        \ fixed)
 
 ENDIF
 

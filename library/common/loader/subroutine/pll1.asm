@@ -78,8 +78,10 @@ ENDIF
 
 IF _DISC_VERSION
 
- LDA #&4B               \ ???? Copy protection
- STA L19D2+1
+ LDA #LO(OSBmod)        \ As part of the copy protection, the JSR OSB
+ STA OSBjsr+1           \ instruction at OSBjsr gets modified to point to OSBmod
+                        \ instead of OSB, and this is where we modify the low
+                        \ byte of the destination address
 
 ENDIF
 
@@ -286,8 +288,10 @@ ENDIF
 
 IF _DISC_VERSION
 
- LDA #&29               \ ???? Copy protection
- STA L19D2+2
+ LDA #HI(OSBmod)        \ As part of the copy protection, the JSR OSB
+ STA OSBjsr+2           \ instruction at OSBjsr gets modified to point to OSBmod
+                        \ instead of OSB, and this is where we modify the high
+                        \ byte of the destination address
 
 ENDIF
 

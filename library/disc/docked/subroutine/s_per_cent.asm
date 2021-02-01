@@ -14,13 +14,13 @@
 
  JMP DOBEGIN            \ Decrypt the main flight code and start a new game
 
- JMP CHPR               \ WRCHV handler
+ JMP CHPR               \ WRCHV is set to point here by elite-loader3.asm
 
- EQUW &114B             \ IRQ1V handler (points to IRQ1)
+ EQUW IRQ1              \ IRQ1V is set to point here by elite-loader3.asm
 
- EQUB &4C               \ A JMP instruction
+ EQUB &4C               \ A JMP instruction, so this becomes JMP BRBR
 
 .BRKV
 
- EQUW &11D5             \ BRKV handler (points to BRBR)
+ EQUW BRBR1             \ BRKV is set to point here by elite-loader3.asm
 

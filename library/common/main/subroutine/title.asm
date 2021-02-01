@@ -70,9 +70,11 @@ ENDIF
 
 IF _DISC_VERSION
 
- LDA K2+4               \ ???? Copy protection, checks location &9F for the
- CMP #&DB               \ value &DB and crashes the game if it doesn't match
- BEQ tiwe
+ LDA &9F                \ As part of the copy protection, location &9F is set to
+ CMP #219               \ 219 in the OSBmod routine in elite-loader3.asm. This
+ BEQ tiwe               \ jumps to tiwe if the value is unchanged, otherwise it
+                        \ crashes the game with the following (as presumably
+                        \ the game code has been tampered with)
 
  LDA #&10               \ Modify the STA DELTA instruction in RES2 to &10 &FE,
  STA modify+2           \ which is a BPL P%-2 instruction, to create an infinite
@@ -206,9 +208,8 @@ IF _6502SP_VERSION OR _DISC_VERSION
                         \ pointed to by the MOS error message pointer
 
  BNE P%-6               \ If the fetched character is non-zero, loop back to the
-                        \ JSR OSWRCH above to print the it, and keep looping
-                        \ until we fetch a zero (which marks the end of the
-                        \ message)
+                        \ JSR OSWRCH above to print it, and keep looping until
+                        \ we fetch a zero (which marks the end of the message)
 
 .BRBR2
 

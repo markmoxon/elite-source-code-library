@@ -783,11 +783,11 @@ ORG LOD + P% - LOADER
                         \
                         \ In other words, this whole routine is a complicated
                         \ way of pointing ZP(1 0) to the &01 byte in the JSR
-                        \ instruction above
+                        \ instruction above, i.e. to do + 2
 
- LDA ZP                 \ Set ZP(1 0) = ZP(1 0) - 40, so ZP now points to PROT1
- SEC
- SBC #(2 + do - PROT1)
+ LDA ZP                 \ Set ZP(1 0) = ZP(1 0) - (2 + do - PROT1)
+ SEC                    \             = do + 2 - 2 - do + PROT1
+ SBC #(2 + do - PROT1)  \             = PROT1
  STA ZP
  LDA ZP+1
  SBC #&00
@@ -801,19 +801,19 @@ ORG LOD + P% - LOADER
 
  LDA (ZP),Y             \ Set SC(1 0) = ZP(1 0) + Y-th word from TABLE
  CLC                    \
- ADC ZP                 \ so, for example, the first entry in TABLE points SC to:
+ ADC ZP                 \ so, for example, the first entry in TABLE does this:
  STA SC                 \
- INY                    \     ZP + first word from TABLE
- LDA (ZP),Y             \   = PROT1 + modify1 + 1 - PROT1
- ADC ZP+1               \   = modify + 1
+ INY                    \   SC(1 0) = ZP + first word from TABLE
+ LDA (ZP),Y             \           = PROT1 + jsr1 + 1 - PROT1
+ ADC ZP+1               \           = modify + 1
  STA SC+1               \
-                        \ which is the address of the JSR at modify1
+                        \ which is the address of the JSR destination at jsr1
 
  LDX #0                 \ Add ZP(1 0), i.e. PROT1, to the word at SC(1 0)
  LDA (SC,X)             \
  CLC                    \ so, for example, the first entry in TABLE modifies the
- ADC ZP                 \ address of the JSR at modify1 by adding PROT1 to it
- STA (SC,X)
+ ADC ZP                 \ destination address of the JSR at jsr1 by adding
+ STA (SC,X)             \ PROT1 to it
 
  INC SC
 
@@ -837,12 +837,12 @@ ORG LOD + P% - LOADER
 
 .TABLE
 
- EQUW modify1 + 1 - PROT1
- EQUW modify2 + 1 - PROT1
- EQUW modify3 + 1 - PROT1
- EQUW modify4 + 1 - PROT1
- EQUW modify5 + 1 - PROT1
- EQUW modify6 + 1 - PROT1
+ EQUW jsr1 + 1 - PROT1  \ Offsets within PROT1 of JSR destination addresses that
+ EQUW jsr2 + 1 - PROT1  \ we modify with the code above
+ EQUW jsr3 + 1 - PROT1
+ EQUW jsr4 + 1 - PROT1
+ EQUW jsr5 + 1 - PROT1
+ EQUW jsr6 + 1 - PROT1
 
  SKIP 14
 
@@ -929,10 +929,12 @@ ORG LOD + P% - LOADER
  LDA #7
  JSR OSWRCH
 
-.modify1
+.jsr1
 
  JSR dest1 - PROT1      \ Call dest1 to write the following characters,
-                        \ restarting with the NOP instruction
+                        \ restarting with the NOP instruction (this destination
+                        \ address is modified by the code above that adds PROT1
+                        \ to the address)
 
 .wrch1
 
@@ -946,17 +948,21 @@ ORG LOD + P% - LOADER
  LDA #&91               \ Set T = &91
  STA T
 
-.modify2
+.jsr2
 
- JSR modify5 - PROT1    \ Call modify5 -> modify6 -> dest2
+ JSR jsr5 - PROT1       \ Call jsr5, which calls jsr6, which calls dest2 (this
+                        \ destination address is modified by the code above that
+                        \ adds PROT1 to the address)
 
  BIT S
- BMI modify4
+ BMI jsr4
 
-.modify3
+.jsr3
 
  JSR dest1 - PROT1      \ Call dest1 to write the following characters,
-                        \ restarting with the NOP instruction
+                        \ restarting with the NOP instruction (this destination
+                        \ address is modified by the code above that adds PROT1
+                        \ to the address)
 
 .wrch2
 
@@ -990,7 +996,7 @@ ORG LOD + P% - LOADER
  EQUS "E L I T E"
 
  NOP
- RTS                    \ Return from the subroutine
+ RTS                    \ Return from the PROT1 subroutine
 
  EQUB &20, &20, &20, &20, &20, &20, &8C, &92
  EQUB &87, &8D, &20, &20, &20, &20, &20, &20
@@ -1001,9 +1007,12 @@ ORG LOD + P% - LOADER
  NOP
  RTS
 
-.modify4
+.jsr4
 
- JSR dest1 - PROT1
+ JSR dest1 - PROT1      \ Call dest1 to write the following characters,
+                        \ restarting with the NOP instruction (this destination
+                        \ address is modified by the code above that adds PROT1
+                        \ to the address)
 
  EQUB 28                \ Define a text window as follows:
  EQUB 13, 12, 25, 10    \
@@ -1023,23 +1032,26 @@ ORG LOD + P% - LOADER
  EQUS "E L I T E"
 
  NOP
- RTS
+ RTS                    \ Return from the PROT1 subroutine
 
  EQUS "                   "
 
  NOP
  RTS
 
-.modify5
+.jsr5
 
- JSR modify6 - PROT1        \ Call modify6 -> dest2
+ JSR jsr6 - PROT1       \ Call jsr6, which calls dest2 (this destination address
+                        \ is modified by the code above that adds PROT1 to the
+                        \ address)
 
  JSR OSNEWL
  JSR OSNEWL
 
-.modify6
+.jsr6
 
- JSR dest2 - PROT1          \ Call dest2
+ JSR dest2 - PROT1      \ Call dest2 (this destination address is modified by
+                        \ the code above that adds PROT1 to the address)
 
  JSR OSNEWL
 
@@ -1056,11 +1068,11 @@ ORG LOD + P% - LOADER
 
  LDY #&1C
 
-.dest2q
+.dest2a
 
  LDX #&26
  BIT S
- BMI dest2a
+ BMI dest2b
 
  LDA T
  JSR OSWRCH
@@ -1071,23 +1083,23 @@ ORG LOD + P% - LOADER
  CLC
  BCC P%+7
 
-.dest2a
+.dest2b
 
  LDA #' '
  JSR OSWRCH
 
-.dest2r
+.dest2c
 
  LDA (ZP),Y
  BIT S
- BMI dest2b
+ BMI dest2d
  STY P
  TAY
  LDA (ZP),Y
  LDY P
  BNE P%+4
 
-.dest2b
+.dest2d
 
  ORA #&E0
 
@@ -1095,10 +1107,10 @@ ORG LOD + P% - LOADER
 
  INY
  CPY #&FF
- BEQ dest2c
+ BEQ dest2e
 
  DEX
- BNE dest2r
+ BNE dest2c
 
  BIT S
  BPL P%+7
@@ -1107,9 +1119,9 @@ ORG LOD + P% - LOADER
  JSR OSWRCH
 
  CLC
- BCC dest2q
+ BCC dest2a
 
-.dest2c
+.dest2e
 
  INC T
 

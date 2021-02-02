@@ -68,7 +68,8 @@ Mlas = 50               \ Mining laser power
 Armlas = INT(128.5+1.5*POW) \ Military laser power
 
 VEC = &7FFE             \ VEC is where we store the original value of the IRQ1
-                        \ vector, and it matches the address in the main source
+                        \ vector, matching the address in the elite-missile.asm
+                        \ source
 
 ZP = &70                \ Temporary storage, used all over the place
 
@@ -84,11 +85,20 @@ SC = &76                \ Used to store the screen address while plotting pixels
 
 BLPTR = &78             \ Gets set as part of the obfuscation code
 
-DL = &8B
-LASCT = &0346
-HFX = &0348
-ESCP = &0386
-S% = &11E3
+DL = &8B                \ The vertical sync flag, matching the address in the
+                        \ main game code
+
+LASCT = &0346           \ The laser pulse count for the current laser, matching
+                        \ the address in the main game code
+
+HFX = &0348             \ A flag that toggles the hyperspace colour effect,
+                        \ matching the address in the main game code
+
+ESCP = &0386            \ The flag that determines whether we have an escape pod
+                        \ fitted, matching the address in the main game code
+
+S% = &11E3              \ The adress of the main entry point workspace in the
+                        \ main game code
 
 CODE% = &1900           \ The address where this file (the third loader) loads
 LOAD% = &1900
@@ -309,7 +319,7 @@ INCLUDE "library/common/loader/macro/fne.asm"
  BPL LOOP2              \ Loop back to copy the next byte until they are all
                         \ done
 
- LDA SC                 \ ???? Set the drive number in the CATD routine to SC
+ LDA SC                 \ Set the drive number in the CATD routine to SC ????
  STA CATBLOCK
 
  FNE 0                  \ Set up sound envelopes 0-3 using the FNE macro
@@ -356,7 +366,7 @@ INCLUDE "library/common/loader/macro/fne.asm"
 \       Name: PROT2
 \       Type: Subroutine
 \   Category: Copy protection
-\    Summary: 
+\    Summary: Calculate a checksum on the loader code
 \
 \ ******************************************************************************
 
@@ -379,10 +389,8 @@ INCLUDE "library/common/loader/macro/fne.asm"
 \       Name: LOADcode
 \       Type: Subroutine
 \   Category: Loader
-\    Summary: 
-\
-\ code block, org &0B00, eor'd with &18, gets copied to &0B00 by above, called
-\ at end of this loader
+\    Summary: Load the main docked code, set up various vectors, run a checksum
+\             and start the game
 \
 \ ******************************************************************************
 
@@ -515,7 +523,7 @@ ORG CATDcode + P% - CATD
 \       Name: PROT1
 \       Type: Subroutine
 \   Category: Copy protection
-\    Summary: 
+\    Summary: Part of the BLPTR copy protection checks
 \
 \ ******************************************************************************
 
@@ -555,7 +563,7 @@ INCLUDE "library/common/loader/variable/twos.asm"
 \       Name: PROT4
 \       Type: Subroutine
 \   Category: Copy protection
-\    Summary: 
+\    Summary: Part of the BLPTR copy protection checks
 \
 \ ******************************************************************************
 
@@ -578,7 +586,7 @@ INCLUDE "library/common/loader/variable/cnt3.asm"
 \       Name: PROT5
 \       Type: Subroutine
 \   Category: Copy protection
-\    Summary: 
+\    Summary: Part of the BLPTR copy protection checks
 \
 \ ******************************************************************************
 
@@ -596,7 +604,7 @@ INCLUDE "library/common/loader/variable/cnt3.asm"
 \       Name: PROT6
 \       Type: Subroutine
 \   Category: Copy protection
-\    Summary: 
+\    Summary: Crash the game as copy protection has detected an issue
 \
 \ ******************************************************************************
 
@@ -750,9 +758,7 @@ INCLUDE "library/common/loader/subroutine/osb.asm"
 \       Name: OSBmod
 \       Type: Subroutine
 \   Category: Loader
-\    Summary: 
-\
-\ &294B, JSR OSB above gets modified to jump here
+\    Summary: Calculate a checksum
 \
 \ ******************************************************************************
 
@@ -786,11 +792,8 @@ INCLUDE "library/common/loader/subroutine/osb.asm"
 \       Name: TVT1code
 \       Type: Subroutine
 \   Category: Loader
-\    Summary: 
-\
-\ &2962-&2A61 to &1100-&11FF
-\ IRQ1 etc. - this is code
-\ Need to EOR this, commander file and BRBR1 with &A5 in elite-checksum.py
+\    Summary: Code block at &1100-&11E2 that remains resident in both docked and
+\             flight mode (palettes, screen mode routine and commander data)
 \
 \ ******************************************************************************
 

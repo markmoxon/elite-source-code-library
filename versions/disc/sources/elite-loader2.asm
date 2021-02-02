@@ -32,33 +32,20 @@ _IB_DISC                = (_RELEASE = 1)
 _STH_DISC               = (_RELEASE = 2)
 
 TRTB% = &04             \ TRTB%(1 0) points to the keyboard translation table
-K1   = &0012
-K2   = &0013
-K3   = &0044
-K4   = &004C
-K5   = &004D
-K6   = &004E
-K7   = &004F
-K8   = &0050
-K9   = &0051
 
-S   = &0070
-ZP   = &0071
-P   = &0073
-Q   = &0074
-R   = &0075
-T   = &0076
-SC   = &0081
+S = &70                 \ Temporary storage, used all over the place
 
-L0AC1   = &0AC1
-L373D   = &373D
-L4953   = &4953
-L495C   = &495C
-L499C   = &499C
-L49D6   = &49D6
-L4BBA   = &4BBA
-L4BC3   = &4BC3
-L4BCC   = &4BCC
+ZP = &71                \ Temporary storage, used all over the place
+
+P = &73                 \ Temporary storage, used all over the place
+
+Q = &74                 \ Temporary storage, used all over the place
+
+R = &75                 \ Temporary storage, used all over the place
+
+T = &76                 \ Temporary storage, used all over the place
+
+SC = &81                \ Temporary storage, used all over the place
 
 OSNEWL = &FFE7          \ The address for the OSNEWL routine
 OSWRCH = &FFEE          \ The address for the OSWRCH routine
@@ -228,7 +215,7 @@ ENDIF
 
  JMP &197B              \ Jump to the start of the ELITE4 loader code at &197B
 
- SKIP 15
+ SKIP 15                \ These bytes appear to be unused
 
 \ ******************************************************************************
 \
@@ -244,14 +231,14 @@ ENDIF
  EQUS "LOAD Elite4"
  EQUB 13
 
- SKIP 4
+ SKIP 4                 \ These bytes appear to be unused
 
 \ ******************************************************************************
 \
 \       Name: Elite loader (Part 3 of 4)
 \       Type: Subroutine
 \   Category: Loader
-\    Summary: 
+\    Summary: Pause for a surprisingly long time (7.67 seconds)
 \
 \ ******************************************************************************
 
@@ -278,51 +265,54 @@ ENDIF
 \       Name: MPL
 \       Type: Subroutine
 \   Category: Utility routines
-\    Summary: Move 512 bytes from &5819 to &0400 and jump to ENTRY2
+\    Summary: Move two pages of memory from LOADcode to LOAD and jump to ENTRY2
 \
 \ ******************************************************************************
 
 .MPL
 
- LDY #0                 \ Move &5819 onwards to &0400
+ LDY #0                 \ Set Y = 0 to act as a byte counter
 
- LDX #2                 \ 2 * 256 bytes
+ LDX #2                 \ Set X = 2 to act as a page counter
 
 .MVBL
 
- LDA LOADcode,Y
- STA LOAD,Y
+ LDA LOADcode,Y         \ Copy the Y-th byte of LOADcode to the Y-th byte of
+ STA LOAD,Y             \ LOAD (this instruction gets modified below, so this is
+                        \ a single-use, self-modifying routine)
 
- INY
+ INY                    \ Increment the byte counter
 
- BNE MVBL
+ BNE MVBL               \ Loop back to MVBL to copy the next byte until we have
+                        \ copied a whole page
 
- INC MVBL+2             \ High byte of LDA
- INC MVBL+5             \ High byte of STA
+ INC MVBL+2             \ Increment the high byte of the LDA instruction above,
+                        \ so it now points to the next page
 
- DEX
+ INC MVBL+5             \ Increment the high byte of the STA instruction above,
+                        \ so it now points to the next page
 
- BNE MVBL
+ DEX                    \ Decrement the page counter in X
 
- JMP ENTRY2
+ BNE MVBL               \ Loop back to MVBL to copy the next page until we have
+                        \ copied X pages
+
+ JMP ENTRY2             \ Jump to ENTRY2 to continue the loading process
 
 \ ******************************************************************************
 \
 \       Name: LOADcode
 \       Type: Subroutine
-\   Category: Loader
-\    Summary: 
+\   Category: Copy protection
+\    Summary: This code doesn't appear to be run
 \
 \ ******************************************************************************
-
-\ Gets copied from &5819 to &0400 (512 bytes)
 
 .LOADcode
 
 ORG &0400
 
-.LOAD                   \ Moved to &0400-&05FF from &5819-&5A18
-                        \ Gets replaced by QQ18 tokens in loader3
+.LOAD
 
  JSR LOAD10
 
@@ -605,173 +595,109 @@ COPYBLOCK LOAD, P%, LOADcode
 
 ORG LOADcode + P% - LOAD
 
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00
+ SKIP 487
 
 \ ******************************************************************************
 \
-\       Name: aELEC
+\       Name: ECHAR
 \       Type: Variable
 \   Category: Loader
-\    Summary: The Acorn Electron background for the Acornsoft loading screen
+\    Summary: Character definitions for the Acorn Electron to mimic the graphics
+\             characters of the BBC Micro's mode 7 teletext screen
 \
 \ ******************************************************************************
 
-.aELEC
+.ECHAR
 
- EQUB &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &E0
- EQUB &E0, &00, &00, &00, &00, &00, &00, &0E
- EQUB &0E, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &0E, &0E, &E0
- EQUB &E0, &00, &E0, &E0, &00, &00, &00, &EE
- EQUB &EE, &00, &E0, &E0, &00, &00, &00, &EE
- EQUB &EE, &00, &0E, &0E, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &E0, &E0, &E0
- EQUB &E0, &00, &00, &00, &00, &E0, &E0, &00
- EQUB &00, &00, &E0, &E0, &00, &E0, &E0, &E0
- EQUB &E0, &00, &E0, &E0, &00, &E0, &E0, &EE
- EQUB &EE, &00, &E0, &E0, &00, &E0, &E0, &EE
- EQUB &EE, &00, &EE, &EE, &00, &E0, &E0, &EE
- EQUB &EE, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &0E, &0E, &00, &0E, &0E, &0E
- EQUB &0E, &00, &0E, &0E, &00, &0E, &0E, &EE
- EQUB &EE, &00, &0E, &0E, &00, &0E, &0E, &EE
- EQUB &EE, &00, &EE, &EE, &00, &0E, &0E, &00
- EQUB &00, &00, &00, &00, &00, &EE, &EE, &EE
- EQUB &EE
-
- EQUB &00
-
- EQUB &00, &00, &00, &EE, &EE, &00, &00, &00
- EQUB &E0, &E0, &00, &EE, &EE, &E0, &E0, &00
- EQUB &E0, &E0, &00, &EE, &EE, &00, &00, &00
- EQUB &0E, &0E, &00, &EE, &EE, &0E, &0E, &00
- EQUB &0E, &0E, &00, &EE, &EE, &00, &00, &00
- EQUB &EE, &EE, &00, &EE, &EE, &E0, &E0, &00
- EQUB &EE, &EE, &00, &EE, &EE, &0E, &0E, &00
- EQUB &EE, &EE, &00, &EE, &EE, &EE, &EE, &00
- EQUB &EE, &EE, &00, &EE, &EE
+ EQUB &00, &00, &00, &00, &00, &00, &00, &00
+ EQUB &E0, &E0, &00, &00, &00, &00, &00, &00
+ EQUB &0E, &0E, &00, &00, &00, &00, &00, &00
+ EQUB &00, &00, &00, &00, &00, &00, &0E, &0E
+ EQUB &E0, &E0, &00, &E0, &E0, &00, &00, &00
+ EQUB &EE, &EE, &00, &E0, &E0, &00, &00, &00
+ EQUB &EE, &EE, &00, &0E, &0E, &00, &00, &00
+ EQUB &00, &00, &00, &00, &00, &00, &E0, &E0
+ EQUB &E0, &E0, &00, &00, &00, &00, &E0, &E0
+ EQUB &00, &00, &00, &E0, &E0, &00, &E0, &E0
+ EQUB &E0, &E0, &00, &E0, &E0, &00, &E0, &E0
+ EQUB &EE, &EE, &00, &E0, &E0, &00, &E0, &E0
+ EQUB &EE, &EE, &00, &EE, &EE, &00, &E0, &E0
+ EQUB &EE, &EE, &00, &00, &00, &00, &00, &00
+ EQUB &00, &00, &00, &0E, &0E, &00, &0E, &0E
+ EQUB &0E, &0E, &00, &0E, &0E, &00, &0E, &0E
+ EQUB &EE, &EE, &00, &0E, &0E, &00, &0E, &0E
+ EQUB &EE, &EE, &00, &EE, &EE, &00, &0E, &0E
+ EQUB &00, &00, &00, &00, &00, &00, &EE, &EE
+ EQUB &EE, &EE, &00, &00, &00, &00, &EE, &EE
+ EQUB &00, &00, &00, &E0, &E0, &00, &EE, &EE
+ EQUB &E0, &E0, &00, &E0, &E0, &00, &EE, &EE
+ EQUB &00, &00, &00, &0E, &0E, &00, &EE, &EE
+ EQUB &0E, &0E, &00, &0E, &0E, &00, &EE, &EE
+ EQUB &00, &00, &00, &EE, &EE, &00, &EE, &EE
+ EQUB &E0, &E0, &00, &EE, &EE, &00, &EE, &EE
+ EQUB &0E, &0E, &00, &EE, &EE, &00, &EE, &EE
+ EQUB &EE, &EE, &00, &EE, &EE, &00, &EE, &EE
 
 \ ******************************************************************************
 \
 \       Name: LOGO
 \       Type: Variable
 \   Category: Loader
-\    Summary: The BBC Micro background for the Acornsoft loading screen
+\    Summary: Tables containing the Acornsoft logo for the BBC Micro and Acorn
+\             Electron
 \
 \ ******************************************************************************
 
 .LOGO
 
- EQUB &A0, &A1, &A2
- EQUB &E0, &A5, &A7, &AB, &B0, &B1, &B4, &B5
- EQUB &B7, &BF, &A3, &E8, &EA, &EB, &EF, &F0
- EQUB &F3, &F4, &F5, &F8, &FA, &FC, &FD, &FE
- EQUB &FF
+ EQUB &A0, &A1          \ For the BBC Micro, the tables below consist of offsets
+ EQUB &A2, &E0          \ into this top table, so the first three characters of
+ EQUB &A5, &A7          \ the Acornsoft logo are &A0 (the &00-th entry in this
+ EQUB &AB, &B0          \ table), then &FC (the &18-th entry in this table),
+ EQUB &B1, &B4          \ then &B4 (the &09-th entry in this table) and so on
+ EQUB &B5, &B7          \
+ EQUB &BF, &A3          \ The Electron ignores this top table and just uses the
+ EQUB &E8, &EA          \ values below, adding &E0 to get the number of the
+ EQUB &EB, &EF          \ relevant user-defined character (so the first three
+ EQUB &F0, &F3          \ characters are &E0, then &F8, then &E9 and so on)
+ EQUB &F4, &F5          \
+ EQUB &F8, &FA          \ The Acornsoft logo is made up of 5 rows with 38
+ EQUB &FC, &FD          \ graphics characters on each row, which corresponds
+ EQUB &FE, &FF          \ with the tables below
 
-\ The logo, 38 characters per row, 5 rows
-\ These are user-defined character numbers for Electron (when you add &E0)
-\ They are indexes into the above section of the table for BBC
-
- EQUB &00, &00, &00, &18, &09, &03, &18
- EQUB &18, &07, &00, &16, &18, &14, &00, &18
- EQUB &18, &18, &07, &0E, &14, &00, &0E, &09
- EQUB &16, &18, &18, &07, &00, &1A, &1B, &09
- EQUB &00, &18, &18, &18, &18, &18, &18
+ EQUB &00, &00, &00, &18, &09, &03, &18, &18
+ EQUB &07, &00, &16, &18, &14, &00, &18, &18
+ EQUB &18, &07, &0E, &14, &00, &0E, &09, &16
+ EQUB &18, &18, &07, &00, &1A, &1B, &09, &00
+ EQUB &18, &18, &18, &18, &18, &18
  
- EQUB &00
- EQUB &00, &17, &1B, &0A, &1B, &05, &06, &1B
- EQUB &0F, &0C, &0D, &11, &0A, &1B, &0D, &10
- EQUB &0A, &0F, &1B, &09, &0F, &0A, &1B, &08
- EQUB &06, &04, &0F, &1B, &1B, &1B, &00, &1B
- EQUB &0D, &0D, &0D, &1B, &0D
+ EQUB &00, &00, &17, &1B, &0A, &1B, &05, &06
+ EQUB &1B, &0F, &0C, &0D, &11, &0A, &1B, &0D
+ EQUB &10, &0A, &0F, &1B, &09, &0F, &0A, &1B
+ EQUB &08, &06, &04, &0F, &1B, &1B, &1B, &00
+ EQUB &1B, &0D, &0D, &0D, &1B, &0D
 
- EQUB &00, &0E, &0C
- EQUB &10, &0A, &1B, &00, &00, &00, &0F, &0A
- EQUB &00, &0F, &0A, &1B, &18, &1A, &04, &0F
- EQUB &0C, &1B, &17, &0A, &06, &1B, &19, &07
- EQUB &1B, &1B, &1B, &1B, &0A, &1B, &1B, &1B
- EQUB &00, &1B, &00
+ EQUB &00, &0E, &0C, &10, &0A, &1B, &00, &00
+ EQUB &00, &0F, &0A, &00, &0F, &0A, &1B, &18
+ EQUB &1A, &04, &0F, &0C, &1B, &17, &0A, &06
+ EQUB &1B, &19, &07, &1B, &1B, &1B, &1B, &0A
+ EQUB &1B, &1B, &1B, &00, &1B, &00
 
- EQUB &03, &1B, &19, &1A, &0A
- EQUB &1B, &07, &03, &18, &0F, &15, &00, &17
- EQUB &0A, &1B, &06, &19, &00, &0F, &0A, &10
- EQUB &1B, &0A, &12, &00, &10, &1B, &13, &13
- EQUB &13, &13, &08, &1B, &00, &00, &00, &1B
- EQUB &00
+ EQUB &03, &1B, &19, &1A, &0A, &1B, &07, &03
+ EQUB &18, &0F, &15, &00, &17, &0A, &1B, &06
+ EQUB &19, &00, &0F, &0A, &10, &1B, &0A, &12
+ EQUB &00, &10, &1B, &13, &13, &13, &13, &08
+ EQUB &1B, &00, &00, &00, &1B, &00
 
- EQUB &1A, &0B, &00, &0F, &0A, &06, &1B
- EQUB &1B, &05, &02, &11, &1B, &0C, &01, &1B
- EQUB &00, &10, &15, &0F, &0A, &00, &11, &0A
- EQUB &11, &1B, &1B, &04, &11, &1B, &1B, &1B
- EQUB &04, &1B, &00, &00, &00, &1B, &00
- 
- EQUB &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &02, &0D, &00, &00, &00
- EQUB &00, &00, &00, &00, &00
+ EQUB &1A, &0B, &00, &0F, &0A, &06, &1B, &1B
+ EQUB &05, &02, &11, &1B, &0C, &01, &1B, &00
+ EQUB &10, &15, &0F, &0A, &00, &11, &0A, &11
+ EQUB &1B, &1B, &04, &11, &1B, &1B, &1B, &04
+ EQUB &1B, &00, &00, &00, &1B, &00
+
+ SKIP 28                \ These bytes appear to be unused
+ EQUB &02, &0D
+ SKIP 8
 
 \ ******************************************************************************
 \
@@ -843,26 +769,22 @@ ORG LOADcode + P% - LOAD
  STA SC                 \
  INY                    \   SC(1 0) = ZP + first word from TABLE
  LDA (ZP),Y             \           = PROT1 + jsr1 + 1 - PROT1
- ADC ZP+1               \           = modify + 1
+ ADC ZP+1               \           = jsr1 + 1
  STA SC+1               \
-                        \ which is the address of the JSR destination at jsr1
+                        \ which is the address of the destination adress in the
+                        \ JSR instruction at jsr1
 
- LDX #0                 \ Add ZP(1 0), i.e. PROT1, to the word at SC(1 0)
- LDA (SC,X)             \
- CLC                    \ so, for example, the first entry in TABLE modifies the
- ADC ZP                 \ destination address of the JSR at jsr1 by adding
- STA (SC,X)             \ PROT1 to it
+ LDX #0                 \ Add ZP(1 0), i.e. PROT1, to the word at SC(1 0),
+ LDA (SC,X)             \ starting with the low bytes
+ CLC
+ ADC ZP
+ STA (SC,X)
 
- INC SC
-
- BNE PROT1b
-
- INC SC+1
-
-.PROT1b
-
- LDA (SC,X)
- ADC ZP+1
+ INC SC                 \ And then adding the high bytes
+ BNE P%+4               \
+ INC SC+1               \ So, for example, the first entry in TABLE modifies the
+ LDA (SC,X)             \ destination address of the JSR at jsr1 by adding PROT1
+ ADC ZP+1               \ to it, so the address now points to prstr
  STA (SC,X)
 
  INY                    \ Increment Y to point to the next word in TABLE
@@ -870,7 +792,7 @@ ORG LOADcode + P% - LOAD
  CPY #&7D               \ Loop until we have done them all
  BNE PROT1a
 
- BEQ PROT2              \ Jump to PROT2 (this BEQ is effectively a JMP as we
+ BEQ LOADSCR            \ Jump to LOADSCR (this BEQ is effectively a JMP as we
                         \ didn't take the BNE branch)
 
 .TABLE
@@ -882,25 +804,25 @@ ORG LOADcode + P% - LOAD
  EQUW jsr5 + 1 - PROT1
  EQUW jsr6 + 1 - PROT1
 
- SKIP 14
+ SKIP 14                \ These bytes appear to be unused
 
 \ ******************************************************************************
 \
-\       Name: PROT2
+\       Name: LOADSCR
 \       Type: Subroutine
 \   Category: Loader
 \    Summary: Show the mode 7 Acornsoft loading screen
 \
 \ ******************************************************************************
 
-.PROT2
+.LOADSCR
 
- LDA ZP                 \ Set ZP(1 0) = ZP(1 0) - (PROT1 - aELEC)
- SEC                    \             = PROT1 - PROT1 + aELEC
- SBC #LO(PROT1 - aELEC) \             = aELEC
+ LDA ZP                 \ Set ZP(1 0) = ZP(1 0) - (PROT1 - ECHAR)
+ SEC                    \             = PROT1 - PROT1 + ECHAR
+ SBC #LO(PROT1 - ECHAR) \             = ECHAR
  STA ZP
  LDA ZP+1
- SBC #HI(PROT1 - aELEC)
+ SBC #HI(PROT1 - ECHAR)
  STA ZP+1
 
  LDX #0                 \ Set S = 0, to use as a flag denoting whether this is a
@@ -929,7 +851,7 @@ ORG LOADcode + P% - LOAD
 
  LDY #0
 
-.PROT2a
+.eloop
 
  LDX #7
 
@@ -943,26 +865,26 @@ ORG LOADcode + P% - LOAD
  ORA #&E0
  JSR OSWRCH
 
-.PROT2b
+.vloop
 
  LDA (ZP),Y
  JSR OSWRCH
 
  INY
  DEX
- BPL PROT2b
+ BPL vloop
 
  CPY #&E0
- BNE PROT2a
+ BNE eloop
 
 .bbc
 
                         \ We now print the Acornsoft loading screen background
                         \ using mode 7 graphics (or the "fake" Electron version)
 
- LDA ZP                 \ Set ZP(1 0) = ZP(1 0) + LOGO - aELEC
- CLC                    \             = aELEC + LOGO - aELEC
- ADC #(LOGO - aELEC)    \             = LOGO
+ LDA ZP                 \ Set ZP(1 0) = ZP(1 0) + LOGO - ECHAR
+ CLC                    \             = ECHAR + LOGO - ECHAR
+ ADC #(LOGO - ECHAR)    \             = LOGO
  STA ZP
  BCC P%+4
  INC ZP+1
@@ -991,7 +913,7 @@ ORG LOADcode + P% - LOAD
 
 .jsr2
 
- JSR jsr5 - PROT1       \ Call jsr5, which calls jsr6, which calls ASoft (this
+ JSR jsr5 - PROT1       \ Call jsr5, which calls jsr6, which calls LOGOS (this
                         \ destination address is modified by the code above that
                         \ adds PROT1 to the address)
 
@@ -1091,7 +1013,7 @@ ORG LOADcode + P% - LOAD
 
  JSR jsr6 - PROT1       \ Call jsr6 (this destination address is modified by the
                         \ code above that adds PROT1 to the address). This calls
-                        \ the ASoft routine twice to print two Acornsoft logos,
+                        \ the LOGOS routine twice to print two Acornsoft logos,
                         \ with a newline between then
 
  JSR OSNEWL             \ Print two newlines
@@ -1099,18 +1021,18 @@ ORG LOADcode + P% - LOAD
 
 .jsr6
 
- JSR ASoft - PROT1      \ Call ASoft (this destination address is modified by
+ JSR LOGOS - PROT1      \ Call LOGOS (this destination address is modified by
                         \ the code above that adds PROT1 to the address). This
                         \ prints a third Acornsoft logo
 
  JSR OSNEWL             \ Print a newline
  
-                        \ Fall through into ASoft to print a fourth Acornsoft
+                        \ Fall through into LOGOS to print a fourth Acornsoft
                         \ logo and return from the subroutine using a tail call
 
 \ ******************************************************************************
 \
-\       Name: ASoft
+\       Name: LOGOS
 \       Type: Subroutine
 \   Category: Loader
 \    Summary: Print a large Acornsoft logo as part of the loading screen
@@ -1127,7 +1049,7 @@ ORG LOADcode + P% - LOAD
 \
 \ ******************************************************************************
 
-.ASoft
+.LOGOS
 
  LDY #28                \ Set Y = 28 as an index to the first row of logo
                         \ characters in the table at LOGO, after the 28 bytes of
@@ -1159,7 +1081,7 @@ ORG LOADcode + P% - LOAD
  LDA #' '               \ Print a space (on the Electron only)
  JSR OSWRCH
 
-.dest2c
+.cloop
 
  LDA (ZP),Y             \ Fetch the Y-th character from ZP into A, so A contains
                         \ the next byte from LOGO, which is the user-defined
@@ -1196,7 +1118,7 @@ ORG LOADcode + P% - LOAD
 
  DEX                    \ Otherwise decrement the character counter in X
 
- BNE dest2c             \ Loop back to print the next character until we have
+ BNE cloop             \ Loop back to print the next character until we have
                         \ done all 38 in this row
 
  BIT S                  \ If bit 7 of S is clear (this is a BBC Micro), skip the
@@ -1213,7 +1135,7 @@ ORG LOADcode + P% - LOAD
  INC T                  \ Increment the colour in T, which started with teletext
                         \ control code 145 (Red graphics) and increments through
                         \ 146 (green), 147 (yellow) and 148 (blue) with each new
-                        \ call to the ASoft routine
+                        \ call to the LOGOS routine
 
  RTS                    \ Return from the subroutine
 
@@ -1258,265 +1180,254 @@ ORG LOADcode + P% - LOAD
                         \ we just fetched, so execution continues from the end
                         \ of the string we just printed
 
+\ ******************************************************************************
+\
+\       Name: Unused copy protection routine
+\       Type: Subroutine
+\   Category: Copy protection
+\    Summary: This code doesn't appear to be run
+\
+\ ******************************************************************************
+
  SKIP 76                \ These bytes appear to be unused
  EQUB &FF
  SKIP 255
 
-\ ******************************************************************************
-\
-\       Name: L6100
-\       Type: Subroutine
-\   Category: Loader
-\    Summary: 
-\
-\ ******************************************************************************
+ BNE LABEL1
 
-.L6100
+ LDA &50
+ CMP &4E
 
- BNE L6106
+.LABEL1
 
- LDA K8
- CMP K6
-
-.L6106
-
- BNE L6113
+ BNE LABEL2
 
  LDA #&00
- STA K6
+ STA &4E
  LDA #&00
- STA K7
- JMP L4953
+ STA &4F
+ JMP &4953
 
-.L6113
+.LABEL2
 
- BIT L495C
- BPL L6119
+ BIT &495C
+ BPL LABEL3
 
  RTS
 
-.L6119
+.LABEL3
 
- LDA K7
- BNE L6120
+ LDA &4F
+ BNE LABEL4
 
- JSR L4BBA
+ JSR &4BBA
 
-.L6120
+.LABEL4
 
- LDA K5
- BNE L6132
+ LDA &4D
+ BNE LABEL5
 
- JSR L4BC3
+ JSR &4BC3
 
  LDA #&00
- STA K6
+ STA &4E
  LDA #&00
- STA K7
- JMP L4953
+ STA &4F
+ JMP &4953
 
-.L6132
+.LABEL5
 
- LDA K5
- CMP K7
- BCC L613E
+ LDA &4D
+ CMP &4F
+ BCC LABEL6
 
- BNE L613E
+ BNE LABEL6
 
- LDA K4
- CMP K6
+ LDA &4C
+ CMP &4E
 
-.L613E
+.LABEL6
 
- BCC L6153
+ BCC LABEL7
 
- LDA K4
- STA K1
- LDA K5
- STA K2
- JSR L4BC3
+ LDA &4C
+ STA &12
+ LDA &4D
+ STA &13
+ JSR &4BC3
 
- LDA K1
- STA K6
- LDA K2
- STA K7
+ LDA &12
+ STA &4E
+ LDA &13
+ STA &4F
 
-.L6153
+.LABEL7
 
- BIT L495C
- BMI L615B
+ BIT &495C
+ BMI LABEL8
 
- JSR L373D
+ JSR &373D
 
-.L615B
+.LABEL8
 
  RTS
 
  SKIP 1
 
-\ ******************************************************************************
-\
-\       Name: L615D
-\       Type: Subroutine
-\   Category: Loader
-\    Summary: 
-\
-\ ******************************************************************************
+.LABEL9
 
-.L615D
+ LDA &4F
+ BEQ LABEL11
 
- LDA K7
- BEQ L6172
+ LDA &4F
+ CMP &51
+ BCC LABEL10
 
- LDA K7
- CMP K9
- BCC L616D
+ BNE LABEL10
 
- BNE L616D
+ LDA &4E
+ CMP &50
 
- LDA K6
- CMP K8
+.LABEL10
 
-.L616D
+ BCS LABEL11
 
- BCS L6172
+ JMP &49D6
 
- JMP L49D6
+.LABEL11
 
-.L6172
+ LDA &4D
+ BEQ LABEL13
 
- LDA K5
- BEQ L6187
+ LDA &4D
+ CMP &51
+ BCC LABEL12
 
- LDA K5
- CMP K9
- BCC L6182
+ BNE LABEL12
 
- BNE L6182
+ LDA &4C
+ CMP &50
 
- LDA K4
- CMP K8
+.LABEL12
 
-.L6182
+ BCS LABEL13
 
- BCS L6187
+ JMP &499C
 
- JMP L499C
-
-.L6187
+.LABEL13
 
  RTS
 
- LDA K5
- BEQ L61C2
+ LDA &4D
+ BEQ LABEL18
 
- LDA K5
- CMP K9
- BCC L6198
+ LDA &4D
+ CMP &51
+ BCC LABEL14
 
- BNE L6198
+ BNE LABEL14
 
- LDA K4
- CMP K8
+ LDA &4C
+ CMP &50
 
-.L6198
+.LABEL14
 
- BEQ L61C2
+ BEQ LABEL18
 
- BCC L61C2
+ BCC LABEL18
 
- BIT L0AC1
- BEQ L61BB
+ BIT &0AC1
+ BEQ LABEL17
 
- LDA K7
- CMP K9
- BCC L61AD
+ LDA &4F
+ CMP &51
+ BCC LABEL15
 
- BNE L61AD
+ BNE LABEL15
 
- LDA K6
- CMP K8
+ LDA &4E
+ CMP &50
 
-.L61AD
+.LABEL15
 
- BEQ L61BA
+ BEQ LABEL16
 
- LDA K8
- STA K4
- LDA K9
- STA K5
- JSR L373D
+ LDA &50
+ STA &4C
+ LDA &51
+ STA &4D
+ JSR &373D
 
-.L61BA
-
- RTS
-
-.L61BB
-
- JSR L4BCC
-
- JSR L373D
+.LABEL16
 
  RTS
 
-.L61C2
+.LABEL17
 
- LDA K7
- BEQ L61FB
+ JSR &4BCC
 
- LDA K7
- CMP K9
- BCC L61D2
-
- BNE L61D2
-
- LDA K6
- CMP K8
-
-.L61D2
-
- BEQ L61FB
-
- BCC L61FB
-
- BIT L0AC1
- BEQ L61F0
-
- LDA K5
- CMP K9
- BCC L61E7
-
- BNE L61E7
-
- LDA K4
- CMP K8
-
-.L61E7
-
- BEQ L61EF
-
- JSR L4BBA
-
- JSR L373D
-
-.L61EF
+ JSR &373D
 
  RTS
 
-.L61F0
+.LABEL18
 
- LDA K6
- STA K8
- LDA K7
- STA K9
- JSR L373D
+ LDA &4F
+ BEQ LABEL23
 
-.L61FB  
+ LDA &4F
+ CMP &51
+ BCC LABEL19
+
+ BNE LABEL19
+
+ LDA &4E
+ CMP &50
+
+.LABEL19
+
+ BEQ LABEL23
+
+ BCC LABEL23
+
+ BIT &0AC1
+ BEQ LABEL22
+
+ LDA &4D
+ CMP &51
+ BCC LABEL20
+
+ BNE LABEL20
+
+ LDA &4C
+ CMP &50
+
+.LABEL20
+
+ BEQ LABEL21
+
+ JSR &4BBA
+
+ JSR &373D
+
+.LABEL21
 
  RTS
 
- LDA K3
- STA K4
+.LABEL22
+
+ LDA &4E
+ STA &50
+ LDA &4F
+ STA &51
+ JSR &373D
+
+.LABEL23  
+
+ RTS
+
+ LDA &44
+ STA &4C
 
 \ ******************************************************************************
 \

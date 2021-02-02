@@ -43,10 +43,7 @@ INCLUDE "library/common/main/macro/vertex.asm"
 INCLUDE "library/common/main/macro/edge.asm"
 INCLUDE "library/common/main/macro/face.asm"
 INCLUDE "library/common/main/variable/ship_missile.asm"
-
-EQUB &04, &00           \ This is where the VEC variable lives, at &7FFE. These
-                        \ values are presumably noise included at the time of
-                        \ compilation, as they get overwritten
+INCLUDE "library/common/main/variable/vec.asm"
 
 \ ******************************************************************************
 \

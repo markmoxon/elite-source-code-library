@@ -68,8 +68,7 @@ NOST = 18               \ The number of stardust particles in normal space (this
                         \ goes down to 3 in witchspace)
 
 NOSH = 20               \ The maximum number of ships in our local bubble of
-                        \ universe (counting from 0, so there are actually 21
-                        \ ship slots)
+                        \ universe
 
 NTY = 34                \ The number of different ship types
 

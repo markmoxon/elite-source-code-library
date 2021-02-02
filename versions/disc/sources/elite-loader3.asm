@@ -38,8 +38,14 @@ Q% = _REMOVE_CHECKSUMS  \ Set Q% to TRUE to max out the default commander, FALSE
 NETV = &224             \ The NETV vector that we intercept as part of the copy
                         \ protection
 
+BRKV = &202             \ The break vector that we intercept to enable us to
+                        \ handle and display system errors
+
 IRQ1V = &204            \ The IRQ1V vector that we intercept to implement the
                         \ split-sceen mode
+
+WRCHV = &20E            \ The WRCHV vector that we intercept with our custom
+                        \ text printing routine
 
 OSWRCH = &FFEE          \ The address for the OSWRCH routine
 OSBYTE = &FFF4          \ The address for the OSBYTE routine
@@ -61,13 +67,8 @@ Mlas = 50               \ Mining laser power
 
 Armlas = INT(128.5+1.5*POW) \ Military laser power
 
-DL = &8B
-LASCT = &0346
-HFX = &0348
-ESCP = &0386
-
 VEC = &7FFE             \ VEC is where we store the original value of the IRQ1
-                        \ vector, and it matches the value in elite-source.asm
+                        \ vector, and it matches the address in the main source
 
 ZP = &70                \ Temporary storage, used all over the place
 
@@ -83,6 +84,12 @@ SC = &76                \ Used to store the screen address while plotting pixels
 
 BLPTR = &78             \ Gets set as part of the obfuscation code
 
+DL = &8B
+LASCT = &0346
+HFX = &0348
+ESCP = &0386
+S% = &11E3
+
 CODE% = &1900           \ The address where this file (the third loader) loads
 LOAD% = &1900
 
@@ -97,13 +104,14 @@ INCLUDE "library/common/loader/macro/fne.asm"
 \       Name: Elite loader (Part 1 of 3)
 \       Type: Subroutine
 \   Category: Loader
-\    Summary: 
+\    Summary: Set up the split screen mode, move code around, set up the sound
+\             envelopes and configure the system
 \
 \ ******************************************************************************
 
 .ENTRY
 
- JSR PROT1              \ ???? Copy protection
+ JSR PROT1              \ Call PROT1 to do various copy protection checks
 
  LDA #144               \ Call OSBYTE with A = 144 and Y = 255 to turn the
  LDX #255               \ screen interlace off (equivalent to a *TV 255, 255
@@ -183,19 +191,19 @@ INCLUDE "library/common/loader/macro/fne.asm"
  LDX #0                 \ flashing colours
  JSR OSB
 
- JSR PROT5              \ ???? Copy protection
+ JSR PROT5              \ Call PROT5 to do various copy protection checks
 
  LDA #&00               \ Set the following:
  STA ZP                 \
  LDA #&11               \   ZP(1 0) = &1100
- STA ZP+1               \   P(1 0) = COMMON
- LDA #LO(COMMON)
+ STA ZP+1               \   P(1 0) = TVT1code
+ LDA #LO(TVT1code)
  STA P
- LDA #HI(COMMON)
+ LDA #HI(TVT1code)
  STA P+1
 
  JSR MVPG               \ Call MVPG to move and decrypt a page of memory from
-                        \ COMMON to &1100-&11FF
+                        \ TVT1code to &1100-&11FF
 
  LDA #&00               \ Set the following:
  STA ZP                 \
@@ -288,20 +296,20 @@ INCLUDE "library/common/loader/macro/fne.asm"
                         \ WORDS to &0400-&07FF
 
  LDX #35                \ We now want to copy the disc catalogue routine from
-                        \ CATDISC to CATD, so set a counter in X for the 36
+                        \ CATDcode to CATD, so set a counter in X for the 36
                         \ bytes to copy
 
 .LOOP2
 
- LDA CATDISC,X          \ Copy the X-th byte of CATDISC to the X-th byte of CATD
- STA CATD,X
+ LDA CATDcode,X         \ Copy the X-th byte of CATDcode to the X-th byte of
+ STA CATD,X             \ CATD
 
  DEX                    \ Decrement the loop counter
 
  BPL LOOP2              \ Loop back to copy the next byte until they are all
                         \ done
 
- LDA SC                 \ ????
+ LDA SC                 \ ???? Set the drive number in the CATD routine to SC
  STA CATBLOCK
 
  FNE 0                  \ Set up sound envelopes 0-3 using the FNE macro
@@ -315,13 +323,13 @@ INCLUDE "library/common/loader/macro/fne.asm"
  JSR OSCLI              \ Call OSCLI to run the OS command in MESS1, which
                         \ changes the disc directory to E
 
- LDA #&00               \ Set the following:
+ LDA #LO(LOAD)          \ Set the following:
  STA ZP                 \
- LDA #&0B               \   ZP(1 0) = &0B00
- STA ZP+1               \   P(1 0) = &1AED LOD2
- LDA #LO(LOD2)
+ LDA #HI(LOAD)          \   ZP(1 0) = LOAD
+ STA ZP+1               \   P(1 0) = LOADcode
+ LDA #LO(LOADcode)
  STA P
- LDA #HI(LOD2)
+ LDA #HI(LOADcode)
  STA P+1
 
  LDY #0                 \ We want to move one page of memory, so set Y as a byte
@@ -341,7 +349,7 @@ INCLUDE "library/common/loader/macro/fne.asm"
  BNE LOOP3              \ Loop back to copy the next byte until we have done a
                         \ whole page of 256 bytes
 
- JMP &0B00              \ Jump to the start of the routine we just decrypted
+ JMP LOAD               \ Jump to the start of the routine we just decrypted
 
 \ ******************************************************************************
 \
@@ -368,38 +376,43 @@ INCLUDE "library/common/loader/macro/fne.asm"
 
 \ ******************************************************************************
 \
-\       Name: 
+\       Name: LOADcode
 \       Type: Subroutine
 \   Category: Loader
 \    Summary: 
-\
-\ This block (LOD2 &1AED to &1B4E) needs EOR'ing with &18 by elite-checksum.py
 \
 \ code block, org &0B00, eor'd with &18, gets copied to &0B00 by above, called
 \ at end of this loader
 \
 \ ******************************************************************************
 
-.LOD2
+.LOADcode
 
 ORG &0B00
 
-.LOADER2
+.LOAD
 
- LDX #&37
- LDY #&0B
- JSR &FFF7
- LDA #&EE
- STA &0202
- LDA #&11
- STA &0203
- LDA #&E9
- STA &020E
- LDA #&11
- STA &020F
- SEC
- LDY #&00
+ LDX #LO(LTLI)          \ Set (Y X) to point to LTLI ("L.T.CODE")
+ LDY #HI(LTLI)
+
+ JSR OSCLI              \ Call OSCLI to run the OS command in LTLI, which loads
+                        \ the T.CODE binary (the main docked code) to its load
+                        \ address of &11E3
+
+ LDA #LO(S%+11)         \ Point BRKV to the fifth entry in the main docked
+ STA BRKV               \ code's S% workspace, which contains JMP BRBR1
+ LDA #HI(S%+11)
+ STA BRKV+1
+
+ LDA #LO(S%+6)          \ Point BRKV to the third entry in the main docked
+ STA WRCHV              \ code's S% workspace, which contains JMP CHPR
+ LDA #HI(S%+6)
+ STA WRCHV+1
+
+ SEC                    \ Run a checksum on the docked game code
+ LDY #0
  STY &70
+
  LDX #&11
  TXA
 
@@ -409,22 +422,22 @@ ORG &0B00
  ADC (&70),Y
  DEY
  BNE l1
+
  INX
  CPX #&54
  BCC l1
  CMP &55FF
 
-.l2
+ BNE P%
 
- BNE l2
- JMP &11E6
+ JMP S%+3               \ Jump to the second entry in the main docked code's S%
+                        \ workspace to start a new game
 
-.L0B37
+.LTLI
 
- EQUB &4C, &2E, &54
- EQUB &2E, &43, &4F
- EQUB &44
- EQUB &45, &0D
+ EQUS "L.T.CODE"
+ EQUB 13
+
  EQUB &44
  EQUB &6F
  EQUB &65, &73
@@ -445,23 +458,23 @@ ORG &0B00
  EQUB &69, &73
  EQUB &3F
 
-COPYBLOCK LOADER2, P%, LOD2
+COPYBLOCK LOAD, P%, LOADcode
 
-ORG LOD2 + P% - LOADER2
+ORG LOADcode + P% - LOAD
 
 \ ******************************************************************************
 \
-\       Name: CATDISC
+\       Name: CATDcode
 \       Type: Subroutine
 \   Category: Copy protection
 \    Summary: Load disc sectors 0 and 1 to &0E00 and &0F00 respectively
 \
-\ ******************************************************************************
-
 \ Gets copied from &1B4F to &0D7A by loop at L1A89 (35 bytes),
 \ is called by D and T to load from disc
+\
+\ ******************************************************************************
 
-.CATDISC
+.CATDcode
 
 ORG &0D7A
 
@@ -493,9 +506,9 @@ ORG &0D7A
  EQUB %00100001         \ 9 = Load 1 sector of 256 bytes
  EQUB 0
 
-COPYBLOCK CATD, P%, CATDISC
+COPYBLOCK CATD, P%, CATDcode
 
-ORG CATDISC + P% - CATD
+ORG CATDcode + P% - CATD
 
 \ ******************************************************************************
 \
@@ -715,7 +728,7 @@ INCLUDE "library/common/loader/subroutine/osb.asm"
 \     &7800, which is the starting point of the four-colour mode 5 portion at
 \     the bottom of the split screen
 \
-\ There are three other image binaries bundled into the loder, which are
+\ There are three other image binaries bundled into the loader, which are
 \ described in part 3 below.
 \
 \ ******************************************************************************
@@ -739,9 +752,9 @@ INCLUDE "library/common/loader/subroutine/osb.asm"
 \   Category: Loader
 \    Summary: 
 \
+\ &294B, JSR OSB above gets modified to jump here
+\
 \ ******************************************************************************
-
-\ &294B, JSR OSB above gets modified to jump here, so disassemble
 
 .OSBmod
 
@@ -770,7 +783,7 @@ INCLUDE "library/common/loader/subroutine/osb.asm"
 
 \ ******************************************************************************
 \
-\       Name: COMMON
+\       Name: TVT1code
 \       Type: Subroutine
 \   Category: Loader
 \    Summary: 
@@ -781,7 +794,7 @@ INCLUDE "library/common/loader/subroutine/osb.asm"
 \
 \ ******************************************************************************
 
-.COMMON
+.TVT1code
 
 ORG &1100
 
@@ -830,9 +843,9 @@ INCLUDE "library/common/main/variable/chk.asm"
  EQUB &63, &00, &B6
  EQUB &3C, &C6
 
-COPYBLOCK TVT1, P%, COMMON
+COPYBLOCK TVT1, P%, TVT1code
 
-ORG COMMON + P% - TVT1
+ORG TVT1code + P% - TVT1
 
 \ ******************************************************************************
 \

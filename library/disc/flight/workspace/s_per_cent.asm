@@ -10,8 +10,7 @@
 
 .S%
 
- JMP scramble           \ Decrypt the main flight code and join the main game
-                        \ loop
+ JMP scramble           \ Decrypt the main flight code and join the main loop
 
  JMP scramble           \ Decrypt the main flight code and start a new game
 

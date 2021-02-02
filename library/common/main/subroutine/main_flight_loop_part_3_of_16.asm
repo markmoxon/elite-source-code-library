@@ -29,6 +29,12 @@
 \
 \ ******************************************************************************
 
+IF _6502SP_VERSION OR _DISC_VERSION
+
+.BS2
+
+ENDIF
+
  LDA KY2                \ If Space is being pressed, keep going, otherwise jump
  BEQ MA17               \ down to MA17 to skip the following
 

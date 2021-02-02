@@ -2,10 +2,25 @@
 \
 \ DISC ELITE MISSILE SHIP BLUEPRINT FILE
 \
-\ Produces the binary file MISSILE.bin that gets loaded by elite-loader3.asm.
+\ Elite was written by Ian Bell and David Braben and is copyright Acornsoft 1984
 \
-\ The missile blueprint is loaded at &254B and is moved up to &7F00 as part of
-\ elite-loader3.asm.
+\ The code on this site has been disassembled from the version released on Ian
+\ Bell's personal website at http://www.elitehomepage.org/
+\
+\ The commentary is copyright Mark Moxon, and any misunderstandings or mistakes
+\ in the documentation are entirely my fault
+\
+\ The terminology and notations used in this commentary are explained at
+\ https://www.bbcelite.com/about_site/terminology_used_in_this_commentary.html
+\
+\ ------------------------------------------------------------------------------
+\
+\ This source file produces the following binary file:
+\
+\   * output/MISSILE.bin
+\
+\ This gets loaded as part of elite-loader3.asm and gets moved to &7F00 during
+\ the loading process.
 \
 \ ******************************************************************************
 
@@ -29,13 +44,13 @@ INCLUDE "library/common/main/macro/edge.asm"
 INCLUDE "library/common/main/macro/face.asm"
 INCLUDE "library/common/main/variable/ship_missile.asm"
 
-EQUB &04, &00           \ This is where the VEC variable lives, at &7FFE, and
-                        \ these bytes are presumably noise included at the time
-                        \ of compilation, as they get overwritten
+EQUB &04, &00           \ This is where the VEC variable lives, at &7FFE. These
+                        \ values are presumably noise included at the time of
+                        \ compilation, as they get overwritten
 
 \ ******************************************************************************
 \
-\ Save output/WORDS.bin
+\ Save output/MISSILE.bin
 \
 \ ******************************************************************************
 

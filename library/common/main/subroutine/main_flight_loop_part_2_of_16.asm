@@ -179,8 +179,6 @@ IF _DISC_VERSION
                         \ keyboard (so Bitstik users can still use the keyboard
                         \ for speed adjustments if they twist the stick to zero)
 
-.BS2
-
 ELIF _6502SP_VERSION
 
  LDA BSTK               \ If BSTK = 0 then the Bitstik is not configured, so
@@ -204,8 +202,6 @@ ELIF _6502SP_VERSION
                         \ keyboard for speed keys, otherwise do check the
                         \ keyboard (so Bitstik users can still use the keyboard
                         \ for speed adjustments if they twist the stick to zero)
-
-.BS2
 
 ENDIF
 

@@ -61,7 +61,7 @@ ORG CODE%
 \       Name: PROT1
 \       Type: Subroutine
 \   Category: Copy protection
-\    Summary: 
+\    Summary: ????
 \
 \ ******************************************************************************
 
@@ -98,7 +98,7 @@ ORG CODE%
 \       Type: Subroutine
 \   Category: Loader
 \    Summary: Reset vectors, change to mode 7, and load and run the ELITE3
-\             loader code
+\             loader
 \
 \ ******************************************************************************
 
@@ -202,7 +202,7 @@ ORG CODE%
  CPY #12                \ Loop back for the next byte until we have done all 10
  BNE LOOP2              \ of them
 
-.command
+.LOAD
 
  LDX #LO(MESS2)         \ Set (Y X) to point to MESS2 ("LOAD Elite3")
  LDY #HI(MESS2)
@@ -212,7 +212,7 @@ ORG CODE%
 
  JMP &5700              \ Jump to the start of the ELITE3 loader code at &5700
 
- NOP
+ NOP                    \ These bytes appear to be unused
  NOP
  NOP
  NOP
@@ -236,15 +236,15 @@ ORG CODE%
 \       Name: PROT2
 \       Type: Subroutine
 \   Category: Copy protection
-\    Summary: Load hidden file from disc
+\    Summary: Load a hidden file from disc
 \
 \ ******************************************************************************
 
 .PROT2
 
- JSR PROT2a
+ JSR PROT2a             \ ????
 
- JMP command            \ Jump to command to load and run the next part of the
+ JMP LOAD               \ Jump to LOAD to load and run the next part of the
                         \ loader
 
  LDA #2                 \ Set PARAMS1+8 = 2, which is the track number in the
@@ -288,7 +288,9 @@ ORG CODE%
 \       Name: BLOCK1
 \       Type: Variable
 \   Category: Copy protection
-\    Summary: 
+\    Summary: ????
+\
+\ &2FD0 to &2FDC
 \
 \ ******************************************************************************
 
@@ -353,7 +355,9 @@ ORG CODE%
 \       Name: BLOCK2
 \       Type: Variable
 \   Category: Copy protection
-\    Summary: 
+\    Summary: ????
+\
+\ &2FF5 to &2FFF
 \
 \ ******************************************************************************
 

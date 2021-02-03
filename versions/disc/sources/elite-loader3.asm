@@ -201,7 +201,7 @@ INCLUDE "library/common/loader/macro/fne.asm"
  LDX #0                 \ flashing colours
  JSR OSB
 
- JSR PROT5              \ Call PROT5 to do various copy protection checks
+ JSR PROT3              \ Call PROT3 to do more checks on the CHKSM checksum
 
  LDA #&00               \ Set the following:
  STA ZP                 \
@@ -363,14 +363,14 @@ INCLUDE "library/common/loader/macro/fne.asm"
 
 \ ******************************************************************************
 \
-\       Name: PROT2
+\       Name: CHECK
 \       Type: Subroutine
 \   Category: Copy protection
-\    Summary: Calculate a checksum on the loader code
+\    Summary: Calculate a checksum from two 256-byte portions of the loader code
 \
 \ ******************************************************************************
 
-.PROT2
+.CHECK
 
  CLC                    \ Clear the C flag for the addition below
 
@@ -438,51 +438,26 @@ ORG &0B00
  LDA #HI(S%+6)
  STA WRCHV+1
 
- SEC                    \ Set the C flag so the checksum we calculate in A
-                        \ starts with an initial value of 18 (17 plus carry)
+ SEC                    \ Run a checksum on the docked game code
+ LDY #0
+ STY &70
 
- LDY #&00               \ Set Y = 0 to act as a byte pointer
-
- STY ZP                 \ Set the low byte of ZP(1 0) to 0, so ZP(1 0) always
-                        \ points to the start of a page
-
- LDX #&11               \ Set X = &11, so ZP(1 0) will point to &1100 when we
-                        \ stick X in ZP+1 below
-
- TXA                    \ Set A = &11 = 17, to set the intial value of the
-                        \ checksum to 18 (17 plus carry)
+ LDX #&11
+ TXA
 
 .l1
 
- STX ZP+1               \ Set the high byte of ZP(1 0) to the page number in X
+ STX &71
+ ADC (&70),Y
+ DEY
+ BNE l1
 
- ADC (ZP),Y             \ Set A = A + the Y-th byte of ZP(1 0)
+ INX
+ CPX #&54
+ BCC l1
+ CMP &55FF
 
- INY                    \ Increment the byte pointer
-
- BNE l1                 \ Loop back to add the next byte until we have added the
-                        \ whole page
-
- INX                    \ Increment the page number in X
-
- CPX #&54               \ Loop back to checksum the next page until we have
- BCC l1                 \ checked up to (but not including) page &54
-
- CMP &55FF              \ Compare the checksum with the value in &55FF, which is
-                        \ in the docked file we just loaded, in the byte before
-                        \ the ship hanger blueprints at XX21
-
-IF _REMOVE_CHECKSUMS
-
- NOP                    \ If we have disabled checksums, then ignore the result
- NOP
-
-ELSE
-
- BNE P%                 \ If the checksums don't match then enter an infinite
-                        \ loop, which hangs the computer
-
-ENDIF
+ BNE P%
 
  JMP S%+3               \ Jump to the second entry in the main docked code's S%
                         \ workspace to start a new game
@@ -588,25 +563,33 @@ ORG CATDcode + P% - CATD
 
 .PROT1
 
- LDA #&55
- LDX #&40
+ LDA #85                \ We start by calculating a checksum in A, with an
+                        \ initial value of 85
 
-.PROT1a
+ LDX #64                \ The checksum calculation in CHECK gets run 65 times,
+                        \ so set a counter in X to count them
 
- JSR PROT2
+.p1a
 
- DEX
- BPL PROT1a
+ JSR CHECK              \ Call CHECK to calculate the checksum and add it to A
 
- STA RAND+2
- ORA #&00
- BPL PROT1b
+ DEX                    \ Decrement the loop counter
 
- LSR CHKSM
+ BPL p1a                \ Loop back until we have runnthe checksum 65 times
 
-.PROT1b
+ STA RAND+2             \ Store the checksum result in the random number seeds
+                        \ used to generate the Saturn
 
- JMP PROT4
+ ORA #0                 \ If bit 7 of the checksum is clear, skip to p1b
+ BPL p1b
+
+ LSR CHKSM              \ Bit 7 of the checksum is set, so shift the C flag that
+                        \ was returned by CHECK into bit 7 of CHKSM
+
+.p1b
+
+ JMP PROT2              \ Jump to PROT2 for more checksums, returning from the
+                        \ subroutine using a tail call
 
  EQUB &AC
 
@@ -619,14 +602,14 @@ INCLUDE "library/common/loader/variable/twos.asm"
 
 \ ******************************************************************************
 \
-\       Name: PROT4
+\       Name: PROT2
 \       Type: Subroutine
 \   Category: Copy protection
-\    Summary: Part of the CHKSM copy protection checks
+\    Summary: Part of the CHKSM copy protection checksum calculation
 \
 \ ******************************************************************************
 
-.PROT4
+.PROT2
 
  LDA RAND+2             \ Fetch the checksum we calculated in PROT1
 
@@ -651,14 +634,14 @@ INCLUDE "library/common/loader/variable/cnt3.asm"
 
 \ ******************************************************************************
 \
-\       Name: PROT5
+\       Name: PROT3
 \       Type: Subroutine
 \   Category: Copy protection
-\    Summary: Part of the CHKSM copy protection checks
+\    Summary: Part of the CHKSM copy protection checksum calculation
 \
 \ ******************************************************************************
 
-.PROT5
+.PROT3
 
  LDA CHKSM              \ Update the checksum
  AND CHKSM+1

@@ -388,7 +388,7 @@ ORG &0400
 
 .LOAD6
 
- STX T
+ STX &76                \ Store the drive number in &76 for retrieval in ELITE4
  LDA #&15
  LDX #&00
  JSR OSBYTE

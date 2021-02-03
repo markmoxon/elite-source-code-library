@@ -319,8 +319,8 @@ INCLUDE "library/common/loader/macro/fne.asm"
  BPL loop2              \ Loop back to copy the next byte until they are all
                         \ done
 
- LDA SC                 \ Set the drive number in the CATD routine to SC, which
- STA CATBLOCK           \ gets set in ELITE3
+ LDA &76                \ Set the drive number in the CATD routine to the
+ STA CATBLOCK           \ contents of &76, which gets set in ELITE3
 
  FNE 0                  \ Set up sound envelopes 0-3 using the FNE macro
  FNE 1

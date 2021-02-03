@@ -56,8 +56,8 @@
 
 IF _REMOVE_CHECKSUMS
 
- EQUB HI(TUT)           \ LDA TUT,Y
- EQUB LO(TUT)
+ EQUB HI(TUT)           \ If we have disabled checksums, then just load the Y-th
+ EQUB LO(TUT)           \ byte of TUT with LDA TUT,Y
  EQUB &B9
 
 ELSE

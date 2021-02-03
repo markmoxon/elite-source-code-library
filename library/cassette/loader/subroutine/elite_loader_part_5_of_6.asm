@@ -98,13 +98,12 @@ ENDIF
 
 IF _REMOVE_CHECKSUMS
 
- LDA (ZP),Y             \ If encryption is disabled, fetch the byte to copy from
-                        \ the Y-th block pointed to by ZP(1 0)
+ LDA (ZP),Y             \ If we have disabled checksums, just fetch the byte to
+                        \ copy from the Y-th block pointed to by ZP(1 0)
 
 ELSE
 
- EOR (ZP),Y             \ If encryption is enabled, fetch the byte and EOR it
-                        \ with the counter
+ EOR (ZP),Y             \ Fetch the byte and EOR it with the counter
 
 ENDIF
 

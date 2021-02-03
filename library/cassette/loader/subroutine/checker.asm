@@ -52,14 +52,14 @@
 
 IF _REMOVE_CHECKSUMS
 
- NOP                    \ If checksums are disabled, do nothing
+ NOP                    \ If we have disabled checksums, do nothing
  NOP
 
 ELSE
 
- BNE nononono           \ If checksums are enabled and the checksum we just
-                        \ calculated does not match the contents of MAINSUM+1,
-                        \ jump to nononono to reset the machine
+ BNE nononono           \ If the checksum we just calculated does not match the
+                        \ contents of MAINSUM+1, jump to nononono to reset the
+                        \ machine
 
 ENDIF
 
@@ -86,14 +86,14 @@ ENDIF
 
 IF _REMOVE_CHECKSUMS
 
- NOP                    \ If checksums are disabled, do nothing
+ NOP                    \ If we have disabled checksums, do nothing
  NOP
 
 ELSE
 
- BNE nononono           \ If checksums are enabled and the checksum we just
-                        \ calculated does not match the contents of MAINSUM,
-                        \ jump to nononono to reset the machine
+ BNE nononono           \ If the checksum we just calculated does not match the
+                        \ contents of MAINSUM, jump to nononono to reset the
+                        \ machine
 
 ENDIF
 
@@ -112,19 +112,19 @@ ENDIF
 
 IF _REMOVE_CHECKSUMS
 
- RTS                    \ If checksums are disabled, return from the subroutine
- NOP
+ RTS                    \ If we have disabled checksums, return from the
+ NOP                    \ subroutine
  NOP
 
 ELSE
 
- JMP (CHECKV)           \ If checksums are enabled, call the LBL routine in the
-                        \ header (whose address is in CHECKV). This routine is
-                        \ inserted before the main game code by elite-bcfs.asm,
-                        \ and it checks the validity of the first two pages of
-                        \ the UU% routine, which was copied to LE% above, and
-                        \ which contains a checksum byte in CHECKbyt. We return
-                        \ from the subroutine using a tail call
+ JMP (CHECKV)           \ Call the LBL routine in the header (whose address is
+                        \ in CHECKV). This routine is inserted before the main
+                        \ game code by elite-bcfs.asm, and it checks the
+                        \ validity of the first two pages of the UU% routine,
+                        \ which was copied to LE% above, and which contains a
+                        \ checksum byte in CHECKbyt. We then return from the
+                        \ subroutine using a tail call
 
 ENDIF
 

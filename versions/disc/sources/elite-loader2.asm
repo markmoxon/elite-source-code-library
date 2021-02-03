@@ -117,7 +117,7 @@ ORG CODE%
 
 IF _REMOVE_CHECKSUMS
 
- NOP                    \ Disable the copy protection
+ NOP                    \ If we have disabled checksums, ignore the result in A
  NOP
 
 ELSE

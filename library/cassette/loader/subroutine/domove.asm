@@ -88,8 +88,8 @@
 
 IF _REMOVE_CHECKSUMS
 
- NOP                    \ Skip the EOR if checksums are disabled
- NOP
+ NOP                    \ If we have disabled checksums, skip the EOR so the
+ NOP                    \ routine just does the copying part
  NOP
 
 ELSE

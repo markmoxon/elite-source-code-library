@@ -475,7 +475,7 @@ ORG &0B00
 IF _REMOVE_CHECKSUMS
 
  NOP                    \ If we have disabled checksums, then ignore the result
- NOP
+ NOP                    \ of the checksum comparison
 
 ELSE
 
@@ -492,24 +492,17 @@ ENDIF
  EQUS "L.T.CODE"
  EQUB 13
 
- EQUB &44
- EQUB &6F
- EQUB &65, &73
- EQUB &20, &79, &6F
- EQUB &75, &72
+ EQUB &44, &6F, &65     \ These bytes appear to be unused
+ EQUB &73, &20, &79
+ EQUB &6F, &75, &72
  EQUB &20, &6D, &6F
- EQUB &74
- EQUB &68
- EQUB &65, &72
- EQUB &20, &6B, &6E
- EQUB &6F
- EQUB &77
+ EQUB &74, &68, &65
+ EQUB &72, &20, &6B
+ EQUB &6E, &6F, &77
  EQUB &20, &79, &6F
- EQUB &75, &20
- EQUB &64
- EQUB &6F
- EQUB &20, &74, &68
- EQUB &69, &73
+ EQUB &75, &20, &64
+ EQUB &6F, &20, &74
+ EQUB &68, &69, &73
  EQUB &3F
 
 COPYBLOCK LOAD, P%, LOADcode

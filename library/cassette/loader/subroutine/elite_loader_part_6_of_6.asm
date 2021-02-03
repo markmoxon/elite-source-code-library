@@ -100,7 +100,7 @@
 
 IF _REMOVE_CHECKSUMS
 
- LDA #0                 \ If the checksum is disabled, just set A to 0 so the
+ LDA #0                 \ If we have disabled checksums, just set A to 0 so the
  NOP                    \ BEQ below jumps to itsOK
 
 ELSE

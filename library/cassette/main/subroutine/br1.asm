@@ -137,11 +137,10 @@ IF _REMOVE_CHECKSUMS
 
 ELSE
 
- BNE P%-6               \ If commander check is enabled and the calculated
-                        \ checksum does not match CHK, then loop back to repeat
-                        \ the check - in other words, we enter an infinite loop
-                        \ here, as the checksum routine will keep returning the
-                        \ same incorrect value
+ BNE P%-6               \ If the calculated checksum does not match CHK, then
+                        \ loop back to repeat the check - in other words, we
+                        \ enter an infinite loop here, as the checksum routine
+                        \ will keep returning the same incorrect value
 
 ENDIF
 

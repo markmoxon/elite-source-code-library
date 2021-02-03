@@ -170,7 +170,7 @@ IF DISC
 
 IF _REMOVE_CHECKSUMS
 
- NOP                    \ Skip the OSBYTE call if checksums are disabled
+ NOP                    \ If we have disabled checksums, skip the OSBYTE call
  NOP
  NOP
 

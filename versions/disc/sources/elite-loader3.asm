@@ -372,17 +372,22 @@ INCLUDE "library/common/loader/macro/fne.asm"
 
 .PROT2
 
- CLC
- LDY #0
+ CLC                    \ Clear the C flag for the addition below
 
-.PROT2a
+ LDY #0                 \ We are going to loop through 256 bytes, so set a byte
+                        \ counter in Y
 
- ADC PLL1,Y
- EOR ENTRY,Y
- DEY
- BNE PROT2a
+.p2
 
- RTS
+ ADC PLL1,Y             \ Set A = A + Y-th byte of PLL1
+
+ EOR ENTRY,Y            \ Set A = A EOR Y-th byte of ENTRY
+
+ DEY                    \ Decrement the byte counter
+
+ BNE p2                 \ Loop back to checksum the next byte
+
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
@@ -433,26 +438,51 @@ ORG &0B00
  LDA #HI(S%+6)
  STA WRCHV+1
 
- SEC                    \ Run a checksum on the docked game code
- LDY #0
- STY &70
+ SEC                    \ Set the C flag so the checksum we calculate in A
+                        \ starts with an initial value of 18 (17 plus carry)
 
- LDX #&11
- TXA
+ LDY #&00               \ Set Y = 0 to act as a byte pointer
+
+ STY ZP                 \ Set the low byte of ZP(1 0) to 0, so ZP(1 0) always
+                        \ points to the start of a page
+
+ LDX #&11               \ Set X = &11, so ZP(1 0) will point to &1100 when we
+                        \ stick X in ZP+1 below
+
+ TXA                    \ Set A = &11 = 17, to set the intial value of the
+                        \ checksum to 18 (17 plus carry)
 
 .l1
 
- STX &71
- ADC (&70),Y
- DEY
- BNE l1
+ STX ZP+1               \ Set the high byte of ZP(1 0) to the page number in X
 
- INX
- CPX #&54
- BCC l1
- CMP &55FF
+ ADC (ZP),Y             \ Set A = A + the Y-th byte of ZP(1 0)
 
- BNE P%
+ INY                    \ Increment the byte pointer
+
+ BNE l1                 \ Loop back to add the next byte until we have added the
+                        \ whole page
+
+ INX                    \ Increment the page number in X
+
+ CPX #&54               \ Loop back to checksum the next page until we have
+ BCC l1                 \ checked up to (but not including) page &54
+
+ CMP &55FF              \ Compare the checksum with the value in &55FF, which is
+                        \ in the docked file we just loaded, in the byte before
+                        \ the ship hanger blueprints at XX21
+
+IF _REMOVE_CHECKSUMS
+
+ NOP                    \ If we have disabled checksums, then ignore the result
+ NOP
+
+ELSE
+
+ BNE P%                 \ If the checksums don't match then enter an infinite
+                        \ loop, which hangs the computer
+
+ENDIF
 
  JMP S%+3               \ Jump to the second entry in the main docked code's S%
                         \ workspace to start a new game
@@ -552,7 +582,7 @@ ORG CATDcode + P% - CATD
 \       Name: PROT1
 \       Type: Subroutine
 \   Category: Copy protection
-\    Summary: Part of the CHKSM copy protection checks
+\    Summary: Part of the CHKSM copy protection checksum calculation
 \
 \ ******************************************************************************
 
@@ -598,13 +628,22 @@ INCLUDE "library/common/loader/variable/twos.asm"
 
 .PROT4
 
- LDA RAND+2
- EOR CHKSM
- ASL A
- CMP #&93
- ROR A
- STA CHKSM
- BCC out
+ LDA RAND+2             \ Fetch the checksum we calculated in PROT1
+
+ EOR CHKSM              \ Set A = A EOR CHKSM
+
+ ASL A                  \ Shift A left, moving bit 7 into the C flag and
+                        \ clearing bit 0
+
+ CMP #147               \ If A >= 147, set the C flag, otherwise clear it
+
+ ROR A                  \ Shift A right, moving the C flag into bit 7 and
+                        \ clearing the C flag
+
+ STA CHKSM              \ Store the updated A in CHKSM
+
+ BCC out                \ Return from the subroutine (as we cleared the C flag
+                        \ above and out contains an RTS)
 
 INCLUDE "library/common/loader/variable/cnt.asm"
 INCLUDE "library/common/loader/variable/cnt2.asm"
@@ -621,25 +660,16 @@ INCLUDE "library/common/loader/variable/cnt3.asm"
 
 .PROT5
 
- LDA CHKSM
+ LDA CHKSM              \ Update the checksum
  AND CHKSM+1
  ORA #&0C
  ASL A
  STA CHKSM
- RTS
 
-\ ******************************************************************************
-\
-\       Name: PROT6
-\       Type: Subroutine
-\   Category: Copy protection
-\    Summary: Crash the game as copy protection has detected an issue
-\
-\ ******************************************************************************
+ RTS                    \ Return from the subroutine
 
-.PROT6
-
- JMP PROT6
+ JMP P%                 \ This would hang the computer, but we never get here as
+                        \ the checksum code has been disabled
 
 INCLUDE "library/common/loader/subroutine/root.asm"
 INCLUDE "library/common/loader/subroutine/osb.asm"
@@ -798,20 +828,24 @@ INCLUDE "library/common/loader/subroutine/osb.asm"
 
 .OSBmod
 
- SEC
- LDY #0
- STY &70
- LDA #$0F
- STA &71
+ SEC                    \ Set the C flag so the checksum we calculate in A
+                        \ starts with an initial value of 16 (15 plus carry)
 
-.L2954
+ LDY #&00               \ Set ZP(1 0) = &0F00
+ STY ZP                 \
+ LDA #&0F               \ and at the same time set a byte counter in Y and set
+ STA ZP+1               \ the intial value of the checksum to 16 (15 plus carry)
 
- ADC (&70),Y
- INY
- BNE L2954
+.osb1
 
- CMP #&CF
+ ADC (ZP),Y             \ Set A = A + the Y-th byte of ZP(1 0)
 
+ INY                    \ Increment the byte pointer
+
+ BNE osb1               \ Loop back to add the next byte until we have added the
+                        \ whole page
+
+ CMP #&CF               \ The checksum test has been disabled
  NOP
  NOP
 
@@ -866,22 +900,36 @@ INCLUDE "library/common/main/variable/chk.asm"
 
 .BRBR1
 
- LDY #0
+                        \ The following loop prints out the null-terminated
+                        \ message pointed to by (&FD &FE), which is the MOS
+                        \ error message pointer - so this prints the error
+                        \ message on the next line
 
- LDA #13
+ LDY #0                 \ Set Y = 0 to act as a character counter
+
+ LDA #13                \ Set A = 13 so the first character printed is a
+                        \ carriage return
 
 .BRBRLOOP
 
- JSR OSWRCH
- INY
- LDA (&FD),Y
- BNE BRBRLOOP
+ JSR OSWRCH             \ Print the character in A (which contains a carriage
+                        \ return on the first loop iteration), and then any
+                        \ characters we fetch from the error message
 
-.BRBR1a
+ INY                    \ Increment the loop counter
 
- BEQ BRBR1a
+ LDA (&FD),Y            \ Fetch the Y-th byte of the block pointed to by
+                        \ (&FD &FE), so that's the Y-th character of the message
+                        \ pointed to by the MOS error message pointer
 
- EQUB &64, &5F, &61
+ BNE BRBRLOOP           \ If the fetched character is non-zero, loop back to the
+                        \ JSR OSWRCH above to print the it, and keep looping
+                        \ until we fetch a zero (which marks the end of the
+                        \ message)
+
+ BEQ P%                 \ Hang the computer as something has gone wrong
+
+ EQUB &64, &5F, &61     \ These bytes appear to be unused
  EQUB &74, &74, &72
  EQUB &69, &62, &75
  EQUB &74, &65, &73

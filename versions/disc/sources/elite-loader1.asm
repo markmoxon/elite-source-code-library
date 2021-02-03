@@ -33,6 +33,9 @@ _STH_DISC               = (_RELEASE = 2)
 
 ZP = &01                \ Temporary storage, used all over the place
 
+BYTEV = &20A            \ The BYTEV vector that we check as part of the copy
+                        \ protection
+
 OSWRCH = &FFEE          \ The address for the OSWRCH routine
 OSBYTE = &FFF4          \ The address for the OSBYTE routine
 OSWORD = &FFF1          \ The address for the OSWORD routine

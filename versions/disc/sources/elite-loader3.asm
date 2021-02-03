@@ -83,7 +83,7 @@ T = &75                 \ Temporary storage, used all over the place
 
 SC = &76                \ Used to store the screen address while plotting pixels
 
-CHKSM = &78             \ Gets set as part of the obfuscation code
+CHKSM = &78             \ Used in the copy protection code
 
 DL = &8B                \ The vertical sync flag, matching the address in the
                         \ main game code
@@ -100,7 +100,7 @@ ESCP = &0386            \ The flag that determines whether we have an escape pod
 S% = &11E3              \ The adress of the main entry point workspace in the
                         \ main game code
 
-CODE% = &1900           \ The address where this file (the third loader) loads
+CODE% = &1900
 LOAD% = &1900
 
 ORG CODE%
@@ -121,7 +121,7 @@ INCLUDE "library/common/loader/macro/fne.asm"
 
 .ENTRY
 
- JSR PROT1              \ Call PROT1 to do various copy protection checks
+ JSR PROT1              \ Call PROT1 to calculate checksums into CHKSM
 
  LDA #144               \ Call OSBYTE with A = 144 and Y = 255 to turn the
  LDX #255               \ screen interlace off (equivalent to a *TV 255, 255
@@ -137,7 +137,7 @@ INCLUDE "library/common/loader/macro/fne.asm"
                         \ at B% to OSWRCH to set up the special mode 4 screen
                         \ that forms the basis for the split-screen mode
 
-.LOOP
+.loop1
 
  LDA (ZP),Y             \ Pass the Y-th byte of the B% table to OSWRCH
  JSR OSWRCH
@@ -145,7 +145,7 @@ INCLUDE "library/common/loader/macro/fne.asm"
  INY                    \ Increment the loop counter
 
  CPY #N%                \ Loop back for the next byte until we have done them
- BNE LOOP               \ all (the number of bytes was set in N% above)
+ BNE loop1              \ all (the number of bytes was set in N% above)
 
  JSR PLL1               \ Call PLL1 to draw Saturn
 
@@ -309,18 +309,18 @@ INCLUDE "library/common/loader/macro/fne.asm"
                         \ CATDcode to CATD, so set a counter in X for the 36
                         \ bytes to copy
 
-.LOOP2
+.loop2
 
  LDA CATDcode,X         \ Copy the X-th byte of CATDcode to the X-th byte of
  STA CATD,X             \ CATD
 
  DEX                    \ Decrement the loop counter
 
- BPL LOOP2              \ Loop back to copy the next byte until they are all
+ BPL loop2              \ Loop back to copy the next byte until they are all
                         \ done
 
- LDA SC                 \ Set the drive number in the CATD routine to SC ????
- STA CATBLOCK
+ LDA SC                 \ Set the drive number in the CATD routine to SC, which
+ STA CATBLOCK           \ gets set in ELITE3
 
  FNE 0                  \ Set up sound envelopes 0-3 using the FNE macro
  FNE 1
@@ -342,10 +342,10 @@ INCLUDE "library/common/loader/macro/fne.asm"
  LDA #HI(LOADcode)
  STA P+1
 
- LDY #0                 \ We want to move one page of memory, so set Y as a byte
-                        \ counter
+ LDY #0                 \ We now want to move and decrypt one page of memory
+                        \ from LOADcode to LOAD, so set Y as a byte counter
 
-.LOOP3
+.loop3
 
  LDA (P),Y              \ Fetch the Y-th byte of the P(1 0) memory block
 
@@ -356,7 +356,7 @@ INCLUDE "library/common/loader/macro/fne.asm"
 
  DEY                    \ Decrement the byte counter
 
- BNE LOOP3              \ Loop back to copy the next byte until we have done a
+ BNE loop3              \ Loop back to copy the next byte until we have done a
                         \ whole page of 256 bytes
 
  JMP LOAD               \ Jump to the start of the routine we just decrypted
@@ -389,14 +389,30 @@ INCLUDE "library/common/loader/macro/fne.asm"
 \       Name: LOADcode
 \       Type: Subroutine
 \   Category: Loader
-\    Summary: Load the main docked code, set up various vectors, run a checksum
-\             and start the game
+\    Summary: Encrypted LOAD routine, bundled up in the loader so it can be
+\             moved to &0B00 to be run
+\
+\ ------------------------------------------------------------------------------
+\
+\ This section is encrypted by EOR'ing with &18. The encryption is done by the
+\ elite-checksum.py script, and decryption is done in part 1 above, at the same
+\ time as it is moved to &0B00.
 \
 \ ******************************************************************************
 
 .LOADcode
 
 ORG &0B00
+
+\ ******************************************************************************
+\
+\       Name: LOAD
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: Load the main docked code, set up various vectors, run a checksum
+\             and start the game
+\
+\ ******************************************************************************
 
 .LOAD
 
@@ -474,17 +490,30 @@ ORG LOADcode + P% - LOAD
 \
 \       Name: CATDcode
 \       Type: Subroutine
-\   Category: Copy protection
-\    Summary: Load disc sectors 0 and 1 to &0E00 and &0F00 respectively
-\
-\ Gets copied from &1B4F to &0D7A by loop at L1A89 (35 bytes),
-\ is called by D and T to load from disc
+\   Category: Save and load
+\    Summary: CATD routine, bundled up in the loader so it can be moved to &0D7A
+\             to be run
 \
 \ ******************************************************************************
 
 .CATDcode
 
 ORG &0D7A
+
+\ ******************************************************************************
+\
+\       Name: CATD
+\       Type: Subroutine
+\   Category: Save and load
+\    Summary: Load disc sectors 0 and 1 to &0E00 and &0F00 respectively
+\
+\ ------------------------------------------------------------------------------
+\
+\ This routine is copied to &0D7A in part 1 above. It is called by both the main
+\ docked code and the main flight code, just before the docked code, flight code
+\ or shup blueprint files are loaded.
+\
+\ ******************************************************************************
 
 .CATD
 
@@ -512,7 +541,7 @@ ORG &0D7A
  EQUB 0                 \ 7 = Track = 0
  EQUB 1                 \ 8 = Sector = 1
  EQUB %00100001         \ 9 = Load 1 sector of 256 bytes
- EQUB 0
+ EQUB 0                 \ 10 = The result of the OSWORD call is returned here
 
 COPYBLOCK CATD, P%, CATDcode
 
@@ -721,6 +750,10 @@ INCLUDE "library/common/loader/subroutine/osb.asm"
 \ The loader bundles a number of binary files in with the loader code, and moves
 \ them to their correct memory locations in part 1 above.
 \
+\ This section is encrypted by EOR'ing with &A5. The encryption is done by the
+\ elite-checksum.py script, and decryption is done in part 1 above, at the same
+\ time as each block is moved to its correct location.
+\
 \ There are two files containing code:
 \
 \   * WORDS.bin contains the recursive token table, which is moved to &0400
@@ -757,8 +790,9 @@ INCLUDE "library/common/loader/subroutine/osb.asm"
 \
 \       Name: OSBmod
 \       Type: Subroutine
-\   Category: Loader
-\    Summary: Calculate a checksum
+\   Category: Copy protection
+\    Summary: Calculate a checksum on &0F00 to &0FFF (the test is disabled in
+\             this version)
 \
 \ ******************************************************************************
 
@@ -795,6 +829,12 @@ INCLUDE "library/common/loader/subroutine/osb.asm"
 \    Summary: Code block at &1100-&11E2 that remains resident in both docked and
 \             flight mode (palettes, screen mode routine and commander data)
 \
+\ ------------------------------------------------------------------------------
+\
+\ This section is encrypted by EOR'ing with &A5. The encryption is done by the
+\ elite-checksum.py script, and decryption is done in part 1 above, at the same
+\ time as it is moved to &1000.
+\
 \ ******************************************************************************
 
 .TVT1code
@@ -813,8 +853,14 @@ INCLUDE "library/common/main/variable/chk.asm"
 \       Name: BRBR1
 \       Type: Subroutine
 \   Category: Loader
-\    Summary: Common break handler: prints a newline and the error message and
-\             hangs
+\    Summary: Loader break handler: print a newline and the error message, and
+\             then hang the computer
+\
+\ ------------------------------------------------------------------------------
+\
+\ This break handler is only used until the docked code has loaded and the scram
+\ routine has decrypted the code, at which point the break handler is changed to
+\ the main game break handler (which doesn't hang the computer on an error).
 \
 \ ******************************************************************************
 
@@ -862,6 +908,10 @@ ORG TVT1code + P% - TVT1
 \ The loader bundles a number of binary files in with the loader code, and moves
 \ them to their correct memory locations in part 1 above.
 \
+\ This section is encrypted by EOR'ing with &A5. The encryption is done by the
+\ elite-checksum.py script, and decryption is done in part 1 above, at the same
+\ time as each block is moved to its correct location.
+\
 \ This part includes three files containing images, which are all moved into
 \ screen memory by the loader:
 \
@@ -878,7 +928,8 @@ ORG TVT1code + P% - TVT1
 \     penultimate character row of the monochrome mode 4 screen, just above the
 \     dashboard
 \
-\ There are three other binaries bundled into the loder, which are part 2 above.
+\ There are three other binaries bundled into the loader, which are described in
+\ part 2 above.
 \
 \ ******************************************************************************
 

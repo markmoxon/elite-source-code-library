@@ -1,0 +1,249 @@
+\ ******************************************************************************
+\
+\       Name: Unused copy protection routine
+\       Type: Subroutine
+\   Category: Copy protection
+\    Summary: This code doesn't appear to be run in this version
+\
+\ ******************************************************************************
+
+ SKIP 76                \ These bytes appear to be unused
+ EQUB &FF
+ SKIP 255
+
+ BNE LABEL1
+
+ LDA &50
+ CMP &4E
+
+.LABEL1
+
+ BNE LABEL2
+
+ LDA #&00
+ STA &4E
+ LDA #&00
+ STA &4F
+ JMP &4953
+
+.LABEL2
+
+ BIT &495C
+ BPL LABEL3
+
+ RTS
+
+.LABEL3
+
+ LDA &4F
+ BNE LABEL4
+
+ JSR &4BBA
+
+.LABEL4
+
+ LDA &4D
+ BNE LABEL5
+
+ JSR &4BC3
+
+ LDA #&00
+ STA &4E
+ LDA #&00
+ STA &4F
+ JMP &4953
+
+.LABEL5
+
+ LDA &4D
+ CMP &4F
+ BCC LABEL6
+
+ BNE LABEL6
+
+ LDA &4C
+ CMP &4E
+
+.LABEL6
+
+ BCC LABEL7
+
+ LDA &4C
+ STA &12
+ LDA &4D
+ STA &13
+ JSR &4BC3
+
+ LDA &12
+ STA &4E
+ LDA &13
+ STA &4F
+
+.LABEL7
+
+ BIT &495C
+ BMI LABEL8
+
+ JSR &373D
+
+.LABEL8
+
+ RTS
+
+ SKIP 1
+
+.LABEL9
+
+ LDA &4F
+ BEQ LABEL11
+
+ LDA &4F
+ CMP &51
+ BCC LABEL10
+
+ BNE LABEL10
+
+ LDA &4E
+ CMP &50
+
+.LABEL10
+
+ BCS LABEL11
+
+ JMP &49D6
+
+.LABEL11
+
+ LDA &4D
+ BEQ LABEL13
+
+ LDA &4D
+ CMP &51
+ BCC LABEL12
+
+ BNE LABEL12
+
+ LDA &4C
+ CMP &50
+
+.LABEL12
+
+ BCS LABEL13
+
+ JMP &499C
+
+.LABEL13
+
+ RTS
+
+ LDA &4D
+ BEQ LABEL18
+
+ LDA &4D
+ CMP &51
+ BCC LABEL14
+
+ BNE LABEL14
+
+ LDA &4C
+ CMP &50
+
+.LABEL14
+
+ BEQ LABEL18
+
+ BCC LABEL18
+
+ BIT &0AC1
+ BEQ LABEL17
+
+ LDA &4F
+ CMP &51
+ BCC LABEL15
+
+ BNE LABEL15
+
+ LDA &4E
+ CMP &50
+
+.LABEL15
+
+ BEQ LABEL16
+
+ LDA &50
+ STA &4C
+ LDA &51
+ STA &4D
+ JSR &373D
+
+.LABEL16
+
+ RTS
+
+.LABEL17
+
+ JSR &4BCC
+
+ JSR &373D
+
+ RTS
+
+.LABEL18
+
+ LDA &4F
+ BEQ LABEL23
+
+ LDA &4F
+ CMP &51
+ BCC LABEL19
+
+ BNE LABEL19
+
+ LDA &4E
+ CMP &50
+
+.LABEL19
+
+ BEQ LABEL23
+
+ BCC LABEL23
+
+ BIT &0AC1
+ BEQ LABEL22
+
+ LDA &4D
+ CMP &51
+ BCC LABEL20
+
+ BNE LABEL20
+
+ LDA &4C
+ CMP &50
+
+.LABEL20
+
+ BEQ LABEL21
+
+ JSR &4BBA
+
+ JSR &373D
+
+.LABEL21
+
+ RTS
+
+.LABEL22
+
+ LDA &4E
+ STA &50
+ LDA &4F
+ STA &51
+ JSR &373D
+
+.LABEL23  
+
+ RTS
+
+ LDA &44
+ STA &4C
+

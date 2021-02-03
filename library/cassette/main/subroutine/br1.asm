@@ -132,8 +132,8 @@ IF _CASSETTE_VERSION
 
 IF _REMOVE_CHECKSUMS
 
- NOP                    \ If we have disabled the commander check, then ignore
- NOP                    \ the checksum and fall through into the next part
+ NOP                    \ If we have disabled checksums then ignore the result
+ NOP                    \ and fall through into the next part
 
 ELSE
 

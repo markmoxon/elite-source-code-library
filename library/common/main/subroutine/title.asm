@@ -198,7 +198,7 @@ IF _6502SP_VERSION OR _DISC_VERSION
  LDY #0                 \ Set Y = 0 to act as a character counter
 
  JSR OSWRCH             \ Print the character in A (which contains a line feed
-                        \ on the first loop iteration, and then any non-zero
+                        \ on the first loop iteration), and then any non-zero
                         \ characters we fetch from the error message
 
  INY                    \ Increment the loop counter

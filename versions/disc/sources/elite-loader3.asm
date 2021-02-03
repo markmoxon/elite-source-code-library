@@ -83,7 +83,7 @@ T = &75                 \ Temporary storage, used all over the place
 
 SC = &76                \ Used to store the screen address while plotting pixels
 
-BLPTR = &78             \ Gets set as part of the obfuscation code
+CHKSM = &78             \ Gets set as part of the obfuscation code
 
 DL = &8B                \ The vertical sync flag, matching the address in the
                         \ main game code
@@ -523,7 +523,7 @@ ORG CATDcode + P% - CATD
 \       Name: PROT1
 \       Type: Subroutine
 \   Category: Copy protection
-\    Summary: Part of the BLPTR copy protection checks
+\    Summary: Part of the CHKSM copy protection checks
 \
 \ ******************************************************************************
 
@@ -543,7 +543,7 @@ ORG CATDcode + P% - CATD
  ORA #&00
  BPL PROT1b
 
- LSR BLPTR
+ LSR CHKSM
 
 .PROT1b
 
@@ -563,18 +563,18 @@ INCLUDE "library/common/loader/variable/twos.asm"
 \       Name: PROT4
 \       Type: Subroutine
 \   Category: Copy protection
-\    Summary: Part of the BLPTR copy protection checks
+\    Summary: Part of the CHKSM copy protection checks
 \
 \ ******************************************************************************
 
 .PROT4
 
  LDA RAND+2
- EOR BLPTR
+ EOR CHKSM
  ASL A
  CMP #&93
  ROR A
- STA BLPTR
+ STA CHKSM
  BCC out
 
 INCLUDE "library/common/loader/variable/cnt.asm"
@@ -586,17 +586,17 @@ INCLUDE "library/common/loader/variable/cnt3.asm"
 \       Name: PROT5
 \       Type: Subroutine
 \   Category: Copy protection
-\    Summary: Part of the BLPTR copy protection checks
+\    Summary: Part of the CHKSM copy protection checks
 \
 \ ******************************************************************************
 
 .PROT5
 
- LDA BLPTR
- AND BLPTR+1
+ LDA CHKSM
+ AND CHKSM+1
  ORA #&0C
  ASL A
- STA BLPTR
+ STA CHKSM
  RTS
 
 \ ******************************************************************************

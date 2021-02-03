@@ -58,8 +58,8 @@ ELIF _DISC_VERSION
  LSR A
  LSR A
 
- LSR BLPTR+1            \ Halve the high byte of BLPTR(1 0), as part of the copy
-                        \ protection
+ LSR CHKSM+1            \ Rotate the high byte of CHKSM+1 to the right, as part
+                        \ of the copy protection
 
  ORA #&60               \ Set ZP+1 = &60 + A >> 3
  STA ZP+1

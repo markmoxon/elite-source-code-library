@@ -34,11 +34,13 @@ ENDIF
 .p1
 
  LDA BEGIN              \ Fetch the first byte from BEGIN to act as the initial
-                        \ seed for the rolling EOR process
+                        \ seed for the rolling EOR process (this address gets
+                        \ modified by the following to work through the whole
+                        \ decryption routine)
 
 .p1a
 
- EOR BEGIN,X            \ Set A = A EOR the X-th byte the loader
+ EOR BEGIN,X            \ Set A = A EOR the X-th byte of the loader
 
  STA BEGIN,X            \ Store the decrypted byte in the X-th byte the loader
 
@@ -72,7 +74,8 @@ ENDIF
                         \ stop decrypting)
 
  JMP BEGIN              \ Otherwise look up to BEGIN to do another decryption
-                        \ run, but starting one byte later than the previous run
+                        \ run, but using the next byte of the decryption routine
+                        \ as the seed
 
 .p1d
 

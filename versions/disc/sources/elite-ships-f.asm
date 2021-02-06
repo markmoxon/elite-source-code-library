@@ -48,7 +48,7 @@ ORG CODE%
 \       Type: Variable
 \   Category: Drawing ships
 \    Summary: Ship blueprints lookup table for the D.MOF file
-\  Deep dive: Ship blueprints
+\  Deep dive: Ship blueprints in the disc version
 \
 \ ******************************************************************************
 

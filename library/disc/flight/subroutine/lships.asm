@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Loader
 \    Summary: Load a new ship blueprints file
+\  Deep dive: Ship blueprints in the disc version
 \
 \ ******************************************************************************
 

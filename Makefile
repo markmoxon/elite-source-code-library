@@ -1,6 +1,13 @@
 BEEBASM?=beebasm
 PYTHON?=python
 
+# Cassette version
+
+rel-cassette=1
+folder-cassette=''
+
+# 6502 Second Processor version
+
 # Change the release by adding 'release-6502sp=source-disc' to the make command, e.g.
 #
 #   make encrypt verify
@@ -18,6 +25,8 @@ else
   rel-6502sp=2
   folder-6502sp='/sng45'
 endif
+
+# Disc version
 
 # Change the release by adding 'release-disc=ib-disc' to the make command, e.g.
 #
@@ -37,6 +46,11 @@ else
   folder-disc='/sth'
 endif
 
+# Master version
+
+rel-master=1
+folder-master='/sng47'
+
 # The following variables are written into elite-header.h.asm so they can be
 # passed to BeebAsm:
 #
@@ -49,22 +63,27 @@ endif
 #   FALSE = Zero-fill workspaces
 #
 # _VERSION
-#   1 = Cassette
-#   2 = Disc
-#   3 = 6502 Second Processor
+#   1 = BBC Micro cassette
+#   2 = BBC Micro disc
+#   3 = BBC Micro with 6502 Second Processor
+#	4 = BBC Master
 #
-# _RELEASE (for Disc version only)
+# _RELEASE (for disc version)
 #   1 = Ian Bell's game disc
 #   2 = Stairway to Hell version (default)
 #
-# _RELEASE (for 6502SP version only)
+# _RELEASE (for 6502SP version)
 #   1 = source disc
 #   2 = SNG45 (default)
+#
+# _RELEASE (for Master version)
+#   1 = SNG47 (default)
 #
 
 .PHONY:build
 build:
 	echo _VERSION=1 > versions/cassette/sources/elite-header.h.asm
+	echo _RELEASE=$(rel-cassette) >> versions/cassette/sources/elite-header.h.asm
 	echo _REMOVE_CHECKSUMS=TRUE >> versions/cassette/sources/elite-header.h.asm
 	$(BEEBASM) -i versions/cassette/sources/elite-source.asm -v > versions/cassette/output/compile.txt
 	$(BEEBASM) -i versions/cassette/sources/elite-bcfs.asm -v >> versions/cassette/output/compile.txt
@@ -117,6 +136,7 @@ build:
 .PHONY:encrypt
 encrypt:
 	echo _VERSION=1 > versions/cassette/sources/elite-header.h.asm
+	echo _RELEASE=$(rel-cassette) >> versions/cassette/sources/elite-header.h.asm
 	echo _REMOVE_CHECKSUMS=FALSE >> versions/cassette/sources/elite-header.h.asm
 	$(BEEBASM) -i versions/cassette/sources/elite-source.asm -v > versions/cassette/output/compile.txt
 	$(BEEBASM) -i versions/cassette/sources/elite-bcfs.asm -v >> versions/cassette/output/compile.txt
@@ -166,8 +186,18 @@ encrypt:
 	$(PYTHON) versions/6502sp/sources/elite-checksum.py -rel$(rel-6502sp)
 	$(BEEBASM) -i versions/6502sp/sources/elite-disc.asm -do versions/6502sp/elite-6502sp.ssd -boot ELITE
 
+	echo _VERSION=4 > versions/master/sources/elite-header.h.asm
+	echo _RELEASE=$(rel-master) >> versions/6502sp/sources/elite-header.h.asm
+	echo _REMOVE_CHECKSUMS=FALSE >> versions/master/sources/elite-header.h.asm
+	$(BEEBASM) -i versions/master/sources/elite-loader.asm -v >> versions/master/output/compile.txt
+	$(BEEBASM) -i versions/master/sources/elite-data.asm -v >> versions/master/output/compile.txt
+	#$(BEEBASM) -i versions/master/sources/elite-source.asm -v >> versions/master/output/compile.txt
+	#$(PYTHON) versions/master/sources/elite-checksum.py
+	$(BEEBASM) -i versions/master/sources/elite-disc.asm -do versions/master/elite-master.ssd -boot M128Elt
+
 .PHONY:verify
 verify:
-	@$(PYTHON) versions/cassette/sources/crc32.py versions/cassette/extracted versions/cassette/output
+	@$(PYTHON) versions/cassette/sources/crc32.py versions/cassette/extracted$(folder-cassette) versions/cassette/output
 	@$(PYTHON) versions/disc/sources/crc32.py versions/disc/extracted$(folder-disc) versions/disc/output
 	@$(PYTHON) versions/6502sp/sources/crc32.py versions/6502sp/extracted$(folder-6502sp) versions/6502sp/output
+	@$(PYTHON) versions/master/sources/crc32.py versions/master/extracted$(folder-master) versions/master/output

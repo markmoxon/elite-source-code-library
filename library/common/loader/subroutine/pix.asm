@@ -13,7 +13,7 @@
 \ instead of a two pixel dash from TWOS2. This applies to the top part of the
 IF _CASSETTE_VERSION OR _DISC_VERSION
 \ screen (the monochrome mode 4 space view).
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 \ screen (the four-colour mode 1 space view).
 ENDIF
 \
@@ -69,7 +69,7 @@ ELIF _DISC_VERSION
  AND #%11111000
  STA ZP
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LSR A                  \ Set ZP+1 = &40 + 2 * (A >> 3)
  LSR A
@@ -105,7 +105,7 @@ IF _CASSETTE_VERSION
  ORA (ZP),Y
  STA (ZP),Y
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
  LDA TWOS,X             \ Otherwise fetch a pixel from TWOS and poke it into
  STA (ZP),Y             \ ZP+Y

@@ -1,0 +1,14 @@
+\ ******************************************************************************
+\
+\       Name: MESS3
+\       Type: Variable
+\   Category: Loader
+\    Summary: The OS command string for changing the disc directory to E
+\
+\ ******************************************************************************
+
+.MESS3
+
+ EQUS "DIR E"
+ EQUB 13
+

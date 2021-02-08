@@ -18,7 +18,7 @@ IF _CASSETTE_VERSION
 
  EQUW &0500             \ The number of iterations of the PLL3 loop (1280)
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
  EQUW &0333             \ The number of iterations of the PLL3 loop (819)
 

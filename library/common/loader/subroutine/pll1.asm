@@ -54,7 +54,7 @@ IF _CASSETTE_VERSION
                         \ or 1280 times, and draws the planet part of the
                         \ loading screen's Saturn
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
                         \ The following loop iterates CNT(1 0) times, i.e. &300
                         \ or 768 times, and draws the planet part of the
@@ -62,10 +62,26 @@ ELIF _6502SP_VERSION OR _DISC_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_VERSION
+
  LDA VIA+&44            \ Read the 6522 System VIA T1C-L timer 1 low-order
  STA RAND+1             \ counter (SHEILA &44), which increments 1000 times a
                         \ second so this will be pretty random, and store it in
                         \ RAND+1 among the hard-coded random seeds in RAND
+
+ELIF _MASTER_VERSION
+
+ STA RAND+1             \ Store A in RAND+1 among the hard-coded random seeds
+                        \ in RAND. We set A to %00001111 before calling the PLL1
+                        \ routine, so this sets the random number generator so
+                        \ that it always generates the same numbers every time,
+                        \ which is probably not what was intended (other
+                        \ versions read the 6522 System VIA timer to use as a
+                        \ seed, which is random). As a result, if you look at
+                        \ the Saturn on the Master loading screen, it is always
+                        \ exactly the same, every time you run the game
+
+ENDIF
 
  JSR DORND              \ Set A and X to random numbers, say A = r1
 
@@ -266,7 +282,7 @@ IF _CASSETTE_VERSION
                         \ or 1280 times, and draws the rings around the loading
                         \ screen's Saturn
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
                         \ The following loop iterates CNT3(1 0) times, i.e. &333
                         \ or 819 times, and draws the rings around the loading

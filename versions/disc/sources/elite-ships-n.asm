@@ -26,6 +26,7 @@ INCLUDE "versions/disc/sources/elite-header.h.asm"
 _CASSETTE_VERSION       = (_VERSION = 1)
 _DISC_VERSION           = (_VERSION = 2)
 _6502SP_VERSION         = (_VERSION = 3)
+_MASTER_VERSION         = (_VERSION = 4)
 _DISC_DOCKED            = FALSE
 _DISC_FLIGHT            = TRUE
 

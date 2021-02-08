@@ -4,13 +4,11 @@
 #
 # 6502 SECOND PROCESSOR ELITE DECRYPTION SCRIPT
 #
-# Written by Mark Moxon, and inspired by Kieran Connell's version for the
-# cassette version of Elite
+# Written by Mark Moxon
 #
-# This script applies encryption and checksums to the compiled binary for the
-# main parasite game code. It reads the unencrypted "CODE.unprot.bin" binary and
-# generates an encrypted version as "P.CODE", based on the code in the original
-# "S.PCODES" BASIC source program
+# This script removes encryption and checksums from the compiled binary for the
+# main game code. It reads the encrypted "P.CODE" binary and generates a
+# decrypted version as "P.CODE.decrypt.bin"
 #
 # ******************************************************************************
 

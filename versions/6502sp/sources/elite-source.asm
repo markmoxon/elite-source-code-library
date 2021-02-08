@@ -41,6 +41,7 @@ CPU 1                   \ Switch to 65C02 assembly, as this code runs on the
 _CASSETTE_VERSION       = (_VERSION = 1)
 _DISC_VERSION           = (_VERSION = 2)
 _6502SP_VERSION         = (_VERSION = 3)
+_MASTER_VERSION         = (_VERSION = 4)
 _SOURCE_DISC            = (_RELEASE = 1)
 _SNG45                  = (_RELEASE = 2)
 _DISC_DOCKED            = FALSE

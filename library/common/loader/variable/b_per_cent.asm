@@ -5,7 +5,7 @@
 \   Category: Screen mode
 IF _CASSETTE_VERSION OR _DISC_VERSION
 \    Summary: VDU commands for setting the square mode 4 screen
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 \    Summary: VDU commands for setting the square mode 1 screen
 ENDIF
 \
@@ -30,7 +30,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
 \   * Screen memory goes from &6000 to &7EFF, which leaves another whole page
 \     for code (i.e. 256 bytes) after the end of the screen. This is where the
 \     Python ship blueprint slots in
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 \ It defines the whole screen using a square, monochrome mode 1 configuration;
 \ the mode 2 part for the dashboard is implemented in the IRQ1 routine.
 \
@@ -60,7 +60,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
 \ setting from that of mode 4 to that of mode 5, when the raster reaches the
 \ split between the space view and the dashboard. See the deep dive on "The
 \ split-screen mode" for details.
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 \ This almost-square mode 1 variant makes life a lot easier when drawing to the
 \ screen, as there are 256 pixels on each row (or, to put it in screen memory
 \ terms, there are two pages of memory per row of pixels).
@@ -83,6 +83,10 @@ ELIF _6502SP_VERSION
 
  EQUB 22, 1             \ Switch to screen mode 1
 
+ELIF _MASTER_VERSION
+
+ EQUB 22, 129           \ Switch to screen mode 129
+
 ENDIF
 
  EQUB 28                \ Define a text window as follows:
@@ -101,7 +105,7 @@ ENDIF
 IF _CASSETTE_VERSION OR _DISC_VERSION
                         \ comparison, this value is 32 for standard modes 4 and
                         \ 5, but we claw back the last row for storing code just
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ comparison, this value is 32 for standard modes 1 and
                         \ 2, but we claw back the last row for storing code just
 ENDIF
@@ -121,7 +125,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
                         \
                         \ So this sets the start of screen memory to &6000
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  EQUB 23, 0, 12, &08    \ Set 6845 register R12 = &08 and R13 = &00
  EQUB 0, 0, 0           \
@@ -156,7 +160,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
                         \ is 49 for modes 4 and 5, but needs to be adjusted for
                         \ our custom screen's width
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  EQUB 23, 0, 1, 64      \ Set 6845 register R1 = 64
  EQUB 0, 0, 0           \

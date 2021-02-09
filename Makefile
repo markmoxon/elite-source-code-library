@@ -192,7 +192,7 @@ encrypt:
 	$(BEEBASM) -i versions/master/sources/elite-loader.asm -v >> versions/master/output/compile.txt
 	$(BEEBASM) -i versions/master/sources/elite-data.asm -v >> versions/master/output/compile.txt
 	$(BEEBASM) -i versions/master/sources/elite-source.asm -v >> versions/master/output/compile.txt
-	#$(PYTHON) versions/master/sources/elite-checksum.py
+	$(PYTHON) versions/master/sources/elite-checksum.py
 	$(BEEBASM) -i versions/master/sources/elite-disc.asm -do versions/master/elite-master.ssd -boot M128Elt
 
 .PHONY:verify

@@ -8,15 +8,18 @@ folder-cassette=''
 
 # 6502 Second Processor version
 
-# Change the release by adding 'release-6502sp=source-disc' to the make command, e.g.
+# You can set the release that gets built by adding 'release-6502sp=<rel>' to
+# the make command, where <rel> is one of:
 #
-#   make encrypt verify
+#   source-disc
+#   sng45
 #
-# will build the SNG45 version of 6502SP Elite, while:
+# So, for example:
 #
 #   make encrypt verify release-6502sp=source-disc
 #
-# will build the version from the source disc
+# will build the version from the source disc. If you omit the release-6502sp
+# parameter, it will build the SNG45 version.
 
 ifeq ($(release-6502sp), source-disc)
   rel-6502sp=1
@@ -28,15 +31,18 @@ endif
 
 # Disc version
 
-# Change the release by adding 'release-disc=ib-disc' to the make command, e.g.
+# You can set the release that gets built by adding 'release-disc=<rel>' to
+# the make command, where <rel> is one of:
 #
-#   make encrypt verify
+#   ib-disc
+#   sth
 #
-# will build the Stairway to Hell version of Disc Elite, while:
+# So, for example:
 #
 #   make encrypt verify release-disc=ib-disc
 #
-# will build the version from the game disc on Ian Bell's site
+# will build the version from the game disc on Ian Bell's site. If you omit
+# the release-disc parameter, it will build the Stairway to Hell version.
 
 ifeq ($(release-disc), ib-disc)
   rel-disc=1

@@ -55,10 +55,10 @@ folder-master='/sng47'
 # passed to BeebAsm:
 #
 # _REMOVE_CHECKSUMS
-#   TRUE  = Disable all checksums, max commander
+#   TRUE  = Disable checksums, max commander
 #   FALSE = Enable checksums, standard commander
 #
-# _MATCH_EXTRACTED_BINARIES
+# _MATCH_EXTRACTED_BINARIES (for disc and 6502SP versions)
 #   TRUE  = Match binaries to release version (i.e. fill workspaces with noise)
 #   FALSE = Zero-fill workspaces
 #
@@ -68,12 +68,15 @@ folder-master='/sng47'
 #   3 = BBC Micro with 6502 Second Processor
 #	4 = BBC Master
 #
+# _RELEASE (for cassette version)
+#   1 = Source disc (default)
+#
 # _RELEASE (for disc version)
 #   1 = Ian Bell's game disc
 #   2 = Stairway to Hell version (default)
 #
 # _RELEASE (for 6502SP version)
-#   1 = source disc
+#   1 = Source disc
 #   2 = SNG45 (default)
 #
 # _RELEASE (for Master version)
@@ -88,7 +91,7 @@ build:
 	$(BEEBASM) -i versions/cassette/sources/elite-source.asm -v > versions/cassette/output/compile.txt
 	$(BEEBASM) -i versions/cassette/sources/elite-bcfs.asm -v >> versions/cassette/output/compile.txt
 	$(BEEBASM) -i versions/cassette/sources/elite-loader.asm -v >> versions/cassette/output/compile.txt
-	$(PYTHON) versions/cassette/sources/elite-checksum.py -u
+	$(PYTHON) versions/cassette/sources/elite-checksum.py -u -rel$(rel-cassette)
 	$(BEEBASM) -i versions/cassette/sources/elite-disc.asm -do versions/cassette/elite-cassette.ssd -boot ELTdata
 
 	echo _VERSION=2 > versions/disc/sources/elite-header.h.asm
@@ -118,7 +121,7 @@ build:
 	$(BEEBASM) -i versions/disc/sources/elite-ships-n.asm -v >> versions/disc/output/compile.txt
 	$(BEEBASM) -i versions/disc/sources/elite-ships-o.asm -v >> versions/disc/output/compile.txt
 	$(BEEBASM) -i versions/disc/sources/elite-ships-p.asm -v >> versions/disc/output/compile.txt
-	$(PYTHON) versions/disc/sources/elite-checksum.py -u
+	$(PYTHON) versions/disc/sources/elite-checksum.py -u -rel$(rel-disc)
 	$(BEEBASM) -i versions/disc/sources/elite-disc.asm -do versions/disc/elite-disc.ssd -boot ELITE2
 
 	echo _VERSION=3 > versions/6502sp/sources/elite-header.h.asm
@@ -133,6 +136,15 @@ build:
 	$(PYTHON) versions/6502sp/sources/elite-checksum.py -u -rel$(rel-6502sp)
 	$(BEEBASM) -i versions/6502sp/sources/elite-disc.asm -do versions/6502sp/elite-6502sp.ssd -boot ELITE
 
+	echo _VERSION=4 > versions/master/sources/elite-header.h.asm
+	echo _RELEASE=$(rel-master) >> versions/master/sources/elite-header.h.asm
+	echo _REMOVE_CHECKSUMS=TRUE >> versions/master/sources/elite-header.h.asm
+	$(BEEBASM) -i versions/master/sources/elite-loader.asm -v >> versions/master/output/compile.txt
+	$(BEEBASM) -i versions/master/sources/elite-data.asm -v >> versions/master/output/compile.txt
+	$(BEEBASM) -i versions/master/sources/elite-source.asm -v >> versions/master/output/compile.txt
+	$(PYTHON) versions/master/sources/elite-checksum.py -u -rel$(rel-master)
+	$(BEEBASM) -i versions/master/sources/elite-disc.asm -do versions/master/elite-master.ssd -boot M128Elt
+
 .PHONY:encrypt
 encrypt:
 	echo _VERSION=1 > versions/cassette/sources/elite-header.h.asm
@@ -141,7 +153,7 @@ encrypt:
 	$(BEEBASM) -i versions/cassette/sources/elite-source.asm -v > versions/cassette/output/compile.txt
 	$(BEEBASM) -i versions/cassette/sources/elite-bcfs.asm -v >> versions/cassette/output/compile.txt
 	$(BEEBASM) -i versions/cassette/sources/elite-loader.asm -v >> versions/cassette/output/compile.txt
-	$(PYTHON) versions/cassette/sources/elite-checksum.py
+	$(PYTHON) versions/cassette/sources/elite-checksum.py -rel$(rel-cassette)
 	$(BEEBASM) -i versions/cassette/sources/elite-disc.asm -do versions/cassette/elite-cassette.ssd -boot ELTdata
 
 	echo _VERSION=2 > versions/disc/sources/elite-header.h.asm
@@ -171,7 +183,7 @@ encrypt:
 	$(BEEBASM) -i versions/disc/sources/elite-ships-n.asm -v >> versions/disc/output/compile.txt
 	$(BEEBASM) -i versions/disc/sources/elite-ships-o.asm -v >> versions/disc/output/compile.txt
 	$(BEEBASM) -i versions/disc/sources/elite-ships-p.asm -v >> versions/disc/output/compile.txt
-	$(PYTHON) versions/disc/sources/elite-checksum.py
+	$(PYTHON) versions/disc/sources/elite-checksum.py -rel$(rel-disc)
 	$(BEEBASM) -i versions/disc/sources/elite-disc.asm -do versions/disc/elite-disc.ssd -boot ELITE2
 
 	echo _VERSION=3 > versions/6502sp/sources/elite-header.h.asm
@@ -187,12 +199,12 @@ encrypt:
 	$(BEEBASM) -i versions/6502sp/sources/elite-disc.asm -do versions/6502sp/elite-6502sp.ssd -boot ELITE
 
 	echo _VERSION=4 > versions/master/sources/elite-header.h.asm
-	echo _RELEASE=$(rel-master) >> versions/6502sp/sources/elite-header.h.asm
+	echo _RELEASE=$(rel-master) >> versions/master/sources/elite-header.h.asm
 	echo _REMOVE_CHECKSUMS=FALSE >> versions/master/sources/elite-header.h.asm
 	$(BEEBASM) -i versions/master/sources/elite-loader.asm -v >> versions/master/output/compile.txt
 	$(BEEBASM) -i versions/master/sources/elite-data.asm -v >> versions/master/output/compile.txt
 	$(BEEBASM) -i versions/master/sources/elite-source.asm -v >> versions/master/output/compile.txt
-	$(PYTHON) versions/master/sources/elite-checksum.py
+	$(PYTHON) versions/master/sources/elite-checksum.py -rel$(rel-master)
 	$(BEEBASM) -i versions/master/sources/elite-disc.asm -do versions/master/elite-master.ssd -boot M128Elt
 
 .PHONY:verify

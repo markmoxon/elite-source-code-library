@@ -187,7 +187,6 @@ The binaries in the `extracted` folder were taken straight from the [6502 Second
 [--extracted--]  [---output----]
 Checksum   Size  Checksum   Size  Match  Filename
 -----------------------------------------------------------
-11ccbb59  38832  11ccbb59  38832   Yes   CODE.unprot.bin
 56520930    752  56520930    752   Yes   ELITE.bin
 e78cb0cf   5769  e78cb0cf   5769   Yes   ELITEa.bin
 455ba962   2666  455ba962   2666   Yes   ELTA.bin
@@ -202,6 +201,7 @@ a949f485   1427  a949f485   1427   Yes   ELTH.bin
 62e09fa4   3619  62e09fa4   3619   Yes   ELTJ.bin
 a1342e53   6454  a1342e53   6454   Yes   I.CODE.bin
 5908b6d5  38832  5908b6d5  38832   Yes   P.CODE.bin
+11ccbb59  38832  11ccbb59  38832   Yes   P.CODE.unprot.bin
 2580d019   8460  2580d019   8460   Yes   SHIPS.bin
 57406380   1024  57406380   1024   Yes   WORDS.bin
 ```

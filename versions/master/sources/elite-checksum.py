@@ -13,13 +13,14 @@
 #
 # ******************************************************************************
 
+from __future__ import print_function
 import sys
 
 argv = sys.argv
 Encrypt = True
 
 for arg in argv[1:]:
-    if arg == '-u':
+    if arg == "-u":
         Encrypt = False
 
 print("Elite Big Code File")
@@ -36,7 +37,7 @@ data_block = bytearray()
 
 # Load assembled code file
 
-elite_file = open('versions/master/output/BCODE.unprot.bin', 'rb')
+elite_file = open("versions/master/output/BCODE.unprot.bin", "rb")
 data_block.extend(elite_file.read())
 elite_file.close()
 
@@ -45,11 +46,13 @@ for n in range(scramble_from, scramble_to):
 
 data_block[scramble_to - load_address] = (data_block[scramble_to - load_address] + seed) % 256
 
-# Write output file for 'BCODE'
+# Write output file for BCODE
 
-output_file = open('versions/master/output/BCODE.bin', 'wb')
+output_file = open("versions/master/output/BCODE.bin", "wb")
 output_file.write(data_block)
 output_file.close()
+
+print("output/BCODE.bin file saved")
 
 # Configuration variables for BDATA
 
@@ -62,7 +65,7 @@ data_block = bytearray()
 
 # Load assembled code file
 
-elite_file = open('versions/master/output/BDATA.unprot.bin', 'rb')
+elite_file = open("versions/master/output/BDATA.unprot.bin", "rb")
 data_block.extend(elite_file.read())
 elite_file.close()
 
@@ -71,8 +74,10 @@ for n in range(scramble_from, scramble_to):
 
 data_block[scramble_to - load_address] = (data_block[scramble_to - load_address] + seed) % 256
 
-# Write output file for 'BDATA'
+# Write output file for BDATA
 
-output_file = open('versions/master/output/BDATA.bin', 'wb')
+output_file = open("versions/master/output/BDATA.bin", "wb")
 output_file.write(data_block)
 output_file.close()
+
+print("output/BDATA.bin file saved")

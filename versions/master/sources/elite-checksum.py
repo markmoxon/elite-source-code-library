@@ -25,11 +25,14 @@ for arg in argv[1:]:
 print("Elite Big Code File")
 print("Encryption = ", Encrypt)
 
-data_block = bytearray()
+# Configuration variables for BCODE
+
 load_address = 0x1300
 seed = 0x19
 scramble_from = 0x2cc1
 scramble_to = 0x7f47
+
+data_block = bytearray()
 
 # Load assembled code file
 
@@ -47,3 +50,4 @@ data_block[scramble_to - load_address] = (data_block[scramble_to - load_address]
 output_file = open('versions/master/output/BCODE.bin', 'wb')
 output_file.write(data_block)
 output_file.close()
+

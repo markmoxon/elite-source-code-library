@@ -1067,7 +1067,7 @@ IF _CASSETTE_VERSION
  RTOK 55
  EQUB 0
 
-ELIF _DISC_VERSION
+ELIF _DISC_VERSION OR _MASTER_VERSION
 
  RTOK 121               \ Token 114:    "ENERGY UNIT"
  RTOK 14                \
@@ -1099,23 +1099,6 @@ ELIF _SOURCE_DISC
  EQUB 0
 
 ENDIF
-
- CHAR 'D'               \ Token 115:    "DOCKING COMPUTERS"
- CHAR 'O'               \
- CHAR 'C'               \ Encoded as:   "DOCK<140>G [55]"
- CHAR 'K'
- TWOK 'I', 'N'
- CHAR 'G'
- CHAR ' '
- RTOK 55
- EQUB 0
-
-ELIF _MASTER_VERSION
-
- RTOK 102               \ Token 114:    "EXTRA ENERGY UNIT"
- RTOK 121               \
- RTOK 14                \ Encoded as:   "[102][121][14]"
- EQUB 0
 
  CHAR 'D'               \ Token 115:    "DOCKING COMPUTERS"
  CHAR 'O'               \
@@ -1568,7 +1551,7 @@ IF _CASSETTE_VERSION
  CHAR '4'
  EQUB 0
 
-ELIF _DISC_VERSION OR _MASTER_VERSION
+ELIF _DISC_VERSION
 
  SKIP 5                 \ These bytes are unused
 

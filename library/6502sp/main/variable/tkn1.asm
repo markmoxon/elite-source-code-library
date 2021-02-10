@@ -32,7 +32,7 @@ ENDIF
  ECHR 'S'               \
 IF _DISC_VERSION
  ECHR ' '               \ Encoded as:   "{9}{11}{1}{8} <241>SK AC<233>SS ME
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
  ECHR ' '               \ Encoded as:   "{9}{11}{30}{1}{8} <241>SK AC<233>SS ME
 ENDIF
  ECHR 'M'               \                <225><215>{10}{2}1. [149]<215>2. SA
@@ -543,7 +543,7 @@ ENDIF
 
  EJMP 25                \ Token 11:     "{incoming message screen, wait 2s}
  EJMP 9                 \                {clear screen}
-IF _6502SP_VERSION
+IF _6502SP_VERSION OR _MASTER_VERSION
  EJMP 30                \                {white}
 ENDIF
  EJMP 23                \                {move to row 10, white, lower case}
@@ -566,7 +566,7 @@ ENDIF
  ECHR 'H'               \
 IF _DISC_VERSION
  ECHR 'A'               \ Encoded as:   "{25}{9}{23}{14}{2}  <245>T<246>
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
  ECHR 'A'               \ Encoded as:   "{25}{9}{30}{23}{14}{2}  <245>T<246>
 ENDIF
  ETWO 'V', 'E'          \                <251><223>[213]. {19}WE HA<250> NE[196]
@@ -719,7 +719,7 @@ ENDIF
 
  EJMP 25                \ Token 15:     "{incoming message screen, wait 2s}
  EJMP 9                 \                {clear screen}
-IF _6502SP_VERSION
+IF _6502SP_VERSION OR _MASTER_VERSION
  EJMP 30                \                {white}
 ENDIF
  EJMP 23                \                {move to row 10, white, lower case}
@@ -738,7 +738,7 @@ ENDIF
  ETWO 'O', 'N'          \
 IF _DISC_VERSION
  ECHR 'S'               \ Encoded as:   "{25}{9}{23}{14}{2}  C<223>G<248>TU
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
  ECHR 'S'               \ Encoded as:   "{25}{9}{30}{23}{14}{2}  C<223>G<248>TU
 ENDIF
  ECHR ' '               \                <249><251><223>S [154]!{12}{12}<226>
@@ -1358,7 +1358,7 @@ ENDIF
 
 IF _DISC_VERSION
  ECHR 'W'               \ Token 95:     "WHORESON BEETLE HEAD FLAP EAR'D
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
  ECHR 'W'               \ Token 95:     "WHORESON BEETLE HEADED FLAP EAR'D
 ENDIF
  ECHR 'H'               \                KNAVE"
@@ -1366,7 +1366,7 @@ ENDIF
  ETWO 'E', 'S'          \ Encoded as:   "WH<253><237><223> <247><221><229> HEAD
 IF _DISC_VERSION
  ETWO 'O', 'N'          \                [198]F<249>P E<238>[39]D KNA<250>"
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
  ETWO 'O', 'N'          \                [196]F<249>P E<238>[39]D KNA<250>"
 ENDIF
  ECHR ' '
@@ -1380,7 +1380,7 @@ ENDIF
  ECHR 'D'
 IF _DISC_VERSION
  ETOK 198
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
  ETOK 196
 ENDIF
  ECHR 'F'
@@ -2318,7 +2318,7 @@ ENDIF
  EJMP 9                 \ Token 216:    "{clear screen}
  EJMP 8                 \                {tab 6}
  EJMP 23                \                {move to row 10, white, lower case}
-IF _6502SP_VERSION
+IF _6502SP_VERSION OR _MASTER_VERSION
  EJMP 30                \                {white}
 ENDIF
  EJMP 1                 \                {all caps}
@@ -2326,7 +2326,7 @@ ENDIF
  ECHR 'C'               \
 IF _DISC_VERSION
  ECHR 'O'               \ Encoded as:   "{9}{8}{23}{1}<240>COM[195]M<237>SA
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
  ECHR 'O'               \ Encoded as:   "{9}{8}{23}{30}{1}<240>COM[195]M<237>SA
 ENDIF
  ECHR 'M'               \                <231>"
@@ -2408,7 +2408,7 @@ ENDIF
 
  EJMP 25                \ Token 222:    "{incoming message screen, wait 2s}
  EJMP 9                 \                {clear screen}
-IF _6502SP_VERSION
+IF _6502SP_VERSION OR _MASTER_VERSION
  EJMP 30                \                {white}
 ENDIF
  EJMP 29                \                {tab 6, white, lower case in words}
@@ -2454,7 +2454,7 @@ ENDIF
  ECHR 'V'               \
 IF _DISC_VERSION
  ECHR 'A'               \ Encoded as:   "{25}{9}{29}{14}{2}GOOD DAY [154]
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
  ECHR 'A'               \ Encoded as:   "{25}{9}{30}{29}{14}{2}GOOD DAY [154]
 ENDIF
  ECHR 'L'               \                 {4}[204]I{13} AM {19}AG<246>T {19}B
@@ -2470,7 +2470,7 @@ ENDIF
  ETWO 'C', 'E'          \                 SYSTEM OF <226>O<218> MO<226><244>S
 IF _DISC_VERSION
  ETOK 204               \                [204]{24}{9}{29}I{13} HA<250> OBTA
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
  ETOK 204               \                [204]{24}{9}{30}{29}I{13} HA<250> OBTA
 ENDIF
  ECHR 'A'               \                <240>[196][147]DEF<246><233> P<249>NS F
@@ -2636,7 +2636,7 @@ ENDIF
  ETOK 204
  EJMP 24
  EJMP 9
-IF _6502SP_VERSION
+IF _6502SP_VERSION OR _MASTER_VERSION
  EJMP 30
 ENDIF
  EJMP 29
@@ -2883,7 +2883,7 @@ ENDIF
  EJMP 25                \ Token 223:    "{incoming message screen, wait 2s}
  EJMP 9                 \                {clear screen}
  EJMP 29                \                {tab 6, white, lower case in words}
-IF _6502SP_VERSION
+IF _6502SP_VERSION OR _MASTER_VERSION
  EJMP 30                \                {white}
 ENDIF
  EJMP 8                 \                {tab 6}
@@ -2906,7 +2906,7 @@ ENDIF
  ECHR 'H'               \
 IF _DISC_VERSION
  ECHR 'A'               \ Encoded as:   "{25}{9}{29}{8}{14}{13}{19}WELL D
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
  ECHR 'A'               \ Encoded as:   "{25}{9}{29}{30}{8}{14}{13}{19}WELL D
 ENDIF
  ETWO 'V', 'E'          \                <223>E [154][204][179] HA<250> <218>RV

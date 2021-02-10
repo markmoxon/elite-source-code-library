@@ -1,7 +1,8 @@
 CPU 1
 
-L0000   = $0000
-RAND    = $0002
+NRU%    = $0000
+MSL     = $0001
+SST     = $0002
 L0003   = $0003
 L0004   = $0004
 OIL     = $0005
@@ -30,7 +31,7 @@ L001E   = $001E
 K4      = $0022
 L0023   = $0023
 XX16    = $0024
-L0025   = $0025
+NI%     = $0025
 L0026   = $0026
 L0027   = $0027
 L0028   = $0028
@@ -793,7 +794,7 @@ L152A = L1529+1
         STA     LFE34
         LDX     #$90
 .L1547
-        LDA     L0000,X
+        LDA     NRU%,X
         STA     L3000,X
         INX
         BNE     L1547
@@ -807,9 +808,9 @@ L152A = L1529+1
         STA     LFE34
         LDX     #$90
 .L155C
-        LDA     L0000,X
+        LDA     NRU%,X
         LDY     L3000,X
-        STY     L0000,X
+        STY     NRU%,X
         STA     L3000,X
         INX
         CPX     #$F0
@@ -3771,9 +3772,9 @@ L22DA = L22D9+1
         EQUB    $04,$F7,$08,$EF,$10,$DF,$20,$BF
         EQUB    $40,$7F,$80
 
-.MPERCENT
+.M%
         LDA     K%
-        STA     RAND
+        STA     SST
         LDX     JSTX
         JSR     cntr
 
@@ -4627,7 +4628,7 @@ L3000 = L2FFF+1
 
         RTI
 
-        JSR     L0000
+        JSR     NRU%
 
 .L321D
         BRK
@@ -8462,7 +8463,7 @@ L48F1 = L48F0+1
         LDX     #$03
 .L4903
         LDA     L0060,X
-        STA     RAND,X
+        STA     SST,X
         DEX
         BPL     L4903
 
@@ -11215,10 +11216,10 @@ L527A = L5279+1
 
         LDX     #$15
 .L58B9
-        LDA     L0000,X
-        LDY     L0000,X
-        STA     L0000,X
-        STY     L0000,X
+        LDA     NRU%,X
+        LDY     NRU%,X
+        STA     NRU%,X
+        STY     NRU%,X
         INX
         BNE     L58B9
 
@@ -11346,11 +11347,11 @@ L527A = L5279+1
         STY     L008B
 .L596F
         CLC
-        LDA     RAND
+        LDA     SST
         ROL     A
         TAX
         ADC     L0004
-        STA     RAND
+        STA     SST
         STX     L0004
         LDA     L0003
         TAX
@@ -11399,11 +11400,11 @@ L527A = L5279+1
 
 .L59C1
         CLC
-        LDA     RAND
+        LDA     SST
         ROL     A
         TAX
         ADC     L0004
-        STA     RAND
+        STA     SST
         STX     L0004
         LDA     L0003
         TAX
@@ -11415,11 +11416,11 @@ L527A = L5279+1
 .L59D8
         STA     S
         CLC
-        LDA     RAND
+        LDA     SST
         ROL     A
         TAX
         ADC     L0004
-        STA     RAND
+        STA     SST
         STX     L0004
         LDA     L0003
         TAX
@@ -11898,7 +11899,7 @@ L527A = L5279+1
         STY     MSAR
         RTS
 
-        TSB     L0000
+        TSB     NRU%
         BRK
         EQUB    $00
 
@@ -12018,7 +12019,7 @@ L527A = L5279+1
         JSR     L5DBC
 
         STA     L0094
-        STY     L0025
+        STY     NI%
         LDX     #$0F
         JSR     L6140
 
@@ -12069,7 +12070,7 @@ L527A = L5279+1
 
         LSR     A
         STA     L0094
-        STY     L0025
+        STY     NI%
         LDX     #$15
         JSR     L5DBC
 
@@ -12191,7 +12192,7 @@ L527A = L5279+1
         LDA     L0058
         STA     P
         LDA     L0028
-        EOR     L0025
+        EOR     NI%
         JSR     ADD
 
         EOR     #$80
@@ -13207,11 +13208,11 @@ L527A = L5279+1
         STA     L00BC
         CLC
 .DORND
-        LDA     RAND
+        LDA     SST
         ROL     A
         TAX
         ADC     L0004
-        STA     RAND
+        STA     SST
         STX     L0004
         LDA     L0003
         TAX
@@ -13248,7 +13249,7 @@ L527A = L5279+1
         JSR     NWSHP
 
 .L643F
-        JSR     MPERCENT
+        JSR     M%
 
         DEC     L0E7C
         BEQ     L63C7
@@ -13810,10 +13811,10 @@ L6620 = L661F+1
 
         LDA     #$00
         STA     DELTA
-        JSR     MPERCENT
+        JSR     M%
 
 .L6750
-        JSR     MPERCENT
+        JSR     M%
 
         DEC     LASCT
         BNE     L6750
@@ -15419,7 +15420,7 @@ QQ23 = L6E6A+2
 
         STA     T
         LDA     Y1
-        EOR     L0025,X
+        EOR     NI%,X
         STA     S
         LDA     X2
         STA     Q
@@ -15616,7 +15617,7 @@ L712B = L712A+1
 .L71F2
         LDA     XX16,Y
         ASL     A
-        LDA     L0025,Y
+        LDA     NI%,Y
         ROL     A
         JSR     LL28
 

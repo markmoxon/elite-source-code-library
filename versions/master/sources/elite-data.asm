@@ -1,3 +1,40 @@
+\ ******************************************************************************
+\
+\ BBC MASTER ELITE DATA FILE SOURCE
+\
+\ BBC Master Elite was written by Ian Bell and David Braben and is copyright
+\ Acornsoft 1986
+\
+\ The code on this site has been disassembled from the version released on Ian
+\ Bell's personal website at http://www.elitehomepage.org/
+\
+\ The commentary is copyright Mark Moxon, and any misunderstandings or mistakes
+\ in the documentation are entirely my fault
+\
+\ The terminology and notations used in this commentary are explained at
+\ https://www.bbcelite.com/about_site/terminology_used_in_this_commentary.html
+\
+\ ------------------------------------------------------------------------------
+\
+\ This source file produces the following binary file:
+\
+\   * output/BDATA.bin
+\
+\ ******************************************************************************
+
+INCLUDE "versions/master/sources/elite-header.h.asm"
+
+CPU 1                   \ Switch to 65SC12 assembly, as this code runs on the
+                        \ BBC Master
+
+_CASSETTE_VERSION       = (_VERSION = 1)
+_DISC_VERSION           = (_VERSION = 2)
+_6502SP_VERSION         = (_VERSION = 3)
+_MASTER_VERSION         = (_VERSION = 4)
+
+VE = &57                \ The obfuscation byte used to hide the extended tokens
+                        \ table from crackers viewing the binary code
+
 CODE% = &1300
 LOAD% = &1300
 
@@ -9,6 +46,7 @@ INCBIN "versions/master/binaries/P.DIALS2P.bin"
 
 SKIP 512
 
+.XX21
         EQUB    $A5,$80,$A3,$81,$BF,$82,$13,$83
         EQUB    $53,$83,$FB,$83,$9D,$84,$73,$85
         EQUB    $AF,$85,$E1,$86,$C3,$88,$4B,$8A
@@ -1033,6 +1071,14 @@ SKIP 512
         EQUB    $4C,$6F,$AB,$12,$4F,$AB,$8B,$41
         EQUB    $02,$FF,$BF,$BF,$43,$53,$D2,$B9
         EQUB    $C6,$DF,$CD,$94,$A2,$5A,$68,$21
+
+INCLUDE "library/common/main/macro/char.asm"
+INCLUDE "library/common/main/macro/twok.asm"
+INCLUDE "library/common/main/macro/ctrl.asm"
+INCLUDE "library/common/main/macro/rtok.asm"
+
+.QQ18
+
         EQUB    $4C,$32,$24,$00,$03,$60,$6B,$A9
         EQUB    $77,$00,$64,$6C,$B5,$71,$6D,$6E
         EQUB    $B1,$77,$00,$67,$B2,$62,$32,$20
@@ -1153,461 +1199,3557 @@ SKIP 512
         EQUB    $0E,$0E,$00,$73,$AD,$70,$B1,$77
         EQUB    $00,$2B,$64,$62,$6E,$66,$03,$6C
         EQUB    $B5,$71,$00,$00,$00,$19,$03,$16
-        EQUB    $00,$19,$32,$4A,$62,$79,$8E,$A2
-        EQUB    $B5,$C6,$D5,$E2,$ED,$F5,$FB,$FF
-        EQUB    $FF,$FF,$FB,$F5,$ED,$E2,$D5,$C6
-        EQUB    $B5,$A2,$8E,$79,$62,$4A,$32,$19
-        EQUB    $00,$01,$03,$04,$05,$06,$08,$09
-        EQUB    $0A,$0B,$0C,$0D,$0F,$10,$11,$12
-        EQUB    $13,$14,$15,$16,$17,$18,$19,$19
-        EQUB    $1A,$1B,$1C,$1D,$1D,$1E,$1F,$1F
-        EQUB    $57,$5E,$5C,$56,$5F,$77,$A6,$04
-        EQUB    $1C,$77,$16,$14,$BE,$04,$04,$77
-        EQUB    $1A,$12,$B6,$80,$5D,$55,$66,$79
-        EQUB    $77,$C2,$80,$65,$79,$77,$04,$16
-        EQUB    $AD,$77,$CD,$77,$53,$80,$64,$79
-        EQUB    $77,$14,$16,$03,$16,$1B,$18,$10
-        EQUB    $02,$12,$77,$13,$1E,$04,$1C,$80
-        EQUB    $63,$79,$77,$13,$12,$1B,$12,$03
-        EQUB    $12,$77,$11,$1E,$1B,$12,$80,$62
-        EQUB    $79,$77,$13,$12,$11,$16,$02,$1B
-        EQUB    $03,$77,$56,$1D,$16,$1A,$BA,$88
-        EQUB    $55,$80,$61,$79,$77,$12,$0F,$8C
-        EQUB    $80,$57,$5B,$00,$1F,$1E,$14,$1F
-        EQUB    $77,$C0,$68,$57,$C1,$C0,$77,$47
-        EQUB    $CF,$80,$57,$57,$E7,$3A,$9D,$39
-        EQUB    $E6,$57,$77,$77,$C2,$77,$56,$7F
-        EQUB    $0E,$78,$19,$7E,$68,$55,$5B,$5B
-        EQUB    $57,$07,$A5,$04,$04,$77,$04,$07
-        EQUB    $16,$BE,$77,$AA,$77,$11,$1E,$A5
-        EQUB    $7B,$CD,$79,$5B,$5B,$57,$CD,$70
-        EQUB    $04,$9F,$57,$5B,$56,$8B,$B2,$10
-        EQUB    $B3,$77,$12,$1B,$1E,$03,$12,$77
-        EQUB    $1E,$1E,$77,$11,$1E,$B2,$57,$40
-        EQUB    $59,$55,$10,$A5,$8A,$A7,$10,$04
-        EQUB    $82,$E5,$44,$1E,$77,$A0,$10,$87
-        EQUB    $1A,$18,$1A,$A1,$03,$77,$18,$11
-        EQUB    $77,$E4,$05,$77,$01,$B3,$02,$8F
-        EQUB    $B2,$77,$AC,$1A,$12,$9B,$00,$12
-        EQUB    $77,$00,$8E,$1B,$13,$77,$1B,$1E
-        EQUB    $1C,$12,$77,$E4,$9E,$13,$18,$87
-        EQUB    $1B,$8C,$03,$B2,$77,$1D,$18,$15
-        EQUB    $77,$11,$AA,$77,$BB,$9B,$C4,$98
-        EQUB    $77,$E4,$77,$8D,$12,$77,$1F,$12
-        EQUB    $A5,$9D,$16,$85,$1A,$18,$13,$12
-        EQUB    $1B,$7B,$77,$C4,$44,$14,$88,$89
-        EQUB    $05,$1E,$14,$03,$AA,$7B,$77,$12
-        EQUB    $A9,$1E,$07,$93,$00,$1E,$B5,$87
-        EQUB    $03,$18,$07,$77,$8D,$14,$05,$8A
-        EQUB    $85,$04,$1F,$1E,$12,$1B,$13,$77
-        EQUB    $10,$A1,$A3,$A2,$AA,$9B,$02,$19
-        EQUB    $11,$AA,$03,$02,$19,$A2,$12,$1B
-        EQUB    $0E,$77,$8C,$70,$04,$77,$A0,$A1
-        EQUB    $77,$89,$18,$1B,$A1,$9B,$41,$8C
-        EQUB    $77,$00,$A1,$03,$77,$1A,$1E,$04
-        EQUB    $04,$94,$11,$05,$18,$1A,$77,$8E
-        EQUB    $05,$77,$98,$77,$0E,$B9,$13,$77
-        EQUB    $88,$77,$44,$B1,$A3,$77,$11,$1E
-        EQUB    $AD,$77,$1A,$88,$B5,$04,$77,$16
-        EQUB    $10,$18,$E5,$4B,$9B,$E4,$05,$77
-        EQUB    $1A,$1E,$04,$04,$1E,$88,$7B,$77
-        EQUB    $04,$1F,$8E,$1B,$13,$77,$E4,$77
-        EQUB    $13,$12,$14,$1E,$13,$12,$9E,$16
-        EQUB    $14,$BE,$07,$03,$77,$8C,$7B,$77
-        EQUB    $1E,$04,$9E,$8D,$12,$1C,$E5,$13
-        EQUB    $BA,$03,$05,$18,$0E,$77,$C3,$98
-        EQUB    $9B,$E4,$77,$16,$A5,$77,$14,$16
-        EQUB    $02,$AC,$88,$93,$B5,$A2,$77,$88
-        EQUB    $1B,$0E,$77,$51,$22,$52,$04,$77
-        EQUB    $00,$8B,$1B,$77,$07,$A1,$8A,$AF
-        EQUB    $03,$12,$77,$C4,$19,$12,$00,$77
-        EQUB    $04,$1F,$1E,$12,$1B,$13,$04,$E5
-        EQUB    $B5,$A2,$77,$C4,$44,$14,$88,$89
-        EQUB    $05,$1E,$14,$03,$AA,$9D,$11,$8C
-        EQUB    $03,$93,$00,$1E,$B5,$77,$A8,$77
-        EQUB    $51,$3B,$52,$E6,$55,$5F,$10,$18
-        EQUB    $18,$13,$77,$1B,$02,$14,$1C,$7B
-        EQUB    $77,$CD,$83,$41,$57,$4E,$5E,$40
-        EQUB    $59,$55,$77,$77,$A2,$03,$A1,$AC
-        EQUB    $88,$82,$79,$77,$44,$00,$12,$77
-        EQUB    $1F,$16,$AD,$77,$19,$12,$93,$18
-        EQUB    $11,$77,$E4,$05,$77,$8D,$05,$01
-        EQUB    $1E,$14,$BA,$77,$16,$10,$16,$A7
-        EQUB    $9B,$1E,$11,$77,$E4,$77,$00,$8E
-        EQUB    $1B,$13,$77,$A0,$77,$BC,$77,$10
-        EQUB    $18,$18,$13,$77,$16,$04,$9E,$10
-        EQUB    $18,$9E,$44,$BE,$A3,$A6,$77,$E4
-        EQUB    $77,$00,$8B,$1B,$77,$A0,$77,$15
-        EQUB    $05,$1E,$12,$11,$AB,$9B,$1E,$11
-        EQUB    $77,$04,$02,$14,$BE,$04,$04,$11
-        EQUB    $02,$1B,$7B,$77,$E4,$77,$00,$8B
-        EQUB    $1B,$77,$A0,$77,$00,$12,$1B,$1B
-        EQUB    $77,$A5,$00,$B9,$13,$AB,$83,$4F
-        EQUB    $57,$7F,$44,$14,$7E,$77,$16,$14
-        EQUB    $AA,$19,$BC,$11,$03,$77,$66,$6E
-        EQUB    $6F,$61,$57,$15,$0E,$92,$57,$42
-        EQUB    $C6,$9F,$4D,$57,$4E,$5E,$40,$59
-        EQUB    $55,$77,$77,$14,$88,$10,$AF,$03
-        EQUB    $02,$AE,$AC,$88,$04,$77,$CD,$76
-        EQUB    $5B,$5B,$B5,$A3,$12,$5A,$77,$00
-        EQUB    $8B,$1B,$77,$B3,$00,$16,$0E,$04
-        EQUB    $77,$A0,$87,$07,$AE,$BE,$77,$11
-        EQUB    $AA,$77,$E4,$77,$A7,$84,$9B,$A8
-        EQUB    $13,$77,$B8,$0E,$A0,$77,$BC,$88
-        EQUB    $A3,$77,$B5,$A8,$77,$E4,$77,$B5
-        EQUB    $A7,$1C,$79,$79,$83,$4F,$57,$11
-        EQUB    $8F,$B2,$13,$57,$B4,$03,$8F,$B2
-        EQUB    $57,$00,$12,$1B,$1B,$77,$1C,$B4
-        EQUB    $00,$19,$57,$11,$16,$1A,$18,$BB
-        EQUB    $57,$B4,$03,$AB,$57,$AD,$05,$0E
-        EQUB    $57,$1A,$8B,$13,$1B,$0E,$57,$1A
-        EQUB    $18,$89,$57,$A5,$16,$04,$88,$8F
-        EQUB    $1B,$0E,$57,$57,$F2,$57,$25,$57
-        EQUB    $10,$A5,$A2,$57,$01,$16,$89,$57
-        EQUB    $07,$A7,$1C,$57,$55,$20,$77,$21
-        EQUB    $5A,$77,$EE,$16,$AC,$88,$04,$57
-        EQUB    $CB,$04,$57,$22,$57,$D7,$77,$11
-        EQUB    $AA,$BA,$03,$04,$57,$18,$BE,$A8
-        EQUB    $04,$57,$04,$1F,$0E,$19,$BA,$04
-        EQUB    $57,$04,$8B,$1B,$A7,$BA,$04,$57
-        EQUB    $B8,$03,$94,$03,$AF,$A6,$AC,$88
-        EQUB    $04,$57,$B7,$A2,$1F,$94,$18,$11
-        EQUB    $77,$33,$57,$B7,$AD,$77,$11,$AA
-        EQUB    $77,$33,$57,$11,$18,$18,$13,$77
-        EQUB    $15,$B2,$19,$13,$A3,$04,$57,$03
-        EQUB    $8E,$05,$1E,$89,$04,$57,$07,$18
-        EQUB    $8A,$05,$0E,$57,$A6,$04,$14,$18
-        EQUB    $04,$57,$3B,$57,$00,$B3,$1C,$94
-        EQUB    $C9,$57,$14,$AF,$15,$57,$15,$A2
-        EQUB    $57,$B7,$15,$89,$57,$45,$57,$A0
-        EQUB    $04,$8A,$57,$07,$AE,$10,$02,$AB
-        EQUB    $57,$AF,$01,$16,$10,$AB,$57,$14
-        EQUB    $02,$05,$04,$AB,$57,$04,$14,$8E
-        EQUB    $05,$10,$AB,$57,$26,$77,$14,$1E
-        EQUB    $01,$8B,$77,$00,$B9,$57,$3F,$77
-        EQUB    $08,$77,$37,$04,$57,$16,$77,$3F
-        EQUB    $77,$A6,$8D,$16,$8D,$57,$26,$77
-        EQUB    $12,$B9,$B5,$A9,$16,$1C,$BA,$57
-        EQUB    $26,$77,$BC,$AE,$05,$77,$16,$14
-        EQUB    $AC,$01,$8C,$0E,$57,$F8,$0A,$77
-        EQUB    $09,$57,$C4,$46,$77,$08,$77,$37
-        EQUB    $57,$F8,$96,$04,$70,$77,$35,$77
-        EQUB    $34,$57,$55,$2D,$5A,$57,$F8,$3C
-        EQUB    $77,$3B,$57,$1D,$02,$1E,$BE,$57
-        EQUB    $15,$AF,$19,$13,$0E,$57,$00,$A2
-        EQUB    $A3,$57,$15,$A5,$00,$57,$10,$B9
-        EQUB    $10,$B2,$77,$15,$AE,$89,$A3,$04
-        EQUB    $57,$45,$57,$46,$77,$37,$57,$46
-        EQUB    $77,$45,$57,$46,$77,$3F,$57,$3F
-        EQUB    $77,$45,$57,$11,$8F,$02,$B7,$BB
-        EQUB    $57,$12,$0F,$18,$AC,$14,$57,$1F
-        EQUB    $18,$18,$07,$0E,$57,$02,$B6,$04
-        EQUB    $02,$B3,$57,$12,$0F,$14,$8C,$A7
-        EQUB    $10,$57,$14,$02,$1E,$04,$A7,$12
-        EQUB    $57,$19,$1E,$10,$1F,$03,$77,$1B
-        EQUB    $1E,$11,$12,$57,$14,$16,$04,$1E
-        EQUB    $B4,$04,$57,$04,$8C,$77,$14,$18
-        EQUB    $1A,$04,$57,$55,$2D,$5A,$57,$54
-        EQUB    $57,$C4,$C6,$77,$54,$57,$C4,$C5
-        EQUB    $77,$54,$57,$C3,$C6,$57,$C3,$C5
-        EQUB    $57,$04,$88,$77,$18,$11,$87,$15
-        EQUB    $8C,$14,$1F,$57,$04,$14,$8E,$19
-        EQUB    $13,$A5,$1B,$57,$15,$AE,$14,$1C
-        EQUB    $10,$02,$B9,$13,$57,$05,$18,$10
-        EQUB    $02,$12,$57,$00,$1F,$AA,$BA,$88
-        EQUB    $77,$A0,$8A,$B2,$77,$1F,$12,$16
-        EQUB    $13,$93,$11,$AE,$07,$77,$12,$B9
-        EQUB    $70,$13,$77,$1C,$19,$16,$AD,$57
-        EQUB    $19,$77,$02,$19,$A5,$B8,$05,$1C
-        EQUB    $8F,$B2,$57,$77,$15,$AA,$A7,$10
-        EQUB    $57,$77,$13,$02,$1B,$1B,$57,$77
-        EQUB    $03,$12,$A6,$18,$BB,$57,$77,$A5
-        EQUB    $01,$18,$1B,$03,$A7,$10,$57,$C6
-        EQUB    $57,$C5,$57,$07,$AE,$BE,$57,$1B
-        EQUB    $8C,$03,$B2,$77,$C6,$57,$13,$02
-        EQUB    $1A,$07,$57,$1E,$77,$1F,$12,$B9
-        EQUB    $87,$25,$77,$B7,$18,$1C,$94,$98
-        EQUB    $77,$16,$07,$07,$12,$B9,$93,$A2
-        EQUB    $86,$57,$0E,$12,$16,$1F,$7B,$77
-        EQUB    $1E,$77,$1F,$12,$B9,$87,$25,$77
-        EQUB    $98,$77,$B2,$11,$03,$86,$87,$77
-        EQUB    $00,$1F,$1E,$B2,$77,$15,$16,$14
-        EQUB    $1C,$57,$10,$8A,$77,$E4,$05,$77
-        EQUB    $1E,$05,$88,$77,$16,$04,$04,$77
-        EQUB    $18,$01,$A3,$77,$03,$18,$86,$57
-        EQUB    $BC,$1A,$12,$77,$24,$85,$98,$77
-        EQUB    $00,$16,$04,$77,$8D,$A1,$77,$A2
-        EQUB    $86,$57,$03,$05,$0E,$86,$57,$57
-        EQUB    $57,$57,$57,$00,$16,$04,$07,$57
-        EQUB    $1A,$18,$B5,$57,$10,$05,$02,$15
-        EQUB    $57,$A8,$03,$57,$45,$57,$07,$18
-        EQUB    $8A,$57,$B9,$03,$04,$77,$10,$AF
-        EQUB    $13,$02,$A2,$12,$57,$0E,$16,$1C
-        EQUB    $57,$04,$19,$16,$8B,$57,$04,$1B
-        EQUB    $02,$10,$57,$03,$05,$18,$07,$1E
-        EQUB    $14,$B3,$57,$13,$A1,$8D,$57,$AF
-        EQUB    $A7,$57,$1E,$1A,$07,$A1,$8A,$AF
-        EQUB    $15,$B2,$57,$12,$0F,$02,$A0,$AF
-        EQUB    $19,$03,$57,$11,$02,$19,$19,$0E
-        EQUB    $57,$00,$12,$1E,$05,$13,$57,$02
-        EQUB    $B6,$04,$02,$B3,$57,$89,$AF,$19
-        EQUB    $B0,$57,$07,$12,$14,$02,$1B,$1E
-        EQUB    $B9,$57,$11,$A5,$A9,$A1,$03,$57
-        EQUB    $18,$14,$14,$16,$04,$1E,$88,$B3
-        EQUB    $57,$02,$19,$07,$A5,$A6,$14,$03
-        EQUB    $8F,$B2,$57,$13,$A5,$16,$13,$11
-        EQUB    $02,$1B,$57,$FC,$57,$0B,$77,$0C
-        EQUB    $77,$11,$AA,$77,$32,$57,$DB,$E5
-        EQUB    $32,$57,$31,$77,$15,$0E,$77,$30
-        EQUB    $57,$DB,$77,$15,$02,$03,$77,$D9
-        EQUB    $57,$77,$16,$38,$77,$27,$57,$07
-        EQUB    $1B,$A8,$8A,$57,$00,$AA,$1B,$13
-        EQUB    $57,$B5,$12,$77,$57,$B5,$1E,$04
-        EQUB    $77,$57,$B7,$16,$13,$85,$CD,$57
-        EQUB    $5E,$5C,$56,$5F,$57,$13,$05,$1E
-        EQUB    $AD,$57,$77,$14,$A2,$16,$B7,$10
-        EQUB    $02,$12,$57,$1E,$A8,$57,$44,$14
-        EQUB    $18,$1A,$1A,$A8,$13,$A3,$57,$3F
-        EQUB    $57,$1A,$8E,$19,$03,$16,$A7,$57
-        EQUB    $AB,$1E,$15,$B2,$57,$03,$A5,$12
-        EQUB    $57,$04,$07,$18,$03,$03,$AB,$57
-        EQUB    $2F,$57,$2E,$57,$36,$18,$1E,$13
-        EQUB    $57,$28,$57,$29,$57,$A8,$14,$1E
-        EQUB    $A1,$03,$57,$12,$0F,$BE,$07,$AC
-        EQUB    $88,$B3,$57,$12,$14,$BE,$19,$03
-        EQUB    $05,$1E,$14,$57,$A7,$10,$AF,$A7
-        EQUB    $AB,$57,$25,$57,$1C,$8B,$1B,$A3
-        EQUB    $57,$13,$12,$16,$13,$1B,$0E,$57
-        EQUB    $12,$01,$8B,$57,$B2,$B5,$B3,$57
-        EQUB    $01,$1E,$14,$1E,$18,$BB,$57,$8C
-        EQUB    $04,$77,$57,$5A,$59,$44,$57,$79
-        EQUB    $5B,$58,$57,$77,$A8,$13,$77,$57
-        EQUB    $0E,$8E,$57,$07,$B9,$1C,$94,$1A
-        EQUB    $8A,$A3,$04,$57,$13,$BB,$03,$77
-        EQUB    $14,$B7,$02,$13,$04,$57,$1E,$BE
-        EQUB    $77,$A0,$05,$10,$04,$57,$05,$18
-        EQUB    $14,$1C,$77,$11,$AA,$B8,$AC,$88
-        EQUB    $04,$57,$01,$18,$1B,$14,$16,$B4
-        EQUB    $BA,$57,$07,$1B,$A8,$03,$57,$03
-        EQUB    $02,$1B,$1E,$07,$57,$15,$A8,$A8
-        EQUB    $16,$57,$14,$AA,$19,$57,$45,$00
-        EQUB    $12,$AB,$57,$45,$57,$46,$77,$45
-        EQUB    $57,$46,$77,$3F,$57,$A7,$1F,$16
-        EQUB    $BD,$03,$A8,$03,$57,$E8,$57,$A7
-        EQUB    $10,$77,$57,$AB,$77,$57,$77,$13
-        EQUB    $79,$15,$AF,$A0,$19,$77,$71,$77
-        EQUB    $1E,$79,$A0,$1B,$1B,$57,$57,$57
-        EQUB    $77,$19,$16,$1A,$12,$68,$77,$57
-        EQUB    $77,$03,$18,$77,$57,$77,$1E,$04
-        EQUB    $77,$57,$00,$16,$04,$77,$AE,$89
-        EQUB    $77,$8D,$A1,$77,$A2,$77,$44,$57
-        EQUB    $79,$5B,$77,$44,$57,$13,$18,$14
-        EQUB    $1C,$AB,$57,$56,$7F,$0E,$78,$19
-        EQUB    $7E,$68,$57,$04,$1F,$1E,$07,$57
-        EQUB    $77,$16,$77,$57,$77,$A3,$05,$1E
-        EQUB    $BB,$57,$77,$19,$12,$00,$77,$57
-        EQUB    $55,$77,$1F,$A3,$77,$B8,$1D,$BA
-        EQUB    $03,$0E,$70,$04,$77,$04,$07,$16
-        EQUB    $BE,$77,$19,$16,$01,$0E,$5A,$57
-        EQUB    $E6,$5F,$56,$77,$77,$1A,$BA,$04
-        EQUB    $16,$B0,$77,$A1,$13,$04,$57,$77
-        EQUB    $CD,$77,$53,$7B,$77,$1E,$77,$5A
-        EQUB    $16,$1A,$55,$77,$14,$16,$07,$03
-        EQUB    $16,$A7,$77,$4C,$77,$5A,$18,$11
-        EQUB    $84,$57,$57,$58,$77,$02,$19,$1C
-        EQUB    $B4,$00,$19,$77,$C6,$57,$5E,$5F
-        EQUB    $40,$56,$77,$A7,$14,$18,$1A,$94
-        EQUB    $1A,$BA,$04,$16,$B0,$57,$14,$02
-        EQUB    $05,$05,$02,$B5,$A3,$04,$57,$11
-        EQUB    $18,$04,$13,$0E,$1C,$12,$77,$04
-        EQUB    $1A,$0E,$B5,$12,$57,$11,$AA,$03
-        EQUB    $BA,$A9,$12,$57,$9C,$A5,$BA,$A6
-        EQUB    $BE,$57,$1E,$04,$77,$A0,$1B,$1E
-        EQUB    $12,$01,$AB,$9E,$1F,$16,$AD,$77
-        EQUB    $1D,$02,$1A,$07,$AB,$9E,$C3,$10
-        EQUB    $B3,$16,$0F,$0E,$57,$4E,$5E,$4A
-        EQUB    $59,$55,$10,$18,$18,$13,$77,$13
-        EQUB    $16,$0E,$77,$CD,$77,$53,$9B,$1E
-        EQUB    $5A,$77,$16,$1A,$77,$44,$16,$10
-        EQUB    $A1,$03,$77,$44,$15,$AE,$1C,$12
-        EQUB    $77,$18,$11,$77,$44,$19,$16,$01
-        EQUB    $B3,$77,$44,$A7,$03,$12,$1B,$1B
-        EQUB    $1E,$10,$A1,$BE,$9B,$16,$04,$77
-        EQUB    $E4,$77,$1C,$B4,$00,$7B,$77,$C4
-        EQUB    $44,$19,$16,$01,$0E,$77,$1F,$16
-        EQUB    $AD,$77,$A0,$A1,$77,$1C,$12,$12
-        EQUB    $07,$94,$C4,$44,$B5,$B9,$10,$18
-        EQUB    $1E,$13,$04,$77,$18,$11,$11,$77
-        EQUB    $E4,$05,$77,$16,$04,$04,$77,$8E
-        EQUB    $03,$77,$A7,$77,$13,$12,$12,$07
-        EQUB    $77,$04,$07,$16,$BE,$77,$11,$AA
-        EQUB    $77,$B8,$19,$0E,$77,$0E,$12,$B9
-        EQUB    $04,$77,$B4,$00,$79,$77,$44,$00
-        EQUB    $12,$1B,$1B,$77,$C4,$04,$8C,$02
-        EQUB    $16,$AC,$88,$77,$1F,$16,$04,$77
-        EQUB    $14,$1F,$A8,$10,$AB,$9B,$8E,$05
-        EQUB    $77,$15,$18,$0E,$04,$77,$B9,$12
-        EQUB    $77,$A5,$16,$13,$0E,$77,$11,$AA
-        EQUB    $87,$07,$02,$04,$1F,$77,$05,$1E
-        EQUB    $10,$1F,$03,$9E,$C4,$1F,$18,$1A
-        EQUB    $12,$77,$04,$0E,$04,$03,$12,$1A
-        EQUB    $77,$18,$11,$77,$B5,$18,$8D,$77
-        EQUB    $1A,$02,$05,$13,$A3,$A3,$04,$9B
-        EQUB    $4F,$5E,$4A,$1E,$5A,$77,$1F,$16
-        EQUB    $AD,$77,$18,$15,$03,$16,$A7,$93
-        EQUB    $C4,$13,$12,$11,$A1,$BE,$77,$07
-        EQUB    $AE,$19,$04,$77,$11,$AA,$77,$B5
-        EQUB    $12,$1E,$05,$77,$44,$1F,$1E,$AD
-        EQUB    $77,$44,$00,$AA,$1B,$13,$04,$9B
-        EQUB    $C4,$A0,$8A,$B2,$04,$77,$1C,$B4
-        EQUB    $00,$77,$00,$12,$70,$AD,$77,$10
-        EQUB    $18,$03,$77,$BC,$1A,$12,$B5,$94
-        EQUB    $15,$02,$03,$77,$B4,$03,$77,$00
-        EQUB    $1F,$A2,$9B,$1E,$11,$77,$44,$1E
-        EQUB    $77,$03,$AF,$19,$04,$1A,$8C,$77
-        EQUB    $C4,$07,$AE,$19,$04,$9E,$8E,$05
-        EQUB    $77,$15,$16,$8D,$77,$88,$77,$44
-        EQUB    $BD,$A5,$AF,$77,$B5,$12,$0E,$70
-        EQUB    $1B,$1B,$77,$A7,$03,$A3,$BE,$07
-        EQUB    $03,$77,$C4,$03,$05,$A8,$04,$1A
-        EQUB    $1E,$04,$04,$1E,$88,$79,$77,$44
-        EQUB    $1E,$77,$19,$12,$AB,$87,$98,$9E
-        EQUB    $B8,$1C,$12,$77,$C4,$05,$02,$19
-        EQUB    $9B,$E4,$70,$A5,$77,$12,$B2,$14
-        EQUB    $03,$AB,$9B,$C4,$07,$AE,$19,$04
-        EQUB    $77,$16,$A5,$77,$02,$19,$1E,$07
-        EQUB    $02,$1B,$8D,$77,$14,$18,$13,$93
-        EQUB    $00,$1E,$B5,$A7,$77,$C3,$03,$05
-        EQUB    $A8,$04,$1A,$1E,$04,$04,$1E,$88
-        EQUB    $9B,$5F,$E4,$77,$00,$8B,$1B,$77
-        EQUB    $A0,$77,$07,$16,$1E,$13,$9B,$77
-        EQUB    $77,$77,$77,$44,$10,$18,$18,$13
-        EQUB    $77,$1B,$02,$14,$1C,$77,$CD,$83
-        EQUB    $4F,$57,$4E,$5E,$4A,$5F,$59,$5A
-        EQUB    $44,$00,$12,$1B,$1B,$77,$13,$88
-        EQUB    $12,$77,$CD,$9B,$E4,$77,$1F,$16
-        EQUB    $AD,$77,$8D,$05,$01,$93,$02,$04
-        EQUB    $77,$00,$12,$1B,$1B,$E5,$00,$12
-        EQUB    $77,$04,$1F,$B3,$1B,$77,$A5,$1A
-        EQUB    $12,$1A,$15,$A3,$9B,$00,$12,$77
-        EQUB    $13,$1E,$13,$77,$B4,$03,$77,$12
-        EQUB    $0F,$07,$12,$14,$03,$77,$C4,$44
-        EQUB    $B5,$B9,$10,$18,$1E,$13,$04,$9E
-        EQUB    $11,$A7,$13,$77,$8E,$03,$77,$16
-        EQUB    $15,$8E,$03,$77,$E4,$9B,$11,$AA
-        EQUB    $77,$C4,$1A,$18,$1A,$A1,$03,$77
-        EQUB    $07,$B2,$16,$8D,$77,$16,$14,$BE
-        EQUB    $07,$03,$77,$C3,$44,$19,$16,$01
-        EQUB    $0E,$77,$51,$25,$52,$77,$16,$04
-        EQUB    $77,$07,$16,$0E,$1A,$A1,$03,$83
-        EQUB    $4F,$57,$16,$A5,$77,$E4,$77,$04
-        EQUB    $02,$A5,$68,$57,$04,$1F,$A5,$00
-        EQUB    $57,$A0,$16,$89,$57,$15,$1E,$04
-        EQUB    $88,$57,$04,$19,$16,$1C,$12,$57
-        EQUB    $00,$18,$1B,$11,$57,$B2,$18,$07
-        EQUB    $B9,$13,$57,$14,$A2,$57,$1A,$88
-        EQUB    $1C,$12,$0E,$57,$10,$18,$A2,$57
-        EQUB    $11,$1E,$04,$1F,$57,$3D,$77,$3E
-        EQUB    $57,$46,$77,$2F,$77,$2C,$57,$F8
-        EQUB    $3C,$77,$2E,$77,$2C,$57,$2B,$77
-        EQUB    $2A,$57,$3D,$77,$3E,$57,$1A,$12
-        EQUB    $A2,$57,$14,$02,$03,$1B,$8A,$57
-        EQUB    $89,$12,$16,$1C,$57,$15,$02,$05
-        EQUB    $10,$A3,$04,$57,$BC,$02,$07,$57
-        EQUB    $1E,$BE,$57,$1A,$02,$13,$57,$0D
-        EQUB    $A3,$18,$7A,$44,$10,$57,$01,$16
-        EQUB    $14,$02,$02,$1A,$57,$46,$77,$02
-        EQUB    $1B,$03,$AF,$57,$1F,$18,$14,$1C
-        EQUB    $12,$0E,$57,$14,$05,$1E,$14,$1C
-        EQUB    $8A,$57,$1C,$B9,$A2,$12,$57,$07
-        EQUB    $18,$B7,$57,$03,$A1,$19,$1E,$04
-        EQUB    $57,$5B,$49,$77,$A3,$05,$AA,$57
-        EQUB    $D3,$96,$24,$1C,$FD,$4F,$35,$76
-        EQUB    $64,$20,$44,$A4,$DC,$6A,$10,$A2
-        EQUB    $03,$6B,$1A,$C0,$B8,$05,$65,$C1
-        EQUB    $29,$01,$80,$00,$00,$00,$01,$01
-        EQUB    $01,$01,$82,$01,$01,$01,$01,$01
-        EQUB    $01,$01,$01,$01,$01,$01,$01,$01
-        EQUB    $02,$01,$82,$90,$57,$C4,$14,$18
-        EQUB    $B7,$19,$1E,$89,$04,$77,$1F,$12
-        EQUB    $A5,$77,$1F,$16,$AD,$77,$01,$1E
-        EQUB    $18,$1B,$A2,$AB,$55,$77,$A7,$03
-        EQUB    $A3,$10,$B3,$16,$14,$AC,$14,$77
-        EQUB    $14,$B7,$19,$94,$07,$05,$18,$03
-        EQUB    $18,$14,$18,$1B,$5A,$E5,$04,$1F
-        EQUB    $8E,$1B,$13,$77,$A0,$77,$16,$01
-        EQUB    $18,$1E,$13,$AB,$57,$C4,$14,$88
-        EQUB    $89,$05,$1E,$14,$03,$AA,$77,$9C
-        EQUB    $A5,$BA,$A6,$BE,$7B,$77,$CD,$57
-        EQUB    $16,$77,$25,$77,$B7,$18,$1C,$94
-        EQUB    $98,$77,$B2,$11,$03,$77,$1F,$12
-        EQUB    $A5,$87,$00,$1F,$1E,$B2,$77,$15
-        EQUB    $16,$14,$1C,$79,$77,$1B,$18,$18
-        EQUB    $1C,$93,$15,$8E,$19,$13,$77,$11
-        EQUB    $AA,$77,$B9,$12,$B1,$57,$0E,$12
-        EQUB    $07,$7B,$87,$25,$85,$98,$77,$1F
-        EQUB    $16,$13,$87,$10,$B3,$16,$14,$AC
-        EQUB    $14,$77,$1F,$0E,$07,$A3,$13,$05
-        EQUB    $1E,$AD,$77,$11,$8C,$03,$93,$1F
-        EQUB    $12,$A5,$79,$77,$BB,$93,$8C,$77
-        EQUB    $03,$18,$18,$57,$C3,$77,$25,$77
-        EQUB    $98,$77,$13,$12,$1F,$0E,$07,$93
-        EQUB    $1F,$12,$A5,$77,$11,$05,$18,$1A
-        EQUB    $77,$B4,$00,$1F,$12,$A5,$7B,$77
-        EQUB    $04,$02,$19,$77,$04,$1C,$1E,$1A
-        EQUB    $1A,$AB,$E5,$1D,$02,$1A,$07,$AB
-        EQUB    $79,$77,$1E,$77,$1F,$12,$B9,$77
-        EQUB    $8C,$77,$00,$A1,$03,$9E,$A7,$BD
-        EQUB    $A0,$57,$24,$77,$98,$77,$00,$A1
-        EQUB    $03,$77,$11,$AA,$77,$1A,$12,$77
-        EQUB    $A2,$77,$16,$BB,$B9,$79,$77,$1A
-        EQUB    $0E,$77,$AE,$04,$A3,$04,$77,$13
-        EQUB    $1E,$13,$19,$70,$03,$77,$12,$01
-        EQUB    $A1,$77,$04,$14,$AF,$03,$14,$1F
-        EQUB    $77,$C4,$24,$57,$18,$1F,$77,$13
-        EQUB    $12,$B9,$77,$1A,$12,$77,$0E,$BA
-        EQUB    $79,$87,$11,$05,$1E,$10,$1F,$03
-        EQUB    $11,$02,$1B,$77,$05,$18,$10,$02
-        EQUB    $12,$77,$00,$1E,$B5,$77,$00,$1F
-        EQUB    $A2,$77,$1E,$77,$A0,$1B,$1E,$12
-        EQUB    $AD,$77,$E4,$77,$07,$12,$18,$07
-        EQUB    $B2,$77,$14,$B3,$1B,$87,$B2,$16
-        EQUB    $13,$77,$07,$18,$89,$A3,$1E,$AA
-        EQUB    $77,$04,$1F,$18,$03,$77,$02,$07
-        EQUB    $77,$B7,$03,$04,$77,$18,$11,$77
-        EQUB    $B5,$18,$8D,$77,$A0,$16,$89,$1B
-        EQUB    $0E,$77,$07,$1E,$AF,$03,$BA,$E5
-        EQUB    $00,$A1,$03,$9E,$BB,$B2,$05,$1E
-        EQUB    $57,$E4,$77,$14,$A8,$77,$03,$16
-        EQUB    $14,$1C,$B2,$77,$C4,$3F,$77,$24
-        EQUB    $77,$1E,$11,$77,$E4,$77,$1B,$1E
-        EQUB    $1C,$12,$79,$77,$1F,$12,$70,$04
-        EQUB    $77,$A2,$77,$AA,$B9,$AF,$57,$56
-        EQUB    $14,$18,$1A,$94,$BC,$88,$6D,$77
-        EQUB    $12,$1B,$8C,$12,$77,$1E,$1E,$57
-        EQUB    $23,$57,$23,$57,$23,$57,$23,$57
-        EQUB    $23,$57,$23,$57,$23,$57,$23,$57
-        EQUB    $23,$57,$23,$57,$23,$57,$23,$57
-        EQUB    $23,$57,$15,$18,$0E,$77,$16,$A5
-        EQUB    $77,$E4,$77,$A7,$77,$C4,$00,$05
-        EQUB    $88,$10,$77,$10,$B3,$16,$0F,$0E
-        EQUB    $76,$57,$B5,$A3,$12,$70,$04,$87
-        EQUB    $A5,$B3,$77,$24,$77,$07,$1E,$AF
-        EQUB    $03,$12,$77,$8E,$03,$77,$B5,$A3
-        EQUB    $12,$57,$C4,$96,$04,$77,$18,$11
-        EQUB    $77,$3A,$77,$16,$A5,$77,$BC,$77
-        EQUB    $16,$B8,$0D,$A7,$10,$1B,$0E,$77
-        EQUB    $07,$05,$1E,$1A,$1E,$AC,$AD,$77
-        EQUB    $B5,$A2,$77,$B5,$12,$0E,$77,$89
-        EQUB    $8B,$1B,$77,$B5,$A7,$1C,$77,$44
-        EQUB    $7D,$7D,$7D,$7D,$7D,$77,$7D,$7D
-        EQUB    $7D,$7D,$7D,$7D,$9D,$77,$64,$13
-        EQUB    $57,$56,$00,$12,$1B,$14,$18,$1A
-        EQUB    $12,$9E,$77,$C4,$8D,$AD,$19,$03
-        EQUB    $12,$A1,$B5,$77,$10,$16,$AE,$0F
-        EQUB    $0E,$76,$57,$20,$5C,$6D,$75,$74
-        EQUB    $69,$6C,$61,$74,$65,$20,$66,$72
-        EQUB    $6F,$6D,$20,$68,$65,$72,$65,$20
-        EQUB    $74,$6F,$20,$46,$25,$0D,$0B,$B8
+
+INCLUDE "library/common/main/variable/sne.asm"
+INCLUDE "library/common/main/variable/act.asm"
+INCLUDE "library/6502sp/main/macro/ejmp.asm"
+INCLUDE "library/6502sp/main/macro/echr.asm"
+INCLUDE "library/6502sp/main/macro/etok.asm"
+INCLUDE "library/6502sp/main/macro/etwo.asm"
+INCLUDE "library/6502sp/main/macro/ernd.asm"
+INCLUDE "library/6502sp/main/macro/tokn.asm"
+
+.TKN1
+
+ EQUB &00 EOR VE
+ EQUB &09 EOR VE
+ EQUB &0B EOR VE
+ EQUB &01 EOR VE
+ EQUB &08 EOR VE
+ EQUB &20 EOR VE
+ EQUB &F1 EOR VE
+ EQUB &53 EOR VE
+ EQUB &4B EOR VE
+ EQUB &20 EOR VE
+ EQUB &41 EOR VE
+ EQUB &43 EOR VE
+ EQUB &E9 EOR VE
+ EQUB &53 EOR VE
+ EQUB &53 EOR VE
+ EQUB &20 EOR VE
+ EQUB &4D EOR VE
+ EQUB &45 EOR VE
+ EQUB &E1 EOR VE
+ EQUB &D7 EOR VE
+ EQUB &0A EOR VE
+ EQUB &02 EOR VE
+ EQUB &31 EOR VE
+ EQUB &2E EOR VE
+ EQUB &20 EOR VE
+ EQUB &95 EOR VE
+ EQUB &D7 EOR VE
+ EQUB &32 EOR VE
+ EQUB &2E EOR VE
+ EQUB &20 EOR VE
+ EQUB &53 EOR VE
+ EQUB &41 EOR VE
+ EQUB &FA EOR VE
+ EQUB &20 EOR VE
+ EQUB &9A EOR VE
+ EQUB &20 EOR VE
+ EQUB &04 EOR VE
+ EQUB &D7 EOR VE
+ EQUB &33 EOR VE
+ EQUB &2E EOR VE
+ EQUB &20 EOR VE
+ EQUB &43 EOR VE
+ EQUB &41 EOR VE
+ EQUB &54 EOR VE
+ EQUB &41 EOR VE
+ EQUB &4C EOR VE
+ EQUB &4F EOR VE
+ EQUB &47 EOR VE
+ EQUB &55 EOR VE
+ EQUB &45 EOR VE
+ EQUB &20 EOR VE
+ EQUB &44 EOR VE
+ EQUB &49 EOR VE
+ EQUB &53 EOR VE
+ EQUB &4B EOR VE
+ EQUB &D7 EOR VE
+ EQUB &34 EOR VE
+ EQUB &2E EOR VE
+ EQUB &20 EOR VE
+ EQUB &44 EOR VE
+ EQUB &45 EOR VE
+ EQUB &4C EOR VE
+ EQUB &45 EOR VE
+ EQUB &54 EOR VE
+ EQUB &45 EOR VE
+ EQUB &20 EOR VE
+ EQUB &46 EOR VE
+ EQUB &49 EOR VE
+ EQUB &4C EOR VE
+ EQUB &45 EOR VE
+ EQUB &D7 EOR VE
+ EQUB &35 EOR VE
+ EQUB &2E EOR VE
+ EQUB &20 EOR VE
+ EQUB &44 EOR VE
+ EQUB &45 EOR VE
+ EQUB &46 EOR VE
+ EQUB &41 EOR VE
+ EQUB &55 EOR VE
+ EQUB &4C EOR VE
+ EQUB &54 EOR VE
+ EQUB &20 EOR VE
+ EQUB &01 EOR VE
+ EQUB &4A EOR VE
+ EQUB &41 EOR VE
+ EQUB &4D EOR VE
+ EQUB &ED EOR VE
+ EQUB &DF EOR VE
+ EQUB &02 EOR VE
+ EQUB &D7 EOR VE
+ EQUB &36 EOR VE
+ EQUB &2E EOR VE
+ EQUB &20 EOR VE
+ EQUB &45 EOR VE
+ EQUB &58 EOR VE
+ EQUB &DB EOR VE
+ EQUB &D7 EOR VE
+ EQUB &00 EOR VE
+ EQUB &0C EOR VE
+ EQUB &57 EOR VE
+ EQUB &48 EOR VE
+ EQUB &49 EOR VE
+ EQUB &43 EOR VE
+ EQUB &48 EOR VE
+ EQUB &20 EOR VE
+ EQUB &97 EOR VE
+ EQUB &3F EOR VE
+ EQUB &00 EOR VE
+ EQUB &96 EOR VE
+ EQUB &97 EOR VE
+ EQUB &20 EOR VE
+ EQUB &10 EOR VE
+ EQUB &98 EOR VE
+ EQUB &D7 EOR VE
+ EQUB &00 EOR VE
+ EQUB &00 EOR VE
+ EQUB &B0 EOR VE
+ EQUB &6D EOR VE
+ EQUB &CA EOR VE
+ EQUB &6E EOR VE
+ EQUB &B1 EOR VE
+ EQUB &00 EOR VE
+ EQUB &20 EOR VE
+ EQUB &20 EOR VE
+ EQUB &95 EOR VE
+ EQUB &20 EOR VE
+ EQUB &01 EOR VE
+ EQUB &28 EOR VE
+ EQUB &59 EOR VE
+ EQUB &2F EOR VE
+ EQUB &4E EOR VE
+ EQUB &29 EOR VE
+ EQUB &3F EOR VE
+ EQUB &02 EOR VE
+ EQUB &0C EOR VE
+ EQUB &0C EOR VE
+ EQUB &00 EOR VE
+ EQUB &50 EOR VE
+ EQUB &F2 EOR VE
+ EQUB &53 EOR VE
+ EQUB &53 EOR VE
+ EQUB &20 EOR VE
+ EQUB &53 EOR VE
+ EQUB &50 EOR VE
+ EQUB &41 EOR VE
+ EQUB &E9 EOR VE
+ EQUB &20 EOR VE
+ EQUB &FD EOR VE
+ EQUB &20 EOR VE
+ EQUB &46 EOR VE
+ EQUB &49 EOR VE
+ EQUB &F2 EOR VE
+ EQUB &2C EOR VE
+ EQUB &9A EOR VE
+ EQUB &2E EOR VE
+ EQUB &0C EOR VE
+ EQUB &0C EOR VE
+ EQUB &00 EOR VE
+ EQUB &9A EOR VE
+ EQUB &27 EOR VE
+ EQUB &53 EOR VE
+ EQUB &C8 EOR VE
+ EQUB &00 EOR VE
+ EQUB &0C EOR VE
+ EQUB &01 EOR VE
+ EQUB &DC EOR VE
+ EQUB &E5 EOR VE
+ EQUB &47 EOR VE
+ EQUB &E4 EOR VE
+ EQUB &20 EOR VE
+ EQUB &45 EOR VE
+ EQUB &4C EOR VE
+ EQUB &49 EOR VE
+ EQUB &54 EOR VE
+ EQUB &45 EOR VE
+ EQUB &20 EOR VE
+ EQUB &49 EOR VE
+ EQUB &49 EOR VE
+ EQUB &20 EOR VE
+ EQUB &46 EOR VE
+ EQUB &49 EOR VE
+ EQUB &E5 EOR VE
+ EQUB &00 EOR VE
+ EQUB &17 EOR VE
+ EQUB &0E EOR VE
+ EQUB &02 EOR VE
+ EQUB &47 EOR VE
+ EQUB &F2 EOR VE
+ EQUB &DD EOR VE
+ EQUB &F0 EOR VE
+ EQUB &47 EOR VE
+ EQUB &53 EOR VE
+ EQUB &D5 EOR VE
+ EQUB &B2 EOR VE
+ EQUB &13 EOR VE
+ EQUB &49 EOR VE
+ EQUB &20 EOR VE
+ EQUB &F7 EOR VE
+ EQUB &47 EOR VE
+ EQUB &D0 EOR VE
+ EQUB &4D EOR VE
+ EQUB &4F EOR VE
+ EQUB &4D EOR VE
+ EQUB &F6 EOR VE
+ EQUB &54 EOR VE
+ EQUB &20 EOR VE
+ EQUB &4F EOR VE
+ EQUB &46 EOR VE
+ EQUB &20 EOR VE
+ EQUB &B3 EOR VE
+ EQUB &52 EOR VE
+ EQUB &20 EOR VE
+ EQUB &56 EOR VE
+ EQUB &E4 EOR VE
+ EQUB &55 EOR VE
+ EQUB &D8 EOR VE
+ EQUB &E5 EOR VE
+ EQUB &20 EOR VE
+ EQUB &FB EOR VE
+ EQUB &4D EOR VE
+ EQUB &45 EOR VE
+ EQUB &CC EOR VE
+ EQUB &57 EOR VE
+ EQUB &45 EOR VE
+ EQUB &20 EOR VE
+ EQUB &57 EOR VE
+ EQUB &D9 EOR VE
+ EQUB &4C EOR VE
+ EQUB &44 EOR VE
+ EQUB &20 EOR VE
+ EQUB &4C EOR VE
+ EQUB &49 EOR VE
+ EQUB &4B EOR VE
+ EQUB &45 EOR VE
+ EQUB &20 EOR VE
+ EQUB &B3 EOR VE
+ EQUB &C9 EOR VE
+ EQUB &44 EOR VE
+ EQUB &4F EOR VE
+ EQUB &D0 EOR VE
+ EQUB &4C EOR VE
+ EQUB &DB EOR VE
+ EQUB &54 EOR VE
+ EQUB &E5 EOR VE
+ EQUB &20 EOR VE
+ EQUB &4A EOR VE
+ EQUB &4F EOR VE
+ EQUB &42 EOR VE
+ EQUB &20 EOR VE
+ EQUB &46 EOR VE
+ EQUB &FD EOR VE
+ EQUB &20 EOR VE
+ EQUB &EC EOR VE
+ EQUB &CC EOR VE
+ EQUB &93 EOR VE
+ EQUB &CF EOR VE
+ EQUB &20 EOR VE
+ EQUB &B3 EOR VE
+ EQUB &20 EOR VE
+ EQUB &DA EOR VE
+ EQUB &45 EOR VE
+ EQUB &20 EOR VE
+ EQUB &48 EOR VE
+ EQUB &45 EOR VE
+ EQUB &F2 EOR VE
+ EQUB &CA EOR VE
+ EQUB &41 EOR VE
+ EQUB &D2 EOR VE
+ EQUB &4D EOR VE
+ EQUB &4F EOR VE
+ EQUB &44 EOR VE
+ EQUB &45 EOR VE
+ EQUB &4C EOR VE
+ EQUB &2C EOR VE
+ EQUB &20 EOR VE
+ EQUB &93 EOR VE
+ EQUB &13 EOR VE
+ EQUB &43 EOR VE
+ EQUB &DF EOR VE
+ EQUB &DE EOR VE
+ EQUB &52 EOR VE
+ EQUB &49 EOR VE
+ EQUB &43 EOR VE
+ EQUB &54 EOR VE
+ EQUB &FD EOR VE
+ EQUB &2C EOR VE
+ EQUB &20 EOR VE
+ EQUB &45 EOR VE
+ EQUB &FE EOR VE
+ EQUB &49 EOR VE
+ EQUB &50 EOR VE
+ EQUB &C4 EOR VE
+ EQUB &57 EOR VE
+ EQUB &49 EOR VE
+ EQUB &E2 EOR VE
+ EQUB &D0 EOR VE
+ EQUB &54 EOR VE
+ EQUB &4F EOR VE
+ EQUB &50 EOR VE
+ EQUB &20 EOR VE
+ EQUB &DA EOR VE
+ EQUB &43 EOR VE
+ EQUB &52 EOR VE
+ EQUB &DD EOR VE
+ EQUB &D2 EOR VE
+ EQUB &53 EOR VE
+ EQUB &48 EOR VE
+ EQUB &49 EOR VE
+ EQUB &45 EOR VE
+ EQUB &4C EOR VE
+ EQUB &44 EOR VE
+ EQUB &20 EOR VE
+ EQUB &47 EOR VE
+ EQUB &F6 EOR VE
+ EQUB &F4 EOR VE
+ EQUB &F5 EOR VE
+ EQUB &FD EOR VE
+ EQUB &CC EOR VE
+ EQUB &55 EOR VE
+ EQUB &4E EOR VE
+ EQUB &46 EOR VE
+ EQUB &FD EOR VE
+ EQUB &54 EOR VE
+ EQUB &55 EOR VE
+ EQUB &4E EOR VE
+ EQUB &F5 EOR VE
+ EQUB &45 EOR VE
+ EQUB &4C EOR VE
+ EQUB &59 EOR VE
+ EQUB &20 EOR VE
+ EQUB &DB EOR VE
+ EQUB &27 EOR VE
+ EQUB &53 EOR VE
+ EQUB &20 EOR VE
+ EQUB &F7 EOR VE
+ EQUB &F6 EOR VE
+ EQUB &20 EOR VE
+ EQUB &DE EOR VE
+ EQUB &4F EOR VE
+ EQUB &4C EOR VE
+ EQUB &F6 EOR VE
+ EQUB &CC EOR VE
+ EQUB &16 EOR VE
+ EQUB &DB EOR VE
+ EQUB &20 EOR VE
+ EQUB &57 EOR VE
+ EQUB &F6 EOR VE
+ EQUB &54 EOR VE
+ EQUB &20 EOR VE
+ EQUB &4D EOR VE
+ EQUB &49 EOR VE
+ EQUB &53 EOR VE
+ EQUB &53 EOR VE
+ EQUB &C3 EOR VE
+ EQUB &46 EOR VE
+ EQUB &52 EOR VE
+ EQUB &4F EOR VE
+ EQUB &4D EOR VE
+ EQUB &20 EOR VE
+ EQUB &D9 EOR VE
+ EQUB &52 EOR VE
+ EQUB &20 EOR VE
+ EQUB &CF EOR VE
+ EQUB &20 EOR VE
+ EQUB &59 EOR VE
+ EQUB &EE EOR VE
+ EQUB &44 EOR VE
+ EQUB &20 EOR VE
+ EQUB &DF EOR VE
+ EQUB &20 EOR VE
+ EQUB &13 EOR VE
+ EQUB &E6 EOR VE
+ EQUB &F4 EOR VE
+ EQUB &20 EOR VE
+ EQUB &46 EOR VE
+ EQUB &49 EOR VE
+ EQUB &FA EOR VE
+ EQUB &20 EOR VE
+ EQUB &4D EOR VE
+ EQUB &DF EOR VE
+ EQUB &E2 EOR VE
+ EQUB &53 EOR VE
+ EQUB &20 EOR VE
+ EQUB &41 EOR VE
+ EQUB &47 EOR VE
+ EQUB &4F EOR VE
+ EQUB &B2 EOR VE
+ EQUB &1C EOR VE
+ EQUB &CC EOR VE
+ EQUB &B3 EOR VE
+ EQUB &52 EOR VE
+ EQUB &20 EOR VE
+ EQUB &4D EOR VE
+ EQUB &49 EOR VE
+ EQUB &53 EOR VE
+ EQUB &53 EOR VE
+ EQUB &49 EOR VE
+ EQUB &DF EOR VE
+ EQUB &2C EOR VE
+ EQUB &20 EOR VE
+ EQUB &53 EOR VE
+ EQUB &48 EOR VE
+ EQUB &D9 EOR VE
+ EQUB &4C EOR VE
+ EQUB &44 EOR VE
+ EQUB &20 EOR VE
+ EQUB &B3 EOR VE
+ EQUB &20 EOR VE
+ EQUB &44 EOR VE
+ EQUB &45 EOR VE
+ EQUB &43 EOR VE
+ EQUB &49 EOR VE
+ EQUB &44 EOR VE
+ EQUB &45 EOR VE
+ EQUB &C9 EOR VE
+ EQUB &41 EOR VE
+ EQUB &43 EOR VE
+ EQUB &E9 EOR VE
+ EQUB &50 EOR VE
+ EQUB &54 EOR VE
+ EQUB &20 EOR VE
+ EQUB &DB EOR VE
+ EQUB &2C EOR VE
+ EQUB &20 EOR VE
+ EQUB &49 EOR VE
+ EQUB &53 EOR VE
+ EQUB &C9 EOR VE
+ EQUB &DA EOR VE
+ EQUB &45 EOR VE
+ EQUB &4B EOR VE
+ EQUB &B2 EOR VE
+ EQUB &44 EOR VE
+ EQUB &ED EOR VE
+ EQUB &54 EOR VE
+ EQUB &52 EOR VE
+ EQUB &4F EOR VE
+ EQUB &59 EOR VE
+ EQUB &20 EOR VE
+ EQUB &94 EOR VE
+ EQUB &CF EOR VE
+ EQUB &CC EOR VE
+ EQUB &B3 EOR VE
+ EQUB &20 EOR VE
+ EQUB &41 EOR VE
+ EQUB &F2 EOR VE
+ EQUB &20 EOR VE
+ EQUB &43 EOR VE
+ EQUB &41 EOR VE
+ EQUB &55 EOR VE
+ EQUB &FB EOR VE
+ EQUB &DF EOR VE
+ EQUB &C4 EOR VE
+ EQUB &E2 EOR VE
+ EQUB &F5 EOR VE
+ EQUB &20 EOR VE
+ EQUB &DF EOR VE
+ EQUB &4C EOR VE
+ EQUB &59 EOR VE
+ EQUB &20 EOR VE
+ EQUB &06 EOR VE
+ EQUB &75 EOR VE
+ EQUB &05 EOR VE
+ EQUB &53 EOR VE
+ EQUB &20 EOR VE
+ EQUB &57 EOR VE
+ EQUB &DC EOR VE
+ EQUB &4C EOR VE
+ EQUB &20 EOR VE
+ EQUB &50 EOR VE
+ EQUB &F6 EOR VE
+ EQUB &DD EOR VE
+ EQUB &F8 EOR VE
+ EQUB &54 EOR VE
+ EQUB &45 EOR VE
+ EQUB &20 EOR VE
+ EQUB &93 EOR VE
+ EQUB &4E EOR VE
+ EQUB &45 EOR VE
+ EQUB &57 EOR VE
+ EQUB &20 EOR VE
+ EQUB &53 EOR VE
+ EQUB &48 EOR VE
+ EQUB &49 EOR VE
+ EQUB &45 EOR VE
+ EQUB &4C EOR VE
+ EQUB &44 EOR VE
+ EQUB &53 EOR VE
+ EQUB &B2 EOR VE
+ EQUB &E2 EOR VE
+ EQUB &F5 EOR VE
+ EQUB &20 EOR VE
+ EQUB &93 EOR VE
+ EQUB &13 EOR VE
+ EQUB &43 EOR VE
+ EQUB &DF EOR VE
+ EQUB &DE EOR VE
+ EQUB &52 EOR VE
+ EQUB &49 EOR VE
+ EQUB &43 EOR VE
+ EQUB &54 EOR VE
+ EQUB &FD EOR VE
+ EQUB &CA EOR VE
+ EQUB &46 EOR VE
+ EQUB &DB EOR VE
+ EQUB &54 EOR VE
+ EQUB &C4 EOR VE
+ EQUB &57 EOR VE
+ EQUB &49 EOR VE
+ EQUB &E2 EOR VE
+ EQUB &20 EOR VE
+ EQUB &FF EOR VE
+ EQUB &20 EOR VE
+ EQUB &06 EOR VE
+ EQUB &6C EOR VE
+ EQUB &05 EOR VE
+ EQUB &B1 EOR VE
+ EQUB &02 EOR VE
+ EQUB &08 EOR VE
+ EQUB &47 EOR VE
+ EQUB &4F EOR VE
+ EQUB &4F EOR VE
+ EQUB &44 EOR VE
+ EQUB &20 EOR VE
+ EQUB &4C EOR VE
+ EQUB &55 EOR VE
+ EQUB &43 EOR VE
+ EQUB &4B EOR VE
+ EQUB &2C EOR VE
+ EQUB &20 EOR VE
+ EQUB &9A EOR VE
+ EQUB &D4 EOR VE
+ EQUB &16 EOR VE
+ EQUB &00 EOR VE
+ EQUB &19 EOR VE
+ EQUB &09 EOR VE
+ EQUB &17 EOR VE
+ EQUB &0E EOR VE
+ EQUB &02 EOR VE
+ EQUB &20 EOR VE
+ EQUB &20 EOR VE
+ EQUB &F5 EOR VE
+ EQUB &54 EOR VE
+ EQUB &F6 EOR VE
+ EQUB &FB EOR VE
+ EQUB &DF EOR VE
+ EQUB &D5 EOR VE
+ EQUB &2E EOR VE
+ EQUB &20 EOR VE
+ EQUB &13 EOR VE
+ EQUB &57 EOR VE
+ EQUB &45 EOR VE
+ EQUB &20 EOR VE
+ EQUB &48 EOR VE
+ EQUB &41 EOR VE
+ EQUB &FA EOR VE
+ EQUB &20 EOR VE
+ EQUB &4E EOR VE
+ EQUB &45 EOR VE
+ EQUB &C4 EOR VE
+ EQUB &4F EOR VE
+ EQUB &46 EOR VE
+ EQUB &20 EOR VE
+ EQUB &B3 EOR VE
+ EQUB &52 EOR VE
+ EQUB &20 EOR VE
+ EQUB &DA EOR VE
+ EQUB &52 EOR VE
+ EQUB &56 EOR VE
+ EQUB &49 EOR VE
+ EQUB &43 EOR VE
+ EQUB &ED EOR VE
+ EQUB &20 EOR VE
+ EQUB &41 EOR VE
+ EQUB &47 EOR VE
+ EQUB &41 EOR VE
+ EQUB &F0 EOR VE
+ EQUB &CC EOR VE
+ EQUB &49 EOR VE
+ EQUB &46 EOR VE
+ EQUB &20 EOR VE
+ EQUB &B3 EOR VE
+ EQUB &20 EOR VE
+ EQUB &57 EOR VE
+ EQUB &D9 EOR VE
+ EQUB &4C EOR VE
+ EQUB &44 EOR VE
+ EQUB &20 EOR VE
+ EQUB &F7 EOR VE
+ EQUB &20 EOR VE
+ EQUB &EB EOR VE
+ EQUB &20 EOR VE
+ EQUB &47 EOR VE
+ EQUB &4F EOR VE
+ EQUB &4F EOR VE
+ EQUB &44 EOR VE
+ EQUB &20 EOR VE
+ EQUB &41 EOR VE
+ EQUB &53 EOR VE
+ EQUB &C9 EOR VE
+ EQUB &47 EOR VE
+ EQUB &4F EOR VE
+ EQUB &C9 EOR VE
+ EQUB &13 EOR VE
+ EQUB &E9 EOR VE
+ EQUB &F4 EOR VE
+ EQUB &F1 EOR VE
+ EQUB &20 EOR VE
+ EQUB &B3 EOR VE
+ EQUB &20 EOR VE
+ EQUB &57 EOR VE
+ EQUB &DC EOR VE
+ EQUB &4C EOR VE
+ EQUB &20 EOR VE
+ EQUB &F7 EOR VE
+ EQUB &20 EOR VE
+ EQUB &42 EOR VE
+ EQUB &52 EOR VE
+ EQUB &49 EOR VE
+ EQUB &45 EOR VE
+ EQUB &46 EOR VE
+ EQUB &FC EOR VE
+ EQUB &CC EOR VE
+ EQUB &49 EOR VE
+ EQUB &46 EOR VE
+ EQUB &20 EOR VE
+ EQUB &53 EOR VE
+ EQUB &55 EOR VE
+ EQUB &43 EOR VE
+ EQUB &E9 EOR VE
+ EQUB &53 EOR VE
+ EQUB &53 EOR VE
+ EQUB &46 EOR VE
+ EQUB &55 EOR VE
+ EQUB &4C EOR VE
+ EQUB &2C EOR VE
+ EQUB &20 EOR VE
+ EQUB &B3 EOR VE
+ EQUB &20 EOR VE
+ EQUB &57 EOR VE
+ EQUB &DC EOR VE
+ EQUB &4C EOR VE
+ EQUB &20 EOR VE
+ EQUB &F7 EOR VE
+ EQUB &20 EOR VE
+ EQUB &57 EOR VE
+ EQUB &45 EOR VE
+ EQUB &4C EOR VE
+ EQUB &4C EOR VE
+ EQUB &20 EOR VE
+ EQUB &F2 EOR VE
+ EQUB &57 EOR VE
+ EQUB &EE EOR VE
+ EQUB &44 EOR VE
+ EQUB &FC EOR VE
+ EQUB &D4 EOR VE
+ EQUB &18 EOR VE
+ EQUB &00 EOR VE
+ EQUB &28 EOR VE
+ EQUB &13 EOR VE
+ EQUB &43 EOR VE
+ EQUB &29 EOR VE
+ EQUB &20 EOR VE
+ EQUB &41 EOR VE
+ EQUB &43 EOR VE
+ EQUB &FD EOR VE
+ EQUB &4E EOR VE
+ EQUB &EB EOR VE
+ EQUB &46 EOR VE
+ EQUB &54 EOR VE
+ EQUB &20 EOR VE
+ EQUB &31 EOR VE
+ EQUB &39 EOR VE
+ EQUB &38 EOR VE
+ EQUB &36 EOR VE
+ EQUB &00 EOR VE
+ EQUB &42 EOR VE
+ EQUB &59 EOR VE
+ EQUB &C5 EOR VE
+ EQUB &00 EOR VE
+ EQUB &15 EOR VE
+ EQUB &91 EOR VE
+ EQUB &C8 EOR VE
+ EQUB &1A EOR VE
+ EQUB &00 EOR VE
+ EQUB &19 EOR VE
+ EQUB &09 EOR VE
+ EQUB &17 EOR VE
+ EQUB &0E EOR VE
+ EQUB &02 EOR VE
+ EQUB &20 EOR VE
+ EQUB &20 EOR VE
+ EQUB &43 EOR VE
+ EQUB &DF EOR VE
+ EQUB &47 EOR VE
+ EQUB &F8 EOR VE
+ EQUB &54 EOR VE
+ EQUB &55 EOR VE
+ EQUB &F9 EOR VE
+ EQUB &FB EOR VE
+ EQUB &DF EOR VE
+ EQUB &53 EOR VE
+ EQUB &20 EOR VE
+ EQUB &9A EOR VE
+ EQUB &21 EOR VE
+ EQUB &0C EOR VE
+ EQUB &0C EOR VE
+ EQUB &E2 EOR VE
+ EQUB &F4 EOR VE
+ EQUB &45 EOR VE
+ EQUB &0D EOR VE
+ EQUB &20 EOR VE
+ EQUB &57 EOR VE
+ EQUB &DC EOR VE
+ EQUB &4C EOR VE
+ EQUB &20 EOR VE
+ EQUB &E4 EOR VE
+ EQUB &57 EOR VE
+ EQUB &41 EOR VE
+ EQUB &59 EOR VE
+ EQUB &53 EOR VE
+ EQUB &20 EOR VE
+ EQUB &F7 EOR VE
+ EQUB &D0 EOR VE
+ EQUB &50 EOR VE
+ EQUB &F9 EOR VE
+ EQUB &E9 EOR VE
+ EQUB &20 EOR VE
+ EQUB &46 EOR VE
+ EQUB &FD EOR VE
+ EQUB &20 EOR VE
+ EQUB &B3 EOR VE
+ EQUB &20 EOR VE
+ EQUB &F0 EOR VE
+ EQUB &D3 EOR VE
+ EQUB &CC EOR VE
+ EQUB &FF EOR VE
+ EQUB &44 EOR VE
+ EQUB &20 EOR VE
+ EQUB &EF EOR VE
+ EQUB &59 EOR VE
+ EQUB &F7 EOR VE
+ EQUB &20 EOR VE
+ EQUB &EB EOR VE
+ EQUB &DF EOR VE
+ EQUB &F4 EOR VE
+ EQUB &20 EOR VE
+ EQUB &E2 EOR VE
+ EQUB &FF EOR VE
+ EQUB &20 EOR VE
+ EQUB &B3 EOR VE
+ EQUB &20 EOR VE
+ EQUB &E2 EOR VE
+ EQUB &F0 EOR VE
+ EQUB &4B EOR VE
+ EQUB &2E EOR VE
+ EQUB &2E EOR VE
+ EQUB &D4 EOR VE
+ EQUB &18 EOR VE
+ EQUB &00 EOR VE
+ EQUB &46 EOR VE
+ EQUB &D8 EOR VE
+ EQUB &E5 EOR VE
+ EQUB &44 EOR VE
+ EQUB &00 EOR VE
+ EQUB &E3 EOR VE
+ EQUB &54 EOR VE
+ EQUB &D8 EOR VE
+ EQUB &E5 EOR VE
+ EQUB &00 EOR VE
+ EQUB &57 EOR VE
+ EQUB &45 EOR VE
+ EQUB &4C EOR VE
+ EQUB &4C EOR VE
+ EQUB &20 EOR VE
+ EQUB &4B EOR VE
+ EQUB &E3 EOR VE
+ EQUB &57 EOR VE
+ EQUB &4E EOR VE
+ EQUB &00 EOR VE
+ EQUB &46 EOR VE
+ EQUB &41 EOR VE
+ EQUB &4D EOR VE
+ EQUB &4F EOR VE
+ EQUB &EC EOR VE
+ EQUB &00 EOR VE
+ EQUB &E3 EOR VE
+ EQUB &54 EOR VE
+ EQUB &FC EOR VE
+ EQUB &00 EOR VE
+ EQUB &FA EOR VE
+ EQUB &52 EOR VE
+ EQUB &59 EOR VE
+ EQUB &00 EOR VE
+ EQUB &4D EOR VE
+ EQUB &DC EOR VE
+ EQUB &44 EOR VE
+ EQUB &4C EOR VE
+ EQUB &59 EOR VE
+ EQUB &00 EOR VE
+ EQUB &4D EOR VE
+ EQUB &4F EOR VE
+ EQUB &DE EOR VE
+ EQUB &00 EOR VE
+ EQUB &F2 EOR VE
+ EQUB &41 EOR VE
+ EQUB &53 EOR VE
+ EQUB &DF EOR VE
+ EQUB &D8 EOR VE
+ EQUB &4C EOR VE
+ EQUB &59 EOR VE
+ EQUB &00 EOR VE
+ EQUB &00 EOR VE
+ EQUB &A5 EOR VE
+ EQUB &00 EOR VE
+ EQUB &72 EOR VE
+ EQUB &00 EOR VE
+ EQUB &47 EOR VE
+ EQUB &F2 EOR VE
+ EQUB &F5 EOR VE
+ EQUB &00 EOR VE
+ EQUB &56 EOR VE
+ EQUB &41 EOR VE
+ EQUB &DE EOR VE
+ EQUB &00 EOR VE
+ EQUB &50 EOR VE
+ EQUB &F0 EOR VE
+ EQUB &4B EOR VE
+ EQUB &00 EOR VE
+ EQUB &02 EOR VE
+ EQUB &77 EOR VE
+ EQUB &20 EOR VE
+ EQUB &76 EOR VE
+ EQUB &0D EOR VE
+ EQUB &20 EOR VE
+ EQUB &B9 EOR VE
+ EQUB &41 EOR VE
+ EQUB &FB EOR VE
+ EQUB &DF EOR VE
+ EQUB &53 EOR VE
+ EQUB &00 EOR VE
+ EQUB &9C EOR VE
+ EQUB &53 EOR VE
+ EQUB &00 EOR VE
+ EQUB &75 EOR VE
+ EQUB &00 EOR VE
+ EQUB &80 EOR VE
+ EQUB &20 EOR VE
+ EQUB &46 EOR VE
+ EQUB &FD EOR VE
+ EQUB &ED EOR VE
+ EQUB &54 EOR VE
+ EQUB &53 EOR VE
+ EQUB &00 EOR VE
+ EQUB &4F EOR VE
+ EQUB &E9 EOR VE
+ EQUB &FF EOR VE
+ EQUB &53 EOR VE
+ EQUB &00 EOR VE
+ EQUB &53 EOR VE
+ EQUB &48 EOR VE
+ EQUB &59 EOR VE
+ EQUB &4E EOR VE
+ EQUB &ED EOR VE
+ EQUB &53 EOR VE
+ EQUB &00 EOR VE
+ EQUB &53 EOR VE
+ EQUB &DC EOR VE
+ EQUB &4C EOR VE
+ EQUB &F0 EOR VE
+ EQUB &ED EOR VE
+ EQUB &53 EOR VE
+ EQUB &00 EOR VE
+ EQUB &EF EOR VE
+ EQUB &54 EOR VE
+ EQUB &C3 EOR VE
+ EQUB &54 EOR VE
+ EQUB &F8 EOR VE
+ EQUB &F1 EOR VE
+ EQUB &FB EOR VE
+ EQUB &DF EOR VE
+ EQUB &53 EOR VE
+ EQUB &00 EOR VE
+ EQUB &E0 EOR VE
+ EQUB &F5 EOR VE
+ EQUB &48 EOR VE
+ EQUB &C3 EOR VE
+ EQUB &4F EOR VE
+ EQUB &46 EOR VE
+ EQUB &20 EOR VE
+ EQUB &64 EOR VE
+ EQUB &00 EOR VE
+ EQUB &E0 EOR VE
+ EQUB &FA EOR VE
+ EQUB &20 EOR VE
+ EQUB &46 EOR VE
+ EQUB &FD EOR VE
+ EQUB &20 EOR VE
+ EQUB &64 EOR VE
+ EQUB &00 EOR VE
+ EQUB &46 EOR VE
+ EQUB &4F EOR VE
+ EQUB &4F EOR VE
+ EQUB &44 EOR VE
+ EQUB &20 EOR VE
+ EQUB &42 EOR VE
+ EQUB &E5 EOR VE
+ EQUB &4E EOR VE
+ EQUB &44 EOR VE
+ EQUB &F4 EOR VE
+ EQUB &53 EOR VE
+ EQUB &00 EOR VE
+ EQUB &54 EOR VE
+ EQUB &D9 EOR VE
+ EQUB &52 EOR VE
+ EQUB &49 EOR VE
+ EQUB &DE EOR VE
+ EQUB &53 EOR VE
+ EQUB &00 EOR VE
+ EQUB &50 EOR VE
+ EQUB &4F EOR VE
+ EQUB &DD EOR VE
+ EQUB &52 EOR VE
+ EQUB &59 EOR VE
+ EQUB &00 EOR VE
+ EQUB &F1 EOR VE
+ EQUB &53 EOR VE
+ EQUB &43 EOR VE
+ EQUB &4F EOR VE
+ EQUB &53 EOR VE
+ EQUB &00 EOR VE
+ EQUB &6C EOR VE
+ EQUB &00 EOR VE
+ EQUB &57 EOR VE
+ EQUB &E4 EOR VE
+ EQUB &4B EOR VE
+ EQUB &C3 EOR VE
+ EQUB &9E EOR VE
+ EQUB &00 EOR VE
+ EQUB &43 EOR VE
+ EQUB &F8 EOR VE
+ EQUB &42 EOR VE
+ EQUB &00 EOR VE
+ EQUB &42 EOR VE
+ EQUB &F5 EOR VE
+ EQUB &00 EOR VE
+ EQUB &E0 EOR VE
+ EQUB &42 EOR VE
+ EQUB &DE EOR VE
+ EQUB &00 EOR VE
+ EQUB &12 EOR VE
+ EQUB &00 EOR VE
+ EQUB &F7 EOR VE
+ EQUB &53 EOR VE
+ EQUB &DD EOR VE
+ EQUB &00 EOR VE
+ EQUB &50 EOR VE
+ EQUB &F9 EOR VE
+ EQUB &47 EOR VE
+ EQUB &55 EOR VE
+ EQUB &FC EOR VE
+ EQUB &00 EOR VE
+ EQUB &F8 EOR VE
+ EQUB &56 EOR VE
+ EQUB &41 EOR VE
+ EQUB &47 EOR VE
+ EQUB &FC EOR VE
+ EQUB &00 EOR VE
+ EQUB &43 EOR VE
+ EQUB &55 EOR VE
+ EQUB &52 EOR VE
+ EQUB &53 EOR VE
+ EQUB &FC EOR VE
+ EQUB &00 EOR VE
+ EQUB &53 EOR VE
+ EQUB &43 EOR VE
+ EQUB &D9 EOR VE
+ EQUB &52 EOR VE
+ EQUB &47 EOR VE
+ EQUB &FC EOR VE
+ EQUB &00 EOR VE
+ EQUB &71 EOR VE
+ EQUB &20 EOR VE
+ EQUB &43 EOR VE
+ EQUB &49 EOR VE
+ EQUB &56 EOR VE
+ EQUB &DC EOR VE
+ EQUB &20 EOR VE
+ EQUB &57 EOR VE
+ EQUB &EE EOR VE
+ EQUB &00 EOR VE
+ EQUB &68 EOR VE
+ EQUB &20 EOR VE
+ EQUB &5F EOR VE
+ EQUB &20 EOR VE
+ EQUB &60 EOR VE
+ EQUB &53 EOR VE
+ EQUB &00 EOR VE
+ EQUB &41 EOR VE
+ EQUB &20 EOR VE
+ EQUB &68 EOR VE
+ EQUB &20 EOR VE
+ EQUB &F1 EOR VE
+ EQUB &DA EOR VE
+ EQUB &41 EOR VE
+ EQUB &DA EOR VE
+ EQUB &00 EOR VE
+ EQUB &71 EOR VE
+ EQUB &20 EOR VE
+ EQUB &45 EOR VE
+ EQUB &EE EOR VE
+ EQUB &E2 EOR VE
+ EQUB &FE EOR VE
+ EQUB &41 EOR VE
+ EQUB &4B EOR VE
+ EQUB &ED EOR VE
+ EQUB &00 EOR VE
+ EQUB &71 EOR VE
+ EQUB &20 EOR VE
+ EQUB &EB EOR VE
+ EQUB &F9 EOR VE
+ EQUB &52 EOR VE
+ EQUB &20 EOR VE
+ EQUB &41 EOR VE
+ EQUB &43 EOR VE
+ EQUB &FB EOR VE
+ EQUB &56 EOR VE
+ EQUB &DB EOR VE
+ EQUB &59 EOR VE
+ EQUB &00 EOR VE
+ EQUB &AF EOR VE
+ EQUB &5D EOR VE
+ EQUB &20 EOR VE
+ EQUB &5E EOR VE
+ EQUB &00 EOR VE
+ EQUB &93 EOR VE
+ EQUB &11 EOR VE
+ EQUB &20 EOR VE
+ EQUB &5F EOR VE
+ EQUB &20 EOR VE
+ EQUB &60 EOR VE
+ EQUB &00 EOR VE
+ EQUB &AF EOR VE
+ EQUB &C1 EOR VE
+ EQUB &53 EOR VE
+ EQUB &27 EOR VE
+ EQUB &20 EOR VE
+ EQUB &62 EOR VE
+ EQUB &20 EOR VE
+ EQUB &63 EOR VE
+ EQUB &00 EOR VE
+ EQUB &02 EOR VE
+ EQUB &7A EOR VE
+ EQUB &0D EOR VE
+ EQUB &00 EOR VE
+ EQUB &AF EOR VE
+ EQUB &6B EOR VE
+ EQUB &20 EOR VE
+ EQUB &6C EOR VE
+ EQUB &00 EOR VE
+ EQUB &4A EOR VE
+ EQUB &55 EOR VE
+ EQUB &49 EOR VE
+ EQUB &E9 EOR VE
+ EQUB &00 EOR VE
+ EQUB &42 EOR VE
+ EQUB &F8 EOR VE
+ EQUB &4E EOR VE
+ EQUB &44 EOR VE
+ EQUB &59 EOR VE
+ EQUB &00 EOR VE
+ EQUB &57 EOR VE
+ EQUB &F5 EOR VE
+ EQUB &F4 EOR VE
+ EQUB &00 EOR VE
+ EQUB &42 EOR VE
+ EQUB &F2 EOR VE
+ EQUB &57 EOR VE
+ EQUB &00 EOR VE
+ EQUB &47 EOR VE
+ EQUB &EE EOR VE
+ EQUB &47 EOR VE
+ EQUB &E5 EOR VE
+ EQUB &20 EOR VE
+ EQUB &42 EOR VE
+ EQUB &F9 EOR VE
+ EQUB &DE EOR VE
+ EQUB &F4 EOR VE
+ EQUB &53 EOR VE
+ EQUB &00 EOR VE
+ EQUB &12 EOR VE
+ EQUB &00 EOR VE
+ EQUB &11 EOR VE
+ EQUB &20 EOR VE
+ EQUB &60 EOR VE
+ EQUB &00 EOR VE
+ EQUB &11 EOR VE
+ EQUB &20 EOR VE
+ EQUB &12 EOR VE
+ EQUB &00 EOR VE
+ EQUB &11 EOR VE
+ EQUB &20 EOR VE
+ EQUB &68 EOR VE
+ EQUB &00 EOR VE
+ EQUB &68 EOR VE
+ EQUB &20 EOR VE
+ EQUB &12 EOR VE
+ EQUB &00 EOR VE
+ EQUB &46 EOR VE
+ EQUB &D8 EOR VE
+ EQUB &55 EOR VE
+ EQUB &E0 EOR VE
+ EQUB &EC EOR VE
+ EQUB &00 EOR VE
+ EQUB &45 EOR VE
+ EQUB &58 EOR VE
+ EQUB &4F EOR VE
+ EQUB &FB EOR VE
+ EQUB &43 EOR VE
+ EQUB &00 EOR VE
+ EQUB &48 EOR VE
+ EQUB &4F EOR VE
+ EQUB &4F EOR VE
+ EQUB &50 EOR VE
+ EQUB &59 EOR VE
+ EQUB &00 EOR VE
+ EQUB &55 EOR VE
+ EQUB &E1 EOR VE
+ EQUB &53 EOR VE
+ EQUB &55 EOR VE
+ EQUB &E4 EOR VE
+ EQUB &00 EOR VE
+ EQUB &45 EOR VE
+ EQUB &58 EOR VE
+ EQUB &43 EOR VE
+ EQUB &DB EOR VE
+ EQUB &F0 EOR VE
+ EQUB &47 EOR VE
+ EQUB &00 EOR VE
+ EQUB &43 EOR VE
+ EQUB &55 EOR VE
+ EQUB &49 EOR VE
+ EQUB &53 EOR VE
+ EQUB &F0 EOR VE
+ EQUB &45 EOR VE
+ EQUB &00 EOR VE
+ EQUB &4E EOR VE
+ EQUB &49 EOR VE
+ EQUB &47 EOR VE
+ EQUB &48 EOR VE
+ EQUB &54 EOR VE
+ EQUB &20 EOR VE
+ EQUB &4C EOR VE
+ EQUB &49 EOR VE
+ EQUB &46 EOR VE
+ EQUB &45 EOR VE
+ EQUB &00 EOR VE
+ EQUB &43 EOR VE
+ EQUB &41 EOR VE
+ EQUB &53 EOR VE
+ EQUB &49 EOR VE
+ EQUB &E3 EOR VE
+ EQUB &53 EOR VE
+ EQUB &00 EOR VE
+ EQUB &53 EOR VE
+ EQUB &DB EOR VE
+ EQUB &20 EOR VE
+ EQUB &43 EOR VE
+ EQUB &4F EOR VE
+ EQUB &4D EOR VE
+ EQUB &53 EOR VE
+ EQUB &00 EOR VE
+ EQUB &02 EOR VE
+ EQUB &7A EOR VE
+ EQUB &0D EOR VE
+ EQUB &00 EOR VE
+ EQUB &03 EOR VE
+ EQUB &00 EOR VE
+ EQUB &93 EOR VE
+ EQUB &91 EOR VE
+ EQUB &20 EOR VE
+ EQUB &03 EOR VE
+ EQUB &00 EOR VE
+ EQUB &93 EOR VE
+ EQUB &92 EOR VE
+ EQUB &20 EOR VE
+ EQUB &03 EOR VE
+ EQUB &00 EOR VE
+ EQUB &94 EOR VE
+ EQUB &91 EOR VE
+ EQUB &00 EOR VE
+ EQUB &94 EOR VE
+ EQUB &92 EOR VE
+ EQUB &00 EOR VE
+ EQUB &53 EOR VE
+ EQUB &DF EOR VE
+ EQUB &20 EOR VE
+ EQUB &4F EOR VE
+ EQUB &46 EOR VE
+ EQUB &D0 EOR VE
+ EQUB &42 EOR VE
+ EQUB &DB EOR VE
+ EQUB &43 EOR VE
+ EQUB &48 EOR VE
+ EQUB &00 EOR VE
+ EQUB &53 EOR VE
+ EQUB &43 EOR VE
+ EQUB &D9 EOR VE
+ EQUB &4E EOR VE
+ EQUB &44 EOR VE
+ EQUB &F2 EOR VE
+ EQUB &4C EOR VE
+ EQUB &00 EOR VE
+ EQUB &42 EOR VE
+ EQUB &F9 EOR VE
+ EQUB &43 EOR VE
+ EQUB &4B EOR VE
+ EQUB &47 EOR VE
+ EQUB &55 EOR VE
+ EQUB &EE EOR VE
+ EQUB &44 EOR VE
+ EQUB &00 EOR VE
+ EQUB &52 EOR VE
+ EQUB &4F EOR VE
+ EQUB &47 EOR VE
+ EQUB &55 EOR VE
+ EQUB &45 EOR VE
+ EQUB &00 EOR VE
+ EQUB &57 EOR VE
+ EQUB &48 EOR VE
+ EQUB &FD EOR VE
+ EQUB &ED EOR VE
+ EQUB &DF EOR VE
+ EQUB &20 EOR VE
+ EQUB &F7 EOR VE
+ EQUB &DD EOR VE
+ EQUB &E5 EOR VE
+ EQUB &20 EOR VE
+ EQUB &48 EOR VE
+ EQUB &45 EOR VE
+ EQUB &41 EOR VE
+ EQUB &44 EOR VE
+ EQUB &C4 EOR VE
+ EQUB &46 EOR VE
+ EQUB &F9 EOR VE
+ EQUB &50 EOR VE
+ EQUB &20 EOR VE
+ EQUB &45 EOR VE
+ EQUB &EE EOR VE
+ EQUB &27 EOR VE
+ EQUB &44 EOR VE
+ EQUB &20 EOR VE
+ EQUB &4B EOR VE
+ EQUB &4E EOR VE
+ EQUB &41 EOR VE
+ EQUB &FA EOR VE
+ EQUB &00 EOR VE
+ EQUB &4E EOR VE
+ EQUB &20 EOR VE
+ EQUB &55 EOR VE
+ EQUB &4E EOR VE
+ EQUB &F2 EOR VE
+ EQUB &EF EOR VE
+ EQUB &52 EOR VE
+ EQUB &4B EOR VE
+ EQUB &D8 EOR VE
+ EQUB &E5 EOR VE
+ EQUB &00 EOR VE
+ EQUB &20 EOR VE
+ EQUB &42 EOR VE
+ EQUB &FD EOR VE
+ EQUB &F0 EOR VE
+ EQUB &47 EOR VE
+ EQUB &00 EOR VE
+ EQUB &20 EOR VE
+ EQUB &44 EOR VE
+ EQUB &55 EOR VE
+ EQUB &4C EOR VE
+ EQUB &4C EOR VE
+ EQUB &00 EOR VE
+ EQUB &20 EOR VE
+ EQUB &54 EOR VE
+ EQUB &45 EOR VE
+ EQUB &F1 EOR VE
+ EQUB &4F EOR VE
+ EQUB &EC EOR VE
+ EQUB &00 EOR VE
+ EQUB &20 EOR VE
+ EQUB &F2 EOR VE
+ EQUB &56 EOR VE
+ EQUB &4F EOR VE
+ EQUB &4C EOR VE
+ EQUB &54 EOR VE
+ EQUB &F0 EOR VE
+ EQUB &47 EOR VE
+ EQUB &00 EOR VE
+ EQUB &91 EOR VE
+ EQUB &00 EOR VE
+ EQUB &92 EOR VE
+ EQUB &00 EOR VE
+ EQUB &50 EOR VE
+ EQUB &F9 EOR VE
+ EQUB &E9 EOR VE
+ EQUB &00 EOR VE
+ EQUB &4C EOR VE
+ EQUB &DB EOR VE
+ EQUB &54 EOR VE
+ EQUB &E5 EOR VE
+ EQUB &20 EOR VE
+ EQUB &91 EOR VE
+ EQUB &00 EOR VE
+ EQUB &44 EOR VE
+ EQUB &55 EOR VE
+ EQUB &4D EOR VE
+ EQUB &50 EOR VE
+ EQUB &00 EOR VE
+ EQUB &49 EOR VE
+ EQUB &20 EOR VE
+ EQUB &48 EOR VE
+ EQUB &45 EOR VE
+ EQUB &EE EOR VE
+ EQUB &D0 EOR VE
+ EQUB &72 EOR VE
+ EQUB &20 EOR VE
+ EQUB &E0 EOR VE
+ EQUB &4F EOR VE
+ EQUB &4B EOR VE
+ EQUB &C3 EOR VE
+ EQUB &CF EOR VE
+ EQUB &20 EOR VE
+ EQUB &41 EOR VE
+ EQUB &50 EOR VE
+ EQUB &50 EOR VE
+ EQUB &45 EOR VE
+ EQUB &EE EOR VE
+ EQUB &C4 EOR VE
+ EQUB &F5 EOR VE
+ EQUB &D1 EOR VE
+ EQUB &00 EOR VE
+ EQUB &59 EOR VE
+ EQUB &45 EOR VE
+ EQUB &41 EOR VE
+ EQUB &48 EOR VE
+ EQUB &2C EOR VE
+ EQUB &20 EOR VE
+ EQUB &49 EOR VE
+ EQUB &20 EOR VE
+ EQUB &48 EOR VE
+ EQUB &45 EOR VE
+ EQUB &EE EOR VE
+ EQUB &D0 EOR VE
+ EQUB &72 EOR VE
+ EQUB &20 EOR VE
+ EQUB &CF EOR VE
+ EQUB &20 EOR VE
+ EQUB &E5 EOR VE
+ EQUB &46 EOR VE
+ EQUB &54 EOR VE
+ EQUB &D1 EOR VE
+ EQUB &D0 EOR VE
+ EQUB &20 EOR VE
+ EQUB &57 EOR VE
+ EQUB &48 EOR VE
+ EQUB &49 EOR VE
+ EQUB &E5 EOR VE
+ EQUB &20 EOR VE
+ EQUB &42 EOR VE
+ EQUB &41 EOR VE
+ EQUB &43 EOR VE
+ EQUB &4B EOR VE
+ EQUB &00 EOR VE
+ EQUB &47 EOR VE
+ EQUB &DD EOR VE
+ EQUB &20 EOR VE
+ EQUB &B3 EOR VE
+ EQUB &52 EOR VE
+ EQUB &20 EOR VE
+ EQUB &49 EOR VE
+ EQUB &52 EOR VE
+ EQUB &DF EOR VE
+ EQUB &20 EOR VE
+ EQUB &41 EOR VE
+ EQUB &53 EOR VE
+ EQUB &53 EOR VE
+ EQUB &20 EOR VE
+ EQUB &4F EOR VE
+ EQUB &56 EOR VE
+ EQUB &F4 EOR VE
+ EQUB &20 EOR VE
+ EQUB &54 EOR VE
+ EQUB &4F EOR VE
+ EQUB &D1 EOR VE
+ EQUB &00 EOR VE
+ EQUB &EB EOR VE
+ EQUB &4D EOR VE
+ EQUB &45 EOR VE
+ EQUB &20 EOR VE
+ EQUB &73 EOR VE
+ EQUB &D2 EOR VE
+ EQUB &CF EOR VE
+ EQUB &20 EOR VE
+ EQUB &57 EOR VE
+ EQUB &41 EOR VE
+ EQUB &53 EOR VE
+ EQUB &20 EOR VE
+ EQUB &DA EOR VE
+ EQUB &F6 EOR VE
+ EQUB &20 EOR VE
+ EQUB &F5 EOR VE
+ EQUB &D1 EOR VE
+ EQUB &00 EOR VE
+ EQUB &54 EOR VE
+ EQUB &52 EOR VE
+ EQUB &59 EOR VE
+ EQUB &D1 EOR VE
+ EQUB &00 EOR VE
+ EQUB &00 EOR VE
+ EQUB &00 EOR VE
+ EQUB &00 EOR VE
+ EQUB &00 EOR VE
+ EQUB &57 EOR VE
+ EQUB &41 EOR VE
+ EQUB &53 EOR VE
+ EQUB &50 EOR VE
+ EQUB &00 EOR VE
+ EQUB &4D EOR VE
+ EQUB &4F EOR VE
+ EQUB &E2 EOR VE
+ EQUB &00 EOR VE
+ EQUB &47 EOR VE
+ EQUB &52 EOR VE
+ EQUB &55 EOR VE
+ EQUB &42 EOR VE
+ EQUB &00 EOR VE
+ EQUB &FF EOR VE
+ EQUB &54 EOR VE
+ EQUB &00 EOR VE
+ EQUB &12 EOR VE
+ EQUB &00 EOR VE
+ EQUB &50 EOR VE
+ EQUB &4F EOR VE
+ EQUB &DD EOR VE
+ EQUB &00 EOR VE
+ EQUB &EE EOR VE
+ EQUB &54 EOR VE
+ EQUB &53 EOR VE
+ EQUB &20 EOR VE
+ EQUB &47 EOR VE
+ EQUB &F8 EOR VE
+ EQUB &44 EOR VE
+ EQUB &55 EOR VE
+ EQUB &F5 EOR VE
+ EQUB &45 EOR VE
+ EQUB &00 EOR VE
+ EQUB &59 EOR VE
+ EQUB &41 EOR VE
+ EQUB &4B EOR VE
+ EQUB &00 EOR VE
+ EQUB &53 EOR VE
+ EQUB &4E EOR VE
+ EQUB &41 EOR VE
+ EQUB &DC EOR VE
+ EQUB &00 EOR VE
+ EQUB &53 EOR VE
+ EQUB &4C EOR VE
+ EQUB &55 EOR VE
+ EQUB &47 EOR VE
+ EQUB &00 EOR VE
+ EQUB &54 EOR VE
+ EQUB &52 EOR VE
+ EQUB &4F EOR VE
+ EQUB &50 EOR VE
+ EQUB &49 EOR VE
+ EQUB &43 EOR VE
+ EQUB &E4 EOR VE
+ EQUB &00 EOR VE
+ EQUB &44 EOR VE
+ EQUB &F6 EOR VE
+ EQUB &DA EOR VE
+ EQUB &00 EOR VE
+ EQUB &F8 EOR VE
+ EQUB &F0 EOR VE
+ EQUB &00 EOR VE
+ EQUB &49 EOR VE
+ EQUB &4D EOR VE
+ EQUB &50 EOR VE
+ EQUB &F6 EOR VE
+ EQUB &DD EOR VE
+ EQUB &F8 EOR VE
+ EQUB &42 EOR VE
+ EQUB &E5 EOR VE
+ EQUB &00 EOR VE
+ EQUB &45 EOR VE
+ EQUB &58 EOR VE
+ EQUB &55 EOR VE
+ EQUB &F7 EOR VE
+ EQUB &F8 EOR VE
+ EQUB &4E EOR VE
+ EQUB &54 EOR VE
+ EQUB &00 EOR VE
+ EQUB &46 EOR VE
+ EQUB &55 EOR VE
+ EQUB &4E EOR VE
+ EQUB &4E EOR VE
+ EQUB &59 EOR VE
+ EQUB &00 EOR VE
+ EQUB &57 EOR VE
+ EQUB &45 EOR VE
+ EQUB &49 EOR VE
+ EQUB &52 EOR VE
+ EQUB &44 EOR VE
+ EQUB &00 EOR VE
+ EQUB &55 EOR VE
+ EQUB &E1 EOR VE
+ EQUB &53 EOR VE
+ EQUB &55 EOR VE
+ EQUB &E4 EOR VE
+ EQUB &00 EOR VE
+ EQUB &DE EOR VE
+ EQUB &F8 EOR VE
+ EQUB &4E EOR VE
+ EQUB &E7 EOR VE
+ EQUB &00 EOR VE
+ EQUB &50 EOR VE
+ EQUB &45 EOR VE
+ EQUB &43 EOR VE
+ EQUB &55 EOR VE
+ EQUB &4C EOR VE
+ EQUB &49 EOR VE
+ EQUB &EE EOR VE
+ EQUB &00 EOR VE
+ EQUB &46 EOR VE
+ EQUB &F2 EOR VE
+ EQUB &FE EOR VE
+ EQUB &F6 EOR VE
+ EQUB &54 EOR VE
+ EQUB &00 EOR VE
+ EQUB &4F EOR VE
+ EQUB &43 EOR VE
+ EQUB &43 EOR VE
+ EQUB &41 EOR VE
+ EQUB &53 EOR VE
+ EQUB &49 EOR VE
+ EQUB &DF EOR VE
+ EQUB &E4 EOR VE
+ EQUB &00 EOR VE
+ EQUB &55 EOR VE
+ EQUB &4E EOR VE
+ EQUB &50 EOR VE
+ EQUB &F2 EOR VE
+ EQUB &F1 EOR VE
+ EQUB &43 EOR VE
+ EQUB &54 EOR VE
+ EQUB &D8 EOR VE
+ EQUB &E5 EOR VE
+ EQUB &00 EOR VE
+ EQUB &44 EOR VE
+ EQUB &F2 EOR VE
+ EQUB &41 EOR VE
+ EQUB &44 EOR VE
+ EQUB &46 EOR VE
+ EQUB &55 EOR VE
+ EQUB &4C EOR VE
+ EQUB &00 EOR VE
+ EQUB &AB EOR VE
+ EQUB &00 EOR VE
+ EQUB &5C EOR VE
+ EQUB &20 EOR VE
+ EQUB &5B EOR VE
+ EQUB &20 EOR VE
+ EQUB &46 EOR VE
+ EQUB &FD EOR VE
+ EQUB &20 EOR VE
+ EQUB &65 EOR VE
+ EQUB &00 EOR VE
+ EQUB &8C EOR VE
+ EQUB &B2 EOR VE
+ EQUB &65 EOR VE
+ EQUB &00 EOR VE
+ EQUB &66 EOR VE
+ EQUB &20 EOR VE
+ EQUB &42 EOR VE
+ EQUB &59 EOR VE
+ EQUB &20 EOR VE
+ EQUB &67 EOR VE
+ EQUB &00 EOR VE
+ EQUB &8C EOR VE
+ EQUB &20 EOR VE
+ EQUB &42 EOR VE
+ EQUB &55 EOR VE
+ EQUB &54 EOR VE
+ EQUB &20 EOR VE
+ EQUB &8E EOR VE
+ EQUB &00 EOR VE
+ EQUB &20 EOR VE
+ EQUB &41 EOR VE
+ EQUB &6F EOR VE
+ EQUB &20 EOR VE
+ EQUB &70 EOR VE
+ EQUB &00 EOR VE
+ EQUB &50 EOR VE
+ EQUB &4C EOR VE
+ EQUB &FF EOR VE
+ EQUB &DD EOR VE
+ EQUB &00 EOR VE
+ EQUB &57 EOR VE
+ EQUB &FD EOR VE
+ EQUB &4C EOR VE
+ EQUB &44 EOR VE
+ EQUB &00 EOR VE
+ EQUB &E2 EOR VE
+ EQUB &45 EOR VE
+ EQUB &20 EOR VE
+ EQUB &00 EOR VE
+ EQUB &E2 EOR VE
+ EQUB &49 EOR VE
+ EQUB &53 EOR VE
+ EQUB &20 EOR VE
+ EQUB &00 EOR VE
+ EQUB &E0 EOR VE
+ EQUB &41 EOR VE
+ EQUB &44 EOR VE
+ EQUB &D2 EOR VE
+ EQUB &9A EOR VE
+ EQUB &00 EOR VE
+ EQUB &09 EOR VE
+ EQUB &0B EOR VE
+ EQUB &01 EOR VE
+ EQUB &08 EOR VE
+ EQUB &00 EOR VE
+ EQUB &44 EOR VE
+ EQUB &52 EOR VE
+ EQUB &49 EOR VE
+ EQUB &FA EOR VE
+ EQUB &00 EOR VE
+ EQUB &20 EOR VE
+ EQUB &43 EOR VE
+ EQUB &F5 EOR VE
+ EQUB &41 EOR VE
+ EQUB &E0 EOR VE
+ EQUB &47 EOR VE
+ EQUB &55 EOR VE
+ EQUB &45 EOR VE
+ EQUB &00 EOR VE
+ EQUB &49 EOR VE
+ EQUB &FF EOR VE
+ EQUB &00 EOR VE
+ EQUB &13 EOR VE
+ EQUB &43 EOR VE
+ EQUB &4F EOR VE
+ EQUB &4D EOR VE
+ EQUB &4D EOR VE
+ EQUB &FF EOR VE
+ EQUB &44 EOR VE
+ EQUB &F4 EOR VE
+ EQUB &00 EOR VE
+ EQUB &68 EOR VE
+ EQUB &00 EOR VE
+ EQUB &4D EOR VE
+ EQUB &D9 EOR VE
+ EQUB &4E EOR VE
+ EQUB &54 EOR VE
+ EQUB &41 EOR VE
+ EQUB &F0 EOR VE
+ EQUB &00 EOR VE
+ EQUB &FC EOR VE
+ EQUB &49 EOR VE
+ EQUB &42 EOR VE
+ EQUB &E5 EOR VE
+ EQUB &00 EOR VE
+ EQUB &54 EOR VE
+ EQUB &F2 EOR VE
+ EQUB &45 EOR VE
+ EQUB &00 EOR VE
+ EQUB &53 EOR VE
+ EQUB &50 EOR VE
+ EQUB &4F EOR VE
+ EQUB &54 EOR VE
+ EQUB &54 EOR VE
+ EQUB &FC EOR VE
+ EQUB &00 EOR VE
+ EQUB &78 EOR VE
+ EQUB &00 EOR VE
+ EQUB &79 EOR VE
+ EQUB &00 EOR VE
+ EQUB &61 EOR VE
+ EQUB &4F EOR VE
+ EQUB &49 EOR VE
+ EQUB &44 EOR VE
+ EQUB &00 EOR VE
+ EQUB &7F EOR VE
+ EQUB &00 EOR VE
+ EQUB &7E EOR VE
+ EQUB &00 EOR VE
+ EQUB &FF EOR VE
+ EQUB &43 EOR VE
+ EQUB &49 EOR VE
+ EQUB &F6 EOR VE
+ EQUB &54 EOR VE
+ EQUB &00 EOR VE
+ EQUB &45 EOR VE
+ EQUB &58 EOR VE
+ EQUB &E9 EOR VE
+ EQUB &50 EOR VE
+ EQUB &FB EOR VE
+ EQUB &DF EOR VE
+ EQUB &E4 EOR VE
+ EQUB &00 EOR VE
+ EQUB &45 EOR VE
+ EQUB &43 EOR VE
+ EQUB &E9 EOR VE
+ EQUB &4E EOR VE
+ EQUB &54 EOR VE
+ EQUB &52 EOR VE
+ EQUB &49 EOR VE
+ EQUB &43 EOR VE
+ EQUB &00 EOR VE
+ EQUB &F0 EOR VE
+ EQUB &47 EOR VE
+ EQUB &F8 EOR VE
+ EQUB &F0 EOR VE
+ EQUB &FC EOR VE
+ EQUB &00 EOR VE
+ EQUB &72 EOR VE
+ EQUB &00 EOR VE
+ EQUB &4B EOR VE
+ EQUB &DC EOR VE
+ EQUB &4C EOR VE
+ EQUB &F4 EOR VE
+ EQUB &00 EOR VE
+ EQUB &44 EOR VE
+ EQUB &45 EOR VE
+ EQUB &41 EOR VE
+ EQUB &44 EOR VE
+ EQUB &4C EOR VE
+ EQUB &59 EOR VE
+ EQUB &00 EOR VE
+ EQUB &45 EOR VE
+ EQUB &56 EOR VE
+ EQUB &DC EOR VE
+ EQUB &00 EOR VE
+ EQUB &E5 EOR VE
+ EQUB &E2 EOR VE
+ EQUB &E4 EOR VE
+ EQUB &00 EOR VE
+ EQUB &56 EOR VE
+ EQUB &49 EOR VE
+ EQUB &43 EOR VE
+ EQUB &49 EOR VE
+ EQUB &4F EOR VE
+ EQUB &EC EOR VE
+ EQUB &00 EOR VE
+ EQUB &DB EOR VE
+ EQUB &53 EOR VE
+ EQUB &20 EOR VE
+ EQUB &00 EOR VE
+ EQUB &0D EOR VE
+ EQUB &0E EOR VE
+ EQUB &13 EOR VE
+ EQUB &00 EOR VE
+ EQUB &2E EOR VE
+ EQUB &0C EOR VE
+ EQUB &0F EOR VE
+ EQUB &00 EOR VE
+ EQUB &20 EOR VE
+ EQUB &FF EOR VE
+ EQUB &44 EOR VE
+ EQUB &20 EOR VE
+ EQUB &00 EOR VE
+ EQUB &59 EOR VE
+ EQUB &D9 EOR VE
+ EQUB &00 EOR VE
+ EQUB &50 EOR VE
+ EQUB &EE EOR VE
+ EQUB &4B EOR VE
+ EQUB &C3 EOR VE
+ EQUB &4D EOR VE
+ EQUB &DD EOR VE
+ EQUB &F4 EOR VE
+ EQUB &53 EOR VE
+ EQUB &00 EOR VE
+ EQUB &44 EOR VE
+ EQUB &EC EOR VE
+ EQUB &54 EOR VE
+ EQUB &20 EOR VE
+ EQUB &43 EOR VE
+ EQUB &E0 EOR VE
+ EQUB &55 EOR VE
+ EQUB &44 EOR VE
+ EQUB &53 EOR VE
+ EQUB &00 EOR VE
+ EQUB &49 EOR VE
+ EQUB &E9 EOR VE
+ EQUB &20 EOR VE
+ EQUB &F7 EOR VE
+ EQUB &52 EOR VE
+ EQUB &47 EOR VE
+ EQUB &53 EOR VE
+ EQUB &00 EOR VE
+ EQUB &52 EOR VE
+ EQUB &4F EOR VE
+ EQUB &43 EOR VE
+ EQUB &4B EOR VE
+ EQUB &20 EOR VE
+ EQUB &46 EOR VE
+ EQUB &FD EOR VE
+ EQUB &EF EOR VE
+ EQUB &FB EOR VE
+ EQUB &DF EOR VE
+ EQUB &53 EOR VE
+ EQUB &00 EOR VE
+ EQUB &56 EOR VE
+ EQUB &4F EOR VE
+ EQUB &4C EOR VE
+ EQUB &43 EOR VE
+ EQUB &41 EOR VE
+ EQUB &E3 EOR VE
+ EQUB &ED EOR VE
+ EQUB &00 EOR VE
+ EQUB &50 EOR VE
+ EQUB &4C EOR VE
+ EQUB &FF EOR VE
+ EQUB &54 EOR VE
+ EQUB &00 EOR VE
+ EQUB &54 EOR VE
+ EQUB &55 EOR VE
+ EQUB &4C EOR VE
+ EQUB &49 EOR VE
+ EQUB &50 EOR VE
+ EQUB &00 EOR VE
+ EQUB &42 EOR VE
+ EQUB &FF EOR VE
+ EQUB &FF EOR VE
+ EQUB &41 EOR VE
+ EQUB &00 EOR VE
+ EQUB &43 EOR VE
+ EQUB &FD EOR VE
+ EQUB &4E EOR VE
+ EQUB &00 EOR VE
+ EQUB &12 EOR VE
+ EQUB &57 EOR VE
+ EQUB &45 EOR VE
+ EQUB &FC EOR VE
+ EQUB &00 EOR VE
+ EQUB &12 EOR VE
+ EQUB &00 EOR VE
+ EQUB &11 EOR VE
+ EQUB &20 EOR VE
+ EQUB &12 EOR VE
+ EQUB &00 EOR VE
+ EQUB &11 EOR VE
+ EQUB &20 EOR VE
+ EQUB &68 EOR VE
+ EQUB &00 EOR VE
+ EQUB &F0 EOR VE
+ EQUB &48 EOR VE
+ EQUB &41 EOR VE
+ EQUB &EA EOR VE
+ EQUB &54 EOR VE
+ EQUB &FF EOR VE
+ EQUB &54 EOR VE
+ EQUB &00 EOR VE
+ EQUB &BF EOR VE
+ EQUB &00 EOR VE
+ EQUB &F0 EOR VE
+ EQUB &47 EOR VE
+ EQUB &20 EOR VE
+ EQUB &00 EOR VE
+ EQUB &FC EOR VE
+ EQUB &20 EOR VE
+ EQUB &00 EOR VE
+ EQUB &20 EOR VE
+ EQUB &44 EOR VE
+ EQUB &2E EOR VE
+ EQUB &42 EOR VE
+ EQUB &F8 EOR VE
+ EQUB &F7 EOR VE
+ EQUB &4E EOR VE
+ EQUB &20 EOR VE
+ EQUB &26 EOR VE
+ EQUB &20 EOR VE
+ EQUB &49 EOR VE
+ EQUB &2E EOR VE
+ EQUB &F7 EOR VE
+ EQUB &4C EOR VE
+ EQUB &4C EOR VE
+ EQUB &00 EOR VE
+ EQUB &00 EOR VE
+ EQUB &00 EOR VE
+ EQUB &20 EOR VE
+ EQUB &4E EOR VE
+ EQUB &41 EOR VE
+ EQUB &4D EOR VE
+ EQUB &45 EOR VE
+ EQUB &3F EOR VE
+ EQUB &20 EOR VE
+ EQUB &00 EOR VE
+ EQUB &20 EOR VE
+ EQUB &54 EOR VE
+ EQUB &4F EOR VE
+ EQUB &20 EOR VE
+ EQUB &00 EOR VE
+ EQUB &20 EOR VE
+ EQUB &49 EOR VE
+ EQUB &53 EOR VE
+ EQUB &20 EOR VE
+ EQUB &00 EOR VE
+ EQUB &57 EOR VE
+ EQUB &41 EOR VE
+ EQUB &53 EOR VE
+ EQUB &20 EOR VE
+ EQUB &F9 EOR VE
+ EQUB &DE EOR VE
+ EQUB &20 EOR VE
+ EQUB &DA EOR VE
+ EQUB &F6 EOR VE
+ EQUB &20 EOR VE
+ EQUB &F5 EOR VE
+ EQUB &20 EOR VE
+ EQUB &13 EOR VE
+ EQUB &00 EOR VE
+ EQUB &2E EOR VE
+ EQUB &0C EOR VE
+ EQUB &20 EOR VE
+ EQUB &13 EOR VE
+ EQUB &00 EOR VE
+ EQUB &44 EOR VE
+ EQUB &4F EOR VE
+ EQUB &43 EOR VE
+ EQUB &4B EOR VE
+ EQUB &FC EOR VE
+ EQUB &00 EOR VE
+ EQUB &01 EOR VE
+ EQUB &28 EOR VE
+ EQUB &59 EOR VE
+ EQUB &2F EOR VE
+ EQUB &4E EOR VE
+ EQUB &29 EOR VE
+ EQUB &3F EOR VE
+ EQUB &00 EOR VE
+ EQUB &53 EOR VE
+ EQUB &48 EOR VE
+ EQUB &49 EOR VE
+ EQUB &50 EOR VE
+ EQUB &00 EOR VE
+ EQUB &20 EOR VE
+ EQUB &41 EOR VE
+ EQUB &20 EOR VE
+ EQUB &00 EOR VE
+ EQUB &20 EOR VE
+ EQUB &F4 EOR VE
+ EQUB &52 EOR VE
+ EQUB &49 EOR VE
+ EQUB &EC EOR VE
+ EQUB &00 EOR VE
+ EQUB &20 EOR VE
+ EQUB &4E EOR VE
+ EQUB &45 EOR VE
+ EQUB &57 EOR VE
+ EQUB &20 EOR VE
+ EQUB &00 EOR VE
+ EQUB &02 EOR VE
+ EQUB &20 EOR VE
+ EQUB &48 EOR VE
+ EQUB &F4 EOR VE
+ EQUB &20 EOR VE
+ EQUB &EF EOR VE
+ EQUB &4A EOR VE
+ EQUB &ED EOR VE
+ EQUB &54 EOR VE
+ EQUB &59 EOR VE
+ EQUB &27 EOR VE
+ EQUB &53 EOR VE
+ EQUB &20 EOR VE
+ EQUB &53 EOR VE
+ EQUB &50 EOR VE
+ EQUB &41 EOR VE
+ EQUB &E9 EOR VE
+ EQUB &20 EOR VE
+ EQUB &4E EOR VE
+ EQUB &41 EOR VE
+ EQUB &56 EOR VE
+ EQUB &59 EOR VE
+ EQUB &0D EOR VE
+ EQUB &00 EOR VE
+ EQUB &B1 EOR VE
+ EQUB &08 EOR VE
+ EQUB &01 EOR VE
+ EQUB &20 EOR VE
+ EQUB &20 EOR VE
+ EQUB &4D EOR VE
+ EQUB &ED EOR VE
+ EQUB &53 EOR VE
+ EQUB &41 EOR VE
+ EQUB &E7 EOR VE
+ EQUB &20 EOR VE
+ EQUB &F6 EOR VE
+ EQUB &44 EOR VE
+ EQUB &53 EOR VE
+ EQUB &00 EOR VE
+ EQUB &20 EOR VE
+ EQUB &9A EOR VE
+ EQUB &20 EOR VE
+ EQUB &04 EOR VE
+ EQUB &2C EOR VE
+ EQUB &20 EOR VE
+ EQUB &49 EOR VE
+ EQUB &20 EOR VE
+ EQUB &0D EOR VE
+ EQUB &41 EOR VE
+ EQUB &4D EOR VE
+ EQUB &02 EOR VE
+ EQUB &20 EOR VE
+ EQUB &43 EOR VE
+ EQUB &41 EOR VE
+ EQUB &50 EOR VE
+ EQUB &54 EOR VE
+ EQUB &41 EOR VE
+ EQUB &F0 EOR VE
+ EQUB &20 EOR VE
+ EQUB &1B EOR VE
+ EQUB &20 EOR VE
+ EQUB &0D EOR VE
+ EQUB &4F EOR VE
+ EQUB &46 EOR VE
+ EQUB &D3 EOR VE
+ EQUB &00 EOR VE
+ EQUB &00 EOR VE
+ EQUB &0F EOR VE
+ EQUB &20 EOR VE
+ EQUB &55 EOR VE
+ EQUB &4E EOR VE
+ EQUB &4B EOR VE
+ EQUB &E3 EOR VE
+ EQUB &57 EOR VE
+ EQUB &4E EOR VE
+ EQUB &20 EOR VE
+ EQUB &91 EOR VE
+ EQUB &00 EOR VE
+ EQUB &09 EOR VE
+ EQUB &08 EOR VE
+ EQUB &17 EOR VE
+ EQUB &01 EOR VE
+ EQUB &20 EOR VE
+ EQUB &F0 EOR VE
+ EQUB &43 EOR VE
+ EQUB &4F EOR VE
+ EQUB &4D EOR VE
+ EQUB &C3 EOR VE
+ EQUB &4D EOR VE
+ EQUB &ED EOR VE
+ EQUB &53 EOR VE
+ EQUB &41 EOR VE
+ EQUB &E7 EOR VE
+ EQUB &00 EOR VE
+ EQUB &43 EOR VE
+ EQUB &55 EOR VE
+ EQUB &52 EOR VE
+ EQUB &52 EOR VE
+ EQUB &55 EOR VE
+ EQUB &E2 EOR VE
+ EQUB &F4 EOR VE
+ EQUB &53 EOR VE
+ EQUB &00 EOR VE
+ EQUB &46 EOR VE
+ EQUB &4F EOR VE
+ EQUB &53 EOR VE
+ EQUB &44 EOR VE
+ EQUB &59 EOR VE
+ EQUB &4B EOR VE
+ EQUB &45 EOR VE
+ EQUB &20 EOR VE
+ EQUB &53 EOR VE
+ EQUB &4D EOR VE
+ EQUB &59 EOR VE
+ EQUB &E2 EOR VE
+ EQUB &45 EOR VE
+ EQUB &00 EOR VE
+ EQUB &46 EOR VE
+ EQUB &FD EOR VE
+ EQUB &54 EOR VE
+ EQUB &ED EOR VE
+ EQUB &FE EOR VE
+ EQUB &45 EOR VE
+ EQUB &00 EOR VE
+ EQUB &CB EOR VE
+ EQUB &F2 EOR VE
+ EQUB &ED EOR VE
+ EQUB &F1 EOR VE
+ EQUB &E9 EOR VE
+ EQUB &00 EOR VE
+ EQUB &49 EOR VE
+ EQUB &53 EOR VE
+ EQUB &20 EOR VE
+ EQUB &F7 EOR VE
+ EQUB &4C EOR VE
+ EQUB &49 EOR VE
+ EQUB &45 EOR VE
+ EQUB &56 EOR VE
+ EQUB &FC EOR VE
+ EQUB &C9 EOR VE
+ EQUB &48 EOR VE
+ EQUB &41 EOR VE
+ EQUB &FA EOR VE
+ EQUB &20 EOR VE
+ EQUB &4A EOR VE
+ EQUB &55 EOR VE
+ EQUB &4D EOR VE
+ EQUB &50 EOR VE
+ EQUB &FC EOR VE
+ EQUB &C9 EOR VE
+ EQUB &94 EOR VE
+ EQUB &47 EOR VE
+ EQUB &E4 EOR VE
+ EQUB &41 EOR VE
+ EQUB &58 EOR VE
+ EQUB &59 EOR VE
+ EQUB &00 EOR VE
+ EQUB &19 EOR VE
+ EQUB &09 EOR VE
+ EQUB &1D EOR VE
+ EQUB &0E EOR VE
+ EQUB &02 EOR VE
+ EQUB &47 EOR VE
+ EQUB &4F EOR VE
+ EQUB &4F EOR VE
+ EQUB &44 EOR VE
+ EQUB &20 EOR VE
+ EQUB &44 EOR VE
+ EQUB &41 EOR VE
+ EQUB &59 EOR VE
+ EQUB &20 EOR VE
+ EQUB &9A EOR VE
+ EQUB &20 EOR VE
+ EQUB &04 EOR VE
+ EQUB &CC EOR VE
+ EQUB &49 EOR VE
+ EQUB &0D EOR VE
+ EQUB &20 EOR VE
+ EQUB &41 EOR VE
+ EQUB &4D EOR VE
+ EQUB &20 EOR VE
+ EQUB &13 EOR VE
+ EQUB &41 EOR VE
+ EQUB &47 EOR VE
+ EQUB &F6 EOR VE
+ EQUB &54 EOR VE
+ EQUB &20 EOR VE
+ EQUB &13 EOR VE
+ EQUB &42 EOR VE
+ EQUB &F9 EOR VE
+ EQUB &4B EOR VE
+ EQUB &45 EOR VE
+ EQUB &20 EOR VE
+ EQUB &4F EOR VE
+ EQUB &46 EOR VE
+ EQUB &20 EOR VE
+ EQUB &13 EOR VE
+ EQUB &4E EOR VE
+ EQUB &41 EOR VE
+ EQUB &56 EOR VE
+ EQUB &E4 EOR VE
+ EQUB &20 EOR VE
+ EQUB &13 EOR VE
+ EQUB &F0 EOR VE
+ EQUB &54 EOR VE
+ EQUB &45 EOR VE
+ EQUB &4C EOR VE
+ EQUB &4C EOR VE
+ EQUB &49 EOR VE
+ EQUB &47 EOR VE
+ EQUB &F6 EOR VE
+ EQUB &E9 EOR VE
+ EQUB &CC EOR VE
+ EQUB &41 EOR VE
+ EQUB &53 EOR VE
+ EQUB &20 EOR VE
+ EQUB &B3 EOR VE
+ EQUB &20 EOR VE
+ EQUB &4B EOR VE
+ EQUB &E3 EOR VE
+ EQUB &57 EOR VE
+ EQUB &2C EOR VE
+ EQUB &20 EOR VE
+ EQUB &93 EOR VE
+ EQUB &13 EOR VE
+ EQUB &4E EOR VE
+ EQUB &41 EOR VE
+ EQUB &56 EOR VE
+ EQUB &59 EOR VE
+ EQUB &20 EOR VE
+ EQUB &48 EOR VE
+ EQUB &41 EOR VE
+ EQUB &FA EOR VE
+ EQUB &20 EOR VE
+ EQUB &F7 EOR VE
+ EQUB &F6 EOR VE
+ EQUB &20 EOR VE
+ EQUB &4B EOR VE
+ EQUB &45 EOR VE
+ EQUB &45 EOR VE
+ EQUB &50 EOR VE
+ EQUB &C3 EOR VE
+ EQUB &93 EOR VE
+ EQUB &13 EOR VE
+ EQUB &E2 EOR VE
+ EQUB &EE EOR VE
+ EQUB &47 EOR VE
+ EQUB &4F EOR VE
+ EQUB &49 EOR VE
+ EQUB &44 EOR VE
+ EQUB &53 EOR VE
+ EQUB &20 EOR VE
+ EQUB &4F EOR VE
+ EQUB &46 EOR VE
+ EQUB &46 EOR VE
+ EQUB &20 EOR VE
+ EQUB &B3 EOR VE
+ EQUB &52 EOR VE
+ EQUB &20 EOR VE
+ EQUB &41 EOR VE
+ EQUB &53 EOR VE
+ EQUB &53 EOR VE
+ EQUB &20 EOR VE
+ EQUB &D9 EOR VE
+ EQUB &54 EOR VE
+ EQUB &20 EOR VE
+ EQUB &F0 EOR VE
+ EQUB &20 EOR VE
+ EQUB &44 EOR VE
+ EQUB &45 EOR VE
+ EQUB &45 EOR VE
+ EQUB &50 EOR VE
+ EQUB &20 EOR VE
+ EQUB &53 EOR VE
+ EQUB &50 EOR VE
+ EQUB &41 EOR VE
+ EQUB &E9 EOR VE
+ EQUB &20 EOR VE
+ EQUB &46 EOR VE
+ EQUB &FD EOR VE
+ EQUB &20 EOR VE
+ EQUB &EF EOR VE
+ EQUB &4E EOR VE
+ EQUB &59 EOR VE
+ EQUB &20 EOR VE
+ EQUB &59 EOR VE
+ EQUB &45 EOR VE
+ EQUB &EE EOR VE
+ EQUB &53 EOR VE
+ EQUB &20 EOR VE
+ EQUB &E3 EOR VE
+ EQUB &57 EOR VE
+ EQUB &2E EOR VE
+ EQUB &20 EOR VE
+ EQUB &13 EOR VE
+ EQUB &57 EOR VE
+ EQUB &45 EOR VE
+ EQUB &4C EOR VE
+ EQUB &4C EOR VE
+ EQUB &20 EOR VE
+ EQUB &93 EOR VE
+ EQUB &53 EOR VE
+ EQUB &DB EOR VE
+ EQUB &55 EOR VE
+ EQUB &41 EOR VE
+ EQUB &FB EOR VE
+ EQUB &DF EOR VE
+ EQUB &20 EOR VE
+ EQUB &48 EOR VE
+ EQUB &41 EOR VE
+ EQUB &53 EOR VE
+ EQUB &20 EOR VE
+ EQUB &43 EOR VE
+ EQUB &48 EOR VE
+ EQUB &FF EOR VE
+ EQUB &47 EOR VE
+ EQUB &FC EOR VE
+ EQUB &CC EOR VE
+ EQUB &D9 EOR VE
+ EQUB &52 EOR VE
+ EQUB &20 EOR VE
+ EQUB &42 EOR VE
+ EQUB &4F EOR VE
+ EQUB &59 EOR VE
+ EQUB &53 EOR VE
+ EQUB &20 EOR VE
+ EQUB &EE EOR VE
+ EQUB &45 EOR VE
+ EQUB &20 EOR VE
+ EQUB &F2 EOR VE
+ EQUB &41 EOR VE
+ EQUB &44 EOR VE
+ EQUB &59 EOR VE
+ EQUB &20 EOR VE
+ EQUB &46 EOR VE
+ EQUB &FD EOR VE
+ EQUB &D0 EOR VE
+ EQUB &50 EOR VE
+ EQUB &55 EOR VE
+ EQUB &53 EOR VE
+ EQUB &48 EOR VE
+ EQUB &20 EOR VE
+ EQUB &52 EOR VE
+ EQUB &49 EOR VE
+ EQUB &47 EOR VE
+ EQUB &48 EOR VE
+ EQUB &54 EOR VE
+ EQUB &C9 EOR VE
+ EQUB &93 EOR VE
+ EQUB &48 EOR VE
+ EQUB &4F EOR VE
+ EQUB &4D EOR VE
+ EQUB &45 EOR VE
+ EQUB &20 EOR VE
+ EQUB &53 EOR VE
+ EQUB &59 EOR VE
+ EQUB &53 EOR VE
+ EQUB &54 EOR VE
+ EQUB &45 EOR VE
+ EQUB &4D EOR VE
+ EQUB &20 EOR VE
+ EQUB &4F EOR VE
+ EQUB &46 EOR VE
+ EQUB &20 EOR VE
+ EQUB &E2 EOR VE
+ EQUB &4F EOR VE
+ EQUB &DA EOR VE
+ EQUB &20 EOR VE
+ EQUB &4D EOR VE
+ EQUB &55 EOR VE
+ EQUB &52 EOR VE
+ EQUB &44 EOR VE
+ EQUB &F4 EOR VE
+ EQUB &F4 EOR VE
+ EQUB &53 EOR VE
+ EQUB &CC EOR VE
+ EQUB &18 EOR VE
+ EQUB &09 EOR VE
+ EQUB &1D EOR VE
+ EQUB &49 EOR VE
+ EQUB &0D EOR VE
+ EQUB &20 EOR VE
+ EQUB &48 EOR VE
+ EQUB &41 EOR VE
+ EQUB &FA EOR VE
+ EQUB &20 EOR VE
+ EQUB &4F EOR VE
+ EQUB &42 EOR VE
+ EQUB &54 EOR VE
+ EQUB &41 EOR VE
+ EQUB &F0 EOR VE
+ EQUB &C4 EOR VE
+ EQUB &93 EOR VE
+ EQUB &44 EOR VE
+ EQUB &45 EOR VE
+ EQUB &46 EOR VE
+ EQUB &F6 EOR VE
+ EQUB &E9 EOR VE
+ EQUB &20 EOR VE
+ EQUB &50 EOR VE
+ EQUB &F9 EOR VE
+ EQUB &4E EOR VE
+ EQUB &53 EOR VE
+ EQUB &20 EOR VE
+ EQUB &46 EOR VE
+ EQUB &FD EOR VE
+ EQUB &20 EOR VE
+ EQUB &E2 EOR VE
+ EQUB &45 EOR VE
+ EQUB &49 EOR VE
+ EQUB &52 EOR VE
+ EQUB &20 EOR VE
+ EQUB &13 EOR VE
+ EQUB &48 EOR VE
+ EQUB &49 EOR VE
+ EQUB &FA EOR VE
+ EQUB &20 EOR VE
+ EQUB &13 EOR VE
+ EQUB &57 EOR VE
+ EQUB &FD EOR VE
+ EQUB &4C EOR VE
+ EQUB &44 EOR VE
+ EQUB &53 EOR VE
+ EQUB &CC EOR VE
+ EQUB &93 EOR VE
+ EQUB &F7 EOR VE
+ EQUB &DD EOR VE
+ EQUB &E5 EOR VE
+ EQUB &53 EOR VE
+ EQUB &20 EOR VE
+ EQUB &4B EOR VE
+ EQUB &E3 EOR VE
+ EQUB &57 EOR VE
+ EQUB &20 EOR VE
+ EQUB &57 EOR VE
+ EQUB &45 EOR VE
+ EQUB &27 EOR VE
+ EQUB &FA EOR VE
+ EQUB &20 EOR VE
+ EQUB &47 EOR VE
+ EQUB &4F EOR VE
+ EQUB &54 EOR VE
+ EQUB &20 EOR VE
+ EQUB &EB EOR VE
+ EQUB &4D EOR VE
+ EQUB &45 EOR VE
+ EQUB &E2 EOR VE
+ EQUB &C3 EOR VE
+ EQUB &42 EOR VE
+ EQUB &55 EOR VE
+ EQUB &54 EOR VE
+ EQUB &20 EOR VE
+ EQUB &E3 EOR VE
+ EQUB &54 EOR VE
+ EQUB &20 EOR VE
+ EQUB &57 EOR VE
+ EQUB &48 EOR VE
+ EQUB &F5 EOR VE
+ EQUB &CC EOR VE
+ EQUB &49 EOR VE
+ EQUB &46 EOR VE
+ EQUB &20 EOR VE
+ EQUB &13 EOR VE
+ EQUB &49 EOR VE
+ EQUB &20 EOR VE
+ EQUB &54 EOR VE
+ EQUB &F8 EOR VE
+ EQUB &4E EOR VE
+ EQUB &53 EOR VE
+ EQUB &4D EOR VE
+ EQUB &DB EOR VE
+ EQUB &20 EOR VE
+ EQUB &93 EOR VE
+ EQUB &50 EOR VE
+ EQUB &F9 EOR VE
+ EQUB &4E EOR VE
+ EQUB &53 EOR VE
+ EQUB &C9 EOR VE
+ EQUB &D9 EOR VE
+ EQUB &52 EOR VE
+ EQUB &20 EOR VE
+ EQUB &42 EOR VE
+ EQUB &41 EOR VE
+ EQUB &DA EOR VE
+ EQUB &20 EOR VE
+ EQUB &DF EOR VE
+ EQUB &20 EOR VE
+ EQUB &13 EOR VE
+ EQUB &EA EOR VE
+ EQUB &F2 EOR VE
+ EQUB &F8 EOR VE
+ EQUB &20 EOR VE
+ EQUB &E2 EOR VE
+ EQUB &45 EOR VE
+ EQUB &59 EOR VE
+ EQUB &27 EOR VE
+ EQUB &4C EOR VE
+ EQUB &4C EOR VE
+ EQUB &20 EOR VE
+ EQUB &F0 EOR VE
+ EQUB &54 EOR VE
+ EQUB &F4 EOR VE
+ EQUB &E9 EOR VE
+ EQUB &50 EOR VE
+ EQUB &54 EOR VE
+ EQUB &20 EOR VE
+ EQUB &93 EOR VE
+ EQUB &54 EOR VE
+ EQUB &52 EOR VE
+ EQUB &FF EOR VE
+ EQUB &53 EOR VE
+ EQUB &4D EOR VE
+ EQUB &49 EOR VE
+ EQUB &53 EOR VE
+ EQUB &53 EOR VE
+ EQUB &49 EOR VE
+ EQUB &DF EOR VE
+ EQUB &2E EOR VE
+ EQUB &20 EOR VE
+ EQUB &13 EOR VE
+ EQUB &49 EOR VE
+ EQUB &20 EOR VE
+ EQUB &4E EOR VE
+ EQUB &45 EOR VE
+ EQUB &FC EOR VE
+ EQUB &D0 EOR VE
+ EQUB &CF EOR VE
+ EQUB &C9 EOR VE
+ EQUB &EF EOR VE
+ EQUB &4B EOR VE
+ EQUB &45 EOR VE
+ EQUB &20 EOR VE
+ EQUB &93 EOR VE
+ EQUB &52 EOR VE
+ EQUB &55 EOR VE
+ EQUB &4E EOR VE
+ EQUB &CC EOR VE
+ EQUB &B3 EOR VE
+ EQUB &27 EOR VE
+ EQUB &F2 EOR VE
+ EQUB &20 EOR VE
+ EQUB &45 EOR VE
+ EQUB &E5 EOR VE
+ EQUB &43 EOR VE
+ EQUB &54 EOR VE
+ EQUB &FC EOR VE
+ EQUB &CC EOR VE
+ EQUB &93 EOR VE
+ EQUB &50 EOR VE
+ EQUB &F9 EOR VE
+ EQUB &4E EOR VE
+ EQUB &53 EOR VE
+ EQUB &20 EOR VE
+ EQUB &41 EOR VE
+ EQUB &F2 EOR VE
+ EQUB &20 EOR VE
+ EQUB &55 EOR VE
+ EQUB &4E EOR VE
+ EQUB &49 EOR VE
+ EQUB &50 EOR VE
+ EQUB &55 EOR VE
+ EQUB &4C EOR VE
+ EQUB &DA EOR VE
+ EQUB &20 EOR VE
+ EQUB &43 EOR VE
+ EQUB &4F EOR VE
+ EQUB &44 EOR VE
+ EQUB &C4 EOR VE
+ EQUB &57 EOR VE
+ EQUB &49 EOR VE
+ EQUB &E2 EOR VE
+ EQUB &F0 EOR VE
+ EQUB &20 EOR VE
+ EQUB &94 EOR VE
+ EQUB &54 EOR VE
+ EQUB &52 EOR VE
+ EQUB &FF EOR VE
+ EQUB &53 EOR VE
+ EQUB &4D EOR VE
+ EQUB &49 EOR VE
+ EQUB &53 EOR VE
+ EQUB &53 EOR VE
+ EQUB &49 EOR VE
+ EQUB &DF EOR VE
+ EQUB &CC EOR VE
+ EQUB &08 EOR VE
+ EQUB &B3 EOR VE
+ EQUB &20 EOR VE
+ EQUB &57 EOR VE
+ EQUB &DC EOR VE
+ EQUB &4C EOR VE
+ EQUB &20 EOR VE
+ EQUB &F7 EOR VE
+ EQUB &20 EOR VE
+ EQUB &50 EOR VE
+ EQUB &41 EOR VE
+ EQUB &49 EOR VE
+ EQUB &44 EOR VE
+ EQUB &CC EOR VE
+ EQUB &20 EOR VE
+ EQUB &20 EOR VE
+ EQUB &20 EOR VE
+ EQUB &20 EOR VE
+ EQUB &13 EOR VE
+ EQUB &47 EOR VE
+ EQUB &4F EOR VE
+ EQUB &4F EOR VE
+ EQUB &44 EOR VE
+ EQUB &20 EOR VE
+ EQUB &4C EOR VE
+ EQUB &55 EOR VE
+ EQUB &43 EOR VE
+ EQUB &4B EOR VE
+ EQUB &20 EOR VE
+ EQUB &9A EOR VE
+ EQUB &D4 EOR VE
+ EQUB &18 EOR VE
+ EQUB &00 EOR VE
+ EQUB &19 EOR VE
+ EQUB &09 EOR VE
+ EQUB &1D EOR VE
+ EQUB &08 EOR VE
+ EQUB &0E EOR VE
+ EQUB &0D EOR VE
+ EQUB &13 EOR VE
+ EQUB &57 EOR VE
+ EQUB &45 EOR VE
+ EQUB &4C EOR VE
+ EQUB &4C EOR VE
+ EQUB &20 EOR VE
+ EQUB &44 EOR VE
+ EQUB &DF EOR VE
+ EQUB &45 EOR VE
+ EQUB &20 EOR VE
+ EQUB &9A EOR VE
+ EQUB &CC EOR VE
+ EQUB &B3 EOR VE
+ EQUB &20 EOR VE
+ EQUB &48 EOR VE
+ EQUB &41 EOR VE
+ EQUB &FA EOR VE
+ EQUB &20 EOR VE
+ EQUB &DA EOR VE
+ EQUB &52 EOR VE
+ EQUB &56 EOR VE
+ EQUB &C4 EOR VE
+ EQUB &55 EOR VE
+ EQUB &53 EOR VE
+ EQUB &20 EOR VE
+ EQUB &57 EOR VE
+ EQUB &45 EOR VE
+ EQUB &4C EOR VE
+ EQUB &4C EOR VE
+ EQUB &B2 EOR VE
+ EQUB &57 EOR VE
+ EQUB &45 EOR VE
+ EQUB &20 EOR VE
+ EQUB &53 EOR VE
+ EQUB &48 EOR VE
+ EQUB &E4 EOR VE
+ EQUB &4C EOR VE
+ EQUB &20 EOR VE
+ EQUB &F2 EOR VE
+ EQUB &4D EOR VE
+ EQUB &45 EOR VE
+ EQUB &4D EOR VE
+ EQUB &42 EOR VE
+ EQUB &F4 EOR VE
+ EQUB &CC EOR VE
+ EQUB &57 EOR VE
+ EQUB &45 EOR VE
+ EQUB &20 EOR VE
+ EQUB &44 EOR VE
+ EQUB &49 EOR VE
+ EQUB &44 EOR VE
+ EQUB &20 EOR VE
+ EQUB &E3 EOR VE
+ EQUB &54 EOR VE
+ EQUB &20 EOR VE
+ EQUB &45 EOR VE
+ EQUB &58 EOR VE
+ EQUB &50 EOR VE
+ EQUB &45 EOR VE
+ EQUB &43 EOR VE
+ EQUB &54 EOR VE
+ EQUB &20 EOR VE
+ EQUB &93 EOR VE
+ EQUB &13 EOR VE
+ EQUB &E2 EOR VE
+ EQUB &EE EOR VE
+ EQUB &47 EOR VE
+ EQUB &4F EOR VE
+ EQUB &49 EOR VE
+ EQUB &44 EOR VE
+ EQUB &53 EOR VE
+ EQUB &C9 EOR VE
+ EQUB &46 EOR VE
+ EQUB &F0 EOR VE
+ EQUB &44 EOR VE
+ EQUB &20 EOR VE
+ EQUB &D9 EOR VE
+ EQUB &54 EOR VE
+ EQUB &20 EOR VE
+ EQUB &41 EOR VE
+ EQUB &42 EOR VE
+ EQUB &D9 EOR VE
+ EQUB &54 EOR VE
+ EQUB &20 EOR VE
+ EQUB &B3 EOR VE
+ EQUB &CC EOR VE
+ EQUB &46 EOR VE
+ EQUB &FD EOR VE
+ EQUB &20 EOR VE
+ EQUB &93 EOR VE
+ EQUB &4D EOR VE
+ EQUB &4F EOR VE
+ EQUB &4D EOR VE
+ EQUB &F6 EOR VE
+ EQUB &54 EOR VE
+ EQUB &20 EOR VE
+ EQUB &50 EOR VE
+ EQUB &E5 EOR VE
+ EQUB &41 EOR VE
+ EQUB &DA EOR VE
+ EQUB &20 EOR VE
+ EQUB &41 EOR VE
+ EQUB &43 EOR VE
+ EQUB &E9 EOR VE
+ EQUB &50 EOR VE
+ EQUB &54 EOR VE
+ EQUB &20 EOR VE
+ EQUB &94 EOR VE
+ EQUB &13 EOR VE
+ EQUB &4E EOR VE
+ EQUB &41 EOR VE
+ EQUB &56 EOR VE
+ EQUB &59 EOR VE
+ EQUB &20 EOR VE
+ EQUB &06 EOR VE
+ EQUB &72 EOR VE
+ EQUB &05 EOR VE
+ EQUB &20 EOR VE
+ EQUB &41 EOR VE
+ EQUB &53 EOR VE
+ EQUB &20 EOR VE
+ EQUB &50 EOR VE
+ EQUB &41 EOR VE
+ EQUB &59 EOR VE
+ EQUB &4D EOR VE
+ EQUB &F6 EOR VE
+ EQUB &54 EOR VE
+ EQUB &D4 EOR VE
+ EQUB &18 EOR VE
+ EQUB &00 EOR VE
+ EQUB &41 EOR VE
+ EQUB &F2 EOR VE
+ EQUB &20 EOR VE
+ EQUB &B3 EOR VE
+ EQUB &20 EOR VE
+ EQUB &53 EOR VE
+ EQUB &55 EOR VE
+ EQUB &F2 EOR VE
+ EQUB &3F EOR VE
+ EQUB &00 EOR VE
+ EQUB &53 EOR VE
+ EQUB &48 EOR VE
+ EQUB &F2 EOR VE
+ EQUB &57 EOR VE
+ EQUB &00 EOR VE
+ EQUB &F7 EOR VE
+ EQUB &41 EOR VE
+ EQUB &DE EOR VE
+ EQUB &00 EOR VE
+ EQUB &42 EOR VE
+ EQUB &49 EOR VE
+ EQUB &53 EOR VE
+ EQUB &DF EOR VE
+ EQUB &00 EOR VE
+ EQUB &53 EOR VE
+ EQUB &4E EOR VE
+ EQUB &41 EOR VE
+ EQUB &4B EOR VE
+ EQUB &45 EOR VE
+ EQUB &00 EOR VE
+ EQUB &57 EOR VE
+ EQUB &4F EOR VE
+ EQUB &4C EOR VE
+ EQUB &46 EOR VE
+ EQUB &00 EOR VE
+ EQUB &E5 EOR VE
+ EQUB &4F EOR VE
+ EQUB &50 EOR VE
+ EQUB &EE EOR VE
+ EQUB &44 EOR VE
+ EQUB &00 EOR VE
+ EQUB &43 EOR VE
+ EQUB &F5 EOR VE
+ EQUB &00 EOR VE
+ EQUB &4D EOR VE
+ EQUB &DF EOR VE
+ EQUB &4B EOR VE
+ EQUB &45 EOR VE
+ EQUB &59 EOR VE
+ EQUB &00 EOR VE
+ EQUB &47 EOR VE
+ EQUB &4F EOR VE
+ EQUB &F5 EOR VE
+ EQUB &00 EOR VE
+ EQUB &46 EOR VE
+ EQUB &49 EOR VE
+ EQUB &53 EOR VE
+ EQUB &48 EOR VE
+ EQUB &00 EOR VE
+ EQUB &6A EOR VE
+ EQUB &20 EOR VE
+ EQUB &69 EOR VE
+ EQUB &00 EOR VE
+ EQUB &11 EOR VE
+ EQUB &20 EOR VE
+ EQUB &78 EOR VE
+ EQUB &20 EOR VE
+ EQUB &7B EOR VE
+ EQUB &00 EOR VE
+ EQUB &AF EOR VE
+ EQUB &6B EOR VE
+ EQUB &20 EOR VE
+ EQUB &79 EOR VE
+ EQUB &20 EOR VE
+ EQUB &7B EOR VE
+ EQUB &00 EOR VE
+ EQUB &7C EOR VE
+ EQUB &20 EOR VE
+ EQUB &7D EOR VE
+ EQUB &00 EOR VE
+ EQUB &6A EOR VE
+ EQUB &20 EOR VE
+ EQUB &69 EOR VE
+ EQUB &00 EOR VE
+ EQUB &4D EOR VE
+ EQUB &45 EOR VE
+ EQUB &F5 EOR VE
+ EQUB &00 EOR VE
+ EQUB &43 EOR VE
+ EQUB &55 EOR VE
+ EQUB &54 EOR VE
+ EQUB &4C EOR VE
+ EQUB &DD EOR VE
+ EQUB &00 EOR VE
+ EQUB &DE EOR VE
+ EQUB &45 EOR VE
+ EQUB &41 EOR VE
+ EQUB &4B EOR VE
+ EQUB &00 EOR VE
+ EQUB &42 EOR VE
+ EQUB &55 EOR VE
+ EQUB &52 EOR VE
+ EQUB &47 EOR VE
+ EQUB &F4 EOR VE
+ EQUB &53 EOR VE
+ EQUB &00 EOR VE
+ EQUB &EB EOR VE
+ EQUB &55 EOR VE
+ EQUB &50 EOR VE
+ EQUB &00 EOR VE
+ EQUB &49 EOR VE
+ EQUB &E9 EOR VE
+ EQUB &00 EOR VE
+ EQUB &4D EOR VE
+ EQUB &55 EOR VE
+ EQUB &44 EOR VE
+ EQUB &00 EOR VE
+ EQUB &5A EOR VE
+ EQUB &F4 EOR VE
+ EQUB &4F EOR VE
+ EQUB &2D EOR VE
+ EQUB &13 EOR VE
+ EQUB &47 EOR VE
+ EQUB &00 EOR VE
+ EQUB &56 EOR VE
+ EQUB &41 EOR VE
+ EQUB &43 EOR VE
+ EQUB &55 EOR VE
+ EQUB &55 EOR VE
+ EQUB &4D EOR VE
+ EQUB &00 EOR VE
+ EQUB &11 EOR VE
+ EQUB &20 EOR VE
+ EQUB &55 EOR VE
+ EQUB &4C EOR VE
+ EQUB &54 EOR VE
+ EQUB &F8 EOR VE
+ EQUB &00 EOR VE
+ EQUB &48 EOR VE
+ EQUB &4F EOR VE
+ EQUB &43 EOR VE
+ EQUB &4B EOR VE
+ EQUB &45 EOR VE
+ EQUB &59 EOR VE
+ EQUB &00 EOR VE
+ EQUB &43 EOR VE
+ EQUB &52 EOR VE
+ EQUB &49 EOR VE
+ EQUB &43 EOR VE
+ EQUB &4B EOR VE
+ EQUB &DD EOR VE
+ EQUB &00 EOR VE
+ EQUB &4B EOR VE
+ EQUB &EE EOR VE
+ EQUB &F5 EOR VE
+ EQUB &45 EOR VE
+ EQUB &00 EOR VE
+ EQUB &50 EOR VE
+ EQUB &4F EOR VE
+ EQUB &E0 EOR VE
+ EQUB &00 EOR VE
+ EQUB &54 EOR VE
+ EQUB &F6 EOR VE
+ EQUB &4E EOR VE
+ EQUB &49 EOR VE
+ EQUB &53 EOR VE
+ EQUB &00 EOR VE
+ EQUB &0C EOR VE
+ EQUB &1E EOR VE
+ EQUB &20 EOR VE
+ EQUB &F4 EOR VE
+ EQUB &52 EOR VE
+ EQUB &FD EOR VE
+ EQUB &00 EOR VE
+
+
+INCLUDE "library/6502sp/main/variable/rupla.asm"
+INCLUDE "library/6502sp/main/variable/rugal.asm"
+
+.RUTOK
+
+ EQUB &00 EOR VE
+ EQUB &93 EOR VE
+ EQUB &43 EOR VE
+ EQUB &4F EOR VE
+ EQUB &E0 EOR VE
+ EQUB &4E EOR VE
+ EQUB &49 EOR VE
+ EQUB &DE EOR VE
+ EQUB &53 EOR VE
+ EQUB &20 EOR VE
+ EQUB &48 EOR VE
+ EQUB &45 EOR VE
+ EQUB &F2 EOR VE
+ EQUB &20 EOR VE
+ EQUB &48 EOR VE
+ EQUB &41 EOR VE
+ EQUB &FA EOR VE
+ EQUB &20 EOR VE
+ EQUB &56 EOR VE
+ EQUB &49 EOR VE
+ EQUB &4F EOR VE
+ EQUB &4C EOR VE
+ EQUB &F5 EOR VE
+ EQUB &FC EOR VE
+ EQUB &02 EOR VE
+ EQUB &20 EOR VE
+ EQUB &F0 EOR VE
+ EQUB &54 EOR VE
+ EQUB &F4 EOR VE
+ EQUB &47 EOR VE
+ EQUB &E4 EOR VE
+ EQUB &41 EOR VE
+ EQUB &43 EOR VE
+ EQUB &FB EOR VE
+ EQUB &43 EOR VE
+ EQUB &20 EOR VE
+ EQUB &43 EOR VE
+ EQUB &E0 EOR VE
+ EQUB &4E EOR VE
+ EQUB &C3 EOR VE
+ EQUB &50 EOR VE
+ EQUB &52 EOR VE
+ EQUB &4F EOR VE
+ EQUB &54 EOR VE
+ EQUB &4F EOR VE
+ EQUB &43 EOR VE
+ EQUB &4F EOR VE
+ EQUB &4C EOR VE
+ EQUB &0D EOR VE
+ EQUB &B2 EOR VE
+ EQUB &53 EOR VE
+ EQUB &48 EOR VE
+ EQUB &D9 EOR VE
+ EQUB &4C EOR VE
+ EQUB &44 EOR VE
+ EQUB &20 EOR VE
+ EQUB &F7 EOR VE
+ EQUB &20 EOR VE
+ EQUB &41 EOR VE
+ EQUB &56 EOR VE
+ EQUB &4F EOR VE
+ EQUB &49 EOR VE
+ EQUB &44 EOR VE
+ EQUB &FC EOR VE
+ EQUB &00 EOR VE
+ EQUB &93 EOR VE
+ EQUB &43 EOR VE
+ EQUB &DF EOR VE
+ EQUB &DE EOR VE
+ EQUB &52 EOR VE
+ EQUB &49 EOR VE
+ EQUB &43 EOR VE
+ EQUB &54 EOR VE
+ EQUB &FD EOR VE
+ EQUB &20 EOR VE
+ EQUB &CB EOR VE
+ EQUB &F2 EOR VE
+ EQUB &ED EOR VE
+ EQUB &F1 EOR VE
+ EQUB &E9 EOR VE
+ EQUB &2C EOR VE
+ EQUB &20 EOR VE
+ EQUB &9A EOR VE
+ EQUB &00 EOR VE
+ EQUB &41 EOR VE
+ EQUB &20 EOR VE
+ EQUB &72 EOR VE
+ EQUB &20 EOR VE
+ EQUB &E0 EOR VE
+ EQUB &4F EOR VE
+ EQUB &4B EOR VE
+ EQUB &C3 EOR VE
+ EQUB &CF EOR VE
+ EQUB &20 EOR VE
+ EQUB &E5 EOR VE
+ EQUB &46 EOR VE
+ EQUB &54 EOR VE
+ EQUB &20 EOR VE
+ EQUB &48 EOR VE
+ EQUB &45 EOR VE
+ EQUB &F2 EOR VE
+ EQUB &D0 EOR VE
+ EQUB &57 EOR VE
+ EQUB &48 EOR VE
+ EQUB &49 EOR VE
+ EQUB &E5 EOR VE
+ EQUB &20 EOR VE
+ EQUB &42 EOR VE
+ EQUB &41 EOR VE
+ EQUB &43 EOR VE
+ EQUB &4B EOR VE
+ EQUB &2E EOR VE
+ EQUB &20 EOR VE
+ EQUB &4C EOR VE
+ EQUB &4F EOR VE
+ EQUB &4F EOR VE
+ EQUB &4B EOR VE
+ EQUB &C4 EOR VE
+ EQUB &42 EOR VE
+ EQUB &D9 EOR VE
+ EQUB &4E EOR VE
+ EQUB &44 EOR VE
+ EQUB &20 EOR VE
+ EQUB &46 EOR VE
+ EQUB &FD EOR VE
+ EQUB &20 EOR VE
+ EQUB &EE EOR VE
+ EQUB &45 EOR VE
+ EQUB &E6 EOR VE
+ EQUB &00 EOR VE
+ EQUB &59 EOR VE
+ EQUB &45 EOR VE
+ EQUB &50 EOR VE
+ EQUB &2C EOR VE
+ EQUB &D0 EOR VE
+ EQUB &72 EOR VE
+ EQUB &D2 EOR VE
+ EQUB &CF EOR VE
+ EQUB &20 EOR VE
+ EQUB &48 EOR VE
+ EQUB &41 EOR VE
+ EQUB &44 EOR VE
+ EQUB &D0 EOR VE
+ EQUB &47 EOR VE
+ EQUB &E4 EOR VE
+ EQUB &41 EOR VE
+ EQUB &43 EOR VE
+ EQUB &FB EOR VE
+ EQUB &43 EOR VE
+ EQUB &20 EOR VE
+ EQUB &48 EOR VE
+ EQUB &59 EOR VE
+ EQUB &50 EOR VE
+ EQUB &F4 EOR VE
+ EQUB &44 EOR VE
+ EQUB &52 EOR VE
+ EQUB &49 EOR VE
+ EQUB &FA EOR VE
+ EQUB &20 EOR VE
+ EQUB &46 EOR VE
+ EQUB &DB EOR VE
+ EQUB &54 EOR VE
+ EQUB &C4 EOR VE
+ EQUB &48 EOR VE
+ EQUB &45 EOR VE
+ EQUB &F2 EOR VE
+ EQUB &2E EOR VE
+ EQUB &20 EOR VE
+ EQUB &EC EOR VE
+ EQUB &C4 EOR VE
+ EQUB &DB EOR VE
+ EQUB &20 EOR VE
+ EQUB &54 EOR VE
+ EQUB &4F EOR VE
+ EQUB &4F EOR VE
+ EQUB &00 EOR VE
+ EQUB &94 EOR VE
+ EQUB &20 EOR VE
+ EQUB &72 EOR VE
+ EQUB &20 EOR VE
+ EQUB &CF EOR VE
+ EQUB &20 EOR VE
+ EQUB &44 EOR VE
+ EQUB &45 EOR VE
+ EQUB &48 EOR VE
+ EQUB &59 EOR VE
+ EQUB &50 EOR VE
+ EQUB &C4 EOR VE
+ EQUB &48 EOR VE
+ EQUB &45 EOR VE
+ EQUB &F2 EOR VE
+ EQUB &20 EOR VE
+ EQUB &46 EOR VE
+ EQUB &52 EOR VE
+ EQUB &4F EOR VE
+ EQUB &4D EOR VE
+ EQUB &20 EOR VE
+ EQUB &E3 EOR VE
+ EQUB &57 EOR VE
+ EQUB &48 EOR VE
+ EQUB &45 EOR VE
+ EQUB &F2 EOR VE
+ EQUB &2C EOR VE
+ EQUB &20 EOR VE
+ EQUB &53 EOR VE
+ EQUB &55 EOR VE
+ EQUB &4E EOR VE
+ EQUB &20 EOR VE
+ EQUB &53 EOR VE
+ EQUB &4B EOR VE
+ EQUB &49 EOR VE
+ EQUB &4D EOR VE
+ EQUB &4D EOR VE
+ EQUB &FC EOR VE
+ EQUB &B2 EOR VE
+ EQUB &4A EOR VE
+ EQUB &55 EOR VE
+ EQUB &4D EOR VE
+ EQUB &50 EOR VE
+ EQUB &FC EOR VE
+ EQUB &2E EOR VE
+ EQUB &20 EOR VE
+ EQUB &49 EOR VE
+ EQUB &20 EOR VE
+ EQUB &48 EOR VE
+ EQUB &45 EOR VE
+ EQUB &EE EOR VE
+ EQUB &20 EOR VE
+ EQUB &DB EOR VE
+ EQUB &20 EOR VE
+ EQUB &57 EOR VE
+ EQUB &F6 EOR VE
+ EQUB &54 EOR VE
+ EQUB &C9 EOR VE
+ EQUB &F0 EOR VE
+ EQUB &EA EOR VE
+ EQUB &F7 EOR VE
+ EQUB &00 EOR VE
+ EQUB &73 EOR VE
+ EQUB &20 EOR VE
+ EQUB &CF EOR VE
+ EQUB &20 EOR VE
+ EQUB &57 EOR VE
+ EQUB &F6 EOR VE
+ EQUB &54 EOR VE
+ EQUB &20 EOR VE
+ EQUB &46 EOR VE
+ EQUB &FD EOR VE
+ EQUB &20 EOR VE
+ EQUB &4D EOR VE
+ EQUB &45 EOR VE
+ EQUB &20 EOR VE
+ EQUB &F5 EOR VE
+ EQUB &20 EOR VE
+ EQUB &41 EOR VE
+ EQUB &EC EOR VE
+ EQUB &EE EOR VE
+ EQUB &2E EOR VE
+ EQUB &20 EOR VE
+ EQUB &4D EOR VE
+ EQUB &59 EOR VE
+ EQUB &20 EOR VE
+ EQUB &F9 EOR VE
+ EQUB &53 EOR VE
+ EQUB &F4 EOR VE
+ EQUB &53 EOR VE
+ EQUB &20 EOR VE
+ EQUB &44 EOR VE
+ EQUB &49 EOR VE
+ EQUB &44 EOR VE
+ EQUB &4E EOR VE
+ EQUB &27 EOR VE
+ EQUB &54 EOR VE
+ EQUB &20 EOR VE
+ EQUB &45 EOR VE
+ EQUB &56 EOR VE
+ EQUB &F6 EOR VE
+ EQUB &20 EOR VE
+ EQUB &53 EOR VE
+ EQUB &43 EOR VE
+ EQUB &F8 EOR VE
+ EQUB &54 EOR VE
+ EQUB &43 EOR VE
+ EQUB &48 EOR VE
+ EQUB &20 EOR VE
+ EQUB &93 EOR VE
+ EQUB &73 EOR VE
+ EQUB &00 EOR VE
+ EQUB &4F EOR VE
+ EQUB &48 EOR VE
+ EQUB &20 EOR VE
+ EQUB &44 EOR VE
+ EQUB &45 EOR VE
+ EQUB &EE EOR VE
+ EQUB &20 EOR VE
+ EQUB &4D EOR VE
+ EQUB &45 EOR VE
+ EQUB &20 EOR VE
+ EQUB &59 EOR VE
+ EQUB &ED EOR VE
+ EQUB &2E EOR VE
+ EQUB &D0 EOR VE
+ EQUB &46 EOR VE
+ EQUB &52 EOR VE
+ EQUB &49 EOR VE
+ EQUB &47 EOR VE
+ EQUB &48 EOR VE
+ EQUB &54 EOR VE
+ EQUB &46 EOR VE
+ EQUB &55 EOR VE
+ EQUB &4C EOR VE
+ EQUB &20 EOR VE
+ EQUB &52 EOR VE
+ EQUB &4F EOR VE
+ EQUB &47 EOR VE
+ EQUB &55 EOR VE
+ EQUB &45 EOR VE
+ EQUB &20 EOR VE
+ EQUB &57 EOR VE
+ EQUB &49 EOR VE
+ EQUB &E2 EOR VE
+ EQUB &20 EOR VE
+ EQUB &57 EOR VE
+ EQUB &48 EOR VE
+ EQUB &F5 EOR VE
+ EQUB &20 EOR VE
+ EQUB &49 EOR VE
+ EQUB &20 EOR VE
+ EQUB &F7 EOR VE
+ EQUB &4C EOR VE
+ EQUB &49 EOR VE
+ EQUB &45 EOR VE
+ EQUB &FA EOR VE
+ EQUB &20 EOR VE
+ EQUB &B3 EOR VE
+ EQUB &20 EOR VE
+ EQUB &50 EOR VE
+ EQUB &45 EOR VE
+ EQUB &4F EOR VE
+ EQUB &50 EOR VE
+ EQUB &E5 EOR VE
+ EQUB &20 EOR VE
+ EQUB &43 EOR VE
+ EQUB &E4 EOR VE
+ EQUB &4C EOR VE
+ EQUB &D0 EOR VE
+ EQUB &E5 EOR VE
+ EQUB &41 EOR VE
+ EQUB &44 EOR VE
+ EQUB &20 EOR VE
+ EQUB &50 EOR VE
+ EQUB &4F EOR VE
+ EQUB &DE EOR VE
+ EQUB &F4 EOR VE
+ EQUB &49 EOR VE
+ EQUB &FD EOR VE
+ EQUB &20 EOR VE
+ EQUB &53 EOR VE
+ EQUB &48 EOR VE
+ EQUB &4F EOR VE
+ EQUB &54 EOR VE
+ EQUB &20 EOR VE
+ EQUB &55 EOR VE
+ EQUB &50 EOR VE
+ EQUB &20 EOR VE
+ EQUB &E0 EOR VE
+ EQUB &54 EOR VE
+ EQUB &53 EOR VE
+ EQUB &20 EOR VE
+ EQUB &4F EOR VE
+ EQUB &46 EOR VE
+ EQUB &20 EOR VE
+ EQUB &E2 EOR VE
+ EQUB &4F EOR VE
+ EQUB &DA EOR VE
+ EQUB &20 EOR VE
+ EQUB &F7 EOR VE
+ EQUB &41 EOR VE
+ EQUB &DE EOR VE
+ EQUB &4C EOR VE
+ EQUB &59 EOR VE
+ EQUB &20 EOR VE
+ EQUB &50 EOR VE
+ EQUB &49 EOR VE
+ EQUB &F8 EOR VE
+ EQUB &54 EOR VE
+ EQUB &ED EOR VE
+ EQUB &B2 EOR VE
+ EQUB &57 EOR VE
+ EQUB &F6 EOR VE
+ EQUB &54 EOR VE
+ EQUB &C9 EOR VE
+ EQUB &EC EOR VE
+ EQUB &E5 EOR VE
+ EQUB &52 EOR VE
+ EQUB &49 EOR VE
+ EQUB &00 EOR VE
+ EQUB &B3 EOR VE
+ EQUB &20 EOR VE
+ EQUB &43 EOR VE
+ EQUB &FF EOR VE
+ EQUB &20 EOR VE
+ EQUB &54 EOR VE
+ EQUB &41 EOR VE
+ EQUB &43 EOR VE
+ EQUB &4B EOR VE
+ EQUB &E5 EOR VE
+ EQUB &20 EOR VE
+ EQUB &93 EOR VE
+ EQUB &68 EOR VE
+ EQUB &20 EOR VE
+ EQUB &73 EOR VE
+ EQUB &20 EOR VE
+ EQUB &49 EOR VE
+ EQUB &46 EOR VE
+ EQUB &20 EOR VE
+ EQUB &B3 EOR VE
+ EQUB &20 EOR VE
+ EQUB &4C EOR VE
+ EQUB &49 EOR VE
+ EQUB &4B EOR VE
+ EQUB &45 EOR VE
+ EQUB &2E EOR VE
+ EQUB &20 EOR VE
+ EQUB &48 EOR VE
+ EQUB &45 EOR VE
+ EQUB &27 EOR VE
+ EQUB &53 EOR VE
+ EQUB &20 EOR VE
+ EQUB &F5 EOR VE
+ EQUB &20 EOR VE
+ EQUB &FD EOR VE
+ EQUB &EE EOR VE
+ EQUB &F8 EOR VE
+ EQUB &00 EOR VE
+ EQUB &01 EOR VE
+ EQUB &43 EOR VE
+ EQUB &4F EOR VE
+ EQUB &4D EOR VE
+ EQUB &C3 EOR VE
+ EQUB &EB EOR VE
+ EQUB &DF EOR VE
+ EQUB &3A EOR VE
+ EQUB &20 EOR VE
+ EQUB &45 EOR VE
+ EQUB &4C EOR VE
+ EQUB &DB EOR VE
+ EQUB &45 EOR VE
+ EQUB &20 EOR VE
+ EQUB &49 EOR VE
+ EQUB &49 EOR VE
+ EQUB &00 EOR VE
+ EQUB &74 EOR VE
+ EQUB &00 EOR VE
+ EQUB &74 EOR VE
+ EQUB &00 EOR VE
+ EQUB &74 EOR VE
+ EQUB &00 EOR VE
+ EQUB &74 EOR VE
+ EQUB &00 EOR VE
+ EQUB &74 EOR VE
+ EQUB &00 EOR VE
+ EQUB &74 EOR VE
+ EQUB &00 EOR VE
+ EQUB &74 EOR VE
+ EQUB &00 EOR VE
+ EQUB &74 EOR VE
+ EQUB &00 EOR VE
+ EQUB &74 EOR VE
+ EQUB &00 EOR VE
+ EQUB &74 EOR VE
+ EQUB &00 EOR VE
+ EQUB &74 EOR VE
+ EQUB &00 EOR VE
+ EQUB &74 EOR VE
+ EQUB &00 EOR VE
+ EQUB &74 EOR VE
+ EQUB &00 EOR VE
+ EQUB &42 EOR VE
+ EQUB &4F EOR VE
+ EQUB &59 EOR VE
+ EQUB &20 EOR VE
+ EQUB &41 EOR VE
+ EQUB &F2 EOR VE
+ EQUB &20 EOR VE
+ EQUB &B3 EOR VE
+ EQUB &20 EOR VE
+ EQUB &F0 EOR VE
+ EQUB &20 EOR VE
+ EQUB &93 EOR VE
+ EQUB &57 EOR VE
+ EQUB &52 EOR VE
+ EQUB &DF EOR VE
+ EQUB &47 EOR VE
+ EQUB &20 EOR VE
+ EQUB &47 EOR VE
+ EQUB &E4 EOR VE
+ EQUB &41 EOR VE
+ EQUB &58 EOR VE
+ EQUB &59 EOR VE
+ EQUB &21 EOR VE
+ EQUB &00 EOR VE
+ EQUB &E2 EOR VE
+ EQUB &F4 EOR VE
+ EQUB &45 EOR VE
+ EQUB &27 EOR VE
+ EQUB &53 EOR VE
+ EQUB &D0 EOR VE
+ EQUB &F2 EOR VE
+ EQUB &E4 EOR VE
+ EQUB &20 EOR VE
+ EQUB &73 EOR VE
+ EQUB &20 EOR VE
+ EQUB &50 EOR VE
+ EQUB &49 EOR VE
+ EQUB &F8 EOR VE
+ EQUB &54 EOR VE
+ EQUB &45 EOR VE
+ EQUB &20 EOR VE
+ EQUB &D9 EOR VE
+ EQUB &54 EOR VE
+ EQUB &20 EOR VE
+ EQUB &E2 EOR VE
+ EQUB &F4 EOR VE
+ EQUB &45 EOR VE
+ EQUB &00 EOR VE
+ EQUB &93 EOR VE
+ EQUB &C1 EOR VE
+ EQUB &53 EOR VE
+ EQUB &20 EOR VE
+ EQUB &4F EOR VE
+ EQUB &46 EOR VE
+ EQUB &20 EOR VE
+ EQUB &6D EOR VE
+ EQUB &20 EOR VE
+ EQUB &41 EOR VE
+ EQUB &F2 EOR VE
+ EQUB &20 EOR VE
+ EQUB &EB EOR VE
+ EQUB &20 EOR VE
+ EQUB &41 EOR VE
+ EQUB &EF EOR VE
+ EQUB &5A EOR VE
+ EQUB &F0 EOR VE
+ EQUB &47 EOR VE
+ EQUB &4C EOR VE
+ EQUB &59 EOR VE
+ EQUB &20 EOR VE
+ EQUB &50 EOR VE
+ EQUB &52 EOR VE
+ EQUB &49 EOR VE
+ EQUB &4D EOR VE
+ EQUB &49 EOR VE
+ EQUB &FB EOR VE
+ EQUB &FA EOR VE
+ EQUB &20 EOR VE
+ EQUB &E2 EOR VE
+ EQUB &F5 EOR VE
+ EQUB &20 EOR VE
+ EQUB &E2 EOR VE
+ EQUB &45 EOR VE
+ EQUB &59 EOR VE
+ EQUB &20 EOR VE
+ EQUB &DE EOR VE
+ EQUB &DC EOR VE
+ EQUB &4C EOR VE
+ EQUB &20 EOR VE
+ EQUB &E2 EOR VE
+ EQUB &F0 EOR VE
+ EQUB &4B EOR VE
+ EQUB &20 EOR VE
+ EQUB &13 EOR VE
+ EQUB &2A EOR VE
+ EQUB &2A EOR VE
+ EQUB &2A EOR VE
+ EQUB &2A EOR VE
+ EQUB &2A EOR VE
+ EQUB &20 EOR VE
+ EQUB &2A EOR VE
+ EQUB &2A EOR VE
+ EQUB &2A EOR VE
+ EQUB &2A EOR VE
+ EQUB &2A EOR VE
+ EQUB &2A EOR VE
+ EQUB &CA EOR VE
+ EQUB &20 EOR VE
+ EQUB &33 EOR VE
+ EQUB &44 EOR VE
+ EQUB &00 EOR VE
+ EQUB &01 EOR VE
+ EQUB &57 EOR VE
+ EQUB &45 EOR VE
+ EQUB &4C EOR VE
+ EQUB &43 EOR VE
+ EQUB &4F EOR VE
+ EQUB &4D EOR VE
+ EQUB &45 EOR VE
+ EQUB &C9 EOR VE
+ EQUB &20 EOR VE
+ EQUB &93 EOR VE
+ EQUB &DA EOR VE
+ EQUB &FA EOR VE
+ EQUB &4E EOR VE
+ EQUB &54 EOR VE
+ EQUB &45 EOR VE
+ EQUB &F6 EOR VE
+ EQUB &E2 EOR VE
+ EQUB &20 EOR VE
+ EQUB &47 EOR VE
+ EQUB &41 EOR VE
+ EQUB &F9 EOR VE
+ EQUB &58 EOR VE
+ EQUB &59 EOR VE
+ EQUB &21 EOR VE
+ EQUB &00 EOR VE
+ EQUB &77 EOR VE
+ EQUB &0B EOR VE
+ EQUB &3A EOR VE
+ EQUB &22 EOR VE
+ EQUB &23 EOR VE
+ EQUB &3E EOR VE
+ EQUB &3B EOR VE
+ EQUB &36 EOR VE
+ EQUB &23 EOR VE
+ EQUB &32 EOR VE
+ EQUB &77 EOR VE
+ EQUB &31 EOR VE
+ EQUB &25 EOR VE
+ EQUB &38 EOR VE
+ EQUB &3A EOR VE
+ EQUB &77 EOR VE
+ EQUB &3F EOR VE
+ EQUB &32 EOR VE
+ EQUB &25 EOR VE
+ EQUB &32 EOR VE
+ EQUB &77 EOR VE
+ EQUB &23 EOR VE
+ EQUB &38 EOR VE
+ EQUB &77 EOR VE
+ EQUB &11 EOR VE
+ EQUB &72 EOR VE
+ EQUB &5A EOR VE
+ EQUB &5C EOR VE
+ EQUB &EF EOR VE
+
 
 SAVE "versions/master/output/BDATA.unprot.bin", CODE%, P%, LOAD%

@@ -11,8 +11,13 @@
 
  EQUB 7                 \ Max. canisters on demise = 7
  EQUW 80 * 80           \ Targetable area          = 80 * 80
+IF _MASTER_VERSION
+ EQUB LO(SHIP_ASTEROID_EDGES - SHIP_ROCK_HERMIT)     \ Edges data = asteroid
+ EQUB LO(SHIP_ASTEROID_FACES - SHIP_ROCK_HERMIT)     \ Faces data = asteroid
+ELIF _6502SP_VERSION OR _DISC_VERSION
  EQUB &4A               \ Edges data offset (low)  = &004A
  EQUB &9E               \ Faces data offset (low)  = &009E
+ENDIF
  EQUB 69                \ Max. edge count          = (69 - 1) / 4 = 17
  EQUB 0                 \ Gun vertex               = 0
  EQUB 50                \ Explosion count          = 11, as (4 * n) + 6 = 50
@@ -23,8 +28,13 @@
  EQUB 50                \ Visibility distance      = 50
  EQUB 180               \ Max. energy              = 180
  EQUB 30                \ Max. speed               = 30
+IF _MASTER_VERSION
+ EQUB HI(SHIP_ASTEROID_EDGES - SHIP_ROCK_HERMIT)     \ Edges data = asteroid
+ EQUB HI(SHIP_ASTEROID_FACES - SHIP_ROCK_HERMIT)     \ Faces data = asteroid
+ELIF _6502SP_VERSION OR _DISC_VERSION
  EQUB &00               \ Edges data offset (high) = &004A
  EQUB &00               \ Faces data offset (high) = &009E
+ENDIF
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
  EQUB %00000010         \ Laser power              = 0
                         \ Missiles                 = 2
@@ -39,6 +49,8 @@
  VERTEX  -40,    0,   70,     0,      1,    2,     3,         31    \ Vertex 6
  VERTEX    0,   30,  -75,    15,     15,   15,    15,         31    \ Vertex 7
  VERTEX    0,  -50,  -60,     8,      9,   10,    11,         31    \ Vertex 8
+
+IF _6502SP_VERSION OR _DISC_VERSION
 
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     2,     7,         31    \ Edge 0
@@ -78,4 +90,6 @@
  FACE       58,     -102,      -51,         31    \ Face 11
  FACE       81,        9,      -67,         31    \ Face 12
  FACE       47,       94,      -63,         31    \ Face 13
+
+ENDIF
 

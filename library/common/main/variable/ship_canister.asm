@@ -15,7 +15,7 @@
  EQUB &8C               \ Faces data offset (low)  = &008C
 IF _CASSETTE_VERSION OR _DISC_VERSION
  EQUB 49                \ Max. edge count          = (49 - 1) / 4 = 12
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 53                \ Max. edge count          = (53 - 1) / 4 = 13
 ENDIF
  EQUB 0                 \ Gun vertex               = 0

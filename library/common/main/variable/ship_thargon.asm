@@ -16,16 +16,16 @@
 
 IF _CASSETTE_VERSION
  EQUB 0                 \ Max. canisters on demise = 0
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
  EQUB 0 + (15 << 4)     \ Max. canisters on demise = 0
                         \ Market item when scooped = 15 + 1 = 16 (Alien items)
 ENDIF
  EQUW 40 * 40           \ Targetable area          = 40 * 40
- EQUB LO(SHIP_CANISTER_EDGES - SHIP_THARGON)    \ Edges data = canister
+ EQUB LO(SHIP_CANISTER_EDGES - SHIP_THARGON)         \ Edges data = canister
  EQUB &50               \ Faces data offset (low)  = &0050
 IF _CASSETTE_VERSION OR _DISC_VERSION
  EQUB 65                \ Max. edge count          = (65 - 1) / 4 = 16
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 69                \ Max. edge count          = (69 - 1) / 4 = 17
 ENDIF
  EQUB 0                 \ Gun vertex               = 0
@@ -37,7 +37,7 @@ ENDIF
  EQUB 20                \ Visibility distance      = 20
  EQUB 20                \ Max. energy              = 20
  EQUB 30                \ Max. speed               = 30
- EQUB HI(SHIP_CANISTER_EDGES - SHIP_THARGON)    \ Edges data = canister
+ EQUB HI(SHIP_CANISTER_EDGES - SHIP_THARGON)         \ Edges data = canister
  EQUB &00               \ Faces data offset (high) = &0050
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
  EQUB %00010000         \ Laser power              = 2

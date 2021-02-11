@@ -10,7 +10,7 @@
 
 .XX21
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
 
  EQUW SHIP_SIDEWINDER   \         1 = Sidewinder
  EQUW SHIP_VIPER        \ COPS =  2 = Viper
@@ -26,7 +26,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
  EQUW SHIP_THARGON      \ TGL  = 12 = Thargon
  EQUW SHIP_ESCAPE_POD   \ ESC  = 13 = Escape pod
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  EQUW SHIP_MISSILE      \ MSL  =  1 = Missile
  EQUW SHIP_CORIOLIS     \ SST  =  2 = Coriolis space station
@@ -59,8 +59,14 @@ ELIF _6502SP_VERSION
  EQUW SHIP_THARGOID     \ THG  = 29 = Thargoid
  EQUW SHIP_THARGON      \ TGL  = 30 = Thargon
  EQUW SHIP_CONSTRICTOR  \ CON  = 31 = Constrictor
+ENDIF
+IF _6502SP_VERSION
  EQUW SHIP_LOGO         \ LGO  = 32 = The Elite logo
  EQUW SHIP_COUGAR       \ COU  = 33 = Cougar
  EQUW SHIP_DODO         \ DOD  = 34 = Dodecahedron ("Dodo") space station
+
+ELIF _MASTER_VERSION
+ EQUW SHIP_COUGAR       \ COU  = 32 = Cougar
+ EQUW SHIP_DODO         \ DOD  = 33 = Dodecahedron ("Dodo") space station
 
 ENDIF

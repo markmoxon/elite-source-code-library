@@ -15,7 +15,7 @@
  EQUB &54               \ Faces data offset (low)  = &0154
 IF _CASSETTE_VERSION OR _DISC_VERSION
  EQUB 153               \ Max. edge count          = (153 - 1) / 4 = 38
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 157               \ Max. edge count          = (157 - 1) / 4 = 39
 ENDIF
  EQUB 84                \ Gun vertex               = 84 / 4 = 21
@@ -63,6 +63,12 @@ ENDIF
  VERTEX   88,    0,  -40,     9,      9,    9,     9,          6    \ Vertex 26
  VERTEX   80,   -6,  -40,     9,      9,    9,     9,          8    \ Vertex 27
 
+IF _MASTER_VERSION
+
+.SHIP_COBRA_MK_3_EDGES
+
+ENDIF
+
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     0,    11,         31    \ Edge 0
  EDGE       0,       4,     4,    12,         31    \ Edge 1
@@ -103,6 +109,11 @@ ENDIF
  EDGE      26,      27,     9,     9,          6    \ Edge 36
  EDGE      25,      27,     9,     9,          8    \ Edge 37
 
+IF _MASTER_VERSION
+
+.SHIP_COBRA_MK_3_FACES
+
+ENDIF
 \FACE normal_x, normal_y, normal_z, visibility
  FACE        0,       62,       31,         31    \ Face 0
  FACE      -18,       55,       16,         31    \ Face 1

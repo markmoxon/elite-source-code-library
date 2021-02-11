@@ -15,7 +15,7 @@
  EQUB &9E               \ Faces data offset (low)  = &009E
 IF _CASSETTE_VERSION OR _DISC_VERSION
  EQUB 65                \ Max. edge count          = (65 - 1) / 4 = 16
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 69                \ Max. edge count          = (69 - 1) / 4 = 17
 ENDIF
  EQUB 0                 \ Gun vertex               = 0
@@ -44,6 +44,12 @@ ENDIF
  VERTEX    0,   30,  -75,    15,     15,   15,    15,         31    \ Vertex 7
  VERTEX    0,  -50,  -60,     8,      9,   10,    11,         31    \ Vertex 8
 
+IF _MASTER_VERSION
+
+.SHIP_ASTEROID_EDGES
+
+ENDIF
+
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     2,     7,         31    \ Edge 0
  EDGE       0,       4,     6,    13,         31    \ Edge 1
@@ -66,6 +72,12 @@ ENDIF
  EDGE       3,       8,     9,    11,         31    \ Edge 18
  EDGE       2,       8,    10,    11,         31    \ Edge 19
  EDGE       7,       8,     8,     9,         31    \ Edge 20
+
+IF _MASTER_VERSION
+
+.SHIP_ASTEROID_FACES
+
+ENDIF
 
 \FACE normal_x, normal_y, normal_z, visibility
  FACE        9,       66,       81,         31    \ Face 0

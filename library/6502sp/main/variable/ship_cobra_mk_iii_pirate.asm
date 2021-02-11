@@ -11,11 +11,16 @@
 
  EQUB 1                 \ Max. canisters on demise = 1
  EQUW 95 * 95           \ Targetable area          = 95 * 95
+IF _MASTER_VERSION
+ EQUB LO(SHIP_COBRA_MK_3_EDGES - SHIP_COBRA_MK_3_P)  \ Edges data = Cobra Mk III
+ EQUB LO(SHIP_COBRA_MK_3_FACES - SHIP_COBRA_MK_3_P)  \ Faces data = Cobra Mk III
+ELIF _6502SP_VERSION OR _DISC_VERSION
  EQUB &BC               \ Edges data offset (low)  = &00BC
  EQUB &54               \ Faces data offset (low)  = &0154
+ENDIF
 IF _DISC_VERSION
  EQUB 153               \ Max. edge count          = (153 - 1) / 4 = 38
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 157               \ Max. edge count          = (157 - 1) / 4 = 39
 ENDIF
  EQUB 84                \ Gun vertex               = 84 / 4 = 21
@@ -27,8 +32,13 @@ ENDIF
  EQUB 50                \ Visibility distance      = 50
  EQUB 150               \ Max. energy              = 150
  EQUB 28                \ Max. speed               = 28
+IF _MASTER_VERSION
+ EQUB HI(SHIP_COBRA_MK_3_EDGES - SHIP_COBRA_MK_3_P)  \ Edges data = Cobra Mk III
+ EQUB HI(SHIP_COBRA_MK_3_FACES - SHIP_COBRA_MK_3_P)  \ Faces data = Cobra Mk III
+ELIF _6502SP_VERSION OR _DISC_VERSION
  EQUB &00               \ Edges data offset (high) = &00BC
  EQUB &01               \ Faces data offset (high) = &0154
+ENDIF
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
  EQUB %00010010         \ Laser power              = 2
                         \ Missiles                 = 2
@@ -62,6 +72,8 @@ ENDIF
  VERTEX   80,    6,  -40,     9,      9,    9,     9,          8    \ Vertex 25
  VERTEX   88,    0,  -40,     9,      9,    9,     9,          6    \ Vertex 26
  VERTEX   80,   -6,  -40,     9,      9,    9,     9,          8    \ Vertex 27
+
+IF _6502SP_VERSION OR _DISC_VERSION
 
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     0,    11,         31    \ Edge 0
@@ -117,4 +129,6 @@ ENDIF
  FACE       -7,      -42,        9,         31    \ Face 10
  FACE        0,      -30,        6,         31    \ Face 11
  FACE        7,      -42,        9,         31    \ Face 12
+
+ENDIF
 

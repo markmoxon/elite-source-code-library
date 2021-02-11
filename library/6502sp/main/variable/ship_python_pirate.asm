@@ -11,11 +11,16 @@
 
  EQUB 2                 \ Max. canisters on demise = 2
  EQUW 80 * 80           \ Targetable area          = 80 * 80
+IF _MASTER_VERSION
+ EQUB LO(SHIP_PYTHON_EDGES - SHIP_PYTHON_P)          \ Edges data = Python
+ EQUB LO(SHIP_PYTHON_FACES - SHIP_PYTHON_P)          \ Faces data = Python
+ELIF _6502SP_VERSION OR _DISC_VERSION
  EQUB &56               \ Edges data offset (low)  = &0056
  EQUB &BE               \ Faces data offset (low)  = &00BE
+ENDIF
 IF _DISC_VERSION
  EQUB 85                \ Max. edge count          = (85 - 1) / 4 = 21
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 89                \ Max. edge count          = (89 - 1) / 4 = 22
 ENDIF
  EQUB 0                 \ Gun vertex               = 0
@@ -27,8 +32,13 @@ ENDIF
  EQUB 40                \ Visibility distance      = 40
  EQUB 250               \ Max. energy              = 250
  EQUB 20                \ Max. speed               = 20
+IF _MASTER_VERSION
+ EQUB HI(SHIP_PYTHON_EDGES - SHIP_PYTHON_P)          \ Edges data = Python
+ EQUB HI(SHIP_PYTHON_FACES - SHIP_PYTHON_P)          \ Faces data = Python
+ELIF _6502SP_VERSION OR _DISC_VERSION
  EQUB &00               \ Edges data offset (high) = &0056
  EQUB &00               \ Faces data offset (high) = &00BE
+ENDIF
  EQUB 0                 \ Normals are scaled by    = 2^0 = 1
  EQUB %00011011         \ Laser power              = 3
                         \ Missiles                 = 3
@@ -45,6 +55,8 @@ ENDIF
  VERTEX    0,  -48,   48,     2,      3,    6,     7,         31    \ Vertex 8
  VERTEX    0,  -48,  -32,     6,      7,   10,    11,         31    \ Vertex 9
  VERTEX    0,  -24, -112,    10,     11,   12,    12,         31    \ Vertex 10
+
+IF _6502SP_VERSION OR _DISC_VERSION
 
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       8,     2,     3,         31    \ Edge 0
@@ -88,4 +100,6 @@ ENDIF
  FACE       25,      -37,      -11,         31    \ Face 10
  FACE      -25,      -37,      -11,         31    \ Face 11
  FACE        0,        0,     -112,         31    \ Face 12
+
+ENDIF
 

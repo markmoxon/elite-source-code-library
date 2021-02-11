@@ -15,7 +15,7 @@
  EQUB &CE               \ Faces data offset (low)  = &00CE
 IF _DISC_VERSION
  EQUB 85                \ Max. edge count          = (85 - 1) / 4 = 21
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 89                \ Max. edge count          = (89 - 1) / 4 = 22
 ENDIF
  EQUB 0                 \ Gun vertex               = 0
@@ -26,14 +26,14 @@ ENDIF
  EQUB 24                \ Number of faces          = 24 / 4 = 6
 IF _DISC_FLIGHT
  EQUB 25                \ Visibility distance      = 25
-ELIF _6502SP_VERSION OR _DISC_DOCKED
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
  EQUB 20                \ Visibility distance      = 20
 ENDIF
  EQUB 80                \ Max. energy              = 80
  EQUB 30                \ Max. speed               = 30
  EQUB &00               \ Edges data offset (high) = &007A
  EQUB &00               \ Faces data offset (high) = &00CE
-IF _6502SP_VERSION OR _DISC_FLIGHT
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
 ELIF _DISC_DOCKED
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
@@ -47,7 +47,7 @@ ENDIF
  VERTEX    0,  -18,  -48,     2,      1,    5,     4,         31    \ Vertex 2
  VERTEX   90,    0,   -3,     1,      0,    4,     4,         31    \ Vertex 3
  VERTEX  -90,    0,   -3,     3,      2,    5,     5,         31    \ Vertex 4
-IF _6502SP_VERSION OR _DISC_FLIGHT
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
  VERTEX   90,    0,   87,     1,      0,    1,     1,         30    \ Vertex 5
  VERTEX  -90,    0,   87,     3,      2,    3,     3,         30    \ Vertex 6
 ELIF _DISC_DOCKED
@@ -74,7 +74,7 @@ ENDIF
  EDGE       4,       2,     5,     2,         31    \ Edge 5
  EDGE       2,       3,     4,     1,         31    \ Edge 6
  EDGE       3,       1,     4,     0,         31    \ Edge 7
-IF _6502SP_VERSION OR _DISC_FLIGHT
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
  EDGE       3,       5,     1,     0,         30    \ Edge 8
  EDGE       4,       6,     3,     2,         30    \ Edge 9
  EDGE       1,       2,     5,     4,          8    \ Edge 10
@@ -94,7 +94,7 @@ ENDIF
  EDGE      15,      16,     5,     5,          8    \ Edge 19
  EDGE      16,      14,     5,     5,          8    \ Edge 20
 
-IF _6502SP_VERSION OR _DISC_FLIGHT
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
 \FACE normal_x, normal_y, normal_z, visibility
  FACE        3,       24,        3,         31    \ Face 0

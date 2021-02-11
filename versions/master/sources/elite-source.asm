@@ -869,7 +869,7 @@ L152A = L1529+1
         LDX     TYPE
         BMI     L1676
 
-        LDA     L3553,X
+        LDA     scacol,X
         STA     COL
         LDA     L009D
         ORA     L00A0
@@ -5058,7 +5058,7 @@ L32F6 = L32F4+2
         EQUB    $FF,$FF,$FF,$FF,$C9,$FA,$FA,$FF
         EQUB    $FF,$FF
 
-.L3553
+.scacol
         EQUB    $00,$0F,$0C,$30,$30,$30,$03,$03
         EQUB    $03,$3C,$3C,$3C,$33,$33,$33,$03
         EQUB    $3C,$3C,$3C,$3C,$3C,$3C,$3C,$30
@@ -17736,6 +17736,7 @@ L712B = L712A+1
         RTI
 
 .BeebDisEndAddr
+
 
 
 

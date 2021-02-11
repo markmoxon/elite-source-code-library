@@ -819,6 +819,9 @@ LOAD_PYTHON% = &1B00
 ORG CODE_PYTHON%
 
 INCLUDE "library/common/main/variable/ship_python.asm"
+
+ SKIP 11                \ This space is unused
+
 INCLUDE "library/common/main/variable/svn.asm"
 INCLUDE "library/common/main/variable/vec.asm"
 

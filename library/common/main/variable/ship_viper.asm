@@ -15,7 +15,7 @@
  EQUB &BE               \ Faces data offset (low)  = &00BE
 IF _CASSETTE_VERSION OR _DISC_VERSION
  EQUB 77                \ Max. edge count          = (77 - 1) / 4 = 19
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 81                \ Max. edge count          = (81 - 1) / 4 = 20
 ENDIF
  EQUB 0                 \ Gun vertex               = 0
@@ -29,7 +29,7 @@ IF _CASSETTE_VERSION
  EQUB 120               \ Max. energy              = 120
 ELIF _DISC_VERSION
  EQUB 100               \ Max. energy              = 100
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 140               \ Max. energy              = 140
 ENDIF
  EQUB 32                \ Max. speed               = 32

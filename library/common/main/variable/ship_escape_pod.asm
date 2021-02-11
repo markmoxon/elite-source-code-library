@@ -11,7 +11,7 @@
 
 IF _CASSETTE_VERSION
  EQUB 0                 \ Max. canisters on demise = 0
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
  EQUB 0 + (2 << 4)      \ Max. canisters on demise = 0
                         \ Market item when scooped = 2 + 1 = 3 (Slaves)
 ENDIF
@@ -20,7 +20,7 @@ ENDIF
  EQUB &44               \ Faces data offset (low)  = &0044
 IF _CASSETTE_VERSION OR _DISC_VERSION
  EQUB 25                \ Max. edge count          = (25 - 1) / 4 = 6
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 29                \ Max. edge count          = (29 - 1) / 4 = 7
 ENDIF
  EQUB 0                 \ Gun vertex               = 0
@@ -36,7 +36,7 @@ ENDIF
  EQUB &00               \ Faces data offset (high) = &0044
 IF _CASSETTE_VERSION
  EQUB 3                 \ Normals are scaled by    =  2^3 = 8
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
  EQUB 4                 \ Normals are scaled by    =  2^4 = 16
 ENDIF
  EQUB %00000000         \ Laser power              = 0
@@ -66,7 +66,7 @@ IF _CASSETTE_VERSION
  FACE       19,      -51,       15,         31    \ Face 2
  FACE      -56,        0,        0,         31    \ Face 3
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
 \FACE normal_x, normal_y, normal_z, visibility
  FACE       52,        0,     -122,         31    \ Face 0

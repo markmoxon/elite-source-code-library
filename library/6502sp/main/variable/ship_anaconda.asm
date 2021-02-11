@@ -24,7 +24,7 @@ ENDIF
  EQUB 25                \ Number of edges          = 25
  EQUW 0                 \ Bounty                   = 0
  EQUB 48                \ Number of faces          = 48 / 4 = 12
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 36                \ Visibility distance      = 36
 ELIF _DISC_VERSION
  EQUB 50                \ Visibility distance      = 50

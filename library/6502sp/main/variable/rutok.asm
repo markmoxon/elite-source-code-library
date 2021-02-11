@@ -602,7 +602,7 @@ IF _DISC_VERSION
  ERND 18                \                <245> <226>EY <222><220>L <226><240>K
  ECHR ' '               \                 {19}A*****R[202]A P<242>TTY NE<245>
  ECHR 'A'               \                 GAME"
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
  ETOK 147               \ Token 25:     "THE INHABITANTS OF [86-90] ARE SO
  ETOK 193               \                AMAZINGLY PRIMITIVE THAT THEY STILL
  ECHR 'S'               \                THINK {single cap}***** ****** IS  3D"
@@ -676,7 +676,7 @@ IF _DISC_VERSION
  ECHR 'M'
  ECHR 'E'
  EQUB VE
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
  ECHR '*'
  ECHR '*'
  ECHR '*'
@@ -704,7 +704,7 @@ IF _SOURCE_DISC
  EJMP 2                 \ Token 26:     "{sentence case}BITS'N PIECES - END OF
  ECHR 'B'               \                PART 1"
  ECHR 'I'               \
- ECHR 'T'               \ Encoded as:   "{2}BITS[39]N PIECES - END OF PART 1"
+ ECHR 'T'               \ Encoded as:   "{2}BITS'N PIECES - END OF PART 1"
  ECHR 'S'
  ECHR '`'
  ECHR 'N'
@@ -734,6 +734,41 @@ IF _SOURCE_DISC
  EQUB VE
 
 ENDIF
+
+ELIF _MASTER_VERSION
+
+ EJMP 1                 \ Token 26:     "{all caps}WELCOME TO  THE SEVENTEENTH
+ ECHR 'W'               \                GALAXY!"
+ ECHR 'E'               \
+ ECHR 'L'               \ Encoded as:   "{1}WELCOME[201] [147]<218><250>NTE<246>
+ ECHR 'C'               \                <226> GA<249>XY!"
+ ECHR 'O'
+ ECHR 'M'
+ ECHR 'E'
+ ETOK 201
+ ECHR ' '
+ ETOK 147
+ ETWO 'S', 'E'
+ ETWO 'V', 'E'
+ ECHR 'N'
+ ECHR 'T'
+ ECHR 'E'
+ ETWO 'E', 'N'
+ ETWO 'T', 'H'
+ ECHR ' '
+ ECHR 'G'
+ ECHR 'A'
+ ETWO 'L', 'A'
+ ECHR 'X'
+ ECHR 'Y'
+ ECHR '!'
+ EQUB VE
+
+ EQUS " \mutilate"      \ This appears to be unused and is presumably noise from 
+ EQUS " from here"      \ the compilation (it looks like an assembly language
+ EQUS " to F%"          \ comment)
+ EQUB 13
+ EQUB &0B, &B8
 
 ENDIF
 

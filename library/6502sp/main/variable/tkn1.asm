@@ -30,9 +30,9 @@ ENDIF
  ETWO 'C', 'E'          \                5. EXIT{crlf}
  ECHR 'S'               \               "
  ECHR 'S'               \
-IF _DISC_VERSION
+IF _DISC_VERSION OR _MASTER_VERSION
  ECHR ' '               \ Encoded as:   "{9}{11}{1}{8} <241>SK AC<233>SS ME
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION
  ECHR ' '               \ Encoded as:   "{9}{11}{30}{1}{8} <241>SK AC<233>SS ME
 ENDIF
  ECHR 'M'               \                <225><215>{10}{2}1. [149]<215>2. SA
@@ -61,12 +61,27 @@ ENDIF
  ECHR '.'
  ECHR ' '
  ECHR 'C'
+IF _6502SP_VERSION OR _DISC_VERSION
  ETWO 'A', 'T'
  ECHR 'A'
  ETWO 'L', 'O'
+ELIF _MASTER_VERSION
+ ECHR 'A'
+ ECHR 'T'
+ ECHR 'A'
+ ECHR 'L'
+ ECHR 'O'
+ENDIF
  ECHR 'G'
  ECHR 'U'
  ECHR 'E'
+IF _MASTER_VERSION
+ ECHR ' '
+ ECHR 'D'
+ ECHR 'I'
+ ECHR 'S'
+ ECHR 'K'
+ENDIF
  ETWO '-', '-'
  ECHR '4'
  ECHR '.'
@@ -74,6 +89,7 @@ ENDIF
  ECHR 'D'
  ECHR 'E'
  ECHR 'L'
+IF _6502SP_VERSION OR _DISC_VERSION
  ETWO 'E', 'T'
  ECHR 'E'
  ETOK 208
@@ -88,6 +104,43 @@ ENDIF
  ECHR 'X'
  ETWO 'I', 'T'
  ETWO '-', '-'
+ELIF _MASTER_VERSION
+ ECHR 'E'
+ ECHR 'T'
+ ECHR 'E'
+ ECHR ' '
+ ECHR 'F'
+ ECHR 'I'
+ ECHR 'L'
+ ECHR 'E'
+ EQUB &D7 EOR VE
+ EQUB &35 EOR VE
+ EQUB &2E EOR VE
+ EQUB &20 EOR VE
+ EQUB &44 EOR VE
+ EQUB &45 EOR VE
+ EQUB &46 EOR VE
+ EQUB &41 EOR VE
+ EQUB &55 EOR VE
+ EQUB &4C EOR VE
+ EQUB &54 EOR VE
+ EQUB &20 EOR VE
+ EQUB &01 EOR VE
+ EQUB &4A EOR VE
+ EQUB &41 EOR VE
+ EQUB &4D EOR VE
+ EQUB &ED EOR VE
+ EQUB &DF EOR VE
+ EQUB &02 EOR VE
+ EQUB &D7 EOR VE
+ EQUB &36 EOR VE
+ EQUB &2E EOR VE
+ EQUB &20 EOR VE
+ EQUB &45 EOR VE
+ EQUB &58 EOR VE
+ EQUB &DB EOR VE
+ EQUB &D7 EOR VE
+ENDIF
  EQUB VE
 
  EJMP 12                \ Token 2:      "{cr}
@@ -100,6 +153,8 @@ ENDIF
  ETOK 151
  ECHR '?'
  EQUB VE
+
+IF _6502SP_VERSION OR _DISC_VERSION
 
  ECHR 'C'               \ Token 3:      "COMPETITION NUMBER:"
  ECHR 'O'               \
@@ -117,7 +172,13 @@ ENDIF
  ECHR ':'
  EQUB VE
 
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_VERSION
  ETOK 150               \ Token 4:      "{clear screen}
+ELIF _MASTER_VERSION
+ ETOK 150               \ Token 3:      "{clear screen}
+ENDIF
  ETOK 151               \                {draw box around title}
  ECHR ' '               \                {all caps}
  EJMP 16                \                {tab 6}DRIVE {drive number} CATALOGUE
@@ -125,6 +186,12 @@ ENDIF
  ETWO '-', '-'          \               "
  EQUB VE                \
                         \ Encoded as:   "[150][151] {16}[152]<215>"
+
+IF _MASTER_VERSION
+
+ EQUB VE                \ Token 4:      ""
+
+ENDIF
 
  ETOK 176               \ Token 5:      "{lower case}
  ERND 18                \                {justify}
@@ -177,6 +244,8 @@ ENDIF
  ETOK 200
  EQUB VE
 
+IF _6502SP_VERSION OR _DISC_VERSION
+
  EJMP 21                \ Token 9:      "{clear bottom of screen}
  ECHR 'F'               \                FILE TO DELETE?"
  ECHR 'I'               \
@@ -189,6 +258,31 @@ ENDIF
  ECHR 'E'
  ECHR '?'
  EQUB VE
+
+ELIF _MASTER_VERSION
+
+ EQUB &0C EOR VE
+ EQUB &01 EOR VE
+ EQUB &DC EOR VE
+ EQUB &E5 EOR VE
+ EQUB &47 EOR VE
+ EQUB &E4 EOR VE
+ EQUB &20 EOR VE
+ EQUB &45 EOR VE
+ EQUB &4C EOR VE
+ EQUB &49 EOR VE
+ EQUB &54 EOR VE
+ EQUB &45 EOR VE
+ EQUB &20 EOR VE
+ EQUB &49 EOR VE
+ EQUB &49 EOR VE
+ EQUB &20 EOR VE
+ EQUB &46 EOR VE
+ EQUB &49 EOR VE
+ EQUB &E5 EOR VE
+ EQUB VE
+
+ENDIF
 
  EJMP 23                \ Token 10:     "{move to row 10, white, lower case}
  EJMP 14                \                {justify}
@@ -543,7 +637,7 @@ ENDIF
 
  EJMP 25                \ Token 11:     "{incoming message screen, wait 2s}
  EJMP 9                 \                {clear screen}
-IF _6502SP_VERSION OR _MASTER_VERSION
+IF _6502SP_VERSION
  EJMP 30                \                {white}
 ENDIF
  EJMP 23                \                {move to row 10, white, lower case}
@@ -564,9 +658,9 @@ ENDIF
  ECHR 'E'               \                {left align}{tab 6}{all caps}  MESSAGE
  ECHR ' '               \                ENDS{wait for key press}"
  ECHR 'H'               \
-IF _DISC_VERSION
+IF _DISC_VERSION OR _MASTER_VERSION
  ECHR 'A'               \ Encoded as:   "{25}{9}{23}{14}{2}  <245>T<246>
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION
  ECHR 'A'               \ Encoded as:   "{25}{9}{30}{23}{14}{2}  <245>T<246>
 ENDIF
  ETWO 'V', 'E'          \                <251><223>[213]. {19}WE HA<250> NE[196]
@@ -673,9 +767,15 @@ ENDIF
  EJMP 24
  EQUB VE
 
+IF _6502SP_VERSION OR _DISC_VERSION
  ECHR '('               \ Token 12:     "({single cap}C) ACORNSOFT 1984"
  EJMP 19                \
  ECHR 'C'               \ Encoded as:   "({19}C) AC<253>N<235>FT 1984"
+ELIF _MASTER_VERSION
+ ECHR '('               \ Token 12:     "({single cap}C) ACORNSOFT 1986"
+ EJMP 19                \
+ ECHR 'C'               \ Encoded as:   "({19}C) AC<253>N<235>FT 1986"
+ENDIF
  ECHR ')'
  ECHR ' '
  ECHR 'A'
@@ -689,8 +789,14 @@ ENDIF
  ECHR '1'
  ECHR '9'
  ECHR '8'
+IF _6502SP_VERSION OR _DISC_VERSION
  ECHR '4'
+ELIF _MASTER_VERSION
+ ECHR '6'
+ENDIF
  EQUB VE
+
+IF _6502SP_VERSION OR _DISC_VERSION
 
  ECHR 'B'               \ Token 13:     "BY D.BRABEN & I.BELL"
  ECHR 'Y'               \
@@ -711,15 +817,24 @@ ENDIF
  ECHR 'L'
  EQUB VE
 
+ELIF _MASTER_VERSION
+
+ EQUB &42 EOR VE
+ EQUB &59 EOR VE
+ EQUB &C5 EOR VE
+ EQUB VE
+
+ENDIF
+
  EJMP 21                \ Token 14:     "{clear bottom of screen}
  ETOK 145               \                PLANET NAME?
  ETOK 200               \                {fetch line input from keyboard}"
  EJMP 26                \
- EQUB VE                \ Encoded as:   "{21}[145][200]{26}"
+ EQUB VE
 
  EJMP 25                \ Token 15:     "{incoming message screen, wait 2s}
  EJMP 9                 \                {clear screen}
-IF _6502SP_VERSION OR _MASTER_VERSION
+IF _6502SP_VERSION
  EJMP 30                \                {white}
 ENDIF
  EJMP 23                \                {move to row 10, white, lower case}
@@ -736,9 +851,9 @@ ENDIF
  ETWO 'L', 'A'          \                {left align}{tab 6}{all caps}  MESSAGE
  ETWO 'T', 'I'          \                ENDS{wait for key press}"
  ETWO 'O', 'N'          \
-IF _DISC_VERSION
+IF _DISC_VERSION OR _MASTER_VERSION
  ECHR 'S'               \ Encoded as:   "{25}{9}{23}{14}{2}  C<223>G<248>TU
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION
  ECHR 'S'               \ Encoded as:   "{25}{9}{30}{23}{14}{2}  C<223>G<248>TU
 ENDIF
  ECHR ' '               \                <249><251><223>S [154]!{12}{12}<226>
@@ -1693,11 +1808,24 @@ ENDIF
  ECHR 'Y'
  EQUB VE
 
+IF _6502SP_VERSION OR _DISC_VERSION
+
  ECHR 'W'               \ Token 131:    "WIERD"
  ECHR 'I'               \
  ETWO 'E', 'R'          \ Encoded as:   "WI<244>D"
  ECHR 'D'
  EQUB VE
+
+ELIF _MASTER_VERSION
+
+ ECHR 'W'               \ Token 131:    "WEIRD"
+ ECHR 'E'               \
+ ECHR 'I'               \ Encoded as:   "WEIRD"
+ ECHR 'R'               \
+ ECHR 'D'
+ EQUB VE
+
+ENDIF
 
  ECHR 'U'               \ Token 132:    "UNUSUAL"
  ETWO 'N', 'U'          \
@@ -2135,9 +2263,32 @@ ENDIF
  ECHR ' '               \
  EQUB VE                \ Encoded as:   "<252> "
 
+IF _6502SP_VERSION OR _DISC_VERSION
+
  EQUB VE                \ Token 197:    ""
                         \
                         \ Encoded as:   ""
+
+ELIF _MASTER_VERSION
+
+ EQUB &20 EOR VE
+ EQUB &44 EOR VE
+ EQUB &2E EOR VE
+ EQUB &42 EOR VE
+ EQUB &F8 EOR VE
+ EQUB &F7 EOR VE
+ EQUB &4E EOR VE
+ EQUB &20 EOR VE
+ EQUB &26 EOR VE
+ EQUB &20 EOR VE
+ EQUB &49 EOR VE
+ EQUB &2E EOR VE
+ EQUB &F7 EOR VE
+ EQUB &4C EOR VE
+ EQUB &4C EOR VE
+ EQUB VE
+
+ENDIF
 
  EQUB VE                \ Token 198:    ""
                         \
@@ -2318,16 +2469,21 @@ ENDIF
  EJMP 9                 \ Token 216:    "{clear screen}
  EJMP 8                 \                {tab 6}
  EJMP 23                \                {move to row 10, white, lower case}
-IF _6502SP_VERSION OR _MASTER_VERSION
+IF _6502SP_VERSION
  EJMP 30                \                {white}
 ENDIF
  EJMP 1                 \                {all caps}
+IF _MASTER_VERSION
+ ECHR ' '               \                (space)
+ENDIF
  ETWO 'I', 'N'          \                INCOMING MESSAGE"
  ECHR 'C'               \
 IF _DISC_VERSION
  ECHR 'O'               \ Encoded as:   "{9}{8}{23}{1}<240>COM[195]M<237>SA
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION
  ECHR 'O'               \ Encoded as:   "{9}{8}{23}{30}{1}<240>COM[195]M<237>SA
+ELIF _MASTER_VERSION
+ ECHR 'O'               \ Encoded as:   "{9}{8}{23}{1} <240>COM[195]M<237>SA
 ENDIF
  ECHR 'M'               \                <231>"
  ETOK 195
@@ -2408,7 +2564,7 @@ ENDIF
 
  EJMP 25                \ Token 222:    "{incoming message screen, wait 2s}
  EJMP 9                 \                {clear screen}
-IF _6502SP_VERSION OR _MASTER_VERSION
+IF _6502SP_VERSION
  EJMP 30                \                {white}
 ENDIF
  EJMP 29                \                {tab 6, white, lower case in words}
@@ -2454,9 +2610,6 @@ ENDIF
  ECHR 'V'               \
 IF _DISC_VERSION
  ECHR 'A'               \ Encoded as:   "{25}{9}{29}{14}{2}GOOD DAY [154]
-ELIF _6502SP_VERSION OR _MASTER_VERSION
- ECHR 'A'               \ Encoded as:   "{25}{9}{30}{29}{14}{2}GOOD DAY [154]
-ENDIF
  ECHR 'L'               \                 {4}[204]I{13} AM {19}AG<246>T {19}B
  ECHR ' '               \                <249>KE OF {19}NAVAL {19}<240>TEL<229>
  EJMP 19                \                G<246><233>[204]AS [179] K<227>W, [147]
@@ -2465,12 +2618,33 @@ ENDIF
  ECHR 'E'               \                 <217>T <240> DEEP SPA<233> F<253>
  ECHR 'L'               \                 <239>NY YE<238>S <227>W. {19}WELL
  ETWO 'L', 'E'          \                 [147]S<219>UA<251><223> HAS CH<255>G
+ELIF _6502SP_VERSION
+ ECHR 'A'               \ Encoded as:   "{25}{9}{30}{29}{14}{2}GOOD DAY [154]
+ ECHR 'L'               \                 {4}[204]I{13} AM {19}AG<246>T {19}B
+ ECHR ' '               \                <249>KE OF {19}NAVAL {19}<240>TEL<229>
+ EJMP 19                \                G<246><233>[204]AS [179] K<227>W, [147]
+ ETWO 'I', 'N'          \                {19}NAVY HA<250> <247><246> KEEP[195]
+ ECHR 'T'               \                [147]{19}<226><238>GOIDS OFF [179]R ASS
+ ECHR 'E'               \                 <217>T <240> DEEP SPA<233> F<253>
+ ECHR 'L'               \                 <239>NY YE<238>S <227>W. {19}WELL
+ ETWO 'L', 'E'          \                 [147]S<219>UA<251><223> HAS CH<255>G
+ELIF _MASTER_VERSION
+ ETWO 'A', 'L'          \ Encoded as:   "{25}{9}{29}{14}{2}GOOD DAY [154]
+ ECHR ' '               \                 {4}[204]I{13} AM {19}AG<246>T {19}B
+ EJMP 19                \                <249>KE OF {19}NAV<228> {19}<240>TELLI
+ ETWO 'I', 'N'          \                G<246><233>[204]AS [179] K<227>W, [147]
+ ECHR 'T'               \                {19}NAVY HA<250> <247><246> KEEP[195]
+ ECHR 'E'               \                [147]{19}<226><238>GOIDS OFF [179]R ASS
+ ECHR 'L'               \                 <217>T <240> DEEP SPA<233> F<253>
+ ECHR 'L'               \                 <239>NY YE<238>S <227>W. {19}WELL
+ ECHR 'I'               \                 [147]S<219>UA<251><223> HAS CH<255>G
+ENDIF
  ECHR 'G'               \                <252>[204]<217>R BOYS <238>E <242>ADY F
  ETWO 'E', 'N'          \                <253>[208]PUSH RIGHT[201][147]HOME
  ETWO 'C', 'E'          \                 SYSTEM OF <226>O<218> MO<226><244>S
-IF _DISC_VERSION
+IF _DISC_VERSION OR _MASTER_VERSION
  ETOK 204               \                [204]{24}{9}{29}I{13} HA<250> OBTA
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION
  ETOK 204               \                [204]{24}{9}{30}{29}I{13} HA<250> OBTA
 ENDIF
  ECHR 'A'               \                <240>[196][147]DEF<246><233> P<249>NS F
@@ -2629,14 +2803,22 @@ ENDIF
  ETWO 'S', 'E'
  ECHR ' '
  ECHR 'M'
+IF _6502SP_VERSION OR _DISC_VERSION
  ECHR 'O'
  ETWO 'T', 'H'
  ETWO 'E', 'R'
+ELIF _MASTER_VERSION
+ EQUB &55 EOR VE
+ EQUB &52 EOR VE
+ EQUB &44 EOR VE
+ EQUB &F4 EOR VE
+ EQUB &F4 EOR VE
+ENDIF
  ECHR 'S'
  ETOK 204
  EJMP 24
  EJMP 9
-IF _6502SP_VERSION OR _MASTER_VERSION
+IF _6502SP_VERSION
  EJMP 30
 ENDIF
  EJMP 29
@@ -2883,7 +3065,7 @@ ENDIF
  EJMP 25                \ Token 223:    "{incoming message screen, wait 2s}
  EJMP 9                 \                {clear screen}
  EJMP 29                \                {tab 6, white, lower case in words}
-IF _6502SP_VERSION OR _MASTER_VERSION
+IF _6502SP_VERSION
  EJMP 30                \                {white}
 ENDIF
  EJMP 8                 \                {tab 6}
@@ -2904,9 +3086,9 @@ ENDIF
  ETOK 179               \                {tab 6}{all caps}  MESSAGE ENDS
  ECHR ' '               \                {wait for key press}"
  ECHR 'H'               \
-IF _DISC_VERSION
+IF _DISC_VERSION OR _MASTER_VERSION
  ECHR 'A'               \ Encoded as:   "{25}{9}{29}{8}{14}{13}{19}WELL D
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION
  ECHR 'A'               \ Encoded as:   "{25}{9}{29}{30}{8}{14}{13}{19}WELL D
 ENDIF
  ETWO 'V', 'E'          \                <223>E [154][204][179] HA<250> <218>RV
@@ -3024,9 +3206,28 @@ ENDIF
  EJMP 24
  EQUB VE
 
+IF _6502SP_VERSION OR _DISC_VERSION
+
  EQUB VE                \ Token 224:    ""
                         \
                         \ Encoded as:   ""
+
+ELIF _MASTER_VERSION
+
+ EQUB &41 EOR VE
+ EQUB &F2 EOR VE
+ EQUB &20 EOR VE
+ EQUB &B3 EOR VE
+ EQUB &20 EOR VE
+ EQUB &53 EOR VE
+ EQUB &55 EOR VE
+ EQUB &F2 EOR VE
+ EQUB &3F EOR VE
+ EQUB VE                \ Token 224:    ""
+                        \
+                        \ Encoded as:   ""
+
+ENDIF
 
  ECHR 'S'               \ Token 225:    "SHREW"
  ECHR 'H'               \
@@ -3215,7 +3416,23 @@ ENDIF
  ECHR 'S'
  EQUB VE
 
+IF _6502SP_VERSION OR _DISC_VERSION
+
  EQUB VE                \ Token 255:    ""
                         \
                         \ Encoded as:   ""
+
+ELIF _MASTER_VERSION
+
+ EQUB &0C EOR VE
+ EQUB &1E EOR VE
+ EQUB &20 EOR VE
+ EQUB &F4 EOR VE
+ EQUB &52 EOR VE
+ EQUB &FD EOR VE
+ EQUB VE                \ Token 255:    ""
+                        \
+                        \ Encoded as:   ""
+
+ENDIF
 

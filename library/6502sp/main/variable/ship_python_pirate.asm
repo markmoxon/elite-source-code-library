@@ -5,6 +5,13 @@
 \   Category: Drawing ships
 \    Summary: Ship blueprint for a Python (pirate)
 \
+IF _MASTER_VERSION
+\ ------------------------------------------------------------------------------
+\
+\ The ship blueprint for the pirate Python reuses the edges and faces data from
+\ the non-pirate Python, so the edges and faces data offsets are negative.
+\
+ENDIF
 \ ******************************************************************************
 
 .SHIP_PYTHON_P

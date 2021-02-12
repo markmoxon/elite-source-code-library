@@ -5,6 +5,14 @@
 \   Category: Drawing ships
 \    Summary: Ship blueprint for a Cobra Mk III (pirate)
 \
+IF _MASTER_VERSION
+\ ------------------------------------------------------------------------------
+\
+\ The ship blueprint for the pirate Cobra Mk III reuses the edges and faces data
+\ from the non-pirate Cobra Mk III, so the edges and faces data offsets are
+\ negative.
+\
+ENDIF
 \ ******************************************************************************
 
 .SHIP_COBRA_MK_3_P

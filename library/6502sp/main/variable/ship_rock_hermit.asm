@@ -5,6 +5,13 @@
 \   Category: Drawing ships
 \    Summary: Ship blueprint for a rock hermit (asteroid)
 \
+IF _MASTER_VERSION
+\ ------------------------------------------------------------------------------
+\
+\ The ship blueprint for the rock hermit reuses the edges and faces data from
+\ the asteroid, so the edges and faces data offsets are negative.
+\
+ENDIF
 \ ******************************************************************************
 
 .SHIP_ROCK_HERMIT

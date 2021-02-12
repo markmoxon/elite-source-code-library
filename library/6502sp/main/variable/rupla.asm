@@ -61,7 +61,7 @@ ENDIF
 
 ELIF _MASTER_VERSION
 
- EQUB 1                  \ ???
+ EQUB 1                  \ System   1, Galaxy 16                 Lave = Token 26
 
 ENDIF
 

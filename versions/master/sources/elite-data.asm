@@ -24,7 +24,7 @@
 
 INCLUDE "versions/master/sources/elite-header.h.asm"
 
-CPU 1                   \ Switch to 65SC12 assembly, as this code runs on the
+CPU 1                   \ Switch to 65SC12 assembly, as this code runs on a
                         \ BBC Master
 
 _CASSETTE_VERSION       = (_VERSION = 1)
@@ -54,7 +54,7 @@ SKIP 256                \ These bytes are unused, but they get moved to
 INCLUDE "library/common/main/variable/xx21.asm"
 INCLUDE "library/6502sp/main/variable/e_per_cent.asm"
 INCLUDE "library/master/data/variable/tallyfrac.asm"
-INCLUDE "library/master/data/variable/tallyship.asm"
+INCLUDE "library/master/data/variable/tallyint.asm"
 INCLUDE "library/common/main/macro/vertex.asm"
 INCLUDE "library/common/main/macro/edge.asm"
 INCLUDE "library/common/main/macro/face.asm"

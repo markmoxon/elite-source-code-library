@@ -8,8 +8,9 @@
 # cassette version of Elite
 #
 # This script applies encryption and checksums to the compiled binary for the
-# main parasite game code. It reads the unencrypted "BCODE.unprot.bin" binary
-# and generates an encrypted version as "BCODE.bin"
+# main parasite game code. It reads the unencrypted "BCODE.unprot.bin" and
+# "BDATA.unprot.bin" binaries and generates encrypted versions as "BCODE.bin"
+# and "BDATA.bin"
 #
 # ******************************************************************************
 

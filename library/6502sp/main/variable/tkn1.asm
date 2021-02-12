@@ -830,7 +830,7 @@ ENDIF
  ETOK 145               \                PLANET NAME?
  ETOK 200               \                {fetch line input from keyboard}"
  EJMP 26                \
- EQUB VE
+ EQUB VE                \ Encoded as:   "{21}[145][200]{26}"
 
  EJMP 25                \ Token 15:     "{incoming message screen, wait 2s}
  EJMP 9                 \                {clear screen}

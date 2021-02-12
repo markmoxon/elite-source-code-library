@@ -1,11 +1,18 @@
+NRU% = 0
+NI% = 37
+MSL = 1
+SST = 2
+OIL = 5
+RED = $F0
+WHITE = $FF
+
 CPU 1
 
-NRU%    = $0000
-MSL     = $0001
-SST     = $0002
+L0000   = $0000
+RAND    = $0002
 L0003   = $0003
 L0004   = $0004
-OIL     = $0005
+L0005   = $0005
 T1      = $0006
 L000A   = $000A
 L000B   = $000B
@@ -31,7 +38,7 @@ L001E   = $001E
 K4      = $0022
 L0023   = $0023
 XX16    = $0024
-NI%     = $0025
+L0025   = $0025
 L0026   = $0026
 L0027   = $0027
 L0028   = $0028
@@ -211,11 +218,10 @@ L00E0   = $00E0
 QQ9     = $00E1
 QQ10    = $00E2
 L00E3   = $00E3
-RED     = $00F0
 L00F9   = $00F9
 L00FC   = $00FC
 L00FD   = $00FD
-WHITE   = $00FF
+L00FF   = $00FF
 XX3     = $0100
 L0101   = $0101
 L0102   = $0102
@@ -268,6 +274,7 @@ L042F   = $042F
 L0431   = $0431
 L0433   = $0433
 L0449   = $0449
+STARTUP = $05D4
 L06A9   = $06A9
 L0791   = $0791
 L07A9   = $07A9
@@ -380,15 +387,20 @@ L8003   = $8003
 L8007   = $8007
 L8040   = $8040
 L8041   = $8041
+E%      = $8042
 L8062   = $8062
+KFRAC   = $8063
 L8083   = $8083
+KILLS   = $8084
 QQ18    = $A000
-LA3C0   = $A3C0
+SNE     = $A3C0
 ACT     = $A3E0
+TKN1    = $A400
 LAF47   = $AF47
 RUPLA   = $AF48
 LAF61   = $AF61
 RUGAL   = $AF62
+RUTOK   = $AF7C
 LB0A9   = $B0A9
 LBDB1   = $BDB1
 LDDEB   = $DDEB
@@ -432,7 +444,7 @@ OSCLI   = $FFF7
 LFFFF   = $FFFF
 
         org     $1300
-.BeebDisStartAddr
+.TVT3
         EQUB    $00,$34,$24,$17,$74,$64,$57,$47
         EQUB    $B1,$A1,$96,$86,$F1,$E1,$D6,$C6
         EQUB    $00,$34,$24,$17,$74,$64,$57,$47
@@ -442,7 +454,7 @@ LFFFF   = $FFFF
         EQUB    $00,$34,$24,$17,$74,$64,$57,$47
         EQUB    $B0,$A0,$92,$82,$F0,$E0,$D2,$C2
 
-.L1340
+.VEC
         EQUB    $88
 
 .L1341
@@ -694,7 +706,7 @@ LFFFF   = $FFFF
         LDA     #$7F
         STA     LFE6E
         LDA     IRQ1V
-        STA     L1340
+        STA     VEC
         LDA     L0205
         STA     L1341
         LDA     #$CB
@@ -764,7 +776,7 @@ LFFFF   = $FFFF
         LDA     #$18
         STA     LFE20
 .L1529
-        LDA     BeebDisStartAddr,Y
+        LDA     TVT3,Y
 L152A = L1529+1
         STA     LFE21
         DEY
@@ -794,7 +806,7 @@ L152A = L1529+1
         STA     LFE34
         LDX     #$90
 .L1547
-        LDA     NRU%,X
+        LDA     L0000,X
         STA     L3000,X
         INX
         BNE     L1547
@@ -808,9 +820,9 @@ L152A = L1529+1
         STA     LFE34
         LDX     #$90
 .L155C
-        LDA     NRU%,X
+        LDA     L0000,X
         LDY     L3000,X
-        STY     NRU%,X
+        STY     L0000,X
         STA     L3000,X
         INX
         CPX     #$F0
@@ -3774,7 +3786,7 @@ L22DA = L22D9+1
 
 .M%
         LDA     K%
-        STA     SST
+        STA     RAND
         LDX     JSTX
         JSR     cntr
 
@@ -4628,7 +4640,7 @@ L3000 = L2FFF+1
 
         RTI
 
-        JSR     NRU%
+        JSR     L0000
 
 .L321D
         BRK
@@ -6012,7 +6024,7 @@ L32F6 = L32F4+2
         RTS
 
 .L3B66
-        JSR     WHITE
+        JSR     L00FF
 
 L3B67 = L3B66+1
 L3B68 = L3B66+2
@@ -7813,10 +7825,10 @@ L41F8 = L41F7+1
         ROR     P
         RTS
 
-.L458C
+.FMLTU2
         AND     #$1F
         TAX
-        LDA     LA3C0,X
+        LDA     SNE,X
         STA     Q
         LDA     K
 .FMLTU
@@ -8463,7 +8475,7 @@ L48F1 = L48F0+1
         LDX     #$03
 .L4903
         LDA     L0060,X
-        STA     SST,X
+        STA     RAND,X
         DEX
         BPL     L4903
 
@@ -11216,10 +11228,10 @@ L527A = L5279+1
 
         LDX     #$15
 .L58B9
-        LDA     NRU%,X
-        LDY     NRU%,X
-        STA     NRU%,X
-        STY     NRU%,X
+        LDA     L0000,X
+        LDY     L0000,X
+        STA     L0000,X
+        STY     L0000,X
         INX
         BNE     L58B9
 
@@ -11347,17 +11359,17 @@ L527A = L5279+1
         STY     L008B
 .L596F
         CLC
-        LDA     SST
+        LDA     RAND
         ROL     A
         TAX
         ADC     L0004
-        STA     SST
+        STA     RAND
         STX     L0004
         LDA     L0003
         TAX
-        ADC     OIL
+        ADC     L0005
         STA     L0003
-        STX     OIL
+        STX     L0005
         STA     ZZ
         AND     #$03
         TAX
@@ -11395,38 +11407,38 @@ L527A = L5279+1
         PLA
         STA     L0003
         LDA     L0406
-        STA     OIL
+        STA     L0005
         RTS
 
 .L59C1
         CLC
-        LDA     SST
+        LDA     RAND
         ROL     A
         TAX
         ADC     L0004
-        STA     SST
+        STA     RAND
         STX     L0004
         LDA     L0003
         TAX
-        ADC     OIL
+        ADC     L0005
         STA     L0003
-        STX     OIL
+        STX     L0005
         JMP     L59AE
 
 .L59D8
         STA     S
         CLC
-        LDA     SST
+        LDA     RAND
         ROL     A
         TAX
         ADC     L0004
-        STA     SST
+        STA     RAND
         STX     L0004
         LDA     L0003
         TAX
-        ADC     OIL
+        ADC     L0005
         STA     L0003
-        STX     OIL
+        STX     L0005
         ROL     A
         BCS     L59FC
 
@@ -11469,7 +11481,7 @@ L527A = L5279+1
 
 .L5A24
         LDA     L1264
-        BEQ     L5A47
+        BEQ     SOLAR
 
         LDA     #$00
         STA     QQ20
@@ -11482,10 +11494,10 @@ L527A = L5279+1
         ROL     A
         STA     L1264
         ROL     L1265
-        BPL     L5A47
+        BPL     SOLAR
 
         ROR     L1265
-.L5A47
+.SOLAR
         LSR     L1268
         JSR     ZINF
 
@@ -11899,7 +11911,7 @@ L527A = L5279+1
         STY     MSAR
         RTS
 
-        TSB     NRU%
+        TSB     L0000
         BRK
         EQUB    $00
 
@@ -12019,7 +12031,7 @@ L527A = L5279+1
         JSR     L5DBC
 
         STA     L0094
-        STY     NI%
+        STY     L0025
         LDX     #$0F
         JSR     L6140
 
@@ -12070,7 +12082,7 @@ L527A = L5279+1
 
         LSR     A
         STA     L0094
-        STY     NI%
+        STY     L0025
         LDX     #$15
         JSR     L5DBC
 
@@ -12121,7 +12133,7 @@ L527A = L5279+1
         LDA     L008B
         AND     #$1F
         TAX
-        LDA     LA3C0,X
+        LDA     SNE,X
         STA     Q
         LDA     L0095
         JSR     FMLTU
@@ -12141,7 +12153,7 @@ L527A = L5279+1
         ADC     #$10
         AND     #$1F
         TAX
-        LDA     LA3C0,X
+        LDA     SNE,X
         STA     Q
         LDA     L0094
         JSR     FMLTU
@@ -12192,7 +12204,7 @@ L527A = L5279+1
         LDA     L0058
         STA     P
         LDA     L0028
-        EOR     NI%
+        EOR     L0025
         JSR     ADD
 
         EOR     #$80
@@ -12466,7 +12478,7 @@ L527A = L5279+1
         STX     CNT
 .L5FED
         LDA     CNT
-        JSR     L458C
+        JSR     FMLTU2
 
         LDX     #$00
         STX     T
@@ -12491,7 +12503,7 @@ L527A = L5279+1
         LDA     CNT
         CLC
         ADC     #$10
-        JSR     L458C
+        JSR     FMLTU2
 
         TAX
         LDA     #$00
@@ -13208,17 +13220,17 @@ L527A = L5279+1
         STA     L00BC
         CLC
 .DORND
-        LDA     SST
+        LDA     RAND
         ROL     A
         TAX
         ADC     L0004
-        STA     SST
+        STA     RAND
         STX     L0004
         LDA     L0003
         TAX
-        ADC     OIL
+        ADC     L0005
         STA     L0003
-        STX     OIL
+        STX     L0005
         RTS
 
 .L6415
@@ -15420,7 +15432,7 @@ QQ23 = L6E6A+2
 
         STA     T
         LDA     Y1
-        EOR     NI%,X
+        EOR     L0025,X
         STA     S
         LDA     X2
         STA     Q
@@ -15617,7 +15629,7 @@ L712B = L712A+1
 .L71F2
         LDA     XX16,Y
         ASL     A
-        LDA     NI%,Y
+        LDA     L0025,Y
         ROL     A
         JSR     LL28
 
@@ -17736,6 +17748,7 @@ L712B = L712A+1
         RTI
 
 .BeebDisEndAddr
+
 
 
 

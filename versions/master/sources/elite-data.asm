@@ -101,7 +101,7 @@ INCLUDE "library/6502sp/main/variable/ship_dodo.asm"
 \       Name: NOT_USED
 \       Type: Variable
 \   Category: Status
-\    Summary: ????
+\    Summary: Probably not used, yet to confirm this
 \
 \ ******************************************************************************
 
@@ -203,6 +203,12 @@ INCLUDE "library/6502sp/main/variable/tkn1.asm"
 INCLUDE "library/6502sp/main/variable/rupla.asm"
 INCLUDE "library/6502sp/main/variable/rugal.asm"
 INCLUDE "library/6502sp/main/variable/rutok.asm"
+
+ EQUS " \mutilate"      \ These bytes appear to be unused and are presumably
+ EQUS " from here"      \ workspace noise from the compilation process (it looks
+ EQUS " to F%"          \ like an assembly language comment)
+ EQUB 13
+ EQUB &0B, &B8
 
 \ ******************************************************************************
 \

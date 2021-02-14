@@ -764,11 +764,5 @@ ELIF _MASTER_VERSION
  ECHR '!'
  EQUB VE
 
- EQUS " \mutilate"      \ This appears to be unused and is presumably noise from 
- EQUS " from here"      \ the compilation (it looks like an assembly language
- EQUS " to F%"          \ comment)
- EQUB 13
- EQUB &0B, &B8
-
 ENDIF
 

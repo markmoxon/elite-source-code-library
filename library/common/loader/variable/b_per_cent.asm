@@ -11,8 +11,8 @@ ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-\ This block contains the bytes that get written by OSWRCH in part 2 to set up
-\ the screen mode (this is equivalent to using the VDU statement in BASIC).
+\ This block contains the bytes that get written by OSWRCH to set up the screen
+\ mode (this is equivalent to using the VDU statement in BASIC).
 \
 IF _CASSETTE_VERSION OR _DISC_VERSION
 \ It defines the whole screen using a square, monochrome mode 4 configuration;
@@ -45,10 +45,17 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 \
 \   * Screen memory goes from &4000 to &7EFF
 ENDIF
+IF _MASTER_VERSION
+\
+\   * In the Master version of Elite, the screen mode is actually based on mode
+\     129 rather than mode 1, so shadow RAM (known as LYNNE) is used to store
+\     the screen memory, though in all other respects the screen mode is the
+\     same as if it were based on mode 1
+ENDIF
 \
 \   * The text window is 1 row high and 13 columns wide, and is at (2, 16)
 \
-\   * There's a large, fast-blinking cursor
+\   * The cursor is disabled
 \
 IF _CASSETTE_VERSION OR _DISC_VERSION
 \ This almost-square mode 4 variant makes life a lot easier when drawing to the
@@ -183,8 +190,9 @@ ENDIF
 
  EQUB 23, 0, 10, 32     \ Set 6845 register R10 = 32
  EQUB 0, 0, 0           \
- EQUB 0, 0, 0           \ This is the "cursor start" register, which sets the
-                        \ cursor start line at 0, so it turns the cursor off
+ EQUB 0, 0, 0           \ This is the "cursor start" register, so this sets the
+                        \ cursor start line at 0, effectively disabling the
+                        \ cursor
 
 IF _6502SP_VERSION
 

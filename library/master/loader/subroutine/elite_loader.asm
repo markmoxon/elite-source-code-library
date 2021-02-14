@@ -9,7 +9,7 @@
 \ ------------------------------------------------------------------------------
 \
 \ The loader loads and moves the following files. There is no decryption at this
-\ stage.
+\ stage - that is all done by the main game code.
 \
 \   * BDATA is loaded into main memory at &1300-&54FF, and is then moved as
 \     follows:
@@ -17,10 +17,14 @@
 \       * &1300-&21FF is moved to &7000-&7EFF in screen memory (i.e. shadow RAM)
 \         for the dashboard
 \
-\       * &2200-&54FF is moved to &7F00-&B1FF in main memory
+\       * &2200-&54FF is moved to &7F00-&B1FF in main memory, where the main
+\         game code will decrypt it
 \
 \   * BCODE is loaded into main memory at &1300-&7F47 and the game is started by
 \     jumping to &2C6C
+\
+\ The main game code is then responsible for decrypting BDATA (from &8000 to
+\ &B1FF) and BCODE (from the end of the scramble routine to &7F47).
 \
 \ ******************************************************************************
 
@@ -114,7 +118,10 @@
  LDY #HI(MESS1)
 
  JSR OSCLI              \ Call OSCLI to run the OS command in MESS1, which
-                        \ loads the BDATA file to address &1300-&54FF
+                        \ loads the BDATA file to address &1300-&54FF, appending
+                        \ &FFFF to the address to make sure it loads in the main
+                        \ BBC Master rather than getting passed across the Tube
+                        \ to the second processor, if one is fitted
 
  LDA #6                 \ Set the RAM copy of the currently selected paged ROM
  STA LATCH              \ to 6, so it matches the paged ROM selection latch at
@@ -217,8 +224,10 @@
  LDY #HI(MESS2)
 
  JSR OSCLI              \ Call OSCLI to run the OS command in MESS2, which
-                        \ loads the BCODE file to address &1300-&7F48 in main
-                        \ memory
+                        \ loads the BCODE file to address &1300-&7F48, appending
+                        \ &FFFF to the address to make sure it loads in the main
+                        \ BBC Master rather than getting passed across the Tube
+                        \ to the second processor, if one is fitted
 
  LDX #LO(MESS3)         \ Set (Y X) to point to MESS3 ("DIR E")
  LDY #HI(MESS3)

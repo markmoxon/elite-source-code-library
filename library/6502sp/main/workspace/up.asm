@@ -2,7 +2,11 @@
 \
 \       Name: UP
 \       Type: Workspace
+IF _DISC_VERSION
+\    Address: &0300 to &03CF
+ELIF _6502SP_VERSION
 \    Address: &0800 to &0974
+ENDIF
 \   Category: Workspaces
 \    Summary: Ship slots, variables
 \

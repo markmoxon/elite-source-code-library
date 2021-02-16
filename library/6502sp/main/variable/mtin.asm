@@ -20,7 +20,7 @@
 
 .MTIN
 
- EQUB 16                \ Token  0: a random extended token between 16 and 21
+ EQUB 16                \ Token  0: a random extended token between 16 and 20
  EQUB 21                \ Token  1: a random extended token between 21 and 25
  EQUB 26                \ Token  2: a random extended token between 26 and 30
  EQUB 31                \ Token  3: a random extended token between 31 and 35

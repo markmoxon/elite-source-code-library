@@ -59,5 +59,5 @@ PRINT "Code size is ", ~(P% - CODE%)
 PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD%
 
-PRINT "S.WORDS ",~CODE%," ",~P%," ",~LOAD%," ",~LOAD%
+PRINT "S.MISSILE ",~CODE%," ",~P%," ",~LOAD%," ",~LOAD%
 SAVE "versions/disc/output/MISSILE.bin", CODE%, P%, LOAD%

@@ -56,7 +56,9 @@
 
  AND #%00000001         \ We have picked up the plans in mission 2 so we need to
  ORA #%00000010         \ load a ship blueprints file containing Thargoids, so
-                        \ set A to either 
+                        \ set A to either %10 or %11 for file D.MOC or D.MOD, as
+                        \ they are the only files that contain Thargoid ship
+                        \ blueprints
 
  TAX                    \ Store the amended A in X again
 

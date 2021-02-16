@@ -174,7 +174,7 @@ ELIF _6502SP_VERSION
                         \   | Ship blueprints                   |
                         \   |                                   |
                         \   +-----------------------------------+   &D000 = D%
-                        \   |                                   |   
+                        \   |                                   |
                         \   | Current ship line heap            |
                         \   |                                   |
 ENDIF

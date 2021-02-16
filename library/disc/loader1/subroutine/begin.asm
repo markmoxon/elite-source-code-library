@@ -49,7 +49,8 @@
  INC p1+1               \ Increment the low byte of the argument to the LDA
                         \ instruction at p1 above, so this would change it from
                         \ LDA BEGIN to LDA BEGIN+1, for example (so the next
-                        \ time we do the EOR, 
+                        \ time we do the EOR, we choose the next byte of the
+                        \ decryption routine as the initial seed)
 
  BEQ p1d                \ If it equals zero (so the LDA BEGIN has worked itself
                         \ to LDA BEGIN+255 and round again to LDA BEGIN), jump

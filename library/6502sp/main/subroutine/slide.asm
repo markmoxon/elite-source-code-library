@@ -309,7 +309,7 @@
  STZ INWK+7             \ Set x_hi = 0
 
  LDA Y2TB,Y             \ Set A to Y2, the end point's y-coordinate from Y1TB
- 
+
  SEC
  SBC BALI
  BCC GR6

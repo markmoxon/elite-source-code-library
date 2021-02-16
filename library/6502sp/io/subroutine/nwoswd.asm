@@ -22,7 +22,7 @@
 \
 \ Other entry points:
 \
-\   SAFE                Contains an RTS   
+\   SAFE                Contains an RTS
 \
 \ ******************************************************************************
 

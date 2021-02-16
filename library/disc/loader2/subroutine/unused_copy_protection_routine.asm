@@ -240,7 +240,7 @@
  STA &51
  JSR &373D
 
-.LABEL23  
+.LABEL23
 
  RTS
 

@@ -223,7 +223,7 @@ ELIF _6502SP_VERSION
  BNE LIlog6             \ closest possible answer to 256, i.e. 255, and jump to
                         \ LIlog6 to return the result (this BNE is effectively a
                         \ JMP as A is never zero)
- 
+
 .LIlog7
 
  LDA #0                 \ The numerator in the division is 0, so set A to 0 and

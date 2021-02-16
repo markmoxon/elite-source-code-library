@@ -38,7 +38,7 @@ ELIF _DISC_VERSION
  STY XC
 
  STY YC                 \ Move the text cursor to row 1
- 
+
  DEY                    \ Decrement Y to 0 for the high byte in pr6
 
 ELIF _6502SP_VERSION

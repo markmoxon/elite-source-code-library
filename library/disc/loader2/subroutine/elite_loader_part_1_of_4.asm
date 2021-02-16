@@ -28,7 +28,7 @@
  LDA #0                 \ Set &3FFF = 0
  STA &3FFF
 
- LDA #64                \ Set &7FFF = 64 
+ LDA #64                \ Set &7FFF = 64
  STA &7FFF
 
  EOR &3FFF              \ Set A = 64 EOR &3FFF

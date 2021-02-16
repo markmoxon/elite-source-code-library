@@ -20,7 +20,7 @@
  STA RDCHV              \ lets us implement all our custom OSRDCH commands
  LDA #HI(newosrdch)
  STA RDCHV+1
- 
+
  LDA #%00111001         \ Set 6522 System VIA interrupt enable register IER
  STA VIA+&4E            \ (SHEILA &4E) bits 0 and 3-5 (i.e. disable the Timer1,
                         \ CB1, CB2 and CA2 interrupts from the System VIA)

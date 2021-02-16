@@ -1292,7 +1292,7 @@ ENDIF
  EJMP 13                \ Encoded as:   "{2}[31?]{13}"
  EQUB VE
 
- ETOK 175               \ Token 65:     "ITS [76-80] [81-85]
+ ETOK 175               \ Token 65:     "ITS [76-80] [81-85]"
  ERND 16                \
  ECHR ' '               \ Encoded as:   "[175][16?] [17?]"
  ERND 17
@@ -1916,7 +1916,7 @@ ENDIF
  EQUB VE                \
                         \ Encoded as:   "[171]"
 
- ERND 1                 \ Token 140:    "[21-25] [16-21] FOR [61-65]"
+ ERND 1                 \ Token 140:    "[21-25] [16-20] FOR [61-65]"
  ECHR ' '               \
  ERND 0                 \ Encoded as:   "[1?] [0?] F<253> [10?]"
  ECHR ' '
@@ -1926,7 +1926,7 @@ ENDIF
  ERND 10
  EQUB VE
 
- ETOK 140               \ Token 141:    "[21-25] [16-21] FOR [61-65] AND
+ ETOK 140               \ Token 141:    "[21-25] [16-20] FOR [61-65] AND
  ETOK 178               \                [61-65]"
  ERND 10                \
  EQUB VE                \ Encoded as:   "[140][178][10?]"
@@ -1939,7 +1939,7 @@ ENDIF
  ERND 12
  EQUB VE
 
- ETOK 140               \ Token 143:    "[21-25] [16-21] FOR [61-65] BUT [51-55]
+ ETOK 140               \ Token 143:    "[21-25] [16-20] FOR [61-65] BUT [51-55]
  ECHR ' '               \                BY [56-60]"
  ECHR 'B'               \
  ECHR 'U'               \ Encoded as:   "[140] BUT [142]"

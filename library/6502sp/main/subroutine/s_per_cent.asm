@@ -39,7 +39,7 @@
  LDA #HI(G%)
  STA 1
  STA SC+1
- 
+
  LDA #LO(F%-1)          \ Set (3 2) = F% - 1
  STA 2
  LDA #HI(F%-1)

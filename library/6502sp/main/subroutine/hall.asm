@@ -55,7 +55,7 @@ ENDIF
  JSR DORND              \ Set A and X to random numbers
 
  BPL HA7                \ Jump to HA7 if A is positive (50% chance)
- 
+
  AND #3                 \ Reduce A to a random number in the range 0-3
 
  STA T                  \ Set X = A * 8 + A

@@ -81,7 +81,7 @@ ENDIF
                         \ If we get here then mission 1 is in progress, so we
                         \ print out the corresponding token from RUTOK
 
- JSR MT14               \ Call MT14 to switch to justified text 
+ JSR MT14               \ Call MT14 to switch to justified text
 
  LDA #1                 \ Set A = 1 so that extended token 1 (an empty string)
                         \ gets printed below instead of token 176, followed by
@@ -134,7 +134,7 @@ ENDIF
 
  DEX                    \ Decrement the loop counter
 
- BPL PDL1               \ Loop back to PDL1 until we have copied all 
+ BPL PDL1               \ Loop back to PDL1 until we have copied all
 
  LDA #5                 \ Set A = 5, so we print extended token 5 in the next
                         \ instruction ("{lower case}{justify}{single cap}[86-90]

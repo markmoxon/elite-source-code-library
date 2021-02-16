@@ -31,7 +31,7 @@
 \       * Otherwise if this is us docking, refine our approach and we're done
 \
 \       * Otherwise this is an NPC, so turn away from station and we're done
-\ 
+\
 \ "Refine our approach" means:
 \
 \   * If this is us docking (rather than an NPC), apply pitch and roll to get
@@ -285,7 +285,7 @@ ENDIF
                         \ the ship
 
  EOR XX15               \ A is negative, so this sets the sign of A to the same
- EOR XX15+1             \ as -XX15 * XX15+1, or -ship_x * ship_y 
+ EOR XX15+1             \ as -XX15 * XX15+1, or -ship_x * ship_y
 
  ASL A                  \ Shift the sign bit into the C flag, so the C flag has
                         \ the following sign:

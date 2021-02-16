@@ -117,7 +117,7 @@ IF _6502SP_VERSION
 
  TXA                    \ Retrieve the value of A we stored above, so A now
                         \ contains the pixel mask again
- 
+
  AND #RED               \ Apply the pixel mask in A to a four-pixel block of
                         \ red pixels, so we now know which bits to set in screen
                         \ memory

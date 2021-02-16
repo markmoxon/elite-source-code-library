@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: I/O Variables
+\       Name: I/O variables
 \       Type: Workspace
 \    Address: &2C40 to &2C60
 \   Category: Workspaces

@@ -511,7 +511,7 @@ IF _6502SP_VERSION
 
  CLC                    \ Clear the C flag (as HL7 is called with the C flag
                         \ set, which this instruction reverts)
- 
+
  JMP HL8                \ Jump back to HL8, just after the instruction that
                         \ called HL7
 
@@ -524,7 +524,7 @@ IF _6502SP_VERSION
 
  CLC                    \ Clear the C flag (as HL9 is called with the C flag
                         \ set, which this instruction reverts)
- 
+
  JMP HL10               \ Jump back to HL10, just after the instruction that
                         \ called HL9
 

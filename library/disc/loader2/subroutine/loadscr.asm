@@ -19,7 +19,7 @@
 
  LDX #0                 \ Set S = 0, to use as a flag denoting whether this is a
  STX S                  \ BBC Micro (0) or an Acorn Electron (&FF)
-                        
+
  LDY #&FF               \ Call OSBYTE with A = 129, X = 0 and Y = &FF to detect
  LDA #129               \ the machine type. This call is undocumented and is not
  JSR OSBYTE             \ the recommended way to determine the machine type
@@ -176,7 +176,7 @@
  EQUS "E L I T E"       \ The top half of the game's name
 
  NOP                    \ Marks the end of the VDU block
- 
+
  RTS                    \ Return from the PROT1 subroutine
 
  EQUS "      "          \ These bytes appear to be unused
@@ -217,7 +217,7 @@
  EQUS "E L I T E"       \ The name of the game
 
  NOP                    \ Marks the end of the VDU block
- 
+
  RTS                    \ Return from the PROT1 subroutine
 
  EQUS "         "       \ These bytes appear to be unused
@@ -242,7 +242,7 @@
                         \ prints a third Acornsoft logo
 
  JSR OSNEWL             \ Print a newline
- 
+
                         \ Fall through into LOGOS to print a fourth Acornsoft
                         \ logo and return from the subroutine using a tail call
 

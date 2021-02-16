@@ -31,7 +31,7 @@
  LDA #5                 \ Send 5 to the I/O processor as the argument to the
  JSR OSWRCH             \ OSWRCH 129 command, so the I/O processor should expect
                         \ 4 bytes (as we send the count plus 1)
- 
+
  LDA X1                 \ Send X1, Y1, X2 and Y2 to the I/O processor, so the
  JSR OSWRCH             \ I/O processor will draw a line from (X1, Y1) to
  LDA Y1                 \ (X2, Y2), returning from the subroutine using a tail

@@ -22,7 +22,7 @@
 .TWIST
 
  LDA #0                 \ Set A = 0
- 
+
  STA RAT2               \ Set the pitch direction in RAT2 to A
 
  LDX #15                \ Rotate (roofv_x, nosev_x) by a small angle (pitch)

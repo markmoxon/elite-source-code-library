@@ -63,7 +63,7 @@
 
  LDA XX15+2             \ Set A = XX15+2
 
- JMP MAD                \ Set: 
+ JMP MAD                \ Set:
                         \
                         \   (A X) = Q * A + (S R)
                         \           = vect_z * XX15+2 + vect_y * XX15+1 +

@@ -7,7 +7,7 @@ IF _DISC_FLIGHT
 \    Summary: Decrypt the main flight code between &1300 and &55FF and jump into
 \             the main game loop
 ELIF _DISC_DOCKED
-\    Summary: Decrypt the main docked code between &1300 and &5FFF and 
+\    Summary: Decrypt the main docked code between &1300 and &5FFF and
 \             the main game loop
 ENDIF
 \
@@ -34,11 +34,11 @@ ENDIF
                         \ byte within its page
 
  EOR (SC),Y             \ EOR the current byte with its index within the page
- 
+
  EOR #&33               \ EOR the current byte with &33
 
  STA (SC),Y             \ Update the current byte
- 
+
                         \ The current byte is in page X at offset Y, and SC(1 0)
                         \ points to the first byte of page X, so we just did
                         \  this:
@@ -51,21 +51,21 @@ ENDIF
                         \ have done the whole page
 
  INX                    \ Increment X to point to the next page in memory
- 
+
 IF _DISC_FLIGHT
- 
+
  CPX #&56               \ Loop back to scrl to decrypt the next page until we
  BNE scrl               \ reach the start of page &56
 
  JMP RSHIPS             \ Call RSHIPS to launch from the station, load a new set
                         \ of ship blueprints and jump into the main game loop
- 
+
 ELIF _DISC_DOCKED
- 
+
  CPX #&60               \ Loop back to scrl to decrypt the next page until we
  BNE scrl               \ reach the start of page &60
 
  JMP BRKBK              \ Call BRKBK to set BRKV to point to the BRBR routine
                         \ and return from the subroutine using a tail call
 ENDIF
- 
+

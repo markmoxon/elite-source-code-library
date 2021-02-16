@@ -83,7 +83,7 @@ ENDIF
 .BRL2
 
  LSR INWK               \ Halve x_lo so the Constrictor moves towards the centre
- 
+
  INC INWK+6             \ Increment z_lo so the Constrictor moves away from us
 
  BEQ BR2                \ If z_lo = 0 (i.e. it just went past 255), jump to BR2

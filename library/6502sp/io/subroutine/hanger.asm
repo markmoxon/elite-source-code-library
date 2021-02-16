@@ -186,7 +186,7 @@ ELIF _6502SP_VERSION
                         \ as there is only one ship in the hanger
 
 ENDIF
-                        
+
                         \ If we get here then there are multiple ships in the
                         \ hanger, so we also need to draw the horizontal line in
                         \ the gap between the ships

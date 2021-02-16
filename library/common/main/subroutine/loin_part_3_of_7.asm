@@ -147,7 +147,7 @@ ELIF _6502SP_VERSION
                         \ pixels but plot the last one
 
  BNE LI130+6            \ If we get here then R must be 3, so jump to LI130+6 to
-                        \ skip plotting any of the pixels, but making sure we 
+                        \ skip plotting any of the pixels, but making sure we
                         \ join the routine just after the plotting instructions
 
 .LI190

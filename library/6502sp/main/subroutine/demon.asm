@@ -44,7 +44,7 @@
  JSR TT66               \ and set the current view type in QQ11 to 1
 
  JSR RESET              \ Call RESET to initialise most of the game variables
- 
+
  LDA #0                 \ Set ALPHA and ALP1 to 0, so our roll angle (i.e. that
  STA ALPHA              \ of the camera) is 0
  STA ALP1
@@ -133,7 +133,7 @@
 
  JSR LL9                \ Call LL9 to draw the logo on-screen
 
- LDA INWK+14            \ Loop back to FLYL2 to keep pitching, until nosev_z_hi 
+ LDA INWK+14            \ Loop back to FLYL2 to keep pitching, until nosev_z_hi
  BPL FLYL2              \ is negative (i.e. the logo has pitched forward through
                         \ 90 degrees, as nosev starts out by pointing into the
                         \ screen towards the camera, in a positive direction,
@@ -224,7 +224,7 @@
  TSB K%+31              \ block, which is the Elite logo, so this flags the logo
                         \ as having been killed (the TSB instruction applies the
                         \ accumulator to the memory location using an OR)
- 
+
  JSR EXNO3              \ Make an explosion sound
 
  JSR ZZAAP              \ Call ZZAAP to redraw the vertical laser line from the
@@ -235,7 +235,7 @@
                         \ We now want to draw the logo exploding, so we first
                         \ need to copy the logo's ship data block from K% to
                         \ INWK
- 
+
  LDX #NI%-1             \ Set a counter in X so we can loop through the NI%
                         \ bytes in the ship data block
 
@@ -384,7 +384,7 @@
  LDA #&E0               \ Set nosev_z_hi = -1 (as &E0 is a negative unit vector
  STA INWK+14            \ length), so the ship points out of the screen, towards
                         \ us
-                        
+
  STZ DELTA              \ Set DELTA to 0, so our current speed (i.e. that of the
                         \ camera) is 0
 

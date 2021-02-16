@@ -15,7 +15,7 @@
 \ Other entry points:
 \
 \   sent                Turn the printer off and restore the USOSWRCH handler,
-\                       returning from the subroutine using a tail call   
+\                       returning from the subroutine using a tail call
 \
 \ ******************************************************************************
 

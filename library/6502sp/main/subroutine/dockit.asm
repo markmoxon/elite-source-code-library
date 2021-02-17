@@ -4,47 +4,7 @@
 \       Type: Subroutine
 \   Category: Flight
 \    Summary: Apply docking manoeuvres to the ship in INWK
-\
-\ ------------------------------------------------------------------------------
-\
-\ The docking computer does the following:
-\
-\   * If we are outside the space station safe zone, head for the planet and
-\     we're done for this iteration
-\
-\   * If we are a long way away from the station, head for the planet and we're
-\     done
-\
-\   * If we're approaching the station from behind or the side, aim for the
-\     docking point and we're done
-\
-\   * If we're approaching the station from the front, then:
-\
-\     * If we are pointing towards the station, refine our approach and we're
-\       done
-\
-\     * If we are not pointing towards the station, then check our distance to
-\       the station
-\
-\       * If we're too close, turn away and we're done
-\
-\       * Otherwise if this is us docking, refine our approach and we're done
-\
-\       * Otherwise this is an NPC, so turn away from station and we're done
-\
-\ "Refine our approach" means:
-\
-\   * If this is us docking (rather than an NPC), apply pitch and roll to get
-\     the station in our sights
-\
-\   * Once the station is in our sights, match roll with the station to get a
-\     horizontal slot
-\
-\   * Once we are matching the station roll, accelerate into the slot
-\
-\ The docking point is 8 unit vector lengths from the centre of the space
-\ station, through the slot and out into space, so it's a good starting point
-\ for the final approach towards the slot.
+\  Deep dive: The docking computer
 \
 \ ******************************************************************************
 

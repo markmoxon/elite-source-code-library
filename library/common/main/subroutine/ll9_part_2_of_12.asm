@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing ships
 \    Summary: Draw ship: Check if ship is in field of view, close enough to draw
+\  Deep dive: Drawing ships
 \
 \ ------------------------------------------------------------------------------
 \

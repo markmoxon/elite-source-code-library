@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing ships
 \    Summary: Draw ship: Calculate the screen coordinates of visible vertices
+\  Deep dive: Drawing ships
 \
 \ ------------------------------------------------------------------------------
 \

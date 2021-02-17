@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing ships
 \    Summary: Draw ship: Draw all the visible edges from the ship line heap
+\  Deep dive: Drawing ships
 \
 \ ------------------------------------------------------------------------------
 \

@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing ships
 \    Summary: Draw ship: Set visibility for exploding ship (all faces visible)
+\  Deep dive: Drawing ships
 \
 \ ------------------------------------------------------------------------------
 \

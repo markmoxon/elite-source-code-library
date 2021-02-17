@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing ships
 \    Summary: Draw ship: Set up orientation vector, ship coordinate variables
+\  Deep dive: Drawing ships
 \
 \ ------------------------------------------------------------------------------
 \

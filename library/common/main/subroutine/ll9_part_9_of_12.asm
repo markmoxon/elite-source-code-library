@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing ships
 \    Summary: Draw ship: Draw laser beams if the ship is firing its laser at us
+\  Deep dive: Drawing ships
 \
 \ ------------------------------------------------------------------------------
 \

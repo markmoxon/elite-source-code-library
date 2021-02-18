@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Dashboard
 \    Summary: Update the dashboard: pitch and roll indicators
+\  Deep dive: The dashboard indicators
 \
 \ ******************************************************************************
 

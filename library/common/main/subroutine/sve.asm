@@ -8,7 +8,8 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
 ELIF _6502SP_VERSION
 \    Summary: Display the disc access menu and process saving of commander files
 ENDIF
-\  Deep dive: The competition code
+\  Deep dive: Commander save files
+\             The competition code
 \
 IF _6502SP_VERSION
 \ ------------------------------------------------------------------------------

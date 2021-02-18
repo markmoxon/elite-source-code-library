@@ -14,6 +14,7 @@ ELIF _6502SP_VERSION
 \    Summary: Ship data blocks
 ENDIF
 \  Deep dive: Ship data blocks
+\             The local bubble of universe
 \
 \ ------------------------------------------------------------------------------
 \

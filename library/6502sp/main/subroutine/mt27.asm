@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Text
 \    Summary: Print the captain's name during mission briefings
+\  Deep dive: Extended text tokens
 \
 \ ------------------------------------------------------------------------------
 \

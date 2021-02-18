@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Text
 \    Summary: Flags that govern how justified extended text tokens are printed
+\  Deep dive: Extended text tokens
 \
 \ ------------------------------------------------------------------------------
 \

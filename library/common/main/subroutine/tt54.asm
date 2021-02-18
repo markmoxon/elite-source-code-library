@@ -5,6 +5,7 @@
 \   Category: Universe
 \    Summary: Twist the selected system's seeds
 \  Deep dive: Twisting the system seeds
+\             Galaxy and system seeds
 \
 \ ------------------------------------------------------------------------------
 \

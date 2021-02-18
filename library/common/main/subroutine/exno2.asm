@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Sound
 \    Summary: Process us making a kill
+\  Deep dive: Combat rank
 \
 \ ------------------------------------------------------------------------------
 \

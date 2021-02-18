@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Text
 \    Summary: Print the location hint during the mission 1 briefing
+\  Deep dive: Extended text tokens
 \
 \ ------------------------------------------------------------------------------
 \

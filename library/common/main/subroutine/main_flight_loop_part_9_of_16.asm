@@ -5,7 +5,8 @@
 \   Category: Main loop
 \    Summary: For each nearby ship: If it is a space station, check whether we
 \             are successfully docking with it
-\  Deep dive: Docking checks
+\  Deep dive: Program flow of the main game loop
+\             Docking checks
 \
 \ ------------------------------------------------------------------------------
 \

@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Tube
 \    Summary: Reset the OSWRCH vector in WRCHV to point to USOSWRCH
+\  Deep dive: 6502 Second Processor Tube communication
 \
 \ ******************************************************************************
 

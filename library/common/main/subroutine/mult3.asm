@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Maths (Arithmetic)
 \    Summary: Calculate K(3 2 1 0) = (A P+1 P) * Q
+\  Deep dive: Shift-and-add multiplication
 \
 \ ------------------------------------------------------------------------------
 \

@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Keyboard
 \    Summary: Scan for pause, configuration and secondary flight keys
+\  Deep dive: The key logger
 \
 \ ------------------------------------------------------------------------------
 \

@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Text
 \    Summary: Capitalise the next letter
+\  Deep dive: Extended text tokens
 \
 \ ------------------------------------------------------------------------------
 \

@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Dashboard
 \    Summary: Update the dashboard: speed indicator
+\  Deep dive: The dashboard indicators
 \
 \ ------------------------------------------------------------------------------
 \

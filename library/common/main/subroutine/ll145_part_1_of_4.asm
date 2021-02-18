@@ -5,6 +5,7 @@
 \   Category: Drawing lines
 \    Summary: Clip line: Work out which end-points are on-screen, if any
 \  Deep dive: Line-clipping
+\             Extended screen coordinates
 \
 \ ------------------------------------------------------------------------------
 \

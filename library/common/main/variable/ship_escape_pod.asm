@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Drawing ships
 \    Summary: Ship blueprint for an escape pod
+\  Deep dive: Ship blueprints
 \
 \ ******************************************************************************
 

@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing suns
 \    Summary: Draw the sun: Continue to move up the screen, drawing the new sun
+\  Deep dive: Drawing the sun
 \
 \ ------------------------------------------------------------------------------
 \

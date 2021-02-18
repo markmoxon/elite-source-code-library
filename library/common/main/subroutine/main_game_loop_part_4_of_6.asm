@@ -4,6 +4,8 @@
 \       Type: Subroutine
 \   Category: Main loop
 \    Summary: Potentially spawn lone bounty hunter, Thargoid, or up to 4 pirates
+\  Deep dive: Program flow of the main game loop
+\             Ship data blocks
 \
 \ ------------------------------------------------------------------------------
 \

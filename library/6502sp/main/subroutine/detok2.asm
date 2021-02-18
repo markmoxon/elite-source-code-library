@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Text
 \    Summary: Print an extended text token (1-255)
+\  Deep dive: Extended text tokens
 \
 \ ------------------------------------------------------------------------------
 \

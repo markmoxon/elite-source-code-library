@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing circles
 \    Summary: Draw a circle on a chart
+\  Deep dive: Drawing circles
 \
 \ ------------------------------------------------------------------------------
 \

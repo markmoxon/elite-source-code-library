@@ -8,6 +8,7 @@ ENDIF
 \       Type: Subroutine
 \   Category: Text
 \    Summary: Print a character at the text cursor by poking into screen memory
+\  Deep dive: Drawing text
 \
 \ ------------------------------------------------------------------------------
 \

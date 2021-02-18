@@ -4,6 +4,8 @@
 \       Type: Subroutine
 \   Category: Drawing lines
 \    Summary: Clip line: Calculate the line's gradient
+\  Deep dive: Line-clipping
+\             Extended screen coordinates
 \
 \ ******************************************************************************
 

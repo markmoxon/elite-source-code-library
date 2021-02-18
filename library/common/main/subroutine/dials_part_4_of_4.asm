@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Dashboard
 \    Summary: Update the dashboard: shields, fuel, laser & cabin temp, altitude
+\  Deep dive: The dashboard indicators
 \
 \ ******************************************************************************
 

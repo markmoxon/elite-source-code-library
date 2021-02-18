@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Keyboard
 \    Summary: Scan the keyboard for a flight key
+\  Deep dive: The key logger
 \
 \ ------------------------------------------------------------------------------
 \

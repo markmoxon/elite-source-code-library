@@ -4,6 +4,8 @@
 \       Type: Subroutine
 \   Category: Main loop
 \    Summary: Seed the random number generator
+\  Deep dive: Program flow of the main game loop
+\             Generating random numbers
 \
 \ ------------------------------------------------------------------------------
 \

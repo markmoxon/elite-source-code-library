@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Drawing ships
 \    Summary: Ship blueprint for a rock hermit (asteroid)
+\  Deep dive: Ship blueprints
 \
 IF _MASTER_VERSION
 \ ------------------------------------------------------------------------------

@@ -4,6 +4,8 @@
 \       Type: Subroutine
 \   Category: Main loop
 \    Summary: Cool down lasers, make calls to update the dashboard
+\  Deep dive: Program flow of the main game loop
+\             The dashboard indicators
 \
 \ ------------------------------------------------------------------------------
 \

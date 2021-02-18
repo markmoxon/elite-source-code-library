@@ -5,6 +5,7 @@
 \   Category: Market
 \    Summary: Print the name, price and availability of a market item
 \  Deep dive: Market item prices and availability
+\             Galaxy and system seeds
 \
 \ ------------------------------------------------------------------------------
 \

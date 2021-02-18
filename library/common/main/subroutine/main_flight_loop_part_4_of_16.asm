@@ -5,6 +5,8 @@
 \   Category: Main loop
 \    Summary: For each nearby ship: Copy the ship's data block from K% to the
 \             zero-page workspace at INWK
+\  Deep dive: Program flow of the main game loop
+\             Ship data blocks
 \
 \ ------------------------------------------------------------------------------
 \

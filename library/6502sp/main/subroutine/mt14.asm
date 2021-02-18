@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Text
 \    Summary: Switch to justified text when printing extended tokens
+\  Deep dive: Extended text tokens
 \
 \ ------------------------------------------------------------------------------
 \

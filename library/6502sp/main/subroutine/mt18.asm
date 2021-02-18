@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Text
 \    Summary: Print a random 1-8 letter word in Sentence Case
+\  Deep dive: Extended text tokens
 \
 \ ******************************************************************************
 

@@ -4,6 +4,8 @@
 \       Type: Variable
 \   Category: Text
 \    Summary: System numbers that have special extended decriptions
+\  Deep dive: Extended system descriptions
+\             Extended text tokens
 \
 \ ------------------------------------------------------------------------------
 \

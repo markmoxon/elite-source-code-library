@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Tube
 \    Summary: The lookup table for OSWRCH jump commands (128-147)
+\  Deep dive: 6502 Second Processor Tube communication
 \
 \ ------------------------------------------------------------------------------
 \

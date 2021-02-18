@@ -8,6 +8,8 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 \    Summary: VDU commands for setting the square mode 1 screen
 ENDIF
+\  Deep dive: The split-screen mode
+\             Drawing monochrome pixels in mode 4
 \
 \ ------------------------------------------------------------------------------
 \

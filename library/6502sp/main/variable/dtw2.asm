@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Text
 \    Summary: A flag that indicates whether we are currently printing a word
+\  Deep dive: Extended text tokens
 \
 \ ------------------------------------------------------------------------------
 \

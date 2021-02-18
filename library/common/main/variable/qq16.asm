@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Text
 \    Summary: The two-letter token lookup table
+\  Deep dive: Printing text tokens
 \
 \ ------------------------------------------------------------------------------
 \

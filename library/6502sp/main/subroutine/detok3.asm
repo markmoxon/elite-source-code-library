@@ -4,6 +4,8 @@
 \       Type: Subroutine
 \   Category: Text
 \    Summary: Print an extended recursive token from the RUTOK token table
+\  Deep dive: Extended system descriptions
+\             Extended text tokens
 \
 \ ------------------------------------------------------------------------------
 \

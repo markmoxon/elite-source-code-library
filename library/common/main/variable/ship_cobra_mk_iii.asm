@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Drawing ships
 \    Summary: Ship blueprint for a Cobra Mk III
+\  Deep dive: Ship blueprints
 \
 \ ******************************************************************************
 

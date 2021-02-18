@@ -4,7 +4,7 @@
 \       Type: Macro
 \   Category: Text
 \    Summary: Macro definition for two-letter tokens in the extended token table
-\  Deep dive: Printing extended text tokens
+\  Deep dive: Extended text tokens
 \
 \ ------------------------------------------------------------------------------
 \

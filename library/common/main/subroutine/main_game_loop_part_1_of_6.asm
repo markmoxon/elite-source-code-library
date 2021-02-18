@@ -3,7 +3,13 @@
 \       Name: Main game loop (Part 1 of 6)
 \       Type: Subroutine
 \   Category: Main loop
+IF _CASSETTE_VERSION
 \    Summary: Spawn a trader (a peaceful Cobra Mk III)
+ELIF _6502SP_VERSION OR _DISC_VERSION
+\    Summary: Spawn a trader (a Cobra Mk III, Python, Boa or Anaconda)
+ENDIF
+\  Deep dive: Program flow of the main game loop
+\             Ship data blocks
 \
 \ ------------------------------------------------------------------------------
 \

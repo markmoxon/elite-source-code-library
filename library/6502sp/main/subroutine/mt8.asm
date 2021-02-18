@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Text
 \    Summary: Tab to column 6 and start a new word when printing extended tokens
+\  Deep dive: Extended text tokens
 \
 \ ------------------------------------------------------------------------------
 \

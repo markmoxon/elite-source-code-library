@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Text
 \    Summary: A mask for capitalising the next letter in an extended text token
+\  Deep dive: Extended text tokens
 \
 \ ------------------------------------------------------------------------------
 \

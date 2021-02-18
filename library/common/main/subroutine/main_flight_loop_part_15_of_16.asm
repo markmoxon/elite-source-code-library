@@ -4,6 +4,8 @@
 \       Type: Subroutine
 \   Category: Main loop
 \    Summary: Perform altitude checks with planet and sun, process fuel scooping
+\  Deep dive: Program flow of the main game loop
+\             Scheduling tasks with the main loop counter
 \
 \ ------------------------------------------------------------------------------
 \

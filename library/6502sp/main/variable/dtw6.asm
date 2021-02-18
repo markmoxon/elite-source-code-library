@@ -5,6 +5,7 @@
 \   Category: Text
 \    Summary: A flag to denote whether printing in lower case is enabled for
 \             extended text tokens
+\  Deep dive: Extended text tokens
 \
 \ ------------------------------------------------------------------------------
 \

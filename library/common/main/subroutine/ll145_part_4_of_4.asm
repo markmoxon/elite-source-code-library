@@ -4,6 +4,8 @@
 \       Type: Subroutine
 \   Category: Drawing lines
 \    Summary: Clip line: Call the routine in LL188 to do the actual clipping
+\  Deep dive: Line-clipping
+\             Extended screen coordinates
 \
 \ ------------------------------------------------------------------------------
 \

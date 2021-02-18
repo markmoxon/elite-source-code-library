@@ -4,6 +4,8 @@
 \       Type: Variable
 \   Category: Text
 \    Summary: The criteria for systems with special extended descriptions
+\  Deep dive: Extended system descriptions
+\             Extended text tokens
 \
 \ ------------------------------------------------------------------------------
 \

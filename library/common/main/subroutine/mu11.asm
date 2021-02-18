@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Maths (Arithmetic)
 \    Summary: Calculate (A P) = P * X
+\  Deep dive: Shift-and-add multiplication
 \
 \ ------------------------------------------------------------------------------
 \

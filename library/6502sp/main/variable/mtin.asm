@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Text
 \    Summary: Lookup table for random tokens in the extended token table (0-37)
+\  Deep dive: Extended text tokens
 \
 \ ------------------------------------------------------------------------------
 \

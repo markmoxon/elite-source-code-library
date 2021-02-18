@@ -4,6 +4,8 @@
 \       Type: Subroutine
 \   Category: Drawing lines
 \    Summary: Clip line: Work out if any part of the line is on-screen
+\  Deep dive: Line-clipping
+\             Extended screen coordinates
 \
 \ ------------------------------------------------------------------------------
 \

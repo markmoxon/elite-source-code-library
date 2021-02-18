@@ -5,6 +5,7 @@
 \   Category: Maths (Geometry)
 \    Summary: Orthonormalise the orientation vectors for a ship
 \  Deep dive: Tidying orthonormal vectors
+\             Orientation vectors
 \
 \ ------------------------------------------------------------------------------
 \

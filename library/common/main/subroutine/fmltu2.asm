@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Maths (Arithmetic)
 \    Summary: Calculate A = K * sin(A)
+\  Deep dive: The sine, cosine and arctan tables
 \
 \ ------------------------------------------------------------------------------
 \

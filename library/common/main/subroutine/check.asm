@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Save and load
 \    Summary: Calculate the checksum for the last saved commander data block
+\  Deep dive: Commander save files
 \
 \ ------------------------------------------------------------------------------
 \

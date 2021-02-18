@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing planets
 \    Summary: Draw a circle or half-circle
+\  Deep dive: The sine, cosine and arctan tables
 \
 \ ------------------------------------------------------------------------------
 \

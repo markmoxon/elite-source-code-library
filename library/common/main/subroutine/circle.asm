@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing circles
 \    Summary: Draw a circle for the planet
+\  Deep dive: Drawing circles
 \
 \ ------------------------------------------------------------------------------
 \

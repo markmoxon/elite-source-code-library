@@ -5,6 +5,7 @@
 \   Category: Drawing circles
 \    Summary: Draw a circle segment and add it to the ball line heap
 \  Deep dive: The ball line heap
+\             Drawing circles
 \
 \ ------------------------------------------------------------------------------
 \

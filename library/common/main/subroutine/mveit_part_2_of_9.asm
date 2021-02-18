@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Moving
 \    Summary: Move current ship: Call tactics routine, remove ship from scanner
+\  Deep dive: Scheduling tasks with the main loop counter
 \
 \ ------------------------------------------------------------------------------
 \

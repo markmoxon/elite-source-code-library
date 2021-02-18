@@ -4,6 +4,8 @@
 \       Type: Subroutine
 \   Category: Moving
 \    Summary: Move current ship: Rotate ship about itself by its own pitch/roll
+\  Deep dive: Orientation vectors
+\             Pitching and rolling by a fixed angle
 \
 \ ------------------------------------------------------------------------------
 \

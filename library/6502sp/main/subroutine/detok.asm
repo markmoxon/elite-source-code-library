@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Text
 \    Summary: Print an extended recursive token from the TKN1 token table
+\  Deep dive: Extended text tokens
 \
 \ ------------------------------------------------------------------------------
 \

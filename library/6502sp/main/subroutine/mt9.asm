@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Text
 \    Summary: Clear the screen and set the current view type to 1
+\  Deep dive: Extended text tokens
 \
 \ ------------------------------------------------------------------------------
 \

@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Text
 \    Summary: Print a text token
+\  Deep dive: Printing text tokens
 \
 \ ------------------------------------------------------------------------------
 \

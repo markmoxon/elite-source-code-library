@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing planets
 \    Summary: Remove the planet from the screen
+\  Deep dive: The ball line heap
 \
 \ ------------------------------------------------------------------------------
 \

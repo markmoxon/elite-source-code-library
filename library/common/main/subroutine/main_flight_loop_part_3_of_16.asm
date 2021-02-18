@@ -4,6 +4,8 @@
 \       Type: Subroutine
 \   Category: Main loop
 \    Summary: Scan for flight keys and process the results
+\  Deep dive: Program flow of the main game loop
+\             The key logger
 \
 \ ------------------------------------------------------------------------------
 \

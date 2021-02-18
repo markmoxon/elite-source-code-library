@@ -3,7 +3,15 @@
 \       Name: Main game loop (Part 2 of 6)
 \       Type: Subroutine
 \   Category: Main loop
-\    Summary: Call main flight loop, potentially spawn trader, asteroid, cargo
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+\    Summary: Call the main flight loop, and potentially spawn a trader, an
+\             asteroid, or a cargo canister
+ELIF _DISC_DOCKED
+\    Summary: Potentially spawn a trader, an asteroid, or a cargo canister
+\             (though this has no effect when docked)
+ENDIF
+\  Deep dive: Program flow of the main game loop
+\             Ship data blocks
 \
 \ ------------------------------------------------------------------------------
 \
@@ -18,7 +26,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
 \   * Call M% to do the main flight loop
 \
 ENDIF
-\   * Potentially spawn a trader (Cobra Mk III), asteroid or cargo canister
+\   * Potentially spawn a trader, asteroid or cargo canister
 \
 \ Other entry points:
 \

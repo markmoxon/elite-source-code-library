@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Text
 \    Summary: Print the character in variable DTW7
+\  Deep dive: Extended text tokens
 \
 \ ******************************************************************************
 

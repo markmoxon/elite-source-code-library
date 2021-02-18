@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Tactics
 \    Summary: Apply tactics: Check energy levels, maybe launch escape pod if low
+\  Deep dive: Program flow of the tactics routine
 \
 \ ------------------------------------------------------------------------------
 \

@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Main loop
 \    Summary: Process laser pulsing, E.C.M. energy drain, call stardust routine
+\  Deep dive: Program flow of the main game loop
 \
 \ ------------------------------------------------------------------------------
 \

@@ -5,6 +5,7 @@
 \   Category: Text
 \    Summary: Move to row 10, switch to white text, and switch to lower case
 \             when printing extended tokens
+\  Deep dive: Extended text tokens
 \
 \ ******************************************************************************
 

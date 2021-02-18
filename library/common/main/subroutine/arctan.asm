@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Maths (Geometry)
 \    Summary: Calculate A = arctan(P / Q)
+\  Deep dive: The sine, cosine and arctan tables
 \
 \ ------------------------------------------------------------------------------
 \

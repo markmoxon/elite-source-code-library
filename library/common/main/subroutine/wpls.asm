@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing suns
 \    Summary: Remove the sun from the screen
+\  Deep dive: Drawing the sun
 \
 \ ------------------------------------------------------------------------------
 \

@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Text
 \    Summary: Fetch a line of text from the keyboard
+\  Deep dive: Extended text tokens
 \
 \ ------------------------------------------------------------------------------
 \

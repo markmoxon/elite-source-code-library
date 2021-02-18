@@ -5,6 +5,7 @@
 \   Category: Text
 \    Summary: A mask for applying the lower case part of Sentence Case to
 \             extended text tokens
+\  Deep dive: Extended text tokens
 \
 \ ------------------------------------------------------------------------------
 \

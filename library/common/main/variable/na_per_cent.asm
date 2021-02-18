@@ -4,6 +4,8 @@
 \       Type: Variable
 \   Category: Save and load
 \    Summary: The data block for the last saved commander
+\  Deep dive: Commander save files
+\             The competition code
 \
 \ ------------------------------------------------------------------------------
 \

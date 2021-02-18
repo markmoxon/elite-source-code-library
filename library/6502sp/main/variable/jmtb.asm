@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Text
 \    Summary: The extended token table for jump tokens 1-32 (DETOK)
+\  Deep dive: Extended text tokens
 \
 \ ******************************************************************************
 

@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Copy protection
 \    Summary: Implement the OSWORD 249 command (some copy protection)
+\  Deep dive: 6502 Second Processor Tube communication
 \
 \ ------------------------------------------------------------------------------
 \

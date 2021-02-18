@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Drawing ships
 \    Summary: Ship blueprint for a Python (pirate)
+\  Deep dive: Ship blueprints
 \
 IF _MASTER_VERSION
 \ ------------------------------------------------------------------------------

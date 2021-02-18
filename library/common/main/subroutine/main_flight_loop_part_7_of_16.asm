@@ -5,6 +5,7 @@
 \   Category: Main loop
 \    Summary: For each nearby ship: Check whether we are docking, scooping or
 \             colliding with it
+\  Deep dive: Program flow of the main game loop
 \
 \ ------------------------------------------------------------------------------
 \

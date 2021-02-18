@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Dashboard
 \    Summary: Update the dashboard: four energy banks
+\  Deep dive: The dashboard indicators
 \
 \ ------------------------------------------------------------------------------
 \

@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing lines
 \    Summary: Move a point along a line until it is on-screen
+\  Deep dive: Line-clipping
 \
 \ ------------------------------------------------------------------------------
 \

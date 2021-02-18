@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing lines
 \    Summary: Draw a shallow line going right and up or left and down
+\  Deep dive: Bresenham's line algorithm
 \
 \ ------------------------------------------------------------------------------
 \

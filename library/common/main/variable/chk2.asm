@@ -4,6 +4,8 @@
 \       Type: Variable
 \   Category: Save and load
 \    Summary: Second checksum byte for the saved commander data file
+\  Deep dive: Commander save files
+\             The competition code
 \
 \ ------------------------------------------------------------------------------
 \

@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Tactics
 \    Summary: Apply tactics: Calculate dot product to determine ship's aim
+\  Deep dive: Program flow of the tactics routine
 \
 \ ------------------------------------------------------------------------------
 \

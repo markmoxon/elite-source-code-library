@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Keyboard
 \    Summary: Scan the keyboard to see if a specific key is being pressed
+\  Deep dive: The key logger
 \
 \ ------------------------------------------------------------------------------
 \

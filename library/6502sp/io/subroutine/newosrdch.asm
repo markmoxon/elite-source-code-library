@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Tube
 \    Summary: The custom OSRDCH routine for reading characters
+\  Deep dive: 6502 Second Processor Tube communication
 \
 \ ------------------------------------------------------------------------------
 \

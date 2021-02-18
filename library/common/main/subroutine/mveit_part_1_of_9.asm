@@ -4,7 +4,8 @@
 \       Type: Subroutine
 \   Category: Moving
 \    Summary: Move current ship: Tidy the orientation vectors
-\  Deep dive: Orientation vectors
+\  Deep dive: Program flow of the ship-moving routine
+\             Scheduling tasks with the main loop counter
 \
 \ ------------------------------------------------------------------------------
 \

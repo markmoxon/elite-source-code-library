@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Text
 \    Summary: The extended two-letter token lookup table
+\  Deep dive: Extended text tokens
 \
 \ ------------------------------------------------------------------------------
 \

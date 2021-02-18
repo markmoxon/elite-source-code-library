@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Text
 \    Summary: The first extended token table for recursive tokens 0-255 (DETOK)
+\  Deep dive: Extended text tokens
 \
 \ ******************************************************************************
 

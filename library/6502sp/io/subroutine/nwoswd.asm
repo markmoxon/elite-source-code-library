@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Tube
 \    Summary: The custom OSWORD routine
+\  Deep dive: 6502 Second Processor Tube communication
 \
 \ ------------------------------------------------------------------------------
 \

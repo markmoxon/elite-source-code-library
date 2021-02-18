@@ -4,6 +4,8 @@
 \       Type: Subroutine
 \   Category: Main loop
 \    Summary: For each nearby ship: Draw the ship, remove if killed, loop back
+\  Deep dive: Program flow of the main game loop
+\             Drawing ships
 \
 \ ------------------------------------------------------------------------------
 \

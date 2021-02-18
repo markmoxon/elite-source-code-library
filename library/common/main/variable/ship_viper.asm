@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Drawing ships
 \    Summary: Ship blueprint for a Viper
+\  Deep dive: Ship blueprints
 \
 \ ******************************************************************************
 

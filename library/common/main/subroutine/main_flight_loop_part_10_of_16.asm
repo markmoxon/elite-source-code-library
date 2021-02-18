@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Main loop
 \    Summary: For each nearby ship: Remove if scooped, or process collisions
+\  Deep dive: Program flow of the main game loop
 \
 \ ------------------------------------------------------------------------------
 \

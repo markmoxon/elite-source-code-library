@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Maths (Arithmetic)
 \    Summary: Calculate R = 256 * A / Q
+\  Deep dive: Shift-and-subtract division
 \
 \ ------------------------------------------------------------------------------
 \

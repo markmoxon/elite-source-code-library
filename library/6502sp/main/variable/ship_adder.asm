@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Drawing ships
 \    Summary: Ship blueprint for an Adder
+\  Deep dive: Ship blueprints
 \
 \ ******************************************************************************
 

@@ -4,6 +4,8 @@
 \       Type: Subroutine
 \   Category: Maths (Geometry)
 \    Summary: Normalise the three-coordinate vector in XX15
+\  Deep dive: Tidying orthonormal vectors
+\             Orientation vectors
 \
 \ ------------------------------------------------------------------------------
 \

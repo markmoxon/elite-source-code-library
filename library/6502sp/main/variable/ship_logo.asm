@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Drawing ships
 \    Summary: Ship blueprint for the Elite logo
+\  Deep dive: Ship blueprints
 \
 \ ******************************************************************************
 

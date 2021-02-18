@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Text
 \    Summary: The size of the justified text buffer at BUF
+\  Deep dive: Extended text tokens
 \
 \ ------------------------------------------------------------------------------
 \

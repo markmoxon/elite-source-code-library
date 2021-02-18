@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Tube
 \    Summary: The lookup table for OSWORD jump commands (240-255)
+\  Deep dive: 6502 Second Processor Tube communication
 \
 \ ------------------------------------------------------------------------------
 \

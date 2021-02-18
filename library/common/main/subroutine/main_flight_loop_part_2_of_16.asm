@@ -5,6 +5,8 @@
 \   Category: Main loop
 \    Summary: Calculate the alpha and beta angles from the current pitch and
 \             roll of our ship
+\  Deep dive: Program flow of the main game loop
+\             Pitching and rolling
 \
 \ ------------------------------------------------------------------------------
 \

@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Text
 \    Summary: Switch to standard tokens in Sentence Case
+\  Deep dive: Extended text tokens
 \
 \ ------------------------------------------------------------------------------
 \

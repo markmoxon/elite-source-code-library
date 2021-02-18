@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Text
 \    Summary: Print the selected system's adjective, e.g. Lavian for Lave
+\  Deep dive: Extended text tokens
 \
 \ ------------------------------------------------------------------------------
 \

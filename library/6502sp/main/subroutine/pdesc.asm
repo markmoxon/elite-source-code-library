@@ -4,12 +4,14 @@
 \       Type: Subroutine
 \   Category: Text
 \    Summary: Print the system's extended description or a mission 1 directive
+\  Deep dive: Extended system descriptions
+\             Extended text tokens
 \
 \ ------------------------------------------------------------------------------
 \
 \ This prints a specific system's extended description. This is called the "pink
 \ volcanoes string" in a comment in the original source, and the "goat soup"
-\ string by Ian Bell on his website (where he also refers to the species string
+\ recipe by Ian Bell on his website (where he also refers to the species string
 \ as the "pink felines" string).
 \
 \ For some special systems, when you are docked at them, the procedurally

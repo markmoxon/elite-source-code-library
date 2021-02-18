@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Maths (Arithmetic)
 \    Summary: Calculate K(3 2 1 0) = (A P+1 P) / (z_sign z_hi z_lo)
+\  Deep dive: Shift-and-subtract division
 \
 \ ------------------------------------------------------------------------------
 \

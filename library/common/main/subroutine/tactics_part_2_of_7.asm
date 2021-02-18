@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Tactics
 \    Summary: Apply tactics: Escape pod, station, lone Thargon, safe-zone pirate
+\  Deep dive: Program flow of the tactics routine
 \
 \ ------------------------------------------------------------------------------
 \

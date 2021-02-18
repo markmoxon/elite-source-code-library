@@ -5,6 +5,7 @@
 \   Category: Text
 \    Summary: Print a character at the text cursor, with support for verified
 \             text in extended tokens
+\  Deep dive: Extended text tokens
 \
 \ ------------------------------------------------------------------------------
 \

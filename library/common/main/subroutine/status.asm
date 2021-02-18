@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Status
 \    Summary: Show the Status Mode screen (red key f8)
+\  Deep dive: Combat rank
 \
 \ ******************************************************************************
 

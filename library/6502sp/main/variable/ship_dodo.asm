@@ -3,7 +3,8 @@
 \       Name: SHIP_DODO
 \       Type: Variable
 \   Category: Drawing ships
-\    Summary: Ship blueprint for a Dodecahedron ("Dodo")space station
+\    Summary: Ship blueprint for a Dodecahedron ("Dodo") space station
+\  Deep dive: Ship blueprints
 \
 \ ******************************************************************************
 

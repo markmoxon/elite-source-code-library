@@ -4,6 +4,8 @@
 \       Type: Subroutine
 \   Category: Universe
 \    Summary: Show the Data on System screen (red key f6)
+\  Deep dive: Generating system data
+\             Galaxy and system seeds
 \
 \ ------------------------------------------------------------------------------
 \

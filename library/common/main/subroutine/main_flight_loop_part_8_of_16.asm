@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Main loop
 \    Summary: For each nearby ship: Process us potentially scooping this item
+\  Deep dive: Program flow of the main game loop
 \
 \ ------------------------------------------------------------------------------
 \

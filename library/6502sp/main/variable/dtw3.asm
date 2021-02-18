@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Text
 \    Summary: A flag for switching between standard and extended text tokens
+\  Deep dive: Extended text tokens
 \
 \ ------------------------------------------------------------------------------
 \

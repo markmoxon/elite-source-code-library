@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Maths (Arithmetic)
 \    Summary: Calculate (A ?) = (-X * A + (S R)) / 96
+\  Deep dive: Shift-and-subtract division
 \
 \ ------------------------------------------------------------------------------
 \

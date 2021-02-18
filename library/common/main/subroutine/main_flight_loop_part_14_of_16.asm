@@ -4,6 +4,9 @@
 \       Type: Subroutine
 \   Category: Main loop
 \    Summary: Spawn a space station if we are close enough to the planet
+\  Deep dive: Program flow of the main game loop
+\             Scheduling tasks with the main loop counter
+\             Ship data blocks
 \
 \ ------------------------------------------------------------------------------
 \

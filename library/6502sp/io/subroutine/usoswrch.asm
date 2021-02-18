@@ -5,6 +5,7 @@
 \   Category: Tube
 \    Summary: The custom OSWRCH routine for writing characters and implementing
 \             jump table commands
+\  Deep dive: 6502 Second Processor Tube communication
 \
 \ ------------------------------------------------------------------------------
 \

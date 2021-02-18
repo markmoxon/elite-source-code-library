@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Tactics
 \    Summary: Apply tactics: Consider firing a laser at us, if aim is true
+\  Deep dive: Program flow of the tactics routine
 \
 \ ------------------------------------------------------------------------------
 \

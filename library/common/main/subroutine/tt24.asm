@@ -5,6 +5,7 @@
 \   Category: Universe
 \    Summary: Calculate system data from the system seeds
 \  Deep dive: Generating system data
+\             Galaxy and system seeds
 \
 \ ------------------------------------------------------------------------------
 \

@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Text
 \    Summary: A constant used when printing large numbers in BPRNT
+\  Deep dive: Printing decimal numbers
 \
 \ ------------------------------------------------------------------------------
 \

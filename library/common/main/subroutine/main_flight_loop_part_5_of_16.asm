@@ -5,6 +5,7 @@
 \   Category: Main loop
 \    Summary: For each nearby ship: If an energy bomb has been set off,
 \             potentially kill this ship
+\  Deep dive: Program flow of the main game loop
 \
 \ ------------------------------------------------------------------------------
 \

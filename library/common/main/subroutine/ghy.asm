@@ -4,6 +4,8 @@
 \       Type: Subroutine
 \   Category: Flight
 \    Summary: Perform a galactic hyperspace jump
+\  Deep dive: Twisting the system seeds
+\             Galaxy and system seeds
 \
 \ ------------------------------------------------------------------------------
 \

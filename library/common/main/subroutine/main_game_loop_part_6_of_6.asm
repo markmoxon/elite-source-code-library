@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Main loop
 \    Summary: Process non-flight key presses (red function keys, docked keys)
+\  Deep dive: Program flow of the main game loop
 \
 \ ------------------------------------------------------------------------------
 \

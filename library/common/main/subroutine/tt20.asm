@@ -4,7 +4,8 @@
 \       Type: Subroutine
 \   Category: Universe
 \    Summary: Twist the selected system's seeds four times
-\  Deep dive: Galaxy and system seeds
+\  Deep dive: Twisting the system seeds
+\             Galaxy and system seeds
 \
 \ ------------------------------------------------------------------------------
 \

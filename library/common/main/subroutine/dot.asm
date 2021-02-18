@@ -3,14 +3,17 @@
 \       Name: DOT
 \       Type: Subroutine
 \   Category: Dashboard
+IF _CASSETTE_VERSION OR _DISC_VERSION
 \    Summary: Draw a dot on the compass
+ELIF _6502SP_VERSION
+\    Summary: Implement the #DOdot command (draw a dot on the compass)
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-\ Draw a dot on the compass.
-\
 \ Arguments:
 \
+IF _CASSETTE_VERSION OR _DISC_VERSION
 \   COMX                The screen pixel x-coordinate of the dot
 \
 \   COMY                The screen pixel y-coordinate of the dot
@@ -22,10 +25,21 @@
 \
 \                         * &FF = a single-height dot in green/cyan, for when
 \                           the object in the compass is behind us
+ELIF _6502SP_VERSION
+\   OSSC(1 0)           A parameter block as follows:
+\
+\                         * Byte #2 = The screen pixel x-coordinate of the dot
+\
+\                         * Byte #3 = The screen pixel x-coordinate of the dot
+\
+\                         * Byte #4 = The colour of the dot
+ENDIF
 \
 \ ******************************************************************************
 
 .DOT
+
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA COMY               \ Set Y1 = COMY, the y-coordinate of the dot
  STA Y1
@@ -42,4 +56,28 @@
 
                         \ Otherwise fall through into CPIX4 to draw a double-
                         \ height dot
+
+ELIF _6502SP_VERSION
+
+ LDY #2                 \ Fetch byte #2 from the parameter block (the dot's
+ LDA (OSSC),Y           \ x-coordinate) and store it in X1
+ STA X1
+
+ INY                    \ Fetch byte #3 from the parameter block (the dot's
+ LDA (OSSC),Y           \ y-coordinate) and store it in X1
+ STA Y1
+
+ INY                    \ Fetch byte #3 from the parameter block (the dot's
+ LDA (OSSC),Y           \ colour) and store it in COL
+ STA COL
+
+ CMP #WHITE2            \ If the dot's colour is not white, jump to CPIX2 to
+ BNE CPIX2              \ draw a single-height dot in the compass, as it is
+                        \ showing that the planet or station is behind us
+
+                        \ Otherwise the dot is white, which is in front of us,
+                        \ so fall through into CPIX4 to draw a double-height
+                        \ dot in the compass
+
+ENDIF
 

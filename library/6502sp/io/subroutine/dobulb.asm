@@ -16,7 +16,7 @@
 .DOBULB
 
  TAX                    \ If the parameter to the #DOBULB command is non-zero,
- BNE ECBLB              \ i.e. this is a #DOBULB 255 command, jump to EXBLB to
+ BNE ECBLB              \ i.e. this is a #DOBULB 255 command, jump to ECBLB to
                         \ draw the E.C.M. bulb instead
 
  LDA #16*8              \ The space station bulb is in character block number 48

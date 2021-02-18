@@ -3,14 +3,62 @@
 \       Name: CLYNS
 \       Type: Subroutine
 \   Category: Utility routines
+IF _CASSETTE_VERSION OR _DISC_VERSION
+\    Summary: Clear the bottom three text rows of the mode 4 screen
+ELIF _6502SP_VERSION
 \    Summary: Implement the #clyns command (clear the bottom of the screen)
+ENDIF
 \
+IF _CASSETTE_VERSION OR _DISC_VERSION
+\ ------------------------------------------------------------------------------
+\
+\ Clear some space at the bottom of the screen and move the text cursor to
+\ column 1, row 21. Specifically, this zeroes the following screen locations:
+\
+\   &7507 to &75F0
+\   &7607 to &76F0
+\   &7707 to &77F0
+\
+\ which clears the three bottom text rows of the mode 4 screen (rows 21 to 23),
+\ clearing each row from text column 1 to 30 (so it doesn't overwrite the box
+\ border in columns 0 and 32, or the last usable column in column 31).
+\
+\ Returns:
+\
+\   A                   A is set to 0
+\
+\   Y                   Y is set to 0
+\
+ENDIF
 \ ******************************************************************************
 
 .CLYNS
 
- LDA #20                \ Move the text cursor in YC to row 20
- STA YC
+IF _DISC_DOCKED
+
+ LDA #%11111111         \ Set DTW2 = %11111111 to denote that we are not
+ STA DTW2               \ currently printing a word
+
+ENDIF
+
+ LDA #20                \ Move the text cursor to row 20, near the bottom of
+ STA YC                 \ the screen
+
+IF _DISC_DOCKED
+
+ JSR TT67               \ Print a newline, which will move the text cursor down
+                        \ a line (to row 21) and back to column 1
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION
+
+ LDA #&75               \ Set the two-byte value in SC to &7507
+ STA SC+1
+ LDA #7
+ STA SC
+
+ELIF _6502SP_VERSION
 
  LDA #&6A               \ Set SC+1 = &6A, for the high byte of SC(1 0)
  STA SC+1
@@ -19,6 +67,44 @@
 
  LDA #0                 \ Set SC = 0, so now SC(1 0) = &6A00
  STA SC
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_FLIGHT
+
+ JSR TT67               \ Print a newline, which will move the text cursor down
+                        \ a line (to row 21) and back to column 1
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION
+
+ LDA #0                 \ Call LYN to clear the pixels from &7507 to &75F0
+ JSR LYN
+
+ INC SC+1               \ Increment SC+1 so SC points to &7607
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_DOCKED
+
+ JSR LYN                \ Call LYN to clear the pixels from &7607 to &76F0
+
+ INC SC+1               \ Increment SC+1 so SC points to &7707
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION
+
+ INY                    \ Move the text cursor to column 1 (as LYN sets Y to 0)
+ STY XC
+
+                        \ Fall through into LYN to clear the pixels from &7707
+                        \ to &77F0
+
+ENDIF
+
+IF _6502SP_VERSION
 
  LDX #3                 \ We want to clear three text rows, so set a counter in
                         \ X for 3 rows
@@ -82,4 +168,6 @@
 
  JMP PUTBACK            \ Jump to PUTBACK to restore the USOSWRCH handler and
                         \ return from the subroutine using a tail call
+
+ENDIF
 

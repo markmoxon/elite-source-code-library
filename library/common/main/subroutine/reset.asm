@@ -7,13 +7,8 @@
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION
-\ Reset our ship and various controls, then fall through into RES4 to recharge
-\ shields and energy, and reset the stardust and the ship workspace at INWK.
-ELIF _6502SP_VERSION
 \ Reset our ship and various controls, recharge shields and energy, and then
 \ fall through into RES2 to reset the stardust and the ship workspace at INWK.
-ENDIF
 \
 \ In this subroutine, this means zero-filling the following locations:
 \
@@ -37,16 +32,17 @@ IF _DISC_VERSION
 \     * ALP1, ALP2 - Set roll signs to 0
 \
 ENDIF
-IF _CASSETTE_VERSION
-\ It also sets QQ12 to &FF, to indicate we are docked, and then falls through
-\ into RES4.
-ELIF _DISC_VERSION
-\ It then recharges the shields and energy banks, and falls through into RES2.
-ELIF _6502SP_VERSION
 \ It also sets QQ12 to &FF, to indicate we are docked, recharges the shields and
 \ energy banks, and then falls through into RES2.
-ENDIF
 \
+IF _CASSETTE_VERSION
+\ Other entry points:
+\
+\   RES4                Reset the shields and energy banks, then fall through
+\                       into RES2 to reset the stardust and the ship workspace
+\                       at INWK
+\
+ENDIF
 \ ******************************************************************************
 
 .RESET
@@ -93,7 +89,14 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION
+
+.RES4
+
+ LDA #&FF               \ Set A to &FF so we can fill up the shields and energy
+                        \ bars with a full charge
+
+ENDIF
 
  LDX #2                 \ We're now going to recharge both shields and the
                         \ energy bank, which live in the three bytes at FSH,
@@ -112,6 +115,4 @@ IF _6502SP_VERSION OR _DISC_VERSION
 
                         \ Fall through into RES2 to reset the stardust and ship
                         \ workspace at INWK
-
-ENDIF
 

@@ -233,8 +233,8 @@ ENDIF
 IF _CASSETTE_VERSION
 
  CPY #6                 \ If Y = 6 (i.e. a Thargoid), jump down to the tha
- BEQ tha                \ routine to decide whether or not to spawn it (where
-                        \ there's a 22% chance of this happening)
+ BEQ tha                \ routine in part 6 to decide whether or not to spawn it
+                        \ (where there's a 22% chance of this happening)
 
  STA INWK+32            \ Store A in the AI flag of this ship
 

@@ -26,6 +26,10 @@
 \                       "press" a key, in which case A contains the internal key
 \                       number of the key we want to "press"
 \
+IF _CASSETTE_VERSION
+\   tha                 Consider spawning a Thargoid (22% chance)
+\
+ENDIF
 \ ******************************************************************************
 
 .FRCE
@@ -44,4 +48,20 @@ ENDIF
 
  JMP TT100              \ Otherwise jump to TT100 to restart the main loop from
                         \ the start
+
+IF _CASSETTE_VERSION
+
+.tha
+
+ JSR DORND              \ Set A and X to random numbers
+
+ CMP #200               \ If A < 200 (78% chance), skip the next instruction
+ BCC P%+5
+
+ JSR GTHG               \ Call GTHG to spawn a Thargoid ship
+
+ JMP MLOOP              \ Jump back into the main loop at MLOOP, which is just
+                        \ after the ship-spawning section
+
+ENDIF
 

@@ -1,11 +1,48 @@
 \ ******************************************************************************
 \
+IF _CASSETTE_VERSION
+\       Name: QU5
+ELIF _6502SP_VERSION OR _DISC_VERSION
 \       Name: DFAULT
+ENDIF
 \       Type: Subroutine
 \   Category: Start and end
 \    Summary: Reset the current commander data block to the last saved commander
 \
 \ ******************************************************************************
+
+IF _CASSETTE_VERSION
+
+.QU5
+
+                        \ By the time we get here, the correct commander name
+                        \ is at NA% and the correct commander data is at NA%+8.
+                        \ Specifically:
+                        \
+                        \   * If we loaded a commander file, then the name and
+                        \     data from that file will be at NA% and NA%+8
+                        \
+                        \   * If this is a brand new game, then NA% will contain
+                        \     the default starting commander name ("JAMESON")
+                        \     and NA%+8 will contain the default commander data
+                        \
+                        \   * If this is not a new game (because they died or
+                        \     quit) and we didn't want to load a commander file,
+                        \     then NA% will contain the last saved commander
+                        \     name, and NA%+8 the last saved commander data. If
+                        \     the game has never been saved, this will still be
+                        \     the default commander
+
+\JSR TTX66              \ This instruction is commented out in the original
+                        \ source; it clears the screen and draws a border
+
+ LDX #NT%               \ The size of the commander data block is NT% bytes,
+                        \ and it starts at NA%+8, so we need to copy the data
+                        \ from the "last saved" buffer at NA%+8 to the current
+                        \ commander workspace at TP. So we set up a counter in X
+                        \ for the NT% bytes that we want to copy
+
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
 .DFAULT
 
@@ -19,11 +56,23 @@
                         \ a counter in X for the NT% + 8 bytes that we want to
                         \ copy
 
+ENDIF
+
 .QUL1
+
+IF _CASSETTE_VERSION
+
+ LDA NA%+7,X            \ Copy the X-th byte of NA%+7 to the X-th byte of TP-1,
+ STA TP-1,X             \ (the -1 is because X is counting down from NT% to 1)
+
+ELIF _6502SP_VERSION OR _DISC_VERSION
+
 
  LDA NA%-1,X            \ Copy the X-th byte of NA%-1 to the X-th byte of
  STA NAME-1,X           \ NAME-1 (the -1 is because X is counting down from
                         \ NT% + 8 to 1)
+
+ENDIF
 
  DEX                    \ Decrement the loop counter
 
@@ -34,6 +83,9 @@
                         \ to 0, which means we will be showing a view without a
                         \ boxed title at the top (i.e. we're going to use the
                         \ screen layout of a space view in the following)
+
+                        \ If the commander check below fails, we keep jumping
+                        \ back to here to crash the game with an infinite loop
 
  JSR CHECK              \ Call the CHECK subroutine to calculate the checksum
                         \ for the current commander block at NA%+8 and put it
@@ -55,8 +107,18 @@ ELSE
 
 ENDIF
 
+IF _6502SP_VERSION OR _DISC_VERSION
+
 \JSR BELL               \ This instruction is commented out in the original
                         \ source. It would make a standard system beep
+
+ENDIF
+
+                        \ The checksum CHK is correct, so now we check whether
+                        \ CHK2 = CHK EOR A9, and if this check fails, bit 7 of
+                        \ the competition flags at COK gets set, to indicate
+                        \ to Acornsoft via the competition code that there has
+                        \ been some hacking going on with this competition entry
 
  EOR #&A9               \ X = checksum EOR &A9
  TAX
@@ -71,7 +133,12 @@ ENDIF
 
 .tZ
 
-IF _DISC_VERSION
+IF _CASSETTE_VERSION
+
+ ORA #%00000010         \ Set bit 1 of A to denote that this is the cassette
+                        \ version
+
+ELIF _DISC_VERSION
 
 IF _STH_DISC
 
@@ -98,5 +165,9 @@ ENDIF
 
  STA COK                \ Store the updated competition flags in COK
 
- RTS                    \ Retirn from the subroutine
+IF _6502SP_VERSION OR _DISC_VERSION
+
+ RTS                    \ Return from the subroutine
+
+ENDIF
 

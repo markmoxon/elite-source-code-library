@@ -138,11 +138,11 @@ INCLUDE "library/common/main/variable/ship_canister.asm"
 INCLUDE "library/common/main/variable/ship_viper.asm"
 INCLUDE "library/common/main/variable/ship_sidewinder.asm"
 INCLUDE "library/common/main/variable/ship_mamba.asm"
-INCLUDE "library/6502sp/main/variable/ship_krait.asm"
-INCLUDE "library/6502sp/main/variable/ship_adder.asm"
-INCLUDE "library/6502sp/main/variable/ship_gecko.asm"
-INCLUDE "library/6502sp/main/variable/ship_cobra_mk_i.asm"
-INCLUDE "library/6502sp/main/variable/ship_cobra_mk_iii_pirate.asm"
+INCLUDE "library/enhanced/main/variable/ship_krait.asm"
+INCLUDE "library/enhanced/main/variable/ship_adder.asm"
+INCLUDE "library/enhanced/main/variable/ship_gecko.asm"
+INCLUDE "library/enhanced/main/variable/ship_cobra_mk_i.asm"
+INCLUDE "library/enhanced/main/variable/ship_cobra_mk_iii_pirate.asm"
 
 \ ******************************************************************************
 \

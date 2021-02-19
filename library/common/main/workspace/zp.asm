@@ -95,7 +95,7 @@ INCLUDE "library/common/main/variable/xx19.asm"
 
 IF _6502SP_VERSION OR _DISC_VERSION
 
-INCLUDE "library/6502sp/main/variable/newb.asm"
+INCLUDE "library/enhanced/main/variable/newb.asm"
 
 ENDIF
 

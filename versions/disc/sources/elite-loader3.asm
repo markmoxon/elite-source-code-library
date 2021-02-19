@@ -119,7 +119,7 @@ INCLUDE "library/disc/loader3/subroutine/prot1.asm"
 
 INCLUDE "library/common/loader/subroutine/pll1.asm"
 INCLUDE "library/common/loader/subroutine/dornd.asm"
-INCLUDE "library/6502sp/loader1/variable/rand.asm"
+INCLUDE "library/enhanced/loader/variable/rand.asm"
 INCLUDE "library/common/loader/subroutine/squa2.asm"
 INCLUDE "library/common/loader/subroutine/pix.asm"
 INCLUDE "library/common/loader/variable/twos.asm"

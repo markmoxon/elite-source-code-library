@@ -112,6 +112,7 @@
                         \
                         \ It's yet another impressive bit of obfuscation and
                         \ misdirection
+
 .RAND
 
  EQUD &6C785349         \ The random number seed used for drawing Saturn

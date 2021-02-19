@@ -20,7 +20,7 @@ ORG &1100
 
 INCLUDE "library/original/main/variable/tvt1.asm"
 INCLUDE "library/common/main/subroutine/irq1.asm"
-INCLUDE "library/6502sp/main/variable/s1_per_cent.asm"
+INCLUDE "library/enhanced/main/variable/s1_per_cent.asm"
 INCLUDE "library/common/main/variable/na_per_cent.asm"
 INCLUDE "library/common/main/variable/chk2.asm"
 INCLUDE "library/common/main/variable/chk.asm"

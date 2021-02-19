@@ -151,7 +151,7 @@ E% = &563E              \ The address of the default NEWB ship bytes within the
 
 INCLUDE "library/common/main/workspace/zp.asm"
 INCLUDE "library/common/main/workspace/xx3.asm"
-INCLUDE "library/6502sp/main/workspace/up.asm"
+INCLUDE "library/enhanced/main/workspace/up.asm"
 INCLUDE "library/common/main/workspace/k_per_cent.asm"
 INCLUDE "library/common/main/workspace/wp.asm"
 
@@ -190,7 +190,7 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_13_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_14_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_15_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_16_of_16.asm"
-INCLUDE "library/6502sp/main/subroutine/spin.asm"
+INCLUDE "library/enhanced/main/subroutine/spin.asm"
 
 \ ******************************************************************************
 \
@@ -282,7 +282,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_B%
 
 PRINT "S.ELTB ", ~CODE_B%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_B%
-\SAVE "versions/cassette/output/D.ELTB.bin", CODE_B%, P%, LOAD%
+\SAVE "versions/disc/output/D.ELTB.bin", CODE_B%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -301,11 +301,11 @@ INCLUDE "library/common/main/subroutine/tactics_part_5_of_7.asm"
 INCLUDE "library/common/main/subroutine/tactics_part_6_of_7.asm"
 INCLUDE "library/common/main/subroutine/tactics_part_7_of_7.asm"
 INCLUDE "library/enhanced/main/subroutine/dockit.asm"
-INCLUDE "library/6502sp/main/subroutine/vcsu1.asm"
-INCLUDE "library/6502sp/main/subroutine/vcsub.asm"
+INCLUDE "library/enhanced/main/subroutine/vcsu1.asm"
+INCLUDE "library/enhanced/main/subroutine/vcsub.asm"
 INCLUDE "library/common/main/subroutine/tas1.asm"
-INCLUDE "library/6502sp/main/subroutine/tas4.asm"
-INCLUDE "library/6502sp/main/subroutine/tas6.asm"
+INCLUDE "library/enhanced/main/subroutine/tas4.asm"
+INCLUDE "library/enhanced/main/subroutine/tas6.asm"
 INCLUDE "library/enhanced/main/subroutine/dcs1.asm"
 INCLUDE "library/common/main/subroutine/hitch.asm"
 INCLUDE "library/common/main/subroutine/frs1.asm"
@@ -380,7 +380,7 @@ PRINT "S.ELTC ", ~CODE_C%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_C%
 CODE_D% = P%
 LOAD_D% = LOAD% + P% - CODE%
 
-INCLUDE "library/6502sp/main/subroutine/tnpr1.asm"
+INCLUDE "library/enhanced/main/subroutine/tnpr1.asm"
 INCLUDE "library/common/main/subroutine/tnpr.asm"
 INCLUDE "library/common/main/subroutine/tt20.asm"
 INCLUDE "library/common/main/subroutine/tt54.asm"
@@ -415,7 +415,7 @@ INCLUDE "library/common/main/subroutine/pr6.asm"
 INCLUDE "library/common/main/subroutine/pr5.asm"
 INCLUDE "library/common/main/subroutine/tt147.asm"
 INCLUDE "library/common/main/subroutine/prq.asm"
-INCLUDE "library/6502sp/main/subroutine/ttx110.asm"
+INCLUDE "library/enhanced/main/subroutine/ttx110.asm"
 INCLUDE "library/common/main/subroutine/tt151.asm"
 INCLUDE "library/common/main/subroutine/tt152.asm"
 INCLUDE "library/common/main/subroutine/tt162.asm"
@@ -573,7 +573,7 @@ CODE_F% = P%
 LOAD_F% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/variable/sfx.asm"
-INCLUDE "library/6502sp/main/subroutine/there.asm"
+INCLUDE "library/enhanced/main/subroutine/there.asm"
 INCLUDE "library/common/main/subroutine/reset.asm"
 INCLUDE "library/common/main/subroutine/res2.asm"
 INCLUDE "library/common/main/subroutine/zinf.asm"

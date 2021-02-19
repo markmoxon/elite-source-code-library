@@ -133,16 +133,16 @@ ORG CODE%
 INCLUDE "library/common/main/macro/vertex.asm"
 INCLUDE "library/common/main/macro/edge.asm"
 INCLUDE "library/common/main/macro/face.asm"
-INCLUDE "library/6502sp/main/variable/ship_dodo.asm"
+INCLUDE "library/enhanced/main/variable/ship_dodo.asm"
 INCLUDE "library/common/main/variable/ship_escape_pod.asm"
 INCLUDE "library/common/main/variable/ship_canister.asm"
 INCLUDE "library/common/main/variable/ship_cobra_mk_iii.asm"
-INCLUDE "library/6502sp/main/variable/ship_anaconda.asm"
+INCLUDE "library/enhanced/main/variable/ship_anaconda.asm"
 INCLUDE "library/common/main/variable/ship_viper.asm"
 INCLUDE "library/common/main/variable/ship_sidewinder.asm"
 INCLUDE "library/common/main/variable/ship_mamba.asm"
-INCLUDE "library/6502sp/main/variable/ship_worm.asm"
-INCLUDE "library/6502sp/main/variable/ship_fer_de_lance.asm"
+INCLUDE "library/enhanced/main/variable/ship_worm.asm"
+INCLUDE "library/enhanced/main/variable/ship_fer_de_lance.asm"
 
 \ ******************************************************************************
 \

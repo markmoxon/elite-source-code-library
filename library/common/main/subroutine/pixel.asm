@@ -53,7 +53,6 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
 \ Other entry points:
 \
 \   PX4                 Contains an RTS
-
 ELIF _6502SP_VERSION
 \   OSSC(1 0)           A parameter block as follows:
 \

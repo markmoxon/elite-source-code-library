@@ -52,15 +52,13 @@ VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
 IRQ1V = &204            \ The IRQ1V vector that we intercept to implement the
                         \ split-sceen mode
 
-ZP = &90                \ Temporary storage, used all over the place
+INCLUDE "library/6502sp/loader1/workspace/zp.asm"
 
-P = &92                 \ Temporary storage, used all over the place
-
-Q = &93                 \ Temporary storage, used all over the place
-
-YY = &94                \ Temporary storage, used when drawing Saturn
-
-T = &95                 \ Temporary storage, used all over the place
+\ ******************************************************************************
+\
+\ ELITE LOADER
+\
+\ ******************************************************************************
 
 IF _SNG45
 

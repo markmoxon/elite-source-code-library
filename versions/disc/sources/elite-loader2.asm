@@ -32,22 +32,6 @@ _DISC_FLIGHT            = TRUE
 _IB_DISC                = (_RELEASE = 1)
 _STH_DISC               = (_RELEASE = 2)
 
-TRTB% = &04             \ TRTB%(1 0) points to the keyboard translation table
-
-S = &70                 \ Temporary storage, used all over the place
-
-ZP = &71                \ Temporary storage, used all over the place
-
-P = &73                 \ Temporary storage, used all over the place
-
-Q = &74                 \ Temporary storage, used all over the place
-
-R = &75                 \ Temporary storage, used all over the place
-
-T = &76                 \ Temporary storage, used all over the place
-
-SC = &81                \ Temporary storage, used all over the place
-
 OSNEWL = &FFE7          \ The address for the OSNEWL routine
 OSWRCH = &FFEE          \ The address for the OSWRCH routine
 OSBYTE = &FFF4          \ The address for the OSBYTE routine
@@ -60,6 +44,14 @@ VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
 
 CODE% = &5700
 LOAD% = &5700
+
+INCLUDE "library/disc/loader2/workspace/zp.asm"
+
+\ ******************************************************************************
+\
+\ ELITE LOADER
+\
+\ ******************************************************************************
 
 ORG CODE%
 

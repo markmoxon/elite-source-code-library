@@ -35,19 +35,6 @@ _MASTER_VERSION         = (_VERSION = 4)
 N% = 67                 \ N% is set to the number of bytes in the VDU table, so
                         \ we can loop through them below
 
-ZP = &70                \ Temporary storage, used all over the place
-
-P = &72                 \ Temporary storage, used all over the place
-
-Q = &73                 \ Temporary storage, used all over the place
-
-YY = &74                \ Temporary storage, used when drawing Saturn
-
-T = &75                 \ Temporary storage, used all over the place
-
-LATCH = &00F4           \ The RAM copy of the currently selected paged ROM/RAM
-                        \ in SHEILA+&30
-
 OSWRCH = &FFEE          \ The address for the OSWRCH routine
 OSBYTE = &FFF4          \ The address for the OSBYTE routine
 OSCLI = &FFF7           \ The address for the OSCLI routine
@@ -55,6 +42,14 @@ OSCLI = &FFF7           \ The address for the OSCLI routine
 VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
                         \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
                         \ known as SHEILA)
+
+INCLUDE "library/master/loader/workspace/zp.asm"
+
+\ ******************************************************************************
+\
+\ ELITE LOADER
+\
+\ ******************************************************************************
 
 CODE% = &0E00
 LOAD% = &0E00

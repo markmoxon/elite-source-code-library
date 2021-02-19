@@ -132,32 +132,13 @@ VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
 
 VSCAN = 57-1            \ Defines the split position in the split-screen mode
 
-TRTB% = &04             \ TRTB%(1 0) points to the keyboard translation table
+INCLUDE "library/cassette/loader/workspace/zp.asm"
 
-ZP = &70                \ Temporary storage, used all over the place
-
-P = &72                 \ Temporary storage, used all over the place
-
-Q = &73                 \ Temporary storage, used all over the place
-
-YY = &74                \ Temporary storage, used when drawing Saturn
-
-T = &75                 \ Temporary storage, used all over the place
-
-SC = &76                \ Used to store the screen address while plotting pixels
-
-BLPTR = &78             \ Gets set to &03CA as part of the obfuscation code
-
-V219 = &7A              \ Gets set to &0218 as part of the obfuscation code
-
-K3 = &80                \ Temporary storage, used for preserving the A register
-
-BLCNT = &81             \ Stores the tape loader block count as part of the copy
-                        \ protection code in IRQ1
-
-BLN = &83               \ Gets set to &03C6 as part of the obfuscation code
-
-EXCN = &85              \ Gets set to &03C2 as part of the obfuscation code
+\ ******************************************************************************
+\
+\ ELITE LOADER
+\
+\ ******************************************************************************
 
 INCLUDE "library/cassette/loader/subroutine/elite_loader_part_1_of_6.asm"
 INCLUDE "library/common/loader/variable/b_per_cent.asm"

@@ -14,7 +14,7 @@ ORG &0080
 
  SKIP 0                 \ The start of the zero page workspace
 
-INCLUDE "library/6502sp/io/variable/p.asm"
+INCLUDE "library/common/loader/variable/p.asm"
 INCLUDE "library/common/main/variable/q.asm"
 INCLUDE "library/common/main/variable/r.asm"
 INCLUDE "library/common/main/variable/s.asm"

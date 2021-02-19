@@ -53,9 +53,13 @@ OSBYTE = &FFF4          \ The address for the OSBYTE routine
 OSWORD = &FFF1          \ The address for the OSWORD routine
 OSCLI = &FFF7           \ The address for the OSCLI routine
 
-Z1 = &90                \ Temporary storage, used when moving code
+INCLUDE "library/6502sp/loader2/workspace/zp.asm"
 
-Z2 = &92                \ Temporary storage, used when moving code
+\ ******************************************************************************
+\
+\ ELITE LOADER
+\
+\ ******************************************************************************
 
 CODE% = &2000
 LOAD% = &2000

@@ -55,8 +55,7 @@ LOAD% = &1128           \ LOAD% points to the start of the actual game code,
 
 D% = &563A              \ D% is set to the size of the main game code
 
-ZP = &70                \ ZP is a zero page variable used in the checksum
-                        \ routine at LBL
+INCLUDE "library/cassette/bcfs/workspace/zp.asm"
 
 \ ******************************************************************************
 \

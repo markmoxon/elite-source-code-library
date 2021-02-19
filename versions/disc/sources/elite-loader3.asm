@@ -72,23 +72,6 @@ VEC = &7FFE             \ VEC is where we store the original value of the IRQ1
                         \ vector, matching the address in the elite-missile.asm
                         \ source
 
-ZP = &70                \ Temporary storage, used all over the place
-
-P = &72                 \ Temporary storage, used all over the place
-
-Q = &73                 \ Temporary storage, used all over the place
-
-YY = &74                \ Temporary storage, used when drawing Saturn
-
-T = &75                 \ Temporary storage, used all over the place
-
-SC = &76                \ Used to store the screen address while plotting pixels
-
-CHKSM = &78             \ Used in the copy protection code
-
-DL = &8B                \ The vertical sync flag, matching the address in the
-                        \ main game code
-
 LASCT = &0346           \ The laser pulse count for the current laser, matching
                         \ the address in the main game code
 
@@ -100,6 +83,14 @@ ESCP = &0386            \ The flag that determines whether we have an escape pod
 
 S% = &11E3              \ The adress of the main entry point workspace in the
                         \ main game code
+
+INCLUDE "library/disc/loader3/workspace/zp.asm"
+
+\ ******************************************************************************
+\
+\ ELITE LOADER
+\
+\ ******************************************************************************
 
 CODE% = &1900
 LOAD% = &1900

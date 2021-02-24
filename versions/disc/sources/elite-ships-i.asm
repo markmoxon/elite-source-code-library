@@ -142,8 +142,8 @@ INCLUDE "library/common/main/variable/ship_sidewinder.asm"
 INCLUDE "library/common/main/variable/ship_mamba.asm"
 INCLUDE "library/enhanced/main/variable/ship_krait.asm"
 INCLUDE "library/enhanced/main/variable/ship_adder.asm"
-INCLUDE "library/enhanced/main/variable/ship_cobra_mk_iii_pirate.asm"
-INCLUDE "library/enhanced/main/variable/ship_python_pirate.asm"
+INCLUDE "library/enhanced/main/variable/ship_cobra_mk_3_p.asm"
+INCLUDE "library/enhanced/main/variable/ship_python_p.asm"
 
 \ ******************************************************************************
 \

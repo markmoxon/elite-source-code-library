@@ -44,7 +44,7 @@ ENDIF
  JMP TA20               \ This is a missile, so jump down to TA20 to get
                         \ straight into some aggressive manoeuvring
 
-IF _DISC_VERSION
+IF _DISC_VERSION OR _6502SP_VERSION
 
  CMP #ANA               \ If this is not an Anaconda, jump down to TN7 to skip
  BNE TN7                \ the following
@@ -53,6 +53,10 @@ IF _DISC_VERSION
 
  CMP #200               \ If A < 200 (78% chance), jump down to TN7 to skip the
  BCC TN7                \ following
+
+ENDIF
+
+IF _DISC_VERSION
 
  LDX #WRM               \ Set X to the ship type for a Worm
 
@@ -62,14 +66,6 @@ IF _DISC_VERSION
 .TN7
 
 ELIF _6502SP_VERSION
-
- CMP #ANA               \ If this is not an Anaconda, jump down to TN7 to skip
- BNE TN7                \ the following
-
- JSR DORND              \ Set A and X to random numbers
-
- CMP #200               \ If A < 200 (78% chance), jump down to TN7 to skip the
- BCC TN7                \ following
 
  JSR DORND              \ Set A and X to random numbers
 

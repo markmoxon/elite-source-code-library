@@ -1,12 +1,4 @@
-IF _CASSETTE_VERSION OR _DISC_VERSION
-
-.LSX2
-
- SKIP 78                \ The ball line heap for storing x-coordinates (see the
-                        \ deep dive on "The ball line heap" for details)
-
-ELIF _6502SP_VERSION
-
+IF _6502SP_VERSION
 \ ******************************************************************************
 \
 \       Name: LSX2
@@ -17,7 +9,16 @@ ELIF _6502SP_VERSION
 \
 \ ******************************************************************************
 
+ENDIF
+
 .LSX2
+
+IF _CASSETTE_VERSION OR _DISC_VERSION
+
+ SKIP 78                \ The ball line heap for storing x-coordinates (see the
+                        \ deep dive on "The ball line heap" for details)
+
+ELIF _6502SP_VERSION
 
 IF _MATCH_EXTRACTED_BINARIES
 
@@ -34,3 +35,4 @@ ELSE
 ENDIF
 
 ENDIF
+

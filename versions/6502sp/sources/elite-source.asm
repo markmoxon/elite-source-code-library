@@ -212,10 +212,10 @@ INCLUDE "library/common/main/workspace/xx3.asm"
 \
 \ ELITE RECURSIVE TEXT TOKEN FILE
 \
-\ Produces the binary file WORDS.bin that gets loaded by elite-loader.asm.
+\ Produces the binary file WORDS.bin that gets loaded by elite-bcfs.asm.
 \
 \ The recursive token table is loaded at &81B0 and is moved down to &0400 as
-\ part of elite-loader2.asm. The table binary also includes the sine and arctan
+\ part of elite-source.asm. The table binary also includes the sine and arctan
 \ tables, so the three parts end up as follows:
 \
 \   * Recursive token table:    QQ18 = &0400 to &07C0

@@ -102,8 +102,8 @@ INCLUDE "library/common/loader/variable/e_per_cent.asm"
 INCLUDE "library/common/loader/macro/fne.asm"
 INCLUDE "library/disc/loader3/subroutine/elite_loader_part_1_of_3.asm"
 INCLUDE "library/disc/loader3/subroutine/check.asm"
-INCLUDE "library/disc/loader3/copyblock/loadcode.asm"
-INCLUDE "library/disc/loader3/copyblock/catdcode.asm"
+INCLUDE "library/disc/loader3/subroutine/loadcode.asm"
+INCLUDE "library/disc/loader3/subroutine/catdcode.asm"
 INCLUDE "library/disc/loader3/subroutine/prot1.asm"
 
  EQUB &AC               \ This byte appears to be unused
@@ -132,7 +132,7 @@ INCLUDE "library/disc/loader3/subroutine/mvbl.asm"
 INCLUDE "library/disc/loader3/variable/mess1.asm"
 INCLUDE "library/disc/loader3/subroutine/elite_loader_part_2_of_3.asm"
 INCLUDE "library/disc/loader3/subroutine/osbmod.asm"
-INCLUDE "library/disc/loader3/copyblock/tvt1code.asm"
+INCLUDE "library/disc/loader3/subroutine/tvt1code.asm"
 INCLUDE "library/disc/loader3/subroutine/elite_loader_part_3_of_3.asm"
 
 IF _MATCH_EXTRACTED_BINARIES

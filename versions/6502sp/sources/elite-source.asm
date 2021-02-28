@@ -264,9 +264,6 @@ INCLUDE "library/6502sp/main/workspace/lp.asm"
 \
 \ Produces the binary file ELTA.bin that gets loaded by elite-bcfs.asm.
 \
-\ The main game code (ELITE A through G, plus the ship data) is loaded at &1128
-\ and is moved down to &0F40 as part of elite-loader.asm.
-\
 \ ******************************************************************************
 
 CODE% = &1000
@@ -975,7 +972,7 @@ INCLUDE "library/common/main/subroutine/mvs4.asm"
 INCLUDE "library/common/main/subroutine/mvt6.asm"
 INCLUDE "library/common/main/subroutine/mv40.asm"
 INCLUDE "library/6502sp/main/subroutine/checksum.asm"
-INCLUDE "library/common/main/subroutine/plut.asm"
+INCLUDE "library/common/main/subroutine/plut-pu1.asm"
 INCLUDE "library/common/main/subroutine/look1.asm"
 INCLUDE "library/common/main/subroutine/sight.asm"
 INCLUDE "library/common/main/subroutine/tt66.asm"

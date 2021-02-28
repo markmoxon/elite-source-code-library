@@ -1,7 +1,7 @@
 \ ******************************************************************************
 \
 \       Name: spasto
-\       Type: Subroutine
+\       Type: Variable
 \   Category: Universe
 \    Summary: Contains the address Coriolis space station's ship blueprint
 \

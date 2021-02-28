@@ -1,7 +1,7 @@
 \ ******************************************************************************
 \
 \       Name: MVBL
-\       Type: Macro
+\       Type: Subroutine
 \   Category: Utility routines
 \    Summary: Move a multi-page block of memory from one location to another
 \

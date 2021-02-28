@@ -1,7 +1,7 @@
 \ ******************************************************************************
 \
 \       Name: brkd
-\       Type: Subroutine
+\       Type: Variable
 \   Category: Utility routines
 \    Summary: The brkd counter for error handling
 \

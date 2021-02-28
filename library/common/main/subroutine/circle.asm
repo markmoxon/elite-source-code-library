@@ -23,7 +23,7 @@
 
 .CIRCLE
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
  JSR CHKON              \ Call CHKON to check whether the circle fits on-screen
 
@@ -33,7 +33,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Platform
 
  LDA #0                 \ Set LSX2 = 0
  STA LSX2
@@ -44,7 +44,7 @@ ENDIF
 
  LDA #8                 \ Set A = 8
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Feature
 
  CPX #8                 \ If the radius < 8, skip to PL89
  BCC PL89
@@ -58,7 +58,7 @@ ENDIF
 
  LSR A                  \ Halve A so A = 4
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Feature
 
  CPX #60                \ If the radius < 60, skip to PL89
  BCC PL89
@@ -77,6 +77,14 @@ ENDIF
  STA STP                \ Set STP = A. STP is the step size for the circle, so
                         \ the above sets a smaller step size for bigger circles
 
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+
                         \ Fall through into CIRCLE2 to draw the circle with the
                         \ correct step size
 
+ELIF _6502SP_VERSION
+
+                        \ Fall through into CIRCLE3 to draw the circle with the
+                        \ correct step size
+
+ENDIF

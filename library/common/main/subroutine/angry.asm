@@ -25,7 +25,7 @@
  CMP #SST               \ If this is the space station, jump to AN2 to make the
  BEQ AN2                \ space station hostile
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Enhanced
 
  BCS HI1                \ If A >= #SST then this is a missile, asteroid, cargo
                         \ canister, Thargon or escape pod, and they can't get
@@ -67,7 +67,7 @@ ENDIF
  LDY #30                \ starts pitching
  STA (INF),Y
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_VERSION \ Enhanced
 
  LDA TYPE               \ If the ship's type is < #CYL (i.e. a missile, Coriolis
  CMP #CYL               \ space station, escape pod, plate, cargo canister,
@@ -87,7 +87,7 @@ ENDIF
 
 .AN2
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Enhanced
 
  ASL K%+NI%+32          \ Fetch the AI counter (byte #32) of the second ship
  SEC                    \ in the ship data workspace at K%, which is reserved

@@ -25,9 +25,16 @@
 \
 \   C flag              The C flag is cleared
 \
+IF _6502SP_VERSION \ Comment
+\ Other entry points:
+\
+\   CIRCLE3             Just add the circle segments to the existing ball line
+\                       heap - do not send the send the ball line heap to the
+\                       I/O processor for drawing on-screen
+ENDIF
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Label
 
 .CIRCLE2
 
@@ -147,7 +154,7 @@ ENDIF
 
  RTS                    \ Return from the subroutine
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Platform
 
 .CIRCLE2
 

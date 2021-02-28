@@ -9,7 +9,7 @@
 
 .BEGIN
 
-IF _DISC_VERSION
+IF _DISC_VERSION \ Platform
 
  JSR BRKBK              \ Call BRKBK to set BRKV to point to the BRBR routine
 
@@ -35,7 +35,7 @@ ENDIF
  BPL BEL1               \ Loop back to BEL1 to zero the next byte, until we have
                         \ zeroed them all
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Platform
 
  LDA XX21+SST*2-2       \ Set spasto(1 0) to the Coriolis space station entry
  STA spasto             \ from the ship blueprint lookup table at XX21 (so

@@ -9,7 +9,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \Comment
 \ Draw a single segment of a circle, adding the point to the ball line heap.
 ELIF _6502SP_VERSION
 \ Draw a single segment of a circle by adding the point to the ball line heap,
@@ -69,7 +69,7 @@ ENDIF
                         \ we call BLINE it can draw the first line, from this
                         \ point to the next
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
 
 .BL5
 
@@ -143,7 +143,7 @@ ENDIF
                         \ screen anyway, so jump to BL5, to avoid drawing and
                         \ storing this line
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \Tube
 
  LDA SWAP               \ If SWAP = 0, then we didn't have to swap the line
  BEQ BL9                \ coordinates around during the clipping process, so
@@ -164,7 +164,7 @@ ENDIF
 
  LDY LSP                \ Set Y = LSP
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
 
  LDA LSY2-1,Y           \ If byte LSP-1 of LSY2 is not &FF, jump down to BL8
  CMP #&FF               \ to skip the following (X1, Y1) code
@@ -183,7 +183,7 @@ ENDIF
 
  INY                    \ Increment Y to point to the next byte in LSX2/LSY2
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Label
 
 .BL8
 
@@ -199,7 +199,7 @@ ENDIF
 
  STY LSP                \ Update LSP to point to the same as Y
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
 
  JSR LOIN               \ Draw a line from (X1, Y1) to (X2, Y2)
 

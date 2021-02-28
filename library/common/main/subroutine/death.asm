@@ -35,7 +35,7 @@
  JSR nWq                \ Create a cloud of stardust containing the correct
                         \ number of dust particles (i.e. NOSTM of them)
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
 
  LDA #12                \ Move the text cursor to column 12 on row 12
  STA YC
@@ -46,6 +46,10 @@ ELIF _6502SP_VERSION
  LDA #12                \ Move the text cursor to column 12 on row 12
  JSR DOYC
  JSR DOXC
+
+ENDIF
+
+IF _6502SP_VERSION \ Screen
 
  LDA #YELLOW            \ Send a #SETCOL YELLOW command to the I/O processor to
  JSR DOCOL              \ change the current colour to yellow
@@ -76,7 +80,7 @@ ENDIF
  STY MCNT               \ Reset the main loop counter to 255, so all timer-based
                         \ calls will be stopped
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Platform
 
  STY LASCT              \ Set the laser count to 255 to act as a counter in the
                         \ D2 loop below, so this setting determines how long the
@@ -97,7 +101,7 @@ ENDIF
  STA INWK+29            \ store in byte #29 (roll counter) to give our ship a
                         \ gentle roll with damping
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Platform
 
  STY LASCT              \ Set the laser count to 127 to act as a counter in the
  LSR LASCT              \ D2 loop below, so this setting determines how long the
@@ -111,7 +115,7 @@ ENDIF
  STA INWK+30            \ we store in byte #30 (the pitch counter) to give our
                         \ ship a very gentle pitch with damping
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Enhanced
 
  PHP                    \ Store the processor flags
 
@@ -197,16 +201,11 @@ ENDIF
                         \ which will display our exploding canister scene and
                         \ move everything about
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Platform
 
  LDA LASCT              \ Loop back to D2 to run the main flight loop until
  BNE D2                 \ LASCT reaches zero (which will take 5.1 seconds, as
                         \ explained above)
-
- LDX #31                \ Set the screen to show all 31 text rows, which shows
- JSR DET1               \ the dashboard
-
-                        \ Fall through into DEATH2 to reset and restart the game
 
 ELIF _6502SP_VERSION
 
@@ -215,13 +214,16 @@ ELIF _6502SP_VERSION
  BNE D2                 \ Loop back to call the main flight loop again, until we
                         \ have called it 127 times
 
- LDX #31                \ Set the screen to show all 31 text rows, which shows
- JSR DET1               \ the dashboard, and fall through into DEATH2 to reset
-                        \ and restart the game
-
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_VERSION
+ LDX #31                \ Set the screen to show all 31 text rows, which shows
+ JSR DET1               \ the dashboard
+
+IF _CASSETTE_VERSION \ Minor
+
+                        \ Fall through into DEATH2 to reset and restart the game
+
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  JMP DEATH2             \ Jump to DEATH2 to reset and restart the game
 

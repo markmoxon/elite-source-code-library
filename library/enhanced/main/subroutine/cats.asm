@@ -42,7 +42,7 @@
  JSR DETOK              \ prints the boxed-out title "DRIVE {drive number}
                         \ CATALOGUE"
 
-IF _DISC_VERSION
+IF _DISC_VERSION \ Tube
 
  LDA #1                 \ Set the CATF flag to 1, so that the TT26 routine will
  STA CATF               \ print out the disc catalogue correctly
@@ -63,19 +63,25 @@ ENDIF
                         \ DFS command for cataloguing that drive (*. being short
                         \ for *CAT)
 
-IF _DISC_VERSION
+IF _DISC_VERSION \ Platform
 
  JSR OSCLI              \ Call OSCLI to execute the OS command at (Y X), which
                         \ catalogues the disc
-
- DEC CATF               \ Decrement the CATF flag back to 0, so the TT26 routine
-                        \ reverts to standard formatting
 
 ELIF _6502SP_VERSION
 
  JSR SCLI2              \ Call SCLI2 to execute the OS command at (Y X), which
                         \ catalogues the disc, setting the SVN flag while it's
                         \ running to indicate disc access is in progress
+
+ENDIF
+
+IF _DISC_VERSION \ Tube
+
+ DEC CATF               \ Decrement the CATF flag back to 0, so the TT26 routine
+                        \ reverts to standard formatting
+
+ELIF _6502SP_VERSION
 
  LDA #DOCATF            \ Send a #DOCATF 0 command to the I/O processor to set
  JSR OSWRCH             \ the CATF flag to 0, so that TT26 returns to normal

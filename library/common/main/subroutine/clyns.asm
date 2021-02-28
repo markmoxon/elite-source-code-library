@@ -3,13 +3,13 @@
 \       Name: CLYNS
 \       Type: Subroutine
 \   Category: Utility routines
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \    Summary: Clear the bottom three text rows of the mode 4 screen
 ELIF _6502SP_VERSION
 \    Summary: Implement the #clyns command (clear the bottom of the screen)
 ENDIF
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ Clear some space at the bottom of the screen and move the text cursor to
@@ -34,7 +34,7 @@ ENDIF
 
 .CLYNS
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Platform
 
  LDA #%11111111         \ Set DTW2 = %11111111 to denote that we are not
  STA DTW2               \ currently printing a word
@@ -44,19 +44,25 @@ ENDIF
  LDA #20                \ Move the text cursor to row 20, near the bottom of
  STA YC                 \ the screen
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Minor Screen
 
  JSR TT67               \ Print a newline, which will move the text cursor down
                         \ a line (to row 21) and back to column 1
-
-ENDIF
-
-IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDA #&75               \ Set the two-byte value in SC to &7507
  STA SC+1
  LDA #7
  STA SC
+
+ELIF _CASSETTE_VERSION OR _DISC_FLIGHT
+
+ LDA #&75               \ Set the two-byte value in SC to &7507
+ STA SC+1
+ LDA #7
+ STA SC
+
+ JSR TT67               \ Print a newline, which will move the text cursor down
+                        \ a line (to row 21) and back to column 1
 
 ELIF _6502SP_VERSION
 
@@ -70,31 +76,16 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT
-
- JSR TT67               \ Print a newline, which will move the text cursor down
-                        \ a line (to row 21) and back to column 1
-
-ENDIF
-
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Screen
 
  LDA #0                 \ Call LYN to clear the pixels from &7507 to &75F0
  JSR LYN
 
  INC SC+1               \ Increment SC+1 so SC points to &7607
 
-ENDIF
-
-IF _CASSETTE_VERSION OR _DISC_DOCKED
-
  JSR LYN                \ Call LYN to clear the pixels from &7607 to &76F0
 
  INC SC+1               \ Increment SC+1 so SC points to &7707
-
-ENDIF
-
-IF _CASSETTE_VERSION OR _DISC_VERSION
 
  INY                    \ Move the text cursor to column 1 (as LYN sets Y to 0)
  STY XC
@@ -102,9 +93,20 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
                         \ Fall through into LYN to clear the pixels from &7707
                         \ to &77F0
 
-ENDIF
+ELIF _DISC_FLIGHT
 
-IF _6502SP_VERSION
+ LDA #0                 \ Call LYN to clear the pixels from &7507 to &75F0
+ JSR LYN
+
+ INC SC+1               \ Increment SC+1 so SC points to &7607
+
+ INY                    \ Move the text cursor to column 1 (as LYN sets Y to 0)
+ STY XC
+
+                        \ Fall through into LYN to clear the pixels from &7707
+                        \ to &77F0
+
+ELIF _6502SP_VERSION
 
  LDX #3                 \ We want to clear three text rows, so set a counter in
                         \ X for 3 rows

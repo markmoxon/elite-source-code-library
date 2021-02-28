@@ -3,7 +3,7 @@
 \       Name: B%
 \       Type: Variable
 \   Category: Screen mode
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \    Summary: VDU commands for setting the square mode 4 screen
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 \    Summary: VDU commands for setting the square mode 1 screen
@@ -16,7 +16,7 @@ ENDIF
 \ This block contains the bytes that get written by OSWRCH to set up the screen
 \ mode (this is equivalent to using the VDU statement in BASIC).
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \ It defines the whole screen using a square, monochrome mode 4 configuration;
 \ the mode 5 part for the dashboard is implemented in the IRQ1 routine.
 \
@@ -47,7 +47,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 \
 \   * Screen memory goes from &4000 to &7EFF
 ENDIF
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Comment
 \
 \   * In the Master version of Elite, the screen mode is actually based on mode
 \     129 rather than mode 1, so shadow RAM (known as LYNNE) is used to store
@@ -59,7 +59,7 @@ ENDIF
 \
 \   * The cursor is disabled
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \ This almost-square mode 4 variant makes life a lot easier when drawing to the
 \ screen, as there are 256 pixels on each row (or, to put it in screen memory
 \ terms, there's one page of memory per row of pixels). For more details of the
@@ -84,7 +84,7 @@ ENDIF
 
 .B%
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  EQUB 22, 4             \ Switch to screen mode 4
 
@@ -111,7 +111,7 @@ ENDIF
  EQUB 0, 0, 0           \
  EQUB 0, 0, 0           \ This is the "vertical displayed" register, and sets
                         \ the number of displayed character rows to 31. For
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
                         \ comparison, this value is 32 for standard modes 4 and
                         \ 5, but we claw back the last row for storing code just
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -120,7 +120,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 ENDIF
                         \ above the end of screen memory
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  EQUB 23, 0, 12, &0C    \ Set 6845 register R12 = &0C and R13 = &00
  EQUB 0, 0, 0           \
@@ -150,7 +150,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  EQUB 23, 0, 1, 32      \ Set 6845 register R1 = 32
  EQUB 0, 0, 0           \
@@ -196,7 +196,7 @@ ENDIF
                         \ cursor start line at 0, effectively disabling the
                         \ cursor
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Platform
 
  EQUB 23, 0, &87, 34    \ Set 6845 register R7 = 34
  EQUB 0, 0, 0           \

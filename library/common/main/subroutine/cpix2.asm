@@ -4,13 +4,13 @@
 \       Type: Subroutine
 \   Category: Drawing pixels
 \    Summary: Draw a single-height dot on the dashboard
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \  Deep dive: Drawing colour pixels in mode 5
 ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \ Draw a single-height mode 5 dash (1 pixel high, 2 pixels wide).
 ELIF _6502SP_VERSION
 \ Draw a single-height mode 2 dash (1 pixel high, 2 pixels wide).
@@ -22,7 +22,7 @@ ENDIF
 \
 \   Y1                  The screen pixel y-coordinate of the dash
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \   COL                 The colour of the dash as a mode 5 character row byte
 ELIF _6502SP_VERSION
 \   COL                 The colour of the dash as a mode 2 character row byte
@@ -40,7 +40,7 @@ ENDIF
 
  TAY                    \ Store the y-coordinate in Y
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  LSR A                  \ Set A = A / 8, so A now contains the character row we
  LSR A                  \ need to draw in (as each character row contains 8
@@ -101,7 +101,7 @@ ENDIF
  AND #%00000111         \ be the number of the pixel row we need to draw into
  TAY                    \ within the character block
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  LDA X1                 \ Copy bits 0-1 of X1 to bits 1-2 of X, and clear the C
  AND #%00000110         \ flag in the process (using the LSR). X will now be
@@ -135,7 +135,7 @@ ENDIF
  STA (SC),Y             \ remove it later without ruining the background that's
                         \ already on-screen
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  LDA CTWOS+1,X          \ Fetch a mode 5 1-pixel byte with the pixel position
                         \ at X+1, so we can draw the right pixel of the dash
@@ -147,7 +147,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
  BPL CP1                \ The CTWOS table has an extra row at the end of it that
                         \ repeats the first value, %10001000, so if we have not
 ELIF _6502SP_VERSION
@@ -164,7 +164,15 @@ ENDIF
                         \ along (as there are 8 bytes in a character block).
                         \ The C flag was cleared above, so this ADC is correct
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION \ Screen
+
+ BCC P%+4               \ If the addition we just did overflowed, then increment
+ INC SC+1               \ the high byte of SC(1 0), as this means we just moved
+                        \ into the right half of the screen row
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  LDA CTWOS+1,X          \ Refetch the mode 5 1-pixel byte, as we just overwrote
                         \ A (the byte will still be the fifth byte from the
@@ -173,10 +181,6 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
                         \ dash's right pixel)
 
 ELIF _6502SP_VERSION
-
- BCC P%+4               \ If the addition we just did overflowed, then increment
- INC SC+1               \ the high byte of SC(1 0), as this means we just moved
-                        \ into the right half of the screen row
 
  LDA CTWOS+2,X          \ Refetch the mode 2 1-pixel byte, as we just overwrote
                         \ A (the byte will still be the fifth or sixth byte from

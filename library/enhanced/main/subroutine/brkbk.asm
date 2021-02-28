@@ -5,7 +5,7 @@
 \   Category: Save and load
 \    Summary: Set the standard BRKV handler for the game
 \
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ BRKV is set to this routine by the BRKBK routine, which is called by the
@@ -18,7 +18,7 @@ ENDIF
 
 .BRKBK
 
-IF _DISC_VERSION
+IF _DISC_VERSION \ Platform
 
  LDA #LO(BRBR)          \ Set BRKV to point to the BRBR routine
  STA BRKV

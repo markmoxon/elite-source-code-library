@@ -19,7 +19,7 @@
  JSR FX200              \ Disable the ESCAPE key and clear memory if the BREAK
                         \ key is pressed (*FX 200,3)
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Text
 
  LDX #CYL               \ Call TITLE to show a rotating Cobra Mk III (#CYL) and
  LDA #128               \ token 128 ("  LOAD NEW COMMANDER (Y/N)?{crlf}{crlf}"),
@@ -38,7 +38,7 @@ ENDIF
  CMP #&44               \ Did we press "Y"? If not, jump to QU5, otherwise
  BNE QU5                \ continue on to load a new commander
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Platform
 
 \BR1                    \ These instructions are commented out in the original
 \LDX #3                 \ source. This block starts with the same *FX call as

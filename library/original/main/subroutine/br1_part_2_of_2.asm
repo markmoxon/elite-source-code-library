@@ -14,7 +14,7 @@
  JSR msblob             \ Reset the dashboard's missile indicators so none of
                         \ them are targeted
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Feature
 
  LDA #147               \ Call TITLE to show a rotating Mamba (#3) and token
  LDX #3                 \ 147 ("PRESS FIRE OR SPACE,COMMANDER.{crlf}{crlf}"),

@@ -9,7 +9,7 @@
 
 .DEATH2
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Platform
 
  LDX #&FF               \ Set the stack pointer to &01FF, which is the standard
  TXS                    \ location for the 6502 stack, so this instruction
@@ -21,7 +21,7 @@ ENDIF
                         \ and fall through into the entry code for the game
                         \ to restart from the title screen
 
-IF _DISC_FLIGHT
+IF _DISC_FLIGHT \ Platform
 
  JSR CATD               \ Call CATD to reload the disc catalogue
 

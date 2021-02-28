@@ -30,12 +30,7 @@
 
  DEC brkd               \ Decrement the brkd counter
 
-IF _DISC_VERSION
-
- BNE BR1                \ If the brkd counter is non-zero, jump to BR1 to
-                        \ restart the game
-
-ELIF _6502SP_VERSION
+IF _6502SP_VERSION \ Platform
 
  LDX #&FF               \ Set the stack pointer to &01FF, which is the standard
  TXS                    \ location for the 6502 stack, so this instruction
@@ -65,6 +60,15 @@ ELIF _6502SP_VERSION
                         \ JSR OSWRCH above to print the it, and keep looping
                         \ until we fetch a zero (which marks the end of the
                         \ message)
+
+ENDIF
+
+IF _DISC_VERSION \ Minor
+
+ BNE BR1                \ If the brkd counter is non-zero, jump to BR1 to
+                        \ restart the game
+
+ELIF _6502SP_VERSION
 
  JMP BR1                \ Jump to BR1 to restart the game
 

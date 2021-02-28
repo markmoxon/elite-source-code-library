@@ -17,7 +17,7 @@
 
 .cmn
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Platform
 
  JSR MT19               \ Call MT19 to capitalise the next letter (i.e. set
                         \ Sentence Case for this word only)
@@ -28,7 +28,7 @@ ENDIF
 
 .QUL4
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Platform
 
  LDA NA%,Y              \ The commander's name is stored at NA%, so load the
                         \ Y-th character from NA%

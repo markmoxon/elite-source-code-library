@@ -44,7 +44,7 @@ ENDIF
  LDA #20                \ Move the text cursor to row 20, near the bottom of
  STA YC                 \ the screen
 
-IF _DISC_DOCKED \ Minor Screen
+IF _DISC_DOCKED \ Screen
 
  JSR TT67               \ Print a newline, which will move the text cursor down
                         \ a line (to row 21) and back to column 1

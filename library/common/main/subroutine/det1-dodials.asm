@@ -30,7 +30,7 @@ ELIF _6502SP_VERSION
 ENDIF
 \                       will hide the dashboard, 31 will make it reappear)
 \
-\ Returns
+\ Returns:
 \
 \   A                   A is set to 6
 \

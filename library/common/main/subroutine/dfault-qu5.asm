@@ -2,7 +2,7 @@
 \
 IF _CASSETTE_VERSION
 \       Name: QU5
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED
 \       Name: DFAULT
 ENDIF
 \       Type: Subroutine
@@ -42,7 +42,7 @@ IF _CASSETTE_VERSION
                         \ commander workspace at TP. So we set up a counter in X
                         \ for the NT% bytes that we want to copy
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED
 
 .DFAULT
 
@@ -65,7 +65,7 @@ IF _CASSETTE_VERSION
  LDA NA%+7,X            \ Copy the X-th byte of NA%+7 to the X-th byte of TP-1,
  STA TP-1,X             \ (the -1 is because X is counting down from NT% to 1)
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED
 
 
  LDA NA%-1,X            \ Copy the X-th byte of NA%-1 to the X-th byte of
@@ -107,7 +107,7 @@ ELSE
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_DOCKED
 
 \JSR BELL               \ This instruction is commented out in the original
                         \ source. It would make a standard system beep
@@ -138,7 +138,7 @@ IF _CASSETTE_VERSION
  ORA #%00000010         \ Set bit 1 of A to denote that this is the cassette
                         \ version
 
-ELIF _DISC_VERSION
+ELIF _DISC_DOCKED
 
 IF _STH_DISC
 
@@ -165,7 +165,7 @@ ENDIF
 
  STA COK                \ Store the updated competition flags in COK
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_DOCKED
 
  RTS                    \ Return from the subroutine
 

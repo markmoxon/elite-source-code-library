@@ -32,7 +32,7 @@ IF _CASSETTE_VERSION
  LDA #12                \ Move the text cursor to column 12
  STA XC
 
-ELIF _DISC_VERSION
+ELIF _DISC_DOCKED
 
  LDA #32                \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 32 (Equip
@@ -63,7 +63,7 @@ ENDIF
  LDA #%10000000         \ Set bit 7 of QQ17 to switch to Sentence Case, with the
  STA QQ17               \ next letter in capitals
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED
 
  INC YC                 \ Move the text cursor down one line
 
@@ -83,7 +83,7 @@ IF _CASSETTE_VERSION
  BCC P%+4               \ 3 and 12
  LDA #12
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED
 
  CMP #12                \ If A >= 12 then set A = 14, so A is now set to between
  BCC P%+4               \ 3 and 14
@@ -139,7 +139,7 @@ ENDIF
  SEC                    \ Set the C flag so we will print a decimal point when
                         \ we print the price
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED
 
  LDA #25                \ Move the text cursor to column 25
  STA XC
@@ -187,7 +187,7 @@ ENDIF
                         \ clear), which will be the actual item number we want
                         \ to buy
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED
 
  LDX #2                 \ Move the text cursor to column 2
  STX XC
@@ -239,7 +239,7 @@ IF _CASSETTE_VERSION
 
  LDY #117               \ Set Y to recursive token 117 ("ALL")
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED
 
  LDY #124               \ Set Y to recursive token 124 ("ALL")
 
@@ -331,7 +331,7 @@ IF _CASSETTE_VERSION
  STA LASER,X            \ to fit it by storing the laser power for a pulse laser
                         \ (given in POW) in LASER+X
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED
 
  LDA #POW               \ Call refund with A set to the power of the new pulse
  JSR refund             \ laser to install the new laser and process a refund if
@@ -394,7 +394,7 @@ IF _CASSETTE_VERSION
                         \ we stored in T1 earlier, as the call to prx will have
                         \ overwritten the original value in X
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED
 
  LDA #POW+128           \ Call refund with A set to the power of the new beam
  JSR refund             \ laser to install the new laser and process a refund if
@@ -531,7 +531,7 @@ ENDIF
 
 .et9
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_DOCKED
 
  INY                    \ Increment Y to recursive token 117 ("MILITARY  LASER")
 

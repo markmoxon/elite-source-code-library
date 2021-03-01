@@ -34,7 +34,7 @@
                         \ before we set BRKV to point to MEBRK in the SVE
                         \ routine
 
-IF _DISC_VERSION
+IF _DISC_DOCKED
 
  LDY #0                 \ Set Y to 0 to use as a loop counter below
 

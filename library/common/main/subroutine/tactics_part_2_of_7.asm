@@ -27,7 +27,7 @@ IF _CASSETTE_VERSION
 \   * If this is a pirate and we are within the space station safe zone, stop
 \     the pirate from attacking by removing all its aggression
 \
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
 \   * If this is the space station and it is hostile, consider spawning a cop
 \     (6.2% chance, up to a maximum of seven) and we're done
 \
@@ -50,7 +50,7 @@ ENDIF
 
 .TACTICS
 
-IF _DISC_VERSION
+IF _DISC_FLIGHT
 
  LDY #3                 \ Set RAT = 3, which is the magnitude we set the pitch
  STY RAT                \ or roll counter to in part 7 when turning a ship
@@ -175,7 +175,7 @@ IF _CASSETTE_VERSION
 
 .TA62
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
  LDA NEWB               \ This is the space station, so check whether bit 2 of
  AND #%00000100         \ the ship's NEWB flags is set, and if it is (i.e. the
@@ -216,7 +216,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION
 
 ENDIF
 
-IF _DISC_VERSION
+IF _DISC_FLIGHT
 
  LDA MANY+COPS          \ Check how many cops there are in the vicinity already,
  CMP #4                 \ and if there are 4 or more, return from the subroutine
@@ -230,7 +230,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_FLIGHT
 
  LDX #COPS              \ Set X to the ship type for a cop
 

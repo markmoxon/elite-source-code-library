@@ -24,7 +24,7 @@
  BEQ SC5                \ on the scanner, so return from the subroutine (as SC5
                         \ contains an RTS)
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT
 
  LDA TYPE               \ Fetch the ship's type from TYPE into A
 
@@ -39,7 +39,7 @@ ENDIF
                         \ scanner, so return from the subroutine (as SC5
                         \ contains an RTS)
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT
 
  LDX #&FF               \ Set X to the default scanner colour of green/cyan
                         \ (a 4-pixel mode 5 byte in colour 3)
@@ -106,7 +106,7 @@ ENDIF
 
 .SC2
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT
 
  ADC #123               \ Set X1 = 123 + x_hi
  STA X1
@@ -197,7 +197,7 @@ ENDIF
                         \ the end of the stick, plus the length of the stick, to
                         \ give us the screen y-coordinate of the dot
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT
 
  BPL ld246              \ If the result has bit 0 clear, then the result has
                         \ overflowed and is bigger than 256, so jump to ld246 to
@@ -224,7 +224,7 @@ ENDIF
  CMP #247               \ If A < 247, skip the following instruction, as 246 is
  BCC P%+4               \ the maximum allowed value of A
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT
 
 .ld246
 
@@ -237,7 +237,7 @@ ENDIF
  LDA #246               \ A >= 247, so set A to 246, the maximum allowed value
                         \ for the y-coordinate of our ship's dot
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT
 
  STA Y1                 \ Store A in Y1, as it now contains the screen
                         \ y-coordinate for the ship's dot, clipped so that it
@@ -275,7 +275,7 @@ ENDIF
                         \
                         \ and we can get on with drawing the dot and stick
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT
 
  PHP                    \ Store the flags (specifically the C flag) from the
                         \ above subtraction

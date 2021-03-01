@@ -5,7 +5,7 @@
 \   Category: Main loop
 IF _CASSETTE_VERSION
 \    Summary: Spawn a trader (a peaceful Cobra Mk III)
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
 \    Summary: Spawn a trader (a Cobra Mk III, Python, Boa or Anaconda)
 ENDIF
 \  Deep dive: Program flow of the main game loop
@@ -27,7 +27,7 @@ IF _CASSETTE_VERSION
 \
 \ We call this from within the main loop, with A set to a random number and the
 \ C flag set.
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
 \   * Spawn a trader, i.e. a Cobra Mk III, Python, Boa or Anaconda, with one
 \     missile, a 50% chance of having an E.C.M., a 50% chance of being hostile,
 \     a speed between 16 and 31, and a gentle clockwise roll
@@ -39,7 +39,7 @@ ENDIF
 
 .MTT4
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_FLIGHT
 
  JSR DORND              \ Set A and X to random numbers
 
@@ -63,7 +63,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION
  ORA #16                \ minimum of 16 and a maximum of 31
  STA INWK+27
 
-ELIF _DISC_VERSION
+ELIF _DISC_FLIGHT
 
  AND #15                \ Set the ship speed to our random number, set to a
  ORA #16                \ minimum of 16 and a maximum of 31
@@ -76,7 +76,7 @@ IF _CASSETTE_VERSION
  LDA #CYL               \ Add a new Cobra Mk III to the local bubble and fall
  JSR NWSHP              \ through into the main game loop again
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
  JSR DORND              \ Set A and X to random numbers, plus the C flag
 
@@ -115,7 +115,7 @@ IF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_FLIGHT
 
  JSR NWSHP              \ Add a new ship of type A to the local bubble and fall
                         \ through into the main game loop again

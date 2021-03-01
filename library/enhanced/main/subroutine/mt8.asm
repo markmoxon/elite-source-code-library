@@ -18,7 +18,7 @@
 
 .MT8
 
-IF _DISC_VERSION
+IF _DISC_DOCKED
 
  LDA #6                 \ Move the text cursor to column 6
  STA XC

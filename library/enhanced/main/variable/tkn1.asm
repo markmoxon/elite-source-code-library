@@ -26,7 +26,7 @@ ENDIF
  ECHR 'S'               \                1. LOAD NEW {single cap}COMMANDER{crlf}
  ECHR 'K'               \                2. SAVE {single cap}COMMANDER
  ECHR ' '               \                   {commander name}{crlf}
-IF _DISC_VERSION
+IF _DISC_DOCKED
  ECHR 'A'               \                3. CATALOGUE{crlf}
  ECHR 'C'               \                4. DELETE A FILE{crlf}
  ETWO 'C', 'E'          \                5. EXIT{crlf}
@@ -88,7 +88,7 @@ ENDIF
  ECHR '.'
  ECHR ' '
  ECHR 'C'
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_DOCKED
  ETWO 'A', 'T'
  ECHR 'A'
  ETWO 'L', 'O'
@@ -116,7 +116,7 @@ ENDIF
  ECHR 'D'
  ECHR 'E'
  ECHR 'L'
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_DOCKED
  ETWO 'E', 'T'
  ECHR 'E'
  ETOK 208
@@ -181,7 +181,7 @@ ENDIF
  ECHR '?'
  EQUB VE
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_DOCKED
 
  ECHR 'C'               \ Token 3:      "COMPETITION NUMBER:"
  ECHR 'O'               \
@@ -201,7 +201,7 @@ IF _6502SP_VERSION OR _DISC_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_DOCKED
  ETOK 150               \ Token 4:      "{clear screen}
 ELIF _MASTER_VERSION
  ETOK 150               \ Token 3:      "{clear screen}
@@ -271,7 +271,7 @@ ENDIF
  ETOK 200
  EQUB VE
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_DOCKED
 
  EJMP 21                \ Token 9:      "{clear bottom of screen}
  ECHR 'F'               \                FILE TO DELETE?"
@@ -685,7 +685,7 @@ ENDIF
  ECHR 'E'               \                {left align}{tab 6}{all caps}  MESSAGE
  ECHR ' '               \                ENDS{wait for key press}"
  ECHR 'H'               \
-IF _DISC_VERSION OR _MASTER_VERSION
+IF _DISC_DOCKED OR _MASTER_VERSION
  ECHR 'A'               \ Encoded as:   "{25}{9}{23}{14}{2}  <245>T<246>
 ELIF _6502SP_VERSION
  ECHR 'A'               \ Encoded as:   "{25}{9}{30}{23}{14}{2}  <245>T<246>
@@ -794,7 +794,7 @@ ENDIF
  EJMP 24
  EQUB VE
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_DOCKED
  ECHR '('               \ Token 12:     "({single cap}C) ACORNSOFT 1984"
  EJMP 19                \
  ECHR 'C'               \ Encoded as:   "({19}C) AC<253>N<235>FT 1984"
@@ -816,14 +816,14 @@ ENDIF
  ECHR '1'
  ECHR '9'
  ECHR '8'
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_DOCKED
  ECHR '4'
 ELIF _MASTER_VERSION
  ECHR '6'
 ENDIF
  EQUB VE
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_DOCKED
 
  ECHR 'B'               \ Token 13:     "BY D.BRABEN & I.BELL"
  ECHR 'Y'               \
@@ -878,7 +878,7 @@ ENDIF
  ETWO 'L', 'A'          \                {left align}{tab 6}{all caps}  MESSAGE
  ETWO 'T', 'I'          \                ENDS{wait for key press}"
  ETWO 'O', 'N'          \
-IF _DISC_VERSION OR _MASTER_VERSION
+IF _DISC_DOCKED OR _MASTER_VERSION
  ECHR 'S'               \ Encoded as:   "{25}{9}{23}{14}{2}  C<223>G<248>TU
 ELIF _6502SP_VERSION
  ECHR 'S'               \ Encoded as:   "{25}{9}{30}{23}{14}{2}  C<223>G<248>TU
@@ -1498,7 +1498,7 @@ ENDIF
  ECHR 'E'
  EQUB VE
 
-IF _DISC_VERSION
+IF _DISC_DOCKED
  ECHR 'W'               \ Token 95:     "WHORESON BEETLE HEAD FLAP EAR'D
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  ECHR 'W'               \ Token 95:     "WHORESON BEETLE HEADED FLAP EAR'D
@@ -1506,7 +1506,7 @@ ENDIF
  ECHR 'H'               \                KNAVE"
  ETWO 'O', 'R'          \
  ETWO 'E', 'S'          \ Encoded as:   "WH<253><237><223> <247><221><229> HEAD
-IF _DISC_VERSION
+IF _DISC_DOCKED
  ETWO 'O', 'N'          \                [198]F<249>P E<238>[39]D KNA<250>"
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  ETWO 'O', 'N'          \                [196]F<249>P E<238>[39]D KNA<250>"
@@ -1520,7 +1520,7 @@ ENDIF
  ECHR 'E'
  ECHR 'A'
  ECHR 'D'
-IF _DISC_VERSION
+IF _DISC_DOCKED
  ETOK 198
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  ETOK 196
@@ -1835,7 +1835,7 @@ ENDIF
  ECHR 'Y'
  EQUB VE
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_DOCKED
 
  ECHR 'W'               \ Token 131:    "WIERD"
  ECHR 'I'               \
@@ -2290,7 +2290,7 @@ ENDIF
  ECHR ' '               \
  EQUB VE                \ Encoded as:   "<252> "
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_DOCKED
 
  EQUB VE                \ Token 197:    ""
                         \
@@ -2505,7 +2505,7 @@ IF _MASTER_VERSION
 ENDIF
  ETWO 'I', 'N'          \                INCOMING MESSAGE"
  ECHR 'C'               \
-IF _DISC_VERSION
+IF _DISC_DOCKED
  ECHR 'O'               \ Encoded as:   "{9}{8}{23}{1}<240>COM[195]M<237>SA
 ELIF _6502SP_VERSION
  ECHR 'O'               \ Encoded as:   "{9}{8}{23}{30}{1}<240>COM[195]M<237>SA
@@ -2609,7 +2609,7 @@ ENDIF
  ETOK 154               \                WELL THE SITUATION HAS CHANGED.{cr}
  ECHR ' '               \                 {single cap}OUR BOYS ARE READY FOR A
  EJMP 4                 \                PUSH RIGHT TO THE HOME SYSTEM OF THOSE
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_DOCKED
  ETOK 204               \                MOTHERS.{cr}
 ELIF _MASTER_VERSION
  ETOK 204               \                MURDERERS.{cr}
@@ -2639,7 +2639,7 @@ ENDIF
  ECHR 'N'               \                {tab 6}{all caps}  MESSAGE ENDS
  ECHR 'A'               \                {wait for key press}"
  ECHR 'V'               \
-IF _DISC_VERSION
+IF _DISC_DOCKED
  ECHR 'A'               \ Encoded as:   "{25}{9}{29}{14}{2}GOOD DAY [154]
  ECHR 'L'               \                 {4}[204]I{13} AM {19}AG<246>T {19}B
  ECHR ' '               \                <249>KE OF {19}NAVAL {19}<240>TEL<229>
@@ -2672,7 +2672,7 @@ ELIF _MASTER_VERSION
 ENDIF
  ECHR 'G'               \                <252>[204]<217>R BOYS <238>E <242>ADY F
  ETWO 'E', 'N'          \                <253>[208]PUSH RIGHT[201][147]HOME
-IF _DISC_VERSION
+IF _DISC_DOCKED
  ETWO 'C', 'E'          \                 SYSTEM OF <226>O<218> MO<226><244>S
  ETOK 204               \                [204]{24}{9}{29}I{13} HA<250> OBTA
 ELIF _6502SP_VERSION
@@ -2838,7 +2838,7 @@ ENDIF
  ETWO 'S', 'E'
  ECHR ' '
  ECHR 'M'
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_DOCKED
  ECHR 'O'
  ETWO 'T', 'H'
  ETWO 'E', 'R'
@@ -3121,7 +3121,7 @@ ENDIF
  ETOK 179               \                {tab 6}{all caps}  MESSAGE ENDS
  ECHR ' '               \                {wait for key press}"
  ECHR 'H'               \
-IF _DISC_VERSION OR _MASTER_VERSION
+IF _DISC_DOCKED OR _MASTER_VERSION
  ECHR 'A'               \ Encoded as:   "{25}{9}{29}{8}{14}{13}{19}WELL D
 ELIF _6502SP_VERSION
  ECHR 'A'               \ Encoded as:   "{25}{9}{29}{30}{8}{14}{13}{19}WELL D
@@ -3241,7 +3241,7 @@ ENDIF
  EJMP 24
  EQUB VE
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_DOCKED
 
  EQUB VE                \ Token 224:    ""
                         \
@@ -3449,7 +3449,7 @@ ENDIF
  ECHR 'S'
  EQUB VE
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_DOCKED
 
  EQUB VE                \ Token 255:    ""
                         \

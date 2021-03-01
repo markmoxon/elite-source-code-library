@@ -15,7 +15,7 @@ IF _CASSETTE_VERSION
 \   * Potentially spawn (35% chance) either a lone bounty hunter (a Mamba,
 \     Python or Cobra Mk III), a Thargoid, or a group of up to 4 pirates
 \     (Sidewinders and/or Mambas)
-ELIF _DISC_VERSION
+ELIF _DISC_FLIGHT
 \   * Potentially spawn (47% chance) either a lone bounty hunter (a Cobra Mk
 ELIF _6502SP_VERSION
 \   * Potentially spawn (35% chance) either a lone bounty hunter (a Cobra Mk
@@ -35,7 +35,7 @@ IF _CASSETTE_VERSION
  BPL MLOOP              \ jump to MLOOP if it is still positive, so we only
                         \ do the following when the EV counter runs down
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
  DEC EV                 \ Decrement EV, the extra vessels spawning delay, and
  BPL MLOOPS             \ jump to MLOOPS if it is still positive, so we only
@@ -46,7 +46,7 @@ ENDIF
  INC EV                 \ EV is negative, so bump it up again, setting it back
                         \ to 0
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_FLIGHT
 
  LDA TP                 \ Fetch bits 2 and 3 of TP, which contain the status of
  AND #%00001100         \ mission 2
@@ -90,7 +90,7 @@ IF _CASSETTE_VERSION
                         \ dangerous systems spawn pirates and bounty hunters
                         \ more often)
 
-ELIF _DISC_VERSION
+ELIF _DISC_FLIGHT
 
  CMP #120               \ If the random number in A >= 120 (53% chance), jump to
  BCS MLOOPS             \ MLOOPS to stop spawning (so there's a 47% chance of
@@ -104,7 +104,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_FLIGHT
 
  AND #7                 \ Reduce the random number in A to the range 0-7, and
  CMP gov                \ if A is less than government of this system, jump
@@ -140,7 +140,7 @@ IF _CASSETTE_VERSION
  BCS mt1                \ to mt1 to spawn pirates, otherwise keep going to
                         \ spawn a lone bounty hunter or a Thargoid
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
  CMP #100               \ If the random number in A >= 100 (61% chance), jump
  BCS mt1                \ to mt1 to spawn pirates, otherwise keep going to
@@ -162,7 +162,7 @@ IF _CASSETTE_VERSION
  TXA                    \ First, set the C flag if X >= 200 (22% chance)
  CMP #200
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
  AND #3                 \ Set A = random number in the range 0-3, which we
                         \ will now use to determine the type of ship
@@ -249,7 +249,7 @@ IF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_FLIGHT
 
  TYA
 
@@ -328,7 +328,7 @@ IF _CASSETTE_VERSION
 
  ORA #1                 \ Set A to %01 or %11 (Sidewinder or Mamba)
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
  STA T                  \ Set T to a random number
 
@@ -343,7 +343,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION
 
 ENDIF
 
-IF _DISC_VERSION
+IF _DISC_FLIGHT
 
  STA CPIR               \ Set CPIR to this random number in the range 0-7
 

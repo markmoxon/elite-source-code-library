@@ -47,7 +47,7 @@
  SBC #8                 \ to the next character block to the left
  TAY
 
-IF _DISC_VERSION
+IF _DISC_DOCKED
 
  LDA #%00000001         \ Set a mask in A to the last pixel in the 8-pixel byte
 

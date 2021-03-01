@@ -14,7 +14,7 @@ IF _CASSETTE_VERSION
 \   * Work out which direction the ship should be moving, depending on whether
 \     it's an escape pod, where it is, which direction it is pointing, and how
 \     aggressive it is
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
 \   * Work out which direction the ship should be moving, depending on the type
 \     of ship, where it is, which direction it is pointing, and how aggressive
 \     it is
@@ -24,7 +24,7 @@ ENDIF
 \
 \   * Speed up or slow down, depending on where the ship is in relation to us
 \
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_FLIGHT
 \ Other entry points:
 \
 \   TA151               Make the ship head towards the planet
@@ -88,7 +88,7 @@ IF _CASSETTE_VERSION
  EOR #%10000000         \ so now it's positive if the ships are facing each
  STA CNT                \ other, and negative if they are facing the same way
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
  JSR TAS6               \ Call TAS6 to negate the vector in XX15 so it points in
                         \ the opposite direction
@@ -110,7 +110,7 @@ ENDIF
 IF _CASSETTE_VERSION
                         \   * This is an escape pod and XX15 is pointing towards
                         \     the planet
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
                         \   * This is a trader and XX15 is pointing towards the
                         \     planet
 ENDIF
@@ -131,7 +131,7 @@ ENDIF
                         \ which will make aggressive ships head towards us, and
 IF _CASSETTE_VERSION
                         \ ships that are too close turn away. Escape pods,
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
                         \ ships that are too close turn away. Peaceful traders,
 ENDIF
                         \ meanwhile, head off towards the planet in search of a
@@ -157,7 +157,7 @@ IF _CASSETTE_VERSION
  CMP #16                \ If A >= 16 then jump to TA6, as the ship is already
  BCS TA6                \ in the process of rolling
 
-ELIF _DISC_VERSION
+ELIF _DISC_FLIGHT
 
  TAX                    \ Copy A into X so we can retrieve it below
 
@@ -187,7 +187,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_FLIGHT
 
 .TA11
 
@@ -214,7 +214,7 @@ IF _CASSETTE_VERSION
  EOR #%10000101         \ different signs, negative if they have the same sign
  STA INWK+29
 
-ELIF _DISC_VERSION
+ELIF _DISC_FLIGHT
 
  TAX                    \ Copy A into X so we can retrieve it below
 
@@ -267,7 +267,7 @@ IF _CASSETTE_VERSION
                         \ directly towards each other, so jump to TA9 to slow
                         \ down
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
  CMP CNT2               \ The dot product is positive, so the ships are facing
  BCC TA9                \ each other. If A < CNT2 then the ships are not heading
@@ -307,7 +307,7 @@ ENDIF
 
  RTS                    \ Return from the subroutine
 
-IF _DISC_VERSION
+IF _DISC_FLIGHT
 
 .TA151
 
@@ -345,7 +345,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_FLIGHT
 
  CMP #&98               \ If A is positive or A <= -24, jump to ttt
  BCC ttt
@@ -363,7 +363,7 @@ IF _6502SP_VERSION OR _DISC_VERSION
 
 ENDIF
 
-IF _DISC_VERSION
+IF _DISC_FLIGHT
 
 .nroll
 

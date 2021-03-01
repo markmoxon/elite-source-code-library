@@ -83,7 +83,7 @@ ENDIF
                         \ and set up data blocks and slots for the planet and
                         \ sun
 
-IF _DISC_VERSION
+IF _DISC_FLIGHT
 
  JSR LSHIPS             \ Call LSHIPS to load a new ship blueprints file
 
@@ -95,7 +95,7 @@ IF _CASSETTE_VERSION
  AND #%00111111         \ one of the charts (64 or 128), return from the
  BNE hyR                \ subroutine (as hyR contains an RTS)
 
-ELIF _DISC_VERSION
+ELIF _DISC_FLIGHT
 
  LDA QQ11               \ If the current view in QQ11 is not a space view (0) or
  AND #%00111111         \ one of the charts (64 or 128), return from the

@@ -19,7 +19,7 @@
 
 .TT214
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION
 
  PHA                    \ Print a space, using the stack to preserve the value
  JSR TT162              \ of A
@@ -31,7 +31,7 @@ ENDIF
 
  JSR TT27               \ Print the text token in A
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION
 
  LDA #225               \ Print recursive token 65 ("(Y/N)?")
  JSR TT27

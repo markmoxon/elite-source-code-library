@@ -74,7 +74,7 @@ IF _CASSETTE_VERSION
                         \ if the C flag is clear (if it is set, we skip this
                         \ instruction)
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
  CMP #8                 \ If A >= 8, skip the following instruction
  BCS P%+3
@@ -154,7 +154,7 @@ ENDIF
  ORA BET2               \ Store A in BETA, but with the sign set to BET2 (so
  STA BETA               \ BETA has the same sign as the actual pitch rate)
 
-IF _DISC_VERSION
+IF _DISC_FLIGHT
 
  LDA BSTK               \ If BSTK = 0 then the Bitstik is not configured, so
  BEQ BS2                \ jump to BS2 to skip the following

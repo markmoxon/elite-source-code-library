@@ -31,7 +31,7 @@ ENDIF
  JSR FRS1               \ Call FRS1 to launch the Cobra Mk III straight ahead,
                         \ like a missile launch, but with our ship instead
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_FLIGHT
 
  BCS ES1                \ If the Cobra was successfully added to the local
                         \ bubble, jump to ES1 to skip the following instructions
@@ -79,7 +79,7 @@ IF _CASSETTE_VERSION
                         \ jump to DEATH to begin the funeral and return from the
                         \ subroutine using a tail call
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
  LDA #0                 \ Set A = 0 so we can use it to zero the contents of
                         \ the cargo hold
@@ -98,7 +98,7 @@ IF _CASSETTE_VERSION
                         \ from the BEQ above), so we no longer have any of item
                         \ type X in the cargo hold
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
  STA QQ20,X             \ Set the X-th byte of QQ20 to zero, so we no longer
                         \ have any of item type X in the cargo hold
@@ -126,7 +126,7 @@ IF _CASSETTE_VERSION
                         \ screen) and return from the subroutine with a tail
                         \ call
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
  JMP GOIN               \ Go to the docking bay (i.e. show the ship hanger
                         \ screen) and return from the subroutine with a tail

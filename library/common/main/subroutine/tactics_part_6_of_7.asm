@@ -58,7 +58,7 @@
  BCC TA4                \ ship's line of fire, so jump to TA4 to skip the laser
                         \ checks
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_FLIGHT
 
  LDY #19                \ Fetch the enemy ship's byte #19 from their ship's
  LDA (XX0),Y            \ blueprint into A
@@ -86,7 +86,7 @@ IF _CASSETTE_VERSION
  LDA (XX0),Y            \ enemy ship's byte #19 from their ship's blueprint
                         \ into A
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
  LDA (XX0),Y            \ Fetch the enemy ship's byte #19 from their ship's
                         \ blueprint into A
@@ -110,7 +110,7 @@ IF _CASSETTE_VERSION
  BNE TA10               \ opponent's), return from the subroutine without making
                         \ the laser-strike sound (as TA10 contains an RTS)
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
  LDA ECMA               \ If an E.C.M. is currently active (either our's or an
  BNE TA9-1              \ opponent's), return from the subroutine without making

@@ -26,7 +26,7 @@
  EQUW 15000             \ 9  Energy Unit               1500.0 Cr
  EQUW 10000             \ 10 Docking Computer          1000.0 Cr
  EQUW 50000             \ 11 Galactic Hyperspace       5000.0 Cr
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_DOCKED
  EQUW 60000             \ 12 Extra Military Lasers     6000.0 Cr
  EQUW 8000              \ 13 Extra Mining Lasers        800.0 Cr
 ENDIF

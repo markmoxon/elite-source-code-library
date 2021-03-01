@@ -3,7 +3,7 @@
 \       Name: SVE
 \       Type: Subroutine
 \   Category: Save and load
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED
 \    Summary: Save the commander file
 ELIF _6502SP_VERSION
 \    Summary: Display the disc access menu and process saving of commander files
@@ -28,7 +28,7 @@ IF _CASSETTE_VERSION
  JSR GTNME              \ Clear the screen and ask for the commander filename
                         \ to save, storing the name at INWK
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED
 
  JSR ZEBC               \ Call ZEBC to zero-fill pages &B and &C
 
@@ -37,7 +37,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION
 
 ENDIF
 
-IF _DISC_VERSION
+IF _DISC_DOCKED
 
  LDA #LO(MEBRK)         \ Set BRKV to point to the MEBRK routine, which is the
  STA BRKV               \ BRKV handler for disc access operations, and replaces
@@ -55,7 +55,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_DOCKED
 
  LDA #1                 \ Print extended token 1, the disc access menu, which
  JSR DETOK              \ presents these options:
@@ -121,7 +121,7 @@ ENDIF
 
  LSR SVC                \ Halve the save count value in SVC
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_DOCKED
 
  LDA #3                 \ Print extended token 3 ("COMPETITION NUMBER:")
  JSR DETOK
@@ -185,7 +185,7 @@ IF _CASSETTE_VERSION
  JSR TT67               \ Call TT67 twice to print two newlines
  JSR TT67
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED
 
  CLC                    \ Clear the C flag so the call to BPRNT does not include
                         \ a decimal point
@@ -265,7 +265,7 @@ ENDIF
 
 ENDIF
 
-IF _DISC_VERSION OR _6502SP_VERSION
+IF _DISC_DOCKED OR _6502SP_VERSION
 
 .SVEX
 

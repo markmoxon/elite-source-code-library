@@ -10,7 +10,7 @@
 \
 \ This section sets up some vectors and calculates dot products. Specifically:
 \
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_FLIGHT
 \   * If this is a lone Thargon without a mothership, set it adrift aimlessly
 \     and we're done
 \
@@ -34,7 +34,7 @@ ENDIF
 \     us work out later on whether the enemy ship is pointing towards us, and
 \     therefore whether it can hit us with its lasers.
 \
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_FLIGHT
 \ Other entry points:
 \
 \   GOPL                Make the ship head towards the planet
@@ -44,7 +44,7 @@ ENDIF
 
 .TA21
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_FLIGHT
 
  CPX #TGL               \ If this is not a Thargon, jump down to TA14
  BNE TA14
@@ -72,7 +72,7 @@ IF _6502SP_VERSION OR _DISC_VERSION
 
 ENDIF
 
-IF _DISC_VERSION
+IF _DISC_FLIGHT
 
  CPX #100               \ This is a trader, so if X >= 100 (61% chance), return
  BCS TA22               \ from the subroutine (as TA22 contains an RTS)
@@ -84,7 +84,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_FLIGHT
 
 .TN1
 
@@ -175,7 +175,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION
  LDY #10                \ Set (A X) = nosev . XX15
  JSR TAS3
 
-ELIF _DISC_VERSION
+ELIF _DISC_FLIGHT
 
  JSR TAS3-2             \ Set (A X) = nosev . XX15
 

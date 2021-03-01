@@ -33,7 +33,7 @@
  LDA INWK+35            \ byte #35 in INF (so the ship's data in K% gets
  STA (INF),Y            \ updated)
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_FLIGHT
 
  LDA NEWB               \ If bit 7 of the ship's NEWB flags is set, which means
  BMI KS1S               \ the ship has docked or been scooped, jump to KS1S to
@@ -62,7 +62,7 @@ IF _CASSETTE_VERSION
 
 .q2
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
  AND #%00100000         \ If bit 5 of the ship's byte #31 is clear then the
  BEQ MAC1               \ ship is no longer exploding, so jump to MAC1 to skip

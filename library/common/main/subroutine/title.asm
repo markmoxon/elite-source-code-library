@@ -12,7 +12,7 @@
 \
 \ Arguments:
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED
 \   A                   The number of the recursive token to show below the
 \                       rotating ship (see variable QQ18 for details of
 \                       recursive tokens)
@@ -50,7 +50,7 @@ ENDIF
  LDA #1                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 1
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED
 
  DEC QQ11               \ Decrement QQ11 to 0, so from here on we are using a
                         \ space view
@@ -68,7 +68,7 @@ ENDIF
  LDA #96                \ Set nosev_z hi = 96 (96 is the value of unity in the
  STA INWK+14            \ rotation vector)
 
-IF _DISC_VERSION
+IF _DISC_DOCKED
 
  LDA &9F                \ As part of the copy protection, location &9F is set to
  CMP #219               \ 219 in the OSBmod routine in elite-loader3.asm. This
@@ -111,7 +111,7 @@ IF _CASSETTE_VERSION
 
  JSR DELAY              \ Delay for 6 vertical syncs (6/50 = 0.12 seconds)
 
-ELIF _DISC_VERSION
+ELIF _DISC_DOCKED
 
  LDY #6                 \ Move the text cursor to column 6
  STY XC
@@ -126,7 +126,7 @@ ENDIF
  LDA #30                \ Print recursive token 144 ("---- E L I T E ----")
  JSR plf                \ followed by a newline
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED
 
  LDY #6                 \ Move the text cursor to column 6 again
  STY XC
@@ -152,7 +152,7 @@ IF _CASSETTE_VERSION
  LDA #254               \ Print recursive token 94 ("BY D.BRABEN & I.BELL")
  JSR TT27
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED
 
  LDA #13                \ Print extended token 13 ("BY D.BRABEN & I.BELL")
  JSR DETOK
@@ -161,7 +161,7 @@ ENDIF
 
 .awe
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_DOCKED
 
  LDA brkd               \ If brkd = 0, jump to BRBR2 to skip the following, as
  BEQ BRBR2              \ we do not have a system error message to display
@@ -170,7 +170,7 @@ IF _6502SP_VERSION OR _DISC_VERSION
 
 ENDIF
 
-IF _DISC_VERSION
+IF _DISC_DOCKED
 
  LDA #7                 \ Move the text cursor to column 7
  STA XC
@@ -188,7 +188,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_DOCKED
 
                         \ The following loop prints out the null-terminated
                         \ message pointed to by (&FD &FE), which is the MOS
@@ -235,7 +235,7 @@ IF _CASSETTE_VERSION
  STX XC
  JSR ex
 
-ELIF _DISC_VERSION
+ELIF _DISC_DOCKED
 
  PLA                    \ Restore the recursive token number we stored on the
                         \ stack at the start of this subroutine
@@ -291,7 +291,7 @@ ENDIF
  JSR MVEIT              \ Move the ship in space according to the orientation
                         \ vectors and the new value in z_hi
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED
 
  LDA #128               \ Set z_lo = 128 (so the closest the ship gets to us is
  STA INWK+6             \ z_hi = 1, z_lo = 128, or 256 + 128 = 384
@@ -326,7 +326,7 @@ ENDIF
 
  JSR LL9                \ Call LL9 to display the ship
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED
 
  DEC MCNT               \ Decrement the main loop counter
 
@@ -345,7 +345,7 @@ ENDIF
                         \ button is pressed, otherwise it is set, so AND'ing
                         \ the value of IRB with %10000 extracts this bit
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED
 
 \TAX                    \ This instruction is commented out in the original
                         \ source
@@ -358,7 +358,7 @@ ENDIF
 
  BEQ TL2                \ If the joystick fire button is pressed, jump to BL2
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED
 
  JSR RDKEY              \ Scan the keyboard for a key press
 

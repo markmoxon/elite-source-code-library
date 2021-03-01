@@ -63,7 +63,7 @@ IF _6502SP_VERSION \ Platform
 
 ENDIF
 
-IF _DISC_VERSION \ Minor
+IF _DISC_DOCKED \ Minor
 
  BNE BR1                \ If the brkd counter is non-zero, jump to BR1 to
                         \ restart the game

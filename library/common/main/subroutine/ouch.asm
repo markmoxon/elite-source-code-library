@@ -33,7 +33,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION
  LDA DLY                \ If there is already an in-flight message on-screen,
  BNE out                \ return from the subroutine (as out contains an RTS)
 
-ELIF _DISC_VERSION
+ELIF _DISC_FLIGHT
 
  BMI DK5                \ If A < 0 (50% chance), return from the subroutine
                         \ (as DK5 contains an RTS)
@@ -88,7 +88,7 @@ ENDIF
                         \     = 113 - 19 + X
                         \     = 113 to 115
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT
 
  BNE MESS               \ Print recursive token A ("ENERGY BOMB", "ENERGY UNIT"
                         \ or "DOCKING COMPUTERS") as an in-flight message,

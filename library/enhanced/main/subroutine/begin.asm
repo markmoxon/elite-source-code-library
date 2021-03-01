@@ -9,7 +9,7 @@
 
 .BEGIN
 
-IF _DISC_VERSION \ Platform
+IF _DISC_DOCKED \ Platform
 
  JSR BRKBK              \ Call BRKBK to set BRKV to point to the BRBR routine
 

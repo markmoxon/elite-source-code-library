@@ -10,7 +10,7 @@
 \
 \ This section works out what kind of condition the ship is in. Specifically:
 \
-IF _DISC_VERSION
+IF _DISC_FLIGHT
 \   * If this is an Anaconda, consider spawning (22% chance) a Worm
 \
 ELIF _6502SP_VERSION
@@ -29,7 +29,7 @@ ENDIF
 IF _CASSETTE_VERSION
 \   * If the ship is into the last 1/8th of its energy, then rarely (10% chance)
 \     the ship launches an escape pod and is left drifting in space
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
 \   * If the ship is into the last 1/8th of its energy, and this ship type has
 \     an escape pod fitted, then rarely (10% chance) the ship launches an escape
 \     pod and is left drifting in space
@@ -44,7 +44,7 @@ ENDIF
  JMP TA20               \ This is a missile, so jump down to TA20 to get
                         \ straight into some aggressive manoeuvring
 
-IF _DISC_VERSION OR _6502SP_VERSION
+IF _DISC_FLIGHT OR _6502SP_VERSION
 
  CMP #ANA               \ If this is not an Anaconda, jump down to TN7 to skip
  BNE TN7                \ the following
@@ -56,7 +56,7 @@ IF _DISC_VERSION OR _6502SP_VERSION
 
 ENDIF
 
-IF _DISC_VERSION
+IF _DISC_FLIGHT
 
  LDX #WRM               \ Set X to the ship type for a Worm
 
@@ -119,7 +119,7 @@ IF _CASSETTE_VERSION
  CMP #THG               \ launching a Thargon
  BEQ ta3
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
  LDX TYPE               \ Fetch the ship blueprint's default NEWB flags from the
  LDA E%-1,X             \ table at E%, and if bit 7 is clear (i.e. this ship

@@ -3,7 +3,7 @@
 \       Name: HANGER
 \       Type: Subroutine
 \   Category: Ship hanger
-IF _DISC_VERSION
+IF _DISC_DOCKED
 \    Summary: Display the ship hanger
 ELIF _6502SP_VERSION
 \    Summary: Implement the OSWORD 248 command (display the ship hanger)
@@ -11,7 +11,7 @@ ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-IF _DISC_VERSION
+IF _DISC_DOCKED
 \ This routine is called after the ships in the hanger have been drawn, so all
 \ it has to do is draw the hanger's background.
 ELIF _6502SP_VERSION
@@ -55,7 +55,7 @@ ENDIF
 
 .HAL1
 
-IF _DISC_VERSION
+IF _DISC_DOCKED
 
  STX XSAV               \ Store the loop counter in XSAV
 
@@ -67,7 +67,7 @@ ENDIF
 
  LDA #130               \ Set A = 130
 
-IF _DISC_VERSION
+IF _DISC_DOCKED
 
  LDX XSAV               \ Retrieve the loop counter from XSAV
 
@@ -91,7 +91,7 @@ ENDIF
                         \ the screen) and bunching up towards the horizon (low
                         \ value of P, low y-coordinate, higher up the screen)
 
-IF _DISC_VERSION
+IF _DISC_DOCKED
 
  LDA P                  \ Set Y = #Y + P
  CLC                    \
@@ -139,7 +139,7 @@ ENDIF
                         \ screen, going right until we bump into something
                         \ already on-screen, at which point stop drawing
 
-IF _DISC_VERSION
+IF _DISC_DOCKED
 
  LDA #%00000100         \ Now to draw the same line but from the right edge of
                         \ the screen, so set a pixel mask in A to check the
@@ -168,7 +168,7 @@ ENDIF
                         \ screen, going left until we bump into something
                         \ already on-screen, at which point stop drawing
 
-IF _DISC_VERSION
+IF _DISC_DOCKED
 
  LDY YSAV               \ Fetch the value of YSAV, which gets set to 0 in the
                         \ HALL routine above if there is only one ship
@@ -191,7 +191,7 @@ ENDIF
                         \ hanger, so we also need to draw the horizontal line in
                         \ the gap between the ships
 
-IF _DISC_VERSION
+IF _DISC_DOCKED
 
  JSR HAS2               \ Call HAS2 to a line to the right, starting with the
                         \ third pixel of the pixel row at screen address SC(1 0)
@@ -251,7 +251,7 @@ ENDIF
                         \ We have finished threading our horizontal line behind
                         \ the ships already on-screen, so now for the next line
 
-IF _DISC_VERSION
+IF _DISC_DOCKED
 
  LDX XSAV               \ Fetch the loop counter from XSAV and increment it
  INX
@@ -294,7 +294,7 @@ ENDIF
 
 .HAL6
 
-IF _DISC_VERSION
+IF _DISC_DOCKED
 
  LDX #&60               \ Set the high byte of SC(1 0) to &60, the high byte of
  STX SCH                \ the start of screen
@@ -343,7 +343,7 @@ ENDIF
 
  TXA                    \ Copy the pixel mask to A again
 
-IF _DISC_VERSION
+IF _DISC_DOCKED
 
  ORA (SC),Y             \ OR the byte with the current contents of screen
                         \ memory, so the pixel we want is set
@@ -368,7 +368,7 @@ ENDIF
  CPY #8                 \ Loop back to HAL7 to draw this next pixel until we
  BNE HAL7               \ have drawn all 8 in the character block
 
-IF _DISC_VERSION
+IF _DISC_DOCKED
 
  INC SC+1               \ Point SC(1 0) to the next page in memory, i.e. the
                         \ next character row
@@ -389,7 +389,7 @@ ENDIF
 
 .HA6
 
-IF _DISC_VERSION
+IF _DISC_DOCKED
 
  LDA XSAV               \ Fetch the x-coordinate of the line we just drew from
  CLC                    \ XSAV into A, and add 16 so that A contains the

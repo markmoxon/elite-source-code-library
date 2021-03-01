@@ -24,7 +24,7 @@
 
 .PL9
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT
 
  JSR WPLS2              \ Call WPLS2 to remove the planet from the screen
 
@@ -50,7 +50,7 @@ ENDIF
 
 .PL20
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT
 
  RTS                    \ The planet doesn't fit on-screen, so return from the
                         \ subroutine

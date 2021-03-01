@@ -35,7 +35,7 @@ IF _CASSETTE_VERSION \ Enhanced
  CMP #CYL               \ If this is not a Cobra Mk III trader, skip the
  BNE P%+5               \ following instruction
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
  LDY #36                \ Fetch the ship's NEWB flags from byte #36
  LDA (INF),Y
@@ -67,7 +67,7 @@ ENDIF
  LDY #30                \ starts pitching
  STA (INF),Y
 
-IF _6502SP_VERSION OR _DISC_VERSION \ Enhanced
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced
 
  LDA TYPE               \ If the ship's type is < #CYL (i.e. a missile, Coriolis
  CMP #CYL               \ space station, escape pod, plate, cargo canister,
@@ -98,7 +98,7 @@ IF _CASSETTE_VERSION \ Enhanced
                         \ routine, but it does set up the entry point FR1-2
                         \ so that it clears the C flag and does an RTS
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
  LDA K%+NI%+36          \ Set bit 2 of the NEWB flags in byte #36 of the second
  ORA #%00000100         \ ship in the ship data workspace at K%, which is

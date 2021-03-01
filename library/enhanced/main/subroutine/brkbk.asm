@@ -18,7 +18,7 @@ ENDIF
 
 .BRKBK
 
-IF _DISC_VERSION \ Platform
+IF _DISC_DOCKED \ Platform
 
  LDA #LO(BRBR)          \ Set BRKV to point to the BRBR routine
  STA BRKV

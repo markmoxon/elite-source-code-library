@@ -22,7 +22,7 @@ ENDIF
 IF _MASTER_VERSION
  EQUB LO(SHIP_ASTEROID_EDGES - SHIP_ROCK_HERMIT)     \ Edges data = asteroid
  EQUB LO(SHIP_ASTEROID_FACES - SHIP_ROCK_HERMIT)     \ Faces data = asteroid
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION
  EQUB &4A               \ Edges data offset (low)  = &004A
  EQUB &9E               \ Faces data offset (low)  = &009E
 ENDIF
@@ -39,7 +39,7 @@ ENDIF
 IF _MASTER_VERSION
  EQUB HI(SHIP_ASTEROID_EDGES - SHIP_ROCK_HERMIT)     \ Edges data = asteroid
  EQUB HI(SHIP_ASTEROID_FACES - SHIP_ROCK_HERMIT)     \ Faces data = asteroid
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION
  EQUB &00               \ Edges data offset (high) = &004A
  EQUB &00               \ Faces data offset (high) = &009E
 ENDIF
@@ -58,7 +58,7 @@ ENDIF
  VERTEX    0,   30,  -75,    15,     15,   15,    15,         31    \ Vertex 7
  VERTEX    0,  -50,  -60,     8,      9,   10,    11,         31    \ Vertex 8
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION
 
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     2,     7,         31    \ Edge 0

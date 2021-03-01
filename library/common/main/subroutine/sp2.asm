@@ -52,7 +52,7 @@
                         \
                         \ COMY = 204 - X - (1 - 0) = 203 - X
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT
 
  LDA #&F0               \ Set A to a 4-pixel mode 5 byte row in colour 2
                         \ (yellow/white), the colour for when the planet or
@@ -68,7 +68,7 @@ ENDIF
  LDX XX15+2             \ If the z-coordinate of the XX15 vector is positive,
  BPL P%+4               \ skip the following instruction
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT
 
  LDA #&FF               \ The z-coordinate of XX15 is negative, so the planet or
                         \ station is behind us and the compass dot should be in

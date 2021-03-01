@@ -11,7 +11,7 @@
 
  LDA #108               \ Set A to recursive token 108 ("E.C.M.SYSTEM")
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT
 
  EQUB &2C               \ Fall through into ou3 to print the new message, but
                         \ skip the first instruction by turning it into

@@ -42,7 +42,7 @@ IF _CASSETTE_VERSION
  JSR DELAY-5            \ Delay for 8 vertical syncs (8/50 = 0.16 seconds) so we
                         \ don't take up too much CPU time while looping round
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED
 
  LDY #2                 \ Delay for 2 vertical syncs (2/50 = 0.04 seconds) so we
  JSR DELAY              \ don't take up too much CPU time while looping round
@@ -67,7 +67,7 @@ ENDIF
  TAY                    \ Copy A to Y, so Y contains the internal key number
                         \ of the key pressed
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED
 
  LDA (TRTB%),Y          \ The address in TRTB% points to the MOS key
                         \ translation table, which is used to translate

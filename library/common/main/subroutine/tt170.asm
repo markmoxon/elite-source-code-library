@@ -8,7 +8,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED
 \ This is the main entry point for the main game code.
 ELIF _6502SP_VERSION
 \ This is the main entry point for the main game code. It is called after the
@@ -30,7 +30,7 @@ ENDIF
                         \ code onto the stack, and this effectively removes that
                         \ code so we start afresh
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED
 
                         \ Fall through into BR1 to start the game
 

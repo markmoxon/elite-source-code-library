@@ -3,7 +3,7 @@
 \       Name: DOT
 \       Type: Subroutine
 \   Category: Dashboard
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT
 \    Summary: Draw a dot on the compass
 ELIF _6502SP_VERSION
 \    Summary: Implement the #DOdot command (draw a dot on the compass)
@@ -13,7 +13,7 @@ ENDIF
 \
 \ Arguments:
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT
 \   COMX                The screen pixel x-coordinate of the dot
 \
 \   COMY                The screen pixel y-coordinate of the dot
@@ -39,7 +39,7 @@ ENDIF
 
 .DOT
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT
 
  LDA COMY               \ Set Y1 = COMY, the y-coordinate of the dot
  STA Y1

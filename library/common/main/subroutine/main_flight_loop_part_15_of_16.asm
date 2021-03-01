@@ -28,7 +28,7 @@ IF _CASSETTE_VERSION
  BNE MA23               \ the following, as there are no planets or suns to
                         \ bump into in witchspace
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
  LDA MJ                 \ If we are in witchspace, jump down to MA23S to skip
  BNE MA23S              \ the following, as there are no planets or suns to
@@ -109,7 +109,7 @@ ENDIF
 
 .MA29
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_FLIGHT
 
  CMP #15                \ If this is the 15th iteration in this block of 32,
  BNE MA33               \ do the following, otherwise jump to MA33 to skip the
@@ -204,7 +204,7 @@ IF _CASSETTE_VERSION
  LDA #160               \ Print recursive token 0 ("FUEL SCOOPS ON") as an
  JSR MESS               \ in-flight message
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
  LDA #160               \ Set A to token 160 ("FUEL SCOOPS ON")
 

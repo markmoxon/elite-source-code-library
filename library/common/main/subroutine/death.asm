@@ -35,7 +35,7 @@
  JSR nWq                \ Create a cloud of stardust containing the correct
                         \ number of dust particles (i.e. NOSTM of them)
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Tube
 
  LDA #12                \ Move the text cursor to column 12 on row 12
  STA YC
@@ -80,7 +80,7 @@ ENDIF
  STY MCNT               \ Reset the main loop counter to 255, so all timer-based
                         \ calls will be stopped
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Platform
 
  STY LASCT              \ Set the laser count to 255 to act as a counter in the
                         \ D2 loop below, so this setting determines how long the
@@ -139,7 +139,7 @@ IF _CASSETTE_VERSION \ Enhanced
                         \ is we loop back to D1 to add another canister, until
                         \ we have added four of them
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
  LDX #OIL               \ Set X to #OIL, the ship type for a cargo canister
 
@@ -201,7 +201,7 @@ ENDIF
                         \ which will display our exploding canister scene and
                         \ move everything about
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Platform
 
  LDA LASCT              \ Loop back to D2 to run the main flight loop until
  BNE D2                 \ LASCT reaches zero (which will take 5.1 seconds, as
@@ -223,7 +223,7 @@ IF _CASSETTE_VERSION \ Minor
 
                         \ Fall through into DEATH2 to reset and restart the game
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
  JMP DEATH2             \ Jump to DEATH2 to reset and restart the game
 

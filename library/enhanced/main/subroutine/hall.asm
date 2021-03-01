@@ -3,7 +3,7 @@
 \       Name: HALL
 \       Type: Subroutine
 \   Category: Ship hanger
-IF _DISC_VERSION
+IF _DISC_DOCKED
 \    Summary: Draw the ships in the ship hanger, then draw the hanger
 ELIF _6502SP_VERSION
 \    Summary: Draw the ships in the ship hanger, then draw the hanger by sending
@@ -39,7 +39,7 @@ IF _6502SP_VERSION
                         \ so the authors presumably just cleared out the UNWISE
                         \ routine rather than unplumbing it from the code)
 
-ELIF _DISC_VERSION
+ELIF _DISC_DOCKED
 
  JSR UNWISE             \ Call UNWISE to switch the main line-drawing routine
                         \ between EOR and OR logic (in this case, switching it
@@ -147,7 +147,7 @@ ENDIF
  JSR DORND              \ Set XX15 = random number 0-255
  STA XX15
 
-IF _DISC_VERSION
+IF _DISC_DOCKED
 
  JSR DORND              \ Set XX15+2 = random number 0-7
  AND #7                 \
@@ -170,7 +170,7 @@ ENDIF
                         \
                         \   * Random x-coordinate from -63 to +63
                         \
-IF _DISC_VERSION
+IF _DISC_DOCKED
                         \   * Randomly chosen cargo canister, shuttle,
                         \     transporter, Cobra Mk III, Python, Viper or Krait
 ELIF _6502SP_VERSION
@@ -213,7 +213,7 @@ IF _6502SP_VERSION
                         \
                         \   * 128 = there are multiple ships in the hanger
 
-ELIF _DISC_VERSION
+ELIF _DISC_DOCKED
 
  STY YSAV               \ Set YSAV = 0 to indicate that there is only one ship
                         \ (so the HANGER routine knows not to draw between the

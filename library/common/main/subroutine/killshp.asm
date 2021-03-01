@@ -48,7 +48,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION
  LDA MSTG               \ Check whether this slot matches the slot number in
  CMP XX4                \ MSTG, which is the target of our missile lock
 
-ELIF _DISC_VERSION
+ELIF _DISC_FLIGHT
 
  CPX MSTG               \ Check whether this slot matches the slot number in
                         \ MSTG, which is the target of our missile lock
@@ -57,7 +57,7 @@ ENDIF
 
  BNE KS5                \ If our missile is not locked on this ship, jump to KS5
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT
 
  LDY #&EE               \ Otherwise we need to remove our missile lock, so call
  JSR ABORT              \ ABORT to disarm the missile and update the missile
@@ -84,7 +84,7 @@ ENDIF
  CPX #SST               \ If this is the space station, then jump to KS4 to
  BEQ KS4                \ replace the space station with the sun
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_FLIGHT
 
  CPX #CON               \ Did we just kill the Constrictor from mission 1? If
  BNE lll                \ not, jump to lll
@@ -104,7 +104,7 @@ IF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_FLIGHT
 
  CPX #JL                \ If JL <= X < JH, i.e. the type of ship we killed in X
  BCC KS7                \ is junk (escape pod, alloy plate, cargo canister,
@@ -119,7 +119,7 @@ IF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_FLIGHT
 
  DEC JUNK               \ We just killed junk, or a rock hermit, so decrease the
                         \ junk counter
@@ -210,7 +210,7 @@ IF _CASSETTE_VERSION
                         \ the source slot is empty and we are done shuffling,
                         \ so jump to KS2 to move on to processing missiles
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
  BNE P%+5               \ If the slot we just shuffled down is not empty, then
                         \ skip the following instruction
@@ -281,7 +281,7 @@ IF _CASSETTE_VERSION
                         \ to the destination, so we set it to 35 to start things
                         \ off, and will decrement Y for each byte we copy
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
  LDY #36                \ We are going to be using Y as a counter for the 37
                         \ bytes of ship data we want to copy from the source
@@ -299,7 +299,7 @@ ENDIF
  LDA (SC),Y             \ Fetch byte #35 of the source's ship data block at SC,
  STA (INF),Y            \ and store it in byte #35 of the destination's block
                         \ at INF, so that's the ship's energy copied from the
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT
                         \ source to the destination. One down, quite a few to
                         \ go...
 ELIF _6502SP_VERSION

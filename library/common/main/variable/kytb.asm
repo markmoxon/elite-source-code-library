@@ -31,13 +31,13 @@ IF _CASSETTE_VERSION
 
 KYTB = P% - 1           \ Point KYTB to the byte before the start of the table
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
 .KYTB
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_FLIGHT
 
  RTS                    \ Return from the subroutine (used as an entry point and
                         \ a fall-through from above)
@@ -66,7 +66,7 @@ ENDIF
  EQUB &45               \ J         KYTB+14     In-system jump
  EQUB &52               \ C         KYTB+15     Docking computer
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_FLIGHT
 
  EQUB &37               \ P         KYTB+16     Cancel docking computer
 

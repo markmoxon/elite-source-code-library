@@ -78,7 +78,7 @@ IF _CASSETTE_VERSION
                         \ so return from the subroutine with the C flag clear
                         \ (as FR1-2 contains a CLC then an RTS)
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
  BCS TN10               \ If the addition just overflowed then there is no way
                         \ our crosshairs are within the ship's targetable area,
@@ -116,7 +116,7 @@ ENDIF
 
  RTS                    \ Return from the subroutine
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_FLIGHT
 
 .TN10
 

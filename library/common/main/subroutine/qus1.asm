@@ -9,7 +9,7 @@
 \ ------------------------------------------------------------------------------
 \
 \ The filename should be stored at INWK, terminated with a carriage return (13).
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED
 \ The routine should be called with Y set to &C.
 ELIF _6502SP_VERSION
 \ The routine asks for a drive number and updates the filename accordingly
@@ -25,7 +25,7 @@ ENDIF
 \
 \                         * &FF (load file)
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED
 \   Y                   Points to the page number containing the OSFILE block,
 \                       which must be &C because that's where the pointer to the
 \                       filename in INWK is stored below (by the STX &C00
@@ -41,7 +41,7 @@ ENDIF
 
 .QUS1
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_DOCKED
 
  PHA                    \ Store A on the stack so we can restore it after the
                         \ call to GTDRV
@@ -84,7 +84,7 @@ IF _CASSETTE_VERSION
                         \ &0C00 (i.e. save or load a file depending on the value
                         \ of A), returning from the subroutine using a tail call
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED
 
  LDX #0                 \ Set (Y X) = &0C00
  LDY #&C
@@ -104,7 +104,7 @@ IF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_DOCKED
 
  CLC                    \ Clear the C flag
 

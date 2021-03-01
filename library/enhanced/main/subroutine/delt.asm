@@ -28,7 +28,7 @@
                         \ entered as part of the catalogue process, so jump to
                         \ SVE to display the disc access menu
 
-IF _DISC_VERSION
+IF _DISC_DOCKED
 
  LDA CTLI+1             \ The call to CATS above put the drive number into
  STA DELI+4             \ CTLI+1, so copy the drive number into DELI+4 so that
@@ -59,7 +59,7 @@ ENDIF
 
  LDX #9                 \ Set up a counter in X to count from 9 to 1, so that we
                         \ copy the string starting at INWK+4+1 (i.e. INWK+5) to
-IF _DISC_VERSION
+IF _DISC_DOCKED
                         \ DELI+5+1 (i.e. DELI+6 onwards, or "E.1234567")
 ELIF _6502SP_VERSION
                         \ DELI+8+1 (i.e. DELI+9 onwards, or "E.1234567")
@@ -67,7 +67,7 @@ ENDIF
 
 .DELL1
 
-IF _DISC_VERSION
+IF _DISC_DOCKED
 
  LDA INWK+4,X           \ Copy the X-th byte of INWK+4 to the X-th byte of
  STA DELI+5,X           \ DELI+5
@@ -88,7 +88,7 @@ ENDIF
  LDY #HI(DELI)          \ contains the DFS command for deleting this file
 
 
-IF _DISC_VERSION
+IF _DISC_DOCKED
 
  JSR OSCLI              \ Call OSCLI to execute the OS command at (Y X), which
                         \ catalogues the disc

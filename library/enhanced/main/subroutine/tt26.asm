@@ -74,7 +74,7 @@
                         \ we need to buffer the text until we reach the end of
                         \ the paragraph, so we can then pad it out with spaces
 
-IF _6502SP_VERSION OR _DISC_FLIGHT
+IF _6502SP_VERSION
 
  BVS P%+6               \ If bit 6 of DTW4 is set, then this is an in-flight
                         \ message and we should buffer the carriage return

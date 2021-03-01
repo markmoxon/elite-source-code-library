@@ -14,7 +14,7 @@
  EQUW 180 * 180         \ Targetable area          = 180 * 180
  EQUB &A4               \ Edges data offset (low)  = &00A4
  EQUB &2C               \ Faces data offset (low)  = &012C
-IF _DISC_VERSION
+IF _DISC_FLIGHT
  EQUB 97                \ Max. edge count          = (97 - 1) / 4 = 24
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 101               \ Max. edge count          = (101 - 1) / 4 = 25

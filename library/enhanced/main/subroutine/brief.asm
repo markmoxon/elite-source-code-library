@@ -41,7 +41,7 @@
  JSR NWSHP              \ Add a new Constrictor to the local bubble (in this
                         \ case, the briefing screen)
 
-IF _DISC_VERSION \ Minor
+IF _DISC_DOCKED \ Minor
 
  LDA #1                 \ Move the text cursor to column 1
  STA XC

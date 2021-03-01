@@ -593,7 +593,7 @@
  ECHR 'E'
  EQUB VE
 
-IF _DISC_VERSION
+IF _DISC_DOCKED
  ETOK 147               \ Token 25:     "THE INHABITANTS OF [86-90] ARE SO
  ETOK 193               \                AMAZINGLY PRIMITIVE THAT THEY STILL
  ECHR 'S'               \                THINK {single cap}STILL THINK A*****R
@@ -652,7 +652,7 @@ ENDIF
  ECHR 'K'
  ECHR ' '
  EJMP 19
-IF _DISC_VERSION
+IF _DISC_DOCKED
  ECHR 'A'
  ECHR '*'
  ECHR '*'

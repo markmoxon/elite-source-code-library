@@ -14,7 +14,7 @@
  EQUW 50 * 50           \ Targetable area          = 50 * 50
  EQUB &80               \ Edges data offset (low)  = &0080
  EQUB &F4               \ Faces data offset (low)  = &00F4
-IF _DISC_FLIGHT
+IF _DISC_FLIGHT \ Advanced
  EQUB 97                \ Max. edge count          = (97 - 1) / 4 = 24
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 101               \ Max. edge count          = (101 - 1) / 4 = 25
@@ -25,7 +25,7 @@ ENDIF
  EQUB 29                \ Number of edges          = 29
  EQUW 40                \ Bounty                   = 40
  EQUB 60                \ Number of faces          = 60 / 4 = 15
-IF _DISC_FLIGHT
+IF _DISC_FLIGHT \ Feature
  EQUB 23                \ Visibility distance      = 23
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 20                \ Visibility distance      = 20

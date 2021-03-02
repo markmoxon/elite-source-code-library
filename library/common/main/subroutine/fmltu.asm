@@ -16,7 +16,7 @@
 \
 \   A = A * Q / 256
 \
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
 \ Let La be the a-th entry in the 16-bit log/logL table, so:
 \
 \   La = 32 * log(a) * 256
@@ -81,7 +81,7 @@ ENDIF
 
 .FMLTU
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Other
 
  EOR #%11111111         \ Flip the bits in A, set the C flag and rotate right,
  SEC                    \ so the C flag now contains bit 0 of A inverted, and P

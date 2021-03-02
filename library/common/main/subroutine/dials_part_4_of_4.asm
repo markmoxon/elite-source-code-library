@@ -8,7 +8,7 @@
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  LDA #&78               \ Set SC(1 0) = &7810, which is the screen address for
  STA SC+1               \ the character block containing the left end of the
@@ -32,7 +32,7 @@ ENDIF
  JSR DILX               \ and increment SC to point to the next indicator (the
                         \ fuel level)
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Screen
 
  LDA #YELLOW2           \ Set K (the colour we should show for high values) to
  STA K                  \ yellow
@@ -47,7 +47,7 @@ ENDIF
  JSR DILX+2             \ and increment SC to point to the next indicator (the
                         \ cabin temperature)
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  JSR PZW                \ Call PZW to set A to the colour for dangerous values
                         \ and X to the colour for safe values
@@ -88,7 +88,14 @@ ENDIF
                         \ 15 and 16, so this effectively switches off the colour
                         \ change for the altitude indicator
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT
+IF _6502SP_VERSION \ Screen
+
+ LDA #YELLOW2           \ Set K (the colour we should show for high values) to
+ STA K                  \ yellow
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Minor
 
  STA K+1                \ Set K+1 (the colour we should show for low values) to
                         \ 240, or &F0 (dashboard colour 2, yellow/white), so the
@@ -96,10 +103,6 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT
 
  LDA ALTIT              \ Draw the altitude indicator using a range of 0-255
  JSR DILX
-
- JMP COMPAS             \ We have now drawn all the indicators, so jump to
-                        \ COMPAS to draw the compass, returning from the
-                        \ subroutine using a tail call
 
 ELIF _DISC_DOCKED
 
@@ -112,15 +115,20 @@ ELIF _DISC_DOCKED
 
 ELIF _6502SP_VERSION
 
- LDA #YELLOW2           \ Set K (the colour we should show for high values) to
- STA K                  \ yellow
-
  STA K+1                \ Set K+1 (the colour we should show for low values) to
                         \ yellow, so the altitude indicator always shows in this
                         \ colour
 
  LDA ALTIT              \ Draw the altitude indicator using a range of 0-255,
  JMP DILX               \ returning from the subroutine using a tail call
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Platform
+
+ JMP COMPAS             \ We have now drawn all the indicators, so jump to
+                        \ COMPAS to draw the compass, returning from the
+                        \ subroutine using a tail call
 
 ENDIF
 

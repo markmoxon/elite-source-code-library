@@ -17,7 +17,7 @@
 \
 \   * Draw from (X1, Y1) at bottom left to (X2, Y2) at top right
 \
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
 \ This routine looks complex, but that's because the loop that's used in the
 \ cassette and disc versions has been unrolled to speed it up. The algorithm is
 \ unchanged, it's just a lot longer.
@@ -27,7 +27,7 @@ ENDIF
 
 .LFT
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  LDA SWAP               \ If SWAP = 0 then we didn't swap the coordinates above,
  BEQ LI18               \ jump down to LI18 to skip plotting the first pixel

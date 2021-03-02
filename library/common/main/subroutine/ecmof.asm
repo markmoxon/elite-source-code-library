@@ -18,7 +18,7 @@
  STA ECMA               \ currently running
  STA ECMP
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
  JSR ECBLB              \ Update the E.C.M. indicator bulb on the dashboard
 

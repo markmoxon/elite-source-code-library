@@ -33,7 +33,7 @@
 
  STX XX4                \ Store the slot number of the ship to remove in XX4
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _6502SP_VERSION \ Minor
 
                         \ The following two instructions appear in the BASIC
                         \ source file (ELITEF), but in the text source file
@@ -57,7 +57,7 @@ ENDIF
 
  BNE KS5                \ If our missile is not locked on this ship, jump to KS5
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Screen
 
  LDY #&EE               \ Otherwise we need to remove our missile lock, so call
  JSR ABORT              \ ABORT to disarm the missile and update the missile
@@ -84,7 +84,7 @@ ENDIF
  CPX #SST               \ If this is the space station, then jump to KS4 to
  BEQ KS4                \ replace the space station with the sun
 
-IF _6502SP_VERSION OR _DISC_FLIGHT
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced
 
  CPX #CON               \ Did we just kill the Constrictor from mission 1? If
  BNE lll                \ not, jump to lll
@@ -97,14 +97,14 @@ IF _6502SP_VERSION OR _DISC_FLIGHT
 
 ENDIF
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Advanced
 
  CPX #HER               \ Did we just kill a rock hermit? If we did, jump to
  BEQ blacksuspenders    \ blacksuspenders to increase the junk count
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced
 
  CPX #JL                \ If JL <= X < JH, i.e. the type of ship we killed in X
  BCC KS7                \ is junk (escape pod, alloy plate, cargo canister,
@@ -113,13 +113,13 @@ IF _6502SP_VERSION OR _DISC_FLIGHT
 
 ENDIF
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Label
 
 .blacksuspenders
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced
 
  DEC JUNK               \ We just killed junk, or a rock hermit, so decrease the
                         \ junk counter
@@ -204,7 +204,7 @@ ENDIF
  LDA FRIN,X             \ Copy the contents of the source slot into the
  STA FRIN-1,X           \ destination slot
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Minor
 
  BEQ KS2                \ If the slot we just shuffled down contains 0, then
                         \ the source slot is empty and we are done shuffling,
@@ -274,7 +274,7 @@ ENDIF
                         \ so let's start copying data from the source to the
                         \ destination
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Enhanced
 
  LDY #35                \ We are going to be using Y as a counter for the 36
                         \ bytes of ship data we want to copy from the source
@@ -299,7 +299,7 @@ ENDIF
  LDA (SC),Y             \ Fetch byte #35 of the source's ship data block at SC,
  STA (INF),Y            \ and store it in byte #35 of the destination's block
                         \ at INF, so that's the ship's energy copied from the
-IF _CASSETTE_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Comment
                         \ source to the destination. One down, quite a few to
                         \ go...
 ELIF _6502SP_VERSION

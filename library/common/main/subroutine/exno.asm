@@ -36,7 +36,7 @@
  JSR NOS1               \ kill (part 1 of the explosion), and call NOS1 to set
                         \ up the sound block in XX16
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Feature
 
  LDA INWK+8             \ Fetch z_sign, the distance of the ship being hit in
  ASL A                  \ terms of the z-axis (in and out of the screen), and
@@ -92,7 +92,7 @@ ENDIF
                         \ (part 2 of the explosion), and fall through into NOISE
                         \ to make the sound
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Minor
 
  EQUB &2C               \ Skip the next instruction by turning it into
                         \ &2C &A9 &20, or BIT &20A9, which does nothing apart

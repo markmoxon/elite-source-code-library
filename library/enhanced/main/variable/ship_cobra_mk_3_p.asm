@@ -6,7 +6,7 @@
 \    Summary: Ship blueprint for a Cobra Mk III (pirate)
 \  Deep dive: Ship blueprints
 \
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ The ship blueprint for the pirate Cobra Mk III reuses the edges and faces data
@@ -20,14 +20,14 @@ ENDIF
 
  EQUB 1                 \ Max. canisters on demise = 1
  EQUW 95 * 95           \ Targetable area          = 95 * 95
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Platform
  EQUB LO(SHIP_COBRA_MK_3_EDGES - SHIP_COBRA_MK_3_P)  \ Edges data = Cobra Mk III
  EQUB LO(SHIP_COBRA_MK_3_FACES - SHIP_COBRA_MK_3_P)  \ Faces data = Cobra Mk III
 ELIF _6502SP_VERSION OR _DISC_FLIGHT
  EQUB &BC               \ Edges data offset (low)  = &00BC
  EQUB &54               \ Faces data offset (low)  = &0154
 ENDIF
-IF _DISC_FLIGHT
+IF _DISC_FLIGHT \ Advanced
  EQUB 153               \ Max. edge count          = (153 - 1) / 4 = 38
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 157               \ Max. edge count          = (157 - 1) / 4 = 39
@@ -41,7 +41,7 @@ ENDIF
  EQUB 50                \ Visibility distance      = 50
  EQUB 150               \ Max. energy              = 150
  EQUB 28                \ Max. speed               = 28
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Platform
  EQUB HI(SHIP_COBRA_MK_3_EDGES - SHIP_COBRA_MK_3_P)  \ Edges data = Cobra Mk III
  EQUB HI(SHIP_COBRA_MK_3_FACES - SHIP_COBRA_MK_3_P)  \ Faces data = Cobra Mk III
 ELIF _6502SP_VERSION OR _DISC_FLIGHT
@@ -82,7 +82,7 @@ ENDIF
  VERTEX   88,    0,  -40,     9,      9,    9,     9,          6    \ Vertex 26
  VERTEX   80,   -6,  -40,     9,      9,    9,     9,          8    \ Vertex 27
 
-IF _6502SP_VERSION OR _DISC_FLIGHT
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     0,    11,         31    \ Edge 0

@@ -6,7 +6,7 @@
                         \
                         \   * Non-zero = hyperspace colour effect enabled
                         \
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
                         \ When HFS is set to 1, the mode 4 screen that makes
                         \ up the top part of the display is temporarily switched
                         \ to mode 5 (the same screen mode as the dashboard),

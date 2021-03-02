@@ -1,6 +1,6 @@
 .LSO
 
-IF _DISC_VERSION
+IF _DISC_VERSION \ Label
 
  SKIP 1                 \ This space has three uses:
                         \

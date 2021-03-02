@@ -10,7 +10,7 @@
 
 .SHIP_ESCAPE_POD
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Enhanced
  EQUB 0                 \ Max. canisters on demise = 0
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
  EQUB 0 + (2 << 4)      \ Max. canisters on demise = 0
@@ -19,7 +19,7 @@ ENDIF
  EQUW 16 * 16           \ Targetable area          = 16 * 16
  EQUB &2C               \ Edges data offset (low)  = &002C
  EQUB &44               \ Faces data offset (low)  = &0044
-IF _CASSETTE_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Advanced
  EQUB 25                \ Max. edge count          = (25 - 1) / 4 = 6
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 29                \ Max. edge count          = (29 - 1) / 4 = 7
@@ -35,7 +35,7 @@ ENDIF
  EQUB 8                 \ Max. speed               = 8
  EQUB &00               \ Edges data offset (high) = &002C
  EQUB &00               \ Faces data offset (high) = &0044
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Feature
  EQUB 3                 \ Normals are scaled by    =  2^3 = 8
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
  EQUB 4                 \ Normals are scaled by    =  2^4 = 16
@@ -59,7 +59,7 @@ ENDIF
  EDGE       0,       2,     3,     1,         31    \ Edge 4
  EDGE       3,       1,     2,     0,         31    \ Edge 5
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Feature
 
 \FACE normal_x, normal_y, normal_z, visibility
  FACE       26,        0,      -61,         31    \ Face 0

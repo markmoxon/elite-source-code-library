@@ -46,7 +46,7 @@
 
 .TT112
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Other
 
  LDA QQ15,X             \ Copy the X-th byte in QQ15 to the X-th byte in QQ2, to
  STA QQ2,X              \ update the selected system to the new one. Note that
@@ -86,9 +86,14 @@ ENDIF
  LDA QQ4                \ Set the current system's government in gov to the
  STA gov                \ selected system's government from QQ4
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Minor
 
  RTS                    \ Return from the subroutine
+
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
+
+                        \ Fall through into GVL to calculate the availability of
+                        \ market items in the new system
 
 ENDIF
 

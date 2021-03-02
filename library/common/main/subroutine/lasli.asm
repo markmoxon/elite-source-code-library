@@ -45,23 +45,21 @@
 
 .LASLI2
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Label
 
  LDA QQ11               \ If this is not a space view (i.e. QQ11 is non-zero)
  BNE PU1-1              \ then jump to MA9 to return from the main flight loop
                         \ (as PU1-1 is an RTS)
 
-ELIF _DISC_FLIGHT
+ELIF _DISC_FLIGHT OR _6502SP_VERSION
 
  LDA QQ11               \ If this is not a space view (i.e. QQ11 is non-zero)
  BNE LASLI-1            \ then jump to MA9 to return from the main flight loop
                         \ (as LASLI-1 is an RTS)
 
-ELIF _6502SP_VERSION
+ENDIF
 
- LDA QQ11               \ If this is not a space view (i.e. QQ11 is non-zero)
- BNE LASLI-1            \ then jump to MA9 to return from the main flight loop
-                        \ (as LASLI-1 is an RTS)
+IF _6502SP_VERSION \ Screen
 
  LDA #RED               \ Send a #SETCOL RED command to the I/O processor to
  JSR DOCOL              \ switch to colour 2, which is red in the space view
@@ -71,7 +69,7 @@ ENDIF
  LDA #32                \ Set A = 32 and Y = 224 for the first set of laser
  LDY #224               \ lines (the wider pair of lines)
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Feature
 IF _SNG45
 
  DEC LASY               \ Decrement the y-coordinate of the centre point to move
@@ -84,7 +82,7 @@ ENDIF
 
  JSR las                \ Call las below to draw the first set of laser lines
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Feature
 IF _SNG45
 
  INC LASY               \ Increment the y-coordinate of the centre point to put
@@ -118,7 +116,7 @@ ENDIF
                         \ this sets Y2 to 191, the y-coordinate of the bottom
                         \ pixel row of the space view
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Label
 
  JSR LOIN               \ Draw a line from (X1, Y1) to (X2, Y2), so that's from
                         \ the centre point to (A, 191)
@@ -140,7 +138,7 @@ ENDIF
  LDA #2*Y-1             \ Set Y2 = 2 * #Y - 1, the y-coordinate of the bottom
  STA Y2                 \ pixel row of the space view (as before)
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Label
 
  JMP LOIN               \ Draw a line from (X1, Y1) to (X2, Y2), so that's from
                         \ the centre point to (Y, 191), and return from

@@ -17,7 +17,7 @@
 
 .DKJ1
 
-IF _6502SP_VERSION OR _DISC_FLIGHT
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Advanced
 
  LDA auto               \ If auto is non-zero, then the docking computer is
  BNE auton              \ currently activated, so jump to auton in DOKEY so the
@@ -25,7 +25,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Tube
 
  LDY #1                 \ Update the key logger for key 1 in the KYTB table, so
  JSR DKS1               \ KY1 will be &FF if "?" (slow down) is being pressed

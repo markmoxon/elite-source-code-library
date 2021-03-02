@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Comment
 \       Name: QU5
 ELIF _6502SP_VERSION OR _DISC_DOCKED
 \       Name: DFAULT
@@ -11,9 +11,17 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Label
 
 .QU5
+
+ELIF _6502SP_VERSION OR _DISC_DOCKED
+
+.DFAULT
+
+ENDIF
+
+IF _CASSETTE_VERSION \ Comment
 
                         \ By the time we get here, the correct commander name
                         \ is at NA% and the correct commander data is at NA%+8.
@@ -36,6 +44,10 @@ IF _CASSETTE_VERSION
 \JSR TTX66              \ This instruction is commented out in the original
                         \ source; it clears the screen and draws a border
 
+ENDIF
+
+IF _CASSETTE_VERSION \ Platform
+
  LDX #NT%               \ The size of the commander data block is NT% bytes,
                         \ and it starts at NA%+8, so we need to copy the data
                         \ from the "last saved" buffer at NA%+8 to the current
@@ -43,8 +55,6 @@ IF _CASSETTE_VERSION
                         \ for the NT% bytes that we want to copy
 
 ELIF _6502SP_VERSION OR _DISC_DOCKED
-
-.DFAULT
 
  LDX #NT%+8             \ The size of the last saved commander data block is NT%
                         \ bytes, and it is preceded by the 8 bytes of the
@@ -60,7 +70,7 @@ ENDIF
 
 .QUL1
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Platform
 
  LDA NA%+7,X            \ Copy the X-th byte of NA%+7 to the X-th byte of TP-1,
  STA TP-1,X             \ (the -1 is because X is counting down from NT% to 1)
@@ -107,7 +117,7 @@ ELSE
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED
+IF _6502SP_VERSION OR _DISC_DOCKED \ Comment
 
 \JSR BELL               \ This instruction is commented out in the original
                         \ source. It would make a standard system beep
@@ -133,7 +143,7 @@ ENDIF
 
 .tZ
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Feature
 
  ORA #%00000010         \ Set bit 1 of A to denote that this is the cassette
                         \ version
@@ -165,7 +175,7 @@ ENDIF
 
  STA COK                \ Store the updated competition flags in COK
 
-IF _6502SP_VERSION OR _DISC_DOCKED
+IF _6502SP_VERSION OR _DISC_DOCKED \ Minor
 
  RTS                    \ Return from the subroutine
 

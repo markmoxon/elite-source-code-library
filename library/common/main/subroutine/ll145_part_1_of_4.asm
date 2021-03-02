@@ -142,7 +142,7 @@
  LDA XX12               \ Set Y2 (aka XX15+3) = y2_lo
  STA XX15+3
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Platform
 
  LDA SWAP               \ If SWAP = 0, then we didn't have to swap the line
  BEQ noswap             \ coordinates around during the clipping process, so

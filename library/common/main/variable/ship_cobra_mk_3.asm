@@ -14,7 +14,7 @@
  EQUW 95 * 95           \ Targetable area          = 95 * 95
  EQUB &BC               \ Edges data offset (low)  = &00BC
  EQUB &54               \ Faces data offset (low)  = &0154
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Advanced
  EQUB 153               \ Max. edge count          = (153 - 1) / 4 = 38
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 157               \ Max. edge count          = (157 - 1) / 4 = 39
@@ -64,7 +64,7 @@ ENDIF
  VERTEX   88,    0,  -40,     9,      9,    9,     9,          6    \ Vertex 26
  VERTEX   80,   -6,  -40,     9,      9,    9,     9,          8    \ Vertex 27
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Label
 
 .SHIP_COBRA_MK_3_EDGES
 

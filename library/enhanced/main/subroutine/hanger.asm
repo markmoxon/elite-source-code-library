@@ -3,7 +3,7 @@
 \       Name: HANGER
 \       Type: Subroutine
 \   Category: Ship hanger
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Comment
 \    Summary: Display the ship hanger
 ELIF _6502SP_VERSION
 \    Summary: Implement the OSWORD 248 command (display the ship hanger)
@@ -11,7 +11,7 @@ ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Comment
 \ This routine is called after the ships in the hanger have been drawn, so all
 \ it has to do is draw the hanger's background.
 ELIF _6502SP_VERSION
@@ -37,7 +37,7 @@ ENDIF
 \ the hanger, this also means drawing lines between the ships, as well as in
 \ from each side.
 \
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
 \ Other entry points:
 \
 \   HA3                 Contains an RTS
@@ -55,7 +55,7 @@ ENDIF
 
 .HAL1
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Minor
 
  STX XSAV               \ Store the loop counter in XSAV
 
@@ -67,7 +67,7 @@ ENDIF
 
  LDA #130               \ Set A = 130
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Minor
 
  LDX XSAV               \ Retrieve the loop counter from XSAV
 
@@ -91,7 +91,7 @@ ENDIF
                         \ the screen) and bunching up towards the horizon (low
                         \ value of P, low y-coordinate, higher up the screen)
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Screen
 
  LDA P                  \ Set Y = #Y + P
  CLC                    \
@@ -139,7 +139,7 @@ ENDIF
                         \ screen, going right until we bump into something
                         \ already on-screen, at which point stop drawing
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Screen
 
  LDA #%00000100         \ Now to draw the same line but from the right edge of
                         \ the screen, so set a pixel mask in A to check the
@@ -168,7 +168,7 @@ ENDIF
                         \ screen, going left until we bump into something
                         \ already on-screen, at which point stop drawing
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Tube
 
  LDY YSAV               \ Fetch the value of YSAV, which gets set to 0 in the
                         \ HALL routine above if there is only one ship
@@ -191,7 +191,7 @@ ENDIF
                         \ hanger, so we also need to draw the horizontal line in
                         \ the gap between the ships
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Screen
 
  JSR HAS2               \ Call HAS2 to a line to the right, starting with the
                         \ third pixel of the pixel row at screen address SC(1 0)
@@ -251,7 +251,7 @@ ENDIF
                         \ We have finished threading our horizontal line behind
                         \ the ships already on-screen, so now for the next line
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Minor
 
  LDX XSAV               \ Fetch the loop counter from XSAV and increment it
  INX
@@ -268,7 +268,7 @@ ENDIF
 
                         \ The floor is done, so now we move on to the back wall
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Other
 
  LDA #60                \ Set S = 60, so we run the following 60 times (though I
  STA S                  \ have no idea why it's 60 times, when it should be 15,
@@ -284,7 +284,7 @@ ENDIF
                         \ line as we work our way through them from left to
                         \ right, incrementing by 16 for each new line
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Screen
 
  LDX #&40               \ Set X = &40, the high byte of the start of screen
  STX R                  \ memory (the screen starts at location &4000) and the
@@ -294,7 +294,7 @@ ENDIF
 
 .HAL6
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Screen
 
  LDX #&60               \ Set the high byte of SC(1 0) to &60, the high byte of
  STX SCH                \ the start of screen
@@ -343,7 +343,7 @@ ENDIF
 
  TXA                    \ Copy the pixel mask to A again
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Screen
 
  ORA (SC),Y             \ OR the byte with the current contents of screen
                         \ memory, so the pixel we want is set
@@ -368,7 +368,7 @@ ENDIF
  CPY #8                 \ Loop back to HAL7 to draw this next pixel until we
  BNE HAL7               \ have drawn all 8 in the character block
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Screen
 
  INC SC+1               \ Point SC(1 0) to the next page in memory, i.e. the
                         \ next character row
@@ -389,7 +389,7 @@ ENDIF
 
 .HA6
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Screen
 
  LDA XSAV               \ Fetch the x-coordinate of the line we just drew from
  CLC                    \ XSAV into A, and add 16 so that A contains the
@@ -411,7 +411,7 @@ ENDIF
  BNE HAL6               \ Loop back to HAL6 until we have run through the loop
                         \ 60 times, by which point we are most definitely done
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Label
 
 .HA3
 

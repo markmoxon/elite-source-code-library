@@ -47,7 +47,7 @@
 
  LDA #0                 \ Set A = 0, the type number of a space view
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Screen
 
  JSR DOVDU19            \ Send a #SETVDU19 0 command to the I/O processor to
                         \ switch to the mode 1 palette for the space view,

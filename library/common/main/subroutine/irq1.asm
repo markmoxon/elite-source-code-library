@@ -13,7 +13,7 @@
 \
 \ IRQ1V is set to point to IRQ1 by elite-loader.asm.
 \
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
 \ Other entry points:
 \
 \   VNT3+1              Changing this byte modifies the palette-loading
@@ -23,7 +23,7 @@ IF _6502SP_VERSION
 ENDIF
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
 .LINSCN
 
@@ -64,13 +64,17 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
  BPL VNT3               \ Loop back to VNT3 until we have copied all the
                         \ palette bytes
 
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Platform
+
  LDA LASCT              \ Decrement the value of LASCT, but if we go too far
  BEQ P%+5               \ and it becomes negative, bump it back up again (this
  DEC LASCT              \ controls the pulsing of pulse lasers)
 
 ENDIF
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Platform
 
  LDA SVN                \ If SVN is non-zero, we are in the process of saving
  BNE jvec               \ the commander file, so jump to jvec to pass control
@@ -79,7 +83,7 @@ IF _CASSETTE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Minor
 
  PLA                    \ Otherwise restore Y from the stack
  TAY
@@ -101,7 +105,7 @@ ENDIF
  TYA                    \ Store Y on the stack
  PHA
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  LDY #11                \ Set Y as a counter for 12 bytes, to use when setting
                         \ the dashboard palette below
@@ -129,7 +133,7 @@ ENDIF
                         \ clear and we aren't at the boundary, so we jump to
                         \ jvec to pass control to the next interrupt handler
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  ASL A                  \ Double the value in A to 4
 
@@ -147,7 +151,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  LDA ESCP               \ If an escape pod is fitted, jump to VNT1 to set the
  BNE VNT1               \ mode 5 palette differently (so the dashboard is a
@@ -205,7 +209,7 @@ ENDIF
                         \ instruction passes control to the next interrupt
                         \ handler
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
 .VNT1
 
@@ -224,7 +228,9 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
                         \ handler (this BMI is effectively a JMP as we didn't
                         \ loop back with the BPL above, so BMI is always true)
 
-ELIF _6502SP_VERSION
+ENDIF
+
+IF _6502SP_VERSION \ Screen
 
 .LINSCN
 
@@ -275,6 +281,10 @@ ELIF _6502SP_VERSION
 
  BNE VNT3               \ Loop back to VNT3 until we have copied all the
                         \ palette bytes
+
+ENDIF
+
+IF _6502SP_VERSION \ Minor
 
  PLA                    \ Otherwise restore Y from the stack
  TAY

@@ -3,7 +3,7 @@
 \       Name: HALL
 \       Type: Subroutine
 \   Category: Ship hanger
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Comment
 \    Summary: Draw the ships in the ship hanger, then draw the hanger
 ELIF _6502SP_VERSION
 \    Summary: Draw the ships in the ship hanger, then draw the hanger by sending
@@ -26,16 +26,20 @@ ENDIF
 
 .HALL
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Screen
 
  LDA #0                 \ Send a #SETVDU19 0 command to the I/O processor to
  JSR DOVDU19            \ switch to the mode 1 palette for the space view,
                         \ which is yellow (colour 1), red (colour 2) and cyan
                         \ (colour 3)
 
+ENDIF
+
+IF _6502SP_VERSION \ Comment
+
  JSR UNWISE             \ Call UNWISE, which does nothing in the 6502 Second
                         \ Processor version of Elite (this routine does have a
-                        \ function in the disc version but isn't required here,
+                        \ function in the disc version that isn't required here,
                         \ so the authors presumably just cleared out the UNWISE
                         \ routine rather than unplumbing it from the code)
 
@@ -147,7 +151,7 @@ ENDIF
  JSR DORND              \ Set XX15 = random number 0-255
  STA XX15
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Feature
 
  JSR DORND              \ Set XX15+2 = random number 0-7
  AND #7                 \
@@ -156,6 +160,16 @@ IF _DISC_DOCKED
                         \ table, i.e. a cargo canister, shuttle, transporter,
                         \ Cobra Mk III, Python, Viper or Krait
 
+ JSR HAS1               \ Call HAS1 to draw this ship in the hanger, with the
+                        \ the following properties:
+                        \
+                        \   * Random x-coordinate from -63 to +63
+                        \
+                        \   * Randomly chosen cargo canister, shuttle,
+                        \     transporter, Cobra Mk III, Python, Viper or Krait
+                        \
+                        \   * Random z-coordinate from +256 to +639
+
 ELIF _6502SP_VERSION
 
  JSR DORND              \ Set XX15+2 = #SH3 + random number 0-3
@@ -163,34 +177,46 @@ ELIF _6502SP_VERSION
  ADC #SH3               \ which is the ship type of a Sidewinder, Mamba, Krait
  STA XX15+2             \ or Adder
 
-ENDIF
-
  JSR HAS1               \ Call HAS1 to draw this ship in the hanger, with the
                         \ the following properties:
                         \
                         \   * Random x-coordinate from -63 to +63
                         \
-IF _DISC_DOCKED
-                        \   * Randomly chosen cargo canister, shuttle,
-                        \     transporter, Cobra Mk III, Python, Viper or Krait
-ELIF _6502SP_VERSION
                         \   * Randomly chosen Sidewinder, Mamba, Krait or Adder
-ENDIF
                         \
                         \   * Random z-coordinate from +256 to +639
 
- LDY #0                 \ Set Y = 0 to send as byte #2 of the parameter block to
-                        \ the OSWORD 248 command below, to tell the I/O
-                        \ processor that there is just one ship in the hanger
+ENDIF
+
+ LDY #0                 \ Set Y = 0 to use in the following instruction, to tell
+                        \ the hanger-drawing routine that there is just one ship
+                        \ in the hanger, so it knows not to draw between the
+                        \ ships
 
 .HA9
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Minor
 
- STY HANG+2             \ Store Y in byte #2 of the parameter block below
+ STY HANG+2             \ Store Y in byte #2 of the parameter block to the
+                        \ OSWORD 248 command below, to specify whether there
+                        \ are multiple ships in the hanger
 
  JSR UNWISE             \ Call UNWISE, which (as noted above) does nothing in
                         \ the 6502 Second Processor version of Elite
+
+ELIF _DISC_DOCKED
+
+ STY YSAV               \ Store Y in YSAV to specify whether there are multiple
+                        \ ships in the hanger
+
+ JSR UNWISE             \ Call UNWISE to switch the main line-drawing routine
+                        \ between EOR and OR logic (in this case, switching it
+                        \ back to EOR logic so that we can erase anything we
+                        \ draw on-screen)
+
+ENDIF
+
+IF _6502SP_VERSION \ Tube
 
  LDA #248               \ Set A in preparation for sending an OSWORD 248 command
 
@@ -214,15 +240,6 @@ IF _6502SP_VERSION
                         \   * 128 = there are multiple ships in the hanger
 
 ELIF _DISC_DOCKED
-
- STY YSAV               \ Set YSAV = 0 to indicate that there is only one ship
-                        \ (so the HANGER routine knows not to draw between the
-                        \ ships)
-
- JSR UNWISE             \ Call UNWISE to switch the main line-drawing routine
-                        \ between EOR and OR logic (in this case, switching it
-                        \ back to EOR logic so that we can erase anything we
-                        \ draw on-screen)
 
                         \ Fall through into HANGER to draw the hanger background
 

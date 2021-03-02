@@ -3,7 +3,7 @@
 \       Name: DOKEY
 \       Type: Subroutine
 \   Category: Keyboard
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Comment
 \    Summary: Scan for the seven primary flight controls
 \  Deep dive: The key logger
 \             The docking computer
@@ -11,7 +11,7 @@ ELIF _DISC_DOCKED
 \    Summary: Scan for the joystick
 ENDIF
 \
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ Scan for the seven primary flight controls (or the equivalent on joystick),
@@ -30,7 +30,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
 \ flight controls.
 \
 ENDIF
-IF _6502SP_VERSION OR _DISC_FLIGHT
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Comment
 \ Other entry points:
 \
 \   auton               Get the docking computer to "press" the flight keys to
@@ -41,9 +41,9 @@ ENDIF
 
 .DOKEY
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Feature
 
- LDA NEEDKEY            \ If NEEDKEY is zero, skip the next insruction
+ LDA NEEDKEY            \ If NEEDKEY is zero, skip the next instruction
  BEQ P%+5
 
  JSR RDKEY              \ NEEDKEY is non-zero, so call RDKEY to ask the I/O
@@ -53,7 +53,9 @@ IF _6502SP_VERSION
  LDA #&FF               \ Set NEEDKEY to &FF, so the next call to DOKEY updates
  STA NEEDKEY            \ the key logger buffer
 
-ELIF _DISC_DOCKED
+ENDIF
+
+IF _DISC_DOCKED \ Platform
 
  LDA JSTK               \ If JSTK is zero, then we are configured to use the
  BEQ DK9                \ keyboard rather than the joystick, so jump to DK9 to
@@ -71,9 +73,7 @@ ELIF _DISC_DOCKED
  STA JSTY               \ reverse the joystick Y channel, so this EOR does
                         \ exactly that, and then we store the result in JSTY
 
-ENDIF
-
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+ELIF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
 
  JSR U%                 \ Call U% to clear the key logger
 
@@ -84,13 +84,13 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced
 
  STA BSTK               \ Set BSTK = 0 to disable the Bitstik
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Tube
 
  LDY #7                 \ We're going to work our way through the primary flight
                         \ control keys (pitch, roll, speed and laser), so set a
@@ -125,7 +125,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced
 
  LDA auto               \ If auto is 0, then the docking computer is not
  BEQ DK15               \ currently activated, so jump to DK15 to skip the
@@ -277,7 +277,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
  LDX JSTX               \ Set X = JSTX, the current roll rate (as shown in the
                         \ RL indicator on the dashboard)

@@ -19,14 +19,14 @@ ENDIF
 
  EQUB 2                 \ Max. canisters on demise = 2
  EQUW 80 * 80           \ Targetable area          = 80 * 80
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Platform
  EQUB LO(SHIP_PYTHON_EDGES - SHIP_PYTHON_P)          \ Edges data = Python
  EQUB LO(SHIP_PYTHON_FACES - SHIP_PYTHON_P)          \ Faces data = Python
 ELIF _6502SP_VERSION OR _DISC_FLIGHT
  EQUB &56               \ Edges data offset (low)  = &0056
  EQUB &BE               \ Faces data offset (low)  = &00BE
 ENDIF
-IF _DISC_FLIGHT
+IF _DISC_FLIGHT \ Advanced
  EQUB 85                \ Max. edge count          = (85 - 1) / 4 = 21
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 89                \ Max. edge count          = (89 - 1) / 4 = 22
@@ -40,7 +40,7 @@ ENDIF
  EQUB 40                \ Visibility distance      = 40
  EQUB 250               \ Max. energy              = 250
  EQUB 20                \ Max. speed               = 20
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Platform
  EQUB HI(SHIP_PYTHON_EDGES - SHIP_PYTHON_P)          \ Edges data = Python
  EQUB HI(SHIP_PYTHON_FACES - SHIP_PYTHON_P)          \ Faces data = Python
 ELIF _6502SP_VERSION OR _DISC_FLIGHT
@@ -64,7 +64,7 @@ ENDIF
  VERTEX    0,  -48,  -32,     6,      7,   10,    11,         31    \ Vertex 9
  VERTEX    0,  -24, -112,    10,     11,   12,    12,         31    \ Vertex 10
 
-IF _6502SP_VERSION OR _DISC_FLIGHT
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       8,     2,     3,         31    \ Edge 0

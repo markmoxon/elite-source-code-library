@@ -14,7 +14,7 @@
  EQUW 75 * 75           \ Targetable area          = 75 * 75
  EQUB &6E               \ Edges data offset (low)  = &006E
  EQUB &BE               \ Faces data offset (low)  = &00BE
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Advanced
  EQUB 77                \ Max. edge count          = (77 - 1) / 4 = 19
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 81                \ Max. edge count          = (81 - 1) / 4 = 20
@@ -26,7 +26,7 @@ ENDIF
  EQUW 0                 \ Bounty                   = 0
  EQUB 28                \ Number of faces          = 28 / 4 = 7
  EQUB 23                \ Visibility distance      = 23
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Feature
  EQUB 120               \ Max. energy              = 120
 ELIF _DISC_VERSION
  EQUB 100               \ Max. energy              = 100

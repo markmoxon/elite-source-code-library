@@ -13,7 +13,7 @@
 \ halfway point, and then HAL3 takes over to draw from the halfway point across
 \ the right half of the screen.
 \
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Comment
 \ Other entry points:
 \
 \   HA3                 Contains an RTS
@@ -23,7 +23,7 @@ ENDIF
 
 .HAS2
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Screen
 
  LDA #%00100000         \ Set A to the pixel pattern for a mode 4 character row
                         \ byte with the third pixel set, so we start drawing the
@@ -53,7 +53,7 @@ ENDIF
  TXA                    \ Retrieve the value of A we stored above, so A now
                         \ contains the pixel mask again
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Screen
 
  AND #RED               \ Apply the pixel mask in A to a four-pixel block of
                         \ red pixels, so we now know which bits to set in screen
@@ -80,7 +80,7 @@ ENDIF
  ADC #7                 \ to the next character block along
  TAY
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Screen
 
  LDA #%10000000         \ Reset the pixel mask in A to the first pixel in the
                         \ new 8-pixel character block
@@ -96,7 +96,7 @@ ENDIF
                         \ HAL2 to keep drawing the line in the next character
                         \ block
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Screen
 
  INC SC+1               \ The addition overflowed, so we have reached the last
                         \ character block in this page of memory, so increment
@@ -150,7 +150,7 @@ IF _6502SP_VERSION
 
 ENDIF
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Label
 
 .HA3
 

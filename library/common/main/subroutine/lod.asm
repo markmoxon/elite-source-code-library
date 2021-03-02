@@ -9,7 +9,7 @@
 \
 \ The filename should be stored at INWK, terminated with a carriage return (13).
 \
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
 \ Other entry points:
 \
 \   LOR                 Set the C flag and return from the subroutine
@@ -19,7 +19,16 @@ ENDIF
 
 .LOD
 
-IF _CASSETTE_VERSION
+IF _6502SP_VERSION \ Comment
+
+\LDX #LO(MINI)          \ These instructions are commented out in the original
+\LDY #HI(MINI)          \ source, but they would load a commander file called
+\JSR OSCLI              \ "E.MINING" and continue below, so presumably this is
+\JMP LOL1-2             \ code for loading a test commander file
+
+ENDIF
+
+IF _CASSETTE_VERSION \ Platform
 
  LDX #2                 \ Enable the ESCAPE key and clear memory if the BREAK
  JSR FX200              \ key is pressed (*FX 200,2)
@@ -30,11 +39,6 @@ IF _CASSETTE_VERSION
                         \ flight and ship status variables
 
 ELIF _6502SP_VERSION OR _DISC_VERSION
-
-\LDX #LO(MINI)          \ These instructions are commented out in the original
-\LDY #HI(MINI)          \ source, but they would load a commander file called
-\JSR OSCLI              \ "E.MINING" and continue below, so presumably this is
-\JMP LOL1-2             \ code for loading a test commander file
 
 \LDX #2                 \ These instructions are commented out in the original
 \JSR FX200              \ source, but they would enable the ESCAPE key and clear
@@ -50,7 +54,7 @@ ENDIF
                         \
                         \ Length of file = &00000100 in &0C0A to &0C0D
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Platform
 
  INY                    \ Increment Y to &C, which we use next
 
@@ -59,7 +63,7 @@ ENDIF
  LDA #&FF               \ Call QUS1 with A = &FF, Y = &C to load the commander
  JSR QUS1               \ file at address &0B00
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Platform
 
  LDA &B00               \ If the first byte of the loaded file has bit 7 set,
  BMI SPS1+1             \ jump to SPS+1, which is the second byte of an LDA #0
@@ -100,7 +104,7 @@ ENDIF
 
  BPL LOL1               \ Loop back until we have copied all NT% bytes
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Platform
 
  LDX #3                 \ Fall through into FX200 to disable the ESCAPE key and
                         \ clear memory if the BREAK key is pressed (*FX 200,3)
@@ -120,6 +124,10 @@ ELIF _6502SP_VERSION OR _DISC_VERSION
  EQUS "IIllegal "       \ invalid commander file with bit 7 of byte #0 set
  EQUS "ELITE II file"   \ (the spelling mistake is in the original source)
  BRK
+
+ENDIF
+
+IF _6502SP_VERSION \ Comment
 
 \.MINI                  \ These instructions are commented out in the original
 \EQUS "L.E.MINING B00"  \ source, and form part of the commented section above

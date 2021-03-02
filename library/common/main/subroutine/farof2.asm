@@ -21,7 +21,7 @@
 
 .FAROF2
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Label
 
  CMP INWK+1             \ If A < x_hi, C will be clear so jump to MA34 to
  BCC MA34               \ return from the subroutine with C clear, otherwise
@@ -30,10 +30,6 @@ IF _CASSETTE_VERSION
  CMP INWK+4             \ If A < y_hi, C will be clear so jump to MA34 to
  BCC MA34               \ return from the subroutine with C clear, otherwise
                         \ C will be set so move on to the next one
-
- CMP INWK+7             \ If A < z_hi, C will be clear, otherwise C will be set
-
-.MA34
 
 ELIF _6502SP_VERSION OR _DISC_VERSION
 
@@ -45,7 +41,15 @@ ELIF _6502SP_VERSION OR _DISC_VERSION
  BCC FA1                \ return from the subroutine with C clear, otherwise
                         \ C will be set so move on to the next one
 
+ENDIF
+
  CMP INWK+7             \ If A < z_hi, C will be clear, otherwise C will be set
+
+IF _CASSETTE_VERSION \ Label
+
+.MA34
+
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
 .FA1
 

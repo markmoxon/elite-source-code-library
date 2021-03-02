@@ -21,7 +21,7 @@
 \
 \   Y2                  The screen y-coordinate of the end of the line
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \ Returns:
 \
 \   Y                   Y is preserved
@@ -36,7 +36,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
 ENDIF
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Label
 
 .LL30
 
@@ -48,7 +48,7 @@ ENDIF
                         \ because the two developers each had their own line
                         \ routines to start with, and then chose one of them for
                         \ the final game
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
                         \
                         \ In the 6502 Second Processor version, there are three
                         \ different routines. In the parasite, LL30 draws a
@@ -63,7 +63,7 @@ ENDIF
 
 .LOIN
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Platform
 
  STY YSAV               \ Store Y into YSAV, so we can preserve it across the
                         \ call to this subroutine
@@ -101,7 +101,7 @@ ENDIF
                         \ This subtraction works as we either set the C flag
                         \ above, or we skipped that SEC instruction with a BCS
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Platform
 
  BEQ HLOIN2             \ If A = 0 then Y1 = Y2, which means the line is
                         \ horizontal, so jump to HLOIN2 to draw a horizontal

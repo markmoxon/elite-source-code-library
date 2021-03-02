@@ -10,7 +10,7 @@
 \ Get a number from the keyboard, up to the maximum number in QQ25, for the
 \ buying and selling of cargo and equipment.
 \
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
 \ Pressing "Y" will return the maximum number (i.e. buy/sell all items), while
 \ pressing "N" will abort the sale and return a 0.
 \
@@ -36,7 +36,7 @@ ENDIF
 
 .gnum
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Screen
 
  LDA #MAGENTA           \ Send a #SETCOL MAGENTA command to the I/O processor to
  JSR DOCOL              \ switch to colour 2, which is magenta in the trade view
@@ -54,7 +54,7 @@ ENDIF
  JSR TT217              \ Scan the keyboard until a key is pressed, and return
                         \ the key's ASCII code in A (and X)
 
-IF _6502SP_VERSION OR _DISC_DOCKED
+IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced
 
  LDX R                  \ If R is non-zero then skip to NWDAV2, as we are
  BNE NWDAV2             \ already building a number
@@ -120,7 +120,7 @@ ENDIF
 
 .OUT
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Screen
 
  PHP                    \ Store the processor flags, so we can return the C flag
                         \ without the call to DOCOL corrupting it
@@ -136,7 +136,7 @@ ENDIF
 
  RTS                    \ Return from the subroutine
 
-IF _6502SP_VERSION OR _DISC_DOCKED
+IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced
 
 .NWDAV1
 
@@ -150,7 +150,7 @@ IF _6502SP_VERSION OR _DISC_DOCKED
 
 ENDIF
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Minor
 
  RTS                    \ Return from the subroutine
 
@@ -160,7 +160,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED
+IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced
 
 .NWDAV3
 
@@ -173,7 +173,7 @@ IF _6502SP_VERSION OR _DISC_DOCKED
 
 ENDIF
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Minor
 
  RTS                    \ Return from the subroutine
 

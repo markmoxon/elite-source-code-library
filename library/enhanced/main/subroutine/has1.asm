@@ -96,7 +96,7 @@
  BEQ HA1                \ If Y = 0, return from the subroutine (as HA1 contains
                         \ an RTS)
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Platform
 
                         \ We now work our way through the ship blueprints table
                         \ for the hanger, counting valid blueprints until we
@@ -128,7 +128,7 @@ ENDIF
  LDA XX21-1,X           \ to the blueprint for the ship we need to draw
  STA XX0+1
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Platform
 
  BEQ hloop              \ If the high byte of the blueprint address is 0, then
                         \ the blueprint for this ship is not available, so jump

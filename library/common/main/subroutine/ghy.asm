@@ -32,7 +32,7 @@
 
 .Ghy
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Comment
 
 \JSR TT111              \ This instruction is commented out in the original
                         \ source, and appears in the text cassette code source
@@ -40,15 +40,16 @@ IF _CASSETTE_VERSION
                         \ source disc (ELITED). It finds the closest system to
                         \ coordinates (QQ9, QQ10)
 
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Label
+
  LDX GHYP               \ Fetch GHYP, which tells us whether we own a galactic
  BEQ hy5                \ hyperdrive, and if it is zero, which means we don't,
                         \ return from the subroutine (as hy5 contains an RTS)
 
  INX                    \ We own a galactic hyperdrive, so X is &FF, so this
                         \ instruction sets X = 0
-
- STX QQ8                \ Set the distance to the selected system in QQ8(1 0)
- STX QQ8+1              \ to 0
 
 ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
@@ -59,14 +60,12 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT
  INX                    \ We own a galactic hyperdrive, so X is &FF, so this
                         \ instruction sets X = 0
 
-ELIF _DISC_DOCKED
+ENDIF
 
- LDX GHYP               \ Fetch GHYP, which tells us whether we own a galactic
- BEQ hy5                \ hyperdrive, and if it is zero, which means we don't,
-                        \ return from the subroutine (as hy5 contains an RTS)
+IF _CASSETTE_VERSION \ Other
 
- INX                    \ We own a galactic hyperdrive, so X is &FF, so this
-                        \ instruction sets X = 0
+ STX QQ8                \ Set the distance to the selected system in QQ8(1 0)
+ STX QQ8+1              \ to 0
 
 ENDIF
 
@@ -76,7 +75,7 @@ ENDIF
  STX FIST               \ Changing galaxy also clears our criminal record, so
                         \ set our legal status in FIST to 0 ("clean")
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Feature
 
  JSR wW                 \ Call wW to start the hyperspace countdown
 
@@ -123,21 +122,15 @@ ENDIF
 
  JSR TT110              \ Call TT110 to show the front space view
 
-IF _DISC_VERSION
+IF _DISC_VERSION OR _6502SP_VERSION \ Other
 
  JSR TT111              \ Call TT111 to set the current system to the nearest
                         \ system to (QQ9, QQ10), and put the seeds of the
                         \ nearest system into QQ15 to QQ15+5
 
- LDX #0                 \ Set the distance to the selected system in QQ8(1 0)
- STX QQ8                \ to 0
- STX QQ8+1
+ENDIF
 
-ELIF _6502SP_VERSION
-
- JSR TT111              \ Call TT111 to set the current system to the nearest
-                        \ system to (QQ9, QQ10), and put the seeds of the
-                        \ nearest system into QQ15 to QQ15+5
+IF _6502SP_VERSION \ Other
 
  LDX #5                 \ We now want to copy those seeds into safehouse, so we
                         \ so set a counter in Xto copy 6 bytes
@@ -151,6 +144,10 @@ ELIF _6502SP_VERSION
 
  BPL dumdeedum          \ Loop back to copy the next byte until we have copied
                         \ all six seed bytes
+
+ENDIF
+
+IF _DISC_VERSION OR _6502SP_VERSION \ Other
 
  LDX #0                 \ Set the distance to the selected system in QQ8(1 0)
  STX QQ8                \ to 0

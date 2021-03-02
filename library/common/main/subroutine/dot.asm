@@ -3,7 +3,7 @@
 \       Name: DOT
 \       Type: Subroutine
 \   Category: Dashboard
-IF _CASSETTE_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Comment
 \    Summary: Draw a dot on the compass
 ELIF _6502SP_VERSION
 \    Summary: Implement the #DOdot command (draw a dot on the compass)
@@ -13,7 +13,7 @@ ENDIF
 \
 \ Arguments:
 \
-IF _CASSETTE_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Comment
 \   COMX                The screen pixel x-coordinate of the dot
 \
 \   COMY                The screen pixel y-coordinate of the dot
@@ -39,7 +39,7 @@ ENDIF
 
 .DOT
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Tube
 
  LDA COMY               \ Set Y1 = COMY, the y-coordinate of the dot
  STA Y1
@@ -49,13 +49,6 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT
 
  LDA COMC               \ Set COL = COMC, the mode 5 colour byte for the dot
  STA COL
-
- CMP #&F0               \ If COL is &F0 then the dot is in front of us and we
- BNE CPIX2              \ want to draw a double-height dot, so if it isn't &F0
-                        \ jump to CPIX2 to draw a single-height dot
-
-                        \ Otherwise fall through into CPIX4 to draw a double-
-                        \ height dot
 
 ELIF _6502SP_VERSION
 
@@ -70,6 +63,19 @@ ELIF _6502SP_VERSION
  INY                    \ Fetch byte #3 from the parameter block (the dot's
  LDA (OSSC),Y           \ colour) and store it in COL
  STA COL
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Screen
+
+ CMP #&F0               \ If COL is &F0 then the dot is in front of us and we
+ BNE CPIX2              \ want to draw a double-height dot, so if it isn't &F0
+                        \ jump to CPIX2 to draw a single-height dot
+
+                        \ Otherwise fall through into CPIX4 to draw a double-
+                        \ height dot
+
+ELIF _6502SP_VERSION
 
  CMP #WHITE2            \ If the dot's colour is not white, jump to CPIX2 to
  BNE CPIX2              \ draw a single-height dot in the compass, as it is

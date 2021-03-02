@@ -14,7 +14,7 @@
  EQUW 80 * 80           \ Targetable area          = 80 * 80
  EQUB &4A               \ Edges data offset (low)  = &004A
  EQUB &9E               \ Faces data offset (low)  = &009E
-IF _CASSETTE_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Advanced
  EQUB 65                \ Max. edge count          = (65 - 1) / 4 = 16
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 69                \ Max. edge count          = (69 - 1) / 4 = 17
@@ -45,7 +45,7 @@ ENDIF
  VERTEX    0,   30,  -75,    15,     15,   15,    15,         31    \ Vertex 7
  VERTEX    0,  -50,  -60,     8,      9,   10,    11,         31    \ Vertex 8
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Label
 
 .SHIP_ASTEROID_EDGES
 
@@ -74,7 +74,7 @@ ENDIF
  EDGE       2,       8,    10,    11,         31    \ Edge 19
  EDGE       7,       8,     8,     9,         31    \ Edge 20
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Label
 
 .SHIP_ASTEROID_FACES
 

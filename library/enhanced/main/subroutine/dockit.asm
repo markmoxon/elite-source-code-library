@@ -117,7 +117,7 @@
                         \ degrees, so we're heading in pretty much the correct
                         \ direction for a good approach to the docking slot
 
-IF _DISC_FLIGHT
+IF _DISC_FLIGHT \ Minor
 
  JSR TAS3-2             \ Call TAS3-2 to calculate:
                         \

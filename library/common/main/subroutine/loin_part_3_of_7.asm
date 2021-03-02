@@ -13,7 +13,7 @@
 \
 \   * The line is going right and up (no swap) or left and down (swap)
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \   * X1 < X2 and Y1-1 > Y2
 ELIF _6502SP_VERSION
 \   * X1 < X2 and Y1 > Y2
@@ -21,7 +21,7 @@ ENDIF
 \
 \   * Draw from (X1, Y1) at bottom left to (X2, Y2) at top right
 \
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
 \ This routine looks complex, but that's because the loop that's used in the
 \ cassette and disc versions has been unrolled to speed it up. The algorithm is
 \ unchanged, it's just a lot longer.
@@ -29,7 +29,7 @@ IF _6502SP_VERSION
 ENDIF
 \ ******************************************************************************
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Screen
 
  LDA #%10001000         \ Modify the value in the LDA instruction at LI100 below
  AND COL                \ to contain a pixel mask for the first pixel in the
@@ -53,7 +53,7 @@ IF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  LDA SWAP               \ If SWAP > 0 then we swapped the coordinates above, so
  BNE LI6                \ jump down to LI6 to skip plotting the first pixel

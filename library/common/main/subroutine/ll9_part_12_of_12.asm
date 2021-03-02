@@ -11,7 +11,7 @@
 \ This part draws the lines in the ship line heap, which is used both to draw
 \ the ship, and to remove it from the screen.
 \
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
 \ If NEEDKEY is non-zero, then this routine also scans the keyboard for a key
 \ press and returns the internal key number in X (or 0 for no key press).
 \
@@ -20,7 +20,22 @@ ENDIF
 
 .LL155
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION \ Feature
+
+ LDA NEEDKEY            \ If NEEDKEY is zero, jump to notneed to skip the next
+ BEQ notneed            \ two instructions, so we only read the keyboard if
+                        \ NEEDKEY is non-zero
+
+ STZ NEEDKEY            \ Set NEEDKEY = 0
+
+ JSR RDKEY              \ Scan the keyboard for a key press and return the
+                        \ internal key number in X (or 0 for no key press)
+
+.notneed
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
 
  LDY #0                 \ Fetch the first byte from the ship line heap into A,
  LDA (XX19),Y           \ which contains the number of bytes in the heap
@@ -36,17 +51,6 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
                         \ the heap size)
 
 ELIF _6502SP_VERSION
-
- LDA NEEDKEY            \ If NEEDKEY is zero, jump to notneed to skip the next
- BEQ notneed            \ two instructions, so we only read the keyboard if
-                        \ NEEDKEY is non-zero
-
- STZ NEEDKEY            \ Set NEEDKEY = 0
-
- JSR RDKEY              \ Scan the keyboard for a key press and return the
-                        \ internal key number in X (or 0 for no key press)
-
-.notneed
 
  LDA (XX19)             \ Fetch the first byte from the ship line heap into A,
                         \ which contains the number of bytes in the heap
@@ -71,7 +75,7 @@ ENDIF
 
 .LL27
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
 
  LDA (XX19),Y           \ Fetch the X1 line coordinate from the heap and store
  STA XX15               \ it in XX15
@@ -105,7 +109,7 @@ ENDIF
  CPY XX20               \ If the heap counter is less than the size of the heap,
  BCC LL27               \ loop back to LL27 to draw the next line from the heap
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Label
 
 \LL82                   \ This label is commented out in the original source
 

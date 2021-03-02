@@ -3,13 +3,13 @@
 \       Name: ECBLB
 \       Type: Subroutine
 \   Category: Dashboard
-IF _CASSETTE_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Comment
 \    Summary: Light up the E.C.M. indicator bulb ("E") on the dashboard
 ELIF _6502SP_VERSION
 \    Summary: Implement the #DOBULB 255 command (draw the E.C.M. indicator bulb)
 ENDIF
 \
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ This routine is run when the parasite sends a #DOBULB 255 command. It draws
@@ -20,7 +20,7 @@ ENDIF
 
 .ECBLB
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Screen
 
  LDA #7*8               \ The E.C.M. bulb is in character block number 7
                         \ with each character taking 8 bytes, so this sets the

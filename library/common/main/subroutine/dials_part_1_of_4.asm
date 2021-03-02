@@ -19,7 +19,15 @@
 
 .DIALS
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION \ Platform
+
+ LDA #%00000001         \ Set 6522 System VIA interrupt enable register IER
+ STA VIA+&4E            \ (SHEILA &4E) bit 1 (i.e. disable the CA2 interrupt,
+                        \ which comes from the keyboard)
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  LDA #&D0               \ Set SC(1 0) = &78D0, which is the screen address for
  STA SC                 \ the character block containing the left end of the
@@ -30,10 +38,6 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
                         \ and X to the colour for safe values
 
 ELIF _6502SP_VERSION
-
- LDA #%00000001         \ Set 6522 System VIA interrupt enable register IER
- STA VIA+&4E            \ (SHEILA &4E) bit 1 (i.e. disable the CA2 interrupt,
-                        \ which comes from the keyboard)
 
  LDA #&A0               \ Set SC(1 0) = &71A0, which is the screen address for
  STA SC                 \ the character block containing the left end of the

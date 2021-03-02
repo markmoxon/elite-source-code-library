@@ -19,7 +19,7 @@
 \ Note that KYTB actually points to the byte before the start of the table, so
 \ the offset of the first key value is 1 (i.e. KYTB+1), not 0.
 \
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
 \ Other entry points:
 \
 \   KYTB                Contains an RTS
@@ -27,7 +27,7 @@ IF _6502SP_VERSION
 ENDIF
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Label
 
 KYTB = P% - 1           \ Point KYTB to the byte before the start of the table
 
@@ -37,7 +37,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Label
 
  RTS                    \ Return from the subroutine (used as an entry point and
                         \ a fall-through from above)
@@ -66,7 +66,7 @@ ENDIF
  EQUB &45               \ J         KYTB+14     In-system jump
  EQUB &52               \ C         KYTB+15     Docking computer
 
-IF _6502SP_VERSION OR _DISC_FLIGHT
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced
 
  EQUB &37               \ P         KYTB+16     Cancel docking computer
 

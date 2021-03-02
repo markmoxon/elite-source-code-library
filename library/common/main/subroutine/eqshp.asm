@@ -21,33 +21,38 @@
 
 .EQSHP
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Platform
 
  JSR DIALS              \ Call DIALS to update the dashboard
 
- LDA #32                \ Clear the top part of the screen, draw a white border,
- JSR TT66               \ and set the current view type in QQ11 to 32 (Equip
-                        \ Ship screen)
+ENDIF
 
- LDA #12                \ Move the text cursor to column 12
- STA XC
-
-ELIF _DISC_DOCKED
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Advanced
 
  LDA #32                \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 32 (Equip
                         \ Ship screen)
-
- JSR FLKB               \ Flush the keyboard buffer
-
- LDA #12                \ Move the text cursor to column 12
- STA XC
 
 ELIF _6502SP_VERSION
 
  LDA #32                \ Clear the top part of the screen, draw a white border,
  JSR TRADEMODE          \ and set up a printable trading screen with a view type
                         \ in QQ11 of 32 (Equip Ship screen)
+
+ENDIF
+
+IF _DISC_DOCKED \ Platform
+
+ JSR FLKB               \ Flush the keyboard buffer
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Tube
+
+ LDA #12                \ Move the text cursor to column 12
+ STA XC
+
+ELIF _6502SP_VERSION
 
  LDA #12                \ Move the text cursor to column 12
  JSR DOXC
@@ -63,7 +68,7 @@ ENDIF
  LDA #%10000000         \ Set bit 7 of QQ17 to switch to Sentence Case, with the
  STA QQ17               \ next letter in capitals
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Tube
 
  INC YC                 \ Move the text cursor down one line
 
@@ -77,7 +82,7 @@ ENDIF
  CLC                    \ and add 3 (the tech level is stored as 0-14, so A is
  ADC #3                 \ now set to between 3 and 17)
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Enhanced
 
  CMP #12                \ If A >= 12 then set A = 12, so A is now set to between
  BCC P%+4               \ 3 and 12
@@ -139,7 +144,7 @@ ENDIF
  SEC                    \ Set the C flag so we will print a decimal point when
                         \ we print the price
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Tube
 
  LDA #25                \ Move the text cursor to column 25
  STA XC
@@ -187,7 +192,7 @@ ENDIF
                         \ clear), which will be the actual item number we want
                         \ to buy
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Tube
 
  LDX #2                 \ Move the text cursor to column 2
  STX XC
@@ -217,7 +222,7 @@ ENDIF
  BNE et0                \ If A is not 0 (i.e. the item we've just bought is not
                         \ fuel), skip to et0
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Other
 
  STA MCNT               \ We just bought fuel, so we zero the main loop counter
 
@@ -235,7 +240,7 @@ ENDIF
 
  INX                    \ Increment X to the new number of missiles
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Minor
 
  LDY #117               \ Set Y to recursive token 117 ("ALL")
 
@@ -256,9 +261,9 @@ ENDIF
  JSR msblob             \ Reset the dashboard's missile indicators so none of
                         \ them are targeted
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Other
 
- LDA #1                 \ Set A to 5 as the call to msblob will have overwritten
+ LDA #1                 \ Set A to 1 as the call to msblob will have overwritten
                         \ the original value, and we still need it set
                         \ correctly so we can continue through the conditional
                         \ statements for all the other equipment
@@ -307,7 +312,7 @@ ENDIF
                         \ prompt, and ask for a view number, which is returned
                         \ in X (which now contains 0-3)
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Enhanced
 
  LDA #4                 \ This instruction doesn't appear to do anything, as we
                         \ either don't need it (if we already have this laser)
@@ -353,7 +358,7 @@ ENDIF
                         \ prompt, and ask for a view number, which is returned
                         \ in X (which now contains 0-3)
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Enhanced
 
  STX T1                 \ Store the view in T1 so we can retrieve it below
 
@@ -531,7 +536,7 @@ ENDIF
 
 .et9
 
-IF _6502SP_VERSION OR _DISC_DOCKED
+IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced
 
  INY                    \ Increment Y to recursive token 117 ("MILITARY  LASER")
 

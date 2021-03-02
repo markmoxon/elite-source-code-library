@@ -7,7 +7,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Comment
 \ Print the 8-bit number in X at text location (0, 1). Print the number to
 ELIF _DISC_VERSION OR _6502SP_VERSION
 \ Print the 8-bit number in X at text location (1, 1). Print the number to
@@ -23,7 +23,14 @@ ENDIF
 
 .ee3
 
-IF _CASSETTE_VERSION
+IF _6502SP_VERSION \ Screen
+
+ LDA #RED               \ Send a #SETCOL RED command to the I/O processor to
+ JSR DOCOL              \ switch to colour 2, which is red in the space view
+
+ENDIF
+
+IF _CASSETTE_VERSION \ Feature
 
  LDY #1                 \ Move the text cursor to row 1
  STY YC
@@ -42,9 +49,6 @@ ELIF _DISC_VERSION
  DEY                    \ Decrement Y to 0 for the high byte in pr6
 
 ELIF _6502SP_VERSION
-
- LDA #RED               \ Send a #SETCOL RED command to the I/O processor to
- JSR DOCOL              \ switch to colour 2, which is red in the space view
 
  LDA #1                 \ Move the text cursor to column 1 on row 1
  JSR DOXC

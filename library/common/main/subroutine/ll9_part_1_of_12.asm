@@ -30,7 +30,7 @@
 \
 \   XX0                 The address of the blueprint for this ship
 \
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
 \ Returns:
 \
 \   X                   If NEEDKEY is non-zero, scan the keyboard for a key
@@ -50,7 +50,7 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
 .LL25
 
@@ -61,7 +61,7 @@ ENDIF
 
 .LL9
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Minor
 
  LDA TYPE               \ If the ship type is negative then this indicates a
  BMI LL25               \ planet or sun, so jump to PLANET via LL25 above
@@ -70,6 +70,10 @@ ELIF _6502SP_VERSION
 
  LDX TYPE               \ If the ship type is negative then this indicates a
  BMI LL25               \ planet or sun, so jump to PLANET via LL25 above
+
+ENDIF
+
+IF _6502SP_VERSION \ Screen
 
  LDA shpcol,X           \ Set A to the ship colour for this type, from the X-th
                         \ entry in the shpcol table
@@ -84,7 +88,7 @@ ENDIF
                         \ update this value below with the actual ship's
                         \ distance if it turns out to be visible on-screen
 
-IF _6502SP_VERSION OR _DISC_FLIGHT
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced
 
  LDA NEWB               \ If bit 7 of the ship's NEWB flags is set, then the
  BMI EE51               \ ship has been scooped or has docked, so jump down to
@@ -176,7 +180,7 @@ ENDIF
  AND #%11110111         \ byte #31 to denote that the ship is no longer being
  STA XX1+31             \ drawn on-screen
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Comment
 
  JMP DOEXP              \ Jump to DOEXP to display the explosion cloud, which
                         \ will remove it from the screen, returning from the

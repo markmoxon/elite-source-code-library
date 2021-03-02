@@ -1,7 +1,7 @@
 \ ******************************************************************************
 \
 \       Name: DKS4
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \       Type: Subroutine
 ELIF _6502SP_VERSION
 \       Type: Macro
@@ -14,7 +14,7 @@ ENDIF
 \
 \ Arguments:
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \   X                   The internal number of the key to check (see p.142 of
 ELIF _6502SP_VERSION
 \   A                   The internal number of the key to check (see p.142 of
@@ -29,7 +29,7 @@ ENDIF
 \                       If the key in A is not being pressed, the value in A is
 \                       unchanged
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \   X                   Contains the same as A
 \
 \ Other entry points:
@@ -39,7 +39,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
 ENDIF
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Minor
 
 .DKS4
 

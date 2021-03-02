@@ -124,7 +124,7 @@
  EQUB %00001100         \ Thargoid                               Hostile, pirate
  EQUB %00000100         \ Thargon                                        Hostile
  EQUB %00000100         \ Constrictor                                    Hostile
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Advanced
  EQUB %00000000         \ The Elite logo
 ENDIF
  EQUB %00100000         \ Cougar                                        Innocent

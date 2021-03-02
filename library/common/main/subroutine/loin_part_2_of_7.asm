@@ -48,7 +48,7 @@
                         \ X1 < X2, so we're going from left to right as we go
                         \ from X1 to X2
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  LDA Y1                 \ Set A = Y1 / 8, so A now contains the character row
  LSR A                  \ that will contain our horizontal line
@@ -77,7 +77,7 @@ ENDIF
  AND #7                 \ character block at which we want to draw the start of
  TAY                    \ our line (as each character block has 8 rows)
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  TXA                    \ Set A = bits 3-7 of X1
  AND #%11111000
@@ -95,7 +95,7 @@ ENDIF
                         \ of the horizontal pixel row that we want to draw the
                         \ start of our line on
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  TXA                    \ Set X = X1 mod 8, which is the horizontal pixel number
  AND #7                 \ within the character block where the line starts (as
@@ -105,15 +105,32 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
  LDA TWOS,X             \ Fetch a 1-pixel byte from TWOS where pixel X is set,
  STA R                  \ and store it in R
 
- LDA Q                  \ Set A = |delta_y|
+
+ELIF _6502SP_VERSION
+
+ BCC P%+4               \ If bit 7 of X1 was set, so X1 > 127, increment the
+ INC SC+1               \ high byte of SC(1 0) to point to the second page on
+                        \ this screen row, as this page contains the right half
+                        \ of the row
+
+ TXA                    \ Set R = X1 mod 4, which is the horizontal pixel number
+ AND #3                 \ within the character block where the line starts (as
+ STA R                  \ each pixel line in the character block is 4 pixels
+                        \ wide)
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Other
 
                         \ The following calculates:
                         \
-                        \   Q = A / P
+                        \   Q = Q / P
                         \     = |delta_y| / |delta_x|
                         \
                         \ using the same shift-and-subtract algorithm that's
                         \ documented in TIS2
+
+ LDA Q                  \ Set A = |delta_y|
 
  LDX #%11111110         \ Set Q to have bits 1-7 set, so we can rotate through 7
  STX Q                  \ loop iterations, getting a 1 each time, and then
@@ -165,16 +182,6 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
                         \ the line to the right and down
 
 ELIF _6502SP_VERSION
-
- BCC P%+4               \ If bit 7 of X1 was set, so X1 > 127, increment the
- INC SC+1               \ high byte of SC(1 0) to point to the second page on
-                        \ this screen row, as this page contains the right half
-                        \ of the row
-
- TXA                    \ Set R = X1 mod 4, which is the horizontal pixel number
- AND #3                 \ within the character block where the line starts (as
- STA R                  \ each pixel line in the character block is 4 pixels
-                        \ wide)
 
                         \ The following section calculates:
                         \

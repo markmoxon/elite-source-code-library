@@ -10,7 +10,7 @@
 
 .DOENTRY
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Platform
 
  JSR scramble           \ Decrypt the newly loaded code
 
@@ -79,7 +79,7 @@ ENDIF
                         \ Mission 1 has been completed, so now to check for
                         \ mission 2
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Minor
 
  LDA GCNT               \ Fetch the galaxy number into A
 
@@ -102,7 +102,7 @@ ENDIF
  BCC EN4                \ to Deadly), jump to EN4 as our rank isn't high enough
                         \ for mission 2
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Minor
 
  LDA GCNT               \ Fetch the galaxy number into A
 
@@ -127,7 +127,7 @@ ENDIF
                         \ will be %0110, so this jumps to EN5 if this is not the
                         \ case
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Minor
 
  LDA GCNT               \ Fetch the galaxy number into A
 
@@ -161,7 +161,7 @@ ENDIF
                         \ plans, then bits 0-3 of TP will be %1010, so this
                         \ jumps to EN5 if this is not the case
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Minor
 
  LDA GCNT               \ Fetch the galaxy number into A
 

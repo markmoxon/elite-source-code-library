@@ -10,7 +10,7 @@
 
 .SHIP_CONSTRICTOR
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
  EQUB 3                 \ Max. canisters on demise = 3
  EQUW 65 * 65           \ Targetable area          = 65 * 65
 ELIF _DISC_DOCKED
@@ -20,7 +20,7 @@ ELIF _DISC_DOCKED
 ENDIF
  EQUB &7A               \ Edges data offset (low)  = &007A
  EQUB &DA               \ Faces data offset (low)  = &00DA
-IF _DISC_VERSION
+IF _DISC_VERSION \ Advanced
  EQUB 77                \ Max. edge count          = (77 - 1) / 4 = 19
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 81                \ Max. edge count          = (81 - 1) / 4 = 20
@@ -32,7 +32,7 @@ ENDIF
  EQUW 0                 \ Bounty                   = 0
  EQUB 40                \ Number of faces          = 40 / 4 = 10
  EQUB 45                \ Visibility distance      = 45
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
  EQUB 252               \ Max. energy              = 252
  EQUB 36                \ Max. speed               = 36
 ELIF _DISC_DOCKED
@@ -42,7 +42,7 @@ ENDIF
  EQUB &00               \ Edges data offset (high) = &007A
  EQUB &00               \ Faces data offset (high) = &00DA
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
  EQUB %00110100         \ Laser power              = 6
                         \ Missiles                 = 4
 ELIF _DISC_DOCKED

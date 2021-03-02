@@ -17,7 +17,7 @@
 \ This has the effect of making the tunnel appear to be racing towards us as we
 \ hurtle out into hyperspace or through the space station's docking tunnel.
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \ The hyperspace effect is done in a full mode 5 screen, which makes the rings
 \ all coloured and zig-zaggy, while the launch screen is in the normal
 \ monochrome mode 4 screen.
@@ -32,7 +32,7 @@ ENDIF
 \   A                   The step size of the straight lines making up the rings
 \                       (4 for launch, 8 for hyperspace)
 \
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
 \ Other entry points:
 \
 \   HFS1                Don't clear the screen, and draw 8 concentric rings
@@ -47,7 +47,7 @@ ENDIF
 
  JSR TTX66              \ Clear the screen and draw a white border
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Feature
 
  JSR HFS1               \ Call HFS1 below and then fall through into the same
                         \ routine, so this effectively runs HFS1 twice, and as
@@ -58,7 +58,7 @@ ENDIF
 
 .HFS1
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Minor
 
  LDA #128               \ Set K3 = 128 (the x-coordinate of the centre of the
  STA K3                 \ screen)
@@ -73,7 +73,7 @@ ENDIF
  LDX #Y                 \ Set K4 = #Y (the y-coordinate of the centre of the
  STX K4                 \ screen)
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Minor
 
  ASL A                  \ Set A = 0
 

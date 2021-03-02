@@ -19,7 +19,7 @@
 \   * If this is a space view, scan for secondary flight keys and update the
 \     relevant bytes in the key logger
 \
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
 \ Other entry points:
 \
 \   FREEZE              Rejoin the pause routine after processing a screen save
@@ -34,7 +34,7 @@ ENDIF
 
 .DK4
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
 
  JSR RDKEY              \ Scan the keyboard for a key press and return the
                         \ internal key number in X (or 0 for no key press)
@@ -91,7 +91,7 @@ ENDIF
 
  BNE DKL4               \ If not, loop back to check for the next toggle key
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Label
 
 .DK55
 
@@ -108,18 +108,19 @@ ENDIF
  CPX #&70               \ If ESCAPE is not being pressed, skip over the next
  BNE P%+5               \ instruction
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Minor
 
  JMP DEATH2             \ ESCAPE is being pressed, so jump to DEATH2 to end
                         \ the game
 
 ELIF _DISC_DOCKED
 
- JMP BR1                \ Jump to BR1 to restart the game
+ JMP BR1                \ ESCAPE is being pressed, so jump to BR1 to end the
+                        \ game
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION OR _DISC_VERSION \ Enhanced
 
  CPX #&64               \ If "B" is not being pressed, skip to DK7
  BNE nobit
@@ -139,7 +140,7 @@ IF _6502SP_VERSION OR _DISC_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Advanced
 
  CPX #&32               \ If "D" is being pressed, jump to savscr to save a
  BEQ savscr             \ screenshot
@@ -153,11 +154,21 @@ ENDIF
 
 .DK2
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Minor
 
  LDA QQ11               \ If the current view is non-zero (i.e. not a space
  BNE DK5                \ view), return from the subroutine (as DK5 contains
                         \ an RTS)
+
+ELIF _6502SP_VERSION OR _DISC_DOCKED
+
+ LDA QQ11               \ If the current view is non-zero (i.e. not a space
+ BNE out                \ view), return from the subroutine (as out contains
+                        \ an RTS)
+
+ENDIF
+
+IF _CASSETTE_VERSION \ Enhanced
 
  LDY #15                \ This is a space view, so now we want to check for all
                         \ the secondary flight keys. The internal key numbers
@@ -166,24 +177,7 @@ IF _CASSETTE_VERSION
                         \ to KL+15. So set a decreasing counter in Y for the
                         \ index, starting at 15, so we can loop through them
 
-ELIF _DISC_FLIGHT
-
- LDA QQ11               \ If the current view is non-zero (i.e. not a space
- BNE DK5                \ view), return from the subroutine (as DK5 contains
-                        \ an RTS)
-
- LDY #16                \ This is a space view, so now we want to check for all
-                        \ the secondary flight keys. The internal key numbers
-                        \ are in the keyboard table KYTB from KYTB+8 to
-                        \ KYTB+16, and their key logger locations are from KL+8
-                        \ to KL+16. So set a decreasing counter in Y for the
-                        \ index, starting at 16, so we can loop through them
-
-ELIF _6502SP_VERSION OR _DISC_DOCKED
-
- LDA QQ11               \ If the current view is non-zero (i.e. not a space
- BNE out                \ view), return from the subroutine (as out contains
-                        \ an RTS)
+ELIF _6502SP_VERSION OR _DISC_VERSION
 
  LDY #16                \ This is a space view, so now we want to check for all
                         \ the secondary flight keys. The internal key numbers
@@ -197,7 +191,7 @@ ENDIF
  LDA #&FF               \ Set A to &FF so we can store this in the keyboard
                         \ logger for keys that are being pressed
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
 .DKL1
 
@@ -223,7 +217,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Label
 
 .DK5
 
@@ -231,7 +225,7 @@ ENDIF
 
  RTS                    \ Return from the subroutine
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Platform
 
 .DK9
 

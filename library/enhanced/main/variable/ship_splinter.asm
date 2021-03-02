@@ -20,7 +20,7 @@
  EQUW 16 * 16           \ Targetable area          = 16 * 16
  EQUB LO(SHIP_ESCAPE_POD_EDGES - SHIP_SPLINTER)      \ Edges data = escape pod
  EQUB &44               \ Faces data offset (low)  = &0044
-IF _DISC_FLIGHT
+IF _DISC_FLIGHT \ Advanced
  EQUB 25                \ Max. edge count          = (25 - 1) / 4 = 6
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 29                \ Max. edge count          = (29 - 1) / 4 = 7

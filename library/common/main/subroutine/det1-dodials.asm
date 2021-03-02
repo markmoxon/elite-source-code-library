@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \       Name: DET1
 \       Type: Subroutine
 \   Category: Screen mode
@@ -23,7 +23,7 @@ ENDIF
 \
 \ Arguments:
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \   X                   The number of text rows to display on the screen (24
 ELIF _6502SP_VERSION
 \   A                   The number of text rows to display on the screen (24
@@ -36,13 +36,17 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Label
 
 .DET1
 
 ELIF _6502SP_VERSION
 
 .DODIALS
+
+ENDIF
+
+IF _6502SP_VERSION \ Platform
 
  TAX                    \ Copy the number of rows to display into X
 
@@ -58,7 +62,7 @@ ENDIF
 
  CLI                    \ Re-enable interrupts
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
 
  RTS                    \ Return from the subroutine
 

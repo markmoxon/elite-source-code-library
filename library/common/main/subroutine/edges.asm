@@ -35,7 +35,7 @@
 \
 \   Y                   Y is preserved
 \
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Comment
 \ Other entry points:
 \
 \   PL44                Clear the C flag and return from the subroutine
@@ -96,7 +96,7 @@ ENDIF
  STA X1                 \ past the left edge of the screen, so clip X1 to the
                         \ y-coordinate of the left edge of the screen
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Label
 
 .PL44
 
@@ -112,7 +112,7 @@ ENDIF
  LDA #0                 \ Set the Y-th byte of the LSO block to 0
  STA LSO,Y
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Minor
 
  SEC                    \ The line does not fit on the screen, so set the C flag
                         \ to indicate this result

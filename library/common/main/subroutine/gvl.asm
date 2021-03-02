@@ -3,7 +3,7 @@
 \       Name: GVL
 \       Type: Subroutine
 \   Category: Universe
-\    Summary: Calculate the availability of a market item
+\    Summary: Calculate the availability of market items
 \  Deep dive: Market item prices and availability
 \             Galaxy and system seeds
 \

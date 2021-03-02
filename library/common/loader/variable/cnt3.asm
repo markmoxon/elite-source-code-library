@@ -14,7 +14,7 @@
 
 .CNT3
 
-IF _CASSETTE_VERSION \ Feature
+IF _CASSETTE_VERSION \ Feature: Saturn in the cassette version has up to 1280 dots in the ring, while all other versions have up to 819
 
  EQUW &0500             \ The number of iterations of the PLL3 loop (1280)
 

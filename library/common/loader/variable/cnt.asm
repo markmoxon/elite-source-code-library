@@ -14,7 +14,7 @@
 
 .CNT
 
-IF _CASSETTE_VERSION \ Feature
+IF _CASSETTE_VERSION \ Feature: Saturn in the cassette version has up to 1280 dots in the planet, while all other versions have up to 768
 
  EQUW &0500             \ The number of iterations of the PLL1 loop (1280)
 

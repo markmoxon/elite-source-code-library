@@ -28,7 +28,7 @@
 
 .E%
 
-IF _CASSETTE_VERSION \ Feature
+IF _CASSETTE_VERSION \ Feature: There is a subtle difference between the cassette version's laser firing sound compared to the other versions (the cassette version has a slightly lower amplitude in the envelope's attack phase)
 
  EQUB 1, 1, 0, 111, -8, 4, 1, 8, 8, -2, 0, -1, 112, 44
 ELIF _6502SP_VERSION OR _DISC_VERSION

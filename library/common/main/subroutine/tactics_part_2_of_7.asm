@@ -52,7 +52,7 @@ ENDIF
 
 .TACTICS
 
-IF _DISC_FLIGHT
+IF _DISC_FLIGHT \ Enhanced: The docking computer can set its own turning circle rate, which is diffrent to the requirements of the tactics routine, so the latter now sets otsnown configuration when it starts
 
  LDY #3                 \ Set RAT = 3, which is the magnitude we set the pitch
  STY RAT                \ or roll counter to in part 7 when turning a ship
@@ -70,14 +70,6 @@ IF _DISC_FLIGHT
                         \ or planet. This value is set to different values by
                         \ both the TACTICS and DOCKIT routines
 
- LDA #22                \ Set CNT2 = 22, which is the maximum angle beyond which
- STA CNT2               \ a ship will slow down to start turning towards its
-                        \ prey (a lower value means a ship will start to slow
-                        \ down even if its angle with the enemy ship is large,
-                        \ which gives a tighter turn). This value is not changed
-                        \ in the TACTICS routine, but it is set to different
-                        \ values by the DOCKIT routine
-
 ELIF _6502SP_VERSION
 
  LDA #3                 \ Set RAT = 3, which is the magnitude we set the pitch
@@ -87,6 +79,7 @@ ELIF _6502SP_VERSION
                         \ routine, but it is set to different values by the
                         \ DOCKIT routine
 
+
  LDA #4                 \ Set RAT2 = 4, which is the threshold below which we
  STA RAT2               \ don't apply pitch and roll to the ship (so a lower
                         \ value means we apply pitch and roll more often, and a
@@ -95,6 +88,10 @@ ELIF _6502SP_VERSION
                         \ where XX15 is the vector from the ship to the enemy
                         \ or planet. This value is set to different values by
                         \ both the TACTICS and DOCKIT routines
+
+ENDIF
+
+IF _DISC_FLIGHT OR _6502SP_VERSION \ Enhanced: See above
 
  LDA #22                \ Set CNT2 = 22, which is the maximum angle beyond which
  STA CNT2               \ a ship will slow down to start turning towards its
@@ -109,7 +106,7 @@ ENDIF
  CPX #MSL               \ If this is a missile, jump up to TA18 to implement
  BEQ TA18               \ missile tactics
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Enhanced: In the cassette version, the tactics routine sends escape pods straight to the planet. Enhanced versions let the NEWB flags steer it home
 
  CPX #ESC               \ If this is not an escape pod, skip the following two
  BNE P%+8               \ instructions
@@ -218,7 +215,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
 ENDIF
 
-IF _DISC_FLIGHT
+IF _DISC_FLIGHT \ Advanced
 
  LDA MANY+COPS          \ Check how many cops there are in the vicinity already,
  CMP #4                 \ and if there are 4 or more, return from the subroutine
@@ -248,7 +245,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT
 
 ENDIF
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Advanced: Rock hermit tactics, 22% chance of spawning a Sidewinder, Mamba, Krait, Adder or Gecko
 
  CPX #HER               \ If this is not a rock hermit, jump down to TA17
  BNE TA17

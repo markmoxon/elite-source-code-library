@@ -73,7 +73,7 @@
                         \ can use it as an index for the two-byte address table
                         \ at UNIV
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Minor: This does exactly the same, but some code has moved into the VCSUB routine
 
  TAX                    \ Copy the address of the target ship's data block from
  LDA UNIV,X             \ UNIV(X+1 X) to V(1 0)
@@ -178,7 +178,7 @@ ENDIF
 
  JSR DORND              \ Set A and X to random numbers
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Minor
 
  CMP #16                \ If A >= 16 (94% chance), jump down to TA19 with the
  BCS TA19               \ vector from the target to the missile in K3
@@ -196,7 +196,7 @@ ENDIF
  LDA (V),Y              \ into the C flag
  LSR A
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Minor
 
  BCC TA19               \ If the C flag is clear then the target does not have
                         \ E.C.M. fitted, so jump down to TA19 with the vector

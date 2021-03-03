@@ -26,7 +26,7 @@
  JSR DORND              \ Fetch a random number, and jump to oh if it is
  BPL oh                 \ positive (50% chance)
 
-IF _DISC_FLIGHT
+IF _DISC_FLIGHT \ Other: Bug fix? Stops A being changed from a random number to the type, which presumably happens with the 6502SP version
 
  PHA                    \ Store A on the stack so we can restore it after the
                         \ following transfers
@@ -36,7 +36,7 @@ ENDIF
  TYA                    \ Copy the cargo type from Y into A and X
  TAX
 
-IF _DISC_FLIGHT
+IF _DISC_FLIGHT \ Other: See above
 
  PLA                    \ Restore A from the stack
 

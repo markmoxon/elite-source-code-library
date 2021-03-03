@@ -53,7 +53,7 @@
  LDA K3+1
  STA SUNX+1
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Tube
 
  JSR HBFL               \ Call HBFL to send the contents of the horizontal line
                         \ buffer to the I/O processor for drawing on-screen

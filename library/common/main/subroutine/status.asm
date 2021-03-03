@@ -8,7 +8,7 @@
 \
 \ ******************************************************************************
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Minor: The 6502SP version has to use an extended token for printing "DOCKED" because the standard token has been repurposed compared to the cassette version
 
 .wearedocked
 
@@ -66,7 +66,7 @@ ENDIF
 
 .STATUS
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Advanced
 
  LDA #8                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 8 (Status
@@ -83,7 +83,7 @@ ENDIF
  JSR TT111              \ Select the system closest to galactic coordinates
                         \ (QQ9, QQ10)
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
 
  LDA #7                 \ Move the text cursor to column 7
  STA XC
@@ -108,7 +108,7 @@ ENDIF
                         \ and draw a horizontal line at pixel row 19 to box
                         \ in the title
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Minor
 
  LDA #15                \ Set A to token 129 ("{sentence case}DOCKED")
 
@@ -125,14 +125,14 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
  LDA #230               \ Otherwise we are in space, so start off by setting A
                         \ to token 70 ("GREEN")
 
 ENDIF
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Platform
 
  LDY MANY+AST           \ Set Y to the number of asteroids in our local bubble
                         \ of universe
@@ -145,7 +145,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
  LDX FRIN+2,Y           \ The ship slots at FRIN are ordered with the first two
                         \ slots reserved for the planet and sun/space station,
@@ -227,7 +227,7 @@ ENDIF
  LSR A
  LSR A
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Label
 
 .st5L
 
@@ -258,7 +258,7 @@ ENDIF
 
  LSR A                  \ Shift A to the right
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Label
 
  BNE st5L               \ Keep looping around until A = 0, which means there are
                         \ no set bits left in A
@@ -359,7 +359,7 @@ ENDIF
 
  LDA #103               \ Set A to token 103 ("PULSE LASER")
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Enhanced
 
  LDX CNT                \ If the laser power for view X has bit 7 clear, then it
  LDY LASER,X            \ is a pulse laser, so skip the following instruction

@@ -10,7 +10,7 @@
 \
 \ This section sets up some vectors and calculates dot products. Specifically:
 \
-IF _6502SP_VERSION OR _DISC_FLIGHT
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Comment
 \   * If this is a lone Thargon without a mothership, set it adrift aimlessly
 \     and we're done
 \
@@ -34,7 +34,7 @@ ENDIF
 \     us work out later on whether the enemy ship is pointing towards us, and
 \     therefore whether it can hit us with its lasers.
 \
-IF _6502SP_VERSION OR _DISC_FLIGHT
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Comment
 \ Other entry points:
 \
 \   GOPL                Make the ship head towards the planet

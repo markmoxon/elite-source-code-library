@@ -12,7 +12,7 @@
 \
 \ Arguments:
 \
-IF _CASSETTE_VERSION OR _DISC_DOCKED
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Comment
 \   A                   The number of the recursive token to show below the
 \                       rotating ship (see variable QQ18 for details of
 \                       recursive tokens)
@@ -36,10 +36,14 @@ ENDIF
  JSR RESET              \ Reset our ship so we can use it for the rotating
                         \ title ship
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Tube
 
  JSR ZEKTRAN            \ Reset the key logger buffer that gets returned from
                         \ the I/O processor
+
+ENDIF
+
+IF _6502SP_VERSION \ Screen
 
  LDA #32                \ Send a #SETVDU19 32 command to the I/O processor to
  JSR DOVDU19            \ set the mode 1 palette to yellow (colour 1), white
@@ -50,15 +54,19 @@ ENDIF
  LDA #1                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 1
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED
+IF _6502SP_VERSION \ Screen
+
+ LDA #RED               \ Send a #SETCOL RED command to the I/O processor to
+ JSR DOCOL              \ switch to colour 2, which is white in the title screen
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Minor
 
  DEC QQ11               \ Decrement QQ11 to 0, so from here on we are using a
                         \ space view
 
 ELIF _6502SP_VERSION
-
- LDA #RED               \ Send a #SETCOL RED command to the I/O processor to
- JSR DOCOL              \ switch to colour 2, which is white in the title screen
 
  STZ QQ11               \ Set QQ11 to 0, so from here on we are using a space
                         \ view
@@ -68,7 +76,7 @@ ENDIF
  LDA #96                \ Set nosev_z hi = 96 (96 is the value of unity in the
  STA INWK+14            \ rotation vector)
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Other: Copy protection
 
  LDA &9F                \ As part of the copy protection, location &9F is set to
  CMP #219               \ 219 in the OSBmod routine in elite-loader3.asm. This
@@ -104,14 +112,7 @@ ENDIF
  LDA TYPE               \ Set up a new ship, using the ship type in TYPE
  JSR NWSHP
 
-IF _CASSETTE_VERSION
-
- LDY #6                 \ Move the text cursor to column 6
- STY XC
-
- JSR DELAY              \ Delay for 6 vertical syncs (6/50 = 0.12 seconds)
-
-ELIF _DISC_DOCKED
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Tube
 
  LDY #6                 \ Move the text cursor to column 6
  STY XC
@@ -123,10 +124,16 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION \ Feature
+
+ JSR DELAY              \ Delay for 6 vertical syncs (6/50 = 0.12 seconds)
+
+ENDIF
+
  LDA #30                \ Print recursive token 144 ("---- E L I T E ----")
  JSR plf                \ followed by a newline
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Tube
 
  LDY #6                 \ Move the text cursor to column 6 again
  STY XC
@@ -147,7 +154,7 @@ ENDIF
  BEQ awe                \ print the author credits (PATG can be toggled by
                         \ pausing the game and pressing "X")
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Minor
 
  LDA #254               \ Print recursive token 94 ("BY D.BRABEN & I.BELL")
  JSR TT27
@@ -161,7 +168,7 @@ ENDIF
 
 .awe
 
-IF _6502SP_VERSION OR _DISC_DOCKED
+IF _6502SP_VERSION OR _DISC_DOCKED \ Platform
 
  LDA brkd               \ If brkd = 0, jump to BRBR2 to skip the following, as
  BEQ BRBR2              \ we do not have a system error message to display
@@ -170,7 +177,7 @@ IF _6502SP_VERSION OR _DISC_DOCKED
 
 ENDIF
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Tube
 
  LDA #7                 \ Move the text cursor to column 7
  STA XC
@@ -188,7 +195,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED
+IF _6502SP_VERSION OR _DISC_DOCKED \ Platform
 
                         \ The following loop prints out the null-terminated
                         \ message pointed to by (&FD &FE), which is the MOS
@@ -224,16 +231,18 @@ ENDIF
 
  STY JSTK               \ Set KSTK = 0 (i.e. keyboard, not joystick)
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Minor
 
  PLA                    \ Restore the recursive token number we stored on the
  JSR ex                 \ stack at the start of this subroutine, and print that
                         \ token
 
- LDA #148               \ Move the text cursor to column 7 and print recursive
- LDX #7                 \ token 148 ("(C) ACORNSOFT 1984")
+ LDA #148               \ Set A to recursive token 148
+
+ LDX #7                 \ Move the text cursor to column 7
  STX XC
- JSR ex
+
+ JSR ex                 \ Print recursive token 148 ("(C) ACORNSOFT 1984")
 
 ELIF _DISC_DOCKED
 
@@ -269,6 +278,10 @@ ELIF _6502SP_VERSION
  LDA #12                \ Print extended token 12 ("({single cap}C) ACORNSOFT
  JSR DETOK              \ 1984")
 
+ENDIF
+
+IF _6502SP_VERSION \ Advanced: Add loop counters so we can start the demo after a certain period on the title screen
+
  LDA #12                \ Set CNT2 = 12 as the outer loop counter for the loop
  STA CNT2               \ starting at TLL2
 
@@ -291,21 +304,19 @@ ENDIF
  JSR MVEIT              \ Move the ship in space according to the orientation
                         \ vectors and the new value in z_hi
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Minor
 
  LDA #128               \ Set z_lo = 128 (so the closest the ship gets to us is
  STA INWK+6             \ z_hi = 1, z_lo = 128, or 256 + 128 = 384
-
- ASL A                  \ Set A = 0
-
- STA INWK               \ Set x_lo = 0, so the ship remains in the screen centre
-
- STA INWK+3             \ Set y_lo = 0, so the ship remains in the screen centre
 
 ELIF _6502SP_VERSION
 
  LDX #128               \ Set z_lo = 128 (so the closest the ship gets to us is
  STX INWK+6             \ z_hi = 1, z_lo = 128, or 256 + 128 = 384
+
+ENDIF
+
+IF _6502SP_VERSION \ Advanced
 
  LDA MCNT               \ This value will be zero on one out of every four
  AND #3                 \ iterations, so for the other three, skip to nodesire
@@ -318,6 +329,18 @@ ELIF _6502SP_VERSION
 
 .nodesire
 
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Minor
+
+ ASL A                  \ Set A = 0
+
+ STA INWK               \ Set x_lo = 0, so the ship remains in the screen centre
+
+ STA INWK+3             \ Set y_lo = 0, so the ship remains in the screen centre
+
+ELIF _6502SP_VERSION
+
  STZ INWK               \ Set x_lo = 0, so the ship remains in the screen centre
 
  STZ INWK+3             \ Set y_lo = 0, so the ship remains in the screen centre
@@ -326,9 +349,13 @@ ENDIF
 
  JSR LL9                \ Call LL9 to display the ship
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Platform
 
  DEC MCNT               \ Decrement the main loop counter
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Tube
 
  LDA VIA+&40            \ Read 6522 System VIA input register IRB (SHEILA &40)
 
@@ -345,7 +372,7 @@ ENDIF
                         \ button is pressed, otherwise it is set, so AND'ing
                         \ the value of IRB with %10000 extracts this bit
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Other
 
 \TAX                    \ This instruction is commented out in the original
                         \ source
@@ -358,7 +385,7 @@ ENDIF
 
  BEQ TL2                \ If the joystick fire button is pressed, jump to BL2
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Tube
 
  JSR RDKEY              \ Scan the keyboard for a key press
 
@@ -373,6 +400,10 @@ ELIF _6502SP_VERSION
                         \ press from the key logger buffer
 
  BNE TL3                \ If a key is being pressed, jump to TL3
+
+ENDIF
+
+IF _6502SP_VERSION \ Advanced: See above
 
  DEC MCNT               \ Decrement the inner loop counter
 
@@ -395,7 +426,7 @@ ENDIF
                         \ (it was set to 0 above), to disable keyboard and
                         \ enable joysticks
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Label
 
 .TL3
 

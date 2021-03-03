@@ -58,7 +58,7 @@
  BCC TA4                \ ship's line of fire, so jump to TA4 to skip the laser
                         \ checks
 
-IF _6502SP_VERSION OR _DISC_FLIGHT
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Other: Bug fix? When enemies have no lasers, cassette version still damages us if they are pointing at us, as well as making the laser noise. Fixed in other versions
 
  LDY #19                \ Fetch the enemy ship's byte #19 from their ship's
  LDA (XX0),Y            \ blueprint into A
@@ -78,7 +78,7 @@ ENDIF
  CPX #163               \ If X < 163, i.e. X > -35, then we are not in the enemy
  BCC TA4                \ ship's crosshairs, so jump to TA4 to skip the laser
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Minor
 
 .HIT
 
@@ -104,7 +104,7 @@ ENDIF
 
  DEC INWK+28            \ Halve the attacking ship's acceleration in byte #28
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Label
 
  LDA ECMA               \ If an E.C.M. is currently active (either our's or an
  BNE TA10               \ opponent's), return from the subroutine without making

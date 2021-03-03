@@ -31,7 +31,7 @@
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
  JMP WPLS               \ Jump to WPLS to remove the old sun from the screen. We
                         \ only get here via the BCS just after the SUN entry
@@ -61,7 +61,7 @@ ENDIF
 
  LDA #&FF               \ Set A = &FF
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Minor
 
  JMP PLF5               \ Jump to PLF5
 
@@ -81,7 +81,7 @@ ENDIF
                         \ circle appears on-screen, and of it does, set P(2 1)
                         \ to the maximum y-coordinate of the new sun on-screen
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
  BCS PLF3-3             \ If CHKON set the C flag then the new sun's circle does
                         \ not appear on-screen, so jump to WPLS (via the JMP at

@@ -1,4 +1,4 @@
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Comment
 \ ******************************************************************************
 \
 \       Name: SVN
@@ -7,6 +7,10 @@ IF _CASSETTE_VERSION
 \    Summary: The "saving in progress" flag
 \
 \ ******************************************************************************
+
+ENDIF
+
+IF _CASSETTE_VERSION \ Label
 
 .SVN
 
@@ -18,7 +22,7 @@ ENDIF
 
  SKIP 1                 \ "Saving in progress" flag
                         \
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Comment
                         \   * Non-zero while we are saving a commander
 ELIF _6502SP_VERSION
                         \   * Non-zero while the disc is being accessed (so this

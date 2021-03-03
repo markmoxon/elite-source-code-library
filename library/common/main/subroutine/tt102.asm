@@ -23,12 +23,10 @@
 \
 \   Y                   The amount to move the crosshairs in the y-axis
 \
-IF _6502SP_VERSION
 \ Other entry points:
 \
 \   T95                 Print the distance to the selected system
 \
-ENDIF
 \ ******************************************************************************
 
 .TT102
@@ -67,21 +65,15 @@ ENDIF
 
 .fvw
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _6502SP_VERSION \ Platform
 
  BIT QQ12               \ If bit 7 of QQ12 is clear (i.e. we are not docked, but
  BPL INSP               \ in space), jump to INSP to skip the following checks
                         \ for f1-f3 and "@" (save commander file) key presses
 
- CMP #f3                \ If red key f3 was pressed, jump to EQSHP to show the
- BNE P%+5               \ Equip Ship screen, returning from the subroutine using
- JMP EQSHP              \ a tail call
+ENDIF
 
- CMP #f1                \ If red key f1 was pressed, jump to TT219 to show the
- BNE P%+5               \ Buy Cargo screen, returning from the subroutine using
- JMP TT219              \ a tail call
-
-ELIF _DISC_DOCKED
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Platform
 
  CMP #f3                \ If red key f3 was pressed, jump to EQSHP to show the
  BNE P%+5               \ Equip Ship screen, returning from the subroutine using
@@ -93,7 +85,7 @@ ELIF _DISC_DOCKED
 
 ENDIF
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Enhanced
 
  CMP #&47               \ If "@" was pressed, jump to SVE to save the commander
  BNE P%+5               \ file, returning from the subroutine using a tail call
@@ -117,7 +109,7 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Platform
 
  CMP #f2                \ If red key f2 was pressed, jump to TT208 to show the
  BNE LABEL_3            \ Sell Cargo screen, returning from the subroutine using
@@ -127,7 +119,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
  CMP #f1                \ If the key pressed is < red key f1 or > red key f3,
  BCC LABEL_3            \ jump to LABEL_3 (so only do the following if the key
@@ -148,7 +140,7 @@ ENDIF
 
 .LABEL_3
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Label
 
                         \ In the 6502 Second Processor version, the LABEL_3
                         \ label is actually `` (two backticks), but that doesn't
@@ -158,7 +150,7 @@ IF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Feature
 
  CMP #&54               \ If "H" was pressed, jump to hyp to do a hyperspace
  BNE P%+5               \ jump (if we are in space), returning from the
@@ -182,7 +174,7 @@ ELIF _DISC_DOCKED
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED
+IF _6502SP_VERSION OR _DISC_DOCKED \ Label
 
 .NWDAV5
 
@@ -191,14 +183,14 @@ ENDIF
  CMP #&32               \ If "D" was pressed, jump to T95 to print the distance
  BEQ T95                \ to a system (if we are in one of the chart screens)
 
-IF _6502SP_VERSION OR _DISC_DOCKED
+IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced
 
  CMP #&43               \ If "F" was not pressed, jump down to HME1, otherwise
  BNE HME1               \ keep going to process searching for systems
 
 ENDIF
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Platform
 
  LDA QQ12               \ If QQ12 = 0 (we are not docked), we can't search for
  BEQ t95                \ systems, so return from the subroutine (as t95
@@ -206,7 +198,7 @@ IF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED
+IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced
 
  LDA QQ11               \ If the current view is a chart (QQ11 = 64 or 128),
  AND #%11000000         \ keep going, otherwise return from the subroutine (as

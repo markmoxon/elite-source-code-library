@@ -3,7 +3,7 @@
 \       Name: SVE
 \       Type: Subroutine
 \   Category: Save and load
-IF _CASSETTE_VERSION OR _DISC_DOCKED
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Comment
 \    Summary: Save the commander file
 ELIF _6502SP_VERSION
 \    Summary: Display the disc access menu and process saving of commander files
@@ -11,7 +11,7 @@ ENDIF
 \  Deep dive: Commander save files
 \             The competition code
 \
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ Returns:
@@ -23,12 +23,7 @@ ENDIF
 
 .SVE
 
-IF _CASSETTE_VERSION
-
- JSR GTNME              \ Clear the screen and ask for the commander filename
-                        \ to save, storing the name at INWK
-
-ELIF _6502SP_VERSION OR _DISC_DOCKED
+IF _6502SP_VERSION OR _DISC_DOCKED \ Platform
 
  JSR ZEBC               \ Call ZEBC to zero-fill pages &B and &C
 
@@ -37,7 +32,7 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED
 
 ENDIF
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Platform
 
  LDA #LO(MEBRK)         \ Set BRKV to point to the MEBRK routine, which is the
  STA BRKV               \ BRKV handler for disc access operations, and replaces
@@ -55,7 +50,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED
+IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced
 
  LDA #1                 \ Print extended token 1, the disc access menu, which
  JSR DETOK              \ presents these options:
@@ -101,16 +96,25 @@ IF _6502SP_VERSION OR _DISC_DOCKED
                         \ jumps to CAT if option 2 was not chosen - in other
                         \ words, if option 3 (catalogue) was chosen
 
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced
+
  JSR GTNMEW             \ If we get here then option 2 (save) was chosen, so
                         \ call GTNMEW to fetch the name of the commander file
                         \ to save (including drive number and directory) into
                         \ INWK
 
+ELIF _CASSETTE_VERSION
+
+ JSR GTNME              \ Clear the screen and ask for the commander filename
+                        \ to save, storing the name at INWK
+
 ENDIF
 
  JSR TRNME              \ Transfer the commander filename from INWK to NA%
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Platform
 
  JSR ZERO               \ Zero-fill pages &9, &A, &B, &C and &D, which clears
                         \ the ship data blocks, the ship line heap, the ship
@@ -121,7 +125,7 @@ ENDIF
 
  LSR SVC                \ Halve the save count value in SVC
 
-IF _6502SP_VERSION OR _DISC_DOCKED
+IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced
 
  LDA #3                 \ Print extended token 3 ("COMPETITION NUMBER:")
  JSR DETOK
@@ -168,27 +172,12 @@ ENDIF
  EOR TALLY+1            \ the kill tally)
  STA K+3
 
-IF _CASSETTE_VERSION
-
- JSR BPRNT              \ Print the competition number stored in K to K+3. The
-                        \ values of the C flag and U will affect how this is
-                        \ printed, which is odd as they appear to be random (C
-                        \ is last set in CHECK and could go either way, and it's
-                        \ hard to know when U was last set as it's a temporary
-                        \ variable in zero page, so isn't reset by ZERO). I
-                        \ wonder if the competition number can ever get printed
-                        \ out incorrectly, with a decimal point and the wrong
-                        \ number of digits? Other versions of Elite have a CLC
-                        \ instruction before the call to BPRNT, presumably to
-                        \ fix this issue
-
- JSR TT67               \ Call TT67 twice to print two newlines
- JSR TT67
-
-ELIF _6502SP_VERSION OR _DISC_DOCKED
+IF _6502SP_VERSION OR _DISC_DOCKED \ Other
 
  CLC                    \ Clear the C flag so the call to BPRNT does not include
                         \ a decimal point
+
+ENDIF
 
  JSR BPRNT              \ Print the competition number stored in K to K+3. The
                         \ value of U might affect how this is printed, and as
@@ -196,6 +185,13 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED
                         \ reset by ZERO, it might have any value, but as the
                         \ competition code is a 10-digit number, this just means
                         \ it may or may not have an extra space of padding
+
+IF _CASSETTE_VERSION \ Feature
+
+ JSR TT67               \ Call TT67 twice to print two newlines
+ JSR TT67
+
+ELIF _6502SP_VERSION OR _DISC_DOCKED
 
  JSR TT67               \ Print a newline
 
@@ -222,7 +218,7 @@ ENDIF
                         \
                         \ Y is left containing &C which we use below
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Platform
 
  LDA #%10000001         \ Clear 6522 System VIA interrupt enable register IER
  STA VIA+&4E            \ (SHEILA &4E) bit 1 (i.e. enable the CA2 interrupt,
@@ -236,7 +232,7 @@ ENDIF
  JSR QUS1               \ file with the filename we copied to INWK at the start
                         \ of this routine
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Platform
 
  LDX #0                 \ Set X = 0 for storing in SVN below
 
@@ -265,7 +261,7 @@ ENDIF
 
 ENDIF
 
-IF _DISC_DOCKED OR _6502SP_VERSION
+IF _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
 .SVEX
 

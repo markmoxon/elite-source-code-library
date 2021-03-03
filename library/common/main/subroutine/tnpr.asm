@@ -96,7 +96,7 @@
 
  LDY QQ29               \ Set Y to the item number we want to add
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Feature
 
  ADC QQ20,Y             \ Set A = A + the number of units of this item that we
                         \ already have in the hold
@@ -120,7 +120,7 @@ ENDIF
 
  RTS                    \ Return from the subroutine
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Minor
 
  NOP                    \ This instruction appears to have no effect
 

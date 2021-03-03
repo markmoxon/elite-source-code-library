@@ -35,7 +35,7 @@ ENDIF
  EQUB 8                 \ Max. speed               = 8
  EQUB &00               \ Edges data offset (high) = &002C
  EQUB &00               \ Faces data offset (high) = &0044
-IF _CASSETTE_VERSION \ Feature
+IF _CASSETTE_VERSION \ Feature: In the cassette version, the escape pod stores its faces with a scale factor of 8, while the other versions store them at a more accurate factor of 16
  EQUB 3                 \ Normals are scaled by    =  2^3 = 8
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
  EQUB 4                 \ Normals are scaled by    =  2^4 = 16
@@ -59,7 +59,7 @@ ENDIF
  EDGE       0,       2,     3,     1,         31    \ Edge 4
  EDGE       3,       1,     2,     0,         31    \ Edge 5
 
-IF _CASSETTE_VERSION \ Feature
+IF _CASSETTE_VERSION \ Feature: See above
 
 \FACE normal_x, normal_y, normal_z, visibility
  FACE       26,        0,      -61,         31    \ Face 0

@@ -3,7 +3,7 @@
 \       Name: Main game loop (Part 1 of 6)
 \       Type: Subroutine
 \   Category: Main loop
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Comment
 \    Summary: Spawn a trader (a peaceful Cobra Mk III)
 ELIF _6502SP_VERSION OR _DISC_FLIGHT
 \    Summary: Spawn a trader (a Cobra Mk III, Python, Boa or Anaconda)
@@ -20,17 +20,17 @@ ENDIF
 \
 \ This section covers the following:
 \
-IF _CASSETTE_VERSION
-\   * Spawn a trader, i.e. a Cobra Mk III that isn't hostile, with one missile,
-\     a 50% chance of having an E.C.M., a speed between 16 and 31, and a gentle
-\     clockwise roll
+IF _CASSETTE_VERSION \ Comment
+\   * Spawn a trader, i.e. a Cobra Mk III that isn't hostile, with a 50% chance
+\     of it having a missile, a 50% chance of it having an E.C.M., a speed
+\     between 16 and 31, and a gentle clockwise roll
 \
-\ We call this from within the main loop, with A set to a random number and the
-\ C flag set.
+\ We call this from within the main loop, with A set to a random number.
 ELIF _6502SP_VERSION OR _DISC_FLIGHT
-\   * Spawn a trader, i.e. a Cobra Mk III, Python, Boa or Anaconda, with one
-\     missile, a 50% chance of having an E.C.M., a 50% chance of being hostile,
-\     a speed between 16 and 31, and a gentle clockwise roll
+\   * Spawn a trader, i.e. a Cobra Mk III, Python, Boa or Anaconda, with a 50%
+\     chance of it having a missile, a 50% chance of it having an E.C.M., a 50%
+\     chance of it docking and being aggressive if attacked, a speed between 16
+\     and 31, and a gentle clockwise roll
 \
 \ We call this from within the main loop.
 ENDIF
@@ -39,13 +39,14 @@ ENDIF
 
 .MTT4
 
-IF _6502SP_VERSION OR _DISC_FLIGHT
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
  JSR DORND              \ Set A and X to random numbers
 
 ENDIF
 
- LSR A                  \ Clear bit 7 of our random number in A
+ LSR A                  \ Clear bit 7 of our random number in A and set the C
+                        \ flag to bit 0 of A, which os random
 
  STA INWK+32            \ Store this in the ship's AI flag, so this ship does
                         \ not have AI
@@ -54,10 +55,11 @@ ENDIF
                         \ clockwise roll (as bit 7 is clear), and a 1 in 127
                         \ chance of it having no damping
 
- ROL INWK+31            \ Set bit 0 of missile count (as we know the C flag is
-                        \ set), giving the ship one missile
+ ROL INWK+31            \ Set bit 0 of the ship's missile count ramdomly (as the
+                        \ C flag was set), giving the ship either no missiles or
+                        \ one missile
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _6502SP_VERSION \ Minor
 
  AND #31                \ Set the ship speed to our random number, set to a
  ORA #16                \ minimum of 16 and a maximum of 31
@@ -71,7 +73,7 @@ ELIF _DISC_FLIGHT
 
 ENDIF
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Enhanced
 
  LDA #CYL               \ Add a new Cobra Mk III to the local bubble and fall
  JSR NWSHP              \ through into the main game loop again
@@ -108,14 +110,14 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
 ENDIF
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Feature: 6502SP has rock hermits
 
  CMP #HER               \ If A is now the ship type of a rock hermit, jump to
  BEQ TT100              \ TT100 to skip the following instruction
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
  JSR NWSHP              \ Add a new ship of type A to the local bubble and fall
                         \ through into the main game loop again

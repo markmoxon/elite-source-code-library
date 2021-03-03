@@ -11,7 +11,7 @@
 \ before drawing, and then the routine uses the same approach as the PIXEL
 \ routine in the main game code, except it plots a single pixel from TWOS
 \ instead of a two pixel dash from TWOS2. This applies to the top part of the
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \ screen (the monochrome mode 4 space view).
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 \ screen (the four-colour mode 1 space view).
@@ -25,7 +25,7 @@ ENDIF
 \
 \   A                   The screen y-coordinate of the pixel to draw, negated
 \
-IF _DISC_VERSION
+IF _DISC_VERSION \ Comment
 \ Other entry points:
 \
 \   out                 Contains an RTS
@@ -39,7 +39,7 @@ ENDIF
 
  EOR #%10000000         \ Flip the sign of A
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Screen
 
  LSR A                  \ Set ZP+1 = &60 + A >> 3
  LSR A
@@ -99,7 +99,7 @@ ENDIF
  AND #%00000111
  TAX
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Feature: When the loading screen draws Saturn, the cassette version OR's the pixels into the screen, so pixels within a character block can be next to each other, while the other versions just poke a one-pixel byte into memory, overwriting what's already there and ensuring better pixel spacing (though pixels in neighbouring bytes can still be next to each other)
 
  LDA TWOS,X             \ Otherwise fetch a pixel from TWOS and OR it into ZP+Y
  ORA (ZP),Y
@@ -112,7 +112,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _DISC_VERSION
+IF _DISC_VERSION \ Label
 
 .out
 

@@ -1,13 +1,13 @@
 \ ******************************************************************************
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \       Name: SPBLB
 ELIF _6502SP_VERSION
 \       Name: DOBULB
 ENDIF
 \       Type: Subroutine
 \   Category: Dashboard
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \    Summary: Draw (or erase) the space station indicator ("S") on the dashboard
 ELIF _6502SP_VERSION
 \    Summary: Implement the #DOBULB 0 command (draw the space station indicator
@@ -16,7 +16,7 @@ ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \ Other entry points:
 \
 \   BULB-2              Set the Y screen address
@@ -27,7 +27,7 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
 
 .SPBLB
 
@@ -38,6 +38,8 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDX #LO(SPBT)          \ Set (Y X) to point to the character definition in SPBT
  LDY #HI(SPBT)
+
+                        \ Fall through into BULB to draw the space station bulb
 
 ELIF _6502SP_VERSION
 

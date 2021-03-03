@@ -15,7 +15,7 @@
 
 .PLANET
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Screen
 
  LDA #GREEN             \ Send a #SETCOL GREEN command to the I/O processor to
  JSR DOCOL              \ switch to stripe 3-1-3-1, which is cyan/yellow in the
@@ -26,7 +26,7 @@ ENDIF
  LDA INWK+8             \ Set A = z_sign (the highest byte in the planet/sun's
                         \ coordinates)
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Other
 
  BMI PL2                \ If A is negative then the planet/sun is behind us, so
                         \ jump to PL2 to remove it from the screen, returning

@@ -16,7 +16,7 @@
 
  JSR DORND              \ Set A and X to random numbers
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _6502SP_VERSION \ Label
 
  BMI out                \ If A < 0 (50% chance), return from the subroutine
                         \ (as out contains an RTS)
@@ -88,7 +88,7 @@ ENDIF
                         \     = 113 - 19 + X
                         \     = 113 to 115
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Minor
 
  BNE MESS               \ Print recursive token A ("ENERGY BOMB", "ENERGY UNIT"
                         \ or "DOCKING COMPUTERS") as an in-flight message,

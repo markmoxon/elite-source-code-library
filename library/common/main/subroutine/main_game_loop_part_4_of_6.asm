@@ -11,7 +11,7 @@
 \
 \ This section covers the following:
 \
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Comment
 \   * Potentially spawn (35% chance) either a lone bounty hunter (a Mamba,
 \     Python or Cobra Mk III), a Thargoid, or a group of up to 4 pirates
 \     (Sidewinders and/or Mambas)
@@ -29,7 +29,7 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Label
 
  DEC EV                 \ Decrement EV, the extra vessels spawning delay, and
  BPL MLOOP              \ jump to MLOOP if it is still positive, so we only
@@ -46,7 +46,7 @@ ENDIF
  INC EV                 \ EV is negative, so bump it up again, setting it back
                         \ to 0
 
-IF _6502SP_VERSION OR _DISC_FLIGHT
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced
 
  LDA TP                 \ Fetch bits 2 and 3 of TP, which contain the status of
  AND #%00001100         \ mission 2
@@ -55,6 +55,10 @@ IF _6502SP_VERSION OR _DISC_FLIGHT
  BNE nopl               \ spawn a Thargoid as we are transporting the plans in
                         \ mission 2 and the Thargoids are trying to stop us,
                         \ otherwise jump to nopl to skip spawning a Thargoid
+
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
  JSR DORND              \ Set A and X to random numbers
 
@@ -76,19 +80,11 @@ ENDIF
  BEQ LABEL_2            \ straight to LABEL_2 to start spawning pirates or a
                         \ lone bounty hunter
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Feature: In the disc version there's a 47% chance of spawning a group of pirates or a lone bounty hunter, while in the cassette and 6502SP versions there's a 35% chance
 
  CMP #90                \ If the random number in A >= 90 (65% chance), jump to
  BCS MLOOP              \ MLOOP to stop spawning (so there's a 35% chance of
                         \ spawning pirates or a lone bounty hunter)
-
- AND #7                 \ Reduce the random number in A to the range 0-7, and
- CMP gov                \ if A is less than government of this system, jump
- BCC MLOOP              \ to MLOOP to stop spawning (so safer governments with
-                        \ larger gov numbers have a greater chance of jumping
-                        \ out, which is another way of saying that more
-                        \ dangerous systems spawn pirates and bounty hunters
-                        \ more often)
 
 ELIF _DISC_FLIGHT
 
@@ -104,7 +100,17 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION \ Label
+
+ AND #7                 \ Reduce the random number in A to the range 0-7, and
+ CMP gov                \ if A is less than government of this system, jump
+ BCC MLOOP              \ to MLOOP to stop spawning (so safer governments with
+                        \ larger gov numbers have a greater chance of jumping
+                        \ out, which is another way of saying that more
+                        \ dangerous systems spawn pirates and bounty hunters
+                        \ more often)
+
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
  AND #7                 \ Reduce the random number in A to the range 0-7, and
  CMP gov                \ if A is less than government of this system, jump
@@ -118,7 +124,7 @@ ENDIF
 
 .LABEL_2
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Label
 
                         \ In the 6502 Second Processor version, the LABEL_2
                         \ label is actually ` (a backtick), but that doesn't
@@ -134,7 +140,7 @@ ENDIF
  JSR Ze                 \ Call Ze to initialise INWK to a potentially hostile
                         \ ship, and set A and X to random values
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Feature: In the cassette version there's a 13% chance of spawning a group of pirates, while in the disc and 6502SP versions there's a 61% chance
 
  CMP #200               \ If the random number in A >= 200 (13% chance), jump
  BCS mt1                \ to mt1 to spawn pirates, otherwise keep going to
@@ -151,7 +157,7 @@ ENDIF
  INC EV                 \ Increase the extra vessels spawning counter, to
                         \ prevent the next attempt to spawn extra vessels
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Enhanced
 
  AND #3                 \ Set A = Y = random number in the range 3-6, which
  ADC #3                 \ we will use to determine the type of ship
@@ -159,8 +165,7 @@ IF _CASSETTE_VERSION
 
                         \ We now build the AI flag for this ship in A
 
- TXA                    \ First, set the C flag if X >= 200 (22% chance)
- CMP #200
+ TXA                    \ First, copy the random number in X to A
 
 ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
@@ -207,7 +212,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
 ENDIF
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Advanced
 
  LDA #%00000100         \ Set bit 2 of the NEWB flags and clear all other bits,
  STA NEWB               \ so the ship we are about to spawn is hostile
@@ -216,11 +221,11 @@ IF _6502SP_VERSION
 
  JSR DORND              \ Set A and X to random numbers
 
- CMP #200               \ First, set the C flag if X >= 200 (22% chance)
-
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _6502SP_VERSION \ Feature: Lone bounty hunters in the cassette and 6502SP versions have a a 22% chance of having E.C.M., while they don't have E.C.M. in the disc version
+
+ CMP #200               \ First, set the C flag if X >= 200 (22% chance)
 
  ROL A                  \ Set bit 0 of A to the C flag (i.e. there's a 22%
                         \ chance of this ship having E.C.M.)
@@ -230,7 +235,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Platform
 
  CPY #6                 \ If Y = 6 (i.e. a Thargoid), jump down to the tha
  BEQ tha                \ routine in part 6 to decide whether or not to spawn it
@@ -241,15 +246,13 @@ IF _CASSETTE_VERSION
  TYA                    \ Add a new ship of type Y to the local bubble, so
  JSR NWSHP              \ that's a Mamba, Cobra Mk III or Python
 
-ENDIF
-
-IF _6502SP_VERSION
+ELIF _6502SP_VERSION
 
  STA INWK+32            \ Store A in the AI flag of this ship
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced
 
  TYA
 
@@ -274,7 +277,7 @@ ENDIF
 
  JMP MLOOP              \ Jump down to MLOOP, as we are done spawning ships
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Advanced
 
 .fothg
 
@@ -322,7 +325,7 @@ ENDIF
 
  JSR DORND              \ Set A and X to random numbers
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Enhanced
 
  AND #3                 \ Set A to a random number in the range 0-3
 
@@ -343,18 +346,28 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
 ENDIF
 
-IF _DISC_FLIGHT
+IF _DISC_FLIGHT \ Platform
 
  STA CPIR               \ Set CPIR to this random number in the range 0-7
 
 .more
 
- LDA CPIR               \ #PACK is set to #SH3, the ship type for a Sidewinder,
- ADC #PACK              \ so this sets our new ship type to one of the pack
+ LDA CPIR
+
+ENDIF
+
+IF _DISC_FLIGHT OR _6502SP_VERSION \ Enhanced
+
+ ADC #PACK              \ #PACK is set to #SH3, the ship type for a Sidewinder,
+                        \ so this sets our new ship type to one of the pack
                         \ hunters, namely a Sidewinder, Mamba, Krait, Adder,
                         \ Gecko, Cobra Mk I, Worm or Cobra Mk III (pirate)
 
+ENDIF
+
  JSR NWSHP              \ Try adding a new ship of type A to the local bubble
+
+IF _DISC_FLIGHT \ Platform
 
  BCS P%+7               \ If the ship was successfully added, skip the following
                         \ two instructions
@@ -370,30 +383,11 @@ IF _DISC_FLIGHT
                         \ CPIR is 0, in which case give up and move on to the
                         \ next pirate to spawn
 
- DEC XX13               \ Decrement the pirate counter
-
- BPL mt3                \ If we need more pirates, loop back up to mt3,
-                        \ otherwise we are done spawning, so fall through into
-                        \ the end of the main loop at MLOOP
-
-ELIF _6502SP_VERSION
-
- ADC #PACK              \ #PACK is set to #SH3, the ship type for a Sidewinder,
-                        \ so this sets our new ship type to one of the pack
-                        \ hunters, namely a Sidewinder, Mamba, Krait, Adder,
-                        \ Gecko, Cobra Mk I, Worm or Cobra Mk III (pirate)
-
 ENDIF
-
-IF _CASSETTE_VERSION OR _6502SP_VERSION
-
- JSR NWSHP              \ Add a new ship of type A to the local bubble
 
  DEC XX13               \ Decrement the pirate counter
 
  BPL mt3                \ If we need more pirates, loop back up to mt3,
                         \ otherwise we are done spawning, so fall through into
                         \ the end of the main loop at MLOOP
-
-ENDIF
 

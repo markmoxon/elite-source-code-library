@@ -18,7 +18,7 @@
  LDA TYPE               \ Shift bit 0 of the planet/sun's type into the C flag
  LSR A
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Tube
 
  BCS P%+5               \ If the planet/sun's type has bit 0 clear, then it's
                         \ either 128 or 130, which is a planet; meanwhile, the
@@ -38,7 +38,8 @@ ELIF _6502SP_VERSION
                         \ instructions
 
  JSR LS2FL              \ Call LS2FL to send the ball line heap to the I/O
-                        \ processor for drawing on-screen
+                        \ processor for drawing on-screen, which redraws the
+                        \ planet and this removes it from the screen
 
  STZ LSP                \ Reset the ball line heap by setting the ball line heap
                         \ pointer to 0

@@ -11,8 +11,15 @@
                         \   * Splinter
                         \   * Shuttle
                         \   * Transporter
+IF _DISC_VERSION \ Comment
+                        \
+                        \ Junk is the range of ship types from #JL to #JH - 1
+
+ELIF _6502SP_VERSION
                         \   * Rock hermit
                         \
                         \ Apart from the rock hermit, junk is the range of ship
                         \ types from #JL to #JH - 1
+
+ENDIF
 

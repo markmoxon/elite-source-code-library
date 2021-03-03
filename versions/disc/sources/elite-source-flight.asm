@@ -55,10 +55,9 @@ PLT = 4                 \ Ship type for an alloy plate
 OIL = 5                 \ Ship type for a cargo canister
 AST = 7                 \ Ship type for an asteroid
 SPL = 8                 \ Ship type for a splinter
-SHU = 9                 \ Ship type for a shuttle
+SHU = 9                 \ Ship type for a Shuttle
 CYL = 11                \ Ship type for a Cobra Mk III
 ANA = 14                \ Ship type for an Anaconda
-HER = 15                \ Ship type for a rock hermit (asteroid)
 COPS = 16               \ Ship type for a Viper
 SH3 = 17                \ Ship type for a Sidewinder
 KRA = 19                \ Ship type for a Krait
@@ -79,7 +78,7 @@ JH = SHU+2              \ Junk is defined as ending before the Cobra Mk III
                         \
                         \ So junk is defined as the following: escape pod,
                         \ alloy plate, cargo canister, asteroid, splinter,
-                        \ shuttle, transporter
+                        \ Shuttle or Transporter
 
 PACK = SH3              \ The first of the eight pack-hunter ships, which tend
                         \ to spawn in groups. With the default value of PACK the

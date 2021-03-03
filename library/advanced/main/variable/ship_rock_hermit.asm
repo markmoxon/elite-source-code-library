@@ -19,7 +19,7 @@ ENDIF
 
  EQUB 7                 \ Max. canisters on demise = 7
  EQUW 80 * 80           \ Targetable area          = 80 * 80
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Platform
  EQUB LO(SHIP_ASTEROID_EDGES - SHIP_ROCK_HERMIT)     \ Edges data = asteroid
  EQUB LO(SHIP_ASTEROID_FACES - SHIP_ROCK_HERMIT)     \ Faces data = asteroid
 ELIF _6502SP_VERSION
@@ -36,7 +36,7 @@ ENDIF
  EQUB 50                \ Visibility distance      = 50
  EQUB 180               \ Max. energy              = 180
  EQUB 30                \ Max. speed               = 30
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Platform
  EQUB HI(SHIP_ASTEROID_EDGES - SHIP_ROCK_HERMIT)     \ Edges data = asteroid
  EQUB HI(SHIP_ASTEROID_FACES - SHIP_ROCK_HERMIT)     \ Faces data = asteroid
 ELIF _6502SP_VERSION
@@ -58,7 +58,7 @@ ENDIF
  VERTEX    0,   30,  -75,    15,     15,   15,    15,         31    \ Vertex 7
  VERTEX    0,  -50,  -60,     8,      9,   10,    11,         31    \ Vertex 8
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Platform
 
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     2,     7,         31    \ Edge 0

@@ -19,7 +19,7 @@
 
  LDA INWK+31            \ Fetch the ship's exploding/killed state from byte #31
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Platform
 
  AND #%00100000         \ If we are exploding then jump to MVD1 to remove it
  BNE MVD1               \ from the scanner permanently
@@ -35,7 +35,7 @@ ENDIF
  ORA #%00010000
  STA INWK+31
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
  JMP SCAN               \ Display the ship on the scanner, returning from the
                         \ subroutine using a tail call

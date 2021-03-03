@@ -15,14 +15,14 @@
 \     more often if have been naughty, and very often if we have been properly
 \     bad
 \
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
 \   * Very rarely, consider spawning a Thargoid, or vanishingly rarely, a Cougar
 ENDIF
 \ ******************************************************************************
 
 .MTT1
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Minor
 
  LDA SSPR               \ If we are inside the space station's safe zone, jump
  BNE MLOOP              \ to MLOOP to skip the following
@@ -59,7 +59,7 @@ ENDIF
  JSR Ze                 \ Call Ze to initialise INWK to a potentially hostile
                         \ ship, and set A and X to random values
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Advanced
 
  CMP #136               \ If the random number in A = 136 (0.4% chance), jump
  BEQ fothg              \ to fothg in part 4 to spawn either a Thargoid or, very
@@ -77,7 +77,7 @@ ENDIF
  LDA #COPS              \ Add a new police ship to the local bubble
  JSR NWSHP
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Label
 
  LDA MANY+COPS          \ If we now have at least one cop in the local bubble,
  BNE MLOOP              \ jump down to MLOOP, otherwise fall through into the

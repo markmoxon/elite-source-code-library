@@ -26,7 +26,7 @@
  LDX XX+1               \ And then doing the high bytes
  STX S
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Other
 
  LDX ALP1               \ This repeats the first two instructions of MLS1, which
  STX P                  \ is presumably unintentional (though it has no effect)

@@ -29,7 +29,7 @@
 
  PLA                    \ Restore the new message token
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Platform
 
  EQUB &2C               \ Fall through into ou2 to print the new message, but
                         \ skip the first instruction by turning it into

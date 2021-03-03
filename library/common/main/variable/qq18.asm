@@ -39,7 +39,7 @@
  CTRL 3
  EQUB 0
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Platform
 
  TWOK 'I', 'N'          \ Token 4:      "INVENTORY{crlf}
  TWOK 'V', 'E'          \               "
@@ -229,7 +229,7 @@ ENDIF
  CHAR 'P'
  EQUB 0
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Minor
 
  CHAR 'P'               \ Token 26:     "PRODUCT"
  CHAR 'R'               \
@@ -307,7 +307,7 @@ ENDIF
  TWOK 'O', 'N'
  EQUB 0
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Minor
 
  CHAR 'G'               \ Token 33:     "GROSS PRODUCTIVITY"
  CHAR 'R'               \
@@ -376,7 +376,7 @@ ENDIF
  CHAR 'H'
  EQUB 0
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Minor
 
  CHAR ' '               \ Token 38:     " BILLION"
  TWOK 'B', 'I'          \
@@ -436,7 +436,7 @@ ENDIF
  CHAR ' '
  EQUB 0
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Minor
 
  CHAR 'S'               \ Token 45:     "SELL"
  CHAR 'E'               \
@@ -538,7 +538,7 @@ ENDIF
  CHAR 'Y'
  EQUB 0
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Minor
 
  RTOK 117               \ Token 57:     "ALLOYS"
  CHAR 'O'               \
@@ -609,7 +609,7 @@ ENDIF
  CHAR 'S'
  EQUB 0
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Enhanced
 
  CHAR '('               \ Token 65:     "(Y/N)?"
  CHAR 'Y'               \
@@ -647,7 +647,7 @@ ENDIF
  TWOK 'C', 'E'
  EQUB 0
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Minor
 
  CHAR 'S'               \ Token 69:     "SMALL"
  TWOK 'M', 'A'          \
@@ -672,7 +672,7 @@ ENDIF
  TWOK 'E', 'D'          \
  EQUB 0                 \ Encoded as:   "R<152>"
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Minor
 
  CHAR 'Y'               \ Token 72:     "YELLOW"
  CHAR 'E'               \
@@ -746,7 +746,7 @@ ENDIF
  CHAR 'Y'
  EQUB 0
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Minor
 
  CHAR 'R'               \ Token 82:     "RODENT"
  CHAR 'O'               \
@@ -836,7 +836,7 @@ ENDIF
  TWOK 'E', 'R'
  EQUB 0
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Minor
 
  CHAR ' '               \ Token 93:     " DESTROYED"
  CHAR 'D'               \
@@ -847,6 +847,21 @@ IF _CASSETTE_VERSION
  CHAR 'Y'
  TWOK 'E', 'D'
  EQUB 0
+
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+
+ CHAR ' '               \ Token 93:     " DESTROYED"
+ CHAR 'D'               \
+ TWOK 'E', 'S'          \ Encoded as:   " D<137>T[94]Y<152>"
+ CHAR 'T'
+ RTOK 94
+ CHAR 'Y'
+ TWOK 'E', 'D'
+ EQUB 0
+
+ENDIF
+
+IF _CASSETTE_VERSION \ Enhanced
 
  CHAR 'B'               \ Token 94:     "BY D.BRABEN & I.BELL"
  CHAR 'Y'               \
@@ -865,6 +880,16 @@ IF _CASSETTE_VERSION
  TWOK 'B', 'E'
  RTOK 118
  EQUB 0
+
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+
+ CHAR 'R'               \ Token 94:     "RO"
+ CHAR 'O'               \
+ EQUB 0                 \ Encoded as:   "RO"
+
+ENDIF
+
+IF _CASSETTE_VERSION \ Platform
 
  RTOK 14                \ Token 95:     "UNIT  QUANTITY{crlf}
  CHAR ' '               \                 PRODUCT   UNIT PRICE FOR SALE{crlf}
@@ -891,19 +916,6 @@ IF _CASSETTE_VERSION
  EQUB 0
 
 ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
-
- CHAR ' '               \ Token 93:     " DESTROYED"
- CHAR 'D'               \
- TWOK 'E', 'S'          \ Encoded as:   " D<137>T[94]Y<152>"
- CHAR 'T'
- RTOK 94
- CHAR 'Y'
- TWOK 'E', 'D'
- EQUB 0
-
- CHAR 'R'               \ Token 94:     "RO"
- CHAR 'O'               \
- EQUB 0                 \ Encoded as:   "RO"
 
  RTOK 14                \ Token 95:     "UNIT  QUANTITY{cr}
  CHAR ' '               \                 PRODUCT   UNIT PRICE FOR SALE{cr}{lf}
@@ -1054,34 +1066,11 @@ ENDIF
  CHAR 'B'
  EQUB 0
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Feature: In the source disc release of the 6502SP version, the Inventory screen shows an "Extra Energy Unit" if you have one fitted, while all other versions just show "Energy Unit"
 
  RTOK 121               \ Token 114:    "ENERGY UNIT"
  RTOK 14                \
  EQUB 0                 \ Encoded as:   "[121][14]"
-
- RTOK 124               \ Token 115:    "DOCKING COMPUTERS"
- TWOK 'I', 'N'          \
- CHAR 'G'               \ Encoded as:   "[124]<140>G [55]"
- CHAR ' '
- RTOK 55
- EQUB 0
-
-ELIF _DISC_VERSION OR _MASTER_VERSION
-
- RTOK 121               \ Token 114:    "ENERGY UNIT"
- RTOK 14                \
- EQUB 0                 \ Encoded as:   "[121][14]"
-
- CHAR 'D'               \ Token 115:    "DOCKING COMPUTERS"
- CHAR 'O'               \
- CHAR 'C'               \ Encoded as:   "DOCK<140>G [55]"
- CHAR 'K'
- TWOK 'I', 'N'
- CHAR 'G'
- CHAR ' '
- RTOK 55
- EQUB 0
 
 ELIF _6502SP_VERSION
 
@@ -1100,6 +1089,19 @@ ELIF _SOURCE_DISC
 
 ENDIF
 
+ENDIF
+
+IF _CASSETTE_VERSION \ Minor
+
+ RTOK 124               \ Token 115:    "DOCKING COMPUTERS"
+ TWOK 'I', 'N'          \
+ CHAR 'G'               \ Encoded as:   "[124]<140>G [55]"
+ CHAR ' '
+ RTOK 55
+ EQUB 0
+
+ELIF _DISC_VERSION OR _MASTER_VERSION OR _6502SP_VERSION
+
  CHAR 'D'               \ Token 115:    "DOCKING COMPUTERS"
  CHAR 'O'               \
  CHAR 'C'               \ Encoded as:   "DOCK<140>G [55]"
@@ -1117,7 +1119,7 @@ ENDIF
  RTOK 29                \ Encoded as:   "[122] [29]"
  EQUB 0
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Enhanced
 
  CHAR 'A'               \ Token 117:    "ALL"
  RTOK 118               \
@@ -1126,11 +1128,6 @@ IF _CASSETTE_VERSION
  CHAR 'L'               \ Token 118:    "LL"
  CHAR 'L'               \
  EQUB 0                 \ Encoded as:   "LL"
-
- RTOK 37                \ Token 119:    "CASH:{cash} CR{crlf}
- CHAR ':'               \               "
- CTRL 0                 \
- EQUB 0                 \ Encoded as:   "[37]:{0}"
 
 ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
@@ -1152,6 +1149,17 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
  CHAR ' '
  RTOK 27
  EQUB 0
+
+ENDIF
+
+IF _CASSETTE_VERSION \ Minor
+
+ RTOK 37                \ Token 119:    "CASH:{cash} CR{crlf}
+ CHAR ':'               \               "
+ CTRL 0                 \
+ EQUB 0                 \ Encoded as:   "[37]:{0}"
+
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
  RTOK 37                \ Token 119:    "CASH:{cash} CR{cr}
  CHAR ':'               \               "
@@ -1183,7 +1191,7 @@ ENDIF
  CHAR 'C'
  EQUB 0
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Enhanced
 
  CTRL 13                \ Token 123:    "{crlf}
  RTOK 92                \                COMMANDER'S NAME? "
@@ -1204,6 +1212,22 @@ IF _CASSETTE_VERSION
  CHAR 'K'
  EQUB 0
 
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+
+ RTOK 115               \ Token 123:    "DOCKING COMPUTERS ON"
+ CHAR ' '               \
+ CHAR 'O'               \ Encoded as:   "[115] ON"
+ CHAR 'N'
+ EQUB 0
+
+ CHAR 'A'               \ Token 124:    "ALL"
+ RTOK 129               \
+ EQUB 0                 \ Encoded as:   "A[129]"
+
+ENDIF
+
+IF _CASSETTE_VERSION \ Comment
+
  CTRL 5                 \ Token 125:    "FUEL: {fuel level} LIGHT YEARS{crlf}
  TWOK 'L', 'E'          \                CASH:{cash} CR{crlf}
  CHAR 'G'               \                LEGAL STATUS:"
@@ -1216,16 +1240,6 @@ IF _CASSETTE_VERSION
  EQUB 0
 
 ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
-
- RTOK 115               \ Token 123:    "DOCKING COMPUTERS ON"
- CHAR ' '               \
- CHAR 'O'               \ Encoded as:   "[115] ON"
- CHAR 'N'
- EQUB 0
-
- CHAR 'A'               \ Token 124:    "ALL"
- RTOK 129               \
- EQUB 0                 \ Encoded as:   "A[129]"
 
  CTRL 5                 \ Token 125:    "FUEL: {fuel level} LIGHT YEARS{cr}
  TWOK 'L', 'E'          \                CASH:{cash} CR{cr}
@@ -1240,7 +1254,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Platform
 
  RTOK 92                \ Token 126:    "COMMANDER {commander name}{crlf}
  CHAR ' '               \                {crlf}
@@ -1303,8 +1317,7 @@ ENDIF
  CHAR 'M'               \ Encoded as:   "I<156>M"
  EQUB 0
 
-IF _CASSETTE_VERSION
-
+IF _CASSETTE_VERSION \ Enhanced
 
  CHAR ' '               \ Token 128:    "  LOAD NEW COMMANDER (Y/N)?{crlf}
  CHAR ' '               \                {crlf}
@@ -1353,7 +1366,7 @@ ENDIF
  CHAR ' '               \ Encoded as:   " <159> "
  EQUB 0
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Platform
 
  CTRL 13                \ Token 132:    "{crlf}
  CTRL 8                 \                {all caps}EQUIPMENT: {sentence case}"
@@ -1441,7 +1454,7 @@ ENDIF
  CHAR 'T'
  EQUB 0
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Minor
 
  CHAR 'D'               \ Token 142:    "DANGEROUS"
  TWOK 'A', 'N'          \
@@ -1509,7 +1522,7 @@ ENDIF
  CHAR 'R'
  EQUB 0
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Enhanced
 
  CHAR 'P'               \ Token 147:    "PRESS FIRE OR SPACE,COMMANDER.{crlf}
  CHAR 'R'               \                {crlf}

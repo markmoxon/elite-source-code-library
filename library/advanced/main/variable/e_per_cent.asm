@@ -73,8 +73,8 @@
 \
 \    * Bit 6: Cop flag (0 = not a cop, 1 = cop)
 \
-\             If we destroy a cop, then we instantly becoime a fugitive (the
-\             transporter isn't actually a cop, but it's clearly under police
+\             If we destroy a cop, then we instantly become a fugitive (the
+\             Transporter isn't actually a cop, but it's clearly under police
 \             protection)
 \
 \             Viper, Transporter

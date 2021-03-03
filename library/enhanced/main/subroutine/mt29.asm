@@ -20,7 +20,7 @@
 
 .MT29
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Tube
 
  LDA #6                 \ Move the text cursor to row 6
  STA YC
@@ -29,6 +29,10 @@ ELIF _6502SP_VERSION
 
  LDA #6                 \ Move the text cursor to row 6
  JSR DOYC
+
+ENDIF
+
+IF _6502SP_VERSION \ Screen
 
  JSR WHITETEXT          \ Set white text
 

@@ -36,7 +36,7 @@
  JSR NOS1               \ kill (part 1 of the explosion), and call NOS1 to set
                         \ up the sound block in XX16
 
-IF _6502SP_VERSION \ Feature
+IF _6502SP_VERSION \ Other: Bug fix to make very distant ships (i.e. where z_sign is non-zero) explode silently
 
  LDA INWK+8             \ Fetch z_sign, the distance of the ship being hit in
  ASL A                  \ terms of the z-axis (in and out of the screen), and
@@ -53,9 +53,12 @@ IF _6502SP_VERSION \ Feature
 
                         \ So, by this point, if any of bits 0-6 of z_sign are
                         \ non-zero, which means the ship is a long way away,
-                        \ then A will be set to 0 rather than z_hi, and the
-                        \ SOUND amplitude below will be -15 (%11110001), or
-                        \ full volume... which seems a little odd
+                        \ then A will be set to 0 rather than z_hi and the next
+                        \ instruction gets skipped, so we end up with a volume
+                        \ of 0. This fixes a bug in the other versions which
+                        \ ignore the value of z_sign when calculating explosion
+                        \ volumne, which means very distant ships can still be
+                        \ heard
 
 ENDIF
 

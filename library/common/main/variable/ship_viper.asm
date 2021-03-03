@@ -26,7 +26,7 @@ ENDIF
  EQUW 0                 \ Bounty                   = 0
  EQUB 28                \ Number of faces          = 28 / 4 = 7
  EQUB 23                \ Visibility distance      = 23
-IF _CASSETTE_VERSION \ Feature
+IF _CASSETTE_VERSION \ Feature: The Viper has a different maximum energy in the disc version (100), cassette version (120) and advanced versions (140), so they are easiest to kill in the disc version, harder to kill in the cassette version, and even harder to kill in the advanced versions
  EQUB 120               \ Max. energy              = 120
 ELIF _DISC_VERSION
  EQUB 100               \ Max. energy              = 100

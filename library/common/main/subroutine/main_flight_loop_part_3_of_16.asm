@@ -31,7 +31,7 @@
 \
 \ ******************************************************************************
 
-IF _6502SP_VERSION OR _DISC_FLIGHT
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Label
 
 .BS2
 
@@ -67,7 +67,7 @@ ENDIF
  AND NOMSL              \ in NOMSL is non-zero, keep going, otherwise jump down
  BEQ MA20               \ to MA20 to skip the following
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Screen
 
  LDY #&EE               \ The "disarm missiles" key is being pressed, so call
  JSR ABORT              \ ABORT to disarm the missile and update the missile
@@ -84,7 +84,7 @@ ENDIF
  LDA #40                \ Call the NOISE routine with A = 40 to make a low,
  JSR NOISE              \ long beep to indicate the missile is now disarmed
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Label
 
 .MA31
 
@@ -114,7 +114,7 @@ ENDIF
                         \ value &FF, as we just loaded it from MSTG and checked
                         \ that it was negative)
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Screen
 
  LDY #&E0               \ Change the leftmost missile indicator to yellow/white
  JSR MSBAR              \ on the missile bar (this call changes the leftmost
@@ -163,18 +163,7 @@ ENDIF
 
 .MA76
 
-IF _CASSETTE_VERSION
-
- LDA KY13               \ If ESCAPE is being pressed and we have an escape pod
- AND ESCP               \ fitted, keep going, otherwise skip the next
- BEQ P%+5               \ instruction
-
- JMP ESCAPE             \ The "launch escape pod" button is being pressed and
-                        \ we have an escape pod fitted, so jump to ESCAPE to
-                        \ launch it, and exit the main flight loop using a tail
-                        \ call
-
-ELIF _6502SP_VERSION OR _DISC_FLIGHT
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced
 
  LDA KY20               \ If "P" is being pressed, keep going, otherwise skip
  BEQ MA78               \ the next two instructions
@@ -184,25 +173,35 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
 .MA78
 
+ENDIF
+
+IF _CASSETTE_VERSION \ Minor
+
+ LDA KY13               \ If ESCAPE is being pressed and we have an escape pod
+ AND ESCP               \ fitted, keep going, otherwise skip the next
+ BEQ P%+5               \ instruction
+
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
+
  LDA KY13               \ If ESCAPE is being pressed and we have an escape pod
  AND ESCP               \ fitted, keep going, otherwise jump to noescp to skip
  BEQ noescp             \ the following instructions
 
 ENDIF
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Feature: In the 6502SP version, you can't launch your escape pod in witchspace
 
  LDA MJ                 \ If we are in witchspace, we can't launch our escape
  BNE noescp             \ pod, so jump down to noescp
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT
-
  JMP ESCAPE             \ The "launch escape pod" button is being pressed and
                         \ we have an escape pod fitted, so jump to ESCAPE to
                         \ launch it, and exit the main flight loop using a tail
                         \ call
+
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Label
 
 .noescp
 
@@ -234,7 +233,7 @@ ENDIF
 
 .MA64
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Enhanced
 
  LDA KY19               \ If "C" is being pressed, and we have a docking
  AND DKCMP              \ computer fitted, and we are inside the space station's

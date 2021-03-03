@@ -21,7 +21,7 @@
 \
 \   ptg                 Called when the user manually forces a mis-jump
 \
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
 \   RTS111              Contains an RTS
 \
 ENDIF
@@ -35,7 +35,14 @@ ENDIF
 
 .MJP
 
-IF _CASSETTE_VERSION
+IF _DISC_VERSION \ Platform
+
+ LDA #3                 \ Call SHIPinA to load ship blueprints file D, which is
+ JSR SHIPinA            \ one of the two files that contain Thargoids
+
+ENDIF
+
+IF _CASSETTE_VERSION \ Minor
 
 \LDA #1                 \ This instruction is commented out in the original
                         \ source - it is not required as a call to TT66-2 sets
@@ -47,15 +54,7 @@ IF _CASSETTE_VERSION
  JSR TT66-2             \ Clear the top part of the screen, draw a white border,
                         \ and set the current view type in QQ11 to 1
 
-ELIF _DISC_VERSION
-
- LDA #3                 \ Call SHIPinA to load ship blueprints file D, which is
- JSR SHIPinA            \ one of the two files that contain Thargoids
-
- LDA #3                 \ Clear the top part of the screen, draw a white border,
- JSR TT66               \ and set the current view type in QQ11 to 3
-
-ELIF _6502SP_VERSION
+ELIF _DISC_VERSION OR _6502SP_VERSION
 
  LDA #3                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 3
@@ -92,7 +91,7 @@ ENDIF
  STA QQ1                \ vicinity of our original destination, but above or
                         \ below it in the galactic chart
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Label
 
 .RTS111
 

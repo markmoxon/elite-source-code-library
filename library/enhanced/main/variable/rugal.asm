@@ -3,21 +3,21 @@
 \       Name: RUGAL
 \       Type: Variable
 \   Category: Text
-\    Summary: The criteria for systems with special extended descriptions
+\    Summary: The criteria for systems with extended decription overrides
 \  Deep dive: Extended system descriptions
 \             Extended text tokens
 \
 \ ------------------------------------------------------------------------------
 \
-\ This table contains the criteria for printing a special extended description
+\ This table contains the criteria for printing an extended decription override
 \ for a system. The galaxy number is in bits 0-6, while bit 7 determines whether
 \ to show this token during mission 1 only (bit 7 is clear, i.e. a value of &0x
 \ in the table below), or all of the time (bit 7 is set, i.e. a value of &8x in
 \ the table below).
 \
-\ In other words, Teorge, Arredi, Anreer and Lave have special extended
-\ descriptions that are always shown, while the rest only appear when mission 1
-\ is in progress.
+\ In other words, Teorge, Arredi, Anreer and Lave have extended decription
+\ overrides descriptions that are always shown, while the rest only appear when
+\ mission 1 is in progress.
 \
 \ The three variables work as follows:
 \
@@ -59,7 +59,7 @@
  EQUB &02                \ System 101, Galaxy 2, Mission 1     Xeveon = Token 23
  EQUB &01                \ System 193, Galaxy 1, Mission 1     Orarra = Token 24
  EQUB &82                \ System  41, Galaxy 2                Anreer = Token 25
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Feature: The source disc release of the 6502SP version overrides the extended system description for Lave. The Master version also has an override Lave, but this time it's only for the Lave in galaxy 16 (i.e. the 17th galaxy)
 
 IF _SOURCE_DISC
 

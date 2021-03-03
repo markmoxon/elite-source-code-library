@@ -14,7 +14,7 @@
 \
 \   * Pages &9, &A, &B, &C and &D
 \
-IF _CASSETTE_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _6502SP_VERSION \ Comment
 \   * BETA to BETA+6, which covers the following:
 ELIF _DISC_VERSION
 \   * BETA to BETA+8, which covers the following:
@@ -28,14 +28,14 @@ ENDIF
 \
 \     * ECMA - Turn E.C.M. off
 \
-IF _DISC_VERSION
+IF _DISC_VERSION \ Comment
 \     * ALP1, ALP2 - Set roll signs to 0
 \
 ENDIF
 \ It also sets QQ12 to &FF, to indicate we are docked, recharges the shields and
 \ energy banks, and then falls through into RES2.
 \
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Comment
 \ Other entry points:
 \
 \   RES4                Reset the shields and energy banks, then fall through
@@ -52,7 +52,7 @@ ENDIF
                         \ slots for the local bubble of universe, and various
                         \ flight and ship status variables
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Platform
 
  LDX #6                 \ Set up a counter for zeroing BETA through BETA+6
 
@@ -70,13 +70,19 @@ ENDIF
 
  BPL SAL3               \ Loop back for the next byte to zero
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION  \ Platform
 
  STX QQ12               \ X is now negative - i.e. &FF - so this sets QQ12 to
                         \ &FF to indicate we are docked
 
-                        \ Fall through into RES4 to restore shields and energy,
-                        \ and reset the stardust and ship workspace at INWK
+                        \ We now fall through into RES4 to restore shields and
+                        \ energy, and reset the stardust and ship workspace at
+                        \ INWK
+
+.RES4
+
+ LDA #&FF               \ Set A to &FF so we can fill up the shields and energy
+                        \ bars with a full charge
 
 ELIF _DISC_FLIGHT
 
@@ -86,15 +92,6 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED
 
  TXA                    \ X is now negative - i.e. &FF - so this sets A and QQ12
  STA QQ12               \ to &FF to indicate we are docked
-
-ENDIF
-
-IF _CASSETTE_VERSION
-
-.RES4
-
- LDA #&FF               \ Set A to &FF so we can fill up the shields and energy
-                        \ bars with a full charge
 
 ENDIF
 

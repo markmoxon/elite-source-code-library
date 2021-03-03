@@ -36,7 +36,7 @@ IF _6502SP_VERSION OR _DISC_DOCKED \ Label
 
 ENDIF
 
-IF _DISC_DOCKED \ Feature
+IF _DISC_DOCKED \ Other
 
  LDY #8                 \ Wait for 8/50 of a second (0.16 seconds)
  JSR DELAY

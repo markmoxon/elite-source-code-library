@@ -14,7 +14,7 @@
 \
 \   * If this is a missile, jump up to the missile code in part 1
 \
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Comment
 \   * If this is an escape pod, point it at the planet and jump to the
 \     manoeuvring code in part 7
 \
@@ -32,9 +32,11 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT
 \     (6.2% chance, up to a maximum of seven) and we're done
 \
 \   * If this is the space station and it is not hostile, consider spawning
-\     (0.8% chance if there are no transporters around) a transporter or shuttle
+\     (0.8% chance if there are no Transporters around) a Transporter or Shuttle
 \     (equal odds of each type) and we're done
 \
+ENDIF
+IF _6502SP_VERSION \ Comment
 \   * If this is a rock hermit, consider spawning (22% chance) a highly
 \     aggressive and hostile Sidewinder, Mamba, Krait, Adder or Gecko (equal
 \     odds of each type) and we're done
@@ -182,12 +184,12 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT
  BNE TN5                \ station is hostile), jump to TN5 to spawn some cops
 
  LDA MANY+SHU+1         \ The station is not hostile, so check how many
- BNE TA1                \ transporters there are in the vicinity, and if we
+ BNE TA1                \ Transporters there are in the vicinity, and if we
                         \ already have one, return from the subroutine (as TA1
                         \ contains an RTS)
 
                         \ If we get here then the station is not hostile, so we
-                        \ can consider spawning a transporter or shuttle
+                        \ can consider spawning a Transporter or Shuttle
 
  JSR DORND              \ Set A and X to random numbers
 
@@ -198,7 +200,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
  ADC #SHU-1             \ The C flag is set (as we didn't take the BCC above),
  TAX                    \ so this sets X to a value of either #SHU or #SHU + 1,
-                        \ which is the ship type for a shuttle or a transporter
+                        \ which is the ship type for a Shuttle or a Transporter
 
  BNE TN6                \ Jump to TN6 to spawn this ship type and return from
                         \ the subroutine using a tail call (this BNE is

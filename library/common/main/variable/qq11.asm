@@ -7,7 +7,7 @@
                         \         Get commander name ("@", save/load commander)
                         \         In-system jump just arrived ("J")
                         \         Data on System screen (red key f6)
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
                         \         Buy Cargo screen (red key f1)
                         \         Mis-jump just arrived (witchspace)
 ELIF _6502SP_VERSION
@@ -22,7 +22,7 @@ ENDIF
                         \   32  = Equip Ship screen (red key f3)
                         \   64  = Long-range Chart (red key f4)
                         \   128 = Short-range Chart (red key f5)
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
                         \   255 = Launch view
 ENDIF
                         \

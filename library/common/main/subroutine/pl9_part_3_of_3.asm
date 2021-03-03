@@ -120,7 +120,7 @@
  LDA #64                \ Set TGT = 64, so we draw a full circle in the call to
  STA TGT                \ PLS22 below
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Minor
 
  LDA #0                 \ Set CNT2 = 0 as we are drawing a full circle, so we
  STA CNT2               \ don't need to apply an offset
@@ -143,6 +143,10 @@ ELIF _6502SP_VERSION
                         \ don't need to apply an offset
 
  JSR PLS22              \ Call PLS22 to draw the crater
+
+ENDIF
+
+IF _6502SP_VERSION \ Tube
 
  JMP LS2FL              \ Jump to LS2FL to send the ball line heap to the I/O
                         \ processor for drawing on-screen, returning from the

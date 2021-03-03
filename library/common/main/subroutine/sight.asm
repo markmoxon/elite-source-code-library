@@ -13,7 +13,7 @@
  LDY VIEW               \ Fetch the laser power for our new view
  LDA LASER,Y
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Label
 
  BEQ BOL1-1             \ If it is zero (i.e. there is no laser fitted to this
                         \ view), jump to BOL1-1 to return from the subroutine
@@ -28,7 +28,7 @@ ELIF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
 
 ENDIF
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Screen
 
  LDA #YELLOW            \ Send a #SETCOL YELLOW command to the I/O processor to
  JSR DOCOL              \ switch to colour 1, which is yellow in the space view
@@ -45,7 +45,7 @@ ENDIF
  LDA #20                \ Set QQ19+2 to size 20 for the crosshairs size
  STA QQ19+2
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Platform
 
  JSR TT15               \ Call TT15 to draw crosshairs of size 20 just to the
                         \ left of the middle of the screen
@@ -61,7 +61,7 @@ ENDIF
  LDA #10                \ Set QQ19+2 to size 10 for the crosshairs size
  STA QQ19+2
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Platform
 
  JMP TT15               \ Call TT15 to draw crosshairs of size 10 at the same
                         \ location, which will remove the centre part from the

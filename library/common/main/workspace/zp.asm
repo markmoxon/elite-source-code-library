@@ -19,7 +19,7 @@ INCLUDE "library/common/main/variable/rand.asm"
 
 IF _CASSETTE_VERSION OR _DISC_VERSION
 
-INCLUDE "library/cassette/main/variable/trtb_per_cent.asm"
+INCLUDE "library/original/main/variable/trtb_per_cent.asm"
 
 ENDIF
 

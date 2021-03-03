@@ -195,7 +195,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
 .DKL1
 
- LDX KYTB,Y             \ Get the internal key value of the Y-th flight key
+ LDX KYTB,Y             \ Get the internal key number of the Y-th flight key
                         \ the KYTB keyboard table
 
  CPX KL                 \ We stored the key that's being pressed in KL above,

@@ -50,7 +50,7 @@ ENDIF
  LDA QQ22+1             \ Fetch QQ22+1, which contains the number that's shown
                         \ on-screen during hyperspace countdown
 
-IF _CASSETTE_VERSION \ Feature
+IF _CASSETTE_VERSION \ Minor
 
  BNE zZ+1               \ If it is non-zero, return from the subroutine (as zZ+1
                         \ contains an RTS), as there is already a countdown in
@@ -167,7 +167,7 @@ IF _6502SP_VERSION \ Other
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Feature
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Platform
 
  LDA #7                 \ Move the text cursor to column 7, row 23 (in the
  STA XC                 \ middle of the bottom text row)

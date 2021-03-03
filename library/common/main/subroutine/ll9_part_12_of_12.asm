@@ -20,7 +20,7 @@ ENDIF
 
 .LL155
 
-IF _6502SP_VERSION \ Feature
+IF _6502SP_VERSION \ Tube
 
  LDA NEEDKEY            \ If NEEDKEY is zero, jump to notneed to skip the next
  BEQ notneed            \ two instructions, so we only read the keyboard if

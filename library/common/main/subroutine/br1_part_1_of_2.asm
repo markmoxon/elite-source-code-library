@@ -7,17 +7,44 @@
 \
 \ ------------------------------------------------------------------------------
 \
+IF _CASSETTE_VERSION OR _DISC_VERSION
 \ BRKV is set to point to BR1 by elite-loader.asm.
+ENDIF
+IF _6502SP_VERSION
+\ Other entry points:
+\
+\   QU5                 Restart the game using the last saved commander without
+\                       asking whether to load a new commander file
+ENDIF
 \
 \ ******************************************************************************
 
 .BR1
 
+IF _6502SP_VERSION \ Tube
+
+ JSR ZEKTRAN            \ Reset the key logger buffer that gets returned from
+                        \ the I/O processor
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION
+
  LDX #3                 \ Set XC = 3 (set text cursor to column 3)
  STX XC
 
+ELIF _6502SP_VERSION
+
+ LDA #3                 \ Move the text cursor to column 3
+ JSR DOXC
+
+ LDX #3                 \ Set X = 3 for the call to FX200
+
+ENDIF
+
  JSR FX200              \ Disable the ESCAPE key and clear memory if the BREAK
                         \ key is pressed (*FX 200,3)
+
 
 IF _CASSETTE_VERSION \ Minor
 
@@ -26,12 +53,23 @@ IF _CASSETTE_VERSION \ Minor
  JSR TITLE              \ returning with the internal number of the key pressed
                         \ in A
 
-ELIF _DISC_VERSION
+ELIF _DISC_VERSION OR _6502SP_VERSION
 
  LDX #CYL               \ Call TITLE to show a rotating Cobra Mk III (#CYL) and
  LDA #6                 \ token 6 ("LOAD NEW {single cap}COMMANDER {all caps}
  JSR TITLE              \ (Y/N)?{sentence case}{cr}{cr}"), returning with the
                         \ internal number of the key pressed in A
+
+ENDIF
+
+IF _6502SP_VERSION
+
+ CMP #&60               \ Did we press TAB? If not, skip the following
+ BNE P%+5               \ instruction
+
+.BRGO
+
+ JMP DEMON              \ We pressed TAB, so jump to DEMON to show the demo
 
 ENDIF
 
@@ -65,7 +103,7 @@ IF _CASSETTE_VERSION \ Platform
  JSR TTX66              \ And we clear the top part of the screen and draw a
                         \ white border
 
-ELIF _DISC_VERSION
+ELIF _DISC_VERSION OR _6502SP_VERSION
 
  JSR DFAULT             \ Call DFAULT to reset the current commander data block
                         \ to the last saved commander

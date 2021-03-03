@@ -80,7 +80,7 @@ PLT = 4                 \ Ship type for an alloy plate
 OIL = 5                 \ Ship type for a cargo canister
 AST = 7                 \ Ship type for an asteroid
 SPL = 8                 \ Ship type for a splinter
-SHU = 9                 \ Ship type for a shuttle
+SHU = 9                 \ Ship type for a Shuttle
 CYL = 11                \ Ship type for a Cobra Mk III
 ANA = 14                \ Ship type for an Anaconda
 HER = 15                \ Ship type for a rock hermit (asteroid)
@@ -104,7 +104,7 @@ JH = SHU+2              \ Junk is defined as ending before the Cobra Mk III
                         \
                         \ So junk is defined as the following: escape pod,
                         \ alloy plate, cargo canister, asteroid, splinter,
-                        \ shuttle, transporter
+                        \ Shuttle or Transporter
 
 PACK = SH3              \ The first of the eight pack-hunter ships, which tend
                         \ to spawn in groups. With the default value of PACK the
@@ -179,10 +179,10 @@ CYAN2   = %00111100     \ Two mode 2 pixels of colour 6    (cyan)
 WHITE2  = %00111111     \ Two mode 2 pixels of colour 7    (white)
 STRIPE  = %00100011     \ Two mode 2 pixels of colour 5, 1 (magenta/red)
 
-NRU% = 0                \ The number of planetary systems with special extended
-                        \ descriptions in the RUTOK table. The value of this
-                        \ variable is 0 in the original source, but this appears
-                        \ to be a bug, as it should be 26
+NRU% = 0                \ The number of planetary systems with extended
+                        \ description overrides in the RUTOK table. The value of
+                        \ this variable is 0 in the original source, but this
+                        \ appears to be a bug, as it should really be 26
 
 VE = &57                \ The obfuscation byte used to hide the extended tokens
                         \ table from crackers viewing the binary code
@@ -784,7 +784,8 @@ INCLUDE "library/6502sp/main/variable/spasto.asm"
 INCLUDE "library/enhanced/main/subroutine/begin.asm"
 INCLUDE "library/common/main/subroutine/tt170.asm"
 INCLUDE "library/common/main/subroutine/death2.asm"
-INCLUDE "library/6502sp/main/subroutine/br1.asm"
+INCLUDE "library/common/main/subroutine/br1_part_1_of_2.asm"
+INCLUDE "library/common/main/subroutine/br1_part_2_of_2.asm"
 INCLUDE "library/common/main/subroutine/bay.asm"
 INCLUDE "library/common/main/subroutine/dfault-qu5.asm"
 INCLUDE "library/common/main/subroutine/title.asm"

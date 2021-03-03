@@ -41,7 +41,7 @@ ENDIF
 
 .DOKEY
 
-IF _6502SP_VERSION \ Feature
+IF _6502SP_VERSION \ Tube
 
  LDA NEEDKEY            \ If NEEDKEY is zero, skip the next instruction
  BEQ P%+5

@@ -39,14 +39,12 @@
 \
 \                         * If X = 19, rotate roofv_z
 \
-IF _6502SP_VERSION
 \                         * If X = 21, rotate sidev_x
 \
 \                         * If X = 23, rotate sidev_y
 \
 \                         * If X = 25, rotate sidev_z
 \
-ENDIF
 \   Y                   The second vector to rotate:
 \
 \                         * If Y = 9,  rotate nosev_x

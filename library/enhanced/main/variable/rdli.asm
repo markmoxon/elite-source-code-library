@@ -4,11 +4,11 @@
 \       Type: Variable
 \   Category: Loader
 \    Summary: The OS command string for loading the flight code file D.CODE
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
 \             in the disc version of Elite
 ENDIF
 \
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ This command is not used in the 6502 Second Processor version of Elite.

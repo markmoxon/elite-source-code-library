@@ -29,7 +29,7 @@
 
 .MLOOP
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Other
 
  LDA #%00000001         \ Set 6522 System VIA interrupt enable register IER
  STA VIA+&4E            \ (SHEILA &4E) bit 1 (i.e. disable the CA2 interrupt,
@@ -47,7 +47,7 @@ ENDIF
 
 .EE20
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Platform
 
  LDX LASCT              \ Set X to the value of LASCT, the laser pulse count
 
@@ -69,39 +69,7 @@ ENDIF
 
  JSR DIALS              \ Call DIALS to update the dashboard
 
-IF _CASSETTE_VERSION
-
- LDA QQ11               \ If this is a space view, skip the following four
- BEQ P%+11              \ instructions (i.e. jump to JSR TT17 below)
-
- AND PATG               \ If PATG = &FF (author names are shown on start-up)
- LSR A                  \ and bit 0 of QQ11 is 1 (the current view is type 1),
- BCS P%+5               \ then skip the following instruction
-
- JSR DELAY-5            \ Delay for 8 vertical syncs (8/50 = 0.16 seconds), to
-                        \ slow the main loop down a bit
-
-ELIF _DISC_FLIGHT
-
- LDA QQ11               \ If this is a space view, skip the following five
- BEQ P%+13              \ instructions (i.e. jump to JSR TT17 below)
-
- AND PATG               \ If PATG = &FF (author names are shown on start-up)
- LSR A                  \ and bit 0 of QQ11 is 1 (the current view is type 1),
- BCS P%+7               \ then skip the following two instructions
-
- LDY #2                 \ Wait for 2/50 of a second (0.04 seconds), to slow the
- JSR DELAY              \ main loop down a bit
-
-ELIF _DISC_DOCKED
-
- LDA QQ11               \ If this is a space view, skip the following two
- BEQ P%+7               \ instructions (i.e. jump to JSR TT17 below)
-
- LDY #2                 \ Wait for 2/50 of a second (0.04 seconds), to slow the
- JSR DELAY              \ main loop down a bit
-
-ELIF _6502SP_VERSION
+IF _6502SP_VERSION \ Advanced
 
  BIT printflag          \ If bit 7 of printflag is clear (printer output is not
                         \ enabled), jump to dontdolinefeedontheprinternow to
@@ -121,12 +89,36 @@ ELIF _6502SP_VERSION
 
  STZ printflag          \ Set the printflag to 0 to disable printing
 
+ENDIF
+
+IF _CASSETTE_VERSION \ Minor
+
+ LDA QQ11               \ If this is a space view, skip the following four
+ BEQ P%+11              \ instructions (i.e. jump to JSR TT17 below)
+
+ AND PATG               \ If PATG = &FF (author names are shown on start-up)
+ LSR A                  \ and bit 0 of QQ11 is 1 (the current view is type 1),
+ BCS P%+5               \ then skip the following instruction
+
+ JSR DELAY-5            \ Delay for 8 vertical syncs (8/50 = 0.16 seconds), to
+                        \ slow the main loop down a bit
+
+ELIF _DISC_FLIGHT OR _6502SP_VERSION
+
  LDA QQ11               \ If this is a space view, skip the following five
  BEQ P%+13              \ instructions (i.e. jump to JSR TT17 below)
 
  AND PATG               \ If PATG = &FF (author names are shown on start-up)
  LSR A                  \ and bit 0 of QQ11 is 1 (the current view is type 1),
  BCS P%+7               \ then skip the following two instructions
+
+ LDY #2                 \ Wait for 2/50 of a second (0.04 seconds), to slow the
+ JSR DELAY              \ main loop down a bit
+
+ELIF _DISC_DOCKED
+
+ LDA QQ11               \ If this is a space view, skip the following two
+ BEQ P%+7               \ instructions (i.e. jump to JSR TT17 below)
 
  LDY #2                 \ Wait for 2/50 of a second (0.04 seconds), to slow the
  JSR DELAY              \ main loop down a bit

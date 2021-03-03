@@ -18,7 +18,7 @@
  JSR SFS1-2             \ to add the missile to our universe with an AI flag
                         \ of %11111110 (AI enabled, hostile, no E.C.M.)
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Label
 
  BCC NO1                \ The C flag will be set if the call to SFS1-2 was a
                         \ success, so if it's clear, jump to NO1 to return from

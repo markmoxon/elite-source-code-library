@@ -3,7 +3,7 @@
 \       Name: RUPLA
 \       Type: Variable
 \   Category: Text
-\    Summary: System numbers that have special extended decriptions
+\    Summary: System numbers that have extended decription overrides
 \  Deep dive: Extended system descriptions
 \             Extended text tokens
 \
@@ -52,7 +52,7 @@
  EQUB 101                \ System 101, Galaxy 2, Mission 1     Xeveon = Token 23
  EQUB 193                \ System 193, Galaxy 1, Mission 1     Orarra = Token 24
  EQUB 41                 \ System  41, Galaxy 2                Anreer = Token 25
-IF _6502SP_VERSION
+IF _6502SP_VERSION  \ Feature: The source disc release of the 6502SP version, and the Master version, both use token 26 to override the extended system description for Lave
 
 IF _SOURCE_DISC
 

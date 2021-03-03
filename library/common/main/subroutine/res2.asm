@@ -28,7 +28,7 @@
 
  STX MSTG               \ Reset MSTG, the missile target, to &FF (no target)
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Platform
 
  LDA #128               \ Set the current pitch rate to the mid-point, 128
  STA JSTY
@@ -46,7 +46,7 @@ ENDIF
 
  ASL A                  \ This sets A to 0
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Platform
 
  STA BETA               \ Reset BETA (pitch angle alpha) to 0
 
@@ -54,7 +54,7 @@ IF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Platform
 
  STA ALP2+1             \ Reset ALP2+1 (flipped roll sign) and BET2+1 (flipped
  STA BET2+1             \ pitch sign) to positive, i.e. pitch and roll negative
@@ -63,13 +63,13 @@ ENDIF
 
  STA MCNT               \ Reset MCNT (the main loop counter) to 0
 
-IF _DISC_FLIGHT
+IF _DISC_FLIGHT \ Platform
 
  STA QQ22+1             \ Set the on-screen hyperspace counter to 0
 
 ENDIF
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Label
 
 .modify
 
@@ -78,7 +78,7 @@ ENDIF
  LDA #3                 \ Reset DELTA (speed) to 3
  STA DELTA
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Platform
 
  STA ALPHA              \ Reset ALPHA (roll angle alpha) to 3
 
@@ -86,7 +86,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
  LDA SSPR               \ Fetch the "space station present" flag, and if we are
  BEQ P%+5               \ not inside the safe zone, skip the next instruction
@@ -109,7 +109,7 @@ ENDIF
                         \ slots for the local bubble of universe, and various
                         \ flight and ship status variables
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Minor
 
  LDA #LO(WP-1)          \ We have reset the ship line heap, so we now point
  STA SLSP               \ SLSP to the byte before the WP workspace to indicate
@@ -130,7 +130,7 @@ ENDIF
                         \ Finally, fall through into ZINF to reset the INWK
                         \ ship workspace
 
-IF _DISC_FLIGHT
+IF _DISC_FLIGHT \ Platform
 
  JSR U%                 \ Call U% to clear the key logger
 

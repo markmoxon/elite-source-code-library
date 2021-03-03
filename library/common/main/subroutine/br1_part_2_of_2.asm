@@ -1,69 +1,52 @@
 \ ******************************************************************************
 \
-\       Name: BR1
+\       Name: BR1 (Part 2 of 2)
 \       Type: Subroutine
 \   Category: Start and end
-\    Summary: Restart the game
+\    Summary: Show the "Load New Commander (Y/N)?" screen and start the game
 \
 \ ------------------------------------------------------------------------------
 \
-\ Other entry points:
-\
-\   QU5                 Restart the game using the last saved commander without
-\                       asking whether to load a new commander file
+\ BRKV is set to point to BR1 by elite-loader.asm.
 \
 \ ******************************************************************************
 
-.BR1
-
- JSR ZEKTRAN            \ Reset the key logger buffer that gets returned from
-                        \ the I/O processor
-
- LDA #3                 \ Move the text cursor to column 3
- JSR DOXC
-
- LDX #3                 \ Disable the ESCAPE key and clear memory if the BREAK
- JSR FX200              \ key is pressed (*FX 200,3)
-
- LDX #CYL               \ Call TITLE to show a rotating Cobra Mk III (#CYL) and
- LDA #6                 \ token 6 ("LOAD NEW {single cap}COMMANDER {all caps}
- JSR TITLE              \ (Y/N)?{sentence case}{cr}{cr}"), returning with the
-                        \ internal number of the key pressed in A
-
- CMP #&60               \ Did we press TAB? If not, skip the following
- BNE P%+5               \ instruction
-
-.BRGO
-
- JMP DEMON              \ We pressed TAB, so jump to DEMON to show the demo
-
- CMP #&44               \ Did we press "Y"? If not, jump to QU5, otherwise
- BNE QU5                \ continue on to load a new commander
-
- JSR DFAULT             \ Call DFAULT to reset the current commander data block
-                        \ to the last saved commander
-
- JSR SVE                \ Call SVE to load a new commander into the last saved
-                        \ commander data block
-
-.QU5
-
- JSR DFAULT             \ Call DFAULT to reset the current commander data block
-                        \ to the last saved commander
-
  JSR msblob             \ Reset the dashboard's missile indicators so none of
                         \ them are targeted
+
+IF _CASSETTE_VERSION \ Feature: On the second part of the title page ("Press Space Or Fire,Commander"), the cassette version shows a rotating Mamba, the disc version shows a rotating Krait, and the 6502SP version shows a rotating Asp Mk II
+
+ LDA #147               \ Call TITLE to show a rotating Mamba (#3) and token
+ LDX #3                 \ 147 ("PRESS FIRE OR SPACE,COMMANDER.{crlf}{crlf}"),
+ JSR TITLE              \ returning with the internal number of the key pressed
+                        \ in A
+
+ELIF _DISC_VERSION
+
+ LDA #7                 \ Call TITLE to show a rotating Krait (#KRA) and token
+ LDX #KRA               \ 7 ("PRESS SPACE OR FIRE,{single cap}COMMANDER.{cr}
+ JSR TITLE              \ {cr}"), returning with the internal number of the key
+                        \ pressed in A
+
+ELIF _6502SP_VERSION
 
  LDA #7                 \ Call TITLE to show a rotating Asp Mk II (#ASP) and
  LDX #ASP               \ token 7 ("LOAD NEW {single cap}COMMANDER {all caps}
  JSR TITLE              \ (Y/N)?{sentence case}{cr}{cr}""), returning with the
                         \ internal number of the key pressed in A
 
+ENDIF
+
  JSR ping               \ Set the target system coordinates (QQ9, QQ10) to the
                         \ current system coordinates (QQ0, QQ1) we just loaded
 
-                        \ The rest of this routine is almost identical to the
-                        \ hyp routine in the cassette version
+IF _CASSETTE_VERSION OR _DISC_VERSION
+
+ JSR hyp1               \ Arrive in the system closest to (QQ9, QQ10) and then
+                        \ and then fall through into the docking bay routine
+                        \ below
+
+ELIF _6502SP_VERSION
 
  JSR TT111              \ Select the system closest to galactic coordinates
                         \ (QQ9, QQ10)
@@ -103,4 +86,6 @@
 
  LDA QQ4                \ Set the current system's government in gov to the
  STA gov                \ selected system's government from QQ4
+
+ENDIF
 

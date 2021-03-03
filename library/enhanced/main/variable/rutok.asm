@@ -9,7 +9,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ Contains the tokens for special extended descriptions of systems that match
+\ Contains the tokens for extended description overrides of systems that match
 \ the system number in RUPLA and the conditions in RUGAL.
 \
 \ The three variables work as follows:
@@ -593,7 +593,7 @@
  ECHR 'E'
  EQUB VE
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Feature: The disc version has a system description override for Anreer in galaxy 3: "THE INHABITANTS OF ANREER ARE SO AMAZINGLY PRIMITIVE THAT THEY STILL THINK STILL THINK A*****R IS A PRETTY NEAT GAME". The advanced versions have a different override: "THE INHABITANTS OF ANREER ARE SO AMAZINGLY PRIMITIVE THAT THEY STILL THINK ***** ****** IS 3D"
  ETOK 147               \ Token 25:     "THE INHABITANTS OF [86-90] ARE SO
  ETOK 193               \                AMAZINGLY PRIMITIVE THAT THEY STILL
  ECHR 'S'               \                THINK {single cap}STILL THINK A*****R
@@ -652,7 +652,7 @@ ENDIF
  ECHR 'K'
  ECHR ' '
  EJMP 19
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Feature: See above
  ECHR 'A'
  ECHR '*'
  ECHR '*'
@@ -699,7 +699,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Feature: The source disc release of the 6502SP version has a bizarre override for Lave: "Bits'n Pieces - End Of Part 1". No, I have no idea what this means either
 
 IF _SOURCE_DISC
 

@@ -3,7 +3,7 @@
 \       Name: Main game loop (Part 2 of 6)
 \       Type: Subroutine
 \   Category: Main loop
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Comment
 \    Summary: Call the main flight loop, and potentially spawn a trader, an
 \             asteroid, or a cargo canister
 ELIF _DISC_DOCKED
@@ -15,14 +15,14 @@ ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Comment
 \ In the docked code, we start the main game loop at part 2 and then jump
 \ straight to part 5, as parts 1, 3 and 4 are not required when we are docked.
 \
 ENDIF
 \ This section covers the following:
 \
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Comment
 \   * Call M% to do the main flight loop
 \
 ENDIF
@@ -41,7 +41,7 @@ ENDIF
 
 .TT100
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
  JSR M%                 \ Call M% to iterate through the main flight loop
 
@@ -93,7 +93,7 @@ ENDIF
 
  JSR DORND              \ Set A and X to random numbers
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Minor
 
  CMP #35                \ If A >= 35 (87% chance), jump down to MTT1 to skip
  BCS MTT1               \ the spawning of an asteroid or cargo canister and
@@ -106,7 +106,7 @@ ELIF _DISC_DOCKED
 
 ENDIF
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Minor
 
  LDA MANY+AST           \ If we already have 3 or more asteroids in the local
  CMP #3                 \ bubble, jump down to MTT1 to skip the following and
@@ -156,7 +156,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
 
 ENDIF
 
-IF _DISC_FLIGHT
+IF _DISC_FLIGHT \ Other
 
 IF _STH_DISC
 
@@ -183,7 +183,7 @@ ENDIF
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
  ORA #%01101111         \ Take the random number in A and set bits 0-3 and 5-6,
  STA INWK+29            \ so the result has a 50% chance of being positive or
@@ -222,15 +222,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
 
 ENDIF
 
-IF _CASSETTE_VERSION
-
- CMP #5                 \ Set A to the ship number of an asteroid, and keep
- LDA #AST               \ this value for 98.5% of the time (i.e. if random
- BCS P%+4               \ A >= 5 then skip the following instruction)
-
- LDA #OIL               \ Set A to the ship number of a cargo canister
-
-ELIF _6502SP_VERSION
+IF _6502SP_VERSION \ Feature: In the 6502SP version, 1.2% of asteroids spawned are rock hermits
 
  CMP #252               \ If random A < 252 (98.8% of the time), jump to thongs
  BCC thongs             \ to skip the following
@@ -248,7 +240,15 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION \ Enhanced
+
+ CMP #5                 \ Set A to the ship number of an asteroid, and keep
+ LDA #AST               \ this value for 98.5% of the time (i.e. if random
+ BCS P%+4               \ A >= 5 then skip the following instruction)
+
+ LDA #OIL               \ Set A to the ship number of a cargo canister
+
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
  CMP #10                \ If random A >= 10 (96% of the time), set the C flag
 
@@ -261,19 +261,19 @@ IF _6502SP_VERSION OR _DISC_FLIGHT
 
 ENDIF
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Label
 
 .whips
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
  JSR NWSHP              \ Add our new asteroid or canister to the universe
 
 ENDIF
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Platform
 
                         \ Fall through into part 5 (parts 3 and 4 are not
                         \ required when we are docked)

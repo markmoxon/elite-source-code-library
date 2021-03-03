@@ -18,7 +18,7 @@
 
 .MESS
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Screen
 
  PHA                    \ Store A on the stack so we can restore it after the
                         \ the call to DOCOL
@@ -33,7 +33,7 @@ ENDIF
  LDX #0                 \ Set QQ17 = 0 to switch to ALL CAPS
  STX QQ17
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Advanced
 
  LDY #9                 \ Move the text cursor to column 9, row 22, at the
  STY XC                 \ bottom middle of the screen, and set Y = 22
@@ -66,7 +66,7 @@ ENDIF
 
  STA MCH                \ Set MCH to the token we are about to display
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Advanced
 
                         \ Before we fall through into mes9 to print the token,
                         \ we need to work out the starting column for the

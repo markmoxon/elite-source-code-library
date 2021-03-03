@@ -123,7 +123,7 @@
                         \ add them together to get the result we're after, and
                         \ then set the sign afterwards
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Other
 
  LDA K                  \ We now do the following sum:
 \CLC                    \

@@ -44,7 +44,7 @@ ENDIF
 
  LDA #8                 \ Set A = 8
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Feature: The original versions of Elite define small circle as having a radius less than 8, while in the advanced versions they have radii less than 4
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Feature: The cassette and disc versions define a circle as being small when it has a radius of less than 8, while in the advanced versions, a circle is small if it has a radius of less than 4
 
  CPX #8                 \ If the radius < 8, skip to PL89
  BCC PL89
@@ -58,7 +58,7 @@ ENDIF
 
  LSR A                  \ Halve A so A = 4
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Feature: The original versions of Elite define medium circle as having a radius less than 60, while in the advanced versions they have radii less than 50
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Feature: The cassette and disc versions define a circle as being medium when it has a radius of less than 60, while in the advanced versions, a circle is medium if it has a radius of less than 50
 
  CPX #60                \ If the radius < 60, skip to PL89
  BCC PL89

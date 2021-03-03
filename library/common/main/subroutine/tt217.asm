@@ -71,13 +71,13 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED
 
  LDA (TRTB%),Y          \ The address in TRTB% points to the MOS key
                         \ translation table, which is used to translate
-                        \ internal key values to ASCII, so this fetches the
+                        \ internal key numbers to ASCII, so this fetches the
                         \ key's ASCII code into A
 
 ELIF _6502SP_VERSION
 
  LDA TRANTABLE,Y        \ TRANTABLE points to the MOS key translation table,
-                        \ which is used to translate internal key values to
+                        \ which is used to translate internal key numbers to
                         \ ASCII, so this fetches the key's ASCII code into A
 
 ENDIF

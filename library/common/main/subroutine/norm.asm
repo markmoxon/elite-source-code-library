@@ -29,10 +29,8 @@
 \
 \   XX15                The normalised vector
 \
-IF _6502SP_VERSION
 \   Q                   The length of the original XX15 vector
 \
-ENDIF
 \ Other entry points:
 \
 \   NO1                 Contains an RTS

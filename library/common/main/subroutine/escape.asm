@@ -15,7 +15,7 @@
 
 .ESCAPE
 
-IF _CASSETTE_VERSION \ Feature
+IF _CASSETTE_VERSION \ Feature: See below
 
  LDA MJ                 \ Store the value of MJ on the stack (the "are we in
  PHA                    \ witchspace?" flag)
@@ -67,7 +67,7 @@ ENDIF
  JSR SCAN               \ Call SCAN to remove the Cobra from the scanner (by
                         \ redrawing it)
 
-IF _CASSETTE_VERSION \ Feature
+IF _CASSETTE_VERSION \ Feature: In the cassette version, launching an escape pod in witchspace is immediately fatal, while in other versions it works properly
 
  JSR RESET              \ Call RESET to reset our ship and various controls
 

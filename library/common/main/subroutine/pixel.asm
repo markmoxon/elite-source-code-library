@@ -3,7 +3,7 @@
 \       Name: PIXEL
 \       Type: Subroutine
 \   Category: Drawing pixels
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \    Summary: Draw a 1-pixel dot, 2-pixel dash or 4-pixel square
 \  Deep dive: Drawing monochrome pixels in mode 4
 ELIF _6502SP_VERSION
@@ -13,7 +13,7 @@ ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \ Draw a point at screen coordinate (X, A) with the point size determined by the
 \ distance in ZZ. This applies to the top part of the screen (the monochrome
 \ mode 4 portion).
@@ -39,7 +39,7 @@ ENDIF
 \
 \ Arguments:
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \   X                   The screen x-coordinate of the point to draw
 \
 \   A                   The screen y-coordinate of the point to draw
@@ -85,7 +85,47 @@ ENDIF
 
 .PIXEL
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _6502SP_VERSION \ Tube
+
+ LDY #0                 \ Set Q to byte #0 from the block pointed to by OSSC,
+ LDA (OSSC),Y           \ which contains the size of the pixel buffer
+ STA Q
+
+ INY                    \ Increment Y to 2, so y now points at the data for the
+ INY                    \ first pixel in the command block
+
+.PXLO
+
+ LDA (OSSC),Y           \ Set P to byte #2 from the Y-th pixel block in OSSC,
+ STA P                  \ which contains the point's distance value (ZZ)
+
+ AND #%00000111         \ If ZZ is a multiple of 8 (which will be the case for
+ BEQ PX5                \ pixels sent by the parasite's PIXEL routine), jump to
+                        \ PX5
+
+                        \ Otherwise this pixel was sent by the parasite's PIXEL3
+                        \ routine and will have an odd value of ZZ, and we use
+                        \ the distance value to determine the dot's colour and
+                        \ size
+
+ TAX                    \ Set S to the ZZ-th value from the PXCL table, to get
+ LDA PXCL,X             \ the correct colour byte for this pixel, depending on
+ STA S                  \ the distance
+
+ INY                    \ Increment Y to 3
+
+ LDA (OSSC),Y           \ Set X to byte #3 from the Y-th pixel block in OSSC,
+ TAX                    \ contains the pixel's x-coordinate
+
+ INY                    \ Increment Y to 4
+
+ LDA (OSSC),Y           \ Set Y to byte #4 from the Y-th pixel block in OSSC,
+ STY T1                 \ which contains the pixel's y-coordinate, and store Y,
+ TAY                    \ the index of this pixel's y-coordinate, in T1
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  STY T1                 \ Store Y in T1
 
@@ -148,42 +188,6 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
  RTS                    \ Return from the subroutine
 
 ELIF _6502SP_VERSION
-
- LDY #0                 \ Set Q to byte #0 from the block pointed to by OSSC,
- LDA (OSSC),Y           \ which contains the size of the pixel buffer
- STA Q
-
- INY                    \ Increment Y to 2, so y now points at the data for the
- INY                    \ first pixel in the command block
-
-.PXLO
-
- LDA (OSSC),Y           \ Set P to byte #2 from the Y-th pixel block in OSSC,
- STA P                  \ which contains the point's distance value (ZZ)
-
- AND #%00000111         \ If ZZ is a multiple of 8 (which will be the case for
- BEQ PX5                \ pixels sent by the parasite's PIXEL routine), jump to
-                        \ PX5
-
-                        \ Otherwise this pixel was sent by the parasite's PIXEL3
-                        \ routine and will have an odd value of ZZ, and we use
-                        \ the distance value to determine the dot's colour and
-                        \ size
-
- TAX                    \ Set S to the ZZ-th value from the PXCL table, to get
- LDA PXCL,X             \ the correct colour byte for this pixel, depending on
- STA S                  \ the distance
-
- INY                    \ Increment Y to 3
-
- LDA (OSSC),Y           \ Set X to byte #3 from the Y-th pixel block in OSSC,
- TAX                    \ contains the pixel's x-coordinate
-
- INY                    \ Increment Y to 4
-
- LDA (OSSC),Y           \ Set Y to byte #4 from the Y-th pixel block in OSSC,
- STY T1                 \ which contains the pixel's y-coordinate, and store Y,
- TAY                    \ the index of this pixel's y-coordinate, in T1
 
  LDA ylookup,Y          \ Look up the page number of the character row that
  STA SC+1               \ contains the pixel with the y-coordinate in Y, and

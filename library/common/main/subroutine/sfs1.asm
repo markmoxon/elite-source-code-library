@@ -34,7 +34,7 @@
 \
 \   INWK                The whole INWK workspace is preserved
 \
-IF _6502SP_VERSION OR _DISC_FLIGHT
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Comment
 \   X                   X is preserved
 \
 ENDIF
@@ -49,7 +49,7 @@ ENDIF
                         \ so we can restore them later when returning from the
                         \ subroutine
 
-IF _6502SP_VERSION OR _DISC_FLIGHT
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
  TXA                    \ Store X, the ship type to spawn, on the stack so we
  PHA                    \ can preserve it through the routine
@@ -91,7 +91,7 @@ ENDIF
                         \ new child ship (in this way, the child inherits things
                         \ like location from the parent)
 
-IF _DISC_FLIGHT
+IF _DISC_FLIGHT \ Enhanced
 
  LDA NEWB               \ Clear bits 0-1 and 5-7 of the ship's NEWB flags,
  AND #%00011100         \ leaving only the hostile, pirate and docking flags
@@ -148,7 +148,7 @@ ENDIF
 
  TXA                    \ Copy the child's ship type from X into A
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Enhanced
 
  CMP #OIL               \ If the child we are spawning is not a cargo canister,
  BNE NOIL               \ jump to NOIL to skip us setting up the pitch and roll
@@ -181,7 +181,7 @@ ENDIF
  STA INWK+29            \ damping randomly enabled or disabled, depending on the
                         \ C flag from above
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Enhanced
 
  LDA #OIL               \ Set A to the ship type of a cargo canister
 
@@ -223,7 +223,7 @@ ENDIF
  PLA
  STA XX0
 
-IF _6502SP_VERSION OR _DISC_FLIGHT
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
  PLA                    \ Retrieve the ship type to spawn from the stack into X
  TAX                    \ so it is preserved through calls to this routine

@@ -3,7 +3,7 @@
 \       Name: SHPPT
 \       Type: Subroutine
 \   Category: Drawing ships
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Comment
 \    Summary: Draw a distant ship as a point rather than a full wireframe
 ELIF _DISC_DOCKED
 \    Summary: Draw a distant ship as a point in the middle of the screen
@@ -16,7 +16,7 @@ ENDIF
  JSR EE51               \ Call EE51 to remove the ship's wireframe from the
                         \ screen, if there is one
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
  JSR PROJ               \ Project the ship onto the screen, returning:
                         \
@@ -27,26 +27,22 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
  ORA K3+1               \ If either of the high bytes of the screen coordinates
  BNE nono               \ are non-zero, jump to nono as the ship is off-screen
 
- LDA K4                 \ Set A = y-coordinate of dot
-
- CMP #Y*2-2             \ If the y-coordinate is bigger than the y-coordinate of
- BCS nono               \ the bottom of the screen, jump to nono as the ship's
-                        \ dot is off the bottom of the space view
-
- LDY #2                 \ Call Shpt with Y = 2 to set up bytes 1-4 in the ship
- JSR Shpt               \ lines space, aborting the call to LL9 if the dot is
-                        \ off the side of the screen. This call sets up the
-                        \ first row of the dot (i.e. a four-pixel dash)
-
- LDY #6                 \ Set Y to 6 for the next call to Shpt
-
- LDA K4                 \ Set A = y-coordinate of dot + 1 (so this is the second
- ADC #1                 \ row of the two-pixel-high dot)
+ LDA K4                 \ Set A = the y-coordinate of the dot
 
 ELIF _DISC_DOCKED
 
  LDA #Y                 \ Set A = the y-coordinate of a dot halfway down the
                         \ screen
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Comment
+
+ CMP #Y*2-2             \ If the y-coordinate is bigger than the y-coordinate of
+ BCS nono               \ the bottom of the screen, jump to nono as the ship's
+                        \ dot is off the bottom of the space view
+
+ELIF _DISC_DOCKED
 
  CMP #Y*2-2             \ If the y-coordinate is bigger than the y-coordinate of
  BCS nono               \ the bottom of the screen, jump to nono as the ship's
@@ -54,12 +50,21 @@ ELIF _DISC_DOCKED
                         \ never happen, but this code is copied from the flight
                         \ code, where A can contain any y-coordinate
 
+ENDIF
+
  LDY #2                 \ Call Shpt with Y = 2 to set up bytes 1-4 in the ship
  JSR Shpt               \ lines space, aborting the call to LL9 if the dot is
                         \ off the side of the screen. This call sets up the
                         \ first row of the dot (i.e. a four-pixel dash)
 
  LDY #6                 \ Set Y to 6 for the next call to Shpt
+
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
+
+ LDA K4                 \ Set A = y-coordinate of dot + 1 (so this is the second
+ ADC #1                 \ row of the two-pixel-high dot)
+
+ELIF _DISC_DOCKED
 
  LDA #Y                 \ Set A = #Y + 1 (so this is the second row of the
  ADC #1                 \ two-pixel-high dot halfway down the screen)
@@ -76,7 +81,7 @@ ENDIF
  ORA XX1+31             \ have now drawn something on-screen for this ship
  STA XX1+31
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Advanced
 
  LDA #8                 \ Set A = 8 so when we call LL18+2 next, byte #0 of the
                         \ heap gets set to 8, for the 8 bytes we just stuck on
@@ -85,7 +90,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
 ELIF _6502SP_VERSION
 
  LDA #9                 \ Set A = 9 so when we call LL18+2 next, byte #0 of the
-                        \ heap gets set to 9, to cover the 8 bytes we just stuck
+                        \ heap gets set to 9, to cover the 9 bytes we just stuck
                         \ on the heap
 
 ENDIF
@@ -119,7 +124,7 @@ ENDIF
  INY
  STA (XX19),Y
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
  LDA K3                 \ Set A = screen x-coordinate of the ship dot
 

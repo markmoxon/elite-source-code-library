@@ -25,7 +25,7 @@ ENDIF
  EQUB 21                \ Number of edges          = 21
  EQUW 100               \ Bounty                   = 100
  EQUB 24                \ Number of faces          = 24 / 4 = 6
-IF _DISC_FLIGHT \ Feature
+IF _DISC_FLIGHT \ Feature: In the disc version, the Krait has a visibility distance of 25 compared to 20 in the other versions, so if one is running away from you in the disc version, it will turn into a dot later than in the others
  EQUB 25                \ Visibility distance      = 25
 ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
  EQUB 20                \ Visibility distance      = 20

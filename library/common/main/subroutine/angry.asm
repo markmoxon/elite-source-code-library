@@ -71,7 +71,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced
 
  LDA TYPE               \ If the ship's type is < #CYL (i.e. a missile, Coriolis
  CMP #CYL               \ space station, escape pod, plate, cargo canister,
- BCC AN3                \ boulder, asteroid, splinter, shuttle or transporter),
+ BCC AN3                \ boulder, asteroid, splinter, Shuttle or Transporter),
                         \ then jump to AN3 to skip the following
 
  LDY #36                \ Set bit 2 of the ship's NEWB flags in byte #36 to

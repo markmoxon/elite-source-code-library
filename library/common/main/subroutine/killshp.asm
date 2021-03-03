@@ -97,10 +97,10 @@ IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced
 
 ENDIF
 
-IF _6502SP_VERSION \ Advanced
+IF _6502SP_VERSION \ Feature: Rock hermits are classed as junk
 
  CPX #HER               \ Did we just kill a rock hermit? If we did, jump to
- BEQ blacksuspenders    \ blacksuspenders to increase the junk count
+ BEQ blacksuspenders    \ blacksuspenders to decrease the junk count
 
 ENDIF
 
@@ -108,7 +108,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced
 
  CPX #JL                \ If JL <= X < JH, i.e. the type of ship we killed in X
  BCC KS7                \ is junk (escape pod, alloy plate, cargo canister,
- CPX #JH                \ asteroid, splinter, shuttle or transporter), then keep
+ CPX #JH                \ asteroid, splinter, Shuttle or Transporter), then keep
  BCS KS7                \ going, otherwise jump to KS7
 
 ENDIF
@@ -121,8 +121,7 @@ ENDIF
 
 IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced
 
- DEC JUNK               \ We just killed junk, or a rock hermit, so decrease the
-                        \ junk counter
+ DEC JUNK               \ We just killed junk, so decrease the junk counter
 
 .KS7
 

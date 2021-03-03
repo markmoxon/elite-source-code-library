@@ -10,7 +10,7 @@
 
 ORG &0004
 
-INCLUDE "library/original/loader/variable/trtb_per_cent.asm"
+INCLUDE "library/original/main/variable/trtb_per_cent.asm"
 
 ORG &0070
 

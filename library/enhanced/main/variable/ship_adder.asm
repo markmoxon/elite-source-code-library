@@ -25,7 +25,7 @@ ENDIF
  EQUB 29                \ Number of edges          = 29
  EQUW 40                \ Bounty                   = 40
  EQUB 60                \ Number of faces          = 60 / 4 = 15
-IF _DISC_FLIGHT \ Feature
+IF _DISC_FLIGHT \ Feature: In the disc version, the Adder has a visibility distance of 23 compared to 20 in the other versions, so if one is running away from you in the disc version, it will turn into a dot later than in the others
  EQUB 23                \ Visibility distance      = 23
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 20                \ Visibility distance      = 20

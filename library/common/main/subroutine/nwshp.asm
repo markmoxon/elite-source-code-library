@@ -93,7 +93,7 @@
  ASL A                  \ Set Y = ship type * 2
  TAY
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Platform
 
  LDA XX21-2,Y           \ The ship blueprints at XX21 start with a lookup
  STA XX0                \ table that points to the individual ship blueprints,
@@ -134,7 +134,7 @@ ENDIF
                         \ can easily be erased from the screen again). SLSP
                         \ points to the start of the current heap space, and we
                         \ can extend it downwards with the heap for our new ship
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
                         \ (as the heap space always ends just before the WP
                         \ workspace)
 ELIF _6502SP_VERSION
@@ -159,7 +159,7 @@ ENDIF
                         \ for our ship. In memory, this is the layout of the
                         \ ship data blocks and ship line heaps:
                         \
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
                         \   +-----------------------------------+   &0F34
                         \   |                                   |
                         \   | WP workspace                      |
@@ -198,7 +198,7 @@ ENDIF
                         \   |                                   |
                         \   | Existing ship data blocks         |
                         \   |                                   |
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
                         \   +-----------------------------------+   &0900 = K%
 ELIF _6502SP_VERSION
                         \   +-----------------------------------+   &8200 = K%
@@ -271,7 +271,7 @@ ENDIF
 
  TAX                    \ Copy the ship type into X
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Label
 
  BMI P%+5               \ If the ship type is negative (planet or sun), then
                         \ skip the following instruction
@@ -286,22 +286,25 @@ ELIF _6502SP_VERSION
  BMI NW8                \ If the ship type is negative (planet or sun), then
                         \ jump to NW8 to skip the following instructions
 
+ENDIF
+
+IF _6502SP_VERSION \ Feature: Rock hermits are junk
+
  CPX #HER               \ If the ship type is a rock hermit, jump to gangbang
  BEQ gangbang           \ to increase the junk count
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced
 
  CPX #JL                \ If JL <= X < JH, i.e. the type of ship we killed in X
  BCC NW7                \ is junk (escape pod, alloy plate, cargo canister,
- CPX #JH                \ asteroid, splinter, shuttle or transporter), then keep
+ CPX #JH                \ asteroid, splinter, Shuttle or Transporter), then keep
  BCS NW7                \ going, otherwise jump to NW7
 
 .gangbang
 
- INC JUNK               \ We're adding junk, or a rock hermit, so increase the
-                        \ junk counter
+ INC JUNK               \ We're adding junk, so increase the junk counter
 
 .NW7
 
@@ -309,7 +312,7 @@ ENDIF
 
  INC MANY,X             \ Increment the total number of ships of type X
 
-IF _6502SP_VERSION OR _DISC_FLIGHT
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced
 
 .NW8
 

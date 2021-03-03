@@ -25,10 +25,10 @@ ENDIF
  EQUB 25                \ Number of edges          = 25
  EQUW 0                 \ Bounty                   = 0
  EQUB 48                \ Number of faces          = 48 / 4 = 12
-IF _6502SP_VERSION OR _MASTER_VERSION \ Feature
- EQUB 36                \ Visibility distance      = 36
-ELIF _DISC_FLIGHT
+IF _DISC_FLIGHT \ Feature: In the disc version, the Anaconda has a visibility distance of 50 compared to 36 in the other versions, so if one is running away from you in the disc version, it will turn into a dot later than in the others
  EQUB 50                \ Visibility distance      = 50
+ELIF _6502SP_VERSION OR _MASTER_VERSION
+ EQUB 36                \ Visibility distance      = 36
 ENDIF
  EQUB 252               \ Max. energy              = 252
  EQUB 14                \ Max. speed               = 14

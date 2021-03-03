@@ -151,13 +151,13 @@ ENDIF
  JSR DORND              \ Set XX15 = random number 0-255
  STA XX15
 
-IF _DISC_DOCKED \ Feature
+IF _DISC_DOCKED \ Feature: The ship hanger has a 50% chance of displaying a group of ships, and a 50% chance of displaying a solitary ship. In the disc version, this latter option can display no ship at all, or it can show a solitary cargo canister, Shuttle, Transporter, Cobra Mk III, Python, Viper or Krait; in the 6502SP version there is always a ship, and it's a Sidewinder, Mamba, Krait or Adder
 
  JSR DORND              \ Set XX15+2 = random number 0-7
  AND #7                 \
  STA XX15+2             \ which is either 0 (no ships in the hanger) or one of
                         \ the first 7 ship types in the ship hanger blueprints
-                        \ table, i.e. a cargo canister, shuttle, transporter,
+                        \ table, i.e. a cargo canister, Shuttle, Transporter,
                         \ Cobra Mk III, Python, Viper or Krait
 
  JSR HAS1               \ Call HAS1 to draw this ship in the hanger, with the
@@ -165,8 +165,8 @@ IF _DISC_DOCKED \ Feature
                         \
                         \   * Random x-coordinate from -63 to +63
                         \
-                        \   * Randomly chosen cargo canister, shuttle,
-                        \     transporter, Cobra Mk III, Python, Viper or Krait
+                        \   * Randomly chosen cargo canister, Shuttle,
+                        \     Transporter, Cobra Mk III, Python, Viper or Krait
                         \
                         \   * Random z-coordinate from +256 to +639
 

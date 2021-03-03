@@ -34,7 +34,7 @@
                         \ before we set BRKV to point to MEBRK in the SVE
                         \ routine
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Tube
 
  LDY #0                 \ Set Y to 0 to use as a loop counter below
 
@@ -58,7 +58,7 @@ ENDIF
 
  INY                    \ Increment the loop counter
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Other
 
  BEQ retry              \ If A = 0 then we have reached the end of the error
                         \ message, so jump to retry to wait for a key press and

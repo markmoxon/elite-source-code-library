@@ -53,7 +53,7 @@
  BNE SAL4               \ Loop back to SAL4 until we have randomised all the
                         \ stardust particles
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Tube
 
  JSR PBFL               \ Call PBFL to send the contents of the pixel buffer to
                         \ the I/O processor for plotting on-screen

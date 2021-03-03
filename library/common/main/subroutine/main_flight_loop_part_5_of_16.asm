@@ -27,7 +27,7 @@
  CPY #2*SST             \ If the ship in Y is the space station, jump to BA21
  BEQ MA21               \ as energy bombs are useless against space stations
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Feature: In the 6502SP version, you can't use energy bombs against the Constrictor
 
  CPY #2*CON             \ If the ship in Y is the Constrictor, jump to BA21
  BCS MA21               \ as energy bombs are useless against the Constrictor
@@ -41,7 +41,7 @@ ENDIF
  AND #%00100000         \ byte #31, then it is already exploding, so jump to
  BNE MA21               \ BA21 as ships can't explode more than once
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Minor
 
  LDA INWK+31            \ The energy bomb is killing this ship, so set bit 7 of
  ORA #%10000000         \ the ship byte #31 to indicate that it has now been

@@ -109,7 +109,7 @@
                         \ >= 192 (i.e. they must all be < 192 for us to be near
                         \ enough to the planet to bump into a space station)
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Other
 
  LDA QQ11               \ If the current view is not a space view, skip the
  BNE P%+5               \ following instruction (so we only remove the sun from

@@ -18,7 +18,7 @@
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Enhanced
 
  LDA #3                 \ Set A to 3 to denote we may be scooping an escape pod
 
@@ -80,7 +80,7 @@ ENDIF
                         \ computers, while escape pods contain slaves, and
                         \ Thargons become alien items when scooped
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Platform
 
  STA QQ29               \ Call tnpr with the scooped cargo type stored in QQ29
  LDA #1                 \ and A set to 1, to work out whether we have room in
@@ -115,7 +115,7 @@ ENDIF
  ADC #208               \ which will be in the range 48 ("FOOD") to 64 ("ALIEN
  JSR MESS               \ ITEMS"), so this prints the scooped item's name
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Enhanced
 
  JMP MA60               \ We are done scooping, so jump down to MA60 to set the
                         \ kill flag on the canister, as it no longer exists in

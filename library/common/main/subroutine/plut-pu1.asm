@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-IF _CASSETTE_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _6502SP_VERSION \ Comment
 \       Name: PLUT
 ELIF _DISC_VERSION
 \       Name: PU1
@@ -19,13 +19,13 @@ ENDIF
 \
 \   LO2                 Contains an RTS
 \
-IF _CASSETTE_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _6502SP_VERSION \ Comment
 \   PU1-1               Contains an RTS
 \
 ENDIF
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _6502SP_VERSION \ Platform
 
 .PLUT
 
@@ -38,7 +38,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Minor
 
  BNE PU1                \ If the current view is the front view, return from the
  RTS                    \ subroutine, as the geometry in INWK is already correct

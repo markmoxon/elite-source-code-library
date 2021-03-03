@@ -3,7 +3,7 @@
 \       Name: scramble
 \       Type: Subroutine
 \   Category: Loader
-IF _DISC_FLIGHT
+IF _DISC_FLIGHT \ Comment
 \    Summary: Decrypt the main flight code between &1300 and &55FF and jump into
 \             the main game loop
 ELIF _DISC_DOCKED
@@ -52,7 +52,7 @@ ENDIF
 
  INX                    \ Increment X to point to the next page in memory
 
-IF _DISC_FLIGHT
+IF _DISC_FLIGHT \ Platform
 
  CPX #&56               \ Loop back to scrl to decrypt the next page until we
  BNE scrl               \ reach the start of page &56

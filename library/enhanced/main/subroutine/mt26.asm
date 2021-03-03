@@ -21,7 +21,7 @@
 
 .MT26
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Tube
 
  LDA #%10000001         \ Clear 6522 System VIA interrupt enable register IER
  STA VIA+&4E            \ (SHEILA &4E) bit 1 (i.e. enable the CA2 interrupt,
@@ -32,8 +32,7 @@ ELIF _6502SP_VERSION
  LDA #VIAE              \ Send a #VIAE %10000001 command to the I/O processor to
  JSR OSWRCH             \ clear 6522 System VIA interrupt enable register IER
  LDA #%10000001         \ (SHEILA &4E) bit 1 (i.e. enable the CA2 interrupt,
-                        \ which comes from the keyboard)
- JSR OSWRCH
+ JSR OSWRCH             \ which comes from the keyboard)
 
  LDY #8                 \ Wait for 8/50 of a second (0.16 seconds)
  JSR DELAY
@@ -55,7 +54,7 @@ ENDIF
  LDY #0                 \ ESCAPE was pressed, so set Y = 0 (as the OSWORD call
                         \ returns the length of the entered string in Y)
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Tube
 
  LDA #%00000001         \ Set 6522 System VIA interrupt enable register IER
  STA VIA+&4E            \ (SHEILA &4E) bit 1 (i.e. disable the CA2 interrupt,

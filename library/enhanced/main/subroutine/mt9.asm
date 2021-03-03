@@ -18,7 +18,7 @@
 
 .MT9
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Tube
 
  LDA #1                 \ Move the text cursor to column 1
  STA XC

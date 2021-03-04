@@ -209,7 +209,7 @@ ENDIF
                         \ ship, in other words if the ship should roll right to
                         \ head in the direction of XX15
 
-IF _CASSETTE_VERSION \ feature
+IF _CASSETTE_VERSION \ Feature
 
  EOR INWK+30            \ Set the ship's roll counter to 5, with the sign set to
  AND #%10000000         \ positive if the pitch counter and dot product have

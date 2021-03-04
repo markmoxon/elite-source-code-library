@@ -161,7 +161,7 @@ ENDIF
 
  JSR DORND              \ Set A and X to random numbers
 
-IF _CASSETTE_VERSION \ In the cassette version there is a 45% chance that an angry station will spawn a cop, while in the other versions there is only a 6.2% chance
+IF _CASSETTE_VERSION \ Enhanced: In the cassette version there is a 45% chance that an angry station will spawn a cop, while in the enhanced versions there is only a 6.2% chance
 
  CMP #140               \ If A < 140 (55% chance) then return from the
  BCC TA14-1             \ subroutine (as TA14-1 contains an RTS)

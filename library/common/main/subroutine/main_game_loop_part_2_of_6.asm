@@ -147,7 +147,7 @@ ENDIF
  ROL INWK+1             \ Set bit 2 of x_hi to the C flag, which is random, so
  ROL INWK+1             \ this randomly moves us slightly off-centre
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
  JSR DORND              \ Set A, X and V flag to random numbers
 

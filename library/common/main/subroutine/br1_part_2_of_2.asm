@@ -40,7 +40,7 @@ ENDIF
  JSR ping               \ Set the target system coordinates (QQ9, QQ10) to the
                         \ current system coordinates (QQ0, QQ1) we just loaded
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Platform: The 6502SP version inlines the code from the hyp1 routine here, instead of calling it (though it could, as the hyp1 routine is included in the 6502SP version)
 
  JSR hyp1               \ Arrive in the system closest to (QQ9, QQ10) and then
                         \ and then fall through into the docking bay routine
@@ -59,8 +59,8 @@ ELIF _6502SP_VERSION
                         \ 6 bytes (for three 16-bit seeds)
 
                         \ The label below is called likeTT112 because this code
-                        \ is almost identical to the TT112 loop in the hyp
-                        \ routine in the cassette version
+                        \ is almost identical to the TT112 loop in the hyp1
+                        \ routine
 
 .likeTT112
 
@@ -86,6 +86,8 @@ ELIF _6502SP_VERSION
 
  LDA QQ4                \ Set the current system's government in gov to the
  STA gov                \ selected system's government from QQ4
+
+                        \ Fall through into the docking bay routine below
 
 ENDIF
 

@@ -97,7 +97,7 @@ ENDIF
                         \ whose byte #1 from the market prices table is in
                         \ QQ19+1 (which we set up above)
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Platform
 
  LDA QQ11               \ If the current view type in QQ11 is not 4 (Sell Cargo
  CMP #4                 \ screen), jump to TT212 to skip the option to sell

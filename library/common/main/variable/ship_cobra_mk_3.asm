@@ -110,7 +110,7 @@ ENDIF
  EDGE      26,      27,     9,     9,          6    \ Edge 36
  EDGE      25,      27,     9,     9,          8    \ Edge 37
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Label
 
 .SHIP_COBRA_MK_3_FACES
 

@@ -121,7 +121,7 @@ ENDIF
  CPX #SST               \ If this is not the space station, jump down to TA13
  BNE TA13
 
-IF _6502SP_VERSION OR _DISC_FLIGHT
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: Space stations spawn Transporters and Shuttles that ply their trade between the station and the planet
 
  LDA NEWB               \ This is the space station, so check whether bit 2 of
  AND #%00000100         \ the ship's NEWB flags is set, and if it is (i.e. the

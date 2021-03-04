@@ -7,7 +7,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \ BRKV is set to point to BR1 by elite-loader.asm.
 ENDIF
 IF _6502SP_VERSION
@@ -28,7 +28,7 @@ IF _6502SP_VERSION \ Tube
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
 
  LDX #3                 \ Set XC = 3 (set text cursor to column 3)
  STX XC
@@ -62,7 +62,7 @@ ELIF _DISC_VERSION OR _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Advanced: Pressing TAB in the title screen of the 6502SP version will start the demo
 
  CMP #&60               \ Did we press TAB? If not, skip the following
  BNE P%+5               \ instruction

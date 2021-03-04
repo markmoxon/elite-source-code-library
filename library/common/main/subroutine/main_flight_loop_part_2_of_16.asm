@@ -154,10 +154,14 @@ ENDIF
  ORA BET2               \ Store A in BETA, but with the sign set to BET2 (so
  STA BETA               \ BETA has the same sign as the actual pitch rate)
 
-IF _DISC_FLIGHT
+IF _DISC_FLIGHT OR _6502SP_VERSION \ Enhanced: The enhanced versions support the Bitstik joystick
 
  LDA BSTK               \ If BSTK = 0 then the Bitstik is not configured, so
  BEQ BS2                \ jump to BS2 to skip the following
+
+ENDIF
+
+IF _DISC_FLIGHT \ Tube
 
  LDX #3                 \ Call OSBYTE 128 to fetch the 16-bit value from ADC
  LDA #128               \ channel 3 (the Bitstik rotation value), returning the
@@ -165,29 +169,14 @@ IF _DISC_FLIGHT
 
  TYA                    \ Copy Y to A, so the result is now in (A X)
 
- LSR A                  \ Divide A by 4
- LSR A
-
- CMP #40                \ If A < 40, skip the following instruction
- BCC P%+4
-
- LDA #40                \ Set A = 40, which ensures a maximum speed of 40
-
- STA DELTA              \ Update our speed in DELTA
-
- BNE MA4                \ If the speed we just set is non-zero, then jump to MA4
-                        \ to skip the following, as we don't need to check the
-                        \ keyboard for speed keys, otherwise do check the
-                        \ keyboard (so Bitstik users can still use the keyboard
-                        \ for speed adjustments if they twist the stick to zero)
-
 ELIF _6502SP_VERSION
-
- LDA BSTK               \ If BSTK = 0 then the Bitstik is not configured, so
- BEQ BS2                \ jump to BS2 to skip the following
 
  LDA KTRAN+10           \ Fetch the Bitstik rotation value (high byte) from the
                         \ key logger buffer
+
+ENDIF
+
+IF _DISC_FLIGHT OR _6502SP_VERSION \ Enhanced: If you use a Bitstik with the enhanced versions, then you can change the ship's speed by twisting the joystick
 
  LSR A                  \ Divide A by 4
  LSR A

@@ -19,7 +19,7 @@
 \
 \                           * 8 = Inventory
 \
-IF _6502SP_VERSION
+IF _6502SP_VERSION OR _DISC_DOCKED \ Comment
 \ Other entry points:
 \
 \   NWDAVxx             Used to rejoin this routine from the call to NWDAV4
@@ -39,7 +39,7 @@ ENDIF
 
  STY QQ29               \ Store the current item number in QQ29
 
-IF _6502SP_VERSION OR _DISC_DOCKED
+IF _6502SP_VERSION OR _DISC_DOCKED \ Label
 
 .NWDAVxx
 
@@ -69,7 +69,7 @@ ENDIF
  ADC #208               \ prints the current item's name
  JSR TT27
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
 
  LDA #14                \ Move the text cursor to column 14, for the item's
  STA XC                 \ quantity
@@ -84,7 +84,7 @@ ENDIF
  PLA                    \ Restore the amount of item in the hold into X
  TAX
 
-IF _6502SP_VERSION OR _DISC_DOCKED
+IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: See below
 
  STA QQ25               \ Store the amount of this item in the hold in QQ25
 
@@ -105,7 +105,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED
 
 ENDIF
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Enhanced: In the enhanced versions, you can specify how much of each individual commodity you want to sell. In the cassette version, you have to choose for each commodity whether to sell all of your stock, or none
 
  LDA #205               \ Set A to recursive token 45 ("SELL")
 
@@ -141,7 +141,7 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Platform
 
  LDA QQ29               \ We are selling this item, so fetch the item number
                         \ from QQ29
@@ -155,7 +155,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED
 
 ENDIF
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Enhanced: See above
 
  LDY QQ29               \ Set P to the amount of this item we have in our cargo
  LDA QQ20,Y             \ hold (which is the amount to sell)
@@ -174,7 +174,7 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Platform
 
  LDA QQ24               \ Set Q to the item's price / 4
  STA Q
@@ -191,7 +191,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED
 
 ENDIF
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Enhanced: See above
 
  LDA #0                 \ We've made the sale, so set the amount
  LDY QQ29
@@ -212,7 +212,7 @@ ENDIF
  LDY QQ29               \ Fetch the item number from QQ29 into Y, and increment
  INY                    \ Y to point to the next item
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Minor
 
  CPY #17                \ If Y >= 17 then skip the next instruction as we have
  BCS P%+5               \ done the last item
@@ -235,7 +235,7 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Platform
 
  LDA QQ11               \ If the current view type in QQ11 is not 4 (Sell Cargo
  CMP #4                 \ screen), skip the next two instructions and just

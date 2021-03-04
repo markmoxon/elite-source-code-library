@@ -17,7 +17,7 @@
 
 .TT219
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Advanced: In the 6502SP version, you can send the Buy Cargo screen to the printer by pressing SHIFT-f1
 
 \LDA #2                 \ This instruction is commented out in the original
                         \ source. Perhaps this view originally had a QQ11 value
@@ -47,7 +47,7 @@ ENDIF
  LDA #%10000000         \ Set bit 7 of QQ17 to switch to Sentence Case, with the
  STA QQ17               \ next letter in capitals
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Platform
 
 \JSR FLKB               \ This instruction is commented out in the original
                         \ source. It calls a routine to flush the keyboard
@@ -125,7 +125,7 @@ ENDIF
  LDX #12                \ Perhaps they were left behind when code was moved from
  STX T1                 \ here into gnum, and weren't deleted?
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Label
 
 \.TT223                 \ This label is commented out in the original source,
                         \ and is a duplicate of a label in gnum, so this could
@@ -214,7 +214,7 @@ ENDIF
 
 .TT222
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Tube
 
  LDA QQ29               \ Move the text cursor to row QQ29 + 5 (where QQ29 is
  CLC                    \ the item number, starting from 0)

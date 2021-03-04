@@ -15,7 +15,7 @@
 \   A                   The type of the new current view (see QQ11 for a list of
 \                       view types)
 \
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Comment
 \ Other entry points:
 \
 \   TT66-2              Call TT66 with A = 1
@@ -23,7 +23,7 @@ IF _CASSETTE_VERSION
 ENDIF
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Minor
 
  LDA #1                 \ Set the view type to 1 when this is called via the
                         \ TT66-2 entry point

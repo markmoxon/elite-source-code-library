@@ -7,7 +7,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Comment
 \ Zero-fill from address (X SC) + Y to (X SC) + &FF.
 ELIF _DISC_FLIGHT
 \ Zero-fill from address (X SC) to (X SC) + Y.
@@ -19,7 +19,7 @@ ENDIF
 \                       the zero-fill
 \
 \   Y                   The offset from (X SC) where we start zeroing, counting
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Comment
 \                       up to to &FF
 ELIF _DISC_FLIGHT
 \                       down to 0
@@ -36,7 +36,7 @@ ENDIF
 
 .ZES2
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Other: Why is the disc flight version of ZES2 different?
 
  LDA #0                 \ Load A with the byte we want to fill the memory block
                         \ with - i.e. zero
@@ -52,7 +52,7 @@ ENDIF
  STA (SC),Y             \ Zero the Y-th byte of the block pointed to by SC,
                         \ so that's effectively the Y-th byte before SC
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Other
 
  INY                    \ Increment the loop counter
 

@@ -13,7 +13,7 @@
 
 .ypl
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Feature: If we jump into witchspace, the disc version still displays the original system name as the "Present system" in the Status Mode screen, while the cassette and 6502SP versions just show a blank name
 
  LDA MJ                 \ Check the mis-jump flag at MJ, and if it is non-zero
  BNE cmn-1              \ then we are in witchspace, and witchspace doesn't have
@@ -59,7 +59,7 @@ ENDIF
 
  BPL TT78               \ Loop back for the next byte to swap
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Label
 
 .ypl16
 

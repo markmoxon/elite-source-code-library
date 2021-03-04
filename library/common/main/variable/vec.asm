@@ -1,4 +1,4 @@
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \ ******************************************************************************
 \
 \       Name: VEC
@@ -12,7 +12,7 @@ ENDIF
 
 .VEC
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _6502SP_VERSION \ Minor
 
  SKIP 2                 \ VEC = &7FFE
                         \

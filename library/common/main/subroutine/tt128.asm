@@ -41,7 +41,14 @@
  LDX #2                 \ Set STP = 2, the step size for the circle
  STX STP
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT
+IF _6502SP_VERSION \ Screen
+
+ LDA #RED               \ Send a #SETCOL RED command to the I/O processor to
+ JSR DOCOL              \ switch to colour 2, which is red in the chart view
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Minor
 
  JSR CIRCLE2            \ Call CIRCLE2 to draw a circle with the centre at
                         \ (K3(1 0), K4(1 0)) and radius K
@@ -51,16 +58,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT
 
  RTS                    \ Return from the subroutine
 
-ELIF _DISC_DOCKED
-
- JMP CIRCLE2            \ Jump to CIRCLE2 to draw a circle with the centre at
-                        \ (K3(1 0), K4(1 0)) and radius K, returning from the
-                        \ subroutine using a tail call
-
-ELIF _6502SP_VERSION
-
- LDA #RED               \ Send a #SETCOL RED command to the I/O processor to
- JSR DOCOL              \ switch to colour 2, which is red in the chart view
+ELIF _DISC_DOCKED OR _6502SP_VERSION
 
  JMP CIRCLE2            \ Jump to CIRCLE2 to draw a circle with the centre at
                         \ (K3(1 0), K4(1 0)) and radius K, returning from the

@@ -2,7 +2,7 @@
 \
 \       Name: WP
 \       Type: Workspace
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Comment
 \    Address: &0D40 to &0F33
 \   Category: Workspaces
 \    Summary: Ship slots, variables
@@ -18,7 +18,7 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Platform
 
 ORG &0D40
 
@@ -36,7 +36,7 @@ ENDIF
 
  SKIP 0                 \ The start of the WP workspace
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Platform
 
 INCLUDE "library/common/main/variable/frin.asm"
 INCLUDE "library/common/main/variable/cabtmp.asm"

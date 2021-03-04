@@ -10,7 +10,7 @@
 \
 \ This section works out what kind of condition the ship is in. Specifically:
 \
-IF _DISC_FLIGHT
+IF _DISC_FLIGHT \ Comment
 \   * If this is an Anaconda, consider spawning (22% chance) a Worm
 \
 ELIF _6502SP_VERSION
@@ -26,7 +26,7 @@ ENDIF
 \   * If the ship is not into the last 1/8th of its energy, jump to part 5 to
 \     consider firing a missile
 \
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Comment
 \   * If the ship is into the last 1/8th of its energy, then rarely (10% chance)
 \     the ship launches an escape pod and is left drifting in space
 ELIF _6502SP_VERSION OR _DISC_FLIGHT
@@ -44,7 +44,7 @@ ENDIF
  JMP TA20               \ This is a missile, so jump down to TA20 to get
                         \ straight into some aggressive manoeuvring
 
-IF _DISC_FLIGHT OR _6502SP_VERSION
+IF _DISC_FLIGHT OR _6502SP_VERSION \ Enhanced: In the enhanced versions, Anacondas can spawn other ships
 
  CMP #ANA               \ If this is not an Anaconda, jump down to TN7 to skip
  BNE TN7                \ the following
@@ -56,7 +56,7 @@ IF _DISC_FLIGHT OR _6502SP_VERSION
 
 ENDIF
 
-IF _DISC_FLIGHT
+IF _DISC_FLIGHT \ Advanced: In the disc version, Anacondas can only spawn Worms, while in the advanced versions they can also spawn Sidewinders
 
  LDX #WRM               \ Set X to the ship type for a Worm
 
@@ -113,7 +113,7 @@ ENDIF
  CMP #230               \ If A < 230 (90% chance), jump down to ta3 to consider
  BCC ta3                \ firing a missile
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Enhanced: In the cassette version, every ship has an escape pod fitted that it can launch when things go south, but in the enhanced versions, the NEWB flags determine whether or not a ship has an escape pod
 
  LDA TYPE               \ If this is a Thargoid, jump down to ta3 to consider
  CMP #THG               \ launching a Thargon

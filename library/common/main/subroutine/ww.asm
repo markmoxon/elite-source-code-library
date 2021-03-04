@@ -10,7 +10,7 @@
 \ Start the hyperspace countdown (for both inter-system hyperspace and the
 \ galactic hyperdrive).
 \
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
 \ Other entry points:
 \
 \   wW2                 Start the hyperspace countdown, starting the countdown
@@ -23,7 +23,7 @@ ENDIF
  LDA #15                \ The hyperspace countdown starts from 15, so set A to
                         \ to 15 so we can set the two hyperspace counters
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Label
 
 .wW2
 
@@ -44,7 +44,7 @@ ENDIF
                         \ left corner of the screen, and return from the
                         \ subroutine using a tail call
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Comment
 
 \hy5                    \ This instruction and the hy5 label are commented out
 \RTS                    \ in the original - they can actually be found at the

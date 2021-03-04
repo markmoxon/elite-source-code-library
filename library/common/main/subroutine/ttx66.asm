@@ -3,7 +3,7 @@
 \       Name: TTX66
 \       Type: Subroutine
 \   Category: Utility routines
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \    Summary: Clear the top part of the screen and draw a white border
 ELIF _6502SP_VERSION
 \    Summary: Send control code 11 to the I/O processor to clear the top part
@@ -21,7 +21,7 @@ ENDIF
 \                       view name. This can be used to remove the border and
 \                       view name, as it is drawn using EOR logic
 \
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Comment
 \   BOL1-1              Contains an RTS
 \
 ENDIF
@@ -29,13 +29,13 @@ ENDIF
 
 .TTX66
 
-IF _6502SP_VERSION OR _DISC_DOCKED
+IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced
 
  JSR MT2                \ Switch to Sentence Case when printing extended tokens
 
 ENDIF
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Tube
 
  JSR PBZE               \ Reset the pixel buffer size in PBUP
 
@@ -50,30 +50,49 @@ ENDIF
  LDA #%10000000         \ Set bit 7 of QQ17 to switch to Sentence Case
  STA QQ17
 
-IF _CASSETTE_VERSION
-
- ASL A                  \ Set LASCT to 0, as 128 << 1 = %10000000 << 1 = 0. This
- STA LASCT              \ stops any laser pulsing. This instruction is STA LAS2
-                        \ in the text source file ELITEC.TXT
-
-ELIF _DISC_FLIGHT
-
- JSR FLFLLS             \ Call FLFLLS to reset the LSO block
-
- STA LAS2               \ Set LAS2 = 0 to stop any laser pulsing
-
-ELIF _DISC_DOCKED
+IF _DISC_DOCKED OR _6502SP_VERSION \ Enhanced
 
  STA DTW2               \ Set bit 7 of DTW2 to indicate we are not currently
                         \ printing a word
 
+ENDIF
+
+IF _DISC_FLIGHT OR _6502SP_VERSION \ Platform
+
+ JSR FLFLLS             \ Call FLFLLS to reset the LSO block
+
+ENDIF
+
+IF _6502SP_VERSION \ Screen
+
+ LDA #YELLOW            \ Send a #SETCOL YELLOW command to the I/O processor to
+ JSR DOCOL              \ switch to colour 2, which is yellow
+
+ENDIF
+
+IF _CASSETTE_VERSION \ Platform
+
  ASL A                  \ Set LASCT to 0, as 128 << 1 = %10000000 << 1 = 0. This
  STA LASCT              \ stops any laser pulsing. This instruction is STA LAS2
                         \ in the text source file ELITEC.TXT
 
+ELIF _DISC_DOCKED
+
+ ASL A                  \ Set LASCT to 0, as 128 << 1 = %10000000 << 1 = 0. This
+ STA LASCT              \ stops any laser pulsing
+
+ELIF _DISC_FLIGHT
+
+ STA LAS2               \ Set LAS2 = 0 to stop any laser pulsing (the call to
+                        \ FLFLLS sets A = 0)
+
+ELIF _6502SP_VERSION
+
+ STZ LAS2               \ Set LAS2 = 0 to stop any laser pulsing
+
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Minor
 
  STA DLY                \ Set the delay in DLY to 0, to indicate that we are
                         \ no longer showing an in-flight message, so any new
@@ -81,6 +100,19 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
 
  STA de                 \ Clear de, the flag that appends " DESTROYED" to the
                         \ end of the next text token, so that it doesn't
+
+ELIF _6502SP_VERSION
+
+ STZ DLY                \ Set the delay in DLY to 0, to indicate that we are
+                        \ no longer showing an in-flight message, so any new
+                        \ in-flight messages will be shown instantly
+
+ STZ de                 \ Clear de, the flag that appends " DESTROYED" to the
+                        \ end of the next text token, so that it doesn't
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
 
  LDX #&60               \ Set X to the screen memory page for the top row of the
                         \ screen (as screen memory starts at &6000)
@@ -99,29 +131,12 @@ IF _CASSETTE_VERSION OR _DISC_VERSION
 
 ELIF _6502SP_VERSION
 
- STA DTW2               \ Set bit 7 of DTW2 to indicate we are not currently
-                        \ printing a word
-
- JSR FLFLLS             \ Call FLFLLS to reset the LSO block
-
- LDA #YELLOW            \ Send a #SETCOL YELLOW command to the I/O processor to
- JSR DOCOL              \ switch to colour 2, which is yellow
-
- STZ LAS2               \ Set LAS2 = 0 to stop any laser pulsing
-
- STZ DLY                \ Set the delay in DLY to 0, to indicate that we are
-                        \ no longer showing an in-flight message, so any new
-                        \ in-flight messages will be shown instantly
-
- STZ de                 \ Clear de, the flag that appends " DESTROYED" to the
-                        \ end of the next text token, so that it doesn't
-
  LDA #11                \ Send control code 11 to OSWRCH, to instruct the I/O
  JSR OSWRCH             \ processor to clear the top part of the screen
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Label
 
  LDX QQ22+1             \ Fetch into X the number that's shown on-screen during
                         \ the hyperspace countdown
@@ -133,6 +148,8 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT
  JSR ee3                \ Print the 8-bit number in X at text location (0, 1),
                         \ i.e. print the hyperspace countdown in the top-left
                         \ corner
+
+.BOX
 
 ELIF _6502SP_VERSION
 
@@ -147,18 +164,16 @@ ELIF _6502SP_VERSION
                         \ i.e. print the hyperspace countdown in the top-left
                         \ corner
 
+.OLDBOX
+
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
-
-.BOX
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
 
  LDY #1                 \ Move the text cursor to row 1
  STY YC
 
 ELIF _6502SP_VERSION
-
-.OLDBOX
 
  LDA #1                 \ Move the text cursor to column 1
  JSR DOYC
@@ -168,7 +183,7 @@ ENDIF
  LDA QQ11               \ If this is not a space view, jump to tt66 to skip
  BNE tt66               \ displaying the view name
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
 
  LDY #11                \ Move the text cursor to row 11
  STY XC
@@ -177,6 +192,10 @@ ELIF _6502SP_VERSION
 
  LDA #11                \ Move the text cursor to row 11
  JSR DOXC
+
+ENDIF
+
+IF _6502SP_VERSION \ Screen
 
  LDA #CYAN              \ Send a #SETCOL CYAN command to the I/O processor to
  JSR DOCOL              \ switch to colour 3, which is cyan in the space view
@@ -202,15 +221,7 @@ ENDIF
 
 .tt66
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
-
- LDX #0                 \ Set (X1, Y1) to (0, 0)
- STX X1
- STX Y1
-
- STX QQ17               \ Set QQ17 = 0 to switch to ALL CAPS
-
-ELIF _6502SP_VERSION
+IF _6502SP_VERSION \ Platform
 
  LDA #1                 \ Move the text cursor to column 1, row 1
  JSR DOXC
@@ -223,8 +234,24 @@ ELIF _6502SP_VERSION
 
 .BOX
 
+ENDIF
+
+IF _6502SP_VERSION \ Screen
+
  LDA #YELLOW            \ Send a #SETCOL YELLOW command to the I/O processor to
  JSR DOCOL              \ switch to colour 2, which is yellow
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
+
+ LDX #0                 \ Set (X1, Y1) to (0, 0)
+ STX X1
+ STX Y1
+
+ STX QQ17               \ Set QQ17 = 0 to switch to ALL CAPS
+
+ELIF _6502SP_VERSION
 
  LDX #0                 \ Set QQ17 = 0 to switch to ALL CAPS
  STX QQ17
@@ -239,7 +266,7 @@ ENDIF
  DEX                    \ Set X2 = 255
  STX X2
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
 
  JSR HLOIN              \ Draw a horizontal line from (X1, Y1) to (X2, Y1), so
                         \ that's (0, 0) to (255, 0), along the very top of the
@@ -291,7 +318,7 @@ ENDIF
  DEC X1                 \ Decrement X1 and X2
  DEC X2
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
 
  JMP LOIN               \ Draw a line from (X1, Y1) to (X2, Y2), and return from
                         \ the subroutine using a tail call

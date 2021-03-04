@@ -9,20 +9,26 @@
 
 .TT213
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Advanced: In the 6502SP version, you can send the Inventory screen to the printer by pressing SHIFT-f9
 
  LDA #8                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 8 (Inventory
                         \ screen)
-
- LDA #11                \ Move the text cursor to column 11 to print the screen
- STA XC                 \ title
 
 ELIF _6502SP_VERSION
 
  LDA #8                 \ Clear the top part of the screen, draw a white border,
  JSR TRADEMODE          \ and set up a printable trading screen with a view type
                         \ in QQ11 of 4 (Inventory screen)
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
+
+ LDA #11                \ Move the text cursor to column 11 to print the screen
+ STA XC                 \ title
+
+ELIF _6502SP_VERSION
 
  LDA #11                \ Move the text cursor to column 11 to print the screen
  JSR DOXC               \ title

@@ -18,7 +18,7 @@
 
 .TT25
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Advanced: In the 6502SP version, you can send the Data on System screen to the printer by pressing SHIFT-f6
 
  JSR TT66-2             \ Clear the top part of the screen, draw a white border,
                         \ and set the current view type in QQ11 to 1
@@ -36,7 +36,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
 
  LDA #9                 \ Move the text cursor to column 9
  STA XC
@@ -48,7 +48,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Minor
 
  LDA #163               \ Print recursive token 3 as a title in capitals at
  JSR TT27               \ the top ("DATA ON {selected system name}")
@@ -65,7 +65,7 @@ ENDIF
 
  JSR TTX69              \ Print a paragraph break and set Sentence Case
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Enhanced: The cassette version doesn't show extended system descriptions in the Data on System screen, and neither does the disc version when we are in flight, so both of these show the information one line higher than in the other versions
 
  INC YC                 \ Move the text cursor down one more line
 
@@ -328,7 +328,7 @@ ENDIF
 
  JSR TT162              \ Print a space
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Minor
 
  LDA #'k'               \ Print "km", returning from the subroutine using a
  JSR TT26               \ tail call
@@ -342,7 +342,16 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED
  LDA #'m'
  JSR TT26
 
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: Extended system descriptions are shown in the enhanced versions, though in the disc version they are only shown when docked, as the PDESC routine isn't present in the flight code due to memory restrictions
+
  JSR TTX69              \ Print a paragraph break and set Sentence Case
+
+                        \ By this point, ZZ contains the current system number
+                        \ which PDESC requires. It gets put there in the TT102
+                        \ routine, which calls TT111 to populate ZZ before
+                        \ calling TT25 (this routine)
 
  JMP PDESC              \ Jump to PDESC to print the system's extended
                         \ description, returning from the subroutine using a

@@ -18,7 +18,7 @@
  LDA #0                 \ Set A to 0, as this means "key not pressed" in the
                         \ key logger at KL
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Enhanced: Compared to the cassette version, the enhanced versions have an extra key in the key logger, for "P" (which turns off the docking computer)
 
  LDY #15                \ We want to clear the 15 key logger locations from
                         \ KY1 to KY19, so set a counter in Y

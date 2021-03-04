@@ -10,7 +10,7 @@
 
 .XX21
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Enhanced: The cassette version has 13 different ship types with 12 distinct designs, while the other versions have 32 different ship types with 29 distinct designs
 
  EQUW SHIP_SIDEWINDER   \         1 = Sidewinder
  EQUW SHIP_VIPER        \ COPS =  2 = Viper
@@ -60,7 +60,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUW SHIP_THARGON      \ TGL  = 30 = Thargon
  EQUW SHIP_CONSTRICTOR  \ CON  = 31 = Constrictor
 ENDIF
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Advanced: The 6502SP version has an extra ship definition for the Elite logo that appears in the demo, but it doesn't turn up in-game, not surprisingly
  EQUW SHIP_LOGO         \ LGO  = 32 = The Elite logo
  EQUW SHIP_COUGAR       \ COU  = 33 = Cougar
  EQUW SHIP_DODO         \ DOD  = 34 = Dodecahedron ("Dodo") space station

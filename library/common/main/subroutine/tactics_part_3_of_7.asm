@@ -44,7 +44,7 @@ ENDIF
 
 .TA21
 
-IF _6502SP_VERSION OR _DISC_FLIGHT
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Platform: This code is in part 2 for the cassette version
 
  CPX #TGL               \ If this is not a Thargon, jump down to TA14
  BNE TA14
@@ -64,6 +64,10 @@ IF _6502SP_VERSION OR _DISC_FLIGHT
 
 .TA14
 
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: The NEWB flags are used to determine whether we are dealing with a trader
+
  JSR DORND              \ Set A and X to random numbers
 
  LDA NEWB               \ Extract bit 0 of the ship's NEWB flags into the C flag
@@ -72,7 +76,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT
 
 ENDIF
 
-IF _DISC_FLIGHT
+IF _DISC_FLIGHT \ Feature: In the disc version, 39% of traders turn out to be bounty hunters, while it's just 20% in the 6502SP version
 
  CPX #100               \ This is a trader, so if X >= 100 (61% chance), return
  BCS TA22               \ from the subroutine (as TA22 contains an RTS)
@@ -84,7 +88,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: Applying tactics logic according to the NEWB flags
 
 .TN1
 
@@ -170,7 +174,7 @@ ENDIF
                         \ to the missile - in both cases it's the vector from
                         \ the potential victim to the attacker)
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _6502SP_VERSION \ Minor
 
  LDY #10                \ Set (A X) = nosev . XX15
  JSR TAS3

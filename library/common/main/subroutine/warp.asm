@@ -27,7 +27,7 @@
 
 .WARP
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Platform
 
  LDA MANY+AST           \ Set X to the total number of asteroids, escape pods
  CLC                    \ and cargo canisters in the vicinity
@@ -90,7 +90,7 @@ ENDIF
                         \ memory (as LSR A is a one-byte opcode, while CMP #2
                         \ takes up two bytes)
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _6502SP_VERSION \ Minor
 
  CMP #2                 \ If A < 2 then jump to WA1 to abort the in-system jump
  BCC WA1                \ with a low beep, as we are facing the planet and are
@@ -133,7 +133,7 @@ ENDIF
                         \ memory (as LSR A is a one-byte opcode, while CMP #2
                         \ takes up two bytes)
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _6502SP_VERSION \ Minor
 
  CMP #2                 \ If A < 2 then jump to WA1 to abort the in-system jump
  BCC WA1                \ with a low beep, as we are facing the sun and are too
@@ -221,7 +221,7 @@ ENDIF
 
 .WA1
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Minor
 
  LDA #40                \ If we get here then we can't do an in-system jump, so
  JMP NOISE              \ call the NOISE routine with A = 40 to make a long, low

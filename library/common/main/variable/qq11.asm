@@ -22,7 +22,7 @@ ENDIF
                         \   32  = Equip Ship screen (red key f3)
                         \   64  = Long-range Chart (red key f4)
                         \   128 = Short-range Chart (red key f5)
-IF _6502SP_VERSION \ Comment
+IF _6502SP_VERSION OR _DISC_VERSION \ Comment
                         \   255 = Launch view
 ENDIF
                         \

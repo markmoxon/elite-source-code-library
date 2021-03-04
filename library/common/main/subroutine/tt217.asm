@@ -24,7 +24,7 @@
 \
 \   out                 Contains an RTS
 \
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
 \   t                   As TT217 but don't preserve Y, set it to YSAV instead
 \
 ENDIF
@@ -37,7 +37,7 @@ ENDIF
 
 .t
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Platform
 
  JSR DELAY-5            \ Delay for 8 vertical syncs (8/50 = 0.16 seconds) so we
                         \ don't take up too much CPU time while looping round
@@ -67,7 +67,7 @@ ENDIF
  TAY                    \ Copy A to Y, so Y contains the internal key number
                         \ of the key pressed
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Tube
 
  LDA (TRTB%),Y          \ The address in TRTB% points to the MOS key
                         \ translation table, which is used to translate

@@ -27,7 +27,7 @@ IF _CASSETTE_VERSION \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Advanced
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Advanced: In the 6502SP version, you can send the Equip Ship screen to the printer by pressing SHIFT-f3
 
  LDA #32                \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 32 (Equip

@@ -13,12 +13,7 @@
  JSR TT66               \ and set the current view type in QQ11 to 32 (Long-
                         \ range Chart)
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
-
- LDA #7                 \ Move the text cursor to column 7
- STA XC
-
-ELIF _6502SP_VERSION
+IF _6502SP_VERSION \ Screen
 
  LDA #CYAN              \ Send a #SETCOL CYAN command to the I/O processor to
  JSR DOCOL              \ switch to colour 3, which is white in the chart view
@@ -27,6 +22,15 @@ ELIF _6502SP_VERSION
  JSR DOVDU19            \ switch to the mode 1 palette for the trade view, which
                         \ is yellow (colour 1), magenta (colour 2) and white
                         \ (colour 3)
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
+
+ LDA #7                 \ Move the text cursor to column 7
+ STA XC
+
+ELIF _6502SP_VERSION
 
  LDA #7                 \ Move the text cursor to column 7
  JSR DOXC
@@ -98,7 +102,7 @@ ENDIF
  BNE TT83               \ If X > 0 then we haven't done all 256 systems yet, so
                         \ loop back up to TT83
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Tube
 
  JSR PBFL               \ Call PBFL to send the contents of the pixel buffer to
                         \ the I/O processor for plotting on-screen

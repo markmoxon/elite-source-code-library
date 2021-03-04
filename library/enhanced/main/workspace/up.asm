@@ -2,7 +2,7 @@
 \
 \       Name: UP
 \       Type: Workspace
-IF _DISC_VERSION
+IF _DISC_VERSION \ Comment
 \    Address: &0300 to &03CF
 ELIF _6502SP_VERSION
 \    Address: &0800 to &0974
@@ -12,7 +12,7 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF _DISC_VERSION
+IF _DISC_VERSION \ Platform
 
 ORG &0300
 
@@ -128,7 +128,7 @@ INCLUDE "library/common/main/variable/qq9.asm"
 INCLUDE "library/common/main/variable/qq10.asm"
 INCLUDE "library/common/main/variable/nostm.asm"
 
-IF _DISC_VERSION
+IF _DISC_VERSION \ Platform
 
  SKIP 1                 \ This byte is unused
 

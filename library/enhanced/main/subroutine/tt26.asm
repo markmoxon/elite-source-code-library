@@ -74,7 +74,7 @@
                         \ we need to buffer the text until we reach the end of
                         \ the paragraph, so we can then pad it out with spaces
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Platform: The enhanced versions use this routine for in-flight text, where carriage returns are buffered
 
  BVS P%+6               \ If bit 6 of DTW4 is set, then this is an in-flight
                         \ message and we should buffer the carriage return

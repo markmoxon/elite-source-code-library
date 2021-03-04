@@ -15,7 +15,7 @@
 
 .ZES1
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Platform: Changes required because the flight version of ZES2 is different, but the function of this routine doesn't change
 
  LDY #0                 \ If we set Y = SC = 0 and fall through into ZES2
  STY SC                 \ below, then we will zero-fill 255 bytes starting from

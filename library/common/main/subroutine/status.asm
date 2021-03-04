@@ -66,7 +66,7 @@ ENDIF
 
 .STATUS
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Advanced
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Advanced: In the 6502SP version, you can send the Status Mode screen to the printer by pressing SHIFT-f8
 
  LDA #8                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 8 (Status

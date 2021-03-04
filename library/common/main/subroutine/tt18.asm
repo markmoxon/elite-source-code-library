@@ -18,7 +18,7 @@
  SEC                    \ from the amount of fuel in our tank (in QQ14) into A
  SBC QQ8
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Other
 
  BCS P%+4               \ If the subtraction didn't overflow, skip the next
                         \ instruction
@@ -70,7 +70,7 @@ ENDIF
  JSR hyp1+3             \ Jump straight to the system at (QQ9, QQ10) without
                         \ first calculating which system is closest
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Platform: In the cassette version, hyp1 doesn't fall through into GVL, so we need to call it
 
  JSR GVL                \ Calculate the availability for each market item in the
                         \ new system
@@ -83,13 +83,13 @@ ENDIF
                         \ and set up data blocks and slots for the planet and
                         \ sun
 
-IF _DISC_FLIGHT
+IF _DISC_FLIGHT \ Platform
 
  JSR LSHIPS             \ Call LSHIPS to load a new ship blueprints file
 
 ENDIF
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Label
 
  LDA QQ11               \ If the current view in QQ11 is not a space view (0) or
  AND #%00111111         \ one of the charts (64 or 128), return from the

@@ -52,7 +52,7 @@ ENDIF
 
 .TACTICS
 
-IF _DISC_FLIGHT \ Enhanced: The docking computer can set its own turning circle rate, which is diffrent to the requirements of the tactics routine, so the latter now sets otsnown configuration when it starts
+IF _DISC_FLIGHT \ Enhanced: The docking computer can set its own turning circle rate, which is different to the requirements of the tactics routine, so in the enhanced versions the latter sets its own configuration when it starts
 
  LDY #3                 \ Set RAT = 3, which is the magnitude we set the pitch
  STY RAT                \ or roll counter to in part 7 when turning a ship
@@ -106,7 +106,7 @@ ENDIF
  CPX #MSL               \ If this is a missile, jump up to TA18 to implement
  BEQ TA18               \ missile tactics
 
-IF _CASSETTE_VERSION \ Enhanced: In the cassette version, the tactics routine sends escape pods straight to the planet. Enhanced versions let the NEWB flags steer it home
+IF _CASSETTE_VERSION \ Enhanced: In the cassette version, the tactics routine sends escape pods straight for the planet, while the enhanced versions let the NEWB flags steer it home (along with anything else that's heading for the planet, like traders)
 
  CPX #ESC               \ If this is not an escape pod, skip the following two
  BNE P%+8               \ instructions
@@ -121,60 +121,7 @@ ENDIF
  CPX #SST               \ If this is not the space station, jump down to TA13
  BNE TA13
 
-IF _CASSETTE_VERSION
-
- JSR DORND              \ This is the space station, so set A and X to random
-                        \ numbers
-
- CMP #140               \ If A < 140 (55% chance) then return from the
- BCC TA14-1             \ subroutine (as TA14-1 contains an RTS)
-
- LDA MANY+COPS          \ We only call the tactics routine for the space station
- CMP #4                 \ when it is hostile, so first check the number of cops
- BCS TA14-1             \ in the vicinity, and if we already have 4 or more, we
-                        \ don't need to spawn any more, so return from the
-                        \ subroutine (as TA14-1 contains an RTS)
-
- LDX #COPS              \ Call SFS1 to spawn a cop from the space station that
- LDA #%11110001         \ is hostile, has AI and has E.C.M., and return from the
- JMP SFS1               \ subroutine using a tail call
-
-.TA13
-
- CPX #TGL               \ If this is not a Thargon, jump down to TA14
- BNE TA14
-
- LDA MANY+THG           \ If there is at least one Thargoid in the vicinity,
- BNE TA14               \ jump down to TA14
-
- LSR INWK+32            \ This is a Thargon but there is no Thargoid mothership,
- ASL INWK+32            \ so clear bit 0 of the AI flag to disable its E.C.M.
-
- LSR INWK+27            \ And halve the Thargon's speed
-
- RTS                    \ Return from the subroutine
-
-.TA14
-
- CPX #CYL               \ If A >= #CYL, i.e. this is a Cobra Mk III trader (as
- BCS TA62               \ asteroids and cargo canisters never have AI), jump
-                        \ down to TA62
-
- CPX #COPS              \ If this is a cop, jump down to TA62
- BEQ TA62
-
- LDA SSPR               \ If we aren't within range of the space station, jump
- BEQ TA62               \ down to TA62
-
- LDA INWK+32            \ This is a pirate or bounty hunter, but we are inside
- AND #%10000001         \ the space station's safe zone, so clear bits 1-6 of
- STA INWK+32            \ the AI flag to stop it being hostile, because even
-                        \ pirates aren't crazy enough to breach the station's
-                        \ no-fire zone
-
-.TA62
-
-ELIF _6502SP_VERSION OR _DISC_FLIGHT
+IF _6502SP_VERSION OR _DISC_FLIGHT
 
  LDA NEWB               \ This is the space station, so check whether bit 2 of
  AND #%00000100         \ the ship's NEWB flags is set, and if it is (i.e. the
@@ -205,17 +152,36 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
 .TN5
 
-                        \ If we get here then the station is hostile and we need
+ENDIF
+
+                        \ We only call the tactics routine for the space station
+                        \ when it is hostile, so if we get here then this is the
+                        \ station, and we already know it's hostile, so we need
                         \ to spawn some cops
 
  JSR DORND              \ Set A and X to random numbers
+
+IF _CASSETTE_VERSION \ In the cassette version there is a 45% chance that an angry station will spawn a cop, while in the other versions there is only a 6.2% chance
+
+ CMP #140               \ If A < 140 (55% chance) then return from the
+ BCC TA14-1             \ subroutine (as TA14-1 contains an RTS)
+
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
  CMP #240               \ If A < 240 (93.8% chance), return from the subroutine
  BCC TA1                \ (as TA1 contains an RTS)
 
 ENDIF
 
-IF _DISC_FLIGHT \ Advanced
+IF _CASSETTE_VERSION \ Advanced: In the 6502SP version there can be up to 7 cops in the vicinity, while the limit is 4 in the other versions
+
+ LDA MANY+COPS          \ We only call the tactics routine for the space station
+ CMP #4                 \ when it is hostile, so first check the number of cops
+ BCS TA14-1             \ in the vicinity, and if we already have 4 or more, we
+                        \ don't need to spawn any more, so return from the
+                        \ subroutine (as TA14-1 contains an RTS)
+
+ELIF _DISC_FLIGHT
 
  LDA MANY+COPS          \ Check how many cops there are in the vicinity already,
  CMP #4                 \ and if there are 4 or more, return from the subroutine
@@ -229,11 +195,13 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT
-
  LDX #COPS              \ Set X to the ship type for a cop
 
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Label
+
 .TN6
+
+ENDIF
 
  LDA #%11110001         \ Set the AI flag to give the ship E.C.M., enable AI and
                         \ make it very aggressive (56 out of 63)
@@ -242,6 +210,45 @@ IF _6502SP_VERSION OR _DISC_FLIGHT
                         \ subroutine using a tail call
 
 .TA13
+
+IF _CASSETTE_VERSION \ Platform: This logic is in part 3 for the other versions 
+
+ CPX #TGL               \ If this is not a Thargon, jump down to TA14
+ BNE TA14
+
+ LDA MANY+THG           \ If there is at least one Thargoid in the vicinity,
+ BNE TA14               \ jump down to TA14
+
+ LSR INWK+32            \ This is a Thargon but there is no Thargoid mothership,
+ ASL INWK+32            \ so clear bit 0 of the AI flag to disable its E.C.M.
+
+ LSR INWK+27            \ And halve the Thargon's speed
+
+ RTS                    \ Return from the subroutine
+
+.TA14
+
+ENDIF
+
+IF _CASSETTE_VERSION \ Platform: Without the NEWB flags, the cassette version logic is much simpler (traders always fly a Cobra Mk III)
+
+ CPX #CYL               \ If A >= #CYL, i.e. this is a Cobra Mk III trader (as
+ BCS TA62               \ asteroids and cargo canisters never have AI), jump
+                        \ down to TA62
+
+ CPX #COPS              \ If this is a cop, jump down to TA62
+ BEQ TA62
+
+ LDA SSPR               \ If we aren't within range of the space station, jump
+ BEQ TA62               \ down to TA62
+
+ LDA INWK+32            \ This is a pirate or bounty hunter, but we are inside
+ AND #%10000001         \ the space station's safe zone, so clear bits 1-6 of
+ STA INWK+32            \ the AI flag to stop it being hostile, because even
+                        \ pirates aren't crazy enough to breach the station's
+                        \ no-fire zone
+
+.TA62
 
 ENDIF
 

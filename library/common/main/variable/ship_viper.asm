@@ -14,7 +14,7 @@
  EQUW 75 * 75           \ Targetable area          = 75 * 75
  EQUB &6E               \ Edges data offset (low)  = &006E
  EQUB &BE               \ Faces data offset (low)  = &00BE
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Advanced
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Advanced: The colour versions of Elite have an extra edge count for the ship colour; Vipers are shown in cyan
  EQUB 77                \ Max. edge count          = (77 - 1) / 4 = 19
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 81                \ Max. edge count          = (81 - 1) / 4 = 20

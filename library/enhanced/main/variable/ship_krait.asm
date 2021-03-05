@@ -14,7 +14,7 @@
  EQUW 60 * 60           \ Targetable area          = 60 * 60
  EQUB &7A               \ Edges data offset (low)  = &007A
  EQUB &CE               \ Faces data offset (low)  = &00CE
-IF _DISC_VERSION \ Advanced
+IF _DISC_VERSION \ Advanced: The colour versions of Elite have an extra edge count for the ship colour; Kraits are shown in cyan
  EQUB 85                \ Max. edge count          = (85 - 1) / 4 = 21
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 89                \ Max. edge count          = (89 - 1) / 4 = 22
@@ -25,7 +25,7 @@ ENDIF
  EQUB 21                \ Number of edges          = 21
  EQUW 100               \ Bounty                   = 100
  EQUB 24                \ Number of faces          = 24 / 4 = 6
-IF _DISC_FLIGHT \ Feature: In the disc version, the Krait has a visibility distance of 25 compared to 20 in the other versions, so if one is running away from you in the disc version, it will turn into a dot later than in the others
+IF _DISC_FLIGHT \ Enhanced: In the disc version, the Krait has a visibility distance of 25 compared to 20 in the other versions, so if one is running away from you in the disc version, it will turn into a dot later than in the others
  EQUB 25                \ Visibility distance      = 25
 ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
  EQUB 20                \ Visibility distance      = 20
@@ -34,7 +34,7 @@ ENDIF
  EQUB 30                \ Max. speed               = 30
  EQUB &00               \ Edges data offset (high) = &007A
  EQUB &00               \ Faces data offset (high) = &00CE
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Feature: The ship hanger in the disc version displays the Krait with normals scaled with a factor of 4, which are more accurate than in the ship hangers of the other enhanced versions, which store them with a scale factor of 2
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: The ship hanger in the disc version displays the Krait with normals scaled with a factor of 4, which are more accurate than in the ship hangers of the other enhanced versions, which store them with a scale factor of 2
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
 ELIF _DISC_DOCKED
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
@@ -95,7 +95,7 @@ ENDIF
  EDGE      15,      16,     5,     5,          8    \ Edge 19
  EDGE      16,      14,     5,     5,          8    \ Edge 20
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Feature: See above
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: See above
 
 \FACE normal_x, normal_y, normal_z, visibility
  FACE        3,       24,        3,         31    \ Face 0

@@ -14,7 +14,7 @@
  EQUW 99 * 99           \ Targetable area          = 99 * 99
  EQUB &5C               \ Edges data offset (low)  = &005C
  EQUB &A0               \ Faces data offset (low)  = &00A0
-IF _DISC_FLIGHT \ Advanced
+IF _DISC_FLIGHT \ Advanced: The colour versions of Elite have an extra edge count for the ship colour; Geckos are shown in cyan
  EQUB 65                \ Max. edge count          = (65 - 1) / 4 = 16
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 69                \ Max. edge count          = (69 - 1) / 4 = 17

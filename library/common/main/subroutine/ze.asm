@@ -53,7 +53,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Other
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Other: When spawning hostile ships in space, the cassette and 6502SP versions reuse the previous random number in X for the 4% check (i.e. the one used to determine the x and y signs of the new ship), while the disc version generates a new random number instead of reusing, so this change presumably improves the randomness of the spawning in the disc version somehow
 
  TXA                    \ Set the C flag if X >= 245 (4% chance)
  CMP #245

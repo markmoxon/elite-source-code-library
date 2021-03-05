@@ -14,7 +14,7 @@
  EQUW 40 * 40           \ Targetable area          = 40 * 40
  EQUB &7A               \ Edges data offset (low)  = &007A
  EQUB &DA               \ Faces data offset (low)  = &00DA
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Advanced
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Advanced: The colour versions of Elite have an extra edge count for the ship colour; missiles are shown in yellow
  EQUB 81                \ Max. edge count          = (81 - 1) / 4 = 20
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 85                \ Max. edge count          = (85 - 1) / 4 = 21

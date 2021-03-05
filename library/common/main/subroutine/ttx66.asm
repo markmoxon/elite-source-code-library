@@ -29,7 +29,7 @@ ENDIF
 
 .TTX66
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced
+IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: The default case for enhanced text tokens is Sentence Case
 
  JSR MT2                \ Switch to Sentence Case when printing extended tokens
 
@@ -50,7 +50,7 @@ ENDIF
  LDA #%10000000         \ Set bit 7 of QQ17 to switch to Sentence Case
  STA QQ17
 
-IF _DISC_DOCKED OR _6502SP_VERSION \ Enhanced
+IF _DISC_DOCKED OR _6502SP_VERSION \ Enhanced: See above
 
  STA DTW2               \ Set bit 7 of DTW2 to indicate we are not currently
                         \ printing a word

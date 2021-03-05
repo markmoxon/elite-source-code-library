@@ -14,7 +14,7 @@
  EQUW 40 * 40           \ Targetable area          = 40 * 40
  EQUB &86               \ Edges data offset (low)  = &0086
  EQUB &F2               \ Faces data offset (low)  = &00F2
-IF _DISC_FLIGHT \ Advanced
+IF _DISC_FLIGHT \ Advanced: The colour versions of Elite have an extra edge count for the ship colour; Fer-de-lances are shown in cyan
  EQUB 105               \ Max. edge count          = (105 - 1) / 4 = 26
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 109               \ Max. edge count          = (109 - 1) / 4 = 27

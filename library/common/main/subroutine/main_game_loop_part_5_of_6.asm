@@ -29,7 +29,7 @@
 
 .MLOOP
 
-IF _CASSETTE_VERSION \ Other
+IF _CASSETTE_VERSION \ Other: The cassette version disables keyboard interrupts at the start of the minimal game loop, though I'm not sure why
 
  LDA #%00000001         \ Set 6522 System VIA interrupt enable register IER
  STA VIA+&4E            \ (SHEILA &4E) bit 1 (i.e. disable the CA2 interrupt,
@@ -69,7 +69,7 @@ ENDIF
 
  JSR DIALS              \ Call DIALS to update the dashboard
 
-IF _6502SP_VERSION \ Advanced
+IF _6502SP_VERSION \ Advanced: The 6502SP version supports a printer (holding SHIFT when pressing a red function key will send that screen to the printer). As part of this, the code sends line feeds, which is mainly notable for using the longest label name in the entire source code: dontdolinefeedontheprinternow
 
  BIT printflag          \ If bit 7 of printflag is clear (printer output is not
                         \ enabled), jump to dontdolinefeedontheprinternow to

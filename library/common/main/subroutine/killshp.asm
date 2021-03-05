@@ -84,7 +84,7 @@ ENDIF
  CPX #SST               \ If this is the space station, then jump to KS4 to
  BEQ KS4                \ replace the space station with the sun
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: Killing the Constrictor in mission 1 ends the mission
 
  CPX #CON               \ Did we just kill the Constrictor from mission 1? If
  BNE lll                \ not, jump to lll
@@ -97,14 +97,14 @@ IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced
 
 ENDIF
 
-IF _6502SP_VERSION \ Feature: Rock hermits are classed as junk
+IF _6502SP_VERSION \ Advanced: There are rock hermits in the 6502SP version, and they are classed as junk (along with the escape pod, alloy plate, cargo canister, asteroid, splinter, Shuttle and Transporter)
 
  CPX #HER               \ Did we just kill a rock hermit? If we did, jump to
  BEQ blacksuspenders    \ blacksuspenders to decrease the junk count
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Feature: In the cassette version, only the escape pod, asteroid and cargo canister are classed as junk. In the enhanced versions, the alloy plate, splinter, Shuttle and Transporter are also junk, and in the advanced versions, rock hermits are also junk. Junk in the vicinity doesn't prevent you from performing an in-system jump - in fact, it gets dragged along for the ride
 
  CPX #JL                \ If JL <= X < JH, i.e. the type of ship we killed in X
  BCC KS7                \ is junk (escape pod, alloy plate, cargo canister,
@@ -119,7 +119,7 @@ IF _6502SP_VERSION \ Label
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Feature: See above
 
  DEC JUNK               \ We just killed junk, so decrease the junk counter
 
@@ -273,7 +273,7 @@ ENDIF
                         \ so let's start copying data from the source to the
                         \ destination
 
-IF _CASSETTE_VERSION \ Enhanced
+IF _CASSETTE_VERSION \ Enhanced: Ship data blocks have an extra byte in the enhanced versions - the NEWB flags. This gives a total of 37 bytes per ship, compared to 36 bytes in the cassette version
 
  LDY #35                \ We are going to be using Y as a counter for the 36
                         \ bytes of ship data we want to copy from the source

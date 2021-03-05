@@ -18,7 +18,7 @@
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION \ Enhanced
+IF _CASSETTE_VERSION \ Enhanced: In the enhanced versions, the top nibble of the first byte of each ship blueprint defines whether a ship is scoopable, and the type of item that we get when we scoop it (so scooping Thargons gives alien items, and so on). The cassette version implements this using hard-coded conditional statements, while the enhanced versions support more flexibility by using the ship data block
 
  LDA #3                 \ Set A to 3 to denote we may be scooping an escape pod
 
@@ -115,7 +115,7 @@ ENDIF
  ADC #208               \ which will be in the range 48 ("FOOD") to 64 ("ALIEN
  JSR MESS               \ ITEMS"), so this prints the scooped item's name
 
-IF _CASSETTE_VERSION \ Enhanced
+IF _CASSETTE_VERSION \ Enhanced: In the enhanced version there is a difference between a ship that has been killed and a ship that has docked or been scooped, unlike in the cassette version where they are the same thing
 
  JMP MA60               \ We are done scooping, so jump down to MA60 to set the
                         \ kill flag on the canister, as it no longer exists in

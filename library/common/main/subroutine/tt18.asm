@@ -18,7 +18,7 @@
  SEC                    \ from the amount of fuel in our tank (in QQ14) into A
  SBC QQ8
 
-IF _6502SP_VERSION \ Other
+IF _6502SP_VERSION \ Other: Bug fix? The 6502SP version makes sure we don't end up with a negative fuel amount should we try a hyperspace jump that we don't have enough fuel for, though quite how we would get to this point is not clear
 
  BCS P%+4               \ If the subtraction didn't overflow, skip the next
                         \ instruction

@@ -10,7 +10,7 @@
 \ Get a number from the keyboard, up to the maximum number in QQ25, for the
 \ buying and selling of cargo and equipment.
 \
-IF _6502SP_VERSION \ Comment
+IF _6502SP_VERSION OR _DISC_DOCKED \ Comment
 \ Pressing "Y" will return the maximum number (i.e. buy/sell all items), while
 \ pressing "N" will abort the sale and return a 0.
 \
@@ -54,7 +54,7 @@ ENDIF
  JSR TT217              \ Scan the keyboard until a key is pressed, and return
                         \ the key's ASCII code in A (and X)
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced
+IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: When buying or selling cargo in the ehnaced versions, you can specify an exact amount of cargo for the transaction, or you can press "Y" to sell everything, or "N" to sell nothing. In the cassette version, you can only specify all or nothing
 
  LDX R                  \ If R is non-zero then skip to NWDAV2, as we are
  BNE NWDAV2             \ already building a number
@@ -136,7 +136,7 @@ ENDIF
 
  RTS                    \ Return from the subroutine
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced
+IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: See above
 
 .NWDAV1
 
@@ -160,7 +160,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced
+IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: See above
 
 .NWDAV3
 

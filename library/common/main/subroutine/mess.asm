@@ -33,7 +33,7 @@ ENDIF
  LDX #0                 \ Set QQ17 = 0 to switch to ALL CAPS
  STX QQ17
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Advanced
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Feature: Most versions display in-flight messages at column 9 on row 22, at the bottom of the screen. The 6502SP version goes one better and centres its in-flight messages on screen, rather than always starting them at column 9
 
  LDY #9                 \ Move the text cursor to column 9, row 22, at the
  STY XC                 \ bottom middle of the screen, and set Y = 22
@@ -66,7 +66,7 @@ ENDIF
 
  STA MCH                \ Set MCH to the token we are about to display
 
-IF _6502SP_VERSION \ Advanced
+IF _6502SP_VERSION \ Feature: See above
 
                         \ Before we fall through into mes9 to print the token,
                         \ we need to work out the starting column for the

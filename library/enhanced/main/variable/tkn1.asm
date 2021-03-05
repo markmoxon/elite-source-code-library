@@ -102,7 +102,7 @@ ENDIF
  ECHR 'G'
  ECHR 'U'
  ECHR 'E'
-IF _MASTER_VERSION \ Feature
+IF _MASTER_VERSION \ Advanced: In the Master version, option 3 in the disc access menu is "Catalogue Disk" rather than just "Catalogue"
  ECHR ' '
  ECHR 'D'
  ECHR 'I'
@@ -116,7 +116,7 @@ ENDIF
  ECHR 'D'
  ECHR 'E'
  ECHR 'L'
-IF _6502SP_VERSION OR _DISC_DOCKED \ Feature
+IF _6502SP_VERSION OR _DISC_DOCKED \ Advanced: In the Master version, the disc access menu has an extra option 5, "Default JAMESON", which resets the commander to the default starting point
  ETWO 'E', 'T'
  ECHR 'E'
  ETOK 208
@@ -181,7 +181,7 @@ ENDIF
  ECHR '?'
  EQUB VE
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Feature
+IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: The disc and 6502SP versions have an extra token for displaying "COMPETITION NUMBER:" when saving commander files
 
  ECHR 'C'               \ Token 3:      "COMPETITION NUMBER:"
  ECHR 'O'               \
@@ -271,7 +271,7 @@ ENDIF
  ETOK 200
  EQUB VE
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Feature
+IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: The disc and 6502SP versions support a "File To Delete?" prompt when deleting files via the disc access menu, though the token for this prompt isn't present in the Master version. Instead the Master version contains a token for the error message "ILLEGAL ELITE II FILE"; this message is also present in the other versions, but there it is hard-coded rather than being a token, is in sentence case, and contains a spelling mistake ("IIllegal ELITE II file") which is corrected in the Master version
 
  EJMP 21                \ Token 9:      "{clear bottom of screen}
  ECHR 'F'               \                FILE TO DELETE?"
@@ -316,7 +316,7 @@ ENDIF
  EJMP 2                 \                {sentence case}
  ECHR 'G'               \                GREETINGS {single cap}COMMANDER
  ETWO 'R', 'E'          \                {commander name}, I {lower case}AM
- ETWO 'E', 'T'          \                {sentence case} CAPTAIN {mission 1
+ ETWO 'E', 'T'          \                {sentence case} CAPTAIN {mission
  ETWO 'I', 'N'          \                captain's name} {lower case}OF{sentence
  ECHR 'G'               \                case} HER MAJESTY'S SPACE NAVY{lower
  ECHR 'S'               \                case} AND {single cap}I BEG A MOMENT OF
@@ -672,7 +672,7 @@ ENDIF
  EJMP 2                 \                {sentence case}
  ECHR ' '               \                  ATTENTION {single cap}COMMANDER
  ECHR ' '               \                {commander name}, I {lower case}AM
- ETWO 'A', 'T'          \                {sentence case} CAPTAIN {mission 1
+ ETWO 'A', 'T'          \                {sentence case} CAPTAIN {mission
  ECHR 'T'               \                captain's name} {lower case}OF{sentence
  ETWO 'E', 'N'          \                case} HER MAJESTY'S SPACE NAVY{lower
  ETWO 'T', 'I'          \                case}. {single cap}WE HAVE NEED OF YOUR
@@ -816,7 +816,7 @@ ENDIF
  ECHR '1'
  ECHR '9'
  ECHR '8'
-IF _6502SP_VERSION OR _DISC_DOCKED \ Feature
+IF _6502SP_VERSION OR _DISC_DOCKED \ Advanced: The Master version has a copyright notice of "(C) Acornsoft 1986", rather than the "1984" of the other versions
  ECHR '4'
 ELIF _MASTER_VERSION
  ECHR '6'
@@ -1520,7 +1520,7 @@ ENDIF
  ECHR 'E'
  ECHR 'A'
  ECHR 'D'
-IF _DISC_DOCKED \ Feature
+IF _DISC_DOCKED \ Enhanced: In the disc version, the extended system description override that's shown at Usleri in galaxy 1 during mission 1 refers to the Constrictor pilot as a "WHORESON BEETLE HEAD FLAP EAR'D KNAVE". In the advanced versions, this has been changed to the better-sounding "WHORESON BEETLE HEADED FLAP EAR'D KNAVE"
  ETOK 198
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  ETOK 196
@@ -1835,7 +1835,7 @@ ENDIF
  ECHR 'Y'
  EQUB VE
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Feature
+IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: The disc and 6502SP versions contain a spelling mistake in the extended token system - they incorrectly spell weird as "wierd". The correct spelling is used in the Master version
 
  ECHR 'W'               \ Token 131:    "WIERD"
  ECHR 'I'               \
@@ -2500,7 +2500,7 @@ IF _6502SP_VERSION \ Screen
  EJMP 30                \                {white}
 ENDIF
  EJMP 1                 \                {all caps}
-IF _MASTER_VERSION \ Feature
+IF _MASTER_VERSION \ Advanced: The Master version indents the "INCOMING MESSAGE" shown during mission briefings to the right by one space
  ECHR ' '               \                (space)
 ENDIF
  ETWO 'I', 'N'          \                INCOMING MESSAGE"
@@ -2639,7 +2639,7 @@ ENDIF
  ECHR 'N'               \                {tab 6}{all caps}  MESSAGE ENDS
  ECHR 'A'               \                {wait for key press}"
  ECHR 'V'               \
-IF _DISC_DOCKED \ Feature
+IF _DISC_DOCKED \ Enhanced: The disc and 6502SP versions contain a spelling mistake in the mission 2 briefing that's shown when picking up the plans from Ceerdi - they incorrectly spell intelligence as "intellegence". The correct spelling is used in the Master version
  ECHR 'A'               \ Encoded as:   "{25}{9}{29}{14}{2}GOOD DAY [154]
  ECHR 'L'               \                 {4}[204]I{13} AM {19}AG<246>T {19}B
  ECHR ' '               \                <249>KE OF {19}NAVAL {19}<240>TEL<229>
@@ -2838,7 +2838,7 @@ ENDIF
  ETWO 'S', 'E'
  ECHR ' '
  ECHR 'M'
-IF _6502SP_VERSION OR _DISC_DOCKED \ Feature
+IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: The disc and 6502SP versions call the Thargoids "those mothers" in the mission 2 briefing that's shown when picking up the plans from Ceerdi. In the Master version, this has changed to "those murderers"
  ECHR 'O'
  ETWO 'T', 'H'
  ETWO 'E', 'R'
@@ -3241,7 +3241,7 @@ ENDIF
  EJMP 24
  EQUB VE
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Feature
+IF _6502SP_VERSION OR _DISC_DOCKED \ Advanced: The Master version contains a new prompt in the extended token table, "ARE YOU SURE?", which isn't present in the other versions
 
  EQUB VE                \ Token 224:    ""
                         \
@@ -3449,7 +3449,7 @@ ENDIF
  ECHR 'S'
  EQUB VE
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Feature
+IF _6502SP_VERSION OR _DISC_DOCKED \ Advanced: The Master version contains a new prompt in the extended token table, " ERROR", which isn't present in the other versions
 
  EQUB VE                \ Token 255:    ""
                         \

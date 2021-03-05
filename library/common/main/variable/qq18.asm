@@ -609,7 +609,7 @@ ENDIF
  CHAR 'S'
  EQUB 0
 
-IF _CASSETTE_VERSION \ Enhanced
+IF _CASSETTE_VERSION \ Enhanced: The enhanced versions contain a strange text token 65 that displays your credit balance as "10{cash} CR5{cash} CR" - it isn't used anywhere and doesn't make a whole lot of sense
 
  CHAR '('               \ Token 65:     "(Y/N)?"
  CHAR 'Y'               \
@@ -861,7 +861,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Enhanced
+IF _CASSETTE_VERSION \ Enhanced: The enhanced versions encode an extra two-letter token ("RO") in the standard text token table, replacing the author credits, which are moved into the extended token table
 
  CHAR 'B'               \ Token 94:     "BY D.BRABEN & I.BELL"
  CHAR 'Y'               \
@@ -1066,7 +1066,7 @@ ENDIF
  CHAR 'B'
  EQUB 0
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Feature: In the source disc release of the 6502SP version, the Inventory screen shows an "Extra Energy Unit" if you have one fitted, while all other versions just show "Energy Unit"
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Feature: If you have bought an energy unit, then most versions will show it on the Inventory screen as "Energy Unit", but in the source disc release of the 6502SP version, it is shown as "Extra Energy Unit" (though it's still "Energy Unit" in the SNG45 release)
 
  RTOK 121               \ Token 114:    "ENERGY UNIT"
  RTOK 14                \
@@ -1119,7 +1119,7 @@ ENDIF
  RTOK 29                \ Encoded as:   "[122] [29]"
  EQUB 0
 
-IF _CASSETTE_VERSION \ Enhanced
+IF _CASSETTE_VERSION \ Enhanced: There are two new tokens in the text token table for the new laser types (token 117 for military lasers and token 118 for mining lasers), and the "ALL" and "LL" tokens that are here in the cassette version move to 124 and 129 respectively
 
  CHAR 'A'               \ Token 117:    "ALL"
  RTOK 118               \
@@ -1191,7 +1191,7 @@ ENDIF
  CHAR 'C'
  EQUB 0
 
-IF _CASSETTE_VERSION \ Enhanced
+IF _CASSETTE_VERSION \ Enhanced: There's a new token in the enhanced versions for showing that the docking computers are currently switched on. It replaces the request for a commander's name, which isn't required as the disc access menu does that instead
 
  CTRL 13                \ Token 123:    "{crlf}
  RTOK 92                \                COMMANDER'S NAME? "
@@ -1206,12 +1206,6 @@ IF _CASSETTE_VERSION \ Enhanced
  CHAR ' '
  EQUB 0
 
- CHAR 'D'               \ Token 124:    "DOCK"
- CHAR 'O'               \
- CHAR 'C'               \ Encoded as:   "DOCK"
- CHAR 'K'
- EQUB 0
-
 ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
  RTOK 115               \ Token 123:    "DOCKING COMPUTERS ON"
@@ -1219,6 +1213,18 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
  CHAR 'O'               \ Encoded as:   "[115] ON"
  CHAR 'N'
  EQUB 0
+
+ENDIF
+
+IF _CASSETTE_VERSION \ Enhanced: The enhanced versions drop token 124 ("DOCK") and replace it with the "ALL" token that was displaced by the new military laser token; instead, "DOCK" is spelled out manually instead of using this token
+
+ CHAR 'D'               \ Token 124:    "DOCK"
+ CHAR 'O'               \
+ CHAR 'C'               \ Encoded as:   "DOCK"
+ CHAR 'K'
+ EQUB 0
+
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
  CHAR 'A'               \ Token 124:    "ALL"
  RTOK 129               \
@@ -1317,7 +1323,7 @@ ENDIF
  CHAR 'M'               \ Encoded as:   "I<156>M"
  EQUB 0
 
-IF _CASSETTE_VERSION \ Enhanced
+IF _CASSETTE_VERSION \ Enhanced: See above
 
  CHAR ' '               \ Token 128:    "  LOAD NEW COMMANDER (Y/N)?{crlf}
  CHAR ' '               \                {crlf}
@@ -1337,16 +1343,22 @@ IF _CASSETTE_VERSION \ Enhanced
  CTRL 13
  EQUB 0
 
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+
+ EQUB 0                 \ Token 128:    ""
+                        \
+                        \ Encoded as:   ""
+
+ENDIF
+
+IF _CASSETTE_VERSION \ Enhanced: See above
+
  CTRL 6                 \ Token 129:    "{sentence case}DOCKED"
  RTOK 124               \
  TWOK 'E', 'D'          \ Encoded as:   "{6}[124]<152>"
  EQUB 0
 
 ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
-
- EQUB 0                 \ Token 128:    ""
-                        \
-                        \ Encoded as:   ""
 
  CHAR 'L'               \ Token 129:    "LL"
  CHAR 'L'               \
@@ -1522,7 +1534,7 @@ ENDIF
  CHAR 'R'
  EQUB 0
 
-IF _CASSETTE_VERSION \ Enhanced
+IF _CASSETTE_VERSION \ Enhanced: To make room for the new tokens for lasers, the enhanced versions drop tokens 147 ("PRESS FIRE OR SPACE,COMMANDER.") and 148 ("(C) ACORNSOFT 1984"), moving them instead to the extended token table
 
  CHAR 'P'               \ Token 147:    "PRESS FIRE OR SPACE,COMMANDER.{crlf}
  CHAR 'R'               \                {crlf}

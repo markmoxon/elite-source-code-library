@@ -123,7 +123,7 @@
                         \ add them together to get the result we're after, and
                         \ then set the sign afterwards
 
-IF _CASSETTE_VERSION \ Other
+IF _CASSETTE_VERSION \ Other: A CLC instruction is omitted from the cassette version in the rotation routine in MV40; it isn't needed, so this claws back one precious byte
 
  LDA K                  \ We now do the following sum:
 \CLC                    \

@@ -33,7 +33,7 @@
  LDA INWK+35            \ byte #35 in INF (so the ship's data in K% gets
  STA (INF),Y            \ updated)
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Other: Ships that have docked or been scooped are not classed as being killed and are not tested for potential bounties
 
  LDA NEWB               \ If bit 7 of the ship's NEWB flags is set, which means
  BMI KS1S               \ the ship has docked or been scooped, jump to KS1S to

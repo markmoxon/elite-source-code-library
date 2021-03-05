@@ -43,7 +43,7 @@ ELIF _6502SP_VERSION
  JSR backtonormal       \ Disable the keyboard and set the SVN flag to 0
 
  TAY                    \ The call to backtonormal sets A to 0, so this sets Y
-                        \ to 0, which use as a loop counter below
+                        \ to 0, which we use as a loop counter below
 
 ENDIF
 
@@ -58,10 +58,10 @@ ENDIF
 
  INY                    \ Increment the loop counter
 
-IF _6502SP_VERSION \ Other
+IF _6502SP_VERSION \ Other: Bug fix? The 6502SP version returns from the disc access break handler if the error printing routine loops through a whole page, so it always exits. The other versions could crash if there is no null value in the block pointed to by (&FD &FE), so perhaps this fixes this issue?
 
- BEQ retry              \ If A = 0 then we have reached the end of the error
-                        \ message, so jump to retry to wait for a key press and
+ BEQ retry              \ If Y = 0 then we have worked our way through a whole
+                        \ page, so jump to retry to wait for a key press and
                         \ display the disc access menu (this BEQ is effectively
                         \ a JMP, as we didn't take the BNE branch above)
 

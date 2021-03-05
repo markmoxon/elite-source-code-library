@@ -66,7 +66,7 @@ ENDIF
  EQUB &45               \ J         KYTB+14     In-system jump
  EQUB &52               \ C         KYTB+15     Docking computer
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: The lookup table for in-flight keyboard controls contains an extra entry in the enhanced versions, for "P" (cancel docking computer)
 
  EQUB &37               \ P         KYTB+16     Cancel docking computer
 

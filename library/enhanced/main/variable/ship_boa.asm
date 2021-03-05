@@ -14,7 +14,7 @@
  EQUW 70 * 70           \ Targetable area          = 70 * 70
  EQUB &62               \ Edges data offset (low)  = &0062
  EQUB &C2               \ Faces data offset (low)  = &00C2
-IF _DISC_FLIGHT \ Advanced
+IF _DISC_FLIGHT \ Advanced: The colour versions of Elite have an extra edge count for the ship colour; Boas are shown in cyan
  EQUB 89                \ Max. edge count          = (89 - 1) / 4 = 22
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 93                \ Max. edge count          = (93 - 1) / 4 = 23

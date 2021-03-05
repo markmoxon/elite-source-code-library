@@ -120,7 +120,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Other
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Other: Part 2 of the LOIN routine in the 6502SP version uses logarithms to speed up the multiplication
 
                         \ The following calculates:
                         \

@@ -359,7 +359,7 @@ ENDIF
 
  LDA #103               \ Set A to token 103 ("PULSE LASER")
 
-IF _CASSETTE_VERSION \ Enhanced
+IF _CASSETTE_VERSION \ Enhanced: The Status Mode screen supports the new types of laser (military and mining)
 
  LDX CNT                \ If the laser power for view X has bit 7 clear, then it
  LDY LASER,X            \ is a pulse laser, so skip the following instruction

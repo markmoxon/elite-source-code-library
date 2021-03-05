@@ -18,7 +18,7 @@
 
 .cntr
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: Keyboard damping is disabled when the docking computer takes over the controls
 
  LDA auto               \ If the docking computer is currently activated, jump
  BNE cnt2               \ to cnt2 to skip the following as we always want to

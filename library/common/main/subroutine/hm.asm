@@ -26,7 +26,7 @@
                         \ which will draw the crosshairs at our current home
                         \ system
 
-IF _CASSETTE_VERSION \ Other
+IF _CASSETTE_VERSION \ Platform
 
  LDA QQ11               \ If this is a space view, return from the subroutine
  BEQ SC5                \ (as SC5 contains an RTS)

@@ -144,7 +144,7 @@ ENDIF
                         \ other words if the ship should pull up to head in the
                         \ direction of XX15
 
-IF _CASSETTE_VERSION \ Feature
+IF _CASSETTE_VERSION \ Feature: 
 
  EOR #%10000000         \ Set the ship's pitch counter to 3, with the opposite
  AND #%10000000         \ sign to the dot product result, which gently pitches
@@ -183,7 +183,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Feature
+IF _CASSETTE_VERSION \ Enhanced: The cassette version has fairly basic pitch and roll control over ships when applying tactics, whereas the other versions have finer control using the RAT, RAT2 and CNT2 variables, which is particularly useful when the docking computer is in control
 
  LDA INWK+29            \ Fetch the roll counter from byte #29 into A and clear
  AND #%01111111         \ the sign bit
@@ -209,7 +209,7 @@ ENDIF
                         \ ship, in other words if the ship should roll right to
                         \ head in the direction of XX15
 
-IF _CASSETTE_VERSION \ Feature
+IF _CASSETTE_VERSION \ Enhanced: See above
 
  EOR INWK+30            \ Set the ship's roll counter to 5, with the sign set to
  AND #%10000000         \ positive if the pitch counter and dot product have
@@ -309,7 +309,7 @@ ENDIF
 
  RTS                    \ Return from the subroutine
 
-IF _DISC_FLIGHT \ Feature: The tactics routines to point the ship at the planet are shared with the docking computer
+IF _DISC_FLIGHT \ Enhanced: The tactics routines to point the ship at the planet are shared with the docking computer
 
 .TA151
 
@@ -347,7 +347,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Feature: See above
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: See above
 
  CMP #&98               \ If A is positive or A <= -24, jump to ttt
  BCC ttt
@@ -365,7 +365,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT \ Feature: See above
 
 ENDIF
 
-IF _DISC_FLIGHT \ Feature: The tactics routines to pitch and roll the ship are shared with the docking computer
+IF _DISC_FLIGHT \ Enhanced: The tactics routines to pitch and roll the ship are shared with the docking computer
 
 .nroll
 

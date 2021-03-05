@@ -26,7 +26,7 @@ ENDIF
  LDA INWK+8             \ Set A = z_sign (the highest byte in the planet/sun's
                         \ coordinates)
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Other
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Other: In the cassette version, in part 14 of the main flight loop, we didn't remove the planet/sun if it was behind us, so we do it here instead
 
  BMI PL2                \ If A is negative then the planet/sun is behind us, so
                         \ jump to PL2 to remove it from the screen, returning

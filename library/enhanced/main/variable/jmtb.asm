@@ -36,7 +36,7 @@
  EQUW PAUSE2            \ Token 24: Wait for a key press
  EQUW BRIS              \ Token 25: Show incoming message screen, wait 2 seconds
  EQUW MT26              \ Token 26: Fetch line input from keyboard (filename)
- EQUW MT27              \ Token 27: Print mission 1 captain's name (217-219)
+ EQUW MT27              \ Token 27: Print mission captain's name (217-219)
  EQUW MT28              \ Token 28: Print mission 1 location hint (220-221)
  EQUW MT29              \ Token 29: Column 6, white text, lower case in words
 IF _DISC_DOCKED \ Screen

@@ -151,7 +151,7 @@ ENDIF
  JSR DORND              \ Set XX15 = random number 0-255
  STA XX15
 
-IF _DISC_DOCKED \ Feature: The ship hanger has a 50% chance of displaying a group of ships, and a 50% chance of displaying a solitary ship. In the disc version, this latter option can display no ship at all, or it can show a solitary cargo canister, Shuttle, Transporter, Cobra Mk III, Python, Viper or Krait; in the 6502SP version there is always a ship, and it's a Sidewinder, Mamba, Krait or Adder
+IF _DISC_DOCKED \ Enhanced: The ship hanger has a 50% chance of displaying a group of ships, and a 50% chance of displaying a solitary ship. In the disc version, this latter option can display no ship at all, or it can show a solitary cargo canister, Shuttle, Transporter, Cobra Mk III, Python, Viper or Krait; in the 6502SP version there is always a ship, and it's a Sidewinder, Mamba, Krait or Adder
 
  JSR DORND              \ Set XX15+2 = random number 0-7
  AND #7                 \

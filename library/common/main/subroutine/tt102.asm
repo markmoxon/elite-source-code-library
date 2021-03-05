@@ -99,7 +99,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Enhanced
+IF _CASSETTE_VERSION \ Enhanced: Pressing "@" brings up the disc access menu in the enhanced versions
 
  CMP #&47               \ If "@" was pressed, jump to SVE to save the commander
  BNE P%+5               \ file, returning from the subroutine using a tail call
@@ -110,7 +110,8 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED
  CMP #&47               \ If "@" was not pressed, skip to nosave
  BNE nosave
 
- JSR SVE                \ "@" was pressed, so call SVE to show the disc menu
+ JSR SVE                \ "@" was pressed, so call SVE to show the disc access
+                        \ menu
 
  BCC P%+5               \ If the C flag was set by SVE, then we loaded a new
  JMP QU5                \ commander file, so jump to QU5 to restart the game
@@ -164,7 +165,7 @@ IF _6502SP_VERSION \ Label
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Feature
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform: When docked in the disc version, the screen-clearing and DOCKED printing is done here rather than in hyp and hy6, but the code is the same
 
  CMP #&54               \ If "H" was pressed, jump to hyp to do a hyperspace
  BNE P%+5               \ jump (if we are in space), returning from the
@@ -197,7 +198,7 @@ ENDIF
  CMP #&32               \ If "D" was pressed, jump to T95 to print the distance
  BEQ T95                \ to a system (if we are in one of the chart screens)
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced
+IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: Pressing "F" in the enhanced versions when viewing a chart lets us search for systems by name
 
  CMP #&43               \ If "F" was not pressed, jump down to HME1, otherwise
  BNE HME1               \ keep going to process searching for systems
@@ -212,7 +213,7 @@ IF _6502SP_VERSION \ Platform
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced
+IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: See above
 
  LDA QQ11               \ If the current view is a chart (QQ11 = 64 or 128),
  AND #%11000000         \ keep going, otherwise return from the subroutine (as
@@ -262,7 +263,7 @@ ENDIF
                         \ will move the location in (QQ9, QQ10) to the current
                         \ home system
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Other
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Other: Bug fix? If "O" is pressed in the 6502SP version, then the target system is set to home, and the routine terminates, which is different to the other versions; they stick around for one more move of the cursor, so presumably this fixes a bug where pressing "O" might not always move the cursor exactly to the current system
 
  JSR TT103              \ Draw small crosshairs at coordinates (QQ9, QQ10),
                         \ which will draw the crosshairs at our current home

@@ -15,7 +15,7 @@
  EQUW 10 * 10           \ Targetable area          = 10 * 10
  EQUB &2C               \ Edges data offset (low)  = &002C
  EQUB &3C               \ Faces data offset (low)  = &003C
-IF _DISC_FLIGHT \ Advanced
+IF _DISC_FLIGHT \ Advanced: The colour versions of Elite have an extra edge count for the ship colour; alloy plates are shown in cyan
  EQUB 17                \ Max. edge count          = (17 - 1) / 4 = 4
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 21                \ Max. edge count          = (21 - 1) / 4 = 5

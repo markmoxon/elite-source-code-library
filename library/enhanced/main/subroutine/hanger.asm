@@ -268,7 +268,7 @@ ENDIF
 
                         \ The floor is done, so now we move on to the back wall
 
-IF _6502SP_VERSION \ Other
+IF _6502SP_VERSION \ Other: The ship hanger in the 6502SP version draws the vertical lines for the backdrop 60 times, when it only needs to do this 15 times. Is this a quick way of making the hanger display hang around for longer, or is it just a mistake?
 
  LDA #60                \ Set S = 60, so we run the following 60 times (though I
  STA S                  \ have no idea why it's 60 times, when it should be 15,

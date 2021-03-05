@@ -25,7 +25,7 @@
  CMP #SST               \ If this is the space station, jump to AN2 to make the
  BEQ AN2                \ space station hostile
 
-IF _CASSETTE_VERSION \ Enhanced
+IF _CASSETTE_VERSION \ Enhanced: In the enhanced versions, attacking an innocent bystander (i.e. a ship that has bit 5 of the NEWB flags set) will annoy the space station
 
  BCS HI1                \ If A >= #SST then this is a missile, asteroid, cargo
                         \ canister, Thargon or escape pod, and they can't get
@@ -67,7 +67,7 @@ ENDIF
  LDY #30                \ starts pitching
  STA (INF),Y
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: In the enhanced versions, hostility is separated from aggression; in the cassette version, hostility and aggression are the same thing (and a ship is hostile if its aggression level has its top bit set), but in the enhanced version you can have a very aggressive ship that isn't hostile... yet
 
  LDA TYPE               \ If the ship's type is < #CYL (i.e. a missile, Coriolis
  CMP #CYL               \ space station, escape pod, plate, cargo canister,
@@ -87,7 +87,7 @@ ENDIF
 
 .AN2
 
-IF _CASSETTE_VERSION \ Enhanced
+IF _CASSETTE_VERSION \ Enhanced: See above
 
  ASL K%+NI%+32          \ Fetch the AI counter (byte #32) of the second ship
  SEC                    \ in the ship data workspace at K%, which is reserved

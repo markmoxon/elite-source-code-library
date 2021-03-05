@@ -46,7 +46,7 @@ ENDIF
  INC EV                 \ EV is negative, so bump it up again, setting it back
                         \ to 0
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: In mission 2, after picking up the plans, there's an extra 22% chance that a Thargoid will spawn (this is on top of the normal spawning rate of pirates, bounty hunters and Thargoids)
 
  LDA TP                 \ Fetch bits 2 and 3 of TP, which contain the status of
  AND #%00001100         \ mission 2
@@ -80,7 +80,7 @@ ENDIF
  BEQ LABEL_2            \ straight to LABEL_2 to start spawning pirates or a
                         \ lone bounty hunter
 
-IF _CASSETTE_VERSION \ Feature: In the disc version there's a 47% chance of spawning a group of pirates or a lone bounty hunter, while in the cassette and 6502SP versions there's a 35% chance
+IF _CASSETTE_VERSION \ Feature: In the cassette and 6502SP versions there's a 35% chance of spawning a group of pirates or a lone bounty hunter, while in the disc version there's a 47% chance
 
  CMP #90                \ If the random number in A >= 90 (65% chance), jump to
  BCS MLOOP              \ MLOOP to stop spawning (so there's a 35% chance of
@@ -157,7 +157,7 @@ ENDIF
  INC EV                 \ Increase the extra vessels spawning counter, to
                         \ prevent the next attempt to spawn extra vessels
 
-IF _CASSETTE_VERSION \ Enhanced
+IF _CASSETTE_VERSION \ Enhanced: In the enhanced versions, lone bounty hunters can be in a Cobra Mk III (pirate), Asp Mk II, Python (pirate) or Fer-de-lance, while in the cassette version they can be in a Mamba, Python or Cobra Mk III
 
  AND #3                 \ Set A = Y = random number in the range 3-6, which
  ADC #3                 \ we will use to determine the type of ship
@@ -212,7 +212,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
 ENDIF
 
-IF _6502SP_VERSION \ Advanced
+IF _6502SP_VERSION \ Advanced: In the 6502SP version, lone bounty hunters are always spawned as hostile
 
  LDA #%00000100         \ Set bit 2 of the NEWB flags and clear all other bits,
  STA NEWB               \ so the ship we are about to spawn is hostile
@@ -252,7 +252,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: The Constrictor only spawns in its home system, during the mission 1 endgame, and then it only spawns once... though it can still appear in the ship hanger from time to time
 
  TYA
 
@@ -268,6 +268,15 @@ IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced
 
 .focoug
 
+ENDIF
+
+IF _DISC_FLIGHT \ Comment
+
+ JSR NWSHP              \ Spawn the new ship, whether it's a pirate, Thargoid or
+                        \ Constrictor
+
+ELIF _6502SP_VERSION
+
  JSR NWSHP              \ Spawn the new ship, whether it's a pirate, Thargoid,
                         \ Cougar or Constrictor
 
@@ -277,7 +286,7 @@ ENDIF
 
  JMP MLOOP              \ Jump down to MLOOP, as we are done spawning ships
 
-IF _6502SP_VERSION \ Advanced
+IF _6502SP_VERSION \ Advanced: When considering spawning a Cougar or a Thargoid instead of a cop, the 6502SP version spawns a Thargoid 96.8% of the time, and a Cougar 3.2% of the time
 
 .fothg
 
@@ -325,7 +334,7 @@ ENDIF
 
  JSR DORND              \ Set A and X to random numbers
 
-IF _CASSETTE_VERSION \ Enhanced
+IF _CASSETTE_VERSION \ Enhanced: When spawning a pack of pirates in the enhanced version, the chances of each ship type appearing in the pack are slightly different, with the mosty likely candidates first: Sidewinder, Mamba, Krait, Adder, Gecko, Cobra Mk I, Worm or Cobra Mk III (pirate)
 
  AND #3                 \ Set A to a random number in the range 0-3
 
@@ -356,7 +365,7 @@ IF _DISC_FLIGHT \ Platform
 
 ENDIF
 
-IF _DISC_FLIGHT OR _6502SP_VERSION \ Enhanced
+IF _DISC_FLIGHT OR _6502SP_VERSION \ Enhanced: In the enhanced versions, a pack-hunting pirate will fly a Sidewinder, Mamba, Krait, Adder, Gecko, Cobra Mk I, Worm or Cobra Mk III (pirate), while in the cassette version they only fly in Sidewinders and Mambas
 
  ADC #PACK              \ #PACK is set to #SH3, the ship type for a Sidewinder,
                         \ so this sets our new ship type to one of the pack

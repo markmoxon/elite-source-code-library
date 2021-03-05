@@ -120,7 +120,7 @@ ELIF _DISC_DOCKED
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_VERSION \ Enhanced
+IF _6502SP_VERSION OR _DISC_VERSION \ Enhanced: The enhanced versions support a new Bitstik configuration option, "B", which toggles the Bitstik when the game is paused
 
  CPX #&64               \ If "B" is not being pressed, skip to DK7
  BNE nobit
@@ -140,7 +140,7 @@ IF _6502SP_VERSION OR _DISC_VERSION \ Enhanced
 
 ENDIF
 
-IF _6502SP_VERSION \ Advanced
+IF _6502SP_VERSION \ Advanced: The 6502SP lets you take screenshots, by pressing "D" when the game is paused
 
  CPX #&32               \ If "D" is being pressed, jump to savscr to save a
  BEQ savscr             \ screenshot
@@ -168,7 +168,7 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Enhanced
+IF _CASSETTE_VERSION \ Enhanced: The key logger scans for an additional secondary flight key, "P", which disables the docking computer
 
  LDY #15                \ This is a space view, so now we want to check for all
                         \ the secondary flight keys. The internal key numbers

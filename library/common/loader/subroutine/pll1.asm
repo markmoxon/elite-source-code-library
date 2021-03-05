@@ -62,7 +62,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_VERSION \ Feature: The Master version always draws exactly the same pixels for the Saturn on its  loading screen, while all the other versions draw random pixels
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_VERSION \ Feature: For most versions, the loading screen's Saturn is drawn randomly, so the dots are different every time the game loads. However, the Master version always draws exactly the same pixels for the Saturn, as the random number generator is always seeded to the same value
 
  LDA VIA+&44            \ Read the 6522 System VIA T1C-L timer 1 low-order
  STA RAND+1             \ counter (SHEILA &44), which increments 1000 times a
@@ -92,7 +92,7 @@ ENDIF
  LDA P                  \             = r1^2
  STA ZP
 
-IF _DISC_VERSION \ Other
+IF _DISC_VERSION \ Other: The disc version contains various bits of copy protection code injected into the Saturn-drawing routine in the loader
 
  LDA #LO(OSBmod)        \ As part of the copy protection, the JSR OSB
  STA OSBjsr+1           \ instruction at OSBjsr gets modified to point to OSBmod
@@ -200,7 +200,7 @@ ENDIF
 
  BNE PLL1               \ Loop back to PLL1 until CNT+1 = 0
 
-IF _CASSETTE_VERSION \ Other
+IF _CASSETTE_VERSION \ Other: The cassette version contains various bits of copy protection code injected into the Saturn-drawing routine in the loader
 
  LDX #&C2               \ Set the low byte of EXCN(1 0) to &C2, so we now have
  STX EXCN               \ EXCN(1 0) = &03C2, which we will use in the IRQ1
@@ -265,7 +265,7 @@ ENDIF
 
  BNE PLL2               \ Loop back to PLL2 until CNT2+1 = 0
 
-IF _CASSETTE_VERSION \ Other
+IF _CASSETTE_VERSION \ Other: See above
 
  LDX MHCA               \ Set the low byte of BLPTR(1 0) to the contents of MHCA
  STX BLPTR              \ (which is &CA), so we now have BLPTR(1 0) = &03CA,
@@ -306,7 +306,7 @@ ENDIF
  STA ZP+1               \ Set ZP+1 = A
                         \          = r5^2 / 256
 
-IF _DISC_VERSION \ Other
+IF _DISC_VERSION \ Other: In the original versions of Elite, the only self-modifying code is in the copy protection
 
  LDA #HI(OSBmod)        \ As part of the copy protection, the JSR OSB
  STA OSBjsr+2           \ instruction at OSBjsr gets modified to point to OSBmod
@@ -418,7 +418,7 @@ ENDIF
 
  BNE PLL3               \ Loop back to PLL3 until CNT3+1 = 0
 
-IF _DISC_VERSION \ Other
+IF _DISC_VERSION \ Other: See above
 
  LDA #&00               \ Set ZP(1 0) = &6300
  STA ZP

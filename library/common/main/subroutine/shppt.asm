@@ -81,7 +81,7 @@ ENDIF
  ORA XX1+31             \ have now drawn something on-screen for this ship
  STA XX1+31
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Advanced
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Advanced: Ships in the advanced versions each have their own colour, including when they are shown as points
 
  LDA #8                 \ Set A = 8 so when we call LL18+2 next, byte #0 of the
                         \ heap gets set to 8, for the 8 bytes we just stuck on

@@ -11,7 +11,7 @@
 
  JSR SPBLB              \ Light up the space station bulb on the dashboard
 
-IF _CASSETTE_VERSION \ Enhanced
+IF _CASSETTE_VERSION \ Enhanced: Space stations in the enhanced versions are always set to be aggressive if attacked, but they start out friendly; in the cassette version, they have no aggression at all until they are attacked
 
  LDX #%00000001         \ Set the AI flag in byte #32 to %00000001 (friendly, no
  STX INWK+32            \ AI, has an E.C.M.)
@@ -50,7 +50,7 @@ ENDIF
 
  JSR NwS1               \ And again to flip the sign of nosev_z_hi (byte #14)
 
-IF _6502SP_VERSION \ Advanced
+IF _6502SP_VERSION \ Platform
 
  LDA spasto             \ Copy the address of the Coriolis space station's ship
  STA XX21+2*SST-2       \ blueprint from spasto to the #SST entry in the

@@ -31,7 +31,7 @@ ENDIF
  JSR FRS1               \ Call FRS1 to launch the Cobra Mk III straight ahead,
                         \ like a missile launch, but with our ship instead
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: When trying to spawn a Cobra Mk III to display when we use an escape pod, the enhanced versions will first try to spawn a normal Cobra, and if that fails, they will try again with a pirate Cobra
 
  BCS ES1                \ If the Cobra was successfully added to the local
                         \ bubble, jump to ES1 to skip the following instructions

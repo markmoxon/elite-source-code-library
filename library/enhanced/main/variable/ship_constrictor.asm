@@ -20,7 +20,7 @@ ELIF _DISC_DOCKED
 ENDIF
  EQUB &7A               \ Edges data offset (low)  = &007A
  EQUB &DA               \ Faces data offset (low)  = &00DA
-IF _DISC_VERSION \ Advanced
+IF _DISC_VERSION \ Advanced: The colour versions of Elite have an extra edge count for the ship colour; Constrictors are shown in cyan
  EQUB 77                \ Max. edge count          = (77 - 1) / 4 = 19
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 81                \ Max. edge count          = (81 - 1) / 4 = 20

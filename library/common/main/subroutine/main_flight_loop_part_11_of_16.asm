@@ -26,7 +26,7 @@
 
 .MA26
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: Ships that have docked or been scooped are hidden from the scanner
 
  LDA NEWB               \ If bit 7 of the ship's NEWB flags is clear, skip the
  BPL P%+5               \ following instruction
@@ -103,7 +103,7 @@ ENDIF
  JSR EXNO               \ the crosshairs, so call EXNO to make the sound of
                         \ us making a laser strike on another ship
 
-IF _DISC_FLIGHT \ Enhanced
+IF _DISC_FLIGHT \ Advanced: Only military lasers can harm the Cougar, and then they only inflict a quarter of the damage that military lasers inflict on normal ships
 
  LDA TYPE               \ Did we just hit the space station? If so, jump to
  CMP #SST               \ MA14+2 to make the station hostile, skipping the
@@ -111,6 +111,20 @@ IF _DISC_FLIGHT \ Enhanced
 
  CMP #CON               \ If the ship we hit is not a Constrictor, jump to BURN
  BNE BURN               \ to skip the following
+
+ELIF _6502SP_VERSION
+
+ LDA TYPE               \ Did we just hit the space station? If so, jump to
+ CMP #SST               \ MA14+2 to make the station hostile, skipping the
+ BEQ MA14+2             \ following as we can't destroy a space station
+
+ CMP #CON               \ If the ship we hit is less than #CON - i.e. it's not
+ BCC BURN               \ a Constrictor, Cougar, Dodo station or the Elite logo,
+                        \ jump to BURN to skip the following
+
+ENDIF
+
+IF _DISC_FLIGHT \ Enhanced: Only military lasers can harm the Constrictor, and then they only inflict a quarter of the damage that military lasers inflict on normal ships
 
  LDA LAS                \ Set A to the power of the laser we just used to hit
                         \ the ship (i.e. the laser in the current view)
@@ -127,14 +141,6 @@ IF _DISC_FLIGHT \ Enhanced
 .BURN
 
 ELIF _6502SP_VERSION
-
- LDA TYPE               \ Did we just hit the space station? If so, jump to
- CMP #SST               \ MA14+2 to make the station hostile, skipping the
- BEQ MA14+2             \ following as we can't destroy a space station
-
- CMP #CON               \ If the ship we hit is less than #CON - i.e. it's not
- BCC BURN               \ a Constrictor, Cougar, Dodo station or the Elite logo,
-                        \ jump to BURN to skip the following
 
  LDA LAS                \ Set A to the power of the laser we just used to hit
                         \ the ship (i.e. the laser in the current view)
@@ -159,7 +165,7 @@ ENDIF
  SBC LAS                \ than zero, the other ship has survived the hit, so
  BCS MA14               \ jump down to MA14
 
-IF _CASSETTE_VERSION \ Enhanced
+IF _CASSETTE_VERSION \ Enhanced: Destroying an asteroid with mining lasers will release scoopable splinters, and destroying ships will randomly release cargo canisters and allow plates
 
  LDA TYPE               \ Did we just hit the space station? If so, jump to
  CMP #SST               \ MA14+2 to make the station hostile, skipping the

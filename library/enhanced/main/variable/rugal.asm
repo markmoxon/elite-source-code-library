@@ -59,7 +59,7 @@
  EQUB &02                \ System 101, Galaxy 2, Mission 1     Xeveon = Token 23
  EQUB &01                \ System 193, Galaxy 1, Mission 1     Orarra = Token 24
  EQUB &82                \ System  41, Galaxy 2                Anreer = Token 25
-IF _6502SP_VERSION \ Feature: The source disc release of the 6502SP version overrides the extended system description for Lave. The Master version also has an override Lave, but this time it's only for the Lave in galaxy 16 (i.e. the 17th galaxy)
+IF _6502SP_VERSION \ Enhanced: The source disc release of the 6502SP version overrides the extended system description for Lave. The Master version also has an override for Lave, but this time it's only for the Lave in galaxy 16 (i.e. the 17th galaxy)
 
 IF _SOURCE_DISC
 

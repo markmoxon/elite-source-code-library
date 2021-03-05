@@ -73,7 +73,7 @@ ELIF _DISC_FLIGHT
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Enhanced
+IF _CASSETTE_VERSION \ Enhanced: Traders in the enhanced version can be one of the following: Cobra Mk III, Python, Boa or Anaconda (in the cassette version, they are always Cobras)
 
  LDA #CYL               \ Add a new Cobra Mk III to the local bubble and fall
  JSR NWSHP              \ through into the main game loop again
@@ -110,7 +110,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
 ENDIF
 
-IF _6502SP_VERSION \ Feature: 6502SP has rock hermits
+IF _6502SP_VERSION \ Advanced: The 6502SP has rock hermits, which are classed as junk but can release ships if attacked
 
  CMP #HER               \ If A is now the ship type of a rock hermit, jump to
  BEQ TT100              \ TT100 to skip the following instruction

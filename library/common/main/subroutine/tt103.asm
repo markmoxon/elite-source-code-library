@@ -16,7 +16,7 @@
 
  LDA QQ11               \ Fetch the current view type into A
 
-IF _CASSETTE_VERSION \ Other
+IF _CASSETTE_VERSION \ Other: The cassette version doesn't draw crosshairs in routine TT103 if this is a space view, but the other versions don't do this check, so perhaps it isn't required?
 
  BEQ TT180              \ If this is a space view, return from the subroutine
                         \ (as TT180 contains an RTS), as there are no moveable

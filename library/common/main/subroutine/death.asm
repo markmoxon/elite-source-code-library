@@ -115,7 +115,7 @@ ENDIF
  STA INWK+30            \ we store in byte #30 (the pitch counter) to give our
                         \ ship a very gentle pitch with damping
 
-IF _CASSETTE_VERSION \ Enhanced
+IF _CASSETTE_VERSION \ Enhanced: On death, the cassette version shows your ship explosion along with up to four cargo canisters; in the enhanced versions, it shows up to five items, which can be a mix of cargo canisters and alloy plates
 
  PHP                    \ Store the processor flags
 

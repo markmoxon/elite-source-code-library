@@ -163,7 +163,7 @@ ENDIF
 
 .MA76
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: The main loop scans for "P" being pressed, which disables the docking computer
 
  LDA KY20               \ If "P" is being pressed, keep going, otherwise skip
  BEQ MA78               \ the next two instructions
@@ -189,7 +189,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
 ENDIF
 
-IF _6502SP_VERSION \ Feature: In the 6502SP version, you can't launch your escape pod in witchspace
+IF _6502SP_VERSION \ Feature: Normally you can launch your escape pod in witchspace (though it may be fatal, depending on the version). You can't even launch it in the 6502SP version
 
  LDA MJ                 \ If we are in witchspace, we can't launch our escape
  BNE noescp             \ pod, so jump down to noescp
@@ -233,7 +233,7 @@ ENDIF
 
 .MA64
 
-IF _CASSETTE_VERSION \ Enhanced
+IF _CASSETTE_VERSION \ Enhanced: If "C" is pressed during flight and we have a docking computer, then the docking computer takes control of the ship, unlike in the cassette version, which instantly docks when "C" is pressed
 
  LDA KY19               \ If "C" is being pressed, and we have a docking
  AND DKCMP              \ computer fitted, and we are inside the space station's

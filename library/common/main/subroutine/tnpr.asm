@@ -96,7 +96,7 @@
 
  LDY QQ29               \ Set Y to the item number we want to add
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Feature
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: When scooping gold, platinum, gem-stones or alien items in the disc version, we are allowed up to 201kg of each item; in the other versions, we are only allowed 200kg
 
  ADC QQ20,Y             \ Set A = A + the number of units of this item that we
                         \ already have in the hold

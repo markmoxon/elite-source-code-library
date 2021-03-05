@@ -52,7 +52,7 @@ ENDIF
  CMP Q                  \ If A >= Q, then the answer will not fit in one byte,
  BCS LL2                \ so jump to LL2 to return 255
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Other
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Other: The LL28 routine in the 6502SP version uses logarithms to speed up the multiplication
 
  LDX #%11111110         \ Set R to have bits 1-7 set, so we can rotate through 7
  STX R                  \ loop iterations, getting a 1 each time, and then
@@ -154,7 +154,7 @@ ENDIF
  BCS LL31               \ If we still have set bits in R, loop back to LL31 to
                         \ do the next iteration of 7
 
-IF _6502SP_VERSION \ Other
+IF _6502SP_VERSION \ Other: The 6502SP version of LL28 returns the remainder in A, which the other versions don't
 
  LDA R                  \ Set A to the remainder in R
 

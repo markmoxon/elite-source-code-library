@@ -62,7 +62,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Other
+IF _CASSETTE_VERSION \ Other: See below
 
  STX QQ8                \ Set the distance to the selected system in QQ8(1 0)
  STX QQ8+1              \ to 0
@@ -122,7 +122,7 @@ ENDIF
 
  JSR TT110              \ Call TT110 to show the front space view
 
-IF _DISC_VERSION OR _6502SP_VERSION \ Other
+IF _DISC_VERSION OR _6502SP_VERSION \ Other: See below
 
  JSR TT111              \ Call TT111 to set the current system to the nearest
                         \ system to (QQ9, QQ10), and put the seeds of the
@@ -130,7 +130,7 @@ IF _DISC_VERSION OR _6502SP_VERSION \ Other
 
 ENDIF
 
-IF _6502SP_VERSION \ Other
+IF _6502SP_VERSION \ Other: Part of the bug fix for the "hyperspace while docking" bug
 
  LDX #5                 \ We now want to copy those seeds into safehouse, so we
                         \ so set a counter in Xto copy 6 bytes
@@ -147,7 +147,7 @@ IF _6502SP_VERSION \ Other
 
 ENDIF
 
-IF _DISC_VERSION OR _6502SP_VERSION \ Other
+IF _DISC_VERSION OR _6502SP_VERSION \ Other: See above
 
  LDX #0                 \ Set the distance to the selected system in QQ8(1 0)
  STX QQ8                \ to 0

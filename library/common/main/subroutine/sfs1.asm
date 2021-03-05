@@ -91,7 +91,7 @@ ENDIF
                         \ new child ship (in this way, the child inherits things
                         \ like location from the parent)
 
-IF _DISC_FLIGHT \ Enhanced
+IF _DISC_FLIGHT \ Enhanced: In the disc version only, child ships that are spawned from a parent inherit the hostile, pirate and docking NEWB flags, meaning pirates spawn pirates, angry ships spawn angry ships, and ships that are docking spawn ships that are also docking
 
  LDA NEWB               \ Clear bits 0-1 and 5-7 of the ship's NEWB flags,
  AND #%00011100         \ leaving only the hostile, pirate and docking flags
@@ -148,7 +148,7 @@ ENDIF
 
  TXA                    \ Copy the child's ship type from X into A
 
-IF _CASSETTE_VERSION \ Enhanced
+IF _CASSETTE_VERSION \ Enhanced: On demise, ships can spawn both cargo canisters and alloy plates, and both of them are set spinning randomly when they are spawned
 
  CMP #OIL               \ If the child we are spawning is not a cargo canister,
  BNE NOIL               \ jump to NOIL to skip us setting up the pitch and roll
@@ -181,7 +181,7 @@ ENDIF
  STA INWK+29            \ damping randomly enabled or disabled, depending on the
                         \ C flag from above
 
-IF _CASSETTE_VERSION \ Enhanced
+IF _CASSETTE_VERSION \ Enhanced: See above
 
  LDA #OIL               \ Set A to the ship type of a cargo canister
 

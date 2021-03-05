@@ -21,17 +21,17 @@
 \
 \ ******************************************************************************
 
-IF _DISC_DOCKED \ Other
+IF _DISC_DOCKED \ Other: Bug fix for the laseer refund bug in the first version of disc Elite, where buying a laser that you already owned affected your credit balance
 
 IF _STH_DISC
 
  NOP                    \ In the first version of disc Elite, there was a nasty
- NOP                    \ bug where buying a laser that you already owned gave
- NOP                    \ you a refund of the laser's worth without removing the
- NOP                    \ laser, so you could keep doing this to get as many
- NOP                    \ credits as you liked. This was quickly fixed by
- NOP                    \ replacing the incorrect code with NOPs, which is what
- NOP                    \ we have here
+ NOP                    \ bug where buying a laser that you already owned
+ NOP                    \ affected your credit balance, so if you were clever,
+ NOP                    \ you could keep doing this to get as many credits as
+ NOP                    \ you liked. This was quickly fixed by replacing the
+ NOP                    \ incorrect code with NOPs, which is what we have here
+ NOP
  NOP
  NOP
 

@@ -81,7 +81,7 @@ ENDIF
 
 .FMLTU
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Other
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Other: The FMLTU routine in the 6502SP version uses logarithms to speed up the multiplication
 
  EOR #%11111111         \ Flip the bits in A, set the C flag and rotate right,
  SEC                    \ so the C flag now contains bit 0 of A inverted, and P

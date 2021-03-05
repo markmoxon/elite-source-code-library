@@ -50,7 +50,7 @@
 
  SBC Q                  \ A >= Q, so set A = A - Q
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Other
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Other: There two differences in the DVID4 routine between the original versions and the 6502SP version that look like they would affect the result of the division; I haven't yet worked out what this is all about
 
  SEC                    \ Set the C flag, so that P gets a 1 shifted into bit 0
 
@@ -65,7 +65,7 @@ ENDIF
  BNE DVL4               \ Loop back for the next bit until we have done all 8
                         \ bits of P
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Other
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Other: See above
 
  JMP LL28+4             \ Jump to LL28+4 to convert the remainder in A into an
                         \ integer representation of the fractional value A / Q,

@@ -82,7 +82,7 @@ ENDIF
  CLC                    \ and add 3 (the tech level is stored as 0-14, so A is
  ADC #3                 \ now set to between 3 and 17)
 
-IF _CASSETTE_VERSION \ Enhanced
+IF _CASSETTE_VERSION \ Enhanced: There are 14 types of equipment in the enhanced version, as opposed to 12 in the cassette version
 
  CMP #12                \ If A >= 12 then set A = 12, so A is now set to between
  BCC P%+4               \ 3 and 12
@@ -222,7 +222,7 @@ ENDIF
  BNE et0                \ If A is not 0 (i.e. the item we've just bought is not
                         \ fuel), skip to et0
 
-IF _CASSETTE_VERSION \ Other
+IF _CASSETTE_VERSION \ Other: The cassette version resets the MCNT main loop counter when we refuel, which the other versions don't. I don't know why it would do this - perhaps it's a remnant of some other code that was cleared out in later versions?
 
  STA MCNT               \ We just bought fuel, so we zero the main loop counter
 
@@ -261,7 +261,7 @@ ENDIF
  JSR msblob             \ Reset the dashboard's missile indicators so none of
                         \ them are targeted
 
-IF _6502SP_VERSION \ Other
+IF _6502SP_VERSION \ Platform: The MSBAR routine that msblob calls corrupts the A register in the 6502SP version, so we need to reset it
 
  LDA #1                 \ Set A to 1 as the call to msblob will have overwritten
                         \ the original value, and we still need it set
@@ -312,7 +312,7 @@ ENDIF
                         \ prompt, and ask for a view number, which is returned
                         \ in X (which now contains 0-3)
 
-IF _CASSETTE_VERSION \ Enhanced
+IF _CASSETTE_VERSION \ Enhanced: The enhanced versions have two extra types of laser: Mining and Military
 
  LDA #4                 \ This instruction doesn't appear to do anything, as we
                         \ either don't need it (if we already have this laser)
@@ -358,7 +358,7 @@ ENDIF
                         \ prompt, and ask for a view number, which is returned
                         \ in X (which now contains 0-3)
 
-IF _CASSETTE_VERSION \ Enhanced
+IF _CASSETTE_VERSION \ Platform: The refund code has been moved to the refund routine in the enhanced versions
 
  STX T1                 \ Store the view in T1 so we can retrieve it below
 
@@ -536,7 +536,7 @@ ENDIF
 
 .et9
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced
+IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: Mining and Military lasers can be fitted to any views in the Equip Ship screen
 
  INY                    \ Increment Y to recursive token 117 ("MILITARY  LASER")
 

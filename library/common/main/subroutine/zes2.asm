@@ -52,7 +52,7 @@ ENDIF
  STA (SC),Y             \ Zero the Y-th byte of the block pointed to by SC,
                         \ so that's effectively the Y-th byte before SC
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Other
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Other: The disc version's flight code has a different ZES2 routine - it still zero-fills a part of a page, but it fills the opposite part of the page to the other versions
 
  INY                    \ Increment the loop counter
 

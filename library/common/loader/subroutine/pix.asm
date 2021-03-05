@@ -99,7 +99,7 @@ ENDIF
  AND #%00000111
  TAX
 
-IF _CASSETTE_VERSION \ Feature: When the loading screen draws Saturn, the cassette version OR's the pixels into the screen, so pixels within a character block can be next to each other, while the other versions just poke a one-pixel byte into memory, overwriting what's already there and ensuring better pixel spacing (though pixels in neighbouring bytes can still be next to each other)
+IF _CASSETTE_VERSION \ Feature: In the cassette version, the loading screen's Saturn has a much higher dot density than the other versions, as the drawing routine OR's the pixels into the screen, meaning pixels within a character block can be next to each other. The other versions just poke a one-pixel byte directly into memory without the OR logic, which overwrites what's already there and ensures a much greater pixel spacing (though pixels at the ends of neighbouring character blocks can still be next to each other)
 
  LDA TWOS,X             \ Otherwise fetch a pixel from TWOS and OR it into ZP+Y
  ORA (ZP),Y

@@ -124,7 +124,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Feature
+IF _CASSETTE_VERSION \ Platform
 
  JSR DELAY              \ Delay for 6 vertical syncs (6/50 = 0.12 seconds)
 
@@ -316,7 +316,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION \ Advanced
+IF _6502SP_VERSION \ Advanced: The 6502SP version only scans for keypresses every four iterations on the title screen (as opposed to every iteration in the other versions), so you have to hold down Y/N or Space for longer to load a commander or start the game
 
  LDA MCNT               \ This value will be zero on one out of every four
  AND #3                 \ iterations, so for the other three, skip to nodesire
@@ -372,18 +372,23 @@ ENDIF
                         \ button is pressed, otherwise it is set, so AND'ing
                         \ the value of IRB with %10000 extracts this bit
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Other
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Minor
 
 \TAX                    \ This instruction is commented out in the original
-                        \ source
+                        \ source; it would have no effect, as the comparison
+                        \ flags are already set by the AND, and the value of X
+                        \ is not used anywhere
 
 ELIF _6502SP_VERSION
 
- TAX                    \ Copy the joystick fire button state to X
+ TAX                    \ Copy the joystick fire button state to X, though this
+                        \ instruction has no effect, as the comparison flags are
+                        \ already set by the AND and the value of X is not used
+                        \ anywhere
 
 ENDIF
 
- BEQ TL2                \ If the joystick fire button is pressed, jump to BL2
+ BEQ TL2                \ If the joystick fire button is pressed, jump to TL2
 
 IF _CASSETTE_VERSION OR _DISC_DOCKED \ Tube
 

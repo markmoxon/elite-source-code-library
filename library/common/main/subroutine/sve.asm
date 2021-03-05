@@ -50,7 +50,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced
+IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: The enhanced versions show a disc access menu when the "@" key is pressed, that lets you load and save commanders, catalogue discs and delete files
 
  LDA #1                 \ Print extended token 1, the disc access menu, which
  JSR DETOK              \ presents these options:
@@ -98,7 +98,7 @@ IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced
+IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: See above
 
  JSR GTNMEW             \ If we get here then option 2 (save) was chosen, so
                         \ call GTNMEW to fetch the name of the commander file
@@ -125,7 +125,7 @@ ENDIF
 
  LSR SVC                \ Halve the save count value in SVC
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced
+IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: In the disc and 6502SP versions, the competition number is labelled as such when saving (in the cassette version, it is just displayed as a standalone number, without any clues as to what it is) 
 
  LDA #3                 \ Print extended token 3 ("COMPETITION NUMBER:")
  JSR DETOK
@@ -172,7 +172,7 @@ ENDIF
  EOR TALLY+1            \ the kill tally)
  STA K+3
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Other
+IF _6502SP_VERSION OR _DISC_DOCKED \ Other: Bug fix in the enhanced versions to stop the competition code being printed with a decimal point, which it can be in the cassette version
 
  CLC                    \ Clear the C flag so the call to BPRNT does not include
                         \ a decimal point
@@ -186,7 +186,7 @@ ENDIF
                         \ competition code is a 10-digit number, this just means
                         \ it may or may not have an extra space of padding
 
-IF _CASSETTE_VERSION \ Feature
+IF _CASSETTE_VERSION \ Platform
 
  JSR TT67               \ Call TT67 twice to print two newlines
  JSR TT67

@@ -50,7 +50,7 @@
 
  SBC Q                  \ A >= Q, so set A = A - Q
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Other: There two differences in the DVID4 routine between the original versions and the 6502SP version that look like they would affect the result of the division; I haven't yet worked out what this is all about
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Other: There are two differences in the DVID4 routine between the original versions and the 6502SP version that look like they would affect the result of the division; I haven't yet worked out what this is all about
 
  SEC                    \ Set the C flag, so that P gets a 1 shifted into bit 0
 

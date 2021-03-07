@@ -6,7 +6,7 @@
 \    Summary: Ship blueprint for a rock hermit (asteroid)
 \  Deep dive: Ship blueprints
 \
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ The ship blueprint for the rock hermit reuses the edges and faces data from

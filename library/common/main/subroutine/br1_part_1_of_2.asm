@@ -10,7 +10,7 @@
 IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \ BRKV is set to point to BR1 by elite-loader.asm.
 ENDIF
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
 \ Other entry points:
 \
 \   QU5                 Restart the game using the last saved commander without

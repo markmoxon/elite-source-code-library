@@ -6,7 +6,7 @@
 \    Summary: Ship blueprint for a Python (pirate)
 \  Deep dive: Ship blueprints
 \
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ The ship blueprint for the pirate Python reuses the edges and faces data from

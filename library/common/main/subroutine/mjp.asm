@@ -35,7 +35,7 @@ ENDIF
 
 .MJP
 
-IF _DISC_VERSION \ Platform
+IF _DISC_FLIGHT \ Platform
 
  LDA #3                 \ Call SHIPinA to load ship blueprints file D, which is
  JSR SHIPinA            \ one of the two files that contain Thargoids
@@ -54,7 +54,7 @@ IF _CASSETTE_VERSION \ Minor
  JSR TT66-2             \ Clear the top part of the screen, draw a white border,
                         \ and set the current view type in QQ11 to 1
 
-ELIF _DISC_VERSION OR _6502SP_VERSION
+ELIF _DISC_FLIGHT OR _6502SP_VERSION
 
  LDA #3                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 3

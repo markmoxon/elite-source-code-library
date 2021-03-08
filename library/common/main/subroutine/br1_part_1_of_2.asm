@@ -7,7 +7,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Comment
 \ BRKV is set to point to BR1 by elite-loader.asm.
 ENDIF
 IF _6502SP_VERSION \ Comment
@@ -28,7 +28,7 @@ IF _6502SP_VERSION \ Tube
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Tube
 
  LDX #3                 \ Set XC = 3 (set text cursor to column 3)
  STX XC
@@ -53,7 +53,7 @@ IF _CASSETTE_VERSION \ Minor
  JSR TITLE              \ returning with the internal number of the key pressed
                         \ in A
 
-ELIF _DISC_VERSION OR _6502SP_VERSION
+ELIF _DISC_DOCKED OR _6502SP_VERSION
 
  LDX #CYL               \ Call TITLE to show a rotating Cobra Mk III (#CYL) and
  LDA #6                 \ token 6 ("LOAD NEW {single cap}COMMANDER {all caps}
@@ -103,7 +103,7 @@ IF _CASSETTE_VERSION \ Platform
  JSR TTX66              \ And we clear the top part of the screen and draw a
                         \ white border
 
-ELIF _DISC_VERSION OR _6502SP_VERSION
+ELIF _DISC_DOCKED OR _6502SP_VERSION
 
  JSR DFAULT             \ Call DFAULT to reset the current commander data block
                         \ to the last saved commander

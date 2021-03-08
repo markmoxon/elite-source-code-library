@@ -312,7 +312,7 @@ ENDIF
                         \ prompt, and ask for a view number, which is returned
                         \ in X (which now contains 0-3)
 
-IF _CASSETTE_VERSION \ Enhanced: The enhanced versions have two extra types of laser: Mining and Military
+IF _CASSETTE_VERSION \ Platform: The refund code has been moved to the refund routine in the enhanced versions
 
  LDA #4                 \ This instruction doesn't appear to do anything, as we
                         \ either don't need it (if we already have this laser)

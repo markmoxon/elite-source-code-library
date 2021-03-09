@@ -84,7 +84,7 @@ ENDIF
  PLA                    \ Restore the amount of item in the hold into X
  TAX
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: In the enhanced versions, you can specify how much of each individual commodity you want to sell. In the cassette version, for each commodity you have to choose whether to sell all of your stock, or none
+IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: Group A: In the enhanced versions, you can specify how much of each individual commodity you want to sell. In the cassette version, for each commodity you have to choose whether to sell all of your stock, or none
 
  STA QQ25               \ Store the amount of this item in the hold in QQ25
 
@@ -105,7 +105,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Enhanced: See above
+IF _CASSETTE_VERSION \ Enhanced: See group A
 
  LDA #205               \ Set A to recursive token 45 ("SELL")
 
@@ -155,7 +155,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Enhanced: See above
+IF _CASSETTE_VERSION \ Enhanced: See group A
 
  LDY QQ29               \ Set P to the amount of this item we have in our cargo
  LDA QQ20,Y             \ hold (which is the amount to sell)
@@ -191,7 +191,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Enhanced: See above
+IF _CASSETTE_VERSION \ Enhanced: See group A
 
  LDA #0                 \ We've made the sale, so set the amount
  LDY QQ29

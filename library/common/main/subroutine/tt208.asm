@@ -23,7 +23,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Feature: The layout of the Sell Cargo screen in the cassette version is slightly different to the other versions (it doesn't have a boxed title and the text starts lower down the screen)
+IF _CASSETTE_VERSION \ Feature: Group A: The layout of the Sell Cargo screen in the cassette version is slightly different to the other versions (it doesn't have a boxed title and the text starts lower down the screen)
 
  LDA #4                 \ Move the text cursor to row 4, column 4
  STA YC
@@ -57,7 +57,7 @@ ENDIF
  LDA #205               \ Print recursive token 45 ("SELL")
  JSR TT27
 
-IF _CASSETTE_VERSION \ Feature: See above
+IF _CASSETTE_VERSION \ Feature: See group A
 
  LDA #206               \ Print recursive token 46 (" CARGO{sentence case}")
  JSR TT68               \ followed by a colon

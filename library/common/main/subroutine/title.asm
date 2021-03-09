@@ -280,7 +280,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION \ Advanced: Add loop counters so we can start the demo after a certain period on the title screen
+IF _6502SP_VERSION \ Advanced: Group A: The 6502SP version adds two loop counters to the title screen so we can start the demo after a certain period on the title screen
 
  LDA #12                \ Set CNT2 = 12 as the outer loop counter for the loop
  STA CNT2               \ starting at TLL2
@@ -408,7 +408,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION \ Advanced: See above
+IF _6502SP_VERSION \ Advanced: See group A
 
  DEC MCNT               \ Decrement the inner loop counter
 

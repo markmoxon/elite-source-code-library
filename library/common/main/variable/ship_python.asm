@@ -52,14 +52,14 @@ ENDIF
 
 \VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX    0,    0,  224,     0,      1,    2,     3,         31    \ Vertex 0
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Feature: The Python has a number of different visibility settings for vertices, edges and faces between the cassette and disc ship hanger versions (which have slightly lower visibility values), and the other versions
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Feature: Group A: The Python has a number of different visibility settings for vertices, edges and faces between the cassette and disc ship hanger versions (which have slightly lower visibility values), and the other versions
  VERTEX    0,   48,   48,     0,      1,    4,     5,         30    \ Vertex 1
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
  VERTEX    0,   48,   48,     0,      1,    4,     5,         31    \ Vertex 1
 ENDIF
  VERTEX   96,    0,  -16,    15,     15,   15,    15,         31    \ Vertex 2
  VERTEX  -96,    0,  -16,    15,     15,   15,    15,         31    \ Vertex 3
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Feature: See above
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Feature: See group A
  VERTEX    0,   48,  -32,     4,      5,    8,     9,         30    \ Vertex 4
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
  VERTEX    0,   48,  -32,     4,      5,    8,     9,         31    \ Vertex 4
@@ -67,7 +67,7 @@ ENDIF
  VERTEX    0,   24, -112,     9,      8,   12,    12,         31    \ Vertex 5
  VERTEX  -48,    0, -112,     8,     11,   12,    12,         31    \ Vertex 6
  VERTEX   48,    0, -112,     9,     10,   12,    12,         31    \ Vertex 7
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Feature: See above
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Feature: See group A
  VERTEX    0,  -48,   48,     2,      3,    6,     7,         30    \ Vertex 8
  VERTEX    0,  -48,  -32,     6,      7,   10,    11,         30    \ Vertex 9
  VERTEX    0,  -24, -112,    10,     11,   12,    12,         30    \ Vertex 10
@@ -84,14 +84,14 @@ IF _MASTER_VERSION \ Label
 ENDIF
 
 \EDGE vertex1, vertex2, face1, face2, visibility
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Feature: See above
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Feature: See group A
  EDGE       0,       8,     2,     3,         30    \ Edge 0
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
  EDGE       0,       8,     2,     3,         31    \ Edge 0
 ENDIF
  EDGE       0,       3,     0,     2,         31    \ Edge 1
  EDGE       0,       2,     1,     3,         31    \ Edge 2
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Feature: See above
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Feature: See group A
  EDGE       0,       1,     0,     1,         30    \ Edge 3
  EDGE       2,       4,     9,     5,         29    \ Edge 4
  EDGE       1,       2,     1,     5,         29    \ Edge 5
@@ -124,7 +124,7 @@ ENDIF
  EDGE       3,       6,     8,    11,         31    \ Edge 17
  EDGE       5,       6,     8,    12,         31    \ Edge 18
  EDGE       5,       7,     9,    12,         31    \ Edge 19
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Feature: See above
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Feature: See group A
  EDGE       7,      10,    12,    10,         29    \ Edge 20
  EDGE       6,      10,    11,    12,         29    \ Edge 21
  EDGE       4,       5,     8,     9,         29    \ Edge 22
@@ -146,7 +146,7 @@ IF _MASTER_VERSION \ Label
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Feature: See above
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Feature: See group A
 
 \FACE normal_x, normal_y, normal_z, visibility
  FACE      -27,       40,       11,         30    \ Face 0

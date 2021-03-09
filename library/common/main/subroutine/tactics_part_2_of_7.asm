@@ -52,7 +52,7 @@ ENDIF
 
 .TACTICS
 
-IF _DISC_FLIGHT \ Enhanced: The docking computer in the enhanced versions uses its own turning circle configuration, which is different to the turning circle used by the tactics routine, so the latter switches to its own configuration when it starts (as they share configuration variables)
+IF _DISC_FLIGHT \ Enhanced: Group A: The docking computer in the enhanced versions uses its own turning circle configuration, which is different to the turning circle used by the tactics routine, so the latter switches to its own configuration when it starts (as they share configuration variables)
 
  LDY #3                 \ Set RAT = 3, which is the magnitude we set the pitch
  STY RAT                \ or roll counter to in part 7 when turning a ship
@@ -91,7 +91,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _DISC_FLIGHT OR _6502SP_VERSION \ Enhanced: See above
+IF _DISC_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
 
  LDA #22                \ Set CNT2 = 22, which is the maximum angle beyond which
  STA CNT2               \ a ship will slow down to start turning towards its

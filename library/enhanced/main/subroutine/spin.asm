@@ -26,7 +26,7 @@
  JSR DORND              \ Fetch a random number, and jump to oh if it is
  BPL oh                 \ positive (50% chance)
 
-IF _DISC_FLIGHT \ Other: Bug fix? This prevents A from being changed from a random number to the cargo type to be spawned, which would stop the amount of cargo being spawned from being random (so presumably the 6502SP version always spawns the same amount of cargo from each ship type, with no random factor at all)
+IF _DISC_FLIGHT \ Other: Group A: Bug fix? This prevents A from being changed from a random number to the cargo type to be spawned, which would stop the amount of cargo being spawned from being random (so presumably the 6502SP version always spawns the same amount of cargo from each ship type, with no random factor at all)
 
  PHA                    \ Store A on the stack so we can restore it after the
                         \ following transfers
@@ -36,7 +36,7 @@ ENDIF
  TYA                    \ Copy the cargo type from Y into A and X
  TAX
 
-IF _DISC_FLIGHT \ Other: See above
+IF _DISC_FLIGHT \ Other: See group A
 
  PLA                    \ Restore A from the stack
 

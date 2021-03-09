@@ -36,7 +36,7 @@
                         \ (or the equivalent on joystick) and update the key
                         \ logger, setting KL to the key pressed
 
-IF _6502SP_VERSION \ Enhanced: In the enhanced versions, the cursor moves more quickly in the chart views if you hold down SHIFT
+IF _6502SP_VERSION \ Enhanced: Group A: In the enhanced versions, the cursor moves more quickly in the chart views if you hold down SHIFT
 
  LDX #0                 \ Call DKS4 to check whether the SHIFT key is being
  JSR DKS4               \ pressed
@@ -62,7 +62,7 @@ ENDIF
 
  TYA                    \ Copy Y to A
 
-IF _6502SP_VERSION \ Enhanced: See above
+IF _6502SP_VERSION \ Enhanced: See group A
 
  BIT newlocn            \ If bit 7 of newlocn is clear - in other words, if
  BPL P%+3               \ SHIFT is not being pressed - then skip the following
@@ -106,7 +106,7 @@ ENDIF
 \ADC #0                 \ source, but they would make the joystick move the
                         \ cursor faster by increasing the range of Y by -1 to +1
 
-IF _6502SP_VERSION \ Enhanced: See above
+IF _6502SP_VERSION \ Enhanced: See group A
 
  BIT newlocn            \ If bit 7 of newlocn is clear - in other words, if
  BPL P%+3               \ SHIFT is not being pressed - then skip the following
@@ -124,7 +124,7 @@ ENDIF
 
  RTS                    \ Return from the subroutine
 
-IF _6502SP_VERSION \ Enhanced: See above
+IF _6502SP_VERSION \ Enhanced: See group A
 
 .newlocn
 

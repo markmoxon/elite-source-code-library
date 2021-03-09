@@ -198,7 +198,7 @@ ENDIF
  CMP #&32               \ If "D" was pressed, jump to T95 to print the distance
  BEQ T95                \ to a system (if we are in one of the chart screens)
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: Pressing "F" in the enhanced versions when viewing a chart lets us search for systems by name
+IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: Group A: Pressing "F" in the enhanced versions when viewing a chart lets us search for systems by name
 
  CMP #&43               \ If "F" was not pressed, jump down to HME1, otherwise
  BNE HME1               \ keep going to process searching for systems
@@ -213,7 +213,7 @@ IF _6502SP_VERSION \ Platform
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: See above
+IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: See group A
 
  LDA QQ11               \ If the current view is a chart (QQ11 = 64 or 128),
  AND #%11000000         \ keep going, otherwise return from the subroutine (as

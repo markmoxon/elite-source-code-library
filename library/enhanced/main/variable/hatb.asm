@@ -98,7 +98,7 @@ ENDIF
 
                         \ Hanger group for X = 18
                         \
-IF _DISC_DOCKED \ Enhanced: In the disc version, the third ship hanger group (of four) consists of a Transporter on the right and a Cobra Mk III on the left, while in the 6502SP version the third group has a Viper on the right and a Krait on the left
+IF _DISC_DOCKED \ Enhanced: Group A: In the disc version, the third ship hanger group (of four) consists of a Transporter on the right and a Cobra Mk III on the left, while in the 6502SP version the third group has a Viper on the right and a Krait on the left
                         \ Transporter (right) and Cobra Mk III (left)
 ELIF _6502SP_VERSION
                         \ Viper (right) and Krait (left)
@@ -107,7 +107,7 @@ ENDIF
                         \ (This group consists of a Transporter and Cobra Mk III
                         \ in the disc version)
 
-IF _DISC_DOCKED \ Enhanced: See above
+IF _DISC_DOCKED \ Enhanced: See group A
  EQUB 3                 \ Ship type in the hanger = 3 = Transporter
 ELIF _6502SP_VERSION
  EQUB COPS              \ Ship type = COPS = Viper
@@ -115,7 +115,7 @@ ENDIF
  EQUB %01100000         \ x_hi = %01100000 =  96, z_hi   = 1    -> x = +96
  EQUB %10010000         \ z_lo = %10010000 = 144, x_sign = 0       z = +400
 
-IF _DISC_DOCKED \ Enhanced: See above
+IF _DISC_DOCKED \ Enhanced: See group A
  EQUB 4                 \ Ship type in the hanger = 4 = Cobra Mk III
 ELIF _6502SP_VERSION
  EQUB KRA               \ Ship type = KRA = Krait

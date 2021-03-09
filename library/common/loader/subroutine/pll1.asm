@@ -92,7 +92,7 @@ ENDIF
  LDA P                  \             = r1^2
  STA ZP
 
-IF _DISC_VERSION \ Other: The disc version contains various bits of copy protection code injected into the Saturn-drawing routine in the loader
+IF _DISC_VERSION \ Other: Group A: The disc version contains various bits of copy protection code injected into the Saturn-drawing routine in the loader. In the original versions of Elite, the only self-modifying code is in the copy protection, though later versions do use this technique
 
  LDA #LO(OSBmod)        \ As part of the copy protection, the JSR OSB
  STA OSBjsr+1           \ instruction at OSBjsr gets modified to point to OSBmod
@@ -200,7 +200,7 @@ ENDIF
 
  BNE PLL1               \ Loop back to PLL1 until CNT+1 = 0
 
-IF _CASSETTE_VERSION \ Other: The cassette version contains various bits of copy protection code injected into the Saturn-drawing routine in the loader
+IF _CASSETTE_VERSION \ Other: Group B: The cassette version contains various bits of copy protection code injected into the Saturn-drawing routine in the loader
 
  LDX #&C2               \ Set the low byte of EXCN(1 0) to &C2, so we now have
  STX EXCN               \ EXCN(1 0) = &03C2, which we will use in the IRQ1
@@ -265,7 +265,7 @@ ENDIF
 
  BNE PLL2               \ Loop back to PLL2 until CNT2+1 = 0
 
-IF _CASSETTE_VERSION \ Other: See above
+IF _CASSETTE_VERSION \ Other: See group B
 
  LDX MHCA               \ Set the low byte of BLPTR(1 0) to the contents of MHCA
  STX BLPTR              \ (which is &CA), so we now have BLPTR(1 0) = &03CA,
@@ -306,7 +306,7 @@ ENDIF
  STA ZP+1               \ Set ZP+1 = A
                         \          = r5^2 / 256
 
-IF _DISC_VERSION \ Other: In the original versions of Elite, the only self-modifying code is in the copy protection
+IF _DISC_VERSION \ Other: See group A
 
  LDA #HI(OSBmod)        \ As part of the copy protection, the JSR OSB
  STA OSBjsr+2           \ instruction at OSBjsr gets modified to point to OSBmod
@@ -418,7 +418,7 @@ ENDIF
 
  BNE PLL3               \ Loop back to PLL3 until CNT3+1 = 0
 
-IF _DISC_VERSION \ Other: See above
+IF _DISC_VERSION \ Other: See group A
 
  LDA #&00               \ Set ZP(1 0) = &6300
  STA ZP

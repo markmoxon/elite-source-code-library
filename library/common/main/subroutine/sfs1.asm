@@ -148,7 +148,7 @@ ENDIF
 
  TXA                    \ Copy the child's ship type from X into A
 
-IF _CASSETTE_VERSION \ Enhanced: On their demise, ships can spawn both cargo canisters and alloy plates in the enhanced versions
+IF _CASSETTE_VERSION \ Enhanced: Group A: On their demise, ships can spawn both cargo canisters and alloy plates in the enhanced versions
 
  CMP #OIL               \ If the child we are spawning is not a cargo canister,
  BNE NOIL               \ jump to NOIL to skip us setting up the pitch and roll
@@ -181,7 +181,7 @@ ENDIF
  STA INWK+29            \ damping randomly enabled or disabled, depending on the
                         \ C flag from above
 
-IF _CASSETTE_VERSION \ Enhanced: See above
+IF _CASSETTE_VERSION \ Enhanced: See group A
 
  LDA #OIL               \ Set A to the ship type of a cargo canister
 

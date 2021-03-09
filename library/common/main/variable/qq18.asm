@@ -1119,7 +1119,7 @@ ENDIF
  RTOK 29                \ Encoded as:   "[122] [29]"
  EQUB 0
 
-IF _CASSETTE_VERSION \ Enhanced: There are two new tokens in the text token table for the new laser types in the enhanced versions (token 117 for military lasers and token 118 for mining lasers), and the "ALL" and "LL" tokens that are here in the cassette version move to 124 and 129 respectively
+IF _CASSETTE_VERSION \ Enhanced: Group A: There are two new tokens in the text token table for the new laser types in the enhanced versions (token 117 for military lasers and token 118 for mining lasers), and the "ALL" and "LL" tokens that are here in the cassette version move to 124 and 129 respectively
 
  CHAR 'A'               \ Token 117:    "ALL"
  RTOK 118               \
@@ -1323,7 +1323,7 @@ ENDIF
  CHAR 'M'               \ Encoded as:   "I<156>M"
  EQUB 0
 
-IF _CASSETTE_VERSION \ Enhanced: See above
+IF _CASSETTE_VERSION \ Enhanced: See group A
 
  CHAR ' '               \ Token 128:    "  LOAD NEW COMMANDER (Y/N)?{crlf}
  CHAR ' '               \                {crlf}
@@ -1351,7 +1351,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Enhanced: See above
+IF _CASSETTE_VERSION \ Enhanced: See group A
 
  CTRL 6                 \ Token 129:    "{sentence case}DOCKED"
  RTOK 124               \

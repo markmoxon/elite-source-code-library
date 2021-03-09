@@ -24,7 +24,7 @@
 \
 \ ******************************************************************************
 
-IF _6502SP_VERSION \ Advanced: In the 6502SP version, the Market Price screen doesn't list any prices when you're in witchspace, while the other versions still show the prices from the system you jumped from
+IF _6502SP_VERSION \ Advanced: Group A: In the 6502SP version, the Market Price screen doesn't list any prices when you're in witchspace, while the other versions still show the prices from the system you jumped from
 
 .TT151q
 
@@ -45,7 +45,7 @@ ENDIF
  ASL A                  \ an index into the market prices table at QQ23 for this
  STA QQ19               \ item (as there are four bytes per item in the table)
 
-IF _6502SP_VERSION \ Advanced: See above
+IF _6502SP_VERSION \ Advanced: See group A
 
  LDA MJ                 \ If we are in witchspace, we can't trade items, so jump
  BNE TT151q             \ up to TT151q to return from the subroutine

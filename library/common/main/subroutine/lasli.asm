@@ -69,7 +69,7 @@ ENDIF
  LDA #32                \ Set A = 32 and Y = 224 for the first set of laser
  LDY #224               \ lines (the wider pair of lines)
 
-IF _6502SP_VERSION \ Feature: In all versions except the 6502SP version, both sets of laser lines point at the same pixel. In the 6502SP version, the wider (top) set of laser lines aim one pixel higher than the narrower set, so they overlap less
+IF _6502SP_VERSION \ Advanced: In all versions except the 6502SP version, both sets of laser lines point at the same pixel. In the 6502SP version, the wider (top) set of laser lines aim one pixel higher than the narrower set, so they overlap less
 IF _SNG45
 
  DEC LASY               \ Decrement the y-coordinate of the centre point to move
@@ -82,7 +82,7 @@ ENDIF
 
  JSR las                \ Call las below to draw the first set of laser lines
 
-IF _6502SP_VERSION \ Feature: See above
+IF _6502SP_VERSION \ Advanced: See above
 IF _SNG45
 
  INC LASY               \ Increment the y-coordinate of the centre point to put

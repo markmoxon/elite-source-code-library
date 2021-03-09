@@ -148,7 +148,7 @@ ENDIF
 
  TXA                    \ Copy the child's ship type from X into A
 
-IF _CASSETTE_VERSION \ Enhanced: On demise, ships can spawn both cargo canisters and alloy plates, and both of them are set spinning randomly when they are spawned
+IF _CASSETTE_VERSION \ Enhanced: On their demise, ships can spawn both cargo canisters and alloy plates in the enhanced versions
 
  CMP #OIL               \ If the child we are spawning is not a cargo canister,
  BNE NOIL               \ jump to NOIL to skip us setting up the pitch and roll

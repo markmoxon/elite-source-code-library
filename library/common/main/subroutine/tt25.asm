@@ -65,7 +65,7 @@ ENDIF
 
  JSR TTX69              \ Print a paragraph break and set Sentence Case
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Enhanced: The cassette version doesn't show extended system descriptions in the Data on System screen, and neither does the disc version when we are in flight, so both of these show the information one line higher than in the other versions
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Enhanced: The cassette version doesn't show extended system descriptions in the Data on System screen, and neither does the disc version when we are in flight, so both of these show the information one line lower on-screen than in the other versions
 
  INC YC                 \ Move the text cursor down one more line
 

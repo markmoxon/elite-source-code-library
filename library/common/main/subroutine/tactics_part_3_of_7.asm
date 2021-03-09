@@ -66,7 +66,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT \ Platform: This code is in part 2 for the ca
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: The NEWB flags are used to determine whether we are dealing with a trader
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: In the enhanced versions, the NEWB flags are used to determine whether we are dealing with a trader, so traders can fly any ship. In the cassette version, traders only ever fly the Cobra Mk III
 
  JSR DORND              \ Set A and X to random numbers
 
@@ -88,7 +88,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: Applying tactics logic according to the NEWB flags
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: In the enhanced versions, AI is are to each ship according to its NEWB flags, which determine whether it is a trader, a bounty hunter, currently docking, a pirate, hostile, an innocent bystander or a cop
 
 .TN1
 

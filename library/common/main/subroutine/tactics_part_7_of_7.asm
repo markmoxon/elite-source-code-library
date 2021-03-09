@@ -144,7 +144,7 @@ ENDIF
                         \ other words if the ship should pull up to head in the
                         \ direction of XX15
 
-IF _CASSETTE_VERSION \ Feature: 
+IF _CASSETTE_VERSION \ Enhanced: The cassette version has fairly basic pitch and roll control over ships when applying AI tactics, whereas the enhanced versions have finer control using the RAT, RAT2 and CNT2 variables, which is particularly useful when the docking computer is in control
 
  EOR #%10000000         \ Set the ship's pitch counter to 3, with the opposite
  AND #%10000000         \ sign to the dot product result, which gently pitches
@@ -183,7 +183,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Enhanced: The cassette version has fairly basic pitch and roll control over ships when applying tactics, whereas the other versions have finer control using the RAT, RAT2 and CNT2 variables, which is particularly useful when the docking computer is in control
+IF _CASSETTE_VERSION \ Enhanced: See above
 
  LDA INWK+29            \ Fetch the roll counter from byte #29 into A and clear
  AND #%01111111         \ the sign bit

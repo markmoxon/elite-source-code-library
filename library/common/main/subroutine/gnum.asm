@@ -54,7 +54,7 @@ ENDIF
  JSR TT217              \ Scan the keyboard until a key is pressed, and return
                         \ the key's ASCII code in A (and X)
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: When buying or selling cargo in the enhanced versions, you can specify an exact amount of cargo for the transaction, or you can press "Y" to sell everything, or "N" to sell nothing. In the cassette version, you can only specify all or nothing
+IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: When buying or selling cargo in the enhanced versions, you can specify an exact amount of cargo for the transaction, or you can press "Y" to buy/sell everything, or "N" to buy/sell nothing. In the cassette version, you have to enter the exact amount you want to buy, and if you want to sell an item, then you have to sell your entire stock of that item, rather than part of it
 
  LDX R                  \ If R is non-zero then skip to NWDAV2, as we are
  BNE NWDAV2             \ already building a number

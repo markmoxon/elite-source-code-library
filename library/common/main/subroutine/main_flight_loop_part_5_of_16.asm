@@ -27,7 +27,7 @@
  CPY #2*SST             \ If the ship in Y is the space station, jump to BA21
  BEQ MA21               \ as energy bombs are useless against space stations
 
-IF _6502SP_VERSION \ Enhanced: In the 6502SP version, you can't use energy bombs against the Constrictor
+IF _6502SP_VERSION \ Advanced: In the 6502SP version, energy bombs have no effect against the Constrictor in mission 1
 
  CPY #2*CON             \ If the ship in Y is the Constrictor, jump to BA21
  BCS MA21               \ as energy bombs are useless against the Constrictor

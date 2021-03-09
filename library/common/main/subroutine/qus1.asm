@@ -41,7 +41,7 @@ ENDIF
 
 .QUS1
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: The enhanced versions support different drive numbers when loading or saving
+IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: The enhanced versions support the entering of disc drive numbers when loading or saving
 
  PHA                    \ Store A on the stack so we can restore it after the
                         \ call to GTDRV

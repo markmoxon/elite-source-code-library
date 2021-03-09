@@ -82,7 +82,7 @@ ENDIF
  CLC                    \ and add 3 (the tech level is stored as 0-14, so A is
  ADC #3                 \ now set to between 3 and 17)
 
-IF _CASSETTE_VERSION \ Enhanced: There are 14 types of equipment in the enhanced version, as opposed to 12 in the cassette version
+IF _CASSETTE_VERSION \ Enhanced: There are up to 14 different types of ship equipment available in the enhanced version, as opposed to 12 in the cassette version (the extra options are mining and military lasers)
 
  CMP #12                \ If A >= 12 then set A = 12, so A is now set to between
  BCC P%+4               \ 3 and 12
@@ -536,7 +536,7 @@ ENDIF
 
 .et9
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: Mining and Military lasers can be fitted to any views in the Equip Ship screen
+IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: In the enhanced versions, mining and military lasers can be fitted in the Equip Ship screen
 
  INY                    \ Increment Y to recursive token 117 ("MILITARY  LASER")
 

@@ -124,7 +124,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _DISC_FLIGHT \ Enhanced: Only military lasers can harm the Constrictor, and then they only inflict a quarter of the damage that military lasers inflict on normal ships
+IF _DISC_FLIGHT \ Enhanced: Only military lasers can harm the Constrictor in mission 1, and then they only inflict a quarter of the damage that military lasers inflict on normal ships
 
  LDA LAS                \ Set A to the power of the laser we just used to hit
                         \ the ship (i.e. the laser in the current view)
@@ -165,7 +165,7 @@ ENDIF
  SBC LAS                \ than zero, the other ship has survived the hit, so
  BCS MA14               \ jump down to MA14
 
-IF _CASSETTE_VERSION \ Enhanced: Destroying an asteroid with mining lasers will release scoopable splinters, and destroying ships will randomly release cargo canisters and allow plates
+IF _CASSETTE_VERSION \ Enhanced: Destroying an asteroid with mining lasers in the enhanced versions will randomly release scoopable splinters, and destroying ships will randomly release not only cargo canisters (as in the cassette version) but also alloy plates
 
  LDA TYPE               \ Did we just hit the space station? If so, jump to
  CMP #SST               \ MA14+2 to make the station hostile, skipping the

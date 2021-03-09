@@ -154,7 +154,7 @@ ENDIF
  ORA BET2               \ Store A in BETA, but with the sign set to BET2 (so
  STA BETA               \ BETA has the same sign as the actual pitch rate)
 
-IF _DISC_FLIGHT OR _6502SP_VERSION \ Enhanced: The enhanced versions support the Bitstik joystick
+IF _DISC_FLIGHT OR _6502SP_VERSION \ Enhanced: To use a Bitsik with the enhanced versions, you need to configure it using the "B" option when paused, otherwise it will act like a normal joystick
 
  LDA BSTK               \ If BSTK = 0 then the Bitstik is not configured, so
  BEQ BS2                \ jump to BS2 to skip the following
@@ -176,7 +176,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _DISC_FLIGHT OR _6502SP_VERSION \ Enhanced: If you use a Bitstik with the enhanced versions, then you can change the ship's speed by twisting the joystick
+IF _DISC_FLIGHT OR _6502SP_VERSION \ Enhanced: If you configure the enhanced versions to use a Bitstik, then you can change the ship's speed up and down by twisting the stick
 
  LSR A                  \ Divide A by 4
  LSR A

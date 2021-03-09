@@ -1066,7 +1066,7 @@ ENDIF
  CHAR 'B'
  EQUB 0
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Feature: If you have bought an energy unit, then most versions will show it on the Inventory screen as "Energy Unit", but in the source disc release of the 6502SP version, it is shown as "Extra Energy Unit" (though it's still "Energy Unit" in the SNG45 release)
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Advanced: If you have bought an energy unit, then most versions will show it on the Inventory screen as "Energy Unit", but in the source disc release of the 6502SP version, it is shown as "Extra Energy Unit" (though it's still "Energy Unit" in the official SNG45 release of the game)
 
  RTOK 121               \ Token 114:    "ENERGY UNIT"
  RTOK 14                \
@@ -1119,7 +1119,7 @@ ENDIF
  RTOK 29                \ Encoded as:   "[122] [29]"
  EQUB 0
 
-IF _CASSETTE_VERSION \ Enhanced: There are two new tokens in the text token table for the new laser types (token 117 for military lasers and token 118 for mining lasers), and the "ALL" and "LL" tokens that are here in the cassette version move to 124 and 129 respectively
+IF _CASSETTE_VERSION \ Enhanced: There are two new tokens in the text token table for the new laser types in the enhanced versions (token 117 for military lasers and token 118 for mining lasers), and the "ALL" and "LL" tokens that are here in the cassette version move to 124 and 129 respectively
 
  CHAR 'A'               \ Token 117:    "ALL"
  RTOK 118               \
@@ -1191,7 +1191,7 @@ ENDIF
  CHAR 'C'
  EQUB 0
 
-IF _CASSETTE_VERSION \ Enhanced: There's a new token in the enhanced versions for showing that the docking computers are currently switched on. It replaces the request for a commander's name, which isn't required as the disc access menu does that instead
+IF _CASSETTE_VERSION \ Enhanced: There's a new token in the enhanced versions for showing that the docking computers are currently switched on. It replaces the request for a commander's name, which isn't required as the disc access menu implements that functionality using extended text tokens
 
  CTRL 13                \ Token 123:    "{crlf}
  RTOK 92                \                COMMANDER'S NAME? "
@@ -1216,7 +1216,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Enhanced: The enhanced versions drop token 124 ("DOCK") and replace it with the "ALL" token that was displaced by the new military laser token; instead, "DOCK" is spelled out manually instead of using this token
+IF _CASSETTE_VERSION \ Enhanced: The enhanced versions drop token 124 ("DOCK") and replace it with the "ALL" token that was displaced by the new military laser token; instead, "DOCK" is spelled out manually rather than using this token
 
  CHAR 'D'               \ Token 124:    "DOCK"
  CHAR 'O'               \
@@ -1534,7 +1534,7 @@ ENDIF
  CHAR 'R'
  EQUB 0
 
-IF _CASSETTE_VERSION \ Enhanced: To make room for the new tokens for lasers, the enhanced versions drop tokens 147 ("PRESS FIRE OR SPACE,COMMANDER.") and 148 ("(C) ACORNSOFT 1984"), moving them instead to the extended token table
+IF _CASSETTE_VERSION \ Enhanced: To make room for the new laser tokens, the enhanced versions drop tokens 147 ("PRESS FIRE OR SPACE,COMMANDER.") and 148 ("(C) ACORNSOFT 1984"), moving them instead to the extended token table
 
  CHAR 'P'               \ Token 147:    "PRESS FIRE OR SPACE,COMMANDER.{crlf}
  CHAR 'R'               \                {crlf}

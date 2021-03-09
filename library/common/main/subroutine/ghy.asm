@@ -62,7 +62,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Other: See below
+IF _CASSETTE_VERSION \ Other: Part of the bug fix for the "hyperspace while docking" bug
 
  STX QQ8                \ Set the distance to the selected system in QQ8(1 0)
  STX QQ8+1              \ to 0
@@ -75,7 +75,7 @@ ENDIF
  STX FIST               \ Changing galaxy also clears our criminal record, so
                         \ set our legal status in FIST to 0 ("clean")
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Feature: The original versions of Elite start the galactic hyperspace countdown from 15, just like the normal hyperspace countdown, but the 6502SP version doesn't muck about and starts the galactic hyperspace countdown from 2
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Advanced: The original versions of Elite start the galactic hyperspace countdown from 15, just like the normal hyperspace countdown, but the 6502SP version doesn't muck about and starts the galactic hyperspace countdown from 2
 
  JSR wW                 \ Call wW to start the hyperspace countdown
 
@@ -122,7 +122,7 @@ ENDIF
 
  JSR TT110              \ Call TT110 to show the front space view
 
-IF _DISC_VERSION OR _6502SP_VERSION \ Other: See below
+IF _DISC_VERSION OR _6502SP_VERSION \ Other: See above
 
  JSR TT111              \ Call TT111 to set the current system to the nearest
                         \ system to (QQ9, QQ10), and put the seeds of the
@@ -130,7 +130,7 @@ IF _DISC_VERSION OR _6502SP_VERSION \ Other: See below
 
 ENDIF
 
-IF _6502SP_VERSION \ Other: Part of the bug fix for the "hyperspace while docking" bug
+IF _6502SP_VERSION \ Other: See above
 
  LDX #5                 \ We now want to copy those seeds into safehouse, so we
                         \ so set a counter in Xto copy 6 bytes

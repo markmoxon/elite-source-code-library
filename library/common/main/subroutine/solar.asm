@@ -45,7 +45,7 @@ ENDIF
 
  STA INWK+8             \ Store the result in z_sign in byte #6
 
-IF _CASSETTE_VERSION \ Feature: In the cassette version, the initial position of the planet can be to the upper right or lower left, but in other versions it's always to the upper right
+IF _CASSETTE_VERSION \ Feature: In the cassette version, the initial position of the planet can be to the upper right or lower left, but in the other versions it's always to the upper right
 
  ROR A                  \ Halve A, rotating in the C flag, which was previously
  STA INWK+2             \ bit 0 of s0_hi + 6 + C, so when this is stored in both

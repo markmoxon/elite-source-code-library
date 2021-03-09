@@ -131,7 +131,7 @@ ENDIF
  BPL TT136              \ Loop back to TT136 if we still have more bytes to
                         \ copy
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: Store the system number in ZZ so if we want to show the extended system description for this system, the PDESC routine knows which one to display
+IF _6502SP_VERSION OR _DISC_DOCKED \ Platform: Store the system number in ZZ so if we want to show the extended system description for this system, the PDESC routine knows which one to display
 
  LDA U                  \ Store the system number U in ZZ, so when we are done
  STA ZZ                 \ looping through all the candidates, the winner's

@@ -47,7 +47,7 @@
 
  LDA #0                 \ Set A = 0 so we can start building the answer in A
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Other: See below
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Other: The loop in the the 6502SP version of the MULT1 routine in is unrolled to speed it up
 
  LDX #7                 \ Set up a counter in X to count the 7 bits remaining
                         \ in P
@@ -106,7 +106,7 @@ ENDIF
                         \ the start of P, and shift P right to fetch the next
                         \ bit for the calculation
 
-IF _6502SP_VERSION \ Other: The loop in the the 6502SP version of the MULT1 routine in is unrolled to speed it up
+IF _6502SP_VERSION \ Other: See above
 
  BCC P%+4               \ Repeat for the second time
  ADC T1

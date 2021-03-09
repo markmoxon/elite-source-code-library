@@ -288,7 +288,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION \ Feature: In the 6502SP version, rock hermits are classed as junk, so they will not prevent you from performing an in-system jump (just like normal asteroids)
+IF _6502SP_VERSION \ Advanced: In the 6502SP version, rock hermits are classed as junk, so they will not prevent you from performing an in-system jump (just like normal asteroids)
 
  CPX #HER               \ If the ship type is a rock hermit, jump to gangbang
  BEQ gangbang           \ to increase the junk count
@@ -312,7 +312,7 @@ ENDIF
 
  INC MANY,X             \ Increment the total number of ships of type X
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: New ships are spawned using the default NEWB flags from the E% table, which gives each ship a typical "personality" which is then tailored to the game's needs. The cassette version doesn't have this byte
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: New ships are spawned using the default NEWB flags byte from the E% table, which gives each ship a typical "personality" which is then tailored to the game's needs. The cassette version doesn't have this byte, so ship behaviour is more limited
 
 .NW8
 

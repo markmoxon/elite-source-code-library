@@ -44,7 +44,7 @@ ENDIF
 
  LDA #8                 \ Set A = 8
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Feature: The cassette and disc versions define a circle as being small when it has a radius of less than 8, while in the advanced versions, a circle is small if it has a radius of less than 4
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Feature: The cassette and disc versions define a circle as being small when it has a radius of less than 8, while in the 6502SP version, a circle is small if it has a radius of less than 4. Small circles are drawn with a step size of 2
 
  CPX #8                 \ If the radius < 8, skip to PL89
  BCC PL89
@@ -58,7 +58,7 @@ ENDIF
 
  LSR A                  \ Halve A so A = 4
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Feature: The cassette and disc versions define a circle as being medium when it has a radius of less than 60, while in the advanced versions, a circle is medium if it has a radius of less than 50
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Feature: The cassette and disc versions define a circle as being medium when it has a radius of less than 60, while in the 6502SP version, a circle is medium if it has a radius of less than 50. Medium circles are drawn with a step size of 4, and large circles are drawn with a step size of 8
 
  CPX #60                \ If the radius < 60, skip to PL89
  BCC PL89

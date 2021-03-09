@@ -52,7 +52,7 @@ ENDIF
 
 .TACTICS
 
-IF _DISC_FLIGHT \ Enhanced: The docking computer can set its own turning circle rate, which is different to the requirements of the tactics routine, so in the enhanced versions the latter sets its own configuration when it starts
+IF _DISC_FLIGHT \ Enhanced: The docking computer in the enhanced versions uses its own turning circle configuration, which is different to the turning circle used by the tactics routine, so the latter switches to its own configuration when it starts (as they share configuration variables)
 
  LDY #3                 \ Set RAT = 3, which is the magnitude we set the pitch
  STY RAT                \ or roll counter to in part 7 when turning a ship
@@ -106,7 +106,7 @@ ENDIF
  CPX #MSL               \ If this is a missile, jump up to TA18 to implement
  BEQ TA18               \ missile tactics
 
-IF _CASSETTE_VERSION \ Enhanced: In the cassette version, the tactics routine sends escape pods straight for the planet, while the enhanced versions let the NEWB flags steer it home (along with anything else that's heading for the planet, like traders)
+IF _CASSETTE_VERSION \ Enhanced: The enhanced versions let the NEWB flags determine whether ships should be heading for the planet (which is applied to traders, ships who are docking, escape pods and so on). The cassette version is a lot simpler and only sends escape pods in the direction of the planet
 
  CPX #ESC               \ If this is not an escape pod, skip the following two
  BNE P%+8               \ instructions
@@ -121,7 +121,7 @@ ENDIF
  CPX #SST               \ If this is not the space station, jump down to TA13
  BNE TA13
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: Space stations spawn Transporters and Shuttles that ply their trade between the station and the planet
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: Space stations in the enhanced versions regularly spawn Transporters and Shuttles that ply their trade between the station and the planet
 
  LDA NEWB               \ This is the space station, so check whether bit 2 of
  AND #%00000100         \ the ship's NEWB flags is set, and if it is (i.e. the
@@ -161,7 +161,7 @@ ENDIF
 
  JSR DORND              \ Set A and X to random numbers
 
-IF _CASSETTE_VERSION \ Enhanced: In the cassette version there is a 45% chance that an angry station will spawn a cop, while in the enhanced versions there is only a 6.2% chance
+IF _CASSETTE_VERSION \ Feature: In the cassette version there is a 45% chance that an angry station will spawn a cop, while in the enhanced versions there is only a 6.2% chance
 
  CMP #140               \ If A < 140 (55% chance) then return from the
  BCC TA14-1             \ subroutine (as TA14-1 contains an RTS)

@@ -189,7 +189,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
 ENDIF
 
-IF _6502SP_VERSION \ Feature: Normally you can launch your escape pod in witchspace (though it may be fatal, depending on the version). You can't even launch it in the 6502SP version
+IF _6502SP_VERSION \ Advanced: In the original versions, you can launch your escape pod in witchspace (though it may be fatal, depending on the version). You can't even launch it in the 6502SP version, as the launch key is disabled in witchspace
 
  LDA MJ                 \ If we are in witchspace, we can't launch our escape
  BNE noescp             \ pod, so jump down to noescp
@@ -233,7 +233,7 @@ ENDIF
 
 .MA64
 
-IF _CASSETTE_VERSION \ Enhanced: If "C" is pressed during flight and we have a docking computer, then the docking computer takes control of the ship, unlike in the cassette version, which instantly docks when "C" is pressed
+IF _CASSETTE_VERSION \ Enhanced: If "C" is pressed during flight and we have a docking computer, then in the enhanced versions the docking computer takes control of the ship, unlike in the cassette version, which instantly docks when "C" is pressed
 
  LDA KY19               \ If "C" is being pressed, and we have a docking
  AND DKCMP              \ computer fitted, and we are inside the space station's

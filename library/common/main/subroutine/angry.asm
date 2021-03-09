@@ -67,7 +67,7 @@ ENDIF
  LDY #30                \ starts pitching
  STA (INF),Y
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: In the enhanced versions, hostility is separated from aggression; in the cassette version, hostility and aggression are the same thing (and a ship is hostile if its aggression level has its top bit set), but in the enhanced version you can have a very aggressive ship that isn't hostile... yet
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: In the enhanced versions, ship hostility is measured separately from aggression, so ships can be very aggressive, but not hostile (though this changes when provoked). This is more subtle than in the cassette version, where there is only a measure of aggression, and a ship is deemed to be hostile if the top bit of its aggression level is set
 
  LDA TYPE               \ If the ship's type is < #CYL (i.e. a missile, Coriolis
  CMP #CYL               \ space station, escape pod, plate, cargo canister,

@@ -113,7 +113,7 @@ ENDIF
  CMP #230               \ If A < 230 (90% chance), jump down to ta3 to consider
  BCC ta3                \ firing a missile
 
-IF _CASSETTE_VERSION \ Enhanced: In the cassette version, every ship has an escape pod fitted that it can launch when things go south, but in the enhanced versions, the NEWB flags determine whether or not a ship has an escape pod
+IF _CASSETTE_VERSION \ Enhanced: In the enhanced versions, the NEWB flags determine whether or not a ship has an escape pod it can launch when things go south, while in the cassette version, every ship has an escape pod fitted
 
  LDA TYPE               \ If this is a Thargoid, jump down to ta3 to consider
  CMP #THG               \ launching a Thargon

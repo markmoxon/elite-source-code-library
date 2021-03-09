@@ -84,7 +84,7 @@ ENDIF
  CPX #SST               \ If this is the space station, then jump to KS4 to
  BEQ KS4                \ replace the space station with the sun
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: Killing the Constrictor in mission 1 ends the mission
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: In the enhanced versions, the Constrictor is a special ship, and killing it ends the first mission
 
  CPX #CON               \ Did we just kill the Constrictor from mission 1? If
  BNE lll                \ not, jump to lll
@@ -104,7 +104,7 @@ IF _6502SP_VERSION \ Advanced: There are rock hermits in the 6502SP version, and
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Feature: In the cassette version, only the escape pod, asteroid and cargo canister are classed as junk. In the enhanced versions, the alloy plate, splinter, Shuttle and Transporter are also junk, and in the advanced versions, rock hermits are also junk. Junk in the vicinity doesn't prevent you from performing an in-system jump - in fact, it gets dragged along for the ride
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: In the cassette version, only the escape pod, asteroid and cargo canister are classed as junk. In the enhanced versions, the alloy plate, splinter, Shuttle and Transporter are also junk (and in the advanced versions, rock hermits are also junk). Junk in the vicinity doesn't prevent you from performing an in-system jump - in fact, it gets dragged along for the ride
 
  CPX #JL                \ If JL <= X < JH, i.e. the type of ship we killed in X
  BCC KS7                \ is junk (escape pod, alloy plate, cargo canister,
@@ -119,7 +119,7 @@ IF _6502SP_VERSION \ Label
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Feature: See above
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: See above
 
  DEC JUNK               \ We just killed junk, so decrease the junk counter
 

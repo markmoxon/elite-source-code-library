@@ -50,7 +50,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: The enhanced versions show a disc access menu when the "@" key is pressed, that lets you load and save commanders, catalogue discs and delete files
+IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: The enhanced versions show a disc access menu when the "@" key is pressed, which lets you load and save commanders, catalogue discs and delete files
 
  LDA #1                 \ Print extended token 1, the disc access menu, which
  JSR DETOK              \ presents these options:

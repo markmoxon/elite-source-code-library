@@ -47,7 +47,7 @@ ENDIF
 
  JSR TTX66              \ Clear the screen and draw a white border
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Feature: The original versions of Elite draw 16 concentric rings for hyperspace, while the 6502SP version draws 8
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Advanced: The original versions of Elite draw 16 concentric rings for hyperspace, while the 6502SP version draws 8
 
  JSR HFS1               \ Call HFS1 below and then fall through into the same
                         \ routine, so this effectively runs HFS1 twice, and as

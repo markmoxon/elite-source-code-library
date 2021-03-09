@@ -652,7 +652,7 @@ ENDIF
  ECHR 'K'
  ECHR ' '
  EJMP 19
-IF _DISC_DOCKED \ Feature: See above
+IF _DISC_DOCKED \ Advanced: See above
  ECHR 'A'
  ECHR '*'
  ECHR '*'
@@ -699,7 +699,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION \ Feature: The source disc release of the 6502SP version has a bizarre override for Lave: "Bits'n Pieces - End Of Part 1". No, I have no idea what this means either
+IF _6502SP_VERSION \ Advanced: The source disc release of the 6502SP version has a bizarre override for Lave: "Bits'n Pieces - End Of Part 1". No, I have no idea what this means either
 
 IF _SOURCE_DISC
 

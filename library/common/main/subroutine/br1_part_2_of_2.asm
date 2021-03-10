@@ -14,7 +14,7 @@
  JSR msblob             \ Reset the dashboard's missile indicators so none of
                         \ them are targeted
 
-IF _CASSETTE_VERSION \ Feature: On the second title page (the one that says "Press Space Or Fire,Commander"), the cassette version shows a rotating Mamba, the disc version shows a rotating Krait, and the 6502SP version shows a rotating Asp Mk II
+IF _CASSETTE_VERSION \ Standard: On the second title page (the one that says "Press Space Or Fire,Commander"), the cassette version shows a rotating Mamba, the disc version shows a rotating Krait, and the 6502SP version shows a rotating Asp Mk II
 
  LDA #147               \ Call TITLE to show a rotating Mamba (#3) and token
  LDX #3                 \ 147 ("PRESS FIRE OR SPACE,COMMANDER.{crlf}{crlf}"),

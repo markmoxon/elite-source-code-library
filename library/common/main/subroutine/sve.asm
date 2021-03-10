@@ -172,7 +172,7 @@ ENDIF
  EOR TALLY+1            \ the kill tally)
  STA K+3
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Other: Bug fix in the enhanced versions to stop the competition code being printed with a decimal point, which it can be in the cassette version
+IF _6502SP_VERSION OR _DISC_DOCKED \ Other: This is a bug fix in the enhanced versions to stop the competition code being printed with a decimal point, which can sometimes happen in the cassette version
 
  CLC                    \ Clear the C flag so the call to BPRNT does not include
                         \ a decimal point

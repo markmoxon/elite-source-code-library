@@ -30,7 +30,7 @@ ENDIF
  EQUB 10                \ Max. speed               = 10
  EQUB &00               \ Edges data offset (high) = &00F2
  EQUB &01               \ Faces data offset (high) = &01AA
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: The ship hanger in the disc version displays the Transporter with normals scaled with a factor of 4, rather than the scale factor of 2 used in the other versions, but the face normals themselves are unchanged. I'm not sure why
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: The ship hanger in the disc version displays the Transporter with normals scaled with a factor of 4, rather than the scale factor of 2 used in the other versions, but the face normals themselves are unchanged. I'm not entirely sure why
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
 ELIF _DISC_DOCKED
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
@@ -38,7 +38,7 @@ ENDIF
  EQUB %00000000         \ Laser power              = 0
                         \ Missiles                 = 0
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: Group A: The ship hanger in the disc version displays the Transporter with slightly different visibility settings to the other enhanced versions (the visibility settings are lower). I'm not sure why
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: Group A: The ship hanger in the disc version displays the Transporter with slightly different visibility settings to the other enhanced versions (the visibility settings are lower). I'm not entirely sure why
 
 \VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX    0,   10,  -26,     6,      0,    7,     7,         31    \ Vertex 0

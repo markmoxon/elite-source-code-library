@@ -80,7 +80,7 @@ ENDIF
  BEQ LABEL_2            \ straight to LABEL_2 to start spawning pirates or a
                         \ lone bounty hunter
 
-IF _CASSETTE_VERSION \ Feature: In the cassette and 6502SP versions there's a 35% chance of spawning a group of pirates or a lone bounty hunter, while in the disc version there's a 47% chance
+IF _CASSETTE_VERSION \ Standard: In the cassette and 6502SP versions there's a 35% chance of spawning a group of pirates or a lone bounty hunter, while in the disc version there's a 47% chance
 
  CMP #90                \ If the random number in A >= 90 (65% chance), jump to
  BCS MLOOP              \ MLOOP to stop spawning (so there's a 35% chance of
@@ -140,7 +140,7 @@ ENDIF
  JSR Ze                 \ Call Ze to initialise INWK to a potentially hostile
                         \ ship, and set A and X to random values
 
-IF _CASSETTE_VERSION \ Feature: In the cassette version there's a 13% chance of spawning a group of pirates, while in the disc and 6502SP versions there's a 61% chance
+IF _CASSETTE_VERSION \ Standard: In the cassette version there's a 13% chance of spawning a group of pirates, while in the disc and 6502SP versions there's a 61% chance
 
  CMP #200               \ If the random number in A >= 200 (13% chance), jump
  BCS mt1                \ to mt1 to spawn pirates, otherwise keep going to
@@ -223,7 +223,7 @@ IF _6502SP_VERSION \ Advanced: In the 6502SP version, lone bounty hunters are al
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION \ Feature: Lone bounty hunters in the cassette and 6502SP versions have a a 22% chance of having E.C.M., while they don't have E.C.M. at all in the disc version
+IF _CASSETTE_VERSION OR _6502SP_VERSION \ Standard: Lone bounty hunters in the cassette and 6502SP versions have a a 22% chance of having E.C.M., while they don't have E.C.M. at all in the disc version
 
  CMP #200               \ First, set the C flag if X >= 200 (22% chance)
 

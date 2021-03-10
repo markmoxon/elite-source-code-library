@@ -53,7 +53,7 @@ ENDIF
  CMP #214               \ docking, as the angle of approach is greater than 26
  BCC MA62               \ degrees
 
-IF _CASSETTE_VERSION \ Feature: The cassette version contains an extra docking check that makes sure we are facing towards the station when trying to dock
+IF _CASSETTE_VERSION \ Standard: The cassette version contains an extra docking check that makes sure we are facing towards the station when trying to dock
 
  JSR SPS4               \ Call SPS4 to get the vector to the space station
                         \ into XX15
@@ -71,7 +71,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION \ Feature: When docking, the cassette version checks that the angle between the vector to the space station and the nominal approach is less than 22.0 degrees; in the disc version, it checks that the angle between the vector to the planet and the nominal approach is less than 26.3 degrees; and in the 6502SP version, it checks that the angle between the vector to the planet and the nominal approach is less than 22.0 degrees
+IF _CASSETTE_VERSION OR _6502SP_VERSION \ Standard: When docking, the cassette version checks that the angle between the vector to the space station and the nominal approach is less than 22.0 degrees; in the disc version, it checks that the angle between the vector to the planet and the nominal approach is less than 26.3 degrees; and in the 6502SP version, it checks that the angle between the vector to the planet and the nominal approach is less than 22.0 degrees
 
  CMP #89                \ 4. If z-axis < 89, jump to MA62 to fail docking, as
  BCC MA62               \ we are not in the 22.0 degree safe cone of approach

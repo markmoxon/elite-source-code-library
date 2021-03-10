@@ -76,7 +76,7 @@ ENDIF
  LDA #96                \ Set nosev_z hi = 96 (96 is the value of unity in the
  STA INWK+14            \ rotation vector)
 
-IF _DISC_DOCKED \ Other: Copy protection
+IF _DISC_DOCKED \ Other: The disc version contains various bits of copy protection code injected into the loader, and the results get checked in the main title sequence to make sure nothing has been changed
 
  LDA &9F                \ As part of the copy protection, location &9F is set to
  CMP #219               \ 219 in the OSBmod routine in elite-loader3.asm. This

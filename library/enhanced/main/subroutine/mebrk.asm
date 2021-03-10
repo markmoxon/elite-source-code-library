@@ -58,7 +58,7 @@ ENDIF
 
  INY                    \ Increment the loop counter
 
-IF _6502SP_VERSION \ Other: Bug fix? The 6502SP version returns from the disc access break handler if the error printing routine loops through a whole page, so it always exits. The other versions could crash if there is no null value in the block pointed to by (&FD &FE), so perhaps this fixes this issue?
+IF _6502SP_VERSION \ Other: This might be a bug fix? The 6502SP version returns from the disc access break handler if the error printing routine loops through a whole page, so it always exits. The other versions could crash if there is no null value in the block pointed to by (&FD &FE), so perhaps this fixes this issue?
 
  BEQ retry              \ If Y = 0 then we have worked our way through a whole
                         \ page, so jump to retry to wait for a key press and

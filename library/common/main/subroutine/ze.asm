@@ -37,7 +37,7 @@
  AND #%10000000
  STA INWK+5
 
-IF _CASSETTE_VERSION \ Feature: The cassette version spawns new ships at a distance of 32 unit vectors, while the other versions spawn new ships noticeably closer, at a distance of 25 unit vectors
+IF _CASSETTE_VERSION \ Standard: The cassette version spawns new ships at a distance of 32 unit vectors, while the other versions spawn new ships noticeably closer, at a distance of 25 unit vectors
 
  LDA #32                \ Set x_hi = y_hi = z_hi = 32, a fair distance away
  STA INWK+1

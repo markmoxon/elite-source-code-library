@@ -62,7 +62,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Other: Group A: Part of the bug fix for the "hyperspace while docking" bug
+IF _CASSETTE_VERSION \ Other: Group A: Part of the bug fix for the "hyperspace while docking" bug (see below)
 
  STX QQ8                \ Set the distance to the selected system in QQ8(1 0)
  STX QQ8+1              \ to 0

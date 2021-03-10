@@ -156,7 +156,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
 ENDIF
 
-IF _DISC_FLIGHT \ Other: Bug fix for the first version of disc Elite, when asteroids never appeared
+IF _DISC_FLIGHT \ Other: A bug fix for the first version of disc Elite, in which asteroids never appeared
 
 IF _STH_DISC
 
@@ -240,7 +240,7 @@ IF _6502SP_VERSION \ Advanced: In the 6502SP version, 1.2% of asteroids spawned 
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Feature: In the cassette version, 1.5% of asteroids are actually spawned as cargo canisters, while in the enhanced version 4% of asteroids are spawned as either cargo canisters or alloy plates, with an even chance of each
+IF _CASSETTE_VERSION \ Standard: In the cassette version, 1.5% of asteroids are actually spawned as cargo canisters, while in the enhanced version 4% of asteroids are spawned as either cargo canisters or alloy plates, with an even chance of each
 
  CMP #5                 \ Set A to the ship number of an asteroid, and keep
  LDA #AST               \ this value for 98.5% of the time (i.e. if random

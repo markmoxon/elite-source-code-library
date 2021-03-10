@@ -150,7 +150,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION \ Other: Part of the 6502SP version's bug fix for the "hyperspace when docking" bug
+IF _6502SP_VERSION \ Other: Part of the bug fix for the "hyperspace when docking" bug (see below)
 
  LDX #5                 \ We now want to copy those seeds into safehouse, so we
                         \ so set a counter in X to copy 6 bytes

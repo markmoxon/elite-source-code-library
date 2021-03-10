@@ -58,7 +58,7 @@
  BCC TA4                \ ship's line of fire, so jump to TA4 to skip the laser
                         \ checks
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Other: Bug fix? When enemies have no lasers, cassette version still damages us if they are pointing at us, as well as making the laser noise. Fixed in other versions
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Other: This might be a bug fix? When enemies have no lasers, the cassette version still allows them to damage us if they are pointing at us, and it even makes the laser noise. This is fixed in other versions
 
  LDY #19                \ Fetch the enemy ship's byte #19 from their ship's
  LDA (XX0),Y            \ blueprint into A

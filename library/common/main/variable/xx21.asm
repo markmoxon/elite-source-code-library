@@ -10,7 +10,7 @@
 
 .XX21
 
-IF _CASSETTE_VERSION \ Enhanced: The cassette version has 13 different ship types with 12 distinct designs, including the Coriolis space station; the disc version has 32 ship types with 29 distinct designs, including an additional space station, the Dodo; and the advanced versions have 33 ship types with 30 distinct designs, again including both station types
+IF _CASSETTE_VERSION \ Standard: The cassette version has 13 different ship types with 12 distinct designs, including the Coriolis space station; the disc version has 32 ship types with 29 distinct designs, including an additional space station, the Dodo; and the advanced versions have 33 ship types with 30 distinct designs, again including both station types
 
  EQUW SHIP_SIDEWINDER   \         1 = Sidewinder
  EQUW SHIP_VIPER        \ COPS =  2 = Viper

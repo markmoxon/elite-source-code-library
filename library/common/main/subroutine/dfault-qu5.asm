@@ -143,7 +143,7 @@ ENDIF
 
 .tZ
 
-IF _CASSETTE_VERSION \ Feature: When you save a commander file, the version details get saved along with the competition flags. The flags get set as follows: the cassette version sets bit 1, the disc version sets bit 2 or 5 depending on the release, and the 6502SP version sets bit 2
+IF _CASSETTE_VERSION \ Standard: When you save a commander file, the version details get saved along with the competition flags. The flags get set as follows: the cassette version sets bit 1, the disc version sets bit 2 or 5 depending on the release, and the 6502SP version sets bit 2
 
  ORA #%00000010         \ Set bit 1 of A to denote that this is the cassette
                         \ version

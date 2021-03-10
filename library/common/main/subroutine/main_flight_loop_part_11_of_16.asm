@@ -26,7 +26,7 @@
 
 .MA26
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: Ships that have docked or been scooped are hidden from the scanner
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: Ships that have docked or been scooped in the enhanced versions are hidden from the scanner
 
  LDA NEWB               \ If bit 7 of the ship's NEWB flags is clear, skip the
  BPL P%+5               \ following instruction

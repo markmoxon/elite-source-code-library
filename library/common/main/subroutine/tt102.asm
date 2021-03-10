@@ -263,7 +263,7 @@ ENDIF
                         \ will move the location in (QQ9, QQ10) to the current
                         \ home system
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Other: Bug fix? If "O" is pressed in the 6502SP version, then the target system is set to home, and the routine terminates, which is different to the other versions; they stick around for one more move of the cursor, so presumably this fixes a bug where pressing "O" might not always move the cursor exactly to the current system
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Other: This might be a bug fix? If "O" is pressed in the 6502SP version, then the target system is set to home, and the routine terminates, which is different to the other versions; they stick around for one more move of the cursor, so presumably this fixes a bug where pressing "O" might not always move the cursor exactly to the current system
 
  JSR TT103              \ Draw small crosshairs at coordinates (QQ9, QQ10),
                         \ which will draw the crosshairs at our current home

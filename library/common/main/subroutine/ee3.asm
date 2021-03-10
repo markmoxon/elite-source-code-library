@@ -30,7 +30,7 @@ IF _6502SP_VERSION \ Screen
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Feature: The cassette version prints the hyperspace countdown in column 0, while the other versions print it in column 1
+IF _CASSETTE_VERSION \ Standard: The cassette version prints the right-aligned hyperspace countdown in column 0, while the other versions print it one column to the right in column 1
 
  LDY #1                 \ Move the text cursor to row 1
  STY YC

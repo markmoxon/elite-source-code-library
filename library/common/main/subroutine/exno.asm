@@ -36,7 +36,7 @@
  JSR NOS1               \ kill (part 1 of the explosion), and call NOS1 to set
                         \ up the sound block in XX16
 
-IF _6502SP_VERSION \ Other: Bug fix to make very distant ships (i.e. where z_sign is non-zero) explode silently
+IF _6502SP_VERSION \ Other: The 6502SP version contains a bug fix to make sure very distant ships (i.e. where z_sign is non-zero) explode silently
 
  LDA INWK+8             \ Fetch z_sign, the distance of the ship being hit in
  ASL A                  \ terms of the z-axis (in and out of the screen), and

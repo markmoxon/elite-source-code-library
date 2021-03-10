@@ -161,7 +161,7 @@ ENDIF
 
  JSR DORND              \ Set A and X to random numbers
 
-IF _CASSETTE_VERSION \ Feature: In the cassette version there is a 45% chance that an angry station will spawn a cop, while in the enhanced versions there is only a 6.2% chance
+IF _CASSETTE_VERSION \ Standard: In the cassette version there is a 45% chance that an angry station will spawn a cop, while in the enhanced versions there is only a 6.2% chance
 
  CMP #140               \ If A < 140 (55% chance) then return from the
  BCC TA14-1             \ subroutine (as TA14-1 contains an RTS)
@@ -252,7 +252,7 @@ IF _CASSETTE_VERSION \ Platform: Without the NEWB flags, the cassette version lo
 
 ENDIF
 
-IF _6502SP_VERSION \ Advanced: Rock hermit tactics, 22% chance of spawning a Sidewinder, Mamba, Krait, Adder or Gecko
+IF _6502SP_VERSION \ Advanced: Rock hermits have a 22% chance of spawning a Sidewinder, Mamba, Krait, Adder or Gecko
 
  CPX #HER               \ If this is not a rock hermit, jump down to TA17
  BNE TA17

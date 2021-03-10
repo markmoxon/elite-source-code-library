@@ -156,7 +156,7 @@ ENDIF
  BNE P%+3
  DEY
 
-IF _DISC_DOCKED \ Enhanced: In the enhanced versions, the cursor moves more quickly in the chart views if you hold down SHIFT
+IF _DISC_DOCKED \ Enhanced: See group A
 
  STX T                  \ Set T to the value of X, which contains the joystick
                         \ roll value

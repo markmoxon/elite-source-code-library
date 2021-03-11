@@ -23,7 +23,7 @@ ENDIF
 
 .SPBT
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Advanced: The "S" indicator bulb on the dashboard is four pixels wide in the advanced versions, while it is only three pixels wide in the original versions
 
  EQUB %11100000         \ x x x .
  EQUB %11100000         \ x x x .

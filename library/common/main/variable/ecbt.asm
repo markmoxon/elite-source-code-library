@@ -26,7 +26,7 @@ ENDIF
 
 .ECBT
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Screen
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Advanced: The "E" indicator bulb on the dashboard is four pixels wide in the advanced versions, while it is only three pixels wide in the original versions
 
  EQUB %11100000         \ x x x .
  EQUB %11100000         \ x x x .

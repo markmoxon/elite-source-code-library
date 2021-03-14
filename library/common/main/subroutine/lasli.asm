@@ -17,6 +17,8 @@
 \                       centre point, draining energy or heating up. This has
 \                       the effect of removing the lines from the screen
 \
+\   LASLI-1             Contains an RTS
+\
 \ ******************************************************************************
 
 .LASLI

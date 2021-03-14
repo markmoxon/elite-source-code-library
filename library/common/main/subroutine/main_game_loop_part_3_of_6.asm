@@ -17,6 +17,7 @@
 \
 IF _6502SP_VERSION \ Comment
 \   * Very rarely, consider spawning a Thargoid, or vanishingly rarely, a Cougar
+\
 ENDIF
 \ ******************************************************************************
 

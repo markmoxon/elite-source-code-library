@@ -229,7 +229,7 @@ ENDIF
 
  STY DELTA              \ Set DELTA = 0 (i.e. ship speed = 0)
 
- STY JSTK               \ Set KSTK = 0 (i.e. keyboard, not joystick)
+ STY JSTK               \ Set JSTK = 0 (i.e. keyboard, not joystick)
 
 IF _CASSETTE_VERSION \ Minor
 

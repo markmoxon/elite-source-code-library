@@ -1,4 +1,4 @@
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Comment
 \ ******************************************************************************
 \
 \       Name: VEC

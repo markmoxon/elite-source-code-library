@@ -31,7 +31,15 @@
 
 .PIX1
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  JSR ADD                \ Set (A X) = (A P) + (S R)
+
+ELIF _MASTER_VERSION
+
+ JSR ADD_DUPLICATE      \ Set (A X) = (A P) + (S R)
+
+ENDIF
 
  STA YY+1               \ Set YY+1 to A, the high byte of the result
 

@@ -3,7 +3,7 @@
 \       Name: HLOIN
 \       Type: Subroutine
 \   Category: Drawing lines
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Draw a horizontal line from (X1, Y1) to (X2, Y1)
 ELIF _6502SP_VERSION
 \    Summary: Implement the OSWORD 247 command (draw the sun lines in the
@@ -21,6 +21,22 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \ Returns:
 \
 \   Y                   Y is preserved
+ELIF _MASTER_VERSION
+\ This routine draws a horizontal orange line in the space view.
+\
+\ We do not draw a pixel at the end point (X2, X1).
+\
+\ To understand how this routine works, you might find it helpful to read the
+\ deep dive on "Drawing monochrome pixels in mode 5".
+\
+\ Returns:
+\
+\   Y                   Y is preserved
+\
+\ Other entry points:
+\
+\   HLOIN3              Draw a line from (X, Y1) to (X2, Y1) in the colour given
+\                       in A
 ELIF _6502SP_VERSION
 \ This routine is run when the parasite sends an OSWORD 247 command with
 \ parameters in the block at OSSC(1 0). It draws a horizontal orange line (or a
@@ -73,6 +89,10 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
 
  LDX X1                 \ Set X = X1
 
+ELIF _MASTER_VERSION
+
+ LDA Y1                 \ ???
+
 ELIF _6502SP_VERSION
 
  LDY #0                 \ Fetch byte #0 from the parameter block (which gives
@@ -103,7 +123,23 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION \ Screen
+IF _MASTER_VERSION \ Screen
+
+ AND #3                 \ Set A to the correct order of red/yellow pixels to
+ TAX                    \ make this line an orange colour (by using bits 0-1 of
+ LDA orange,X           \ the pixel y-coordinate as the index into the orange
+                        \ lookup table)
+
+ STA COL                \ Store the correct orange colour in COL
+
+.HLOIN3
+
+ STY YSAV               \ ???
+ LDY #&0F
+ STY VIA+&34
+ LDX X1
+
+ELIF _6502SP_VERSION
 
  AND #3                 \ Set A to the correct order of red/yellow pixels to
  TAY                    \ make this line an orange colour (by using bits 0-1 of
@@ -153,7 +189,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
  AND #7                 \ character block at which we want to draw our line (as
                         \ each character block has 8 rows)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDY Y1                 \ Look up the page number of the character row that
  LDA ylookup,Y          \ contains the pixel with the y-coordinate in Y1, and
@@ -177,7 +213,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
  AND #%11111000
  TAY
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  TXA                    \ Set Y = 2 * bits 2-6 of X1
  AND #%11111100         \
@@ -205,7 +241,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
  SEC                    \ Set A = A - T, which will contain the number of
  SBC T                  \ character blocks we need to fill - 1 * 8
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  TXA                    \ Set T = bits 2-7 of X1, which will contain the
  AND #%11111100         \ the character number of the start of the line * 4
@@ -239,7 +275,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
  TAX                    \ each pixel line in the character block is 8 pixels
                         \ wide)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LSR A                  \ Set R = A / 4, so R now contains the number of
  LSR A                  \ character blocks we need to fill - 1
@@ -265,6 +301,13 @@ IF _6502SP_VERSION \ Screen
                         \ in screen memory to paint the relevant pixels in the
                         \ required colour
 
+ELIF _MASTER_VERSION
+
+ AND COL                \ Apply the pixel mask in A to the four-pixel block of
+                        \ coloured pixels in COL, so we now know which bits to
+                        \ set in screen memory to paint the relevant pixels in
+                        \ the required colour
+
 ENDIF
 
  EOR (SC),Y             \ Store this into screen memory at SC(1 0), using EOR
@@ -275,7 +318,7 @@ ENDIF
  ADC #8                 \ block along, on the same pixel row as before
  TAY
 
-IF _6502SP_VERSION \ Screen
+IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  BCS HL7                \ If the above addition overflowed, then we have just
                         \ crossed over from the left half of the screen into the
@@ -316,13 +359,20 @@ ELIF _6502SP_VERSION
  STA (SC),Y             \ EOR logic so it merges with whatever is already
                         \ on-screen
 
+ELIF _MASTER_VERSION
+
+ LDA COL                \ Store a full-width 4-pixel horizontal line of colour
+ EOR (SC),Y             \ COL in SC(1 0) so that it draws the line on-screen,
+ STA (SC),Y             \ using EOR logic so it merges with whatever is already
+                        \ on-screen
+
 ENDIF
 
  TYA                    \ Set Y = Y + 8 so (SC),Y points to the next character
  ADC #8                 \ block along, on the same pixel row as before
  TAY
 
-IF _6502SP_VERSION \ Screen
+IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  BCS HL9                \ If the above addition overflowed, then we have just
                         \ crossed over from the left half of the screen into the
@@ -349,7 +399,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
  AND #7                 \ of the line, so set X = X2 mod 8, which is the
  TAX                    \ horizontal pixel number where the line ends
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA X2                 \ Now to draw the last character block at the right end
  AND #3                 \ of the line, so set X = X2 mod 3, which is the
@@ -368,6 +418,13 @@ IF _6502SP_VERSION \ Screen
                         \ coloured pixels in S, so we now know which bits to set
                         \ in screen memory to paint the relevant pixels in the
                         \ required colour
+
+ELIF _MASTER_VERSION
+
+ AND COL                \ Apply the pixel mask in A to the four-pixel block of
+                        \ coloured pixels in COL, so we now know which bits to
+                        \ set in screen memory to paint the relevant pixels in
+                        \ the required colour
 
 ENDIF
 
@@ -399,6 +456,14 @@ ELIF _6502SP_VERSION
                         \ one we just drew, so jump to HLLO with Y pointing to
                         \ the new line's coordinates, so we can draw it
 
+ELIF _MASTER_VERSION
+
+.HL6
+
+ LDY #&09               \ ???
+ STY VIA+&34
+ LDY YSAV
+
 ENDIF
 
  RTS                    \ Return from the subroutine
@@ -415,7 +480,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
  TAX                    \ each pixel line in the character block is 8 pixels
                         \ wide)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA X1                 \ Set X = X1 mod 4, which is the horizontal pixel number
  AND #3                 \ within the character block where the line starts (as
@@ -434,7 +499,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
  AND #7                 \ where the line ends
  TAX
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA X2                 \ Set X = X2 mod 4, which is the horizontal pixel number
  AND #3                 \ where the line ends
@@ -472,6 +537,12 @@ IF _6502SP_VERSION \ Screen
                         \ coloured pixels in S, so we now know which bits to set
                         \ in screen memory to paint the relevant pixels in the
                         \ required colour
+ELIF _MASTER_VERSION
+
+ AND COL                \ Apply the pixel mask in A to the four-pixel block of
+                        \ coloured pixels in COL, so we now know which bits to
+                        \ set in screen memory to paint the relevant pixels in
+                        \ the required colour
 
 ENDIF
 
@@ -500,11 +571,17 @@ ELIF _6502SP_VERSION
                         \ one we just drew, so jump to HLLO with Y pointing to
                         \ the new line's coordinates, so we can draw it
 
+ELIF _MASTER_VERSION
+
+ LDY #&09               \ ???
+ STY VIA+&34
+ LDY YSAV
+
 ENDIF
 
  RTS                    \ Return from the subroutine
 
-IF _6502SP_VERSION \ Screen
+IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
 .HL7
 

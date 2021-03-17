@@ -3,7 +3,7 @@
 \       Name: DOT
 \       Type: Subroutine
 \   Category: Dashboard
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
 \    Summary: Draw a dot on the compass
 ELIF _6502SP_VERSION
 \    Summary: Implement the #DOdot command (draw a dot on the compass)
@@ -13,7 +13,7 @@ ENDIF
 \
 \ Arguments:
 \
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
 \   COMX                The screen pixel x-coordinate of the dot
 \
 \   COMY                The screen pixel y-coordinate of the dot
@@ -39,6 +39,13 @@ ENDIF
 
 .DOT
 
+IF _MASTER_VERSION \ Platform
+
+ LDA #&0F               \ ???
+ STA VIA+&34
+
+ENDIF
+
 IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Tube
 
  LDA COMY               \ Set Y1 = COMY, the y-coordinate of the dot
@@ -49,6 +56,16 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Tube
 
  LDA COMC               \ Set COL = COMC, the mode 5 colour byte for the dot
  STA COL
+
+ELIF _MASTER_VERSION
+
+ LDA COMX               \ Set X1 = COMX, the x-coordinate of the dot
+ STA X1
+
+ LDX COMC               \ Set COL = COMC, the mode 2 colour byte for the dot
+ STX COL
+
+ LDA COMY               \ Set Y1 = COMY, the y-coordinate of the dot
 
 ELIF _6502SP_VERSION
 
@@ -74,6 +91,24 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Screen
 
                         \ Otherwise fall through into CPIX4 to draw a double-
                         \ height dot
+
+ELIF _MASTER_VERSION
+
+ CPX #&0F               \ ???
+ BNE L1EA5
+
+ JSR CPIX2
+
+ LDA Y1
+ DEC A
+
+.L1EA5
+
+ JSR CPIX2
+
+ LDA #&09
+ STA VIA+&34
+ RTS
 
 ELIF _6502SP_VERSION
 

@@ -3,7 +3,7 @@
 \       Name: MSBAR
 \       Type: Subroutine
 \   Category: Dashboard
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Draw a specific indicator in the dashboard's missile bar
 ELIF _6502SP_VERSION
 \    Summary: Implement the #DOmsbar command (draw a specific indicator in the
@@ -31,6 +31,22 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \                         * &E0 = yellow/white (armed)
 \
 \                         * &EE = green/cyan (disarmed)
+ELIF _MASTER_VERSION
+\ Arguments:
+\
+\   X                   The number of the missile indicator to update (counting
+\                       from right to left, so indicator NOMSL is the leftmost
+\                       indicator)
+\
+\   Y                   The colour of the missile indicator:
+\
+\                         * &00 = black (no missile)
+\
+\                         * #RED2 = red (armed and locked)
+\
+\                         * #YELLOW2 = yellow/white (armed)
+\
+\                         * #GREEN2 = green (disarmed)
 ELIF _6502SP_VERSION
 \ This routine is run when the parasite sends a #DOmsbar command with parameters
 \ in the block at OSSC(1 0). It draws a specific indicator in the dashboard's
@@ -66,6 +82,23 @@ ENDIF
 
 .MSBAR
 
+IF _MASTER_VERSION \ Platform
+
+ LDA #&0F               \ ???
+ STA VIA+&34
+
+ TXA
+ PHA
+
+ENDIF
+
+IF _6502SP_VERSION \ Tube
+
+ LDY #2                 \ Fetch byte #2 from the parameter block (the number of
+ LDA (OSSC),Y           \ the missile indicator) into A
+
+ENDIF
+
 IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  TXA                    \ Set T = X * 8
@@ -78,10 +111,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
  SBC T                  \        = 48 + 1 - (X * 8)
  STA SC
 
-ELIF _6502SP_VERSION
-
- LDY #2                 \ Fetch byte #2 from the parameter block (the number of
- LDA (OSSC),Y           \ the missile indicator) into A
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  ASL A                  \ Set T = A * 8
  ASL A
@@ -101,7 +131,7 @@ ENDIF
                         \
 IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
                         \   * 48 (character block 7, as byte #7 * 8 = 48), the
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \   * 96 (character block 14, as byte #14 * 8 = 96), the
 ENDIF
                         \     character block of the rightmost missile
@@ -126,16 +156,29 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
                         \ the missile blocks are 3 pixels wide, with the
                         \ fourth pixel on the character row being empty)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA #&7C               \ Set the high byte of SC(1 0) to &7C, the character row
  STA SCH                \ that contains the missile indicators (i.e. the bottom
                         \ row of the screen)
 
+ENDIF
+
+IF _6502SP_VERSION
+
  LDY #3                 \ Fetch byte #2 from the parameter block (the indicator
  LDA (OSSC),Y           \ colour) into A. This is one of #GREEN2, #YELLOW2 or
                         \ #RED2, or 0 for black, so this is a 2-pixel wide mode
                         \ 2 character row byte in the specified colour
+
+ELIF _MASTER_VERSION
+
+ TYA                    \ ???
+
+ENDIF
+
+
+IF _6502SP_VERSION OR _MASTER_VERSION
 
  LDY #5                 \ We now want to draw this line five times to do the
                         \ left two pixels of the indicator, so set a counter in
@@ -175,7 +218,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Label
 
 .MBL1
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 .MBL2
 
@@ -184,7 +227,7 @@ ENDIF
 IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 
  STA (SC),Y             \ Draw the 3-pixel row, and as we do not use EOR logic,
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  STA (SC),Y             \ Draw the 1-pixel row, and as we do not use EOR logic,
 ENDIF
@@ -197,9 +240,17 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Label
 
  BNE MBL1               \ Loop back to MBL1 if have more rows to draw
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  BNE MBL2               \ Loop back to MBL2 if have more rows to draw
+
+ENDIF
+
+IF _MASTER_VERSION
+
+ PLX                    \ ???
+ LDA #&09
+ STA VIA+&34
 
 ENDIF
 

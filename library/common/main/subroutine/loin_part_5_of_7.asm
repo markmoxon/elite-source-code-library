@@ -70,7 +70,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
  TXA                    \ Set A = bits 3-7 of X1
  AND #%11111000
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA ylookup,Y          \ Look up the page number of the character row that
  STA SC+1               \ contains the pixel with the y-coordinate in Y1, and
@@ -88,7 +88,7 @@ ENDIF
                         \ of the horizontal pixel row that we want to draw the
                         \ start of our line on
 
-IF _6502SP_VERSION \ Screen
+IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  BCC P%+4               \ If bit 7 of X1 was set, so X1 > 127, increment the
  INC SC+1               \ high byte of SC(1 0) to point to the second page on
@@ -104,7 +104,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
  TAX                    \ each pixel line in the character block is 8 pixels
                         \ wide)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  TXA                    \ Set X = X1 mod 4, which is the horizontal pixel number
  AND #3                 \ within the character block where the line starts (as
@@ -181,7 +181,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Other: Part 5 of the LOIN routine in the
  BCC LFT                \ If X2 < X1 then jump to LFT, as we need to draw the
                         \ line to the left and down
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
                         \ The following section calculates:
                         \
@@ -209,7 +209,15 @@ ELIF _6502SP_VERSION
  SEC                    \
  SBC logL,X             \ by first subtracting the low bytes of log(P) - log(Q)
 
+ENDIF
+
+IF _6502SP_VERSION
+
  BMI LIloG              \ If A > 127, jump to LIloG
+
+ENDIF
+
+IF _6502SP_VERSION OR _MASTER_VERSION
 
  LDX P                  \ And then subtracting the high bytes of log(P) - log(Q)
  LDA log,X              \ so now A contains the high byte of log(P) - log(Q)
@@ -226,6 +234,10 @@ ELIF _6502SP_VERSION
  JMP LIlog2             \ Jump to LIlog2 to return the result
 
 .LIlog3
+
+ENDIF
+
+IF _6502SP_VERSION
 
  LDA #255               \ The division is very close to 1, so set A to the
  BNE LIlog2             \ closest possible answer to 256, i.e. 255, and jump to
@@ -245,6 +257,15 @@ ELIF _6502SP_VERSION
 
  TAX                    \ Otherwise we set A to the A-th entry from the
  LDA antilogODD,X       \ antilogODD so the result of the division is now in A
+
+ELIF _MASTER_VERSION
+
+ LDA #255               \ The division is very close to 1, so set A to the
+                        \ closest possible answer to 256, i.e. 255
+
+ENDIF
+
+IF _6502SP_VERSION OR _MASTER_VERSION
 
 .LIlog2
 

@@ -12,7 +12,7 @@
 \
 IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \ Each pixel is in mode 5 colour 2 (%10), which is yellow/white.
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 \ The bulb is four pixels wide, so it covers two mode 2 character blocks, one
 \ containing the left half of the "S", and the other the right half, which are
 \ displayed next to each other. Each pixel is in mode 2 colour 7 (%1111), which
@@ -34,7 +34,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Advanced: The "S" indicator bulb on the 
  EQUB %11100000         \ x x x .
  EQUB %11100000         \ x x x .
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
                         \ Left half of the "S" bulb
                         \

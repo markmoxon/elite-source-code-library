@@ -59,6 +59,13 @@ IF _6502SP_VERSION \ Comment
                         \
                         \ This, then, is the I/O processor's LOIN routine, which
                         \ is not the same as LL30, or the other LOIN. Got that?
+
+ELIF _MASTER_VERSION
+                        \
+                        \ In the BBC Master version, there are two different
+                        \ routines: LL30 draws a one-segment line, while LOIN
+                        \ draws multi-segment lines
+
 ENDIF
 
 .LOIN

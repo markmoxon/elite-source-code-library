@@ -15,7 +15,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Comment
 \ below, as the bottom 5 rows of the "E" match the top 5 rows of the "S".
 \
 \ Each pixel is in mode 5 colour 2 (%10), which is yellow/white.
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 \ The bulb is four pixels wide, so it covers two mode 2 character blocks, one
 \ containing the left half of the "E", and the other the right half, which are
 \ displayed next to each other. Each pixel is in mode 2 colour 7 (%1111), which
@@ -37,7 +37,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Advanced: The "E" indicator bulb on the d
                         \ x x x .
                         \ x x x .
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
                         \ Left half of the "E" bulb
                         \

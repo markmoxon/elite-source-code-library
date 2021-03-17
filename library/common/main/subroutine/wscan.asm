@@ -5,7 +5,7 @@
 \   Category: Screen mode
 IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \    Summary: Wait for the vertical sync
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 \    Summary: Implement the #wscn command (wait for the vertical sync)
 ENDIF
 \

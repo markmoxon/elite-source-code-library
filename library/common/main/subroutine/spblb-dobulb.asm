@@ -1,13 +1,13 @@
 \ ******************************************************************************
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Comment
 \       Name: SPBLB
 ELIF _6502SP_VERSION
 \       Name: DOBULB
 ENDIF
 \       Type: Subroutine
 \   Category: Dashboard
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Draw (or erase) the space station indicator ("S") on the dashboard
 ELIF _6502SP_VERSION
 \    Summary: Implement the #DOBULB 0 command (draw the space station indicator
@@ -20,7 +20,13 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \ Other entry points:
 \
 \   BULB-2              Set the Y screen address
+ELIF _MASTER_VERSION
+\ Other entry points:
+\
+\   BULB2               ???
 ELIF _6502SP_VERSION
+\ ------------------------------------------------------------------------------
+\
 \ This routine is run when the parasite sends a #DOBULB 0 command. It draws
 \ (or erases) the space station indicator bulb ("S") on the dashboard.
 ENDIF
@@ -41,6 +47,13 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
 
                         \ Fall through into BULB to draw the space station bulb
 
+ELIF _MASTER_VERSION
+
+.SPBLB
+
+ LDA #&0F               \ ???
+ STA VIA+&34
+
 ELIF _6502SP_VERSION
 
 .DOBULB
@@ -48,6 +61,10 @@ ELIF _6502SP_VERSION
  TAX                    \ If the parameter to the #DOBULB command is non-zero,
  BNE ECBLB              \ i.e. this is a #DOBULB 255 command, jump to ECBLB to
                         \ draw the E.C.M. bulb instead
+
+ENDIF
+
+IF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA #16*8              \ The space station bulb is in character block number 48
  STA SC                 \ (counting from the left edge of the screen), with the
@@ -85,8 +102,20 @@ ELIF _6502SP_VERSION
  BPL BULL               \ Loop back to poke the next byte until we have done
                         \ all 16 bytes across two character blocks
 
+ENDIF
+
+IF _6502SP_VERSION
+
  JMP PUTBACK            \ Jump to PUTBACK to restore the USOSWRCH handler and
                         \ return from the subroutine using a tail call
+
+ELIF _MASTER_VERSION
+
+.BULB2
+
+ LDA #&09               \ ???
+ STA VIA+&34
+ RTS
 
 ENDIF
 

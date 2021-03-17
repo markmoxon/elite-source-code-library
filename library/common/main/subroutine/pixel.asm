@@ -6,6 +6,9 @@
 IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \    Summary: Draw a 1-pixel dot, 2-pixel dash or 4-pixel square
 \  Deep dive: Drawing monochrome pixels in mode 4
+ELIF _MASTER_VERSION
+\    Summary: Draw a 1-pixel dot, 2-pixel dash or 4-pixel square
+\  Deep dive: Drawing monochrome pixels in mode 5
 ELIF _6502SP_VERSION
 \    Summary: Implement the OSWORD 241 command (draw space view pixels)
 \  Deep dive: Drawing colour pixels in mode 5
@@ -17,6 +20,10 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \ Draw a point at screen coordinate (X, A) with the point size determined by the
 \ distance in ZZ. This applies to the top part of the screen (the monochrome
 \ mode 4 portion).
+ELIF _MASTER_VERSION
+\ Draw a point at screen coordinate (X, A) with the point size determined by the
+\ distance in ZZ. This applies to the top part of the screen (the 4-colour mode
+\ 5 portion).
 ELIF _6502SP_VERSION
 \ This routine is run when the parasite sends an OSWORD 241 command with
 \ parameters in the block at OSSC(1 0). It draws a dot (or collection of dots)
@@ -39,7 +46,7 @@ ENDIF
 \
 \ Arguments:
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Comment
 \   X                   The screen x-coordinate of the point to draw
 \
 \   A                   The screen y-coordinate of the point to draw
@@ -123,6 +130,13 @@ IF _6502SP_VERSION \ Tube
  STY T1                 \ which contains the pixel's y-coordinate, and store Y,
  TAY                    \ the index of this pixel's y-coordinate, in T1
 
+ELIF _MASTER_VERSION
+
+ STY T1                 \ ????
+ LDY #&0F
+ STY VIA+&34
+ TAY
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
@@ -187,7 +201,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  RTS                    \ Return from the subroutine
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA ylookup,Y          \ Look up the page number of the character row that
  STA SC+1               \ contains the pixel with the y-coordinate in Y, and
@@ -224,8 +238,20 @@ ELIF _6502SP_VERSION
  AND #%00000011         \ which will now be in the range 0-3, and will contain
  TAX                    \ the two pixels to show in the character row
 
+ENDIF
+
+IF _6502SP_VERSION \ Other
+
  LDA P                  \ If the pixel's ZZ distance, which we stored in P, is
  BMI PX3                \ greater than 127, jump to PX3 to plot a 1-pixel dot
+
+ELIF _MASTER_VERSION
+
+ LDA ZZ                 \ Set A to the pixel's distance in ZZ
+
+ENDIF
+
+IF _6502SP_VERSION \ Label
 
  CMP #80                \ If the pixel's ZZ distance is < 80, then the dot is
  BCC PX2                \ pretty close, so jump to PX2 to to draw a four-pixel
@@ -236,9 +262,28 @@ ELIF _6502SP_VERSION
                         \ so that pixel takes on the colour we want to draw
                         \ (i.e. A is acting as a mask on the colour byte)
 
+ELIF _MASTER_VERSION
+
+ CMP #80                \ If the pixel's ZZ distance is < 80, then the dot is
+ BCC PX21               \ pretty close, so jump to PX21 to to draw a four-pixel
+                        \ square
+
+ LDA TWOS2,X            \ Fetch a mode 1 2-pixel byte with the pixels set as in
+ AND COL                \ X, and AND with the colour byte we fetched into COL
+                        \ so that pixel takes on the colour we want to draw
+                        \ (i.e. A is acting as a mask on the colour byte)
+
+ENDIF
+
+IF _6502SP_VERSION OR _MASTER_VERSION
+
  EOR (SC),Y             \ Draw the pixel on-screen using EOR logic, so we can
  STA (SC),Y             \ remove it later without ruining the background that's
                         \ already on-screen
+
+ENDIF
+
+IF _6502SP_VERSION \ Platform
 
  LDY T1                 \ Set Y to the index of this pixel's y-coordinate byte
                         \ in the command block, which we stored in T1 above
@@ -262,6 +307,30 @@ ELIF _6502SP_VERSION
                         \ so that pixel takes on the colour we want to draw
                         \ (i.e. A is acting as a mask on the colour byte)
 
+ELIF _MASTER_VERSION
+
+ LDY #&09               \ ???
+ STY VIA+&34
+ LDY T1
+
+.PX4
+
+ RTS                    \ Return from the subroutine
+
+.PX21
+
+                        \ If we get here, we need to plot a 4-pixel square in
+                        \ in the correct colour for this pixel's distance
+
+ LDA TWOS2,X            \ Fetch a mode 1 2-pixel byte with the pixels set as in
+ AND COL                \ X, and AND with the colour byte we fetched into COL
+                        \ so that pixel takes on the colour we want to draw
+                        \ (i.e. A is acting as a mask on the colour byte)
+
+ENDIF
+
+IF _6502SP_VERSION OR _MASTER_VERSION
+
  EOR (SC),Y             \ Draw the pixel on-screen using EOR logic, so we can
  STA (SC),Y             \ remove it later without ruining the background that's
                         \ already on-screen
@@ -276,14 +345,33 @@ ELIF _6502SP_VERSION
 
                         \ We now draw our second dash
 
+ENDIF
+
+IF _6502SP_VERSION \ Label
+
  LDA TWOS2,X            \ Fetch a mode 1 2-pixel byte with the pixels set as in
  AND S                  \ X, and AND with the colour byte we fetched into S
                         \ so that pixel takes on the colour we want to draw
                         \ (i.e. A is acting as a mask on the colour byte)
 
+ELIF _MASTER_VERSION
+
+ LDA TWOS2,X            \ Fetch a mode 1 2-pixel byte with the pixels set as in
+ AND COL                \ X, and AND with the colour byte we fetched into COL
+                        \ so that pixel takes on the colour we want to draw
+                        \ (i.e. A is acting as a mask on the colour byte)
+
+ENDIF
+
+IF _6502SP_VERSION OR _MASTER_VERSION
+
  EOR (SC),Y             \ Draw the pixel on-screen using EOR logic, so we can
  STA (SC),Y             \ remove it later without ruining the background that's
                         \ already on-screen
+
+ENDIF
+
+IF _6502SP_VERSION
 
  LDY T1                 \ Set Y to the index of this pixel's y-coordinate byte
                         \ in the command block, which we stored in T1 above
@@ -296,6 +384,18 @@ ELIF _6502SP_VERSION
                         \ PXLO to draw the next pixel in the buffer
 
  RTS                    \ Return from the subroutine
+
+ELIF _MASTER_VERSION
+
+ LDY #&09
+ STY VIA+&34
+ LDY T1
+
+ RTS                    \ Return from the subroutine
+
+ENDIF
+
+IF _6502SP_VERSION
 
 .PX3
 

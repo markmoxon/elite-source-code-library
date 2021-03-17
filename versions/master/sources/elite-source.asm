@@ -37,19 +37,32 @@ _DISC_FLIGHT = FALSE
 VE = &57 \ The obfuscation byte used to hide the extended tokens
  \ table from crackers viewing the binary code
 
-CODE% = &1300
-LOAD% = &1300
-
-ORG CODE%
-
 NRU% = 0
 NI% = 37
 MSL = 1
 SST = 2
 OIL = 5
-RED = &F0
-WHITE = &FF
 LL = 30
+
+Y = 96                  \ The centre y-coordinate of the 256 x 192 space view
+
+YELLOW  = %00001111     \ Four mode 1 pixels of colour 1 (yellow)
+RED     = %11110000     \ Four mode 1 pixels of colour 2 (red, magenta or white)
+CYAN    = %11111111     \ Four mode 1 pixels of colour 3 (cyan or white)
+GREEN   = %10101111     \ Four mode 1 pixels of colour 3, 1, 3, 1 (cyan/yellow)
+WHITE   = %11111010     \ Four mode 1 pixels of colour 3, 2, 3, 2 (cyan/red)
+MAGENTA = RED           \ Four mode 1 pixels of colour 2 (red, magenta or white)
+DUST    = WHITE         \ Four mode 1 pixels of colour 3, 2, 3, 2 (cyan/red)
+
+RED2    = %00000011     \ Two mode 2 pixels of colour 1    (red)
+GREEN2  = %00001100     \ Two mode 2 pixels of colour 2    (green)
+YELLOW2 = %00001111     \ Two mode 2 pixels of colour 3    (yellow)
+BLUE2   = %00110000     \ Two mode 2 pixels of colour 4    (blue)
+MAG2    = %00110011     \ Two mode 2 pixels of colour 5    (magenta)
+CYAN2   = %00111100     \ Two mode 2 pixels of colour 6    (cyan)
+WHITE2  = %00111111     \ Two mode 2 pixels of colour 7    (white)
+STRIPE  = %00100011     \ Two mode 2 pixels of colour 5, 1 (magenta/red)
+
 
 \ New vars: L0098, L0099, L009B, L00FC
 \ KL vars: L00C9, L00CB, L00D0, L00D1
@@ -59,10 +72,16 @@ LL = 30
 \ L12A6 - L12A9 (see IRQ1)
 \ LDDEB
 
+CODE% = &1300
+LOAD% = &1300
+
+ORG CODE%
+
 ZP = &0000
 RAND = &0002
 T1 = &0006
 SC = &000A
+SCH = &000B
 P = &000C
 XC = &0010
 COL = &0011
@@ -108,7 +127,7 @@ T = &007C
 XSAV = &007D
 YSAV = &007E
 XX17 = &007F
-U_COPY  = &0080
+U_DUPLICATE  = &0080
 QQ11 = &0081
 ZZ = &0082
 XX13 = &0083
@@ -620,1948 +639,42 @@ INCLUDE "library/6502sp/io/subroutine/setvdu19.asm"
 
 INCLUDE "library/6502sp/io/variable/ylookup.asm"
 INCLUDE "library/common/main/subroutine/scan.asm"
-
-
-.LL30
-
- STY YSAV
- LDA #&0F
- STA VIA+&34
- JSR LOIN
-
- LDA #&09
- STA VIA+&34
- LDY YSAV
- RTS
-
-.L173A
-
- EQUB &88
-
- EQUB &44,&22,&11
-
-.TWOS2
-
- EQUB &CC,&66,&33,&33
-
-.CTWOS
-
- EQUB &AA,&AA
-
-.L1744
-
- EQUB &55,&55,&AA,&AA,&4C,&49,&1D
-
-.LOIN
-
- LDA #&80
- STA S
- ASL A
- STA SWAP
- LDA X2
- SBC XX15
- BCS LI1
-
- EOR #&FF
- ADC #&01
- SEC
-
-.LI1
-
- STA P
- LDA Y2
- SBC Y1
- BCS LI2
-
- EOR #&FF
- ADC #&01
-
-.LI2
-
- STA Q
- CMP P
- BCC STPX
-
- JMP STPY
-
-.STPX
-
- LDX XX15
- CPX X2
- BCC LI3
-
- DEC SWAP
- LDA X2
- STA XX15
- STX X2
- TAX
- LDA Y2
- LDY Y1
- STA Y1
- STY Y2
-
-.LI3
-
- LDY Y1
- LDA ylookup,Y
- STA SC+1
- LDA Y1
- AND #&07
- TAY
- TXA
- AND #&FC
- ASL A
- STA SC
- BCC L17A1
-
- INC SC+1
-
-.L17A1
-
- TXA
- AND #&03
- STA R
- LDX Q
- BEQ LIlog7
-
- LDA logL,X
- LDX P
- SEC
- SBC logL,X
- LDX Q
- LDA log,X
- LDX P
- SBC log,X
- BCS LIlog5
-
- TAX
- LDA antilog,X
- JMP LIlog6
-
-.LIlog5
-
- LDA #&FF
- BNE LIlog6
-
-.LIlog7
-
- LDA #&00
-
-.LIlog6
-
- STA Q
- LDX P
- BEQ LIEXS
-
- INX
- LDA Y2
- CMP Y1
- BCC L17DC
-
- JMP DOWN
-
-.L17DC
-
- LDA #&88
- AND COL
- STA L181A
- LDA #&44
- AND COL
- STA L182F
- LDA #&22
- AND COL
- STA L1844
- LDA #&11
- AND COL
- STA L1859
- LDA SWAP
- BEQ LI190
-
- LDA R
- BEQ L181F
-
- CMP #&02
- BCC L1834
-
- CLC
- BEQ L1849
-
- BNE L185E
-
-.LI190
-
- DEX
- LDA R
- BEQ LI100
-
- CMP #&02
- BCC LI110
-
- CLC
- BEQ LI120
-
- JMP LI130
-
-.LI100
-
- LDA #&88
-L181A = LI100+1
- EOR (SC),Y
- STA (SC),Y
-
-.L181F
-
- DEX
-
-.LIEXS
-
- BEQ LIEX
-
- LDA S
- ADC Q
- STA S
- BCC LI110
-
- CLC
- DEY
- BMI LI101
-
-.LI110
-
- LDA #&44
-L182F = LI110+1
- EOR (SC),Y
- STA (SC),Y
-
-.L1834
-
- DEX
- BEQ LIEX
-
- LDA S
- ADC Q
- STA S
- BCC LI120
-
- CLC
- DEY
- BMI LI111
-
-.LI120
-
- LDA #&22
-L1844 = LI120+1
- EOR (SC),Y
- STA (SC),Y
-
-.L1849
-
- DEX
- BEQ LIEX
-
- LDA S
- ADC Q
- STA S
- BCC LI130
-
- CLC
- DEY
- BMI LI121
-
-.LI130
-
- LDA #&11
-L1859 = LI130+1
- EOR (SC),Y
- STA (SC),Y
-
-.L185E
-
- LDA S
- ADC Q
- STA S
- BCC LI140
-
- CLC
- DEY
- BMI LI131
-
-.LI140
-
- DEX
- BEQ LIEX
-
- LDA SC
- ADC #&08
- STA SC
- BCC LI100
-
- INC SC+1
- CLC
- BCC LI100
-
-.LI101
-
- DEC SC+1
- DEC SC+1
- LDY #&07
- BPL LI110
-
-.LI111
-
- DEC SC+1
- DEC SC+1
- LDY #&07
- BPL LI120
-
-.LI121
-
- DEC SC+1
- DEC SC+1
- LDY #&07
- BPL LI130
-
-.LI131
-
- DEC SC+1
- DEC SC+1
- LDY #&07
- BPL LI140
-
-.LIEX
-
- RTS
-
-.DOWN
-
- LDA #&88
- AND COL
- STA L18E8
- LDA #&44
- AND COL
- STA L18FD
- LDA #&22
- AND COL
- STA L1912
- LDA #&11
- AND COL
- STA L1927
- LDA SC
- SBC #&F8
- STA SC
- LDA SC+1
- SBC #&00
- STA SC+1
- TYA
- EOR #&F8
- TAY
- LDA SWAP
- BEQ LI191
-
- LDA R
- BEQ L18ED
-
- CMP #&02
- BCC L1902
-
- CLC
- BEQ L1917
-
- BNE L192C
-
-.LI191
-
- DEX
- LDA R
- BEQ LI200
-
- CMP #&02
- BCC LI210
-
- CLC
- BEQ LI220
-
- BNE LI230
-
-.LI200
-
- LDA #&88
-L18E8 = LI200+1
- EOR (SC),Y
- STA (SC),Y
-
-.L18ED
-
- DEX
- BEQ LIEX
-
- LDA S
- ADC Q
- STA S
- BCC LI210
-
- CLC
- INY
- BEQ LI201
-
-.LI210
-
- LDA #&44
-L18FD = LI210+1
- EOR (SC),Y
- STA (SC),Y
-
-.L1902
-
- DEX
- BEQ LIEX
-
- LDA S
- ADC Q
- STA S
- BCC LI220
-
- CLC
- INY
- BEQ LI211
-
-.LI220
-
- LDA #&22
-L1912 = LI220+1
- EOR (SC),Y
- STA (SC),Y
-
-.L1917
-
- DEX
- BEQ LIEX2
-
- LDA S
- ADC Q
- STA S
- BCC LI230
-
- CLC
- INY
- BEQ LI221
-
-.LI230
-
- LDA #&11
-L1927 = LI230+1
- EOR (SC),Y
- STA (SC),Y
-
-.L192C
-
- LDA S
- ADC Q
- STA S
- BCC LI240
-
- CLC
- INY
- BEQ LI231
-
-.LI240
-
- DEX
- BEQ LIEX2
-
- LDA SC
- ADC #&08
- STA SC
- BCC LI200
-
- INC SC+1
- CLC
- BCC LI200
-
-.LI201
-
- INC SC+1
- INC SC+1
- LDY #&F8
- BNE LI210
-
-.LI211
-
- INC SC+1
- INC SC+1
- LDY #&F8
- BNE LI220
-
-.LI221
-
- INC SC+1
- INC SC+1
- LDY #&F8
- BNE LI230
-
-.LI231
-
- INC SC+1
- INC SC+1
- LDY #&F8
- BNE LI240
-
-.LIEX2
-
- RTS
-
-.STPY
-
- LDY Y1
- TYA
- LDX XX15
- CPY Y2
- BCS LI15
-
- DEC SWAP
- LDA X2
- STA XX15
- STX X2
- TAX
- LDA Y2
- STA Y1
- STY Y2
- TAY
-
-.LI15
-
- LDA ylookup,Y
- STA SC+1
- TXA
- AND #&FC
- ASL A
- STA SC
- BCC L1992
-
- INC SC+1
-
-.L1992
-
- TXA
- AND #&03
- TAX
- LDA L173A,X
- STA R
- LDX P
- BEQ LIfudge
-
- LDA logL,X
- LDX Q
- SEC
- SBC logL,X
- LDX P
- LDA log,X
- LDX Q
- SBC log,X
- BCS LIlog3
-
- TAX
- LDA antilog,X
- JMP LIlog2
-
-.LIlog3
-
- LDA #&FF
-
-.LIlog2
-
- STA P
-
-.LIfudge
-
- LDX Q
- BEQ LIEX7
-
- INX
- LDA X2
- SEC
- SBC XX15
- BCS L19CF
-
- JMP LFT
-
-.LIEX7
-
- RTS
-
-.L19CF
-
- LDA SWAP
- BEQ LI290
-
- TYA
- AND #&07
- TAY
- BNE L19DD
-
- JMP L1B18
-
-.L19DD
-
- CPY #&02
- BCS L19E4
-
- JMP L1B04
-
-.L19E4
-
- CLC
- BNE L19EA
-
- JMP L1AF0
-
-.L19EA
-
- CPY #&04
- BCS L19F1
-
- JMP L1ADC
-
-.L19F1
-
- CLC
- BNE L19F7
-
- JMP L1AC8
-
-.L19F7
-
- CPY #&06
- BCS L19FE
-
- JMP L1AB4
-
-.L19FE
-
- CLC
- BEQ L1A04
-
- JMP L1A8C
-
-.L1A04
-
- JMP L1AA0
-
-.LI290
-
- DEX
- TYA
- AND #&07
- TAY
- BNE L1A11
-
- JMP LI307
-
-.L1A11
-
- CPY #&02
- BCS L1A18
-
- JMP LI306
-
-.L1A18
-
- CLC
- BNE L1A1E
-
- JMP LI305
-
-.L1A1E
-
- CPY #&04
- BCC LI304S
-
- CLC
- BEQ LI303S
-
- CPY #&06
- BCC LI302S
-
- CLC
- BEQ LI301S
-
- JMP LI300
-
-.LI310
-
- LSR R
- BCC LI301
-
- LDA #&88
- STA R
- LDA SC
- ADC #&07
- STA SC
- BCC LI301
-
- INC SC+1
- CLC
-
-.LI301S
-
- BCC LI301
-
-.LI311
-
- LSR R
- BCC LI302
-
- LDA #&88
- STA R
- LDA SC
- ADC #&07
- STA SC
- BCC LI302
-
- INC SC+1
- CLC
-
-.LI302S
-
- BCC LI302
-
-.LI312
-
- LSR R
- BCC LI303
-
- LDA #&88
- STA R
- LDA SC
- ADC #&07
- STA SC
- BCC LI303
-
- INC SC+1
- CLC
-
-.LI303S
-
- BCC LI303
-
-.LI313
-
- LSR R
- BCC LI304
-
- LDA #&88
- STA R
- LDA SC
- ADC #&07
- STA SC
- BCC LI304
-
- INC SC+1
- CLC
-
-.LI304S
-
- BCC LI304
-
-.LIEX3
-
- RTS
-
-.LI300
-
- LDA R
- AND COL
- EOR (SC),Y
- STA (SC),Y
-
-.L1A8C
-
- DEX
- BEQ LIEX3
-
- DEY
- LDA S
- ADC P
- STA S
- BCS LI310
-
-.LI301
-
- LDA R
- AND COL
- EOR (SC),Y
- STA (SC),Y
-
-.L1AA0
-
- DEX
- BEQ LIEX3
-
- DEY
- LDA S
- ADC P
- STA S
- BCS LI311
-
-.LI302
-
- LDA R
- AND COL
- EOR (SC),Y
- STA (SC),Y
-
-.L1AB4
-
- DEX
- BEQ LIEX3
-
- DEY
- LDA S
- ADC P
- STA S
- BCS LI312
-
-.LI303
-
- LDA R
- AND COL
- EOR (SC),Y
- STA (SC),Y
-
-.L1AC8
-
- DEX
- BEQ LIEX3
-
- DEY
- LDA S
- ADC P
- STA S
- BCS LI313
-
-.LI304
-
- LDA R
- AND COL
- EOR (SC),Y
- STA (SC),Y
-
-.L1ADC
-
- DEX
- BEQ LIEX4
-
- DEY
- LDA S
- ADC P
- STA S
- BCS LI314
-
-.LI305
-
- LDA R
- AND COL
- EOR (SC),Y
- STA (SC),Y
-
-.L1AF0
-
- DEX
- BEQ LIEX4
-
- DEY
- LDA S
- ADC P
- STA S
- BCS LI315
-
-.LI306
-
- LDA R
- AND COL
- EOR (SC),Y
- STA (SC),Y
-
-.L1B04
-
- DEX
- BEQ LIEX4
-
- DEY
- LDA S
- ADC P
- STA S
- BCS LI316
-
-.LI307
-
- LDA R
- AND COL
- EOR (SC),Y
- STA (SC),Y
-
-.L1B18
-
- DEX
- BEQ LIEX4
-
- DEC SC+1
- DEC SC+1
- LDY #&07
- LDA S
- ADC P
- STA S
- BCS L1B2C
-
- JMP LI300
-
-.L1B2C
-
- LSR R
- BCS L1B33
-
- JMP LI300
-
-.L1B33
-
- LDA #&88
- STA R
- LDA SC
- ADC #&07
- STA SC
- BCS L1B42
-
- JMP LI300
-
-.L1B42
-
- INC SC+1
- CLC
- JMP LI300
-
-.LIEX4
-
- RTS
-
-.LI314
-
- LSR R
- BCC LI305
-
- LDA #&88
- STA R
- LDA SC
- ADC #&07
- STA SC
- BCC LI305
-
- INC SC+1
- CLC
- BCC LI305
-
-.LI315
-
- LSR R
- BCC LI306
-
- LDA #&88
- STA R
- LDA SC
- ADC #&07
- STA SC
- BCC LI306
-
- INC SC+1
- CLC
- BCC LI306
-
-.LI316
-
- LSR R
- BCC LI307
-
- LDA #&88
- STA R
- LDA SC
- ADC #&07
- STA SC
- BCC LI307
-
- INC SC+1
- CLC
- BCC LI307
-
-.LFT
-
- LDA SWAP
- BEQ LI291
-
- TYA
- AND #&07
- TAY
- BNE L1B96
-
- JMP L1CD1
-
-.L1B96
-
- CPY #&02
- BCS L1B9D
-
- JMP L1CBD
-
-.L1B9D
-
- CLC
- BNE L1BA3
-
- JMP L1CA9
-
-.L1BA3
-
- CPY #&04
- BCS L1BAA
-
- JMP L1C95
-
-.L1BAA
-
- CLC
- BNE L1BB0
-
- JMP L1C81
-
-.L1BB0
-
- CPY #&06
- BCS L1BB7
-
- JMP L1C6D
-
-.L1BB7
-
- CLC
- BEQ L1BBD
-
- JMP L1C45
-
-.L1BBD
-
- JMP L1C59
-
-.LI291
-
- DEX
- TYA
- AND #&07
- TAY
- BNE L1BCA
-
- JMP LI407
-
-.L1BCA
-
- CPY #&02
- BCS L1BD1
-
- JMP LI406
-
-.L1BD1
-
- CLC
- BNE L1BD7
-
- JMP LI405
-
-.L1BD7
-
- CPY #&04
- BCC LI404S
-
- CLC
- BEQ LI403S
-
- CPY #&06
- BCC LI402S
-
- CLC
- BEQ LI401S
-
- JMP LI400
-
-.LI410
-
- ASL R
- BCC LI401
-
- LDA #&11
- STA R
- LDA SC
- SBC #&08
- STA SC
- BCS L1BFA
-
- DEC SC+1
-
-.L1BFA
-
- CLC
-
-.LI401S
-
- BCC LI401
-
-.LI411
-
- ASL R
- BCC LI402
-
- LDA #&11
- STA R
- LDA SC
- SBC #&08
- STA SC
- BCS L1C0F
-
- DEC SC+1
-
-.L1C0F
-
- CLC
-
-.LI402S
-
- BCC LI402
-
-.LI412
-
- ASL R
- BCC LI403
-
- LDA #&11
- STA R
- LDA SC
- SBC #&08
- STA SC
- BCS L1C24
-
- DEC SC+1
-
-.L1C24
-
- CLC
-
-.LI403S
-
- BCC LI403
-
-.LI413
-
- ASL R
- BCC LI404
-
- LDA #&11
- STA R
- LDA SC
- SBC #&08
- STA SC
- BCS L1C39
-
- DEC SC+1
-
-.L1C39
-
- CLC
-
-.LI404S
-
- BCC LI404
-
-.LIEX5
-
- RTS
-
-.LI400
-
- LDA R
- AND COL
- EOR (SC),Y
- STA (SC),Y
-
-.L1C45
-
- DEX
- BEQ LIEX5
-
- DEY
- LDA S
- ADC P
- STA S
- BCS LI410
-
-.LI401
-
- LDA R
- AND COL
- EOR (SC),Y
- STA (SC),Y
-
-.L1C59
-
- DEX
- BEQ LIEX5
-
- DEY
- LDA S
- ADC P
- STA S
- BCS LI411
-
-.LI402
-
- LDA R
- AND COL
- EOR (SC),Y
- STA (SC),Y
-
-.L1C6D
-
- DEX
- BEQ LIEX5
-
- DEY
- LDA S
- ADC P
- STA S
- BCS LI412
-
-.LI403
-
- LDA R
- AND COL
- EOR (SC),Y
- STA (SC),Y
-
-.L1C81
-
- DEX
- BEQ LIEX5
-
- DEY
- LDA S
- ADC P
- STA S
- BCS LI413
-
-.LI404
-
- LDA R
- AND COL
- EOR (SC),Y
- STA (SC),Y
-
-.L1C95
-
- DEX
- BEQ LIEX6
-
- DEY
- LDA S
- ADC P
- STA S
- BCS LI414
-
-.LI405
-
- LDA R
- AND COL
- EOR (SC),Y
- STA (SC),Y
-
-.L1CA9
-
- DEX
- BEQ LIEX6
-
- DEY
- LDA S
- ADC P
- STA S
- BCS LI415
-
-.LI406
-
- LDA R
- AND COL
- EOR (SC),Y
- STA (SC),Y
-
-.L1CBD
-
- DEX
- BEQ LIEX6
-
- DEY
- LDA S
- ADC P
- STA S
- BCS LI416
-
-.LI407
-
- LDA R
- AND COL
- EOR (SC),Y
- STA (SC),Y
-
-.L1CD1
-
- DEX
- BEQ LIEX6
-
- DEC SC+1
- DEC SC+1
- LDY #&07
- LDA S
- ADC P
- STA S
- BCS L1CE5
-
- JMP LI400
-
-.L1CE5
-
- ASL R
- BCS L1CEC
-
- JMP LI400
-
-.L1CEC
-
- LDA #&11
- STA R
- LDA SC
- SBC #&08
- STA SC
- BCS L1CFA
-
- DEC SC+1
-
-.L1CFA
-
- CLC
- JMP LI400
-
-.LIEX6
-
- RTS
-
-.LI414
-
- ASL R
- BCC LI405
-
- LDA #&11
- STA R
- LDA SC
- SBC #&08
- STA SC
- BCS L1D11
-
- DEC SC+1
-
-.L1D11
-
- CLC
- BCC LI405
-
-.LI415
-
- ASL R
- BCC LI406
-
- LDA #&11
- STA R
- LDA SC
- SBC #&08
- STA SC
- BCS L1D26
-
- DEC SC+1
-
-.L1D26
-
- CLC
- BCC LI406
-
-.LI416
-
- ASL R
- BCC LI407
-
- LDA #&11
- STA R
- LDA SC
- SBC #&08
- STA SC
- BCS L1D3B
-
- DEC SC+1
-
-.L1D3B
-
- CLC
- JMP LI407
-
-.HLOIN
-
- LDA Y1
- AND #&03
- TAX
- LDA orange,X
- STA COL
-
-.HLOIN3
-
- STY YSAV
- LDY #&0F
- STY VIA+&34
- LDX XX15
- CPX X2
- BEQ HL6
-
- BCC HL5
-
- LDA X2
- STA XX15
- STX X2
- TAX
-
-.HL5
-
- DEC X2
- LDY Y1
- LDA ylookup,Y
- STA SC+1
- TYA
- AND #&07
- STA SC
- TXA
- AND #&FC
- ASL A
- TAY
- BCC HL1
-
- INC SC+1
-
-.HL1
-
- TXA
- AND #&FC
- STA T
- LDA X2
- AND #&FC
- SEC
- SBC T
- BEQ HL2
-
- LSR A
- LSR A
- STA R
- LDA XX15
- AND #&03
- TAX
- LDA TWFR,X
- AND COL
- EOR (SC),Y
- STA (SC),Y
- TYA
- ADC #&08
- TAY
- BCS HL7
-
-.HL8
-
- LDX R
- DEX
- BEQ HL3
-
- CLC
-
-.HLL1
-
- LDA COL
- EOR (SC),Y
- STA (SC),Y
- TYA
- ADC #&08
- TAY
- BCS HL9
-
-.HL10
-
- DEX
- BNE HLL1
-
-.HL3
-
- LDA X2
- AND #&03
- TAX
- LDA L1DF5,X
- AND COL
- EOR (SC),Y
- STA (SC),Y
-
-.HL6
-
- LDY #&09
- STY VIA+&34
- LDY YSAV
- RTS
-
-.HL2
-
- LDA XX15
- AND #&03
- TAX
- LDA TWFR,X
- STA T
- LDA X2
- AND #&03
- TAX
- LDA L1DF5,X
- AND T
- AND COL
- EOR (SC),Y
- STA (SC),Y
- LDY #&09
- STY VIA+&34
- LDY YSAV
- RTS
-
-.HL7
-
- INC SC+1
- CLC
- JMP HL8
-
-.HL9
-
- INC SC+1
- CLC
- JMP HL10
-
-.L1DF5
-
- EQUB &88
-
- EQUB &CC,&EE,&FF
-
-.TWFR
-
- EQUB &FF,&77,&33,&11
-
-.orange
-
- EQUB &A5,&A5,&5A,&5A
-
-.PIX1
-
- JSR ADD_COPY
-
- STA YY+1
- TXA
- STA SYL,Y
-
-.PIXEL2
-
- LDA XX15
- BPL PX1
-
- EOR #&7F
- CLC
- ADC #&01
-
-.PX1
-
- EOR #&80
- TAX
- LDA Y1
- AND #&7F
- CMP #&60
- BCS L1E61
-
- LDA Y1
- BPL PX2
-
- EOR #&7F
- ADC #&01
-
-.PX2
-
- STA T
- LDA #&61
- SBC T
-
-.PIXEL
-
- STY T1
- LDY #&0F
- STY VIA+&34
- TAY
- LDA ylookup,Y
- STA SC+1
- TXA
- AND #&FC
- ASL A
- STA SC
- BCC L1E43
-
- INC SC+1
-
-.L1E43
-
- TYA
- AND #&07
- TAY
- TXA
- AND #&03
- TAX
- LDA ZZ
- CMP #&50
- BCC PX2_REPEAT
-
- LDA TWOS2,X
- AND COL
- EOR (SC),Y
- STA (SC),Y
- LDY #&09
- STY VIA+&34
- LDY T1
-
-.L1E61
-
- RTS
-
-.PX2_REPEAT
-
- LDA TWOS2,X
- AND COL
- EOR (SC),Y
- STA (SC),Y
- DEY
- BPL L1E70
-
- LDY #&01
-
-.L1E70
-
- LDA TWOS2,X
- AND COL
- EOR (SC),Y
- STA (SC),Y
- LDY #&09
- STY VIA+&34
- LDY T1
- RTS
-
- EQUB &FA
-
- EQUB &0F,&0F,&F0,&F0,&A5,&A5,&0F
-
-.DOT
-
- LDA #&0F
- STA VIA+&34
- LDA COMX
- STA XX15
- LDX COMC
- STX COL
- LDA COMY
- CPX #&0F
- BNE L1EA5
-
- JSR CPIX2
-
- LDA Y1
- DEC A
-
-.L1EA5
-
- JSR CPIX2
-
- LDA #&09
- STA VIA+&34
- RTS
-
-.CPIX2
-
- STA Y1
- TAY
- LDA ylookup,Y
- STA SC+1
- LDA XX15
- AND #&FC
- ASL A
- STA SC
- BCC L1EC2
-
- INC SC+1
- CLC
-
-.L1EC2
-
- TYA
- AND #&07
- TAY
- LDA XX15
- AND #&02
- TAX
- LDA CTWOS,X
- AND COL
- EOR (SC),Y
- STA (SC),Y
- LDA L1744,X
- BPL CP1
-
- LDA SC
- ADC #&08
- STA SC
- BCC L1EE3
-
- INC SC+1
-
-.L1EE3
-
- LDA L1744,X
-
-.CP1
-
- AND COL
- STA R
- EOR (SC),Y
- STA (SC),Y
- RTS
-
-.ECBLB2
-
- LDA #&20
- STA ECMA
-
-.ECBLB
-
- LDA #&0F
- STA VIA+&34
- LDA #&70
- STA SC
- LDA #&7A
- STA SC+1
- LDY #&0F
-
-.BULL2
-
- LDA ECBT,Y
- EOR (SC),Y
- STA (SC),Y
- DEY
- BPL BULL2
-
- BMI L1F27
-
-.SPBLB
-
- LDA #&0F
- STA VIA+&34
- LDA #&80
- STA SC
- LDA #&7B
- STA SC+1
- LDY #&0F
-
-.BULL
-
- LDA L1F2D,Y
- EOR (SC),Y
- STA (SC),Y
- DEY
- BPL BULL
-
-.L1F27
-
- LDA #&09
- STA VIA+&34
- RTS
-
-.L1F2D
-
- EQUB &FF
-
- EQUB &FF,&AA,&FF,&FF,&00,&FF,&FF,&FF
- EQUB &FF,&00,&FF,&FF,&55,&FF,&FF
-
-.ECBT
-
- EQUB &FF,&FF,&AA,&FF,&FF,&AA,&FF,&FF
- EQUB &FF,&FF,&00,&FF,&FF,&00,&FF,&FF
-
-.MSBAR
-
- LDA #&0F
- STA VIA+&34
- TXA
- PHA
- ASL A
- ASL A
- ASL A
- ASL A
- STA T
- LDA #&61
- SBC T
- STA SC
- LDA #&7C
- STA SC+1
- TYA
- LDY #&05
-
-.MBL1
-
- STA (SC),Y
- DEY
- BNE MBL1
-
- PHA
- LDA SC
- CLC
- ADC #&08
- STA SC
- PLA
- AND #&AA
- LDY #&05
-
-.MBL2
-
- STA (SC),Y
- DEY
- BNE MBL2
-
- PLX
- LDA #&09
- STA VIA+&34
- RTS
-
-.L1F85
+INCLUDE "library/6502sp/main/subroutine/ll30.asm"
+INCLUDE "library/6502sp/io/variable/twos.asm"
+INCLUDE "library/6502sp/io/variable/twos2.asm"
+INCLUDE "library/6502sp/io/variable/ctwos.asm"
+
+ EQUB &4C,&49,&1D
+
+INCLUDE "library/common/main/subroutine/loin_part_1_of_7.asm"
+INCLUDE "library/common/main/subroutine/loin_part_2_of_7.asm"
+INCLUDE "library/common/main/subroutine/loin_part_3_of_7.asm"
+INCLUDE "library/common/main/subroutine/loin_part_4_of_7.asm"
+INCLUDE "library/common/main/subroutine/loin_part_5_of_7.asm"
+INCLUDE "library/common/main/subroutine/loin_part_6_of_7.asm"
+INCLUDE "library/common/main/subroutine/loin_part_7_of_7.asm"
+INCLUDE "library/common/main/subroutine/hloin.asm"
+INCLUDE "library/6502sp/io/variable/twfl.asm"
+INCLUDE "library/6502sp/io/variable/twfr.asm"
+INCLUDE "library/6502sp/io/variable/orange.asm"
+INCLUDE "library/common/main/subroutine/pix1.asm"
+INCLUDE "library/common/main/subroutine/pixel2.asm"
+INCLUDE "library/common/main/subroutine/pixel.asm"
+INCLUDE "library/6502sp/io/variable/pxcl.asm"
+INCLUDE "library/common/main/subroutine/dot.asm"
+INCLUDE "library/common/main/subroutine/cpix2.asm"
+INCLUDE "library/common/main/subroutine/ecblb2.asm"
+INCLUDE "library/common/main/subroutine/ecblb.asm"
+INCLUDE "library/common/main/subroutine/spblb-dobulb.asm"
+INCLUDE "library/common/main/variable/spbt.asm"
+INCLUDE "library/common/main/variable/ecbt.asm"
+INCLUDE "library/common/main/subroutine/msbar.asm"
+
+.HCNT
 
  EQUB &00
 
-.HANGER
-
- LDX #&02
- LDA #&0F
- STA VIA+&34
-
-.HAL1
-
- STX T
- LDA #&82
- STX Q
- JSR DVID4_COPY
-
- LDA P
- CLC
- ADC #&60
- TAY
- LDA ylookup,Y
- STA SC+1
- STA R
- LDA P
- AND #&07
- STA SC
- LDY #&00
- JSR HAS2
-
- LDY R
- INY
- STY SC+1
- LDA #&40
- LDY #&F8
- JSR HAS3
-
- LDY L1F85
- BEQ HA2
-
- LDY #&00
- LDA #&88
- JSR HAL3
-
- DEC SC+1
- LDY #&F8
- LDA #&10
- JSR HAS3
-
-.HA2
-
- LDX T
- INX
- CPX #&0D
- BCC HAL1
-
- LDA #&3C
- STA S
- LDA #&10
- LDX #&40
- STX R
-
-.HAL6
-
- LDX R
- STX SC+1
- STA T
- AND #&FC
- STA SC
- LDX #&88
- LDY #&01
-
-.HAL7
-
- TXA
- AND (SC),Y
- BNE HA6
-
- TXA
- AND #&F0
- ORA (SC),Y
- STA (SC),Y
- INY
- CPY #&08
- BNE HAL7
-
- INC SC+1
- INC SC+1
- LDY #&00
- BEQ HAL7
-
-.HA6
-
- LDA T
- CLC
- ADC #&10
- BCC L2010
-
- INC R
-
-.L2010
-
- DEC S
- BNE HAL6
-
- LDA #&09
- STA VIA+&34
- RTS
-
-.HA3
-
- RTS
+INCLUDE "library/enhanced/main/subroutine/hanger.asm"
 
 .HAS2
 
@@ -2632,7 +745,7 @@ L1927 = LI230+1
 
  RTS
 
-.DVID4_COPY
+.DVID4_DUPLICATE
 
  LDX #&08
  ASL A
@@ -2665,7 +778,7 @@ L1927 = LI230+1
 
  JMP RR4
 
-.TT67_COPY
+.TT67_DUPLICATE
 
  LDA #&0C
 
@@ -2799,23 +912,23 @@ L1927 = LI230+1
 
  LDA (P),Y
  AND #&F0
- STA U_COPY
+ STA U_DUPLICATE
  LSR A
  LSR A
  LSR A
  LSR A
- ORA U_COPY
+ ORA U_DUPLICATE
  AND COL
  EOR (SC),Y
  STA (SC),Y
  LDA (P),Y
  AND #&0F
- STA U_COPY
+ STA U_DUPLICATE
  ASL A
  ASL A
  ASL A
  ASL A
- ORA U_COPY
+ ORA U_DUPLICATE
  AND COL
  EOR (P+2),Y
  STA (P+2),Y
@@ -2928,7 +1041,7 @@ L1927 = LI230+1
  STA QQ17
  LDA #&14
  STA YC
- JSR TT67_COPY
+ JSR TT67_DUPLICATE
 
  LDA #&0F
  STA VIA+&34
@@ -2995,7 +1108,7 @@ L1927 = LI230+1
  LSR A
  ORA ALP2
  EOR #&80
- JSR ADD_COPY
+ JSR ADD_DUPLICATE
 
  JSR DIL2
 
@@ -3007,7 +1120,7 @@ L1927 = LI230+1
 
 .L2245
 
- JSR ADD_COPY
+ JSR ADD_DUPLICATE
 
  JSR DIL2
 
@@ -3254,13 +1367,13 @@ L1927 = LI230+1
  INC SC+1
  RTS
 
-.ADD_COPY
+.ADD_DUPLICATE
 
  STA T1
  AND #&80
  STA T
  EOR S
- BMI MU8_COPY
+ BMI MU8_DUPLICATE
 
  LDA R
  CLC
@@ -3271,7 +1384,7 @@ L1927 = LI230+1
  ORA T
  RTS
 
-.MU8_COPY
+.MU8_DUPLICATE
 
  LDA S
  AND #&7F
@@ -3283,7 +1396,7 @@ L1927 = LI230+1
  LDA T1
  AND #&7F
  SBC U
- BCS MU9_COPY
+ BCS MU9_DUPLICATE
 
  STA U
  TXA
@@ -3294,7 +1407,7 @@ L1927 = LI230+1
  SBC U
  ORA #&80
 
-.MU9_COPY
+.MU9_DUPLICATE
 
  EOR T
  RTS
@@ -4418,7 +2531,7 @@ L3000 = L2FFF+1
  LDA BOMB
  BPL MA77
 
- JSR WSCAN_COPY
+ JSR WSCAN_DUPLICATE
 
  ASL BOMB
  BMI MA77
@@ -4721,7 +2834,7 @@ L3000 = L2FFF+1
 
  RTS
 
-.WSCAN_COPY
+.WSCAN_DUPLICATE
 
  JSR L31E2
 
@@ -5805,7 +3918,7 @@ L32F6 = DTM+2
  LDA #&CD
  JSR DETOK
 
- JSR TT67_COPY
+ JSR TT67_DUPLICATE
 
  JMP L3915
 
@@ -6720,7 +4833,7 @@ DTW7 = MT16+1
 
 .HA9
 
- STY L1F85
+ STY HCNT
  JMP HANGER
 
 .HAS1
@@ -6795,17 +4908,17 @@ DTW7 = MT16+1
 
  RTS
 
-.TA35_COPY
+.TA35_DUPLICATE
 
  LDA INWK
  ORA INWK+3
  ORA INWK+6
- BNE TA87_COPY
+ BNE TA87_DUPLICATE
 
  LDA #&50
  JSR OOPS
 
-.TA87_COPY
+.TA87_DUPLICATE
 
  LDX #&04
  BNE L3E37
@@ -6831,7 +4944,7 @@ DTW7 = MT16+1
 .TA18
 
  LDA ECMA
- BNE TA35_COPY
+ BNE TA35_DUPLICATE
 
  LDA INWK+32
  ASL A
@@ -6855,7 +4968,7 @@ DTW7 = MT16+1
 
  LDA INWK+32
  CMP #&82
- BEQ TA35_COPY
+ BEQ TA35_DUPLICATE
 
  LDY #&1F
  LDA (V),Y
@@ -8744,7 +6857,7 @@ L41F8 = L41F7+1
  LDX #&00
  STA widget
  TAX
- BEQ LLfix_COPY
+ BEQ LLfix_DUPLICATE
 
  LDA logL,X
  LDX Q
@@ -8754,17 +6867,17 @@ L41F8 = L41F7+1
  LDA log,X
  LDX Q
  SBC log,X
- BCS LL2_COPY
+ BCS LL2_DUPLICATE
 
  TAX
  LDA antilog,X
 
-.LLfix_COPY
+.LLfix_DUPLICATE
 
  STA R
  RTS
 
-.LL2_COPY
+.LL2_DUPLICATE
 
  LDA #&FF
  STA R
@@ -8821,10 +6934,10 @@ L41F8 = L41F7+1
  STA R
  LDA P+2
 
-.LL31_COPY
+.LL31_DUPLICATE
 
  ASL A
- BCS LL29_COPY
+ BCS LL29_DUPLICATE
 
  CMP Q
  BCC L4794
@@ -8834,20 +6947,20 @@ L41F8 = L41F7+1
 .L4794
 
  ROL R
- BCS LL31_COPY
+ BCS LL31_DUPLICATE
 
- JMP LL31_COPY_RTS
+ JMP LL31_DUPLICATE_RTS
 
-.LL29_COPY
+.LL29_DUPLICATE
 
  SBC Q
  SEC
  ROL R
- BCS LL31_COPY
+ BCS LL31_DUPLICATE
 
  LDA R
 
-.LL31_COPY_RTS
+.LL31_DUPLICATE_RTS
 
  LDA #&00
  STA K+1
@@ -10143,7 +8256,7 @@ L49C1 = L49C0+1
  STA S
  LDA R
  CMP #&1A
- BCS OUT_COPY
+ BCS OUT_DUPLICATE
 
  ASL A
  STA T
@@ -10151,13 +8264,13 @@ L49C1 = L49C0+1
  ASL A
  ADC T
  ADC S
- BCS OUT_COPY
+ BCS OUT_DUPLICATE
 
  STA R
  CMP QQ25
  BEQ TT226
 
- BCS OUT_COPY
+ BCS OUT_DUPLICATE
 
 .TT226
 
@@ -10201,7 +8314,7 @@ L49C1 = L49C0+1
  LDY QQ29
  JMP NWDAVxx
 
-.OUT_COPY
+.OUT_DUPLICATE
 
  LDA Q
  JSR DASC

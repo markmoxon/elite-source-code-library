@@ -3,8 +3,12 @@
 \       Name: LL30
 \       Type: Subroutine
 \   Category: Drawing lines
+IF _6502SP_VERSION
 \    Summary: Draw a one-segment line by sending an OSWRCH 129 command to the
 \             I/O processor
+ELIF _MASTER_VERSION
+\    Summary: Draw a one-segment line
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
@@ -21,6 +25,8 @@
 \ ******************************************************************************
 
 .LL30
+
+IF _6502SP_VERSION \ Tube
 
  LDA #129               \ Send an OSWRCH 129 command to the I/O processor to
  JSR OSWRCH             \ tell it to start receiving a new line to draw. The
@@ -40,4 +46,18 @@
  JSR OSWRCH
  LDA Y2
  JMP OSWRCH
+
+ELIF _MASTER_VERSION
+
+ STY YSAV               \ ???
+ LDA #&0F
+ STA VIA+&34
+ JSR LOIN
+
+ LDA #&09
+ STA VIA+&34
+ LDY YSAV
+ RTS
+
+ENDIF
 

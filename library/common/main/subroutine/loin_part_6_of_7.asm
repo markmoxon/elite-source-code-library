@@ -17,7 +17,7 @@
 \
 \   * Draw from (X1, Y1) at top left to (X2, Y2) at bottom right
 \
-IF _6502SP_VERSION \ Comment
+IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ This routine looks complex, but that's because the loop that's used in the
 \ cassette and disc versions has been unrolled to speed it up. The algorithm is
 \ unchanged, it's just a lot longer.
@@ -92,7 +92,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  RTS                    \ Return from the subroutine
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA SWAP               \ If SWAP = 0 then we didn't swap the coordinates above,
  BEQ LI290              \ so jump down to LI290 to plot the first pixel

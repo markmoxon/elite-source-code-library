@@ -3,7 +3,7 @@
 \       Name: HANGER
 \       Type: Subroutine
 \   Category: Ship hanger
-IF _DISC_DOCKED \ Comment
+IF _DISC_DOCKED OR _MASTER_VERSION \ Comment
 \    Summary: Display the ship hanger
 ELIF _6502SP_VERSION
 \    Summary: Implement the OSWORD 248 command (display the ship hanger)
@@ -11,7 +11,7 @@ ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-IF _DISC_DOCKED \ Comment
+IF _DISC_DOCKED OR _MASTER_VERSION \ Comment
 \ This routine is called after the ships in the hanger have been drawn, so all
 \ it has to do is draw the hanger's background.
 ELIF _6502SP_VERSION
@@ -37,7 +37,7 @@ ENDIF
 \ the hanger, this also means drawing lines between the ships, as well as in
 \ from each side.
 \
-IF _6502SP_VERSION \ Comment
+IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ Other entry points:
 \
 \   HA3                 Contains an RTS
@@ -53,13 +53,20 @@ ENDIF
                         \ from 2 to 12, one for each of the 11 horizontal lines
                         \ in the floor, so set the initial value in X
 
+IF _MASTER_VERSION
+
+ LDA #&0F               \ ???
+ STA VIA+&34
+
+ENDIF
+
 .HAL1
 
 IF _DISC_DOCKED \ Minor
 
  STX XSAV               \ Store the loop counter in XSAV
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  STX T                  \ Store the loop counter in T
 
@@ -75,7 +82,12 @@ ENDIF
 
  STX Q                  \ Set Q = T
 
+IF _DISC_VERSION OR _6502SP_VERSION
  JSR DVID4              \ Calculate the following:
+ELIF _MASTER_VERSION
+ JSR DVID4_DUPLICATE    \ Calculate the following:
+ENDIF
+
                         \
                         \   (P R) = 256 * A / Q
                         \         = 256 * 130 / T
@@ -109,7 +121,7 @@ IF _DISC_DOCKED \ Screen
 
  STA SCH                \ Store the screen page in the high byte of SC(1 0)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA P                  \ Set Y = #Y + P
  CLC                    \
@@ -146,7 +158,7 @@ IF _DISC_DOCKED \ Screen
                         \ sixth pixel of the last byte, so we skip the 2-pixel
                         \ scren border at the right edge of the screen
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDY R                  \ Fetch the page number of the line from R, increment it
  INY                    \ so it points to the right half of the character row
@@ -174,6 +186,14 @@ IF _DISC_DOCKED \ Tube
                         \ HALL routine above if there is only one ship
 
  BEQ HA2                \ If YSAV is zero, jump to HA2 to skip the following
+                        \ as there is only one ship in the hanger
+
+ELIF _MASTER_VERSION
+
+ LDY HCNT               \ Fetch the value of HCNT, which gets set to 0 in the
+                        \ HALL routine above if there is only one ship
+
+ BEQ HA2                \ If HCNT is zero, jump to HA2 to skip the following
                         \ as there is only one ship in the hanger
 
 ELIF _6502SP_VERSION
@@ -210,7 +230,7 @@ IF _DISC_DOCKED \ Screen
                         \ we bump into something already on-screen, at which
                         \ point it stops drawing
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDY #0                 \ First we draw the line from the centre of the screen
                         \ to the right. SC(1 0) points to the start address of
@@ -256,7 +276,7 @@ IF _DISC_DOCKED \ Minor
  LDX XSAV               \ Fetch the loop counter from XSAV and increment it
  INX
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDX T                  \ Fetch the loop counter from T and increment it
  INX
@@ -268,7 +288,7 @@ ENDIF
 
                         \ The floor is done, so now we move on to the back wall
 
-IF _6502SP_VERSION \ Other: The ship hanger in the 6502SP version draws the vertical lines for the backdrop 60 times, when it only needs to do this 15 times. Is this a quick way of making the hanger display hang around for longer, or is it just a mistake?
+IF _6502SP_VERSION OR _MASTER_VERSION \ Other: The ship hanger in the advanced versions draws the vertical lines for the backdrop 60 times, when it only needs to do this 15 times. Is this a quick way of making the hanger display hang around for longer, or is it just a mistake?
 
  LDA #60                \ Set S = 60, so we run the following 60 times (though I
  STA S                  \ have no idea why it's 60 times, when it should be 15,
@@ -284,7 +304,7 @@ ENDIF
                         \ line as we work our way through them from left to
                         \ right, incrementing by 16 for each new line
 
-IF _6502SP_VERSION \ Screen
+IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  LDX #&40               \ Set X = &40, the high byte of the start of screen
  STX R                  \ memory (the screen starts at location &4000) and the
@@ -311,7 +331,7 @@ IF _DISC_DOCKED \ Screen
 
  LDX #%10000000         \ Set a mask in X to the first pixel the 8-pixel byte
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDX R                  \ Set the high byte of SC(1 0) to R
  STX SC+1
@@ -348,7 +368,7 @@ IF _DISC_DOCKED \ Screen
  ORA (SC),Y             \ OR the byte with the current contents of screen
                         \ memory, so the pixel we want is set
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  AND #RED               \ Apply the pixel mask in A to a four-pixel block of
                         \ red pixels, so we now know which bits to set in screen
@@ -373,7 +393,7 @@ IF _DISC_DOCKED \ Screen
  INC SC+1               \ Point SC(1 0) to the next page in memory, i.e. the
                         \ next character row
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  INC SC+1               \ There are two pages of memory for each character row,
  INC SC+1               \ so we increment the high byte of SC(1 0) twice to
@@ -395,7 +415,7 @@ IF _DISC_DOCKED \ Screen
  CLC                    \ XSAV into A, and add 16 so that A contains the
  ADC #16                \ x-coordinate of the next line to draw
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA T                  \ Fetch the x-coordinate of the line we just drew from T
  CLC                    \ into A, and add 16 so that A contains the x-coordinate
@@ -411,7 +431,15 @@ ENDIF
  BNE HAL6               \ Loop back to HAL6 until we have run through the loop
                         \ 60 times, by which point we are most definitely done
 
-IF _6502SP_VERSION \ Label
+IF _MASTER_VERSION
+
+ LDA #&09               \ ???
+ STA VIA+&34
+ RTS
+
+ENDIF
+
+IF _6502SP_VERSION OR _MASTER_VERSION \ Label
 
 .HA3
 

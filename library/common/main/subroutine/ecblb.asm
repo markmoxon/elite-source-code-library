@@ -3,7 +3,7 @@
 \       Name: ECBLB
 \       Type: Subroutine
 \   Category: Dashboard
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
 \    Summary: Light up the E.C.M. indicator bulb ("E") on the dashboard
 ELIF _6502SP_VERSION
 \    Summary: Implement the #DOBULB 255 command (draw the E.C.M. indicator bulb)
@@ -19,6 +19,13 @@ ENDIF
 \ ******************************************************************************
 
 .ECBLB
+
+IF _MASTER_VERSION \ Platform
+
+ LDA #&0F               \ ???
+ STA VIA+&34
+
+ENDIF
 
 IF _CASSETTE_VERSION \ Screen
 
@@ -53,7 +60,7 @@ ELIF _DISC_FLIGHT
  BNE BULB-2             \ Jump down to BULB-2 (this BNE is effectively a JMP as
                         \ A will never be zero)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA #8*14              \ The E.C.M. bulb is in character block number 14 with
  STA SC                 \ each character taking 8 bytes, so this sets the low
@@ -85,8 +92,16 @@ ELIF _6502SP_VERSION
  BPL BULL2              \ Loop back to poke the next byte until we have done
                         \ all 16 bytes across two character blocks
 
+ENDIF
+
+IF _6502SP_VERSION
+
  JMP PUTBACK            \ Jump to PUTBACK to restore the USOSWRCH handler and
                         \ return from the subroutine using a tail call
 
+ELIF _MASTER_VERSION
+
+ BMI BULB2              \ ???
 
 ENDIF
+

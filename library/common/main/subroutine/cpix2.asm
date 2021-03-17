@@ -12,7 +12,7 @@ ENDIF
 \
 IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \ Draw a single-height mode 5 dash (1 pixel high, 2 pixels wide).
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 \ Draw a single-height mode 2 dash (1 pixel high, 2 pixels wide).
 ENDIF
 \
@@ -24,7 +24,7 @@ ENDIF
 \
 IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \   COL                 The colour of the dash as a mode 5 character row byte
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 \   COL                 The colour of the dash as a mode 2 character row byte
 ENDIF
 \
@@ -32,7 +32,15 @@ ENDIF
 
 .CPIX2
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  LDA Y1                 \ Fetch the y-coordinate into A
+
+ELIF _MASTER_VERSION
+
+ STA Y1                 \ ???
+
+ENDIF
 
 \.CPIX                  \ This label is commented out in the original source. It
                         \ would provide a new entry point with A specifying the
@@ -63,7 +71,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
                         \ byte of SC(1 0), so now SC(1 0) points to the
                         \ character block we need to draw into
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA ylookup,Y          \ Look up the page number of the character row that
  STA SC+1               \ contains the pixel with the y-coordinate in Y, and
@@ -116,7 +124,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
                         \ on the colour we want to draw (i.e. A is acting as a
                         \ mask on the colour byte)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA X1                 \ Copy bit 1 of X1 to bit 1 of X. X will now be either
  AND #%00000010         \ 0 or 2, and will be double the pixel number in the
@@ -140,7 +148,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
  LDA CTWOS+1,X          \ Fetch a mode 5 1-pixel byte with the pixel position
                         \ at X+1, so we can draw the right pixel of the dash
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA CTWOS+2,X          \ Fetch a mode 2 1-pixel byte with the pixel position
                         \ at (X+1)/2, so we can draw the right pixel of the dash
@@ -150,7 +158,7 @@ ENDIF
 IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
  BPL CP1                \ The CTWOS table has an extra row at the end of it that
                         \ repeats the first value, %10001000, so if we have not
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
  BPL CP1                \ The CTWOS table has 2 extra rows at the end of it that
                         \ repeat the first values, %10101010, so if we have not
 ENDIF
@@ -164,7 +172,7 @@ ENDIF
                         \ along (as there are 8 bytes in a character block).
                         \ The C flag was cleared above, so this ADC is correct
 
-IF _6502SP_VERSION \ Screen
+IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  BCC P%+4               \ If the addition we just did overflowed, then increment
  INC SC+1               \ the high byte of SC(1 0), as this means we just moved
@@ -180,7 +188,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
                         \ leftmost pixel in the next character along as the
                         \ dash's right pixel)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA CTWOS+2,X          \ Refetch the mode 2 1-pixel byte, as we just overwrote
                         \ A (the byte will still be the fifth or sixth byte from
@@ -192,9 +200,17 @@ ENDIF
 
 .CP1
 
- AND COL                \ Draw the dash's right pixel according to the mask in
- EOR (SC),Y             \ A, with the colour in COL, using EOR logic, just as
- STA (SC),Y             \ above
+ AND COL                \ Apply the colour mask to the pixel byte, as above
+
+IF _MASTER_VERSION \ Platform
+
+ STA R                  \ ???
+
+ENDIF
+
+ EOR (SC),Y             \ Draw the dash's right pixel according to the mask in
+ STA (SC),Y             \ A, with the colour in COL, using EOR logic, just as
+                        \ above
 
  RTS                    \ Return from the subroutine
 

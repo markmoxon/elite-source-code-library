@@ -64,7 +64,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
                         \ the high byte of SC is set correctly for drawing the
                         \ start of our line
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDY Y1                 \ Look up the page number of the character row that
  LDA ylookup,Y          \ contains the pixel with the y-coordinate in Y1, and
@@ -82,7 +82,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
  TXA                    \ Set A = bits 3-7 of X1
  AND #%11111000
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  TXA                    \ Set A = 2 * bits 2-6 of X1
  AND #%11111100         \
@@ -106,7 +106,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
  STA R                  \ and store it in R
 
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  BCC P%+4               \ If bit 7 of X1 was set, so X1 > 127, increment the
  INC SC+1               \ high byte of SC(1 0) to point to the second page on
@@ -181,7 +181,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Other: Part 2 of the LOIN routine in the
  BCS DOWN               \ If Y2 >= Y1 - 1 then jump to DOWN, as we need to draw
                         \ the line to the right and down
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
                         \ The following section calculates:
                         \
@@ -209,7 +209,15 @@ ELIF _6502SP_VERSION
  SEC                    \
  SBC logL,X             \ by first subtracting the low bytes of log(Q) - log(P)
 
+ENDIF
+
+IF _6502SP_VERSION \ Other
+
  BMI LIlog4             \ If A > 127, jump to LIlog4
+
+ENDIF
+
+IF _6502SP_VERSION OR _MASTER_VERSION
 
  LDX Q                  \ And then subtracting the high bytes of log(Q) - log(P)
  LDA log,X              \ so now A contains the high byte of log(Q) - log(P)
@@ -234,6 +242,10 @@ ELIF _6502SP_VERSION
 
 .LIlog7
 
+ENDIF
+
+IF _6502SP_VERSION
+
  LDA #0                 \ The numerator in the division is 0, so set A to 0 and
  BEQ LIlog6             \ jump to LIlog6 to return the result (this BEQ is
                         \ effectively a JMP as A is always zero)
@@ -251,6 +263,14 @@ ELIF _6502SP_VERSION
 
  TAX                    \ Otherwise we set A to the A-th entry from the
  LDA antilogODD,X       \ antilogODD so the result of the division is now in A
+
+ELIF _MASTER_VERSION
+
+ LDA #0                 \ The numerator in the division is 0, so set A to 0
+
+ENDIF
+
+IF _6502SP_VERSION OR _MASTER_VERSION
 
 .LIlog6
 

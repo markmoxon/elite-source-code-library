@@ -9,8 +9,11 @@ LL = 30
 
 \ New vars: L0098, L0099, L009B, L00FC
 \ KL vars: L00C9, L00CB, L00D0, L00D1
-
-\ XX3
+\ Save block? L0791
+\ L1229: distance for ship in TITLE?
+\ L1264 - L1266
+\ L12A6 - L12A9
+\ LDDEB
 
 CPU 1
 
@@ -123,33 +126,9 @@ QQ10    = $00E2
 NOSTM   = $00E3
 L00FC   = $00FC
 XX3     = $0100
-USERV   = $0200
 BRKV    = $0202
 IRQ1V   = $0204
-IRQ2V   = $0206
-CLIV    = $0208
-BYTEV   = $020A
-WORDV   = $020C
 WRCHV   = $020E
-RDCHV   = $0210
-FILEV   = $0212
-ARGSV   = $0214
-BGETV   = $0216
-BPUTV   = $0218
-GBPBV   = $021A
-FINDV   = $021C
-FSCV    = $021E
-EVENTV  = $0220
-UPTV    = $0222
-NETV    = $0224
-VDUV    = $0226
-KEYV    = $0228
-INSV    = $022A
-REMV    = $022C
-CNPV    = $022E
-INDV1   = $0230
-INDV2   = $0232
-INDV3   = $0234
 K%      = $0400
 L0401   = $0401
 L0402   = $0402
@@ -169,7 +148,6 @@ L0449   = $0449
 L06A9   = $06A9
 L0791   = $0791
 FRIN    = $0E41
-L0E45   = $0E45
 MANY    = $0E4E
 SSPR    = $0E50
 L0E58   = $0E58
@@ -251,8 +229,6 @@ L12A6   = $12A6
 L12A7   = $12A7
 L12A8   = $12A8
 L12A9   = $12A9
-L7FFE   = $7FFE
-L7FFF   = $7FFF
 XX21    = $8000
 L8002   = $8002
 L8003   = $8003
@@ -268,50 +244,12 @@ QQ18    = $A000
 SNE     = $A3C0
 ACT     = $A3E0
 TKN1    = $A400
-LAF47   = $AF47
 RUPLA   = $AF48
-LAF61   = $AF61
 RUGAL   = $AF62
 RUTOK   = $AF7C
 LDDEB   = $DDEB
 VIA     = $FE00
-LFE01   = $FE01
-LFE18   = $FE18
-LFE19   = $FE19
-LFE20   = $FE20
-LFE21   = $FE21
-LFE30   = $FE30
-LFE34   = $FE34
-LFE40   = $FE40
-LFE41   = $FE41
-LFE43   = $FE43
-LFE44   = $FE44
-LFE45   = $FE45
-LFE4D   = $FE4D
-LFE4E   = $FE4E
-LFE4F   = $FE4F
-LFE6E   = $FE6E
-OSWRSC  = $FFB3
-OSRDSC  = $FFB9
-OSEVEN  = $FFBF
-GSINIT  = $FFC2
-GSREAD  = $FFC5
-NVRDCH  = $FFC8
-NNWRCH  = $FFCB
-OSFIND  = $FFCE
-OSGBPB  = $FFD1
-OSBPUT  = $FFD4
-OSBGET  = $FFD7
-OSARGS  = $FFDA
-OSFILE  = $FFDD
-OSRDCH  = $FFE0
-OSASCI  = $FFE3
-OSNEWL  = $FFE7
-OSWRCH  = $FFEE
-OSWORD  = $FFF1
-OSBYTE  = $FFF4
 OSCLI   = $FFF7
-LFFFF   = $FFFF
 
         org     $1300
 .TVT3
@@ -364,16 +302,16 @@ LFFFF   = $FFFF
 
 .MASTER_DKSn
         LDX     #$FF
-        STX     LFE43
-        STA     LFE4F
+        STX     VIA+&43
+        STA     VIA+&4F
         LDA     #$00
-        STA     LFE40
+        STA     VIA+&40
         PHA
         PLA
         PHA
         PLA
         LDA     #$08
-        STA     LFE40
+        STA     VIA+&40
 .L1376
         RTS
 
@@ -572,9 +510,9 @@ LFFFF   = $FFFF
 .STARTUP
         SEI
         LDA     #$39
-        STA     LFE4E
+        STA     VIA+&4E
         LDA     #$7F
-        STA     LFE6E
+        STA     VIA+&6E
         LDA     IRQ1V
         STA     VEC
         LDA     IRQ1V+1
@@ -584,7 +522,7 @@ LFFFF   = $FFFF
         LDA     #$14
         STA     IRQ1V+1
         LDA     L153A
-        STA     LFE45
+        STA     VIA+&45
         CLI
         RTS
 
@@ -598,25 +536,25 @@ LFFFF   = $FFFF
         PHY
         LDY     #$0F
         LDA     #$02
-        BIT     LFE4D
+        BIT     VIA+&4D
         BNE     LINSCN
 
         LDA     #$14
-        STA     LFE20
+        STA     VIA+&20
         LDA     ESCP
         AND     #$04
         EOR     #$34
-        STA     LFE21
+        STA     VIA+&21
 .L14E4
         LDA     L14BB,Y
-        STA     LFE21
+        STA     VIA+&21
         DEY
         BNE     L14E4
 
-        LDA     LFE18
+        LDA     VIA+&18
         AND     #$03
         TAY
-        LDA     LFE19
+        LDA     VIA+&19
         STA     L12A7,Y
         INY
         TYA
@@ -625,30 +563,30 @@ LFFFF   = $FFFF
 
         LDA     #$00
 .L1501
-        STA     LFE18
+        STA     VIA+&18
         PLY
-        LDA     LFE44
+        LDA     VIA+&44
         LDA     L00FC
         RTI
 
 .LINSCN
-        LDA     LFE41
+        LDA     VIA+&41
         LDA     L00FC
         PHA
         LDA     L153B
         STA     DL
-        STA     LFE44
+        STA     VIA+&44
         LDA     L153A
-        STA     LFE45
+        STA     VIA+&45
         LDA     HFX
         BNE     L1532
 
         LDA     #$18
-        STA     LFE20
+        STA     VIA+&20
 .VNT3
         LDA     TVT3,Y
 L152A = VNT3+1
-        STA     LFE21
+        STA     VIA+&21
         DEY
         BNE     VNT3
 
@@ -673,7 +611,7 @@ L152A = VNT3+1
 
 .MASTER_MOVE_ZP_3000
         LDA     #$0F
-        STA     LFE34
+        STA     VIA+&34
         LDX     #$90
 .L1547
         LDA     ZP,X
@@ -682,12 +620,12 @@ L152A = VNT3+1
         BNE     L1547
 
         LDA     #$09
-        STA     LFE34
+        STA     VIA+&34
         RTS
 
 .MASTER_SWAP_ZP_3000
         LDA     #$0F
-        STA     LFE34
+        STA     VIA+&34
         LDX     #$90
 .L155C
         LDA     ZP,X
@@ -699,9 +637,9 @@ L152A = VNT3+1
         BNE     L155C
 
         LDA     #$09
-        STA     LFE34
+        STA     VIA+&34
         LDA     #$06
-        STA     LFE30
+        STA     VIA+&30
         RTS
 
 .L1576
@@ -811,7 +749,7 @@ L152A = VNT3+1
         LDA     #$F6
 .L16D2
         LDY     #$0F
-        STY     LFE34
+        STY     VIA+&34
         JSR     CPIX2
 
         LDA     Y1
@@ -843,7 +781,7 @@ L152A = VNT3+1
 
 .RTS
         LDA     #$09
-        STA     LFE34
+        STA     VIA+&34
         RTS
 
 .RTS_PLUS_1
@@ -872,17 +810,17 @@ L152A = VNT3+1
         BNE     VLL2
 
         LDA     #$09
-        STA     LFE34
+        STA     VIA+&34
         RTS
 
 .LL30
         STY     YSAV
         LDA     #$0F
-        STA     LFE34
+        STA     VIA+&34
         JSR     LOIN
 
         LDA     #$09
-        STA     LFE34
+        STA     VIA+&34
         LDY     YSAV
         RTS
 
@@ -2076,7 +2014,7 @@ L1927 = LI230+1
 .HLOIN3
         STY     YSAV
         LDY     #$0F
-        STY     LFE34
+        STY     VIA+&34
         LDX     XX15
         CPX     X2
         BEQ     HL6
@@ -2156,7 +2094,7 @@ L1927 = LI230+1
         STA     (SC),Y
 .HL6
         LDY     #$09
-        STY     LFE34
+        STY     VIA+&34
         LDY     YSAV
         RTS
 
@@ -2175,7 +2113,7 @@ L1927 = LI230+1
         EOR     (SC),Y
         STA     (SC),Y
         LDY     #$09
-        STY     LFE34
+        STY     VIA+&34
         LDY     YSAV
         RTS
 
@@ -2233,7 +2171,7 @@ L1927 = LI230+1
 .PIXEL
         STY     T1
         LDY     #$0F
-        STY     LFE34
+        STY     VIA+&34
         TAY
         LDA     L1576,Y
         STA     SC+1
@@ -2260,7 +2198,7 @@ L1927 = LI230+1
         EOR     (SC),Y
         STA     (SC),Y
         LDY     #$09
-        STY     LFE34
+        STY     VIA+&34
         LDY     T1
 .L1E61
         RTS
@@ -2280,7 +2218,7 @@ L1927 = LI230+1
         EOR     (SC),Y
         STA     (SC),Y
         LDY     #$09
-        STY     LFE34
+        STY     VIA+&34
         LDY     T1
         RTS
 
@@ -2290,7 +2228,7 @@ L1927 = LI230+1
 
 .DOT
         LDA     #$0F
-        STA     LFE34
+        STA     VIA+&34
         LDA     COMX
         STA     XX15
         LDX     COMC
@@ -2307,7 +2245,7 @@ L1927 = LI230+1
         JSR     CPIX2
 
         LDA     #$09
-        STA     LFE34
+        STA     VIA+&34
         RTS
 
 .CPIX2
@@ -2357,7 +2295,7 @@ L1927 = LI230+1
         STA     ECMA
 .ECBLB
         LDA     #$0F
-        STA     LFE34
+        STA     VIA+&34
         LDA     #$70
         STA     SC
         LDA     #$7A
@@ -2374,7 +2312,7 @@ L1927 = LI230+1
 
 .SPBLB
         LDA     #$0F
-        STA     LFE34
+        STA     VIA+&34
         LDA     #$80
         STA     SC
         LDA     #$7B
@@ -2389,7 +2327,7 @@ L1927 = LI230+1
 
 .L1F27
         LDA     #$09
-        STA     LFE34
+        STA     VIA+&34
         RTS
 
 .L1F2D
@@ -2404,7 +2342,7 @@ L1927 = LI230+1
 
 .MSBAR
         LDA     #$0F
-        STA     LFE34
+        STA     VIA+&34
         TXA
         PHA
         ASL     A
@@ -2439,7 +2377,7 @@ L1927 = LI230+1
 
         PLX
         LDA     #$09
-        STA     LFE34
+        STA     VIA+&34
         RTS
 
 .L1F85
@@ -2448,7 +2386,7 @@ L1927 = LI230+1
 .HANGER
         LDX     #$02
         LDA     #$0F
-        STA     LFE34
+        STA     VIA+&34
 .HAL1
         STX     T
         LDA     #$82
@@ -2536,7 +2474,7 @@ L1927 = LI230+1
         BNE     HAL6
 
         LDA     #$09
-        STA     LFE34
+        STA     VIA+&34
         RTS
 
 .HA3
@@ -2642,7 +2580,7 @@ L1927 = LI230+1
         BEQ     RR4S
 
         LDY     #$0F
-        STY     LFE34
+        STY     VIA+&34
         TAY
         BEQ     RR4S
 
@@ -2725,7 +2663,7 @@ L1927 = LI230+1
         JSR     TTX66
 
         LDA     #$0F
-        STA     LFE34
+        STA     VIA+&34
         LDA     #$01
         STA     XC
         STA     YC
@@ -2772,7 +2710,7 @@ L1927 = LI230+1
 
 .RR4
         LDA     #$09
-        STA     LFE34
+        STA     VIA+&34
         PLX
         PLY
         LDA     K3
@@ -2786,7 +2724,7 @@ L1927 = LI230+1
 
 .TTX66
         LDX     #$0F
-        STX     LFE34
+        STX     VIA+&34
         LDX     #$40
 .BOL1
         JSR     ZES1
@@ -2797,7 +2735,7 @@ L1927 = LI230+1
 
 .BOX
         LDX     #$0F
-        STX     LFE34
+        STX     VIA+&34
         LDA     COL
         PHA
         LDA     #$0F
@@ -2826,7 +2764,7 @@ L1927 = LI230+1
         PLA
         STA     COL
         LDA     #$09
-        STA     LFE34
+        STA     VIA+&34
         RTS
 
 .BOS2
@@ -2865,7 +2803,7 @@ L1927 = LI230+1
         JSR     TT67_COPY
 
         LDA     #$0F
-        STA     LFE34
+        STA     VIA+&34
         LDA     #$6A
         STA     SC+1
         LDA     #$00
@@ -2891,13 +2829,13 @@ L1927 = LI230+1
         BNE     CLYL
 
         LDA     #$09
-        STA     LFE34
+        STA     VIA+&34
         LDA     #$00
         RTS
 
 .DIALS
         LDA     #$0F
-        STA     LFE34
+        STA     VIA+&34
         LDA     #$01
         STA     LDDEB
         LDA     #$A0
@@ -3017,7 +2955,7 @@ L1927 = LI230+1
         JSR     DILX
 
         LDA     #$09
-        STA     LFE34
+        STA     VIA+&34
         JMP     COMPAS
 
 .PZW2
@@ -3901,9 +3839,9 @@ L1927 = LI230+1
 
         ASL     A
         TAY
-        LDA     L7FFE,Y
+        LDA     XX21-2,Y
         STA     XX0
-        LDA     L7FFF,Y
+        LDA     XX21-1,Y
         STA     XX0+1
         LDA     BOMB
         BPL     MA21
@@ -6275,9 +6213,9 @@ DTW7 = MT16+1
         TYA
         ASL     A
         TAX
-        LDA     L7FFE,X
+        LDA     XX21-2,X
         STA     XX0
-        LDA     L7FFF,X
+        LDA     XX21-1,X
         STA     XX0+1
         BEQ     HA1
 
@@ -8297,16 +8235,16 @@ L41F8 = L41F7+1
 
         LDY     #$00
 .PDL1
-        LDA     LAF47,Y
+        LDA     RUPLA-1,Y
         CMP     ZZ
         BNE     PD2
 
-        LDA     LAF61,Y
+        LDA     RUGAL-1,Y
         AND     #$7F
         CMP     GCNT
         BNE     PD2
 
-        LDA     LAF61,Y
+        LDA     RUGAL-1,Y
         BMI     PD3
 
         LDA     TP
@@ -11213,7 +11151,7 @@ L527A = zZ_lc+1
         INY
         LDA     (XX19),Y
         EOR     CNT
-        STA     LFFFF,Y
+        STA     &FFFF,Y
         CPY     #$06
         BNE     EXL2
 
@@ -11465,7 +11403,7 @@ L527A = zZ_lc+1
         LDA     #$06
         SEI
         STA     VIA
-        STX     LFE01
+        STX     VIA+&01
         CLI
         RTS
 
@@ -11676,11 +11614,11 @@ L527A = zZ_lc+1
 
         ASL     A
         TAY
-        LDA     L7FFF,Y
+        LDA     XX21-1,Y
         BEQ     NW3
 
         STA     XX0+1
-        LDA     L7FFE,Y
+        LDA     XX21-2,Y
         STA     XX0
         CPY     #$04
         BEQ     NW6
@@ -12845,9 +12783,9 @@ L527A = zZ_lc+1
 .L629E
         ASL     A
         TAY
-        LDA     L7FFE,Y
+        LDA     XX21-2,Y
         STA     SC
-        LDA     L7FFF,Y
+        LDA     XX21-1,Y
         STA     SC+1
         LDY     #$05
         LDA     (SC),Y
@@ -13681,7 +13619,7 @@ L527A = zZ_lc+1
         AND     #$80
         LDY     #$1F
         STA     (INF),Y
-        LDA     L0E45
+        LDA     FRIN+4
         BEQ     D1
 
         LDA     #$00
@@ -13892,7 +13830,7 @@ L527A = zZ_lc+1
         JSR     LL9
 
         DEC     MCNT
-        LDA     LFE40
+        LDA     VIA+&40
         AND     #$10
         BEQ     TL2
 
@@ -14674,7 +14612,7 @@ L527A = zZ_lc+1
         EOR     L2C5B
         EOR     L2C5A
         STA     JSTY
-        LDA     LFE40
+        LDA     VIA+&40
         AND     #$10
         BNE     DK4
 
@@ -17482,13 +17420,13 @@ L527A = zZ_lc+1
 .L7E73
         LDY     #$03
         SEI
-        STY     LFE40
+        STY     VIA+&40
         LDY     #$7F
-        STY     LFE43
-        STA     LFE4F
-        LDY     LFE4F
+        STY     VIA+&43
+        STA     VIA+&4F
+        LDY     VIA+&4F
         LDA     #$0B
-        STA     LFE40
+        STA     VIA+&40
         CLI
         TYA
         BMI     DKS1
@@ -17529,13 +17467,13 @@ L527A = zZ_lc+1
 .DKS4
         LDX     #$03
         SEI
-        STX     LFE40
+        STX     VIA+&40
         LDX     #$7F
-        STX     LFE43
-        STA     LFE4F
-        LDX     LFE4F
+        STX     VIA+&43
+        STA     VIA+&4F
+        LDX     VIA+&4F
         LDA     #$0B
-        STA     LFE40
+        STA     VIA+&40
         CLI
         TXA
         RTS

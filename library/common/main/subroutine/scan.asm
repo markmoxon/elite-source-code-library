@@ -16,6 +16,14 @@
 \
 \ ******************************************************************************
 
+IF _MASTER_VERSION \ Platform
+
+.SC5
+
+ RTS                    \ Return from the subroutine
+
+ENDIF
+
 .SCAN
 
  LDA INWK+31            \ Fetch the ship's scanner flag from byte #31
@@ -28,7 +36,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Minor
 
  LDA TYPE               \ Fetch the ship's type from TYPE into A
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDX TYPE               \ Fetch the ship's type from TYPE into X
 
@@ -72,6 +80,14 @@ ELIF _6502SP_VERSION
  STA SCANcol            \ Store the scanner colour in SCANcol so it can be sent
                         \ to the I/O processor with the #onescan command
 
+ELIF _MASTER_VERSION
+
+ LDA scacol,X           \ Set A to the scanner colour for this ship type from
+                        \ the X-th entry in the scacol table
+
+ STA COL                \ Store the scanner colour in COL so it can be used to
+                        \ draw this ship in the correct colour
+
 ENDIF
 
  LDA INWK+1             \ If any of x_hi, y_hi and z_hi have a 1 in bit 6 or 7,
@@ -104,6 +120,12 @@ ENDIF
                         \ this gives A the sign of x_sign and gives it a value
                         \ range of -63 (%11000001) to 0
 
+IF _MASTER_VERSION \ Other
+
+ CLC                    \ ???
+
+ENDIF
+
 .SC2
 
 IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Tube
@@ -117,6 +139,15 @@ ELIF _6502SP_VERSION
 
  STA SCANx1             \ Store the x-coordinate in SCANx1 so it can be sent
                         \ to the I/O processor with the #onescan command
+
+ELIF _MASTER_VERSION
+
+ ADC #125               \ ???
+ AND #&FE
+ STA X1
+ TAX
+ DEX
+ DEX
 
 ENDIF
 
@@ -137,7 +168,15 @@ ENDIF
 
  CLC                    \ Clear the C flag
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Minor
+
  LDX INWK+8             \ Set X = z_sign
+
+ELIF _MASTER_VERSION
+
+ LDY INWK+8             \ Set Y = z_sign
+
+ENDIF
 
  BPL SC3                \ If z_sign is positive, skip the following
 
@@ -151,8 +190,17 @@ ENDIF
 
  ADC #35                \ Set A = 35 + A to give a number in the range 20 to 50
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Minor
+
  EOR #%11111111         \ Flip all the bits and store in SC, so SC is in the
  STA SC                 \ range 205 to 235, with a higher z_hi giving a lower SC
+
+ELIF _MASTER_VERSION
+
+ EOR #%11111111         \ Flip all the bits and store in Y2, so Y2 is in the
+ STA Y2                 \ range 205 to 235, with a higher z_hi giving a lower Y2
+
+ENDIF
 
                         \ Now for the stick height, which we calculate using the
                         \ following (see the deep dive on "The 3D scanner" for
@@ -165,7 +213,15 @@ ENDIF
 
  CLC                    \ Clear the C flag
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Minor
+
  LDX INWK+5             \ Set X = y_sign
+
+ELIF _MASTER_VERSION
+
+ LDY INWK+5             \ Set Y = y_sign
+
+ENDIF
 
  BMI SCD6               \ If y_sign is negative, skip the following, as we
                         \ already have a positive value in A
@@ -193,9 +249,19 @@ ENDIF
                         \ First, though, we have to make sure the dot is inside
                         \ the dashboard, by moving it if necessary
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Minor
+
  ADC SC                 \ Set A = SC + A, so A now contains the y-coordinate of
                         \ the end of the stick, plus the length of the stick, to
                         \ give us the screen y-coordinate of the dot
+
+ELIF _MASTER_VERSION
+
+ ADC Y2                 \ Set A = Y2 + A, so A now contains the y-coordinate of
+                        \ the end of the stick, plus the length of the stick, to
+                        \ give us the screen y-coordinate of the dot
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Label
 
@@ -205,7 +271,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Label
                         \ instruction isn't required as we test both the maximum
                         \ and minimum below, but it might save a few cycles)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  BPL FIXIT              \ If the result has bit 0 clear, then the result has
                         \ overflowed and is bigger than 256, so jump to FIXIT to
@@ -228,7 +294,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Label
 
 .ld246
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 .FIXIT
 
@@ -248,10 +314,23 @@ ELIF _6502SP_VERSION
  STA SCANy1             \ Store the y-coordinate in SCANy1 so it can be sent
                         \ to the I/O processor with the #onescan command
 
+ELIF _MASTER_VERSION
+
+ LDY #&0F               \ ???
+ STY VIA+&34
+ JSR CPIX2
+
+ LDA Y1
+
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Minor
  SEC                    \ Set A = A - SC to get the stick length, by reversing
  SBC SC                 \ the ADC SC we did above. This clears the C flag if the
+ELIF _MASTER_VERSION
+ SEC                    \ Set A = A - Y2 to get the stick length, by reversing
+ SBC Y2                 \ the ADC Y2 we did above. This clears the C flag if the
+ENDIF
                         \ result is negative (i.e. the stick length is negative)
                         \ and sets it if the result is positive (i.e. the stick
                         \ length is negative)
@@ -437,6 +516,78 @@ ELIF _6502SP_VERSION
  LDA #onescan           \ Send a #onescan command to the I/O processor to draw
  JMP OSWORD             \ the ship on the scanner, returning from the subroutine
                         \ using a tail call
+
+ELIF _MASTER_VERSION
+
+ BEQ RTS                \ ???
+
+ BCC RTS_PLUS_1
+
+ TAX
+ INX
+ JMP VL1
+
+.VLL1
+
+ LDA R
+ EOR (SC),Y
+ STA (SC),Y
+
+.VL1
+
+ DEY
+ BPL L16F9
+
+ LDA SC+1
+ SBC #&02
+ STA SC+1
+ LDY #&07
+
+.L16F9
+
+ DEX
+ BNE VLL1
+
+.RTS
+
+ LDA #&09
+ STA VIA+&34
+ RTS
+
+.RTS_PLUS_1
+
+ LDA Y2
+ SEC
+ SBC Y1
+ TAX
+ INX
+ JMP VL2
+
+.VLL2
+
+ LDA R
+ EOR (SC),Y
+ STA (SC),Y
+
+.VL2
+
+ INY
+ CPY #&08
+ BNE L171F
+
+ LDA SC+1
+ ADC #&01
+ STA SC+1
+ LDY #&00
+
+.L171F
+
+ DEX
+ BNE VLL2
+
+ LDA #&09
+ STA VIA+&34
+ RTS
 
 ENDIF
 

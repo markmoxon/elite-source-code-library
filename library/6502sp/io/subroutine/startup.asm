@@ -3,12 +3,18 @@
 \       Name: STARTUP
 \       Type: Subroutine
 \   Category: Loader
+IF _6502SP_VERSION \ Comment
 \    Summary: Set the various vectors, interrupts and timers, and terminate the
 \             loading process so the vector handlers can take over
+ELIF _MASTER_VERSION
+\    Summary: Set the various vectors, interrupts and timers
+ENDIF
 \
 \ ******************************************************************************
 
 .STARTUP
+
+IF _6502SP_VERSION \ Tube
 
  LDA RDCHV              \ Store the current RDCHV vector in newosrdch(2 1),
  STA newosrdch+1        \ which modifies the address portion of the JSR &FFFF
@@ -20,6 +26,12 @@
  STA RDCHV              \ lets us implement all our custom OSRDCH commands
  LDA #HI(newosrdch)
  STA RDCHV+1
+
+ELIF _MASTER_VERSION
+
+ SEI                    \ Disable interrupts
+
+ENDIF
 
  LDA #%00111001         \ Set 6522 System VIA interrupt enable register IER
  STA VIA+&4E            \ (SHEILA &4E) bits 0 and 3-5 (i.e. disable the Timer1,
@@ -39,13 +51,26 @@
  LDA #HI(IRQ1)
  STA IRQ1V+1
 
+IF _6502SP_VERSION \ Minor
+
  LDA #VSCAN             \ Set 6522 System VIA T1C-L timer 1 high-order counter
  STA VIA+&45            \ (SHEILA &45) to VSCAN (57) to start the T1 counter
                         \ counting down from 14592 at a rate of 1 MHz (this is
                         \ a different value to the main game code and to the
                         \ loader's IRQ1 routine in the cassette version)
 
+ELIF _MASTER_VERSION
+
+ LDA VSCAN              \ Set 6522 System VIA T1C-L timer 1 high-order counter
+ STA VIA+&45            \ (SHEILA &45) to the contents of VSCAN (57) to start
+                        \ the T1 counter counting down from 14592 at a rate of
+                        \ 1 MHz
+
+ENDIF
+
  CLI                    \ Enable interrupts again
+
+IF _6502SP_VERSION \ Tube
 
 .NOINT
 
@@ -61,6 +86,14 @@
  STA WORDV+1
 
  CLI                    \ Enable interrupts again
+
+ELIF _MASTER_VERSION
+
+ RTS
+
+ENDIF
+
+IF _6502SP_VERSION \ Advanced: The 6502SP version implements a hook that enables you to add arbitrary code to the startup process. The code needs to be inserted at location &0B00 in the I/O processor, and it needs to start with the characters "TINA"
 
  LDA #&FF               \ Set the text and graphics colour to cyan
  STA COL
@@ -87,4 +120,6 @@
                         \ Fall through into PUTBACK to point WRCHV to USOSWRCH,
                         \ and then end the program, as from now on the handlers
                         \ pointed to by the vectors will handle everything
+
+ENDIF
 

@@ -3,14 +3,22 @@
 \       Name: SETVDU19
 \       Type: Subroutine
 \   Category: Screen mode
+IF _6502SP_VERSION
 \    Summary: Implement the #SETVDU19 <offset> command (change mode 1 palette)
+ELIF _MASTER_VERSION
+\    Summary: Change the mode 1 palette
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-\ This routine is run when the parasite sends a #SETVDU19 <offset> command. It
-\ updates the VNT+3 location in the IRQ1 handler to change the palette that's
-\ applied to the top part of the screen (the four-colour mode 1 part). The
-\ parameter is the offset within the TVT3 palette block of the desired palette.
+IF _6502SP_VERSION
+\ This routine is run when the parasite sends a #SETVDU19 <offset> command.
+\
+ENDIF
+\ This routine updates the VNT3+1 location in the IRQ1 handler to change the
+\ palette that's applied to the top part of the screen (the four-colour mode 1
+\ part). The parameter is the offset within the TVT3 palette block of the
+\ desired palette.
 \
 \ Arguments:
 \
@@ -32,6 +40,14 @@
                         \ which modifies which TVT3 palette block gets applied
                         \ to the mode 1 part of the screen
 
+IF _6502SP_VERSION \ Tube
+
  JMP PUTBACK            \ Jump to PUTBACK to restore the USOSWRCH handler and
                         \ return from the subroutine using a tail call
+
+ELIF _MASTER_VERSION
+
+ RTS                    \ Return from the subroutine
+
+ENDIF
 

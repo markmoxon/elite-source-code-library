@@ -11,7 +11,7 @@
 \ The main interrupt handler, which implements Elite's split-screen mode (see
 \ the deep dive on "The split-screen mode" for details).
 \
-\ IRQ1V is set to point to IRQ1 by elite-loader.asm.
+\ IRQ1V is set to point to IRQ1 by the loading process.
 \
 IF _6502SP_VERSION \ Comment
 \ Other entry points:
@@ -102,15 +102,23 @@ ENDIF
 
 .IRQ1
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Minor
+
  TYA                    \ Store Y on the stack
  PHA
+
+ELIF _MASTER_VERSION
+
+ PHY                    \ Store Y on the stack
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  LDY #11                \ Set Y as a counter for 12 bytes, to use when setting
                         \ the dashboard palette below
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDY #15                \ Set Y as a counter for 16 bytes, to use when setting
                         \ the dashboard palette below
@@ -125,6 +133,8 @@ ENDIF
                         \ to set up the timers to enable us to switch the
                         \ screen mode between the space view and dashboard
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+
  BVC jvec               \ Read the 6522 System VIA status byte bit 6, which is
                         \ set if timer 1 has timed out. We set the timer in
                         \ LINSCN above, so this means we only run the next bit
@@ -132,6 +142,8 @@ ENDIF
                         \ the space view and the dashboard. Otherwise bit 6 is
                         \ clear and we aren't at the boundary, so we jump to
                         \ jvec to pass control to the next interrupt handler
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
@@ -142,7 +154,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
                         \ (i.e. the bottom part of the screen) but with no
                         \ cursor
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA #%00010100         \ Set the Video ULA control register (SHEILA &20) to
  STA VIA+&20            \ %00010100, which is the same as switching to mode 2,
@@ -166,7 +178,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
  BPL P%-7               \ Loop back to the LDA TVT1,Y instruction until we have
                         \ copied all the palette bytes
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA ESCP               \ Set A = ESCP, which is &FF if we have an escape pod
                         \ fitted, or 0 if we don't
@@ -199,6 +211,8 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+
 .jvec
 
  PLA                    \ Restore Y from the stack
@@ -208,6 +222,27 @@ ENDIF
                         \ original IRQ1V vector by elite-loader.asm, so this
                         \ instruction passes control to the next interrupt
                         \ handler
+
+ELIF _MASTER_VERSION
+
+ LDA VIA+&18            \ ???
+ AND #&03
+ TAY
+ LDA VIA+&19
+ STA L12A7,Y
+ INY
+ TYA
+ CMP #&03
+ BCC P%+4
+
+ LDA #&00
+ STA VIA+&18
+ PLY
+ LDA VIA+&44
+ LDA L00FC
+ RTI
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
@@ -242,12 +277,41 @@ IF _6502SP_VERSION \ Screen
  STA DL                 \ routines like WSCAN can set DL to 0 and then wait for
                         \ it to change to non-zero to catch the vertical sync
 
+ELIF _MASTER_VERSION
+
+.LINSCN
+
+ LDA VIA+&41            \ ???
+ LDA L00FC
+ PHA
+ LDA L153B
+ STA DL
+
+ENDIF
+
+IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
+
  STA VIA+&44            \ Set 6522 System VIA T1C-L timer 1 low-order counter
                         \ (SHEILA &44) to 30
+
+ENDIF
+
+IF _6502SP_VERSION \ Screen
 
  LDA #VSCAN             \ Set 6522 System VIA T1C-L timer 1 high-order counter
  STA VIA+&45            \ (SHEILA &45) to VSCAN (57) to start the T1 counter
                         \ counting down from 14622 at a rate of 1 MHz
+
+ELIF _MASTER_VERSION
+
+ LDA VSCAN              \ Set 6522 System VIA T1C-L timer 1 high-order counter
+ STA VIA+&45            \ (SHEILA &45) to the contents of VSCAN (57) to start
+                        \ the T1 counter counting down from 14622 at a rate of
+                        \ 1 MHz
+
+ENDIF
+
+IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  LDA HFX                \ If the hyperspace effect flag in HFX is non-zero, then
  BNE jvec               \ jump up to jvec to pass control to the next interrupt
@@ -294,6 +358,24 @@ IF _6502SP_VERSION \ Minor
  LDA &FC                \ Set A to the interrupt accumulator save register,
                         \ which restores A to the value it had on entering the
                         \ interrupt
+
+ RTI                    \ Return from interrupts, so this interrupt is not
+                        \ passed on to the next interrupt handler, but instead
+                        \ the interrupt terminates here
+
+ENDIF
+
+IF _MASTER_VERSION \ Platform
+
+.jvec
+
+ PHX                    \ ???
+ JSR L13EC
+ PLX
+
+ PLA
+
+ PLY                    \ Restore Y from the stack
 
  RTI                    \ Return from interrupts, so this interrupt is not
                         \ passed on to the next interrupt handler, but instead

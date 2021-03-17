@@ -19,8 +19,16 @@ ENDIF
 
 .WSCAN
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Minor
+
  LDA #0                 \ Set DL to 0
  STA DL
+
+ELIF _MASTER_VERSION
+
+ STZ DL                 \ Set DL to 0
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION \ Label
 
@@ -30,7 +38,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Label
                         \ video system, so DL will change to a non-zero value
                         \ at the start of each screen refresh)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 .WSCAN1
 

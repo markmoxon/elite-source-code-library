@@ -16,17 +16,23 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION \ Minor
 
  SKIP 2                 \ VEC = &7FFE
                         \
-                        \ Set to the original IRQ1 vector by elite-loader.asm
+                        \ This gets set to the value of the original IRQ1 vector
+                        \ by elite-loader.asm
 
 ELIF _DISC_VERSION
 
  EQUW &0004             \ VEC = &7FFE
                         \
-                        \ Set to the original IRQ1 vector by elite-loader3.asm
+                        \ This gets set to the value of the original IRQ1 vector
+                        \ by elite-loader3.asm
                         \
-                        \ This default value is presumably noise included at the time of
-                        \ compilation, as they get overwritten
+                        \ This default value is presumably noise included at the
+                        \ time of compilation, as it gets overwritten
 
+ELIF _MASTER_VERSION
+
+ EQUW &8888             \ This gets set to the value of the original IRQ1 vector
+                        \ by the STARTUP routine
 
 ENDIF
 

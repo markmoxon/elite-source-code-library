@@ -20,5 +20,10 @@ ELIF _6502SP_VERSION OR _DISC_VERSION
  BNE NOISE              \ returning from the subroutine using a tail call (this
                         \ BNE is effectively a JMP as A will never be zero)
 
+ELIF _MASTER_VERSION
+
+ LDY #1                 \ Call NOISE with Y = 1 to make a short, high beep,
+ BRA NOISE              \ returning from the subroutine using a tail call
+
 ENDIF
 

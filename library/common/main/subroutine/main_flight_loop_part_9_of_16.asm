@@ -37,7 +37,7 @@ IF _CASSETTE_VERSION \ Platform
                         \ fail docking (so trying to dock at a station that we
                         \ have annoyed does not end well)
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
  LDA K%+NI%+36          \ 1. Fetch the NEWB flags (byte #36) of the second ship
  AND #%00000100         \ in the ship data workspace at K%, which is reserved
@@ -62,7 +62,7 @@ IF _CASSETTE_VERSION \ Standard: The cassette version contains an extra docking 
  BMI MA62               \ if it is negative, we are facing away from the
                         \ station, so jump to MA62 to fail docking
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
  JSR SPS1               \ Call SPS1 to calculate the vector to the planet and
                         \ store it in XX15
@@ -71,7 +71,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION \ Standard: When docking, the cassette version checks that the angle between the vector to the space station and the nominal approach is less than 22.0 degrees; in the disc version, it checks that the angle between the vector to the planet and the nominal approach is less than 26.3 degrees; and in the 6502SP version, it checks that the angle between the vector to the planet and the nominal approach is less than 22.0 degrees
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Standard: When docking, the cassette version checks that the angle between the vector to the space station and the nominal approach is less than 22.0 degrees; in the disc version, it checks that the angle between the vector to the planet and the nominal approach is less than 26.3 degrees; and in the 6502SP version, it checks that the angle between the vector to the planet and the nominal approach is less than 22.0 degrees
 
  CMP #89                \ 4. If z-axis < 89, jump to MA62 to fail docking, as
  BCC MA62               \ we are not in the 22.0 degree safe cone of approach
@@ -122,7 +122,7 @@ ELIF _DISC_VERSION
 
  JMP DOENTRY            \ Go to the docking bay (i.e. show the ship hanger)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  JMP DOENTRY            \ Go to the docking bay (i.e. show the ship hanger)
 

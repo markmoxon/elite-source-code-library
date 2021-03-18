@@ -27,7 +27,14 @@
  CPY #2*SST             \ If the ship in Y is the space station, jump to BA21
  BEQ MA21               \ as energy bombs are useless against space stations
 
-IF _6502SP_VERSION \ Advanced: In the 6502SP version, energy bombs have no effect against the Constrictor in mission 1
+IF _MASTER_VERSION
+
+ CPY #2*THG             \ ???
+ BEQ MA21
+
+ENDIF
+
+IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: In the 6502SP version, energy bombs have no effect against the Constrictor in mission 1
 
  CPY #2*CON             \ If the ship in Y is the Constrictor, jump to BA21
  BCS MA21               \ as energy bombs are useless against the Constrictor
@@ -47,11 +54,17 @@ IF _CASSETTE_VERSION \ Minor
  ORA #%10000000         \ the ship byte #31 to indicate that it has now been
  STA INWK+31            \ killed
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
  ASL INWK+31            \ The energy bomb is killing this ship, so set bit 7 of
  SEC                    \ the ship byte #31 to indicate that it has now been
  ROR INWK+31            \ killed
+
+ENDIF
+
+IF _MASTER_VERSION
+
+ LDX TYPE               \ ???
 
 ENDIF
 

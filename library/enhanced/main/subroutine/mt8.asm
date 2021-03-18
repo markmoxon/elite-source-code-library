@@ -23,7 +23,7 @@ IF _DISC_DOCKED \ Tube
  LDA #6                 \ Move the text cursor to column 6
  STA XC
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA #6                 \ Move the text cursor to column 6
  JSR DOXC

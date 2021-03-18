@@ -33,7 +33,7 @@
  LDA INWK+35            \ byte #35 in INF (so the ship's data in K% gets
  STA (INF),Y            \ updated)
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: Ships that have docked or been scooped in the enhanced versions are not classed as being killed and are not tested for potential bounties
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: Ships that have docked or been scooped in the enhanced versions are not classed as being killed and are not tested for potential bounties
 
  LDA NEWB               \ If bit 7 of the ship's NEWB flags is set, which means
  BMI KS1S               \ the ship has docked or been scooped, jump to KS1S to
@@ -52,7 +52,7 @@ IF _CASSETTE_VERSION \ Label
  BEQ NBOUN              \ ship is no longer exploding, so jump to NBOUN to skip
                         \ the following
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  AND #%00100000         \ If bit 5 of the ship's byte #31 is clear then the
  BEQ MAC1               \ ship is no longer exploding, so jump to MAC1 to skip
@@ -72,7 +72,7 @@ IF _CASSETTE_VERSION \ Platform
 
 .q2
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  LDA NEWB               \ Extract bit 6 of the ship's NEWB flags, so A = 64 if
  AND #%01000000         \ bit 6 is set, or 0 if it is clear. Bit 6 is set if

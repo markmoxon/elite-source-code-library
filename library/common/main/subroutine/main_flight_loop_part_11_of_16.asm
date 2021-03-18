@@ -26,7 +26,7 @@
 
 .MA26
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: Ships that have docked or been scooped in the enhanced versions are hidden from the scanner
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: Ships that have docked or been scooped in the enhanced versions are hidden from the scanner
 
  LDA NEWB               \ If bit 7 of the ship's NEWB flags is clear, skip the
  BPL P%+5               \ following instruction
@@ -40,7 +40,7 @@ ENDIF
  LDA QQ11               \ If this is not a space view, jump to MA15 to skip
  BNE MA15               \ missile and laser locking
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
  JSR PLUT               \ Call PLUT to update the geometric axes in INWK to
                         \ match the view (front, rear, left, right)
@@ -79,7 +79,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Screen
                         \ loop at MAL1), and set the colour of the missile
                         \ indicator to the colour in Y (red = &0E)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDX XSAV               \ Call ABORT2 to store the details of this missile
  LDY #RED2              \ lock, with the targeted ship's slot number in X
@@ -112,7 +112,7 @@ IF _DISC_FLIGHT \ Advanced: Only military lasers can harm the Cougar, and then t
  CMP #CON               \ If the ship we hit is not a Constrictor, jump to BURN
  BNE BURN               \ to skip the following
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA TYPE               \ Did we just hit the space station? If so, jump to
  CMP #SST               \ MA14+2 to make the station hostile, skipping the
@@ -140,7 +140,7 @@ IF _DISC_FLIGHT \ Enhanced: Only military lasers can harm the Constrictor in mis
 
 .BURN
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA LAS                \ Set A to the power of the laser we just used to hit
                         \ the ship (i.e. the laser in the current view)
@@ -209,7 +209,7 @@ IF _CASSETTE_VERSION \ Enhanced: Destroying an asteroid with mining lasers in th
 
 .oh
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  ASL INWK+31            \ Set bit 7 of the ship byte #31 to indicate that it has
  SEC                    \ now been killed
@@ -239,6 +239,12 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
  LDY #OIL               \ Randomly spawn some cargo canisters
  JSR SPIN
+
+ENDIF
+
+IF _MASTER_VERSION
+
+ LDX TYPE               \ ???
 
 ENDIF
 

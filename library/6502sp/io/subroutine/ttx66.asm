@@ -14,6 +14,13 @@
 
 .TTX66
 
+IF _MASTER_VERSION \ Platform
+
+ LDX #%00001111         \ Set bits 1 and 2 of the Access Control Register at
+ STX VIA+&34            \ SHEILA+&34 to switch screen memory into &3000-&7FFF
+
+ENDIF
+
  LDX #&40               \ Set X to point to page &40, which is the start of the
                         \ screen memory at &4000
 
@@ -31,11 +38,23 @@
 
 .BOX
 
+IF _MASTER_VERSION
+
+ LDX #%00001111         \ Set bits 1 and 2 of the Access Control Register at
+ STX VIA+&34            \ SHEILA+&34 to switch screen memory into &3000-&7FFF
+
+ LDA COL                \ ???
+ PHA
+
+ENDIF
+
  LDA #%00001111         \ Set COL = %00001111 to act as a four-pixel yellow
  STA COL                \ character byte (i.e. set the line colour to yellow)
 
  LDY #1                 \ Move the text cursor to row 1
  STY YC
+
+IF _6502SP_VERSION
 
  LDY #11                \ Move the text cursor to column 11
  STY XC
@@ -44,6 +63,17 @@
  STX X1
  STX Y1
  STX Y2
+
+ELIF _MASTER_VERSION
+
+ STY XC                 \ Move the text cursor to column 1 ???
+
+ LDX #0                 \ Set X1 = Y1 = Y2 = 0
+ STX Y1
+ STX Y2
+ STX X1
+
+ENDIF
 
 \STX QQ17               \ This instruction is commented out in the original
                         \ source
@@ -73,6 +103,23 @@
                         \ left edge of the upper part of the screen, and a
                         \ 2-pixel wide vertical border along the right edge
 
+IF _MASTER_VERSION
+
+ JSR BOS2               \ ???
+
+ LDA COL
+ STA L4000
+ STA L41F8
+ PLA
+ STA COL
+
+ LDA #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
+ STA VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
+
+ RTS                    \ Return from the subroutine
+
+ENDIF
+
 .BOS2
 
  JSR BOS1               \ Call BOS1 below and then fall through into it, which
@@ -82,8 +129,16 @@
 
 .BOS1
 
+IF _6502SP_VERSION \ Minor
+
  LDA #0                 \ Set Y1 = 0
  STA Y1
+
+ELIF _MASTER_VERSION
+
+ STZ Y1                 \ Set Y1 = 0
+
+ENDIF
 
  LDA #2*Y-1             \ Set Y2 = 2 * #Y - 1. The constant #Y is 96, the
  STA Y2                 \ y-coordinate of the mid-point of the space view, so
@@ -93,6 +148,8 @@
  DEC X1                 \ Decrement X1 and X2
  DEC X2
 
+IF _6502SP_VERSION
+
  JSR LOIN               \ Draw a line from (X1, Y1) to (X2, Y2)
 
  LDA #%00001111         \ Set locations &4000 &41F8 to %00001111, as otherwise
@@ -101,4 +158,11 @@
                         \ used by LOIN will otherwise make them black)
 
  RTS                    \ Return from the subroutine
+
+ELIF _MASTER_VERSION
+
+ JMP LOIN               \ Draw a line from (X1, Y1) to (X2, Y2) and return from
+                        \ the subroutine using a tail call
+
+ENDIF
 

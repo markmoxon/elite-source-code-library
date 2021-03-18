@@ -3,7 +3,7 @@
 \       Name: CLYNS
 \       Type: Subroutine
 \   Category: Utility routines
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Clear the bottom three text rows of the mode 4 screen
 ELIF _6502SP_VERSION
 \    Summary: Implement the #clyns command (clear the bottom of the screen)
@@ -34,10 +34,24 @@ ENDIF
 
 .CLYNS
 
-IF _DISC_DOCKED \ Platform
+IF _MASTER_VERSION
+
+ STZ DLY                \ ???
+ STZ de
+
+ENDIF
+
+IF _DISC_DOCKED OR _MASTER_VERSION \ Platform
 
  LDA #%11111111         \ Set DTW2 = %11111111 to denote that we are not
  STA DTW2               \ currently printing a word
+
+ENDIF
+
+IF _MASTER_VERSION
+
+ LDA #&80               \ ???
+ STA QQ17
 
 ENDIF
 
@@ -74,6 +88,19 @@ ELIF _6502SP_VERSION
  LDA #0                 \ Set SC = 0, so now SC(1 0) = &6A00
  STA SC
 
+ELIF _MASTER_VERSION
+
+ JSR TT67_DUPLICATE     \ Print a newline
+
+ LDA #%00001111         \ Set bits 1 and 2 of the Access Control Register at
+ STA VIA+&34            \ SHEILA+&34 to switch screen memory into &3000-&7FFF
+
+ LDA #&6A               \ Set SC+1 = &6A, for the high byte of SC(1 0)
+ STA SC+1
+
+ LDA #0                 \ Set SC = 0, so now SC(1 0) = &6A00
+ STA SC
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_DOCKED \ Screen
@@ -106,7 +133,7 @@ ELIF _DISC_FLIGHT
                         \ Fall through into LYN to clear the pixels from &7707
                         \ to &77F0
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDX #3                 \ We want to clear three text rows, so set a counter in
                         \ X for 3 rows
@@ -146,6 +173,10 @@ ELIF _6502SP_VERSION
                         \ is 8 bytes), so we put this in Y to act as a byte
                         \ counter, as before
 
+ENDIF
+
+IF _6502SP_VERSION \ Platform
+
 .EE3
 
  STA (SC),Y             \ Zero the Y-th byte from SC(1 0), which clears it by
@@ -156,6 +187,28 @@ ELIF _6502SP_VERSION
  BNE EE3                \ Loop back to EE2 to blank the next byte to the left,
                         \ until we have done one page's worth (from byte #247 to
                         \ #1)
+
+ELIF _MASTER_VERSION
+
+{
+.EE3                    \ This label is a duplicate of a label in TT23 (which is
+                        \ why we need to surround it with braces, as BeebAsm
+                        \ doesn't allow us to redefine labels, unlike BBC
+                        \ BASIC)
+
+ STA (SC),Y             \ Zero the Y-th byte from SC(1 0), which clears it by
+                        \ setting it to colour 0, black
+
+ DEY                    \ Decrement the byte counter in Y
+
+ BNE EE3                \ Loop back to EE2 to blank the next byte to the left,
+                        \ until we have done one page's worth (from byte #247 to
+                        \ #1)
+}
+
+ENDIF
+
+IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  INC SC+1               \ We have now blanked a whole text row, so increment
                         \ SC+1 so that SC(1 0) points to the next row
@@ -168,8 +221,21 @@ ELIF _6502SP_VERSION
 \INX                    \ These instructions are commented out in the original
 \STX SC                 \ source
 
+ENDIF
+
+IF _6502SP_VERSION \ Platform
+
  JMP PUTBACK            \ Jump to PUTBACK to restore the USOSWRCH handler and
                         \ return from the subroutine using a tail call
+
+ELIF _MASTER_VERSION
+
+ LDA #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
+ STA VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
+
+ LDA #0                 \ Set A = 0 as this is a return value for this routine
+
+ RTS                    \ Return from the subroutine
 
 ENDIF
 

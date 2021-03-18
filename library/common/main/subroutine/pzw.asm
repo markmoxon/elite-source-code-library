@@ -24,7 +24,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \ nibble (bits 0-3). So in &F0 each pixel is %10, or colour 2 (yellow or white,
 \ depending on the dashboard palette), while in &0F each pixel is %01, or colour
 \ 1 (red).
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 \ If flashing is enabled, the colour returned in A (dangerous values) will be
 \ red for 8 iterations of the main loop, and green for the next 8, before
 \ going back to red. If we always use PZW to decide which colours we should use
@@ -49,7 +49,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  LDX #&F0               \ Set X to dashboard colour 2 (yellow/white)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDX #STRIPE            \ Set X to the dashboard stripe colour, which is stripe
                         \ 5-1 (magenta/red)
@@ -77,7 +77,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  LDA #&0F               \ Set A to dashboard colour 1 (red)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  BEQ P%+5               \ If A is zero, skip the next two instructions
 

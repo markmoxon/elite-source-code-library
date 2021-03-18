@@ -31,7 +31,7 @@
 \
 \ ******************************************************************************
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Label
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Label
 
 .BS2
 
@@ -73,7 +73,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Screen
  JSR ABORT              \ ABORT to disarm the missile and update the missile
                         \ indicators on the dashboard to green/cyan (Y = &EE)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDY #GREEN2            \ The "disarm missiles" key is being pressed, so call
  JSR ABORT              \ ABORT to disarm the missile and update the missile
@@ -81,8 +81,16 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
+
  LDA #40                \ Call the NOISE routine with A = 40 to make a low,
  JSR NOISE              \ long beep to indicate the missile is now disarmed
+
+ELIF _MASTER_VERSION
+
+ JSR BEEP_LONG_LOW      \ ???
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Label
 
@@ -123,7 +131,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Screen
                         \ right to left, so X is the number of the leftmost
                         \ indicator)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDY #YELLOW2           \ Change the leftmost missile indicator to yellow
  JSR MSBAR              \ on the missile bar (this call changes the leftmost
@@ -152,6 +160,13 @@ ENDIF
  LDA KY12               \ If TAB is being pressed, keep going, otherwise jump
  BEQ MA76               \ jump down to MA76 to skip the following
 
+IF _MASTER_VERSION
+
+ LDA BOMB               \ ???
+ BMI MA76
+
+ENDIF
+
  ASL BOMB               \ The "energy bomb" key is being pressed, so double
                         \ the value in BOMB. If we have an energy bomb fitted,
                         \ BOMB will contain &7F (%01111111) before this shift
@@ -161,9 +176,17 @@ ENDIF
                         \ MAL1 routine below - this just registers the fact that
                         \ we've set the bomb ticking
 
+IF _MASTER_VERSION
+
+ BEQ MA76               \ ???
+
+ JSR L31ED
+
+ENDIF
+
 .MA76
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: The main loop scans for "P" being pressed, which disables the docking computer
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: The main loop scans for "P" being pressed, which disables the docking computer
 
  LDA KY20               \ If "P" is being pressed, keep going, otherwise skip
  BEQ MA78               \ the next two instructions
@@ -181,7 +204,7 @@ IF _CASSETTE_VERSION \ Minor
  AND ESCP               \ fitted, keep going, otherwise skip the next
  BEQ P%+5               \ instruction
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  LDA KY13               \ If ESCAPE is being pressed and we have an escape pod
  AND ESCP               \ fitted, keep going, otherwise jump to noescp to skip
@@ -189,7 +212,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
 ENDIF
 
-IF _6502SP_VERSION \ Advanced: In the original versions, you can launch your escape pod in witchspace (though it may be fatal, depending on the version). You can't even launch it in the 6502SP version, as the launch key is disabled in witchspace
+IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: In the original versions, you can launch your escape pod in witchspace (though it may be fatal, depending on the version). You can't even launch it in the 6502SP version, as the launch key is disabled in witchspace
 
  LDA MJ                 \ If we are in witchspace, we can't launch our escape
  BNE noescp             \ pod, so jump down to noescp
@@ -201,7 +224,7 @@ ENDIF
                         \ launch it, and exit the main flight loop using a tail
                         \ call
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Label
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Label
 
 .noescp
 
@@ -254,7 +277,7 @@ IF _CASSETTE_VERSION \ Enhanced: If "C" is pressed during flight and we have a d
                         \ GOIN to dock (or "go in"), and exit the main flight
                         \ loop using a tail call
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  LDA KY19               \ If "C" is being pressed, and we have a docking
  AND DKCMP              \ computer fitted, keep going, otherwise jump down to
@@ -306,8 +329,16 @@ ENDIF
  STA LAS
  STA LAS2
 
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
+
  LDA #0                 \ Call the NOISE routine with A = 0 to make the sound
  JSR NOISE              \ of our laser firing
+
+ELIF _MASTER_VERSION
+
+ JSR LASER_NOISE        \ ???
+
+ENDIF
 
  JSR LASLI              \ Call LASLI to draw the laser lines
 

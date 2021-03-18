@@ -34,7 +34,7 @@ IF _CASSETTE_VERSION \ Enhanced: In the enhanced versions, the top nibble of the
                         \ (this BNE is effectively a JMP as A will never be
                         \ zero)
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
  CPX #OIL               \ If this is a cargo canister, jump to oily to randomly
  BEQ oily               \ decide the canister's contents
@@ -87,7 +87,7 @@ IF _CASSETTE_VERSION \ Platform
  JSR tnpr               \ the hold for the scooped item (A is preserved by this
                         \ call, and the C flag contains the result)
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
  JSR tnpr1              \ Call tnpr1 with the scooped cargo type stored in A
                         \ to work out whether we have room in the hold for one
@@ -121,7 +121,7 @@ IF _CASSETTE_VERSION \ Enhanced: In the enhanced version there is a difference b
                         \ kill flag on the canister, as it no longer exists in
                         \ the local bubble
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
  ASL NEWB               \ The item has now been scooped, so set bit 7 of its
  SEC                    \ NEWB flags to indicate this

@@ -15,7 +15,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
  LDA #&10               \ top indicator in the left part of the dashboard, the
  STA SC                 \ one showing the forward shield
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA #&70               \ Set SC(1 0) = &7020, which is the screen address for
  STA SC+1               \ the character block containing the left end of the
@@ -32,7 +32,7 @@ ENDIF
  JSR DILX               \ and increment SC to point to the next indicator (the
                         \ fuel level)
 
-IF _6502SP_VERSION \ Screen
+IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  LDA #YELLOW2           \ Set K (the colour we should show for high values) to
  STA K                  \ yellow
@@ -52,7 +52,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
  JSR PZW                \ Call PZW to set A to the colour for dangerous values
                         \ and X to the colour for safe values
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  JSR PZW2               \ Call PZW2 to set A to the colour for dangerous values
                         \ and X to the colour for safe values, suitable for
@@ -88,14 +88,14 @@ ENDIF
                         \ 15 and 16, so this effectively switches off the colour
                         \ change for the altitude indicator
 
-IF _6502SP_VERSION \ Screen
+IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  LDA #YELLOW2           \ Set K (the colour we should show for high values) to
  STA K                  \ yellow
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Minor
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Minor
 
  STA K+1                \ Set K+1 (the colour we should show for low values) to
                         \ 240, or &F0 (dashboard colour 2, yellow/white), so the
@@ -124,7 +124,14 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Platform
+IF _MASTER_VERSION \ Platform
+
+ LDA #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
+ STA VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
+ 
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
  JMP COMPAS             \ We have now drawn all the indicators, so jump to
                         \ COMPAS to draw the compass, returning from the

@@ -36,6 +36,25 @@ ELIF _6502SP_VERSION
 
  STA ENERGY             \ Recharge the energy banks
 
+ELIF _MASTER_VERSION
+
+ JSR RES2               \ Reset a number of flight variables and workspaces
+
+ JSR LAUN               \ Show the space station docking tunnel
+
+ LDA #0                 \ Reduce the speed to 0
+ STA DELTA
+
+ STA GNTMP              \ Cool down the lasers completely
+
+ STA QQ22+1             \ Reset the on-screen hyperspace counter
+
+ LDA #&FF               \ Recharge the forward and aft shields
+ STA FSH
+ STA ASH
+
+ STA ENERGY             \ Recharge the energy banks
+
 ENDIF
 
  JSR HALL               \ Show the ship hanger
@@ -79,7 +98,7 @@ ENDIF
                         \ Mission 1 has been completed, so now to check for
                         \ mission 2
 
-IF _6502SP_VERSION \ Minor
+IF _6502SP_VERSION OR _MASTER_VERSION \ Minor
 
  LDA GCNT               \ Fetch the galaxy number into A
 

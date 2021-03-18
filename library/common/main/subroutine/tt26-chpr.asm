@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \       Name: TT26
 ELIF _DISC_DOCKED
 \       Name: CHPR
@@ -15,8 +15,8 @@ ENDIF
 \ Print a character at the text cursor (XC, YC), do a beep, print a newline,
 \ or delete left (backspace).
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
-\ WRCHV is set to point here by elite-loader.asm.
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Comment
+\ WRCHV is set to point here by the loading process.
 ELIF _6502SP_VERSION
 \ Calls to OSWRCH will end up here when A is not in the range 128-147, as those
 \ are reserved for the special jump table OSWRCH commands.
@@ -31,7 +31,7 @@ ENDIF
 \
 IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \                         * 10-13 (line feeds and carriage returns)
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 \                         * 10 (line feed)
 \
 \                         * 11 (clear the top part of the screen and draw a
@@ -58,9 +58,11 @@ ENDIF
 \
 \   Y                   Y is preserved
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Comment
 \   C flag              The C flag is cleared
 \
+ENDIF
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \ Other entry points:
 \
 \   RR3+1               Contains an RTS
@@ -73,7 +75,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Comment
 \
 \   rT9                 Contains an RTS
 ENDIF
-IF _6502SP_VERSION \ Comment
+IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ Other entry points:
 \
 \   RR4                 Restore the registers and return from the subroutine
@@ -81,7 +83,7 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Label
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Label
 
 .TT26
 
@@ -106,6 +108,12 @@ ELIF _6502SP_VERSION
  PHA
  LDA K3
 
+ELIF  _MASTER_VERSION
+
+ STA K3                 \ Store the A, X and Y registers, so we can restore
+ PHY                    \ them at the end (so they don't get changed by this
+ PHX                    \ routine)
+
 ENDIF
 
 IF _DISC_DOCKED \ Label
@@ -114,7 +122,7 @@ IF _DISC_DOCKED \ Label
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Platform
 
  LDY QQ17               \ Load the QQ17 flag, which contains the text printing
                         \ flags
@@ -133,6 +141,19 @@ ELIF _DISC_DOCKED
  BEQ RR4                \ RR4, which doesn't print anything, it just restores
                         \ the registers and returns from the subroutine
 
+ELIF _MASTER_VERSION
+
+ CPY #255               \ If QQ17 = 255 then printing is disabled, so jump to
+ BEQ RR4S               \ RR4S (via the JMP in RR4S) to restore the registers
+                        \ and return from the subroutine using a tail call
+
+ENDIF
+
+IF _MASTER_VERSION \ Platform
+
+ LDY #%00001111         \ Set bits 1 and 2 of the Access Control Register at
+ STY VIA+&34            \ SHEILA+&34 to switch screen memory into &3000-&7FFF
+
 ENDIF
 
 IF _DISC_DOCKED \ Label
@@ -143,7 +164,7 @@ IF _DISC_DOCKED \ Label
                         \ terminator character, jump down to RR4 to restore the
                         \ registers and return from the subroutine
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  TAY                    \ Set Y = the character to be printed
 
@@ -160,9 +181,15 @@ IF _DISC_DOCKED \ Platform
                         \ RR4 to restore the registers and return from the
                         \ subroutine
 
+ELIF _MASTER_VERSION
+
+ BMI RR4S               \ If A > 127 then there is nothing to print, so jump to
+                        \ RR4 (via the JMP in RR4S) to restore the registers and
+                        \ return from the subroutine
+
 ENDIF
 
-IF _6502SP_VERSION \ Advanced: The 6502SP version supports an extra control code in the standard text token system: control code 11 clears the screen
+IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: The advanced versions support an extra control code in the standard text token system: control code 11 clears the screen
 
  CMP #11                \ If this is control code 11 (clear screen), jump to cls
  BEQ cls                \ to clear the top part of the screen, draw a white
@@ -176,7 +203,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Minor
  BEQ R5                 \ which will emit the beep, restore the registers and
                         \ return from the subroutine
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  CMP #7                 \ If this is not control code 7 (beep), skip the next
  BNE P%+5               \ instruction
@@ -198,7 +225,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Platform: The cassette version uses cont
 
  LDX #1                 \ If we get here, then this is control code 11-13, of
  STX XC                 \ which only 13 is used. This code prints a newline,
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDX #1                 \ If we get here, then this is control code 12 or 13,
  STX XC                 \ both of which are used. This code prints a newline,
@@ -229,7 +256,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Minor
                         \ the subroutine (this BNE is effectively a JMP as Y
                         \ will never be zero)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  CMP #13                \ If this is control code 13 (carriage return) then jump
  BEQ RR4S               \ to RR4 (via the JMP in RR4S) to restore the registers
@@ -365,6 +392,11 @@ ELIF _6502SP_VERSION
  LDX #(FONT%-1)         \ Set X to point to the page before the first font page,
                         \ which is FONT% - 1
 
+ELIF _MASTER_VERSION
+
+ LDX #&23               \ ??? Need to change comments above to reflect address
+                        \ of Master character definitions (at &2300 and &2500?)
+
 ENDIF
 
  ASL A                  \ If bit 6 of the character is clear (A is 32-63)
@@ -378,6 +410,10 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Platform
 ELIF _6502SP_VERSION
 
  LDX #(FONT%+1)         \ A is 64-126, so set X to point to page FONT% + 1
+
+ELIF _MASTER_VERSION
+
+ LDX #&25               \ ???
 
 ENDIF
 
@@ -431,12 +467,17 @@ ELIF _6502SP_VERSION
  STA Q                  \ R is the same location as Q+1, so this stores the
  STX R                  \ address of this character's definition in Q(1 0)
 
+ELIF _MASTER_VERSION
+
+ STA P                  \ Store the address of this character's definition in
+ STX P+1                \ P(1 0)
+
 ENDIF
 
  LDA XC                 \ Fetch XC, the x-coordinate (column) of the text cursor
                         \ into A
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: The standard disc catalogue is just too wide to fit into Elite's special square screen mode, so when printing the catalogue in the enhanced versions, a space is removed from column 17, which is always a blank column in the middle of the catalogue
+IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Enhanced: The standard disc catalogue is just too wide to fit into Elite's special square screen mode, so when printing the catalogue in the enhanced versions, a space is removed from column 17, which is always a blank column in the middle of the catalogue
 
  LDX CATF               \ If CATF = 0, jump to RR5, otherwise we are printing a
  BEQ RR5                \ disc catalogue
@@ -483,7 +524,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
                         \
                         \ and so on
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  ASL A                  \ Multiply A by 8, and store in SC, so we now have:
  ASL A                  \
@@ -500,7 +541,7 @@ ENDIF
 
  LDA YC                 \ Fetch YC, the y-coordinate (row) of the text cursor
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Platform
 
  CPY #127               \ If the character number (which is in Y) <> 127, then
  BNE RR2                \ skip to RR2 to print that character, otherwise this is
@@ -523,7 +564,7 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED \ Platform
                         \   X = YC + &5E + 1
                         \     = YC + &5F
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  ASL A                  \ A contains YC (from above), so this sets A = YC * 2
 
@@ -574,7 +615,7 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED \ Platform
                         \ this call zero-fills the character to the left of the
                         \ cursor, which erases it from the screen
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ Because YC starts at 0 for the first text row, this
                         \ means that X will be &3F for row 0, &41 for row 1 and
                         \ so on. In other words, X is now set to the page number
@@ -597,7 +638,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Platform
 
  BEQ RR4                \ We are done deleting, so restore the registers and
                         \ return from the subroutine (this BNE is effectively
@@ -672,13 +713,32 @@ ELIF _6502SP_VERSION
  JSR TTX66              \ Otherwise we are off the bottom of the screen, so
                         \ clear the screen and draw a white border
 
- LDA #1                 \ Otherwise we are off the bottom of the screen, so move
- STA XC                 \ the text cursor to column 1, row 1
+ LDA #1                 \ Move the text cursor to column 1, row 1
+ STA XC
  STA YC
 
  PLA                    \ Retrieve A from the stack... only to overwrite it with
                         \ the next instruction, so presumably we didn't need to
                         \ preserve it and this and the PHA above have no effect
+
+ LDA K3                 \ Set A to the character to be printed, though again
+                        \ this has no effect, as the following call to RR4 does
+                        \ the exact same thing
+
+ JMP RR4                \ And restore the registers and return from the
+                        \ subroutine
+
+ELIF _MASTER_VERSION
+
+ JSR TTX66              \ Otherwise we are off the bottom of the screen, so
+                        \ clear the screen and draw a white border
+
+ LDA #%00001111         \ Set bits 1 and 2 of the Access Control Register at
+ STA VIA+&34            \ SHEILA+&34 to switch screen memory into &3000-&7FFF
+
+ LDA #1                 \ Move the text cursor to column 1, row 1
+ STA XC
+ STA YC
 
  LDA K3                 \ Set A to the character to be printed, though again
                         \ this has no effect, as the following call to RR4 does
@@ -717,7 +777,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
                         \ so YC OR &60 effectively adds &60 to YC, giving us
                         \ the page number that we want
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  ASL A                  \ Set A = 2 * A
                         \       = 2 * YC
@@ -763,6 +823,17 @@ IF _6502SP_VERSION \ Screen
                         \
                         \   S(1 0) = SC(1 0) + 8
 
+ELIF _MASTER_VERSION
+
+ LDA SC                 \ Set P(3 2) = SC(1 0) + 8
+ CLC                    \
+ ADC #8                 \ starting with the low bytes
+ STA P+2
+
+ LDA SC+1               \ And then adding the high bytes, so P(3 2) points to
+ STA P+3                \ the character block after the one pointed to by
+                        \ SC(1 0)
+
 ENDIF
 
  LDY #7                 \ We want to print the 8 bytes of character data to the
@@ -805,9 +876,37 @@ ELIF _6502SP_VERSION
                         \ the colour we want to draw (i.e. A is acting as a mask
                         \ on the colour byte)
 
+ELIF _MASTER_VERSION
+
+                        \ We print the character's 8-pixel row in two parts,
+                        \ starting with the first four pixels (one byte of
+                        \ screen memory), and then the second four (a second
+                        \ byte of screen memory)
+
+ LDA (P),Y              \ The character definition is at P(1 0) - we set this up
+                        \ above - so load the Y-th byte from P(1 0), which will
+                        \ contain the bitmap for the Y-th row of the character
+
+ AND #%11110000         \ Extract the top nibble of the character definition
+                        \ byte, so the first four pixels on this row of the
+                        \ character are in the first nibble, i.e. xxxx 0000
+                        \ where xxxx is the pattern of those four pixels in the
+                        \ character
+
+ STA W                  \ Set A = (A >> 4) OR A
+ LSR A                  \
+ LSR A                  \ which duplicates the top nibble into the bottom nibble
+ LSR A                  \ to give xxxx xxxx
+ LSR A
+ ORA W
+
+ AND COL                \ AND with the colour byte so that the pixels take on
+                        \ the colour we want to draw (i.e. A is acting as a mask
+                        \ on the colour byte)
+
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Platform: When we are docked in the disc version, we don't need to worry about displaying text on the space view, so we don't have to implement EOR logic when printing, and instead can use OR logic
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Platform: When we are docked in the disc version, we don't need to worry about displaying text on the space view, so we don't have to implement EOR logic when printing, and instead can use OR logic
 
  EOR (SC),Y             \ If we EOR this value with the existing screen
                         \ contents, then it's reversible (so reprinting the
@@ -857,6 +956,36 @@ IF _6502SP_VERSION \ Screen
  STA (S),Y              \ Store the Y-th byte at the screen address for this
                         \ character location
 
+ELIF _MASTER_VERSION
+
+                        \ We now repeat the process for the second batch of four
+                        \ pixels in this character row
+
+ LDA (P),Y              \ Fetch the the bitmap for the Y-th row of the character
+                        \ again
+
+ AND #%00001111         \ This time we extract the bottom nibble of the
+                        \ character definition, to get 0000 xxxx
+
+ STA W                  \ Set A = (A << 4) OR A
+ ASL A                  \
+ ASL A                  \ which duplicates the bottom nibble into the top nibble
+ ASL A                  \ to give xxxx xxxx
+ ASL A
+ ORA W
+
+ AND COL                \ AND with the colour byte so that the pixels take on
+                        \ the colour we want to draw (i.e. A is acting as a mask
+                        \ on the colour byte)
+
+ EOR (P+2),Y            \ EOR this value with the existing screen contents of
+                        \ P(3 2), which is equal to SC(1 0) + 8, the next four
+                        \ pixels along from the first four pixels we just
+                        \ plotted in SC(1 0)
+
+ STA (P+2),Y            \ Store the Y-th byte at the screen address for this
+                        \ character location
+
 ENDIF
 
  DEY                    \ Decrement the loop counter
@@ -880,6 +1009,16 @@ ELIF _6502SP_VERSION
  TAY
  LDA K3
 
+ELIF _MASTER_VERSION
+
+ LDA #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
+ STA VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
+
+ PLX                    \ ???
+ PLY
+ LDA K3
+ CLC
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Label
@@ -892,7 +1031,7 @@ ENDIF
 
 .R5
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Tube
 
  JSR BEEP               \ Call the BEEP subroutine to make a short, high beep
 

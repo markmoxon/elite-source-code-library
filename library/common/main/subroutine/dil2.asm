@@ -55,7 +55,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
                         \ not contain the vertical indicator bar, so jump to
                         \ DLL11 to draw a blank character block
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  SEC                    \ Set A = Q - 2, so that A contains the offset of the
  LDA Q                  \ vertical bar from the start of this character block
@@ -93,7 +93,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
                         \ vertical bar (i.e. A is acting as a mask on the
                         \ 4-pixel colour byte)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA CTWOS,X            \ CTWOS is a table of ready-made 1-pixel mode 2 bytes,
                         \ just like the TWOS and TWOS2 tables for mode 1 (see
@@ -111,7 +111,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
 
  BNE DLL12              \ Jump to DLL12 to skip the code for drawing a blank,
                         \ and move on to drawing the indicator (this BNE is
@@ -167,7 +167,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
                         \ to the next indicator, i.e. the one below the one we
                         \ just drew
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  CPY #60                \ If Y < 60 then we still have some more character
  BCC DLL10              \ blocks to draw, so loop back to DLL10 to display the

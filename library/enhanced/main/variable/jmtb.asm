@@ -43,7 +43,13 @@ IF _DISC_DOCKED \ Screen
  EQUW DASC              \ Token 30: Unused
 ELIF _6502SP_VERSION
  EQUW WHITETEXT         \ Token 30: White text
+ELIF _MASTER_VERSION
+ EQUW L6960             \ ???
 ENDIF
+IF _DISC_DOCKED OR _6502SP_VERSION
  EQUW DASC              \ Token 31: Unused
+ELIF _MASTER_VERSION
+ EQUW L6969             \ ???
+ENDIF
  EQUW DASC              \ Token 32: Unused
 

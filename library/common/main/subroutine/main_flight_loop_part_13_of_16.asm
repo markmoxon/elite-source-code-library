@@ -24,6 +24,8 @@
  BPL MA77               \ MA24 above), then BOMB is now negative, so this skips
                         \ to MA77 if our energy bomb is not going off
 
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
+
  ASL BOMB               \ We set off our energy bomb, so rotate BOMB to the
                         \ left by one place. BOMB was rotated left once already
                         \ during this iteration of the main loop, back at MA24,
@@ -35,6 +37,17 @@
  JSR WSCAN              \ Call WSCAN to wait for the vertical sync, so the whole
                         \ screen gets drawn and the following palette change
                         \ won't kick in while the screen is still refreshing
+
+ELIF _MASTER_VERSION
+
+ JSR WSCAN_DUPLICATE
+
+ ASL BOMB
+ BMI MA77
+
+ JSR L31AC
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Tube
 
@@ -83,6 +96,15 @@ ENDIF
  LDA ENGY               \ level goes up by 2 if we have an energy unit fitted,
  ADC ENERGY             \ otherwise it goes up by 1
 
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
+
  BCS P%+5               \ If the value of A did not overflow (the maximum
  STA ENERGY             \ energy level is &FF), then store A in ENERGY
+
+ELIF _MASTER_VERSION
+
+ BCS P%+4               \ If the value of A did not overflow (the maximum
+ STA ENERGY             \ energy level is &FF), then store A in ENERGY ???
+
+ENDIF
 

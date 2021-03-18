@@ -67,6 +67,13 @@
  LDA ECMA               \ If an E.C.M is going off (our's or an opponent's) then
  BEQ MA66               \ keep going, otherwise skip to MA66
 
+IF _MASTER_VERSION
+
+ LDY #&07               \ ???
+ JSR NOISE
+
+ENDIF
+
  DEC ECMA               \ Decrement the E.C.M. countdown timer, and if it has
  BNE MA66               \ reached zero, keep going, otherwise skip to MA66
 
@@ -84,7 +91,7 @@ IF _CASSETTE_VERSION \ Label
  BNE MA9                \ then jump to MA9 to return from the main flight loop
                         \ (as MA9 is an RTS)
 
-ELIF _DISC_FLIGHT OR _6502SP_VERSION
+ELIF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
 
  LDA QQ11               \ If this is not a space view (i.e. QQ11 is non-zero)
  BNE oh                 \ then jump to oh to return from the main flight loop
@@ -92,7 +99,7 @@ ELIF _DISC_FLIGHT OR _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Tube
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Tube
 
  JMP STARS              \ This is a space view, so jump to the STARS routine to
                         \ process the stardust, and return from the main flight

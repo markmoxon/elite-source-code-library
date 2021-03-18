@@ -33,7 +33,15 @@
                         \ extended token that is printed is 217-219 (as this is
                         \ only called in galaxies 0 through 2)
 
+IF _DISC_VERSION OR _6502SP_VERSION \ Minor
+
  EQUB &2C               \ Skip the next instruction by turning it into
                         \ &2C &A9 &DC, or BIT &DCA9, which does nothing apart
                         \ from affect the flags
+
+ELIF _MASTER_VERSION
+
+ BNE P%+4               \ Skip the next instruction
+
+ENDIF
 

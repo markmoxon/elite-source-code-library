@@ -1,15 +1,27 @@
 \ ******************************************************************************
 \
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 \       Name: NA%
+ELIF _MASTER_VERSION
+\       Name: DEFAULT%
+ENDIF
 \       Type: Variable
 \   Category: Save and load
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 \    Summary: The data block for the last saved commander
+ELIF _MASTER_VERSION
+\    Summary: The data block for the default commander
+ENDIF
 \  Deep dive: Commander save files
 \             The competition code
 \
 \ ------------------------------------------------------------------------------
 \
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 \ Contains the last saved commander data, with the name at NA% and the data at
+ELIF _MASTER_VERSION
+\ Contains the default commander data, with the name at NA% and the data at
+ENDIF
 \ NA%+8 onwards. The size of the data block is given in NT% (which also includes
 \ the two checksum bytes that follow this block. This block is initially set up
 \ with the default commander, which can be maxed out for testing purposes by
@@ -26,7 +38,17 @@
 \
 \ ******************************************************************************
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
 .NA%
+
+ELIF _MASTER_VERSION
+
+ EQUS ":0.E."
+
+.DEFAULT%
+
+ENDIF
 
  EQUS "JAMESON"         \ The current commander name, which defaults to JAMESON
  EQUB 13                \
@@ -144,4 +166,12 @@ ENDIF
  EQUW 0                 \ TALLY = Number of kills, #71-72
 
  EQUB 128               \ SVC = Save count, #73
+
+IF _MASTER_VERSION
+
+ EQUB &AA               \ The CHK2 checksum value for the default commander
+
+ EQUB &03               \ The CHK checksum value for the default commander
+
+ENDIF
 

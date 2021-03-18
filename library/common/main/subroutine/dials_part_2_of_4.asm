@@ -8,9 +8,18 @@
 \
 \ ******************************************************************************
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Minor
+
  LDA #0                 \ Set R = P = 0 for the low bytes in the call to the ADD
  STA R                  \ routine below
  STA P
+
+ELIF _MASTER_VERSION
+
+ STZ R                  \ Set R = P = 0 for the low bytes in the call to the ADD
+ STZ P                  \ routine below
+
+ENDIF
 
  LDA #8                 \ Set S = 8, which is the value of the centre of the
  STA S                  \ roll indicator
@@ -23,7 +32,13 @@
  EOR #%10000000         \ so it's now in the range -7 to +7, with a positive
                         \ roll angle alpha giving a negative value in A
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  JSR ADD                \ We now add A to S to give us a value in the range 1 to
+ELIF _MASTER_VERSION
+
+ JSR ADD_DUPLICATE      \ We now add A to S to give us a value in the range 1 to
+ENDIF
                         \ 15, which we can pass to DIL2 to draw the vertical
                         \ bar on the indicator at this position. We use the ADD
                         \ routine like this:
@@ -54,7 +69,13 @@
                         \ numbers with sign bits, rather than two's complement
                         \ numbers
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  JSR ADD                \ We now add A to S to give us a value in the range 1 to
+ELIF _MASTER_VERSION
+
+ JSR ADD_DUPLICATE      \ We now add A to S to give us a value in the range 1 to
+ENDIF
                         \ 15, which we can pass to DIL2 to draw the vertical
                         \ bar on the indicator at this position (see the JSR ADD
                         \ above for more on this)

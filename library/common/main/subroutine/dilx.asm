@@ -28,7 +28,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \
 \   K+1                 The colour to use when A is a low value, as a 4-pixel
 \                       mode 5 character row byte
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 \   K                   The colour to use when A is a high value, as a 2-pixel
 \                       mode 2 character row byte
 \
@@ -99,7 +99,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
                         \ which is 4 characters (each of which is 4 pixels wide,
                         \ to give a total width of 16 pixels)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDX #7                 \ Set up a counter in X for the width of the indicator,
                         \ which is 8 characters (each of which is 2 pixels wide,
@@ -121,7 +121,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
  STA Q                  \ subtract 4 from Q so it contains the amount of the
                         \ indicator that's left to draw after this character
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  CMP #2                 \ If Q < 2, then we need to draw the end cap of the
  BCC DL2                \ indicator, which is less than a full character's
@@ -146,7 +146,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
                         \ only keep pixels that have their equivalent bits set
                         \ in the mask byte in A
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  AND COL                \ Fetch the 2-pixel mode 2 colour byte from COL, and
                         \ only keep pixels that have their equivalent bits set
@@ -191,7 +191,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
                         \ columns there should be on the right side of the cap's
                         \ character block
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  EOR #1                 \ If we get here then we are drawing the indicator's
  STA Q                  \ end cap, so Q is < 2, and this EOR flips the bits, so
@@ -218,7 +218,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
                         \ xxx0 xxx0, which blanks out the last column in the
                         \ 4-pixel mode 5 character block)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  ASL A                  \ Shift the mask left and clear bits 0, 2, 4 and 8,
  AND #%10101010         \ which has the effect of shifting zeroes from the left
@@ -238,8 +238,17 @@ ENDIF
  PHA                    \ Store the mask byte on the stack while we use the
                         \ accumulator for a bit
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Minor
+
  LDA #0                 \ Change the mask so no bits are set, so the characters
  STA R                  \ after the one we're about to draw will be all blank
+
+ELIF _MASTER_VERSION
+
+ STZ R                  \ Change the mask so no bits are set, so the characters
+                        \ after the one we're about to draw will be all blank
+
+ENDIF
 
  LDA #99                \ Set Q to a high number (99, why not) so we will keep
  STA Q                  \ drawing blank characters until we reach the end of
@@ -260,7 +269,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
                         \ to the next indicator, i.e. the one below the one we
                         \ just drew
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  INC SC+1               \ Increment the high byte of SC to point to the next
  INC SC+1               \ character row on-screen (as each row takes up exactly

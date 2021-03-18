@@ -51,8 +51,8 @@ ELIF _MASTER_VERSION
 
 .SPBLB
 
- LDA #&0F               \ ???
- STA VIA+&34
+ LDA #%00001111         \ Set bits 1 and 2 of the Access Control Register at
+ STA VIA+&34            \ SHEILA+&34 to switch screen memory into &3000-&7FFF
 
 ELIF _6502SP_VERSION
 
@@ -104,7 +104,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Platform
 
  JMP PUTBACK            \ Jump to PUTBACK to restore the USOSWRCH handler and
                         \ return from the subroutine using a tail call
@@ -113,8 +113,9 @@ ELIF _MASTER_VERSION
 
 .BULB2
 
- LDA #&09               \ ???
- STA VIA+&34
+ LDA #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
+ STA VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
+
  RTS
 
 ENDIF

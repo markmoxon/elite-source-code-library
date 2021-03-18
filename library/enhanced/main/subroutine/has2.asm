@@ -30,7 +30,7 @@ IF _DISC_DOCKED \ Screen
                         \ horizontal line just to the right of the 2-pixel
                         \ border along the edge of the screen
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA #%00100010         \ Set A to the pixel pattern for a mode 1 character row
                         \ byte with the third pixel set, so we start drawing the
@@ -53,7 +53,7 @@ ENDIF
  TXA                    \ Retrieve the value of A we stored above, so A now
                         \ contains the pixel mask again
 
-IF _6502SP_VERSION \ Screen
+IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  AND #RED               \ Apply the pixel mask in A to a four-pixel block of
                         \ red pixels, so we now know which bits to set in screen
@@ -85,7 +85,7 @@ IF _DISC_DOCKED \ Screen
  LDA #%10000000         \ Reset the pixel mask in A to the first pixel in the
                         \ new 8-pixel character block
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA #%10001000         \ Reset the pixel mask in A to the first pixel in the
                         \ new 4-pixel character block
@@ -96,7 +96,7 @@ ENDIF
                         \ HAL2 to keep drawing the line in the next character
                         \ block
 
-IF _6502SP_VERSION \ Screen
+IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  INC SC+1               \ The addition overflowed, so we have reached the last
                         \ character block in this page of memory, so increment

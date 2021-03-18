@@ -592,9 +592,9 @@ INCLUDE "library/common/main/subroutine/irq1.asm"
 
  EQUB 57
 
-.L153B
+.DLCNT
 
- EQUB &1E
+ EQUB 30
 
 INCLUDE "library/6502sp/io/subroutine/setvdu19.asm"
 
@@ -643,9 +643,6 @@ INCLUDE "library/6502sp/main/subroutine/ll30.asm"
 INCLUDE "library/6502sp/io/variable/twos.asm"
 INCLUDE "library/6502sp/io/variable/twos2.asm"
 INCLUDE "library/6502sp/io/variable/ctwos.asm"
-
- EQUB &4C,&49,&1D
-
 INCLUDE "library/common/main/subroutine/loin_part_1_of_7.asm"
 INCLUDE "library/common/main/subroutine/loin_part_2_of_7.asm"
 INCLUDE "library/common/main/subroutine/loin_part_3_of_7.asm"
@@ -675,112 +672,12 @@ INCLUDE "library/common/main/subroutine/msbar.asm"
  EQUB &00
 
 INCLUDE "library/enhanced/main/subroutine/hanger.asm"
+INCLUDE "library/enhanced/main/subroutine/has2.asm"
+INCLUDE "library/enhanced/main/subroutine/has3.asm"
+INCLUDE "library/common/main/subroutine/dvid4.asm"
+INCLUDE "library/6502sp/io/subroutine/cls.asm"
+INCLUDE "library/6502sp/io/subroutine/tt67.asm"
 
-.HAS2
-
- LDA #&22
-
-.HAL2
-
- TAX
- AND (SC),Y
- BNE HA3
-
- TXA
- AND #&F0
- ORA (SC),Y
- STA (SC),Y
- TXA
- LSR A
- BCC HAL2
-
- TYA
- ADC #&07
- TAY
- LDA #&88
- BCC HAL2
-
- INC SC+1
-
-.HAL3
-
- TAX
- AND (SC),Y
- BNE HA3
-
- TXA
- AND #&F0
- ORA (SC),Y
- STA (SC),Y
- TXA
- LSR A
- BCC HAL3
-
- TYA
- ADC #&07
- TAY
- LDA #&88
- BCC HAL3
-
- RTS
-
-.HAS3
-
- TAX
- AND (SC),Y
- BNE HA3
-
- TXA
- ORA (SC),Y
- STA (SC),Y
- TXA
- ASL A
- BCC HAS3
-
- TYA
- SBC #&08
- TAY
- LDA #&10
- BCS HAS3
-
- RTS
-
-.DVID4_DUPLICATE
-
- LDX #&08
- ASL A
- STA P
- LDA #&00
-
-.DVL4
-
- ROL A
- BCS DV8
-
- CMP Q
- BCC DV5
-
-.DV8
-
- SBC Q
-
-.DV5
-
- ROL P
- DEX
- BNE DVL4
-
- RTS
-
-.cls
-
- JSR TTX66
-
- JMP RR4
-
-.TT67_DUPLICATE
-
- LDA #&0C
 
 .TT26
 

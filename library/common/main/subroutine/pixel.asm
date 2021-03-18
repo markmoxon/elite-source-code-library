@@ -133,8 +133,10 @@ IF _6502SP_VERSION \ Tube
 ELIF _MASTER_VERSION
 
  STY T1                 \ ????
- LDY #&0F
- STY VIA+&34
+
+ LDY #%00001111         \ Set bits 1 and 2 of the Access Control Register at
+ STY VIA+&34            \ SHEILA+&34 to switch screen memory into &3000-&7FFF
+
  TAY
 
 ENDIF
@@ -309,8 +311,9 @@ IF _6502SP_VERSION \ Platform
 
 ELIF _MASTER_VERSION
 
- LDY #&09               \ ???
- STY VIA+&34
+ LDY #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
+ STY VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
+
  LDY T1
 
 .PX4
@@ -387,8 +390,9 @@ IF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDY #&09
- STY VIA+&34
+ LDY #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
+ STY VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
+
  LDY T1
 
  RTS                    \ Return from the subroutine

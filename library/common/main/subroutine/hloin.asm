@@ -135,8 +135,10 @@ IF _MASTER_VERSION \ Screen
 .HLOIN3
 
  STY YSAV               \ ???
- LDY #&0F
- STY VIA+&34
+
+ LDY #%00001111         \ Set bits 1 and 2 of the Access Control Register at
+ STY VIA+&34            \ SHEILA+&34 to switch screen memory into &3000-&7FFF
+
  LDX X1
 
 ELIF _6502SP_VERSION
@@ -460,8 +462,9 @@ ELIF _MASTER_VERSION
 
 .HL6
 
- LDY #&09               \ ???
- STY VIA+&34
+ LDY #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
+ STY VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
+
  LDY YSAV
 
 ENDIF
@@ -573,8 +576,9 @@ ELIF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDY #&09               \ ???
- STY VIA+&34
+ LDY #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
+ STY VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
+
  LDY YSAV
 
 ENDIF

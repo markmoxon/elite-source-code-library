@@ -36,6 +36,12 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 ENDIF
 \ ******************************************************************************
 
+IF _MASTER_VERSION \ Minor
+
+ JMP HLOIN3             \ This instruction doesn't appear to be used anywhere
+
+ENDIF
+
 IF _CASSETTE_VERSION OR _DISC_VERSION \ Label
 
 .LL30

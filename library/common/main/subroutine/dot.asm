@@ -41,8 +41,8 @@ ENDIF
 
 IF _MASTER_VERSION \ Platform
 
- LDA #&0F               \ ???
- STA VIA+&34
+ LDA #%00001111         \ Set bits 1 and 2 of the Access Control Register at
+ STA VIA+&34            \ SHEILA+&34 to switch screen memory into &3000-&7FFF
 
 ENDIF
 
@@ -106,8 +106,9 @@ ELIF _MASTER_VERSION
 
  JSR CPIX2
 
- LDA #&09
- STA VIA+&34
+ LDA #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
+ STA VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
+
  RTS
 
 ELIF _6502SP_VERSION

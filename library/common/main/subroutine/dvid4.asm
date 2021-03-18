@@ -1,6 +1,10 @@
 \ ******************************************************************************
 \
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 \       Name: DVID4
+ELIF _MASTER_VERSION
+\       Name: DVID4_DUPLICATE
+ENDIF
 \       Type: Subroutine
 \   Category: Maths (Arithmetic)
 \    Summary: Calculate (P R) = 256 * A / Q
@@ -27,7 +31,15 @@
 \
 \ ******************************************************************************
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
 .DVID4
+
+ELIF _MASTER_VERSION
+
+.DVID4_DUPLICATE
+
+ENDIF
 
  LDX #8                 \ Set a counter in X to count the 8 bits in A
 
@@ -73,7 +85,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Other: See group A
                         \ C flag cleared, and we return from the subroutine
                         \ using a tail call
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  RTS                    \ Return from the subroutine
 

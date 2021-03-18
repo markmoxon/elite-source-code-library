@@ -50,13 +50,17 @@ IF _6502SP_VERSION \ Tube
 ELIF _MASTER_VERSION
 
  STY YSAV               \ ???
- LDA #&0F
- STA VIA+&34
+
+ LDA #%00001111         \ Set bits 1 and 2 of the Access Control Register at
+ STA VIA+&34            \ SHEILA+&34 to switch screen memory into &3000-&7FFF
+
  JSR LOIN
 
- LDA #&09
- STA VIA+&34
+ LDA #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
+ STA VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
+
  LDY YSAV
+
  RTS
 
 ENDIF

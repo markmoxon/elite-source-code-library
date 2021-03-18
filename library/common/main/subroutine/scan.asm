@@ -316,8 +316,9 @@ ELIF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDY #&0F               \ ???
- STY VIA+&34
+ LDY #%00001111         \ Set bits 1 and 2 of the Access Control Register at
+ STY VIA+&34            \ SHEILA+&34 to switch screen memory into &3000-&7FFF
+
  JSR CPIX2
 
  LDA Y1
@@ -550,8 +551,9 @@ ELIF _MASTER_VERSION
 
 .RTS
 
- LDA #&09
- STA VIA+&34
+ LDA #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
+ STA VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
+
  RTS
 
 .RTS_PLUS_1
@@ -585,8 +587,9 @@ ELIF _MASTER_VERSION
  DEX
  BNE VLL2
 
- LDA #&09
- STA VIA+&34
+ LDA #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
+ STA VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
+
  RTS
 
 ENDIF

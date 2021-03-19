@@ -13,12 +13,22 @@
 
 .STARS
 
+IF _CASSETTE_VERSION OR _DISC_FLIGHT
+
 \LDA #&FF               \ These instructions are commented out in the original
 \STA COL                \ source, but they would set the stardust colour to
                         \ white. That said, COL is only used when updating the
                         \ dashboard, so this would have no effect - perhaps it's
                         \ left over from experiments with a colour top part of
                         \ the screen? Who knows...
+
+
+ELIF _MASTER_VERSION
+
+ LDA #&FA               \ ???
+ STA COL
+
+ENDIF
 
  LDX VIEW               \ Load the current view into X:
                         \

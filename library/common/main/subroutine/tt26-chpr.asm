@@ -1,8 +1,8 @@
 \ ******************************************************************************
 \
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Comment
 \       Name: TT26
-ELIF _DISC_DOCKED
+ELIF _DISC_DOCKED OR _MASTER_VERSION
 \       Name: CHPR
 ENDIF
 \       Type: Subroutine
@@ -15,9 +15,9 @@ ENDIF
 \ Print a character at the text cursor (XC, YC), do a beep, print a newline,
 \ or delete left (backspace).
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \ WRCHV is set to point here by the loading process.
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 \ Calls to OSWRCH will end up here when A is not in the range 128-147, as those
 \ are reserved for the special jump table OSWRCH commands.
 ENDIF
@@ -83,11 +83,11 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Label
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Label
 
 .TT26
 
-ELIF _DISC_DOCKED
+ELIF _DISC_DOCKED OR _MASTER_VERSION
 
 .CHPR
 
@@ -108,7 +108,7 @@ ELIF _6502SP_VERSION
  PHA
  LDA K3
 
-ELIF  _MASTER_VERSION
+ELIF _MASTER_VERSION
 
  STA K3                 \ Store the A, X and Y registers, so we can restore
  PHY                    \ them at the end (so they don't get changed by this

@@ -27,6 +27,13 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
 
  RTS                    \ Return from the subroutine
 
+ELIF _MASTER_VERSION
+
+ LDA #6                 \ Move the text cursor to column 6
+ STA XC
+
+ RTS                    \ Return from the subroutine
+
 ELIF _6502SP_VERSION
 
  LDA #6                 \ Move the text cursor to column 6 and return from the

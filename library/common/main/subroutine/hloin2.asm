@@ -43,6 +43,16 @@
  LDA #0                 \ Set the Y-th byte of the LSO block to 0
  STA LSO,Y
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+
                         \ Fall through into HLOIN to draw a horizontal line from
                         \ (X1, Y) to (X2, Y)
+
+ELIF _MASTER_VERSION
+
+ JMP HLOIN              \ Call HLOIN to draw a horizontal line from (X1, Y) to
+                        \ (X2, Y), returning from the subroutine using a tail
+                        \ call
+
+ENDIF
 

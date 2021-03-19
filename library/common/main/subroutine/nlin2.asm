@@ -31,6 +31,11 @@ IF _6502SP_VERSION \ Screen
  LDA #YELLOW            \ Send a #SETCOL YELLOW command to the I/O processor to
  JSR DOCOL              \ switch to colour 1, which is yellow
 
+ELIF _MASTER_VERSION
+
+ LDA #&0F               \ ???
+ STA COL
+
 ENDIF
 
  LDX #2                 \ Set X1 = 2, so (X1, Y1) = (2, A)
@@ -49,12 +54,22 @@ ELIF _6502SP_VERSION
 
  JSR LL30               \ Call LL30 to draw a line from (2, A) to (254, A)
 
+ELIF _MASTER_VERSION
+
+ JSR HLOIN3             \ ???
+
 ENDIF
 
 IF _6502SP_VERSION \ Screen
 
  LDA #CYAN              \ Send a #SETCOL CYAN command to the I/O processor to
  JMP DOCOL              \ switch to colour 3, which is cyan or white
+
+ELIF _MASTER_VERSION
+
+ LDA #&FF               \ ???
+ STA COL
+ RTS
 
 ENDIF
 

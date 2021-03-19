@@ -8,7 +8,7 @@
 \
 \ ******************************************************************************
 
-IF _6502SP_VERSION \ Minor: The 6502SP version has to use an extended token for printing "DOCKED" because the standard token has been repurposed compared to the cassette version
+IF _6502SP_VERSION OR _MASTER_VERSION \ Minor: The advanced versions have to use an extended token for printing "DOCKED" because the standard token has been repurposed compared to the cassette version
 
 .wearedocked
 
@@ -17,7 +17,19 @@ IF _6502SP_VERSION \ Minor: The 6502SP version has to use an extended token for 
  LDA #205               \ Print extended token 205 ("DOCKED") and return from
  JSR DETOK              \ the subroutine using a tail call
 
+ENDIF
+
+IF _6502SP_VERSION \ Platform
+
  JSR TT67               \ Print a newline
+
+ELIF _MASTER_VERSION
+
+ JSR TT67_DUPLICATE     \ Print a newline
+
+ENDIF
+
+IF _6502SP_VERSION OR _MASTER_VERSION \ Minor
 
  JMP st6+3              \ Jump down to st6+3, to print recursive token 125 and
                         \ continue to the rest of the Status Mode screen
@@ -72,7 +84,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Advanced: In the 6502SP version, you can
  JSR TT66               \ and set the current view type in QQ11 to 8 (Status
                         \ Mode screen)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA #8                 \ Clear the top part of the screen, draw a white border,
  JSR TRADEMODE          \ and set up a printable trading screen with a view type
@@ -83,7 +95,7 @@ ENDIF
  JSR TT111              \ Select the system closest to galactic coordinates
                         \ (QQ9, QQ10)
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Tube
 
  LDA #7                 \ Move the text cursor to column 7
  STA XC
@@ -116,7 +128,7 @@ IF _CASSETTE_VERSION \ Minor
  BNE st6                \ docked, jump to st6 to print "Docked" for our
                         \ ship's condition
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA #15                \ Set A to token 129 ("{sentence case}DOCKED")
 
@@ -125,7 +137,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
  LDA #230               \ Otherwise we are in space, so start off by setting A
                         \ to token 70 ("GREEN")
@@ -137,7 +149,7 @@ IF _CASSETTE_VERSION \ Platform
  LDY MANY+AST           \ Set Y to the number of asteroids in our local bubble
                         \ of universe
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  LDY JUNK               \ Set Y to the number of junk items in our local bubble
                         \ of universe (where junk is asteroids, canisters,
@@ -145,7 +157,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
  LDX FRIN+2,Y           \ The ship slots at FRIN are ordered with the first two
                         \ slots reserved for the planet and sun/space station,
@@ -227,7 +239,7 @@ ENDIF
  LSR A
  LSR A
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Label
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Label
 
 .st5L
 
@@ -258,7 +270,7 @@ ENDIF
 
  LSR A                  \ Shift A to the right
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Label
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Label
 
  BNE st5L               \ Keep looping around until A = 0, which means there are
                         \ no set bits left in A
@@ -287,6 +299,8 @@ ENDIF
                         \
                         \ followed by a newline and an indent of 6 characters
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  LDA CRGO               \ If our ship's cargo capacity is < 26 (i.e. we do not
  CMP #26                \ have a cargo bay extension), skip the following two
  BCC P%+7               \ instructions
@@ -294,6 +308,16 @@ ENDIF
  LDA #107               \ We do have a cargo bay extension, so print recursive
  JSR plf2               \ token 107 ("LARGE CARGO{sentence case} BAY"), followed
                         \ by a newline and an indent of 6 characters
+
+ELIF _MASTER_VERSION
+
+ LDA ESCP               \ ???
+ BEQ P%+7
+
+ LDA #112
+ JSR plf2
+
+ENDIF
 
  LDA BST                \ If we don't have fuel scoops fitted, skip the
  BEQ P%+7               \ following two instructions
@@ -367,7 +391,7 @@ IF _CASSETTE_VERSION \ Enhanced: The Status Mode screen in the enhanced versions
 
  LDA #104               \ Set A to token 104 ("BEAM LASER")
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
  LDX CNT                \ Set Y = the laser power for view X
  LDY LASER,X

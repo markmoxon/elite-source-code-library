@@ -59,6 +59,12 @@ ELIF _DISC_FLIGHT OR _6502SP_VERSION
  BNE LASLI-1            \ then jump to MA9 to return from the main flight loop
                         \ (as LASLI-1 is an RTS)
 
+ELIF _MASTER_VERSION
+
+ LDA QQ11               \ If this is not a space view (i.e. QQ11 is non-zero)
+ BNE ARCRTS             \ then jump to MA9 to return from the main flight loop
+                        \ (as ARCRTS is an RTS)
+
 ENDIF
 
 IF _6502SP_VERSION \ Screen
@@ -66,31 +72,52 @@ IF _6502SP_VERSION \ Screen
  LDA #RED               \ Send a #SETCOL RED command to the I/O processor to
  JSR DOCOL              \ switch to colour 2, which is red in the space view
 
+ELIF _MASTER_VERSION
+
+ LDA #RED               \ Switch to colour 2, which is red in the space view
+ STA COL
+
 ENDIF
 
  LDA #32                \ Set A = 32 and Y = 224 for the first set of laser
  LDY #224               \ lines (the wider pair of lines)
 
-IF _6502SP_VERSION \ Advanced: Group A: In the original versions, both sets of laser lines converge at the same pixel. In the 6502SP version, the upper pair of laser lines aim one pixel higher than the lower pair, so they overlap less. Because EOR logic is used when drawing, this gives the lasers in the 6502SP version a much sharper point, as the tips overlap less and don't cancel each other out
+IF _6502SP_VERSION \ Advanced: Group A: In the original versions, both sets of laser lines converge at the same pixel. In the 6502SP version, the upper pair of laser lines aim one pixel higher than the lower pair, so they overlap less, and in the Master version, the top lines aim two pixels higher than the lower lines. Because EOR logic is used when drawing, this gives the lasers in the 6502SP version a sharper point, and the lines in the Master version a much sharper point, as the tips overlap less and don't cancel each other out
+
 IF _SNG45
 
  DEC LASY               \ Decrement the y-coordinate of the centre point to move
-                        \ it up the screen by a line for the first set of lines,
+                        \ it up the screen by a pixel for the top set of lines,
                         \ so the wider set of lines aim slightly higher than the
                         \ narrower set
 
 ENDIF
+
+ELIF _MASTER_VERSION
+
+ DEC LASY               \ Decrement the y-coordinate of the centre point to move
+ DEC LASY               \ it up the screen by two pixels for the top set of
+                        \ lines, so the wider set of lines aim slightly higher
+                        \ than the narrower set
+
 ENDIF
 
  JSR las                \ Call las below to draw the first set of laser lines
 
 IF _6502SP_VERSION \ Advanced: See group A
+
 IF _SNG45
 
  INC LASY               \ Increment the y-coordinate of the centre point to put
                         \ it back to the original position
 
 ENDIF
+
+ELIF _MASTER_VERSION
+
+ INC LASY               \ Increment the y-coordinate of the centre point to put
+ INC LASY               \ it back to the original position
+
 ENDIF
 
  LDA #48                \ Fall through into las with A = 48 and Y = 208 to draw
@@ -123,7 +150,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Label
  JSR LOIN               \ Draw a line from (X1, Y1) to (X2, Y2), so that's from
                         \ the centre point to (A, 191)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  JSR LL30               \ Draw a line from (X1, Y1) to (X2, Y2), so that's from
                         \ the centre point to (A, 191)
@@ -146,7 +173,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Label
                         \ the centre point to (Y, 191), and return from
                         \ the subroutine using a tail call
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  JMP LL30               \ Draw a line from (X1, Y1) to (X2, Y2), so that's from
                         \ the centre point to (Y, 191), and return from

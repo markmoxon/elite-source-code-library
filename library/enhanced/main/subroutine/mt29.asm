@@ -20,7 +20,7 @@
 
 .MT29
 
-IF _DISC_DOCKED \ Tube
+IF _DISC_DOCKED OR _MASTER_VERSION \ Tube
 
  LDA #6                 \ Move the text cursor to row 6
  STA YC
@@ -35,6 +35,11 @@ ENDIF
 IF _6502SP_VERSION \ Screen
 
  JSR WHITETEXT          \ Set white text
+
+ELIF _MASTER_VERSION
+
+ LDA #&FF               \ ???
+ STA COL
 
 ENDIF
 

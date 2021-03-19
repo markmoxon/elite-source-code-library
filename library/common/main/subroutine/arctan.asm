@@ -18,6 +18,12 @@
 \
 \   tan(A) = P / Q
 \
+IF _MASTER_VERSION \ Comment
+\ Other entry points:
+\
+\   ARCRTS              Contains an RTS
+\
+ENDIF
 \ ******************************************************************************
 
 .ARCTAN
@@ -127,6 +133,12 @@
                         \   A = value in ACT + X
                         \     = value in ACT + (32 * A / Q)
                         \     = arctan(A / Q)
+
+IF _MASTER_VERSION \ Label
+
+.ARCRTS
+
+ENDIF
 
  RTS                    \ Return from the subroutine
 

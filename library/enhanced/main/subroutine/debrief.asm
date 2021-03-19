@@ -19,7 +19,11 @@
  LSR TP                 \ Clear bit 0 of TP to indicate that mission 1 is no
  ASL TP                 \ longer in progress, as we have completed it
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: In the Master version, killing the Constrictor at the end of mission 1 gives you 5.3 kill points, but the other versions give you a much more generous 256 points
+
  INC TALLY+1            \ Award 256 kill points for completing the mission
+
+ENDIF
 
  LDX #LO(50000)         \ Increase our cash reserves by the generous mission
  LDY #HI(50000)         \ reward of 5,000 CR

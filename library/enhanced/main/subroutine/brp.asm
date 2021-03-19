@@ -9,6 +9,13 @@
 
 .BRP
 
+IF _MASTER_VERSION
+
+ LDX #&FF               \ ???
+ STX COL
+
+ENDIF
+
  JSR DETOK              \ Print the extended token in A
 
  JMP BAY                \ Jump to BAY to go to the docking bay (i.e. show the

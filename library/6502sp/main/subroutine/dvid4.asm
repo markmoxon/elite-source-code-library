@@ -96,9 +96,45 @@
  LDX #0                 \ Set X = 0 so this unrolled version of DVID4 also
                         \ returns X = 0
 
+IF _6502SP_VERSION
+
  JMP LL28+4             \ Jump to LL28+4 to convert the remainder in A into an
                         \ integer representation of the fractional value A / Q,
                         \ in R, where 1.0 = 255. LL28+4 always returns with the
                         \ C flag cleared, and we return from the subroutine
                         \ using a tail call
+
+ELIF _MASTER_VERSION
+
+{
+ STA widget
+ TAX
+ BEQ LLfix
+
+ LDA logL,X
+ LDX Q
+ SEC
+ SBC logL,X
+ LDX widget
+ LDA log,X
+ LDX Q
+ SBC log,X
+ BCS LL2
+
+ TAX
+ LDA antilog,X
+
+.LLfix
+
+ STA R
+ RTS
+
+.LL2
+
+ LDA #&FF
+ STA R
+ RTS
+}
+
+ENDIF
 

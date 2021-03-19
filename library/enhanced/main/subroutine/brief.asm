@@ -46,7 +46,7 @@ IF _DISC_DOCKED \ Minor
  LDA #1                 \ Move the text cursor to column 1
  STA XC
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA #1                 \ Move the text cursor to column 1
  JSR DOXC
@@ -55,6 +55,12 @@ ENDIF
 
  STA INWK+7             \ Set z_hi = 1, the distance at which we show the
                         \ rotating ship
+
+IF _MASTER_VERSION
+
+ LDA #&0D               \ ???
+
+ENDIF
 
  JSR TT66               \ Clear the top part of the screen, draw a white border,
                         \ and set the current view type in QQ11 to 1
@@ -99,11 +105,23 @@ ENDIF
  LDX INWK+3             \ Set X = y_lo + 1
  INX
 
+IF _DISC_DOCKED OR _6502SP_VERSION
+
  CPX #112               \ If X < 112 then skip the next instruction
  BCC P%+4
 
  LDX #112               \ X is bigger than 112, so set X = 112 so that X has a
                         \ maximum value of 112
+
+ELIF _MASTER_VERSION
+
+ CPX #120               \ If X < 120 then skip the next instruction
+ BCC P%+4
+
+ LDX #120               \ X is bigger than 120, so set X = 120 so that X has a
+                        \ maximum value of 120 ???
+
+ENDIF
 
  STX INWK+3             \ Set y_lo = X
                         \          = y_lo + 1
@@ -115,6 +133,12 @@ ENDIF
 
  JSR MVEIT              \ Call MVEIT to move and rotate the ship in space
 
+IF _MASTER_VERSION
+
+ DEC MCNT               \ ???
+
+ENDIF
+
  JMP BRL2               \ Loop back to keep moving the ship up the screen and
                         \ away from us
 
@@ -122,6 +146,12 @@ ENDIF
 
  INC INWK+7             \ Increment z_hi, to keep the ship at the same distance
                         \ as we just incremented z_lo past 255
+
+IF _MASTER_VERSION
+
+ JSR PAS1               \ ???
+
+ENDIF
 
  LDA #10                \ Set A = 10 so the call to BRP prints extended token 10
                         \ (the briefing for mission 1 where we find out all

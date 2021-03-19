@@ -42,7 +42,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Other: The 6502SP version has a check to
  LDA INWK+6             \ Set Q = z_lo
  STA Q
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA INWK+6             \ Set Q = z_lo, making sure Q is at least 1
  ORA #1
@@ -160,6 +160,8 @@ ENDIF
 
  LDA P+2                \ Set A to the highest byte of the numerator
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  JSR LL31               \ Call LL31 to calculate:
                         \
                         \   R = 256 * A / Q
@@ -167,6 +169,39 @@ ENDIF
 
                         \ The result of our division is now in R, so we just
                         \ need to shift it back by the scale factor in Y
+
+ELIF _MASTER_VERSION
+
+{
+.LL31
+
+ ASL A
+ BCS LL29
+
+ CMP Q
+ BCC P%+4
+
+ SBC Q
+
+ ROL R
+
+ BCS LL31
+
+ JMP RTS
+
+.LL29
+
+ SBC Q
+ SEC
+ ROL R
+ BCS LL31
+
+ LDA R
+
+.RTS
+}
+
+ENDIF
 
  LDA #0                 \ Set K(3 2 1) = 0 to hold the result (we populate K
  STA K+1                \ next)

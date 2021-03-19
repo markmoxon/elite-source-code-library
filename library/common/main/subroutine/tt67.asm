@@ -19,7 +19,7 @@ IF _CASSETTE_VERSION \ Standard: The cassette version uses control code 13 for p
 
  LDA #13                \ Load a newline character into A
 
-ELIF _DISC_VERSION OR _6502SP_VERSION
+ELIF _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
 
  LDA #12                \ Load a newline character into A
 

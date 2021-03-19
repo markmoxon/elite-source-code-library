@@ -65,7 +65,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Label
 
                         \ Jumps to RE3+2 end up here
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 .djd1
 

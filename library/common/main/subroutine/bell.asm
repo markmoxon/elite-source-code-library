@@ -25,5 +25,9 @@ ELIF _6502SP_VERSION
                         \ Fall through into the CHPR print routine to
                         \ actually make the sound
 
+ELIF _MASTER_VERSION
+
+ JMP CHPR               \ Call the CHPR print routine to actually make the sound
+
 ENDIF
 

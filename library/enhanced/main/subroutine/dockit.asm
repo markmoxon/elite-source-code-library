@@ -121,7 +121,7 @@ IF _DISC_FLIGHT \ Minor
 
  JSR TAS3-2             \ Call TAS3-2 to calculate:
                         \
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDY #10                \ Call TAS3 to calculate:
  JSR TAS3               \

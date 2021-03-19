@@ -13,8 +13,20 @@
 
 .LL164
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  LDA #56                \ Call the NOISE routine with A = 56 to make the sound
  JSR NOISE              \ of the hyperspace drive being engaged
+
+ELIF _MASTER_VERSION
+
+ LDY #&0A               \ ???
+ JSR NOISE
+
+ LDY #&0B
+ JSR NOISE
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
 
@@ -37,6 +49,12 @@ ENDIF
                         \ quite round (compared to the step size of 8 used in
                         \ the much more polygonal launch rings)
 
+IF _MASTER_VERSION
+
+ STA HFX                \ ???
+
+ENDIF
+
  JSR HFS2               \ Call HFS2 to draw the hyperspace tunnel rings
 
 IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
@@ -52,6 +70,13 @@ ELIF _6502SP_VERSION
  JSR OSWRCH             \ it to show normal colours in the top part of the
  LDA #0                 \ screen, returning from the subroutine using a tail
  JMP OSWRCH             \ call
+
+ELIF _MASTER_VERSION
+
+ STZ HFX                \ Set HFX back to 0, so we switch back to the normal
+                        \ split-screen mode
+
+ RTS                    \ Return from the subroutine
 
 ENDIF
 

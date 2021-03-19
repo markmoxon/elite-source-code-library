@@ -34,7 +34,7 @@
 \
 \   INWK                The whole INWK workspace is preserved
 \
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Comment
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
 \   X                   X is preserved
 \
 ENDIF
@@ -49,7 +49,7 @@ ENDIF
                         \ so we can restore them later when returning from the
                         \ subroutine
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Platform
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
  TXA                    \ Store X, the ship type to spawn, on the stack so we
  PHA                    \ can preserve it through the routine
@@ -154,7 +154,7 @@ IF _CASSETTE_VERSION \ Enhanced: Group A: On their demise, ships can spawn both 
  BNE NOIL               \ jump to NOIL to skip us setting up the pitch and roll
                         \ for the canister
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  CMP #SPL+1             \ If the type of the child we are spawning is less than
  BCS NOIL               \ #PLT or greater than #SPL - i.e. not an alloy plate,
@@ -185,7 +185,7 @@ IF _CASSETTE_VERSION \ Enhanced: See group A
 
  LDA #OIL               \ Set A to the ship type of a cargo canister
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  PLA                    \ Retrieve the child's ship type from the stack
 
@@ -223,7 +223,7 @@ ENDIF
  PLA
  STA XX0
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Platform
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
  PLA                    \ Retrieve the ship type to spawn from the stack into X
  TAX                    \ so it is preserved through calls to this routine

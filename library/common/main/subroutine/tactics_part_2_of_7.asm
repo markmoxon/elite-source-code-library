@@ -27,7 +27,7 @@ IF _CASSETTE_VERSION \ Comment
 \   * If this is a pirate and we are within the space station safe zone, stop
 \     the pirate from attacking by removing all its aggression
 \
-ELIF _6502SP_VERSION OR _DISC_FLIGHT
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 \   * If this is the space station and it is hostile, consider spawning a cop
 \     (6.2% chance, up to a maximum of seven) and we're done
 \
@@ -36,7 +36,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT
 \     (equal odds of each type) and we're done
 \
 ENDIF
-IF _6502SP_VERSION \ Comment
+IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \   * If this is a rock hermit, consider spawning (22% chance) a highly
 \     aggressive and hostile Sidewinder, Mamba, Krait, Adder or Gecko (equal
 \     odds of each type) and we're done
@@ -70,7 +70,7 @@ IF _DISC_FLIGHT \ Enhanced: Group A: The docking computer in the enhanced versio
                         \ or planet. This value is set to different values by
                         \ both the TACTICS and DOCKIT routines
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA #3                 \ Set RAT = 3, which is the magnitude we set the pitch
  STA RAT                \ or roll counter to in part 7 when turning a ship
@@ -91,7 +91,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _DISC_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
+IF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Enhanced: See group A
 
  LDA #22                \ Set CNT2 = 22, which is the maximum angle beyond which
  STA CNT2               \ a ship will slow down to start turning towards its
@@ -121,7 +121,7 @@ ENDIF
  CPX #SST               \ If this is not the space station, jump down to TA13
  BNE TA13
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: Space stations in the enhanced versions regularly spawn Transporters and Shuttles that ply their trade between the station and the planet
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: Space stations in the enhanced versions regularly spawn Transporters and Shuttles that ply their trade between the station and the planet
 
  LDA NEWB               \ This is the space station, so check whether bit 2 of
  AND #%00000100         \ the ship's NEWB flags is set, and if it is (i.e. the
@@ -166,14 +166,14 @@ IF _CASSETTE_VERSION \ Standard: In the cassette version there is a 45% chance t
  CMP #140               \ If A < 140 (55% chance) then return from the
  BCC TA14-1             \ subroutine (as TA14-1 contains an RTS)
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  CMP #240               \ If A < 240 (93.8% chance), return from the subroutine
  BCC TA1                \ (as TA1 contains an RTS)
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Advanced: In the 6502SP version there can be up to 7 cops in the vicinity, while the limit is 4 in the other versions
+IF _CASSETTE_VERSION \ Advanced: In the 6502SP version there can be up to 7 cops in the vicinity, and in the Master version there can be up to 6, while the limit is 4 in the other versions
 
  LDA MANY+COPS          \ We only call the tactics routine for the space station
  CMP #4                 \ when it is hostile, so first check the number of cops
@@ -193,11 +193,17 @@ ELIF _6502SP_VERSION
  CMP #7                 \ and if there are 7 or more, return from the subroutine
  BCS TA22               \ (as TA22 contains an RTS)
 
+ELIF _MASTER_VERSION
+
+ LDA MANY+COPS          \ Check how many cops there are in the vicinity already,
+ CMP #6                 \ and if there are 6 or more, return from the subroutine
+ BCS TA22               \ (as TA22 contains an RTS)
+
 ENDIF
 
  LDX #COPS              \ Set X to the ship type for a cop
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Label
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Label
 
 .TN6
 
@@ -252,7 +258,7 @@ IF _CASSETTE_VERSION \ Platform: Without the NEWB flags, the cassette version lo
 
 ENDIF
 
-IF _6502SP_VERSION \ Advanced: Rock hermits have a 22% chance of spawning a Sidewinder, Mamba, Krait, Adder or Gecko
+IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: Rock hermits have a 22% chance of spawning a ship
 
  CPX #HER               \ If this is not a rock hermit, jump down to TA17
  BNE TA17
@@ -264,6 +270,16 @@ IF _6502SP_VERSION \ Advanced: Rock hermits have a 22% chance of spawning a Side
 
  LDX #0                 \ Set byte #32 to %00000000 to disable AI, aggression
  STX INWK+32            \ and E.C.M.
+
+ENDIF
+
+IF _MASTER_VERSION
+
+ LDX #%00100100         \ ???
+
+ENDIF
+
+IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: Rock hermits can spawn a Sidewinder, Mamba, Krait, Adder or Gecko
 
  STX NEWB               \ Set the ship's NEWB flags to %00000000 so the ship we
                         \ spawn below will inherit the default values from E%

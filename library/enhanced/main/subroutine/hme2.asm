@@ -14,6 +14,11 @@ IF _6502SP_VERSION \ Screen
  LDA #CYAN              \ Send a #SETCOL CYAN command to the I/O processor to
  JSR DOCOL              \ switch to colour 3, which is white in the chart view
 
+ELIF _MASTER_VERSION
+
+ LDA #&FF               \ ???
+ STA COL
+
 ENDIF
 
  LDA #14                \ Print extended token 14 ("{clear bottom of screen}
@@ -95,8 +100,16 @@ ENDIF
 
  JSR TT103              \ Draw small crosshairs at coordinates (QQ9, QQ10)
 
+IF _DISC_VERSION OR _6502SP_VERSION \ Minor
+
  LDA #40                \ Call the NOISE routine with A = 40 to make a low,
  JSR NOISE              \ long beep to indicate a failed search
+
+ELIF _MASTER_VERSION
+
+ JSR BEEP_LONG_LOW      \ ???
+
+ENDIF
 
  LDA #215               \ Print extended token 215 ("{left align} UNKNOWN
  JMP DETOK              \ PLANET"), which will print on-screem as the left align

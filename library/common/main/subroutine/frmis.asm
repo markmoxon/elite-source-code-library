@@ -36,7 +36,16 @@
 
  DEC NOMSL              \ Reduce the number of missiles we have by 1
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+
  LDA #48                \ Call the NOISE routine with A = 48 to make the sound
  JMP NOISE              \ of a missile launch, returning from the subroutine
                         \ using a tail call
+
+ELIF _MASTER_VERSION
+
+ LDY #8                 \ Call the NOISE routine with A = 8 to make the sound
+ JSR NOISE              \ of a missile launch ???
+
+ENDIF
 

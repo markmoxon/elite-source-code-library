@@ -14,7 +14,7 @@ IF _CASSETTE_VERSION \ Comment
 \   * Work out which direction the ship should be moving, depending on whether
 \     it's an escape pod, where it is, which direction it is pointing, and how
 \     aggressive it is
-ELIF _6502SP_VERSION OR _DISC_FLIGHT
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 \   * Work out which direction the ship should be moving, depending on the type
 \     of ship, where it is, which direction it is pointing, and how aggressive
 \     it is
@@ -24,7 +24,7 @@ ENDIF
 \
 \   * Speed up or slow down, depending on where the ship is in relation to us
 \
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Comment
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
 \ Other entry points:
 \
 \   TA151               Make the ship head towards the planet
@@ -88,7 +88,7 @@ IF _CASSETTE_VERSION \ Minor: This code is in the TAS6 routine in the enhanced v
  EOR #%10000000         \ so now it's positive if the ships are facing each
  STA CNT                \ other, and negative if they are facing the same way
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  JSR TAS6               \ Call TAS6 to negate the vector in XX15 so it points in
                         \ the opposite direction
@@ -110,7 +110,7 @@ ENDIF
 IF _CASSETTE_VERSION \ Comment
                         \   * This is an escape pod and XX15 is pointing towards
                         \     the planet
-ELIF _6502SP_VERSION OR _DISC_FLIGHT
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
                         \   * This is a trader and XX15 is pointing towards the
                         \     planet
 ENDIF
@@ -131,7 +131,7 @@ ENDIF
                         \ which will make aggressive ships head towards us, and
 IF _CASSETTE_VERSION \ Comment
                         \ ships that are too close turn away. Escape pods,
-ELIF _6502SP_VERSION OR _DISC_FLIGHT
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
                         \ ships that are too close turn away. Peaceful traders,
 ENDIF
                         \ meanwhile, head off towards the planet in search of a
@@ -160,7 +160,7 @@ ELIF _DISC_FLIGHT
 
  STA INWK+30            \ Store the result in the ship's pitch counter
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  TAX                    \ Copy A into X so we can retrieve it below
 
@@ -200,6 +200,15 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT
  CMP #32                \ If A >= 32 then jump to TA6, as the ship is already
  BCS TA6                \ in the process of rolling
 
+ELIF _MASTER_VERSION
+
+ LDA INWK+29            \ Fetch the roll counter from byte #29 into A
+
+ ASL A                  \ Shift A left to double it and drop the sign bit
+
+ CMP #32                \ If A >= 32 then jump to TA12, as the ship is already
+ BCS TA12               \ in the process of rolling ???
+
 ENDIF
 
  LDY #22                \ Set (A X) = sidev . XX15
@@ -232,7 +241,7 @@ ELIF _DISC_FLIGHT
 
 .TA12
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  TAX                    \ Copy A into X so we can retrieve it below
 
@@ -269,7 +278,7 @@ IF _CASSETTE_VERSION \ Minor: CNT2 is set to 22 in the enhanced versions
                         \ directly towards each other, so jump to TA9 to slow
                         \ down
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  CMP CNT2               \ The dot product is positive, so the ships are facing
  BCC TA9                \ each other. If A < CNT2 then the ships are not heading
@@ -327,7 +336,7 @@ IF _DISC_FLIGHT \ Enhanced: The tactics routines to point the ship at the planet
                         \ vectors are facing in a similar direction, if it's
                         \ negative they are facing in opposite directions
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 .TA151
 
@@ -347,7 +356,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: See group A
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
 
  CMP #&98               \ If A is positive or A <= -24, jump to ttt
  BCC ttt

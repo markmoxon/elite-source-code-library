@@ -80,6 +80,12 @@ IF _6502SP_VERSION \ Platform: The enhanced versions use this routine for in-fli
                         \ message and we should buffer the carriage return
                         \ character {12}, so skip the following two instructions
 
+ELIF _MASTER_VERSION
+
+ BIT DTW4               \ If bit 6 of DTW4 is set, then this is an in-flight
+ BVS P%+6               \ message and we should buffer the carriage return
+                        \ character {12}, so skip the following two instructions
+
 ENDIF
 
  CMP #12                \ If the character in A is a carriage return, then we

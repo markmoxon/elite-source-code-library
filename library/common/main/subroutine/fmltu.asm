@@ -81,7 +81,7 @@ ENDIF
 
 .FMLTU
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Other: The FMLTU routine in the 6502SP version uses logarithms to speed up the multiplication
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Other: The FMLTU routine in the advanced versions uses logarithms to speed up the multiplication
 
  EOR #%11111111         \ Flip the bits in A, set the C flag and rotate right,
  SEC                    \ so the C flag now contains bit 0 of A inverted, and P
@@ -132,7 +132,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Other: The FMLTU routine in the 6502SP v
 
  RTS                    \ Return from the subroutine
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  STX P                  \ Store X in P so we can preserve it through the call to
                         \ FMULTU
@@ -159,7 +159,15 @@ ELIF _6502SP_VERSION
  CLC                    \ Set A = A + low byte of Lq
  ADC logL,X             \       = low byte of La + low byte of Lq
 
- BMI oddlog             \ If A > 127, jump to oddlog
+ENDIF
+
+IF _6502SP_VERSION
+
+ BMI oddlog             \ If A > 127, jump to oddlog ???
+
+ENDIF
+
+IF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA log,X              \ Set A = high byte of Lq
 
@@ -181,6 +189,10 @@ ELIF _6502SP_VERSION
 
  RTS                    \ Return from the subroutine
 
+ENDIF
+
+IF _6502SP_VERSION
+
 .oddlog
 
  LDA log,X              \ Set A = high byte of Lq
@@ -199,6 +211,10 @@ ELIF _6502SP_VERSION
  TAX                    \ Otherwise La + Lq >= 256, so we return the A-th entry
  LDA antilogODD,X       \ from the antilogODD table
 
+ENDIF
+
+IF _6502SP_VERSION
+
 .MU3
 
                         \ If we get here then A (our result) is already 0
@@ -210,6 +226,20 @@ ELIF _6502SP_VERSION
 .MU3again
 
  LDA #0                 \ Set A = 0
+
+ LDX P                  \ Restore X from P so it is preserved
+
+ RTS                    \ Return from the subroutine
+
+ELIF _MASTER_VERSION
+
+.MU3again
+
+ LDA #0                 \ Set A = 0 ???
+
+.MU3
+
+                        \ If we get here then A (our result) is already 0
 
  LDX P                  \ Restore X from P so it is preserved
 

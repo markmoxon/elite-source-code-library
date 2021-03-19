@@ -33,6 +33,12 @@ IF _6502SP_VERSION \ Screen
                         \ which is yellow (colour 1), red (colour 2) and cyan
                         \ (colour 3)
 
+ELIF _MASTER_VERSION
+
+ LDA #0                 \ Switch to the mode 1 palette for the space view,
+ JSR SETVDU19           \ which is yellow (colour 1), red (colour 2) and cyan
+                        \ (colour 3)
+
 ENDIF
 
 IF _6502SP_VERSION \ Comment
@@ -170,7 +176,7 @@ IF _DISC_DOCKED \ Enhanced: The ship hanger has a 50% chance of displaying a gro
                         \
                         \   * Random z-coordinate from +256 to +639
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  JSR DORND              \ Set XX15+2 = #SH3 + random number 0-3
  AND #3                 \
@@ -214,6 +220,16 @@ ELIF _DISC_DOCKED
                         \ back to EOR logic so that we can erase anything we
                         \ draw on-screen)
 
+                        \ Fall through into HANGER to draw the hanger background
+
+ELIF _MASTER_VERSION
+
+ STY HCNT               \ Store Y in HCNT to specify whether there are multiple
+                        \ ships in the hanger
+
+ JMP HANGER             \ Call HANGER to draw the hanger background and return
+                        \ from the subroutine using a tail call
+
 ENDIF
 
 IF _6502SP_VERSION \ Tube
@@ -238,10 +254,6 @@ IF _6502SP_VERSION \ Tube
                         \   * 0 = there is just one ship in the hanger
                         \
                         \   * 128 = there are multiple ships in the hanger
-
-ELIF _DISC_DOCKED
-
-                        \ Fall through into HANGER to draw the hanger background
 
 ENDIF
 

@@ -27,7 +27,7 @@
 
  LDA #0                 \ Set A = 0 so we can start building the answer in A
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Other: The loop in the the 6502SP version of the MU11 routine in is unrolled to speed it up
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Other: The loop in the the MU11 routine in the advanced versions is unrolled to speed it up
 
  LDX #8                 \ Set up a counter in X to count the 8 bits in P
 
@@ -62,7 +62,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Other: The loop in the the 6502SP versio
  BNE MUL6               \ Loop back for the next bit until P has been rotated
                         \ all the way
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  TAX                    \ Copy A into X. There is a comment in the original
                         \ source here that says "just in case", which refers to

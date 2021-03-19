@@ -58,7 +58,7 @@
  BCC TA4                \ ship's line of fire, so jump to TA4 to skip the laser
                         \ checks
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Other: This might be a bug fix? When enemies have no lasers, the cassette version still allows them to damage us if they are pointing at us, and it even makes the laser noise. This is fixed in other versions
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Other: This might be a bug fix? When enemies have no lasers, the cassette version still allows them to damage us if they are pointing at us, and it even makes the laser noise. This is fixed in other versions
 
  LDY #19                \ Fetch the enemy ship's byte #19 from their ship's
  LDA (XX0),Y            \ blueprint into A
@@ -86,7 +86,7 @@ IF _CASSETTE_VERSION \ Minor
  LDA (XX0),Y            \ enemy ship's byte #19 from their ship's blueprint
                         \ into A
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  LDA (XX0),Y            \ Fetch the enemy ship's byte #19 from their ship's
                         \ blueprint into A
@@ -110,7 +110,7 @@ IF _CASSETTE_VERSION \ Label
  BNE TA10               \ opponent's), return from the subroutine without making
                         \ the laser-strike sound (as TA10 contains an RTS)
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  LDA ECMA               \ If an E.C.M. is currently active (either our's or an
  BNE TA9-1              \ opponent's), return from the subroutine without making
@@ -118,7 +118,15 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  LDA #8                 \ Call the NOISE routine with A = 8 to make the sound
  JMP NOISE              \ of us being hit by lasers, returning from the
                         \ subroutine using a tail call
+
+ELIF _MASTER_VERSION
+
+ JSR BEING_HIT_NOISE    \ ???
+
+ENDIF
 

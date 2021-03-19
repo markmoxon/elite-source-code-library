@@ -79,6 +79,8 @@
                         \ This represents the distance we should move this
                         \ particle along the x-axis, let's call it delta_x
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  LDA P                  \ Set S = P but with the sign from RAT2, so we now have
  EOR RAT2               \ the distance delta_x with the correct sign in (S R):
  STA S                  \
@@ -87,6 +89,21 @@
                         \
                         \ So (S R) is the delta, signed to match the direction
                         \ the stardust should move in, which is result 1 above
+
+ELIF _MASTER_VERSION
+
+ LDA P                  \ ???
+ STA L009B
+
+ EOR RAT2               \ Set S = P but with the sign from RAT2, so we now have
+ STA S                  \ the distance delta_x with the correct sign in (S R):
+                        \
+                        \   (S R) = delta_x
+                        \         = 8 * 256 * speed / z_hi
+                        \
+                        \ So (S R) is the delta, signed to match the direction
+                        \ the stardust should move in, which is result 1 above
+ENDIF
 
  LDA SXL,Y              \ Set (A P) = (x_hi x_lo)
  STA P                  \           = x
@@ -227,9 +244,21 @@
  STA SX,Y               \ the new x-coordinate is in (x_hi x_lo) and the high
  STA X1                 \ byte is in X1
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  AND #%01111111         \ If |x_hi| >= 116 then jump to KILL2 to recycle this
  CMP #116               \ particle, as it's gone off the side of the screen,
  BCS KILL2              \ and re-join at STC2 with the new particle
+
+ELIF _MASTER_VERSION
+
+ AND #%01111111         \ If |x_hi| >= ??? then jump to KILL2 to recycle this
+ EOR #%01111111         \ particle, as it's gone off the side of the screen,
+ CMP L009B              \ and re-join at STC2 with the new particle ???
+ BCC KILL2
+ BEQ KILL2
+
+ENDIF
 
  LDA YY+1               \ Set Y1 and y_hi to the high byte of YY in YY+1, so
  STA SY,Y               \ the new x-coordinate is in (y_hi y_lo) and the high

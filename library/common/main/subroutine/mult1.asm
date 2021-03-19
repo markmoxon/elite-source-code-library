@@ -54,7 +54,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Other: Group A: The loop in the the 6502
 
 .MUL4
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  TAX                    \ Copy A into X. There is a comment in the original
                         \ source here that says "just in case", which refers to
@@ -106,7 +106,7 @@ ENDIF
                         \ the start of P, and shift P right to fetch the next
                         \ bit for the calculation
 
-IF _6502SP_VERSION \ Other: See group A
+IF _6502SP_VERSION OR _MASTER_VERSION \ Other: See group A
 
  BCC P%+4               \ Repeat for the second time
  ADC T1

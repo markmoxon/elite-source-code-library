@@ -21,7 +21,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \ The hyperspace effect is done in a full mode 5 screen, which makes the rings
 \ all coloured and zig-zaggy, while the launch screen is in the normal
 \ monochrome mode 4 screen.
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 \ The hyperspace effect is done in a full mode 2 screen, which makes the rings
 \ all coloured and zig-zaggy, while the launch screen is in the normal
 \ four-colour mode 1 screen.
@@ -32,7 +32,7 @@ ENDIF
 \   A                   The step size of the straight lines making up the rings
 \                       (4 for launch, 8 for hyperspace)
 \
-IF _6502SP_VERSION \ Comment
+IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ Other entry points:
 \
 \   HFS1                Don't clear the screen, and draw 8 concentric rings
@@ -45,9 +45,24 @@ ENDIF
 
  STA STP                \ Store the step size in A
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  JSR TTX66              \ Clear the screen and draw a white border
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Advanced: The original versions of Elite draw 16 concentric rings for hyperspace, while the 6502SP version draws 8
+ELIF _MASTER_VERSION
+
+ LDA QQ11               \ ???
+ PHA
+
+ LDA #0
+ JSR TT66
+
+ PLA
+ STA QQ11
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Advanced: The original versions of Elite draw 16 concentric rings for hyperspace, while the advanced versions draw 8
 
  JSR HFS1               \ Call HFS1 below and then fall through into the same
                         \ routine, so this effectively runs HFS1 twice, and as
@@ -63,7 +78,7 @@ IF _CASSETTE_VERSION \ Minor
  LDA #128               \ Set K3 = 128 (the x-coordinate of the centre of the
  STA K3                 \ screen)
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
  LDX #X                 \ Set K3 = #X (the x-coordinate of the centre of the
  STX K3                 \ screen)
@@ -83,7 +98,7 @@ IF _CASSETTE_VERSION \ Minor
  STA K3+1               \ Set the high bytes of K3(1 0) and K4(1 0) to 0
  STA K4+1
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
  LDX #0                 \ Set X = 0
 

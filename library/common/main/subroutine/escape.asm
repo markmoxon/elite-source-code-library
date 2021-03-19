@@ -31,7 +31,7 @@ ENDIF
  JSR FRS1               \ Call FRS1 to launch the Cobra Mk III straight ahead,
                         \ like a missile launch, but with our ship instead
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: When trying to spawn a Cobra Mk III to display when we use an escape pod, the enhanced versions will first try to spawn a normal Cobra, and if that fails, they will try again with a pirate Cobra
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: When trying to spawn a Cobra Mk III to display when we use an escape pod, the enhanced versions will first try to spawn a normal Cobra, and if that fails, they will try again with a pirate Cobra
 
  BCS ES1                \ If the Cobra was successfully added to the local
                         \ bubble, jump to ES1 to skip the following instructions
@@ -57,6 +57,14 @@ ENDIF
 
  JSR MVEIT              \ Call MVEIT to move the Cobra in space
 
+IF _MASTER_VERSION
+
+ LDA QQ11               \ ???
+ ORA VIEW
+ BNE P%+5
+
+ENDIF
+
  JSR LL9                \ Call LL9 to draw the Cobra on-screen
 
  DEC INWK+32            \ Decrement the counter in byte #32
@@ -79,7 +87,7 @@ IF _CASSETTE_VERSION \ Standard: See group A
                         \ jump to DEATH to begin the funeral and return from the
                         \ subroutine using a tail call
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  LDA #0                 \ Set A = 0 so we can use it to zero the contents of
                         \ the cargo hold
@@ -98,7 +106,7 @@ IF _CASSETTE_VERSION \ Comment
                         \ from the BEQ above), so we no longer have any of item
                         \ type X in the cargo hold
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  STA QQ20,X             \ Set the X-th byte of QQ20 to zero, so we no longer
                         \ have any of item type X in the cargo hold
@@ -126,7 +134,7 @@ IF _CASSETTE_VERSION \ Platform
                         \ screen) and return from the subroutine with a tail
                         \ call
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  JMP GOIN               \ Go to the docking bay (i.e. show the ship hanger
                         \ screen) and return from the subroutine with a tail

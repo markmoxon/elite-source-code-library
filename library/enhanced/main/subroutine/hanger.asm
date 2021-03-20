@@ -87,7 +87,6 @@ IF _DISC_VERSION OR _6502SP_VERSION
 ELIF _MASTER_VERSION
  JSR DVID4_DUPLICATE    \ Calculate the following:
 ENDIF
-
                         \
                         \   (P R) = 256 * A / Q
                         \         = 256 * 130 / T

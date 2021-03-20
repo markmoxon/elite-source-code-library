@@ -15,7 +15,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Advanced: In the 6502SP version, you can
  JSR TT66               \ and set the current view type in QQ11 to 8 (Inventory
                         \ screen)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA #8                 \ Clear the top part of the screen, draw a white border,
  JSR TRADEMODE          \ and set up a printable trading screen with a view type
@@ -23,7 +23,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Tube
 
  LDA #11                \ Move the text cursor to column 11 to print the screen
  STA XC                 \ title

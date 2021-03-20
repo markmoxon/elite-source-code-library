@@ -10,7 +10,7 @@
 \ Start the hyperspace countdown (for both inter-system hyperspace and the
 \ galactic hyperdrive).
 \
-IF _6502SP_VERSION \ Comment
+IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ Other entry points:
 \
 \   wW2                 Start the hyperspace countdown, starting the countdown
@@ -23,7 +23,7 @@ ENDIF
  LDA #15                \ The hyperspace countdown starts from 15, so set A to
                         \ to 15 so we can set the two hyperspace counters
 
-IF _6502SP_VERSION \ Label
+IF _6502SP_VERSION OR _MASTER_VERSION \ Label
 
 .wW2
 

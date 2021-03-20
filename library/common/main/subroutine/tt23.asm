@@ -23,9 +23,18 @@ IF _6502SP_VERSION \ Screen
  LDA #CYAN              \ Send a #SETCOL CYAN command to the I/O processor to
  JSR DOCOL              \ switch to colour 3, which is white in the chart view
 
+ELIF _MASTER_VERSION
+
+ LDA #16                \ Switch to the mode 1 palette for the trade view, which
+ JSR SETVDU19           \ is yellow (colour 1), magenta (colour 2) and white
+                        \ (colour 3)
+
+ LDA #CYAN              \ Switch to colour 3, which is white in the chart view
+ STA COL
+
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Tube
 
  LDA #7                 \ Move the text cursor to column 7
  STA XC
@@ -54,6 +63,11 @@ IF _6502SP_VERSION \ Screen
 
  LDA #CYAN              \ Send a #SETCOL CYAN command to the I/O processor to
  JSR DOCOL              \ switch to colour 3, which is white in the chart view
+
+ELIF _MASTER_VERSION
+
+ LDA #CYAN              \ Switch to colour 3, which is white in the chart view
+ STA COL
 
 ENDIF
 
@@ -105,10 +119,21 @@ ENDIF
 
 .TT184
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  CMP #20                \ If the horizontal distance in A is >= 20, then this
  BCS TT187              \ system is too far away from the current system to
                         \ appear in the Short-range Chart, so jump to TT187 to
                         \ move on to the next system
+
+ELIF _MASTER_VERSION
+
+ CMP #29                \ If the horizontal distance in A is >= 29, then this
+ BCS L50FB              \ system is too far away from the current system to
+                        \ appear in the Short-range Chart, so jump to L50FB to
+                        \ move on to the next system ???
+
+ENDIF
 
  LDA QQ15+1             \ Set A = s0_hi - QQ1, the vertical distance between
  SEC                    \ (s1_hi, s0_hi) and (QQ0, QQ1)
@@ -123,10 +148,19 @@ ENDIF
 
 .TT186
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  CMP #38                \ If the vertical distance in A is >= 38, then this
  BCS TT187              \ system is too far away from the current system to
                         \ appear in the Short-range Chart, so jump to TT187 to
                         \ move on to the next system
+
+ELIF _MASTER_VERSION
+
+ CMP #&28
+ BCS L50FB
+
+ENDIF
 
                         \ This system should be shown on the Short-range Chart,
                         \ so now we need to work out where the label should go,
@@ -142,11 +176,23 @@ ENDIF
                         \ of the chart's centre, or positive if it's to the
                         \ right)
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  ASL A                  \ Set XX12 = 104 + x-delta * 4
  ASL A                  \
  ADC #104               \ 104 is the x-coordinate of the centre of the chart,
  STA XX12               \ so this sets XX12 to the centre 104 +/- 76, the pixel
                         \ x-coordinate of this system
+
+ELIF _MASTER_VERSION
+
+ ASL A                  \ Set XX12 = 104 + x-delta * 4
+ ASL A                  \
+ ADC #104               \ 104 is the x-coordinate of the centre of the chart,
+ JSR L4A43              \ so this sets XX12 to the centre 104 +/- 76, the pixel
+ STA XX12               \ x-coordinate of this system ???
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
@@ -164,6 +210,14 @@ ELIF _6502SP_VERSION
  INA
  JSR DOXC
 
+ELIF _MASTER_VERSION
+
+ LSR A                  \ Move the text cursor to column x-delta / 2 + 1
+ LSR A                  \ which will be in the range 1-10
+ LSR A
+ INC A
+ STA XC
+
 ENDIF
 
  LDA QQ15+1             \ Set A = s0_hi - QQ1, the vertical distance between
@@ -174,11 +228,23 @@ ENDIF
                         \ sign of A, so it can be negative if it's above the
                         \ chart's centre, or positive if it's below)
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  ASL A                  \ Set K4 = 90 + y-delta * 2
  ADC #90                \
  STA K4                 \ 90 is the y-coordinate of the centre of the chart,
                         \ so this sets K4 to the centre 90 +/- 74, the pixel
                         \ y-coordinate of this system
+
+ELIF _MASTER_VERSION
+
+ ASL A                  \ Set K4 = 90 + y-delta * 2
+ ADC #90                \
+ JSR L4A43              \ 90 is the y-coordinate of the centre of the chart,
+ STA K4                 \ so this sets K4 to the centre 90 +/- 74, the pixel
+                        \ y-coordinate of this system ???
+
+ENDIF
 
  LSR A                  \ Set Y = K4 / 8, so Y contains the number of the text
  LSR A                  \ row that contains this system
@@ -213,7 +279,7 @@ ENDIF
 
 .EE4
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Tube
 
  STY YC                 \ Now to print the label, so move the text cursor to row
                         \ Y (which contains the row where we can print this
@@ -238,6 +304,32 @@ IF _CASSETTE_VERSION \ Minor
                         \ this row
 
 ELIF _6502SP_VERSION OR _DISC_VERSION
+
+ LDA #&FF               \ Store &FF in INWK+Y, to denote that this row is now
+ STA INWK,Y             \ occupied so we don't try to print another system's
+                        \ label on this row
+
+ELIF _MASTER_VERSION
+
+ CPY #&15
+ BCS TT187
+
+ TYA
+ PHA
+ LDA QQ15+3
+ JSR L5193
+
+ PLA
+ TAY
+ LDA QQ8+1
+ BNE TT187
+
+ LDA QQ8
+ CMP #&46
+
+.L50FB
+
+ BCS TT187
 
  LDA #&FF               \ Store &FF in INWK+Y, to denote that this row is now
  STA INWK,Y             \ occupied so we don't try to print another system's
@@ -289,6 +381,13 @@ ENDIF
 
  JSR FLFLLS             \ Call FLFLLS to reset the LSO block
 
+IF _MASTER_VERSION \ Screen
+
+ LDA #CYAN              \ Switch to colour 3, which is white in the chart view
+ STA COL
+
+ENDIF
+
 .TT187
 
  JSR TT20               \ We want to move on to the next system, so call TT20
@@ -308,8 +407,20 @@ ELIF _6502SP_VERSION
                         \ buffer to the I/O processor for drawing on-screen,
                         \ returning from the subroutine using a tail call
 
+ELIF _MASTER_VERSION
+
+ BEQ L5134              \ ???
+
 ENDIF
 
  JMP TT182              \ Otherwise jump back up to TT182 to process the next
                         \ system
+
+IF _MASTER_VERSION
+
+.L5134
+
+ RTS
+
+ENDIF
 

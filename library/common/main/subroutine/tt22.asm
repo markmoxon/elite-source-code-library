@@ -23,9 +23,18 @@ IF _6502SP_VERSION \ Screen
                         \ is yellow (colour 1), magenta (colour 2) and white
                         \ (colour 3)
 
+ELIF _MASTER_VERSION
+
+ LDA #16                \ Switch to the mode 1 palette for the trade view, which
+ JSR SETVDU19           \ is yellow (colour 1), magenta (colour 2) and white
+                        \ (colour 3)
+
+ LDA #CYAN              \ Switch to colour 3, which is white in the chart view
+ STA COL
+
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Tube
 
  LDA #7                 \ Move the text cursor to column 7
  STA XC
@@ -47,10 +56,21 @@ ENDIF
                         \ title and act as the top frame of the chart, and move
                         \ the text cursor down one line
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  LDA #152               \ Draw a screen-wide horizontal line at pixel row 152
  JSR NLIN2              \ for the bottom edge of the chart, so the chart itself
                         \ is 128 pixels high, starting on row 24 and ending on
                         \ row 151
+
+ELIF _MASTER_VERSION
+
+ LDA #153               \ Draw a screen-wide horizontal line at pixel row 152
+ JSR NLIN2-2            \ for the bottom edge of the chart, so the chart itself
+                        \ is 128 pixels high, starting on row 24 and ending on
+                        \ row 151 ???
+
+ENDIF
 
  JSR TT14               \ Call TT14 to draw a circle with crosshairs at the
                         \ current system's galactic coordinates
@@ -74,8 +94,17 @@ ENDIF
                         \ system on the chart by passing it as the distance
                         \ argument to the PIXEL routine below
 
+IF _MASTER_VERSION
+
+ LDA #&0F               \ ???
+ STA COL
+
+ENDIF
+
  LDA QQ15+1             \ Fetch the s0_hi seed into A, which gives us the
                         \ galactic y-coordinate of this system
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
  LSR A                  \ We halve the y-coordinate because the galaxy in
                         \ in Elite is rectangular rather than square, and is
@@ -91,6 +120,22 @@ ENDIF
                         \ (so a high value of ZZ will produce a 1-pixel point,
                         \ a medium value will produce a 2-pixel dash, and a
                         \ small value will produce a 4-pixel square)
+
+ELIF _MASTER_VERSION
+
+ JSR L4A42              \ ???
+
+ CLC                    \ Add 24 to the halved y-coordinate ???
+ ADC #24                \ (as the top of the chart is on pixel row 24, just
+                        \ below the line we drew on row 23 above)
+
+ JSR PIXEL              \ Call PIXEL to draw a point at (X, A), with the size of
+                        \ the point dependent on the distance specified in ZZ
+                        \ (so a high value of ZZ will produce a 1-pixel point,
+                        \ a medium value will produce a 2-pixel dash, and a
+                        \ small value will produce a 4-pixel square)
+
+ENDIF
 
  JSR TT20               \ We want to move on to the next system, so call TT20
                         \ to twist the three 16-bit seeds in QQ15
@@ -108,6 +153,8 @@ IF _6502SP_VERSION \ Tube
                         \ the I/O processor for plotting on-screen
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  LDA QQ9                \ Set QQ19 to the selected system's x-coordinate
  STA QQ19
 
@@ -117,6 +164,25 @@ ENDIF
 
  LDA #4                 \ Set QQ19+2 to size 4 for the crosshairs size
  STA QQ19+2
+
+ELIF _MASTER_VERSION
+
+ LDA QQ9                \ ???
+ JSR L4A44
+
+ STA QQ19
+ LDA QQ10
+ JSR L4A42
+
+ STA QQ19+1
+
+ LDA #4                 \ Set QQ19+2 to size 4 for the crosshairs size
+ STA QQ19+2
+
+ LDA #&AF               \ ???
+ STA COL
+
+ENDIF
 
                         \ Fall through into TT15 to draw crosshairs of size 4 at
                         \ the selected system's coordinates

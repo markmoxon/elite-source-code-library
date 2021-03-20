@@ -21,7 +21,7 @@
 \
 \   ptg                 Called when the user manually forces a mis-jump
 \
-IF _6502SP_VERSION \ Comment
+IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \   RTS111              Contains an RTS
 \
 ENDIF
@@ -54,7 +54,7 @@ IF _CASSETTE_VERSION \ Minor
  JSR TT66-2             \ Clear the top part of the screen, draw a white border,
                         \ and set the current view type in QQ11 to 1
 
-ELIF _DISC_FLIGHT OR _6502SP_VERSION
+ELIF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
 
  LDA #3                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 3
@@ -75,9 +75,19 @@ ENDIF
 
  JSR GTHG               \ Call GTHG to spawn a Thargoid ship
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  LDA #3                 \ Fetch the number of Thargoid ships from MANY+THG, and
  CMP MANY+THG           \ if it is less than 3, loop back to MJP1 to spawn
  BCS MJP1               \ another one, until we have three Thargoids
+
+ELIF _MASTER_VERSION
+
+ LDA #2                 \ Fetch the number of Thargoid ships from MANY+THG, and
+ CMP MANY+THG           \ if it is less than 2, loop back to MJP1 to spawn
+ BCS MJP1               \ another one, until we have three Thargoids ???
+
+ENDIF
 
  STA NOSTM              \ Set NOSTM (the maximum number of stardust particles)
                         \ to 3, so there are fewer bits of stardust in
@@ -91,7 +101,13 @@ ENDIF
  STA QQ1                \ vicinity of our original destination, but above or
                         \ below it in the galactic chart
 
-IF _6502SP_VERSION \ Label
+IF _MASTER_VERSION \ Platform
+
+ RTS                    \ Return from the subroutine
+
+ENDIF
+
+IF _6502SP_VERSION OR _MASTER_VERSION \ Label
 
 .RTS111
 

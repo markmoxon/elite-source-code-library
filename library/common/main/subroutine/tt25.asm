@@ -28,7 +28,7 @@ ELIF _DISC_VERSION
  LDA #1                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 1
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA #1                 \ Clear the top part of the screen, draw a white border,
  JSR TRADEMODE          \ and set up a printable trading screen with a view type
@@ -36,7 +36,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Tube
 
  LDA #9                 \ Move the text cursor to column 9
  STA XC
@@ -55,7 +55,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Minor
 
  JSR NLIN               \ Draw a horizontal line underneath the title
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
 
  LDA #163               \ Print recursive token 3 ("DATA ON {selected system
  JSR NLIN3              \ name}" and draw a horizontal line at pixel row 19
@@ -282,8 +282,16 @@ ENDIF
 
  JSR TT162              \ Print a space
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Minor
+
  LDA #0                 \ Set QQ17 = 0 to switch to ALL CAPS
  STA QQ17
+
+ELIF _MASTER_VERSION
+
+ STZ QQ17               \ Set QQ17 = 0 to switch to ALL CAPS
+
+ENDIF
 
  LDA #'M'               \ Print "M"
  JSR TT27
@@ -335,7 +343,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Minor
  LDA #'m'
  JMP TT26
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
 
  LDA #'k'               \ Print "km"
  JSR TT26
@@ -344,7 +352,7 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: Extended system descriptions are shown in the enhanced versions, though in the disc version they are only shown when docked, as the PDESC routine isn't present in the flight code due to memory restrictions
+IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Enhanced: Extended system descriptions are shown in the enhanced versions, though in the disc version they are only shown when docked, as the PDESC routine isn't present in the flight code due to memory restrictions
 
  JSR TTX69              \ Print a paragraph break and set Sentence Case
 
@@ -356,6 +364,10 @@ IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: Extended system descriptions are 
  JMP PDESC              \ Jump to PDESC to print the system's extended
                         \ description, returning from the subroutine using a
                         \ tail call
+
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_DOCKED \ Other
 
                         \ The following code doesn't appear to be called from
                         \ anywhere, so it's presumably a remnant of code from

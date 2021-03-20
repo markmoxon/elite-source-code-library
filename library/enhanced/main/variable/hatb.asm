@@ -115,9 +115,6 @@ IF _DISC_DOCKED \ Enhanced: Group A: In the disc version, the third ship hanger 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ Viper (right) and Krait (left)
 ENDIF
-                        \
-                        \ (This group consists of a Transporter and Cobra Mk III
-                        \ in the disc version)
 
 IF _DISC_DOCKED \ Enhanced: See group A
  EQUB 3                 \ Ship type in the hanger = 3 = Transporter

@@ -28,6 +28,11 @@ IF _6502SP_VERSION \ Screen
  LDA #RED               \ Send a #SETCOL RED command to the I/O processor to
  JSR DOCOL              \ switch to colour 2, which is red in the space view
 
+ELIF _MASTER_VERSION
+
+ LDA #RED               \ Switch to colour 2, which is red in the space view
+ STA COL
+
 ENDIF
 
 IF _CASSETTE_VERSION \ Standard: The cassette version prints the right-aligned hyperspace countdown in column 0, while the other versions print it one column to the right in column 1
@@ -56,8 +61,27 @@ ELIF _6502SP_VERSION
 
  LDY #0                 \ Set Y = 0 for the high byte in pr6
 
+ELIF _MASTER_VERSION
+
+ LDA #1                 \ Move the text cursor to column 1
+ STA XC
+
+ STA YC                 \ Move the text cursor to row 1
+
+ LDY #0                 \ Set Y = 0 for the high byte in pr6
+
 ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
                         \ Fall through into pr6 to print X to 5 digits, as the
                         \ high byte in Y is 0
+
+ELIF _MASTER_VERSION
+
+ CLC                    \ ???
+ LDA #&03
+ JMP TT11
+
+ENDIF
 

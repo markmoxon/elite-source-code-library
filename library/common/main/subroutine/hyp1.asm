@@ -59,7 +59,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Other: Tha main bug fix for the "hypersp
                         \ separate location called safehouse, and using those
                         \ instead... but that isn't the case in this version
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA safehouse,X        \ Copy the X-th byte in safehouse to the X-th byte in
  STA QQ2,X              \ QQ2
@@ -90,7 +90,7 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED \ Minor
 
  RTS                    \ Return from the subroutine
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
                         \ Fall through into GVL to calculate the availability of
                         \ market items in the new system

@@ -18,7 +18,7 @@
  SEC                    \ from the amount of fuel in our tank (in QQ14) into A
  SBC QQ8
 
-IF _6502SP_VERSION \ Other: This might be a bug fix? The 6502SP version makes sure we don't end up with a negative fuel amount should we try a hyperspace jump that we don't have enough fuel for, though quite how we would get to this point is not clear
+IF _6502SP_VERSION OR _MASTER_VERSION \ Other: This might be a bug fix? The 6502SP version makes sure we don't end up with a negative fuel amount should we try a hyperspace jump that we don't have enough fuel for, though quite how we would get to this point is not clear
 
  BCS P%+4               \ If the subtraction didn't overflow, skip the next
                         \ instruction
@@ -79,9 +79,17 @@ ENDIF
 
  JSR RES2               \ Reset a number of flight variables and workspaces
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  JSR SOLAR              \ Halve our legal status, update the missile indicators,
                         \ and set up data blocks and slots for the planet and
                         \ sun
+
+ELIF _MASTER_VERSION
+
+ JSR L5A24              \ ???
+
+ENDIF
 
 IF _DISC_FLIGHT \ Platform
 
@@ -101,7 +109,7 @@ ELIF _DISC_FLIGHT
  AND #%00111111         \ one of the charts (64 or 128), return from the
  BNE TT113              \ subroutine (as TT113 contains an RTS)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA QQ11               \ If the current view in QQ11 is not a space view (0) or
  AND #%00111111         \ one of the charts (64 or 128), return from the

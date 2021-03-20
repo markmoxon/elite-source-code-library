@@ -30,7 +30,7 @@
 \   QQ15 to QQ15+5      The three 16-bit seeds of the nearest system to the
 \                       original coordinates
 \
-IF _6502SP_VERSION OR _DISC_DOCKED \ Comment
+IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Comment
 \   ZZ                  The system number of the nearest system
 \
 ENDIF
@@ -38,6 +38,10 @@ ENDIF
 \
 \   TT111-1             Contains an RTS
 \
+IF _MASTER_VERSION \ Comment
+\   L5193               ???
+\
+ENDIF
 \ ******************************************************************************
 
 .TT111
@@ -131,7 +135,7 @@ ENDIF
  BPL TT136              \ Loop back to TT136 if we still have more bytes to
                         \ copy
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Platform: Store the system number in ZZ so if we want to show the extended system description for this system, the PDESC routine knows which one to display
+IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Platform: Store the system number in ZZ so if we want to show the extended system description for this system, the PDESC routine knows which one to display
 
  LDA U                  \ Store the system number U in ZZ, so when we are done
  STA ZZ                 \ looping through all the candidates, the winner's
@@ -182,6 +186,12 @@ ENDIF
                         \ need to work out the distance between the selected
                         \ system and the current system
 
+IF _MASTER_VERSION
+
+.L5193                  \ ???
+
+ENDIF
+
  SEC                    \ Set A = QQ9 - QQ0, the horizontal distance between
  SBC QQ0                \ the selected system's x-coordinate (QQ9) and the
                         \ current system's x-coordinate (QQ0)
@@ -208,9 +218,19 @@ ENDIF
  LDA P
  STA K
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  LDA QQ10               \ Set A = QQ10 - QQ1, the vertical distance between the
  SEC                    \ selected system's y-coordinate (QQ10) and the current
  SBC QQ1                \ system's y-coordinate (QQ1)
+
+ELIF _MASTER_VERSION
+
+ LDA QQ15+1             \ ???
+ SEC
+ SBC QQ1
+
+ENDIF
 
  BCS TT141              \ If a borrow didn't occur, i.e. QQ10 >= QQ1, then the
                         \ result is positive, so jump to TT141 and skip the
@@ -257,11 +277,26 @@ ENDIF
  PLA                    \ Restore the high byte of the y-axis value from the
                         \ stack into A again
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  ADC K+1                \ Set R = A + K+1, which adds the high bytes of the two
  STA R                  \ calculated values, so we now have:
                         \
                         \   (R Q) = K(1 0) + (A P)
                         \         = (x_delta ^ 2) + (y_delta ^ 2)
+
+ELIF _MASTER_VERSION
+
+ ADC K+1                \ ???
+ BCC L51C5
+
+ LDA #&FF
+
+.L51C5
+
+ STA R
+
+ENDIF
 
  JSR LL5                \ Set Q = SQRT(R Q), so Q now contains the distance
                         \ between the two systems, in terms of coordinates

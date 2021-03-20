@@ -14,6 +14,13 @@
 
 .TT103
 
+IF _MASTER_VERSION
+
+ LDA #&AF               \ ???
+ STA COL
+
+ENDIF
+
  LDA QQ11               \ Fetch the current view type into A
 
 IF _CASSETTE_VERSION \ Other: The cassette version doesn't draw crosshairs in routine TT103 if this is a space view, but the other versions don't do this check, so perhaps it isn't required?
@@ -26,12 +33,26 @@ ENDIF
 
  BMI TT105              \ If this is the Short-range Chart screen, jump to TT105
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  LDA QQ9                \ Store the crosshairs x-coordinate in QQ19
  STA QQ19
 
  LDA QQ10               \ Halve the crosshairs y-coordinate and store it in QQ19
  LSR A                  \ (we halve it because the Long-range Chart is half as
  STA QQ19+1             \ high as it is wide)
+
+ELIF _MASTER_VERSION
+
+ LDA QQ9                \ ???
+ JSR L4A44
+
+ STA QQ19
+ LDA QQ10
+ JSR L4A42
+ STA QQ19+1
+
+ENDIF
 
  LDA #4                 \ Set QQ19+2 to 4 denote crosshairs of size 4
  STA QQ19+2

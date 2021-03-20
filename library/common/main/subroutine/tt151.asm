@@ -24,7 +24,7 @@
 \
 \ ******************************************************************************
 
-IF _6502SP_VERSION \ Advanced: Group A: In the 6502SP version, the Market Price screen doesn't list any prices when you're in witchspace, while the other versions still show the prices from the system you jumped from
+IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: Group A: In the 6502SP version, the Market Price screen doesn't list any prices when you're in witchspace, while the other versions still show the prices from the system you jumped from
 
 .TT151q
 
@@ -45,7 +45,7 @@ ENDIF
  ASL A                  \ an index into the market prices table at QQ23 for this
  STA QQ19               \ item (as there are four bytes per item in the table)
 
-IF _6502SP_VERSION \ Advanced: See group A
+IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: See group A
 
  LDA MJ                 \ If we are in witchspace, we can't trade items, so jump
  BNE TT151q             \ up to TT151q to return from the subroutine
@@ -57,7 +57,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
  LDA #1                 \ Move the text cursor to column 1, for the item's name
  STA XC
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA #1                 \ Move the text cursor to column 1, for the item's name
  JSR DOXC
@@ -70,7 +70,7 @@ ENDIF
  JSR TT27               \ range 48 ("FOOD") to 64 ("ALIEN ITEMS"), so this
                         \ prints the item's name
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Tube
 
  LDA #14                \ Move the text cursor to column 14, for the price
  STA XC
@@ -173,7 +173,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
  ADC #4                 \ so the cursor is where the last digit would be if we
  STA XC                 \ were printing a 5-digit availability number
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA #25                \ Move the text cursor to column 25
  JSR DOXC

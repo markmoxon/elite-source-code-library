@@ -22,11 +22,28 @@
  LDA #16                \ Set QQ19+2 = 16, the size of the crosshairs on the
  STA QQ19+2             \ Short-range Chart
 
+IF _MASTER_VERSION
+
+ LDA #&AF               \ ???
+ STA COL
+
+ENDIF
+
  JSR TT15               \ Draw the set of crosshairs defined in QQ19, at the
                         \ exact coordinates as this is the Short-range Chart
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  LDA QQ14               \ Set K to the fuel level from QQ14, so this can act as
  STA K                  \ the circle's radius (70 being a full tank)
+
+ELIF _MASTER_VERSION
+
+ LDA QQ14               \ ???
+ JSR L4A43
+ STA K
+
+ENDIF
 
  JMP TT128              \ Jump to TT128 to draw a circle with the centre at the
                         \ same coordinates as the crosshairs, (QQ19, QQ19+1),
@@ -49,6 +66,8 @@ ENDIF
                         \ Otherwise this is the Long-range Chart, so we draw the
                         \ crosshairs and circle for that view instead
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  LDA QQ14               \ Set K to the fuel level from QQ14 divided by 4, so
  LSR A                  \ this can act as the circle's radius (70 being a full
  LSR A                  \ tank, which divides down to a radius of 17)
@@ -63,8 +82,33 @@ ENDIF
  STA QQ19+1             \ it is wide, which will again be the centre of the
                         \ circle and crosshairs we draw
 
+ELIF _MASTER_VERSION
+
+ LDA QQ14               \ ???
+ LSR A
+ JSR L4A42
+
+ STA K
+ LDA QQ0
+ JSR L4A44
+
+ STA QQ19
+ LDA QQ1
+ JSR L4A42
+
+ STA QQ19+1
+
+ENDIF
+
  LDA #7                 \ Set QQ19+2 = 7, the size of the crosshairs on the
  STA QQ19+2             \ Long-range Chart
+
+IF _MASTER_VERSION
+
+ LDA #&FF               \ ???
+ STA COL
+
+ENDIF
 
  JSR TT15               \ Draw the set of crosshairs defined in QQ19, which will
                         \ be drawn 24 pixels to the right of QQ19+1

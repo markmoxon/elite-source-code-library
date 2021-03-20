@@ -19,7 +19,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
  LDA #17                \ Move the text cursor in XC to column 17
  STA XC
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA #17                \ Move the text cursor in XC to column 17
  JSR DOXC

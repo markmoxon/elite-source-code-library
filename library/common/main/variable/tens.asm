@@ -17,7 +17,7 @@
 \   & 17 48 76 E8 00
 \
 \ The TENS variable contains the lowest four bytes in this number, with the
-\ least significant byte first, i.e. 00 E8 76 48. This value is used in the
+\ most significant byte first, i.e. 48 76 E8 00. This value is used in the
 \ BPRNT routine when working out which decimal digits to print when printing a
 \ number.
 \

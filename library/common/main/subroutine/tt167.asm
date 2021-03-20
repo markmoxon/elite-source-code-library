@@ -15,7 +15,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION  \ Advanced: In the 6502SP version, you ca
  JSR TT66               \ and set the current view type in QQ11 to 16 (Market
                         \ Price screen)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA #16                \ Clear the top part of the screen, draw a white border,
  JSR TRADEMODE          \ and set up a printable trading screen with a view type
@@ -23,7 +23,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION  \ Tube
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION  \ Tube
 
  LDA #5                 \ Move the text cursor to column 4
  STA XC
@@ -39,7 +39,7 @@ ENDIF
  JSR NLIN3              \ PRICES") and draw a horizontal line at pixel row 19
                         \ to box in the title
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Tube
 
  LDA #3                 \ Move the text cursor to row 3
  STA YC
@@ -58,6 +58,11 @@ IF _6502SP_VERSION \ Tube
  LDA #6                 \ Move the text cursor to row 6
  JSR DOYC
 
+ELIF _MASTER_VERSION
+
+ LDA #6                 \ Move the text cursor to row 6
+ STA YC
+
 ENDIF
 
  LDA #0                 \ We're going to loop through all the available market
@@ -75,7 +80,7 @@ ENDIF
                         \ QQ19+1 to byte #1 from the market prices table for
                         \ this item
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Tube
 
  INC YC                 \ Move the text cursor down one row
 

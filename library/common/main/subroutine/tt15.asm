@@ -57,7 +57,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Label
  LDA #0                 \ This is the Short-range Chart, so set A to 0, so the
                         \ crosshairs can go right up against the screen edges
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDX QQ11               \ If the current view is not the Short-range Chart,
  BPL TT178              \ which is the only view with bit 7 set, then jump to
@@ -77,11 +77,29 @@ ENDIF
  SEC                    \ to get the x-coordinate of the left edge of the
  SBC QQ19+2             \ crosshairs
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  BCS TT84               \ If the above subtraction didn't underflow, then A is
                         \ positive, so skip the next instruction
 
  LDA #0                 \ The subtraction underflowed, so set A to 0 so the
                         \ crosshairs don't spill out of the left of the screen
+
+ELIF _MASTER_VERSION
+
+ BIT QQ11               \ ???
+ BMI TT84
+
+ BCC L4CC7
+
+ CMP #&02
+ BCS TT84
+
+.L4CC7
+
+ LDA #&02
+
+ENDIF
 
 .TT84
 
@@ -128,6 +146,19 @@ ELIF _6502SP_VERSION
 
 .TT85
 
+ELIF _MASTER_VERSION
+
+ BCS L4CD6              \ ???
+
+ CMP #&FE
+ BCC TT85
+
+.L4CD6
+
+ LDA #&FE
+
+.TT85
+
 ENDIF
 
  STA XX15+2             \ Set XX15+2 (X2) = A (the x-coordinate of the right
@@ -153,6 +184,10 @@ ELIF _6502SP_VERSION
                         \ which will draw from the left edge of the crosshairs
                         \ to the right edge, through the centre of the
                         \ crosshairs
+
+ELIF _MASTER_VERSION
+
+ JSR HLOIN3             \ ???
 
 ENDIF
 
@@ -186,8 +221,17 @@ ENDIF
  BMI TT87               \ If this is the Short-range Chart then the y-coordinate
                         \ is fine, so skip to TT87
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  LDA #151               \ Otherwise this is the Long-range Chart, so we need to
                         \ clip the crosshairs at a maximum y-coordinate of 151
+
+ELIF _MASTER_VERSION
+
+ LDA #152               \ Otherwise this is the Long-range Chart, so we need to
+                        \ clip the crosshairs at a maximum y-coordinate of 152
+                        \ ???
+ENDIF
 
 .TT87
 

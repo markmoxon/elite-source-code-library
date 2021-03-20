@@ -23,7 +23,7 @@
 \ and if all the pre-jump checks are passed, we print the destination on-screen
 \ and start the countdown.
 \
-IF _6502SP_VERSION OR _DISC_VERSION \ Comment
+IF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Comment
 \ Other entry points:
 \
 \   TTX111              Used to rejoin this routine from the call to TTX110
@@ -33,7 +33,7 @@ ENDIF
 
 .hyp
 
-IF _CASSETTE_VERSION \ Label
+IF _CASSETTE_VERSION OR _MASTER_VERSION \ Label
 
  LDA QQ12               \ If we are docked (QQ12 = &FF) then jump to hy6 to
  BNE hy6                \ print an error message and return from the subroutine
@@ -64,7 +64,7 @@ ELIF _DISC_VERSION
                         \ can't hyperspace when docked, or there is already a
                         \ countdown in progress
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  BEQ P%+3               \ If it is zero, skip the next instruction
 
@@ -74,9 +74,14 @@ ENDIF
 
 IF _6502SP_VERSION \ Screen
 
- LDA #CYAN              \ The count is zero, send a #SETCOL CYAN command to the
- JSR DOCOL              \ I/O processor to switch to colour 3, which is cyan in
-                        \ the space view
+ LDA #CYAN              \ The count is zero, so send a #SETCOL CYAN command to
+ JSR DOCOL              \ the I/O processor to switch to colour 3, which is cyan
+                        \ in the space view
+
+ELIF _MASTER_VERSION
+
+ LDA #CYAN              \ The count is zero, so switch to colour 3, which is
+ STA COL                \ cyan in the space view
 
 ENDIF
 
@@ -104,7 +109,7 @@ ELIF _DISC_DOCKED
                         \ then return from the subroutine (as zZ+1 contains an
                         \ RTS)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA QQ11               \ If the current view is 0 (i.e. the space view) then
  BEQ TTX110             \ jump to TTX110, which calls TT111 to set the current
@@ -123,7 +128,7 @@ ENDIF
  JSR hm                 \ This is a chart view, so call hm to redraw the chart
                         \ crosshairs
 
-IF _DISC_VERSION OR _6502SP_VERSION \ Label
+IF _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Label
 
 .TTX111
 
@@ -139,7 +144,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Minor
  BEQ zZ+1               \ contains an RTS), as the selected system is the
                         \ current system
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA QQ8                \ If either byte of the distance to the selected system
  ORA QQ8+1              \ in QQ8 are zero, skip the next instruction to make a
@@ -150,7 +155,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION \ Other: Part of the bug fix for the "hyperspace when docking" bug (see below)
+IF _6502SP_VERSION OR _MASTER_VERSION \ Other: Part of the bug fix for the "hyperspace when docking" bug (see below)
 
  LDX #5                 \ We now want to copy those seeds into safehouse, so we
                         \ so set a counter in X to copy 6 bytes
@@ -174,7 +179,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Platform
  LDA #23
  STA YC
 
-ELIF _DISC_DOCKED
+ELIF _DISC_DOCKED OR _MASTER_VERSION
 
  LDA #7                 \ Move the text cursor to column 7, row 22 (in the
  STA XC                 \ middle of the bottom text row)
@@ -205,7 +210,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Minor
                         \ "RANGE?" and return from the subroutine using a tail
                         \ call
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA QQ8+1              \ If the high byte of the distance to the selected
  BNE goTT147            \ system in QQ8 is > 0, then it is definitely too far to
@@ -225,7 +230,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Minor
                         \ this jump, so jump to TT147 to print "RANGE?" and
                         \ return from the subroutine using a tail call
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  CMP QQ8                \ If our fuel reserves are greater then or equal to the
  BCS P%+5               \ distance to the selected system, then we have enough

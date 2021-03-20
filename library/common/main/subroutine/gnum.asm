@@ -10,7 +10,7 @@
 \ Get a number from the keyboard, up to the maximum number in QQ25, for the
 \ buying and selling of cargo and equipment.
 \
-IF _6502SP_VERSION OR _DISC_DOCKED \ Comment
+IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Comment
 \ Pressing "Y" will return the maximum number (i.e. buy/sell all items), while
 \ pressing "N" will abort the sale and return a 0.
 \
@@ -41,6 +41,11 @@ IF _6502SP_VERSION \ Screen
  LDA #MAGENTA           \ Send a #SETCOL MAGENTA command to the I/O processor to
  JSR DOCOL              \ switch to colour 2, which is magenta in the trade view
 
+ELIF _MASTER_VERSION
+
+ LDA #MAGENTA           \ Switch to colour 2, which is magenta in the trade view
+ STA COL
+
 ENDIF
 
  LDX #0                 \ We will build the number entered in R, so initialise
@@ -67,6 +72,19 @@ IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: Group A: When buying or selling c
 
 .NWDAV2
 
+ELIF _MASTER_VERSION
+
+ LDX R                  \ If R is non-zero then skip to NWDAV2, as we are
+ BNE NWDAV2             \ already building a number
+
+ CMP #'Y'               \ If "Y" was pressed, jump to NWDAV1 to return the
+ BEQ NWDAV1             \ maximum number allowed (i.e. buy/sell the whole stock)
+
+ CMP #'N'               \ If "N" was pressed, jump to NWDAV3 to return from the
+ BEQ NWDAV3             \ subroutine with a result of 0 (i.e. abort transaction)
+
+.NWDAV2
+
 ENDIF
 
  STA Q                  \ Store the key pressed in Q
@@ -86,10 +104,20 @@ ENDIF
 
  LDA R                  \ Fetch the result so far into A
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  CMP #26                \ If A >= 26, where A is the number entered so far, then
  BCS OUT                \ adding a further digit will make it bigger than 256,
                         \ so jump to OUT to return from the subroutine with the
                         \ result in R (i.e. ignore the last key press)
+
+ELIF _MASTER_VERSION
+
+ CMP #26                \ If A >= 26, where A is the number entered so far, then
+ BCS OUTX               \ adding a further digit will make it bigger than 256,
+                        \ so jump to OUTX to ???
+
+ENDIF
 
  ASL A                  \ Set A = (A * 2) + (A * 8) = A * 10
  STA T
@@ -97,17 +125,34 @@ ENDIF
  ASL A
  ADC T
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  ADC S                  \ Add the pressed digit to A and store in R, so R now
  STA R                  \ contains its previous value with the new key press
                         \ tacked onto the end
+ELIF _MASTER_VERSION
+
+ ADC S                  \ ???
+ BCS OUTX
+ STA R
+
+ENDIF
 
  CMP QQ25               \ If the result in R = the maximum allowed in QQ25, jump
  BEQ TT226              \ to TT226 to print the key press and keep looping (the
                         \ BEQ is needed because the BCS below would jump to OUT
                         \ if R >= QQ25, which we don't want)
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  BCS OUT                \ If the result in R > QQ25, jump to OUT to return from
                         \ the subroutine with the result in R
+
+ELIF _MASTER_VERSION
+
+ BCS OUTX               \ If the result in R > QQ25, jump to OUTX to ???
+
+ENDIF
 
 .TT226
 
@@ -130,13 +175,18 @@ IF _6502SP_VERSION \ Screen
 
  PLP                    \ Restore the processor flags, in particular the C flag
 
+ELIF _MASTER_VERSION
+
+ LDA #CYAN              \ Switch to colour 3, which is white in the trade view
+ STA COL
+
 ENDIF
 
  LDA R                  \ Set A to the result we have been building in R
 
  RTS                    \ Return from the subroutine
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: See group A
+IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Enhanced: See group A
 
 .NWDAV1
 
@@ -158,6 +208,10 @@ ELIF _6502SP_VERSION
 
  BRA OUT                \ Jump to OUT to return from the subroutine
 
+ELIF _MASTER_VERSION
+
+ JMP OUT                \ Jump to OUT to return from the subroutine
+
 ENDIF
 
 IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: See group A
@@ -171,6 +225,16 @@ IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: See group A
  LDA #0                 \ Set R = 0, so we return 0
  STA R
 
+ELIF _MASTER_VERSION
+
+.NWDAV3
+
+                        \ If we get here then "N" was pressed, so we return 0
+
+ JSR TT26               \ Print the character for the key that was pressed
+
+ STZ R                  \ Set R = 0, so we return 0
+
 ENDIF
 
 IF _DISC_DOCKED \ Minor
@@ -180,6 +244,10 @@ IF _DISC_DOCKED \ Minor
 ELIF _6502SP_VERSION
 
  BRA OUT                \ Jump to OUT to return from the subroutine
+
+ELIF _MASTER_VERSION
+
+ JMP OUT                \ Jump to OUT to return from the subroutine
 
 ENDIF
 

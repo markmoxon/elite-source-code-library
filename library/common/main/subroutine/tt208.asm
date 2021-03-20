@@ -15,7 +15,7 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED \ Advanced: In the 6502SP version, you can 
  JSR TT66               \ and set the current view type in QQ11 to 4 (Sell
                         \ Cargo screen)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA #4                 \ Clear the top part of the screen, draw a white border,
  JSR TRADEMODE          \ and set up a printable trading screen with a view type
@@ -29,7 +29,7 @@ IF _CASSETTE_VERSION \ Standard: Group A: The layout of the Sell Cargo screen in
  STA YC
  STA XC
 
-ELIF _DISC_DOCKED
+ELIF _DISC_DOCKED OR _MASTER_VERSION
 
  LDA #10                \ Move the text cursor to column 10
  STA XC
@@ -62,7 +62,7 @@ IF _CASSETTE_VERSION \ Standard: See group A
  LDA #206               \ Print recursive token 46 (" CARGO{sentence case}")
  JSR TT68               \ followed by a colon
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
 
  LDA #206               \ Print recursive token 46 (" CARGO{sentence case}")
  JSR NLIN3              \ draw a horizontal line at pixel row 19 to box in the

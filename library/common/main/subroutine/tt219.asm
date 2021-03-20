@@ -34,7 +34,7 @@ ELIF _DISC_DOCKED
  JSR TT66               \ Clear the top part of the screen, draw a white border,
                         \ and set the current view type in QQ11 to 2
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA #2                 \ Clear the top part of the screen, draw a white border,
  JSR TRADEMODE          \ and set up a printable trading screen with a view type
@@ -161,10 +161,24 @@ ENDIF
  JSR tnpr               \ Call tnpr to work out whether there is room in the
                         \ cargo hold for this item
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  LDY #206               \ If the C flag is set, then there is no room in the
  BCS Tc                 \ cargo hold, so set Y to the recursive token 46
                         \ (" CARGO{sentence case}") and jump up to Tc to print a
                         \ "Cargo?" error, beep, clear the number and try again
+
+ELIF _MASTER_VERSION
+
+ LDY #&CE
+ LDA R
+ BEQ L4DD8
+
+ BCS Tc
+
+.L4DD8
+
+ENDIF
 
  LDA QQ24               \ There is room in the cargo hold, so now to check
  STA Q                  \ whether we have enough cash, so fetch the item's
@@ -224,7 +238,7 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED \ Tube
  LDA #0                 \ Move the text cursor to column 0
  STA XC
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA QQ29               \ Move the text cursor to row QQ29 + 5 (where QQ29 is
  CLC                    \ the item number, starting from 0)

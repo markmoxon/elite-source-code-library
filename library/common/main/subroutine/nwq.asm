@@ -17,6 +17,13 @@
 
 .nWq
 
+IF _MASTER_VERSION
+
+ LDA #&FA               \ ???
+ STA COL
+
+ENDIF
+
  LDY NOSTM              \ Set Y to the current number of stardust particles, so
                         \ we can use it as a counter through all the stardust
 

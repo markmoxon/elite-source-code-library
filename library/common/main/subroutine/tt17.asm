@@ -32,6 +32,17 @@
 
 .TT17
 
+IF _MASTER_VERSION
+
+ LDA QQ11               \ ???
+ BNE P%+7
+
+ JSR DOKEY
+ TXA
+ RTS
+
+ENDIF
+
  JSR DOKEY              \ Scan the keyboard for flight controls and pause keys,
                         \ (or the equivalent on joystick) and update the key
                         \ logger, setting KL to the key pressed
@@ -49,6 +60,14 @@ ENDIF
  LDA JSTK               \ If the joystick was not used, jump down to TJ1,
  BEQ TJ1                \ otherwise we move the cursor with the joystick
 
+IF _MASTER_VERSION
+
+ LDA JSTY               \ ???
+ JSR TJS1
+ TAY
+
+ENDIF
+
  LDA JSTX               \ Fetch the joystick roll, ranging from 1 to 255 with
                         \ 128 as the centre point
 
@@ -60,7 +79,11 @@ ENDIF
                         \ and +2 depending on the joystick roll value (moving
                         \ the stick sideways)
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  TYA                    \ Copy Y to A
+
+ENDIF
 
 IF _6502SP_VERSION \ Enhanced: See group A
 
@@ -73,6 +96,8 @@ IF _6502SP_VERSION \ Enhanced: See group A
                         \ when using the joystick)
 
 ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
  TAX                    \ Copy A to X, so X contains the joystick roll value
 
@@ -106,6 +131,8 @@ ENDIF
 \ADC #0                 \ source, but they would make the joystick move the
                         \ cursor faster by increasing the range of Y by -1 to +1
 
+ENDIF
+
 IF _6502SP_VERSION \ Enhanced: See group A
 
  BIT newlocn            \ If bit 7 of newlocn is clear - in other words, if
@@ -118,7 +145,15 @@ IF _6502SP_VERSION \ Enhanced: See group A
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  TAY                    \ Copy the value of A into Y
+
+ELIF _MASTER_VERSION
+
+ TAX                    \ Copy the value of A into X ???
+
+ENDIF
 
  LDA KL                 \ Set A to the value of KL (the key pressed)
 
@@ -140,6 +175,8 @@ ENDIF
  LDX #0                 \ Set the results, X = Y = 0
  LDY #0
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  CMP #&19               \ If left arrow was pressed, set X = X - 1
  BNE P%+3
  DEX
@@ -155,6 +192,26 @@ ENDIF
  CMP #&29               \ If down arrow was pressed, set Y = Y - 1
  BNE P%+3
  DEY
+
+ELIF _MASTER_VERSION
+
+ CMP #&8C               \ ???
+ BNE P%+3
+ DEX
+
+ CMP #&8D
+ BNE P%+3
+ INX
+
+ CMP #&8E
+ BNE P%+3
+ DEY
+
+ CMP #&8F
+ BNE P%+3
+ INY
+
+ENDIF
 
 IF _DISC_DOCKED \ Enhanced: See group A
 
@@ -211,6 +268,39 @@ ELIF _6502SP_VERSION
  TAY                    \ Transfer the amended value of A back into Y
 
  LDA KL                 \ Set A to the value of KL (the key pressed)
+
+ELIF _MASTER_VERSION
+
+ PHX
+ LDA #0
+ JSR DKS4
+
+ BMI P%+6
+
+ PLX
+ LDA KL
+ RTS
+
+ PLA
+ ASL A
+ ASL A
+ TAX
+ TYA
+ ASL A
+ ASL A
+ TAY
+ LDA KL
+ RTS
+
+.TJS1
+
+ LSR A
+ LSR A
+ LSR A
+ LSR A
+ LSR A
+ ADC #0
+ SBC #3
 
 ENDIF
 

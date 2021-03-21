@@ -21,6 +21,12 @@ IF _6502SP_VERSION \ Screen
  JSR DOCOL              \ switch to stripe 3-1-3-1, which is cyan/yellow in the
                         \ space view
 
+ELIF _MASTER_VERSION
+
+
+ LDA #GREEN             \ Switch to stripe 3-1-3-1, which is cyan/yellow in the
+ STA COL                \ space view
+
 ENDIF
 
  LDA INWK+8             \ Set A = z_sign (the highest byte in the planet/sun's
@@ -32,7 +38,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Other: In the cassette version, in part 1
                         \ jump to PL2 to remove it from the screen, returning
                         \ from the subroutine using a tail call
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 \BMI PL2                \ This instruction is commented out in the original
                         \ source. It would remove the planet from the screen

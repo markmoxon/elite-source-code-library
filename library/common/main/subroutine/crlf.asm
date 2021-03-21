@@ -20,7 +20,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
  LDA #21                \ Set the X-column in XC to 21
  STA XC
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA #21                \ Set the X-column in XC to 21
  JSR DOXC
@@ -32,7 +32,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Minor
  BNE TT73               \ Jump to TT73, which prints a colon (this BNE is
                         \ effectively a JMP as A will never be zero)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  JMP TT73               \ Jump to TT73, which prints a colon (this BNE is
                         \ effectively a JMP as A will never be zero)

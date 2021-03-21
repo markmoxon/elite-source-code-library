@@ -18,10 +18,21 @@
 
 .FLFLLS
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  LDY #2*Y-1             \ #Y is the y-coordinate of the centre of the space
                         \ view, so this sets Y as a counter for the number of
                         \ lines in the space view (i.e. 191), which is also the
                         \ number of lines in the LSO block
+
+ELIF _MASTER_VERSION
+
+ LDY #2*Y-1+8           \ #Y is the y-coordinate of the centre of the space
+                        \ view, so this sets Y as a counter for the number of
+                        \ lines in the space view (i.e. 191), which is also the
+                        \ number of lines in the LSO block ???
+
+ENDIF
 
  LDA #0                 \ Set A to 0 so we can zero-fill the LSO block
 

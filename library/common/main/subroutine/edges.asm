@@ -64,9 +64,19 @@ ENDIF
                         \ next two instructions, as the result already fits on
                         \ the screen
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  LDA #254               \ The high byte is positive and non-zero, so we went
  STA X2                 \ past the right edge of the screen, so clip X2 to the
                         \ x-coordinate of the right edge of the screen
+
+ELIF _MASTER_VERSION
+
+ LDA #255               \ The high byte is positive and non-zero, so we went
+ STA X2                 \ past the right edge of the screen, so clip X2 to the
+                        \ x-coordinate of the right edge of the screen ???
+
+ENDIF
 
  LDA YY                 \ We now calculate:
  SEC                    \
@@ -92,9 +102,19 @@ ENDIF
  BPL ED1                \ If the addition is positive then the calculation has
                         \ underflowed, so jump to ED1 to return a failure
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  LDA #2                 \ The high byte is negative and non-zero, so we went
  STA X1                 \ past the left edge of the screen, so clip X1 to the
                         \ y-coordinate of the left edge of the screen
+
+ELIF _MASTER_VERSION
+
+ LDA #0                 \ The high byte is negative and non-zero, so we went
+ STA X1                 \ past the left edge of the screen, so clip X1 to the
+                        \ y-coordinate of the left edge of the screen ???
+
+ENDIF
 
 IF _DISC_DOCKED \ Label
 
@@ -112,7 +132,7 @@ ENDIF
  LDA #0                 \ Set the Y-th byte of the LSO block to 0
  STA LSO,Y
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Minor
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Minor
 
  SEC                    \ The line does not fit on the screen, so set the C flag
                         \ to indicate this result

@@ -123,7 +123,13 @@
                         \ the C flag and return from the subroutine, as the
                         \ whole circle is off-screen to the bottom
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  CPX #2*Y-1             \ If we get here then A is zero, which means the top
+ELIF _MASTER_VERSION
+
+ CPX L0099              \ If we get here then A is zero, which means the top ???
+ENDIF
                         \ edge of the circle is within the screen boundary, so
                         \ now we need to check whether it is in the space view
                         \ (in which case it is on-screen) or the dashboard (in

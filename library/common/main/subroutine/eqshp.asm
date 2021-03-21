@@ -33,7 +33,7 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED \ Advanced: In the 6502SP version, you can 
  JSR TT66               \ and set the current view type in QQ11 to 32 (Equip
                         \ Ship screen)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA #32                \ Clear the top part of the screen, draw a white border,
  JSR TRADEMODE          \ and set up a printable trading screen with a view type
@@ -47,7 +47,7 @@ IF _DISC_DOCKED \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Tube
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Tube
 
  LDA #12                \ Move the text cursor to column 12
  STA XC
@@ -68,7 +68,7 @@ ENDIF
  LDA #%10000000         \ Set bit 7 of QQ17 to switch to Sentence Case, with the
  STA QQ17               \ next letter in capitals
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Tube
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Tube
 
  INC YC                 \ Move the text cursor down one line
 
@@ -88,7 +88,7 @@ IF _CASSETTE_VERSION \ Enhanced: There are up to 14 different types of ship equi
  BCC P%+4               \ 3 and 12
  LDA #12
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
 
  CMP #12                \ If A >= 12 then set A = 14, so A is now set to between
  BCC P%+4               \ 3 and 14
@@ -144,7 +144,7 @@ ENDIF
  SEC                    \ Set the C flag so we will print a decimal point when
                         \ we print the price
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Tube
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Tube
 
  LDA #25                \ Move the text cursor to column 25
  STA XC
@@ -211,6 +211,18 @@ ELIF _6502SP_VERSION
 
  PLA                    \ Restore A from the stack
 
+ELIF _MASTER_VERSION
+
+ PHA                    \ Store A on the stack so we can restore it after the
+                        \ following call to DOXC
+
+ LDA #2                 \ Move the text cursor to column 2
+ STA XC
+
+ INC YC                 \ Move the text cursor down one line
+
+ PLA                    \ Restore A from the stack
+
 ENDIF
 
  PHA                    \ While preserving the value in A, call eq to subtract
@@ -244,7 +256,7 @@ IF _CASSETTE_VERSION \ Minor
 
  LDY #117               \ Set Y to recursive token 117 ("ALL")
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
 
  LDY #124               \ Set Y to recursive token 124 ("ALL")
 
@@ -261,7 +273,7 @@ ENDIF
  JSR msblob             \ Reset the dashboard's missile indicators so none of
                         \ them are targeted
 
-IF _6502SP_VERSION \ Platform: The MSBAR routine that msblob calls corrupts the A register in the 6502SP version, so we need to reset it
+IF _6502SP_VERSION OR _MASTER_VERSION \ Platform: The MSBAR routine that msblob calls corrupts the A register in the 6502SP version, so we need to reset it
 
  LDA #1                 \ Set A to 1 as the call to msblob will have overwritten
                         \ the original value, and we still need it set
@@ -336,7 +348,7 @@ IF _CASSETTE_VERSION \ Platform: The refund code has been moved to the refund ro
  STA LASER,X            \ to fit it by storing the laser power for a pulse laser
                         \ (given in POW) in LASER+X
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
 
  LDA #POW               \ Call refund with A set to the power of the new pulse
  JSR refund             \ laser to install the new laser and process a refund if
@@ -399,7 +411,7 @@ IF _CASSETTE_VERSION \ Platform: The refund code has been moved to the refund ro
                         \ we stored in T1 earlier, as the call to prx will have
                         \ overwritten the original value in X
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
 
  LDA #POW+128           \ Call refund with A set to the power of the new beam
  JSR refund             \ laser to install the new laser and process a refund if
@@ -536,7 +548,7 @@ ENDIF
 
 .et9
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: In the enhanced versions, mining and military lasers can be fitted in the Equip Ship screen
+IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Enhanced: In the enhanced versions, mining and military lasers can be fitted in the Equip Ship screen
 
  INY                    \ Increment Y to recursive token 117 ("MILITARY  LASER")
 

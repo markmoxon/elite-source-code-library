@@ -46,7 +46,15 @@
  LDA LSX2,Y             \ heap
  STA X2
 
+IF _CASSETTE_VERSION OR _DISC_VERSION
+
  JSR LOIN               \ Draw a line from (X1, Y1) to (X2, Y2)
+
+ELIF _MASTER_VERSION
+
+ JSR LL30               \ Draw a line from (X1, Y1) to (X2, Y2)
+
+ENDIF
 
  INY                    \ Increment the loop counter to point to the next point
 

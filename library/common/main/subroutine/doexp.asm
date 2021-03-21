@@ -18,7 +18,7 @@
 
 .DOEXP
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
  LDA INWK+31            \ If bit 6 of the ship's byte #31 is clear, then the
  AND #%01000000         \ ship is not already exploding so there is no existing
@@ -59,6 +59,16 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
  LDY #1                 \ Fetch byte #1 of the ship line heap, which contains
  LDA (XX19),Y           \ the cloud counter
+
+ENDIF
+
+IF _MASTER_VERSION
+
+ STA L12A6              \ ???
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
  ADC #4                 \ Add 4 to the cloud counter, so it ticks onwards every
                         \ we redraw it
@@ -113,7 +123,7 @@ IF _6502SP_VERSION \ Comment
                         \ with the label LABEL_1 from the cassette version
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
  DEY                    \ Decrement Y to 0
 
@@ -182,6 +192,16 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
  LSR A                  \ Divide A by 8 so that is has a maximum value of 15
  LSR A
  LSR A
+
+ENDIF
+
+IF _MASTER_VERSION
+
+ LSR A                  \ ???
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
  ORA #1                 \ Make sure A is at least 1 and store it in U, to
  STA U                  \ give us the number of particles in the explosion for
@@ -259,9 +279,23 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
  EOR CNT                \ EOR with the vertex index, so the seeds are different
                         \ for each vertex
 
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Platform
+
  STA &FFFD,Y            \ Y is going from 3 to 6, so this stores the four bytes
                         \ in memory locations &00, &01, &02 and &03, which are
                         \ the memory locations of RAND through RAND+3
+
+ELIF _MASTER_VERSION
+
+ STA &FFFF,Y            \ Y is going from 3 to 6, so this stores the four bytes
+                        \ in memory locations &02, &03, &04 and &05, which are
+                        \ the memory locations of RAND through RAND+3
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
  CPY #6                 \ Loop back to EXL2 until Y = 6, which means we have
  BNE EXL2               \ copied four bytes
@@ -271,10 +305,49 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
                         \ use this as a loop counter to iterate through all the
                         \ particles in the explosion
 
+ENDIF
+
+IF _MASTER_VERSION
+
+ STY CNT2               \ ???
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
+
 .EXL4
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
 
  JSR DORND2             \ Set ZZ to a random number (also restricts the
  STA ZZ                 \ value of RAND+2 so that bit 0 is always 0)
+
+ELIF _MASTER_VERSION
+
+ CLC                    \ ???
+ LDA RAND
+ ROL A
+ TAX
+ ADC RAND+2
+ STA RAND
+ STX RAND+2
+ LDA RAND+1
+ TAX
+ ADC RAND+3
+ STA RAND+1
+ STX RAND+3
+ STA ZZ
+
+ AND #&03
+ TAX
+ LDA L5A0D,X
+ STA COL
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
  LDA K3+1               \ Set (A R) = (y_hi y_lo)
  STA R                  \           = y
@@ -314,7 +387,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Minor
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Minor
 
  JSR PIXEL              \ Draw a point at screen coordinate (X, A) with the
                         \ point size determined by the distance in ZZ
@@ -332,6 +405,16 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
  DEY                    \ Decrement the loop counter for the next particle
 
+ELIF _MASTER_VERSION
+
+.EX4
+
+ DEC CNT2
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
+
  BPL EXL4               \ Loop back to EXL4 until we have done all the particles
                         \ in the cloud
 
@@ -346,6 +429,10 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
  PLA                    \ Restore the current random number seed to RAND+1 that
  STA RAND+1             \ we stored at the start of the routine
 
+ENDIF
+
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
+
  LDA K%+6               \ Store the z_lo coordinate for the planet (which will
  STA RAND+3             \ be pretty random) in the RAND+3 seed
 
@@ -353,8 +440,31 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
 .EX11
 
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
+
  JSR DORND2             \ Set A and X to random numbers (also restricts the
                         \ value of RAND+2 so that bit 0 is always 0)
+
+ELIF _MASTER_VERSION
+
+ CLC                    \ ???
+ LDA RAND
+ ROL A
+ TAX
+ ADC RAND+2
+ STA RAND
+ STX RAND+2
+ LDA RAND+1
+ TAX
+ ADC RAND+3
+ STA RAND+1
+ STX RAND+3
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
  JMP EX4                \ We just skipped a particle, so jump up to EX4 to do
                         \ the next one
@@ -369,8 +479,31 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
  STA S                  \ Store A in S so we can use it later
 
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
+
  JSR DORND2             \ Set A and X to random numbers (also restricts the
                         \ value of RAND+2 so that bit 0 is always 0)
+
+ELIF _MASTER_VERSION
+
+ CLC                    \ ???
+ LDA RAND
+ ROL A
+ TAX
+ ADC RAND+2
+ STA RAND
+ STX RAND+2
+ LDA RAND+1
+ TAX
+ ADC RAND+3
+ STA RAND+1
+ STX RAND+3
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
  ROL A                  \ Set A = A * 2
 
@@ -406,4 +539,14 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 ENDIF
 
  RTS                    \ Return from the subroutine
+
+IF _MASTER_VERSION
+
+ EQUB &00, &02
+
+.L5A0D
+
+ EQUB &0F,&F0,&0F,&FF
+
+ENDIF
 

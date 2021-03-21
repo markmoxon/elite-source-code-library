@@ -18,7 +18,7 @@
  LDA TYPE               \ Shift bit 0 of the planet/sun's type into the C flag
  LSR A
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Tube
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Tube
 
  BCS P%+5               \ If the planet/sun's type has bit 0 clear, then it's
                         \ either 128 or 130, which is a planet; meanwhile, the

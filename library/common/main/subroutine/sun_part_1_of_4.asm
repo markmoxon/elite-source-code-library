@@ -31,7 +31,7 @@
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
  JMP WPLS               \ Jump to WPLS to remove the old sun from the screen. We
                         \ only get here via the BCS just after the SUN entry
@@ -65,7 +65,7 @@ IF _CASSETTE_VERSION \ Minor
 
  JMP PLF5               \ Jump to PLF5
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
  BNE PLF5               \ Jump to PLF5 (this BNE is effectively a JMP as A is
                         \ never zero)
@@ -74,6 +74,13 @@ ENDIF
 
 .SUN
 
+IF _MASTER_VERSION
+
+ LDA #&F0               \ ???
+ STA COL
+
+ENDIF
+
  LDA #1                 \ Set LSX = 1 to indicate the sun line heap is about to
  STA LSX                \ be filled up
 
@@ -81,7 +88,7 @@ ENDIF
                         \ circle appears on-screen, and of it does, set P(2 1)
                         \ to the maximum y-coordinate of the new sun on-screen
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
  BCS PLF3-3             \ If CHKON set the C flag then the new sun's circle does
                         \ not appear on-screen, so jump to WPLS (via the JMP at
@@ -126,9 +133,17 @@ ENDIF
                         \ new sun, given that P(2 1) contains the 16-bit maximum
                         \ y-coordinate of the new sun on-screen
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  LDA #2*Y-1             \ #Y is the y-coordinate of the centre of the space
                         \ view, so this sets Y to the y-coordinate of the bottom
                         \ of the space view, i.e. 191
+
+ELIF _MASTER_VERSION
+
+ LDA L0099              \ ???
+
+ENDIF
 
  LDX P+2                \ If P+2 is non-zero, the maximum y-coordinate is off
  BNE PLF2               \ the bottom of the screen, so skip to PLF2 with A = 191
@@ -153,10 +168,21 @@ ENDIF
                         \ and the direction in which we need to draw them, both
                         \ from the centre of the new sun
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  LDA #2*Y-1             \ Set (A X) = y-coordinate of bottom of screen - K4(1 0)
  SEC                    \
  SBC K4                 \ Starting with the low bytes
  TAX
+
+ELIF _MASTER_VERSION
+
+ LDA L0099              \ Set (A X) = y-coordinate of bottom of screen - K4(1 0)
+ SEC                    \
+ SBC K4                 \ Starting with the low bytes ???
+ TAX
+
+ENDIF
 
  LDA #0                 \ And then doing the high bytes, so (A X) now contains
  SBC K4+1               \ the number of lines between the centre of the sun and

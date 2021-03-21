@@ -63,6 +63,11 @@ ELIF _6502SP_VERSION
  LDA #WHITE2            \ Set A to white, the colour for when the planet or
                         \ station in the compass is in front of us
 
+ELIF _MASTER_VERSION
+
+ LDA #YELLOW2           \ Set A to yellow, the colour for when the planet or
+                        \ station in the compass is in front of us ???
+
 ENDIF
 
  LDX XX15+2             \ If the z-coordinate of the XX15 vector is positive,
@@ -75,7 +80,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Screen
                         \ green/cyan, so set A to a 4-pixel mode 5 byte row in
                         \ colour 3
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA #GREEN2            \ The z-coordinate of XX15 is negative, so the planet or
                         \ station is behind us and the compass dot should be in
@@ -85,5 +90,14 @@ ENDIF
 
  STA COMC               \ Store the compass colour in COMC
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+
                         \ Fall through into DOT to draw the dot on the compass
+
+ELIF _MASTER_VERSION
+
+ JMP DOT                \ Jump to DOT to draw the dot on the compass and return
+                        \ from the subroutine using a tail call
+
+ENDIF
 

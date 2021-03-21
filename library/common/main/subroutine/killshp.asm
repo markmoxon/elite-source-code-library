@@ -33,7 +33,7 @@
 
  STX XX4                \ Store the slot number of the ship to remove in XX4
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
 
                         \ The following two instructions appear in the BASIC
                         \ source file (ELITEF), but in the text source file
@@ -63,7 +63,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Screen
  JSR ABORT              \ ABORT to disarm the missile and update the missile
                         \ indicators on the dashboard to green/cyan (Y = &EE)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDY #GREEN2            \ Otherwise we need to remove our missile lock, so call
  JSR ABORT              \ ABORT to disarm the missile and update the missile
@@ -84,7 +84,7 @@ ENDIF
  CPX #SST               \ If this is the space station, then jump to KS4 to
  BEQ KS4                \ replace the space station with the sun
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: In the enhanced versions, the Constrictor is a special ship, and killing it ends the first mission
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: In the enhanced versions, the Constrictor is a special ship, and killing it ends the first mission
 
  CPX #CON               \ Did we just kill the Constrictor from mission 1? If
  BNE lll                \ not, jump to lll
@@ -93,18 +93,28 @@ IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: In the enhanced versions, the Con
  ORA #%00000010         \ bit 1 of TP to indicate that we have successfully
  STA TP                 \ completed mission 1
 
+ENDIF
+
+IF _MASTER_VERSION
+
+ INC TALLY+1            \ ???
+
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Label
+
 .lll
 
 ENDIF
 
-IF _6502SP_VERSION \ Advanced: There are rock hermits in the 6502SP version, and they are classed as junk (along with the escape pod, alloy plate, cargo canister, asteroid, splinter, Shuttle and Transporter)
+IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: There are rock hermits in the 6502SP version, and they are classed as junk (along with the escape pod, alloy plate, cargo canister, asteroid, splinter, Shuttle and Transporter)
 
  CPX #HER               \ Did we just kill a rock hermit? If we did, jump to
  BEQ blacksuspenders    \ blacksuspenders to decrease the junk count
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: Group A: In the cassette version, only the escape pod, asteroid and cargo canister are classed as junk. In the enhanced versions, the alloy plate, splinter, Shuttle and Transporter are also junk (and in the advanced versions, rock hermits are also junk). Junk in the vicinity doesn't prevent you from performing an in-system jump - in fact, it gets dragged along for the ride
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: Group A: In the cassette version, only the escape pod, asteroid and cargo canister are classed as junk. In the enhanced versions, the alloy plate, splinter, Shuttle and Transporter are also junk (and in the advanced versions, rock hermits are also junk). Junk in the vicinity doesn't prevent you from performing an in-system jump - in fact, it gets dragged along for the ride
 
  CPX #JL                \ If JL <= X < JH, i.e. the type of ship we killed in X
  BCC KS7                \ is junk (escape pod, alloy plate, cargo canister,
@@ -113,13 +123,13 @@ IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: Group A: In the cassette version,
 
 ENDIF
 
-IF _6502SP_VERSION \ Label
+IF _6502SP_VERSION OR _MASTER_VERSION \ Label
 
 .blacksuspenders
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: See group A
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
 
  DEC JUNK               \ We just killed junk, so decrease the junk counter
 
@@ -209,7 +219,7 @@ IF _CASSETTE_VERSION \ Minor
                         \ the source slot is empty and we are done shuffling,
                         \ so jump to KS2 to move on to processing missiles
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  BNE P%+5               \ If the slot we just shuffled down is not empty, then
                         \ skip the following instruction
@@ -280,7 +290,7 @@ IF _CASSETTE_VERSION \ Enhanced: Ship data blocks have an extra byte in the enha
                         \ to the destination, so we set it to 35 to start things
                         \ off, and will decrement Y for each byte we copy
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  LDY #36                \ We are going to be using Y as a counter for the 37
                         \ bytes of ship data we want to copy from the source
@@ -298,7 +308,7 @@ ENDIF
  LDA (SC),Y             \ Fetch byte #35 of the source's ship data block at SC,
  STA (INF),Y            \ and store it in byte #35 of the destination's block
                         \ at INF, so that's the ship's energy copied from the
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
                         \ source to the destination. One down, quite a few to
                         \ go...
 ELIF _6502SP_VERSION

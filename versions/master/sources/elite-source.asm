@@ -47,7 +47,7 @@ Q% = _REMOVE_CHECKSUMS  \ Set Q% to TRUE to max out the default commander, FALSE
 BRKV = &202             \ The break vector that we intercept to enable us to
                         \ handle and display system errors
 
-NOST = 18               \ The number of stardust particles in normal space (this
+NOST = 20               \ The number of stardust particles in normal space (this
                         \ goes down to 3 in witchspace)
 
 NOSH = 12               \ The maximum number of ships in our local bubble of
@@ -298,6 +298,9 @@ L0433   = &0433
 L0449   = &0449
 L06A9   = &06A9
 L0791   = &0791
+
+WP = &0801
+
 FRIN = &0E41
 MANY = &0E4E
 SSPR = &0E50
@@ -1889,7 +1892,6 @@ INCLUDE "library/common/main/subroutine/pls4.asm"
 INCLUDE "library/common/main/subroutine/pls5.asm"
 INCLUDE "library/common/main/subroutine/pls6.asm"
 
-
 .L6174
 
  JSR t
@@ -1934,228 +1936,11 @@ CODE_F% = P%
 LOAD_F% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/ks3.asm"
-
-
-.KS1
-
- LDX XSAV
- JSR KILLSHP
-
- LDX XSAV
- JMP MAL1
-
-.KS4
-
- JSR ZINF
-
- JSR FLFLLS
-
- STA FRIN+1
- STA SSPR
- JSR SPBLB
-
- LDA #&06
- STA INWK+5
- LDA #&81
- JMP NWSHP
-
-.KS2
-
- LDX #&FF
-
-.KSL4
-
- INX
- LDA FRIN,X
- BEQ KS3
-
- CMP #&01
- BNE KSL4
-
- TXA
- ASL A
- TAY
- LDA UNIV,Y
- STA SC
- LDA UNIV+1,Y
- STA SC+1
- LDY #&20
- LDA (SC),Y
- BPL KSL4
-
- AND #&7F
- LSR A
- CMP XX4
- BCC KSL4
-
- BEQ KS6
-
- SBC #&01
- ASL A
- ORA #&80
- STA (SC),Y
- BNE KSL4
-
-.KS6
-
- LDA #&00
- STA (SC),Y
- BEQ KSL4
-
-.KILLSHP
-
- STX XX4
- LDA MSTG
- CMP XX4
- BNE KS5
-
- LDY #&0C
- JSR ABORT
-
- LDA #&C8
- JSR MESS
-
-.KS5
-
- LDY XX4
- LDX FRIN,Y
- CPX #&02
- BEQ KS4
-
- CPX #&1F
- BNE lll
-
- LDA TP
- ORA #&02
- STA TP
- INC TALLY+1
-
-.lll
-
- CPX #&0F
- BEQ blacksuspenders
-
- CPX #&03
- BCC KS7
-
- CPX #&0B
- BCS KS7
-
-.blacksuspenders
-
- DEC JUNK
-
-.KS7
-
- DEC MANY,X
- LDX XX4
- LDY #&05
- LDA (XX0),Y
- LDY #&21
- CLC
- ADC (INF),Y
- STA P
- INY
- LDA (INF),Y
- ADC #&00
- STA P+1
-
-.KSL1
-
- INX
- LDA FRIN,X
- STA FRIN-1,X
- BNE L629E
-
- JMP KS2
-
-.L629E
-
- ASL A
- TAY
- LDA XX21-2,Y
- STA SC
- LDA XX21-1,Y
- STA SC+1
- LDY #&05
- LDA (SC),Y
- STA T
- LDA P
- SEC
- SBC T
- STA P
- LDA P+1
- SBC #&00
- STA P+1
- TXA
- ASL A
- TAY
- LDA UNIV,Y
- STA SC
- LDA UNIV+1,Y
- STA SC+1
- LDY #&24
- LDA (SC),Y
- STA (INF),Y
- DEY
- LDA (SC),Y
- STA (INF),Y
- DEY
- LDA (SC),Y
- STA K+1
- LDA P+1
- STA (INF),Y
- DEY
- LDA (SC),Y
- STA K
- LDA P
- STA (INF),Y
- DEY
-
-.KSL2
-
- LDA (SC),Y
- STA (INF),Y
- DEY
- BPL KSL2
-
- LDA SC
- STA INF
- LDA SC+1
- STA INF+1
- LDY T
-
-.KSL3
-
- DEY
- LDA (K),Y
- STA (P),Y
- TYA
- BNE KSL3
-
- BEQ KSL1
-
-.THERE
-
- LDX GCNT
- DEX
- BNE THEX
-
- LDA QQ0
- CMP #&90
- BNE THEX
-
- LDA QQ1
- CMP #&21
- BEQ L6318
-
-.THEX
-
- CLC
-
-.L6318
-
- RTS
+INCLUDE "library/common/main/subroutine/ks1.asm"
+INCLUDE "library/common/main/subroutine/ks4.asm"
+INCLUDE "library/common/main/subroutine/ks2.asm"
+INCLUDE "library/common/main/subroutine/killshp.asm"
+INCLUDE "library/enhanced/main/subroutine/there.asm"
 
  PHA
  LSR A
@@ -2180,77 +1965,9 @@ INCLUDE "library/common/main/subroutine/ks3.asm"
  ADC #&36
  JMP CHPR
 
-.RESET
+INCLUDE "library/common/main/subroutine/reset.asm"
+INCLUDE "library/common/main/subroutine/res2.asm"
 
- JSR ZERO
-
- LDX #&06
-
-.SAL3
-
- STA BETA,X
- DEX
- BPL SAL3
-
- STX L2C5A
- TXA
- STA QQ12
- LDX #&02
-
-.REL5
-
- STA FSH,X
- DEX
- BPL REL5
-
-.RES2
-
- LDA #&14
- STA NOSTM
- LDX #&FF
- STX LSX2
- STX LSY2
- STX MSTG
- LDA #&80
- STA JSTY
- STA ALP2
- STA BET2
- ASL A
- STA BETA
- STA BET1
- STA ALP2+1
- STA BET2+1
- STA MCNT
- LDA #&03
- STA DELTA
- STA ALPHA
- STA ALP1
- LDA #&00
- STA L0098
- LDA #&BF
- STA L0099
- LDA SSPR
- BEQ L6382
-
- JSR SPBLB
-
-.L6382
-
- LDA ECMA
- BEQ yu
-
- JSR ECMOF
-
-.yu
-
- JSR WPSHPS
-
- JSR ZERO
-
- LDA #&00
- STA SLSP
- LDA #&08
- STA SLSP+1
 
 .ZINF
 

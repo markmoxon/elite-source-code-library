@@ -9,6 +9,13 @@
 
 .me2
 
+IF _MASTER_VERSION
+
+ LDA QQ11               \ ???
+ BNE L63D9
+
+ENDIF
+
  LDA MCH                \ Fetch the token number of the current message into A
 
  JSR MESS               \ Call MESS to print the token, which will remove it
@@ -19,3 +26,12 @@
 
  JMP me3                \ Jump back into the main spawning loop at TT100
 
+IF _MASTER_VERSION
+
+.L63D9
+
+ JSR CLYNS              \ ???
+
+ JMP me3                \ Jump back into the main spawning loop at TT100
+
+ENDIF

@@ -14,7 +14,16 @@
 
 .DEATH
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  JSR EXNO3              \ Make the sound of us dying
+
+ELIF _MASTER_VERSION
+
+ LDY #&04               \ ???
+ JSR NOISE
+
+ENDIF
 
  JSR RES2               \ Reset a number of flight variables and workspaces
 
@@ -24,9 +33,21 @@
  LDX #24                \ Set the screen to only show 24 text rows, which hides
  JSR DET1               \ the dashboard, setting A to 6 in the process
 
+IF _MASTER_VERSION
+
+ LDA #&0D               \ ???
+
+ENDIF
+
  JSR TT66               \ Clear the top part of the screen, draw a white border,
                         \ and set the current view type in QQ11 to 6 (death
                         \ screen)
+
+IF _MASTER_VERSION
+
+ STZ QQ11               \ ???
+
+ENDIF
 
  JSR BOX                \ Call BOX to redraw the same white border (BOX is part
                         \ of TT66), which removes the border as it is drawn
@@ -35,11 +56,24 @@
  JSR nWq                \ Create a cloud of stardust containing the correct
                         \ number of dust particles (i.e. NOSTM of them)
 
+IF _MASTER_VERSION
+
+ LDA #&FF               \ ???
+ STA COL
+
+ENDIF
+
 IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Tube
 
  LDA #12                \ Move the text cursor to column 12 on row 12
  STA YC
  STA XC
+
+ELIF _MASTER_VERSION
+
+ LDA #12                \ Move the text cursor to column 12 on row 12
+ STA XC
+ STA YC
 
 ELIF _6502SP_VERSION
 
@@ -68,12 +102,24 @@ ENDIF
  LSR A                  \ store in byte #0 (x_lo)
  STA INWK
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  LDY #0                 \ Set the following to 0: the current view in QQ11
  STY QQ11               \ (space view), x_hi, y_hi, z_hi and the AI flag (no AI
  STY INWK+1             \ or E.C.M. and not hostile)
  STY INWK+4
  STY INWK+7
  STY INWK+32
+
+ELIF _MASTER_VERSION
+
+ LDY #0                 \ Set the following to 0: x_hi, y_hi, z_hi and the AI
+ STY INWK+1             \ flag (no AI or E.C.M. and not hostile)
+ STY INWK+4
+ STY INWK+7
+ STY INWK+32
+
+ENDIF
 
  DEY                    \ Set Y = 255
 
@@ -108,6 +154,12 @@ IF _6502SP_VERSION \ Platform
                         \ death animation lasts (it's 127 iterations of the main
                         \ flight loop)
 
+ELIF _MASTER_VERSION
+
+ LDY #&40               \ ???
+ STY LASCT
+ SEC
+
 ENDIF
 
  ROR A                  \ The C flag is randomly set from the above call to Ze,
@@ -139,7 +191,7 @@ IF _CASSETTE_VERSION \ Enhanced: On death, the cassette version shows your ship 
                         \ is we loop back to D1 to add another canister, until
                         \ we have added four of them
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  LDX #OIL               \ Set X to #OIL, the ship type for a cargo canister
 
@@ -190,10 +242,24 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  JSR U%                 \ Clear the key logger, which also sets A = 0
 
- STA DELTA              \ Set our speed in DELTA to 3, so all the cargo
-                        \ canisters we just added drift away from us
+ELIF _MASTER_VERSION
+
+ LDA #0                 \ ???
+
+ENDIF
+
+ STA DELTA              \ Set our speed in DELTA to 0, as we aen't going
+                        \ anywhere any more
+
+IF _MASTER_VERSION
+
+ JSR M%                 \ ???
+
+ENDIF
 
 .D2
 
@@ -207,7 +273,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Platform
  BNE D2                 \ LASCT reaches zero (which will take 5.1 seconds, as
                         \ explained above)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  DEC LASCT              \ Decrement the counter in LASCT, which we set above
 
@@ -223,7 +289,7 @@ IF _CASSETTE_VERSION \ Minor
 
                         \ Fall through into DEATH2 to reset and restart the game
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  JMP DEATH2             \ Jump to DEATH2 to reset and restart the game
 

@@ -3,7 +3,7 @@
 \       Name: Main game loop (Part 2 of 6)
 \       Type: Subroutine
 \   Category: Main loop
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Comment
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
 \    Summary: Call the main flight loop, and potentially spawn a trader, an
 \             asteroid, or a cargo canister
 ELIF _DISC_DOCKED
@@ -22,7 +22,7 @@ IF _DISC_DOCKED \ Comment
 ENDIF
 \ This section covers the following:
 \
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Comment
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
 \   * Call M% to do the main flight loop
 \
 ENDIF
@@ -41,7 +41,7 @@ ENDIF
 
 .TT100
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
  JSR M%                 \ Call M% to iterate through the main flight loop
 
@@ -93,7 +93,7 @@ ENDIF
 
  JSR DORND              \ Set A and X to random numbers
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Minor
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Minor
 
  CMP #35                \ If A >= 35 (87% chance), jump down to MTT1 to skip
  BCS MTT1               \ the spawning of an asteroid or cargo canister and
@@ -118,7 +118,7 @@ ELIF _DISC_DOCKED
  CMP #3                 \ bubble, jump down to MLOOP to skip the following
  BCS MLOOP
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  LDA JUNK               \ If we already have 3 or more bits of junk in the local
  CMP #3                 \ bubble, jump down to MTT1 to skip the following and
@@ -147,7 +147,7 @@ ENDIF
  ROL INWK+1             \ Set bit 2 of x_hi to the C flag, which is random, so
  ROL INWK+1             \ this randomly moves us slightly off-centre
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
  JSR DORND              \ Set A, X and V flag to random numbers
 
@@ -183,7 +183,7 @@ ENDIF
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
  ORA #%01101111         \ Take the random number in A and set bits 0-3 and 5-6,
  STA INWK+29            \ so the result has a 50% chance of being positive or
@@ -222,7 +222,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
 ENDIF
 
-IF _6502SP_VERSION \ Advanced: In the 6502SP version, 1.2% of asteroids spawned are rock hermits
+IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: In the advanced versions, 1.2% of asteroids spawned are rock hermits
 
  CMP #252               \ If random A < 252 (98.8% of the time), jump to thongs
  BCC thongs             \ to skip the following
@@ -240,7 +240,7 @@ IF _6502SP_VERSION \ Advanced: In the 6502SP version, 1.2% of asteroids spawned 
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Standard: In the cassette version, 1.5% of asteroids are actually spawned as cargo canisters, while in the enhanced version 4% of asteroids are spawned as either cargo canisters or alloy plates, with an even chance of each
+IF _CASSETTE_VERSION \ Standard: In the cassette version, 1.5% of asteroids are actually spawned as cargo canisters, while in the enhanced versions 4% of asteroids are spawned as either cargo canisters or alloy plates, with an even chance of each
 
  CMP #5                 \ Set A to the ship number of an asteroid, and keep
  LDA #AST               \ this value for 98.5% of the time (i.e. if random
@@ -248,7 +248,7 @@ IF _CASSETTE_VERSION \ Standard: In the cassette version, 1.5% of asteroids are 
 
  LDA #OIL               \ Set A to the ship number of a cargo canister
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  CMP #10                \ If random A >= 10 (96% of the time), set the C flag
 
@@ -261,13 +261,13 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
 ENDIF
 
-IF _6502SP_VERSION \ Label
+IF _6502SP_VERSION OR _MASTER_VERSION \ Label
 
 .whips
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
  JSR NWSHP              \ Add our new asteroid or canister to the universe
 

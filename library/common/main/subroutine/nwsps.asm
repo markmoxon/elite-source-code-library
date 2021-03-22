@@ -50,7 +50,7 @@ ENDIF
 
  JSR NwS1               \ And again to flip the sign of nosev_z_hi (byte #14)
 
-IF _6502SP_VERSION \ Platform
+IF _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
  LDA spasto             \ Copy the address of the Coriolis space station's ship
  STA XX21+2*SST-2       \ blueprint from spasto to the #SST entry in the
@@ -65,24 +65,6 @@ IF _6502SP_VERSION \ Platform
  STA XX21+2*SST-2       \ blueprint from spasto to the #SST entry in the
  LDA XX21+2*DOD-1       \ blueprint lookup table at XX21, so when we spawn a
  STA XX21+2*SST-1       \ ship of type #SST, it will be a Dodo station
-
-.notadodo
-
-ELIF _MASTER_VERSION
-
- LDA spasto             \ Copy the address of the Coriolis space station's ship
- STA XX21+2*SST-2       \ blueprint from spasto to the #SST entry in the
- LDA spasto+1           \ blueprint lookup table at XX21, so when we spawn a
- STA XX21+2*SST-1       \ ship of type #SST, it will be a Coriolis station
-
- LDA tek                \ If the system's tech level in tek is less than 10,
- CMP #10                \ jump to notadodo, so tech levels 0 to 9 have Coriolis
- BCC notadodo           \ stations, while 10 and above will have Dodo stations
-
- LDA XX21+2*DOD-2-2     \ Copy the address of the Dodo space station's ship
- STA XX21+2*SST-2       \ blueprint from spasto to the #SST entry in the
- LDA XX21+2*DOD-1-2     \ blueprint lookup table at XX21, so when we spawn a
- STA XX21+2*SST-1       \ ship of type #SST, it will be a Dodo station ???
 
 .notadodo
 

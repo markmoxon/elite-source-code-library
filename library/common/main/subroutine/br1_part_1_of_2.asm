@@ -7,10 +7,10 @@
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Comment
-\ BRKV is set to point to BR1 by elite-loader.asm.
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Comment
+\ BRKV is set to point to BR1 by the loading process.
 ENDIF
-IF _6502SP_VERSION \ Comment
+IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ Other entry points:
 \
 \   QU5                 Restart the game using the last saved commander without
@@ -26,12 +26,21 @@ IF _6502SP_VERSION \ Tube
  JSR ZEKTRAN            \ Reset the key logger buffer that gets returned from
                         \ the I/O processor
 
+ELIF _MASTER_VERSION
+
+ JSR U%                 \ ???
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_DOCKED \ Tube
 
  LDX #3                 \ Set XC = 3 (set text cursor to column 3)
  STX XC
+
+ELIF _MASTER_VERSION
+
+ LDA #3                 \ Set XC = 3 (set text cursor to column 3)
+ STA XC
 
 ELIF _6502SP_VERSION
 
@@ -42,9 +51,12 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  JSR FX200              \ Disable the ESCAPE key and clear memory if the BREAK
                         \ key is pressed (*FX 200,3)
 
+ENDIF
 
 IF _CASSETTE_VERSION \ Minor
 
@@ -60,6 +72,13 @@ ELIF _DISC_DOCKED OR _6502SP_VERSION
  JSR TITLE              \ (Y/N)?{sentence case}{cr}{cr}"), returning with the
                         \ internal number of the key pressed in A
 
+ELIF _MASTER_VERSION
+
+ LDX #&0B
+ LDA #&06
+ LDY #&C8
+ JSR TITLE
+
 ENDIF
 
 IF _6502SP_VERSION \ Advanced: Pressing TAB in the title screen of the 6502SP version will start the demo
@@ -73,8 +92,17 @@ IF _6502SP_VERSION \ Advanced: Pressing TAB in the title screen of the 6502SP ve
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+
  CMP #&44               \ Did we press "Y"? If not, jump to QU5, otherwise
  BNE QU5                \ continue on to load a new commander
+
+ELIF _MASTER_VERSION
+
+ CPX #&59               \ Did we press "Y"? If not, jump to QU5, otherwise
+ BNE QU5                \ continue on to load a new commander
+
+ENDIF
 
 IF _CASSETTE_VERSION \ Platform
 
@@ -103,7 +131,7 @@ IF _CASSETTE_VERSION \ Platform
  JSR TTX66              \ And we clear the top part of the screen and draw a
                         \ white border
 
-ELIF _DISC_DOCKED OR _6502SP_VERSION
+ELIF _DISC_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION
 
  JSR DFAULT             \ Call DFAULT to reset the current commander data block
                         \ to the last saved commander

@@ -28,7 +28,11 @@
 
 .BRBR
 
+IF _DISC_DOCKED OR _6502SP_VERSION
+
  DEC brkd               \ Decrement the brkd counter
+
+ENDIF
 
 IF _6502SP_VERSION \ Platform
 
@@ -46,9 +50,35 @@ IF _6502SP_VERSION \ Platform
 
 .BRBRLOOP
 
+ELIF _MASTER_VERSION
+
+ LDX brkd               \ ???
+ TXS
+ JSR MASTER_SWAP_ZP_3000
+
+ STZ CATF
+ LDY #&00
+
+ LDA #7                 \ Set A = 7 to generate a beep before we print the error
+                        \ message
+
+.BRBRLOOP
+
+ENDIF
+
+IF _6502SP_VERSION
+
  JSR OSWRCH             \ Print the character in A, which contains a line feed
                         \ on the first loop iteration, and then any non-zero
                         \ characters we fetch from the error message
+
+ELIF _MASTER_VERSION
+
+ JSR CHPR               \ ???
+
+ENDIF
+
+IF _6502SP_VERSION OR _MASTER_VERSION
 
  INY                    \ Increment the loop counter
 
@@ -71,6 +101,11 @@ IF _DISC_DOCKED \ Minor
 ELIF _6502SP_VERSION
 
  JMP BR1                \ Jump to BR1 to restart the game
+
+ELIF _MASTER_VERSION
+
+ JSR t                  \ ???
+ JMP SVE
 
 ENDIF
 

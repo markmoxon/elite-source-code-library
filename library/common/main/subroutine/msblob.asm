@@ -10,7 +10,7 @@
 \ Display the dashboard's missile indicators, with all the missiles reset to
 IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \ green/cyan (i.e. not armed or locked).
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 \ green (i.e. not armed or locked).
 ENDIF
 \
@@ -28,7 +28,7 @@ ENDIF
                         \ the rest of them are present and should be drawn in
 IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
                         \ green/cyan
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ green
 ENDIF
 
@@ -48,7 +48,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
  LDY #&EE               \ Draw the missile indicator at position X in green/cyan
  JSR MSBAR
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDY #GREEN2            \ Draw the missile indicator at position X in green
  JSR MSBAR

@@ -51,7 +51,7 @@ IF _CASSETTE_VERSION \ Comment
  JMP TT25               \ TT25 to show the Data on System screen, returning
                         \ from the subroutine using a tail call
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
  CMP #f6                \ If red key f6 was pressed, call TT111 to select the
  BNE TT92               \ system nearest to galactic coordinates (QQ9, QQ10)
@@ -79,7 +79,7 @@ ENDIF
 
 .fvw
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
  BIT QQ12               \ If bit 7 of QQ12 is clear (i.e. we are not docked, but
  BPL INSP               \ in space), jump to INSP to skip the following checks
@@ -87,7 +87,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Platform
 
  CMP #f3                \ If red key f3 was pressed, jump to EQSHP to show the
  BNE P%+5               \ Equip Ship screen, returning from the subroutine using
@@ -99,7 +99,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Enhanced: Pressing "@" brings up the disc access menu in the enhanced versions
+IF _CASSETTE_VERSION \ Enhanced: Group A: Pressing "@" brings up the disc access menu in the enhanced versions
 
  CMP #&47               \ If "@" was pressed, jump to SVE to save the commander
  BNE P%+5               \ file, returning from the subroutine using a tail call
@@ -109,6 +109,15 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED
 
  CMP #&47               \ If "@" was not pressed, skip to nosave
  BNE nosave
+
+ELIF _MASTER_VERSION
+
+ CMP #&40               \ If "@" was not pressed, skip to nosave
+ BNE nosave
+
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Enhanced: See group A
 
  JSR SVE                \ "@" was pressed, so call SVE to show the disc access
                         \ menu
@@ -124,7 +133,7 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Platform
 
  CMP #f2                \ If red key f2 was pressed, jump to TT208 to show the
  BNE LABEL_3            \ Sell Cargo screen, returning from the subroutine using
@@ -150,6 +159,30 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
                         \ set X to the last digit (1, 2 or 3) and jump to LOOK1
                         \ to switch to view X (back, left or right), returning
                         \ from the subroutine using a tail call
+
+ELIF _MASTER_VERSION
+
+ CMP #&81               \ ???
+ BEQ L6620
+
+ CMP #&82
+ BEQ L661D
+
+ CMP #&83
+ BNE LABEL_3
+
+ LDX #&03
+ EQUB &2C
+
+.L661D
+
+ LDX #&02
+ EQUB &2C
+
+.L6620
+
+ LDX #&01
+ JMP LOOK1
 
 ENDIF
 
@@ -187,25 +220,47 @@ ELIF _DISC_DOCKED
  LDA #205               \ Print extended token 205 ("DOCKED") and return from
  JMP DETOK              \ the subroutine using a tail call
 
+ELIF _MASTER_VERSION
+
+ LDA KL                 \ ???
+ CMP #&48
+ BNE NWDAV5
+
+ JMP hyp
+
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Label
+IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Label
 
 .NWDAV5
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+
  CMP #&32               \ If "D" was pressed, jump to T95 to print the distance
  BEQ T95                \ to a system (if we are in one of the chart screens)
+
+ELIF _MASTER_VERSION
+
+ CMP #&44               \ If "D" was pressed, jump to T95 to print the distance
+ BEQ T95                \ to a system (if we are in one of the chart screens)
+
+ENDIF
 
 IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: Group A: Pressing "F" in the enhanced versions when viewing a chart lets us search for systems by name
 
  CMP #&43               \ If "F" was not pressed, jump down to HME1, otherwise
  BNE HME1               \ keep going to process searching for systems
 
+ELIF _MASTER_VERSION
+
+ CMP #&46               \ If "F" was not pressed, jump down to HME1, otherwise
+ BNE HME1               \ keep going to process searching for systems
+
 ENDIF
 
-IF _6502SP_VERSION \ Platform
+IF _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
  LDA QQ12               \ If QQ12 = 0 (we are not docked), we can't search for
  BEQ t95                \ systems, so return from the subroutine (as t95
@@ -213,7 +268,7 @@ IF _6502SP_VERSION \ Platform
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: See group A
+IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Enhanced: See group A
 
  LDA QQ11               \ If the current view is a chart (QQ11 = 64 or 128),
  AND #%11000000         \ keep going, otherwise return from the subroutine (as
@@ -228,7 +283,7 @@ ENDIF
 
  STA T1                 \ Store A (the key that's been pressed) in T1
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
  LDA QQ11               \ If the current view is a chart (QQ11 = 64 or 128),
  AND #%11000000         \ keep going, otherwise jump down to TT107 to skip the
@@ -253,8 +308,17 @@ ENDIF
  LDA T1                 \ Restore the original value of A (the key that's been
                         \ pressed) from T1
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+
  CMP #&36               \ If "O" was pressed, do the following three jumps,
  BNE ee2                \ otherwise skip to ee2 to continue
+
+ELIF _MASTER_VERSION
+
+ CMP #&4F               \ If "O" was pressed, do the following three jumps,
+ BNE ee2                \ otherwise skip to ee2 to continue
+
+ENDIF
 
  JSR TT103              \ Draw small crosshairs at coordinates (QQ9, QQ10),
                         \ which will erase the crosshairs currently there
@@ -269,7 +333,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Other: This might be a bug fix? If "O" i
                         \ which will draw the crosshairs at our current home
                         \ system
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  JMP TT103              \ Draw small crosshairs at coordinates (QQ9, QQ10),
                         \ which will draw the crosshairs at our current home
@@ -284,7 +348,7 @@ ENDIF
                         \ and Y, which were passed to this subroutine as
                         \ arguments
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
 .TT107
 
@@ -358,7 +422,11 @@ ENDIF
  JSR hm                 \ Call hm to move the crosshairs to the target system
                         \ in (QQ9, QQ10), returning with A = 0
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+
  STA QQ17               \ Set QQ17 = 0 to switch to ALL CAPS
+
+ENDIF
 
  JSR cpl                \ Print control code 3 (the selected system name)
 
@@ -380,6 +448,11 @@ ELIF _6502SP_VERSION
  JSR DOXC
 
  JSR INCYC              \ Move the text cursor down one line
+
+ELIF _MASTER_VERSION
+
+ LDA #&0C               \ ???
+ JSR TT26
 
 ENDIF
 

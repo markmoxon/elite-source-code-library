@@ -31,7 +31,7 @@ IF _CASSETTE_VERSION \ Label
  BCC MA34               \ return from the subroutine with C clear, otherwise
                         \ C will be set so move on to the next one
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
  CMP INWK+1             \ If A < x_hi, C will be clear so jump to FA1 to
  BCC FA1                \ return from the subroutine with C clear, otherwise
@@ -49,7 +49,7 @@ IF _CASSETTE_VERSION \ Label
 
 .MA34
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
 .FA1
 

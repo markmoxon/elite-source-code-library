@@ -47,7 +47,7 @@ ENDIF
 
 .EE20
 
-IF _6502SP_VERSION \ Platform
+IF _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
  LDX LASCT              \ Set X to the value of LASCT, the laser pulse count
 
@@ -103,7 +103,7 @@ IF _CASSETTE_VERSION \ Minor
  JSR DELAY-5            \ Delay for 8 vertical syncs (8/50 = 0.16 seconds), to
                         \ slow the main loop down a bit
 
-ELIF _DISC_FLIGHT OR _6502SP_VERSION
+ELIF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
 
  LDA QQ11               \ If this is a space view, skip the following five
  BEQ P%+13              \ instructions (i.e. jump to JSR TT17 below)

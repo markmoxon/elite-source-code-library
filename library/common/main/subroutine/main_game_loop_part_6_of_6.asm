@@ -44,6 +44,14 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Platform
                         \ to restart the main loop, but skipping all the flight
                         \ and spawning code in the top part of the main loop
 
+ELIF _MASTER_VERSION
+
+ LDA QQ12               \ Fetch the docked flag from QQ12 into A
+
+ BEQ P%+5               \ ???
+
+ JMP MLOOP
+
 ENDIF
 
  JMP TT100              \ Otherwise jump to TT100 to restart the main loop from

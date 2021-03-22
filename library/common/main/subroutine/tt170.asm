@@ -8,7 +8,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Comment
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Comment
 \ This is the main entry point for the main game code.
 ELIF _6502SP_VERSION
 \ This is the main entry point for the main game code. It is called after the
@@ -34,7 +34,7 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED \ Platform
 
                         \ Fall through into BR1 to start the game
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  JSR RESET              \ Call RESET to initialise most of the game variables
 

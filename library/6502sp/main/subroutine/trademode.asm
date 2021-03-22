@@ -56,7 +56,7 @@ ENDIF
 
  JSR FLKB               \ Call FLKB to flush the keyboard buffer
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Minor
 
  LDA #48                \ Send a #SETVDU19 48 command to the I/O processor to
  JSR DOVDU19            \ switch to the mode 1 palette for trading screens,
@@ -72,7 +72,7 @@ ELIF _MASTER_VERSION
 .TRADE
 
  LDA #48                \ Switch to the mode 1 palette for trading screens,
- JSR SETVDU19           \ which is yellow (colour 1), magenta (colour 2) and
+ JSR DOVDU19            \ which is yellow (colour 1), magenta (colour 2) and
                         \ white (colour 3)
 
  LDA #CYAN              \ Switch to colour 3, which is white in the trade view

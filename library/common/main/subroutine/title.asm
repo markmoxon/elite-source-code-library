@@ -16,7 +16,7 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED \ Comment
 \   A                   The number of the recursive token to show below the
 \                       rotating ship (see variable QQ18 for details of
 \                       recursive tokens)
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 \   A                   The number of the extended token to show below the
 \                       rotating ship (see variable TKN1 for details of
 \                       recursive tokens)
@@ -28,6 +28,12 @@ ENDIF
 \ ******************************************************************************
 
 .TITLE
+
+IF _MASTER_VERSION
+
+ STY L1229              \ ???
+
+ENDIF
 
  PHA                    \ Store the token number on the stack for later
 
@@ -41,23 +47,47 @@ IF _6502SP_VERSION \ Tube
  JSR ZEKTRAN            \ Reset the key logger buffer that gets returned from
                         \ the I/O processor
 
+ELIF _MASTER_VERSION
+
+ JSR U%                 \ ???
+ JSR ZINF
+
 ENDIF
 
-IF _6502SP_VERSION \ Screen
+IF _6502SP_VERSION \ Comment
 
  LDA #32                \ Send a #SETVDU19 32 command to the I/O processor to
  JSR DOVDU19            \ set the mode 1 palette to yellow (colour 1), white
                         \ (colour 2) and cyan (colour 3)
 
+ELIF _MASTER_VERSION
+
+ LDA #32                \ Set the mode 1 palette to yellow (colour 1), white
+ JSR DOVDU19            \ (colour 2) and cyan (colour 3)
+
 ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
  LDA #1                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 1
+
+ELIF _MASTER_VERSION
+
+ LDA #&0D
+ JSR TT66
+
+ENDIF
 
 IF _6502SP_VERSION \ Screen
 
  LDA #RED               \ Send a #SETCOL RED command to the I/O processor to
  JSR DOCOL              \ switch to colour 2, which is white in the title screen
+
+ELIF _MASTER_VERSION
+
+ LDA #RED               \ Switch to colour 2, which is white in the title screen
+ STA COL
 
 ENDIF
 
@@ -70,6 +100,11 @@ ELIF _6502SP_VERSION
 
  STZ QQ11               \ Set QQ11 to 0, so from here on we are using a space
                         \ view
+
+ELIF _MASTER_VERSION
+
+ LDA #&00
+ STA QQ11
 
 ENDIF
 
@@ -90,6 +125,12 @@ IF _DISC_DOCKED \ Other: The disc version contains various bits of copy protecti
  STA modify+3
 
 .tiwe
+
+ENDIF
+
+IF _MASTER_VERSION
+
+ LDA #&60               \ ???
 
 ENDIF
 
@@ -122,6 +163,11 @@ ELIF _6502SP_VERSION
  LDA #6                 \ Move the text cursor to column 6
  JSR DOXC
 
+ELIF _MASTER_VERSION
+
+ LDA #6                 \ Move the text cursor to column 6
+ STA XC
+
 ENDIF
 
 IF _CASSETTE_VERSION \ Platform
@@ -148,6 +194,14 @@ ELIF _6502SP_VERSION
  LDA #6                 \ Move the text cursor to column 6 again
  JSR DOXC
 
+ELIF _MASTER_VERSION
+
+ LDA #10                \ Print a line feed to move the text cursor down a line
+ JSR TT26
+
+ LDA #6                 \ Move the text cursor to column 6 again
+ STA XC
+
 ENDIF
 
  LDA PATG               \ If PATG = 0, skip the following two lines, which
@@ -159,7 +213,7 @@ IF _CASSETTE_VERSION \ Minor
  LDA #254               \ Print recursive token 94 ("BY D.BRABEN & I.BELL")
  JSR TT27
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
 
  LDA #13                \ Print extended token 13 ("BY D.BRABEN & I.BELL")
  JSR DETOK
@@ -167,6 +221,14 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED
 ENDIF
 
 .awe
+
+IF _MASTER_VERSION
+
+ LDY #&00               \ ???
+ STY DELTA
+ STY JSTK
+
+ENDIF
 
 IF _6502SP_VERSION OR _DISC_DOCKED \ Platform
 
@@ -192,6 +254,13 @@ ELIF _6502SP_VERSION
 
  LDA #10                \ Move the text cursor to row 10
  JSR DOYC
+
+ELIF _MASTER_VERSION
+
+ LDA #&14               \ ???
+ STA YC
+ LDA #1
+ STA XC
 
 ENDIF
 
@@ -222,6 +291,8 @@ IF _6502SP_VERSION OR _DISC_DOCKED \ Platform
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+
  JSR CLYNS              \ Clear the bottom three text rows of the upper screen,
                         \ and move the text cursor to column 1 on row 21, i.e.
                         \ the start of the top row of the three bottom rows.
@@ -230,6 +301,8 @@ ENDIF
  STY DELTA              \ Set DELTA = 0 (i.e. ship speed = 0)
 
  STY JSTK               \ Set JSTK = 0 (i.e. keyboard, not joystick)
+
+ENDIF
 
 IF _CASSETTE_VERSION \ Minor
 
@@ -278,15 +351,32 @@ ELIF _6502SP_VERSION
  LDA #12                \ Print extended token 12 ("({single cap}C) ACORNSOFT
  JSR DETOK              \ 1984")
 
+ELIF _MASTER_VERSION
+
+ PLA
+ JSR DETOK
+
+ LDA #7
+ STA XC
+
+ LDA #&0C
+ JSR DETOK
+
 ENDIF
 
-IF _6502SP_VERSION \ Advanced: Group A: The 6502SP version adds two loop counters to the title screen so we can start the demo after a certain period on the title screen
+IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: Group A: The 6502SP version adds two loop counters to the title screen so we can start the demo after a certain period on the title screen
 
  LDA #12                \ Set CNT2 = 12 as the outer loop counter for the loop
  STA CNT2               \ starting at TLL2
 
  LDA #5                 \ Set the main loop counter in MCNT to 5, to act as the
  STA MCNT               \ inner loop counter for the loop starting at TLL2
+
+ENDIF
+
+IF _MASTER_VERSION
+
+ STZ JSTK               \ ???
 
 ENDIF
 
@@ -313,6 +403,11 @@ ELIF _6502SP_VERSION
 
  LDX #128               \ Set z_lo = 128 (so the closest the ship gets to us is
  STX INWK+6             \ z_hi = 1, z_lo = 128, or 256 + 128 = 384
+
+ELIF _MASTER_VERSION
+
+ LDX L1229              \ ???
+ STX INWK+6
 
 ENDIF
 
@@ -345,17 +440,23 @@ ELIF _6502SP_VERSION
 
  STZ INWK+3             \ Set y_lo = 0, so the ship remains in the screen centre
 
+ELIF _MASTER_VERSION
+
+ LDA #0
+ STA INWK
+ STA INWK+3
+
 ENDIF
 
  JSR LL9                \ Call LL9 to display the ship
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Platform
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Platform
 
  DEC MCNT               \ Decrement the main loop counter
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Tube
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Tube
 
  LDA VIA+&40            \ Read 6522 System VIA input register IRB (SHEILA &40)
 
@@ -390,7 +491,7 @@ ENDIF
 
  BEQ TL2                \ If the joystick fire button is pressed, jump to TL2
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Tube
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Tube
 
  JSR RDKEY              \ Scan the keyboard for a key press
 

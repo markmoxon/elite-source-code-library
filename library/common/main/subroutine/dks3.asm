@@ -39,10 +39,22 @@
 
 .DKS3
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  STY T                  \ Store the configuration key argument in T
 
  CPX T                  \ If X <> Y, jump to Dk3 to return from the subroutine
  BNE Dk3
+
+ELIF _MASTER_VERSION
+
+ TXA                    \ ???
+ CMP L2C62,Y
+ BNE Dk3
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
                         \ We have a match between X and Y, so now to toggle
                         \ the relevant configuration byte. CAPS LOCK has a key
@@ -62,12 +74,42 @@
  EOR #&FF               \ put it back (0 means no and &FF means yes in the
  STA DAMP-&40,X         \ configuration bytes, so this toggles the setting)
 
+ELIF _MASTER_VERSION
+
+ LDA DAMP,Y             \ ???
+ EOR #&FF
+ STA DAMP,Y
+ BPL L6C83
+
+ JSR BELL
+
+.L6C83
+
+ENDIF
+
  JSR BELL               \ Make a beep sound so we know something has happened
+
+IF _MASTER_VERSION
+
+ TYA                    \ ???
+ PHA
+ LDY #&14
+
+ENDIF
 
  JSR DELAY              \ Wait for Y vertical syncs (Y is between 64 and 70, so
                         \ this is always a bit longer than a second)
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  LDY T                  \ Restore the configuration key argument into Y
+
+ELIF _MASTER_VERSION
+
+ PLA                    \ ???
+ TAY
+
+ENDIF
 
 .Dk3
 

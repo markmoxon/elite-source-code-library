@@ -9,7 +9,7 @@
 \
 \ The filename should be stored at INWK, terminated with a carriage return (13).
 \
-IF _6502SP_VERSION \ Comment
+IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ Other entry points:
 \
 \   LOR                 Set the C flag and return from the subroutine
@@ -46,7 +46,13 @@ ELIF _6502SP_VERSION OR _DISC_VERSION
 
  JSR ZEBC               \ Call ZEBC to zero-fill pages &B and &C
 
+ELIF _MASTER_VERSION
+
+ JSR L6B53              \ ???
+
 ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
  LDY #&B                \ Set up an OSFILE block at &0C00, containing:
  STY &0C03              \
@@ -54,14 +60,20 @@ ENDIF
                         \
                         \ Length of file = &00000100 in &0C0A to &0C0D
 
+ENDIF
+
 IF _CASSETTE_VERSION \ Platform
 
  INY                    \ Increment Y to &C, which we use next
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  LDA #&FF               \ Call QUS1 with A = &FF, Y = &C to load the commander
  JSR QUS1               \ file at address &0B00
+
+ENDIF
 
 IF _CASSETTE_VERSION \ Platform
 
@@ -88,19 +100,43 @@ ELIF _6502SP_VERSION OR _DISC_VERSION
                         \ interrupt to call the address in BRKV, which will
                         \ print out the system error at ELT2F
 
+ELIF _MASTER_VERSION
+
+ LDA L0791              \ ???
+ BMI ELT2F
+
 ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
  LDX #NT%               \ We have successfully loaded the commander file at
                         \ &0B00, so now we want to copy it to the last saved
                         \ commander data block at NA%+8, so we set up a counter
                         \ in X to copy NT% bytes
 
+ELIF _MASTER_VERSION
+
+ LDY #NT%+1             \ ???
+
+ENDIF
+
 .LOL1
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
  LDA &B00,X             \ Copy the X-th byte of &0B00 to the X-th byte of NA%+8
  STA NA%+8,X
 
  DEX                    \ Decrement the loop counter
+
+ELIF _MASTER_VERSION
+
+ LDA L0791,Y            \ Copy the Y-th byte of ??? to the Y-th byte of NA%+8
+ STA NA%+8,Y
+
+ DEY                    \ Decrement the loop counter
+
+ENDIF
 
  BPL LOL1               \ Loop back until we have copied all NT% bytes
 
@@ -124,6 +160,27 @@ ELIF _6502SP_VERSION OR _DISC_VERSION
  EQUS "IIllegal "       \ invalid commander file with bit 7 of byte #0 set
  EQUS "ELITE II file"   \ (the spelling mistake is in the original source)
  BRK
+
+ELIF _MASTER_VERSION
+
+.LOR
+
+ SEC                    \ Set the C flag
+
+ RTS                    \ Return from the subroutine
+
+.ELT2F
+
+ LDA #9                 \ ???
+ JSR DETOK
+
+ JSR t
+
+ JMP SVE
+
+ RTS
+
+ RTS
 
 ENDIF
 

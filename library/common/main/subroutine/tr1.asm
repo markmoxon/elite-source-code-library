@@ -20,7 +20,7 @@ IF _CASSETTE_VERSION \ Platform
  LDA NA%,X              \ Copy the X-th byte of NA% to the X-th byte of INWK
  STA INWK,X
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
  LDA NA%,X              \ Copy the X-th byte of NA% to the X-th byte of INWK+5
  STA INWK+5,X

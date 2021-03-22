@@ -2,7 +2,7 @@
 \
 IF _CASSETTE_VERSION \ Comment
 \       Name: GTNME
-ELIF _6502SP_VERSION OR _DISC_DOCKED
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
 \       Name: GTNMEW
 ENDIF
 \       Type: Subroutine
@@ -22,7 +22,7 @@ ENDIF
 IF _CASSETTE_VERSION \ Comment
 \   INWK                The commander name entered, terminated by a return
 \                       character (13)
-ELIF _6502SP_VERSION OR _DISC_DOCKED
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
 \   INWK                The full filename, including drive and directory, in
 \                       the form ":0.E.JAMESON", for example, terminated by a
 \                       return character (13)
@@ -30,7 +30,7 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Label
+IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Label
 
 .GTNMEW
 
@@ -84,7 +84,7 @@ IF _CASSETTE_VERSION \ Platform
                         \ the last saved commander's name from NA% to INWK
                         \ and return from the subroutine there
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
 
  LDX #4                 \ First we want to copy the drive and directory part of
                         \ the commander file from S1% (which equals NA%-5), so
@@ -133,6 +133,12 @@ IF _CASSETTE_VERSION \ Platform
                         \ and return from the subroutine using a tail call
 
 ELIF _6502SP_VERSION OR _DISC_DOCKED
+
+ RTS                    \ Return from the subroutine
+
+ELIF _MASTER_VERSION
+
+ STY L6A8A              \ ???
 
  RTS                    \ Return from the subroutine
 

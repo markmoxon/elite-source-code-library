@@ -5,7 +5,7 @@
 \   Category: Save and load
 IF _CASSETTE_VERSION OR _DISC_DOCKED \ Comment
 \    Summary: Save the commander file
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 \    Summary: Display the disc access menu and process saving of commander files
 ENDIF
 \  Deep dive: Commander save files
@@ -29,6 +29,12 @@ IF _6502SP_VERSION OR _DISC_DOCKED \ Platform
 
  TSX                    \ Transfer the stack pointer to X and store it in stack,
  STX stack              \ so we can restore it in the MRBRK routine
+
+ELIF _MASTER_VERSION
+
+ TSX                    \ ???
+ STX brkd
+ JSR TRADE
 
 ENDIF
 
@@ -96,9 +102,82 @@ IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: Group A: The enhanced versions sh
                         \ jumps to CAT if option 2 was not chosen - in other
                         \ words, if option 3 (catalogue) was chosen
 
+ELIF _MASTER_VERSION
+
+ LDA #1                 \ ???
+ JSR DETOK
+
+ JSR t
+
+ CMP #&31
+ BEQ MASTER_LOAD
+
+ CMP #&32
+ BEQ SV1
+
+ CMP #&33
+ BEQ CAT
+
+ CMP #&34
+ BNE L69FB
+
+ JSR DELT
+
+ JMP SVE
+
+.L69FB
+
+ CMP #&35
+ BNE L6A0F
+
+ LDA #&E0
+ JSR DETOK
+
+ JSR L6174
+
+ BCC L6A0F
+
+ JSR L68BB
+
+ JMP DFAULT
+
+.L6A0F
+
+ CLC
+ RTS
+
+.CAT
+
+ JSR CATS
+
+ JSR t
+
+ JMP SVE
+
+.MASTER_LOAD
+
+ JSR GTNMEW
+
+ JSR GTDRV
+
+ BCS L6A2C
+
+ STA LDLI+6
+ JSR LOD
+
+ JSR TRNME
+
+ SEC
+
+.L6A2C
+
+ RTS
+
+.SV1
+
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: See group A
+IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Enhanced: See group A
 
  JSR GTNMEW             \ If we get here then option 2 (save) was chosen, so
                         \ call GTNMEW to fetch the name of the commander file
@@ -125,12 +204,19 @@ ENDIF
 
  LSR SVC                \ Halve the save count value in SVC
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: In the disc and 6502SP versions, the competition number is labelled as such when saving (in the cassette version, it is just displayed as a standalone number, without any clues as to what it is) 
+IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: In the disc and 6502SP versions, the competition number is labelled as such when saving. In the cassette version, it is just displayed as a standalone number, without any clues as to what it is, while the Master doesn't show the number at all
 
  LDA #3                 \ Print extended token 3 ("COMPETITION NUMBER:")
  JSR DETOK
 
+ELIF _MASTER_VERSION
+
+ LDA #4                 \ Print extended token 4, which is blank
+ JSR DETOK
+
 ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION
 
  LDX #NT%               \ We now want to copy the current commander data block
                         \ from location TP to the last saved commander block at
@@ -141,11 +227,26 @@ ENDIF
                         \ location &0B00, which is normally used for the ship
                         \ lines heap
 
+ELIF _MASTER_VERSION
+
+ LDX #NT%+1             \ ???
+
+ENDIF
+
 .SVL1
+
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION
 
  LDA TP,X               \ Copy the X-th byte of TP to the X-th byte of &B00
  STA &B00,X             \ and NA%+8
  STA NA%+8,X
+
+ELIF _MASTER_VERSION
+
+ LDA TP,X               \ Copy the X-th byte of TP to the X-th byte of &B00
+ STA NA%+8,X            \ and NA%+8
+
+ENDIF
 
  DEX                    \ Decrement the loop counter
 
@@ -172,12 +273,14 @@ ENDIF
  EOR TALLY+1            \ the kill tally)
  STA K+3
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Other: This is a bug fix in the enhanced versions to stop the competition code being printed with a decimal point, which can sometimes happen in the cassette version
+IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Other: This is a bug fix in the enhanced versions to stop the competition code being printed with a decimal point, which can sometimes happen in the cassette version
 
  CLC                    \ Clear the C flag so the call to BPRNT does not include
                         \ a decimal point
 
 ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Advanced: The Master version doesn't show the competition number when saving, as the competition closed some time before the Master came on the scene
 
  JSR BPRNT              \ Print the competition number stored in K to K+3. The
                         \ value of U might affect how this is printed, and as
@@ -186,7 +289,9 @@ ENDIF
                         \ competition code is a 10-digit number, this just means
                         \ it may or may not have an extra space of padding
 
-IF _CASSETTE_VERSION \ Platform
+ENDIF
+
+IF _CASSETTE_VERSION OR _MASTER_VERSION \ Platform
 
  JSR TT67               \ Call TT67 twice to print two newlines
  JSR TT67
@@ -199,12 +304,18 @@ ENDIF
 
  PLA                    \ Restore the checksum from the stack
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  STA &B00+NT%           \ Store the checksum in the last byte of the save file
                         \ at &0B00 (the equivalent of CHK in the last saved
                         \ block)
 
+ENDIF
+
  EOR #&A9               \ Store the checksum EOR &A9 in CHK2, the penultimate
  STA CHK2               \ byte of the last saved commander block
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  STA &AFF+NT%           \ Store the checksum EOR &A9 in the penultimate byte of
                         \ the save file at &0B00 (the equivalent of CHK2 in the
@@ -218,6 +329,8 @@ ENDIF
                         \
                         \ Y is left containing &C which we use below
 
+ENDIF
+
 IF _CASSETTE_VERSION \ Platform
 
  LDA #%10000001         \ Clear 6522 System VIA interrupt enable register IER
@@ -228,9 +341,37 @@ IF _CASSETTE_VERSION \ Platform
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+
  LDA #0                 \ Call QUS1 with A = 0, Y = &C to save the commander
  JSR QUS1               \ file with the filename we copied to INWK at the start
                         \ of this routine
+
+ELIF _MASTER_VERSION
+
+ LDY #&4C               \ ???
+
+.L6A71
+
+ LDA NA%+8,Y
+ STA L0791,Y
+ DEY
+ BPL L6A71
+
+ JSR GTDRV
+
+ BCS L6A85
+
+ STA SVLI+6
+ JSR L6B16
+
+.L6A85
+
+ JSR DFAULT
+ CLC
+ RTS
+
+ENDIF
 
 IF _CASSETTE_VERSION \ Platform
 

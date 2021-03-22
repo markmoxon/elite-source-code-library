@@ -26,7 +26,7 @@ ENDIF
 
 .HALL
 
-IF _6502SP_VERSION \ Screen
+IF _6502SP_VERSION \ Comment
 
  LDA #0                 \ Send a #SETVDU19 0 command to the I/O processor to
  JSR DOVDU19            \ switch to the mode 1 palette for the space view,
@@ -36,7 +36,7 @@ IF _6502SP_VERSION \ Screen
 ELIF _MASTER_VERSION
 
  LDA #0                 \ Switch to the mode 1 palette for the space view,
- JSR SETVDU19           \ which is yellow (colour 1), red (colour 2) and cyan
+ JSR DOVDU19            \ which is yellow (colour 1), red (colour 2) and cyan
                         \ (colour 3)
 
 ENDIF

@@ -39,7 +39,7 @@ IF _CASSETTE_VERSION \ Platform
                         \ number escape pods will cause a carry, so presumably
                         \ it got removed at some point
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
  LDX JUNK               \ Set X to the total number of junk items in the
                         \ vicinity (e.g. asteroids, escape pods, cargo
@@ -90,7 +90,7 @@ ENDIF
                         \ memory (as LSR A is a one-byte opcode, while CMP #2
                         \ takes up two bytes)
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
 
  CMP #2                 \ If A < 2 then jump to WA1 to abort the in-system jump
  BCC WA1                \ with a low beep, as we are facing the planet and are
@@ -133,7 +133,7 @@ ENDIF
                         \ memory (as LSR A is a one-byte opcode, while CMP #2
                         \ takes up two bytes)
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
 
  CMP #2                 \ If A < 2 then jump to WA1 to abort the in-system jump
  BCC WA1                \ with a low beep, as we are facing the sun and are too
@@ -233,6 +233,12 @@ ELIF _6502SP_VERSION OR _DISC_VERSION
  BNE NOISE              \ call the NOISE routine with A = 40 to make a long, low
                         \ beep and return from the subroutine using a tail call
                         \ (the BNE is effectively a JMP as A is never zero)
+
+ELIF _MASTER_VERSION
+
+ JMP BEEP_LONG_LOW      \ ???
+
+ RTS
 
 ENDIF
 

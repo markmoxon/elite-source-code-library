@@ -22,7 +22,7 @@ IF _CASSETTE_VERSION \ Enhanced: The enhanced versions allow the "{" character i
  EQUB 'z'               \ the name
 
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
  EQUW INWK+5            \ The address to store the input, so the text entered
                         \ will be stored in INWK+5 as it is typed

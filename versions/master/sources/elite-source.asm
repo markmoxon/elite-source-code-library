@@ -398,6 +398,8 @@ RUPLA   = &AF48
 RUGAL   = &AF62
 RUTOK   = &AF7C
 
+NT% = SVC + 2 - TP
+
 \ ******************************************************************************
 \
 \ ELITE A FILE
@@ -1987,207 +1989,15 @@ INCLUDE "library/enhanced/main/subroutine/begin.asm"
 INCLUDE "library/common/main/subroutine/tt170.asm"
 INCLUDE "library/common/main/subroutine/death2.asm"
 INCLUDE "library/common/main/subroutine/br1_part_1_of_2.asm"
-
-
- JSR msblob
-
- LDA #&07
- LDX #&20
- LDY #&64
- JSR TITLE
-
- JSR ping
-
- JSR TT111
-
- JSR jmp
-
- LDX #&05
-
-.likeTT112
-
- LDA QQ15,X
- STA QQ2,X
- DEX
- BPL likeTT112
-
- INX
- STX EV
- LDA QQ3
- STA QQ28
- LDA QQ5
- STA tek
- LDA QQ4
- STA gov
-
-.BAY
-
- LDA #&FF
- STA QQ12
- LDA #&88
- JMP FRCE
-
-.DFAULT
-
- LDX #&54
-
-.QUL1
-
- LDA NA%-1,X
- STA NAME-1,X
- DEX
- BNE QUL1
-
- STX QQ11
-
-.L67EC
-
- JSR CHECK
-
- CMP CHK
- BNE L67EC
-
- EOR #&A9
- TAX
- LDA COK
- CPX CHK2
- BEQ tZ
-
- ORA #&80
-
-.tZ
-
- ORA #&08
- STA COK
- RTS
-
-.TITLE
-
- STY L1229
- PHA
- STX TYPE
- JSR RESET
-
- JSR U%
-
- JSR ZINF
-
- LDA #&20
- JSR SETVDU19
-
- LDA #&0D
- JSR TT66
-
- LDA #&F0
- STA COL
- LDA #&00
- STA QQ11
- LDA #&60
- STA INWK+14
- LDA #&60
- STA INWK+7
- LDX #&7F
- STX INWK+29
- STX INWK+30
- INX
- STX QQ17
- LDA TYPE
- JSR NWSHP
-
- LDA #&06
- STA XC
- LDA #&1E
- JSR plf
-
- LDA #&0A
- JSR DASC
-
- LDA #&06
- STA XC
- LDA PATG
- BEQ awe
-
- LDA #&0D
- JSR DETOK
-
-.awe
-
- LDY #&00
- STY DELTA
- STY JSTK
- LDA #&14
- STA YC
- LDA #&01
- STA XC
- PLA
- JSR DETOK
-
- LDA #&07
- STA XC
- LDA #&0C
- JSR DETOK
-
- LDA #&0C
- STA CNT2
- LDA #&05
- STA MCNT
- STZ JSTK
-
-.TLL2
-
- LDA INWK+7
- CMP #&01
- BEQ TL1
-
- DEC INWK+7
-
-.TL1
-
- JSR MVEIT
-
- LDX L1229
- STX INWK+6
- LDA #&00
- STA INWK
- STA INWK+3
- JSR LL9
-
- DEC MCNT
- LDA VIA+&40
- AND #&10
- BEQ TL2
-
- JSR RDKEY
-
- BEQ TLL2
-
- RTS
-
-.TL2
-
- DEC JSTK
- RTS
-
-.CHECK
-
- LDX #&49
- CLC
- TXA
-
-.QUL2
-
- ADC NA%+7,X            \ Add the X-1-th byte of the data block to A, plus the
-                        \ C flag
-
- EOR NA%+8,X            \ EOR A with the X-th byte of the data block
- DEX
- BNE QUL2
-
- RTS
+INCLUDE "library/common/main/subroutine/br1_part_2_of_2.asm"
+INCLUDE "library/common/main/subroutine/bay.asm"
+INCLUDE "library/common/main/subroutine/dfault-qu5.asm"
+INCLUDE "library/common/main/subroutine/title.asm"
+INCLUDE "library/common/main/subroutine/check.asm"
 
 .L68BB
 
- LDY #&60
+ LDY #&60               \ Restore default commander
 
 .L68BD
 
@@ -2200,148 +2010,11 @@ INCLUDE "library/common/main/subroutine/br1_part_1_of_2.asm"
  STY L6A8B
  RTS
 
-.TRNME
-
- LDX #&07
- LDA L6A8A
- STA L6A8B
-
-.GTL1
-
- LDA INWK+5,X
- STA NA%,X
- DEX
- BPL GTL1
-
-.TR1
-
- LDX #&07
-
-.GTL2
-
- LDA NA%,X
- STA INWK+5,X
- DEX
- BPL GTL2
-
- RTS
-
-.GTNMEW
-
- LDX #&04
-
-.GTL3
-
- LDA S1%,X
- STA INWK,X
- DEX
- BPL GTL3
-
- LDA #&07
- STA L695D
- LDA #&08
- JSR DETOK
-
- JSR MT26
-
- LDA #&09
- STA L695D
- TYA
- BEQ TR1
-
- STY L6A8A
- RTS
-
-.MT26
-
- LDA COL
- PHA
- LDA #&F0
- STA COL
- LDY #&08
- JSR DELAY
-
- JSR FLKB
-
- LDY #&00
-
-.L691B
-
- JSR TT217
-
- CMP #&0D
- BEQ L6945
-
- CMP #&1B
- BEQ L694E
-
- CMP #&7F
- BEQ L6953
-
- CPY L695D
- BCS L693E
-
- CMP L695E
- BCC L693E
-
- CMP L695F
- BCS L693E
-
- STA INWK+5,Y
- INY
- EQUB &2C
-
-.L693E
-
- LDA #&07
-
-.L6940
-
- JSR CHPR
-
- BCC L691B
-
-.L6945
-
- STA INWK+5,Y
- LDA #&0C
- JSR CHPR
-
- EQUB &24
-
-.L694E
-
- SEC
- PLA
- STA COL
- RTS
-
-.L6953
-
- TYA
- BEQ L693E
-
- DEY
- LDA #&7F
- BNE L6940
-
-.L695B
-
- EQUB &A1
-
- EQUB &00
-
-.L695D
-
- EQUB &09
-
-.L695E
-
- EQUB &21
-
-.L695F
-
- EQUB &7B
+INCLUDE "library/common/main/subroutine/trnme.asm"
+INCLUDE "library/common/main/subroutine/tr1.asm"
+INCLUDE "library/common/main/subroutine/gtnme-gtnmew.asm"
+INCLUDE "library/enhanced/main/subroutine/mt26.asm"
+INCLUDE "library/common/main/variable/rline.asm"
 
 .L6960                    \ See JMTB
 
@@ -2351,224 +2024,16 @@ INCLUDE "library/common/main/subroutine/br1_part_1_of_2.asm"
  JMP DETOK
 
 .L6969                    \ See JMTB
+
  LDA #&02
  SEC
  SBC L2C5E
  JMP DETOK
 
-.ZERO
-
- LDX #&3C
- LDA #&00
-
-.ZEL2
-
- STA FRIN,X
- DEX
- BPL ZEL2
-
- RTS
-
-.CATS
-
- JSR GTDRV
-
- BCS L69A5
-
- STA L6ACB
- STA DTW7
- LDA #&03
- JSR DETOK
-
- LDA #&01
- STA CATF
- STA XC
- JSR MASTER_SWAP_ZP_3000
-
- LDX #&C7
- LDY #&6A
- JSR OSCLI
-
- JSR MASTER_SWAP_ZP_3000
-
- STZ CATF
- CLC
-
-.L69A5
-
- RTS
-
-.DELT
-
- JSR CATS
-
- BCS SVE
-
- LDA L6ACB
- STA L6AD5
- LDA #&08
- JSR DETOK
-
- JSR MT26
-
- TYA
- BEQ SVE
-
- LDX #&09
-
-.DELL1
-
- LDA INWK+4,X
- STA L6AD6,X
- DEX
- BNE DELL1
-
- JSR MASTER_SWAP_ZP_3000
-
- LDX #&CD
- LDY #&6A
- JSR OSCLI
-
- JSR MASTER_SWAP_ZP_3000
-
- JMP SVE
-
-.SVE
-
- TSX
- STX brkd
- JSR TRADE
-
- LDA #&01
- JSR DETOK
-
- JSR t
-
- CMP #&31
- BEQ MASTER_LOAD
-
- CMP #&32
- BEQ SV1
-
- CMP #&33
- BEQ CAT
-
- CMP #&34
- BNE L69FB
-
- JSR DELT
-
- JMP SVE
-
-.L69FB
-
- CMP #&35
- BNE L6A0F
-
- LDA #&E0
- JSR DETOK
-
- JSR L6174
-
- BCC L6A0F
-
- JSR L68BB
-
- JMP DFAULT
-
-.L6A0F
-
- CLC
- RTS
-
-.CAT
-
- JSR CATS
-
- JSR t
-
- JMP SVE
-
-.MASTER_LOAD
-
- JSR GTNMEW
-
- JSR GTDRV
-
- BCS L6A2C
-
- STA L6B05
- JSR LOD
-
- JSR TRNME
-
- SEC
-
-.L6A2C
-
- RTS
-
-.SV1
-
- JSR GTNMEW
-
- JSR TRNME
-
- LSR SVC
- LDA #&04
- JSR DETOK
-
- LDX #&4C
-
-.SVL1
-
- LDA TP,X
- STA NA%+8,X
- DEX
- BPL SVL1
-
- JSR CHECK
-
- STA CHK
- PHA
- ORA #&80
- STA K
- EOR COK
- STA K+2
- EOR CASH+2
- STA K+1
- EOR #&5A
- EOR TALLY+1
- STA K+3
- CLC
- JSR TT67
-
- JSR TT67
-
- PLA
- EOR #&A9
- STA CHK2
- LDY #&4C
-
-.L6A71
-
- LDA NA%+8,Y
- STA L0791,Y
- DEY
- BPL L6A71
-
- JSR GTDRV
-
- BCS L6A85
-
- STA L6AE5
- JSR L6B16
-
-.L6A85
-
- EQUB &20
-
- EQUB &DF,&67,&18,&60
+INCLUDE "library/common/main/subroutine/zero.asm"
+INCLUDE "library/enhanced/main/subroutine/cats.asm"
+INCLUDE "library/enhanced/main/subroutine/delt.asm"
+INCLUDE "library/common/main/subroutine/sve.asm"
 
 .L6A8A
 
@@ -2578,106 +2043,19 @@ INCLUDE "library/common/main/subroutine/br1_part_1_of_2.asm"
 
  EQUB &07
 
-.GTDRV
+INCLUDE "library/enhanced/main/subroutine/gtdrv.asm"
+INCLUDE "library/common/main/subroutine/lod.asm"
+INCLUDE "library/enhanced/main/variable/ctli.asm"
+INCLUDE "library/enhanced/main/variable/deli.asm"
 
- LDA #&02
- JSR DETOK
+.SVLI
 
- JSR t
-
- ORA #&10
- JSR CHPR
-
- PHA
- JSR FEED
-
- PLA
- CMP #&30
- BCC LOR
-
- CMP #&34
- RTS
-
-.LOD
-
- JSR ZEBC
-
- LDA L0791
- BMI L6ABA
-
- LDY #&4C
-
-.LOL1
-
- LDA L0791,Y
- STA NA%+8,Y
- DEY
- BPL LOL1
-
-.LOR
-
- SEC
- RTS
-
-.L6ABA
-
- LDA #&09
- JSR DETOK
-
- JSR t
-
- JMP SVE
-
- RTS
-
- RTS
-
- EQUS "CAT"
-
- EQUS " "
-
-.L6ACB
-
- EQUS "1"
-
+ EQUS "SAVE :1.E.JAMESON  E7E +100 0 0"
  EQUB &0D
 
- EQUS "DELE"
+.LDLI
 
- EQUS "TE :"
-
-.L6AD5
-
- EQUS "1"
-
-.L6AD6
-
- EQUS ".1234567"
-
- EQUB &0D
-
- EQUS "SAVE :"
-
-.L6AE5
-
- EQUS "1.E."
-
-.L6AE9
-
- EQUS "JAMESON  E7E +100 0 0"
-
- EQUB &0D
-
- EQUS "LOAD :"
-
-.L6B05
-
- EQUS "1.E."
-
-.L6B09
-
- EQUS "JAMESON  E7E"
-
+ EQUS "LOAD :1.E.JAMESON  E7E"
  EQUB &0D
 
 .L6B16
@@ -2708,7 +2086,7 @@ INCLUDE "library/common/main/subroutine/br1_part_1_of_2.asm"
  CMP #&0D
  BEQ L6B3C
 
- STA L6AE9,Y
+ STA SVLI+10,Y
  INY
  CPY #&07
  BCC L6B2D
@@ -2716,7 +2094,7 @@ INCLUDE "library/common/main/subroutine/br1_part_1_of_2.asm"
 .L6B3C
 
  LDA #&20
- STA L6AE9,Y
+ STA SVLI+10,Y
  INY
  CPY #&07
  BCC L6B3C
@@ -2729,7 +2107,7 @@ INCLUDE "library/common/main/subroutine/br1_part_1_of_2.asm"
 
  JMP MASTER_SWAP_ZP_3000
 
-.ZEBC
+.L6B53
 
  LDY #&00
 
@@ -2739,7 +2117,7 @@ INCLUDE "library/common/main/subroutine/br1_part_1_of_2.asm"
  CMP #&0D
  BEQ L6B64
 
- STA L6B09,Y
+ STA LDLI+10,Y
  INY
  CPY #&07
  BCC L6B55
@@ -2747,7 +2125,7 @@ INCLUDE "library/common/main/subroutine/br1_part_1_of_2.asm"
 .L6B64
 
  LDA #&20
- STA L6B09,Y
+ STA LDLI+10,Y
  INY
  CPY #&07
  BCC L6B64
@@ -2773,330 +2151,12 @@ INCLUDE "library/common/main/subroutine/br1_part_1_of_2.asm"
 
  RTS
 
-.SPS1
-
- LDX #&00
- JSR SPS3
-
- LDX #&03
- JSR SPS3
-
- LDX #&06
- JSR SPS3
-
-.TAS2
-
- LDA K3
- ORA K3+3
- ORA K3+6
- ORA #&01
- STA K3+9
- LDA K3+1
- ORA K3+4
- ORA K3+7
-
-.TAL2
-
- ASL K3+9
- ROL A
- BCS TA2
-
- ASL K3
- ROL K3+1
- ASL K3+3
- ROL K3+4
- ASL K3+6
- ROL K3+7
- BCC TAL2
-
-.TA2
-
- LDA K3+1
- LSR A
- ORA K3+2
- STA XX15
- LDA K3+4
- LSR A
- ORA K3+5
- STA Y1
- LDA K3+7
- LSR A
- ORA K3+8
- STA X2
-
-.NORM
-
- LDA XX15
- JSR SQUA
-
- STA R
- LDA P
- STA Q
- LDA Y1
- JSR SQUA
-
- STA T
- LDA P
- ADC Q
- STA Q
- LDA T
- ADC R
- STA R
- LDA X2
- JSR SQUA
-
- STA T
- LDA P
- ADC Q
- STA Q
- LDA T
- ADC R
- STA R
- JSR LL5
-
- LDA XX15
- JSR TIS2
-
- STA XX15
- LDA Y1
- JSR TIS2
-
- STA Y1
- LDA X2
- JSR TIS2
-
- STA X2
- RTS
-
-.WARP
-
- LDX JUNK
- LDA FRIN+2,X
- ORA SSPR
- ORA MJ
- BNE WA1
-
- LDY L0408
- BMI WA3
-
- TAY
- JSR MAS2
-
- CMP #&02
- BCC WA1
-
-.WA3
-
- LDY L042D
- BMI WA2
-
- LDY #&25
- JSR m
-
- CMP #&02
- BCC WA1
-
-.WA2
-
- LDA #&81
- STA S
- STA R
- STA P
- LDA L0408
- JSR ADD
-
- STA L0408
- LDA L042D
- JSR ADD
-
- STA L042D
- LDA #&01
- STA QQ11
- STA MCNT
- LSR A
- STA EV
- LDX VIEW
- JMP LOOK1
-
-.WA1
-
- JMP BEEP_LONG_LOW
-
- RTS
-
-.DKS3
-
- TXA
- CMP L2C62,Y
- BNE Dk3
-
- LDA DAMP,Y
- EOR #&FF
- STA DAMP,Y
- BPL L6C83
-
- JSR BELL
-
-.L6C83
-
- JSR BELL
-
- TYA
- PHA
- LDY #&14
- JSR DELAY
-
- PLA
- TAY
-
-.Dk3
-
- RTS
-
-.DOKEY
-
- JSR L7ED7
-
- LDA auto
- BEQ L6CF2
-
- JSR ZINF
-
- LDA #&60
- STA INWK+14
- ORA #&80
- STA INWK+22
- STA TYPE
- LDA DELTA
- STA INWK+27
- JSR DOCKIT
-
- LDA INWK+27
- CMP #&16
- BCC L6CB4
-
- LDA #&16
-
-.L6CB4
-
- STA DELTA
- LDA #&FF
- LDX #&0F
- LDY INWK+28
- BEQ DK11
-
- BMI L6CC2
-
- LDX #&0B
-
-.L6CC2
-
- STA KL,X
-
-.DK11
-
- LDA #&80
- LDX #&0D
- ASL INWK+29
- BEQ DK12
-
- BCC L6CD0
-
- LDX #&0E
-
-.L6CD0
-
- BIT INWK+29
- BPL DK14
-
- LDA #&40
- STA JSTX
- LDA #&00
-
-.DK14
-
- STA KL,X
- LDA JSTX
-
-.DK12
-
- STA JSTX
- LDA #&80
- LDX #&06
- ASL INWK+30
- BEQ DK13
-
- BCS L6CEC
-
- LDX #&08
-
-.L6CEC
-
- STA KL,X
- LDA JSTY
-
-.DK13
-
- STA JSTY
-
-.L6CF2
-
- LDA JSTK
- BEQ DK15
-
- LDA L12A7
- EOR L2C5B
- ORA #&01
- STA JSTX
- LDA L12A8
- EOR #&FF
- EOR L2C5B
- EOR L2C5A
- STA JSTY
- LDA VIA+&40
- AND #&10
- BNE DK4
-
- LDA #&FF
- STA KY7
- BNE DK4
-
-.DK15
-
- LDX JSTX
- LDA #&07
- LDY L00D0
- BEQ L6D26
-
- JSR BUMP2
-
-.L6D26
-
- LDY L00D1
- BEQ L6D2D
-
- JSR REDU2
-
-.L6D2D
-
- STX JSTX
- ASL A
- LDX JSTY
- LDY L00C9
- BEQ L6D39
-
- JSR REDU2
-
-.L6D39
-
- LDY L00CB
- BEQ L6D40
-
- JSR BUMP2
-
-.L6D40
-
- STX JSTY
+INCLUDE "library/common/main/subroutine/sps1.asm"
+INCLUDE "library/common/main/subroutine/tas2.asm"
+INCLUDE "library/common/main/subroutine/norm.asm"
+INCLUDE "library/common/main/subroutine/warp.asm"
+INCLUDE "library/common/main/subroutine/dks3.asm"
+INCLUDE "library/common/main/subroutine/dokey.asm"
 
 .DK4
 
@@ -5999,7 +5059,7 @@ INCLUDE "library/common/main/subroutine/br1_part_1_of_2.asm"
 .LOOK1
 
  LDA #&00
- JSR SETVDU19
+ JSR DOVDU19
 
  LDY QQ11
  BNE LQ

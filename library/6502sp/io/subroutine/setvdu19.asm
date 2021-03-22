@@ -1,6 +1,10 @@
 \ ******************************************************************************
 \
+IF _6502SP_VERSION
 \       Name: SETVDU19
+ELIF _MASTER_VERSION
+\       Name: DOVDU19
+ENDIF
 \       Type: Subroutine
 \   Category: Screen mode
 IF _6502SP_VERSION
@@ -34,7 +38,15 @@ ENDIF
 \
 \ ******************************************************************************
 
+IF _6502SP_VERSION
+
 .SETVDU19
+
+ELIF _MASTER_VERSION
+
+.DOVDU19
+
+ENDIF
 
  STA VNT3+1             \ Store the new colour in VNT3+1, in the IRQ1 routine,
                         \ which modifies which TVT3 palette block gets applied

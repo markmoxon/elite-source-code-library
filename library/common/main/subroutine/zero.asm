@@ -5,7 +5,7 @@
 \   Category: Utility routines
 IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \    Summary: Zero-fill pages &9, &A, &B, &C and &D
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 \    Summary: Reset the local bubble of universe and ship status
 ENDIF
 \
@@ -21,7 +21,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \   * WP workspace variables from FRIN to de, which include the ship slots for
 \     the local bubble of universe, and various flight and ship status variables
 \     (only a portion of the LSX/LSO sun line heap is cleared)
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 \   * UP workspace variables from FRIN to de, which include the ship slots for
 \     the local bubble of universe, and various flight and ship status variables
 ENDIF
@@ -46,7 +46,7 @@ IF _CASSETTE_VERSION \ Platform
                         \ Then fall through into ZES1 with X set to 9, so we
                         \ clear page &9 too
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
  LDX #(de-FRIN)         \ We're going to zero the UP workspace variables from
                         \ FRIN to de, so set a counter in X for the correct

@@ -13,6 +13,13 @@
                         \ characters, and is terminated by a carriage return,
                         \ so set up a counter in X to copy 8 characters
 
+IF _MASTER_VERSION
+
+ LDA L6A8A              \ ???
+ STA L6A8B
+
+ENDIF
+
 .GTL1
 
 IF _CASSETTE_VERSION \ Platform
@@ -20,7 +27,7 @@ IF _CASSETTE_VERSION \ Platform
  LDA INWK,X             \ Copy the X-th byte of INWK to the X-th byte of NA%
  STA NA%,X
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
  LDA INWK+5,X           \ Copy the X-th byte of INWK+5 to the X-th byte of NA%
  STA NA%,X

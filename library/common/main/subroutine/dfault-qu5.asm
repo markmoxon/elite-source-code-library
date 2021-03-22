@@ -15,7 +15,7 @@ IF _CASSETTE_VERSION \ Label
 
 .QU5
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
 
 .DFAULT
 
@@ -66,6 +66,10 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED
                         \ a counter in X for the NT% + 8 bytes that we want to
                         \ copy
 
+ELIF _MASTER_VERSION
+
+ LDX #NT%+9             \ ???
+
 ENDIF
 
 .QUL1
@@ -75,7 +79,7 @@ IF _CASSETTE_VERSION \ Platform
  LDA NA%+7,X            \ Copy the X-th byte of NA%+7 to the X-th byte of TP-1,
  STA TP-1,X             \ (the -1 is because X is counting down from NT% to 1)
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
 
 
  LDA NA%-1,X            \ Copy the X-th byte of NA%-1 to the X-th byte of
@@ -143,7 +147,7 @@ ENDIF
 
 .tZ
 
-IF _CASSETTE_VERSION \ Standard: When you save a commander file, the version details get saved along with the competition flags. The flags get set as follows: the cassette version sets bit 1, the disc version sets bit 2 or 5 depending on the release, and the 6502SP version sets bit 2
+IF _CASSETTE_VERSION \ Standard: When you save a commander file, the version details get saved along with the competition flags. The flags get set as follows: the cassette version sets bit 1, the disc version sets bit 2 or 5 depending on the release, the 6502SP version sets bit 2, and the Master version sets bit 3
 
  ORA #%00000010         \ Set bit 1 of A to denote that this is the cassette
                         \ version
@@ -171,11 +175,16 @@ ELIF _6502SP_VERSION
                         \ original disc version, before the refund bug was
                         \ fixed)
 
+ELIF _MASTER_VERSION
+
+ ORA #%00001000         \ Set bit 3 of A to denote that this is the Master
+                        \ version
+
 ENDIF
 
  STA COK                \ Store the updated competition flags in COK
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Minor
+IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Minor
 
  RTS                    \ Return from the subroutine
 

@@ -42,10 +42,26 @@ ELIF _6502SP_VERSION
                         \ the drive number in the "DELETE:0.E.1234567" string
                         \ gets updated (i.e. the number after the colon)
 
+ELIF _MASTER_VERSION
+
+ LDA CTLI+4             \ The call to CATS above put the drive number into
+ STA DELI+8             \ CTLI+4, so copy the drive number into DELI+8 so that
+                        \ the drive number in the "DELETE :1.1234567" string
+                        \ gets updated (i.e. the number after the colon)
+
 ENDIF
+
+IF _DISC_DOCKED OR _6502SP_VERSION
 
  LDA #9                 \ Print extended token 9 ("{clear bottom of screen}FILE
  JSR DETOK              \ TO DELETE?")
+
+ELIF _MASTER_VERSION
+
+ LDA #8                 \ Print extended token 8 ("{single cap}COMMANDER'S
+ JSR DETOK              \ NAME? ")
+
+ENDIF
 
  JSR MT26               \ Call MT26 to fetch a line of text from the keyboard
                         \ to INWK+5, with the text length in Y
@@ -63,6 +79,8 @@ IF _DISC_DOCKED \ Comment
                         \ DELI+5+1 (i.e. DELI+6 onwards, or "E.1234567")
 ELIF _6502SP_VERSION
                         \ DELI+8+1 (i.e. DELI+9 onwards, or "E.1234567")
+ELIF _MASTER_VERSION
+                        \ DELI+9+1 (i.e. DELI+10 onwards, or "1.1234567")
 ENDIF
 
 .DELL1
@@ -77,6 +95,11 @@ ELIF _6502SP_VERSION
  LDA INWK+4,X           \ Copy the X-th byte of INWK+4 to the X-th byte of
  STA DELI+8,X           \ DELI+8
 
+ELIF _MASTER_VERSION
+
+ LDA INWK+4,X           \ Copy the X-th byte of INWK+4 to the X-th byte of
+ STA DELI+9,X           \ DELI+9
+
 ENDIF
 
  DEX                    \ Decrement the loop counter
@@ -84,11 +107,17 @@ ENDIF
  BNE DELL1              \ Loop back to DELL1 to copy the next character until we
                         \ have copied the whole filename
 
+IF _MASTER_VERSION
+
+ JSR MASTER_SWAP_ZP_3000 \ ???
+
+ENDIF
+
  LDX #LO(DELI)          \ Set (Y X) to point to the OS command at DELI, which
  LDY #HI(DELI)          \ contains the DFS command for deleting this file
 
 
-IF _DISC_DOCKED \ Platform
+IF _DISC_DOCKED OR _MASTER_VERSION \ Platform
 
  JSR OSCLI              \ Call OSCLI to execute the OS command at (Y X), which
                         \ catalogues the disc
@@ -98,6 +127,12 @@ ELIF _6502SP_VERSION
  JSR SCLI2              \ Call SCLI2 to execute the OS command at (Y X), which
                         \ deletes the file, setting the SVN flag while it's
                         \ running to indicate disc access is in progress
+
+ENDIF
+
+IF _MASTER_VERSION
+
+ JSR MASTER_SWAP_ZP_3000 \ ???
 
 ENDIF
 

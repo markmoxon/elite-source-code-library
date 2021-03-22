@@ -14,7 +14,7 @@
  JSR msblob             \ Reset the dashboard's missile indicators so none of
                         \ them are targeted
 
-IF _CASSETTE_VERSION \ Standard: On the second title page (the one that says "Press Space Or Fire,Commander"), the cassette version shows a rotating Mamba, the disc version shows a rotating Krait, and the 6502SP version shows a rotating Asp Mk II
+IF _CASSETTE_VERSION \ Standard: On the second title page (the one that says "Press Space Or Fire,Commander"), the cassette version shows a rotating Mamba, the disc version shows a rotating Krait, the 6502SP version shows a rotating Asp Mk II, and the Master version shows a rotating Cougar
 
  LDA #147               \ Call TITLE to show a rotating Mamba (#3) and token
  LDX #3                 \ 147 ("PRESS FIRE OR SPACE,COMMANDER.{crlf}{crlf}"),
@@ -35,6 +35,13 @@ ELIF _6502SP_VERSION
  JSR TITLE              \ (Y/N)?{sentence case}{cr}{cr}""), returning with the
                         \ internal number of the key pressed in A
 
+ELIF _MASTER_VERSION
+
+ LDA #7                 \ Call TITLE to show a rotating Cougar (#COU) and
+ LDX #COU               \ token 7 ("LOAD NEW {single cap}COMMANDER {all caps}
+ LDY #&64               \ (Y/N)?{sentence case}{cr}{cr}""), returning with the
+ JSR TITLE              \ internal number of the key pressed in A ???
+
 ENDIF
 
  JSR ping               \ Set the target system coordinates (QQ9, QQ10) to the
@@ -46,7 +53,7 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED \ Platform: The 6502SP version inlines the 
                         \ and then fall through into the docking bay routine
                         \ below
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  JSR TT111              \ Select the system closest to galactic coordinates
                         \ (QQ9, QQ10)

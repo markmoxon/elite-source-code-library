@@ -13,7 +13,7 @@
  JSR TT66               \ and set the current view type in QQ11 to 128 (Short-
                         \ range Chart)
 
-IF _6502SP_VERSION \ Screen
+IF _6502SP_VERSION \ Minor
 
  LDA #16                \ Send a #SETVDU19 16 command to the I/O processor to
  JSR DOVDU19            \ switch to the mode 1 palette for the trade view, which
@@ -26,7 +26,7 @@ IF _6502SP_VERSION \ Screen
 ELIF _MASTER_VERSION
 
  LDA #16                \ Switch to the mode 1 palette for the trade view, which
- JSR SETVDU19           \ is yellow (colour 1), magenta (colour 2) and white
+ JSR DOVDU19            \ is yellow (colour 1), magenta (colour 2) and white
                         \ (colour 3)
 
  LDA #CYAN              \ Switch to colour 3, which is white in the chart view

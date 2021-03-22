@@ -3,7 +3,7 @@
 \       Name: DOKEY
 \       Type: Subroutine
 \   Category: Keyboard
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Comment
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
 \    Summary: Scan for the seven primary flight controls
 \  Deep dive: The key logger
 \             The docking computer
@@ -11,7 +11,7 @@ ELIF _DISC_DOCKED
 \    Summary: Scan for the joystick
 ENDIF
 \
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Comment
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ Scan for the seven primary flight controls (or the equivalent on joystick),
@@ -123,13 +123,26 @@ ELIF _6502SP_VERSION
  BNE DKL2               \ Loop back until we have copied all seven primary
                         \ flight control key presses to KL
 
+ELIF _MASTER_VERSION
+
+ JSR L7ED7              \ ???
+
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: The docking computer literally takes the controls in the enhanced versions. The DOKEY routine normally scans the keyboard for the primary flight controls, but if the docking computer is enabled, it calls DOCKIT to ask the docking computer how to move the ship, and then it "presses" the relevant keys instead of scanning the keyboard
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: Group A: The docking computer literally takes the controls in the enhanced versions. The DOKEY routine normally scans the keyboard for the primary flight controls, but if the docking computer is enabled, it calls DOCKIT to ask the docking computer how to move the ship, and then it "presses" the relevant keys instead of scanning the keyboard
 
  LDA auto               \ If auto is 0, then the docking computer is not
  BEQ DK15               \ currently activated, so jump to DK15 to skip the
                         \ docking computer manoeuvring code below
+
+ELIF _MASTER_VERSION
+
+ LDA auto               \ ???
+ BEQ L6CF2
+
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
 
 .auton
 
@@ -167,10 +180,27 @@ IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: The docking computer literally ta
  LDA #&FF               \ Set A = &FF, which we can insert into the key logger
                         \ to "fake" the docking computer working the keyboard
 
+ENDIF
+
+IF _DISC_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
+
  LDX #0                 \ Set X = 0, so we "press" KY1 below ("?", slow down)
+
+ELIF _MASTER_VERSION
+
+ LDX #&0F               \ Set X = 0, so we "press" KY1 below ("?", slow down)
+                        \ ???
+
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
 
  LDY INWK+28            \ If the updated acceleration in byte #28 is zero, skip
  BEQ DK11               \ to DK11
+
+ENDIF
+
+IF _DISC_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
 
  BMI P%+3               \ If the updated acceleration is negative, skip the
                         \ following instruction
@@ -184,6 +214,20 @@ IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: The docking computer literally ta
                         \ down) or positive (in which case we "press" KY2,
                         \ Space, to speed up)
 
+ELIF _MASTER_VERSION
+
+ BMI L6CC2
+
+ LDX #&0B
+
+.L6CC2
+
+ STA KL,X
+
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
+
 .DK11
 
                         \ We now "press" the relevant roll keys, depending on
@@ -192,8 +236,20 @@ IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: The docking computer literally ta
  LDA #128               \ Set A = 128, which indicates no change in roll when
                         \ stored in JSTX (i.e. the centre of the roll indicator)
 
+ENDIF
+
+IF _DISC_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
+
  LDX #0                 \ Set X = 0, so we "press" KY3 below ("<", increase
                         \ roll)
+
+ELIF _MASTER_VERSION
+
+ LDX #&0D               \ ???
+
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
 
  ASL INWK+29            \ Shift ship byte #29 left, which shifts bit 7 of the
                         \ updated roll counter (i.e. the roll direction) into
@@ -203,11 +259,27 @@ IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: The docking computer literally ta
                         \ roll counter is zero, so jump to DK12 set JSTX to 128,
                         \ to indicate there's no change in the roll
 
+ENDIF
+
+IF _DISC_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
+
  BCC P%+3               \ If the C flag is clear, skip the following instruction
 
  INX                    \ The C flag is set, i.e. the direction of the updated
                         \ roll counter is negative, so increment X to 1 so we
                         \ "press" KY4 below (">", decrease roll)
+
+ELIF _MASTER_VERSION
+
+ BCC L6CD0              \ ???
+
+ LDX #&0E
+
+.L6CD0
+
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
 
  BIT INWK+29            \ We shifted the updated roll counter to the left above,
  BPL DK14               \ so this tests bit 6 of the original value, and if it
@@ -225,9 +297,21 @@ IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: The docking computer literally ta
 
 .DK14
 
+ENDIF
+
+IF _DISC_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
+
  STA KY3,X              \ Store A in either KY3 or KY4, depending on whether
                         \ the updated roll rate is increasing (KY3) or
                         \ decreasing (KY4)
+
+ELIF _MASTER_VERSION
+
+ STA KL,X               \ ???
+
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
 
  LDA JSTX               \ Fetch A from JSTX so the next instruction has no
                         \ effect
@@ -243,8 +327,20 @@ IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: The docking computer literally ta
                         \ stored in JSTX (i.e. the centre of the pitch
                         \ indicator)
 
+ENDIF
+
+IF _DISC_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
+
  LDX #0                 \ Set X = 0, so we "press" KY5 below ("X", decrease
                         \ pitch)
+
+ELIF _MASTER_VERSION
+
+ LDX #&06               \ ???
+
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
 
  ASL INWK+30            \ Shift ship byte #30 left, which shifts bit 7 of the
                         \ updated pitch counter (i.e. the pitch direction) into
@@ -253,6 +349,10 @@ IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: The docking computer literally ta
  BEQ DK13               \ If the remains of byte #30 is zero, then the updated
                         \ pitch counter is zero, so jump to DK13 set JSTY to
                         \ 128, to indicate there's no change in the pitch
+
+ENDIF
+
+IF _DISC_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
 
  BCS P%+3               \ If the C flag is set, skip the following instruction
 
@@ -266,12 +366,56 @@ IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: The docking computer literally ta
                         \ decrease the pitch) or positive (in which case we
                         \ "press" KY6, "S", to increase the pitch)
 
+ELIF _MASTER_VERSION
+
+ BCS L6CEC              \ ???
+
+ LDX #&08
+
+.L6CEC
+
+ STA KL,X
+
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
+
  LDA JSTY               \ Fetch A from JSTY so the next instruction has no
                         \ effect
 
 .DK13
 
  STA JSTY               \ Store A in JSTY to update the current pitch rate
+
+ENDIF
+
+IF _MASTER_VERSION \ Enhanced: See group A
+
+.L6CF2
+
+ LDA JSTK               \ ???
+ BEQ DK15
+
+ LDA L12A7
+ EOR L2C5B
+ ORA #&01
+ STA JSTX
+ LDA L12A8
+ EOR #&FF
+ EOR L2C5B
+ EOR L2C5A
+ STA JSTY
+ LDA VIA+&40
+ AND #&10
+ BNE DK4
+
+ LDA #&FF
+ STA KY7
+ BNE DK4
+
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
 
 .DK15
 
@@ -309,6 +453,43 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
  JSR BUMP2
 
  STX JSTY               \ Store the updated roll rate in JSTY
+
+ELIF _MASTER_VERSION
+
+ LDX JSTX               \ ???
+ LDA #&07
+ LDY L00D0
+ BEQ L6D26
+
+ JSR BUMP2
+
+.L6D26
+
+ LDY L00D1
+ BEQ L6D2D
+
+ JSR REDU2
+
+.L6D2D
+
+ STX JSTX
+ ASL A
+ LDX JSTY
+ LDY L00C9
+ BEQ L6D39
+
+ JSR REDU2
+
+.L6D39
+
+ LDY L00CB
+ BEQ L6D40
+
+ JSR BUMP2
+
+.L6D40
+
+ STX JSTY
 
 ENDIF
 

@@ -189,7 +189,7 @@ ELIF _MASTER_VERSION
  ASL A                  \ Set XX12 = 104 + x-delta * 4
  ASL A                  \
  ADC #104               \ 104 is the x-coordinate of the centre of the chart,
- JSR L4A43              \ so this sets XX12 to the centre 104 +/- 76, the pixel
+ JSR LSR2              \ so this sets XX12 to the centre 104 +/- 76, the pixel
  STA XX12               \ x-coordinate of this system ???
 
 ENDIF
@@ -240,7 +240,7 @@ ELIF _MASTER_VERSION
 
  ASL A                  \ Set K4 = 90 + y-delta * 2
  ADC #90                \
- JSR L4A43              \ 90 is the y-coordinate of the centre of the chart,
+ JSR LSR2              \ 90 is the y-coordinate of the centre of the chart,
  STA K4                 \ so this sets K4 to the centre 90 +/- 74, the pixel
                         \ y-coordinate of this system ???
 

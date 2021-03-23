@@ -371,10 +371,10 @@ IF _MASTER_VERSION \ Platform
 .jvec
 
  PHX                    \ ???
- JSR L13EC
+ JSR NOISE2
  PLX
 
- PLA
+ PLA                    \ Restore A from the stack
 
  PLY                    \ Restore Y from the stack
 

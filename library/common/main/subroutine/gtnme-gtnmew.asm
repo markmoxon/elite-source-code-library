@@ -138,7 +138,7 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED
 
 ELIF _MASTER_VERSION
 
- STY L6A8A              \ ???
+ STY NAMELEN1           \ ???
 
  RTS                    \ Return from the subroutine
 

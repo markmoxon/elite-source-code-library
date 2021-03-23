@@ -15,8 +15,8 @@
 
 IF _MASTER_VERSION
 
- LDA L6A8A              \ ???
- STA L6A8B
+ LDA NAMELEN1           \ ???
+ STA NAMELEN2
 
 ENDIF
 

@@ -123,7 +123,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- JSR L4A42              \ ???
+ JSR LSR1              \ ???
 
  CLC                    \ Add 24 to the halved y-coordinate ???
  ADC #24                \ (as the top of the chart is on pixel row 24, just
@@ -168,11 +168,11 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 ELIF _MASTER_VERSION
 
  LDA QQ9                \ ???
- JSR L4A44
+ JSR LSR3
 
  STA QQ19
  LDA QQ10
- JSR L4A42
+ JSR LSR1
 
  STA QQ19+1
 

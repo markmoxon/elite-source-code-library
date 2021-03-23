@@ -461,7 +461,7 @@ INCLUDE "library/common/main/subroutine/beep.asm"
 
 .L137B
 
- STA L144C,Y
+ STA NS9,Y
  DEY
  BNE L137B
 
@@ -494,79 +494,95 @@ INCLUDE "library/common/main/subroutine/beep.asm"
 
  LDY #&05
 
+\ ******************************************************************************
+\
+\       Name: NOISE
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: Make the sound whose number is in Y
+\
+\ ******************************************************************************
+
 .NOISE
 
- LDA L2C55
+ LDA DNOIZ
  BNE L1376
 
- LDA L146E,Y
+ LDA SFX2,Y
  LSR A
  CLV
  LDX #&00
- BCS L13B7
+ BCS NS1
 
  INX
- LDA L145A
- CMP L145B
- BCC L13B7
+ LDA SBUF+13
+ CMP SBUF+14
+ BCC NS1
 
  INX
 
-.L13B7
+.NS1
 
- LDA L1462,Y
- CMP L1459,X
+ LDA SFX1,Y
+ CMP SBUF+12,X
  BCC L1376
 
  SEI
- STA L1459,X
+ STA SBUF+12,X
  LSR A
  AND #&07
- STA L1453,X
- LDA L1486,Y
- STA L1456,X
- LDA L146E,Y
- STA L1450,X
+ STA SBUF+6,X
+ LDA SFX4,Y
+ STA SBUF+9,X
+ LDA SFX2,Y
+ STA SBUF+3,X
  AND #&0F
  LSR A
- STA L145C,X
- LDA L147A,Y
- BVC L13E1
+ STA SBUF+15,X
+ LDA SFX3,Y
+ BVC P%+3
 
  ASL A
 
-.L13E1
-
- STA L145F,X
+ STA SBUF+18,X
  LDA #&80
  STA SBUF,X
  CLI
  SEC
  RTS
 
-.L13EC
+\ ******************************************************************************
+\
+\       Name: NOISE2
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
 
- LDY #&02
+.NOISE2
 
-.L13EE
+ LDY #2
+
+.NSL1
 
  LDA SBUF,Y
- BEQ L1449
+ BEQ NS8
 
- BMI L13FB
+ BMI NS2
 
- LDA L145C,Y
- BEQ L1416
+ LDA SBUF+15,Y
+ BEQ NS3
 
  EQUB &2C
 
-.L13FB
+.NS2
 
  LDA #&00
  CLC
  CLD
- ADC L145F,Y
- STA L145F,Y
+ ADC SBUF+18,Y
+ STA SBUF+18,Y
  PHA
  ASL A
  ASL A
@@ -579,108 +595,119 @@ INCLUDE "library/common/main/subroutine/beep.asm"
  LSR A
  JSR MASTER_DKSn
 
-.L1416
+.NS3
 
  TYA
  TAX
  LDA SBUF,Y
- BMI L1439
+ BMI NS5
 
- DEC L1450,X
- BEQ L142F
+ DEC SBUF+3,X
+ BEQ NS4
 
- LDA L1450,X
- AND L1456,X
- BNE L1449
+ LDA SBUF+3,X
+ AND SBUF+9,X
+ BNE NS8
 
- DEC L1453,X
- BNE L143C
+ DEC SBUF+6,X
+ BNE NS6
 
-.L142F
+.NS4
 
  LDA #&00
  STA SBUF,Y
- STA L1459,Y
- BEQ L1443
+ STA SBUF+12,Y
+ BEQ NS7
 
-.L1439
+.NS5
 
  LSR SBUF,X
 
-.L143C
+.NS6
 
- LDA L1453,Y
+ LDA SBUF+6,Y
  CLC
  ADC L2C61
 
-.L1443
+.NS7
 
  EOR L135B,Y
  JSR MASTER_DKSn
 
-.L1449
+.NS8
 
  DEY
- BPL L13EE
+ BPL NSL1
 
-.L144C
+.NS9
 
  RTS
 
+\ ******************************************************************************
+\
+\       Name: 
+\       Type: Variable
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .SBUF
 
- EQUB &00
+ SKIP 21
 
- EQUB &00,&00
+\ ******************************************************************************
+\
+\       Name: SFX1
+\       Type: Variable
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
 
-.L1450
-
- EQUB &00,&00,&00
-
-.L1453
-
- EQUB &00,&00,&00
-
-.L1456
-
- EQUB &00,&00,&00
-
-.L1459
-
- EQUB &00
-
-.L145A
-
- EQUB &00
-
-.L145B
-
- EQUB &00
-
-.L145C
-
- EQUB &00,&00,&00
-
-.L145F
-
- EQUB &00,&00,&00
-
-.L1462
+.SFX1
 
  EQUB &4B,&5B,&3F,&EB,&FF,&09,&FF,&8B
  EQUB &CF,&E7,&FF,&EF
 
-.L146E
+\ ******************************************************************************
+\
+\       Name: SFX2
+\       Type: Variable
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.SFX2
 
  EQUB &40,&10,&01,&FC,&F3,&19,&F9,&7C
  EQUB &F1,&FA,&FE,&FE
 
-.L147A
+\ ******************************************************************************
+\
+\       Name: SFX3
+\       Type: Variable
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.SFX3
 
  EQUB &F0,&20,&10,&30,&03,&01,&08,&80
  EQUB &16,&38,&00,&80
 
-.L1486
+\ ******************************************************************************
+\
+\       Name: SFX4
+\       Type: Variable
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.SFX4
 
  EQUB &FF,&FF,&00,&03,&1F,&01,&07,&07
  EQUB &0F,&03,&0F,&0F
@@ -848,6 +875,14 @@ INCLUDE "library/common/main/subroutine/pzw.asm"
 INCLUDE "library/common/main/subroutine/dilx.asm"
 INCLUDE "library/common/main/subroutine/dil2.asm"
 
+\ ******************************************************************************
+\
+\       Name: ADD_DUPLICATE
+\       Type: Subroutine
+\   Category: Maths (Arithmetic)
+\    Summary: Calculate (A X) = (A P) + (S R)
+\
+\ ******************************************************************************
 
 .ADD_DUPLICATE
 
@@ -855,7 +890,9 @@ INCLUDE "library/common/main/subroutine/dil2.asm"
  AND #&80
  STA T
  EOR S
- BMI MU8_DUPLICATE
+
+{
+ BMI MU8
 
  LDA R
  CLC
@@ -866,7 +903,8 @@ INCLUDE "library/common/main/subroutine/dil2.asm"
  ORA T
  RTS
 
-.MU8_DUPLICATE
+.MU8
+}
 
  LDA S
  AND #&7F
@@ -878,7 +916,9 @@ INCLUDE "library/common/main/subroutine/dil2.asm"
  LDA T1
  AND #&7F
  SBC U
- BCS MU9_DUPLICATE
+
+{
+ BCS MU9
 
  STA U
  TXA
@@ -889,10 +929,13 @@ INCLUDE "library/common/main/subroutine/dil2.asm"
  SBC U
  ORA #&80
 
-.MU9_DUPLICATE
+.MU9
+}
 
  EOR T
  RTS
+
+
 
  EQUB &41,&23,&6D,&65,&6D,&3A,&53,&54
  EQUB &41,&6C,&61,&74,&63,&68,&3A,&52
@@ -1107,6 +1150,8 @@ INCLUDE "library/common/main/subroutine/dil2.asm"
  EQUB &B5,&B8,&BD,&C1,&C5,&C9,&CE,&D2
  EQUB &D7,&DB,&E0,&E5,&EA,&EF,&F5,&FA
 
+.antilogODD
+
  EQUB &01,&02,&03,&04,&05,&06,&00,&01
  EQUB &02,&03,&04,&05,&06,&00,&01,&02
  EQUB &03,&04,&05,&06,&00,&01,&02,&03
@@ -1192,7 +1237,7 @@ INCLUDE "library/common/main/subroutine/dil2.asm"
 
  EQUB &00,&00
 
-.L2C55
+.DNOIZ
 
  EQUB &00
 
@@ -1222,7 +1267,9 @@ INCLUDE "library/common/main/subroutine/dil2.asm"
 
 .JSTK
 
- EQUB &00,&00
+ EQUB &00
+
+ EQUB &00
 
 .L2C5E
 
@@ -1236,21 +1283,41 @@ INCLUDE "library/common/main/subroutine/dil2.asm"
 
  EQUB &07
 
-.L2C62
+.CKEYS
 
- EQUB &01,&41,&58,&46,&59,&4A,&4B,&55
- EQUB &54,&60
+ EQUB 1
+ EQUS "AXFYJKUT"
+ EQUB &60
+
+\ ******************************************************************************
+\
+\       Name: S%
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: Move code, set up break handler and start the game
+\
+\ ******************************************************************************
 
 .S%
 
  CLD
- JSR MOVE_CODE
+
+ JSR MVBL
 
  JSR BRKBK
 
  JMP BEGIN
 
-.MOVE_CODE
+\ ******************************************************************************
+\
+\       Name: MVBL
+\       Type: Subroutine
+\   Category: Utility routines
+\    Summary: Move a multi-page block of memory from one location to another
+\
+\ ******************************************************************************
+
+.MVBL
 
  LDA #&C0
  STA FRIN
@@ -1259,7 +1326,7 @@ INCLUDE "library/common/main/subroutine/dil2.asm"
  LDA #&7F
  LDY #&47
  LDX #&19
- JSR MOVE_CODE_L1
+ JSR MVPG
 
  LDA #&FF
  STA FRIN
@@ -1269,14 +1336,14 @@ INCLUDE "library/common/main/subroutine/dil2.asm"
  LDY #&FF
  LDX #&62
 
-.MOVE_CODE_L1
+.MVPG
 
  STX T
  STA SC+1
  LDA #&00
  STA SC
 
-.MOVE_CODE_L2
+.MPL
 
  LDA (SC),Y
  SEC
@@ -1284,28 +1351,29 @@ INCLUDE "library/common/main/subroutine/dil2.asm"
  STA (SC),Y
  STA T
  TYA
- BNE L2CAF
+ BNE P%+4
 
  DEC SC+1
 
-.L2CAF
-
  DEY
  CPY FRIN
- BNE MOVE_CODE_L2
+ BNE MPL
 
  LDA SC+1
  CMP FRIN+1
- BNE MOVE_CODE_L2
+ BNE MPL
 
  RTS
 
- EQUB &B7,&AA,&45,&23
+ EQUB &B7, &AA          \ These bytes appear to be unused
+ EQUB &45, &23
 
 INCLUDE "library/enhanced/main/subroutine/doentry.asm"
 
- EQUB &FB,&04,&F7,&08,&EF,&10,&DF,&20,&BF
- EQUB &40,&7F,&80
+ EQUB &FB, &04, &F7     \ These bytes appear to be unused
+ EQUB &08, &EF, &10
+ EQUB &DF, &20, &BF
+ EQUB &40, &7F, &80
 
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_1_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_2_of_16.asm"
@@ -1360,22 +1428,18 @@ INCLUDE "library/enhanced/main/subroutine/spin.asm"
 
  RTS
 
-.WSCAN_DUPLICATE
+.BOMBFX
 
- JSR L31E2
+ JSR P%+3
 
-.L31E2
-
- JSR L31E5
-
-.L31E5
+ JSR P%+3
 
  LDY #&06
  JSR NOISE
 
  JSR L31AC
 
-.L31ED
+.BOMBFX2
 
  LDY #&00
 
@@ -1396,34 +1460,37 @@ INCLUDE "library/enhanced/main/subroutine/spin.asm"
  BCC L31EF
 
  LDX #&00
- STX L3226
+ STX L321D+9
  DEX
  STX L321D
  BCS L31AC
 
 .L3213
 
- CPX #&E0
- CPY #&A0
- BRA &3279
+ EQUB &E0, &E0
+ EQUB &C0, &A0
+ EQUB &80, &60
+ EQUB &40, &20
+ EQUB &00, &00
 
- EQUB &40
-
- EQUB &20,&00,&00
+\ EQUB %11100000
+\ EQUB %11100000
+\ EQUB %11000000
+\ EQUB %10100000
+\ EQUB %10000000
+\ EQUB %01100000
+\ EQUB %01000000
+\ EQUB %00100000
+\ EQUB %00000000
+\ EQUB %00000000
 
 .L321D
 
- EQUB &00,&00,&00,&00,&00,&00,&00,&00
- EQUB &00
-
-.L3226
-
- EQUB &00
+ SKIP 10
 
 .L3227
 
- EQUB &00,&00,&00,&00,&00,&00,&00,&00
- EQUB &00,&00
+ SKIP 10
 
 INCLUDE "library/enhanced/main/subroutine/mt27.asm"
 INCLUDE "library/enhanced/main/subroutine/mt28.asm"
@@ -1447,6 +1514,15 @@ INCLUDE "library/enhanced/main/variable/jmtb.asm"
 INCLUDE "library/enhanced/main/variable/tkn2.asm"
 INCLUDE "library/common/main/variable/qq16.asm"
 INCLUDE "library/enhanced/main/variable/s1_per_cent.asm"
+
+\ ******************************************************************************
+\
+\       Name: NA%
+\       Type: Variable
+\   Category: Save and load
+\    Summary: The data block for the last saved commander
+\
+\ ******************************************************************************
 
 .NA%
 
@@ -1681,26 +1757,50 @@ INCLUDE "library/common/main/subroutine/ginf.asm"
 INCLUDE "library/common/main/subroutine/ping.asm"
 INCLUDE "library/enhanced/main/variable/mtin.asm"
 
+\ ******************************************************************************
+\
+\       Name: LSR1
+\       Type: Subroutine
+\   Category: Utility routines
+\    Summary: ???
+\
+\ ******************************************************************************
 
-.L4A42
+.LSR1
 
  LSR A
 
-.L4A43
+\ ******************************************************************************
+\
+\       Name: LSR2
+\       Type: Subroutine
+\   Category: Utility routines
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.LSR2
 
  RTS
 
-.L4A44
+\ ******************************************************************************
+\
+\       Name: LSR3
+\       Type: Subroutine
+\   Category: Utility routines
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.LSR3
 
  RTS
 
-.L4A45
-
- STA XX15
+ STA X1                 \ This code appears to be unused
  STA X2
- LDA #&18
+ LDA #24
  STA Y1
- LDA #&98
+ LDA #152
  STA Y2
  JMP LL30
 
@@ -1729,13 +1829,25 @@ INCLUDE "library/common/main/subroutine/tt219.asm"
 INCLUDE "library/common/main/subroutine/gnum.asm"
 INCLUDE "library/enhanced/main/subroutine/nwdav4.asm"
 
+\ ******************************************************************************
+\
+\       Name: OUTX
+\       Type: Subroutine
+\   Category: Text
+\    Summary: Print the character in Q before returning to gnum
+\
+\ ******************************************************************************
+
 .OUTX
 
- LDA Q
- JSR DASC
+ LDA Q                  \ Print the character in Q, which is the key that was
+ JSR DASC               \ just pressed in the gnum routine
 
- SEC
- JMP OUT
+ SEC                    \ Set the C flag, as this routine is only called if the
+                        \ key pressed makes the number too high
+
+ JMP OUT                \ Jump back into the gnum routine to return the number
+                        \ that has been built
 
 INCLUDE "library/common/main/subroutine/tt208.asm"
 INCLUDE "library/common/main/subroutine/tt210.asm"
@@ -1834,7 +1946,7 @@ INCLUDE "library/common/main/subroutine/tt74.asm"
 INCLUDE "library/common/main/subroutine/tt43.asm"
 INCLUDE "library/common/main/subroutine/ex.asm"
 
- LDX #&15
+ LDX #&15               \ This code appears to be unused
 
 .L58B9
 
@@ -1850,20 +1962,30 @@ INCLUDE "library/common/main/subroutine/ex.asm"
 INCLUDE "library/common/main/subroutine/doexp.asm"
 INCLUDE "library/common/main/subroutine/sos1.asm"
 
-.L5A24
+\ ******************************************************************************
+\
+\       Name: SOLARX
+\       Type: Subroutine
+\   Category: Universe
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.SOLARX
 
  LDA L1264
  BEQ SOLAR
 
- LDA #&00
+ LDA #0
  STA QQ20
  STA QQ20+6
- JSR DORND
 
+ JSR DORND
  AND #&0F
  ADC L1264
  ORA #&04
  ROL A
+
  STA L1264
  ROL L1265
  BPL SOLAR
@@ -1891,7 +2013,8 @@ INCLUDE "library/common/main/subroutine/nws1.asm"
 INCLUDE "library/common/main/subroutine/abort.asm"
 INCLUDE "library/common/main/subroutine/abort2.asm"
 
- EQUB &04,&00,&00,&00,&00
+ EQUB 4                 \ These bytes appear to be unused
+ SKIP 4
 
 INCLUDE "library/common/main/subroutine/proj.asm"
 INCLUDE "library/common/main/subroutine/pl2.asm"
@@ -1919,21 +2042,38 @@ INCLUDE "library/common/main/subroutine/pls4.asm"
 INCLUDE "library/common/main/subroutine/pls5.asm"
 INCLUDE "library/common/main/subroutine/pls6.asm"
 
-.L6174
+\ ******************************************************************************
+\
+\       Name: GETYN
+\       Type: Subroutine
+\   Category: Keyboard
+\    Summary: Wait until either "Y" or "N" is pressed
+\
+\ ------------------------------------------------------------------------------
+\
+\ Returns:
+\
+\   C flag              Set if "Y" was pressed, clear if "N" was pressed
+\
+\ ******************************************************************************
 
- JSR t
+.GETYN
 
- CMP #&59
- BEQ PL6
+ JSR t                  \ Scan the keyboard until a key is pressed, returning
+                        \ the ASCII code in A and X
 
- CMP #&4E
- BNE L6174
+ CMP #'Y'               \ If "Y" was pressed, return from the subroutine with
+ BEQ PL6                \ the C flag set (as the CMP sets the C flag, and PL6
+                        \ contains an RTS)
 
- CLC
- RTS
+ CMP #'N'               \ If "N" was not pressed, loop back to keep scanning
+ BNE GETYN              \ for key presses
+
+ CLC                    \ Clear the C flag
+
+ RTS                    \ Return from the subroutine
 
 INCLUDE "library/common/main/subroutine/tt17.asm"
-
 
 \ ******************************************************************************
 \
@@ -1967,25 +2107,21 @@ INCLUDE "library/common/main/subroutine/ks2.asm"
 INCLUDE "library/common/main/subroutine/killshp.asm"
 INCLUDE "library/enhanced/main/subroutine/there.asm"
 
- PHA
+ PHA                    \ This code appears to be unused
  LSR A
  LSR A
  LSR A
  LSR A
- JSR L6324
+ JSR P%+6
 
  PLA
  AND #&0F
 
-.L6324
-
  CMP #&0A
- BCS L632D
+ BCS P%+7
 
  ADC #&30
  JMP CHPR
-
-.L632D
 
  ADC #&36
  JMP CHPR
@@ -2022,19 +2158,29 @@ INCLUDE "library/common/main/subroutine/dfault-qu5.asm"
 INCLUDE "library/common/main/subroutine/title.asm"
 INCLUDE "library/common/main/subroutine/check.asm"
 
-.L68BB
+\ ******************************************************************************
+\
+\       Name: JAMESON
+\       Type: Subroutine
+\   Category: Save and load
+\    Summary: Restore the default JAMESON commander file
+\
+\ ******************************************************************************
 
- LDY #&60               \ Restore default commander
+.JAMESON
 
-.L68BD
+ LDY #&60
+
+.JAMESL
 
  LDA DEFAULT%,Y
  STA NA%,Y
  DEY
- BPL L68BD
+ BPL JAMESL
 
- LDY #&07
- STY L6A8B
+ LDY #7
+ STY NAMELEN2
+
  RTS
 
 INCLUDE "library/common/main/subroutine/trnme.asm"
@@ -2043,16 +2189,36 @@ INCLUDE "library/common/main/subroutine/gtnme-gtnmew.asm"
 INCLUDE "library/enhanced/main/subroutine/mt26.asm"
 INCLUDE "library/common/main/variable/rline.asm"
 
-.L6960                    \ See JMTB
+\ ******************************************************************************
+\
+\       Name: MT30
+\       Type: Subroutine
+\   Category: Text
+\    Summary: ???
+\  Deep dive: Extended text tokens
+\
+\ ******************************************************************************
 
- LDA #&03
+.MT30
+
+ LDA #3
  CLC
  ADC L2C5E
  JMP DETOK
 
-.L6969                    \ See JMTB
+\ ******************************************************************************
+\
+\       Name: MT31
+\       Type: Subroutine
+\   Category: Text
+\    Summary: ???
+\  Deep dive: Extended text tokens
+\
+\ ******************************************************************************
 
- LDA #&02
+.MT31
+
+ LDA #2
  SEC
  SBC L2C5E
  JMP DETOK
@@ -2062,69 +2228,114 @@ INCLUDE "library/enhanced/main/subroutine/cats.asm"
 INCLUDE "library/enhanced/main/subroutine/delt.asm"
 INCLUDE "library/common/main/subroutine/sve.asm"
 
-.L6A8A
+\ ******************************************************************************
+\
+\       Name: NAMELEN1
+\       Type: Variable
+\   Category: Save and load
+\    Summary: ???
+\
+\ ******************************************************************************
 
- EQUB &07
+.NAMELEN1
 
-.L6A8B
+ EQUB 7
 
- EQUB &07
+\ ******************************************************************************
+\
+\       Name: NAMELEN2
+\       Type: Variable
+\   Category: Save and load
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.NAMELEN2
+
+ EQUB 7
 
 INCLUDE "library/enhanced/main/subroutine/gtdrv.asm"
 INCLUDE "library/common/main/subroutine/lod.asm"
 INCLUDE "library/enhanced/main/variable/ctli.asm"
 INCLUDE "library/enhanced/main/variable/deli.asm"
 
+\ ******************************************************************************
+\
+\       Name: SVLI
+\       Type: Variable
+\   Category: Save and load
+\    Summary: The OS command string for saving a commander file
+\
+\ ******************************************************************************
+
 .SVLI
 
  EQUS "SAVE :1.E.JAMESON  E7E +100 0 0"
- EQUB &0D
+ EQUB 13
+
+\ ******************************************************************************
+\
+\       Name: LDLI
+\       Type: Variable
+\   Category: Save and load
+\    Summary: The OS command string for loading a commander file
+\
+\ ******************************************************************************
 
 .LDLI
 
  EQUS "LOAD :1.E.JAMESON  E7E"
- EQUB &0D
+ EQUB 13
 
-.L6B16
+\ ******************************************************************************
+\
+\       Name: SAVE
+\       Type: Subroutine
+\   Category: Save and load
+\    Summary: Save the commander file
+\
+\ ******************************************************************************
+
+.SAVE
 
  LDY #&4C
 
-.L6B18
+.SAVEL1
 
  LDA NA%+8,Y
  STA LSX2,Y
  DEY
- BPL L6B18
+ BPL SAVEL1
 
  LDA #&00
  LDY #&4C
 
-.L6B25
+.SAVEL2
 
  STA LSX2,Y
  INY
- BNE L6B25
+ BNE SAVEL2
 
  LDY #&00
 
-.L6B2D
+.SAVEL3
 
  LDA NA%,Y
  CMP #&0D
- BEQ L6B3C
+ BEQ SAVEL4
 
  STA SVLI+10,Y
  INY
  CPY #&07
- BCC L6B2D
+ BCC SAVEL3
 
-.L6B3C
+.SAVEL4
 
  LDA #&20
  STA SVLI+10,Y
  INY
  CPY #&07
- BCC L6B3C
+ BCC SAVEL4
 
  JSR LOADZP
 
@@ -2134,28 +2345,37 @@ INCLUDE "library/enhanced/main/variable/deli.asm"
 
  JMP LOADZP
 
-.L6B53
+\ ******************************************************************************
+\
+\       Name: LOAD
+\       Type: Subroutine
+\   Category: Save and load
+\    Summary: Load the commander file
+\
+\ ******************************************************************************
 
- LDY #&00
+.LOAD
 
-.L6B55
+ LDY #0
+
+.LOADL1
 
  LDA INWK+5,Y
  CMP #&0D
- BEQ L6B64
+ BEQ LOADL2
 
  STA LDLI+10,Y
  INY
  CPY #&07
- BCC L6B55
+ BCC LOADL1
 
-.L6B64
+.LOADL2
 
  LDA #&20
  STA LDLI+10,Y
  INY
  CPY #&07
- BCC L6B64
+ BCC LOADL2
 
  JSR LOADZP
 
@@ -2167,12 +2387,12 @@ INCLUDE "library/enhanced/main/variable/deli.asm"
 
  LDY #&4C
 
-.L6B7D
+.LOADL3
 
  LDA LSX2,Y
  STA L0791,Y
  DEY
- BPL L6B7D
+ BPL LOADL3
 
  RTS
 
@@ -2253,20 +2473,28 @@ INCLUDE "library/common/main/subroutine/ll145_part_3_of_4.asm"
 INCLUDE "library/common/main/subroutine/ll145_part_4_of_4.asm"
 INCLUDE "library/common/main/subroutine/ll9_part_12_of_12.asm"
 
+\ ******************************************************************************
+\
+\       Name: LLX30
+\       Type: Subroutine
+\   Category: Drawing lines
+\    Summary: Draw a one-segment line using smooth animation
+\
+\ ******************************************************************************
 
-.L78F8
+.LLX30
 
  LDY XX14
  CPY XX14+1
  PHP
- LDX #&03
+ LDX #3
 
-.L78FF
+.LLXL
 
  LDA XX15,X
  STA XX12,X
  DEX
- BPL L78FF
+ BPL LLXL
 
  JSR LL30
 
@@ -2292,7 +2520,7 @@ INCLUDE "library/common/main/subroutine/ll9_part_12_of_12.asm"
  INY
  STY XX14
  PLP
- BCS L78F7
+ BCS LL82
 
  JMP LL30
 
@@ -2340,6 +2568,15 @@ INCLUDE "library/common/main/subroutine/plut-pu1.asm"
 INCLUDE "library/common/main/subroutine/look1.asm"
 INCLUDE "library/common/main/subroutine/sight.asm"
 
+\ ******************************************************************************
+\
+\       Name: SIGHTCOL
+\       Type: Variable
+\   Category: Drawing lines
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .SIGHTCOL
 
  EQUB &0F,&FF,&FF,&0F
@@ -2349,11 +2586,29 @@ INCLUDE "library/common/main/subroutine/tt66.asm"
 INCLUDE "library/common/main/subroutine/ttx66.asm"
 INCLUDE "library/6502sp/main/variable/trantable.asm"
 
+\ ******************************************************************************
+\
+\       Name: KYTB
+\       Type: Variable
+\   Category: Keyboard
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .KYTB
 
  EQUB &22,&23,&35,&37,&41,&42,&45,&51
  EQUB &52,&60,&62,&65,&66,&67,&68,&70
  EQUB &F0
+
+\ ******************************************************************************
+\
+\       Name: RDKEY2
+\       Type: Subroutine
+\   Category: Keyboard
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .RDKEY2
 
@@ -2391,6 +2646,15 @@ INCLUDE "library/6502sp/main/variable/trantable.asm"
  TAX
  RTS
 
+\ ******************************************************************************
+\
+\       Name: DKS1
+\       Type: Subroutine
+\   Category: Keyboard
+\    Summary: Scan the keyboard for a flight key
+\
+\ ******************************************************************************
+
 .DKS1
 
  EOR #&80
@@ -2414,6 +2678,15 @@ INCLUDE "library/6502sp/main/variable/trantable.asm"
 INCLUDE "library/common/main/subroutine/ctrl.asm"
 INCLUDE "library/common/main/subroutine/dks4.asm"
 INCLUDE "library/common/main/subroutine/u_per_cent.asm"
+
+\ ******************************************************************************
+\
+\       Name: RDKEY
+\       Type: Subroutine
+\   Category: Keyboard
+\    Summary: Scan the keyboard for key presses
+\
+\ ******************************************************************************
 
  SED
 

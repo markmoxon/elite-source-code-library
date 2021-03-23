@@ -55,7 +55,7 @@ ENDIF
 
 IF _MASTER_VERSION
 
- JSR L68BB              \ ??? Could also be at start of TT170
+ JSR JAMESON            \ ??? Could also be at start of TT170
 
 ENDIF
 

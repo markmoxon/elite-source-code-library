@@ -32,6 +32,13 @@ ENDIF
 \
 \   C flag              Set if the number is too large (> QQ25), clear otherwise
 \
+IF _MASTER_VERSION
+\ Other entry points:
+\
+\   OUT                 The OUTX routine jumps back here after printing the key
+\                       that was just pressed
+\
+ENDIF
 \ ******************************************************************************
 
 .gnum
@@ -115,7 +122,8 @@ ELIF _MASTER_VERSION
 
  CMP #26                \ If A >= 26, where A is the number entered so far, then
  BCS OUTX               \ adding a further digit will make it bigger than 256,
-                        \ so jump to OUTX to ???
+                        \ so jump to OUTX to print the key that was just pressed
+                        \ before jumping to OUT below with the C flag still set
 
 ENDIF
 
@@ -130,11 +138,18 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
  ADC S                  \ Add the pressed digit to A and store in R, so R now
  STA R                  \ contains its previous value with the new key press
                         \ tacked onto the end
+
 ELIF _MASTER_VERSION
 
- ADC S                  \ ???
- BCS OUTX
- STA R
+ ADC S                  \ Add the pressed digit to A
+
+ BCS OUTX               \ If the addition overflowed, then jump to OUTX to print
+                        \ the key that was just pressed before jumping to OUT
+                        \ below with the C flag still set
+
+ STA R                  \ Otherwise store the result in R, so R now contains
+                        \ its previous value with the new key press tacked onto
+                        \ the end
 
 ENDIF
 
@@ -150,7 +165,9 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- BCS OUTX               \ If the result in R > QQ25, jump to OUTX to ???
+ BCS OUTX               \ If the result in R > QQ25, jump to OUTX to print
+                        \ the key that was just pressed before jumping to OUT
+                        \ below with the C flag still set
 
 ENDIF
 

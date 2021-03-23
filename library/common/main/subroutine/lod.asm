@@ -48,7 +48,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION
 
 ELIF _MASTER_VERSION
 
- JSR L6B53              \ ???
+ JSR LOAD               \ ???
 
 ENDIF
 

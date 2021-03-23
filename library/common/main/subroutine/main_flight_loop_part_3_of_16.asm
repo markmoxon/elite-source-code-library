@@ -180,7 +180,7 @@ IF _MASTER_VERSION
 
  BEQ MA76               \ ???
 
- JSR L31ED
+ JSR BOMBFX2
 
 ENDIF
 

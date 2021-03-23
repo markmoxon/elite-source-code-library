@@ -244,7 +244,7 @@ ENDIF
 
 IF _MASTER_VERSION
 
- JSR L78F8              \ ???
+ JSR LLX30              \ ???
 
 ENDIF
 

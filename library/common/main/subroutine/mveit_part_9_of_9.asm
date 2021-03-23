@@ -24,7 +24,7 @@ IF _DISC_DOCKED \ Platform
  AND #%00100000         \ If we are exploding then jump to MVD1 to remove it
  BNE MVD1               \ from the scanner permanently
 
-ELIF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+ELIF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  AND #%10100000         \ If we are exploding or removing this ship then jump to
  BNE MVD1               \ MVD1 to remove it from the scanner permanently
@@ -35,7 +35,7 @@ ENDIF
  ORA #%00010000
  STA INWK+31
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
  JMP SCAN               \ Display the ship on the scanner, returning from the
                         \ subroutine using a tail call

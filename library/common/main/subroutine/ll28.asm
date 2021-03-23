@@ -23,7 +23,7 @@
 IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \ This routine uses the same shift-and-subtract algorithm that's documented in
 \ TIS2, but it leaves the fractional result in the integer range 0-255.
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 \ This routine uses the same logarithm algorithm that's documented in FMLTU,
 \ except it subtracts the logarithm values, to do a division instead of a
 \ multiplication.
@@ -59,7 +59,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Other: The LL28 routine in the 6502SP ve
                         \ getting a 0 on the 8th iteration... and we can also
                         \ use R to catch our result bits into bit 0 each time
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  STA widget             \ Store A in widget, so now widget = argument A
 
@@ -80,7 +80,15 @@ ELIF _6502SP_VERSION
  SEC                    \ Set A = A - low byte of log(Q)
  SBC logL,X             \       = low byte of log(A) - low byte of log(Q)
 
+ENDIF
+
+IF _6502SP_VERSION
+
  BMI noddlog            \ If the subtraction is negative, jump to noddlog
+
+ENDIF
+
+IF _6502SP_VERSION OR _MASTER_VERSION
 
  LDX widget             \ Set A = high byte of log(A) - high byte of log(Q)
  LDA log,X
@@ -100,6 +108,10 @@ ELIF _6502SP_VERSION
 
  RTS                    \ Return from the subroutine
 
+ENDIF
+
+IF _6502SP_VERSION
+
 .noddlog
 
  LDX widget             \ Set A = high byte of log(A) - high byte of log(Q)
@@ -117,6 +129,13 @@ ELIF _6502SP_VERSION
  STA R                  \ Set the result in R to the value of A
 
  RTS                    \ Return from the subroutine
+
+ELIF _MASTER_VERSION
+
+ BCS LL2
+
+ LDX #&FE
+ STX R
 
 ENDIF
 
@@ -154,7 +173,7 @@ ENDIF
  BCS LL31               \ If we still have set bits in R, loop back to LL31 to
                         \ do the next iteration of 7
 
-IF _6502SP_VERSION \ Other: The 6502SP version of LL28 returns the remainder in A, which the other versions don't
+IF _6502SP_VERSION OR _MASTER_VERSION \ Other: The 6502SP version of LL28 returns the remainder in A, which the other versions don't
 
  LDA R                  \ Set A to the remainder in R
 

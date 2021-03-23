@@ -28,12 +28,27 @@ IF _6502SP_VERSION \ Screen
 
  PLA                    \ Restore A from the stack
 
+ELIF _MASTER_VERSION
+
+ PHA                    \ ???
+ LDX QQ11
+ BEQ L6DDE
+
+ JSR CLYNS
+
+.L6DDE
+
+ LDA #&15
+ STA YC
+ LDA #&0F
+ STA COL
+
 ENDIF
 
  LDX #0                 \ Set QQ17 = 0 to switch to ALL CAPS
  STX QQ17
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Advanced: Group A: Most versions display in-flight messages at column 9 on row 22, at the bottom of the screen. The 6502SP version goes one better and centres its in-flight messages on screen, rather than always starting them at column 9
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Advanced: Group A: The original versions display in-flight messages at column 9 on row 22, at the bottom of the screen. The advanced versions go one better and centre their in-flight messages on screen, rather than always starting them at column 9
 
  LDY #9                 \ Move the text cursor to column 9, row 22, at the
  STY XC                 \ bottom middle of the screen, and set Y = 22
@@ -56,6 +71,13 @@ ELIF _6502SP_VERSION
 
  PLA                    \ Restore A from the stack
 
+ELIF _MASTER_VERSION
+
+ LDA messXC             \ ???
+ STA XC
+ PLA
+ LDY #&14
+
 ENDIF
 
  CPX DLY                \ If the message delay in DLY is not zero, jump up to
@@ -66,7 +88,7 @@ ENDIF
 
  STA MCH                \ Set MCH to the token we are about to display
 
-IF _6502SP_VERSION \ Advanced: See group A
+IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: See group A
 
                         \ Before we fall through into mes9 to print the token,
                         \ we need to work out the starting column for the
@@ -110,7 +132,19 @@ IF _6502SP_VERSION \ Advanced: See group A
                         \ the branch to me1 above, messXC will tell us where to
                         \ print it
 
+ENDIF
+
+IF _6502SP_VERSION \ Platform
+
  JSR DOXC               \ Move the text cursor to column messXC
+
+ELIF _MASTER_VERSION
+
+ STA XC                 \ Move the text cursor to column messXC
+
+ENDIF
+
+IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: See group A
 
  JSR MT15               \ Call MT15 to wwitch to left-aligned text when printing
                         \ extended tokens disabling the justify text setting we

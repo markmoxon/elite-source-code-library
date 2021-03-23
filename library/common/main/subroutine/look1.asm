@@ -40,6 +40,17 @@
 
  JSR SIGHT              \ Draw the laser crosshairs
 
+IF _MASTER_VERSION
+
+ LDA BOMB               \ ???
+ BPL L7D32
+
+ JSR L31AC
+
+.L7D32
+
+ENDIF
+
  JMP NWSTARS            \ Set up a new stardust field and return from the
                         \ subroutine using a tail call
 
@@ -47,7 +58,7 @@
 
  LDA #0                 \ Set A = 0, the type number of a space view
 
-IF _6502SP_VERSION \ Screen
+IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  JSR DOVDU19            \ Send a #SETVDU19 0 command to the I/O processor to
                         \ switch to the mode 1 palette for the space view,
@@ -70,6 +81,17 @@ ENDIF
 
  JSR FLIP               \ Swap the x- and y-coordinates of all the stardust
                         \ particles
+
+IF _MASTER_VERSION
+
+ LDA BOMB               \ ???
+ BPL L7D54
+
+ JSR L31AC
+
+.L7D54
+
+ENDIF
 
  JSR WPSHPS             \ Wipe all the ships from the scanner
 

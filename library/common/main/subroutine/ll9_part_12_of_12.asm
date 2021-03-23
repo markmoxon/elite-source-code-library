@@ -71,6 +71,10 @@ ELIF _6502SP_VERSION
 
  STA XX20               \ Store the heap size in XX20
 
+ELIF _MASTER_VERSION
+
+ LDY XX14               \ ???
+
 ENDIF
 
 .LL27
@@ -97,6 +101,25 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
 
  JSR LL30               \ Draw a line from (X1, Y1) to (X2, Y2)
 
+ELIF _MASTER_VERSION
+
+ CPY XX14+1             \ ???
+ BCS L78F1
+
+ LDA (XX19),Y
+ INY
+ STA XX15
+ LDA (XX19),Y
+ INY
+ STA Y1
+ LDA (XX19),Y
+ INY
+ STA X2
+ LDA (XX19),Y
+ INY
+ STA Y2
+ JSR LL30
+
 ELIF _6502SP_VERSION
 
  LDA (XX19),Y           \ Fetch the Y-th line coordinate from the heap and send
@@ -104,10 +127,26 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  INY                    \ Increment the heap pointer
 
  CPY XX20               \ If the heap counter is less than the size of the heap,
  BCC LL27               \ loop back to LL27 to draw the next line from the heap
+
+ELIF _MASTER_VERSION
+
+ JMP LL27               \ ???
+
+.L78F1
+
+ LDA XX14
+ LDY #&00
+ STA (XX19),Y
+
+.L78F7
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION \ Label
 

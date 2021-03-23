@@ -46,10 +46,20 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  STX KL                 \ Store X in KL, byte #0 of the key logger
 
  CPX #&69               \ If COPY is not being pressed, jump to DK2 below,
  BNE DK2                \ otherwise let's process the configuration keys
+
+ELIF _MASTER_VERSION
+
+ LDX KL                 \ ???
+ CPX #&8B
+ BNE DK2
+
+ENDIF
 
 .FREEZE
 
@@ -68,16 +78,34 @@ ENDIF
  CPX #&51               \ If S is not being pressed, skip to DK6
  BNE DK6
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  LDA #0                 \ S is being pressed, so set DNOIZ to 0 to turn the
  STA DNOIZ              \ sound on
 
+ELIF _MASTER_VERSION
+
+ LDX #&FF               \ ???
+ STX L2C55
+ LDX #&51
+
+ENDIF
+
 .DK6
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
  LDY #&40               \ We now want to loop through the keys that toggle
                         \ various settings. These have internal key numbers
                         \ between &40 (CAPS LOCK) and &46 ("K"), so we set up
                         \ the first key number in Y to act as a loop counter.
                         \ See subroutine DKS3 for more details on this
+
+ELIF _MASTER_VERSION
+
+ LDY #0                 \ ???
+
+ENDIF
 
 .DKL4
 
@@ -86,8 +114,16 @@ ENDIF
 
  INY                    \ Increment Y to point to the next toggle key
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  CPY #&47               \ The last toggle key is &46 (K), so check whether we
                         \ have just done that one
+
+ELIF _MASTER_VERSION
+
+ CPY #&09               \ ???
+
+ENDIF
 
  BNE DKL4               \ If not, loop back to check for the next toggle key
 
@@ -96,6 +132,8 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Label
 .DK55
 
 ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
  CPX #&10               \ If "Q" is not being pressed, skip to DK7
  BNE DK7
@@ -107,6 +145,41 @@ ENDIF
 
  CPX #&70               \ If ESCAPE is not being pressed, skip over the next
  BNE P%+5               \ instruction
+
+ELIF _MASTER_VERSION
+
+ LDA L2C61              \ ???
+ CPX #&2E
+ BEQ L6D70
+
+ CPX #&2C
+ BNE L6D83
+
+ DEC A
+ EQUB &24
+
+.L6D70
+
+ INC A
+ TAY
+ AND #&F8
+ BNE L6D79
+
+ STY L2C61
+
+.L6D79
+
+ PHX
+ JSR BEEP
+
+ LDY #&0A
+ JSR DELAY
+
+ PLX
+
+.L6D83
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Minor
 
@@ -120,10 +193,19 @@ ELIF _DISC_DOCKED
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_VERSION \ Enhanced: The enhanced versions support a new Bitstik configuration option, "B", which toggles the Bitstik when the game is paused
+IF _DISC_VERSION OR _6502SP_VERSION
 
  CPX #&64               \ If "B" is not being pressed, skip to DK7
  BNE nobit
+
+ELIF _MASTER_VERSION
+
+ CPX #&42               \ ???
+ BNE nobit
+
+ENDIF
+
+IF _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Enhanced: The enhanced versions support a new Bitstik configuration option, "B", which toggles the Bitstik when the game is paused
 
  LDA BSTK               \ Toggle the value of BSTK between 0 and &FF
  EOR #&FF
@@ -136,6 +218,22 @@ IF _6502SP_VERSION OR _DISC_VERSION \ Enhanced: The enhanced versions support a 
                         \ is enabled, the joystick is configured with reversed
                         \ channels
 
+ENDIF
+
+IF _MASTER_VERSION
+
+ BPL L6D9A              \ ???
+
+ JSR BELL
+
+.L6D9A
+
+ JSR BELL
+
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Label
+
 .nobit
 
 ENDIF
@@ -147,10 +245,38 @@ IF _6502SP_VERSION \ Advanced: The 6502SP lets you take screenshots, by pressing
 
 ENDIF
 
+IF _MASTER_VERSION
+
+ CPX #&53               \ ???
+ BNE DK7
+
+ LDA #&00
+ STA L2C55
+
+.DK7
+
+ CPX #&1B
+ BNE L6DAD
+
+ JMP DEATH2
+
+.L6DAD
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  CPX #&59               \ If DELETE is not being pressed, we are still paused,
  BNE FREEZE             \ so loop back up to keep listening for configuration
                         \ keys, otherwise fall through into the rest of the
                         \ key detection code, which unpauses the game
+
+ELIF _MASTER_VERSION
+
+ CPX #&7F               \ ???
+ BNE FREEZE
+
+ENDIF
 
 .DK2
 
@@ -188,8 +314,12 @@ ELIF _6502SP_VERSION OR _DISC_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+
  LDA #&FF               \ Set A to &FF so we can store this in the keyboard
                         \ logger for keys that are being pressed
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 

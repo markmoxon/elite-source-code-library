@@ -16,7 +16,7 @@
 
  JSR TT27               \ Call TT27 to print the text token in A
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
 
  LSR de                 \ If bit 0 of variable de is clear, return from the
  BCC out                \ subroutine (as out contains an RTS)

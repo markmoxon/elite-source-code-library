@@ -136,7 +136,7 @@ IF _CASSETTE_VERSION \ Other: A CLC instruction is omitted from the cassette ver
                         \ flag, so this is an example of the authors finding
                         \ one more precious byte to save
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
  LDA K                  \ We now do the following sum:
  CLC                    \

@@ -50,7 +50,7 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
 .LL25
 
@@ -66,7 +66,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Minor
  LDA TYPE               \ If the ship type is negative then this indicates a
  BMI LL25               \ planet or sun, so jump to PLANET via LL25 above
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDX TYPE               \ If the ship type is negative then this indicates a
  BMI LL25               \ planet or sun, so jump to PLANET via LL25 above
@@ -81,6 +81,13 @@ IF _6502SP_VERSION \ Screen
  JSR DOCOL              \ Send a #SETCOL command to the I/O processor to switch
                         \ to this colour
 
+ELIF _MASTER_VERSION
+
+ LDA shpcol,X           \ Set A to the ship colour for this type, from the X-th
+                        \ entry in the shpcol table
+
+ STA COL                \ Switch to this colour
+
 ENDIF
 
  LDA #31                \ Set XX4 = 31 to store the ship's distance for later
@@ -88,7 +95,26 @@ ENDIF
                         \ update this value below with the actual ship's
                         \ distance if it turns out to be visible on-screen
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: The enhanced versions have an extra bit (bit 7 of the NEWB flags) that determines whether a ship has been scooped or has finished docking, at which point they are removed from the screen
+IF _MASTER_VERSION
+
+ LDY #&01               \ ???
+ STY XX14
+ DEY
+ LDA #&08
+ BIT INWK+31
+ BNE L712B
+
+ LDA #&00
+ EQUB &2C
+
+.L712B
+
+ LDA (XX19),Y
+ STA XX14+1
+
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: The enhanced versions have an extra bit (bit 7 of the NEWB flags) that determines whether a ship has been scooped or has finished docking, at which point they are removed from the screen
 
  LDA NEWB               \ If bit 7 of the ship's NEWB flags is set, then the
  BMI EE51               \ ship has been scooped or has docked, so jump down to
@@ -180,7 +206,7 @@ ENDIF
  AND #%11110111         \ byte #31 to denote that the ship is no longer being
  STA XX1+31             \ drawn on-screen
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Comment
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
 
  JMP DOEXP              \ Jump to DOEXP to display the explosion cloud, which
                         \ will remove it from the screen, returning from the

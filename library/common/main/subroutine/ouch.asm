@@ -16,7 +16,7 @@
 
  JSR DORND              \ Set A and X to random numbers
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION \ Label
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Label
 
  BMI out                \ If A < 0 (50% chance), return from the subroutine
                         \ (as out contains an RTS)
@@ -63,12 +63,25 @@ ENDIF
  CPX #17                \ If X >= 17 then we just lost a piece of equipment, so
  BCS ou1                \ jump to ou1 to print the relevant message
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Minor
+
  TXA                    \ Print recursive token 48 + A as an in-flight token,
  ADC #208               \ which will be in the range 48 ("FOOD") to 64 ("ALIEN
  BNE MESS               \ ITEMS") as the C flag is clear, so this prints the
                         \ destroyed item's name, followed by " DESTROYED" (as we
                         \ set bit 1 of the de flag above), and returns from the
                         \ subroutine using a tail call
+
+ELIF _MASTER_VERSION
+
+ TXA                    \ Print recursive token 48 + A as an in-flight token,
+ ADC #208               \ which will be in the range 48 ("FOOD") to 64 ("ALIEN
+ JMP MESS               \ ITEMS") as the C flag is clear, so this prints the
+                        \ destroyed item's name, followed by " DESTROYED" (as we
+                        \ set bit 1 of the de flag above), and returns from the
+                        \ subroutine using a tail call
+
+ENDIF
 
 .ou1
 
@@ -95,7 +108,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Minor
                         \ followed by " DESTROYED", and return from the
                         \ subroutine using a tail call
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  JMP MESS               \ Print recursive token A ("ENERGY BOMB", "ENERGY UNIT"
                         \ or "DOCKING COMPUTERS") as an in-flight message,

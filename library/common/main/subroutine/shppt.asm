@@ -3,7 +3,7 @@
 \       Name: SHPPT
 \       Type: Subroutine
 \   Category: Drawing ships
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Comment
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
 \    Summary: Draw a distant ship as a point rather than a full wireframe
 ELIF _DISC_DOCKED
 \    Summary: Draw a distant ship as a point in the middle of the screen
@@ -13,10 +13,14 @@ ENDIF
 
 .SHPPT
 
- JSR EE51               \ Call EE51 to remove the ship's wireframe from the
-                        \ screen, if there is one
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
+ JSR EE51               \ Call EE51 to remove the ship's wireframe from the
+                        \ screen, if there is one ???
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
  JSR PROJ               \ Project the ship onto the screen, returning:
                         \
@@ -36,7 +40,7 @@ ELIF _DISC_DOCKED
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Comment
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
 
  CMP #Y*2-2             \ If the y-coordinate is bigger than the y-coordinate of
  BCS nono               \ the bottom of the screen, jump to nono as the ship's
@@ -52,6 +56,8 @@ ELIF _DISC_DOCKED
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  LDY #2                 \ Call Shpt with Y = 2 to set up bytes 1-4 in the ship
  JSR Shpt               \ lines space, aborting the call to LL9 if the dot is
                         \ off the side of the screen. This call sets up the
@@ -59,10 +65,22 @@ ENDIF
 
  LDY #6                 \ Set Y to 6 for the next call to Shpt
 
+ELIF _MASTER_VERSION
+
+ JSR Shpt               \ ???
+
+ENDIF
+
 IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
  LDA K4                 \ Set A = y-coordinate of dot + 1 (so this is the second
  ADC #1                 \ row of the two-pixel-high dot)
+
+ELIF _MASTER_VERSION
+
+ LDA K4                 \ Set A = y-coordinate of dot + 1 (so this is the second
+ CLC                    \ row of the two-pixel-high dot) ???
+ ADC #1
 
 ELIF _DISC_DOCKED
 
@@ -71,11 +89,19 @@ ELIF _DISC_DOCKED
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Comment
+
  JSR Shpt               \ Call Shpt with Y = 6 to set up bytes 5-8 in the ship
                         \ lines space, aborting the call to LL9 if the dot is
                         \ off the side of the screen. This call sets up the
                         \ second row of the dot (i.e. another four-pixel dash,
                         \ on the row below the first one)
+
+ELIF _MASTER_VERSION
+
+ JSR Shpt               \ ???
+
+ENDIF
 
  LDA #%00001000         \ Set bit 3 of the ship's byte #31 to record that we
  ORA XX1+31             \ have now drawn something on-screen for this ship
@@ -95,21 +121,40 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  JMP LL81+2             \ Call LL81+2 to draw the ship's dot, returning from the
                         \ subroutine using a tail call
 
  PLA                    \ Pull the return address from the stack, so the RTS
  PLA                    \ below actually returns from the subroutine that called
                         \ LL9 (as we called SHPPT from LL9 with a JMP)
+
+ELIF _MASTER_VERSION
+
+ JMP LL155              \ ???
+
+ENDIF
+
 .nono
 
  LDA #%11110111         \ Clear bit 3 of the ship's byte #31 to record that
  AND XX1+31             \ nothing is being drawn on-screen for this ship
  STA XX1+31
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  RTS                    \ Return from the subroutine
 
+ELIF _MASTER_VERSION
+
+ JMP LL155              \ ???
+
+ENDIF
+
 .Shpt
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
                         \ This routine sets up four bytes in the ship line heap,
                         \ from byte Y-1 to byte Y+2. If the ship's screen point
@@ -124,7 +169,14 @@ ENDIF
  INY
  STA (XX19),Y
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
+ELIF _MASTER_VERSION
+
+ STA Y1                 \ ???
+ STA Y2
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
  LDA K3                 \ Set A = screen x-coordinate of the ship dot
 
@@ -133,6 +185,8 @@ ELIF _DISC_DOCKED
  LDA #X                 \ Set A = x-coordinate of the middle of the screen
 
 ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
  DEY                    \ Store A in byte Y+1 of the ship line heap
  STA (XX19),Y
@@ -155,4 +209,20 @@ ENDIF
  STA (XX19),Y
 
  RTS                    \ Return from the subroutine
+
+ELIF _MASTER_VERSION
+
+ STA XX15
+ CLC
+ ADC #&03
+ BCC L7012
+
+ LDA #&FF
+
+.L7012
+
+ STA X2
+ JMP L78F8
+
+ENDIF
 

@@ -31,6 +31,8 @@
 
 .EE31
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  LDA #%00001000         \ If bit 3 of the ship's byte #31 is clear, then there
  BIT XX1+31             \ is nothing already being shown for this ship, so skip
  BEQ LL74               \ to LL74 as we don't need to erase anything from the
@@ -39,13 +41,21 @@
  JSR LL155              \ Otherwise call LL155 to draw the existing ship, which
                         \ removes it from the screen
 
+ELIF _MASTER_VERSION
+
+ LDY #&09               \ ???
+ LDA (XX0),Y
+ STA XX20
+
+ENDIF
+
  LDA #%00001000         \ Set bit 3 of A so the next instruction sets bit 3 of
                         \ the ship's byte #31 to denote that we are drawing
                         \ something on-screen for this ship
 
 .LL74
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Minor
 
  ORA XX1+31             \ Apply bit 3 of A to the ship's byte #31, so if there
  STA XX1+31             \ was no ship already on screen, the bit is clear,
@@ -60,9 +70,18 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  LDY #9                 \ Fetch byte #9 of the ship's blueprint, which is the
  LDA (XX0),Y            \ number of edges, and store it in XX20
  STA XX20
+
+ELIF _MASTER_VERSION
+
+ LDY #&00               \ ???
+ STY XX17
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION \ Minor
 
@@ -83,10 +102,14 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  INC U                  \ We are going to start calculating the lines we need to
                         \ draw for this ship, and will store them in the ship
                         \ line heap, using U to point to the end of the heap, so
                         \ we start by setting U = 1
+
+ENDIF
 
  BIT XX1+31             \ If bit 6 of the ship's byte #31 is clear, then the
  BVC LL170              \ ship is not firing its lasers, so jump to LL170 to
@@ -95,7 +118,7 @@ ENDIF
                         \ The ship is firing its laser at us, so we need to draw
                         \ the laser lines
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Minor
 
  LDA XX1+31             \ Clear bit 6 of the ship's byte #31 so the ship doesn't
  AND #%10111111         \ keep firing endlessly
@@ -201,6 +224,8 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  LDA XX15               \ Add X1 to the end of the heap
  STA (XX19),Y
 
@@ -222,4 +247,10 @@ ENDIF
  INY                    \ Increment the heap pointer
 
  STY U                  \ Store the updated ship line heap pointer in U
+
+ELIF _MASTER_VERSION
+
+ JSR L78F8              \ ???
+
+ENDIF
 

@@ -13,6 +13,8 @@
 \
 \ ******************************************************************************
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
 .LL80
 
  LDY U                  \ Fetch the ship line heap pointer, which points to the
@@ -44,7 +46,11 @@
  BCS LL81               \ edge lines that we can store in the ship line heap, so
                         \ skip to LL81 so we don't loop back for the next edge
 
+ENDIF
+
 .LL78
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
  INC XX17               \ Increment the edge counter to point to the next edge
 
@@ -55,9 +61,28 @@
  LDY #0                 \ Set Y to point to byte #0 again, ready for the next
                         \ edge
 
+ELIF _MASTER_VERSION
+
+ LDA XX14               \ ???
+ CMP CNT
+ BCS LL81
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Minor
+
  LDA V                  \ Increment V by 4 so V(1 0) points to the data for the
  ADC #4                 \ next edge
  STA V
+
+ELIF _MASTER_VERSION
+
+ LDA V                  \ Increment V by 4 so V(1 0) points to the data for the
+ CLC                    \ next edge
+ ADC #4
+ STA V
+
+ENDIF
 
  BCC ll81               \ If the above addition didn't overflow, jump to ll81
 
@@ -66,9 +91,22 @@
 
 .ll81
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  JMP LL75               \ Loop back to LL75 to process the next edge
 
+ELIF _MASTER_VERSION
+
+ INC XX17               \ ???
+ LDY XX17
+ CPY XX20
+ BCC LL75
+
+ENDIF
+
 .LL81
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
                         \ We have finished adding lines to the ship line heap,
                         \ so now we need to set the first byte of the heap to
@@ -77,6 +115,12 @@
  LDA U                  \ Fetch the ship line heap pointer from U into A, which
                         \ points to the end of the heap, and therefore contains
                         \ the heap size
+
+ELIF _MASTER_VERSION
+
+ JMP LL155              \ ???
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION \ Minor
 

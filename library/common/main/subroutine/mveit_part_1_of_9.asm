@@ -31,7 +31,7 @@ IF _DISC_DOCKED \ Platform
  AND #%00100000         \ ship is exploding, so we don't need to tidy its
  BNE MV3                \ orientation vectors
 
-ELIF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+ELIF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  LDA INWK+31            \ If bits 5 or 7 of ship byte #31 are set, jump to MV30
  AND #%10100000         \ as the ship is either exploding or has been killed, so

@@ -33,6 +33,8 @@
                         \ So V(1 0) now points to the start of the edges data
                         \ for this ship
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Minor
+
  LDY #5                 \ Fetch byte #5 of the ship's blueprint, which contains
  LDA (XX0),Y            \ the maximum heap size for plotting the ship (which is
  STA T1                 \ 1 + 4 * the maximum number of visible edges) and store
@@ -40,13 +42,28 @@
 
  LDY XX17               \ Set Y to the edge counter in XX17
 
+ELIF _MASTER_VERSION
+
+ LDY #5                 \ Fetch byte #5 of the ship's blueprint, which contains
+ LDA (XX0),Y            \ the maximum heap size for plotting the ship (which is
+ STA CNT                \ 1 + 4 * the maximum number of visible edges) and store
+                        \ it in CNT
+
+ENDIF
+
 .LL75
+
+IF _MASTER_VERSION
+
+ LDY #0                 \ ???
+
+ENDIF
 
  LDA (V),Y              \ Fetch byte #0 for this edge, which contains the
                         \ visibility distance for this edge, beyond which the
                         \ edge is not shown
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
 
  CMP XX4                \ If XX4 > the visibility distance, where XX4 contains
  BCC LL78               \ the ship's z-distance reduced to 0-31 (which we set in
@@ -73,7 +90,11 @@ ENDIF
                         \
                         \     * Bits 4-7 = the number of face 2
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  INY                    \ Increment Y to point to byte #2
+
+ENDIF
 
  STA P                  \ Store byte #1 into P
 
@@ -91,7 +112,7 @@ ENDIF
  LSR A
  TAX
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
 
  LDA XX2,X              \ If XX2+X is zero then we decided in part 5 that
  BEQ LL78               \ face 2 is hidden, so jump to LL78
@@ -122,13 +143,25 @@ ENDIF
                         \ before storing the resulting line in the ship line
                         \ heap
 
+IF _MASTER_VERSION
+
+ INY                    \ ???
+
+ENDIF
+
  LDA (V),Y              \ Fetch byte #2 for this edge into X, which contains
  TAX                    \ the number of the vertex at the start of the edge
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
  INY                    \ Increment Y to point to byte #3
 
  LDA (V),Y              \ Fetch byte #3 for this edge into X, which contains
  STA Q                  \ the number of the vertex at the end of the edge
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Minor
 
  LDA XX3+1,X            \ Fetch the x_hi coordinate of the edge's start vertex
  STA XX15+1             \ from the XX3 heap into XX15+1
@@ -136,23 +169,55 @@ ENDIF
  LDA XX3,X              \ Fetch the x_lo coordinate of the edge's start vertex
  STA XX15               \ from the XX3 heap into XX15
 
+ELIF _MASTER_VERSION
+
+ LDA XX3,X              \ Fetch the x_lo coordinate of the edge's start vertex
+ STA XX15               \ from the XX3 heap into XX15
+
+ LDA XX3+1,X            \ Fetch the x_hi coordinate of the edge's start vertex
+ STA XX15+1             \ from the XX3 heap into XX15+1
+
+ENDIF
+
  LDA XX3+2,X            \ Fetch the y_lo coordinate of the edge's start vertex
  STA XX15+2             \ from the XX3 heap into XX15+2
 
  LDA XX3+3,X            \ Fetch the y_hi coordinate of the edge's start vertex
  STA XX15+3             \ from the XX3 heap into XX15+3
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  LDX Q                  \ Set X to the number of the vertex at the end of the
                         \ edge, which we stored in Q
 
+ELIF _MASTER_VERSION
+
+ INY                    \ ???
+ LDA (V),Y
+ TAX
+
+ENDIF
+
  LDA XX3,X              \ Fetch the x_lo coordinate of the edge's end vertex
  STA XX15+4             \ from the XX3 heap into XX15+4
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Minor
 
  LDA XX3+3,X            \ Fetch the y_hi coordinate of the edge's end vertex
  STA XX12+1             \ from the XX3 heap into XX11+1
 
  LDA XX3+2,X            \ Fetch the y_lo coordinate of the edge's end vertex
  STA XX12               \ from the XX3 heap into XX12
+
+ELIF _MASTER_VERSION
+
+ LDA XX3+2,X            \ Fetch the y_lo coordinate of the edge's end vertex
+ STA XX12               \ from the XX3 heap into XX12
+
+ LDA XX3+3,X            \ Fetch the y_hi coordinate of the edge's end vertex
+ STA XX12+1             \ from the XX3 heap into XX11+1
+
+ENDIF
 
  LDA XX3+1,X            \ Fetch the x_hi coordinate of the edge's end vertex
  STA XX15+5             \ from the XX3 heap into XX15+5
@@ -161,7 +226,7 @@ ENDIF
                         \ clipped to fit on-screen, returning the clipped line's
                         \ end-points in (X1, Y1) and (X2, Y2)
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
 
  BCS LL78               \ If the C flag is set then the line is not visible on
                         \ screen, so jump to LL78 so we don't store this line
@@ -174,6 +239,12 @@ ELIF _DISC_VERSION
                         \ this line in the ship line heap
 
  JMP LL80               \ Jump down to part 11 to draw this edge
+
+ENDIF
+
+IF _MASTER_VERSION
+
+ JSR L78F8              \ ???
 
 ENDIF
 

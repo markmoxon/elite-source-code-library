@@ -22,6 +22,13 @@
 
  PHA                    \ Store the new message token we want to print
 
+IF _MASTER_VERSION
+
+ LDA #&0F               \ ???
+ STA COL
+
+ENDIF
+
  LDA MCH                \ Set A to the token number of the message that is
  JSR mes9               \ currently on-screen, and call mes9 to print it (which
                         \ will remove it from the screen, as printing is done

@@ -25,7 +25,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION \ Comment
 ENDIF
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
 .PLUT
 
@@ -43,7 +43,7 @@ IF _CASSETTE_VERSION \ Minor
  BNE PU1                \ If the current view is the front view, return from the
  RTS                    \ subroutine, as the geometry in INWK is already correct
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  BEQ PU2-1              \ If the current view is the front view, return from the
                         \ subroutine (PU2-1 contains an RTS), as the geometry in

@@ -18,6 +18,8 @@
 
 .EXNO3
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  LDA #16                \ Call the NOISE routine with A = 16 to make the first
  JSR NOISE              \ death sound
 
@@ -25,4 +27,11 @@
  BNE NOISE              \ death sound and return from the subroutine using a
                         \ tail call (this BNE is effectively a JMP as A will
                         \ never be zero)
+
+ELIF _MASTER_VERSION
+
+ LDY #4                 \ ???
+ JMP NOISE
+
+ENDIF
 

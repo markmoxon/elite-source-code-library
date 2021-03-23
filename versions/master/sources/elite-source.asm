@@ -539,7 +539,7 @@ INCLUDE "library/common/main/subroutine/beep.asm"
 
  STA L145F,X
  LDA #&80
- STA L144D,X
+ STA SBUF,X
  CLI
  SEC
  RTS
@@ -550,7 +550,7 @@ INCLUDE "library/common/main/subroutine/beep.asm"
 
 .L13EE
 
- LDA L144D,Y
+ LDA SBUF,Y
  BEQ L1449
 
  BMI L13FB
@@ -583,7 +583,7 @@ INCLUDE "library/common/main/subroutine/beep.asm"
 
  TYA
  TAX
- LDA L144D,Y
+ LDA SBUF,Y
  BMI L1439
 
  DEC L1450,X
@@ -599,13 +599,13 @@ INCLUDE "library/common/main/subroutine/beep.asm"
 .L142F
 
  LDA #&00
- STA L144D,Y
+ STA SBUF,Y
  STA L1459,Y
  BEQ L1443
 
 .L1439
 
- LSR L144D,X
+ LSR SBUF,X
 
 .L143C
 
@@ -627,7 +627,7 @@ INCLUDE "library/common/main/subroutine/beep.asm"
 
  RTS
 
-.L144D
+.SBUF
 
  EQUB &00
 
@@ -718,43 +718,71 @@ INCLUDE "library/common/main/subroutine/irq1.asm"
 
 INCLUDE "library/6502sp/io/subroutine/setvdu19.asm"
 
-.MASTER_MOVE_ZP_3000
+\ ******************************************************************************
+\
+\       Name: SAVEZP
+\       Type: Subroutine
+\   Category: Utility routines
+\    Summary: Save zero page from &0090 to &00FF into the buffer at &3000
+\
+\ ******************************************************************************
 
- LDA #&0F
- STA VIA+&34
+.SAVEZP
+
+ LDA #%00001111         \ Set bits 1 and 2 of the Access Control Register at
+ STA VIA+&34            \ SHEILA+&34 to switch screen memory into &3000-&7FFF
+
  LDX #&90
 
-.L1547
+.SZPL1
 
  LDA ZP,X
  STA &3000,X
- INX
- BNE L1547
 
- LDA #&09
- STA VIA+&34
+ INX
+
+ BNE SZPL1
+
+ LDA #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
+ STA VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
+
  RTS
 
-.MASTER_SWAP_ZP_3000
+\ ******************************************************************************
+\
+\       Name: LOADZP
+\       Type: Subroutine
+\   Category: Utility routines
+\    Summary: Swap zero page from &0090 to &00EF with the buffer at &3000
+\
+\ ******************************************************************************
 
- LDA #&0F
- STA VIA+&34
+.LOADZP
+
+ LDA #%00001111         \ Set bits 1 and 2 of the Access Control Register at
+ STA VIA+&34            \ SHEILA+&34 to switch screen memory into &3000-&7FFF
+
  LDX #&90
 
-.L155C
+.LZPL1
 
  LDA ZP,X
  LDY &3000,X
+
  STY ZP,X
  STA &3000,X
- INX
- CPX #&F0
- BNE L155C
 
- LDA #&09
- STA VIA+&34
+ INX
+
+ CPX #&F0
+ BNE LZPL1
+
+ LDA #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
+ STA VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
+
  LDA #&06
  STA VIA+&30
+
  RTS
 
 INCLUDE "library/6502sp/io/variable/ylookup.asm"
@@ -2098,13 +2126,13 @@ INCLUDE "library/enhanced/main/variable/deli.asm"
  CPY #&07
  BCC L6B3C
 
- JSR MASTER_SWAP_ZP_3000
+ JSR LOADZP
 
  LDX #&DF
  LDY #&6A
  JSR OSCLI
 
- JMP MASTER_SWAP_ZP_3000
+ JMP LOADZP
 
 .L6B53
 
@@ -2129,13 +2157,13 @@ INCLUDE "library/enhanced/main/variable/deli.asm"
  CPY #&07
  BCC L6B64
 
- JSR MASTER_SWAP_ZP_3000
+ JSR LOADZP
 
  LDX #&FF
  LDY #&6A
  JSR OSCLI
 
- JSR MASTER_SWAP_ZP_3000
+ JSR LOADZP
 
  LDY #&4C
 
@@ -2310,121 +2338,16 @@ INCLUDE "library/common/main/subroutine/mvt6.asm"
 INCLUDE "library/common/main/subroutine/mv40.asm"
 INCLUDE "library/common/main/subroutine/plut-pu1.asm"
 INCLUDE "library/common/main/subroutine/look1.asm"
+INCLUDE "library/common/main/subroutine/sight.asm"
 
+.SIGHTCOL
 
-.SIGHT
+ EQUB &0F,&FF,&FF,&0F
+ EQUB &FA,&FA,&FA,&FA
 
- LDY VIEW
- LDA LASER,Y
- BEQ LO2
-
- LDY #&00
- CMP #&0F
- BEQ L7D70
-
- INY
- CMP #&8F
- BEQ L7D70
-
- INY
- CMP #&97
- BEQ L7D70
-
- INY
-
-.L7D70
-
- LDA L7D8B,Y
- STA COL
- LDA #&80
- STA QQ19
- LDA #&48
- STA QQ19+1
- LDA #&14
- STA QQ19+2
- JSR TT15
-
- LDA #&0A
- STA QQ19+2
- JMP TT15
-
-.L7D8B
-
- EQUB &0F
-
- EQUB &FF,&FF,&0F
-
- EQUB &FA
-
- EQUB &FA,&FA,&FA
-
-.TT66
-
- STA QQ11
- JSR TTX66
-
- JSR MT2
-
- LDA #&00
- STA LSP
- LDA #&80
- STA QQ17
- STA DTW2
- JSR FLFLLS
-
- LDA #&00
- STA LAS2
- STA DLY
- STA de
- LDX QQ22+1
- BEQ OLDBOX
-
- JSR ee3
-
-.OLDBOX
-
- LDA QQ11
- BNE tt66
-
- LDA #&0B
- STA XC
- LDA #&FF
- STA COL
- LDA VIEW
- ORA #&60
- JSR TT27
-
- JSR TT162
-
- LDA #&AF
- JSR TT27
-
-.tt66
-
- LDX #&00
- STX QQ17
- RTS
-
-.L7DDC
-
- EQUB &00
-
- EQUB &40,&FE,&A0,&5F,&8C,&43,&FE,&8E
- EQUB &4F,&FE,&EA,&AE,&4F,&FE,&60,&51
- EQUB &33,&34,&35,&84,&38,&87,&2D,&5E
- EQUB &8C,&36,&37,&BC,&00,&FC,&60,&80
- EQUB &57,&45,&54,&37,&49,&39,&30,&5F
- EQUB &8E,&38,&39,&BC,&00,&FD,&60,&31
- EQUB &32,&44,&52,&36,&55,&4F,&50,&5B
- EQUB &8F,&81,&82,&0D,&4C,&20,&02,&01
- EQUB &41,&58,&46,&59,&4A,&4B,&40,&3A
- EQUB &0D,&83,&7F,&AE,&4C,&FE,&FD,&02
- EQUB &53,&43,&47,&48,&4E,&4C,&3B,&5D
- EQUB &7F,&85,&84,&86,&4C,&FA,&00,&00
- EQUB &5A,&20,&56,&42,&4D,&2C,&2E,&2F
- EQUB &8B,&30,&31,&33,&00,&00,&00,&1B
- EQUB &81,&82,&83,&85,&86,&88,&89,&5C
- EQUB &8D,&34,&35,&32,&2C,&4E,&E3
+INCLUDE "library/common/main/subroutine/tt66.asm"
+INCLUDE "library/common/main/subroutine/ttx66.asm"
+INCLUDE "library/6502sp/main/variable/trantable.asm"
 
 .KYTB
 
@@ -2432,14 +2355,14 @@ INCLUDE "library/common/main/subroutine/look1.asm"
  EQUB &52,&60,&62,&65,&66,&67,&68,&70
  EQUB &F0
 
-.RDKEY_REAL
+.RDKEY2
 
  JSR U%
 
  LDA #&10
  CLC
 
-.L7E73
+.RDK1
 
  LDY #&03
  SEI
@@ -2454,10 +2377,10 @@ INCLUDE "library/common/main/subroutine/look1.asm"
  TYA
  BMI DKS1
 
-.L7E8D
+.RDK2
 
  ADC #&01
- BPL L7E73
+ BPL RDK1
 
  CLD
  LDA L00CB
@@ -2473,56 +2396,24 @@ INCLUDE "library/common/main/subroutine/look1.asm"
  EOR #&80
  STA KL
 
-.L7EA2
+.DKL5
 
  CMP KYTB,X
- BCC L7E8D
+ BCC RDK2
 
- BEQ L7EAC
+ BEQ P%+5
 
  INX
- BNE L7EA2
-
-.L7EAC
+ BNE DKL5
 
  DEC KY17,X
  INX
  CLC
- BCC L7E8D
+ BCC RDK2
 
-.CTRL
-
- LDA #&01
-
-.DKS4
-
- LDX #&03
- SEI
- STX VIA+&40
- LDX #&7F
- STX VIA+&43
- STA VIA+&4F
- LDX VIA+&4F
- LDA #&0B
- STA VIA+&40
- CLI
- TXA
- RTS
-
-.U%
-
- LDA #&00
- LDX #&11
-
-.DKL3
-
- STA JSTY,X
- DEX
- BNE DKL3
-
- RTS
-
-.L7ED7
+INCLUDE "library/common/main/subroutine/ctrl.asm"
+INCLUDE "library/common/main/subroutine/dks4.asm"
+INCLUDE "library/common/main/subroutine/u_per_cent.asm"
 
  SED
 
@@ -2530,84 +2421,25 @@ INCLUDE "library/common/main/subroutine/look1.asm"
 
  TYA
  PHA
- JSR RDKEY_REAL
+ JSR RDKEY2
 
  PLA
  TAY
- LDA L7DDC,X
+ LDA TRANTABLE,X
  STA KL
  TAX
  RTS
 
-.L7EE6
+.RDKRTS
 
  RTS
 
-.ECMOF
-
- LDA #&00
- STA ECMA
- STA ECMP
- JMP ECBLB
-
-.SFRMIS
-
- LDX #&01
- JSR SFS1-2
-
- BCC L7EE6
-
- LDA #&78
- JSR MESS
-
- LDY #&08
- JMP NOISE
-
-.EXNO2
-
- LDA L1266
- CLC
- ADC L8062,X
- STA L1266
- LDA TALLY
- ADC L8083,X
- STA TALLY
- BCC EXNO3
-
- INC TALLY+1
- LDA #&65
- JSR MESS
-
-.EXNO3
-
- LDY #&04
- JMP NOISE
-
-.EXNO
-
- LDY #&06
- JMP NOISE
-
-.BRKBK
-
- LDA #&B9
- STA BRKV
- LDA #&66
- STA BRKV+1
- LDA #&85
- STA WRCHV
- LDA #&20
- STA WRCHV+1
- JSR MASTER_MOVE_ZP_3000
-
- JSR STARTUP
-
- JMP L1377
-
- CLI
- RTI
-
-.BeebDisEndAddr
+INCLUDE "library/common/main/subroutine/ecmof.asm"
+INCLUDE "library/common/main/subroutine/sfrmis.asm"
+INCLUDE "library/common/main/subroutine/exno2.asm"
+INCLUDE "library/common/main/subroutine/exno3.asm"
+INCLUDE "library/common/main/subroutine/exno.asm"
+INCLUDE "library/enhanced/main/subroutine/brkbk.asm"
 
 \ ******************************************************************************
 \
@@ -2617,4 +2449,3 @@ INCLUDE "library/common/main/subroutine/look1.asm"
 
 PRINT "S.BCODE ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
 SAVE "versions/master/output/BCODE.unprot.bin", CODE%, P%, LOAD%
-

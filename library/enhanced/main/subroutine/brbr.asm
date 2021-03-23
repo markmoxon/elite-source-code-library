@@ -54,7 +54,7 @@ ELIF _MASTER_VERSION
 
  LDX brkd               \ ???
  TXS
- JSR MASTER_SWAP_ZP_3000
+ JSR LOADZP
 
  STZ CATF
  LDY #&00

@@ -22,10 +22,19 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
  JSR ECBLB              \ Update the E.C.M. indicator bulb on the dashboard
 
+ELIF _MASTER_VERSION
+
+ JMP ECBLB              \ Update the E.C.M. indicator bulb on the dashboard and
+                        \ return from the subroutine using a tail call
+
 ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  LDA #72                \ Call the NOISE routine with A = 72 to make the sound
  BNE NOISE              \ of the E.C.M. being turned off and return from the
                         \ subroutine using a tail call (this BNE is effectively
                         \ a JMP as A will never be zero)
+
+ENDIF
 

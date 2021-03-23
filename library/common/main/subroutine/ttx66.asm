@@ -1,9 +1,13 @@
 \ ******************************************************************************
 \
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 \       Name: TTX66
+ELIF _MASTER_VERSION
+\       Name: TT662
+ENDIF
 \       Type: Subroutine
 \   Category: Utility routines
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Clear the top part of the screen and draw a white border
 ELIF _6502SP_VERSION
 \    Summary: Send control code 11 to the I/O processor to clear the top part
@@ -15,21 +19,35 @@ ENDIF
 \ Clear the top part of the screen (the space view) and draw a white border
 \ along the top and sides.
 \
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
 \ Other entry points:
 \
 \   BOX                 Just draw the border and (if this is a space view) the
 \                       view name. This can be used to remove the border and
 \                       view name, as it is drawn using EOR logic
 \
+ENDIF
 IF _DISC_DOCKED \ Comment
+\ Other entry points:
+\
 \   BOL1-1              Contains an RTS
 \
 ENDIF
 \ ******************************************************************************
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
 .TTX66
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: Group A: The default case for enhanced text tokens is Sentence Case
+ELIF _MASTER_VERSION
+
+.TT662
+
+ JSR TTX66              \ ???
+
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Enhanced: Group A: The default case for enhanced text tokens is Sentence Case
 
  JSR MT2                \ Switch to Sentence Case when printing extended tokens
 
@@ -45,19 +63,24 @@ IF _6502SP_VERSION \ Tube
 
  STZ LSP                \ Reset the ball line heap pointer at LSP
 
+ELIF _MASTER_VERSION
+
+ LDA #0                 \ Reset the ball line heap pointer at LSP
+ STA LSP
+
 ENDIF
 
  LDA #%10000000         \ Set bit 7 of QQ17 to switch to Sentence Case
  STA QQ17
 
-IF _DISC_DOCKED OR _6502SP_VERSION \ Enhanced: See group A
+IF _DISC_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Enhanced: See group A
 
  STA DTW2               \ Set bit 7 of DTW2 to indicate we are not currently
                         \ printing a word
 
 ENDIF
 
-IF _DISC_FLIGHT OR _6502SP_VERSION \ Platform
+IF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
  JSR FLFLLS             \ Call FLFLLS to reset the LSO block
 
@@ -90,9 +113,14 @@ ELIF _6502SP_VERSION
 
  STZ LAS2               \ Set LAS2 = 0 to stop any laser pulsing
 
+ELIF _MASTER_VERSION
+
+ LDA #0                 \ Set LAS2 = 0 to stop any laser pulsing
+ STA LAS2
+
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Minor
 
  STA DLY                \ Set the delay in DLY to 0, to indicate that we are
                         \ no longer showing an in-flight message, so any new
@@ -151,7 +179,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Label
 
 .BOX
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDX QQ22+1             \ Fetch into X the number that's shown on-screen during
                         \ the hyperspace countdown
@@ -193,12 +221,22 @@ ELIF _6502SP_VERSION
  LDA #11                \ Move the text cursor to row 11
  JSR DOXC
 
+ELIF _MASTER_VERSION
+
+ LDA #11                \ Move the text cursor to row 11
+ STA XC
+
 ENDIF
 
 IF _6502SP_VERSION \ Screen
 
  LDA #CYAN              \ Send a #SETCOL CYAN command to the I/O processor to
  JSR DOCOL              \ switch to colour 3, which is cyan in the space view
+
+ELIF _MASTER_VERSION
+
+ LDA #CYAN              \ Switch to colour 3, which is cyan in the space view
+ STA COL
 
 ENDIF
 
@@ -261,10 +299,19 @@ ELIF _6502SP_VERSION
 
  STX Y2                 \ Set Y2 = 0
 
+ELIF _MASTER_VERSION
+
+ LDX #0                 \ Set QQ17 = 0 to switch to ALL CAPS
+ STX QQ17
+
 ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
  DEX                    \ Set X2 = 255
  STX X2
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
 
@@ -278,6 +325,8 @@ ELIF _6502SP_VERSION
                         \ (0, 0) to (255, 0), along the very top of the screen
 
 ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
  LDA #2                 \ Set X1 = X2 = 2
  STA X1
@@ -318,6 +367,8 @@ ENDIF
  DEC X1                 \ Decrement X1 and X2
  DEC X2
 
+ENDIF
+
 IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
 
  JMP LOIN               \ Draw a line from (X1, Y1) to (X2, Y2), and return from
@@ -327,6 +378,10 @@ ELIF _6502SP_VERSION
 
  JMP LL30               \ Draw a line from (X1, Y1) to (X2, Y2), and return from
                         \ the subroutine using a tail call
+
+ELIF _MASTER_VERSION
+
+ RTS                    \ Return from the subroutine
 
 ENDIF
 

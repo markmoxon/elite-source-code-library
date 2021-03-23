@@ -21,10 +21,26 @@
 
 .EXNO2
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  INC TALLY              \ Increment the low byte of the kill count in TALLY
 
  BNE EXNO-2             \ If there is no carry, jump to the LDX #7 below (at
                         \ EXNO-2)
+
+ELIF _MASTER_VERSION
+
+ LDA L1266              \ ???
+ CLC
+ ADC L8062,X
+ STA L1266
+ LDA TALLY
+ ADC L8083,X
+ STA TALLY
+
+ BCC EXNO3
+
+ENDIF
 
  INC TALLY+1            \ Increment the high byte of the kill count in TALLY
 
@@ -32,6 +48,15 @@
  JSR MESS               \ for a pat on the back, so print recursive token 101
                         \ ("RIGHT ON COMMANDER!") as an in-flight message
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  LDX #7                 \ Set X = 7 and fall through into EXNO to make the
                         \ sound of a ship exploding
+
+ELIF _MASTER_VERSION
+
+                        \ Fall through into EXNO3 to make the sound of a
+                        \ ship exploding
+
+ENDIF
 

@@ -30,13 +30,28 @@ ELIF _6502SP_VERSION OR _DISC_VERSION
                         \ success, so if it's clear, jump to KYTB to return from
                         \ the subroutine (as KYTB contains an RTS)
 
+ELIF _MASTER_VERSION
+
+ BCC RDKRTS             \ The C flag will be set if the call to SFS1-2 was a
+                        \ success, so if it's clear, jump to KYTB to return from
+                        \ the subroutine (as RDKRTS contains an RTS)
+
 ENDIF
 
  LDA #120               \ Print recursive token 120 ("INCOMING MISSILE") as an
  JSR MESS               \ in-flight message
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  LDA #48                \ Call the NOISE routine with A = 48 to make the sound
  BNE NOISE              \ of the missile being launched and return from the
                         \ subroutine using a tail call (this BNE is effectively
                         \ a JMP as A will never be zero)
+
+ELIF _MASTER_VERSION
+
+ LDY #&08               \ ???
+ JMP NOISE
+
+ENDIF
 

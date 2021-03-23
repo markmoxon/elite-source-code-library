@@ -3,7 +3,7 @@
 \       Name: U%
 \       Type: Subroutine
 \   Category: Keyboard
-\    Summary: Clear the key logger (from KY1 through KY19)
+\    Summary: Clear the key logger
 \
 \ ------------------------------------------------------------------------------
 \
@@ -28,13 +28,27 @@ ELIF _6502SP_VERSION OR _DISC_VERSION
  LDY #16                \ We want to clear the 16 key logger locations from
                         \ KY1 to KY19, so set a counter in Y
 
+ELIF _MASTER_VERSION
+
+ LDX #17                \ ???
+
 ENDIF
 
 .DKL3
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  STA KL,Y               \ Store 0 in the Y-th byte of the key logger
 
  DEY                    \ Decrement the counter
+
+ELIF _MASTER_VERSION
+
+ STA JSTY,X             \ Store 0 in the Y-th byte of the key logger ???
+
+ DEX                    \ Decrement the counter
+
+ENDIF
 
  BNE DKL3               \ And loop back for the next key, until we have just
                         \ KL+1. We don't want to clear the first key logger

@@ -10,6 +10,7 @@
 \ Make the two-part explosion sound of us making a laser strike, or of another
 \ ship exploding.
 \
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Comment
 \ The volume of the first explosion is affected by the distance of the ship
 \ being hit, with more distant ships being quieter. The value in X also affects
 \ the volume of the first explosion, with a higher X giving a quieter sound
@@ -26,15 +27,25 @@
 \                         * 15 = explosion is quieter (i.e. this is just a laser
 \                                strike)
 \
+ENDIF
 \ ******************************************************************************
 
 .EXNO
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  STX T                  \ Store the distance in T
 
  LDA #24                \ Set A = 24 to denote the sound of us making a hit or
  JSR NOS1               \ kill (part 1 of the explosion), and call NOS1 to set
                         \ up the sound block in XX16
+
+ELIF _MASTER_VERSION
+
+ LDY #&06               \ ???
+ JMP NOISE
+
+ENDIF
 
 IF _6502SP_VERSION \ Other: The 6502SP version contains a bug fix to make sure very distant ships (i.e. where z_sign is non-zero) explode silently
 
@@ -61,6 +72,8 @@ IF _6502SP_VERSION \ Other: The 6502SP version contains a bug fix to make sure v
                         \ heard
 
 ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  LDA INWK+7             \ Fetch z_hi, the distance of the ship being hit in
  LSR A                  \ terms of the z-axis (in and out of the screen), and
@@ -94,6 +107,8 @@ ENDIF
  LDA #16                \ Set A = 16 to denote we have made a hit or kill
                         \ (part 2 of the explosion), and fall through into NOISE
                         \ to make the sound
+
+ENDIF
 
 IF _CASSETTE_VERSION \ Minor
 

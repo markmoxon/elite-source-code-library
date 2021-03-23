@@ -109,7 +109,7 @@ ENDIF
 
 IF _MASTER_VERSION
 
- JSR MASTER_SWAP_ZP_3000 \ ???
+ JSR LOADZP             \ ???
 
 ENDIF
 
@@ -132,7 +132,7 @@ ENDIF
 
 IF _MASTER_VERSION
 
- JSR MASTER_SWAP_ZP_3000 \ ???
+ JSR LOADZP             \ ???
 
 ENDIF
 

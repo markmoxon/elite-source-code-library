@@ -34,6 +34,15 @@ ENDIF
 
  STA QQ11               \ Set the current view type in QQ11 to A
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
                         \ Fall through into TTX66 to clear the screen and draw a
                         \ white border
+
+ELIF _MASTER_VERSION
+
+                        \ Fall through into TTX662 to clear the screen and draw a
+                        \ white border
+
+ENDIF
 

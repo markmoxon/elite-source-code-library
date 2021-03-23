@@ -34,7 +34,34 @@ ELIF _6502SP_VERSION
  STA BRKV+1
  CLI
 
+ELIF _MASTER_VERSION
+
+ LDA #&B9               \ ???
+ STA BRKV
+ LDA #&66
+ STA BRKV+1
+ LDA #&85
+ STA WRCHV
+ LDA #&20
+ STA WRCHV+1
+
+ JSR SAVEZP
+
+ JSR STARTUP
+
+ JMP L1377
+
+ CLI
+
 ENDIF
 
+IF _DISC_DOCKED OR _6502SP_VERSION
+
  RTS                    \ Return from the subroutine
+
+ELIF _MASTER_VERSION
+
+ RTI                    \ ???
+
+ENDIF
 

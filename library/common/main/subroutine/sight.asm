@@ -20,7 +20,7 @@ IF _DISC_DOCKED \ Label
                         \ (as BOL1-1 contains &60, which is the opcode for an
                         \ RTS)
 
-ELIF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+ELIF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  BEQ LO2                \ If it is zero (i.e. there is no laser fitted to this
                         \ view), jump to LO2 to return from the subroutine (as
@@ -32,6 +32,27 @@ IF _6502SP_VERSION \ Screen
 
  LDA #YELLOW            \ Send a #SETCOL YELLOW command to the I/O processor to
  JSR DOCOL              \ switch to colour 1, which is yellow in the space view
+
+ELIF _MASTER_VERSION
+
+ LDY #&00               \ ???
+ CMP #&0F
+ BEQ L7D70
+
+ INY
+ CMP #&8F
+ BEQ L7D70
+
+ INY
+ CMP #&97
+ BEQ L7D70
+
+ INY
+
+.L7D70
+
+ LDA SIGHTCOL,Y
+ STA COL
 
 ENDIF
 
@@ -45,7 +66,7 @@ ENDIF
  LDA #20                \ Set QQ19+2 to size 20 for the crosshairs size
  STA QQ19+2
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Platform
 
  JSR TT15               \ Call TT15 to draw crosshairs of size 20 just to the
                         \ left of the middle of the screen
@@ -61,7 +82,7 @@ ENDIF
  LDA #10                \ Set QQ19+2 to size 10 for the crosshairs size
  STA QQ19+2
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Platform
 
  JMP TT15               \ Call TT15 to draw crosshairs of size 10 at the same
                         \ location, which will remove the centre part from the

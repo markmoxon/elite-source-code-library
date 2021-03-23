@@ -20,6 +20,15 @@
 
 .CTRL
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  LDX #1                 \ Set X to the internal key number for CTRL and fall
                         \ through to DSK4 to scan the keyboard
+
+ELIF _MASTER_VERSION
+
+ LDA #1                 \ Set A to the internal key number for CTRL and fall
+                        \ through to DSK4 to scan the keyboard
+
+ENDIF
 

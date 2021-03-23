@@ -125,7 +125,7 @@ ELIF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- JSR L7ED7              \ ???
+ JSR RDKEY-1            \ ???
 
 ENDIF
 

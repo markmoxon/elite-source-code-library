@@ -27,12 +27,12 @@ INCLUDE "versions/master/sources/elite-header.h.asm"
 CPU 1                   \ Switch to 65SC12 assembly, as this code runs on a
                         \ BBC Master
 
-_CASSETTE_VERSION = (_VERSION = 1)
-_DISC_VERSION = (_VERSION = 2)
-_6502SP_VERSION = (_VERSION = 3)
-_MASTER_VERSION = (_VERSION = 4)
-_DISC_DOCKED = FALSE
-_DISC_FLIGHT = FALSE
+_CASSETTE_VERSION       = (_VERSION = 1)
+_DISC_VERSION           = (_VERSION = 2)
+_6502SP_VERSION         = (_VERSION = 3)
+_MASTER_VERSION         = (_VERSION = 4)
+_DISC_DOCKED            = FALSE
+_DISC_FLIGHT            = FALSE
 
 \ ******************************************************************************
 \
@@ -44,6 +44,8 @@ Q% = _REMOVE_CHECKSUMS  \ Set Q% to TRUE to max out the default commander, FALSE
                         \ for the standard default commander (this is set to
                         \ TRUE if checksums are disabled, just for convenience)
 
+LS% = &0800             \ The start of the descending ship line heap
+
 BRKV = &202             \ The break vector that we intercept to enable us to
                         \ handle and display system errors
 
@@ -53,7 +55,7 @@ NOST = 20               \ The number of stardust particles in normal space (this
 NOSH = 12               \ The maximum number of ships in our local bubble of
                         \ universe
 
-NTY = 34                \ The number of different ship types
+NTY = 33                \ The number of different ship types
 
 MSL = 1                 \ Ship type for a missile
 SST = 2                 \ Ship type for a Coriolis space station
@@ -156,219 +158,43 @@ VE = &57                \ The obfuscation byte used to hide the extended tokens
 LL = 30                 \ The length of lines (in characters) of justified text
                         \ in the extended tokens system
 
-ZP = &0000
-RAND = &0002
-T1 = &0006
-SC = &000A
-SCH = &000B
-P = &000C
-XC = &0010
-COL = &0011
-YC = &0012
-QQ17 = &0013
-K3 = &0014
-XX2 = &0014
-K4 = &0022
-XX16 = &0024
-XX0 = &0036
-INF = &0038
-V = &003A
-XX = &003C
-YY = &003E
-SUNX = &0040
-BETA = &0042
-BET1 = &0043
-QQ22 = &0044
-ECMA = &0046
-ALP1 = &0047
-ALP2 = &0048
-XX15 = &004A
-X1 = &004A
-Y1 = &004B
-X2 = &004C
-Y2 = &004D
-XX12 = &0050
-K = &0056
-LAS = &005A
-MSTG = &005B
-DL = &005C
-LSP = &005D
-QQ15 = &005E
-XX18 = &0064
-K5 = &0064
-K6 = &0068
-QQ19 = &006D
-BET2 = &0073
-DELTA = &0075
-DELT4 = &0076
-U = &0078
-Q = &0079
-R = &007A
-S = &007B
-T = &007C
-XSAV = &007D
-YSAV = &007E
-XX17 = &007F
-W = &0080
-QQ11 = &0081
-ZZ = &0082
-XX13 = &0083
-MCNT = &0084
-TYPE = &0085
-ALPHA = &0086
-QQ12 = &0087
-TGT = &0088
-FLAG = &0089
-CNT = &008A
-CNT2 = &008B
-STP = &008C
-XX4 = &008D
-XX20 = &008E
-XX14 = &008F
-RAT = &0091
-RAT2 = &0092
-K2 = &0093
-widget = &0097
-XMAX = &0098 \ Set to 0 in RES2, never read I think
-YMAX = &0099 \ Set to 191 by RES2, i.e. number of pixel rows in space view
-messXC = &009A
-deltX = &009B \ New var, used in STARS2 only for delta_x
-INWK = &009C
-XX1 = &009C
-XX19 = &00BD
-NEWB = &00C0
-JSTX = &00C1
-JSTY = &00C2
-KL = &00C3
-KY17 = &00C4
-KY14 = &00C5
-KY15 = &00C6
-KY20 = &00C7
-KY7 = &00C8
-KY5 = &00C9  \ KL+5, X in others, so KY5
-KY18 = &00CA
-KY6 = &00CB \ KL+6, S in others, so KY6
-KY19 = &00CC
-KY12 = &00CD
-KY2 = &00CE
-KY16 = &00CF
-KY3 = &00D0  \ KL+3, < in others, so KY3
-KY4 = &00D1  \ KL+4, > in others, so KY4
-KY1 = &00D2
-KY13 = &00D3
-LSX = &00D4
-FSH = &00D5
-ASH = &00D6
-ENERGY = &00D7
-QQ3 = &00D8
-QQ4 = &00D9
-QQ5 = &00DA
-QQ6 = &00DB
-QQ7 = &00DD
-QQ8 = &00DF
-QQ9 = &00E1
-QQ10 = &00E2
-NOSTM = &00E3
+XX21 = &8000            \ The address of the ship blueprints lookup table, as
+                        \ set in elite-data.asm
 
-XX3 = &0100
+E% = &8042              \ The address of the default NEWB ship bytes, as set in
+                        \ elite-data.asm
 
-K% = &0400
+TALLYFRAC = &8063       \ The address of the kill tally fraction table, as set
+                        \ in elite-data.asm
 
-L0791 = &0791 \ New
+TALLYINT = &8084        \ The address of the kill tally integer table, as set in
+                        \ elite-data.asm
 
-WP = &0801
+QQ18 = &A000            \ The address of the text token table, as set in
+                        \ elite-data.asm
 
-FRIN = &0E41
-MANY = &0E4E
-SSPR = &0E50
-JUNK = &0E70
-auto = &0E71
-ECMP = &0E72
-MJ = &0E73
-CABTMP = &0E74
-LAS2 = &0E75
-MSAR = &0E76
-VIEW = &0E77
-LASCT = &0E78
-GNTMP = &0E79
-HFX = &0E7A
-EV = &0E7B
-DLY = &0E7C
-de = &0E7D
-LSX2 = &0E7E
-LSY2 = &0F7E
-LSO = &107E
-BUF = &1146
-SX = &11A0
-SXL = &11B5
-SY = &11CA
-SYL = &11DF
-SZ = &11F4
-SZL = &1209
-LASX = &121E
-LASY = &121F
-ALTIT = &1221
-SWAP = &1222
-SDIST = &1229 \ New, distance for ship in TITLE?
-NAME = &122C
-TP = &1234
-QQ0 = &1235
-QQ1 = &1236
-QQ21 = &1237
-CASH = &123D
-QQ14 = &1241
-COK = &1242
-GCNT = &1243
-LASER   = &1244
-CRGO = &124A
-QQ20 = &124B
-ECM = &125C
-BST = &125D
-BOMB = &125E
-ENGY = &125F
-DKCMP = &1260
-GHYP = &1261
-ESCP = &1262
-L1264 = &1264 \ New, updated in SOLAR, something to do with cargo hold
-L1265 = &1265 \ New, connected to 1265, see SOLAR and inventory TT210
-TALLYF = &1266 \ New, only mentioned in EXNO2, is this our fractional TALLY?
-NOMSL = &1267
-FIST = &1268
-AVL = &1269
-QQ26 = &127A
-TALLY = &127B
-SVC = &127D
-MCH = &1281
-COMX = &1282
-COMY = &1283
-QQ24 = &1292
-QQ25 = &1293
-QQ28 = &1294
-QQ29 = &1295
-gov = &1296
-tek = &1297
-SLSP = &1298
-QQ2 = &129A
-safehouse = &12A0
-CLCNT   = &12A6 \ New, EX2, stored but never read = cloud counter
-ADCH1   = &12A7 \ New, joystick channel 1, written to in irq1
-ADCH2   = &12A8 \ New, channel 2
-ADCH3   = &12A9 \ New, channel 3
+SNE = &A3C0             \ The address of the sine lookup table, as set in
+                        \ elite-data.asm
 
-XX21 = &8000
-E% = &8042
-TALLYFRAC = &8063
-TALLYINT = &8084
+ACT = &A3E0             \ The address of the arctan lookup table, as set in
+                        \ elite-data.asm
 
-QQ18 = &A000
-SNE = &A3C0
-ACT = &A3E0
-TKN1 = &A400
-RUPLA = &AF48
-RUGAL = &AF62
-RUTOK = &AF7C
+TKN1 = &A400            \ The address of the extended token table, as set in
+                        \ elite-data.asm
 
-NT% = SVC + 2 - TP
+RUPLA = &AF48           \ The address of the extended system description system
+                        \ number table, as set in elite-data.asm
+
+RUGAL = &AF62           \ The address of the extended system description galaxy
+                        \ number table, as set in elite-data.asm
+
+RUTOK = &AF7C           \ The address of the extended system description token
+                        \ table, as set in elite-data.asm
+
+INCLUDE "library/common/main/workspace/zp.asm"
+INCLUDE "library/common/main/workspace/xx3.asm"
+INCLUDE "library/common/main/workspace/k_per_cent.asm"
+INCLUDE "library/common/main/workspace/wp.asm"
 
 \ ******************************************************************************
 \
@@ -383,25 +209,11 @@ ORG CODE%
 
 LOAD_A% = LOAD%
 
-INCLUDE "library/6502sp/io/variable/tvt3.asm"
+INCLUDE "library/advanced/main/variable/tvt3.asm"
 INCLUDE "library/common/main/variable/vec.asm"
 INCLUDE "library/common/main/subroutine/wscan.asm"
 INCLUDE "library/common/main/subroutine/delay.asm"
-
-\ ******************************************************************************
-\
-\       Name: LOWBEEP
-\       Type: Subroutine
-\   Category: Sound
-\    Summary: Make a long, low beep
-\
-\ ******************************************************************************
-
-.LOWBEEP
-
- LDY #0                 \ Call NOISE with Y = 0 to make a long, low beep,
- BRA NOISE              \ returning from the subroutine using a tail call
-
+INCLUDE "library/master/main/subroutine/lowbeep.asm"
 INCLUDE "library/common/main/subroutine/beep.asm"
 
 \ ******************************************************************************
@@ -436,45 +248,7 @@ INCLUDE "library/common/main/subroutine/beep.asm"
  EQUB %11011111
  EQUB %11101111
 
-\ ******************************************************************************
-\
-\       Name: SOUND
-\       Type: Subroutine
-\   Category: Sound
-\    Summary: Write sound data directly to the 76489 sound chip
-\
-\ ------------------------------------------------------------------------------
-\
-\ Other entry points:
-\
-\   SRTS                Contains an RTS
-\
-\ ******************************************************************************
-
-.SOUND
-
- LDX #%11111111         \ Set 6522 System VIA data direction register DDRA
- STX VIA+&43            \ (SHEILA &43) to %11111111. This sets the ORA register
-                        \ so that bits 0-7 of ORA will be sent to the 76489
-                        \ sound chip
-
- STA VIA+&4F            \ Set 6522 System VIA output register ORA (SHEILA &4F)
-                        \ to A, the sound data we want to send
-
- LDA #%00000000         \ Activate the sound chip by clearing bit 3 of the
- STA VIA+&40            \ 6522 System VIA output register ORB (SHEILA &40)
-
- PHA                    \ These instructions don't do anything apart from
- PLA                    \ keeping the sound chip activated for at least 8us,
- PHA                    \ which we need to do in order for the data to make
- PLA                    \ it to the chip
-
- LDA #%00001000         \ Deactivate the sound chip by setting bit 3 of the
- STA VIA+&40            \ 6522 System VIA output register ORB (SHEILA &40)
-
-.SRTS
-
- RTS                    \ Return from the subroutine
+INCLUDE "library/master/main/subroutine/sound.asm"
 
 \ ******************************************************************************
 \
@@ -772,38 +546,12 @@ INCLUDE "library/common/main/subroutine/beep.asm"
  EQUB &07, &07, &0F
  EQUB &03, &0F, &0F
 
-INCLUDE "library/6502sp/io/subroutine/startup.asm"
-INCLUDE "library/6502sp/io/variable/tvt1.asm"
+INCLUDE "library/advanced/main/subroutine/startup.asm"
+INCLUDE "library/advanced/main/variable/tvt1.asm"
 INCLUDE "library/common/main/subroutine/irq1.asm"
-
-\ ******************************************************************************
-\
-\       Name: VSCAN
-\       Type: Variable
-\   Category: Screen mode
-\    Summary: Defines the split position in the split-screen mode
-\
-\ ******************************************************************************
-
-.VSCAN
-
- EQUB 57
-
-\ ******************************************************************************
-\
-\       Name: DLCNT
-\       Type: Variable
-\   Category: Screen mode
-\    Summary: The line scan counter in DL gets reset to this value at each
-\             vertical sync, before decrementing with each line scan
-\
-\ ******************************************************************************
-
-.DLCNT
-
- EQUB 30
-
-INCLUDE "library/6502sp/io/subroutine/setvdu19.asm"
+INCLUDE "library/master/main/variable/vscan.asm"
+INCLUDE "library/master/main/variable/dlcnt.asm"
+INCLUDE "library/advanced/main/subroutine/setvdu19-dovdu19.asm"
 
 \ ******************************************************************************
 \
@@ -872,12 +620,12 @@ INCLUDE "library/6502sp/io/subroutine/setvdu19.asm"
 
  RTS
 
-INCLUDE "library/6502sp/io/variable/ylookup.asm"
+INCLUDE "library/advanced/main/variable/ylookup.asm"
 INCLUDE "library/common/main/subroutine/scan.asm"
-INCLUDE "library/6502sp/main/subroutine/ll30.asm"
-INCLUDE "library/6502sp/io/variable/twos.asm"
-INCLUDE "library/6502sp/io/variable/twos2.asm"
-INCLUDE "library/6502sp/io/variable/ctwos.asm"
+INCLUDE "library/advanced/main/subroutine/ll30.asm"
+INCLUDE "library/advanced/main/variable/twos.asm"
+INCLUDE "library/advanced/main/variable/twos2.asm"
+INCLUDE "library/advanced/main/variable/ctwos.asm"
 INCLUDE "library/common/main/subroutine/loin_part_1_of_7.asm"
 INCLUDE "library/common/main/subroutine/loin_part_2_of_7.asm"
 INCLUDE "library/common/main/subroutine/loin_part_3_of_7.asm"
@@ -886,13 +634,13 @@ INCLUDE "library/common/main/subroutine/loin_part_5_of_7.asm"
 INCLUDE "library/common/main/subroutine/loin_part_6_of_7.asm"
 INCLUDE "library/common/main/subroutine/loin_part_7_of_7.asm"
 INCLUDE "library/common/main/subroutine/hloin.asm"
-INCLUDE "library/6502sp/io/variable/twfl.asm"
-INCLUDE "library/6502sp/io/variable/twfr.asm"
-INCLUDE "library/6502sp/io/variable/orange.asm"
+INCLUDE "library/advanced/main/variable/twfl.asm"
+INCLUDE "library/advanced/main/variable/twfr.asm"
+INCLUDE "library/advanced/main/variable/orange.asm"
 INCLUDE "library/common/main/subroutine/pix1.asm"
 INCLUDE "library/common/main/subroutine/pixel2.asm"
 INCLUDE "library/common/main/subroutine/pixel.asm"
-INCLUDE "library/6502sp/io/variable/pxcl.asm"
+INCLUDE "library/advanced/main/variable/pxcl.asm"
 INCLUDE "library/common/main/subroutine/dot.asm"
 INCLUDE "library/common/main/subroutine/cpix2.asm"
 INCLUDE "library/common/main/subroutine/ecblb2.asm"
@@ -901,28 +649,15 @@ INCLUDE "library/common/main/subroutine/spblb-dobulb.asm"
 INCLUDE "library/common/main/variable/spbt.asm"
 INCLUDE "library/common/main/variable/ecbt.asm"
 INCLUDE "library/common/main/subroutine/msbar.asm"
-
-\ ******************************************************************************
-\
-\       Name: HCNT
-\       Type: Variable
-\   Category: Ship hanger
-\    Summary: The number of ships being displayed in the ship hanger
-\
-\ ******************************************************************************
-
-.HCNT
-
- EQUB 0
-
+INCLUDE "library/master/main/variable/hcnt.asm"
 INCLUDE "library/enhanced/main/subroutine/hanger.asm"
 INCLUDE "library/enhanced/main/subroutine/has2.asm"
 INCLUDE "library/enhanced/main/subroutine/has3.asm"
-INCLUDE "library/common/main/subroutine/dvid4.asm"
-INCLUDE "library/6502sp/io/subroutine/cls.asm"
-INCLUDE "library/6502sp/io/subroutine/tt67.asm"
+INCLUDE "library/common/main/subroutine/dvid4-dvid4_duplicate.asm"
+INCLUDE "library/advanced/main/subroutine/cls.asm"
+INCLUDE "library/advanced/main/subroutine/tt67-tt67_duplicate.asm"
 INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
-INCLUDE "library/6502sp/io/subroutine/ttx66.asm"
+INCLUDE "library/advanced/main/subroutine/ttx66.asm"
 INCLUDE "library/common/main/subroutine/zes1.asm"
 INCLUDE "library/common/main/subroutine/zes2.asm"
 INCLUDE "library/common/main/subroutine/clyns.asm"
@@ -930,7 +665,7 @@ INCLUDE "library/common/main/subroutine/dials_part_1_of_4.asm"
 INCLUDE "library/common/main/subroutine/dials_part_2_of_4.asm"
 INCLUDE "library/common/main/subroutine/dials_part_3_of_4.asm"
 INCLUDE "library/common/main/subroutine/dials_part_4_of_4.asm"
-INCLUDE "library/6502sp/io/subroutine/pzw2.asm"
+INCLUDE "library/advanced/main/subroutine/pzw2.asm"
 INCLUDE "library/common/main/subroutine/pzw.asm"
 INCLUDE "library/common/main/subroutine/dilx.asm"
 INCLUDE "library/common/main/subroutine/dil2.asm"
@@ -1659,53 +1394,15 @@ INCLUDE "library/enhanced/main/variable/jmtb.asm"
 INCLUDE "library/enhanced/main/variable/tkn2.asm"
 INCLUDE "library/common/main/variable/qq16.asm"
 INCLUDE "library/enhanced/main/variable/s1_per_cent.asm"
-
-\ ******************************************************************************
-\
-\       Name: NA%
-\       Type: Variable
-\   Category: Save and load
-\    Summary: The data block for the last saved commander
-\
-\ ******************************************************************************
-
-.NA%
-
- EQUS "jameson"         \ The current commander name
- EQUB 13
-
- SKIP 53                \ Placeholders for bytes #0 to #52
-
- EQUB 16                \ AVL+0  = Market availability of Food, #53
- EQUB 15                \ AVL+1  = Market availability of Textiles, #54
- EQUB 17                \ AVL+2  = Market availability of Radioactives, #55
- EQUB 0                 \ AVL+3  = Market availability of Slaves, #56
- EQUB 3                 \ AVL+4  = Market availability of Liquor/Wines, #57
- EQUB 28                \ AVL+5  = Market availability of Luxuries, #58
- EQUB 14                \ AVL+6  = Market availability of Narcotics, #59
- EQUB 0                 \ AVL+7  = Market availability of Computers, #60
- EQUB 0                 \ AVL+8  = Market availability of Machinery, #61
- EQUB 10                \ AVL+9  = Market availability of Alloys, #62
- EQUB 0                 \ AVL+10 = Market availability of Firearms, #63
- EQUB 17                \ AVL+11 = Market availability of Furs, #64
- EQUB 58                \ AVL+12 = Market availability of Minerals, #65
- EQUB 7                 \ AVL+13 = Market availability of Gold, #66
- EQUB 9                 \ AVL+14 = Market availability of Platinum, #67
- EQUB 8                 \ AVL+15 = Market availability of Gem-Stones, #68
- EQUB 0                 \ AVL+16 = Market availability of Alien Items, #69
-
- SKIP 3                 \ Placeholders for bytes #70 to #72
-
- EQUB 128               \ SVC = Save count, #73
-
+INCLUDE "library/master/main/variable/na_per_cent.asm"
 INCLUDE "library/common/main/variable/chk2.asm"
 INCLUDE "library/common/main/variable/chk.asm"
 
- SKIP 12
+ SKIP 12                \ These bytes appear to be unused
 
-INCLUDE "library/common/main/variable/na_per_cent.asm"
+INCLUDE "library/common/main/variable/na_per_cent-default_per_cent.asm"
 
- SKIP 16
+ SKIP 16                \ These bytes appear to be unused
 
 INCLUDE "library/advanced/main/variable/shpcol.asm"
 INCLUDE "library/advanced/main/variable/scacol.asm"
@@ -1852,7 +1549,7 @@ INCLUDE "library/common/main/subroutine/add.asm"
 INCLUDE "library/common/main/subroutine/tis1.asm"
 INCLUDE "library/common/main/subroutine/dv42.asm"
 INCLUDE "library/common/main/subroutine/dv41.asm"
-INCLUDE "library/6502sp/main/subroutine/dvid4.asm"
+INCLUDE "library/advanced/main/subroutine/dvid4.asm"
 INCLUDE "library/common/main/subroutine/dvid3b2.asm"
 INCLUDE "library/common/main/subroutine/cntr.asm"
 INCLUDE "library/common/main/subroutine/bump2.asm"
@@ -1960,10 +1657,10 @@ INCLUDE "library/enhanced/main/variable/mtin.asm"
 
 INCLUDE "library/enhanced/main/subroutine/tnpr1.asm"
 INCLUDE "library/common/main/subroutine/tnpr.asm"
-INCLUDE "library/6502sp/io/subroutine/setxc.asm"
-INCLUDE "library/6502sp/io/subroutine/setyc.asm"
-INCLUDE "library/6502sp/main/subroutine/incyc.asm"
-INCLUDE "library/6502sp/main/subroutine/trademode.asm"
+INCLUDE "library/advanced/main/subroutine/setxc-doxc.asm"
+INCLUDE "library/advanced/main/subroutine/setyc-doyc.asm"
+INCLUDE "library/advanced/main/subroutine/incyc.asm"
+INCLUDE "library/advanced/main/subroutine/trademode.asm"
 INCLUDE "library/common/main/subroutine/tt20.asm"
 INCLUDE "library/common/main/subroutine/tt54.asm"
 INCLUDE "library/common/main/subroutine/tt146.asm"
@@ -1982,27 +1679,7 @@ INCLUDE "library/common/main/subroutine/tt128.asm"
 INCLUDE "library/common/main/subroutine/tt219.asm"
 INCLUDE "library/common/main/subroutine/gnum.asm"
 INCLUDE "library/enhanced/main/subroutine/nwdav4.asm"
-
-\ ******************************************************************************
-\
-\       Name: OUTX
-\       Type: Subroutine
-\   Category: Text
-\    Summary: Print the character in Q before returning to gnum
-\
-\ ******************************************************************************
-
-.OUTX
-
- LDA Q                  \ Print the character in Q, which is the key that was
- JSR DASC               \ just pressed in the gnum routine
-
- SEC                    \ Set the C flag, as this routine is only called if the
-                        \ key pressed makes the number too high
-
- JMP OUT                \ Jump back into the gnum routine to return the number
-                        \ that has been built
-
+INCLUDE "library/master/main/subroutine/outx.asm"
 INCLUDE "library/common/main/subroutine/tt208.asm"
 INCLUDE "library/common/main/subroutine/tt210.asm"
 INCLUDE "library/common/main/subroutine/tt213.asm"
@@ -2204,38 +1881,7 @@ INCLUDE "library/common/main/subroutine/pls3.asm"
 INCLUDE "library/common/main/subroutine/pls4.asm"
 INCLUDE "library/common/main/subroutine/pls5.asm"
 INCLUDE "library/common/main/subroutine/pls6.asm"
-
-\ ******************************************************************************
-\
-\       Name: GETYN
-\       Type: Subroutine
-\   Category: Keyboard
-\    Summary: Wait until either "Y" or "N" is pressed
-\
-\ ------------------------------------------------------------------------------
-\
-\ Returns:
-\
-\   C flag              Set if "Y" was pressed, clear if "N" was pressed
-\
-\ ******************************************************************************
-
-.GETYN
-
- JSR t                  \ Scan the keyboard until a key is pressed, returning
-                        \ the ASCII code in A and X
-
- CMP #'Y'               \ If "Y" was pressed, return from the subroutine with
- BEQ PL6                \ the C flag set (as the CMP sets the C flag, and PL6
-                        \ contains an RTS)
-
- CMP #'N'               \ If "N" was not pressed, loop back to keep scanning
- BNE GETYN              \ for key presses
-
- CLC                    \ Clear the C flag
-
- RTS                    \ Return from the subroutine
-
+INCLUDE "library/master/main/subroutine/getyn.asm"
 INCLUDE "library/common/main/subroutine/tt17.asm"
 
 \ ******************************************************************************
@@ -2316,10 +1962,10 @@ INCLUDE "library/common/main/subroutine/bad.asm"
 INCLUDE "library/common/main/subroutine/farof.asm"
 INCLUDE "library/common/main/subroutine/farof2.asm"
 INCLUDE "library/common/main/subroutine/mas4.asm"
-INCLUDE "library/enhanced/main/variable/brkd.asm"
+INCLUDE "library/enhanced/main/variable/stack.asm"
 INCLUDE "library/enhanced/main/subroutine/brbr.asm"
 INCLUDE "library/common/main/subroutine/death.asm"
-INCLUDE "library/6502sp/main/variable/spasto.asm"
+INCLUDE "library/advanced/main/variable/spasto.asm"
 INCLUDE "library/enhanced/main/subroutine/begin.asm"
 INCLUDE "library/common/main/subroutine/tt170.asm"
 INCLUDE "library/common/main/subroutine/death2.asm"
@@ -2430,34 +2076,8 @@ INCLUDE "library/enhanced/main/subroutine/gtdrv.asm"
 INCLUDE "library/common/main/subroutine/lod.asm"
 INCLUDE "library/enhanced/main/variable/ctli.asm"
 INCLUDE "library/enhanced/main/variable/deli.asm"
-
-\ ******************************************************************************
-\
-\       Name: SVLI
-\       Type: Variable
-\   Category: Save and load
-\    Summary: The OS command string for saving a commander file
-\
-\ ******************************************************************************
-
-.SVLI
-
- EQUS "SAVE :1.E.JAMESON  E7E +100 0 0"
- EQUB 13
-
-\ ******************************************************************************
-\
-\       Name: LDLI
-\       Type: Variable
-\   Category: Save and load
-\    Summary: The OS command string for loading a commander file
-\
-\ ******************************************************************************
-
-.LDLI
-
- EQUS "LOAD :1.E.JAMESON  E7E"
- EQUB 13
+INCLUDE "library/master/main/variable/svli.asm"
+INCLUDE "library/master/main/variable/ldli.asm"
 
 \ ******************************************************************************
 \
@@ -2562,7 +2182,7 @@ INCLUDE "library/enhanced/main/variable/deli.asm"
 .LOADL3
 
  LDA LSX2,Y
- STA L0791,Y
+ STA &0791,Y
  DEY
  BPL LOADL3
 
@@ -2590,7 +2210,7 @@ INCLUDE "library/common/main/subroutine/tidy.asm"
 INCLUDE "library/common/main/subroutine/tis2.asm"
 INCLUDE "library/common/main/subroutine/tis3.asm"
 INCLUDE "library/common/main/subroutine/dvidt.asm"
-INCLUDE "library/6502sp/main/variable/ktran.asm"
+INCLUDE "library/advanced/main/variable/ktran.asm"
 
 \ ******************************************************************************
 \
@@ -2760,8 +2380,8 @@ INCLUDE "library/common/main/subroutine/sight.asm"
  EQUB &FA,&FA,&FA,&FA
 
 INCLUDE "library/common/main/subroutine/tt66.asm"
-INCLUDE "library/common/main/subroutine/ttx66.asm"
-INCLUDE "library/6502sp/main/variable/trantable.asm"
+INCLUDE "library/common/main/subroutine/ttx66-ttx662.asm"
+INCLUDE "library/advanced/main/variable/trantable.asm"
 
 \ ******************************************************************************
 \

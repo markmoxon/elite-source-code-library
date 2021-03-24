@@ -52,7 +52,7 @@ IF _6502SP_VERSION \ Platform
 
 ELIF _MASTER_VERSION
 
- LDX brkd               \ ???
+ LDX stack              \ ???
  TXS
  JSR LOADZP
 

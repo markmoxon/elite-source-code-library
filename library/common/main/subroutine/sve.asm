@@ -33,7 +33,7 @@ IF _6502SP_VERSION OR _DISC_DOCKED \ Platform
 ELIF _MASTER_VERSION
 
  TSX                    \ ???
- STX brkd
+ STX stack
  JSR TRADE
 
 ENDIF
@@ -354,7 +354,7 @@ ELIF _MASTER_VERSION
 .L6A71
 
  LDA NA%+8,Y
- STA L0791,Y
+ STA &0791,Y
  DEY
  BPL L6A71
 

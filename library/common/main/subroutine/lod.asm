@@ -102,7 +102,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION
 
 ELIF _MASTER_VERSION
 
- LDA L0791              \ ???
+ LDA &0791              \ ???
  BMI ELT2F
 
 ENDIF
@@ -131,7 +131,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDA L0791,Y            \ Copy the Y-th byte of ??? to the Y-th byte of NA%+8
+ LDA &0791,Y            \ Copy the Y-th byte of ??? to the Y-th byte of NA%+8
  STA NA%+8,Y
 
  DEY                    \ Decrement the loop counter

@@ -6,9 +6,11 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \    Address: &0900 to &0D3F
 ELIF _6502SP_VERSION
 \    Address: &8200 to &85FF
+ELIF _MASTER_VERSION
+\    Address: &0400 to &0800
 ENDIF
 \   Category: Workspaces
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Ship data blocks and ship line heaps
 ELIF _6502SP_VERSION
 \    Summary: Ship data blocks
@@ -25,9 +27,14 @@ ELIF _6502SP_VERSION
 \ local bubble of universe.
 ENDIF
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION \ Comment
 \ The blocks are pointed to by the lookup table at location UNIV. The first 432
 \ bytes of the K% workspace hold ship data on up to 12 ships, with 36 (NI%)
+\ bytes per ship, and the ship line heap grows downwards from WP at the end of
+\ the K% workspace.
+ELIF _DISC_VERSION OR _MASTER_VERSION
+\ The blocks are pointed to by the lookup table at location UNIV. The first 444
+\ bytes of the K% workspace hold ship data on up to 12 ships, with 37 (NI%)
 \ bytes per ship, and the ship line heap grows downwards from WP at the end of
 \ the K% workspace.
 ELIF _6502SP_VERSION
@@ -49,6 +56,10 @@ ORG &0900
 ELIF _6502SP_VERSION
 
 ORG &8200
+
+ELIF _MASTER_VERSION
+
+ORG &0400
 
 ENDIF
 

@@ -118,14 +118,14 @@ ENDIF
                         \ slots for the local bubble of universe, and various
                         \ flight and ship status variables
 
-IF _CASSETTE_VERSION OR _MASTER_VERSION \ Minor
+IF _CASSETTE_VERSION \ Minor
 
  LDA #LO(WP-1)          \ We have reset the ship line heap, so we now point
  STA SLSP               \ SLSP to the byte before the WP workspace to indicate
  LDA #HI(WP-1)          \ that the heap is empty
  STA SLSP+1
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
  LDA #LO(LS%)           \ We have reset the ship line heap, so we now point
  STA SLSP               \ SLSP to LS% (the byte below the ship blueprints at D%)

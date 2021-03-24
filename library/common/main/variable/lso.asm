@@ -29,5 +29,9 @@ ELIF _CASSETTE_VERSION OR _6502SP_VERSION
                         \ universe can support either the sun or a space
                         \ station, but not both
 
+ELIF _MASTER_VERSION
+
+ SKIP 200
+
 ENDIF
 

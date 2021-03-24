@@ -14,6 +14,10 @@ ELIF _6502SP_VERSION
 \    Address: &0D00 to &0E3B
 \   Category: Workspaces
 \    Summary: Variables
+ELIF _MASTER_VERSION
+\    Address: &0E41 to &12A9
+\   Category: Workspaces
+\    Summary: Ship slots, variables
 ENDIF
 \
 \ ******************************************************************************
@@ -29,6 +33,10 @@ ORG &0E00
 ELIF _6502SP_VERSION
 
 ORG &0D00
+
+ELIF _MASTER_VERSION
+
+ORG &0E41
 
 ENDIF
 
@@ -129,6 +137,136 @@ INCLUDE "library/6502sp/main/variable/yp.asm"
 INCLUDE "library/6502sp/main/variable/ys.asm"
 INCLUDE "library/6502sp/main/variable/bali.asm"
 INCLUDE "library/6502sp/main/variable/upo.asm"
+
+ELIF _MASTER_VERSION
+
+INCLUDE "library/common/main/variable/frin.asm"
+INCLUDE "library/common/main/variable/many.asm"
+INCLUDE "library/common/main/variable/sspr.asm"
+INCLUDE "library/enhanced/main/variable/junk.asm"
+INCLUDE "library/enhanced/main/variable/auto.asm"
+INCLUDE "library/common/main/variable/ecmp.asm"
+INCLUDE "library/common/main/variable/mj.asm"
+INCLUDE "library/common/main/variable/cabtmp.asm"
+
+ SKIP 1                 \ This byte is unused
+
+INCLUDE "library/common/main/variable/las2.asm"
+INCLUDE "library/common/main/variable/msar.asm"
+INCLUDE "library/common/main/variable/view.asm"
+INCLUDE "library/common/main/variable/lasct.asm"
+INCLUDE "library/common/main/variable/gntmp.asm"
+INCLUDE "library/common/main/variable/hfx.asm"
+INCLUDE "library/common/main/variable/ev.asm"
+INCLUDE "library/common/main/variable/dly.asm"
+INCLUDE "library/common/main/variable/de.asm"
+INCLUDE "library/common/main/variable/lsx2.asm"
+INCLUDE "library/common/main/variable/lsy2.asm"
+INCLUDE "library/common/main/variable/lso.asm"
+INCLUDE "library/6502sp/main/variable/buf.asm"
+INCLUDE "library/common/main/variable/sx.asm"
+INCLUDE "library/common/main/variable/sxl.asm"
+INCLUDE "library/common/main/variable/sy.asm"
+INCLUDE "library/common/main/variable/syl.asm"
+INCLUDE "library/common/main/variable/sz.asm"
+INCLUDE "library/common/main/variable/szl.asm"
+INCLUDE "library/common/main/variable/lasx.asm"
+INCLUDE "library/common/main/variable/lasy.asm"
+
+ SKIP 1                 \ This byte is unused
+
+INCLUDE "library/common/main/variable/altit.asm"
+INCLUDE "library/common/main/variable/swap.asm"
+
+ SKIP 6                 \ These bytes are unused
+
+.SDIST
+
+ SKIP 1                 \ New, distance for ship in TITLE?
+
+ SKIP 2                 \ These bytes are unused
+
+INCLUDE "library/6502sp/main/variable/name.asm"
+INCLUDE "library/common/main/variable/tp.asm"
+
+ SKIP 1                 \ This byte is unused
+
+INCLUDE "library/common/main/variable/qq0.asm"
+INCLUDE "library/common/main/variable/qq1.asm"
+INCLUDE "library/common/main/variable/qq21.asm"
+INCLUDE "library/common/main/variable/cash.asm"
+INCLUDE "library/common/main/variable/qq14.asm"
+INCLUDE "library/common/main/variable/cok.asm"
+INCLUDE "library/common/main/variable/gcnt.asm"
+INCLUDE "library/common/main/variable/laser.asm"
+
+ SKIP 2                 \ These bytes are unused (they were originally used for
+                        \ up/down lasers, but they were dropped)
+
+INCLUDE "library/common/main/variable/crgo.asm"
+INCLUDE "library/common/main/variable/qq20.asm"
+INCLUDE "library/common/main/variable/ecm.asm"
+INCLUDE "library/common/main/variable/bst.asm"
+INCLUDE "library/common/main/variable/bomb.asm"
+INCLUDE "library/common/main/variable/engy.asm"
+INCLUDE "library/common/main/variable/dkcmp.asm"
+INCLUDE "library/common/main/variable/ghyp.asm"
+INCLUDE "library/common/main/variable/escp.asm"
+
+ SKIP 1                 \ This byte is unused
+
+.L1264
+
+ SKIP 1
+
+.L1265
+
+ SKIP 1
+
+.TALLYF
+
+ SKIP 1
+
+INCLUDE "library/common/main/variable/nomsl.asm"
+INCLUDE "library/common/main/variable/fist.asm"
+INCLUDE "library/common/main/variable/avl.asm"
+INCLUDE "library/common/main/variable/qq26.asm"
+INCLUDE "library/common/main/variable/tally.asm"
+INCLUDE "library/common/main/variable/svc.asm"
+
+ SKIP 1                 \ This byte is unused
+
+INCLUDE "library/common/main/variable/mch.asm"
+INCLUDE "library/common/main/variable/comx.asm"
+INCLUDE "library/common/main/variable/comy.asm"
+
+ SKIP 14                \ These bytes are unused
+
+INCLUDE "library/common/main/variable/qq24.asm"
+INCLUDE "library/common/main/variable/qq25.asm"
+INCLUDE "library/common/main/variable/qq28.asm"
+INCLUDE "library/common/main/variable/qq29.asm"
+INCLUDE "library/common/main/variable/gov.asm"
+INCLUDE "library/common/main/variable/tek.asm"
+INCLUDE "library/common/main/variable/slsp.asm"
+INCLUDE "library/common/main/variable/qq2.asm"
+INCLUDE "library/6502sp/main/variable/safehouse.asm"
+
+.CLCNT
+
+ SKIP 1                 \ New, EX2, stored but never read = cloud counter
+
+.ADCH1
+
+ SKIP 1                 \ New, joystick channel 1, written to in irq1
+
+.ADCH2
+
+ SKIP 1                 \ New, channel 2
+
+.ADCH3
+
+ SKIP 1                 \ New, channel 3
 
 ENDIF
 

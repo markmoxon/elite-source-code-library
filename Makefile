@@ -64,7 +64,7 @@ folder-master='/sng47'
 #   TRUE  = Disable checksums, max commander
 #   FALSE = Enable checksums, standard commander
 #
-# _MATCH_EXTRACTED_BINARIES (for disc and 6502SP versions)
+# _MATCH_EXTRACTED_BINARIES (for disc, 6502SP, Master versions)
 #   TRUE  = Match binaries to release version (i.e. fill workspaces with noise)
 #   FALSE = Zero-fill workspaces
 #
@@ -145,6 +145,7 @@ build:
 	echo _VERSION=4 > versions/master/sources/elite-header.h.asm
 	echo _RELEASE=$(rel-master) >> versions/master/sources/elite-header.h.asm
 	echo _REMOVE_CHECKSUMS=TRUE >> versions/master/sources/elite-header.h.asm
+	echo _MATCH_EXTRACTED_BINARIES=FALSE >> versions/master/sources/elite-header.h.asm
 	$(BEEBASM) -i versions/master/sources/elite-loader.asm -v >> versions/master/output/compile.txt
 	$(BEEBASM) -i versions/master/sources/elite-data.asm -v >> versions/master/output/compile.txt
 	$(BEEBASM) -i versions/master/sources/elite-source.asm -v >> versions/master/output/compile.txt
@@ -207,6 +208,7 @@ encrypt:
 	echo _VERSION=4 > versions/master/sources/elite-header.h.asm
 	echo _RELEASE=$(rel-master) >> versions/master/sources/elite-header.h.asm
 	echo _REMOVE_CHECKSUMS=FALSE >> versions/master/sources/elite-header.h.asm
+	echo _MATCH_EXTRACTED_BINARIES=TRUE >> versions/master/sources/elite-header.h.asm
 	$(BEEBASM) -i versions/master/sources/elite-loader.asm -v > versions/master/output/compile.txt
 	$(BEEBASM) -i versions/master/sources/elite-data.asm -v >> versions/master/output/compile.txt
 	$(BEEBASM) -i versions/master/sources/elite-source.asm -v >> versions/master/output/compile.txt

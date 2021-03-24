@@ -896,7 +896,9 @@ IF _MATCH_EXTRACTED_BINARIES
  ENDIF
 
 ELSE
+
  ALIGN &100
+
 ENDIF
 
 INCLUDE "library/6502sp/main/variable/log.asm"

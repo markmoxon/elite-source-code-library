@@ -25,17 +25,24 @@
 
 IF _MATCH_EXTRACTED_BINARIES
 
+IF _6502SP_VERSION
  IF _SNG45
   INCBIN "versions/6502sp/extracted/sng45/workspaces/ELTG-log.bin"
  ELIF _SOURCE_DISC
   INCBIN "versions/6502sp/extracted/source-disc/workspaces/ELTG-log.bin"
  ENDIF
+ELIF _MASTER_VERSION
+ INCBIN "versions/master/extracted/sng47/workspaces/ELTA-log.bin"
+ENDIF
 
 ELSE
+
  SKIP 1
+
  FOR I%, 1, 255
    B% = INT(&2000 * LOG(I%) / LOG(2) + 0.5)
    EQUB B% DIV 256
  NEXT
+
 ENDIF
 

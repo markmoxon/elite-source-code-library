@@ -14,7 +14,7 @@
 \
 \   * Pages &9, &A, &B, &C and &D
 \
-IF _CASSETTE_VERSION OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \   * BETA to BETA+6, which covers the following:
 ELIF _DISC_VERSION
 \   * BETA to BETA+8, which covers the following:
@@ -72,7 +72,9 @@ ENDIF
 
 IF _MASTER_VERSION
 
- STX L2C5A              \ ???
+ STX JSTGY              \ X is now negative - i.e. &FF - so this sets JSTGY to
+                        \ &FF to set the joystick Y-channel to the default
+                        \ direction
 
 ENDIF
 

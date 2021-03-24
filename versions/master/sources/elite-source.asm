@@ -156,13 +156,6 @@ VE = &57                \ The obfuscation byte used to hide the extended tokens
 LL = 30                 \ The length of lines (in characters) of justified text
                         \ in the extended tokens system
 
-\ New vars: L0098, L0099, L009B, L00FC
-\ KL vars: L00C9, L00CB, L00D0, L00D1
-\ Save block? L0791
-\ L1229: distance for ship in TITLE?
-\ L1264 - L1266
-\ L12A6 - L12A9 (see IRQ1)
-
 ZP = &0000
 RAND = &0002
 T1 = &0006
@@ -206,8 +199,8 @@ K5 = &0064
 K6 = &0068
 QQ19 = &006D
 BET2 = &0073
-DELTA   = &0075
-DELT4   = &0076
+DELTA = &0075
+DELT4 = &0076
 U = &0078
 Q = &0079
 R = &007A
@@ -216,13 +209,13 @@ T = &007C
 XSAV = &007D
 YSAV = &007E
 XX17 = &007F
-W  = &0080
+W = &0080
 QQ11 = &0081
 ZZ = &0082
 XX13 = &0083
 MCNT = &0084
 TYPE = &0085
-ALPHA   = &0086
+ALPHA = &0086
 QQ12 = &0087
 TGT = &0088
 FLAG = &0089
@@ -235,11 +228,11 @@ XX14 = &008F
 RAT = &0091
 RAT2 = &0092
 K2 = &0093
-widget  = &0097
-L0098   = &0098
-L0099   = &0099
-messXC  = &009A
-L009B   = &009B
+widget = &0097
+L0098 = &0098 \ Set to 0 in RES2, never read I think
+L0099 = &0099 \ Set to 191 by RES2, i.e. number of pixel rows in space view
+messXC = &009A
+L009B = &009B \ New var, used in STARS2 only for delta_x
 INWK = &009C
 XX1 = &009C
 XX19 = &00BD
@@ -252,21 +245,21 @@ KY14 = &00C5
 KY15 = &00C6
 KY20 = &00C7
 KY7 = &00C8
-L00C9   = &00C9
+L00C9 = &00C9  \ KL+5, X in others, so KY5
 KY18 = &00CA
-L00CB   = &00CB
+L00CB = &00CB \ KL+6, S in others, so KY6
 KY19 = &00CC
 KY12 = &00CD
 KY2 = &00CE
 KY16 = &00CF
-L00D0   = &00D0
-L00D1   = &00D1
+L00D0 = &00D0  \ KL+3, < in others, so KY3
+L00D1 = &00D1  \ KL+4, > in others, so KY4
 KY1 = &00D2
 KY13 = &00D3
 LSX = &00D4
 FSH = &00D5
 ASH = &00D6
-ENERGY  = &00D7
+ENERGY = &00D7
 QQ3 = &00D8
 QQ4 = &00D9
 QQ5 = &00DA
@@ -275,47 +268,29 @@ QQ7 = &00DD
 QQ8 = &00DF
 QQ9 = &00E1
 QQ10 = &00E2
-NOSTM   = &00E3
-L00FC   = &00FC
+NOSTM = &00E3
+
 XX3 = &0100
+
 K% = &0400
-L0401   = &0401
-L0402   = &0402
-L0404   = &0404
-L0405   = &0405
-L0406   = &0406
-L0407   = &0407
-L0408   = &0408
-L0425   = &0425
-L0427   = &0427
-L0429   = &0429
-L042D   = &042D
-L042F   = &042F
-L0431   = &0431
-L0433   = &0433
-L0449   = &0449
-L06A9   = &06A9
-L0791   = &0791
+
+L0791 = &0791 \ New
 
 WP = &0801
 
 FRIN = &0E41
 MANY = &0E4E
 SSPR = &0E50
-L0E58   = &0E58
-L0E5E   = &0E5E
-L0E6B   = &0E6B
-L0E6D   = &0E6D
 JUNK = &0E70
 auto = &0E71
 ECMP = &0E72
 MJ = &0E73
-CABTMP  = &0E74
+CABTMP = &0E74
 LAS2 = &0E75
 MSAR = &0E76
 VIEW = &0E77
-LASCT   = &0E78
-GNTMP   = &0E79
+LASCT = &0E78
+GNTMP = &0E79
 HFX = &0E7A
 EV = &0E7B
 DLY = &0E7C
@@ -328,14 +303,13 @@ SX = &11A0
 SXL = &11B5
 SY = &11CA
 SYL = &11DF
-L11ED   = &11ED
 SZ = &11F4
 SZL = &1209
 LASX = &121E
 LASY = &121F
-ALTIT   = &1221
+ALTIT = &1221
 SWAP = &1222
-L1229   = &1229
+L1229 = &1229 \ New, distance for ship in TITLE?
 NAME = &122C
 TP = &1234
 QQ0 = &1235
@@ -352,17 +326,17 @@ ECM = &125C
 BST = &125D
 BOMB = &125E
 ENGY = &125F
-DKCMP   = &1260
+DKCMP = &1260
 GHYP = &1261
 ESCP = &1262
-L1264   = &1264
-L1265   = &1265
-L1266   = &1266
+L1264   = &1264 \ New, updated in SOLAR, something to do with cargo hold
+L1265   = &1265 \ New, connected to 1265, see SOLAR and inventory TT210
+L1266   = &1266 \ New, only mentioned in EXNO2, is this our fractional TALLY?
 NOMSL   = &1267
 FIST = &1268
 AVL = &1269
 QQ26 = &127A
-TALLY   = &127B
+TALLY = &127B
 SVC = &127D
 MCH = &1281
 COMX = &1282
@@ -376,28 +350,23 @@ tek = &1297
 SLSP = &1298
 QQ2 = &129A
 safehouse = &12A0
-L12A6   = &12A6
-L12A7   = &12A7
-L12A8   = &12A8
-L12A9   = &12A9
+L12A6   = &12A6 \ New, EX2, stored but never read = cloud counter
+L12A7   = &12A7 \ New, joystick channel 1, written to in irq1
+L12A8   = &12A8 \ New, channel 2
+L12A9   = &12A9 \ New, channel 3
+
 XX21 = &8000
-L8002   = &8002
-L8003   = &8003
-L8007   = &8007
-L8040   = &8040
-L8041   = &8041
 E% = &8042
-L8062   = &8062
 TALLYFRAC = &8063
-L8083   = &8083
 TALLYINT = &8084
+
 QQ18 = &A000
 SNE = &A3C0
 ACT = &A3E0
 TKN1 = &A400
-RUPLA   = &AF48
-RUGAL   = &AF62
-RUTOK   = &AF7C
+RUPLA = &AF48
+RUGAL = &AF62
+RUTOK = &AF7C
 
 NT% = SVC + 2 - TP
 
@@ -419,49 +388,111 @@ INCLUDE "library/common/main/variable/vec.asm"
 INCLUDE "library/common/main/subroutine/wscan.asm"
 INCLUDE "library/common/main/subroutine/delay.asm"
 
-.BEEP_LONG_LOW
+\ ******************************************************************************
+\
+\       Name: LOWBEEP
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: Make a long, low beep
+\
+\ ******************************************************************************
 
- LDY #&00
- BRA NOISE
+.LOWBEEP
+
+ LDY #0                 \ Call NOISE with Y = 0 to make a long, low beep,
+ BRA NOISE              \ returning from the subroutine using a tail call
 
 INCLUDE "library/common/main/subroutine/beep.asm"
 
+\ ******************************************************************************
+\
+\       Name: L1358
+\       Type: Variable
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .L1358
 
- EQUB &C0
+ EQUB %11000000
+ EQUB %10100000
+ EQUB %10000000
 
- EQUB &A0,&80
+\ ******************************************************************************
+\
+\       Name: L135B
+\       Type: Variable
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .L135B
 
- EQUB &FF,&BF,&9F,&DF,&EF
+ EQUB %11111111
+ EQUB %10111111
+ EQUB %10011111
+ EQUB %11011111
+ EQUB %11101111
 
-.MASTER_DKSn
+\ ******************************************************************************
+\
+\       Name: SOUND
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: Write sound data directly to the 76489 sound chip
+\
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   SRTS                Contains an RTS
+\
+\ ******************************************************************************
 
- LDX #&FF
- STX VIA+&43
- STA VIA+&4F
- LDA #&00
- STA VIA+&40
- PHA
- PLA
- PHA
- PLA
- LDA #&08
- STA VIA+&40
+.SOUND
 
-.L1376
+ LDX #%11111111         \ Set 6522 System VIA data direction register DDRA
+ STX VIA+&43            \ (SHEILA &43) to %11111111. This sets the ORA register
+                        \ so that bits 0-7 of ORA will be sent to the 76489
+                        \ sound chip
 
- RTS
+ STA VIA+&4F            \ Set 6522 System VIA output register ORA (SHEILA &4F)
+                        \ to A, the sound data we want to send
+
+ LDA #%00000000         \ Activate the sound chip by clearing bit 3 of the
+ STA VIA+&40            \ 6522 System VIA output register ORB (SHEILA &40)
+
+ PHA                    \ These instructions don't do anything apart from
+ PLA                    \ keeping the sound chip activated for at least 8us,
+ PHA                    \ which we need to do in order for the data to make
+ PLA                    \ it to the chip
+
+ LDA #%00001000         \ Deactivate the sound chip by setting bit 3 of the
+ STA VIA+&40            \ 6522 System VIA output register ORB (SHEILA &40)
+
+.SRTS
+
+ RTS                    \ Return from the subroutine
+
+\ ******************************************************************************
+\
+\       Name: L1377
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .L1377
 
- LDY #&03
- LDA #&00
+ LDY #3
+ LDA #0
 
 .L137B
 
- STA NS9,Y
+ STA SBUF-1,Y
  DEY
  BNE L137B
 
@@ -470,29 +501,48 @@ INCLUDE "library/common/main/subroutine/beep.asm"
 .L1382
 
  LDA L135B,Y
- JSR MASTER_DKSn
+ JSR SOUND
 
  INY
- CPY #&05
+ CPY #5
  BNE L1382
 
  CLI
+
  RTS
 
-.BEING_HIT_NOISE
+\ ******************************************************************************
+\
+\       Name: NOISEHIT
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: Make the sound of us being hit
+\
+\ ******************************************************************************
 
- LDY #&09
+.NOISEHIT
+
+ LDY #9
  JSR NOISE
 
- LDY #&05
+ LDY #5
  BRA NOISE
 
-.LASER_NOISE
+\ ******************************************************************************
+\
+\       Name: NOISELASER
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: Make the sound of our laser firing
+\
+\ ******************************************************************************
 
- LDY #&03
+.NOISELASER
+
+ LDY #3
  JSR NOISE
 
- LDY #&05
+ LDY #5
 
 \ ******************************************************************************
 \
@@ -506,12 +556,12 @@ INCLUDE "library/common/main/subroutine/beep.asm"
 .NOISE
 
  LDA DNOIZ
- BNE L1376
+ BNE SRTS
 
  LDA SFX2,Y
  LSR A
  CLV
- LDX #&00
+ LDX #0
  BCS NS1
 
  INX
@@ -525,7 +575,7 @@ INCLUDE "library/common/main/subroutine/beep.asm"
 
  LDA SFX1,Y
  CMP SBUF+12,X
- BCC L1376
+ BCC SRTS
 
  SEI
  STA SBUF+12,X
@@ -548,7 +598,9 @@ INCLUDE "library/common/main/subroutine/beep.asm"
  LDA #&80
  STA SBUF,X
  CLI
+
  SEC
+
  RTS
 
 \ ******************************************************************************
@@ -578,7 +630,7 @@ INCLUDE "library/common/main/subroutine/beep.asm"
 
 .NS2
 
- LDA #&00
+ LDA #0
  CLC
  CLD
  ADC SBUF+18,Y
@@ -588,12 +640,12 @@ INCLUDE "library/common/main/subroutine/beep.asm"
  ASL A
  AND #&0F
  ORA L1358,Y
- JSR MASTER_DKSn
+ JSR SOUND
 
  PLA
  LSR A
  LSR A
- JSR MASTER_DKSn
+ JSR SOUND
 
 .NS3
 
@@ -614,7 +666,7 @@ INCLUDE "library/common/main/subroutine/beep.asm"
 
 .NS4
 
- LDA #&00
+ LDA #0
  STA SBUF,Y
  STA SBUF+12,Y
  BEQ NS7
@@ -632,7 +684,7 @@ INCLUDE "library/common/main/subroutine/beep.asm"
 .NS7
 
  EOR L135B,Y
- JSR MASTER_DKSn
+ JSR SOUND
 
 .NS8
 
@@ -645,7 +697,7 @@ INCLUDE "library/common/main/subroutine/beep.asm"
 
 \ ******************************************************************************
 \
-\       Name: 
+\       Name: SBUF
 \       Type: Variable
 \   Category: Sound
 \    Summary: ???
@@ -667,8 +719,10 @@ INCLUDE "library/common/main/subroutine/beep.asm"
 
 .SFX1
 
- EQUB &4B,&5B,&3F,&EB,&FF,&09,&FF,&8B
- EQUB &CF,&E7,&FF,&EF
+ EQUB &4B, &5B, &3F
+ EQUB &EB, &FF, &09
+ EQUB &FF, &8B, &CF
+ EQUB &E7, &FF, &EF
 
 \ ******************************************************************************
 \
@@ -681,8 +735,10 @@ INCLUDE "library/common/main/subroutine/beep.asm"
 
 .SFX2
 
- EQUB &40,&10,&01,&FC,&F3,&19,&F9,&7C
- EQUB &F1,&FA,&FE,&FE
+ EQUB &40, &10, &01
+ EQUB &FC, &F3, &19
+ EQUB &F9, &7C, &F1
+ EQUB &FA, &FE, &FE
 
 \ ******************************************************************************
 \
@@ -695,8 +751,10 @@ INCLUDE "library/common/main/subroutine/beep.asm"
 
 .SFX3
 
- EQUB &F0,&20,&10,&30,&03,&01,&08,&80
- EQUB &16,&38,&00,&80
+ EQUB &F0, &20, &10
+ EQUB &30, &03, &01
+ EQUB &08, &80, &16
+ EQUB &38, &00, &80
 
 \ ******************************************************************************
 \
@@ -709,8 +767,10 @@ INCLUDE "library/common/main/subroutine/beep.asm"
 
 .SFX4
 
- EQUB &FF,&FF,&00,&03,&1F,&01,&07,&07
- EQUB &0F,&03,&0F,&0F
+ EQUB &FF, &FF, &00
+ EQUB &03, &1F, &01
+ EQUB &07, &07, &0F
+ EQUB &03, &0F, &0F
 
 INCLUDE "library/6502sp/io/subroutine/startup.asm"
 INCLUDE "library/6502sp/io/variable/tvt1.asm"
@@ -1150,7 +1210,7 @@ INCLUDE "library/common/main/subroutine/dil2.asm"
  EQUB &B5,&B8,&BD,&C1,&C5,&C9,&CE,&D2
  EQUB &D7,&DB,&E0,&E5,&EA,&EF,&F5,&FA
 
-.antilogODD
+
 
  EQUB &01,&02,&03,&04,&05,&06,&00,&01
  EQUB &02,&03,&04,&05,&06,&00,&01,&02
@@ -1184,6 +1244,8 @@ INCLUDE "library/common/main/subroutine/dil2.asm"
  EQUB &02,&03,&04,&05,&06,&00,&01,&02
  EQUB &03,&04,&05,&06,&00,&01,&02,&03
  EQUB &04,&05,&06,&00,&01,&02,&03,&04
+
+ 
  EQUB &01,&01,&01,&01,&01,&01,&02,&02
  EQUB &02,&02,&02,&02,&02,&03,&03,&03
  EQUB &03,&03,&03,&03,&04,&04,&04,&04
@@ -1216,6 +1278,7 @@ INCLUDE "library/common/main/subroutine/dil2.asm"
  EQUB &22,&22,&22,&22,&22,&23,&23,&23
  EQUB &23,&23,&23,&23,&24,&24,&24,&24
  EQUB &24,&24,&24,&25,&25,&25,&25,&25
+
  EQUB &96,&97,&9A,&9B,&9D,&9E,&9F,&A6
  EQUB &A7,&AB,&AC,&AD,&AE,&AF,&B2,&B3
  EQUB &B4,&B5,&B6,&B7,&B9,&BA,&BB,&BC
@@ -1229,13 +1292,13 @@ INCLUDE "library/common/main/subroutine/dil2.asm"
 
  EQUB &00
 
- EQUB &00,&00,&00,&00,&00,&00,&00
- EQUB &00,&00,&00,&00,&00,&00,&00,&00
- EQUB &00,&00,&00
+ SKIP 18
 
 .CATF
 
- EQUB &00,&00
+ EQUB &00
+ 
+ SKIP 1
 
 .DNOIZ
 
@@ -1257,9 +1320,9 @@ INCLUDE "library/common/main/subroutine/dil2.asm"
 
  EQUB &00
 
-.L2C5A
+.JSTGY
 
- EQUB &00
+ EQUB &00           \ Other way round (&FF is default = standard Y axis)
 
 .JSTE
 
@@ -1269,15 +1332,18 @@ INCLUDE "library/common/main/subroutine/dil2.asm"
 
  EQUB &00
 
- EQUB &00
+ 
+ EQUB &00           \ Conf option U
 
 .L2C5E
 
- EQUB &00
+ EQUB &00           \ Conf option T
 
 .BSTK
 
- EQUB &00,&00
+ EQUB &00
+ 
+ EQUB 0
 
 .L2C61
 
@@ -1302,7 +1368,7 @@ INCLUDE "library/common/main/subroutine/dil2.asm"
 
  CLD
 
- JSR MVBL
+ JSR scramble
 
  JSR BRKBK
 
@@ -1310,40 +1376,51 @@ INCLUDE "library/common/main/subroutine/dil2.asm"
 
 \ ******************************************************************************
 \
-\       Name: MVBL
+\       Name: scramble
 \       Type: Subroutine
 \   Category: Utility routines
-\    Summary: Move a multi-page block of memory from one location to another
+\    Summary: Unscramble the main code
 \
 \ ******************************************************************************
 
-.MVBL
+.scramble
 
- LDA #&C0
+ LDA #&C0               \ See elite-checksum.py
  STA FRIN
  LDA #&2C
  STA FRIN+1
+
  LDA #&7F
  LDY #&47
  LDX #&19
- JSR MVPG
+ JSR DECRYPT
 
  LDA #&FF
  STA FRIN
  LDA #&7F
  STA FRIN+1
+
  LDA #&B1
  LDY #&FF
  LDX #&62
 
-.MVPG
+\ ******************************************************************************
+\
+\       Name: DECRYPT
+\       Type: Subroutine
+\   Category: Utility routines
+\    Summary: Decrypt a multi-page block of memory
+\
+\ ******************************************************************************
+
+.DECRYPT
 
  STX T
  STA SC+1
  LDA #&00
  STA SC
 
-.MPL
+.DEL
 
  LDA (SC),Y
  SEC
@@ -1357,11 +1434,11 @@ INCLUDE "library/common/main/subroutine/dil2.asm"
 
  DEY
  CPY FRIN
- BNE MPL
+ BNE DEL
 
  LDA SC+1
  CMP FRIN+1
- BNE MPL
+ BNE DEL
 
  RTS
 
@@ -1393,31 +1470,49 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_15_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_16_of_16.asm"
 INCLUDE "library/enhanced/main/subroutine/spin.asm"
 
+\ ******************************************************************************
+\
+\       Name: L31AC
+\       Type: Subroutine
+\   Category: Drawing lines
+\    Summary: 
+\
+\ ******************************************************************************
+
 .L31AC
 
  LDA #&FF
  STA COL
+
  LDA QQ11
  BNE L31DE
 
  LDY #&01
+
  LDA L321D
  STA XX12
+
  LDA L3227
  STA XX12+1
 
 .L31C0
 
  LDA XX12
- STA XX15
+ STA X1
+
  LDA XX12+1
  STA Y1
+
  LDA L321D,Y
  STA X2
+
  STA XX12
+
  LDA L3227,Y
  STA Y2
+
  STA XX12+1
+
  JSR LL30
 
  INY
@@ -1427,6 +1522,15 @@ INCLUDE "library/enhanced/main/subroutine/spin.asm"
 .L31DE
 
  RTS
+
+\ ******************************************************************************
+\
+\       Name: BOMBFX
+\       Type: Subroutine
+\   Category: Screen mode
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .BOMBFX
 
@@ -1439,9 +1543,18 @@ INCLUDE "library/enhanced/main/subroutine/spin.asm"
 
  JSR L31AC
 
+\ ******************************************************************************
+\
+\       Name: BOMBFX2
+\       Type: Subroutine
+\   Category: Screen mode
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .BOMBFX2
 
- LDY #&00
+ LDY #0
 
 .L31EF
 
@@ -1450,20 +1563,34 @@ INCLUDE "library/enhanced/main/subroutine/spin.asm"
  AND #&7F
  ADC #&03
  STA L3227,Y
+
  TXA
  AND #&1F
  CLC
  ADC L3213,Y
  STA L321D,Y
+
  INY
  CPY #&0A
  BCC L31EF
 
  LDX #&00
  STX L321D+9
+
  DEX
+
  STX L321D
+
  BCS L31AC
+
+\ ******************************************************************************
+\
+\       Name: L3213
+\       Type: Variable
+\   Category: Screen mode
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .L3213
 
@@ -1484,9 +1611,27 @@ INCLUDE "library/enhanced/main/subroutine/spin.asm"
 \ EQUB %00000000
 \ EQUB %00000000
 
+\ ******************************************************************************
+\
+\       Name: L321D
+\       Type: Variable
+\   Category: Screen mode
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .L321D
 
  SKIP 10
+
+\ ******************************************************************************
+\
+\       Name: L3227
+\       Type: Variable
+\   Category: Screen mode
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .L3227
 
@@ -1526,7 +1671,7 @@ INCLUDE "library/enhanced/main/variable/s1_per_cent.asm"
 
 .NA%
 
- EQUS "jameson"         \ The current commander name, which defaults to JAMESON
+ EQUS "jameson"         \ The current commander name
  EQUB 13
 
  SKIP 53                \ Placeholders for bytes #0 to #52
@@ -1796,6 +1941,15 @@ INCLUDE "library/enhanced/main/variable/mtin.asm"
 
  RTS
 
+\ ******************************************************************************
+\
+\       Name: Unused
+\       Type: Subroutine
+\   Category: Drawing lines
+\    Summary: ???
+\
+\ ******************************************************************************
+
  STA X1                 \ This code appears to be unused
  STA X2
  LDA #24
@@ -1945,6 +2099,15 @@ INCLUDE "library/common/main/subroutine/tt46.asm"
 INCLUDE "library/common/main/subroutine/tt74.asm"
 INCLUDE "library/common/main/subroutine/tt43.asm"
 INCLUDE "library/common/main/subroutine/ex.asm"
+
+\ ******************************************************************************
+\
+\       Name: Unused2
+\       Type: Subroutine
+\   Category: Utility routines
+\    Summary: ???
+\
+\ ******************************************************************************
 
  LDX #&15               \ This code appears to be unused
 
@@ -2106,6 +2269,15 @@ INCLUDE "library/common/main/subroutine/ks4.asm"
 INCLUDE "library/common/main/subroutine/ks2.asm"
 INCLUDE "library/common/main/subroutine/killshp.asm"
 INCLUDE "library/enhanced/main/subroutine/there.asm"
+
+\ ******************************************************************************
+\
+\       Name: Unused3
+\       Type: Subroutine
+\   Category: Text
+\    Summary: ???
+\
+\ ******************************************************************************
 
  PHA                    \ This code appears to be unused
  LSR A
@@ -2500,25 +2672,30 @@ INCLUDE "library/common/main/subroutine/ll9_part_12_of_12.asm"
 
  LDA (XX19),Y
  STA XX15
+
  LDA XX12
  STA (XX19),Y
  INY
  LDA (XX19),Y
  STA Y1
+
  LDA XX12+1
  STA (XX19),Y
  INY
  LDA (XX19),Y
  STA X2
+
  LDA XX12+2
  STA (XX19),Y
  INY
  LDA (XX19),Y
  STA Y2
+
  LDA XX12+3
  STA (XX19),Y
  INY
  STY XX14
+
  PLP
  BCS LL82
 
@@ -2713,6 +2890,22 @@ INCLUDE "library/common/main/subroutine/exno2.asm"
 INCLUDE "library/common/main/subroutine/exno3.asm"
 INCLUDE "library/common/main/subroutine/exno.asm"
 INCLUDE "library/enhanced/main/subroutine/brkbk.asm"
+
+\ ******************************************************************************
+\
+\ Save output/ELTH.bin
+\
+\ ******************************************************************************
+
+PRINT "ELITE H"
+PRINT "Assembled at ", ~CODE_H%
+PRINT "Ends at ", ~P%
+PRINT "Code size is ", ~(P% - CODE_H%)
+PRINT "Execute at ", ~LOAD%
+PRINT "Reload at ", ~LOAD_H%
+
+PRINT "S.ELTH ", ~CODE_H%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_H%
+\SAVE "versions/master/output/ELTH.bin", CODE_G%, P%, LOAD%
 
 \ ******************************************************************************
 \

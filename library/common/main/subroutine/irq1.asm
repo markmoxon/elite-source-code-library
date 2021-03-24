@@ -225,10 +225,10 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
 ELIF _MASTER_VERSION
 
- LDA VIA+&18            \ ???
+ LDA VIA+&18            \ ??? A to D joystick status byte (channel?)
  AND #&03
  TAY
- LDA VIA+&19
+ LDA VIA+&19            \ A to D joystick high byte
  STA L12A7,Y
  INY
  TYA
@@ -239,7 +239,11 @@ ELIF _MASTER_VERSION
  STA VIA+&18
  PLY
  LDA VIA+&44
- LDA L00FC
+
+ LDA &FC                \ Restore the value of A from before the call to the
+                        \ interrupt handler (the MOS stores the value of A in
+                        \ location &FC before calling the interrupt handler)
+
  RTI
 
 ENDIF
@@ -282,7 +286,11 @@ ELIF _MASTER_VERSION
 .LINSCN
 
  LDA VIA+&41            \ ???
- LDA L00FC
+
+ LDA &FC                \ Fetch the value of A from before the call to the
+                        \ interrupt handler (the MOS stores the value of A in
+                        \ location &FC before calling the interrupt handler)
+
  PHA
 
  LDA DLCNT

@@ -37,6 +37,12 @@ _DISC_FLIGHT            = FALSE
 VE = &57                \ The obfuscation byte used to hide the extended tokens
                         \ table from crackers viewing the binary code
 
+\ ******************************************************************************
+\
+\ ELITE DATA FILE
+\
+\ ******************************************************************************
+
 CODE% = &7000
 LOAD% = &1300
 
@@ -50,6 +56,12 @@ SKIP 256                \ These bytes are unused, but they get moved to
 SKIP 256                \ These bytes are unused, but they get moved to
                         \ &7F00-&7FFF along with the ship blueprints and text
                         \ tokens
+
+\ ******************************************************************************
+\
+\ ELITE SHIP BLUEPRINTS FILE
+\
+\ ******************************************************************************
 
 INCLUDE "library/common/main/variable/xx21.asm"
 INCLUDE "library/advanced/main/variable/e_per_cent.asm"
@@ -185,6 +197,12 @@ INCLUDE "library/enhanced/main/variable/ship_dodo.asm"
  EQUB &4C, &6F, &AB, &12, &4F, &AB, &8B, &41
  EQUB &02, &FF, &BF, &BF, &43, &53, &D2, &B9
  EQUB &C6, &DF, &CD, &94, &A2, &5A, &68, &21
+
+\ ******************************************************************************
+\
+\ ELITE RECURSIVE TEXT TOKEN FILE
+\
+\ ******************************************************************************
 
 INCLUDE "library/common/main/macro/char.asm"
 INCLUDE "library/common/main/macro/twok.asm"

@@ -148,9 +148,6 @@ INCLUDE "library/enhanced/main/variable/auto.asm"
 INCLUDE "library/common/main/variable/ecmp.asm"
 INCLUDE "library/common/main/variable/mj.asm"
 INCLUDE "library/common/main/variable/cabtmp.asm"
-
- SKIP 1                 \ This byte is unused
-
 INCLUDE "library/common/main/variable/las2.asm"
 INCLUDE "library/common/main/variable/msar.asm"
 INCLUDE "library/common/main/variable/view.asm"
@@ -182,15 +179,13 @@ INCLUDE "library/common/main/variable/swap.asm"
 
 .SDIST
 
- SKIP 1                 \ New, distance for ship in TITLE?
+ SKIP 1                 \ Used to store the nearest distance of the rotating
+                        \ ship on the title screen
 
  SKIP 2                 \ These bytes are unused
 
 INCLUDE "library/6502sp/main/variable/name.asm"
 INCLUDE "library/common/main/variable/tp.asm"
-
- SKIP 1                 \ This byte is unused
-
 INCLUDE "library/common/main/variable/qq0.asm"
 INCLUDE "library/common/main/variable/qq1.asm"
 INCLUDE "library/common/main/variable/qq21.asm"
@@ -217,15 +212,21 @@ INCLUDE "library/common/main/variable/escp.asm"
 
 .L1264
 
- SKIP 1
+ SKIP 1                 \ ???
 
 .L1265
 
- SKIP 1
+ SKIP 1                 \ ???
 
 .TALLYF
 
- SKIP 1
+ SKIP 1                 \ Combat rank fraction
+                        \
+                        \ Contains the fraction part of the kill count, which
+                        \ together with the integer in TALLY(1 0) determines our
+                        \ combat rank. The fraction is stored as the numerator
+                        \ of a fraction with a denominator of 256, so a TALLYF
+                        \ of 128 would represent 0.5 (i.e. 128 / 256)
 
 INCLUDE "library/common/main/variable/nomsl.asm"
 INCLUDE "library/common/main/variable/fist.asm"
@@ -254,19 +255,23 @@ INCLUDE "library/6502sp/main/variable/safehouse.asm"
 
 .CLCNT
 
- SKIP 1                 \ New, EX2, stored but never read = cloud counter
+ SKIP 1                 \ Used to store the number of particles in the explosion
+                        \ cloud, though the number is never actually used
 
 .ADCH1
 
- SKIP 1                 \ New, joystick channel 1, written to in irq1
+ SKIP 1                 \ Contains the latest value of joystick channel 1, as
+                        \ updated by the IRQ1 interrupt handler
 
 .ADCH2
 
- SKIP 1                 \ New, channel 2
+ SKIP 1                 \ Contains the latest value of joystick channel 2, as
+                        \ updated by the IRQ1 interrupt handler
 
 .ADCH3
 
- SKIP 1                 \ New, channel 3
+ SKIP 1                 \ Contains the latest value of joystick channel 3, as
+                        \ updated by the IRQ1 interrupt handler
 
 ENDIF
 

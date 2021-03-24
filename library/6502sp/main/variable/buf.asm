@@ -6,7 +6,7 @@ IF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- SKIP 90               \ The line buffer used by DASC to print justified text
+ SKIP 90                \ The line buffer used by DASC to print justified text
 
 ENDIF
 

@@ -13,13 +13,11 @@ ORG &0000
 
 .ZP
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
-
  SKIP 0                 \ The start of the zero page workspace
 
-ELIF _MASTER_VERSION
+IF _MASTER_VERSION \ Platform
 
- SKIP 2                 \ The start of the zero page workspace
+ SKIP 2                 \ These bytes are unused
 
 ENDIF
 
@@ -33,9 +31,9 @@ ENDIF
 
 INCLUDE "library/common/main/variable/t1.asm"
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Platform
 
- SKIP 3                 \ ???
+ SKIP 3                 \ These bytes are unused
 
 ENDIF
 
@@ -51,7 +49,7 @@ ELIF _MASTER_VERSION
 
 INCLUDE "library/common/main/variable/p.asm"
 
- SKIP 1                 \ ???
+ SKIP 1                 \ This byte is unused
 
 INCLUDE "library/common/main/variable/xc.asm"
 INCLUDE "library/common/main/variable/col.asm"
@@ -102,7 +100,7 @@ INCLUDE "library/common/main/variable/y1.asm"
 INCLUDE "library/common/main/variable/x2.asm"
 INCLUDE "library/common/main/variable/y2.asm"
 
- SKIP 2                 \ The last 2 bytes of the XX15 block
+ SKIP 2                 \ The last two bytes of the XX15 block
 
 INCLUDE "library/common/main/variable/xx12.asm"
 INCLUDE "library/common/main/variable/k.asm"
@@ -173,12 +171,8 @@ ENDIF
 
 IF _MASTER_VERSION \ Platform
 
- SKIP 4
-
 INCLUDE "library/common/main/variable/k6.asm"
 INCLUDE "library/common/main/variable/qq19.asm"
-
- SKIP 3
 
 ENDIF
 
@@ -203,7 +197,8 @@ INCLUDE "library/common/main/variable/xx17.asm"
 IF _MASTER_VERSION \ Platform
 
 .W
- SKIP 1
+
+ SKIP 1                 \ Temporary storage, used in a number of places
 
 ENDIF
 
@@ -259,13 +254,6 @@ INCLUDE "library/common/main/variable/stp.asm"
 INCLUDE "library/common/main/variable/xx4.asm"
 INCLUDE "library/common/main/variable/xx20.asm"
 INCLUDE "library/common/main/variable/xx14.asm"
-
-IF _MASTER_VERSION
-
- SKIP 1                 \ ???
-
-ENDIF
-
 INCLUDE "library/common/main/variable/rat.asm"
 INCLUDE "library/common/main/variable/rat2.asm"
 INCLUDE "library/common/main/variable/k2.asm"
@@ -281,26 +269,25 @@ ELIF _MASTER_VERSION
 INCLUDE "library/6502sp/main/variable/widget.asm"
 
 .XMAX
- SKIP 1 \ Set to 0 in RES2, never read I think
+
+ SKIP 1                 \ This is set to 0 in the RES2 routine, but the value is
+                        \ never actually read
 
 .YMAX
- SKIP 1 \ Set to 191 by RES2, i.e. number of pixel rows in space view
+
+ SKIP 1                 \ This is used to store the number of pixel rows in the
+                        \ space view (it is set to 191 in the RES2 routine)
 
 INCLUDE "library/6502sp/main/variable/messxc.asm"
 
 .deltX
- SKIP 1 \ New var, used in STARS2 only for delta_x
+
+ SKIP 1                 \ This is used by the STARS2 routine for storing the
+                        \ stardust particle's delta_x value
 
 INCLUDE "library/common/main/variable/xx1.asm"
 INCLUDE "library/common/main/variable/inwk.asm"
 INCLUDE "library/common/main/variable/xx19.asm"
-
-IF _MASTER_VERSION
-
- SKIP 3                 \ ???
-
-ENDIF
-
 INCLUDE "library/enhanced/main/variable/newb.asm"
 INCLUDE "library/common/main/variable/jstx.asm"
 INCLUDE "library/common/main/variable/jsty.asm"

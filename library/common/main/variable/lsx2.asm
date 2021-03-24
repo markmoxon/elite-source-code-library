@@ -30,13 +30,15 @@ IF _MATCH_EXTRACTED_BINARIES
 
 ELSE
 
- SKIP &100
+ SKIP 256               \ The ball line heap for storing x-coordinates (see the
+                        \ deep dive on "The ball line heap" for details)
 
 ENDIF
 
 ELIF _MASTER_VERSION
 
- SKIP &100
+ SKIP 256               \ The ball line heap for storing x-coordinates (see the
+                        \ deep dive on "The ball line heap" for details)
 
 ENDIF
 

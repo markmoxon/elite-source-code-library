@@ -50,18 +50,18 @@ ORG CODE%
 
 INCLUDE "library/master/data/variable/dashboard_image.asm"
 
-SKIP 256                \ These bytes are unused, but they get moved to
+ SKIP 256               \ These bytes are unused, but they get moved to
                         \ &7E00-&7EFF along with the dashboard
-
-SKIP 256                \ These bytes are unused, but they get moved to
-                        \ &7F00-&7FFF along with the ship blueprints and text
-                        \ tokens
 
 \ ******************************************************************************
 \
 \ ELITE SHIP BLUEPRINTS FILE
 \
 \ ******************************************************************************
+
+ SKIP 256               \ These bytes are unused, but they get moved to
+                        \ &7F00-&7FFF along with the ship blueprints and text
+                        \ tokens
 
 INCLUDE "library/common/main/variable/xx21.asm"
 INCLUDE "library/advanced/main/variable/e_per_cent.asm"
@@ -108,6 +108,12 @@ INCLUDE "library/enhanced/main/variable/ship_constrictor.asm"
 INCLUDE "library/advanced/main/variable/ship_cougar.asm"
 INCLUDE "library/enhanced/main/variable/ship_dodo.asm"
 
+\ ******************************************************************************
+\
+\ ELITE RECURSIVE TEXT TOKEN FILE
+\
+\ ******************************************************************************
+
 IF _MATCH_EXTRACTED_BINARIES
 
  INCBIN "versions/master/extracted/sng47/workspaces/DATA-align.bin"
@@ -117,13 +123,6 @@ ELSE
  SKIP 619               \ This data appears to be unused
 
 ENDIF
-
-
-\ ******************************************************************************
-\
-\ ELITE RECURSIVE TEXT TOKEN FILE
-\
-\ ******************************************************************************
 
 INCLUDE "library/common/main/macro/char.asm"
 INCLUDE "library/common/main/macro/twok.asm"

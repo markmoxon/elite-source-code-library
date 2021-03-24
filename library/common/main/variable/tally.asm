@@ -5,6 +5,11 @@
                         \ The combat rank is stored as the number of kills, in a
                         \ 16-bit number TALLY(1 0) - so the high byte is in
                         \ TALLY+1 and the low byte in TALLY
+IF _MASTER_VERSION \ Comment
+                        \
+                        \ There is also a fractional part of the kill count,
+                        \ which is stored in TALLYF
+ENDIF
                         \
                         \ If the high byte in TALLY+1 is 0 then we have between
                         \ 0 and 255 kills, so our rank is Harmless, Mostly

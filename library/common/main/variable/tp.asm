@@ -5,7 +5,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
  SKIP 1                 \ The current mission status, which is always 0 for the
                         \ cassette version of Elite as there are no missions
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  SKIP 1                 \ The current mission status:
                         \

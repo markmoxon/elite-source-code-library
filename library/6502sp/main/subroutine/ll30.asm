@@ -49,19 +49,19 @@ IF _6502SP_VERSION \ Tube
 
 ELIF _MASTER_VERSION
 
- STY YSAV               \ ???
+ STY YSAV               \ Store Y in YSAV so we can retrieve it below
 
  LDA #%00001111         \ Set bits 1 and 2 of the Access Control Register at
  STA VIA+&34            \ SHEILA+&34 to switch screen memory into &3000-&7FFF
 
- JSR LOIN
+ JSR LOIN               \ Draw a line from (X1, Y1) to (X2, Y2)
 
  LDA #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
  STA VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
 
- LDY YSAV
+ LDY YSAV               \ Retrieve the value of Y we stored above
 
- RTS
+ RTS                    \ Return from the subroutine
 
 ENDIF
 

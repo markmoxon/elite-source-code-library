@@ -176,7 +176,7 @@ ELIF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDA L12A9              \ ???
+ LDA ADCH3              \ ???
 
 ENDIF
 

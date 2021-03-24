@@ -22,8 +22,8 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDY #25                \ Delay for 50 vertical syncs (25/50 = 0.5 second) and
- JMP DELAY              \ return from the subroutine using a tail call ???
+ LDY #25                \ Delay for 25 vertical syncs (25/50 = 0.5 second) and
+ JMP DELAY              \ return from the subroutine using a tail call
 
 ENDIF
 

@@ -31,7 +31,7 @@ ENDIF
 
 IF _MASTER_VERSION
 
- STY L1229              \ ???
+ STY SDIST              \ ???
 
 ENDIF
 
@@ -49,8 +49,9 @@ IF _6502SP_VERSION \ Tube
 
 ELIF _MASTER_VERSION
 
- JSR U%                 \ ???
- JSR ZINF
+ JSR U%                 \ Call U% to clear the key logger
+
+ JSR ZINF               \ Call ZINF to reset the INWK ship workspace
 
 ENDIF
 
@@ -103,8 +104,8 @@ ELIF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDA #&00
- STA QQ11
+ LDA #0                 \ Set QQ11 to 0, so from here on we are using a space
+ STA QQ11               \ view
 
 ENDIF
 
@@ -353,7 +354,7 @@ ELIF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- PLA
+ PLA                    \ ???
  JSR DETOK
 
  LDA #7
@@ -406,7 +407,7 @@ ELIF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDX L1229              \ ???
+ LDX SDIST              \ ???
  STX INWK+6
 
 ENDIF

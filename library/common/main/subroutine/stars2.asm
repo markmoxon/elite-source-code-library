@@ -93,7 +93,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 ELIF _MASTER_VERSION
 
  LDA P                  \ ???
- STA L009B
+ STA deltX
 
  EOR RAT2               \ Set S = P but with the sign from RAT2, so we now have
  STA S                  \ the distance delta_x with the correct sign in (S R):
@@ -254,7 +254,7 @@ ELIF _MASTER_VERSION
 
  AND #%01111111         \ If |x_hi| >= ??? then jump to KILL2 to recycle this
  EOR #%01111111         \ particle, as it's gone off the side of the screen,
- CMP L009B              \ and re-join at STC2 with the new particle ???
+ CMP deltX              \ and re-join at STC2 with the new particle ???
  BCC KILL2
  BEQ KILL2
 

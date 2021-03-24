@@ -222,11 +222,9 @@ ENDIF
 
 IF _MASTER_VERSION
 
- BPL L6D9A              \ ???
+ BPL P%+5              \ ???
 
  JSR BELL
-
-.L6D9A
 
  JSR BELL
 
@@ -256,11 +254,9 @@ IF _MASTER_VERSION
 .DK7
 
  CPX #&1B
- BNE L6DAD
+ BNE P%+5
 
  JMP DEATH2
-
-.L6DAD
 
 ENDIF
 

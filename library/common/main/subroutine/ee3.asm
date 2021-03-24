@@ -79,8 +79,8 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- CLC                    \ ???
- LDA #&03
+ CLC                    \ Call TT11 to print X to 3 digits with no decimal point
+ LDA #3                 \ and return from the subroutine using a tail call
  JMP TT11
 
 ENDIF

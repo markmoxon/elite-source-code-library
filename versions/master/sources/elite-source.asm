@@ -229,10 +229,10 @@ RAT = &0091
 RAT2 = &0092
 K2 = &0093
 widget = &0097
-L0098 = &0098 \ Set to 0 in RES2, never read I think
-L0099 = &0099 \ Set to 191 by RES2, i.e. number of pixel rows in space view
+XMAX = &0098 \ Set to 0 in RES2, never read I think
+YMAX = &0099 \ Set to 191 by RES2, i.e. number of pixel rows in space view
 messXC = &009A
-L009B = &009B \ New var, used in STARS2 only for delta_x
+deltX = &009B \ New var, used in STARS2 only for delta_x
 INWK = &009C
 XX1 = &009C
 XX19 = &00BD
@@ -245,15 +245,15 @@ KY14 = &00C5
 KY15 = &00C6
 KY20 = &00C7
 KY7 = &00C8
-L00C9 = &00C9  \ KL+5, X in others, so KY5
+KY5 = &00C9  \ KL+5, X in others, so KY5
 KY18 = &00CA
-L00CB = &00CB \ KL+6, S in others, so KY6
+KY6 = &00CB \ KL+6, S in others, so KY6
 KY19 = &00CC
 KY12 = &00CD
 KY2 = &00CE
 KY16 = &00CF
-L00D0 = &00D0  \ KL+3, < in others, so KY3
-L00D1 = &00D1  \ KL+4, > in others, so KY4
+KY3 = &00D0  \ KL+3, < in others, so KY3
+KY4 = &00D1  \ KL+4, > in others, so KY4
 KY1 = &00D2
 KY13 = &00D3
 LSX = &00D4
@@ -309,7 +309,7 @@ LASX = &121E
 LASY = &121F
 ALTIT = &1221
 SWAP = &1222
-L1229 = &1229 \ New, distance for ship in TITLE?
+SDIST = &1229 \ New, distance for ship in TITLE?
 NAME = &122C
 TP = &1234
 QQ0 = &1235
@@ -329,10 +329,10 @@ ENGY = &125F
 DKCMP = &1260
 GHYP = &1261
 ESCP = &1262
-L1264   = &1264 \ New, updated in SOLAR, something to do with cargo hold
-L1265   = &1265 \ New, connected to 1265, see SOLAR and inventory TT210
-L1266   = &1266 \ New, only mentioned in EXNO2, is this our fractional TALLY?
-NOMSL   = &1267
+L1264 = &1264 \ New, updated in SOLAR, something to do with cargo hold
+L1265 = &1265 \ New, connected to 1265, see SOLAR and inventory TT210
+TALLYF = &1266 \ New, only mentioned in EXNO2, is this our fractional TALLY?
+NOMSL = &1267
 FIST = &1268
 AVL = &1269
 QQ26 = &127A
@@ -350,10 +350,10 @@ tek = &1297
 SLSP = &1298
 QQ2 = &129A
 safehouse = &12A0
-L12A6   = &12A6 \ New, EX2, stored but never read = cloud counter
-L12A7   = &12A7 \ New, joystick channel 1, written to in irq1
-L12A8   = &12A8 \ New, channel 2
-L12A9   = &12A9 \ New, channel 3
+CLCNT   = &12A6 \ New, EX2, stored but never read = cloud counter
+ADCH1   = &12A7 \ New, joystick channel 1, written to in irq1
+ADCH2   = &12A8 \ New, channel 2
+ADCH3   = &12A9 \ New, channel 3
 
 XX21 = &8000
 E% = &8042
@@ -2815,7 +2815,7 @@ INCLUDE "library/6502sp/main/variable/trantable.asm"
  BPL RDK1
 
  CLD
- LDA L00CB
+ LDA KY6
  EOR #&FF
  AND KY19
  STA KY19

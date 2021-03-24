@@ -64,7 +64,7 @@ ENDIF
 
 IF _MASTER_VERSION
 
- STA L12A6              \ ???
+ STA CLCNT              \ ???
 
 ENDIF
 

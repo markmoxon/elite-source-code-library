@@ -141,7 +141,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDA L0099              \ ???
+ LDA YMAX               \ ???
 
 ENDIF
 
@@ -177,7 +177,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDA L0099              \ Set (A X) = y-coordinate of bottom of screen - K4(1 0)
+ LDA YMAX               \ Set (A X) = y-coordinate of bottom of screen - K4(1 0)
  SEC                    \
  SBC K4                 \ Starting with the low bytes ???
  TAX

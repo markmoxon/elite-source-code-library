@@ -38,13 +38,13 @@ ENDIF
 
 .BOX
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Platform
 
  LDX #%00001111         \ Set bits 1 and 2 of the Access Control Register at
  STX VIA+&34            \ SHEILA+&34 to switch screen memory into &3000-&7FFF
 
- LDA COL                \ ???
- PHA
+ LDA COL                \ Store the current colour on the stack, so we can
+ PHA                    \ restore it once we have drawn the border
 
 ENDIF
 
@@ -66,7 +66,7 @@ IF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- STY XC                 \ Move the text cursor to column 1 ???
+ STY XC                 \ Move the text cursor to column 1
 
  LDX #0                 \ Set X1 = Y1 = Y2 = 0
  STX Y1
@@ -88,6 +88,8 @@ ENDIF
  STA X1
  STA X2
 
+IF _6502SP_VERSION \ Platform
+
  JSR BOS2               \ Call BOS2 below, which will call BOS1 twice, and then
                         \ fall through into BOS2 again, so we effectively do
                         \ BOS1 four times, decrementing X1 and X2 each time
@@ -103,14 +105,28 @@ ENDIF
                         \ left edge of the upper part of the screen, and a
                         \ 2-pixel wide vertical border along the right edge
 
-IF _MASTER_VERSION
+ELIF _MASTER_VERSION
 
- JSR BOS2               \ ???
+ JSR BOS2               \ Call BOS2 below, which will call BOS1 twice, and then
+ JSR BOS2               \ call BOS2 again, so we effectively do BOS1 four times,
+                        \ decrementing X1 and X2 each time before calling LOIN,
+                        \ so this whole loop-within-a-loop mind-bender ends up
+                        \ drawing these four lines:
+                        \
+                        \   (1, 0)   to (1, 191)
+                        \   (0, 0)   to (0, 191)
+                        \   (255, 0) to (255, 191)
+                        \   (254, 0) to (254, 191)
+                        \
+                        \ So that's a 2-pixel wide vertical border along the
+                        \ left edge of the upper part of the screen, and a
+                        \ 2-pixel wide vertical border along the right edge
+ LDA COL                \ Set locations &4000 &41F8 to %00001111, as otherwise
+ STA &4000              \ the top-left and top-right corners will be black (as
+ STA &41F8              \ the lines overlap at the corners, and the EOR logic
+                        \ used by LOIN will otherwise make them black)
 
- LDA COL
- STA &4000
- STA &41F8
- PLA
+ PLA                    \ Restore the original colour that we stored above
  STA COL
 
  LDA #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
@@ -148,7 +164,7 @@ ENDIF
  DEC X1                 \ Decrement X1 and X2
  DEC X2
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Platform
 
  JSR LOIN               \ Draw a line from (X1, Y1) to (X2, Y2)
 

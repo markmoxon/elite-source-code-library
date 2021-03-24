@@ -39,8 +39,9 @@ ELIF _MASTER_VERSION
 
  LDA #7                 \ Call TITLE to show a rotating Cougar (#COU) and
  LDX #COU               \ token 7 ("LOAD NEW {single cap}COMMANDER {all caps}
- LDY #&64               \ (Y/N)?{sentence case}{cr}{cr}""), returning with the
- JSR TITLE              \ internal number of the key pressed in A ???
+ LDY #100               \ (Y/N)?{sentence case}{cr}{cr}""), with the ship at a
+ JSR TITLE              \ distance of 100, returning with the internal number
+                        \ of the key pressed in A
 
 ENDIF
 

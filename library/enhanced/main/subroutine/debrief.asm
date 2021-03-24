@@ -19,7 +19,7 @@
  LSR TP                 \ Clear bit 0 of TP to indicate that mission 1 is no
  ASL TP                 \ longer in progress, as we have completed it
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: In the Master version, killing the Constrictor at the end of mission 1 instantly gives you 256 kill points, but the other versions only give you your reward during the debriefing
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: In the disc and 6502SP versions, killing the Constrictor at the end of mission 1 gives you 256 kill points, but only when you attend the debriefing
 
  INC TALLY+1            \ Award 256 kill points for completing the mission
 

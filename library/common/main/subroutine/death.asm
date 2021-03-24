@@ -14,14 +14,14 @@
 
 .DEATH
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  JSR EXNO3              \ Make the sound of us dying
 
 ELIF _MASTER_VERSION
 
- LDY #&04               \ ???
- JSR NOISE
+ LDY #4                 \ Call the NOISE routine with Y = 4 to make the sound of
+ JSR NOISE              \ us dying
 
 ENDIF
 
@@ -45,7 +45,8 @@ ENDIF
 
 IF _MASTER_VERSION
 
- STZ QQ11               \ ???
+ STZ QQ11               \ Set QQ11 to 0, so from here on we are using a space
+                        \ view
 
 ENDIF
 
@@ -56,9 +57,9 @@ ENDIF
  JSR nWq                \ Create a cloud of stardust containing the correct
                         \ number of dust particles (i.e. NOSTM of them)
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Advanced: Group A: In the Master version, the "GAME OVER" message is cyan, while in the 6502SP version it is yellow
 
- LDA #&FF               \ ???
+ LDA #CYAN              \ Change the current colour to cyan
  STA COL
 
 ENDIF
@@ -83,7 +84,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION \ Screen
+IF _6502SP_VERSION \ Advanced: See group A
 
  LDA #YELLOW            \ Send a #SETCOL YELLOW command to the I/O processor to
  JSR DOCOL              \ change the current colour to yellow

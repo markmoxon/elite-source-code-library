@@ -45,7 +45,11 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 ELIF _MASTER_VERSION
 
  LDY #8                 \ Call the NOISE routine with Y = 8 to make the sound
- JSR NOISE              \ of a missile launch ???
+ JSR NOISE              \ of a missile launch
+
+                        \ Fall through into ANGRY to make the missile target
+                        \ angry, though as we already did this above, I'm not
+                        \ entirely sure why we do this again
 
 ENDIF
 

@@ -229,7 +229,7 @@ ELIF _MASTER_VERSION
  AND #&03
  TAY
  LDA VIA+&19            \ A to D joystick high byte
- STA L12A7,Y
+ STA ADCH1,Y
  INY
  TYA
  CMP #&03

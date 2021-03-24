@@ -34,10 +34,14 @@ ENDIF
 
 .CLYNS
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Platform
 
- STZ DLY                \ ???
- STZ de
+ STZ DLY                \ Set the delay in DLY to 0, to indicate that we are
+                        \ no longer showing an in-flight message, so any new
+                        \ in-flight messages will be shown instantly
+
+ STZ de                 \ Clear de, the flag that appends " DESTROYED" to the
+                        \ end of the next text token, so that it doesn't
 
 ENDIF
 
@@ -48,10 +52,10 @@ IF _DISC_DOCKED OR _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Platform
 
- LDA #&80               \ ???
- STA QQ17
+ LDA #%10000000         \ Set bit 7 of QQ17 to switch standard tokens to
+ STA QQ17               \ Sentence Case
 
 ENDIF
 

@@ -204,7 +204,7 @@ ENDIF
 
 IF _MASTER_VERSION \ Platform
 
- STA R                  \ ???
+ STA R                  \ Store the dash's right pixel in R ???
 
 ENDIF
 

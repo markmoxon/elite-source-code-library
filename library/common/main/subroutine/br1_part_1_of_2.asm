@@ -28,7 +28,7 @@ IF _6502SP_VERSION \ Tube
 
 ELIF _MASTER_VERSION
 
- JSR U%                 \ ???
+ JSR U%                 \ Call U% to clear the key logger
 
 ENDIF
 
@@ -58,7 +58,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION \ Advanced: The rotating Cobra Mk III on the title screen is further away on the Master version compared to the other versions, so it doesn't overlap the title text as much
 
  LDX #CYL               \ Call TITLE to show a rotating Cobra Mk III (#CYL) and
  LDA #128               \ token 128 ("  LOAD NEW COMMANDER (Y/N)?{crlf}{crlf}"),
@@ -74,10 +74,11 @@ ELIF _DISC_DOCKED OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDX #&0B
- LDA #&06
- LDY #&C8
- JSR TITLE
+ LDX #CYL               \ Call TITLE to show a rotating Cobra Mk III (#CYL) and
+ LDA #6                 \ token 6 ("LOAD NEW {single cap}COMMANDER {all caps}
+ LDY #200               \ (Y/N)?{sentence case}{cr}{cr}"), with the ship at a
+ JSR TITLE              \ distance of 200, returning with the internal number
+                        \ of the key pressed in A
 
 ENDIF
 

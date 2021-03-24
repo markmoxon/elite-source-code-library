@@ -89,9 +89,9 @@ ENDIF
 IF _MASTER_VERSION
 
  LDA #&00               \ ???
- STA L0098
+ STA XMAX
  LDA #&BF
- STA L0099
+ STA YMAX
 
 ENDIF
 

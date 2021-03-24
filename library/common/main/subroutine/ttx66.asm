@@ -3,7 +3,7 @@
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 \       Name: TTX66
 ELIF _MASTER_VERSION
-\       Name: TT662
+\       Name: TTX662
 ENDIF
 \       Type: Subroutine
 \   Category: Utility routines
@@ -41,7 +41,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
-.TT662
+.TTX662
 
  JSR TTX66              \ ???
 

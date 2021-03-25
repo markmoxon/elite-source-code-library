@@ -168,7 +168,7 @@ ENDIF
 
  CLC                    \ Clear the C flag
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Minor
 
  LDX INWK+8             \ Set X = z_sign
 
@@ -190,7 +190,7 @@ ENDIF
 
  ADC #35                \ Set A = 35 + A to give a number in the range 20 to 50
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Minor
 
  EOR #%11111111         \ Flip all the bits and store in SC, so SC is in the
  STA SC                 \ range 205 to 235, with a higher z_hi giving a lower SC
@@ -213,7 +213,7 @@ ENDIF
 
  CLC                    \ Clear the C flag
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Minor
 
  LDX INWK+5             \ Set X = y_sign
 
@@ -249,7 +249,7 @@ ENDIF
                         \ First, though, we have to make sure the dot is inside
                         \ the dashboard, by moving it if necessary
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Minor
 
  ADC SC                 \ Set A = SC + A, so A now contains the y-coordinate of
                         \ the end of the stick, plus the length of the stick, to
@@ -325,7 +325,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Minor
  SEC                    \ Set A = A - SC to get the stick length, by reversing
  SBC SC                 \ the ADC SC we did above. This clears the C flag if the
 ELIF _MASTER_VERSION

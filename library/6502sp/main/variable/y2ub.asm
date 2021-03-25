@@ -1,6 +1,6 @@
 .Y2UB
 
- SKIP &100              \ The y-coordinates of the end points for character
+ SKIP 256               \ The y-coordinates of the end points for character
                         \ lines in the scroll text (as projected screen
                         \ coordinates)
 

@@ -21,5 +21,5 @@ ORG &2300
 
 .TABLE
 
- SKIP &100
+ SKIP 256
 

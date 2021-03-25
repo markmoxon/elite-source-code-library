@@ -75,7 +75,7 @@ ENDIF
 
  JSR GTHG               \ Call GTHG to spawn a Thargoid ship
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
 
  LDA #3                 \ Fetch the number of Thargoid ships from MANY+THG, and
  CMP MANY+THG           \ if it is less than 3, loop back to MJP1 to spawn

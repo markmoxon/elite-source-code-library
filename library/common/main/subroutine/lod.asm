@@ -38,7 +38,7 @@ IF _CASSETTE_VERSION \ Platform
                         \ slots for the local bubble of universe, and various
                         \ flight and ship status variables
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED
 
 \LDX #2                 \ These instructions are commented out in the original
 \JSR FX200              \ source, but they would enable the ESCAPE key and clear
@@ -52,7 +52,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION
 
  LDY #&B                \ Set up an OSFILE block at &0C00, containing:
  STY &0C03              \
@@ -68,7 +68,7 @@ IF _CASSETTE_VERSION \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION
 
  LDA #&FF               \ Call QUS1 with A = &FF, Y = &C to load the commander
  JSR QUS1               \ file at address &0B00
@@ -87,7 +87,7 @@ IF _CASSETTE_VERSION \ Platform
                         \ byte, as there are no missions in this version, so
                         \ having bit 7 set is invalid anyway
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED
 
  BCS LOR                \ If the C flag is set then an invalid drive number was
                         \ entered during the call to QUS1 and the file wasn't
@@ -107,7 +107,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION
 
  LDX #NT%               \ We have successfully loaded the commander file at
                         \ &0B00, so now we want to copy it to the last saved
@@ -122,7 +122,7 @@ ENDIF
 
 .LOL1
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION
 
  LDA &B00,X             \ Copy the X-th byte of &0B00 to the X-th byte of NA%+8
  STA NA%+8,X
@@ -146,7 +146,7 @@ IF _CASSETTE_VERSION \ Platform
                         \ clear memory if the BREAK key is pressed (*FX 200,3)
                         \ and return from the subroutine there
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED
 
 .LOR
 

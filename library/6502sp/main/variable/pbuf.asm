@@ -32,7 +32,7 @@ IF _MATCH_EXTRACTED_BINARIES
 
 ELSE
 
- SKIP &100              \ The pixel buffer to send with this command
+ SKIP 256               \ The pixel buffer to send with this command
 
 ENDIF
 

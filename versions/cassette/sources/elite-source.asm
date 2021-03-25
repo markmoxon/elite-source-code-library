@@ -566,8 +566,8 @@ INCLUDE "library/common/main/subroutine/sun_part_3_of_4.asm"
 INCLUDE "library/common/main/subroutine/sun_part_4_of_4.asm"
 INCLUDE "library/common/main/subroutine/circle.asm"
 INCLUDE "library/common/main/subroutine/circle2.asm"
-INCLUDE "library/original/main/subroutine/wpls2.asm"
-INCLUDE "library/original/main/subroutine/wp1.asm"
+INCLUDE "library/common/main/subroutine/wpls2.asm"
+INCLUDE "library/common/main/subroutine/wp1.asm"
 INCLUDE "library/common/main/subroutine/wpls.asm"
 INCLUDE "library/common/main/subroutine/edges.asm"
 INCLUDE "library/common/main/subroutine/chkon.asm"
@@ -821,7 +821,7 @@ ORG CODE_PYTHON%
 
 INCLUDE "library/common/main/variable/ship_python.asm"
 
- SKIP 11                \ This space is unused
+ SKIP 11                \ This space appears to be unused
 
 INCLUDE "library/common/main/variable/svn.asm"
 INCLUDE "library/common/main/variable/vec.asm"

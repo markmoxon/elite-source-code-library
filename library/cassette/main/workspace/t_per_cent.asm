@@ -29,8 +29,8 @@ INCLUDE "library/common/main/variable/cok.asm"
 INCLUDE "library/common/main/variable/gcnt.asm"
 INCLUDE "library/common/main/variable/laser.asm"
 
- SKIP 2                 \ These bytes are unused (they were originally used for
-                        \ up/down lasers, but they were dropped)
+ SKIP 2                 \ These bytes appear to be unused (they were originally
+                        \ used for up/down lasers, but they were dropped)
 
 INCLUDE "library/common/main/variable/crgo.asm"
 INCLUDE "library/common/main/variable/qq20.asm"
@@ -42,7 +42,7 @@ INCLUDE "library/common/main/variable/dkcmp.asm"
 INCLUDE "library/common/main/variable/ghyp.asm"
 INCLUDE "library/common/main/variable/escp.asm"
 
- SKIP 4                 \ These bytes are unused
+ SKIP 4                 \ These bytes appear to be unused
 
 INCLUDE "library/common/main/variable/nomsl.asm"
 INCLUDE "library/common/main/variable/fist.asm"

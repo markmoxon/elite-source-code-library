@@ -1578,24 +1578,24 @@ IF _CASSETTE_VERSION \ Enhanced: To make room for the new laser tokens, the enha
 
 ELIF _DISC_VERSION
 
- SKIP 5                 \ These bytes are unused
+ SKIP 5                 \ These bytes appear to be unused
 
 ELIF _6502SP_VERSION
 
 IF _SNG45
 
- EQUB 0, 0              \ These bytes are unused and just contain noise
+ EQUB 0, 0              \ These bytes appear to be unused and just contain noise
  EQUB &E4, &63, &A5
 
 ELIF _SOURCE_DISC
 
- SKIP 4                 \ These bytes are unused
+ SKIP 4                 \ These bytes appear to be unused
 
 ENDIF
 
 ELIF _MASTER_VERSION
 
- EQUB 0, 0              \ These bytes are unused and just contain noise
+ EQUB 0, 0              \ These bytes appear to be unused and just contain noise
  EQUB &19, &03, &16
 
 ENDIF

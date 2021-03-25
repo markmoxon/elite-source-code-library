@@ -90,7 +90,7 @@ ENDIF
 
  STA COMC               \ Store the compass colour in COMC
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Platform
 
                         \ Fall through into DOT to draw the dot on the compass
 

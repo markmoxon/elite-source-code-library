@@ -99,8 +99,9 @@ ENDIF
 
  EQUB 0                 \ LASER+3 = Right laser, #19
 
- EQUW 0                 \ These bytes are unused (they were originally used for
-                        \ up/down lasers, but they were dropped), #20-21
+ EQUW 0                 \ These bytes appear to be unused (they were originally
+                        \ used for up/down lasers, but they were dropped),
+                        \ #20-21
 
  EQUB 22+(15 AND Q%)    \ CRGO = Cargo capacity, #22
 
@@ -136,7 +137,7 @@ ENDIF
 
  EQUB Q%                \ ESCP = Escape pod, #46
 
- EQUD 0                 \ These four bytes are unused, #47-50
+ EQUD 0                 \ These four bytes appear to be unused, #47-50
 
  EQUB 3+(Q% AND 1)      \ NOMSL = Number of missiles, #51
 

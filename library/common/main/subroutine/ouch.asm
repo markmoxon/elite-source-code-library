@@ -63,7 +63,7 @@ ENDIF
  CPX #17                \ If X >= 17 then we just lost a piece of equipment, so
  BCS ou1                \ jump to ou1 to print the relevant message
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Minor
 
  TXA                    \ Print recursive token 48 + A as an in-flight token,
  ADC #208               \ which will be in the range 48 ("FOOD") to 64 ("ALIEN

@@ -19,6 +19,6 @@ INCLUDE "library/common/main/variable/jstgy.asm"
 INCLUDE "library/common/main/variable/jste.asm"
 INCLUDE "library/common/main/variable/jstk.asm"
 INCLUDE "library/enhanced/main/variable/bstk.asm"
-INCLUDE "library/enhanced/main/variable/catf.asm"
+INCLUDE "library/6502sp/main/variable/catf.asm"
 INCLUDE "library/6502sp/main/variable/zip.asm"
 

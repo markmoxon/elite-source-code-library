@@ -161,7 +161,7 @@ ENDIF
  JSR tnpr               \ Call tnpr to work out whether there is room in the
                         \ cargo hold for this item
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION
 
  LDY #206               \ If the C flag is set, then there is no room in the
  BCS Tc                 \ cargo hold, so set Y to the recursive token 46

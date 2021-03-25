@@ -1,5 +1,5 @@
 .Y1TB
 
- SKIP &100              \ The y-coordinates of the start points for character
+ SKIP 256               \ The y-coordinates of the start points for character
                         \ lines in the scroll text
 

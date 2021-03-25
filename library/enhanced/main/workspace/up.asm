@@ -72,7 +72,7 @@ INCLUDE "library/common/main/variable/jstx.asm"
 INCLUDE "library/common/main/variable/jsty.asm"
 INCLUDE "library/common/main/variable/xsav2.asm"
 INCLUDE "library/common/main/variable/ysav2.asm"
-INCLUDE "library/6502sp/main/variable/name.asm"
+INCLUDE "library/advanced/main/variable/name.asm"
 INCLUDE "library/common/main/variable/tp.asm"
 INCLUDE "library/common/main/variable/qq0.asm"
 INCLUDE "library/common/main/variable/qq1.asm"
@@ -83,8 +83,8 @@ INCLUDE "library/common/main/variable/cok.asm"
 INCLUDE "library/common/main/variable/gcnt.asm"
 INCLUDE "library/common/main/variable/laser.asm"
 
- SKIP 2                 \ These bytes are unused (they were originally used for
-                        \ up/down lasers, but they were dropped)
+ SKIP 2                 \ These bytes appear to be unused (they were originally
+                        \ used for up/down lasers, but they were dropped)
 
 INCLUDE "library/common/main/variable/crgo.asm"
 INCLUDE "library/common/main/variable/qq20.asm"
@@ -96,7 +96,7 @@ INCLUDE "library/common/main/variable/dkcmp.asm"
 INCLUDE "library/common/main/variable/ghyp.asm"
 INCLUDE "library/common/main/variable/escp.asm"
 
- SKIP 4                 \ These bytes are unused
+ SKIP 4                 \ These bytes appear to be unused
 
 INCLUDE "library/common/main/variable/nomsl.asm"
 INCLUDE "library/common/main/variable/fist.asm"
@@ -130,7 +130,7 @@ INCLUDE "library/common/main/variable/nostm.asm"
 
 IF _DISC_VERSION \ Platform
 
- SKIP 1                 \ This byte is unused
+ SKIP 1                 \ This byte appears to be unused
 
 INCLUDE "library/common/main/variable/comc.asm"
 INCLUDE "library/common/main/variable/dnoiz.asm"
@@ -146,6 +146,6 @@ INCLUDE "library/enhanced/main/variable/catf.asm"
 
 ELIF _6502SP_VERSION
 
-INCLUDE "library/6502sp/main/variable/buf.asm"
+INCLUDE "library/advanced/main/variable/buf.asm"
 
 ENDIF

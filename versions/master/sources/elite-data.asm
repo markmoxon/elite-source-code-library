@@ -50,7 +50,7 @@ ORG CODE%
 
 INCLUDE "library/master/data/variable/dashboard_image.asm"
 
- SKIP 256               \ These bytes are unused, but they get moved to
+ SKIP 256               \ These bytes appear to be unused, but they get moved to
                         \ &7E00-&7EFF along with the dashboard
 
 \ ******************************************************************************
@@ -59,7 +59,7 @@ INCLUDE "library/master/data/variable/dashboard_image.asm"
 \
 \ ******************************************************************************
 
- SKIP 256               \ These bytes are unused, but they get moved to
+ SKIP 256               \ These bytes appear to be unused, but they get moved to
                         \ &7F00-&7FFF along with the ship blueprints and text
                         \ tokens
 

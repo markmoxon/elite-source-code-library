@@ -16,7 +16,7 @@
 \ Valid internal key numbers are Binary Coded Decimal (BCD) numbers in the range
 \ &10 top &79, so they're in the ranges &10 to &19, then &20 to &29, then &30 to
 \ &39, and so on. This means that the other locations - i.e. &1A to &1F, &2A to
-\ &2F and so on - are unused by the lookup table, but the MOS doesn't let this
+\ &2F and so on - aren't used by the lookup table, but the MOS doesn't let this
 \ space go to waste; instead, those gaps contain MOS code, which is replicated
 \ below as TRANTABLE contains a copy of this entire block of the MOS, not just
 \ the table entries.

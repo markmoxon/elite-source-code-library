@@ -7,7 +7,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 
 ELIF _6502SP_VERSION
 
- SKIP 1                 \ This byte is unused in this version of Elite
+ SKIP 1                 \ This byte appears to be unused
 
 ENDIF
 

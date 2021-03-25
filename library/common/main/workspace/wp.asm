@@ -160,7 +160,7 @@ INCLUDE "library/common/main/variable/de.asm"
 INCLUDE "library/common/main/variable/lsx2.asm"
 INCLUDE "library/common/main/variable/lsy2.asm"
 INCLUDE "library/common/main/variable/lso.asm"
-INCLUDE "library/6502sp/main/variable/buf.asm"
+INCLUDE "library/advanced/main/variable/buf.asm"
 INCLUDE "library/common/main/variable/sx.asm"
 INCLUDE "library/common/main/variable/sxl.asm"
 INCLUDE "library/common/main/variable/sy.asm"
@@ -170,21 +170,21 @@ INCLUDE "library/common/main/variable/szl.asm"
 INCLUDE "library/common/main/variable/lasx.asm"
 INCLUDE "library/common/main/variable/lasy.asm"
 
- SKIP 1                 \ This byte is unused
+ SKIP 1                 \ This byte appears to be unused
 
 INCLUDE "library/common/main/variable/altit.asm"
 INCLUDE "library/common/main/variable/swap.asm"
 
- SKIP 6                 \ These bytes are unused
+ SKIP 6                 \ These bytes appear to be unused
 
 .SDIST
 
  SKIP 1                 \ Used to store the nearest distance of the rotating
                         \ ship on the title screen
 
- SKIP 2                 \ These bytes are unused
+ SKIP 2                 \ These bytes appear to be unused
 
-INCLUDE "library/6502sp/main/variable/name.asm"
+INCLUDE "library/advanced/main/variable/name.asm"
 INCLUDE "library/common/main/variable/tp.asm"
 INCLUDE "library/common/main/variable/qq0.asm"
 INCLUDE "library/common/main/variable/qq1.asm"
@@ -195,8 +195,8 @@ INCLUDE "library/common/main/variable/cok.asm"
 INCLUDE "library/common/main/variable/gcnt.asm"
 INCLUDE "library/common/main/variable/laser.asm"
 
- SKIP 2                 \ These bytes are unused (they were originally used for
-                        \ up/down lasers, but they were dropped)
+ SKIP 2                 \ These bytes appear to be unused (they were originally
+                        \ used for up/down lasers, but they were dropped)
 
 INCLUDE "library/common/main/variable/crgo.asm"
 INCLUDE "library/common/main/variable/qq20.asm"
@@ -208,7 +208,7 @@ INCLUDE "library/common/main/variable/dkcmp.asm"
 INCLUDE "library/common/main/variable/ghyp.asm"
 INCLUDE "library/common/main/variable/escp.asm"
 
- SKIP 1                 \ This byte is unused
+ SKIP 1                 \ This byte appears to be unused
 
 .L1264
 
@@ -235,13 +235,13 @@ INCLUDE "library/common/main/variable/qq26.asm"
 INCLUDE "library/common/main/variable/tally.asm"
 INCLUDE "library/common/main/variable/svc.asm"
 
- SKIP 1                 \ This byte is unused
+ SKIP 1                 \ This byte appears to be unused
 
 INCLUDE "library/common/main/variable/mch.asm"
 INCLUDE "library/common/main/variable/comx.asm"
 INCLUDE "library/common/main/variable/comy.asm"
 
- SKIP 14                \ These bytes are unused
+ SKIP 14                \ These bytes appear to be unused
 
 INCLUDE "library/common/main/variable/qq24.asm"
 INCLUDE "library/common/main/variable/qq25.asm"
@@ -251,7 +251,7 @@ INCLUDE "library/common/main/variable/gov.asm"
 INCLUDE "library/common/main/variable/tek.asm"
 INCLUDE "library/common/main/variable/slsp.asm"
 INCLUDE "library/common/main/variable/qq2.asm"
-INCLUDE "library/6502sp/main/variable/safehouse.asm"
+INCLUDE "library/advanced/main/variable/safehouse.asm"
 
 .CLCNT
 

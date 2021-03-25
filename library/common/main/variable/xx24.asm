@@ -1,4 +1,4 @@
 .XX24
 
- SKIP 1                 \ This byte is unused
+ SKIP 1                 \ This byte appears to be unused
 

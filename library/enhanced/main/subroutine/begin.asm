@@ -20,7 +20,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _DISC_VERSION OR _6502SP_VERSION
+IF _DISC_DOCKED OR _6502SP_VERSION
 
 
  LDX #(CATF-COMC)       \ We start by zeroing all the configuration variables

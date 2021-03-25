@@ -24,7 +24,7 @@ INCLUDE "library/common/main/variable/sch.asm"
 INCLUDE "library/cassette/loader/variable/blptr.asm"
 INCLUDE "library/cassette/loader/variable/v219.asm"
 
- SKIP 4                 \ These bytes are unused
+ SKIP 4                 \ These bytes appear to be unused
 
 INCLUDE "library/6502sp/io/variable/k3.asm"
 INCLUDE "library/cassette/loader/variable/blcnt.asm"

@@ -901,9 +901,9 @@ ELSE
 
 ENDIF
 
-INCLUDE "library/6502sp/main/variable/log.asm"
-INCLUDE "library/6502sp/main/variable/logl.asm"
-INCLUDE "library/6502sp/main/variable/antilog.asm"
+INCLUDE "library/advanced/main/variable/log.asm"
+INCLUDE "library/advanced/main/variable/logl.asm"
+INCLUDE "library/advanced/main/variable/antilog.asm"
 INCLUDE "library/6502sp/main/variable/antilogodd.asm"
 INCLUDE "library/common/main/subroutine/shppt.asm"
 INCLUDE "library/common/main/subroutine/ll5.asm"

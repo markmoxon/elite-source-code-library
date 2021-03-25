@@ -14,7 +14,7 @@
 
 .DEATH
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Platform
 
  JSR EXNO3              \ Make the sound of us dying
 
@@ -103,7 +103,7 @@ ENDIF
  LSR A                  \ store in byte #0 (x_lo)
  STA INWK
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
 
  LDY #0                 \ Set the following to 0: the current view in QQ11
  STY QQ11               \ (space view), x_hi, y_hi, z_hi and the AI flag (no AI
@@ -243,7 +243,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
 
  JSR U%                 \ Clear the key logger, which also sets A = 0
 
@@ -253,7 +253,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
- STA DELTA              \ Set our speed in DELTA to 0, as we aen't going
+ STA DELTA              \ Set our speed in DELTA to 0, as we aren't going
                         \ anywhere any more
 
 IF _MASTER_VERSION

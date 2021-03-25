@@ -17,7 +17,7 @@ ORG &0000
 
 IF _MASTER_VERSION \ Platform
 
- SKIP 2                 \ These bytes are unused
+ SKIP 2                 \ These bytes appear to be unused
 
 ENDIF
 
@@ -33,7 +33,7 @@ INCLUDE "library/common/main/variable/t1.asm"
 
 IF _MASTER_VERSION \ Platform
 
- SKIP 3                 \ These bytes are unused
+ SKIP 3                 \ These bytes appear to be unused
 
 ENDIF
 
@@ -49,7 +49,7 @@ ELIF _MASTER_VERSION
 
 INCLUDE "library/common/main/variable/p.asm"
 
- SKIP 1                 \ This byte is unused
+ SKIP 1                 \ This byte appears to be unused
 
 INCLUDE "library/common/main/variable/xc.asm"
 INCLUDE "library/common/main/variable/col.asm"
@@ -260,13 +260,13 @@ INCLUDE "library/common/main/variable/k2.asm"
 
 IF _6502SP_VERSION \ Platform
 
-INCLUDE "library/6502sp/main/variable/widget.asm"
-INCLUDE "library/6502sp/main/variable/safehouse.asm"
-INCLUDE "library/6502sp/main/variable/messxc.asm"
+INCLUDE "library/advanced/main/variable/widget.asm"
+INCLUDE "library/advanced/main/variable/safehouse.asm"
+INCLUDE "library/advanced/main/variable/messxc.asm"
 
 ELIF _MASTER_VERSION
 
-INCLUDE "library/6502sp/main/variable/widget.asm"
+INCLUDE "library/advanced/main/variable/widget.asm"
 
 .XMAX
 
@@ -278,7 +278,7 @@ INCLUDE "library/6502sp/main/variable/widget.asm"
  SKIP 1                 \ This is used to store the number of pixel rows in the
                         \ space view (it is set to 191 in the RES2 routine)
 
-INCLUDE "library/6502sp/main/variable/messxc.asm"
+INCLUDE "library/advanced/main/variable/messxc.asm"
 
 .deltX
 

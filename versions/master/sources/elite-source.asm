@@ -350,7 +350,7 @@ INCLUDE "library/master/main/subroutine/sound.asm"
 
 .NOISE
 
- LDA DNOIZ
+ LDA DNOIZ              \ ???
  BNE SRTS
 
  LDA SFX2,Y
@@ -588,7 +588,7 @@ INCLUDE "library/advanced/main/subroutine/setvdu19-dovdu19.asm"
  LDA #%00001111         \ Set bits 1 and 2 of the Access Control Register at
  STA VIA+&34            \ SHEILA+&34 to switch screen memory into &3000-&7FFF
 
- LDX #&90
+ LDX #&90               \ ???
 
 .SZPL1
 
@@ -618,7 +618,7 @@ INCLUDE "library/advanced/main/subroutine/setvdu19-dovdu19.asm"
  LDA #%00001111         \ Set bits 1 and 2 of the Access Control Register at
  STA VIA+&34            \ SHEILA+&34 to switch screen memory into &3000-&7FFF
 
- LDX #&90
+ LDX #&90               \ ???
 
 .LZPL1
 
@@ -702,7 +702,7 @@ INCLUDE "library/common/main/subroutine/dil2.asm"
 
 .ADD_DUPLICATE
 
- STA T1
+ STA T1                 \ ???
  AND #&80
  STA T
  EOR S
@@ -761,9 +761,9 @@ ELSE
 
 ENDIF
 
-INCLUDE "library/6502sp/main/variable/log.asm"
-INCLUDE "library/6502sp/main/variable/logL.asm"
-INCLUDE "library/6502sp/main/variable/antilog.asm"
+INCLUDE "library/advanced/main/variable/log.asm"
+INCLUDE "library/advanced/main/variable/logl.asm"
+INCLUDE "library/advanced/main/variable/antilog.asm"
 
 IF _MATCH_EXTRACTED_BINARIES
 
@@ -775,70 +775,40 @@ ELSE
 
 ENDIF
 
-.COMC
+INCLUDE "library/common/main/variable/comc.asm"
 
- EQUB 0
+ SKIP 18                \ These bytes appear to be unused
 
- SKIP 18
-
-.CATF
-
- EQUB &00
+INCLUDE "library/enhanced/main/variable/catf.asm"
  
- SKIP 1
+ SKIP 1                 \ This byte appears to be unused
 
-.DNOIZ
+INCLUDE "library/common/main/variable/dnoiz.asm"
+INCLUDE "library/common/main/variable/damp.asm"
+INCLUDE "library/common/main/variable/djd.asm"
+INCLUDE "library/common/main/variable/patg.asm"
+INCLUDE "library/common/main/variable/flh.asm"
+INCLUDE "library/common/main/variable/jstgy.asm"
+INCLUDE "library/common/main/variable/jste.asm"
+INCLUDE "library/common/main/variable/jstk.asm"
 
- EQUB &00
-
-.DAMP
-
- EQUB &00
-
-.DJD
-
- EQUB &00
-
-.PATG
-
- EQUB &00
-
-.FLH
-
- EQUB &00
-
-.JSTGY
-
- EQUB &00           \ Other way round (&FF is default = standard Y axis)
-
-.JSTE
-
- EQUB &00
-
-.JSTK
-
- EQUB &00
-
- 
- EQUB &00           \ Conf option U
+ EQUB &00               \ Conf option U ???
 
 .L2C5E
 
- EQUB &00           \ Conf option T
+ EQUB &00               \ Conf option T ???
 
-.BSTK
+INCLUDE "library/enhanced/main/variable/bstk.asm"
 
- EQUB &00
- 
- EQUB 0
+ SKIP 1                 \ This byte appears to be unused
 
 .L2C61
 
- EQUB &07
+ EQUB &07               \ ???
 
 .CKEYS
 
- EQUB 1
+ EQUB 1                 \ ???
  EQUS "AXFYJKUT"
  EQUB &60
 
@@ -853,7 +823,7 @@ ENDIF
 
 .S%
 
- CLD
+ CLD                    \ ???
 
  JSR scramble
 
@@ -872,7 +842,7 @@ ENDIF
 
 .scramble
 
- LDA #&C0               \ See elite-checksum.py
+ LDA #&C0               \ See elite-checksum.py ???
  STA FRIN
  LDA #&2C
  STA FRIN+1
@@ -902,7 +872,7 @@ ENDIF
 
 .DECRYPT
 
- STX T
+ STX T                  \ ???
  STA SC+1
  LDA #&00
  STA SC
@@ -962,7 +932,7 @@ INCLUDE "library/enhanced/main/subroutine/spin.asm"
 \       Name: L31AC
 \       Type: Subroutine
 \   Category: Drawing lines
-\    Summary: 
+\    Summary: ???
 \
 \ ******************************************************************************
 
@@ -1623,8 +1593,8 @@ INCLUDE "library/common/main/subroutine/sun_part_3_of_4.asm"
 INCLUDE "library/common/main/subroutine/sun_part_4_of_4.asm"
 INCLUDE "library/common/main/subroutine/circle.asm"
 INCLUDE "library/common/main/subroutine/circle2.asm"
-INCLUDE "library/original/main/subroutine/wpls2.asm"
-INCLUDE "library/original/main/subroutine/wp1.asm"
+INCLUDE "library/common/main/subroutine/wpls2.asm"
+INCLUDE "library/common/main/subroutine/wp1.asm"
 INCLUDE "library/common/main/subroutine/wpls.asm"
 INCLUDE "library/common/main/subroutine/edges.asm"
 INCLUDE "library/common/main/subroutine/chkon.asm"
@@ -1739,7 +1709,7 @@ INCLUDE "library/common/main/subroutine/check.asm"
 
 .JAMESON
 
- LDY #&60
+ LDY #&60               \ ???
 
 .JAMESL
 
@@ -1771,7 +1741,7 @@ INCLUDE "library/common/main/variable/rline.asm"
 
 .MT30
 
- LDA #3
+ LDA #3                 \ ???
  CLC
  ADC L2C5E
  JMP DETOK
@@ -1788,7 +1758,7 @@ INCLUDE "library/common/main/variable/rline.asm"
 
 .MT31
 
- LDA #2
+ LDA #2                 \ ???
  SEC
  SBC L2C5E
  JMP DETOK
@@ -1842,7 +1812,7 @@ INCLUDE "library/master/main/variable/ldli.asm"
 
 .SAVE
 
- LDY #&4C
+ LDY #&4C               \ ???
 
 .SAVEL1
 
@@ -1900,7 +1870,7 @@ INCLUDE "library/master/main/variable/ldli.asm"
 
 .LOAD
 
- LDY #0
+ LDY #0                 \ ???
 
 .LOADL1
 
@@ -2028,7 +1998,7 @@ INCLUDE "library/common/main/subroutine/ll9_part_12_of_12.asm"
 
 .LLX30
 
- LDY XX14
+ LDY XX14               \ ???
  CPY XX14+1
  PHP
  LDX #3
@@ -2206,7 +2176,7 @@ INCLUDE "library/advanced/main/variable/trantable.asm"
 
 .DKS1
 
- EOR #&80
+ EOR #&80               \ ???
  STA KL
 
 .DKL5
@@ -2237,7 +2207,7 @@ INCLUDE "library/common/main/subroutine/u_per_cent.asm"
 \
 \ ******************************************************************************
 
- SED
+ SED                    \ ???
 
 .RDKEY
 

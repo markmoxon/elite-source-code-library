@@ -30,8 +30,9 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDY #4                 \ ???
- JMP NOISE
+ LDY #4                 \ Call the NOISE routine with Y = 4 to make the sound of
+ JMP NOISE              \ an explosion and return from the subroutine using a
+                        \ tail call
 
 ENDIF
 

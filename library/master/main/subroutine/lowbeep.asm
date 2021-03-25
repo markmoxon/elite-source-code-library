@@ -9,6 +9,6 @@
 
 .LOWBEEP
 
- LDY #0                 \ Call NOISE with Y = 0 to make a long, low beep,
- BRA NOISE              \ returning from the subroutine using a tail call
+ LDY #0                 \ Call the NOISE routine with Y = 0 to make a long, low
+ BRA NOISE              \ beep, returning from the subroutine using a tail call
 

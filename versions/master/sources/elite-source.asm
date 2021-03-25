@@ -296,11 +296,12 @@ INCLUDE "library/master/main/subroutine/sound.asm"
 
 .NOISEHIT
 
- LDY #9
- JSR NOISE
+ LDY #9                 \ Call the NOISE routine with Y = 9 to make the first
+ JSR NOISE              \ sound of us being hit
 
- LDY #5
- BRA NOISE
+ LDY #5                 \ Call the NOISE routine with Y = 5 to make the second
+ BRA NOISE              \ sound of us being hit, returning from the subroutine
+                        \ using a tail call
 
 \ ******************************************************************************
 \
@@ -313,10 +314,11 @@ INCLUDE "library/master/main/subroutine/sound.asm"
 
 .NOISELASER
 
- LDY #3
- JSR NOISE
+ LDY #3                 \ Call the NOISE routine with Y = 3 to make the first
+ JSR NOISE              \ sound of us firing our lasers
 
- LDY #5
+ LDY #5                 \ Set Y = 5 and fall through into the NOISE routine to
+                        \ make the second sound of us firing our lasers
 
 \ ******************************************************************************
 \
@@ -324,6 +326,25 @@ INCLUDE "library/master/main/subroutine/sound.asm"
 \       Type: Subroutine
 \   Category: Sound
 \    Summary: Make the sound whose number is in Y
+\
+\ ------------------------------------------------------------------------------
+\
+\ The following sounds can be made by this routine. Two-part noises are made by
+\ consecutive calls to this routine woth different values of Y.
+\
+\   0       Long, low beep
+\   1       Short, high beep
+\   3, 5    Lasers fired by us
+\   4       We died / Collision / Our depleted shields being hit by lasers
+\   6       We made a hit or kill / Energy bomb / Other ship exploding
+\   7       E.C.M. on
+\   8       Missile launched / Ship launched from station
+\   9, 5    We're being hit by lasers
+\   10, 11  Hyperspace drive engaged
+\
+\ Arguments:
+\
+\   Y                   The number of the sound to be made from the above table
 \
 \ ******************************************************************************
 
@@ -1004,8 +1025,8 @@ INCLUDE "library/enhanced/main/subroutine/spin.asm"
 
  JSR P%+3
 
- LDY #&06
- JSR NOISE
+ LDY #6                 \ Call the NOISE routine with Y = 6 to make the sound of
+ JSR NOISE              \ an energy bomb going off
 
  JSR L31AC
 

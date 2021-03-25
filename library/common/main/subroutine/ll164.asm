@@ -20,11 +20,11 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDY #&0A               \ ???
- JSR NOISE
+ LDY #10                \ Call the NOISE routine with Y = 10 to make the first
+ JSR NOISE              \ sound of the hyperspace drive being engaged
 
- LDY #&0B
- JSR NOISE
+ LDY #11                \ Call the NOISE routine with Y = 11 to make the second
+ JSR NOISE              \ sound of the hyperspace drive being engaged
 
 ENDIF
 

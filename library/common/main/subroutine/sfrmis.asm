@@ -50,8 +50,9 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDY #&08               \ ???
- JMP NOISE
+ LDY #8                 \ Call the NOISE routine with Y = 8 to make the sound
+ JMP NOISE              \ of the missile being launched and return from the
+                        \ subroutine using a tail call
 
 ENDIF
 

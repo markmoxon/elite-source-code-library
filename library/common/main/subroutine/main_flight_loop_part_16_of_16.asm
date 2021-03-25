@@ -69,8 +69,8 @@
 
 IF _MASTER_VERSION
 
- LDY #&07               \ ???
- JSR NOISE
+ LDY #7                 \ Call the NOISE routine with Y = 7 to make the sound of
+ JSR NOISE              \ the E.C.M.
 
 ENDIF
 

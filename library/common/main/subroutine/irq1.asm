@@ -219,7 +219,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
  TAY
 
  JMP (VEC)              \ Jump to the address in VEC, which was set to the
-                        \ original IRQ1V vector by elite-loader.asm, so this
+                        \ original IRQ1V vector by the loading process, so this
                         \ instruction passes control to the next interrupt
                         \ handler
 

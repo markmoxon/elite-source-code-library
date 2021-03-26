@@ -36,32 +36,34 @@ ELIF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDA #&B9               \ ???
+ LDA #LO(BRBR)          \ Set BRKV to point to the BRBR routine
  STA BRKV
- LDA #&66
+ LDA #HI(BRBR)
  STA BRKV+1
- LDA #&85
+
+ LDA #LO(CHPR)          \ Set WRCHV to point to the CHPR routine
  STA WRCHV
- LDA #&20
+ LDA #HI(CHPR)
  STA WRCHV+1
 
- JSR SAVEZP
+ JSR SAVEZP             \ Call SAVEZP to backup the top part of zero page
 
- JSR STARTUP
+ JSR STARTUP            \ Call STARTUP to set various vectors, interrupts and
+                        \ timers
 
- JMP L1377
+ JMP L1377              \ ???
 
- CLI
+ CLI                    \ Enable interrupts
 
 ENDIF
 
-IF _DISC_DOCKED OR _6502SP_VERSION
+IF _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
  RTS                    \ Return from the subroutine
 
 ELIF _MASTER_VERSION
 
- RTI                    \ ???
+ RTI                    \ Return from the interrupt handler
 
 ENDIF
 

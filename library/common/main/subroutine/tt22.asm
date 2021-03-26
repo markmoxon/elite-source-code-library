@@ -96,7 +96,7 @@ ENDIF
 
 IF _MASTER_VERSION
 
- LDA #&0F               \ ???
+ LDA #YELLOW            \ Switch to colour 1, which is yellow
  STA COL
 
 ENDIF
@@ -179,8 +179,8 @@ ELIF _MASTER_VERSION
  LDA #4                 \ Set QQ19+2 to size 4 for the crosshairs size
  STA QQ19+2
 
- LDA #&AF               \ ???
- STA COL
+ LDA #GREEN             \ Switch to stripe 3-1-3-1, which is white/yellow in the
+ STA COL                \ chart view
 
 ENDIF
 

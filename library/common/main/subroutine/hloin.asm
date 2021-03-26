@@ -465,7 +465,7 @@ ELIF _MASTER_VERSION
  LDY #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
  STY VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
 
- LDY YSAV
+ LDY YSAV               \ ???
 
 ENDIF
 
@@ -579,7 +579,7 @@ ELIF _MASTER_VERSION
  LDY #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
  STY VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
 
- LDY YSAV
+ LDY YSAV               \ ???
 
 ENDIF
 

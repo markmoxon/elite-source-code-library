@@ -129,5 +129,5 @@ IF _6502SP_VERSION \ Advanced: The 6502SP version stores the Elite logo as a shi
 ENDIF
  EQUB %00100000         \ Cougar                                        Innocent
 
- EQUB 0
+ EQUB 0                 \ This byte appears to be unused
 

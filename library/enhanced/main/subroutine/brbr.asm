@@ -54,7 +54,8 @@ ELIF _MASTER_VERSION
 
  LDX stack              \ ???
  TXS
- JSR LOADZP
+
+ JSR LOADZP             \ Call LOADZP to restore the top part of zero page
 
  STZ CATF
  LDY #&00

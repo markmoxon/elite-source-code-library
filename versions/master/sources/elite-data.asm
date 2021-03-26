@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\ BBC MASTER ELITE DATA FILE SOURCE
+\ BBC MASTER ELITE GAME DATA FILE SOURCE
 \
 \ BBC Master Elite was written by Ian Bell and David Braben and is copyright
 \ Acornsoft 1986
@@ -39,7 +39,7 @@ VE = &57                \ The obfuscation byte used to hide the extended tokens
 
 \ ******************************************************************************
 \
-\ ELITE DATA FILE
+\ ELITE GAME DATA FILE
 \
 \ ******************************************************************************
 
@@ -96,7 +96,7 @@ INCLUDE "library/enhanced/main/variable/ship_worm.asm"
 INCLUDE "library/enhanced/main/variable/ship_cobra_mk_3_p.asm"
 INCLUDE "library/enhanced/main/variable/ship_asp_mk_2.asm"
 
- EQUB &45, &4D          \ This data appears to be unused
+ EQUB &45, &4D          \ These bytes appear to be unused
  EQUB &41, &36
 
 INCLUDE "library/enhanced/main/variable/ship_python_p.asm"
@@ -120,7 +120,7 @@ IF _MATCH_EXTRACTED_BINARIES
 
 ELSE
 
- SKIP 619               \ This data appears to be unused
+ SKIP 619               \ These bytes appear to be unused
 
 ENDIF
 
@@ -145,10 +145,10 @@ INCLUDE "library/enhanced/main/variable/rutok.asm"
 IF _MATCH_EXTRACTED_BINARIES
 
  EQUS " \mutilate"      \ These bytes appear to be unused and are presumably
- EQUS " from here"      \ workspace noise from the compilation process (it looks
- EQUS " to F%"          \ like an assembly language comment)
- EQUB 13
- EQUB &0B, &B8
+ EQUS " from here"      \ workspace noise from the build process (this snippet
+ EQUS " to F%"          \ looks like an assembly language comment from the
+ EQUB 13                \ encryption process, which the authors presumably
+ EQUB &0B, &B8          \ liked to call "mutilation")
 
 ELSE
 

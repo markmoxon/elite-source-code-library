@@ -37,7 +37,7 @@
 \
 \ which makes a sound with flush control 1 on channel 0, using envelope 2,
 \ and with pitch &60 (96) and duration &10 (16). The four sound envelopes (1-4)
-\ are set up in elite-loader.asm.
+\ are set up by the loading process.
 \
 \ ******************************************************************************
 

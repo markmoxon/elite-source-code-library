@@ -94,22 +94,22 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Screen
 
 ELIF _MASTER_VERSION
 
- CPX #&0F               \ ???
- BNE L1EA5
+ CPX #YELLOW2           \ If the colour in X is yellow, then the dot is behind
+ BNE P%+8               \ us, so skip the following three instructions so we
+                        \ only draw a single-height dot
 
- JSR CPIX2
+ JSR CPIX2              \ Call CPIX2 to draw a single-height dash, i.e. the top
+                        \ row of a double-height dot
 
- LDA Y1
- DEC A
+ LDA Y1                 \ Fetch the y-coordinate of the row we just drew and
+ DEC A                  \ decrement it, ready to draw the bottom row
 
-.L1EA5
-
- JSR CPIX2
+ JSR CPIX2              \ Call CPIX2 to draw a single-height dash
 
  LDA #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
  STA VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
 
- RTS
+ RTS                    \ Return from the subroutine
 
 ELIF _6502SP_VERSION
 

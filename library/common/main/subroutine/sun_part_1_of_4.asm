@@ -76,7 +76,7 @@ ENDIF
 
 IF _MASTER_VERSION
 
- LDA #&F0               \ ???
+ LDA #RED               \ Switch to colour 2, which is red in the space view
  STA COL
 
 ENDIF

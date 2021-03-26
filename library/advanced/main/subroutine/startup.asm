@@ -89,7 +89,7 @@ IF _6502SP_VERSION \ Tube
 
 ELIF _MASTER_VERSION
 
- RTS
+ RTS                    \ Return from the subroutine
 
 ENDIF
 

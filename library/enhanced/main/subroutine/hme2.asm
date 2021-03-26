@@ -16,7 +16,7 @@ IF _6502SP_VERSION \ Screen
 
 ELIF _MASTER_VERSION
 
- LDA #&FF               \ ???
+ LDA #CYAN              \ Switch to colour 3, which is white in the chart view
  STA COL
 
 ENDIF
@@ -107,7 +107,8 @@ IF _DISC_DOCKED OR _6502SP_VERSION \ Minor
 
 ELIF _MASTER_VERSION
 
- JSR LOWBEEP            \ ???
+ JSR LOWBEEP            \ Call the LOWBEEP routine to make a low, long beep to
+                        \ indicate a failed search
 
 ENDIF
 

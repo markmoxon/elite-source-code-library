@@ -16,8 +16,8 @@
 
 IF _MASTER_VERSION
 
- LDA #&AF               \ ???
- STA COL
+ LDA #GREEN             \ Switch to stripe 3-1-3-1, which is white/yellow in the
+ STA COL                \ chart view
 
 ENDIF
 

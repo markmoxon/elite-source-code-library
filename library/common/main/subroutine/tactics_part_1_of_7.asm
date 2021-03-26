@@ -34,7 +34,7 @@ IF _MASTER_VERSION
 
 .TAX35
 
- LDA INWK
+ LDA INWK               \ ???
  ORA INWK+3
  ORA INWK+6
  BNE P%+7

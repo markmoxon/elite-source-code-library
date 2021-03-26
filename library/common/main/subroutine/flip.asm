@@ -26,9 +26,9 @@
 \BNE FLIP-1             \ source. They would have the effect of not swapping the
                         \ stardust if we had mis-jumped into witchspace
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Screen
 
- LDA #&FA               \ ???
+ LDA #WHITE             \ Switch to white (i.e. cyan/red)
  STA COL
 
 ENDIF

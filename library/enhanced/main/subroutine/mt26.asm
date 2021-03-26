@@ -39,15 +39,16 @@ ELIF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDA COL                \ ???
+ LDA COL                \ Store the current colour on the stack
  PHA
- LDA #&F0
- STA COL
+
+ LDA #RED               \ Switch to colour 2, which is magenta in the trade view
+ STA COL                \ or red in the chart view
 
  LDY #8                 \ Wait for 8/50 of a second (0.16 seconds)
  JSR DELAY
 
- JSR FLKB
+ JSR FLKB               \ Call FLKB to flush the keyboard buffer
 
 ENDIF
 
@@ -70,7 +71,7 @@ IF _DISC_DOCKED OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDY #&00
+ LDY #&00               \ ???
 
 .L691B
 
@@ -119,8 +120,10 @@ ELIF _MASTER_VERSION
 .L694E
 
  SEC
- PLA
- STA COL
+
+ PLA                    \ Restore the original colour from the stack and set it
+ STA COL                \ as the current colour
+
  RTS
 
 .L6953

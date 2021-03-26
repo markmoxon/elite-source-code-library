@@ -20,7 +20,11 @@ ENDIF
 \
 \   X1                  The screen pixel x-coordinate of the dash
 \
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Comment
 \   Y1                  The screen pixel y-coordinate of the dash
+ELIF _MASTER_VERSION
+\   A                   The screen pixel y-coordinate of the dash
+ENDIF
 \
 IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \   COL                 The colour of the dash as a mode 5 character row byte
@@ -28,6 +32,12 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 \   COL                 The colour of the dash as a mode 2 character row byte
 ENDIF
 \
+IF _MASTER_VERSION
+\ Returns:
+\
+\   R                   The dash's right pixel byte
+\
+ENDIF
 \ ******************************************************************************
 
 .CPIX2
@@ -38,7 +48,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- STA Y1                 \ ???
+ STA Y1                 \ Store the y-coordinate in Y1
 
 ENDIF
 
@@ -204,7 +214,7 @@ ENDIF
 
 IF _MASTER_VERSION \ Platform
 
- STA R                  \ Store the dash's right pixel in R ???
+ STA R                  \ Store the dash's right pixel byte in R
 
 ENDIF
 

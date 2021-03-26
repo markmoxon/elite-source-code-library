@@ -3,8 +3,8 @@
 \       Name: Unused block
 \       Type: Variable
 \   Category: Utility routines
-\    Summary: This data appears to be unused (the same block appears in both the
-\             flight and docked code)
+\    Summary: These bytes appear to be unused (the same block appears in both
+\             the flight and docked code)
 \
 \ ******************************************************************************
 

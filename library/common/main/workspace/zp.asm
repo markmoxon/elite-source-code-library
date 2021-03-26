@@ -326,7 +326,7 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
-ORG &D1
+ORG &00D1
 
 INCLUDE "library/common/main/variable/t.asm"
 INCLUDE "library/common/main/variable/k3.asm"

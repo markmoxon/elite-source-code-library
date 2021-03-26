@@ -221,7 +221,7 @@ INCLUDE "library/common/main/subroutine/beep.asm"
 \       Name: L1358
 \       Type: Variable
 \   Category: Sound
-\    Summary: ???
+\    Summary: ??? Sound data mask applied to top nibble of sound data in NS2
 \
 \ ******************************************************************************
 
@@ -236,7 +236,7 @@ INCLUDE "library/common/main/subroutine/beep.asm"
 \       Name: L135B
 \       Type: Variable
 \   Category: Sound
-\    Summary: ???
+\    Summary: ??? Sound data passed to the sound chip, and a mask applied in NS7
 \
 \ ******************************************************************************
 
@@ -474,7 +474,7 @@ INCLUDE "library/master/main/subroutine/sound.asm"
 
  LDA SBUF+6,Y
  CLC
- ADC L2C61
+ ADC VOLUME
 
 .NS7
 
@@ -802,9 +802,9 @@ INCLUDE "library/enhanced/main/variable/bstk.asm"
 
  SKIP 1                 \ This byte appears to be unused
 
-.L2C61
+.VOLUME
 
- EQUB &07               \ ???
+ EQUB 7                 \ ???
 
 .CKEYS
 
@@ -1120,11 +1120,15 @@ INCLUDE "library/master/main/variable/na_per_cent.asm"
 INCLUDE "library/common/main/variable/chk2.asm"
 INCLUDE "library/common/main/variable/chk.asm"
 
- SKIP 12                \ These bytes appear to be unused
+ SKIP 12                \ These bytes appear to be unused, though the first byte
+                        \ in this block is included in the commander file (it
+                        \ has no effect)
 
 INCLUDE "library/common/main/variable/na_per_cent-default_per_cent.asm"
 
- SKIP 16                \ These bytes appear to be unused
+ SKIP 16                \ These bytes appear to be unused, though the first byte
+                        \ in this block is included in the commander file (it
+                        \ has no effect)
 
 INCLUDE "library/advanced/main/variable/shpcol.asm"
 INCLUDE "library/advanced/main/variable/scacol.asm"
@@ -1529,7 +1533,7 @@ INCLUDE "library/common/main/subroutine/sos1.asm"
 \       Name: SOLARX
 \       Type: Subroutine
 \   Category: Universe
-\    Summary: ???
+\    Summary: ??? Does this implement Trumbles multiplying 
 \
 \ ******************************************************************************
 
@@ -1538,19 +1542,19 @@ INCLUDE "library/common/main/subroutine/sos1.asm"
  LDA L1264
  BEQ SOLAR
 
- LDA #0
+ LDA #0                 \ Trumbles eat food and narcotics
  STA QQ20
  STA QQ20+6
 
- JSR DORND
+ JSR DORND              \ L1264 increases exponentially
  AND #&0F
  ADC L1264
  ORA #&04
  ROL A
-
  STA L1264
- ROL L1265
- BPL SOLAR
+
+ ROL L1265              \ Rotate carry into bit 0 of L1265 until bit 6 is set
+ BPL SOLAR              \ Change to P%+5
 
  ROR L1265
 
@@ -1851,13 +1855,14 @@ INCLUDE "library/master/main/variable/ldli.asm"
  CPY #&07
  BCC SAVEL4
 
- JSR LOADZP
+ JSR LOADZP             \ Call LOADZP to restore the top part of zero page
 
  LDX #&DF
  LDY #&6A
  JSR OSCLI
 
- JMP LOADZP
+ JMP LOADZP             \ Call LOADZP to restore the top part of zero page
+                        \ and return from the subroutine using a tail call
 
 \ ******************************************************************************
 \
@@ -1891,13 +1896,13 @@ INCLUDE "library/master/main/variable/ldli.asm"
  CPY #&07
  BCC LOADL2
 
- JSR LOADZP
+ JSR LOADZP             \ Call LOADZP to restore the top part of zero page
 
  LDX #&FF
  LDY #&6A
  JSR OSCLI
 
- JSR LOADZP
+ JSR LOADZP             \ Call LOADZP to restore the top part of zero page
 
  LDY #&4C
 

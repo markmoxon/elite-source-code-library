@@ -1131,7 +1131,7 @@ INCLUDE "library/enhanced/main/variable/ship_worm.asm"
 INCLUDE "library/enhanced/main/variable/ship_cobra_mk_3_p.asm"
 INCLUDE "library/enhanced/main/variable/ship_asp_mk_2.asm"
 
- EQUB &38, &E5          \ This data appears to be unused
+ EQUB &38, &E5          \ These bytes appear to be unused
  EQUB &2C, &C5
 
 INCLUDE "library/enhanced/main/variable/ship_python_p.asm"
@@ -1144,7 +1144,7 @@ INCLUDE "library/6502sp/main/variable/ship_logo.asm"
 INCLUDE "library/advanced/main/variable/ship_cougar.asm"
 INCLUDE "library/enhanced/main/variable/ship_dodo.asm"
 
- EQUB &A9, &80          \ This data appears to be unused
+ EQUB &A9, &80          \ These bytes appear to be unused
  EQUB &14, &2B
  EQUB &20, &FD
  EQUB &B8, &90

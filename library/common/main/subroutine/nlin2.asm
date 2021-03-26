@@ -33,7 +33,7 @@ IF _6502SP_VERSION \ Screen
 
 ELIF _MASTER_VERSION
 
- LDA #&0F               \ ???
+ LDA #YELLOW            \ Switch to colour 1, which is yellow
  STA COL
 
 ENDIF
@@ -67,9 +67,10 @@ IF _6502SP_VERSION \ Screen
 
 ELIF _MASTER_VERSION
 
- LDA #&FF               \ ???
+ LDA #CYAN              \ Switch to colour 3, which is cyan or white
  STA COL
- RTS
+
+ RTS                    \ Return from the subroutine
 
 ENDIF
 

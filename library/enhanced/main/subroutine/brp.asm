@@ -11,7 +11,7 @@
 
 IF _MASTER_VERSION
 
- LDX #&FF               \ ???
+ LDX #CYAN              \ Switch to colour 3, which is white or cyan
  STX COL
 
 ENDIF

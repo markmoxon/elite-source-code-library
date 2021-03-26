@@ -212,11 +212,11 @@ INCLUDE "library/common/main/variable/escp.asm"
 
 .L1264
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Low byte of Trumble count ???
 
 .L1265
 
- SKIP 1                 \ ???
+ SKIP 1                 \ High byte of Trumble count, this many tons of space are taken up, see tnpr, so 256 Trumbles = 1 ton ???
 
 .TALLYF
 

@@ -319,9 +319,12 @@ ELIF _MASTER_VERSION
  LDY #%00001111         \ Set bits 1 and 2 of the Access Control Register at
  STY VIA+&34            \ SHEILA+&34 to switch screen memory into &3000-&7FFF
 
- JSR CPIX2
+ JSR CPIX2              \ Call CPIX2 to draw a single-height dash at the
+                        \ y-coordinate in A, and return the dash's right pixel
+                        \ byte in R, which we use below
 
- LDA Y1
+ LDA Y1                 \ Fetch the y-coordinate back into A, which was stored
+                        \ in Y1 by the call to CPIX2
 
 ENDIF
 
@@ -434,7 +437,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Tube
                         \ stick comes out of the right side of the dot)
 
  EOR (SC),Y             \ Draw the stick on row Y of the character block using
- STA (SC),Y
+ STA (SC),Y             \ EOR logic
 
  DEX                    \ Decrement (positive) the stick height in X
 
@@ -492,7 +495,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Tube
                         \ stick comes out of the right side of the dot)
 
  EOR (SC),Y             \ Draw the stick on row Y of the character block using
- STA (SC),Y
+ STA (SC),Y             \ EOR logic
 
  INX                    \ Decrement the (negative) stick height in X
 
@@ -530,9 +533,11 @@ ELIF _MASTER_VERSION
 
 .VLL1
 
- LDA R
- EOR (SC),Y
- STA (SC),Y
+ LDA R                  \ The call to CPIX2 above saved the dash's right pixel
+                        \ byte in R, so we load this into A
+
+ EOR (SC),Y             \ Draw the bottom row of the double-height dot using the
+ STA (SC),Y             \ same byte as the top row, plotted using EOR logic
 
 .VL1
 

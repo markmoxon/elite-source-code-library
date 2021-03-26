@@ -24,7 +24,7 @@
 
 IF _MASTER_VERSION
 
- LDA #&0F               \ ???
+ LDA #YELLOW            \ Switch to colour 1, which is yellow
  STA COL
 
 ENDIF

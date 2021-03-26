@@ -55,9 +55,10 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDX KL                 \ ???
- CPX #&8B
- BNE DK2
+ LDX KL                 \ Fetch the key pressed from byte #0 of the key logger
+
+ CPX #&8B               \ If COPY is not being pressed, jump to DK2 below,
+ BNE DK2                \ otherwise let's process the configuration keys
 
 ENDIF
 
@@ -75,19 +76,26 @@ ENDIF
  JSR RDKEY              \ Scan the keyboard for a key press and return the
                         \ internal key number in X (or 0 for no key press)
 
- CPX #&51               \ If S is not being pressed, skip to DK6
- BNE DK6
-
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
- LDA #0                 \ S is being pressed, so set DNOIZ to 0 to turn the
+ CPX #&51               \ If "S" is not being pressed, skip to DK6
+ BNE DK6
+
+ LDA #0                 \ "S" is being pressed, so set DNOIZ to 0 to turn the
  STA DNOIZ              \ sound on
 
 ELIF _MASTER_VERSION
 
- LDX #&FF               \ ???
- STX DNOIZ
- LDX #&51
+ CPX #'Q'               \ If "Q" is not being pressed, skip to DK6
+ BNE DK6
+
+ LDX #&FF               \ "Q" is being pressed, so set DNOIZ to &FF to turn the
+ STX DNOIZ              \ sound off
+
+ LDX #&51               \ Set X to &51, which is the internal key for "S" on the
+                        \ BBC Micro. This is set to ensure that X has the same
+                        \ value at this point as the BBC Micro version of this
+                        \ routine would
 
 ENDIF
 
@@ -103,7 +111,9 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDY #0                 \ ???
+ LDY #0                 \ We now want to loop through the keys that toggle
+                        \ various settings, so set a counter in Y to work our
+                        \ way through them
 
 ENDIF
 
@@ -121,7 +131,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- CPY #&09               \ ???
+ CPY #9                 \ Have we reached the last toggle key?
 
 ENDIF
 
@@ -133,7 +143,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Label
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  CPX #&10               \ If "Q" is not being pressed, skip to DK7
  BNE DK7
@@ -146,38 +156,54 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
  CPX #&70               \ If ESCAPE is not being pressed, skip over the next
  BNE P%+5               \ instruction
 
-ELIF _MASTER_VERSION
+ENDIF
 
- LDA L2C61              \ ???
- CPX #&2E
- BEQ L6D70
+IF _MASTER_VERSION \ Advanced: The Master version allows you to change the volume of the sound effects using the "<" and ">" keys when paused
 
- CPX #&2C
- BNE L6D83
+ LDA VOLUME             \ Fetch the current volume setting into A
 
- DEC A
- EQUB &24
+ CPX #'.'               \ If "." is being pressed (i.e. the ">" key) then jump
+ BEQ VOLUP              \ to VOLUP to increase the volume
 
-.L6D70
+ CPX #','               \ If "," is not being pressed (i.e. the "<" key) then
+ BNE NOVOL              \ jump to NOVOL to skip the following
 
- INC A
- TAY
- AND #&F8
- BNE L6D79
+ DEC A                  \ The volume down key is being pressed, so decrement the
+                        \ volume level in A
 
- STY L2C61
+ EQUB &24               \ Skip the next instruction by turning it into &24 &1A,
+                        \ or BIT &001A, which does nothing apart from affect the
+                        \ flags
 
-.L6D79
+.VOLUP
 
- PHX
- JSR BEEP
+ INC A                  \ The volume up key is being pressed, so increment the
+                        \ volume level in A
 
- LDY #&0A
+ TAY                    \ Copy the new volumen level to Y
+
+ AND #%11111000         \ If any of bits 3-7 are set, skip to MAXVOL as we have
+ BNE MAXVOL             \ either increased the volume past the maximum volume of
+                        \ 7, or we have decreased it below 0 to -1, and in
+                        \ neither case do we want to change the volume as we are
+                        \ already at the maximum or minimum level
+
+ STY VOLUME             \ Store the new volume level in VOLUME
+
+.MAXVOL
+
+ PHX                    \ Store X on the stack so we can retrieve it below after
+                        \ making a beep
+
+ JSR BEEP               \ Call the BEEP subroutine to make a short, high beep at
+                        \ the new volume level
+
+ LDY #10                \ Wait for 10/50 of a second (0.2 seconds)
  JSR DELAY
 
- PLX
+ PLX                    \ Restore the value of X we stored above
 
-.L6D83
+.NOVOL
 
 ENDIF
 
@@ -200,7 +226,7 @@ IF _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- CPX #&42               \ ???
+ CPX #'B'               \ If "B" is not being pressed, skip to DK7
  BNE nobit
 
 ENDIF
@@ -222,11 +248,11 @@ ENDIF
 
 IF _MASTER_VERSION
 
- BPL P%+5              \ ???
+ BPL P%+5               \ If we just toggled the Bitstik off (i.e. to 0, which
+                        \ is positive), then skip the following two instructions
 
- JSR BELL
-
- JSR BELL
+ JSR BELL               \ We just enabled the Bitstik, so give two standard
+ JSR BELL               \ system beeps
 
 ENDIF
 
@@ -243,20 +269,22 @@ IF _6502SP_VERSION \ Advanced: The 6502SP lets you take screenshots, by pressing
 
 ENDIF
 
+
 IF _MASTER_VERSION
 
- CPX #&53               \ ???
+ CPX #'S'               \ If "S" is not being pressed, jump to DK7
  BNE DK7
 
- LDA #&00
- STA DNOIZ
+ LDA #0                 \ "S" is being pressed, so set DNOIZ to 0 to turn the
+ STA DNOIZ              \ sound on
 
 .DK7
 
- CPX #&1B
- BNE P%+5
+ CPX #&1B               \ If ESCAPE is not being pressed, skip over the next
+ BNE P%+5               \ instruction
 
- JMP DEATH2
+ JMP DEATH2             \ ESCAPE is being pressed, so jump to DEATH2 to end
+                        \ the game
 
 ENDIF
 
@@ -269,8 +297,10 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- CPX #&7F               \ ???
- BNE FREEZE
+ CPX #&7F               \ If DELETE is not being pressed, we are still paused,
+ BNE FREEZE             \ so loop back up to keep listening for configuration
+                        \ keys, otherwise fall through into the rest of the
+                        \ key detection code, which unpauses the game
 
 ENDIF
 

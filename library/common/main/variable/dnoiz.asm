@@ -4,7 +4,7 @@
                         \
                         \   * 0 = sound is on (default)
                         \
-                        \   * &10 = sound is off
+                        \   * Non-zero = sound is off
                         \
                         \ Toggled by pressing "S" when paused, see the DK4
                         \ routine for details

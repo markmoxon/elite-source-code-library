@@ -255,7 +255,8 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Platform
 
 ELIF _MASTER_VERSION
 
- JSR TT69               \ ???
+ JSR TT69               \ ??? Would show special cargo of some kind? But tokens
+                        \ are blank
 
  LDA L1264
  ORA L1265

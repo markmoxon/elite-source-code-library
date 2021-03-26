@@ -23,12 +23,22 @@ ENDIF
 
 .TT170
 
+IF _CASSETTE_VERSION \ Comment
+
  LDX #&FF               \ Set the stack pointer to &01FF, which is the standard
  TXS                    \ location for the 6502 stack, so this instruction
                         \ effectively resets the stack. We need to do this
                         \ because the loader code in elite-loader.asm pushes
                         \ code onto the stack, and this effectively removes that
                         \ code so we start afresh
+
+ELIF _DISC_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION
+
+ LDX #&FF               \ Set the stack pointer to &01FF, which is the standard
+ TXS                    \ location for the 6502 stack, so this instruction
+                        \ effectively resets the stack
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_DOCKED \ Platform
 

@@ -38,7 +38,7 @@ IF _6502SP_VERSION \ Screen
 
 ELIF _MASTER_VERSION
 
- LDA #&FF               \ ???
+ LDA #CYAN              \ Set white text
  STA COL
 
 ENDIF

@@ -747,7 +747,7 @@ INCLUDE "library/enhanced/main/variable/mtin.asm"
 
 IF _STH_DISC
 
- EQUB &45, &4E          \ This data appears to be unused
+ EQUB &45, &4E          \ These bytes appear to be unused
  EQUB &44, &2D
  EQUB &45, &4E
  EQUB &44, &2D
@@ -763,7 +763,7 @@ IF _STH_DISC
 
 ELIF _IB_DISC
 
- EQUB &45, &4E          \ This data appears to be unused
+ EQUB &45, &4E          \ These bytes appear to be unused
  EQUB &44, &2D
  EQUB &45, &4E
  EQUB &44, &2D

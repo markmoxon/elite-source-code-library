@@ -64,7 +64,8 @@ ENDIF
 
 IF _MASTER_VERSION
 
- STA CLCNT              \ ???
+ STA CLCNT              \ Store the cloud counter in CLCNT (though this value is
+                        \ never read, so this has no effect)
 
 ENDIF
 
@@ -189,15 +190,20 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Pla
  EOR #&FF               \ Flip the value of A so that in the second half of the
                         \ cloud's existence, A counts down instead of up
 
+ENDIF
+
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Advanced: The Master version has smaller explosion clouds?
+
  LSR A                  \ Divide A by 8 so that is has a maximum value of 15
  LSR A
  LSR A
 
-ENDIF
+ELIF _MASTER_VERSION
 
-IF _MASTER_VERSION
-
- LSR A                  \ ???
+ LSR A                  \ Divide A by 16 so that is has a maximum value of 7
+ LSR A
+ LSR A
+ LSR A
 
 ENDIF
 
@@ -309,7 +315,9 @@ ENDIF
 
 IF _MASTER_VERSION
 
- STY CNT2               \ ???
+ STY CNT2               \ Store the number of explosion particles in CNT2, to
+                        \ use this as a loop counter to iterate through all the
+                        \ particles in the explosion
 
 ENDIF
 
@@ -319,31 +327,38 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Pla
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Minor
 
  JSR DORND2             \ Set ZZ to a random number (also restricts the
  STA ZZ                 \ value of RAND+2 so that bit 0 is always 0)
 
 ELIF _MASTER_VERSION
 
- CLC                    \ ???
- LDA RAND
- ROL A
- TAX
- ADC RAND+2
- STA RAND
+ CLC                    \ This contains the code from the DORND2 routine, so
+ LDA RAND               \ this section is exactly equivalent to a JSR DORND2
+ ROL A                  \ call, but is slightly faster as it's been inlined
+ TAX                    \ (so it sets A and X to random values and also
+ ADC RAND+2             \ restricts the value of RAND+2 so that bit 0 is
+ STA RAND               \ always 0)
  STX RAND+2
  LDA RAND+1
  TAX
  ADC RAND+3
  STA RAND+1
  STX RAND+3
- STA ZZ
 
- AND #&03
- TAX
- LDA L5A0D,X
- STA COL
+ STA ZZ                 \ Set ZZ to a random number
+
+ENDIF
+
+IF _MASTER_VERSION \ Advanced: In the Master version, explosions are made up of yellow, red and cyan particles
+
+ AND #3                 \ Set X to this random number, reduced to be in the
+ TAX                    \ range 0-3
+
+ LDA EXCOL,X            \ Set the colour randomly to one of the four colours
+ STA COL                \ in the EXCOL table, so explosions are made up of
+                        \ yellow, red and cyan particles
 
 ENDIF
 
@@ -409,7 +424,8 @@ ELIF _MASTER_VERSION
 
 .EX4
 
- DEC CNT2
+ DEC CNT2               \ Decrement the loop counter in CNT2 for the next
+                        \ particle
 
 ENDIF
 
@@ -442,19 +458,19 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Pla
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Minor
 
  JSR DORND2             \ Set A and X to random numbers (also restricts the
                         \ value of RAND+2 so that bit 0 is always 0)
 
 ELIF _MASTER_VERSION
 
- CLC                    \ ???
- LDA RAND
- ROL A
- TAX
- ADC RAND+2
- STA RAND
+ CLC                    \ This contains the code from the DORND2 routine, so
+ LDA RAND               \ this section is exactly equivalent to a JSR DORND2
+ ROL A                  \ call, but is slightly faster as it's been inlined
+ TAX                    \ (so it sets A and X to random values and also
+ ADC RAND+2             \ restricts the value of RAND+2 so that bit 0 is
+ STA RAND               \ always 0)
  STX RAND+2
  LDA RAND+1
  TAX
@@ -481,19 +497,19 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Pla
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Minor
 
  JSR DORND2             \ Set A and X to random numbers (also restricts the
                         \ value of RAND+2 so that bit 0 is always 0)
 
 ELIF _MASTER_VERSION
 
- CLC                    \ ???
- LDA RAND
- ROL A
- TAX
- ADC RAND+2
- STA RAND
+ CLC                    \ This contains the code from the DORND2 routine, so
+ LDA RAND               \ this section is exactly equivalent to a JSR DORND2
+ ROL A                  \ call, but is slightly faster as it's been inlined
+ TAX                    \ (so it sets A and X to random values and also
+ ADC RAND+2             \ restricts the value of RAND+2 so that bit 0 is
+ STA RAND               \ always 0)
  STX RAND+2
  LDA RAND+1
  TAX
@@ -539,14 +555,4 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Pla
 ENDIF
 
  RTS                    \ Return from the subroutine
-
-IF _MASTER_VERSION
-
- EQUB &00, &02
-
-.L5A0D
-
- EQUB &0F,&F0,&0F,&FF
-
-ENDIF
 

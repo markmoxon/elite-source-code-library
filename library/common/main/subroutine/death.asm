@@ -33,17 +33,19 @@ ENDIF
  LDX #24                \ Set the screen to only show 24 text rows, which hides
  JSR DET1               \ the dashboard, setting A to 6 in the process
 
-IF _MASTER_VERSION
-
- LDA #&0D               \ ???
-
-ENDIF
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  JSR TT66               \ Clear the top part of the screen, draw a white border,
                         \ and set the current view type in QQ11 to 6 (death
                         \ screen)
 
-IF _MASTER_VERSION
+ELIF _MASTER_VERSION
+
+ LDA #13                \ Clear the top part of the screen, draw a white border,
+ JSR TT66               \ and set the current view type in QQ11 to 13 (which
+                        \ is not a space view, though I'm not quite sure why
+                        \ this value is chosen, as it gets overwritten by the
+                        \ next instruction anyway)
 
  STZ QQ11               \ Set QQ11 to 0, so from here on we are using a space
                         \ view
@@ -157,16 +159,29 @@ IF _6502SP_VERSION \ Platform
 
 ELIF _MASTER_VERSION
 
- LDY #&40               \ ???
- STY LASCT
- SEC
+ LDY #64                \ Set the laser count to 64 to act as a counter in the
+ STY LASCT              \ D2 loop below, so this setting determines how long the
+                        \ death animation lasts (it's 64 * 2 iterations of the
+                        \ main flight loop)
 
 ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
  ROR A                  \ The C flag is randomly set from the above call to Ze,
  AND #%10000111         \ so this sets A to a number between -7 and +7, which
  STA INWK+30            \ we store in byte #30 (the pitch counter) to give our
                         \ ship a very gentle pitch with damping
+
+ELIF _MASTER_VERSION
+
+ SEC                    \ Set the C flag
+
+ ROR A                  \ This sets A to a number between 0 and +7, which we
+ AND #%10000111         \ we store in byte #30 (the pitch counter) to give our
+ STA INWK+30            \ ship a very gentle clockwise pitch with damping
+
+ENDIF
 
 IF _CASSETTE_VERSION \ Enhanced: On death, the cassette version shows your ship explosion along with up to four cargo canisters; in the enhanced versions, it shows up to five items, which can be a mix of cargo canisters and alloy plates
 
@@ -259,7 +274,8 @@ ELIF _MASTER_VERSION
 
  JSR M%                 \ Call the M% routine to do the main flight loop once,
                         \ which will display our exploding canister scene and
-                        \ move everything about
+                        \ move everything about, as well as decrementing the
+                        \ value in LASCT
 
 ENDIF
 
@@ -267,7 +283,12 @@ ENDIF
 
  JSR M%                 \ Call the M% routine to do the main flight loop once,
                         \ which will display our exploding canister scene and
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Comment
                         \ move everything about
+ELIF _6502SP_VERSION OR _MASTER_VERSION
+                        \ move everything about, as well as decrementing the
+                        \ value in LASCT
+ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Platform
 
@@ -277,7 +298,8 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Platform
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
- DEC LASCT              \ Decrement the counter in LASCT, which we set above
+ DEC LASCT              \ Decrement the counter in LASCT, which we set above,
+                        \ so for each loop around D2, we decrement LASCT twice
 
  BNE D2                 \ Loop back to call the main flight loop again, until we
                         \ have called it 127 times

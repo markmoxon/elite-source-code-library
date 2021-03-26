@@ -13,6 +13,7 @@
 \ Specifically, this routine toggles the configuration settings for the
 \ following keys:
 \
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 \   * CAPS LOCK toggles keyboard flight damping (&40)
 \   * A toggles keyboard auto-recentre (&41)
 \   * X toggles author names on start-up screen (&42)
@@ -26,14 +27,35 @@
 \ has been pressed in X, and the configuration option to check it against in Y,
 \ so this routine is typically called in a loop that loops through the various
 \ configuration options.
+ELIF _MASTER_VERSION
+\   * CAPS LOCK toggles keyboard flight damping (0)
+\   * A toggles keyboard auto-recentre (1)
+\   * X toggles author names on start-up screen (2)
+\   * F toggles flashing console bars (3)
+\   * Y toggles reverse joystick Y channel (4)
+\   * J toggles reverse both joystick channels (5)
+\   * K toggles keyboard and joystick (6)
+\
+\ The numbers in brackets are the configuration options that we pass in Y. We
+\ pass the ASCII code of the key that has been pressed in X, and the option to
+\ check it against in Y, so this routine is typically called in a loop that
+\ loops through the various configuration option.
+ENDIF
 \
 \ Arguments:
 \
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 \   X                   The internal number of the key that's been pressed
 \
 \   Y                   The internal number of the configuration key to check
 \                       against, from the list above (i.e. Y must be from &40 to
 \                       &46)
+ELIF _MASTER_VERSION
+\   X                   The ASCII code of the key that's been pressed
+\
+\   Y                   The number of the configuration option to check against
+\                       from the list above (i.e. Y must be from 0 to 6)
+ENDIF
 \
 \ ******************************************************************************
 
@@ -48,9 +70,12 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- TXA                    \ ???
- CMP CKEYS,Y
- BNE Dk3
+ TXA                    \ Copy the ASCII code of the key that has been pressed
+                        \ into A
+
+ CMP CKEYS,Y            \ If the pressed key doesn't match the configuration key
+ BNE Dk3                \ for option Y (as listed in the CKEYS table), then jump
+                        \ to Dk3 to return from the subroutine
 
 ENDIF
 
@@ -76,29 +101,37 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDA DAMP,Y             \ ???
- EOR #&FF
- STA DAMP,Y
- BPL L6C83
+ LDA DAMP,Y             \ The configuration keys listed in CKEYS correspond to
+ EOR #&FF               \ the configuration option settings from DAMP onwards,
+ STA DAMP,Y             \ so to toggle a setting, we fetch the existing byte
+                        \ from DAMP+Y, invert it and put it back (0 means no
+                        \ and &FF means yes in the configuration bytes, so
+                        \ this toggles the setting)
 
- JSR BELL
+ BPL P%+5               \ If the result has a clear bit 7 (i.e. we just turned
+                        \ the option off), skip the following instruction
 
-.L6C83
+ JSR BELL               \ We just turned the option on, so make a standard
+                        \ system beep, so in all we make two beeps
 
 ENDIF
 
  JSR BELL               \ Make a beep sound so we know something has happened
 
-IF _MASTER_VERSION
-
- TYA                    \ ???
- PHA
- LDY #&14
-
-ENDIF
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
  JSR DELAY              \ Wait for Y vertical syncs (Y is between 64 and 70, so
                         \ this is always a bit longer than a second)
+
+ELIF _MASTER_VERSION
+
+ TYA                    \ Store Y and A on the stack so we can retrieve them
+ PHA                    \ below
+
+ LDY #20                \ Wait for 20 vertical syncs (20/50 = 0.4 seconds)
+ JSR DELAY
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
@@ -106,7 +139,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- PLA                    \ ???
+ PLA                    \ Restore A and Y from the stack
  TAY
 
 ENDIF

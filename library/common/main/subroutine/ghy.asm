@@ -99,9 +99,16 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDA GCNT               \ Set GCNT = GCNT mod 8, so we jump from galaxy 7 back
- AND #&F7               \ to galaxy 0 (shown in-game as going from galaxy 8 back
- STA GCNT               \ to the starting point in galaxy 1) ???
+ LDA GCNT               \ Clear bit 3 of GCNT, so we jump from galaxy 7 back
+ AND #%11110111         \ to galaxy 0 (shown in-game as going from galaxy 8 back
+ STA GCNT               \ to the starting point in galaxy 1). We also retain any
+                        \ set bits in the top nibble, so if the galaxy number is
+                        \ manually set to 16 or higher, it will stay high
+                        \ (though the upper nibble doesn't seem to get set by
+                        \ the game at any point, so it isn't clear what this is
+                        \ for, though Lave in galaxy 16 does show a unique
+                        \ system description override, so something is going on
+                        \ here...)
 
 ENDIF
 

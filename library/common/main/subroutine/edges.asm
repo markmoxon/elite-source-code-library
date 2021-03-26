@@ -74,7 +74,7 @@ ELIF _MASTER_VERSION
 
  LDA #255               \ The high byte is positive and non-zero, so we went
  STA X2                 \ past the right edge of the screen, so clip X2 to the
-                        \ x-coordinate of the right edge of the screen ???
+                        \ x-coordinate of the right edge of the screen
 
 ENDIF
 
@@ -112,7 +112,7 @@ ELIF _MASTER_VERSION
 
  LDA #0                 \ The high byte is negative and non-zero, so we went
  STA X1                 \ past the left edge of the screen, so clip X1 to the
-                        \ y-coordinate of the left edge of the screen ???
+                        \ y-coordinate of the left edge of the screen
 
 ENDIF
 

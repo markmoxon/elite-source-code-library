@@ -101,7 +101,10 @@ IF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- BMI BULB2              \ ???
+ BMI BULB2              \ Jump to BULB2 to switch main memory back into
+                        \ &3000-&7FFF and return from the subroutine (this BMI
+                        \ is effectively a JMP as we just passed through the BPL
+                        \ above)
 
 ENDIF
 

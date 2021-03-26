@@ -162,26 +162,26 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
 ELIF _MASTER_VERSION
 
- CMP #&81               \ ???
- BEQ L6620
+ CMP #f1                \ ???
+ BEQ BVIEW
 
- CMP #&82
- BEQ L661D
+ CMP #f2
+ BEQ LVIEW
 
- CMP #&83
+ CMP #f3
  BNE LABEL_3
 
- LDX #&03
+ LDX #3
  EQUB &2C
 
-.L661D
+.LVIEW
 
- LDX #&02
+ LDX #2
  EQUB &2C
 
-.L6620
+.BVIEW
 
- LDX #&01
+ LDX #1
  JMP LOOK1
 
 ENDIF
@@ -451,7 +451,7 @@ ELIF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDA #&0C               \ ???
+ LDA #12                \ ???
  JSR TT26
 
 ENDIF

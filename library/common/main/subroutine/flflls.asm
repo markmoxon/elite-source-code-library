@@ -29,8 +29,9 @@ ELIF _MASTER_VERSION
 
  LDY #2*Y-1+8           \ #Y is the y-coordinate of the centre of the space
                         \ view, so this sets Y as a counter for the number of
-                        \ lines in the space view (i.e. 191), which is also the
-                        \ number of lines in the LSO block ???
+                        \ lines in the space view (i.e. 191) - which is also the
+                        \ number of lines in the LSO block - plus an extra 8
+                        \ bytes
 
 ENDIF
 

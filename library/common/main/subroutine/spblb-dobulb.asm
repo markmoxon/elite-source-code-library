@@ -23,10 +23,9 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 ELIF _MASTER_VERSION
 \ Other entry points:
 \
-\   BULB2               ???
+\   BULB2               Switch main memory back into &3000-&7FFF and return from
+\                       the subroutine
 ELIF _6502SP_VERSION
-\ ------------------------------------------------------------------------------
-\
 \ This routine is run when the parasite sends a #DOBULB 0 command. It draws
 \ (or erases) the space station indicator bulb ("S") on the dashboard.
 ENDIF
@@ -116,7 +115,7 @@ ELIF _MASTER_VERSION
  LDA #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
  STA VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
 
- RTS
+ RTS                    \ Return from the subroutine
 
 ENDIF
 

@@ -51,7 +51,10 @@ ENDIF
 
 IF _MASTER_VERSION
 
- STA HFX                \ ???
+ STA HFX                \ Set HFX to 4, which switches the screen mode to a full
+                        \ mode 2 screen, therefore making the hyperspace rings
+                        \ multi-coloured and all zig-zaggy (see the IRQ1 routine
+                        \ for details)
 
 ENDIF
 

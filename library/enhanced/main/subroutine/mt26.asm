@@ -71,7 +71,7 @@ IF _DISC_DOCKED OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDY #&00               \ ???
+ LDY #0                 \ ???
 
 .L691B
 

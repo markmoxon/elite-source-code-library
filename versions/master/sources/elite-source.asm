@@ -1526,6 +1526,10 @@ INCLUDE "library/common/main/subroutine/ex.asm"
  RTS
 
 INCLUDE "library/common/main/subroutine/doexp.asm"
+
+ EQUB 0, 2              \ These bytes appear to be unused
+
+INCLUDE "library/master/main/variable/excol.asm"
 INCLUDE "library/common/main/subroutine/sos1.asm"
 
 \ ******************************************************************************

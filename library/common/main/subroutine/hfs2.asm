@@ -51,13 +51,14 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDA QQ11               \ ???
+ LDA QQ11               \ Store the current view number in QQ11 on the stack
  PHA
 
- LDA #0
- JSR TT66
+ LDA #0                 \ Clear the top part of the screen, draw a white border,
+ JSR TT66               \ and set the current view type in QQ11 to 0 (the space
+                        \ view)
 
- PLA
+ PLA                    \ Restore the view number from the stack
  STA QQ11
 
 ENDIF

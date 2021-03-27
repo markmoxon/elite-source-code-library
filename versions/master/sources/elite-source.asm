@@ -1477,7 +1477,8 @@ INCLUDE "library/common/main/subroutine/sos1.asm"
 \       Name: SOLARX
 \       Type: Subroutine
 \   Category: Universe
-\    Summary: ??? Does this implement Trumbles multiplying 
+\    Summary: Set up various aspects of arriving in a new system, including
+\             Trumble breeding
 \
 \ ******************************************************************************
 
@@ -1488,7 +1489,8 @@ INCLUDE "library/common/main/subroutine/sos1.asm"
 
                         \ If we get here then we have Trumbles in the hold, so
                         \ this is where they breed (though we never get here in
-                        \ the Master version)
+                        \ the Master version as the number of Trumbles is always
+                        \ zero)
 
  LDA #0                 \ Trumbles eat food and narcotics during the hyperspace
  STA QQ20               \ journey, so zero the amount of food and narcotics in
@@ -1669,7 +1671,7 @@ INCLUDE "library/common/main/variable/rline.asm"
 
 .MT30
 
- LDA #3                 \ ???
+ LDA #3
  CLC
  ADC L2C5E
  JMP DETOK
@@ -1686,7 +1688,7 @@ INCLUDE "library/common/main/variable/rline.asm"
 
 .MT31
 
- LDA #2                 \ ???
+ LDA #2
  SEC
  SBC L2C5E
  JMP DETOK
@@ -1701,7 +1703,7 @@ INCLUDE "library/common/main/subroutine/sve.asm"
 \       Name: NAMELEN1
 \       Type: Variable
 \   Category: Save and load
-\    Summary: ???
+\    Summary: Contains the length of the most recently entered commander name
 \
 \ ******************************************************************************
 
@@ -1714,7 +1716,7 @@ INCLUDE "library/common/main/subroutine/sve.asm"
 \       Name: NAMELEN2
 \       Type: Variable
 \   Category: Save and load
-\    Summary: ???
+\    Summary: Contains the length of the last saved commander name
 \
 \ ******************************************************************************
 

@@ -137,7 +137,7 @@ ENDIF
 
 IF _MASTER_VERSION
 
- LDA #96               \ Set A = 96 as the distance that the ship starts at
+ LDA #96                \ Set A = 96 as the distance that the ship starts at
 
 ENDIF
 
@@ -231,9 +231,10 @@ ENDIF
 
 IF _MASTER_VERSION
 
- LDY #&00               \ ???
+ LDY #0                 \ Set DELTA = 0 (i.e. ship speed = 0)
  STY DELTA
- STY JSTK
+
+ STY JSTK               \ Set JSTK = 0 (i.e. keyboard, not joystick)
 
 ENDIF
 
@@ -246,7 +247,7 @@ IF _6502SP_VERSION OR _DISC_DOCKED \ Platform
 
 ENDIF
 
-IF _DISC_DOCKED \ Tube
+IF _DISC_DOCKED
 
  LDA #7                 \ Move the text cursor to column 7
  STA XC
@@ -264,9 +265,10 @@ ELIF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDA #&14               \ ???
+ LDA #20                \ Move the text cursor to row 20
  STA YC
- LDA #1
+
+ LDA #1                 \ Move the text cursor to column 1
  STA XC
 
 ENDIF
@@ -360,14 +362,16 @@ ELIF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- PLA                    \ ???
- JSR DETOK
+ PLA                    \ Restore the recursive token number we stored on the
+                        \ stack at the start of this subroutine
 
- LDA #7
+ JSR DETOK              \ Print the extended token in A
+
+ LDA #7                 \ Move the text cursor to column 7
  STA XC
 
- LDA #&0C
- JSR DETOK
+ LDA #12                \ Print extended token 12 ("({single cap}C) ACORNSOFT
+ JSR DETOK              \ 1986")
 
 ENDIF
 
@@ -383,7 +387,7 @@ ENDIF
 
 IF _MASTER_VERSION
 
- STZ JSTK               \ ???
+ STZ JSTK               \ Set JSTK = 0 (i.e. keyboard, not joystick)
 
 ENDIF
 
@@ -403,18 +407,18 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_DOCKED \ Minor
 
- LDA #128               \ Set z_lo = 128 (so the closest the ship gets to us is
+ LDA #128               \ Set z_lo = 128, so the closest the ship gets to us is
  STA INWK+6             \ z_hi = 1, z_lo = 128, or 256 + 128 = 384
 
 ELIF _6502SP_VERSION
 
- LDX #128               \ Set z_lo = 128 (so the closest the ship gets to us is
+ LDX #128               \ Set z_lo = 128, so the closest the ship gets to us is
  STX INWK+6             \ z_hi = 1, z_lo = 128, or 256 + 128 = 384
 
 ELIF _MASTER_VERSION
 
- LDX SDIST              \ ???
- STX INWK+6
+ LDX SDIST              \ Set z_lo to the distance value we passed to the
+ STX INWK+6             \ routine, so this is the closest the ship gets to us
 
 ENDIF
 
@@ -449,9 +453,10 @@ ELIF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDA #0
+ LDA #0                 \ Set x_lo = 0, so the ship remains in the screen centre
  STA INWK
- STA INWK+3
+
+ STA INWK+3             \ Set y_lo = 0, so the ship remains in the screen centre
 
 ENDIF
 

@@ -299,7 +299,7 @@ ENDIF
                         \
                         \ followed by a newline and an indent of 6 characters
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: The Master version shows the escape pod by name in the Status Mode screen, while the other versions don't list it explicitly, they rely on the different dashboard palette to indicate the presence of a pod
 
  LDA CRGO               \ If our ship's cargo capacity is < 26 (i.e. we do not
  CMP #26                \ have a cargo bay extension), skip the following two
@@ -311,11 +311,12 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDA ESCP               \ ???
- BEQ P%+7
+ LDA ESCP               \ If we don't have an escape pod fitted (i.e. ESCP is
+ BEQ P%+7               \ zero), skip the following two instructions
 
- LDA #112
- JSR plf2
+ LDA #112               \ We do have an escape pod fitted, so print recursive
+ JSR plf2               \ token 112 ("ESCAPE POD"), followed by a newline and an
+                        \ indent of 6 characters
 
 ENDIF
 

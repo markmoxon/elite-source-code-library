@@ -237,7 +237,9 @@ ELIF _MASTER_VERSION
 
  LDA #&00
  STA VIA+&18
- PLY
+
+ PLY                    \ Restore Y from the stack
+
  LDA VIA+&44
 
  LDA &FC                \ Restore the value of A from before the call to the

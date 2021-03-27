@@ -87,7 +87,9 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- JSR SOLARX             \ ???
+ JSR SOLARX             \ Halve our legal status, update the missile indicators,
+                        \ and set up data blocks and slots for the planet and
+                        \ sun
 
 ENDIF
 

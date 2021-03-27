@@ -138,7 +138,8 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED
 
 ELIF _MASTER_VERSION
 
- STY NAMELEN1           \ ???
+ STY NAMELEN1           \ Store the length of the length of the commander's that
+                        \ was entered in NAMELEN1
 
  RTS                    \ Return from the subroutine
 

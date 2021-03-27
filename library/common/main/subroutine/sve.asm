@@ -32,9 +32,11 @@ IF _6502SP_VERSION OR _DISC_DOCKED \ Platform
 
 ELIF _MASTER_VERSION
 
- TSX                    \ ???
- STX stack
- JSR TRADE
+ TSX                    \ Transfer the stack pointer to X and store it in stack,
+ STX stack              \ so we can restore it in the BRBR routine
+
+ JSR TRADE              \ Set the palette for trading screens and switch the
+                        \ current colour to white
 
 ENDIF
 

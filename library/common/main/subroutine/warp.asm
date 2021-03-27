@@ -236,9 +236,11 @@ ELIF _6502SP_VERSION OR _DISC_VERSION
 
 ELIF _MASTER_VERSION
 
- JMP LOWBEEP            \ ???
+ JMP LOWBEEP            \ Call the LOWBEEP routine to make a long, low beep, and
+                        \ return from the subroutine using a tail call
 
- RTS
+ RTS                    \ This instruction has no effect as we already returned
+                        \ from the subroutine
 
 ENDIF
 

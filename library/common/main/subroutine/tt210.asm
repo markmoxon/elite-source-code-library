@@ -249,52 +249,60 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Pla
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Advanced: The Master version contains Trumble-related code, though it is never run as we never get to pick up any Trumbles
 
  RTS                    \ Return from the subroutine
 
 ELIF _MASTER_VERSION
 
- JSR TT69               \ ??? Would show special cargo of some kind? But tokens
-                        \ are blank
+ JSR TT69               \ Call TT69 to set Sentence Case and print a newline
 
- LDA L1264
- ORA L1265
- BNE L4F4A
+ LDA TRUMBLE            \ If there are any Trumbles in the hold, skip the
+ ORA TRUMBLE+1          \ following RTS and continue on (in the Master version,
+ BNE P%+3               \ there are never any Trumbles, so this value will
+                        \ always be zero)
 
-.L4F49
+.TRRTS
 
- RTS
+ RTS                    \ There are no Trumbles in the hold, so return from the
+                        \ subroutine
 
-.L4F4A
+                        \ If we get here then we have Trumbles in the hold, so
+                        \ we print out the number (though we never get here in
+                        \ the Master version)
 
+ CLC                    \ Clear the C flag
+
+ LDA #0                 \ Set A = 0, for the call to TT11 below, so we don't pad
+                        \ out the number of Trumbles
+
+ LDX TRUMBLE            \ Fetch the number of Trumbles into (Y X)
+ LDY TRUMBLE+1
+
+ JSR TT11               \ Call TT11 to print the number of Trumbles in (Y X), with
+                        \ no decimal point
+
+ JSR DORND              \ Print out a random extended token from 111 to 114, all
+ AND #3                 \ of which are blank in this version of Elite
  CLC
- LDA #&00
- LDX L1264
- LDY L1265
- JSR TT11
-
- JSR DORND
-
- AND #&03
- CLC
- ADC #&6F
+ ADC #111
  JSR DETOK
 
- LDA #&C6
- JSR DETOK
+ LDA #198               \ Print extended token 198, which is blank, but would
+ JSR DETOK              \ presumably contain the word "TRUMBLE" if they were
+                        \ enabled
 
- LDA L1265
- BNE L4F71
+ LDA TRUMBLE+1          \ If we have more than 256 Trumbles, skip to TRDONE
+ BNE TRDONE
 
- LDX L1264
- DEX
- BEQ L4F49
+ LDX TRUMBLE            \ If we have exactly one Trumble, return from the
+ DEX                    \ subroutine (as TRRTS contains an RTS)
+ BEQ TRRTS
 
-.L4F71
+.TRDONE
 
- LDA #&73
- JMP DASC
+ LDA #'s'               \ We have more than one Trumble, so print an 's' and
+ JMP DASC               \ return from the subroutine using a tail call
 
 ENDIF
 

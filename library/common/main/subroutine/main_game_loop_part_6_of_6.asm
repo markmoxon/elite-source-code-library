@@ -36,7 +36,7 @@ ENDIF
 
  JSR TT102              \ Call TT102 to process the key pressed in A
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Minor
 
  LDA QQ12               \ Fetch the docked flag from QQ12 into A
 
@@ -48,9 +48,9 @@ ELIF _MASTER_VERSION
 
  LDA QQ12               \ Fetch the docked flag from QQ12 into A
 
- BEQ P%+5               \ ???
-
- JMP MLOOP
+ BEQ P%+5               \ If we are docked, loop back up to MLOOP just above
+ JMP MLOOP              \ to restart the main loop, but skipping all the flight
+                        \ and spawning code in the top part of the main loop
 
 ENDIF
 

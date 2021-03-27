@@ -12,6 +12,11 @@
 \ message of encouragement if the kill total is a multiple of 256, and then
 \ make a nearby explosion sound.
 \
+IF _MASTER_VERSION
+\ Arguments:
+\
+\   X                   The type of the ship that was killed
+ENDIF
 \ Other entry points:
 \
 \   EXNO-2              Set X = 7 and fall through into EXNO to make the sound

@@ -34,16 +34,27 @@ IF _MASTER_VERSION
 
 .TAX35
 
- LDA INWK               \ ???
+                        \ If we get here, the missile has been destroyed by
+                        \ E.C.M. or by the space station
+
+ LDA INWK               \ Set A = x_lo OR y_lo OR z_lo of the missile
  ORA INWK+3
  ORA INWK+6
- BNE P%+7
 
- LDA #&50
- JSR OOPS
+ BNE P%+7               \ If A is non-zero then the missile is not near our
+                        \ ship, so skip the next two instructions to avoid
+                        \ damaging our ship
 
- LDX #&04
- BNE TA87
+ LDA #80                \ Otherwise the missile just got destroyed near us, so
+ JSR OOPS               \ call OOPS to damage the ship by 80, which is nowhere
+                        \ near as bad as the 250 damage from a missile slamming
+                        \ straight into us, but it's still pretty nasty
+
+ LDX #PLT               \ Set X to the ship type for plate alloys, so we get
+                        \ awarded the kill points for the missile scraps in TA87
+
+ BNE TA87               \ Jump to TA87 to process the missile kill tally and
+                        \ make an explosion sound
 
 ENDIF
 
@@ -64,7 +75,8 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- JMP TN4                \ ???
+ JMP TN4                \ Jump down to part 3 to set up the vectors and skip
+                        \ straight to aggressive manoeuvring
 
 ENDIF
 
@@ -92,7 +104,7 @@ ELIF _MASTER_VERSION
 
 
  LDA ECMA               \ If an E.C.M. is currently active (either our's or an
- BNE TAX35              \ opponent's), jump to TAX35 to ???
+ BNE TAX35              \ opponent's), jump to TAX35 to destroy this missile
 
 ENDIF
 
@@ -160,7 +172,7 @@ ENDIF
                         \ distance from the target, so jump down to TA64 see if
                         \ the target activates its E.C.M.
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Label
 
  LDA INWK+32            \ Fetch the AI flag from byte #32 and if only bits 7 and
  CMP #%10000010         \ 1 are set (AI is enabled and the target is slot 1, the
@@ -171,7 +183,8 @@ ELIF _MASTER_VERSION
 
  LDA INWK+32            \ Fetch the AI flag from byte #32 and if only bits 7 and
  CMP #%10000010         \ 1 are set (AI is enabled and the target is slot 1, the
- BEQ TAX35               \ space station), jump to TAX35 to ???
+ BEQ TAX35              \ space station), jump to TAX35 to destroy this missile,
+                        \ as the space station ain't kidding around
 
 ENDIF
 
@@ -214,10 +227,12 @@ ENDIF
 
 IF _MASTER_VERSION
 
- LDA INWK+32            \ ???
- AND #%01111111
- LSR A
- TAX
+ LDA INWK+32            \ Set X to bits 1-6 of the missile's AI flag in ship
+ AND #%01111111         \ byte #32, so bits 0-3 of X are the target's slot
+ LSR A                  \ number, and bit 4 is set (as the missile is hostile)
+ TAX                    \ so X is fairly random and in the range 16-31. This is
+                        \ used to determine the number of kill points awarded
+                        \ for the destruction of the missile
 
 ENDIF
 

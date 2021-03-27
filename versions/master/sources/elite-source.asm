@@ -285,40 +285,8 @@ INCLUDE "library/master/main/subroutine/sound.asm"
 
  RTS
 
-\ ******************************************************************************
-\
-\       Name: NOISEHIT
-\       Type: Subroutine
-\   Category: Sound
-\    Summary: Make the sound of us being hit
-\
-\ ******************************************************************************
-
-.NOISEHIT
-
- LDY #9                 \ Call the NOISE routine with Y = 9 to make the first
- JSR NOISE              \ sound of us being hit
-
- LDY #5                 \ Call the NOISE routine with Y = 5 to make the second
- BRA NOISE              \ sound of us being hit, returning from the subroutine
-                        \ using a tail call
-
-\ ******************************************************************************
-\
-\       Name: NOISELASER
-\       Type: Subroutine
-\   Category: Sound
-\    Summary: Make the sound of our laser firing
-\
-\ ******************************************************************************
-
-.NOISELASER
-
- LDY #3                 \ Call the NOISE routine with Y = 3 to make the first
- JSR NOISE              \ sound of us firing our lasers
-
- LDY #5                 \ Set Y = 5 and fall through into the NOISE routine to
-                        \ make the second sound of us firing our lasers
+INCLUDE "library/master/main/subroutine/noisehit.asm"
+INCLUDE "library/master/main/subroutine/noiselaser.asm"
 
 \ ******************************************************************************
 \
@@ -573,74 +541,8 @@ INCLUDE "library/common/main/subroutine/irq1.asm"
 INCLUDE "library/master/main/variable/vscan.asm"
 INCLUDE "library/master/main/variable/dlcnt.asm"
 INCLUDE "library/advanced/main/subroutine/setvdu19-dovdu19.asm"
-
-\ ******************************************************************************
-\
-\       Name: SAVEZP
-\       Type: Subroutine
-\   Category: Utility routines
-\    Summary: Save zero page from &0090 to &00FF into the buffer at &3000
-\
-\ ******************************************************************************
-
-.SAVEZP
-
- LDA #%00001111         \ Set bits 1 and 2 of the Access Control Register at
- STA VIA+&34            \ SHEILA+&34 to switch screen memory into &3000-&7FFF
-
- LDX #&90               \ ???
-
-.SZPL1
-
- LDA ZP,X
- STA &3000,X
-
- INX
-
- BNE SZPL1
-
- LDA #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
- STA VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
-
- RTS
-
-\ ******************************************************************************
-\
-\       Name: LOADZP
-\       Type: Subroutine
-\   Category: Utility routines
-\    Summary: Swap zero page from &0090 to &00EF with the buffer at &3000
-\
-\ ******************************************************************************
-
-.LOADZP
-
- LDA #%00001111         \ Set bits 1 and 2 of the Access Control Register at
- STA VIA+&34            \ SHEILA+&34 to switch screen memory into &3000-&7FFF
-
- LDX #&90               \ ???
-
-.LZPL1
-
- LDA ZP,X
- LDY &3000,X
-
- STY ZP,X
- STA &3000,X
-
- INX
-
- CPX #&F0
- BNE LZPL1
-
- LDA #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
- STA VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
-
- LDA #&06
- STA VIA+&30
-
- RTS
-
+INCLUDE "library/master/main/subroutine/savezp.asm"
+INCLUDE "library/master/main/subroutine/swapzp.asm"
 INCLUDE "library/advanced/main/variable/ylookup.asm"
 INCLUDE "library/common/main/subroutine/scan.asm"
 INCLUDE "library/advanced/main/subroutine/ll30.asm"
@@ -701,16 +603,13 @@ INCLUDE "library/common/main/subroutine/dil2.asm"
 \ ******************************************************************************
 
 .ADD_DUPLICATE
-
- STA T1                 \ ???
- AND #&80
- STA T
- EOR S
-
 {
- BMI MU8
-
- LDA R
+ STA T1                 \ This is an exact duplicate of the ADD routine, which
+ AND #%10000000         \ is also present in this source, so it isn't clear why
+ STA T                  \ this duplicate exists (it is surrounded by braces as
+ EOR S                  \ BeebAsm doesn't allow us to redefine labels, unlike
+ BMI MU8                \ BBC BASIC). See the ADD routine for an explanation
+ LDA R                  \ of the code
  CLC
  ADC P
  TAX
@@ -720,36 +619,32 @@ INCLUDE "library/common/main/subroutine/dil2.asm"
  RTS
 
 .MU8
-}
 
  LDA S
- AND #&7F
+ AND #%01111111
  STA U
  LDA P
  SEC
  SBC R
  TAX
  LDA T1
- AND #&7F
+ AND #%01111111
  SBC U
-
-{
  BCS MU9
-
  STA U
  TXA
  EOR #&FF
- ADC #&01
+ ADC #1
  TAX
- LDA #&00
+ LDA #0
  SBC U
- ORA #&80
+ ORA #%10000000
 
 .MU9
-}
 
  EOR T
  RTS
+}
 
 IF _MATCH_EXTRACTED_BINARIES
 
@@ -792,11 +687,15 @@ INCLUDE "library/common/main/variable/jstgy.asm"
 INCLUDE "library/common/main/variable/jste.asm"
 INCLUDE "library/common/main/variable/jstk.asm"
 
- EQUB &00               \ Conf option U ???
+ SKIP 1                 \ The configuration setting for toggle key "U", which
+                        \ isn't actually used but is still updated by pressing
+                        \ "U" while the game is paused
 
 .L2C5E
 
- EQUB &00               \ Conf option T ???
+ SKIP 1                 \ The configuration setting for toggle key "T", which
+                        \ isn't actually used but is still updated by pressing
+                        \ "T" while the game is paused
 
 INCLUDE "library/enhanced/main/variable/bstk.asm"
 
@@ -804,13 +703,30 @@ INCLUDE "library/enhanced/main/variable/bstk.asm"
 
 .VOLUME
 
- EQUB 7                 \ ???
+ EQUB 7                 \ The volume level for the game's sound effects (0-7)
+                        \
+                        \ This is controlled by the "<" and ">" keys while the
+                        \ game is paused, and the default level is 7
+
+\ ******************************************************************************
+\
+\       Name: CKEYS
+\       Type: Variable
+\   Category: Keyboard
+\    Summary: The keys used to toggle configuration settings when the game is
+\             paused
+\
+\ ******************************************************************************
 
 .CKEYS
 
- EQUB 1                 \ ???
- EQUS "AXFYJKUT"
- EQUB &60
+ EQUB 1                 \ The configuration keys in the same order as their
+ EQUS "AXFYJKUT"        \ configuration bytes (starting from DAMP). The 1 is
+                        \ for CAPS LOCK, and although "U" and "T" still toggle
+                        \ the relevant configuration bytes, those values ar not
+                        \ used, so those keys have no effect
+
+ EQUB &60               \ This byte appears to be unused
 
 \ ******************************************************************************
 \
@@ -932,7 +848,7 @@ INCLUDE "library/enhanced/main/subroutine/spin.asm"
 \       Name: L31AC
 \       Type: Subroutine
 \   Category: Drawing lines
-\    Summary: ???
+\    Summary: ??? energy bomb
 \
 \ ******************************************************************************
 
@@ -1330,7 +1246,15 @@ INCLUDE "library/enhanced/main/variable/mtin.asm"
 \       Name: LSR1
 \       Type: Subroutine
 \   Category: Utility routines
-\    Summary: ???
+\    Summary: Scaling routine for A (which halves the value in A)
+\
+\ ------------------------------------------------------------------------------
+\
+\ This routine (and the related LSR2 and LSR3 routines) are called from various
+\ places in the code to scale the value in A. This scaling can be changed by
+\ changing these routines (for example, by changing an RTS to an LSR A), so
+\ perhaps this is code left over from the conversion to other platforms, where
+\ the scale factor might need to be different.
 \
 \ ******************************************************************************
 
@@ -1343,7 +1267,15 @@ INCLUDE "library/enhanced/main/variable/mtin.asm"
 \       Name: LSR2
 \       Type: Subroutine
 \   Category: Utility routines
-\    Summary: ???
+\    Summary: Scaling routine for A (which leaves A alone)
+\
+\ ------------------------------------------------------------------------------
+\
+\ This routine (and the related LSR1 and LSR3 routines) are called from various
+\ places in the code to scale the value in A. This scaling can be changed by
+\ changing these routines (for example, by changing an RTS to an LSR A), so
+\ perhaps this is code left over from the conversion to other platforms, where
+\ the scale factor might need to be different.
 \
 \ ******************************************************************************
 
@@ -1356,7 +1288,15 @@ INCLUDE "library/enhanced/main/variable/mtin.asm"
 \       Name: LSR3
 \       Type: Subroutine
 \   Category: Utility routines
-\    Summary: ???
+\    Summary: Scaling routine for A (which leaves A alone)
+\
+\ ------------------------------------------------------------------------------
+\
+\ This routine (and the related LSR1 and LSR2 routines) are called from various
+\ places in the code to scale the value in A. This scaling can be changed by
+\ changing these routines (for example, by changing an RTS to an LSR A), so
+\ perhaps this is code left over from the conversion to other platforms, where
+\ the scale factor might need to be different.
 \
 \ ******************************************************************************
 
@@ -1543,24 +1483,29 @@ INCLUDE "library/common/main/subroutine/sos1.asm"
 
 .SOLARX
 
- LDA L1264
+ LDA TRUMBLE            \ If we have no Trumbles in the hold, skip to SOLAR 
  BEQ SOLAR
 
- LDA #0                 \ Trumbles eat food and narcotics
- STA QQ20
- STA QQ20+6
+                        \ If we get here then we have Trumbles in the hold, so
+                        \ this is where they breed (though we never get here in
+                        \ the Master version)
 
- JSR DORND              \ L1264 increases exponentially
- AND #&0F
- ADC L1264
- ORA #&04
- ROL A
- STA L1264
+ LDA #0                 \ Trumbles eat food and narcotics during the hyperspace
+ STA QQ20               \ journey, so zero the amount of food and narcotics in
+ STA QQ20+6             \ the hold
 
- ROL L1265              \ Rotate carry into bit 0 of L1265 until bit 6 is set
- BPL SOLAR              \ Change to P%+5
+ JSR DORND              \ Take the lnumber of Trumbles from TRUMBLE(1 0), add a
+ AND #15                \ random number between 4 and 15, and double the result,
+ ADC TRUMBLE            \ storing the resulting number in TRUMBLE(1 0)
+ ORA #4                 \
+ ROL A                  \ We start with the low byte
+ STA TRUMBLE
 
- ROR L1265
+ ROL TRUMBLE+1          \ And then do the high byte
+
+ BPL P%+5               \ If bit 7 of the high byte is set, then rotate the high
+ ROR TRUMBLE+1          \ byte back to the right, so the number of Trumbles is
+                        \ always positive
 
 INCLUDE "library/common/main/subroutine/solar.asm"
 INCLUDE "library/common/main/subroutine/nwstars.asm"
@@ -1705,32 +1650,7 @@ INCLUDE "library/common/main/subroutine/bay.asm"
 INCLUDE "library/common/main/subroutine/dfault-qu5.asm"
 INCLUDE "library/common/main/subroutine/title.asm"
 INCLUDE "library/common/main/subroutine/check.asm"
-
-\ ******************************************************************************
-\
-\       Name: JAMESON
-\       Type: Subroutine
-\   Category: Save and load
-\    Summary: Restore the default JAMESON commander file
-\
-\ ******************************************************************************
-
-.JAMESON
-
- LDY #&60               \ ???
-
-.JAMESL
-
- LDA DEFAULT%,Y
- STA NA%,Y
- DEY
- BPL JAMESL
-
- LDY #7
- STY NAMELEN2
-
- RTS
-
+INCLUDE "library/master/main/subroutine/jameson.asm"
 INCLUDE "library/common/main/subroutine/trnme.asm"
 INCLUDE "library/common/main/subroutine/tr1.asm"
 INCLUDE "library/common/main/subroutine/gtnme-gtnmew.asm"
@@ -1859,13 +1779,13 @@ INCLUDE "library/master/main/variable/ldli.asm"
  CPY #&07
  BCC SAVEL4
 
- JSR LOADZP             \ Call LOADZP to restore the top part of zero page
+ JSR SWAPZP             \ Call SWAPZP to restore the top part of zero page
 
  LDX #&DF
  LDY #&6A
  JSR OSCLI
 
- JMP LOADZP             \ Call LOADZP to restore the top part of zero page
+ JMP SWAPZP             \ Call SWAPZP to restore the top part of zero page
                         \ and return from the subroutine using a tail call
 
 \ ******************************************************************************
@@ -1900,13 +1820,13 @@ INCLUDE "library/master/main/variable/ldli.asm"
  CPY #&07
  BCC LOADL2
 
- JSR LOADZP             \ Call LOADZP to restore the top part of zero page
+ JSR SWAPZP             \ Call SWAPZP to restore the top part of zero page
 
  LDX #&FF
  LDY #&6A
  JSR OSCLI
 
- JSR LOADZP             \ Call LOADZP to restore the top part of zero page
+ JSR SWAPZP             \ Call SWAPZP to restore the top part of zero page
 
  LDY #&4C
 

@@ -27,10 +27,10 @@
  CPY #2*SST             \ If the ship in Y is the space station, jump to BA21
  BEQ MA21               \ as energy bombs are useless against space stations
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Advanced: In the Master version, energy bombs have no effect against Thargoids
 
- CPY #2*THG             \ ???
- BEQ MA21
+ CPY #2*THG             \ If the ship in Y is a Thargoid, jump to BA21 as energy
+ BEQ MA21               \ bombs have no effect against Thargoids
 
 ENDIF
 
@@ -64,7 +64,9 @@ ENDIF
 
 IF _MASTER_VERSION
 
- LDX TYPE               \ ???
+ LDX TYPE               \ Set X to the type of the ship that was killed so the
+                        \ following call to EXNO2 can award us the correct
+                        \ number of fractional kill points
 
 ENDIF
 

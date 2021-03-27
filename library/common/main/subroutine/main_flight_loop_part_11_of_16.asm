@@ -244,7 +244,9 @@ ENDIF
 
 IF _MASTER_VERSION
 
- LDX TYPE               \ ???
+ LDX TYPE               \ Set X to the type of the ship that was killed so the
+                        \ following call to EXNO2 can award us the correct
+                        \ number of fractional kill points
 
 ENDIF
 

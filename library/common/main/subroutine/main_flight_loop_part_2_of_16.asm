@@ -161,7 +161,7 @@ IF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Enhanced: To use a Bitsi
 
 ENDIF
 
-IF _DISC_FLIGHT \ Tube
+IF _DISC_FLIGHT \ Platform
 
  LDX #3                 \ Call OSBYTE 128 to fetch the 16-bit value from ADC
  LDA #128               \ channel 3 (the Bitstik rotation value), returning the
@@ -176,7 +176,9 @@ ELIF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDA ADCH3              \ ???
+ LDA ADCH3              \ Fetch the Bitstik rotation value (high byte) from
+                        \ ADCH3, which is constantly updated with the high byte
+                        \ of ADC channel 3 by the interrupt handler IRQ1
 
 ENDIF
 

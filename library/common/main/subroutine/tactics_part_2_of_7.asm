@@ -273,16 +273,21 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: Rock hermits have a 22% chance
 
 ENDIF
 
-IF _MASTER_VERSION
+IF _6502SP_VERSION
 
- LDX #%00100100         \ ???
+ STX NEWB               \ Set the ship's NEWB flags to %00000000 so the ship we
+                        \ spawn below will inherit the default values from E%
+
+ELIF _MASTER_VERSION
+
+ LDX #%00100100         \ Set the ship's NEWB flags to %00100100 so the ship we
+ STX NEWB               \ spawn below will inherit the default values from E% as
+                        \ well as having bit 2 (hostile) and bit 5 (innocent
+                        \ bystander) set
 
 ENDIF
 
 IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: Rock hermits can spawn a Sidewinder, Mamba, Krait, Adder or Gecko
-
- STX NEWB               \ Set the ship's NEWB flags to %00000000 so the ship we
-                        \ spawn below will inherit the default values from E%
 
  AND #3                 \ Set A = a random number that's in the range 0-3
 

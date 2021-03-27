@@ -42,12 +42,11 @@
 
 IF _MASTER_VERSION
 
- LDA BOMB               \ ???
- BPL L7D32
+ LDA BOMB               \ If our energy bomb has been set off, then BOMB will be
+ BPL P%+5               \ negative, so this skips the following instruction if
+                        \ our energy bomb is not going off
 
- JSR L31AC
-
-.L7D32
+ JSR L31AC              \ Our energy bomb is going off, so ???
 
 ENDIF
 
@@ -84,12 +83,11 @@ ENDIF
 
 IF _MASTER_VERSION
 
- LDA BOMB               \ ???
- BPL L7D54
+ LDA BOMB               \ If our energy bomb has been set off, then BOMB will be
+ BPL P%+5               \ negative, so this skips the following instruction if
+                        \ our energy bomb is not going off
 
- JSR L31AC
-
-.L7D54
+ JSR L31AC              \ Our energy bomb is going off, so ???
 
 ENDIF
 

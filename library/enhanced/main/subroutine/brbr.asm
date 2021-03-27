@@ -52,10 +52,11 @@ IF _6502SP_VERSION \ Platform
 
 ELIF _MASTER_VERSION
 
- LDX stack              \ ???
- TXS
+ LDX stack              \ Set the stack pointer to the value that we stored in
+ TXS                    \ location stack, so that's back to the value it had
+                        \ before we change it in the SVE routine
 
- JSR LOADZP             \ Call LOADZP to restore the top part of zero page
+ JSR SWAPZP             \ Call SWAPZP to restore the top part of zero page
 
  STZ CATF
  LDY #&00

@@ -67,7 +67,8 @@
 
 IF _MASTER_VERSION
 
- ADC L1265              \ ???
+ ADC TRUMBLE+1          \ Add the high byte of the number of Trumbles in the
+                        \ hold, as 256 Trumbles take up one ton of cargo space
 
 ENDIF
 

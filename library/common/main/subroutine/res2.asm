@@ -88,10 +88,11 @@ ENDIF
 
 IF _MASTER_VERSION
 
- LDA #&00               \ ???
- STA XMAX
- LDA #&BF
- STA YMAX
+ LDA #0                 \ Set XMAX to 0 (though this variable is never used, so
+ STA XMAX               \ this has no effect)
+
+ LDA #191               \ Set YMAX to 191, the number of pixel lines in the
+ STA YMAX               \ space view
 
 ENDIF
 

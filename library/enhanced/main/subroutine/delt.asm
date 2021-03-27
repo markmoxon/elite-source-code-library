@@ -109,7 +109,7 @@ ENDIF
 
 IF _MASTER_VERSION
 
- JSR LOADZP             \ Call LOADZP to restore the top part of zero page
+ JSR SWAPZP             \ Call SWAPZP to restore the top part of zero page
 
 ENDIF
 
@@ -132,7 +132,7 @@ ENDIF
 
 IF _MASTER_VERSION
 
- JSR LOADZP             \ Call LOADZP to restore the top part of zero page
+ JSR SWAPZP             \ Call SWAPZP to restore the top part of zero page
 
 ENDIF
 

@@ -73,9 +73,9 @@ ELIF _6502SP_VERSION
 \
 \ Other entry points:
 \
-\   HLOIN3              Draw a line from (X, Y1) to (X2, Y1) in the colour given
-\                       in A (we need to set Q = Y2 + 1 before calling HLOIN3 so
-\                       only one line is drawn)
+\   HLOIN3              Draw a line from (X1, Y1) to (X2, Y1) in the current
+\                       colour (we need to set Q = Y2 + 1 before calling
+\                       HLOIN3 so only one line is drawn)
 ENDIF
 \
 \ ******************************************************************************
@@ -91,7 +91,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
 
 ELIF _MASTER_VERSION
 
- LDA Y1                 \ ???
+ LDA Y1                 \ Set A = Y1, the pixel y-coordinate of the line
 
 ELIF _6502SP_VERSION
 
@@ -134,12 +134,13 @@ IF _MASTER_VERSION \ Screen
 
 .HLOIN3
 
- STY YSAV               \ ???
+ STY YSAV               \ Store Y into YSAV, so we can preserve it across the
+                        \ call to this subroutine
 
  LDY #%00001111         \ Set bits 1 and 2 of the Access Control Register at
  STY VIA+&34            \ SHEILA+&34 to switch screen memory into &3000-&7FFF
 
- LDX X1
+ LDX X1                 \ Set X = X1
 
 ELIF _6502SP_VERSION
 
@@ -465,7 +466,7 @@ ELIF _MASTER_VERSION
  LDY #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
  STY VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
 
- LDY YSAV               \ ???
+ LDY YSAV               \ Restore Y from YSAV, so that it's preserved
 
 ENDIF
 
@@ -579,7 +580,7 @@ ELIF _MASTER_VERSION
  LDY #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
  STY VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
 
- LDY YSAV               \ ???
+ LDY YSAV               \ Restore Y from YSAV, so that it's preserved
 
 ENDIF
 

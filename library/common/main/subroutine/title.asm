@@ -25,13 +25,18 @@ ENDIF
 \   X                   The type of the ship to show (see variable XX21 for a
 \                       list of ship types)
 \
+IF _MASTER_VERSION
+\
+\   Y                   The distance to show the ship rotating, once it has
+\                       finished moving towards us
+ENDIF
 \ ******************************************************************************
 
 .TITLE
 
 IF _MASTER_VERSION
 
- STY SDIST              \ ???
+ STY SDIST              \ Store the ship distance in SDIST
 
 ENDIF
 
@@ -75,8 +80,9 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDA #&0D               \ ???
- JSR TT66
+ LDA #13                \ Clear the top part of the screen, draw a white border,
+ JSR TT66               \ and set the current view type in QQ11 to 13 (rotating
+                        \ ship view)
 
 ENDIF
 
@@ -131,7 +137,7 @@ ENDIF
 
 IF _MASTER_VERSION
 
- LDA #&60               \ ???
+ LDA #96               \ Set A = 96 as the distance that the ship starts at
 
 ENDIF
 

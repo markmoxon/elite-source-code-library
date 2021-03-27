@@ -163,7 +163,7 @@ ENDIF
 
 IF _6502SP_VERSION
 
- BMI oddlog             \ If A > 127, jump to oddlog ???
+ BMI oddlog             \ If A > 127, jump to oddlog
 
 ENDIF
 
@@ -235,7 +235,7 @@ ELIF _MASTER_VERSION
 
 .MU3again
 
- LDA #0                 \ Set A = 0 ???
+ LDA #0                 \ Set A = 0
 
 .MU3
 

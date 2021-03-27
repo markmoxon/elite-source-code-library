@@ -177,10 +177,7 @@ INCLUDE "library/common/main/variable/swap.asm"
 
  SKIP 6                 \ These bytes appear to be unused
 
-.SDIST
-
- SKIP 1                 \ Used to store the nearest distance of the rotating
-                        \ ship on the title screen
+INCLUDE "library/master/main/variable/sdist.asm"
 
  SKIP 2                 \ These bytes appear to be unused
 
@@ -210,24 +207,8 @@ INCLUDE "library/common/main/variable/escp.asm"
 
  SKIP 1                 \ This byte appears to be unused
 
-.L1264
-
- SKIP 1                 \ Low byte of Trumble count ???
-
-.L1265
-
- SKIP 1                 \ High byte of Trumble count, this many tons of space are taken up, see tnpr, so 256 Trumbles = 1 ton ???
-
-.TALLYF
-
- SKIP 1                 \ Combat rank fraction
-                        \
-                        \ Contains the fraction part of the kill count, which
-                        \ together with the integer in TALLY(1 0) determines our
-                        \ combat rank. The fraction is stored as the numerator
-                        \ of a fraction with a denominator of 256, so a TALLYF
-                        \ of 128 would represent 0.5 (i.e. 128 / 256)
-
+INCLUDE "library/master/main/variable/trumble.asm"
+INCLUDE "library/master/main/variable/tallyf.asm"
 INCLUDE "library/common/main/variable/nomsl.asm"
 INCLUDE "library/common/main/variable/fist.asm"
 INCLUDE "library/common/main/variable/avl.asm"
@@ -252,26 +233,10 @@ INCLUDE "library/common/main/variable/tek.asm"
 INCLUDE "library/common/main/variable/slsp.asm"
 INCLUDE "library/common/main/variable/qq2.asm"
 INCLUDE "library/advanced/main/variable/safehouse.asm"
-
-.CLCNT
-
- SKIP 1                 \ Used to store the number of particles in the explosion
-                        \ cloud, though the number is never actually used
-
-.ADCH1
-
- SKIP 1                 \ Contains the latest value of joystick channel 1, as
-                        \ updated by the IRQ1 interrupt handler
-
-.ADCH2
-
- SKIP 1                 \ Contains the latest value of joystick channel 2, as
-                        \ updated by the IRQ1 interrupt handler
-
-.ADCH3
-
- SKIP 1                 \ Contains the latest value of joystick channel 3, as
-                        \ updated by the IRQ1 interrupt handler
+INCLUDE "library/master/main/variable/clcnt.asm"
+INCLUDE "library/master/main/variable/adch1.asm"
+INCLUDE "library/master/main/variable/adch2.asm"
+INCLUDE "library/master/main/variable/adch3.asm"
 
 ENDIF
 

@@ -163,8 +163,9 @@ ENDIF
 
 IF _MASTER_VERSION
 
- LDA BOMB               \ ???
- BMI MA76
+ LDA BOMB               \ If we already set off our energy bomb by pressing TAB,
+ BMI MA76               \ then BOMB is now negative, so this skips to MA76 if
+                        \ our energy bomb is already going off
 
 ENDIF
 
@@ -179,9 +180,11 @@ ENDIF
 
 IF _MASTER_VERSION
 
- BEQ MA76               \ ???
+ BEQ MA76               \ If BOMB now contains 0, then the bomb is not going off
+                        \ any more (or it never was), so skip the following
+                        \ instruction
 
- JSR BOMBFX2
+ JSR BOMBFX2            \ Call BOMBFX2 to show the energy bomb effect
 
 ENDIF
 

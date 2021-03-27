@@ -123,7 +123,17 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- JSR LSR1              \ ???
+ JSR LSR1               \ We halve the y-coordinate because the galaxy in
+                        \ in Elite is rectangular rather than square, and is
+                        \ twice as wide (x-axis) as it is high (y-axis), so the
+                        \ chart is 256 pixels wide and 128 high
+                        \
+                        \ The call to LSR1 simply does an LSR A, but having this
+                        \ call instruction here would enable different scaling
+                        \ to be applied by altering the LSR routines, so perhaps
+                        \ this is code left over from the conversion to other
+                        \ platforms, where the scale factor might need to be
+                        \ different
 
  CLC                    \ Add 24 to the halved y-coordinate ???
  ADC #24                \ (as the top of the chart is on pixel row 24, just
@@ -167,14 +177,24 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDA QQ9                \ ???
- JSR LSR3
+ LDA QQ9                \ Set QQ19 to the selected system's x-coordinate
+ JSR LSR3               \
+ STA QQ19               \ The call to LSR3 has no effect as it only contains an
+                        \ RTS, but having this call instruction here would
+                        \ enable different scaling to be applied by altering
+                        \ the LSR routines, so perhaps this is code left over
+                        \ from the conversion to other platforms, where the
+                        \ scale factor might need to be different
 
- STA QQ19
- LDA QQ10
- JSR LSR1
-
- STA QQ19+1
+ LDA QQ10               \ Set QQ19+1 to the selected system's y-coordinate,
+ JSR LSR1               \ halved to fit it into the chart
+ STA QQ19+1             \
+                        \ The call to LSR1 simply does an LSR A, but having this
+                        \ call instruction here would enable different scaling
+                        \ to be applied by altering the LSR routines, so perhaps
+                        \ this is code left over from the conversion to other
+                        \ platforms, where the scale factor might need to be
+                        \ different
 
  LDA #4                 \ Set QQ19+2 to size 4 for the crosshairs size
  STA QQ19+2

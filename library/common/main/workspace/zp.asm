@@ -196,9 +196,7 @@ INCLUDE "library/common/main/variable/xx17.asm"
 
 IF _MASTER_VERSION \ Platform
 
-.W
-
- SKIP 1                 \ Temporary storage, used in a number of places
+INCLUDE "library/master/main/variable/w.asm"
 
 ENDIF
 
@@ -267,24 +265,10 @@ INCLUDE "library/advanced/main/variable/messxc.asm"
 ELIF _MASTER_VERSION
 
 INCLUDE "library/advanced/main/variable/widget.asm"
-
-.XMAX
-
- SKIP 1                 \ This is set to 0 in the RES2 routine, but the value is
-                        \ never actually read
-
-.YMAX
-
- SKIP 1                 \ This is used to store the number of pixel rows in the
-                        \ space view (it is set to 191 in the RES2 routine)
-
+INCLUDE "library/master/main/variable/xmax.asm"
+INCLUDE "library/master/main/variable/ymax.asm"
 INCLUDE "library/advanced/main/variable/messxc.asm"
-
-.deltX
-
- SKIP 1                 \ This is used by the STARS2 routine for storing the
-                        \ stardust particle's delta_x value
-
+INCLUDE "library/master/main/variable/deltx.asm"
 INCLUDE "library/common/main/variable/xx1.asm"
 INCLUDE "library/common/main/variable/inwk.asm"
 INCLUDE "library/common/main/variable/xx19.asm"

@@ -39,6 +39,11 @@ ELIF _MASTER_VERSION
 
 .DVID4_DUPLICATE
 
+                        \ This is an exact duplicate of the DVID4 routine, which
+                        \ is also present in this source, so it isn't clear why
+                        \ this duplicate exists (especially as the other version
+                        \ is slightly faster, as it unrolls the loop)
+
 ENDIF
 
  LDX #8                 \ Set a counter in X to count the 8 bits in A

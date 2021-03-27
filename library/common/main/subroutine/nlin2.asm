@@ -56,7 +56,7 @@ ELIF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- JSR HLOIN3             \ ???
+ JSR HLOIN3             \ Call HLOIN3 to draw a line from (2, A) to (254, A)
 
 ENDIF
 

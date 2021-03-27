@@ -44,13 +44,26 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDA QQ9                \ ???
- JSR LSR3
+ LDA QQ9                \ Store the crosshairs x-coordinate in QQ19
+ JSR LSR3               \
+ STA QQ19               \ The call to LSR3 has no effect as it only contains an
+                        \ RTS, but having this call instruction here would
+                        \ enable different scaling to be applied by altering
+                        \ the LSR routines, so perhaps this is code left over
+                        \ from the conversion to other platforms, where the
+                        \ scale factor might need to be different
 
- STA QQ19
- LDA QQ10
- JSR LSR1
- STA QQ19+1
+
+ LDA QQ10               \ Halve the crosshairs y-coordinate and store it in QQ19
+ JSR LSR1               \ (we halve it because the Long-range Chart is half as
+ STA QQ19+1             \ high as it is wide)
+                        \
+                        \ The call to LSR1 simply does an LSR A, but having this
+                        \ call instruction here would enable different scaling
+                        \ to be applied by altering the LSR routines, so perhaps
+                        \ this is code left over from the conversion to other
+                        \ platforms, where the scale factor might need to be
+                        \ different
 
 ENDIF
 

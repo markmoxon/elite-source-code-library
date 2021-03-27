@@ -56,18 +56,22 @@ ENDIF
  STA INWK+7             \ Set z_hi = 1, the distance at which we show the
                         \ rotating ship
 
-IF _MASTER_VERSION
-
- LDA #&0D               \ ???
-
-ENDIF
+IF _DISC_DOCKED OR _6502SP_VERSION
 
  JSR TT66               \ Clear the top part of the screen, draw a white border,
                         \ and set the current view type in QQ11 to 1
 
+ELIF _MASTER_VERSION
+
+ LDA #13                \ Clear the top part of the screen, draw a white border,
+ JSR TT66               \ and set the current view type in QQ11 to 13 (rotating
+                        \ ship view)
+
+ENDIF
+
  LDA #64                \ Set the main loop counter to 64, so the ship rotates
-                        \ for 64 iterations through MVEIT
- STA MCNT
+ STA MCNT               \ for 64 iterations through MVEIT
+ 
 
 .BRL1
 
@@ -119,7 +123,7 @@ ELIF _MASTER_VERSION
  BCC P%+4
 
  LDX #120               \ X is bigger than 120, so set X = 120 so that X has a
-                        \ maximum value of 120 ???
+                        \ maximum value of 120
 
 ENDIF
 
@@ -135,7 +139,7 @@ ENDIF
 
 IF _MASTER_VERSION
 
- DEC MCNT               \ ???
+ DEC MCNT               \ Decrease the counter in MCNT
 
 ENDIF
 
@@ -149,7 +153,10 @@ ENDIF
 
 IF _MASTER_VERSION
 
- JSR PAS1               \ ???
+ JSR PAS1               \ Call PAS1 to display the rotating ship at space
+                        \ coordinates (0, 112, 256) and scan the keyboard,
+                        \ returning the internal key number in X (or 0 for no
+                        \ key press)
 
 ENDIF
 

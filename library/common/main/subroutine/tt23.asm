@@ -129,9 +129,9 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 ELIF _MASTER_VERSION
 
  CMP #29                \ If the horizontal distance in A is >= 29, then this
- BCS L50FB              \ system is too far away from the current system to
-                        \ appear in the Short-range Chart, so jump to L50FB to
-                        \ move on to the next system ???
+ BCS TT187S             \ system is too far away from the current system to
+                        \ appear in the Short-range Chart, so jump to TT187 via
+                        \ TT187S to move on to the next system
 
 ENDIF
 
@@ -157,8 +157,10 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- CMP #&28
- BCS L50FB
+ CMP #40                \ If the vertical distance in A is >= 40, then this
+ BCS TT187S             \ system is too far away from the current system to
+                        \ appear in the Short-range Chart, so jump to TT187 via
+                        \ TT187S to move on to the next system
 
 ENDIF
 
@@ -343,7 +345,7 @@ ELIF _MASTER_VERSION
  LDA QQ8
  CMP #&46
 
-.L50FB
+.TT187S
 
  BCS TT187
 
@@ -425,7 +427,8 @@ ELIF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- BEQ L5134              \ ???
+ BEQ P%+5               \ If X = 0 then we have done all 256 systems, so skip
+                        \ the next instruction to return from the subroutine
 
 ENDIF
 
@@ -434,9 +437,7 @@ ENDIF
 
 IF _MASTER_VERSION
 
-.L5134
-
- RTS
+ RTS                    \ Return from the subroutine
 
 ENDIF
 

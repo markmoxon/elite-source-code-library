@@ -149,14 +149,14 @@ ELIF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- BCS L4CD6              \ ???
+ BCS P%+6               \ If the above addition overflowed, skip the following
+                        \ two instructions to set A = 254
 
- CMP #&FE
- BCC TT85
+ CMP #254               \ The addition didn't overflow, so if A < 254, jump to
+ BCC TT85               \ TT85
 
-.L4CD6
-
- LDA #&FE
+ LDA #254               \ Set A = 254, so the crosshairs don't spill out of the
+                        \ right of the screen
 
 .TT85
 

@@ -279,8 +279,8 @@ ELIF _MASTER_VERSION
  LDX TRUMBLE            \ Fetch the number of Trumbles into (Y X)
  LDY TRUMBLE+1
 
- JSR TT11               \ Call TT11 to print the number of Trumbles in (Y X), with
-                        \ no decimal point
+ JSR TT11               \ Call TT11 to print the number of Trumbles in (Y X),
+                        \ with no decimal point
 
  JSR DORND              \ Print out a random extended token from 111 to 114, all
  AND #3                 \ of which are blank in this version of Elite

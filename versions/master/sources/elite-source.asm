@@ -1694,18 +1694,21 @@ INCLUDE "library/common/main/subroutine/sight.asm"
 \       Name: SIGHTCOL
 \       Type: Variable
 \   Category: Drawing lines
-\    Summary: ???
+\    Summary: Colours for the crosshair sights on the different laser types
 \
 \ ******************************************************************************
 
 .SIGHTCOL
 
- EQUB YELLOW            \ Pulse laser
- EQUB CYAN              \ Beam laser
- EQUB CYAN              \ Military laser
- EQUB YELLOW            \ Mining laser
+ EQUB YELLOW            \ Pulse lasers have yellow sights
 
- EQUB WHITE             \ These bytes appear to be unuused - perhaps they were
+ EQUB CYAN              \ Beam lasers have cyan sights
+
+ EQUB CYAN              \ Military lasers have cyan sights
+
+ EQUB YELLOW            \ Mining lasers have yellow sights
+
+ EQUB WHITE             \ These bytes appear to be unused - perhaps they were
  EQUB WHITE             \ going to be used to set different colours of laser
  EQUB WHITE             \ beam for the different lasers?
  EQUB WHITE

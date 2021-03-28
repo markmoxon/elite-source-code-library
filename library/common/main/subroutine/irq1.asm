@@ -225,28 +225,36 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
 ELIF _MASTER_VERSION
 
- LDA VIA+&18            \ ??? A to D joystick status byte (channel?)
- AND #&03
+ LDA VIA+&18            \ Fetch the ADC channel number into Y from bits 1-2 in
+ AND #3                 \ the ADC status byte at SHEILA &18
  TAY
- LDA VIA+&19            \ A to D joystick high byte
- STA ADCH1,Y
- INY
- TYA
- CMP #&03
+
+ LDA VIA+&19            \ Fetch the high byte of the value on this ADC channel
+                        \ to read the relevant joystick position
+
+ STA ADCH1,Y            \ Store this value in the apropriate ADCH1-ADCH3 byte
+
+ INY                    \ Increment the channel number
+
+ TYA                    \ If the new channel number in A < 3, skip the next two
+ CMP #3                 \ instructions
  BCC P%+4
 
- LDA #&00
+ LDA #0                 \ Set the ADC status byte at SHEILA &18 to 0
  STA VIA+&18
 
  PLY                    \ Restore Y from the stack
 
- LDA VIA+&44
+ LDA VIA+&44            \ Read 6522 System VIA T1C-L timer 1 low-order counter
+                        \ (SHEILA &44)
 
  LDA &FC                \ Restore the value of A from before the call to the
                         \ interrupt handler (the MOS stores the value of A in
                         \ location &FC before calling the interrupt handler)
 
- RTI
+ RTI                    \ Return from interrupts, so this interrupt is not
+                        \ passed on to the next interrupt handler, but instead
+                        \ the interrupt terminates here
 
 ENDIF
 
@@ -287,16 +295,18 @@ ELIF _MASTER_VERSION
 
 .LINSCN
 
- LDA VIA+&41            \ ???
+ LDA VIA+&41            \ Read 6522 System VIA input register IRA (SHEILA &41)
 
  LDA &FC                \ Fetch the value of A from before the call to the
                         \ interrupt handler (the MOS stores the value of A in
                         \ location &FC before calling the interrupt handler)
 
- PHA
+ PHA                    \ Store the original value of A on the stack
 
- LDA DLCNT
- STA DL
+ LDA DLCNT              \ Set the line scan counter to the value of DLCNT (which
+ STA DL                 \ contains 30 by default and doesn't change), so
+                        \ routines like WSCAN can set DL to 0 and then wait for
+                        \ it to change to this value to catch the vertical sync
 
 ENDIF
 
@@ -380,9 +390,9 @@ IF _MASTER_VERSION \ Platform
 
 .jvec
 
- PHX                    \ ???
- JSR NOISE2
- PLX
+ PHX                    \ Call NOISE2 to send the current sound data to the
+ JSR NOISE2             \ 76489 sound chip, stashing X on the stack so it gets
+ PLX                    \ preserved across the call
 
  PLA                    \ Restore A from the stack
 

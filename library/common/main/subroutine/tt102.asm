@@ -157,32 +157,44 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
                         \
                         \ A will contain &71, &72 or &73 (for f1, f2 or f3), so
                         \ set X to the last digit (1, 2 or 3) and jump to LOOK1
-                        \ to switch to view X (back, left or right), returning
+                        \ to switch to view X (rear, left or right), returning
                         \ from the subroutine using a tail call
 
 ELIF _MASTER_VERSION
 
- CMP #f1                \ ???
+ CMP #f1                \ If red key f1 was pressed, jump to BVIEW
  BEQ BVIEW
 
- CMP #f2
+ CMP #f2                \ If red key f2 was pressed, jump to LVIEW
  BEQ LVIEW
 
- CMP #f3
- BNE LABEL_3
+ CMP #f3                \ If red key f3 was not pressed, jump to LABEL_3 to keep
+ BNE LABEL_3            \ checking for which key was pressed
 
- LDX #3
- EQUB &2C
+ LDX #3                 \ Red key f3 was pressed, so set the view number in X to
+                        \ 3 for the right view
+
+ EQUB &2C               \ Skip the next instruction by turning it into
+                        \ &2C &A2 &02, or BIT &02A2, which does nothing apart
+                        \ from affect the flags
 
 .LVIEW
 
- LDX #2
- EQUB &2C
+ LDX #2                 \ If we jump to here, red key f2 was pressed, so set the
+                        \ view number in X to 2 for the left view
+
+ EQUB &2C               \ Skip the next instruction by turning it into
+                        \ &2C &A2 &01, or BIT &02A2, which does nothing apart
+                        \ from affect the flags
 
 .BVIEW
 
- LDX #1
- JMP LOOK1
+ LDX #1                 \ If we jump to here, red key f1 was pressed, so set the
+                        \ view number in X to 1 for the rear view
+
+ JMP LOOK1              \ Jump to LOOK1 to switch to view X (rear, left or
+                        \ right), returning from the subroutine using a tail
+                        \ call
 
 ENDIF
 
@@ -453,7 +465,7 @@ ELIF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDA #12                \ ???
+ LDA #12                \ Print a line feed to move the text cursor down a line
  JSR TT26
 
 ENDIF

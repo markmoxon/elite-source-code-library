@@ -20,35 +20,41 @@
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
- CMP #38                \ If the horizontal distance in A is < 38, then the
+ CMP #38                \ If the horizontal distance in A < 38, then the
  BCC TT179              \ crosshairs are close enough to the current system to
                         \ appear in the Short-range Chart, so jump to TT179 to
                         \ check the vertical distance
 
- CMP #230               \ If the horizontal distance in A is < -26, then the
+ CMP #230               \ If the horizontal distance in A < -26, then the
  BCC TT180              \ crosshairs are too far from the current system to
                         \ appear in the Short-range Chart, so jump to TT180 to
                         \ return from the subroutine (as TT180 contains an RTS)
 
 ELIF _MASTER_VERSION
 
- BCS L5017              \ ???
+ BCS P%+6               \ If the subtraction didn't underflow, skip the next two
+                        \ instructions
 
- EOR #&FF
- ADC #&01
+ EOR #&FF               \ The subtraction underflowed, so negate the result
+ ADC #1                 \ using two's complement so that it is positive, i.e.
+                        \ A = |QQ9 - QQ0|, the absolute horizontal distance
 
-.L5017
+ CMP #29                \ If the absolute horizontal distance in A >= 29, then
+ BCS TT180              \ the crosshairs are too far from the current system to
+                        \ appear in the Short-range Chart, so jump to TT180 to
+                        \ return from the subroutine (as TT180 contains an RTS)
 
- CMP #&1D
- BCS TT180
-
- LDA QQ9
- SEC
+ LDA QQ9                \ Set A = QQ9 - QQ0, the horizontal distance between the
+ SEC                    \ crosshairs (QQ9) and the current system (QQ0)
  SBC QQ0
- BPL TT179
 
- CMP #&E9
- BCC TT180
+ BPL TT179              \ If the horizontal distance in A is positive, then skip
+                        \ the next two instructions
+
+ CMP #233               \ If the horizontal distance in A < -23, then the
+ BCC TT180              \ crosshairs are too far from the current system to
+                        \ appear in the Short-range Chart, so jump to TT180 to
+                        \ return from the subroutine (as TT180 contains an RTS)
 
 ENDIF
 
@@ -96,18 +102,20 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- BCS L503D              \ ???
+ BCS P%+6               \ If the subtraction didn't underflow, skip the next two
+                        \ instructions
 
- EOR #&FF
- ADC #&01
+ EOR #&FF               \ The subtraction underflowed, so negate the result
+ ADC #1                 \ using two's complement so that it is positive, i.e.
+                        \ A = |QQ10 - QQ0|, the absolute vertical distance
 
-.L503D
+ CMP #35                \ If the absolute vertical distance in A >= 35, then
+ BCS TT180              \ the crosshairs are too far from the current system to
+                        \ appear in the Short-range Chart, so jump to TT180 to
+                        \ return from the subroutine (as TT180 contains an RTS)
 
- CMP #&23
- BCS TT180
-
- LDA QQ10
- SEC
+ LDA QQ10               \ Set A = QQ10 - QQ1, the vertical distance between the
+ SEC                    \ crosshairs (QQ10) and the current system (QQ1)
  SBC QQ1
 
 ENDIF

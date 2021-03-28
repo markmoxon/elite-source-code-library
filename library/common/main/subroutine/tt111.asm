@@ -219,7 +219,7 @@ ENDIF
  LDA P
  STA K
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Minor
 
  LDA QQ10               \ Set A = QQ10 - QQ1, the vertical distance between the
  SEC                    \ selected system's y-coordinate (QQ10) and the current
@@ -227,9 +227,9 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDA QQ15+1             \ ???
- SEC
- SBC QQ1
+ LDA QQ15+1             \ Set A = QQ15+1 - QQ1, the vertical distance between
+ SEC                    \ the selected system's y-coordinate (QQ15+1) and the
+ SBC QQ1                \ current system's y-coordinate (QQ1)
 
 ENDIF
 

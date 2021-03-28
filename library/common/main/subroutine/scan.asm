@@ -122,13 +122,13 @@ ENDIF
 
 IF _MASTER_VERSION \ Other
 
- CLC                    \ ???
+ CLC                    \ Clear the C flag so we can do addition below
 
 ENDIF
 
 .SC2
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Tube
+IF _CASSETTE_VERSION OR _DISC_FLIGHT
 
  ADC #123               \ Set X1 = 123 + x_hi
  STA X1
@@ -142,10 +142,11 @@ ELIF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- ADC #125               \ ???
- AND #&FE
- STA X1
- TAX
+ ADC #125               \ Set X1 = 125 + x_hi
+ AND #%11111110         \
+ STA X1                 \ and if the result is odd, subtract 1 to make it even
+
+ TAX                    \ Set X = X1 - 2
  DEX
  DEX
 

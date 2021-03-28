@@ -1014,9 +1014,9 @@ ELIF _MASTER_VERSION
  LDA #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
  STA VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
 
- PLX                    \ ???
- PLY
- LDA K3
+ PLX                    \ We're done printing, so restore the values of the
+ PLY                    \ A, X and Y registers that we saved above and clear the
+ LDA K3                 \ C flag, so everything is back to how it was
  CLC
 
 ENDIF

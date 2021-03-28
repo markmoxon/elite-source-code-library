@@ -65,10 +65,10 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDA #153               \ Draw a screen-wide horizontal line at pixel row 152
- JSR NLIN2-2            \ for the bottom edge of the chart, so the chart itself
-                        \ is 128 pixels high, starting on row 24 and ending on
-                        \ row 151 ???
+ LDA #153               \ Move the text cursor down one line and draw a
+ JSR NLIN2-2            \ screen-wide horizontal line at pixel row 153 for the
+                        \ bottom edge of the chart, so the chart itself is 128
+                        \ pixels high, starting on row 24 and ending on row 153
 
 ENDIF
 
@@ -123,21 +123,21 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- JSR LSR1               \ We halve the y-coordinate because the galaxy in
+ JSR SCALEY             \ We halve the y-coordinate because the galaxy in
                         \ in Elite is rectangular rather than square, and is
                         \ twice as wide (x-axis) as it is high (y-axis), so the
                         \ chart is 256 pixels wide and 128 high
                         \
-                        \ The call to LSR1 simply does an LSR A, but having this
-                        \ call instruction here would enable different scaling
-                        \ to be applied by altering the LSR routines, so perhaps
-                        \ this is code left over from the conversion to other
+                        \ The call to SCALEY simply does an LSR A, but having
+                        \ this call instruction here would enable different
+                        \ scaling to be applied by altering the SCALE routines.
+                        \ This code is left over from the conversion to other
                         \ platforms, where the scale factor might need to be
                         \ different
 
- CLC                    \ Add 24 to the halved y-coordinate ???
- ADC #24                \ (as the top of the chart is on pixel row 24, just
-                        \ below the line we drew on row 23 above)
+ CLC                    \ Add 24 to the halved y-coordinate in A (as the top of
+ ADC #24                \ the chart is on pixel row 24, just below the line we
+                        \ drew on row 23 above)
 
  JSR PIXEL              \ Call PIXEL to draw a point at (X, A), with the size of
                         \ the point dependent on the distance specified in ZZ
@@ -178,21 +178,22 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 ELIF _MASTER_VERSION
 
  LDA QQ9                \ Set QQ19 to the selected system's x-coordinate
- JSR LSR3               \
- STA QQ19               \ The call to LSR3 has no effect as it only contains an
-                        \ RTS, but having this call instruction here would
+ JSR SCALEX             \
+ STA QQ19               \ The call to SCALEX has no effect as it only contains
+                        \ an RTS, but having this call instruction here would
                         \ enable different scaling to be applied by altering
-                        \ the LSR routines, so perhaps this is code left over
-                        \ from the conversion to other platforms, where the
-                        \ scale factor might need to be different
+                        \ the SCALE routines. This code is left over from the
+                        \ conversion to other platforms, where the scale factor
+                        \ might need to be different
+
 
  LDA QQ10               \ Set QQ19+1 to the selected system's y-coordinate,
- JSR LSR1               \ halved to fit it into the chart
+ JSR SCALEY             \ halved to fit it into the chart
  STA QQ19+1             \
-                        \ The call to LSR1 simply does an LSR A, but having this
-                        \ call instruction here would enable different scaling
-                        \ to be applied by altering the LSR routines, so perhaps
-                        \ this is code left over from the conversion to other
+                        \ The call to SCALEY simply does an LSR A, but having
+                        \ this call instruction here would enable different
+                        \ scaling to be applied by altering the SCALE routines.
+                        \ This code is left over from the conversion to other
                         \ platforms, where the scale factor might need to be
                         \ different
 

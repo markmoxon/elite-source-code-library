@@ -189,15 +189,15 @@ ELIF _MASTER_VERSION
  ASL A                  \ Set XX12 = 104 + x-delta * 4
  ASL A                  \
  ADC #104               \ 104 is the x-coordinate of the centre of the chart,
- JSR LSR2               \ so this sets XX12 to the centre 104 +/- 76, the pixel
+ JSR SCALEY2            \ so this sets XX12 to the centre 104 +/- 76, the pixel
  STA XX12               \ x-coordinate of this system
                         \
-                        \ The call to LSR2 has no effect as it only contains an
-                        \ RTS, but having this call instruction here would
+                        \ The call to SCALEY2 has no effect as it only contains
+                        \ an RTS, but having this call instruction here would
                         \ enable different scaling to be applied by altering
-                        \ the LSR routines, so perhaps this is code left over
-                        \ from the conversion to other platforms, where the
-                        \ scale factor might need to be different
+                        \ the SCALE routines. This code is left over from the
+                        \ conversion to other platforms, where the scale factor
+                        \ might need to be different
 
 ENDIF
 
@@ -247,16 +247,16 @@ ELIF _MASTER_VERSION
 
  ASL A                  \ Set K4 = 90 + y-delta * 2
  ADC #90                \
- JSR LSR2               \ 90 is the y-coordinate of the centre of the chart,
+ JSR SCALEY2            \ 90 is the y-coordinate of the centre of the chart,
  STA K4                 \ so this sets K4 to the centre 90 +/- 74, the pixel
                         \ y-coordinate of this system
                         \
-                        \ The call to LSR2 has no effect as it only contains an
-                        \ RTS, but having this call instruction here would
+                        \ The call to SCALEY2 has no effect as it only contains
+                        \ an RTS, but having this call instruction here would
                         \ enable different scaling to be applied by altering
-                        \ the LSR routines, so perhaps this is code left over
-                        \ from the conversion to other platforms, where the
-                        \ scale factor might need to be different
+                        \ the SCALE routines. This code is left over from the
+                        \ conversion to other platforms, where the scale factor
+                        \ might need to be different
 
 ENDIF
 
@@ -331,7 +331,9 @@ ELIF _MASTER_VERSION
  TYA
  PHA
  LDA QQ15+3
- JSR L5193
+
+ JSR DIST               \ Calculate the distance between the selected system and
+                        \ the current system
 
  PLA
  TAY

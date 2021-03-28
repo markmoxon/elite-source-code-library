@@ -51,7 +51,7 @@ ELIF _MASTER_VERSION
  JSR STARTUP            \ Call STARTUP to set various vectors, interrupts and
                         \ timers
 
- JMP L1377              \ ???
+ JMP SRESET             \ Call SRESET to reset the sound buffers
 
  CLI                    \ Enable interrupts
 

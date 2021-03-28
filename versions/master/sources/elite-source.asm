@@ -252,16 +252,16 @@ INCLUDE "library/master/main/subroutine/sound.asm"
 
 \ ******************************************************************************
 \
-\       Name: L1377
+\       Name: SRESET
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: ???
+\    Summary: Reset the sound buffers
 \
 \ ******************************************************************************
 
-.L1377
+.SRESET
 
- LDY #3
+ LDY #3                 \ ???
  LDA #0
 
 .L137B
@@ -592,59 +592,7 @@ INCLUDE "library/advanced/main/subroutine/pzw2.asm"
 INCLUDE "library/common/main/subroutine/pzw.asm"
 INCLUDE "library/common/main/subroutine/dilx.asm"
 INCLUDE "library/common/main/subroutine/dil2.asm"
-
-\ ******************************************************************************
-\
-\       Name: ADD_DUPLICATE
-\       Type: Subroutine
-\   Category: Maths (Arithmetic)
-\    Summary: Calculate (A X) = (A P) + (S R)
-\
-\ ******************************************************************************
-
-.ADD_DUPLICATE
-{
- STA T1                 \ This is an exact duplicate of the ADD routine, which
- AND #%10000000         \ is also present in this source, so it isn't clear why
- STA T                  \ this duplicate exists (it is surrounded by braces as
- EOR S                  \ BeebAsm doesn't allow us to redefine labels, unlike
- BMI MU8                \ BBC BASIC). See the ADD routine for an explanation
- LDA R                  \ of the code
- CLC
- ADC P
- TAX
- LDA S
- ADC T1
- ORA T
- RTS
-
-.MU8
-
- LDA S
- AND #%01111111
- STA U
- LDA P
- SEC
- SBC R
- TAX
- LDA T1
- AND #%01111111
- SBC U
- BCS MU9
- STA U
- TXA
- EOR #&FF
- ADC #1
- TAX
- LDA #0
- SBC U
- ORA #%10000000
-
-.MU9
-
- EOR T
- RTS
-}
+INCLUDE "library/master/main/subroutine/add_duplicate.asm"
 
 IF _MATCH_EXTRACTED_BINARIES
 
@@ -686,66 +634,15 @@ INCLUDE "library/common/main/variable/flh.asm"
 INCLUDE "library/common/main/variable/jstgy.asm"
 INCLUDE "library/common/main/variable/jste.asm"
 INCLUDE "library/common/main/variable/jstk.asm"
-
- SKIP 1                 \ The configuration setting for toggle key "U", which
-                        \ isn't actually used but is still updated by pressing
-                        \ "U" while the game is paused
-
-.L2C5E
-
- SKIP 1                 \ The configuration setting for toggle key "T", which
-                        \ isn't actually used but is still updated by pressing
-                        \ "T" while the game is paused
-
+INCLUDE "library/master/main/variable/lcase.asm"
+INCLUDE "library/master/main/variable/dtape.asm"
 INCLUDE "library/enhanced/main/variable/bstk.asm"
 
  SKIP 1                 \ This byte appears to be unused
 
-.VOLUME
-
- EQUB 7                 \ The volume level for the game's sound effects (0-7)
-                        \
-                        \ This is controlled by the "<" and ">" keys while the
-                        \ game is paused, and the default level is 7
-
-\ ******************************************************************************
-\
-\       Name: CKEYS
-\       Type: Variable
-\   Category: Keyboard
-\    Summary: The keys used to toggle configuration settings when the game is
-\             paused
-\
-\ ******************************************************************************
-
-.CKEYS
-
- EQUB 1                 \ The configuration keys in the same order as their
- EQUS "AXFYJKUT"        \ configuration bytes (starting from DAMP). The 1 is
-                        \ for CAPS LOCK, and although "U" and "T" still toggle
-                        \ the relevant configuration bytes, those values ar not
-                        \ used, so those keys have no effect
-
- EQUB &60               \ This byte appears to be unused
-
-\ ******************************************************************************
-\
-\       Name: S%
-\       Type: Subroutine
-\   Category: Loader
-\    Summary: Move code, set up break handler and start the game
-\
-\ ******************************************************************************
-
-.S%
-
- CLD                    \ ???
-
- JSR scramble
-
- JSR BRKBK
-
- JMP BEGIN
+INCLUDE "library/master/main/variable/volume.asm"
+INCLUDE "library/master/main/variable/ckeys.asm"
+INCLUDE "library/master/main/subroutine/s_per_cent.asm"
 
 \ ******************************************************************************
 \
@@ -1240,87 +1137,10 @@ LOAD_D% = LOAD% + P% - CODE%
 INCLUDE "library/common/main/subroutine/ginf.asm"
 INCLUDE "library/common/main/subroutine/ping.asm"
 INCLUDE "library/enhanced/main/variable/mtin.asm"
-
-\ ******************************************************************************
-\
-\       Name: LSR1
-\       Type: Subroutine
-\   Category: Utility routines
-\    Summary: Scaling routine for A (which halves the value in A)
-\
-\ ------------------------------------------------------------------------------
-\
-\ This routine (and the related LSR2 and LSR3 routines) are called from various
-\ places in the code to scale the value in A. This scaling can be changed by
-\ changing these routines (for example, by changing an RTS to an LSR A), so
-\ perhaps this is code left over from the conversion to other platforms, where
-\ the scale factor might need to be different.
-\
-\ ******************************************************************************
-
-.LSR1
-
- LSR A
-
-\ ******************************************************************************
-\
-\       Name: LSR2
-\       Type: Subroutine
-\   Category: Utility routines
-\    Summary: Scaling routine for A (which leaves A alone)
-\
-\ ------------------------------------------------------------------------------
-\
-\ This routine (and the related LSR1 and LSR3 routines) are called from various
-\ places in the code to scale the value in A. This scaling can be changed by
-\ changing these routines (for example, by changing an RTS to an LSR A), so
-\ perhaps this is code left over from the conversion to other platforms, where
-\ the scale factor might need to be different.
-\
-\ ******************************************************************************
-
-.LSR2
-
- RTS
-
-\ ******************************************************************************
-\
-\       Name: LSR3
-\       Type: Subroutine
-\   Category: Utility routines
-\    Summary: Scaling routine for A (which leaves A alone)
-\
-\ ------------------------------------------------------------------------------
-\
-\ This routine (and the related LSR1 and LSR2 routines) are called from various
-\ places in the code to scale the value in A. This scaling can be changed by
-\ changing these routines (for example, by changing an RTS to an LSR A), so
-\ perhaps this is code left over from the conversion to other platforms, where
-\ the scale factor might need to be different.
-\
-\ ******************************************************************************
-
-.LSR3
-
- RTS
-
-\ ******************************************************************************
-\
-\       Name: Unused
-\       Type: Subroutine
-\   Category: Drawing lines
-\    Summary: ???
-\
-\ ******************************************************************************
-
- STA X1                 \ This code appears to be unused
- STA X2
- LDA #24
- STA Y1
- LDA #152
- STA Y2
- JMP LL30
-
+INCLUDE "library/master/main/subroutine/scaley.asm"
+INCLUDE "library/master/main/subroutine/scaley2.asm"
+INCLUDE "library/master/main/subroutine/scalex.asm"
+INCLUDE "library/master/main/subroutine/dvloin.asm"
 INCLUDE "library/enhanced/main/subroutine/tnpr1.asm"
 INCLUDE "library/common/main/subroutine/tnpr.asm"
 INCLUDE "library/advanced/main/subroutine/setxc-doxc.asm"
@@ -1471,44 +1291,7 @@ INCLUDE "library/common/main/subroutine/doexp.asm"
 
 INCLUDE "library/master/main/variable/excol.asm"
 INCLUDE "library/common/main/subroutine/sos1.asm"
-
-\ ******************************************************************************
-\
-\       Name: SOLARX
-\       Type: Subroutine
-\   Category: Universe
-\    Summary: Set up various aspects of arriving in a new system, including
-\             Trumble breeding
-\
-\ ******************************************************************************
-
-.SOLARX
-
- LDA TRUMBLE            \ If we have no Trumbles in the hold, skip to SOLAR 
- BEQ SOLAR
-
-                        \ If we get here then we have Trumbles in the hold, so
-                        \ this is where they breed (though we never get here in
-                        \ the Master version as the number of Trumbles is always
-                        \ zero)
-
- LDA #0                 \ Trumbles eat food and narcotics during the hyperspace
- STA QQ20               \ journey, so zero the amount of food and narcotics in
- STA QQ20+6             \ the hold
-
- JSR DORND              \ Take the lnumber of Trumbles from TRUMBLE(1 0), add a
- AND #15                \ random number between 4 and 15, and double the result,
- ADC TRUMBLE            \ storing the resulting number in TRUMBLE(1 0)
- ORA #4                 \
- ROL A                  \ We start with the low byte
- STA TRUMBLE
-
- ROL TRUMBLE+1          \ And then do the high byte
-
- BPL P%+5               \ If bit 7 of the high byte is set, then rotate the high
- ROR TRUMBLE+1          \ byte back to the right, so the number of Trumbles is
-                        \ always positive
-
+INCLUDE "library/master/main/subroutine/solarx.asm"
 INCLUDE "library/common/main/subroutine/solar.asm"
 INCLUDE "library/common/main/subroutine/nwstars.asm"
 INCLUDE "library/common/main/subroutine/nwq.asm"
@@ -1658,72 +1441,14 @@ INCLUDE "library/common/main/subroutine/tr1.asm"
 INCLUDE "library/common/main/subroutine/gtnme-gtnmew.asm"
 INCLUDE "library/enhanced/main/subroutine/mt26.asm"
 INCLUDE "library/common/main/variable/rline.asm"
-
-\ ******************************************************************************
-\
-\       Name: MT30
-\       Type: Subroutine
-\   Category: Text
-\    Summary: ???
-\  Deep dive: Extended text tokens
-\
-\ ******************************************************************************
-
-.MT30
-
- LDA #3
- CLC
- ADC L2C5E
- JMP DETOK
-
-\ ******************************************************************************
-\
-\       Name: MT31
-\       Type: Subroutine
-\   Category: Text
-\    Summary: ???
-\  Deep dive: Extended text tokens
-\
-\ ******************************************************************************
-
-.MT31
-
- LDA #2
- SEC
- SBC L2C5E
- JMP DETOK
-
+INCLUDE "library/master/main/subroutine/mt30.asm"
+INCLUDE "library/master/main/subroutine/mt31.asm"
 INCLUDE "library/common/main/subroutine/zero.asm"
 INCLUDE "library/enhanced/main/subroutine/cats.asm"
 INCLUDE "library/enhanced/main/subroutine/delt.asm"
 INCLUDE "library/common/main/subroutine/sve.asm"
-
-\ ******************************************************************************
-\
-\       Name: NAMELEN1
-\       Type: Variable
-\   Category: Save and load
-\    Summary: Contains the length of the most recently entered commander name
-\
-\ ******************************************************************************
-
-.NAMELEN1
-
- EQUB 7
-
-\ ******************************************************************************
-\
-\       Name: NAMELEN2
-\       Type: Variable
-\   Category: Save and load
-\    Summary: Contains the length of the last saved commander name
-\
-\ ******************************************************************************
-
-.NAMELEN2
-
- EQUB 7
-
+INCLUDE "library/master/main/variable/namelen1.asm"
+INCLUDE "library/master/main/variable/namelen2.asm"
 INCLUDE "library/enhanced/main/subroutine/gtdrv.asm"
 INCLUDE "library/common/main/subroutine/lod.asm"
 INCLUDE "library/enhanced/main/variable/ctli.asm"
@@ -1839,9 +1564,10 @@ INCLUDE "library/master/main/variable/ldli.asm"
  DEY
  BPL LOADL3
 
- RTS
+ RTS                    \ Return from the subroutine
 
- RTS
+ RTS                    \ This instruction has no effect as we already returned
+                        \ from the subroutine
 
 INCLUDE "library/common/main/subroutine/sps1.asm"
 INCLUDE "library/common/main/subroutine/tas2.asm"
@@ -1917,123 +1643,7 @@ INCLUDE "library/common/main/subroutine/ll145_part_2_of_4.asm"
 INCLUDE "library/common/main/subroutine/ll145_part_3_of_4.asm"
 INCLUDE "library/common/main/subroutine/ll145_part_4_of_4.asm"
 INCLUDE "library/common/main/subroutine/ll9_part_12_of_12.asm"
-
-\ ******************************************************************************
-\
-\       Name: LLX30
-\       Type: Subroutine
-\   Category: Drawing lines
-\    Summary: Draw a ship line using smooth animation, by drawing the ship's new
-\             line and erasing the corresponding old line from the screen
-\
-\ ------------------------------------------------------------------------------
-\
-\ This routine implements smoother ship animation by erasing and redrawing each
-\ individual line in the ship, rather than the approach in the other Acornsoft
-\ versions of the game, which erase the entire existing ship before drawing the
-\ new one.
-\
-\ Here's the new approach in this routine:
-\
-\   * Draw the new line
-\   * Fetch the corresponding existing line (in position XX14) from the heap
-\   * Store the new line in the heap at this position, replacing the old one
-\   * If the existing line we just took from the heap is on-screen, erase it
-\
-\ Arguments:
-\
-\   XX14                The offset within the line heap where we add the new
-\                       line's coordinates
-\
-\   X1                  The screen x-coordinate of the start of the line to add
-\                       to the ship line heap
-\
-\   Y1                  The screen y-coordinate of the start of the line to add
-\                       to the ship line heap
-\
-\   X2                  The screen x-coordinate of the end of the line to add
-\                       to the ship line heap
-\
-\   Y2                  The screen y-coordinate of the end of the line to add
-\                       to the ship line heap
-\
-\   XX19(1 0)           XX19(1 0) shares its location with INWK(34 33), which
-\                       contains the ship line heap address pointer
-\
-\ Returns:
-\
-\   XX14                The offset of the next line in the line heap
-\
-\ ******************************************************************************
-
-.LLX30
-
- LDY XX14               \ Set Y = XX14, to get the offset within the ship line
-                        \ heap where we want to insert our new line
-
- CPY XX14+1             \ Compare XX14 and XX14+1 and store the flags on the
- PHP                    \ stack so we can retrieve them later
-
- LDX #3                 \ We now want to copy the line coordinates (X1, Y1) and
-                        \ (X2, Y2) to XX12...XX12+3, so set a counter to copy
-                        \ 4 bytes
-
-.LLXL
-
- LDA X1,X               \ Copy the X-th byte of X1/Y1/X2/Y2 to the X-th byte of
- STA XX12,X             \ XX12
-
- DEX                    \ Decrement the loop counter
-
- BPL LLXL               \ Loop back until we have copied all four bytes
-
- JSR LL30               \ Draw a line from (X1, Y1) to (X2, Y2)
-
- LDA (XX19),Y           \ Set X1 to the Y-th coordinate on the ship line heap,
- STA X1                 \ i.e. one we are replacing in the heap
-
- LDA XX12               \ Replace it with the X1 coordinate in XX12
- STA (XX19),Y
-
- INY                    \ Increment the index to point to the Y1 coordinate
-
- LDA (XX19),Y           \ Set Y1 to the Y-th coordinate on the ship line heap,
- STA Y1                 \ i.e. one we are replacing in the heap
-
- LDA XX12+1             \ Replace it with the Y1 coordinate in XX12+1
- STA (XX19),Y
-
- INY                    \ Increment the index to point to the X2 coordinate
-
- LDA (XX19),Y           \ Set X1 to the Y-th coordinate on the ship line heap,
- STA X2
-
- LDA XX12+2             \ Replace it with the X2 coordinate in XX12+2
- STA (XX19),Y
-
- INY                    \ Increment the index to point to the Y2 coordinate
-
- LDA (XX19),Y           \ Set Y2 to the Y-th coordinate on the ship line heap,
- STA Y2
-
- LDA XX12+3             \ Replace it with the Y2 coordinate in XX12+3
- STA (XX19),Y
-
- INY                    \ Increment the index to point to the next coordinate
- STY XX14               \ and store the updated index in XX14
-
- PLP                    \ Restore the result of the comparison above, so if the
- BCS LL82               \ original value of XX14 >= XX14+1, then we have already
-                        \ redrawn all the lines from the old ship's line heap,
-                        \ so return from the subroutine (as LL82 contains an
-                        \ RTS)
-
- JMP LL30               \ Otherwise there are still more lines to erase from the
-                        \ old ship on-screen, so the coordinates in (X1, Y1) and
-                        \ (X2, Y2) that we just pulled from the ship line heap
-                        \ point to a line that is still on-screen, so call LL30
-                        \ to draw this line and erase it from the screen,
-                        \ returning from the subroutine using a tail call
+INCLUDE "library/master/main/subroutine/llx30.asm"
 
 \ ******************************************************************************
 \
@@ -2090,8 +1700,15 @@ INCLUDE "library/common/main/subroutine/sight.asm"
 
 .SIGHTCOL
 
- EQUB &0F,&FF,&FF,&0F
- EQUB &FA,&FA,&FA,&FA
+ EQUB YELLOW            \ Pulse laser
+ EQUB CYAN              \ Beam laser
+ EQUB CYAN              \ Military laser
+ EQUB YELLOW            \ Mining laser
+
+ EQUB WHITE             \ These bytes appear to be unuused - perhaps they were
+ EQUB WHITE             \ going to be used to set different colours of laser
+ EQUB WHITE             \ beam for the different lasers?
+ EQUB WHITE
 
 INCLUDE "library/common/main/subroutine/tt66.asm"
 INCLUDE "library/common/main/subroutine/ttx66-ttx662.asm"

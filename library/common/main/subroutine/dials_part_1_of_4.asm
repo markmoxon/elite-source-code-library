@@ -32,8 +32,9 @@ IF _MASTER_VERSION \ Platform
  LDA #%00001111         \ Set bits 1 and 2 of the Access Control Register at
  STA VIA+&34            \ SHEILA+&34 to switch screen memory into &3000-&7FFF
 
- LDA #1                 \ ???
- STA &DDEB
+ LDA #1                 \ Set location &DDEB to 1. This location is in HAZEL,
+ STA &DDEB              \ which contains the filing system RAM space, though
+                        \ I'm not sure what effect this has
 
 ENDIF
 

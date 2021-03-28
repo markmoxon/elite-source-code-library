@@ -109,7 +109,8 @@ ELIF _MASTER_VERSION
  LDA #1                 \ ???
  JSR DETOK
 
- JSR t
+ JSR t                  \ Scan the keyboard until a key is pressed, returning
+                        \ the ASCII code in A and X
 
  CMP #&31
  BEQ MASTER_LOAD
@@ -125,7 +126,8 @@ ELIF _MASTER_VERSION
 
  JSR DELT
 
- JMP SVE
+ JMP SVE                \ Jump to SVE to display the disc access menu and return
+                        \ from the subroutine using a tail call
 
 .L69FB
 
@@ -139,7 +141,8 @@ ELIF _MASTER_VERSION
 
  BCC L6A0F
 
- JSR JAMESON
+ JSR JAMESON            \ Call JAMESON to set the last saved commander to the
+                        \ default "JAMESON" commander
 
  JMP DFAULT
 
@@ -152,9 +155,11 @@ ELIF _MASTER_VERSION
 
  JSR CATS
 
- JSR t
+ JSR t                  \ Scan the keyboard until a key is pressed, returning
+                        \ the ASCII code in A and X
 
- JMP SVE
+ JMP SVE                \ Jump to SVE to display the disc access menu and return
+                        \ from the subroutine using a tail call
 
 .MASTER_LOAD
 

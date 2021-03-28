@@ -121,7 +121,7 @@ IF _MASTER_VERSION
                         \ ship)
  
  EQUB &2C               \ Skip the next instruction by turning it into
-                        \ &2C ??? ???, or BIT ???, which does nothing apart
+                        \ &2C &B1 &BD, or BIT &BDB1 which does nothing apart
                         \ from affect the flags
 
  LDA (XX19),Y           \ Set XX14+1 to the first byte of the ship's line heap,

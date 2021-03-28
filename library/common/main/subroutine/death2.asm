@@ -5,6 +5,11 @@
 \   Category: Start and end
 \    Summary: Reset most of the game and restart from the title screen
 \
+\ ------------------------------------------------------------------------------
+\
+\ This routine is called following death, and when the game is quit by pressing
+\ ESCAPE when paused.
+\
 \ ******************************************************************************
 
 .DEATH2

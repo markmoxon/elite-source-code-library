@@ -24,5 +24,6 @@
 
  RTS                    \ Return from the subroutine
 
- RTS                    \ This instruction has no effect
+ RTS                    \ This instruction has no effect as we already returned
+                        \ from the subroutine
 

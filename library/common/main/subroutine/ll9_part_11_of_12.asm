@@ -132,7 +132,8 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- JMP LL155              \ Jump down to part 12 below
+ JMP LL155              \ Jump down to part 12 below to draw any remaining lines
+                        \ from the old ship that are still in the ship line heap
 
 ENDIF
 

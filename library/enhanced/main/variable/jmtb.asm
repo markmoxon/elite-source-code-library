@@ -44,12 +44,12 @@ IF _DISC_DOCKED \ Screen
 ELIF _6502SP_VERSION
  EQUW WHITETEXT         \ Token 30: White text
 ELIF _MASTER_VERSION
- EQUW MT30              \ Token 30: ???
+ EQUW MT30              \ Token 30: Display disc or tape (unused)
 ENDIF
 IF _DISC_DOCKED OR _6502SP_VERSION
  EQUW DASC              \ Token 31: Unused
 ELIF _MASTER_VERSION
- EQUW MT31              \ Token 31: ???
+ EQUW MT31              \ Token 31: Display tape or disc (unused)
 ENDIF
  EQUW DASC              \ Token 32: Unused
 

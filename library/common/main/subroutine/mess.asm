@@ -30,17 +30,20 @@ IF _6502SP_VERSION \ Screen
 
 ELIF _MASTER_VERSION
 
- PHA                    \ ???
- LDX QQ11
- BEQ L6DDE
+ PHA                    \ Store A on the stack so we can restore it after the
+                        \ the call to DOCOL
 
- JSR CLYNS
+ LDX QQ11               \ If this is the space view, skip the following
+ BEQ P%+5               \ instruction
 
-.L6DDE
+ JSR CLYNS              \ Clear the bottom three text rows of the upper screen,
+                        \ and move the text cursor to column 1 on row 21, i.e.
+                        \ the start of the top row of the three bottom rows
 
- LDA #&15
+ LDA #21                \ Move the text cursor to row 21
  STA YC
- LDA #&0F
+
+ LDA #YELLOW            \ Switch to colour 1, which is yellow
  STA COL
 
 ENDIF
@@ -73,10 +76,14 @@ ELIF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDA messXC             \ ???
- STA XC
- PLA
- LDY #&14
+ LDA messXC             \ Move the text cursor to column messXC, in case we
+ STA XC                 \ jump to me1 below to erase the current in-flight
+                        \ message (whose column we stored in messXC when we
+                        \ called MESS to put it there in the first place)
+
+ PLA                    \ Restore A from the stack
+
+ LDY #20                \ Set Y = 20 for setting the message delay below
 
 ENDIF
 
@@ -84,7 +91,15 @@ ENDIF
  BNE me1                \ me1 to erase the current message first (whose token
                         \ number will be in MCH)
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
  STY DLY                \ Set the message delay in DLY to 22
+
+ELIF _MASTER_VERSION
+
+ STY DLY                \ Set the message delay in DLY to 20
+
+ENDIF
 
  STA MCH                \ Set MCH to the token we are about to display
 

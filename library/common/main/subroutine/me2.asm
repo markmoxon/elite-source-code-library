@@ -11,8 +11,8 @@
 
 IF _MASTER_VERSION
 
- LDA QQ11               \ ???
- BNE L63D9
+ LDA QQ11               \ If this is not the space view, jump down to nomess to
+ BNE nomess             \ skip displaying the in-flight message
 
 ENDIF
 
@@ -28,9 +28,11 @@ ENDIF
 
 IF _MASTER_VERSION
 
-.L63D9
+.nomess
 
- JSR CLYNS              \ ???
+ JSR CLYNS              \ Clear the bottom three text rows of the upper screen,
+                        \ and move the text cursor to column 1 on row 21, i.e.
+                        \ the start of the top row of the three bottom rows
 
  JMP me3                \ Jump back into the main spawning loop at TT100
 

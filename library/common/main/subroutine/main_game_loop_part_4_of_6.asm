@@ -58,7 +58,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: In mission 2, 
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Platform
+IF _6502SP_VERSION OR _DISC_FLIGHT
 
  JSR DORND              \ Set A and X to random numbers
 
@@ -77,7 +77,7 @@ ELIF _MASTER_VERSION
  JSR DORND              \ Set A and X to random numbers
 
  CMP #220               \ If the random number in A < 220 (86% chance), jump to
- BCC nopl               \ nopl to skip spawning a Thargoid ???
+ BCC nopl               \ nopl to skip spawning a Thargoid
 
 .fothg2
 

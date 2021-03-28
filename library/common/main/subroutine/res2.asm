@@ -137,7 +137,7 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
- JSR DIALS              \ Update the dashboard ???
+ JSR DIALS              \ Update the dashboard
 
 ENDIF
                         \ Finally, fall through into ZINF to reset the INWK

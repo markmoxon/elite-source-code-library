@@ -92,7 +92,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDA P                  \ ???
+ LDA P                  \ Store the high byte of delta_x in deltX
  STA deltX
 
  EOR RAT2               \ Set S = P but with the sign from RAT2, so we now have
@@ -252,7 +252,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- AND #%01111111         \ If |x_hi| >= ??? then jump to KILL2 to recycle this
+ AND #%01111111         \ If |x_hi| <= deltX then jump to KILL2 to recycle this
  EOR #%01111111         \ particle, as it's gone off the side of the screen,
  CMP deltX              \ and re-join at STC2 with the new particle ???
  BCC KILL2

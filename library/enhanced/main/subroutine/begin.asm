@@ -29,7 +29,10 @@ IF _DISC_DOCKED OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDX #&1E               \ ???
+ LDX #(DTAPE-COMC)      \ We start by zeroing all the configuration variables
+                        \ between COMC and DTAPE, to set them to their default
+                        \ values, so set a counter in X for DTAPE - COMC bytes
+
 
 ENDIF
 
@@ -55,7 +58,8 @@ ENDIF
 
 IF _MASTER_VERSION
 
- JSR JAMESON            \ ??? Could also be at start of TT170
+ JSR JAMESON            \ Call JAMESON to set the last saved commander to the
+                        \ default "JAMESON" commander
 
 ENDIF
 

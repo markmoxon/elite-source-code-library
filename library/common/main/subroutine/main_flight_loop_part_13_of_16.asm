@@ -104,7 +104,7 @@ ENDIF
  LDA ENGY               \ level goes up by 2 if we have an energy unit fitted,
  ADC ENERGY             \ otherwise it goes up by 1
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Platform
 
  BCS P%+5               \ If the value of A did not overflow (the maximum
  STA ENERGY             \ energy level is &FF), then store A in ENERGY
@@ -112,7 +112,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
 ELIF _MASTER_VERSION
 
  BCS P%+4               \ If the value of A did not overflow (the maximum
- STA ENERGY             \ energy level is &FF), then store A in ENERGY ???
+ STA ENERGY             \ energy level is &FF), then store A in ENERGY
 
 ENDIF
 

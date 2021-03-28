@@ -222,11 +222,13 @@ ELIF _DISC_DOCKED
 
 ELIF _MASTER_VERSION
 
- LDA KL                 \ ???
- CMP #&48
+ LDA KL                 \ If "H" was not pressed, jump to NWDAV5 to skip the
+ CMP #'H'               \ following
  BNE NWDAV5
 
- JMP hyp
+ JMP hyp                \ Jump to hyp to do a hyperspace jump (if we are in
+                        \ space), returning from the subroutine using a tail
+                        \ call
 
 ENDIF
 

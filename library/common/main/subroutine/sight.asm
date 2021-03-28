@@ -9,7 +9,6 @@
 
 .SIGHT
 
-
  LDY VIEW               \ Fetch the laser power for our new view
  LDA LASER,Y
 
@@ -28,30 +27,33 @@ ELIF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION \ Screen
+IF _6502SP_VERSION \ Advanced: In the Master version, the laser crosshairs are different colours for the different laser types
 
  LDA #YELLOW            \ Send a #SETCOL YELLOW command to the I/O processor to
  JSR DOCOL              \ switch to colour 1, which is yellow in the space view
 
 ELIF _MASTER_VERSION
 
- LDY #&00               \ ???
- CMP #&0F
- BEQ L7D70
+ LDY #0                 \ Set Y to 0, to represent a pulse laser
 
- INY
- CMP #&8F
- BEQ L7D70
+ CMP #POW               \ If the laser power in A is equal to a pulse laser,
+ BEQ SIGHT1             \ jump to SIGHT1 with Y = 0
 
- INY
- CMP #&97
- BEQ L7D70
+ INY                    \ Increment Y to 1, to represent a beam laser
 
- INY
+ CMP #(POW+128)         \ If the laser power in A is equal to a beam laser,
+ BEQ SIGHT1             \ jump to SIGHT1 with Y = 1
 
-.L7D70
+ INY                    \ Increment Y to 2, to represent a military laser
 
- LDA SIGHTCOL,Y
+ CMP #Armlas            \ If the laser power in A is equal to a military laser,
+ BEQ SIGHT1             \ jump to SIGHT1 with Y = 2
+
+ INY                    \ Increment Y to 3, to represent a mining laser
+
+.SIGHT1
+
+ LDA SIGHTCOL,Y         \ Set the colour from the SIGHTCOL table
  STA COL
 
 ENDIF

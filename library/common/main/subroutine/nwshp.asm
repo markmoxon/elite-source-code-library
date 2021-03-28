@@ -139,7 +139,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Comment
                         \ workspace)
 ELIF _6502SP_VERSION
                         \ (as the heap space always ends just before the ship
-                        \ blueprints at D%) ???
+                        \ blueprints at D%)
 ENDIF
 
  LDY #5                 \ Fetch ship blueprint byte #5, which contains the

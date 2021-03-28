@@ -26,11 +26,12 @@ IF _CASSETTE_VERSION \ Enhanced: Compared to the cassette version, the enhanced 
 ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
  LDY #16                \ We want to clear the 16 key logger locations from
-                        \ KY1 to KY19, so set a counter in Y
+                        \ KY1 to KY20, so set a counter in Y
 
 ELIF _MASTER_VERSION
 
- LDX #17                \ ???
+ LDX #17                \ We want to clear the 17 key logger locations from
+                        \ KL to KY20, so set a counter in Y
 
 ENDIF
 
@@ -44,7 +45,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- STA JSTY,X             \ Store 0 in the Y-th byte of the key logger ???
+ STA JSTY,X             \ Store 0 in the Y-th byte of the key logger
 
  DEX                    \ Decrement the counter
 

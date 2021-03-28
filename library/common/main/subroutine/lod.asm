@@ -171,16 +171,19 @@ ELIF _MASTER_VERSION
 
 .ELT2F
 
- LDA #9                 \ ???
- JSR DETOK
+ LDA #9                 \ Print extended token 9 ("{cr}{all caps}ILLEGAL ELITE
+ JSR DETOK              \ II FILE{sentence case}")
 
- JSR t
+ JSR t                  \ Scan the keyboard until a key is pressed, returning
+                        \ the ASCII code in A and X
 
- JMP SVE
+ JMP SVE                \ Jump to SVE to display the disc access menu and return
+                        \ from the subroutine using a tail call
 
- RTS
+ RTS                    \ Return from the subroutine
 
- RTS
+ RTS                    \ This instruction has no effect as we already returned
+                        \ from the subroutine
 
 ENDIF
 

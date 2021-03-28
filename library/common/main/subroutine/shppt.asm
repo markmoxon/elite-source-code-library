@@ -16,7 +16,7 @@ ENDIF
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
  JSR EE51               \ Call EE51 to remove the ship's wireframe from the
-                        \ screen, if there is one ???
+                        \ screen, if there is one
 
 ENDIF
 
@@ -67,7 +67,8 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- JSR Shpt               \ ???
+ JSR Shpt               \ Call Shpt to draws a horizontal 4-pixel dash for the 
+                        \ first row of the dot (i.e. a four-pixel dash)
 
 ENDIF
 
@@ -79,7 +80,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 ELIF _MASTER_VERSION
 
  LDA K4                 \ Set A = y-coordinate of dot + 1 (so this is the second
- CLC                    \ row of the two-pixel-high dot) ???
+ CLC                    \ row of the two-pixel-high dot)
  ADC #1
 
 ELIF _DISC_DOCKED
@@ -99,7 +100,8 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Comment
 
 ELIF _MASTER_VERSION
 
- JSR Shpt               \ ???
+ JSR Shpt               \ Call Shpt to draws a horizontal 4-pixel dash for the 
+                        \ first row of the dot (i.e. a four-pixel dash)
 
 ENDIF
 
@@ -132,7 +134,9 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- JMP LL155              \ ???
+ JMP LL155              \ Jump to LL155 to draw any remaining lines that are
+                        \ still in the ship line heap and return from the
+                        \ subroutine using a tail call
 
 ENDIF
 
@@ -148,7 +152,9 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- JMP LL155              \ ???
+ JMP LL155              \ Jump to LL155 to draw any remaining lines that are
+                        \ still in the ship line heap and return from the
+                        \ subroutine using a tail call
 
 ENDIF
 
@@ -171,8 +177,11 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- STA Y1                 \ ???
- STA Y2
+                        \ This routine draws a horizontal 4-pixel dash, for
+                        \ either the top or the bottom of the ship's dot
+
+ STA Y1                 \ Store A in both y-coordinates, as this is a horizontal
+ STA Y2                 \ dash at y-coordinate A
 
 ENDIF
 
@@ -212,17 +221,22 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- STA XX15
- CLC
- ADC #&03
- BCC L7012
+ STA X1                 \ Store the x-coordinate of the ship dot in X1, as this
+                        \ is where the dash starts
 
- LDA #&FF
+ CLC                    \ Set A = screen x-coordinate of the ship dot + 3
+ ADC #3
 
-.L7012
+ BCC P%+4               \ If the addition overflowed, set A = 255, the
+ LDA #255               \ x-coordinate of the right edge of the screen
 
- STA X2
- JMP LLX30
+ STA X2                 \ Store the x-coordinate of the ship dot in X1, as this
+                        \ is where the dash starts
+
+ JMP LLX30              \ Draw this edge using smooth animation, by first
+                        \ drawing the ship's new line and then erasing the
+                        \ corresponding old line from the screen, and return
+                        \ from the subroutine using a tail call
 
 ENDIF
 

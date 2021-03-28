@@ -3449,7 +3449,7 @@ ENDIF
  ECHR 'S'
  EQUB VE
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Advanced: The Master version contains a new prompt in the extended token table, " ERROR", which isn't present in the other versions
+IF _6502SP_VERSION OR _DISC_DOCKED \ Advanced: The Master version contains a new prompt in the extended token table, "{currently selected media} ERROR", which isn't present in the other versions, though it isn't actually used (it's been left in from the Commodore 64 version of the game)
 
  EQUB VE                \ Token 255:    ""
                         \
@@ -3458,7 +3458,7 @@ IF _6502SP_VERSION OR _DISC_DOCKED \ Advanced: The Master version contains a new
 ELIF _MASTER_VERSION
 
  EJMP 12                \ Token 255:    "{cr}
- EJMP 30                \                {white}
+ EJMP 30                \                {currently selected media}
  ECHR ' '               \                 ERROR"
  ETWO 'E', 'R'          \
  ECHR 'R'               \ Encoded as:   "{12}{30} <244>R<253>"

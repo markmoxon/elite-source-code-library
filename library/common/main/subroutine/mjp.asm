@@ -78,14 +78,14 @@ ENDIF
 IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
 
  LDA #3                 \ Fetch the number of Thargoid ships from MANY+THG, and
- CMP MANY+THG           \ if it is less than 3, loop back to MJP1 to spawn
- BCS MJP1               \ another one, until we have three Thargoids
+ CMP MANY+THG           \ if it is less than or equal to 3, loop back to MJP1 to
+ BCS MJP1               \ spawn another one, until we have four Thargoids
 
 ELIF _MASTER_VERSION
 
  LDA #2                 \ Fetch the number of Thargoid ships from MANY+THG, and
- CMP MANY+THG           \ if it is less than 2, loop back to MJP1 to spawn
- BCS MJP1               \ another one, until we have three Thargoids ???
+ CMP MANY+THG           \ if it is less than or equal to 2, loop back to MJP1 to
+ BCS MJP1               \ spawn another one, until we have three Thargoids
 
 ENDIF
 

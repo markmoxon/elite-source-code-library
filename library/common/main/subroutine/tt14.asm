@@ -40,14 +40,14 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 ELIF _MASTER_VERSION
 
  LDA QQ14               \ Set K to the fuel level from QQ14, so this can act as
- JSR LSR2               \ the circle's radius (70 being a full tank)
+ JSR SCALEY2            \ the circle's radius (70 being a full tank)
  STA K                  \
-                        \ The call to LSR2 has no effect as it only contains an
-                        \ RTS, but having this call instruction here would
+                        \ The call to SCALEY2 has no effect as it only contains
+                        \ an RTS, but having this call instruction here would
                         \ enable different scaling to be applied by altering
-                        \ the LSR routines, so perhaps this is code left over
-                        \ from the conversion to other platforms, where the
-                        \ scale factor might need to be different
+                        \ the SCALE routines. This code is left over from the
+                        \ conversion to other platforms, where the scale factor
+                        \ might need to be different
 
 ENDIF
 
@@ -92,34 +92,34 @@ ELIF _MASTER_VERSION
 
  LDA QQ14               \ Set K to the fuel level from QQ14 divided by 4, so
  LSR A                  \ this can act as the circle's radius (70 being a full
- JSR LSR1               \ tank, which divides down to a radius of 17)
+ JSR SCALEY             \ tank, which divides down to a radius of 17)
  STA K                  \
-                        \ The call to LSR1 simply does an LSR A, but having this
-                        \ call instruction here would enable different scaling
-                        \ to be applied by altering the LSR routines, so perhaps
-                        \ this is code left over from the conversion to other
+                        \ The call to SCALEY simply does an LSR A, but having
+                        \ this call instruction here would enable different
+                        \ scaling to be applied by altering the SCALE routines.
+                        \ This code is left over from the conversion to other
                         \ platforms, where the scale factor might need to be
                         \ different
 
  LDA QQ0                \ Set QQ19 to the x-coordinate of the current system,
- JSR LSR3               \ which will be the centre of the circle and crosshairs
+ JSR SCALEX             \ which will be the centre of the circle and crosshairs
  STA QQ19               \ we draw
                         \
-                        \ The call to LSR3 has no effect as it only contains an
-                        \ RTS, but having this call instruction here would
+                        \ The call to SCALEX has no effect as it only contains
+                        \ an RTS, but having this call instruction here would
                         \ enable different scaling to be applied by altering
-                        \ the LSR routines, so perhaps this is code left over
-                        \ from the conversion to other platforms, where the
-                        \ scale factor might need to be different
+                        \ the SCALE routines. This code is left over from the
+                        \ conversion to other platforms, where the scale factor
+                        \ might need to be different
 
 
  LDA QQ1                \ Set QQ19+1 to the y-coordinate of the current system,
- JSR LSR1               \ halved because the galactic chart is half as high as
+ JSR SCALEY             \ halved because the galactic chart is half as high as
  STA QQ19+1             \ it is wide, which will again be the centre of the
                         \ circle and crosshairs we draw
                         \
-                        \ Again, the call to LSR1 simply does an LSR A (see the
-                        \ comment above)
+                        \ Again, the call to SCALEY simply does an LSR A (see
+                        \ the comment above)
 
 ENDIF
 

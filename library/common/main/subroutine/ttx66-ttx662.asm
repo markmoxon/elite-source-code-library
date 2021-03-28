@@ -43,7 +43,8 @@ ELIF _MASTER_VERSION
 
 .TTX662
 
- JSR TTX66              \ ???
+ JSR TTX66              \ Call TTX66 to clear the top part of the screen and
+                        \ draw a white border
 
 ENDIF
 

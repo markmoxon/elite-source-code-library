@@ -76,7 +76,9 @@ IF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- JSR CHPR               \ ???
+ JSR CHPR               \ Print the character in A, which contains a line feed
+                        \ on the first loop iteration, and then any non-zero
+                        \ characters we fetch from the error message
 
 ENDIF
 
@@ -106,8 +108,11 @@ ELIF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- JSR t                  \ ???
- JMP SVE
+ JSR t                  \ Scan the keyboard until a key is pressed, returning
+                        \ the ASCII code in A and X
+
+ JMP SVE                \ Jump to SVE to display the disc access menu and return
+                        \ from the subroutine using a tail call
 
 ENDIF
 

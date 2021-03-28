@@ -16,9 +16,6 @@ ELIF _6502SP_VERSION
 \ successfully completed.
 ENDIF
 \
-\ It is also called following death, and when the game is quit by pressing
-\ ESCAPE when paused.
-\
 \ ******************************************************************************
 
 .TT170

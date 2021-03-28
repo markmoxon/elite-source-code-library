@@ -87,17 +87,18 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- BIT QQ11               \ ???
- BMI TT84
+ BIT QQ11               \ If bit 7 of QQ11 is set, then this this is the
+ BMI TT84               \ Short-range Chart, so jump to TT84
 
- BCC L4CC7
+ BCC P%+6               \ If the above subtraction underflowed, then A is
+                        \ positive, so skip the next two instructions
 
- CMP #&02
+ CMP #2                 \ If A >= 2, skip the next instruction
  BCS TT84
 
-.L4CC7
-
- LDA #&02
+ LDA #2                 \ The subtraction underflowed or A < 2, so set A to 2
+                        \ so the crosshairs don't spill out of the left of the
+                        \ screen
 
 ENDIF
 
@@ -230,7 +231,7 @@ ELIF _MASTER_VERSION
 
  LDA #152               \ Otherwise this is the Long-range Chart, so we need to
                         \ clip the crosshairs at a maximum y-coordinate of 152
-                        \ ???
+
 ENDIF
 
 .TT87

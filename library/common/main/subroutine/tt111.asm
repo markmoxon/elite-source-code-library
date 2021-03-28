@@ -39,7 +39,8 @@ ENDIF
 \   TT111-1             Contains an RTS
 \
 IF _MASTER_VERSION \ Comment
-\   L5193               ???
+\   DIST                Calculate the distance between the selected system and
+\                       the current system
 \
 ENDIF
 \ ******************************************************************************
@@ -186,9 +187,9 @@ ENDIF
                         \ need to work out the distance between the selected
                         \ system and the current system
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Label
 
-.L5193                  \ ???
+.DIST
 
 ENDIF
 
@@ -287,14 +288,16 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- ADC K+1                \ ???
- BCC L51C5
+ ADC K+1                \ Set A = A + K+1, which adds the high bytes of the two
+                        \ calculated values
 
- LDA #&FF
+ BCC P%+4               \ If the above addition overflowed, set A = 255
+ LDA #255
 
-.L51C5
-
- STA R
+ STA R                  \ Store A in R, so we now have R = A + K+1, and:
+                        \
+                        \   (R Q) = K(1 0) + (A P)
+                        \         = (x_delta ^ 2) + (y_delta ^ 2)
 
 ENDIF
 

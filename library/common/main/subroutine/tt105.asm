@@ -68,13 +68,14 @@ ELIF _MASTER_VERSION
  ASL A                  \
  CLC                    \ 104 is the x-coordinate of the centre of the chart,
  ADC #104               \ so this sets QQ19 to the screen pixel x-coordinate
- JSR LSR2               \
- STA QQ19               \ The call to LSR2 has no effect as it only contains an
-                        \ RTS, but having this call instruction here would
+ JSR SCALEY2            \
+ STA QQ19               \ The call to SCALEY2 has no effect as it only contains
+                        \ an RTS, but having this call instruction here would
                         \ enable different scaling to be applied by altering
-                        \ the LSR routines, so perhaps this is code left over
-                        \ from the conversion to other platforms, where the
-                        \ scale factor might need to be different
+                        \ the SCALE routines. This code is left over from the
+                        \ conversion to other platforms, where the scale factor
+                        \ might need to be different
+
 ENDIF
 
  LDA QQ10               \ Set A = QQ10 - QQ1, the vertical distance between the
@@ -124,15 +125,15 @@ ELIF _MASTER_VERSION
  ASL A                  \ Set QQ19+1 = 90 + A * 2
  CLC                    \
  ADC #90                \ 90 is the y-coordinate of the centre of the chart,
- JSR LSR2               \ so this sets QQ19+1 to the screen pixel x-coordinate
+ JSR SCALEY2            \ so this sets QQ19+1 to the screen pixel x-coordinate
  STA QQ19+1             \ of the crosshairs
                         \
-                        \ The call to LSR2 has no effect as it only contains an
-                        \ RTS, but having this call instruction here would
+                        \ The call to SCALEY2 has no effect as it only contains
+                        \ an RTS, but having this call instruction here would
                         \ enable different scaling to be applied by altering
-                        \ the LSR routines, so perhaps this is code left over
-                        \ from the conversion to other platforms, where the
-                        \ scale factor might need to be different
+                        \ the SCALE routines. This code is left over from the
+                        \ conversion to other platforms, where the scale factor
+                        \ might need to be different
 
 ENDIF
 

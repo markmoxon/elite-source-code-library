@@ -34,12 +34,17 @@
 
 IF _MASTER_VERSION
 
- LDA QQ11               \ ???
- BNE P%+7
+ LDA QQ11               \ If this not the space view, skip the following
+ BNE P%+7               \ three instructions
 
- JSR DOKEY
- TXA
- RTS
+ JSR DOKEY              \ This is the space view, so scan the keyboard for
+                        \ flight controls and pause keys, (or the equivalent on
+                        \ joystick) and update the key logger, setting KL to the
+                        \ key pressed
+
+ TXA                    \ Transfer the value of X into A ???
+
+ RTS                    \ Return from the subroutine
 
 ENDIF
 
@@ -62,9 +67,12 @@ ENDIF
 
 IF _MASTER_VERSION
 
- LDA JSTY               \ ???
- JSR TJS1
- TAY
+ LDA JSTY               \ Fetch the joystick pitch, ranging from 1 to 255 with
+                        \ 128 as the centre point
+
+ JSR TJS1               \ Call TJS1 just below to ???
+
+ TAY                    \ ???
 
 ENDIF
 
@@ -103,7 +111,8 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
  LDA JSTY               \ Fetch the joystick pitch, ranging from 1 to 255 with
                         \ 128 as the centre point, and fall through into TJS1 to
-                        \ joystick pitch value (moving the stick up and down)
+                        \ set Y to the joystick pitch value (moving the stick up
+                        \ and down)
 
 .TJS1
 

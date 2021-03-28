@@ -4,6 +4,9 @@
 \       Type: Subroutine
 \   Category: Drawing ships
 \    Summary: Draw ship: Calculate the visibility of each of the ship's edges
+IF _MASTER_VERSION
+\             and draw the visible ones using smooth animation
+ENDIF
 \  Deep dive: Drawing ships
 \
 \ ------------------------------------------------------------------------------
@@ -11,6 +14,11 @@
 \ This part calculates which edges are visible - in other words, which lines we
 \ should draw - and clips them to fit on the screen.
 \
+IF _MASTER_VERSION
+\ Visible edges are drawn using smooth animation, which erases the corresponding
+\ edge from the on-scren ship at the same time.
+\
+ENDIF
 \ When we get here, the heap at XX3 contains all the visible vertex screen
 \ coordinates.
 \
@@ -55,7 +63,7 @@ ENDIF
 
 IF _MASTER_VERSION
 
- LDY #0                 \ ???
+ LDY #0                 \ Set Y = 0 so we start with byte #0
 
 ENDIF
 
@@ -145,7 +153,7 @@ ENDIF
 
 IF _MASTER_VERSION
 
- INY                    \ ???
+ INY                    \ Increment Y to point to byte #2
 
 ENDIF
 
@@ -156,7 +164,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
  INY                    \ Increment Y to point to byte #3
 
- LDA (V),Y              \ Fetch byte #3 for this edge into X, which contains
+ LDA (V),Y              \ Fetch byte #3 for this edge into Q, which contains
  STA Q                  \ the number of the vertex at the end of the edge
 
 ENDIF
@@ -192,9 +200,10 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- INY                    \ ???
- LDA (V),Y
- TAX
+ INY                    \ Increment Y to point to byte #3
+
+ LDA (V),Y              \ Fetch byte #3 for this edge into X, which contains
+ TAX                    \ the number of the vertex at the end of the edge
 
 ENDIF
 
@@ -244,7 +253,9 @@ ENDIF
 
 IF _MASTER_VERSION
 
- JSR LLX30              \ ???
+ JSR LLX30              \ Draw this edge using smooth animation, by first
+                        \ drawing the ship's new line and then erasing the
+                        \ corresponding old line from the screen
 
 ENDIF
 

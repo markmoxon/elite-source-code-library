@@ -10,9 +10,13 @@
 \
 \ This routine draws the current ship on the screen. This part checks to see if
 \ the ship is exploding, or if it should start exploding, and if it does it sets
-\ things up accordingly. It also does some basic checks to see if we can see the
-\ ship, and if not it removes it from the screen.
+\ things up accordingly.
 \
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_VERSION\ Comment
+\ It also does some basic checks to see if we can see the ship, and if not it
+\ removes it from the screen.
+\
+ENDIF
 \ In this code, XX1 is used to point to the current ship's data block at INWK
 \ (the two labels are interchangeable).
 \
@@ -42,11 +46,6 @@ ENDIF
 \
 \   EE51                Remove the current ship from the screen, called from
 \                       SHPPT before drawing the ship as a point
-\
-\   LL81+2              Draw the contents of the ship lone heap, used to draw
-\                       the ship as a dot from SHPPT
-\
-\   LL10-1              Contains an RTS
 \
 \ ******************************************************************************
 
@@ -97,20 +96,36 @@ ENDIF
 
 IF _MASTER_VERSION
 
- LDY #&01               \ ???
- STY XX14
- DEY
- LDA #&08
- BIT INWK+31
- BNE L712B
+                        \ We now set things up for smooth ship plotting, by
+                        \ setting the following:
+                        \
+                        \   XX14 = offset to the first coordinate in the ship's
+                        \          line heap
+                        \
+                        \   XX14+1 = the number of bytes in the heap for the
+                        \            ship that's currently on-screen (or 0 if
+                        \            there is no ship currently on-screen)
 
- LDA #&00
- EQUB &2C
+ LDY #1                 \ Set XX14 = 1, the offset of the first set of line
+ STY XX14               \ coordinates in the ship line heap
 
-.L712B
+ DEY                    \ Decrement Y to 0
 
- LDA (XX19),Y
- STA XX14+1
+ LDA #%00001000         \ If bit 3 of the ship's byte #31 is set, then the ship
+ BIT INWK+31            \ is currently being drawn on-screen, so skip the
+ BNE P%+5               \ following two instructions
+
+ LDA #0                 \ The ship is not being drawn on screen, so set A = 0
+                        \ so that XX14+1 gets set to 0 below (as there are no
+                        \ existing coordinates on the ship line heap for this
+                        \ ship)
+ 
+ EQUB &2C               \ Skip the next instruction by turning it into
+                        \ &2C ??? ???, or BIT ???, which does nothing apart
+                        \ from affect the flags
+
+ LDA (XX19),Y           \ Set XX14+1 to the first byte of the ship's line heap,
+ STA XX14+1             \ which contains the number of bytes in the heap
 
 ENDIF
 

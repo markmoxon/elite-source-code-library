@@ -41,10 +41,12 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
  JSR LL155              \ Otherwise call LL155 to draw the existing ship, which
                         \ removes it from the screen
 
-ELIF _MASTER_VERSION
+ENDIF
 
- LDY #&09               \ ???
- LDA (XX0),Y
+IF _MASTER_VERSION \ Platform
+
+ LDY #9                 \ Fetch byte #9 of the ship's blueprint, which is the
+ LDA (XX0),Y            \ number of edges, and store it in XX20
  STA XX20
 
 ENDIF
@@ -70,16 +72,11 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  LDY #9                 \ Fetch byte #9 of the ship's blueprint, which is the
  LDA (XX0),Y            \ number of edges, and store it in XX20
  STA XX20
-
-ELIF _MASTER_VERSION
-
- LDY #&00               \ ???
- STY XX17
 
 ENDIF
 
@@ -99,6 +96,11 @@ ELIF _6502SP_VERSION
 
  STZ XX17               \ Set XX17 = 0, which we are going to use as a counter
                         \ for stepping through the ship's edges
+
+ELIF _MASTER_VERSION
+
+ LDY #0                 \ Set XX17 = 0, which we are going to use as a counter
+ STY XX17               \ for stepping through the ship's edges
 
 ENDIF
 
@@ -250,7 +252,9 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- JSR LLX30              \ ???
+ JSR LLX30              \ Draw the laser line using smooth animation, by first
+                        \ drawing the new laser line and then erasing the
+                        \ corresponding old line from the screen
 
 ENDIF
 

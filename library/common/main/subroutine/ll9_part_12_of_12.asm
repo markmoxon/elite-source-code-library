@@ -8,9 +8,15 @@
 \
 \ ------------------------------------------------------------------------------
 \
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Comment
 \ This part draws the lines in the ship line heap, which is used both to draw
 \ the ship, and to remove it from the screen.
 \
+ELIF _MASTER_VERSION
+\ This part draws any remaining lines from the old ship that are still in the
+\ ship line heap.
+\
+ENDIF
 IF _6502SP_VERSION \ Comment
 \ If NEEDKEY is non-zero, then this routine also scans the keyboard for a key
 \ press and returns the internal key number in X (or 0 for no key press).
@@ -73,7 +79,7 @@ ELIF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDY XX14               \ ???
+ LDY XX14               \ Set Y to the offset in the line heap XX14
 
 ENDIF
 
@@ -103,22 +109,34 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
 
 ELIF _MASTER_VERSION
 
- CPY XX14+1             \ ???
- BCS L78F1
+ CPY XX14+1             \ If Y >= XX14+1, jump to LLEX to return from the ship
+ BCS LLEX               \ drawing routine, because the index in Y is greater
+                        \ than the size of the existing ship line heap, which
+                        \ means we have alrady erased all the old ships lines
+                        \ when drawing the new ship
 
- LDA (XX19),Y
- INY
+                        \ If we get here then Y < XX14+1, which means Y is
+                        \ pointing to an on-screen line from the old ship that
+                        \ we need to erase
+
+ LDA (XX19),Y           \ Fetch the X1 line coordinate from the heap and store
+ INY                    \ it in XX15, incrementing the heap pointer
  STA XX15
- LDA (XX19),Y
- INY
- STA Y1
- LDA (XX19),Y
- INY
- STA X2
- LDA (XX19),Y
- INY
- STA Y2
- JSR LL30
+
+ LDA (XX19),Y           \ Fetch the Y1 line coordinate from the heap and store
+ INY                    \ it in XX15+1, incrementing the heap pointer
+ STA XX15+1
+
+ LDA (XX19),Y           \ Fetch the X2 line coordinate from the heap and store
+ INY                    \ it in XX15+2, incrementing the heap pointer
+ STA XX15+2
+
+ LDA (XX19),Y           \ Fetch the Y2 line coordinate from the heap and store
+ INY                    \ it in XX15+3, incrementing the heap pointer
+ STA XX15+3
+
+ JSR LL30               \ Draw a line from (X1, Y1) to (X2, Y2) to erase it from
+                        \ the screen
 
 ELIF _6502SP_VERSION
 
@@ -136,12 +154,13 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- JMP LL27               \ ???
+ JMP LL27               \ Loop back to LL27 to draw (i.e. erase) the next line
+                        \ from the heap
 
-.L78F1
+.LLEX
 
- LDA XX14
- LDY #&00
+ LDA XX14               \ Store XX14 in the first byte of the ship line heap
+ LDY #0
  STA (XX19),Y
 
 .LL82

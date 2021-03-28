@@ -3,13 +3,24 @@
 \       Name: LL9 (Part 11 of 12)
 \       Type: Subroutine
 \   Category: Drawing ships
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Comment
 \    Summary: Draw ship: Add all visible edges to the ship line heap
+ELIF _MASTER_VERSION
+\    Summary: Draw ship: Loop back for the next edge
+ENDIF
 \  Deep dive: Drawing ships
 \
 \ ------------------------------------------------------------------------------
 \
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Comment
 \ This part adds all the visible edges to the ship line heap, so we can draw
 \ them in part 12.
+\
+ENDIF
+\ Other entry points:
+\
+\   LL81+2              Draw the contents of the ship line heap, used to draw
+\                       the ship as a dot from SHPPT
 \
 \ ******************************************************************************
 
@@ -56,16 +67,18 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
  LDY XX17               \ If Y >= XX20, which contains the number of edges in
  CPY XX20               \ the blueprint, jump to LL81 as we have processed all
- BCS LL81               \ the edges
+ BCS LL81               \ the edges and don't need to loop back for the next one
 
  LDY #0                 \ Set Y to point to byte #0 again, ready for the next
                         \ edge
 
 ELIF _MASTER_VERSION
 
- LDA XX14               \ ???
- CMP CNT
- BCS LL81
+ LDA XX14               \ If XX14 >= CNT, skip to LL81 so we don't loop back for
+ CMP CNT                \ the next edge (CNT was set to the maximum heap size
+ BCS LL81               \ for this ship in part 10, so this checks whether we
+                        \ have just run out of space in the ship line heap, and
+                        \ stops drawing edges if we have)
 
 ENDIF
 
@@ -97,10 +110,11 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- INC XX17               \ ???
- LDY XX17
- CPY XX20
- BCC LL75
+ INC XX17               \ Increment the edge counter to point to the next edge
+
+ LDY XX17               \ If Y < XX20, which contains the number of edges in
+ CPY XX20               \ the blueprint, loop back to LL75 to process the next
+ BCC LL75               \ edge
 
 ENDIF
 
@@ -118,7 +132,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- JMP LL155              \ ???
+ JMP LL155              \ Jump down to part 12 below
 
 ENDIF
 

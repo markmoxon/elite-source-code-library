@@ -1817,10 +1817,18 @@ INCLUDE "library/common/main/subroutine/u_per_cent.asm"
 \   Category: Keyboard
 \    Summary: Scan the keyboard for key presses
 \
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   RDKEY-1             Only scan the keyboard for valid BCD key numbers
+
 \ ******************************************************************************
 
- SED                    \ ???
-
+ SED                    \ Set the D flag to enter decimal mode. Because
+                        \ internal key numbers are all valid BCD (Binary Coded
+                        \ Decimal) numbers, setting this flag ensures we only
+                        \ loop through valid key numbers
 .RDKEY
 
  TYA

@@ -191,7 +191,7 @@ IF _CASSETTE_VERSION \ Enhanced: See group A
  CMP #16                \ If A >= 16 then jump to TA6, as the ship is already
  BCS TA6                \ in the process of rolling
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  LDA INWK+29            \ Fetch the roll counter from byte #29 into A
 
@@ -199,15 +199,6 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
  CMP #32                \ If A >= 32 then jump to TA6, as the ship is already
  BCS TA6                \ in the process of rolling
-
-ELIF _MASTER_VERSION
-
- LDA INWK+29            \ Fetch the roll counter from byte #29 into A
-
- ASL A                  \ Shift A left to double it and drop the sign bit
-
- CMP #32                \ If A >= 32 then jump to TA12, as the ship is already
- BCS TA12               \ in the process of rolling ???
 
 ENDIF
 

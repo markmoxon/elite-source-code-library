@@ -133,10 +133,12 @@ ENDIF
 
 IF _MASTER_VERSION
 
- LDA NEWB               \ ???
- AND #&F0
- STA NEWB
- LDY #&24
+ LDA NEWB               \ Clear bits 0-3 of the NEWB flags, so the ship is no
+ AND #%11110000         \ longer a trader, a bounty hunter, hostile or a pirate
+ STA NEWB               \ and the escape pod we are about to spawn won't inherit
+                        \ any of these traits
+
+ LDY #36                \ Update the NEWB flags in the ship's data block
  STA (INF),Y
 
 ENDIF

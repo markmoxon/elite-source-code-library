@@ -125,7 +125,8 @@ ELIF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- JSR RDKEY-1            \ ???
+ JSR RDKEY-1            \ Scan the keyboard for a key press and return the
+                        \ internal key number in X (or 0 for no key press)
 
 ENDIF
 
@@ -137,8 +138,9 @@ IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: Group A: The docking computer lit
 
 ELIF _MASTER_VERSION
 
- LDA auto               \ ???
- BEQ L6CF2
+ LDA auto               \ If auto is 0, then the docking computer is not
+ BEQ DK16               \ currently activated, so jump to DK16 to skip the
+                        \ docking computer manoeuvring code below
 
 ENDIF
 
@@ -188,8 +190,8 @@ IF _DISC_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
 
 ELIF _MASTER_VERSION
 
- LDX #&0F               \ Set X = 0, so we "press" KY1 below ("?", slow down)
-                        \ ???
+ LDX #15                \ Set X = 0, so we "press" KY+15, i.e. KY1, below
+                        \ ("?", slow down)
 
 ENDIF
 
@@ -216,13 +218,17 @@ IF _DISC_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
 
 ELIF _MASTER_VERSION
 
- BMI L6CC2
+ BMI P%+4               \ If the updated acceleration is negative, skip the
+                        \ following instruction
 
- LDX #&0B
+ LDX #11                \ Set X = 11, so we "press" KY+11, i.e. KY2, with the next
+                        \ instruction (Space, speed up)
 
-.L6CC2
-
- STA KL,X
+ STA KL,X               \ Store &FF in either KY1 or KY2 to "press" the relevant
+                        \ key, depending on whether the updated acceleration is
+                        \ negative (in which case we "press" KY1, "?", to slow
+                        \ down) or positive (in which case we "press" KY2,
+                        \ Space, to speed up)
 
 ENDIF
 
@@ -245,7 +251,8 @@ IF _DISC_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
 
 ELIF _MASTER_VERSION
 
- LDX #&0D               \ ???
+ LDX #13                \ Set X = 13, so we "press" KY+13, i.e. KY3, below
+                        \ ("<", increase roll)
 
 ENDIF
 
@@ -271,11 +278,11 @@ IF _DISC_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
 
 ELIF _MASTER_VERSION
 
- BCC L6CD0              \ ???
+ BCC P%+4               \ If the C flag is clear, skip the following instruction
 
- LDX #&0E
-
-.L6CD0
+ LDX #14                \ The C flag is set, i.e. the direction of the updated
+                        \ roll counter is negative, so set X to 14 so we
+                        \ "press" KY+14. i.e. KY4, below (">", decrease roll)
 
 ENDIF
 
@@ -307,7 +314,9 @@ IF _DISC_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
 
 ELIF _MASTER_VERSION
 
- STA KL,X               \ ???
+ STA KL,X               \ Store A in either KY3 or KY4, depending on whether
+                        \ the updated roll rate is increasing (KY3) or
+                        \ decreasing (KY4)
 
 ENDIF
 
@@ -336,7 +345,8 @@ IF _DISC_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
 
 ELIF _MASTER_VERSION
 
- LDX #&06               \ ???
+ LDX #6                 \ Set X = 6, so we "press" KY+6, i.e. KY5, below
+                        \ ("X", decrease pitch)
 
 ENDIF
 
@@ -368,13 +378,16 @@ IF _DISC_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
 
 ELIF _MASTER_VERSION
 
- BCS L6CEC              \ ???
+ BCS P%+4               \ If the C flag is set, skip the following instruction
 
- LDX #&08
+ LDX #8                 \ Set X = 6, so we "press" KY+8, i.e. KY6, with the next
+                        \ instruction ("S", increase pitch)
 
-.L6CEC
-
- STA KL,X
+ STA KL,X               \ Store 128 in either KY5 or KY6 to "press" the relevant
+                        \ key, depending on whether the pitch direction is
+                        \ negative (in which case we "press" KY5, "X", to
+                        \ decrease the pitch) or positive (in which case we
+                        \ "press" KY6, "S", to increase the pitch)
 
 ENDIF
 
@@ -391,27 +404,57 @@ ENDIF
 
 IF _MASTER_VERSION \ Enhanced: See group A
 
-.L6CF2
+.DK16
 
- LDA JSTK               \ ???
- BEQ DK15
+ LDA JSTK               \ If JSTK is zero, then we are configured to use the
+ BEQ DK15               \ keyboard rather than the joystick, so jump to DK15 to
+                        \ skip reading the joystick
 
- LDA ADCH1
- EOR JSTE
- ORA #&01
- STA JSTX
- LDA ADCH2
- EOR #&FF
- EOR JSTE
- EOR JSTGY
- STA JSTY
- LDA VIA+&40
- AND #&10
- BNE DK4
+ LDA ADCH1              \ Fetch the high byte of the joystick X value
 
- LDA #&FF
- STA KY7
- BNE DK4
+ EOR JSTE               \ The high byte A is now EOR'd with the value in
+                        \ location JSTE, which contains &FF if both joystick
+                        \ channels are reversed and 0 otherwise (so A now
+                        \ contains the high byte but inverted, if that's what
+                        \ the current settings say)
+
+ ORA #1                 \ Ensure the value is at least 1
+
+ STA JSTX               \ Store the resulting joystick X value in JSTX
+
+ LDA ADCH2              \ Fetch the high byte of the joystick Y value
+
+ EOR #&FF               \ This EOR is used in conjunction with the EOR JSTGY
+                        \ below, as having a value of 0 in JSTGY means we have
+                        \ to invert the joystick Y value, and this EOR does
+                        \ that part
+
+ EOR JSTE               \ The high byte A is now EOR'd with the value in
+                        \ location JSTE, which contains &FF if both joystick
+                        \ channels are reversed and 0 otherwise (so A now
+                        \ contains the high byte but inverted, if that's what
+                        \ the current settings say)
+
+ EOR JSTGY              \ JSTGY will be 0 if the game is configured to reverse
+                        \ the joystick Y channel, so this EOR along with the
+                        \ EOR #&FF above does exactly that
+
+ STA JSTY               \ Store the resulting joystick Y value in JSTY
+
+ LDA VIA+&40            \ Read 6522 System VIA input register IRB (SHEILA &40)
+
+ AND #%00010000         \ Bit 4 of IRB (PB4) is clear if joystick 1's fire
+                        \ button is pressed, otherwise it is set, so AND'ing
+                        \ the value of IRB with %10000 extracts this bit
+
+ BNE DK4                \ If the joystick fire button is not being pressed,
+                        \ jump to DK4 to scan for other keys
+
+ LDA #&FF               \ Update the key logger at KY7 to "press" the "A" (fire)
+ STA KY7                \ button
+
+ BNE DK4                \ Jump to DK4 to scan for other keys (this BNE is
+                        \ effectively a JMP as A is never 0)
 
 ENDIF
 
@@ -456,40 +499,46 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
 ELIF _MASTER_VERSION
 
- LDX JSTX               \ ???
- LDA #&07
- LDY KY3
- BEQ L6D26
+ LDX JSTX               \ Set X = JSTX, the current roll rate (as shown in the
+                        \ RL indicator on the dashboard)
 
- JSR BUMP2
+ LDA #7                 \ Set A to 7, which is the amount we want to alter the
+                        \ roll rate by if the roll keys are being pressed
 
-.L6D26
+ LDY KY3                \ If the "<" key is not being pressed, skip the next
+ BEQ P%+5               \ instruction
 
- LDY KY4
- BEQ L6D2D
+ JSR BUMP2              \ The "<" key is being pressed, so call the BUMP2
+                        \ routine to increase the roll rate in X by A
 
- JSR REDU2
+ LDY KY4                \ If the ">" key is not being pressed, skip the next
+ BEQ P%+5               \ instruction
 
-.L6D2D
+ JSR REDU2              \ The "<" key is being pressed, so call the REDU2
+                        \ routine to decrease the roll rate in X by A, taking
+                        \ the keyboard auto re-centre setting into account
 
- STX JSTX
- ASL A
- LDX JSTY
- LDY KY5
- BEQ L6D39
+ STX JSTX               \ Store the updated roll rate in JSTX
 
- JSR REDU2
+ ASL A                  \ Double the value of A, to 14
 
-.L6D39
+ LDX JSTY               \ Set X = JSTY, the current pitch rate (as shown in the
+                        \ DC indicator on the dashboard)
 
- LDY KY6
- BEQ L6D40
+ LDY KY5                \ If the "X" key is not being pressed, skip the next
+ BEQ P%+5               \ instruction
 
- JSR BUMP2
+ JSR REDU2              \ The "X" key is being pressed, so call the REDU2
+                        \ routine to decrease the pitch rate in X by A, taking
+                        \ the keyboard auto re-centre setting into account
 
-.L6D40
+ LDY KY6                \ If the "S" key is not being pressed, skip the next
+ BEQ P%+5               \ instruction
 
- STX JSTY
+ JSR BUMP2              \ The "S" key is being pressed, so call the BUMP2
+                        \ routine to increase the pitch rate in X by A
+
+ STX JSTY               \ Store the updated roll rate in JSTY
 
 ENDIF
 

@@ -86,13 +86,12 @@ ENDIF
  LDX QQ15+3             \ Fetch the s1_hi seed into X, which gives us the
                         \ galactic x-coordinate of this system
 
- LDY QQ15+4             \ Fetch the s2_lo seed and clear all the bits apart
- TYA                    \ from bits 4 and 6, storing the result in ZZ to give a
- ORA #%01010000         \ random number out of 0, &10, &40 or &50 (but which
- STA ZZ                 \ will always be the same for this system). We use this
-                        \ value to determine the size of the point for this
-                        \ system on the chart by passing it as the distance
-                        \ argument to the PIXEL routine below
+ LDY QQ15+4             \ Fetch the s2_lo seed and set bits 4 and 6, storing the
+ TYA                    \ result in ZZ to give a random number between 80 and
+ ORA #%01010000         \ (but which will always be the same for this system).
+ STA ZZ                 \ We use this value to determine the size of the point
+                        \ for this system on the chart by passing it as the
+                        \ distance argument to the PIXEL routine below
 
 IF _MASTER_VERSION
 

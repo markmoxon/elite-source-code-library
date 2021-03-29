@@ -106,54 +106,65 @@ IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: Group A: The enhanced versions sh
 
 ELIF _MASTER_VERSION
 
- LDA #1                 \ ???
- JSR DETOK
+ LDA #1                 \ Print extended token 1, the disc access menu, which
+ JSR DETOK              \ presents these options:
+                        \
+                        \   1. Load New Commander
+                        \   2. Save Commander {commander name}
+                        \   3. Catalogue
+                        \   4. Delete A File
+                        \   5. Default JAMESON
+                        \   6. Exit
 
  JSR t                  \ Scan the keyboard until a key is pressed, returning
                         \ the ASCII code in A and X
 
- CMP #&31
- BEQ MASTER_LOAD
+ CMP #'1'               \ Option 1 was chosen, so jump to LD1 to load a new
+ BEQ LD1                \ commander
 
- CMP #&32
- BEQ SV1
+ CMP #'2'               \ Option 2 was chosen, so jump to LD1 to save the
+ BEQ SV1                \ current commander
 
- CMP #&33
- BEQ CAT
+ CMP #'3'               \ Option 3 was chosen, so jump to CAT to catalogue a
+ BEQ CAT                \ disc
 
- CMP #&34
- BNE L69FB
+ CMP #'4'               \ If option 4 wasn't chosen, skip the next two
+ BNE P%+8               \ instructions
 
- JSR DELT
+ JSR DELT               \ Option 4 was chosen, so call DELT to delete a file
 
- JMP SVE                \ Jump to SVE to display the disc access menu and return
-                        \ from the subroutine using a tail call
+ JMP SVE                \ Jump to SVE to display the disc access menu again and
+                        \ return from the subroutine using a tail call
 
-.L69FB
+ CMP #'5'               \ If option 5 wasn't chosen, skip to exit to exit the menu
+ BNE exit
 
- CMP #&35
- BNE L6A0F
-
- LDA #&E0
+ LDA #224               \ Print extended token 224 ("ARE YOU SURE?")
  JSR DETOK
 
- JSR GETYN
+ JSR GETYN              \ Call GETYN to wait until either "Y" or "N" is pressed
 
- BCC L6A0F
+ BCC exit               \ If "N" was pressed, jump to exit
 
- JSR JAMESON            \ Call JAMESON to set the last saved commander to the
-                        \ default "JAMESON" commander
+ JSR JAMESON            \ Otherwise "Y" was pressed, so call JAMESON to set the
+                        \ last saved commander to the default "JAMESON"
+                        \ commander
 
- JMP DFAULT
+ JMP DFAULT             \ Jump to DFAULT to reset the current commander data
+                        \ block to the last saved commander, returning from the
+                        \ subroutine using a tail call
 
-.L6A0F
+.exit
 
- CLC
- RTS
+ CLC                    \ Option 5 was chosen, so clear the C flag to indicate
+                        \ that nothing was loaded
+
+ RTS                    \ Return from the subroutine
 
 .CAT
 
- JSR CATS
+ JSR CATS               \ Call CATS to ask for a drive number, catalogue that
+                        \ disc and update the catalogue command at CTLI
 
  JSR t                  \ Scan the keyboard until a key is pressed, returning
                         \ the ASCII code in A and X
@@ -161,24 +172,33 @@ ELIF _MASTER_VERSION
  JMP SVE                \ Jump to SVE to display the disc access menu and return
                         \ from the subroutine using a tail call
 
-.MASTER_LOAD
+.LD1
 
- JSR GTNMEW
+ JSR GTNMEW             \ If we get here then option 1 (load) was chosen, so
+                        \ call GTNMEW to fetch the name of the commander file
+                        \ to load (including drive number and directory) into
+                        \ INWK
 
- JSR GTDRV
+ JSR GTDRV              \ Get an ASCII disc drive drive number from the keyboard
+                        \ in A, setting the C flag if an invalid drive number
+                        \ was entered
 
- BCS L6A2C
+ BCS LDdone             \ If the C flag is set, then an invalid drive number was
+                        \ entered, so return from the subroutine (as DELT-1
+                        \ contains an RTS)
 
- STA LDLI+6
- JSR LOD
+ STA LDLI+6             \ Store the ASCII drive number in LDLI+6, which is the
+                        \ drive character of the load filename string ":1.E."
 
- JSR TRNME
+ JSR LOD                \ Call LOD to load the commander file
 
- SEC
+ JSR TRNME              \ Transfer the commander filename from INWK to NA%
 
-.L6A2C
+ SEC                    \ Set the C flag to indicate we loaded a new commander
 
- RTS
+.LDdone
+
+ RTS                    \ Return from the subroutine
 
 .SV1
 

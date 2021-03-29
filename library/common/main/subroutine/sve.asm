@@ -136,8 +136,8 @@ ELIF _MASTER_VERSION
  JMP SVE                \ Jump to SVE to display the disc access menu again and
                         \ return from the subroutine using a tail call
 
- CMP #'5'               \ If option 5 wasn't chosen, skip to exit to exit the menu
- BNE exit
+ CMP #'5'               \ If option 5 wasn't chosen, skip to exit to exit the
+ BNE exit               \ menu
 
  LDA #224               \ Print extended token 224 ("ARE YOU SURE?")
  JSR DETOK
@@ -238,46 +238,43 @@ IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: In the disc and 6502SP versions, 
 
 ELIF _MASTER_VERSION
 
- LDA #4                 \ Print extended token 4, which is blank
- JSR DETOK
+ LDA #4                 \ Print extended token 4, which is blank (this was where
+ JSR DETOK              \ the competition number was printed in older versions,
+                        \ but the competition was long gone by the time of the
+                        \ BBC Master version
 
 ENDIF
-
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION
 
  LDX #NT%               \ We now want to copy the current commander data block
                         \ from location TP to the last saved commander block at
                         \ NA%+8, so set a counter in X to copy the NT% bytes in
                         \ the commander data block
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION
                         \
                         \ We also want to copy the data block to another
                         \ location &0B00, which is normally used for the ship
                         \ lines heap
-
-ELIF _MASTER_VERSION
-
- LDX #NT%+1             \ ???
-
 ENDIF
 
 .SVL1
 
 IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION
 
- LDA TP,X               \ Copy the X-th byte of TP to the X-th byte of &B00
- STA &B00,X             \ and NA%+8
+ LDA TP,X               \ Copy the X-th byte of TP to the X-th byte of &0B00
+ STA &0B00,X            \ and NA%+8
  STA NA%+8,X
 
 ELIF _MASTER_VERSION
 
- LDA TP,X               \ Copy the X-th byte of TP to the X-th byte of &B00
- STA NA%+8,X            \ and NA%+8
+ LDA TP,X               \ Copy the X-th byte of TP to the X-th byte of NA%+8
+ STA NA%+8,X
 
 ENDIF
 
  DEX                    \ Decrement the loop counter
 
- BPL SVL1               \ Loop back until we have copied all NT% bytes
+ BPL SVL1               \ Loop back until we have copied all the bytes in the
+                        \ commander data block
 
  JSR CHECK              \ Call CHECK to calculate the checksum for the last
                         \ saved commander and return it in A
@@ -333,7 +330,7 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION
 
- STA &B00+NT%           \ Store the checksum in the last byte of the save file
+ STA &0B00+NT%          \ Store the checksum in the last byte of the save file
                         \ at &0B00 (the equivalent of CHK in the last saved
                         \ block)
 
@@ -349,9 +346,9 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
                         \ last saved block)
 
  LDY #&B                \ Set up an OSFILE block at &0C00, containing:
- STY &C0B               \
+ STY &0C0B              \
  INY                    \ Start address for save = &00000B00 in &0C0A to &0C0D
- STY &C0F               \
+ STY &0C0F              \
                         \ End address for save = &00000C00 in &0C0E to &0C11
                         \
                         \ Y is left containing &C which we use below
@@ -376,27 +373,40 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
 ELIF _MASTER_VERSION
 
- LDY #&4C               \ ???
+ LDY #NT%               \ We now want to copy the current commander data block
+                        \ to location &0791 so we can do a file save operation,
+                        \ so set a counter in X to copy the NT% bytes in the
+                        \ commander data block
 
-.L6A71
+.SVL2
 
- LDA NA%+8,Y
+ LDA NA%+8,Y            \ Copy the X-th byte of NA% to the X-th byte of &0791
  STA &0791,Y
- DEY
- BPL L6A71
 
- JSR GTDRV
+ DEY                    \ Decrement the loop counter
 
- BCS L6A85
+ BPL SVL2               \ Loop back until we have copied all the bytes in the
+                        \ commander data block
 
- STA SVLI+6
- JSR SAVE
+ JSR GTDRV              \ Get an ASCII disc drive drive number from the keyboard
+                        \ in A, setting the C flag if an invalid drive number
+                        \ was entered
 
-.L6A85
+ BCS P%+8               \ If the C flag is set, then an invalid drive number was
+                        \ entered, so skip the next two instructions
 
- JSR DFAULT
- CLC
- RTS
+ STA SVLI+6             \ Store the ASCII drive number in SVLI+6, which is the
+                        \ drive character of the save filename string ":1.E."
+
+ JSR SAVE               \ Call SAVE to save the commander file
+
+ JSR DFAULT             \ Call DFAULT to reset the current commander data
+                        \ block to the last saved commander
+
+ CLC                    \ Clear the C flag to indicate that no new commander
+                        \ file was loaded
+
+ RTS                    \ Return from the subroutine
 
 ENDIF
 

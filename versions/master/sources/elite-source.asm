@@ -1477,6 +1477,7 @@ INCLUDE "library/master/main/variable/ldli.asm"
  BPL SAVEL1
 
  LDA #&00
+
  LDY #&4C
 
 .SAVEL2

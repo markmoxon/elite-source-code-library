@@ -16,7 +16,18 @@
                         \ copied from here to the last saved commander block at
                         \ NA%, CHK and CHK2 get overwritten
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
 NT% = SVC + 2 - TP      \ This sets the variable NT% to the size of the current
                         \ commander data block, which starts at TP and ends at
                         \ SVC+2 (inclusive)
+
+ELIF _MASTER_VERSION
+
+NT% = SVC + 3 - TP      \ This sets the variable NT% to the size of the current
+                        \ commander data block, which starts at TP and ends at
+                        \ SVC+3 (inclusive), i.e. with the last checksum byte
+
+ENDIF
+
 

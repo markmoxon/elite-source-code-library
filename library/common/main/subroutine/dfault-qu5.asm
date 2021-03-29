@@ -54,7 +54,7 @@ IF _CASSETTE_VERSION \ Platform
                         \ commander workspace at TP. So we set up a counter in X
                         \ for the NT% bytes that we want to copy
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
 
  LDX #NT%+8             \ The size of the last saved commander data block is NT%
                         \ bytes, and it is preceded by the 8 bytes of the
@@ -65,21 +65,6 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED
                         \ the current commander workspace at NAME. So we set up
                         \ a counter in X for the NT% + 8 bytes that we want to
                         \ copy
-
-ELIF _MASTER_VERSION
-
- LDX #NT%+9             \ The size of the last saved commander data block is NT%
-                        \ bytes, and it is preceded by the 8 bytes of the
-                        \ commander name (seven characters plus a carriage
-                        \ return). The commander data block at NAME is followed
-                        \ by the commander data block, so we need to copy the
-                        \ name and data from the "last saved" buffer at NA% to
-                        \ the current commander workspace at NAME. So we set up
-                        \ a counter in X for the NT% + 8 bytes that we want to
-                        \ copy, plus we also copy an extra byte from the end of
-                        \ the commander data block which isn't used (perhaps
-                        \ this byte was going to be used for something, but
-                        \ wasn't in the end)
 
 ENDIF
 

@@ -23,7 +23,7 @@ ELIF _MASTER_VERSION
 \ Contains the default commander data, with the name at NA% and the data at
 ENDIF
 \ NA%+8 onwards. The size of the data block is given in NT% (which also includes
-\ the two checksum bytes that follow this block. This block is initially set up
+\ the two checksum bytes that follow this block). This block is initially set up
 \ with the default commander, which can be maxed out for testing purposes by
 \ setting Q% to TRUE.
 \

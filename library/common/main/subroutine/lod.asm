@@ -116,7 +116,10 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDY #NT%+1             \ ???
+ LDY #NT%               \ We have successfully loaded the commander file at
+                        \ &0791, so now we want to copy it to the last saved
+                        \ commander data block at NA%+8, so we set up a counter
+                        \ in Y to copy NT% bytes
 
 ENDIF
 

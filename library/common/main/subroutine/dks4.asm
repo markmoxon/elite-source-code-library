@@ -45,8 +45,8 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Minor
 
 .DKS4
 
- LDA #3                 \ Set A to 3, so it's ready to send to SHEILA once
-                        \ interrupts have been disabled
+ LDA #%00000011         \ Set A to %00000011, so it's ready to send to SHEILA
+                        \ once interrupts have been disabled
 
  SEI                    \ Disable interrupts so we can scan the keyboard
                         \ without being hijacked

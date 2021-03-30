@@ -10,7 +10,19 @@
 \ Switch the E.C.M. off, turn off the dashboard bulb and make the sound of the
 \ E.C.M. switching off).
 \
+IF _MASTER_VERSION \ Comment
+\ Other entry points:
+\
+\   ECMOF-1             \ Contains an RTS
+\
+ENDIF
 \ ******************************************************************************
+
+IF _MASTER_VERSION \ Platform
+
+ RTS                    \ Return from the subroutine
+
+ENDIF
 
 .ECMOF
 

@@ -11,6 +11,13 @@
 \
 \   A                   A is set to 0
 \
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
+\   Y                   Y is set to 0
+\
+ELIF _MASTER_VERSION
+\   X                   X is set to 0
+\
+ENDIF
 \ ******************************************************************************
 
 .U%

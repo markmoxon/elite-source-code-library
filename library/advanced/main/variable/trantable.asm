@@ -120,7 +120,7 @@ IF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- EQUB &00
+ EQUB &00               \ ???
 
  EQUB &40,&FE,&A0,&5F,&8C,&43,&FE,&8E
  EQUB &4F,&FE,&EA,&AE,&4F,&FE,&60,&51

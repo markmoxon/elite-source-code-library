@@ -32,9 +32,9 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
 ELIF _MASTER_VERSION
 
- BCC RDKRTS             \ The C flag will be set if the call to SFS1-2 was a
+ BCC ECMOF-1            \ The C flag will be set if the call to SFS1-2 was a
                         \ success, so if it's clear, jump to KYTB to return from
-                        \ the subroutine (as RDKRTS contains an RTS)
+                        \ the subroutine (as ECMOF-1 contains an RTS)
 
 ENDIF
 

@@ -184,7 +184,8 @@ IF _MASTER_VERSION
                         \ any more (or it never was), so skip the following
                         \ instruction
 
- JSR BOMBFX2            \ Call BOMBFX2 to show the energy bomb effect
+ JSR BOMBSFX            \ Call BOMBSFX to make the sound of our energy bomb
+                        \ going off
 
 ENDIF
 

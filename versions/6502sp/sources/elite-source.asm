@@ -1069,7 +1069,7 @@ INCLUDE "library/enhanced/main/variable/rugal.asm"
 INCLUDE "library/enhanced/main/variable/rutok.asm"
 INCLUDE "library/enhanced/main/variable/mtin.asm"
 INCLUDE "library/6502sp/main/subroutine/cold.asm"
-INCLUDE "library/6502sp/main/variable/f_per_cent.asm"
+INCLUDE "library/advanced/main/variable/f_per_cent.asm"
 
 \ ******************************************************************************
 \

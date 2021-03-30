@@ -621,74 +621,8 @@ ENDIF
 INCLUDE "library/enhanced/main/workspace/up.asm"
 INCLUDE "library/master/main/variable/ckeys.asm"
 INCLUDE "library/master/main/subroutine/s_per_cent.asm"
-
-\ ******************************************************************************
-\
-\       Name: scramble
-\       Type: Subroutine
-\   Category: Utility routines
-\    Summary: Unscramble the main code
-\
-\ ******************************************************************************
-
-.scramble
-
- LDA #&C0               \ See elite-checksum.py ???
- STA FRIN
- LDA #&2C
- STA FRIN+1
-
- LDA #&7F
- LDY #&47
- LDX #&19
- JSR DECRYPT
-
- LDA #&FF
- STA FRIN
- LDA #&7F
- STA FRIN+1
-
- LDA #&B1
- LDY #&FF
- LDX #&62
-
-\ ******************************************************************************
-\
-\       Name: DECRYPT
-\       Type: Subroutine
-\   Category: Utility routines
-\    Summary: Decrypt a multi-page block of memory
-\
-\ ******************************************************************************
-
-.DECRYPT
-
- STX T                  \ ???
- STA SC+1
- LDA #&00
- STA SC
-
-.DEL
-
- LDA (SC),Y
- SEC
- SBC T
- STA (SC),Y
- STA T
- TYA
- BNE P%+4
-
- DEC SC+1
-
- DEY
- CPY FRIN
- BNE DEL
-
- LDA SC+1
- CMP FRIN+1
- BNE DEL
-
- RTS
+INCLUDE "library/master/main/subroutine/scramble.asm"
+INCLUDE "library/master/main/subroutine/decrypt.asm"
 
  EQUB &B7, &AA          \ These bytes appear to be unused
  EQUB &45, &23
@@ -720,22 +654,23 @@ INCLUDE "library/enhanced/main/subroutine/spin.asm"
 
 \ ******************************************************************************
 \
-\       Name: L31AC
+\       Name: BOMBLINES
 \       Type: Subroutine
-\   Category: Drawing lines
-\    Summary: ??? energy bomb
+\   Category: Flight
+\    Summary: Draw the zigzag "electricity" lines for the energy bomb
 \
 \ ******************************************************************************
 
-.L31AC
+.BOMBLINES
 
- LDA #&FF
+ LDA #CYAN              \ Change the current colour to cyan
  STA COL
 
- LDA QQ11
- BNE L31DE
+ LDA QQ11               \ If the current view is non-zero (i.e. not a space
+ BNE BOMBRTS            \ view), return from the subroutine (as L31DE contains
+                        \ an RTS)
 
- LDY #&01
+ LDY #1
 
  LDA L321D
  STA XX12
@@ -743,7 +678,7 @@ INCLUDE "library/enhanced/main/subroutine/spin.asm"
  LDA L3227
  STA XX12+1
 
-.L31C0
+.BOMBL1
 
  LDA XX12
  STA X1
@@ -761,50 +696,56 @@ INCLUDE "library/enhanced/main/subroutine/spin.asm"
 
  STA XX12+1
 
- JSR LL30
+ JSR LL30               \ Draw a line from (X1, Y1) to (X2, Y2)
 
- INY
- CPY #&0A
- BCC L31C0
+ INY                    \ Increment the loop counter
 
-.L31DE
+ CPY #10                \ If Y < 10, loop back until we have drawn all the lines
+ BCC BOMBL1
 
- RTS
+.BOMBRTS
+
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
 \       Name: BOMBFX
 \       Type: Subroutine
-\   Category: Screen mode
-\    Summary: ???
+\   Category: Flight
+\    Summary: Draw the "electricity" lines and make the sound of the energy bomb
+\             going off
 \
 \ ******************************************************************************
 
 .BOMBFX
 
- JSR P%+3
-
+ JSR P%+3               \ This pair of JSRs runs the following code four times
  JSR P%+3
 
  LDY #6                 \ Call the NOISE routine with Y = 6 to make the sound of
  JSR NOISE              \ an energy bomb going off
 
- JSR L31AC
+ JSR BOMBLINES          \ Our energy bomb is going off, so call BOMBLINES to
+                        \ draw the zigzag "electricity" lines
+
+                        \ Fall through into BOMBSFX to make the sound of the
+                        \ energy bomb going off
 
 \ ******************************************************************************
 \
-\       Name: BOMBFX2
+\       Name: BOMBSFX
 \       Type: Subroutine
-\   Category: Screen mode
-\    Summary: ???
+\   Category: Flight
+\    Summary: Make the sound of the energy bomb going off, randomise the energy
+\             bomb "electricity" lines and draw them again
 \
 \ ******************************************************************************
 
-.BOMBFX2
+.BOMBSFX
 
  LDY #0
 
-.L31EF
+.BOMBSL1
 
  JSR DORND
 
@@ -820,7 +761,7 @@ INCLUDE "library/enhanced/main/subroutine/spin.asm"
 
  INY
  CPY #&0A
- BCC L31EF
+ BCC BOMBSL1
 
  LDX #&00
  STX L321D+9
@@ -829,13 +770,16 @@ INCLUDE "library/enhanced/main/subroutine/spin.asm"
 
  STX L321D
 
- BCS L31AC
+ BCS BOMBLINES          \ Our energy bomb is going off, so call BOMBLINES to
+                        \ draw the zigzag "electricity" lines and return from
+                        \ the subroutine using a tail call (this BCS is
+                        \ effectively a JMP as we passed through the BCC above)
 
 \ ******************************************************************************
 \
 \       Name: L3213
 \       Type: Variable
-\   Category: Screen mode
+\   Category: Flight
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -863,7 +807,7 @@ INCLUDE "library/enhanced/main/subroutine/spin.asm"
 \
 \       Name: L321D
 \       Type: Variable
-\   Category: Screen mode
+\   Category: Flight
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -876,7 +820,7 @@ INCLUDE "library/enhanced/main/subroutine/spin.asm"
 \
 \       Name: L3227
 \       Type: Variable
-\   Category: Screen mode
+\   Category: Flight
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -1636,6 +1580,7 @@ INCLUDE "library/common/main/subroutine/exno2.asm"
 INCLUDE "library/common/main/subroutine/exno3.asm"
 INCLUDE "library/common/main/subroutine/exno.asm"
 INCLUDE "library/enhanced/main/subroutine/brkbk.asm"
+INCLUDE "library/advanced/main/variable/f_per_cent.asm"
 
 \ ******************************************************************************
 \

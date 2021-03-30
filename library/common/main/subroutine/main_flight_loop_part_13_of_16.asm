@@ -40,7 +40,8 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- JSR BOMBFX             \ ???
+ JSR BOMBFX             \ Call BOMBFX to make the sound of our energy bomb
+                        \ going off
 
  ASL BOMB               \ We set off our energy bomb, so rotate BOMB to the
                         \ left by one place. BOMB was rotated left once already
@@ -53,7 +54,8 @@ ELIF _MASTER_VERSION
  BMI MA77               \ If the result has bit 7 set, skip the following
                         \ instruction
 
- JSR L31AC              
+ JSR BOMBLINES          \ Our energy bomb is going off, so call BOMBLINES to
+                        \ draw the zigzag "electricity" lines
 
 ENDIF
 

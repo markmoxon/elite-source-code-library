@@ -252,8 +252,8 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- JSR LLX30              \ Draw the laser line using smooth animation, by first
-                        \ drawing the new laser line and then erasing the
+ JSR LLX30              \ Draw the laser line using flicker-free animation, by
+                        \ first drawing the new laser line and then erasing the
                         \ corresponding old line from the screen
 
 ENDIF

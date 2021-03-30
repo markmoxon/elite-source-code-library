@@ -5,7 +5,7 @@
 \   Category: Drawing ships
 \    Summary: Draw ship: Calculate the visibility of each of the ship's edges
 IF _MASTER_VERSION
-\             and draw the visible ones using smooth animation
+\             and draw the visible ones using flicker-free animation
 ENDIF
 \  Deep dive: Drawing ships
 \
@@ -15,8 +15,8 @@ ENDIF
 \ should draw - and clips them to fit on the screen.
 \
 IF _MASTER_VERSION
-\ Visible edges are drawn using smooth animation, which erases the corresponding
-\ edge from the on-scren ship at the same time.
+\ Visible edges are drawn using flicker-free animation, which erases the
+\ corresponding edge from the on-scren ship at the same time.
 \
 ENDIF
 \ When we get here, the heap at XX3 contains all the visible vertex screen
@@ -253,7 +253,7 @@ ENDIF
 
 IF _MASTER_VERSION
 
- JSR LLX30              \ Draw this edge using smooth animation, by first
+ JSR LLX30              \ Draw this edge using flicker-free animation, by first
                         \ drawing the ship's new line and then erasing the
                         \ corresponding old line from the screen
 

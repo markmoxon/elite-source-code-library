@@ -618,29 +618,7 @@ ELSE
 
 ENDIF
 
-INCLUDE "library/common/main/variable/comc.asm"
-
- SKIP 18                \ These bytes appear to be unused
-
-INCLUDE "library/enhanced/main/variable/catf.asm"
- 
- SKIP 1                 \ This byte appears to be unused
-
-INCLUDE "library/common/main/variable/dnoiz.asm"
-INCLUDE "library/common/main/variable/damp.asm"
-INCLUDE "library/common/main/variable/djd.asm"
-INCLUDE "library/common/main/variable/patg.asm"
-INCLUDE "library/common/main/variable/flh.asm"
-INCLUDE "library/common/main/variable/jstgy.asm"
-INCLUDE "library/common/main/variable/jste.asm"
-INCLUDE "library/common/main/variable/jstk.asm"
-INCLUDE "library/master/main/variable/lcase.asm"
-INCLUDE "library/master/main/variable/dtape.asm"
-INCLUDE "library/enhanced/main/variable/bstk.asm"
-
- SKIP 1                 \ This byte appears to be unused
-
-INCLUDE "library/master/main/variable/volume.asm"
+INCLUDE "library/enhanced/main/workspace/up.asm"
 INCLUDE "library/master/main/variable/ckeys.asm"
 INCLUDE "library/master/main/subroutine/s_per_cent.asm"
 
@@ -1262,29 +1240,7 @@ INCLUDE "library/common/main/subroutine/tt46.asm"
 INCLUDE "library/common/main/subroutine/tt74.asm"
 INCLUDE "library/common/main/subroutine/tt43.asm"
 INCLUDE "library/common/main/subroutine/ex.asm"
-
-\ ******************************************************************************
-\
-\       Name: Unused2
-\       Type: Subroutine
-\   Category: Utility routines
-\    Summary: ???
-\
-\ ******************************************************************************
-
- LDX #&15               \ This code appears to be unused
-
-.L58B9
-
- LDA ZP,X
- LDY ZP,X
- STA ZP,X
- STY ZP,X
- INX
- BNE L58B9
-
- RTS
-
+INCLUDE "library/master/main/subroutine/swapzp2.asm"
 INCLUDE "library/common/main/subroutine/doexp.asm"
 
  EQUB 0, 2              \ These bytes appear to be unused
@@ -1375,35 +1331,7 @@ INCLUDE "library/common/main/subroutine/ks4.asm"
 INCLUDE "library/common/main/subroutine/ks2.asm"
 INCLUDE "library/common/main/subroutine/killshp.asm"
 INCLUDE "library/enhanced/main/subroutine/there.asm"
-
-\ ******************************************************************************
-\
-\       Name: Unused3
-\       Type: Subroutine
-\   Category: Text
-\    Summary: ???
-\
-\ ******************************************************************************
-
- PHA                    \ This code appears to be unused
- LSR A
- LSR A
- LSR A
- LSR A
- JSR P%+6
-
- PLA
- AND #&0F
-
- CMP #&0A
- BCS P%+7
-
- ADC #&30
- JMP CHPR
-
- ADC #&36
- JMP CHPR
-
+INCLUDE "library/master/main/subroutine/hexprnt.asm"
 INCLUDE "library/common/main/subroutine/reset.asm"
 INCLUDE "library/common/main/subroutine/res2.asm"
 INCLUDE "library/common/main/subroutine/zinf.asm"
@@ -1455,121 +1383,8 @@ INCLUDE "library/enhanced/main/variable/ctli.asm"
 INCLUDE "library/enhanced/main/variable/deli.asm"
 INCLUDE "library/master/main/variable/svli.asm"
 INCLUDE "library/master/main/variable/ldli.asm"
-
-\ ******************************************************************************
-\
-\       Name: SAVE
-\       Type: Subroutine
-\   Category: Save and load
-\    Summary: Save the commander file
-\
-\ ******************************************************************************
-
-.SAVE
-
- LDY #&4C               \ ???
-
-.SAVEL1
-
- LDA NA%+8,Y
- STA LSX2,Y
- DEY
- BPL SAVEL1
-
- LDA #&00
-
- LDY #&4C
-
-.SAVEL2
-
- STA LSX2,Y
- INY
- BNE SAVEL2
-
- LDY #&00
-
-.SAVEL3
-
- LDA NA%,Y
- CMP #&0D
- BEQ SAVEL4
-
- STA SVLI+10,Y
- INY
- CPY #&07
- BCC SAVEL3
-
-.SAVEL4
-
- LDA #&20
- STA SVLI+10,Y
- INY
- CPY #&07
- BCC SAVEL4
-
- JSR SWAPZP             \ Call SWAPZP to restore the top part of zero page
-
- LDX #&DF
- LDY #&6A
- JSR OSCLI
-
- JMP SWAPZP             \ Call SWAPZP to restore the top part of zero page
-                        \ and return from the subroutine using a tail call
-
-\ ******************************************************************************
-\
-\       Name: LOAD
-\       Type: Subroutine
-\   Category: Save and load
-\    Summary: Load the commander file
-\
-\ ******************************************************************************
-
-.LOAD
-
- LDY #0                 \ ???
-
-.LOADL1
-
- LDA INWK+5,Y
- CMP #&0D
- BEQ LOADL2
-
- STA LDLI+10,Y
- INY
- CPY #&07
- BCC LOADL1
-
-.LOADL2
-
- LDA #&20
- STA LDLI+10,Y
- INY
- CPY #&07
- BCC LOADL2
-
- JSR SWAPZP             \ Call SWAPZP to restore the top part of zero page
-
- LDX #&FF
- LDY #&6A
- JSR OSCLI
-
- JSR SWAPZP             \ Call SWAPZP to restore the top part of zero page
-
- LDY #&4C
-
-.LOADL3
-
- LDA LSX2,Y
- STA &0791,Y
- DEY
- BPL LOADL3
-
- RTS                    \ Return from the subroutine
-
- RTS                    \ This instruction has no effect as we already returned
-                        \ from the subroutine
-
+INCLUDE "library/master/main/subroutine/save.asm"
+INCLUDE "library/master/main/subroutine/load.asm"
 INCLUDE "library/common/main/subroutine/sps1.asm"
 INCLUDE "library/common/main/subroutine/tas2.asm"
 INCLUDE "library/common/main/subroutine/norm.asm"
@@ -1689,31 +1504,7 @@ INCLUDE "library/common/main/subroutine/mv40.asm"
 INCLUDE "library/common/main/subroutine/plut-pu1.asm"
 INCLUDE "library/common/main/subroutine/look1.asm"
 INCLUDE "library/common/main/subroutine/sight.asm"
-
-\ ******************************************************************************
-\
-\       Name: SIGHTCOL
-\       Type: Variable
-\   Category: Drawing lines
-\    Summary: Colours for the crosshair sights on the different laser types
-\
-\ ******************************************************************************
-
-.SIGHTCOL
-
- EQUB YELLOW            \ Pulse lasers have yellow sights
-
- EQUB CYAN              \ Beam lasers have cyan sights
-
- EQUB CYAN              \ Military lasers have cyan sights
-
- EQUB YELLOW            \ Mining lasers have yellow sights
-
- EQUB WHITE             \ These bytes appear to be unused - perhaps they were
- EQUB WHITE             \ going to be used to set different colours of laser
- EQUB WHITE             \ beam for the different lasers?
- EQUB WHITE
-
+INCLUDE "library/master/main/variable/sightcol.asm"
 INCLUDE "library/common/main/subroutine/tt66.asm"
 INCLUDE "library/common/main/subroutine/ttx66-ttx662.asm"
 INCLUDE "library/advanced/main/variable/trantable.asm"
@@ -1729,20 +1520,20 @@ INCLUDE "library/advanced/main/variable/trantable.asm"
 
 .KYTB
 
- EQUB &22,&23,&35,&37,&41,&42,&45,&51
- EQUB &52,&60,&62,&65,&66,&67,&68,&70
+ EQUB &22,&23,&35,&37,&41,&42,&45,&51  \ ETUPAXJSC TAB Space M<>? ESCAPE
+ EQUB &52,&60,&62,&65,&66,&67,&68,&70  \ Contains key number EOR &FF
  EQUB &F0
 
 \ ******************************************************************************
 \
-\       Name: RDKEY2
+\       Name: DKS1
 \       Type: Subroutine
 \   Category: Keyboard
-\    Summary: ???
+\    Summary: Scan the keyboard for a flight key
 \
 \ ******************************************************************************
 
-.RDKEY2
+.DKS1
 
  JSR U%
 
@@ -1762,7 +1553,7 @@ INCLUDE "library/advanced/main/variable/trantable.asm"
  STA VIA+&40
  CLI
  TYA
- BMI DKS1
+ BMI RDK3
 
 .RDK2
 
@@ -1778,18 +1569,9 @@ INCLUDE "library/advanced/main/variable/trantable.asm"
  TAX
  RTS
 
-\ ******************************************************************************
-\
-\       Name: DKS1
-\       Type: Subroutine
-\   Category: Keyboard
-\    Summary: Scan the keyboard for a flight key
-\
-\ ******************************************************************************
+.RDK3
 
-.DKS1
-
- EOR #&80               \ ???
+ EOR #&80
  STA KL
 
 .DKL5
@@ -1830,11 +1612,12 @@ INCLUDE "library/common/main/subroutine/u_per_cent.asm"
                         \ internal key numbers are all valid BCD (Binary Coded
                         \ Decimal) numbers, setting this flag ensures we only
                         \ loop through valid key numbers
+
 .RDKEY
 
- TYA
+ TYA                    \ ???
  PHA
- JSR RDKEY2
+ JSR DKS1
 
  PLA
  TAY

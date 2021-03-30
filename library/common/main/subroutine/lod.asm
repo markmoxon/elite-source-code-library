@@ -46,10 +46,6 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED
 
  JSR ZEBC               \ Call ZEBC to zero-fill pages &B and &C
 
-ELIF _MASTER_VERSION
-
- JSR LOAD               \ ???
-
 ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION
@@ -71,13 +67,17 @@ ENDIF
 IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION
 
  LDA #&FF               \ Call QUS1 with A = &FF, Y = &C to load the commander
- JSR QUS1               \ file at address &0B00
+ JSR QUS1               \ file to address &0B00
+
+ELIF _MASTER_VERSION
+
+ JSR LOAD               \ Call LOAD to load the commander file to address &0791
 
 ENDIF
 
 IF _CASSETTE_VERSION \ Platform
 
- LDA &B00               \ If the first byte of the loaded file has bit 7 set,
+ LDA &0B00              \ If the first byte of the loaded file has bit 7 set,
  BMI SPS1+1             \ jump to SPS+1, which is the second byte of an LDA #0
                         \ instruction, i.e. a BRK instruction, which will force
                         \ an interrupt to call the address in BRKV, which is set
@@ -93,7 +93,7 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED
                         \ entered during the call to QUS1 and the file wasn't
                         \ loaded, so jump to LOR to return from the subroutine
 
- LDA &B00               \ If the first byte of the loaded file has bit 7 set,
+ LDA &0B00              \ If the first byte of the loaded file has bit 7 set,
  BMI ELT2F              \ jump to ELT2F, as this is an invalid commander file
                         \
                         \ ELT2F contains a BRK instruction, which will force an
@@ -102,8 +102,12 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED
 
 ELIF _MASTER_VERSION
 
- LDA &0791              \ ???
- BMI ELT2F
+ LDA &0791              \ If the first byte of the loaded file has bit 7 set,
+ BMI ELT2F              \ jump to ELT2F, as this is an invalid commander file
+                        \
+                        \ ELT2F contains a BRK instruction, which will force an
+                        \ interrupt to call the address in BRKV, which will
+                        \ print out the system error at ELT2F
 
 ENDIF
 
@@ -134,7 +138,7 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDA &0791,Y            \ Copy the Y-th byte of ??? to the Y-th byte of NA%+8
+ LDA &0791,Y            \ Copy the Y-th byte of &0791 to the Y-th byte of NA%+8
  STA NA%+8,Y
 
  DEY                    \ Decrement the loop counter

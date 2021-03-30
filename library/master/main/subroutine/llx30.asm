@@ -3,15 +3,14 @@
 \       Name: LLX30
 \       Type: Subroutine
 \   Category: Drawing lines
-\    Summary: Draw a ship line using smooth animation, by drawing the ship's new
-\             line and erasing the corresponding old line from the screen
+\    Summary: Draw a ship line using flicker-free animation
 \
 \ ------------------------------------------------------------------------------
 \
-\ This routine implements smoother ship animation by erasing and redrawing each
-\ individual line in the ship, rather than the approach in the other Acornsoft
-\ versions of the game, which erase the entire existing ship before drawing the
-\ new one.
+\ This routine implements flicker-free ship animation by erasing and redrawing
+\ each individual line in the ship, rather than the approach in the other
+\ Acornsoft versions of the game, which erase the entire existing ship before
+\ drawing the new one.
 \
 \ Here's the new approach in this routine:
 \

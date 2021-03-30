@@ -12,10 +12,10 @@
  LDA #%00001111         \ Set bits 1 and 2 of the Access Control Register at
  STA VIA+&34            \ SHEILA+&34 to switch screen memory into &3000-&7FFF
 
- LDX #&90               \ We want to swap zero page from &0900 and up, so set an
+ LDX #&90               \ We want to swap zero page from &0090 and up, so set an
                         \ index in X, starting from &90
 
-.LZPL1
+.SWPL1
 
  LDA ZP,X               \ Swap the X-th byte of ZP with the X-th byte of &3000
  LDY &3000,X
@@ -25,7 +25,7 @@
  INX                    \ Increment the loop counter
 
  CPX #&F0               \ Loop back until we have swapped up to location &00EF
- BNE LZPL1
+ BNE SWPL1
 
  LDA #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
  STA VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF

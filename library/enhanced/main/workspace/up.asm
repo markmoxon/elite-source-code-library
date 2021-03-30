@@ -8,7 +8,11 @@ ELIF _6502SP_VERSION
 \    Address: &0800 to &0974
 ENDIF
 \   Category: Workspaces
+IF _DISC_VERSION OR _6502SP_VERSION \ Comment
 \    Summary: Ship slots, variables
+ELIF _MASTER_VERSION
+\    Summary: Configuration variables
+ENDIF
 \
 \ ******************************************************************************
 
@@ -33,6 +37,8 @@ ORG &0800
                         \ is commented out
 
 ENDIF
+
+IF _DISC_VERSION OR _6502SP_VERSION \ Platform
 
 INCLUDE "library/common/main/variable/kl.asm"
 INCLUDE "library/common/main/variable/ky1.asm"
@@ -128,6 +134,8 @@ INCLUDE "library/common/main/variable/qq9.asm"
 INCLUDE "library/common/main/variable/qq10.asm"
 INCLUDE "library/common/main/variable/nostm.asm"
 
+ENDIF
+
 IF _DISC_VERSION \ Platform
 
  SKIP 1                 \ This byte appears to be unused
@@ -147,5 +155,31 @@ INCLUDE "library/enhanced/main/variable/catf.asm"
 ELIF _6502SP_VERSION
 
 INCLUDE "library/advanced/main/variable/buf.asm"
+
+ELIF _MASTER_VERSION
+
+INCLUDE "library/common/main/variable/comc.asm"
+
+ SKIP 18                \ These bytes appear to be unused
+
+INCLUDE "library/enhanced/main/variable/catf.asm"
+ 
+ SKIP 1                 \ This byte appears to be unused
+
+INCLUDE "library/common/main/variable/dnoiz.asm"
+INCLUDE "library/common/main/variable/damp.asm"
+INCLUDE "library/common/main/variable/djd.asm"
+INCLUDE "library/common/main/variable/patg.asm"
+INCLUDE "library/common/main/variable/flh.asm"
+INCLUDE "library/common/main/variable/jstgy.asm"
+INCLUDE "library/common/main/variable/jste.asm"
+INCLUDE "library/common/main/variable/jstk.asm"
+INCLUDE "library/master/main/variable/lcase.asm"
+INCLUDE "library/master/main/variable/dtape.asm"
+INCLUDE "library/enhanced/main/variable/bstk.asm"
+
+ SKIP 1                 \ This byte appears to be unused
+
+INCLUDE "library/master/main/variable/volume.asm"
 
 ENDIF

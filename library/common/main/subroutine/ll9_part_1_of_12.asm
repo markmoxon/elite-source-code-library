@@ -96,8 +96,8 @@ ENDIF
 
 IF _MASTER_VERSION
 
-                        \ We now set things up for smooth ship plotting, by
-                        \ setting the following:
+                        \ We now set things up for flicker-free ship plotting,
+                        \ by setting the following:
                         \
                         \   XX14 = offset to the first coordinate in the ship's
                         \          line heap

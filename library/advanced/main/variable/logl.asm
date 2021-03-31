@@ -17,7 +17,7 @@
 
 IF _MATCH_EXTRACTED_BINARIES
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Platform
  IF _SNG45
   INCBIN "versions/6502sp/extracted/sng45/workspaces/ELTG-logL.bin"
  ELIF _SOURCE_DISC

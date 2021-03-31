@@ -37,7 +37,7 @@ ENDIF
 \
 \   A                   Contains the same as X
 \
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Comment
 \   Y                   Y is preserved
 \
 \ Other entry points:

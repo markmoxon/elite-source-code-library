@@ -5,7 +5,7 @@
 \   Category: Keyboard
 \    Summary: Flush the keyboard buffer
 \
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ This routine does nothing in the BBC Master version of Elite. It does have a

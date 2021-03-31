@@ -3,7 +3,7 @@
 \       Name: LL30
 \       Type: Subroutine
 \   Category: Drawing lines
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
 \    Summary: Draw a one-segment line by sending an OSWRCH 129 command to the
 \             I/O processor
 ELIF _MASTER_VERSION

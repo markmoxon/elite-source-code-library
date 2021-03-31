@@ -137,7 +137,7 @@ ELIF _MASTER_VERSION
  LDY #%00001111         \ Set bits 1 and 2 of the Access Control Register at
  STY VIA+&34            \ SHEILA+&34 to switch screen memory into &3000-&7FFF
 
- TAY
+ TAY                    \ Copy the screen y-coordinate from A into Y
 
 ENDIF
 
@@ -314,7 +314,7 @@ ELIF _MASTER_VERSION
  LDY #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
  STY VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
 
- LDY T1
+ LDY T1                 \ Restore Y from T1, so Y is preserved by the routine
 
 .PX4
 
@@ -393,7 +393,7 @@ ELIF _MASTER_VERSION
  LDY #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
  STY VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
 
- LDY T1
+ LDY T1                 \ Restore Y from T1, so Y is preserved by the routine
 
  RTS                    \ Return from the subroutine
 

@@ -1,13 +1,13 @@
 \ ******************************************************************************
 \
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
 \       Name: SETVDU19
 ELIF _MASTER_VERSION
 \       Name: DOVDU19
 ENDIF
 \       Type: Subroutine
 \   Category: Screen mode
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
 \    Summary: Implement the #SETVDU19 <offset> command (change mode 1 palette)
 ELIF _MASTER_VERSION
 \    Summary: Change the mode 1 palette
@@ -15,7 +15,7 @@ ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
 \ This routine is run when the parasite sends a #SETVDU19 <offset> command.
 \
 ENDIF
@@ -38,7 +38,7 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Label
 
 .SETVDU19
 

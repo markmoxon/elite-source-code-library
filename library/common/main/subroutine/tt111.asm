@@ -39,8 +39,9 @@ ENDIF
 \   TT111-1             Contains an RTS
 \
 IF _MASTER_VERSION \ Comment
-\   DIST                Calculate the distance between the selected system and
-\                       the current system
+\   DIST                Calculate the distance between the system with galactic
+\                       coordinates (A, QQ15+1) and the system at (QQ0, QQ1),
+\                       returning the result in QQ8(1 0)
 \
 ENDIF
 \ ******************************************************************************

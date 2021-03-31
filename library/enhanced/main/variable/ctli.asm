@@ -9,7 +9,7 @@
 
 .CTLI
 
-IF _DISC_DOCKED OR _6502SP_VERSION
+IF _DISC_DOCKED OR _6502SP_VERSION \ Minor
 
  EQUS ".0"              \ The "0" part of the string is overwritten with the
  EQUB 13                \ actual drive number by the CATS routine

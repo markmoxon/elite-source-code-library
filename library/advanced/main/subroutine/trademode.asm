@@ -3,7 +3,7 @@
 \       Name: TRADEMODE
 \       Type: Subroutine
 \   Category: Utility routines
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
 \    Summary: Clear the screen and set up a printable trading screen
 ELIF _MASTER_VERSION
 \    Summary: Clear the screen and set up a trading screen
@@ -11,7 +11,7 @@ ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
 \ Clear the top part of the screen, draw a white border, set the print flag if
 \ CTRL is being pressed, set the palette for trading screens, and set the
 \ current view type in QQ11 to A.
@@ -25,7 +25,7 @@ ENDIF
 \   A                   The type of the new current view (see QQ11 for a list of
 \                       view types)
 \
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Comment
 \ Other entry points:
 \
 \   TRADE               Set the palette for trading screens and switch the

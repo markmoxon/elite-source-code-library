@@ -96,7 +96,7 @@
  LDX #0                 \ Set X = 0 so this unrolled version of DVID4 also
                         \ returns X = 0
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Platform
 
  JMP LL28+4             \ Jump to LL28+4 to convert the remainder in A into an
                         \ integer representation of the fractional value A / Q,
@@ -107,20 +107,18 @@ IF _6502SP_VERSION
 ELIF _MASTER_VERSION
 
 {
- STA widget
- TAX
- BEQ LLfix
-
- LDA logL,X
- LDX Q
- SEC
- SBC logL,X
- LDX widget
- LDA log,X
+ STA widget             \ This contains the code from the LL28+4 routine, so
+ TAX                    \ this section is exactly equivalent to a JMP LL28+4
+ BEQ LLfix              \ call, but is slightly faster as it's been inlined
+ LDA logL,X             \ (so it converts the remainder in A into an integer
+ LDX Q                  \ representation of the fractional value A / Q, in R,
+ SEC                    \ where 1.0 = 255, and it also clears the C flag
+ SBC logL,X             \
+ LDX widget             \ The routine is surrounded by braces as BeebAsm
+ LDA log,X              \ doesn't allow us to redefine labels, unlike BBC BASIC
  LDX Q
  SBC log,X
  BCS LL2
-
  TAX
  LDA antilog,X
 
@@ -131,7 +129,7 @@ ELIF _MASTER_VERSION
 
 .LL2
 
- LDA #&FF
+ LDA #255
  STA R
  RTS
 }

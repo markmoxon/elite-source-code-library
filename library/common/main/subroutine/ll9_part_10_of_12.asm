@@ -4,7 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing ships
 \    Summary: Draw ship: Calculate the visibility of each of the ship's edges
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Comment
 \             and draw the visible ones using flicker-free animation
 ENDIF
 \  Deep dive: Drawing ships
@@ -14,7 +14,7 @@ ENDIF
 \ This part calculates which edges are visible - in other words, which lines we
 \ should draw - and clips them to fit on the screen.
 \
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Comment
 \ Visible edges are drawn using flicker-free animation, which erases the
 \ corresponding edge from the on-scren ship at the same time.
 \

@@ -25,7 +25,7 @@
 \ work reasonably well (outside of the title screen palette, anyway).
 \
 \ The palettes are set in the IRQ1 handler that implements the split screen
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
 \ mode, and can be changed by the parasite sending a #SETVDU19 <offset> command
 \ to point to the offset of the new palette in this table.
 ELIF _MASTER_VERSION
@@ -35,7 +35,7 @@ ENDIF
 \
 \ This table must start on a page boundary (i.e. an address that ends in two
 \ zeroes in hexadecimal). In the release version of the game TVT3 is at &2C00.
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
 \ This is so the #SETVDU19 command can switch palettes properly, as it does this
 ELIF _MASTER_VERSION
 \ This is so the SETVDU19 routine can switch palettes properly, as it does this
@@ -56,7 +56,7 @@ ENDIF
 
  EQUB &00, &34          \ 1 = yellow, 2 = red, 3 = cyan (space view)
  EQUB &24, &17          \
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
  EQUB &74, &64          \ Set with a #SETVDU19 0 command, after which:
 ELIF _MASTER_VERSION
  EQUB &74, &64          \ Set with a call to SETVDU19 with A = 0, after which:
@@ -70,7 +70,7 @@ ENDIF
 
  EQUB &00, &34          \ 1 = yellow, 2 = red, 3 = white (chart view)
  EQUB &24, &17          \
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
  EQUB &74, &64          \ Set with a #SETVDU19 16 command, after which:
 ELIF _MASTER_VERSION
  EQUB &74, &64          \ Set with a call to SETVDU19 with A = 16, after which:
@@ -84,7 +84,7 @@ ENDIF
 
  EQUB &00, &34          \ 1 = yellow, 2 = white, 3 = cyan (title screen)
  EQUB &24, &17          \
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
  EQUB &74, &64          \ Set with a #SETVDU19 32 command, after which:
 ELIF _MASTER_VERSION
  EQUB &74, &64          \ Set with a call to SETVDU19 with A = 32, after which:
@@ -98,7 +98,7 @@ ENDIF
 
  EQUB &00, &34          \ 1 = yellow, 2 = magenta, 3 = white (trade view)
  EQUB &24, &17          \
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
  EQUB &74, &64          \ Set with a #SETVDU19 48 command, after which:
 ELIF _MASTER_VERSION
  EQUB &74, &64          \ Set with a call to SETVDU19 with A = 48, after which:

@@ -24,7 +24,7 @@
 \
 \ ******************************************************************************
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Platform
 
 ORG CODE%
 
@@ -32,7 +32,7 @@ ENDIF
 
 FONT% = P% DIV 256
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Platform
 
 INCBIN "versions/6502sp/binaries/P.FONT.bin"
 

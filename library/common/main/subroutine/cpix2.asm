@@ -32,7 +32,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 \   COL                 The colour of the dash as a mode 2 character row byte
 ENDIF
 \
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Comment
 \ Returns:
 \
 \   R                   The dash's right pixel byte

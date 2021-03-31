@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
 \       Name: TT67
 ELIF _MASTER_VERSION
 \       Name: TT67_DUPLICATE
@@ -11,7 +11,7 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Label
 
 .TT67
 

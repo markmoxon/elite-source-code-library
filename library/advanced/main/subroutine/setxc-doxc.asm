@@ -16,7 +16,7 @@ ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
 \ This routine is run when the parasite sends a #SETXC <column> command. It
 \ updates the text cursor x-coordinate (i.e. the text column) in XC.
 \

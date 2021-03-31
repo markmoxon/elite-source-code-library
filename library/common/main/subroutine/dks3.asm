@@ -13,7 +13,7 @@
 \ Specifically, this routine toggles the configuration settings for the
 \ following keys:
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Comment
 \   * CAPS LOCK toggles keyboard flight damping (&40)
 \   * A toggles keyboard auto-recentre (&41)
 \   * X toggles author names on start-up screen (&42)
@@ -44,7 +44,7 @@ ENDIF
 \
 \ Arguments:
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Comment
 \   X                   The internal number of the key that's been pressed
 \
 \   Y                   The internal number of the configuration key to check

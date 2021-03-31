@@ -160,48 +160,42 @@ ENDIF
 
  LDA P+2                \ Set A to the highest byte of the numerator
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  JSR LL31               \ Call LL31 to calculate:
                         \
                         \   R = 256 * A / Q
                         \     = 256 * numerator / denominator
 
-                        \ The result of our division is now in R, so we just
-                        \ need to shift it back by the scale factor in Y
-
 ELIF _MASTER_VERSION
 
 {
 .LL31
 
- ASL A
- BCS LL29
-
- CMP Q
- BCC P%+4
-
- SBC Q
-
- ROL R
-
- BCS LL31
-
- JMP RTS
-
-.LL29
+ ASL A                  \ This contains the code from the LL31 routine, so
+ BCS LL29               \ this section is exactly equivalent to a JSR LL31
+ CMP Q                  \ call, but is slightly faster as it's been inlined
+ BCC P%+4               \ (so it calculates:
+ SBC Q                  \
+ ROL R                  \   R = 256 * A / Q
+ BCS LL31               \     = 256 * numerator / denominator
+ JMP RTS                \
+                        \ The routine is surrounded by braces as BeebAsm
+.LL29                   \ doesn't allow us to redefine labels, unlike BBC BASIC
 
  SBC Q
  SEC
  ROL R
  BCS LL31
-
  LDA R
 
 .RTS
 }
 
 ENDIF
+
+                        \ The result of our division is now in R, so we just
+                        \ need to shift it back by the scale factor in Y
 
  LDA #0                 \ Set K(3 2 1) = 0 to hold the result (we populate K
  STA K+1                \ next)

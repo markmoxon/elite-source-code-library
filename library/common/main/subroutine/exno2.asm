@@ -12,7 +12,7 @@
 \ message of encouragement if the kill total is a multiple of 256, and then
 \ make a nearby explosion sound.
 \
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Comment
 \ Arguments:
 \
 \   X                   The type of the ship that was killed

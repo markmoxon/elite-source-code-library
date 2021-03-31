@@ -312,6 +312,39 @@ ENDIF
  CPY #3                 \ If Y < 3, then the label would clash with the chart
  BCC TT187              \ title, so jump to TT187 to skip printing the label
 
+IF _MASTER_VERSION
+
+ CPY #21                \ If Y > 21, then the label will spill out of the
+ BCS TT187              \ right edge of the screen, so jump to TT187 to skip
+                        \ printing the label
+
+ TYA                    \ Store Y on the stack so it can be preserved across the
+ PHA                    \ call to DIST
+
+ LDA QQ15+3             \ Set A = s1_hi, so A contains the galactic x-coordinate
+                        \ of the system we are displaying on the chart
+
+ JSR DIST               \ Call DIST to calculate the distance between the system
+                        \ with galactic coordinates (A, QQ15+1) - i.e. the
+                        \ system we are displaying - and the current system at
+                        \ (QQ0, QQ1), returning the result in QQ8(1 0)
+
+ PLA                    \ Restore Y from the stack
+ TAY
+
+ LDA QQ8+1              \ If the horizontal distance in QQ18+1 is non-zero,
+ BNE TT187              \ jump to TT187 to skip printing the label
+
+ LDA QQ8                \ If the vertical distance is >= 70, jump to TT187 to
+ CMP #70                \ skip printing the label
+
+.TT187S
+
+ BCS TT187              \ If we jump here with a BCS TT187S, it jumps on to
+                        \ TT187
+
+ENDIF
+
 IF _CASSETTE_VERSION \ Minor
 
  DEX                    \ We entered the EE4 routine with X = 0, so this stores
@@ -319,35 +352,7 @@ IF _CASSETTE_VERSION \ Minor
                         \ so we don't try to print another system's label on
                         \ this row
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
-
- LDA #&FF               \ Store &FF in INWK+Y, to denote that this row is now
- STA INWK,Y             \ occupied so we don't try to print another system's
-                        \ label on this row
-
-ELIF _MASTER_VERSION
-
- CPY #&15
- BCS TT187
-
- TYA
- PHA
- LDA QQ15+3
-
- JSR DIST               \ Calculate the distance between the selected system and
-                        \ the current system
-
- PLA
- TAY
- LDA QQ8+1
- BNE TT187
-
- LDA QQ8
- CMP #&46
-
-.TT187S
-
- BCS TT187
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
  LDA #&FF               \ Store &FF in INWK+Y, to denote that this row is now
  STA INWK,Y             \ occupied so we don't try to print another system's

@@ -82,13 +82,13 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Other
 
  BMI noddlog            \ If the subtraction is negative, jump to noddlog
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION
+IF _6502SP_VERSION OR _MASTER_VERSION \ Other
 
  LDX widget             \ Set A = high byte of log(A) - high byte of log(Q)
  LDA log,X
@@ -110,7 +110,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Other
 
 .noddlog
 
@@ -132,9 +132,11 @@ IF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- BCS LL2
+ BCS LL2                \ If the subtraction fitted into one byte and didn't
+                        \ underflow, then log(A) - log(Q) < 256, so we jump to
+                        \ LL2 to return a result of 255
 
- LDX #&FE
+ LDX #254               \ Otherwise set the result in R to 254
  STX R
 
 ENDIF

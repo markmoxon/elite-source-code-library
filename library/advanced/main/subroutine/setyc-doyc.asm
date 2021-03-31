@@ -7,7 +7,7 @@ ELIF _MASTER_VERSION
 ENDIF
 \       Type: Subroutine
 \   Category: Text
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
 \    Summary: Implement the #SETYC <row> command (move the text cursor to a
 \             specific row)
 ELIF _MASTER_VERSION
@@ -16,7 +16,7 @@ ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
 \ This routine is run when the parasite sends a #SETYC <row> command. It updates
 \ the text cursor y-coordinate (i.e. the text row) in YC.
 \

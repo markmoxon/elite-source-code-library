@@ -375,7 +375,7 @@ IF _DISC_FLIGHT \ Platform
 
 .more
 
- LDA CPIR
+ LDA CPIR               \ Set A to the ship type in CPIR
 
 ENDIF
 

@@ -39,7 +39,7 @@ ENDIF
 
 .TRANTABLE
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Platform
 
  EQUB &03, &8C, &40     \ MOS code
  EQUB &FE, &A0, &7F

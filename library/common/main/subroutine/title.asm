@@ -25,7 +25,7 @@ ENDIF
 \   X                   The type of the ship to show (see variable XX21 for a
 \                       list of ship types)
 \
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Comment
 \
 \   Y                   The distance to show the ship rotating, once it has
 \                       finished moving towards us

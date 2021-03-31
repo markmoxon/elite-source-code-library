@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Comment
 \       Name: TTX66
 ELIF _MASTER_VERSION
 \       Name: TTX662
@@ -19,7 +19,7 @@ ENDIF
 \ Clear the top part of the screen (the space view) and draw a white border
 \ along the top and sides.
 \
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Comment
 \ Other entry points:
 \
 \   BOX                 Just draw the border and (if this is a space view) the

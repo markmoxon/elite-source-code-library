@@ -8,7 +8,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Comment
 \ Keyboard table for in-flight controls. This table contains the internal key
 \ codes for the flight keys (see p.142 of the Advanced User Guide for a list of
 \ internal key numbers).

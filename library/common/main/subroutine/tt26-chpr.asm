@@ -410,7 +410,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDX #(FONT%+1)         \ A is 64-126, so set X to point to page FONT% + 1
 
- ENDIF
+ENDIF
 
  ASL A                  \ If bit 5 of the character is clear (A is 64-95)
  BCC P%+3               \ then skip the following instruction

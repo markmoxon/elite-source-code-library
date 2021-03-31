@@ -440,7 +440,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Tube
  EOR (SC),Y             \ Draw the stick on row Y of the character block using
  STA (SC),Y             \ EOR logic
 
- DEX                    \ Decrement (positive) the stick height in X
+ DEX                    \ Decrement the (positive) stick height in X
 
  BNE VLL1               \ If we still have more stick to draw, jump up to VLL1
                         \ to draw the next pixel
@@ -498,7 +498,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Tube
  EOR (SC),Y             \ Draw the stick on row Y of the character block using
  STA (SC),Y             \ EOR logic
 
- INX                    \ Decrement the (negative) stick height in X
+ INX                    \ Increment the (negative) stick height in X
 
  BNE VLL2               \ If we still have more stick to draw, jump up to VLL2
                         \ to draw the next pixel
@@ -524,36 +524,57 @@ ELIF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- BEQ RTS                \ ???
+ BEQ RTS                \ If the stick height is zero, then there is no stick to
+                        \ draw, so return from the subroutine (as RTS contains
+                        \ an RTS)
 
- BCC RTS_PLUS_1
+ BCC VL3                \ If the C flag is clear then the stick height in A is
+                        \ negative, so jump down to RTS+1
 
- TAX
- INX
- JMP VL1
+ TAX                    \ Copy the (positive) stick height into X
+
+ INX                    \ Increment the (positive) stick height in X
+
+ JMP VLL1a              \ Jump into the middle of the VLL1 loop, skipping the
+                        \ drawing of first pixel in the stick
 
 .VLL1
 
  LDA R                  \ The call to CPIX2 above saved the dash's right pixel
-                        \ byte in R, so we load this into A
+                        \ byte in R, so we load this into A (so the stick comes
+                        \ out of the right side of the dot)
 
  EOR (SC),Y             \ Draw the bottom row of the double-height dot using the
  STA (SC),Y             \ same byte as the top row, plotted using EOR logic
 
+.VLL1a
+
+                        \ If we get here then the stick length is positive (so
+                        \ the dot is below the ellipse and the stick is above
+                        \ the dot, and we need to draw the stick upwards from
+                        \ the dot)
+
+ DEY                    \ We want to draw the stick upwards, so decrement the
+                        \ pixel row in Y
+
+ BPL VL1                \ If Y is still positive then it correctly points at the
+                        \ line above, so jump to VL1 to skip the following
+
+ LDA SC+1               \ Subtract 2 from the high byte of the screen address to
+ SBC #2                 \ move to the character block above
+ STA SC+1
+
+ LDY #7                 \ We just decremented Y up through the top of the
+                        \ character block, so we need to move it to the last row
+                        \ in the character above, so set Y to 7, the number of
+                        \ the last row
+
 .VL1
 
- DEY
- BPL L16F9
+ DEX                    \ Decrement the (positive) stick height in X
 
- LDA SC+1
- SBC #&02
- STA SC+1
- LDY #&07
-
-.L16F9
-
- DEX
- BNE VLL1
+ BNE VLL1               \ If we still have more stick to draw, jump up to VLL1
+                        \ to draw the next pixel
 
 .RTS
 
@@ -562,41 +583,60 @@ ELIF _MASTER_VERSION
 
  RTS
 
-.RTS_PLUS_1
+.VL3
 
- LDA Y2
+                        \ If we get here then the stick length is negative (so
+                        \ the dot is above the ellipse and the stick is below
+                        \ the dot, and we need to draw the stick downwards from
+                        \ the dot)
+
+ LDA Y2                 \ Set A = Y2 - Y1 to get the positive stick height
  SEC
  SBC Y1
- TAX
- INX
- JMP VL2
+
+ TAX                    \ Copy the (positive) stick height into X
+
+ INX                    \ Increment the (positive) stick height in X
+
+ JMP VLL2a              \ Jump into the middle of the VLL2 loop, skipping the
+                        \ drawing of first pixel in the stick
 
 .VLL2
 
- LDA R
- EOR (SC),Y
- STA (SC),Y
+ LDA R                  \ The call to CPIX2 above saved the dash's right pixel
+                        \ byte in R, so we load this into A (so the stick comes
+                        \ out of the right side of the dot)
+
+ EOR (SC),Y             \ Draw the bottom row of the double-height dot using the
+ STA (SC),Y             \ same byte as the top row, plotted using EOR logic
+
+.VLL2a
+
+ INY                    \ We want to draw the stick itself, heading downwards,
+                        \ so increment the pixel row in Y
+
+ CPY #8                 \ If the row number in Y is less than 8, then it
+ BNE VL2                \ correctly points at the next line down, so jump to
+                        \ VL2 to skip the following
+
+ LDA SC+1               \ We just incremented Y down through the bottom of the
+ ADC #1                 \ character block, so increment the high byte of the
+ STA SC+1               \ screen address to move to the character block above
+
+ LDY #0                 \ We need to move to the first row in the character
+                        \ below, so set Y to 0, the number of the first row
 
 .VL2
 
- INY
- CPY #&08
- BNE L171F
+ DEX                    \ Decrement the (positive) stick height in X
 
- LDA SC+1
- ADC #&01
- STA SC+1
- LDY #&00
-
-.L171F
-
- DEX
- BNE VLL2
+ BNE VLL2               \ If we still have more stick to draw, jump up to VLL2
+                        \ to draw the next pixel
 
  LDA #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
  STA VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
 
- RTS
+ RTS                    \ Return from the subroutine
 
 ENDIF
 

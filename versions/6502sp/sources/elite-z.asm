@@ -101,7 +101,7 @@ PARMAX = 15             \ The number of dashboard parameters transmitted with
 
 INCLUDE "library/6502sp/io/workspace/zp.asm"
 INCLUDE "library/6502sp/io/variable/table.asm"
-INCLUDE "library/6502sp/io/workspace/font_per_cent.asm"
+INCLUDE "library/advanced/main/variable/font_per_cent.asm"
 INCLUDE "library/6502sp/io/variable/log.asm"
 INCLUDE "library/6502sp/io/variable/logl.asm"
 INCLUDE "library/6502sp/io/variable/antilog.asm"

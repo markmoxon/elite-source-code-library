@@ -1,7 +1,7 @@
 \ ******************************************************************************
 \
 \       Name: FONT%
-\       Type: Workspace
+\       Type: Variable
 \   Category: Text
 \    Summary: A copy of the character definition bitmap table from the MOS ROM
 \
@@ -24,9 +24,21 @@
 \
 \ ******************************************************************************
 
+IF _6502SP_VERSION
+
 ORG CODE%
+
+ENDIF
 
 FONT% = P% DIV 256
 
+IF _6502SP_VERSION
+
 INCBIN "versions/6502sp/binaries/P.FONT.bin"
+
+ELIF _MASTER_VERSION
+
+INCBIN "versions/master/binaries/P.FONT.bin"
+
+ENDIF
 

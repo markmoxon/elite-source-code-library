@@ -287,84 +287,7 @@ INCLUDE "library/master/main/subroutine/sound.asm"
 
 INCLUDE "library/master/main/subroutine/noisehit.asm"
 INCLUDE "library/master/main/subroutine/noiselaser.asm"
-
-\ ******************************************************************************
-\
-\       Name: NOISE
-\       Type: Subroutine
-\   Category: Sound
-\    Summary: Make the sound whose number is in Y
-\
-\ ------------------------------------------------------------------------------
-\
-\ The following sounds can be made by this routine. Two-part noises are made by
-\ consecutive calls to this routine woth different values of Y.
-\
-\   0       Long, low beep
-\   1       Short, high beep
-\   3, 5    Lasers fired by us
-\   4       We died / Collision / Our depleted shields being hit by lasers
-\   6       We made a hit or kill / Energy bomb / Other ship exploding
-\   7       E.C.M. on
-\   8       Missile launched / Ship launched from station
-\   9, 5    We're being hit by lasers
-\   10, 11  Hyperspace drive engaged
-\
-\ Arguments:
-\
-\   Y                   The number of the sound to be made from the above table
-\
-\ ******************************************************************************
-
-.NOISE
-
- LDA DNOIZ              \ ???
- BNE SRTS
-
- LDA SFX2,Y
- LSR A
- CLV
- LDX #0
- BCS NS1
-
- INX
- LDA SBUF+13
- CMP SBUF+14
- BCC NS1
-
- INX
-
-.NS1
-
- LDA SFX1,Y
- CMP SBUF+12,X
- BCC SRTS
-
- SEI
- STA SBUF+12,X
- LSR A
- AND #&07
- STA SBUF+6,X
- LDA SFX4,Y
- STA SBUF+9,X
- LDA SFX2,Y
- STA SBUF+3,X
- AND #&0F
- LSR A
- STA SBUF+15,X
- LDA SFX3,Y
- BVC P%+3
-
- ASL A
-
- STA SBUF+18,X
- LDA #&80
- STA SBUF,X
- CLI
-
- SEC
-
- RTS
+INCLUDE "library/common/main/subroutine/noise.asm"
 
 \ ******************************************************************************
 \
@@ -594,22 +517,17 @@ INCLUDE "library/common/main/subroutine/dilx.asm"
 INCLUDE "library/common/main/subroutine/dil2.asm"
 INCLUDE "library/master/main/subroutine/add_duplicate.asm"
 
-FONT% = &24             \ ??? 768 bytes in bin file at &2400, use font_per_cent.asm, update comments
-
-\FONT% = P% DIV 256
-
-\INCBIN "binaries/P.FONT.bin"
-
 IF _MATCH_EXTRACTED_BINARIES
 
  INCBIN "versions/master/extracted/sng47/workspaces/ELTA-align1.bin"
 
 ELSE
 
- SKIP 845               \ These bytes appear to be unused
+ SKIP 77                 \ These bytes appear to be unused
 
 ENDIF
 
+INCLUDE "library/advanced/main/variable/font_per_cent.asm"
 INCLUDE "library/advanced/main/variable/log.asm"
 INCLUDE "library/advanced/main/variable/logl.asm"
 INCLUDE "library/advanced/main/variable/antilog.asm"

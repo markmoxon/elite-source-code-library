@@ -7,11 +7,19 @@
 \
 \ ------------------------------------------------------------------------------
 \
+IF _6502SP_VERSION \ Comment
 \ This is a copy of the keyboard translation table from the BBC Micro's MOS 1.20
 \ ROM. The value at offset n is the lower-case ASCII value of the key with
 \ internal key number n, so for example the value at offset &10 is &71, which is
 \ 113, or ASCII "q", so internal key number &10 is the key number of the "Q"
 \ key.
+ELIF _MASTER_VERSION
+\ This is a copy of the keyboard translation table from the BBC Master's MOS
+\ 3.20 ROM. The value at offset n is the upper-case ASCII value of the key with
+\ internal key number n, so for example the value at offset &10 is &51, which is
+\ 81, or ASCII "Q", so internal key number &10 is the key number of the "Q"
+\ key.
+ENDIF
 \
 \ Valid internal key numbers are Binary Coded Decimal (BCD) numbers in the range
 \ &10 top &79, so they're in the ranges &10 to &19, then &20 to &29, then &30 to
@@ -98,7 +106,7 @@ IF _6502SP_VERSION
                         \ Internal key numbers &60 to &69:
                         \
  EQUB &00, &7A          \ TAB           Z
- EQUB &20, &76          \ SPACE         V
+ EQUB &20, &76          \ Space         V
  EQUB &62, &6D          \ B             M
  EQUB &2C, &2E          \ ,             .
  EQUB &2F, &8B          \ /             COPY
@@ -120,26 +128,89 @@ IF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- EQUB &00               \ ???
+ EQUB &00, &40, &FE     \ MOS code
+ EQUB &A0, &5F, &8C
+ EQUB &43, &FE, &8E
+ EQUB &4F, &FE, &EA
+ EQUB &AE, &4F, &FE
+ EQUB &60
 
- EQUB &40,&FE,&A0,&5F,&8C,&43,&FE,&8E
- EQUB &4F,&FE,&EA,&AE,&4F,&FE,&60
- 
- EQUB &51
- EQUB &33,&34,&35,&84,&38,&87,&2D,&5E
- EQUB &8C,&36,&37,&BC,&00,&FC,&60,&80
- EQUB &57,&45,&54,&37,&49,&39,&30,&5F
- EQUB &8E,&38,&39,&BC,&00,&FD,&60,&31
- EQUB &32,&44,&52,&36,&55,&4F,&50,&5B
- EQUB &8F,&81,&82,&0D,&4C,&20,&02,&01
- EQUB &41,&58,&46,&59,&4A,&4B,&40,&3A
- EQUB &0D,&83,&7F,&AE,&4C,&FE,&FD,&02
- EQUB &53,&43,&47,&48,&4E,&4C,&3B,&5D
- EQUB &7F,&85,&84,&86,&4C,&FA,&00,&00
- EQUB &5A,&20,&56,&42,&4D,&2C,&2E,&2F
- EQUB &8B,&30,&31,&33,&00,&00,&00,&1B
- EQUB &81,&82,&83,&85,&86,&88,&89,&5C
- EQUB &8D,&34,&35,&32,&2C,&4E,&E3
+                        \ Internal key numbers &10 to &19:
+                        \
+ EQUB &51, &33          \ Q             3
+ EQUB &34, &35          \ 4             5
+ EQUB &84, &38          \ f4            8
+ EQUB &87, &2D          \ f7            -
+ EQUB &5E, &8C          \ ^             Left arrow
+
+ EQUB &36, &37, &BC     \ MOS code
+ EQUB &00, &FC, &60
+
+                        \ Internal key numbers &20 to &29:
+                        \
+ EQUB &80, &57          \ f0            W
+ EQUB &45, &54          \ E             T
+ EQUB &37, &49          \ 7             I
+ EQUB &39, &30          \ 9             0
+ EQUB &5F, &8E          \ _             Down arrow
+
+ EQUB &38, &39, &BC     \ MOS code
+ EQUB &00, &FD, &60
+
+                        \ Internal key numbers &30 to &39:
+                        \
+ EQUB &31, &32          \ 1             2
+ EQUB &44, &52          \ D             R
+ EQUB &36, &55          \ 6             U
+ EQUB &4F, &50          \ O             P
+ EQUB &5B, &8F          \ [             Up arrow
+
+ EQUB &81, &82, &0D     \ MOS code
+ EQUB &4C, &20, &02
+
+                        \ Internal key numbers &40 to &49:
+                        \
+ EQUB &01, &41          \ CAPS LOCK     A
+ EQUB &58, &46          \ X             F
+ EQUB &59, &4A          \ Y             J
+ EQUB &4B, &40          \ K             @
+ EQUB &3A, &0D          \ :             RETURN
+
+ EQUB &83, &7F, &AE     \ MOS code
+ EQUB &4C, &FE, &FD
+
+                        \ Internal key numbers &50 to &59:
+                        \
+ EQUB &02, &53          \ SHIFT LOCK    S
+ EQUB &43, &47          \ C             G
+ EQUB &48, &4E          \ H             N
+ EQUB &4C, &3B          \ L             ;
+ EQUB &5D, &7F          \ ]             DELETE
+
+ EQUB &85, &84, &86     \ MOS code
+ EQUB &4C, &FA, &00
+
+                        \ Internal key numbers &60 to &69:
+                        \
+ EQUB &00, &5A          \ TAB           Z
+ EQUB &20, &56          \ Space         V
+ EQUB &42, &4D          \ B             M
+ EQUB &2C, &2E          \ ,             .
+ EQUB &2F, &8B          \ /             COPY
+
+ EQUB &30, &31, &33     \ MOS code
+ EQUB &00, &00, &00
+
+                        \ Internal key numbers &70 to &79:
+                        \
+ EQUB &1B, &81          \ ESCAPE        f1
+ EQUB &82, &83          \ f2            f3
+ EQUB &85, &86          \ f5            f6
+ EQUB &88, &89          \ f8            f9
+ EQUB &5C, &8D          \ \             Right arrow
+
+ EQUB &34, &35, &32     \ MOS code
+ EQUB &2C, &4E, &E3
 
 ENDIF
 

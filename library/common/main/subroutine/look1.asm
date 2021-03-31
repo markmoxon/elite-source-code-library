@@ -47,7 +47,7 @@ IF _MASTER_VERSION
                         \ our energy bomb is not going off
 
  JSR BOMBLINES          \ Our energy bomb is going off, so call BOMBLINES to
-                        \ draw the zigzag "electricity" lines
+                        \ draw the zig-zag lightning bolt
 
 ENDIF
 
@@ -89,7 +89,7 @@ IF _MASTER_VERSION
                         \ our energy bomb is not going off
 
  JSR BOMBLINES          \ Our energy bomb is going off, so call BOMBLINES to
-                        \ draw the zigzag "electricity" lines
+                        \ draw the zig-zag lightning bolt
 
 ENDIF
 

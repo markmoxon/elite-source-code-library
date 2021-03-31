@@ -20,7 +20,7 @@
 \
 \ The key presses that are processed are as follows:
 \
-\   * SPACE and "?" to speed up and slow down
+\   * Space and "?" to speed up and slow down
 \   * "U", "T" and "M" to disarm, arm and fire missiles
 \   * TAB to fire an energy bomb
 \   * ESCAPE to launch an escape pod
@@ -184,8 +184,8 @@ IF _MASTER_VERSION
                         \ any more (or it never was), so skip the following
                         \ instruction
 
- JSR BOMBSFX            \ Call BOMBSFX to make the sound of our energy bomb
-                        \ going off
+ JSR BOMBINIT           \ Call BOMBINIT to set up and display a new energy bomb
+                        \ zig-zag lightning bolt
 
 ENDIF
 

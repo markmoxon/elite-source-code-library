@@ -372,12 +372,7 @@ ENDIF
                         \
                         \ We'll refer to this below
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Platform
-
- LDX #&BF               \ Set X to point to the first font page in ROM minus 1,
-                        \ which is &C0 - 1, or &BF
-
-ELIF _6502SP_VERSION
+IF _6502SP_VERSION
 
 \BEQ RR4                \ This instruction is commented out in the original
                         \ source, but it would return from the subroutine if A
@@ -388,14 +383,18 @@ ELIF _6502SP_VERSION
 
  JMP RR4                \ A >= 128, so jump to RR4 to restore the registers and
                         \ return from the subroutine using a tail call
+                        
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Platform
+
+ LDX #&BF               \ Set X to point to the first font page in ROM minus 1,
+                        \ which is &C0 - 1, or &BF
+
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDX #(FONT%-1)         \ Set X to point to the page before the first font page,
                         \ which is FONT% - 1
-
-ELIF _MASTER_VERSION
-
- LDX #&23               \ ??? Need to change comments above to reflect address
-                        \ of Master character definitions (at &2300 and &2500?)
 
 ENDIF
 
@@ -407,15 +406,11 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Platform
 
  LDX #&C1               \ A is 64-126, so set X to point to page &C1
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDX #(FONT%+1)         \ A is 64-126, so set X to point to page FONT% + 1
 
-ELIF _MASTER_VERSION
-
- LDX #&25               \ ???
-
-ENDIF
+ ENDIF
 
  ASL A                  \ If bit 5 of the character is clear (A is 64-95)
  BCC P%+3               \ then skip the following instruction

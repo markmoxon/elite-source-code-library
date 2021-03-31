@@ -31,7 +31,7 @@ IF _CASSETTE_VERSION \ Label
 
 KYTB = P% - 1           \ Point KYTB to the byte before the start of the table
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
 .KYTB
 
@@ -44,11 +44,13 @@ IF _6502SP_VERSION OR _DISC_FLIGHT \ Label
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
+
                         \ These are the primary flight controls (pitch, roll,
                         \ speed and lasers):
 
  EQUB &68 + 128         \ ?         KYTB+1      Slow down
- EQUB &62 + 128         \ SPACE     KYTB+2      Speed up
+ EQUB &62 + 128         \ Space     KYTB+2      Speed up
  EQUB &66 + 128         \ <         KYTB+3      Roll left
  EQUB &67 + 128         \ >         KYTB+4      Roll right
  EQUB &42 + 128         \ X         KYTB+5      Pitch up
@@ -65,6 +67,30 @@ ENDIF
  EQUB &22               \ E         KYTB+13     E.C.M.
  EQUB &45               \ J         KYTB+14     In-system jump
  EQUB &52               \ C         KYTB+15     Docking computer
+
+ELIF _MASTER_VERSION
+
+ EQUB &DD EOR 255       \ E         KYTB+0    KY13     E.C.M.
+ EQUB &DC EOR 255       \ T         KYTB+1    KY10     Arm missile
+ EQUB &CA EOR 255       \ U         KYTB+2    KY11     Unarm missile
+ EQUB &C8 EOR 255       \ P         KYTB+3    KY16     Cancel docking computer
+ EQUB &BE EOR 255       \ A         KYTB+4    KY7      Fire lasers
+ EQUB &BD EOR 255       \ X         KYTB+5    KY5      Pitch up
+ EQUB &BA EOR 255       \ J         KYTB+6    KY14     In-system jump
+ EQUB &AE EOR 255       \ S         KYTB+7    KY6      Pitch down
+ EQUB &AD EOR 255       \ C         KYTB+8    KY15     Docking computer
+ EQUB &9F EOR 255       \ TAB       KYTB+9    KY8      Energy bomb
+ EQUB &9D EOR 255       \ Space     KYTB+10   KY2      Speed up
+ EQUB &9A EOR 255       \ M         KYTB+11   KY12     Fire missile
+ EQUB &99 EOR 255       \ <         KYTB+12   KY3      Roll left
+ EQUB &98 EOR 255       \ >         KYTB+13   KY4      Roll right
+ EQUB &97 EOR 255       \ ?         KYTB+14   KY1      Slow down
+ EQUB &8F EOR 255       \ ESCAPE    KYTB+15   KY9      Launch escape pod
+
+ EQUB &F0               \ This value just has to be higher than &80 to act as a
+                        \ terminator for the KYTB matching process in DKS1
+
+ENDIF
 
 IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: The lookup table for in-flight keyboard controls contains an extra entry in the enhanced versions, for "P" (cancel docking computer)
 

@@ -40,8 +40,10 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- JSR BOMBFX             \ Call BOMBFX to make the sound of our energy bomb
-                        \ going off
+ JSR BOMBFX             \ Call BOMBFX to erase the energy bomb zig-zag lightning
+                        \ bolt that we drew in part 3, make the sound of the
+                        \ energy bomb going off, draw a new lightning bolt, and
+                        \ repeat the process four times so the bolt flashes
 
  ASL BOMB               \ We set off our energy bomb, so rotate BOMB to the
                         \ left by one place. BOMB was rotated left once already
@@ -52,10 +54,11 @@ ELIF _MASTER_VERSION
                         \ (BOMB > 0) for four iterations of the main loop
 
  BMI MA77               \ If the result has bit 7 set, skip the following
-                        \ instruction
+                        \ instruction as the bomb is still going off
 
- JSR BOMBLINES          \ Our energy bomb is going off, so call BOMBLINES to
-                        \ draw the zigzag "electricity" lines
+ JSR BOMBLINES          \ Our energy bomb has finished going off, so call
+                        \ BOMBLINES to draw the zig-zag lightning bolt, which
+                        \ erases it from the screen
 
 ENDIF
 

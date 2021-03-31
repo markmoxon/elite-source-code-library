@@ -123,7 +123,9 @@ ELIF _MASTER_VERSION
  EQUB &00               \ ???
 
  EQUB &40,&FE,&A0,&5F,&8C,&43,&FE,&8E
- EQUB &4F,&FE,&EA,&AE,&4F,&FE,&60,&51
+ EQUB &4F,&FE,&EA,&AE,&4F,&FE,&60
+ 
+ EQUB &51
  EQUB &33,&34,&35,&84,&38,&87,&2D,&5E
  EQUB &8C,&36,&37,&BC,&00,&FC,&60,&80
  EQUB &57,&45,&54,&37,&49,&39,&30,&5F

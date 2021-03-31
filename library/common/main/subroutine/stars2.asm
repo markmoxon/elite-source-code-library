@@ -252,11 +252,19 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- AND #%01111111         \ If |x_hi| <= deltX then jump to KILL2 to recycle this
- EOR #%01111111         \ particle, as it's gone off the side of the screen,
- CMP deltX              \ and re-join at STC2 with the new particle ???
- BCC KILL2
- BEQ KILL2
+ AND #%01111111         \ Set A = ~|x_hi|, which is the same as -(x_hi + 1)
+ EOR #%01111111         \ using two's complement
+
+ CMP deltX              \ If deltX <= -(x_hi + 1), then the particle has been
+ BCC KILL2              \ moved off the side of the screen and has wrapped
+ BEQ KILL2              \ round to the other side, jump to KILL2 to recycle this
+                        \ particle and re-join at STC2 with the new particle
+                        \
+                        \ In the other BBC versions, this test simply checks
+                        \ whether |x_hi| >= 116, but this version using deltX
+                        \ doesn't hard-code the screen width, so this is
+                        \ presumably a change that was introduced to support
+                        \ the different screen sizes of the other platforms
 
 ENDIF
 

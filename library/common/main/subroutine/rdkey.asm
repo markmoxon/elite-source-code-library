@@ -1,0 +1,129 @@
+\ ******************************************************************************
+\
+\       Name: RDKEY
+\       Type: Subroutine
+\   Category: Keyboard
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Comment
+\    Summary: Scan the keyboard for key presses
+ELIF _6502SP_VERSION
+\    Summary: Scan the keyboard for key presses by sending an OSWORD 240 command
+\             to the I/O processor
+ENDIF
+\
+\ ------------------------------------------------------------------------------
+\
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+\ Scan the keyboard, starting with internal key number 16 ("Q") and working
+\ through the set of internal key numbers (see p.142 of the Advanced User Guide
+\ for a list of internal key numbers).
+ELIF _MASTER_VERSION
+\ Scan the keyboard, starting with internal key number 16 ("Q") and working
+\ through the set of internal key numbers.
+ELIF _6502SP_VERSION
+\ This routine sends an OSWORD 240 command to the I/O processor to ask it to
+\ scan the keyboard, starting with internal key number 16 ("Q") and working
+\ through the set of internal key numbers (see p.142 of the Advanced User Guide
+\ for a list of internal key numbers). The results are copied from the I/O
+\ processor into the key logger buffer at KTRAN.
+ENDIF
+\
+\ This routine is effectively the same as OSBYTE 122, though the OSBYTE call
+\ preserves A, unlike this routine.
+\
+\ Returns:
+\
+\   X                   If a key is being pressed, X contains the internal key
+\                       number, otherwise it contains 0
+\
+\   A                   Contains the same as X
+\
+IF _MASTER_VERSION
+\   Y                   Y is preserved
+\
+\ Other entry points:
+\
+\   RDKEY-1             Only scan the keyboard for valid BCD key numbers
+\
+ENDIF
+\ ******************************************************************************
+
+IF _MASTER_VERSION
+
+ SED                    \ Set the D flag to enter decimal mode. Because
+                        \ internal key numbers are all valid BCD (Binary Coded
+                        \ Decimal) numbers, setting this flag ensures we only
+                        \ loop through valid key numbers
+
+ENDIF
+
+.RDKEY
+
+IF _CASSETTE_VERSION OR _DISC_VERSION
+
+ LDX #16                \ Start the scan with internal key number 16 ("Q")
+
+.Rd1
+
+ JSR DKS4               \ Scan the keyboard to see if the key in X is currently
+                        \ being pressed, returning the result in A and X
+
+ BMI Rd2                \ Jump to Rd2 if this key is being pressed (in which
+                        \ case DKS4 will have returned the key number with bit
+                        \ 7 set, which is negative)
+
+ INX                    \ Increment the key number, which was unchanged by the
+                        \ above call to DKS4
+
+ BPL Rd1                \ Loop back to test the next key, ending the loop when
+                        \ X is negative (i.e. 128)
+
+ TXA                    \ If we get here, nothing is being pressed, so copy X
+                        \ into A so that X = A = 128 = %10000000
+
+.Rd2
+
+ EOR #%10000000         \ EOR A with #%10000000 to flip bit 7, so A now contains
+                        \ 0 if no key has been pressed, or the internal key
+                        \ number if a key has been pressed
+
+ TAX                    \ Copy A into X
+
+ELIF _6502SP_VERSION
+
+ LDA #240               \ Set A in preparation for sending an OSWORD 240 command
+
+ LDY #HI(buf)           \ Set (Y X) to point to the parameter block at buf
+ LDX #LO(buf)
+
+ JSR OSWORD             \ Send an OSWORD 240 command to the I/O processor to
+                        \ scan the keyboard and joysticks, and populate the key
+                        \ logger buffer in KTRAN, which is the part of the buf
+                        \ buffer just after the two OSWORD size bytes
+
+ LDX KTRAN              \ Set X to the first byte of the updated KTRAN, which
+                        \ contains the internal key number of the key being
+                        \ pressed, or 0 if there is no keypress
+
+ TXA                    \ Copy X into A
+
+ELIF _MASTER_VERSION
+
+ TYA                    \ Store Y on the stack so we can retrieve it later
+ PHA
+
+ JSR RDKEY2             \ Call RDKEY2 to scan the keyboard, update the key logger
+                        \ and return any non-logger key presses in X
+
+ PLA                    \ Retrieve the value of Y we stored above
+ TAY
+
+ LDA TRANTABLE,X        \ Fetch the internal key number for the key pressed
+
+ STA KL                 \ Store the key pressed in KL
+
+ TAX                    \ Copy the key value into X
+
+ENDIF
+
+ RTS                    \ Return from the subroutine
+

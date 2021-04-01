@@ -221,8 +221,8 @@ ELIF _MASTER_VERSION
  BMI P%+4               \ If the updated acceleration is negative, skip the
                         \ following instruction
 
- LDX #11                \ Set X = 11, so we "press" KY+11, i.e. KY2, with the next
-                        \ instruction (Space, speed up)
+ LDX #11                \ Set X = 11, so we "press" KY+11, i.e. KY2, with the
+                        \ next instruction (Space, speed up)
 
  STA KL,X               \ Store &FF in either KY1 or KY2 to "press" the relevant
                         \ key, depending on whether the updated acceleration is

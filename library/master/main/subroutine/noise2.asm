@@ -112,7 +112,8 @@
 
  DEY                    \ Decrement the loop counter
 
- BPL NSL1               \ Loop back to NSL1 until we have done all three channels
+ BPL NSL1               \ Loop back to NSL1 until we have done all three
+                        \ channels
 
 .NS9
 

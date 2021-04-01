@@ -111,8 +111,8 @@ ELIF _MASTER_VERSION
  TYA                    \ Store Y on the stack so we can retrieve it later
  PHA
 
- JSR RDKEY2             \ Call RDKEY2 to scan the keyboard, update the key logger
-                        \ and return any non-logger key presses in X
+ JSR RDKEY2             \ Call RDKEY2 to scan the keyboard, update the key
+                        \ logger and return any non-logger key presses in X
 
  PLA                    \ Retrieve the value of Y we stored above
  TAY

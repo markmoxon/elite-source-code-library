@@ -231,7 +231,7 @@ ORG CODE_WORDS%
 
 INCLUDE "library/common/main/macro/char.asm"
 INCLUDE "library/common/main/macro/twok.asm"
-INCLUDE "library/common/main/macro/ctrl.asm"
+INCLUDE "library/common/main/macro/cont.asm"
 INCLUDE "library/common/main/macro/rtok.asm"
 INCLUDE "library/common/main/variable/qq18.asm"
 INCLUDE "library/common/main/variable/sne.asm"

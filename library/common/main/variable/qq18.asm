@@ -12,7 +12,7 @@
 
  RTOK 111               \ Token 0:      "FUEL SCOOPS ON {beep}"
  RTOK 131               \
- CTRL 7                 \ Encoded as:   "[111][131]{7}"
+ CONT 7                 \ Encoded as:   "[111][131]{7}"
  EQUB 0
 
  CHAR ' '               \ Token 1:      " CHART"
@@ -36,7 +36,7 @@
  TWOK 'A', 'T'          \
  CHAR 'A'               \ Encoded as:   "D<145>A[131]{3}"
  RTOK 131
- CTRL 3
+ CONT 3
  EQUB 0
 
 IF _CASSETTE_VERSION \ Platform
@@ -47,7 +47,7 @@ IF _CASSETTE_VERSION \ Platform
  CHAR 'T'               \ Encoded as:   "<140><150>NT<153>Y{13}"
  TWOK 'O', 'R'
  CHAR 'Y'
- CTRL 13
+ CONT 13
  EQUB 0
 
 ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
@@ -58,7 +58,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
  CHAR 'T'               \ Encoded as:   "<140><150>NT<153>Y{12}"
  TWOK 'O', 'R'
  CHAR 'Y'
- CTRL 12
+ CONT 12
  EQUB 0
 
 ENDIF
@@ -75,7 +75,7 @@ ENDIF
  TWOK 'C', 'E'          \ Encoded as:   "P<158><133>"
  EQUB 0
 
- CTRL 2                 \ Token 7:      "{current system name} MARKET PRICES"
+ CONT 2                 \ Token 7:      "{current system name} MARKET PRICES"
  CHAR ' '               \
  TWOK 'M', 'A'          \ Encoded as:   "{2} <139>RKET [6]S"
  CHAR 'R'
@@ -398,7 +398,7 @@ ENDIF
 
  RTOK 122               \ Token 39:     "GALACTIC CHART{galaxy number}"
  RTOK 1                 \
- CTRL 1                 \ Encoded as:   "[122][1]{1}"
+ CONT 1                 \ Encoded as:   "[122][1]{1}"
  EQUB 0
 
  CHAR 'T'               \ Token 40:     "TARGET LOST"
@@ -457,7 +457,7 @@ ENDIF
  TWOK 'A', 'R'          \ Encoded as:   " C<138>GO{6}"
  CHAR 'G'
  CHAR 'O'
- CTRL 6
+ CONT 6
  EQUB 0
 
  CHAR 'E'               \ Token 47:     "EQUIP"
@@ -621,12 +621,12 @@ IF _CASSETTE_VERSION \ Enhanced: The enhanced versions contain a strange text to
 
 ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
- CTRL 12                \ Token 65:     "{cr}
+ CONT 12                \ Token 65:     "{cr}
  CHAR '1'               \                10{cash} CR5{cash} CR"
  CHAR '0'               \
- CTRL 0                 \ Encoded as:   "{12}10{0}5{0}"
+ CONT 0                 \ Encoded as:   "{12}10{0}5{0}"
  CHAR '5'
- CTRL 0
+ CONT 0
  EQUB 0
 
 ENDIF
@@ -895,7 +895,7 @@ IF _CASSETTE_VERSION \ Platform
  CHAR ' '               \                 PRODUCT   UNIT PRICE FOR SALE{crlf}
  CHAR ' '               \                                              {lf}"
  RTOK 16                \
- CTRL 13                \ Encoded as:   "[14]  [16]{13} [26]   [14] [6] F<153>
+ CONT 13                \ Encoded as:   "[14]  [16]{13} [26]   [14] [6] F<153>
  CHAR ' '               \                 SA<129>{13}{10}"
  RTOK 26
  CHAR ' '
@@ -911,8 +911,8 @@ IF _CASSETTE_VERSION \ Platform
  CHAR 'S'
  CHAR 'A'
  TWOK 'L', 'E'
- CTRL 13
- CTRL 10
+ CONT 13
+ CONT 10
  EQUB 0
 
 ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
@@ -921,7 +921,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
  CHAR ' '               \                 PRODUCT   UNIT PRICE FOR SALE{cr}{lf}
  CHAR ' '               \               "
  RTOK 16                \
- CTRL 12                \ Encoded as:   "[14]  [16]{13} [26]   [14] [6] F<153>
+ CONT 12                \ Encoded as:   "[14]  [16]{13} [26]   [14] [6] F<153>
  CHAR ' '               \                 SA<129>{12}{10}"
  RTOK 26
  CHAR ' '
@@ -937,8 +937,8 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
  CHAR 'S'
  CHAR 'A'
  TWOK 'L', 'E'
- CTRL 12
- CTRL 10
+ CONT 12
+ CONT 10
  EQUB 0
 
 ENDIF
@@ -968,7 +968,7 @@ ENDIF
  CHAR 'L'               \
  CHAR 'O'               \ Encoded as:   "[121]LOW{7}"
  CHAR 'W'
- CTRL 7
+ CONT 7
  EQUB 0
 
  RTOK 99                \ Token 101:    "RIGHT ON COMMANDER!"
@@ -1156,14 +1156,14 @@ IF _CASSETTE_VERSION \ Minor
 
  RTOK 37                \ Token 119:    "CASH:{cash} CR{crlf}
  CHAR ':'               \               "
- CTRL 0                 \
+ CONT 0                 \
  EQUB 0                 \ Encoded as:   "[37]:{0}"
 
 ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
  RTOK 37                \ Token 119:    "CASH:{cash} CR{cr}
  CHAR ':'               \               "
- CTRL 0                 \
+ CONT 0                 \
  EQUB 0                 \ Encoded as:   "[37]:{0}"
 
 ENDIF
@@ -1193,7 +1193,7 @@ ENDIF
 
 IF _CASSETTE_VERSION \ Enhanced: There's a new token in the enhanced versions for showing that the docking computers are currently switched on. It replaces the request for a commander's name, which isn't required as the disc access menu implements that functionality using extended text tokens
 
- CTRL 13                \ Token 123:    "{crlf}
+ CONT 13                \ Token 123:    "{crlf}
  RTOK 92                \                COMMANDER'S NAME? "
  CHAR '`'               \
  CHAR 'S'               \ Encoded as:   "{13}[92]'S NAME? "
@@ -1234,7 +1234,7 @@ ENDIF
 
 IF _CASSETTE_VERSION \ Comment
 
- CTRL 5                 \ Token 125:    "FUEL: {fuel level} LIGHT YEARS{crlf}
+ CONT 5                 \ Token 125:    "FUEL: {fuel level} LIGHT YEARS{crlf}
  TWOK 'L', 'E'          \                CASH:{cash} CR{crlf}
  CHAR 'G'               \                LEGAL STATUS:"
  TWOK 'A', 'L'          \
@@ -1247,7 +1247,7 @@ IF _CASSETTE_VERSION \ Comment
 
 ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
- CTRL 5                 \ Token 125:    "FUEL: {fuel level} LIGHT YEARS{cr}
+ CONT 5                 \ Token 125:    "FUEL: {fuel level} LIGHT YEARS{cr}
  TWOK 'L', 'E'          \                CASH:{cash} CR{cr}
  CHAR 'G'               \                LEGAL STATUS:"
  TWOK 'A', 'L'          \
@@ -1264,56 +1264,56 @@ IF _CASSETTE_VERSION \ Platform
 
  RTOK 92                \ Token 126:    "COMMANDER {commander name}{crlf}
  CHAR ' '               \                {crlf}
- CTRL 4                 \                {crlf}
- CTRL 13                \                {sentence case}PRESENT SYSTEM{tab to
- CTRL 13                \                column 21}:{current system name}{crlf}
- CTRL 13                \                HYPERSPACE SYSTEM{tab to column 21}:
- CTRL 6                 \                {selected system name}{crlf}
+ CONT 4                 \                {crlf}
+ CONT 13                \                {sentence case}PRESENT SYSTEM{tab to
+ CONT 13                \                column 21}:{current system name}{crlf}
+ CONT 13                \                HYPERSPACE SYSTEM{tab to column 21}:
+ CONT 6                 \                {selected system name}{crlf}
  RTOK 145               \                CONDITION{tab to column 21}:"
  CHAR ' '               \
  RTOK 5                 \ Encoded as:   "[92] {4}{13}{13}{13}{6}[145] [5]{9}{2}
- CTRL 9                 \                {13}[29][5]{9}{3}{13}C<159><141><151>
- CTRL 2                 \                <159>{9}"
- CTRL 13
+ CONT 9                 \                {13}[29][5]{9}{3}{13}C<159><141><151>
+ CONT 2                 \                <159>{9}"
+ CONT 13
  RTOK 29
  RTOK 5
- CTRL 9
- CTRL 3
- CTRL 13
+ CONT 9
+ CONT 3
+ CONT 13
  CHAR 'C'
  TWOK 'O', 'N'
  TWOK 'D', 'I'
  TWOK 'T', 'I'
  TWOK 'O', 'N'
- CTRL 9
+ CONT 9
  EQUB 0
 
 ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
  RTOK 92                \ Token 126:    "COMMANDER {commander name}{cr}
  CHAR ' '               \                {cr}
- CTRL 4                 \                {cr}
- CTRL 12                \                {sentence case}PRESENT SYSTEM{tab to
- CTRL 12                \                column 21}:{current system name}{cr}
- CTRL 12                \                HYPERSPACE SYSTEM{tab to column 21}:
- CTRL 6                 \                {selected system name}{cr}
+ CONT 4                 \                {cr}
+ CONT 12                \                {sentence case}PRESENT SYSTEM{tab to
+ CONT 12                \                column 21}:{current system name}{cr}
+ CONT 12                \                HYPERSPACE SYSTEM{tab to column 21}:
+ CONT 6                 \                {selected system name}{cr}
  RTOK 145               \                CONDITION{tab to column 21}:"
  CHAR ' '               \
  RTOK 5                 \ Encoded as:   "[92] {4}{12}{12}{12}{6}[145] [5]{9}{2}
- CTRL 9                 \                {12}[29][5]{9}{3}{13}C<159><141><151>
- CTRL 2                 \                <159>{9}"
- CTRL 12
+ CONT 9                 \                {12}[29][5]{9}{3}{13}C<159><141><151>
+ CONT 2                 \                <159>{9}"
+ CONT 12
  RTOK 29
  RTOK 5
- CTRL 9
- CTRL 3
- CTRL 12
+ CONT 9
+ CONT 3
+ CONT 12
  CHAR 'C'
  TWOK 'O', 'N'
  TWOK 'D', 'I'
  TWOK 'T', 'I'
  TWOK 'O', 'N'
- CTRL 9
+ CONT 9
  EQUB 0
 
 ENDIF
@@ -1339,8 +1339,8 @@ IF _CASSETTE_VERSION \ Enhanced: See group A
  RTOK 92
  CHAR ' '
  RTOK 65
- CTRL 13
- CTRL 13
+ CONT 13
+ CONT 13
  EQUB 0
 
 ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
@@ -1353,7 +1353,7 @@ ENDIF
 
 IF _CASSETTE_VERSION \ Enhanced: See group A
 
- CTRL 6                 \ Token 129:    "{sentence case}DOCKED"
+ CONT 6                 \ Token 129:    "{sentence case}DOCKED"
  RTOK 124               \
  TWOK 'E', 'D'          \ Encoded as:   "{6}[124]<152>"
  EQUB 0
@@ -1380,26 +1380,26 @@ ENDIF
 
 IF _CASSETTE_VERSION \ Platform
 
- CTRL 13                \ Token 132:    "{crlf}
- CTRL 8                 \                {all caps}EQUIPMENT: {sentence case}"
+ CONT 13                \ Token 132:    "{crlf}
+ CONT 8                 \                {all caps}EQUIPMENT: {sentence case}"
  RTOK 47                \
  CHAR 'M'               \ Encoded as:   "{13}{8}[47]M<146>T:{6}"
  TWOK 'E', 'N'
  CHAR 'T'
  CHAR ':'
- CTRL 6
+ CONT 6
  EQUB 0
 
 ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
- CTRL 12                \ Token 132:    "{cr}
- CTRL 8                 \                {all caps}EQUIPMENT: {sentence case}"
+ CONT 12                \ Token 132:    "{cr}
+ CONT 8                 \                {all caps}EQUIPMENT: {sentence case}"
  RTOK 47                \
  CHAR 'M'               \ Encoded as:   "{12}{8}[47]M<146>T:{6}"
  TWOK 'E', 'N'
  CHAR 'T'
  CHAR ':'
- CTRL 6
+ CONT 6
  EQUB 0
 
 ENDIF
@@ -1523,7 +1523,7 @@ ENDIF
  CHAR 'T'
  EQUB 0
 
- CTRL 8                 \ Token 146:    "{all caps}GAME OVER"
+ CONT 8                 \ Token 146:    "{all caps}GAME OVER"
  CHAR 'G'               \
  CHAR 'A'               \ Encoded as:   "{8}GAME O<150>R"
  CHAR 'M'
@@ -1554,8 +1554,8 @@ IF _CASSETTE_VERSION \ Enhanced: To make room for the new laser tokens, the enha
  CHAR ','
  RTOK 92
  CHAR '.'
- CTRL 13
- CTRL 13
+ CONT 13
+ CONT 13
  EQUB 0
 
  CHAR '('               \ Token 148:    "(C) ACORNSOFT 1984"

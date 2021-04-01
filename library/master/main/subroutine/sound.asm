@@ -7,6 +7,10 @@
 \
 \ ------------------------------------------------------------------------------
 \
+\ Arguments:
+\
+\   A                   The sound byte to send to the 76489 sound chip
+\
 \ Other entry points:
 \
 \   SRTS                Contains an RTS

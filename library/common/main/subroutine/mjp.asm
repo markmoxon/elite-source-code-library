@@ -75,7 +75,7 @@ ENDIF
 
  JSR GTHG               \ Call GTHG to spawn a Thargoid ship
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Advanced: The Master version spawns three Thargoid motherships in witchspace, while the other versions spawn four
 
  LDA #3                 \ Fetch the number of Thargoid ships from MANY+THG, and
  CMP MANY+THG           \ if it is less than or equal to 3, loop back to MJP1 to

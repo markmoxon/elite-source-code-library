@@ -58,7 +58,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: In mission 2, 
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Advanced: In the disc and 6502SP versions there's a 22% chance of spawning a Thargoid during the spawning loop in part 4, while it's a 14% chance in the Master version
 
  JSR DORND              \ Set A and X to random numbers
 

@@ -164,7 +164,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Screen
 
  LDY #3                 \ Fetch byte #2 from the parameter block (the indicator
  LDA (OSSC),Y           \ colour) into A. This is one of #GREEN2, #YELLOW2 or
@@ -179,7 +179,7 @@ ELIF _MASTER_VERSION
 ENDIF
 
 
-IF _6502SP_VERSION OR _MASTER_VERSION
+IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  LDY #5                 \ We now want to draw this line five times to do the
                         \ left two pixels of the indicator, so set a counter in
@@ -247,7 +247,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Platform
 
  PLX                    \ Restore X from the stack, so that it's preserved
 

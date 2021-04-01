@@ -81,7 +81,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Advanced: The Master version has a unique "low beep" sound that has more reverb than in the other versions
 
  LDA #40                \ Call the NOISE routine with A = 40 to make a low,
  JSR NOISE              \ long beep to indicate the missile is now disarmed
@@ -161,7 +161,7 @@ ENDIF
  LDA KY12               \ If TAB is being pressed, keep going, otherwise jump
  BEQ MA76               \ jump down to MA76 to skip the following
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Platform
 
  LDA BOMB               \ If we already set off our energy bomb by pressing TAB,
  BMI MA76               \ then BOMB is now negative, so this skips to MA76 if
@@ -178,7 +178,7 @@ ENDIF
                         \ MAL1 routine below - this just registers the fact that
                         \ we've set the bomb ticking
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Advanced: The Master's energy bomb lightning bolt effect contains 9 random zig-zag lines that are set up in the BOMBINIT routine
 
  BEQ MA76               \ If BOMB now contains 0, then the bomb is not going off
                         \ any more (or it never was), so skip the following
@@ -334,7 +334,7 @@ ENDIF
  STA LAS
  STA LAS2
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Advanced: The Master version has a unique sound for our laser firing
 
  LDA #0                 \ Call the NOISE routine with A = 0 to make the sound
  JSR NOISE              \ of our laser firing

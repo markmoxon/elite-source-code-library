@@ -82,7 +82,7 @@ ENDIF
 
  STX Q                  \ Set Q = T
 
-IF _DISC_DOCKED OR _6502SP_VERSION
+IF _DISC_DOCKED OR _6502SP_VERSION \ Label
  JSR DVID4              \ Calculate the following:
 ELIF _MASTER_VERSION
  JSR DVID4_DUPLICATE    \ Calculate the following:

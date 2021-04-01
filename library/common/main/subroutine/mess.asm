@@ -91,7 +91,7 @@ ENDIF
  BNE me1                \ me1 to erase the current message first (whose token
                         \ number will be in MCH)
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: The Master version flashes in-flight messages 10% more quickly than the other versions
 
  STY DLY                \ Set the message delay in DLY to 22
 

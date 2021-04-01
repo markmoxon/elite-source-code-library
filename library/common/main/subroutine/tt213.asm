@@ -9,7 +9,7 @@
 
 .TT213
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Advanced: In the 6502SP version, you can send the Inventory screen to the printer by pressing SHIFT-f9
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Advanced: In the 6502SP version, you can send the Inventory screen to the printer by pressing CTRL-f9
 
  LDA #8                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 8 (Inventory

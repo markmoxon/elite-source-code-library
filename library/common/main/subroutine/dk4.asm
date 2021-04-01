@@ -46,7 +46,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  STX KL                 \ Store X in KL, byte #0 of the key logger
 
@@ -76,7 +76,7 @@ ENDIF
  JSR RDKEY              \ Scan the keyboard for a key press and return the
                         \ internal key number in X (or 0 for no key press)
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  CPX #&51               \ If "S" is not being pressed, skip to DK6
  BNE DK6
@@ -101,7 +101,7 @@ ENDIF
 
 .DK6
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  LDY #&40               \ We now want to loop through the keys that toggle
                         \ various settings. These have internal key numbers
@@ -124,14 +124,15 @@ ENDIF
 
  INY                    \ Increment Y to point to the next toggle key
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  CPY #&47               \ The last toggle key is &46 (K), so check whether we
                         \ have just done that one
 
 ELIF _MASTER_VERSION
 
- CPY #9                 \ Have we reached the last toggle key?
+ CPY #9                 \ Check to see whether we have reached the last toggle
+                        \ key
 
 ENDIF
 
@@ -219,7 +220,7 @@ ELIF _DISC_DOCKED
 
 ENDIF
 
-IF _DISC_VERSION OR _6502SP_VERSION
+IF _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  CPX #&64               \ If "B" is not being pressed, skip to DK7
  BNE nobit
@@ -246,7 +247,7 @@ IF _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Enhanced: The enhanced 
 
 ENDIF
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Advanced: The Master version makes two beeps when Bitstik is configured, while the disc and 6502SP versions remain totally silent and give no clue as to whether you just turned the Bitstik on or off
 
  BPL P%+5               \ If we just toggled the Bitstik off (i.e. to 0, which
                         \ is positive), then skip the following two instructions
@@ -270,7 +271,7 @@ IF _6502SP_VERSION \ Advanced: The 6502SP lets you take screenshots, by pressing
 ENDIF
 
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Platform
 
  CPX #'S'               \ If "S" is not being pressed, jump to DK7
  BNE DK7
@@ -288,7 +289,7 @@ IF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  CPX #&59               \ If DELETE is not being pressed, we are still paused,
  BNE FREEZE             \ so loop back up to keep listening for configuration

@@ -78,7 +78,7 @@ ENDIF
 
 .STATUS
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Advanced: In the 6502SP version, you can send the Status Mode screen to the printer by pressing SHIFT-f8
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Advanced: In the 6502SP version, you can send the Status Mode screen to the printer by pressing CTRL-f8
 
  LDA #8                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 8 (Status
@@ -299,7 +299,7 @@ ENDIF
                         \
                         \ followed by a newline and an indent of 6 characters
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: The Master version shows the escape pod by name in the Status Mode screen, while the other versions don't list it explicitly, they rely on the different dashboard palette to indicate the presence of a pod
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: The Master version shows the escape pod by name in the Status Mode screen but doesn't show the large cargo bay, while the other versions do show the large cargo bay but don't show the escape pod
 
  LDA CRGO               \ If our ship's cargo capacity is < 26 (i.e. we do not
  CMP #26                \ have a cargo bay extension), skip the following two

@@ -18,7 +18,7 @@
 
 .FLFLLS
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  LDY #2*Y-1             \ #Y is the y-coordinate of the centre of the space
                         \ view, so this sets Y as a counter for the number of

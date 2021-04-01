@@ -107,7 +107,7 @@ ENDIF
  BNE DELL1              \ Loop back to DELL1 to copy the next character until we
                         \ have copied the whole filename
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Platform
 
  JSR SWAPZP             \ Call SWAPZP to restore the top part of zero page
 
@@ -130,7 +130,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Platform
 
  JSR SWAPZP             \ Call SWAPZP to restore the top part of zero page
 

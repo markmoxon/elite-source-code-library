@@ -17,7 +17,7 @@
 
 .TT219
 
-IF _CASSETTE_VERSION \ Advanced: In the 6502SP version, you can send the Buy Cargo screen to the printer by pressing SHIFT-f1
+IF _CASSETTE_VERSION \ Advanced: In the 6502SP version, you can send the Buy Cargo screen to the printer by pressing CTRL-f1
 
 \LDA #2                 \ This instruction is commented out in the original
                         \ source. Perhaps this view originally had a QQ11 value

@@ -61,7 +61,7 @@ ENDIF
 
 .DKS3
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  STY T                  \ Store the configuration key argument in T
 
@@ -79,7 +79,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: When toggling a configuration option in the Master version, we get two beeps when we turn the option on (which sounds like one long beep) and one beep when we turn it off, whereas the other versions beep when we turn it on and remain silent when we turn it off
 
                         \ We have a match between X and Y, so now to toggle
                         \ the relevant configuration byte. CAPS LOCK has a key
@@ -118,7 +118,7 @@ ENDIF
 
  JSR BELL               \ Make a beep sound so we know something has happened
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  JSR DELAY              \ Wait for Y vertical syncs (Y is between 64 and 70, so
                         \ this is always a bit longer than a second)
@@ -133,7 +133,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  LDY T                  \ Restore the configuration key argument into Y
 

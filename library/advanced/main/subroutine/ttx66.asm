@@ -54,7 +54,7 @@ ENDIF
  LDY #1                 \ Move the text cursor to row 1
  STY YC
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Platform
 
  LDY #11                \ Move the text cursor to column 11
  STY XC

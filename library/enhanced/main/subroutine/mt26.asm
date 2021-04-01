@@ -28,6 +28,16 @@ ENDIF
 
 .MT26
 
+IF _MASTER_VERSION \ Advanced: When entering text in the Master version, it is shown in magenta, while it is shown in white in the other versions
+
+ LDA COL                \ Store the current colour on the stack
+ PHA
+
+ LDA #RED               \ Switch to colour 2, which is magenta in the trade view
+ STA COL
+
+ENDIF
+
 IF _DISC_DOCKED \ Tube
 
  LDA #%10000001         \ Clear 6522 System VIA interrupt enable register IER
@@ -45,12 +55,6 @@ ELIF _6502SP_VERSION
  JSR DELAY
 
 ELIF _MASTER_VERSION
-
- LDA COL                \ Store the current colour on the stack
- PHA
-
- LDA #RED               \ Switch to colour 2, which is magenta in the trade view
- STA COL                \ or red in the chart view
 
  LDY #8                 \ Wait for 8/50 of a second (0.16 seconds)
  JSR DELAY

@@ -176,7 +176,7 @@ ENDIF
  JMP LL9                \ Jump to LL9 to display the ship and return from the
                         \ subroutine using a tail call
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Label
 
 .HA1
 

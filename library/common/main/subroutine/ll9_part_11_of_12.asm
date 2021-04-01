@@ -24,7 +24,7 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: Group A: The cassette, disc and 6502SP versions add all the lines in a ship to the heap and then draw them all in one go, whereas the Master version erases and draws lines as they are added to the ship line heap
 
 .LL80
 
@@ -61,7 +61,7 @@ ENDIF
 
 .LL78
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: See group A
 
  INC XX17               \ Increment the edge counter to point to the next edge
 
@@ -104,7 +104,7 @@ ENDIF
 
 .ll81
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: See group A
 
  JMP LL75               \ Loop back to LL75 to process the next edge
 
@@ -120,7 +120,7 @@ ENDIF
 
 .LL81
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: See group A
 
                         \ We have finished adding lines to the ship line heap,
                         \ so now we need to set the first byte of the heap to

@@ -78,7 +78,7 @@ ENDIF
 
  STA XC                 \ Move the text cursor to column 1
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Platform
 
  JSR SWAPZP             \ Call SWAPZP to restore the top part of zero page
 
@@ -102,7 +102,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Platform
 
  JSR SWAPZP             \ Call SWAPZP to restore the top part of zero page
 

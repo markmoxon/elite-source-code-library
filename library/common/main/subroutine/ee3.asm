@@ -72,7 +72,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: The Master version's hyperspace countdown is padded to 3 characters rather than 5, so it appears two characters to the left compared to the other versions
 
                         \ Fall through into pr6 to print X to 5 digits, as the
                         \ high byte in Y is 0

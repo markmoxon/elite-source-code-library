@@ -40,7 +40,7 @@
 
  JSR SIGHT              \ Draw the laser crosshairs
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Advanced: Group A: The Master has a unique lightning bolt effect for the energy bomb
 
  LDA BOMB               \ If our energy bomb has been set off, then BOMB will be
  BPL P%+5               \ negative, so this skips the following instruction if
@@ -82,7 +82,7 @@ ENDIF
  JSR FLIP               \ Swap the x- and y-coordinates of all the stardust
                         \ particles
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Advanced: See group A
 
  LDA BOMB               \ If our energy bomb has been set off, then BOMB will be
  BPL P%+5               \ negative, so this skips the following instruction if

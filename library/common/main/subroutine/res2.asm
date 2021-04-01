@@ -86,7 +86,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Pla
 
 ENDIF
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Platform
 
  LDA #0                 \ Set XMAX to 0 (though this variable is never used, so
  STA XMAX               \ this has no effect)

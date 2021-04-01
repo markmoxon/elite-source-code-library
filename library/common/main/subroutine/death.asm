@@ -105,7 +105,7 @@ ENDIF
  LSR A                  \ store in byte #0 (x_lo)
  STA INWK
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Platform
 
  LDY #0                 \ Set the following to 0: the current view in QQ11
  STY QQ11               \ (space view), x_hi, y_hi, z_hi and the AI flag (no AI
@@ -166,7 +166,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: In the cassette, disc and 6502SP versions, our ship is given a gentle pitch up or down when we die; the same is true in the Master version, but the pitch is always downwards so the detritus of our death always rises to the top of the screen
 
  ROR A                  \ The C flag is randomly set from the above call to Ze,
  AND #%10000111         \ so this sets A to a number between -7 and +7, which
@@ -179,7 +179,7 @@ ELIF _MASTER_VERSION
 
  ROR A                  \ This sets A to a number between 0 and +7, which we
  AND #%10000111         \ we store in byte #30 (the pitch counter) to give our
- STA INWK+30            \ ship a very gentle clockwise pitch with damping
+ STA INWK+30            \ ship a very gentle downwards pitch with damping
 
 ENDIF
 
@@ -258,7 +258,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Platform
 
  JSR U%                 \ Clear the key logger, which also sets A = 0
 

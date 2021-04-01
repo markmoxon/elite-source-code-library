@@ -18,7 +18,7 @@
 
 .TT25
 
-IF _CASSETTE_VERSION \ Advanced: In the 6502SP version, you can send the Data on System screen to the printer by pressing SHIFT-f6
+IF _CASSETTE_VERSION \ Advanced: In the 6502SP version, you can send the Data on System screen to the printer by pressing CTRL-f6
 
  JSR TT66-2             \ Clear the top part of the screen, draw a white border,
                         \ and set the current view type in QQ11 to 1

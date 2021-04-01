@@ -91,7 +91,7 @@ ENDIF
 
  INC GCNT               \ Increment the current galaxy number in GCNT
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: In the Master version, the internal galaxy number can be set to be greater than 16, and it will stay high even if you jump to the next galaxy (though it isn't clear what this is for, as the game doesn't set the galaxy to more than 7 at any point, so perhaps this was for an expansion that never happened)
 
  LDA GCNT               \ Set GCNT = GCNT mod 8, so we jump from galaxy 7 back
  AND #7                 \ to galaxy 0 (shown in-game as going from galaxy 8 back

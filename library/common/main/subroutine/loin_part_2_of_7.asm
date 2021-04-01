@@ -211,13 +211,13 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION \ Other
+IF _6502SP_VERSION \ Other: Group A: The Master version omits half of the logarithm algorithm when compared to the 6502SP version
 
  BMI LIlog4             \ If A > 127, jump to LIlog4
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION
+IF _6502SP_VERSION OR _MASTER_VERSION \ Other: See group A 
 
  LDX Q                  \ And then subtracting the high bytes of log(Q) - log(P)
  LDA log,X              \ so now A contains the high byte of log(Q) - log(P)
@@ -244,7 +244,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Other: See group A
 
  LDA #0                 \ The numerator in the division is 0, so set A to 0 and
  BEQ LIlog6             \ jump to LIlog6 to return the result (this BEQ is
@@ -270,7 +270,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION
+IF _6502SP_VERSION OR _MASTER_VERSION \ Other: See group A
 
 .LIlog6
 

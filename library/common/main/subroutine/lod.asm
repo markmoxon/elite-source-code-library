@@ -48,7 +48,7 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
  LDY #&B                \ Set up an OSFILE block at &0C00, containing:
  STY &0C03              \
@@ -64,7 +64,7 @@ IF _CASSETTE_VERSION \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
  LDA #&FF               \ Call QUS1 with A = &FF, Y = &C to load the commander
  JSR QUS1               \ file to address &0B00
@@ -111,7 +111,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
  LDX #NT%               \ We have successfully loaded the commander file at
                         \ &0B00, so now we want to copy it to the last saved
@@ -129,7 +129,7 @@ ENDIF
 
 .LOL1
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
  LDA &B00,X             \ Copy the X-th byte of &0B00 to the X-th byte of NA%+8
  STA NA%+8,X

@@ -52,10 +52,6 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
  BCC LL118-1            \ draw, so return from the subroutine (as LL118-1
                         \ contains an RTS)
 
- INY                    \ Set Y = 1, which we will use as an index into the ship
-                        \ line heap, starting at byte #1 (as byte #0 contains
-                        \ the heap size)
-
 ELIF _6502SP_VERSION
 
  LDA (XX19)             \ Fetch the first byte from the ship line heap into A,
@@ -72,6 +68,16 @@ ELIF _6502SP_VERSION
                         \ they are all sent, at which point it will draw the
                         \ line)
 
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Advanced: Group A: The cassette, disc and 6502SP versions do all their line drawing at the very end of the LL9 ship-drawing routine, but the Master has already redrawn most of the ship by this point and only needs to erase any remaining lines by this point
+
+ INY                    \ Set Y = 1, which we will use as an index into the ship
+                        \ line heap, starting at byte #1 (as byte #0 contains
+                        \ the heap size)
+
+ELIF _6502SP_VERSION
+
  LDY #0                 \ Fetch the first byte from the ship line heap into A,
  LDA (XX19),Y           \ which contains the number of bytes in the heap
 
@@ -85,7 +91,7 @@ ENDIF
 
 .LL27
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Advanced: See group A
 
  LDA (XX19),Y           \ Fetch the X1 line coordinate from the heap and store
  STA XX15               \ it in XX15
@@ -145,7 +151,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: See group A
 
  INY                    \ Increment the heap pointer
 

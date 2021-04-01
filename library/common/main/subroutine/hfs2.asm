@@ -45,7 +45,7 @@ ENDIF
 
  STA STP                \ Store the step size in A
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  JSR TTX66              \ Clear the screen and draw a white border
 

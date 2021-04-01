@@ -24,7 +24,7 @@
  BPL MA77               \ MA24 above), then BOMB is now negative, so this skips
                         \ to MA77 if our energy bomb is not going off
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Advanced: The Master version's energy bomb lightning bolt flashes on the screen
 
  ASL BOMB               \ We set off our energy bomb, so rotate BOMB to the
                         \ left by one place. BOMB was rotated left once already

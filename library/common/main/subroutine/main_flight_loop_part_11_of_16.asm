@@ -242,7 +242,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
 ENDIF
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Advanced: The Master version awards different kill points depending on the type of the ship that was killed
 
  LDX TYPE               \ Set X to the type of the ship that was killed so the
                         \ following call to EXNO2 can award us the correct

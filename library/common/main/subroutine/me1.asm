@@ -22,7 +22,7 @@
 
  PHA                    \ Store the new message token we want to print
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Platform
 
  LDA #YELLOW            \ Switch to colour 1, which is yellow
  STA COL

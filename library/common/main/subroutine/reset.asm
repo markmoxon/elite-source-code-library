@@ -70,7 +70,7 @@ ENDIF
 
  BPL SAL3               \ Loop back for the next byte to zero
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Platform
 
  STX JSTGY              \ X is now negative - i.e. &FF - so this sets JSTGY to
                         \ &FF to set the joystick Y-channel to the default

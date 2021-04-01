@@ -69,7 +69,7 @@ ENDIF
 
  JSR DIALS              \ Call DIALS to update the dashboard
 
-IF _6502SP_VERSION \ Advanced: The 6502SP version supports a printer (holding SHIFT when pressing a red function key will send that screen to the printer). As part of this, the code sends line feeds, which is mainly notable for using the longest label name in the entire source code: dontdolinefeedontheprinternow
+IF _6502SP_VERSION \ Advanced: The 6502SP version supports a printer (holding CTRL when pressing a red function key will send that screen to the printer). As part of this, the code sends line feeds, which is mainly notable for using the longest label name in the entire source code: dontdolinefeedontheprinternow
 
  BIT printflag          \ If bit 7 of printflag is clear (printer output is not
                         \ enabled), jump to dontdolinefeedontheprinternow to

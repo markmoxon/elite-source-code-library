@@ -46,7 +46,7 @@ ENDIF
 
 .NOISE
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: The Master supports a much more sophisticated interrupt-driven sound system rather than using the standard sound envelope system in the other versions
 
  JSR NOS1               \ Set up the sound block in XX16 for the sound in A and
                         \ fall through into NO3 to make the sound

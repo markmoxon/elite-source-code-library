@@ -94,7 +94,7 @@ ENDIF
                         \ update this value below with the actual ship's
                         \ distance if it turns out to be visible on-screen
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Advanced: The Master has a flicker-free ship plotting algorithm that plots and erases ship lines one line at a time, storing its progress through the ship line heap in the otherwise unused variables at XX14 and XX14+1
 
                         \ We now set things up for flicker-free ship plotting,
                         \ by setting the following:

@@ -47,7 +47,7 @@ IF _MASTER_VERSION \ Comment
 ENDIF
 \ ******************************************************************************
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Platform
 
  SED                    \ Set the D flag to enter decimal mode. Because
                         \ internal key numbers are all valid BCD (Binary Coded
@@ -58,7 +58,7 @@ ENDIF
 
 .RDKEY
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Platform
 
  LDX #16                \ Start the scan with internal key number 16 ("Q")
 

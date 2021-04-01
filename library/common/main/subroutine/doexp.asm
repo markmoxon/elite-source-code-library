@@ -62,7 +62,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Pla
 
 ENDIF
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Platform
 
  STA CLCNT              \ Store the cloud counter in CLCNT (though this value is
                         \ never read, so this has no effect)
@@ -313,7 +313,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Pla
 
 ENDIF
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Platform
 
  STY CNT2               \ Store the number of explosion particles in CNT2, to
                         \ use this as a loop counter to iterate through all the

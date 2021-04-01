@@ -51,7 +51,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
  JSR FX200              \ Disable the ESCAPE key and clear memory if the BREAK
                         \ key is pressed (*FX 200,3)

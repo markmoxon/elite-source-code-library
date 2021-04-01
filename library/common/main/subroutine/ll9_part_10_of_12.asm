@@ -61,7 +61,7 @@ ENDIF
 
 .LL75
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Platform
 
  LDY #0                 \ Set Y = 0 so we start with byte #0
 
@@ -98,7 +98,7 @@ ENDIF
                         \
                         \     * Bits 4-7 = the number of face 2
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  INY                    \ Increment Y to point to byte #2
 
@@ -151,7 +151,7 @@ ENDIF
                         \ before storing the resulting line in the ship line
                         \ heap
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Platform
 
  INY                    \ Increment Y to point to byte #2
 
@@ -160,7 +160,7 @@ ENDIF
  LDA (V),Y              \ Fetch byte #2 for this edge into X, which contains
  TAX                    \ the number of the vertex at the start of the edge
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  INY                    \ Increment Y to point to byte #3
 
@@ -193,7 +193,7 @@ ENDIF
  LDA XX3+3,X            \ Fetch the y_hi coordinate of the edge's start vertex
  STA XX15+3             \ from the XX3 heap into XX15+3
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  LDX Q                  \ Set X to the number of the vertex at the end of the
                         \ edge, which we stored in Q
@@ -251,7 +251,7 @@ ELIF _DISC_VERSION
 
 ENDIF
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Advanced: The LLX30 routine is at the heart of the Master's flicker-free ship drawing algorithm
 
  JSR LLX30              \ Draw this edge using flicker-free animation, by first
                         \ drawing the ship's new line and then erasing the

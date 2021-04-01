@@ -13,7 +13,7 @@
 
 .LL164
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: The Master version has a unique hyperdrive sound
 
  LDA #56                \ Call the NOISE routine with A = 56 to make the sound
  JSR NOISE              \ of the hyperspace drive being engaged
@@ -49,7 +49,7 @@ ENDIF
                         \ quite round (compared to the step size of 8 used in
                         \ the much more polygonal launch rings)
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Platform
 
  STA HFX                \ Set HFX to 4, which switches the screen mode to a full
                         \ mode 2 screen, therefore making the hyperspace rings

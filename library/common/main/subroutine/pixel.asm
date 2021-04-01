@@ -277,7 +277,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION
+IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  EOR (SC),Y             \ Draw the pixel on-screen using EOR logic, so we can
  STA (SC),Y             \ remove it later without ruining the background that's
@@ -332,7 +332,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION
+IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  EOR (SC),Y             \ Draw the pixel on-screen using EOR logic, so we can
  STA (SC),Y             \ remove it later without ruining the background that's
@@ -366,7 +366,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION
+IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  EOR (SC),Y             \ Draw the pixel on-screen using EOR logic, so we can
  STA (SC),Y             \ remove it later without ruining the background that's
@@ -374,7 +374,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Platform
 
  LDY T1                 \ Set Y to the index of this pixel's y-coordinate byte
                         \ in the command block, which we stored in T1 above
@@ -399,7 +399,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Platform
 
 .PX3
 

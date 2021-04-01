@@ -31,7 +31,7 @@
 
 .EE31
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: The cassette, disc and 6502SP versions all erase an entire ship before redrawing it, unlike the Master version which erases and redraws ships one line at a time
 
  LDA #%00001000         \ If bit 3 of the ship's byte #31 is clear, then there
  BIT XX1+31             \ is nothing already being shown for this ship, so skip
@@ -104,7 +104,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  INC U                  \ We are going to start calculating the lines we need to
                         \ draw for this ship, and will store them in the ship
@@ -226,7 +226,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: The cassette, disc and 6502SP versions add all the lines in a ship to the heap (including the laser lines) and then draw them all in one go, whereas the Master version erases and draws lines as they are added to the ship line heap
 
  LDA XX15               \ Add X1 to the end of the heap
  STA (XX19),Y

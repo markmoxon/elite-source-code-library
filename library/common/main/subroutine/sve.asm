@@ -249,7 +249,7 @@ ENDIF
                         \ from location TP to the last saved commander block at
                         \ NA%+8, so set a counter in X to copy the NT% bytes in
                         \ the commander data block
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Comment
                         \
                         \ We also want to copy the data block to another
                         \ location &0B00, which is normally used for the ship
@@ -258,7 +258,7 @@ ENDIF
 
 .SVL1
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
  LDA TP,X               \ Copy the X-th byte of TP to the X-th byte of &0B00
  STA &0B00,X            \ and NA%+8
@@ -328,7 +328,7 @@ ENDIF
 
  PLA                    \ Restore the checksum from the stack
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
  STA &0B00+NT%          \ Store the checksum in the last byte of the save file
                         \ at &0B00 (the equivalent of CHK in the last saved

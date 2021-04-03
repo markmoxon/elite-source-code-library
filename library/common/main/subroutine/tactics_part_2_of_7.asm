@@ -273,7 +273,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: Rock hermits have a 22% chance
 
 ENDIF
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Advanced: In the Master version, rock hermits spawn ships that are hostile and innocent bystanders
 
  STX NEWB               \ Set the ship's NEWB flags to %00000000 so the ship we
                         \ spawn below will inherit the default values from E%

@@ -18,7 +18,7 @@
  SEC                    \ crosshairs (QQ9) and the current system (QQ0)
  SBC QQ0
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: In most versions the Short-range Chart crosshairs can be moved to the right edge of the screen, but in the Master version they disappear before they get to the edge
 
  CMP #38                \ If the horizontal distance in A < 38, then the
  BCC TT179              \ crosshairs are close enough to the current system to
@@ -60,7 +60,7 @@ ENDIF
 
 .TT179
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: Group A: The Master version contains code to scale the chart views, though it has no effect in this version. The code is left over from the non-BBC versions, which needed to be able to scale the charts to fit their different-sized screens
 
  ASL A                  \ Set QQ19 = 104 + A * 4
  ASL A                  \
@@ -88,7 +88,7 @@ ENDIF
  SEC                    \ crosshairs (QQ10) and the current system (QQ1)
  SBC QQ1
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: In most versions the Short-range Chart crosshairs can be moved close to the bottom edge of the screen, but in the Master version they disappear before they get quite as far
 
  CMP #38                \ If the vertical distance in A is < 38, then the
  BCC P%+6               \ crosshairs are close enough to the current system to
@@ -120,7 +120,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: See group A
 
  ASL A                  \ Set QQ19+1 = 90 + A * 2
  CLC                    \
@@ -148,7 +148,7 @@ ENDIF
  LDA #8                 \ Set QQ19+2 to 8 denote crosshairs of size 8
  STA QQ19+2
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Advanced: The moveable chart crosshairs in the Master version are drawn with white/yellow vertical stripes (with the exception of the static crosshairs on the Long-range Chart, which are white). All crosshairs are white in the other versions
 
  LDA #GREEN             \ Switch to stripe 3-1-3-1, which is white/yellow in the
  STA COL                \ chart view

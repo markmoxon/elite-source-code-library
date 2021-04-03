@@ -63,7 +63,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION
+IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: The advanced versions have wider "E" and "S" dashboard indicators than the original versions
 
  LDA #16*8              \ The space station bulb is in character block number 48
  STA SC                 \ (counting from the left edge of the screen), with the

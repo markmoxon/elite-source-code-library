@@ -28,7 +28,7 @@
 
 .BRBR
 
-IF _DISC_DOCKED OR _6502SP_VERSION
+IF _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
  DEC brkd               \ Decrement the brkd counter
 
@@ -68,7 +68,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Label
 
  JSR OSWRCH             \ Print the character in A, which contains a line feed
                         \ on the first loop iteration, and then any non-zero
@@ -82,7 +82,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION
+IF _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
  INY                    \ Increment the loop counter
 

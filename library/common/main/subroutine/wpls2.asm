@@ -46,7 +46,7 @@
  LDA LSX2,Y             \ heap
  STA X2
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Label
 
  JSR LOIN               \ Draw a line from (X1, Y1) to (X2, Y2)
 

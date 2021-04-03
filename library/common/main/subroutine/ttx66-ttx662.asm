@@ -35,7 +35,7 @@ IF _DISC_DOCKED \ Comment
 ENDIF
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Label
 
 .TTX66
 
@@ -307,7 +307,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Tube
 
  DEX                    \ Set X2 = 255
  STX X2
@@ -327,7 +327,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  LDA #2                 \ Set X1 = X2 = 2
  STA X1
@@ -370,7 +370,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Platform
 
  JMP LOIN               \ Draw a line from (X1, Y1) to (X2, Y2), and return from
                         \ the subroutine using a tail call

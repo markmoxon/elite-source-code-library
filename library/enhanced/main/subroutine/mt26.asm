@@ -63,7 +63,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _DISC_DOCKED OR _6502SP_VERSION
+IF _DISC_DOCKED OR _6502SP_VERSION \ Advanced: Group A: The Master version contains its own custom routine for the extended token that asks for a line of text, while the other enhanced versions use the standard OSWORD command
 
  JSR FLKB               \ Call FLKB to flush the keyboard buffer
 
@@ -185,7 +185,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _DISC_DOCKED OR _6502SP_VERSION
+IF _DISC_DOCKED OR _6502SP_VERSION \ Advanced: See group A
 
  JMP FEED               \ Jump to FEED to print a newline, returning from the
                         \ subroutine using a tail call

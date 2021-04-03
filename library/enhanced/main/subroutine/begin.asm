@@ -20,7 +20,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _DISC_DOCKED OR _6502SP_VERSION
+IF _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
 
  LDX #(CATF-COMC)       \ We start by zeroing all the configuration variables
@@ -56,7 +56,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Advanced: The Master version contains an embedded copy of the default JAMESON commander file that gets loaded on startup
 
  JSR JAMESON            \ Call JAMESON to set the last saved commander to the
                         \ default "JAMESON" commander

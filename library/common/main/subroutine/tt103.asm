@@ -14,7 +14,7 @@
 
 .TT103
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Advanced: Group A: The moveable chart crosshairs in the Master version are drawn with white/yellow vertical stripes (with the exception of the static crosshairs on the Long-range Chart, which are white). All crosshairs are white in the other versions
 
  LDA #GREEN             \ Switch to stripe 3-1-3-1, which is white/yellow in the
  STA COL                \ chart view
@@ -33,7 +33,8 @@ ENDIF
 
  BMI TT105              \ If this is the Short-range Chart screen, jump to TT105
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: Master version contains code to scale the crosshairs on the chart views, though it has no effect in this version. The code is left over from the non-BBC versions, which needed to be able to scale the charts to fit their different-sized screens
+
 
  LDA QQ9                \ Store the crosshairs x-coordinate in QQ19
  STA QQ19

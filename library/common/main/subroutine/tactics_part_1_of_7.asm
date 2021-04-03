@@ -30,7 +30,7 @@
 \
 \ ******************************************************************************
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Advanced: Group A: In the Master version, destroying a missile using E.C.M. gives us the same number of fractional kill points as killing an alloy plate, while the other versions always award one point, whatever is killed
 
 .TAX35
 
@@ -68,7 +68,7 @@ ENDIF
  BEQ P%+5               \ If A = 0 then the missile is very close to our ship,
                         \ so skip the following instruction
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Advanced: In the Master version, the tactics routine is slightly more efficient as it skips the NEWB logic checks for missiles, which aren't relevant (the disc and 6502SP versions still perform the checks, though this has no effect)
 
  JMP TA21               \ Jump down to part 3 to set up the vectors and skip
                         \ straight to aggressive manoeuvring
@@ -95,7 +95,7 @@ ENDIF
                         \ This is the entry point for missile tactics and is
                         \ called from the main TACTICS routine below
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Advanced: See group A
 
  LDA ECMA               \ If an E.C.M. is currently active (either our's or an
  BNE TA35               \ opponent's), jump to TA35 to destroy this missile
@@ -207,7 +207,7 @@ ENDIF
  ORA INWK+3
  ORA INWK+6
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Label
 
  BNE TA87               \ If A is non-zero then the missile is not near our
                         \ ship, so jump to TA87 to skip damaging our ship
@@ -225,7 +225,7 @@ ENDIF
                         \ near as bad as the 250 damage from a missile slamming
                         \ straight into us, but it's still pretty nasty
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Advanced: In the Master version, destroying a missile (not using E.C.M.) gives us a number of kill points that depends on the missile's target slot number, and therefore is fairly random
 
  LDA INWK+32            \ Set X to bits 1-6 of the missile's AI flag in ship
  AND #%01111111         \ byte #32, so bits 0-3 of X are the target's slot

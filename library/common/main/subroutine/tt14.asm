@@ -22,7 +22,7 @@
  LDA #16                \ Set QQ19+2 = 16, the size of the crosshairs on the
  STA QQ19+2             \ Short-range Chart
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Advanced: Group A: The static chart crosshairs in the Master version are drawn with white/yellow vertical stripes (with the exception of the static crosshairs on the Long-range Chart, which are white). All crosshairs are white in the other versions
 
  LDA #GREEN             \ Switch to stripe 3-1-3-1, which is white/yellow in the
  STA COL                \ chart view
@@ -32,7 +32,7 @@ ENDIF
  JSR TT15               \ Draw the set of crosshairs defined in QQ19, at the
                         \ exact coordinates as this is the Short-range Chart
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: Group B: The Master version contains code to scale the chart views, though it has no effect in this version. The code is left over from the non-BBC versions, which needed to be able to scale the charts to fit their different-sized screens
 
  LDA QQ14               \ Set K to the fuel level from QQ14, so this can act as
  STA K                  \ the circle's radius (70 being a full tank)
@@ -58,7 +58,7 @@ ENDIF
 
 .TT14
 
-IF _6502SP_VERSION \ Screen
+IF _6502SP_VERSION \ Advanced: See group A
 
  LDA #CYAN              \ Send a #SETCOL CYAN command to the I/O processor to
  JSR DOCOL              \ switch to colour 3, which is white in the chart view
@@ -72,7 +72,7 @@ ENDIF
                         \ Otherwise this is the Long-range Chart, so we draw the
                         \ crosshairs and circle for that view instead
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: See group B
 
  LDA QQ14               \ Set K to the fuel level from QQ14 divided by 4, so
  LSR A                  \ this can act as the circle's radius (70 being a full
@@ -126,7 +126,7 @@ ENDIF
  LDA #7                 \ Set QQ19+2 = 7, the size of the crosshairs on the
  STA QQ19+2             \ Long-range Chart
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Advanced: See group A
 
  LDA #CYAN              \ Switch to colour 3, which is white in the chart view
  STA COL
@@ -143,6 +143,6 @@ ENDIF
 
                         \ Fall through into TT128 to draw a circle with the
                         \ centre at the same coordinates as the crosshairs,
-                        \ (QQ19, QQ19+1),  and radius K that reflects the
+                        \ (QQ19, QQ19+1), and radius K that reflects the
                         \ current fuel levels
 

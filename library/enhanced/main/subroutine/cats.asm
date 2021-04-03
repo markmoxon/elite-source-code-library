@@ -29,7 +29,7 @@
                         \ entered, so return from the subroutine (as DELT-1
                         \ contains an RTS)
 
-IF _DISC_DOCKED OR _6502SP_VERSION
+IF _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
  STA CTLI+1             \ Store the drive number in the second byte of the
                         \ command string at CTLI, so it overwrites the "0" in

@@ -49,7 +49,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT \ Label
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Advanced: The BBC Master has a different set of internal key numbers to the BBC Micro, as it has a different keyboard layout, so the keyboard lookup tables are not the same
 
                         \ These are the primary flight controls (pitch, roll,
                         \ speed and lasers):

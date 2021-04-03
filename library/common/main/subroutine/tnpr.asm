@@ -65,7 +65,7 @@
                         \ until we have added up all market items from 12
                         \ (minerals) down to 0 (food)
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Advanced: The Master version contains the code for Trumbles to take up cargo space, though as we never actually get given any Trumbles, the value is always zero
 
  ADC TRUMBLE+1          \ Add the high byte of the number of Trumbles in the
                         \ hold, as 256 Trumbles take up one ton of cargo space

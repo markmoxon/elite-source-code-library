@@ -33,7 +33,7 @@ ENDIF
  LDX #24                \ Set the screen to only show 24 text rows, which hides
  JSR DET1               \ the dashboard, setting A to 6 in the process
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform: The Master version has a unique internal view number for the title screen (13)
 
  JSR TT66               \ Clear the top part of the screen, draw a white border,
                         \ and set the current view type in QQ11 to 6 (death

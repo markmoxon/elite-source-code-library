@@ -119,7 +119,7 @@ ENDIF
 
 .TT184
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: The Master version includes systems on the Short-range Chart if they are in the horizontal range 0-29, while the other versions include systems in the range 0-20, so the Master version shows more systems on the chart
 
  CMP #20                \ If the horizontal distance in A is >= 20, then this
  BCS TT187              \ system is too far away from the current system to
@@ -148,7 +148,7 @@ ENDIF
 
 .TT186
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: The Master version includes systems on the Short-range Chart if they are in the vertical range 0-40, while the other versions include systems in the range 0-38, so the Master version shows more systems on the chart
 
  CMP #38                \ If the vertical distance in A is >= 38, then this
  BCS TT187              \ system is too far away from the current system to
@@ -178,7 +178,7 @@ ENDIF
                         \ of the chart's centre, or positive if it's to the
                         \ right)
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: Group A: The Master version contains code to scale the chart views, though it has no effect in this version. The code is left over from the non-BBC versions, which needed to be able to scale the charts to fit their different-sized screens
 
  ASL A                  \ Set XX12 = 104 + x-delta * 4
  ASL A                  \
@@ -237,7 +237,7 @@ ENDIF
                         \ sign of A, so it can be negative if it's above the
                         \ chart's centre, or positive if it's below)
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: See group A
 
  ASL A                  \ Set K4 = 90 + y-delta * 2
  ADC #90                \
@@ -312,11 +312,10 @@ ENDIF
  CPY #3                 \ If Y < 3, then the label would clash with the chart
  BCC TT187              \ title, so jump to TT187 to skip printing the label
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Advanced: The Master version contains different logic to the other versions when deciding whether to display labels on the Short-range Chart; it only shows labels on systems that are within 7 light years of the current system, whereas the other versions show labels if there is space, irrespective of the system's distance
 
- CPY #21                \ If Y > 21, then the label will spill out of the
- BCS TT187              \ right edge of the screen, so jump to TT187 to skip
-                        \ printing the label
+ CPY #21                \ If Y > 21, then the label will be off the bottom of
+ BCS TT187              \ the chart, so jump to TT187 to skip printing the label
 
  TYA                    \ Store Y on the stack so it can be preserved across the
  PHA                    \ call to DIST
@@ -332,16 +331,25 @@ IF _MASTER_VERSION
  PLA                    \ Restore Y from the stack
  TAY
 
- LDA QQ8+1              \ If the horizontal distance in QQ18+1 is non-zero,
- BNE TT187              \ jump to TT187 to skip printing the label
+ LDA QQ8+1              \ If the high byte of the distance in QQ8(1 0) is
+ BNE TT187              \ non-zero, jump to TT187 to skip printing the label as
+                        \ the system is too far away from the current system to
+                        \ get a label
 
- LDA QQ8                \ If the vertical distance is >= 70, jump to TT187 to
- CMP #70                \ skip printing the label
+ LDA QQ8                \ If the low byte of the distance in QQ8(1 0) is >= 70,
+ CMP #70                \ jump to TT187 to skip printing the label as the system
+                        \ is too far away from the current system to
+                        \ get a label
 
 .TT187S
 
- BCS TT187              \ If we jump here with a BCS TT187S, it jumps on to
-                        \ TT187
+ BCS TT187              \ If we get here from the instruction above, we jump to
+                        \ TT187 if QQ8(1 0) >= 70, so we only show labels for
+                        \ systems that are within distance 70 (i.e. 7 light
+                        \ years) of the current system
+                        \
+                        \ If we jump here from elsewhere with a BCS TT187S, we
+                        \ jump straight on to TT187
 
 ENDIF
 
@@ -440,7 +448,7 @@ ENDIF
  JMP TT182              \ Otherwise jump back up to TT182 to process the next
                         \ system
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Label
 
  RTS                    \ Return from the subroutine
 

@@ -13,7 +13,7 @@
 
 .STARS
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Screen
 
 \LDA #&FF               \ These instructions are commented out in the original
 \STA COL                \ source, but they would set the stardust colour to
@@ -23,7 +23,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT
                         \ the screen? Who knows...
 
 
-ELIF _MASTER_VERSION \ Screen
+ELIF _MASTER_VERSION
 
  LDA #WHITE             \ Switch to white (i.e. cyan/red)
  STA COL

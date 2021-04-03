@@ -372,7 +372,7 @@ ENDIF
                         \
                         \ We'll refer to this below
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Platform
 
 \BEQ RR4                \ This instruction is commented out in the original
                         \ source, but it would return from the subroutine if A

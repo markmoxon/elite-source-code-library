@@ -44,7 +44,7 @@ ENDIF
 
 .TITLE
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Advanced: Group A: In the Master version, the Cobra Mk III shown on the first title page is further away than in the other versions, which is implemented by a new variable that contains the distance that the ship should be shown at
 
  STY SDIST              \ Store the ship distance in SDIST
 
@@ -83,7 +83,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform: The Master version has a unique internal view number for the title screen (13)
 
  LDA #1                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 1
@@ -145,7 +145,7 @@ IF _DISC_DOCKED \ Other: The disc version contains various bits of copy protecti
 
 ENDIF
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Advanced: See group A
 
  LDA #96                \ Set A = 96 as the distance that the ship starts at
 
@@ -239,7 +239,7 @@ ENDIF
 
 .awe
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Platform
 
  LDY #0                 \ Set DELTA = 0 (i.e. ship speed = 0)
  STY DELTA
@@ -257,7 +257,7 @@ IF _6502SP_VERSION OR _DISC_DOCKED \ Platform
 
 ENDIF
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Advanced: Group B: The Master version shows the "Load New Commander (Y/N)?" prompt on row 20, while the other versions show it one line lower, on row 21
 
  LDA #7                 \ Move the text cursor to column 7
  STA XC
@@ -310,7 +310,7 @@ IF _6502SP_VERSION OR _DISC_DOCKED \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Advanced: See group B
 
  JSR CLYNS              \ Clear the bottom three text rows of the upper screen,
                         \ and move the text cursor to column 1 on row 21, i.e.
@@ -323,7 +323,7 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION \ Advanced: The Master version shows the copyright year on the title screen as 1986 rather than 1984
 
  PLA                    \ Restore the recursive token number we stored on the
  JSR ex                 \ stack at the start of this subroutine, and print that
@@ -395,7 +395,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: Group A: The 6502SP version ad
 
 ENDIF
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Platform
 
  STZ JSTK               \ Set JSTK = 0 (i.e. keyboard, not joystick)
 

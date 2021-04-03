@@ -56,7 +56,7 @@ ENDIF
                         \ title and act as the top frame of the chart, and move
                         \ the text cursor down one line
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: The bottom border of the Long-range Chart is one pixel lower down the screen in the Master version than in the other versions
 
  LDA #152               \ Draw a screen-wide horizontal line at pixel row 152
  JSR NLIN2              \ for the bottom edge of the chart, so the chart itself
@@ -93,7 +93,7 @@ ENDIF
                         \ for this system on the chart by passing it as the
                         \ distance argument to the PIXEL routine below
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Advanced: Group A: The Master version shows systems in the Long-range Chart in yellow, while the 650SP version shows them in "white" (cyan/red)
 
  LDA #YELLOW            \ Switch to colour 1, which is yellow
  STA COL
@@ -103,7 +103,7 @@ ENDIF
  LDA QQ15+1             \ Fetch the s0_hi seed into A, which gives us the
                         \ galactic y-coordinate of this system
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: Group B: The Master version contains code to scale the chart views, though it has no effect in this version. The code is left over from the non-BBC versions, which needed to be able to scale the charts to fit their different-sized screens
 
  LSR A                  \ We halve the y-coordinate because the galaxy in
                         \ in Elite is rectangular rather than square, and is
@@ -162,7 +162,7 @@ IF _6502SP_VERSION \ Tube
                         \ the I/O processor for plotting on-screen
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: See group B
 
  LDA QQ9                \ Set QQ19 to the selected system's x-coordinate
  STA QQ19
@@ -198,6 +198,10 @@ ELIF _MASTER_VERSION
 
  LDA #4                 \ Set QQ19+2 to size 4 for the crosshairs size
  STA QQ19+2
+
+ENDIF
+
+IF _MASTER_VERSION \ Advanced: See group A
 
  LDA #GREEN             \ Switch to stripe 3-1-3-1, which is white/yellow in the
  STA COL                \ chart view

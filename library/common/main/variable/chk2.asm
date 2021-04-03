@@ -19,7 +19,7 @@
 
 .CHK2
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  EQUB &03 EOR &A9       \ The checksum value for the default commander, EOR'd
                         \ with &A9 to make it harder to tamper with the checksum

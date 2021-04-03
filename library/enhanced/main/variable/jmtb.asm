@@ -39,17 +39,17 @@
  EQUW MT27              \ Token 27: Print mission captain's name (217-219)
  EQUW MT28              \ Token 28: Print mission 1 location hint (220-221)
  EQUW MT29              \ Token 29: Column 6, white text, lower case in words
-IF _DISC_DOCKED \ Screen
+IF _DISC_DOCKED \ Advanced: The 6502SP version has an extended jump token for switching to white text, while the Master version uses the same token for displaying the currently selected file system (though the Master token isn't actually used as the file system can't be changed from disc)
  EQUW DASC              \ Token 30: Unused
 ELIF _6502SP_VERSION
  EQUW WHITETEXT         \ Token 30: White text
 ELIF _MASTER_VERSION
- EQUW MT30              \ Token 30: Display disc or tape (unused)
+ EQUW MT30              \ Token 30: Display currently selected media (disc/tape)
 ENDIF
-IF _DISC_DOCKED OR _6502SP_VERSION
+IF _DISC_DOCKED OR _6502SP_VERSION \ Advanced: The Master version has an extended jump token for displaying the non-selected file system, though this token isn't actually used as the file system can't be changed from disc
  EQUW DASC              \ Token 31: Unused
 ELIF _MASTER_VERSION
- EQUW MT31              \ Token 31: Display tape or disc (unused)
+ EQUW MT31              \ Token 31: Display the non-selected media (disc/tape)
 ENDIF
  EQUW DASC              \ Token 32: Unused
 

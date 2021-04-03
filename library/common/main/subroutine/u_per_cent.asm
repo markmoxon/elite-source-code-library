@@ -44,7 +44,7 @@ ENDIF
 
 .DKL3
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Platform
 
  STA KL,Y               \ Store 0 in the Y-th byte of the key logger
 

@@ -279,7 +279,7 @@ ENDIF
  PLA                    \ Restore the high byte of the y-axis value from the
                         \ stack into A again
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Other: The Master version fixes a bug in the code to calculate the distance between two systems, which can overflow in the other versions and give an incorrect result
 
  ADC K+1                \ Set R = A + K+1, which adds the high bytes of the two
  STA R                  \ calculated values, so we now have:
@@ -307,7 +307,7 @@ ENDIF
 
                         \ We now store the distance to the selected system * 4
                         \ in the two-byte location QQ8, by taking (0 Q) and
-                        \ shifting it left twice, storing it in (QQ8+1 QQ8)
+                        \ shifting it left twice, storing it in QQ8(1 0)
 
  LDA Q                  \ First we shift the low byte left by setting
  ASL A                  \ A = Q * 2, with bit 7 of A going into the C flag

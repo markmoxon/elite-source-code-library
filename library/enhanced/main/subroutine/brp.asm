@@ -9,7 +9,7 @@
 
 .BRP
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Advanced: The Master version shows the mission briefings in cyan, while the 6502SP version shows the text in white and rotating ship in cyan, and the disc version shows the whole thing in white
 
  LDX #CYAN              \ Switch to colour 3, which is white or cyan
  STX COL

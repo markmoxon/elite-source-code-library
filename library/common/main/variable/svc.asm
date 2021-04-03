@@ -16,7 +16,7 @@
                         \ copied from here to the last saved commander block at
                         \ NA%, CHK and CHK2 get overwritten
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
 NT% = SVC + 2 - TP      \ This sets the variable NT% to the size of the current
                         \ commander data block, which starts at TP and ends at

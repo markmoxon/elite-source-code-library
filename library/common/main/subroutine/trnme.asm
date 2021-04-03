@@ -13,7 +13,7 @@
                         \ characters, and is terminated by a carriage return,
                         \ so set up a counter in X to copy 8 characters
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Platform
 
  LDA NAMELEN1           \ Copy the length of the commander's name from NAMELEN1
  STA NAMELEN2           \ to NAMELEN2 (though this is never used, so this

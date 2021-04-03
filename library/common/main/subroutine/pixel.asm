@@ -141,7 +141,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Other: Group A: The Master version doesn't draw single-pixel dots, as it omits the logic to check for distant dots and plot them using one pixel. The Long-range Chart is a good example of this, where the Master version draws a two-pixel yellow dash for every system
 
  STY T1                 \ Store Y in T1
 
@@ -242,7 +242,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Other: See group A
 
  LDA P                  \ If the pixel's ZZ distance, which we stored in P, is
  BMI PX3                \ greater than 127, jump to PX3 to plot a 1-pixel dot

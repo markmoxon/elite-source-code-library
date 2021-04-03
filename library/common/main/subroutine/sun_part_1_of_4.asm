@@ -74,7 +74,7 @@ ENDIF
 
 .SUN
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Screen
 
  LDA #RED               \ Switch to colour 2, which is red in the space view
  STA COL
@@ -133,7 +133,7 @@ ENDIF
                         \ new sun, given that P(2 1) contains the 16-bit maximum
                         \ y-coordinate of the new sun on-screen
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: Group A: In the Master version, the screen size is not hard-coded, but is stored in a dedicated location, an approach that was presumably inherited from the non-BBC versions of the game
 
  LDA #2*Y-1             \ #Y is the y-coordinate of the centre of the space
                         \ view, so this sets Y to the y-coordinate of the bottom
@@ -169,7 +169,7 @@ ENDIF
                         \ and the direction in which we need to draw them, both
                         \ from the centre of the new sun
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: See group A
 
  LDA #2*Y-1             \ Set (A X) = y-coordinate of bottom of screen - K4(1 0)
  SEC                    \

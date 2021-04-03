@@ -18,7 +18,7 @@ ENDIF
 
 .FLKB
 
-IF _DISC_VERSION OR _6502SP_VERSION
+IF _DISC_VERSION OR _6502SP_VERSION \ Platform: The cassette and Master versions don't explicitly flush the keyboard buffer, while the disc and 6502SP versions call OSBYTE 15 to flush the input buffers
 
  LDA #15                \ Call OSBYTE with A = 15 and Y <> 0 to flush the input
  TAX                    \ buffers (i.e. flush the operating system's keyboard

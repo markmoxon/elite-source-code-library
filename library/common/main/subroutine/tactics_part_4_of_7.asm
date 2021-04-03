@@ -131,7 +131,7 @@ ENDIF
                         \ By this point, the ship has run out of both energy and
                         \ luck, so it's time to bail
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Advanced: In the Master version, escape pods that other ships drop do not inherit the parent ship's characteristics (i.e. trader, bounty hunter, hostile, pirate)
 
  LDA NEWB               \ Clear bits 0-3 of the NEWB flags, so the ship is no
  AND #%11110000         \ longer a trader, a bounty hunter, hostile or a pirate

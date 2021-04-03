@@ -192,7 +192,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Pla
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Advanced: The Master version has smaller explosion clouds?
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Advanced: The Master version has half the number of explosion particles per vertex than the other versions
 
  LSR A                  \ Divide A by 8 so that is has a maximum value of 15
  LSR A

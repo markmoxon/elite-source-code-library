@@ -164,7 +164,7 @@ ENDIF
  LDY #206               \ Set Y to recursive token 46 (" CARGO{sentence case}")
                         \ to pass to the Tc routine if we call it
 
-IF _MASTER_VERSION \ Other: Do not show the "Cargo?" prompt if we didn't enter a number in the Buy Cargo prompt
+IF _MASTER_VERSION \ Other: This is presumably a bug fix, as it skips the "Cargo?" prompt if we didn't enter a number when buying cargo
 
  LDA R                  \ If R = 0, then we didn't enter a number above, so skip
  BEQ P%+4               \ the following instruction

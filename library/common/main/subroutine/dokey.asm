@@ -126,7 +126,7 @@ ELIF _6502SP_VERSION
 ELIF _MASTER_VERSION
 
  JSR RDKEY-1            \ Scan the keyboard for a key press and return the
-                        \ internal key number in X (or 0 for no key press)
+                        \ ASCII code of the key pressed in X
 
 ENDIF
 

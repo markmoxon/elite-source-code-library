@@ -34,7 +34,7 @@
  LDA #200               \ X, and return from the subroutine using a tail call
  JMP OSBYTE
 
-IF _CASSETTE_VERSION \ Other: There's an extra RTS in the cassette version that is never used
+IF _CASSETTE_VERSION \ Other: There's an extra RTS in the cassette version that is never used, which is only noteworthy because spare bytes are very hard to come by in that version, as it's so heavily optimised for compactness of code
 
  RTS                    \ This instruction has no effect, as we already returned
                         \ from the subroutine

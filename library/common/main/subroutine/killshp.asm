@@ -107,7 +107,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Label
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: There are rock hermits in the 6502SP version, and they are classed as junk (along with the escape pod, alloy plate, cargo canister, asteroid, splinter, Shuttle and Transporter)
+IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: There are rock hermits in the advanced versions, and they are classed as junk (along with the escape pod, alloy plate, cargo canister, asteroid, splinter, Shuttle and Transporter)
 
  CPX #HER               \ Did we just kill a rock hermit? If we did, jump to
  BEQ blacksuspenders    \ blacksuspenders to decrease the junk count

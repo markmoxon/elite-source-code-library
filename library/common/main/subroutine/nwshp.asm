@@ -294,7 +294,7 @@ ELIF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: In the 6502SP version, rock hermits are classed as junk, so they will not prevent you from performing an in-system jump (just like normal asteroids)
+IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: In the advanced versions, rock hermits are classed as junk, so they will not prevent you from performing an in-system jump (just like normal asteroids)
 
  CPX #HER               \ If the ship type is a rock hermit, jump to gangbang
  BEQ gangbang           \ to increase the junk count

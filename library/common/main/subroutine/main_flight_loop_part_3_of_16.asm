@@ -178,7 +178,7 @@ ENDIF
                         \ MAL1 routine below - this just registers the fact that
                         \ we've set the bomb ticking
 
-IF _MASTER_VERSION \ Advanced: The Master's energy bomb lightning bolt effect contains 9 random zig-zag lines that are set up in the BOMBINIT routine
+IF _MASTER_VERSION \ Advanced: The Master's energy bomb lightning bolt effect contains nine random zig-zag lines that are set up in the BOMBINIT routine
 
  BEQ MA76               \ If BOMB now contains 0, then the bomb is not going off
                         \ any more (or it never was), so skip the following
@@ -191,7 +191,7 @@ ENDIF
 
 .MA76
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: The main loop scans for "P" being pressed, which disables the docking computer
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: In the enhanced versions, the main loop scans for "P" being pressed, which disables the docking computer
 
  LDA KY20               \ If "P" is being pressed, keep going, otherwise skip
  BEQ MA78               \ the next two instructions
@@ -217,7 +217,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: In the original versions, you can launch your escape pod in witchspace (though it may be fatal, depending on the version). You can't even launch it in the 6502SP version, as the launch key is disabled in witchspace
+IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: In the original versions, you can launch your escape pod in witchspace (though it may be fatal, depending on the version). You can't even launch it in the advanced versions, as the launch key is disabled in witchspace
 
  LDA MJ                 \ If we are in witchspace, we can't launch our escape
  BNE noescp             \ pod, so jump down to noescp
@@ -334,7 +334,7 @@ ENDIF
  STA LAS
  STA LAS2
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Advanced: The Master version has a unique sound for our laser firing
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Advanced: The Master version has a unique sound for when our laser is firing
 
  LDA #0                 \ Call the NOISE routine with A = 0 to make the sound
  JSR NOISE              \ of our laser firing

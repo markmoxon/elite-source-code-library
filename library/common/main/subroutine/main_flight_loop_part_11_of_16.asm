@@ -242,7 +242,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
 ENDIF
 
-IF _MASTER_VERSION \ Advanced: The Master version awards different kill points depending on the type of the ship that was killed
+IF _MASTER_VERSION \ Advanced: The Master version awards different kill points depending on the type of the ship that we kill, ranging from 0.03125 points for a splinter to 5.33203125 points for a Constrictor or Cougar
 
  LDX TYPE               \ Set X to the type of the ship that was killed so the
                         \ following call to EXNO2 can award us the correct

@@ -114,10 +114,19 @@ ENDIF
 
  JSR WPSHPS             \ Wipe all ships from the scanner
 
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+
  JSR ZERO               \ Zero-fill pages &9, &A, &B, &C and &D, which clears
                         \ the ship data blocks, the ship line heap, the ship
                         \ slots for the local bubble of universe, and various
                         \ flight and ship status variables
+
+ELIF _6502SP_VERSION OR _MASTER_VERSION
+
+ JSR ZERO               \ Reset the ship slots for the local bubble of universe,
+                        \ and various flight and ship status variables
+
+ENDIF
 
 IF _CASSETTE_VERSION \ Minor
 

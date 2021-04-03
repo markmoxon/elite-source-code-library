@@ -14,8 +14,13 @@ ENDIF
 \
 \ Returns:
 \
+IF _DISC_DOCKED OR _6502SP_VERSION \ Comment
 \   X                   If a key is being pressed, X contains the internal key
 \                       number, otherwise it contains 0
+ELIF _MASTER_VERSION
+\   X                   If a key is being pressed, X contains the ASCII code of
+\                       the key being pressed, otherwise it contains 0
+ENDIF
 \
 \   A                   Contains the same as X
 \
@@ -47,7 +52,19 @@ ENDIF
 
  JSR MVEIT              \ Call MVEIT to move and rotate the ship in space
 
+IF _DISC_DOCKED OR _6502SP_VERSION \ Platform
+
+
  JMP RDKEY              \ Scan the keyboard for a key press and return the
                         \ internal key number in X (or 0 for no key press),
                         \ returning from the subroutine using a tail call
+
+ELIF _MASTER_VERSION
+
+ JMP RDKEY              \ Scan the keyboard for a key press and return the
+                        \ ASCII code of the key pressed in X (or 0 for no key 
+                        \ press), returning from the subroutine using a tail
+                        \ call
+
+ENDIF
 

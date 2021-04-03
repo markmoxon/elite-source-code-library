@@ -60,7 +60,7 @@ ENDIF
  JSR Ze                 \ Call Ze to initialise INWK to a potentially hostile
                         \ ship, and set A and X to random values
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: When considering spawning cops, the advanced versions has a 0.4% chance of spawning a Cougar or a Thargoid instead
+IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: When considering spawning cops, the advanced versions have a 0.4% chance of spawning a Cougar or a Thargoid instead
 
  CMP #136               \ If the random number in A = 136 (0.4% chance), jump
  BEQ fothg              \ to fothg in part 4 to spawn either a Thargoid or, very

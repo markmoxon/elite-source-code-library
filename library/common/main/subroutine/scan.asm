@@ -120,7 +120,7 @@ ENDIF
                         \ this gives A the sign of x_sign and gives it a value
                         \ range of -63 (%11000001) to 0
 
-IF _MASTER_VERSION \ Other
+IF _MASTER_VERSION
 
  CLC                    \ Clear the C flag so we can do addition below
 

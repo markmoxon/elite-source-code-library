@@ -24,7 +24,7 @@
 \
 \ ******************************************************************************
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: Group A: In the 6502SP version, the Market Price screen doesn't list any prices when you're in witchspace, while the other versions still show the prices from the system you jumped from
+IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: Group A: In the advanced versions, the Market Price screen doesn't list any prices when you're in witchspace, while the other versions still show the prices from the system you jumped from
 
 .TT151q
 

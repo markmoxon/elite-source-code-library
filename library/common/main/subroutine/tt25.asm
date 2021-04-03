@@ -367,7 +367,7 @@ IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Enhanced: Extended syste
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Other
+IF _6502SP_VERSION OR _DISC_DOCKED \ Minor
 
                         \ The following code doesn't appear to be called from
                         \ anywhere, so it's presumably a remnant of code from

@@ -49,8 +49,18 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
+
  JSR RDKEY              \ Scan the keyboard for a key press and return the
                         \ internal key number in X (or 0 for no key press)
+
+ELIF _MASTER_VERSION
+
+ JSR RDKEY              \ Scan the keyboard for a key press and return the
+                        \ ASCII code of the key pressed in X (or 0 for no key 
+                        \ press)
+
+ENDIF
 
  BNE t                  \ If a key was already being held down when we entered
                         \ this routine, keep looping back up to t, until the
@@ -58,9 +68,20 @@ ENDIF
 
 .t2
 
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
+
  JSR RDKEY              \ Any pre-existing key press is now gone, so we can
                         \ start scanning the keyboard again, returning the
                         \ internal key number in X (or 0 for no key press)
+
+ELIF _MASTER_VERSION
+
+ JSR RDKEY              \ Any pre-existing key press is now gone, so we can
+                        \ start scanning the keyboard again, returning the
+                        \ ASCII code of the key pressed in X (or 0 for no key 
+                        \ press)
+
+ENDIF
 
  BEQ t2                 \ Keep looping up to t2 until a key is pressed
 

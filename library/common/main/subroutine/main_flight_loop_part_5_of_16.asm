@@ -34,7 +34,7 @@ IF _MASTER_VERSION \ Advanced: In the Master version, energy bombs have no effec
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: In the 6502SP version, energy bombs have no effect against the Constrictor in mission 1
+IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: In the advanced versions, energy bombs have no effect against the Constrictor in mission 1
 
  CPY #2*CON             \ If the ship in Y is the Constrictor, jump to BA21
  BCS MA21               \ as energy bombs are useless against the Constrictor
@@ -62,7 +62,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _MASTER_VERSION \ Advanced: The Master version awards different kill points depending on the type of the ship that was killed
+IF _MASTER_VERSION \ Advanced: The Master version awards different numbers of kill points to all the different types of ship that the energy bomb kills
 
  LDX TYPE               \ Set X to the type of the ship that was killed so the
                         \ following call to EXNO2 can award us the correct

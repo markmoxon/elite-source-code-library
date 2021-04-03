@@ -116,7 +116,7 @@ ENDIF
  ECHR 'D'
  ECHR 'E'
  ECHR 'L'
-IF _6502SP_VERSION OR _DISC_DOCKED \ Advanced: In the Master version, the disc access menu has an extra option 5, "Default JAMESON", which resets the commander to the default starting point
+IF _6502SP_VERSION OR _DISC_DOCKED \ Advanced: In the Master version, the disc access menu has an extra option, "Default JAMESON", which resets the commander to the default starting point
  ETWO 'E', 'T'
  ECHR 'E'
  ETOK 208
@@ -3241,7 +3241,7 @@ ENDIF
  EJMP 24
  EQUB VE
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Advanced: The Master version contains a new prompt in the extended token table, "ARE YOU SURE?", which isn't present in the other versions
+IF _6502SP_VERSION OR _DISC_DOCKED \ Advanced: The Master version contains a new prompt in the extended token table, "ARE YOU SURE?", which isn't present in the other versions. It is used to make sure you really do want to revert to the default commander if you choose that option from the disc access menu
 
  EQUB VE                \ Token 224:    ""
                         \
@@ -3449,7 +3449,7 @@ ENDIF
  ECHR 'S'
  EQUB VE
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Advanced: The Master version contains a new prompt in the extended token table, "{currently selected media} ERROR", which isn't present in the other versions, though it isn't actually used (it's been left in from the Commodore 64 version of the game)
+IF _6502SP_VERSION OR _DISC_DOCKED \ Advanced: The Master version contains a new prompt in the extended token table, "{currently selected media} ERROR", which isn't present in the other versions, though it isn't actually used (it was carried over from the Commodore 64 version of the game)
 
  EQUB VE                \ Token 255:    ""
                         \

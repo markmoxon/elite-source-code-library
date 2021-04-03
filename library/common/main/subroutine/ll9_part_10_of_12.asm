@@ -251,7 +251,7 @@ ELIF _DISC_VERSION
 
 ENDIF
 
-IF _MASTER_VERSION \ Advanced: The LLX30 routine is at the heart of the Master's flicker-free ship drawing algorithm
+IF _MASTER_VERSION \ Advanced: The Master implements flicker-free ship drawing using the LLX30 routine, which manages the erasing and drawing of individual lines
 
  JSR LLX30              \ Draw this edge using flicker-free animation, by first
                         \ drawing the ship's new line and then erasing the

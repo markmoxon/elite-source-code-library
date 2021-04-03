@@ -100,7 +100,7 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
 ELIF _MASTER_VERSION
 
- CPX #&59               \ Did we press "Y"? If not, jump to QU5, otherwise
+ CPX #'Y'               \ Did we press "Y"? If not, jump to QU5, otherwise
  BNE QU5                \ continue on to load a new commander
 
 ENDIF

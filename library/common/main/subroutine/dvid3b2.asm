@@ -37,7 +37,7 @@
 
  STA P+2                \ Set P+2 = A
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Other: The 6502SP version has a check to ensure the DVID3B2 routine doesn't try to divide by zero, a check the other versions lack
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Other: The advanced versions have a check to ensure the DVID3B2 routine doesn't try to divide by zero, a check the other versions lack
 
  LDA INWK+6             \ Set Q = z_lo
  STA Q

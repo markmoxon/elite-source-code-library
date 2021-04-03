@@ -70,7 +70,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Advanced: Group A: The cassette, disc and 6502SP versions do all their line drawing at the very end of the LL9 ship-drawing routine, but the Master has already redrawn most of the ship by this point and only needs to erase any remaining lines by this point
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Advanced: Group A: The cassette, disc and 6502SP versions do all their line drawing at the very end of the LL9 ship-drawing routine, but the Master has already redrawn most of the ship by this point and only needs to erase any remaining lines
 
  INY                    \ Set Y = 1, which we will use as an index into the ship
                         \ line heap, starting at byte #1 (as byte #0 contains

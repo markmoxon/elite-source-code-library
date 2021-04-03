@@ -28,7 +28,7 @@ ENDIF
 
 .MT26
 
-IF _MASTER_VERSION \ Advanced: When entering text in the Master version, it is shown in magenta, while it is shown in white in the other versions
+IF _MASTER_VERSION \ Advanced: When entering text in the Master version, the text that is typed is shown in magenta, while it is shown in white in the other versions
 
  LDA COL                \ Store the current colour on the stack
  PHA

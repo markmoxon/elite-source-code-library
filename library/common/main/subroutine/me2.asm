@@ -9,7 +9,7 @@
 
 .me2
 
-IF _MASTER_VERSION \ Advanced: Group A: The Master version clears the bottom part of the screen when displaying in-flight messages in non-space view screens, whereas the other versions messily superimpose the message over the current screen
+IF _MASTER_VERSION \ Advanced: Group A: The Master version clears the bottom part of the screen when displaying in-flight messages in screens other than the space view, whereas the other versions messily superimpose the message over the current screen
 
  LDA QQ11               \ If this is not the space view, jump down to nomess to
  BNE nomess             \ skip displaying the in-flight message

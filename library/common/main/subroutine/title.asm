@@ -30,6 +30,16 @@ IF _MASTER_VERSION \ Comment
 \   Y                   The distance to show the ship rotating, once it has
 \                       finished moving towards us
 ENDIF
+\ Returns:
+\
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Comment
+\   X                   If a key is being pressed, X contains the internal key
+\                       number, otherwise it contains 0
+ELIF _MASTER_VERSION
+\   X                   If a key is being pressed, X contains the ASCII code
+\                       of the key pressed
+ENDIF
+\
 \ ******************************************************************************
 
 .TITLE
@@ -422,7 +432,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION \ Advanced: The 6502SP version only scans for keypresses every four iterations on the title screen (as opposed to every iteration in the other versions), so you have to hold down Y/N or Space for longer to load a commander or start the game
+IF _6502SP_VERSION \ Advanced: The 6502SP version only scans for keypresses every four iterations on the title screen (as opposed to every iteration in the other versions), so you have to hold down "Y", "N" or Space for noticeably longer to load a commander or start the game
 
  LDA MCNT               \ This value will be zero on one out of every four
  AND #3                 \ iterations, so for the other three, skip to nodesire

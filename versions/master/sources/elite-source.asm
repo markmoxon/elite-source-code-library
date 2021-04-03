@@ -947,8 +947,6 @@ PRINT "S.ELTG ", ~CODE_G%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_G%
 \
 \ ELITE H FILE
 \
-\ Produces the binary file ELTH.bin that gets loaded by elite-bcfs.asm.
-\
 \ ******************************************************************************
 
 CODE_H% = P%

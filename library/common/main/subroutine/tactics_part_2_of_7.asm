@@ -173,7 +173,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Advanced: In the 6502SP version there can be up to 7 cops in the vicinity, and in the Master version there can be up to 6, while the limit is 4 in the other versions
+IF _CASSETTE_VERSION \ Advanced: In the 6502SP version there can be up to seven cops in the vicinity, and in the Master version there can be up to six, while the limit is four in the other versions
 
  LDA MANY+COPS          \ We only call the tactics routine for the space station
  CMP #4                 \ when it is hostile, so first check the number of cops

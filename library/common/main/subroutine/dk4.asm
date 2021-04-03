@@ -73,8 +73,18 @@ ENDIF
  JSR WSCAN              \ Call WSCAN to wait for the vertical sync, so the whole
                         \ screen gets drawn
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+
  JSR RDKEY              \ Scan the keyboard for a key press and return the
                         \ internal key number in X (or 0 for no key press)
+
+ELIF _MASTER_VERSION
+
+ JSR RDKEY              \ Scan the keyboard for a key press and return the
+                        \ ASCII code of the key pressed in X (or 0 for no key 
+                        \ press)
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
@@ -159,7 +169,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
 ENDIF
 
-IF _MASTER_VERSION \ Advanced: The Master version allows you to change the volume of the sound effects using the "<" and ">" keys when paused
+IF _MASTER_VERSION \ Advanced: The Master version allows you to change the volume of the sound effects using the "<" and ">" keys when the game is paused
 
  LDA VOLUME             \ Fetch the current volume setting into A
 
@@ -247,7 +257,7 @@ IF _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Enhanced: The enhanced 
 
 ENDIF
 
-IF _MASTER_VERSION \ Advanced: The Master version makes two beeps when Bitstik is configured, while the disc and 6502SP versions remain totally silent and give no clue as to whether you just turned the Bitstik on or off
+IF _MASTER_VERSION \ Advanced: The Master version makes two beeps when the Bitstik is configured, while the disc and 6502SP versions remain totally silent and give no clue as to whether you just turned the Bitstik on or off
 
  BPL P%+5               \ If we just toggled the Bitstik off (i.e. to 0, which
                         \ is positive), then skip the following two instructions
@@ -263,7 +273,7 @@ IF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Label
 
 ENDIF
 
-IF _6502SP_VERSION \ Advanced: The 6502SP lets you take screenshots, by pressing "D" when the game is paused
+IF _6502SP_VERSION \ Advanced: The 6502SP version lets you take screenshots, by pressing "D" when the game is paused
 
  CPX #&32               \ If "D" is being pressed, jump to savscr to save a
  BEQ savscr             \ screenshot

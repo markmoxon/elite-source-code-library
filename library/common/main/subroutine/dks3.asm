@@ -79,7 +79,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: When toggling a configuration option in the Master version, we get two beeps when we turn the option on (which sounds like one long beep) and one beep when we turn it off, whereas the other versions beep when we turn it on and remain silent when we turn it off
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: When toggling a configuration option in the Master version, we get two beeps when we turn the option on (which sounds like one long beep) and one beep when we turn it off (which sounds like a short beep), whereas the other versions beep when we turn it on and remain silent when we turn it off
 
                         \ We have a match between X and Y, so now to toggle
                         \ the relevant configuration byte. CAPS LOCK has a key

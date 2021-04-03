@@ -75,7 +75,7 @@ ENDIF
  STX FIST               \ Changing galaxy also clears our criminal record, so
                         \ set our legal status in FIST to 0 ("clean")
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Advanced: The original versions of Elite start the galactic hyperspace countdown from 15, just like the normal hyperspace countdown, but the 6502SP version doesn't muck about and starts the galactic hyperspace countdown from 2
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Advanced: The original versions of Elite start the galactic hyperspace countdown from 15, just like the normal hyperspace countdown, but the advanced versions don't muck about and start the galactic hyperspace countdown from 2
 
  JSR wW                 \ Call wW to start the hyperspace countdown
 

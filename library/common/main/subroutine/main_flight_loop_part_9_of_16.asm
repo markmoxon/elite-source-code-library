@@ -71,7 +71,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Standard: When docking, the cassette version checks that the angle between the vector to the space station and the nominal approach is less than 22.0 degrees; in the disc version, it checks that the angle between the vector to the planet and the nominal approach is less than 26.3 degrees; and in the 6502SP version, it checks that the angle between the vector to the planet and the nominal approach is less than 22.0 degrees
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Standard: When docking, the cassette version checks that the angle between the vector to the space station and the nominal approach is less than 22.0 degrees; in the disc version, it checks that the angle between the vector to the planet and the nominal approach is less than 26.3 degrees; and in the advanced versions, it checks that the angle between the vector to the planet and the nominal approach is less than 22.0 degrees
 
  CMP #89                \ 4. If z-axis < 89, jump to MA62 to fail docking, as
  BCC MA62               \ we are not in the 22.0 degree safe cone of approach

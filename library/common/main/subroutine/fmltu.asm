@@ -161,13 +161,13 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION \ Other
+IF _6502SP_VERSION \ Other: Group A: The Master version omits half of the logarithm algorithm when compared to the 6502SP version
 
  BMI oddlog             \ If A > 127, jump to oddlog
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Other
+IF _6502SP_VERSION OR _MASTER_VERSION \ Other: See group A 
 
  LDA log,X              \ Set A = high byte of Lq
 
@@ -191,7 +191,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Other
 
 ENDIF
 
-IF _6502SP_VERSION \ Other
+IF _6502SP_VERSION \ Other: See group A
 
 .oddlog
 
@@ -213,7 +213,7 @@ IF _6502SP_VERSION \ Other
 
 ENDIF
 
-IF _6502SP_VERSION \ Other
+IF _6502SP_VERSION \ Other: See group A
 
 .MU3
 

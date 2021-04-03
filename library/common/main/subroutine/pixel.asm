@@ -242,7 +242,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION \ Other
+IF _6502SP_VERSION
 
  LDA P                  \ If the pixel's ZZ distance, which we stored in P, is
  BMI PX3                \ greater than 127, jump to PX3 to plot a 1-pixel dot

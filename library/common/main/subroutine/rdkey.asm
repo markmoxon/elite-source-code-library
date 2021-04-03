@@ -18,7 +18,8 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \ for a list of internal key numbers).
 ELIF _MASTER_VERSION
 \ Scan the keyboard, starting with internal key number 16 ("Q") and working
-\ through the set of internal key numbers.
+\ through the set of internal key numbers, returning the resulting key press in
+\ ASCII.
 ELIF _6502SP_VERSION
 \ This routine sends an OSWORD 240 command to the I/O processor to ask it to
 \ scan the keyboard, starting with internal key number 16 ("Q") and working
@@ -32,8 +33,13 @@ ENDIF
 \
 \ Returns:
 \
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Comment
 \   X                   If a key is being pressed, X contains the internal key
 \                       number, otherwise it contains 0
+ELIF _MASTER_VERSION
+\   X                   If a key is being pressed, X contains the ASCII code
+\                       of the key pressed, otherwise it contains 0
+ENDIF
 \
 \   A                   Contains the same as X
 \

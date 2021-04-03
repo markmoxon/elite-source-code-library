@@ -111,7 +111,7 @@ ENDIF
 
  LDA R                  \ Fetch the result so far into A
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Advanced: Group B: If you try to enter a number that is too big in the Master version, all your key presses are displayed, whereas in the other versions the key press that pushed you over the edge is not shown
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Advanced: Group B: If you try to enter a number that is too big when buying or selling in the Master version, all your key presses are displayed, whereas in the other versions the key press that pushes you over the edge is not shown
 
  CMP #26                \ If A >= 26, where A is the number entered so far, then
  BCS OUT                \ adding a further digit will make it bigger than 256,

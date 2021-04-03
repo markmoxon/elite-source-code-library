@@ -95,7 +95,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: In the enhance
 
 ENDIF
 
-IF _MASTER_VERSION \ Advanced: In the Master version, killing the Constrictor at the end of mission 1 instantly gives you 256 kill points
+IF _MASTER_VERSION \ Master: In the Master version, killing the Constrictor at the end of mission 1 instantly gives you 256 kill points
 
  INC TALLY+1            \ Award 256 kill points for killing the Constrictor
 

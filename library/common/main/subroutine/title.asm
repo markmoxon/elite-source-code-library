@@ -44,7 +44,7 @@ ENDIF
 
 .TITLE
 
-IF _MASTER_VERSION \ Advanced: Group A: In the Master version, the Cobra Mk III shown on the first title page is further away than in the other versions, which is implemented by a new variable that contains the distance that the ship should be shown at
+IF _MASTER_VERSION \ Master: Group A: In the Master version, the Cobra Mk III shown on the first title page is further away than in the other versions, which is implemented by a new variable that contains the distance that the ship should be shown at
 
  STY SDIST              \ Store the ship distance in SDIST
 
@@ -145,7 +145,7 @@ IF _DISC_DOCKED \ Other: The disc version contains various bits of copy protecti
 
 ENDIF
 
-IF _MASTER_VERSION \ Advanced: See group A
+IF _MASTER_VERSION \ Master: See group A
 
  LDA #96                \ Set A = 96 as the distance that the ship starts at
 
@@ -257,7 +257,7 @@ IF _6502SP_VERSION OR _DISC_DOCKED \ Platform
 
 ENDIF
 
-IF _DISC_DOCKED \ Advanced: Group B: The Master version shows the "Load New Commander (Y/N)?" prompt on row 20, while the other versions show it one line lower, on row 21
+IF _DISC_DOCKED \ Master: Group B: The Master version shows the "Load New Commander (Y/N)?" prompt on row 20, while the other versions show it one line lower, on row 21
 
  LDA #7                 \ Move the text cursor to column 7
  STA XC
@@ -310,7 +310,7 @@ IF _6502SP_VERSION OR _DISC_DOCKED \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Advanced: See group B
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Master: See group B
 
  JSR CLYNS              \ Clear the bottom three text rows of the upper screen,
                         \ and move the text cursor to column 1 on row 21, i.e.
@@ -323,7 +323,7 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Advanced: See group B
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Advanced: The Master version shows the copyright year on the title screen as 1986 rather than 1984
+IF _CASSETTE_VERSION \ Master: The Master version shows the copyright year on the title screen as 1986 rather than 1984
 
  PLA                    \ Restore the recursive token number we stored on the
  JSR ex                 \ stack at the start of this subroutine, and print that
@@ -385,7 +385,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: Group A: The 6502SP version adds two loop counters to the title screen so we can start the demo after a certain period on the title screen
+IF _6502SP_VERSION OR _MASTER_VERSION \ 6502SP: Group C: The 6502SP version adds two loop counters to the title screen so we can start the demo after a certain period on the title screen
 
  LDA #12                \ Set CNT2 = 12 as the outer loop counter for the loop
  STA CNT2               \ starting at TLL2
@@ -432,7 +432,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION \ Advanced: The 6502SP version only scans for keypresses every four iterations on the title screen (as opposed to every iteration in the other versions), so you have to hold down "Y", "N" or Space for noticeably longer to load a commander or start the game
+IF _6502SP_VERSION \ 6502SP: The 6502SP version only scans for keypresses every four iterations on the title screen (as opposed to every iteration in the other versions), so you have to hold down "Y", "N" or Space for noticeably longer to load a commander or start the game
 
  LDA MCNT               \ This value will be zero on one out of every four
  AND #3                 \ iterations, so for the other three, skip to nodesire
@@ -531,7 +531,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION \ Advanced: See group A
+IF _6502SP_VERSION \ 6502SP: See group C
 
  DEC MCNT               \ Decrement the inner loop counter
 

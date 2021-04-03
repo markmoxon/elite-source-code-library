@@ -57,7 +57,7 @@ ENDIF
 
  JSR MVEIT              \ Call MVEIT to move the Cobra in space
 
-IF _MASTER_VERSION \ Advanced: In the Master version, if you launch your escape pod while looking out of the side or rear views, you won't see your Cobra as you leave it behind, while in the other versions you do
+IF _MASTER_VERSION \ Master: In the Master version, if you launch your escape pod while looking out of the side or rear views, you won't see your Cobra as you leave it behind, while in the other versions you do
 
  LDA QQ11               \ If either of QQ11 or VIEW is non-zero (i.e. this is
  ORA VIEW               \ not the front space view), skip the following

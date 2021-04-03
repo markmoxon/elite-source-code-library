@@ -28,7 +28,7 @@ ENDIF
 
 .PAS1
 
-IF _DISC_DOCKED OR _6502SP_VERSION \ Advanced: In the Master version, the rotating Constrictor in the mission 1 briefing is slightly higher up the screen than in the other versions
+IF _DISC_DOCKED OR _6502SP_VERSION \ Master: In the Master version, the rotating Constrictor in the mission 1 briefing is slightly higher up the screen than in the other versions
 
  LDA #112               \ Set y_lo = 112
  STA INWK+3

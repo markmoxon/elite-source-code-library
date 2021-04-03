@@ -102,7 +102,7 @@ ENDIF
  ECHR 'G'
  ECHR 'U'
  ECHR 'E'
-IF _MASTER_VERSION \ Advanced: In the Master version, option 3 in the disc access menu is "Catalogue Disk" rather than just "Catalogue"
+IF _MASTER_VERSION \ Master: In the Master version, option 3 in the disc access menu is "Catalogue Disk" rather than just "Catalogue"
  ECHR ' '
  ECHR 'D'
  ECHR 'I'
@@ -116,7 +116,7 @@ ENDIF
  ECHR 'D'
  ECHR 'E'
  ECHR 'L'
-IF _6502SP_VERSION OR _DISC_DOCKED \ Advanced: In the Master version, the disc access menu has an extra option, "Default JAMESON", which resets the commander to the default starting point
+IF _6502SP_VERSION OR _DISC_DOCKED \ Master: In the Master version, the disc access menu has an extra option, "Default JAMESON", which resets the commander to the default starting point
  ETWO 'E', 'T'
  ECHR 'E'
  ETOK 208
@@ -816,7 +816,7 @@ ENDIF
  ECHR '1'
  ECHR '9'
  ECHR '8'
-IF _6502SP_VERSION OR _DISC_DOCKED \ Advanced: The Master version has a copyright notice of "(C) Acornsoft 1986", rather than the "1984" of the other versions
+IF _6502SP_VERSION OR _DISC_DOCKED \ Master: Text token 12 in the Master version has a copyright notice of "(C) Acornsoft 1986", rather than the "1984" of the other versions
  ECHR '4'
 ELIF _MASTER_VERSION
  ECHR '6'
@@ -1835,7 +1835,7 @@ ENDIF
  ECHR 'Y'
  EQUB VE
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Advanced: The disc and 6502SP versions contain a spelling mistake in the extended token system - they incorrectly spell weird as "wierd". The correct spelling is used in the Master version
+IF _6502SP_VERSION OR _DISC_DOCKED \ Master: The disc and 6502SP versions contain a spelling mistake in the extended token system - they incorrectly spell weird as "wierd". The correct spelling is used in the Master version
 
  ECHR 'W'               \ Token 131:    "WIERD"
  ECHR 'I'               \
@@ -2500,7 +2500,7 @@ IF _6502SP_VERSION \ Screen
  EJMP 30                \                {white}
 ENDIF
  EJMP 1                 \                {all caps}
-IF _MASTER_VERSION \ Advanced: The Master version indents the "INCOMING MESSAGE" shown during mission briefings to the right by one space
+IF _MASTER_VERSION \ Master: The Master version indents the "INCOMING MESSAGE" shown during mission briefings to the right by one space
  ECHR ' '               \                (space)
 ENDIF
  ETWO 'I', 'N'          \                INCOMING MESSAGE"
@@ -2639,7 +2639,7 @@ ENDIF
  ECHR 'N'               \                {tab 6}{all caps}  MESSAGE ENDS
  ECHR 'A'               \                {wait for key press}"
  ECHR 'V'               \
-IF _DISC_DOCKED \ Advanced: The disc and 6502SP versions contain a spelling mistake in the mission 2 briefing that's shown when picking up the plans from Ceerdi - they incorrectly spell intelligence as "intellegence". The correct spelling is used in the Master version
+IF _DISC_DOCKED \ Master: The disc and 6502SP versions contain a spelling mistake in the mission 2 briefing that's shown when picking up the plans from Ceerdi - they incorrectly spell intelligence as "intellegence". The correct spelling is used in the Master version
  ECHR 'A'               \ Encoded as:   "{25}{9}{29}{14}{2}GOOD DAY [154]
  ECHR 'L'               \                 {4}[204]I{13} AM {19}AG<246>T {19}B
  ECHR ' '               \                <249>KE OF {19}NAVAL {19}<240>TEL<229>
@@ -2838,7 +2838,7 @@ ENDIF
  ETWO 'S', 'E'
  ECHR ' '
  ECHR 'M'
-IF _6502SP_VERSION OR _DISC_DOCKED \ Advanced: The disc and 6502SP versions call the Thargoids "those mothers" in the mission 2 briefing that's shown when picking up the plans from Ceerdi. In the Master version, this has changed to "those murderers"
+IF _6502SP_VERSION OR _DISC_DOCKED \ Master: The disc and 6502SP versions call the Thargoids "those mothers" in the mission 2 briefing that's shown when picking up the plans from Ceerdi. In the Master version, this has changed to "those murderers"
  ECHR 'O'
  ETWO 'T', 'H'
  ETWO 'E', 'R'
@@ -3241,7 +3241,7 @@ ENDIF
  EJMP 24
  EQUB VE
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Advanced: The Master version contains a new prompt in the extended token table, "ARE YOU SURE?", which isn't present in the other versions. It is used to make sure you really do want to revert to the default commander if you choose that option from the disc access menu
+IF _6502SP_VERSION OR _DISC_DOCKED \ Master: The Master version contains a new prompt in the extended token table, "ARE YOU SURE?", which isn't present in the other versions. It is used to make sure you really do want to revert to the default commander if you choose that option from the disc access menu
 
  EQUB VE                \ Token 224:    ""
                         \
@@ -3449,7 +3449,7 @@ ENDIF
  ECHR 'S'
  EQUB VE
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Advanced: The Master version contains a new prompt in the extended token table, "{currently selected media} ERROR", which isn't present in the other versions, though it isn't actually used (it was carried over from the Commodore 64 version of the game)
+IF _6502SP_VERSION OR _DISC_DOCKED \ Master: The Master version contains a new prompt in the extended token table, "{currently selected media} ERROR", which isn't present in the other versions, though it isn't actually used (it was carried over from the Commodore 64 version of the game)
 
  EQUB VE                \ Token 255:    ""
                         \

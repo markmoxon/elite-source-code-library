@@ -14,7 +14,7 @@
  EQUW 20 * 20           \ Targetable area          = 20 * 20
  EQUB &50               \ Edges data offset (low)  = &0050
  EQUB &8C               \ Faces data offset (low)  = &008C
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Advanced: The colour versions of Elite have an extra edge count for the ship colour; cargo canisters are shown in cyan
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; cargo canisters are shown in cyan
  EQUB 49                \ Max. edge count          = (49 - 1) / 4 = 12
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 53                \ Max. edge count          = (53 - 1) / 4 = 13

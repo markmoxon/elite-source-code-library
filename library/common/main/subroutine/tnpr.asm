@@ -65,7 +65,7 @@
                         \ until we have added up all market items from 12
                         \ (minerals) down to 0 (food)
 
-IF _MASTER_VERSION \ Advanced: The Master version contains the code for Trumbles to take up cargo space, though as we never actually get given any Trumbles, the value is always zero
+IF _MASTER_VERSION \ Master: The Master version contains the code for Trumbles to take up cargo space, though as we never actually get given any Trumbles, the value is always zero
 
  ADC TRUMBLE+1          \ Add the high byte of the number of Trumbles in the
                         \ hold, as 256 Trumbles take up one ton of cargo space
@@ -103,7 +103,7 @@ ENDIF
 
  LDY QQ29               \ Set Y to the item number we want to add
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Enhanced: When scooping gold, platinum, gem-stones or alien items in the disc version, we are allowed to scoop what we want as long as our existing hold containss 200 units or less (irrespecitve of what we're trying to scoop); in the other versions, we can only scoop more units if it would result in a total haul of 200 units or less
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Disc: When scooping gold, platinum, gem-stones or alien items in the disc version, we are allowed to scoop what we want as long as our existing hold containss 200 units or less (irrespecitve of what we're trying to scoop); in the other versions, we can only scoop more units if it would result in a total haul of 200 units or less
 
  ADC QQ20,Y             \ Set A = A + the number of units of this item that we
                         \ already have in the hold

@@ -128,7 +128,7 @@ ENDIF
 
 .SC2
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Advanced: In most versions, ships that are exactly ahead of us or behind us are shown on the 3D scanner so the stick goes from the dot onto the centre line of the ellipse, but in the Master version the dot is moved over to the right so the stick goes from the dot just to the right of the centre line
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Master: In most versions, ships that are exactly ahead of us or behind us are shown on the 3D scanner so the stick goes from the dot onto the centre line of the ellipse, but in the Master version the dot is moved over to the right so the stick goes from the dot just to the right of the centre line
 
  ADC #123               \ Set X1 = 123 + x_hi
  STA X1
@@ -304,7 +304,7 @@ ENDIF
  LDA #246               \ A >= 247, so set A to 246, the maximum allowed value
                         \ for the y-coordinate of our ship's dot
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Advanced: Group A: The Master version's 3D scanner draws a dash at the end of each stick (i.e. one pixel high, two pixels wide), while the other versions draw a full dot (i.e. two pixels high, two pixels wide)
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Master: Group A: The Master version's 3D scanner draws a dash at the end of each stick (i.e. one pixel high, two pixels wide), while the other versions draw a full dot (i.e. two pixels high, two pixels wide)
 
  STA Y1                 \ Store A in Y1, as it now contains the screen
                         \ y-coordinate for the ship's dot, clipped so that it
@@ -359,7 +359,7 @@ ENDIF
                         \
                         \ and we can get on with drawing the dot and stick
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Advanced: See group A
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Master: See group A
 
  PHP                    \ Store the flags (specifically the C flag) from the
                         \ above subtraction

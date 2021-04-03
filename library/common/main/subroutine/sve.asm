@@ -304,7 +304,7 @@ IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Other: This is a bug fix
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Advanced: The Master version doesn't show the competition number when saving, as the competition closed some time before the Master came on the scene
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Master: The Master version doesn't show the competition number when saving, as the competition closed some time before the Master came on the scene
 
  JSR BPRNT              \ Print the competition number stored in K to K+3. The
                         \ value of U might affect how this is printed, and as

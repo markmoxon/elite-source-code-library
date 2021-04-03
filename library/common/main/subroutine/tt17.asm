@@ -32,7 +32,7 @@
 
 .TT17
 
-IF _MASTER_VERSION \ Advanced: The Master version doesn't check for SHIFT being held down in the space view, as it has no effect there (it's only used in the chart views for speeding up the crosshairs)
+IF _MASTER_VERSION \ Master: The Master version doesn't check for SHIFT being held down in the space view, as it has no effect there (it's only used in the chart views for speeding up the crosshairs)
 
  LDA QQ11               \ If this not the space view, skip the following three
  BNE P%+7               \ instructions to move onto the SHIFT key logic
@@ -65,7 +65,7 @@ ENDIF
  LDA JSTK               \ If the joystick was not used, jump down to TJ1,
  BEQ TJ1                \ otherwise we move the cursor with the joystick
 
-IF _MASTER_VERSION \ Advanced: Group B: The Master has different logic around moving the crosshairs on the chart views, though the results appear to be the same
+IF _MASTER_VERSION \ Master: Group B: The Master has different logic around moving the crosshairs on the chart views, though the results appear to be the same
 
  LDA JSTY               \ Fetch the joystick pitch, ranging from 1 to 255 with
                         \ 128 as the centre point
@@ -99,7 +99,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: See group B
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: See group B
 
  TYA                    \ Copy Y to A
 
@@ -117,7 +117,7 @@ IF _6502SP_VERSION \ Enhanced: See group A
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: See group B
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: See group B
 
  TAX                    \ Copy A to X, so X contains the joystick roll value
 
@@ -166,7 +166,7 @@ IF _6502SP_VERSION \ Enhanced: See group A
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: See group B
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: See group B
 
  TAY                    \ Copy the value of A into Y
 
@@ -332,7 +332,7 @@ ENDIF
 
  RTS                    \ Return from the subroutine
 
-IF _MASTER_VERSION \ Advanced: See group B
+IF _MASTER_VERSION \ Master: See group B
 
 .TJS1
 

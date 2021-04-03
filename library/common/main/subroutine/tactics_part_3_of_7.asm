@@ -76,7 +76,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: In the enhance
 
 ENDIF
 
-IF _DISC_FLIGHT \ Enhanced: In the disc version, 39% of traders turn out to be bounty hunters, while it's just 20% in the 6502SP version
+IF _DISC_FLIGHT \ Disc: In the disc version, 39% of traders turn out to be bounty hunters, while it's just 20% in the advanced versions
 
  CPX #100               \ This is a trader, so if X >= 100 (61% chance), return
  BCS TA22               \ from the subroutine (as TA22 contains an RTS)

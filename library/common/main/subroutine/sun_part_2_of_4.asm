@@ -13,7 +13,7 @@
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: In the Master version, the screen size is not hard-coded, but is stored in a dedicated location, an approach that was presumably inherited from the non-BBC versions of the game
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: In the Master version, the screen size is not hard-coded, but is stored in a dedicated location, an approach that was presumably inherited from the non-BBC versions of the game
 
  LDY #2*Y-1             \ Set Y = y-coordinate of the bottom of the screen,
                         \ which we use as a counter in the following routine to

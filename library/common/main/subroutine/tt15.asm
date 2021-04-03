@@ -77,7 +77,7 @@ ENDIF
  SEC                    \ to get the x-coordinate of the left edge of the
  SBC QQ19+2             \ crosshairs
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: In the Master version, the horizontal crosshair doesn't overlap the left border of the Short-range Chart, while it does in the other versions
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: In the Master version, the horizontal crosshair doesn't overlap the left border of the Short-range Chart, while it does in the other versions
 
  BCS TT84               \ If the above subtraction didn't underflow, then A is
                         \ positive, so skip the next instruction
@@ -222,7 +222,7 @@ ENDIF
  BMI TT87               \ If this is the Short-range Chart then the y-coordinate
                         \ is fine, so skip to TT87
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: The bottom border of the Long-range Chart is one pixel lower down the screen in the Master version than in the other versions, so crosshair-clipping code is slightly different too
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: The bottom border of the Long-range Chart is one pixel lower down the screen in the Master version than in the other versions, so crosshair-clipping code is slightly different too
 
  LDA #151               \ Otherwise this is the Long-range Chart, so we need to
                         \ clip the crosshairs at a maximum y-coordinate of 151

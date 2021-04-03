@@ -38,7 +38,7 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: Group A: The Master version contains an embedded copy of the default JAMESON commander file that can be restored over the current commander via the disc access menu
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: Group A: The Master version contains an embedded copy of the default JAMESON commander file that can be restored over the current commander via the disc access menu
 
 .NA%
 
@@ -168,7 +168,7 @@ ENDIF
 
  EQUB 128               \ SVC = Save count, #73
 
-IF _MASTER_VERSION \ Advanced: See group A
+IF _MASTER_VERSION \ Master: See group A
 
  EQUB &AA               \ The CHK2 checksum value for the default commander
 

@@ -593,7 +593,7 @@
  ECHR 'E'
  EQUB VE
 
-IF _DISC_DOCKED \ Enhanced: Group A: The disc version has a system description override for Anreer in galaxy 3: "THE INHABITANTS OF ANREER ARE SO AMAZINGLY PRIMITIVE THAT THEY STILL THINK STILL THINK A*****R IS A PRETTY NEAT GAME". The advanced versions have a different override: "THE INHABITANTS OF ANREER ARE SO AMAZINGLY PRIMITIVE THAT THEY STILL THINK ***** ****** IS 3D"
+IF _DISC_DOCKED \ Disc: Group A: The disc version has a system description override for Anreer in galaxy 3: "THE INHABITANTS OF ANREER ARE SO AMAZINGLY PRIMITIVE THAT THEY STILL THINK STILL THINK A*****R IS A PRETTY NEAT GAME". The advanced versions have a different override: "THE INHABITANTS OF ANREER ARE SO AMAZINGLY PRIMITIVE THAT THEY STILL THINK ***** ****** IS 3D"
  ETOK 147               \ Token 25:     "THE INHABITANTS OF [86-90] ARE SO
  ETOK 193               \                AMAZINGLY PRIMITIVE THAT THEY STILL
  ECHR 'S'               \                THINK {single cap}STILL THINK A*****R
@@ -652,7 +652,7 @@ ENDIF
  ECHR 'K'
  ECHR ' '
  EJMP 19
-IF _DISC_DOCKED \ Enhanced: See group A
+IF _DISC_DOCKED \ Disc: See group A
  ECHR 'A'
  ECHR '*'
  ECHR '*'
@@ -699,7 +699,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION \ Advanced: The source disc release of the 6502SP version has a bizarre override for Lave: "Bits'n Pieces - End Of Part 1". I have no idea what this means either
+IF _6502SP_VERSION \ 6502SP: The source disc release of the 6502SP version has a bizarre override for Lave: "Bits'n Pieces - End Of Part 1". I have no idea what this means either
 
 IF _SOURCE_DISC
 

@@ -19,7 +19,7 @@ ENDIF
  EQUW 16 * 16           \ Targetable area          = 16 * 16
  EQUB &2C               \ Edges data offset (low)  = &002C
  EQUB &44               \ Faces data offset (low)  = &0044
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Advanced: The colour versions of Elite have an extra edge count for the ship colour; escape pods are shown in cyan
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; escape pods are shown in cyan
  EQUB 25                \ Max. edge count          = (25 - 1) / 4 = 6
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 29                \ Max. edge count          = (29 - 1) / 4 = 7

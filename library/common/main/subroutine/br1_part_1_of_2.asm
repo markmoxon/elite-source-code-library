@@ -58,7 +58,7 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Advanced: The rotating Cobra Mk III on the title screen is further away on the Master version compared to the other versions, so it doesn't overlap the title text as much
+IF _CASSETTE_VERSION \ Master: The rotating Cobra Mk III on the title screen is further away on the Master version compared to the other versions, so it doesn't overlap the title text as much
 
  LDX #CYL               \ Call TITLE to show a rotating Cobra Mk III (#CYL) and
  LDA #128               \ token 128 ("  LOAD NEW COMMANDER (Y/N)?{crlf}{crlf}"),
@@ -82,7 +82,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION \ Advanced: Pressing TAB in the title screen of the 6502SP version will start the demo
+IF _6502SP_VERSION \ 6502SP: Pressing TAB in the title screen of the 6502SP version will start the demo
 
  CMP #&60               \ Did we press TAB? If not, skip the following
  BNE P%+5               \ instruction

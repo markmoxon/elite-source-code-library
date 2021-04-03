@@ -14,7 +14,7 @@
  EQUW 65 * 65           \ Targetable area          = 65 * 65
  EQUB &50               \ Edges data offset (low)  = &0050
  EQUB &8C               \ Faces data offset (low)  = &008C
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Advanced: The colour versions of Elite have an extra edge count for the ship colour; Sidewinders are shown in cyan
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Sidewinders are shown in cyan
  EQUB 61                \ Max. edge count          = (61 - 1) / 4 = 15
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 65                \ Max. edge count          = (65 - 1) / 4 = 16

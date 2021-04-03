@@ -27,7 +27,7 @@ ELIF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION \ Advanced: In the Master version, the laser crosshairs are different colours for the different laser types
+IF _6502SP_VERSION \ Master: In the Master version, the laser crosshairs are different colours for the different laser types
 
  LDA #YELLOW            \ Send a #SETCOL YELLOW command to the I/O processor to
  JSR DOCOL              \ switch to colour 1, which is yellow in the space view

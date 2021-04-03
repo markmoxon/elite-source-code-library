@@ -26,7 +26,7 @@ ENDIF
 
 .EXNO2
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: The Master version incorporates a fractional kill tally when calculating the combat rank, so each ship type has a different number of kill points, while all the other versions count one point for each kill
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: The Master version incorporates a fractional kill tally when calculating the combat rank, so each ship type has a different number of kill points, while all the other versions count one point for each kill
 
  INC TALLY              \ Increment the low byte of the kill count in TALLY
 

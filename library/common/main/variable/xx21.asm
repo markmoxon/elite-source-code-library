@@ -60,7 +60,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUW SHIP_THARGON      \ TGL  = 30 = Thargon
  EQUW SHIP_CONSTRICTOR  \ CON  = 31 = Constrictor
 ENDIF
-IF _6502SP_VERSION \ Advanced: The 6502SP version has an extra ship definition for the Elite logo that appears in the demo, but it doesn't turn up in-game, not surprisingly
+IF _6502SP_VERSION \ 6502SP: The 6502SP version has an extra ship definition for the Elite logo that appears in the demo, but it doesn't turn up in-game, not surprisingly
  EQUW SHIP_LOGO         \ LGO  = 32 = The Elite logo
  EQUW SHIP_COUGAR       \ COU  = 33 = Cougar
  EQUW SHIP_DODO         \ DOD  = 34 = Dodecahedron ("Dodo") space station

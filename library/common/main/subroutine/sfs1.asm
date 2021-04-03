@@ -91,7 +91,7 @@ ENDIF
                         \ new child ship (in this way, the child inherits things
                         \ like location from the parent)
 
-IF _DISC_FLIGHT \ Enhanced: In the disc version only, child ships that are spawned from a parent inherit the hostile, pirate and docking NEWB flags, meaning pirates spawn pirates, angry ships spawn angry ships, and ships that are docking spawn ships that are also docking
+IF _DISC_FLIGHT \ Disc: In the disc version only, child ships that are spawned from a parent inherit the hostile, pirate and docking NEWB flags, meaning pirates spawn pirates, angry ships spawn angry ships, and ships that are docking spawn ships that are also docking
 
  LDA NEWB               \ Clear bits 0-1 and 5-7 of the ship's NEWB flags,
  AND #%00011100         \ leaving only the hostile, pirate and docking flags

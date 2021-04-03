@@ -9,7 +9,7 @@
 
 .TT208
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Advanced: In the 6502SP version, you can send the Sell Cargo screen to the printer by pressing CTRL-f2
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ 6502SP: In the 6502SP version, you can send the Sell Cargo screen to the printer by pressing CTRL-f2
 
  LDA #4                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 4 (Sell

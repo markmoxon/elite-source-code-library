@@ -51,7 +51,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _DISC_DOCKED OR _6502SP_VERSION \ Enhanced: When deleting a file via the disc menu, the disc and 6502SP versions ask for the "FILE TO DELETE?", while the Master version asks for the "COMMANDER'S NAME?"
+IF _DISC_DOCKED OR _6502SP_VERSION \ Master: When deleting a file via the disc menu, the disc and 6502SP versions ask for the "FILE TO DELETE?", while the Master version asks for the "COMMANDER'S NAME?"
 
  LDA #9                 \ Print extended token 9 ("{clear bottom of screen}FILE
  JSR DETOK              \ TO DELETE?")

@@ -24,7 +24,7 @@ ENDIF
  EQUW 40 * 40           \ Targetable area          = 40 * 40
  EQUB LO(SHIP_CANISTER_EDGES - SHIP_THARGON)         \ Edges data = canister
  EQUB &50               \ Faces data offset (low)  = &0050
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Advanced: The colour versions of Elite have an extra edge count for the ship colour; Thargons are shown in "white" (cyan/red stripes)
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Thargons are shown in "white" (cyan/red stripes)
  EQUB 65                \ Max. edge count          = (65 - 1) / 4 = 16
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 69                \ Max. edge count          = (69 - 1) / 4 = 17

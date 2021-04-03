@@ -14,7 +14,7 @@
  EQUW 99 * 99           \ Targetable area          = 99 * 99
  EQUB &50               \ Edges data offset (low)  = &0050
  EQUB &90               \ Faces data offset (low)  = &0090
-IF _DISC_FLIGHT \ Advanced: The colour versions of Elite have an extra edge count for the ship colour; Worms are shown in cyan
+IF _DISC_FLIGHT \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Worms are shown in cyan
  EQUB 73                \ Max. edge count          = (73 - 1) / 4 = 18
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 77                \ Max. edge count          = (77 - 1) / 4 = 19

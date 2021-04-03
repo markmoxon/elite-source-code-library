@@ -14,7 +14,7 @@
  EQUW 30 * 30           \ Targetable area          = 30 * 30
  EQUB &68               \ Edges data offset (low)  = &0068
  EQUB &B4               \ Faces data offset (low)  = &00B4
-IF _DISC_FLIGHT \ Advanced: The colour versions of Elite have an extra edge count for the ship colour; Morays are shown in cyan/red/black/yellow stripes
+IF _DISC_FLIGHT \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Morays are shown in cyan/red/black/yellow stripes
  EQUB 69                \ Max. edge count          = (69 - 1) / 4 = 17
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 73                \ Max. edge count          = (73 - 1) / 4 = 18

@@ -192,7 +192,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Pla
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Advanced: The Master version has half the number of explosion particles per vertex than the other versions
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Master: The Master version has half the number of explosion particles per vertex than the other versions
 
  LSR A                  \ Divide A by 8 so that is has a maximum value of 15
  LSR A
@@ -351,7 +351,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _MASTER_VERSION \ Advanced: In the Master version, explosions are made up of yellow, red and cyan particles
+IF _MASTER_VERSION \ Master: In the Master version, explosions are made up of yellow, red and cyan particles
 
  AND #3                 \ Set X to this random number, reduced to be in the
  TAX                    \ range 0-3

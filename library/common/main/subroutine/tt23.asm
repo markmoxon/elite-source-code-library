@@ -119,7 +119,7 @@ ENDIF
 
 .TT184
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: The Master version includes systems on the Short-range Chart if they are in the horizontal range 0-29, while the other versions include systems in the range 0-20, so the Master version shows more systems on the chart
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: The Master version includes systems on the Short-range Chart if they are in the horizontal range 0-29, while the other versions include systems in the range 0-20, so the Master version can show systems that are further to the right
 
  CMP #20                \ If the horizontal distance in A is >= 20, then this
  BCS TT187              \ system is too far away from the current system to
@@ -148,7 +148,7 @@ ENDIF
 
 .TT186
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: The Master version includes systems on the Short-range Chart if they are in the vertical range 0-40, while the other versions include systems in the range 0-38, so the Master version shows more systems on the chart
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: The Master version includes systems on the Short-range Chart if they are in the vertical range 0-40, while the other versions include systems in the range 0-38, so the Master version version can show systems that are further down the chart
 
  CMP #38                \ If the vertical distance in A is >= 38, then this
  BCS TT187              \ system is too far away from the current system to
@@ -178,7 +178,7 @@ ENDIF
                         \ of the chart's centre, or positive if it's to the
                         \ right)
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: Group A: The Master version contains code to scale the chart views, though it has no effect in this version. The code is left over from the non-BBC versions, which needed to be able to scale the charts to fit their different-sized screens
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: Group A: The Master version contains code to scale the chart views, though it has no effect in this version. The code is left over from the non-BBC versions, which needed to be able to scale the charts to fit their different-sized screens
 
  ASL A                  \ Set XX12 = 104 + x-delta * 4
  ASL A                  \
@@ -237,7 +237,7 @@ ENDIF
                         \ sign of A, so it can be negative if it's above the
                         \ chart's centre, or positive if it's below)
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Advanced: See group A
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: See group A
 
  ASL A                  \ Set K4 = 90 + y-delta * 2
  ADC #90                \
@@ -312,7 +312,7 @@ ENDIF
  CPY #3                 \ If Y < 3, then the label would clash with the chart
  BCC TT187              \ title, so jump to TT187 to skip printing the label
 
-IF _MASTER_VERSION \ Advanced: The Master version contains different logic to the other versions when deciding whether to display labels on the Short-range Chart; it only shows labels on systems that are within 7 light years of the current system, whereas the other versions show labels if there is space, irrespective of the system's distance
+IF _MASTER_VERSION \ Master: The Master version contains different logic to the other versions when deciding whether to display labels on the Short-range Chart; it only shows labels on systems that are within 7 light years of the current system, whereas the other versions show labels if there is space, irrespective of the system's distance
 
  CPY #21                \ If Y > 21, then the label will be off the bottom of
  BCS TT187              \ the chart, so jump to TT187 to skip printing the label

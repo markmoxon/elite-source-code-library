@@ -16,7 +16,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Comment
 ENDIF
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Advanced: The Master version updates all the dials on every iteration of the main loop, while the other versions only update the speed, pitch and roll indicators on every loop (the other indicators only update every four iterations of the main loop)
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Master: The Master version updates all the dials on every iteration of the main loop, while the other versions only update the speed, pitch and roll indicators on every loop (the other indicators only update every four iterations of the main loop)
 
  LDA MCNT               \ Fetch the main loop counter and calculate MCNT mod 4,
  AND #3                 \ jumping to rT9 if it is non-zero. rT9 contains an RTS,

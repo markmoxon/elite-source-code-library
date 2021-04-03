@@ -9,7 +9,7 @@
 
 .TT167
 
-IF _CASSETTE_VERSION OR _DISC_VERSION  \ Advanced: In the 6502SP version, you can send the Market Price screen to the printer by pressing CTRL-f7
+IF _CASSETTE_VERSION OR _DISC_VERSION  \ 6502SP: In the 6502SP version, you can send the Market Price screen to the printer by pressing CTRL-f7
 
  LDA #16                \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 16 (Market

@@ -41,7 +41,7 @@ ENDIF
  LDA #120               \ Print recursive token 120 ("INCOMING MISSILE") as an
  JSR MESS               \ in-flight message
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Advanced: The Master version has a unique missile launch sound
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Master: The Master version has a unique missile launch sound
 
  LDA #48                \ Call the NOISE routine with A = 48 to make the sound
  BNE NOISE              \ of the missile being launched and return from the

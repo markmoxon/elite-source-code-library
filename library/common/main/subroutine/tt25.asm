@@ -18,7 +18,7 @@
 
 .TT25
 
-IF _CASSETTE_VERSION \ Advanced: In the 6502SP version, you can send the Data on System screen to the printer by pressing CTRL-f6
+IF _CASSETTE_VERSION \ 6502SP: In the 6502SP version, you can send the Data on System screen to the printer by pressing CTRL-f6
 
  JSR TT66-2             \ Clear the top part of the screen, draw a white border,
                         \ and set the current view type in QQ11 to 1
@@ -352,7 +352,7 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Enhanced: Extended system descriptions are shown in the enhanced versions, though in the disc version they are only shown when docked, as the PDESC routine isn't present in the flight code due to memory restrictions
+IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Disc: Extended system descriptions are shown in the enhanced versions, though in the disc version they are only shown when docked, as the PDESC routine isn't present in the flight code due to memory restrictions
 
  JSR TTX69              \ Print a paragraph break and set Sentence Case
 

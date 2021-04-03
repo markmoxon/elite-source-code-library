@@ -109,7 +109,7 @@ ENDIF
  LDX INWK+3             \ Set X = y_lo + 1
  INX
 
-IF _DISC_DOCKED OR _6502SP_VERSION \ Advanced: The Master version shows the Constrictor slightly higher up the screen during the mission 1 briefing, so it doesn't get quite so close to the briefing text
+IF _DISC_DOCKED OR _6502SP_VERSION \ Master: The Master version shows the Constrictor slightly higher up the screen during the mission 1 briefing, so it doesn't get quite so close to the briefing text
 
  CPX #112               \ If X < 112 then skip the next instruction
  BCC P%+4

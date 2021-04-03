@@ -36,7 +36,7 @@ ENDIF
 
 .TRADEMODE
 
-IF _6502SP_VERSION \ Advanced: The 6502SP version implements printable trade screens by checking whether CTRL is being pressed before displaying the relevant screen
+IF _6502SP_VERSION \ 6502SP: The 6502SP version implements printable trade screens by checking whether CTRL is being pressed before displaying the relevant screen
 
  PHA                    \ Store the view type on the stack so we can restore it
                         \ after the call to CTRL

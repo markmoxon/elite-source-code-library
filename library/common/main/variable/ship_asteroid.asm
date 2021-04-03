@@ -14,7 +14,7 @@
  EQUW 80 * 80           \ Targetable area          = 80 * 80
  EQUB &4A               \ Edges data offset (low)  = &004A
  EQUB &9E               \ Faces data offset (low)  = &009E
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Advanced: The colour versions of Elite have an extra edge count for the ship colour; asteroids are shown in red
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; asteroids are shown in red
  EQUB 65                \ Max. edge count          = (65 - 1) / 4 = 16
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 69                \ Max. edge count          = (69 - 1) / 4 = 17

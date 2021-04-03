@@ -14,7 +14,7 @@
  EQUW 50 * 50           \ Targetable area          = 50 * 50
  EQUB &86               \ Edges data offset (low)  = &0086
  EQUB &FE               \ Faces data offset (low)  = &00FE
-IF _DISC_VERSION \ Advanced: The colour versions of Elite have an extra edge count for the ship colour; Shuttles are shown in cyan
+IF _DISC_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Shuttles are shown in cyan
  EQUB 109               \ Max. edge count          = (109 - 1) / 4 = 27
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 113               \ Max. edge count          = (113 - 1) / 4 = 28
@@ -34,7 +34,7 @@ ENDIF
  EQUB %00000000         \ Laser power              = 0
                         \ Missiles                 = 0
 
-IF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Enhanced: Group A: The ship hanger in the disc version displays the Shuttle with slightly different visibility settings to the other enhanced versions, and the face normals are twice the size (even though the scale factor is the same). I'm not entirely sure why
+IF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Disc: Group A: The ship hanger in the disc version displays the Shuttle with slightly different visibility settings to the other enhanced versions, and the face normals are twice the size (even though the scale factor is the same). I'm not entirely sure why
 
 \VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX    0,  -17,   23,    15,     15,   15,    15,         31    \ Vertex 0
@@ -104,7 +104,7 @@ ENDIF
  EDGE       2,      12,    11,    10,         16    \ Edge 18
  EDGE       3,      12,    12,    11,         16    \ Edge 19
  EDGE       8,       9,     9,     9,         16    \ Edge 20
-IF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Enhanced: See group A
+IF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Disc: See group A
  EDGE       9,      10,     9,     9,          7    \ Edge 21
  EDGE      10,      11,     9,     9,          9    \ Edge 22
  EDGE       8,      11,     9,     9,          7    \ Edge 23
@@ -126,7 +126,7 @@ ELIF _DISC_DOCKED
  EDGE      16,      18,    10,    10,          6    \ Edge 29
 ENDIF
 
-IF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Enhanced: See group A
+IF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Disc: See group A
 
 \FACE normal_x, normal_y, normal_z, visibility
  FACE      -55,      -55,       40,         31    \ Face 0

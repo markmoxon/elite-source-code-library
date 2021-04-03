@@ -22,7 +22,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 ENDIF
  EQUB &56               \ Edges data offset (low)  = &0056
  EQUB &BE               \ Faces data offset (low)  = &00BE
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Advanced: The colour versions of Elite have an extra edge count for the ship colour; Pythons are shown in cyan
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Pythons are shown in cyan
  EQUB 85                \ Max. edge count          = (85 - 1) / 4 = 21
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 89                \ Max. edge count          = (89 - 1) / 4 = 22

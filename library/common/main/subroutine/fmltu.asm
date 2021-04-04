@@ -161,7 +161,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION \ Other: Group A: The Master version omits half of the logarithm algorithm when compared to the 6502SP version
+IF _6502SP_VERSION \ Other: Group A: In the FMLTU multiplication routine, the Master version omits half of the logarithm algorithm when compared to the 6502SP version. The effect of this in-game is most noticeable in the Short-range Chart, where the fuel circle is a different shape to the other versions (the Master version looks rather less smooth, as if it has a slightly larger step size, though it's actually down to the less accurate FMLTU routine)
 
  BMI oddlog             \ If A > 127, jump to oddlog
 

@@ -28,4 +28,4 @@ INCLUDE "versions/master/sources/elite-header.h.asm"
 
 PUTFILE "versions/master/output/M128Elt.bin", "M128Elt", &FF0E00, &FF0E43
 PUTFILE "versions/master/output/BDATA.bin", "BDATA", &000000, &000000
-PUTFILE "versions/master/extracted/sng47/BCODE.bin", "BCODE", &000000, &000000
+PUTFILE "versions/master/output/BCODE.bin", "BCODE", &000000, &000000

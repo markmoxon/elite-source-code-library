@@ -119,7 +119,7 @@ ENDIF
 
 .TT184
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: The Master version includes systems on the Short-range Chart if they are in the horizontal range 0-29, while the other versions include systems in the range 0-20, so the Master version can show systems that are further to the right
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: The Master version includes systems on the Short-range Chart if they are in the horizontal range 0-29, while the other versions include systems in the range 0-20, so the Master version can show systems that are further to the right. You can see an example of this difference in the Short-range Chart at Lave, which contains a lone system (Qutiri) out to the far right. This system isn't shown in the other versions because of their stricter horizontal distance check
 
  CMP #20                \ If the horizontal distance in A is >= 20, then this
  BCS TT187              \ system is too far away from the current system to
@@ -310,12 +310,12 @@ ELIF _6502SP_VERSION
 ENDIF
 
  CPY #3                 \ If Y < 3, then the label would clash with the chart
- BCC TT187              \ title, so jump to TT187 to skip printing the label
+ BCC TT187              \ title, so jump to TT187 to skip showing the system
 
-IF _MASTER_VERSION \ Master: The Master version contains different logic to the other versions when deciding whether to display labels on the Short-range Chart; it only shows labels on systems that are within 7 light years of the current system, whereas the other versions show labels if there is space, irrespective of the system's distance
+IF _MASTER_VERSION \ Master: The Master version only shows systems on the Short-range Chart that are within 7 light years of the current system, whereas the other versions show all systems in the vicinity, irrespective of the distance. You can see this on the Short-range Chart at Lave, where Orrere, Uszaa and Tionisla are all missing from the Master version's chart, but are present in the other versions. Interestingly, the unlabelled system on the far right (Qutiri) that slipped through the Master's more generous horizontal distance check is still shown, even though it's more than 7 light years away. This is a bug, and it's caused by the label-printing logic; because there is no room for a label for this system, the code skips label-printing by jumping to ee1 rather than TT187, inadvertently jumping to the system-drawing routine rather than moving on to the next system
 
  CPY #21                \ If Y > 21, then the label will be off the bottom of
- BCS TT187              \ the chart, so jump to TT187 to skip printing the label
+ BCS TT187              \ the chart, so jump to TT187 to skip showing the system
 
  TYA                    \ Store Y on the stack so it can be preserved across the
  PHA                    \ call to DIST
@@ -332,21 +332,19 @@ IF _MASTER_VERSION \ Master: The Master version contains different logic to the 
  TAY
 
  LDA QQ8+1              \ If the high byte of the distance in QQ8(1 0) is
- BNE TT187              \ non-zero, jump to TT187 to skip printing the label as
-                        \ the system is too far away from the current system to
-                        \ get a label
+ BNE TT187              \ non-zero, jump to TT187 to skip showing the system as
+                        \ it is too far away from the current system
 
  LDA QQ8                \ If the low byte of the distance in QQ8(1 0) is >= 70,
- CMP #70                \ jump to TT187 to skip printing the label as the system
-                        \ is too far away from the current system to
-                        \ get a label
+ CMP #70                \ jump to TT187 to skip showing the system as it is too
+                        \ far away from the current system
 
 .TT187S
 
  BCS TT187              \ If we get here from the instruction above, we jump to
-                        \ TT187 if QQ8(1 0) >= 70, so we only show labels for
-                        \ systems that are within distance 70 (i.e. 7 light
-                        \ years) of the current system
+                        \ TT187 if QQ8(1 0) >= 70, so we only show systems that
+                        \ are within distance 70 (i.e. 7 light years) of the
+                        \ current system
                         \
                         \ If we jump here from elsewhere with a BCS TT187S, we
                         \ jump straight on to TT187

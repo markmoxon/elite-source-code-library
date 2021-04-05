@@ -309,7 +309,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
- CPY #3                 \ If Y < 3, then the label would clash with the chart
+ CPY #3                 \ If Y < 3, then the system would clash with the chart
  BCC TT187              \ title, so jump to TT187 to skip showing the system
 
 IF _MASTER_VERSION \ Master: The Master version only shows systems on the Short-range Chart that are within 7 light years of the current system, whereas the other versions show all systems in the vicinity, irrespective of the distance. You can see this on the Short-range Chart at Lave, where Orrere, Uszaa and Tionisla are all missing from the Master version's chart, but are present in the other versions. Interestingly, the unlabelled system on the far right (Qutiri) that slipped through the Master's more generous horizontal distance check is still shown, even though it's more than 7 light years away. This is a bug, and it's caused by the label-printing logic; because there is no room for a label for this system, the code skips label-printing by jumping to ee1 rather than TT187, inadvertently jumping to the system-drawing routine rather than moving on to the next system

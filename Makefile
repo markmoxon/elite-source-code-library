@@ -57,6 +57,11 @@ endif
 rel-master=1
 folder-master='/sng47'
 
+# Electron version
+
+rel-electron=1
+folder-electron=''
+
 # The following variables are written into elite-header.h.asm so they can be
 # passed to BeebAsm:
 #
@@ -73,6 +78,7 @@ folder-master='/sng47'
 #   2 = BBC Micro disc
 #   3 = BBC Micro with 6502 Second Processor
 #	4 = BBC Master
+#	5 = Acorn Electron
 #
 # _RELEASE (for cassette version)
 #   1 = Source disc (default)
@@ -87,6 +93,9 @@ folder-master='/sng47'
 #
 # _RELEASE (for Master version)
 #   1 = SNG47 (default)
+#
+# _RELEASE (for Electron version)
+#   1 = Stairway to Hell version (default)
 #
 
 .PHONY:build
@@ -152,6 +161,15 @@ build:
 	$(PYTHON) versions/master/sources/elite-checksum.py -u -rel$(rel-master)
 	$(BEEBASM) -i versions/master/sources/elite-disc.asm -do versions/master/elite-master.ssd -boot M128Elt
 
+	echo _VERSION=5 > versions/electron/sources/elite-header.h.asm
+	echo _RELEASE=$(rel-electron) >> versions/electron/sources/elite-header.h.asm
+	echo _REMOVE_CHECKSUMS=TRUE >> versions/electron/sources/elite-header.h.asm
+	$(BEEBASM) -i versions/electron/sources/elite-source.asm -v > versions/electron/output/compile.txt
+	#$(BEEBASM) -i versions/electron/sources/elite-bcfs.asm -v >> versions/electron/output/compile.txt
+	$(BEEBASM) -i versions/electron/sources/elite-loader.asm -v >> versions/electron/output/compile.txt
+	#$(PYTHON) versions/electron/sources/elite-checksum.py -u -rel$(rel-electron)
+	$(BEEBASM) -i versions/electron/sources/elite-disc.asm -do versions/electron/elite-electron.ssd -opt 3
+
 .PHONY:encrypt
 encrypt:
 	echo _VERSION=1 > versions/cassette/sources/elite-header.h.asm
@@ -215,9 +233,19 @@ encrypt:
 	$(PYTHON) versions/master/sources/elite-checksum.py -rel$(rel-master)
 	$(BEEBASM) -i versions/master/sources/elite-disc.asm -do versions/master/elite-master.ssd -boot M128Elt
 
+	echo _VERSION=5 > versions/electron/sources/elite-header.h.asm
+	echo _RELEASE=$(rel-electron) >> versions/electron/sources/elite-header.h.asm
+	echo _REMOVE_CHECKSUMS=FALSE >> versions/electron/sources/elite-header.h.asm
+	$(BEEBASM) -i versions/electron/sources/elite-source.asm -v > versions/electron/output/compile.txt
+	#$(BEEBASM) -i versions/electron/sources/elite-bcfs.asm -v >> versions/electron/output/compile.txt
+	$(BEEBASM) -i versions/electron/sources/elite-loader.asm -v >> versions/electron/output/compile.txt
+	#$(PYTHON) versions/electron/sources/elite-checksum.py -rel$(rel-electron)
+	$(BEEBASM) -i versions/electron/sources/elite-disc.asm -do versions/electron/elite-electron.ssd -opt 3
+
 .PHONY:verify
 verify:
 	@$(PYTHON) versions/cassette/sources/crc32.py versions/cassette/extracted$(folder-cassette) versions/cassette/output
 	@$(PYTHON) versions/disc/sources/crc32.py versions/disc/extracted$(folder-disc) versions/disc/output
 	@$(PYTHON) versions/6502sp/sources/crc32.py versions/6502sp/extracted$(folder-6502sp) versions/6502sp/output
 	@$(PYTHON) versions/master/sources/crc32.py versions/master/extracted$(folder-master) versions/master/output
+	@$(PYTHON) versions/electron/sources/crc32.py versions/electron/extracted$(folder-electron) versions/electron/output

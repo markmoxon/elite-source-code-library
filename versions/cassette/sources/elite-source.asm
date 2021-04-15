@@ -61,7 +61,6 @@ NOSH = 12               \ The maximum number of ships in our local bubble of
 NTY = 13                \ The number of different ship types
 
 COPS = 2                \ Ship type for a Viper
-MAM = 3                 \ Ship type for a Mamba
 THG = 6                 \ Ship type for a Thargoid
 CYL = 7                 \ Ship type for a Cobra Mk III (trader)
 SST = 8                 \ Ship type for the space station

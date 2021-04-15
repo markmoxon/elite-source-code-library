@@ -14,7 +14,7 @@ IF _CASSETTE_VERSION \ Standard: The cassette version has 13 different ship type
 
  EQUW SHIP_SIDEWINDER   \         1 = Sidewinder
  EQUW SHIP_VIPER        \ COPS =  2 = Viper
- EQUW SHIP_MAMBA        \ MAM  =  3 = Mamba
+ EQUW SHIP_MAMBA        \         3 = Mamba
  EQUW SHIP_PYTHON       \         4 = Python
  EQUW SHIP_COBRA_MK_3   \         5 = Cobra Mk III (bounty hunter)
  EQUW SHIP_THARGOID     \ THG  =  6 = Thargoid

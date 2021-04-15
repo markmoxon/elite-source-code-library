@@ -1,5 +1,15 @@
 INCLUDE "versions/electron/sources/elite-header.h.asm"
 
+NOST = 10               \ The number of stardust particles in normal space
+
+COPS = 2                \ Ship type for a Viper
+CYL = 6                 \ Ship type for a Cobra Mk III (trader)
+SST = 7                 \ Ship type for the space station
+MSL = 8                 \ Ship type for a missile
+AST = 9                \ Ship type for an asteroid
+OIL = 10                \ Ship type for a cargo canister
+ESC = 11                \ Ship type for an escape pod
+
 \ ******************************************************************************
 \
 \ ELITE RECURSIVE TEXT TOKEN FILE
@@ -13303,6 +13313,8 @@ L43C1 = L43C0+1
         EQUB    $9F,$38,$00,$00
 
 .BeebDisEndAddr
+
+
 
 
 PRINT "S.ELITECO ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%

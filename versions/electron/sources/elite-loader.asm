@@ -30,7 +30,6 @@ KEYV    = $0228
 L0258   = $0258
 L0B11   = $0B11
 L0B3D   = $0B3D
-L0BC2   = $0BC2
 L0C24   = $0C24
 
 L0D00   = $0D00
@@ -1215,44 +1214,25 @@ L5313 = abrk+1
         NOP
         JMP     (L5278)
 
-        BPL     L5627
+.LOADcode
 
-        BPL     L5629
+        org     $0B00
 
-        BPL     L562B
+.LOAD
+        EQUB    $10,$10,$10,$10,$10,$10,$10,$10
+        EQUB    $10,$10,$10,$10,$10,$10,$10,$10
 
-        BPL     L562D
+.L0B10
+        BPL     &0AB4
 
-        BPL     L562F
-
-        BPL     L5631
-
-        BPL     L5633
-
-        BPL     L5635
-
-        BPL     L55C9
-
-.L5627
         INY
-.L5628
         LDY     #$0B
-L5629 = L5628+1
-.L562A
         JSR     OSCLI
 
-L562B = L562A+1
-.L562D
         LDA     #$03
-.L562F
         STA     L0258
-L5631 = L562F+2
-.L5632
         LDA     #$8C
-L5633 = L5632+1
-.L5634
         LDX     #$0C
-L5635 = L5634+1
         LDY     #$00
         JSR     OSBYTE
 
@@ -1270,19 +1250,19 @@ L5635 = L5634+1
         LDA     #$20
         STA     ZP+1
         LDA     #$0D
-        STA     Q
-.L5659
+        STA     P+1
+.L0B44
         LDA     (ZP),Y
         STA     (P),Y
         LDA     #$00
         STA     (ZP),Y
         INY
-        BNE     L5659
+        BNE     L0B44
 
         INC     ZP+1
-        INC     Q
+        INC     P+1
         DEX
-        BPL     L5659
+        BPL     L0B44
 
         SEI
         TXS
@@ -1321,14 +1301,15 @@ L5635 = L5634+1
         JSR     L0BC2
 
         LDA     #$60
-        STA     VIA+&02
+        STA     VIA+$02
         LDA     #$3F
-        STA     VIA+&03
+        STA     VIA+$03
         CLI
         JMP     (L0D08)
 
+.L0BC2
         STA     L00F4
-        STA     VIA+&05
+        STA     VIA+$05
         RTS
 
         EQUS    "LOAD EliteCo FFFF2000"
@@ -1336,10 +1317,9 @@ L5635 = L5634+1
         EQUB    $0D,$00,$00,$00,$00,$00,$00,$00
         EQUB    $00,$00,$00,$00,$00,$00
 
-.BeebDisEndAddr
+COPYBLOCK LOAD, P%, LOADcode
 
-
-
+ORG LOADcode + P% - LOAD
 
 
 PRINT "S.ELITEDA ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%

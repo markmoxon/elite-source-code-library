@@ -5,10 +5,7 @@ LOAD% = &4400
 
 
 TRTB%   = $0004
-L0005   = $0005
-L0006   = $0006
 ZP      = $0070
-L0071   = $0071
 P       = $0072
 Q       = $0073
 YY      = $0074
@@ -16,55 +13,26 @@ T       = $0075
 SC      = $0076
 SCH     = $0077
 BLPTR   = $0078
-L0079   = $0079
 V219    = $007A
-L007B   = $007B
 L0081   = $0081
 BLN     = $0083
-L0084   = $0084
 EXCN    = $0085
-L0086   = $0086
 L0087   = $0087
 L0088   = $0088
 L00F4   = $00F4
 USERV   = $0200
-L0201   = $0201
 BRKV    = $0202
-L0203   = $0203
 IRQ1V   = $0204
-L0205   = $0205
-IRQ2V   = $0206
-CLIV    = $0208
-BYTEV   = $020A
-WORDV   = $020C
 WRCHV   = $020E
-L020F   = $020F
 RDCHV   = $0210
-L0211   = $0211
-FILEV   = $0212
-ARGSV   = $0214
-BGETV   = $0216
-BPUTV   = $0218
-GBPBV   = $021A
-FINDV   = $021C
-FSCV    = $021E
-EVENTV  = $0220
-UPTV    = $0222
-NETV    = $0224
-VDUV    = $0226
 KEYV    = $0228
-L0229   = $0229
-INSV    = $022A
-REMV    = $022C
-CNPV    = $022E
-INDV1   = $0230
-INDV2   = $0232
-INDV3   = $0234
+
 L0258   = $0258
 L0B11   = $0B11
 L0B3D   = $0B3D
 L0BC2   = $0BC2
 L0C24   = $0C24
+
 L0D00   = $0D00
 L0D02   = $0D02
 L0D03   = $0D03
@@ -77,29 +45,11 @@ L0D0C   = $0D0C
 L0D0D   = $0D0D
 L0D0E   = $0D0E
 L0D0F   = $0D0F
+
 VIA     = $FE00
-LFE02   = $FE02
-LFE03   = $FE03
-LFE05   = $FE05
-OSWRSC  = $FFB3
-OSRDSC  = $FFB9
-OSEVEN  = $FFBF
-GSINIT  = $FFC2
-GSREAD  = $FFC5
-NVRDCH  = $FFC8
-NNWRCH  = $FFCB
-OSFIND  = $FFCE
-OSGBPB  = $FFD1
-OSBPUT  = $FFD4
-OSBGET  = $FFD7
-OSARGS  = $FFDA
-OSFILE  = $FFDD
-OSRDCH  = $FFE0
-OSASCI  = $FFE3
-OSNEWL  = $FFE7
+OSBYTE  = $FFF4
 OSWRCH  = $FFEE
 OSWORD  = $FFF1
-OSBYTE  = $FFF4
 OSCLI   = $FFF7
 
         org     $4400
@@ -595,12 +545,12 @@ OSCLI   = $FFF7
         LDY     #$DB
         STY     TRTB%
         LDY     #$EF
-        STY     L0005
+        STY     TRTB%+1
         LDY     #$02
-        STY     L007B
+        STY     V219+1
         CMP     L5247,X
         LDY     #$18
-        STY     L007B,X
+        STY     V219+1,X
         RTS
 
 .L5291
@@ -687,9 +637,9 @@ OSCLI   = $FFF7
         NOP
         LSR     A
         LDX     #$03
-        STX     L0079
-        STX     L0084
-        STX     L0086
+        STX     BLPTR+1
+        STX     BLN+1
+        STX     EXCN+1
         LDX     #$00
         LDY     #$00
         JSR     OSBYTE
@@ -731,7 +681,7 @@ L5313 = abrk+1
         JSR     OSBYTE
 
         STX     TRTB%
-        STY     L0005
+        STY     TRTB%+1
         NOP
         NOP
         NOP
@@ -754,7 +704,7 @@ L5313 = abrk+1
 .David3
         LDA     crunchit,Y
 .PROT1
-        STA     L0006,X
+        STA     TRTB%+2,X
         INX
         INY
         CPY     #$21
@@ -765,7 +715,7 @@ L5313 = abrk+1
         LDA     #$95
         BIT     PROT1
         LDA     #$52
-        STA     L0071
+        STA     ZP+1
         LDY     #$00
 .LOOP
         LDA     (ZP),Y
@@ -815,7 +765,7 @@ L5313 = abrk+1
         LDX     #$04
         STX     Q
         LDA     #$44
-        STA     L0071
+        STA     ZP+1
         LDY     #$00
         LDA     #$18
         CMP     (SC,X)
@@ -825,7 +775,7 @@ L5313 = abrk+1
 
         LDX     #$01
         LDA     #$4F
-        STA     L0071
+        STA     ZP+1
         LDA     #$5B
         STA     Q
         LDA     #$E0
@@ -835,7 +785,7 @@ L5313 = abrk+1
 
         LDX     #$01
         LDA     #$50
-        STA     L0071
+        STA     ZP+1
         LDA     #$59
         STA     Q
         LDA     #$60
@@ -845,7 +795,7 @@ L5313 = abrk+1
 
         LDX     #$01
         LDA     #$51
-        STA     L0071
+        STA     ZP+1
         LDA     #$73
         STA     Q
         LDA     #$A0
@@ -856,7 +806,7 @@ L5313 = abrk+1
         JSR     PLL1
 
         LDA     #$48
-        STA     L0071
+        STA     ZP+1
         LDA     #$76
         STA     Q
         LDY     #$00
@@ -880,7 +830,7 @@ L5313 = abrk+1
 
         LDX     #$01
         LDA     #$56
-        STA     L0071
+        STA     ZP+1
         LDA     #$15
         STA     ZP
         LDA     #$0B
@@ -962,7 +912,7 @@ L5313 = abrk+1
 
         JSR     SQUA2
 
-        STA     L0071
+        STA     ZP+1
         LDA     P
         STA     ZP
         JSR     DORND
@@ -975,16 +925,16 @@ L5313 = abrk+1
         ADC     ZP
         STA     ZP
         TXA
-        ADC     L0071
+        ADC     ZP+1
         BCS     PLC1
 
-        STA     L0071
+        STA     ZP+1
         LDA     #$01
         SBC     ZP
         STA     ZP
         LDA     #$40
-        SBC     L0071
-        STA     L0071
+        SBC     ZP+1
+        STA     ZP+1
         BCC     PLC1
 
         JSR     ROOT
@@ -1014,13 +964,13 @@ L5313 = abrk+1
         TAX
         JSR     SQUA2
 
-        STA     L0071
+        STA     ZP+1
         JSR     DORND
 
         STA     YY
         JSR     SQUA2
 
-        ADC     L0071
+        ADC     ZP+1
         CMP     #$11
         BCC     PLC2
 
@@ -1045,15 +995,15 @@ L5313 = abrk+1
         STA     ZP
         JSR     SQUA2
 
-        STA     L0071
+        STA     ZP+1
         JSR     DORND
 
         STA     YY
         JSR     SQUA2
 
         STA     T
-        ADC     L0071
-        STA     L0071
+        ADC     ZP+1
+        STA     ZP+1
         LDA     ZP
         CMP     #$80
         ROR     A
@@ -1064,7 +1014,7 @@ L5313 = abrk+1
         JSR     SQUA2
 
         TAY
-        ADC     L0071
+        ADC     ZP+1
         BCS     PLC3
 
         CMP     #$50
@@ -1142,14 +1092,14 @@ L5313 = abrk+1
         LSR     A
         LSR     A
         LSR     A
-        STA     L0071
+        STA     ZP+1
         LSR     A
         ROR     ZP
         LSR     A
         ROR     ZP
-        ADC     L0071
+        ADC     ZP+1
         ADC     #$58
-        STA     L0071
+        STA     ZP+1
         TXA
         EOR     #$80
         AND     #$F8
@@ -1157,7 +1107,7 @@ L5313 = abrk+1
         STA     ZP
         BCC     L559F
 
-        INC     L0071
+        INC     ZP+1
 .L559F
         TYA
         AND     #$07
@@ -1194,7 +1144,7 @@ L5313 = abrk+1
         EQUB    $05
 
 .ROOT
-        LDY     L0071
+        LDY     ZP+1
         LDA     ZP
         STA     Q
         LDX     #$00
@@ -1249,7 +1199,7 @@ L5313 = abrk+1
         BNE     crunchit
 
         INC     Q
-        INC     L0071
+        INC     ZP+1
         DEX
         BNE     crunchit
 
@@ -1318,7 +1268,7 @@ L5635 = L5634+1
         STY     ZP
         STY     P
         LDA     #$20
-        STA     L0071
+        STA     ZP+1
         LDA     #$0D
         STA     Q
 .L5659
@@ -1329,7 +1279,7 @@ L5635 = L5634+1
         INY
         BNE     L5659
 
-        INC     L0071
+        INC     ZP+1
         INC     Q
         DEX
         BPL     L5659
@@ -1338,32 +1288,32 @@ L5635 = L5634+1
         TXS
         LDA     RDCHV
         STA     USERV
-        LDA     L0211
-        STA     L0201
+        LDA     RDCHV+1
+        STA     USERV+1
         LDA     KEYV
         STA     L0D04
-        LDA     L0229
+        LDA     KEYV+1
         STA     L0D05
         LDA     #$10
         STA     KEYV
         LDA     #$0D
-        STA     L0229
+        STA     KEYV+1
         LDA     L0D0E
         STA     BRKV
         LDA     L0D0F
-        STA     L0203
+        STA     BRKV+1
         LDA     L0D0A
         STA     WRCHV
         LDA     L0D0B
-        STA     L020F
+        STA     WRCHV+1
         LDA     IRQ1V
         STA     L0D02
-        LDA     L0205
+        LDA     IRQ1V+1
         STA     L0D03
         LDA     L0D0C
         STA     IRQ1V
         LDA     L0D0D
-        STA     L0205
+        STA     IRQ1V+1
         LDA     #$FC
         JSR     L0BC2
 
@@ -1371,14 +1321,14 @@ L5635 = L5634+1
         JSR     L0BC2
 
         LDA     #$60
-        STA     LFE02
+        STA     VIA+&02
         LDA     #$3F
-        STA     LFE03
+        STA     VIA+&03
         CLI
         JMP     (L0D08)
 
         STA     L00F4
-        STA     LFE05
+        STA     VIA+&05
         RTS
 
         EQUS    "LOAD EliteCo FFFF2000"

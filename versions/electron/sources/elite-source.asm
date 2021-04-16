@@ -1648,6 +1648,7 @@ LOAD% = &2000
 
 
  org &0D00
+
  EQUB &40
 
 .L0D01
@@ -1666,7 +1667,12 @@ LOAD% = &2000
 
  EQUB &00, &00, &B6, &3F, &F8, &1C, &25, &0D
  EQUB &B9, &3F, &08, &2C, &01, &0D, &30, &02
- EQUB &28, &60, &28, &6C, &04, &0D
+
+ EQUW &6028
+
+ EQUW &6C28
+
+ EQUW &0D04
 
 .COMC
 
@@ -1720,6 +1726,7 @@ LOAD% = &2000
 
  LDA K%
  STA RAND
+
  LDA #&00
  LDX #&01
 
@@ -1747,15 +1754,11 @@ LOAD% = &2000
  AND #&80
  JMP L0D70
 
- EQUB &A1
+ EQUB &A1, &BB, &80, &00, &90, &01, &D6, &F1
 
- EQUB &BB, &80, &00, &90, &01, &D6
+.L0D70
 
-.L0D6F
-
- SBC (L0085),Y
-L0D70 = L0D6F+1
- DEY
+ STA ALP2
  STX JSTX
  EOR #&80
  STA ALP2+1

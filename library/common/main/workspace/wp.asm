@@ -115,15 +115,15 @@ INCLUDE "library/common/main/variable/las2.asm"
 INCLUDE "library/common/main/variable/many.asm"
 INCLUDE "library/common/main/variable/sspr.asm"
 
- SKIP 2
+ SKIP 2                 \ ???
 
 .L0BFB
 
- SKIP 2
+ SKIP 2                 \ ???
 
 .L0BFD
 
- SKIP 2
+ SKIP 2                 \ ???
 
 INCLUDE "library/common/main/variable/ecmp.asm"
 INCLUDE "library/common/main/variable/msar.asm"

@@ -30,25 +30,15 @@ _6502SP_VERSION         = (_VERSION = 3)
 _MASTER_VERSION         = (_VERSION = 4)
 _ELECTRON_VERSION       = (_VERSION = 5)
 
+\ ******************************************************************************
+\
+\ Configuration variables
+\
+\ ******************************************************************************
+
 CODE% = &4400
 LOAD% = &4400
 
-TRTB%   = &0004
-ZP      = &0070
-P       = &0072
-Q       = &0073
-YY      = &0074
-T       = &0075
-SC      = &0076
-SCH     = &0077
-BLPTR   = &0078
-V219    = &007A
-L0081   = &0081
-BLN     = &0083
-EXCN    = &0085
-L0087   = &0087
-L0088   = &0088
-L00F4   = &00F4
 USERV   = &0200
 BRKV    = &0202
 IRQ1V   = &0204
@@ -56,29 +46,22 @@ WRCHV   = &020E
 RDCHV   = &0210
 KEYV    = &0228
 
-L0258   = &0258
-L0B11   = &0B11
-L0B3D   = &0B3D
-L0C24   = &0C24
+OSWRCH = &FFEE          \ The address for the OSWRCH routine
+OSBYTE = &FFF4          \ The address for the OSBYTE routine
+OSWORD = &FFF1          \ The address for the OSWORD routine
+OSCLI = &FFF7           \ The address for the OSCLI routine
 
-L0D00   = &0D00
-L0D02   = &0D02
-L0D03   = &0D03
-L0D04   = &0D04
-L0D05   = &0D05
-L0D08   = &0D08
-L0D0A   = &0D0A
-L0D0B   = &0D0B
-L0D0C   = &0D0C
-L0D0D   = &0D0D
-L0D0E   = &0D0E
-L0D0F   = &0D0F
+VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
+                        \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
+                        \ known as SHEILA)
 
-VIA     = &FE00
-OSBYTE  = &FFF4
-OSWRCH  = &FFEE
-OSWORD  = &FFF1
-OSCLI   = &FFF7
+INCLUDE "library/cassette/loader/workspace/zp.asm"
+
+\ ******************************************************************************
+\
+\ ELITE LOADER
+\
+\ ******************************************************************************
 
 ORG CODE%
 
@@ -859,7 +842,7 @@ L5313 = abrk+1
  LDY #&00
  STY ZP
  LDX #&20
- STY L0081
+ STY BLCNT
  STX P
 
 .L540B
@@ -888,7 +871,7 @@ L5313 = abrk+1
  STY P
  JSR crunchit
 
- JMP L0B11
+ JMP &0B11
 
  NOP
  NOP
@@ -1302,9 +1285,9 @@ L5313 = abrk+1
 
  PLA
  PLA
- LDA L0C24,Y
+ LDA &0C24,Y
  PHA
- EOR L0B3D,Y
+ EOR &0B3D,Y
  NOP
  NOP
  NOP
@@ -1328,7 +1311,7 @@ L5313 = abrk+1
  JSR OSCLI
 
  LDA #&03
- STA L0258
+ STA &0258
  LDA #&8C
  LDX #&0C
  LDY #&00
@@ -1340,7 +1323,7 @@ L5313 = abrk+1
  JSR OSBYTE
 
  LDA #&40
- STA L0D00
+ STA &0D00
  LDX #&4A
  LDY #&00
  STY ZP
@@ -1371,28 +1354,28 @@ L5313 = abrk+1
  LDA RDCHV+1
  STA USERV+1
  LDA KEYV
- STA L0D04
+ STA &0D04
  LDA KEYV+1
- STA L0D05
+ STA &0D05
  LDA #&10
  STA KEYV
  LDA #&0D
  STA KEYV+1
- LDA L0D0E
+ LDA &0D0E
  STA BRKV
- LDA L0D0F
+ LDA &0D0F
  STA BRKV+1
- LDA L0D0A
+ LDA &0D0A
  STA WRCHV
- LDA L0D0B
+ LDA &0D0B
  STA WRCHV+1
  LDA IRQ1V
- STA L0D02
+ STA &0D02
  LDA IRQ1V+1
- STA L0D03
- LDA L0D0C
+ STA &0D03
+ LDA &0D0C
  STA IRQ1V
- LDA L0D0D
+ LDA &0D0D
  STA IRQ1V+1
  LDA #&FC
  JSR L0BC2
@@ -1405,11 +1388,11 @@ L5313 = abrk+1
  LDA #&3F
  STA VIA+&03
  CLI
- JMP (L0D08)
+ JMP (&0D08)
 
 .L0BC2
 
- STA L00F4
+ STA &00F4
  STA VIA+&05
  RTS
 

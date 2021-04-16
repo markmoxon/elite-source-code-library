@@ -30,3 +30,15 @@ INCLUDE "library/6502sp/io/variable/k3.asm"
 INCLUDE "library/cassette/loader/variable/blcnt.asm"
 INCLUDE "library/cassette/loader/variable/bln.asm"
 INCLUDE "library/cassette/loader/variable/excn.asm"
+
+IF _ELECTRON_VERSION
+
+.L0087
+
+ SKIP 1                 \ ???
+
+.L0088
+
+ SKIP 1                 \ ???
+
+ENDIF

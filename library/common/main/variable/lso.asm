@@ -1,6 +1,6 @@
 .LSO
 
-IF _DISC_VERSION \ Label
+IF _DISC_VERSION \ Platform
 
  SKIP 1                 \ This space has three uses:
                         \

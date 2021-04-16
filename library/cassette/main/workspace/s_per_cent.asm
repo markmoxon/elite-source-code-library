@@ -2,7 +2,7 @@
 \
 \       Name: S%
 \       Type: Workspace
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Comment
 \    Address: &0F40 to &0F50
 ELIF _ELECTRON_VERSION
 \    Address: &0D14 to &0D24
@@ -35,7 +35,7 @@ IF _CASSETTE_VERSION
 
 ELIF _ELECTRON_VERSION
 
- EQUW &0230
+ EQUW &0230             \ ???
 
  EQUW &6028
 

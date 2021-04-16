@@ -23,7 +23,7 @@ ENDIF
 
 .MTT1
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
  LDA SSPR               \ If we are inside the space station's safe zone, jump
  BNE MLOOP              \ to MLOOP to skip the following
@@ -78,7 +78,7 @@ ENDIF
  LDA #COPS              \ Add a new police ship to the local bubble
  JSR NWSHP
 
-IF _CASSETTE_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
 
  LDA MANY+COPS          \ If we now have at least one cop in the local bubble,
  BNE MLOOP              \ jump down to MLOOP, otherwise fall through into the

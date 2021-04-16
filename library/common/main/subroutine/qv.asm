@@ -39,7 +39,7 @@ IF _DISC_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Standard: When buying a 
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Tube
 
  LDY #16                \ Move the text cursor to row 16, and at the same time
  STY YC                 \ set Y to a counter going from 16-20 in the loop below
@@ -60,7 +60,7 @@ ENDIF
 
 .qv1
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Tube
 
  LDX #12                \ Move the text cursor to column 12
  STX XC
@@ -88,7 +88,7 @@ ENDIF
  ADC #80                \ "RIGHT"
  JSR TT27
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Tube
 
  INC YC                 \ Move the text cursor down a row
 
@@ -103,7 +103,7 @@ ENDIF
  CPY #20                \ If Y < 20 then loop back up to qv1 to print the next
  BCC qv1                \ view in the menu
 
-IF _CASSETTE_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
 
 .qv3
 
@@ -124,7 +124,7 @@ ENDIF
  SEC                    \ Subtract ASCII '0' from the key pressed, to leave the
  SBC #'0'               \ numeric value of the key in A (if it was a number key)
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
  CMP #4                 \ If the number entered in A >= 4, then it is not a
  BCS qv3                \ valid view number, so jump back to qv3 to try again

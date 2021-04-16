@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-IF _CASSETTE_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 \       Name: GTNME
 ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
 \       Name: GTNMEW
@@ -19,7 +19,7 @@ ENDIF
 \
 \ Returns:
 \
-IF _CASSETTE_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 \   INWK                The commander name entered, terminated by a return
 \                       character (13)
 ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
@@ -50,7 +50,7 @@ ENDIF
 
 .GTNME
 
-IF _CASSETTE_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
  LDA #1                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 1
@@ -127,7 +127,7 @@ ENDIF
                         \ the last saved commander's name from NA% to INWK
                         \ and return from the subroutine there
 
-IF _CASSETTE_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
  JMP TT67               \ We have a name, so jump to TT67 to print a newline
                         \ and return from the subroutine using a tail call

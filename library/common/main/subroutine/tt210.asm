@@ -69,7 +69,7 @@ ENDIF
  ADC #208               \ prints the current item's name
  JSR TT27
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Tube
 
  LDA #14                \ Move the text cursor to column 14, for the item's
  STA XC                 \ quantity
@@ -97,7 +97,7 @@ ENDIF
                         \ whose byte #1 from the market prices table is in
                         \ QQ19+1 (which we set up above)
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Platform
 
  LDA QQ11               \ If the current view type in QQ11 is not 4 (Sell Cargo
  CMP #4                 \ screen), jump to TT212 to skip the option to sell
@@ -105,7 +105,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Pla
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Enhanced: See group A
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: See group A
 
  LDA #205               \ Set A to recursive token 45 ("SELL")
 
@@ -141,7 +141,7 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Platform
 
  LDA QQ29               \ We are selling this item, so fetch the item number
                         \ from QQ29
@@ -155,7 +155,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Pla
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Enhanced: See group A
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: See group A
 
  LDY QQ29               \ Set P to the amount of this item we have in our cargo
  LDA QQ20,Y             \ hold (which is the amount to sell)
@@ -174,7 +174,7 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Platform
 
  LDA QQ24               \ Set Q to the item's price / 4
  STA Q
@@ -191,7 +191,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Pla
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Enhanced: See group A
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: See group A
 
  LDA #0                 \ We've made the sale, so set the amount
  LDY QQ29
@@ -212,7 +212,7 @@ ENDIF
  LDY QQ29               \ Fetch the item number from QQ29 into Y, and increment
  INY                    \ Y to point to the next item
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
  CPY #17                \ If Y >= 17 then skip the next instruction as we have
  BCS P%+5               \ done the last item
@@ -235,7 +235,7 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Platform
 
  LDA QQ11               \ If the current view type in QQ11 is not 4 (Sell Cargo
  CMP #4                 \ screen), skip the next two instructions and just
@@ -249,7 +249,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Pla
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Master: The Master version contains a fair amount of Trumble-related code, though it doesn't have any effect as we never get to pick up any Trumbles (though if we did, they would take over our cargo bay and hoof up all the food and narcotics, just as in the Commodore 64 version, so their essence is still encoded in the Master version)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Master: The Master version contains a fair amount of Trumble-related code, though it doesn't have any effect as we never get to pick up any Trumbles (though if we did, they would take over our cargo bay and hoof up all the food and narcotics, just as in the Commodore 64 version, so their essence is still encoded in the Master version)
 
  RTS                    \ Return from the subroutine
 

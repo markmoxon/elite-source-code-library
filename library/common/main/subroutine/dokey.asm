@@ -3,7 +3,7 @@
 \       Name: DOKEY
 \       Type: Subroutine
 \   Category: Keyboard
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
 \    Summary: Scan for the seven primary flight controls
 \  Deep dive: The key logger
 \             The docking computer
@@ -11,7 +11,7 @@ ELIF _DISC_DOCKED
 \    Summary: Scan for the joystick
 ENDIF
 \
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ Scan for the seven primary flight controls (or the equivalent on joystick),
@@ -73,7 +73,7 @@ IF _DISC_DOCKED \ Platform
  STA JSTY               \ reverse the joystick Y channel, so this EOR does
                         \ exactly that, and then we store the result in JSTY
 
-ELIF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+ELIF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
 
  JSR U%                 \ Call U% to clear the key logger
 
@@ -90,7 +90,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: The Bitstik configuration option 
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Tube
 
  LDY #7                 \ We're going to work our way through the primary flight
                         \ control keys (pitch, roll, speed and laser), so set a
@@ -464,7 +464,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
  LDX JSTX               \ Set X = JSTX, the current roll rate (as shown in the
                         \ RL indicator on the dashboard)

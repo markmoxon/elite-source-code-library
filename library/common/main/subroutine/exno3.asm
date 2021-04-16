@@ -18,7 +18,7 @@
 
 .EXNO3
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: The Master version has a unique explosion sound
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: The Master version has a unique explosion sound
 
  LDA #16                \ Call the NOISE routine with A = 16 to make the first
  JSR NOISE              \ death sound

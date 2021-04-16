@@ -13,7 +13,7 @@
 \
 \   * The line is going right and down (no swap) or left and up (swap)
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
 \   * X1 < X2 and Y1-1 <= Y2
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 \   * X1 < X2 and Y1 <= Y2
@@ -79,7 +79,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
 
  LDA SWAP               \ If SWAP = 0 then we didn't swap the coordinates above,
  BEQ LI9                \ so jump down to LI9 to skip plotting the first pixel

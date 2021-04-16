@@ -3,7 +3,7 @@
 \       Name: Main game loop (Part 1 of 6)
 \       Type: Subroutine
 \   Category: Main loop
-IF _CASSETTE_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 \    Summary: Spawn a trader (a peaceful Cobra Mk III)
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 \    Summary: Spawn a trader (a Cobra Mk III, Python, Boa or Anaconda)
@@ -20,7 +20,7 @@ ENDIF
 \
 \ This section covers the following:
 \
-IF _CASSETTE_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 \   * Spawn a trader, i.e. a Cobra Mk III that isn't hostile, with a 50% chance
 \     of it having a missile, a 50% chance of it having an E.C.M., a speed
 \     between 16 and 31, and a gentle clockwise roll
@@ -59,7 +59,7 @@ ENDIF
                         \ C flag was set), giving the ship either no missiles or
                         \ one missile
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
 
  AND #31                \ Set the ship speed to our random number, set to a
  ORA #16                \ minimum of 16 and a maximum of 31
@@ -73,7 +73,7 @@ ELIF _DISC_FLIGHT
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Enhanced: Traders in the enhanced versions can be one of the following: Cobra Mk III, Python, Boa or Anaconda (in the cassette version, they are always Cobras)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Traders in the enhanced versions can be one of the following: Cobra Mk III, Python, Boa or Anaconda (in the cassette version, they are always Cobras)
 
  LDA #CYL               \ Add a new Cobra Mk III to the local bubble and fall
  JSR NWSHP              \ through into the main game loop again

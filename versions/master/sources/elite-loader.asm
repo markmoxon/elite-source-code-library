@@ -31,6 +31,7 @@ _CASSETTE_VERSION       = (_VERSION = 1)
 _DISC_VERSION           = (_VERSION = 2)
 _6502SP_VERSION         = (_VERSION = 3)
 _MASTER_VERSION         = (_VERSION = 4)
+_ELECTRON_VERSION       = (_VERSION = 5)
 
 N% = 67                 \ N% is set to the number of bytes in the VDU table, so
                         \ we can loop through them below

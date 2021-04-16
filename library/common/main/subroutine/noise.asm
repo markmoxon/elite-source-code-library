@@ -3,7 +3,7 @@
 \       Name: NOISE
 \       Type: Subroutine
 \   Category: Sound
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Comment
 \    Summary: Make the sound whose number is in A
 ELIF _MASTER_VERSION
 \    Summary: Make the sound whose number is in Y by populating the sound buffer
@@ -11,7 +11,7 @@ ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Comment
 \ Arguments:
 \
 \   A                   The number of the sound to be made. See the
@@ -46,7 +46,7 @@ ENDIF
 
 .NOISE
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: The Master supports a much more sophisticated interrupt-driven sound system rather than the standard sound envelope system that the other versions use
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: The Master supports a much more sophisticated interrupt-driven sound system rather than the standard sound envelope system that the other versions use
 
  JSR NOS1               \ Set up the sound block in XX16 for the sound in A and
                         \ fall through into NO3 to make the sound

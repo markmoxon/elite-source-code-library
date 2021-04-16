@@ -45,6 +45,7 @@ _CASSETTE_VERSION       = (_VERSION = 1)
 _DISC_VERSION           = (_VERSION = 2)
 _6502SP_VERSION         = (_VERSION = 3)
 _MASTER_VERSION         = (_VERSION = 4)
+_ELECTRON_VERSION       = (_VERSION = 5)
 
 CODE% = &0F40           \ CODE% is set to the location that the main game code
                         \ gets moved to after it is loaded

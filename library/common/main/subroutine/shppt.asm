@@ -3,7 +3,7 @@
 \       Name: SHPPT
 \       Type: Subroutine
 \   Category: Drawing ships
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
 \    Summary: Draw a distant ship as a point rather than a full wireframe
 ELIF _DISC_DOCKED
 \    Summary: Draw a distant ship as a point in the middle of the screen
@@ -13,14 +13,14 @@ ENDIF
 
 .SHPPT
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: Group A: When drawing a distant ship as a dot, the cassette, disc and 6502SP versions erase the entire on-screen ship before redrawing it, while the Master version erases and redraws each ship one line at a time
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: Group A: When drawing a distant ship as a dot, the cassette, disc and 6502SP versions erase the entire on-screen ship before redrawing it, while the Master version erases and redraws each ship one line at a time
 
  JSR EE51               \ Call EE51 to remove the ship's wireframe from the
                         \ screen, if there is one
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
  JSR PROJ               \ Project the ship onto the screen, returning:
                         \
@@ -40,7 +40,7 @@ ELIF _DISC_DOCKED
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
 
  CMP #Y*2-2             \ If the y-coordinate is bigger than the y-coordinate of
  BCS nono               \ the bottom of the screen, jump to nono as the ship's
@@ -56,7 +56,7 @@ ELIF _DISC_DOCKED
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: See group A
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: See group A
 
  LDY #2                 \ Call Shpt with Y = 2 to set up bytes 1-4 in the ship
  JSR Shpt               \ lines space, aborting the call to LL9 if the dot is
@@ -72,7 +72,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
  LDA K4                 \ Set A = y-coordinate of dot + 1 (so this is the second
  ADC #1                 \ row of the two-pixel-high dot)
@@ -90,7 +90,7 @@ ELIF _DISC_DOCKED
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Comment
 
  JSR Shpt               \ Call Shpt with Y = 6 to set up bytes 5-8 in the ship
                         \ lines space, aborting the call to LL9 if the dot is
@@ -109,7 +109,7 @@ ENDIF
  ORA XX1+31             \ have now drawn something on-screen for this ship
  STA XX1+31
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Advanced: Ships in the advanced versions each have their own colour, including when they are shown as points
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Advanced: Ships in the advanced versions each have their own colour, including when they are shown as points
 
  LDA #8                 \ Set A = 8 so when we call LL18+2 next, byte #0 of the
                         \ heap gets set to 8, for the 8 bytes we just stuck on
@@ -123,7 +123,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: See group A
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: See group A
 
  JMP LL81+2             \ Call LL81+2 to draw the ship's dot, returning from the
                         \ subroutine using a tail call
@@ -146,7 +146,7 @@ ENDIF
  AND XX1+31             \ nothing is being drawn on-screen for this ship
  STA XX1+31
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: See group A
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: See group A
 
  RTS                    \ Return from the subroutine
 
@@ -160,7 +160,7 @@ ENDIF
 
 .Shpt
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: See group A
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: See group A
 
                         \ This routine sets up four bytes in the ship line heap,
                         \ from byte Y-1 to byte Y+2. If the ship's screen point
@@ -185,7 +185,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
  LDA K3                 \ Set A = screen x-coordinate of the ship dot
 
@@ -195,7 +195,7 @@ ELIF _DISC_DOCKED
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: The Master implements flicker-free ship drawing using the LLX30 routine, which is used both for drawing wireframes and for drawing distant ships as dots
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: The Master implements flicker-free ship drawing using the LLX30 routine, which is used both for drawing wireframes and for drawing distant ships as dots
 
  DEY                    \ Store A in byte Y+1 of the ship line heap
  STA (XX19),Y

@@ -11,7 +11,7 @@
 \ before drawing, and then the routine uses the same approach as the PIXEL
 \ routine in the main game code, except it plots a single pixel from TWOS
 \ instead of a two pixel dash from TWOS2. This applies to the top part of the
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
 \ screen (the monochrome mode 4 space view).
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 \ screen (the four-colour mode 1 space view).
@@ -39,7 +39,7 @@ ENDIF
 
  EOR #%10000000         \ Flip the sign of A
 
-IF _CASSETTE_VERSION \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Screen
 
  LSR A                  \ Set ZP+1 = &60 + A >> 3
  LSR A
@@ -99,7 +99,7 @@ ENDIF
  AND #%00000111
  TAX
 
-IF _CASSETTE_VERSION \ Standard: In the cassette version, the loading screen's Saturn has a much higher dot density than the other versions, as the drawing routine plots individual pixels into the screen using OR logic, so pixels within a character block can be next to each other. The other versions poke whole one-pixel bytes directly into screen memory without the OR logic, which overwrites any pixels already plotted in that byte and ensures a much greater pixel spacing (though pixels at the ends of neighbouring character blocks can still be next to each other)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: In the cassette version, the loading screen's Saturn has a much higher dot density than the other versions, as the drawing routine plots individual pixels into the screen using OR logic, so pixels within a character block can be next to each other. The other versions poke whole one-pixel bytes directly into screen memory without the OR logic, which overwrites any pixels already plotted in that byte and ensures a much greater pixel spacing (though pixels at the ends of neighbouring character blocks can still be next to each other)
 
  LDA TWOS,X             \ Otherwise fetch a pixel from TWOS and OR it into ZP+Y
  ORA (ZP),Y

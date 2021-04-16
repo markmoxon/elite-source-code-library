@@ -25,7 +25,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
 ENDIF
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
 
  CLC                    \ Clear the C flag
 

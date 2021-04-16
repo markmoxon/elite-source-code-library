@@ -2,7 +2,11 @@
 \
 \       Name: S%
 \       Type: Workspace
+IF _CASSETTE_VERSION
 \    Address: &0F40 to &0F50
+ELIF _ELECTRON_VERSION
+\    Address: &0D14 to &0D24
+ENDIF
 \   Category: Workspaces
 \    Summary: Vector addresses, compass colour and configuration settings
 \
@@ -14,6 +18,8 @@
 \ ******************************************************************************
 
 .S%
+
+IF _CASSETTE_VERSION
 
  EQUW TT170             \ The entry point for the main game; once the main code
                         \ has been loaded, decrypted and moved to the right
@@ -27,6 +33,18 @@
 
  EQUW BR1               \ BRKV is set to point here by elite-loader.asm
 
+ELIF _ELECTRON_VERSION
+
+ EQUW &0230
+
+ EQUW &6028
+
+ EQUW &6C28
+
+ EQUW &0D04
+
+ENDIF
+
 INCLUDE "library/common/main/variable/comc.asm"
 INCLUDE "library/common/main/variable/dnoiz.asm"
 INCLUDE "library/common/main/variable/damp.asm"
@@ -36,3 +54,4 @@ INCLUDE "library/common/main/variable/flh.asm"
 INCLUDE "library/common/main/variable/jstgy.asm"
 INCLUDE "library/common/main/variable/jste.asm"
 INCLUDE "library/common/main/variable/jstk.asm"
+

@@ -32,7 +32,7 @@ ENDIF
  BEQ SC5                \ on the scanner, so return from the subroutine (as SC5
                         \ contains an RTS)
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Minor
 
  LDA TYPE               \ Fetch the ship's type from TYPE into A
 
@@ -47,7 +47,7 @@ ENDIF
                         \ scanner, so return from the subroutine (as SC5
                         \ contains an RTS)
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Advanced: In the original versions, ships are shown on the scanner with a green stick, while missiles are shown in yellow (if an escape pod is fitted, they are shown in cyan and white respectively). In the advanced versions, each ship has its own colour for when it is shown on the scanner, as defined in the scacol table
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Advanced: In the original versions, ships are shown on the scanner with a green stick, while missiles are shown in yellow (if an escape pod is fitted, they are shown in cyan and white respectively). In the advanced versions, each ship has its own colour for when it is shown on the scanner, as defined in the scacol table
 
  LDX #&FF               \ Set X to the default scanner colour of green/cyan
                         \ (a 4-pixel mode 5 byte in colour 3)
@@ -128,7 +128,7 @@ ENDIF
 
 .SC2
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Master: In most versions, ships that are exactly ahead of us or behind us are shown on the 3D scanner so the stick goes from the dot onto the centre line of the ellipse, but in the Master version the dot is moved over to the right so the stick goes from the dot just to the right of the centre line
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Master: In most versions, ships that are exactly ahead of us or behind us are shown on the 3D scanner so the stick goes from the dot onto the centre line of the ellipse, but in the Master version the dot is moved over to the right so the stick goes from the dot just to the right of the centre line
 
  ADC #123               \ Set X1 = 123 + x_hi
  STA X1
@@ -169,7 +169,7 @@ ENDIF
 
  CLC                    \ Clear the C flag
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Minor
 
  LDX INWK+8             \ Set X = z_sign
 
@@ -191,7 +191,7 @@ ENDIF
 
  ADC #35                \ Set A = 35 + A to give a number in the range 20 to 50
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Minor
 
  EOR #%11111111         \ Flip all the bits and store in SC, so SC is in the
  STA SC                 \ range 205 to 235, with a higher z_hi giving a lower SC
@@ -214,7 +214,7 @@ ENDIF
 
  CLC                    \ Clear the C flag
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Minor
 
  LDX INWK+5             \ Set X = y_sign
 
@@ -250,7 +250,7 @@ ENDIF
                         \ First, though, we have to make sure the dot is inside
                         \ the dashboard, by moving it if necessary
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Minor
 
  ADC SC                 \ Set A = SC + A, so A now contains the y-coordinate of
                         \ the end of the stick, plus the length of the stick, to
@@ -264,7 +264,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Label
 
  BPL ld246              \ If the result has bit 0 clear, then the result has
                         \ overflowed and is bigger than 256, so jump to ld246 to
@@ -291,7 +291,7 @@ ENDIF
  CMP #247               \ If A < 247, skip the following instruction, as 246 is
  BCC P%+4               \ the maximum allowed value of A
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Label
 
 .ld246
 
@@ -304,7 +304,7 @@ ENDIF
  LDA #246               \ A >= 247, so set A to 246, the maximum allowed value
                         \ for the y-coordinate of our ship's dot
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Master: Group A: The Master version's 3D scanner draws a dash at the end of each stick (i.e. one pixel high, two pixels wide), while the other versions draw a full dot (i.e. two pixels high, two pixels wide)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Master: Group A: The Master version's 3D scanner draws a dash at the end of each stick (i.e. one pixel high, two pixels wide), while the other versions draw a full dot (i.e. two pixels high, two pixels wide)
 
  STA Y1                 \ Store A in Y1, as it now contains the screen
                         \ y-coordinate for the ship's dot, clipped so that it
@@ -329,7 +329,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Minor
  SEC                    \ Set A = A - SC to get the stick length, by reversing
  SBC SC                 \ the ADC SC we did above. This clears the C flag if the
 ELIF _MASTER_VERSION
@@ -359,7 +359,7 @@ ENDIF
                         \
                         \ and we can get on with drawing the dot and stick
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Master: See group A
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Master: See group A
 
  PHP                    \ Store the flags (specifically the C flag) from the
                         \ above subtraction
@@ -399,7 +399,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Master: See group A
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Tube
 
  PLP                    \ Restore the flags from above, so the C flag once again
                         \ reflects the sign of the stick height

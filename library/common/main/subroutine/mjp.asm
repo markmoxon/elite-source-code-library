@@ -42,7 +42,7 @@ IF _DISC_FLIGHT \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
 \LDA #1                 \ This instruction is commented out in the original
                         \ source - it is not required as a call to TT66-2 sets
@@ -75,7 +75,7 @@ ENDIF
 
  JSR GTHG               \ Call GTHG to spawn a Thargoid ship
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Master: The Master version spawns three Thargoid motherships in witchspace, while the other versions spawn four
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Master: The Master version spawns three Thargoid motherships in witchspace, while the other versions spawn four
 
  LDA #3                 \ Fetch the number of Thargoid ships from MANY+THG, and
  CMP MANY+THG           \ if it is less than or equal to 3, loop back to MJP1 to

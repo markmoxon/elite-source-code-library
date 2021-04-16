@@ -3,7 +3,7 @@
 \       Name: ECBLB
 \       Type: Subroutine
 \   Category: Dashboard
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
 \    Summary: Light up the E.C.M. indicator bulb ("E") on the dashboard
 ELIF _6502SP_VERSION
 \    Summary: Implement the #DOBULB 255 command (draw the E.C.M. indicator bulb)
@@ -27,7 +27,7 @@ IF _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Screen
 
  LDA #7*8               \ The E.C.M. bulb is in character block number 7
                         \ with each character taking 8 bytes, so this sets the

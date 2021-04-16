@@ -9,7 +9,7 @@
 
 .TT208
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ 6502SP: In the 6502SP version, you can send the Sell Cargo screen to the printer by pressing CTRL-f2
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ 6502SP: In the 6502SP version, you can send the Sell Cargo screen to the printer by pressing CTRL-f2
 
  LDA #4                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 4 (Sell
@@ -23,7 +23,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Standard: Group A: The layout of the Sell Cargo screen in the cassette version is slightly different to the other versions (it doesn't have a boxed title and the text starts lower down the screen)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: Group A: The layout of the Sell Cargo screen in the cassette version is slightly different to the other versions (it doesn't have a boxed title and the text starts lower down the screen)
 
  LDA #4                 \ Move the text cursor to row 4, column 4
  STA YC
@@ -41,7 +41,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
 \JSR FLKB               \ This instruction is commented out in the original
                         \ source. It calls a routine to flush the keyboard
@@ -57,7 +57,7 @@ ENDIF
  LDA #205               \ Print recursive token 45 ("SELL")
  JSR TT27
 
-IF _CASSETTE_VERSION \ Standard: See group A
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: See group A
 
  LDA #206               \ Print recursive token 46 (" CARGO{sentence case}")
  JSR TT68               \ followed by a colon

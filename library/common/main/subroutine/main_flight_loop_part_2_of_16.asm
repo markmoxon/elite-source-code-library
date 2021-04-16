@@ -63,7 +63,7 @@
  LSR A                  \ Divide the (positive) roll rate in A by 4
  LSR A
 
-IF _CASSETTE_VERSION \ Other: The cassette has an extra CLC that isn't needed and could be culled
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Other: The cassette has an extra CLC that isn't needed and could be culled
 
  CMP #8                 \ If A >= 8, skip the following two instructions
  BCS P%+4

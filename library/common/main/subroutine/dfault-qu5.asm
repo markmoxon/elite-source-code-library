@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-IF _CASSETTE_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 \       Name: QU5
 ELIF _6502SP_VERSION OR _DISC_DOCKED
 \       Name: DFAULT
@@ -11,7 +11,7 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
 
 .QU5
 
@@ -21,7 +21,7 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 
                         \ By the time we get here, the correct commander name
                         \ is at NA% and the correct commander data is at NA%+8.
@@ -46,7 +46,7 @@ IF _CASSETTE_VERSION \ Comment
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
  LDX #NT%               \ The size of the commander data block is NT% bytes,
                         \ and it starts at NA%+8, so we need to copy the data
@@ -70,7 +70,7 @@ ENDIF
 
 .QUL1
 
-IF _CASSETTE_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
  LDA NA%+7,X            \ Copy the X-th byte of NA%+7 to the X-th byte of TP-1,
  STA TP-1,X             \ (the -1 is because X is counting down from NT% to 1)
@@ -142,7 +142,7 @@ ENDIF
 
 .tZ
 
-IF _CASSETTE_VERSION \ Standard: When you save a commander file, the version details get saved along with the competition flags. The flags get set as follows: the cassette version sets bit 1, the disc version sets bit 2 or 5 depending on the release, the 6502SP version sets bit 2, and the Master version sets bit 3
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: When you save a commander file, the version details get saved along with the competition flags. The flags get set as follows: the cassette version sets bit 1, the disc version sets bit 2 or 5 depending on the release, the 6502SP version sets bit 2, and the Master version sets bit 3
 
  ORA #%00000010         \ Set bit 1 of A to denote that this is the cassette
                         \ version

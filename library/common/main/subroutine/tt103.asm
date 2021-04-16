@@ -23,7 +23,7 @@ ENDIF
 
  LDA QQ11               \ Fetch the current view type into A
 
-IF _CASSETTE_VERSION \ Other: The cassette version doesn't draw crosshairs in routine TT103 if this is a space view, but the other versions don't do this check, so perhaps it isn't required?
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Other: The cassette version doesn't draw crosshairs in routine TT103 if this is a space view, but the other versions don't do this check, so perhaps it isn't required?
 
  BEQ TT180              \ If this is a space view, return from the subroutine
                         \ (as TT180 contains an RTS), as there are no moveable
@@ -33,7 +33,7 @@ ENDIF
 
  BMI TT105              \ If this is the Short-range Chart screen, jump to TT105
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: Master version contains code to scale the crosshairs on the chart views, though it has no effect in this version. The code is left over from the non-BBC versions, which needed to be able to scale the charts to fit their different-sized screens
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: Master version contains code to scale the crosshairs on the chart views, though it has no effect in this version. The code is left over from the non-BBC versions, which needed to be able to scale the charts to fit their different-sized screens
 
 
  LDA QQ9                \ Store the crosshairs x-coordinate in QQ19

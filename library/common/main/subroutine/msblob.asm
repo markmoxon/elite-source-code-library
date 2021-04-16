@@ -8,7 +8,7 @@
 \ ------------------------------------------------------------------------------
 \
 \ Display the dashboard's missile indicators, with all the missiles reset to
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
 \ green/cyan (i.e. not armed or locked).
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 \ green (i.e. not armed or locked).
@@ -26,7 +26,7 @@ ENDIF
  CPX NOMSL              \ If the counter is equal to the number of missiles,
  BEQ SAL8               \ jump down to SQL8 to draw remaining the missiles, as
                         \ the rest of them are present and should be drawn in
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
                         \ green/cyan
 ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ green
@@ -43,7 +43,7 @@ ENDIF
 
 .SAL8
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
 
  LDY #&EE               \ Draw the missile indicator at position X in green/cyan
  JSR MSBAR

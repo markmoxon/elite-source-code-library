@@ -9,7 +9,7 @@
 
 .BEEP
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
  LDA #32                \ Set A = 32 to denote a short, high beep, and fall
                         \ through into the NOISE routine to make the sound

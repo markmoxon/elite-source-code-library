@@ -8,7 +8,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Comment
 \ Keyboard table for in-flight controls. This table contains the internal key
 \ codes for the flight keys (see p.142 of the Advanced User Guide for a list of
 \ internal key numbers).
@@ -32,7 +32,7 @@ IF _6502SP_VERSION \ Comment
 ENDIF
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
 
 KYTB = P% - 1           \ Point KYTB to the byte before the start of the table
 
@@ -49,7 +49,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT \ Label
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Master: The Master has a different set of internal key numbers to the BBC Micro, so the keyboard lookup tables are different
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Master: The Master has a different set of internal key numbers to the BBC Micro, so the keyboard lookup tables are different
 
                         \ These are the primary flight controls (pitch, roll,
                         \ speed and lasers):

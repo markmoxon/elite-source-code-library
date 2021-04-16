@@ -3,7 +3,7 @@
 \       Name: SVE
 \       Type: Subroutine
 \   Category: Save and load
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Comment
 \    Summary: Save the commander file
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 \    Summary: Display the disc access menu and process saving of commander files
@@ -211,7 +211,7 @@ IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Enhanced: See group A
                         \ to save (including drive number and directory) into
                         \ INWK
 
-ELIF _CASSETTE_VERSION
+ELIF _CASSETTE_VERSION OR _ELECTRON_VERSION
 
  JSR GTNME              \ Clear the screen and ask for the commander filename
                         \ to save, storing the name at INWK
@@ -220,7 +220,7 @@ ENDIF
 
  JSR TRNME              \ Transfer the commander filename from INWK to NA%
 
-IF _CASSETTE_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
  JSR ZERO               \ Zero-fill pages &9, &A, &B, &C and &D, which clears
                         \ the ship data blocks, the ship line heap, the ship
@@ -249,7 +249,7 @@ ENDIF
                         \ from location TP to the last saved commander block at
                         \ NA%+8, so set a counter in X to copy the NT% bytes in
                         \ the commander data block
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Comment
                         \
                         \ We also want to copy the data block to another
                         \ location &0B00, which is normally used for the ship
@@ -258,7 +258,7 @@ ENDIF
 
 .SVL1
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
  LDA TP,X               \ Copy the X-th byte of TP to the X-th byte of &0B00
  STA &0B00,X            \ and NA%+8
@@ -304,7 +304,7 @@ IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Other: This is a bug fix
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Master: The Master version doesn't show the competition number when saving, as the competition closed some time before the Master came on the scene
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Master: The Master version doesn't show the competition number when saving, as the competition closed some time before the Master came on the scene
 
  JSR BPRNT              \ Print the competition number stored in K to K+3. The
                         \ value of U might affect how this is printed, and as
@@ -315,7 +315,7 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Master: The Master ver
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _MASTER_VERSION \ Platform
 
  JSR TT67               \ Call TT67 twice to print two newlines
  JSR TT67
@@ -328,7 +328,7 @@ ENDIF
 
  PLA                    \ Restore the checksum from the stack
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
  STA &0B00+NT%          \ Store the checksum in the last byte of the save file
                         \ at &0B00 (the equivalent of CHK in the last saved
@@ -339,7 +339,7 @@ ENDIF
  EOR #&A9               \ Store the checksum EOR &A9 in CHK2, the penultimate
  STA CHK2               \ byte of the last saved commander block
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
  STA &AFF+NT%           \ Store the checksum EOR &A9 in the penultimate byte of
                         \ the save file at &0B00 (the equivalent of CHK2 in the
@@ -355,7 +355,7 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
  LDA #%10000001         \ Clear 6522 System VIA interrupt enable register IER
  STA VIA+&4E            \ (SHEILA &4E) bit 1 (i.e. enable the CA2 interrupt,
@@ -365,7 +365,7 @@ IF _CASSETTE_VERSION \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
  LDA #0                 \ Call QUS1 with A = 0, Y = &C to save the commander
  JSR QUS1               \ file with the filename we copied to INWK at the start
@@ -410,7 +410,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
  LDX #0                 \ Set X = 0 for storing in SVN below
 

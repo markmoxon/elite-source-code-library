@@ -14,7 +14,7 @@
  JSR msblob             \ Reset the dashboard's missile indicators so none of
                         \ them are targeted
 
-IF _CASSETTE_VERSION \ Standard: On the second title page (the one that says "Press Space Or Fire,Commander"), the cassette version shows a rotating Mamba, the disc version shows a rotating Krait, the 6502SP version shows a rotating Asp Mk II, and the Master version shows a rotating Cougar
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: On the second title page (the one that says "Press Space Or Fire,Commander"), the cassette version shows a rotating Mamba, the disc version shows a rotating Krait, the 6502SP version shows a rotating Asp Mk II, and the Master version shows a rotating Cougar
 
  LDA #147               \ Call TITLE to show a rotating Mamba (#3) and token
  LDX #3                 \ 147 ("PRESS FIRE OR SPACE,COMMANDER.{crlf}{crlf}"),
@@ -48,7 +48,7 @@ ENDIF
  JSR ping               \ Set the target system coordinates (QQ9, QQ10) to the
                         \ current system coordinates (QQ0, QQ1) we just loaded
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Platform: The 6502SP version inlines the code from the hyp1 routine here, instead of calling it (though it could just as easily call it, as the hyp1 routine is included in the 6502SP version and contains the same code)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Platform: The 6502SP version inlines the code from the hyp1 routine here, instead of calling it (though it could just as easily call it, as the hyp1 routine is included in the 6502SP version and contains the same code)
 
  JSR hyp1               \ Arrive in the system closest to (QQ9, QQ10) and then
                         \ and then fall through into the docking bay routine

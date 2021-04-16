@@ -8,7 +8,7 @@
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
 
  LDA #&78               \ Set SC(1 0) = &7810, which is the screen address for
  STA SC+1               \ the character block containing the left end of the
@@ -47,7 +47,7 @@ ENDIF
  JSR DILX+2             \ and increment SC to point to the next indicator (the
                         \ cabin temperature)
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
 
  JSR PZW                \ Call PZW to set A to the colour for dangerous values
                         \ and X to the colour for safe values
@@ -95,7 +95,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Minor
 
  STA K+1                \ Set K+1 (the colour we should show for low values) to
                         \ 240, or &F0 (dashboard colour 2, yellow/white), so the
@@ -131,7 +131,7 @@ IF _MASTER_VERSION \ Platform
  
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
  JMP COMPAS             \ We have now drawn all the indicators, so jump to
                         \ COMPAS to draw the compass, returning from the

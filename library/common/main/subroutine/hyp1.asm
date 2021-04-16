@@ -46,7 +46,7 @@
 
 .TT112
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Other: Tha main bug fix for the "hyperspace when docking" bug. Without the fix, if your hyperspace counter hits 0 just as you're docking, then you will magically appear in the station in your hyperspace destination, without having to go to the effort of actually flying there
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Other: Tha main bug fix for the "hyperspace when docking" bug. Without the fix, if your hyperspace counter hits 0 just as you're docking, then you will magically appear in the station in your hyperspace destination, without having to go to the effort of actually flying there
 
  LDA QQ15,X             \ Copy the X-th byte in QQ15 to the X-th byte in QQ2, to
  STA QQ2,X              \ update the selected system to the new one. Note that
@@ -86,7 +86,7 @@ ENDIF
  LDA QQ4                \ Set the current system's government in gov to the
  STA gov                \ selected system's government from QQ4
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Minor
 
  RTS                    \ Return from the subroutine
 

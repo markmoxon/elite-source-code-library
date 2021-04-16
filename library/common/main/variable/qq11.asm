@@ -7,7 +7,7 @@
                         \         Get commander name ("@", save/load commander)
                         \         In-system jump just arrived ("J")
                         \         Data on System screen (red key f6)
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Platform: The 6502SP version has unique internal view numbers for the Buy Cargo screen (2) and arrival from a mis-jump (3)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Platform: The 6502SP version has unique internal view numbers for the Buy Cargo screen (2) and arrival from a mis-jump (3)
                         \         Buy Cargo screen (red key f1)
                         \         Mis-jump just arrived (witchspace)
 ELIF _6502SP_VERSION

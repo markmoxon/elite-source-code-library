@@ -1,13 +1,13 @@
 \ ******************************************************************************
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Comment
 \       Name: TTX66
 ELIF _MASTER_VERSION
 \       Name: TTX662
 ENDIF
 \       Type: Subroutine
 \   Category: Utility routines
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Clear the top part of the screen and draw a white border
 ELIF _6502SP_VERSION
 \    Summary: Send control code 11 to the I/O processor to clear the top part
@@ -19,7 +19,7 @@ ENDIF
 \ Clear the top part of the screen (the space view) and draw a white border
 \ along the top and sides.
 \
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Comment
 \ Other entry points:
 \
 \   BOX                 Just draw the border and (if this is a space view) the
@@ -35,7 +35,7 @@ IF _DISC_DOCKED \ Comment
 ENDIF
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Label
 
 .TTX66
 
@@ -94,7 +94,7 @@ IF _6502SP_VERSION \ Screen
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
  ASL A                  \ Set LASCT to 0, as 128 << 1 = %10000000 << 1 = 0. This
  STA LASCT              \ stops any laser pulsing. This instruction is STA LAS2
@@ -121,7 +121,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Minor
 
  STA DLY                \ Set the delay in DLY to 0, to indicate that we are
                         \ no longer showing an in-flight message, so any new
@@ -141,7 +141,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Tube
 
  LDX #&60               \ Set X to the screen memory page for the top row of the
                         \ screen (as screen memory starts at &6000)
@@ -165,7 +165,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Label
 
  LDX QQ22+1             \ Fetch into X the number that's shown on-screen during
                         \ the hyperspace countdown
@@ -197,7 +197,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Tube
 
  LDY #1                 \ Move the text cursor to row 1
  STY YC
@@ -212,7 +212,7 @@ ENDIF
  LDA QQ11               \ If this is not a space view, jump to tt66 to skip
  BNE tt66               \ displaying the view name
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Tube
 
  LDY #11                \ Move the text cursor to row 11
  STY XC
@@ -282,7 +282,7 @@ IF _6502SP_VERSION \ Screen
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Tube
 
  LDX #0                 \ Set (X1, Y1) to (0, 0)
  STX X1
@@ -307,14 +307,14 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Tube
 
  DEX                    \ Set X2 = 255
  STX X2
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Tube
 
  JSR HLOIN              \ Draw a horizontal line from (X1, Y1) to (X2, Y1), so
                         \ that's (0, 0) to (255, 0), along the very top of the
@@ -327,7 +327,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  LDA #2                 \ Set X1 = X2 = 2
  STA X1
@@ -370,7 +370,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Platform
 
  JMP LOIN               \ Draw a line from (X1, Y1) to (X2, Y2), and return from
                         \ the subroutine using a tail call

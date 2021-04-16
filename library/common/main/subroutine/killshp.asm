@@ -33,7 +33,7 @@
 
  STX XX4                \ Store the slot number of the ship to remove in XX4
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
 
                         \ The following two instructions appear in the BASIC
                         \ source file (ELITEF), but in the text source file
@@ -57,7 +57,7 @@ ENDIF
 
  BNE KS5                \ If our missile is not locked on this ship, jump to KS5
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Screen
 
  LDY #&EE               \ Otherwise we need to remove our missile lock, so call
  JSR ABORT              \ ABORT to disarm the missile and update the missile
@@ -213,7 +213,7 @@ ENDIF
  LDA FRIN,X             \ Copy the contents of the source slot into the
  STA FRIN-1,X           \ destination slot
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
  BEQ KS2                \ If the slot we just shuffled down contains 0, then
                         \ the source slot is empty and we are done shuffling,
@@ -283,7 +283,7 @@ ENDIF
                         \ so let's start copying data from the source to the
                         \ destination
 
-IF _CASSETTE_VERSION \ Enhanced: Ship data blocks have an extra byte in the enhanced versions - the NEWB flags. This gives a total of 37 bytes per ship, compared to 36 bytes in the cassette version
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Ship data blocks have an extra byte in the enhanced versions - the NEWB flags. This gives a total of 37 bytes per ship, compared to 36 bytes in the cassette version
 
  LDY #35                \ We are going to be using Y as a counter for the 36
                         \ bytes of ship data we want to copy from the source
@@ -308,7 +308,7 @@ ENDIF
  LDA (SC),Y             \ Fetch byte #35 of the source's ship data block at SC,
  STA (INF),Y            \ and store it in byte #35 of the destination's block
                         \ at INF, so that's the ship's energy copied from the
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
                         \ source to the destination. One down, quite a few to
                         \ go...
 ELIF _6502SP_VERSION

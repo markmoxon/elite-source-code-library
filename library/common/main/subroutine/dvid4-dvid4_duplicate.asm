@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Comment
 \       Name: DVID4
 ELIF _MASTER_VERSION
 \       Name: DVID4_DUPLICATE
@@ -31,7 +31,7 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Label
 
 .DVID4
 
@@ -67,7 +67,7 @@ ENDIF
 
  SBC Q                  \ A >= Q, so set A = A - Q
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Other: Group A: There are two differences in the DVID4 routine between the original versions and the advanced versions that look like they would affect the result of the division; I haven't yet worked out what this is all about
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Other: Group A: There are two differences in the DVID4 routine between the original versions and the advanced versions that look like they would affect the result of the division; I haven't yet worked out what this is all about
 
  SEC                    \ Set the C flag, so that P gets a 1 shifted into bit 0
 
@@ -82,7 +82,7 @@ ENDIF
  BNE DVL4               \ Loop back for the next bit until we have done all 8
                         \ bits of P
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Other: See group A
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Other: See group A
 
  JMP LL28+4             \ Jump to LL28+4 to convert the remainder in A into an
                         \ integer representation of the fractional value A / Q,

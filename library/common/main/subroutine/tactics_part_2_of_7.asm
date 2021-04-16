@@ -14,7 +14,7 @@
 \
 \   * If this is a missile, jump up to the missile code in part 1
 \
-IF _CASSETTE_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 \   * If this is an escape pod, point it at the planet and jump to the
 \     manoeuvring code in part 7
 \
@@ -106,7 +106,7 @@ ENDIF
  CPX #MSL               \ If this is a missile, jump up to TA18 to implement
  BEQ TA18               \ missile tactics
 
-IF _CASSETTE_VERSION \ Enhanced: The enhanced versions let the NEWB flags determine whether ships should be heading for the planet (which is applied to traders, ships who are docking, escape pods and so on). The cassette version is a lot simpler and only sends escape pods in the direction of the planet
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: The enhanced versions let the NEWB flags determine whether ships should be heading for the planet (which is applied to traders, ships who are docking, escape pods and so on). The cassette version is a lot simpler and only sends escape pods in the direction of the planet
 
  CPX #ESC               \ If this is not an escape pod, skip the following two
  BNE P%+8               \ instructions
@@ -161,7 +161,7 @@ ENDIF
 
  JSR DORND              \ Set A and X to random numbers
 
-IF _CASSETTE_VERSION \ Standard: In the cassette version there is a 45% chance that an angry station will spawn a cop, while in the enhanced versions there is only a 6.2% chance
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: In the cassette version there is a 45% chance that an angry station will spawn a cop, while in the enhanced versions there is only a 6.2% chance
 
  CMP #140               \ If A < 140 (55% chance) then return from the
  BCC TA14-1             \ subroutine (as TA14-1 contains an RTS)
@@ -173,7 +173,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Advanced: In the 6502SP version there can be up to seven cops in the vicinity, and in the Master version there can be up to six, while the limit is four in the other versions
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Advanced: In the 6502SP version there can be up to seven cops in the vicinity, and in the Master version there can be up to six, while the limit is four in the other versions
 
  LDA MANY+COPS          \ We only call the tactics routine for the space station
  CMP #4                 \ when it is hostile, so first check the number of cops
@@ -217,7 +217,7 @@ ENDIF
 
 .TA13
 
-IF _CASSETTE_VERSION \ Platform: This logic is in part 3 for the other versions 
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform: This logic is in part 3 for the other versions 
 
  CPX #TGL               \ If this is not a Thargon, jump down to TA14
  BNE TA14
@@ -236,7 +236,7 @@ IF _CASSETTE_VERSION \ Platform: This logic is in part 3 for the other versions
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Platform: Without the NEWB flags, the cassette version logic is much simpler (traders always fly a Cobra Mk III)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform: Without the NEWB flags, the cassette version logic is much simpler (traders always fly a Cobra Mk III)
 
  CPX #CYL               \ If A >= #CYL, i.e. this is a Cobra Mk III trader (as
  BCS TA62               \ asteroids and cargo canisters never have AI), jump

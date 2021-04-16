@@ -25,7 +25,7 @@
  CMP #SST               \ If this is the space station, jump to AN2 to make the
  BEQ AN2                \ space station hostile
 
-IF _CASSETTE_VERSION \ Enhanced: Group A: In the enhanced versions, attacking an innocent bystander (i.e. a ship that has bit 5 of the NEWB flags set) will annoy the space station
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Group A: In the enhanced versions, attacking an innocent bystander (i.e. a ship that has bit 5 of the NEWB flags set) will annoy the space station
 
  BCS HI1                \ If A >= #SST then this is a missile, asteroid, cargo
                         \ canister, Thargon or escape pod, and they can't get
@@ -87,7 +87,7 @@ ENDIF
 
 .AN2
 
-IF _CASSETTE_VERSION \ Enhanced: See group A
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: See group A
 
  ASL K%+NI%+32          \ Fetch the AI counter (byte #32) of the second ship
  SEC                    \ in the ship data workspace at K%, which is reserved

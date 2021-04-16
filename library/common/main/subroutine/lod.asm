@@ -28,7 +28,7 @@ IF _6502SP_VERSION \ Comment
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
  LDX #2                 \ Enable the ESCAPE key and clear memory if the BREAK
  JSR FX200              \ key is pressed (*FX 200,2)
@@ -48,7 +48,7 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
  LDY #&B                \ Set up an OSFILE block at &0C00, containing:
  STY &0C03              \
@@ -58,13 +58,13 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
  INY                    \ Increment Y to &C, which we use next
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
  LDA #&FF               \ Call QUS1 with A = &FF, Y = &C to load the commander
  JSR QUS1               \ file to address &0B00
@@ -75,7 +75,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
  LDA &0B00              \ If the first byte of the loaded file has bit 7 set,
  BMI SPS1+1             \ jump to SPS+1, which is the second byte of an LDA #0
@@ -111,7 +111,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
  LDX #NT%               \ We have successfully loaded the commander file at
                         \ &0B00, so now we want to copy it to the last saved
@@ -129,7 +129,7 @@ ENDIF
 
 .LOL1
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
  LDA &B00,X             \ Copy the X-th byte of &0B00 to the X-th byte of NA%+8
  STA NA%+8,X
@@ -147,7 +147,7 @@ ENDIF
 
  BPL LOL1               \ Loop back until we have copied all NT% bytes
 
-IF _CASSETTE_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
  LDX #3                 \ Fall through into FX200 to disable the ESCAPE key and
                         \ clear memory if the BREAK key is pressed (*FX 200,3)

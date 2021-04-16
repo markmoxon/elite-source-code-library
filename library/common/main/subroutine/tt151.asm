@@ -52,7 +52,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: See group A
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Tube
 
  LDA #1                 \ Move the text cursor to column 1, for the item's name
  STA XC
@@ -70,7 +70,7 @@ ENDIF
  JSR TT27               \ range 48 ("FOOD") to 64 ("ALIEN ITEMS"), so this
                         \ prints the item's name
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Tube
 
  LDA #14                \ Move the text cursor to column 14, for the price
  STA XC
@@ -167,7 +167,7 @@ ENDIF
 
 .TT172
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Tube
 
  LDA XC                 \ Move the text cursor in XC to the right by 4 columns,
  ADC #4                 \ so the cursor is where the last digit would be if we

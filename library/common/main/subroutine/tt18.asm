@@ -70,7 +70,7 @@ ENDIF
  JSR hyp1+3             \ Jump straight to the system at (QQ9, QQ10) without
                         \ first calculating which system is closest
 
-IF _CASSETTE_VERSION \ Platform: In the cassette version, hyp1 doesn't fall through into GVL, so we need to call it
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform: In the cassette version, hyp1 doesn't fall through into GVL, so we need to call it
 
  JSR GVL                \ Calculate the availability for each market item in the
                         \ new system
@@ -79,7 +79,7 @@ ENDIF
 
  JSR RES2               \ Reset a number of flight variables and workspaces
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Master: The Master version calls an extra bit of code when arriving in a new system that is responsible for breeding any Trumbles in the hold, though as there are no Trumbles in the BBC versions of the game, this never actually breeds anything
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Master: The Master version calls an extra bit of code when arriving in a new system that is responsible for breeding any Trumbles in the hold, though as there are no Trumbles in the BBC versions of the game, this never actually breeds anything
 
  JSR SOLAR              \ Halve our legal status, update the missile indicators,
                         \ and set up data blocks and slots for the planet and
@@ -99,7 +99,7 @@ IF _DISC_FLIGHT \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
 
  LDA QQ11               \ If the current view in QQ11 is not a space view (0) or
  AND #%00111111         \ one of the charts (64 or 128), return from the

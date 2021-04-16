@@ -78,7 +78,7 @@ ENDIF
 
 .STATUS
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ 6502SP: In the 6502SP version, you can send the Status Mode screen to the printer by pressing CTRL-f8
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ 6502SP: In the 6502SP version, you can send the Status Mode screen to the printer by pressing CTRL-f8
 
  LDA #8                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 8 (Status
@@ -95,7 +95,7 @@ ENDIF
  JSR TT111              \ Select the system closest to galactic coordinates
                         \ (QQ9, QQ10)
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Tube
 
  LDA #7                 \ Move the text cursor to column 7
  STA XC
@@ -120,7 +120,7 @@ ENDIF
                         \ and draw a horizontal line at pixel row 19 to box
                         \ in the title
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
  LDA #15                \ Set A to token 129 ("{sentence case}DOCKED")
 
@@ -137,14 +137,14 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
  LDA #230               \ Otherwise we are in space, so start off by setting A
                         \ to token 70 ("GREEN")
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
  LDY MANY+AST           \ Set Y to the number of asteroids in our local bubble
                         \ of universe
@@ -157,7 +157,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
  LDX FRIN+2,Y           \ The ship slots at FRIN are ordered with the first two
                         \ slots reserved for the planet and sun/space station,
@@ -239,7 +239,7 @@ ENDIF
  LSR A
  LSR A
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Label
 
 .st5L
 
@@ -270,7 +270,7 @@ ENDIF
 
  LSR A                  \ Shift A to the right
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Label
 
  BNE st5L               \ Keep looping around until A = 0, which means there are
                         \ no set bits left in A
@@ -299,7 +299,7 @@ ENDIF
                         \
                         \ followed by a newline and an indent of 6 characters
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: The Master version shows the escape pod by name in the Status Mode screen but doesn't show the large cargo bay, while the other versions do show the large cargo bay but don't show the escape pod
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: The Master version shows the escape pod by name in the Status Mode screen but doesn't show the large cargo bay, while the other versions do show the large cargo bay but don't show the escape pod
 
  LDA CRGO               \ If our ship's cargo capacity is < 26 (i.e. we do not
  CMP #26                \ have a cargo bay extension), skip the following two
@@ -384,7 +384,7 @@ ENDIF
 
  LDA #103               \ Set A to token 103 ("PULSE LASER")
 
-IF _CASSETTE_VERSION \ Enhanced: The Status Mode screen in the enhanced versions supports the new types of laser (military and mining)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: The Status Mode screen in the enhanced versions supports the new types of laser (military and mining)
 
  LDX CNT                \ If the laser power for view X has bit 7 clear, then it
  LDY LASER,X            \ is a pulse laser, so skip the following instruction

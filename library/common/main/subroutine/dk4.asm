@@ -34,7 +34,7 @@ ENDIF
 
 .DK4
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Tube
 
  JSR RDKEY              \ Scan the keyboard for a key press and return the
                         \ internal key number in X (or 0 for no key press)
@@ -46,7 +46,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  STX KL                 \ Store X in KL, byte #0 of the key logger
 
@@ -73,7 +73,7 @@ ENDIF
  JSR WSCAN              \ Call WSCAN to wait for the vertical sync, so the whole
                         \ screen gets drawn
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  JSR RDKEY              \ Scan the keyboard for a key press and return the
                         \ internal key number in X (or 0 for no key press)
@@ -86,7 +86,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  CPX #&51               \ If "S" is not being pressed, skip to DK6
  BNE DK6
@@ -111,7 +111,7 @@ ENDIF
 
 .DK6
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  LDY #&40               \ We now want to loop through the keys that toggle
                         \ various settings. These have internal key numbers
@@ -134,7 +134,7 @@ ENDIF
 
  INY                    \ Increment Y to point to the next toggle key
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  CPY #&47               \ The last toggle key is &46 (K), so check whether we
                         \ have just done that one
@@ -148,13 +148,13 @@ ENDIF
 
  BNE DKL4               \ If not, loop back to check for the next toggle key
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Label
 
 .DK55
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  CPX #&10               \ If "Q" is not being pressed, skip to DK7
  BNE DK7
@@ -218,7 +218,7 @@ IF _MASTER_VERSION \ Master: The Master version allows you to change the volume 
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Minor
 
  JMP DEATH2             \ ESCAPE is being pressed, so jump to DEATH2 to end
                         \ the game
@@ -299,7 +299,7 @@ IF _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  CPX #&59               \ If DELETE is not being pressed, we are still paused,
  BNE FREEZE             \ so loop back up to keep listening for configuration
@@ -317,7 +317,7 @@ ENDIF
 
 .DK2
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Minor
 
  LDA QQ11               \ If the current view is non-zero (i.e. not a space
  BNE DK5                \ view), return from the subroutine (as DK5 contains
@@ -331,7 +331,7 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Enhanced: The key logger scans for an additional secondary flight key, "P", which disables the docking computer
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: The key logger scans for an additional secondary flight key, "P", which disables the docking computer
 
  LDY #15                \ This is a space view, so now we want to check for all
                         \ the secondary flight keys. The internal key numbers
@@ -351,14 +351,14 @@ ELIF _6502SP_VERSION OR _DISC_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  LDA #&FF               \ Set A to &FF so we can store this in the keyboard
                         \ logger for keys that are being pressed
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
 .DKL1
 
@@ -384,7 +384,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Label
 
 .DK5
 

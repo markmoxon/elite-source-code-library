@@ -8,7 +8,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Comment
 \ This is the main entry point for the main game code.
 ELIF _6502SP_VERSION
 \ This is the main entry point for the main game code. It is called after the
@@ -20,7 +20,7 @@ ENDIF
 
 .TT170
 
-IF _CASSETTE_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 
  LDX #&FF               \ Set the stack pointer to &01FF, which is the standard
  TXS                    \ location for the 6502 stack, so this instruction
@@ -37,7 +37,7 @@ ELIF _DISC_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Platform
 
                         \ Fall through into BR1 to start the game
 

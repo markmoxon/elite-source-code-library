@@ -44,7 +44,7 @@ ENDIF
                         \ left corner of the screen, and return from the
                         \ subroutine using a tail call
 
-IF _CASSETTE_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 
 \hy5                    \ This instruction and the hy5 label are commented out
 \RTS                    \ in the original - they can actually be found at the

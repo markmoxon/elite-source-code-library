@@ -8,7 +8,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
 \ Ready-made bytes for plotting two-pixel dashes in mode 4 (the top part of the
 \ split screen). See the PIXEL routine for details.
 ELIF _6502SP_VERSION

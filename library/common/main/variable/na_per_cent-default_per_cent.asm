@@ -1,13 +1,13 @@
 \ ******************************************************************************
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Comment
 \       Name: NA%
 ELIF _MASTER_VERSION
 \       Name: DEFAULT%
 ENDIF
 \       Type: Variable
 \   Category: Save and load
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Comment
 \    Summary: The data block for the last saved commander
 ELIF _MASTER_VERSION
 \    Summary: The data block for the default commander
@@ -17,7 +17,7 @@ ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Comment
 \ Contains the last saved commander data, with the name at NA% and the data at
 ELIF _MASTER_VERSION
 \ Contains the default commander data, with the name at NA% and the data at
@@ -38,7 +38,7 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: Group A: The Master version contains an embedded copy of the default JAMESON commander file that can be restored over the current commander via the disc access menu
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: Group A: The Master version contains an embedded copy of the default JAMESON commander file that can be restored over the current commander via the disc access menu
 
 .NA%
 

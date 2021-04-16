@@ -10,10 +10,22 @@
 
 .QQ18
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  RTOK 111               \ Token 0:      "FUEL SCOOPS ON {beep}"
  RTOK 131               \
  CONT 7                 \ Encoded as:   "[111][131]{7}"
  EQUB 0
+
+ELIF _ELECTRON_VERSION
+
+ RTOK 95                \ Token 0:      "UNIT  QUANTITY{crlf}
+ EQUB 0                 \                 PRODUCT   UNIT PRICE FOR SALE{crlf}
+                        \                                              {lf}"
+                        \
+                        \ Encoded as:   [95]
+
+ENDIF
 
  CHAR ' '               \ Token 1:      " CHART"
  CHAR 'C'               \
@@ -39,7 +51,7 @@
  CONT 3
  EQUB 0
 
-IF _CASSETTE_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
  TWOK 'I', 'N'          \ Token 4:      "INVENTORY{crlf}
  TWOK 'V', 'E'          \               "
@@ -229,7 +241,7 @@ ENDIF
  CHAR 'P'
  EQUB 0
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
  CHAR 'P'               \ Token 26:     "PRODUCT"
  CHAR 'R'               \
@@ -307,7 +319,7 @@ ENDIF
  TWOK 'O', 'N'
  EQUB 0
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
  CHAR 'G'               \ Token 33:     "GROSS PRODUCTIVITY"
  CHAR 'R'               \
@@ -376,7 +388,7 @@ ENDIF
  CHAR 'H'
  EQUB 0
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
  CHAR ' '               \ Token 38:     " BILLION"
  TWOK 'B', 'I'          \
@@ -436,7 +448,7 @@ ENDIF
  CHAR ' '
  EQUB 0
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
  CHAR 'S'               \ Token 45:     "SELL"
  CHAR 'E'               \
@@ -538,7 +550,7 @@ ENDIF
  CHAR 'Y'
  EQUB 0
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
  RTOK 117               \ Token 57:     "ALLOYS"
  CHAR 'O'               \
@@ -609,7 +621,7 @@ ENDIF
  CHAR 'S'
  EQUB 0
 
-IF _CASSETTE_VERSION \ Enhanced: The enhanced versions contain a strange text token 65 that displays your credit balance as "10{cash} CR5{cash} CR" - it isn't used anywhere and doesn't make a whole lot of sense
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: The enhanced versions contain a strange text token 65 that displays your credit balance as "10{cash} CR5{cash} CR" - it isn't used anywhere and doesn't make a whole lot of sense
 
  CHAR '('               \ Token 65:     "(Y/N)?"
  CHAR 'Y'               \
@@ -647,7 +659,7 @@ ENDIF
  TWOK 'C', 'E'
  EQUB 0
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
  CHAR 'S'               \ Token 69:     "SMALL"
  TWOK 'M', 'A'          \
@@ -672,7 +684,7 @@ ENDIF
  TWOK 'E', 'D'          \
  EQUB 0                 \ Encoded as:   "R<152>"
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
  CHAR 'Y'               \ Token 72:     "YELLOW"
  CHAR 'E'               \
@@ -746,7 +758,7 @@ ENDIF
  CHAR 'Y'
  EQUB 0
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
  CHAR 'R'               \ Token 82:     "RODENT"
  CHAR 'O'               \
@@ -836,7 +848,7 @@ ENDIF
  TWOK 'E', 'R'
  EQUB 0
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
  CHAR ' '               \ Token 93:     " DESTROYED"
  CHAR 'D'               \
@@ -861,7 +873,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Enhanced: The enhanced versions encode an extra two-letter token ("RO") in the standard text token table, replacing the author credits, which are moved into the extended token table
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: The enhanced versions encode an extra two-letter token ("RO") in the standard text token table, replacing the author credits, which are moved into the extended token table
 
  CHAR 'B'               \ Token 94:     "BY D.BRABEN & I.BELL"
  CHAR 'Y'               \
@@ -889,7 +901,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
  RTOK 14                \ Token 95:     "UNIT  QUANTITY{crlf}
  CHAR ' '               \                 PRODUCT   UNIT PRICE FOR SALE{crlf}
@@ -1048,6 +1060,8 @@ ENDIF
  CHAR 'S'
  EQUB 0
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  TWOK 'E', 'S'          \ Token 112:    "ESCAPE POD"
  CHAR 'C'               \
  CHAR 'A'               \ Encoded as:   "<137>CAPE POD"
@@ -1059,6 +1073,24 @@ ENDIF
  CHAR 'D'
  EQUB 0
 
+ELIF _ELECTRON_VERSION
+
+ TWOK 'E', 'S'          \ Token 112:    "ESCAPE CAPSULE"
+ CHAR 'C'               \
+ CHAR 'A'               \ Encoded as:   "<137>CAPE CAPSULE"
+ CHAR 'P'
+ CHAR 'E'
+ CHAR ' '
+ CHAR 'C'
+ CHAR 'A'
+ CHAR 'P'
+ CHAR 'S'
+ CHAR 'U'
+ TWOK 'L', 'E'
+ EQUB 0
+
+ENDIF
+
  RTOK 121               \ Token 113:    "ENERGY BOMB"
  CHAR 'B'               \
  CHAR 'O'               \ Encoded as:   "[121]BOMB"
@@ -1066,7 +1098,7 @@ ENDIF
  CHAR 'B'
  EQUB 0
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ 6502SP: If you have bought an energy unit, then most versions will show it on the Inventory screen as "Energy Unit", but in the source disc release of the 6502SP version, it is shown as "Extra Energy Unit" (though it's still "Energy Unit" in the official SNG45 release of the game)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ 6502SP: If you have bought an energy unit, then most versions will show it on the Inventory screen as "Energy Unit", but in the source disc release of the 6502SP version, it is shown as "Extra Energy Unit" (though it's still "Energy Unit" in the official SNG45 release of the game)
 
  RTOK 121               \ Token 114:    "ENERGY UNIT"
  RTOK 14                \
@@ -1091,7 +1123,7 @@ ENDIF
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
  RTOK 124               \ Token 115:    "DOCKING COMPUTERS"
  TWOK 'I', 'N'          \
@@ -1119,7 +1151,7 @@ ENDIF
  RTOK 29                \ Encoded as:   "[122] [29]"
  EQUB 0
 
-IF _CASSETTE_VERSION \ Enhanced: Group A: There are two new tokens in the text token table for the new laser types in the enhanced versions (token 117 for military lasers and token 118 for mining lasers), and the "ALL" and "LL" tokens that are here in the cassette version move to 124 and 129 respectively
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Group A: There are two new tokens in the text token table for the new laser types in the enhanced versions (token 117 for military lasers and token 118 for mining lasers), and the "ALL" and "LL" tokens that are here in the cassette version move to 124 and 129 respectively
 
  CHAR 'A'               \ Token 117:    "ALL"
  RTOK 118               \
@@ -1152,7 +1184,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
  RTOK 37                \ Token 119:    "CASH:{cash} CR{crlf}
  CHAR ':'               \               "
@@ -1191,7 +1223,7 @@ ENDIF
  CHAR 'C'
  EQUB 0
 
-IF _CASSETTE_VERSION \ Enhanced: There's a new token in the enhanced versions for showing that the docking computers are currently switched on. It replaces the request for a commander's name, which isn't required as the disc access menu implements that functionality using extended text tokens
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: There's a new token in the enhanced versions for showing that the docking computers are currently switched on. It replaces the request for a commander's name, which isn't required as the disc access menu implements that functionality using extended text tokens
 
  CONT 13                \ Token 123:    "{crlf}
  RTOK 92                \                COMMANDER'S NAME? "
@@ -1216,7 +1248,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Enhanced: The enhanced versions drop token 124 ("DOCK") and replace it with the "ALL" token that was displaced by the new military laser token; instead, "DOCK" is spelled out manually rather than using this token
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: The enhanced versions drop token 124 ("DOCK") and replace it with the "ALL" token that was displaced by the new military laser token; instead, "DOCK" is spelled out manually rather than using this token
 
  CHAR 'D'               \ Token 124:    "DOCK"
  CHAR 'O'               \
@@ -1232,7 +1264,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 
  CONT 5                 \ Token 125:    "FUEL: {fuel level} LIGHT YEARS{crlf}
  TWOK 'L', 'E'          \                CASH:{cash} CR{crlf}
@@ -1260,7 +1292,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
  RTOK 92                \ Token 126:    "COMMANDER {commander name}{crlf}
  CHAR ' '               \                {crlf}
@@ -1323,7 +1355,7 @@ ENDIF
  CHAR 'M'               \ Encoded as:   "I<156>M"
  EQUB 0
 
-IF _CASSETTE_VERSION \ Enhanced: See group A
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: See group A
 
  CHAR ' '               \ Token 128:    "  LOAD NEW COMMANDER (Y/N)?{crlf}
  CHAR ' '               \                {crlf}
@@ -1351,7 +1383,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Enhanced: See group A
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: See group A
 
  CONT 6                 \ Token 129:    "{sentence case}DOCKED"
  RTOK 124               \
@@ -1378,7 +1410,7 @@ ENDIF
  CHAR ' '               \ Encoded as:   " <159> "
  EQUB 0
 
-IF _CASSETTE_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
  CONT 13                \ Token 132:    "{crlf}
  CONT 8                 \                {all caps}EQUIPMENT: {sentence case}"
@@ -1466,7 +1498,7 @@ ENDIF
  CHAR 'T'
  EQUB 0
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
  CHAR 'D'               \ Token 142:    "DANGEROUS"
  TWOK 'A', 'N'          \
@@ -1534,7 +1566,7 @@ ENDIF
  CHAR 'R'
  EQUB 0
 
-IF _CASSETTE_VERSION \ Enhanced: To make room for the new laser tokens, the enhanced versions drop tokens 147 ("PRESS FIRE OR SPACE,COMMANDER.") and 148 ("(C) ACORNSOFT 1984"), moving them instead to the extended token table
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: To make room for the new laser tokens, the enhanced versions drop tokens 147 ("PRESS FIRE OR SPACE,COMMANDER.") and 148 ("(C) ACORNSOFT 1984"), moving them instead to the extended token table
 
  CHAR 'P'               \ Token 147:    "PRESS FIRE OR SPACE,COMMANDER.{crlf}
  CHAR 'R'               \                {crlf}

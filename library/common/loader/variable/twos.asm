@@ -3,7 +3,7 @@
 \       Name: TWOS
 \       Type: Variable
 \   Category: Drawing pixels
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
 \    Summary: Ready-made single-pixel character row bytes for mode 4
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 \    Summary: Ready-made single-pixel character row bytes for mode 1
@@ -11,7 +11,7 @@ ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
 \ Ready-made bytes for plotting one-pixel points in mode 4 (the top part of the
 \ split screen). See the PIX routine for details.
 ELIF _6502SP_VERSION OR _MASTER_VERSION

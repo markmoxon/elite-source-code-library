@@ -39,7 +39,7 @@ ENDIF
  BPL BUMP               \ dashboard slider, so jump to BUMP to bump it up by 1,
                         \ to move it closer to the centre
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Label
 
  DEX                    \ Otherwise X >= 128, so it's in the right-hand side
  BMI RE1                \ of the dashboard slider, so decrement X by 1, and if

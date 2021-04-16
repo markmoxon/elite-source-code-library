@@ -52,7 +52,7 @@
                         \
                         \   COMY = 204 - X - (1 - 0) = 203 - X
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ 6502SP: The compass on the cassette, disc and Master version uses yellow when the target is in front of us, while the 6502SP version uses white
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ 6502SP: The compass on the cassette, disc and Master version uses yellow when the target is in front of us, while the 6502SP version uses white
 
  LDA #&F0               \ Set A to a 4-pixel mode 5 byte row in colour 2
                         \ (yellow/white), the colour for when the planet or
@@ -73,7 +73,7 @@ ENDIF
  LDX XX15+2             \ If the z-coordinate of the XX15 vector is positive,
  BPL P%+4               \ skip the following instruction
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Screen
 
  LDA #&FF               \ The z-coordinate of XX15 is negative, so the planet or
                         \ station is behind us and the compass dot should be in
@@ -90,7 +90,7 @@ ENDIF
 
  STA COMC               \ Store the compass colour in COMC
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Platform
 
                         \ Fall through into DOT to draw the dot on the compass
 

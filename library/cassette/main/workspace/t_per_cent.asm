@@ -53,5 +53,11 @@ INCLUDE "library/common/main/variable/svc.asm"
 INCLUDE "library/common/main/variable/sx.asm"
 INCLUDE "library/common/main/variable/sxl.asm"
 
+IF _ELECTRON_VERSION
+
+INCLUDE "library/common/main/variable/sy.asm"
+
+ENDIF
+
 PRINT "T% workspace from  ", ~T%, " to ", ~P%
 

@@ -57,7 +57,7 @@
 
  BPL NOL1               \ Loop back for the next source byte
 
-IF _CASSETTE_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
 
  RTS                    \ Return from the subroutine
 

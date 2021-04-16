@@ -3,13 +3,13 @@
 \       Name: CLYNS
 \       Type: Subroutine
 \   Category: Utility routines
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Clear the bottom three text rows of the mode 4 screen
 ELIF _6502SP_VERSION
 \    Summary: Implement the #clyns command (clear the bottom of the screen)
 ENDIF
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ Clear some space at the bottom of the screen and move the text cursor to
@@ -72,7 +72,7 @@ IF _DISC_DOCKED \ Screen
  LDA #7
  STA SC
 
-ELIF _CASSETTE_VERSION OR _DISC_FLIGHT
+ELIF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT
 
  LDA #&75               \ Set the two-byte value in SC to &7507
  STA SC+1
@@ -107,7 +107,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Screen
 
  LDA #0                 \ Call LYN to clear the pixels from &7507 to &75F0
  JSR LYN

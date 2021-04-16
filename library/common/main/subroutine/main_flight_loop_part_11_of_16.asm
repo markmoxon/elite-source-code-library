@@ -40,7 +40,7 @@ ENDIF
  LDA QQ11               \ If this is not a space view, jump to MA15 to skip
  BNE MA15               \ missile and laser locking
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
  JSR PLUT               \ Call PLUT to update the geometric axes in INWK to
                         \ match the view (front, rear, left, right)
@@ -71,7 +71,7 @@ ENDIF
  JSR BEEP               \ We have missile lock and an armed missile, so call
                         \ the BEEP subroutine to make a short, high beep
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Screen
 
  LDX XSAV               \ Call ABORT2 to store the details of this missile
  LDY #&0E               \ lock, with the targeted ship's slot number in X
@@ -165,7 +165,7 @@ ENDIF
  SBC LAS                \ than zero, the other ship has survived the hit, so
  BCS MA14               \ jump down to MA14
 
-IF _CASSETTE_VERSION \ Enhanced: Destroying an asteroid with mining lasers in the enhanced versions will randomly release scoopable splinters, and destroying ships will randomly release not only cargo canisters (as in the cassette version) but also alloy plates
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Destroying an asteroid with mining lasers in the enhanced versions will randomly release scoopable splinters, and destroying ships will randomly release not only cargo canisters (as in the cassette version) but also alloy plates
 
  LDA TYPE               \ Did we just hit the space station? If so, jump to
  CMP #SST               \ MA14+2 to make the station hostile, skipping the

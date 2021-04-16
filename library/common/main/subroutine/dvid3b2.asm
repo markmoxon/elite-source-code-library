@@ -37,7 +37,7 @@
 
  STA P+2                \ Set P+2 = A
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Other: The advanced versions have a check to ensure the DVID3B2 routine doesn't try to divide by zero, a check the other versions lack
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Other: The advanced versions have a check to ensure the DVID3B2 routine doesn't try to divide by zero, a check the other versions lack
 
  LDA INWK+6             \ Set Q = z_lo
  STA Q
@@ -113,7 +113,7 @@ ENDIF
  LDA S                  \ Set A = |S|
  AND #%01111111
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Minor
 
  BMI DV9                \ If bit 7 of A is set, jump down to DV9 to skip the
                         \ left-shifting of the denominator (though this branch
@@ -160,7 +160,7 @@ ENDIF
 
  LDA P+2                \ Set A to the highest byte of the numerator
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  JSR LL31               \ Call LL31 to calculate:
                         \

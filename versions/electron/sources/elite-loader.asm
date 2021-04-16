@@ -1,57 +1,87 @@
+\ ******************************************************************************
+\
+\ ELECTRON ELITE LOADER SOURCE
+\
+\ Electron Elite was written by Ian Bell and David Braben and is copyright
+\ Acornsoft 1984
+\
+\ The code on this site has been disassembled from the version released on Ian
+\ Bell's personal website at http://www.elitehomepage.org/
+\
+\ The commentary is copyright Mark Moxon, and any misunderstandings or mistakes
+\ in the documentation are entirely my fault
+\
+\ The terminology and notations used in this commentary are explained at
+\ https://www.bbcelite.com/about_site/terminology_used_in_this_commentary.html
+\
+\ ------------------------------------------------------------------------------
+\
+\ This source file produces the following binary file:
+\
+\   * output/ELITEDA.bin
+\
+\ ******************************************************************************
+
 INCLUDE "versions/electron/sources/elite-header.h.asm"
+
+_CASSETTE_VERSION       = (_VERSION = 1)
+_DISC_VERSION           = (_VERSION = 2)
+_6502SP_VERSION         = (_VERSION = 3)
+_MASTER_VERSION         = (_VERSION = 4)
+_ELECTRON_VERSION       = (_VERSION = 5)
 
 CODE% = &4400
 LOAD% = &4400
 
+TRTB%   = &0004
+ZP      = &0070
+P       = &0072
+Q       = &0073
+YY      = &0074
+T       = &0075
+SC      = &0076
+SCH     = &0077
+BLPTR   = &0078
+V219    = &007A
+L0081   = &0081
+BLN     = &0083
+EXCN    = &0085
+L0087   = &0087
+L0088   = &0088
+L00F4   = &00F4
+USERV   = &0200
+BRKV    = &0202
+IRQ1V   = &0204
+WRCHV   = &020E
+RDCHV   = &0210
+KEYV    = &0228
 
-TRTB%   = $0004
-ZP      = $0070
-P       = $0072
-Q       = $0073
-YY      = $0074
-T       = $0075
-SC      = $0076
-SCH     = $0077
-BLPTR   = $0078
-V219    = $007A
-L0081   = $0081
-BLN     = $0083
-EXCN    = $0085
-L0087   = $0087
-L0088   = $0088
-L00F4   = $00F4
-USERV   = $0200
-BRKV    = $0202
-IRQ1V   = $0204
-WRCHV   = $020E
-RDCHV   = $0210
-KEYV    = $0228
+L0258   = &0258
+L0B11   = &0B11
+L0B3D   = &0B3D
+L0C24   = &0C24
 
-L0258   = $0258
-L0B11   = $0B11
-L0B3D   = $0B3D
-L0C24   = $0C24
+L0D00   = &0D00
+L0D02   = &0D02
+L0D03   = &0D03
+L0D04   = &0D04
+L0D05   = &0D05
+L0D08   = &0D08
+L0D0A   = &0D0A
+L0D0B   = &0D0B
+L0D0C   = &0D0C
+L0D0D   = &0D0D
+L0D0E   = &0D0E
+L0D0F   = &0D0F
 
-L0D00   = $0D00
-L0D02   = $0D02
-L0D03   = $0D03
-L0D04   = $0D04
-L0D05   = $0D05
-L0D08   = $0D08
-L0D0A   = $0D0A
-L0D0B   = $0D0B
-L0D0C   = $0D0C
-L0D0D   = $0D0D
-L0D0E   = $0D0E
-L0D0F   = $0D0F
+VIA     = &FE00
+OSBYTE  = &FFF4
+OSWRCH  = &FFEE
+OSWORD  = &FFF1
+OSCLI   = &FFF7
 
-VIA     = $FE00
-OSBYTE  = $FFF4
-OSWRCH  = $FFEE
-OSWORD  = $FFF1
-OSCLI   = $FFF7
+ORG CODE%
 
- org &4400
  EQUB &DC, &00, &03, &60, &6B, &A9, &77, &00
  EQUB &64, &6C, &B5, &71, &6D, &6E, &B1, &77
  EQUB &00, &67, &B2, &62, &32, &20, &00, &AF

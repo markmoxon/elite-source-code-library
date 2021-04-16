@@ -10,7 +10,7 @@
 \ Make the two-part explosion sound of us making a laser strike, or of another
 \ ship exploding.
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Comment
 \ The volume of the first explosion is affected by the distance of the ship
 \ being hit, with more distant ships being quieter. The value in X also affects
 \ the volume of the first explosion, with a higher X giving a quieter sound
@@ -32,7 +32,7 @@ ENDIF
 
 .EXNO
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  STX T                  \ Store the distance in T
 
@@ -74,7 +74,7 @@ IF _6502SP_VERSION \ Other: The 6502SP version contains a bug fix to make sure v
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  LDA INWK+7             \ Fetch z_hi, the distance of the ship being hit in
  LSR A                  \ terms of the z-axis (in and out of the screen), and
@@ -111,7 +111,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
  EQUB &2C               \ Skip the next instruction by turning it into
                         \ &2C &A9 &20, or BIT &20A9, which does nothing apart

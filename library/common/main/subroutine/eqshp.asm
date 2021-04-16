@@ -21,13 +21,13 @@
 
 .EQSHP
 
-IF _CASSETTE_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
  JSR DIALS              \ Call DIALS to update the dashboard
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ 6502SP: In the 6502SP version, you can send the Equip Ship screen to the printer by pressing CTRL-f3
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ 6502SP: In the 6502SP version, you can send the Equip Ship screen to the printer by pressing CTRL-f3
 
  LDA #32                \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 32 (Equip
@@ -47,7 +47,7 @@ IF _DISC_DOCKED \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Tube
 
  LDA #12                \ Move the text cursor to column 12
  STA XC
@@ -68,7 +68,7 @@ ENDIF
  LDA #%10000000         \ Set bit 7 of QQ17 to switch to Sentence Case, with the
  STA QQ17               \ next letter in capitals
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Tube
 
  INC YC                 \ Move the text cursor down one line
 
@@ -82,7 +82,7 @@ ENDIF
  CLC                    \ and add 3 (the tech level is stored as 0-14, so A is
  ADC #3                 \ now set to between 3 and 17)
 
-IF _CASSETTE_VERSION \ Enhanced: There are up to 14 different types of ship equipment available in the enhanced version, as opposed to 12 in the cassette version (the extra options are mining and military lasers)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: There are up to 14 different types of ship equipment available in the enhanced version, as opposed to 12 in the cassette version (the extra options are mining and military lasers)
 
  CMP #12                \ If A >= 12 then set A = 12, so A is now set to between
  BCC P%+4               \ 3 and 12
@@ -144,7 +144,7 @@ ENDIF
  SEC                    \ Set the C flag so we will print a decimal point when
                         \ we print the price
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Tube
 
  LDA #25                \ Move the text cursor to column 25
  STA XC
@@ -192,7 +192,7 @@ ENDIF
                         \ clear), which will be the actual item number we want
                         \ to buy
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Tube
 
  LDX #2                 \ Move the text cursor to column 2
  STX XC
@@ -234,7 +234,7 @@ ENDIF
  BNE et0                \ If A is not 0 (i.e. the item we've just bought is not
                         \ fuel), skip to et0
 
-IF _CASSETTE_VERSION \ Other: The cassette version resets the MCNT main loop counter when we refuel, which the other versions don't. I don't know why it would do this - perhaps it's a remnant of some other code that was cleared out in later versions?
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Other: The cassette version resets the MCNT main loop counter when we refuel, which the other versions don't. I don't know why it would do this - perhaps it's a remnant of some other code that was cleared out in later versions?
 
  STA MCNT               \ We just bought fuel, so we zero the main loop counter
 
@@ -252,7 +252,7 @@ ENDIF
 
  INX                    \ Increment X to the new number of missiles
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
  LDY #117               \ Set Y to recursive token 117 ("ALL")
 
@@ -324,7 +324,7 @@ ENDIF
                         \ prompt, and ask for a view number, which is returned
                         \ in X (which now contains 0-3)
 
-IF _CASSETTE_VERSION \ Platform: The refund code has been moved to the refund routine in the enhanced versions
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform: The refund code has been moved to the refund routine in the enhanced versions
 
  LDA #4                 \ This instruction doesn't appear to do anything, as we
                         \ either don't need it (if we already have this laser)
@@ -370,7 +370,7 @@ ENDIF
                         \ prompt, and ask for a view number, which is returned
                         \ in X (which now contains 0-3)
 
-IF _CASSETTE_VERSION \ Platform: The refund code has been moved to the refund routine in the enhanced versions
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform: The refund code has been moved to the refund routine in the enhanced versions
 
  STX T1                 \ Store the view in T1 so we can retrieve it below
 

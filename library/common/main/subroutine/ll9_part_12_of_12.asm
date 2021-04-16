@@ -8,7 +8,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Comment
 \ This part draws the lines in the ship line heap, which is used both to draw
 \ the ship, and to remove it from the screen.
 \
@@ -41,7 +41,7 @@ IF _6502SP_VERSION \ Tube
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Tube
 
  LDY #0                 \ Fetch the first byte from the ship line heap into A,
  LDA (XX19),Y           \ which contains the number of bytes in the heap
@@ -70,7 +70,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Master: Group A: The cassette, disc and 6502SP versions do all their line drawing at the very end of the LL9 ship-drawing routine, but the Master has already redrawn most of the ship by this point and only needs to erase any remaining lines
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Master: Group A: The cassette, disc and 6502SP versions do all their line drawing at the very end of the LL9 ship-drawing routine, but the Master has already redrawn most of the ship by this point and only needs to erase any remaining lines
 
  INY                    \ Set Y = 1, which we will use as an index into the ship
                         \ line heap, starting at byte #1 (as byte #0 contains
@@ -91,7 +91,7 @@ ENDIF
 
 .LL27
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Master: See group A
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Master: See group A
 
  LDA (XX19),Y           \ Fetch the X1 line coordinate from the heap and store
  STA XX15               \ it in XX15
@@ -151,7 +151,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: See group A
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: See group A
 
  INY                    \ Increment the heap pointer
 
@@ -173,7 +173,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Label
 
 \LL82                   \ This label is commented out in the original source
 

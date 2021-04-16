@@ -68,7 +68,7 @@ ENDIF
  BEQ P%+5               \ If A = 0 then the missile is very close to our ship,
                         \ so skip the following instruction
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Master: In the Master version, the tactics routine is slightly more efficient as it skips the NEWB logic checks for missiles, which aren't relevant (the disc and 6502SP versions still perform the checks, though this has no effect)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Master: In the Master version, the tactics routine is slightly more efficient as it skips the NEWB logic checks for missiles, which aren't relevant (the disc and 6502SP versions still perform the checks, though this has no effect)
 
  JMP TA21               \ Jump down to part 3 to set up the vectors and skip
                         \ straight to aggressive manoeuvring
@@ -95,7 +95,7 @@ ENDIF
                         \ This is the entry point for missile tactics and is
                         \ called from the main TACTICS routine below
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Master: See group A
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Master: See group A
 
  LDA ECMA               \ If an E.C.M. is currently active (either our's or an
  BNE TA35               \ opponent's), jump to TA35 to destroy this missile
@@ -120,7 +120,7 @@ ENDIF
                         \ can use it as an index for the two-byte address table
                         \ at UNIV
 
-IF _CASSETTE_VERSION \ Minor: This does exactly the same, but some code has moved into the VCSUB routine
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor: This does exactly the same, but some code has moved into the VCSUB routine
 
  TAX                    \ Copy the address of the target ship's data block from
  LDA UNIV,X             \ UNIV(X+1 X) to V(1 0)
@@ -172,7 +172,7 @@ ENDIF
                         \ distance from the target, so jump down to TA64 see if
                         \ the target activates its E.C.M.
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Label
 
  LDA INWK+32            \ Fetch the AI flag from byte #32 and if only bits 7 and
  CMP #%10000010         \ 1 are set (AI is enabled and the target is slot 1, the
@@ -207,7 +207,7 @@ ENDIF
  ORA INWK+3
  ORA INWK+6
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Label
 
  BNE TA87               \ If A is non-zero then the missile is not near our
                         \ ship, so jump to TA87 to skip damaging our ship
@@ -257,7 +257,7 @@ ENDIF
 
  JSR DORND              \ Set A and X to random numbers
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
  CMP #16                \ If A >= 16 (94% chance), jump down to TA19 with the
  BCS TA19               \ vector from the target to the missile in K3
@@ -275,7 +275,7 @@ ENDIF
  LDA (V),Y              \ into the C flag
  LSR A
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
  BCC TA19               \ If the C flag is clear then the target does not have
                         \ E.C.M. fitted, so jump down to TA19 with the vector

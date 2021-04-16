@@ -11,7 +11,7 @@
 \
 \ This section covers the following:
 \
-IF _CASSETTE_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 \   * Potentially spawn (35% chance) either a lone bounty hunter (a Mamba,
 \     Python or Cobra Mk III), a Thargoid, or a group of up to 4 pirates
 \     (Sidewinders and/or Mambas)
@@ -29,7 +29,7 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
 
  DEC EV                 \ Decrement EV, the extra vessels spawning delay, and
  BPL MLOOP              \ jump to MLOOP if it is still positive, so we only
@@ -94,7 +94,7 @@ ENDIF
  BEQ LABEL_2            \ straight to LABEL_2 to start spawning pirates or a
                         \ lone bounty hunter
 
-IF _CASSETTE_VERSION \ Standard: In the disc there's a 47% chance of spawning a group of pirates or a lone bounty hunter, while in the other versions there's a 35% chance
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: In the disc there's a 47% chance of spawning a group of pirates or a lone bounty hunter, while in the other versions there's a 35% chance
 
  CMP #90                \ If the random number in A >= 90 (65% chance), jump to
  BCS MLOOP              \ MLOOP to stop spawning (so there's a 35% chance of
@@ -114,7 +114,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
 
  AND #7                 \ Reduce the random number in A to the range 0-7, and
  CMP gov                \ if A is less than government of this system, jump
@@ -154,7 +154,7 @@ ENDIF
  JSR Ze                 \ Call Ze to initialise INWK to a potentially hostile
                         \ ship, and set A and X to random values
 
-IF _CASSETTE_VERSION \ Standard: In the cassette version there's a 13% chance of spawning a group of pirates, while in the other versions there's a 61% chance
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: In the cassette version there's a 13% chance of spawning a group of pirates, while in the other versions there's a 61% chance
 
  CMP #200               \ If the random number in A >= 200 (13% chance), jump
  BCS mt1                \ to mt1 to spawn pirates, otherwise keep going to
@@ -171,7 +171,7 @@ ENDIF
  INC EV                 \ Increase the extra vessels spawning counter, to
                         \ prevent the next attempt to spawn extra vessels
 
-IF _CASSETTE_VERSION \ Enhanced: In the enhanced versions, lone bounty hunters can be in a Cobra Mk III (pirate), Asp Mk II, Python (pirate) or Fer-de-lance, while in the cassette version they can be in a Mamba, Python or Cobra Mk III
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: In the enhanced versions, lone bounty hunters can be in a Cobra Mk III (pirate), Asp Mk II, Python (pirate) or Fer-de-lance, while in the cassette version they can be in a Mamba, Python or Cobra Mk III
 
  AND #3                 \ Set A = Y = random number in the range 3-6, which
  ADC #3                 \ we will use to determine the type of ship
@@ -237,7 +237,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: In the advanced versions, lone
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Standard: Lone bounty hunters in the disc version don't have E.C.M., while in the other versions they have a a 22% chance of having E.C.M.
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Standard: Lone bounty hunters in the disc version don't have E.C.M., while in the other versions they have a a 22% chance of having E.C.M.
 
  CMP #200               \ First, set the C flag if X >= 200 (22% chance)
 
@@ -249,7 +249,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Standard: Lone boun
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
  CPY #6                 \ If Y = 6 (i.e. a Thargoid), jump down to the tha
  BEQ tha                \ routine in part 6 to decide whether or not to spawn it
@@ -348,7 +348,7 @@ ENDIF
 
  JSR DORND              \ Set A and X to random numbers
 
-IF _CASSETTE_VERSION \ Enhanced: When spawning a pack of pirates in the enhanced versions, the chances of each ship type appearing in the pack are slightly different, with the most likely candidates appearing first in this list: Sidewinder, Mamba, Krait, Adder, Gecko, Cobra Mk I, Worm or Cobra Mk III (pirate)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: When spawning a pack of pirates in the enhanced versions, the chances of each ship type appearing in the pack are slightly different, with the most likely candidates appearing first in this list: Sidewinder, Mamba, Krait, Adder, Gecko, Cobra Mk I, Worm or Cobra Mk III (pirate)
 
  AND #3                 \ Set A to a random number in the range 0-3
 

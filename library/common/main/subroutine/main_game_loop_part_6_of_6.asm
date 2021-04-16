@@ -26,7 +26,7 @@
 \                       "press" a key, in which case A contains the internal key
 \                       number of the key we want to "press"
 \
-IF _CASSETTE_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 \   tha                 Consider spawning a Thargoid (22% chance)
 \
 ENDIF
@@ -36,7 +36,7 @@ ENDIF
 
  JSR TT102              \ Call TT102 to process the key pressed in A
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED \ Minor
 
  LDA QQ12               \ Fetch the docked flag from QQ12 into A
 
@@ -57,7 +57,7 @@ ENDIF
  JMP TT100              \ Otherwise jump to TT100 to restart the main loop from
                         \ the start
 
-IF _CASSETTE_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
 .tha
 

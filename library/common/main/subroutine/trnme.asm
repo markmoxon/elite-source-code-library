@@ -23,7 +23,7 @@ ENDIF
 
 .GTL1
 
-IF _CASSETTE_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
  LDA INWK,X             \ Copy the X-th byte of INWK to the X-th byte of NA%
  STA NA%,X

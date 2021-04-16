@@ -3,7 +3,7 @@
 \       Name: HLOIN
 \       Type: Subroutine
 \   Category: Drawing lines
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Draw a horizontal line from (X1, Y1) to (X2, Y1)
 ELIF _6502SP_VERSION
 \    Summary: Implement the OSWORD 247 command (draw the sun lines in the
@@ -12,7 +12,7 @@ ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
 \ We do not draw a pixel at the end point (X2, X1).
 \
 \ To understand how this routine works, you might find it helpful to read the
@@ -82,7 +82,7 @@ ENDIF
 
 .HLOIN
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Tube
 
  STY YSAV               \ Store Y into YSAV, so we can preserve it across the
                         \ call to this subroutine
@@ -172,7 +172,7 @@ ENDIF
  DEC X2                 \ Decrement X2 so we do not draw a pixel at the end
                         \ point
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
 
  LDA Y1                 \ Set A = Y1 / 8, so A now contains the character row
  LSR A                  \ that will contain our horizontal line
@@ -210,7 +210,7 @@ ENDIF
                         \ of the horizontal pixel row that we want to draw our
                         \ horizontal line on
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
 
  TXA                    \ Set Y = bits 3-7 of X1
  AND #%11111000
@@ -232,7 +232,7 @@ ENDIF
 
 .HL1
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
 
  TXA                    \ Set T = bits 3-7 of X1, which will contain the
  AND #%11111000         \ the character number of the start of the line * 8
@@ -266,7 +266,7 @@ ENDIF
                         \ start with the left character, then do any characters
                         \ in the middle, and finish with the right character
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
 
  LSR A                  \ Set R = A / 8, so R now contains the number of
  LSR A                  \ character blocks we need to fill - 1
@@ -349,7 +349,7 @@ ENDIF
 
 .HLL1
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
 
  LDA #%11111111         \ Store a full-width 8-pixel horizontal line in SC(1 0)
  EOR (SC),Y             \ so that it draws the line on-screen, using EOR logic
@@ -396,7 +396,7 @@ ENDIF
 
 .HL3
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
 
  LDA X2                 \ Now to draw the last character block at the right end
  AND #7                 \ of the line, so set X = X2 mod 8, which is the
@@ -435,7 +435,7 @@ ENDIF
  STA (SC),Y             \ logic so it merges with whatever is already on-screen,
                         \ so we have now drawn the line's right cap
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Tube
 
  LDY YSAV               \ Restore Y from YSAV, so that it's preserved across the
                         \ call to this subroutine
@@ -477,7 +477,7 @@ ENDIF
                         \ If we get here then the entire horizontal line fits
                         \ into one character block
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
 
  LDA X1                 \ Set X = X1 mod 8, which is the horizontal pixel number
  AND #7                 \ within the character block where the line starts (as
@@ -497,7 +497,7 @@ ENDIF
  STA T                  \ right end of the byte (so the filled pixels start at
                         \ point X and go all the way to the end of the byte)
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
 
  LDA X2                 \ Set X = X2 mod 8, which is the horizontal pixel number
  AND #7                 \ where the line ends
@@ -520,7 +520,7 @@ ENDIF
                         \ containing pixels up to the end point at X2, so we can
                         \ get the actual line we want to draw by AND'ing them
                         \ together. For example, if we want to draw a line from
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
                         \ point 2 to point 5 (within the row of 8 pixels
                         \ numbered from 0 to 7), we would have this:
 ELIF _6502SP_VERSION
@@ -554,7 +554,7 @@ ENDIF
  STA (SC),Y             \ SC(1 0), using EOR logic so it merges with whatever is
                         \ already on-screen
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Tube
 
  LDY YSAV               \ Restore Y from YSAV, so that it's preserved
 

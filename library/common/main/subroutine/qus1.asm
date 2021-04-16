@@ -9,7 +9,7 @@
 \ ------------------------------------------------------------------------------
 \
 \ The filename should be stored at INWK, terminated with a carriage return (13).
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Comment
 \ The routine should be called with Y set to &C.
 ELIF _6502SP_VERSION
 \ The routine asks for a drive number and updates the filename accordingly
@@ -25,7 +25,7 @@ ENDIF
 \
 \                         * &FF (load file)
 \
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Comment
 \   Y                   Points to the page number containing the OSFILE block,
 \                       which must be &C because that's where the pointer to the
 \                       filename in INWK is stored below (by the STX &C00
@@ -76,7 +76,7 @@ ENDIF
  STX &0C00              \ &0C00, storing #INWK in the low byte because INWK is
                         \ in zero page
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
  LDX #0                 \ Set X to 0 so (Y X) = &0C00
 

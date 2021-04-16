@@ -9,7 +9,7 @@
 
 .TT213
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ 6502SP: In the 6502SP version, you can send the Inventory screen to the printer by pressing CTRL-f9
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ 6502SP: In the 6502SP version, you can send the Inventory screen to the printer by pressing CTRL-f9
 
  LDA #8                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 8 (Inventory
@@ -23,7 +23,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Tube
 
  LDA #11                \ Move the text cursor to column 11 to print the screen
  STA XC                 \ title

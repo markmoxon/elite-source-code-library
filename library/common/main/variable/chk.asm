@@ -19,7 +19,7 @@
 
 .CHK
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  EQUB &03               \ The checksum value for the default commander, #75
 

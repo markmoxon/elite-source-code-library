@@ -15,7 +15,7 @@ IF _6502SP_VERSION \ Tube
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Standard: The cassette version uses control code 13 for printing newlines, while the other versions use control code 12
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: The cassette version uses control code 13 for printing newlines, while the other versions use control code 12
 
  LDA #13                \ Load a newline character into A
 

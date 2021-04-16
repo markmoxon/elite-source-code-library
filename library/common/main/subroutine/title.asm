@@ -12,7 +12,7 @@
 \
 \ Arguments:
 \
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Comment
 \   A                   The number of the recursive token to show below the
 \                       rotating ship (see variable QQ18 for details of
 \                       recursive tokens)
@@ -32,7 +32,7 @@ IF _MASTER_VERSION \ Comment
 ENDIF
 \ Returns:
 \
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Comment
 \   X                   If a key is being pressed, X contains the internal key
 \                       number, otherwise it contains 0
 ELIF _MASTER_VERSION
@@ -83,7 +83,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform: The Master version has a unique internal view number for the title screen (13)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform: The Master version has a unique internal view number for the title screen (13)
 
  LDA #1                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 1
@@ -108,7 +108,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Minor
 
  DEC QQ11               \ Decrement QQ11 to 0, so from here on we are using a
                         \ space view
@@ -170,7 +170,7 @@ ENDIF
  LDA TYPE               \ Set up a new ship, using the ship type in TYPE
  JSR NWSHP
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Tube
 
  LDY #6                 \ Move the text cursor to column 6
  STY XC
@@ -187,7 +187,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
  JSR DELAY              \ Delay for 6 vertical syncs (6/50 = 0.12 seconds)
 
@@ -196,7 +196,7 @@ ENDIF
  LDA #30                \ Print recursive token 144 ("---- E L I T E ----")
  JSR plf                \ followed by a newline
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Tube
 
  LDY #6                 \ Move the text cursor to column 6 again
  STY XC
@@ -225,7 +225,7 @@ ENDIF
  BEQ awe                \ print the author credits (PATG can be toggled by
                         \ pausing the game and pressing "X")
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
  LDA #254               \ Print recursive token 94 ("BY D.BRABEN & I.BELL")
  JSR TT27
@@ -310,7 +310,7 @@ IF _6502SP_VERSION OR _DISC_DOCKED \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Master: See group B
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Master: See group B
 
  JSR CLYNS              \ Clear the bottom three text rows of the upper screen,
                         \ and move the text cursor to column 1 on row 21, i.e.
@@ -323,7 +323,7 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Master: See group B
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Master: The Master version shows the copyright year on the title screen as 1986 rather than 1984
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Master: The Master version shows the copyright year on the title screen as 1986 rather than 1984
 
  PLA                    \ Restore the recursive token number we stored on the
  JSR ex                 \ stack at the start of this subroutine, and print that
@@ -415,7 +415,7 @@ ENDIF
  JSR MVEIT              \ Move the ship in space according to the orientation
                         \ vectors and the new value in z_hi
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Minor
 
  LDA #128               \ Set z_lo = 128, so the closest the ship gets to us is
  STA INWK+6             \ z_hi = 1, z_lo = 128, or 256 + 128 = 384
@@ -447,7 +447,7 @@ IF _6502SP_VERSION \ 6502SP: The 6502SP version only scans for keypresses every 
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Minor
 
  ASL A                  \ Set A = 0
 
@@ -472,13 +472,13 @@ ENDIF
 
  JSR LL9                \ Call LL9 to display the ship
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Platform
 
  DEC MCNT               \ Decrement the main loop counter
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Tube
 
  LDA VIA+&40            \ Read 6522 System VIA input register IRB (SHEILA &40)
 
@@ -495,7 +495,7 @@ ENDIF
                         \ button is pressed, otherwise it is set, so AND'ing
                         \ the value of IRB with %10000 extracts this bit
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Minor
 
 \TAX                    \ This instruction is commented out in the original
                         \ source; it would have no effect, as the comparison
@@ -513,7 +513,7 @@ ENDIF
 
  BEQ TL2                \ If the joystick fire button is pressed, jump to TL2
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Tube
 
  JSR RDKEY              \ Scan the keyboard for a key press
 

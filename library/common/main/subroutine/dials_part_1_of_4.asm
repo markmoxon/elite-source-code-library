@@ -38,7 +38,7 @@ IF _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
 
  LDA #&D0               \ Set SC(1 0) = &78D0, which is the screen address for
  STA SC                 \ the character block containing the left end of the

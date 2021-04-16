@@ -8,7 +8,7 @@
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Minor
 
  LDA #0                 \ Set R = P = 0 for the low bytes in the call to the ADD
  STA R                  \ routine below
@@ -32,7 +32,7 @@ ENDIF
  EOR #%10000000         \ so it's now in the range -7 to +7, with a positive
                         \ roll angle alpha giving a negative value in A
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Label
 
  JSR ADD                \ We now add A to S to give us a value in the range 1 to
 ELIF _MASTER_VERSION
@@ -69,7 +69,7 @@ ENDIF
                         \ numbers with sign bits, rather than two's complement
                         \ numbers
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Label
 
  JSR ADD                \ We now add A to S to give us a value in the range 1 to
 ELIF _MASTER_VERSION

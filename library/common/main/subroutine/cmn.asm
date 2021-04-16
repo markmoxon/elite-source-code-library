@@ -28,7 +28,7 @@ ENDIF
 
 .QUL4
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Platform
 
  LDA NA%,Y              \ The commander's name is stored at NA%, so load the
                         \ Y-th character from NA%

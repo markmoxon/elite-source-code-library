@@ -16,7 +16,7 @@
 
  JSR DORND              \ Set A and X to random numbers
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Label
 
  BMI out                \ If A < 0 (50% chance), return from the subroutine
                         \ (as out contains an RTS)
@@ -63,7 +63,7 @@ ENDIF
  CPX #17                \ If X >= 17 then we just lost a piece of equipment, so
  BCS ou1                \ jump to ou1 to print the relevant message
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Minor
 
  TXA                    \ Print recursive token 48 + A as an in-flight token,
  ADC #208               \ which will be in the range 48 ("FOOD") to 64 ("ALIEN
@@ -101,7 +101,7 @@ ENDIF
                         \     = 113 - 19 + X
                         \     = 113 to 115
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Minor
 
  BNE MESS               \ Print recursive token A ("ENERGY BOMB", "ENERGY UNIT"
                         \ or "DOCKING COMPUTERS") as an in-flight message,

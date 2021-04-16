@@ -120,7 +120,7 @@
  LDA #64                \ Set TGT = 64, so we draw a full circle in the call to
  STA TGT                \ PLS22 below
 
-IF _CASSETTE_VERSION OR _MASTER_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _MASTER_VERSION \ Minor
 
  LDA #0                 \ Set CNT2 = 0 as we are drawing a full circle, so we
  STA CNT2               \ don't need to apply an offset

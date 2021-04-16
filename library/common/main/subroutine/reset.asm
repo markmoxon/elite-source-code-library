@@ -14,7 +14,7 @@
 \
 \   * Pages &9, &A, &B, &C and &D
 \
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \   * BETA to BETA+6, which covers the following:
 ELIF _DISC_VERSION
 \   * BETA to BETA+8, which covers the following:
@@ -35,7 +35,7 @@ ENDIF
 \ It also sets QQ12 to &FF, to indicate we are docked, recharges the shields and
 \ energy banks, and then falls through into RES2.
 \
-IF _CASSETTE_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 \ Other entry points:
 \
 \   RES4                Reset the shields and energy banks, then fall through
@@ -47,7 +47,7 @@ ENDIF
 
 .RESET
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
 
  JSR ZERO               \ Zero-fill pages &9, &A, &B, &C and &D, which clears
                         \ the ship data blocks, the ship line heap, the ship
@@ -61,7 +61,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Platform
 
  LDX #6                 \ Set up a counter for zeroing BETA through BETA+6
 
@@ -87,7 +87,7 @@ IF _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION  \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION  \ Platform
 
  STX QQ12               \ X is now negative - i.e. &FF - so this sets QQ12 to
                         \ &FF to indicate we are docked

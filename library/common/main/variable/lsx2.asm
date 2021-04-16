@@ -18,6 +18,11 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Minor
  SKIP 78                \ The ball line heap for storing x-coordinates (see the
                         \ deep dive on "The ball line heap" for details)
 
+ELIF _ELECTRON_VERSION
+
+ SKIP 40                \ The ball line heap for storing x-coordinates (see the
+                        \ deep dive on "The ball line heap" for details)
+
 ELIF _6502SP_VERSION
 
 IF _MATCH_EXTRACTED_BINARIES

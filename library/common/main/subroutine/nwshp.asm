@@ -93,7 +93,7 @@
  ASL A                  \ Set Y = ship type * 2
  TAY
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Platform
 
  LDA XX21-2,Y           \ The ship blueprints at XX21 start with a lookup
  STA XX0                \ table that points to the individual ship blueprints,
@@ -134,7 +134,7 @@ ENDIF
                         \ can easily be erased from the screen again). SLSP
                         \ points to the start of the current heap space, and we
                         \ can extend it downwards with the heap for our new ship
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Comment
                         \ (as the heap space always ends just before the WP
                         \ workspace)
 ELIF _6502SP_VERSION
@@ -159,7 +159,7 @@ ENDIF
                         \ for our ship. In memory, this is the layout of the
                         \ ship data blocks and ship line heaps:
                         \
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
                         \   +-----------------------------------+   &0F34
                         \   |                                   |
                         \   | WP workspace                      |
@@ -207,7 +207,7 @@ ENDIF
                         \   |                                   |
                         \   | Existing ship data blocks         |
                         \   |                                   |
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
                         \   +-----------------------------------+   &0900 = K%
 ELIF _6502SP_VERSION
                         \   +-----------------------------------+   &8200 = K%
@@ -282,7 +282,7 @@ ENDIF
 
  TAX                    \ Copy the ship type into X
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Label
 
  BMI P%+5               \ If the ship type is negative (planet or sun), then
                         \ skip the following instruction

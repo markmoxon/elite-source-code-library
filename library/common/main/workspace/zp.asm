@@ -23,7 +23,7 @@ ENDIF
 
 INCLUDE "library/common/main/variable/rand.asm"
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Platform
 
 INCLUDE "library/original/main/variable/trtb_per_cent.asm"
 
@@ -40,7 +40,7 @@ ENDIF
 INCLUDE "library/common/main/variable/sc.asm"
 INCLUDE "library/common/main/variable/sch.asm"
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
 INCLUDE "library/common/main/variable/xx16.asm"
 INCLUDE "library/common/main/variable/p.asm"
@@ -77,7 +77,7 @@ INCLUDE "library/common/main/variable/sunx.asm"
 INCLUDE "library/common/main/variable/beta.asm"
 INCLUDE "library/common/main/variable/bet1.asm"
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
 INCLUDE "library/common/main/variable/xc.asm"
 INCLUDE "library/common/main/variable/yc.asm"
@@ -105,7 +105,7 @@ INCLUDE "library/common/main/variable/y2.asm"
 INCLUDE "library/common/main/variable/xx12.asm"
 INCLUDE "library/common/main/variable/k.asm"
 
-IF _CASSETTE_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
 INCLUDE "library/common/main/variable/kl.asm"
 INCLUDE "library/common/main/variable/ky1.asm"
@@ -129,7 +129,7 @@ ENDIF
 INCLUDE "library/common/main/variable/las.asm"
 INCLUDE "library/common/main/variable/mstg.asm"
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
 INCLUDE "library/common/main/variable/xx1.asm"
 INCLUDE "library/common/main/variable/inwk.asm"
@@ -154,7 +154,7 @@ INCLUDE "library/common/main/variable/qq15.asm"
 INCLUDE "library/common/main/variable/k5.asm"
 INCLUDE "library/common/main/variable/xx18.asm"
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
 INCLUDE "library/common/main/variable/qq17.asm"
 INCLUDE "library/common/main/variable/qq19.asm"
@@ -162,7 +162,7 @@ INCLUDE "library/common/main/variable/k6.asm"
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
 INCLUDE "library/common/main/variable/alp1.asm"
 INCLUDE "library/common/main/variable/alp2.asm"
@@ -180,6 +180,13 @@ INCLUDE "library/common/main/variable/bet2.asm"
 INCLUDE "library/common/main/variable/delta.asm"
 INCLUDE "library/common/main/variable/delt4.asm"
 INCLUDE "library/common/main/variable/u.asm"
+
+IF _ELECTRON_VERSION
+
+ SKIP 16                \ ???
+
+ENDIF
+
 INCLUDE "library/common/main/variable/q.asm"
 INCLUDE "library/common/main/variable/r.asm"
 INCLUDE "library/common/main/variable/s.asm"
@@ -205,7 +212,7 @@ INCLUDE "library/common/main/variable/zz.asm"
 INCLUDE "library/common/main/variable/xx13.asm"
 INCLUDE "library/common/main/variable/mcnt.asm"
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
 INCLUDE "library/common/main/variable/dl.asm"
 
@@ -213,7 +220,7 @@ ENDIF
 
 INCLUDE "library/common/main/variable/type.asm"
 
-IF _CASSETTE_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
 INCLUDE "library/common/main/variable/jstx.asm"
 INCLUDE "library/common/main/variable/jsty.asm"
@@ -233,13 +240,13 @@ ENDIF
 INCLUDE "library/common/main/variable/qq12.asm"
 INCLUDE "library/common/main/variable/tgt.asm"
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Platform
 
 INCLUDE "library/common/main/variable/swap.asm"
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
 INCLUDE "library/common/main/variable/col.asm"
 
@@ -308,7 +315,7 @@ INCLUDE "library/common/main/variable/nostm.asm"
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
 ORG &00D1
 

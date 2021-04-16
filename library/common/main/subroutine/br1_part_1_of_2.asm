@@ -7,7 +7,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Comment
 \ BRKV is set to point to BR1 by the loading process.
 ENDIF
 IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
@@ -32,7 +32,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Tube
 
  LDX #3                 \ Set XC = 3 (set text cursor to column 3)
  STX XC
@@ -51,14 +51,14 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
  JSR FX200              \ Disable the ESCAPE key and clear memory if the BREAK
                         \ key is pressed (*FX 200,3)
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Master: The rotating Cobra Mk III on the title screen is further away on the Master version compared to the other versions, so it doesn't overlap the title text as much
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Master: The rotating Cobra Mk III on the title screen is further away on the Master version compared to the other versions, so it doesn't overlap the title text as much
 
  LDX #CYL               \ Call TITLE to show a rotating Cobra Mk III (#CYL) and
  LDA #128               \ token 128 ("  LOAD NEW COMMANDER (Y/N)?{crlf}{crlf}"),
@@ -93,7 +93,7 @@ IF _6502SP_VERSION \ 6502SP: Pressing TAB in the title screen of the 6502SP vers
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
  CMP #&44               \ Did we press "Y"? If not, jump to QU5, otherwise
  BNE QU5                \ continue on to load a new commander
@@ -105,7 +105,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
 \BR1                    \ These instructions are commented out in the original
 \LDX #3                 \ source. This block starts with the same *FX call as

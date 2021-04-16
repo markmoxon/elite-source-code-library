@@ -11,7 +11,7 @@
 \
 \   A                   A is set to 0
 \
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Comment
 \   Y                   Y is set to 0
 \
 ELIF _MASTER_VERSION
@@ -25,7 +25,7 @@ ENDIF
  LDA #0                 \ Set A to 0, as this means "key not pressed" in the
                         \ key logger at KL
 
-IF _CASSETTE_VERSION \ Enhanced: Compared to the cassette version, the enhanced versions have an extra key in the key logger, for "P" (which turns off the docking computer)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Compared to the cassette version, the enhanced versions have an extra key in the key logger, for "P" (which turns off the docking computer)
 
  LDY #15                \ We want to clear the 15 key logger locations from
                         \ KY1 to KY19, so set a counter in Y
@@ -44,7 +44,7 @@ ENDIF
 
 .DKL3
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Platform
 
  STA KL,Y               \ Store 0 in the Y-th byte of the key logger
 

@@ -4,13 +4,13 @@
 \       Type: Subroutine
 \   Category: Drawing pixels
 \    Summary: Draw a single-height dot on the dashboard
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
 \  Deep dive: Drawing colour pixels in mode 5
 ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
 \ Draw a single-height mode 5 dash (1 pixel high, 2 pixels wide).
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 \ Draw a single-height mode 2 dash (1 pixel high, 2 pixels wide).
@@ -20,13 +20,13 @@ ENDIF
 \
 \   X1                  The screen pixel x-coordinate of the dash
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Comment
 \   Y1                  The screen pixel y-coordinate of the dash
 ELIF _MASTER_VERSION
 \   A                   The screen pixel y-coordinate of the dash
 ENDIF
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
 \   COL                 The colour of the dash as a mode 5 character row byte
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 \   COL                 The colour of the dash as a mode 2 character row byte
@@ -42,7 +42,7 @@ ENDIF
 
 .CPIX2
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  LDA Y1                 \ Fetch the y-coordinate into A
 
@@ -58,7 +58,7 @@ ENDIF
 
  TAY                    \ Store the y-coordinate in Y
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
 
  LSR A                  \ Set A = A / 8, so A now contains the character row we
  LSR A                  \ need to draw in (as each character row contains 8
@@ -119,7 +119,7 @@ ENDIF
  AND #%00000111         \ be the number of the pixel row we need to draw into
  TAY                    \ within the character block
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
 
  LDA X1                 \ Copy bits 0-1 of X1 to bits 1-2 of X, and clear the C
  AND #%00000110         \ flag in the process (using the LSR). X will now be
@@ -153,7 +153,7 @@ ENDIF
  STA (SC),Y             \ remove it later without ruining the background that's
                         \ already on-screen
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
 
  LDA CTWOS+1,X          \ Fetch a mode 5 1-pixel byte with the pixel position
                         \ at X+1, so we can draw the right pixel of the dash
@@ -165,7 +165,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
  BPL CP1                \ The CTWOS table has an extra row at the end of it that
                         \ repeats the first value, %10001000, so if we have not
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -190,7 +190,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
 
  LDA CTWOS+1,X          \ Refetch the mode 5 1-pixel byte, as we just overwrote
                         \ A (the byte will still be the fifth byte from the

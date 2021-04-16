@@ -43,7 +43,7 @@
  BNE P%+5               \ Short-range Chart, returning from the subroutine using
  JMP TT23               \ a tail call
 
-IF _CASSETTE_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 
  CMP #f6                \ If red key f6 was pressed, call TT111 to select the
  BNE TT92               \ system nearest to galactic coordinates (QQ9, QQ10)
@@ -79,7 +79,7 @@ ENDIF
 
 .fvw
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
  BIT QQ12               \ If bit 7 of QQ12 is clear (i.e. we are not docked, but
  BPL INSP               \ in space), jump to INSP to skip the following checks
@@ -87,7 +87,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Platform
 
  CMP #f3                \ If red key f3 was pressed, jump to EQSHP to show the
  BNE P%+5               \ Equip Ship screen, returning from the subroutine using
@@ -99,7 +99,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Pla
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Enhanced: Group A: Pressing "@" brings up the disc access menu in the enhanced versions
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Group A: Pressing "@" brings up the disc access menu in the enhanced versions
 
  CMP #&47               \ If "@" was pressed, jump to SVE to save the commander
  BNE P%+5               \ file, returning from the subroutine using a tail call
@@ -133,7 +133,7 @@ IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Enhanced: See group A
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Platform
 
  CMP #f2                \ If red key f2 was pressed, jump to TT208 to show the
  BNE LABEL_3            \ Sell Cargo screen, returning from the subroutine using
@@ -143,7 +143,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Pla
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
  CMP #f1                \ If the key pressed is < red key f1 or > red key f3,
  BCC LABEL_3            \ jump to LABEL_3 (so only do the following if the key
@@ -210,7 +210,7 @@ IF _6502SP_VERSION \ Label
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform: When docked in the disc version, the screen-clearing and DOCKED printing is done here rather than in hyp and hy6, but the code is the same
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform: When docked in the disc version, the screen-clearing and DOCKED printing is done here rather than in hyp and hy6, but the code is the same
 
  CMP #&54               \ If "H" was pressed, jump to hyp to do a hyperspace
  BNE P%+5               \ jump (if we are in space), returning from the
@@ -250,7 +250,7 @@ IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Label
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  CMP #&32               \ If "D" was pressed, jump to T95 to print the distance
  BEQ T95                \ to a system (if we are in one of the chart screens)
@@ -297,7 +297,7 @@ ENDIF
 
  STA T1                 \ Store A (the key that's been pressed) in T1
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
  LDA QQ11               \ If the current view is a chart (QQ11 = 64 or 128),
  AND #%11000000         \ keep going, otherwise jump down to TT107 to skip the
@@ -322,7 +322,7 @@ ENDIF
  LDA T1                 \ Restore the original value of A (the key that's been
                         \ pressed) from T1
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  CMP #&36               \ If "O" was pressed, do the following three jumps,
  BNE ee2                \ otherwise skip to ee2 to continue
@@ -341,7 +341,7 @@ ENDIF
                         \ will move the location in (QQ9, QQ10) to the current
                         \ home system
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Other: This might be a bug fix? If "O" is pressed in the advanced versions, then the target system is set to home, and the routine terminates, which is different to the other versions; they stick around for one more move of the cursor, so presumably this fixes a bug where pressing "O" might not always move the cursor exactly to the current system
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Other: This might be a bug fix? If "O" is pressed in the advanced versions, then the target system is set to home, and the routine terminates, which is different to the other versions; they stick around for one more move of the cursor, so presumably this fixes a bug where pressing "O" might not always move the cursor exactly to the current system
 
  JSR TT103              \ Draw small crosshairs at coordinates (QQ9, QQ10),
                         \ which will draw the crosshairs at our current home
@@ -362,7 +362,7 @@ ENDIF
                         \ and Y, which were passed to this subroutine as
                         \ arguments
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
 .TT107
 
@@ -436,7 +436,7 @@ ENDIF
  JSR hm                 \ Call hm to move the crosshairs to the target system
                         \ in (QQ9, QQ10), returning with A = 0
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  STA QQ17               \ Set QQ17 = 0 to switch to ALL CAPS
 
@@ -447,7 +447,7 @@ ENDIF
  LDA #%10000000         \ Set bit 7 of QQ17 to switch to Sentence Case, with the
  STA QQ17               \ next letter in capitals
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Tube
 
  LDA #1                 \ Move the text cursor to column 1 and down one line
  STA XC                 \ (in other words, to the start of the next line)

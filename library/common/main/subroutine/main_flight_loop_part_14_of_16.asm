@@ -109,7 +109,7 @@
                         \ >= 192 (i.e. they must all be < 192 for us to be near
                         \ enough to the planet to bump into a space station)
 
-IF _CASSETTE_VERSION \ Platform: In the cassette version, we don't remove the sun from the screen if we are potentially looking at it, though this check is removed in other versions, so perhaps it isn't needed (the logic in PLANET seems to support this)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform: In the cassette version, we don't remove the sun from the screen if we are potentially looking at it, though this check is removed in other versions, so perhaps it isn't needed (the logic in PLANET seems to support this)
 
  LDA QQ11               \ If the current view is not a space view, skip the
  BNE P%+5               \ following instruction (so we only remove the sun from

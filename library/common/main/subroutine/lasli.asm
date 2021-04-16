@@ -47,7 +47,7 @@
 
 .LASLI2
 
-IF _CASSETTE_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
 
  LDA QQ11               \ If this is not a space view (i.e. QQ11 is non-zero)
  BNE PU1-1              \ then jump to MA9 to return from the main flight loop
@@ -145,7 +145,7 @@ ENDIF
                         \ this sets Y2 to 191, the y-coordinate of the bottom
                         \ pixel row of the space view
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Label
 
  JSR LOIN               \ Draw a line from (X1, Y1) to (X2, Y2), so that's from
                         \ the centre point to (A, 191)
@@ -167,7 +167,7 @@ ENDIF
  LDA #2*Y-1             \ Set Y2 = 2 * #Y - 1, the y-coordinate of the bottom
  STA Y2                 \ pixel row of the space view (as before)
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Label
 
  JMP LOIN               \ Draw a line from (X1, Y1) to (X2, Y2), so that's from
                         \ the centre point to (Y, 191), and return from

@@ -20,7 +20,7 @@
 \ The result is returned in one byte as the result of the division multiplied
 \ by 256, so we can return fractional results using integers.
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
 \ This routine uses the same shift-and-subtract algorithm that's documented in
 \ TIS2, but it leaves the fractional result in the integer range 0-255.
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -52,7 +52,7 @@ ENDIF
  CMP Q                  \ If A >= Q, then the answer will not fit in one byte,
  BCS LL2                \ so jump to LL2 to return 255
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Other: The LL28 routine in the advanced versions uses logarithms to speed up the multiplication
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Other: The LL28 routine in the advanced versions uses logarithms to speed up the multiplication
 
  LDX #%11111110         \ Set R to have bits 1-7 set, so we can rotate through 7
  STX R                  \ loop iterations, getting a 1 each time, and then

@@ -22,7 +22,7 @@
 
 .MA22
 
-IF _CASSETTE_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
 
  LDA MJ                 \ If we are in witchspace, jump down to MA23 to skip
  BNE MA23               \ the following, as there are no planets or suns to
@@ -199,7 +199,7 @@ ENDIF
 
  STA QQ14               \ Store the updated fuel level in QQ14
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
  LDA #160               \ Print recursive token 0 ("FUEL SCOOPS ON") as an
  JSR MESS               \ in-flight message

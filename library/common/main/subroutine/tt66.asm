@@ -15,7 +15,7 @@
 \   A                   The type of the new current view (see QQ11 for a list of
 \                       view types)
 \
-IF _CASSETTE_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 \ Other entry points:
 \
 \   TT66-2              Call TT66 with A = 1
@@ -23,7 +23,7 @@ IF _CASSETTE_VERSION \ Comment
 ENDIF
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
  LDA #1                 \ Set the view type to 1 when this is called via the
                         \ TT66-2 entry point
@@ -34,7 +34,7 @@ ENDIF
 
  STA QQ11               \ Set the current view type in QQ11 to A
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Label
 
                         \ Fall through into TTX66 to clear the screen and draw a
                         \ white border

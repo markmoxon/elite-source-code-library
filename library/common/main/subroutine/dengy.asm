@@ -19,7 +19,7 @@
 
  PHP                    \ Save the flags on the stack
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  BNE P%+5               \ If the energy levels are not yet zero, skip the
                         \ following instruction

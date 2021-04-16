@@ -31,6 +31,7 @@ _CASSETTE_VERSION       = (_VERSION = 1)
 _DISC_VERSION           = (_VERSION = 2)
 _6502SP_VERSION         = (_VERSION = 3)
 _MASTER_VERSION         = (_VERSION = 4)
+_ELECTRON_VERSION       = (_VERSION = 5)
 _DISC_DOCKED            = FALSE
 _DISC_FLIGHT            = FALSE
 

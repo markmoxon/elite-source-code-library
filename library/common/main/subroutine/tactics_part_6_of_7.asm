@@ -17,7 +17,7 @@
 \
 \   * If we are in the ship's crosshairs, register some damage to our ship, slow
 \     down the attacking ship, make the noise of us being hit by laser fire, and
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Comment
 \     we're done
 ELIF _MASTER_VERSION
 \     move on to the next part to manoeuvre the attacking ship
@@ -82,7 +82,7 @@ ENDIF
  CPX #163               \ If X < 163, i.e. X > -35, then we are not in the enemy
  BCC TA4                \ ship's crosshairs, so jump to TA4 to skip the laser
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
 .HIT
 
@@ -108,7 +108,7 @@ ENDIF
 
  DEC INWK+28            \ Halve the attacking ship's acceleration in byte #28
 
-IF _CASSETTE_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
 
  LDA ECMA               \ If an E.C.M. is currently active (either our's or an
  BNE TA10               \ opponent's), return from the subroutine without making
@@ -122,7 +122,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Master: In the Master version, if we are being hit by lasers, the ship firing at us can still manoeuvre, whereas in the other versions enemies mysteriously forget to move if they manage to hit us
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Master: In the Master version, if we are being hit by lasers, the ship firing at us can still manoeuvre, whereas in the other versions enemies mysteriously forget to move if they manage to hit us
 
  LDA #8                 \ Call the NOISE routine with A = 8 to make the sound
  JMP NOISE              \ of us being hit by lasers, returning from the

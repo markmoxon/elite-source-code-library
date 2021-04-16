@@ -3,7 +3,7 @@
 \       Name: MSBAR
 \       Type: Subroutine
 \   Category: Dashboard
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Draw a specific indicator in the dashboard's missile bar
 ELIF _6502SP_VERSION
 \    Summary: Implement the #DOmsbar command (draw a specific indicator in the
@@ -15,7 +15,7 @@ ENDIF
 \ Each indicator is a rectangle that's 3 pixels wide and 5 pixels high. If the
 \ indicator is set to black, this effectively removes a missile.
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
 \ Arguments:
 \
 \   X                   The number of the missile indicator to update (counting
@@ -99,7 +99,7 @@ IF _6502SP_VERSION \ Tube
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
 
  TXA                    \ Set T = X * 8
  ASL A
@@ -129,7 +129,7 @@ ENDIF
                         \ for the rightmost missile indicator, made up as
                         \ follows:
                         \
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
                         \   * 48 (character block 7, as byte #7 * 8 = 48), the
 ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \   * 96 (character block 14, as byte #14 * 8 = 96), the
@@ -144,7 +144,7 @@ ENDIF
                         \     missile, for X = 1 we hop to the left by one
                         \     character, and so on
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
 
  LDA #&7E               \ Set the high byte of SC(1 0) to &7E, the character row
  STA SCH                \ that contains the missile indicators (i.e. the bottom
@@ -215,7 +215,7 @@ ENDIF
  LDY #5                 \ We now want to draw this line five times, so set a
                         \ counter in Y
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Label
 
 .MBL1
 
@@ -225,7 +225,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
 
  STA (SC),Y             \ Draw the 3-pixel row, and as we do not use EOR logic,
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -237,7 +237,7 @@ ENDIF
 
  DEY                    \ Decrement the counter for the next row
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Label
 
  BNE MBL1               \ Loop back to MBL1 if have more rows to draw
 

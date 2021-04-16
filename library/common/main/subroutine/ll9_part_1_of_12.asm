@@ -12,7 +12,7 @@
 \ the ship is exploding, or if it should start exploding, and if it does it sets
 \ things up accordingly.
 \
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_VERSION\ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_VERSION\ Comment
 \ It also does some basic checks to see if we can see the ship, and if not it
 \ removes it from the screen.
 \
@@ -49,7 +49,7 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
 .LL25
 
@@ -60,7 +60,7 @@ ENDIF
 
 .LL9
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Minor
 
  LDA TYPE               \ If the ship type is negative then this indicates a
  BMI LL25               \ planet or sun, so jump to PLANET via LL25 above
@@ -221,7 +221,7 @@ ENDIF
  AND #%11110111         \ byte #31 to denote that the ship is no longer being
  STA XX1+31             \ drawn on-screen
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
 
  JMP DOEXP              \ Jump to DOEXP to display the explosion cloud, which
                         \ will remove it from the screen, returning from the

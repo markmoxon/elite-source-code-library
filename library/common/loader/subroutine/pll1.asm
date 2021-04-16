@@ -48,7 +48,7 @@
 
 .PLL1
 
-IF _CASSETTE_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 
                         \ The following loop iterates CNT(1 0) times, i.e. &500
                         \ or 1280 times, and draws the planet part of the
@@ -62,7 +62,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_VERSION \ Master: For most versions, the loading screen's Saturn is drawn randomly, so the dots are different every time the game loads. However, the Master version always draws exactly the same pixels for the Saturn, as the random number generator gets seeded to the same value every time
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_VERSION \ Master: For most versions, the loading screen's Saturn is drawn randomly, so the dots are different every time the game loads. However, the Master version always draws exactly the same pixels for the Saturn, as the random number generator gets seeded to the same value every time
 
  LDA VIA+&44            \ Read the 6522 System VIA T1C-L timer 1 low-order
  STA RAND+1             \ counter (SHEILA &44), which increments 1000 times a
@@ -200,7 +200,7 @@ ENDIF
 
  BNE PLL1               \ Loop back to PLL1 until CNT+1 = 0
 
-IF _CASSETTE_VERSION \ Other: Group B: The cassette version contains various bits of copy protection code injected into the Saturn-drawing routine in the loader
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Other: Group B: The cassette version contains various bits of copy protection code injected into the Saturn-drawing routine in the loader
 
  LDX #&C2               \ Set the low byte of EXCN(1 0) to &C2, so we now have
  STX EXCN               \ EXCN(1 0) = &03C2, which we will use in the IRQ1
@@ -265,7 +265,7 @@ ENDIF
 
  BNE PLL2               \ Loop back to PLL2 until CNT2+1 = 0
 
-IF _CASSETTE_VERSION \ Other: See group B
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Other: See group B
 
  LDX MHCA               \ Set the low byte of BLPTR(1 0) to the contents of MHCA
  STX BLPTR              \ (which is &CA), so we now have BLPTR(1 0) = &03CA,
@@ -280,7 +280,7 @@ IF _CASSETTE_VERSION \ Other: See group B
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 
                         \ The following loop iterates CNT3(1 0) times, i.e. &500
                         \ or 1280 times, and draws the rings around the loading

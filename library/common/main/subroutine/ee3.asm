@@ -7,7 +7,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 \ Print the 8-bit number in X at text location (0, 1). Print the number to
 ELIF _DISC_VERSION OR _6502SP_VERSION
 \ Print the 8-bit number in X at text location (1, 1). Print the number to
@@ -35,7 +35,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Standard: The cassette version prints the right-aligned hyperspace countdown in column 0, while the other versions print it one column to the right in column 1
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: The cassette version prints the right-aligned hyperspace countdown in column 0, while the other versions print it one column to the right in column 1
 
  LDY #1                 \ Move the text cursor to row 1
  STY YC
@@ -72,7 +72,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: The Master version's hyperspace countdown is padded to 3 characters rather than 5, so it appears two characters to the left compared to the disc and 6502SP versions
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: The Master version's hyperspace countdown is padded to 3 characters rather than 5, so it appears two characters to the left compared to the disc and 6502SP versions
 
                         \ Fall through into pr6 to print X to 5 digits, as the
                         \ high byte in Y is 0

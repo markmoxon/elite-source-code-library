@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-IF _CASSETTE_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 \       Name: hy6
 ELIF _6502SP_VERSION
 \       Name: dockEd
@@ -16,7 +16,7 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _MASTER_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _MASTER_VERSION \ Label
 
 .hy6
 
@@ -30,7 +30,7 @@ ENDIF
                         \ and move the text cursor to column 1 on row 21, i.e.
                         \ the start of the top row of the three bottom rows
 
-IF _CASSETTE_VERSION OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _MASTER_VERSION \ Tube
 
  LDA #15                \ Move the text cursor to column 15 (the middle of the
  STA XC                 \ screen), setting A to 15 at the same time for the
@@ -56,7 +56,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
  JMP TT27               \ Print recursive token 129 ("{sentence case}DOCKED")
                         \ and return from the subroutine using a tail call

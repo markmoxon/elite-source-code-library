@@ -13,7 +13,7 @@
 
 .LAUN
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  LDA #48                \ Call the NOISE routine with A = 48 to make the sound
  JSR NOISE              \ of the ship launching from the station

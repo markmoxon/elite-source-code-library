@@ -3,7 +3,7 @@
 \       Name: PIXEL
 \       Type: Subroutine
 \   Category: Drawing pixels
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
 \    Summary: Draw a 1-pixel dot, 2-pixel dash or 4-pixel square
 \  Deep dive: Drawing monochrome pixels in mode 4
 ELIF _MASTER_VERSION
@@ -16,7 +16,7 @@ ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
 \ Draw a point at screen coordinate (X, A) with the point size determined by the
 \ distance in ZZ. This applies to the top part of the screen (the monochrome
 \ mode 4 portion).
@@ -46,7 +46,7 @@ ENDIF
 \
 \ Arguments:
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Comment
 \   X                   The screen x-coordinate of the point to draw
 \
 \   A                   The screen y-coordinate of the point to draw
@@ -141,7 +141,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Other: Group A: The Master version doesn't draw single-pixel dots, as it omits the logic to check for distant dots and plot them using one pixel. The Long-range Chart is a good example of this, where the Master version draws a two-pixel yellow dash for every system
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Other: Group A: The Master version doesn't draw single-pixel dots, as it omits the logic to check for distant dots and plot them using one pixel. The Long-range Chart is a good example of this, where the Master version draws a two-pixel yellow dash for every system
 
  STY T1                 \ Store Y in T1
 

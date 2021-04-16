@@ -174,7 +174,7 @@ ENDIF
                         \ to the missile - in both cases it's the vector from
                         \ the potential victim to the attacker)
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
 
  LDY #10                \ Set (A X) = nosev . XX15
  JSR TAS3

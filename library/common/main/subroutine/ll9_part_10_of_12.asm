@@ -41,7 +41,7 @@ ENDIF
                         \ So V(1 0) now points to the start of the edges data
                         \ for this ship
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Minor
 
  LDY #5                 \ Fetch byte #5 of the ship's blueprint, which contains
  LDA (XX0),Y            \ the maximum heap size for plotting the ship (which is
@@ -71,7 +71,7 @@ ENDIF
                         \ visibility distance for this edge, beyond which the
                         \ edge is not shown
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
 
  CMP XX4                \ If XX4 > the visibility distance, where XX4 contains
  BCC LL78               \ the ship's z-distance reduced to 0-31 (which we set in
@@ -98,7 +98,7 @@ ENDIF
                         \
                         \     * Bits 4-7 = the number of face 2
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  INY                    \ Increment Y to point to byte #2
 
@@ -120,7 +120,7 @@ ENDIF
  LSR A
  TAX
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
 
  LDA XX2,X              \ If XX2+X is zero then we decided in part 5 that
  BEQ LL78               \ face 2 is hidden, so jump to LL78
@@ -160,7 +160,7 @@ ENDIF
  LDA (V),Y              \ Fetch byte #2 for this edge into X, which contains
  TAX                    \ the number of the vertex at the start of the edge
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  INY                    \ Increment Y to point to byte #3
 
@@ -169,7 +169,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Minor
 
  LDA XX3+1,X            \ Fetch the x_hi coordinate of the edge's start vertex
  STA XX15+1             \ from the XX3 heap into XX15+1
@@ -193,7 +193,7 @@ ENDIF
  LDA XX3+3,X            \ Fetch the y_hi coordinate of the edge's start vertex
  STA XX15+3             \ from the XX3 heap into XX15+3
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  LDX Q                  \ Set X to the number of the vertex at the end of the
                         \ edge, which we stored in Q
@@ -210,7 +210,7 @@ ENDIF
  LDA XX3,X              \ Fetch the x_lo coordinate of the edge's end vertex
  STA XX15+4             \ from the XX3 heap into XX15+4
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Minor
 
  LDA XX3+3,X            \ Fetch the y_hi coordinate of the edge's end vertex
  STA XX12+1             \ from the XX3 heap into XX11+1
@@ -235,7 +235,7 @@ ENDIF
                         \ clipped to fit on-screen, returning the clipped line's
                         \ end-points in (X1, Y1) and (X2, Y2)
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
 
  BCS LL78               \ If the C flag is set then the line is not visible on
                         \ screen, so jump to LL78 so we don't store this line

@@ -16,7 +16,7 @@
 
  LDX DNOIZ              \ Set X to the DNOIZ configuration setting
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Label
 
  BNE NO1                \ If DNOIZ is non-zero, then sound is disabled, so
                         \ return from the subroutine (as NO1 contains an RTS)

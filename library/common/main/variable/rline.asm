@@ -10,7 +10,7 @@
 
 .RLINE
 
-IF _CASSETTE_VERSION \ Enhanced: The enhanced versions allow the "{" character in commander names, which is not allowed in the cassette version
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: The enhanced versions allow the "{" character in commander names, which is not allowed in the cassette version
 
  EQUW INWK              \ The address to store the input, so the commander's
                         \ name will be stored in INWK as it is typed

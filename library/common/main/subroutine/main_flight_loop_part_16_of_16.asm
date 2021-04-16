@@ -85,7 +85,7 @@ ENDIF
 
 .MA66
 
-IF _CASSETTE_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
 
  LDA QQ11               \ If this is not a space view (i.e. QQ11 is non-zero)
  BNE MA9                \ then jump to MA9 to return from the main flight loop
@@ -99,7 +99,7 @@ ELIF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Tube
 
  JMP STARS              \ This is a space view, so jump to the STARS routine to
                         \ process the stardust, and return from the main flight

@@ -33,7 +33,7 @@ ENDIF
 
 .hyp
 
-IF _CASSETTE_VERSION OR _MASTER_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _MASTER_VERSION \ Label
 
  LDA QQ12               \ If we are docked (QQ12 = &FF) then jump to hy6 to
  BNE hy6                \ print an error message and return from the subroutine
@@ -50,7 +50,7 @@ ENDIF
  LDA QQ22+1             \ Fetch QQ22+1, which contains the number that's shown
                         \ on-screen during hyperspace countdown
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
  BNE zZ+1               \ If it is non-zero, return from the subroutine (as zZ+1
                         \ contains an RTS), as there is already a countdown in
@@ -137,7 +137,7 @@ IF _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Label
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Minor
 
  LDA QQ8                \ If both bytes of the distance to the selected system
  ORA QQ8+1              \ in QQ8 are zero, return from the subroutine (as zZ+1
@@ -172,7 +172,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Other: Part of the bug fix for the "hype
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Platform
 
  LDA #7                 \ Move the text cursor to column 7, row 23 (in the
  STA XC                 \ middle of the bottom text row)
@@ -201,7 +201,7 @@ ENDIF
  LDA #189               \ Print recursive token 29 ("HYPERSPACE ")
  JSR TT27
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Minor
 
  LDA QQ8+1              \ If the high byte of the distance to the selected
  BNE TT147              \ system in QQ8 is > 0, then it is definitely too far to
@@ -223,7 +223,7 @@ ENDIF
 
  LDA QQ14               \ Fetch our current fuel level from Q114 into A
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Minor
 
  CMP QQ8                \ If our fuel reserves are less than the distance to the
  BCC TT147              \ selected system, then we don't have enough fuel for

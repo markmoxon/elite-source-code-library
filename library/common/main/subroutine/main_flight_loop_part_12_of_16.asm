@@ -46,7 +46,7 @@ ENDIF
  BPL MAC1               \ ship hasn't been killed by energy bomb, collision or
                         \ laser fire, so jump to MAC1 to skip the following
 
-IF _CASSETTE_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
 
  AND #%00100000         \ If bit 5 of the ship's byte #31 is clear then the
  BEQ NBOUN              \ ship is no longer exploding, so jump to NBOUN to skip
@@ -60,7 +60,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
  LDA TYPE               \ If the ship we just destroyed was a cop, keep going,
  CMP #COPS              \ otherwise jump to q2 to skip the following
@@ -113,7 +113,7 @@ ENDIF
                         \ ship from its slot and shuffles all the other ships
                         \ down to close up the gap)
 
-IF _CASSETTE_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
 
 .NBOUN
 

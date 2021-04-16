@@ -111,7 +111,7 @@ ENDIF
 
  LDA R                  \ Fetch the result so far into A
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Master: Group B: If you try to enter a number that is too big when buying or selling in the Master version, all your key presses are displayed, whereas in the other versions the key press that pushes you over the edge is not shown
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Master: Group B: If you try to enter a number that is too big when buying or selling in the Master version, all your key presses are displayed, whereas in the other versions the key press that pushes you over the edge is not shown
 
  CMP #26                \ If A >= 26, where A is the number entered so far, then
  BCS OUT                \ adding a further digit will make it bigger than 256,
@@ -133,7 +133,7 @@ ENDIF
  ASL A
  ADC T
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Master: See group B
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Master: See group B
 
  ADC S                  \ Add the pressed digit to A and store in R, so R now
  STA R                  \ contains its previous value with the new key press
@@ -158,7 +158,7 @@ ENDIF
                         \ BEQ is needed because the BCS below would jump to OUT
                         \ if R >= QQ25, which we don't want)
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Master: See group B
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Master: See group B
 
  BCS OUT                \ If the result in R > QQ25, jump to OUT to return from
                         \ the subroutine with the result in R

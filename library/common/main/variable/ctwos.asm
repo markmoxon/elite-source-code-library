@@ -8,7 +8,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
 \ Ready-made bytes for plotting one-pixel points in mode 5 (the bottom part of
 \ the split screen). See the dashboard routines SCAN, DIL2 and CPIX2 for
 \ details.
@@ -32,7 +32,7 @@ ENDIF
  EQUB %01000100
  EQUB %00100010
  EQUB %00010001
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
  EQUB %10001000
 ENDIF
 

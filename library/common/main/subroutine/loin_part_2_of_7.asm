@@ -48,7 +48,7 @@
                         \ X1 < X2, so we're going from left to right as we go
                         \ from X1 to X2
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  LDA Y1                 \ Set A = Y1 / 8, so A now contains the character row
  LSR A                  \ that will contain our horizontal line
@@ -64,6 +64,31 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
                         \ the high byte of SC is set correctly for drawing the
                         \ start of our line
 
+ELIF _ELECTRON_VERSION
+
+ LDA Y1                 \ Set A = Y1 / 8, so A now contains the character row
+ LSR A                  \ that will contain our horizontal line
+ LSR A
+ LSR A
+
+ STA SCH
+ LSR A
+ ROR SC
+ LSR A
+ ROR SC
+ ADC SCH
+ ADC #&58
+ STA SCH
+ TXA
+ AND #&F8
+ ADC SC
+ STA SC
+ BCC L1681
+
+ INC SCH
+
+.L1681
+
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDY Y1                 \ Look up the page number of the character row that
@@ -77,7 +102,7 @@ ENDIF
  AND #7                 \ character block at which we want to draw the start of
  TAY                    \ our line (as each character block has 8 rows)
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  TXA                    \ Set A = bits 3-7 of X1
  AND #%11111000
@@ -90,10 +115,14 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  STA SC                 \ Store this value in SC, so SC(1 0) now contains the
                         \ screen address of the far left end (x-coordinate = 0)
                         \ of the horizontal pixel row that we want to draw the
                         \ start of our line on
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
 

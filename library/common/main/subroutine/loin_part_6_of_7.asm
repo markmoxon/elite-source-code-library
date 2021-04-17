@@ -53,10 +53,28 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
  BPL LI16               \ If Y is positive we are still within the same
                         \ character block, so skip to LI16
 
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
+
  DEC SCH                \ Otherwise we need to move up into the character block
  LDY #7                 \ above, so decrement the high byte of the screen
                         \ address and set the pixel line to the last line in
                         \ that character block
+
+ELIF _ELECTRON_VERSION
+
+ LDA SC                 \ ???
+ SBC #&3F
+ STA SC
+ LDA SCH
+ SBC #&01
+ STA SCH
+ LDY #7
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
 
 .LI16
 
@@ -81,6 +99,19 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
  ADC #8                 \ character along to the right
  STA SC
 
+ENDIF
+
+IF _ELECTRON_VERSION
+
+ BCC LIC5               \ ???
+
+ INC SCH
+ CLC
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
+
 .LIC5
 
  DEX                    \ Decrement the counter in X
@@ -92,7 +123,9 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
 
  RTS                    \ Return from the subroutine
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ENDIF
+
+IF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA SWAP               \ If SWAP = 0 then we didn't swap the coordinates above,
  BEQ LI290              \ so jump down to LI290 to plot the first pixel

@@ -86,6 +86,12 @@ ENDIF
  LDA #128               \ Set S = 128, which is the starting point for the
  STA S                  \ slope error (representing half a pixel)
 
+IF _ELECTRON_VERSION
+
+ STA SC                 \ ???
+
+ENDIF
+
  ASL A                  \ Set SWAP = 0, as %10000000 << 1 = 0
  STA SWAP
 
@@ -102,11 +108,21 @@ ENDIF
  ADC #1                 \ adding 1, i.e. using two's complement to make it
                         \ positive
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  SEC                    \ Set the C flag, ready for the subtraction below
+
+ENDIF
 
 .LI1
 
  STA P                  \ Store A in P, so P = |X2 - X1|, or |delta_x|
+
+IF _ELECTRON_VERSION
+
+ SEC                    \ ???
+
+ENDIF
 
  LDA Y2                 \ Set A = Y2 - Y1
  SBC Y1                 \       = delta_y

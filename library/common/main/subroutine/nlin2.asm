@@ -51,11 +51,16 @@ ENDIF
  LDX #254               \ Set X2 = 254, so (X2, Y2) = (254, A)
  STX X2
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
 
  BNE HLOIN              \ Call HLOIN to draw a horizontal line from (2, A) to
                         \ (254, A) and return from the subroutine (this BNE is
                         \ effectively a JMP as A will never be zero)
+
+ELIF _ELECTRON_VERSION
+
+                        \ Fall through into HLOIN to draw a horizontal line from
+                        \ (2, A) to (254, A) and return from the subroutine
 
 ELIF _6502SP_VERSION
 

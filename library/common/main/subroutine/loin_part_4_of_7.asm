@@ -115,6 +115,18 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
  ADC #8                 \ character along to the right
  STA SC
 
+ENDIF
+
+IF _ELECTRON_VERSION
+
+ BCC LI10               \ ???
+
+ INC SCH
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
+
 .LI10
 
  LDA S                  \ Set S = S + Q to update the slope error
@@ -129,10 +141,28 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
  CPY #8                 \ If Y < 8 we are still within the same character block,
  BNE LIC3               \ so skip to LIC3
 
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
+
  INC SCH                \ Otherwise we need to move down into the character
  LDY #0                 \ block below, so increment the high byte of the screen
                         \ address and set the pixel line to the first line in
                         \ that character block
+
+ELIF _ELECTRON_VERSION
+
+ LDA SC                 \ ???
+ ADC #&3F
+ STA SC
+ LDA SCH
+ ADC #&01
+ STA SCH
+ LDY #&00
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
 
 .LIC3
 
@@ -143,7 +173,9 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
 
  LDY YSAV               \ Restore Y from YSAV, so that it's preserved
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ENDIF
+
+IF _6502SP_VERSION OR _MASTER_VERSION
 
                         \ We now work our way along the line from left to right,
                         \ using X as a decreasing counter, and at each count we

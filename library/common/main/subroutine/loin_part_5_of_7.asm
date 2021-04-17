@@ -52,7 +52,7 @@
                         \ Y1 >= Y2, so we're going from top to bottom as we go
                         \ from Y1 to Y2
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  LSR A                  \ Set A = Y1 / 8, so A now contains the character row
  LSR A                  \ that will contain our horizontal line
@@ -70,6 +70,30 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
  TXA                    \ Set A = bits 3-7 of X1
  AND #%11111000
 
+ELIF _ELECTRON_VERSION
+
+ LSR A                  \ Set A = Y1 / 8, so A now contains the character row
+ LSR A                  \ that will contain our horizontal line
+ LSR A
+
+ STA SCH
+ LSR A
+ ROR SC
+ LSR A
+ ROR SC
+ ADC SCH
+ ADC #&58
+ STA SCH
+ TXA
+ AND #&F8
+ ADC SC
+ STA SC
+ BCC L1757
+
+ INC SCH
+
+.L1757
+
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA ylookup,Y          \ Look up the page number of the character row that
@@ -83,10 +107,14 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
+
  STA SC                 \ Store this value in SC, so SC(1 0) now contains the
                         \ screen address of the far left end (x-coordinate = 0)
                         \ of the horizontal pixel row that we want to draw the
                         \ start of our line on
+
+ENDIF
 
 IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
@@ -97,7 +125,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  TXA                    \ Set X = X1 mod 8, which is the horizontal pixel number
  AND #7                 \ within the character block where the line starts (as
@@ -113,8 +141,12 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
+
  LDA TWOS,X             \ Fetch a 1-pixel byte from TWOS where pixel X is set,
  STA R                  \ and store it in R
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Other: Part 5 of the LOIN routine in the advanced versions uses logarithms to speed up the multiplication
 
@@ -129,6 +161,20 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Other: Part 5 of th
                         \
                         \ using the same shift-and-subtract algorithm
                         \ documented in TIS2
+
+ENDIF
+
+IF _ELECTRON_VERSION
+
+ TXA                    \ ???
+ AND #&07
+ TAX
+ LDA TWOS,X
+ STA R
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Other: Part 5 of the LOIN routine in the advanced versions uses logarithms to speed up the multiplication
 
  LDA P                  \ Set A = |delta_x|
 

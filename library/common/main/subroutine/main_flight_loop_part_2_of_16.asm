@@ -41,9 +41,27 @@
  EOR #%10000000         \ flipped (i.e. set them to the sign we want for alpha)
  TAY
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  AND #%10000000         \ Extract the flipped sign of the roll rate and store
  STA ALP2               \ in ALP2 (so ALP2 contains the sign of the roll angle
                         \ alpha)
+
+ELIF _ELECTRON_VERSION
+
+ AND #%10000000         \ Extract the flipped sign of the roll rate
+
+ JMP P%+11              \ ???
+
+ EQUB &A1, &BB
+ EQUB &80, &00
+ EQUB &90, &01
+ EQUB &D6, &F1
+
+ STA ALP2               \ Store the flipped sign of the roll rate in ALP2 (so
+                        \ ALP2 contains the sign of the roll angle alpha)
+
+ENDIF
 
  STX JSTX               \ Update JSTX with the damped value that's still in X
 

@@ -31,3 +31,23 @@
  STA RAND               \ Store the seed in the first byte of the four-byte
                         \ random number seed that's stored in RAND
 
+IF _ELECTRON_VERSION
+
+ LDA #0                 \ ???
+ LDX #1
+
+.L0D49
+
+ DEC L0BFD,X
+ BPL L0D54
+
+ STA L0BFD,X
+ STA L0BFB,X
+
+.L0D54
+
+ DEX
+ BPL L0D49
+
+ENDIF
+

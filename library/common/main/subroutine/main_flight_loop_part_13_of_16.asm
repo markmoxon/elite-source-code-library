@@ -34,10 +34,6 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ M
                         \ if we set off an energy bomb, it stays activated
                         \ (BOMB > 0) for four iterations of the main loop
 
- JSR WSCAN              \ Call WSCAN to wait for the vertical sync, so the whole
-                        \ screen gets drawn and the following palette change
-                        \ won't kick in while the screen is still refreshing
-
 ELIF _MASTER_VERSION
 
  JSR BOMBFX             \ Call BOMBFX to erase the energy bomb zig-zag lightning
@@ -62,7 +58,15 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Tube
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Platform
+
+ JSR WSCAN              \ Call WSCAN to wait for the vertical sync, so the whole
+                        \ screen gets drawn and the following palette change
+                        \ won't kick in while the screen is still refreshing
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Tube
 
  LDA #%00110000         \ Set the palette byte at SHEILA &21 to map logical
  STA VIA+&21            \ colour 0 to physical colour 7 (white), but with only

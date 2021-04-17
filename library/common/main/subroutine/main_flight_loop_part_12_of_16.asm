@@ -86,10 +86,19 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  LDA DLY                \ If we already have an in-flight message on-screen (in
  ORA MJ                 \ which case DLY > 0), or we are in witchspace (in
  BNE KS1S               \ which case MJ > 0), jump to KS1S to skip showing an
                         \ on-screen bounty for this kill
+
+ELIF _ELECTRON_VERSION
+
+ LDA DLY                \ ???
+ BNE KS1S
+
+ENDIF
 
  LDY #10                \ Fetch byte #10 of the ship's blueprint, which is the
  LDA (XX0),Y            \ low byte of the bounty awarded when this ship is

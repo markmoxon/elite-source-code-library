@@ -71,13 +71,21 @@ ENDIF
  JSR BEEP               \ We have missile lock and an armed missile, so call
                         \ the BEEP subroutine to make a short, high beep
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Screen
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Screen
 
  LDX XSAV               \ Call ABORT2 to store the details of this missile
  LDY #&0E               \ lock, with the targeted ship's slot number in X
  JSR ABORT2             \ (which we stored in XSAV at the start of this ship's
                         \ loop at MAL1), and set the colour of the missile
                         \ indicator to the colour in Y (red = &0E)
+
+ELIF _ELECTRON_VERSION
+
+ LDX XSAV               \ Call ABORT2 to store the details of this missile
+ LDY #&11               \ lock, with the targeted ship's slot number in X
+ JSR ABORT2             \ (which we stored in XSAV at the start of this ship's
+                        \ loop at MAL1), and set the colour of the missile
+                        \ indicator to the colour in Y (red = &0E) ???
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 

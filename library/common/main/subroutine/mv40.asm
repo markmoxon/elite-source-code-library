@@ -25,6 +25,14 @@
 
 .MV40
 
+IF _ELECTRON_VERSION
+
+ TXA                    \ ???
+ LSR A
+ BCS MV40-1
+
+ENDIF
+
  LDA ALPHA              \ Set Q = -ALPHA, so Q contains the angle we want to
  EOR #%10000000         \ roll the planet through (i.e. in the opposite
  STA Q                  \ direction to our ship's roll angle alpha)

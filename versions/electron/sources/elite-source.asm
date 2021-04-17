@@ -139,6 +139,8 @@ INCLUDE "library/common/main/workspace/wp.asm"
 \
 \ ELITE A FILE
 \
+\ Produces the binary file ELTA.bin that gets loaded by elite-bcfs.asm.
+\
 \ ******************************************************************************
 
 CODE% = &0D00
@@ -191,1557 +193,75 @@ INCLUDE "library/cassette/main/workspace/s_per_cent.asm"
  JMP (L0D02)
 
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_1_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_2_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_3_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_4_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_5_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_6_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_7_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_8_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_9_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_10_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_11_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_12_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_13_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_14_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_15_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_16_of_16.asm"
+INCLUDE "library/common/main/subroutine/mas1.asm"
+INCLUDE "library/common/main/subroutine/mas2.asm"
+INCLUDE "library/common/main/subroutine/mas3.asm"
+INCLUDE "library/common/main/subroutine/mveit_part_1_of_9.asm"
+INCLUDE "library/common/main/subroutine/mveit_part_2_of_9.asm"
+INCLUDE "library/common/main/subroutine/mveit_part_3_of_9.asm"
+INCLUDE "library/common/main/subroutine/mveit_part_4_of_9.asm"
+INCLUDE "library/common/main/subroutine/mveit_part_5_of_9.asm"
+INCLUDE "library/common/main/subroutine/mveit_part_6_of_9.asm"
+INCLUDE "library/common/main/subroutine/mveit_part_7_of_9.asm"
+INCLUDE "library/common/main/subroutine/mveit_part_8_of_9.asm"
+INCLUDE "library/common/main/subroutine/mveit_part_9_of_9.asm"
+INCLUDE "library/common/main/subroutine/mvt1.asm"
+INCLUDE "library/common/main/subroutine/mvt3.asm"
+INCLUDE "library/common/main/subroutine/mvs4.asm"
+INCLUDE "library/common/main/subroutine/mvs5.asm"
+INCLUDE "library/common/main/subroutine/mvt6.asm"
+INCLUDE "library/common/main/subroutine/mv40.asm"
+
+\ ******************************************************************************
+\
+\ Save output/ELTA.bin
+\
+\ ******************************************************************************
+
+PRINT "ELITE A"
+PRINT "Assembled at ", ~CODE%
+PRINT "Ends at ", ~P%
+PRINT "Code size is ", ~(P% - CODE%)
+PRINT "Execute at ", ~LOAD%
+PRINT "Reload at ", ~LOAD_A%
+
+PRINT "S.ELTA ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_A%
+SAVE "versions/electron/output/ELTA.bin", CODE%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE B FILE
+\
+\ Produces the binary file ELTB.bin that gets loaded by elite-bcfs.asm.
+\
+\ ******************************************************************************
+
+CODE_B% = P%
+LOAD_B% = LOAD% + P% - CODE%
+
+INCLUDE "library/common/main/variable/na_per_cent-default_per_cent.asm"
+INCLUDE "library/common/main/variable/chk2.asm"
+INCLUDE "library/common/main/variable/chk.asm"
+INCLUDE "library/common/main/variable/univ.asm"
+INCLUDE "library/common/main/variable/twos.asm"
+INCLUDE "library/common/main/variable/ctwos.asm"
+INCLUDE "library/common/main/variable/twos2.asm"
 
- LDA #&00
- LDX #&01
-
-.L0D49
-
- DEC L0BFD,X
- BPL L0D54
-
- STA L0BFD,X
- STA L0BFB,X
-
-.L0D54
-
- DEX
- BPL L0D49
-
- LDX JSTX
- JSR cntr
-
- JSR cntr
-
- TXA
- EOR #&80
- TAY
- AND #&80
- JMP L0D70
-
- EQUB &A1, &BB, &80, &00, &90, &01, &D6, &F1
-
-.L0D70
-
- STA ALP2
- STX JSTX
- EOR #&80
- STA ALP2+1
- TYA
- BPL L0D80
-
- EOR #&FF
- CLC
- ADC #&01
-
-.L0D80
-
- LSR A
- LSR A
- CMP #&08
- BCS L0D88
-
- LSR A
- CLC
-
-.L0D88
-
- STA ALP1
- ORA ALP2
- STA ALPHA
- LDX JSTY
- JSR cntr
-
- TXA
- EOR #&80
- TAY
- AND #&80
- STX JSTY
- STA BET2+1
- EOR #&80
- STA BET2
- TYA
- BPL L0DA6
-
- EOR #&FF
-
-.L0DA6
-
- ADC #&04
- LSR A
- LSR A
- LSR A
- LSR A
- CMP #&03
- BCS L0DB1
-
- LSR A
-
-.L0DB1
-
- STA BET1
- ORA BET2
- STA BETA
- LDA KY2
- BEQ MA17
-
- LDA DELTA
- CMP #&28
- BCS MA17
-
- INC DELTA
-
-.MA17
-
- LDA KY1
- BEQ MA4
-
- DEC DELTA
- BNE MA4
-
- INC DELTA
-
-.MA4
-
- LDA KY15
- AND NOMSL
- BEQ MA20
-
- JSR L3903
-
- LDA #&28
- JSR NOISE
-
- LDA #&00
- STA MSAR
-
-.MA20
-
- LDA MSTG
- BPL MA25
-
- LDA KY14
- BEQ MA25
-
- LDX NOMSL
- BEQ MA25
-
- STA MSAR
- LDY #&0D
- JSR MSBAR
-
-.MA25
-
- LDA KY16
- BEQ MA24
-
- LDA MSTG
- BMI MA64
-
- JSR FRMIS
-
-.MA24
-
- LDA KY12
- BEQ MA76
-
- ASL BOMB
-
-.MA76
-
- LDA KY13
- AND ESCP
- BEQ L0E12
-
- JMP ESCAPE
-
-.L0E12
-
- LDA KY18
- BEQ L0E19
-
- JSR WARP
-
-.L0E19
-
- LDA KY17
- AND ECM
- BEQ MA64
-
- LDA ECMA
- BNE MA64
-
- DEC ECMP
- JSR ECBLB2
-
-.MA64
-
- LDA KY19
- AND DKCMP
- AND SSPR
- BEQ MA68
-
- LDA K%+&44
- BMI MA68
-
- JMP GOIN
-
-.MA68
-
- LDA #&00
- STA LAS
- STA DELT4
- LDA DELTA
- LSR A
- ROR DELT4
- LSR A
- ROR DELT4
- STA DELT4+1
- LDA LASCT
- BNE MA3
-
- LDA KY7
- BEQ MA3
-
- LDA GNTMP
- CMP #&F2
- BCS MA3
-
- LDX VIEW
- LDA LASER,X
- BEQ MA3
-
- PHA
- AND #&7F
- STA LAS
- STA MANY
- LDA #&00
- JSR NOISE
-
- JSR LASLI
-
- PLA
- BPL ma1
-
- LDA #&00
-
-.ma1
-
- AND #&FA
- STA LASCT
-
-.MA3
-
- LDX #&00
-
-.MAL1
-
- STX XSAV
- LDA FRIN,X
- BNE L0E8A
-
- JMP MA18
-
-.L0E8A
-
- STA TYPE
- JSR GINF
-
- LDY #&23
-
-.MAL2
-
- LDA (INF),Y
- STA INWK,Y
- DEY
- BPL MAL2
-
- LDA TYPE
- BMI MA21
-
- ASL A
- TAY
- LDA L4ED2,Y
- STA XX0
- LDA L4ED3,Y
- STA XX0+1
- LDA BOMB
- BPL MA21
-
- CPY #&0E
- BEQ MA21
-
- LDA INWK+31
- AND #&20
- BNE MA21
-
- LDA INWK+31
- ORA #&80
- STA INWK+31
- JSR EXNO2
-
-.MA21
-
- JSR MVEIT
-
- LDY #&23
-
-.MAL3
-
- LDA INWK,Y
- STA (INF),Y
- DEY
- BPL MAL3
-
- LDA INWK+31
- AND #&A0
- JSR MAS4
-
- BNE MA65
-
- LDA INWK
- ORA INWK+3
- ORA INWK+6
- BMI MA65
-
- LDX TYPE
- BMI MA65
-
- CPX #&07
- BEQ ISDK
-
- AND #&C0
- BNE MA65
-
- CPX #&08
- BEQ MA65
-
- CPX #&0A
- BCS MA58
-
- JMP L0F73
-
-.MA58
-
- LDA BST
- AND INWK+5
- BPL L0F73
-
- LDA #&03
- CPX #&0B
- BNE oily
-
- BEQ slvy2
-
-.oily
-
- JSR DORND
-
- AND #&07
-
-.slvy2
-
- STA QQ29
- LDA #&01
- JSR tnpr
-
- LDY #&4E
- BCS MA59
-
- LDY QQ29
- ADC QQ20,Y
- STA QQ20,Y
- TYA
- ADC #&D0
- JSR MESS
-
- JMP MA60
-
-.MA65
-
- JMP MA26
-
-.ISDK
-
- LDA K%+&44
- BMI MA62
-
- LDA INWK+14
- CMP #&D6
- BCC MA62
-
- JSR SPS4
-
- LDA X2
- BMI MA62
-
- CMP #&59
- BCC MA62
-
- LDA INWK+16
- AND #&7F
- CMP #&50
- BCC MA62
-
-.GOIN
-
- LDA #&00
- STA QQ22+1
- LDA #&08
- JSR LAUN
-
- JSR RES4
-
- JMP BAY
-
-.MA62
-
- LDA DELTA
- CMP #&05
- BCC MA67
-
- JMP DEATH
-
-.MA59
-
- JSR EXNO3
-
-.MA60
-
- ASL INWK+31
- SEC
- ROR INWK+31
- BNE MA26
-
-.MA67
-
- LDA #&01
- STA DELTA
- LDA #&05
- BNE MA63
-
-.L0F73
-
- ASL INWK+31
- SEC
- ROR INWK+31
- LDA INWK+35
- SEC
- ROR A
-
-.MA63
-
- JSR OOPS
-
- JSR EXNO3
-
-.MA26
-
- LDA QQ11
- BNE MA15
-
- JSR PLUT
-
- JSR HITCH
-
- BCC MA8
-
- LDA MSAR
- BEQ MA47
-
- JSR BEEP
-
- LDX XSAV
- LDY #&11
- JSR ABORT2
-
-.MA47
-
- LDA LAS
- BEQ MA8
-
- LDX #&0F
- JSR EXNO
-
- LDA INWK+35
- SEC
- SBC LAS
- BCS MA14
-
- LDA TYPE
- CMP #&07
- BEQ L0FD8
-
- LDA INWK+31
- ORA #&80
- STA INWK+31
- BCS MA8
-
- JSR DORND
-
- BPL oh
-
- LDY #&00
- AND (XX0),Y
- STA CNT
-
-.um
-
- BEQ oh
-
- LDX #&0A
- LDA #&00
- JSR SFS1
-
- DEC CNT
- BPL um
-
-.oh
-
- JSR EXNO2
-
-.MA14
-
- STA INWK+35
-
-.L0FD8
-
- LDA TYPE
- JSR ANGRY
-
-.MA8
-
- JSR LL9
-
-.MA15
-
- LDY #&23
- LDA INWK+35
- STA (INF),Y
- LDA INWK+31
- BPL MAC1
-
- AND #&20
- BEQ MAC1
-
- LDA TYPE
- CMP #&02
- BNE q2
-
- LDA FIST
- ORA #&40
- STA FIST
-
-.q2
-
- LDA DLY
- BNE KS1S
-
- LDY #&0A
- LDA (XX0),Y
- BEQ KS1S
-
- TAX
- INY
- LDA (XX0),Y
- TAY
- JSR MCASH
-
- LDA #&00
- JSR MESS
-
-.KS1S
-
- JMP KS1
-
-.MAC1
-
- LDA TYPE
- BMI MA27
-
- JSR FAROF
-
- BCC KS1S
-
-.MA27
-
- LDY #&1F
- LDA INWK+31
- STA (INF),Y
- LDX XSAV
- INX
- JMP MAL1
-
-.MA18
-
- LDA BOMB
- BPL MA77
-
- ASL BOMB
-
-.MA77
-
- LDA MCNT
- AND #&07
- BNE MA22
-
- LDX ENERGY
- BPL b
-
- LDX ASH
- JSR SHD
-
- STX ASH
- LDX FSH
- JSR SHD
-
- STX FSH
-
-.b
-
- SEC
- LDA ENGY
- ADC ENERGY
- BCS L105D
-
- STA ENERGY
-
-.L105D
-
- LDA MCNT
- AND #&1F
- BNE MA93
-
- LDA SSPR
- BNE MA23S
-
- TAY
- JSR MAS2
-
- BNE MA23S
-
- LDX #&1C
-
-.MAL4
-
- LDA K%,X
- STA INWK,X
- DEX
- BPL MAL4
-
- INX
- LDY #&09
- JSR MAS1
-
- BNE MA23S
-
- LDX #&03
- LDY #&0B
- JSR MAS1
-
- BNE MA23S
-
- LDX #&06
- LDY #&0D
- JSR MAS1
-
- BNE MA23S
-
- LDA #&C0
- JSR FAROF2
-
- BCC MA23S
-
- JSR NWSPS
-
-.MA23S
-
- JMP MA23
-
-.MA22
-
- LDA MCNT
- AND #&1F
-
-.MA93
-
- CMP #&0A
- BNE MA23
-
- LDA #&32
- CMP ENERGY
- BCC L10B2
-
- ASL A
- JSR MESS
-
-.L10B2
-
- LDY #&FF
- STY ALTIT
- INY
- JSR m
-
- BNE MA23
-
- JSR MAS3
-
- BCS MA23
-
- SBC #&24
- BCC MA28
-
- STA R
- JSR LL5
-
- LDA Q
- STA ALTIT
- BNE MA23
-
-.MA28
-
- JMP DEATH
-
-.MA23
-
- LDA MANY
- BEQ MA16
-
- LDA LASCT
- CMP #&08
- BCS MA16
-
- JSR LASLI2
-
- LDA #&00
- STA MANY
-
-.MA16
-
- LDA ECMP
- BEQ MA69
-
- JSR DENGY
-
- BEQ MA70
-
-.MA69
-
- LDA ECMA
- BEQ MA66
-
- DEC ECMA
- DEC ECMA
- BNE MA66
-
-.MA70
-
- JSR ECMOF
-
-.MA66
-
- LDA QQ11
- BNE MA9
-
- JMP STARS
-
-.MAS1
-
- LDA INWK,Y
- ASL A
- STA K+1
- LDA INWK+1,Y
- ROL A
- STA K+2
- LDA #&00
- ROR A
- STA K+3
- JSR MVT3
-
- STA INWK+2,X
- LDY K+1
- STY INWK,X
- LDY K+2
- STY INWK+1,X
- AND #&7F
-
-.MA9
-
- RTS
-
-.m
-
- LDA #&00
-
-.MAS2
-
- ORA K%+2,Y
- ORA K%+5,Y
- ORA K%+8,Y
- AND #&7F
- RTS
-
-.MAS3
-
- LDA K%+1,Y
- JSR SQUA2
-
- STA R
- LDA K%+4,Y
- JSR SQUA2
-
- ADC R
- BCS MA30
-
- STA R
- LDA K%+7,Y
- JSR SQUA2
-
- ADC R
- BCC L1156
-
-.MA30
-
- LDA #&FF
-
-.L1156
-
- RTS
-
-.MVEIT
-
- LDA INWK+31
- AND #&A0
- BNE MV30
-
- LDA MCNT
- EOR XSAV
- AND #&0F
- BNE MV3
-
- JSR TIDY
-
-.MV3
-
- LDX TYPE
- BPL L116F
-
- JMP MV40
-
-.L116F
-
- LDA INWK+32
- BPL MV30
-
- CPX #&08
- BEQ MV26
-
- LDA MCNT
- EOR XSAV
- AND #&07
- BNE MV30
-
-.MV26
-
- JSR TACTICS
-
-.MV30
-
- JSR SCAN
-
- LDA INWK+27
- ASL A
- ASL A
- STA Q
- LDA INWK+10
- AND #&7F
- JSR FMLTU
-
- STA R
- LDA INWK+10
- LDX #&00
- JSR L12F8
-
- LDA INWK+12
- AND #&7F
- JSR FMLTU
-
- STA R
- LDA INWK+12
- LDX #&03
- JSR L12F8
-
- LDA INWK+14
- AND #&7F
- JSR FMLTU
-
- STA R
- LDA INWK+14
- LDX #&06
- JSR L12F8
-
- LDA INWK+27
- CLC
- ADC INWK+28
- BPL L11C4
-
- LDA #&00
-
-.L11C4
-
- LDY #&0F
- CMP (XX0),Y
- BCC L11CC
-
- LDA (XX0),Y
-
-.L11CC
-
- STA INWK+27
- LDA #&00
- STA INWK+28
- LDX ALP1
- LDA INWK
- EOR #&FF
- STA P
- LDA INWK+1
- JSR L245A
-
- STA P+2
- LDA ALP2+1
- EOR INWK+2
- LDX #&03
- JSR MVT6
-
- STA K2+3
- LDA P+1
- STA K2+1
- EOR #&FF
- STA P
- LDA P+2
- STA K2+2
- LDX BET1
- JSR L245A
-
- STA P+2
- LDA K2+3
- EOR BET2
- LDX #&06
- JSR MVT6
-
- STA INWK+8
- LDA P+1
- STA INWK+6
- EOR #&FF
- STA P
- LDA P+2
- STA INWK+7
- JSR MLTU2
-
- STA P+2
- LDA K2+3
- STA INWK+5
- EOR BET2
- EOR INWK+8
- BPL MV43
-
- LDA P+1
- ADC K2+1
- STA INWK+3
- LDA P+2
- ADC K2+2
- STA INWK+4
- JMP MV44
-
-.MV43
-
- LDA K2+1
- SBC P+1
- STA INWK+3
- LDA K2+2
- SBC P+2
- STA INWK+4
- BCS MV44
-
- LDA #&01
- SBC INWK+3
- STA INWK+3
- LDA #&00
- SBC INWK+4
- STA INWK+4
- LDA INWK+5
- EOR #&80
- STA INWK+5
-
-.MV44
-
- LDX ALP1
- LDA INWK+3
- EOR #&FF
- STA P
- LDA INWK+4
- JSR L245A
-
- STA P+2
- LDA ALP2
- EOR INWK+5
- LDX #&00
- JSR MVT6
-
- STA INWK+2
- LDA P+2
- STA INWK+1
- LDA P+1
- STA INWK
-
-.MV45
-
- LDA DELTA
- STA R
- LDA #&80
- LDX #&06
- JSR MVT1
-
- LDY #&09
- JSR MVS4
-
- LDY #&0F
- JSR MVS4
-
- LDY #&15
- JSR MVS4
-
- LDA INWK+30
- AND #&80
- STA RAT2
- LDA INWK+30
- AND #&7F
- BEQ MV8
-
- CMP #&7F
- SBC #&00
- ORA RAT2
- STA INWK+30
- LDX #&0F
- LDY #&09
- JSR MVS5
-
- LDX #&11
- LDY #&0B
- JSR MVS5
-
- LDX #&13
- LDY #&0D
- JSR MVS5
-
-.MV8
-
- LDA INWK+29
- AND #&80
- STA RAT2
- LDA INWK+29
- AND #&7F
- BEQ MV5
-
- CMP #&7F
- SBC #&00
- ORA RAT2
- STA INWK+29
- LDX #&0F
- LDY #&15
- JSR MVS5
-
- LDX #&11
- LDY #&17
- JSR MVS5
-
- LDX #&13
- LDY #&19
- JSR MVS5
-
-.MV5
-
- LDA INWK+31
- AND #&A0
- BNE MVD1
-
- LDA INWK+31
- ORA #&10
- STA INWK+31
- JMP SCAN
-
-.MVD1
-
- LDA INWK+31
- AND #&EF
- STA INWK+31
- RTS
-
-.L12F8
-
- AND #&80
-
-.MVT1
-
- ASL A
- STA S
- LDA #&00
- ROR A
- STA T
- LSR S
- EOR INWK+2,X
- BMI MV10
-
- LDA R
- ADC INWK,X
- STA INWK,X
- LDA S
- ADC INWK+1,X
- STA INWK+1,X
- LDA INWK+2,X
- ADC #&00
- ORA T
- STA INWK+2,X
- RTS
-
-.MV10
-
- LDA INWK,X
- SEC
- SBC R
- STA INWK,X
- LDA INWK+1,X
- SBC S
- STA INWK+1,X
- LDA INWK+2,X
- AND #&7F
- SBC #&00
- ORA #&80
- EOR T
- STA INWK+2,X
- BCS MV11
-
- LDA #&01
- SBC INWK,X
- STA INWK,X
- LDA #&00
- SBC INWK+1,X
- STA INWK+1,X
- LDA #&00
- SBC INWK+2,X
- AND #&7F
- ORA T
- STA INWK+2,X
-
-.MV11
-
- RTS
-
-.MVT3
-
- LDA K+3
- STA S
- AND #&80
- STA T
- EOR INWK+2,X
- BMI MV13
-
- LDA K+1
- CLC
- ADC INWK,X
- STA K+1
- LDA K+2
- ADC INWK+1,X
- STA K+2
- LDA K+3
- ADC INWK+2,X
- AND #&7F
- ORA T
- STA K+3
- RTS
-
-.MV13
-
- LDA S
- AND #&7F
- STA S
- LDA INWK,X
- SEC
- SBC K+1
- STA K+1
- LDA INWK+1,X
- SBC K+2
- STA K+2
- LDA INWK+2,X
- AND #&7F
- SBC S
- ORA #&80
- EOR T
- STA K+3
- BCS MV14
-
- LDA #&01
- SBC K+1
- STA K+1
- LDA #&00
- SBC K+2
- STA K+2
- LDA #&00
- SBC K+3
- AND #&7F
- ORA T
- STA K+3
-
-.MV14
-
- RTS
-
-.MVS4
-
- LDA ALPHA
- STA Q
- LDX INWK+2,Y
- STX R
- LDX INWK+3,Y
- STX S
- LDX INWK,Y
- STX P
- LDA INWK+1,Y
- EOR #&80
- JSR MAD
-
- STA INWK+3,Y
- STX INWK+2,Y
- STX P
- LDX INWK,Y
- STX R
- LDX INWK+1,Y
- STX S
- LDA INWK+3,Y
- JSR MAD
-
- STA INWK+1,Y
- STX INWK,Y
- STX P
- LDA BETA
- STA Q
- LDX INWK+2,Y
- STX R
- LDX INWK+3,Y
- STX S
- LDX INWK+4,Y
- STX P
- LDA INWK+5,Y
- EOR #&80
- JSR MAD
-
- STA INWK+3,Y
- STX INWK+2,Y
- STX P
- LDX INWK+4,Y
- STX R
- LDX INWK+5,Y
- STX S
- LDA INWK+3,Y
- JSR MAD
-
- STA INWK+5,Y
- STX INWK+4,Y
- RTS
-
-.MVS5
-
- LDA INWK+1,X
- AND #&7F
- LSR A
- STA T
- LDA INWK,X
- SEC
- SBC T
- STA R
- LDA INWK+1,X
- SBC #&00
- STA S
- LDA INWK,Y
- STA P
- LDA INWK+1,Y
- AND #&80
- STA T
- LDA INWK+1,Y
- AND #&7F
- LSR A
- ROR P
- LSR A
- ROR P
- LSR A
- ROR P
- LSR A
- ROR P
- ORA T
- EOR RAT2
- STX Q
- JSR ADD
-
- STA K+1
- STX K
- LDX Q
- LDA INWK+1,Y
- AND #&7F
- LSR A
- STA T
- LDA INWK,Y
- SEC
- SBC T
- STA R
- LDA INWK+1,Y
- SBC #&00
- STA S
- LDA INWK,X
- STA P
- LDA INWK+1,X
- AND #&80
- STA T
- LDA INWK+1,X
- AND #&7F
- LSR A
- ROR P
- LSR A
- ROR P
- LSR A
- ROR P
- LSR A
- ROR P
- ORA T
- EOR #&80
- EOR RAT2
- STX Q
- JSR ADD
-
- STA INWK+1,Y
- STX INWK,Y
- LDX Q
- LDA K
- STA INWK,X
- LDA K+1
- STA INWK+1,X
- RTS
-
-.MVT6
-
- TAY
- EOR INWK+2,X
- BMI MV50
-
- LDA P+1
- CLC
- ADC INWK,X
- STA P+1
- LDA P+2
- ADC INWK+1,X
- STA P+2
- TYA
- RTS
-
-.MV50
-
- LDA INWK,X
- SEC
- SBC P+1
- STA P+1
- LDA INWK+1,X
- SBC P+2
- STA P+2
- BCC MV51
-
- TYA
- EOR #&80
- RTS
-
-.MV51
-
- LDA #&01
- SBC P+1
- STA P+1
- LDA #&00
- SBC P+2
- STA P+2
- TYA
-
-.L14D2
-
- RTS
-
-.MV40
-
- TXA
- LSR A
- BCS L14D2
-
- LDA ALPHA
- EOR #&80
- STA Q
- LDA INWK
- STA P
- LDA INWK+1
- STA P+1
- LDA INWK+2
- JSR MULT3
-
- LDX #&03
- JSR MVT3
-
- LDA K+1
- STA K2+1
- STA P
- LDA K+2
- STA K2+2
- STA P+1
- LDA BETA
- STA Q
- LDA K+3
- STA K2+3
- JSR MULT3
-
- LDX #&06
- JSR MVT3
-
- LDA K+1
- STA P
- STA INWK+6
- LDA K+2
- STA P+1
- STA INWK+7
- LDA K+3
- STA INWK+8
- EOR #&80
- JSR MULT3
-
- LDA K+3
- AND #&80
- STA T
- EOR K2+3
- BMI MV1
-
- LDA K
- ADC K2
- LDA K+1
- ADC K2+1
- STA INWK+3
- LDA K+2
- ADC K2+2
- STA INWK+4
- LDA K+3
- ADC K2+3
- JMP MV2
-
-.MV1
-
- LDA K
- SEC
- SBC K2
- LDA K+1
- SBC K2+1
- STA INWK+3
- LDA K+2
- SBC K2+2
- STA INWK+4
- LDA K2+3
- AND #&7F
- STA P
- LDA K+3
- AND #&7F
- SBC P
- STA P
- BCS MV2
-
- LDA #&01
- SBC INWK+3
- STA INWK+3
- LDA #&00
- SBC INWK+4
- STA INWK+4
- LDA #&00
- SBC P
- ORA #&80
-
-.MV2
-
- EOR T
- STA INWK+5
- LDA ALPHA
- STA Q
- LDA INWK+3
- STA P
- LDA INWK+4
- STA P+1
- LDA INWK+5
- JSR MULT3
-
- LDX #&00
- JSR MVT3
-
- LDA K+1
- STA INWK
- LDA K+2
- STA INWK+1
- LDA K+3
- STA INWK+2
- JMP MV45
-
-.L159D
-
- EQUB &4A
-
- EQUB &41, &4D, &45, &53, &4F, &4E
-
-.L15A4
-
- EQUB &0D
-
-.L15A5
-
- EQUB &00, &14, &AD, &4A, &5A, &48, &02, &53
- EQUB &B7, &00, &00, &03, &E8, &46, &00, &00
- EQUB &0F, &00, &00, &00, &00, &00, &16, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &03, &00, &10, &0F, &11
- EQUB &00, &03, &1C, &0E, &00, &00, &0A, &00
- EQUB &11, &3A, &07, &09, &08, &00, &00, &00
- EQUB &00, &80
-
-.CHK2
-
- EQUB &AA
-
-.CHK
-
- EQUB &03
-
-.UNIV
-
- EQUB &00
-
-.L15F2
-
- EQUB &09, &24, &09, &48, &09, &6C, &09, &90
- EQUB &09, &B4, &09, &D8, &09, &FC, &09, &20
- EQUB &0A, &44, &0A, &68, &0A, &8C, &0A, &B0
- EQUB &0A
-
-.TWOS
-
- EQUB &80, &40, &20, &10, &08, &04, &02, &01
- EQUB &80, &40
-
-.CTWOS
-
- EQUB &C0, &30, &0C, &03
-
-.TWOS2
-
- EQUB &C0, &C0, &60, &30, &18, &0C, &06, &03
 
 .LL30
 
@@ -3463,7 +1983,7 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_1_of_16.asm"
  TAX
  LDA UNIV,X
  STA V
- LDA L15F2,X
+ LDA UNIV+1,X
  STA V+1
  LDY #&02
  JSR TAS1
@@ -7668,7 +6188,7 @@ hy5 = L3023+1
 
 .QUL4
 
- LDA L159D,Y
+ LDA NA%,Y
  CMP #&0D
  BEQ L3479
 
@@ -8534,7 +7054,7 @@ hy5 = L3023+1
  TAY
  LDA UNIV,Y
  STA INF
- LDA L15F2,Y
+ LDA UNIV+1,Y
  STA INF+1
  RTS
 
@@ -9183,7 +7703,7 @@ hy5 = L3023+1
  TAY
  LDA UNIV,Y
  STA SC
- LDA L15F2,Y
+ LDA UNIV+1,Y
  STA SCH
  LDY #&20
  LDA (SC),Y
@@ -9268,7 +7788,7 @@ hy5 = L3023+1
  TAY
  LDA UNIV,Y
  STA SC
- LDA L15F2,Y
+ LDA UNIV+1,Y
  STA SCH
  LDY #&23
  LDA (SC),Y
@@ -10028,7 +8548,7 @@ L3E5C = L3E5A+2
 
 .QUL1
 
- LDA L15A4,X
+ LDA NA%+7,X
  STA TP-1,X
  DEX
  BNE QUL1
@@ -10154,8 +8674,8 @@ L3E5C = L3E5A+2
 
 .QUL2
 
- ADC L15A4,X
- EOR L15A5,X
+ ADC NA%+7,X
+ EOR NA%+8,X
  DEX
  BNE QUL2
 
@@ -10168,7 +8688,7 @@ L3E5C = L3E5A+2
 .GTL1
 
  LDA INWK,X
- STA L159D,X
+ STA NA%,X
  DEX
  BPL GTL1
 
@@ -10178,7 +8698,7 @@ L3E5C = L3E5A+2
 
 .GTL2
 
- LDA L159D,X
+ LDA NA%,X
  STA INWK,X
  DEX
  BPL GTL2
@@ -10262,7 +8782,7 @@ L3E5C = L3E5A+2
 
  LDA TP,X
  STA K%,X
- STA L15A5,X
+ STA NA%+8,X
  DEX
  BPL SVL1
 
@@ -10333,7 +8853,7 @@ L3E5C = L3E5A+2
 .LOL1
 
  LDA K%,X
- STA L15A5,X
+ STA NA%+8,X
  DEX
  BPL LOL1
 
@@ -12877,9 +11397,22 @@ L418E = SPS1+1
 
  EQUB &67
 
+.XX21
+
  EQUB &EA, &4E, &92, &4F, &6C, &50, &9A, &51
  EQUB &8C, &52, &8C, &52, &14, &54, &30, &55
  EQUB &2E, &56, &04, &57, &AC, &57
+
+SHIP_SIDEWINDER = $4EEA
+SHIP_VIPER = $4F92
+SHIP_MAMBA = $506C
+SHIP_PYTHON = $519A
+SHIP_COBRA_MK_3 = $528C
+SHIP_CORIOLIS = $5414
+SHIP_MISSILE = $5530
+SHIP_ASTEROID = $562E
+SHIP_CANISTER = $5704
+SHIP_ESCAPE_POD = $57AC
 
  EQUB &00, &81, &10, &50, &8C, &3D, &00, &1E
  EQUB &3C, &0F, &32, &00, &1C, &14, &46, &25

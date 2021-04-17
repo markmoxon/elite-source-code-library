@@ -74,8 +74,19 @@ IF _MASTER_VERSION \ Master: The Master version has a unique E.C.M. sound
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  DEC ECMA               \ Decrement the E.C.M. countdown timer, and if it has
  BNE MA66               \ reached zero, keep going, otherwise skip to MA66
+
+ELIF _ELECTRON_VERSION
+
+ DEC ECMA               \ ???
+ DEC ECMA               \ Decrement the E.C.M. countdown timer, and if it has
+ BNE MA66               \ reached zero, keep going, otherwise skip to MA66
+
+
+ENDIF
 
 .MA70
 

@@ -22,7 +22,7 @@
 
 .MA22
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
+IF _CASSETTE_VERSION
 
  LDA MJ                 \ If we are in witchspace, jump down to MA23 to skip
  BNE MA23               \ the following, as there are no planets or suns to
@@ -126,6 +126,8 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: The docking co
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  CMP #20                \ If this is the 20th iteration in this block of 32,
  BNE MA23               \ do the following, otherwise jump to MA23 to skip the
                         \ sun altitude check
@@ -199,7 +201,9 @@ ENDIF
 
  STA QQ14               \ Store the updated fuel level in QQ14
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
+ENDIF
+
+IF _CASSETTE_VERSION \ Minor
 
  LDA #160               \ Print recursive token 0 ("FUEL SCOOPS ON") as an
  JSR MESS               \ in-flight message

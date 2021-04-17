@@ -18,7 +18,7 @@
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: In the enhanced versions, the top nibble of the first byte of each ship blueprint defines whether a ship is scoopable, and the type of item that we get when we scoop it (so scooping Thargons gives alien items, and so on). The cassette version implements this functionality using hard-coded conditional statements, while the enhanced versions support more flexibility by using the ship data block to determine scoopability
+IF _CASSETTE_VERSION \ Enhanced: In the enhanced versions, the top nibble of the first byte of each ship blueprint defines whether a ship is scoopable, and the type of item that we get when we scoop it (so scooping Thargons gives alien items, and so on). The cassette version implements this functionality using hard-coded conditional statements, while the enhanced versions support more flexibility by using the ship data block to determine scoopability
 
  LDA #3                 \ Set A to 3 to denote we may be scooping an escape pod
 
@@ -33,6 +33,15 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: In the enhanced versions, 
  BNE slvy2              \ A set to 16, so we scoop up the Thargon as alien items
                         \ (this BNE is effectively a JMP as A will never be
                         \ zero)
+
+ELIF _ELECTRON_VERSION
+
+ LDA #3                 \ Set A to 3 to denote we may be scooping an escape pod
+
+ CPX #ESC               \ ???
+ BNE oily
+
+ BEQ slvy2
 
 ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 

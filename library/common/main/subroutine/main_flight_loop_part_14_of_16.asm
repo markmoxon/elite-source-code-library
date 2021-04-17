@@ -18,9 +18,13 @@
 \
 \ ******************************************************************************
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  LDA MJ                 \ If we are in witchspace, jump down to MA23S to skip
  BNE MA23S              \ the following, as there are no space stations in
                         \ witchspace
+
+ENDIF
 
  LDA MCNT               \ Fetch the main loop counter and calculate MCNT mod 32,
  AND #31                \ jumping to MA93 if it is on-zero (so the following
@@ -109,7 +113,7 @@
                         \ >= 192 (i.e. they must all be < 192 for us to be near
                         \ enough to the planet to bump into a space station)
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform: In the cassette version, we don't remove the sun from the screen if we are potentially looking at it, though this check is removed in other versions, so perhaps it isn't needed (the logic in PLANET seems to support this)
+IF _CASSETTE_VERSION \ Platform: In the cassette version, we don't remove the sun from the screen if we are potentially looking at it, though this check is removed in other versions, so perhaps it isn't needed (the logic in PLANET seems to support this)
 
  LDA QQ11               \ If the current view is not a space view, skip the
  BNE P%+5               \ following instruction (so we only remove the sun from
@@ -117,9 +121,13 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform: In the cassette version, w
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  JSR WPLS               \ Call WPLS to remove the sun from the screen, as we
                         \ can't have both the sun and the space station at the
                         \ same time
+
+ENDIF
 
  JSR NWSPS              \ Add a new space station to our local bubble of
                         \ universe

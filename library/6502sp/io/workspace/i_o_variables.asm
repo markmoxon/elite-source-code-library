@@ -10,7 +10,7 @@
 
 INCLUDE "library/6502sp/io/variable/xc.asm"
 INCLUDE "library/6502sp/io/variable/yc.asm"
-INCLUDE "library/6502sp/io/variable/k3.asm"
+INCLUDE "library/common/loader/variable/k3.asm"
 INCLUDE "library/common/main/variable/u.asm"
 INCLUDE "library/6502sp/io/variable/lintab.asm"
 INCLUDE "library/6502sp/io/variable/linmax.asm"

@@ -19,11 +19,9 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
 
 ELIF _ELECTRON_VERSION
 
- RTOK 95                \ Token 0:      "UNIT  QUANTITY{crlf}
- EQUB 0                 \                 PRODUCT   UNIT PRICE FOR SALE{crlf}
-                        \                                              {lf}"
-                        \
-                        \ Encoded as:   [95]
+ EQUB &FF EOR 35        \ Token 0 is unused in the Electron version of Elite,
+ EQUB 0                 \ and it just contains &FF (plus the standard token
+                        \ obfuscation EOR) as filler
 
 ENDIF
 

@@ -71,7 +71,7 @@ ELIF _ELECTRON_VERSION
  LSR A
  LSR A
 
- STA SCH
+ STA SCH                \ ???
  LSR A
  ROR SC
  LSR A

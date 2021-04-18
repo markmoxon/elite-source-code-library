@@ -14,7 +14,15 @@
 
 .David9
 
+IF _CASSETTE_VERSION
+
  EQUW David5            \ The address of David5
+
+ELIF _ELECTRON_VERSION
+
+ EQUW &5456             \ ???
+
+ENDIF
 
  CLD                    \ This instruction is not used
 

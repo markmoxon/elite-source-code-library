@@ -43,31 +43,26 @@
 \ ******************************************************************************
 
 ORG CODE%
+
 PRINT "WORDS9 = ",~P%
 INCBIN "versions/cassette/output/WORDS9.bin"
 
-ORG CODE% + &400
+ALIGN 256
+
 PRINT "P.DIALS = ",~P%
 INCBIN "versions/cassette/binaries/P.DIALS.bin"
 
-ORG CODE% + &B00
 PRINT "PYTHON = ",~P%
 INCBIN "versions/cassette/output/PYTHON.bin"
 
-ORG CODE% + &C00
 PRINT "P.ELITE = ",~P%
 INCBIN "versions/cassette/binaries/P.ELITE.bin"
 
-ORG CODE% + &D00
 PRINT "P.A-SOFT = ",~P%
 INCBIN "versions/cassette/binaries/P.A-SOFT.bin"
 
-ORG CODE% + &E00
 PRINT "P.(C)ASFT = ",~P%
 INCBIN "versions/cassette/binaries/P.(C)ASFT.bin"
-
-O% = CODE% + &400 + &800 + &300
-ORG O%
 
 .run
 

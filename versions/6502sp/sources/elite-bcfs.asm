@@ -128,14 +128,10 @@ F% = P%
 PRINT "F% = ", ~F%
 PRINT "P% = ", ~P%
 
-ORG F%
-
 .words
 
 PRINT "words = ", ~P%
 INCBIN "versions/6502sp/output/WORDS.bin"
-
-ORG F% + &400
 
 .ships
 

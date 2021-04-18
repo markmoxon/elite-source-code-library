@@ -98,6 +98,8 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  EQUB 28                \ Define a text window as follows:
  EQUB 2, 17, 15, 16     \
                         \   * Left = 2
@@ -107,20 +109,43 @@ ENDIF
                         \
                         \ i.e. 1 row high, 13 columns wide at (2, 16)
 
+
+ELIF _ELECTRON_VERSION
+
+ EQUB 28                \ Define a text window as follows:
+ EQUB 8, 19, 23, 10     \
+                        \   * Left = 8
+                        \   * Right = 23
+                        \   * Top = 10
+                        \   * Bottom = 19
+                        \
+                        \ i.e. 9 rows high, 15 columns wide at (8, 10)
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+
  EQUB 23, 0, 6, 31      \ Set 6845 register R6 = 31
  EQUB 0, 0, 0           \
  EQUB 0, 0, 0           \ This is the "vertical displayed" register, and sets
                         \ the number of displayed character rows to 31. For
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
                         \ comparison, this value is 32 for standard modes 4 and
                         \ 5, but we claw back the last row for storing code just
-ELIF _6502SP_VERSION OR _MASTER_VERSION
-                        \ comparison, this value is 32 for standard modes 1 and
-                        \ 2, but we claw back the last row for storing code just
-ENDIF
                         \ above the end of screen memory
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
+ELIF _6502SP_VERSION OR _MASTER_VERSION
+
+ EQUB 23, 0, 6, 31      \ Set 6845 register R6 = 31
+ EQUB 0, 0, 0           \
+ EQUB 0, 0, 0           \ This is the "vertical displayed" register, and sets
+                        \ the number of displayed character rows to 31. For
+                        \ comparison, this value is 32 for standard modes 1 and
+                        \ 2, but we claw back the last row for storing code just
+                        \ above the end of screen memory
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  EQUB 23, 0, 12, &0C    \ Set 6845 register R12 = &0C and R13 = &00
  EQUB 0, 0, 0           \
@@ -150,7 +175,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  EQUB 23, 0, 1, 32      \ Set 6845 register R1 = 32
  EQUB 0, 0, 0           \
@@ -190,11 +215,21 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  EQUB 23, 0, 10, 32     \ Set 6845 register R10 = 32
  EQUB 0, 0, 0           \
  EQUB 0, 0, 0           \ This is the "cursor start" register, so this sets the
                         \ cursor start line at 0, effectively disabling the
                         \ cursor
+
+ELIF _ELECTRON_VERSION
+
+ EQUB 23, 1, 0, 0       \ Disable the cursor
+ EQUB 0, 0, 0
+ EQUB 0, 0, 0
+
+ENDIF
 
 IF _6502SP_VERSION \ Platform
 

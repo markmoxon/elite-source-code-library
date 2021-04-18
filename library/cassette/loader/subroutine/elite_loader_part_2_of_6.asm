@@ -216,7 +216,7 @@ ENDIF
  LDX #2                 \ the "character entering keyboard buffer" event
  JSR OSB
 
-.OS01                   \ Reset stack
+.OS01
 
  LDX #&FF               \ Set the stack pointer to &01FF, which is the standard
  TXS                    \ location for the 6502 stack, so this instruction

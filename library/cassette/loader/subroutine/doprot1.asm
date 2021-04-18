@@ -22,8 +22,16 @@
  LDY #2                 \ Set the high byte of V219(1 0) to 2
  STY V219+1
 
+IF _CASSETTE_VERSION
+
  STA PROT1-255,X        \ Poke &48 into PROT1, which changes the instruction
                         \ there to a PHA
+
+ELIF _ELECTRON_VERSION
+
+ CMP swine-5,X          \ ???
+
+ENDIF
 
  LDY #&18
  STY V219+1,X           \ Set the low byte of V219(1 0) to &18 (as X = 255), so

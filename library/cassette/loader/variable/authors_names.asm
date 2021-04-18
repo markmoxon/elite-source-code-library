@@ -13,9 +13,20 @@
 \
 \ ******************************************************************************
 
+IF _CASSETTE_VERSION
+
  EQUS "R.ELITEcode"
  EQUB 13
+
+ELIF _ELECTRON_VERSION
+
+ EQUS "RUN ELITEcode"
+ EQUB 13
+
+ENDIF
+
  EQUS "By D.Braben/I.Bell"
  EQUB 13
+
  EQUB &B0
 

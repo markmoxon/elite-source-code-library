@@ -34,7 +34,6 @@ IF _CASSETTE_VERSION \ Standard: There is a subtle difference between the casset
 ELIF _ELECTRON_VERSION
 
  EQUB 1, 1, 0, 111, -8, 4, 1, 8, 126, 0, 0, -126, 126, 126
-
 ELIF _6502SP_VERSION OR _DISC_VERSION
 
  EQUB 1, 1, 0, 111, -8, 4, 1, 8, 8, -2, 0, -1, 126, 44

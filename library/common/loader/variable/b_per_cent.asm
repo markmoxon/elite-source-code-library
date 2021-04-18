@@ -3,20 +3,24 @@
 \       Name: B%
 \       Type: Variable
 \   Category: Screen mode
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \    Summary: VDU commands for setting the square mode 4 screen
+ELIF _ELECTRON_VERSION
+\    Summary: VDU commands for changing to a standard mode 4 screen
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 \    Summary: VDU commands for setting the square mode 1 screen
 ENDIF
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \  Deep dive: The split-screen mode
 \             Drawing monochrome pixels in mode 4
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
 \ This block contains the bytes that get written by OSWRCH to set up the screen
 \ mode (this is equivalent to using the VDU statement in BASIC).
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \ It defines the whole screen using a square, monochrome mode 4 configuration;
 \ the mode 5 part for the dashboard is implemented in the IRQ1 routine.
 \
@@ -32,6 +36,33 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
 \   * Screen memory goes from &6000 to &7EFF, which leaves another whole page
 \     for code (i.e. 256 bytes) after the end of the screen. This is where the
 \     Python ship blueprint slots in
+ELIF _ELECTRON_VERSION
+\ The Electron version of Elite is unique in that it uses a standard mode 4
+\ screen, rather than the custom square mode used in the BBC versions. This is
+\ because the Electron lacks the 6845 CRTC chip, which the BBC versions use to
+\ customise the mode.
+\
+\ To make the Electron screen appear square like the BBC versions, there is a
+\ blank 32-byte (&20-byte) margin on each end of each character row, so each
+\ character row consists of 32 blank bytes on the left, then a page (256 bytes)
+\ of screen memory containing the game display, then another 32 blank bytes on
+\ the right. Screen memory is from &5800 to &7FFF, and the bottom row from &7EC0
+\ to &7FFF is left blank, again to be consistent with look of the BBC version.
+\ This means the screen takes up more memory on the Electron version than on the
+\ BBC versions, despite showing the same amount of content.
+\
+\ On top of this, the Electron also lacks the Video ULA of the BBC Micro, so the
+\ famous split-screen mode of the BBC versions can't be implemented in the
+\ Electron version, as the BBC versions reprogram the ULA to create the coloured
+\ dashboard. As a result, not only does the Electron suffer from the bigger
+\ memory footprint of the screen, it also has to stick to the same palette for
+\ the whole screen, so while the space view is the same monochrome mode 4 view
+\ as in the BBC versions, the dashboard has to be in the same screen mode, so
+\ it's also monochrome (though it has twice the number of horizontal pixels as
+\ the four-colour mode 5 dashboard of the BBC versions, so it is noticeably
+\ sharper, at least).
+\
+\ The following are also set up:
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 \ It defines the whole screen using a square, monochrome mode 1 configuration;
 \ the mode 2 part for the dashboard is implemented in the IRQ1 routine.
@@ -55,11 +86,15 @@ IF _MASTER_VERSION \ Comment
 \     same as if it were based on mode 1
 ENDIF
 \
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
 \   * The text window is 1 row high and 13 columns wide, and is at (2, 16)
+ELIF _ELECTRON_VERSION
+\   * The text window is 9 rows high and 15 columns wide, and is at (8, 10)
+ENDIF
 \
 \   * The cursor is disabled
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \ This almost-square mode 4 variant makes life a lot easier when drawing to the
 \ screen, as there are 256 pixels on each row (or, to put it in screen memory
 \ terms, there's one page of memory per row of pixels). For more details of the
@@ -69,6 +104,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
 \ setting from that of mode 4 to that of mode 5, when the raster reaches the
 \ split between the space view and the dashboard. See the deep dive on "The
 \ split-screen mode" for details.
+\
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 \ This almost-square mode 1 variant makes life a lot easier when drawing to the
 \ screen, as there are 256 pixels on each row (or, to put it in screen memory
@@ -78,8 +114,8 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 \ setting from that of mode 1 to that of mode 2, when the raster reaches the
 \ split between the space view and the dashboard. See the deep dive on "The
 \ split-screen mode" for details.
-ENDIF
 \
+ENDIF
 \ ******************************************************************************
 
 .B%

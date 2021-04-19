@@ -76,7 +76,7 @@ ENDIF
                         \ drawing blank characters after this one until we reach
                         \ the end of the indicator row
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  LDA CTWOS,X            \ CTWOS is a table of ready-made 1-pixel mode 5 bytes,
                         \ just like the TWOS and TWOS2 tables for mode 4 (see
@@ -92,6 +92,15 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
                         \ keep the pixel that matches the position of the
                         \ vertical bar (i.e. A is acting as a mask on the
                         \ 4-pixel colour byte)
+
+ELIF _ELECTRON_VERSION
+
+ LDA CTWOS,X            \ CTWOS is a table of ready-made 1-pixel mode 5 bytes,
+                        \ just like the TWOS and TWOS2 tables for mode 4 (see
+                        \ the PIXEL routine for details of how they work). This
+                        \ fetches a mode 5 1-pixel byte with the pixel position
+                        \ at X, so the pixel is at the offset that we want for
+                        \ our vertical bar
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
@@ -155,7 +164,7 @@ ENDIF
  TAY                    \ character block (as each character is 8 bytes of
                         \ screen memory)
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  CPY #30                \ If Y < 30 then we still have some more character
  BCC DLL10              \ blocks to draw, so loop back to DLL10 to display the
@@ -166,6 +175,14 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
                         \ one page of 256 bytes) - so this sets up SC to point
                         \ to the next indicator, i.e. the one below the one we
                         \ just drew
+
+ELIF _ELECTRON_VERSION
+
+ CPY #30                \ If Y < 30 then we still have some more character
+ BCC DLL10              \ blocks to draw, so loop back to DLL10 to display the
+                        \ next one along
+
+ JMP L293D
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
@@ -181,5 +198,9 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  RTS                    \ Return from the subroutine
+
+ENDIF
 

@@ -38,7 +38,7 @@ IF _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  LDA #&D0               \ Set SC(1 0) = &78D0, which is the screen address for
  STA SC                 \ the character block containing the left end of the
@@ -47,6 +47,13 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
 
  JSR PZW                \ Call PZW to set A to the colour for dangerous values
                         \ and X to the colour for safe values
+
+ELIF _ELECTRON_VERSION
+
+ LDA #&F0               \ ???
+ STA SC
+ LDA #&76
+ STA SC+1
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
@@ -61,6 +68,8 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  STX K+1                \ Set K+1 (the colour we should show for low values) to
                         \ X (the colour to use for safe values)
 
@@ -73,11 +82,21 @@ ENDIF
  LDA #14                \ Set T1 to 14, the threshold at which we change the
  STA T1                 \ indicator's colour
 
+ENDIF
+
  LDA DELTA              \ Fetch our ship's speed into A, in the range 0-40
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
 
 \LSR A                  \ Draw the speed indicator using a range of 0-31, and
  JSR DIL-1              \ increment SC to point to the next indicator (the roll
                         \ indicator). The LSR is commented out as it isn't
                         \ required with a call to DIL-1, so perhaps this was
                         \ originally a call to DIL that got optimised
+
+ELIF _ELECTRON_VERSION
+
+ JSR DIL                \ ???
+
+ENDIF
 

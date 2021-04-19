@@ -256,1265 +256,57 @@ INCLUDE "library/common/main/subroutine/nlin4.asm"
 INCLUDE "library/common/main/subroutine/nlin.asm"
 INCLUDE "library/common/main/subroutine/nlin2.asm"
 INCLUDE "library/common/main/subroutine/hloin.asm"
-
-.PIX1
-
- JSR ADD
-
- STA YY+1
- TXA
- STA SYL,Y
-
-.PIXEL2
-
- LDA XX15
- BPL PX1
-
- EOR #&7F
- CLC
- ADC #&01
-
-.PX1
-
- EOR #&80
- TAX
- LDA Y1
- AND #&7F
- CMP #&60
- BCS PX4
-
- LDA Y1
- BPL PX2
-
- EOR #&7F
- ADC #&01
-
-.PX2
-
- STA T
- LDA #&61
- SBC T
-
-.PIXEL
-
- STY T1
- LDY #&80
- STY SC
- TAY
- LSR A
- LSR A
- LSR A
- STA SCH
- LSR A
- ROR SC
- LSR A
- ROR SC
- ADC SCH
- ADC #&58
- STA SCH
- TXA
- AND #&F8
- ADC SC
- STA SC
- BCC L1869
-
- INC SCH
-
-.L1869
-
- TYA
- AND #&07
- TAY
- TXA
- AND #&07
- TAX
- LDA ZZ
- CMP #&90
- BCS PX3
-
- LDA TWOS2,X
- EOR (SC),Y
- STA (SC),Y
- LDA ZZ
- CMP #&50
- BCS PX13
-
- DEY
- BPL PX3
-
- LDY #&01
-
-.PX3
-
- LDA TWOS2,X
- EOR (SC),Y
- STA (SC),Y
-
-.PX13
-
- LDY T1
-
-.PX4
-
- RTS
-
-.BLINE
-
- TXA
- ADC K4
- STA QQ19+5
- LDA K4+1
- ADC T
- STA K6+3
- LDA FLAG
- BEQ BL1
-
- INC FLAG
-
-.BL5
-
- LDY LSP
- LDA #&FF
- CMP LSY2-1,Y
- BEQ BL7
-
- STA LSY2,Y
- INC LSP
- BNE BL7
-
-.BL1
-
- LDA QQ17
- STA XX15
- LDA QQ19
- STA Y1
- LDA QQ19+1
- STA X2
- LDA QQ19+2
- STA Y2
- LDA K6
- STA XX15+4
- LDA QQ19+4
- STA XX15+5
- LDA QQ19+5
- STA XX12
- LDA K6+3
- STA XX12+1
- JSR LL145
-
- BCS BL5
-
- LDA SWAP
- BEQ BL9
-
- LDA XX15
- LDY X2
- STA X2
- STY XX15
- LDA Y1
- LDY Y2
- STA Y2
- STY Y1
-
-.BL9
-
- LDY LSP
- LDA LSY2-1,Y
- CMP #&FF
- BNE BL8
-
- LDA XX15
- STA LSX2,Y
- LDA Y1
- STA LSY2,Y
- INY
-
-.BL8
-
- LDA X2
- STA LSX2,Y
- LDA Y2
- STA LSY2,Y
- INY
- STY LSP
- JSR LL30
-
- LDA XX13
- BNE BL5
-
-.BL7
-
- LDA K6
- STA QQ17
- LDA QQ19+4
- STA QQ19
- LDA QQ19+5
- STA QQ19+1
- LDA K6+3
- STA QQ19+2
- LDA CNT
- CLC
- ADC STP
- STA CNT
- RTS
-
-.FLIP
-
- LDY #&0A
-
-.FLL1
-
- LDX SY,Y
- LDA SX,Y
- STA Y1
- STA SY,Y
- TXA
- STA XX15
- STA SX,Y
- LDA SZ,Y
- STA ZZ
- JSR PIXEL2
-
- DEY
- BNE FLL1
-
- RTS
-
-.STARS
-
- LDX VIEW
- BEQ STARS1
-
- DEX
- BNE ST11
-
- JMP STARS6
-
-.ST11
-
- JMP STARS2
-
-.STARS1
-
- LDY #&0A
-
-.STL1
-
- JSR DV42
-
- LDA R
- LSR P
- ROR A
- LSR P
- ROR A
- ORA #&01
- STA Q
- LDA SZL,Y
- SBC DELT4
- STA SZL,Y
- LDA SZ,Y
- STA ZZ
- SBC DELT4+1
- STA SZ,Y
- JSR MLU1
-
- STA YY+1
- LDA P
- ADC SYL,Y
- STA YY
- STA R
- LDA Y1
- ADC YY+1
- STA YY+1
- STA S
- LDA SX,Y
- STA XX15
- JSR MLU2
-
- STA XX+1
- LDA P
- ADC SXL,Y
- STA XX
- LDA XX15
- ADC XX+1
- STA XX+1
- EOR ALP2+1
- JSR MLS1
-
- JSR ADD
-
- STA YY+1
- STX YY
- EOR ALP2
- JSR MLS2
-
- JSR ADD
-
- STA XX+1
- STX XX
- LDX BET1
- LDA YY+1
- EOR BET2+1
- JSR L23AB
-
- STA Q
- JSR MUT2
-
- ASL P
- ROL A
- STA T
- LDA #&00
- ROR A
- ORA T
- JSR ADD
-
- STA XX+1
- TXA
- STA SXL,Y
- LDA YY
- STA R
- LDA YY+1
- STA S
- LDA #&00
- STA P
- LDA BETA
- EOR #&80
- JSR PIX1
-
- LDA XX+1
- STA XX15
- STA SX,Y
- AND #&7F
- CMP #&78
- BCS KILL1
-
- LDA YY+1
- STA SY,Y
- STA Y1
- AND #&7F
- CMP #&78
- BCS KILL1
-
- LDA SZ,Y
- CMP #&10
- BCC KILL1
-
- STA ZZ
-
-.STC1
-
- JSR PIXEL2
-
- DEY
- BEQ L1A22
-
- JMP STL1
-
-.L1A22
-
- RTS
-
-.KILL1
-
- JSR DORND
-
- ORA #&04
- STA Y1
- STA SY,Y
- JSR DORND
-
- ORA #&08
- STA XX15
- STA SX,Y
- JSR DORND
-
- ORA #&90
- STA SZ,Y
- STA ZZ
- LDA Y1
- JMP STC1
-
-.STARS6
-
- LDY #&0A
-
-.STL6
-
- JSR DV42
-
- LDA R
- LSR P
- ROR A
- LSR P
- ROR A
- ORA #&01
- STA Q
- LDA SX,Y
- STA XX15
- JSR MLU2
-
- STA XX+1
- LDA SXL,Y
- SBC P
- STA XX
- LDA XX15
- SBC XX+1
- STA XX+1
- JSR MLU1
-
- STA YY+1
- LDA SYL,Y
- SBC P
- STA YY
- STA R
- LDA Y1
- SBC YY+1
- STA YY+1
- STA S
- LDA SZL,Y
- ADC DELT4
- STA SZL,Y
- LDA SZ,Y
- STA ZZ
- ADC DELT4+1
- STA SZ,Y
- LDA XX+1
- EOR ALP2
- JSR MLS1
-
- JSR ADD
-
- STA YY+1
- STX YY
- EOR ALP2+1
- JSR MLS2
-
- JSR ADD
-
- STA XX+1
- STX XX
- LDA YY+1
- EOR BET2+1
- LDX BET1
- JSR L23AB
-
- STA Q
- LDA XX+1
- STA S
- EOR #&80
- JSR MUT1
-
- ASL P
- ROL A
- STA T
- LDA #&00
- ROR A
- ORA T
- JSR ADD
-
- STA XX+1
- TXA
- STA SXL,Y
- LDA YY
- STA R
- LDA YY+1
- STA S
- LDA #&00
- STA P
- LDA BETA
- JSR PIX1
-
- LDA XX+1
- STA XX15
- STA SX,Y
- LDA YY+1
- STA SY,Y
- STA Y1
- AND #&7F
- CMP #&6E
- BCS KILL6
-
- LDA SZ,Y
- CMP #&A0
- BCS KILL6
-
- STA ZZ
-
-.STC6
-
- JSR PIXEL2
-
- DEY
- BEQ ST3
-
- JMP STL6
-
-.ST3
-
- RTS
-
-.KILL6
-
- JSR DORND
-
- AND #&7F
- ADC #&0A
- STA SZ,Y
- STA ZZ
- LSR A
- BCS ST4
-
- LSR A
- LDA #&FC
- ROR A
- STA XX15
- STA SX,Y
- JSR DORND
-
- STA Y1
- STA SY,Y
- JMP STC6
-
-.ST4
-
- JSR DORND
-
- STA XX15
- STA SX,Y
- LSR A
- LDA #&E6
- ROR A
- STA Y1
- STA SY,Y
- BNE STC6
-
-.L1B45
-
- EQUB &01
-
-.L1B46
-
- EQUB &00, &2C, &01, &A0, &0F, &70, &17, &A0
- EQUB &0F, &10, &27, &82, &14, &10, &27, &28
- EQUB &23, &98, &3A, &10, &27, &50, &C3
-
-.L1B5D
-
- LDX #&09
- CMP #&19
- BCS st3_lc
-
- DEX
- CMP #&0A
- BCS st3_lc
-
- DEX
- CMP #&02
- BCS st3_lc
-
- DEX
- BNE st3_lc
-
-.STATUS
-
- LDA #&08
- JSR TT66
-
- JSR TT111
-
- LDA #&07
- STA XC
- LDA #&7E
- JSR NLIN3
-
- LDA #&0F
- LDY QQ12
- BNE st6
-
- LDA #&E6
- LDY MANY+9
- LDX FRIN+2,Y
- BEQ st6
-
- LDY ENERGY
- CPY #&80
- ADC #&01
-
-.st6
-
- JSR plf
-
- LDA #&7D
- JSR spc
-
- LDA #&13
- LDY FIST
- BEQ st5
-
- CPY #&32
- ADC #&01
-
-.st5
-
- JSR plf
-
- LDA #&10
- JSR spc
-
- LDA TALLY+1
- BNE L1B5D
-
- TAX
- LDA TALLY
- LSR A
- LSR A
-
-.st5L
-
- INX
- LSR A
- BNE st5L
-
-.st3_lc
-
- TXA
- CLC
- ADC #&15
- JSR plf
-
- LDA #&12
- JSR plf2
-
- LDA ESCP
- BEQ L1BD8
-
- LDA #&70
- JSR plf2
-
-.L1BD8
-
- LDA BST
- BEQ L1BE2
-
- LDA #&6F
- JSR plf2
-
-.L1BE2
-
- LDA ECM
- BEQ L1BEC
-
- LDA #&6C
- JSR plf2
-
-.L1BEC
-
- LDA #&71
- STA XX4
-
-.stqv
-
- TAY
- LDX BOMB-113,Y
- BEQ L1BF9
-
- JSR plf2
-
-.L1BF9
-
- INC XX4
- LDA XX4
- CMP #&75
- BCC stqv
-
- LDX #&00
-
-.st
-
- STX CNT
- LDY LASER,X
- BEQ st1
-
- TXA
- CLC
- ADC #&60
- JSR spc
-
- LDA #&67
- LDX CNT
- LDY LASER,X
- BPL L1C1C
-
- LDA #&68
-
-.L1C1C
-
- JSR plf2
-
-.st1
-
- LDX CNT
- INX
- CPX #&04
- BCC st
-
- RTS
-
-.plf2
-
- JSR plf
-
- LDX #&06
- STX XC
- RTS
-
-.L1C2F
-
- EQUB &48
-
- EQUB &76, &E8, &00
-
-.pr2
-
- LDA #&03
-
-.L1C35
-
- LDY #&00
-
-.TT11
-
- STA U
- LDA #&00
- STA K
- STA K+1
- STY K+2
- STX K+3
-
-.BPRNT
-
- LDX #&0B
- STX T
- PHP
- BCC TT30
-
- DEC T
- DEC U
-
-.TT30
-
- LDA #&0B
- SEC
- STA XX17
- SBC U
- STA U
- INC U
- LDY #&00
- STY S
- JMP TT36
-
-.TT35
-
- ASL K+3
- ROL K+2
- ROL K+1
- ROL K
- ROL S
- LDX #&03
-
-.tt35_lc
-
- LDA K,X
- STA XX15,X
- DEX
- BPL tt35_lc
-
- LDA S
- STA XX15+4
- ASL K+3
- ROL K+2
- ROL K+1
- ROL K
- ROL S
- ASL K+3
- ROL K+2
- ROL K+1
- ROL K
- ROL S
- CLC
- LDX #&03
-
-.tt36_lc
-
- LDA K,X
- ADC XX15,X
- STA K,X
- DEX
- BPL tt36_lc
-
- LDA XX15+4
- ADC S
- STA S
- LDY #&00
-
-.TT36
-
- LDX #&03
- SEC
-
-.tt37_lc
-
- LDA K,X
- SBC L1C2F,X
- STA XX15,X
- DEX
- BPL tt37_lc
-
- LDA S
- SBC #&17
- STA XX15+4
- BCC TT37
-
- LDX #&03
-
-.tt38_lc
-
- LDA XX15,X
- STA K,X
- DEX
- BPL tt38_lc
-
- LDA XX15+4
- STA S
- INY
- JMP TT36
-
-.TT37
-
- TYA
- BNE TT32
-
- LDA T
- BEQ TT32
-
- DEC U
- BPL TT34
-
- LDA #&20
- BNE tt34_lc
-
-.TT32
-
- LDY #&00
- STY T
- CLC
- ADC #&30
-
-.tt34_lc
-
- JSR TT26
-
-.TT34
-
- DEC T
- BPL L1CE4
-
- INC T
-
-.L1CE4
-
- DEC XX17
- BMI L1CF5
-
- BNE L1CF2
-
- PLP
- BCC L1CF2
-
- LDA #&2E
- JSR TT26
-
-.L1CF2
-
- JMP TT35
-
-.L1CF5
-
- RTS
-
-.BELL
-
- LDA #&07
-
-.TT26
-
- STA K3
- STY YSAV2
- STX XSAV2
- LDY QQ17
- CPY #&FF
- BEQ RR4
-
- CMP #&07
- BEQ R5
-
- CMP #&20
- BCS RR1
-
- CMP #&0A
- BEQ RRX1
-
- LDX #&01
- STX XC
-
-.RRX1
-
- INC YC
- BNE RR4
-
-.RR1
-
- TAY
- LDX #&BF
- ASL A
- ASL A
- BCC L1D23
-
- LDX #&C1
-
-.L1D23
-
- ASL A
- BCC L1D27
-
- INX
-
-.L1D27
-
- STA P+1
- STX P+2
- LDA #&80
- STA SC
- LDA YC
- CMP #&18
- BCC L1D3B
-
- JSR TTX66
-
- JMP RR4
-
-.L1D3B
-
- LSR A
- ROR SC
- LSR A
- ROR SC
- ADC YC
- ADC #&58
- STA SCH
- LDA XC
- ASL A
- ASL A
- ASL A
- ADC SC
- STA SC
- BCC L1D54
-
- INC SCH
-
-.L1D54
-
- CPY #&7F
- BNE RR2
-
- DEC XC
- DEC SCH
- LDY #&F8
- JSR ZES2
-
- BEQ RR4
-
-.RR2
-
- INC XC
- EQUB &2C
-
-.RREN
-
- STA SCH
- LDY #&07
-
-.RRL1
-
- LDA (P+1),Y
- EOR (SC),Y
- STA (SC),Y
- DEY
- BPL RRL1
-
-.RR4
-
- LDY YSAV2
- LDX XSAV2
- LDA K3
- CLC
-
-.rT9
-
- RTS
-
-.R5
-
- JSR BEEP
-
- JMP RR4
-
-.DIALS
-
- LDA #&F0
- STA SC
- LDA #&76
- STA SCH
- LDA DELTA
- JSR DIL
-
- LDA #&00
- STA R
- STA P
- LDA #&08
- STA S
- LDA ALP1
- LSR A
- LSR A
- ORA ALP2
- EOR #&80
- JSR ADD
-
- JSR DIL2
-
- LDA BETA
- LDX BET1
- BEQ L1DB0
-
- SBC #&01
-
-.L1DB0
-
- JSR ADD
-
- JSR DIL2
-
- LDA MCNT
- AND #&03
- BNE rT9
-
- LDY #&00
- LDX #&03
-
-.DLL23
-
- STY XX12,X
- DEX
- BPL DLL23
-
- LDX #&03
- LDA ENERGY
- LSR A
- STA Q
-
-.DLL24
-
- SEC
- SBC #&20
- BCC DLL26
-
- STA Q
- LDA #&20
- STA XX12,X
- LDA Q
- DEX
- BPL DLL24
-
- BMI DLL9
-
-.DLL26
-
- LDA Q
- STA XX12,X
-
-.DLL9
-
- LDA XX12,Y
- STY P
- JSR DIL
-
- LDY P
- INY
- CPY #&04
- BNE DLL9
-
- LDA #&76
- STA SCH
- LDA #&30
- STA SC
- LDA FSH
- JSR DILX
-
- LDA ASH
- JSR DILX
-
- LDA QQ14
- JSR L1E27
-
- SEC
- JSR L293D
-
- LDA GNTMP
- JSR DILX
-
- LDA #&F0
- STA T1
- STA K+1
- LDA ALTIT
- JSR DILX
-
- JMP COMPAS
-
-.DILX
-
- LSR A
- LSR A
-
-.L1E27
-
- LSR A
-
-.DIL
-
- STA Q
- LDX #&FF
- STX R
- LDY #&02
- LDX #&03
-
-.DL1
-
- LDA Q
- CMP #&08
- BCC DL2
-
- SBC #&08
- STA Q
- LDA R
-
-.DL5
-
- STA (SC),Y
- INY
- STA (SC),Y
- INY
- STA (SC),Y
- TYA
- CLC
- ADC #&06
- BCC L1E4E
-
- INC SCH
-
-.L1E4E
-
- TAY
- DEX
- BMI DL6
-
- BPL DL1
-
-.DL2
-
- EOR #&07
- STA Q
- LDA R
-
-.DL3
-
- ASL A
- DEC Q
- BPL DL3
-
- PHA
- LDA #&00
- STA R
- LDA #&63
- STA Q
- PLA
- JMP DL5
-
-.DL6
-
- SEC
- JMP L293D
-
-.DIL2
-
- LDY #&01
- STA Q
-
-.DLL10
-
- SEC
- LDA Q
- SBC #&04
- BCS DLL11
-
- LDA #&FF
- LDX Q
- STA Q
- LDA CTWOS,X
- BNE DLL12
-
-.DLL11
-
- STA Q
- LDA #&00
-
-.DLL12
-
- STA (SC),Y
- INY
- STA (SC),Y
- INY
- STA (SC),Y
- INY
- STA (SC),Y
- TYA
- CLC
- ADC #&05
- TAY
- CPY #&1E
- BCC DLL10
-
- JMP L293D
-
-.ESCAPE
-
- JSR RES2
-
- JSR RESET
-
- LDA #&00
- LDX #&10
-
-.ESL2
-
- STA QQ20,X
- DEX
- BPL ESL2
-
- STA FIST
- STA ESCP
- LDA #&46
- STA QQ14
- JMP BAY
+INCLUDE "library/common/main/subroutine/pix1.asm"
+INCLUDE "library/common/main/subroutine/pixel2.asm"
+INCLUDE "library/common/main/subroutine/pixel.asm"
+INCLUDE "library/common/main/subroutine/bline.asm"
+INCLUDE "library/common/main/subroutine/flip.asm"
+INCLUDE "library/common/main/subroutine/stars.asm"
+INCLUDE "library/common/main/subroutine/stars1.asm"
+INCLUDE "library/common/main/subroutine/stars6.asm"
+INCLUDE "library/common/main/variable/prxs.asm"
+INCLUDE "library/common/main/subroutine/status.asm"
+INCLUDE "library/common/main/subroutine/plf2.asm"
+INCLUDE "library/common/main/variable/tens.asm"
+INCLUDE "library/common/main/subroutine/pr2.asm"
+INCLUDE "library/common/main/subroutine/tt11.asm"
+INCLUDE "library/common/main/subroutine/bprnt.asm"
+INCLUDE "library/common/main/subroutine/bell.asm"
+INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
+INCLUDE "library/common/main/subroutine/dials_part_1_of_4.asm"
+INCLUDE "library/common/main/subroutine/dials_part_2_of_4.asm"
+INCLUDE "library/common/main/subroutine/dials_part_3_of_4.asm"
+INCLUDE "library/common/main/subroutine/dials_part_4_of_4.asm"
+INCLUDE "library/common/main/subroutine/dilx.asm"
+INCLUDE "library/common/main/subroutine/dil2.asm"
+INCLUDE "library/common/main/subroutine/escape.asm"
+
+\ ******************************************************************************
+\
+\ Save output/ELTB.bin
+\
+\ ******************************************************************************
+
+PRINT "ELITE B"
+PRINT "Assembled at ", ~CODE_B%
+PRINT "Ends at ", ~P%
+PRINT "Code size is ", ~(P% - CODE_B%)
+PRINT "Execute at ", ~LOAD%
+PRINT "Reload at ", ~LOAD_B%
+
+PRINT "S.ELTB ", ~CODE_B%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_B%
+SAVE "versions/electron/output/ELTB.bin", CODE_B%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE C FILE
+\
+\ Produces the binary file ELTC.bin that gets loaded by elite-bcfs.asm.
+\
+\ ******************************************************************************
+
+CODE_C% = P%
+LOAD_C% = LOAD% +P% - CODE%
 
 .TA34
 
@@ -1722,18 +514,18 @@ L1F39 = M32+1
  LSR A
  LSR A
  CMP INWK+35
- BCC ta3_lc
+ BCC ta3
 
  JSR DORND
 
  CMP #&E6
- BCC ta3_lc
+ BCC ta3
 
  LDA #&00
  STA INWK+32
  JMP SESCP
 
-.ta3_lc
+.ta3
 
  LDA INWK+31
  AND #&07
@@ -2248,7 +1040,7 @@ L1F39 = M32+1
  STA Y1
  EOR BET2
  LDX BET1
- JSR L23AB
+ JSR MULTS-2
 
  JSR ADD
 
@@ -2260,7 +1052,7 @@ L1F39 = M32+1
  STX S
  LDX BET1
  EOR BET2+1
- JSR L23AB
+ JSR MULTS-2
 
  JSR ADD
 
@@ -2268,7 +1060,7 @@ L1F39 = M32+1
  STA YY+1
  LDX ALP1
  EOR ALP2
- JSR L23AB
+ JSR MULTS-2
 
  STA Q
  LDA XX
@@ -2440,9 +1232,10 @@ L1F39 = M32+1
 
  LDX ALP1
 
-.L23AB
-
  STX P
+
+.MULTS
+
  TAX
  AND #&80
  STA T
@@ -3368,7 +2161,7 @@ L1F39 = M32+1
  LDY #&01
  STY YC
  LDA QQ11
- BNE tt66_lc
+ BNE tt66
 
  LDY #&0B
  STY XC
@@ -3381,7 +2174,7 @@ L1F39 = M32+1
  LDA #&AF
  JSR TT27
 
-.tt66_lc
+.tt66
 
  LDX #&00
  STX QQ17
@@ -5015,7 +3808,7 @@ hy5 = L3023+1
  CLC
  BEQ TT172
 
- JSR L1C35
+ JSR pr2+2
 
  JMP TT152
 
@@ -5333,7 +4126,7 @@ hy5 = L3023+1
  LDX P
  RTS
 
-.bay_lc
+.bay
 
  JMP BAY
 
@@ -5372,7 +4165,7 @@ hy5 = L3023+1
  SEC
  SBC QQ14
  ASL A
- STA L1B45
+ STA PRXS
  LDX #&01
 
 .EQL1
@@ -5412,9 +4205,9 @@ hy5 = L3023+1
 
  JSR gnum
 
- BEQ bay_lc
+ BEQ bay
 
- BCS bay_lc
+ BCS bay
 
  SBC #&00
  LDX #&02
@@ -5644,8 +4437,8 @@ hy5 = L3023+1
 
  ASL A
  TAY
- LDX L1B45,Y
- LDA L1B46,Y
+ LDX PRXS,Y
+ LDA PRXS+1,Y
  TAY
 
 .c
@@ -7937,10 +6730,10 @@ L3E5C = L3E5A+2
 .TT107
 
  LDA QQ22+1
- BEQ t95_lc
+ BEQ t95
 
  DEC QQ22
- BNE t95_lc
+ BNE t95
 
  LDX QQ22+1
  DEX
@@ -7952,11 +6745,11 @@ L3E5C = L3E5A+2
  JSR L304B
 
  DEC QQ22+1
- BNE t95_lc
+ BNE t95
 
  JMP TT18
 
-.t95_lc
+.t95
 
  RTS
 
@@ -7964,7 +6757,7 @@ L3E5C = L3E5A+2
 
  LDA QQ11
  AND #&C0
- BEQ t95_lc
+ BEQ t95
 
  JSR hm
 
@@ -9400,7 +8193,7 @@ L418E = SPS1+1
  LDX #&00
  LDY #&00
 
-.ll51_lc
+.ll51
 
  LDA XX15
  STA Q
@@ -9446,7 +8239,7 @@ L418E = SPS1+1
  ADC #&06
  TAX
  CMP #&11
- BCC ll51_lc
+ BCC ll51
 
  RTS
 
@@ -9616,12 +8409,12 @@ L418E = SPS1+1
 
  LDX #&08
 
-.ll91_lc
+.ll91
 
  LDA INWK,X
  STA QQ17,X
  DEX
- BPL ll91_lc
+ BPL ll91
 
  LDA #&FF
  STA K4+1
@@ -10463,11 +9256,11 @@ L418E = SPS1+1
  LDA V
  ADC #&04
  STA V
- BCC ll81_lc
+ BCC ll81
 
  INC V+1
 
-.ll81_lc
+.ll81
 
  JMP LL75
 

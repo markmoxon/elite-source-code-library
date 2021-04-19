@@ -298,7 +298,7 @@
  DEC XX17               \ Decrement the total number of characters left to
                         \ print, which we stored in XX17
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
+IF _CASSETTE_VERSION \ Label
 
  BMI RR3+1              \ If the result is negative, we have printed all the
                         \ characters, so return from the subroutine (as RR3
@@ -311,7 +311,7 @@ ELIF _DISC_FLIGHT
                         \ characters, so jump down to rT9 to return from the
                         \ subroutine
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
+ELIF _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
 
  BMI rT10               \ If the result is negative, we have printed all the
                         \ characters, so jump down to rT10 to return from the
@@ -337,7 +337,7 @@ ENDIF
 
  JMP TT35               \ Loop back to TT35 to print the next digit
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Label
+IF _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Label
 
 .rT10
 

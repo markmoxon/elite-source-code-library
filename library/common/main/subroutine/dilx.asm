@@ -17,12 +17,14 @@
 \   A                   The value to be shown on the indicator (so the larger
 \                       the value, the longer the bar)
 \
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \   T1                  The threshold at which we change the indicator's colour
 \                       from the low value colour to the high value colour. The
 \                       threshold is in pixels, so it should have a value from
 \                       0-16, as each bar indicator is 16 pixels wide
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
+ENDIF
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \   K                   The colour to use when A is a high value, as a 4-pixel
 \                       mode 5 character row byte
 \
@@ -41,9 +43,11 @@ ENDIF
 \
 \ Other entry points:
 \
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
 \   DILX+2              The range of the indicator is 0-64 (for the fuel
 \                       indicator)
 \
+ENDIF
 \   DIL-1               The range of the indicator is 0-32 (for the speed
 \                       indicator)
 \
@@ -57,7 +61,11 @@ ENDIF
  LSR A                  \ If we call DILX, we set A = A / 16, so A is 0-15
  LSR A
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  LSR A                  \ If we call DILX+2, we set A = A / 4, so A is 0-15
+
+ENDIF
 
  LSR A                  \ If we call DIL-1, we set A = A / 2, so A is 0-15
 
@@ -71,6 +79,8 @@ ENDIF
  LDX #&FF               \ Set R = &FF, to use as a mask for drawing each row of
  STX R                  \ each character block of the bar, starting with a full
                         \ character's width of 4 pixels
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
 
  CMP T1                 \ If A >= T1 then we have passed the threshold where we
  BCS DL30               \ change bar colour, so jump to DL30 to set A to the
@@ -88,6 +98,8 @@ ENDIF
 .DL31
 
  STA COL                \ Store the colour of the indicator in COL
+
+ENDIF
 
  LDY #2                 \ We want to start drawing the indicator on the third
                         \ line in this character row, so set Y to point to that
@@ -111,7 +123,7 @@ ENDIF
 
  LDA Q                  \ Fetch the indicator value (0-15) from Q into A
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  CMP #4                 \ If Q < 4, then we need to draw the end cap of the
  BCC DL2                \ indicator, which is less than a full character's
@@ -119,6 +131,16 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
 
  SBC #4                 \ Otherwise we can draw a 4-pixel wide block, so
  STA Q                  \ subtract 4 from Q so it contains the amount of the
+                        \ indicator that's left to draw after this character
+
+ELIF _ELECTRON_VERSION
+
+ CMP #8                 \ If Q < 8, then we need to draw the end cap of the
+ BCC DL2                \ indicator, which is less than a full character's
+                        \ width, so jump down to DL2 to do this
+
+ SBC #8                 \ Otherwise we can draw an 8-pixel wide block, so
+ STA Q                  \ subtract 8 from Q so it contains the amount of the
                         \ indicator that's left to draw after this character
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -140,7 +162,7 @@ ENDIF
 
 .DL5
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 
  AND COL                \ Fetch the 4-pixel mode 5 colour byte from COL, and
                         \ only keep pixels that have their equivalent bits set
@@ -163,11 +185,28 @@ ENDIF
  INY                    \ And draw the third pixel row, incrementing Y
  STA (SC),Y
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  TYA                    \ Add 6 to Y, so Y is now 8 more than when we started
  CLC                    \ this loop iteration, so Y now points to the address
  ADC #6                 \ of the first line of the indicator bar in the next
  TAY                    \ character block (as each character is 8 bytes of
                         \ screen memory)
+
+ELIF _ELECTRON_VERSION
+
+ TYA                    \ ???
+ CLC
+ ADC #&06
+ BCC L1E4E
+
+ INC SCH
+
+.L1E4E
+
+ TAY
+
+ENDIF
 
  DEX                    \ Decrement the loop counter for the next character
                         \ block along in the indicator
@@ -181,10 +220,20 @@ ENDIF
 
 .DL2
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  EOR #3                 \ If we get here then we are drawing the indicator's
  STA Q                  \ end cap, so Q is < 4, and this EOR flips the bits, so
+                        \ instead of containing the number of indicator columns
+                        \ we need to fill in on the left side of the cap's
+                        \ character block, Q now contains the number of blank
+                        \ columns there should be on the right side of the cap's
+                        \ character block
+
+ELIF _ELECTRON_VERSION
+
+ EOR #7                 \ If we get here then we are drawing the indicator's
+ STA Q                  \ end cap, so Q is < 8, and this EOR flips the bits, so
                         \ instead of containing the number of indicator columns
                         \ we need to fill in on the left side of the cap's
                         \ character block, Q now contains the number of blank
@@ -210,13 +259,17 @@ ENDIF
 
 .DL3
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  ASL A                  \ Shift the mask left so bit 0 is cleared, and then
  AND #%11101111         \ clear bit 4, which has the effect of shifting zeroes
                         \ from the left into each nibble (i.e. xxxx xxxx becomes
                         \ xxx0 xxx0, which blanks out the last column in the
                         \ 4-pixel mode 5 character block)
+
+ELIF _ELECTRON_VERSION
+
+ ASL A                  \ ???
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
@@ -261,13 +314,18 @@ ENDIF
 
 .DL6
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  INC SC+1               \ Increment the high byte of SC to point to the next
                         \ character row on-screen (as each row takes up exactly
                         \ one page of 256 bytes) - so this sets up SC to point
                         \ to the next indicator, i.e. the one below the one we
                         \ just drew
+
+ELIF _ELECTRON_VERSION
+
+ SEC                    \ ???
+ JMP L293D
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
@@ -279,7 +337,11 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
 .DL9                    \ This label is not used but is in the original source
 
  RTS                    \ Return from the subroutine
+
+ENDIF
 

@@ -8,11 +8,18 @@
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  LDA #&78               \ Set SC(1 0) = &7810, which is the screen address for
  STA SC+1               \ the character block containing the left end of the
  LDA #&10               \ top indicator in the left part of the dashboard, the
+ STA SC                 \ one showing the forward shield
+
+ELIF _ELECTRON_VERSION
+
+ LDA #&76               \ Set SC(1 0) = &7630, which is the screen address for
+ STA SC+1               \ the character block containing the left end of the
+ LDA #&30               \ top indicator in the left part of the dashboard, the
  STA SC                 \ one showing the forward shield
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -47,7 +54,7 @@ ENDIF
  JSR DILX+2             \ and increment SC to point to the next indicator (the
                         \ cabin temperature)
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  JSR PZW                \ Call PZW to set A to the colour for dangerous values
                         \ and X to the colour for safe values
@@ -58,7 +65,14 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ and X to the colour for safe values, suitable for
                         \ non-striped indicators
 
+ELIF _ELECTRON_VERSION
+
+ SEC                    \ ???
+ JSR L293D
+
 ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
 
  STX K+1                \ Set K+1 (the colour we should show for low values) to
                         \ X (the colour to use for safe values)
@@ -76,6 +90,8 @@ ENDIF
  LDA CABTMP             \ Draw the cabin temperature indicator using a range of
  JSR DILX               \ 0-255, and increment SC to point to the next indicator
                         \ (the laser temperature)
+
+ENDIF
 
  LDA GNTMP              \ Draw the laser temperature indicator using a range of
  JSR DILX               \ 0-255, and increment SC to point to the next indicator

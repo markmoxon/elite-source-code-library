@@ -299,7 +299,7 @@ ENDIF
                         \
                         \ followed by a newline and an indent of 6 characters
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: The Master version shows the escape pod by name in the Status Mode screen but doesn't show the large cargo bay, while the other versions do show the large cargo bay but don't show the escape pod
+IF _DISC_VERSION OR _6502SP_VERSION \ Master: The Master version shows the escape pod by name in the Status Mode screen but doesn't show the large cargo bay; the Electron version is similar (though it shows it as "Escape Capsule), while the other versions do show the large cargo bay but don't show the escape pod
 
  LDA CRGO               \ If our ship's cargo capacity is < 26 (i.e. we do not
  CMP #26                \ have a cargo bay extension), skip the following two
@@ -317,6 +317,27 @@ ELIF _MASTER_VERSION
  LDA #112               \ We do have an escape pod fitted, so print recursive
  JSR plf2               \ token 112 ("ESCAPE POD"), followed by a newline and an
                         \ indent of 6 characters
+
+ENDIF
+
+IF _CASSETTE_VERSION \ Electron: The Electron version shows the escape pod by name in the Status Mode screen (where it is shown as "Escape Capsule") but it doesn't show the large cargo bay; the Master version is similar (though it shows it as "Escape Pod"), while the other versions show the large cargo bay but don't show the escape pod at all
+
+ LDA CRGO               \ If our ship's cargo capacity is < 26 (i.e. we do not
+ CMP #26                \ have a cargo bay extension), skip the following two
+ BCC P%+7               \ instructions
+
+ LDA #107               \ We do have a cargo bay extension, so print recursive
+ JSR plf2               \ token 107 ("LARGE CARGO{sentence case} BAY"), followed
+                        \ by a newline and an indent of 6 characters
+
+ELIF _ELECTRON_VERSION
+
+ LDA ESCP               \ If we don't have an escape pod fitted (i.e. ESCP is
+ BEQ P%+7               \ zero), skip the following two instructions
+
+ LDA #112               \ We do have an escape pod fitted, so print recursive
+ JSR plf2               \ token 112 ("ESCAPE CAPSULE"), followed by a newline
+                        \ and an indent of 6 characters
 
 ENDIF
 

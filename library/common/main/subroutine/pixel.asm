@@ -16,10 +16,13 @@ ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \ Draw a point at screen coordinate (X, A) with the point size determined by the
 \ distance in ZZ. This applies to the top part of the screen (the monochrome
 \ mode 4 portion).
+ELIF _ELECTRON_VERSION
+\ Draw a point at screen coordinate (X, A) with the point size determined by the
+\ distance in ZZ. This applies to the top part of the screen (the space view).
 ELIF _MASTER_VERSION
 \ Draw a point at screen coordinate (X, A) with the point size determined by the
 \ distance in ZZ. This applies to the top part of the screen (the 4-colour mode
@@ -141,7 +144,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Other: Group A: The Master version doesn't draw single-pixel dots, as it omits the logic to check for distant dots and plot them using one pixel. The Long-range Chart is a good example of this, where the Master version draws a two-pixel yellow dash for every system
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  STY T1                 \ Store Y in T1
 
@@ -157,6 +160,37 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Other: Group A: The
  AND #%11111000
  STA SC
 
+ELIF _ELECTRON_VERSION
+
+ STY T1                 \ ???
+ LDY #&80
+ STY SC
+ TAY
+ LSR A
+ LSR A
+ LSR A
+ STA SCH
+ LSR A
+ ROR SC
+ LSR A
+ ROR SC
+ ADC SCH
+ ADC #&58
+ STA SCH
+ TXA
+ AND #&F8
+ ADC SC
+ STA SC
+ BCC L1869
+
+ INC SCH
+
+.L1869
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Other: Group A: The Master version doesn't draw single-pixel dots, as it omits the logic to check for distant dots and plot them using one pixel. The Long-range Chart is a good example of this, where the Master version draws a two-pixel yellow dash for every system
+
  TYA                    \ Set Y = Y AND %111
  AND #%00000111
  TAY
@@ -165,9 +199,23 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Other: Group A: The
  AND #%00000111
  TAX
 
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION
+
  LDA ZZ                 \ If distance in ZZ >= 144, then this point is a very
  CMP #144               \ long way away, so jump to PX3 to fetch a 1-pixel point
  BCS PX3                \ from TWOS and EOR it into SC+Y
+
+ELIF _ELECTRON_VERSION
+
+ LDA ZZ                 \ If distance in ZZ >= 144, then this point is a very
+ CMP #144               \ long way away, so jump to PX14 to ???
+ BCS PX14
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Other: See group A
 
  LDA TWOS2,X            \ Otherwise fetch a 2-pixel dash from TWOS2 and EOR it
  EOR (SC),Y             \ into SC+Y

@@ -34,8 +34,17 @@
 
 .STARS6
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron version has no witchspace, so the number of stardust particles shown is always the same, so the value is hard-coded rather than needing to use a location (which the other versions need so they can vary the number of particles when in witchspace)
+
  LDY NOSTM              \ Set Y to the current number of stardust particles, so
                         \ we can use it as a counter through all the stardust
+
+ELIF _ELECTRON_VERSION
+
+ LDY #NOST              \ Set Y to the number of stardust particles, so we can
+                        \ use it as a counter through all the stardust
+
+ENDIF
 
 .STL6
 

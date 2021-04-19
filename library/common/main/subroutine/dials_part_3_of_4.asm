@@ -35,6 +35,8 @@ ENDIF
 
  LDY #0                 \ Set Y = 0, for use in various places below
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  JSR PZW                \ Call PZW to set A to the colour for dangerous values
                         \ and X to the colour for safe values
 
@@ -48,6 +50,8 @@ ENDIF
                         \ for low values and yellow/white for high values, which
                         \ we use not only for the energy banks, but also for the
                         \ shield levels and current fuel
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
 
@@ -63,8 +67,12 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  STX T1                 \ Set T1 to 3, the threshold at which we change the
                         \ indicator's colour
+
+ENDIF
 
 .DLL23
 
@@ -87,9 +95,18 @@ ENDIF
                         \ bank indicators, so we can calculate each of the four
                         \ energy banks' values and store them in XX12
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  LDA ENERGY             \ Set A = Q = ENERGY / 4, so they are both now in the
  LSR A                  \ range 0-63 (so that's a maximum of 16 in each of the
  LSR A                  \ banks, and a maximum of 15 in the top bank)
+
+ELIF _ELECTRON_VERSION
+
+ LDA ENERGY             \ ???
+ LSR A
+
+ENDIF
 
  STA Q                  \ Set Q to A, so we can use Q to hold the remaining
                         \ energy as we work our way through each bank, from the
@@ -97,8 +114,17 @@ ENDIF
 
 .DLL24
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
+
  SEC                    \ Set A = A - 16 to reduce the energy count by a full
  SBC #16                \ bank
+
+ELIF _ELECTRON_VERSION
+
+ SEC                    \ Set A = A - 32 to reduce the energy count by a full
+ SBC #32                \ bank
+
+ENDIF
 
  BCC DLL26              \ If the C flag is clear then A < 16, so this bank is
                         \ not full to the brim, and is therefore the last one
@@ -107,9 +133,14 @@ ENDIF
  STA Q                  \ This bank is full, so update Q with the energy of the
                         \ remaining banks
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  LDA #16                \ Store this bank's level in XX12 as 16, as it is full,
+ STA XX12,X             \ with XX12+3 for the bottom bank and XX12+0 for the top
+
+ELIF _ELECTRON_VERSION
+
+ LDA #32                \ Store this bank's level in XX12 as 32, as it is full,
  STA XX12,X             \ with XX12+3 for the bottom bank and XX12+0 for the top
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION

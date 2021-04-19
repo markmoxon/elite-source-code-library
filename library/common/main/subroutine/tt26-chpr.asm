@@ -316,7 +316,7 @@ ENDIF
                         \
                         \ It's a long way from 10 PRINT "Hello world!":GOTO 10
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
+IF _CASSETTE_VERSION \ Comment
 
 \LDX #LO(K3)            \ These instructions are commented out in the original
 \INX                    \ source, but they call OSWORD 10, which reads the
@@ -469,6 +469,30 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
+IF _ELECTRON_VERSION
+
+ LDA #&80               \ ???
+ STA SC
+ LDA YC
+ CMP #&18
+ BCC L1D3B
+
+ JSR TTX66
+
+ JMP RR4
+
+.L1D3B
+
+ LSR A
+ ROR SC
+ LSR A
+ ROR SC
+ ADC YC
+ ADC #&58
+ STA SCH
+
+ENDIF
+
  LDA XC                 \ Fetch XC, the x-coordinate (column) of the text cursor
                         \ into A
 
@@ -499,7 +523,7 @@ IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Enhanced: The standard d
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  ASL A                  \ Multiply A by 8, and store in SC. As each character is
  ASL A                  \ 8 pixels wide, and the special screen mode Elite uses
@@ -519,6 +543,33 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
                         \
                         \ and so on
 
+ELIF _ELECTRON_VERSION
+
+ ASL A                  \ Multiply A by 8, and store in SC. As each character is
+ ASL A                  \ 8 pixels wide, and the special screen mode Elite uses
+ ASL A                  \ for the top part of the screen is 256 pixels across
+ ADC SC                 \ ???
+ STA SC                 \ with one bit per pixel, this value is not only the
+                        \ screen address offset of the text cursor from the left
+                        \ side of the screen, it's also the least significant
+                        \ byte of the screen address where we want to print this
+                        \ character, as each row of on-screen pixels corresponds
+                        \ to one page. To put this more explicitly, the screen
+                        \ starts at &6000, so the text rows are stored in screen
+                        \ memory like this:
+                        \
+                        \   Row 1: &6000 - &60FF    YC = 1, XC = 0 to 31
+                        \   Row 2: &6100 - &61FF    YC = 2, XC = 0 to 31
+                        \   Row 3: &6200 - &62FF    YC = 3, XC = 0 to 31
+                        \
+                        \ and so on
+
+ BCC L1D54              \ ???
+
+ INC SCH
+
+.L1D54
+
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  ASL A                  \ Multiply A by 8, and store in SC, so we now have:
@@ -534,7 +585,11 @@ IF _DISC_FLIGHT \ Platform
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  LDA YC                 \ Fetch YC, the y-coordinate (row) of the text cursor
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Platform
 
@@ -551,13 +606,17 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR 
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Platform
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Platform
 
  ADC #&5E               \ A contains YC (from above) and the C flag is set (from
  TAX                    \ the CPY #127 above), so these instructions do this:
                         \
                         \   X = YC + &5E + 1
                         \     = YC + &5F
+
+ELIF _ELECTRON_VERSION
+
+ DEC SCH                \ ???
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
@@ -652,7 +711,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR 
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
+IF _CASSETTE_VERSION \ Comment
 
 \LDA YC                 \ This instruction is commented out in the original
                         \ source. It isn't required because we only just did a
@@ -666,11 +725,19 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  CMP #24                \ If the text cursor is on the screen (i.e. YC < 24, so
  BCC RR3                \ we are on rows 1-23), then jump to RR3 to print the
                         \ character
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
+ELIF _ELECTRON_VERSION
+
+ EQUB &2C               \ ???
+
+ENDIF
+
+IF _CASSETTE_VERSION \ Platform
 
  JSR TTX66              \ Otherwise we are off the bottom of the screen, so
                         \ clear the screen and draw a white border
@@ -752,7 +819,7 @@ ENDIF
                         \ the character data to the right place in screen
                         \ memory
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  ORA #&60               \ We already stored the least significant byte
                         \ of this screen address in SC above (see the STA SC

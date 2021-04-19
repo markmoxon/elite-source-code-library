@@ -153,33 +153,11 @@ ORG CODE%
 
 LOAD_A% = LOAD%
 
- EQUB &40
-
-.L0D01
-
- EQUB &00
-
-.L0D02
-
- EQUB &00, &00
-
-.L0D04
-
- EQUB &00, &00
-
-.L0D06
-
- EQUB &00, &00, &B6, &3F, &F8, &1C, &25, &0D
- EQUB &B9, &3F, &08, &2C, &01, &0D
-
-
 INCLUDE "library/cassette/main/workspace/s_per_cent.asm"
 
- EQUB &AD
+.IRQ1
 
-.L0D26
-
- ASL XX16+4
+ LDA L0D06
  EOR #&FF
  STA L0D06
  ORA L0D01
@@ -193,7 +171,8 @@ INCLUDE "library/cassette/main/workspace/s_per_cent.asm"
 
 .L0D3D
 
- JMP (L0D02)
+ JMP (S%+2)             \ Jump to the original value of IRQ1V to process the
+                        \ interrupt as normal
 
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_1_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_2_of_16.asm"
@@ -8106,8 +8085,13 @@ L3E5C = L3E5A+2
 
  JSR RES2
 
+.TT170
+
  LDX #&FF
  TXS
+
+.BR1
+
  LDX #&03
  STX XC
  JSR FX200
@@ -8704,7 +8688,7 @@ L418E = SPS1+1
  SEC
  CLV
  SEI
- JMP (L0D04)
+ JMP (S%+4)
 
 .L42D6
 

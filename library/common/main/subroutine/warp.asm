@@ -56,6 +56,8 @@ ENDIF
                         \ be non-zero, so OR'ing with SSPR will produce a
                         \ a non-zero result if either A or SSPR are non-zero
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron version doesn't have witchspace, so there's no need to disable in-system jumping there
+
  ORA MJ                 \ If we are in witchspace, then MJ will be non-zero, so
                         \ OR'ing with MJ will produce a non-zero result if
                         \ either A or SSPR or MJ are non-zero
@@ -64,6 +66,15 @@ ENDIF
                         \ station in the vicinity, or we are in witchspace, in
                         \ which case jump to WA1 to make a low beep to show that
                         \ we can't do an in-system jump
+
+ELIF _ELECTRON_VERSION
+
+ BNE WA1                \ A is non-zero if we have either a ship or a space
+                        \ station in the vicinity, in which case jump to WA1 to
+                        \ make a low beep to show that we can't do an in-system
+                        \ jump
+
+ENDIF
 
  LDY K%+8               \ Otherwise we can do an in-system jump, so now we fetch
                         \ the byte at K%+8, which contains the z_sign for the

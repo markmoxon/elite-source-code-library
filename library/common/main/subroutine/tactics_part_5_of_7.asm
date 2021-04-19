@@ -45,14 +45,19 @@
  DEC INWK+31            \ We're done with the checks, so it's time to fire off a
                         \ missile, so reduce the missile count in byte #31 by 1
 
- LDA TYPE               \ If this is not a Thargoid, jump down to TA16 to launch
- CMP #THG               \ a missile
- BNE TA16
+ LDA TYPE               \ Fetch the ship type into A
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron version has no Thargoids, which also means no ships can launch Thargons
+
+ CMP #THG               \ If this is not a Thargoid, jump down to TA16 to launch
+ BNE TA16               \ a missile
 
  LDX #TGL               \ This is a Thargoid, so instead of launching a missile,
  LDA INWK+32            \ the mothership launches a Thargon, so call SFS1 to
  JMP SFS1               \ spawn a Thargon from the parent ship, and return from
                         \ the subroutine using a tail call
+
+ENDIF
 
 .TA16
 

@@ -30,9 +30,19 @@
 
  JSR ANGRY              \ Call ANGRY to make the target ship hostile
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  LDY #0                 \ We have just launched a missile, so we need to remove
  JSR ABORT              \ missile lock and hide the leftmost indicator on the
                         \ dashboard by setting it to black (Y = 0)
+
+ELIF _ELECTRON_VERSION
+
+ LDY #4                 \ We have just launched a missile, so we need to remove
+ JSR ABORT              \ missile lock and hide the leftmost indicator on the
+                        \ dashboard by setting it to black (Y = 4) ???
+
+ENDIF
 
  DEC NOMSL              \ Reduce the number of missiles we have by 1
 

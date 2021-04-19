@@ -161,10 +161,15 @@ ENDIF
 
  JSR DORND              \ Set A and X to random numbers
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: In the cassette version there is a 45% chance that an angry station will spawn a cop, while in the enhanced versions there is only a 6.2% chance
+IF _CASSETTE_VERSION \ Standard: In the cassette version there is a 45% chance that an angry station will spawn a cop, while in the enhanced versions there is only a 6.2% chance
 
  CMP #140               \ If A < 140 (55% chance) then return from the
  BCC TA14-1             \ subroutine (as TA14-1 contains an RTS)
+
+ELIF _ELECTRON_VERSION
+
+ CMP #140               \ If A < 140 (55% chance) then return from the subroutine
+ BCC TA1                \ (as TA1 contains an RTS)
 
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
@@ -173,13 +178,21 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Advanced: In the 6502SP version there can be up to seven cops in the vicinity, and in the Master version there can be up to six, while the limit is four in the other versions
+IF _CASSETTE_VERSION \ Standard: In the Electron version there can be up to three cops in the vicinity, in the cassette and disc versions there can be up to four, in the Master version there can be up to six, and in the 6502SP there can be up to seven
 
  LDA MANY+COPS          \ We only call the tactics routine for the space station
  CMP #4                 \ when it is hostile, so first check the number of cops
  BCS TA14-1             \ in the vicinity, and if we already have 4 or more, we
                         \ don't need to spawn any more, so return from the
                         \ subroutine (as TA14-1 contains an RTS)
+
+ELIF _ELECTRON_VERSION
+
+ LDA MANY+COPS          \ We only call the tactics routine for the space station
+ CMP #3                 \ when it is hostile, so first check the number of cops
+ BCS TA1                \ in the vicinity, and if we already have 3 or more, we
+                        \ don't need to spawn any more, so return from the
+                        \ subroutine (as TA1 contains an RTS)
 
 ELIF _DISC_FLIGHT
 
@@ -209,15 +222,24 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Label
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  LDA #%11110001         \ Set the AI flag to give the ship E.C.M., enable AI and
                         \ make it very aggressive (56 out of 63)
+
+ELIF _ELECTRON_VERSION
+
+ LDA #%11100001         \ Set the AI flag to give the ship E.C.M., enable AI and
+                        \ make it pretty aggressive (48 out of 63)
+
+ENDIF
 
  JMP SFS1               \ Jump to SFS1 to spawn the ship, returning from the
                         \ subroutine using a tail call
 
 .TA13
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform: This logic is in part 3 for the other versions 
+IF _CASSETTE_VERSION \ Platform: This logic is in part 3 for the other versions 
 
  CPX #TGL               \ If this is not a Thargon, jump down to TA14
  BNE TA14

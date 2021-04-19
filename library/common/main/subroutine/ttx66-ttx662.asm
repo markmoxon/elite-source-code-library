@@ -94,11 +94,16 @@ IF _6502SP_VERSION \ Screen
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
+IF _CASSETTE_VERSION \ Platform
 
  ASL A                  \ Set LASCT to 0, as 128 << 1 = %10000000 << 1 = 0. This
  STA LASCT              \ stops any laser pulsing. This instruction is STA LAS2
                         \ in the text source file ELITEC.TXT
+
+ELIF _ELECTRON_VERSION
+
+ ASL A                  \ Set LAS2 to 0, as 128 << 1 = %10000000 << 1 = 0. This
+ STA LAS2               \ stops any laser pulsing
 
 ELIF _DISC_DOCKED
 
@@ -141,7 +146,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
 
  LDX #&60               \ Set X to the screen memory page for the top row of the
                         \ screen (as screen memory starts at &6000)
@@ -157,6 +162,11 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Tube
  CPX #&78               \ Loop back to BOL1 until we have cleared page &7700,
  BNE BOL1               \ the last character row in the space view part of the
                         \ screen (the space view)
+
+ELIF _ELECTRON_VERSION
+
+ LDX #&58               \ ???
+ JSR LYN
 
 ELIF _6502SP_VERSION
 
@@ -282,13 +292,24 @@ IF _6502SP_VERSION \ Screen
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
 
  LDX #0                 \ Set (X1, Y1) to (0, 0)
  STX X1
  STX Y1
 
  STX QQ17               \ Set QQ17 = 0 to switch to ALL CAPS
+
+ELIF _ELECTRON_VERSION
+
+ LDX #0                 \ Set QQ17 = 0 to switch to ALL CAPS
+ STX QQ17
+
+.L2838                  \ ???
+
+ LDX #0                 \ Set (X1, Y1) to (0, 0)
+ STX X1
+ STX Y1
 
 ELIF _6502SP_VERSION
 

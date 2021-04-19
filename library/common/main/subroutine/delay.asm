@@ -24,7 +24,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 ENDIF
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
+IF _CASSETTE_VERSION \ Platform
 
  LDY #2                 \ Set Y to 2 vertical syncs
 
@@ -37,12 +37,55 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
  LDY #8                 \ Set Y to 8 vertical syncs and fall through into DELAY
                         \ to wait for this long
 
+ELIF _ELECTRON_VERSION
+
+.L285F
+
+ LDY #1                 \ Set Y to 1 ???
+
+ EQUB &2C               \ Skip the next instruction by turning it into
+                        \ &2C &A0 &08, or BIT &08A0, which does nothing apart
+                        \ from affect the flags
+
+.DEL8
+
+ LDY #30                \ Set Y to 30 ??? and fall through into DELAY
+                        \ to wait for this long
+
 ENDIF
 
 .DELAY
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  JSR WSCAN              \ Call WSCAN to wait for the vertical sync, so the whole
                         \ screen gets drawn
+
+ELIF _ELECTRON_VERSION
+
+ TXA                    \ ???
+ LDX #0
+
+.L2867
+
+ EQUB &2C
+
+.L2868
+
+ BNE L2867
+
+ EQUB &2C
+
+.L286B
+
+ BNE L2868
+
+ DEX
+ BNE L286B
+
+ TAX
+
+ENDIF
 
  DEY                    \ Decrement the counter in Y
 

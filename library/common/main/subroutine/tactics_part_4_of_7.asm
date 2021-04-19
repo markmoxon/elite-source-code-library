@@ -113,13 +113,15 @@ ENDIF
  CMP #230               \ If A < 230 (90% chance), jump down to ta3 to consider
  BCC ta3                \ firing a missile
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: In the enhanced versions, the NEWB flags determine whether or not a ship has an escape pod it can launch when things go south, while in the cassette version, every ship has an escape pod fitted
+IF _CASSETTE_VERSION \ Electron: The cassette version has Thargoids but no NEWB flags, so we have to manually cater for Thargoids launching Thargons rather than using the same code as escape pods
 
  LDA TYPE               \ If this is a Thargoid, jump down to ta3 to consider
  CMP #THG               \ launching a Thargon
  BEQ ta3
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: In the enhanced versions, the NEWB flags determine whether or not a ship has an escape pod it can launch when things go south, while in the cassette and Electron versions, every ship has an escape pod fitted
 
  LDX TYPE               \ Fetch the ship blueprint's default NEWB flags from the
  LDA E%-1,X             \ table at E%, and if bit 7 is clear (i.e. this ship

@@ -27,7 +27,7 @@ IF _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Screen
+IF _CASSETTE_VERSION \ Screen
 
  LDA #7*8               \ The E.C.M. bulb is in character block number 7
                         \ with each character taking 8 bytes, so this sets the
@@ -44,6 +44,19 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Screen
                         \ knows...
 
  BNE BULB-2             \ Jump down to BULB-2 (this BNE is effectively a JMP as
+                        \ A will never be zero)
+
+ELIF _ELECTRON_VERSION
+
+ LDA #&98               \ The E.C.M. bulb is in character block number 7
+                        \ with each character taking 8 bytes, so this sets the
+                        \ low byte of the screen address of the character block
+                        \ we want to draw to ???
+
+ LDX #LO(ECBT)          \ Set (Y X) to point to the character definition in
+ LDY #HI(ECBT)+&43      \ ECBT ???
+
+ BNE BULB               \ Jump down to BULB (this BNE is effectively a JMP as
                         \ A will never be zero)
 
 ELIF _DISC_FLIGHT

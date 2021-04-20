@@ -25,6 +25,8 @@
                         \ is the x-offset from the centre of the compass of the
                         \ dot we want to draw. Returns with the C flag clear
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  TXA                    \ Set COMX = 195 + X, as 186 is the pixel x-coordinate
  ADC #195               \ of the leftmost dot possible on the compass, and X can
  STA COMX               \ be -9, which would be 195 - 9 = 186. This also means
@@ -33,6 +35,19 @@
                         \ in the compass... but the compass dot is actually two
                         \ pixels wide, so the compass dot can overlap the right
                         \ edge of the compass, but not the left edge
+
+ELIF _ELECTRON_VERSION
+
+ TXA                    \ Set COMX = 193 + X, as 186 is the pixel x-coordinate
+ ADC #193               \ of the leftmost dot possible on the compass, and X can
+ STA COMX               \ be -9, which would be 195 - 9 = 186. This also means
+                        \ that the highest value for COMX is 195 + 9 = 204,
+                        \ which is the pixel x-coordinate of the rightmost dot
+                        \ in the compass... but the compass dot is actually two
+                        \ pixels wide, so the compass dot can overlap the right
+                        \ edge of the compass, but not the left edge ???
+
+ENDIF
 
  LDA XX15+1             \ Set A to the y-coordinate of the planet or station to
                         \ show on the compass, which will be in the range -96 to
@@ -73,12 +88,18 @@ ENDIF
  LDX XX15+2             \ If the z-coordinate of the XX15 vector is positive,
  BPL P%+4               \ skip the following instruction
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Screen
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Screen
 
  LDA #&FF               \ The z-coordinate of XX15 is negative, so the planet or
                         \ station is behind us and the compass dot should be in
                         \ green/cyan, so set A to a 4-pixel mode 5 byte row in
                         \ colour 3
+
+ELIF _ELECTRON_VERSION
+
+ LDA #&FF               \ The z-coordinate of XX15 is negative, so the planet or
+                        \ station is behind us and the compass dot should be in
+                        \ green/cyan, so set A to a ???
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 

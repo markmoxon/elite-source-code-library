@@ -15,15 +15,25 @@
 
 .PL2
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  LDA TYPE               \ Shift bit 0 of the planet/sun's type into the C flag
  LSR A
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Tube
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Tube
 
  BCS P%+5               \ If the planet/sun's type has bit 0 clear, then it's
                         \ either 128 or 130, which is a planet; meanwhile, the
                         \ sun has type 129, which has bit 0 set. So if this is
                         \ the sun, skip the following instruction
+
+ JMP WPLS2              \ This is the planet, so jump to WPLS2 to remove it from
+                        \ screen, returning from the subroutine using a tail
+                        \ call
+
+ELIF _ELECTRON_VERSION
 
  JMP WPLS2              \ This is the planet, so jump to WPLS2 to remove it from
                         \ screen, returning from the subroutine using a tail
@@ -50,7 +60,11 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  JMP WPLS               \ This is the sun, so jump to WPLS to remove it from
                         \ screen, returning from the subroutine using a tail
                         \ call
+
+ENDIF
 

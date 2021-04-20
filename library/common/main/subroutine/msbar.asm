@@ -99,7 +99,7 @@ IF _6502SP_VERSION \ Tube
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  TXA                    \ Set T = X * 8
  ASL A
@@ -109,6 +109,20 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
 
  LDA #49                \ Set SC = 49 - T
  SBC T                  \        = 48 + 1 - (X * 8)
+ STA SC
+
+ELIF _ELECTRON_VERSION
+
+ TXA                    \ Set T = X * 8
+ PHA
+
+ ASL A
+ ASL A
+ ASL A
+ STA T
+
+ LDA #&D1               \ Set SC = ???
+ SBC T                  \        = 
  STA SC
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -144,7 +158,7 @@ ENDIF
                         \     missile, for X = 1 we hop to the left by one
                         \     character, and so on
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  LDA #&7E               \ Set the high byte of SC(1 0) to &7E, the character row
  STA SCH                \ that contains the missile indicators (i.e. the bottom
@@ -155,6 +169,20 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
                         \ example, a green block has Y = &EE, or %11101110, so
                         \ the missile blocks are 3 pixels wide, with the
                         \ fourth pixel on the character row being empty)
+
+ELIF _ELECTRON_VERSION
+
+ LDA #&7D               \ Set the high byte of SC(1 0) to &7D, the character row
+ STA SCH                \ that contains the missile indicators (i.e. the bottom
+                        \ row of the screen) ???
+
+ TYA                    \ Set A to the correct colour, which is a 3-pixel wide
+                        \ mode 5 character row in the correct colour (for
+                        \ example, a green block has Y = &EE, or %11101110, so
+                        \ the missile blocks are 3 pixels wide, with the
+                        \ fourth pixel on the character row being empty)
+
+ TAX                    \ ???
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
@@ -177,7 +205,6 @@ ELIF _MASTER_VERSION
                         \ mode 2 character row byte in the specified colour
 
 ENDIF
-
 
 IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
@@ -225,6 +252,12 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
+IF _ELECTRON_VERSION
+
+ LDA L3961,X            \ ???
+
+ENDIF
+
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
 
  STA (SC),Y             \ Draw the 3-pixel row, and as we do not use EOR logic,
@@ -234,6 +267,12 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 ENDIF
                         \ this will overwrite anything that is already there
                         \ (so drawing a black missile will delete what's there)
+
+IF _ELECTRON_VERSION
+
+ DEX                    \ ???
+
+ENDIF
 
  DEY                    \ Decrement the counter for the next row
 
@@ -253,6 +292,13 @@ IF _MASTER_VERSION \ Platform
 
  LDA #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
  STA VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
+
+ENDIF
+
+IF _ELECTRON_VERSION
+
+ PLA                    \ ???
+ TAX
 
 ENDIF
 

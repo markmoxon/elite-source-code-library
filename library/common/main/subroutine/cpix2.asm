@@ -10,8 +10,10 @@ ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \ Draw a single-height mode 5 dash (1 pixel high, 2 pixels wide).
+ELIF _ELECTRON_VERSION
+\ Draw a single-height mode 4 dash (1 pixel high, 4 pixels wide).
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 \ Draw a single-height mode 2 dash (1 pixel high, 2 pixels wide).
 ENDIF
@@ -26,8 +28,10 @@ ELIF _MASTER_VERSION
 \   A                   The screen pixel y-coordinate of the dash
 ENDIF
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \   COL                 The colour of the dash as a mode 5 character row byte
+ELIF _ELECTRON_VERSION
+\   COL                 The dash as a mode 4 character row byte
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 \   COL                 The colour of the dash as a mode 2 character row byte
 ENDIF
@@ -42,6 +46,13 @@ ENDIF
 
 .CPIX2
 
+IF _ELECTRON_VERSION
+
+ LDY #&80               \ ???
+ STY SC
+
+ENDIF
+
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  LDA Y1                 \ Fetch the y-coordinate into A
@@ -52,13 +63,17 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
 \.CPIX                  \ This label is commented out in the original source. It
                         \ would provide a new entry point with A specifying the
                         \ y-coordinate instead of Y1, but it isn't used anywhere
 
  TAY                    \ Store the y-coordinate in Y
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  LSR A                  \ Set A = A / 8, so A now contains the character row we
  LSR A                  \ need to draw in (as each character row contains 8
@@ -80,6 +95,31 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
  STA SC                 \ Store the address of the character block in the low
                         \ byte of SC(1 0), so now SC(1 0) points to the
                         \ character block we need to draw into
+
+ELIF _ELECTRON_VERSION
+
+ LSR A                  \ Set A = A / 8, so A now contains the character row we
+ LSR A                  \ need to draw in (as each character row contains 8
+ LSR A                  \ pixel rows)
+
+ STA SCH                \ Store the screen page in the high byte of SC(1 0)
+
+ LSR A                  \ ???
+ ROR SC
+ LSR A
+ ROR SC
+ ADC SCH
+ ADC #&58
+ STA SCH
+ LDA XX15
+ AND #&F8
+ ADC SC
+ STA SC
+ BCC L37D0
+
+ INC SCH
+
+.L37D0
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
@@ -115,11 +155,21 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  TYA                    \ Set Y to just bits 0-2 of the y-coordinate, which will
  AND #%00000111         \ be the number of the pixel row we need to draw into
  TAY                    \ within the character block
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
+ELIF _ELECTRON_VERSION
+
+ LDA Y1                 \ ???
+ AND #&07
+ TAY
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  LDA X1                 \ Copy bits 0-1 of X1 to bits 1-2 of X, and clear the C
  AND #%00000110         \ flag in the process (using the LSR). X will now be
@@ -133,6 +183,13 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
  AND COL                \ at X, and AND with the colour byte so that pixel takes
                         \ on the colour we want to draw (i.e. A is acting as a
                         \ mask on the colour byte)
+
+ELIF _ELECTRON_VERSION
+
+ LDA X1                 \ ???
+ AND #&07
+ TAX
+ LDA TWOS,X
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
@@ -153,10 +210,19 @@ ENDIF
  STA (SC),Y             \ remove it later without ruining the background that's
                         \ already on-screen
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  LDA CTWOS+1,X          \ Fetch a mode 5 1-pixel byte with the pixel position
                         \ at X+1, so we can draw the right pixel of the dash
+
+ELIF _ELECTRON_VERSION
+
+ JSR L37E4              \ ???
+
+.L37E4
+
+ INX
+ LDA TWOS,X
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
@@ -175,6 +241,7 @@ ENDIF
                         \ fetched that value, then the right pixel of the dash
                         \ is in the same character block as the left pixel, so
                         \ jump to CP1 to draw it
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
 
  LDA SC                 \ Otherwise the left pixel we drew was at the last
  ADC #8                 \ position of four in this character block, so we add
@@ -182,7 +249,19 @@ ENDIF
                         \ along (as there are 8 bytes in a character block).
                         \ The C flag was cleared above, so this ADC is correct
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
+ELIF _ELECTRON_VERSION
+
+ LDA SC                 \ Otherwise the left pixel we drew was at the last
+ CLC                    \ ???
+ ADC #8                 \ position of four in this character block, so we add
+ STA SC                 \ 8 to the screen address to move onto the next block
+                        \ along (as there are 8 bytes in a character block).
+                        \ The C flag was cleared above, so this ADC is correct
+
+ENDIF
+
+
+IF _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  BCC P%+4               \ If the addition we just did overflowed, then increment
  INC SC+1               \ the high byte of SC(1 0), as this means we just moved
@@ -190,13 +269,17 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  LDA CTWOS+1,X          \ Refetch the mode 5 1-pixel byte, as we just overwrote
                         \ A (the byte will still be the fifth byte from the
                         \ table, which is correct as we want to draw the
                         \ leftmost pixel in the next character along as the
                         \ dash's right pixel)
+
+ELIF _ELECTRON_VERSION
+
+ LDA TWOS,X             \ ???
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
@@ -210,7 +293,11 @@ ENDIF
 
 .CP1
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  AND COL                \ Apply the colour mask to the pixel byte, as above
+
+ENDIF
 
 IF _MASTER_VERSION \ Platform
 

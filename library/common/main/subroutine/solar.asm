@@ -65,6 +65,8 @@ ENDIF
                         \ it's the first one to be added to our local bubble of
                         \ this new system's universe
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  LDA QQ15+3             \ Fetch s1_hi, extract bits 0-2, set bits 0 and 7 and
  AND #%00000111         \ store in z_sign, so the sun is behind us at a distance
  ORA #%10000001         \ of 1 to 7
@@ -78,6 +80,8 @@ ENDIF
  LDA #0                 \ Set the pitch and roll counters to 0 (no rotation)
  STA INWK+29
  STA INWK+30
+
+ENDIF
 
  LDA #129               \ Set A = 129, the "ship" type for the sun
 

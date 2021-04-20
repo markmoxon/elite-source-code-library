@@ -15,6 +15,14 @@
 
 .PLANET
 
+IF _ELECTRON_VERSION
+
+ LDA TYPE               \ ???
+ LSR A
+ BCS PL2-1
+
+ENDIF
+
 IF _6502SP_VERSION \ Screen
 
  LDA #GREEN             \ Send a #SETCOL GREEN command to the I/O processor to
@@ -90,6 +98,9 @@ ENDIF
 
 .PL82
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
+
  LDA TYPE               \ If the planet/sun's type has bit 0 clear, then it's
  LSR A                  \ either 128 or 130, which is a planet (the sun has type
  BCC PL9                \ 129, which has bit 0 set). So jump to PL9 to draw the
@@ -98,4 +109,12 @@ ENDIF
 
  JMP SUN                \ Otherwise jump to SUN to draw the sun with radius K,
                         \ returning from the subroutine using a tail call
+
+ELIF _ELECTRON_VERSION
+
+ JSR WPLS2              \ ???
+
+ JMP CIRCLE
+
+ENDIF
 

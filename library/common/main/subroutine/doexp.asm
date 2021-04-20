@@ -192,13 +192,28 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR 
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Master: The Master version has half the number of explosion particles per vertex than the other versions
+IF _6502SP_VERSION \ Master: The Master and Electron versions have half the number of explosion particles per vertex compared to the other versions
 
  LSR A                  \ Divide A by 8 so that is has a maximum value of 15
  LSR A
  LSR A
 
 ELIF _MASTER_VERSION
+
+ LSR A                  \ Divide A by 16 so that is has a maximum value of 7
+ LSR A
+ LSR A
+ LSR A
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Electron: The Master and Electron versions have half the number of explosion particles per vertex compared to the other versions
+
+ LSR A                  \ Divide A by 8 so that is has a maximum value of 15
+ LSR A
+ LSR A
+
+ELIF _ELECTRON_VERSION
 
  LSR A                  \ Divide A by 16 so that is has a maximum value of 7
  LSR A

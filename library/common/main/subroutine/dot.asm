@@ -46,7 +46,7 @@ IF _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Tube
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Tube
 
  LDA COMY               \ Set Y1 = COMY, the y-coordinate of the dot
  STA Y1
@@ -56,6 +56,16 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Tube
 
  LDA COMC               \ Set COL = COMC, the mode 5 colour byte for the dot
  STA COL
+
+ELIF _ELECTRON_VERSION
+
+ LDA COMY               \ Set Y1 = COMY, the y-coordinate of the dot
+ STA Y1
+
+ LDA COMX               \ Set X1 = COMX, the x-coordinate of the dot
+ STA X1
+
+ LDA COMC               \ Set A = COMC, the pixel byte for the dot
 
 ELIF _MASTER_VERSION
 

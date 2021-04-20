@@ -13,6 +13,8 @@
 \ instead of a two pixel dash from TWOS2. This applies to the top part of the
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
 \ screen (the monochrome mode 4 space view).
+ELIF _ELECTRON_VERSION
+\ screen (the space view).
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 \ screen (the four-colour mode 1 space view).
 ENDIF
@@ -35,11 +37,25 @@ ENDIF
 
 .PIX
 
+IF _ELECTRON_VERSION
+
+ LDY #&80               \ ???
+ STY ZP
+
+ENDIF
+
  TAY                    \ Copy A into Y, for use later
 
  EOR #%10000000         \ Flip the sign of A
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Screen
+IF _ELECTRON_VERSION
+
+ CMP #&F8               \ ???
+ BCS PIX-1
+
+ENDIF
+
+IF _CASSETTE_VERSION \ Screen
 
  LSR A                  \ Set ZP+1 = &60 + A >> 3
  LSR A
@@ -51,6 +67,30 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Screen
  EOR #%10000000
  AND #%11111000
  STA ZP
+
+ELIF _ELECTRON_VERSION
+
+ LSR A                  \ ???
+ LSR A
+ LSR A
+ STA ZP+1
+ LSR A
+ ROR ZP
+ LSR A
+ ROR ZP
+ ADC ZP+1
+ ADC #&58
+ STA ZP+1
+ TXA
+ EOR #&80
+ AND #&F8
+ ADC ZP
+ STA ZP
+ BCC L559F
+
+ INC ZP+1
+
+.L559F
 
 ELIF _DISC_VERSION
 

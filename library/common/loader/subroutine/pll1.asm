@@ -62,7 +62,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_VERSION \ Master: For most versions, the loading screen's Saturn is drawn randomly, so the dots are different every time the game loads. However, the Master version always draws exactly the same pixels for the Saturn, as the random number generator gets seeded to the same value every time
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_VERSION \ Master: For most versions, the loading screen's Saturn is drawn randomly, so the dots are different every time the game loads. However, the Master version always draws exactly the same pixels for the Saturn, as the random number generator gets seeded to the same value every time
 
  LDA VIA+&44            \ Read the 6522 System VIA T1C-L timer 1 low-order
  STA RAND+1             \ counter (SHEILA &44), which increments 1000 times a
@@ -209,6 +209,13 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Other: Group B: The cassette version
 
 ENDIF
 
+IF _ELECTRON_VERSION
+
+ LDX #&60               \ ???
+ STX &0087
+
+ENDIF
+
                         \ The following loop iterates CNT2(1 0) times, i.e. &1DD
                         \ or 477 times, and draws the background stars on the
                         \ loading screen
@@ -265,7 +272,7 @@ ENDIF
 
  BNE PLL2               \ Loop back to PLL2 until CNT2+1 = 0
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Other: See group B
+IF _CASSETTE_VERSION \ Other: See group B
 
  LDX MHCA               \ Set the low byte of BLPTR(1 0) to the contents of MHCA
  STX BLPTR              \ (which is &CA), so we now have BLPTR(1 0) = &03CA,
@@ -277,6 +284,14 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Other: See group B
  STX BLN                \ BLN(1 0) = &03C6, which we will use in the IRQ1
                         \ handler (this has nothing to do with drawing Saturn,
                         \ it's all part of the copy protection)
+
+ELIF _ELECTRON_VERSION
+
+ LDX #&CA               \ ???
+ NOP
+ STX BLPTR
+ LDX #&C6
+ STX BLN
 
 ENDIF
 

@@ -85,6 +85,12 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
+IF _ELECTRON_VERSION
+
+ LDX #1                 \ ???
+
+ENDIF
+
  JSR CTRL               \ Scan the keyboard to see if CTRL is currently pressed
 
  BMI Ghy                \ If it is, then the galactic hyperdrive has been

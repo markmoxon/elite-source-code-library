@@ -42,6 +42,8 @@ ENDIF
 
 .ee5
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  JSR CTRL               \ Scan the keyboard to see if CTRL is currently pressed,
                         \ returning a negative value in A if it is
 
@@ -69,6 +71,12 @@ ENDIF
 
  JSR hyp1+3             \ Jump straight to the system at (QQ9, QQ10) without
                         \ first calculating which system is closest
+
+ELIF _ELECTRON_VERSION
+
+ JSR hyp1               \ ???
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform: In the cassette version, hyp1 doesn't fall through into GVL, so we need to call it
 

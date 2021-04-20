@@ -237,12 +237,20 @@ ENDIF
                         \ sign of A, so it can be negative if it's above the
                         \ chart's centre, or positive if it's below)
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: See group A
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: See group A
 
  ASL A                  \ Set K4 = 90 + y-delta * 2
  ADC #90                \
  STA K4                 \ 90 is the y-coordinate of the centre of the chart,
                         \ so this sets K4 to the centre 90 +/- 74, the pixel
+                        \ y-coordinate of this system
+
+ELIF _ELECTRON_VERSION
+
+ ASL A                  \ Set Y1 = 90 + y-delta * 2
+ ADC #90                \
+ STA Y1                 \ 90 is the y-coordinate of the centre of the chart,
+                        \ so this sets Y1 to the centre 90 +/- 74, the pixel
                         \ y-coordinate of this system
 
 ELIF _MASTER_VERSION
@@ -262,10 +270,21 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+
  LSR A                  \ Set Y = K4 / 8, so Y contains the number of the text
  LSR A                  \ row that contains this system
  LSR A
  TAY
+
+ELIF _ELECTRON_VERSION
+
+ LSR A                  \ Set Y = Y1 / 8, so Y contains the number of the text
+ LSR A                  \ row that contains this system
+ LSR A
+ TAY
+
+ENDIF
 
                         \ Now to see if there is room for this system's label.
                         \ Ideally we would print the system name on the same
@@ -375,6 +394,8 @@ ENDIF
 
 .ee1
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  LDA #0                 \ Now to plot the star, so set the high bytes of K, K3
  STA K3+1               \ and K4 to 0
  STA K4+1
@@ -409,6 +430,14 @@ ENDIF
                         \ coordinate (K3, K4)
 
  JSR FLFLLS             \ Call FLFLLS to reset the LSO block
+
+ELIF _ELECTRON_VERSION
+
+ LDA XX12               \ ???
+ STA X1
+ JSR CPIX4
+
+ENDIF
 
 IF _MASTER_VERSION \ Screen
 

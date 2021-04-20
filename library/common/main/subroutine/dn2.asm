@@ -15,10 +15,15 @@ ENDIF
 
  JSR BEEP               \ Call the BEEP subroutine to make a short, high beep
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
  LDY #50                \ Delay for 50 vertical syncs (50/50 = 1 second) and
  JMP DELAY              \ return from the subroutine using a tail call
+
+ELIF _ELECTRON_VERSION
+
+ LDY #200               \ Delay for 50 vertical syncs (50/50 = 1 second) and
+ JMP DELAY              \ return from the subroutine using a tail call ???
 
 ELIF _MASTER_VERSION
 

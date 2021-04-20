@@ -14,6 +14,7 @@
 \   A                   The value to store in pixels 1-233 (the only value that
 \                       is actually used is A = 0, which clears those pixels)
 \
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \ Returns:
 \
 \   Y                   Y is set to 0
@@ -22,9 +23,12 @@
 \
 \   SC5                 Contains an RTS
 \
+ENDIF
 \ ******************************************************************************
 
 .LYN
+
+IF _CASSETTE_VERSION OR _DISC_VERSION
 
  LDY #233               \ Set up a counter in Y to count down from pixel 233
 
@@ -38,6 +42,16 @@
  BNE EE2                \ Loop back until Y is zero
 
 .SC5
+
+ELIF _ELECTRON_VERSION
+
+ JSR ZES1               \ ???
+
+ INX
+ CPX #&76
+ BNE LYN
+
+ENDIF
 
  RTS                    \ Return from the subroutine
 

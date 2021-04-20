@@ -59,6 +59,17 @@ IF _MASTER_VERSION \ Platform
 
 ENDIF
 
+IF _ELECTRON_VERSION
+
+ JSR L2838              \ ???
+
+ LDX #&71
+ JSR LYN
+
+ JSR L2838
+
+ENDIF
+
  LDA #20                \ Move the text cursor to row 20, near the bottom of
  STA YC                 \ the screen
 
@@ -72,12 +83,17 @@ IF _DISC_DOCKED \ Screen
  LDA #7
  STA SC
 
-ELIF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT
+ELIF _CASSETTE_VERSION OR _DISC_FLIGHT
 
  LDA #&75               \ Set the two-byte value in SC to &7507
  STA SC+1
  LDA #7
  STA SC
+
+ JSR TT67               \ Print a newline, which will move the text cursor down
+                        \ a line (to row 21) and back to column 1
+
+ELIF _ELECTRON_VERSION
 
  JSR TT67               \ Print a newline, which will move the text cursor down
                         \ a line (to row 21) and back to column 1
@@ -107,7 +123,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Screen
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Screen
 
  LDA #0                 \ Call LYN to clear the pixels from &7507 to &75F0
  JSR LYN
@@ -123,6 +139,17 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Screen
 
                         \ Fall through into LYN to clear the pixels from &7707
                         \ to &77F0
+
+ELIF _ELECTRON_VERSION
+
+ LDY #1                 \ ???
+ STY XC
+ DEY
+ TYA
+
+.SC5
+
+ RTS
 
 ELIF _DISC_FLIGHT
 

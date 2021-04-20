@@ -47,7 +47,7 @@ ENDIF
                         \ scanner, so return from the subroutine (as SC5
                         \ contains an RTS)
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Advanced: In the original versions, ships are shown on the scanner with a green stick, while missiles are shown in yellow (if an escape pod is fitted, they are shown in cyan and white respectively). In the advanced versions, each ship has its own colour for when it is shown on the scanner, as defined in the scacol table
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Advanced: In the original versions, ships are shown on the scanner with a green stick, while missiles are shown in yellow (if an escape pod is fitted, they are shown in cyan and white respectively). In the advanced versions, each ship has its own colour for when it is shown on the scanner, as defined in the scacol table
 
  LDX #&FF               \ Set X to the default scanner colour of green/cyan
                         \ (a 4-pixel mode 5 byte in colour 3)
@@ -390,12 +390,22 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Master: See group A
                         \ We can use there as the starting point for drawing the
                         \ stick, if there is one
 
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Master: See group A
+
  LDA CTWOS+1,X          \ Load the same mode 5 1-pixel byte that we just used
  AND COL                \ for the top-right pixel, and mask it with the same
  STA X1                 \ colour, storing the result in X1, so we can use it as
                         \ the character row byte for the stick
 
  PLA                    \ Restore the stick height from the stack into A
+
+ELIF _ELECTRON_VERSION
+
+ LDA TWOS,X             \ ???
+ STA X1
+ PLA
 
 ENDIF
 
@@ -431,8 +441,26 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Tube
                         \ in the character above, so set Y to 7, the number of
                         \ the last row
 
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_FLIGHT
+
  DEC SC+1               \ Decrement the high byte of the screen address to move
                         \ to the character block above
+
+ELIF _ELECTRON_VERSION
+
+ LDA SC                 \ ???
+ SEC
+ SBC #&40
+ STA SC
+ LDA SCH
+ SBC #&01
+ STA SCH
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Tube
 
 .VL1
 
@@ -457,6 +485,10 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Tube
                         \ the dot is above the ellipse and the stick is below
                         \ the dot, and we need to draw the stick downwards from
                         \ the dot)
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_FLIGHT
 
  INY                    \ We want to draw the stick downwards, so we first
                         \ increment the row counter so that it's pointing to the
@@ -508,6 +540,40 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Tube
                         \ to draw the next pixel
 
  RTS                    \ Return from the subroutine
+
+ELIF _ELECTRON_VERSION
+
+ JSR L2936              \ ???
+
+.L2929
+
+ JSR L2936
+
+ LDA XX15
+ EOR (SC),Y
+ STA (SC),Y
+ INX
+ BNE L2929
+
+ RTS
+
+.L2936
+
+ INY
+ CPY #&08
+ BNE RTS
+
+ LDY #&00
+
+.L293D
+
+ LDA SC
+ ADC #&3F
+ STA SC
+ LDA SCH
+ ADC #&01
+ STA SCH
+ RTS
 
 ELIF _6502SP_VERSION
 

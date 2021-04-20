@@ -42,8 +42,6 @@
 \
 \ ******************************************************************************
 
-ORG CODE%
-
 PRINT "WORDS9 = ",~P%
 INCBIN "versions/cassette/output/WORDS9.bin"
 

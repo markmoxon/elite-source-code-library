@@ -39,17 +39,15 @@ _ELECTRON_VERSION       = (_VERSION = 5)
 N% = 17                 \ N% is set to the number of bytes in the VDU table, so
                         \ we can loop through them in part 2 below
 
-LEN = 506               \ ???
-
-LE% = &0B00
+LE% = &0B00             \ LE% is the address to which the code from UU% onwards
+                        \ is copied in part 3
 
 C% = &0D00              \ C% is set to the location that the main game code gets
                         \ moved to after it is loaded
 
-S% = C%                 \ S% points to the entry point for the main game code
+L% = &2000              \ L% is the load address of the main game code file
 
-CODE% = &4400
-LOAD% = &4400
+S% = C%                 \ S% points to the entry point for the main game code
 
 USERV = &0200           \ The address for the user vector
 BRKV = &0202            \ The address for the break vector
@@ -74,6 +72,11 @@ INCLUDE "library/cassette/loader/workspace/zp.asm"
 \ ELITE LOADER
 \
 \ ******************************************************************************
+
+CODE% = &4400
+LOAD% = &4400
+
+ORG CODE%
 
 \ ******************************************************************************
 \
@@ -114,8 +117,6 @@ INCLUDE "library/cassette/loader/workspace/zp.asm"
 \ The routine ends with a jump to the start of the loader code at ENTRY.
 \
 \ ******************************************************************************
-
-ORG CODE%
 
 PRINT "WORDS9 = ",~P%
 INCBIN "versions/electron/output/WORDS9.bin"
@@ -161,8 +162,11 @@ INCLUDE "library/common/loader/macro/fne.asm"
 \ ------------------------------------------------------------------------------
 \
 \ This part of the loader does a number of calls to OS routines, sets up the
-\ sound envelopes, pushes 33 bytes onto the stack that will be used later, and
-\ sends us on a wild goose chase, just for kicks.
+\ sound envelopes, and pushes 33 bytes onto the stack. A lot of the code in this
+\ routine has been removed or hobbled to remove the protection; for a full
+\ picture of the protection that's missing, see the source code for the BBC
+\ Micro cassette version, which contains almost exactly the same protection code
+\ as the original Electron version.
 \
 \ ******************************************************************************
 
@@ -217,8 +221,8 @@ INCLUDE "library/common/loader/macro/fne.asm"
  NOP
  NOP
 
- LDA #&60
- STA L0088
+ LDA #&60               \ This appears to be a lone instruction left over from
+ STA &0088              \ the unprotected code, as this value is never used
 
  NOP                    \ This part of the loader has been disabled by the
  NOP                    \ crackers, as this is an unprotected version
@@ -332,27 +336,40 @@ INCLUDE "library/common/loader/macro/fne.asm"
 
  INX                    \ Set X = 0, to use as a counter in the following loop
  
- LDY #0
+                        \ The following loop copies the crunchit routine into
+                        \ zero page, though this unprotected version of the
+                        \ loader doesn't call it there, so this has no effect
+
+ LDY #0                 \ Set a counter in Y for the copy
 
 .David3
 
- LDA crunchit,Y
+ LDA crunchit,Y         \ Copy the Y-th byte of crunchit
 
 .PROT1
 
- STA TRTB%+2,X
- INX
- INY
- CPY #&21
- BNE David3
+ STA TRTB%+2,X          \ And store it in the X-th byte of zero page after the
+                        \ TRTB%(1 0) variable
 
- LDA #&03
- STA ZP
- LDA #&95
- BIT PROT1
- LDA #&52
- STA ZP+1
- LDY #&00
+ INX                    \ Increment both byte counters
+ INY
+
+ CPY #33                \ Loop back to copy the next byte until we have copied
+ BNE David3             \ all 33 bytes
+
+ LDA #LO(B%)            \ Set the low byte of ZP(1 0) to point to the VDU code
+ STA ZP                 \ table at B%
+
+ LDA #&95               \ This part of the loader has been disabled by the
+ BIT PROT1              \ crackers, as this is an unprotected version (the BIT
+                        \ instruction is an STA instruction in the full version,
+                        \ but it has been hobbled here)
+
+ LDA #HI(B%)            \ Set the high byte of ZP(1 0) to point to the VDU code
+ STA ZP+1               \ table at B%
+
+ LDY #0                 \ We are now going to send the N% VDU bytes in the table
+                        \ at B% to OSWRCH to set up the screen mode
 
 .LOOP
 
@@ -364,10 +381,10 @@ INCLUDE "library/common/loader/macro/fne.asm"
  CPY #N%                \ Loop back for the next byte until we have done them
  BNE LOOP               \ all (the number of bytes was set in N% above)
 
- LDA #1
- TAX
- TAY
- LDA abrk+1
+ LDA #1                 \ This part of the loader has been disabled by the
+ TAX                    \ crackers, as this is an unprotected version (the CMP
+ TAY                    \ instruction is an STA instruction in the full version,
+ LDA abrk+1             \ but it has been hobbled here)
  CMP (V219),Y
 
  LDA #4                 \ Call OSBYTE with A = 4, X = 1 and Y = 0 to disable
@@ -378,13 +395,11 @@ INCLUDE "library/common/loader/macro/fne.asm"
  LDX #0                 \ flashing colours
  JSR OSB
 
- LDA #&6C
-
- NOP                    \ This part of the loader has been disabled by the
- NOP                    \ crackers, as this is an unprotected version
- NOP
-
- BIT L544F
+ LDA #&6C               \ This part of the loader has been disabled by the
+ NOP                    \ crackers, as this is an unprotected version (the BIT
+ NOP                    \ instruction is an STA instruction in the full version,
+ NOP                    \ but it has been hobbled here)
+ BIT &544F
 
  FNE 0                  \ Set up sound envelopes 0-3 using the FNE macro
  FNE 1
@@ -396,15 +411,15 @@ INCLUDE "library/common/loader/macro/fne.asm"
 \       Name: Elite loader (Part 3 of 5)
 \       Type: Subroutine
 \   Category: Loader
-\    Summary: Move and decrypt recursive tokens and images
+\    Summary: Move recursive tokens and images
 \
 \ ------------------------------------------------------------------------------
 \
-\ Move and decrypt the following memory blocks:
+\ Move the following memory blocks:
 \
 \   * WORDS9: move 4 pages (1024 bytes) from &4400 (CODE%) to &0400
 \
-\   * P.ELITE: move 1 page (256 bytes) from &4F00 (CODE% + &B00) to &5B00
+\   * P.ELITE: move 1 page (256 bytes) from &4F00 (CODE% + &B00) to &5BE0
 \
 \   * P.A-SOFT: move 1 page (256 bytes) from &5000 (CODE% + &C00) to &5960
 \
@@ -437,99 +452,118 @@ INCLUDE "library/common/loader/macro/fne.asm"
 \ being run, so it's tucked away safely while the main game code is loaded and
 \ decrypted.
 \
+\ In the unprotected version of the loader, the images are encrypted and this
+\ part also decrypts them, but this is an unprotected version of the game, so
+\ the encryption part of the crunchit routine is disabled.
+\
 \ ******************************************************************************
 
- LDX #&04
- STX Q
- LDA #&44
- STA ZP+1
- LDY #&00
- LDA #&18
- CMP (SC,X)
- STY ZP
- STY P
- JSR crunchit
+ LDX #4                 \ Set the following:
+ STX P+1                \
+ LDA #HI(CODE%)         \   P(1 0) = &0400
+ STA ZP+1               \   ZP(1 0) = CODE%
+ LDY #0                 \   (X Y) = &400 = 1024
+ LDA #256-232           \
+ CMP (V219-4,X)         \ The CMP instruction is an STA instruction in the
+ STY ZP                 \ protected version of the loader, but this version has
+ STY P                  \ been hacked to remove the protection, and the crackers
+                        \ just switched the STA to a CMP to disable this bit of
+                        \ the protection code
 
- LDX #&01
- LDA #&4F
- STA ZP+1
- LDA #&5B
- STA Q
+ JSR crunchit           \ Call crunchit to move &400 bytes from CODE% to &0400.
+                        \ We loaded WORDS9.bin to CODE% in part 1, so this moves
+                        \ WORDS9
+
+ LDX #1                 \ Set the following:
+ LDA #(HI(CODE%)+&B)    \
+ STA ZP+1               \   P(1 0) = &5BE0
+ LDA #&5B               \   ZP(1 0) = CODE% + &B
+ STA P+1                \   (X Y) = &100 = 256
  LDA #&E0
  STA P
- LDY #&00
- JSR crunchit
+ LDY #0
 
- LDX #&01
- LDA #&50
- STA ZP+1
- LDA #&59
- STA Q
+ JSR crunchit           \ Call crunchit to move &100 bytes from CODE% + &B to
+                        \ &5BE0, so this moves P.ELITE
+
+ LDX #1                 \ Set the following:
+ LDA #(HI(CODE%)+&C)    \
+ STA ZP+1               \   P(1 0) = &5960
+ LDA #&59               \   ZP(1 0) = CODE% + &C
+ STA P+1                \   (X Y) = &100 = 256
  LDA #&60
  STA P
- LDY #&00
- JSR crunchit
+ LDY #0
 
- LDX #&01
- LDA #&51
- STA ZP+1
- LDA #&73
- STA Q
+ JSR crunchit           \ Call crunchit to move &100 bytes from CODE% + &C to
+                        \ &5960, so this moves P.A-SOFT
+
+ LDX #1                 \ Set the following:
+ LDA #(HI(CODE%)+&D)    \
+ STA ZP+1               \   P(1 0) = &73A0
+ LDA #&73               \   ZP(1 0) = CODE% + &D
+ STA P+1                \   (X Y) = &100 = 256
  LDA #&A0
  STA P
- LDY #&00
- JSR crunchit
+ LDY #0
 
- JSR PLL1
+ JSR crunchit           \ Call crunchit to move &100 bytes from CODE% + &D to
+                        \ &73A0, so this moves P.(C)ASFT
 
- LDA #&48
- STA ZP+1
- LDA #&76
- STA Q
- LDY #&00
- STY ZP
- LDX #&20
+ JSR PLL1               \ Call PLL1 to draw Saturn
+
+ LDA #(HI(CODE%)+4)     \ Set the following:
+ STA ZP+1               \
+ LDA #&76               \   P(1 0) = &7620
+ STA P+1                \   ZP(1 0) = CODE% + &4
+ LDY #0                 \   Y = 0
+ STY ZP                 \
+ LDX #&20               \ Also set BLCNT = 0
  STY BLCNT
  STX P
 
-.L540B
+.dialsL
 
- LDX #&01
- JSR crunchit
+ LDX #1                 \ Set (X Y) = &100 = 256
 
- CLC
+ JSR crunchit           \ Call crunchit to move &100 bytes from ZP(1 0) to
+                        \ P(1 0), so this moves P.DIALS one row at a time
+
+ CLC                    \ Set P(1 0) = P(1 0) + &40 to skip the screen margins
  LDA P
  ADC #&40
  STA P
- LDA Q
- ADC #&00
- STA Q
- CMP #&7E
- BCC L540B
+ LDA P+1
+ ADC #0
+ STA P+1
 
- LDX #&01
- LDA #&56
- STA ZP+1
- LDA #&15
- STA ZP
- LDA #&0B
- STA Q
- LDY #&00
+ CMP #&7E               \ Loop back to copy the next row of the dashboard until
+ BCC dialsL             \ we have poked the last one into screen memory
+
+ LDX #1                 \ Set the following:
+ LDA #HI(UU%)           \
+ STA ZP+1               \   P(1 0) = LE%
+ LDA #LO(UU%)           \   ZP(1 0) = UU%
+ STA ZP                 \   (X Y) = &100 = 256
+ LDA #HI(LE%)
+ STA P+1
+ LDY #0
  STY P
- JSR crunchit
+
+ JSR crunchit           \ Call crunchit to move &100 bytes from UU% to LE%
 
 \ ******************************************************************************
 \
 \       Name: Elite loader (Part 4 of 5)
 \       Type: Subroutine
 \   Category: Loader
-\    Summary: Copy more code onto stack, decrypt TUT block, set up IRQ1 handler
+\    Summary: Call part 5 of the loader now that is has been relocated
 \
 \ ------------------------------------------------------------------------------
 \
-\ This part copies more code onto the stack (from BLOCK to ENDBLOCK), decrypts
-\ the code from TUT onwards, and sets up the IRQ1 handler for the split-screen
-\ mode.
+\ In the protected version of the loader, this part copies more code onto the
+\ stack and decrypts a chunk of loader code before calling part 5, but in the
+\ unprotected version it's mostly NOPs.
 \
 \ ******************************************************************************
 
@@ -558,11 +592,8 @@ INCLUDE "library/common/loader/macro/fne.asm"
  NOP
  NOP
  NOP
-
-.L544F
-
- NOP                    \ This part of the loader has been disabled by the
- NOP                    \ crackers, as this is an unprotected version
+ NOP
+ NOP
  NOP
 
 .RAND
@@ -646,10 +677,11 @@ INCLUDE "library/common/loader/macro/fne.asm"
  DEC L55B8
  BNE PLL1
 
- LDX #&C2
+ LDX #&C2               \ ???
  STX EXCN
- LDX #&60
- STX L0087
+
+ LDX #&60               \ ???
+ STX &0087
 
 .PLL2
 
@@ -679,7 +711,7 @@ INCLUDE "library/common/loader/macro/fne.asm"
  DEC L55BA
  BNE PLL2
 
- LDX #&CA
+ LDX #&CA               \ ???
  NOP
  STX BLPTR
  LDX #&C6
@@ -915,22 +947,67 @@ INCLUDE "library/common/loader/macro/fne.asm"
 
  RTS
 
+\ ******************************************************************************
+\
+\       Name: crunchit
+\       Type: Subroutine
+\   Category: Copy protection
+\    Summary: Multi-byte decryption and copying routine
+\
+\ ------------------------------------------------------------------------------
+\
+\ In the unprotected version of the loader on this site, this routine just moves
+\ data frommone location to another. In the protected version, it also decrypts
+\ the data as it is moved, but that part is disabled in the following.
+\
+\ Arguments:
+\
+\   (X Y)               The number of bytes to copy
+\
+\   ZP(1 0)             The source address
+\
+\   P(1 0)              The destination address
+\
+\ ******************************************************************************
+
 .crunchit
 
- LDA (ZP),Y
- NOP
+ LDA (ZP),Y             \ Copy the Y-th byte of ZP(1 0) to the Y-th byte of
+ NOP                    \ P(1 0), without any decryption (hence the NOPs)
  NOP
  NOP
  STA (P),Y
- DEY
- BNE crunchit
 
- INC Q
- INC ZP+1
- DEX
- BNE crunchit
+ DEY                    \ Decrement the byte counter
 
- RTS
+ BNE crunchit           \ Loop back to crunchit to copy the next byte until we
+                        \ have done a whole page
+
+ INC P+1                \ Increment the high bytes of the source and destination
+ INC ZP+1               \ addresses so we can copy the next page
+
+ DEX                    \ Decrement the page counter
+
+ BNE crunchit           \ Loop back to crunchit to copy the next page until we
+                        \ have done X pages
+
+ RTS                    \ Return from the subroutine
+
+\ ******************************************************************************
+\
+\       Name: BEGIN%
+\       Type: Subroutine
+\   Category: Copy protection
+\    Summary: Single-byte decryption and copying routine, run on the stack
+\
+\ ------------------------------------------------------------------------------
+\
+\ This code is not run in the unprotected version of the loader. In the full
+\ version it is stored with the instructions reversed so it can be copied onto
+\ the stack to be run, and it doesn't contain any NOPs, so this is presumably a
+\ remnant of the cracking process.
+\
+\ ******************************************************************************
 
  PLA
  PLA
@@ -960,6 +1037,7 @@ INCLUDE "library/common/loader/macro/fne.asm"
 .UU%
 
 Q% = P% - LE%
+
 ORG LE%
 
 \ ******************************************************************************
@@ -1014,12 +1092,12 @@ ORG LE%
                         \ game code from where we just loaded it at &2000, down
                         \ to &0D00 where we will run it
 
- LDY #&00               \ Set the source and destination addresses for the copy:
+ LDY #0                 \ Set the source and destination addresses for the copy:
  STY ZP                 \
- STY P                  \   ZP(1 0) = &2000
- LDA #&20               \   P(1 0) = &0D00
+ STY P                  \   ZP(1 0) = L% = &2000
+ LDA #HI(L%)            \   P(1 0) = C% = &0D00
  STA ZP+1               \
- LDA #&0D               \ and set Y = 0 to act as a byte counter in the
+ LDA #HI(C%)            \ and set Y = 0 to act as a byte counter in the
  STA P+1                \ following loop
 
 .MVDL

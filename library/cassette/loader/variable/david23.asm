@@ -18,5 +18,15 @@
 
 .David23
 
+IF _CASSETTE_VERSION
+
  EQUW (512-LEN)         \ The address of LEN bytes before the start of the stack
+
+ELIF _ELECTRON_VERSION
+
+ EQUW 6                 \ This value is not used in this unprotected version of
+                        \ the loader, though why the crackers set it to 6 is a
+                        \ mystery
+
+ENDIF
 

@@ -49,16 +49,12 @@ DISC = TRUE             \ Set to TRUE to load the code above DFS and relocate
 
 PROT = FALSE            \ Set to TRUE to enable the tape protection code
 
-LOAD% = &1100           \ LOAD% is the load address of the main game code file
-                        \ ("ELTcode" for loading from disc, "ELITEcode" for
-                        \ loading from tape)
-
 C% = &0F40              \ C% is set to the location that the main game code gets
                         \ moved to after it is loaded
 
 S% = C%                 \ S% points to the entry point for the main game code
 
-L% = LOAD% + &28        \ L% points to the start of the actual game code from
+L% = &1128              \ L% points to the start of the actual game code from
                         \ elite-source.asm, after the &28 bytes of header code
                         \ that are inserted by elite-bcfs.asm
 
@@ -100,22 +96,6 @@ LE% = &0B00             \ LE% is the address to which the code from UU% onwards
                         \
                         \   * The variables used by the above
 
-IF DISC
-
- CODE% = &E00+&300      \ CODE% is set to the assembly address of the loader
-                        \ code file that we assemble in this file ("ELITE"),
-                        \ which is at the lowest DFS page value of &1100 for the
-                        \ version that loads from disc
-
-ELSE
-
- CODE% = &E00           \ CODE% is set to the assembly address of the loader
-                        \ code file that we assemble in this file ("ELITE"),
-                        \ which is at the standard &0E00 address for the version
-                        \ that loads from cassette
-
-ENDIF
-
 NETV = &224             \ The NETV vector that we intercept as part of the copy
                         \ protection
 
@@ -140,6 +120,28 @@ INCLUDE "library/cassette/loader/workspace/zp.asm"
 \ ELITE LOADER
 \
 \ ******************************************************************************
+
+IF DISC
+
+ CODE% = &1100          \ CODE% is set to the assembly address of the loader
+                        \ code file that we assemble in this file ("ELITE"),
+                        \ which is at the lowest DFS page value of &1100 for the
+                        \ version that loads from disc
+
+ELSE
+
+ CODE% = &E00           \ CODE% is set to the assembly address of the loader
+                        \ code file that we assemble in this file ("ELITE"),
+                        \ which is at the standard &0E00 address for the version
+                        \ that loads from cassette
+
+ENDIF
+
+LOAD% = &1100           \ LOAD% is the load address of the main game code file
+                        \ ("ELTcode" for loading from disc, "ELITEcode" for
+                        \ loading from tape)
+
+ORG CODE%
 
 INCLUDE "library/cassette/loader/subroutine/elite_loader_part_1_of_6.asm"
 INCLUDE "library/common/loader/variable/b_per_cent.asm"

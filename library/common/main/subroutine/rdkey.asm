@@ -92,8 +92,6 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Platform
                         \ 0 if no key has been pressed, or the internal key
                         \ number if a key has been pressed
 
- TAX                    \ Copy A into X
-
 ELIF _6502SP_VERSION
 
  LDA #240               \ Set A in preparation for sending an OSWORD 240 command
@@ -128,6 +126,28 @@ ELIF _MASTER_VERSION
  STA KL                 \ Store the key pressed in KL
 
  TAX                    \ Copy the key value into X
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Platform
+
+ TAX                    \ Copy A into X
+
+ELIF _ELECTRON_VERSION
+
+ TAY                    \ ???
+ JSR L42D6
+
+ PHP
+ TYA
+ PLP
+ BPL L4236
+
+ ORA #&80
+
+.L4236
+
+ TAX                    \ Copy A into X
 
 ENDIF
 

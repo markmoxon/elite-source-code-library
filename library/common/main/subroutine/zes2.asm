@@ -36,7 +36,7 @@ ENDIF
 
 .ZES2
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Other: Group A: The disc version's flight code has a different ZES2 routine - it still zero-fills a part of a page, but it fills the opposite part of the page to the other versions
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Other: Group A: The disc version's flight code has a different ZES2 routine - it still zero-fills a part of a page, but it fills the opposite part of the page to the other versions
 
  LDA #0                 \ Load A with the byte we want to fill the memory block
                         \ with - i.e. zero
@@ -44,6 +44,11 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR 
  STX SC+1               \ We want to zero-fill page X, so store this in the
                         \ high byte of SC, so the 16-bit address in SC and
                         \ SC+1 is now pointing to the SC-th byte of page X
+
+ELIF _ELECTRON_VERSION
+
+ LDA #0                 \ Load A with the byte we want to fill the memory block
+                        \ with - i.e. zero ???
 
 ENDIF
 

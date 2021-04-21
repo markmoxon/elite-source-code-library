@@ -16,7 +16,15 @@
 
  JSR ZINF               \ Call ZINF to reset the INWK ship workspace
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  JSR FLFLLS             \ Reset the LSO block, returns with A = 0
+
+ELIF _ELECTRON_VERSION
+
+ LDA #0                 \ ???
+
+ENDIF
 
  STA FRIN+1             \ Set the second slot in the FRIN table to 0, which
                         \ sets this slot to empty, so when we call NWSHP below

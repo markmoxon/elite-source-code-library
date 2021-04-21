@@ -57,7 +57,7 @@ ENDIF
 
  BNE KS5                \ If our missile is not locked on this ship, jump to KS5
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Screen
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Screen
 
  LDY #&EE               \ Otherwise we need to remove our missile lock, so call
  JSR ABORT              \ ABORT to disarm the missile and update the missile
@@ -68,6 +68,10 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
  LDY #GREEN2            \ Otherwise we need to remove our missile lock, so call
  JSR ABORT              \ ABORT to disarm the missile and update the missile
                         \ indicators on the dashboard to green (Y = #GREEN2)
+
+ELIF _ELECTRON_VERSION
+
+ JSR L3903              \ ???
 
 ENDIF
 

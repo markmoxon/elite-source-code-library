@@ -18,7 +18,7 @@
 
 .EXNO3
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: The Master version has a unique explosion sound
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: The Master version has a unique explosion sound
 
  LDA #16                \ Call the NOISE routine with A = 16 to make the first
  JSR NOISE              \ death sound
@@ -27,6 +27,13 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ 
  BNE NOISE              \ death sound and return from the subroutine using a
                         \ tail call (this BNE is effectively a JMP as A will
                         \ never be zero)
+
+ELIF _ELECTRON_VERSION
+
+ LDA #24                \ Call the NOISE routine with A = 24 to make the second
+ BNE NOISE              \ death sound and return from the subroutine using a
+                        \ tail call (this BNE is effectively a JMP as A will
+                        \ never be zero) ???
 
 ELIF _MASTER_VERSION
 

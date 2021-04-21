@@ -16,10 +16,28 @@
 
  LDX DNOIZ              \ Set X to the DNOIZ configuration setting
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Label
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Label
 
  BNE NO1                \ If DNOIZ is non-zero, then sound is disabled, so
                         \ return from the subroutine (as NO1 contains an RTS)
+
+ELIF _ELECTRON_VERSION
+
+ BNE ECMOF-1            \ If DNOIZ is non-zero, then sound is disabled, so
+                        \ return from the subroutine (as ECMOF-1 contains an
+                        \ RTS)
+
+ LDA XX16               \ ???
+ AND #&01
+ TAX
+ LDY XX16+8
+ LDA SFX+40,Y
+ CMP L0BFB,X
+ BCC ECMOF-1
+
+ STA L0BFB,X
+ AND #&0F
+ STA L0BFD,X
 
 ELIF _6502SP_VERSION OR _DISC_FLIGHT
 

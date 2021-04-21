@@ -10,7 +10,7 @@
 
 .XX21
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: The cassette version has 13 different ship types with 12 distinct designs, including the Coriolis space station; the disc version has 31 ship types with 29 distinct designs, including an additional space station, the Dodo; and the advanced versions have 33 ship types with 30 distinct designs, again including both station types
+IF _CASSETTE_VERSION \ Standard: The cassette version has 13 different ship types with 12 distinct designs, including the Coriolis space station; the Electron version has 11 ship types with 10 distinct designs; the disc version has 31 ship types with 29 distinct designs, including an additional space station, the Dodo; and the advanced versions have 33 ship types with 30 distinct designs, again including both station types
 
  EQUW SHIP_SIDEWINDER   \         1 = Sidewinder
  EQUW SHIP_VIPER        \ COPS =  2 = Viper
@@ -25,6 +25,20 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: The cassette version has 1
  EQUW SHIP_CANISTER     \ OIL  = 11 = Cargo canister
  EQUW SHIP_THARGON      \ TGL  = 12 = Thargon
  EQUW SHIP_ESCAPE_POD   \ ESC  = 13 = Escape pod
+
+ELIF _ELECTRON_VERSION
+
+ EQUW SHIP_SIDEWINDER   \         1 = Sidewinder
+ EQUW SHIP_VIPER        \ COPS =  2 = Viper
+ EQUW SHIP_MAMBA        \         3 = Mamba
+ EQUW SHIP_PYTHON       \         4 = Python
+ EQUW SHIP_COBRA_MK_3   \         5 = Cobra Mk III (bounty hunter)
+ EQUW SHIP_COBRA_MK_3   \ CYL  =  6 = Cobra Mk III (trader)
+ EQUW SHIP_CORIOLIS     \ SST  =  7 = Coriolis space station
+ EQUW SHIP_MISSILE      \ MSL  =  8 = Missile
+ EQUW SHIP_ASTEROID     \ AST  =  9 = Asteroid
+ EQUW SHIP_CANISTER     \ OIL  = 10 = Cargo canister
+ EQUW SHIP_ESCAPE_POD   \ ESC  = 11 = Escape pod
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 

@@ -258,10 +258,16 @@ ENDIF
 
 .SVL1
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
  LDA TP,X               \ Copy the X-th byte of TP to the X-th byte of &0B00
  STA &0B00,X            \ and NA%+8
+ STA NA%+8,X
+
+ELIF _ELECTRON_VERSION
+
+ LDA TP,X               \ Copy the X-th byte of TP to the X-th byte of &0900
+ STA &0900,X            \ and NA%+8
  STA NA%+8,X
 
 ELIF _MASTER_VERSION
@@ -297,7 +303,7 @@ ENDIF
  EOR TALLY+1            \ the kill tally)
  STA K+3
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Other: This is a bug fix in the enhanced versions to stop the competition code being printed with a decimal point, which can sometimes happen in the cassette version
+IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Other: This is a bug fix in the enhanced versions to stop the competition code being printed with a decimal point, which can sometimes happen in the cassette and Electron versions
 
  CLC                    \ Clear the C flag so the call to BPRNT does not include
                         \ a decimal point
@@ -328,10 +334,16 @@ ENDIF
 
  PLA                    \ Restore the checksum from the stack
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
  STA &0B00+NT%          \ Store the checksum in the last byte of the save file
                         \ at &0B00 (the equivalent of CHK in the last saved
+                        \ block)
+
+ELIF _ELECTRON_VERSION
+
+ STA &0900+NT%          \ Store the checksum in the last byte of the save file
+                        \ at &0900 (the equivalent of CHK in the last saved
                         \ block)
 
 ENDIF
@@ -339,7 +351,7 @@ ENDIF
  EOR #&A9               \ Store the checksum EOR &A9 in CHK2, the penultimate
  STA CHK2               \ byte of the last saved commander block
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
  STA &AFF+NT%           \ Store the checksum EOR &A9 in the penultimate byte of
                         \ the save file at &0B00 (the equivalent of CHK2 in the
@@ -353,9 +365,23 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ P
                         \
                         \ Y is left containing &C which we use below
 
+ELIF _ELECTRON_VERSION
+
+ STA &8FF+NT%           \ Store the checksum EOR &A9 in the penultimate byte of
+                        \ the save file at &0900 (the equivalent of CHK2 in the
+                        \ last saved block)
+
+ LDY #&9                \ Set up an OSFILE block at &0A00, containing:
+ STY &0A0B              \
+ INY                    \ Start address for save = &00000900 in &0A0A to &0A0D
+ STY &0A0F              \
+                        \ End address for save = &00000A00 in &0A0E to &0A11
+                        \
+                        \ Y is left containing &A which we use below
+
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
+IF _CASSETTE_VERSION \ Platform
 
  LDA #%10000001         \ Clear 6522 System VIA interrupt enable register IER
  STA VIA+&4E            \ (SHEILA &4E) bit 1 (i.e. enable the CA2 interrupt,
@@ -410,7 +436,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
+IF _CASSETTE_VERSION \ Platform
 
  LDX #0                 \ Set X = 0 for storing in SVN below
 
@@ -425,6 +451,10 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
                         \ affects the logic in the IRQ1 handler
 
  STX SVN                \ Set SVN to 0 to indicate we are done saving
+
+ JMP BAY                \ Go to the docking bay (i.e. show Status Mode)
+
+ELIF _ELECTRON_VERSION
 
  JMP BAY                \ Go to the docking bay (i.e. show Status Mode)
 

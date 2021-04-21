@@ -37,7 +37,7 @@ ENDIF
 
 .t
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
+IF _CASSETTE_VERSION \ Platform
 
  JSR DELAY-5            \ Delay for 8 vertical syncs (8/50 = 0.16 seconds) so we
                         \ don't take up too much CPU time while looping round
@@ -49,18 +49,10 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
  JSR RDKEY              \ Scan the keyboard for a key press and return the
                         \ internal key number in X (or 0 for no key press)
-
-ELIF _MASTER_VERSION
-
- JSR RDKEY              \ Scan the keyboard for a key press and return the
-                        \ ASCII code of the key pressed in X (or 0 for no key 
-                        \ press)
-
-ENDIF
 
  BNE t                  \ If a key was already being held down when we entered
                         \ this routine, keep looping back up to t, until the
@@ -68,7 +60,27 @@ ENDIF
 
 .t2
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
+ELIF _ELECTRON_VERSION
+
+ DEC L0D01              \ ???
+ JSR OSRDCH
+ INC L0D01
+
+ELIF _MASTER_VERSION
+
+ JSR RDKEY              \ Scan the keyboard for a key press and return the
+                        \ ASCII code of the key pressed in X (or 0 for no key 
+                        \ press)
+
+ BNE t                  \ If a key was already being held down when we entered
+                        \ this routine, keep looping back up to t, until the
+                        \ key is released
+
+.t2
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
  JSR RDKEY              \ Any pre-existing key press is now gone, so we can
                         \ start scanning the keyboard again, returning the
@@ -83,9 +95,13 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  BEQ t2                 \ Keep looping up to t2 until a key is pressed
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Tube
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Tube
 
  TAY                    \ Copy A to Y, so Y contains the internal key number
                         \ of the key pressed
@@ -106,7 +122,11 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  LDY YSAV               \ Restore the original value of Y we stored above
+
+ENDIF
 
  TAX                    \ Copy A into X
 

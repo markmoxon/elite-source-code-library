@@ -30,7 +30,7 @@ ENDIF
 
 .ZERO
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
+IF _CASSETTE_VERSION \ Platform
 
  LDX #&D                \ Point X to page &D
 
@@ -42,6 +42,21 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
  CPX #9                 \ If X is > 9 (i.e. is &A, &B or &C), then loop back
  BNE ZEL                \ up to clear the next page
+
+                        \ Then fall through into ZES1 with X set to 9, so we
+                        \ clear page &9 too
+
+ELIF _ELECTRON_VERSION
+
+ LDX #&B                \ Point X to page &B
+
+ JSR ZES1               \ Call ZES1 below to zero-fill the page in X
+
+ DEX                    \ Decrement X to point to the next page (&A)
+
+ JSR ZES1               \ Call ZES1 below to zero-fill the page in X
+
+ DEX                    \ Decrement X to point to the next page
 
                         \ Then fall through into ZES1 with X set to 9, so we
                         \ clear page &9 too

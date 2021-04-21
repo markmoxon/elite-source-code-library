@@ -187,7 +187,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
+IF _CASSETTE_VERSION \ Platform
 
  JSR DELAY              \ Delay for 6 vertical syncs (6/50 = 0.12 seconds)
 
@@ -478,9 +478,13 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ P
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Tube
 
  LDA VIA+&40            \ Read 6522 System VIA input register IRB (SHEILA &40)
+
+ AND #%00010000         \ Bit 4 of IRB (PB4) is clear if joystick 1's fire
+                        \ button is pressed, otherwise it is set, so AND'ing
+                        \ the value of IRB with %10000 extracts this bit
 
 ELIF _6502SP_VERSION
 
@@ -489,13 +493,13 @@ ELIF _6502SP_VERSION
                         \ the value of the 6522 System VIA input register IRB
                         \ (SHEILA &40)
 
-ENDIF
-
  AND #%00010000         \ Bit 4 of IRB (PB4) is clear if joystick 1's fire
                         \ button is pressed, otherwise it is set, so AND'ing
                         \ the value of IRB with %10000 extracts this bit
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Minor
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Minor
 
 \TAX                    \ This instruction is commented out in the original
                         \ source; it would have no effect, as the comparison
@@ -511,7 +515,11 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  BEQ TL2                \ If the joystick fire button is pressed, jump to TL2
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Tube
 
@@ -548,11 +556,15 @@ IF _6502SP_VERSION \ 6502SP: See group C
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
 .TL2
 
  DEC JSTK               \ Joystick fire button was pressed, so set JSTK to &FF
                         \ (it was set to 0 above), to disable keyboard and
                         \ enable joysticks
+
+ENDIF
 
 IF _6502SP_VERSION \ Label
 
@@ -560,5 +572,9 @@ IF _6502SP_VERSION \ Label
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  RTS                    \ Return from the subroutine
+
+ENDIF
 

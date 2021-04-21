@@ -72,17 +72,37 @@ IF _6502SP_VERSION \ Tube
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  LDX #INWK              \ Store a pointer to INWK at the start of the block at
  STX &0C00              \ &0C00, storing #INWK in the low byte because INWK is
                         \ in zero page
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
+ELIF _ELECTRON_VERSION
+
+ LDX #INWK              \ Store a pointer to INWK at the start of the block at
+ STX &0A00              \ &0A00, storing #INWK in the low byte because INWK is
+                        \ in zero page
+
+ENDIF
+
+IF _CASSETTE_VERSION \ Minor
 
  LDX #0                 \ Set X to 0 so (Y X) = &0C00
 
  JMP OSFILE             \ Jump to OSFILE to do the file operation specified in
                         \ &0C00 (i.e. save or load a file depending on the value
                         \ of A), returning from the subroutine using a tail call
+
+ELIF _ELECTRON_VERSION
+
+ LDX #&FF               \ ???
+ STX L0D01
+ INX
+ JSR OSFILE
+ INC L0D01
+
+ RTS                    \ Return from the subroutine
 
 ELIF _6502SP_VERSION OR _DISC_DOCKED
 

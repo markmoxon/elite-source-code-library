@@ -32,6 +32,12 @@
 
 .NOS1
 
+IF _ELECTRON_VERSION
+
+ STA XX16+8             \ ???
+
+ENDIF
+
  LSR A                  \ Divide A by 2, and also clear the C flag, as bit 0 of
                         \ A is always zero (as A is a multiple of 8)
 
@@ -57,7 +63,7 @@
 
  BPL NOL1               \ Loop back for the next source byte
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
+IF _CASSETTE_VERSION \ Label
 
  RTS                    \ Return from the subroutine
 

@@ -15,6 +15,16 @@
 
 .checksum0
 
+IF _CASSETTE_VERSION
+
  SKIP 1                 \ This value is checked against the calculated checksum
                         \ in part 6 of the loader in elite-loader.asm
+
+ELIF _ELECTRON_VERSION
+
+ SKIP 1                 \ This value is checked against the calculated checksum
+                        \ in part 5 of the loader in elite-loader.asm (or it
+                        \ would be if this weren't an unprotected version)
+
+ENDIF
 

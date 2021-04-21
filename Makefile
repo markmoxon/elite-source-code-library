@@ -165,9 +165,9 @@ build:
 	echo _RELEASE=$(rel-electron) >> versions/electron/sources/elite-header.h.asm
 	echo _REMOVE_CHECKSUMS=TRUE >> versions/electron/sources/elite-header.h.asm
 	$(BEEBASM) -i versions/electron/sources/elite-source.asm -v > versions/electron/output/compile.txt
-	#$(BEEBASM) -i versions/electron/sources/elite-bcfs.asm -v >> versions/electron/output/compile.txt
+	$(BEEBASM) -i versions/electron/sources/elite-bcfs.asm -v >> versions/electron/output/compile.txt
 	$(BEEBASM) -i versions/electron/sources/elite-loader.asm -v >> versions/electron/output/compile.txt
-	#$(PYTHON) versions/electron/sources/elite-checksum.py -u -rel$(rel-electron)
+	$(PYTHON) versions/electron/sources/elite-checksum.py -u -rel$(rel-electron)
 	$(BEEBASM) -i versions/electron/sources/elite-disc.asm -do versions/electron/elite-electron.ssd -opt 3
 
 .PHONY:encrypt
@@ -237,9 +237,9 @@ encrypt:
 	echo _RELEASE=$(rel-electron) >> versions/electron/sources/elite-header.h.asm
 	echo _REMOVE_CHECKSUMS=FALSE >> versions/electron/sources/elite-header.h.asm
 	$(BEEBASM) -i versions/electron/sources/elite-source.asm -v > versions/electron/output/compile.txt
-	#$(BEEBASM) -i versions/electron/sources/elite-bcfs.asm -v >> versions/electron/output/compile.txt
+	$(BEEBASM) -i versions/electron/sources/elite-bcfs.asm -v >> versions/electron/output/compile.txt
 	$(BEEBASM) -i versions/electron/sources/elite-loader.asm -v >> versions/electron/output/compile.txt
-	#$(PYTHON) versions/electron/sources/elite-checksum.py -rel$(rel-electron)
+	$(PYTHON) versions/electron/sources/elite-checksum.py -rel$(rel-electron)
 	$(BEEBASM) -i versions/electron/sources/elite-disc.asm -do versions/electron/elite-electron.ssd -opt 3
 
 .PHONY:verify

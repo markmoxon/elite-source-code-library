@@ -29,7 +29,7 @@
 
 .MLOOP
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Other: The cassette version disables keyboard interrupts at the start of the minimal game loop, though I'm not entirely sure why
+IF _CASSETTE_VERSION \ Other: The cassette version disables keyboard interrupts at the start of the minimal game loop, though I'm not entirely sure why
 
  LDA #%00000001         \ Set 6522 System VIA interrupt enable register IER
  STA VIA+&4E            \ (SHEILA &4E) bit 1 (i.e. disable the CA2 interrupt,
@@ -37,9 +37,30 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Other: The cassette version disables
 
 ENDIF
 
+IF _ELECTRON_VERSION
+
+ LDA LASCT              \ ???
+ SBC #4
+ BCS L3E2E
+
+ LDA #0
+
+.L3E2E
+
+ STA LASCT
+
+ENDIF
+
  LDX #&FF               \ Set the stack pointer to &01FF, which is the standard
  TXS                    \ location for the 6502 stack, so this instruction
                         \ effectively resets the stack
+
+IF _ELECTRON_VERSION
+
+ INX                    \ ???
+ STX L0D01
+
+ENDIF
 
  LDX GNTMP              \ If the laser temperature in GNTMP is non-zero,
  BEQ EE20               \ decrement it (i.e. cool it down a bit)

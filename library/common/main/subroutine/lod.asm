@@ -48,7 +48,7 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION  OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
  LDY #&B                \ Set up an OSFILE block at &0C00, containing:
  STY &0C03              \
@@ -56,11 +56,23 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ P
                         \
                         \ Length of file = &00000100 in &0C0A to &0C0D
 
+ELIF _ELECTRON_VERSION
+
+ LDY #&9                \ Set up an OSFILE block at &0A00, containing:
+ STY &0A03              \
+ INC &0A0B              \ Load address = &00000900 in &0A02 to &0A05
+                        \
+                        \ Length of file = &00000100 in &0A0A to &0A0D
+
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
+IF _CASSETTE_VERSION \ Comment
 
  INY                    \ Increment Y to &C, which we use next
+
+ELIF _ELECTRON_VERSION
+
+ INY                    \ Increment Y to &A, which we use next
 
 ENDIF
 
@@ -75,9 +87,21 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
+IF _CASSETTE_VERSION \ Platform
 
  LDA &0B00              \ If the first byte of the loaded file has bit 7 set,
+ BMI SPS1+1             \ jump to SPS+1, which is the second byte of an LDA #0
+                        \ instruction, i.e. a BRK instruction, which will force
+                        \ an interrupt to call the address in BRKV, which is set
+                        \ to BR1... so this instruction restarts the game from
+                        \ the title screen. Valid commander files for the
+                        \ cassette version of Elite only have 0 for the first
+                        \ byte, as there are no missions in this version, so
+                        \ having bit 7 set is invalid anyway
+
+ELIF _ELECTRON_VERSION
+
+ LDA &0900              \ If the first byte of the loaded file has bit 7 set,
  BMI SPS1+1             \ jump to SPS+1, which is the second byte of an LDA #0
                         \ instruction, i.e. a BRK instruction, which will force
                         \ an interrupt to call the address in BRKV, which is set
@@ -129,9 +153,16 @@ ENDIF
 
 .LOL1
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
  LDA &B00,X             \ Copy the X-th byte of &0B00 to the X-th byte of NA%+8
+ STA NA%+8,X
+
+ DEX                    \ Decrement the loop counter
+
+ELIF _ELECTRON_VERSION
+
+ LDA &900,X             \ Copy the X-th byte of &0900 to the X-th byte of NA%+8
  STA NA%+8,X
 
  DEX                    \ Decrement the loop counter

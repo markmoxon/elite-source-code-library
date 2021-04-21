@@ -32,24 +32,24 @@ IF _6502SP_VERSION \ Comment
 ENDIF
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
+IF _CASSETTE_VERSION \ Label
 
 KYTB = P% - 1           \ Point KYTB to the byte before the start of the table
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
+ELIF _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
 .KYTB
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Label
+IF _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Label
 
  RTS                    \ Return from the subroutine (used as an entry point and
                         \ a fall-through from above)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Master: The Master has a different set of internal key numbers to the BBC Micro, so the keyboard lookup tables are different
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Master: The Master has a very different set of internal key numbers to the BBC Micro and Electron (which have the same numbers for all flight keys except for TAB), so the keyboard lookup table for the Master is unique
 
                         \ These are the primary flight controls (pitch, roll,
                         \ speed and lasers):
@@ -65,6 +65,30 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ M
                         \ These are the secondary flight controls:
 
  EQUB &60               \ TAB       KYTB+8      Energy bomb
+ EQUB &70               \ ESCAPE    KYTB+9      Launch escape pod
+ EQUB &23               \ T         KYTB+10     Arm missile
+ EQUB &35               \ U         KYTB+11     Unarm missile
+ EQUB &65               \ M         KYTB+12     Fire missile
+ EQUB &22               \ E         KYTB+13     E.C.M.
+ EQUB &45               \ J         KYTB+14     In-system jump
+ EQUB &52               \ C         KYTB+15     Docking computer
+
+ELIF _ELECTRON_VERSION
+
+                        \ These are the primary flight controls (pitch, roll,
+                        \ speed and lasers):
+
+ EQUB &68 + 128         \ ?         KYTB+1      Slow down
+ EQUB &62 + 128         \ Space     KYTB+2      Speed up
+ EQUB &66 + 128         \ <         KYTB+3      Roll left
+ EQUB &67 + 128         \ >         KYTB+4      Roll right
+ EQUB &42 + 128         \ X         KYTB+5      Pitch up
+ EQUB &51 + 128         \ S         KYTB+6      Pitch down
+ EQUB &41 + 128         \ A         KYTB+7      Fire lasers
+
+                        \ These are the secondary flight controls:
+
+ EQUB &17               \ TAB       KYTB+8      Energy bomb
  EQUB &70               \ ESCAPE    KYTB+9      Launch escape pod
  EQUB &23               \ T         KYTB+10     Arm missile
  EQUB &35               \ U         KYTB+11     Unarm missile

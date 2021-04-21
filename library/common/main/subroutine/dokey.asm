@@ -55,7 +55,7 @@ IF _6502SP_VERSION \ Tube
 
 ENDIF
 
-IF _DISC_DOCKED \ Platform
+IF _DISC_DOCKED \ Electron: The Electron version doesn't support a joystick
 
  LDA JSTK               \ If JSTK is zero, then we are configured to use the
  BEQ DK9                \ keyboard rather than the joystick, so jump to DK9 to
@@ -73,7 +73,7 @@ IF _DISC_DOCKED \ Platform
  STA JSTY               \ reverse the joystick Y channel, so this EOR does
                         \ exactly that, and then we store the result in JSTY
 
-ELIF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+ELIF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
 
  JSR U%                 \ Call U% to clear the key logger
 
@@ -81,6 +81,10 @@ ELIF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
  BNE DKJ1               \ the joystick rather than keyboard, so jump to DKJ1
                         \ to read the joystick flight controls, before jumping
                         \ to DK4 below
+
+ELIF _ELECTRON_VERSION
+
+ JSR U%                 \ Call U% to clear the key logger
 
 ENDIF
 
@@ -90,7 +94,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: The Bitstik configuration option 
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Tube
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Tube
 
  LDY #7                 \ We're going to work our way through the primary flight
                         \ control keys (pitch, roll, speed and laser), so set a
@@ -100,6 +104,29 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Tube
 
  JSR DKS1               \ Call DKS1 to see if the KYTB key at offset Y is being
                         \ pressed, and set the key logger accordingly
+
+ DEY                    \ Decrement the loop counter
+
+ BNE DKL2               \ Loop back for the next key, working our way from A at
+                        \ KYTB+7 down to ? at KYTB+1
+
+ELIF _ELECTRON_VERSION
+
+ LDY #7                 \ We're going to work our way through the primary flight
+                        \ control keys (pitch, roll, speed and laser), so set a
+                        \ counter in Y so we can loop through all 7
+
+.DKL2
+
+ LDX KYTB,Y             \ ???
+ JSR DKS4
+
+ BPL L432F
+
+ LDX #&FF
+ STX KL,Y
+
+.L432F
 
  DEY                    \ Decrement the loop counter
 

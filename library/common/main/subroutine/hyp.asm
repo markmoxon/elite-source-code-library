@@ -85,13 +85,16 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _ELECTRON_VERSION
-
- LDX #1                 \ ???
-
-ENDIF
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
 
  JSR CTRL               \ Scan the keyboard to see if CTRL is currently pressed
+
+ELIF _ELECTRON_VERSION
+
+ LDX #1                 \ ???
+ JSR DKS4
+
+ENDIF
 
  BMI Ghy                \ If it is, then the galactic hyperdrive has been
                         \ activated, so jump to Ghy to process it

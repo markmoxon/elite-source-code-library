@@ -60,9 +60,17 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
  JSR DEL8               \ Wait for 8/50 of a second (0.16 seconds)
 
+ENDIF
+
+IF _CASSETTE_VERSION \ Platform
+
  LDA #%10000001         \ Clear 6522 System VIA interrupt enable register IER
  STA VIA+&4E            \ (SHEILA &4E) bit 1 (i.e. enable the CA2 interrupt,
                         \ which comes from the keyboard)
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
  LDA #15                \ Call OSBYTE with A = 15 (flush all buffers)
  TAX
@@ -70,6 +78,10 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
  LDX #LO(RLINE)         \ Set (Y X) to point to the RLINE parameter block
  LDY #HI(RLINE)         \ configuration block below, which reads a line from
+
+ENDIF
+
+IF _CASSETTE_VERSION \ Platform
 
  LDA #0                 \ Call OSWORD with A = 0 to read a line from the current
  JSR OSWORD             \ input stream (i.e. the keyboard)
@@ -84,7 +96,22 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
                         \ the last saved commander's name from NA% to INWK
                         \ and return from the subroutine there
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
+ELIF _ELECTRON_VERSION
+
+ LDA #0                 \ Call OSWORD with A = 0 to read a line from the current
+ DEC L0D01              \ ???
+ JSR OSWORD             \ input stream (i.e. the keyboard)
+
+ INC L0D01
+
+ BCS TR1                \ The C flag will be set if we pressed ESCAPE when
+                        \ entering the name, in which case jump to TR1 to copy
+                        \ the last saved commander's name from NA% to INWK
+                        \ and return from the subroutine there
+
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
 
  LDX #4                 \ First we want to copy the drive and directory part of
                         \ the commander file from S1% (which equals NA%-5), so

@@ -11,10 +11,14 @@
 \
 \ This section covers the following:
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
+IF _CASSETTE_VERSION \ Comment
 \   * Potentially spawn (35% chance) either a lone bounty hunter (a Mamba,
 \     Python or Cobra Mk III), a Thargoid, or a group of up to 4 pirates
 \     (Sidewinders and/or Mambas)
+ELIF _ELECTRON_VERSION
+\   * Potentially spawn (35% chance) either a lone bounty hunter (a Mamba,
+\     Python or Cobra Mk III), or a group of up to 4 pirates (Sidewinders and/or
+\     Mambas)
 ELIF _DISC_FLIGHT
 \   * Potentially spawn (47% chance) either a lone bounty hunter (a Cobra Mk
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -154,11 +158,17 @@ ENDIF
  JSR Ze                 \ Call Ze to initialise INWK to a potentially hostile
                         \ ship, and set A and X to random values
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: In the cassette version there's a 13% chance of spawning a group of pirates, while in the other versions there's a 61% chance
+IF _CASSETTE_VERSION \ Standard: In the cassette version there's a 13% chance of spawning a group of pirates, while in the other versions there's a 61% chance
 
  CMP #200               \ If the random number in A >= 200 (13% chance), jump
  BCS mt1                \ to mt1 to spawn pirates, otherwise keep going to
                         \ spawn a lone bounty hunter or a Thargoid
+
+ELIF _ELECTRON_VERSION
+
+ CMP #200               \ If the random number in A >= 200 (13% chance), jump
+ BCS mt1                \ to mt1 to spawn pirates, otherwise keep going to
+                        \ spawn a lone bounty hunter
 
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
@@ -249,11 +259,15 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION 
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
+IF _CASSETTE_VERSION \ Platform
 
  CPY #6                 \ If Y = 6 (i.e. a Thargoid), jump down to the tha
  BEQ tha                \ routine in part 6 to decide whether or not to spawn it
                         \ (where there's a 22% chance of this happening)
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
  STA INWK+32            \ Store A in the AI flag of this ship
 

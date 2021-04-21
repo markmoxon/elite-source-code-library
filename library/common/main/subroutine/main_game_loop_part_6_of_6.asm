@@ -26,7 +26,7 @@
 \                       "press" a key, in which case A contains the internal key
 \                       number of the key we want to "press"
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
+IF _CASSETTE_VERSION \ Comment
 \   tha                 Consider spawning a Thargoid (22% chance)
 \
 ENDIF
@@ -57,7 +57,7 @@ ENDIF
  JMP TT100              \ Otherwise jump to TT100 to restart the main loop from
                         \ the start
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
+IF _CASSETTE_VERSION \ Platform
 
 .tha
 

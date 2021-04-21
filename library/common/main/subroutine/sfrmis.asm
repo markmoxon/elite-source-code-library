@@ -18,7 +18,7 @@
  JSR SFS1-2             \ to add the missile to our universe with an AI flag
                         \ of %11111110 (AI enabled, hostile, no E.C.M.)
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
+IF _CASSETTE_VERSION \ Label
 
  BCC NO1                \ The C flag will be set if the call to SFS1-2 was a
                         \ success, so if it's clear, jump to NO1 to return from
@@ -30,7 +30,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT
                         \ success, so if it's clear, jump to KYTB to return from
                         \ the subroutine (as KYTB contains an RTS)
 
-ELIF _MASTER_VERSION
+ELIF _ELECTRON_VERSION OR _MASTER_VERSION
 
  BCC ECMOF-1            \ The C flag will be set if the call to SFS1-2 was a
                         \ success, so if it's clear, jump to KYTB to return from

@@ -30,8 +30,12 @@ ENDIF
  ASL DELTA              \ Divide our speed in DELTA by 4
  ASL DELTA
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  LDX #24                \ Set the screen to only show 24 text rows, which hides
  JSR DET1               \ the dashboard, setting A to 6 in the process
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform: The Master version has a unique internal view number for the title screen (13)
 
@@ -49,6 +53,13 @@ ELIF _MASTER_VERSION
 
  STZ QQ11               \ Set QQ11 to 0, so from here on we are using a space
                         \ view
+
+ENDIF
+
+IF _ELECTRON_VERSION
+
+ LDX #&32               \ ???
+ STX LASCT
 
 ENDIF
 
@@ -93,17 +104,36 @@ IF _6502SP_VERSION \ Advanced: See group A
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  LDA #146               \ Print recursive token 146 ("{all caps}GAME OVER")
  JSR ex
+
+ELIF _ELECTRON_VERSION
+
+ LDA #146               \ Print recursive token 146 ("{all caps}GAME OVER")
+ STA MCNT               \ ???
+ JSR ex
+
+ENDIF
 
 .D1
 
  JSR Ze                 \ Call Ze to initialise INWK to a potentially hostile
                         \ ship, and set A and X to random values
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  LSR A                  \ Set A = A / 4, so A is now between 0 and 63, and
  LSR A                  \ store in byte #0 (x_lo)
  STA INWK
+
+ELIF _ELECTRON_VERSION
+
+ LDA #&20               \ ???
+ STA INWK
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Platform
 
@@ -126,10 +156,14 @@ ENDIF
 
  DEY                    \ Set Y = 255
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  STY MCNT               \ Reset the main loop counter to 255, so all timer-based
                         \ calls will be stopped
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Platform
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Platform
 
  STY LASCT              \ Set the laser count to 255 to act as a counter in the
                         \ D2 loop below, so this setting determines how long the
@@ -290,13 +324,13 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ value in LASCT
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Platform
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Platform
 
  LDA LASCT              \ Loop back to D2 to run the main flight loop until
  BNE D2                 \ LASCT reaches zero (which will take 5.1 seconds, as
                         \ explained above)
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
 
  DEC LASCT              \ Decrement the counter in LASCT, which we set above,
                         \ so for each loop around D2, we decrement LASCT twice
@@ -306,8 +340,12 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  LDX #31                \ Set the screen to show all 31 text rows, which shows
  JSR DET1               \ the dashboard
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 

@@ -8,8 +8,10 @@
 \ ------------------------------------------------------------------------------
 \
 \ Display the dashboard's missile indicators, with all the missiles reset to
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \ green/cyan (i.e. not armed or locked).
+ELIF _ELECTRON_VERSION
+\ green/cyan (i.e. not armed or locked). ???
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 \ green (i.e. not armed or locked).
 ENDIF
@@ -26,14 +28,25 @@ ENDIF
  CPX NOMSL              \ If the counter is equal to the number of missiles,
  BEQ SAL8               \ jump down to SQL8 to draw remaining the missiles, as
                         \ the rest of them are present and should be drawn in
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
                         \ green/cyan
+ELIF _ELECTRON_VERSION
+                        \ green/cyan ???
 ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ green
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  LDY #0                 \ Draw the missile indicator at position X in black
  JSR MSBAR
+
+ELIF _ELECTRON_VERSION
+
+ LDY #4                 \ Draw the missile indicator at position X in black ???
+ JSR MSBAR
+
+ENDIF
 
  DEX                    \ Decrement the counter to point to the next missile
 
@@ -43,7 +56,7 @@ ENDIF
 
 .SAL8
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  LDY #&EE               \ Draw the missile indicator at position X in green/cyan
  JSR MSBAR
@@ -51,6 +64,11 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDY #GREEN2            \ Draw the missile indicator at position X in green
+ JSR MSBAR
+
+ELIF _ELECTRON_VERSION
+
+ LDY #9                 \ Draw the missile indicator at position X in green/cyan ???
  JSR MSBAR
 
 ENDIF

@@ -14,7 +14,7 @@
  JSR msblob             \ Reset the dashboard's missile indicators so none of
                         \ them are targeted
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: On the second title page (the one that says "Press Space Or Fire,Commander"), the cassette version shows a rotating Mamba, the disc version shows a rotating Krait, the 6502SP version shows a rotating Asp Mk II, and the Master version shows a rotating Cougar
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: On the second title page (the one that says "Press Space Or Fire,Commander"), the cassette and Electron versions show a rotating Mamba, the disc version shows a rotating Krait, the 6502SP version shows a rotating Asp Mk II, and the Master version shows a rotating Cougar
 
  LDA #147               \ Call TITLE to show a rotating Mamba (#3) and token
  LDX #3                 \ 147 ("PRESS FIRE OR SPACE,COMMANDER.{crlf}{crlf}"),

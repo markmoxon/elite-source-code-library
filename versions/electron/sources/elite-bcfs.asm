@@ -1,11 +1,12 @@
 \ ******************************************************************************
 \
-\ ELITE BIG CODE FILE SOURCE
+\ ELECTRON ELITE BIG CODE FILE SOURCE
 \
-\ Elite was written by Ian Bell and David Braben and is copyright Acornsoft 1984
+\ Electron Elite was written by Ian Bell and David Braben and is copyright
+\ Acornsoft 1984
 \
-\ The code on this site is identical to the version released on Ian Bell's
-\ personal website at http://www.elitehomepage.org/
+\ The code on this site has been disassembled from the version released on Ian
+\ Bell's personal website at http://www.elitehomepage.org/
 \
 \ The commentary is copyright Mark Moxon, and any misunderstandings or mistakes
 \ in the documentation are entirely my fault
@@ -17,8 +18,7 @@
 \
 \ This source file produces the following binary files:
 \
-\   * output/ELTcode.unprot.bin
-\   * output/ELThead.bin
+\   * output/ELITECO.bin
 \
 \ after reading in the following files:
 \
@@ -30,10 +30,11 @@
 \   * output/ELTF.bin
 \   * output/ELTG.bin
 \   * output/SHIPS.bin
+\   * output/WORDS9.bin
 \
 \ ******************************************************************************
 
-INCLUDE "versions/cassette/sources/elite-header.h.asm"
+INCLUDE "versions/electron/sources/elite-header.h.asm"
 
 _CASSETTE_VERSION       = (_VERSION = 1)
 _DISC_VERSION           = (_VERSION = 2)
@@ -47,16 +48,10 @@ _ELECTRON_VERSION       = (_VERSION = 5)
 \
 \ ******************************************************************************
 
-CODE% = &0F40           \ CODE% is set to the location that the main game code
+CODE% = &0D00           \ CODE% is set to the location that the main game code
                         \ gets moved to after it is loaded
 
-LOAD% = &1128           \ LOAD% points to the start of the actual game code,
-                        \ after the &28 bytes of header code that are inserted
-                        \ below
-
-D% = &563A              \ D% is set to the size of the main game code
-
-INCLUDE "library/cassette/bcfs/workspace/zp.asm"
+LOAD% = &2000           \ The load address of the main game code file
 
 \ ******************************************************************************
 \
@@ -64,46 +59,42 @@ INCLUDE "library/cassette/bcfs/workspace/zp.asm"
 \
 \ ******************************************************************************
 
-ORG &1100               \ The load address of the main game code file ("ELTcode"
-                        \ for loading from disc, "ELITEcode" for loading from
-                        \ tape)
-
-INCLUDE "library/cassette/bcfs/subroutine/lbl.asm"
+ORG CODE%
 
 .elitea
 
 PRINT "elitea = ", ~P%
-INCBIN "versions/cassette/output/ELTA.bin"
+INCBIN "versions/electron/output/ELTA.bin"
 
 .eliteb
 
 PRINT "eliteb = ", ~P%
-INCBIN "versions/cassette/output/ELTB.bin"
+INCBIN "versions/electron/output/ELTB.bin"
 
 .elitec
 
 PRINT "elitec = ", ~P%
-INCBIN "versions/cassette/output/ELTC.bin"
+INCBIN "versions/electron/output/ELTC.bin"
 
 .elited
 
 PRINT "elited = ", ~P%
-INCBIN "versions/cassette/output/ELTD.bin"
+INCBIN "versions/electron/output/ELTD.bin"
 
 .elitee
 
 PRINT "elitee = ", ~P%
-INCBIN "versions/cassette/output/ELTE.bin"
+INCBIN "versions/electron/output/ELTE.bin"
 
 .elitef
 
 PRINT "elitef = ", ~P%
-INCBIN "versions/cassette/output/ELTF.bin"
+INCBIN "versions/electron/output/ELTF.bin"
 
 .eliteg
 
 PRINT "eliteg = ", ~P%
-INCBIN "versions/cassette/output/ELTG.bin"
+INCBIN "versions/electron/output/ELTG.bin"
 
 .checksum0
 
@@ -115,17 +106,16 @@ PRINT "checksum0 = ", ~P%
 .ships
 
 PRINT "ships = ", ~P%
-INCBIN "versions/cassette/output/SHIPS.bin"
+INCBIN "versions/electron/output/SHIPS.bin"
 
 .end
 
 \ ******************************************************************************
 \
-\ Save output/ELTcode.unprot.bin and output/ELThead.bin
+\ Save output/ELITECO.unprot.bin
 \
 \ ******************************************************************************
 
 PRINT "P% = ", ~P%
-PRINT "S.ELTcode 1100 ", ~(LOAD% + &6000 - CODE%), " ", ~LOAD%, ~LOAD%
-SAVE "versions/cassette/output/ELTcode.unprot.bin", &1100, (LOAD% + &6000 - CODE%), LOAD%
-SAVE "versions/cassette/output/ELThead.bin", &1100, elitea, &1100
+PRINT "S.ELITECO ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
+SAVE "versions/electron/output/ELITECO.unprot.bin", CODE%, P%, LOAD%

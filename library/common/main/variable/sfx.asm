@@ -43,6 +43,8 @@
 
 .SFX
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  EQUB &12,&01,&00,&10   \ 0  - Lasers fired by us
  EQUB &12,&02,&2C,&08   \ 8  - We're being hit by lasers
  EQUB &11,&03,&F0,&18   \ 16 - We died 1 / We made a hit or kill 2
@@ -53,4 +55,19 @@
  EQUB &10,&02,&60,&10   \ 56 - Hyperspace drive engaged
  EQUB &13,&04,&C2,&FF   \ 64 - E.C.M. on
  EQUB &13,&00,&00,&00   \ 72 - E.C.M. off
+
+ELIF _ELECTRON_VERSION
+
+ EQUB &11               \ ???
+
+ EQUB &01, &00, &03, &11, &02, &2C, &04, &11
+ EQUB &03, &F0, &06, &10, &F1, &04, &05, &01
+ EQUB &F1, &BC, &01, &11, &F4, &0C, &08, &10
+ EQUB &F1, &04, &06, &10, &02, &60, &10, &11
+ EQUB &04, &C2, &FF, &11, &00, &00, &00
+
+ EQUB &70, &24, &56, &56, &42, &28, &C8, &D0
+ EQUB &F0, &E0
+
+ENDIF
 

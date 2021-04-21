@@ -99,9 +99,15 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR 
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Group A: Pressing "@" brings up the disc access menu in the enhanced versions
+IF _CASSETTE_VERSION \ Enhanced: Group A: Pressing "@" brings up the disc access menu in the enhanced versions
 
  CMP #&47               \ If "@" was pressed, jump to SVE to save the commander
+ BNE P%+5               \ file, returning from the subroutine using a tail call
+ JMP SVE
+
+ELIF _ELECTRON_VERSION
+
+ CMP #&48               \ If "@" was pressed, jump to SVE to save the commander
  BNE P%+5               \ file, returning from the subroutine using a tail call
  JMP SVE
 
@@ -143,7 +149,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR 
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
  CMP #f1                \ If the key pressed is < red key f1 or > red key f3,
  BCC LABEL_3            \ jump to LABEL_3 (so only do the following if the key
@@ -159,6 +165,25 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ P
                         \ set X to the last digit (1, 2 or 3) and jump to LOOK1
                         \ to switch to view X (rear, left or right), returning
                         \ from the subroutine using a tail call
+
+ELIF _ELECTRON_VERSION
+
+ STX T                  \ ???
+ LDX #&03
+
+.L3EB8
+
+ CMP L3E5D-1,X
+ BNE L3EC0
+
+ JMP LOOK1
+
+.L3EC0
+
+ DEX
+ BNE L3EB8
+
+ LDX T
 
 ELIF _MASTER_VERSION
 

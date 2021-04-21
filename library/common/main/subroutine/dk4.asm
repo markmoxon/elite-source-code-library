@@ -46,11 +46,18 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  STX KL                 \ Store X in KL, byte #0 of the key logger
 
  CPX #&69               \ If COPY is not being pressed, jump to DK2 below,
+ BNE DK2                \ otherwise let's process the configuration keys
+
+ELIF _ELECTRON_VERSION
+
+ STX KL                 \ Store X in KL, byte #0 of the key logger
+
+ CPX #&38               \ If COPY is not being pressed, jump to DK2 below,
  BNE DK2                \ otherwise let's process the configuration keys
 
 ELIF _MASTER_VERSION
@@ -70,8 +77,16 @@ ENDIF
                         \ pauses the game when COPY is pressed, and unpauses
                         \ it when DELETE is pressed
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+
  JSR WSCAN              \ Call WSCAN to wait for the vertical sync, so the whole
                         \ screen gets drawn
+
+ELIF _ELECTRON_VERSION
+
+ JSR DEL8               \ ???
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 

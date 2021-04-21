@@ -41,7 +41,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
 ENDIF
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Minor
 
 .DKS4
 
@@ -80,6 +80,46 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Minor
  TXA                    \ Transfer X into A
 
  RTS                    \ Return from the subroutine
+
+ELIF _ELECTRON_VERSION
+
+.L42D0
+
+ SEC                    \ ???
+ CLV
+ SEI
+ JMP (S%+4)
+
+.L42D6
+
+ LDX #&40
+
+.DKS4
+
+ TYA
+ PHA
+ TXA
+ PHA
+ ORA #&80
+ TAX
+ JSR L42D0
+
+ CLI
+ TAX
+ PLA
+ AND #&7F
+ CPX #&80
+ BCC L42ED
+
+ ORA #&80
+
+.L42ED
+
+ TAX
+ PLA
+ TAY
+ TXA
+ RTS
 
 ELIF _6502SP_VERSION
 

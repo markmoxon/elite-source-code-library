@@ -62,8 +62,17 @@ IF _6502SP_VERSION \ Enhanced: Group A: In the enhanced versions, the cursor mov
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
+
  LDA JSTK               \ If the joystick was not used, jump down to TJ1,
  BEQ TJ1                \ otherwise we move the cursor with the joystick
+
+ELIF _ELECTRON_VERSION
+
+ LDX JSTK               \ If the joystick was not used, jump down to TJ1,
+ BEQ TJ1                \ otherwise we move the cursor with the joystick
+
+ENDIF
 
 IF _MASTER_VERSION \ Master: Group B: The Master has different logic around moving the crosshairs on the chart views, though the results appear to be the same
 
@@ -193,10 +202,10 @@ ENDIF
 
  LDA KL                 \ Set A to the value of KL (the key pressed)
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+
  LDX #0                 \ Set the results, X = Y = 0
  LDY #0
-
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  CMP #&19               \ If left arrow was pressed, set X = X - 1
  BNE P%+3
@@ -214,7 +223,30 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ 
  BNE P%+3
  DEY
 
+ELIF _ELECTRON_VERSION
+
+ LDY #0                 \ ???
+
+ CMP #&18
+ BNE P%+3
+ DEX
+
+ CMP #&78
+ BNE P%+3
+ INX
+
+ CMP #&39
+ BNE P%+3
+ INY
+
+ CMP #&28
+ BNE P%+3
+ DEY
+
 ELIF _MASTER_VERSION
+
+ LDX #0                 \ Set the results, X = Y = 0
+ LDY #0
 
  CMP #&8C               \ If left arrow was pressed, set X = X - 1
  BNE P%+3

@@ -15,7 +15,7 @@
 
 .PL2
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
 
  LDA TYPE               \ Shift bit 0 of the planet/sun's type into the C flag
  LSR A
@@ -60,7 +60,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
 
  JMP WPLS               \ This is the sun, so jump to WPLS to remove it from
                         \ screen, returning from the subroutine using a tail

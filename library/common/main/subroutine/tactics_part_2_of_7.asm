@@ -222,7 +222,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Label
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
 
  LDA #%11110001         \ Set the AI flag to give the ship E.C.M., enable AI and
                         \ make it very aggressive (56 out of 63)

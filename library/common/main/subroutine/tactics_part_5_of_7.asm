@@ -47,7 +47,7 @@
 
  LDA TYPE               \ Fetch the ship type into A
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron version has no Thargoids, which also means no ships can launch Thargons
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron version has no Thargoids, which also means no ships can launch Thargons
 
  CMP #THG               \ If this is not a Thargoid, jump down to TA16 to launch
  BNE TA16               \ a missile

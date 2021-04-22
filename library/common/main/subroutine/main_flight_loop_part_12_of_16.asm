@@ -86,7 +86,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
 
  LDA DLY                \ If we already have an in-flight message on-screen (in
  ORA MJ                 \ which case DLY > 0), or we are in witchspace (in

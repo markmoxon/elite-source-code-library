@@ -13,7 +13,7 @@ ENDIF
 \
 \ This resets the following workspaces to zero:
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \   * The ship data blocks ascending from K% at &0900
 \
 \   * The ship line heap descending from WP at &0D40
@@ -21,6 +21,14 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
 \   * WP workspace variables from FRIN to de, which include the ship slots for
 \     the local bubble of universe, and various flight and ship status variables
 \     (only a portion of the LSX/LSO sun line heap is cleared)
+ELIF _ELECTRON_VERSION
+\   * The ship data blocks ascending from K% at &0900
+\
+\   * The ship line heap descending from WP at &0BE0
+\
+\   * WP workspace variables from FRIN to de, which include the ship slots for
+\     the local bubble of universe, and various flight and ship status variables
+\     (only a portion of the LSO space station line heap is cleared)
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 \   * UP workspace variables from FRIN to de, which include the ship slots for
 \     the local bubble of universe, and various flight and ship status variables

@@ -30,14 +30,14 @@ ENDIF
  ASL DELTA              \ Divide our speed in DELTA by 4
  ASL DELTA
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
 
  LDX #24                \ Set the screen to only show 24 text rows, which hides
  JSR DET1               \ the dashboard, setting A to 6 in the process
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform: The Master version has a unique internal view number for the title screen (13)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Platform: The Master version has a unique internal view number for the title screen (13)
 
  JSR TT66               \ Clear the top part of the screen, draw a white border,
                         \ and set the current view type in QQ11 to 6 (death
@@ -104,7 +104,7 @@ IF _6502SP_VERSION \ Advanced: See group A
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
 
  LDA #146               \ Print recursive token 146 ("{all caps}GAME OVER")
  JSR ex
@@ -122,7 +122,7 @@ ENDIF
  JSR Ze                 \ Call Ze to initialise INWK to a potentially hostile
                         \ ship, and set A and X to random values
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
 
  LSR A                  \ Set A = A / 4, so A is now between 0 and 63, and
  LSR A                  \ store in byte #0 (x_lo)
@@ -156,7 +156,7 @@ ENDIF
 
  DEY                    \ Set Y = 255
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
 
  STY MCNT               \ Reset the main loop counter to 255, so all timer-based
                         \ calls will be stopped
@@ -200,7 +200,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: In the cassette, disc and 6502SP versions, our ship is given a gentle pitch up or down when we die; the same is true in the Master version, but the pitch is always downwards so the detritus of our death always rises to the top of the screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Master: In the cassette, disc and 6502SP versions, our ship is given a gentle pitch up or down when we die; the same is true in the Master version, but the pitch is always downwards so the detritus of our death always rises to the top of the screen
 
  ROR A                  \ The C flag is randomly set from the above call to Ze,
  AND #%10000111         \ so this sets A to a number between -7 and +7, which
@@ -340,7 +340,7 @@ ELIF _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
 
  LDX #31                \ Set the screen to show all 31 text rows, which shows
  JSR DET1               \ the dashboard

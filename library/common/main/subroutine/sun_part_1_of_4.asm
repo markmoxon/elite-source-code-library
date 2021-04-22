@@ -31,7 +31,7 @@
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
  JMP WPLS               \ Jump to WPLS to remove the old sun from the screen. We
                         \ only get here via the BCS just after the SUN entry
@@ -61,7 +61,7 @@ ENDIF
 
  LDA #&FF               \ Set A = &FF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
+IF _CASSETTE_VERSION \ Minor
 
  JMP PLF5               \ Jump to PLF5
 
@@ -88,7 +88,7 @@ ENDIF
                         \ circle appears on-screen, and of it does, set P(2 1)
                         \ to the maximum y-coordinate of the new sun on-screen
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
  BCS PLF3-3             \ If CHKON set the C flag then the new sun's circle does
                         \ not appear on-screen, so jump to WPLS (via the JMP at
@@ -133,7 +133,7 @@ ENDIF
                         \ new sun, given that P(2 1) contains the 16-bit maximum
                         \ y-coordinate of the new sun on-screen
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: Group A: In the Master version, the screen size is not hard-coded, but is stored in a dedicated location, an approach that was presumably inherited from the non-BBC versions of the game
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: Group A: In the Master version, the screen size is not hard-coded, but is stored in a dedicated location, an approach that was presumably inherited from the non-BBC versions of the game
 
  LDA #2*Y-1             \ #Y is the y-coordinate of the centre of the space
                         \ view, so this sets Y to the y-coordinate of the bottom
@@ -169,7 +169,7 @@ ENDIF
                         \ and the direction in which we need to draw them, both
                         \ from the centre of the new sun
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: See group A
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: See group A
 
  LDA #2*Y-1             \ Set (A X) = y-coordinate of bottom of screen - K4(1 0)
  SEC                    \

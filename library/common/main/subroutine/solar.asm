@@ -33,7 +33,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: When generating system dat
  LSR A                  \ and 7, at the same time shifting bit 0 of the result
                         \ of the addition into the C flag
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  AND #%00000011         \ Extract bits 0-1 (which also help to determine the
                         \ economy), which will be between 0 and 3
@@ -52,7 +52,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: In the cassette version, t
  STA INWK+5             \ x_sign and y_sign, it moves the planet to the upper
                         \ right or lower left
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  ROR A                  \ Halve A, rotating in the C flag (which is clear) and
  STA INWK+2             \ store in both x_sign and y_sign, moving the planet to
@@ -65,7 +65,7 @@ ENDIF
                         \ it's the first one to be added to our local bubble of
                         \ this new system's universe
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
 
  LDA QQ15+3             \ Fetch s1_hi, extract bits 0-2, set bits 0 and 7 and
  AND #%00000111         \ store in z_sign, so the sun is behind us at a distance

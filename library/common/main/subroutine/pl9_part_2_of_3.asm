@@ -83,7 +83,7 @@
                         \
                         \   (XX16+3 K2+3) = sidev_y / z
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Tube
 
  JMP PLS2               \ Jump to PLS2 to draw the second meridian, returning
                         \ from the subroutine using a tail call

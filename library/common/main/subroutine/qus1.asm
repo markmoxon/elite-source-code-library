@@ -72,7 +72,7 @@ IF _6502SP_VERSION \ Tube
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION
 
  LDX #INWK              \ Store a pointer to INWK at the start of the block at
  STX &0C00              \ &0C00, storing #INWK in the low byte because INWK is

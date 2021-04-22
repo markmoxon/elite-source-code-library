@@ -18,7 +18,7 @@
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
 
  LDA MJ                 \ If we are in witchspace, jump down to MA23S to skip
  BNE MA23S              \ the following, as there are no space stations in
@@ -121,7 +121,7 @@ IF _CASSETTE_VERSION \ Platform: In the cassette version, we don't remove the su
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
 
  JSR WPLS               \ Call WPLS to remove the sun from the screen, as we
                         \ can't have both the sun and the space station at the

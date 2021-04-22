@@ -126,7 +126,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: The docking co
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
 
  CMP #20                \ If this is the 20th iteration in this block of 32,
  BNE MA23               \ do the following, otherwise jump to MA23 to skip the

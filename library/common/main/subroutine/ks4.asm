@@ -16,7 +16,7 @@
 
  JSR ZINF               \ Call ZINF to reset the INWK ship workspace
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
 
  JSR FLFLLS             \ Reset the LSO block, returns with A = 0
 

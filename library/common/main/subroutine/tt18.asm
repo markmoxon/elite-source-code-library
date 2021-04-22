@@ -42,7 +42,7 @@ ENDIF
 
 .ee5
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
 
  JSR CTRL               \ Scan the keyboard to see if CTRL is currently pressed,
                         \ returning a negative value in A if it is

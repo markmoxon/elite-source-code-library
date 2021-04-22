@@ -25,7 +25,7 @@
                         \ is the x-offset from the centre of the compass of the
                         \ dot we want to draw. Returns with the C flag clear
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
 
  TXA                    \ Set COMX = 195 + X, as 186 is the pixel x-coordinate
  ADC #195               \ of the leftmost dot possible on the compass, and X can

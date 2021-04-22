@@ -28,7 +28,7 @@
  LDA QQ19+1             \ Set K4 = the y-coordinate of the centre
  STA K4
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION \ Minor
 
  LDX #0                 \ Set the high bytes of K3(1 0) and K4(1 0) to 0
  STX K4+1
@@ -36,6 +36,18 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ 
 
 \STX LSX                \ This instruction is commented out in the original
                         \ source
+
+ INX                    \ Set LSP = 1 to reset the ball line heap
+ STX LSP
+
+ LDX #2                 \ Set STP = 2, the step size for the circle
+ STX STP
+
+ELIF _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION
+
+ LDX #0                 \ Set the high bytes of K3(1 0) and K4(1 0) to 0
+ STX K4+1
+ STX K3+1
 
  INX                    \ Set LSP = 1 to reset the ball line heap
  STX LSP
@@ -68,13 +80,20 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Minor
+IF _CASSETTE_VERSION \ Minor
 
  JSR CIRCLE2            \ Call CIRCLE2 to draw a circle with the centre at
                         \ (K3(1 0), K4(1 0)) and radius K
 
 \LDA #&FF               \ These instructions are commented out in the original
 \STA LSX                \ source
+
+ RTS                    \ Return from the subroutine
+
+ELIF _ELECTRON_VERSION OR _DISC_FLIGHT
+
+ JSR CIRCLE2            \ Call CIRCLE2 to draw a circle with the centre at
+                        \ (K3(1 0), K4(1 0)) and radius K
 
  RTS                    \ Return from the subroutine
 

@@ -25,7 +25,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: The docking computer in the enhan
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Tube
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Tube
 
  LDY #1                 \ Update the key logger for key 1 in the KYTB table, so
  JSR DKS1               \ KY1 will be &FF if "?" (slow down) is being pressed

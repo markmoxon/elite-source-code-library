@@ -3,7 +3,7 @@
 \       Name: CTWOS
 \       Type: Variable
 \   Category: Drawing pixels
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 \    Summary: Ready-made single-pixel character row bytes for mode 5
 \  Deep dive: Drawing colour pixels in mode 5
 ELIF _ELECTRON_VERSION
@@ -48,7 +48,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Platform
  EQUB %00010001
  EQUB %10001000
 
-ELIF _DISC_DOCKED OR _MASTER_VERSION
+ELIF _DISC_DOCKED
 
  EQUB %10001000
  EQUB %01000100

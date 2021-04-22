@@ -31,7 +31,7 @@
  BPL DKS2-1             \ The key is not being pressed, so return from the
                         \ subroutine (as DKS2-1 contains an RTS)
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
+IF _CASSETTE_VERSION \ Minor
 
  LDX #&FF               \ Store &FF in the Y-th byte of the key logger at KL
  STX KL,Y

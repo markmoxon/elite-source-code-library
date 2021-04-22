@@ -41,7 +41,7 @@
  EOR #%10000000         \ flipped (i.e. set them to the sign we want for alpha)
  TAY
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
 
  AND #%10000000         \ Extract the flipped sign of the roll rate and store
  STA ALP2               \ in ALP2 (so ALP2 contains the sign of the roll angle

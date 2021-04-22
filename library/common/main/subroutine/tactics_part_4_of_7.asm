@@ -113,7 +113,7 @@ ENDIF
  CMP #230               \ If A < 230 (90% chance), jump down to ta3 to consider
  BCC ta3                \ firing a missile
 
-IF _CASSETTE_VERSION \ Electron: The cassette version has Thargoids but no NEWB flags, so we have to manually cater for Thargoids launching Thargons rather than using the same code as escape pods
+IF _CASSETTE_VERSION \ Standard: The cassette version has Thargoids but no NEWB flags, so we have to manually cater for Thargoids launching Thargons rather than using the same code as escape pods
 
  LDA TYPE               \ If this is a Thargoid, jump down to ta3 to consider
  CMP #THG               \ launching a Thargon

@@ -200,7 +200,7 @@ ENDIF
 
  BNE PLL1               \ Loop back to PLL1 until CNT+1 = 0
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Other: Group B: The cassette version contains various bits of copy protection code injected into the Saturn-drawing routine in the loader
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Other: Group B: The cassette and Electron versions contain various bits of copy protection code injected into the Saturn-drawing routine in the loader
 
  LDX #&C2               \ Set the low byte of EXCN(1 0) to &C2, so we now have
  STX EXCN               \ EXCN(1 0) = &03C2, which we will use in the IRQ1
@@ -209,7 +209,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Other: Group B: The cassette version
 
 ENDIF
 
-IF _ELECTRON_VERSION
+IF _ELECTRON_VERSION \ Other: See group B
 
  LDX #&60               \ ???
  STX &0087

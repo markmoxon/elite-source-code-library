@@ -14,7 +14,7 @@
 
 .David9
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Platform
 
  EQUW David5            \ The address of David5
 

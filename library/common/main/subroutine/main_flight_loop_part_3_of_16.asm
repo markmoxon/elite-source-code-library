@@ -22,7 +22,11 @@
 \
 \   * Space and "?" to speed up and slow down
 \   * "U", "T" and "M" to disarm, arm and fire missiles
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
 \   * TAB to fire an energy bomb
+ELIF _ELECTRON_VERSION
+\   * "-" to fire an energy bomb
+ENDIF
 \   * ESCAPE to launch an escape pod
 \   * "J" to initiate an in-system jump
 \   * "E" to deploy E.C.M. anti-missile countermeasures
@@ -163,7 +167,11 @@ ENDIF
 
  LDA MSTG               \ If MSTG = &FF then there is no target lock, so jump to
  BMI MA64               \ MA64 to skip the following (also skipping the checks
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
                         \ for TAB, ESCAPE, "J" and "E")
+ELIF _ELECTRON_VERSION
+                        \ for "-", ESCAPE, "J" and "E")
+ENDIF
 
  JSR FRMIS              \ The "fire missile" key is being pressed and we have
                         \ a missile lock, so call the FRMIS routine to fire
@@ -171,14 +179,23 @@ ENDIF
 
 .MA24
 
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+
  LDA KY12               \ If TAB is being pressed, keep going, otherwise jump
  BEQ MA76               \ jump down to MA76 to skip the following
 
+ELIF _ELECTRON_VERSION
+
+ LDA KY12               \ If "-" is being pressed, keep going, otherwise jump
+ BEQ MA76               \ jump down to MA76 to skip the following
+
+ENDIF
+
 IF _MASTER_VERSION \ Platform
 
- LDA BOMB               \ If we already set off our energy bomb by pressing TAB,
- BMI MA76               \ then BOMB is now negative, so this skips to MA76 if
-                        \ our energy bomb is already going off
+ LDA BOMB               \ If we already set off our energy bomb, then BOMB is
+ BMI MA76               \ negative, so this skips to MA76 if our energy bomb is
+                        \ already going off
 
 ENDIF
 

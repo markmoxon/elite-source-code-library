@@ -15,7 +15,7 @@
 
 .checksum0
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Comment
 
  SKIP 1                 \ This value is checked against the calculated checksum
                         \ in part 6 of the loader in elite-loader.asm

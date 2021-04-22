@@ -19,21 +19,7 @@ ENDIF
 
 .S%
 
-IF _CASSETTE_VERSION
-
- EQUW TT170             \ The entry point for the main game; once the main code
-                        \ has been loaded, decrypted and moved to the right
-                        \ place by elite-loader.asm, the game is started by a
-                        \ JMP (S%) instruction, which jumps to the main entry
-                        \ point at TT170 via this location
-
- EQUW TT26              \ WRCHV is set to point here by elite-loader.asm
-
- EQUW IRQ1              \ IRQ1V is set to point here by elite-loader.asm
-
- EQUW BR1               \ BRKV is set to point here by elite-loader.asm
-
-ELIF _ELECTRON_VERSION
+IF _ELECTRON_VERSION \ Platform
 
  EQUB &40               \ This gets set to &40 by elite-loader.asm ???
 
@@ -51,17 +37,33 @@ ELIF _ELECTRON_VERSION
 
  EQUW 0                 \ ???
 
+ENDIF
+
+IF _CASSETTE_VERSION \ Comment
+
+ EQUW TT170             \ The entry point for the main game; once the main code
+                        \ has been loaded, decrypted and moved to the right
+                        \ place by elite-loader.asm, the game is started by a
+                        \ JMP (S%) instruction, which jumps to the main entry
+                        \ point at TT170 via this location
+
+ELIF _ELECTRON_VERSION
+
  EQUW TT170             \ The entry point for the main game; once the main code
                         \ has been loaded, decrypted and moved to the right
                         \ place by elite-loader.asm, the game is started by a
                         \ JMP (S%+8) instruction, which jumps to the main entry
                         \ point at TT170 via this location
 
+ENDIF
+
  EQUW TT26              \ WRCHV is set to point here by elite-loader.asm
 
  EQUW IRQ1              \ IRQ1V is set to point here by elite-loader.asm
 
  EQUW BR1               \ BRKV is set to point here by elite-loader.asm
+
+IF _ELECTRON_VERSION \ Platform
 
 .KEY1
 

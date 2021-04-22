@@ -22,7 +22,7 @@
  LDY #2                 \ Set the high byte of V219(1 0) to 2
  STY V219+1
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Platform
 
  STA PROT1-255,X        \ Poke &48 into PROT1, which changes the instruction
                         \ there to a PHA

@@ -28,12 +28,18 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
 
  LDA #1                 \ Set HFX to 1, which switches the screen mode to a full
  STA HFX                \ mode 5 screen, therefore making the hyperspace rings
                         \ multi-coloured and all zig-zaggy (see the IRQ1 routine
                         \ for details)
+
+ELIF _ELECTRON_VERSION
+
+ LDA #1                 \ Set HFX to 1. In the other versions, this makes the
+ STA HFX                \ hyperspace rings multi-coloured, but the Electron
+                        \ version is monochrome, so this has no effect
 
 ELIF _6502SP_VERSION
 
@@ -60,10 +66,17 @@ ENDIF
 
  JSR HFS2               \ Call HFS2 to draw the hyperspace tunnel rings
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
 
  DEC HFX                \ Set HFX back to 0, so we switch back to the normal
                         \ split-screen mode
+
+ RTS                    \ Return from the subroutine
+
+ELIF _ELECTRON_VERSION
+
+ DEC HFX                \ Set HFX back to 0, which has no effect in the Electron
+                        \ version
 
  RTS                    \ Return from the subroutine
 

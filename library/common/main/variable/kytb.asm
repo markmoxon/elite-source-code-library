@@ -49,7 +49,7 @@ IF _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Label
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Master: The Master has a very different set of internal key numbers to the BBC Micro and Electron (which have the same numbers for all flight keys except for TAB), so the keyboard lookup table for the Master is unique
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Master: The Master has a very different set of internal key numbers to the BBC Micro and Electron, so the keyboard lookup table for the Master is also very different; the Electron and BBC Micro are much more similar, but the Electron has no TAB key, so "-" launches an energy bomb instead
 
                         \ These are the primary flight controls (pitch, roll,
                         \ speed and lasers):
@@ -88,7 +88,7 @@ ELIF _ELECTRON_VERSION
 
                         \ These are the secondary flight controls:
 
- EQUB &17               \ TAB       KYTB+8      Energy bomb
+ EQUB &17               \ -         KYTB+8      Energy bomb
  EQUB &70               \ ESCAPE    KYTB+9      Launch escape pod
  EQUB &23               \ T         KYTB+10     Arm missile
  EQUB &35               \ U         KYTB+11     Unarm missile

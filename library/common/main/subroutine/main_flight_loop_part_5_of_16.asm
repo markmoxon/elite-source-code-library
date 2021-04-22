@@ -20,9 +20,9 @@
 \
 \ ******************************************************************************
 
- LDA BOMB               \ If we set off our energy bomb by pressing TAB (see
- BPL MA21               \ MA24 above), then BOMB is now negative, so this skips
-                        \ to MA21 if our energy bomb is not going off
+ LDA BOMB               \ If we set off our energy bomb (see MA24 above), then
+ BPL MA21               \ BOMB is now negative, so this skips to MA21 if our
+                        \ energy bomb is not going off
 
  CPY #2*SST             \ If the ship in Y is the space station, jump to BA21
  BEQ MA21               \ as energy bombs are useless against space stations

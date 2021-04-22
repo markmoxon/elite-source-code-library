@@ -20,9 +20,9 @@
 
 .MA18
 
- LDA BOMB               \ If we set off our energy bomb by pressing TAB (see
- BPL MA77               \ MA24 above), then BOMB is now negative, so this skips
-                        \ to MA77 if our energy bomb is not going off
+ LDA BOMB               \ If we set off our energy bomb (see MA24 above), then
+ BPL MA77               \ BOMB is now negative, so this skips to MA21 if our
+                        \ energy bomb is not going off
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Master: The Master version's energy bomb lightning bolt flashes on the screen, just like real lightning
 

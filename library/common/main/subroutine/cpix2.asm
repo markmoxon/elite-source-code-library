@@ -46,7 +46,7 @@ ENDIF
 
 .CPIX2
 
-IF _ELECTRON_VERSION
+IF _ELECTRON_VERSION \ Screen
 
  LDY #&80               \ ???
  STY SC
@@ -63,7 +63,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
 \.CPIX                  \ This label is commented out in the original source. It
                         \ would provide a new entry point with A specifying the
@@ -155,7 +155,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  TYA                    \ Set Y to just bits 0-2 of the y-coordinate, which will
  AND #%00000111         \ be the number of the pixel row we need to draw into
@@ -241,7 +241,7 @@ ENDIF
                         \ fetched that value, then the right pixel of the dash
                         \ is in the same character block as the left pixel, so
                         \ jump to CP1 to draw it
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  LDA SC                 \ Otherwise the left pixel we drew was at the last
  ADC #8                 \ position of four in this character block, so we add
@@ -255,8 +255,7 @@ ELIF _ELECTRON_VERSION
  CLC                    \ ???
  ADC #8                 \ position of four in this character block, so we add
  STA SC                 \ 8 to the screen address to move onto the next block
-                        \ along (as there are 8 bytes in a character block).
-                        \ The C flag was cleared above, so this ADC is correct
+                        \ along (as there are 8 bytes in a character block)
 
 ENDIF
 
@@ -293,7 +292,7 @@ ENDIF
 
 .CP1
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  AND COL                \ Apply the colour mask to the pixel byte, as above
 

@@ -13,7 +13,7 @@
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Minor
 
  EQUS "R.ELITEcode"
  EQUB 13

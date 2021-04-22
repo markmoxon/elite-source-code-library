@@ -9,7 +9,7 @@
 
 .swine
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Platform
 
  LDA #%01111111         \ Set 6522 System VIA interrupt enable register IER
  STA &FE4E              \ (SHEILA &4E) bits 0-6 (i.e. disable all hardware

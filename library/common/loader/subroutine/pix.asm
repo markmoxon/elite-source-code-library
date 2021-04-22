@@ -37,7 +37,7 @@ ENDIF
 
 .PIX
 
-IF _ELECTRON_VERSION
+IF _ELECTRON_VERSION \ Screen
 
  LDY #&80               \ ???
  STY ZP
@@ -48,7 +48,7 @@ ENDIF
 
  EOR #%10000000         \ Flip the sign of A
 
-IF _ELECTRON_VERSION
+IF _ELECTRON_VERSION \ Screen
 
  CMP #&F8               \ ???
  BCS PIX-1

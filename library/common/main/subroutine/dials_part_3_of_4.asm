@@ -35,7 +35,7 @@ ENDIF
 
  LDY #0                 \ Set Y = 0, for use in various places below
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: Group A: Dashboard indicators in the Electron version don't change colour, as the dashboard is monochrome
 
  JSR PZW                \ Call PZW to set A to the colour for dangerous values
                         \ and X to the colour for safe values
@@ -67,7 +67,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: See group A
 
  STX T1                 \ Set T1 to 3, the threshold at which we change the
                         \ indicator's colour
@@ -95,7 +95,7 @@ ENDIF
                         \ bank indicators, so we can calculate each of the four
                         \ energy banks' values and store them in XX12
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  LDA ENERGY             \ Set A = Q = ENERGY / 4, so they are both now in the
  LSR A                  \ range 0-63 (so that's a maximum of 16 in each of the
@@ -103,8 +103,9 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
 
 ELIF _ELECTRON_VERSION
 
- LDA ENERGY             \ ???
- LSR A
+ LDA ENERGY             \ Set A = Q = ENERGY / 2, so they are both now in the
+ LSR A                  \ range 0-127 (so that's a maximum of 32 in each of the
+                        \ banks, and a maximum of 31 in the top bank)
 
 ENDIF
 

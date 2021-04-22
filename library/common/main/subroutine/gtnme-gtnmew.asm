@@ -77,7 +77,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
  JSR OSBYTE
 
  LDX #LO(RLINE)         \ Set (Y X) to point to the RLINE parameter block
- LDY #HI(RLINE)         \ configuration block below, which reads a line from
+ LDY #HI(RLINE)         \ configuration block below
 
 ENDIF
 

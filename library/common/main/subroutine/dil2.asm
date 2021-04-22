@@ -176,6 +176,8 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
                         \ to the next indicator, i.e. the one below the one we
                         \ just drew
 
+ RTS                    \ Return from the subroutine
+
 ELIF _ELECTRON_VERSION
 
  CPY #30                \ If Y < 30 then we still have some more character
@@ -195,10 +197,6 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ two pages of 256 bytes) - so this sets up SC to point
                         \ to the next indicator, i.e. the one below the one we
                         \ just drew
-
-ENDIF
-
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
 
  RTS                    \ Return from the subroutine
 

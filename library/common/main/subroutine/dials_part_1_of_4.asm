@@ -68,7 +68,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  STX K+1                \ Set K+1 (the colour we should show for low values) to
                         \ X (the colour to use for safe values)
@@ -86,7 +86,7 @@ ENDIF
 
  LDA DELTA              \ Fetch our ship's speed into A, in the range 0-40
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
 \LSR A                  \ Draw the speed indicator using a range of 0-31, and
  JSR DIL-1              \ increment SC to point to the next indicator (the roll
@@ -96,7 +96,9 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
 
 ELIF _ELECTRON_VERSION
 
- JSR DIL                \ ???
+ JSR DIL                \ Draw the speed indicator using a range of 0-31, and
+                        \ increment SC to point to the next indicator (the roll
+                        \ indicator)
 
 ENDIF
 

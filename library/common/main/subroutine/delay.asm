@@ -56,7 +56,7 @@ ENDIF
 
 .DELAY
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: On the BBC versions, delays are implemented by waiting for a specified number of vertical syncs. The Electron's video system doesn't work in the same way, so it has its own dedicated delay routine that isn't based around the screen refresh
 
  JSR WSCAN              \ Call WSCAN to wait for the vertical sync, so the whole
                         \ screen gets drawn

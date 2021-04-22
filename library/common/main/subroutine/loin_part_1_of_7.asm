@@ -86,7 +86,7 @@ ENDIF
  LDA #128               \ Set S = 128, which is the starting point for the
  STA S                  \ slope error (representing half a pixel)
 
-IF _ELECTRON_VERSION
+IF _ELECTRON_VERSION \ Screen
 
  STA SC                 \ ???
 
@@ -120,7 +120,7 @@ ENDIF
 
 IF _ELECTRON_VERSION
 
- SEC                    \ ???
+ SEC                    \ Set the C flag, ready for the subtraction below
 
 ENDIF
 

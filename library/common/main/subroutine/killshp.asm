@@ -71,7 +71,10 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ELIF _ELECTRON_VERSION
 
- JSR L3903              \ ???
+ JSR ABORT-2            \ Otherwise we need to remove our missile lock, so call
+                        \ ABORT-2 to disarm the missile and update the missile
+                        \ indicators on the dashboard to disarmed (white
+                        \ squares)
 
 ENDIF
 

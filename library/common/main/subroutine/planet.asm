@@ -3,19 +3,27 @@
 \       Name: PLANET
 \       Type: Subroutine
 \   Category: Drawing planets
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Draw the planet or sun
+ELIF _ELECTRON_VERSION
+\    Summary: Draw the planet
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
 \ Arguments:
 \
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \   INWK                The planet or sun's ship data block
+ELIF _ELECTRON_VERSION
+\   INWK                The planet's ship data block
+ENDIF
 \
 \ ******************************************************************************
 
 .PLANET
 
-IF _ELECTRON_VERSION
+IF _ELECTRON_VERSION \ Electron: In the Electron version, the PLANET routine only draws planets and will terminate if asked to draw a sun
 
  LDA TYPE               \ ???
  LSR A
@@ -98,8 +106,7 @@ ENDIF
 
 .PL82
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
-
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: Planets in the Electron version are simple circles, so the code to draw meridians and craters is omitted, and the simple CIRCLE routine is used instead
 
  LDA TYPE               \ If the planet/sun's type has bit 0 clear, then it's
  LSR A                  \ either 128 or 130, which is a planet (the sun has type
@@ -112,9 +119,11 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
 
 ELIF _ELECTRON_VERSION
 
- JSR WPLS2              \ ???
+ JSR WPLS2              \ Call WPLS2 to remove the planet from the screen
 
- JMP CIRCLE
+ JMP CIRCLE             \ Jump to CIRCLE to draw the planet (which is just a
+                        \ simple circle) and return from the subroutine using
+                        \ a tail call
 
 ENDIF
 

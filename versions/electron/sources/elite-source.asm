@@ -536,11 +536,6 @@ INCLUDE "library/common/main/subroutine/ginf.asm"
 INCLUDE "library/common/main/subroutine/nwsps.asm"
 INCLUDE "library/common/main/subroutine/nwshp.asm"
 INCLUDE "library/common/main/subroutine/nws1.asm"
-
-.L3903
-
- LDY #&09
-
 INCLUDE "library/common/main/subroutine/abort.asm"
 INCLUDE "library/common/main/subroutine/abort2.asm"
 INCLUDE "library/common/main/subroutine/ecblb2.asm"
@@ -550,14 +545,7 @@ INCLUDE "library/original/main/subroutine/bulb.asm"
 INCLUDE "library/common/main/variable/ecbt.asm"
 INCLUDE "library/common/main/variable/spbt.asm"
 INCLUDE "library/common/main/subroutine/msbar.asm"
-
-.L3961
-
- EQUB &00
- EQUB &00, &00, &00, &00, &FC, &FC, &FC, &FC
- EQUB &FC, &84, &B4, &84, &FC, &C4, &EC, &EC
- EQUB &FC
-
+INCLUDE "library/electron/main/variable/mdials.asm"
 INCLUDE "library/common/main/subroutine/proj.asm"
 INCLUDE "library/common/main/subroutine/pl2.asm"
 INCLUDE "library/common/main/subroutine/planet.asm"

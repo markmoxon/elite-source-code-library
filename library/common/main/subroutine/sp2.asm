@@ -25,7 +25,7 @@
                         \ is the x-offset from the centre of the compass of the
                         \ dot we want to draw. Returns with the C flag clear
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  TXA                    \ Set COMX = 195 + X, as 186 is the pixel x-coordinate
  ADC #195               \ of the leftmost dot possible on the compass, and X can
@@ -38,10 +38,10 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
 
 ELIF _ELECTRON_VERSION
 
- TXA                    \ Set COMX = 193 + X, as 186 is the pixel x-coordinate
+ TXA                    \ Set COMX = 193 + X, as 184 is the pixel x-coordinate
  ADC #193               \ of the leftmost dot possible on the compass, and X can
- STA COMX               \ be -9, which would be 195 - 9 = 186. This also means
-                        \ that the highest value for COMX is 195 + 9 = 204,
+ STA COMX               \ be -9, which would be 193 - 9 = 184. This also means
+                        \ that the highest value for COMX is 193 + 9 = 202,
                         \ which is the pixel x-coordinate of the rightmost dot
                         \ in the compass... but the compass dot is actually two
                         \ pixels wide, so the compass dot can overlap the right

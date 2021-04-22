@@ -499,7 +499,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Minor
+IF _CASSETTE_VERSION \ Minor
 
 \TAX                    \ This instruction is commented out in the original
                         \ source; it would have no effect, as the comparison
@@ -515,7 +515,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: Group D: The Electron version doesn't support joysticks, so it doesn't check for the fire button being pressed during the title screen
 
  BEQ TL2                \ If the joystick fire button is pressed, jump to TL2
 
@@ -556,7 +556,7 @@ IF _6502SP_VERSION \ 6502SP: See group C
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: See group D
 
 .TL2
 
@@ -572,7 +572,7 @@ IF _6502SP_VERSION \ Label
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
  RTS                    \ Return from the subroutine
 

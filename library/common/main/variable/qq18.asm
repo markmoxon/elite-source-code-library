@@ -10,7 +10,7 @@
 
 .QQ18
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron doesn't support fuel scooping (as there are no suns), so the text token for "FUEL SCOOPS ON" isn't included
 
  RTOK 111               \ Token 0:      "FUEL SCOOPS ON {beep}"
  RTOK 131               \
@@ -1058,7 +1058,7 @@ ENDIF
  CHAR 'S'
  EQUB 0
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: In the Electron version you can buy an "Escape Capsule", while all the other versions call it an "Escape Pod"
 
  TWOK 'E', 'S'          \ Token 112:    "ESCAPE POD"
  CHAR 'C'               \

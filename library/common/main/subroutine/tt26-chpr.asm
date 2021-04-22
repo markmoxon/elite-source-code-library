@@ -469,7 +469,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _ELECTRON_VERSION
+IF _ELECTRON_VERSION \ Screen
 
  LDA #&80               \ ???
  STA SC
@@ -564,11 +564,9 @@ ELIF _ELECTRON_VERSION
                         \
                         \ and so on
 
- BCC L1D54              \ ???
+ BCC P%+4               \ ???
 
  INC SCH
-
-.L1D54
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
@@ -585,7 +583,7 @@ IF _DISC_FLIGHT \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  LDA YC                 \ Fetch YC, the y-coordinate (row) of the text cursor
 
@@ -725,7 +723,7 @@ IF _CASSETTE_VERSION \ Comment
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  CMP #24                \ If the text cursor is on the screen (i.e. YC < 24, so
  BCC RR3                \ we are on rows 1-23), then jump to RR3 to print the

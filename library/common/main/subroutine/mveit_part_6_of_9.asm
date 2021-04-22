@@ -38,7 +38,7 @@
                         \ (z_sign z_hi z_lo) = (z_sign z_hi z_lo) + (A R)
                         \                    = (z_sign z_hi z_lo) - speed
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: As the Electron has no suns, we don't need to check whether we are trying to rotate the sun, unlike in the other versions
 
  LDA TYPE               \ If the ship type is not the sun (129) then skip the
  AND #%10000001         \ next instruction, otherwise return from the subroutine

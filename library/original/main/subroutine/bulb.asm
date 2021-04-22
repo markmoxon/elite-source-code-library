@@ -23,7 +23,7 @@
 
  STA SC                 \ Store the low byte of the screen address in SC
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  STX P+1                \ Set P(2 1) = (Y X)
  STY P+2

@@ -44,7 +44,7 @@
 \
 \   A                   Contains K4+1, the high byte of the y-coordinate
 \
-IF _ELECTRON_VERSION
+IF _ELECTRON_VERSION \ Comment
 \ Other entry points:
 \
 \   RTS2                Contains an RTS
@@ -111,7 +111,7 @@ ENDIF
 
  CLC                    \ Clear the C flag to indicate success
 
-IF _ELECTRON_VERSION
+IF _ELECTRON_VERSION \ Label
 
 .RTS2
 

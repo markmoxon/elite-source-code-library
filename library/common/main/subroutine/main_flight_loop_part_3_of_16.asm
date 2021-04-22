@@ -79,7 +79,9 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Screen
 
 ELIF _ELECTRON_VERSION
 
- JSR L3903              \ ???
+ JSR ABORT-2            \ The "disarm missiles" key is being pressed, so call
+                        \ ABORT-2 to disarm the missile and update the missile
+                        \ indicators on the dashboard to white squares (Y = &09)
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 

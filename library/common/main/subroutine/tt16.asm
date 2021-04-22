@@ -27,7 +27,7 @@
  EOR #255
  PHA
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron doesn't contain the 6845 CRTC chip - instead the video is controlled by the custom ULA - so we can't wait for the vertical sync to prevent flicker
 
  JSR WSCAN              \ Call WSCAN to wait for the vertical sync, so the whole
                         \ screen gets drawn and we can move the crosshairs with

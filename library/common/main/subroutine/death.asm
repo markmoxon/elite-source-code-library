@@ -30,7 +30,7 @@ ENDIF
  ASL DELTA              \ Divide our speed in DELTA by 4
  ASL DELTA
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: Group B: The Electron version doesn't hide the dashboard when you die. This effect is implemented in the BBC versions by programming the 6845 CRTC, which isn't present on the Electron
 
  LDX #24                \ Set the screen to only show 24 text rows, which hides
  JSR DET1               \ the dashboard, setting A to 6 in the process
@@ -58,8 +58,9 @@ ENDIF
 
 IF _ELECTRON_VERSION
 
- LDX #&32               \ ???
- STX LASCT
+ LDX #50                \ Set the laser count to 50 to act as a counter in the
+ STX LASCT              \ D2 loop below, so this setting determines how long the
+                        \ death animation lasts
 
 ENDIF
 
@@ -104,7 +105,7 @@ IF _6502SP_VERSION \ Advanced: See group A
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
  LDA #146               \ Print recursive token 146 ("{all caps}GAME OVER")
  JSR ex
@@ -112,8 +113,8 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
 ELIF _ELECTRON_VERSION
 
  LDA #146               \ Print recursive token 146 ("{all caps}GAME OVER")
- STA MCNT               \ ???
- JSR ex
+ STA MCNT               \ and reset the main loop counter to 146, so all
+ JSR ex                 \ timer-based calls will be stopped
 
 ENDIF
 
@@ -122,7 +123,7 @@ ENDIF
  JSR Ze                 \ Call Ze to initialise INWK to a potentially hostile
                         \ ship, and set A and X to random values
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: In the Electron version, the cargo canisters we see when we die always spawn at an x-coordinate of magnitude 32, so canisters appear on either side of the view but never in the centre. It's much more random in the other versions
 
  LSR A                  \ Set A = A / 4, so A is now between 0 and 63, and
  LSR A                  \ store in byte #0 (x_lo)
@@ -130,7 +131,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
 
 ELIF _ELECTRON_VERSION
 
- LDA #&20               \ ???
+ LDA #32                \ Set x_lo = 32
  STA INWK
 
 ENDIF
@@ -156,7 +157,7 @@ ENDIF
 
  DEY                    \ Set Y = 255
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
  STY MCNT               \ Reset the main loop counter to 255, so all timer-based
                         \ calls will be stopped
@@ -340,7 +341,7 @@ ELIF _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: See group B
 
  LDX #31                \ Set the screen to show all 31 text rows, which shows
  JSR DET1               \ the dashboard

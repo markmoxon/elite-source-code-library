@@ -222,15 +222,15 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Label
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The cops that the space station spawns to defend itself are slightly less aggressive in the Electron version than in the other versions
 
  LDA #%11110001         \ Set the AI flag to give the ship E.C.M., enable AI and
-                        \ make it very aggressive (56 out of 63)
+                        \ make it very aggressive (60 out of 63)
 
 ELIF _ELECTRON_VERSION
 
  LDA #%11100001         \ Set the AI flag to give the ship E.C.M., enable AI and
-                        \ make it pretty aggressive (48 out of 63)
+                        \ make it pretty aggressive (56 out of 63)
 
 ENDIF
 

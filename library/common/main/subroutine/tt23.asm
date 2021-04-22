@@ -394,7 +394,7 @@ ENDIF
 
 .ee1
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: In the non-Electron versions, the same code is used to draw both the sun and the systems on the Short-range Chart. The Electron version doesn't include suns, so systems on the chart are drawn as dots rather than filled circles
 
  LDA #0                 \ Now to plot the star, so set the high bytes of K, K3
  STA K3+1               \ and K4 to 0

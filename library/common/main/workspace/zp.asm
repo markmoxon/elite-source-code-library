@@ -181,7 +181,7 @@ INCLUDE "library/common/main/variable/delta.asm"
 INCLUDE "library/common/main/variable/delt4.asm"
 INCLUDE "library/common/main/variable/u.asm"
 
-IF _ELECTRON_VERSION
+IF _ELECTRON_VERSION \ Platform
 
  SKIP 16                \ ???
 

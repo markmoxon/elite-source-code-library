@@ -12,10 +12,15 @@ ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
 \ Each indicator is a rectangle that's 3 pixels wide and 5 pixels high. If the
 \ indicator is set to black, this effectively removes a missile.
+ELIF _ELECTRON_VERSION
+\ Each indicator is a rectangle that's 6 pixels wide and 5 pixels high. If the
+\ indicator is set to black, this effectively removes a missile.
+ENDIF
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \ Arguments:
 \
 \   X                   The number of the missile indicator to update (counting
@@ -31,6 +36,22 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
 \                         * &E0 = yellow/white (armed)
 \
 \                         * &EE = green/cyan (disarmed)
+ELIF _ELECTRON_VERSION
+\ Arguments:
+\
+\   X                   The number of the missile indicator to update (counting
+\                       from right to left, so indicator NOMSL is the leftmost
+\                       indicator)
+\
+\   Y                   The status of the missile indicator:
+\
+\                         * &04 = black (no missile)
+\
+\                         * &11 = black "T" in white square (armed and locked)
+\
+\                         * &0D = black box in white square (armed)
+\
+\                         * &09 = white square (disarmed)
 ELIF _MASTER_VERSION
 \ Arguments:
 \
@@ -113,10 +134,10 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
 ELIF _ELECTRON_VERSION
 
- TXA                    \ Set T = X * 8
- PHA
+ TXA                    \ Store X on the stack, so we can preserve it across
+ PHA                    \ the call to the subroutine
 
- ASL A
+ ASL A                  \ Set T = X * 8
  ASL A
  ASL A
  STA T
@@ -164,6 +185,22 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
  STA SCH                \ that contains the missile indicators (i.e. the bottom
                         \ row of the screen)
 
+ELIF _ELECTRON_VERSION
+
+ LDA #&7D               \ Set the high byte of SC(1 0) to &7D, the character row
+ STA SCH                \ that contains the missile indicators (i.e. the bottom
+                        \ row of the screen)
+
+ELIF _6502SP_VERSION OR _MASTER_VERSION
+
+ LDA #&7C               \ Set the high byte of SC(1 0) to &7C, the character row
+ STA SCH                \ that contains the missile indicators (i.e. the bottom
+                        \ row of the screen)
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Electron: Group A: The monochrome dashboard can't use colour to indicate the status of the missiles, so instead the Electron version uses four different bitmaps - black (no missile), white box (disarmed), black box in white square (armed), and black "T" in white square (armed and locked)
+
  TYA                    \ Set A to the correct colour, which is a 3-pixel wide
                         \ mode 5 character row in the correct colour (for
                         \ example, a green block has Y = &EE, or %11101110, so
@@ -172,23 +209,10 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
 ELIF _ELECTRON_VERSION
 
- LDA #&7D               \ Set the high byte of SC(1 0) to &7D, the character row
- STA SCH                \ that contains the missile indicators (i.e. the bottom
-                        \ row of the screen) ???
-
- TYA                    \ Set A to the correct colour, which is a 3-pixel wide
-                        \ mode 5 character row in the correct colour (for
-                        \ example, a green block has Y = &EE, or %11101110, so
-                        \ the missile blocks are 3 pixels wide, with the
-                        \ fourth pixel on the character row being empty)
-
- TAX                    \ ???
-
-ELIF _6502SP_VERSION OR _MASTER_VERSION
-
- LDA #&7C               \ Set the high byte of SC(1 0) to &7C, the character row
- STA SCH                \ that contains the missile indicators (i.e. the bottom
-                        \ row of the screen)
+ TYA                    \ Set X to the indicator status that was passed to the
+ TAX                    \ subroutine, so we can use it below as an index into
+                        \ the MDIALS table when fetching the bitmap to set the
+                        \ missile indicator to
 
 ENDIF
 
@@ -252,9 +276,9 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _ELECTRON_VERSION
+IF _ELECTRON_VERSION \ Electron: See group A
 
- LDA L3961,X            \ ???
+ LDA MDIALS,X           \ Fetch the X-th bitmap from the MDIALS table
 
 ENDIF
 
@@ -268,9 +292,9 @@ ENDIF
                         \ this will overwrite anything that is already there
                         \ (so drawing a black missile will delete what's there)
 
-IF _ELECTRON_VERSION
+IF _ELECTRON_VERSION \ Electron: See group A
 
- DEX                    \ ???
+ DEX                    \ Decrement the bitmap counter for the next row
 
 ENDIF
 
@@ -293,11 +317,9 @@ IF _MASTER_VERSION \ Platform
  LDA #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
  STA VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
 
-ENDIF
+ELIF _ELECTRON_VERSION
 
-IF _ELECTRON_VERSION
-
- PLA                    \ ???
+ PLA                    \ Restore X from the stack, so that it's preserved
  TAX
 
 ENDIF

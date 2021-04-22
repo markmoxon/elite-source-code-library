@@ -65,7 +65,7 @@ ENDIF
                         \ it's the first one to be added to our local bubble of
                         \ this new system's universe
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: As there is no sun in the Electron version, there is no need to set up its position and distance on arrival in a new system
 
  LDA QQ15+3             \ Fetch s1_hi, extract bits 0-2, set bits 0 and 7 and
  AND #%00000111         \ store in z_sign, so the sun is behind us at a distance

@@ -443,7 +443,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Tube
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Screen
 
  DEC SC+1               \ Decrement the high byte of the screen address to move
                         \ to the character block above
@@ -488,7 +488,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Tube
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Electron: The dashboard in the Electron version might be monochrome, but it has a higher resolution than the colour versions, so the code to draw ships on the scanner varies accordingly
 
  INY                    \ We want to draw the stick downwards, so we first
                         \ increment the row counter so that it's pointing to the

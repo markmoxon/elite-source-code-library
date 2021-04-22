@@ -3,12 +3,15 @@
 \       Name: MV40
 \       Type: Subroutine
 \   Category: Moving
-\    Summary: Rotate the planet or sun by our ship's pitch and roll
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+\    Summary: Rotate the planet or sun's location in space by the amount of
+\             pitch and roll of our ship
+ELIF _ELECTRON_VERSION
+\    Summary: Rotate the planet's location in space by the amount of pitch and
+\             roll of our ship
+ENDIF
 \
 \ ------------------------------------------------------------------------------
-\
-\ Rotate the planet or sun's location in space by the amount of pitch and roll
-\ of our ship.
 \
 \ We implement this using the same equations as in part 5 of MVEIT, where we
 \ rotated the current ship's location by our pitch and roll. Specifically, the
@@ -25,7 +28,7 @@
 
 .MV40
 
-IF _ELECTRON_VERSION
+IF _ELECTRON_VERSION \ Electron: As the Electron only has planets and no suns, the MV40 routine only moves the planet by our pitch and roll, and does nothing if asked to move the sun
 
  TXA                    \ ???
  LSR A

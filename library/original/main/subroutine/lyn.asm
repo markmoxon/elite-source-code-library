@@ -28,7 +28,7 @@ ENDIF
 
 .LYN
 
-IF _CASSETTE_VERSION OR _DISC_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Platform
 
  LDY #233               \ Set up a counter in Y to count down from pixel 233
 

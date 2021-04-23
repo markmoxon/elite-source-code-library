@@ -108,7 +108,7 @@ ENDIF
  ADC #1                 \ adding 1, i.e. using two's complement to make it
                         \ positive
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
 
  SEC                    \ Set the C flag, ready for the subtraction below
 
@@ -118,7 +118,7 @@ ENDIF
 
  STA P                  \ Store A in P, so P = |X2 - X1|, or |delta_x|
 
-IF _ELECTRON_VERSION
+IF _ELECTRON_VERSION \ Minor
 
  SEC                    \ Set the C flag, ready for the subtraction below
 

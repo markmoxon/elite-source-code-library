@@ -32,6 +32,11 @@ IF _DISC_VERSION \ Comment
 \
 \   out                 Contains an RTS
 \
+ELIF _ELECTRON_VERSION
+\ Other entry points:
+\
+\   PIX-1               Contains an RTS
+\
 ENDIF
 \ ******************************************************************************
 
@@ -39,7 +44,7 @@ ENDIF
 
 IF _ELECTRON_VERSION \ Screen
 
- LDY #&80               \ ???
+ LDY #&80               \ Set ZP = 128 for use in the calculation below
  STY ZP
 
 ENDIF
@@ -50,8 +55,10 @@ ENDIF
 
 IF _ELECTRON_VERSION \ Screen
 
- CMP #&F8               \ ???
- BCS PIX-1
+ CMP #248               \ If the y-coordinate in A >= 248, then this is the
+ BCS PIX-1              \ bottom row of the screen, which we want to leave blank
+                        \ as it's below the bottom of the dashboard, so return
+                        \ from the subroutine (as PIX-1 contains an RTS)
 
 ENDIF
 
@@ -70,27 +77,83 @@ IF _CASSETTE_VERSION \ Screen
 
 ELIF _ELECTRON_VERSION
 
- LSR A                  \ ???
- LSR A
- LSR A
- STA ZP+1
- LSR A
+                        \ We now calculate the address of the character block
+                        \ containing the pixel (x, y) and put it in ZP(1 0)
+                        \
+                        \ Each character row on the mode 4 screen consists of a
+                        \ blank 32-byte border (32 pixels wide, 8 pixels high),
+                        \ then 256 bytes of visible screen (256 pixels wide, 8
+                        \ pixels high), and then another 32-byte border
+                        \
+                        \ This gives a total of 32 + 256 + 32 = 320 bytes per
+                        \ character row, so we can now calculate the address of
+                        \ the first visible pixel in the row containing (x, y)
+                        \
+                        \ First, we calculate the number of the character row
+                        \ containing this pixel, which is y div 8 as each row
+                        \ is 8 pixels high
+                        \
+                        \ We then take the start address of screen memory
+                        \ (&5800), and add 320 bytes for each of these character
+                        \ rows, to get the address of the first pixel on that
+                        \ row, but at the left edge of the left border
+                        \
+                        \ Finally, to indent by the correct margin to get to the
+                        \ first visible pixel, we add 32 bytes for the left
+                        \ margin, so in all we have:
+                        \
+                        \      &5800 + (char row * 320) + 32
+                        \      &5800 + (char row * (256 + 64)) + 32
+                        \    = &5800 + (char row * 256) + (char row * 64) + 32
+                        \
+                        \ so that's what we calculate here
+
+ LSR A                  \ Set A = A >> 3
+ LSR A                  \       = y div 8
+ LSR A                  \       = character row number
+
+                        \ Also, as ZP = 128, we have:
+                        \
+                        \   (A ZP) = (A 128)
+                        \          = (A * 256) + 128
+                        \          = 4 * ((A * 64) + 32)
+                        \          = 4 * ((char row * 64) + 32)
+
+ STA ZP+1               \ Set ZP+1 = A, so (ZP+1 0) = A * 256
+                        \                           = char row * 256
+
+ LSR A                  \ Set (A ZP) = (A ZP) / 4
+ ROR ZP                 \            = (4 * ((char row * 64) + 32)) / 4
+ LSR A                  \            = char row * 64 + 32
  ROR ZP
- LSR A
- ROR ZP
- ADC ZP+1
- ADC #&58
- STA ZP+1
- TXA
- EOR #&80
- AND #&F8
+
+ ADC ZP+1               \ Set ZP(1 0) = (A ZP) + (ZP+1 0) + &5800
+ ADC #&58               \             = (char row * 64 + 32)
+ STA ZP+1               \               + char row * 256
+                        \               + &5800
+                        \
+                        \ which is what we want, so ZP(1 0) contains the address
+                        \ of the first visible pixel on the character row
+                        \ containing the point (x, y)
+                        \
+                        \ To get the address of the character block on this row
+                        \ that contains (x, y), we need to move right by the
+                        \ correct number of character blocks, which is x div 8,
+                        \ and there are 8 bytes per character block, so we need
+                        \ to add (x div 8) * 8, or (x >> 3) * 8
+
+ TXA                    \ Set ZP(1 0) = ZP(1 0) + (X >> 3) * 8
+ EOR #%10000000
+ AND #%11111000
  ADC ZP
  STA ZP
- BCC L559F
 
- INC ZP+1
+ BCC P%+4               \ If the addition of the low bytes overflowed, increment
+ INC ZP+1               \ the high byte
 
-.L559F
+                        \ So ZP(1 0) now contains the address of the first pixel
+                        \ in the character block containing the (x, y), taking
+                        \ the screen borders into consideration
 
 ELIF _DISC_VERSION
 
@@ -141,14 +204,14 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: In the cassette version, the loading screen's Saturn has a much higher dot density than the other versions, as the drawing routine plots individual pixels into the screen using OR logic, so pixels within a character block can be next to each other. The other versions poke whole one-pixel bytes directly into screen memory without the OR logic, which overwrites any pixels already plotted in that byte and ensures a much greater pixel spacing (though pixels at the ends of neighbouring character blocks can still be next to each other)
 
- LDA TWOS,X             \ Otherwise fetch a pixel from TWOS and OR it into ZP+Y
+ LDA TWOS,X             \ Fetch a pixel from TWOS and OR it into ZP+Y
  ORA (ZP),Y
  STA (ZP),Y
 
 ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
- LDA TWOS,X             \ Otherwise fetch a pixel from TWOS and poke it into
- STA (ZP),Y             \ ZP+Y
+ LDA TWOS,X             \ Fetch a pixel from TWOS and poke it into ZP+Y
+ STA (ZP),Y
 
 ENDIF
 

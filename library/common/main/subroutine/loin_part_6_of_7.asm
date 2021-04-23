@@ -101,7 +101,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
 
 ENDIF
 
-IF _ELECTRON_VERSION
+IF _ELECTRON_VERSION \ Screen
 
  BCC LIC5               \ ???
 
@@ -125,7 +125,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION
+IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  LDA SWAP               \ If SWAP = 0 then we didn't swap the coordinates above,
  BEQ LI290              \ so jump down to LI290 to plot the first pixel

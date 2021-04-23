@@ -74,17 +74,16 @@ IF _MASTER_VERSION \ Master: The Master version has a unique E.C.M. sound
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: In the Electron version, the E.C.M. timer counts down twice as fast as in the other versions to cater for the slower iterations round the main loop
 
  DEC ECMA               \ Decrement the E.C.M. countdown timer, and if it has
  BNE MA66               \ reached zero, keep going, otherwise skip to MA66
 
 ELIF _ELECTRON_VERSION
 
- DEC ECMA               \ ???
- DEC ECMA               \ Decrement the E.C.M. countdown timer, and if it has
- BNE MA66               \ reached zero, keep going, otherwise skip to MA66
-
+ DEC ECMA               \ Decrement the E.C.M. countdown timer twice, and if it
+ DEC ECMA               \ has reached zero, keep going, otherwise skip to MA66               
+ BNE MA66
 
 ENDIF
 

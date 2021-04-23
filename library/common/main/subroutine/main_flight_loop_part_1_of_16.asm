@@ -31,7 +31,7 @@
  STA RAND               \ Store the seed in the first byte of the four-byte
                         \ random number seed that's stored in RAND
 
-IF _ELECTRON_VERSION
+IF _ELECTRON_VERSION \ Platform
 
  LDA #0                 \ ???
  LDX #1

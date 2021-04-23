@@ -128,9 +128,12 @@
  JSR VIA05              \ clear and paging register at SHEILA &05
 
  LDA #&60               \ Set the screen start address registers at SHEILA &02
- STA VIA+&02            \ and SHEILA &03 so screen memory starts at &7EC0 ???
- LDA #&3F
- STA VIA+&03
+ STA VIA+&02            \ and SHEILA &03 so screen memory starts at &7EC0. This
+ LDA #&3F               \ gives us a blank line at the top of the screen (for
+ STA VIA+&03            \ the screen memory between &7EC0 and &7FFF, as one row
+                        \ of mode 4 is &140 bytes), and then the rest of the
+                        \ screen memory from &5800 to &7EBF cover the second
+                        \ row and down
 
  CLI                    \ Re-enable interrupts
 

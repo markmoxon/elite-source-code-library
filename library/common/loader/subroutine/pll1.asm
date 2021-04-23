@@ -211,8 +211,10 @@ ENDIF
 
 IF _ELECTRON_VERSION \ Other: See group B
 
- LDX #&60               \ ???
- STX &0087
+ LDX #&60               \ This is normally part of the copy protection, but it's
+ STX &0087              \ been disabled in this unprotected version so this has
+                        \ no effect (though the crackers presumably thought they
+                        \ might as well still set the value just in case)
 
 ENDIF
 
@@ -287,10 +289,10 @@ IF _CASSETTE_VERSION \ Other: See group B
 
 ELIF _ELECTRON_VERSION
 
- LDX #&CA               \ ???
- NOP
- STX BLPTR
- LDX #&C6
+ LDX #&CA               \ This is normally part of the copy protection, but it's
+ NOP                    \ been disabled in this unprotected version so this has
+ STX BLPTR              \ no effect (though the crackers presumably thought they
+ LDX #&C6               \ might as well still set the values just in case)
  STX BLN
 
 ENDIF

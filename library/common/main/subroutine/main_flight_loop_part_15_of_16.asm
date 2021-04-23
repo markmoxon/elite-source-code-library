@@ -22,7 +22,7 @@
 
 .MA22
 
-IF _CASSETTE_VERSION
+IF _CASSETTE_VERSION \ Label
 
  LDA MJ                 \ If we are in witchspace, jump down to MA23 to skip
  BNE MA23               \ the following, as there are no planets or suns to
@@ -126,7 +126,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: The docking co
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: As there are no suns in the Electron version, we don't need to set the cabin temperature based on the altitude from the sun, and we don't need to implement fuel scooping
 
  CMP #20                \ If this is the 20th iteration in this block of 32,
  BNE MA23               \ do the following, otherwise jump to MA23 to skip the

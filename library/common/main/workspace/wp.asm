@@ -114,7 +114,7 @@ INCLUDE "library/common/main/variable/las2.asm"
 INCLUDE "library/common/main/variable/many.asm"
 INCLUDE "library/common/main/variable/sspr.asm"
 
- SKIP 2                 \ ???
+ SKIP 2                 \ These bytes appear to be unused
 
 .L0BFB
 

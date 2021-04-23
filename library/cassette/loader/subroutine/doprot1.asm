@@ -29,7 +29,9 @@ IF _CASSETTE_VERSION \ Platform
 
 ELIF _ELECTRON_VERSION
 
- CMP swine-5,X          \ ???
+ CMP swine-5,X          \ This part of the loader has been disabled by the
+                        \ crackers, by changing an STA to a CMP (as this is an
+                        \ unprotected version)
 
 ENDIF
 

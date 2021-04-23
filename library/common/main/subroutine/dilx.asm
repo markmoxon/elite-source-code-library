@@ -43,7 +43,7 @@ ENDIF
 \
 \ Other entry points:
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \   DILX+2              The range of the indicator is 0-64 (for the fuel
 \                       indicator)
 \
@@ -61,7 +61,7 @@ ENDIF
  LSR A                  \ If we call DILX, we set A = A / 16, so A is 0-15
  LSR A
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  LSR A                  \ If we call DILX+2, we set A = A / 4, so A is 0-15
 
@@ -80,7 +80,7 @@ ENDIF
  STX R                  \ each character block of the bar, starting with a full
                         \ character's width of 4 pixels
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: As the dashboard in the Electron version is monochrome, the dashboard indicators do not change colour when reaching their threshold
 
  CMP T1                 \ If A >= T1 then we have passed the threshold where we
  BCS DL30               \ change bar colour, so jump to DL30 to set A to the
@@ -185,7 +185,7 @@ ENDIF
  INY                    \ And draw the third pixel row, incrementing Y
  STA (SC),Y
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  TYA                    \ Add 6 to Y, so Y is now 8 more than when we started
  CLC                    \ this loop iteration, so Y now points to the address
@@ -195,16 +195,16 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
 
 ELIF _ELECTRON_VERSION
 
- TYA                    \ ???
- CLC
- ADC #&06
- BCC L1E4E
+ TYA                    \ Add 6 to Y, so Y is now 8 more than when we started
+ CLC                    \ this loop iteration, so Y now points to the address
+ ADC #6                 \ of the first line of the indicator bar in the next
+                        \ character block (as each character is 8 bytes of
+                        \ screen memory)
 
- INC SCH
+ BCC P%+4               \ If the addition of the low bytes of SC overflowed,
+ INC SCH                \ increment the high byte
 
-.L1E4E
-
- TAY
+ TAY                    \ Transfer the updated value (Y + 6) back into Y
 
 ENDIF
 
@@ -337,7 +337,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Label
 
 .DL9                    \ This label is not used but is in the original source
 

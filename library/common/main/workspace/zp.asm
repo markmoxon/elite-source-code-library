@@ -183,7 +183,7 @@ INCLUDE "library/common/main/variable/u.asm"
 
 IF _ELECTRON_VERSION \ Platform
 
- SKIP 16                \ ???
+ SKIP 16                \ These bytes appear to be unused
 
 ENDIF
 

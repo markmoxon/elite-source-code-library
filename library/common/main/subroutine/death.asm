@@ -56,11 +56,14 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _ELECTRON_VERSION
+IF _ELECTRON_VERSION \ Platform
 
  LDX #50                \ Set the laser count to 50 to act as a counter in the
  STX LASCT              \ D2 loop below, so this setting determines how long the
-                        \ death animation lasts
+                        \ death animation lasts (LASCT decreases by 4 for each
+                        \ iteration round the main loop, and we also decrement
+                        \ it by 1 below to give a total of 5, so this makes the
+                        \ animation last for 10 iterations of the main loop)
 
 ENDIF
 
@@ -334,7 +337,9 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Platform
 ELIF _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
 
  DEC LASCT              \ Decrement the counter in LASCT, which we set above,
-                        \ so for each loop around D2, we decrement LASCT twice
+                        \ so for each loop around D2, we decrement LASCT by 5
+                        \ (the main loop decrements it by 4, and this one makes
+                        \ it 5)
 
  BNE D2                 \ Loop back to call the main flight loop again, until we
                         \ have called it 127 times

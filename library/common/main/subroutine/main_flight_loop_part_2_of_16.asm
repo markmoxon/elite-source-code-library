@@ -41,7 +41,7 @@
  EOR #%10000000         \ flipped (i.e. set them to the sign we want for alpha)
  TAY
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
 
  AND #%10000000         \ Extract the flipped sign of the roll rate and store
  STA ALP2               \ in ALP2 (so ALP2 contains the sign of the roll angle
@@ -51,9 +51,10 @@ ELIF _ELECTRON_VERSION
 
  AND #%10000000         \ Extract the flipped sign of the roll rate
 
- JMP P%+11              \ ???
+ JMP P%+11              \ This skips over the following block of bytes, which
+                        \ appear to be unused; it isn't clear what they do
 
- EQUB &A1, &BB
+ EQUB &A1, &BB          \ These bytes appear to be unused
  EQUB &80, &00
  EQUB &90, &01
  EQUB &D6, &F1

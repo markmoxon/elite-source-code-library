@@ -14,15 +14,7 @@
 
 .David9
 
-IF _CASSETTE_VERSION \ Platform
+EQUW David5            \ The address of David5
 
- EQUW David5            \ The address of David5
-
-ELIF _ELECTRON_VERSION
-
- EQUW &5456             \ ???
-
-ENDIF
-
- CLD                    \ This instruction is not used
+CLD                    \ This instruction is not used
 

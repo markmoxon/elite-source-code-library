@@ -115,11 +115,9 @@ ELIF _ELECTRON_VERSION
  AND #&F8
  ADC SC
  STA SC
- BCC L37D0
 
+ BCC P%+4
  INC SCH
-
-.L37D0
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
@@ -217,9 +215,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
 ELIF _ELECTRON_VERSION
 
- JSR L37E4              \ ???
-
-.L37E4
+ JSR P%+3              \ ??? Run the following twice
 
  INX
  LDA TWOS,X

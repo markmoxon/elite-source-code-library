@@ -32,7 +32,7 @@
 
 .NOS1
 
-IF _ELECTRON_VERSION
+IF _ELECTRON_VERSION \ Platform
 
  STA XX16+8             \ ???
 

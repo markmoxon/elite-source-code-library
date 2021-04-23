@@ -59,7 +59,7 @@ IF _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF _ELECTRON_VERSION
+IF _ELECTRON_VERSION \ Platform
 
  JSR L2838              \ ???
 

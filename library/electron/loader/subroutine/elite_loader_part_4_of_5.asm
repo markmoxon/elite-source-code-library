@@ -46,6 +46,8 @@
 
  EQUD &6C785349         \ The random number seed used for drawing Saturn
 
+.David5
+
  NOP                    \ This part of the loader has been disabled by the
  NOP                    \ crackers, as this is an unprotected version
  NOP

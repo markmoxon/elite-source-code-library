@@ -37,17 +37,17 @@ IF _CASSETTE_VERSION \ Other: The cassette version disables keyboard interrupts 
 
 ENDIF
 
-IF _ELECTRON_VERSION
+IF _ELECTRON_VERSION \ Platform
 
- LDA LASCT              \ ???
- SBC #4
- BCS L3E2E
+ LDA LASCT              \ Set A to the value of LASCT, the laser pulse count
 
+ SBC #4                 \ Decrement the value of LASCT by 4
+
+ BCS P%+4               \ If we just reduced LASCT below 0, set it to 0
  LDA #0
 
-.L3E2E
-
- STA LASCT
+ STA LASCT              \ Store the decremented value of X in LASCT, so LASCT
+                        \ gets reduced by 4, but not into negative territory
 
 ENDIF
 
@@ -55,9 +55,9 @@ ENDIF
  TXS                    \ location for the 6502 stack, so this instruction
                         \ effectively resets the stack
 
-IF _ELECTRON_VERSION
+IF _ELECTRON_VERSION \ Platform
 
- INX                    \ ???
+ INX                    \ Set L0D01 = 0 ???
  STX L0D01
 
 ENDIF

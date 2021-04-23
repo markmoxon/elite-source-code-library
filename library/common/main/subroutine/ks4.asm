@@ -16,13 +16,13 @@
 
  JSR ZINF               \ Call ZINF to reset the INWK ship workspace
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
  JSR FLFLLS             \ Reset the LSO block, returns with A = 0
 
 ELIF _ELECTRON_VERSION
 
- LDA #0                 \ ???
+ LDA #0                 \ Set A = 0 so we can zero the following flags
 
 ENDIF
 

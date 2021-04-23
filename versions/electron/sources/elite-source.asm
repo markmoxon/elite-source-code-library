@@ -153,27 +153,10 @@ ORG CODE%
 
 LOAD_A% = LOAD%
 
-INCLUDE "library/cassette/main/workspace/s_per_cent.asm"
-
-.IRQ1
-
- LDA L0D06
- EOR #&FF
- STA L0D06
- ORA L0D01
- BMI L0D3D
-
- LDA VIA+&05
- ORA #&20
- STA VIA+&05
- LDA &00FC
- RTI
-
-.L0D3D
-
- JMP (S%+2)             \ Jump to the original value of IRQ1V to process the
-                        \ interrupt as normal
-
+INCLUDE "library/electron/main/workspace/s_per_cent_part_1_of_2.asm"
+INCLUDE "library/electron/main/subroutine/key1.asm"
+INCLUDE "library/electron/main/workspace/s_per_cent_part_2_of_2.asm"
+INCLUDE "library/electron/main/subroutine/irq1.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_1_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_2_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_3_of_16.asm"

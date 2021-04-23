@@ -142,9 +142,18 @@ ELIF _ELECTRON_VERSION
  ASL A
  STA T
 
- LDA #&D1               \ Set SC = ???
- SBC T                  \        = 
- STA SC
+ LDA #209               \ Set SC = &80 + 32 + 49 - T
+ SBC T                  \        = &80 + 32 + 48 + 1 - (X * 8)
+ STA SC                 \
+                        \ The &80 part comes from the fact that the character
+                        \ row containing the missile starts at address &7D80,
+                        \ and the low byte of this is &80
+                        \
+                        \ The 32 part comes from the 32-byte blank border to
+                        \ the left of the screen
+                        \
+                        \ And the 48 part is from character block 7, which is
+                        \ the character block containing the missile indicators
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
@@ -164,6 +173,10 @@ ENDIF
                         \ for the rightmost missile indicator, made up as
                         \ follows:
                         \
+IF _ELECTRON_VERSION \ Comment
+                        \   * &80 + 32 as described above
+                        \
+ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
                         \   * 48 (character block 7, as byte #7 * 8 = 48), the
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -187,9 +200,10 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
 ELIF _ELECTRON_VERSION
 
- LDA #&7D               \ Set the high byte of SC(1 0) to &7D, the character row
- STA SCH                \ that contains the missile indicators (i.e. the bottom
-                        \ row of the screen)
+ LDA #&7D               \ Set the high byte of SC(1 0) to &7D, the high byte of
+ STA SCH                \ &7D80, which is the start of the character row that
+                        \ contains the missile indicators (i.e. the bottom row
+                        \ of the screen)
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 

@@ -24,14 +24,24 @@ ENDIF
 \
 \ See the deep dive on "Rotating the universe" for more details on the above.
 \
+IF _ELECTRON_VERSION \ Comment
+\ Arguments:
+\
+\   X                   The type of the planet or sun
+\
+\ Other entry points:
+\
+\   MV40-1              Contains an RTS
+\
+ENDIF
 \ ******************************************************************************
 
 .MV40
 
 IF _ELECTRON_VERSION \ Electron: As the Electron only has planets and no suns, the MV40 routine only moves the planet by our pitch and roll, and does nothing if asked to move the sun
 
- TXA                    \ ???
- LSR A
+ TXA                    \ If bit 0 of X is set, then this is the sun, so return
+ LSR A                  \ from the subroutine (as MV40-1 contains an RTS)
  BCS MV40-1
 
 ENDIF

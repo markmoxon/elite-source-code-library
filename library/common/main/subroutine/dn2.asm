@@ -22,8 +22,8 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
 ELIF _ELECTRON_VERSION
 
- LDY #200               \ Delay for 50 vertical syncs (50/50 = 1 second) and
- JMP DELAY              \ return from the subroutine using a tail call ???
+ LDY #200               \ Delay for 200 delay loops and return from the
+ JMP DELAY              \ subroutine using a tail call
 
 ELIF _MASTER_VERSION
 

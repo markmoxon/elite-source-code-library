@@ -161,9 +161,9 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Sc
 
 ELIF _ELECTRON_VERSION
 
- LDA Y1                 \ ???
- AND #&07
- TAY
+ LDA Y1                 \ Set Y to just bits 0-2 of the y-coordinate, which will
+ AND #%00000111         \ be the number of the pixel row we need to draw into
+ TAY                    \ within the character block
 
 ENDIF
 

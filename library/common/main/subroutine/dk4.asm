@@ -84,7 +84,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Pl
 
 ELIF _ELECTRON_VERSION
 
- JSR DEL8               \ ???
+ JSR DEL8               \ Call DEL8 to wait for 1 delay loop
 
 ENDIF
 

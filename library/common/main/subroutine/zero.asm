@@ -44,7 +44,7 @@ IF _CASSETTE_VERSION \ Platform
 
 .ZEL
 
- JSR ZES1               \ Call ZES1 below to zero-fill the page in X
+ JSR ZES1               \ Call ZES1 to zero-fill the page in X
 
  DEX                    \ Decrement X to point to the next page
 
@@ -58,11 +58,11 @@ ELIF _ELECTRON_VERSION
 
  LDX #&B                \ Point X to page &B
 
- JSR ZES1               \ Call ZES1 below to zero-fill the page in X
+ JSR ZES1               \ Call ZES1 to zero-fill the page in X
 
  DEX                    \ Decrement X to point to the next page (&A)
 
- JSR ZES1               \ Call ZES1 below to zero-fill the page in X
+ JSR ZES1               \ Call ZES1 to zero-fill the page in X
 
  DEX                    \ Decrement X to point to the next page
 

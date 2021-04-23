@@ -11,7 +11,7 @@
 IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \ green/cyan (i.e. not armed or locked).
 ELIF _ELECTRON_VERSION
-\ green/cyan (i.e. not armed or locked). ???
+\ white squares (i.e. not armed or locked).
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 \ green (i.e. not armed or locked).
 ENDIF
@@ -31,7 +31,7 @@ ENDIF
 IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
                         \ green/cyan
 ELIF _ELECTRON_VERSION
-                        \ green/cyan ???
+                        \ white
 ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ green
 ENDIF
@@ -43,7 +43,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Sc
 
 ELIF _ELECTRON_VERSION
 
- LDY #4                 \ Draw the missile indicator at position X in black ???
+ LDY #&04               \ Draw the missile indicator at position X in black
  JSR MSBAR
 
 ENDIF
@@ -68,8 +68,8 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ELIF _ELECTRON_VERSION
 
- LDY #9                 \ Draw the missile indicator at position X in green/cyan ???
- JSR MSBAR
+ LDY #&09               \ Draw the missile indicator at position X as a white
+ JSR MSBAR              \ square
 
 ENDIF
 

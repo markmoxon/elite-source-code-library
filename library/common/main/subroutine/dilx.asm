@@ -269,7 +269,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
 ELIF _ELECTRON_VERSION
 
- ASL A                  \ ???
+ ASL A                  \ Shift the mask left so bit 0 is cleared
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 

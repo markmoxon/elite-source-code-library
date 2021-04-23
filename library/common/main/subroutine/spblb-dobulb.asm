@@ -50,13 +50,14 @@ ELIF _ELECTRON_VERSION
 
 .SPBLB
 
- LDA #&20               \ The space station bulb is in character block number 24
-                        \ with each character taking 8 bytes, so this sets the
-                        \ low byte of the screen address of the character block
-                        \ we want to draw to
+ LDA #&20               \ Set A to the low byte of the screen address of the
+                        \ space station bulb (which is at &7D20)
 
- LDX #LO(SPBT)          \ Set (Y X) to point to the character definition in SPBT
- LDY #HI(SPBT)+&44      \ ???
+ LDX #LO(SPBT)          \ Set X to the low byte of the address of the character
+                        \ definition in SPBT
+
+ LDY #&7D               \ Set Y to the high byte of the screen address of the
+                        \ space station bulb (which is at &7D20)
 
                         \ Fall through into BULB to draw the space station bulb
 

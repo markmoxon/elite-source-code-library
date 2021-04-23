@@ -61,12 +61,14 @@ ENDIF
 
 IF _ELECTRON_VERSION \ Platform
 
- JSR L2838              \ ???
+ JSR BORDER             \ Redraw the space view's border, which removes it
+                        \ from the screen
 
- LDX #&71
- JSR LYN
+ LDX #&71               \ Call LYN with X = &71 to clear the screen from page
+ JSR LYN                \ &71 to page &75, which clears the bottom three lines
+                        \ of the screen
 
- JSR L2838
+ JSR BORDER             \ Redraw the space view's border
 
 ENDIF
 
@@ -142,14 +144,15 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED \ Screen
 
 ELIF _ELECTRON_VERSION
 
- LDY #1                 \ ???
+ LDY #1                 \ Move the text cursor to column 1
  STY XC
- DEY
+
+ DEY                    \ Set Y = 0, so the subroutine returns with this value
  TYA
 
 .SC5
 
- RTS
+ RTS                    \ Return from the subroutine
 
 ELIF _DISC_FLIGHT
 

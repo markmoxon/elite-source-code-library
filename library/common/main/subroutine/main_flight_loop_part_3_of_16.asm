@@ -144,12 +144,12 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Screen
 
 ELIF _ELECTRON_VERSION
 
- LDY #&0D               \ Change the leftmost missile indicator to yellow/white
- JSR MSBAR              \ on the missile bar (this call changes the leftmost
-                        \ indicator because we set X to the number of missiles
-                        \ in NOMSL above, and the indicators are numbered from
-                        \ right to left, so X is the number of the leftmost
-                        \ indicator) ???
+ LDY #&0D               \ Change the leftmost missile indicator to a black box
+ JSR MSBAR              \ in a white square on the missile bar (this call
+                        \ changes the leftmost indicator because we set X to the
+                        \ number of missiles in NOMSL above, and the indicators
+                        \ are numbered from right to left, so X is the number of
+                        \ the leftmost indicator)
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 

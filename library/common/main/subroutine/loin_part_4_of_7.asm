@@ -119,9 +119,8 @@ ENDIF
 
 IF _ELECTRON_VERSION \ Screen
 
- BCC LI10               \ ???
-
- INC SCH
+ BCC LI10               \ If the addition of the low bytes overflowed, increment
+ INC SCH                \ the high byte of SC(1 0)
 
 ENDIF
 

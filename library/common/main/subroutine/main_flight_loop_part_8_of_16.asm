@@ -38,10 +38,11 @@ ELIF _ELECTRON_VERSION
 
  LDA #3                 \ Set A to 3 to denote we may be scooping an escape pod
 
- CPX #ESC               \ ???
- BNE oily
+ CPX #ESC               \ If this is not an escape pod, jump to oily to randomly
+ BNE oily               \ decide the canister's contents
 
- BEQ slvy2
+ BEQ slvy2              \ This is an escape pod, so jump to slvy2 with A set to
+                        \ 3, so we scoop up the escape pod as slaves
 
 ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 

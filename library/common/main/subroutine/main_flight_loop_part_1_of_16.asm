@@ -14,6 +14,11 @@
 \
 \   * Seed the random number generator
 \
+IF _ELECTRON_VERSION \ Comment
+\   * Update the sound channel's duration counter to ensure sounds are allocated
+\     a minimum duration (unless they are stopped by a higher priority sound)
+\
+ENDIF
 \ Other entry points:
 \
 \   M%                  The entry point for the main flight loop
@@ -31,23 +36,35 @@
  STA RAND               \ Store the seed in the first byte of the four-byte
                         \ random number seed that's stored in RAND
 
-IF _ELECTRON_VERSION \ Platform
+IF _ELECTRON_VERSION \ Electron: Because the Electron only has two sound channels (one noise and one tone), each sound is allocated a minimum duration, during which time it can only be stopped by a higher priority sound coming along
 
- LDA #0                 \ ???
- LDX #1
+                        \ The following processes each sound channel to ensure
+                        \ that sounds last for their minimum duration (see the
+                        \ SFX variable for more details)
 
-.L0D49
+ LDA #0                 \ Set A = 0 so we can use it for resetting the sound
+                        \ channel's duration and priority values below
 
- DEC L0BFD,X
- BPL L0D54
+ LDX #1                 \ Set X as a sound channel counter, starting with
+                        \ channel 1 and then doing channel 0
 
- STA L0BFD,X
- STA L0BFB,X
+.SFXL
 
-.L0D54
+ DEC SFXDU,X            \ Decrement this sound channel's SFXDU duration value
 
- DEX
- BPL L0D49
+ BPL P%+8               \ If the duration is still positive, skip the following
+                        \ two instructions
+
+ STA SFXDU,X            \ The duration just reached zero, so the sound on this
+ STA SFXPR,X            \ channel has reached the end of its mimumum duration,
+                        \ so we zero the channel's SFXDU duration and SFXPR
+                        \ priority values so any new sounds that need to be made
+                        \ will be made regardless of priority
+
+ DEX                    \ Decrement the sound channel
+
+ BPL SFXL               \ Loop back to process the next sound channel until we have
+                        \ done both
 
 ENDIF
 

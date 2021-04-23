@@ -118,15 +118,14 @@ ELIF _ELECTRON_VERSION
 
 .DKL2
 
- LDX KYTB,Y             \ ???
- JSR DKS4
+ LDX KYTB,Y             \ Call DKS4 to see if the KYTB key at offset Y is being
+ JSR DKS4               \ pressed
 
- BPL L432F
+ BPL P%+6               \ If the key isn't being pressed, skip the following two
+                        \ instructions
 
- LDX #&FF
- STX KL,Y
-
-.L432F
+ LDX #&FF               \ Set the key logger for this key to indicate it's being
+ STX KL,Y               \ pressed
 
  DEY                    \ Decrement the loop counter
 

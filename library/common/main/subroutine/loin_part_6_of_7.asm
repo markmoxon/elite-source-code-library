@@ -103,10 +103,10 @@ ENDIF
 
 IF _ELECTRON_VERSION \ Screen
 
- BCC LIC5               \ ???
+ BCC LIC5               \ If the addition of the low bytes of SC overflowed,
+ INC SCH                \ increment the high byte
 
- INC SCH
- CLC
+ CLC                    \ Clear the C flag
 
 ENDIF
 

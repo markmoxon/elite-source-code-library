@@ -48,7 +48,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Oth
 ELIF _ELECTRON_VERSION
 
  LDA #0                 \ Load A with the byte we want to fill the memory block
-                        \ with - i.e. zero ???
+                        \ with - i.e. zero
 
 ENDIF
 

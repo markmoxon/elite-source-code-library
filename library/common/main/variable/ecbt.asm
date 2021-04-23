@@ -31,7 +31,7 @@ ENDIF
 
 .ECBT
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Advanced: The "E" indicator bulb on the dashboard is four pixels wide in the advanced versions, while it is only three pixels wide in the original versions
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Advanced: The "E" indicator bulb on the dashboard is four pixels wide in the advanced versions, while it is only three pixels wide in the cassette and disc versions. It is seven pixels wide in the Electron version, though the latter is in monochrome mode 4, so this is equivalent to 3.5 pixels in the colour versions
 
  EQUB %11100000         \ x x x .
  EQUB %11100000         \ x x x .
@@ -44,7 +44,14 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Advanced: The "E" indicator bulb on the d
 
 ELIF _ELECTRON_VERSION
 
- EQUB &FE, &FE, &E0     \ ???
+ EQUB %11111110         \ x x x x x x x x .
+ EQUB %11111110         \ x x x x x x x x .
+ EQUB %11100000         \ x x x . . . . . .
+                        \ x x x x x x x x .
+                        \ x x x x x x x x .
+                        \ x x x . . . . . .
+                        \ x x x x x x x x .
+                        \ x x x x x x x x .
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 

@@ -50,10 +50,10 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
 ELIF _ELECTRON_VERSION
 
- LDA #&F0               \ ???
- STA SC
- LDA #&76
- STA SC+1
+ LDA #&F0               \ Set SC(1 0) = &76F0, which is the screen address for
+ STA SC                 \ the character block containing the left end of the
+ LDA #&76               \ top indicator in the right part of the dashboard, the
+ STA SC+1               \ one showing our speed
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 

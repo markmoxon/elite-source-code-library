@@ -74,7 +74,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Ele
 
 ELIF _ELECTRON_VERSION
 
- JSR hyp1               \ ???
+ JSR hyp1               \ Jump straight to the system at (QQ9, QQ10)
 
 ENDIF
 

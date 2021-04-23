@@ -403,9 +403,11 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Master: See group A
 
 ELIF _ELECTRON_VERSION
 
- LDA TWOS,X             \ ???
- STA X1
- PLA
+ LDA TWOS,X             \ Load the same mode 4 1-pixel byte that we just used
+ STA X1                 \ for the top-right pixel and store it in X1, so we can
+                        \ use it as the character row byte for the stick
+
+ PLA                    \ Restore the stick height from the stack into A
 
 ENDIF
 

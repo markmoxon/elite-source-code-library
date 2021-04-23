@@ -18,6 +18,8 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ C
 \
 \   COMY                The screen pixel y-coordinate of the dot
 \
+ENDIF
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
 \   COMC                The colour and thickness of the dot:
 \
 \                         * &F0 = a double-height dot in yellow/white, for when
@@ -25,6 +27,14 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ C
 \
 \                         * &FF = a single-height dot in green/cyan, for when
 \                           the object in the compass is behind us
+ELIF _ELECTRON_VERSION
+\   COMC                The thickness of the dot:
+\
+\                         * &F0 = a double-height dot in white, for when the
+\                           object in the compass is in front of us
+\
+\                         * &FF = a single-height dot in white, for when the
+\                           object in the compass is behind us
 ELIF _6502SP_VERSION
 \   OSSC(1 0)           A parameter block as follows:
 \

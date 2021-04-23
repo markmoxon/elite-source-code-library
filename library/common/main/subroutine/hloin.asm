@@ -82,7 +82,7 @@ ENDIF
 
 .HLOIN
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Electron: Group A: The Electron doesn't have a dedicated routine for drawing horizontal lines, unlike the other versions; instead, it just uses the normal line-drawing routine, and sets the y-coordinates to be the same
 
  STY YSAV               \ Store Y into YSAV, so we can preserve it across the
                         \ call to this subroutine
@@ -91,8 +91,8 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
 
 ELIF _ELECTRON_VERSION
 
- LDX Y1                 \ ???
- STX Y2
+ LDX Y1                 \ Set Y2 = Y1, so we can use the normal line-drawing
+ STX Y2                 \ routine to draw a horizontal line
 
 ELIF _MASTER_VERSION
 
@@ -334,7 +334,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: See group A
 
  EOR (SC),Y             \ Store this into screen memory at SC(1 0), using EOR
  STA (SC),Y             \ logic so it merges with whatever is already on-screen,
@@ -346,7 +346,8 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Pl
 
 ELIF _ELECTRON_VERSION
 
- JMP LL30               \ ???
+ JMP LL30               \ Draw a line from (X1, Y1) to (X2, Y2), which will be
+                        \ horizontal because we set Y2 to Y1 above
 
 ENDIF
 

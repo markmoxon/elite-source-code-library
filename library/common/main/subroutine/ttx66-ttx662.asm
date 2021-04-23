@@ -27,6 +27,10 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ C
 \                       view name, as it is drawn using EOR logic
 \
 ENDIF
+IF _ELECTRON_VERSION \ Comment
+\   BORDER              Just draw the border
+\
+ENDIF
 IF _DISC_DOCKED \ Comment
 \ Other entry points:
 \
@@ -153,8 +157,8 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
 
 .BOL1
 
- JSR ZES1               \ Call ZES1 below to zero-fill the page in X, which
-                        \ clears that character row on the screen
+ JSR ZES1               \ Call ZES1  to zero-fill the page in X, which clears
+                        \ that character row on the screen
 
  INX                    \ Increment X to point to the next page, i.e. the next
                         \ character row
@@ -165,8 +169,9 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Tube
 
 ELIF _ELECTRON_VERSION
 
- LDX #&58               \ ???
- JSR LYN
+ LDX #&58               \ Call LYN with X = &58 to clear the screen from page
+ JSR LYN                \ &58 to page &75, which clears the whole screen (as
+                        \ screen memory starts at &5800)
 
 ELIF _6502SP_VERSION
 
@@ -305,7 +310,7 @@ ELIF _ELECTRON_VERSION
  LDX #0                 \ Set QQ17 = 0 to switch to ALL CAPS
  STX QQ17
 
-.L2838                  \ ???
+.BORDER
 
  LDX #0                 \ Set (X1, Y1) to (0, 0)
  STX X1

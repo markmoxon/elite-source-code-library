@@ -433,9 +433,10 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ El
 
 ELIF _ELECTRON_VERSION
 
- LDA XX12               \ ???
+ LDA XX12                \ Set X1 to the pixel x-coordinate of this system
  STA X1
- JSR CPIX4
+
+ JSR CPIX4               \ Draw a double-height mode 4 dot at (X1, Y1)
 
 ENDIF
 

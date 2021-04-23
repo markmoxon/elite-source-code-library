@@ -99,9 +99,8 @@ ENDIF
 
 IF _ELECTRON_VERSION \ Screen
 
- BCS P%+4              \ ???
-
- DEC SCH
+ BCS P%+4               \ If the subtraction of the low bytes of SC underflowed,
+ DEC SCH                \ decrement the high byte
 
 ENDIF
 

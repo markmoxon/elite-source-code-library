@@ -26,8 +26,8 @@ ENDIF
 
 .BOL1
 
- JSR ZES1               \ Call ZES1 below to zero-fill the page in X, which will
-                        \ clear half a character row
+ JSR ZES1               \ Call ZES1 to zero-fill the page in X, which will clear
+                        \ half a character row
 
  INX                    \ Increment X to point to the next page in screen
                         \ memory

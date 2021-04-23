@@ -51,8 +51,7 @@ ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Platform: The 6502SP version inlines the code from the hyp1 routine here, instead of calling it (though it could just as easily call it, as the hyp1 routine is included in the 6502SP version and contains the same code)
 
  JSR hyp1               \ Arrive in the system closest to (QQ9, QQ10) and then
-                        \ and then fall through into the docking bay routine
-                        \ below
+                        \ fall through into the docking bay routine below
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 

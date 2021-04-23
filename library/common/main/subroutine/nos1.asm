@@ -34,7 +34,8 @@
 
 IF _ELECTRON_VERSION \ Platform
 
- STA XX16+8             \ ???
+ STA XX16+8             \ Store the sound number in XX16+8, so we can retrieve
+                        \ it in the NO3 routine
 
 ENDIF
 

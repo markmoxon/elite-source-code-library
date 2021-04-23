@@ -7,6 +7,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \ Set pixels 0-233 to the value in A, starting at the pixel pointed to by SC.
 \
 \ Arguments:
@@ -14,7 +15,6 @@
 \   A                   The value to store in pixels 1-233 (the only value that
 \                       is actually used is A = 0, which clears those pixels)
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \ Returns:
 \
 \   Y                   Y is set to 0
@@ -23,6 +23,12 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \
 \   SC5                 Contains an RTS
 \
+ELIF _ELECTRON_VERSION
+\ Zero memory from page X to page &75 (inclusive).
+\
+\ Arguments:
+\
+\   X                   The page of screen memory from which to start clearing
 ENDIF
 \ ******************************************************************************
 
@@ -45,11 +51,12 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Platform
 
 ELIF _ELECTRON_VERSION
 
- JSR ZES1               \ ???
+ JSR ZES1               \ Call ZES1 to zero-fill the page in X
 
- INX
- CPX #&76
- BNE LYN
+ INX                    \ Increment X to point to the next page in memory
+
+ CPX #&76               \ Loop back to zero the next page until we have reached
+ BNE LYN                \ page &76 (so page &75 is the last page to be zeroed)
 
 ENDIF
 

@@ -15,7 +15,8 @@
 
 .S%
 
- EQUB &40               \ This gets set to &40 by elite-loader.asm ???
+ EQUB &40               \ This gets set to &40 by elite-loader.asm as part of
+                        \ the copy protection
 
 .L0D01
 

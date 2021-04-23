@@ -98,8 +98,9 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Screen
 ELIF _ELECTRON_VERSION
 
  LDA #&FF               \ The z-coordinate of XX15 is negative, so the planet or
-                        \ station is behind us and the compass dot should be in
-                        \ green/cyan, so set A to a ???
+                        \ station is behind us and the compass dot should be a
+                        \ single-height dash, so set A to &FF for the call to
+                        \ DOT below
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 

@@ -48,13 +48,14 @@ IF _CASSETTE_VERSION \ Screen
 
 ELIF _ELECTRON_VERSION
 
- LDA #&98               \ The E.C.M. bulb is in character block number 7
-                        \ with each character taking 8 bytes, so this sets the
-                        \ low byte of the screen address of the character block
-                        \ we want to draw to ???
+ LDA #&98               \ Set A to the low byte of the screen address of the
+                        \ E.C.M. bulb (which is at &7C98)
 
- LDX #LO(ECBT)          \ Set (Y X) to point to the character definition in
- LDY #HI(ECBT)+&43      \ ECBT ???
+ LDX #LO(ECBT)          \ Set X to the low byte of the address of the character
+                        \ definition in ECBT
+
+ LDY #&7C               \ Set Y to the high byte of the screen address of the
+                        \ E.C.M. bulb (which is at &7C98)
 
  BNE BULB               \ Jump down to BULB (this BNE is effectively a JMP as
                         \ A will never be zero)

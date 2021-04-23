@@ -9,6 +9,7 @@
 \
 \ Arguments:
 \
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \   A                   The y-coordinate of the bulb as a low-byte screen
 \                       address offset within screen page &7D (as both bulbs
 \                       are on this character row in the dashboard)
@@ -16,6 +17,15 @@
 \   (Y X)               The address of the character definition of the bulb to
 \                       be drawn (i.e. ECBT for the E.C.M. bulb, or SPBT for the
 \                       space station bulb)
+ELIF _ELECTRON_VERSION
+\   A                   The low byte of the screen address of the bulb to show
+\
+\   X                   The low byte of the address of the character definition
+\                       of the bulb to be drawn, i.e. #LO(ECBT) for the E.C.M.
+\                       bulb, or #LO(SPBT) for the space station bulb
+\
+\   Y                   The high byte of the screen address of the bulb to show
+ENDIF
 \
 \ ******************************************************************************
 
@@ -34,10 +44,13 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
 ELIF _ELECTRON_VERSION
 
- STX P+1                \ ???
- LDX #&39
- STX P+2
- TYA
+ STX P+1                \ Set P(2 1) to the address of the character definition
+ LDX #HI(ECBT)          \ of the bulb to be drawn (this assumes that ECBT and
+ STX P+2                \ SPBT are in the same page and have the same high byte)
+
+ TYA                    \ Set A to Y, the high byte of the screen address we
+                        \ want to write to, so now (A SC) points to the specific
+                        \ bulb's screen address
 
 ENDIF
 

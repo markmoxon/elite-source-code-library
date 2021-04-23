@@ -39,6 +39,24 @@
 \ and with pitch &60 (96) and duration &10 (16). The four sound envelopes (1-4)
 \ are set up by the loading process.
 \
+IF _ELECTRON_VERSION \ Comment
+\ The Electron has an additional layer of sound data for each of the game's
+\ sounds - priority and minimum duration. Because the Electron only has one
+\ tone channel and one noise channel, it prioritises each sound. If a sound
+\ is already playing and a sound of a higher priority needs to be made, the new
+\ sound will take over; if, however, the new sound is of a lower priority, it
+\ gets discarded and doesn't get made.
+\
+\ This system works alongside the miniumum duration value; after the minimum
+\ duration, the priority system is ignored, so once a high priority sound has
+\ sounded for its minimum duration, then even if that high priority sound is
+\ still being made, a lower priority sound can come along and take precedence.
+\
+\ To put it another way, high priority sounds take control of the sound output
+\ and lower priority sounds don't get a look-in, but only for the minimum
+\ duration of the higher priority sound.
+\
+ENDIF
 \ ******************************************************************************
 
 .SFX
@@ -60,8 +78,8 @@ ELIF _ELECTRON_VERSION
 
  EQUB &11,&01,&00,&03   \ 0  - Lasers fired by us
  EQUB &11,&02,&2C,&04   \ 8  - We're being hit by lasers
- EQUB &11,&03,&F0,&06   \ 16 - We died 1 / We made a hit or kill 2
- EQUB &10,&F1,&04,&05   \ 24 - We died 2 / We made a hit or kill 1
+ EQUB &11,&03,&F0,&06   \ 16 - We made a hit or kill 2
+ EQUB &10,&F1,&04,&05   \ 24 - We died / We made a hit or kill 1
  EQUB &01,&F1,&BC,&01   \ 32 - Short, high beep
  EQUB &11,&F4,&0C,&08   \ 40 - Long, low beep
  EQUB &10,&F1,&04,&06   \ 48 - Missile launched / Ship launched from station
@@ -69,9 +87,22 @@ ELIF _ELECTRON_VERSION
  EQUB &11,&04,&C2,&FF   \ 64 - E.C.M. on
  EQUB &11,&00,&00,&00   \ 72 - E.C.M. off
 
- EQUB &70,&24,&56,&56   \ ???
- EQUB &42,&28,&C8,&D0
- EQUB &F0,&E0
+ENDIF
+
+IF _ELECTRON_VERSION \ Electron: In the Electron version, each of the game's sounds is allocated a priority and a minimum duration
+
+.SFX2
+
+ EQUB &70               \ 0  - Priority 112, minimum duration 0
+ EQUB &24               \ 8  - Priority  36, minimum duration 4
+ EQUB &56               \ 16 - Priority  86, minimum duration 6
+ EQUB &56               \ 24 - Priority  86, minimum duration 6
+ EQUB &42               \ 32 - Priority  66, minimum duration 2
+ EQUB &28               \ 40 - Priority  40, minimum duration 8
+ EQUB &C8               \ 48 - Priority 200, minimum duration 8
+ EQUB &D0               \ 56 - Priority 208, minimum duration 0
+ EQUB &F0               \ 64 - Priority 240, minimum duration 0
+ EQUB &E0               \ 72 - Priority 224, minimum duration 0
 
 ENDIF
 

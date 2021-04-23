@@ -225,21 +225,23 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
 ELIF _ELECTRON_VERSION
 
- LDY #0                 \ ???
+ LDY #0                 \ Set the result, Y = 0 (and we know that X is 0 as well
+                        \ as we jumped to TJ1 from above following a LDX and a
+                        \ BEQ)
 
- CMP #&18
+ CMP #&18               \ If left arrow was pressed, set X = X - 1
  BNE P%+3
  DEX
 
- CMP #&78
+ CMP #&78               \ If right arrow was pressed, set X = X + 1
  BNE P%+3
  INX
 
- CMP #&39
+ CMP #&39               \ If up arrow was pressed, set Y = Y + 1
  BNE P%+3
  INY
 
- CMP #&28
+ CMP #&28               \ If down arrow was pressed, set Y = Y - 1
  BNE P%+3
  DEY
 

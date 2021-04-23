@@ -116,14 +116,8 @@ INCLUDE "library/common/main/variable/sspr.asm"
 
  SKIP 2                 \ These bytes appear to be unused
 
-.L0BFB
-
- SKIP 2                 \ ???
-
-.L0BFD
-
- SKIP 2                 \ ???
-
+INCLUDE "library/electron/main/variable/sfxpr.asm"
+INCLUDE "library/electron/main/variable/sfxdu.asm"
 INCLUDE "library/common/main/variable/ecmp.asm"
 INCLUDE "library/common/main/variable/msar.asm"
 INCLUDE "library/common/main/variable/view.asm"

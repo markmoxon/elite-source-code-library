@@ -25,9 +25,9 @@ ENDIF
 
 IF _ELECTRON_VERSION \ Electron: In the Electron version, the PLANET routine only draws planets and will terminate if asked to draw a sun
 
- LDA TYPE               \ ???
- LSR A
- BCS PL2-1
+ LDA TYPE               \ If bit 0 of the ship type is set, then this is the
+ LSR A                  \ sun, so return from the subroutine (as PL2-1 contains
+ BCS PL2-1              \ an RTS)
 
 ENDIF
 

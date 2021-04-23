@@ -24,10 +24,13 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Pla
 
 ELIF _ELECTRON_VERSION
 
- LDY #0                 \ ???
- STY SC
+ LDY #0                 \ If we set Y = SC = 0 and fall through into ZES2
+ STY SC                 \ below, then we will zero-fill 255 bytes starting from
+                        \ SC - in other words, we will zero-fill the whole of
+                        \ page X
 
- STX SC+1
+ STX SC+1               \ We want to zero-fill page X, so store this in the
+                        \ high byte of SC, so SC(1 0) is now pointing to page X
 
 ELIF _DISC_FLIGHT
 

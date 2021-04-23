@@ -85,7 +85,8 @@ ELIF _ELECTRON_VERSION
  LDY #&11               \ lock, with the targeted ship's slot number in X
  JSR ABORT2             \ (which we stored in XSAV at the start of this ship's
                         \ loop at MAL1), and set the colour of the missile
-                        \ indicator to the colour in Y (red = &0E) ???
+                        \ indicator to the colour in Y (black "T" in white
+                        \ square = &11)
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 

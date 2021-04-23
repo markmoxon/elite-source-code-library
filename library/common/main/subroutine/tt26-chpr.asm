@@ -564,9 +564,8 @@ ELIF _ELECTRON_VERSION
                         \
                         \ and so on
 
- BCC P%+4               \ ???
-
- INC SCH
+ BCC P%+4               \ If the addition of the low byte overflowed, increment
+ INC SCH                \ the high byte
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 

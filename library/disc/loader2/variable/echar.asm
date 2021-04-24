@@ -3,7 +3,7 @@
 \       Name: ECHAR
 \       Type: Variable
 \   Category: Loader
-\    Summary: Character definitions for the Acorn Electron to mimic the graphics
+\    Summary: Character definitions for the Electron to mimic the graphics
 \             characters of the BBC Micro's mode 7 teletext screen
 \
 \ ******************************************************************************

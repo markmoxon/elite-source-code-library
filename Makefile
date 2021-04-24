@@ -78,7 +78,7 @@ folder-electron=''
 #   2 = BBC Micro disc
 #   3 = BBC Micro with 6502 Second Processor
 #	4 = BBC Master
-#	5 = Acorn Electron
+#	5 = Electron
 #
 # _RELEASE (for cassette version)
 #   1 = Source disc (default)

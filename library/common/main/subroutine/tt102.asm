@@ -29,6 +29,18 @@
 \
 \ ******************************************************************************
 
+IF _ELECTRON_VERSION
+
+.VKEYS
+
+ EQUB f1                \ The key to press for showing view 1 (back)
+
+ EQUB f2                \ The key to press for showing view 2 (left)
+
+ EQUB f3                \ The key to press for showing view 3 (right)
+
+ENDIF
+
 .TT102
 
  CMP #f8                \ If red key f8 was pressed, jump to STATUS to show the
@@ -168,22 +180,29 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
 ELIF _ELECTRON_VERSION
 
- STX T                  \ ???
- LDX #&03
+ STX T                  \ Store X in T so we can retrieve it after the following
 
-.L3EB8
+ LDX #3                 \ We are about to loop through the key presses for the
+                        \ four views, so set a counter in X, starting with a
+                        \ value of X = 3 (for the right view)
 
- CMP L3E5D-1,X
- BNE L3EC0
+.LOOKL
 
- JMP LOOK1
+ CMP VKEYS-1,X          \ If the key pressed does not match the value in VKEYS
+ BNE P%+5               \ for view X, skip the following instruction
 
-.L3EC0
+ JMP LOOK1              \ The key pressed matches the key in position X, so jump
+                        \ to LOOK1 to switch to view X (rear, left or right),
+                        \ returning from the subroutine using a tail call
 
- DEX
- BNE L3EB8
+ DEX                    \ Decrement the view number in X, so we start with view
+                        \ 3 (right), then work backwards through 2 (left) and
+                        \ 1 (rear)
 
- LDX T
+ BNE LOOKL              \ Loop back to check the next key until we have checked
+                        \ for f3, f2 and f1
+
+ LDX T                  \ Fetch the value of X that we stored in T above
 
 ELIF _MASTER_VERSION
 

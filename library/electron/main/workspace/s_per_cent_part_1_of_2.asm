@@ -20,8 +20,10 @@
 
 .KEYB
 
- EQUB 0                 \ Flag to indicate that we are currently reading from
-                        \ the keyboard using OSRDCH or OSWORD
+ EQUB 0                 \ This flag indicates whether we are currently reading
+                        \ from the keyboard using OSRDCH or OSWORD, so the
+                        \ keyboard interrupt handler at KEY1 knows whether to
+                        \ pass key presses on to the OS
                         \
                         \   * 0 = we are not reading from the keyboard with an
                         \         OS command
@@ -35,9 +37,9 @@
  EQUW 0                 \ Gets set to the original value of KEYV by
                         \ elite-loader.asm
 
-.L0D06
-
- EQUW 0                 \ ???
+ EQUW 0                 \ This flag is flipped between 0 and &FF every time the
+                        \ interrupt routine at IRQ1 is called, but it is never
+                        \ read anywhere, so presumably it isn't actually used
 
  EQUW TT170             \ The entry point for the main game; once the main code
                         \ has been loaded, decrypted and moved to the right

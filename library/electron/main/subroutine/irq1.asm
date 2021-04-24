@@ -9,9 +9,9 @@
 
 .IRQ1
 
- LDA L0D06              \ Flip all the bits in L0D06 ???
- EOR #%11111111
- STA L0D06
+ LDA S%+6               \ Flip all the bits in S%+6 so it toggled between 0 and
+ EOR #%11111111         \ &FF on each call to this routine (though S%+6 is
+ STA S%+6               \ never read, so this doesn't seem to have any effect)
 
  ORA KEYB               \ If we are currently reading from the keyboard with an
  BMI jvec               \ OS command (OSWORD or OSRDCH) then KEYB will be &FF

@@ -16,11 +16,15 @@ ENDIF
 \
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
 \   X                   The internal number of the key to check (see p.142 of
-ELIF _6502SP_VERSION OR _MASTER_VERSION
-\   A                   The internal number of the key to check (see p.142 of
-ENDIF
 \                       the Advanced User Guide for a list of internal key
 \                       numbers)
+ELIF _ELECTRON_VERSION
+\   X                   The internal number of the key to check
+ELIF _6502SP_VERSION OR _MASTER_VERSION
+\   A                   The internal number of the key to check (see p.142 of
+\                       the Advanced User Guide for a list of internal key
+\                       numbers)
+ENDIF
 \
 \ Returns:
 \
@@ -37,6 +41,10 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
 \ Other entry points:
 \
 \   DKS2-1              Contains an RTS
+\
+ENDIF
+IF _ELECTRON_VERSION
+\   CAPSL               Scan the keyboard to see if CAPS LOCK is being pressed
 \
 ENDIF
 \ ******************************************************************************
@@ -83,43 +91,73 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Minor
 
 ELIF _ELECTRON_VERSION
 
-.L42D0
+.KSCAN
 
- SEC                    \ ???
- CLV
- SEI
- JMP (S%+4)
+                        \ This routine is called from below, and performs the
+                        \ actual keyboard scan
 
-.L42D6
+ SEC                    \ Set the C flag and clear the V flag, so when we call
+ CLV                    \ KEYV, it scans the keyboard just like OSBYTE 121
 
- LDX #&40
+ SEI                    \ Disable interrupts
+
+ JMP (S%+4)             \ Jump to the original value of KEYV, which is stored in
+                        \ S%+4. Because we set the C and V flags as above, this
+                        \ will scan the keyboard like OSBYTE 121, which expects
+                        \ X to be set to the internal key number to scan for,
+                        \ EOR'd with %10000000. Unlike OSBYTE 121, a direct call
+                        \ to KEYV will return negative value in both A and X if
+                        \ that key is being pressed
+
+.CAPSL
+
+ LDX #&40               \ Set X to the internal key number for CAPS LOCK, and
+                        \ fall through into DKS4 to check whether it is being
+                        \ pressed
 
 .DKS4
 
- TYA
- PHA
- TXA
- PHA
- ORA #&80
- TAX
- JSR L42D0
+ TYA                    \ Store Y on the stack so we can retrieve it when we
+ PHA                    \ return from the subroutine, thus preserving Y
 
- CLI
- TAX
- PLA
- AND #&7F
- CPX #&80
- BCC L42ED
+ TXA                    \ Store the key number to check in X on the stack so
+ PHA                    \ we can retrieve it below
 
- ORA #&80
+ ORA #%10000000         \ Set bit 7 of the key to check for and transfer the
+ TAX                    \ value to X
 
-.L42ED
+ JSR KSCAN              \ Call KSCAN to check whether the key in X is being
+                        \ pressed, which returns a negative value in A and X
+                        \ if it is
 
- TAX
- PLA
- TAY
- TXA
- RTS
+ CLI                    \ Enable interrupts again (as they are disabled in
+                        \ KSCAN)
+
+ TAX                    \ Set X to the result of the key press call above
+
+ PLA                    \ Fetch the original argument value of X from the stack
+ AND #%01111111         \ into A, and clear bit 7
+
+ CPX #%10000000         \ If bit 7 of the result of the key press check above is
+ BCC P%+4               \ set, then the key in X is being pressed, so skip the
+                        \ next instruction
+
+ ORA #%10000000         \ The key in X isn't being pressed, so set bit 7 of A
+
+ TAX                    \ By this point, A contains the key number we wanted to
+                        \ check for, with bit 7 set if the key is being pressed
+                        \ and clear otherwise, which is what we want to return
+                        \ from the subroutine, but first we need to restore the
+                        \ value of Y from the stack, so we store the result A in
+                        \ X while we do that
+                    
+ PLA                    \ Restore the value Y that we stored on the stack, so it
+ TAY                    \ gets preserved across calls to the subroutine
+
+ TXA                    \ And we now retrieve the result that we stored in X
+                        \ back into A, so we can return it
+
+ RTS                    \ Return from the subroutine
 
 ELIF _6502SP_VERSION
 

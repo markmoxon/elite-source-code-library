@@ -432,7 +432,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION \ 6502SP: The 6502SP version only scans for keypresses every four iterations on the title screen (as opposed to every iteration in the other versions), so you have to hold down "Y", "N" or Space for noticeably longer to load a commander or start the game
+IF _6502SP_VERSION \ 6502SP: The 6502SP version only scans for key presses every four iterations on the title screen (as opposed to every iteration in the other versions), so you have to hold down "Y", "N" or Space for noticeably longer to load a commander or start the game
 
  LDA MCNT               \ This value will be zero on one out of every four
  AND #3                 \ iterations, so for the other three, skip to nodesire

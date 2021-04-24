@@ -588,12 +588,6 @@ INCLUDE "library/common/main/subroutine/main_game_loop_part_3_of_6.asm"
 INCLUDE "library/common/main/subroutine/main_game_loop_part_4_of_6.asm"
 INCLUDE "library/common/main/subroutine/main_game_loop_part_5_of_6.asm"
 INCLUDE "library/common/main/subroutine/main_game_loop_part_6_of_6.asm"
-
-
-.L3E5D
-
- EQUB &B1, &91, &92
-
 INCLUDE "library/common/main/subroutine/tt102.asm"
 INCLUDE "library/common/main/subroutine/bad.asm"
 INCLUDE "library/common/main/subroutine/farof.asm"

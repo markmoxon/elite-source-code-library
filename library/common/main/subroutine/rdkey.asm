@@ -106,7 +106,7 @@ ELIF _6502SP_VERSION
 
  LDX KTRAN              \ Set X to the first byte of the updated KTRAN, which
                         \ contains the internal key number of the key being
-                        \ pressed, or 0 if there is no keypress
+                        \ pressed, or 0 if there is no key press
 
  TXA                    \ Copy X into A
 
@@ -135,19 +135,25 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Platform
 
 ELIF _ELECTRON_VERSION
 
- TAY                    \ ???
- JSR L42D6
+ TAY                    \ Store A in Y so we can preserve it through the call to
+                        \ CAPSL below
 
- PHP
- TYA
+ JSR CAPSL              \ Call CAPSL to check whether CAPS LOCK is being pressed
+                        \ (if it is, the return value in A is the key number of
+                        \ CAPS LOCK, but with bit 7 set)
+
+ PHP                    \ Retrieve the value of A we stored in Y, but making
+ TYA                    \ sure the retrieval doesn't affect the flags
  PLP
- BPL L4236
 
- ORA #&80
+ BPL P%+4               \ If the result of the call to CAPSL was positive, then
+                        \ CAPS LOCK isn't being pressed, so skip the next
+                        \ instruction
 
-.L4236
+ ORA #%10000000         \ CAPS LOCK is being pressed, so set bit 7 of A
 
- TAX                    \ Copy A into X
+ TAX                    \ Copy A into X to return the key number of CAPS LOCK
+                        \ with bit 7 set
 
 ENDIF
 

@@ -62,9 +62,13 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
 ELIF _ELECTRON_VERSION
 
- DEC L0D01              \ ???
- JSR OSRDCH
- INC L0D01
+ DEC KEYB               \ Decrement KEYB, so it is now &FF, to indicate that we
+                        \ are reading from the keyboard using an OS command
+
+ JSR OSRDCH             \ Call OSRDCH to read a character from the keyboard
+
+ INC KEYB               \ Increment KEYB back to 0 to indicate we are done
+                        \ reading the keyboard
 
 ELIF _MASTER_VERSION
 

@@ -9,16 +9,19 @@
 
 .IRQ1
 
- LDA L0D06              \ ???
- EOR #&FF
+ LDA L0D06              \ Flip all the bits in L0D06???
+ EOR #%11111111
  STA L0D06
 
- ORA L0D01
- BMI jvec
+ ORA KEYB               \ If we are currently reading from the keyboard with an
+ BMI jvec               \ OS command (OSWORD or OSRDCH) then KEYB will be &FF
+                        \ rather than 0, so this jumps to jvec if we are already
+                        \ reading the keyboard with an OS command
 
- LDA VIA+&05
- ORA #&20
- STA VIA+&05
+ LDA VIA+&05            \ If we get here then we are not already reading the
+ ORA #%00100000         \ keyboard using an OS command, so set bit 5 of the 
+ STA VIA+&05            \ interrupt clear and paging register at SHEILA &05 to
+                        \ clear the RTC interrupt
 
  LDA &FC                \ Restore the value of A from before the call to the
                         \ interrupt handler (the MOS stores the value of A in

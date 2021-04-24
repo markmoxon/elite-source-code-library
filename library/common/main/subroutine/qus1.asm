@@ -96,11 +96,17 @@ IF _CASSETTE_VERSION \ Minor
 
 ELIF _ELECTRON_VERSION
 
- LDX #&FF               \ ???
- STX L0D01
- INX
- JSR OSFILE
- INC L0D01
+ LDX #&FF               \ Set KEYB = &FF to indicate that we are reading from
+ STX KEYB               \ the keyboard using an OS command
+
+ INX                    \ Set X = 0
+
+ JSR OSFILE             \ Call OSFILE to do the file operation specified in
+                        \ &0A00 (i.e. save or load a file depending on the value
+                        \ of A)
+
+ INC KEYB               \ Increment KEYB back to 0 to indicate we are done
+                        \ reading the keyboard
 
  RTS                    \ Return from the subroutine
 

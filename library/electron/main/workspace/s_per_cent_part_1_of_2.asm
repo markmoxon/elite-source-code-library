@@ -18,10 +18,16 @@
  EQUB &40               \ This gets set to &40 by elite-loader.asm as part of
                         \ the copy protection
 
-.L0D01
+.KEYB
 
- EQUB 0                 \ ??? Gets decreased when we are asking for keyboard
-                        \ input
+ EQUB 0                 \ Flag to indicate that we are currently reading from
+                        \ the keyboard using OSRDCH or OSWORD
+                        \
+                        \   * 0 = we are not reading from the keyboard with an
+                        \         OS command
+                        \
+                        \   * &FF = we are currently reading from the keyboard
+                        \           with an OS command
 
  EQUW 0                 \ Gets set to the original value of IRQ1V by
                         \ elite-loader.asm

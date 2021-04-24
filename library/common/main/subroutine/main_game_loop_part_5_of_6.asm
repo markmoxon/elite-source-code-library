@@ -57,8 +57,8 @@ ENDIF
 
 IF _ELECTRON_VERSION \ Platform
 
- INX                    \ Set L0D01 = 0 ???
- STX L0D01
+ INX                    \ Set KEYB = 0 to indicate we are not currently reading
+ STX KEYB               \ the keyboard using an OS command
 
 ENDIF
 

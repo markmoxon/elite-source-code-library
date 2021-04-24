@@ -29,7 +29,7 @@
 \
 \ ******************************************************************************
 
-IF _ELECTRON_VERSION
+IF _ELECTRON_VERSION \ Platform
 
 .VKEYS
 

@@ -43,7 +43,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
 \   DKS2-1              Contains an RTS
 \
 ENDIF
-IF _ELECTRON_VERSION
+IF _ELECTRON_VERSION \ Comment
 \   CAPSL               Scan the keyboard to see if CAPS LOCK is being pressed
 \
 ENDIF

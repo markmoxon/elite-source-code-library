@@ -15,14 +15,17 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Co
 \ Wait for the number of vertical syncs given in Y, so this effectively waits
 \ for Y/50 of a second (as the vertical sync occurs 50 times a second).
 ELIF _ELECTRON_VERSION
-\ The Electron doesn't have vertical sync, so we can't use that to measure the
-\ length of our delay, so instead we loop round a convoluted loop-within-loop
-\ structure to pass the correct amount of time.
+\ Loop round a convoluted loop-within-loop structure to pass the required
+\ amount of time.
 ENDIF
 \
 \ Arguments:
 \
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \   Y                   The number of vertical sync events to wait for
+ELIF _ELECTRON_VERSION
+\   Y                   The number of delay loops to run
+ENDIF
 \
 IF _CASSETTE_VERSION \ Comment
 \ Other entry points:
@@ -41,7 +44,7 @@ ELIF _ELECTRON_VERSION
 ENDIF
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION \ Electron: Group A: On the BBC versions, delays are implemented by waiting for a specified number of vertical syncs. The Electron's video system doesn't work in the same way, so it has its own dedicated delay routine that isn't based around the screen refresh, but instead wastes time using a convoluted loop-within-loop structure
+IF _CASSETTE_VERSION \ Electron: Group A: On the BBC versions, delays are implemented by waiting for a specified number of vertical syncs. The Electron's video system is different, so it has its own dedicated delay routine that isn't based around the screen refresh, but instead wastes time using a convoluted loop-within-loop structure
 
  LDY #2                 \ Set Y to 2 vertical syncs
 
@@ -111,8 +114,17 @@ ENDIF
 
  DEY                    \ Decrement the counter in Y
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+
  BNE DELAY              \ If Y isn't yet at zero, jump back to DELAY to wait
                         \ for another vertical sync
+
+ELIF _ELECTRON_VERSION
+
+ BNE DELAY              \ If Y isn't yet at zero, jump back to DELAY to wait
+                        \ for another iteration of the delay loop
+
+ENDIF
 
  RTS                    \ Return from the subroutine
 

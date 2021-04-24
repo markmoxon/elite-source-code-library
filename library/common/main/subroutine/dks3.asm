@@ -118,10 +118,14 @@ ENDIF
 
  JSR BELL               \ Make a beep sound so we know something has happened
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  JSR DELAY              \ Wait for Y vertical syncs (Y is between 64 and 70, so
                         \ this is always a bit longer than a second)
+
+ELIF _ELECTRON_VERSION
+
+ JSR DELAY              \ Wait for Y delay loops (Y is between 64 and 70)
 
 ELIF _MASTER_VERSION
 

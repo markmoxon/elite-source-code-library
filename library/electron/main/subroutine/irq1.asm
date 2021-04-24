@@ -9,7 +9,7 @@
 
 .IRQ1
 
- LDA L0D06              \ Flip all the bits in L0D06???
+ LDA L0D06              \ Flip all the bits in L0D06 ???
  EOR #%11111111
  STA L0D06
 

@@ -4,7 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing pixels
 \    Summary: Draw a single pixel at a specific coordinate
-IF _ELECTRON_VERSION
+IF _ELECTRON_VERSION \ Comment
 \  Deep dive: Drawing pixels in the Electron version
 ENDIF
 \

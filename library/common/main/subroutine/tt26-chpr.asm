@@ -614,6 +614,15 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED \ Platform
                         \   X = YC + &5E + 1
                         \     = YC + &5F
 
+                        \ Because YC starts at 0 for the first text row, this
+                        \ means that X will be &5F for row 0, &60 for row 1 and
+                        \ so on. In other words, X is now set to the page number
+                        \ for the row before the one containing the text cursor,
+                        \ and given that we set SC above to point to the offset
+                        \ in memory of the text cursor within the row's page,
+                        \ this means that (X SC) now points to the character
+                        \ above the text cursor
+
 ELIF _ELECTRON_VERSION
 
  DEC SC+1               \ Decrement the high byte of the screen address ???
@@ -648,15 +657,6 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Platform
-
-                        \ Because YC starts at 0 for the first text row, this
-                        \ means that X will be &5F for row 0, &60 for row 1 and
-                        \ so on. In other words, X is now set to the page number
-                        \ for the row before the one containing the text cursor,
-                        \ and given that we set SC above to point to the offset
-                        \ in memory of the text cursor within the row's page,
-                        \ this means that (X SC) now points to the character
-                        \ above the text cursor
 
  LDY #&F8               \ Set Y = &F8, so the following call to ZES2 will count
                         \ Y upwards from &F8 to &FF

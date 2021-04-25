@@ -72,27 +72,50 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
 ELIF _ELECTRON_VERSION
 
+                        \ We now calculate the address of the character block
+                        \ containing the pixel (X1, Y1) and put it in SC(1 0),
+                        \ as follows:
+                        \
+                        \   SC = &5800 + (Y1 div 8 * 256) + (Y1 div 8 * 64) + 32
+                        \
+                        \ See the deep dive on "Drawing pixels in the Electron
+                        \ version" for details
+
  LSR A                  \ Set A = Y1 / 8, so A now contains the character row
  LSR A                  \ that will contain our horizontal line
  LSR A
 
- STA SCH
- LSR A
- ROR SC
- LSR A
- ROR SC
- ADC SCH
- ADC #&58
- STA SCH
- TXA
- AND #&F8
- ADC SC
- STA SC
- BCC L1757
+ STA SC+1               \ Set SC+1 = A, so (SC+1 0) = A * 256
+                        \                           = char row * 256
 
- INC SCH
+ LSR A                  \ Set (A SC) = (A SC) / 4
+ ROR SC                 \            = (4 * ((char row * 64) + 32)) / 4
+ LSR A                  \            = char row * 64 + 32
+ ROR SC
 
-.L1757
+ ADC SC+1               \ Set SC(1 0) = (A SC) + (SC+1 0) + &5800
+ ADC #&58               \             = (char row * 64 + 32)
+ STA SC+1               \               + char row * 256
+                        \               + &5800
+                        \
+                        \ which is what we want, so SC(1 0) contains the address
+                        \ of the first visible pixel on the character row
+                        \ containing the point (X1, Y1)
+
+ TXA                    \ Each character block contains 8 pixel rows, so to get
+ AND #%11111000         \ the address of the first byte in the character block
+                        \ that we need to draw into, as an offset from the start
+                        \ of the row, we clear bits 0-2
+
+ ADC SC                 \ And add the result to SC(1 0) to get the character
+ STA SC                 \ block on the row we want
+
+ BCC P%+4               \ If the addition of the low bytes overflowed, increment
+ INC SC+1               \ the high byte
+
+                        \ So SC(1 0) now contains the address of the first pixel
+                        \ in the character block containing the (X1, Y1), taking
+                        \ the screen borders into consideration
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
@@ -154,6 +177,21 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Other: Part 5 of th
  AND #7                 \ character block at which we want to draw the start of
  TAY                    \ our line (as each character block has 8 rows)
 
+ENDIF
+
+IF _ELECTRON_VERSION \ Screen
+
+ TXA                    \ Set X = X1 mod 8, which is the pixel column within the
+ AND #7                 \ character block at which we want to draw the start of
+ TAX                    \ our line (as each character block has 8 rows)
+
+ LDA TWOS,X             \ Fetch a mode 4 1-pixel byte with the pixel position
+ STA R                  \ at X and store it in R to act as a mask
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Other: Part 5 of the LOIN routine in the advanced versions uses logarithms to speed up the multiplication
+
                         \ The following calculates:
                         \
                         \   P = P / Q
@@ -161,21 +199,6 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Other: Part 5 of th
                         \
                         \ using the same shift-and-subtract algorithm
                         \ documented in TIS2
-
-ENDIF
-
-IF _ELECTRON_VERSION \ Screen
-
- TXA                    \ ???
- AND #7
- TAX
-
- LDA TWOS,X
- STA R
-
-ENDIF
-
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Other: Part 5 of the LOIN routine in the advanced versions uses logarithms to speed up the multiplication
 
  LDA P                  \ Set A = |delta_x|
 

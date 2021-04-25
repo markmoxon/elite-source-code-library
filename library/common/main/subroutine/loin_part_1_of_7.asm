@@ -88,7 +88,7 @@ ENDIF
 
 IF _ELECTRON_VERSION \ Screen
 
- STA SC                 \ ???
+ STA SC                 \ Set SC = 128 for use in the pixel calculations below
 
 ENDIF
 

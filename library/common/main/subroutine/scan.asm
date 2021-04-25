@@ -452,13 +452,20 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Screen
 
 ELIF _ELECTRON_VERSION
 
- LDA SC                 \ ???
- SEC
- SBC #&40
+                        \ We now need to move up into the character block above,
+                        \ and each character row in screen memory takes up &140
+                        \ bytes (&100 for the visible part and &20 for each of
+                        \ the blank borders on the side of the screen), so
+                        \ that's what we need to subtract from SC(1 0)
+
+ LDA SC                 \ Set SC(1 0) = SC(1 0) - &140
+ SEC                    \
+ SBC #&40               \ Starting with the low bytes
  STA SC
- LDA SCH
+
+ LDA SC+1               \ And then subtracting the high bytes
  SBC #&01
- STA SCH
+ STA SC+1
 
 ENDIF
 
@@ -569,13 +576,24 @@ ELIF _ELECTRON_VERSION
 
 .L293D
 
- LDA SC
- ADC #&3F
- STA SC
- LDA SCH
+                        \ We now need to move down into the character block
+                        \ below, and each character row in screen memory takes
+                        \ up &140 bytes (&100 for the visible part and &20 for
+                        \ each of the blank borders on the side of the screen),
+                        \ so that's what we need to add to SC(1 0)
+                        \
+                        \ We also know the C flag is set, so we can add &13F
+                        \ in order to get the correct result
+
+ LDA SC                 \ Set SC(1 0) = SC(1 0) + &140
+ ADC #&3F               \
+ STA SC                 \ Starting with the low bytes
+
+ LDA SC+1               \ And then adding the high bytes
  ADC #&01
- STA SCH
- RTS
+ STA SC+1
+
+ RTS                    \ Return from the subroutine
 
 ELIF _6502SP_VERSION
 

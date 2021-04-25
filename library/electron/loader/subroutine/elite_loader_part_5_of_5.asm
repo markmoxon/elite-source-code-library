@@ -120,11 +120,11 @@
  LDA S%+13
  STA IRQ1V+1
 
- LDA #%11111100         \ Clear all interrupts (bits 4-7) and select ROM 12
- JSR VIA05              \ (bits 0-3) by setting the interrupt clear and paging
-                        \ register at SHEILA &05
+ LDA #%11111100         \ Clear all interrupts (bits 4-7) and de-select the
+ JSR VIA05              \ BASIC ROM (bit 3) by setting the interrupt clear and
+                        \ paging register at SHEILA &05
 
- LDA #8                 \ Select ROM 8 (the keyboard) by setting the interrupt
+ LDA #%00001000         \ Select ROM 8 (the keyboard) by setting the interrupt
  JSR VIA05              \ clear and paging register at SHEILA &05
 
  LDA #&60               \ Set the screen start address registers at SHEILA &02

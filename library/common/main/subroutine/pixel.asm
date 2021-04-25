@@ -162,30 +162,57 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
 ELIF _ELECTRON_VERSION
 
- STY T1                 \ ???
- LDY #&80
+                        \ We now calculate the address of the character block
+                        \ containing the pixel (X1, Y1) and put it in SC(1 0),
+                        \ as follows:
+                        \
+                        \   SC = &5800 + (Y1 div 8 * 256) + (Y1 div 8 * 64) + 32
+                        \
+                        \ See the deep dive on "Drawing pixels in the Electron
+                        \ version" for details
+
+ STY T1                 \ Store Y in T1
+
+ LDY #128               \ Set SC = 128 for use in the calculation below
  STY SC
- TAY
- LSR A
- LSR A
- LSR A
- STA SCH
- LSR A
- ROR SC
- LSR A
- ROR SC
- ADC SCH
- ADC #&58
- STA SCH
- TXA
- AND #&F8
- ADC SC
- STA SC
- BCC L1869
 
- INC SCH
+ TAY                    \ Copy A into Y, for use later
 
-.L1869
+ LSR A                  \ Set A = A >> 3
+ LSR A                  \       = y div 8
+ LSR A                  \       = character row number
+
+ STA SC+1               \ Set SC+1 = A, so (SC+1 0) = A * 256
+                        \                           = char row * 256
+
+ LSR A                  \ Set (A SC) = (A SC) / 4
+ ROR SC                 \            = (4 * ((char row * 64) + 32)) / 4
+ LSR A                  \            = char row * 64 + 32
+ ROR SC
+
+ ADC SC+1               \ Set SC(1 0) = (A SC) + (SC+1 0) + &5800
+ ADC #&58               \             = (char row * 64 + 32)
+ STA SC+1               \               + char row * 256
+                        \               + &5800
+                        \
+                        \ which is what we want, so SC(1 0) contains the address
+                        \ of the first visible pixel on the character row
+                        \ containing the point (x, y)
+
+ TXA                    \ Each character block contains 8 pixel rows, so to get
+ AND #%11111000         \ the address of the first byte in the character block
+                        \ that we need to draw into, as an offset from the start
+                        \ of the row, we clear bits 0-2
+
+ ADC SC                 \ And add the result to SC(1 0) to get the character
+ STA SC                 \ block on the row we want
+
+ BCC P%+4               \ If the addition of the low bytes overflowed, increment
+ INC SC+1               \ the high byte
+
+                        \ So SC(1 0) now contains the address of the first pixel
+                        \ in the character block containing the (x, y), taking
+                        \ the screen borders into consideration
 
 ENDIF
 

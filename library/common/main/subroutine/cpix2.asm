@@ -4,8 +4,10 @@
 \       Type: Subroutine
 \   Category: Drawing pixels
 \    Summary: Draw a single-height dot on the dashboard
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \  Deep dive: Drawing colour pixels in mode 5
+ELIF _ELECTRON_VERSION
+\  Deep dive: Drawing pixels in the Electron version
 ENDIF
 \
 \ ------------------------------------------------------------------------------
@@ -48,7 +50,7 @@ ENDIF
 
 IF _ELECTRON_VERSION \ Screen
 
- LDY #&80               \ ???
+ LDY #128               \ Set SC = 128 for use in the calculation below
  STY SC
 
 ENDIF
@@ -98,26 +100,57 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
 ELIF _ELECTRON_VERSION
 
- LSR A                  \ Set A = A / 8, so A now contains the character row we
- LSR A                  \ need to draw in (as each character row contains 8
- LSR A                  \ pixel rows)
+                        \ We now calculate the address of the character block
+                        \ containing the pixel (x, y) and put it in SC(1 0), as
+                        \ follows:
+                        \
+                        \   SC = &5800 + (y div 8 * 256) + (y div 8 * 64) + 32
+                        \
+                        \ See the deep dive on "Drawing pixels in the Electron
+                        \ version" for details
 
- STA SCH                \ Store the screen page in the high byte of SC(1 0)
+ LSR A                  \ Set A = A >> 3
+ LSR A                  \       = y div 8
+ LSR A                  \       = character row number
 
- LSR A                  \ ???
+                        \ Also, as SC = 128, we have:
+                        \
+                        \   (A SC) = (A 128)
+                        \          = (A * 256) + 128
+                        \          = 4 * ((A * 64) + 32)
+                        \          = 4 * ((char row * 64) + 32)
+
+ STA SC+1               \ Set SC+1 = A, so (SC+1 0) = A * 256
+                        \                           = char row * 256
+
+ LSR A                  \ Set (A SC) = (A SC) / 4
+ ROR SC                 \            = (4 * ((char row * 64) + 32)) / 4
+ LSR A                  \            = char row * 64 + 32
  ROR SC
- LSR A
- ROR SC
- ADC SCH
- ADC #&58
- STA SCH
- LDA XX15
- AND #&F8
- ADC SC
- STA SC
 
- BCC P%+4
- INC SCH
+ ADC SC+1               \ Set SC(1 0) = (A SC) + (SC+1 0) + &5800
+ ADC #&58               \             = (char row * 64 + 32)
+ STA SC+1               \               + char row * 256
+                        \               + &5800
+                        \
+                        \ which is what we want, so SC(1 0) contains the address
+                        \ of the first visible pixel on the character row
+                        \ containing the point (x, y)
+
+ LDA X1                 \ Each character block contains 8 pixel rows, so to get
+ AND #%11111000         \ the address of the first byte in the character block
+                        \ that we need to draw into, as an offset from the start
+                        \ of the row, we clear bits 0-2
+
+ ADC SC                 \ And add the result to SC(1 0) to get the character
+ STA SC                 \ block on the row we want
+
+ BCC P%+4               \ If the addition of the low bytes overflowed, increment
+ INC SC+1               \ the high byte
+
+                        \ So SC(1 0) now contains the address of the first pixel
+                        \ in the character block containing the (x, y), taking
+                        \ the screen borders into consideration
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
@@ -184,10 +217,12 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
 ELIF _ELECTRON_VERSION
 
- LDA X1                 \ ???
- AND #&07
- TAX
- LDA TWOS,X
+ LDA X1                 \ Set X to just bits 0-2 of the x-coordinate, which will
+ AND #%00000111         \ be the pixel number within the character row we need
+ TAX                    \ to draw
+
+ LDA TWOS,X             \ Fetch a mode 4 1-pixel byte with the pixel position
+                        \ at X
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
@@ -215,10 +250,13 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
 ELIF _ELECTRON_VERSION
 
- JSR P%+3              \ ??? Run the following twice
+ JSR P%+3               \ Run the following code twice, incrementing X each
+                        \ time, so we draw a two-pixel dash
 
- INX
- LDA TWOS,X
+ INX                    \ Increment X to get the next pixel along
+
+ LDA TWOS,X             \ Fetch a mode 4 1-pixel byte with the pixel position
+                        \ at X
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
@@ -248,13 +286,11 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Sc
 ELIF _ELECTRON_VERSION
 
  LDA SC                 \ Otherwise the left pixel we drew was at the last
- CLC                    \ ???
- ADC #8                 \ position of four in this character block, so we add
- STA SC                 \ 8 to the screen address to move onto the next block
-                        \ along (as there are 8 bytes in a character block)
+ CLC                    \ position of four in this character block, so we add
+ ADC #8                 \ 8 to the screen address to move onto the next block
+ STA SC                 \ along (as there are 8 bytes in a character block)
 
 ENDIF
-
 
 IF _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
@@ -274,7 +310,8 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
 ELIF _ELECTRON_VERSION
 
- LDA TWOS,X             \ ???
+ LDA TWOS,X             \ Refetch the mode 4 1-pixel byte from before, as we
+                        \ just overwrote A
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 

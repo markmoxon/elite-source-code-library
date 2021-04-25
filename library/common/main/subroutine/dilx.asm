@@ -202,7 +202,7 @@ ELIF _ELECTRON_VERSION
                         \ screen memory)
 
  BCC P%+4               \ If the addition of the low bytes of SC overflowed,
- INC SCH                \ increment the high byte
+ INC SC+1               \ increment the high byte
 
  TAY                    \ Transfer the updated value (Y + 6) back into Y
 

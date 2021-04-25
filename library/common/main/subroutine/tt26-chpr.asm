@@ -471,25 +471,41 @@ ENDIF
 
 IF _ELECTRON_VERSION \ Screen
 
- LDA #&80               \ ???
+ LDA #128               \ Set SC = 128 for use in the calculation below
  STA SC
- LDA YC
- CMP #&18
- BCC L1D3B
 
- JSR TTX66
+ LDA YC                 \ If YC < 24 then we are in the top part of the screen,
+ CMP #24                \ so skip the following two instructions
+ BCC P%+8
 
- JMP RR4
+ JSR TTX66              \ We are off the bottom of the screen, so we don't want
+                        \ to print anything, so first clear the screen and draw
+                        \ a white border
 
-.L1D3B
+ JMP RR4                \ Jump to RR4 to restore the registers and return from
+                        \ the subroutine
 
- LSR A
+                        \ The text row is on-screen, so now to calculate the
+                        \ screen address we need to write to, as follows:
+                        \
+                        \   SC = &5800 + (char row * 256) + (char row * 64) + 32
+                        \
+                        \ See the deep dive on "Drawing pixels in the Electron
+                        \ version" for details
+
+ LSR A                  \ Set (A SC) = (A SC) / 4
+ ROR SC                 \            = (4 * ((char row * 64) + 32)) / 4
+ LSR A                  \            = char row * 64 + 32
  ROR SC
- LSR A
- ROR SC
- ADC YC
- ADC #&58
- STA SCH
+
+ ADC YC                 \ Set SC(1 0) = (A SC) + (YC 0) + &5800
+ ADC #&58               \             = (char row * 64 + 32)
+ STA SCH                \               + char row * 256
+                        \               + &5800
+                        \
+                        \ which is what we want, so SC(1 0) contains the address
+                        \ of the first visible pixel on the character row we
+                        \ want
 
 ENDIF
 
@@ -545,27 +561,14 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
 ELIF _ELECTRON_VERSION
 
- ASL A                  \ Multiply A by 8, and store in SC. As each character is
- ASL A                  \ 8 pixels wide, and the special screen mode Elite uses
- ASL A                  \ for the top part of the screen is 256 pixels across
- ADC SC                 \ ???
- STA SC                 \ with one bit per pixel, this value is not only the
-                        \ screen address offset of the text cursor from the left
-                        \ side of the screen, it's also the least significant
-                        \ byte of the screen address where we want to print this
-                        \ character, as each row of on-screen pixels corresponds
-                        \ to one page. To put this more explicitly, the screen
-                        \ starts at &6000, so the text rows are stored in screen
-                        \ memory like this:
-                        \
-                        \   Row 1: &6000 - &60FF    YC = 1, XC = 0 to 31
-                        \   Row 2: &6100 - &61FF    YC = 2, XC = 0 to 31
-                        \   Row 3: &6200 - &62FF    YC = 3, XC = 0 to 31
-                        \
-                        \ and so on
+ ASL A                  \ Multiply A by 8, and add to SC. As each character is
+ ASL A                  \ 8 pixels wide, this gives us the screen address of the
+ ASL A                  \ character block where we want to print this character
+ ADC SC
+ STA SC
 
  BCC P%+4               \ If the addition of the low byte overflowed, increment
- INC SCH                \ the high byte
+ INC SC+1               \ the high byte
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
@@ -613,7 +616,7 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED \ Platform
 
 ELIF _ELECTRON_VERSION
 
- DEC SCH                \ ???
+ DEC SC+1               \ Decrement the high byte of the screen address ???
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
@@ -730,7 +733,10 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Sc
 
 ELIF _ELECTRON_VERSION
 
- EQUB &2C               \ ???
+ EQUB &2C               \ Skip the next instruction by turning it into
+                        \ &2C &85 &08, or BIT &0885, which does nothing apart
+                        \ from affect the flags. We skip the instruction as we
+                        \ already set the value of SC+1 above
 
 ENDIF
 

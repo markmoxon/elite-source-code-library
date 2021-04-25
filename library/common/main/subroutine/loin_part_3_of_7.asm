@@ -94,7 +94,7 @@ ENDIF
 IF _ELECTRON_VERSION \ Screen
 
  BCC LI7                \ If the addition of the low bytes of SC overflowed,
- INC SCH                \ increment the high byte
+ INC SC+1               \ increment the high byte
 
 ENDIF
 
@@ -125,13 +125,22 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
 ELIF _ELECTRON_VERSION
 
- LDA SC                 \ ???
- SBC #&40
- STA SC
- LDA SCH
+                        \ We now need to move up into the character block above,
+                        \ and each character row in screen memory takes up &140
+                        \ bytes (&100 for the visible part and &20 for each of
+                        \ the blank borders on the side of the screen), so
+                        \ that's what we need to subtract from SC(1 0)
+
+ LDA SC                 \ Set SC(1 0) = SC(1 0) - &140
+ SBC #&40               \
+ STA SC                 \ Starting with the low bytes
+
+ LDA SC+1               \ And then subtracting the high bytes
  SBC #&01
- STA SCH
- LDY #7
+ STA SC+1
+
+ LDY #7                 \ Set the pixel line to the last line in that character
+                        \ block
 
 ENDIF
 

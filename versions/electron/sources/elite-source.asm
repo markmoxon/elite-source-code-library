@@ -358,6 +358,7 @@ INCLUDE "library/common/main/subroutine/hm.asm"
 INCLUDE "library/common/main/subroutine/clyns.asm"
 INCLUDE "library/original/main/subroutine/lyn.asm"
 INCLUDE "library/common/main/subroutine/scan.asm"
+INCLUDE "library/electron/main/subroutine/nextr.asm"
 
 \ ******************************************************************************
 \

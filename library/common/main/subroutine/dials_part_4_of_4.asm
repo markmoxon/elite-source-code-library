@@ -67,8 +67,8 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ELIF _ELECTRON_VERSION
 
- SEC                    \ ???
- JSR L293D
+ SEC                    \ Call NEXTR with the C flag set to move the screen
+ JSR NEXTR              \ address in SC(1 0) down by one character row
 
 ENDIF
 

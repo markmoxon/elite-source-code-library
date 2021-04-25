@@ -324,8 +324,9 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
 ELIF _ELECTRON_VERSION
 
- SEC                    \ ???
- JMP L293D
+ SEC                    \ Jump to NEXTR with the C flag set to move the screen
+ JMP NEXTR              \ address in SC(1 0) down by one character row,
+                        \ returning from the subroutine using a tail call
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 

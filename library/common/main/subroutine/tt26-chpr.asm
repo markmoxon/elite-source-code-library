@@ -500,7 +500,7 @@ IF _ELECTRON_VERSION \ Screen
 
  ADC YC                 \ Set SC(1 0) = (A SC) + (YC 0) + &5800
  ADC #&58               \             = (char row * 64 + 32)
- STA SCH                \               + char row * 256
+ STA SC+1               \               + char row * 256
                         \               + &5800
                         \
                         \ which is what we want, so SC(1 0) contains the address
@@ -625,7 +625,9 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED \ Platform
 
 ELIF _ELECTRON_VERSION
 
- DEC SC+1               \ Decrement the high byte of the screen address ???
+ DEC SC+1               \ Decrement the high byte of the screen address to point
+                        \ to the address of the current character, minus one
+                        \ page
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
@@ -656,7 +658,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Platform
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Platform
 
  LDY #&F8               \ Set Y = &F8, so the following call to ZES2 will count
                         \ Y upwards from &F8 to &FF
@@ -668,6 +670,20 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Platform
                         \ the cursor, which is the one we want to delete. So
                         \ this call zero-fills the character to the left of the
                         \ cursor, which erases it from the screen
+
+ELIF _ELECTRON_VERSION
+
+ LDY #&F8               \ Set Y = &F8, so the following call to ZES2 will count
+                        \ Y upwards from &F8 to &FF
+
+ JSR ZES2               \ Call ZES2, which zero-fills from address SC(1 0) + Y to
+                        \ SC(1 0) + &FF. SC(1 0) points to the address of the
+                        \ current character, minus one page, and adding &FF to
+                        \ this would point to the cursor, so adding &F8 points
+                        \ to the character before the cursor, which is the one
+                        \ we want to delete. So this call zero-fills the
+                        \ character to the left of the cursor, which erases it
+                        \ from the screen
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ Because YC starts at 0 for the first text row, this

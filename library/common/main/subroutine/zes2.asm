@@ -9,15 +9,19 @@
 \
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Comment
 \ Zero-fill from address (X SC) + Y to (X SC) + &FF.
+ELIF _ELECTRON_VERSION
+\ Zero-fill from address SC(1 0) + Y to SC(1 0) + &FF.
 ELIF _DISC_FLIGHT
 \ Zero-fill from address (X SC) to (X SC) + Y.
 ENDIF
 \
 \ Arguments:
 \
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Comment
 \   X                   The high byte (i.e. the page) of the starting point of
 \                       the zero-fill
 \
+ENDIF
 \   Y                   The offset from (X SC) where we start zeroing, counting
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Comment
 \                       up to to &FF

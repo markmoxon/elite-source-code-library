@@ -552,48 +552,46 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Electron: The dashboard in the Electron v
 
 ELIF _ELECTRON_VERSION
 
- JSR L2936              \ ???
+ JSR VL2                \ Call VL2 below to increment Y, moving to the next row
+                        \ if necessary
 
-.L2929
+.VLL2
 
- JSR L2936
+ JSR VL2                \ Call VL2 below to increment Y, moving to the next row
+                        \ if necessary
 
- LDA XX15
- EOR (SC),Y
- STA (SC),Y
- INX
- BNE L2929
+ LDA X1                 \ Set A to the character row byte for the stick, which
+                        \ we stored in X1 above, and which has the same pixel
+                        \ pattern as the bottom-right pixel of the dot (so the
+                        \ stick comes out of the right side of the dot)
 
- RTS
+ EOR (SC),Y             \ Draw the stick on row Y of the character block using
+ STA (SC),Y             \ EOR logic
 
-.L2936
+ INX                    \ Increment the (negative) stick height in X
 
- INY
- CPY #&08
- BNE RTS
-
- LDY #&00
-
-.L293D
-
-                        \ We now need to move down into the character block
-                        \ below, and each character row in screen memory takes
-                        \ up &140 bytes (&100 for the visible part and &20 for
-                        \ each of the blank borders on the side of the screen),
-                        \ so that's what we need to add to SC(1 0)
-                        \
-                        \ We also know the C flag is set, so we can add &13F
-                        \ in order to get the correct result
-
- LDA SC                 \ Set SC(1 0) = SC(1 0) + &140
- ADC #&3F               \
- STA SC                 \ Starting with the low bytes
-
- LDA SC+1               \ And then adding the high bytes
- ADC #&01
- STA SC+1
+ BNE VLL2               \ If we still have more stick to draw, jump up to VLL2
+                        \ to draw the next pixel
 
  RTS                    \ Return from the subroutine
+
+.VL2
+
+ INY                    \ We want to draw the stick itself, heading downwards,
+                        \ so increment the pixel row in Y
+
+ CPY #8                 \ If the row number in Y is less than 8, then it
+ BNE RTS                \ correctly points at the next line down, so return from
+                        \ the subroutine (as RTS contains an RTS)
+
+ LDY #0                 \ We just incremented Y down through the bottom of the
+                        \ character block, so we need to move it to the first
+                        \ row in the character below, so set Y to 0, the number
+                        \ of the first row
+
+                        \ Fall through into NEXTR to move the address in SC(1 0)
+                        \ to the next row and return from the subroutine using a
+                        \ tail call
 
 ELIF _6502SP_VERSION
 

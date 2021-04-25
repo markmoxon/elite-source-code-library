@@ -184,7 +184,9 @@ ELIF _ELECTRON_VERSION
  BCC DLL10              \ blocks to draw, so loop back to DLL10 to display the
                         \ next one along
 
- JMP L293D
+ JMP NEXTR              \ Jump to NEXTR with the C flag set to move the screen
+                        \ address in SC(1 0) down by one character row,
+                        \ returning from the subroutine using a tail call
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 

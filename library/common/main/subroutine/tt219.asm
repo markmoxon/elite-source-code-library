@@ -3,15 +3,23 @@
 \       Name: TT219
 \       Type: Subroutine
 \   Category: Market
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Show the Buy Cargo screen (red key f1)
+ELIF _ELECTRON_VERSION
+\    Summary: Show the Buy Cargo screen (FUNC-2)
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \
 \   BAY2                Jump into the main loop at FRCE, setting the key
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \                       "pressed" to red key f9 (so we show the Inventory
 \                       screen)
+ELIF _ELECTRON_VERSION
+\                       "pressed" to FUNC-0 (so we show the Inventory screen)
+ENDIF
 \
 \ ******************************************************************************
 
@@ -256,7 +264,16 @@ ENDIF
 
 .BAY2
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+
  LDA #f9                \ Jump into the main loop at FRCE, setting the key
  JMP FRCE               \ "pressed" to red key f9 (so we show the Inventory
                         \ screen)
+
+ELIF _ELECTRON_VERSION
+
+ LDA #f9                \ Jump into the main loop at FRCE, setting the key
+ JMP FRCE               \ "pressed" to FUNC-0 (so we show the Inventory screen)
+
+ENDIF
 

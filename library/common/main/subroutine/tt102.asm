@@ -43,6 +43,8 @@ ENDIF
 
 .TT102
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+
  CMP #f8                \ If red key f8 was pressed, jump to STATUS to show the
  BNE P%+5               \ Status Mode screen, returning from the subroutine
  JMP STATUS             \ using a tail call
@@ -55,9 +57,33 @@ ENDIF
  BNE P%+5               \ Short-range Chart, returning from the subroutine using
  JMP TT23               \ a tail call
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
+ELIF _ELECTRON_VERSION
+
+ CMP #f8                \ If FUNC-9 was pressed, jump to STATUS to show the
+ BNE P%+5               \ Status Mode screen, returning from the subroutine
+ JMP STATUS             \ using a tail call
+
+ CMP #f4                \ If FUNC-5 was pressed, jump to TT22 to show the
+ BNE P%+5               \ Long-range Chart, returning from the subroutine using
+ JMP TT22               \ a tail call
+
+ CMP #f5                \ If FUNC-6 was pressed, jump to TT23 to show the
+ BNE P%+5               \ Short-range Chart, returning from the subroutine using
+ JMP TT23               \ a tail call
+
+ENDIF
+
+IF _CASSETTE_VERSION \ Comment
 
  CMP #f6                \ If red key f6 was pressed, call TT111 to select the
+ BNE TT92               \ system nearest to galactic coordinates (QQ9, QQ10)
+ JSR TT111              \ (the location of the chart crosshairs) and jump to
+ JMP TT25               \ TT25 to show the Data on System screen, returning
+                        \ from the subroutine using a tail call
+
+ELIF _ELECTRON_VERSION
+
+ CMP #f6                \ If FUNC-7 was pressed, call TT111 to select the
  BNE TT92               \ system nearest to galactic coordinates (QQ9, QQ10)
  JSR TT111              \ (the location of the chart crosshairs) and jump to
  JMP TT25               \ TT25 to show the Data on System screen, returning
@@ -77,6 +103,8 @@ ENDIF
 
 .TT92
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+
  CMP #f9                \ If red key f9 was pressed, jump to TT213 to show the
  BNE P%+5               \ Inventory screen, returning from the subroutine
  JMP TT213              \ using a tail call
@@ -85,27 +113,66 @@ ENDIF
  BNE P%+5               \ Market Price screen, returning from the subroutine
  JMP TT167              \ using a tail call
 
+ELIF _ELECTRON_VERSION
+
+ CMP #f9                \ If FUNC-0 was pressed, jump to TT213 to show the
+ BNE P%+5               \ Inventory screen, returning from the subroutine
+ JMP TT213              \ using a tail call
+
+ CMP #f7                \ If FUNC-8 was pressed, jump to TT167 to show the
+ BNE P%+5               \ Market Price screen, returning from the subroutine
+ JMP TT167              \ using a tail call
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+
  CMP #f0                \ If red key f0 was pressed, jump to TT110 to launch our
  BNE fvw                \ ship (if docked), returning from the subroutine using
  JMP TT110              \ a tail call
 
+ELIF _ELECTRON_VERSION
+
+ CMP #f0                \ If FUNC-1 was pressed, jump to TT110 to launch our
+ BNE fvw                \ ship (if docked), returning from the subroutine using
+ JMP TT110              \ a tail call
+
+ENDIF
+
 .fvw
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
  BIT QQ12               \ If bit 7 of QQ12 is clear (i.e. we are not docked, but
  BPL INSP               \ in space), jump to INSP to skip the following checks
                         \ for f1-f3 and "@" (save commander file) key presses
 
+ELIF _ELECTRON_VERSION
+
+ BIT QQ12               \ If bit 7 of QQ12 is clear (i.e. we are not docked, but
+ BPL INSP               \ in space), jump to INSP to skip the following checks
+                        \ for FUNC-2 to FUNC-4 and "@" (save commander file) key
+                        \ presses
+
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Platform
 
  CMP #f3                \ If red key f3 was pressed, jump to EQSHP to show the
  BNE P%+5               \ Equip Ship screen, returning from the subroutine using
  JMP EQSHP              \ a tail call
 
  CMP #f1                \ If red key f1 was pressed, jump to TT219 to show the
+ BNE P%+5               \ Buy Cargo screen, returning from the subroutine using
+ JMP TT219              \ a tail call
+
+ELIF _ELECTRON_VERSION
+
+ CMP #f3                \ If FUNC-4 was pressed, jump to EQSHP to show the
+ BNE P%+5               \ Equip Ship screen, returning from the subroutine using
+ JMP EQSHP              \ a tail call
+
+ CMP #f1                \ If FUNC-2 was pressed, jump to TT219 to show the
  BNE P%+5               \ Buy Cargo screen, returning from the subroutine using
  JMP TT219              \ a tail call
 
@@ -151,11 +218,19 @@ IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Enhanced: See group A
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Platform
 
  CMP #f2                \ If red key f2 was pressed, jump to TT208 to show the
  BNE LABEL_3            \ Sell Cargo screen, returning from the subroutine using
  JMP TT208              \ a tail call
+
+.INSP
+
+ELIF _ELECTRON_VERSION
+
+ CMP #f2                \ If FUNC-3 was pressed, jump to TT208 to show the Sell
+ BNE LABEL_3            \ Cargo screen, returning from the subroutine using a
+ JMP TT208              \ tail call
 
 .INSP
 

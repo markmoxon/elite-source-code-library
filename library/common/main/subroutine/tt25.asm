@@ -3,7 +3,11 @@
 \       Name: TT25
 \       Type: Subroutine
 \   Category: Universe
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Show the Data on System screen (red key f6)
+ELIF _ELECTRON_VERSION
+\    Summary: Show the Data on System screen (FUNC-7)
+ENDIF
 \  Deep dive: Generating system data
 \             Galaxy and system seeds
 \

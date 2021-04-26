@@ -3,7 +3,11 @@
 \       Name: TT23
 \       Type: Subroutine
 \   Category: Charts
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Show the Short-range Chart (red key f5)
+ELIF _ELECTRON_VERSION
+\    Summary: Show the Short-range Chart (FUNC-6)
+ENDIF
 \
 \ ******************************************************************************
 

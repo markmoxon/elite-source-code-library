@@ -3,7 +3,11 @@
 \       Name: EQSHP
 \       Type: Subroutine
 \   Category: Equipment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Show the Equip Ship screen (red key f3)
+ELIF _ELECTRON_VERSION
+\    Summary: Show the Equip Ship screen (FUNC-4)
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

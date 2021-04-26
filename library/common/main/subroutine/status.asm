@@ -3,7 +3,11 @@
 \       Name: STATUS
 \       Type: Subroutine
 \   Category: Status
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Show the Status Mode screen (red key f8)
+ELIF _ELECTRON_VERSION
+\    Summary: Show the Status Mode screen (FUNC-9)
+ENDIF
 \  Deep dive: Combat rank
 \
 \ ******************************************************************************

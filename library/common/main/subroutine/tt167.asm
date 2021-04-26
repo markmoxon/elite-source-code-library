@@ -3,7 +3,11 @@
 \       Name: TT167
 \       Type: Subroutine
 \   Category: Market
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Show the Market Price screen (red key f7)
+ELIF _ELECTRON_VERSION
+\    Summary: Show the Market Price screen (FUNC-8)
+ENDIF
 \
 \ ******************************************************************************
 

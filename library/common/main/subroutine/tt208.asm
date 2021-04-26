@@ -3,7 +3,11 @@
 \       Name: TT208
 \       Type: Subroutine
 \   Category: Market
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Show the Sell Cargo screen (red key f2)
+ELIF _ELECTRON_VERSION
+\    Summary: Show the Sell Cargo screen (FUNC-3)
+ENDIF
 \
 \ ******************************************************************************
 

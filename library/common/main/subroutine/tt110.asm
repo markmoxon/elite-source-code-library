@@ -10,7 +10,11 @@
 \ Launch the ship (if we are docked), or show the front space view (if we are
 \ already in space).
 \
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ Called when red key f0 is pressed while docked (launch), after we arrive in a
+ELIF _ELECTRON_VERSION
+\ Called when FUNC-1 is pressed while docked (launch), after we arrive in a
+ENDIF
 \ new galaxy, or after a hyperspace if the current view is a space view.
 \
 \ ******************************************************************************

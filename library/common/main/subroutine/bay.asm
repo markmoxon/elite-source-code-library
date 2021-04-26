@@ -20,7 +20,17 @@
  LDA #&FF               \ Set QQ12 = &FF (the docked flag) to indicate that we
  STA QQ12               \ are docked
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+
  LDA #f8                \ Jump into the main loop at FRCE, setting the key
  JMP FRCE               \ that's "pressed" to red key f8 (so we show the Status
                         \ Mode screen)
+
+ELIF _ELECTRON_VERSION
+
+ LDA #f8                \ Jump into the main loop at FRCE, setting the key
+ JMP FRCE               \ that's "pressed" to FUNC-9 (so we show the Status
+                        \ Mode screen)
+
+ENDIF
 

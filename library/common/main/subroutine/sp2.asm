@@ -66,11 +66,17 @@ ENDIF
                         \
                         \   COMY = 204 - X - (1 - 0) = 203 - X
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ 6502SP: The compass on the cassette, disc and Master version uses yellow when the target is in front of us, while the 6502SP version uses white
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ 6502SP: The compass on the cassette, disc and Master version uses yellow when the target is in front of us, while the 6502SP version uses white (and so does the Electron version, but only because it's monochrome)
 
  LDA #&F0               \ Set A to a 4-pixel mode 5 byte row in colour 2
                         \ (yellow/white), the colour for when the planet or
                         \ station in the compass is in front of us
+
+ELIF _ELECTRON_VERSION
+
+ LDA #&F0               \ Set A to &F0, the value we pass to DOT for drawing a
+                        \ two-pixel high dot, for when the planet or station
+                        \ in the compass is in front of us
 
 ELIF _6502SP_VERSION
 
@@ -109,7 +115,15 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+
  STA COMC               \ Store the compass colour in COMC
+
+ELIF _ELECTRON_VERSION
+
+ STA COMC               \ Store the compass shape in COMC
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Platform
 

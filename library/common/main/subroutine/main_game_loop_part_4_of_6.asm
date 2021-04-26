@@ -3,7 +3,12 @@
 \       Name: Main game loop (Part 4 of 6)
 \       Type: Subroutine
 \   Category: Main loop
-\    Summary: Potentially spawn lone bounty hunter, Thargoid, or up to 4 pirates
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+\    Summary: Potentially spawn a lone bounty hunter, a Thargoid, or up to four
+\             pirates
+ELIF _ELECTRON_VERSION
+\    Summary: Potentially spawn a lone bounty hunter or up to four pirates
+ENDIF
 \  Deep dive: Program flow of the main game loop
 \             Ship data blocks
 \
@@ -152,8 +157,13 @@ IF _6502SP_VERSION \ Label
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
                         \ Now to spawn a lone bounty hunter, a Thargoid or a
                         \ group of pirates
+ELIF _ELECTRON_VERSION
+                        \ Now to spawn a lone bounty hunter or a group of
+                        \ pirates
+ENDIF
 
  JSR Ze                 \ Call Ze to initialise INWK to a potentially hostile
                         \ ship, and set A and X to random values

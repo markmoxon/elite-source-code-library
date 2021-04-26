@@ -3,7 +3,11 @@
 \       Name: TACTICS (Part 2 of 7)
 \       Type: Subroutine
 \   Category: Tactics
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Apply tactics: Escape pod, station, lone Thargon, safe-zone pirate
+ELIF _ELECTRON_VERSION
+\    Summary: Apply tactics: Escape pod, station, safe-zone pirate
+ENDIF
 \  Deep dive: Program flow of the tactics routine
 \
 \ ------------------------------------------------------------------------------
@@ -14,7 +18,7 @@
 \
 \   * If this is a missile, jump up to the missile code in part 1
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
+IF _CASSETTE_VERSION \ Comment
 \   * If this is an escape pod, point it at the planet and jump to the
 \     manoeuvring code in part 7
 \
@@ -23,6 +27,16 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 \
 \   * If this is a lone Thargon without a mothership, set it adrift aimlessly
 \     and we're done
+\
+\   * If this is a pirate and we are within the space station safe zone, stop
+\     the pirate from attacking by removing all its aggression
+\
+ELIF _ELECTRON_VERSION
+\   * If this is an escape pod, point it at the planet and jump to the
+\     manoeuvring code in part 7
+\
+\   * If this is the space station and it is hostile, consider spawning a cop
+\     (45% chance, up to a maximum of four) and we're done
 \
 \   * If this is a pirate and we are within the space station safe zone, stop
 \     the pirate from attacking by removing all its aggression

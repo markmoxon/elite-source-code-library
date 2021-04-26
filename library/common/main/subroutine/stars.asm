@@ -13,7 +13,7 @@
 
 .STARS
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Screen
+IF _CASSETTE_VERSION \ Screen
 
 \LDA #&FF               \ These instructions are commented out in the original
 \STA COL                \ source, but they would set the stardust colour to

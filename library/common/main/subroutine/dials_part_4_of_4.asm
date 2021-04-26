@@ -97,12 +97,23 @@ ENDIF
  JSR DILX               \ 0-255, and increment SC to point to the next indicator
                         \ (the altitude)
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+
  LDA #240               \ Set T1 to 240, the threshold at which we change the
  STA T1                 \ altitude indicator's colour. As the altitude has a
                         \ range of 0-255, pixel 16 will not be filled in, and
                         \ 240 would change the colour when moving between pixels
                         \ 15 and 16, so this effectively switches off the colour
                         \ change for the altitude indicator
+
+ELIF _ELECTRON_VERSION
+
+ LDA #240               \ Set T1 to 240, which would set the threshold at which
+ STA T1                 \ we change the altitude indicator's colour in the other
+                        \ versions, but it has no effect here, as the Electron
+                        \ version doesn't support indicator colour changes
+
+ENDIF
 
 IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
@@ -111,11 +122,21 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Minor
 
  STA K+1                \ Set K+1 (the colour we should show for low values) to
                         \ 240, or &F0 (dashboard colour 2, yellow/white), so the
                         \ altitude indicator always shows in this colour
+
+ LDA ALTIT              \ Draw the altitude indicator using a range of 0-255
+ JSR DILX
+
+ELIF _ELECTRON_VERSION
+
+ STA K+1                \ This sets K+1 to 240, which would set the colour to
+                        \ show for low values in the other versions, but it has
+                        \ no effect here, as the Electron version doesn't
+                        \ support indicator colour changes
 
  LDA ALTIT              \ Draw the altitude indicator using a range of 0-255
  JSR DILX

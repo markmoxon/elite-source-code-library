@@ -25,12 +25,21 @@
  CMP #SST               \ If this is the space station, jump to AN2 to make the
  BEQ AN2                \ space station hostile
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Group A: In the enhanced versions, attacking an innocent bystander (i.e. a ship that has bit 5 of the NEWB flags set) will annoy the space station
+IF _CASSETTE_VERSION \ Enhanced: Group A: In the enhanced versions, attacking an innocent bystander (i.e. a ship that has bit 5 of the NEWB flags set) will annoy the space station
 
  BCS HI1                \ If A >= #SST then this is a missile, asteroid, cargo
                         \ canister, Thargon or escape pod, and they can't get
                         \ hostile, so return from the subroutine (as HI1
                         \ contains an RTS)
+
+ CMP #CYL               \ If this is not a Cobra Mk III trader, skip the
+ BNE P%+5               \ following instruction
+
+ELIF _ELECTRON_VERSION
+
+ BCS HI1                \ If A >= #SST then this is a missile, asteroid, cargo
+                        \ canister or escape pod, and they can't get hostile,
+                        \ so return from the subroutine (as HI1 contains an RTS)
 
  CMP #CYL               \ If this is not a Cobra Mk III trader, skip the
  BNE P%+5               \ following instruction

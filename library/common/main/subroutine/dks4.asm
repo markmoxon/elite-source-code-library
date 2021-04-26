@@ -14,12 +14,14 @@ ENDIF
 \
 \ Arguments:
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \   X                   The internal number of the key to check (see p.142 of
 \                       the Advanced User Guide for a list of internal key
 \                       numbers)
 ELIF _ELECTRON_VERSION
-\   X                   The internal number of the key to check
+\   X                   The internal number of the key to check (see p.40 of the
+\                       Electron Advanced User Guide for a list of internal key
+\                       numbers)
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 \   A                   The internal number of the key to check (see p.142 of
 \                       the Advanced User Guide for a list of internal key

@@ -4,12 +4,12 @@
 \       Type: Workspace
 \    Address: &0D00 to &0D0F
 \   Category: Workspaces
-\    Summary: Vector addresses, compass colour and configuration settings
+\    Summary: Vector addresses, compass shape and configuration settings
 \
 \ ------------------------------------------------------------------------------
 \
 \ Contains addresses that are used by the loader to set up vectors, the current
-\ compass colour, and the game's configuration settings.
+\ compass shape, and the game's configuration settings.
 \
 \ ******************************************************************************
 

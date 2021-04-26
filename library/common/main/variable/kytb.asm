@@ -8,10 +8,14 @@
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Comment
 \ Keyboard table for in-flight controls. This table contains the internal key
 \ codes for the flight keys (see p.142 of the Advanced User Guide for a list of
 \ internal key numbers).
+ELIF _ELECTRON_VERSION
+\ Keyboard table for in-flight controls. This table contains the internal key
+\ codes for the flight keys (see p.40 of the Electron Advanced User Guide for a
+\ list of internal key numbers).
 ELIF _MASTER_VERSION
 \ Keyboard table for in-flight controls. This table contains the internal key
 \ codes for the flight keys, EOR'd with &FF to invert each bit.

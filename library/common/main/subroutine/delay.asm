@@ -37,9 +37,9 @@ IF _CASSETTE_VERSION \ Comment
 ELIF _ELECTRON_VERSION
 \ Other entry points:
 \
-\   DEL8                Wait for 1 delay loop's worth of time
+\   DEL8                Wait for 30 delay loops' worth of time
 \
-\   DELAY-5             Wait for 30 delay loops' worth of time
+\   DELAY-5             Wait for 1 delay loop's worth of time
 \
 ENDIF
 \ ******************************************************************************

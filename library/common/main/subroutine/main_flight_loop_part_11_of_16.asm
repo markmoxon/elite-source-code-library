@@ -84,8 +84,8 @@ ELIF _ELECTRON_VERSION
  LDX XSAV               \ Call ABORT2 to store the details of this missile
  LDY #&11               \ lock, with the targeted ship's slot number in X
  JSR ABORT2             \ (which we stored in XSAV at the start of this ship's
-                        \ loop at MAL1), and set the colour of the missile
-                        \ indicator to the colour in Y (black "T" in white
+                        \ loop at MAL1), and set the shape of the missile
+                        \ indicator to the value in Y (black "T" in white
                         \ square = &11)
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -174,7 +174,7 @@ ENDIF
  SBC LAS                \ than zero, the other ship has survived the hit, so
  BCS MA14               \ jump down to MA14
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Destroying an asteroid with mining lasers in the enhanced versions will randomly release scoopable splinters, and destroying ships will randomly release not only cargo canisters (as in the cassette version) but also alloy plates
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
  LDA TYPE               \ Did we just hit the space station? If so, jump to
  CMP #SST               \ MA14+2 to make the station hostile, skipping the
@@ -184,9 +184,23 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Destroying an asteroid wit
  ORA #%10000000         \ that it has been killed
  STA INWK+31
 
+ENDIF
+
+IF _CASSETTE_VERSION \ Comment
+
  BCS MA8                \ If the enemy ship type is >= SST (i.e. missile,
                         \ asteroid, canister, Thargon or escape pod) then
                         \ jump down to MA8
+
+ELIF _ELECTRON_VERSION
+
+ BCS MA8                \ If the enemy ship type is >= SST (i.e. missile,
+                        \ asteroid, canister or escape pod) then jump down
+                        \ to MA8
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Destroying an asteroid with mining lasers in the enhanced versions will randomly release scoopable splinters, and destroying ships will randomly release not only cargo canisters (as in the cassette version) but also alloy plates
 
  JSR DORND              \ Fetch a random number, and jump to oh if it is
  BPL oh                 \ positive (50% chance)

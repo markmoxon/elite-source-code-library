@@ -32,8 +32,6 @@ ENDIF
 \
 IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \   COL                 The colour of the dash as a mode 5 character row byte
-ELIF _ELECTRON_VERSION
-\   COL                 The dash as a mode 4 character row byte
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 \   COL                 The colour of the dash as a mode 2 character row byte
 ENDIF
@@ -337,9 +335,18 @@ IF _MASTER_VERSION \ Platform
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+
  EOR (SC),Y             \ Draw the dash's right pixel according to the mask in
  STA (SC),Y             \ A, with the colour in COL, using EOR logic, just as
                         \ above
+
+ELIF _ELECTRON_VERSION
+
+ EOR (SC),Y             \ Draw the dash's right pixel according to the mask in
+ STA (SC),Y             \ A, using EOR logic, just as above
+
+ENDIF
 
  RTS                    \ Return from the subroutine
 

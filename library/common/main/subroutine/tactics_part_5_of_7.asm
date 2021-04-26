@@ -14,8 +14,12 @@
 \
 \   * If an E.C.M. is firing, skip to the next part
 \
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \   * Randomly decide whether to fire a missile (or, in the case of Thargoids,
 \     release a Thargon), and if we do, we're done
+ELIF _ELECTRON_VERSION
+\   * Randomly decide whether to fire a missile, and if we do, we're done
+ENDIF
 \
 \ ******************************************************************************
 

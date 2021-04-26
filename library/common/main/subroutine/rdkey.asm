@@ -12,10 +12,14 @@ ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \ Scan the keyboard, starting with internal key number 16 ("Q") and working
 \ through the set of internal key numbers (see p.142 of the Advanced User Guide
 \ for a list of internal key numbers).
+ELIF _ELECTRON_VERSION
+\ Scan the keyboard, starting with internal key number 16 ("Q") and working
+\ through the set of internal key numbers (see p.40 of the Electron Advanced
+\ User Guide for a list of internal key numbers).
 ELIF _MASTER_VERSION
 \ Scan the keyboard, starting with internal key number 16 ("Q") and working
 \ through the set of internal key numbers, returning the resulting key press in

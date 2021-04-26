@@ -4,7 +4,7 @@
 \       Type: Workspace
 \    Address: &0D1C to &0D24
 \   Category: Workspaces
-\    Summary: Compass colour and configuration settings
+\    Summary: Compass shape and configuration settings
 \
 \ ******************************************************************************
 

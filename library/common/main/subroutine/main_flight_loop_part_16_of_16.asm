@@ -33,11 +33,19 @@
                         \ and the next pulse can start (if the fire button is
                         \ still being pressed)
                         \
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
                         \ For pulse lasers, LASCT gets set to 10 in ma1 above,
                         \ and it decrements every vertical sync (50 times a
                         \ second), so this means it pulses five times a second,
                         \ with the laser being on for the first 3/10 of each
                         \ pulse and off for the rest of the pulse
+ELIF _ELECTRON_VERSION
+                        \ For pulse lasers, LASCT gets set to 10 in ma1 above,
+                        \ and it decrements by 4 on every iteration of the main
+                        \ game loop, so this means it pulses every fourth
+                        \ iteration, with the laser being off for the first
+                        \ three iterations, and on for the fourth iteration
+ENDIF
                         \
                         \ If this is a beam laser, LASCT is 0 so we always keep
                         \ going here. This means the laser doesn't pulse, but it

@@ -44,7 +44,7 @@ ELIF _ELECTRON_VERSION
  BEQ slvy2              \ This is an escape pod, so jump to slvy2 with A set to
                         \ 3, so we scoop up the escape pod as slaves
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  CPX #OIL               \ If this is a cargo canister, jump to oily to randomly
  BEQ oily               \ decide the canister's contents
@@ -82,6 +82,7 @@ ENDIF
 
                         \ By the time we get here, we are scooping, and A
                         \ contains the type of item we are scooping (a random
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
                         \ number 0-7 if we are scooping a cargo canister, 3 if
                         \ we are scooping an escape pod, or 16 if we are
                         \ scooping a Thargon). These numbers correspond to the
@@ -89,6 +90,14 @@ ENDIF
                         \ cargo canister can contain anything from food to
                         \ computers, while escape pods contain slaves, and
                         \ Thargons become alien items when scooped
+ELIF _ELECTRON_VERSION
+                        \ number 0-7 if we are scooping a cargo canister, or 3
+                        \ if we are scooping an escape pod). These numbers
+                        \ correspond to the relevant market items (see QQ23
+                        \ for a list), so a cargo canister can contain
+                        \ anything from food to computers, while escape pods
+                        \ contain slaves
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
@@ -97,7 +106,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
  JSR tnpr               \ the hold for the scooped item (A is preserved by this
                         \ call, and the C flag contains the result)
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  JSR tnpr1              \ Call tnpr1 with the scooped cargo type stored in A
                         \ to work out whether we have room in the hold for one
@@ -131,7 +140,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: In the enhanced version th
                         \ kill flag on the canister, as it no longer exists in
                         \ the local bubble
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  ASL NEWB               \ The item has now been scooped, so set bit 7 of its
  SEC                    \ NEWB flags to indicate this

@@ -50,7 +50,7 @@ ENDIF
 
 .GTNME
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
+IF _CASSETTE_VERSION \ Platform
 
  LDA #1                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 1
@@ -59,6 +59,16 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
  JSR TT27
 
  JSR DEL8               \ Wait for 8/50 of a second (0.16 seconds)
+
+ELIF _ELECTRON_VERSION
+
+ LDA #1                 \ Clear the top part of the screen, draw a white border,
+ JSR TT66               \ and set the current view type in QQ11 to 1
+
+ LDA #123               \ Print recursive token 123 ("{crlf}COMMANDER'S NAME? ")
+ JSR TT27
+
+ JSR DEL8               \ Call DEL8 to wait for 30 delay loops
 
 ENDIF
 

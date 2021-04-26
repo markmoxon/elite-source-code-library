@@ -25,8 +25,6 @@ ENDIF
 \
 IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \   COL                 The colour of the dot as a mode 5 character row byte
-ELIF _ELECTRON_VERSION
-\   COL                 The dash as a mode 4 character row byte
 ELIF _6502SP_VERSION
 \   COL                 The colour of the dot as a mode 2 character row byte
 ENDIF

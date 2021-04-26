@@ -75,7 +75,7 @@ ELIF _ELECTRON_VERSION
  LDA COMX               \ Set X1 = COMX, the x-coordinate of the dot
  STA X1
 
- LDA COMC               \ Set A = COMC, the pixel byte for the dot
+ LDA COMC               \ Set A = COMC, the thickness of the dot
 
 ELIF _MASTER_VERSION
 
@@ -103,9 +103,18 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Screen
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Screen
 
  CMP #&F0               \ If COL is &F0 then the dot is in front of us and we
+ BNE CPIX2              \ want to draw a double-height dot, so if it isn't &F0
+                        \ jump to CPIX2 to draw a single-height dot
+
+                        \ Otherwise fall through into CPIX4 to draw a double-
+                        \ height dot
+
+ELIF _ELECTRON_VERSION
+
+ CMP #&F0               \ If COMC is &F0 then the dot is in front of us and we
  BNE CPIX2              \ want to draw a double-height dot, so if it isn't &F0
                         \ jump to CPIX2 to draw a single-height dot
 

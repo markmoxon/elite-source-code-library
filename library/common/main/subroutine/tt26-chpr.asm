@@ -284,7 +284,7 @@ ENDIF
                         \ definition for the character we want to draw on the
                         \ screen (i.e. we need the pixel shape of this
                         \ character). The MOS ROM contains bitmap definitions
-                        \ of the BBC's ASCII characters, starting from &C000
+                        \ of the system's ASCII characters, starting from &C000
                         \ for space (ASCII 32) and ending with the £ symbol
                         \ (ASCII 126)
 IF _6502SP_VERSION \ Comment

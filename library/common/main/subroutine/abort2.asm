@@ -14,17 +14,31 @@
 \   X                   The slot number of the ship to lock our missile onto, or
 \                       &FF to remove missile lock
 \
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \   Y                   The new colour of the missile indicator:
 \
 \                         * &00 = black (no missile)
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
 \                         * &0E = red (armed and locked)
 \
 \                         * &E0 = yellow/white (armed)
 \
 \                         * &EE = green/cyan (disarmed)
+ELIF _ELECTRON_VERSION
+\   Y                   The new shape of the missile indicator:
+\
+\                         * &04 = black (no missile)
+\
+\                         * &11 = black "T" in white square (armed and locked)
+\
+\                         * &0D = black box in white square (armed)
+\
+\                         * &09 = white square (disarmed)
 ELIF _6502SP_VERSION
+\   Y                   The new colour of the missile indicator:
+\
+\                         * &00 = black (no missile)
+\
 \                         * #RED2 = red (armed and locked)
 \
 \                         * #YELLOW2 = yellow/white (armed)

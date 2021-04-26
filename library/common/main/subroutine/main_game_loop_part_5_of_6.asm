@@ -112,7 +112,7 @@ IF _6502SP_VERSION \ 6502SP: The 6502SP version supports a printer (holding CTRL
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
+IF _CASSETTE_VERSION \ Minor
 
  LDA QQ11               \ If this is a space view, skip the following four
  BEQ P%+11              \ instructions (i.e. jump to JSR TT17 below)
@@ -123,6 +123,18 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
  JSR DELAY-5            \ Delay for 8 vertical syncs (8/50 = 0.16 seconds), to
                         \ slow the main loop down a bit
+
+ELIF _ELECTRON_VERSION
+
+ LDA QQ11               \ If this is a space view, skip the following four
+ BEQ P%+11              \ instructions (i.e. jump to JSR TT17 below)
+
+ AND PATG               \ If PATG = &FF (author names are shown on start-up)
+ LSR A                  \ and bit 0 of QQ11 is 1 (the current view is type 1),
+ BCS P%+5               \ then skip the following instruction
+
+ JSR DELAY-5            \ Delay for 1 delay loop, to slow the main loop down a
+                        \ bit
 
 ELIF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
 

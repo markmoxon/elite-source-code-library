@@ -4,7 +4,7 @@
 \       Type: Variable
 \   Category: Drawing pixels
 \    Summary: Ready-made double-pixel character row bytes for mode 4
-\  Deep dive: Drawing colour pixels in mode 4
+\  Deep dive: Drawing monochrome pixels in mode 4
 \
 \ ------------------------------------------------------------------------------
 \

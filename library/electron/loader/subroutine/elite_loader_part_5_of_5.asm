@@ -42,9 +42,10 @@
  LDY #&FF               \ service call that asks the current user of the NMI
  JSR OSBYTE             \ space to clear it out
 
- LDA #&40               \ Set S%+0 to &40, though this gets overwritten in the
- STA S%                 \ following copy process, so I'm not entirely sure what
-                        \ this does
+ LDA #&40               \ Set S% to an RTI instruction (opcode &40), so we can
+ STA S%                 \ claim the NMI workspace at &0D00 (the RTI makes sure
+                        \ we return from any spurious NMIs that still call this
+                        \ workspace)
 
  LDX #&4A               \ Set X = &4A, as we want to copy the &4A pages of main
                         \ game code from where we just loaded it at &2000, down

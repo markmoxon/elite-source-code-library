@@ -2,7 +2,11 @@
 \
 \       Name: T%
 \       Type: Workspace
+IF _CASSETTE_VERSION \ Comment
 \    Address: &0300 to &035F
+ELIF _ELECTRON_VERSION
+\    Address: &0300 to &036C
+ENDIF
 \   Category: Workspaces
 \    Summary: Current commander data and stardust data blocks
 \

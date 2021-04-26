@@ -272,7 +272,7 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Com
 
 ELIF _ELECTRON_VERSION
 
- LDA #f9                \ Jump into the main loop at FRCE, setting the key
+ LDA #func0             \ Jump into the main loop at FRCE, setting the key
  JMP FRCE               \ "pressed" to FUNC-0 (so we show the Inventory screen)
 
 ENDIF

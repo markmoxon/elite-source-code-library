@@ -28,7 +28,7 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Com
 
 ELIF _ELECTRON_VERSION
 
- LDA #f8                \ Jump into the main loop at FRCE, setting the key
+ LDA #func9             \ Jump into the main loop at FRCE, setting the key
  JMP FRCE               \ that's "pressed" to FUNC-9 (so we show the Status
                         \ Mode screen)
 

@@ -82,16 +82,16 @@ VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
 X = 128                 \ The centre x-coordinate of the 256 x 192 space view
 Y = 96                  \ The centre y-coordinate of the 256 x 192 space view
 
-f0 = &B0                \ Internal key number for FUNC-1 (Launch, Front)
-f1 = &B1                \ Internal key number for FUNC-2 (Buy Cargo, Rear)
-f2 = &91                \ Internal key number for FUNC-3 (Sell Cargo, Left)
-f3 = &92                \ Internal key number for FUNC-4 (Equip Ship, Right)
-f4 = &93                \ Internal key number for FUNC-5 (Long-range Chart)
-f5 = &B4                \ Internal key number for FUNC-6 (Short-range Chart)
-f6 = &A4                \ Internal key number for FUNC-7 (Data on System)
-f7 = &95                \ Internal key number for FUNC-8 (Market Price)
-f8 = &A6                \ Internal key number for FUNC-9 (Status Mode)
-f9 = &A7                \ Internal key number for FUNC-0 (Inventory)
+func1 = &B0             \ Internal key number for FUNC-1 (Launch, Front)
+func2 = &B1             \ Internal key number for FUNC-2 (Buy Cargo, Rear)
+func3 = &91             \ Internal key number for FUNC-3 (Sell Cargo, Left)
+func4 = &92             \ Internal key number for FUNC-4 (Equip Ship, Right)
+func5 = &93             \ Internal key number for FUNC-5 (Long-range Chart)
+func6 = &B4             \ Internal key number for FUNC-6 (Short-range Chart)
+func7 = &A4             \ Internal key number for FUNC-7 (Data on System)
+func8 = &95             \ Internal key number for FUNC-8 (Market Price)
+func9 = &A6             \ Internal key number for FUNC-9 (Status Mode)
+func0 = &A7             \ Internal key number for FUNC-0 (Inventory)
 
 INCLUDE "library/common/main/workspace/zp.asm"
 INCLUDE "library/common/main/workspace/xx3.asm"

@@ -9,7 +9,7 @@
 \
 \ Arguments:
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \   A                   The y-coordinate of the bulb as a low-byte screen
 \                       address offset within screen page &7D (as both bulbs
 \                       are on this character row in the dashboard)

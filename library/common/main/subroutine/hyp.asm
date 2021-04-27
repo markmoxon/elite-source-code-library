@@ -93,8 +93,8 @@ ELIF _ELECTRON_VERSION
 
  LDX #1                 \ Set X to the internal key number for CTRL
 
- JSR DKS4               \ Scan the keyboard to see if the key in X (i.e. CTRL) is
-                        \ currently pressed
+ JSR DKS4               \ Scan the keyboard to see if the key in X (i.e. CTRL)
+                        \ is currently pressed
 
 ENDIF
 

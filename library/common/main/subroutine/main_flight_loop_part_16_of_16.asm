@@ -90,7 +90,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Ele
 ELIF _ELECTRON_VERSION
 
  DEC ECMA               \ Decrement the E.C.M. countdown timer twice, and if it
- DEC ECMA               \ has reached zero, keep going, otherwise skip to MA66               
+ DEC ECMA               \ has reached zero, keep going, otherwise skip to MA66
  BNE MA66
 
 ENDIF

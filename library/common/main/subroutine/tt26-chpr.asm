@@ -676,8 +676,8 @@ ELIF _ELECTRON_VERSION
  LDY #&F8               \ Set Y = &F8, so the following call to ZES2 will count
                         \ Y upwards from &F8 to &FF
 
- JSR ZES2               \ Call ZES2, which zero-fills from address SC(1 0) + Y to
-                        \ SC(1 0) + &FF. SC(1 0) points to the address of the
+ JSR ZES2               \ Call ZES2, which zero-fills from address SC(1 0) + Y
+                        \ to SC(1 0) + &FF. SC(1 0) points to the address of the
                         \ current character, minus one page, and adding &FF to
                         \ this would point to the cursor, so adding &F8 points
                         \ to the character before the cursor, which is the one

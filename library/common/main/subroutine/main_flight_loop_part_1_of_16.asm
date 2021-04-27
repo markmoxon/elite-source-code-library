@@ -63,8 +63,8 @@ IF _ELECTRON_VERSION \ Electron: Because the Electron only has two sound channel
 
  DEX                    \ Decrement the sound channel
 
- BPL SFXL               \ Loop back to process the next sound channel until we have
-                        \ done both
+ BPL SFXL               \ Loop back to process the next sound channel until we
+                        \ have done both
 
 ENDIF
 

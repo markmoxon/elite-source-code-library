@@ -182,8 +182,8 @@ IF _CASSETTE_VERSION \ Standard: In the cassette version there is a 45% chance t
 
 ELIF _ELECTRON_VERSION
 
- CMP #140               \ If A < 140 (55% chance) then return from the subroutine
- BCC TA1                \ (as TA1 contains an RTS)
+ CMP #140               \ If A < 140 (55% chance) then return from the
+ BCC TA1                \ subroutine (as TA1 contains an RTS)
 
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 

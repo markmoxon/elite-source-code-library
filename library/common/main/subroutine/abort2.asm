@@ -34,7 +34,7 @@ ELIF _ELECTRON_VERSION
 \                         * &0D = black box in white square (armed)
 \
 \                         * &09 = white square (disarmed)
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 \   Y                   The new colour of the missile indicator:
 \
 \                         * &00 = black (no missile)

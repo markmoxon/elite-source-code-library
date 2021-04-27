@@ -3,10 +3,15 @@
 \       Name: TT17
 \       Type: Subroutine
 \   Category: Keyboard
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Scan the keyboard for cursor key or joystick movement
+ELIF _ELECTRON_VERSION
+\    Summary: Scan the keyboard for cursor key movement
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ Scan the keyboard and joystick for cursor key or stick movement, and return
 \ the result as deltas (changes) in x- and y-coordinates as follows:
 \
@@ -27,6 +32,22 @@
 \   Y                   Change in the y-coordinate according to the cursor keys
 \                       being pressed or joystick movement, as an integer (see
 \                       above)
+ELIF _ELECTRON_VERSION
+\ Scan the keyboard for cursor key movement, and return the result as deltas
+\ (changes) in x- and y-coordinates as follows:
+\
+\   * X and Y are integers between -1 and +1 depending on which keys are pressed
+\
+\ Returns:
+\
+\   A                   The key pressed, if the arrow keys were used
+\
+\   X                   Change in the x-coordinate according to the cursor keys
+\                       being pressed, as an integer (see above)
+\
+\   Y                   Change in the y-coordinate according to the cursor keys
+\                       being pressed, as an integer (see above)
+ENDIF
 \
 \ ******************************************************************************
 
@@ -48,9 +69,19 @@ IF _MASTER_VERSION \ Master: The Master version doesn't check for SHIFT being he
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+
  JSR DOKEY              \ Scan the keyboard for flight controls and pause keys,
                         \ (or the equivalent on joystick) and update the key
                         \ logger, setting KL to the key pressed
+
+ELIF _ELECTRON_VERSION
+
+ JSR DOKEY              \ Scan the keyboard for flight controls and pause keys,
+                        \ and update the key logger, setting KL to the key
+                        \ pressed
+
+ENDIF
 
 IF _6502SP_VERSION \ Enhanced: Group A: In the enhanced versions, the cursor moves more quickly in the chart views if you hold down SHIFT
 
@@ -62,15 +93,19 @@ IF _6502SP_VERSION \ Enhanced: Group A: In the enhanced versions, the cursor mov
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: Despite never reading the joystick values from the ADC channels, the Electron version still lets the joystick control the crosshairs on the chart views, if joysticks are configured. The result is an uncontrollable crosshair that moves of its own accord, so presumably this is a bug
 
- LDA JSTK               \ If the joystick was not used, jump down to TJ1,
+ LDA JSTK               \ If the joystick is not configured, jump down to TJ1,
  BEQ TJ1                \ otherwise we move the cursor with the joystick
 
 ELIF _ELECTRON_VERSION
 
- LDX JSTK               \ If the joystick was not used, jump down to TJ1,
- BEQ TJ1                \ otherwise we move the cursor with the joystick
+ LDX JSTK               \ If the joystick is not configured, jump down to TJ1,
+ BEQ TJ1                \ otherwise keep going... though as the DOKEY routine
+                        \ doesn't read the ADC channels in the Electron version,
+                        \ this doesn't actually work, but instead moves the
+                        \ crosshairs in an uncontrollable way, so this is
+                        \ presumably a bug
 
 ENDIF
 

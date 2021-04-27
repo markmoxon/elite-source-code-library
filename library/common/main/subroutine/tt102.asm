@@ -10,8 +10,13 @@
 \ Process function key presses, plus "@" (save commander), "H" (hyperspace),
 \ "D" (show distance to system) and "O" (move chart cursor back to current
 \ system). We can also pass cursor position deltas in X and Y to indicate that
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ the cursor keys or joystick have been used (i.e. the values that are returned
 \ by routine TT17).
+ELIF _ELECTRON_VERSION
+\ the cursor keys have been used (i.e. the values that are returned by routine
+\ TT17).
+ENDIF
 \
 \ Arguments:
 \

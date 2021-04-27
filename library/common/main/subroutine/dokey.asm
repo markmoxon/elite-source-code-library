@@ -11,7 +11,7 @@ ELIF _DISC_DOCKED
 \    Summary: Scan for the joystick
 ENDIF
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ Scan for the seven primary flight controls (or the equivalent on joystick),
@@ -28,6 +28,19 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR 
 \
 \ Both options end up at DK4 to scan for other keys, beyond the seven primary
 \ flight controls.
+\
+ELIF _ELECTRON_VERSION
+\ ------------------------------------------------------------------------------
+\
+\ Scan for the seven primary flight controls, pause and configuration keys, and
+\ secondary flight controls, and update the key logger and pitch and roll rates
+\ accordingly.
+\
+\ Unlike the other versions of Elite, the Electron version doesn't actually read
+\ the joystick values from the ADC channels, so although you can configure
+\ joysticks using the "K" option when paused, they won't have any effect. All
+\ the other joystick code is present, though, so perhaps the intention was to
+\ support joysticks at some point?
 \
 ENDIF
 IF _6502SP_VERSION OR _DISC_FLIGHT \ Comment
@@ -55,7 +68,7 @@ IF _6502SP_VERSION \ Tube
 
 ENDIF
 
-IF _DISC_DOCKED \ Electron: The Electron version doesn't support a joystick
+IF _DISC_DOCKED \ Electron: The Electron version doesn't read joystick values from the ADC channel in the main DOKEY routine, so although you can switch to a joystick using the "K" configuration option, it doesn't mean you can use it to fly your ship
 
  LDA JSTK               \ If JSTK is zero, then we are configured to use the
  BEQ DK9                \ keyboard rather than the joystick, so jump to DK9 to

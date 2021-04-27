@@ -14,4 +14,10 @@ ENDIF
                         \
                         \ Toggled by pressing "Y" when paused, see the DKS3
                         \ routine for details
+IF _ELECTRON_VERSION \ Comment
+                        \
+                        \ Although this option is still configurable in the
+                        \ Electron version, joystick values are never actually
+                        \ read, so this option has no effect
+ENDIF
 

@@ -158,7 +158,17 @@ ELIF _DISC_DOCKED
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+
  JSR TT17               \ Scan the keyboard for the cursor keys or joystick,
                         \ returning the cursor's delta values in X and Y and
                         \ the key pressed in A
+
+ELIF _ELECTRON_VERSION
+
+ JSR TT17               \ Scan the keyboard for the cursor keys, returning the
+                        \ cursor's delta values in X and Y and the key pressed
+                        \ in A
+
+ENDIF
 

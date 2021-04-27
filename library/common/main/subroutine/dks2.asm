@@ -7,6 +7,13 @@
 \
 \ ------------------------------------------------------------------------------
 \
+IF _ELECTRON_VERSION
+\ This routine is never called in the Electron version, as the Electron doesn't
+\ have ADC channels as standard and doesn't support joysticks (though a lot of
+\ the joystick code from the other versions is still present, it just isn't
+\ called).
+\
+ENDIF
 \ Return the value of ADC channel in X (used to read the joystick). The value
 \ will be inverted if the game has been configured to reverse both joystick
 \ channels (which can be done by pausing the game and pressing J).

@@ -15,8 +15,13 @@
 \
 \   * Calculate the alpha and beta angles from the current pitch and roll
 \
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ Here we take the current rate of pitch and roll, as set by the joystick or
 \ keyboard, and convert them into alpha and beta angles that we can use in the
+ELIF _ELECTRON_VERSION
+\ Here we take the current rate of pitch and roll, as set by the keyboard,
+\ and convert them into alpha and beta angles that we can use in the
+ENDIF
 \ matrix functions to rotate space around our ship. The alpha angle covers
 \ roll, while the beta angle covers pitch (there is no yaw in this version of
 \ Elite). The angles are in radians, which allows us to use the small angle

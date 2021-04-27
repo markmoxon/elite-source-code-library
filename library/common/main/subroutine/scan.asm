@@ -364,12 +364,20 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Master: See group A
  PHP                    \ Store the flags (specifically the C flag) from the
                         \ above subtraction
 
+ENDIF
+
+IF _CASSETTE_VERSION \ Comment
+
 \BCS SC48               \ These instructions are commented out in the original
 \EOR #&FF               \ source. They would negate A if the C flag were set,
 \ADC #1                 \ which would reverse the direction of all the sticks,
                         \ so you could turn your joystick around. Perhaps one of
                         \ the authors' test sticks was easier to use upside
                         \ down? Who knows...
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Master: See group A
 
 .SC48
 

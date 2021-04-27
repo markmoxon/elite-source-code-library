@@ -41,6 +41,10 @@ ELIF _ELECTRON_VERSION
 \ has been pressed in X, and the configuration option to check it against in Y,
 \ so this routine is typically called in a loop that loops through the various
 \ configuration options.
+\
+\ Note that the Electron version doesn't support joysticks, but you can still
+\ configure them (though this does break the chart views, as they still call the
+\ joystick routines that are still present in the Electron's codebase).
 ELIF _MASTER_VERSION
 \   * CAPS LOCK toggles keyboard flight damping (0)
 \   * A toggles keyboard auto-recentre (1)

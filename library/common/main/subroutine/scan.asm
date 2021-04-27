@@ -375,10 +375,10 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Master: See group A
 
  PHA                    \ Store the stick height in A on the stack
 
- JSR CPIX4              \ Draw a double-height mode 5 dot at (X1, Y1). This also
-                        \ leaves the following variables set up for the dot's
-                        \ top-right pixel, the last pixel to be drawn (as the
-                        \ dot gets drawn from the bottom up):
+ JSR CPIX4              \ Draw a double-height dot at (X1, Y1). This also leaves
+                        \ the following variables set up for the dot's top-right
+                        \ pixel, the last pixel to be drawn (as the dot gets
+                        \ drawn from the bottom up):
                         \
                         \   SC(1 0) = screen address of the pixel's character
                         \             block

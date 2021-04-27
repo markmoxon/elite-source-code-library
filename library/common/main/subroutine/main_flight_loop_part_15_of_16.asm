@@ -3,7 +3,12 @@
 \       Name: Main flight loop (Part 15 of 16)
 \       Type: Subroutine
 \   Category: Main loop
-\    Summary: Perform altitude checks with planet and sun, process fuel scooping
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+\    Summary: Perform altitude checks with the planet and sun and process fuel
+\             scooping if appropriate
+ELIF _ELECTRON_VERSION
+\    Summary: Perform altitude checks with the planet
+ENDIF
 \  Deep dive: Program flow of the main game loop
 \             Scheduling tasks with the main loop counter
 \
@@ -15,9 +20,11 @@
 \   * Perform an altitude check with the planet (every 32 iterations of the main
 \     loop, on iteration 10 of each 32)
 \
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \   * Perform an an altitude check with the sun and process fuel scooping (every
 \     32 iterations of the main loop, on iteration 20 of each 32)
 \
+ENDIF
 \ ******************************************************************************
 
 .MA22

@@ -95,12 +95,13 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
 ELIF _ELECTRON_VERSION
 
- LDA CTWOS,X            \ CTWOS is a table of ready-made 1-pixel mode 5 bytes,
-                        \ just like the TWOS and TWOS2 tables for mode 4 (see
-                        \ the PIXEL routine for details of how they work). This
-                        \ fetches a mode 5 1-pixel byte with the pixel position
-                        \ at X, so the pixel is at the offset that we want for
-                        \ our vertical bar
+ LDA CTWOS,X            \ CTWOS is a table of ready-made 2-pixel mode 4 bytes,
+                        \ similar to the TWOS and TWOS2 tables, but laid out in
+                        \ a similar way to the mode 5 pixel bytes in the other
+                        \ versions (see the PIXEL routine for details of how
+                        \ they work). This fetches a 2-pixel mode 4 byte with
+                        \ the pixel position at 2 * X, so the pixel is at the
+                        \ offset that we want for our vertical bar
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 

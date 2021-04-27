@@ -263,16 +263,32 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+
  BPL CP1                \ The CTWOS table has an extra row at the end of it that
                         \ repeats the first value, %10001000, so if we have not
-ELIF _6502SP_VERSION OR _MASTER_VERSION
- BPL CP1                \ The CTWOS table has 2 extra rows at the end of it that
-                        \ repeat the first values, %10101010, so if we have not
-ENDIF
                         \ fetched that value, then the right pixel of the dash
                         \ is in the same character block as the left pixel, so
                         \ jump to CP1 to draw it
+
+ELIF _ELECTRON_VERSION
+
+ BPL CP1                \ The CTWOS table is followed by the TWOS2 table, whose
+                        \ first entry is %11000000, so if we have not just
+                        \ fetched that value, then the right pixel of the dash
+                        \ is in the same character block as the left pixel, so
+                        \ jump to CP1 to draw it
+
+ELIF _6502SP_VERSION OR _MASTER_VERSION
+
+ BPL CP1                \ The CTWOS table has 2 extra rows at the end of it that
+                        \ repeat the first values, %10101010, so if we have not
+                        \ fetched that value, then the right pixel of the dash
+                        \ is in the same character block as the left pixel, so
+                        \ jump to CP1 to draw it
+
+ENDIF
+
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  LDA SC                 \ Otherwise the left pixel we drew was at the last

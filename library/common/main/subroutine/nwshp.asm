@@ -76,12 +76,25 @@
  JSR GINF               \ Get the address of the data block for ship slot X
                         \ (which is in workspace K%) and store it in INF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+
  LDA T                  \ If the type of ship that we want to create is
  BMI NW2                \ negative, then this indicates a planet or sun, so
                         \ jump down to NW2, as the next section sets up a ship
                         \ data block, which doesn't apply to planets and suns,
                         \ as they don't have things like shields, missiles,
                         \ vertices and edges
+
+ELIF _ELECTRON_VERSION
+
+ LDA T                  \ If the type of ship that we want to create is
+ BMI NW2                \ negative, then this indicates the planet, so
+                        \ jump down to NW2, as the next section sets up a ship
+                        \ data block, which doesn't apply to planets, as they
+                        \ don't have things like shields, missiles, vertices
+                        \ and edges
+
+ENDIF
 
                         \ This is a ship, so first we need to set up various
                         \ pointers to the ship blueprint we will need. The
@@ -124,10 +137,20 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+
  CPY #2*SST             \ If the ship type is a space station (SST), then jump
  BEQ NW6                \ to NW6, skipping the heap space steps below, as the
                         \ space station has its own line heap at LSO (which it
                         \ shares with the sun)
+
+ELIF _ELECTRON_VERSION
+
+ CPY #2*SST             \ If the ship type is a space station (SST), then jump
+ BEQ NW6                \ to NW6, skipping the heap space steps below, as the
+                        \ space station has its own line heap at LSO
+
+ENDIF
 
                         \ We now want to allocate space for a heap that we can
                         \ use to store the lines we draw for our new ship (so it
@@ -282,9 +305,14 @@ ENDIF
 
  TAX                    \ Copy the ship type into X
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Label
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Label
 
  BMI P%+5               \ If the ship type is negative (planet or sun), then
+                        \ skip the following instruction
+
+ELIF _ELECTRON_VERSION
+
+ BMI P%+5               \ If the ship type is negative (i.e. the planet), then
                         \ skip the following instruction
 
 ELIF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION

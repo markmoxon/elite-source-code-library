@@ -39,9 +39,19 @@
  BMI MA65               \ to MA65 to skip the following, as it's too far away to
                         \ dock, scoop or collide with
 
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+
  LDX TYPE               \ If the current ship type is negative then it's either
  BMI MA65               \ a planet or a sun, so jump down to MA65 to skip the
                         \ following, as we can't dock with it or scoop it
+
+ELIF _ELECTRON_VERSION
+
+ LDX TYPE               \ If the current ship type is negative then it's the
+ BMI MA65               \ planet, so jump down to MA65 to skip the following,
+                        \ as we can't dock with it or scoop it
+
+ENDIF
 
  CPX #SST               \ If this ship is the space station, jump to ISDK to
  BEQ ISDK               \ check whether we are docking with it

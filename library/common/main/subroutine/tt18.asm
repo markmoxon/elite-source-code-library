@@ -87,11 +87,16 @@ ENDIF
 
  JSR RES2               \ Reset a number of flight variables and workspaces
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Master: The Master version calls an extra bit of code when arriving in a new system that is responsible for breeding any Trumbles in the hold, though as there are no Trumbles in the BBC versions of the game, this never actually breeds anything
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Master: The Master version calls an extra bit of code when arriving in a new system that is responsible for breeding any Trumbles in the hold, though as there are no Trumbles in the BBC versions of the game, this never actually breeds anything
 
  JSR SOLAR              \ Halve our legal status, update the missile indicators,
                         \ and set up data blocks and slots for the planet and
                         \ sun
+
+ELIF _ELECTRON_VERSION
+
+ JSR SOLAR              \ Halve our legal status, update the missile indicators,
+                        \ and set up the data block and slot for the planet
 
 ELIF _MASTER_VERSION
 

@@ -27,7 +27,7 @@
 
 .ISDK
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
+IF _CASSETTE_VERSION \ Platform
 
  LDA K%+NI%+32          \ 1. Fetch the AI counter (byte #32) of the second ship
  BMI MA62               \ in the ship data workspace at K%, which is reserved
@@ -36,6 +36,15 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
                         \ meaning the station is hostile, jump down to MA62 to
                         \ fail docking (so trying to dock at a station that we
                         \ have annoyed does not end well)
+
+ELIF _ELECTRON_VERSION
+
+ LDA K%+NI%+32          \ 1. Fetch the AI counter (byte #32) of the second ship
+ BMI MA62               \ in the ship data workspace at K%, which is reserved
+                        \ for the space station, and if it's negative, i.e. bit
+                        \ 7 is set, meaning the station is hostile, jump down
+                        \ to MA62 to fail docking (so trying to dock at a
+                        \ station that we have annoyed does not end well)
 
 ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 

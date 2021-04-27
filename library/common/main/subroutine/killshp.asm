@@ -11,8 +11,13 @@
 \ when we kill a ship, collide with a ship and destroy it, or when a ship moves
 \ outside our local bubble.
 \
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ We also use this routine when we move out of range of the space station, in
 \ which case we replace it with the sun.
+ELIF _ELECTRON_VERSION
+\ We also use this routine when we move out of range of the space station, in
+\ which case we replace it with the placeholder, type 129.
+ENDIF
 \
 \ When removing a ship, this creates a gap in the ship slots at FRIN, so we
 \ shuffle all the later slots down to close the gap. We also shuffle the ship
@@ -88,8 +93,17 @@ ENDIF
  LDX FRIN,Y             \ Fetch the contents of the slot, which contains the
                         \ ship type
 
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+
  CPX #SST               \ If this is the space station, then jump to KS4 to
  BEQ KS4                \ replace the space station with the sun
+
+ELIF _ELECTRON_VERSION
+
+ CPX #SST               \ If this is the space station, then jump to KS4 to
+ BEQ KS4                \ remove the space station
+
+ENDIF
 
 IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: In the enhanced versions, the Constrictor is a special ship, and killing it ends the first mission
 

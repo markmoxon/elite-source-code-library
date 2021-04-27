@@ -25,9 +25,10 @@ ENDIF
 
 IF _ELECTRON_VERSION \ Electron: In the Electron version, the PLANET routine only draws planets and will terminate if asked to draw a sun
 
- LDA TYPE               \ If bit 0 of the ship type is set, then this is the
- LSR A                  \ sun, so return from the subroutine (as PL2-1 contains
- BCS PL2-1              \ an RTS)
+ LDA TYPE               \ If bit 0 of the ship type is set, then this is 129,
+ LSR A                  \ which is the placeholder used to denote there is no
+ BCS PL2-1              \ space station, so return from the subroutine (as PL2-1
+                        \ contains an RTS)
 
 ENDIF
 
@@ -45,12 +46,27 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+
  LDA INWK+8             \ Set A = z_sign (the highest byte in the planet/sun's
                         \ coordinates)
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Other: In the cassette version, in part 14 of the main flight loop, we didn't remove the planet/sun if it was behind us, so we do it here instead
+ELIF _ELECTRON_VERSION
+
+ LDA INWK+8             \ Set A = z_sign (the highest byte in the planet's
+                        \ coordinates)
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Other: In the cassette version, in part 14 of the main flight loop, we didn't remove the planet/sun if it was behind us, so we do it here instead
 
  BMI PL2                \ If A is negative then the planet/sun is behind us, so
+                        \ jump to PL2 to remove it from the screen, returning
+                        \ from the subroutine using a tail call
+
+ELIF _ELECTRON_VERSION
+
+ BMI PL2                \ If A is negative then the planet is behind us, so
                         \ jump to PL2 to remove it from the screen, returning
                         \ from the subroutine using a tail call
 
@@ -61,6 +77,8 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ when it's behind us
 
 ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 
  CMP #48                \ If A >= 48 then the planet/sun is too far away to be
  BCS PL2                \ seen, so jump to PL2 to remove it from the screen,
@@ -97,6 +115,46 @@ ENDIF
                         \ K+3 and K+2 will be 0, as the number we are dividing,
                         \ (0 96 0), fits into the two bottom bytes, so the
                         \ result is actually in K(1 0)
+
+ELIF _ELECTRON_VERSION
+
+ CMP #48                \ If A >= 48 then the planet is too far away to be
+ BCS PL2                \ seen, so jump to PL2 to remove it from the screen,
+                        \ returning from the subroutine using a tail call
+
+ ORA INWK+7             \ Set A to z_sign OR z_hi to get the maximum of the two
+
+ BEQ PL2                \ If the maximum is 0, then the planet is too close
+                        \ to be shown, so jump to PL2 to remove it from the
+                        \ screen, returning from the subroutine using a tail
+                        \ call
+
+ JSR PROJ               \ Project the planet onto the screen, returning the
+                        \ centre's coordinates in K3(1 0) and K4(1 0)
+
+ BCS PL2                \ If the C flag is set by PROJ then the planet is
+                        \ not visible on-screen, so jump to PL2 to remove it
+                        \ from the screen, returning from the subroutine using
+                        \ a tail call
+
+ LDA #96                \ Set (A P+1 P) = (0 96 0) = 24576
+ STA P+1                \
+ LDA #0                 \ This represents the planet's radius at a distance
+ STA P                  \ of z = 1
+
+ JSR DVID3B2            \ Call DVID3B2 to calculate:
+                        \
+                        \   K(3 2 1 0) = (A P+1 P) / (z_sign z_hi z_lo)
+                        \              = (0 96 0) / z
+                        \              = 24576 / z
+                        \
+                        \ so K now contains the planet's radius, reduced by
+                        \ the actual distance to the planet. We know that
+                        \ K+3 and K+2 will be 0, as the number we are dividing,
+                        \ (0 96 0), fits into the two bottom bytes, so the
+                        \ result is actually in K(1 0)
+
+ENDIF
 
  LDA K+1                \ If the high byte of the reduced radius is zero, jump
  BEQ PL82               \ to PL82, as K contains the radius on its own

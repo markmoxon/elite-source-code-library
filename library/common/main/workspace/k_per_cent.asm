@@ -20,10 +20,14 @@ ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \ Contains ship data for all the ships, planets, suns and space stations in our
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
 \ local bubble of universe, along with their corresponding ship line heaps.
+ELIF _ELECTRON_VERSION
+\ Contains ship data for all the ships, planets and space stations in our local
+\ bubble of universe, along with their corresponding ship line heaps.
 ELIF _6502SP_VERSION
+\ Contains ship data for all the ships, planets, suns and space stations in our
 \ local bubble of universe.
 ENDIF
 \

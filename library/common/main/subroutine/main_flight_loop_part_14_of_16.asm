@@ -134,6 +134,15 @@ ENDIF
 
 .MA23S
 
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+
  JMP MA23               \ Jump to MA23 to skip the following planet and sun
                         \ altitude checks
+
+ELIF _ELECTRON_VERSION
+
+ JMP MA23               \ Jump to MA23 to skip the following planet altitude
+                        \ checks
+
+ENDIF
 

@@ -293,7 +293,7 @@ ENDIF
 
 .MA64
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: If "C" is pressed during flight and we have a docking computer, then in the enhanced versions the docking computer takes control of the ship, unlike in the cassette version, which instantly docks when "C" is pressed
+IF _CASSETTE_VERSION \ Enhanced: If "C" is pressed during flight and we have a docking computer, then in the enhanced versions the docking computer takes control of the ship, unlike in the cassette version, which instantly docks when "C" is pressed
 
  LDA KY19               \ If "C" is being pressed, and we have a docking
  AND DKCMP              \ computer fitted, and we are inside the space station's
@@ -308,6 +308,26 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: If "C" is pressed during f
                         \ down to MA68 to skip the following (so we can't use
                         \ the docking computer to dock at a station that has
                         \ turned against us)
+
+ JMP GOIN               \ The "docking computer" button has been pressed and
+                        \ we are allowed to dock at the station, so jump to
+                        \ GOIN to dock (or "go in"), and exit the main flight
+                        \ loop using a tail call
+
+ELIF _ELECTRON_VERSION
+
+ LDA KY19               \ If "C" is being pressed, and we have a docking
+ AND DKCMP              \ computer fitted, and we are inside the space station's
+ AND SSPR               \ safe zone, keep going, otherwise jump down to MA68 to
+ BEQ MA68               \ skip the following
+
+ LDA K%+NI%+32          \ Fetch the AI counter (byte #32) of the second ship
+ BMI MA68               \ from the ship data workspace at K%, which is reserved
+                        \ for the space station. If byte #32 is negative,
+                        \ meaning the station is hostile, then jump down to
+                        \ MA68 to skip the following (so we can't use the
+                        \ docking computer to dock at a station that has turned
+                        \ against us)
 
  JMP GOIN               \ The "docking computer" button has been pressed and
                         \ we are allowed to dock at the station, so jump to

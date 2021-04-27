@@ -161,13 +161,25 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
 
  LDX FRIN+2,Y           \ The ship slots at FRIN are ordered with the first two
                         \ slots reserved for the planet and sun/space station,
                         \ and then any ships, so if the slot at FRIN+2+Y is not
                         \ empty (i.e is non-zero), then that means the number of
                         \ non-asteroids in the vicinity is at least 1
+
+ELIF _ELECTRON_VERSION
+
+ LDX FRIN+2,Y           \ The ship slots at FRIN are ordered with the first two
+                        \ slots reserved for the planet and space station, and
+                        \ then any ships, so if the slot at FRIN+2+Y is not
+                        \ empty (i.e is non-zero), then that means the number of
+                        \ non-asteroids in the vicinity is at least 1
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
  BEQ st6                \ So if X = 0, there are no ships in the vicinity, so
                         \ jump to st6 to print "Green" for our ship's condition

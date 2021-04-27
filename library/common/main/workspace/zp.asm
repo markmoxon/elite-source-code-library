@@ -73,7 +73,19 @@ INCLUDE "library/common/main/variable/inf.asm"
 INCLUDE "library/common/main/variable/v.asm"
 INCLUDE "library/common/main/variable/xx.asm"
 INCLUDE "library/common/main/variable/yy.asm"
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
+
 INCLUDE "library/common/main/variable/sunx.asm"
+
+ELIF _ELECTRON_VERSION
+
+ SKIP 2                 \ These bytes are unused in this version of Elite (they
+                        \ are used to store the centre axis of the sun in the
+                        \ other versions)
+
+ENDIF
+
 INCLUDE "library/common/main/variable/beta.asm"
 INCLUDE "library/common/main/variable/bet1.asm"
 
@@ -212,9 +224,15 @@ INCLUDE "library/common/main/variable/zz.asm"
 INCLUDE "library/common/main/variable/xx13.asm"
 INCLUDE "library/common/main/variable/mcnt.asm"
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
 INCLUDE "library/common/main/variable/dl.asm"
+
+ELIF _ELECTRON_VERSION
+
+ SKIP 1                 \ This byte is unused in this version of Elite (it
+                        \ is used to store the delay counter in the other
+                        \ versions)
 
 ENDIF
 
@@ -246,9 +264,16 @@ INCLUDE "library/common/main/variable/swap.asm"
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
 INCLUDE "library/common/main/variable/col.asm"
+
+ELIF _ELECTRON_VERSION
+
+ SKIP 1                 \ This byte is unused in this version of Elite (it
+                        \ is used to store colour information when drawing
+                        \ pixels in the dashboard, and the Electron's dashboard
+                        \ is monochrome)
 
 ENDIF
 

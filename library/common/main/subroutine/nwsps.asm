@@ -19,7 +19,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Space stations in the enha
  DEX                    \ Set pitch counter to 0 (no pitch, roll only)
  STX INWK+30
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  LDX #%10000001         \ Set the AI flag in byte #32 to %10000001 (hostile,
  STX INWK+32            \ no AI, has an E.C.M.)
@@ -36,9 +36,18 @@ ENDIF
                         \ source. It would set the exploding state and missile
                         \ count to 0
 
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+
  STX FRIN+1             \ Set the sun/space station slot at FRIN+1 to 0, to
                         \ indicate we should show the space station rather than
                         \ the sun
+
+ELIF _ELECTRON_VERSION
+
+ STX FRIN+1             \ Set the space station slot at FRIN+1 to 0, to indicate
+                        \ we should show the space station
+
+ENDIF
 
  DEX                    \ Set roll counter to 255 (maximum roll with no
  STX INWK+29            \ damping)

@@ -7,7 +7,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-IF _ELECTRON_VERSION
+IF _ELECTRON_VERSION \ Comment
 \ This routine is never called in the Electron version, as the Electron doesn't
 \ have ADC channels as standard and doesn't support joysticks (though a lot of
 \ the joystick code from the other versions is still present, it just isn't

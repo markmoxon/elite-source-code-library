@@ -27,7 +27,7 @@ ENDIF
 IF _ELECTRON_VERSION \ Comment
 \ Arguments:
 \
-\   X                   The type of the planet or sun
+\   X                   The type of the planet
 \
 \ Other entry points:
 \
@@ -40,9 +40,10 @@ ENDIF
 
 IF _ELECTRON_VERSION \ Electron: As the Electron only has planets and no suns, the MV40 routine only moves the planet by our pitch and roll, and does nothing if asked to move the sun
 
- TXA                    \ If bit 0 of X is set, then this is the sun, so return
- LSR A                  \ from the subroutine (as MV40-1 contains an RTS)
- BCS MV40-1
+ TXA                    \ If bit 0 of X is set, then this is 129, which is the
+ LSR A                  \ placeholder used to denote the there is no space
+ BCS MV40-1             \ station, so return from the subroutine (as MV40-1
+                        \ contains an RTS)
 
 ENDIF
 
@@ -157,7 +158,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Other: A CLC instruction is omitted 
                         \ flag, so this is an example of the authors finding
                         \ one more precious byte to save
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  LDA K                  \ We now do the following sum:
  CLC                    \
@@ -286,7 +287,17 @@ ENDIF
                         \
                         \   x = x + y * alpha
 
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+
  JMP MV45               \ We have now finished rotating the planet or sun by
                         \ our pitch and roll, so jump back into the MVEIT
                         \ routine at MV45 to apply all the other movements
+
+ELIF _ELECTRON_VERSION
+
+ JMP MV45               \ We have now finished rotating the planet by our pitch
+                        \ and roll, so jump back into the MVEIT routine at MV45
+                        \ to apply all the other movements
+
+ENDIF
 

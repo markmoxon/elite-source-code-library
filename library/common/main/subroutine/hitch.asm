@@ -32,10 +32,21 @@
                         \ be in our crosshairs, so return from the subroutine
                         \ with the C flag clear (as HI1 contains an RTS)
 
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+
  LDA TYPE               \ If the ship type has bit 7 set then it is the planet
  BMI HI1                \ or sun, which we can't target or hit with lasers, so
                         \ return from the subroutine with the C flag clear (as
                         \ HI1 contains an RTS)
+
+ELIF _ELECTRON_VERSION
+
+ LDA TYPE               \ If the ship type has bit 7 set then it is the planet,
+ BMI HI1                \ which we can't target or hit with lasers, so return
+                        \ from the subroutine with the C flag clear (as HI1
+                        \ contains an RTS)
+
+ENDIF
 
  LDA INWK+31            \ Fetch bit 5 of byte #31 (the exploding flag) and OR
  AND #%00100000         \ with x_hi and y_hi

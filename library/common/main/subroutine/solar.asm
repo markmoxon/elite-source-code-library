@@ -7,8 +7,13 @@
 \
 \ ------------------------------------------------------------------------------
 \
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ Halve our legal status, update the missile indicators, and set up data blocks
 \ and slots for the planet and sun.
+ELIF _ELECTRON_VERSION
+\ Halve our legal status, update the missile indicators, and set up the data
+\ block and slot for the planet.
+ENDIF
 \
 \ ******************************************************************************
 
@@ -83,10 +88,25 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Ele
 
 ENDIF
 
- LDA #129               \ Set A = 129, the "ship" type for the sun
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+
+ LDA #129               \ Set A = 129, the ship type for the sun
 
  JSR NWSHP              \ Call NWSHP to set up the sun's data block and add it
                         \ to FRIN, where it will get put in the second slot as
                         \ it's the second one to be added to our local bubble
                         \ of this new system's universe
+
+ELIF _ELECTRON_VERSION
+
+ LDA #129               \ Set A = 129, the ship type for the placeholder, so
+                        \ there isn't a space station, but there is a non-zero
+                        \ ship type to indicate this
+
+ JSR NWSHP              \ Call NWSHP to set up the new data block and add it
+                        \ to FRIN, where it will get put in the second slot as
+                        \ we just cleared out the second slot, and the first
+                        \ slot is already taken by the planet
+
+ENDIF
 

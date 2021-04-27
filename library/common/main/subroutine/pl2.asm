@@ -3,7 +3,11 @@
 \       Name: PL2
 \       Type: Subroutine
 \   Category: Drawing planets
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Remove the planet or sun from the screen
+ELIF _ELECTRON_VERSION
+\    Summary: Remove the planet from the screen
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

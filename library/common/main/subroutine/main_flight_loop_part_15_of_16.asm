@@ -49,10 +49,20 @@ ENDIF
 
 .MA93
 
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+
  CMP #10                \ If this is the tenth iteration in this block of 32,
  BNE MA29               \ do the following, otherwise jump to MA29 to skip the
                         \ planet altitude check and move on to the sun distance
                         \ check
+
+ELIF _ELECTRON_VERSION
+
+ CMP #10                \ If this is the tenth iteration in this block of 32,
+ BNE MA29               \ do the following, otherwise jump to MA29 to skip the
+                        \ planet altitude check
+
+ENDIF
 
  LDA #50                \ If our energy bank status in ENERGY is >= 50, skip
  CMP ENERGY             \ printing the following message (so the message is
@@ -110,9 +120,20 @@ ENDIF
 
 .MA28
 
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+
  JMP DEATH              \ If we get here then we just crashed into the planet
-                        \ or got too close to the sun, so call DEATH to start
-                        \ the funeral preparations
+                        \ or got too close to the sun, so jump to DEATH to start
+                        \ the funeral preparations and return from the main
+                        \ flight loop using a tail call
+
+ELIF _ELECTRON_VERSION
+
+ JMP DEATH              \ If we get here then we just crashed into the planet,
+                        \ so jump to DEATH to start the funeral preparations
+                        \ and return from the main flight loop using a tail call
+
+ENDIF
 
 .MA29
 

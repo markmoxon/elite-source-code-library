@@ -96,12 +96,23 @@ ENDIF
 
 .AN2
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: See group A
+IF _CASSETTE_VERSION \ Enhanced: See group A
 
  ASL K%+NI%+32          \ Fetch the AI counter (byte #32) of the second ship
  SEC                    \ in the ship data workspace at K%, which is reserved
  ROR K%+NI%+32          \ for the sun or the space station (in this case it's
                         \ the latter), and set bit 7 to make it hostile
+
+ CLC                    \ Clear the C flag, which isn't used by calls to this
+                        \ routine, but it does set up the entry point FR1-2
+                        \ so that it clears the C flag and does an RTS
+
+ELIF _ELECTRON_VERSION
+
+ ASL K%+NI%+32          \ Fetch the AI counter (byte #32) of the second ship
+ SEC                    \ in the ship data workspace at K%, which is reserved
+ ROR K%+NI%+32          \ for the space station, and set bit 7 to make it
+                        \ hostile
 
  CLC                    \ Clear the C flag, which isn't used by calls to this
                         \ routine, but it does set up the entry point FR1-2

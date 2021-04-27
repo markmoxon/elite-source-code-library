@@ -18,6 +18,8 @@
 
 .MV3
 
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+
  LDX TYPE               \ If the type of the ship we are moving is positive,
  BPL P%+5               \ i.e. it is not a planet (types 128 and 130) or sun
                         \ (type 129), then skip the following instruction
@@ -26,6 +28,20 @@
                         \ move it, which ends by jumping back into this routine
                         \ at MV45 (after all the rotation, tactics and scanner
                         \ code, which we don't need to apply to planets or suns)
+
+
+ELIF _ELECTRON_VERSION
+
+ LDX TYPE               \ If the type of the ship we are moving is positive,
+ BPL P%+5               \ i.e. it is not a planet (types 128 and 130), then
+                        \ skip the following instruction
+
+ JMP MV40               \ This item is the planet, so jump to MV40 to move it,
+                        \ which ends by jumping back into this routine at MV45 
+                        \ (after all the rotation, tactics and scanner code,
+                        \ which we don't need to apply to planets)
+
+ENDIF
 
  LDA INWK+32            \ Fetch the ship's byte #32 (AI flag) into A
 

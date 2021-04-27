@@ -18,8 +18,13 @@
 \   centre of screen - 1024 < x < centre of screen + 1024
 \   centre of screen - 1024 < y < centre of screen + 1024
 \
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ This is to cater for ships (and, more likely, planets and suns) whose centres
 \ are off-screen but whose edges may still be visible.
+ELIF _ELECTRON_VERSION
+\ This is to cater for ships (and, more likely, planets) whose centres are
+\ off-screen but whose edges may still be visible.
+ENDIF
 \
 \ The projection calculation is:
 \

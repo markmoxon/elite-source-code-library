@@ -42,10 +42,20 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+
  BMI SC5                \ If this is the planet or the sun, then the type will
                         \ have bit 7 set and we don't want to display it on the
                         \ scanner, so return from the subroutine (as SC5
                         \ contains an RTS)
+
+ELIF _ELECTRON_VERSION
+
+ BMI SC5                \ If this is the planet, then the type will have bit 7
+                        \ set and we don't want to display it on the scanner, 
+                        \ so return from the subroutine (as SC5 contains an RTS)
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Advanced: In the original versions, ships are shown on the scanner with a green stick, while missiles are shown in yellow (if an escape pod is fitted, they are shown in cyan and white respectively). In the advanced versions, each ship has its own colour for when it is shown on the scanner, as defined in the scacol table
 

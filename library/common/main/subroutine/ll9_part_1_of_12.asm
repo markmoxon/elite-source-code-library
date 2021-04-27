@@ -60,10 +60,15 @@ ENDIF
 
 .LL9
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Minor
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Minor
 
  LDA TYPE               \ If the ship type is negative then this indicates a
  BMI LL25               \ planet or sun, so jump to PLANET via LL25 above
+
+ELIF _ELECTRON_VERSION
+
+ LDA TYPE               \ If the ship type is negative then this indicates the
+ BMI LL25               \ planet, so jump to PLANET via LL25 above
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 

@@ -131,8 +131,17 @@ ENDIF
 
 .MAC1
 
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+
  LDA TYPE               \ If the ship we are processing is a planet or sun,
  BMI MA27               \ jump to MA27 to skip the following two instructions
+
+ELIF _ELECTRON_VERSION
+
+ LDA TYPE               \ If the ship we are processing is the planet, jump to
+ BMI MA27               \ MA27 to skip the following two instructions
+
+ENDIF
 
  JSR FAROF              \ If the ship we are processing is a long way away (its
  BCC KS1S               \ distance in any one direction is > 224, jump to KS1S

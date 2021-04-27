@@ -15,7 +15,11 @@
 \
 \ Arguments:
 \
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \   INWK                The planet or sun's ship data block
+ELIF _ELECTRON_VERSION
+\   INWK                The planet's ship data block
+ENDIF
 \
 \ Returns:
 \

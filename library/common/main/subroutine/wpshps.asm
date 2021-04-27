@@ -3,12 +3,21 @@
 \       Name: WPSHPS
 \       Type: Subroutine
 \   Category: Dashboard
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Clear the scanner, reset the ball line and sun line heaps
+ELIF _ELECTRON_VERSION
+\    Summary: Clear the scanner and reset the ball line heap
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ Remove all ships from the scanner, reset the sun line heap at LSO, and reset
 \ the ball line heap at LSX2 and LSY2.
+ELIF _ELECTRON_VERSION
+\ Remove all ships from the scanner and reset the ball line heap at LSX2 and
+\ LSY2.
+ENDIF
 \
 \ ******************************************************************************
 
@@ -26,10 +35,20 @@
                         \ down in the main loop to close up and gaps), so jump
                         \ to WS2 as we are done
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+
  BMI WS1                \ If the slot contains a ship type with bit 7 set, then
                         \ it contains the planet or the sun, so jump down to WS1
                         \ to skip this slot, as the planet and sun don't appear
                         \ on the scanner
+
+ELIF _ELECTRON_VERSION
+
+ BMI WS1                \ If the slot contains a ship type with bit 7 set, then
+                        \ it contains the planet, so jump down to WS1 to skip
+                        \ this slot, as the planet don't appear on the scanner
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 

@@ -15,11 +15,19 @@
 \
 \ Arguments:
 \
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \   INWK                The current ship/planet/sun's data block
 \
 \   XSAV                The slot number of the current ship/planet/sun
 \
 \   TYPE                The type of the current ship/planet/sun
+ELIF _ELECTRON_VERSION
+\   INWK                The current ship/planet's data block
+\
+\   XSAV                The slot number of the current ship/planet
+\
+\   TYPE                The type of the current ship/planet
+ENDIF
 \
 \ ******************************************************************************
 

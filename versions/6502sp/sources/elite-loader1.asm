@@ -50,7 +50,7 @@ VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
                         \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
                         \ known as SHEILA)
 
-IRQ1V = &204            \ The IRQ1V vector that we intercept to implement the
+IRQ1V = &0204           \ The IRQ1V vector that we intercept to implement the
                         \ split-sceen mode
 
 INCLUDE "library/6502sp/loader1/workspace/zp.asm"

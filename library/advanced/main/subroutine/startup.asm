@@ -112,7 +112,7 @@ IF _6502SP_VERSION \ 6502SP: The 6502SP version implements a hook that enables y
  BNE PUTBACK
 
  JSR Tina+4             \ &0B00 to &0B03 contains "TINA", so call the subroutine
-                        \ at &B04. This allows us to add a hook to the startup
+                        \ at &0B04. This allows us to add a hook to the startup
                         \ process by populating page &B with TINA plus the code
                         \ for a subroutine, and it will be called just before
                         \ the setup code terminates on the I/O processor

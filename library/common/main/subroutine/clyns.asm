@@ -115,7 +115,7 @@ ELIF _MASTER_VERSION
  JSR TT67_DUPLICATE     \ Print a newline
 
  LDA #%00001111         \ Set bits 1 and 2 of the Access Control Register at
- STA VIA+&34            \ SHEILA+&34 to switch screen memory into &3000-&7FFF
+ STA VIA+&34            \ SHEILA &34 to switch screen memory into &3000-&7FFF
 
  LDA #&6A               \ Set SC+1 = &6A, for the high byte of SC(1 0)
  STA SC+1
@@ -265,7 +265,7 @@ IF _6502SP_VERSION \ Platform
 ELIF _MASTER_VERSION
 
  LDA #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
- STA VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
+ STA VIA+&34            \ SHEILA &34 to switch main memory back into &3000-&7FFF
 
  LDA #0                 \ Set A = 0 as this is a return value for this routine
 

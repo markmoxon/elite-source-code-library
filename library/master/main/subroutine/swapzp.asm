@@ -10,7 +10,7 @@
 .SWAPZP
 
  LDA #%00001111         \ Set bits 1 and 2 of the Access Control Register at
- STA VIA+&34            \ SHEILA+&34 to switch screen memory into &3000-&7FFF
+ STA VIA+&34            \ SHEILA &34 to switch screen memory into &3000-&7FFF
 
  LDX #&90               \ We want to swap zero page from &0090 and up, so set an
                         \ index in X, starting from &90
@@ -28,9 +28,9 @@
  BNE SWPL1
 
  LDA #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
- STA VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
+ STA VIA+&34            \ SHEILA &34 to switch main memory back into &3000-&7FFF
 
- LDA #6                 \ Set bits 0-3 of the ROM Select latch at SHEILA+&30 to
+ LDA #6                 \ Set bits 0-3 of the ROM Select latch at SHEILA &30 to
  STA VIA+&30            \ 6, to switch sideways ROM bank 6 into into &8000-&BFFF
                         \ in main memory (we already confirmed that this bank
                         \ contains RAM rather than ROM in the loader)

@@ -49,12 +49,12 @@ L% = &2000              \ L% is the load address of the main game code file
 
 S% = C%                 \ S% points to the entry point for the main game code
 
-USERV = &0200           \ The address for the user vector
-BRKV = &0202            \ The address for the break vector
-IRQ1V = &0204           \ The address for the interrupt vector
-WRCHV = &020E           \ The address for the write character vector
-RDCHV = &0210           \ The address for the read character vector
-KEYV = &0228            \ The address for the keyboard vector
+USERV = &0200           \ The address of the user vector
+BRKV = &0202            \ The address of the break vector
+IRQ1V = &0204           \ The address of the interrupt vector
+WRCHV = &020E           \ The address of the write character vector
+RDCHV = &0210           \ The address of the read character vector
+KEYV = &0228            \ The address of the keyboard vector
 
 OSWRCH = &FFEE          \ The address for the OSWRCH routine
 OSBYTE = &FFF4          \ The address for the OSBYTE routine

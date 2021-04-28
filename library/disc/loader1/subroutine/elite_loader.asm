@@ -25,8 +25,8 @@
 .os100
 
  LDA &D941,Y            \ Copy the Y-th byte from the default vector table at
- STA &200               \ &D941 into location &0200 (this is surely supposed to
-                        \ be the Y-th byte in &0200, i.e. STA &200,Y, but it
+ STA &0200              \ &D941 into location &0200 (this is surely supposed to
+                        \ be the Y-th byte in &0200, i.e. STA &0200,Y, but it
                         \ isn't, which feels like a bug)
 
  INY                    \ Increment the loop counter
@@ -46,7 +46,7 @@
 .ABCDEFG
 
  LDA (ZP),Y             \ Copy the Y-th byte from the default vector table into
- STA &200,Y             \ the vector table in &0200
+ STA &0200,Y            \ the vector table in &0200
 
  INY                    \ Increment the loop counter
 

@@ -63,9 +63,6 @@ D% = &D000              \ The address where the ship blueprints get moved to
 
 LS% = D%-1              \ The start of the descending ship line heap
 
-BRKV = &202             \ The break vector that we intercept to enable us to
-                        \ handle and display system errors
-
 NOST = 18               \ The number of stardust particles in normal space (this
                         \ goes down to 3 in witchspace)
 
@@ -120,6 +117,9 @@ Armlas = INT(128.5+1.5*POW) \ Military laser power
 
 NI% = 37                \ The number of bytes in each ship's data block (as
                         \ stored in INWK and K%)
+
+BRKV = &0202            \ The break vector that we intercept to enable us to
+                        \ handle and display system errors
 
 OSWRCH = &FFEE          \ The address for the OSWRCH routine
 OSBYTE = &FFF4          \ The address for the OSBYTE routine
@@ -898,7 +898,7 @@ IF _MATCH_EXTRACTED_BINARIES
 
 ELSE
 
- ALIGN &100
+ ALIGN 256
 
 ENDIF
 

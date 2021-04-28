@@ -154,5 +154,5 @@ INCLUDE "library/common/main/variable/ship_thargon.asm"
 \ ******************************************************************************
 
 PRINT "S.D.MOC ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/disc/output/D.MOC.bin", CODE%, CODE% + &A00
+SAVE "versions/disc/output/D.MOC.bin", CODE%, CODE% + &0A00
 

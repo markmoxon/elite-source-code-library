@@ -152,5 +152,5 @@ INCLUDE "library/enhanced/main/variable/ship_fer_de_lance.asm"
 \ ******************************************************************************
 
 PRINT "S.D.MOL ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/disc/output/D.MOL.bin", CODE%, CODE% + &A00
+SAVE "versions/disc/output/D.MOL.bin", CODE%, CODE% + &0A00
 

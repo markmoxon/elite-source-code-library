@@ -152,5 +152,5 @@ INCLUDE "library/enhanced/main/variable/ship_gecko.asm"
 \ ******************************************************************************
 
 PRINT "S.D.MOF ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/disc/output/D.MOF.bin", CODE%, CODE% + &A00
+SAVE "versions/disc/output/D.MOF.bin", CODE%, CODE% + &0A00
 

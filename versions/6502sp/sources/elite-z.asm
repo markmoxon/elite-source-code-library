@@ -57,18 +57,18 @@ VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
                         \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
                         \ known as SHEILA)
 
-IRQ1V = &204            \ The IRQ1V vector that we intercept to implement the
+IRQ1V = &0204           \ The IRQ1V vector that we intercept to implement the
                         \ split-sceen mode
 
-WRCHV = &20E            \ The WRCHV vector that we intercept to implement our
+WRCHV = &020E           \ The WRCHV vector that we intercept to implement our
                         \ own custom OSWRCH commands for communicating over the
                         \ Tube
 
-WORDV = &20C            \ The WORDV vector that we intercept to implement our
+WORDV = &020C           \ The WORDV vector that we intercept to implement our
                         \ own custom OSWORD commands for communicating over the
                         \ Tube
 
-RDCHV = &210            \ The RDCHV vector that we intercept to add validation
+RDCHV = &0210           \ The RDCHV vector that we intercept to add validation
                         \ when reading characters using OSRDCH
 
 VSCAN = 57              \ Defines the split position in the split-screen mode

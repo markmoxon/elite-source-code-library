@@ -154,5 +154,5 @@ INCLUDE "library/enhanced/main/variable/ship_python_p.asm"
 \ ******************************************************************************
 
 PRINT "S.D.MOO ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/disc/output/D.MOO.bin", CODE%, CODE% + &A00
+SAVE "versions/disc/output/D.MOO.bin", CODE%, CODE% + &0A00
 

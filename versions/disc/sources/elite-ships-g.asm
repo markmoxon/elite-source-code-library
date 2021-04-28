@@ -153,5 +153,5 @@ INCLUDE "library/enhanced/main/variable/ship_constrictor.asm"
 \ ******************************************************************************
 
 PRINT "S.D.MOG ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/disc/output/D.MOG.bin", CODE%, CODE% + &A00
+SAVE "versions/disc/output/D.MOG.bin", CODE%, CODE% + &0A00
 

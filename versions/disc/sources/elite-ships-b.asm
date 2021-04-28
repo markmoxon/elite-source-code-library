@@ -153,5 +153,5 @@ INCLUDE "library/enhanced/main/variable/ship_worm.asm"
 \ ******************************************************************************
 
 PRINT "S.D.MOB ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/disc/output/D.MOB.bin", CODE%, CODE% + &A00
+SAVE "versions/disc/output/D.MOB.bin", CODE%, CODE% + &0A00
 

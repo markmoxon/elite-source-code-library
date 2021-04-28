@@ -153,5 +153,5 @@ INCLUDE "library/enhanced/main/variable/ship_cobra_mk_3_p.asm"
 \ ******************************************************************************
 
 PRINT "S.D.MOJ ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/disc/output/D.MOJ.bin", CODE%, CODE% + &A00
+SAVE "versions/disc/output/D.MOJ.bin", CODE%, CODE% + &0A00
 

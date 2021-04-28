@@ -154,5 +154,5 @@ INCLUDE "library/enhanced/main/variable/ship_moray.asm"
 \ ******************************************************************************
 
 PRINT "S.D.MOK ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/disc/output/D.MOK.bin", CODE%, CODE% + &A00
+SAVE "versions/disc/output/D.MOK.bin", CODE%, CODE% + &0A00
 

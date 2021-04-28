@@ -96,16 +96,17 @@ LE% = &0B00             \ LE% is the address to which the code from UU% onwards
                         \
                         \   * The variables used by the above
 
-NETV = &224             \ The NETV vector that we intercept as part of the copy
+NETV = &0224            \ The NETV vector that we intercept as part of the copy
                         \ protection
 
-IRQ1V = &204            \ The IRQ1V vector that we intercept to implement the
+IRQ1V = &0204           \ The IRQ1V vector that we intercept to implement the
                         \ split-sceen mode
+
+OSPRNT = &0234          \ The address for the OSPRNT vector
 
 OSWRCH = &FFEE          \ The address for the OSWRCH routine
 OSBYTE = &FFF4          \ The address for the OSBYTE routine
 OSWORD = &FFF1          \ The address for the OSWORD routine
-OSPRNT = &234           \ The address for the OSPRNT vector
 
 VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
                         \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
@@ -130,7 +131,7 @@ IF DISC
 
 ELSE
 
- CODE% = &E00           \ CODE% is set to the assembly address of the loader
+ CODE% = &0E00          \ CODE% is set to the assembly address of the loader
                         \ code file that we assemble in this file ("ELITE"),
                         \ which is at the standard &0E00 address for the version
                         \ that loads from cassette

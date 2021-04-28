@@ -66,7 +66,7 @@ ELIF _MASTER_VERSION
 .SPBLB
 
  LDA #%00001111         \ Set bits 1 and 2 of the Access Control Register at
- STA VIA+&34            \ SHEILA+&34 to switch screen memory into &3000-&7FFF
+ STA VIA+&34            \ SHEILA &34 to switch screen memory into &3000-&7FFF
 
 ELIF _6502SP_VERSION
 
@@ -128,7 +128,7 @@ ELIF _MASTER_VERSION
 .BULB2
 
  LDA #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
- STA VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
+ STA VIA+&34            \ SHEILA &34 to switch main memory back into &3000-&7FFF
 
  RTS                    \ Return from the subroutine
 

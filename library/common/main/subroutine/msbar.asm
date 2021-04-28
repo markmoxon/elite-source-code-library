@@ -106,7 +106,7 @@ ENDIF
 IF _MASTER_VERSION \ Platform
 
  LDA #%00001111         \ Set bits 1 and 2 of the Access Control Register at
- STA VIA+&34            \ SHEILA+&34 to switch screen memory into &3000-&7FFF
+ STA VIA+&34            \ SHEILA &34 to switch screen memory into &3000-&7FFF
 
  TXA                    \ Store the value of X on the stack so we can preserve
  PHA                    \ it across the call to this subroutine
@@ -329,7 +329,7 @@ IF _MASTER_VERSION \ Platform
  PLX                    \ Restore X from the stack, so that it's preserved
 
  LDA #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
- STA VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
+ STA VIA+&34            \ SHEILA &34 to switch main memory back into &3000-&7FFF
 
 ELIF _ELECTRON_VERSION
 

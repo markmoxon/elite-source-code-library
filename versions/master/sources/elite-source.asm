@@ -47,9 +47,6 @@ Q% = _REMOVE_CHECKSUMS  \ Set Q% to TRUE to max out the default commander, FALSE
 
 LS% = &0800             \ The start of the descending ship line heap
 
-BRKV = &202             \ The break vector that we intercept to enable us to
-                        \ handle and display system errors
-
 NOST = 20               \ The number of stardust particles in normal space (this
                         \ goes down to 3 in witchspace)
 
@@ -110,10 +107,13 @@ VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
                         \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
                         \ known as SHEILA)
 
-IRQ1V = &204            \ The IRQ1V vector that we intercept to implement the
+BRKV = &0202            \ The break vector that we intercept to enable us to
+                        \ handle and display system errors
+
+IRQ1V = &0204           \ The IRQ1V vector that we intercept to implement the
                         \ split-sceen mode
 
-WRCHV = &20E            \ The WRCHV vector that we intercept to implement our
+WRCHV = &020E           \ The WRCHV vector that we intercept to implement our
                         \ own custom OSWRCH commands for communicating over the
                         \ Tube
 

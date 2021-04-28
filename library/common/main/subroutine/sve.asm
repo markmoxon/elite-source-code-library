@@ -353,7 +353,7 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
- STA &AFF+NT%           \ Store the checksum EOR &A9 in the penultimate byte of
+ STA &0AFF+NT%          \ Store the checksum EOR &A9 in the penultimate byte of
                         \ the save file at &0B00 (the equivalent of CHK2 in the
                         \ last saved block)
 
@@ -367,7 +367,7 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
 ELIF _ELECTRON_VERSION
 
- STA &8FF+NT%           \ Store the checksum EOR &A9 in the penultimate byte of
+ STA &08FF+NT%          \ Store the checksum EOR &A9 in the penultimate byte of
                         \ the save file at &0900 (the equivalent of CHK2 in the
                         \ last saved block)
 

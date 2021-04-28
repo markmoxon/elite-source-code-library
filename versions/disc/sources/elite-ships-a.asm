@@ -153,4 +153,4 @@ INCLUDE "library/enhanced/main/variable/ship_fer_de_lance.asm"
 \ ******************************************************************************
 
 PRINT "S.D.MOA ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/disc/output/D.MOA.bin", CODE%, CODE% + &A00
+SAVE "versions/disc/output/D.MOA.bin", CODE%, CODE% + &0A00

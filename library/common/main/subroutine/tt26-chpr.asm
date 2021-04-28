@@ -152,7 +152,7 @@ ENDIF
 IF _MASTER_VERSION \ Platform
 
  LDY #%00001111         \ Set bits 1 and 2 of the Access Control Register at
- STY VIA+&34            \ SHEILA+&34 to switch screen memory into &3000-&7FFF
+ STY VIA+&34            \ SHEILA &34 to switch screen memory into &3000-&7FFF
 
 ENDIF
 
@@ -815,7 +815,7 @@ ELIF _MASTER_VERSION
                         \ clear the screen and draw a white border
 
  LDA #%00001111         \ Set bits 1 and 2 of the Access Control Register at
- STA VIA+&34            \ SHEILA+&34 to switch screen memory into &3000-&7FFF
+ STA VIA+&34            \ SHEILA &34 to switch screen memory into &3000-&7FFF
 
  LDA #1                 \ Move the text cursor to column 1, row 1
  STA XC
@@ -1093,7 +1093,7 @@ ELIF _6502SP_VERSION
 ELIF _MASTER_VERSION
 
  LDA #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
- STA VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
+ STA VIA+&34            \ SHEILA &34 to switch main memory back into &3000-&7FFF
 
  PLX                    \ We're done printing, so restore the values of the
  PLY                    \ A, X and Y registers that we saved above and clear the

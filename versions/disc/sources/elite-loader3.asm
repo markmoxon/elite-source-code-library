@@ -37,17 +37,17 @@ Q% = _REMOVE_CHECKSUMS  \ Set Q% to TRUE to max out the default commander, FALSE
                         \ for the standard default commander (this is set to
                         \ TRUE if checksums are disabled, just for convenience)
 
-NETV = &224             \ The NETV vector that we intercept as part of the copy
-                        \ protection
-
-BRKV = &202             \ The break vector that we intercept to enable us to
+BRKV = &0202            \ The break vector that we intercept to enable us to
                         \ handle and display system errors
 
-IRQ1V = &204            \ The IRQ1V vector that we intercept to implement the
+IRQ1V = &0204           \ The IRQ1V vector that we intercept to implement the
                         \ split-sceen mode
 
-WRCHV = &20E            \ The WRCHV vector that we intercept with our custom
+WRCHV = &020E           \ The WRCHV vector that we intercept with our custom
                         \ text printing routine
+
+NETV = &0224            \ The NETV vector that we intercept as part of the copy
+                        \ protection
 
 OSWRCH = &FFEE          \ The address for the OSWRCH routine
 OSBYTE = &FFF4          \ The address for the OSBYTE routine

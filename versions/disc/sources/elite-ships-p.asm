@@ -154,5 +154,5 @@ INCLUDE "library/enhanced/main/variable/ship_asp_mk_2.asm"
 \ ******************************************************************************
 
 PRINT "S.D.MOP ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/disc/output/D.MOP.bin", CODE%, CODE% + &A00
+SAVE "versions/disc/output/D.MOP.bin", CODE%, CODE% + &0A00
 

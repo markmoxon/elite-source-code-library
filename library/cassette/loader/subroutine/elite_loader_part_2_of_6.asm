@@ -43,7 +43,7 @@ IF DISC = 0
 .ABCDEFG
 
  LDA (ZP),Y             \ Copy the Y-th byte from the default vector table into
- STA &200,Y             \ the vector table in &0200
+ STA &0200,Y            \ the vector table in &0200
 
  DEY                    \ Decrement the loop counter
 
@@ -65,18 +65,18 @@ ENDIF
  LDA &FFFC              \ Fetch the low byte of the reset address in &FFFC,
                         \ which will reset the machine if called
 
- STA &200               \ Set the low bytes of USERV, BRKV, IRQ2V and EVENTV
- STA &202
- STA &206
- STA &220
+ STA &0200              \ Set the low bytes of USERV, BRKV, IRQ2V and EVENTV
+ STA &0202
+ STA &0206
+ STA &0220
 
  LDA &FFFD              \ Fetch the high byte of the reset address in &FFFD,
                         \ which will reset the machine if called
 
- STA &201               \ Set the high bytes of USERV, BRKV, IRQ2V and EVENTV
- STA &203
- STA &207
- STA &221
+ STA &0201              \ Set the high bytes of USERV, BRKV, IRQ2V and EVENTV
+ STA &0203
+ STA &0207
+ STA &0221
 
  LDX #&2F-2             \ We now step through all the vectors from &0204 to
                         \ &022F and OR their high bytes with &C0, so they all
@@ -86,19 +86,19 @@ ENDIF
 
 .purge
 
- LDA &202,X             \ Set the high byte of the vector in &202+X so it points
- ORA #&C0               \ to the MOS ROM
- STA &202,X
+ LDA &0202,X            \ Set the high byte of the vector in &0202+X so it
+ ORA #&C0               \ points to the MOS ROM
+ STA &0202,X
 
  DEX                    \ Increment the counter to point to the next high byte
  DEX
 
  BPL purge              \ Loop back until we have done all the vectors
 
- LDA #&60               \ Store an RTS instruction in location &232
- STA &232
+ LDA #&60               \ Store an RTS instruction in location &0232
+ STA &0232
 
- LDA #&2                \ Point the NETV vector to &232, which we just filled
+ LDA #&2                \ Point the NETV vector to &0232, which we just filled
  STA NETV+1             \ with an RTS
  LDA #&32
  STA NETV

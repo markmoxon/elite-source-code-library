@@ -155,14 +155,14 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
 
- LDA &B00,X             \ Copy the X-th byte of &0B00 to the X-th byte of NA%+8
+ LDA &0B00,X            \ Copy the X-th byte of &0B00 to the X-th byte of NA%+8
  STA NA%+8,X
 
  DEX                    \ Decrement the loop counter
 
 ELIF _ELECTRON_VERSION
 
- LDA &900,X             \ Copy the X-th byte of &0900 to the X-th byte of NA%+8
+ LDA &0900,X            \ Copy the X-th byte of &0900 to the X-th byte of NA%+8
  STA NA%+8,X
 
  DEX                    \ Decrement the loop counter

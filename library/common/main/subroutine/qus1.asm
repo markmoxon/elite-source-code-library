@@ -28,7 +28,7 @@ ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Comment
 \   Y                   Points to the page number containing the OSFILE block,
 \                       which must be &C because that's where the pointer to the
-\                       filename in INWK is stored below (by the STX &C00
+\                       filename in INWK is stored below (by the STX &0C00
 \                       instruction)
 \
 ELIF _6502SP_VERSION

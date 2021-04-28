@@ -143,7 +143,7 @@ IF _MASTER_VERSION \ Screen
                         \ call to this subroutine
 
  LDY #%00001111         \ Set bits 1 and 2 of the Access Control Register at
- STY VIA+&34            \ SHEILA+&34 to switch screen memory into &3000-&7FFF
+ STY VIA+&34            \ SHEILA &34 to switch screen memory into &3000-&7FFF
 
  LDX X1                 \ Set X = X1
 
@@ -514,7 +514,7 @@ ELIF _MASTER_VERSION
 .HL6
 
  LDY #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
- STY VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
+ STY VIA+&34            \ SHEILA &34 to switch main memory back into &3000-&7FFF
 
  LDY YSAV               \ Restore Y from YSAV, so that it's preserved
 
@@ -645,7 +645,7 @@ ELIF _6502SP_VERSION
 ELIF _MASTER_VERSION
 
  LDY #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
- STY VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
+ STY VIA+&34            \ SHEILA &34 to switch main memory back into &3000-&7FFF
 
  LDY YSAV               \ Restore Y from YSAV, so that it's preserved
 

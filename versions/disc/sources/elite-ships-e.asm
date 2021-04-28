@@ -154,5 +154,5 @@ INCLUDE "library/enhanced/main/variable/ship_cobra_mk_1.asm"
 \ ******************************************************************************
 
 PRINT "S.D.MOE ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/disc/output/D.MOE.bin", CODE%, CODE% + &A00
+SAVE "versions/disc/output/D.MOE.bin", CODE%, CODE% + &0A00
 

@@ -33,7 +33,7 @@ _DISC_FLIGHT            = TRUE
 _IB_DISC                = (_RELEASE = 1)
 _STH_DISC               = (_RELEASE = 2)
 
-BYTEV = &20A            \ The BYTEV vector that we check as part of the copy
+BYTEV = &020A           \ The BYTEV vector that we check as part of the copy
                         \ protection
 
 OSWRCH = &FFEE          \ The address for the OSWRCH routine

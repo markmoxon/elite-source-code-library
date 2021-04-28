@@ -26,20 +26,20 @@
                         \
                         \ so any character printing will use the TT26 routine
 
- LDA &20E               \ Copy the low byte of WRCHV to the low byte of OSPRNT
+ LDA &020E              \ Copy the low byte of WRCHV to the low byte of OSPRNT
  STA OSPRNT
 
  LDA #LO(TT26)          \ Set the low byte of WRCHV to the low byte of TT26
- STA &20E
+ STA &020E
 
  LDX #LO(MESS1)         \ Set X to the low byte of MESS1
 
- LDA &20F               \ Copy the high byte of WRCHV to the high byte of OSPRNT
+ LDA &020F              \ Copy the high byte of WRCHV to the high byte of OSPRNT
  STA OSPRNT+1
 
  LDA #HI(TT26)          \ Set the high byte of WRCHV to the high byte of TT26
  LDY #HI(MESS1)         \ and set Y to the high byte of MESS1
- STA &20F
+ STA &020F
 
  JSR AFOOL              \ This calls AFOOL, which jumps to the address in FOOLV,
                         \ which contains the address of FOOL, which contains an
@@ -129,14 +129,14 @@ ENDIF
                         \ code for the vector values)
 
  LDA S%+6               \ Set BRKV to point to the BR1 routine in the main game
- STA &202               \ code
+ STA &0202              \ code
  LDA S%+7
- STA &203
+ STA &0203
 
  LDA S%+2               \ Set WRCHV to point to the TT26 routine in the main
- STA &20E               \ game code
+ STA &020E              \ game code
  LDA S%+3
- STA &20F
+ STA &020F
 
  RTS                    \ This RTS actually does a jump to the first instruction
                         \ in BLOCK, after the two EQUW operatives, which is now

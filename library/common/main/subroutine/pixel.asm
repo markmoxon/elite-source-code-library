@@ -138,7 +138,7 @@ ELIF _MASTER_VERSION
  STY T1                 \ Store Y, the index of this pixel's y-coordinate, in T1
 
  LDY #%00001111         \ Set bits 1 and 2 of the Access Control Register at
- STY VIA+&34            \ SHEILA+&34 to switch screen memory into &3000-&7FFF
+ STY VIA+&34            \ SHEILA &34 to switch screen memory into &3000-&7FFF
 
  TAY                    \ Copy the screen y-coordinate from A into Y
 
@@ -387,7 +387,7 @@ IF _6502SP_VERSION \ Platform
 ELIF _MASTER_VERSION
 
  LDY #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
- STY VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
+ STY VIA+&34            \ SHEILA &34 to switch main memory back into &3000-&7FFF
 
  LDY T1                 \ Restore Y from T1, so Y is preserved by the routine
 
@@ -466,7 +466,7 @@ IF _6502SP_VERSION \ Platform
 ELIF _MASTER_VERSION
 
  LDY #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
- STY VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
+ STY VIA+&34            \ SHEILA &34 to switch main memory back into &3000-&7FFF
 
  LDY T1                 \ Restore Y from T1, so Y is preserved by the routine
 

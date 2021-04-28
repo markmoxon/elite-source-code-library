@@ -328,7 +328,7 @@ ELIF _6502SP_VERSION
 ELIF _MASTER_VERSION
 
  LDY #%00001111         \ Set bits 1 and 2 of the Access Control Register at
- STY VIA+&34            \ SHEILA+&34 to switch screen memory into &3000-&7FFF
+ STY VIA+&34            \ SHEILA &34 to switch screen memory into &3000-&7FFF
 
  JSR CPIX2              \ Call CPIX2 to draw a single-height dash at the
                         \ y-coordinate in A, and return the dash's right pixel
@@ -685,7 +685,7 @@ ELIF _MASTER_VERSION
 .RTS
 
  LDA #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
- STA VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
+ STA VIA+&34            \ SHEILA &34 to switch main memory back into &3000-&7FFF
 
  RTS
 
@@ -740,7 +740,7 @@ ELIF _MASTER_VERSION
                         \ to draw the next pixel
 
  LDA #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
- STA VIA+&34            \ SHEILA+&34 to switch main memory back into &3000-&7FFF
+ STA VIA+&34            \ SHEILA &34 to switch main memory back into &3000-&7FFF
 
  RTS                    \ Return from the subroutine
 

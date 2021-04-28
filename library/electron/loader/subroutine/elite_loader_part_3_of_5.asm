@@ -11,13 +11,13 @@
 \
 \   * WORDS9: move 4 pages (1024 bytes) from &4400 (CODE%) to &0400
 \
-\   * P.ELITE: move 1 page (256 bytes) from &4F00 (CODE% + &B00) to &5BE0
+\   * P.ELITE: move 1 page (256 bytes) from &4F00 (CODE% + &0B00) to &5BE0
 \
-\   * P.A-SOFT: move 1 page (256 bytes) from &5000 (CODE% + &C00) to &5960
+\   * P.A-SOFT: move 1 page (256 bytes) from &5000 (CODE% + &0C00) to &5960
 \
-\   * P.(C)ASFT: move 1 page (256 bytes) from &5100 (CODE% + &D00) to &73A0
+\   * P.(C)ASFT: move 1 page (256 bytes) from &5100 (CODE% + &0D00) to &73A0
 \
-\   * P.DIALS: move 7 pages (1792 bytes) from &4800 (CODE% + &400) to &7620
+\   * P.DIALS: move 7 pages (1792 bytes) from &4800 (CODE% + &0400) to &7620
 \
 \   * Move 1 page (256 bytes) from &5615 (UU%) to &0B00-&0BFF
 \

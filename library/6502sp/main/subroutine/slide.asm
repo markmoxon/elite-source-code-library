@@ -4,92 +4,12 @@
 \       Type: Subroutine
 \   Category: Demo
 \    Summary: Display a Star Wars scroll text
+\  Deep dive: The 6502 Second Processor demo mode
 \
 \ ------------------------------------------------------------------------------
 \
-\ The first step is to write the scroll text onto a 2D canvas, laid out like
-\ this, starting with the first words in the top-left, as you would expect when
-\ writing on a piece of paper:
-\
-\   (0, 254)              (256, 254)
-\           +------------+
-\           |            |      ^
-\           | On-screen  |      |
-\           |            |      |  scroll direction
-\           |............|      |
-\    ^      :            :
-\    |      :            :
-\   BALI    : Off-screen :
-\    |      :            :
-\    V      :            :
-\           +------------+
-\     (0, 0)              (256, 0)
-\
-\ Note that the y-axis is in the same direction as in the 3D space view, so the
-\ (0, 0) origin is in the bottom left, and y-coordinates get larger as you move
-\ up the canvas (and x increases towards the right, as you would expect).
-\
-\ BALI is a counter that goes from 254 to 2, and can be thought of as the
-\ y-coordinate of our eyes as we read through the scroll text from top to
-\ bottom, or, alternatively, how much of the canvas has yet to appear on-screen
-\ as the canvas scrolls into view.
-\
-\ Now take a point (X1, Y1) in the 2D scroll text canvas, like this:
-\
-\             X1
-\           <--->
-\
-\           +------------+
-\           |            |
-\           |    x       |
-\           |            |      ^       ^
-\           |            |      |       |
-\           |            |      |       | Y1 - BALI
-\           |            |      |       |
-\           |............|      |       v
-\    ^      :            :      |
-\    |      :            :      | Y1
-\   BALI    : Off-screen :      |
-\    |      :            :      |
-\    |      :            :      |
-\    v      +------------+      v
-\
-\ If Y1 < BALI, the point is off the bottom of the screen, so let's assume that
-\ Y1 >= BALI. This means that the value of Y1 - BALI is 0 for points at the
-\ bottom of the visible section, and higher for points near the top.
-\
-\ We can project the point (X1, Y1) onto the Star Wars perspective scroll text
-\ to get a 3D space coordinate (x, y, z) like this:
-\
-\   x = (x_sign x_hi x_lo) = X1 - 128
-\
-\   y = (y_sign y_hi y_lo) = (Y1 - BALI) - 128
-\
-\   z = (z_sign z_hi z_lo) = ((Y1 - BALI) * 4 div 256) + #D
-\
-\ The x calculation moves the point (X1, Y1) to the left so the scroll text is
-\ in the centre, right in front of the camera (i.e. it shifts the x-coordinate
-\ range from 0-255 to -128 to +127).
-\
-\ The y calculation moves the point (X1, Y1) down so that points at the bottom
-\ of the visible part of the canvas (those just appearing) will be at a space
-\ y-coordinate of -128, so the scroll text appears to come in from just below
-\ the bottom of the screen.
-\
-\ The z calculation tips the top of the 2D canvas away from the viewer by giving
-\ points higher up the canvas (i.e. those with higher y-coordinates) a higher
-\ z-coordinate, so the top of the canvas is further away (as the z-coordinate is
-\ into the screen). The #D configuration variable is the z-distance of the
-\ bottom of the visible part of the canvas as it scrolls into view. The scroll
-\ text appears as a disappearing flat canvas because the z-coordinate is in a
-\ linear relationship with the y-coordinate (i.e. z = ky + d where k and d are
-\ constants).
-\
-\ We then project this space coordinate onto the screen for drawing, using the
-\ same process as when we draw ships. Couple this with a couple of tables for
-\ storing the projected lines so they can be erased again, then we can scroll
-\ the text in a Star Wars style by simply counting BALI from 254 down to 2,
-\ reprojecting the canvas and redrawing the scroll text with each new value.
+\ See the deep dive on "The 6502 Second Processor demo mode" for details of how
+\ the scroll text works.
 \
 \ Arguments:
 \

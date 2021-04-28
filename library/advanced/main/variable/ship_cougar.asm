@@ -5,6 +5,7 @@
 \   Category: Drawing ships
 \    Summary: Ship blueprint for a Cougar
 \  Deep dive: Ship blueprints
+\             The elusive Cougar
 \
 \ ******************************************************************************
 

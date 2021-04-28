@@ -4,6 +4,8 @@
 \       Type: Variable
 \   Category: Drawing ships
 \    Summary: Ship blueprints default NEWB flags for the ship hanger
+\  Deep dive: Ship blueprints
+\             Advanced tactics with the NEWB flags
 \
 \ ******************************************************************************
 

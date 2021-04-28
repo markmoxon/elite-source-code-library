@@ -94,6 +94,8 @@ ORG CODE%
 \       Type: Variable
 \   Category: Drawing ships
 \    Summary: Ship blueprints default NEWB flags for the D.MOD file
+\  Deep dive: Ship blueprints
+\             Advanced tactics with the NEWB flags
 \
 \ ******************************************************************************
 

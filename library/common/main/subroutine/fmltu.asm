@@ -4,6 +4,9 @@
 \       Type: Subroutine
 \   Category: Maths (Arithmetic)
 \    Summary: Calculate A = A * Q / 256
+IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
+\  Deep dive: Multiplication and division using logarithms
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
@@ -16,65 +19,10 @@
 \
 \   A = A * Q / 256
 \
-IF _6502SP_VERSION \ Comment
-\ Let La be the a-th entry in the 16-bit log/logL table, so:
-\
-\   La = 32 * log(a) * 256
-\
-\ Let Ar be the r-th entry in the antilog table
-\
-\   Ar = 2^(r / 32 + 8) / 256
-\
-\ These are all logarithms to base 2, so this is true:
-\
-\   a * q = 2 ^ (log(a) + log(q))
-\
-\ Let's reduce this. First, we have the following:
-\
-\   log(a) + log(q) = (log(a) + log(q)) * 1
-\                   = (log(a) + log(q)) * (32 * 256) / (32 * 256)
-\                   = (32 * log(a) * 256 + 32 * log(q) * 256) / (32 * 256)
-\                   = (La + Lq) / (32 * 256)
-\
-\ Now we calculate La + Lq.
-\
-\ * If La + Lq < 256, then
-\
-\     log(a) + log(q) < 256 / (32 * 256)
-\                     = 1 / 32
-\
-\   So:
-\
-\     a * q = 2 ^ (log(a) + log(q))
-\           < 2 ^ (1 / 32)
-\           < 1
-\
-\   so, because this routine returns A = a * q / 256, we return A = 0
-\
-\ * If La + Lq >= 256, then
-\
-\     La + Lq >= 256
-\
-\   so:
-\
-\     La + Lq = r + 256
-\
-\   for some value of r > 0. Plugging this into the above gives:
-\
-\     log(a) + log(q) = (La + Lq) / (32 * 256)
-\                     = (r + 256) / (32 * 256)
-\                     = (r / 32 + 8) / 256
-\
-\   And plugging this into the above gives:
-\
-\     x * y = 2 ^ (log(a) + log(q))
-\           = 2 ^ ((r / 32 + 8) / 256)
-\           = Ar
-\
-\   so we return A = Ar
-\
-\ In summary, given two numbers A and Q, we can calculate A * Q / 256 by adding
-\ La and Lq, and then using the result to look up the correct result in Ar.
+IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
+\ The Master and 6502 Second Processor versions use logarithms to speed up the
+\ multiplication process. See the deep dive on "Multiplication using logarithms"
+\ for more details.
 \
 ENDIF
 \ ******************************************************************************

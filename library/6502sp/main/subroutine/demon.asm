@@ -4,37 +4,12 @@
 \       Type: Subroutine
 \   Category: Demo
 \    Summary: Show the demo
+\  Deep dive: The 6502 Second Processor demo mode
 \
 \ ------------------------------------------------------------------------------
 \
-\ The demo shows automatically if you leave the game idling at the title screen,
-\ or you can trigger it by pressing TAB. It has the following stages:
-\
-\   * "ACORNSOFT PRESENTS" scrolls up the screen like the opening of Star Wars
-\
-\   * The Elite logo appears from behind the camera, moving fowards into view,
-\     tilted back so it appears on-edge, with the bottom of the logo pointing
-\     towards the camera
-\
-\   * It then tilts forwards until it's fully vertical in front of the camera
-\
-\   * A Cobra Mk III flies in slowly from behind the camera at the top of the
-\     screen
-\
-\   * The Cobra fires its lasers at the logo, which explodes, and the Cobra
-\     flies on, in a clockwise roll, before pausing at the top of the screen
-\
-\   * "BY IAN BELL AND DAVID BRABEN" scrolls up the screen
-\
-\   * The camera speeds forward, the Cobra starts to fly again, pitching
-\     upwards as the camera overtakes it while it flies off the top of the
-\     screen
-\
-\   * "THE GALAXY IS IN TURMOIL, THE NAVY FAR AWAY AS THE EMPIRE CRUMBLES"
-\     scrolls up the screen
-\
-\   * An Adder appears in the middle of the screen and flies towards and past
-\     the camera, diving down and rolling clockwise just before it hits
+\ See the deep dive on "The 6502 Second Processor demo mode" for details of how
+\ the demo is implemented.
 \
 \ ******************************************************************************
 

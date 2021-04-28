@@ -4,7 +4,11 @@
 \       Type: Subroutine
 \   Category: Maths (Arithmetic)
 \    Summary: Calculate R = 256 * A / Q
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
 \  Deep dive: Shift-and-subtract division
+ELIF _6502SP_VERSION OR _MASTER_VERSION
+\  Deep dive: Multiplication and division using logarithms
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

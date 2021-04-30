@@ -37,9 +37,31 @@ ENDIF
  STA VIA+&4E            \ (SHEILA &4E) bits 0 and 3-5 (i.e. disable the Timer1,
                         \ CB1, CB2 and CA2 interrupts from the System VIA)
 
+IF _6502SP_VERSION \ Tube
+
+IF _SNG45 OR _SOURCE_DISC
+
  LDA #%01111111         \ Set 6522 User VIA interrupt enable register IER
  STA &FE6E              \ (SHEILA &6E) bits 0-7 (i.e. disable all hardware
                         \ interrupts from the User VIA)
+
+ELIF _EXECUTIVE
+
+ LDA #%01111111         \ At this point, the other 6502SP versions set the 6522
+                        \ User VIA interrupt enable register IER to this value
+                        \ to disable all hardware interrupts from the User VIA,
+                        \ but the Executive version is missing the STA &FE6E
+                        \ instruction, so it doesn't disable all the interrupts
+
+ENDIF
+
+ELIF _MASTER_VERSION
+
+ LDA #%01111111         \ Set 6522 User VIA interrupt enable register IER
+ STA &FE6E              \ (SHEILA &6E) bits 0-7 (i.e. disable all hardware
+                        \ interrupts from the User VIA)
+
+ENDIF
 
  LDA IRQ1V              \ Store the current IRQ1V vector in VEC, so VEC(1 0) now
  STA VEC                \ contains the original address of the IRQ1 handler

@@ -34,7 +34,11 @@ FONT% = P% DIV 256
 
 IF _6502SP_VERSION \ Platform
 
-INCBIN "versions/6502sp/binaries/P.FONT.bin"
+IF _SNG45 OR _SOURCE_DISC
+ INCBIN "versions/6502sp/binaries/P.FONT.bin"
+ELIF _EXECUTIVE
+ INCBIN "versions/6502sp/binaries/P.FONTEX.bin"
+ENDIF
 
 ELIF _MASTER_VERSION
 

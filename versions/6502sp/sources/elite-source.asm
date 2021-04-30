@@ -48,6 +48,7 @@ _MASTER_VERSION         = (_VERSION = 4)
 _ELECTRON_VERSION       = (_VERSION = 5)
 _SOURCE_DISC            = (_RELEASE = 1)
 _SNG45                  = (_RELEASE = 2)
+_EXECUTIVE              = (_RELEASE = 3)
 _DISC_DOCKED            = FALSE
 _DISC_FLIGHT            = FALSE
 
@@ -893,7 +894,7 @@ LOAD_G% = LOAD% + P% - CODE%
 
 IF _MATCH_EXTRACTED_BINARIES
 
- IF _SNG45
+ IF _SNG45 OR _EXECUTIVE
   INCBIN "versions/6502sp/extracted/sng45/workspaces/ELTG-align.bin"
  ELIF _SOURCE_DISC
   INCBIN "versions/6502sp/extracted/source-disc/workspaces/ELTG-align.bin"

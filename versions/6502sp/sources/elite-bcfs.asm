@@ -49,6 +49,7 @@ _MASTER_VERSION         = (_VERSION = 4)
 _ELECTRON_VERSION       = (_VERSION = 5)
 _SOURCE_DISC            = (_RELEASE = 1)
 _SNG45                  = (_RELEASE = 2)
+_EXECUTIVE              = (_RELEASE = 3)
 
 \ ******************************************************************************
 \
@@ -71,7 +72,7 @@ LOAD% = &1000           \ The load address of the main game code file, which is
 
 ORG CODE%
 
-IF _SNG45
+ IF _SNG45 OR _EXECUTIVE
  INCBIN "versions/6502sp/extracted/sng45/workspaces/BCFS-MOS.bin"
 ELIF _SOURCE_DISC
  INCBIN "versions/6502sp/extracted/source-disc/workspaces/BCFS-MOS.bin"
@@ -141,7 +142,7 @@ INCBIN "versions/6502sp/output/WORDS.bin"
 PRINT "ships = ", ~P%
 INCBIN "versions/6502sp/output/SHIPS.bin"
 
-IF _SNG45
+ IF _SNG45 OR _EXECUTIVE
  INCBIN "versions/6502sp/extracted/sng45/workspaces/BCFS-SHIPS.bin"
 ELIF _SOURCE_DISC
  INCBIN "versions/6502sp/extracted/source-disc/workspaces/BCFS-SHIPS.bin"

@@ -73,17 +73,19 @@
  PHA                    \ at least as long as the do65c02 routine, which ends
  LDX #0                 \ with a jump to G% below to start the game
  RTS
+
  BRK
  EQUS "ELITE - By Ian Bell & David Braben"
  EQUB 10
  EQUB 13
  BRK
- LDA SC
- ADC 2
- CMP F%-1
- BNE P%-2
- EQUD &7547534
- EQUD &452365
+
+ LDA SC                 \ This section of unused code is particularly useful to
+ ADC 2                  \ hackers, as it contains the value of F% (in the
+ CMP F%-1               \ CMP F%-1 instruction), which we need to undo the
+ BNE P%-2               \ encryption. We also need the value of G%, which is
+ EQUD &7547534          \ easy enough to work out as it's just after this block.
+ EQUD &452365           \ See the elite-decrypt.py script for more details
  EQUB &8D
 
 .G%

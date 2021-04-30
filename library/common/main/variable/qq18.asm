@@ -1104,7 +1104,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ 
 
 ELIF _6502SP_VERSION
 
-IF _SNG45
+ IF _SNG45 OR _EXECUTIVE
 
  RTOK 121               \ Token 114:    "ENERGY UNIT"
  RTOK 14                \
@@ -1612,7 +1612,7 @@ ELIF _DISC_VERSION
 
 ELIF _6502SP_VERSION
 
-IF _SNG45
+ IF _SNG45 OR _EXECUTIVE
 
  EQUB 0, 0              \ These bytes appear to be unused and just contain noise
  EQUB &E4, &63, &A5

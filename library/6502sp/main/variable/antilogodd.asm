@@ -22,7 +22,7 @@
 
 IF _MATCH_EXTRACTED_BINARIES
 
- IF _SNG45
+ IF _SNG45 OR _EXECUTIVE
   INCBIN "versions/6502sp/extracted/sng45/workspaces/ELTG-antilogODD.bin"
  ELIF _SOURCE_DISC
   INCBIN "versions/6502sp/extracted/source-disc/workspaces/ELTG-antilogODD.bin"

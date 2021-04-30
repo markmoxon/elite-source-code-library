@@ -34,6 +34,7 @@ _MASTER_VERSION         = (_VERSION = 4)
 _ELECTRON_VERSION       = (_VERSION = 5)
 _SOURCE_DISC            = (_RELEASE = 1)
 _SNG45                  = (_RELEASE = 2)
+_EXECUTIVE              = (_RELEASE = 3)
 
 \ ******************************************************************************
 \
@@ -64,7 +65,7 @@ INCLUDE "library/6502sp/loader1/workspace/zp.asm"
 \
 \ ******************************************************************************
 
-IF _SNG45
+ IF _SNG45 OR _EXECUTIVE
 
  CODE% = &1FDC
  LOAD% = &1FDC
@@ -78,7 +79,7 @@ ENDIF
 
 ORG CODE%
 
-IF _SNG45
+ IF _SNG45 OR _EXECUTIVE
 
  EQUS "Copyright (c) Acornsoft Limited 1985"
 

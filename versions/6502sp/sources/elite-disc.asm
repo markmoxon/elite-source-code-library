@@ -31,8 +31,9 @@ INCLUDE "versions/6502sp/sources/elite-header.h.asm"
 
 _SOURCE_DISC            = (_RELEASE = 1)
 _SNG45                  = (_RELEASE = 2)
+_EXECUTIVE              = (_RELEASE = 3)
 
-IF _SNG45
+IF _SNG45 OR _EXECUTIVE
  PUTFILE "versions/6502sp/output/ELITE.bin", "ELITE", &FF1FDC, &FF2085
 ELIF _SOURCE_DISC
  PUTFILE "versions/6502sp/output/ELITE.bin", "ELITE", &FF2000, &FF2085
@@ -40,10 +41,18 @@ ENDIF
 
 PUTFILE "versions/6502sp/output/ELITEa.bin", "I.ELITEa", &FF2000, &FF2000
 
-PUTFILE "versions/6502sp/output/I.CODE.bin", "I.CODE", &FF2400, &FF2C89
+IF _SNG45 OR _SOURCE_DISC
+ PUTFILE "versions/6502sp/output/I.CODE.bin", "I.CODE", &FF2400, &FF2C89
+ELIF _EXECUTIVE
+ PUTFILE "versions/6502sp/output/I.CODE.bin", "I.CODE", &032400, &032C89
+ENDIF
 
 IF _REMOVE_CHECKSUMS
  PUTFILE "versions/6502sp/output/P.CODE.bin", "P.CODE", &1000, &10D1
 ELSE
- PUTFILE "versions/6502sp/output/P.CODE.bin", "P.CODE", &1000, &106A
+ IF _SNG45 OR _EXECUTIVE OR _SOURCE_DISC
+  PUTFILE "versions/6502sp/output/P.CODE.bin", "P.CODE", &1000, &106A
+ ELIF _EXECUTIVE
+  PUTFILE "versions/6502sp/output/I.CODE.bin", "I.CODE", &1000, &106C
+ ENDIF
 ENDIF

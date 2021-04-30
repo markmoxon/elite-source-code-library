@@ -12,7 +12,7 @@
 
  CLD                    \ Clear the decimal flag, so we're not in decimal mode
 
-IF _SNG45
+ IF _SNG45 OR _EXECUTIVE
 
  NOP                    \ In SNG45, the release version of 6502 Second Processor
  NOP                    \ Elite, the detection code from the original source is
@@ -119,7 +119,7 @@ ENDIF
 
  BRK
 
-IF _SNG45
+ IF _SNG45 OR _EXECUTIVE
 
  EQUB &0A               \ Print a line feed
 

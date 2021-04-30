@@ -24,6 +24,9 @@ folder-cassette=''
 ifeq ($(release-6502sp), source-disc)
   rel-6502sp=1
   folder-6502sp='/source-disc'
+else ifeq ($(release-6502sp), executive)
+  rel-6502sp=3
+  folder-6502sp='/executive'
 else
   rel-6502sp=2
   folder-6502sp='/sng45'
@@ -90,6 +93,7 @@ folder-electron=''
 # _RELEASE (for 6502SP version)
 #   1 = Source disc
 #   2 = SNG45 (default)
+#	3 = Executive version
 #
 # _RELEASE (for Master version)
 #   1 = SNG47 (default)

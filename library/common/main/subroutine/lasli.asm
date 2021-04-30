@@ -84,7 +84,7 @@ ENDIF
 
 IF _6502SP_VERSION \ Advanced: Group A: In the original versions, both sets of laser lines converge at the same pixel. In the 6502SP version, the upper pair of laser lines aim one pixel higher than the lower pair, so they overlap less, and in the Master version, the top lines aim two pixels higher than the lower lines. Because EOR logic is used when drawing, this gives the lasers in the 6502SP version a sharper point, and the lines in the Master version an even sharper point, as the tips overlap less and don't cancel each other out
 
-IF _SNG45
+ IF _SNG45 OR _EXECUTIVE
 
  DEC LASY               \ Decrement the y-coordinate of the centre point to move
                         \ it up the screen by a pixel for the top set of lines,
@@ -106,7 +106,7 @@ ENDIF
 
 IF _6502SP_VERSION \ Advanced: See group A
 
-IF _SNG45
+ IF _SNG45 OR _EXECUTIVE
 
  INC LASY               \ Increment the y-coordinate of the centre point to put
                         \ it back to the original position

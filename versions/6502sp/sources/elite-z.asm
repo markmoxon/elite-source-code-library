@@ -34,6 +34,7 @@ _MASTER_VERSION         = (_VERSION = 4)
 _ELECTRON_VERSION       = (_VERSION = 5)
 _SOURCE_DISC            = (_RELEASE = 1)
 _SNG45                  = (_RELEASE = 2)
+_EXECUTIVE              = (_RELEASE = 3)
 _DISC_DOCKED            = FALSE
 _DISC_FLIGHT            = FALSE
 

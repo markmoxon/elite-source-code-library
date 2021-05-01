@@ -38,6 +38,17 @@ ELIF _ELECTRON_VERSION OR _MASTER_VERSION
 
 ENDIF
 
+IF _6502SP_VERSION
+
+IF _EXECUTIVE
+
+ LDX #1                 \ ???
+ JSR $73C0
+
+ENDIF
+
+ENDIF
+
  LDA #120               \ Print recursive token 120 ("INCOMING MISSILE") as an
  JSR MESS               \ in-flight message
 

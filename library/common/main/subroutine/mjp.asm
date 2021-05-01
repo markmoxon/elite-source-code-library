@@ -71,6 +71,17 @@ ENDIF
  STY MJ                 \ Set the mis-jump flag in MJ to &FF, to indicate that
                         \ we are now in witchspace
 
+IF _6502SP_VERSION
+
+IF _EXECUTIVE
+
+ LDX #4                 \ ???
+ JSR $73C0
+
+ENDIF
+
+ENDIF
+
 .MJP1
 
  JSR GTHG               \ Call GTHG to spawn a Thargoid ship

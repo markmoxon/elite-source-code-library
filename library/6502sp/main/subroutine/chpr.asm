@@ -17,10 +17,34 @@
 \
 \ ******************************************************************************
 
+IF _6502SP_VERSION
+
+IF _EXECUTIVE
+
+ BNE $2587              \ ???
+
+ENDIF
+
+ENDIF
+
 .CHPR
 
 .CHPRD                  \ This label is in the original source but is not used
                         \ anywhere
+
+IF _6502SP_VERSION
+
+IF _EXECUTIVE
+
+ CMP #$07              \ ???
+ BNE $2587
+ BIT $100B
+ BPL $2587
+ RTS
+
+ENDIF
+
+ENDIF
 
  STA K3                 \ Store the character to print in K3
 

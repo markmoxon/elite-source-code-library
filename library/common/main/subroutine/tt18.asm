@@ -14,9 +14,33 @@
 
 .TT18
 
+IF _6502SP_VERSION
+
+IF _SNG45 OR _SOURCE_DISC
+
  LDA QQ14               \ Subtract the distance to the selected system (in QQ8)
  SEC                    \ from the amount of fuel in our tank (in QQ14) into A
  SBC QQ8
+
+ELIF _EXECUTIVE
+
+ LDA QQ14               \ Subtract the distance to the selected system (in QQ8)
+
+ BIT $100A              \ ???
+ BMI $3D97
+
+ SEC                    \ from the amount of fuel in our tank (in QQ14) into A
+ SBC QQ8
+
+ENDIF
+
+ELIF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+
+ LDA QQ14               \ Subtract the distance to the selected system (in QQ8)
+ SEC                    \ from the amount of fuel in our tank (in QQ14) into A
+ SBC QQ8
+
+ENDIF
 
 IF _6502SP_VERSION OR _MASTER_VERSION \ Other: This might be a bug fix? The 6502SP version makes sure we don't end up with a negative fuel amount should we try a hyperspace jump that we don't have enough fuel for, though quite how we would get to this point is not clear
 

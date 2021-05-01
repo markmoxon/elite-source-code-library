@@ -12,7 +12,19 @@
 \
 \ ******************************************************************************
 
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+
 .DEATH2
+
+ELIF _6502SP_VERSION
+
+IF _SNG45 OR _SOURCE_DISC
+
+.DEATH2
+
+ENDIF
+
+ENDIF
 
 IF _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
@@ -22,9 +34,29 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+
  JSR RES2               \ Reset a number of flight variables and workspaces
                         \ and fall through into the entry code for the game
                         \ to restart from the title screen
+
+ELIF _6502SP_VERSION
+
+IF _SNG45 OR _SOURCE_DISC
+
+ JSR RES2               \ Reset a number of flight variables and workspaces
+                        \ and fall through into the entry code for the game
+                        \ to restart from the title screen
+
+ELIF _EXECUTIVE
+
+ JSR RESET              \ ???
+
+.DEATH2                 \ ???
+
+ENDIF
+
+ENDIF
 
 IF _DISC_FLIGHT \ Platform
 

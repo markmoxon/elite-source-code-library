@@ -65,7 +65,7 @@ INCLUDE "library/6502sp/loader1/workspace/zp.asm"
 \
 \ ******************************************************************************
 
- IF _SNG45 OR _EXECUTIVE
+IF _SNG45 OR _EXECUTIVE
 
  CODE% = &1FDC
  LOAD% = &1FDC
@@ -79,7 +79,7 @@ ENDIF
 
 ORG CODE%
 
- IF _SNG45 OR _EXECUTIVE
+IF _SNG45 OR _EXECUTIVE
 
  EQUS "Copyright (c) Acornsoft Limited 1985"
 

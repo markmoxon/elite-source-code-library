@@ -64,12 +64,43 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+
  LDA #50                \ If our energy bank status in ENERGY is >= 50, skip
  CMP ENERGY             \ printing the following message (so the message is
  BCC P%+6               \ only shown if our energy is low)
 
+ELIF _6502SP_VERSION
+
+IF _SNG45 OR _SOURCE_DISC
+
+ LDA #50                \ If our energy bank status in ENERGY is >= 50, skip
+ CMP ENERGY             \ printing the following message (so the message is
+ BCC P%+6               \ only shown if our energy is low)
+
+ELIF _EXECUTIVE
+
+ LDA #50                \ If our energy bank status in ENERGY is >= 50, skip
+ CMP ENERGY             \ printing the following message (so the message is
+ BCC P%+11              \ only shown if our energy is low)
+
+ENDIF
+
+ENDIF
+
  ASL A                  \ Print recursive token 100 ("ENERGY LOW{beep}") as an
  JSR MESS               \ in-flight message
+
+IF _6502SP_VERSION
+
+IF _EXECUTIVE
+
+ LDX #2                 \ ???
+ JSR &73C0
+
+ENDIF
+
+ENDIF
 
  LDY #&FF               \ Set our altitude in ALTIT to &FF, the maximum
  STY ALTIT

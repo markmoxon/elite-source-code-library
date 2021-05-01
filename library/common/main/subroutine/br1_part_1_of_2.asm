@@ -19,6 +19,20 @@ ENDIF
 \
 \ ******************************************************************************
 
+IF _6502SP_VERSION
+
+IF _EXECUTIVE
+
+ LDX #&FF               \ Set the stack pointer to &01FF, which is the standard
+ TXS                    \ location for the 6502 stack, so this instruction
+                        \ effectively resets the stack
+
+ JSR $4C9E              \ ???
+
+ENDIF
+
+ENDIF
+
 .BR1
 
 IF _6502SP_VERSION \ Tube
@@ -55,6 +69,17 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ P
 
  JSR FX200              \ Disable the ESCAPE key and clear memory if the BREAK
                         \ key is pressed (*FX 200,3)
+
+ENDIF
+
+IF _6502SP_VERSION
+
+IF _EXECUTIVE
+
+ LDX #3                 \ ???
+ JSR $73C0
+
+ENDIF
 
 ENDIF
 

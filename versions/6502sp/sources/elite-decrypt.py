@@ -67,7 +67,7 @@ print("[ Read    ] extracted/" + folder + "/P.CODE.bin")
 # Can be reversed by simply repeating the reversal
 #
 # These values can be calculated from the unused code at prtblock,
-# which contains a 
+# which contains a CMP F%-1 instruction
 
 if release == 1:
     # Source disc

@@ -460,7 +460,7 @@ ELIF _ELECTRON_VERSION
 
 ELIF _6502SP_VERSION
 
- IF _SNG45 OR _EXECUTIVE
+IF _SNG45
 
  JSR DFAULT             \ Call DFAULT to reset the current commander data block
                         \ to the last saved commander

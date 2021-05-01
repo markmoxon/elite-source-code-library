@@ -65,6 +65,11 @@ IF _SOURCE_DISC
 
  EQUB &80                \ System   7, Galaxy 0                  Lave = Token 26
 
+ELIF _EXECUTIVE
+
+ EQUB &80                \ System   7, Galaxy 0                  Lave = Token 26
+ EQUB &80                \ System   7, Galaxy 0                  Lave = Token 26
+
 ENDIF
 
 ELIF _MASTER_VERSION

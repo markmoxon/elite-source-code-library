@@ -72,8 +72,10 @@ LOAD% = &1000           \ The load address of the main game code file, which is
 
 ORG CODE%
 
- IF _SNG45 OR _EXECUTIVE
+IF _SNG45
  INCBIN "versions/6502sp/extracted/sng45/workspaces/BCFS-MOS.bin"
+ELIF _EXECUTIVE
+ INCBIN "versions/6502sp/extracted/executive/workspaces/BCFS-MOS.bin"
 ELIF _SOURCE_DISC
  INCBIN "versions/6502sp/extracted/source-disc/workspaces/BCFS-MOS.bin"
 ENDIF
@@ -142,8 +144,10 @@ INCBIN "versions/6502sp/output/WORDS.bin"
 PRINT "ships = ", ~P%
 INCBIN "versions/6502sp/output/SHIPS.bin"
 
- IF _SNG45 OR _EXECUTIVE
+IF _SNG45
  INCBIN "versions/6502sp/extracted/sng45/workspaces/BCFS-SHIPS.bin"
+ELIF _EXECUTIVE
+ INCBIN "versions/6502sp/extracted/executive/workspaces/BCFS-SHIPS.bin"
 ELIF _SOURCE_DISC
  INCBIN "versions/6502sp/extracted/source-disc/workspaces/BCFS-SHIPS.bin"
 ENDIF

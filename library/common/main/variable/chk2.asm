@@ -19,11 +19,27 @@
 
 .CHK2
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Platform
 
  EQUB &03 EOR &A9       \ The checksum value for the default commander, EOR'd
                         \ with &A9 to make it harder to tamper with the checksum
                         \ byte, #74
+
+ELIF _6502SP_VERSION
+
+IF _SNG45 OR _SOURCE_DISC
+
+ EQUB &03 EOR &A9       \ The checksum value for the default commander, EOR'd
+                        \ with &A9 to make it harder to tamper with the checksum
+                        \ byte, #74
+
+ELIF _EXECUTIVE
+
+ EQUB &3F EOR &A9       \ The checksum value for the max default commander,
+                        \ EOR'd with &A9 to make it harder to tamper with the
+                        \ checksum byte, #74
+
+ENDIF
 
 ELIF _MASTER_VERSION
 

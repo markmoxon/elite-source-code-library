@@ -358,6 +358,8 @@ ENDIF
  CHAR 'Y'
  EQUB 0
 
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+
  CHAR ' '               \ Token 35:     " LIGHT YEARS"
  CHAR 'L'               \
  CHAR 'I'               \ Encoded as:   " LIGHT YE<138>S"
@@ -370,6 +372,36 @@ ENDIF
  TWOK 'A', 'R'
  CHAR 'S'
  EQUB 0
+
+ELIF _6502SP_VERSION
+
+IF _SNG45 OR _SOURCE_DISC
+
+ CHAR ' '               \ Token 35:     " LIGHT YEARS"
+ CHAR 'L'               \
+ CHAR 'I'               \ Encoded as:   " LIGHT YE<138>S"
+ CHAR 'G'
+ CHAR 'H'
+ CHAR 'T'
+ CHAR ' '
+ CHAR 'Y'
+ CHAR 'E'
+ TWOK 'A', 'R'
+ CHAR 'S'
+ EQUB 0
+
+ELIF _EXECUTIVE
+
+ CHAR ' '               \ Token 35:     " L.Y."
+ CHAR 'L'               \
+ CHAR '.'               \ Encoded as:   " L.Y."
+ CHAR 'Y'
+ CHAR '.'
+ EQUB 0
+
+ENDIF
+
+ENDIF
 
  TWOK 'T', 'E'          \ Token 36:     "TECH.LEVEL"
  CHAR 'C'               \
@@ -974,12 +1006,42 @@ ENDIF
  CHAR 'T'
  EQUB 0
 
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+
  RTOK 121               \ Token 100:    "ENERGY LOW{beep}"
  CHAR 'L'               \
  CHAR 'O'               \ Encoded as:   "[121]LOW{7}"
  CHAR 'W'
  CONT 7
  EQUB 0
+
+ELIF _6502SP_VERSION
+
+IF _SNG45 OR _SOURCE_DISC
+
+ RTOK 121               \ Token 100:    "ENERGY LOW{beep}"
+ CHAR 'L'               \
+ CHAR 'O'               \ Encoded as:   "[121]LOW{7}"
+ CHAR 'W'
+ CONT 7
+ EQUB 0
+
+ELIF _EXECUTIVE
+
+ RTOK 121               \ Token 100:    "ENERGY LOW,SIR{beep}"
+ CHAR 'L'               \
+ CHAR 'O'               \ Encoded as:   "[121]LOW,SIR{7}"
+ CHAR 'W'
+ CHAR ','
+ CHAR 'S'
+ CHAR 'I'
+ CHAR 'R'
+ CONT 7
+ EQUB 0
+
+ENDIF
+
+ENDIF
 
  RTOK 99                \ Token 101:    "RIGHT ON COMMANDER!"
  RTOK 131               \
@@ -1104,7 +1166,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ 
 
 ELIF _6502SP_VERSION
 
- IF _SNG45 OR _EXECUTIVE
+IF _SNG45 OR _EXECUTIVE
 
  RTOK 121               \ Token 114:    "ENERGY UNIT"
  RTOK 14                \
@@ -1198,6 +1260,8 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+
  TWOK 'I', 'N'          \ Token 120:    "INCOMING MISSILE"
  RTOK 91                \
  TWOK 'I', 'N'          \ Encoded as:   "<140>[91]<140>G [106]"
@@ -1205,6 +1269,36 @@ ENDIF
  CHAR ' '
  RTOK 106
  EQUB 0
+
+ELIF _6502SP_VERSION
+
+IF _SNG45 OR _SOURCE_DISC
+
+ TWOK 'I', 'N'          \ Token 120:    "INCOMING MISSILE"
+ RTOK 91                \
+ TWOK 'I', 'N'          \ Encoded as:   "<140>[91]<140>G [106]"
+ CHAR 'G'
+ CHAR ' '
+ RTOK 106
+ EQUB 0
+
+ELIF _EXECUTIVE
+
+ TWOK 'I', 'N'          \ Token 120:    "INCOMING MISSILE,SIR"
+ RTOK 91                \
+ TWOK 'I', 'N'          \ Encoded as:   "<140>[91]<140>G [106],SIR"
+ CHAR 'G'
+ CHAR ' '
+ RTOK 106
+ CHAR ','
+ CHAR 'S'
+ CHAR 'I'
+ CHAR 'R'
+ EQUB 0
+
+ENDIF
+
+ENDIF
 
  TWOK 'E', 'N'          \ Token 121:    "ENERGY "
  TWOK 'E', 'R'          \
@@ -1612,10 +1706,15 @@ ELIF _DISC_VERSION
 
 ELIF _6502SP_VERSION
 
- IF _SNG45 OR _EXECUTIVE
+IF _SNG45
 
  EQUB 0, 0              \ These bytes appear to be unused and just contain noise
  EQUB &E4, &63, &A5
+
+ELIF _EXECUTIVE
+
+ EQUB 0, 0              \ These bytes appear to be unused and just contain noise
+ EQUB &A5
 
 ELIF _SOURCE_DISC
 

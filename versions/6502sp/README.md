@@ -257,8 +257,10 @@ Here's an example of how these binaries are included, in this case for the `LBUF
 
 IF _MATCH_EXTRACTED_BINARIES
 
- IF _SNG45 OR _EXECUTIVE
+ IF _SNG45
   INCBIN "versions/6502sp/extracted/sng45/workspaces/ELTB-LBUF.bin"
+ ELIF _EXECUTIVE
+  INCBIN "versions/6502sp/extracted/executive/workspaces/ELTB-LBUF.bin"
  ELIF _SOURCE_DISC
   INCBIN "versions/6502sp/extracted/source-disc/workspaces/ELTB-LBUF.bin"
  ENDIF

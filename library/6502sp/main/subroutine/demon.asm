@@ -312,6 +312,15 @@
  ROR DELT4
  STA DELT4+1
 
+IF _EXECUTIVE
+
+ LDX #$53               \ ???
+ LDY #$73
+
+ JSR SLIDE              \ Call SLIDE to display the Star Wars scroll text
+
+ENDIF
+
  LDX #LO(byian)         \ Set (Y X) to the address of byian, which contains the
  LDY #HI(byian)         \ "BY IAN BELL AND DAVID BRABEN" text
 
@@ -348,9 +357,18 @@
                         \ camera moves forward, and it's disappeared off the top
                         \ of the screen
 
+IF _SNG45 OR _SOURCE_DISC
+
  LDX #LO(true3)         \ Set (Y X) to the address of true3, which contains the
  LDY #HI(true3)         \ "THE GALAXY IS IN TURMOIL, THE NAVY FAR AWAY AS THE
                         \ EMPIRE CRUMBLES" text
+
+ELIF _EXECUTIVE
+
+ LDX #$7F               \ ???
+ LDY #$73
+
+ENDIF
 
  JSR SLIDE              \ Call SLIDE to display the Star Wars scroll text
 

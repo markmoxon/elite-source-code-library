@@ -18,6 +18,13 @@ INCLUDE "library/common/main/variable/flh.asm"
 INCLUDE "library/common/main/variable/jstgy.asm"
 INCLUDE "library/common/main/variable/jste.asm"
 INCLUDE "library/common/main/variable/jstk.asm"
+
+IF _EXECUTIVE
+
+SKIP 2                  \ ???
+
+ENDIF
+
 INCLUDE "library/enhanced/main/variable/bstk.asm"
 INCLUDE "library/6502sp/main/variable/catf.asm"
 INCLUDE "library/6502sp/main/variable/zip.asm"

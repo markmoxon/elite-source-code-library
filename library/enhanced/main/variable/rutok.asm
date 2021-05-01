@@ -735,6 +735,10 @@ IF _SOURCE_DISC
  ECHR '1'
  EQUB VE
 
+ELIF _EXECUTIVE
+
+ INCBIN "versions/6502sp/extracted/executive/TMP2.bin"
+
 ENDIF
 
 ELIF _MASTER_VERSION

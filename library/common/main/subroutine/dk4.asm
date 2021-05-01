@@ -149,10 +149,23 @@ ENDIF
 
  INY                    \ Increment Y to point to the next toggle key
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Platform
 
  CPY #&47               \ The last toggle key is &46 (K), so check whether we
                         \ have just done that one
+
+ELIF _6502SP_VERSION
+
+IF _SNG45 OR _SOURCE_DISC
+
+ CPY #&47               \ The last toggle key is &46 (K), so check whether we
+                        \ have just done that one
+
+ELIF _EXECUTIVE
+
+ CPY #&49               \ ???
+
+ENDIF
 
 ELIF _MASTER_VERSION
 

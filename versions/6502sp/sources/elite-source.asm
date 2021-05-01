@@ -58,9 +58,17 @@ _DISC_FLIGHT            = FALSE
 \
 \ ******************************************************************************
 
-Q% = _REMOVE_CHECKSUMS  \ Set Q% to TRUE to max out the default commander, FALSE
+IF _SNG45 OR _SOURCE_DISC
+
+ Q% = _REMOVE_CHECKSUMS \ Set Q% to TRUE to max out the default commander, FALSE
                         \ for the standard default commander (this is set to
                         \ TRUE if checksums are disabled, just for convenience)
+
+ELIF _EXECUTIVE
+
+ Q% = TRUE              \ Max out the default commander
+
+ENDIF
 
 D% = &D000              \ The address where the ship blueprints get moved to
                         \ after loading, so they go from &D000 to &F200
@@ -309,6 +317,14 @@ INCLUDE "library/enhanced/main/subroutine/mt28.asm"
 INCLUDE "library/enhanced/main/subroutine/detok3.asm"
 INCLUDE "library/enhanced/main/subroutine/detok.asm"
 INCLUDE "library/enhanced/main/subroutine/detok2.asm"
+
+IF _EXECUTIVE
+
+ EQUS "Firebird"        \ ???
+ EQUB 13
+
+ENDIF
+
 INCLUDE "library/enhanced/main/subroutine/mt1.asm"
 INCLUDE "library/enhanced/main/subroutine/mt2.asm"
 INCLUDE "library/enhanced/main/subroutine/mt8.asm"
@@ -788,6 +804,17 @@ INCLUDE "library/common/main/subroutine/death.asm"
 INCLUDE "library/advanced/main/variable/spasto.asm"
 INCLUDE "library/enhanced/main/subroutine/begin.asm"
 INCLUDE "library/common/main/subroutine/tt170.asm"
+
+IF _6502SP_VERSION
+
+IF _EXECUTIVE
+
+ JSR $6E42
+
+ENDIF
+
+ENDIF
+
 INCLUDE "library/common/main/subroutine/death2.asm"
 INCLUDE "library/common/main/subroutine/br1_part_1_of_2.asm"
 INCLUDE "library/common/main/subroutine/br1_part_2_of_2.asm"
@@ -894,8 +921,10 @@ LOAD_G% = LOAD% + P% - CODE%
 
 IF _MATCH_EXTRACTED_BINARIES
 
- IF _SNG45 OR _EXECUTIVE
+ IF _SNG45
   INCBIN "versions/6502sp/extracted/sng45/workspaces/ELTG-align.bin"
+ ELIF _EXECUTIVE
+  INCBIN "versions/6502sp/extracted/executive/workspaces/ELTG-align.bin"
  ELIF _SOURCE_DISC
   INCBIN "versions/6502sp/extracted/source-disc/workspaces/ELTG-align.bin"
  ENDIF
@@ -1034,6 +1063,21 @@ INCLUDE "library/6502sp/main/variable/nofy.asm"
 INCLUDE "library/6502sp/main/variable/acorn.asm"
 INCLUDE "library/6502sp/main/variable/byian.asm"
 INCLUDE "library/6502sp/main/variable/true3.asm"
+
+IF _EXECUTIVE
+
+.true4
+
+ EQUS "CONGRATULATIONS:"
+ EQUS ";ON;OBTAINING;A;"
+ EQUS "::COPY:OF:THIS::"
+ EQUS "ELUSIVE;PRODUCT."
+ EQUB 0
+
+ INCBIN "versions/6502sp/extracted/executive/TMP.bin"
+
+ENDIF
+
 
 \ ******************************************************************************
 \

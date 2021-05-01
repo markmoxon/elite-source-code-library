@@ -212,6 +212,17 @@ ENDIF
  LDA #189               \ Print recursive token 29 ("HYPERSPACE ")
  JSR TT27
 
+IF _6502SP_VERSION
+
+IF _EXECUTIVE
+
+ BIT $100A              \ ???
+ BMI goTT147+3
+
+ENDIF
+
+ENDIF
+
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Minor
 
  LDA QQ8+1              \ If the high byte of the distance to the selected

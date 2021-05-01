@@ -50,11 +50,35 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Platform
+
  EQUS "JAMESON"         \ The current commander name, which defaults to JAMESON
  EQUB 13                \
                         \ The commander name can be up to 7 characters (the DFS
                         \ limit for file names), and is terminated by a carriage
                         \ return
+
+ELIF _6502SP_VERSION
+
+IF _SNG45 OR _SOURCE_DISC
+
+ EQUS "JAMESON"         \ The current commander name, which defaults to JAMESON
+ EQUB 13                \
+                        \ The commander name can be up to 7 characters (the DFS
+                        \ limit for file names), and is terminated by a carriage
+                        \ return
+
+ELIF _EXECUTIVE
+
+ EQUS "FIREBUD"         \ The current commander name, which defaults to JAMESON
+ EQUB 13                \
+                        \ The commander name can be up to 7 characters (the DFS
+                        \ limit for file names), and is terminated by a carriage
+                        \ return
+
+ENDIF
+
+ENDIF
 
                         \ NA%+8 is the start of the commander data block
                         \
@@ -87,7 +111,24 @@ ENDIF
 
  EQUB 70                \ QQ14 = Fuel level, #13
 
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Platform
+
  EQUB 0                 \ COK = Competition flags, #14
+
+
+ELIF _6502SP_VERSION
+
+IF _SNG45 OR _SOURCE_DISC
+
+ EQUB 0                 \ COK = Competition flags, #14
+
+ELIF _EXECUTIVE
+
+ EQUB %10000000         \ COK = Competition flags, #14
+
+ENDIF
+
+ENDIF
 
  EQUB 0                 \ GCNT = Galaxy number, 0-7, #15
 

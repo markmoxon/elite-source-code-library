@@ -77,7 +77,7 @@ IF _6502SP_VERSION
 IF _EXECUTIVE
 
  LDX #3                 \ ???
- JSR $73C0
+ JSR TALK
 
 ENDIF
 

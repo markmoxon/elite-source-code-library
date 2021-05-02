@@ -17,8 +17,8 @@ IF _SNG45 OR _EXECUTIVE
  NOP                    \ In SNG45, the release version of 6502 Second Processor
  NOP                    \ Elite, the detection code from the original source is
  NOP                    \ disabled and replaced by NOPs
- NOP
- NOP
+ NOP                    \
+ NOP                    \ This is also true in the Executive version
  NOP
  NOP
  NOP

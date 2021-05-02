@@ -35,9 +35,9 @@ IF _SNG45 OR _SOURCE_DISC
 
 ELIF _EXECUTIVE
 
- EQUB &3F EOR &A9       \ The checksum value for the max default commander,
-                        \ EOR'd with &A9 to make it harder to tamper with the
-                        \ checksum byte, #74
+ EQUB &3F EOR &A9       \ The checksum value for the maxed-out default
+                        \ commander, EOR'd with &A9 to make it harder to tamper
+                        \ with the checksum byte, #74
 
 ENDIF
 

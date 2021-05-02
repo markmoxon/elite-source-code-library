@@ -70,8 +70,10 @@ IF _SNG45 OR _SOURCE_DISC
 
 ELIF _EXECUTIVE
 
- EQUS "FIREBUD"         \ The current commander name, which defaults to JAMESON
- EQUB 13                \
+ EQUS "FIREBUD"         \ The current commander name, which defaults to FIREBUD
+ EQUB 13                \ in the Executive version (which comes with a maxed-out
+                        \ commander by default, so it gets a different name)
+                        \
                         \ The commander name can be up to 7 characters (the DFS
                         \ limit for file names), and is terminated by a carriage
                         \ return
@@ -124,7 +126,7 @@ IF _SNG45 OR _SOURCE_DISC
 
 ELIF _EXECUTIVE
 
- EQUB %10000000         \ COK = Competition flags, #14
+ EQUB %10000000         \ COK = Competition flags, #14 ???
 
 ENDIF
 

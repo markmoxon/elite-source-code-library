@@ -70,6 +70,9 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION
  CMP ENERGY             \ printing the following message (so the message is
  BCC P%+6               \ only shown if our energy is low)
 
+ ASL A                  \ Print recursive token 100 ("ENERGY LOW{beep}") as an
+ JSR MESS               \ in-flight message
+
 ELIF _6502SP_VERSION
 
 IF _SNG45 OR _SOURCE_DISC
@@ -78,25 +81,20 @@ IF _SNG45 OR _SOURCE_DISC
  CMP ENERGY             \ printing the following message (so the message is
  BCC P%+6               \ only shown if our energy is low)
 
+ ASL A                  \ Print recursive token 100 ("ENERGY LOW{beep}") as an
+ JSR MESS               \ in-flight message
+
 ELIF _EXECUTIVE
 
  LDA #50                \ If our energy bank status in ENERGY is >= 50, skip
  CMP ENERGY             \ printing the following message (so the message is
  BCC P%+11              \ only shown if our energy is low)
 
-ENDIF
-
-ENDIF
-
  ASL A                  \ Print recursive token 100 ("ENERGY LOW{beep}") as an
  JSR MESS               \ in-flight message
 
-IF _6502SP_VERSION
-
-IF _EXECUTIVE
-
  LDX #2                 \ ???
- JSR &73C0
+ JSR TALK
 
 ENDIF
 

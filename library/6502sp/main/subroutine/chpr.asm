@@ -38,7 +38,7 @@ IF _EXECUTIVE
 
  CMP #$07              \ ???
  BNE $2587
- BIT $100B
+ BIT SPEAK
  BPL $2587
  RTS
 

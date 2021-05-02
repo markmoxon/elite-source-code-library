@@ -18,7 +18,7 @@ IF _SNG45 OR _SOURCE_DISC
 
 ELIF _EXECUTIVE
 
- EQUS ":::PIZZASOFT::::"
+ EQUS ":::PIZZASOFT::::" \ ???
  EQUS ";;;;;;;;;;;;;;;;"
  EQUS "::::PRESENTS"
  EQUB 0

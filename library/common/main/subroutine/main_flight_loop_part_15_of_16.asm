@@ -93,8 +93,9 @@ ELIF _EXECUTIVE
  ASL A                  \ Print recursive token 100 ("ENERGY LOW{beep}") as an
  JSR MESS               \ in-flight message
 
- LDX #2                 \ ???
- JSR TALK
+ LDX #2                 \ Call TALK with X = 2 to say "Energy low" using the
+ JSR TALK               \ Watford Electronics Beeb Speech Synthesiser (if one
+                        \ is fitted and speech has been enabled)
 
 ENDIF
 

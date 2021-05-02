@@ -126,7 +126,7 @@ IF _SNG45 OR _SOURCE_DISC
 
 ELIF _EXECUTIVE
 
- EQUB %10000000         \ COK = Competition flags, #14 ???
+ EQUB %10000000         \ COK = Competition flags, #14
 
 ENDIF
 

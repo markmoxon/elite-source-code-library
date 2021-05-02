@@ -218,6 +218,8 @@ This repository contains the source code for two different versions of 6502 Seco
 
 * The version produced by the source disc from Ian Bell's site (which was never released)
 
+* The Executive version from Ian Bell's site (which was also never released)
+
 By default the build process builds the SNG45 version, but you can build the source disc version by appending `release-6502sp=source-disc` to the `make` command, like this on Windows:
 
 ```
@@ -230,15 +232,52 @@ or this on a Mac or Linux:
 make encrypt verify release-6502sp=source-disc
 ```
 
+and you can build the Executive version by appending `release-6502sp=executive` to the `make` command, like this on Windows:
+
+```
+make.bat encrypt verify release-6502sp=executive
+```
+
+or this on a Mac or Linux:
+
+```
+make encrypt verify release-6502sp=executive
+```
+
 You can also add `release-6502sp=sng45`, though that's the default value so it isn't necessary.
 
-You can see the differences between the versions by searching the source code for `_SNG45` (for features in the SNG45 version) or `_SOURCE_DISC` (for features in the source disc). There are only a few differences, if you ignore [workspace noise](#producing-byte-accurate-binaries):
+You can see the differences between the versions by searching the source code for `_SNG45` (for features in the SNG45 version) or `_SOURCE_DISC` (for features in the source disc) or `_EXECUTIVE_` (for features in the Executive version). There are only a few differences in the source disc version (if you ignore [workspace noise](#producing-byte-accurate-binaries)), but quite a few in the Executive version.
+
+The differences in the source disc version are:
 
 * In the source disc version, the extended description of Lave is replaced by the rather cryptic "Bits'n Pieces - End Of Part 1". You can see this by pressing F6 just after starting the game (you have to be docked at Lave).
 
-* In the SNG45 version, the top laser line aims slightly higher than in the source disc version (see the `LASLI` routine for details).
+* In the source disc version, the top laser line aims slightly lower than in the SNG45 version (see the `LASLI` routine for details).
 
 * The loader contains an extra copyright string inserted at the start of the file ("Copyright (c) Acornsoft Limited 1985"), and most of the Tube-detection code in the source disc version is commented out.
+
+The differences in the Executive version are:
+
+* In the Executive version, the top laser line aims slightly lower than in the SNG45 version (see the `LASLI` routine for details).
+
+* The loader contains an extra copyright string inserted at the start of the file ("Copyright (c) Acornsoft Limited 1985"), and most of the Tube-detection code in the Executive version is commented out.
+
+* Memory map: LP = &8900, K% = &8500
+* COK is different - has bit 7 set in NA%
+* Different override tokens for Lave, Riedquat
+* Speech (:)
+* Infinite jump range (@)
+* Demo:
+    Pizzasoft
+    Shoot logo
+    The Executive Version
+    By Ian Bell and David Braben
+    Flying
+    Congratulations on obtaining a copy of this elusive product.
+    Adder
+* Font
+* SIR in tokens
+
 
 ## Notes on the original source files
 

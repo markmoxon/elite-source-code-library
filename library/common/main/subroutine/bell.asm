@@ -25,6 +25,16 @@ ELIF _6502SP_VERSION
                         \ Fall through into the CHPR print routine to
                         \ actually make the sound
 
+IF _EXECUTIVE
+
+ BNE CHPRD              \ Jump down to CHPRD to actually make the sound,
+                        \ skipping the code that prevents CHPR from beeping if
+                        \ speech is enabled, so the beep gets made even if
+                        \ speech is enabled (this BNE is effectively a JMP as
+                        \ A is never 0)
+
+ENDIF
+
 ELIF _MASTER_VERSION
 
  JMP CHPR               \ Call the CHPR print routine to actually make the sound

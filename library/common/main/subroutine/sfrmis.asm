@@ -42,8 +42,9 @@ IF _6502SP_VERSION
 
 IF _EXECUTIVE
 
- LDX #1                 \ ???
- JSR TALK
+ LDX #1                 \ Call TALK with X = 1 to say "Incoming missile" using
+ JSR TALK               \ the Watford Electronics Beeb Speech Synthesiser (if
+                        \ one is fitted and speech has been enabled)
 
 ENDIF
 

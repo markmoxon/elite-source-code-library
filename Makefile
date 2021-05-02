@@ -13,13 +13,14 @@ folder-cassette=''
 #
 #   source-disc
 #   sng45
+#   executive
 #
 # So, for example:
 #
-#   make encrypt verify release-6502sp=source-disc
+#   make encrypt verify release-6502sp=executive
 #
-# will build the version from the source disc. If you omit the release-6502sp
-# parameter, it will build the SNG45 version.
+# will build the Executive version. If you omit the release-6502sp parameter,
+# it will build the SNG45 version.
 
 ifeq ($(release-6502sp), source-disc)
   rel-6502sp=1

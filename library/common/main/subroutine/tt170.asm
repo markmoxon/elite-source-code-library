@@ -41,9 +41,21 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Platform
 
                         \ Fall through into BR1 to start the game
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _MASTER_VERSION
 
  JSR RESET              \ Call RESET to initialise most of the game variables
+
+                        \ Fall through into DEATH2 to start the game
+
+ELIF _6502SP_VERSION
+
+ JSR RESET              \ Call RESET to initialise most of the game variables
+
+IF _EXECUTIVE
+
+ JSR DEMON              \ Call DEMON to show the demo
+
+ENDIF
 
                         \ Fall through into DEATH2 to start the game
 

@@ -21,21 +21,34 @@ INCLUDE "library/common/main/variable/jstk.asm"
 
 IF _EXECUTIVE
 
- SKIP 1                 \ ???
+.JUMP
+
+ SKIP 1                 \ Infinite jump range configuration setting
+                        \
+                        \   * 0 = maximum jump range is the standard 7 light
+                        \         years (default)
+                        \
+                        \   * Non-zero = jump range is infinite
+                        \
+                        \ Toggled by pressing "@" when paused, see the DK4
+                        \ routine for details
+                        \
+                        \ Not only is the jump range infinite, but you don't use
+                        \ any fuel when jumping, either
 
 .SPEAK
 
- SKIP 1                 \ Speech on/off configuration setting
+ SKIP 1                 \ Speech configuration setting
                         \
-                        \   * 0 = speech is off (default)
+                        \   * 0 = speech is disabled (default)
                         \
-                        \   * Non-zero = speech is on
+                        \   * Non-zero = speech is enabled
                         \
                         \ Toggled by pressing ":" when paused, see the DK4
                         \ routine for details
                         \
                         \ For speech to work, the BBC must be fitted with a
-                        \ Watford Electronics Speech Synthesizer
+                        \ Watford Electronics Beeb Speech Synthesiser
 
 ENDIF
 

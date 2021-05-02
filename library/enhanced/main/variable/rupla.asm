@@ -61,7 +61,7 @@ IF _SOURCE_DISC
 ELIF _EXECUTIVE
 
  EQUB 7                  \ System   7, Galaxy 0                  Lave = Token 26
- EQUB &2E                \ ???
+ EQUB 46                 \ System  46, Galaxy 0              Riedquat = Token 27
 
 ENDIF
 

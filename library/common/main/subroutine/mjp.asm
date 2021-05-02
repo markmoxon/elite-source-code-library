@@ -75,8 +75,9 @@ IF _6502SP_VERSION
 
 IF _EXECUTIVE
 
- LDX #4                 \ ???
- JSR TALK
+ LDX #4                 \ Call TALK with X = 4 to say "Oh shit, it's a mis-jump"
+ JSR TALK               \ using the Watford Electronics Beeb Speech Synthesiser
+                        \ (if one is fitted and speech has been enabled)
 
 ENDIF
 

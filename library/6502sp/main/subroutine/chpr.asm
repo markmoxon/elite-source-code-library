@@ -17,34 +17,27 @@
 \
 \ ******************************************************************************
 
-IF _6502SP_VERSION
-
-IF _EXECUTIVE
-
- BNE $2587              \ ???
-
-ENDIF
-
-ENDIF
-
 .CHPR
 
-.CHPRD                  \ This label is in the original source but is not used
-                        \ anywhere
-
 IF _6502SP_VERSION
 
 IF _EXECUTIVE
 
- CMP #$07              \ ???
- BNE $2587
- BIT SPEAK
- BPL $2587
- RTS
+ CMP #7                 \ If this is not a beep character, jump to CHPRD to
+ BNE CHPRD              \ print the character
+
+ BIT SPEAK              \ If speech is disabled, jump to CHPRD to print the
+ BPL CHPRD              \ character
+
+ RTS                    \ If we get here then this is a beep character and
+                        \ speech is enabled, so return from the subroutine to
+                        \ prevent the beep from being made
 
 ENDIF
 
 ENDIF
+
+.CHPRD
 
  STA K3                 \ Store the character to print in K3
 

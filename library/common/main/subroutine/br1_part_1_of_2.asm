@@ -27,7 +27,7 @@ IF _EXECUTIVE
  TXS                    \ location for the 6502 stack, so this instruction
                         \ effectively resets the stack
 
- JSR $4C9E              \ ???
+ JSR RES2               \ Reset a number of flight variables and workspaces
 
 ENDIF
 
@@ -76,8 +76,9 @@ IF _6502SP_VERSION
 
 IF _EXECUTIVE
 
- LDX #3                 \ ???
- JSR TALK
+ LDX #3                 \ Call TALK with X = 3 to say "Elite" using the Watford
+ JSR TALK               \ Electronics Beeb Speech Synthesiser (if one is fitted
+                        \ speech has been enabled)
 
 ENDIF
 

@@ -216,8 +216,8 @@ IF _6502SP_VERSION
 
 IF _EXECUTIVE
 
- BIT $100A              \ ???
- BMI goTT147+3
+ BIT JUMP               \ If infinite jump range is configured, then jump down
+ BMI goTT147+3          \ to IJUMP so we do the jump whatever the distance
 
 ENDIF
 

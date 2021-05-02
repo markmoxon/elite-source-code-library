@@ -65,7 +65,7 @@ ORG &8200
 
 ELIF _EXECUTIVE
 
-ORG &8500               \ ??? memory map
+ORG &8500
 
 ENDIF
 

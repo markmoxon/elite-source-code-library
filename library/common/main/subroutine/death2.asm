@@ -50,9 +50,9 @@ IF _SNG45 OR _SOURCE_DISC
 
 ELIF _EXECUTIVE
 
- JSR RESET              \ ???
+ JSR RESET              \ Call RESET to initialise most of the game variables
 
-.DEATH2                 \ ???
+.DEATH2
 
 ENDIF
 

@@ -318,14 +318,7 @@ INCLUDE "library/enhanced/main/subroutine/mt28.asm"
 INCLUDE "library/enhanced/main/subroutine/detok3.asm"
 INCLUDE "library/enhanced/main/subroutine/detok.asm"
 INCLUDE "library/enhanced/main/subroutine/detok2.asm"
-
-IF _EXECUTIVE
-
- EQUS "Firebird"        \ ???
- EQUB 13
-
-ENDIF
-
+INCLUDE "library/6502sp/main/variable/firebird.asm"
 INCLUDE "library/enhanced/main/subroutine/mt1.asm"
 INCLUDE "library/enhanced/main/subroutine/mt2.asm"
 INCLUDE "library/enhanced/main/subroutine/mt8.asm"
@@ -805,17 +798,6 @@ INCLUDE "library/common/main/subroutine/death.asm"
 INCLUDE "library/advanced/main/variable/spasto.asm"
 INCLUDE "library/enhanced/main/subroutine/begin.asm"
 INCLUDE "library/common/main/subroutine/tt170.asm"
-
-IF _6502SP_VERSION
-
-IF _EXECUTIVE
-
- JSR $6E42              \ ???
-
-ENDIF
-
-ENDIF
-
 INCLUDE "library/common/main/subroutine/death2.asm"
 INCLUDE "library/common/main/subroutine/br1_part_1_of_2.asm"
 INCLUDE "library/common/main/subroutine/br1_part_2_of_2.asm"
@@ -1064,108 +1046,9 @@ INCLUDE "library/6502sp/main/variable/nofy.asm"
 INCLUDE "library/6502sp/main/variable/acorn.asm"
 INCLUDE "library/6502sp/main/variable/byian.asm"
 INCLUDE "library/6502sp/main/variable/true3.asm"
-
-IF _EXECUTIVE
-
-.elusive
-
- EQUS "CONGRATULATIONS:"            \ ???
- EQUS ";ON;OBTAINING;A;"
- EQUS "::COPY:OF:THIS::"
- EQUS "ELUSIVE;PRODUCT."
- EQUB 0
-
-.TALK
-
- TYA
- PHA
-
- BIT SPEAK
- BPL TALK4
-
- LDA #0
- STA SC
-
- LDY #LO(SPEECH)
-
- LDA #HI(SPEECH)
- STA SC+1
-
-.TALKL
-
- LDA (SC),Y
- CMP #13
- BNE TALK1
-
- DEX
- BEQ TALK2
-
-.TALK1
-
- INY
- BNE TALKL
-
- INC SC+1
- BNE TALKL
-
-.TALK2
-
- INY
- BNE TALK3
-
- INC SC+1
-
-.TALK3
-
- TYA
- TAX
- LDY &06
- JSR OSCLI
-
-.TALK4
-
- PLA
- TAY
- RTS
-
-.SPEECH
-
- EQUB 13
-
- EQUS "TALK "           \ 1: "Incoming missile"
- EQUS "A NN1 "
- EQUS "PA2 "
- EQUS "KK3 AA MM IH NG "
- EQUS "PA4 "
- EQUS "MM IH SS I LL"
- EQUB 13
-
- EQUS "TALK "           \ 2: "Energy low"
- EQUS "N ER1 G "
- EQUS "PA4 "
- EQUS "LOW"
- EQUB 13
-
- EQUS "TALK "           \ 3: "Elite"
- EQUS "EH LL EY TT1"
- EQUB 13
-
- EQUS "TALK "           \ 4: "Oh shit, it's a mis-jump"
- EQUS "O "
- EQUS "PA2 "
- EQUS "SH IH TT1 "
- EQUS "PA5 "
- EQUS "IH TT1 SS "
- EQUS "PA4 "
- EQUS "A "
- EQUS "PA4 "
- EQUS "MM IS "
- EQUS "PA2 "
- EQUS "JH UW1 MM PP"
- EQUB 13
-
-ENDIF
-
+INCLUDE "library/6502sp/main/variable/elusive.asm"
+INCLUDE "library/6502sp/main/subroutine/talk.asm"
+INCLUDE "library/6502sp/main/variable/speech.asm"
 
 \ ******************************************************************************
 \

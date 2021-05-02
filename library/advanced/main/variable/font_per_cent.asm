@@ -22,6 +22,15 @@
 \ but it's quicker to use a lookup table, at the expense of three pages of
 \ memory.
 \
+IF _6502SP_VERSION \ Comment
+\ The Executive version uses a different font to the standard OS, which is
+\ included in the P.FONTEX.bin file. This means all in-game text uses this new
+\ font, which is based on the 1960s Westminster font. Ths font style is similar
+\ to the machine-readable font on cheques, and is in a style that we would now
+\ call "retro-futuristic" (though presumably it was just "futuristic" back in
+\ 1984).
+\
+ENDIF
 \ ******************************************************************************
 
 IF _6502SP_VERSION \ Platform
@@ -37,7 +46,7 @@ IF _6502SP_VERSION \ Platform
 IF _SNG45 OR _SOURCE_DISC
  INCBIN "versions/6502sp/binaries/P.FONT.bin"
 ELIF _EXECUTIVE
- INCBIN "versions/6502sp/binaries/P.FONTEX.bin" \ ???
+ INCBIN "versions/6502sp/binaries/P.FONTEX.bin"
 ENDIF
 
 ELIF _MASTER_VERSION

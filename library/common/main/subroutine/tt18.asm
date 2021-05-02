@@ -26,8 +26,8 @@ ELIF _EXECUTIVE
 
  LDA QQ14               \ Subtract the distance to the selected system (in QQ8)
 
- BIT $100A              \ ???
- BMI $3D97
+ BIT JUMP               \ If infinite jump range is configured, then jump down
+ BMI IJUMP              \ to IJUMP so we don't subtract any fuel for this jump
 
  SEC                    \ from the amount of fuel in our tank (in QQ14) into A
  SBC QQ8
@@ -53,6 +53,16 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Other: This might be a bug fix? The 6502
 ENDIF
 
  STA QQ14               \ Store the updated fuel amount in QQ14
+
+IF _6502SP_VERSION
+
+IF _EXECUTIVE
+
+.IJUMP
+
+ENDIF
+
+ENDIF
 
  LDA QQ11               \ If the current view is not a space view, jump to ee5
  BNE ee5                \ to skip the following

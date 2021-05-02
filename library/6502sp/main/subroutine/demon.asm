@@ -39,7 +39,7 @@
  JSR nWq                \ Call nWq to create a random cloud of stardust
 
  LDX #LO(acorn)         \ Set (Y X) to the address of acorn, which contains the
- LDY #HI(acorn)         \ "ACORNSOFT PRESENTS" text
+ LDY #HI(acorn)         \ text: "ACORNSOFT PRESENTS"
 
  JSR SLIDE              \ Call SLIDE to display the Star Wars scroll text
 
@@ -314,15 +314,15 @@
 
 IF _EXECUTIVE
 
- LDX #$53               \ ???
- LDY #$73
+ LDX #LO(true3)         \ Set (Y X) to the address of true3, which contains the
+ LDY #HI(true3)         \ text: "THE EXECUTIVE VERSION"
 
  JSR SLIDE              \ Call SLIDE to display the Star Wars scroll text
 
 ENDIF
 
  LDX #LO(byian)         \ Set (Y X) to the address of byian, which contains the
- LDY #HI(byian)         \ "BY IAN BELL AND DAVID BRABEN" text
+ LDY #HI(byian)         \ text: "BY IAN BELL AND DAVID BRABEN"
 
  JSR SLIDE              \ Call SLIDE to display the Star Wars scroll text
 
@@ -360,13 +360,14 @@ ENDIF
 IF _SNG45 OR _SOURCE_DISC
 
  LDX #LO(true3)         \ Set (Y X) to the address of true3, which contains the
- LDY #HI(true3)         \ "THE GALAXY IS IN TURMOIL, THE NAVY FAR AWAY AS THE
-                        \ EMPIRE CRUMBLES" text
+ LDY #HI(true3)         \ text: "THE GALAXY IS IN TURMOIL, THE NAVY FAR AWAY AS
+                        \ THE EMPIRE CRUMBLES"
 
 ELIF _EXECUTIVE
 
- LDX #$7F               \ ???
- LDY #$73
+ LDX #LO(elusive)       \ Set (Y X) to the address of elusive, which contains
+ LDY #HI(elusive)       \ the text: "CONGRATULATIONS ON OBTAINING A COPY OF THIS
+                        \ ELUSIVE PRODUCT"
 
 ENDIF
 

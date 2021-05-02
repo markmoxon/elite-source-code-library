@@ -392,7 +392,7 @@ IF _SNG45 OR _SOURCE_DISC
 
 ELIF _EXECUTIVE
 
- CHAR ' '               \ Token 35:     " L.Y." ???
+ CHAR ' '               \ Token 35:     " L.Y."
  CHAR 'L'               \
  CHAR '.'               \ Encoded as:   " L.Y."
  CHAR 'Y'
@@ -1028,7 +1028,7 @@ IF _SNG45 OR _SOURCE_DISC
 
 ELIF _EXECUTIVE
 
- RTOK 121               \ Token 100:    "ENERGY LOW,SIR{beep}" ???
+ RTOK 121               \ Token 100:    "ENERGY LOW,SIR{beep}"
  CHAR 'L'               \
  CHAR 'O'               \ Encoded as:   "[121]LOW,SIR{7}"
  CHAR 'W'
@@ -1284,7 +1284,7 @@ IF _SNG45 OR _SOURCE_DISC
 
 ELIF _EXECUTIVE
 
- TWOK 'I', 'N'          \ Token 120:    "INCOMING MISSILE,SIR" ???
+ TWOK 'I', 'N'          \ Token 120:    "INCOMING MISSILE,SIR"
  RTOK 91                \
  TWOK 'I', 'N'          \ Encoded as:   "<140>[91]<140>G [106],SIR"
  CHAR 'G'

@@ -19,7 +19,7 @@ IF _SNG45 OR _SOURCE_DISC
 
 ELIF _EXECUTIVE
 
- EQUS "::::::THE;::::::" \ ???
+ EQUS "::::::THE;::::::"
  EQUS ";;;EXECUTIVE;;;;"
  EQUS "::::VERSION"
  EQUB 0

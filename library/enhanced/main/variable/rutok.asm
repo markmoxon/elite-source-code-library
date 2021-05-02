@@ -737,90 +737,91 @@ IF _SOURCE_DISC
 
 ELIF _EXECUTIVE
 
- EQUB &B5               \ ???
- EQUB &1E
- EQUB &04
- EQUB &77
- EQUB &1A
- EQUB &BA
- EQUB &04
- EQUB &16
- EQUB &B0
- EQUB &9D
- EQUB &16
- EQUB &01
- EQUB &16
- EQUB &1E
- EQUB &AE
- EQUB &15
- EQUB &B2
- EQUB &77
- EQUB &88
- EQUB &1B
- EQUB &0E
- EQUB &77
- EQUB &88
- EQUB &77
- EQUB &C4
- EQUB &12
- EQUB &B1
- EQUB &14
- EQUB &02
- EQUB &AC
- EQUB &AD
- EQUB &77
- EQUB &AD
- EQUB &05
- EQUB &04
- EQUB &1E
- EQUB &88
- EQUB &77
- EQUB &18
- EQUB &11
- EQUB &77
- EQUB &B5
- EQUB &1E
- EQUB &04
- EQUB &77
- EQUB &07
- EQUB &05
- EQUB &18
- EQUB &10
- EQUB &05
- EQUB &16
- EQUB &1A
- EQUB &57
- EQUB &88
- EQUB &1B
- EQUB &0E
- EQUB &77
- EQUB &C3
- EQUB &12
- EQUB &B1
- EQUB &14
- EQUB &02
- EQUB &AC
- EQUB &AD
- EQUB &77
- EQUB &AD
- EQUB &05
- EQUB &04
- EQUB &1E
- EQUB &88
- EQUB &77
- EQUB &1F
- EQUB &16
- EQUB &04
- EQUB &77
- EQUB &C4
- EQUB &17
- EQUB &77
- EQUB &03
- EQUB &18
- EQUB &10
- EQUB &10
- EQUB &B2
- EQUB &57
+ ETWO 'T', 'H'          \ Token 26:     "THIS MESSAGE IS AVAILABLE ONLY ON THE
+ ECHR 'I'               \                EXECUTIVE VERSION OF THIS PROGRAM"
+ ECHR 'S'               \
+ ECHR ' '               \ Encoded as:   "<226>IS M<237>SA<231>[202]AVAI<249>B
+ ECHR 'M'               \                <229> <223>LY <223> [147]E<230>CU<251>
+ ETWO 'E', 'S'          \                <250> <250>RSI<223> OF <226>IS PROGRAM"
+ ECHR 'S'
+ ECHR 'A'
+ ETWO 'G', 'E'
+ ETOK 202
+ ECHR 'A'
+ ECHR 'V'
+ ECHR 'A'
+ ECHR 'I'
+ ETWO 'L', 'A'
+ ECHR 'B'
+ ETWO 'L', 'E'
+ ECHR ' '
+ ETWO 'O', 'N'
+ ECHR 'L'
+ ECHR 'Y'
+ ECHR ' '
+ ETWO 'O', 'N'
+ ECHR ' '
+ ETOK 147
+ ECHR 'E'
+ ETWO 'X', 'E'
+ ECHR 'C'
+ ECHR 'U'
+ ETWO 'T', 'I'
+ ETWO 'V', 'E'
+ ECHR ' '
+ ETWO 'V', 'E'
+ ECHR 'R'
+ ECHR 'S'
+ ECHR 'I'
+ ETWO 'O', 'N'
+ ECHR ' '
+ ECHR 'O'
+ ECHR 'F'
+ ECHR ' '
+ ETWO 'T', 'H'
+ ECHR 'I'
+ ECHR 'S'
+ ECHR ' '
+ ECHR 'P'
+ ECHR 'R'
+ ECHR 'O'
+ ECHR 'G'
+ ECHR 'R'
+ ECHR 'A'
+ ECHR 'M'
+ EQUB VE
+
+ ETWO 'O', 'N'          \ Token 27:     "ONLY THIS EXECUTIVE VERSION HAS THE @
+ ECHR 'L'               \                TOGGLE"
+ ECHR 'Y'               \
+ ECHR ' '               \ Encoded as:   "<223>LY [148]E<230>CU<251><250> <250>RS
+ ETOK 148               \                I<223> HAS [147]@ TOGG<229>"
+ ECHR 'E'
+ ETWO 'X', 'E'
+ ECHR 'C'
+ ECHR 'U'
+ ETWO 'T', 'I'
+ ETWO 'V', 'E'
+ ECHR ' '
+ ETWO 'V', 'E'
+ ECHR 'R'
+ ECHR 'S'
+ ECHR 'I'
+ ETWO 'O', 'N'
+ ECHR ' '
+ ECHR 'H'
+ ECHR 'A'
+ ECHR 'S'
+ ECHR ' '
+ ETOK 147
+ ECHR '@'
+ ECHR ' '
+ ECHR 'T'
+ ECHR 'O'
+ ECHR 'G'
+ ECHR 'G'
+ ETWO 'L', 'E'
+ EQUB VE
 
 ENDIF
 

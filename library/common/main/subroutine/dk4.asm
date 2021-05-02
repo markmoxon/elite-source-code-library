@@ -163,7 +163,8 @@ IF _SNG45 OR _SOURCE_DISC
 
 ELIF _EXECUTIVE
 
- CPY #&49               \ ???
+ CPY #&49               \ The last toggle key is &48 (:), so check whether we
+                        \ have just done that one
 
 ENDIF
 

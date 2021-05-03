@@ -5,6 +5,7 @@
 \   Category: Demo
 \    Summary: Show the demo
 \  Deep dive: The 6502 Second Processor demo mode
+\             Secrets of the Executive version
 \
 \ ------------------------------------------------------------------------------
 \

@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Sound
 \    Summary: Speak using the Watford Electronics Beeb Speech Synthesiser
+\  Deep dive: Secrets of the Executive version
 \
 \ ------------------------------------------------------------------------------
 \

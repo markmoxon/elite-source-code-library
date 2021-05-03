@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Sound
 \    Summary: Phrases for the Watford Electronics Beeb Speech Synthesiser
+\  Deep dive: Secrets of the Executive version
 \
 \ ******************************************************************************
 

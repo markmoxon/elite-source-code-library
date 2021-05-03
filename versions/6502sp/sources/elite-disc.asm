@@ -23,7 +23,7 @@
 \ which release is being built:
 \
 \   * elite-6502sp-sng45.ssd
-\   * elite-6502sp-source-disc.ssd
+\   * elite-6502sp-from-source-disc.ssd
 \   * elite-6502sp-executive.ssd
 \
 \ This can be loaded into an emulator or a real BBC Micro.

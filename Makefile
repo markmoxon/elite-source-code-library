@@ -5,7 +5,7 @@ PYTHON?=python
 
 rel-cassette=1
 folder-cassette=''
-suffix-cassette='-source-disc'
+suffix-cassette='-from-source-disc'
 
 # 6502 Second Processor version
 
@@ -26,7 +26,7 @@ suffix-cassette='-source-disc'
 ifeq ($(release-6502sp), source-disc)
   rel-6502sp=1
   folder-6502sp='/source-disc'
-  suffix-6502sp='-source-disc'
+  suffix-6502sp='-from-source-disc'
 else ifeq ($(release-6502sp), executive)
   rel-6502sp=3
   folder-6502sp='/executive'

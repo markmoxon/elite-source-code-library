@@ -234,7 +234,7 @@ or this on a Mac or Linux:
 make encrypt verify release-6502sp=source-disc
 ```
 
-This will produce a file called `elite-6502sp-source-disc.ssd` that contains the source disc release.
+This will produce a file called `elite-6502sp-from-source-disc.ssd` that contains the source disc release.
 
 You can build the Executive version by appending `release-6502sp=executive` to the `make` command, like this on Windows:
 

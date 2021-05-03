@@ -8,6 +8,8 @@
 \
 \ ******************************************************************************
 
+IF _6502SP_VERSION \ 6502SP: The Executive version has a different memory map to the other 6502SP versions, with the LP workspace at &8900 instead of &8600
+
 IF _SNG45 OR _SOURCE_DISC
 
 ORG &8600
@@ -15,6 +17,8 @@ ORG &8600
 ELIF _EXECUTIVE
 
 ORG &8900
+
+ENDIF
 
 ENDIF
 

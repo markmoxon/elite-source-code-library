@@ -50,7 +50,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ 6502SP: The Executive version contains a maxed-out default commander, with a different name: Firebud instead of Jameson (the name is presumably a seven-character riff on "Firebird", the publishers of the non-Acorn versions of Elite)
 
  EQUS "JAMESON"         \ The current commander name, which defaults to JAMESON
  EQUB 13                \
@@ -64,19 +64,22 @@ IF _SNG45 OR _SOURCE_DISC
 
  EQUS "JAMESON"         \ The current commander name, which defaults to JAMESON
  EQUB 13                \
-                        \ The commander name can be up to 7 characters (the DFS
-                        \ limit for file names), and is terminated by a carriage
-                        \ return
+                        \ The commander name can be up to seven characters (the
+                        \ DFS limit for file names), and is terminated by a
+                        \ carriage return
 
 ELIF _EXECUTIVE
 
  EQUS "FIREBUD"         \ The current commander name, which defaults to FIREBUD
- EQUB 13                \ in the Executive version (which comes with a maxed-out
-                        \ commander by default, so it gets a different name)
+ EQUB 13                \ in the Executive version (this version comes with a
+                        \ maxed-out commander by default, so it gets a different
+                        \ name, which is presumably a seven-character riff on
+                        \ "Firebird", the publishers of the non-Acorn versions
+                        \ of Elite)
                         \
-                        \ The commander name can be up to 7 characters (the DFS
-                        \ limit for file names), and is terminated by a carriage
-                        \ return
+                        \ The commander name can be up to seven characters (the
+                        \ DFS limit for file names), and is terminated by a
+                        \ carriage return
 
 ENDIF
 
@@ -113,7 +116,7 @@ ENDIF
 
  EQUB 70                \ QQ14 = Fuel level, #13
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ 6502SP: The Executive version has bit 7 of the COK competition flags set, to indicate that this commander file has been tampered with (which it has, of course)
 
  EQUB 0                 \ COK = Competition flags, #14
 

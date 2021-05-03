@@ -699,7 +699,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION \ 6502SP: The source disc release of the 6502SP version has a bizarre override for Lave: "Bits'n Pieces - End Of Part 1". I have no idea what this means either
+IF _6502SP_VERSION \ Advanced: Some of the advanced versions have an extra token for overriding the system description for Lave. The source disc release of the 6502SP version has the bizarre: "Bits'n Pieces - End Of Part 1". The Executive version has: "This message is available only on the executive version of this program". And the Master version has: "WELCOME TO  THE SEVENTEENTH GALAXY!", which is only shown if we are in galaxy 17 (though it isn't possible to get there, so this never gets shown)
 
 IF _SOURCE_DISC
 
@@ -791,6 +791,43 @@ ELIF _EXECUTIVE
  ECHR 'M'
  EQUB VE
 
+ENDIF
+
+ELIF _MASTER_VERSION
+
+ EJMP 1                 \ Token 26:     "{all caps}WELCOME TO  THE SEVENTEENTH
+ ECHR 'W'               \                GALAXY!"
+ ECHR 'E'               \
+ ECHR 'L'               \ Encoded as:   "{1}WELCOME[201] [147]<218><250>NTE<246>
+ ECHR 'C'               \                <226> GA<249>XY!"
+ ECHR 'O'
+ ECHR 'M'
+ ECHR 'E'
+ ETOK 201
+ ECHR ' '
+ ETOK 147
+ ETWO 'S', 'E'
+ ETWO 'V', 'E'
+ ECHR 'N'
+ ECHR 'T'
+ ECHR 'E'
+ ETWO 'E', 'N'
+ ETWO 'T', 'H'
+ ECHR ' '
+ ECHR 'G'
+ ECHR 'A'
+ ETWO 'L', 'A'
+ ECHR 'X'
+ ECHR 'Y'
+ ECHR '!'
+ EQUB VE
+
+ENDIF
+
+IF _6502SP_VERSION \ 6502SP: The Executive version has an extra token for overriding the system description for Riedquat: "Only this executive version has the @ toggle"
+
+IF _EXECUTIVE
+
  ETWO 'O', 'N'          \ Token 27:     "ONLY THIS EXECUTIVE VERSION HAS THE @
  ECHR 'L'               \                TOGGLE"
  ECHR 'Y'               \
@@ -824,35 +861,6 @@ ELIF _EXECUTIVE
  EQUB VE
 
 ENDIF
-
-ELIF _MASTER_VERSION
-
- EJMP 1                 \ Token 26:     "{all caps}WELCOME TO  THE SEVENTEENTH
- ECHR 'W'               \                GALAXY!"
- ECHR 'E'               \
- ECHR 'L'               \ Encoded as:   "{1}WELCOME[201] [147]<218><250>NTE<246>
- ECHR 'C'               \                <226> GA<249>XY!"
- ECHR 'O'
- ECHR 'M'
- ECHR 'E'
- ETOK 201
- ECHR ' '
- ETOK 147
- ETWO 'S', 'E'
- ETWO 'V', 'E'
- ECHR 'N'
- ECHR 'T'
- ECHR 'E'
- ETWO 'E', 'N'
- ETWO 'T', 'H'
- ECHR ' '
- ECHR 'G'
- ECHR 'A'
- ETWO 'L', 'A'
- ECHR 'X'
- ECHR 'Y'
- ECHR '!'
- EQUB VE
 
 ENDIF
 

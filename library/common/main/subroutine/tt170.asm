@@ -37,7 +37,7 @@ ELIF _DISC_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ 6502SP: The Executive version immediately starts the demo once the game has loaded (though just like the other 6502SP versions, you can still bring it up manually using TAB from the title screen, and it will automatically start after a period of inactivity)
 
                         \ Fall through into BR1 to start the game
 
@@ -54,6 +54,12 @@ ELIF _6502SP_VERSION
 IF _EXECUTIVE
 
  JSR DEMON              \ Call DEMON to show the demo
+
+ LDX #&FF               \ Set the stack pointer to &01FF, which is the standard
+ TXS                    \ location for the 6502 stack, so this instruction
+                        \ effectively resets the stack
+
+ JSR RESET              \ Call RESET to initialise most of the game variables
 
 ENDIF
 

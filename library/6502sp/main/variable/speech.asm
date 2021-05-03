@@ -9,6 +9,8 @@
 
 .SPEECH
 
+IF _6502SP_VERSION \ 6502SP: The Executive version supports speech, and the four phrases are stored in the table at SPEECH
+
 IF _EXECUTIVE
 
  EQUB 13
@@ -46,3 +48,6 @@ IF _EXECUTIVE
  EQUB 13
 
 ENDIF
+
+ENDIF
+

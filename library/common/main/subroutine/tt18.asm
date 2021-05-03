@@ -14,7 +14,7 @@
 
 .TT18
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ 6502SP: Group A: If infinite jumps are enabled in the Executive version, no fuel is used for jumpint=g
 
 IF _SNG45 OR _SOURCE_DISC
 
@@ -54,7 +54,7 @@ ENDIF
 
  STA QQ14               \ Store the updated fuel amount in QQ14
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ 6502SP: See group A
 
 IF _EXECUTIVE
 

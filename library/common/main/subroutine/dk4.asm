@@ -149,7 +149,7 @@ ENDIF
 
  INY                    \ Increment Y to point to the next toggle key
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ 6502SP: The Executive version supports two new configuration keys when paused: "@" toggles infinite jumps, while ":" toggles speech
 
  CPY #&47               \ The last toggle key is &46 (K), so check whether we
                         \ have just done that one

@@ -19,7 +19,7 @@
 
 .CHPR
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ 6502SP: If speech is enabled in the Executive version, the main character routine at CHPR doesn't make standard system beeps any more (though the BELL routine still does)
 
 IF _EXECUTIVE
 

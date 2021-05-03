@@ -19,20 +19,6 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF _6502SP_VERSION
-
-IF _EXECUTIVE
-
- LDX #&FF               \ Set the stack pointer to &01FF, which is the standard
- TXS                    \ location for the 6502 stack, so this instruction
-                        \ effectively resets the stack
-
- JSR RES2               \ Reset a number of flight variables and workspaces
-
-ENDIF
-
-ENDIF
-
 .BR1
 
 IF _6502SP_VERSION \ Tube
@@ -72,7 +58,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ P
 
 ENDIF
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ 6502SP: If speech is enabled on the Executive version, it will say "Elite" when the title screen is displayed
 
 IF _EXECUTIVE
 

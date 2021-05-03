@@ -2,7 +2,7 @@
 \
 \       Name: Parasite variables
 \       Type: Workspace
-\    Address: &1000 to &100B (&1000 to &100D in Executive version)
+\    Address: &1000 to &100B (&100D in the Executive version)
 \   Category: Workspaces
 \    Summary: Various variables used by the parasite
 \
@@ -18,6 +18,8 @@ INCLUDE "library/common/main/variable/flh.asm"
 INCLUDE "library/common/main/variable/jstgy.asm"
 INCLUDE "library/common/main/variable/jste.asm"
 INCLUDE "library/common/main/variable/jstk.asm"
+
+IF _6502SP_VERSION \ 6502SP: The Executive version has two extra variables for storing the new configuration options
 
 IF _EXECUTIVE
 
@@ -49,6 +51,8 @@ IF _EXECUTIVE
                         \
                         \ For speech to work, the BBC must be fitted with a
                         \ Watford Electronics Beeb Speech Synthesiser
+
+ENDIF
 
 ENDIF
 

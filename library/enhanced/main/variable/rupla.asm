@@ -52,7 +52,7 @@
  EQUB 101                \ System 101, Galaxy 2, Mission 1     Xeveon = Token 23
  EQUB 193                \ System 193, Galaxy 1, Mission 1     Orarra = Token 24
  EQUB 41                 \ System  41, Galaxy 2                Anreer = Token 25
-IF _6502SP_VERSION  \ Advanced: The source disc release of the 6502SP version, and the Master version, both use token 26 to override the extended system description for Lave
+IF _6502SP_VERSION  \ Advanced: The Executive version, the source disc release of the 6502SP version, and the Master version all use token 26 to override the extended system description for Lave. The Executive version also uses token 27 to override the extended system description for Riedquat
 
 IF _SOURCE_DISC
 

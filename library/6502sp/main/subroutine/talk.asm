@@ -15,6 +15,8 @@
 
 .TALK
 
+IF _6502SP_VERSION \ 6502SP: The Executive version supports speech, via the TALK routine. Speech will work only if you have a Watford Electronics Beeb Speech Synthesiser fitted and enable speech in the configuration options
+
 IF _EXECUTIVE
 
  TYA                    \ Store Y on the stack to we can retrieve it later
@@ -91,6 +93,8 @@ IF _EXECUTIVE
  TAY                    \ gets preserved across the call to the subroutine
 
  RTS                    \ Return from the subroutine
+
+ENDIF
 
 ENDIF
 

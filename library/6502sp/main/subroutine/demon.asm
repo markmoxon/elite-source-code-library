@@ -39,7 +39,8 @@
  JSR nWq                \ Call nWq to create a random cloud of stardust
 
  LDX #LO(acorn)         \ Set (Y X) to the address of acorn, which contains the
- LDY #HI(acorn)         \ text: "ACORNSOFT PRESENTS"
+ LDY #HI(acorn)         \ text: "ACORNSOFT PRESENTS" (or, in the Executive
+                        \ version: "PIZZASOFT PRESENTS")
 
  JSR SLIDE              \ Call SLIDE to display the Star Wars scroll text
 
@@ -312,12 +313,16 @@
  ROR DELT4
  STA DELT4+1
 
+IF _6502SP_VERSION \ 6502SP: The demo in the Executive version shows an extra bit of scroll text before the authors' names: "THE EXECUTIVE VERSION"
+
 IF _EXECUTIVE
 
- LDX #LO(true3)         \ Set (Y X) to the address of true3, which contains the
- LDY #HI(true3)         \ text: "THE EXECUTIVE VERSION"
+ LDX #LO(executive)     \ Set (Y X) to the address of executive, which contains
+ LDY #HI(executive)     \ the text: "THE EXECUTIVE VERSION"
 
  JSR SLIDE              \ Call SLIDE to display the Star Wars scroll text
+
+ENDIF
 
 ENDIF
 
@@ -357,19 +362,11 @@ ENDIF
                         \ camera moves forward, and it's disappeared off the top
                         \ of the screen
 
-IF _SNG45 OR _SOURCE_DISC
-
  LDX #LO(true3)         \ Set (Y X) to the address of true3, which contains the
  LDY #HI(true3)         \ text: "THE GALAXY IS IN TURMOIL, THE NAVY FAR AWAY AS
-                        \ THE EMPIRE CRUMBLES"
-
-ELIF _EXECUTIVE
-
- LDX #LO(elusive)       \ Set (Y X) to the address of elusive, which contains
- LDY #HI(elusive)       \ the text: "CONGRATULATIONS ON OBTAINING A COPY OF THIS
-                        \ ELUSIVE PRODUCT"
-
-ENDIF
+                        \ THE EMPIRE CRUMBLES" (or, in the Executive version:
+                        \ "CONGRATULATIONS ON OBTAINING A COPY OF THIS ELUSIVE
+                        \ PRODUCT")
 
  JSR SLIDE              \ Call SLIDE to display the Star Wars scroll text
 

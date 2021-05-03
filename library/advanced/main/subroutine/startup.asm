@@ -37,7 +37,7 @@ ENDIF
  STA VIA+&4E            \ (SHEILA &4E) bits 0 and 3-5 (i.e. disable the Timer1,
                         \ CB1, CB2 and CA2 interrupts from the System VIA)
 
-IF _6502SP_VERSION \ Tube
+IF _6502SP_VERSION \ 6502SP: The Executive version support speech via the Watford Electronics Beeb Speech Synthesiser, which attaches to the user port, so unlike the other versions, the loader doesn't disable the 6522 User VIA
 
 IF _SNG45 OR _SOURCE_DISC
 
@@ -51,7 +51,12 @@ ELIF _EXECUTIVE
                         \ User VIA interrupt enable register IER to this value
                         \ to disable all hardware interrupts from the User VIA,
                         \ but the Executive version is missing the STA &FE6E
-                        \ instruction, so it doesn't disable all the interrupts
+                        \ instruction, so it doesn't disable all the interrupts.
+                        \ This is because the Watford Electronics Beeb Speech
+                        \ Synthesiser that the Executive version supports plugs
+                        \ into the user port, which is controlled by the 6522
+                        \ User VIA, so this ensures we don't disable the speech
+                        \ synthesiser if one is fitted
 
 ENDIF
 

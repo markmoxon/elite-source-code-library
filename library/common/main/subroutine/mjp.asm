@@ -71,7 +71,7 @@ ENDIF
  STY MJ                 \ Set the mis-jump flag in MJ to &FF, to indicate that
                         \ we are now in witchspace
 
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ 6502SP: If speech is enabled on the Executive version, it will say "Oh shit, it's a mis-jump" when we mis-jump into witchspace (this happens with both accidental and manually triggered mis-jumps)
 
 IF _EXECUTIVE
 

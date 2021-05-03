@@ -3,7 +3,7 @@
 \       Name: byian
 \       Type: Variable
 \   Category: Demo
-\    Summary: The text for the demo's second scroll text
+\    Summary: The text for the demo's middle scroll text
 \
 \ ******************************************************************************
 

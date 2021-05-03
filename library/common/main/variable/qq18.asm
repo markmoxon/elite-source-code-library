@@ -358,7 +358,7 @@ ENDIF
  CHAR 'Y'
  EQUB 0
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ 6502SP: The Executive version displays distances in the Status and galaxy charts as "L.Y." rather than "LIGHT YEARS" (this saves space in the token table so "SIR" can be added to the tokens for low low and incoming missiles)
 
  CHAR ' '               \ Token 35:     " LIGHT YEARS"
  CHAR 'L'               \
@@ -1006,7 +1006,7 @@ ENDIF
  CHAR 'T'
  EQUB 0
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ 6502SP: When energy is low in the Executive version, it shows the in-flight message "ENERGY LOW,SIR", rather than just showing "ENERGY LOW"
 
  RTOK 121               \ Token 100:    "ENERGY LOW{beep}"
  CHAR 'L'               \
@@ -1260,7 +1260,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ 6502SP: When missiles are being fired at us in the Executive version, it shows the in-flight message "INCOMING MISSILE,SIR", rather than just showing "INCOMING MISSILE"
 
  TWOK 'I', 'N'          \ Token 120:    "INCOMING MISSILE"
  RTOK 91                \

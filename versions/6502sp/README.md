@@ -31,7 +31,7 @@ My hope is that this repository and the [accompanying website](https://www.bbcel
   * [Verifying the output](#verifying-the-output)
   * [Log files](#log-files)
 
-* [Building different release versions of Elite](#building-different-release-versions-of-elite)
+* [Building different releases of Elite](#building-different-releases-of-elite)
 
 * [Notes on the original source files](#notes-on-the-original-source-files)
 
@@ -131,7 +131,7 @@ make.bat build
 make.bat encrypt
 ```
 
-will produce a file called `elite-6502sp.ssd`, which you can then load into an emulator, or into a real BBC Micro using a device like a Gotek.
+will produce a file called `elite-6502sp-sng45.ssd` containing the SNG45 release, which you can then load into an emulator, or into a real BBC Micro using a device like a Gotek.
 
 ### Mac and Linux
 
@@ -147,7 +147,7 @@ make build
 make encrypt
 ```
 
-will produce a file called `elite-6502sp.ssd`, which you can then load into an emulator, or into a real BBC Micro using a device like a Gotek.
+will produce a file called `elite-6502sp-sng45.ssd` containing the SNG45 release, which you can then load into an emulator, or into a real BBC Micro using a device like a Gotek.
 
 ### Verifying the output
 
@@ -210,17 +210,19 @@ All the compiled binaries match the extracts, so we know we are producing the sa
 
 During compilation, details of every step are output in a file called `compile.txt` in the `output` folder. If you have problems, it might come in handy, and it's a great reference if you need to know the addresses of labels and variables for debugging (or just snooping around).
 
-## Building different release versions of Elite
+## Building different releases of Elite
 
-This repository contains the source code for two different versions of 6502 Second Processor Elite:
+This repository contains the source code for three different releases of 6502 Second Processor Elite:
 
-* The version from the SNG45 Acornsoft release (the first official release of 6502 Second Processor Elite)
+* The release from the SNG45 Acornsoft release (the first official release of 6502 Second Processor Elite)
 
-* The version produced by the source disc from Ian Bell's site (which was never released)
+* The release produced by the source disc from Ian Bell's site (which was never released)
 
 * The Executive version from Ian Bell's site (which was also never released)
 
-By default the build process builds the SNG45 version, but you can build the source disc version by appending `release-6502sp=source-disc` to the `make` command, like this on Windows:
+By default the build process builds the SNG45 release, but you can build the other relases as follows.
+
+You can build the source disc release by appending `release-6502sp=source-disc` to the `make` command, like this on Windows:
 
 ```
 make.bat encrypt verify release-6502sp=source-disc
@@ -232,7 +234,9 @@ or this on a Mac or Linux:
 make encrypt verify release-6502sp=source-disc
 ```
 
-and you can build the Executive version by appending `release-6502sp=executive` to the `make` command, like this on Windows:
+This will produce a file called `elite-6502sp-source-disc.ssd` that contains the source disc release.
+
+You can build the Executive version by appending `release-6502sp=executive` to the `make` command, like this on Windows:
 
 ```
 make.bat encrypt verify release-6502sp=executive
@@ -244,23 +248,25 @@ or this on a Mac or Linux:
 make encrypt verify release-6502sp=executive
 ```
 
-You can also add `release-6502sp=sng45`, though that's the default value so it isn't necessary.
+This will produce a file called `elite-6502sp-executive.ssd` that contains the Executive version.
 
-You can see the differences between the versions by searching the source code for `_SNG45` (for features in the SNG45 version) or `_SOURCE_DISC` (for features in the source disc) or `_EXECUTIVE_` (for features in the Executive version). There are only a few differences in the source disc version (if you ignore [workspace noise](#producing-byte-accurate-binaries)), but quite a few in the Executive version.
+You can also add `release-6502sp=sng45` to produce the `elite-6502sp-sng45.ssd` file that contains the SNG45 release, though that's the default value so it isn't necessary.
 
-The differences in the source disc version compared to the SNG45 release are:
+You can see the differences between the releases by searching the source code for `_SNG45` (for features in the SNG45 release) or `_SOURCE_DISC` (for features in the source disc release) or `_EXECUTIVE_` (for features in the Executive version). There are only a few differences in the source disc release (if you ignore [workspace noise](#producing-byte-accurate-binaries)), but quite a few in the Executive version.
 
-* In the source disc version, the extended description of Lave is replaced by the rather cryptic "Bits'n Pieces - End Of Part 1". You can see this by pressing F6 just after starting the game (you have to be docked at Lave).
+The differences in the source disc release compared to the SNG45 release are:
 
-* The top laser line in the source disc version aims slightly lower than in the SNG45 version (see the `LASLI` routine for details).
+* In the source disc release, the extended description of Lave is replaced by the rather cryptic "Bits'n Pieces - End Of Part 1". You can see this by pressing F6 just after starting the game (you have to be docked at Lave).
 
-* The loader in the source disc version is missing the copyright string from the start of the file ("Copyright (c) Acornsoft Limited 1985").
+* The top laser line in the source disc release aims slightly lower than in the SNG45 release (see the `LASLI` routine for details).
 
-* The loader in the source disc version contains a load of Tube-detection code that is disabled in the SNG45 version.
+* The loader in the source disc release is missing the copyright string from the start of the file ("Copyright (c) Acornsoft Limited 1985").
+
+* The loader in the source disc release contains a load of Tube-detection code that is disabled in the SNG45 release.
 
 The differences in the Executive version compared to the SNG45 release are:
 
-* The top laser line in the source disc version aims slightly lower than in the SNG45 version (see the `LASLI` routine for details).
+* The top laser line in the source disc release aims slightly lower than in the SNG45 version (see the `LASLI` routine for details).
 
 * Memory map: LP = &8900, K% = &8500
 * Different override tokens for Lave, Riedquat (RUTOK, RUPLA, RUGAL):

@@ -19,9 +19,12 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ This source file produces the following SSD disc image:
+\ This source file produces one of the following SSD disc images, depending on
+\ which release is being built:
 \
-\   * elite-6502sp.ssd
+\   * elite-6502sp-sng45.ssd
+\   * elite-6502sp-source-disc.ssd
+\   * elite-6502sp-executive.ssd
 \
 \ This can be loaded into an emulator or a real BBC Micro.
 \

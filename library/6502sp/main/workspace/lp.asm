@@ -2,7 +2,7 @@
 \
 \       Name: LP
 \       Type: Workspace
-\    Address: &8600 to &91FF
+\    Address: &8600 to &91FF (&8900 to &8BFF in the Executive version)
 \   Category: Workspaces
 \    Summary: Variables used for displaying the scrolling text in the demo
 \

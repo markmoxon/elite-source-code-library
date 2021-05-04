@@ -5,7 +5,7 @@
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
 \    Address: &0900 to &0D3F
 ELIF _6502SP_VERSION
-\    Address: &8200 to &85FF
+\    Address: &8200 to &85FF (&8500 to &88FF in the Executive version)
 ELIF _MASTER_VERSION
 \    Address: &0400 to &0800
 ENDIF

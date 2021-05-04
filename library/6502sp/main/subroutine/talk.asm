@@ -12,6 +12,18 @@
 \ Synthesiser fitted and enable speech by presing ":" while the game is paused,
 \ then the game will speak to you at various points.
 \
+\ Arguments:
+\
+\   X                   The number of the phrase to speak:
+\
+\                         1 = "Incoming missile"
+\
+\                         2 = "Energy low"
+\
+\                         3 = "Elite"
+\
+\                         4 = "Oh shit, it's a mis-jump"
+\
 \ ******************************************************************************
 
 .TALK

@@ -212,7 +212,7 @@ ENDIF
  LDA #189               \ Print recursive token 29 ("HYPERSPACE ")
  JSR TT27
 
-IF _6502SP_VERSION \ 6502SP: If infinite jumps are enabled in the Executive version, you can jump to anywhere in the entire galaxy
+IF _6502SP_VERSION \ 6502SP: If infinite jump range is enabled in the Executive version, you can jump to anywhere in the entire galaxy
 
 IF _EXECUTIVE
 

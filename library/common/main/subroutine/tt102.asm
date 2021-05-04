@@ -17,6 +17,11 @@ ELIF _ELECTRON_VERSION
 \ the cursor keys have been used (i.e. the values that are returned by routine
 \ TT17).
 ENDIF
+IF _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+\
+\ This routine also checks for the "F" key press (search for a system), which
+\ applies to enhanced versions only.
+ENDIF
 \
 \ Arguments:
 \

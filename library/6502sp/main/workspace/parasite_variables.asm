@@ -2,7 +2,7 @@
 \
 \       Name: Parasite variables
 \       Type: Workspace
-\    Address: &1000 to &100B (&100D in the Executive version)
+\    Address: &1000 to &100B (&1000 to &100D in the Executive version)
 \   Category: Workspaces
 \    Summary: Various variables used by the parasite
 \

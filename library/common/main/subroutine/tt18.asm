@@ -14,7 +14,7 @@
 
 .TT18
 
-IF _6502SP_VERSION \ 6502SP: Group A: If infinite jumps are enabled in the Executive version, no fuel is used for jumpint=g
+IF _6502SP_VERSION \ 6502SP: Group A: If infinite jump range is enabled in the Executive version, no fuel is used for jumping
 
 IF _SNG45 OR _SOURCE_DISC
 

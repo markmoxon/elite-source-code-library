@@ -38,7 +38,7 @@ ELIF _ELECTRON_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION \ 6502SP: If speech is enabled on the Executive version, it will say "Incoming missile" every time the "INCOMING MISSILE" message flashes on-screen
+IF _6502SP_VERSION \ 6502SP: If speech is enabled on the Executive version, it will say "Incoming missile" every time the "INCOMING MISSILE,SIR" message flashes on-screen
 
 IF _EXECUTIVE
 

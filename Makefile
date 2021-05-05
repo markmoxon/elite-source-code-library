@@ -64,9 +64,28 @@ endif
 
 # Master version
 
-rel-master=1
-folder-master='/sng47'
-suffix-master='-sng47'
+# You can set the release that gets built by adding 'release-master=<rel>' to
+# the make command, where <rel> is one of:
+#
+#   sng47
+#   compact
+#
+# So, for example:
+#
+#   make encrypt verify release-master=compact
+#
+# will build the Master Compact version. If you omit the release-master
+# parameter, it will build the SNG47 version.
+
+ifeq ($(release-master), compact)
+  rel-master=2
+  folder-master='/compact'
+  suffix-master='-compact'
+else
+  rel-master=1
+  folder-master='/sng47'
+  suffix-master='-sng47'
+endif
 
 # Electron version
 

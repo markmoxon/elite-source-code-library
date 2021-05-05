@@ -34,6 +34,20 @@
  LDX #0                 \ sample no channels from the joystick/Bitstik
  JSR OSBYTE
 
+IF _COMPACT
+
+ LDA #$81               \ ???
+ LDX #$00
+ LDY #$FF
+ JSR $FFF4
+ LDA #$FF
+ CPX #$F5
+ BNE $0E5B
+ LDA #$00
+ STA $02
+
+ENDIF
+
  LDA #200               \ Call OSBYTE with A = 200, X = 1 and Y = 0 to disable
  LDX #1                 \ the ESCAPE key and disable memory clearing if the
  JSR OSB                \ BREAK key is pressed

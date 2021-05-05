@@ -154,11 +154,27 @@ INCLUDE "library/enhanced/main/variable/rutok.asm"
 
 IF _MATCH_EXTRACTED_BINARIES
 
+ IF _SNG47
+
  EQUS " \mutilate"      \ These bytes appear to be unused and are presumably
  EQUS " from here"      \ workspace noise from the build process (this snippet
  EQUS " to F%"          \ looks like an assembly language comment from the
  EQUB 13                \ encryption process, which the authors presumably
  EQUB &0B, &B8          \ liked to call "mutilation")
+
+ ELIF _COMPACT
+
+ EQUS "\red herring"    \ These bytes appear to be unused and are presumably
+ EQUB 13                \ workspace noise from the build process (this snippet
+ EQUB &0B               \ looks like an assembly language comment from the
+ EQUS ","               \ encryption process, which the authors presumably
+ EQUB &05               \ liked to call "mutilation", though this could also
+ EQUS "\"               \ be a "red herring")
+ EQUB 13
+ EQUB &0B
+ EQUS "T!.G% \mutilate"
+
+ ENDIF
 
 ELSE
 

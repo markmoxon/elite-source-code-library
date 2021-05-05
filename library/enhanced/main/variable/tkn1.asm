@@ -86,22 +86,37 @@ ENDIF
  ETWO '-', '-'
  ECHR '3'
  ECHR '.'
+IF _6502SP_VERSION OR _DISC_DOCKED \ Minor
  ECHR ' '
  ECHR 'C'
-IF _6502SP_VERSION OR _DISC_DOCKED \ Minor
  ETWO 'A', 'T'
  ECHR 'A'
  ETWO 'L', 'O'
+ ECHR 'G'
+ ECHR 'U'
+ ECHR 'E'
 ELIF _MASTER_VERSION
+
+IF _SNG47
+
+ ECHR ' '
+ ECHR 'C'
  ECHR 'A'
  ECHR 'T'
  ECHR 'A'
  ECHR 'L'
  ECHR 'O'
-ENDIF
  ECHR 'G'
  ECHR 'U'
  ECHR 'E'
+
+ELIF _COMPACT
+
+ ETOK 152               \ ???
+
+ENDIF
+
+ENDIF
 IF _MASTER_VERSION \ Master: In the Master version, option 3 in the disc access menu is "Catalogue Disk" rather than just "Catalogue"
  ECHR ' '
  ECHR 'D'
@@ -206,9 +221,27 @@ IF _6502SP_VERSION OR _DISC_DOCKED \ Minor
 ELIF _MASTER_VERSION
  ETOK 150               \ Token 3:      "{clear screen}
 ENDIF
+IF _6502SP_VERSION OR _DISC_DOCKED
  ETOK 151               \                {draw box around title}
  ECHR ' '               \                {all caps}
  EJMP 16                \                {tab 6}DRIVE {drive number} CATALOGUE
+ELIF _MASTER_VERSION
+
+IF _SNG47
+
+ ETOK 151               \                {draw box around title}
+ ECHR ' '               \                {all caps}
+ EJMP 16                \                {tab 6}DRIVE {drive number} CATALOGUE
+
+ELIF _COMPACT
+
+ ECHR ' '               \ ???
+ ECHR ' '
+ ECHR ' '
+
+ENDIF
+
+ENDIF
  ETOK 152               \                {crlf}
  ETWO '-', '-'          \               "
  EQUB VE                \
@@ -1993,11 +2026,39 @@ ENDIF
  EQUB VE                \
                         \ Encoded as:   "{9}{11}{1}{8}"
 
+IF _6502SP_VERSION OR _DISC_DOCKED
+
  ECHR 'D'               \ Token 151:    "DRIVE"
  ECHR 'R'               \
  ECHR 'I'               \ Encoded as:   "DRI<250>"
  ETWO 'V', 'E'
  EQUB VE
+
+ELIF _MASTER_VERSION
+
+IF _SNG47
+
+ ECHR 'D'               \ Token 151:    "DRIVE"
+ ECHR 'R'               \
+ ECHR 'I'               \ Encoded as:   "DRI<250>"
+ ETWO 'V', 'E'
+ EQUB VE
+
+ELIF _COMPACT
+
+ ECHR 'D'               \ Token 151:    "DIRECTORY" ???
+ ECHR 'I'               \
+ ETWO 'R', 'E'          \ Encoded as:   "DI<242>CTORY"
+ ECHR 'C'
+ ECHR 'T'
+ ECHR 'O'
+ ECHR 'R'
+ ECHR 'Y'
+ EQUB VE
+
+ENDIF
+
+ENDIF
 
  ECHR ' '               \ Token 152:    " CATALOGUE"
  ECHR 'C'               \

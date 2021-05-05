@@ -35,6 +35,8 @@ _DISC_VERSION           = (_VERSION = 2)
 _6502SP_VERSION         = (_VERSION = 3)
 _MASTER_VERSION         = (_VERSION = 4)
 _ELECTRON_VERSION       = (_VERSION = 5)
+_SNG47                  = (_RELEASE = 1)
+_COMPACT                = (_RELEASE = 2)
 _DISC_DOCKED            = FALSE
 _DISC_FLIGHT            = FALSE
 
@@ -293,7 +295,11 @@ INCLUDE "library/master/main/subroutine/add_duplicate.asm"
 
 IF _MATCH_EXTRACTED_BINARIES
 
- INCBIN "versions/master/extracted/sng47/workspaces/ELTA-align1.bin"
+ IF _SNG47
+  INCBIN "versions/master/extracted/sng47/workspaces/ELTA-align1.bin"
+ ELIF _COMPACT
+  INCBIN "versions/master/extracted/compact/workspaces/ELTA-align1.bin"
+ ENDIF
 
 ELSE
 
@@ -308,7 +314,11 @@ INCLUDE "library/advanced/main/variable/antilog.asm"
 
 IF _MATCH_EXTRACTED_BINARIES
 
- INCBIN "versions/master/extracted/sng47/workspaces/ELTA-align2.bin"
+ IF _SNG47
+  INCBIN "versions/master/extracted/sng47/workspaces/ELTA-align2.bin"
+ ELIF _COMPACT
+  INCBIN "versions/master/extracted/compact/workspaces/ELTA-align2.bin"
+ ENDIF
 
 ELSE
 

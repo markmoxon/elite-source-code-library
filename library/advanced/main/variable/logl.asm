@@ -26,7 +26,11 @@ IF _6502SP_VERSION \ Platform
   INCBIN "versions/6502sp/extracted/source-disc/workspaces/ELTG-logL.bin"
  ENDIF
 ELIF _MASTER_VERSION
+ IF _SNG47
   INCBIN "versions/master/extracted/sng47/workspaces/ELTA-logL.bin"
+ ELIF _COMPACT
+  INCBIN "versions/master/extracted/compact/workspaces/ELTA-logL.bin"
+ ENDIF
 ENDIF
 
 ELSE

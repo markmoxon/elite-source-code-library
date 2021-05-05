@@ -81,10 +81,12 @@ ifeq ($(release-master), compact)
   rel-master=2
   folder-master='/compact'
   suffix-master='-compact'
+  boot-master=''
 else
   rel-master=1
   folder-master='/sng47'
   suffix-master='-sng47'
+  boot-master=' -boot M128Elt'
 endif
 
 # Electron version
@@ -191,7 +193,7 @@ build:
 	$(BEEBASM) -i versions/master/sources/elite-data.asm -v >> versions/master/output/compile.txt
 	$(BEEBASM) -i versions/master/sources/elite-source.asm -v >> versions/master/output/compile.txt
 	$(PYTHON) versions/master/sources/elite-checksum.py -u -rel$(rel-master)
-	$(BEEBASM) -i versions/master/sources/elite-disc.asm -do versions/master/elite-master$(suffix-master).ssd -boot M128Elt
+	$(BEEBASM) -i versions/master/sources/elite-disc.asm -do versions/master/elite-master$(suffix-master).ssd$(boot-master)
 
 	echo _VERSION=5 > versions/electron/sources/elite-header.h.asm
 	echo _RELEASE=$(rel-electron) >> versions/electron/sources/elite-header.h.asm
@@ -263,7 +265,7 @@ encrypt:
 	$(BEEBASM) -i versions/master/sources/elite-data.asm -v >> versions/master/output/compile.txt
 	$(BEEBASM) -i versions/master/sources/elite-source.asm -v >> versions/master/output/compile.txt
 	$(PYTHON) versions/master/sources/elite-checksum.py -rel$(rel-master)
-	$(BEEBASM) -i versions/master/sources/elite-disc.asm -do versions/master/elite-master$(suffix-master).ssd -boot M128Elt
+	$(BEEBASM) -i versions/master/sources/elite-disc.asm -do versions/master/elite-master$(suffix-master).ssd$(boot-master)
 
 	echo _VERSION=5 > versions/electron/sources/elite-header.h.asm
 	echo _RELEASE=$(rel-electron) >> versions/electron/sources/elite-header.h.asm

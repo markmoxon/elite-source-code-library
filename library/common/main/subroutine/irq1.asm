@@ -225,6 +225,13 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
 ELIF _MASTER_VERSION
 
+IF _COMPACT
+
+ LDA $02                \ ???
+ BEQ $1508
+
+ENDIF
+
  LDA VIA+&18            \ Fetch the ADC channel number into Y from bits 1-2 in
  AND #3                 \ the ADC status byte at SHEILA &18
  TAY

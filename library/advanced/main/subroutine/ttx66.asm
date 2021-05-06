@@ -64,22 +64,36 @@ IF _6502SP_VERSION \ Platform
  STX Y1
  STX Y2
 
+\STX QQ17               \ This instruction is commented out in the original
+                        \ source
+
+ DEX                    \ Set X2 = 255
+ STX X2
+
 ELIF _MASTER_VERSION
 
  STY XC                 \ Move the text cursor to column 1
+
+IF _SNG47
 
  LDX #0                 \ Set X1 = Y1 = Y2 = 0
  STX Y1
  STX Y2
  STX X1
 
-ENDIF
-
-\STX QQ17               \ This instruction is commented out in the original
-                        \ source
-
  DEX                    \ Set X2 = 255
  STX X2
+
+ELIF _COMPACT
+
+ EQUB &64, &4C, &64, &4E, &64, &4B \ ???
+
+ LDX #$FF
+ STX X2
+
+ENDIF
+
+ENDIF
 
  JSR LOIN               \ Draw a line from (X1, Y1) to (X2, Y2), so that's from
                         \ (0, 0) to (255, 0), along the very top of the screen

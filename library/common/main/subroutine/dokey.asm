@@ -443,11 +443,19 @@ ENDIF
 
 IF _MASTER_VERSION \ Enhanced: See group A
 
+IF _COMPACT
+
+ JMP $6D32              \ ???
+
+ENDIF
+
 .DK16
 
  LDA JSTK               \ If JSTK is zero, then we are configured to use the
  BEQ DK15               \ keyboard rather than the joystick, so jump to DK15 to
                         \ skip reading the joystick
+
+IF _SNG47
 
  LDA ADCH1              \ Fetch the high byte of the joystick X value
 
@@ -494,6 +502,13 @@ IF _MASTER_VERSION \ Enhanced: See group A
 
  BNE DK4                \ Jump to DK4 to scan for other keys (this BNE is
                         \ effectively a JMP as A is never 0)
+
+ELIF _COMPACT
+
+ JSR $7EF7              \ ???
+ BCC $6D56
+
+ENDIF
 
 ENDIF
 

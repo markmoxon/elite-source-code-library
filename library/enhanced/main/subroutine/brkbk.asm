@@ -25,6 +25,8 @@ IF _DISC_DOCKED \ Platform
  LDA #HI(BRBR)
  STA BRKV+1
 
+ RTS                    \ Return from the subroutine
+
 ELIF _6502SP_VERSION
 
  LDA #LO(BRBR)          \ Set BRKV to point to the BRBR routine, disabling
@@ -33,6 +35,8 @@ ELIF _6502SP_VERSION
  LDA #HI(BRBR)
  STA BRKV+1
  CLI
+
+ RTS                    \ Return from the subroutine
 
 ELIF _MASTER_VERSION
 
@@ -51,19 +55,15 @@ ELIF _MASTER_VERSION
  JSR STARTUP            \ Call STARTUP to set various vectors, interrupts and
                         \ timers
 
- JMP SRESET             \ Call SRESET to reset the sound buffers
+ JMP SRESET             \ Call SRESET to reset the sound buffers and return from
+                        \ the subroutine using a tail call
 
- CLI                    \ Enable interrupts
+IF _SNG47
+
+ CLI                    \ These instructions are never reached and have no
+ RTI                    \ effect
 
 ENDIF
-
-IF _DISC_DOCKED OR _6502SP_VERSION \ Platform
-
- RTS                    \ Return from the subroutine
-
-ELIF _MASTER_VERSION
-
- RTI                    \ Return from the interrupt handler
 
 ENDIF
 

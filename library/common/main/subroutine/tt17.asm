@@ -93,6 +93,17 @@ IF _6502SP_VERSION \ Enhanced: Group A: In the enhanced versions, the cursor mov
 
 ENDIF
 
+IF _MASTER_VERSION
+
+IF _COMPACT
+
+ LDX #0                 \ ???
+ LDY #0
+
+ENDIF
+
+ENDIF
+
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: Despite never reading the joystick values from the ADC channels, the Electron version still lets the joystick control the crosshairs on the chart views, if joysticks are configured. The result is an uncontrollable crosshair that moves of its own accord, so presumably this is a bug
 
  LDA JSTK               \ If the joystick is not configured, jump down to TJ1,
@@ -110,6 +121,13 @@ ELIF _ELECTRON_VERSION
 ENDIF
 
 IF _MASTER_VERSION \ Master: Group B: The Master has different logic around moving the crosshairs on the chart views, though the results appear to be the same
+
+IF _COMPACT
+
+ LDA $02                \ ???
+ BEQ $61E1
+
+ENDIF
 
  LDA JSTY               \ Fetch the joystick pitch, ranging from 1 to 255 with
                         \ 128 as the centre point
@@ -214,15 +232,23 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ 
 
  TAY                    \ Copy the value of A into Y
 
+ LDA KL                 \ Set A to the value of KL (the key pressed)
+
+ RTS                    \ Return from the subroutine
+
 ELIF _MASTER_VERSION
 
  TAX                    \ Copy the value of A into X
 
-ENDIF
-
  LDA KL                 \ Set A to the value of KL (the key pressed)
 
+IF _SNG47
+
  RTS                    \ Return from the subroutine
+
+ENDIF
+
+ENDIF
 
 IF _6502SP_VERSION \ Enhanced: See group A
 
@@ -235,9 +261,9 @@ ENDIF
 
 .TJ1
 
- LDA KL                 \ Set A to the value of KL (the key pressed)
-
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+
+ LDA KL                 \ Set A to the value of KL (the key pressed)
 
  LDX #0                 \ Set the results, X = Y = 0
  LDY #0
@@ -259,6 +285,8 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
  DEY
 
 ELIF _ELECTRON_VERSION
+
+ LDA KL                 \ Set A to the value of KL (the key pressed)
 
  LDY #0                 \ Set the result, Y = 0 (and we know that X is 0 as well
                         \ as we jumped to TJ1 from above following a LDX and a
@@ -282,8 +310,14 @@ ELIF _ELECTRON_VERSION
 
 ELIF _MASTER_VERSION
 
+IF _SNG47
+
+ LDA KL                 \ Set A to the value of KL (the key pressed)
+
  LDX #0                 \ Set the results, X = Y = 0
  LDY #0
+
+ENDIF
 
  CMP #&8C               \ If left arrow was pressed, set X = X - 1
  BNE P%+3
@@ -394,6 +428,12 @@ ELIF _MASTER_VERSION
                         \ when using the joystick)
 
  TAY                    \ Put the amended value of A back into Y
+
+IF _COMPACT
+
+ EQUB &64, &C9          \ ???
+
+ENDIF
 
  LDA KL                 \ Set A to the value of KL (the key pressed)
 

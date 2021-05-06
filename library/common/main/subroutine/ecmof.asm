@@ -26,9 +26,28 @@ ENDIF
 
 .ECMOF
 
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+
  LDA #0                 \ Set ECMA and ECMB to 0 to indicate that no E.C.M. is
  STA ECMA               \ currently running
  STA ECMP
+
+ELIF _MASTER_VERSION
+
+IF _SNG47
+
+ LDA #0                 \ Set ECMA and ECMB to 0 to indicate that no E.C.M. is
+ STA ECMA               \ currently running
+ STA ECMP
+
+ELIF _COMPACT
+
+ EQUB &64, &47          \ ???
+ STA ECMP
+
+ENDIF
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 

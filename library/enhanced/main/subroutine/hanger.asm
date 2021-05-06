@@ -432,12 +432,20 @@ ENDIF
 
 IF _MASTER_VERSION \ Platform
 
+IF _SNG47
+
  LDA #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
  STA VIA+&34            \ SHEILA &34 to switch main memory back into &3000-&7FFF
 
  RTS                    \ Return from the subroutine (this instruction is not
                         \ needed as we could just fall through into the RTS at
                         \ HA3 below)
+
+ELIF _COMPACT
+
+ JMP $1F6B              \ ???
+
+ENDIF
 
 ENDIF
 

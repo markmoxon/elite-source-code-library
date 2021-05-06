@@ -478,7 +478,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ P
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Electron: Group D: As joysticks are not supported in the Electron version, it doesn't check for the joystick fire button being pressed during the "Press Fire Or Space,Commander." stage of the title screen
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Electron: Group D: As joysticks are not supported in the Electron version, it doesn't check for the joystick fire button being pressed during the "Press Fire Or Space,Commander." stage of the title screen
 
  LDA VIA+&40            \ Read 6522 System VIA input register IRB (SHEILA &40)
 
@@ -496,6 +496,23 @@ ELIF _6502SP_VERSION
  AND #%00010000         \ Bit 4 of IRB (PB4) is clear if joystick 1's fire
                         \ button is pressed, otherwise it is set, so AND'ing
                         \ the value of IRB with %10000 extracts this bit
+
+ELIF _MASTER_VERSION
+
+IF _SNG47
+
+ LDA VIA+&40            \ Read 6522 System VIA input register IRB (SHEILA &40)
+
+ AND #%00010000         \ Bit 4 of IRB (PB4) is clear if joystick 1's fire
+                        \ button is pressed, otherwise it is set, so AND'ing
+                        \ the value of IRB with %10000 extracts this bit
+
+ELIF _COMPACT
+
+ JSR $7EE2              \ ???
+ BCS $68B0
+
+ENDIF
 
 ENDIF
 
@@ -515,9 +532,17 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: See group D
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Electron: See group D
 
  BEQ TL2                \ If the joystick fire button is pressed, jump to TL2
+
+ELIF _MASTER_VERSION
+
+IF _SNG47
+
+ BEQ TL2                \ If the joystick fire button is pressed, jump to TL2
+
+ENDIF
 
 ENDIF
 

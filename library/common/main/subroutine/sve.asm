@@ -183,14 +183,18 @@ ELIF _MASTER_VERSION
                         \ in A, setting the C flag if an invalid drive number
                         \ was entered
 
+IF _SNG47
+
  BCS LDdone             \ If the C flag is set, then an invalid drive number was
                         \ entered, so return from the subroutine (as DELT-1
                         \ contains an RTS)
 
  STA LDLI+6             \ Store the ASCII drive number in LDLI+6, which is the
-                        \ drive character of the load filename string ":1.E."
+                        \ drive character of the load filename string ":1.E." ???
 
  JSR LOD                \ Call LOD to load the commander file
+
+ENDIF
 
  JSR TRNME              \ Transfer the commander filename from INWK to NA%
 
@@ -414,6 +418,8 @@ ELIF _MASTER_VERSION
  BPL SVL2               \ Loop back until we have copied all the bytes in the
                         \ commander data block
 
+IF _SNG47
+
  JSR GTDRV              \ Get an ASCII disc drive drive number from the keyboard
                         \ in A, setting the C flag if an invalid drive number
                         \ was entered
@@ -423,6 +429,8 @@ ELIF _MASTER_VERSION
 
  STA SVLI+6             \ Store the ASCII drive number in SVLI+6, which is the
                         \ drive character of the save filename string ":1.E."
+
+ENDIF
 
  JSR SAVE               \ Call SAVE to save the commander file
 

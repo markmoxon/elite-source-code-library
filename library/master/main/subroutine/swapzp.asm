@@ -9,6 +9,17 @@
 
 .SWAPZP
 
+IF _COMPACT
+
+ JSR $156C              \ ???
+ LDA #$8F
+ LDX #$0B
+ LDY $122C
+ JMP $FFF4
+ JSR $158D
+
+ENDIF
+
  LDA #%00001111         \ Set bits 1 and 2 of the Access Control Register at
  STA VIA+&34            \ SHEILA &34 to switch screen memory into &3000-&7FFF
 

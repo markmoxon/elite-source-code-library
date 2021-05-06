@@ -21,6 +21,8 @@
 
 .CATS
 
+IF _DISC_DOCKED OR _6502SP_VERSION \ Platform
+
  JSR GTDRV              \ Get an ASCII disc drive drive number from the keyboard
                         \ in A, setting the C flag if an invalid drive number
                         \ was entered
@@ -29,24 +31,62 @@
                         \ entered, so return from the subroutine (as DELT-1
                         \ contains an RTS)
 
-IF _DISC_DOCKED OR _6502SP_VERSION \ Platform
-
  STA CTLI+1             \ Store the drive number in the second byte of the
                         \ command string at CTLI, so it overwrites the "0" in
                         \ ".0" with the drive number to catalogue
-
-ELIF _MASTER_VERSION
-
- STA CTLI+4             \ Store the drive number in the fifth byte of the
-                        \ command string at CTLI, so it overwrites the "1" in
-                        \ "CAT 1" with the drive number to catalogue
-
-ENDIF
 
  STA DTW7               \ Store the drive number in DTW7, so printing extended
                         \ token 4 will show the correct drive number (as token 4
                         \ contains the {drive number} jump code, which calls
                         \ MT16 to print the character in DTW7)
+
+ELIF _MASTER_VERSION
+
+IF _SNG47
+
+ JSR GTDRV              \ Get an ASCII disc drive drive number from the keyboard
+                        \ in A, setting the C flag if an invalid drive number
+                        \ was entered
+
+ BCS DELT-1             \ If the C flag is set, then an invalid drive number was
+                        \ entered, so return from the subroutine (as DELT-1
+                        \ contains an RTS)
+
+ STA CTLI+4             \ Store the drive number in the fifth byte of the
+                        \ command string at CTLI, so it overwrites the "1" in
+                        \ "CAT 1" with the drive number to catalogue
+
+ STA DTW7               \ Store the drive number in DTW7, so printing extended
+                        \ token 4 will show the correct drive number (as token 4
+                        \ contains the {drive number} jump code, which calls
+                        \ MT16 to print the character in DTW7)
+
+ELIF _COMPACT
+
+ LDA #$02               \ ???
+ JSR $324F
+ LDA #$13
+ STA $6975
+ JSR $6911
+ LDA #$09
+ STA $6975
+ TYA
+ BEQ $6994
+ LDX #$12
+ LDA $A2,X
+ STA $6B07,X
+ DEX
+ BPL $69AC
+ JSR $155C
+ LDX #$03
+ LDY #$6B
+ JSR $FFF7
+ JMP $1569
+ JSR $6995
+
+ENDIF
+
+ENDIF
 
 IF _DISC_DOCKED OR _6502SP_VERSION \ Minor
 

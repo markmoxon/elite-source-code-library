@@ -44,10 +44,14 @@ ELIF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
+IF _SNG47
+
  LDA CTLI+4             \ The call to CATS above put the drive number into
  STA DELI+8             \ CTLI+4, so copy the drive number into DELI+8 so that
                         \ the drive number in the "DELETE :1.1234567" string
-                        \ gets updated (i.e. the number after the colon)
+                        \ gets updated (i.e. the number after the colon) ???
+
+ENDIF
 
 ENDIF
 

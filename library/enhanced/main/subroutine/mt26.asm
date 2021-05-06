@@ -98,6 +98,22 @@ ELIF _MASTER_VERSION
  CMP #127               \ If DELETE was pressed, jump to MT26ret
  BEQ MT26del
 
+IF _COMPACT
+
+ EQUB &DA               \ ???
+ PHA
+ JSR $169A
+ BPL $6944
+ PLA
+ CMP #$40
+ BCS $6943
+ EOR #$10
+ PHA
+ PLA
+ EQUB &FA
+
+ENDIF
+
  CPY RLINE+2            \ If Y >= RLINE+2 (the maximum line length from the
  BCS MT26err            \ OSWORD configuration block at RLINE), then jump to
                         \ MT26err to give an error beep as we have reached the

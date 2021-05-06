@@ -17,7 +17,15 @@ ORG &0000
 
 IF _MASTER_VERSION \ Platform
 
+IF _SNG47
+
  SKIP 2                 \ These bytes appear to be unused
+
+ELIF _COMPACT
+
+ SKIP 3                 \ These bytes appear to be unused
+
+ENDIF
 
 ENDIF
 

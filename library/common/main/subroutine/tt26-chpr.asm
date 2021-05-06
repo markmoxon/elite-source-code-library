@@ -143,9 +143,21 @@ ELIF _DISC_DOCKED
 
 ELIF _MASTER_VERSION
 
+IF _SNG47
+
  CPY #255               \ If QQ17 = 255 then printing is disabled, so jump to
  BEQ RR4S               \ RR4S (via the JMP in RR4S) to restore the registers
                         \ and return from the subroutine using a tail call
+
+ELIF _COMPACT
+
+ CPY #255
+ BEQ $20FA              \ ???
+ TAY
+ BEQ $20FA
+ BMI $20FA
+
+ENDIF
 
 ENDIF
 
@@ -164,7 +176,7 @@ IF _DISC_DOCKED \ Label
                         \ terminator character, jump down to RR4 to restore the
                         \ registers and return from the subroutine
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION
 
  TAY                    \ Set Y = the character to be printed
 
@@ -172,6 +184,24 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ terminator character, jump down to RR4 (via the JMP in
                         \ RR4S) to restore the registers and return from the
                         \ subroutine using a tail call
+
+ELIF _MASTER_VERSION
+
+ TAY                    \ Set Y = the character to be printed
+
+IF _SNG47
+
+ BEQ RR4S               \ If the character is zero, which is typically a string
+                        \ terminator character, jump down to RR4 (via the JMP in
+                        \ RR4S) to restore the registers and return from the
+                        \ subroutine using a tail call
+
+ELIF _COMPACT
+
+ LDX $2C53              \ ???
+ BNE $20DC
+
+ENDIF
 
 ENDIF
 
@@ -183,9 +213,13 @@ IF _DISC_DOCKED \ Platform
 
 ELIF _MASTER_VERSION
 
+IF _SNG47
+
  BMI RR4S               \ If A > 127 then there is nothing to print, so jump to
                         \ RR4 (via the JMP in RR4S) to restore the registers and
                         \ return from the subroutine
+
+ENDIF
 
 ENDIF
 
@@ -512,7 +546,7 @@ ENDIF
  LDA XC                 \ Fetch XC, the x-coordinate (column) of the text cursor
                         \ into A
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Enhanced: The standard disc catalogue is just too wide to fit into Elite's special square screen mode, so when printing the catalogue in the enhanced versions, a space is removed from column 17, which is always a blank column in the middle of the catalogue
+IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: The standard disc catalogue is just too wide to fit into Elite's special square screen mode, so when printing the catalogue in the enhanced versions, a space is removed from column 17, which is always a blank column in the middle of the catalogue
 
  LDX CATF               \ If CATF = 0, jump to RR5, otherwise we are printing a
  BEQ RR5                \ disc catalogue
@@ -534,6 +568,43 @@ IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Enhanced: The standard d
  CMP #17                \ If A = 17, i.e. the text cursor is in column 17, jump
  BEQ RR4                \ to RR4 to restore the registers and return from the
                         \ subroutine, thus omitting this column
+
+.RR5
+
+ELIF _MASTER_VERSION
+
+ LDX CATF               \ If CATF = 0, jump to RR5, otherwise we are printing a
+ BEQ RR5                \ disc catalogue
+
+IF _SNG47
+
+ CPY #' '               \ If the character we want to print in Y is a space,
+ BNE RR5                \ jump to RR5
+
+                        \ If we get here, then CATF is non-zero, so we are
+                        \ printing a disc catalogue and we are not printing a
+                        \ space, so we drop column 17 from the output so the
+                        \ catalogue will fit on-screen (column 17 is a blank
+                        \ column in the middle of the catalogue, between the
+                        \ two lists of filenames, so it can be dropped without
+                        \ affecting the layout). Without this, the catalogue
+                        \ would be one character too wide for the square screen
+                        \ mode (it's 34 characters wide, while the screen mode
+                        \ is only 33 characters across)
+
+ CMP #17                \ If A = 17, i.e. the text cursor is in column 17, jump
+ BEQ RR4                \ to RR4 to restore the registers and return from the
+                        \ subroutine, thus omitting this column
+
+ELIF _COMPACT
+
+ CMP #$15               \ ???
+ BCC $211E
+ INC $13
+ LDA #$01
+ STA $11
+
+ENDIF
 
 .RR5
 
@@ -811,11 +882,24 @@ ELIF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
+IF _COMPACT
+
+ LDA $2C53              \ ???
+ BEQ $2148
+ JSR $169D
+ BPL $2143
+
+ JSR TTX66
+
+ELIF _SNG47
+
  JSR TTX66              \ Otherwise we are off the bottom of the screen, so
                         \ clear the screen and draw a white border
 
  LDA #%00001111         \ Set bits 1 and 2 of the Access Control Register at
  STA VIA+&34            \ SHEILA &34 to switch screen memory into &3000-&7FFF
+
+ENDIF
 
  LDA #1                 \ Move the text cursor to column 1, row 1
  STA XC

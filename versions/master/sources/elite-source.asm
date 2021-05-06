@@ -188,6 +188,8 @@ ACT = &A3E0             \ The address of the arctan lookup table, as set in
 TKN1 = &A400            \ The address of the extended token table, as set in
                         \ elite-data.asm
 
+IF _SNG47
+
 RUPLA = &AF48           \ The address of the extended system description system
                         \ number table, as set in elite-data.asm
 
@@ -196,6 +198,19 @@ RUGAL = &AF62           \ The address of the extended system description galaxy
 
 RUTOK = &AF7C           \ The address of the extended system description token
                         \ table, as set in elite-data.asm
+
+ELIF _COMPACT
+
+RUPLA = &AF43           \ The address of the extended system description system
+                        \ number table, as set in elite-data.asm
+
+RUGAL = &AF5D           \ The address of the extended system description galaxy
+                        \ number table, as set in elite-data.asm
+
+RUTOK = &AF77           \ The address of the extended system description token
+                        \ table, as set in elite-data.asm
+
+ENDIF
 
 INCLUDE "library/common/main/workspace/zp.asm"
 INCLUDE "library/common/main/workspace/xx3.asm"
@@ -260,9 +275,16 @@ IF _COMPACT
 
  LDA #$00               \ ???
  EQUB &2C
+
  LDA #$49
  EQUB &2C
+
+.CTRL
+
  LDA #$01
+
+.DKS4
+
  LDX #$03
  SEI
  STX $FE40
@@ -1046,11 +1068,6 @@ IF _SNG47
 
 INCLUDE "library/common/main/subroutine/ctrl.asm"
 INCLUDE "library/common/main/subroutine/dks4.asm"
-
-ELIF _COMPACT
-
-.CTRL
-.DKS4
 
 ENDIF
 

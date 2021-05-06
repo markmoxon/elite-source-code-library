@@ -199,7 +199,7 @@ IF _SNG47
 ELIF _COMPACT
 
  LDX $2C53              \ ???
- BNE $20DC
+ BNE $20E1
 
 ENDIF
 
@@ -882,7 +882,15 @@ ELIF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
-IF _COMPACT
+IF _SNG47
+
+ JSR TTX66              \ Otherwise we are off the bottom of the screen, so
+                        \ clear the screen and draw a white border
+
+ LDA #%00001111         \ Set bits 1 and 2 of the Access Control Register at
+ STA VIA+&34            \ SHEILA &34 to switch screen memory into &3000-&7FFF
+
+ELIF _COMPACT
 
  LDA $2C53              \ ???
  BEQ $2148
@@ -890,14 +898,6 @@ IF _COMPACT
  BPL $2143
 
  JSR TTX66
-
-ELIF _SNG47
-
- JSR TTX66              \ Otherwise we are off the bottom of the screen, so
-                        \ clear the screen and draw a white border
-
- LDA #%00001111         \ Set bits 1 and 2 of the Access Control Register at
- STA VIA+&34            \ SHEILA &34 to switch screen memory into &3000-&7FFF
 
 ENDIF
 
@@ -909,8 +909,16 @@ ENDIF
                         \ this has no effect, as the following call to RR4 does
                         \ the exact same thing
 
+IF _SNG47
+
  JMP RR4                \ And restore the registers and return from the
                         \ subroutine
+
+ELIF _COMPACT
+
+ JMP $20D2              \ ???
+
+ENDIF
 
 ENDIF
 

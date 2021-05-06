@@ -244,6 +244,16 @@ INCLUDE "library/master/main/variable/sdist.asm"
 
  SKIP 2                 \ These bytes appear to be unused
 
+IF _MASTER_VERSION
+
+IF _COMPACT
+
+ SKIP 1                 \ This byte appears to be unused
+
+ENDIF
+
+ENDIF
+
 INCLUDE "library/advanced/main/variable/name.asm"
 INCLUDE "library/common/main/variable/tp.asm"
 INCLUDE "library/common/main/variable/qq0.asm"

@@ -310,9 +310,17 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ P
 
 ELIF _MASTER_VERSION
 
+IF _SNG47
+
  STA &FFFF,Y            \ Y is going from 3 to 6, so this stores the four bytes
                         \ in memory locations &02, &03, &04 and &05, which are
                         \ the memory locations of RAND through RAND+3
+
+ELIF _COMPACT
+
+ STA &0000,Y            \ ???
+
+ENDIF
 
 ENDIF
 

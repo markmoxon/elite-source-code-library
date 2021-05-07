@@ -509,8 +509,8 @@ IF _SNG47
 
 ELIF _COMPACT
 
- JSR $7EE2              \ ???
- BCS $68B0
+ JSR &7EE2              \ ???
+ BCS &68B0
 
 ENDIF
 

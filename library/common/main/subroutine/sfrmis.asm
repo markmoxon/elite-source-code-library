@@ -46,7 +46,7 @@ IF _SNG47
 
 ELIF _COMPACT
 
- BCC $7F5B              \ ???
+ BCC &7F5B              \ ???
 
 ENDIF
 

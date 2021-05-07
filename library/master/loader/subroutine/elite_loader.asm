@@ -36,15 +36,15 @@
 
 IF _COMPACT
 
- LDA #$81               \ ???
- LDX #$00
- LDY #$FF
- JSR $FFF4
- LDA #$FF
- CPX #$F5
- BNE $0E5B
- LDA #$00
- STA $02
+ LDA #&81               \ ???
+ LDX #&00
+ LDY #&FF
+ JSR &FFF4
+ LDA #&FF
+ CPX #&F5
+ BNE &0E5B
+ LDA #&00
+ STA &02
 
 ENDIF
 

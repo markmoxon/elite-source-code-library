@@ -124,8 +124,8 @@ IF _MASTER_VERSION \ Master: Group B: The Master has different logic around movi
 
 IF _COMPACT
 
- LDA $02                \ ???
- BEQ $61E1
+ LDA &02                \ ???
+ BEQ &61E1
 
 ENDIF
 
@@ -431,7 +431,7 @@ ELIF _MASTER_VERSION
 
 IF _COMPACT
 
- EQUB &64, &C9          \ ???
+ STZ &C9                \ ???
 
 ENDIF
 

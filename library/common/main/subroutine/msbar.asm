@@ -335,7 +335,7 @@ IF _SNG47
 
 ELIF _COMPACT
 
- JMP $1F6B              \ ???
+ JMP &1F6B              \ ???
 
 ENDIF
 

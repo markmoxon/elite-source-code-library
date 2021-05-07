@@ -151,7 +151,7 @@ ELIF _COMPACT
  BPL DELL1              \ Loop back to DELL1 to copy the next character until we
                         \ have copied the whole filename
 
- JSR $155C              \ ???
+ JSR &155C              \ ???
 
 ENDIF
 

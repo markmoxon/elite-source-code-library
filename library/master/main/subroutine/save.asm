@@ -105,7 +105,7 @@ IF _SNG47
 
 ELIF _COMPACT
 
- JSR $155C              \ ???
+ JSR &155C              \ ???
 
 ENDIF
 

@@ -11,7 +11,7 @@
 
 IF _COMPACT
 
- JSR $158D              \ ???
+ JSR &158D              \ ???
 
 ENDIF
 

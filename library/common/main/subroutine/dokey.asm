@@ -445,7 +445,7 @@ IF _MASTER_VERSION \ Enhanced: See group A
 
 IF _COMPACT
 
- JMP $6D32              \ ???
+ JMP &6D32              \ ???
 
 ENDIF
 
@@ -505,8 +505,8 @@ IF _SNG47
 
 ELIF _COMPACT
 
- JSR $7EF7              \ ???
- BCC $6D59
+ JSR &7EF7              \ ???
+ BCC &6D59
 
 ENDIF
 

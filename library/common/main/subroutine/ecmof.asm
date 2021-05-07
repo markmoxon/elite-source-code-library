@@ -42,8 +42,8 @@ IF _SNG47
 
 ELIF _COMPACT
 
- EQUB &64, &47          \ ???
- EQUB &9C, &72, &0E
+ STZ &47                \ ???
+ STZ &0E72
 
 ENDIF
 

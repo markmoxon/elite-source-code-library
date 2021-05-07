@@ -100,17 +100,17 @@ ELIF _MASTER_VERSION
 
 IF _COMPACT
 
- EQUB &DA               \ ???
+ PHX                    \ ???
  PHA
- JSR $169A
- BPL $6940
+ JSR &169A
+ BPL &6940
  PLA
- CMP #$40
- BCS $693F
- EOR #$10
+ CMP #&40
+ BCS &693F
+ EOR #&10
  PHA
  PLA
- EQUB &FA
+ PLX
 
 ENDIF
 

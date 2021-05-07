@@ -227,8 +227,8 @@ ELIF _MASTER_VERSION
 
 IF _COMPACT
 
- LDA $02                \ ???
- BEQ $1508
+ LDA &02                \ ???
+ BEQ &1508
 
 ENDIF
 

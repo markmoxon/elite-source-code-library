@@ -86,9 +86,10 @@ IF _SNG47
 
 ELIF _COMPACT
 
- EQUB &64, &4C, &64, &4E, &64, &4B \ ???
-
- LDX #$FF
+ STZ &4C                \ ???
+ STZ &4E
+ STZ &4B
+ LDX #&FF
  STX X2
 
 ENDIF

@@ -190,24 +190,24 @@ TKN1 = &A400            \ The address of the extended token table, as set in
 
 IF _SNG47
 
-RUPLA = &AF48           \ The address of the extended system description system
+ RUPLA = &AF48          \ The address of the extended system description system
                         \ number table, as set in elite-data.asm
 
-RUGAL = &AF62           \ The address of the extended system description galaxy
+ RUGAL = &AF62          \ The address of the extended system description galaxy
                         \ number table, as set in elite-data.asm
 
-RUTOK = &AF7C           \ The address of the extended system description token
+ RUTOK = &AF7C          \ The address of the extended system description token
                         \ table, as set in elite-data.asm
 
 ELIF _COMPACT
 
-RUPLA = &AF43           \ The address of the extended system description system
+ RUPLA = &AF43          \ The address of the extended system description system
                         \ number table, as set in elite-data.asm
 
-RUGAL = &AF5D           \ The address of the extended system description galaxy
+ RUGAL = &AF5D          \ The address of the extended system description galaxy
                         \ number table, as set in elite-data.asm
 
-RUTOK = &AF77           \ The address of the extended system description token
+ RUTOK = &AF77          \ The address of the extended system description token
                         \ table, as set in elite-data.asm
 
 ENDIF
@@ -259,11 +259,11 @@ INCLUDE "library/master/main/subroutine/savezp.asm"
 
 IF _COMPACT
 
- JSR $156C              \ ???
- LDA #$8F
- LDX #$0B
- LDY $122C
- JMP $FFF4
+ JSR &156C              \ ???
+ LDA #&8F
+ LDX #&0B
+ LDY &122C
+ JMP &FFF4
 
 ENDIF
 
@@ -271,11 +271,11 @@ INCLUDE "library/master/main/subroutine/swapzp.asm"
 
 IF _COMPACT
 
- LDA #$8F               \ ???
- LDX #$0C
- LDY #$FF
- JSR $FFF4
- STY $122C
+ LDA #&8F               \ ???
+ LDX #&0C
+ LDY #&FF
+ JSR &FFF4
+ STY &122C
  RTS
 
 ENDIF
@@ -284,27 +284,27 @@ INCLUDE "library/advanced/main/variable/ylookup.asm"
 
 IF _COMPACT
 
- LDA #$00               \ ???
+ LDA #&00               \ ???
  EQUB &2C
 
- LDA #$49
+ LDA #&49
  EQUB &2C
 
 .CTRL
 
- LDA #$01
+ LDA #&01
 
 .DKS4
 
- LDX #$03
+ LDX #&03
  SEI
- STX $FE40
- LDX #$7F
- STX $FE43
- STA $FE4F
- LDX $FE4F
- LDA #$0B
- STA $FE40
+ STX &FE40
+ LDX #&7F
+ STX &FE43
+ STA &FE4F
+ LDX &FE4F
+ LDA #&0B
+ STA &FE40
  CLI
  TXA
 
@@ -878,8 +878,8 @@ LOAD_F% = LOAD% + P% - CODE%
 
 IF _COMPACT
 
- JSR $7F5C              \ ???
- JMP $61A8
+ JSR &7F5C              \ ???
+ JMP &61A8
 
 ENDIF
 
@@ -1087,99 +1087,99 @@ INCLUDE "library/common/main/subroutine/rdkey.asm"
 
 IF _COMPACT
 
- LDA $02
- BEQ $7EF0
+ LDA &02
+ BEQ &7EF0
  CLC
- LDA $FE40
- AND #$10
- BNE $7EEF
+ LDA &FE40
+ AND #&10
+ BNE &7EEF
  SEC
  RTS
 
- LDA $FE60
- EOR #$01
+ LDA &FE60
+ EOR #&01
  LSR A
  RTS
- LDA $02
- BEQ $7F1F
+ LDA &02
+ BEQ &7F1F
  CLC
- LDA $12A8
- EOR $2C5B
- ORA #$01
- STA $C2
- LDA $12A9
- EOR #$FF
- EOR $2C5B
- EOR $2C5A
- STA $C3
- LDA $FE40
- AND #$10
- BNE $7F1E
- LDA #$FF
- STA $C9
+ LDA &12A8
+ EOR &2C5B
+ ORA #&01
+ STA &C2
+ LDA &12A9
+ EOR #&FF
+ EOR &2C5B
+ EOR &2C5A
+ STA &C3
+ LDA &FE40
+ AND #&10
+ BNE &7F1E
+ LDA #&FF
+ STA &C9
  RTS
- LDX #$FF
- LDA $FE60
+ LDX #&FF
+ LDA &FE60
  LSR A
- BCS $7F29
- STX $C9
+ BCS &7F29
+ STX &C9
  LSR A
- BCS $7F2E
- STX $D1
+ BCS &7F2E
+ STX &D1
  LSR A
- BCS $7F33
- STX $CC
+ BCS &7F33
+ STX &CC
  LSR A
- BCS $7F38
- STX $CA
+ BCS &7F38
+ STX &CA
  LSR A
- BCS $7F3D
- STX $D2
- LDA $2C5B
- BEQ $7F4A
- LDA $D1
- LDX $D2
- STX $D1
- STA $D2
- LDA $2C5B
- EOR $2C5A
- BEQ $7F5A
- LDA $CA
- LDX $CC
- STX $CA
- STA $CC
+ BCS &7F3D
+ STX &D2
+ LDA &2C5B
+ BEQ &7F4A
+ LDA &D1
+ LDX &D2
+ STX &D1
+ STA &D2
+ LDA &2C5B
+ EOR &2C5A
+ BEQ &7F5A
+ LDA &CA
+ LDX &CC
+ STX &CA
+ STA &CC
  SEC
  RTS
- LDA $FE60
+ LDA &FE60
  LSR A
- LDX #$00
- LDY #$00
+ LDX #&00
+ LDY #&00
  LSR A
- BCS $7F68
+ BCS &7F68
  DEX
  LSR A
- BCS $7F6C
+ BCS &7F6C
  INY
  LSR A
- BCS $7F70
+ BCS &7F70
  DEY
  LSR A
- BCS $7F74
+ BCS &7F74
  INX
- LDA $2C5B
- BEQ $7F80
+ LDA &2C5B
+ BEQ &7F80
  TXA
- EOR #$FF
+ EOR #&FF
  CLC
- ADC #$01
+ ADC #&01
  TAX
- LDA $2C5B
- EOR $2C5A
- BEQ $7F5B
+ LDA &2C5B
+ EOR &2C5A
+ BEQ &7F5B
  TYA
- EOR #$FF
+ EOR #&FF
  CLC
- ADC #$01
+ ADC #&01
  TAY
 
 ENDIF
@@ -1198,7 +1198,9 @@ IF _COMPACT
  EQUD &F8F8F8F8
  EQUD &F8F8F8F8
  EQUD &F8F8F8F8
- EQUB &F8, &F8, &F8
+ EQUB &F8
+ EQUB &F8
+ EQUB &F8
 
 ENDIF
 

@@ -179,11 +179,11 @@ ELIF _MASTER_VERSION
                         \ to load (including drive number and directory) into
                         \ INWK
 
+IF _SNG47
+
  JSR GTDRV              \ Get an ASCII disc drive drive number from the keyboard
                         \ in A, setting the C flag if an invalid drive number
                         \ was entered
-
-IF _SNG47
 
  BCS LDdone             \ If the C flag is set, then an invalid drive number was
                         \ entered, so return from the subroutine (as DELT-1
@@ -193,6 +193,10 @@ IF _SNG47
                         \ drive character of the load filename string ":1.E." ???
 
  JSR LOD                \ Call LOD to load the commander file
+
+ELIF _COMPACT
+
+ JSR &6ACB
 
 ENDIF
 

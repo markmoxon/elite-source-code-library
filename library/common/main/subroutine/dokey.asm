@@ -506,7 +506,7 @@ IF _SNG47
 ELIF _COMPACT
 
  JSR $7EF7              \ ???
- BCC $6D56
+ BCC $6D59
 
 ENDIF
 

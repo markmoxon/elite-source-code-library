@@ -103,10 +103,10 @@ IF _COMPACT
  EQUB &DA               \ ???
  PHA
  JSR $169A
- BPL $6944
+ BPL $6940
  PLA
  CMP #$40
- BCS $6943
+ BCS $693F
  EOR #$10
  PHA
  PLA

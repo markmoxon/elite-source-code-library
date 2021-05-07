@@ -9,8 +9,16 @@
 
 .SWAPZP2
 
+IF _SNG47
+
  LDX #&15               \ This routine starts copying zero page from &0015 and
                         \ up, using X as an index
+
+ELIF _COMPACT
+
+ LDX #&16               \ ???
+
+ENDIF
 
 .SWPL2
 

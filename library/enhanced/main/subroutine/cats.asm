@@ -19,6 +19,34 @@
 \
 \ ******************************************************************************
 
+IF _MASTER_VERSION
+
+IF _COMPACT
+
+ LDA #$02               \ ???
+ JSR $324F
+ LDA #$13
+ STA $6975
+ JSR $6911
+ LDA #$09
+ STA $6975
+ TYA
+ BEQ $6994
+ LDX #$12
+ LDA $A2,X
+ STA $6B07,X
+ DEX
+ BPL $69AC
+ JSR $155C
+ LDX #$03
+ LDY #$6B
+ JSR $FFF7
+ JMP $1569
+
+ENDIF
+
+ENDIF
+
 .CATS
 
 IF _DISC_DOCKED OR _6502SP_VERSION \ Platform
@@ -63,26 +91,7 @@ IF _SNG47
 
 ELIF _COMPACT
 
- LDA #$02               \ ???
- JSR $324F
- LDA #$13
- STA $6975
- JSR $6911
- LDA #$09
- STA $6975
- TYA
- BEQ $6994
- LDX #$12
- LDA $A2,X
- STA $6B07,X
- DEX
- BPL $69AC
- JSR $155C
- LDX #$03
- LDY #$6B
- JSR $FFF7
- JMP $1569
- JSR $6995
+ JSR $6995              \ ???
 
 ENDIF
 
@@ -120,7 +129,15 @@ ENDIF
 
 IF _MASTER_VERSION \ Platform
 
+IF _SNG47
+
  JSR SWAPZP             \ Call SWAPZP to restore the top part of zero page
+
+ELIF _COMPACT
+
+ JSR $155C              \ ???
+
+ENDIF
 
 ENDIF
 

@@ -64,7 +64,7 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ 6502SP: If speech is enabled on the Executive version, it will say "Energy low" every time the "ENERGY LOW,SIR" message flashes on-screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ 6502SP: If speech is enabled on the Executive version, it will say "Energy low" every time the "ENERGY LOW,SIR" message flashes on-screen
 
  LDA #50                \ If our energy bank status in ENERGY is >= 50, skip
  CMP ENERGY             \ printing the following message (so the message is

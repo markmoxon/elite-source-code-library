@@ -240,9 +240,9 @@ ELIF _MASTER_VERSION
 
  TAX                    \ Copy the value of A into X
 
- LDA KL                 \ Set A to the value of KL (the key pressed)
-
 IF _SNG47
+
+ LDA KL                 \ Set A to the value of KL (the key pressed)
 
  RTS                    \ Return from the subroutine
 
@@ -310,9 +310,9 @@ ELIF _ELECTRON_VERSION
 
 ELIF _MASTER_VERSION
 
-IF _SNG47
-
  LDA KL                 \ Set A to the value of KL (the key pressed)
+
+IF _SNG47
 
  LDX #0                 \ Set the results, X = Y = 0
  LDY #0

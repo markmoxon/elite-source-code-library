@@ -256,6 +256,17 @@ INCLUDE "library/master/main/variable/vscan.asm"
 INCLUDE "library/master/main/variable/dlcnt.asm"
 INCLUDE "library/advanced/main/subroutine/setvdu19-dovdu19.asm"
 INCLUDE "library/master/main/subroutine/savezp.asm"
+
+IF _COMPACT
+
+ JSR $156C              \ ???
+ LDA #$8F
+ LDX #$0B
+ LDY $122C
+ JMP $FFF4
+
+ENDIF
+
 INCLUDE "library/master/main/subroutine/swapzp.asm"
 
 IF _COMPACT

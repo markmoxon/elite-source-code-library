@@ -43,7 +43,7 @@ IF _SNG47
 ELIF _COMPACT
 
  EQUB &64, &47          \ ???
- STA ECMP
+ EQUB &9C, &72, &0E
 
 ENDIF
 

@@ -30,11 +30,25 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT
                         \ success, so if it's clear, jump to KYTB to return from
                         \ the subroutine (as KYTB contains an RTS)
 
-ELIF _ELECTRON_VERSION OR _MASTER_VERSION
+ELIF _ELECTRON_VERSION
 
  BCC ECMOF-1            \ The C flag will be set if the call to SFS1-2 was a
                         \ success, so if it's clear, jump to KYTB to return from
                         \ the subroutine (as ECMOF-1 contains an RTS)
+
+ELIF _MASTER_VERSION
+
+IF _SNG47
+
+ BCC ECMOF-1            \ The C flag will be set if the call to SFS1-2 was a
+                        \ success, so if it's clear, jump to KYTB to return from
+                        \ the subroutine (as ECMOF-1 contains an RTS)
+
+ELIF _COMPACT
+
+ BCC $7F5B              \ ???
+
+ENDIF
 
 ENDIF
 

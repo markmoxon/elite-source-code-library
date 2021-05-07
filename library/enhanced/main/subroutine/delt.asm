@@ -77,14 +77,32 @@ ENDIF
                         \ that it overwrites the filename part of the string,
                         \ i.e. the "E.1234567" part of "DELETE:0.E.1234567"
 
+IF _DISC_DOCKED \ Comment
+
  LDX #9                 \ Set up a counter in X to count from 9 to 1, so that we
                         \ copy the string starting at INWK+4+1 (i.e. INWK+5) to
-IF _DISC_DOCKED \ Comment
                         \ DELI+5+1 (i.e. DELI+6 onwards, or "E.1234567")
+
 ELIF _6502SP_VERSION
+
+ LDX #9                 \ Set up a counter in X to count from 9 to 1, so that we
+                        \ copy the string starting at INWK+4+1 (i.e. INWK+5) to
                         \ DELI+8+1 (i.e. DELI+9 onwards, or "E.1234567")
+
 ELIF _MASTER_VERSION
+
+IF _SNG47
+
+ LDX #9                 \ Set up a counter in X to count from 9 to 1, so that we
+                        \ copy the string starting at INWK+4+1 (i.e. INWK+5) to
                         \ DELI+9+1 (i.e. DELI+10 onwards, or "1.1234567")
+
+ELIF _COMPACT
+
+ LDX #8                 \ ???
+
+ENDIF
+
 ENDIF
 
 .DELL1
@@ -94,26 +112,48 @@ IF _DISC_DOCKED \ Platform
  LDA INWK+4,X           \ Copy the X-th byte of INWK+4 to the X-th byte of
  STA DELI+5,X           \ DELI+5
 
+ DEX                    \ Decrement the loop counter
+
+ BNE DELL1              \ Loop back to DELL1 to copy the next character until we
+                        \ have copied the whole filename
+
 ELIF _6502SP_VERSION
 
  LDA INWK+4,X           \ Copy the X-th byte of INWK+4 to the X-th byte of
  STA DELI+8,X           \ DELI+8
-
-ELIF _MASTER_VERSION
-
- LDA INWK+4,X           \ Copy the X-th byte of INWK+4 to the X-th byte of
- STA DELI+9,X           \ DELI+9
-
-ENDIF
 
  DEX                    \ Decrement the loop counter
 
  BNE DELL1              \ Loop back to DELL1 to copy the next character until we
                         \ have copied the whole filename
 
-IF _MASTER_VERSION \ Platform
+ELIF _MASTER_VERSION
+
+IF _SNG47
+
+ LDA INWK+4,X           \ Copy the X-th byte of INWK+4 to the X-th byte of
+ STA DELI+9,X           \ DELI+9
+
+ DEX                    \ Decrement the loop counter
+
+ BNE DELL1              \ Loop back to DELL1 to copy the next character until we
+                        \ have copied the whole filename
 
  JSR SWAPZP             \ Call SWAPZP to restore the top part of zero page
+
+ELIF _COMPACT
+
+ LDA INWK+5,X           \ ???
+ STA DELI+7,X
+
+ DEX                    \ Decrement the loop counter
+
+ BPL DELL1              \ Loop back to DELL1 to copy the next character until we
+                        \ have copied the whole filename
+
+ JSR $155C              \ ???
+
+ENDIF
 
 ENDIF
 

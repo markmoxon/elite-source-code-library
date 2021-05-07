@@ -27,12 +27,20 @@
  CMP #13                \ If the character is a carriage return then we have
  BEQ LOADL2             \ reached the end of the filename, so jump to LOADL2 as
                         \ we have now copied the whole filename
- 
+
+IF _SNG47
+
  STA LDLI+10,Y          \ Store the Y-th character of the filename in the Y-th
                         \ character of LDLI+10, where LDLI+10 points to the
                         \ JAMESON part of the load command in LDLI:
                         \
                         \   "LOAD :1.E.JAMESON  E7E"
+
+ELIF _COMPACT
+
+ STA LDLI+5,Y           \ ???
+
+ENDIF
 
  INY                    \ Increment the loop counter
 
@@ -46,9 +54,17 @@
                         \ one, so we now need to blank out the rest of the name
                         \ with spaces, so we load the space character into A
 
+IF _SNG47
+
  STA LDLI+10,Y          \ Store the Y-th character of the filename in the Y-th
                         \ character of LDLI+10, which will be directly after
                         \ the last letter we copied above
+
+ELIF _COMPACT
+
+ STA LDLI+5,Y           \ ???
+
+ENDIF
 
  INY                    \ Increment the loop counter
 
@@ -56,8 +72,16 @@
  BCC LOADL2             \ name, so loop back to LOADL2 to blank the next one
                         \ until the load string is ready for use
 
+IF _SNG47
+
  JSR SWAPZP             \ Call SWAPZP to store the top part of zero page, as it
                         \ gets corrupted by the MOS during the loading process
+
+ELIF _COMPACT
+
+ JSR $155C              \ ???
+
+ENDIF
 
  LDX #LO(LDLI)          \ Set (Y X) to point to the OS command at LDLI, which
  LDY #HI(LDLI)          \ contains the DFS command for loading the commander

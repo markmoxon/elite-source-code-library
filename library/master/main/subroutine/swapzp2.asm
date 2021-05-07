@@ -16,7 +16,8 @@ IF _SNG47
 
 ELIF _COMPACT
 
- LDX #&16               \ ???
+ LDX #&16               \ This routine starts copying zero page from &0016 and
+                        \ up, using X as an index
 
 ENDIF
 

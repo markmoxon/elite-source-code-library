@@ -11,7 +11,7 @@
 
 IF _COMPACT
 
- JSR &158D              \ ???
+ JSR NMICLAIM           \ Claim the NMI workspace (&00A0 to &00A7)
 
 ENDIF
 

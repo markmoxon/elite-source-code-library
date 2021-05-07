@@ -227,8 +227,9 @@ ELIF _MASTER_VERSION
 
 IF _COMPACT
 
- LDA &02                \ ???
- BEQ &1508
+ LDA MOS                \ If MOS = 0 then this is a Master Compact, so jump to
+ BEQ NOADC              \ NOADC to skip reading the ADC channels (as the Compact
+                        \ has a digital joystick rather than an analogue one)
 
 ENDIF
 
@@ -249,6 +250,8 @@ ENDIF
 
  LDA #0                 \ Set the ADC status byte at SHEILA &18 to 0
  STA VIA+&18
+
+.NOADC
 
  PLY                    \ Restore Y from the stack
 

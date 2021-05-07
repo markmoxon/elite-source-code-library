@@ -900,7 +900,7 @@ ELIF _COMPACT
  LDA CATF               \ ???
  BEQ P%+7
 
- JSR &169D
+ JSR RETURN
  BPL P%-3
 
  JSR TTX66

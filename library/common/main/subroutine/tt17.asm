@@ -124,8 +124,9 @@ IF _MASTER_VERSION \ Master: Group B: The Master has different logic around movi
 
 IF _COMPACT
 
- LDA &02                \ ???
- BEQ &61E1
+ LDA MOS                \ If MOS = 0 then this is a Master Compact, so jump to
+ BEQ DJOY               \ DJOY to read the digital joystick before rejoining the
+                        \ routine below at TJ1
 
 ENDIF
 

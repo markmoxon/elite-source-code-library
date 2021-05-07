@@ -443,7 +443,8 @@ IF _SNG47
 
 ELIF _COMPACT
 
- JMP BULB2              \ ???
+ JMP BULB2              \ Jump to BULB2 to switch main memory back into
+                        \ &3000-&7FFF and return from the subroutine
 
 ENDIF
 

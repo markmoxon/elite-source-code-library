@@ -151,7 +151,7 @@ ELIF _COMPACT
  BPL DELL1              \ Loop back to DELL1 to copy the next character until we
                         \ have copied the whole filename
 
- JSR &155C              \ ???
+ JSR NMIRELEASE         \ Release the NMI workspace (&00A0 to &00A7)
 
 ENDIF
 

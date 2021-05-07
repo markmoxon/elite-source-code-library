@@ -102,14 +102,13 @@ IF _COMPACT
 
  PHX                    \ ???
  PHA
- JSR &169A
+ JSR SHIFT
  BPL L6940
  PLA
  CMP #64
- BCS L693F
- EOR #%00010000
+ BCS P%+4
 
-.L693F
+ EOR #%00010000
 
  PHA
 

@@ -36,19 +36,24 @@
 
 IF _COMPACT
 
- LDA #129               \ ???
- LDX #0
- LDY #255
- JSR OSBYTE
+ LDA #129               \ Call OSBYTE with A = 129, X = 0 and Y = &FF to detect
+ LDX #0                 \ the machine type. This call is undocumented and is not
+ LDY #&FF               \ the recommended way to determine the machine type
+ JSR OSBYTE             \ (OSBYTE 0 is the correct way), but this call returns
+                        \ the following:
+                        \
+                        \   * X = Y = &F5 if this is a Master Compact with MOS 5
 
- LDA #255
+ LDA #&FF               \ Set A = &FF, the value we want to store in the MOS flag
+                        \ if this is not a Master Compact
 
- CPX #245
- BNE P%+4
+ CPX #&F5               \ If X <> &F5, skip the following instruction as this is
+ BNE P%+4               \ a Master Compact
 
- LDA #0
+ LDA #0                 \ This is a Master Compact, so set A = 0
 
- STA &02
+ STA &02                \ Store the value of A in MOS, which will be 0 if this
+                        \ is a Master Compact, or &FF if it isn't
 
 ENDIF
 

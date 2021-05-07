@@ -46,7 +46,9 @@ IF _SNG47
 
 ELIF _COMPACT
 
- BCC &7F5B              \ ???
+ BCC TT17X-1            \ The C flag will be set if the call to SFS1-2 was a
+                        \ success, so if it's clear, jump to KYTB to return from
+                        \ the subroutine (as TT17X-1 contains an RTS)
 
 ENDIF
 

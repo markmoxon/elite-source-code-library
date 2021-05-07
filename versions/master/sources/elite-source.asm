@@ -258,44 +258,14 @@ INCLUDE "library/master/main/variable/vscan.asm"
 INCLUDE "library/master/main/variable/dlcnt.asm"
 INCLUDE "library/advanced/main/subroutine/setvdu19-dovdu19.asm"
 INCLUDE "library/master/main/subroutine/savezp.asm"
-
-IF _COMPACT
-
- JSR &156C              \ ???
-
- LDA #143
- LDX #11
- LDY &122C
- JMP OSBYTE
-
-ENDIF
-
+INCLUDE "library/master/main/subroutine/nmirelease.asm"
 INCLUDE "library/master/main/subroutine/swapzp.asm"
-
-IF _COMPACT
-
- LDA #143               \ ???
- LDX #12
- LDY #255
- JSR OSBYTE
-
- STY &122C
-
- RTS
-
-ENDIF
-
+INCLUDE "library/master/main/subroutine/nmiclaim.asm"
 INCLUDE "library/advanced/main/variable/ylookup.asm"
+INCLUDE "library/master/main/subroutine/shift.asm"
+INCLUDE "library/master/main/subroutine/return.asm"
 
 IF _COMPACT
-
- LDA #0                 \ ???
-
- EQUB &2C
-
- LDA #&49
-
- EQUB &2C
 
 INCLUDE "library/common/main/subroutine/ctrl.asm"
 INCLUDE "library/common/main/subroutine/dks4.asm"
@@ -870,8 +840,7 @@ LOAD_F% = LOAD% + P% - CODE%
 
 IF _COMPACT
 
- JSR &7F5C              \ ???
- JMP TJ1
+INCLUDE "library/master/main/subroutine/djoy.asm"
 
 ENDIF
 
@@ -931,6 +900,15 @@ INCLUDE "library/enhanced/main/subroutine/gtdrv.asm"
 INCLUDE "library/common/main/subroutine/lod.asm"
 INCLUDE "library/enhanced/main/variable/ctli.asm"
 INCLUDE "library/enhanced/main/variable/deli.asm"
+
+\ ******************************************************************************
+\
+\       Name: DIRI
+\       Type: Subroutine
+\   Category: Save and load
+\    Summary: 
+\
+\ ******************************************************************************
 
 IF _COMPACT
 
@@ -1079,101 +1057,242 @@ ENDIF
 INCLUDE "library/common/main/subroutine/u_per_cent.asm"
 INCLUDE "library/common/main/subroutine/rdkey.asm"
 
+\ ******************************************************************************
+\
+\       Name: L7EE2
+\       Type: Subroutine
+\   Category: Keyboard
+\    Summary: 
+\
+\ ******************************************************************************
+
 IF _COMPACT
 
- LDA &02
- BEQ &7EF0
+.L7EE2
+
+ LDA MOS
+ BEQ L7EF0
+
  CLC
- LDA &FE40
- AND #&10
- BNE &7EEF
+ LDA VIA+&40
+ AND #%00010000
+ BNE P%+3
  SEC
  RTS
 
- LDA &FE60
- EOR #&01
+.L7EF0
+
+ LDA VIA+&60
+ EOR #%00000001
  LSR A
  RTS
- LDA &02
- BEQ &7F1F
+
+ENDIF
+
+\ ******************************************************************************
+\
+\       Name: L7EF7
+\       Type: Subroutine
+\   Category: Keyboard
+\    Summary: 
+\
+\ ******************************************************************************
+
+IF _COMPACT
+
+.L7EF7
+
+ LDA MOS
+ BEQ L7F1F
+
  CLC
- LDA &12A8
- EOR &2C5B
- ORA #&01
- STA &C2
- LDA &12A9
- EOR #&FF
- EOR &2C5B
- EOR &2C5A
- STA &C3
- LDA &FE40
- AND #&10
- BNE &7F1E
- LDA #&FF
- STA &C9
+
+ LDA ADCH1              \ Fetch the high byte of the joystick X value
+
+ EOR JSTE               \ The high byte A is now EOR'd with the value in
+                        \ location JSTE, which contains &FF if both joystick
+                        \ channels are reversed and 0 otherwise (so A now
+                        \ contains the high byte but inverted, if that's what
+                        \ the current settings say)
+
+ ORA #1                 \ Ensure the value is at least 1
+
+ STA JSTX               \ Store the resulting joystick X value in JSTX
+
+ LDA ADCH2              \ Fetch the high byte of the joystick Y value
+
+ EOR #&FF               \ This EOR is used in conjunction with the EOR JSTGY
+                        \ below, as having a value of 0 in JSTGY means we have
+                        \ to invert the joystick Y value, and this EOR does
+                        \ that part
+
+ EOR JSTE               \ The high byte A is now EOR'd with the value in
+                        \ location JSTE, which contains &FF if both joystick
+                        \ channels are reversed and 0 otherwise (so A now
+                        \ contains the high byte but inverted, if that's what
+                        \ the current settings say)
+
+ EOR JSTGY              \ JSTGY will be 0 if the game is configured to reverse
+                        \ the joystick Y channel, so this EOR along with the
+                        \ EOR #&FF above does exactly that
+
+ STA JSTY               \ Store the resulting joystick Y value in JSTY
+
+ LDA VIA+&40            \ Read 6522 System VIA input register IRB (SHEILA &40)
+
+ AND #%00010000         \ Bit 4 of IRB (PB4) is clear if joystick 1's fire
+                        \ button is pressed, otherwise it is set, so AND'ing
+                        \ the value of IRB with %10000 extracts this bit
+
+ BNE P%+6               \ If the joystick fire button is not being pressed,
+                        \ jump to DK4 to scan for other keys
+
+ LDA #&FF               \ Update the key logger at KY7 to "press" the "A" (fire)
+ STA KY7                \ button
+
  RTS
+
+ENDIF
+
+\ ******************************************************************************
+\
+\       Name: L7F1F
+\       Type: Subroutine
+\   Category: Keyboard
+\    Summary: 
+\
+\ ******************************************************************************
+
+IF _COMPACT
+
+.L7F1F
+
  LDX #&FF
- LDA &FE60
+
+ LDA VIA+&60
  LSR A
- BCS &7F29
- STX &C9
+ BCS P%+4
+
+ STX KY7
+
  LSR A
- BCS &7F2E
- STX &D1
+ BCS P%+4
+
+ STX KY3
+
  LSR A
- BCS &7F33
- STX &CC
+ BCS P%+4
+
+ STX KY6
+
  LSR A
- BCS &7F38
- STX &CA
+ BCS P%+4
+
+ STX KY5
+
  LSR A
- BCS &7F3D
- STX &D2
- LDA &2C5B
- BEQ &7F4A
- LDA &D1
- LDX &D2
- STX &D1
- STA &D2
- LDA &2C5B
- EOR &2C5A
- BEQ &7F5A
- LDA &CA
- LDX &CC
- STX &CA
- STA &CC
+ BCS P%+4
+
+ STX KY4
+
+ LDA JSTE
+ BEQ L7F4A
+
+ LDA KY3
+ LDX KY4
+ STX KY3
+ STA KY4
+
+.L7F4A
+
+ LDA JSTE
+ EOR JSTGY
+ BEQ L7F5A
+
+ LDA KY5
+ LDX KY6
+ STX KY5
+ STA KY6
+
+.L7F5A
+
  SEC
  RTS
- LDA &FE60
+
+ENDIF
+
+\ ******************************************************************************
+\
+\       Name: TT17X
+\       Type: Subroutine
+\   Category: Keyboard
+\    Summary: Scan the digital joystick for movement
+\
+\ ------------------------------------------------------------------------------
+\
+\ Scan the digital joystick for stick movement, and return the result as deltas
+\ (changes) in x- and y-coordinates as follows:
+\
+\   * For joystick, X and Y are integers between -2 and +2 depending on how far
+\     the stick has moved
+\
+\ Returns:
+\
+\   X                   Change in the x-coordinate according to the joystick
+\                       movement, as an integer (see above)
+\
+\   Y                   Change in the y-coordinate according to the joystick
+\                       movement, as an integer (see above)
+\
+\ ******************************************************************************
+
+IF _COMPACT
+
+.TT17X
+
+ LDA VIA+&60
  LSR A
- LDX #&00
- LDY #&00
+ LDX #0
+ LDY #0
  LSR A
- BCS &7F68
+ BCS P%+3
+
  DEX
+
  LSR A
- BCS &7F6C
+ BCS P%+3
+
  INY
+
  LSR A
- BCS &7F70
+ BCS P%+3
+
  DEY
+
  LSR A
- BCS &7F74
+ BCS P%+3
+
  INX
- LDA &2C5B
- BEQ &7F80
+
+ LDA JSTE
+ BEQ L7F80
+
  TXA
  EOR #&FF
  CLC
- ADC #&01
+ ADC #1
  TAX
- LDA &2C5B
- EOR &2C5A
- BEQ &7F5B
+
+.L7F80
+
+ LDA JSTE
+ EOR JSTGY
+ BEQ TT17X-1
+
  TYA
  EOR #&FF
  CLC
- ADC #&01
+ ADC #1
  TAY
 
 ENDIF
@@ -1188,12 +1307,11 @@ INCLUDE "library/advanced/main/variable/f_per_cent.asm"
 
 IF _COMPACT
 
- EQUD &F8F8F8F8         \ ???
+ EQUD &F8F8F8F8         \ These bytes appear to be unused
  EQUD &F8F8F8F8
  EQUD &F8F8F8F8
  EQUD &F8F8F8F8
- EQUB &F8
- EQUB &F8
+ EQUW &F8F8
  EQUB &F8
 
 ENDIF

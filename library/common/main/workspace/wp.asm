@@ -248,7 +248,7 @@ IF _MASTER_VERSION
 
 IF _COMPACT
 
- SKIP 1                 \ This byte appears to be unused
+INCLUDE "library/master/main/variable/nmi.asm"
 
 ENDIF
 

@@ -105,7 +105,7 @@ IF _SNG47
 
 ELIF _COMPACT
 
- JSR &155C              \ ???
+ JSR NMIRELEASE         \ Release the NMI workspace (&00A0 to &00A7)
 
 ENDIF
 

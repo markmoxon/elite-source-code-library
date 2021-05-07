@@ -8,6 +8,10 @@
 \
 \ ******************************************************************************
 
+ORG &0002
+
+INCLUDE "library/master/loader/variable/mos.asm"
+
 ORG &0070
 
 INCLUDE "library/common/loader/variable/zp.asm"

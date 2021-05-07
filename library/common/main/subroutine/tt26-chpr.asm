@@ -152,10 +152,13 @@ IF _SNG47
 ELIF _COMPACT
 
  CPY #255
- BEQ &20FA              \ ???
+ BEQ RR4S               \ ???
+
  TAY
- BEQ &20FA
- BMI &20FA
+ BEQ RR4S
+ BMI RR4S
+
+.RRNEW
 
 ENDIF
 
@@ -198,8 +201,8 @@ IF _SNG47
 
 ELIF _COMPACT
 
- LDX &2C53              \ ???
- BNE &20E1
+ LDX CATF               \ ???
+ BNE P%+6
 
 ENDIF
 
@@ -598,11 +601,13 @@ IF _SNG47
 
 ELIF _COMPACT
 
- CMP #&15               \ ???
- BCC &211E
- INC &13
- LDA #&01
- STA &11
+ CMP #21                \ ???
+ BCC RR5
+
+ INC YC
+
+ LDA #1
+ STA XC
 
 ENDIF
 
@@ -892,10 +897,11 @@ IF _SNG47
 
 ELIF _COMPACT
 
- LDA &2C53              \ ???
- BEQ &2148
+ LDA CATF               \ ???
+ BEQ P%+7
+
  JSR &169D
- BPL &2143
+ BPL P%-3
 
  JSR TTX66
 
@@ -916,7 +922,7 @@ IF _SNG47
 
 ELIF _COMPACT
 
- JMP &20D2              \ ???
+ JMP RRNEW              \ ???
 
 ENDIF
 

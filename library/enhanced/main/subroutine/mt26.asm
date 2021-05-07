@@ -103,12 +103,18 @@ IF _COMPACT
  PHX                    \ ???
  PHA
  JSR &169A
- BPL &6940
+ BPL L6940
  PLA
- CMP #&40
- BCS &693F
- EOR #&10
+ CMP #64
+ BCS L693F
+ EOR #%00010000
+
+.L693F
+
  PHA
+
+.L6940
+
  PLA
  PLX
 

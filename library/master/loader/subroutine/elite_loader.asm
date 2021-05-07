@@ -36,14 +36,18 @@
 
 IF _COMPACT
 
- LDA #&81               \ ???
- LDX #&00
- LDY #&FF
- JSR &FFF4
- LDA #&FF
- CPX #&F5
- BNE &0E5B
- LDA #&00
+ LDA #129               \ ???
+ LDX #0
+ LDY #255
+ JSR OSBYTE
+
+ LDA #255
+
+ CPX #245
+ BNE P%+4
+
+ LDA #0
+
  STA &02
 
 ENDIF

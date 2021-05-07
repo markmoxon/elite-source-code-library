@@ -431,7 +431,7 @@ ELIF _MASTER_VERSION
 
 IF _COMPACT
 
- STZ &C9                \ ???
+ STZ KY7                \ ???
 
 ENDIF
 

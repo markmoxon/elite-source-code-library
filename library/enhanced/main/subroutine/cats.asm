@@ -23,25 +23,37 @@ IF _MASTER_VERSION
 
 IF _COMPACT
 
- LDA #&02               \ ???
- JSR &324F
- LDA #&13
- STA &6975
- JSR &6911
- LDA #&09
- STA &6975
+.DIR
+
+ LDA #2                 \ ???
+ JSR DETOK
+
+ LDA #19
+ STA RLINE+2
+ JSR MT26
+
+ LDA #9
+ STA RLINE+2
+
  TYA
- BEQ &6994
- LDX #&12
+ BEQ DIR-1
+
+ LDX #18
+
+.CATL
+
  LDA &A2,X
- STA &6B07,X
+ STA DIRI+4,X
  DEX
- BPL &69AC
+ BPL CATL
+
  JSR &155C
- LDX #&03
- LDY #&6B
- JSR &FFF7
- JMP &1569
+
+ LDX #LO(DIRI)
+ LDY #HI(DIRI)
+ JSR OSCLI
+
+ JMP SWAPZP
 
 ENDIF
 
@@ -91,7 +103,7 @@ IF _SNG47
 
 ELIF _COMPACT
 
- JSR &6995              \ ???
+ JSR DIR                \ ???
 
 ENDIF
 

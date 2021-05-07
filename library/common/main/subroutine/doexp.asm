@@ -318,7 +318,9 @@ IF _SNG47
 
 ELIF _COMPACT
 
- STA &0000,Y            \ ???
+ STA &0000,Y            \ Y is going from 3 to 6, so this stores the four bytes
+                        \ in memory locations &03, &04, &05 and &06, which are
+                        \ the memory locations of RAND through RAND+3
 
 ENDIF
 

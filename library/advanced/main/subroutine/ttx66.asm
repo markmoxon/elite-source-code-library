@@ -86,10 +86,11 @@ IF _SNG47
 
 ELIF _COMPACT
 
- STZ &4C                \ ???
- STZ &4E
- STZ &4B
- LDX #&FF
+ STZ Y1                 \ Set X1 = Y1 = Y2 = 0
+ STZ Y2
+ STZ X1
+
+ LDX #255                \ Set X2 = 255
  STX X2
 
 ENDIF

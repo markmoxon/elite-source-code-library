@@ -106,6 +106,8 @@ Armlas = INT(128.5+1.5*POW) \ Military laser power
 NI% = 37                \ The number of bytes in each ship's data block (as
                         \ stored in INWK and K%)
 
+OSBYTE = &FFF4          \ The address for the OSBYTE routine
+
 OSCLI = &FFF7           \ The address for the OSCLI routine
 
 VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
@@ -260,10 +262,11 @@ INCLUDE "library/master/main/subroutine/savezp.asm"
 IF _COMPACT
 
  JSR &156C              \ ???
- LDA #&8F
- LDX #&0B
+
+ LDA #143
+ LDX #11
  LDY &122C
- JMP &FFF4
+ JMP OSBYTE
 
 ENDIF
 
@@ -271,11 +274,13 @@ INCLUDE "library/master/main/subroutine/swapzp.asm"
 
 IF _COMPACT
 
- LDA #&8F               \ ???
- LDX #&0C
- LDY #&FF
- JSR &FFF4
+ LDA #143               \ ???
+ LDX #12
+ LDY #255
+ JSR OSBYTE
+
  STY &122C
+
  RTS
 
 ENDIF
@@ -284,29 +289,16 @@ INCLUDE "library/advanced/main/variable/ylookup.asm"
 
 IF _COMPACT
 
- LDA #&00               \ ???
+ LDA #0                 \ ???
+
  EQUB &2C
 
  LDA #&49
+
  EQUB &2C
 
-.CTRL
-
- LDA #&01
-
-.DKS4
-
- LDX #&03
- SEI
- STX &FE40
- LDX #&7F
- STX &FE43
- STA &FE4F
- LDX &FE4F
- LDA #&0B
- STA &FE40
- CLI
- TXA
+INCLUDE "library/common/main/subroutine/ctrl.asm"
+INCLUDE "library/common/main/subroutine/dks4.asm"
 
 ENDIF
 
@@ -879,7 +871,7 @@ LOAD_F% = LOAD% + P% - CODE%
 IF _COMPACT
 
  JSR &7F5C              \ ???
- JMP &61A8
+ JMP TJ1
 
 ENDIF
 
@@ -941,6 +933,8 @@ INCLUDE "library/enhanced/main/variable/ctli.asm"
 INCLUDE "library/enhanced/main/variable/deli.asm"
 
 IF _COMPACT
+
+.DIRI
 
  EQUS "DIR 12345678901234567890"        \ ???
  EQUB 13

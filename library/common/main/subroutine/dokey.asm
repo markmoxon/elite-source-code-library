@@ -445,7 +445,7 @@ IF _MASTER_VERSION \ Enhanced: See group A
 
 IF _COMPACT
 
- JMP &6D32              \ ???
+ JMP DK15               \ ???
 
 ENDIF
 

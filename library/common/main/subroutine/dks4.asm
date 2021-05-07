@@ -237,7 +237,11 @@ ELIF _MASTER_VERSION
 
  TXA                    \ Transfer X into A
 
+IF _SNG47
+
  RTS                    \ Return from the subroutine
+
+ENDIF
 
 ENDIF
 

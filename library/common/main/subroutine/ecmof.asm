@@ -42,8 +42,8 @@ IF _SNG47
 
 ELIF _COMPACT
 
- STZ &47                \ ???
- STZ &0E72
+ STZ ECMA               \ Set ECMA and ECMB to 0 to indicate that no E.C.M. is
+ STZ ECMP               \ currently running
 
 ENDIF
 

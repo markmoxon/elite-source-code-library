@@ -445,7 +445,10 @@ IF _MASTER_VERSION \ Enhanced: See group A
 
 IF _COMPACT
 
- JMP DK15               \ ???
+ JMP DK15               \ Jump to DK15 to skip reading the joystick, as this is
+                        \ a Master Compact that doesn't support an analogue
+                        \ joystick (instead it supports a digital joystick,
+                        \ which is read elsewhere)
 
 ENDIF
 
@@ -505,8 +508,14 @@ IF _SNG47
 
 ELIF _COMPACT
 
- JSR L7EF7              \ ???
- BCC DK4
+ JSR RDJOY              \ Call RDJOY to read from either the analogue or digital
+                        \ joystick
+
+ BCC DK4                \ If we just read from the analogue joystick, the C flag
+                        \ will be clear, so jump to DK4 to scan for other keys
+
+                        \ Otherwise we just read the digital joystick, so we now
+                        \ update the pitch and roll
 
 ENDIF
 

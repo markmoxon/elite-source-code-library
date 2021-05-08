@@ -143,20 +143,21 @@ ELIF _DISC_DOCKED
 
 ELIF _MASTER_VERSION
 
-IF _SNG47
-
  CPY #255               \ If QQ17 = 255 then printing is disabled, so jump to
  BEQ RR4S               \ RR4S (via the JMP in RR4S) to restore the registers
                         \ and return from the subroutine using a tail call
 
-ELIF _COMPACT
+ENDIF
 
- CPY #255
- BEQ RR4S               \ ???
+IF _MASTER_VERSION
 
- TAY
- BEQ RR4S
- BMI RR4S
+IF _COMPACT
+
+ TAY                    \ Copy the character to be printed from A into Y
+
+ BEQ RR4S               \ If the character to be printed is 0 or >= 128, jump to
+ BMI RR4S               \ RR4S (via the JMP in RR4S) to restore the registers
+                        \ and return from the subroutine using a tail call
 
 .RRNEW
 
@@ -171,13 +172,17 @@ IF _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF _DISC_DOCKED \ Label
+IF _DISC_DOCKED
 
  TAY                    \ Set Y = the character to be printed
 
  BEQ RR4                \ If the character is zero, which is typically a string
                         \ terminator character, jump down to RR4 to restore the
                         \ registers and return from the subroutine
+
+ BMI RR4                \ If A > 127 then there is nothing to print, so jump to
+                        \ RR4 to restore the registers and return from the
+                        \ subroutine
 
 ELIF _6502SP_VERSION
 
@@ -199,28 +204,16 @@ IF _SNG47
                         \ RR4S) to restore the registers and return from the
                         \ subroutine using a tail call
 
-ELIF _COMPACT
-
- LDX CATF               \ ???
- BNE P%+6
-
-ENDIF
-
-ENDIF
-
-IF _DISC_DOCKED \ Platform
-
- BMI RR4                \ If A > 127 then there is nothing to print, so jump to
-                        \ RR4 to restore the registers and return from the
-                        \ subroutine
-
-ELIF _MASTER_VERSION
-
-IF _SNG47
-
  BMI RR4S               \ If A > 127 then there is nothing to print, so jump to
                         \ RR4 (via the JMP in RR4S) to restore the registers and
                         \ return from the subroutine
+
+ELIF _COMPACT
+
+ LDX CATF               \ If CATF <> 0, skip the following two instructions, as
+ BNE P%+6               \ we are printing a disc catalogue and we don't want any
+                        \ control characters lurking in the catalogue to trigger
+                        \ the screen clearing routine
 
 ENDIF
 
@@ -601,12 +594,18 @@ IF _SNG47
 
 ELIF _COMPACT
 
- CMP #21                \ ???
- BCC RR5
+ CMP #21                \ If A < 21, i.e. the text cursor is in column 0-20,
+ BCC RR5                \ jump to RR5 to skip the following
 
- INC YC
+                        \ If we get here, then CATF is non-zero, so we are
+                        \ printing a disc catalogue and we have reached column
+                        \ 21, so we move to the start of the next line so the
+                        \ catalogue line-wraps to fit within the bounds of the
+                        \ screen
 
- LDA #1
+ INC YC                 \ More the text cursor down a line
+
+ LDA #1                 \ Move the text cursor to column 1
  STA XC
 
 ENDIF
@@ -897,13 +896,14 @@ IF _SNG47
 
 ELIF _COMPACT
 
- LDA CATF               \ ???
- BEQ P%+7
+ LDA CATF               \ If CATF = 0, skip the next two instructions, as we are
+ BEQ P%+7               \ not printing a disc catalogue
 
- JSR RETURN
- BPL P%-3
+ JSR RETURN             \ We have just printed the disc catalogus, so wait until
+ BPL P%-3               \ RETURN is pressed, looping indefinitely until it gets
+                        \ tapped
 
- JSR TTX66
+ JSR TTX66              \ Call TTX66 to clear the screen
 
 ENDIF
 
@@ -922,7 +922,7 @@ IF _SNG47
 
 ELIF _COMPACT
 
- JMP RRNEW              \ ???
+ JMP RRNEW              \ Jump back to RRNEW to print the character
 
 ENDIF
 

@@ -7,9 +7,9 @@
 \
 \ ******************************************************************************
 
-.NMICLAIM
-
 IF _COMPACT
+
+.NMICLAIM
 
  LDA #143               \ Call OSBYTE 143 to issue a paged ROM service call of
  LDX #&C                \ type &C with argument &FF, which is the "NMI claim"

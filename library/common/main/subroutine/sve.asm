@@ -190,15 +190,11 @@ IF _SNG47
                         \ contains an RTS)
 
  STA LDLI+6             \ Store the ASCII drive number in LDLI+6, which is the
-                        \ drive character of the load filename string ":1.E." ???
-
- JSR LOD                \ Call LOD to load the commander file
-
-ELIF _COMPACT
-
- JSR &6ACB
+                        \ drive character of the load filename string ":1.E."
 
 ENDIF
+
+ JSR LOD                \ Call LOD to load the commander file
 
  JSR TRNME              \ Transfer the commander filename from INWK to NA%
 

@@ -19,49 +19,9 @@
 \
 \ ******************************************************************************
 
-IF _MASTER_VERSION
-
-IF _COMPACT
-
-.DIR
-
- LDA #2                 \ ???
- JSR DETOK
-
- LDA #19
- STA RLINE+2
- JSR MT26
-
- LDA #9
- STA RLINE+2
-
- TYA
- BEQ DIR-1
-
- LDX #18
-
-.CATL
-
- LDA &A2,X
- STA DIRI+4,X
- DEX
- BPL CATL
-
- JSR NMIRELEASE         \ Release the NMI workspace (&00A0 to &00A7)
-
- LDX #LO(DIRI)
- LDY #HI(DIRI)
- JSR OSCLI
-
- JMP SWAPZP
-
-ENDIF
-
-ENDIF
-
 .CATS
 
-IF _DISC_DOCKED OR _6502SP_VERSION \ Platform
+IF _DISC_DOCKED OR _6502SP_VERSION
 
  JSR GTDRV              \ Get an ASCII disc drive drive number from the keyboard
                         \ in A, setting the C flag if an invalid drive number
@@ -103,7 +63,8 @@ IF _SNG47
 
 ELIF _COMPACT
 
- JSR DIR                \ ???
+ JSR GTDIR              \ Get a directory name from the keyboard and change to
+                        \ that directory
 
 ENDIF
 

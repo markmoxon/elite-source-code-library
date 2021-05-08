@@ -38,7 +38,11 @@ IF _SNG47
 
 ELIF _COMPACT
 
- STA LDLI+5,Y           \ ???
+ STA LDLI+5,Y           \ Store the Y-th character of the filename in the Y-th
+                        \ character of LDLI+5, where LDLI+5 points to the
+                        \ JAMESON part of the load command in LDLI:
+                        \
+                        \   "LOAD JAMESON  E7E"
 
 ENDIF
 
@@ -62,7 +66,9 @@ IF _SNG47
 
 ELIF _COMPACT
 
- STA LDLI+5,Y           \ ???
+ STA LDLI+5,Y           \ Store the Y-th character of the filename in the Y-th
+                        \ character of LDLI+5, which will be directly after
+                        \ the last letter we copied above
 
 ENDIF
 

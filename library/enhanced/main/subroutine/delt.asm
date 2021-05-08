@@ -49,7 +49,7 @@ IF _SNG47
  LDA CTLI+4             \ The call to CATS above put the drive number into
  STA DELI+8             \ CTLI+4, so copy the drive number into DELI+8 so that
                         \ the drive number in the "DELETE :1.1234567" string
-                        \ gets updated (i.e. the number after the colon) ???
+                        \ gets updated (i.e. the number after the colon)
 
 ENDIF
 
@@ -99,7 +99,9 @@ IF _SNG47
 
 ELIF _COMPACT
 
- LDX #8                 \ ???
+ LDX #8                 \ Set up a counter in X to count from 8 to 0, so that we
+                        \ copy the string starting at INWK+5+0 (i.e. INWK+5) to
+                        \ DELI+7+0 (i.e. DELI+7 onwards, or "1234567890")
 
 ENDIF
 
@@ -143,8 +145,8 @@ IF _SNG47
 
 ELIF _COMPACT
 
- LDA INWK+5,X           \ ???
- STA DELI+7,X
+ LDA INWK+5,X           \ Copy the X-th byte of INWK+5 to the X-th byte of
+ STA DELI+7,X           \ DELI+7
 
  DEX                    \ Decrement the loop counter
 

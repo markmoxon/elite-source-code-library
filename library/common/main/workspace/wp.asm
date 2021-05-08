@@ -244,13 +244,9 @@ INCLUDE "library/master/main/variable/sdist.asm"
 
  SKIP 2                 \ These bytes appear to be unused
 
-IF _MASTER_VERSION
-
-IF _COMPACT
+IF _MASTER_VERSION \ Platform
 
 INCLUDE "library/master/main/variable/nmi.asm"
-
-ENDIF
 
 ENDIF
 

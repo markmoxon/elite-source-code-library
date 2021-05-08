@@ -85,9 +85,21 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  JSR CTRL               \ Scan the keyboard to see if CTRL is currently pressed
+
+ELIF _MASTER_VERSION
+
+IF _SNG47
+
+ JSR CTRL               \ Scan the keyboard to see if CTRL is currently pressed
+
+ELIF _COMPACT
+
+ JSR CTRLmc             \ Scan the keyboard to see if CTRL is currently pressed
+
+ENDIF
 
 ELIF _ELECTRON_VERSION
 

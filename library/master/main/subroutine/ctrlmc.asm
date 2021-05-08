@@ -1,9 +1,10 @@
 \ ******************************************************************************
 \
-\       Name: CTRL
+\       Name: CTRLmc
 \       Type: Subroutine
 \   Category: Keyboard
-\    Summary: Scan the keyboard to see if CTRL is currently pressed
+\    Summary: Scan the Master Compact keyboard to see if CTRL is currently
+\             pressed
 \
 \ ------------------------------------------------------------------------------
 \
@@ -18,23 +19,12 @@
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+.CTRLmc
 
-.CTRL
-
- LDX #1                 \ Set X to the internal key number for CTRL and fall
-                        \ through to DKS4 to scan the keyboard
-
-ELIF _MASTER_VERSION
-
-IF _SNG47
-
-.CTRL
+IF _COMPACT
 
  LDA #1                 \ Set A to the internal key number for CTRL and fall
-                        \ through to DKS4 to scan the keyboard
-
-ENDIF
+                        \ through to DKS4mc to scan the keyboard
 
 ENDIF
 

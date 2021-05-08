@@ -7,6 +7,8 @@
 \
 \ ******************************************************************************
 
+IF _COMPACT
+
 .DJOY
 
  JSR TT17X              \ Call TT17X to read the digital joystick and return
@@ -16,4 +18,6 @@
                         \ key presses and return the combined deltas for the
                         \ digital joystick and cursor keys, returning from the
                         \ subroutine using a tail call
+
+ENDIF
 

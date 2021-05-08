@@ -333,6 +333,8 @@ IF _SNG47
  LDA #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
  STA VIA+&34            \ SHEILA &34 to switch main memory back into &3000-&7FFF
 
+ RTS                    \ Return from the subroutine
+
 ELIF _COMPACT
 
  JMP BULB2              \ Jump to BULB2 to switch main memory back into
@@ -350,14 +352,6 @@ ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  RTS                    \ Return from the subroutine
-
-ELIF _MASTER_VERSION
-
-IF _SNG47
-
- RTS                    \ Return from the subroutine
-
-ENDIF
 
 ENDIF
 

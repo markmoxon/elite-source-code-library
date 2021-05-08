@@ -18,12 +18,12 @@
 
 \ ******************************************************************************
 
-.RETURN
-
 IF _COMPACT
 
+.RETURN
+
  LDA #&49               \ Set A to the internal key number for RETURN and fall
-                        \ through to DSK4 to scan the keyboard
+                        \ through to DKS4mc to scan the keyboard
 
  EQUB &2C               \ Skip the next instruction by turning it into
                         \ &2C &A9 &01, or BIT &01A9, which does nothing apart

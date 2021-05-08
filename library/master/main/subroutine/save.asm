@@ -64,7 +64,11 @@ IF _SNG47
 
 ELIF _COMPACT
 
- STA SVLI+5,Y           \ ???
+ STA SVLI+5,Y           \ Store the Y-th character of the commander name in the
+                        \ Y-th character of SVLI+5, where SVLI+5 points to the
+                        \ JAMESON part of the save command in SVLI:
+                        \
+                        \   "SAVE JAMESON  E7E +100 0 0"
 
 ENDIF
 
@@ -88,7 +92,9 @@ IF _SNG47
 
 ELIF _COMPACT
 
- STA SVLI+5,Y           \ ???
+ STA SVLI+5,Y           \ Store the Y-th character of the commander name in the
+                        \ Y-th character of SVLI+5, which will be directly
+                        \ after the last letter we copied above
 
 ENDIF
 

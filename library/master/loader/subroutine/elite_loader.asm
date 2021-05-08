@@ -44,8 +44,8 @@ IF _COMPACT
                         \
                         \   * X = Y = &F5 if this is a Master Compact with MOS 5
 
- LDA #&FF               \ Set A = &FF, the value we want to store in the MOS flag
-                        \ if this is not a Master Compact
+ LDA #&FF               \ Set A = &FF, the value we want to store in the MOS
+                        \ flag if this is not a Master Compact
 
  CPX #&F5               \ If X <> &F5, skip the following instruction as this is
  BNE P%+4               \ a Master Compact

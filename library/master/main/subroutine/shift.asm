@@ -17,12 +17,12 @@
 \
 \ ******************************************************************************
 
-.SHIFT
-
 IF _COMPACT
 
+.SHIFT
+
  LDA #0                 \ Set A to the internal key number for SHIFT and fall
-                        \ through to DSK4 to scan the keyboard
+                        \ through to DKS4mc to scan the keyboard
 
  EQUB &2C               \ Skip the next instruction by turning it into
                         \ &2C &A9 &49, or BIT &49A9, which does nothing apart

@@ -100,22 +100,33 @@ ELIF _MASTER_VERSION
 
 IF _COMPACT
 
- PHX                    \ ???
- PHA
- JSR SHIFT
- BPL L6940
- PLA
- CMP #64
- BCS P%+4
+ PHX                    \ Store X on the stack so we can retrieve it after the
+                        \ call to SHIFT
 
- EOR #%00010000
+ PHA                    \ Store the number of the key being pressed on the stack
 
- PHA
+ JSR SHIFT              \ If SHIFT is not being pressed, jump to noshift to skip
+ BPL noshift            \ the following
 
-.L6940
+ PLA                    \ SHIFT is being pressed, so fetch the number of the key
+                        \ being pressed from the stack
 
- PLA
- PLX
+ CMP #'@'               \ If A >= ASCII "@", then we are pressing a letter key,
+ BCS P%+4               \ so skip the following instruction
+
+ EOR #%00010000         \ We are pressing SHIFT and a number key, so flip bit 4
+                        \ of the key number, which flips the letter betweeen the
+                        \ ASCII code of the number being pressed and the ASCII
+                        \ code of the number being pressed when SHIFT is being
+                        \ held down (so SHIFT-1 will enter !, SHIFT-2 will enter
+                        \ ", and so on)
+
+ PHA                    \ Push the updated key number onto the stack
+
+.noshift
+
+ PLA                    \ Retrieve the values of X and A we stored on the stack
+ PLX                    \ above
 
 ENDIF
 

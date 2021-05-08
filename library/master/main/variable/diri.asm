@@ -1,22 +1,18 @@
+
 \ ******************************************************************************
 \
-\       Name: LDLI
-\       Type: Variable
+\       Name: DIRI
+\       Type: Subroutine
 \   Category: Save and load
-\    Summary: The OS command string for loading a commander file
+\    Summary: The OS command string for changing directory on the Master Compact
 \
 \ ******************************************************************************
 
-.LDLI
+IF _COMPACT
 
-IF _SNG47
+.DIRI
 
- EQUS "LOAD :1.E.JAMESON  E7E"
- EQUB 13
-
-ELIF _COMPACT
-
- EQUS "LOAD JAMESON  E7E"
+ EQUS "DIR 12345678901234567890"
  EQUB 13
 
 ENDIF

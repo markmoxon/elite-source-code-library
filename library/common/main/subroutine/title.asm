@@ -509,8 +509,11 @@ IF _SNG47
 
 ELIF _COMPACT
 
- JSR L7EE2              \ ???
- BCS TL2
+ JSR RDFIRE             \ Call RDFIRE to check whether the joystick's fire
+                        \ button is being pressed
+
+ BCS TL2                \ If the C flag is set then the joystick fire button
+                        \ is being pressed, so jump to TL2
 
 ENDIF
 

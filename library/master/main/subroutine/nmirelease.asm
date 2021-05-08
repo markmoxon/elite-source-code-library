@@ -8,9 +8,9 @@
 \
 \ ******************************************************************************
 
-.NMIRELEASE
-
 IF _COMPACT
+
+.NMIRELEASE
 
  JSR SWAPZP+3           \ Call SWAPZP+3 to restore the top part of zero page,
                         \ but without first claiming the NMI sprkspace (as it's

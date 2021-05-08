@@ -97,8 +97,8 @@ IF _MASTER_VERSION
 
 IF _COMPACT
 
- LDX #0                 \ ???
- LDY #0
+ LDX #0                 \ Set the initial values for the results, X = Y = 0,
+ LDY #0                 \ which we now increase or decrease appropriately
 
 ENDIF
 
@@ -266,8 +266,8 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  LDA KL                 \ Set A to the value of KL (the key pressed)
 
- LDX #0                 \ Set the results, X = Y = 0
- LDY #0
+ LDX #0                 \ Set the initial values for the results, X = Y = 0,
+ LDY #0                 \ which we now increase or decrease appropriately
 
  CMP #&19               \ If left arrow was pressed, set X = X - 1
  BNE P%+3
@@ -399,8 +399,17 @@ ELIF _MASTER_VERSION
  PHX                    \ Store X (which contains the change in the
                         \ x-coordinate) on the stack so we can retrieve it later
 
+IF _SNG47
+
  LDA #0                 \ Call DKS4 to check whether the SHIFT key is being
  JSR DKS4               \ pressed
+
+ELIF _COMPACT
+
+ LDA #0                 \ Call DKS4mc to check whether the SHIFT key is being
+ JSR DKS4mc             \ pressed
+
+ENDIF
 
  BMI P%+6               \ If SHIFT is being pressed, skip the next three
                         \ instructions
@@ -432,7 +441,8 @@ ELIF _MASTER_VERSION
 
 IF _COMPACT
 
- STZ KY7                \ ???
+ STZ KY7                \ Clear the key logger at KY7 to reset the "A" (fire)
+                        \ button to "not pressed"
 
 ENDIF
 

@@ -21,8 +21,9 @@
 
 .DELT
 
- JSR CATS               \ Call CATS to ask for a drive number, catalogue that
-                        \ disc and update the catalogue command at CTLI
+ JSR CATS               \ Call CATS to ask for a drive number (or a directory
+                        \ name on the Master Compact) and catalogue that disc
+                        \ or directory
 
  BCS SVE                \ If the C flag is set then an invalid drive number was
                         \ entered as part of the catalogue process, so jump to

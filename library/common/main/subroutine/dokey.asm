@@ -441,7 +441,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
 
 ENDIF
 
-IF _MASTER_VERSION \ Enhanced: See group A
+IF _MASTER_VERSION \ Master: The Master Compact release supports the Compact's digital joystick via the RDJOY routine, which also supports the standard analogue joystick interface
 
 IF _COMPACT
 

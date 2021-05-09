@@ -11,8 +11,8 @@
 \ The loader loads and moves the following files. There is no decryption at this
 \ stage - that is all done by the main game code.
 \
-\   * BDATA is loaded into main memory at &1300-&54FF, and is then moved as
-\     follows:
+\   * The BDATA game data file is loaded into main memory at &1300-&54FF, and is
+\     then moved as follows:
 \
 \       * &1300-&21FF is moved to &7000-&7EFF in screen memory (i.e. shadow RAM)
 \         for the dashboard
@@ -20,11 +20,16 @@
 \       * &2200-&54FF is moved to &7F00-&B1FF in main memory, where the main
 \         game code will decrypt it
 \
-\   * BCODE is loaded into main memory at &1300-&7F47 and the game is started by
-\     jumping to &2C6C
+\   * The main game code file is loaded into main memory at &1300 and the game
+\     isstarted by jumping to &2C6C
+\
+\ The main game code file is called BCODE in the Master release and ELITE in the
+\ Master Compact release. BCODE loads into &1300-&7F47, while ELITE loads into
+\ &1300-&7FEC.
 \
 \ The main game code is then responsible for decrypting BDATA (from &8000 to
-\ &B1FF) and BCODE (from the end of the scramble routine to &7F47).
+\ &B1FF) and BCODE/ELITE (from the end of the scramble routine to the end of the
+\ file).
 \
 \ ******************************************************************************
 
@@ -52,7 +57,7 @@ IF _COMPACT
 
  LDA #0                 \ This is a Master Compact, so set A = 0
 
- STA &02                \ Store the value of A in MOS, which will be 0 if this
+ STA MOS                \ Store the value of A in MOS, which will be 0 if this
                         \ is a Master Compact, or &FF if it isn't
 
 ENDIF
@@ -243,11 +248,12 @@ ENDIF
 
  CLI                    \ Enable interrupts
 
- LDX #LO(MESS2)         \ Set (Y X) to point to MESS2 ("L.BCODE FFFF1300")
- LDY #HI(MESS2)
+ LDX #LO(MESS2)         \ Set (Y X) to point to MESS2 ("L.BCODE FFFF1300" in the
+ LDY #HI(MESS2)         \ Master release, or "L.ELITE FFFF1300" in the Master
+                        \ Compact release)
 
- JSR OSCLI              \ Call OSCLI to run the OS command in MESS2, which
-                        \ loads the BCODE file to address &1300-&7F48, appending
+ JSR OSCLI              \ Call OSCLI to run the OS command in MESS2, which loads
+                        \ the BCODE/ELITE file to address &1300-&7F48, appending
                         \ &FFFF to the address to make sure it loads in the main
                         \ BBC Master rather than getting passed across the Tube
                         \ to the second processor, if one is fitted
@@ -268,5 +274,5 @@ ENDIF
  STA VIA+&30
 
  JMP &2C6C              \ Jump to the start of the main game code at &2C6C,
-                        \ which we just loaded in the BCODE file
+                        \ which we just loaded in the BCODE/ELITE file
 

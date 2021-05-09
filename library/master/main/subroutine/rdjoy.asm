@@ -104,12 +104,23 @@ IF _COMPACT
 
  STX KY6                \ Update the key logger at KY6 to "press" the "S" (pitch
                         \ forward) button
+                        \
+                        \ Note that this is the opposite key presss to the stick
+                        \ direction, as in the default configuration, we want to
+                        \ pitch up when we pull the joystick back (i.e. when the
+                        \ stick is down). To fix this, we flip this result below
 
  LSR A                  \ If PB3 from the User VIA is set (up), skip the
  BCS P%+4               \ following
 
  STX KY5                \ Update the key logger at KY5 to "press" the "X" (pitch
                         \ back) button
+                        \
+                        \ Note that this is the opposite key presss to the stick
+                        \ direction, as in the default configuration, we want to
+                        \ pitch down when we push the joystick forward (i.e.
+                        \ when the stick is up). To fix this, we flip this
+                        \ result below
 
  LSR A                  \ If PB4 from the User VIA is set (right), skip the
  BCS P%+4               \ following
@@ -141,18 +152,14 @@ IF _COMPACT
                         \ i.e. it will be 0 if the Y channel is configured to be
                         \ reversed
 
- BEQ DIG2               \ If the result in A is 0, skip the following
+ BEQ DIG2               \ If the result in A is 0, skip the following to leave
+                        \ the Y channel alone, as we already set the pitch keys
+                        \ above to the opposite direction to the stick
 
                         \ If we get here, then the configuration settings are
                         \ not set to reverse the Y channel, so we now swap KY5
-                        \ and KY6 around. This is because the right key (">")
-                        \ actually rotates the ship to the left, and vice versa,
-                        \ so the above mapping of left digital joystick to left
-                        \ key is the wrong way around, so for the default
-                        \ settings of the joystick reversal, we want to swap the
-                        \ left and right key presses
-                        \
-                        \ This is seriously confusing...
+                        \ and KY6 around, as we set the pitch keys above to the
+                        \ opposite direction to the stick
 
  LDA KY5                \ The Y channel should be reversed, so swap the values
  LDX KY6                \ of KY5 and KY6 (to swap the pitch)

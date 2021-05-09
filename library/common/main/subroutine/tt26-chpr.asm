@@ -149,7 +149,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Master: Group A: The Master Compact release prints the disc catalogue using different logic, as the Compact uses ADFS rather than DFS
 
 IF _COMPACT
 
@@ -172,7 +172,7 @@ IF _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Master: See group A
 
  TAY                    \ Set Y = the character to be printed
 

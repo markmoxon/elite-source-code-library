@@ -53,11 +53,19 @@ IF _COMPACT
  BCS P%+3               \ following
 
  INY                    \ Set Y = Y + 1
+                        \
+                        \ Note that this is the opposite direction to the stick
+                        \ direction, as moving the stick down should decrease Y.
+                        \ To fix this, we flip this result below
 
  LSR A                  \ If PB3 from the User VIA is set (up), skip the
  BCS P%+3               \ following
 
  DEY                    \ Set Y = Y - 1
+                        \
+                        \ Note that this is the opposite direction to the stick
+                        \ direction, as moving the stick up should increase Y.
+                        \ To fix this, we flip this result below
 
  LSR A                  \ If PB4 from the User VIA is set (right), skip the
  BCS P%+3               \ following
@@ -90,10 +98,16 @@ IF _COMPACT
                         \ reversed
 
  BEQ TT17X-1            \ If the result in A is 0, return from the subroutine
-                        \ (as TT17X-1 contain an RTS)
+                        \ (as TT17X-1 contain an RTS), as we already set the Y
+                        \ value above to the opposite direction to the stick
 
- TYA                    \ The Y channel needs to be reversed, so negate the
- EOR #&FF               \ value in Y, using two's complement
+                        \ If we get here, then the configuration settings are
+                        \ not set to reverse the Y channel, so we now negate the
+                        \ Y value, as we set Y above to the opposite direction
+                        \ to the stick
+
+ TYA                    \ The Y channel should be reversed, so negate the value
+ EOR #&FF               \ in Y, using two's complement
  CLC
  ADC #1
  TAY

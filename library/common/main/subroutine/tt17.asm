@@ -93,7 +93,7 @@ IF _6502SP_VERSION \ Enhanced: Group A: In the enhanced versions, the cursor mov
 
 ENDIF
 
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Master: Group C: The Master Compact release allows you to move the chart crosshairs using the digital joystick, using the TT17X and DJOY routines
 
 IF _COMPACT
 
@@ -120,7 +120,7 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
-IF _MASTER_VERSION \ Master: Group B: The Master has different logic around moving the crosshairs on the chart views, though the results appear to be the same
+IF _MASTER_VERSION \ Master: See group C
 
 IF _COMPACT
 
@@ -162,7 +162,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: See group B
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: Group B: The Master has different logic around moving the crosshairs on the chart views, though the results appear to be the same
 
  TYA                    \ Copy Y to A
 

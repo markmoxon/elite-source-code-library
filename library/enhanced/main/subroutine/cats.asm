@@ -21,7 +21,7 @@
 
 .CATS
 
-IF _DISC_DOCKED OR _6502SP_VERSION
+IF _DISC_DOCKED OR _6502SP_VERSION \ Master: The Master Compact only has one disc drive, and it uses ADFS rather than DFS, so instead of asking for a drive number, it asks for a directory name
 
  JSR GTDRV              \ Get an ASCII disc drive drive number from the keyboard
                         \ in A, setting the C flag if an invalid drive number
@@ -100,7 +100,7 @@ ENDIF
 
  STA XC                 \ Move the text cursor to column 1
 
-IF _MASTER_VERSION \ Platform
+IF _MASTER_VERSION \ Master: As the Master Compact uses ADFS, this release has to claim and release the NMI workspace when accessing the disc, in order to prevent ADFS from corrupting that part of zero page. It does this by calling the NMICLAIM and NMIRELEASE routines at the appropriate time
 
 IF _SNG47
 

@@ -19,9 +19,9 @@
 \
 \ ******************************************************************************
 
-.CTRLmc
-
 IF _COMPACT
+
+.CTRLmc
 
  LDA #1                 \ Set A to the internal key number for CTRL and fall
                         \ through to DKS4mc to scan the keyboard

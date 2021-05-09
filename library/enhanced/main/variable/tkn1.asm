@@ -40,6 +40,11 @@ IF _DISC_DOCKED \ Comment
  EJMP 10
  EJMP 2
  ECHR '1'
+ ECHR '.'
+ ECHR ' '
+ ETOK 149
+ ETWO '-', '-'
+ ECHR '2'
 ELIF _6502SP_VERSION
  ECHR 'A'               \                3. CATALOGUE{crlf}
  ECHR 'C'               \                4. DELETE A FILE{crlf}
@@ -54,6 +59,11 @@ ELIF _6502SP_VERSION
  EJMP 10
  EJMP 2
  ECHR '1'
+ ECHR '.'
+ ECHR ' '
+ ETOK 149
+ ETWO '-', '-'
+ ECHR '2'
 ELIF _MASTER_VERSION
  ECHR 'A'               \                3. CATALOGUE DISK{crlf}
  ECHR 'C'               \                4. DELETE FILE{crlf}
@@ -68,12 +78,12 @@ ELIF _MASTER_VERSION
  EJMP 10                \                <215>4. DEL<221>E FI<229><215>5.
  EJMP 2                 \                 DEFAULT {1}JAMESON{2}<215>6. EX<219>
  ECHR '1'               \                <215>"
+ ECHR '.'               \
+ ECHR ' '               \ The Master Compact release encodes the third line in a
+ ETOK 149               \ more efficient manner, like this:
+ ETWO '-', '-'          \
+ ECHR '2'               \                <250> [154] {4}<215>3.[152]] DISK
 ENDIF
- ECHR '.'
- ECHR ' '
- ETOK 149
- ETWO '-', '-'
- ECHR '2'
  ECHR '.'
  ECHR ' '
  ECHR 'S'
@@ -2031,7 +2041,7 @@ ENDIF
  EQUB VE                \
                         \ Encoded as:   "{9}{11}{1}{8}"
 
-IF _6502SP_VERSION OR _DISC_DOCKED
+IF _6502SP_VERSION OR _DISC_DOCKED \ Master: The Master Compact release replaces the "DRIVE" text tokwn with "DIRECTORY", as the Compact only has one disc drive
 
  ECHR 'D'               \ Token 151:    "DRIVE"
  ECHR 'R'               \

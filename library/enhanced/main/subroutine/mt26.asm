@@ -63,7 +63,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _DISC_DOCKED OR _6502SP_VERSION \ Master: Group A: The Master version contains its own custom routine for the extended token that asks for a line of text, while the other enhanced versions use the standard OSWORD command
+IF _DISC_DOCKED OR _6502SP_VERSION \ Master: Group A: The Master version contains its own custom routine for the extended token that asks for a line of text, while the other enhanced versions use the standard OSWORD command. The Master Compact version of that custom routine supports more characters, as it supports ADFS rather than DFS
 
  JSR FLKB               \ Call FLKB to flush the keyboard buffer
 

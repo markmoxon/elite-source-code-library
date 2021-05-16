@@ -35,10 +35,15 @@ _DISC_VERSION           = (_VERSION = 2)
 _6502SP_VERSION         = (_VERSION = 3)
 _MASTER_VERSION         = (_VERSION = 4)
 _ELECTRON_VERSION       = (_VERSION = 5)
+_ELITE_A_VERSION        = (_VERSION = 6)
 _SNG47                  = (_RELEASE = 1)
 _COMPACT                = (_RELEASE = 2)
 _DISC_DOCKED            = FALSE
 _DISC_FLIGHT            = FALSE
+_ELITE_A_DOCKED         = FALSE
+_ELITE_A_FLIGHT         = FALSE
+_ELITE_A_ENCYCLOPEDIA   = FALSE
+_ELITE_A_6502SP         = FALSE
 
 VE = &57                \ The obfuscation byte used to hide the extended tokens
                         \ table from crackers viewing the binary code

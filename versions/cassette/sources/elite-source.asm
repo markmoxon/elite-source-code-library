@@ -40,8 +40,13 @@ _DISC_VERSION           = (_VERSION = 2)
 _6502SP_VERSION         = (_VERSION = 3)
 _MASTER_VERSION         = (_VERSION = 4)
 _ELECTRON_VERSION       = (_VERSION = 5)
+_ELITE_A_VERSION        = (_VERSION = 6)
 _DISC_DOCKED            = FALSE
 _DISC_FLIGHT            = FALSE
+_ELITE_A_DOCKED         = FALSE
+_ELITE_A_FLIGHT         = FALSE
+_ELITE_A_ENCYCLOPEDIA   = FALSE
+_ELITE_A_6502SP         = FALSE
 
 GUARD &6000             \ Screen memory starts here
 GUARD &8000             \ Paged ROMS start here

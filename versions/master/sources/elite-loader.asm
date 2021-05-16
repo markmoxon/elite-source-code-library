@@ -35,6 +35,7 @@ _DISC_VERSION           = (_VERSION = 2)
 _6502SP_VERSION         = (_VERSION = 3)
 _MASTER_VERSION         = (_VERSION = 4)
 _ELECTRON_VERSION       = (_VERSION = 5)
+_ELITE_A_VERSION        = (_VERSION = 6)
 _SNG47                  = (_RELEASE = 1)
 _COMPACT                = (_RELEASE = 2)
 

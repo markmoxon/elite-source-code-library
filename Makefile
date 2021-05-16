@@ -95,6 +95,31 @@ rel-electron=1
 folder-electron=
 suffix-electron=-sth
 
+# Elite-A
+
+# You can set the release that gets built by adding 'release=<rel>' to
+# the make command, where <rel> is one of:
+#
+#   released
+#   patched
+#
+# So, for example:
+#
+#   make encrypt verify release=patched
+#
+# will build the patched version. If you omit the release parameter,
+# it will build the released version.
+
+ifeq ($(release), source-disc)
+  rel-elite-a=2
+  folder-elite-a=/source-disc
+  suffix-elite-a=-from-source-disc
+else
+  rel-elite-a=1
+  folder-elite-a=/released
+  suffix-elite-a=-released
+endif
+
 # The following variables are written into elite-header.h.asm so they can be
 # passed to BeebAsm:
 #
@@ -112,6 +137,7 @@ suffix-electron=-sth
 #   3 = BBC Micro with 6502 Second Processor
 #	4 = BBC Master
 #	5 = Electron
+#   6 = Elite-A
 #
 # _RELEASE (for cassette version)
 #   1 = Source disc (default)
@@ -130,6 +156,10 @@ suffix-electron=-sth
 #
 # _RELEASE (for Electron version)
 #   1 = Stairway to Hell version (default)
+#
+# _RELEASE (for Elite-A)
+#   1 = Released version (default)
+#   2 = Source disc
 #
 
 .PHONY:build
@@ -204,6 +234,19 @@ build:
 	$(PYTHON) versions/electron/sources/elite-checksum.py -u -rel$(rel-electron)
 	$(BEEBASM) -i versions/electron/sources/elite-disc.asm -do versions/electron/elite-electron$(suffix-electron).ssd -opt 3
 
+	echo _VERSION=6 > versions/elite-a/sources/elite-header.h.asm
+	echo _RELEASE=$(rel-elite-a) >> versions/elite-a/sources/elite-header.h.asm
+	echo _REMOVE_CHECKSUMS=FALSE >> versions/elite-a/sources/elite-header.h.asm
+	echo _MATCH_EXTRACTED_BINARIES=TRUE >> versions/elite-a/sources/elite-header.h.asm
+	$(BEEBASM) -i versions/elite-a/sources/a.tcode.asm -v > versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/a.dcode.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/a.icode.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/1.d.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/a.qcode.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/a.qelite.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/a.elite.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-disc.asm -do elite-a$(suffix-elite-a).ssd -opt 3
+
 .PHONY:encrypt
 encrypt:
 	echo _VERSION=1 > versions/cassette/sources/elite-header.h.asm
@@ -275,6 +318,19 @@ encrypt:
 	$(BEEBASM) -i versions/electron/sources/elite-loader.asm -v >> versions/electron/output/compile.txt
 	$(PYTHON) versions/electron/sources/elite-checksum.py -rel$(rel-electron)
 	$(BEEBASM) -i versions/electron/sources/elite-disc.asm -do versions/electron/elite-electron$(suffix-electron).ssd -opt 3
+
+	echo _VERSION=6 > versions/elite-a/sources/elite-header.h.asm
+	echo _RELEASE=$(rel-elite-a) >> versions/elite-a/sources/elite-header.h.asm
+	echo _REMOVE_CHECKSUMS=FALSE >> versions/elite-a/sources/elite-header.h.asm
+	echo _MATCH_EXTRACTED_BINARIES=TRUE >> versions/elite-a/sources/elite-header.h.asm
+	$(BEEBASM) -i versions/elite-a/sources/a.tcode.asm -v > versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/a.dcode.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/a.icode.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/1.d.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/a.qcode.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/a.qelite.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/a.elite.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-disc.asm -do elite-a$(suffix-elite-a).ssd -opt 3
 
 .PHONY:verify
 verify:

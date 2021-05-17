@@ -15,13 +15,158 @@ _ELITE_A_6502SP         = FALSE
 _RELEASED               = (_RELEASE = 1)
 _SOURCE_DISC            = (_RELEASE = 2)
 
+\ ******************************************************************************
+\
+\ Configuration variables
+\
+\ ******************************************************************************
+
+LS% = &0CFF             \ The start of the descending ship line heap
+
+NOST = 18               \ The number of stardust particles in normal space (this
+                        \ goes down to 3 in witchspace)
+
+NOSH = 12               \ The maximum number of ships in our local bubble of
+                        \ universe
+
+NTY = 31                \ The number of different ship types
+
+MSL = 1                 \ Ship type for a missile
+SST = 2                 \ Ship type for a Coriolis space station
+ESC = 3                 \ Ship type for an escape pod
+PLT = 4                 \ Ship type for an alloy plate
+OIL = 5                 \ Ship type for a cargo canister
+AST = 7                 \ Ship type for an asteroid
+SPL = 8                 \ Ship type for a splinter
+SHU = 9                 \ Ship type for a Shuttle
+CYL = 11                \ Ship type for a Cobra Mk III
+ANA = 14                \ Ship type for an Anaconda
+COPS = 16               \ Ship type for a Viper
+SH3 = 17                \ Ship type for a Sidewinder
+KRA = 19                \ Ship type for a Krait
+ADA = 20                \ Ship type for a Adder
+WRM = 23                \ Ship type for a Worm
+CYL2 = 24               \ Ship type for a Cobra Mk III (pirate)
+ASP = 25                \ Ship type for an Asp Mk II
+THG = 29                \ Ship type for a Thargoid
+TGL = 30                \ Ship type for a Thargon
+CON = 31                \ Ship type for a Constrictor
+
+JL = ESC                \ Junk is defined as starting from the escape pod
+
+JH = SHU+2              \ Junk is defined as ending before the Cobra Mk III
+                        \
+                        \ So junk is defined as the following: escape pod,
+                        \ alloy plate, cargo canister, asteroid, splinter,
+                        \ Shuttle or Transporter
+
+PACK = SH3              \ The first of the eight pack-hunter ships, which tend
+                        \ to spawn in groups. With the default value of PACK the
+                        \ pack-hunters are the Sidewinder, Mamba, Krait, Adder,
+                        \ Gecko, Cobra Mk I, Worm and Cobra Mk III (pirate)
+
+POW = 15                \ Pulse laser power
+
+Mlas = 50               \ Mining laser power
+
+Armlas = INT(128.5+1.5*POW) \ Military laser power
+
+NI% = 37                \ The number of bytes in each ship's data block (as
+                        \ stored in INWK and K%)
+
+OSBYTE = &FFF4          \ The address for the OSBYTE routine
+OSWORD = &FFF1          \ The address for the OSWORD routine
+OSFILE = &FFDD          \ The address for the OSFILE routine
+OSWRCH = &FFEE          \ The address for the OSWRCH routine
+OSCLI = &FFF7           \ The address for the OSCLI routine
+
+VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
+                        \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
+                        \ known as SHEILA)
+
+VSCAN = 57              \ Defines the split position in the split-screen mode
+
+X = 128                 \ The centre x-coordinate of the 256 x 192 space view
+Y = 96                  \ The centre y-coordinate of the 256 x 192 space view
+
+f0 = &20                \ Internal key number for red key f0 (Launch, Front)
+f1 = &71                \ Internal key number for red key f1 (Buy Cargo, Rear)
+f2 = &72                \ Internal key number for red key f2 (Sell Cargo, Left)
+f3 = &73                \ Internal key number for red key f3 (Equip Ship, Right)
+f4 = &14                \ Internal key number for red key f4 (Long-range Chart)
+f5 = &74                \ Internal key number for red key f5 (Short-range Chart)
+f6 = &75                \ Internal key number for red key f6 (Data on System)
+f7 = &16                \ Internal key number for red key f7 (Market Price)
+f8 = &76                \ Internal key number for red key f8 (Status Mode)
+f9 = &77                \ Internal key number for red key f9 (Inventory)
+
+NRU% = 25               \ The number of planetary systems with extended system
+                        \ description overrides in the RUTOK table
+
+VE = &57                \ The obfuscation byte used to hide the extended tokens
+                        \ table from crackers viewing the binary code
+
+LL = 30                 \ The length of lines (in characters) of justified text
+                        \ in the extended tokens system
+
+QQ18 = &0400            \ The address of the text token table, as set in
+                        \ elite-loader3.asm
+
+SNE = &07C0             \ The address of the sine lookup table, as set in
+                        \ elite-loader3.asm
+
+ACT = &07E0             \ The address of the arctan lookup table, as set in
+                        \ elite-loader3.asm
+
+QQ16_FLIGHT = &0880     \ The address of the two-letter text token table in the
+                        \ flight code (this gets populated by the docked code at
+                        \ the start of the game)
+
+CATD = &0D7A            \ The address of the CATD routine that is put in place
+                        \ by the third loader, as set in elite-loader3.asm
+
+IRQ1 = &114B            \ The address of the IRQ1 routine that implements the
+                        \ split screen interrupt handler, as set in
+                        \ elite-loader3.asm
+
+BRBR1 = &11D5           \ The address of the main break handler, which BRKV
+                        \ points to as set in elite-loader3.asm
+
+NA% = &1181             \ The address of the data block for the last saved
+                        \ commander, as set in elite-loader3.asm
+
+CHK2 = &11D3            \ The address of the second checksum byte for the saved
+                        \ commander data file, as set in elite-loader3.asm
+
+CHK = &11D4             \ The address of the first checksum byte for the saved
+                        \ commander data file, as set in elite-loader3.asm
+
+SHIP_MISSILE = &7F00    \ The address of the missile ship blueprint, as set in
+                        \ elite-loader3.asm
+
+INCLUDE "library/common/main/workspace/zp.asm"
+INCLUDE "library/common/main/workspace/xx3.asm"
+INCLUDE "library/enhanced/main/workspace/up.asm"
+INCLUDE "library/common/main/workspace/k_per_cent.asm"
+INCLUDE "library/common/main/workspace/wp.asm"
+
+\ ******************************************************************************
+\
+\ ELITE A FILE
+\
+\ ******************************************************************************
+
+CODE% = &11E3
+LOAD% = &11E3
+
+ORG CODE%
+
+LOAD_A% = LOAD%
+
  \ a.dcode - ELITE III in-flight code
 
 INCLUDE "versions/elite-a/sources/a.global.asm"
 
-CODE% = &11E3
-ORG CODE%
-LOAD% = &11E3
 EXEC% = &11E3
 
 
@@ -232,7 +377,7 @@ EXEC% = &11E3
  INC cmdr_bomb
  INC new_hold	\***
  \	JSR l_32c1
- JSR l_3f86
+ JSR DORND
  STA data_homex	\cmdr_homex
  STX data_homey	\cmdr_homey
  JSR l_2f75
@@ -389,7 +534,7 @@ EXEC% = &11E3
 
 .l_13fd
 
- JSR l_3f86
+ JSR DORND
  \	AND #&07
  AND #&0F
 
@@ -513,7 +658,7 @@ EXEC% = &11E3
  LDA &44
  CMP new_mining
  BNE l_14d9
- JSR l_3f86
+ JSR DORND
  LDX #&08
  AND #&03
  JSR l_1687
@@ -825,7 +970,7 @@ EXEC% = &11E3
 
 .l_1678
 
- JSR l_3f86
+ JSR DORND
  BPL l_1694
  PHA
  TYA
@@ -1620,15 +1765,15 @@ EXEC% = &11E3
 
 .l_1afd
 
- JSR l_3f86
+ JSR DORND
  ORA #&04
  STA &35
  STA &0F82,Y
- JSR l_3f86
+ JSR DORND
  ORA #&08
  STA &34
  STA &0F5C,Y
- JSR l_3f86
+ JSR DORND
  ORA #&90
  STA &0FA8,Y
  STA &88
@@ -1737,7 +1882,7 @@ EXEC% = &11E3
 
 .l_1bea
 
- JSR l_3f86
+ JSR DORND
  AND #&7F
  ADC #&0A
  STA &0FA8,Y
@@ -1749,14 +1894,14 @@ EXEC% = &11E3
  ROR A
  STA &34
  STA &0F5C,Y
- JSR l_3f86
+ JSR DORND
  STA &35
  STA &0F82,Y
  JMP l_1be0
 
 .l_1c0d
 
- JSR l_3f86
+ JSR DORND
  STA &34
  STA &0F5C,Y
  LSR A
@@ -2721,7 +2866,7 @@ EXEC% = &11E3
 
 .l_2166
 
- JSR l_3f86
+ JSR DORND
  CMP #&10
  BCS l_2174
 
@@ -2758,7 +2903,7 @@ EXEC% = &11E3
  LDA &0328
  ORA &033F	\ no shuttles if docking computer on
  BNE l_2165
- JSR l_3f86
+ JSR DORND
  CMP #&FD
  BCC l_2165
  AND #&01
@@ -2768,7 +2913,7 @@ EXEC% = &11E3
 
 .l_21a6
 
- JSR l_3f86
+ JSR DORND
  CMP #&F0
  BCC l_2165
  LDA &032E
@@ -2805,7 +2950,7 @@ EXEC% = &11E3
 
 .l_21d5
 
- JSR l_3f86
+ JSR DORND
  LDA &6A
  LSR A
  BCC l_21e1
@@ -2875,7 +3020,7 @@ EXEC% = &11E3
 
  CMP #&0E
  BNE l_223b
- JSR l_3f86
+ JSR DORND
  CMP #&C8
  BCC l_223b
  LDX #&0F
@@ -2883,10 +3028,10 @@ EXEC% = &11E3
 
 .l_223b
 
- JSR l_3f86
+ JSR DORND
  CMP #&FA
  BCC l_2249
- JSR l_3f86
+ JSR DORND
  ORA #&68
  STA &63
 
@@ -2901,7 +3046,7 @@ EXEC% = &11E3
  LSR A
  CMP &69
  BCC l_226d
- JSR l_3f86
+ JSR DORND
  CMP #&E6
  BCC l_226d
  LDX &8C
@@ -2917,7 +3062,7 @@ EXEC% = &11E3
  AND #&07
  BEQ l_2294
  STA &D1
- JSR l_3f86
+ JSR DORND
  \	AND #&1F
  AND #&0F
  CMP &D1
@@ -2975,7 +3120,7 @@ EXEC% = &11E3
 
 .l_22d4
 
- JSR l_3f86
+ JSR DORND
  ORA #&80
  CMP &66
  BCS l_22e6
@@ -3523,7 +3668,7 @@ EXEC% = &11E3
  CMP #&04
  BCC l_25fe
  PHA
- JSR l_3f86
+ JSR DORND
  ASL A
  STA &64
  TXA
@@ -3739,7 +3884,7 @@ EXEC% = &11E3
 
 .l_2748
 
- JSR l_3f86
+ JSR DORND
  STA &35
  STA &0F82,Y
  LDA #&73
@@ -3750,7 +3895,7 @@ EXEC% = &11E3
 
 .l_275b
 
- JSR l_3f86
+ JSR DORND
  STA &34
  STA &0F5C,Y
  LDA #&6E
@@ -3760,7 +3905,7 @@ EXEC% = &11E3
 
 .l_276c
 
- JSR l_3f86
+ JSR DORND
  ORA #&08
  STA &88
  STA &0FA8,Y
@@ -4437,11 +4582,11 @@ EXEC% = &11E3
 
 .l_2a82
 
- JSR l_3f86
+ JSR DORND
  AND #&07
  ADC #&5C
  STA &0FCF
- JSR l_3f86
+ JSR DORND
  AND #&07
  ADC #&7C
  STA &0FCE
@@ -5605,7 +5750,7 @@ EXEC% = &11E3
  STA home_tech
  LDA data_govm
  STA home_govmt
- JSR l_3f86
+ JSR DORND
  STA cmdr_price
  LDX #&00
  STX &96
@@ -5706,7 +5851,7 @@ EXEC% = &11E3
  \	JSR l_4437
  \	AND x_flag
  \	BMI l_321f
- JSR l_3f86
+ JSR DORND
  CMP #&FD
  BCS l_3226
  JSR l_31ab
@@ -6239,7 +6384,7 @@ EXEC% = &11E3
 
 .l_350d
 
- JSR l_3f85
+ JSR DORND2
  STA &88
  LDA &D3
  STA &82
@@ -6272,13 +6417,13 @@ EXEC% = &11E3
 
 .l_3545
 
- JSR l_3f85
+ JSR DORND2
  JMP l_3533
 
 .l_354b
 
  STA &83
- JSR l_3f85
+ JSR DORND2
  ROL A
  BCS l_355e
  JSR l_2847
@@ -6372,14 +6517,14 @@ EXEC% = &11E3
 
 .l_35b8
 
- JSR l_3f86
+ JSR DORND
  ORA #&08
  STA &0FA8,Y
  STA &88
- JSR l_3f86
+ JSR DORND
  STA &0F5C,Y
  STA &34
- JSR l_3f86
+ JSR DORND
  STA &0F82,Y
  STA &35
  JSR l_1910
@@ -7285,7 +7430,7 @@ EXEC% = &11E3
  STY &35
  JSR l_47b8
  LDY &35
- JSR l_3f86
+ JSR DORND
  AND &93
  CLC
  ADC &81
@@ -7967,7 +8112,7 @@ EXEC% = &11E3
 .rand_posn
 
  JSR l_3f26
- JSR l_3f86
+ JSR DORND
  STA &46
  STX &49
  STA &06
@@ -7984,7 +8129,7 @@ EXEC% = &11E3
  SBC &47
  SBC &4A
  STA &4D
- JMP l_3f86
+ JMP DORND
 
 .l_3eb8
 
@@ -8119,35 +8264,18 @@ EXEC% = &11E3
  ORA #&C0
  STA &66
 
-.l_3f85
-
- CLC
-
-.l_3f86
-
- LDA &00
- ROL A
- TAX
- ADC &02
- STA &00
- STX &02
- LDA &01
- TAX
- ADC &03
- STA &01
- STX &03
- RTS
+INCLUDE "library/common/main/subroutine/dornd.asm"
 
 .l_3f9a
 
- JSR l_3f86
+ JSR DORND
  LSR A
  STA &66
  STA &63
  ROL &65
  AND #&0F
  STA &61
- JSR l_3f86
+ JSR DORND
  BMI l_3fb9
  LDA &66
  ORA #&C0
@@ -8182,7 +8310,7 @@ EXEC% = &11E3
 
  LDA &0341
  BNE l_3fd1
- JSR l_3f86
+ JSR DORND
  CMP #&33	\ trader fraction
  BCS l_402e
  LDA &033E
@@ -8207,7 +8335,7 @@ EXEC% = &11E3
 
 .l_4022
 
- JSR l_3f86
+ JSR DORND
  CMP #&0A
  AND #&01
  ADC #&05
@@ -8254,14 +8382,14 @@ EXEC% = &11E3
  AND #&0C
  CMP #&08
  BNE l_4070
- JSR l_3f86
+ JSR DORND
  CMP #&C8
  BCC l_4070
  JSR l_320e
 
 .l_4070
 
- JSR l_3f86
+ JSR DORND
  LDY home_govmt
  BEQ l_4083
  CMP #&78
@@ -8309,7 +8437,7 @@ EXEC% = &11E3
 
  STA horde_base+1
  STX horde_mask+1
- JSR l_3f86
+ JSR DORND
  CMP #&F8
  BCS horde_large
  STA &89
@@ -8325,7 +8453,7 @@ EXEC% = &11E3
 
 .l_40b9
 
- JSR l_3f86
+ JSR DORND
  STA &D1
  TXA
  AND &D1
@@ -8614,7 +8742,7 @@ EXEC% = &11E3
 .l_421e
 
  JSR l_251d
- JSR l_3f86
+ JSR DORND
  AND #&80
  LDY #&1F
  STA (&20),Y
@@ -8649,7 +8777,7 @@ EXEC% = &11E3
  JSR l_3eb8
  LDA #&06
  BCS l_427e
- JSR l_3f86
+ JSR DORND
  AND #&03
  LDX home_govmt
  CPX #&03
@@ -9315,7 +9443,7 @@ EXEC% = &11E3
 
 .l_45ea
 
- JSR l_3f86
+ JSR DORND
  BMI l_45b4
  \	CPX #&16
  CPX #&18
@@ -9789,7 +9917,7 @@ EXEC% = &11E3
 .l_48c1
 
  INY
- JSR l_3f86
+ JSR DORND
  STA (&67),Y
  CPY #&06
  BNE l_48c1

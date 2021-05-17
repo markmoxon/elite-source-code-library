@@ -338,3 +338,18 @@ verify:
 	@$(PYTHON) versions/master/sources/crc32.py versions/master/extracted$(folder-master) versions/master/output
 	@$(PYTHON) versions/electron/sources/crc32.py versions/electron/extracted$(folder-electron) versions/electron/output
 	@$(PYTHON) versions/elite-a/sources/crc32.py versions/elite-a/extracted$(folder-elite-a) versions/elite-a/output
+
+.PHONY:elite-a
+elite-a:
+	echo _VERSION=6 > versions/elite-a/sources/elite-header.h.asm
+	echo _RELEASE=$(rel-elite-a) >> versions/elite-a/sources/elite-header.h.asm
+	echo _REMOVE_CHECKSUMS=FALSE >> versions/elite-a/sources/elite-header.h.asm
+	echo _MATCH_EXTRACTED_BINARIES=TRUE >> versions/elite-a/sources/elite-header.h.asm
+	$(BEEBASM) -i versions/elite-a/sources/elite-source-docked.asm -v > versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-source-flight.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-source-encyclopedia.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-6502sp-parasite.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-6502sp-io-processor.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-loader.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-disc.asm -do elite-a$(suffix-elite-a).ssd -opt 3
+	@$(PYTHON) versions/elite-a/sources/crc32.py versions/elite-a/extracted$(folder-elite-a) versions/elite-a/output

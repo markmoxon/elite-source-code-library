@@ -10,15 +10,21 @@
 \
 \ Set A and X to random numbers. The C and V flags are also set randomly.
 \
+IF NOT(_ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP)
 \ Other entry points:
 \
 \   DORND2              Restricts the value of RAND+2 so that bit 0 is always 0
 \
+ENDIF
 \ ******************************************************************************
+
+IF NOT(_ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP)
 
 .DORND2
 
  CLC                    \ This ensures that bit 0 of r2 is 0
+
+ENDIF
 
 .DORND
 

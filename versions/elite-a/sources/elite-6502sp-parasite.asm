@@ -15,13 +15,156 @@ _ELITE_A_6502SP         = TRUE
 _RELEASED               = (_RELEASE = 1)
 _SOURCE_DISC            = (_RELEASE = 2)
 
+\ ******************************************************************************
+\
+\ Configuration variables
+\
+\ ******************************************************************************
+
+LS% = &0CFF             \ The start of the descending ship line heap
+
+NOST = 18               \ The number of stardust particles in normal space (this
+                        \ goes down to 3 in witchspace)
+
+NOSH = 12               \ The maximum number of ships in our local bubble of
+                        \ universe
+
+NTY = 31                \ The number of different ship types
+
+MSL = 1                 \ Ship type for a missile
+SST = 2                 \ Ship type for a Coriolis space station
+ESC = 3                 \ Ship type for an escape pod
+PLT = 4                 \ Ship type for an alloy plate
+OIL = 5                 \ Ship type for a cargo canister
+AST = 7                 \ Ship type for an asteroid
+SPL = 8                 \ Ship type for a splinter
+SHU = 9                 \ Ship type for a Shuttle
+CYL = 11                \ Ship type for a Cobra Mk III
+ANA = 14                \ Ship type for an Anaconda
+COPS = 16               \ Ship type for a Viper
+SH3 = 17                \ Ship type for a Sidewinder
+KRA = 19                \ Ship type for a Krait
+ADA = 20                \ Ship type for a Adder
+WRM = 23                \ Ship type for a Worm
+CYL2 = 24               \ Ship type for a Cobra Mk III (pirate)
+ASP = 25                \ Ship type for an Asp Mk II
+THG = 29                \ Ship type for a Thargoid
+TGL = 30                \ Ship type for a Thargon
+CON = 31                \ Ship type for a Constrictor
+
+JL = ESC                \ Junk is defined as starting from the escape pod
+
+JH = SHU+2              \ Junk is defined as ending before the Cobra Mk III
+                        \
+                        \ So junk is defined as the following: escape pod,
+                        \ alloy plate, cargo canister, asteroid, splinter,
+                        \ Shuttle or Transporter
+
+PACK = SH3              \ The first of the eight pack-hunter ships, which tend
+                        \ to spawn in groups. With the default value of PACK the
+                        \ pack-hunters are the Sidewinder, Mamba, Krait, Adder,
+                        \ Gecko, Cobra Mk I, Worm and Cobra Mk III (pirate)
+
+POW = 15                \ Pulse laser power
+
+Mlas = 50               \ Mining laser power
+
+Armlas = INT(128.5+1.5*POW) \ Military laser power
+
+NI% = 37                \ The number of bytes in each ship's data block (as
+                        \ stored in INWK and K%)
+
+OSBYTE = &FFF4          \ The address for the OSBYTE routine
+OSWORD = &FFF1          \ The address for the OSWORD routine
+OSFILE = &FFDD          \ The address for the OSFILE routine
+OSWRCH = &FFEE          \ The address for the OSWRCH routine
+OSCLI = &FFF7           \ The address for the OSCLI routine
+
+VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
+                        \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
+                        \ known as SHEILA)
+
+VSCAN = 57              \ Defines the split position in the split-screen mode
+
+X = 128                 \ The centre x-coordinate of the 256 x 192 space view
+Y = 96                  \ The centre y-coordinate of the 256 x 192 space view
+
+f0 = &20                \ Internal key number for red key f0 (Launch, Front)
+f1 = &71                \ Internal key number for red key f1 (Buy Cargo, Rear)
+f2 = &72                \ Internal key number for red key f2 (Sell Cargo, Left)
+f3 = &73                \ Internal key number for red key f3 (Equip Ship, Right)
+f4 = &14                \ Internal key number for red key f4 (Long-range Chart)
+f5 = &74                \ Internal key number for red key f5 (Short-range Chart)
+f6 = &75                \ Internal key number for red key f6 (Data on System)
+f7 = &16                \ Internal key number for red key f7 (Market Price)
+f8 = &76                \ Internal key number for red key f8 (Status Mode)
+f9 = &77                \ Internal key number for red key f9 (Inventory)
+
+NRU% = 25               \ The number of planetary systems with extended system
+                        \ description overrides in the RUTOK table
+
+VE = &57                \ The obfuscation byte used to hide the extended tokens
+                        \ table from crackers viewing the binary code
+
+LL = 30                 \ The length of lines (in characters) of justified text
+                        \ in the extended tokens system
+
+QQ18 = &0400            \ The address of the text token table, as set in
+                        \ elite-loader3.asm
+
+SNE = &07C0             \ The address of the sine lookup table, as set in
+                        \ elite-loader3.asm
+
+ACT = &07E0             \ The address of the arctan lookup table, as set in
+                        \ elite-loader3.asm
+
+QQ16_FLIGHT = &0880     \ The address of the two-letter text token table in the
+                        \ flight code (this gets populated by the docked code at
+                        \ the start of the game)
+
+CATD = &0D7A            \ The address of the CATD routine that is put in place
+                        \ by the third loader, as set in elite-loader3.asm
+
+IRQ1 = &114B            \ The address of the IRQ1 routine that implements the
+                        \ split screen interrupt handler, as set in
+                        \ elite-loader3.asm
+
+BRBR1 = &11D5           \ The address of the main break handler, which BRKV
+                        \ points to as set in elite-loader3.asm
+
+NA% = &1181             \ The address of the data block for the last saved
+                        \ commander, as set in elite-loader3.asm
+
+CHK2 = &11D3            \ The address of the second checksum byte for the saved
+                        \ commander data file, as set in elite-loader3.asm
+
+CHK = &11D4             \ The address of the first checksum byte for the saved
+                        \ commander data file, as set in elite-loader3.asm
+
+SHIP_MISSILE = &7F00    \ The address of the missile ship blueprint, as set in
+                        \ elite-loader3.asm
+
+INCLUDE "library/common/main/workspace/zp.asm"
+INCLUDE "library/common/main/workspace/xx3.asm"
+INCLUDE "library/enhanced/main/workspace/up.asm"
+INCLUDE "library/common/main/workspace/k_per_cent.asm"
+INCLUDE "library/common/main/workspace/wp.asm"
+
+\ ******************************************************************************
+\
+\ ELITE A FILE
+\
+\ ******************************************************************************
+
+CODE% = &1000
+LOAD% = &1000
+
+ORG CODE%
+
+LOAD_A% = LOAD%
+
  \ a.qcode - ELITE III second processor code
 
-\OPT TABS=16
-CPU 1
-CODE% = &1000
-ORG CODE%
-LOAD% = &1000
 \EXEC = boot_in
 
 ptr = &07
@@ -395,11 +538,11 @@ tube_r4d = &FEFF
  ASL A
  PHA
  TAX
- LDA pair_list,X
+ LDA TKN2,X
  JSR msg_alpha
  PLA
  TAX
- LDA pair_list+&01,X
+ LDA TKN2+&01,X
 
 .msg_alpha
 
@@ -464,7 +607,7 @@ tube_r4d = &FEFF
  PHA
  LDA &23
  PHA
- JSR rnd_seq
+ JSR DORND
  TAX
  LDA #&00
  CPX #&33
@@ -573,18 +716,18 @@ tube_r4d = &FEFF
 .name_gen
 
  JSR set_upprmsk
- JSR rnd_seq
+ JSR DORND
  AND #&03
  TAY
 
 .l_1413
 
- JSR rnd_seq
+ JSR DORND
  AND #&3E
  TAX
- LDA pair_list+&02,X
+ LDA TKN2+&02,X
  JSR msg_alpha
- LDA pair_list+&03,X
+ LDA TKN2+&03,X
  JSR msg_alpha
  DEY
  BPL l_1413
@@ -626,14 +769,8 @@ tube_r4d = &FEFF
  EQUW incoming, get_line, l_12b1, l_12b4
  EQUW l_24f0, punctuate, punctuate, punctuate
 
-.pair_list
-
- EQUS &0C, &0A, "ABOUSEITILETSTONLONUTHNO"
-
-.to880
-
- EQUS "ALLEXEGEZACEBISOUSESARMAINDIREA?ERATENBERALAVETIEDORQ"
- EQUS "UANTEISRION"
+INCLUDE "library/enhanced/main/variable/tkn2.asm"
+INCLUDE "library/common/main/variable/qq16.asm"
 
 .l_14e1
 
@@ -1932,7 +2069,7 @@ tube_r4d = &FEFF
  JSR draw_mode
  LDA #&00
  JSR clr_scrn
- JSR rnd_seq
+ JSR DORND
  BPL l_1ff3
  AND #&03
  STA &D1
@@ -1969,9 +2106,9 @@ tube_r4d = &FEFF
 
  LSR A
  STA &35
- JSR rnd_seq
+ JSR DORND
  STA &34
- JSR rnd_seq
+ JSR DORND
  AND #&07
  STA &36
  JSR l_2079
@@ -2033,7 +2170,7 @@ tube_r4d = &FEFF
  STA &9A
  LDA #&0B
  STA &68
- JSR rnd_seq
+ JSR DORND
  STA &84
 
 .l_209d
@@ -4653,9 +4790,9 @@ tube_r4d = &FEFF
  AND #&7F
  ASL A
  TAY
- LDA to880,Y
+ LDA QQ16,Y
  JSR de_token
- LDA to880+&01,Y
+ LDA QQ16+&01,Y
  CMP #&3F
  BEQ l_327a
  JMP de_token
@@ -4890,7 +5027,7 @@ tube_r4d = &FEFF
  STY &35
  JSR sqr_root
  LDY &35
- JSR rnd_seq
+ JSR DORND
  AND &93
  CLC
  ADC &81
@@ -5377,20 +5514,8 @@ tube_r4d = &FEFF
  BNE repeat_fn
  JMP l_374a
 
-.rnd_seq
+INCLUDE "library/common/main/subroutine/dornd.asm"
 
- LDA &00
- ROL A
- TAX
- ADC &02
- STA &00
- STX &02
- LDA &01
- TAX
- ADC &03
- STA &01
- STX &03
- RTS
 
 .err_count
 
@@ -6601,7 +6726,7 @@ tube_r4d = &FEFF
 .l_403c
 
  INY
- JSR rnd_seq
+ JSR DORND
  STA (&67),Y
  CPY #&06
  BNE l_403c
@@ -8417,7 +8542,7 @@ tube_r4d = &FEFF
  JSR sub_money
  BCC stay_quit
  JSR cour_dock
- JSR rnd_seq
+ JSR DORND
  STA cmdr_price
  JSR mung_prices
 
@@ -11008,7 +11133,7 @@ ENDIF
  BEQ d_12f7
  INC cmdr_bomb
  INC new_hold	\***
- JSR rnd_seq
+ JSR DORND
  STA data_homex	\cmdr_homex
  STX data_homey	\cmdr_homey
  JSR snap_hype
@@ -11162,7 +11287,7 @@ ENDIF
 
 .d_13fd
 
- JSR rnd_seq
+ JSR DORND
  \	AND #&07
  AND #&0F
 
@@ -11285,7 +11410,7 @@ ENDIF
  LDA &44
  CMP new_mining
  BNE d_14d9
- JSR rnd_seq
+ JSR DORND
  LDX #&08
  AND #&03
  JSR d_1687
@@ -11583,7 +11708,7 @@ ENDIF
 
 .d_1678
 
- JSR rnd_seq
+ JSR DORND
  BPL d_1694
  PHA
  TYA
@@ -11786,15 +11911,15 @@ ENDIF
 
 .d_1afd
 
- JSR rnd_seq
+ JSR DORND
  ORA #&04
  STA &35
  STA &0F82,Y
- JSR rnd_seq
+ JSR DORND
  ORA #&08
  STA &34
  STA &0F5C,Y
- JSR rnd_seq
+ JSR DORND
  ORA #&90
  STA &0FA8,Y
  STA &88
@@ -11903,7 +12028,7 @@ ENDIF
 
 .d_1bea
 
- JSR rnd_seq
+ JSR DORND
  AND #&7F
  ADC #&0A
  STA &0FA8,Y
@@ -11915,14 +12040,14 @@ ENDIF
  ROR A
  STA &34
  STA &0F5C,Y
- JSR rnd_seq
+ JSR DORND
  STA &35
  STA &0F82,Y
  JMP d_1be0
 
 .d_1c0d
 
- JSR rnd_seq
+ JSR DORND
  STA &34
  STA &0F5C,Y
  LSR A
@@ -12165,7 +12290,7 @@ ENDIF
 
 .d_2166
 
- JSR rnd_seq
+ JSR DORND
  CMP #&10
  BCS d_2174
 
@@ -12202,7 +12327,7 @@ ENDIF
  LDA &0328
  ORA &033F	\ no shuttles if docking computer on
  BNE d_2165
- JSR rnd_seq
+ JSR DORND
  CMP #&FD
  BCC d_2165
  AND #&01
@@ -12212,7 +12337,7 @@ ENDIF
 
 .d_21a6
 
- JSR rnd_seq
+ JSR DORND
  CMP #&F0
  BCC d_2165
  LDA &032E
@@ -12249,7 +12374,7 @@ ENDIF
 
 .d_21d5
 
- JSR rnd_seq
+ JSR DORND
  LDA &6A
  LSR A
  BCC d_21e1
@@ -12319,7 +12444,7 @@ ENDIF
 
  CMP #&0E
  BNE d_223b
- JSR rnd_seq
+ JSR DORND
  CMP #&C8
  BCC d_223b
  LDX #&0F
@@ -12327,10 +12452,10 @@ ENDIF
 
 .d_223b
 
- JSR rnd_seq
+ JSR DORND
  CMP #&FA
  BCC d_2249
- JSR rnd_seq
+ JSR DORND
  ORA #&68
  STA &63
 
@@ -12345,7 +12470,7 @@ ENDIF
  LSR A
  CMP &69
  BCC d_226d
- JSR rnd_seq
+ JSR DORND
  CMP #&E6
  BCC d_226d
  LDX &8C
@@ -12361,7 +12486,7 @@ ENDIF
  AND #&07
  BEQ d_2294
  STA &D1
- JSR rnd_seq
+ JSR DORND
  \	AND #&1F
  AND #&0F
  CMP &D1
@@ -12419,7 +12544,7 @@ ENDIF
 
 .d_22d4
 
- JSR rnd_seq
+ JSR DORND
  ORA #&80
  CMP &66
  BCS d_22e6
@@ -12967,7 +13092,7 @@ ENDIF
  CMP #&04
  BCC d_25fe
  PHA
- JSR rnd_seq
+ JSR DORND
  ASL A
  STA &64
  TXA
@@ -13142,7 +13267,7 @@ ENDIF
 
 .d_2748
 
- JSR rnd_seq
+ JSR DORND
  STA &35
  STA &0F82,Y
  LDA #&73
@@ -13153,7 +13278,7 @@ ENDIF
 
 .d_275b
 
- JSR rnd_seq
+ JSR DORND
  STA &34
  STA &0F5C,Y
  LDA #&6E
@@ -13163,7 +13288,7 @@ ENDIF
 
 .d_276c
 
- JSR rnd_seq
+ JSR DORND
  ORA #&08
  STA &88
  STA &0FA8,Y
@@ -13619,11 +13744,11 @@ ENDIF
 
 .d_2a82
 
- JSR rnd_seq
+ JSR DORND
  AND #&07
  ADC #&5C
  STA &0FCF
- JSR rnd_seq
+ JSR DORND
  AND #&07
  ADC #&7C
  STA &0FCE
@@ -13810,7 +13935,7 @@ ENDIF
  STA home_tech
  LDA data_govm
  STA home_govmt
- JSR rnd_seq
+ JSR DORND
  STA cmdr_price
  JMP mung_prices
 
@@ -13870,7 +13995,7 @@ ENDIF
  \	JSR l_3c91
  \	AND x_flag
  \	BMI d_321f
- JSR rnd_seq
+ JSR DORND
  CMP #&FD
  BCS d_3226
  JSR d_31ab
@@ -14207,14 +14332,14 @@ ENDIF
 
 .d_35b8
 
- JSR rnd_seq
+ JSR DORND
  ORA #&08
  STA &0FA8,Y
  STA &88
- JSR rnd_seq
+ JSR DORND
  STA &0F5C,Y
  STA &34
- JSR rnd_seq
+ JSR DORND
  STA &0F82,Y
  STA &35
  JSR d_1910
@@ -15264,7 +15389,7 @@ ENDIF
 .rand_posn
 
  JSR init_ship
- JSR rnd_seq
+ JSR DORND
  STA &46
  STX &49
  STA &06
@@ -15281,7 +15406,7 @@ ENDIF
  SBC &47
  SBC &4A
  STA &4D
- JMP rnd_seq
+ JMP DORND
 
 .d_3eb8
 
@@ -15314,18 +15439,18 @@ ENDIF
 .d_3f85
 
  CLC
- JMP rnd_seq
+ JMP DORND
 
 .d_3f9a
 
- JSR rnd_seq
+ JSR DORND
  LSR A
  STA &66
  STA &63
  ROL &65
  AND #&0F
  STA &61
- JSR rnd_seq
+ JSR DORND
  BMI d_3fb9
  LDA &66
  ORA #&C0
@@ -15368,7 +15493,7 @@ ENDIF
 
  LDA &0341
  BNE d_3fd1
- JSR rnd_seq
+ JSR DORND
  CMP #&33	\ trader fraction
  BCS d_402e
  LDA &033E
@@ -15393,7 +15518,7 @@ ENDIF
 
 .d_4022
 
- JSR rnd_seq
+ JSR DORND
  CMP #&0A
  AND #&01
  ADC #&05
@@ -15440,14 +15565,14 @@ ENDIF
  AND #&0C
  CMP #&08
  BNE d_4070
- JSR rnd_seq
+ JSR DORND
  CMP #&C8
  BCC d_4070
  JSR d_320e
 
 .d_4070
 
- JSR rnd_seq
+ JSR DORND
  LDY home_govmt
  BEQ d_4083
  CMP #&78
@@ -15495,7 +15620,7 @@ ENDIF
 
  STA horde_base+1
  STX horde_mask+1
- JSR rnd_seq
+ JSR DORND
  CMP #&F8
  BCS horde_large
  STA &89
@@ -15511,7 +15636,7 @@ ENDIF
 
 .d_40b9
 
- JSR rnd_seq
+ JSR DORND
  STA &D1
  TXA
  AND &D1
@@ -15883,7 +16008,7 @@ ENDIF
 .d_421e
 
  JSR d_251d
- JSR rnd_seq
+ JSR DORND
  AND #&80
  LDY #&1F
  STA (&20),Y
@@ -15938,7 +16063,7 @@ ENDIF
 
 .mix_match
 
- JSR rnd_seq
+ JSR DORND
  CMP #ship_total	\ # POSSIBLE SHIPS
  BCS mix_match
  ASL A
@@ -15967,7 +16092,7 @@ ENDIF
 
 .mix_try
 
- JSR rnd_seq
+ JSR DORND
  LDX &35
  CMP ship_bytes,X
  BCC mix_ok
@@ -16452,7 +16577,7 @@ ENDIF
 
 .d_45ea
 
- JSR rnd_seq
+ JSR DORND
  BMI d_45b4
  \	CPX #&17
  CPX #&18

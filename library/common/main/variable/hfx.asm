@@ -1,6 +1,6 @@
 .HFX
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _ELITE_A_VERSION \ Comment
  SKIP 1                 \ A flag that toggles the hyperspace colour effect
                         \
                         \   * 0 = no colour effect
@@ -13,7 +13,7 @@ ELIF _ELECTRON_VERSION
                         \ the hyperspace rings multi-coloured, but the Electron
                         \ version is monochrome, so this has no effect
 ENDIF
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
                         \ When HFX is set to 1, the mode 4 screen that makes
                         \ up the top part of the display is temporarily switched
                         \ to mode 5 (the same screen mode as the dashboard),

@@ -2,7 +2,7 @@
 \
 \       Name: K%
 \       Type: Workspace
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \    Address: &0900 to &0D3F
 ELIF _6502SP_VERSION
 \    Address: &8200 to &85FF (&8500 to &88FF in the Executive version)
@@ -10,7 +10,7 @@ ELIF _MASTER_VERSION
 \    Address: &0400 to &0800
 ENDIF
 \   Category: Workspaces
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION OR _ELITE_A_VERSION \ Comment
 \    Summary: Ship data blocks and ship line heaps
 ELIF _6502SP_VERSION
 \    Summary: Ship data blocks
@@ -20,7 +20,7 @@ ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \ Contains ship data for all the ships, planets, suns and space stations in our
 \ local bubble of universe, along with their corresponding ship line heaps.
 ELIF _ELECTRON_VERSION
@@ -36,7 +36,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 \ bytes of the K% workspace hold ship data on up to 12 ships, with 36 (NI%)
 \ bytes per ship, and the ship line heap grows downwards from WP at the end of
 \ the K% workspace.
-ELIF _DISC_VERSION OR _MASTER_VERSION
+ELIF _DISC_VERSION OR _MASTER_VERSION OR _ELITE_A_VERSION
 \ The blocks are pointed to by the lookup table at location UNIV. The first 444
 \ bytes of the K% workspace hold ship data on up to 12 ships, with 37 (NI%)
 \ bytes per ship, and the ship line heap grows downwards from WP at the end of
@@ -53,7 +53,7 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ 6502SP: The Executive version has a different memory map to the other 6502SP versions, with the K% workspace at &8500 instead of &8200
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ 6502SP: The Executive version has a different memory map to the other 6502SP versions, with the K% workspace at &8500 instead of &8200
 
 ORG &0900
 

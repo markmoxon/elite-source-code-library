@@ -67,9 +67,13 @@
  LDA (V),Y              \ Load the character at offset Y in the token table,
                         \ which is the next character from the token table
 
+IF NOT(_ELITE_A_VERSION)
+
  EOR #VE                \ Tokens are stored in memory having been EOR'd with
                         \ #VE, so we repeat the EOR to get the actual character
                         \ in this token
+
+ENDIF
 
  BNE DT1                \ If the result is non-zero, then this is a character
                         \ in a token rather than the delimiter (which is #VE),
@@ -113,9 +117,13 @@
                         \ which is the next character from the token we want to
                         \ print
 
+IF NOT(_ELITE_A_VERSION)
+
  EOR #VE                \ Tokens are stored in memory having been EOR'd with
                         \ #VE, so we repeat the EOR to get the actual character
                         \ in this token
+
+ENDIF
 
  BEQ DTEX               \ If the result is zero, then this is the delimiter at
                         \ the end of the token to print (which is #VE), so jump

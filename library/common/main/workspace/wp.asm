@@ -10,7 +10,7 @@ ELIF _ELECTRON_VERSION
 \    Address: &0BE0 to &0CF3
 \   Category: Workspaces
 \    Summary: Ship slots, variables
-ELIF _DISC_VERSION
+ELIF _DISC_VERSION OR _ELITE_A_VERSION
 \    Address: &0E00 to &0E3B
 \   Category: Workspaces
 \    Summary: Variables
@@ -34,7 +34,7 @@ ELIF _ELECTRON_VERSION
 
 ORG &0BE0
 
-ELIF _DISC_VERSION
+ELIF _DISC_VERSION OR _ELITE_A_VERSION
 
 ORG &0E00
 
@@ -162,7 +162,7 @@ INCLUDE "library/common/main/variable/qq8.asm"
 INCLUDE "library/common/main/variable/qq9.asm"
 INCLUDE "library/common/main/variable/qq10.asm"
 
-ELIF _DISC_VERSION
+ELIF _DISC_VERSION OR _ELITE_A_VERSION
 
 INCLUDE "library/common/main/variable/lsx.asm"
 INCLUDE "library/common/main/variable/lso.asm"

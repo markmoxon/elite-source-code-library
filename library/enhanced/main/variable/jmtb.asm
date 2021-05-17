@@ -13,7 +13,11 @@
  EQUW MT1               \ Token  1: Switch to ALL CAPS
  EQUW MT2               \ Token  2: Switch to Sentence Case
  EQUW TT27              \ Token  3: Print the selected system name
+IF _ELITE_A_ENCYCLOPEDIA
+ EQUW set_token         \ Token  4: AJD
+ELIF NOT(_ELITE_A_ENCYCLOPEDIA)
  EQUW TT27              \ Token  4: Print the commander's name
+ENDIF
  EQUW MT5               \ Token  5: Switch to extended tokens
  EQUW MT6               \ Token  6: Switch to standard tokens, in Sentence Case
  EQUW DASC              \ Token  7: Beep
@@ -33,20 +37,25 @@
  EQUW CLYNS             \ Token 21: Clear the bottom few lines of the space view
  EQUW PAUSE             \ Token 22: Display ship and wait for key press
  EQUW MT23              \ Token 23: Move to row 10, white text, set lower case
+IF _ELITE_A_ENCYCLOPEDIA
+ EQUW clr_vdustat       \ Token 24: AJD
+ EQUW DASC              \ Token 25: Unused
+ELIF NOT(_ELITE_A_ENCYCLOPEDIA)
  EQUW PAUSE2            \ Token 24: Wait for a key press
  EQUW BRIS              \ Token 25: Show incoming message screen, wait 2 seconds
+ENDIF
  EQUW MT26              \ Token 26: Fetch line input from keyboard (filename)
  EQUW MT27              \ Token 27: Print mission captain's name (217-219)
  EQUW MT28              \ Token 28: Print mission 1 location hint (220-221)
  EQUW MT29              \ Token 29: Column 6, white text, lower case in words
-IF _DISC_DOCKED \ Advanced: The 6502SP version has an extended jump token for switching to white text, while the Master version uses the same token for displaying the currently selected file system (though the Master token isn't actually used as the file system can't be changed from disc)
+IF _DISC_DOCKED OR _ELITE_A_VERSION \ Advanced: The 6502SP version has an extended jump token for switching to white text, while the Master version uses the same token for displaying the currently selected file system (though the Master token isn't actually used as the file system can't be changed from disc)
  EQUW DASC              \ Token 30: Unused
 ELIF _6502SP_VERSION
  EQUW WHITETEXT         \ Token 30: White text
 ELIF _MASTER_VERSION
  EQUW MT30              \ Token 30: Display currently selected media (disc/tape)
 ENDIF
-IF _DISC_DOCKED OR _6502SP_VERSION \ Master: The Master version has an extended jump token for displaying the non-selected file system, though this token isn't actually used as the file system can't be changed from disc
+IF _DISC_DOCKED OR _6502SP_VERSION OR _ELITE_A_VERSION \ Master: The Master version has an extended jump token for displaying the non-selected file system, though this token isn't actually used as the file system can't be changed from disc
  EQUW DASC              \ Token 31: Unused
 ELIF _MASTER_VERSION
  EQUW MT31              \ Token 31: Display the non-selected media (disc/tape)

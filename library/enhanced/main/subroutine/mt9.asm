@@ -18,7 +18,7 @@
 
 .MT9
 
-IF _DISC_DOCKED OR _MASTER_VERSION \ Tube
+IF _DISC_DOCKED OR _MASTER_VERSION OR _ELITE_A_VERSION \ Tube
 
  LDA #1                 \ Move the text cursor to column 1
  STA XC

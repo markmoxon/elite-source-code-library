@@ -33,7 +33,7 @@
                         \ extended token that is printed is 217-219 (as this is
                         \ only called in galaxies 0 through 2)
 
-IF _DISC_DOCKED OR _6502SP_VERSION \ Minor
+IF _DISC_DOCKED OR _6502SP_VERSION OR _ELITE_A_VERSION \ Minor
 
  EQUB &2C               \ Skip the next instruction by turning it into
                         \ &2C &A9 &DC, or BIT &DCA9, which does nothing apart

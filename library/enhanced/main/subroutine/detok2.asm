@@ -26,6 +26,10 @@
 \                       address within the extended two-letter token tables of
 \                       TKN2 and QQ16
 \
+IF _ELITE_A_VERSION
+\   msg_pairs           AJD
+\
+ENDIF
 \ ******************************************************************************
 
 .DETOK2
@@ -75,6 +79,12 @@
 
                         \ If we get here then A >= 215, so this is a two-letter
                         \ token from the extended TKN2/QQ16 table
+
+IF _ELITE_A_VERSION
+
+.msg_pairs
+
+ENDIF
 
  SBC #215               \ Subtract 215 to get a token number in the range 0-12
                         \ (the C flag is set as we passed through the BCC above,

@@ -30,7 +30,11 @@
  CLC                    \ range 220-221, as this is only called in galaxies 0
  ADC GCNT               \ and 1
 
+IF NOT(_ELITE_A_VERSION)
+
  BNE DETOK              \ Jump to DETOK to print extended token 220-221,
                         \ returning from the subroutine using a tail call (this
                         \ BNE is effectively a JMP as A is never zero)
+
+ENDIF
 

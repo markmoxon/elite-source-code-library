@@ -14,11 +14,17 @@
 \
 \   * DTW2 = %11111111 (we are not currently printing a word)
 \
+IF _ELITE_A_ENCYCLOPEDIA
+\ Other entry points:
+\
+\   MT6                 AJD
+\
+ENDIF
 \ ******************************************************************************
 
 .MT8
 
-IF _DISC_DOCKED \ Tube
+IF _DISC_DOCKED OR _ELITE_A_VERSION \ Tube
 
  LDA #6                 \ Move the text cursor to column 6
  STA XC
@@ -27,6 +33,12 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA #6                 \ Move the text cursor to column 6
  JSR DOXC
+
+ENDIF
+
+IF _ELITE_A_ENCYCLOPEDIA
+
+.MT6
 
 ENDIF
 

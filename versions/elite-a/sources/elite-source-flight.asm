@@ -1325,7 +1325,7 @@ EXEC% = &11E3
 .l_184e
 
  LDA #&17
- INC cursor_y
+ INC YC
 
 .l_1852
 
@@ -1989,7 +1989,7 @@ EXEC% = &11E3
  JSR l_54c8
  JSR l_2f75
  LDA #&07
- STA cursor_x
+ STA XC
  LDA #&7E
  JSR l_1847
  LDA #&E6
@@ -2119,7 +2119,7 @@ EXEC% = &11E3
 
  JSR l_338f
  LDX #&08
- STX cursor_x
+ STX XC
  RTS
 
 .l_1d4c
@@ -2432,11 +2432,11 @@ EXEC% = &11E3
  CMP #&0A
  BEQ l_1f1a
  LDX #&01
- STX cursor_x
+ STX XC
 
 .l_1f1a
 
- INC cursor_y
+ INC YC
  BNE l_1f52
 
 .l_1f1e
@@ -2457,13 +2457,13 @@ EXEC% = &11E3
 
  STA font
  STX font+&01
- LDA cursor_x
+ LDA XC
  ASL A
  ASL A
  ASL A
  STA ptr
- INC cursor_x
- LDA cursor_y
+ INC XC
+ LDA YC
  CMP #&18
  BCC l_1f43
  JSR l_54c8
@@ -4694,7 +4694,7 @@ EXEC% = &11E3
  LDA hype_dist
  ORA hype_dist+&01
  BNE l_2b46
- INC cursor_y
+ INC YC
  RTS
 
 .l_2b46
@@ -4713,7 +4713,7 @@ EXEC% = &11E3
 
 .l_2b5a
 
- INC cursor_y
+ INC YC
 
 .l_2b5c
 
@@ -4740,12 +4740,12 @@ EXEC% = &11E3
  LDA #&01
  JSR l_54c8
  LDA #&09
- STA cursor_x
+ STA XC
  LDA #&A3
  JSR l_339a
  JSR l_184e
  JSR l_2b5a
- INC cursor_y
+ INC YC
  JSR l_2b3b
  LDA #&C2
  JSR l_3395
@@ -4940,7 +4940,7 @@ EXEC% = &11E3
  LDA #&40
  JSR l_54c8
  LDA #&07
- STA cursor_x
+ STA XC
  JSR l_2f6a
  LDA #&C7
  JSR l_339a
@@ -5110,7 +5110,7 @@ EXEC% = &11E3
  ADC #&D0
  JSR l_339a
  LDA #&0E
- STA cursor_x
+ STA XC
  PLA
  TAX
  JSR c_1e38
@@ -5129,7 +5129,7 @@ EXEC% = &11E3
  LDA #&08
  JSR l_54c8
  LDA #&0B
- STA cursor_x
+ STA XC
  LDA #&A4
  JSR l_2b57
  JSR l_184a
@@ -5242,7 +5242,7 @@ EXEC% = &11E3
  LDA #&80
  JSR l_54c8
  LDA #&07
- STA cursor_x
+ STA XC
  LDA #&BE
  JSR l_1847
  JSR l_2da1
@@ -5292,8 +5292,8 @@ EXEC% = &11E3
  LSR A
  LSR A
  LSR A
- STA cursor_x
- INC cursor_x
+ STA XC
+ INC XC
  LDA &E0
  ASL A
  ADC #&5A
@@ -5314,7 +5314,7 @@ EXEC% = &11E3
 
 .l_2f31
 
- STY cursor_y
+ STY YC
  CPY #&03
  BCC l_2f60
  LDA #&FF
@@ -5488,9 +5488,9 @@ EXEC% = &11E3
  ORA hype_dist+&01
  BEQ l_3084+&01
  LDA #&07
- STA cursor_x
+ STA XC
  LDA #&17
- STA cursor_y
+ STA YC
  JSR vdu_00
  LDA #&BD
  JSR l_339a
@@ -5524,10 +5524,10 @@ EXEC% = &11E3
  STX cmdr_cour+1
  JSR l_3054
  LDX #&05
- INC cmdr_galxy
- LDA cmdr_galxy
+ INC GCNT
+ LDA GCNT
  AND #&07
- STA cmdr_galxy
+ STA GCNT
 
 .l_307a
 
@@ -5561,8 +5561,8 @@ EXEC% = &11E3
 .l_30ac
 
  LDY #&01
- STY cursor_x
- STY cursor_y
+ STY XC
+ STY YC
  DEY
 
 .l_30b3
@@ -5589,12 +5589,12 @@ EXEC% = &11E3
  ASL A
  STA &73
  LDA #&01
- STA cursor_x
+ STA XC
  PLA
  ADC #&D0
  JSR l_339a
  LDA #&0E
- STA cursor_x
+ STA XC
  LDX &73
  LDA l_4619+&01,X
  STA &74
@@ -5636,9 +5636,9 @@ EXEC% = &11E3
 
 .l_312b
 
- LDA cursor_x
+ LDA XC
  ADC #&04
- STA cursor_x
+ STA XC
  LDA #&2D
  BNE l_3144
 
@@ -5678,7 +5678,7 @@ EXEC% = &11E3
 .l_3158
 
  LDA #&11
- STA cursor_x
+ STA XC
  LDA #&FF
  BNE l_3144
 
@@ -5687,11 +5687,11 @@ EXEC% = &11E3
  LDA #&10
  JSR l_54c8
  LDA #&05
- STA cursor_x
+ STA XC
  LDA #&A7
  JSR l_1847
  LDA #&03
- STA cursor_y
+ STA YC
  JSR l_3158
  LDA #&00
  STA &03AD
@@ -5702,7 +5702,7 @@ EXEC% = &11E3
  \	STX vdu_stat
  JSR vdu_80
  JSR l_30c9
- INC cursor_y
+ INC YC
  INC &03AD
  LDA &03AD
  CMP #&11
@@ -6024,7 +6024,7 @@ EXEC% = &11E3
 
 .l_335e
 
- LDX cmdr_galxy
+ LDX GCNT
  INX
  JMP c_1e38
 
@@ -6157,7 +6157,7 @@ EXEC% = &11E3
 .l_33fb
 
  LDA #&15
- STA cursor_x
+ STA XC
  BNE l_3398
 
 .l_3401
@@ -8133,7 +8133,7 @@ EXEC% = &11E3
 
 .l_3eb8
 
- LDX cmdr_galxy
+ LDX GCNT
  DEX
  BNE l_3ecc
  LDA cmdr_homex
@@ -8664,8 +8664,8 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  JSR l_330a
  JSR vdu_80
  LDA #&01
- STA cursor_x
- INC cursor_y
+ STA XC
+ INC YC
  JMP l_2b3b
 
 .l_41b2
@@ -8703,8 +8703,8 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  JSR l_54eb
  JSR l_35b5
  LDA #&0C
- STA cursor_y
- STA cursor_x
+ STA YC
+ STA XC
  LDA #&92
  JSR l_342d
 
@@ -8785,7 +8785,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDX home_tech
  CPX #&0A
  ROL A
- ADC cmdr_galxy	\ 16+7 -> 23 files !
+ ADC GCNT	\ 16+7 -> 23 files !
  TAX
  LDA cmdr_mission
  AND #&0C
@@ -9425,9 +9425,9 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  \	STX vdu_stat
  JSR vdu_00
  LDY #&09
- STY cursor_x
+ STY XC
  LDY #&16
- STY cursor_y
+ STY YC
  CPX &034A
  BNE l_45b5
  STY &034A
@@ -11919,11 +11919,11 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 .l_54eb
 
  LDY #&01
- STY cursor_y
+ STY YC
  LDA &87
  BNE l_5507
  LDY #&0B
- STY cursor_x
+ STY XC
  LDA view_dirn
  ORA #&60
  JSR l_339a
@@ -11969,7 +11969,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 .l_5537
 
  LDA #&14
- STA cursor_y
+ STA YC
  LDA #&75
  STA ptr+&01
  LDA #&07
@@ -11979,7 +11979,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  JSR l_5550
  INC ptr+&01
  INY
- STY cursor_x
+ STY XC
 
 .l_5550
 

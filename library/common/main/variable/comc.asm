@@ -1,12 +1,12 @@
 .COMC
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _ELITE_A_VERSION \ Comment
  SKIP 1                 \ The colour of the dot on the compass
 ELIF _ELECTRON_VERSION
  SKIP 1                 \ The shape (i.e. thickness) of the dot on the compass
 ENDIF
                         \
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
                         \   * &F0 = the object in the compass is in front of us,
                         \     so the dot is yellow/white
                         \

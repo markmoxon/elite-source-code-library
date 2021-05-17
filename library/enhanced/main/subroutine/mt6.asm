@@ -1,6 +1,10 @@
 \ ******************************************************************************
 \
+IF _ELITE_A_ENCYCLOPEDIA
+\       Name: set_token
+ELIF NOT(_ELITE_A_ENCYCLOPEDIA)
 \       Name: MT6
+ENDIF
 \       Type: Subroutine
 \   Category: Text
 \    Summary: Switch to standard tokens in Sentence Case
@@ -14,12 +18,32 @@
 \
 \   * DTW3 = %11111111 (print standard tokens)
 \
+IF _ELITE_A_6502SP OR _ELITE_A_DOCKED
+\ Other entry points:
+\
+\   set_token           AJD
+\
+ENDIF
 \ ******************************************************************************
+
+IF _ELITE_A_ENCYCLOPEDIA
+
+.set_token
+
+ELIF NOT(_ELITE_A_ENCYCLOPEDIA)
 
 .MT6
 
+ENDIF
+
  LDA #%10000000         \ Set bit 7 of QQ17 to switch standard tokens to
  STA QQ17               \ Sentence Case
+
+IF _ELITE_A_6502SP OR _ELITE_A_DOCKED
+
+.set_token
+
+ENDIF
 
  LDA #%11111111         \ Set A = %11111111, so when we fall through into MT5,
                         \ DTW3 gets set to %11111111 and calls to DETOK print

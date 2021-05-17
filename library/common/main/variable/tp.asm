@@ -1,13 +1,13 @@
 .TP
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 
  SKIP 1                 \ The current mission status, which is always 0 for the
                         \ cassette version of Elite as there are no missions
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION
 
- SKIP 1                 \ The current mission status:
+ SKIP 1                 \ The current mission status
                         \
                         \   * Bits 0-1 = Mission 1 status
                         \

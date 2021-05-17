@@ -1,6 +1,6 @@
 .PATG
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _ELITE_A_VERSION \ Comment
 
  SKIP 1                 \ Configuration setting to show the author names on the
                         \ start-up screen and enable manual hyperspace mis-jumps

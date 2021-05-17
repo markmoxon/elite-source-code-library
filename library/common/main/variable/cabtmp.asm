@@ -2,7 +2,7 @@
 
 IF _CASSETTE_VERSION \ Platform
  SKIP 0                 \ Cabin temperature
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION OR _ELITE_A_VERSION
  SKIP 1                 \ Cabin temperature
 ENDIF
                         \

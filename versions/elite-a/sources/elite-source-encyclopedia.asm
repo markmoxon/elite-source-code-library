@@ -225,362 +225,44 @@ EXEC% = &11E3
  STA brk_in+&02
  RTS
 
-.write_msg2
+INCLUDE "library/enhanced/main/subroutine/detok3.asm"
+INCLUDE "library/enhanced/main/subroutine/mt27.asm"
 
- PHA
- TAX
- TYA
- PHA
- LDA &22
- PHA
- LDA &23
- PHA
- LDA #LO(msg_2)
- STA &22
- LDA #HI(msg_2)
- BNE l_12de
 
-.l_12b1
-
- LDA #&D9
-
-.bit2
-
- EQUB &2C
-
-.l_12b4
+.MT28
 
  LDA #&DC
  CLC
  ADC cmdr_galxy
 
-.write_msg1
+INCLUDE "library/enhanced/main/subroutine/detok.asm"
+INCLUDE "library/enhanced/main/subroutine/detok2.asm"
+INCLUDE "library/enhanced/main/subroutine/mt1.asm"
+INCLUDE "library/enhanced/main/subroutine/mt2.asm"
 
- PHA
- TAX
- TYA
- PHA
- LDA &22
- PHA
- LDA &23
- PHA
- LDA #LO(msg_1)
- STA &22
- LDA #HI(msg_1)
-
-.l_12de
-
- STA &23
- LDY #&00
-
-.l_12e2
-
- LDA (&22),Y
- BNE l_12eb
- DEX
- BEQ msg_loop
-
-.l_12eb
-
- INY
- BNE l_12e2
- INC &23
- BNE l_12e2
-
-.msg_loop
-
- INY
- BNE l_12f7
- INC &23
-
-.l_12f7
-
- LDA (&22),Y
- BEQ msg_quit
- JSR xpand_msg
- JMP msg_loop
-
-.msg_quit
-
- PLA
- STA &23
- PLA
- STA &22
- PLA
- TAY
- PLA
- RTS
-
-.xpand_msg
-
- CMP #&20
- BCC msg_macro
- BIT token_switch
- BPL msg_ntoken
- TAX
- TYA
- PHA
- LDA &22
- PHA
- LDA &23
- PHA
- TXA
- JSR de_token
- JMP msg_retn
-
-.msg_ntoken
-
- CMP #&5B
- BCC msg_alpha
- CMP #&81
- BCC msg_nmacro
- CMP #&D7
- BCC write_msg1
-
-.msg_pairs
-
- SBC #&D7
- ASL A
- PHA
- TAX
- LDA TKN2,X
- JSR msg_alpha
- PLA
- TAX
- LDA TKN2+&01,X
-
-.msg_alpha
-
- CMP #&41
- BCC l_1356
- BIT lower_switch
- BMI l_1350
- BIT upper_switch
- BMI l_1353
-
-.l_1350
-
- ORA or_mask
-
-.l_1353
-
- AND and_mask
-
-.l_1356
-
- JMP punctuate
-
-.msg_macro
-
- TAX
- TYA
- PHA
- LDA &22
- PHA
- LDA &23
- PHA
- TXA
- ASL A
- TAX
- LDA macro_addr-2,X
- STA l_1373+&01
- LDA macro_addr-1,X
- STA l_1373+&02
- TXA
- LSR A
-
-.l_1373
-
- JSR punctuate
-
-.msg_retn
-
- PLA
- STA &23
- PLA
- STA &22
- PLA
- TAY
- RTS
-
-.msg_nmacro
-
- STA ptr
- TYA
- PHA
- LDA &22
- PHA
- LDA &23
- PHA
- JSR DORND
- TAX
- LDA #&00
- CPX #&33
- ADC #&00
- CPX #&66
- ADC #&00
- CPX #&99
- ADC #&00
- CPX #&CC
- LDX ptr
- ADC l_55c0-&5B,X
- JSR write_msg1
- JMP msg_retn
-
-.clr_deflowr
-
- LDA #&00
-
-.bit3
-
- EQUB &2C
-
-.set_deflowr
-
- LDA #&20
- STA or_mask
- LDA #&00
- STA lower_switch
- RTS
-
-.l_24d7
+.PAUSE
 
  LDA #&10
  EQUB &2C
 
-.column_6
-
- LDA #&06
- STA cursor_x
-
-.set_vdustat
-
- LDA #&FF
- STA upper_switch
- RTS
-
-.msg_cls
-
- LDA #&01
- STA cursor_x
- JMP clr_scrn
-
-.set_forclwr
-
- LDA #&80
- STA lower_switch
- LDA #&20
- STA or_mask
- RTS
+INCLUDE "library/enhanced/main/subroutine/mt8.asm"
+INCLUDE "library/enhanced/main/subroutine/mt9.asm"
+INCLUDE "library/enhanced/main/subroutine/mt13.asm"
 
 .clr_vdustat
 
  LDA #&01
  EQUB &2C
 
-.set_token
-
- LDA #&80
- STA vdu_stat
- LDA #&FF
- EQUB &2C
-
-.clr_token
-
- LDA #&00
- STA token_switch
- RTS
-
-.format_on
-
- LDA #&80
-
-.bit5
-
- EQUB &2C
-
-.format_off
-
- LDA #&00
- STA format_switch
- ASL A
- STA format_posn
- RTS
-
-.l_13ec
-
- LDA vdu_stat
- AND #&BF
- STA vdu_stat
- LDA #&03
- JSR de_token
- LDX format_posn
- LDA &0E00,X
- JSR vowel
- BCC l_1405
- DEC format_posn
-
-.l_1405
-
- LDA #&99
- JMP write_msg1
-
-.name_gen
-
- JSR set_upprmsk
- JSR DORND
- AND #&03
- TAY
-
-.l_1413
-
- JSR DORND
- AND #&3E
- TAX
- LDA TKN2+&02,X
- JSR msg_alpha
- LDA TKN2+&03,X
- JSR msg_alpha
- DEY
- BPL l_1413
- RTS
-
-.set_upprmsk
-
- LDA #&DF
- STA and_mask
- RTS
-
-.vowel
-
- ORA #&20
- CMP #&61
- BEQ l_1446
- CMP #&65
- BEQ l_1446
- CMP #&69
- BEQ l_1446
- CMP #&6F
- BEQ l_1446
- CMP #&75
- BEQ l_1446
- CLC
-
-.l_1446
-
- RTS
-
-.macro_addr
-
- EQUW clr_deflowr, set_deflowr, de_token, set_token
- EQUW clr_token, set_vdustat, punctuate, column_6
- EQUW msg_cls, punctuate, hline_19, punctuate
- EQUW set_forclwr, format_on, format_off, l_1c8d
- EQUW l_13ec, name_gen, set_upprmsk, punctuate
- EQUW clr_line, l_24d7, l_24ed, clr_vdustat
- EQUW punctuate, get_line, l_12b1, l_12b4
- EQUW l_24f0, punctuate, punctuate, punctuate
-
+INCLUDE "library/enhanced/main/subroutine/mt6.asm"
+INCLUDE "library/enhanced/main/subroutine/mt5.asm"
+INCLUDE "library/enhanced/main/subroutine/mt14.asm"
+INCLUDE "library/enhanced/main/subroutine/mt15.asm"
+INCLUDE "library/enhanced/main/subroutine/mt17.asm"
+INCLUDE "library/enhanced/main/subroutine/mt18.asm"
+INCLUDE "library/enhanced/main/subroutine/mt19.asm"
+INCLUDE "library/enhanced/main/subroutine/vowel.asm"
+INCLUDE "library/enhanced/main/variable/jmtb.asm"
 INCLUDE "library/enhanced/main/variable/tkn2.asm"
 INCLUDE "library/common/main/variable/qq16.asm"
 
@@ -854,13 +536,13 @@ INCLUDE "library/common/main/variable/qq16.asm"
  LSR A
  LSR A
  ORA #&60
- STA ptr+&01
+ STA SC+&01
  LDA &35
  AND #&07
  TAY
  TXA
  AND #&F8
- STA ptr
+ STA SC
  TXA
  AND #&07
  TAX
@@ -898,17 +580,17 @@ INCLUDE "library/common/main/variable/qq16.asm"
 .l_17ed
 
  LDA &82
- EOR (ptr),Y
- STA (ptr),Y
+ EOR (SC),Y
+ STA (SC),Y
 
 .l_17f3
 
  LSR &82
  BCC l_17ff
  ROR &82
- LDA ptr
+ LDA SC
  ADC #&08
- STA ptr
+ STA SC
 
 .l_17ff
 
@@ -918,7 +600,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
  BCC l_180e
  DEY
  BPL l_180e
- DEC ptr+&01
+ DEC SC+&01
  LDY #&07
 
 .l_180e
@@ -937,17 +619,17 @@ INCLUDE "library/common/main/variable/qq16.asm"
 .l_1819
 
  LDA &82
- EOR (ptr),Y
- STA (ptr),Y
+ EOR (SC),Y
+ STA (SC),Y
 
 .l_181f
 
  LSR &82
  BCC l_182b
  ROR &82
- LDA ptr
+ LDA SC
  ADC #&08
- STA ptr
+ STA SC
 
 .l_182b
 
@@ -958,7 +640,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
  INY
  CPY #&08
  BNE l_183c
- INC ptr+&01
+ INC SC+&01
  LDY #&00
 
 .l_183c
@@ -991,10 +673,10 @@ INCLUDE "library/common/main/variable/qq16.asm"
  LSR A
  LSR A
  ORA #&60
- STA ptr+&01
+ STA SC+&01
  TXA
  AND #&F8
- STA ptr
+ STA SC
  TXA
  AND #&07
  TAX
@@ -1036,14 +718,14 @@ INCLUDE "library/common/main/variable/qq16.asm"
 .l_1898
 
  LDA &82
- EOR (ptr),Y
- STA (ptr),Y
+ EOR (SC),Y
+ STA (SC),Y
 
 .l_189e
 
  DEY
  BPL l_18a5
- DEC ptr+&01
+ DEC SC+&01
  LDY #&07
 
 .l_18a5
@@ -1055,9 +737,9 @@ INCLUDE "library/common/main/variable/qq16.asm"
  LSR &82
  BCC l_18b9
  ROR &82
- LDA ptr
+ LDA SC
  ADC #&08
- STA ptr
+ STA SC
 
 .l_18b9
 
@@ -1075,14 +757,14 @@ INCLUDE "library/common/main/variable/qq16.asm"
 .l_18c4
 
  LDA &82
- EOR (ptr),Y
- STA (ptr),Y
+ EOR (SC),Y
+ STA (SC),Y
 
 .l_18ca
 
  DEY
  BPL l_18d1
- DEC ptr+&01
+ DEC SC+&01
  LDY #&07
 
 .l_18d1
@@ -1094,9 +776,9 @@ INCLUDE "library/common/main/variable/qq16.asm"
  ASL &82
  BCC l_18e6
  ROL &82
- LDA ptr
+ LDA SC
  SBC #&07
- STA ptr
+ STA SC
  CLC
 
 .l_18e6
@@ -1117,9 +799,9 @@ INCLUDE "library/common/main/variable/qq16.asm"
 
 .header
 
- JSR de_token
+ JSR TT27
 
-.hline_19
+.NLIN4
 
  LDA #&13
  BNE hline_acc
@@ -1127,7 +809,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
 .hline_23
 
  LDA #&17
- INC cursor_y
+ INC YC
 
 .hline_acc
 
@@ -1165,10 +847,10 @@ INCLUDE "library/common/main/variable/qq16.asm"
  LSR A
  LSR A
  ORA #&60
- STA ptr+&01
+ STA SC+&01
  LDA &35
  AND #&07
- STA ptr
+ STA SC
  TXA
  AND #&F8
  TAY
@@ -1188,8 +870,8 @@ INCLUDE "library/common/main/variable/qq16.asm"
  AND #&07
  TAX
  LDA horiz_seg+&07,X
- EOR (ptr),Y
- STA (ptr),Y
+ EOR (SC),Y
+ STA (SC),Y
  TYA
  ADC #&08
  TAY
@@ -1201,8 +883,8 @@ INCLUDE "library/common/main/variable/qq16.asm"
 .l_1962
 
  LDA #&FF
- EOR (ptr),Y
- STA (ptr),Y
+ EOR (SC),Y
+ STA (SC),Y
  TYA
  ADC #&08
  TAY
@@ -1215,8 +897,8 @@ INCLUDE "library/common/main/variable/qq16.asm"
  AND #&07
  TAX
  LDA horiz_seg,X
- EOR (ptr),Y
- STA (ptr),Y
+ EOR (SC),Y
+ STA (SC),Y
  LDY &85
  RTS
 
@@ -1232,8 +914,8 @@ INCLUDE "library/common/main/variable/qq16.asm"
  TAX
  LDA horiz_seg,X
  AND &D1
- EOR (ptr),Y
- STA (ptr),Y
+ EOR (SC),Y
+ STA (SC),Y
  LDY &85
  RTS
 
@@ -1245,8 +927,8 @@ INCLUDE "library/common/main/variable/qq16.asm"
 .l_19a8
 
  LDA pixel_1,X
- EOR (ptr),Y
- STA (ptr),Y
+ EOR (SC),Y
+ STA (SC),Y
  LDY &06
  RTS
 
@@ -1258,10 +940,10 @@ INCLUDE "library/common/main/variable/qq16.asm"
  LSR A
  LSR A
  ORA #&60
- STA ptr+&01
+ STA SC+&01
  TXA
  AND #&F8
- STA ptr
+ STA SC
  TYA
  AND #&07
  TAY
@@ -1272,8 +954,8 @@ INCLUDE "library/common/main/variable/qq16.asm"
  CMP #&90
  BCS l_19a8
  LDA pixel_2,X
- EOR (ptr),Y
- STA (ptr),Y
+ EOR (SC),Y
+ STA (SC),Y
  LDA &88
  CMP #&50
  BCS l_1a13
@@ -1284,8 +966,8 @@ INCLUDE "library/common/main/variable/qq16.asm"
 .l_1a0c
 
  LDA pixel_2,X
- EOR (ptr),Y
- STA (ptr),Y
+ EOR (SC),Y
+ STA (SC),Y
 
 .l_1a13
 
@@ -1316,7 +998,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
 
 .l_1a37
 
- LDA vdu_stat
+ LDA QQ17
  STA &34
  LDA &73
  STA &35
@@ -1372,7 +1054,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
 .l_1a98
 
  LDA &76
- STA vdu_stat
+ STA QQ17
  LDA &77
  STA &73
  LDA &78
@@ -1518,7 +1200,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
 
 .l_1c68
 
- JSR punctuate
+ JSR DASC
 
 .l_1c6b
 
@@ -1534,7 +1216,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
  PLP
  BCC l_1c7f
  LDA #&2E
- JSR punctuate
+ JSR DASC
 
 .l_1c7f
 
@@ -1544,31 +1226,31 @@ INCLUDE "library/common/main/variable/qq16.asm"
 
  RTS
 
-.or_mask
+.DTW1
 
  EQUB &20
 
-.upper_switch
+.DTW2
 
  EQUB &FF
 
-.token_switch
+.DTW3
 
  EQUB &00
 
-.format_switch
+.DTW4
 
  EQUB &00
 
-.format_posn
+.DTW5
 
  EQUB &00
 
-.lower_switch
+.DTW6
 
  EQUB &00
 
-.and_mask
+.DTW8
 
  EQUB &FF
 
@@ -1580,15 +1262,15 @@ INCLUDE "library/common/main/variable/qq16.asm"
 
  EQUB &2C
 
-.l_1c8d
+.MT16
 
  LDA #&41
 
-.punctuate
+.DASC
 
- STX ptr
+ STX SC
  LDX #&FF
- STX and_mask
+ STX DTW8
  CMP #&2E
  BEQ is_punct
  CMP #&3A
@@ -1603,9 +1285,9 @@ INCLUDE "library/common/main/variable/qq16.asm"
 
 .is_punct
 
- STX upper_switch
- LDX ptr
- BIT format_switch
+ STX DTW2
+ LDX SC
+ BIT DTW4
  BMI format
  JMP wrchdst
 
@@ -1613,10 +1295,10 @@ INCLUDE "library/common/main/variable/qq16.asm"
 
  CMP #&0C
  BEQ l_1cc9
- LDX format_posn
+ LDX DTW5
  STA &0E01,X
- LDX ptr
- INC format_posn
+ LDX SC
+ INC DTW5
  CLC
  RTS
 
@@ -1629,18 +1311,18 @@ INCLUDE "library/common/main/variable/qq16.asm"
 
 .l_1ccd
 
- LDX format_posn
+ LDX DTW5
  BEQ l_1d4a
  CPX #&1F
  BCC l_1d47
- LSR ptr+&01
+ LSR SC+&01
 
 .l_1cd8
 
- LDA ptr+&01
+ LDA SC+&01
  BMI l_1ce0
  LDA #&40
- STA ptr+&01
+ STA SC+&01
 
 .l_1ce0
 
@@ -1660,19 +1342,19 @@ INCLUDE "library/common/main/variable/qq16.asm"
  LDA &0E01,Y
  CMP #&20
  BNE l_1ce9
- ASL ptr+&01
+ ASL SC+&01
  BMI l_1ce9
- STY ptr
- LDY format_posn
+ STY SC
+ LDY DTW5
 
 .l_1cfe
 
  LDA &0E01,Y
  STA &0E02,Y
  DEY
- CPY ptr
+ CPY SC
  BCS l_1cfe
- INC format_posn
+ INC DTW5
 
 .l_1d0c
 
@@ -1688,9 +1370,9 @@ INCLUDE "library/common/main/variable/qq16.asm"
  JSR l_1d3a
  LDA #&0C
  JSR wrchdst
- LDA format_posn
+ LDA DTW5
  SBC #&1E
- STA format_posn
+ STA DTW5
  TAX
  BEQ l_1d4a
  LDY #&00
@@ -1724,7 +1406,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
 
 .l_1d4a
 
- STX format_posn
+ STX DTW5
  PLA
  TAY
  PLA
@@ -1747,7 +1429,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
 
 .l_1d5e
 
- LDY vdu_stat
+ LDY QQ17
  INY
  BEQ wrch_quit
  TAY
@@ -1760,13 +1442,13 @@ INCLUDE "library/common/main/variable/qq16.asm"
  CMP #&0A
  BEQ next_line
  LDX #&01
- STX cursor_x
+ STX XC
  CMP #&0D
  BEQ wrch_quit
 
 .next_line
 
- INC cursor_y
+ INC YC
  BNE wrch_quit
 
 .wrch_hard
@@ -1787,7 +1469,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
 
  STA &1C
  STX &1D
- LDA cursor_x
+ LDA XC
  LDX &03CF
  BEQ wrch_addr
  CPY #&20
@@ -1800,11 +1482,11 @@ INCLUDE "library/common/main/variable/qq16.asm"
  ASL A
  ASL A
  ASL A
- STA ptr
- LDA cursor_y
+ STA SC
+ LDA YC
  CPY #&7F
  BNE not_del
- DEC cursor_x
+ DEC XC
  ADC #&5E
  TAX
  LDY #&F8
@@ -1813,7 +1495,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
 
 .not_del
 
- INC cursor_x
+ INC XC
  CMP #&18
  BCC wrch_or
  PHA
@@ -1825,14 +1507,14 @@ INCLUDE "library/common/main/variable/qq16.asm"
 .wrch_or
 
  ORA #&60
- STA ptr+&01
+ STA SC+&01
  LDY #&07
 
 .wrch_matrix
 
  LDA (&1C),Y
- ORA (ptr),Y
- STA (ptr),Y
+ ORA (SC),Y
+ STA (SC),Y
  DEY
  BPL wrch_matrix
 
@@ -1852,7 +1534,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
 .find_plant
 
  LDA #&0E
- JSR write_msg1
+ JSR DETOK
  JSR map_cursor
  JSR copy_xy
  LDA #&00
@@ -1860,9 +1542,9 @@ INCLUDE "library/common/main/variable/qq16.asm"
 
 .find_loop
 
- JSR format_on
+ JSR MT14
  JSR write_planet
- LDX format_posn
+ LDX DTW5
  LDA &4B,X
  CMP #&0D
  BNE l_1f6c
@@ -1887,7 +1569,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
  LDA #&28
  JSR sound
  LDA #&D7
- JMP write_msg1
+ JMP DETOK
 
 .found_plant
 
@@ -1897,7 +1579,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
  STA data_homey
  JSR snap_hype
  JSR map_cursor
- JSR format_off
+ JSR MT15
  JMP distance
 
 .l_21be
@@ -2109,9 +1791,9 @@ INCLUDE "library/common/main/variable/qq16.asm"
  DEX
  BPL l_2426
  LDA #&05
- JMP write_msg1
+ JMP DETOK
 
-.l_24ed
+.MT23
 
  LDA #&0A
 
@@ -2119,16 +1801,16 @@ INCLUDE "library/common/main/variable/qq16.asm"
 
  EQUB &2C
 
-.l_24f0
+.MT29
 
  LDA #&06
- STA cursor_y
- JMP set_forclwr
+ STA YC
+ JMP MT13
 
-.l_250e
+.PAUSE2
 
  JSR scan_10
- BNE l_250e
+ BNE PAUSE2
 
 .l_out
 
@@ -2136,16 +1818,16 @@ INCLUDE "library/common/main/variable/qq16.asm"
  BEQ l_out
  RTS
 
-.clr_scrn
+.TT66
 
  STA &87
 
 .l_2539
 
- JSR set_deflowr
+ JSR MT2
  LDA #&80
- STA vdu_stat
- STA upper_switch
+ STA QQ17
+ STA DTW2
  ASL A
  STA &0346
  STA &034A
@@ -2159,24 +1841,24 @@ INCLUDE "library/common/main/variable/qq16.asm"
  CPX #&78
  BNE l_254f
  LDY #&01
- STY cursor_y
+ STY YC
  LDA &87
  BNE l_2573
  LDY #&0B
- STY cursor_x
+ STY XC
  LDA view_dirn
  ORA #&60
- JSR de_token
+ JSR TT27
  JSR price_spc
  LDA #&AF
- JSR de_token
+ JSR TT27
 
 .l_2573
 
  LDX #&00
  STX &34
  STX &35
- STX vdu_stat
+ STX QQ17
  DEX
  STX &36
  JSR draw_hline
@@ -2206,24 +1888,24 @@ INCLUDE "library/common/main/variable/qq16.asm"
  BNE y_sync
  RTS
 
-.clr_line
+.CLYNS
 
  LDA #&FF
- STA upper_switch
+ STA DTW2
  LDA #&14
- STA cursor_y
+ STA YC
  JSR new_line
  LDA #&75
- STA ptr+&01
+ STA SC+&01
  LDA #&07
- STA ptr
+ STA SC
  LDA #&00
  JSR clr_e9
- INC ptr+&01
+ INC SC+&01
  JSR clr_e9
- INC ptr+&01
+ INC SC+&01
  INY
- STY cursor_x
+ STY XC
 
 .clr_e9
 
@@ -2231,7 +1913,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
 
 .l_25c8
 
- STA (ptr),Y
+ STA (SC),Y
  DEY
  BNE l_25c8
  RTS
@@ -2286,7 +1968,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
  LDA hype_dist
  ORA hype_dist+&01
  BNE show_dist
- INC cursor_y
+ INC YC
  RTS
 
 .show_dist
@@ -2301,37 +1983,37 @@ INCLUDE "library/common/main/variable/qq16.asm"
 
 .tok_nxtpar
 
- JSR de_token
+ JSR TT27
 
 .next_par
 
- INC cursor_y
+ INC YC
  \new_pgph
  \	LDA #&80
- \	STA vdu_stat
+ \	STA QQ17
 
 .new_line
 
  LDA #&0C
- JMP de_token
+ JMP TT27
 
 .l_2688
 
  LDA #&AD
- JSR de_token
+ JSR TT27
  JMP l_26c7
 
 .spc_token
 
- JSR de_token
+ JSR TT27
  JMP price_spc
 
 .data_onsys
 
  LDA #&01
- JSR clr_scrn
+ JSR TT66
  LDA #&09
- STA cursor_x
+ STA XC
  LDA #&A3
  JSR header
  JSR next_par
@@ -2352,7 +2034,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
 .l_26c2
 
  ADC #&AA
- JSR de_token
+ JSR TT27
 
 .l_26c7
 
@@ -2383,11 +2065,11 @@ INCLUDE "library/common/main/variable/qq16.asm"
  LDA #&C6
  JSR tok_nxtpar
  LDA #&28
- JSR de_token
+ JSR TT27
  LDA &70
  BMI l_2712
  LDA #&BC
- JSR de_token
+ JSR TT27
  JMP l_274e
 
 .l_2712
@@ -2432,12 +2114,12 @@ INCLUDE "library/common/main/variable/qq16.asm"
  ADC &73
  AND #&07
  ADC #&F2
- JSR de_token
+ JSR TT27
 
 .l_274e
 
  LDA #&53
- JSR de_token
+ JSR TT27
  LDA #&29
  JSR tok_nxtpar
  LDA #&C1
@@ -2447,9 +2129,9 @@ INCLUDE "library/common/main/variable/qq16.asm"
  JSR writed_5c
  JSR price_spc
  LDA #&00
- STA vdu_stat
+ STA QQ17
  LDA #&4D
- JSR de_token
+ JSR TT27
  LDA #&E2
  JSR tok_nxtpar
  LDA #&FA
@@ -2463,9 +2145,9 @@ INCLUDE "library/common/main/variable/qq16.asm"
  JSR writed_5
  JSR price_spc
  LDA #&6B
- JSR punctuate
+ JSR DASC
  LDA #&6D
- JSR punctuate
+ JSR DASC
  JSR next_par
  JMP l_23e8
 
@@ -2531,12 +2213,12 @@ INCLUDE "library/common/main/variable/qq16.asm"
 .long_map
 
  LDA #&40
- JSR clr_scrn
+ JSR TT66
  LDA #&07
- STA cursor_x
+ STA XC
  JSR copy_xy
  LDA #&C7
- JSR de_token
+ JSR TT27
  JSR hline_23
  LDA #&98
  JSR hline_acc
@@ -2778,9 +2460,9 @@ INCLUDE "library/common/main/variable/qq16.asm"
 .short_map
 
  LDA #&80
- JSR clr_scrn
+ JSR TT66
  LDA #&07
- STA cursor_x
+ STA XC
  LDA #&BE
  JSR header
  JSR map_range
@@ -2830,8 +2512,8 @@ INCLUDE "library/common/main/variable/qq16.asm"
  LSR A
  LSR A
  LSR A
- STA cursor_x
- INC cursor_x
+ STA XC
+ INC XC
  LDA &6D
  SEC
  SBC cmdr_homey
@@ -2854,13 +2536,13 @@ INCLUDE "library/common/main/variable/qq16.asm"
 
 .l_2bef
 
- STY cursor_y
+ STY YC
  CPY #&03
  BCC l_2c1e
  LDA #&FF
  STA &46,Y
  LDA #&80
- STA vdu_stat
+ STA QQ17
  JSR write_planet
 
 .l_2c01
@@ -3016,14 +2698,14 @@ INCLUDE "library/common/main/variable/qq16.asm"
  LDA #&05
  JMP writed_word
  \token_query:
- \	JSR de_token
+ \	JSR TT27
  \	LDA #&3F
- \	JMP de_token
+ \	JMP TT27
 
 .price_spc
 
  LDA #&20
- JMP de_token
+ JMP TT27
 
 .func_tab
 
@@ -3085,7 +2767,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
 .l_29eb
 
  LDA &81
- JSR punctuate
+ JSR DASC
  DEC &06
  BNE buy_repeat
 
@@ -3107,7 +2789,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
  JSR map_cursor
  JSR snap_hype
  JSR map_cursor
- JMP clr_line
+ JMP CLYNS
 
 .write_planet
 
@@ -3134,7 +2816,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
  AND #&1F
  BEQ l_3136
  ORA #&80
- JSR de_token
+ JSR TT27
 
 .l_3136
 
@@ -3153,7 +2835,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
 
 .write_cmdr
 
- JSR set_upprmsk
+ JSR MT19
  LDY #&00
 
 .l_314c
@@ -3161,7 +2843,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
  LDA &1181,Y
  CMP #&0D
  BEQ l_3159
- JSR punctuate
+ JSR DASC
  INY
  BNE l_314c
 
@@ -3205,7 +2887,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
  LDA #&C3
  JSR de_tokln
  LDA #&77
- BNE de_token
+ BNE TT27
 
 .show_money
 
@@ -3225,18 +2907,18 @@ INCLUDE "library/common/main/variable/qq16.asm"
 
 .de_tokln
 
- JSR de_token
+ JSR TT27
  JMP new_line
 
 .pre_colon
 
- JSR de_token
+ JSR TT27
 
 .l_31aa
 
  LDA #&3A
 
-.de_token
+.TT27
 
  TAX
  BEQ show_money
@@ -3258,7 +2940,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
  DEX
  BNE l_31cb
  LDA #&80
- STA vdu_stat
+ STA QQ17
  RTS
 
 .l_31cb
@@ -3266,7 +2948,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
  DEX
  DEX
  BNE l_31d2
- STX vdu_stat
+ STX QQ17
  RTS
 
 .l_31d2
@@ -3282,10 +2964,10 @@ INCLUDE "library/common/main/variable/qq16.asm"
 
 .l_31e1
 
- LDX vdu_stat
+ LDX QQ17
  BEQ l_3222
  BMI l_31f8
- BIT vdu_stat
+ BIT QQ17
  BVS l_321b
 
 .l_31eb
@@ -3298,18 +2980,18 @@ INCLUDE "library/common/main/variable/qq16.asm"
 
 .l_31f5
 
- JMP punctuate
+ JMP DASC
 
 .l_31f8
 
- BIT vdu_stat
+ BIT QQ17
  BVS l_3213
  CMP #&41
  BCC l_3222
  PHA
  TXA
  ORA #&40
- STA vdu_stat
+ STA QQ17
  PLA
  BNE l_31f5
 
@@ -3321,7 +3003,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
 .l_320d
 
  LDA #&15
- STA cursor_x
+ STA XC
  BNE l_31aa
 
 .l_3213
@@ -3336,12 +3018,12 @@ INCLUDE "library/common/main/variable/qq16.asm"
  PHA
  TXA
  AND #&BF
- STA vdu_stat
+ STA QQ17
  PLA
 
 .l_3222
 
- JMP punctuate
+ JMP DASC
 
 .l_3225
 
@@ -3351,11 +3033,11 @@ INCLUDE "library/common/main/variable/qq16.asm"
  ASL A
  TAY
  LDA QQ16,Y
- JSR de_token
+ JSR TT27
  LDA QQ16+&01,Y
  CMP #&3F
  BEQ l_327a
- JMP de_token
+ JMP TT27
 
 .l_323d
 
@@ -3400,7 +3082,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
  PHA
  LDA (&22),Y
  EOR #&23
- JSR de_token
+ JSR TT27
  PLA
  STA &23
  PLA
@@ -4165,11 +3847,11 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
  CMP #&54
  BNE not_hype
- JSR clr_line
+ JSR CLYNS
  LDA #&0F
- STA cursor_x
+ STA XC
  LDA #&CD
- JMP write_msg1
+ JMP DETOK
 
 .not_hype
 
@@ -4225,13 +3907,13 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  AND #&C0
  BEQ not_map
  JSR snap_cursor
- STA vdu_stat
+ STA QQ17
  JSR write_planet
  LDA #&80
- STA vdu_stat
+ STA QQ17
  LDA #&01
- STA cursor_x
- INC cursor_y
+ STA XC
+ INC YC
  JMP show_nzdist
 
 .err_count
@@ -4255,7 +3937,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDA #&73
  JMP function
 
-.get_line
+.MT26
 
  LDA #&81
  STA &FE4E
@@ -4293,16 +3975,16 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 .clr_page
 
  LDY #&00
- STY ptr
+ STY SC
 
 .l_3a03
 
  LDA #&00
- STX ptr+&01
+ STX SC+&01
 
 .l_3a07
 
- STA (ptr),Y
+ STA (SC),Y
  INY
  BNE l_3a07
  RTS
@@ -4545,11 +4227,11 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 .l_3d82
 
  LDX #&00
- STX vdu_stat
+ STX QQ17
  LDY #&09
- STY cursor_x
+ STY XC
  LDY #&16
- STY cursor_y
+ STY YC
  CPX &034A
  BNE l_3d77
  STY &034A
@@ -4557,11 +4239,11 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
 .l_3d99
 
- JSR de_token
+ JSR TT27
  LSR &034B
  BEQ frz_ret
  LDA #&FD
- JMP de_token
+ JMP TT27
 
 .l_3dea
 
@@ -5092,7 +4774,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 .l_40e7
 
  LDA &46,X
- STA vdu_stat,X
+ STA QQ17,X
  DEX
  BPL l_40e7
  LDA #&FF
@@ -5137,7 +4819,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LSR &76
  ROR &75
  LSR &73
- ROR vdu_stat
+ ROR QQ17
  LSR A
  ROR &78
  TAY
@@ -5148,7 +4830,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  STX &86
  LDA &7A
  STA &39
- LDA vdu_stat
+ LDA QQ17
  STA &34
  LDA &74
  STA &35
@@ -5160,7 +4842,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  STA &38
  JSR l_3fb8
  LDA &3A
- STA vdu_stat
+ STA QQ17
  LDA &3B
  STA &74
  LDA &3C
@@ -5219,7 +4901,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDX &86
  CPX #&04
  BCC l_41cc
- LDA vdu_stat
+ LDA QQ17
  STA &34
  LDA &74
  STA &35
@@ -5235,7 +4917,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
 .l_41c4
 
- LSR vdu_stat
+ LSR QQ17
  LSR &78
  LSR &75
  LDX #&01
@@ -5275,7 +4957,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  STA &82
  LDA &3B
  STA &83
- LDA vdu_stat
+ LDA QQ17
  STA &81
  LDA &74
  JSR l_3f98
@@ -6398,8 +6080,8 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  ADC #&07
  PHA
  LDA #&20
- JSR clr_scrn
- JSR clr_deflowr
+ JSR TT66
+ JSR MT1
  LDX &8C
  LDA ship_file,X
  CMP ship_load+&04
@@ -6413,10 +6095,10 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
  LDX &8C
  LDA ship_centre,X
- STA cursor_x
+ STA XC
  PLA
- JSR write_msg2
- JSR hline_19
+ JSR DETOK3
+ JSR NLIN4
  JSR init_ship
  LDA #&60
  STA &54
@@ -6426,7 +6108,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  STX &63
  STX &64
  INX
- STA vdu_stat
+ STA QQ17
  LDA &8C
  JSR write_card
  LDX &8C
@@ -6470,17 +6152,17 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  ADC #&04
  PHA
  LDA #&20
- JSR clr_scrn
- JSR clr_deflowr
+ JSR TT66
+ JSR MT1
  LDA #&0B
- STA cursor_x
+ STA XC
  PLA
- JSR write_msg2
- JSR hline_19
- JSR set_deflowr
- INC cursor_y
+ JSR DETOK3
+ JSR NLIN4
+ JSR MT2
+ INC YC
  PLA
- JSR write_msg2
+ JSR DETOK3
  JMP l_restart
 
 .equip_data
@@ -6492,21 +6174,21 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  SBC #&0C
  PHA
  LDA #&20
- JSR clr_scrn
- JSR clr_deflowr
+ JSR TT66
+ JSR MT1
  LDA #&0B
- STA cursor_x
+ STA XC
  PLA
- JSR write_msg2
- JSR hline_19
- JSR set_deflowr
- JSR set_forclwr
- INC cursor_y
- INC cursor_y
+ JSR DETOK3
+ JSR NLIN4
+ JSR MT2
+ JSR MT13
+ INC YC
+ INC YC
  LDA #&01
- STA cursor_x
+ STA XC
  PLA
- JSR write_msg2
+ JSR DETOK3
  JMP l_restart
 
 .trading
@@ -6514,7 +6196,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
 .l_restart
 
- JSR l_250e
+ JSR PAUSE2
  JMP start_loop
 
 
@@ -6529,7 +6211,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
 .card_repeat
 
- JSR clr_deflowr
+ JSR MT1
  LDY #&00
  LDA (&22),Y
  TAX
@@ -6552,12 +6234,12 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 .card_found
 
  LDA card_pattern,Y
- STA cursor_x
+ STA XC
  LDA card_pattern+1,Y
- STA cursor_y
+ STA YC
  LDA card_pattern+2,Y
  BEQ card_details
- JSR write_msg2
+ JSR DETOK3
  INY
  INY
  INY
@@ -6565,7 +6247,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
 .card_details
 
- JSR set_deflowr
+ JSR MT2
  LDY #&00
 
 .card_loop
@@ -6576,12 +6258,12 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  BMI card_msg
  CMP #&20
  BCC card_macro
- JSR msg_alpha
+ JSR DTS
  JMP card_loop
 
 .card_macro
 
- JSR msg_macro
+ JSR DT3
  JMP card_loop
 
 .card_msg
@@ -6589,7 +6271,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  CMP #&D7
  BCS card_pairs
  AND #&7F
- JSR write_msg2
+ JSR DETOK3
  JMP card_loop
 
 .card_pairs
@@ -6654,17 +6336,17 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDA menu_titlex,X
  PHA
  LDA #&20
- JSR clr_scrn
- JSR clr_deflowr
+ JSR TT66
+ JSR MT1
  PLA
- STA cursor_x
+ STA XC
  PLA
- JSR write_msg2
- JSR hline_19
- JSR set_deflowr
+ JSR DETOK3
+ JSR NLIN4
+ JSR MT2
  LDA #&80
- STA vdu_stat
- INC cursor_y
+ STA QQ17
+ INC YC
  LDX #&00
 
 .menu_loop
@@ -6679,16 +6361,16 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  CLC
  LDA &89
  ADC &03AD
- JSR write_msg2
+ JSR DETOK3
  LDX &89
  INX
  CPX &03AB
  BCC menu_loop
- JSR clr_line
+ JSR CLYNS
  PLA
- JSR write_msg2
+ JSR DETOK3
  LDA #'?'
- JSR punctuate
+ JSR DASC
  JSR buy_quant
  BEQ menu_start
  BCS menu_start
@@ -6722,7 +6404,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
 \ a.icode_3
 
-.msg_1
+.TKN1
 
  EQUB &00
  EQUB &00
@@ -7207,7 +6889,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  EQUB &00
 
 
-.msg_2
+.RUTOK
 
  EQUB &00
  EQUS &F6, "CYC", &E0, "P", &FC, "IA G", &E4, "AC", &FB, "CA"
@@ -7591,7 +7273,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  EQUB &00
 
 
-.l_55c0
+.MTIN
 
  EQUB &10, &15, &1A, &1F, &9B, &A0, &2E, &A5, &24, &29, &3D, &33
  EQUB &38, &AA, &42, &47, &4C, &51, &56, &8C, &60, &65, &87, &82

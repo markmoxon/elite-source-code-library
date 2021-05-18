@@ -27,7 +27,7 @@
 
  LDA #0                 \ Set A = 0 so we can start building the answer in A
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Other: The loop in the the MU11 routine in the advanced versions is unrolled to speed it up
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Other: The loop in the the MU11 routine in the advanced versions is unrolled to speed it up
 
  LDX #8                 \ Set up a counter in X to count the 8 bits in P
 

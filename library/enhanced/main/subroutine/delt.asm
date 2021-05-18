@@ -29,7 +29,7 @@
                         \ entered as part of the catalogue process, so jump to
                         \ SVE to display the disc access menu
 
-IF _DISC_DOCKED \ Platform
+IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Platform
 
  LDA CTLI+1             \ The call to CATS above put the drive number into
  STA DELI+4             \ CTLI+1, so copy the drive number into DELI+4 so that
@@ -56,7 +56,7 @@ ENDIF
 
 ENDIF
 
-IF _DISC_DOCKED OR _6502SP_VERSION \ Master: When deleting a file via the disc menu, the disc and 6502SP versions ask for the "FILE TO DELETE?", while the Master version asks for the "COMMANDER'S NAME?"
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Master: When deleting a file via the disc menu, the disc and 6502SP versions ask for the "FILE TO DELETE?", while the Master version asks for the "COMMANDER'S NAME?"
 
  LDA #9                 \ Print extended token 9 ("{clear bottom of screen}FILE
  JSR DETOK              \ TO DELETE?")
@@ -78,7 +78,7 @@ ENDIF
                         \ that it overwrites the filename part of the string,
                         \ i.e. the "E.1234567" part of "DELETE:0.E.1234567"
 
-IF _DISC_DOCKED \ Comment
+IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Comment
 
  LDX #9                 \ Set up a counter in X to count from 9 to 1, so that we
                         \ copy the string starting at INWK+4+1 (i.e. INWK+5) to
@@ -110,7 +110,7 @@ ENDIF
 
 .DELL1
 
-IF _DISC_DOCKED \ Platform
+IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Platform
 
  LDA INWK+4,X           \ Copy the X-th byte of INWK+4 to the X-th byte of
  STA DELI+5,X           \ DELI+5
@@ -164,7 +164,7 @@ ENDIF
  LDY #HI(DELI)          \ contains the DFS command for deleting this file
 
 
-IF _DISC_DOCKED OR _MASTER_VERSION \ Platform
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Platform
 
  JSR OSCLI              \ Call OSCLI to execute the OS command at (Y X), which
                         \ catalogues the disc

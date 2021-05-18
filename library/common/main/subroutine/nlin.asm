@@ -17,7 +17,7 @@
  LDA #23                \ Set A = 23 so NLIN2 below draws a horizontal line at
                         \ pixel row 23
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Tube
 
  INC YC                 \ Move the text cursor down one line
 

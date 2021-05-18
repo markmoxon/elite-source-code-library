@@ -35,7 +35,7 @@
 \
 \   Y                   Y is preserved
 \
-IF _DISC_DOCKED \ Comment
+IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Comment
 \ Other entry points:
 \
 \   PL44                Clear the C flag and return from the subroutine
@@ -64,7 +64,7 @@ ENDIF
                         \ next two instructions, as the result already fits on
                         \ the screen
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
  LDA #254               \ The high byte is positive and non-zero, so we went
  STA X2                 \ past the right edge of the screen, so clip X2 to the
@@ -102,7 +102,7 @@ ENDIF
  BPL ED1                \ If the addition is positive then the calculation has
                         \ underflowed, so jump to ED1 to return a failure
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
  LDA #2                 \ The high byte is negative and non-zero, so we went
  STA X1                 \ past the left edge of the screen, so clip X1 to the
@@ -116,7 +116,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _DISC_DOCKED \ Label
+IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Label
 
 .PL44
 
@@ -132,14 +132,14 @@ ENDIF
  LDA #0                 \ Set the Y-th byte of the LSO block to 0
  STA LSO,Y
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Minor
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Minor
 
  SEC                    \ The line does not fit on the screen, so set the C flag
                         \ to indicate this result
 
  RTS                    \ Return from the subroutine
 
-ELIF _DISC_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
 
                         \ The line does not fit on the screen, so fall through
                         \ into PL21 to set the C flag to indicate this result

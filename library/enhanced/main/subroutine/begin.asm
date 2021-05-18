@@ -9,7 +9,7 @@
 
 .BEGIN
 
-IF _DISC_DOCKED \ Platform
+IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Platform
 
  JSR BRKBK              \ Call BRKBK to set BRKV to point to the BRBR routine
 
@@ -20,7 +20,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _DISC_DOCKED OR _6502SP_VERSION \ Platform
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Platform
 
 
  LDX #(CATF-COMC)       \ We start by zeroing all the configuration variables

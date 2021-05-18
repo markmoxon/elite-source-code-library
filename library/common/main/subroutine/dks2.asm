@@ -36,7 +36,7 @@ ENDIF
 
 .DKS2
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Tube
 
  LDA #128               \ Call OSBYTE 128 to fetch the 16-bit value from ADC
  JSR OSBYTE             \ channel X, returning (Y X), i.e. the high byte in Y

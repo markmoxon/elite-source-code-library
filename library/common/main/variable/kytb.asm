@@ -8,7 +8,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Comment
 \ Keyboard table for in-flight controls. This table contains the internal key
 \ codes for the flight keys (see p.142 of the Advanced User Guide for a list of
 \ internal key numbers).
@@ -40,20 +40,20 @@ IF _CASSETTE_VERSION \ Label
 
 KYTB = P% - 1           \ Point KYTB to the byte before the start of the table
 
-ELIF _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
+ELIF _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
 
 .KYTB
 
 ENDIF
 
-IF _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Label
+IF _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Label
 
  RTS                    \ Return from the subroutine (used as an entry point and
                         \ a fall-through from above)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Master: The Master has a very different set of internal key numbers to the BBC Micro and Electron, so the keyboard lookup table for the Master is also very different; the Electron and BBC Micro are much more similar, but the Electron has no TAB key, so "-" launches an energy bomb instead
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Master: The Master has a very different set of internal key numbers to the BBC Micro and Electron, so the keyboard lookup table for the Master is also very different; the Electron and BBC Micro are much more similar, but the Electron has no TAB key, so "-" launches an energy bomb instead
 
                         \ These are the primary flight controls (pitch, roll,
                         \ speed and lasers):
@@ -125,7 +125,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: The lookup table for in-flight keyboard controls contains an extra entry in the enhanced versions, for "P" (cancel docking computer)
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Enhanced: The lookup table for in-flight keyboard controls contains an extra entry in the enhanced versions, for "P" (cancel docking computer)
 
  EQUB &37               \ P         KYTB+16     Cancel docking computer
 

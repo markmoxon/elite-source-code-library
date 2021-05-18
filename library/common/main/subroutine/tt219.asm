@@ -3,7 +3,7 @@
 \       Name: TT219
 \       Type: Subroutine
 \   Category: Market
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Show the Buy Cargo screen (red key f1)
 ELIF _ELECTRON_VERSION
 \    Summary: Show the Buy Cargo screen (FUNC-2)
@@ -14,7 +14,7 @@ ENDIF
 \ Other entry points:
 \
 \   BAY2                Jump into the main loop at FRCE, setting the key
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \                       "pressed" to red key f9 (so we show the Inventory
 \                       screen)
 ELIF _ELECTRON_VERSION
@@ -36,7 +36,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ 6502SP: In the 6502SP version, you c
  JSR TT66-2             \ Clear the top part of the screen, draw a white border,
                         \ and set the current view type in QQ11 to 1
 
-ELIF _DISC_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
 
  LDA #2                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ Clear the top part of the screen, draw a white border,
@@ -62,7 +62,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
                         \ buffer (FLKB) that isn't present in the cassette
                         \ version but is in other versions
 
-ELIF _DISC_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
 
  JSR FLKB               \ Flush the keyboard buffer
 
@@ -133,7 +133,7 @@ ENDIF
  LDX #12                \ Perhaps they were left behind when code was moved from
  STX T1                 \ here into gnum, and weren't deleted?
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Label
 
 \.TT223                 \ This label is commented out in the original source,
                         \ and is a duplicate of a label in gnum, so this could
@@ -231,7 +231,7 @@ ENDIF
 
 .TT222
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Tube
 
  LDA QQ29               \ Move the text cursor to row QQ29 + 5 (where QQ29 is
  CLC                    \ the item number, starting from 0)
@@ -264,7 +264,7 @@ ENDIF
 
 .BAY2
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 
  LDA #f9                \ Jump into the main loop at FRCE, setting the key
  JMP FRCE               \ "pressed" to red key f9 (so we show the Inventory

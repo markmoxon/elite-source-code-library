@@ -14,7 +14,7 @@ ENDIF
 \ before drawing, and then the routine uses the same approach as the PIXEL
 \ routine in the main game code, except it plots a single pixel from TWOS
 \ instead of a two pixel dash from TWOS2. This applies to the top part of the
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \ screen (the monochrome mode 4 space view).
 ELIF _ELECTRON_VERSION
 \ screen (the space view).
@@ -30,7 +30,7 @@ ENDIF
 \
 \   A                   The screen y-coordinate of the pixel to draw, negated
 \
-IF _DISC_VERSION \ Comment
+IF _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \ Other entry points:
 \
 \   out                 Contains an RTS
@@ -130,7 +130,7 @@ ELIF _ELECTRON_VERSION
                         \ in the character block containing the (x, y), taking
                         \ the screen borders into consideration
 
-ELIF _DISC_VERSION
+ELIF _DISC_VERSION OR _ELITE_A_VERSION
 
  LSR A                  \ Set A = A >> 3
  LSR A
@@ -183,14 +183,14 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: In the cassette version, t
  ORA (ZP),Y
  STA (ZP),Y
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  LDA TWOS,X             \ Fetch a pixel from TWOS and poke it into ZP+Y
  STA (ZP),Y
 
 ENDIF
 
-IF _DISC_VERSION \ Label
+IF _DISC_VERSION OR _ELITE_A_VERSION \ Label
 
 .out
 

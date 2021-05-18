@@ -2,7 +2,7 @@
 \
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 \       Name: QU5
-ELIF _6502SP_VERSION OR _DISC_DOCKED
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED
 \       Name: DFAULT
 ENDIF
 \       Type: Subroutine
@@ -15,7 +15,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
 
 .QU5
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
 
 .DFAULT
 
@@ -54,7 +54,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
                         \ commander workspace at TP. So we set up a counter in X
                         \ for the NT% bytes that we want to copy
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
 
  LDX #NT%+8             \ The size of the last saved commander data block is NT%
                         \ bytes, and it is preceded by the 8 bytes of the
@@ -75,7 +75,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
  LDA NA%+7,X            \ Copy the X-th byte of NA%+7 to the X-th byte of TP-1,
  STA TP-1,X             \ (the -1 is because X is counting down from NT% to 1)
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
 
  LDA NA%-1,X            \ Copy the X-th byte of NA%-1 to the X-th byte of
  STA NAME-1,X           \ NAME-1 (the -1 is because X is counting down from
@@ -116,7 +116,7 @@ ELSE
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Comment
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Comment
 
 \JSR BELL               \ This instruction is commented out in the original
                         \ source. It would make a standard system beep
@@ -152,7 +152,7 @@ ELIF _ELECTRON_VERSION
  ORA #%00001000         \ Set bit 3 of A to denote that this is the Electron
                         \ version
 
-ELIF _DISC_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
 
 IF _STH_DISC
 
@@ -184,7 +184,7 @@ ENDIF
 
  STA COK                \ Store the updated competition flags in COK
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Minor
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Minor
 
  RTS                    \ Return from the subroutine
 

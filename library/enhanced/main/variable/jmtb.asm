@@ -55,7 +55,7 @@ ELIF _6502SP_VERSION
 ELIF _MASTER_VERSION
  EQUW MT30              \ Token 30: Display currently selected media (disc/tape)
 ENDIF
-IF _DISC_DOCKED OR _6502SP_VERSION OR _ELITE_A_VERSION \ Master: The Master version has an extended jump token for displaying the non-selected file system, though this token isn't actually used as the file system can't be changed from disc
+IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: The Master version has an extended jump token for displaying the non-selected file system, though this token isn't actually used as the file system can't be changed from disc
  EQUW DASC              \ Token 31: Unused
 ELIF _MASTER_VERSION
  EQUW MT31              \ Token 31: Display the non-selected media (disc/tape)

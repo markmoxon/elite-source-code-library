@@ -2,7 +2,7 @@
 \
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 \       Name: GTNME
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
 \       Name: GTNMEW
 ENDIF
 \       Type: Subroutine
@@ -22,7 +22,7 @@ ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 \   INWK                The commander name entered, terminated by a return
 \                       character (13)
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
 \   INWK                The full filename, including drive and directory, in
 \                       the form ":0.E.JAMESON", for example, terminated by a
 \                       return character (13)
@@ -30,13 +30,13 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Label
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Label
 
 .GTNMEW
 
 ENDIF
 
-IF _DISC_DOCKED \ Other: The disc version has a delay in the routine to fetch a commander name, though I'm not sure why
+IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Other: The disc version has a delay in the routine to fetch a commander name, though I'm not sure why
 
  LDY #8                 \ Wait for 8/50 of a second (0.16 seconds)
  JSR DELAY
@@ -126,7 +126,7 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Platform
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Platform
 
  LDX #4                 \ First we want to copy the drive and directory part of
                         \ the commander file from S1% (which equals NA%-5), so
@@ -174,7 +174,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
  JMP TT67               \ We have a name, so jump to TT67 to print a newline
                         \ and return from the subroutine using a tail call
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED
 
  RTS                    \ Return from the subroutine
 

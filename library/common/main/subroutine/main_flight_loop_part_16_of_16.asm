@@ -33,7 +33,7 @@
                         \ and the next pulse can start (if the fire button is
                         \ still being pressed)
                         \
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
                         \ For pulse lasers, LASCT gets set to 10 in ma1 above,
                         \ and it decrements every vertical sync (50 times a
                         \ second), so this means it pulses five times a second,
@@ -82,7 +82,7 @@ IF _MASTER_VERSION \ Master: The Master version has a unique E.C.M. sound
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: In the Electron version, the E.C.M. timer counts down twice as fast as in the other versions to cater for the slower iterations round the main loop
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: In the Electron version, the E.C.M. timer counts down twice as fast as in the other versions to cater for the slower iterations round the main loop
 
  DEC ECMA               \ Decrement the E.C.M. countdown timer, and if it has
  BNE MA66               \ reached zero, keep going, otherwise skip to MA66
@@ -109,7 +109,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
  BNE MA9                \ then jump to MA9 to return from the main flight loop
                         \ (as MA9 is an RTS)
 
-ELIF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
+ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
 
  LDA QQ11               \ If this is not a space view (i.e. QQ11 is non-zero)
  BNE oh                 \ then jump to oh to return from the main flight loop
@@ -117,7 +117,7 @@ ELIF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Tube
 
  JMP STARS              \ This is a space view, so jump to the STARS routine to
                         \ process the stardust, and return from the main flight

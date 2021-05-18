@@ -76,7 +76,7 @@
  JSR GINF               \ Get the address of the data block for ship slot X
                         \ (which is in workspace K%) and store it in INF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 
  LDA T                  \ If the type of ship that we want to create is
  BMI NW2                \ negative, then this indicates a planet or sun, so
@@ -106,7 +106,7 @@ ENDIF
  ASL A                  \ Set Y = ship type * 2
  TAY
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Platform
 
  LDA XX21-2,Y           \ The ship blueprints at XX21 start with a lookup
  STA XX0                \ table that points to the individual ship blueprints,
@@ -117,7 +117,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Platform
  STA XX0+1              \ blueprint and store it in XX0+1, so XX0(1 0) now
                         \ contains the address of this ship's blueprint
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
 
  LDA XX21-1,Y           \ The ship blueprints at XX21 start with a lookup
                         \ table that points to the individual ship blueprints,
@@ -137,7 +137,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 
  CPY #2*SST             \ If the ship type is a space station (SST), then jump
  BEQ NW6                \ to NW6, skipping the heap space steps below, as the
@@ -157,7 +157,7 @@ ENDIF
                         \ can easily be erased from the screen again). SLSP
                         \ points to the start of the current heap space, and we
                         \ can extend it downwards with the heap for our new ship
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
                         \ (as the heap space always ends just before the WP
                         \ workspace)
 ELIF _6502SP_VERSION
@@ -182,7 +182,7 @@ ENDIF
                         \ for our ship. In memory, this is the layout of the
                         \ ship data blocks and ship line heaps:
                         \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
                         \   +-----------------------------------+   &0F34
                         \   |                                   |
                         \   | WP workspace                      |
@@ -230,7 +230,7 @@ ENDIF
                         \   |                                   |
                         \   | Existing ship data blocks         |
                         \   |                                   |
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
                         \   +-----------------------------------+   &0900 = K%
 ELIF _6502SP_VERSION
                         \   +-----------------------------------+   &8200 = K%
@@ -305,7 +305,7 @@ ENDIF
 
  TAX                    \ Copy the ship type into X
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Label
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Label
 
  BMI P%+5               \ If the ship type is negative (planet or sun), then
                         \ skip the following instruction
@@ -315,7 +315,7 @@ ELIF _ELECTRON_VERSION
  BMI P%+5               \ If the ship type is negative (i.e. the planet), then
                         \ skip the following instruction
 
-ELIF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
+ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
 
  BMI NW8                \ If the ship type is negative (planet or sun), then
                         \ jump to NW8 to skip the following instructions
@@ -329,7 +329,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: In the advanced versions, rock
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: The amount of junk in the enhanced versions is tracked in the JUNK variable
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhanced: The amount of junk in the enhanced versions is tracked in the JUNK variable
 
  CPX #JL                \ If JL <= X < JH, i.e. the type of ship we killed in X
  BCC NW7                \ is junk (escape pod, alloy plate, cargo canister,
@@ -346,7 +346,7 @@ ENDIF
 
  INC MANY,X             \ Increment the total number of ships of type X
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: New ships are spawned using the default NEWB flags byte from the E% table, which gives each ship a typical "personality" which is then tailored to the game's needs. The cassette version doesn't have this byte, so ship behaviour is more limited
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhanced: New ships are spawned using the default NEWB flags byte from the E% table, which gives each ship a typical "personality" which is then tailored to the game's needs. The cassette version doesn't have this byte, so ship behaviour is more limited
 
 .NW8
 

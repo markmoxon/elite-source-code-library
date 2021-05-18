@@ -17,7 +17,7 @@
  LDA #32                \ Set the E.C.M. countdown timer in ECMA to 32
  STA ECMA
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Platform
 
  ASL A                  \ Call the NOISE routine with A = 64 to make the sound
  JSR NOISE              \ of the E.C.M. being switched on

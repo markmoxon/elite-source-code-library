@@ -7,7 +7,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \ Draw a double-height mode 5 dot (2 pixels high, 2 pixels wide).
 ELIF _ELECTRON_VERSION
 \ Draw a double-height mode 4 dot (2 pixels high, 4 pixels wide).
@@ -23,7 +23,7 @@ ENDIF
 \   Y1                  The screen pixel y-coordinate of the bottom-left corner
 \                       of the dot
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \   COL                 The colour of the dot as a mode 5 character row byte
 ELIF _6502SP_VERSION
 \   COL                 The colour of the dot as a mode 2 character row byte

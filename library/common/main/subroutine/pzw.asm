@@ -11,7 +11,7 @@
 \ safe values respectively. This enables us to implement flashing indicators,
 \ which is one of the game's configurable options.
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \ If flashing is enabled, the colour returned in A (dangerous values) will be
 \ red for 8 iterations of the main loop, and yellow/white for the next 8, before
 \ going back to red. If we always use PZW to decide which colours we should use
@@ -45,7 +45,7 @@ ENDIF
 
 .PZW
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
  LDX #&F0               \ Set X to dashboard colour 2 (yellow/white)
 
@@ -62,7 +62,7 @@ ENDIF
 
  AND FLH                \ A will be zeroed if flashing colours are disabled
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
  BEQ P%+4               \ If A is zero, skip to the LDA instruction below
 

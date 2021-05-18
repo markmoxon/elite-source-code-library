@@ -24,7 +24,7 @@ ENDIF
 
  JSR RES2               \ Reset a number of flight variables and workspaces
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: Group B: When you launch an escape pod in the Electron version, you don't see an animation of your Cobra Mk III drifting away, but jump straight into the station
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: Group B: When you launch an escape pod in the Electron version, you don't see an animation of your Cobra Mk III drifting away, but jump straight into the station
 
  LDX #CYL               \ Set the current ship type to a Cobra Mk III, so we
  STX TYPE               \ can show our ship disappear into the distance when we
@@ -35,7 +35,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Ele
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: When trying to spawn a Cobra Mk III to display when we use an escape pod, the enhanced versions will first try to spawn a normal Cobra, and if that fails, they will try again with a pirate Cobra
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhanced: When trying to spawn a Cobra Mk III to display when we use an escape pod, the enhanced versions will first try to spawn a normal Cobra, and if that fails, they will try again with a pirate Cobra
 
  BCS ES1                \ If the Cobra was successfully added to the local
                         \ bubble, jump to ES1 to skip the following instructions
@@ -47,7 +47,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: When trying to
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: See group B
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: See group B
 
  LDA #8                 \ Set the Cobra's byte #27 (speed) to 8
  STA INWK+27
@@ -63,7 +63,7 @@ ENDIF
 
 .ESL1
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: See group B
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: See group B
 
  JSR MVEIT              \ Call MVEIT to move the Cobra in space
 
@@ -77,7 +77,7 @@ IF _MASTER_VERSION \ Master: In the Master version, if you launch your escape po
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: See group B
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: See group B
 
  JSR LL9                \ Call LL9 to draw the Cobra on-screen
 
@@ -110,7 +110,7 @@ ELIF _ELECTRON_VERSION
  LDA #0                 \ Set A = 0 so we can use it to zero the contents of
                         \ the cargo hold
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
 
  LDA #0                 \ Set A = 0 so we can use it to zero the contents of
                         \ the cargo hold
@@ -129,7 +129,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
                         \ from the BEQ above), so we no longer have any of item
                         \ type X in the cargo hold
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
 
  STA QQ20,X             \ Set the X-th byte of QQ20 to zero, so we no longer
                         \ have any of item type X in the cargo hold
@@ -157,7 +157,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
                         \ screen) and return from the subroutine with a tail
                         \ call
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
 
  JMP GOIN               \ Go to the docking bay (i.e. show the ship hanger
                         \ screen) and return from the subroutine with a tail

@@ -14,7 +14,7 @@
  EQUW 30 * 30           \ Targetable area          = 30 * 30
  EQUB &3E               \ Edges data offset (low)  = &003E
  EQUB &7A               \ Faces data offset (low)  = &007A
-IF _DISC_FLIGHT \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; boulders are shown in red
+IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; boulders are shown in red
  EQUB 45                \ Max. edge count          = (45 - 1) / 4 = 11
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 49                \ Max. edge count          = (49 - 1) / 4 = 12

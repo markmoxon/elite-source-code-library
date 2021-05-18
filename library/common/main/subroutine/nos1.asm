@@ -68,7 +68,7 @@ IF _CASSETTE_VERSION \ Label
 
  RTS                    \ Return from the subroutine
 
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION
 
                         \ Fall through into KYTB to return from the subroutine,
                         \ as the first byte of KYTB is an RTS

@@ -3,15 +3,15 @@
 \       Name: DOKEY
 \       Type: Subroutine
 \   Category: Keyboard
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Comment
 \    Summary: Scan for the seven primary flight controls
 \  Deep dive: The key logger
 \             The docking computer
-ELIF _DISC_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
 \    Summary: Scan for the joystick
 ENDIF
 \
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ Scan for the seven primary flight controls (or the equivalent on joystick),
@@ -43,7 +43,7 @@ ELIF _ELECTRON_VERSION
 \ support joysticks at some point?
 \
 ENDIF
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Comment
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Comment
 \ Other entry points:
 \
 \   auton               Get the docking computer to "press" the flight keys to
@@ -68,7 +68,7 @@ IF _6502SP_VERSION \ Tube
 
 ENDIF
 
-IF _DISC_DOCKED \ Electron: The Electron version doesn't read joystick values from the ADC channel in the main DOKEY routine, so although you can switch to a joystick using the "K" configuration option, it doesn't mean you can use it to fly your ship
+IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Electron: The Electron version doesn't read joystick values from the ADC channel in the main DOKEY routine, so although you can switch to a joystick using the "K" configuration option, it doesn't mean you can use it to fly your ship
 
  LDA JSTK               \ If JSTK is zero, then we are configured to use the
  BEQ DK9                \ keyboard rather than the joystick, so jump to DK9 to
@@ -86,7 +86,7 @@ IF _DISC_DOCKED \ Electron: The Electron version doesn't read joystick values fr
  STA JSTY               \ reverse the joystick Y channel, so this EOR does
                         \ exactly that, and then we store the result in JSTY
 
-ELIF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+ELIF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT
 
  JSR U%                 \ Call U% to clear the key logger
 
@@ -101,13 +101,13 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: The Bitstik configuration option only works if joysticks are configured
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Enhanced: The Bitstik configuration option only works if joysticks are configured
 
  STA BSTK               \ Set BSTK = 0 to disable the Bitstik
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Tube
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Tube
 
  LDY #7                 \ We're going to work our way through the primary flight
                         \ control keys (pitch, roll, speed and laser), so set a
@@ -169,7 +169,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: Group A: The docking computer literally takes the controls in the enhanced versions. The DOKEY routine normally scans the keyboard for the primary flight controls, but if the docking computer is enabled, it calls DOCKIT to ask the docking computer how to move the ship, and then it "presses" the relevant keys instead of scanning the keyboard
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Enhanced: Group A: The docking computer literally takes the controls in the enhanced versions. The DOKEY routine normally scans the keyboard for the primary flight controls, but if the docking computer is enabled, it calls DOCKIT to ask the docking computer how to move the ship, and then it "presses" the relevant keys instead of scanning the keyboard
 
  LDA auto               \ If auto is 0, then the docking computer is not
  BEQ DK15               \ currently activated, so jump to DK15 to skip the
@@ -183,7 +183,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
 
 .auton
 
@@ -223,7 +223,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
 
 ENDIF
 
-IF _DISC_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
+IF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
 
  LDX #0                 \ Set X = 0, so we "press" KY1 below ("?", slow down)
 
@@ -234,14 +234,14 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
 
  LDY INWK+28            \ If the updated acceleration in byte #28 is zero, skip
  BEQ DK11               \ to DK11
 
 ENDIF
 
-IF _DISC_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
+IF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
 
  BMI P%+3               \ If the updated acceleration is negative, skip the
                         \ following instruction
@@ -271,7 +271,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
 
 .DK11
 
@@ -283,7 +283,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
 
 ENDIF
 
-IF _DISC_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
+IF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
 
  LDX #0                 \ Set X = 0, so we "press" KY3 below ("<", increase
                         \ roll)
@@ -295,7 +295,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
 
  ASL INWK+29            \ Shift ship byte #29 left, which shifts bit 7 of the
                         \ updated roll counter (i.e. the roll direction) into
@@ -307,7 +307,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
 
 ENDIF
 
-IF _DISC_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
+IF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
 
  BCC P%+3               \ If the C flag is clear, skip the following instruction
 
@@ -325,7 +325,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
 
  BIT INWK+29            \ We shifted the updated roll counter to the left above,
  BPL DK14               \ so this tests bit 6 of the original value, and if it
@@ -345,7 +345,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
 
 ENDIF
 
-IF _DISC_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
+IF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
 
  STA KY3,X              \ Store A in either KY3 or KY4, depending on whether
                         \ the updated roll rate is increasing (KY3) or
@@ -359,7 +359,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
 
  LDA JSTX               \ Fetch A from JSTX so the next instruction has no
                         \ effect
@@ -377,7 +377,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
 
 ENDIF
 
-IF _DISC_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
+IF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
 
  LDX #0                 \ Set X = 0, so we "press" KY5 below ("X", decrease
                         \ pitch)
@@ -389,7 +389,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
 
  ASL INWK+30            \ Shift ship byte #30 left, which shifts bit 7 of the
                         \ updated pitch counter (i.e. the pitch direction) into
@@ -401,7 +401,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
 
 ENDIF
 
-IF _DISC_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
+IF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
 
  BCS P%+3               \ If the C flag is set, skip the following instruction
 
@@ -430,7 +430,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
 
  LDA JSTY               \ Fetch A from JSTY so the next instruction has no
                         \ effect
@@ -521,13 +521,13 @@ ENDIF
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
 
 .DK15
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Platform
 
  LDX JSTX               \ Set X = JSTX, the current roll rate (as shown in the
                         \ RL indicator on the dashboard)

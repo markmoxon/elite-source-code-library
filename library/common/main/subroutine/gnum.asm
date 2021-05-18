@@ -10,7 +10,7 @@
 \ Get a number from the keyboard, up to the maximum number in QQ25, for the
 \ buying and selling of cargo and equipment.
 \
-IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Comment
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Comment
 \ Pressing "Y" will return the maximum number (i.e. buy/sell all items), while
 \ pressing "N" will abort the sale and return a 0.
 \
@@ -66,7 +66,7 @@ ENDIF
  JSR TT217              \ Scan the keyboard until a key is pressed, and return
                         \ the key's ASCII code in A (and X)
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: Group A: When buying or selling cargo in the enhanced versions, you can specify an exact amount of cargo for the transaction, or you can press "Y" to buy/sell everything, or "N" to buy/sell nothing. In the cassette version, you have to enter the exact amount you want to buy, and if you want to sell an item, then you have to sell your entire stock of that item, rather than part of it
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Enhanced: Group A: When buying or selling cargo in the enhanced versions, you can specify an exact amount of cargo for the transaction, or you can press "Y" to buy/sell everything, or "N" to buy/sell nothing. In the cassette version, you have to enter the exact amount you want to buy, and if you want to sell an item, then you have to sell your entire stock of that item, rather than part of it
 
  LDX R                  \ If R is non-zero then skip to NWDAV2, as we are
  BNE NWDAV2             \ already building a number
@@ -111,7 +111,7 @@ ENDIF
 
  LDA R                  \ Fetch the result so far into A
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Master: Group B: If you try to enter a number that is too big when buying or selling in the Master version, all your key presses are displayed, whereas in the other versions the key press that pushes you over the edge is not shown
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Master: Group B: If you try to enter a number that is too big when buying or selling in the Master version, all your key presses are displayed, whereas in the other versions the key press that pushes you over the edge is not shown
 
  CMP #26                \ If A >= 26, where A is the number entered so far, then
  BCS OUT                \ adding a further digit will make it bigger than 256,
@@ -133,7 +133,7 @@ ENDIF
  ASL A
  ADC T
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Master: See group B
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Master: See group B
 
  ADC S                  \ Add the pressed digit to A and store in R, so R now
  STA R                  \ contains its previous value with the new key press
@@ -158,7 +158,7 @@ ENDIF
                         \ BEQ is needed because the BCS below would jump to OUT
                         \ if R >= QQ25, which we don't want)
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Master: See group B
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Master: See group B
 
  BCS OUT                \ If the result in R > QQ25, jump to OUT to return from
                         \ the subroutine with the result in R
@@ -203,7 +203,7 @@ ENDIF
 
  RTS                    \ Return from the subroutine
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Enhanced: See group A
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Enhanced: See group A
 
 .NWDAV1
 
@@ -217,7 +217,7 @@ IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Enhanced: See group A
 
 ENDIF
 
-IF _DISC_DOCKED \ Minor
+IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Minor
 
  RTS                    \ Return from the subroutine
 
@@ -231,7 +231,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: See group A
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Enhanced: See group A
 
 .NWDAV3
 
@@ -254,7 +254,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _DISC_DOCKED \ Minor
+IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Minor
 
  RTS                    \ Return from the subroutine
 

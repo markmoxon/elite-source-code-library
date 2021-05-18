@@ -36,7 +36,7 @@ IF _CASSETTE_VERSION \ Minor
  LDX #&FF               \ Store &FF in the Y-th byte of the key logger at KL
  STX KL,Y
 
-ELIF _DISC_VERSION
+ELIF _DISC_VERSION OR _ELITE_A_VERSION
 
  LDA #&FF               \ Store &FF in the Y-th byte of the key logger at KL
  STA KL,Y

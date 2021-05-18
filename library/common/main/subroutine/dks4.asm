@@ -1,7 +1,7 @@
 \ ******************************************************************************
 \
 \       Name: DKS4
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
 \       Type: Subroutine
 ELIF _6502SP_VERSION
 \       Type: Macro
@@ -14,7 +14,7 @@ ENDIF
 \
 \ Arguments:
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \   X                   The internal number of the key to check (see p.142 of
 \                       the Advanced User Guide for a list of internal key
 \                       numbers)
@@ -35,11 +35,11 @@ ENDIF
 \                       If the key in A is not being pressed, the value in A is
 \                       unchanged
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
 \   X                   Contains the same as A
 \
 ENDIF
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \ Other entry points:
 \
 \   DKS2-1              Contains an RTS
@@ -51,7 +51,7 @@ IF _ELECTRON_VERSION \ Comment
 ENDIF
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Minor
 
 .DKS4
 

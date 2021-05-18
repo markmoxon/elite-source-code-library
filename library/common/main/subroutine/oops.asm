@@ -29,7 +29,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  LDX #0                 \ set X = 0
  LDA (INF),Y
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
 
  LDX #0                 \ Fetch byte #8 (z_sign) for the ship attacking us, and
  LDY #8                 \ set X = 0
@@ -54,7 +54,7 @@ ENDIF
 
 .OO2
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Minor
 
 \LDX #0                 \ This instruction is commented out in the original
                         \ source, and isn't required as X is set to 0 above
@@ -92,7 +92,7 @@ ENDIF
 
 .OO5
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Minor
 
 \LDX #0                 \ This instruction is commented out in the original
                         \ source, and isn't required as X is set to 0 above

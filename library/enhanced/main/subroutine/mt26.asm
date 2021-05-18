@@ -8,7 +8,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-IF _DISC_DOCKED OR _6502SP_VERSION \ Comment
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Comment
 \ If ESCAPE is pressed or a blank name is entered, then an empty string is
 \ returned.
 \
@@ -16,7 +16,7 @@ ENDIF
 \ Returns:
 \
 \   Y                   The size of the entered text, or 0 if none was entered
-IF _DISC_DOCKED OR _6502SP_VERSION \ Comment
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Comment
 \                       or if ESCAPE was pressed
 ENDIF
 \
@@ -38,7 +38,7 @@ IF _MASTER_VERSION \ Master: When entering text in the Master version, the text 
 
 ENDIF
 
-IF _DISC_DOCKED \ Tube
+IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Tube
 
  LDA #%10000001         \ Clear 6522 System VIA interrupt enable register IER
  STA VIA+&4E            \ (SHEILA &4E) bit 1 (i.e. enable the CA2 interrupt,
@@ -63,7 +63,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _DISC_DOCKED OR _6502SP_VERSION \ Master: Group A: The Master version contains its own custom routine for the extended token that asks for a line of text, while the other enhanced versions use the standard OSWORD command. The Master Compact version of that custom routine supports more characters, as it supports ADFS rather than DFS
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Master: Group A: The Master version contains its own custom routine for the extended token that asks for a line of text, while the other enhanced versions use the standard OSWORD command. The Master Compact version of that custom routine supports more characters, as it supports ADFS rather than DFS
 
  JSR FLKB               \ Call FLKB to flush the keyboard buffer
 
@@ -202,7 +202,7 @@ ENDIF
 
 ENDIF
 
-IF _DISC_DOCKED \ Tube
+IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Tube
 
  LDA #%00000001         \ Set 6522 System VIA interrupt enable register IER
  STA VIA+&4E            \ (SHEILA &4E) bit 1 (i.e. disable the CA2 interrupt,
@@ -217,7 +217,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _DISC_DOCKED OR _6502SP_VERSION \ Master: See group A
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Master: See group A
 
  JMP FEED               \ Jump to FEED to print a newline, returning from the
                         \ subroutine using a tail call

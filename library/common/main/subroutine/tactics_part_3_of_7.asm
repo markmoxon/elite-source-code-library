@@ -10,7 +10,7 @@
 \
 \ This section sets up some vectors and calculates dot products. Specifically:
 \
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Comment
 \   * If this is a lone Thargon without a mothership, set it adrift aimlessly
 \     and we're done
 \
@@ -34,7 +34,7 @@ ENDIF
 \     us work out later on whether the enemy ship is pointing towards us, and
 \     therefore whether it can hit us with its lasers.
 \
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Comment
 \ Other entry points:
 \
 \   GOPL                Make the ship head towards the planet
@@ -44,7 +44,7 @@ ENDIF
 
 .TA21
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform: This code is in part 2 for the cassette version
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Platform: This code is in part 2 for the cassette version
 
  CPX #TGL               \ If this is not a Thargon, jump down to TA14
  BNE TA14
@@ -66,7 +66,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform: This code is i
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: In the enhanced versions, the NEWB flags are used to determine whether we are dealing with a trader, so traders can fly any ship. In the cassette version, traders only ever fly the Cobra Mk III
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhanced: In the enhanced versions, the NEWB flags are used to determine whether we are dealing with a trader, so traders can fly any ship. In the cassette version, traders only ever fly the Cobra Mk III
 
  JSR DORND              \ Set A and X to random numbers
 
@@ -76,7 +76,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: In the enhance
 
 ENDIF
 
-IF _DISC_FLIGHT \ Disc: In the disc version, 39% of traders turn out to be bounty hunters, while it's just 20% in the advanced versions
+IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Disc: In the disc version, 39% of traders turn out to be bounty hunters, while it's just 20% in the advanced versions
 
  CPX #100               \ This is a trader, so if X >= 100 (61% chance), return
  BCS TA22               \ from the subroutine (as TA22 contains an RTS)
@@ -88,7 +88,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: In the enhanced versions, AI is are to each ship according to its NEWB flags, which determine whether it is a trader, a bounty hunter, currently docking, a pirate, hostile, an innocent bystander or a cop
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhanced: In the enhanced versions, AI is are to each ship according to its NEWB flags, which determine whether it is a trader, a bounty hunter, currently docking, a pirate, hostile, an innocent bystander or a cop
 
 .TN1
 
@@ -179,7 +179,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION 
  LDY #10                \ Set (A X) = nosev . XX15
  JSR TAS3
 
-ELIF _DISC_FLIGHT
+ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
 
  JSR TAS3-2             \ Set (A X) = nosev . XX15
 

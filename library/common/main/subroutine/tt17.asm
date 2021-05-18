@@ -3,7 +3,7 @@
 \       Name: TT17
 \       Type: Subroutine
 \   Category: Keyboard
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Scan the keyboard for cursor key or joystick movement
 ELIF _ELECTRON_VERSION
 \    Summary: Scan the keyboard for cursor key movement
@@ -11,7 +11,7 @@ ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ Scan the keyboard and joystick for cursor key or stick movement, and return
 \ the result as deltas (changes) in x- and y-coordinates as follows:
 \
@@ -69,7 +69,7 @@ IF _MASTER_VERSION \ Master: The Master version doesn't check for SHIFT being he
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 
  JSR DOKEY              \ Scan the keyboard for flight controls and pause keys,
                         \ (or the equivalent on joystick) and update the key
@@ -104,7 +104,7 @@ ENDIF
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: Despite never reading the joystick values from the ADC channels, the Electron version still lets the joystick control the crosshairs on the chart views, if joysticks are configured. The result is an uncontrollable crosshair that moves of its own accord, so presumably this is a bug
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: Despite never reading the joystick values from the ADC channels, the Electron version still lets the joystick control the crosshairs on the chart views, if joysticks are configured. The result is an uncontrollable crosshair that moves of its own accord, so presumably this is a bug
 
  LDA JSTK               \ If the joystick is not configured, jump down to TJ1,
  BEQ TJ1                \ otherwise we move the cursor with the joystick
@@ -148,7 +148,7 @@ ENDIF
                         \ works in the opposite way to moving a cursor on-screen
                         \ in terms of left and right
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label
 
  JSR TJS1               \ Call TJS1 just below to set A to a value between -2
                         \ and +2 depending on the joystick roll value (moving
@@ -162,7 +162,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: Group B: The Master has different logic around moving the crosshairs on the chart views, though the results appear to be the same
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: Group B: The Master has different logic around moving the crosshairs on the chart views, though the results appear to be the same
 
  TYA                    \ Copy Y to A
 
@@ -180,7 +180,7 @@ IF _6502SP_VERSION \ Enhanced: See group A
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: See group B
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: See group B
 
  TAX                    \ Copy A to X, so X contains the joystick roll value
 
@@ -229,7 +229,7 @@ IF _6502SP_VERSION \ Enhanced: See group A
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: See group B
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: See group B
 
  TAY                    \ Copy the value of A into Y
 
@@ -262,7 +262,7 @@ ENDIF
 
 .TJ1
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
  LDA KL                 \ Set A to the value of KL (the key pressed)
 
@@ -338,7 +338,7 @@ ENDIF
 
 ENDIF
 
-IF _DISC_DOCKED \ Enhanced: See group A
+IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Enhanced: See group A
 
  STX T                  \ Set T to the value of X, which contains the joystick
                         \ roll value

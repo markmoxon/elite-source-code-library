@@ -19,7 +19,7 @@
 
 .RES2
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron version has a hard-coded number of stardust particles on-screen, so there is no need to reset it after launch from the station
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron version has a hard-coded number of stardust particles on-screen, so there is no need to reset it after launch from the station
 
  LDA #NOST              \ Reset NOSTM, the number of stardust particles, to the
  STA NOSTM              \ maximum allowed (18)
@@ -32,7 +32,7 @@ ENDIF
 
  STX MSTG               \ Reset MSTG, the missile target, to &FF (no target)
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Platform
 
  LDA #128               \ Set the current pitch rate to the mid-point, 128
  STA JSTY
@@ -40,7 +40,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR 
  STA ALP2               \ Reset ALP2 (roll sign) and BET2 (pitch sign)
  STA BET2               \ to negative, i.e. pitch and roll negative
 
-ELIF _DISC_FLIGHT
+ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
 
  LDA #128               \ Set the current pitch and roll rates to the mid-point,
  STA JSTX               \ 128
@@ -58,7 +58,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Platform
 
  STA ALP2+1             \ Reset ALP2+1 (flipped roll sign) and BET2+1 (flipped
  STA BET2+1             \ pitch sign) to positive, i.e. pitch and roll negative
@@ -67,13 +67,13 @@ ENDIF
 
  STA MCNT               \ Reset MCNT (the main loop counter) to 0
 
-IF _DISC_FLIGHT \ Platform
+IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Platform
 
  STA QQ22+1             \ Set the on-screen hyperspace counter to 0
 
 ENDIF
 
-IF _DISC_DOCKED \ Label
+IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Label
 
 .modify
 
@@ -82,7 +82,7 @@ ENDIF
  LDA #3                 \ Reset DELTA (speed) to 3
  STA DELTA
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Platform
 
  STA ALPHA              \ Reset ALPHA (roll angle alpha) to 3
 
@@ -100,7 +100,7 @@ IF _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Platform
 
  LDA SSPR               \ Fetch the "space station present" flag, and if we are
  BEQ P%+5               \ not inside the safe zone, skip the next instruction
@@ -118,7 +118,7 @@ ENDIF
 
  JSR WPSHPS             \ Wipe all ships from the scanner
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 
  JSR ZERO               \ Zero-fill pages &9, &A, &B, &C and &D, which clears
                         \ the ship data blocks, the ship line heap, the ship
@@ -139,7 +139,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  LDA #HI(WP-1)          \ that the heap is empty
  STA SLSP+1
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  LDA #LO(LS%)           \ We have reset the ship line heap, so we now point
  STA SLSP               \ SLSP to LS% (the byte below the ship blueprints at D%)
@@ -148,7 +148,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
  JSR DIALS              \ Update the dashboard
 
@@ -156,7 +156,7 @@ ENDIF
                         \ Finally, fall through into ZINF to reset the INWK
                         \ ship workspace
 
-IF _DISC_FLIGHT \ Platform
+IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Platform
 
  JSR U%                 \ Call U% to clear the key logger
 

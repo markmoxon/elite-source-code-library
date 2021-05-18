@@ -1,8 +1,8 @@
 \ ******************************************************************************
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Comment
 \       Name: TT26
-ELIF _DISC_DOCKED OR _MASTER_VERSION
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
 \       Name: CHPR
 ENDIF
 \       Type: Subroutine
@@ -15,7 +15,7 @@ ENDIF
 \ Print a character at the text cursor (XC, YC), do a beep, print a newline,
 \ or delete left (backspace).
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \ WRCHV is set to point here by the loading process.
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 \ Calls to OSWRCH will end up here when A is not in the range 128-147, as those
@@ -29,7 +29,7 @@ ENDIF
 \
 \                         * 7 (beep)
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \                         * 10-13 (line feeds and carriage returns)
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 \                         * 10 (line feed)
@@ -58,11 +58,11 @@ ENDIF
 \
 \   Y                   Y is preserved
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
 \   C flag              The C flag is cleared
 \
 ENDIF
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \ Other entry points:
 \
 \   RR3+1               Contains an RTS
@@ -71,7 +71,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
 \                       the screen address pointed to by (A SC). Used by the
 \                       BULB routine
 ENDIF
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Comment
 \
 \   rT9                 Contains an RTS
 ENDIF
@@ -83,17 +83,17 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Label
 
 .TT26
 
-ELIF _DISC_DOCKED OR _MASTER_VERSION
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
 
 .CHPR
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Minor
 
  STA K3                 \ Store the A, X and Y registers, so we can restore
  STY YSAV2              \ them at the end (so they don't get changed by this
@@ -116,26 +116,26 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _DISC_DOCKED \ Label
+IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Label
 
 .RRNEW
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Platform
 
  LDY QQ17               \ Load the QQ17 flag, which contains the text printing
                         \ flags
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Minor
 
  CPY #255               \ If QQ17 = 255 then printing is disabled, so jump to
  BEQ RR4                \ RR4, which doesn't print anything, it just restores
                         \ the registers and returns from the subroutine
 
-ELIF _DISC_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
 
  INY                    \ If QQ17 = 255 then printing is disabled, so jump to
  BEQ RR4                \ RR4, which doesn't print anything, it just restores
@@ -172,7 +172,7 @@ IF _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF _DISC_DOCKED \ Master: See group A
+IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Master: See group A
 
  TAY                    \ Set Y = the character to be printed
 
@@ -227,7 +227,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: The advanced versions support 
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Minor
 
  CMP #7                 \ If this is a beep character (A = 7), jump to R5,
  BEQ R5                 \ which will emit the beep, restore the registers and
@@ -251,7 +251,7 @@ ENDIF
  BEQ RRX1               \ RRX1, which will move down a line, restore the
                         \ registers and return from the subroutine
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Platform: The cassette version uses control code 12 for a newline, while the other versions use 13
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Platform: The cassette version uses control code 12 for a newline, while the other versions use 13
 
  LDX #1                 \ If we get here, then this is control code 11-13, of
  STX XC                 \ which only 13 is used. This code prints a newline,
@@ -266,7 +266,7 @@ ENDIF
                         \ bit by setting XC = 1, and we then fall through into
                         \ the line feed routine that's used by control code 10
 
-IF _DISC_DOCKED \ Platform
+IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Platform
 
  CMP #13                \ If this is control code 13 (carriage return) then jump
  BEQ RR4                \ RR4 to restore the registers and return from the
@@ -276,7 +276,7 @@ ENDIF
 
 .RRX1
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Minor
 
  INC YC                 \ Print a line feed, simply by incrementing the row
                         \ number (y-coordinate) of the text cursor, which is
@@ -336,7 +336,7 @@ ENDIF
                         \   ASCII 96-126 are defined in &C200-&C2F0 (page 2)
                         \
                         \ The following code reads the relevant character
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
                         \ bitmap from the above locations in ROM and pokes
 ELIF _6502SP_VERSION
                         \ bitmap from the copied MOS bitmaps at FONT% and pokes
@@ -380,7 +380,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION \ Platform
 ENDIF
 
                         \ Now we want to set X to point to the relevant page
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
                         \ number for this character - i.e. &C0, &C1 or &C2.
 ELIF _6502SP_VERSION
                         \ number for this character - i.e. FONT% to FONT%+2
@@ -416,7 +416,7 @@ IF _6502SP_VERSION \ Platform
                         
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Platform
 
  LDX #&BF               \ Set X to point to the first font page in ROM minus 1,
                         \ which is &C0 - 1, or &BF
@@ -432,7 +432,7 @@ ENDIF
  ASL A                  \ then skip the following instruction
  BCC P%+4
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Platform
 
  LDX #&C1               \ A is 64-126, so set X to point to page &C1
 
@@ -447,7 +447,7 @@ ENDIF
 
  INX                    \ Increment X
                         \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
                         \ By this point, we started with X = &BF, and then
                         \ we did the following:
                         \
@@ -482,7 +482,7 @@ ENDIF
                         \ want, while A contains the low byte (the offset into
                         \ the page) of the address
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Minor
 
  STA P+1                \ Store the address of this character's definition in
  STX P+2                \ P(2 1)
@@ -542,7 +542,7 @@ ENDIF
  LDA XC                 \ Fetch XC, the x-coordinate (column) of the text cursor
                         \ into A
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: The standard disc catalogue is just too wide to fit into Elite's special square screen mode, so when printing the catalogue in the enhanced versions, a space is removed from column 17, which is always a blank column in the middle of the catalogue
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Enhanced: The standard disc catalogue is just too wide to fit into Elite's special square screen mode, so when printing the catalogue in the enhanced versions, a space is removed from column 17, which is always a blank column in the middle of the catalogue
 
  LDX CATF               \ If CATF = 0, jump to RR5, otherwise we are printing a
  BEQ RR5                \ disc catalogue
@@ -614,7 +614,7 @@ ENDIF
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
  ASL A                  \ Multiply A by 8, and store in SC. As each character is
  ASL A                  \ 8 pixels wide, and the special screen mode Elite uses
@@ -654,19 +654,19 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _DISC_FLIGHT \ Platform
+IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Platform
 
  INC XC                 \ Move the text cursor to the right by 1 column
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  LDA YC                 \ Fetch YC, the y-coordinate (row) of the text cursor
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Platform
 
  CPY #127               \ If the character number (which is in Y) <> 127, then
  BNE RR2                \ skip to RR2 to print that character, otherwise this is
@@ -681,7 +681,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR 
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Platform
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Platform
 
  ADC #&5E               \ A contains YC (from above) and the C flag is set (from
  TAX                    \ the CPY #127 above), so these instructions do this:
@@ -733,7 +733,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Platform
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Platform
 
  LDY #&F8               \ Set Y = &F8, so the following call to ZES2 will count
                         \ Y upwards from &F8 to &FF
@@ -783,7 +783,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Platform
 
  BEQ RR4                \ We are done deleting, so restore the registers and
                         \ return from the subroutine (this BNE is effectively
@@ -816,7 +816,7 @@ IF _CASSETTE_VERSION \ Comment
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  CMP #24                \ If the text cursor is on the screen (i.e. YC < 24, so
  BCC RR3                \ we are on rows 1-23), then jump to RR3 to print the
@@ -839,7 +839,7 @@ IF _CASSETTE_VERSION \ Platform
  JMP RR4                \ And restore the registers and return from the
                         \ subroutine
 
-ELIF _DISC_FLIGHT
+ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
 
  JSR TT66               \ Otherwise we are off the bottom of the screen, so
                         \ clear the screen and draw a white border
@@ -847,7 +847,7 @@ ELIF _DISC_FLIGHT
  JMP RR4                \ And restore the registers and return from the
                         \ subroutine
 
-ELIF _DISC_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
 
  PHA                    \ Store A on the stack so we can retrieve it below
 
@@ -936,7 +936,7 @@ ENDIF
                         \ the character data to the right place in screen
                         \ memory
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
  ORA #&60               \ We already stored the least significant byte
                         \ of this screen address in SC above (see the STA SC
@@ -1021,7 +1021,7 @@ ENDIF
 
 .RRL1
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
  LDA (P+1),Y            \ The character definition is at P(2 1) - we set this up
                         \ above - so load the Y-th byte from P(2 1), which will
@@ -1085,7 +1085,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Platform: When we are docked in the disc version, we don't need to worry about displaying text on the space view, so we don't have to implement EOR logic when printing, and instead can use OR logic
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Platform: When we are docked in the disc version, we don't need to worry about displaying text on the space view, so we don't have to implement EOR logic when printing, and instead can use OR logic
 
  EOR (SC),Y             \ If we EOR this value with the existing screen
                         \ contents, then it's reversible (so reprinting the
@@ -1095,7 +1095,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR 
                         \ onto a white background results in a black pixel, but
                         \ that's a small price to pay for easily erasable text
 
-ELIF _DISC_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
 
  ORA (SC),Y             \ OR this value with the current contents of screen
                         \ memory, so the pixels we want to draw are set
@@ -1173,7 +1173,7 @@ ENDIF
 
 .RR4
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Minor
 
  LDY YSAV2              \ We're done printing, so restore the values of the
  LDX XSAV2              \ A, X and Y registers that we saved above and clear
@@ -1200,7 +1200,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Label
 
 .rT9
 
@@ -1210,7 +1210,7 @@ ENDIF
 
 .R5
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Tube
 
  JSR BEEP               \ Call the BEEP subroutine to make a short, high beep
 

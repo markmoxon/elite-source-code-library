@@ -9,7 +9,7 @@
 \
 \ Returns:
 \
-IF _DISC_DOCKED OR _6502SP_VERSION \ Comment
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Comment
 \   X                   The internal key number of the key that was pressed
 ELIF _MASTER_VERSION
 \   X                   The ASCII code of the key that was pressed
@@ -19,7 +19,7 @@ ENDIF
 
 .PAUSE2
 
-IF _DISC_DOCKED OR _6502SP_VERSION \ Platform
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Platform
 
  JSR RDKEY              \ Scan the keyboard for a key press and return the
                         \ internal key number in X (or 0 for no key press)
@@ -36,7 +36,7 @@ ENDIF
                         \ this routine, keep looping back up to PAUSE2, until
                         \ the key is released
 
-IF _DISC_DOCKED OR _6502SP_VERSION \ Platform
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Platform
 
  JSR RDKEY              \ Any pre-existing key press is now gone, so we can
                         \ start scanning the keyboard again, returning the

@@ -9,7 +9,7 @@
 \
 \ Arguments:
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \   A                   The y-coordinate of the bulb as a low-byte screen
 \                       address offset within screen page &7D (as both bulbs
 \                       are on this character row in the dashboard)
@@ -33,7 +33,7 @@ ENDIF
 
  STA SC                 \ Store the low byte of the screen address in SC
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
  STX P+1                \ Set P(2 1) = (Y X)
  STY P+2

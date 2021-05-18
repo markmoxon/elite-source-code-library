@@ -10,7 +10,7 @@
 \ Launch the ship (if we are docked), or show the front space view (if we are
 \ already in space).
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ Called when red key f0 is pressed while docked (launch), after we arrive in a
 ELIF _ELECTRON_VERSION
 \ Called when FUNC-1 is pressed while docked (launch), after we arrive in a
@@ -21,7 +21,7 @@ ENDIF
 
 .TT110
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Platform
 
  LDX QQ12               \ If we are not docked (QQ12 = 0) then jump to NLUNCH
  BEQ NLUNCH             \ to skip the launch tunnel and setup process
@@ -65,7 +65,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR 
 
  STA FIST               \ Update our legal status with the new value
 
-ELIF _DISC_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
 
  LDX #63                \ Before loading the flight code, we need to copy the
                         \ two-letter token table from QQ16 to QQ16_FLIGHT, so
@@ -92,7 +92,7 @@ ELIF _DISC_DOCKED
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform: In the enhanced versions, the launch view has its own QQ11 view number, 255
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Platform: In the enhanced versions, the launch view has its own QQ11 view number, 255
 
  LDA #255               \ Set the view number in QQ11 to 255
  STA QQ11
@@ -101,7 +101,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform: In the enhance
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Platform
 
 .NLUNCH
 

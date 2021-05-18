@@ -17,7 +17,7 @@
 
 .DKJ1
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: The docking computer in the enhanced versions doesn't dock instantly like the cassette version, but it literally takes control of the ship and docks it for you, steering the ship into the slot by "pressing" the same keys that the player would if they were flying
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Enhanced: The docking computer in the enhanced versions doesn't dock instantly like the cassette version, but it literally takes control of the ship and docks it for you, steering the ship into the slot by "pressing" the same keys that the player would if they were flying
 
  LDA auto               \ If auto is non-zero, then the docking computer is
  BNE auton              \ currently activated, so jump to auton in DOKEY so the
@@ -25,7 +25,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: The docking computer in the enhan
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Tube
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Tube
 
  LDY #1                 \ Update the key logger for key 1 in the KYTB table, so
  JSR DKS1               \ KY1 will be &FF if "?" (slow down) is being pressed
@@ -35,7 +35,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Tube
 
  LDA VIA+&40            \ Read 6522 System VIA input register IRB (SHEILA &40)
 
-ELIF _DISC_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
 
  LDA VIA+&40            \ Read 6522 System VIA input register IRB (SHEILA &40)
 

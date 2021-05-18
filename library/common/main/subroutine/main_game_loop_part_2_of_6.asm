@@ -3,10 +3,10 @@
 \       Name: Main game loop (Part 2 of 6)
 \       Type: Subroutine
 \   Category: Main loop
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Comment
 \    Summary: Call the main flight loop, and potentially spawn a trader, an
 \             asteroid, or a cargo canister
-ELIF _DISC_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
 \    Summary: Potentially spawn a trader, an asteroid, or a cargo canister
 \             (though this has no effect when docked)
 ENDIF
@@ -15,14 +15,14 @@ ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-IF _DISC_DOCKED \ Comment
+IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Comment
 \ In the docked code, we start the main game loop at part 2 and then jump
 \ straight to part 5, as parts 1, 3 and 4 are not required when we are docked.
 \
 ENDIF
 \ This section covers the following:
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Comment
 \   * Call M% to do the main flight loop
 \
 ENDIF
@@ -41,7 +41,7 @@ ENDIF
 
 .TT100
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Platform
 
  JSR M%                 \ Call M% to iterate through the main flight loop
 
@@ -88,7 +88,7 @@ ENDIF
                         \ time it will either be an asteroid (98.5% chance) or,
                         \ very rarely, a cargo canister (1.5% chance)
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: As the Electron doesn't support witchspace, we always process ship spawning (the other versions skip the ship spawning logic when in witchspace, as the Thargoids are enough trouble without humans joining the fight)
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: As the Electron doesn't support witchspace, we always process ship spawning (the other versions skip the ship spawning logic when in witchspace, as the Thargoids are enough trouble without humans joining the fight)
 
  LDA MJ                 \ If we are in witchspace following a mis-jump, skip the
  BNE ytq                \ following by jumping down to MLOOP (via ytq above)
@@ -97,13 +97,13 @@ ENDIF
 
  JSR DORND              \ Set A and X to random numbers
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Minor
 
  CMP #35                \ If A >= 35 (87% chance), jump down to MTT1 to skip
  BCS MTT1               \ the spawning of an asteroid or cargo canister and
                         \ potentially spawn something else
 
-ELIF _DISC_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
 
  CMP #35                \ If A >= 35 (87% chance), jump down to MLOOP to skip
  BCS MLOOP              \ the following
@@ -116,13 +116,13 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  CMP #3                 \ bubble, jump down to MTT1 to skip the following and
  BCS MTT1               \ potentially spawn something else
 
-ELIF _DISC_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
 
  LDA MANY+AST           \ If we already have 3 or more asteroids in the local
  CMP #3                 \ bubble, jump down to MLOOP to skip the following
  BCS MLOOP
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
 
  LDA JUNK               \ If we already have 3 or more bits of junk in the local
  CMP #3                 \ bubble, jump down to MTT1 to skip the following and
@@ -151,7 +151,7 @@ ENDIF
  ROL INWK+1             \ Set bit 2 of x_hi to the C flag, which is random, so
  ROL INWK+1             \ this randomly moves us slightly off-centre
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Platform
 
  JSR DORND              \ Set A, X and V flag to random numbers
 
@@ -160,7 +160,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR 
 
 ENDIF
 
-IF _DISC_FLIGHT \ Other: A bug fix for the first version of disc Elite, in which asteroids never appeared
+IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Other: A bug fix for the first version of disc Elite, in which asteroids never appeared
 
 IF _STH_DISC
 
@@ -187,7 +187,7 @@ ENDIF
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Platform
 
  ORA #%01101111         \ Take the random number in A and set bits 0-3 and 5-6,
  STA INWK+29            \ so the result has a 50% chance of being positive or
@@ -252,7 +252,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: In the cassette version, 1
 
  LDA #OIL               \ Set A to the ship number of a cargo canister
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
 
  CMP #10                \ If random A >= 10 (96% of the time), set the C flag
 
@@ -271,13 +271,13 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Label
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Platform
 
  JSR NWSHP              \ Add our new asteroid or canister to the universe
 
 ENDIF
 
-IF _DISC_DOCKED \ Platform
+IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Platform
 
                         \ Fall through into part 5 (parts 3 and 4 are not
                         \ required when we are docked)

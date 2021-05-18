@@ -34,7 +34,7 @@ ELIF _EXECUTIVE
 
 ENDIF
 
-ELIF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  LDA QQ14               \ Subtract the distance to the selected system (in QQ8)
  SEC                    \ from the amount of fuel in our tank (in QQ14) into A
@@ -76,7 +76,7 @@ ENDIF
 
 .ee5
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Platform
 
  JSR CTRL               \ Scan the keyboard to see if CTRL is currently pressed,
                         \ returning a negative value in A if it is
@@ -97,7 +97,7 @@ ENDIF
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron version doesn't support witchspace, so the code for triggering a manual mis-jump is missing
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron version doesn't support witchspace, so the code for triggering a manual mis-jump is missing
 
  AND PATG               \ If the game is configured to show the author's names
                         \ on the start-up screen, then PATG will contain &FF,
@@ -139,7 +139,7 @@ ENDIF
 
  JSR RES2               \ Reset a number of flight variables and workspaces
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Master: The Master version calls an extra bit of code when arriving in a new system that is responsible for breeding any Trumbles in the hold, though as there are no Trumbles in the BBC versions of the game, this never actually breeds anything
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Master: The Master version calls an extra bit of code when arriving in a new system that is responsible for breeding any Trumbles in the hold, though as there are no Trumbles in the BBC versions of the game, this never actually breeds anything
 
  JSR SOLAR              \ Halve our legal status, update the missile indicators,
                         \ and set up data blocks and slots for the planet and
@@ -158,7 +158,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _DISC_FLIGHT \ Platform
+IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Platform
 
  JSR LSHIPS             \ Call LSHIPS to load a new ship blueprints file
 
@@ -170,7 +170,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
  AND #%00111111         \ one of the charts (64 or 128), return from the
  BNE hyR                \ subroutine (as hyR contains an RTS)
 
-ELIF _DISC_FLIGHT
+ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
 
  LDA QQ11               \ If the current view in QQ11 is not a space view (0) or
  AND #%00111111         \ one of the charts (64 or 128), return from the

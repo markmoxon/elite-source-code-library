@@ -3,7 +3,7 @@
 \       Name: Main game loop (Part 4 of 6)
 \       Type: Subroutine
 \   Category: Main loop
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Potentially spawn a lone bounty hunter, a Thargoid, or up to four
 \             pirates
 ELIF _ELECTRON_VERSION
@@ -24,7 +24,7 @@ ELIF _ELECTRON_VERSION
 \   * Potentially spawn (35% chance) either a lone bounty hunter (a Mamba,
 \     Python or Cobra Mk III), or a group of up to 4 pirates (Sidewinders and/or
 \     Mambas)
-ELIF _DISC_FLIGHT
+ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
 \   * Potentially spawn (47% chance) either a lone bounty hunter (a Cobra Mk
 \     III, Asp Mk II, Python or Fer-de-lance), a Thargoid, or a group of up to 4
 \     pirates (a mix of Sidewinders, Mambas, Kraits, Adders, Geckos, Cobras Mk I
@@ -50,7 +50,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
  BPL MLOOP              \ jump to MLOOP if it is still positive, so we only
                         \ do the following when the EV counter runs down
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
 
  DEC EV                 \ Decrement EV, the extra vessels spawning delay, and
  BPL MLOOPS             \ jump to MLOOPS if it is still positive, so we only
@@ -61,7 +61,7 @@ ENDIF
  INC EV                 \ EV is negative, so bump it up again, setting it back
                         \ to 0
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: In mission 2, after picking up the plans, there's an extra 22% chance that a Thargoid will spawn (this is on top of the normal spawning rate of pirates, bounty hunters and Thargoids)
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhanced: In mission 2, after picking up the plans, there's an extra 22% chance that a Thargoid will spawn (this is on top of the normal spawning rate of pirates, bounty hunters and Thargoids)
 
  LDA TP                 \ Fetch bits 2 and 3 of TP, which contain the status of
  AND #%00001100         \ mission 2
@@ -73,7 +73,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: In mission 2, 
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT \ Master: In the disc and 6502SP versions there's a 22% chance of spawning a Thargoid during the spawning loop in part 4, while it's a 14% chance in the Master version
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Master: In the disc and 6502SP versions there's a 22% chance of spawning a Thargoid during the spawning loop in part 4, while it's a 14% chance in the Master version
 
  JSR DORND              \ Set A and X to random numbers
 
@@ -115,7 +115,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: In the disc there's a 47% 
  BCS MLOOP              \ MLOOP to stop spawning (so there's a 35% chance of
                         \ spawning pirates or a lone bounty hunter)
 
-ELIF _DISC_FLIGHT
+ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
 
  CMP #120               \ If the random number in A >= 120 (53% chance), jump to
  BCS MLOOPS             \ MLOOPS to stop spawning (so there's a 47% chance of
@@ -139,7 +139,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
                         \ dangerous systems spawn pirates and bounty hunters
                         \ more often)
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
 
  AND #7                 \ Reduce the random number in A to the range 0-7, and
  CMP gov                \ if A is less than government of this system, jump
@@ -163,7 +163,7 @@ IF _6502SP_VERSION \ Label
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
                         \ Now to spawn a lone bounty hunter, a Thargoid or a
                         \ group of pirates
 ELIF _ELECTRON_VERSION
@@ -186,7 +186,7 @@ ELIF _ELECTRON_VERSION
  BCS mt1                \ to mt1 to spawn pirates, otherwise keep going to
                         \ spawn a lone bounty hunter
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
 
  CMP #100               \ If the random number in A >= 100 (61% chance), jump
  BCS mt1                \ to mt1 to spawn pirates, otherwise keep going to
@@ -207,7 +207,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: In the enhanced versions, 
 
  TXA                    \ First, copy the random number in X to A
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
 
  AND #3                 \ Set A = random number in the range 0-3, which we
                         \ will now use to determine the type of ship
@@ -296,7 +296,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: The Constrictor only spawns in its home system, during the mission 1 endgame, and then it only spawns once... though it can still appear in the ship hanger from time to time
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhanced: The Constrictor only spawns in its home system, during the mission 1 endgame, and then it only spawns once... though it can still appear in the ship hanger from time to time
 
  TYA
 
@@ -314,7 +314,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: The Constricto
 
 ENDIF
 
-IF _DISC_FLIGHT \ Comment
+IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Comment
 
  JSR NWSHP              \ Spawn the new ship, whether it's a pirate, Thargoid or
                         \ Constrictor
@@ -384,7 +384,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: When spawning a pack of pi
 
  ORA #1                 \ Set A to %01 or %11 (Sidewinder or Mamba)
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
 
  STA T                  \ Set T to a random number
 
@@ -399,7 +399,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
 ENDIF
 
-IF _DISC_FLIGHT \ Platform
+IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Platform
 
  STA CPIR               \ Set CPIR to this random number in the range 0-7
 
@@ -409,7 +409,7 @@ IF _DISC_FLIGHT \ Platform
 
 ENDIF
 
-IF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Enhanced: In the enhanced versions, a pack-hunting pirate will fly a Sidewinder, Mamba, Krait, Adder, Gecko, Cobra Mk I, Worm or Cobra Mk III (pirate), while in the cassette version you'll only find them in the cockpit of a Sidewinder or Mamba
+IF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Enhanced: In the enhanced versions, a pack-hunting pirate will fly a Sidewinder, Mamba, Krait, Adder, Gecko, Cobra Mk I, Worm or Cobra Mk III (pirate), while in the cassette version you'll only find them in the cockpit of a Sidewinder or Mamba
 
  ADC #PACK              \ #PACK is set to #SH3, the ship type for a Sidewinder,
                         \ so this sets our new ship type to one of the pack
@@ -420,7 +420,7 @@ ENDIF
 
  JSR NWSHP              \ Try adding a new ship of type A to the local bubble
 
-IF _DISC_FLIGHT \ Platform
+IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Platform
 
  BCS P%+7               \ If the ship was successfully added, skip the following
                         \ two instructions

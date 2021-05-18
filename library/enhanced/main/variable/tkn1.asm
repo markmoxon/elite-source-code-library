@@ -26,7 +26,7 @@ ENDIF
  ECHR 'S'               \                1. LOAD NEW {single cap}COMMANDER{crlf}
  ECHR 'K'               \                2. SAVE {single cap}COMMANDER
  ECHR ' '               \                   {commander name}{crlf}
-IF _DISC_DOCKED \ Comment
+IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Comment
  ECHR 'A'               \                3. CATALOGUE{crlf}
  ECHR 'C'               \                4. DELETE A FILE{crlf}
  ETWO 'C', 'E'          \                5. EXIT{crlf}
@@ -96,7 +96,7 @@ ENDIF
  ETWO '-', '-'
  ECHR '3'
  ECHR '.'
-IF _6502SP_VERSION OR _DISC_DOCKED \ Minor
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Minor
  ECHR ' '
  ECHR 'C'
  ETWO 'A', 'T'
@@ -141,7 +141,7 @@ ENDIF
  ECHR 'D'
  ECHR 'E'
  ECHR 'L'
-IF _6502SP_VERSION OR _DISC_DOCKED \ Master: In the Master version, the disc access menu has an extra option, "Default JAMESON", which resets the commander to the default starting point
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Master: In the Master version, the disc access menu has an extra option, "Default JAMESON", which resets the commander to the default starting point
  ETWO 'E', 'T'
  ECHR 'E'
  ETOK 208
@@ -206,7 +206,7 @@ ENDIF
  ECHR '?'
  EQUB VE
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: The disc and 6502SP versions have an extra token for displaying "COMPETITION NUMBER:" when saving commander files
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Enhanced: The disc and 6502SP versions have an extra token for displaying "COMPETITION NUMBER:" when saving commander files
 
  ECHR 'C'               \ Token 3:      "COMPETITION NUMBER:"
  ECHR 'O'               \
@@ -251,7 +251,7 @@ ENDIF
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: The Master Compact release has a different title and layout for the drive catalogue screen, as the Compact only supports one drive
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Enhanced: The Master Compact release has a different title and layout for the drive catalogue screen, as the Compact only supports one drive
 
  ETOK 150               \ Token 4:      "{clear screen}
  ETOK 151               \                {draw box around title}
@@ -319,7 +319,7 @@ ENDIF
  ETOK 200
  EQUB VE
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Advanced: The disc and 6502SP versions support a "FILE TO DELETE?" prompt when deleting files via the disc access menu, but the token for this prompt isn't present in the Master version. Instead the Master version contains a token for the error message "ILLEGAL ELITE II FILE"; this message is also present in the other versions, but there it is hard-coded rather than being a token, is in sentence case, and contains a spelling mistake ("IIllegal ELITE II file") which is corrected in the Master version
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Advanced: The disc and 6502SP versions support a "FILE TO DELETE?" prompt when deleting files via the disc access menu, but the token for this prompt isn't present in the Master version. Instead the Master version contains a token for the error message "ILLEGAL ELITE II FILE"; this message is also present in the other versions, but there it is hard-coded rather than being a token, is in sentence case, and contains a spelling mistake ("IIllegal ELITE II file") which is corrected in the Master version
 
  EJMP 21                \ Token 9:      "{clear bottom of screen}
  ECHR 'F'               \                FILE TO DELETE?"
@@ -733,7 +733,7 @@ ENDIF
  ECHR 'E'               \                {left align}{tab 6}{all caps}  MESSAGE
  ECHR ' '               \                ENDS{wait for key press}"
  ECHR 'H'               \
-IF _DISC_DOCKED OR _MASTER_VERSION \ Comment
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Comment
  ECHR 'A'               \ Encoded as:   "{25}{9}{23}{14}{2}  <245>T<246>
 ELIF _6502SP_VERSION
  ECHR 'A'               \ Encoded as:   "{25}{9}{30}{23}{14}{2}  <245>T<246>
@@ -842,7 +842,7 @@ ENDIF
  EJMP 24
  EQUB VE
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Comment
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Comment
  ECHR '('               \ Token 12:     "({single cap}C) ACORNSOFT 1984"
  EJMP 19                \
  ECHR 'C'               \ Encoded as:   "({19}C) AC<253>N<235>FT 1984"
@@ -864,14 +864,14 @@ ENDIF
  ECHR '1'
  ECHR '9'
  ECHR '8'
-IF _6502SP_VERSION OR _DISC_DOCKED \ Master: Text token 12 in the Master version has a copyright notice of "(C) Acornsoft 1986", rather than the "1984" of the other versions
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Master: Text token 12 in the Master version has a copyright notice of "(C) Acornsoft 1986", rather than the "1984" of the other versions
  ECHR '4'
 ELIF _MASTER_VERSION
  ECHR '6'
 ENDIF
  EQUB VE
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Platform
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Platform
 
  ECHR 'B'               \ Token 13:     "BY D.BRABEN & I.BELL"
  ECHR 'Y'               \
@@ -926,7 +926,7 @@ ENDIF
  ETWO 'L', 'A'          \                {left align}{tab 6}{all caps}  MESSAGE
  ETWO 'T', 'I'          \                ENDS{wait for key press}"
  ETWO 'O', 'N'          \
-IF _DISC_DOCKED OR _MASTER_VERSION \ Comment
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Comment
  ECHR 'S'               \ Encoded as:   "{25}{9}{23}{14}{2}  C<223>G<248>TU
 ELIF _6502SP_VERSION
  ECHR 'S'               \ Encoded as:   "{25}{9}{30}{23}{14}{2}  C<223>G<248>TU
@@ -1546,7 +1546,7 @@ ENDIF
  ECHR 'E'
  EQUB VE
 
-IF _DISC_DOCKED \ Comment
+IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Comment
  ECHR 'W'               \ Token 95:     "WHORESON BEETLE HEAD FLAP EAR'D
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  ECHR 'W'               \ Token 95:     "WHORESON BEETLE HEADED FLAP EAR'D
@@ -1554,7 +1554,7 @@ ENDIF
  ECHR 'H'               \                KNAVE"
  ETWO 'O', 'R'          \
  ETWO 'E', 'S'          \ Encoded as:   "WH<253><237><223> <247><221><229> HEAD
-IF _DISC_DOCKED \ Comment
+IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Comment
  ETWO 'O', 'N'          \                [198]F<249>P E<238>[39]D KNA<250>"
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  ETWO 'O', 'N'          \                [196]F<249>P E<238>[39]D KNA<250>"
@@ -1568,7 +1568,7 @@ ENDIF
  ECHR 'E'
  ECHR 'A'
  ECHR 'D'
-IF _DISC_DOCKED \ Advanced: In the disc version, the extended system description override that's shown at Usleri in galaxy 1 during mission 1 refers to the Constrictor pilot as a "WHORESON BEETLE HEAD FLAP EAR'D KNAVE". In the advanced versions, this has been changed to the better-sounding "WHORESON BEETLE HEADED FLAP EAR'D KNAVE"
+IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Advanced: In the disc version, the extended system description override that's shown at Usleri in galaxy 1 during mission 1 refers to the Constrictor pilot as a "WHORESON BEETLE HEAD FLAP EAR'D KNAVE". In the advanced versions, this has been changed to the better-sounding "WHORESON BEETLE HEADED FLAP EAR'D KNAVE"
  ETOK 198
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  ETOK 196
@@ -1883,7 +1883,7 @@ ENDIF
  ECHR 'Y'
  EQUB VE
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Master: The disc and 6502SP versions contain a spelling mistake in the extended token system - they incorrectly spell weird as "wierd". The correct spelling is used in the Master version
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Master: The disc and 6502SP versions contain a spelling mistake in the extended token system - they incorrectly spell weird as "wierd". The correct spelling is used in the Master version
 
  ECHR 'W'               \ Token 131:    "WIERD"
  ECHR 'I'               \
@@ -2041,7 +2041,7 @@ ENDIF
  EQUB VE                \
                         \ Encoded as:   "{9}{11}{1}{8}"
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Master: The Master Compact release replaces the "DRIVE" text tokwn with "DIRECTORY", as the Compact only has one disc drive
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Master: The Master Compact release replaces the "DRIVE" text tokwn with "DIRECTORY", as the Compact only has one disc drive
 
  ECHR 'D'               \ Token 151:    "DRIVE"
  ECHR 'R'               \
@@ -2366,7 +2366,7 @@ ENDIF
  ECHR ' '               \
  EQUB VE                \ Encoded as:   "<252> "
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Platform
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Platform
 
  EQUB VE                \ Token 197:    ""
                         \
@@ -2581,7 +2581,7 @@ IF _MASTER_VERSION \ Master: The Master version indents the "INCOMING MESSAGE" s
 ENDIF
  ETWO 'I', 'N'          \                INCOMING MESSAGE"
  ECHR 'C'               \
-IF _DISC_DOCKED \ Comment
+IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Comment
  ECHR 'O'               \ Encoded as:   "{9}{8}{23}{1}<240>COM[195]M<237>SA
 ELIF _6502SP_VERSION
  ECHR 'O'               \ Encoded as:   "{9}{8}{23}{30}{1}<240>COM[195]M<237>SA
@@ -2685,7 +2685,7 @@ ENDIF
  ETOK 154               \                WELL THE SITUATION HAS CHANGED.{cr}
  ECHR ' '               \                 {single cap}OUR BOYS ARE READY FOR A
  EJMP 4                 \                PUSH RIGHT TO THE HOME SYSTEM OF THOSE
-IF _6502SP_VERSION OR _DISC_DOCKED \ Comment
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Comment
  ETOK 204               \                MOTHERS.{cr}
 ELIF _MASTER_VERSION
  ETOK 204               \                MURDERERS.{cr}
@@ -2715,7 +2715,7 @@ ENDIF
  ECHR 'N'               \                {tab 6}{all caps}  MESSAGE ENDS
  ECHR 'A'               \                {wait for key press}"
  ECHR 'V'               \
-IF _DISC_DOCKED \ Master: The disc and 6502SP versions contain a spelling mistake in the mission 2 briefing that's shown when picking up the plans from Ceerdi - they incorrectly spell intelligence as "intellegence". The correct spelling is used in the Master version
+IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Master: The disc and 6502SP versions contain a spelling mistake in the mission 2 briefing that's shown when picking up the plans from Ceerdi - they incorrectly spell intelligence as "intellegence". The correct spelling is used in the Master version
  ECHR 'A'               \ Encoded as:   "{25}{9}{29}{14}{2}GOOD DAY [154]
  ECHR 'L'               \                 {4}[204]I{13} AM {19}AG<246>T {19}B
  ECHR ' '               \                <249>KE OF {19}NAVAL {19}<240>TEL<229>
@@ -2748,7 +2748,7 @@ ELIF _MASTER_VERSION
 ENDIF
  ECHR 'G'               \                <252>[204]<217>R BOYS <238>E <242>ADY F
  ETWO 'E', 'N'          \                <253>[208]PUSH RIGHT[201][147]HOME
-IF _DISC_DOCKED \ Comment
+IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Comment
  ETWO 'C', 'E'          \                 SYSTEM OF <226>O<218> MO<226><244>S
  ETOK 204               \                [204]{24}{9}{29}I{13} HA<250> OBTA
 ELIF _6502SP_VERSION
@@ -2914,7 +2914,7 @@ ENDIF
  ETWO 'S', 'E'
  ECHR ' '
  ECHR 'M'
-IF _6502SP_VERSION OR _DISC_DOCKED \ Master: The disc and 6502SP versions call the Thargoids "those mothers" in the mission 2 briefing that's shown when picking up the plans from Ceerdi. In the Master version, this has changed to "those murderers"
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Master: The disc and 6502SP versions call the Thargoids "those mothers" in the mission 2 briefing that's shown when picking up the plans from Ceerdi. In the Master version, this has changed to "those murderers"
  ECHR 'O'
  ETWO 'T', 'H'
  ETWO 'E', 'R'
@@ -3197,7 +3197,7 @@ ENDIF
  ETOK 179               \                {tab 6}{all caps}  MESSAGE ENDS
  ECHR ' '               \                {wait for key press}"
  ECHR 'H'               \
-IF _DISC_DOCKED OR _MASTER_VERSION \ Comment
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Comment
  ECHR 'A'               \ Encoded as:   "{25}{9}{29}{8}{14}{13}{19}WELL D
 ELIF _6502SP_VERSION
  ECHR 'A'               \ Encoded as:   "{25}{9}{29}{30}{8}{14}{13}{19}WELL D
@@ -3317,7 +3317,7 @@ ENDIF
  EJMP 24
  EQUB VE
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Master: The Master version contains a new prompt in the extended token table, "ARE YOU SURE?", which isn't present in the other versions. It is used to make sure you really do want to revert to the default commander if you choose that option from the disc access menu
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Master: The Master version contains a new prompt in the extended token table, "ARE YOU SURE?", which isn't present in the other versions. It is used to make sure you really do want to revert to the default commander if you choose that option from the disc access menu
 
  EQUB VE                \ Token 224:    ""
                         \
@@ -3525,7 +3525,7 @@ ENDIF
  ECHR 'S'
  EQUB VE
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Master: The Master version contains a new prompt in the extended token table, "{currently selected media} ERROR", which isn't present in the other versions, though it isn't actually used (it was carried over from the Commodore 64 version of the game)
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Master: The Master version contains a new prompt in the extended token table, "{currently selected media} ERROR", which isn't present in the other versions, though it isn't actually used (it was carried over from the Commodore 64 version of the game)
 
  EQUB VE                \ Token 255:    ""
                         \

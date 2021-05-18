@@ -21,7 +21,7 @@
 \
 \   Y2                  The screen y-coordinate of the end of the line
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \ Returns:
 \
 \   Y                   Y is preserved
@@ -42,7 +42,7 @@ IF _MASTER_VERSION \ Minor
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Label
 
 .LL30
 
@@ -76,7 +76,7 @@ ENDIF
 
 .LOIN
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Platform
 
  STY YSAV               \ Store Y into YSAV, so we can preserve it across the
                         \ call to this subroutine
@@ -108,7 +108,7 @@ ENDIF
  ADC #1                 \ adding 1, i.e. using two's complement to make it
                         \ positive
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
 
  SEC                    \ Set the C flag, ready for the subtraction below
 

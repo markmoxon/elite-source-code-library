@@ -16,7 +16,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
                         \ or 1280 times, and draws the planet part of the
                         \ loading screen's Saturn
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
                         \ The following loop iterates CNT(1 0) times, i.e. &300
                         \ or 768 times, and draws the planet part of the
@@ -24,7 +24,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_VERSION \ Master: For most versions, the loading screen's Saturn is drawn randomly, so the dots are different every time the game loads. However, the Master version always draws exactly the same pixels for the Saturn, as the random number generator gets seeded to the same value every time
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Master: For most versions, the loading screen's Saturn is drawn randomly, so the dots are different every time the game loads. However, the Master version always draws exactly the same pixels for the Saturn, as the random number generator gets seeded to the same value every time
 
  LDA VIA+&44            \ Read the 6522 System VIA T1C-L timer 1 low-order
  STA RAND+1             \ counter (SHEILA &44), which increments 1000 times a
@@ -54,7 +54,7 @@ ENDIF
  LDA P                  \             = r1^2
  STA ZP
 
-IF _DISC_VERSION \ Other: Group A: The disc version contains various bits of copy protection code injected into the Saturn-drawing routine in the loader. In the original versions of Elite, the only self-modifying code is in the copy protection, though later versions do use this technique in the main game code
+IF _DISC_VERSION OR _ELITE_A_VERSION \ Other: Group A: The disc version contains various bits of copy protection code injected into the Saturn-drawing routine in the loader. In the original versions of Elite, the only self-modifying code is in the copy protection, though later versions do use this technique in the main game code
 
  LDA #LO(OSBmod)        \ As part of the copy protection, the JSR OSB
  STA OSBjsr+1           \ instruction at OSBjsr gets modified to point to OSBmod
@@ -265,7 +265,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
                         \ or 1280 times, and draws the rings around the loading
                         \ screen's Saturn
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
                         \ The following loop iterates CNT3(1 0) times, i.e. &333
                         \ or 819 times, and draws the rings around the loading
@@ -285,7 +285,7 @@ ENDIF
  STA ZP+1               \ Set ZP+1 = A
                         \          = r5^2 / 256
 
-IF _DISC_VERSION \ Other: See group A
+IF _DISC_VERSION OR _ELITE_A_VERSION \ Other: See group A
 
  LDA #HI(OSBmod)        \ As part of the copy protection, the JSR OSB
  STA OSBjsr+2           \ instruction at OSBjsr gets modified to point to OSBmod
@@ -397,7 +397,7 @@ ENDIF
 
  BNE PLL3               \ Loop back to PLL3 until CNT3+1 = 0
 
-IF _DISC_VERSION \ Other: See group A
+IF _DISC_VERSION OR _ELITE_A_VERSION \ Other: See group A
 
  LDA #&00               \ Set ZP(1 0) = &6300
  STA ZP

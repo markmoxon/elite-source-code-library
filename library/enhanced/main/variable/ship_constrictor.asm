@@ -10,17 +10,17 @@
 
 .SHIP_CONSTRICTOR
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Platform
  EQUB 3                 \ Max. canisters on demise = 3
  EQUW 65 * 65           \ Targetable area          = 65 * 65
-ELIF _DISC_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
  EQUB 3 + (15 << 4)     \ Max. canisters on demise = 3
                         \ Market item when scooped = 15 + 1 = 16 (Alien items)
  EQUW 99 * 99           \ Targetable area          = 99 * 99
 ENDIF
  EQUB &7A               \ Edges data offset (low)  = &007A
  EQUB &DA               \ Faces data offset (low)  = &00DA
-IF _DISC_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Constrictors are shown in cyan
+IF _DISC_VERSION OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Constrictors are shown in cyan
  EQUB 77                \ Max. edge count          = (77 - 1) / 4 = 19
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 81                \ Max. edge count          = (81 - 1) / 4 = 20
@@ -32,20 +32,20 @@ ENDIF
  EQUW 0                 \ Bounty                   = 0
  EQUB 40                \ Number of faces          = 40 / 4 = 10
  EQUB 45                \ Visibility distance      = 45
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Platform
  EQUB 252               \ Max. energy              = 252
  EQUB 36                \ Max. speed               = 36
-ELIF _DISC_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
  EQUB 200               \ Max. energy              = 200
  EQUB 55                \ Max. speed               = 55
 ENDIF
  EQUB &00               \ Edges data offset (high) = &007A
  EQUB &00               \ Faces data offset (high) = &00DA
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Platform
  EQUB %00110100         \ Laser power              = 6
                         \ Missiles                 = 4
-ELIF _DISC_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
  EQUB %00101111         \ Laser power              = 2
                         \ Missiles                 = 7
 ENDIF

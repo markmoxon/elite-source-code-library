@@ -1,6 +1,6 @@
 .LSX
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
  SKIP 0                 \ LSX is an alias that points to the first byte of the
                         \ sun line heap at LSO

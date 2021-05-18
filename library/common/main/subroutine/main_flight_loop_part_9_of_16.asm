@@ -46,7 +46,7 @@ ELIF _ELECTRON_VERSION
                         \ to MA62 to fail docking (so trying to dock at a
                         \ station that we have annoyed does not end well)
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  LDA K%+NI%+36          \ 1. Fetch the NEWB flags (byte #36) of the second ship
  AND #%00000100         \ in the ship data workspace at K%, which is reserved
@@ -71,7 +71,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: The cassette version conta
  BMI MA62               \ if it is negative, we are facing away from the
                         \ station, so jump to MA62 to fail docking
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  JSR SPS1               \ Call SPS1 to calculate the vector to the planet and
                         \ store it in XX15
@@ -85,7 +85,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION 
  CMP #89                \ 4. If z-axis < 89, jump to MA62 to fail docking, as
  BCC MA62               \ we are not in the 22.0 degree safe cone of approach
 
-ELIF _DISC_VERSION
+ELIF _DISC_VERSION OR _ELITE_A_VERSION
 
  CMP #86                \ 4. If z-axis < 86, jump to MA62 to fail docking, as
  BCC MA62               \ we are not in the 26.3 degree safe cone of approach
@@ -118,7 +118,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
  JMP BAY                \ Go to the docking bay (i.e. show the Status Mode
                         \ screen)
 
-ELIF _DISC_VERSION
+ELIF _DISC_VERSION OR _ELITE_A_VERSION
 
  JSR RES2               \ Reset a number of flight variables and workspaces
 

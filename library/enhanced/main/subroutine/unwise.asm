@@ -7,7 +7,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-IF _DISC_DOCKED \ Comment
+IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Comment
 \ This routine modifies the instructions in the main line-drawing routine at
 \ LOIN/LL30, flipping the drawing logic between the default EOR logic (which
 \ merges with whatever is already on screen, allowing us to erase anything we
@@ -32,7 +32,7 @@ ENDIF
 
 .UNWISE
 
-IF _DISC_DOCKED \ Screen
+IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Screen
 
  LDA LIL2+2             \ Flip bit 6 of LIL2+2 to change the EOR (SC),Y in LIL2
  EOR #%01000000         \ to an ORA (SC),Y (or back again)

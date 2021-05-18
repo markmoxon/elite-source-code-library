@@ -3,13 +3,13 @@
 \       Name: CLYNS
 \       Type: Subroutine
 \   Category: Utility routines
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Clear the bottom three text rows of the mode 4 screen
 ELIF _6502SP_VERSION
 \    Summary: Implement the #clyns command (clear the bottom of the screen)
 ENDIF
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ Clear some space at the bottom of the screen and move the text cursor to
@@ -45,7 +45,7 @@ IF _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF _DISC_DOCKED OR _MASTER_VERSION \ Platform
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Platform
 
  LDA #%11111111         \ Set DTW2 = %11111111 to denote that we are not
  STA DTW2               \ currently printing a word
@@ -75,7 +75,7 @@ ENDIF
  LDA #20                \ Move the text cursor to row 20, near the bottom of
  STA YC                 \ the screen
 
-IF _DISC_DOCKED \ Screen
+IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Screen
 
  JSR TT67               \ Print a newline, which will move the text cursor down
                         \ a line (to row 21) and back to column 1
@@ -85,7 +85,7 @@ IF _DISC_DOCKED \ Screen
  LDA #7
  STA SC
 
-ELIF _CASSETTE_VERSION OR _DISC_FLIGHT
+ELIF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT
 
  LDA #&75               \ Set the two-byte value in SC to &7507
  STA SC+1
@@ -125,7 +125,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Screen
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Screen
 
  LDA #0                 \ Call LYN to clear the pixels from &7507 to &75F0
  JSR LYN
@@ -154,7 +154,7 @@ ELIF _ELECTRON_VERSION
 
  RTS                    \ Return from the subroutine
 
-ELIF _DISC_FLIGHT
+ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
 
  LDA #0                 \ Call LYN to clear the pixels from &7507 to &75F0
  JSR LYN

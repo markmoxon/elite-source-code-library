@@ -123,7 +123,7 @@
                         \ the C flag and return from the subroutine, as the
                         \ whole circle is off-screen to the bottom
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
  CPX #2*Y-1             \ If we get here then A is zero, which means the top
 ELIF _MASTER_VERSION
@@ -136,7 +136,7 @@ ENDIF
                         \ which case the top of the circle is hidden by the
                         \ dashboard, so the circle isn't on-screen). We do this
                         \ by checking the low byte of the result in X against
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
                         \ 2 * #Y - 1, and returning the C flag from this
                         \ comparison. The constant #Y is the y-coordinate of the
                         \ mid-point of the space view, so 2 * #Y - 1 is 191, the

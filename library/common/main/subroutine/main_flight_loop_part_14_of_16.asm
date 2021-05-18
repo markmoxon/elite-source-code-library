@@ -18,7 +18,7 @@
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: As the Electron version doesn't have witchspace, we always need to do the main loop check for possibly arriving in the station's safe zone
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: As the Electron version doesn't have witchspace, we always need to do the main loop check for possibly arriving in the station's safe zone
 
  LDA MJ                 \ If we are in witchspace, jump down to MA23S to skip
  BNE MA23S              \ the following, as there are no space stations in
@@ -121,7 +121,7 @@ IF _CASSETTE_VERSION \ Platform: In the cassette version, we don't remove the su
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: As the Electron version doesn't have suns, we don't need to remove it from the screen when we enter the station's safe zone
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: As the Electron version doesn't have suns, we don't need to remove it from the screen when we enter the station's safe zone
 
  JSR WPLS               \ Call WPLS to remove the sun from the screen, as we
                         \ can't have both the sun and the space station at the
@@ -134,7 +134,7 @@ ENDIF
 
 .MA23S
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 
  JMP MA23               \ Jump to MA23 to skip the following planet and sun
                         \ altitude checks

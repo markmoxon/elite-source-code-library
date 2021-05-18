@@ -14,7 +14,7 @@
  EQUW 75 * 75           \ Targetable area          = 75 * 75
  EQUB &6E               \ Edges data offset (low)  = &006E
  EQUB &BE               \ Faces data offset (low)  = &00BE
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Vipers are shown in cyan
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Vipers are shown in cyan
  EQUB 77                \ Max. edge count          = (77 - 1) / 4 = 19
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 81                \ Max. edge count          = (81 - 1) / 4 = 20
@@ -28,7 +28,7 @@ ENDIF
  EQUB 23                \ Visibility distance      = 23
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: The Viper has a different maximum energy in the disc version (100), cassette version (120) and advanced versions (140), so they are easiest to kill in the disc version, harder to kill in the cassette version, and even harder to kill in the advanced versions
  EQUB 120               \ Max. energy              = 120
-ELIF _DISC_VERSION
+ELIF _DISC_VERSION OR _ELITE_A_VERSION
  EQUB 100               \ Max. energy              = 100
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 140               \ Max. energy              = 140

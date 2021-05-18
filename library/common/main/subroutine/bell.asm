@@ -15,7 +15,7 @@
 
  LDA #7                 \ Control code 7 makes a beep, so load this into A
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ 6502SP: If speech is enabled in the Executive version, only the BELL routine makes a standard system beep (the CHPR routine no longer does)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ 6502SP: If speech is enabled in the Executive version, only the BELL routine makes a standard system beep (the CHPR routine no longer does)
 
                         \ Fall through into the TT26 print routine to
                         \ actually make the sound

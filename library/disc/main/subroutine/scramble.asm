@@ -3,10 +3,10 @@
 \       Name: scramble
 \       Type: Subroutine
 \   Category: Loader
-IF _DISC_FLIGHT \ Comment
+IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Comment
 \    Summary: Decrypt the main flight code between &1300 and &55FF and jump into
 \             the main game loop
-ELIF _DISC_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
 \    Summary: Decrypt the main docked code between &1300 and &5FFF and
 \             the main game loop
 ENDIF
@@ -52,7 +52,7 @@ ENDIF
 
  INX                    \ Increment X to point to the next page in memory
 
-IF _DISC_FLIGHT \ Platform
+IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Platform
 
  CPX #&56               \ Loop back to scrl to decrypt the next page until we
  BNE scrl               \ reach the start of page &56
@@ -60,7 +60,7 @@ IF _DISC_FLIGHT \ Platform
  JMP RSHIPS             \ Call RSHIPS to launch from the station, load a new set
                         \ of ship blueprints and jump into the main game loop
 
-ELIF _DISC_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
 
  CPX #&60               \ Loop back to scrl to decrypt the next page until we
  BNE scrl               \ reach the start of page &60

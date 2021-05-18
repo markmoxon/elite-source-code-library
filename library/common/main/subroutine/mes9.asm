@@ -21,14 +21,14 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION 
  LSR de                 \ If bit 0 of variable de is clear, return from the
  BCC out                \ subroutine (as out contains an RTS)
 
-ELIF _DISC_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
 
  LSR de                 \ If bits 1-7 of variable de are clear, return from the
  BEQ out                \ subroutine (as out contains an RTS). This means that
                         \ " DESTROYED" is never shown, even if bit 0 of de is
                         \ set, which makes sense as we are docked
 
-ELIF _DISC_FLIGHT
+ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
 
  LSR de                 \ If bit 0 of variable de is clear, return from the
  BCC DK5                \ subroutine (as DK5 contains an RTS)

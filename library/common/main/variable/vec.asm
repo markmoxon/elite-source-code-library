@@ -1,4 +1,4 @@
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
 \ ******************************************************************************
 \
 \       Name: VEC
@@ -19,7 +19,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION \ Minor
                         \ This gets set to the value of the original IRQ1 vector
                         \ by the loading process
 
-ELIF _DISC_VERSION
+ELIF _DISC_VERSION OR _ELITE_A_VERSION
 
  EQUW &0004             \ VEC = &7FFE
                         \

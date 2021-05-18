@@ -1,6 +1,6 @@
 .HFX
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _ELITE_A_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
  SKIP 1                 \ A flag that toggles the hyperspace colour effect
                         \
                         \   * 0 = no colour effect

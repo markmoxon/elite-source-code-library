@@ -26,7 +26,7 @@
 
 .qv
 
-IF _DISC_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Standard: When buying a laser in the cassette version, the menu of available views is always shown below the equipment list. In the other versions, the list of equipment in systems with tech level 8 and above is too long to squeeze in the menu (due to the extra lasers you can buy in these versions), so when buying lasers in these systems, the whole screen is cleared and the menu is shown in the middle of the screen
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Standard: When buying a laser in the cassette version, the menu of available views is always shown below the equipment list. In the other versions, the list of equipment in systems with tech level 8 and above is too long to squeeze in the menu (due to the extra lasers you can buy in these versions), so when buying lasers in these systems, the whole screen is cleared and the menu is shown in the middle of the screen
 
  LDA tek                \ If the current system's tech level is less than 8,
  CMP #8                 \ skip the next two instructions, otherwise we clear the
@@ -39,7 +39,7 @@ IF _DISC_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Standard: When buying a 
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Tube
 
  LDY #16                \ Move the text cursor to row 16, and at the same time
  STY YC                 \ set Y to a counter going from 16-20 in the loop below
@@ -60,7 +60,7 @@ ENDIF
 
 .qv1
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Tube
 
  LDX #12                \ Move the text cursor to column 12
  STX XC
@@ -88,7 +88,7 @@ ENDIF
  ADC #80                \ "RIGHT"
  JSR TT27
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Tube
 
  INC YC                 \ Move the text cursor down a row
 
@@ -129,7 +129,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  CMP #4                 \ If the number entered in A >= 4, then it is not a
  BCS qv3                \ valid view number, so jump back to qv3 to try again
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
 
  CMP #4                 \ If the number entered in A < 4, then it is a valid
  BCC qv3                \ view number, so jump down to qv3 as we are done

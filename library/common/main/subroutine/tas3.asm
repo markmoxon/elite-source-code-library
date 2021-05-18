@@ -28,7 +28,7 @@
 \
 \   (A X)               The result of the dot product
 \
-IF _DISC_FLIGHT \ Comment
+IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Comment
 \ Other entry points:
 \
 \   TAS3-2              Calculate nosev . XX15
@@ -36,7 +36,7 @@ IF _DISC_FLIGHT \ Comment
 ENDIF
 \ ******************************************************************************
 
-IF _DISC_FLIGHT \ Minor
+IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Minor
 
  LDY #10                \ Set Y = 10 so we calculate nosev . XX15
 

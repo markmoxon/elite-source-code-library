@@ -12,7 +12,7 @@
 \
 \ Arguments:
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Comment
 \   A                   The number of the recursive token to show below the
 \                       rotating ship (see variable QQ18 for details of
 \                       recursive tokens)
@@ -32,7 +32,7 @@ IF _MASTER_VERSION \ Comment
 ENDIF
 \ Returns:
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Comment
 \   X                   If a key is being pressed, X contains the internal key
 \                       number, otherwise it contains 0
 ELIF _MASTER_VERSION
@@ -83,7 +83,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform: The Master version has a unique internal view number for the title screen (13)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Platform: The Master version has a unique internal view number for the title screen (13)
 
  LDA #1                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 1
@@ -108,7 +108,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Minor
 
  DEC QQ11               \ Decrement QQ11 to 0, so from here on we are using a
                         \ space view
@@ -128,7 +128,7 @@ ENDIF
  LDA #96                \ Set nosev_z hi = 96 (96 is the value of unity in the
  STA INWK+14            \ rotation vector)
 
-IF _DISC_DOCKED \ Other: The disc version contains various bits of copy protection code injected into the loader, and the results get checked in the main title sequence to make sure nothing has been changed
+IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Other: The disc version contains various bits of copy protection code injected into the loader, and the results get checked in the main title sequence to make sure nothing has been changed
 
  LDA &9F                \ As part of the copy protection, location &9F is set to
  CMP #219               \ 219 in the OSBmod routine in elite-loader3.asm. This
@@ -170,7 +170,7 @@ ENDIF
  LDA TYPE               \ Set up a new ship, using the ship type in TYPE
  JSR NWSHP
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Tube
 
  LDY #6                 \ Move the text cursor to column 6
  STY XC
@@ -196,7 +196,7 @@ ENDIF
  LDA #30                \ Print recursive token 144 ("---- E L I T E ----")
  JSR plf                \ followed by a newline
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Tube
 
  LDY #6                 \ Move the text cursor to column 6 again
  STY XC
@@ -230,7 +230,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  LDA #254               \ Print recursive token 94 ("BY D.BRABEN & I.BELL")
  JSR TT27
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
 
  LDA #13                \ Print extended token 13 ("BY D.BRABEN & I.BELL")
  JSR DETOK
@@ -248,7 +248,7 @@ IF _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Platform
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Platform
 
  LDA brkd               \ If brkd = 0, jump to BRBR2 to skip the following, as
  BEQ BRBR2              \ we do not have a system error message to display
@@ -257,7 +257,7 @@ IF _6502SP_VERSION OR _DISC_DOCKED \ Platform
 
 ENDIF
 
-IF _DISC_DOCKED \ Master: Group B: The Master version shows the "Load New Commander (Y/N)?" prompt on row 20, while the other versions show it one line lower, on row 21
+IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Master: Group B: The Master version shows the "Load New Commander (Y/N)?" prompt on row 20, while the other versions show it one line lower, on row 21
 
  LDA #7                 \ Move the text cursor to column 7
  STA XC
@@ -283,7 +283,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Platform
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Platform
 
                         \ The following loop prints out the null-terminated
                         \ message pointed to by (&FD &FE), which is the MOS
@@ -310,7 +310,7 @@ IF _6502SP_VERSION OR _DISC_DOCKED \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Master: See group B
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Master: See group B
 
  JSR CLYNS              \ Clear the bottom three text rows of the upper screen,
                         \ and move the text cursor to column 1 on row 21, i.e.
@@ -336,7 +336,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Master: The Master version shows the
 
  JSR ex                 \ Print recursive token 148 ("(C) ACORNSOFT 1984")
 
-ELIF _DISC_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
 
  PLA                    \ Restore the recursive token number we stored on the
                         \ stack at the start of this subroutine
@@ -415,7 +415,7 @@ ENDIF
  JSR MVEIT              \ Move the ship in space according to the orientation
                         \ vectors and the new value in z_hi
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Minor
 
  LDA #128               \ Set z_lo = 128, so the closest the ship gets to us is
  STA INWK+6             \ z_hi = 1, z_lo = 128, or 256 + 128 = 384
@@ -447,7 +447,7 @@ IF _6502SP_VERSION \ 6502SP: The 6502SP version only scans for key presses every
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Minor
 
  ASL A                  \ Set A = 0
 
@@ -472,13 +472,13 @@ ENDIF
 
  JSR LL9                \ Call LL9 to display the ship
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Platform
 
  DEC MCNT               \ Decrement the main loop counter
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Electron: Group D: As joysticks are not supported in the Electron version, it doesn't check for the joystick fire button being pressed during the "Press Fire Or Space,Commander." stage of the title screen
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Electron: Group D: As joysticks are not supported in the Electron version, it doesn't check for the joystick fire button being pressed during the "Press Fire Or Space,Commander." stage of the title screen
 
  LDA VIA+&40            \ Read 6522 System VIA input register IRB (SHEILA &40)
 
@@ -535,7 +535,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Electron: See group D
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Electron: See group D
 
  BEQ TL2                \ If the joystick fire button is pressed, jump to TL2
 
@@ -549,7 +549,7 @@ ENDIF
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Tube
 
  JSR RDKEY              \ Scan the keyboard for a key press
 
@@ -584,7 +584,7 @@ IF _6502SP_VERSION \ 6502SP: See group C
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: See group D
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: See group D
 
 .TL2
 
@@ -600,7 +600,7 @@ IF _6502SP_VERSION \ Label
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
  RTS                    \ Return from the subroutine
 

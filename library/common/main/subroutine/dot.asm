@@ -3,7 +3,7 @@
 \       Name: DOT
 \       Type: Subroutine
 \   Category: Dashboard
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Comment
 \    Summary: Draw a dot on the compass
 ELIF _6502SP_VERSION
 \    Summary: Implement the #DOdot command (draw a dot on the compass)
@@ -13,13 +13,13 @@ ENDIF
 \
 \ Arguments:
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Comment
 \   COMX                The screen pixel x-coordinate of the dot
 \
 \   COMY                The screen pixel y-coordinate of the dot
 \
 ENDIF
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Comment
 \   COMC                The colour and thickness of the dot:
 \
 \                         * &F0 = a double-height dot in yellow/white, for when
@@ -56,7 +56,7 @@ IF _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Tube
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Tube
 
  LDA COMY               \ Set Y1 = COMY, the y-coordinate of the dot
  STA Y1
@@ -103,7 +103,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Screen
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Screen
 
  CMP #&F0               \ If COL is &F0 then the dot is in front of us and we
  BNE CPIX2              \ want to draw a double-height dot, so if it isn't &F0

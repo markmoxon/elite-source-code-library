@@ -8,7 +8,7 @@
 \ ------------------------------------------------------------------------------
 \
 \ This table contains the sound envelope data, which is passed to OSWORD by the
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \ FNE macro to create the four sound envelopes used in-game. Refer to chapter 30
 \ of the BBC Micro User Guide for details of sound envelopes and what all the
 \ parameters mean.
@@ -40,7 +40,7 @@ IF _CASSETTE_VERSION \ Standard: There is a subtle difference between the casset
 ELIF _ELECTRON_VERSION
 
  EQUB 1, 1, 0, 111, -8, 4, 1, 8, 126, 0, 0, -126, 126, 126
-ELIF _6502SP_VERSION OR _DISC_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION
 
  EQUB 1, 1, 0, 111, -8, 4, 1, 8, 8, -2, 0, -1, 126, 44
 ENDIF

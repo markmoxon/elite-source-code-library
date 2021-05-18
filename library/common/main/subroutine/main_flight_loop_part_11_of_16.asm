@@ -26,7 +26,7 @@
 
 .MA26
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: Ships that have docked or been scooped in the enhanced versions are hidden from the scanner
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhanced: Ships that have docked or been scooped in the enhanced versions are hidden from the scanner
 
  LDA NEWB               \ If bit 7 of the ship's NEWB flags is clear, skip the
  BPL P%+5               \ following instruction
@@ -45,7 +45,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION 
  JSR PLUT               \ Call PLUT to update the geometric axes in INWK to
                         \ match the view (front, rear, left, right)
 
-ELIF _DISC_FLIGHT
+ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
 
  LDX VIEW               \ Load the current view into X
 
@@ -71,7 +71,7 @@ ENDIF
  JSR BEEP               \ We have missile lock and an armed missile, so call
                         \ the BEEP subroutine to make a short, high beep
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Screen
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Screen
 
  LDX XSAV               \ Call ABORT2 to store the details of this missile
  LDY #&0E               \ lock, with the targeted ship's slot number in X
@@ -112,7 +112,7 @@ ENDIF
  JSR EXNO               \ the crosshairs, so call EXNO to make the sound of
                         \ us making a laser strike on another ship
 
-IF _DISC_FLIGHT \ Advanced: Only military lasers can harm the Cougar, and then they only inflict a quarter of the damage that military lasers inflict on normal ships
+IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Advanced: Only military lasers can harm the Cougar, and then they only inflict a quarter of the damage that military lasers inflict on normal ships
 
  LDA TYPE               \ Did we just hit the space station? If so, jump to
  CMP #SST               \ MA14+2 to make the station hostile, skipping the
@@ -133,7 +133,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _DISC_FLIGHT \ Enhanced: Only military lasers can harm the Constrictor in mission 1, and then they only inflict a quarter of the damage that military lasers inflict on normal ships
+IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Enhanced: Only military lasers can harm the Constrictor in mission 1, and then they only inflict a quarter of the damage that military lasers inflict on normal ships
 
  LDA LAS                \ Set A to the power of the laser we just used to hit
                         \ the ship (i.e. the laser in the current view)
@@ -232,7 +232,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Destroying an asteroid wit
 
 .oh
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
 
  ASL INWK+31            \ Set bit 7 of the ship byte #31 to indicate that it has
  SEC                    \ now been killed

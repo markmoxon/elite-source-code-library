@@ -13,7 +13,7 @@ ENDIF
 
 .LSX2
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Minor
 
  SKIP 78                \ The ball line heap for storing x-coordinates (see the
                         \ deep dive on "The ball line heap" for details)

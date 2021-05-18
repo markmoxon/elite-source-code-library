@@ -24,7 +24,7 @@ IF _CASSETTE_VERSION \ Label
                         \ success, so if it's clear, jump to NO1 to return from
                         \ the subroutine (as NO1 contains an RTS)
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT
 
  BCC KYTB               \ The C flag will be set if the call to SFS1-2 was a
                         \ success, so if it's clear, jump to KYTB to return from
@@ -69,7 +69,7 @@ ENDIF
  LDA #120               \ Print recursive token 120 ("INCOMING MISSILE") as an
  JSR MESS               \ in-flight message
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Master: The Master version has a unique missile launch sound
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Master: The Master version has a unique missile launch sound
 
  LDA #48                \ Call the NOISE routine with A = 48 to make the sound
  BNE NOISE              \ of the missile being launched and return from the

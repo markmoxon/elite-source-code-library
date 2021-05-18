@@ -4,7 +4,7 @@
                         \
                         \ There are #NOSH + 1 slots, but the ship-spawning
                         \ routine at NWSHP only populates #NOSH of them, so
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
                         \ there are 13 slots but only 12 are used for ships
 ELIF _6502SP_VERSION
                         \ there are 21 slots but only 20 are used for ships

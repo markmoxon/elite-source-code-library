@@ -128,7 +128,7 @@ IF _CASSETTE_VERSION OR _MASTER_VERSION \ Minor
  JMP PLS22              \ Jump to PLS22 to draw the crater, returning from the
                         \ subroutine using a tail call
 
-ELIF _DISC_VERSION
+ELIF _DISC_VERSION OR _ELITE_A_VERSION
 
  LDA #0                 \ Set CNT2 = 0 as we are drawing a full circle, so we
  STA CNT2               \ don't need to apply an offset

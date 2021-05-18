@@ -14,7 +14,7 @@
 \   X                   The slot number of the ship to lock our missile onto, or
 \                       &FF to remove missile lock
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \   Y                   The new colour of the missile indicator:
 \
 \                         * &00 = black (no missile)

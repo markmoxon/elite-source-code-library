@@ -14,7 +14,7 @@
  EQUW 60 * 60           \ Targetable area          = 60 * 60
  EQUB &86               \ Edges data offset (low)  = &0086
  EQUB &F6               \ Faces data offset (low)  = &00F6
-IF _DISC_FLIGHT \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Asps are shown in cyan
+IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Asps are shown in cyan
  EQUB 101               \ Max. edge count          = (101 - 1) / 4 = 25
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 105               \ Max. edge count          = (105 - 1) / 4 = 26

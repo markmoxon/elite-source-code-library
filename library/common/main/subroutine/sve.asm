@@ -3,7 +3,7 @@
 \       Name: SVE
 \       Type: Subroutine
 \   Category: Save and load
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Comment
 \    Summary: Save the commander file
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 \    Summary: Display the disc access menu and process saving of commander files
@@ -23,7 +23,7 @@ ENDIF
 
 .SVE
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Platform
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Platform
 
  JSR ZEBC               \ Call ZEBC to zero-fill pages &B and &C
 
@@ -40,7 +40,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _DISC_DOCKED \ Platform
+IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Platform
 
  LDA #LO(MEBRK)         \ Set BRKV to point to the MEBRK routine, which is the
  STA BRKV               \ BRKV handler for disc access operations, and replaces
@@ -58,7 +58,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: Group A: The enhanced versions show a disc access menu when the "@" key is pressed, which lets you load and save commanders, catalogue discs and delete files
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Enhanced: Group A: The enhanced versions show a disc access menu when the "@" key is pressed, which lets you load and save commanders, catalogue discs and delete files
 
  LDA #1                 \ Print extended token 1, the disc access menu, which
  JSR DETOK              \ presents these options:
@@ -209,7 +209,7 @@ ENDIF
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Enhanced: See group A
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Enhanced: See group A
 
  JSR GTNMEW             \ If we get here then option 2 (save) was chosen, so
                         \ call GTNMEW to fetch the name of the commander file
@@ -236,7 +236,7 @@ ENDIF
 
  LSR SVC                \ Halve the save count value in SVC
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: In the disc and 6502SP versions, the competition number is labelled as such when saving. In the cassette version, it is just displayed as a standalone number, without any clues as to what it is, while the Master doesn't show the number at all
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Enhanced: In the disc and 6502SP versions, the competition number is labelled as such when saving. In the cassette version, it is just displayed as a standalone number, without any clues as to what it is, while the Master doesn't show the number at all
 
  LDA #3                 \ Print extended token 3 ("COMPETITION NUMBER:")
  JSR DETOK
@@ -254,7 +254,7 @@ ENDIF
                         \ from location TP to the last saved commander block at
                         \ NA%+8, so set a counter in X to copy the NT% bytes in
                         \ the commander data block
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Comment
                         \
                         \ We also want to copy the data block to another
                         \ location &0B00, which is normally used for the ship
@@ -263,7 +263,7 @@ ENDIF
 
 .SVL1
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Platform
 
  LDA TP,X               \ Copy the X-th byte of TP to the X-th byte of &0B00
  STA &0B00,X            \ and NA%+8
@@ -308,14 +308,14 @@ ENDIF
  EOR TALLY+1            \ the kill tally)
  STA K+3
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Other: This is a bug fix in the enhanced versions to stop the competition code being printed with a decimal point, which can sometimes happen in the cassette and Electron versions
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Other: This is a bug fix in the enhanced versions to stop the competition code being printed with a decimal point, which can sometimes happen in the cassette and Electron versions
 
  CLC                    \ Clear the C flag so the call to BPRNT does not include
                         \ a decimal point
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Master: The Master version doesn't show the competition number when saving, as the competition closed some time before the Master came on the scene
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Master: The Master version doesn't show the competition number when saving, as the competition closed some time before the Master came on the scene
 
  JSR BPRNT              \ Print the competition number stored in K to K+3. The
                         \ value of U might affect how this is printed, and as
@@ -331,7 +331,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _MASTER_VERSION \ Platform
  JSR TT67               \ Call TT67 twice to print two newlines
  JSR TT67
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED
 
  JSR TT67               \ Print a newline
 
@@ -339,7 +339,7 @@ ENDIF
 
  PLA                    \ Restore the checksum from the stack
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Platform
 
  STA &0B00+NT%          \ Store the checksum in the last byte of the save file
                         \ at &0B00 (the equivalent of CHK in the last saved
@@ -356,7 +356,7 @@ ENDIF
  EOR #&A9               \ Store the checksum EOR &A9 in CHK2, the penultimate
  STA CHK2               \ byte of the last saved commander block
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Platform
 
  STA &0AFF+NT%          \ Store the checksum EOR &A9 in the penultimate byte of
                         \ the save file at &0B00 (the equivalent of CHK2 in the
@@ -396,7 +396,7 @@ IF _CASSETTE_VERSION \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Platform
 
  LDA #0                 \ Call QUS1 with A = 0, Y = &C to save the commander
  JSR QUS1               \ file with the filename we copied to INWK at the start
@@ -478,7 +478,7 @@ ENDIF
 
 ENDIF
 
-IF _DISC_DOCKED OR _6502SP_VERSION \ Platform
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Platform
 
 .SVEX
 

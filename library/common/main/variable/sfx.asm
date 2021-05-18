@@ -61,7 +61,7 @@ ENDIF
 
 .SFX
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Electron: The sound effects on the Electron are noticeably different to the other versions, as it has different sound hardware that only supports one sound channel rather than three
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Electron: The sound effects on the Electron are noticeably different to the other versions, as it has different sound hardware that only supports one sound channel rather than three
 
  EQUB &12,&01,&00,&10   \ 0  - Lasers fired by us
  EQUB &12,&02,&2C,&08   \ 8  - We're being hit by lasers

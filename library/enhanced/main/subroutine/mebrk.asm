@@ -34,7 +34,7 @@
                         \ before we set BRKV to point to MEBRK in the SVE
                         \ routine
 
-IF _DISC_DOCKED \ Tube
+IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Tube
 
  LDY #0                 \ Set Y to 0 to use as a loop counter below
 

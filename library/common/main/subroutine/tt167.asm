@@ -3,7 +3,7 @@
 \       Name: TT167
 \       Type: Subroutine
 \   Category: Market
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Show the Market Price screen (red key f7)
 ELIF _ELECTRON_VERSION
 \    Summary: Show the Market Price screen (FUNC-8)
@@ -13,7 +13,7 @@ ENDIF
 
 .TT167
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION  \ 6502SP: In the 6502SP version, you can send the Market Price screen to the printer by pressing CTRL-f7
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION  \ 6502SP: In the 6502SP version, you can send the Market Price screen to the printer by pressing CTRL-f7
 
  LDA #16                \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 16 (Market
@@ -27,7 +27,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION  \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION  \ Tube
 
  LDA #5                 \ Move the text cursor to column 4
  STA XC
@@ -43,7 +43,7 @@ ENDIF
  JSR NLIN3              \ PRICES") and draw a horizontal line at pixel row 19
                         \ to box in the title
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Tube
 
  LDA #3                 \ Move the text cursor to row 3
  STA YC
@@ -84,7 +84,7 @@ ENDIF
                         \ QQ19+1 to byte #1 from the market prices table for
                         \ this item
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Tube
 
  INC YC                 \ Move the text cursor down one row
 

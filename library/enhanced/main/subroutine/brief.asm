@@ -41,7 +41,7 @@
  JSR NWSHP              \ Add a new Constrictor to the local bubble (in this
                         \ case, the briefing screen)
 
-IF _DISC_DOCKED \ Minor
+IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Minor
 
  LDA #1                 \ Move the text cursor to column 1
  STA XC
@@ -56,7 +56,7 @@ ENDIF
  STA INWK+7             \ Set z_hi = 1, the distance at which we show the
                         \ rotating ship
 
-IF _DISC_DOCKED OR _6502SP_VERSION \ Platform: The Master version has a unique internal view number for the title screen (13)
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Platform: The Master version has a unique internal view number for the title screen (13)
 
  JSR TT66               \ Clear the top part of the screen, draw a white border,
                         \ and set the current view type in QQ11 to 1
@@ -109,7 +109,7 @@ ENDIF
  LDX INWK+3             \ Set X = y_lo + 1
  INX
 
-IF _DISC_DOCKED OR _6502SP_VERSION \ Master: The Master version shows the Constrictor slightly higher up the screen during the mission 1 briefing, so it doesn't get quite so close to the briefing text
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Master: The Master version shows the Constrictor slightly higher up the screen during the mission 1 briefing, so it doesn't get quite so close to the briefing text
 
  CPX #112               \ If X < 112 then skip the next instruction
  BCC P%+4

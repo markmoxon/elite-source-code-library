@@ -3,7 +3,7 @@
 \       Name: EQSHP
 \       Type: Subroutine
 \   Category: Equipment
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Show the Equip Ship screen (red key f3)
 ELIF _ELECTRON_VERSION
 \    Summary: Show the Equip Ship screen (FUNC-4)
@@ -31,7 +31,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ 6502SP: In the 6502SP version, you can send the Equip Ship screen to the printer by pressing CTRL-f3
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ 6502SP: In the 6502SP version, you can send the Equip Ship screen to the printer by pressing CTRL-f3
 
  LDA #32                \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 32 (Equip
@@ -45,13 +45,13 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _DISC_DOCKED \ Platform
+IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Platform
 
  JSR FLKB               \ Flush the keyboard buffer
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Tube
 
  LDA #12                \ Move the text cursor to column 12
  STA XC
@@ -72,7 +72,7 @@ ENDIF
  LDA #%10000000         \ Set bit 7 of QQ17 to switch to Sentence Case, with the
  STA QQ17               \ next letter in capitals
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Tube
 
  INC YC                 \ Move the text cursor down one line
 
@@ -92,7 +92,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: There are up to 14 differe
  BCC P%+4               \ 3 and 12
  LDA #12
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
 
  CMP #12                \ If A >= 12 then set A = 14, so A is now set to between
  BCC P%+4               \ 3 and 14
@@ -148,7 +148,7 @@ ENDIF
  SEC                    \ Set the C flag so we will print a decimal point when
                         \ we print the price
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Tube
 
  LDA #25                \ Move the text cursor to column 25
  STA XC
@@ -196,7 +196,7 @@ ENDIF
                         \ clear), which will be the actual item number we want
                         \ to buy
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Tube
 
  LDX #2                 \ Move the text cursor to column 2
  STX XC
@@ -260,7 +260,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
  LDY #117               \ Set Y to recursive token 117 ("ALL")
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
 
  LDY #124               \ Set Y to recursive token 124 ("ALL")
 
@@ -352,7 +352,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform: The refund code has been m
  STA LASER,X            \ to fit it by storing the laser power for a pulse laser
                         \ (given in POW) in LASER+X
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
 
  LDA #POW               \ Call refund with A set to the power of the new pulse
  JSR refund             \ laser to install the new laser and process a refund if
@@ -415,7 +415,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform: The refund code has been m
                         \ we stored in T1 earlier, as the call to prx will have
                         \ overwritten the original value in X
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
 
  LDA #POW+128           \ Call refund with A set to the power of the new beam
  JSR refund             \ laser to install the new laser and process a refund if
@@ -552,7 +552,7 @@ ENDIF
 
 .et9
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Enhanced: In the enhanced versions, mining and military lasers can be fitted in the Equip Ship screen
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Enhanced: In the enhanced versions, mining and military lasers can be fitted in the Equip Ship screen
 
  INY                    \ Increment Y to recursive token 117 ("MILITARY  LASER")
 

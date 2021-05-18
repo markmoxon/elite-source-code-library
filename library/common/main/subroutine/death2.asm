@@ -26,7 +26,7 @@ ENDIF
                         \ and fall through into the entry code for the game
                         \ to restart from the title screen
 
-IF _DISC_FLIGHT \ Platform
+IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Platform
 
  JSR CATD               \ Call CATD to reload the disc catalogue
 

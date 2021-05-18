@@ -3,7 +3,7 @@
 \       Name: ZERO
 \       Type: Subroutine
 \   Category: Utility routines
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \    Summary: Zero-fill pages &9, &A, &B, &C and &D
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 \    Summary: Reset the local bubble of universe and ship status
@@ -13,7 +13,7 @@ ENDIF
 \
 \ This resets the following workspaces to zero:
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \   * The ship data blocks ascending from K% at &0900
 \
 \   * The ship line heap descending from WP at &0D40
@@ -69,7 +69,7 @@ ELIF _ELECTRON_VERSION
                         \ Then fall through into ZES1 with X set to 9, so we
                         \ clear page &9 too
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  LDX #(de-FRIN)         \ We're going to zero the UP workspace variables from
                         \ FRIN to de, so set a counter in X for the correct

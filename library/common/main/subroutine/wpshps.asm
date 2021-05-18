@@ -3,7 +3,7 @@
 \       Name: WPSHPS
 \       Type: Subroutine
 \   Category: Dashboard
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Clear the scanner, reset the ball line and sun line heaps
 ELIF _ELECTRON_VERSION
 \    Summary: Clear the scanner and reset the ball line heap
@@ -11,7 +11,7 @@ ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ Remove all ships from the scanner, reset the sun line heap at LSO, and reset
 \ the ball line heap at LSX2 and LSY2.
 ELIF _ELECTRON_VERSION
@@ -35,7 +35,7 @@ ENDIF
                         \ down in the main loop to close up and gaps), so jump
                         \ to WS2 as we are done
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 
  BMI WS1                \ If the slot contains a ship type with bit 7 set, then
                         \ it contains the planet or the sun, so jump down to WS1
@@ -50,7 +50,7 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Platform
 
  STA TYPE               \ Store the ship type in TYPE
 
@@ -73,7 +73,7 @@ ENDIF
 
  STX XSAV               \ Store the ship slot number in XSAV while we call SCAN
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Platform
 
  JSR SCAN               \ Call SCAN to plot this ship on the scanner, which will
                         \ remove it as it's plotted with EOR logic
@@ -96,7 +96,7 @@ ENDIF
 
 .WS2
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Tube
 
  LDX #&FF               \ Set LSX2 = LSY2 = &FF to clear the ball line heap
  STX LSX2

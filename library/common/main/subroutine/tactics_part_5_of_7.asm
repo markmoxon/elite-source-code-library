@@ -14,7 +14,7 @@
 \
 \   * If an E.C.M. is firing, skip to the next part
 \
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \   * Randomly decide whether to fire a missile (or, in the case of Thargoids,
 \     release a Thargon), and if we do, we're done
 ELIF _ELECTRON_VERSION
@@ -51,7 +51,7 @@ ENDIF
 
  LDA TYPE               \ Fetch the ship type into A
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron version has no Thargoids, which also means no ships can launch Thargons
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron version has no Thargoids, which also means no ships can launch Thargons
 
  CMP #THG               \ If this is not a Thargoid, jump down to TA16 to launch
  BNE TA16               \ a missile

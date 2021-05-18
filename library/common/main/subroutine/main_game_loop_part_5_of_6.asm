@@ -136,7 +136,7 @@ ELIF _ELECTRON_VERSION
  JSR DELAY-5            \ Delay for 1 delay loop, to slow the main loop down a
                         \ bit
 
-ELIF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
+ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
 
  LDA QQ11               \ If this is a space view, skip the following five
  BEQ P%+13              \ instructions (i.e. jump to JSR TT17 below)
@@ -148,7 +148,7 @@ ELIF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
  LDY #2                 \ Wait for 2/50 of a second (0.04 seconds), to slow the
  JSR DELAY              \ main loop down a bit
 
-ELIF _DISC_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
 
  LDA QQ11               \ If this is a space view, skip the following two
  BEQ P%+7               \ instructions (i.e. jump to JSR TT17 below)
@@ -158,7 +158,7 @@ ELIF _DISC_DOCKED
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 
  JSR TT17               \ Scan the keyboard for the cursor keys or joystick,
                         \ returning the cursor's delta values in X and Y and

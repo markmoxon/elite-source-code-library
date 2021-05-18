@@ -6,7 +6,7 @@
 \    Summary: Update the dashboard: four energy banks
 \  Deep dive: The dashboard indicators
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ This and the next section only run once every four iterations of the main
@@ -16,14 +16,14 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ 
 ENDIF
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Master: The Master version updates all the dials on every iteration of the main loop, while the other versions only update the speed, pitch and roll indicators on every loop (the other indicators only update every four iterations of the main loop)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Master: The Master version updates all the dials on every iteration of the main loop, while the other versions only update the speed, pitch and roll indicators on every loop (the other indicators only update every four iterations of the main loop)
 
  LDA MCNT               \ Fetch the main loop counter and calculate MCNT mod 4,
  AND #3                 \ jumping to rT9 if it is non-zero. rT9 contains an RTS,
  BNE rT9                \ so the following code only runs every 4 iterations of
                         \ the main loop, otherwise we return from the subroutine
 
-ELIF _DISC_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
 
  LDA MCNT               \ Fetch the main loop counter and calculate MCNT mod 4,
  AND #3                 \ jumping to R5-1 if it is non-zero. R5-1 contains an
@@ -35,7 +35,7 @@ ENDIF
 
  LDY #0                 \ Set Y = 0, for use in various places below
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: Group A: Dashboard indicators in the Electron version don't change colour, as the dashboard is monochrome
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: Group A: Dashboard indicators in the Electron version don't change colour, as the dashboard is monochrome
 
  JSR PZW                \ Call PZW to set A to the colour for dangerous values
                         \ and X to the colour for safe values
@@ -53,7 +53,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ El
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 
  LDX #3                 \ Set up a counter in X so we can zero the four bytes at
                         \ XX12, so we can then calculate each of the four energy
@@ -67,7 +67,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: See group A
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: See group A
 
  STX T1                 \ Set T1 to 3, the threshold at which we change the
                         \ indicator's colour
@@ -76,7 +76,7 @@ ENDIF
 
 .DLL23
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Minor
 
  STY XX12,X             \ Set the X-th byte of XX12 to 0
 
@@ -95,7 +95,7 @@ ENDIF
                         \ bank indicators, so we can calculate each of the four
                         \ energy banks' values and store them in XX12
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  LDA ENERGY             \ Set A = Q = ENERGY / 4, so they are both now in the
  LSR A                  \ range 0-63 (so that's a maximum of 16 in each of the
@@ -115,7 +115,7 @@ ENDIF
 
 .DLL24
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  SEC                    \ Set A = A - 16 to reduce the energy count by a full
  SBC #16                \ bank
@@ -134,7 +134,7 @@ ENDIF
  STA Q                  \ This bank is full, so update Q with the energy of the
                         \ remaining banks
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
  LDA #16                \ Store this bank's level in XX12 as 16, as it is full,
  STA XX12,X             \ with XX12+3 for the bottom bank and XX12+0 for the top
@@ -165,7 +165,7 @@ ENDIF
 
 .DLL26
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Minor
 
  LDA Q                  \ If we get here then the bank we just checked is not
  STA XX12,X             \ fully charged, so store its value in XX12 (using Q,
@@ -188,7 +188,7 @@ ENDIF
 
 .DLL9
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Minor
 
  LDA XX12,Y             \ Fetch the value of the Y-th indicator, starting from
                         \ the top

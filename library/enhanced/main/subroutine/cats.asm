@@ -21,7 +21,7 @@
 
 .CATS
 
-IF _DISC_DOCKED OR _6502SP_VERSION \ Master: The Master Compact only has one disc drive, and it uses ADFS rather than DFS, so instead of asking for a drive number, it asks for a directory name
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Master: The Master Compact only has one disc drive, and it uses ADFS rather than DFS, so instead of asking for a drive number, it asks for a directory name
 
  JSR GTDRV              \ Get an ASCII disc drive drive number from the keyboard
                         \ in A, setting the C flag if an invalid drive number
@@ -70,7 +70,7 @@ ENDIF
 
 ENDIF
 
-IF _DISC_DOCKED OR _6502SP_VERSION \ Minor
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Minor
 
  LDA #4                 \ Print extended token 4, which clears the screen and
  JSR DETOK              \ prints the boxed-out title "DRIVE {drive number}
@@ -84,7 +84,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _DISC_DOCKED OR _MASTER_VERSION \ Tube
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Tube
 
  LDA #1                 \ Set the CATF flag to 1, so that the TT26 routine will
  STA CATF               \ print out the disc catalogue correctly
@@ -119,7 +119,7 @@ ENDIF
                         \ DFS command for cataloguing that drive (*. being short
                         \ for *CAT)
 
-IF _DISC_DOCKED OR _MASTER_VERSION \ Platform
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Platform
 
  JSR OSCLI              \ Call OSCLI to execute the OS command at (Y X), which
                         \ catalogues the disc
@@ -138,7 +138,7 @@ IF _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF _DISC_DOCKED \ Tube
+IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Tube
 
  DEC CATF               \ Decrement the CATF flag back to 0, so the TT26 routine
                         \ reverts to standard formatting

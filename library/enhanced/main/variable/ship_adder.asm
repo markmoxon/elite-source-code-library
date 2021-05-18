@@ -14,7 +14,7 @@
  EQUW 50 * 50           \ Targetable area          = 50 * 50
  EQUB &80               \ Edges data offset (low)  = &0080
  EQUB &F4               \ Faces data offset (low)  = &00F4
-IF _DISC_FLIGHT \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Adders are shown in cyan
+IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Adders are shown in cyan
  EQUB 97                \ Max. edge count          = (97 - 1) / 4 = 24
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 101               \ Max. edge count          = (101 - 1) / 4 = 25
@@ -25,7 +25,7 @@ ENDIF
  EQUB 29                \ Number of edges          = 29
  EQUW 40                \ Bounty                   = 40
  EQUB 60                \ Number of faces          = 60 / 4 = 15
-IF _DISC_FLIGHT \ Disc: In the disc version, the Adder has a visibility distance of 23 compared to 20 in the other versions, so if one is running away from you in the disc version, it will turn into a dot later than in the others
+IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Disc: In the disc version, the Adder has a visibility distance of 23 compared to 20 in the other versions, so if one is running away from you in the disc version, it will turn into a dot later than in the others
  EQUB 23                \ Visibility distance      = 23
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 20                \ Visibility distance      = 20

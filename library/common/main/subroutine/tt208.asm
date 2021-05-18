@@ -3,7 +3,7 @@
 \       Name: TT208
 \       Type: Subroutine
 \   Category: Market
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Show the Sell Cargo screen (red key f2)
 ELIF _ELECTRON_VERSION
 \    Summary: Show the Sell Cargo screen (FUNC-3)
@@ -13,7 +13,7 @@ ENDIF
 
 .TT208
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ 6502SP: In the 6502SP version, you can send the Sell Cargo screen to the printer by pressing CTRL-f2
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ 6502SP: In the 6502SP version, you can send the Sell Cargo screen to the printer by pressing CTRL-f2
 
  LDA #4                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 4 (Sell
@@ -33,7 +33,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: Group A: The layout of the
  STA YC
  STA XC
 
-ELIF _DISC_DOCKED OR _MASTER_VERSION
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
 
  LDA #10                \ Move the text cursor to column 10
  STA XC
@@ -52,7 +52,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
                         \ buffer (FLKB) that isn't present in the cassette
                         \ version but is in other versions
 
-ELIF _DISC_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
 
  JSR FLKB               \ Flush the keyboard buffer
 
@@ -66,7 +66,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: See group A
  LDA #206               \ Print recursive token 46 (" CARGO{sentence case}")
  JSR TT68               \ followed by a colon
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
 
  LDA #206               \ Print recursive token 46 (" CARGO{sentence case}")
  JSR NLIN3              \ draw a horizontal line at pixel row 19 to box in the

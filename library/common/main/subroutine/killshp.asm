@@ -11,7 +11,7 @@
 \ when we kill a ship, collide with a ship and destroy it, or when a ship moves
 \ outside our local bubble.
 \
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ We also use this routine when we move out of range of the space station, in
 \ which case we replace it with the sun.
 ELIF _ELECTRON_VERSION
@@ -53,7 +53,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION 
  LDA MSTG               \ Check whether this slot matches the slot number in
  CMP XX4                \ MSTG, which is the target of our missile lock
 
-ELIF _DISC_FLIGHT
+ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
 
  CPX MSTG               \ Check whether this slot matches the slot number in
                         \ MSTG, which is the target of our missile lock
@@ -62,7 +62,7 @@ ENDIF
 
  BNE KS5                \ If our missile is not locked on this ship, jump to KS5
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Screen
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Screen
 
  LDY #&EE               \ Otherwise we need to remove our missile lock, so call
  JSR ABORT              \ ABORT to disarm the missile and update the missile
@@ -93,7 +93,7 @@ ENDIF
  LDX FRIN,Y             \ Fetch the contents of the slot, which contains the
                         \ ship type
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 
  CPX #SST               \ If this is the space station, then jump to KS4 to
  BEQ KS4                \ replace the space station with the sun
@@ -105,7 +105,7 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: In the enhanced versions, the Constrictor is a special ship, and killing it ends the first mission
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhanced: In the enhanced versions, the Constrictor is a special ship, and killing it ends the first mission
 
  CPX #CON               \ Did we just kill the Constrictor from mission 1? If
  BNE lll                \ not, jump to lll
@@ -122,7 +122,7 @@ IF _MASTER_VERSION \ Master: In the Master version, killing the Constrictor at t
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Label
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Label
 
 .lll
 
@@ -135,7 +135,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: There are rock hermits in the 
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: Group A: In the cassette version, only the escape pod, asteroid and cargo canister are classed as junk. In the enhanced versions, the alloy plate, splinter, Shuttle and Transporter are also junk (and in the advanced versions, rock hermits are also junk). Junk in the vicinity doesn't prevent you from performing an in-system jump - in fact, it gets dragged along for the ride
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhanced: Group A: In the cassette version, only the escape pod, asteroid and cargo canister are classed as junk. In the enhanced versions, the alloy plate, splinter, Shuttle and Transporter are also junk (and in the advanced versions, rock hermits are also junk). Junk in the vicinity doesn't prevent you from performing an in-system jump - in fact, it gets dragged along for the ride
 
  CPX #JL                \ If JL <= X < JH, i.e. the type of ship we killed in X
  BCC KS7                \ is junk (escape pod, alloy plate, cargo canister,
@@ -150,7 +150,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Label
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
 
  DEC JUNK               \ We just killed junk, so decrease the junk counter
 
@@ -240,7 +240,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
                         \ the source slot is empty and we are done shuffling,
                         \ so jump to KS2 to move on to processing missiles
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
 
  BNE P%+5               \ If the slot we just shuffled down is not empty, then
                         \ skip the following instruction
@@ -311,7 +311,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Ship data blocks have an e
                         \ to the destination, so we set it to 35 to start things
                         \ off, and will decrement Y for each byte we copy
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
 
  LDY #36                \ We are going to be using Y as a counter for the 37
                         \ bytes of ship data we want to copy from the source
@@ -329,7 +329,7 @@ ENDIF
  LDA (SC),Y             \ Fetch byte #35 of the source's ship data block at SC,
  STA (INF),Y            \ and store it in byte #35 of the destination's block
                         \ at INF, so that's the ship's energy copied from the
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Comment
                         \ source to the destination. One down, quite a few to
                         \ go...
 ELIF _6502SP_VERSION

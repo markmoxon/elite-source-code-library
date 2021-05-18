@@ -12,14 +12,14 @@
  LDY VIEW               \ Fetch the laser power for our new view
  LDA LASER,Y
 
-IF _DISC_DOCKED \ Label
+IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Label
 
  BEQ BOL1-1             \ If it is zero (i.e. there is no laser fitted to this
                         \ view), jump to BOL1-1 to return from the subroutine
                         \ (as BOL1-1 contains &60, which is the opcode for an
                         \ RTS)
 
-ELIF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
+ELIF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
 
  BEQ LO2                \ If it is zero (i.e. there is no laser fitted to this
                         \ view), jump to LO2 to return from the subroutine (as
@@ -68,7 +68,7 @@ ENDIF
  LDA #20                \ Set QQ19+2 to size 20 for the crosshairs size
  STA QQ19+2
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Platform
 
  JSR TT15               \ Call TT15 to draw crosshairs of size 20 just to the
                         \ left of the middle of the screen
@@ -84,7 +84,7 @@ ENDIF
  LDA #10                \ Set QQ19+2 to size 10 for the crosshairs size
  STA QQ19+2
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Platform
 
  JMP TT15               \ Call TT15 to draw crosshairs of size 10 at the same
                         \ location, which will remove the centre part from the

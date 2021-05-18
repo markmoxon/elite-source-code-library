@@ -23,7 +23,7 @@
 \ and if all the pre-jump checks are passed, we print the destination on-screen
 \ and start the countdown.
 \
-IF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Comment
+IF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
 \ Other entry points:
 \
 \   TTX111              Used to rejoin this routine from the call to TTX110
@@ -56,7 +56,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
                         \ contains an RTS), as there is already a countdown in
                         \ progress
 
-ELIF _DISC_VERSION
+ELIF _DISC_VERSION OR _ELITE_A_VERSION
 
  ORA QQ12               \ If we are docked (QQ12 = &FF) or there is already a
  BNE zZ+1               \ countdown in progress, then return from the subroutine
@@ -85,7 +85,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
  JSR CTRL               \ Scan the keyboard to see if CTRL is currently pressed
 
@@ -113,14 +113,14 @@ ENDIF
  BMI Ghy                \ If it is, then the galactic hyperdrive has been
                         \ activated, so jump to Ghy to process it
 
-IF _DISC_FLIGHT \ Minor
+IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Minor
 
  LDA QQ11               \ If the current view is 0 (i.e. the space view) then
  BNE P%+5               \ jump to TTX110, which calls TT111 to set the current
  JMP TTX110             \ system to the nearest system to (QQ9, QQ10), and jumps
                         \ back into this routine at TTX111 below
 
-ELIF _DISC_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
 
  LDA QQ11               \ If the current view is 0 (i.e. the space view) then
  BEQ TTX110             \ jump to TTX110, which calls TT111 to set the current
@@ -151,7 +151,7 @@ ENDIF
  JSR hm                 \ This is a chart view, so call hm to redraw the chart
                         \ crosshairs
 
-IF _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Label
+IF _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Label
 
 .TTX111
 
@@ -160,7 +160,7 @@ IF _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Label
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Minor
 
  LDA QQ8                \ If both bytes of the distance to the selected system
  ORA QQ8+1              \ in QQ8 are zero, return from the subroutine (as zZ+1
@@ -195,14 +195,14 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Other: Part of the bug fix for the "hype
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Platform
 
  LDA #7                 \ Move the text cursor to column 7, row 23 (in the
  STA XC                 \ middle of the bottom text row)
  LDA #23
  STA YC
 
-ELIF _DISC_DOCKED OR _MASTER_VERSION
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
 
  LDA #7                 \ Move the text cursor to column 7, row 22 (in the
  STA XC                 \ middle of the bottom text row)
@@ -235,7 +235,7 @@ ENDIF
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Minor
 
  LDA QQ8+1              \ If the high byte of the distance to the selected
  BNE TT147              \ system in QQ8 is > 0, then it is definitely too far to
@@ -257,7 +257,7 @@ ENDIF
 
  LDA QQ14               \ Fetch our current fuel level from Q114 into A
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Minor
 
  CMP QQ8                \ If our fuel reserves are less than the distance to the
  BCC TT147              \ selected system, then we don't have enough fuel for

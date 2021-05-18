@@ -30,7 +30,7 @@
 \   QQ15 to QQ15+5      The three 16-bit seeds of the nearest system to the
 \                       original coordinates
 \
-IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Comment
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Comment
 \   ZZ                  The system number of the nearest system
 \
 ENDIF
@@ -137,7 +137,7 @@ ENDIF
  BPL TT136              \ Loop back to TT136 if we still have more bytes to
                         \ copy
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Platform: Store the system number in ZZ so if we want to show the extended system description for this system, the PDESC routine knows which one to display
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Platform: Store the system number in ZZ so if we want to show the extended system description for this system, the PDESC routine knows which one to display
 
  LDA U                  \ Store the system number U in ZZ, so when we are done
  STA ZZ                 \ looping through all the candidates, the winner's
@@ -220,7 +220,7 @@ ENDIF
  LDA P
  STA K
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Minor
 
  LDA QQ10               \ Set A = QQ10 - QQ1, the vertical distance between the
  SEC                    \ selected system's y-coordinate (QQ10) and the current
@@ -279,7 +279,7 @@ ENDIF
  PLA                    \ Restore the high byte of the y-axis value from the
                         \ stack into A again
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Other: The Master version fixes a bug in the code to calculate the distance between two systems, which can overflow in the other versions and give an incorrect result
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Other: The Master version fixes a bug in the code to calculate the distance between two systems, which can overflow in the other versions and give an incorrect result
 
  ADC K+1                \ Set R = A + K+1, which adds the high bytes of the two
  STA R                  \ calculated values, so we now have:

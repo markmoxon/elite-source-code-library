@@ -11,7 +11,7 @@
                         \   * Splinter
                         \   * Shuttle
                         \   * Transporter
-IF _DISC_VERSION \ Comment
+IF _DISC_VERSION OR _ELITE_A_VERSION \ Comment
                         \
                         \ Junk is the range of ship types from #JL to #JH - 1
 

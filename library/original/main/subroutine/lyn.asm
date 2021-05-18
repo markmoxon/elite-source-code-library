@@ -7,7 +7,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \ Set pixels 0-233 to the value in A, starting at the pixel pointed to by SC.
 \
 \ Arguments:
@@ -34,7 +34,7 @@ ENDIF
 
 .LYN
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Platform
 
  LDY #233               \ Set up a counter in Y to count down from pixel 233
 

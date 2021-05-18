@@ -3,7 +3,7 @@
 \       Name: HALL
 \       Type: Subroutine
 \   Category: Ship hanger
-IF _DISC_DOCKED \ Comment
+IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Comment
 \    Summary: Draw the ships in the ship hanger, then draw the hanger
 ELIF _6502SP_VERSION
 \    Summary: Draw the ships in the ship hanger, then draw the hanger by sending
@@ -49,7 +49,7 @@ IF _6502SP_VERSION \ Comment
                         \ so the authors presumably just cleared out the UNWISE
                         \ routine rather than unplumbing it from the code)
 
-ELIF _DISC_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
 
  JSR UNWISE             \ Call UNWISE to switch the main line-drawing routine
                         \ between EOR and OR logic (in this case, switching it
@@ -157,7 +157,7 @@ ENDIF
  JSR DORND              \ Set XX15 = random number 0-255
  STA XX15
 
-IF _DISC_DOCKED \ Disc: The ship hanger has a 50% chance of displaying a group of ships, and a 50% chance of displaying a solitary ship. In the disc version, this latter option can display no ship at all, or it can show a solitary cargo canister, Shuttle, Transporter, Cobra Mk III, Python, Viper or Krait; in the advanced versions there is always a ship, and it's a Sidewinder, Mamba, Krait or Adder
+IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Disc: The ship hanger has a 50% chance of displaying a group of ships, and a 50% chance of displaying a solitary ship. In the disc version, this latter option can display no ship at all, or it can show a solitary cargo canister, Shuttle, Transporter, Cobra Mk III, Python, Viper or Krait; in the advanced versions there is always a ship, and it's a Sidewinder, Mamba, Krait or Adder
 
  JSR DORND              \ Set XX15+2 = random number 0-7
  AND #7                 \
@@ -210,7 +210,7 @@ IF _6502SP_VERSION \ Minor
  JSR UNWISE             \ Call UNWISE, which (as noted above) does nothing in
                         \ the 6502 Second Processor version of Elite
 
-ELIF _DISC_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
 
  STY YSAV               \ Store Y in YSAV to specify whether there are multiple
                         \ ships in the hanger

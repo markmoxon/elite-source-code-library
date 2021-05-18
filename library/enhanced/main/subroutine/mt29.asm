@@ -20,7 +20,7 @@
 
 .MT29
 
-IF _DISC_DOCKED OR _MASTER_VERSION \ Tube
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Tube
 
  LDA #6                 \ Move the text cursor to row 6
  STA YC

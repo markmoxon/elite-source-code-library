@@ -10,7 +10,7 @@
                         \ maximum rate, 128 means roll is not changing, and
                         \ 255 means roll is increasing at the maximum rate
                         \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
                         \ This value is updated by "<" and ">" key presses, or
                         \ if joysticks are enabled, from the joystick. If
                         \ keyboard damping is enabled (which it is by default),

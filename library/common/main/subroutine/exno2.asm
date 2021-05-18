@@ -26,7 +26,7 @@ ENDIF
 
 .EXNO2
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: The Master version incorporates a fractional kill tally when calculating the combat rank, so each ship type has a different number of kill points, while all the other versions count one point for each kill
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: The Master version incorporates a fractional kill tally when calculating the combat rank, so each ship type has a different number of kill points, while all the other versions count one point for each kill
 
  INC TALLY              \ Increment the low byte of the kill count in TALLY
 
@@ -63,7 +63,7 @@ ENDIF
  JSR MESS               \ for a pat on the back, so print recursive token 101
                         \ ("RIGHT ON COMMANDER!") as an in-flight message
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
  LDX #7                 \ Set X = 7 and fall through into EXNO to make the
                         \ sound of a ship exploding

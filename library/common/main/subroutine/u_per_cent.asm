@@ -11,7 +11,7 @@
 \
 \   A                   A is set to 0
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Comment
 \   Y                   Y is set to 0
 \
 ELIF _MASTER_VERSION
@@ -30,7 +30,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Compared to the cassette v
  LDY #15                \ We want to clear the 15 key logger locations from
                         \ KY1 to KY19, so set a counter in Y
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT
 
  LDY #16                \ We want to clear the 16 key logger locations from
                         \ KY1 to KY20, so set a counter in Y
@@ -44,7 +44,7 @@ ENDIF
 
 .DKL3
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Platform
 
  STA KL,Y               \ Store 0 in the Y-th byte of the key logger
 

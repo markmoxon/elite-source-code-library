@@ -42,7 +42,7 @@ IF _CASSETTE_VERSION \ Comment
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Label
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Label
 
  LDX GHYP               \ Fetch GHYP, which tells us whether we own a galactic
  BEQ hy5                \ hyperdrive, and if it is zero, which means we don't,
@@ -51,7 +51,7 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED \ Label
  INX                    \ We own a galactic hyperdrive, so X is &FF, so this
                         \ instruction sets X = 0
 
-ELIF _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
+ELIF _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
 
  LDX GHYP               \ Fetch GHYP, which tells us whether we own a galactic
  BEQ zZ+1               \ hyperdrive, and if it is zero, which means we don't,
@@ -75,7 +75,7 @@ ENDIF
  STX FIST               \ Changing galaxy also clears our criminal record, so
                         \ set our legal status in FIST to 0 ("clean")
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Advanced: The original versions of Elite start the galactic hyperspace countdown from 15, just like the normal hyperspace countdown, but the advanced versions don't muck about and start the galactic hyperspace countdown from 2
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Advanced: The original versions of Elite start the galactic hyperspace countdown from 15, just like the normal hyperspace countdown, but the advanced versions don't muck about and start the galactic hyperspace countdown from 2
 
  JSR wW                 \ Call wW to start the hyperspace countdown
 
@@ -91,7 +91,7 @@ ENDIF
 
  INC GCNT               \ Increment the current galaxy number in GCNT
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: In the Master version, the internal galaxy number can be set to be greater than 16, and it will stay high even if you jump to the next galaxy (though it isn't clear what this is for, as the game doesn't set the galaxy to more than 7 at any point, so perhaps this was for an expansion that never happened)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: In the Master version, the internal galaxy number can be set to be greater than 16, and it will stay high even if you jump to the next galaxy (though it isn't clear what this is for, as the game doesn't set the galaxy to more than 7 at any point, so perhaps this was for an expansion that never happened)
 
  LDA GCNT               \ Set GCNT = GCNT mod 8, so we jump from galaxy 7 back
  AND #7                 \ to galaxy 0 (shown in-game as going from galaxy 8 back
@@ -139,7 +139,7 @@ ENDIF
 
  JSR TT110              \ Call TT110 to show the front space view
 
-IF _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Other: See group A
+IF _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Other: See group A
 
  JSR TT111              \ Call TT111 to set the current system to the nearest
                         \ system to (QQ9, QQ10), and put the seeds of the
@@ -164,7 +164,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Other: See group A
 
 ENDIF
 
-IF _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Other: See group A
+IF _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Other: See group A
 
  LDX #0                 \ Set the distance to the selected system in QQ8(1 0)
  STX QQ8                \ to 0

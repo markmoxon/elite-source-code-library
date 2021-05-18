@@ -3,7 +3,7 @@
 \       Name: TT25
 \       Type: Subroutine
 \   Category: Universe
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Show the Data on System screen (red key f6)
 ELIF _ELECTRON_VERSION
 \    Summary: Show the Data on System screen (FUNC-7)
@@ -27,7 +27,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ 6502SP: In the 6502SP version, you c
  JSR TT66-2             \ Clear the top part of the screen, draw a white border,
                         \ and set the current view type in QQ11 to 1
 
-ELIF _DISC_VERSION
+ELIF _DISC_VERSION OR _ELITE_A_VERSION
 
  LDA #1                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 1
@@ -40,7 +40,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Tube
 
  LDA #9                 \ Move the text cursor to column 9
  STA XC
@@ -52,14 +52,14 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Minor
 
  LDA #163               \ Print recursive token 3 as a title in capitals at
  JSR TT27               \ the top ("DATA ON {selected system name}")
 
  JSR NLIN               \ Draw a horizontal line underneath the title
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
 
  LDA #163               \ Print recursive token 3 ("DATA ON {selected system
  JSR NLIN3              \ name}" and draw a horizontal line at pixel row 19
@@ -69,7 +69,7 @@ ENDIF
 
  JSR TTX69              \ Print a paragraph break and set Sentence Case
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Standard: The cassette version doesn't show extended system descriptions in the Data on System screen, and neither does the disc version when we are in flight, so both of these show the information one line lower on-screen than in the other versions
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Standard: The cassette version doesn't show extended system descriptions in the Data on System screen, and neither does the disc version when we are in flight, so both of these show the information one line lower on-screen than in the other versions
 
  INC YC                 \ Move the text cursor down one more line
 
@@ -286,7 +286,7 @@ ENDIF
 
  JSR TT162              \ Print a space
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Minor
 
  LDA #0                 \ Set QQ17 = 0 to switch to ALL CAPS
  STA QQ17
@@ -340,14 +340,14 @@ ENDIF
 
  JSR TT162              \ Print a space
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Minor
 
  LDA #'k'               \ Print "km", returning from the subroutine using a
  JSR TT26               \ tail call
  LDA #'m'
  JMP TT26
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
 
  LDA #'k'               \ Print "km"
  JSR TT26
@@ -356,7 +356,7 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Disc: Extended system descriptions are shown in the enhanced versions, though in the disc version they are only shown when docked, as the PDESC routine isn't present in the flight code due to memory restrictions
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Disc: Extended system descriptions are shown in the enhanced versions, though in the disc version they are only shown when docked, as the PDESC routine isn't present in the flight code due to memory restrictions
 
  JSR TTX69              \ Print a paragraph break and set Sentence Case
 
@@ -371,7 +371,7 @@ IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Disc: Extended system de
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Minor
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Minor
 
                         \ The following code doesn't appear to be called from
                         \ anywhere, so it's presumably a remnant of code from

@@ -9,7 +9,7 @@
 \ ------------------------------------------------------------------------------
 \
 \ The filename should be stored at INWK, terminated with a carriage return (13).
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Comment
 \ The routine should be called with Y set to &C.
 ELIF _6502SP_VERSION
 \ The routine asks for a drive number and updates the filename accordingly
@@ -25,7 +25,7 @@ ENDIF
 \
 \                         * &FF (load file)
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Comment
 \   Y                   Points to the page number containing the OSFILE block,
 \                       which must be &C because that's where the pointer to the
 \                       filename in INWK is stored below (by the STX &0C00
@@ -41,7 +41,7 @@ ENDIF
 
 .QUS1
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: The enhanced versions support the entering of disc drive numbers when loading or saving
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Enhanced: The enhanced versions support the entering of disc drive numbers when loading or saving
 
  PHA                    \ Store A on the stack so we can restore it after the
                         \ call to GTDRV
@@ -72,7 +72,7 @@ IF _6502SP_VERSION \ Tube
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Platform
 
  LDX #INWK              \ Store a pointer to INWK at the start of the block at
  STX &0C00              \ &0C00, storing #INWK in the low byte because INWK is
@@ -110,7 +110,7 @@ ELIF _ELECTRON_VERSION
 
  RTS                    \ Return from the subroutine
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED
 
  LDX #0                 \ Set (Y X) = &0C00
  LDY #&C
@@ -130,7 +130,7 @@ IF _6502SP_VERSION \ Tube
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Platform
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Platform
 
  CLC                    \ Clear the C flag
 

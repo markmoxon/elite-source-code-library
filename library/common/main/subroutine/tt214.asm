@@ -36,7 +36,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  LDA #225               \ Print recursive token 65 ("(Y/N)?")
  JSR TT27
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
 
  LDA #206               \ Print extended token 206 ("{all caps}(Y/N)?")
  JSR DETOK

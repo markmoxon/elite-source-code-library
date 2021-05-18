@@ -10,7 +10,7 @@
 
 .QQ18
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron doesn't support fuel scooping (as there are no suns), so the text token for "FUEL SCOOPS ON" isn't included
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron doesn't support fuel scooping (as there are no suns), so the text token for "FUEL SCOOPS ON" isn't included
 
  RTOK 111               \ Token 0:      "FUEL SCOOPS ON {beep}"
  RTOK 131               \
@@ -60,7 +60,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
  CONT 13
  EQUB 0
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  TWOK 'I', 'N'          \ Token 4:      "INVENTORY{cr}
  TWOK 'V', 'E'          \               "
@@ -250,7 +250,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  CHAR 'T'
  EQUB 0
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  CHAR 'P'               \ Token 26:     "PRODUCT"
  RTOK 94                \
@@ -333,7 +333,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  CHAR 'Y'
  EQUB 0
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  CHAR 'G'               \ Token 33:     "GROSS PRODUCTIVITY"
  RTOK 94                \
@@ -358,7 +358,7 @@ ENDIF
  CHAR 'Y'
  EQUB 0
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ 6502SP: The Executive version displays distances in the Status and galaxy charts as "L.Y." rather than "LIGHT YEARS" (this saves space in the token table so "SIR" can be added to the tokens for low low and incoming missiles)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ 6502SP: The Executive version displays distances in the Status and galaxy charts as "L.Y." rather than "LIGHT YEARS" (this saves space in the token table so "SIR" can be added to the tokens for low low and incoming missiles)
 
  CHAR ' '               \ Token 35:     " LIGHT YEARS"
  CHAR 'L'               \
@@ -427,7 +427,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  TWOK 'O', 'N'
  EQUB 0
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  CHAR ' '               \ Token 38:     " BILLION"
  TWOK 'B', 'I'          \
@@ -485,7 +485,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  RTOK 118               \ Encoded as:   "SE[118]"
  EQUB 0
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  CHAR 'S'               \ Token 45:     "SELL"
  CHAR 'E'               \
@@ -588,7 +588,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  CHAR 'S'
  EQUB 0
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  CHAR 'A'               \ Token 57:     "ALLOYS"
  CHAR 'L'               \
@@ -661,7 +661,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: The enhanced versions cont
  CHAR '?'
  EQUB 0
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  CONT 12                \ Token 65:     "{cr}
  CHAR '1'               \                10{cash} CR5{cash} CR"
@@ -696,7 +696,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  RTOK 118               \ Encoded as:   "S<139>[118]"
  EQUB 0
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  CHAR 'S'               \ Token 69:     "SMALL"
  TWOK 'M', 'A'          \
@@ -723,7 +723,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  CHAR 'W'
  EQUB 0
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  CHAR 'Y'               \ Token 72:     "YELLOW"
  CHAR 'E'               \
@@ -803,7 +803,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  CHAR 'G'
  EQUB 0
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  RTOK 94                \ Token 82:     "RODENT"
  CHAR 'D'               \
@@ -890,7 +890,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  TWOK 'E', 'D'
  EQUB 0
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  CHAR ' '               \ Token 93:     " DESTROYED"
  CHAR 'D'               \
@@ -923,7 +923,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: The enhanced versions enco
  RTOK 118
  EQUB 0
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  CHAR 'R'               \ Token 94:     "RO"
  CHAR 'O'               \
@@ -957,7 +957,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
  CONT 10
  EQUB 0
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  RTOK 14                \ Token 95:     "UNIT  QUANTITY{cr}
  CHAR ' '               \                 PRODUCT   UNIT PRICE FOR SALE{cr}{lf}
@@ -1006,7 +1006,7 @@ ENDIF
  CHAR 'T'
  EQUB 0
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ 6502SP: When energy is low in the Executive version, it shows the in-flight message "ENERGY LOW,SIR", rather than just showing "ENERGY LOW"
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ 6502SP: When energy is low in the Executive version, it shows the in-flight message "ENERGY LOW,SIR", rather than just showing "ENERGY LOW"
 
  RTOK 121               \ Token 100:    "ENERGY LOW{beep}"
  CHAR 'L'               \
@@ -1120,7 +1120,7 @@ ENDIF
  CHAR 'S'
  EQUB 0
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: In the Electron version you can buy an "Escape Capsule", while all the other versions call it an "Escape Pod"
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: In the Electron version you can buy an "Escape Capsule", while all the other versions call it an "Escape Pod"
 
  TWOK 'E', 'S'          \ Token 112:    "ESCAPE POD"
  CHAR 'C'               \
@@ -1158,7 +1158,7 @@ ENDIF
  CHAR 'B'
  EQUB 0
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ 6502SP: If you have bought an energy unit, then most versions will show it on the Inventory screen as "Energy Unit", but in the source disc release of the 6502SP version, it is shown as "Extra Energy Unit" (though it's still "Energy Unit" in the official SNG45 release of the game)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ 6502SP: If you have bought an energy unit, then most versions will show it on the Inventory screen as "Energy Unit", but in the source disc release of the 6502SP version, it is shown as "Extra Energy Unit" (though it's still "Energy Unit" in the official SNG45 release of the game)
 
  RTOK 121               \ Token 114:    "ENERGY UNIT"
  RTOK 14                \
@@ -1192,7 +1192,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  RTOK 55
  EQUB 0
 
-ELIF _DISC_VERSION OR _MASTER_VERSION OR _6502SP_VERSION
+ELIF _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _6502SP_VERSION
 
  CHAR 'D'               \ Token 115:    "DOCKING COMPUTERS"
  CHAR 'O'               \
@@ -1221,7 +1221,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Group A: There are two new
  CHAR 'L'               \
  EQUB 0                 \ Encoded as:   "LL"
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  CHAR 'M'               \ Token 117:    "MILITARY  LASER"
  CHAR 'I'               \
@@ -1251,7 +1251,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  CONT 0                 \
  EQUB 0                 \ Encoded as:   "[37]:{0}"
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  RTOK 37                \ Token 119:    "CASH:{cash} CR{cr}
  CHAR ':'               \               "
@@ -1260,7 +1260,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ 6502SP: When missiles are being fired at us in the Executive version, it shows the in-flight message "INCOMING MISSILE,SIR", rather than just showing "INCOMING MISSILE"
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ 6502SP: When missiles are being fired at us in the Executive version, it shows the in-flight message "INCOMING MISSILE,SIR", rather than just showing "INCOMING MISSILE"
 
  TWOK 'I', 'N'          \ Token 120:    "INCOMING MISSILE"
  RTOK 91                \
@@ -1330,7 +1330,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: There's a new token in the
  CHAR ' '
  EQUB 0
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  RTOK 115               \ Token 123:    "DOCKING COMPUTERS ON"
  CHAR ' '               \
@@ -1348,7 +1348,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: The enhanced versions drop
  CHAR 'K'
  EQUB 0
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  CHAR 'A'               \ Token 124:    "ALL"
  RTOK 129               \
@@ -1369,7 +1369,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
  CHAR ':'
  EQUB 0
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  CONT 5                 \ Token 125:    "FUEL: {fuel level} LIGHT YEARS{cr}
  TWOK 'L', 'E'          \                CASH:{cash} CR{cr}
@@ -1412,7 +1412,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
  CONT 9
  EQUB 0
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  RTOK 92                \ Token 126:    "COMMANDER {commander name}{cr}
  CHAR ' '               \                {cr}
@@ -1467,7 +1467,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: See group A
  CONT 13
  EQUB 0
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  EQUB 0                 \ Token 128:    ""
                         \
@@ -1482,7 +1482,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: See group A
  TWOK 'E', 'D'          \ Encoded as:   "{6}[124]<152>"
  EQUB 0
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  CHAR 'L'               \ Token 129:    "LL"
  CHAR 'L'               \
@@ -1514,7 +1514,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
  CONT 6
  EQUB 0
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  CONT 12                \ Token 132:    "{cr}
  CONT 8                 \                {all caps}EQUIPMENT: {sentence case}"
@@ -1600,7 +1600,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  TWOK 'U', 'S'
  EQUB 0
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  CHAR 'D'               \ Token 142:    "DANGEROUS"
  TWOK 'A', 'N'          \
@@ -1700,7 +1700,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: To make room for the new l
  CHAR '4'
  EQUB 0
 
-ELIF _DISC_VERSION
+ELIF _DISC_VERSION OR _ELITE_A_VERSION
 
  SKIP 5                 \ These bytes appear to be unused
 

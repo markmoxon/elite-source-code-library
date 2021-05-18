@@ -3,14 +3,14 @@
 \       Name: B%
 \       Type: Variable
 \   Category: Screen mode
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \    Summary: VDU commands for setting the square mode 4 screen
 ELIF _ELECTRON_VERSION
 \    Summary: VDU commands for changing to a standard mode 4 screen
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 \    Summary: VDU commands for setting the square mode 1 screen
 ENDIF
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \  Deep dive: The split-screen mode
 \             Drawing monochrome pixels in mode 4
 ENDIF
@@ -20,7 +20,7 @@ ENDIF
 \ This block contains the bytes that get written by OSWRCH to set up the screen
 \ mode (this is equivalent to using the VDU statement in BASIC).
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \ It defines the whole screen using a square, monochrome mode 4 configuration;
 \ the mode 5 part for the dashboard is implemented in the IRQ1 routine.
 \
@@ -86,7 +86,7 @@ IF _MASTER_VERSION \ Comment
 \     same as if it were based on mode 1
 ENDIF
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \   * The text window is 1 row high and 13 columns wide, and is at (2, 16)
 ELIF _ELECTRON_VERSION
 \   * The text window is 9 rows high and 15 columns wide, and is at (8, 10)
@@ -94,7 +94,7 @@ ENDIF
 \
 \   * The cursor is disabled
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \ This almost-square mode 4 variant makes life a lot easier when drawing to the
 \ screen, as there are 256 pixels on each row (or, to put it in screen memory
 \ terms, there's one page of memory per row of pixels). For more details of the
@@ -120,7 +120,7 @@ ENDIF
 
 .B%
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
  EQUB 22, 4             \ Switch to screen mode 4
 
@@ -134,7 +134,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  EQUB 28                \ Define a text window as follows:
  EQUB 2, 17, 15, 16     \
@@ -159,7 +159,7 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 
  EQUB 23, 0, 6, 31      \ Set 6845 register R6 = 31
  EQUB 0, 0, 0           \
@@ -181,7 +181,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
  EQUB 23, 0, 12, &0C    \ Set 6845 register R12 = &0C and R13 = &00
  EQUB 0, 0, 0           \
@@ -211,7 +211,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
  EQUB 23, 0, 1, 32      \ Set 6845 register R1 = 32
  EQUB 0, 0, 0           \
@@ -251,7 +251,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
  EQUB 23, 0, 10, 32     \ Set 6845 register R10 = 32
  EQUB 0, 0, 0           \

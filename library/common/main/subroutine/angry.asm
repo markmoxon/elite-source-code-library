@@ -44,7 +44,7 @@ ELIF _ELECTRON_VERSION
  CMP #CYL               \ If this is not a Cobra Mk III trader, skip the
  BNE P%+5               \ following instruction
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
 
  LDY #36                \ Fetch the ship's NEWB flags from byte #36
  LDA (INF),Y
@@ -76,7 +76,7 @@ ENDIF
  LDY #30                \ starts pitching
  STA (INF),Y
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: In the enhanced versions, ship hostility is measured separately from aggression, so ships can be very aggressive, but not hostile (though this changes when provoked). This is more subtle than in the cassette version, where there is only a measure of aggression, and a ship is deemed to be hostile if the top bit of its aggression level is set
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhanced: In the enhanced versions, ship hostility is measured separately from aggression, so ships can be very aggressive, but not hostile (though this changes when provoked). This is more subtle than in the cassette version, where there is only a measure of aggression, and a ship is deemed to be hostile if the top bit of its aggression level is set
 
  LDA TYPE               \ If the ship's type is < #CYL (i.e. a missile, Coriolis
  CMP #CYL               \ space station, escape pod, plate, cargo canister,
@@ -118,7 +118,7 @@ ELIF _ELECTRON_VERSION
                         \ routine, but it does set up the entry point FR1-2
                         \ so that it clears the C flag and does an RTS
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
 
  LDA K%+NI%+36          \ Set bit 2 of the NEWB flags in byte #36 of the second
  ORA #%00000100         \ ship in the ship data workspace at K%, which is

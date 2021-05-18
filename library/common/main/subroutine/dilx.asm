@@ -17,14 +17,14 @@
 \   A                   The value to be shown on the indicator (so the larger
 \                       the value, the longer the bar)
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \   T1                  The threshold at which we change the indicator's colour
 \                       from the low value colour to the high value colour. The
 \                       threshold is in pixels, so it should have a value from
 \                       0-16, as each bar indicator is 16 pixels wide
 \
 ENDIF
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \   K                   The colour to use when A is a high value, as a 4-pixel
 \                       mode 5 character row byte
 \
@@ -43,7 +43,7 @@ ENDIF
 \
 \ Other entry points:
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \   DILX+2              The range of the indicator is 0-64 (for the fuel
 \                       indicator)
 \
@@ -61,7 +61,7 @@ ENDIF
  LSR A                  \ If we call DILX, we set A = A / 16, so A is 0-15
  LSR A
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  LSR A                  \ If we call DILX+2, we set A = A / 4, so A is 0-15
 
@@ -80,7 +80,7 @@ ENDIF
  STX R                  \ each character block of the bar, starting with a full
                         \ character's width of 4 pixels
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: As the dashboard in the Electron version is monochrome, the dashboard indicators do not change colour when reaching their threshold
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: As the dashboard in the Electron version is monochrome, the dashboard indicators do not change colour when reaching their threshold
 
  CMP T1                 \ If A >= T1 then we have passed the threshold where we
  BCS DL30               \ change bar colour, so jump to DL30 to set A to the
@@ -105,7 +105,7 @@ ENDIF
                         \ line in this character row, so set Y to point to that
                         \ row's offset
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
  LDX #3                 \ Set up a counter in X for the width of the indicator,
                         \ which is 4 characters (each of which is 4 pixels wide,
@@ -123,7 +123,7 @@ ENDIF
 
  LDA Q                  \ Fetch the indicator value (0-15) from Q into A
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
  CMP #4                 \ If Q < 4, then we need to draw the end cap of the
  BCC DL2                \ indicator, which is less than a full character's
@@ -162,7 +162,7 @@ ENDIF
 
 .DL5
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 
  AND COL                \ Fetch the 4-pixel mode 5 colour byte from COL, and
                         \ only keep pixels that have their equivalent bits set
@@ -185,7 +185,7 @@ ENDIF
  INY                    \ And draw the third pixel row, incrementing Y
  STA (SC),Y
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  TYA                    \ Add 6 to Y, so Y is now 8 more than when we started
  CLC                    \ this loop iteration, so Y now points to the address
@@ -220,7 +220,7 @@ ENDIF
 
 .DL2
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
  EOR #3                 \ If we get here then we are drawing the indicator's
  STA Q                  \ end cap, so Q is < 4, and this EOR flips the bits, so
@@ -259,7 +259,7 @@ ENDIF
 
 .DL3
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
  ASL A                  \ Shift the mask left so bit 0 is cleared, and then
  AND #%11101111         \ clear bit 4, which has the effect of shifting zeroes
@@ -291,7 +291,7 @@ ENDIF
  PHA                    \ Store the mask byte on the stack while we use the
                         \ accumulator for a bit
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Minor
 
  LDA #0                 \ Change the mask so no bits are set, so the characters
  STA R                  \ after the one we're about to draw will be all blank
@@ -314,7 +314,7 @@ ENDIF
 
 .DL6
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
  INC SC+1               \ Increment the high byte of SC to point to the next
                         \ character row on-screen (as each row takes up exactly
@@ -338,7 +338,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Label
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Label
 
 .DL9                    \ This label is not used but is in the original source
 

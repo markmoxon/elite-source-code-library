@@ -19,12 +19,12 @@
 
 .WPLS
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Label
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Label
 
  LDA LSX                \ If LSX < 0, the sun line heap is empty, so return from
  BMI WPLS-1             \ the subroutine (as WPLS-1 contains an RTS)
 
-ELIF _DISC_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
 
  LDA LSX                \ If LSX < 0, the sun line heap is empty, so return from
  BMI PL44               \ the subroutine (as PL44 contains a CLC and RTS)
@@ -68,7 +68,7 @@ ENDIF
 
  STY LSX                \ Set LSX to &FF to indicate the sun line heap is empty
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Tube
 
  RTS                    \ Return from the subroutine
 

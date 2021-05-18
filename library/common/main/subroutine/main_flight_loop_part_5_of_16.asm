@@ -54,7 +54,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  ORA #%10000000         \ the ship byte #31 to indicate that it has now been
  STA INWK+31            \ killed
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  ASL INWK+31            \ The energy bomb is killing this ship, so set bit 7 of
  SEC                    \ the ship byte #31 to indicate that it has now been

@@ -15,7 +15,7 @@
 \
 \   * Calculate the alpha and beta angles from the current pitch and roll
 \
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ Here we take the current rate of pitch and roll, as set by the joystick or
 \ keyboard, and convert them into alpha and beta angles that we can use in the
 ELIF _ELECTRON_VERSION
@@ -46,7 +46,7 @@ ENDIF
  EOR #%10000000         \ flipped (i.e. set them to the sign we want for alpha)
  TAY
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
 
  AND #%10000000         \ Extract the flipped sign of the roll rate and store
  STA ALP2               \ in ALP2 (so ALP2 contains the sign of the roll angle
@@ -98,7 +98,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Other: The cassette has an extra CLC
                         \ if the C flag is clear (if it is set, we skip this
                         \ instruction)
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
 
  CMP #8                 \ If A >= 8, skip the following instruction
  BCS P%+3
@@ -178,14 +178,14 @@ ENDIF
  ORA BET2               \ Store A in BETA, but with the sign set to BET2 (so
  STA BETA               \ BETA has the same sign as the actual pitch rate)
 
-IF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Enhanced: To use a Bitsik with the enhanced versions, you need to configure it using the "B" option when paused, otherwise it will act like a normal joystick
+IF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Enhanced: To use a Bitsik with the enhanced versions, you need to configure it using the "B" option when paused, otherwise it will act like a normal joystick
 
  LDA BSTK               \ If BSTK = 0 then the Bitstik is not configured, so
  BEQ BS2                \ jump to BS2 to skip the following
 
 ENDIF
 
-IF _DISC_FLIGHT \ Platform
+IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Platform
 
  LDX #3                 \ Call OSBYTE 128 to fetch the 16-bit value from ADC
  LDA #128               \ channel 3 (the Bitstik rotation value), returning the
@@ -206,7 +206,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Enhanced: If you configure the enhanced versions to use a Bitstik, then you can change the ship's speed up and down by twisting the stick
+IF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Enhanced: If you configure the enhanced versions to use a Bitstik, then you can change the ship's speed up and down by twisting the stick
 
  LSR A                  \ Divide A by 4
  LSR A

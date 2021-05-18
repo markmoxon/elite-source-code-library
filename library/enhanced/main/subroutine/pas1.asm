@@ -3,7 +3,7 @@
 \       Name: PAS1
 \       Type: Subroutine
 \   Category: Keyboard
-IF _DISC_DOCKED OR _6502SP_VERSION \ Comment
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Comment
 \    Summary: Display a rotating ship at space coordinates (0, 112, 256) and
 ELIF _MASTER_VERSION
 \    Summary: Display a rotating ship at space coordinates (0, 120, 256) and
@@ -14,7 +14,7 @@ ENDIF
 \
 \ Returns:
 \
-IF _DISC_DOCKED OR _6502SP_VERSION \ Comment
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Comment
 \   X                   If a key is being pressed, X contains the internal key
 \                       number, otherwise it contains 0
 ELIF _MASTER_VERSION
@@ -28,7 +28,7 @@ ENDIF
 
 .PAS1
 
-IF _DISC_DOCKED OR _6502SP_VERSION \ Master: In the Master version, the rotating Constrictor in the mission 1 briefing is slightly higher up the screen than in the other versions
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Master: In the Master version, the rotating Constrictor in the mission 1 briefing is slightly higher up the screen than in the other versions
 
  LDA #112               \ Set y_lo = 112
  STA INWK+3
@@ -52,7 +52,7 @@ ENDIF
 
  JSR MVEIT              \ Call MVEIT to move and rotate the ship in space
 
-IF _DISC_DOCKED OR _6502SP_VERSION \ Platform
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Platform
 
 
  JMP RDKEY              \ Scan the keyboard for a key press and return the

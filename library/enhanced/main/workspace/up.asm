@@ -8,7 +8,7 @@ ELIF _6502SP_VERSION
 \    Address: &0800 to &0974
 ENDIF
 \   Category: Workspaces
-IF _DISC_VERSION OR _6502SP_VERSION OR _ELITE_A_VERSION \ Comment
+IF _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \    Summary: Ship slots, variables
 ELIF _MASTER_VERSION
 \    Summary: Configuration variables
@@ -38,7 +38,7 @@ ORG &0800
 
 ENDIF
 
-IF _DISC_VERSION OR _6502SP_VERSION OR _ELITE_A_VERSION \ Platform
+IF _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
 INCLUDE "library/common/main/variable/kl.asm"
 INCLUDE "library/common/main/variable/ky1.asm"

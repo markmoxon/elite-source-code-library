@@ -10,7 +10,7 @@
 \ The bitmap definition for the space station indicator's "S" bulb that gets
 \ displayed on the dashboard.
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \ Each pixel is in mode 5 colour 2 (%10), which is yellow/white.
 ELIF _ELECTRON_VERSION
 \ Each pixel is a white mode 4 pixel.
@@ -25,7 +25,7 @@ ENDIF
 
 .SPBT
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Advanced: The "S" indicator bulb on the dashboard is four pixels wide in the advanced versions, while it is only three pixels wide in the cassette and disc versions. It is seven pixels wide in the Electron version, though the latter is in monochrome mode 4, so this is equivalent to 3.5 pixels in the colour versions
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Advanced: The "S" indicator bulb on the dashboard is four pixels wide in the advanced versions, while it is only three pixels wide in the cassette and disc versions. It is seven pixels wide in the Electron version, though the latter is in monochrome mode 4, so this is equivalent to 3.5 pixels in the colour versions
 
  EQUB %11100000         \ x x x .
  EQUB %11100000         \ x x x .

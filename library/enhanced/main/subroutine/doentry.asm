@@ -16,7 +16,7 @@ IF _ELITE_A_DOCKED
  BNE INBAY
  LDA #&FF
 
-ELIF _ELITE_A_6502SP
+ELIF _ELITE_A_6502SP_PARA
 
  LDA #&00               \ AJD
  STA dockedp
@@ -24,7 +24,7 @@ ELIF _ELITE_A_6502SP
 
 ENDIF
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP \ Platform
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Platform
 
  JSR scramble           \ Decrypt the newly loaded code
 
@@ -76,7 +76,7 @@ ENDIF
  LDY #44                \ Wait for 44/50 of a second (0.88 seconds)
  JSR DELAY
 
-IF _ELITE_A_DOCKED OR _ELITE_A_6502SP
+IF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
  JSR cour_dock          \ AJD
 
@@ -141,7 +141,7 @@ ENDIF
  BCC EN4                \ to Deadly), jump to EN4 as our rank isn't high enough
                         \ for mission 2
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP \ Minor
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Minor
 
  LDA GCNT               \ Fetch the galaxy number into A
 
@@ -166,7 +166,7 @@ ENDIF
                         \ will be %0110, so this jumps to EN5 if this is not the
                         \ case
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP \ Minor
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Minor
 
  LDA GCNT               \ Fetch the galaxy number into A
 
@@ -200,7 +200,7 @@ ENDIF
                         \ plans, then bits 0-3 of TP will be %1010, so this
                         \ jumps to EN5 if this is not the case
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP \ Minor
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Minor
 
  LDA GCNT               \ Fetch the galaxy number into A
 

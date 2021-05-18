@@ -16,13 +16,13 @@
 \
 \ ******************************************************************************
 
-IF NOT(_ELITE_A_6502SP)
+IF NOT(_ELITE_A_6502SP_PARA)
 
 .MV3
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _ELITE_A_6502SP OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Comment
 
  LDX TYPE               \ If the type of the ship we are moving is positive,
  BPL P%+5               \ i.e. it is not a planet (types 128 and 130) or sun

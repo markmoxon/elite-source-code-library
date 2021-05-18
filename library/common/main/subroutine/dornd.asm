@@ -10,7 +10,7 @@
 \
 \ Set A and X to random numbers. The C and V flags are also set randomly.
 \
-IF NOT(_ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP)
+IF NOT(_ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA)
 \ Other entry points:
 \
 \   DORND2              Restricts the value of RAND+2 so that bit 0 is always 0
@@ -18,7 +18,7 @@ IF NOT(_ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP)
 ENDIF
 \ ******************************************************************************
 
-IF NOT(_ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP)
+IF NOT(_ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA)
 
 .DORND2
 

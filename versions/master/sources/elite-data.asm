@@ -43,7 +43,7 @@ _DISC_FLIGHT            = FALSE
 _ELITE_A_DOCKED         = FALSE
 _ELITE_A_FLIGHT         = FALSE
 _ELITE_A_ENCYCLOPEDIA   = FALSE
-_ELITE_A_6502SP         = FALSE
+_ELITE_A_6502SP_PARA    = FALSE
 
 VE = &57                \ The obfuscation byte used to hide the extended tokens
                         \ table from crackers viewing the binary code

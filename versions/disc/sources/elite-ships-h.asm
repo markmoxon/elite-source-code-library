@@ -37,7 +37,7 @@ _DISC_FLIGHT            = TRUE
 _ELITE_A_DOCKED         = FALSE
 _ELITE_A_FLIGHT         = FALSE
 _ELITE_A_ENCYCLOPEDIA   = FALSE
-_ELITE_A_6502SP         = FALSE
+_ELITE_A_6502SP_PARA    = FALSE
 
 \ ******************************************************************************
 \

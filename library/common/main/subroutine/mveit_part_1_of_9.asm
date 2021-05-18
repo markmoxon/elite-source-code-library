@@ -33,7 +33,7 @@ ENDIF
 
 .MVEIT
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP \ Platform
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA \ Platform
 
  LDA INWK+31            \ If bit 5 of ship byte #31 is set, jump to MV3 as the
  AND #%00100000         \ ship is exploding, so we don't need to tidy its
@@ -75,7 +75,7 @@ ENDIF
                         \ shape due to the imprecise nature of trigonometry
                         \ in assembly language
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP \ Label
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA \ Label
 
 .MV3
 

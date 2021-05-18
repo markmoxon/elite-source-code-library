@@ -18,7 +18,7 @@ ENDIF
 \
 \   * DTW3 = %11111111 (print standard tokens)
 \
-IF _ELITE_A_6502SP OR _ELITE_A_DOCKED
+IF _ELITE_A_6502SP_PARA OR _ELITE_A_DOCKED
 \ Other entry points:
 \
 \   set_token           AJD
@@ -39,7 +39,7 @@ ENDIF
  LDA #%10000000         \ Set bit 7 of QQ17 to switch standard tokens to
  STA QQ17               \ Sentence Case
 
-IF _ELITE_A_6502SP OR _ELITE_A_DOCKED
+IF _ELITE_A_6502SP_PARA OR _ELITE_A_DOCKED
 
 .set_token
 

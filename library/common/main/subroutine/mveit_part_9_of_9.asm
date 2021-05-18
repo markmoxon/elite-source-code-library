@@ -17,7 +17,7 @@
 
 .MV5
 
-IF _ELITE_A_6502SP
+IF _ELITE_A_6502SP_PARA
 
  BIT dockedp            \ AJD
  BPL l_noradar
@@ -35,7 +35,7 @@ IF _DISC_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Platform
  AND #%00100000         \ If we are exploding then jump to MVD1 to remove it
  BNE MVD1               \ from the scanner permanently
 
-ELIF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP OR _MASTER_VERSION
+ELIF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION
 
  AND #%10100000         \ If we are exploding or removing this ship then jump to
  BNE MVD1               \ MVD1 to remove it from the scanner permanently
@@ -50,7 +50,7 @@ IF NOT(_ELITE_A_DOCKED)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Platform
 
  JMP SCAN               \ Display the ship on the scanner, returning from the
                         \ subroutine using a tail call
@@ -67,7 +67,7 @@ IF NOT(_ELITE_A_DOCKED)
 
 ENDIF
 
-IF _ELITE_A_6502SP
+IF _ELITE_A_6502SP_PARA
 
  .l_noradar
 

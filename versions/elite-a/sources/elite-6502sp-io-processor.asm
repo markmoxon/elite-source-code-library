@@ -40,7 +40,7 @@ _DISC_FLIGHT            = FALSE
 _ELITE_A_DOCKED         = FALSE
 _ELITE_A_FLIGHT         = FALSE
 _ELITE_A_ENCYCLOPEDIA   = FALSE
-_ELITE_A_6502SP         = TRUE
+_ELITE_A_6502SP_PARA    = TRUE
 _RELEASED               = (_RELEASE = 1)
 _SOURCE_DISC            = (_RELEASE = 2)
 

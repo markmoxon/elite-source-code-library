@@ -52,7 +52,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _M
 
 ENDIF
 
-IF _ELITE_A_6502SP
+IF _ELITE_A_6502SP_PARA
 
  LDA TYPE               \ If the ship type is not the sun (129) then skip the
  AND #%10000001         \ next instruction, otherwise return from the subroutine

@@ -52,3 +52,17 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _M
 
 ENDIF
 
+IF _ELITE_A_6502SP
+
+ LDA TYPE               \ If the ship type is not the sun (129) then skip the
+ AND #%10000001         \ next instruction, otherwise return from the subroutine
+ CMP #129               \ as we don't need to rotate the sun around its origin.
+ BEQ P%+5               \ AJD
+
+ JMP MV3                \ AJD
+
+ RTS                    \ Return from the subroutine, as the ship we are moving
+                        \ is the sun and doesn't need any of the following
+
+ENDIF
+

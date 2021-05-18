@@ -199,7 +199,7 @@ INCLUDE "versions/elite-a/sources/a.global.asm"
 EXEC% = &11E3
 
 
-.dcode_in
+.S%
 
  JMP start
 
@@ -209,12 +209,14 @@ EXEC% = &11E3
 
 .wrch_in
 
- JMP wrchdst
- EQUW &114B
+ JMP CHPR
+ EQUW IRQ1
 
 .brk_in
 
  JMP brkdst
+
+BRKV = P% - 2
 
 \ a.dcode_1
 
@@ -407,8 +409,8 @@ EXEC% = &11E3
  INC new_hold	\***
  \	JSR l_32c1
  JSR DORND
- STA data_homex	\cmdr_homex
- STX data_homey	\cmdr_homey
+ STA data_homex	\QQ0
+ STX data_homey	\QQ1
  JSR l_2f75
  JSR hyper_snap
 
@@ -521,7 +523,7 @@ EXEC% = &11E3
 
 .l_13b6
 
- JSR l_50a0
+ JSR MVEIT
  LDY #&24
 
 .l_13bb
@@ -641,7 +643,7 @@ EXEC% = &11E3
 
  LDA &6A
  BPL l_147a
- JSR l_5558
+ JSR SCAN
 
 .l_147a
 
@@ -649,7 +651,7 @@ EXEC% = &11E3
  BNE l_14f0
  LDX view_dirn
  BEQ l_1486
- JSR l_5404
+ JSR PU1
 
 .l_1486
 
@@ -1951,7 +1953,7 @@ EXEC% = &11E3
  LDA #&00
  ROR A
  STA &43
- JSR l_1d4c
+ JSR MVT3
  STA &48,X
  LDY &41
  STY &46,X
@@ -2045,10 +2047,10 @@ EXEC% = &11E3
  JSR l_338f
  LDA #&10
  JSR l_2b6d
- LDA cmdr_kills+&01
+ LDA TALLY+&01
  BNE l_1c70
  TAX
- LDA cmdr_kills
+ LDA TALLY
  LSR A
  LSR A
 
@@ -2151,7 +2153,7 @@ EXEC% = &11E3
  STX XC
  RTS
 
-.l_1d4c
+.MVT3
 
  LDA &43
  STA &83
@@ -2208,7 +2210,7 @@ EXEC% = &11E3
 
  RTS
 
-.l_1da8
+.MVS5
 
  LDA &47,X
  AND #&7F
@@ -2420,7 +2422,7 @@ EXEC% = &11E3
 
 .l_1ee0
 
- JSR wrchdst
+ JSR CHPR
 
 .l_1ee3
 
@@ -2436,7 +2438,7 @@ EXEC% = &11E3
  PLP
  BCC l_1ef7
  LDA #&2E
- JSR wrchdst
+ JSR CHPR
 
 .l_1ef7
 
@@ -2446,7 +2448,7 @@ EXEC% = &11E3
 
  LDA #&07
 
-.wrchdst
+.CHPR
 
  STA &D2
  STY &034F
@@ -2793,11 +2795,11 @@ EXEC% = &11E3
 
 .l_20dd
 
- JSR l_50a0
+ JSR MVEIT
  JSR l_488c
  DEC &66
  BNE l_20dd
- JSR l_5558
+ JSR SCAN
  LDA #&00
  STA cmdr_cargo+&10
  LDX #&0C	\LDX #&10	\ save gold/plat/gems
@@ -2914,7 +2916,7 @@ EXEC% = &11E3
 
  JMP l_3813
 
-.l_217a
+.TACTICS
 
  LDY #&03
  STY &99
@@ -3400,7 +3402,7 @@ EXEC% = &11E3
  STA &41
  STY &80
  LDX &80
- JSR l_1d4c
+ JSR MVT3
  LDY &80
  STA &D4,X
  LDA &42
@@ -3418,13 +3420,13 @@ EXEC% = &11E3
  LDX &0927,Y
  STX &81
  LDA &35
- JSR l_28fc
+ JSR MAD
  STA &83
  STX &82
  LDX &0929,Y
  STX &81
  LDA &36
- JMP l_28fc
+ JMP MAD
 
 .l_245d
 
@@ -3737,7 +3739,7 @@ EXEC% = &11E3
  STA &82
  LDA #&00
  ROR A
- JMP l_524c
+ JMP MVT1
 
 .l_2623
 
@@ -3859,7 +3861,7 @@ EXEC% = &11E3
  LDA &25
  STA &83
  EOR #&80
- JSR l_28fc
+ JSR MAD
  STA &25
  TXA
  STA &0F6F,Y
@@ -3867,7 +3869,7 @@ EXEC% = &11E3
  STA &82
  LDA &27
  STA &83
- JSR l_28fc
+ JSR MAD
  STA &83
  STX &82
  LDA #&00
@@ -3952,7 +3954,7 @@ EXEC% = &11E3
  CLC
  RTS
 
-.l_2782
+.MULT3
 
  STA &82
  AND #&7F
@@ -4130,7 +4132,7 @@ EXEC% = &11E3
  STA &81
  LDA &40
 
-.l_2847
+.FMLTU
 
  EOR #&FF
  SEC
@@ -4171,7 +4173,7 @@ EXEC% = &11E3
 
  STX &81
 
-.l_2879
+.MLTU2
 
  EOR #&FF
  LSR A
@@ -4272,14 +4274,14 @@ EXEC% = &11E3
  LDX &48,Y
  STX &81
  LDA &35
- JSR l_28fc
+ JSR MAD
  STA &83
  STX &82
  LDX &4A,Y
  STX &81
  LDA &36
 
-.l_28fc
+.MAD
 
  JSR l_28a6
 
@@ -4330,7 +4332,7 @@ EXEC% = &11E3
 
  STX &81
  EOR #&80
- JSR l_28fc
+ JSR MAD
  TAX
  AND #&80
  STA &D1
@@ -4901,9 +4903,9 @@ EXEC% = &11E3
  JSR l_30b4
  JSR l_3142
  LDA #&6B
- JSR wrchdst
+ JSR CHPR
  LDA #&6D
- JMP wrchdst
+ JMP CHPR
 
 .l_2c78
 
@@ -5088,9 +5090,9 @@ EXEC% = &11E3
  LSR A
  LSR A
  STA &40
- LDA cmdr_homex
+ LDA QQ0
  STA &73
- LDA cmdr_homey
+ LDA QQ1
  LSR A
  STA &74
  LDA #&07
@@ -5235,7 +5237,7 @@ EXEC% = &11E3
 
  LDA data_homex
  SEC
- SBC cmdr_homex
+ SBC QQ0
  CMP #&26
  BCC l_2e9b
  CMP #&E6
@@ -5250,7 +5252,7 @@ EXEC% = &11E3
  STA &73
  LDA data_homey
  SEC
- SBC cmdr_homey
+ SBC QQ1
  CMP #&26
  BCC l_2eb1
  CMP #&DC
@@ -5291,7 +5293,7 @@ EXEC% = &11E3
 
  LDA &6F
  SEC
- SBC cmdr_homex
+ SBC QQ0
  STA &3A
  BCS l_2eec
  EOR #&FF
@@ -5303,7 +5305,7 @@ EXEC% = &11E3
  BCS l_2f60
  LDA &6D
  SEC
- SBC cmdr_homey
+ SBC QQ1
  STA &E0
  BCS l_2efc
  EOR #&FF
@@ -5452,7 +5454,7 @@ EXEC% = &11E3
  LDA &6F
  STA data_homex
  SEC
- SBC cmdr_homex
+ SBC QQ0
  BCS l_2fd2
  EOR #&FF
  ADC #&01
@@ -5465,7 +5467,7 @@ EXEC% = &11E3
  STA &40
  LDA data_homey
  SEC
- SBC cmdr_homey
+ SBC QQ1
  BCS l_2fe8
  EOR #&FF
  ADC #&01
@@ -5582,9 +5584,9 @@ EXEC% = &11E3
 .l_309f
 
  LDA data_homex
- STA cmdr_homex
+ STA QQ0
  LDA data_homey
- STA cmdr_homey
+ STA QQ1
  RTS
 
 .l_30ac
@@ -5691,18 +5693,18 @@ EXEC% = &11E3
 .l_3147
 
  LDA #&74
- JSR wrchdst
+ JSR CHPR
  BCC l_3142
 
 .l_314e
 
  LDA #&6B
- JSR wrchdst
+ JSR CHPR
 
 .l_3153
 
  LDA #&67
- JMP wrchdst
+ JMP CHPR
 
 .l_3158
 
@@ -5853,9 +5855,9 @@ EXEC% = &11E3
  STA &03C3
  LDX #&00
  JSR l_5493
- LDA cmdr_homey
+ LDA QQ1
  EOR #&1F
- STA cmdr_homey
+ STA QQ1
 
 .r_rts
 
@@ -5932,7 +5934,7 @@ EXEC% = &11E3
 
  JMP l_2ebe
 
-\ a.dcode_2
+\ a.DOENTRY
 
 .l_32d0
 
@@ -6024,7 +6026,7 @@ EXEC% = &11E3
  LDA &0350,Y
  CMP #&0D
  BEQ l_3347
- JSR wrchdst
+ JSR CHPR
  INY
  BNE l_333a
 
@@ -6163,7 +6165,7 @@ EXEC% = &11E3
 
 .l_33e3
 
- JMP wrchdst
+ JMP CHPR
 
 .l_33e6
 
@@ -6206,7 +6208,7 @@ EXEC% = &11E3
 
 .l_3410
 
- JMP wrchdst
+ JMP CHPR
 
 .l_3413
 
@@ -6455,7 +6457,7 @@ EXEC% = &11E3
  JSR DORND2
  ROL A
  BCS l_355e
- JSR l_2847
+ JSR FMLTU
  ADC &82
  TAX
  LDA &83
@@ -6464,7 +6466,7 @@ EXEC% = &11E3
 
 .l_355e
 
- JSR l_2847
+ JSR FMLTU
  STA &D1
  LDA &82
  SBC &D1
@@ -6580,7 +6582,7 @@ EXEC% = &11E3
  DEY
  BPL l_35e8
  STX &84
- JSR l_5558
+ JSR SCAN
  LDX &84
  LDY #&1F
  LDA (&20),Y
@@ -7255,10 +7257,10 @@ EXEC% = &11E3
  LDA &07C0,X
  STA &81
  LDA &9D
- JSR l_2847
+ JSR FMLTU
  STA &82
  LDA &9E
- JSR l_2847
+ JSR FMLTU
  STA &40
  LDX &94
  CPX #&21
@@ -7273,10 +7275,10 @@ EXEC% = &11E3
  LDA &07C0,X
  STA &81
  LDA &9C
- JSR l_2847
+ JSR FMLTU
  STA &42
  LDA &9B
- JSR l_2847
+ JSR FMLTU
  STA &1B
  LDA &94
  ADC #&0F
@@ -7903,12 +7905,12 @@ EXEC% = &11E3
  CPY #&E0
  ADC #&00
  TAY
- LDA last_key
+ LDA KL
  RTS
 
 .l_3d4c
 
- LDA last_key
+ LDA KL
  LDX #&00
  LDY #&00
  CMP #&19
@@ -7943,7 +7945,7 @@ EXEC% = &11E3
 
 .l_3d6a
 
- LDA cmdr_homex,X
+ LDA QQ0,X
  STA data_homex,X
  DEX
  BPL l_3d6a
@@ -8032,9 +8034,9 @@ EXEC% = &11E3
  BEQ l_3d89
  CPX #&1F
  BNE l_3dfd
- LDA cmdr_mission
+ LDA TP
  ORA #&02
- STA cmdr_mission
+ STA TP
 
 .l_3dfd
 
@@ -8165,10 +8167,10 @@ EXEC% = &11E3
  LDX GCNT
  DEX
  BNE l_3ecc
- LDA cmdr_homex
+ LDA QQ0
  CMP #&90
  BNE l_3ecc
- LDA cmdr_homey
+ LDA QQ1
  CMP #&21
  BEQ l_3ecd
 
@@ -8407,7 +8409,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  DEC &0349
  BPL l_4033
  INC &0349
- LDA cmdr_mission
+ LDA TP
  AND #&0C
  CMP #&08
  BNE l_4070
@@ -8439,7 +8441,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  BCC l_40a8
  LDA #&F9
  STA &66
- LDA cmdr_mission
+ LDA TP
  AND #&03
  LSR A
  BCC l_40a8
@@ -8816,7 +8818,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  ROL A
  ADC GCNT	\ 16+7 -> 23 files !
  TAX
- LDA cmdr_mission
+ LDA TP
  AND #&0C
  CMP #&08
  BNE l_427d
@@ -9057,9 +9059,9 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
 .l_43ce
 
- INC cmdr_kills
+ INC TALLY
  BNE l_43db
- INC cmdr_kills+&01
+ INC TALLY+&01
  LDA #&65
  JSR l_45c6
 
@@ -9158,7 +9160,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 .b_pressed
 
  LDA #&FF
- STA last_key,Y
+ STA KL,Y
 
 .b_quit
 
@@ -9239,7 +9241,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
 .l_44a8
 
- STA last_key,Y
+ STA KL,Y
  DEY
  BNE l_44a8
  RTS
@@ -9373,7 +9375,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 .l_4555
 
  JSR l_433f
- STX last_key
+ STX KL
  CPX #&69
  BNE l_459c
 
@@ -9423,9 +9425,9 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
  JSR l_4429
  \	LDX l_4419-1,Y
- \	CPX last_key
+ \	CPX KL
  \	BNE l_45af
- \	STA last_key,Y
+ \	STA KL,Y
  \l_45af
  DEY
  CPY #&07
@@ -9541,7 +9543,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  STA &58
  JMP l_46a5
 
-.l_4679
+.TIDY
 
  LDA &50
  STA &34
@@ -9663,7 +9665,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDX &50,Y
  STX &81
  LDA &56,Y
- JSR l_28fc
+ JSR MAD
  STX &1B
  LDY font+&01
  LDX &50,Y
@@ -9871,7 +9873,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDA &34
  STA &81
  LDA &09,X
- JSR l_2847
+ JSR FMLTU
  STA &D1
  LDA &35
  EOR &0A,X
@@ -9879,7 +9881,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDA &36
  STA &81
  LDA &0B,X
- JSR l_2847
+ JSR FMLTU
  STA &81
  LDA &D1
  STA &82
@@ -9890,7 +9892,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDA &38
  STA &81
  LDA &0D,X
- JSR l_2847
+ JSR FMLTU
  STA &81
  LDA &D1
  STA &82
@@ -10274,7 +10276,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDA &3A
  STA &81
  LDA &34
- JSR l_2847
+ JSR FMLTU
  STA &D1
  LDA &3B
  EOR &35
@@ -10282,7 +10284,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDA &3C
  STA &81
  LDA &36
- JSR l_2847
+ JSR FMLTU
  STA &81
  LDA &D1
  STA &82
@@ -10293,7 +10295,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDA &3E
  STA &81
  LDA &38
- JSR l_2847
+ JSR FMLTU
  STA &81
  LDA &D1
  STA &82
@@ -11313,505 +11315,25 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  EOR &3D
  RTS
 
-.l_50a0
+INCLUDE "library/common/main/subroutine/mveit_part_1_of_9.asm"
+INCLUDE "library/common/main/subroutine/mveit_part_2_of_9.asm"
+INCLUDE "library/common/main/subroutine/mveit_part_3_of_9.asm"
+INCLUDE "library/common/main/subroutine/mveit_part_4_of_9.asm"
+INCLUDE "library/common/main/subroutine/mveit_part_5_of_9.asm"
+INCLUDE "library/common/main/subroutine/mveit_part_6_of_9.asm"
+INCLUDE "library/common/main/subroutine/mveit_part_7_of_9.asm"
+INCLUDE "library/common/main/subroutine/mveit_part_8_of_9.asm"
+INCLUDE "library/common/main/subroutine/mveit_part_9_of_9.asm"
+INCLUDE "library/common/main/subroutine/mvt1.asm"
+INCLUDE "library/common/main/subroutine/mvs4.asm"
+INCLUDE "library/common/main/subroutine/mvt6.asm"
+INCLUDE "library/common/main/subroutine/mv40.asm"
 
- LDA &65
- AND #&A0
- BNE l_50cb
- LDA &8A
- EOR &84
- AND #&0F
- BNE l_50b1
- JSR l_4679
 
-.l_50b1
-
- LDX &8C
- BPL l_50b8
- JMP l_533d
-
-.l_50b8
-
- LDA &66
- BPL l_50cb
- CPX #&01
- BEQ l_50c8
- LDA &8A
- EOR &84
- AND #&07
- BNE l_50cb
-
-.l_50c8
-
- JSR l_217a
-
-.l_50cb
-
- JSR l_5558
- LDA &61
- ASL A
- ASL A
- STA &81
- LDA &50
- AND #&7F
- JSR l_2847
- STA &82
- LDA &50
- LDX #&00
- JSR l_524a
- LDA &52
- AND #&7F
- JSR l_2847
- STA &82
- LDA &52
- LDX #&03
- JSR l_524a
- LDA &54
- AND #&7F
- JSR l_2847
- STA &82
- LDA &54
- LDX #&06
- JSR l_524a
- LDA &61
- CLC
- ADC &62
- BPL l_510d
- LDA #&00
-
-.l_510d
-
- LDY #&0F
- CMP (&1E),Y
- BCC l_5115
- LDA (&1E),Y
-
-.l_5115
-
- STA &61
- LDA #&00
- STA &62
- LDX &31
- LDA &46
- EOR #&FF
- STA &1B
- LDA &47
- JSR l_2877
- STA font+&01
- LDA &33
- EOR &48
- LDX #&03
- JSR l_5308
- STA &9E
- LDA font
- STA &9C
- EOR #&FF
- STA &1B
- LDA font+&01
- STA &9D
- LDX &2B
- JSR l_2877
- STA font+&01
- LDA &9E
- EOR &7B
- LDX #&06
- JSR l_5308
- STA &4E
- LDA font
- STA &4C
- EOR #&FF
- STA &1B
- LDA font+&01
- STA &4D
- JSR l_2879
- STA font+&01
- LDA &9E
- STA &4B
- EOR &7B
- EOR &4E
- BPL l_517d
- LDA font
- ADC &9C
- STA &49
- LDA font+&01
- ADC &9D
- STA &4A
- JMP l_519d
-
-.l_517d
-
- LDA &9C
- SBC font
- STA &49
- LDA &9D
- SBC font+&01
- STA &4A
- BCS l_519d
- LDA #&01
- SBC &49
- STA &49
- LDA #&00
- SBC &4A
- STA &4A
- LDA &4B
- EOR #&80
- STA &4B
-
-.l_519d
-
- LDX &31
- LDA &49
- EOR #&FF
- STA &1B
- LDA &4A
- JSR l_2877
- STA font+&01
- LDA &32
- EOR &4B
- LDX #&00
- JSR l_5308
- STA &48
- LDA font+&01
- STA &47
- LDA font
- STA &46
-
-.l_51bf
-
- LDA &7D
- STA &82
- LDA #&80
- LDX #&06
- JSR l_524c
- LDA &8C
- AND #&81
- CMP #&81
- BNE l_51d3
- RTS
-
-.l_51d3
-
- LDY #&09
- JSR l_52a1
- LDY #&0F
- JSR l_52a1
- LDY #&15
- JSR l_52a1
- LDA &64
- AND #&80
- STA &9A
- LDA &64
- AND #&7F
- BEQ l_520b
- CMP #&7F
- SBC #&00
- ORA &9A
- STA &64
- LDX #&0F
- LDY #&09
- JSR l_1da8
- LDX #&11
- LDY #&0B
- JSR l_1da8
- LDX #&13
- LDY #&0D
- JSR l_1da8
-
-.l_520b
-
- LDA &63
- AND #&80
- STA &9A
- LDA &63
- AND #&7F
- BEQ l_5234
- CMP #&7F
- SBC #&00
- ORA &9A
- STA &63
- LDX #&0F
- LDY #&15
- JSR l_1da8
- LDX #&11
- LDY #&17
- JSR l_1da8
- LDX #&13
- LDY #&19
- JSR l_1da8
-
-.l_5234
-
- LDA &65
- AND #&A0
- BNE l_5243
- LDA &65
- ORA #&10
- STA &65
- JMP l_5558
-
-.l_5243
-
- LDA &65
- AND #&EF
- STA &65
- RTS
-
-.l_524a
-
- AND #&80
-
-.l_524c
-
- ASL A
- STA &83
- LDA #&00
- ROR A
- STA &D1
- LSR &83
- EOR &48,X
- BMI l_526f
- LDA &82
- ADC &46,X
- STA &46,X
- LDA &83
- ADC &47,X
- STA &47,X
- LDA &48,X
- ADC #&00
- ORA &D1
- STA &48,X
- RTS
-
-.l_526f
-
- LDA &46,X
- SEC
- SBC &82
- STA &46,X
- LDA &47,X
- SBC &83
- STA &47,X
- LDA &48,X
- AND #&7F
- SBC #&00
- ORA #&80
- EOR &D1
- STA &48,X
- BCS l_52a0
- LDA #&01
- SBC &46,X
- STA &46,X
- LDA #&00
- SBC &47,X
- STA &47,X
- LDA #&00
- SBC &48,X
- AND #&7F
- ORA &D1
- STA &48,X
-
-.l_52a0
-
- RTS
-
-.l_52a1
-
- LDA &8D
- STA &81
- LDX &48,Y
- STX &82
- LDX &49,Y
- STX &83
- LDX &46,Y
- STX &1B
- LDA &47,Y
- EOR #&80
- JSR l_28fc
- STA &49,Y
- STX &48,Y
- STX &1B
- LDX &46,Y
- STX &82
- LDX &47,Y
- STX &83
- LDA &49,Y
- JSR l_28fc
- STA &47,Y
- STX &46,Y
- STX &1B
- LDA &2A
- STA &81
- LDX &48,Y
- STX &82
- LDX &49,Y
- STX &83
- LDX &4A,Y
- STX &1B
- LDA &4B,Y
- EOR #&80
- JSR l_28fc
- STA &49,Y
- STX &48,Y
- STX &1B
- LDX &4A,Y
- STX &82
- LDX &4B,Y
- STX &83
- LDA &49,Y
- JSR l_28fc
- STA &4B,Y
- STX &4A,Y
- RTS
-
-.l_5308
-
- TAY
- EOR &48,X
- BMI l_531c
- LDA font
- CLC
- ADC &46,X
- STA font
- LDA font+&01
- ADC &47,X
- STA font+&01
- TYA
- RTS
-
-.l_531c
-
- LDA &46,X
- SEC
- SBC font
- STA font
- LDA &47,X
- SBC font+&01
- STA font+&01
- BCC l_532f
- TYA
- EOR #&80
- RTS
-
-.l_532f
-
- LDA #&01
- SBC font
- STA font
- LDA #&00
- SBC font+&01
- STA font+&01
- TYA
- RTS
-
-.l_533d
-
- LDA &8D
- EOR #&80
- STA &81
- LDA &46
- STA &1B
- LDA &47
- STA font
- LDA &48
- JSR l_2782
- LDX #&03
- JSR l_1d4c
- LDA &41
- STA &9C
- STA &1B
- LDA &42
- STA &9D
- STA font
- LDA &2A
- STA &81
- LDA &43
- STA &9E
- JSR l_2782
- LDX #&06
- JSR l_1d4c
- LDA &41
- STA &1B
- STA &4C
- LDA &42
- STA font
- STA &4D
- LDA &43
- STA &4E
- EOR #&80
- JSR l_2782
- LDA &43
- AND #&80
- STA &D1
- EOR &9E
- BMI l_53a8
- LDA &40
- CLC
- ADC &9B
- LDA &41
- ADC &9C
- STA &49
- LDA &42
- ADC &9D
- STA &4A
- LDA &43
- ADC &9E
- JMP l_53db
-
-.l_53a8
-
- LDA &40
- SEC
- SBC &9B
- LDA &41
- SBC &9C
- STA &49
- LDA &42
- SBC &9D
- STA &4A
- LDA &9E
- AND #&7F
- STA &1B
- LDA &43
- AND #&7F
- SBC &1B
- STA &1B
- BCS l_53db
- LDA #&01
- SBC &49
- STA &49
- LDA #&00
- SBC &4A
- STA &4A
- LDA #&00
- SBC &1B
- ORA #&80
-
-.l_53db
-
- EOR &D1
- STA &4B
- LDA &8D
- STA &81
- LDA &49
- STA &1B
- LDA &4A
- STA font
- LDA &4B
- JSR l_2782
- LDX #&00
- JSR l_1d4c
- LDA &41
- STA &46
- LDA &42
- STA &47
- LDA &43
- STA &48
- JMP l_51bf
-
-.l_5404
+.PU1
 
  DEX
- BNE l_5438
+ BNE PU2
  LDA &48
  EOR #&80
  STA &48
@@ -11838,7 +11360,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  STA &60
  RTS
 
-.l_5438
+.PU2
 
  LDA #&00
  CPX #&02
@@ -12032,7 +11554,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
  EQUB &FF, &F0, &FF, &F0, &FF
 
-.l_5558
+.SCAN
 
  LDA &65
  AND #&10

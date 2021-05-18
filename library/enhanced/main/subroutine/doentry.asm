@@ -10,7 +10,21 @@
 
 .DOENTRY
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Platform
+IF _ELITE_A_DOCKED
+
+ LDA KL+1               \ AJD
+ BNE INBAY
+ LDA #&FF
+
+ELIF _ELITE_A_6502SP
+
+ LDA #&00               \ AJD
+ STA dockedp
+ LDA #&FF
+
+ENDIF
+
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP \ Platform
 
  JSR scramble           \ Decrypt the newly loaded code
 
@@ -61,6 +75,12 @@ ENDIF
 
  LDY #44                \ Wait for 44/50 of a second (0.88 seconds)
  JSR DELAY
+
+IF _ELITE_A_DOCKED OR _ELITE_A_6502SP
+
+ JSR cour_dock          \ AJD
+
+ENDIF
 
  LDA TP                 \ Fetch bits 0 and 1 of TP, and if they are non-zero
  AND #%00000011         \ (i.e. mission 1 is either in progress or has been
@@ -121,7 +141,7 @@ ENDIF
  BCC EN4                \ to Deadly), jump to EN4 as our rank isn't high enough
                         \ for mission 2
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Minor
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP \ Minor
 
  LDA GCNT               \ Fetch the galaxy number into A
 
@@ -146,7 +166,7 @@ ENDIF
                         \ will be %0110, so this jumps to EN5 if this is not the
                         \ case
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Minor
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP \ Minor
 
  LDA GCNT               \ Fetch the galaxy number into A
 
@@ -180,7 +200,7 @@ ENDIF
                         \ plans, then bits 0-3 of TP will be %1010, so this
                         \ jumps to EN5 if this is not the case
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Minor
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP \ Minor
 
  LDA GCNT               \ Fetch the galaxy number into A
 
@@ -205,6 +225,14 @@ ENDIF
                         \ the plans, and we have just arrived at Birera at
                         \ galactic coordinates (63, 72), so we jump to DEBRIEF2
                         \ to end the mission and get our reward
+
+IF _ELITE_A_DOCKED
+
+.icode_set
+
+ JSR RES2               \ AJD
+
+ENDIF
 
 .EN4
 

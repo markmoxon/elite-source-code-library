@@ -199,24 +199,19 @@ INCLUDE "versions/elite-a/sources/a.global.asm"
 EXEC% = &11E3
 
 
-.dcode_in
+.S%
 
- JMP dcode_2
+ JMP DOENTRY
 
-.boot_in
+ JMP DOENTRY
 
- JMP dcode_2
+ JMP CHPR
 
-.wrch_in
+ EQUW IRQ1
 
- JMP wrchdst
- EQUW &114B
+ JMP BRBR
 
-.brk_in
-
- JMP brk_go
-
-\ a.icode_1
+BRKV = P% - 2
 
 .tcode
 
@@ -237,33 +232,19 @@ EXEC% = &11E3
 .escape
 
  LDA #&00
- STA last_key+1
+ STA KL+1
  JMP tcode
 
-.dcode_2
+.DOENTRY
 
- JSR set_brk
- JSR clr_common
- JMP start_loop
+ JSR BRKBK
+ JSR RES2
+ JMP BAY
 
-.set_brk
-
- LDA #LO(brk_go)
- STA brk_in+&01
- LDA #HI(brk_go)
- STA brk_in+&02
- RTS
-
+INCLUDE "library/enhanced/main/subroutine/brkbk.asm"
 INCLUDE "library/enhanced/main/subroutine/detok3.asm"
 INCLUDE "library/enhanced/main/subroutine/mt27.asm"
-
-
-.MT28
-
- LDA #&DC
- CLC
- ADC cmdr_galxy
-
+INCLUDE "library/enhanced/main/subroutine/mt28.asm"
 INCLUDE "library/enhanced/main/subroutine/detok.asm"
 INCLUDE "library/enhanced/main/subroutine/detok2.asm"
 INCLUDE "library/enhanced/main/subroutine/mt1.asm"
@@ -294,207 +275,13 @@ INCLUDE "library/enhanced/main/subroutine/vowel.asm"
 INCLUDE "library/enhanced/main/variable/jmtb.asm"
 INCLUDE "library/enhanced/main/variable/tkn2.asm"
 INCLUDE "library/common/main/variable/qq16.asm"
+INCLUDE "library/common/main/subroutine/mveit_part_1_of_9.asm"
+INCLUDE "library/common/main/subroutine/mveit_part_7_of_9.asm"
+INCLUDE "library/common/main/subroutine/mveit_part_8_of_9.asm"
+INCLUDE "library/common/main/subroutine/mveit_part_9_of_9.asm"
+INCLUDE "library/common/main/subroutine/mvs4.asm"
+INCLUDE "library/common/main/subroutine/mvs5.asm"
 
-.l_14e1
-
- LDA &65
- AND #&20
- BNE l_14f2
- LDA &8A
- EOR &84
- AND #&0F
- BNE l_14f2
- JSR l_3e06
-
-.l_14f2
-
- LDY #&09
- JSR l_1619
- LDY #&0F
- JSR l_1619
- LDY #&15
- JSR l_1619
- LDA &64
- AND #&80
- STA &9A
- LDA &64
- AND #&7F
- BEQ l_152a
- CMP #&7F
- SBC #&00
- ORA &9A
- STA &64
- LDX #&0F
- LDY #&09
- JSR l_1680
- LDX #&11
- LDY #&0B
- JSR l_1680
- LDX #&13
- LDY #&0D
- JSR l_1680
-
-.l_152a
-
- LDA &63
- AND #&80
- STA &9A
- LDA &63
- AND #&7F
- BEQ l_1553
- CMP #&7F
- SBC #&00
- ORA &9A
- STA &63
- LDX #&0F
- LDY #&15
- JSR l_1680
- LDX #&11
- LDY #&17
- JSR l_1680
- LDX #&13
- LDY #&19
- JSR l_1680
-
-.l_1553
-
- LDA &65
- AND #&20
- BNE l_155f
- LDA &65
- ORA #&10
- STA &65
-
-.l_155f
-
- LDA &65
- AND #&EF
- STA &65
- RTS
-
-.l_1619
-
- LDA &8D
- STA &81
- LDX &48,Y
- STX &82
- LDX &49,Y
- STX &83
- LDX &46,Y
- STX &1B
- LDA &47,Y
- EOR #&80
- JSR l_22ad
- STA &49,Y
- STX &48,Y
- STX &1B
- LDX &46,Y
- STX &82
- LDX &47,Y
- STX &83
- LDA &49,Y
- JSR l_22ad
- STA &47,Y
- STX &46,Y
- STX &1B
- LDA &2A
- STA &81
- LDX &48,Y
- STX &82
- LDX &49,Y
- STX &83
- LDX &4A,Y
- STX &1B
- LDA &4B,Y
- EOR #&80
- JSR l_22ad
- STA &49,Y
- STX &48,Y
- STX &1B
- LDX &4A,Y
- STX &82
- LDX &4B,Y
- STX &83
- LDA &49,Y
- JSR l_22ad
- STA &4B,Y
- STX &4A,Y
- RTS
-
-.l_1680
-
- LDA &47,X
- AND #&7F
- LSR A
- STA &D1
- LDA &46,X
- SEC
- SBC &D1
- STA &82
- LDA &47,X
- SBC #&00
- STA &83
- LDA &46,Y
- STA &1B
- LDA &47,Y
- AND #&80
- STA &D1
- LDA &47,Y
- AND #&7F
- LSR A
- ROR &1B
- LSR A
- ROR &1B
- LSR A
- ROR &1B
- LSR A
- ROR &1B
- ORA &D1
- EOR &9A
- STX &81
- JSR scale_angle
- STA &41
- STX &40
- LDX &81
- LDA &47,Y
- AND #&7F
- LSR A
- STA &D1
- LDA &46,Y
- SEC
- SBC &D1
- STA &82
- LDA &47,Y
- SBC #&00
- STA &83
- LDA &46,X
- STA &1B
- LDA &47,X
- AND #&80
- STA &D1
- LDA &47,X
- AND #&7F
- LSR A
- ROR &1B
- LSR A
- ROR &1B
- LSR A
- ROR &1B
- LSR A
- ROR &1B
- ORA &D1
- EOR #&80
- EOR &9A
- STX &81
- JSR scale_angle
- STA &47,Y
- STX &46,Y
- LDX &81
- LDA &40
- STA &46,X
- LDA &41
- STA &47,X
- RTS
 
 .ship_addr
 
@@ -1318,7 +1105,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
  LDX SC
  BIT DTW4
  BMI format
- JMP wrchdst
+ JMP CHPR
 
 .format
 
@@ -1398,7 +1185,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
  LDX #&1E
  JSR l_1d3a
  LDA #&0C
- JSR wrchdst
+ JSR CHPR
  LDA DTW5
  SBC #&1E
  STA DTW5
@@ -1423,7 +1210,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
 .l_1d3c
 
  LDA &0E01,Y
- JSR wrchdst
+ JSR CHPR
  INY
  DEX
  BNE l_1d3c
@@ -1450,7 +1237,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
 
  LDA #&07
 
-.wrchdst
+.CHPR
 
  STA &D2
  STY &034F
@@ -1734,11 +1521,11 @@ INCLUDE "library/common/main/variable/qq16.asm"
  STA &82
  RTS
 
-.l_22ad
+.MAD
 
  JSR l_2259
 
-.scale_angle
+.ADD
 
  STA &06
  AND #&80
@@ -1785,7 +1572,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
 
  STX &81
  EOR #&80
- JSR l_22ad
+ JSR MAD
  TAX
  AND #&80
  STA &D1
@@ -1910,11 +1697,11 @@ INCLUDE "library/common/main/variable/qq16.asm"
  DEC &36
  JMP draw_line
 
-.y_sync
+.DELAY
 
  JSR sync
  DEY
- BNE y_sync
+ BNE DELAY
  RTS
 
 .CLYNS
@@ -2363,9 +2150,9 @@ INCLUDE "library/common/main/variable/qq16.asm"
  LSR A
  LSR A
  STA &40
- LDA cmdr_homex
+ LDA QQ0
  STA &73
- LDA cmdr_homey
+ LDA QQ1
  LSR A
  STA &74
  LDA #&07
@@ -2455,7 +2242,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
 
  LDA data_homex
  SEC
- SBC cmdr_homex
+ SBC QQ0
  CMP #&26
  BCC l_2b59
  CMP #&E6
@@ -2470,7 +2257,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
  STA &73
  LDA data_homey
  SEC
- SBC cmdr_homey
+ SBC QQ1
  CMP #&26
  BCC l_2b6f
  CMP #&DC
@@ -2511,7 +2298,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
 
  LDA &6F
  SEC
- SBC cmdr_homex
+ SBC QQ0
  BCS l_2baa
  EOR #&FF
  ADC #&01
@@ -2522,7 +2309,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
  BCS l_2c1e
  LDA &6D
  SEC
- SBC cmdr_homey
+ SBC QQ1
  BCS l_2bba
  EOR #&FF
  ADC #&01
@@ -2533,7 +2320,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
  BCS l_2c1e
  LDA &6F
  SEC
- SBC cmdr_homex
+ SBC QQ0
  ASL A
  ASL A
  ADC #&68
@@ -2545,7 +2332,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
  INC XC
  LDA &6D
  SEC
- SBC cmdr_homey
+ SBC QQ1
  ASL A
  ADC #&5A
  STA &E0
@@ -2677,7 +2464,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
  LDA &6F
  STA data_homex
  SEC
- SBC cmdr_homex
+ SBC QQ0
  BCS l_2c94
  EOR #&FF
  ADC #&01
@@ -2690,7 +2477,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
  STA &40
  LDA data_homey
  SEC
- SBC cmdr_homey
+ SBC QQ1
  BCS l_2caa
  EOR #&FF
  ADC #&01
@@ -2811,7 +2598,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
 
  JSR sound_20
  LDY #&32
- JMP y_sync
+ JMP DELAY
 
 .snap_cursor
 
@@ -2902,7 +2689,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
 .l_3170
 
  CLC
- LDX cmdr_galxy
+ LDX GCNT
  INX
  JMP writed_3
 
@@ -3653,12 +3440,12 @@ INCLUDE "library/common/main/variable/qq16.asm"
  CPY #&E0
  ADC #&00
  TAY
- LDA last_key
+ LDA KL
  RTS
 
 .keybd_dirn
 
- LDA last_key
+ LDA KL
  LDX #&00
  LDY #&00
  CMP #&19
@@ -3699,7 +3486,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
 .not_shift
 
  LDX &D1
- LDA last_key
+ LDA KL
  RTS
 
 .set_home
@@ -3708,7 +3495,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
 
 .l_3650
 
- LDA cmdr_homex,X
+ LDA QQ0,X
  STA data_homex,X
  DEX
  BPL l_3650
@@ -3727,7 +3514,7 @@ INCLUDE "library/common/main/variable/qq16.asm"
  EQUB &13, &04, &C2, &FF
  EQUB &13, &00, &00, &00
 
-.clr_common
+.RES2
 
  LDA #&12
  STA &03C3
@@ -3804,7 +3591,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDX #&FF
  TXS
  LDY #&02
- JSR y_sync
+ JSR DELAY
  JSR get_dirn
 
 .function
@@ -3945,7 +3732,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  INC YC
  JMP show_nzdist
 
-.err_count
+.brkd
 
  EQUB &00
 
@@ -3953,13 +3740,13 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
  JMP escape
 
-.brk_go
+.BRBR
 
- DEC err_count
+ DEC brkd
  BNE jmp_escape
- JSR clr_common
+ JSR RES2
 
-.start_loop
+.BAY
 
  LDA #&FF
  STA &8E
@@ -4152,7 +3939,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  EOR #&FF
  STA &0387,X
  JSR bell
- JSR y_sync
+ JSR DELAY
  LDY &D1
 
 .tog_end
@@ -4175,7 +3962,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 .spec_key
 
  JSR scan_10
- STX last_key
+ STX KL
  CPX #&69
  BNE no_freeze
 
@@ -4228,7 +4015,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 .get_key
 
  LDY #&02
- JSR y_sync
+ JSR DELAY
  JSR scan_10
  BNE get_key
 
@@ -4293,7 +4080,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  STA &58
  JMP l_3e32
 
-.l_3e06
+.TIDY
 
  LDA &50
  STA &34
@@ -4415,7 +4202,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDX &50,Y
  STX &81
  LDA &56,Y
- JSR l_22ad
+ JSR MAD
  STX &1B
  LDY &1D
  LDX &50,Y
@@ -6087,7 +5874,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 .jmp_start3
 
  JSR beep_wait
- JMP start_loop
+ JMP BAY
 
 .ships_ag
 
@@ -6159,7 +5946,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
 .l_3962
 
- JSR l_14e1
+ JSR MVEIT
  LDA #&80
  STA &4C
  ASL A
@@ -6170,7 +5957,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  JSR sync
  JSR scan_10
  BEQ l_395a
- JMP start_loop
+ JMP BAY
 
 .controls
 
@@ -6226,7 +6013,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 .l_restart
 
  JSR PAUSE2
- JMP start_loop
+ JMP BAY
 
 
 .write_card
@@ -6407,7 +6194,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
 .menu_start
 
- JMP start_loop
+ JMP BAY
 
 
 .menu_title

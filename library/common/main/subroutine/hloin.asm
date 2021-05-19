@@ -82,7 +82,20 @@ ENDIF
 
 .HLOIN
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Electron: Group A: The Electron doesn't have a dedicated routine for drawing horizontal lines, unlike the other versions; instead, it just uses the normal line-drawing routine, and sets the y-coordinates to be the same
+IF _ELITE_A_6502SP_IO
+
+ JSR tube_get           \ AJD
+ STA X1
+ JSR tube_get
+ STA Y1
+ JSR tube_get
+ STA X2
+
+ LDX X1                 \ Set X = X1
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Electron: Group A: The Electron doesn't have a dedicated routine for drawing horizontal lines, unlike the other versions; instead, it just uses the normal line-drawing routine, and sets the y-coordinates to be the same
 
  STY YSAV               \ Store Y into YSAV, so we can preserve it across the
                         \ call to this subroutine
@@ -283,7 +296,21 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
+IF _ELITE_A_6502SP_IO
+
+ LSR A                  \ Set P = A / 8, so R now contains the number of
+ LSR A                  \ character blocks we need to fill - 1
+ LSR A
+ STA P
+
+ LDA X1                 \ Set X = X1 mod 8, which is the horizontal pixel number
+ AND #7                 \ within the character block where the line starts (as
+ TAX                    \ each pixel line in the character block is 8 pixels
+                        \ wide)
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Screen
 
  LSR A                  \ Set R = A / 8, so R now contains the number of
  LSR A                  \ character blocks we need to fill - 1
@@ -365,7 +392,26 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _ELITE_A_6502SP_IO
+
+ LDX P                  \ Fetch the number of character blocks we need to fill
+                        \ from P
+
+ DEX                    \ Decrement the number of character blocks in X
+
+ BEQ HL3                \ If X = 0 then we only have the last block to do (i.e.
+                        \ the right cap), so jump down to HL3 to draw it
+
+ CLC                    \ Otherwise clear the C flag so we can do some additions
+                        \ while we draw the character blocks with full-width
+                        \ lines in them
+
+.HLL1
+
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
  LDX R                  \ Fetch the number of character blocks we need to fill
                         \ from R
@@ -485,7 +531,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Tube
 
  LDY YSAV               \ Restore Y from YSAV, so that it's preserved across the
                         \ call to this subroutine
@@ -621,7 +667,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Tube
 
  LDY YSAV               \ Restore Y from YSAV, so that it's preserved
 

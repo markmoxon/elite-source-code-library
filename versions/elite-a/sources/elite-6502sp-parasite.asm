@@ -200,7 +200,6 @@ LOAD_A% = LOAD%
 dockedp = &A0
 brk_line = &FD
 BRKV = &202
-ship_type = &311
 cabin_t = &342
 target = &344
 laser_t = &347
@@ -210,10 +209,7 @@ cmdr_gseed = &35B
 cmdr_money = &361
 cmdr_fuel = &365
 cmdr_ship = &36D
-cmdr_hold = &36E
 cmdr_cargo = &36F
-cmdr_ecm = &380
-cmdr_scoop = &381
 cmdr_bomb = &382
 cmdr_eunit = &383
 cmdr_dock = &384
@@ -223,7 +219,6 @@ cmdr_cour = &387
 cmdr_courx = &389
 cmdr_coury = &38A
 cmdr_misl = &38B
-cmdr_legal = &38C
 cmdr_avail = &38D
 cmdr_price = &39E
 f_shield = &3A5
@@ -426,292 +421,12 @@ INCLUDE "library/common/main/subroutine/hloin2.asm"
  LDA &88
  JMP tube_write
 
-.BLINE
+INCLUDE "library/common/main/subroutine/bline.asm"
+INCLUDE "library/common/main/variable/prxs.asm"
+INCLUDE "library/common/main/subroutine/status.asm"
 
- TXA
- ADC &E0
- STA &78
- LDA &E1
- ADC &D1
- STA &79
- LDA &92
- BEQ l_1a37
- INC &92
 
-.l_1a27
-
- LDY &6B
- LDA #&FF
- CMP &0F0D,Y
- BEQ l_1a98
- STA &0F0E,Y
- INC &6B
- BNE l_1a98
-
-.l_1a37
-
- LDA QQ17
- STA &34
- LDA &73
- STA &35
- LDA &74
- STA &36
- LDA &75
- STA &37
- LDA &76
- STA &38
- LDA &77
- STA &39
- LDA &78
- STA &3A
- LDA &79
- STA &3B
- JSR l_4594
- BCS l_1a27
- LDA &90
- BEQ l_1a70
- LDA &34
- LDY &36
- STA &36
- STY &34
- LDA &35
- LDY &37
- STA &37
- STY &35
-
-.l_1a70
-
- LDY &6B
- LDA &0F0D,Y
- CMP #&FF
- BNE l_1a84
- LDA &34
- STA &0EC0,Y
- LDA &35
- STA &0F0E,Y
- INY
-
-.l_1a84
-
- LDA &36
- STA &0EC0,Y
- LDA &37
- STA &0F0E,Y
- INY
- STY &6B
- JSR LOIN
- LDA &89
- BNE l_1a27
-
-.l_1a98
-
- LDA &76
- STA QQ17
- LDA &77
- STA &73
- LDA &78
- STA &74
- LDA &79
- STA &75
- LDA &93
- CLC
- ADC &95
- STA &93
- RTS
-
-.equip_costs
-
- EQUW &0001
- \ 00 Cobra 3, Boa
- EQUW   250,  4000,  6000,  4000, 10000,  5250, 3000
- EQUW  5500, 15000, 15000, 50000, 30000,  2500
- \ 1A Adder, Cobra 1, Python
- EQUW   250,  2000,  4000,  2000,  4500,  3750, 2000
- EQUW  3750,  9000,  8000, 30000, 23000,  2500
- \ 34 Fer-de-Lance, Asp 2
- EQUW   250,  4000,  5000,  5000, 10000,  7000, 6000
- EQUW  4000, 25000, 10000, 40000, 50000,  2500
- \ 4E Monitor, Anaconda
- EQUW   250,  3000,  8000,  6000,  8000,  6500, 4500
- EQUW  8000, 19000, 20000, 60000, 25000,  2500
- \ 68 Moray, Ophidian
- EQUW   250,  1500,  3000,  3500,  7000,  4500, 2500
- EQUW  4500,  7000,  7000, 30000, 19000,  2500
-
-.l_1aec
-
- LDX #&09
- CMP #&19
- BCS l_1b3f
- DEX
- CMP #&0A
- BCS l_1b3f
- DEX
- CMP #&02
- BCS l_1b3f
- DEX
- BNE l_1b3f
-
-.status
-
- LDA #&08
- JSR TT66
- JSR snap_hype
- LDA #&07
- STA XC
- LDA #&7E
- JSR NLIN3
- BIT dockedp
- BPL stat_dock
- LDA #&E6
- LDY &033E
- LDX ship_type+&02,Y
- BEQ d_1ca5
- LDY energy
- CPY #&80
- ADC #&01
-
-.d_1ca5
-
- JSR de_tokln
- JMP stat_legal
-
-.stat_dock
-
- LDA #&CD
- JSR DETOK
- JSR new_line
-
-.stat_legal
-
- LDA #&7D
- JSR spc_token
- LDA #&13
- LDY cmdr_legal
- BEQ l_1b28
- CPY #&32
- ADC #&01
-
-.l_1b28
-
- JSR de_tokln
- LDA #&10
- JSR spc_token
- LDA TALLY+&01
- BNE l_1aec
- TAX
- LDA TALLY
- LSR A
- LSR A
-
-.l_1b3b
-
- INX
- LSR A
- BNE l_1b3b
-
-.l_1b3f
-
- TXA
- CLC
- ADC #&15
- JSR de_tokln
- LDA #&12
- JSR status_equip
-
-.sell_equip
-
- LDA cmdr_hold
- BEQ l_1b57	\ IFF if flag not set
- LDA #&6B
- LDX #&06
- JSR status_equip
-
-.l_1b57
-
- LDA cmdr_scoop
- BEQ l_1b61
- LDA #&6F
- LDX #&19
- JSR status_equip
-
-.l_1b61
-
- LDA cmdr_ecm
- BEQ l_1b6b
- LDA #&6C
- LDX #&18
- JSR status_equip
-
-.l_1b6b
-
- \	LDA #&71
- \	STA &96
- LDX #&1A
-
-.l_1b6f
-
- STX &93
- \	TAY
- \	LDX ship_type,Y
- LDY LASER,X
- BEQ l_1b78
- TXA
- CLC
- ADC #&57
- JSR status_equip
-
-.l_1b78
-
- \	INC &96
- \	LDA &96
- \	CMP #&75
- LDX &93
- INX
- CPX #&1E
- BCC l_1b6f
- LDX #&00
-
-.l_1b82
-
- STX &93
- LDY LASER,X
- BEQ l_1bac
- TXA
- ORA #&60
- JSR spc_token
- LDA #&67
- LDX &93
- LDY LASER,X
- CPY new_beam	\ beam laser
- BNE l_1b9d
- LDA #&68
-
-.l_1b9d
-
- CPY new_military	\ military laser
- BNE l_1ba3
- LDA #&75
-
-.l_1ba3
-
- CPY new_mining	\ mining laser
- BNE l_1ba9
- LDA #&76
-
-.l_1ba9
-
- JSR status_equip
-
-.l_1bac
-
- LDX &93
- INX
- CPX #&04
- BCC l_1b82
- RTS
-
-.status_equip
+.plf2
 
  STX &93
  STA &96
@@ -1406,7 +1121,7 @@ INCLUDE "library/common/main/subroutine/hloin2.asm"
  JSR permute_4
  INC &97
  BNE find_loop
- JSR snap_hype
+ JSR TT111
  JSR map_cursor
  LDA #&28
  JSR sound
@@ -1419,7 +1134,7 @@ INCLUDE "library/common/main/subroutine/hloin2.asm"
  STA data_homex
  LDA &6D
  STA data_homey
- JSR snap_hype
+ JSR TT111
  JSR map_cursor
  JSR MT15
  JMP distance
@@ -1646,7 +1361,7 @@ INCLUDE "library/common/main/subroutine/hloin2.asm"
 
  AND #&7F
 
-.square
+.SQUA2
 
  STA &1B
  TAX
@@ -2163,7 +1878,7 @@ INCLUDE "library/common/main/subroutine/hloin2.asm"
  STA DTW2
  LDA #&14
  STA YC
- JSR new_line
+ JSR TT67
  LDY #&01	\INY
  STY XC
  DEY
@@ -2269,7 +1984,7 @@ INCLUDE "library/common/main/subroutine/hloin2.asm"
  LDA #&80
  STA QQ17
 
-.new_line
+.TT67
 
  LDA #&0C
  JMP TT27
@@ -2280,7 +1995,7 @@ INCLUDE "library/common/main/subroutine/hloin2.asm"
  JSR TT27
  JMP l_26c7
 
-.spc_token
+.spc
 
  JSR TT27
  JMP price_spc
@@ -2367,7 +2082,7 @@ INCLUDE "library/common/main/subroutine/hloin2.asm"
  CMP #&03
  BCS l_2722
  ADC #&E3
- JSR spc_token
+ JSR spc
 
 .l_2722
 
@@ -2378,7 +2093,7 @@ INCLUDE "library/common/main/subroutine/hloin2.asm"
  CMP #&06
  BCS l_272f
  ADC #&E6
- JSR spc_token
+ JSR spc
 
 .l_272f
 
@@ -2389,7 +2104,7 @@ INCLUDE "library/common/main/subroutine/hloin2.asm"
  CMP #&06
  BCS l_2740
  ADC #&EC
- JSR spc_token
+ JSR spc
 
 .l_2740
 
@@ -2696,7 +2411,7 @@ INCLUDE "library/common/main/subroutine/hloin2.asm"
  JSR price_units
  LDA #&3F
  JSR TT27
- JSR new_line
+ JSR TT67
  JSR buy_quant
  BCS quant_err
  STA &1B
@@ -2821,13 +2536,13 @@ INCLUDE "library/common/main/subroutine/hloin2.asm"
  LDA #&CF
  JSR NLIN3
  JSR new_pgph
- JSR new_line
+ JSR TT67
  JSR sell_equip
  LDA cmdr_escape
  BEQ sell_escape
  LDA #&70
  LDX #&1E
- JSR status_equip
+ JSR plf2
 
 .sell_escape
 
@@ -2835,7 +2550,7 @@ INCLUDE "library/common/main/subroutine/hloin2.asm"
 
 .l_2a08
 
- JSR new_line
+ JSR TT67
  LDA #&B0
  JSR token_query
  JSR beep_wait
@@ -2855,7 +2570,7 @@ INCLUDE "library/common/main/subroutine/hloin2.asm"
  BMI sell_jump
  LDA #&CE
  JSR NLIN3
- JSR new_line
+ JSR TT67
 
 .inv_or_sell
 
@@ -3172,7 +2887,7 @@ INCLUDE "library/common/main/subroutine/hloin2.asm"
 
  RTS
 
-.snap_hype
+.TT111
 
  JSR copy_xy
  LDY #&7F
@@ -3244,7 +2959,7 @@ INCLUDE "library/common/main/subroutine/hloin2.asm"
 
 .l_2c94
 
- JSR square
+ JSR SQUA2
  STA &41
  LDA &1B
  STA &40
@@ -3258,7 +2973,7 @@ INCLUDE "library/common/main/subroutine/hloin2.asm"
 .l_2caa
 
  LSR A
- JSR square
+ JSR SQUA2
  PHA
  LDA &1B
  CLC
@@ -3452,7 +3167,7 @@ INCLUDE "library/common/main/subroutine/hloin2.asm"
 
 .home_setup
 
- JSR snap_hype
+ JSR TT111
  JSR data_home
  LDX #&05
 
@@ -3550,7 +3265,7 @@ INCLUDE "library/common/main/subroutine/hloin2.asm"
  LDA #&0C
  STA XC
  LDA #&CF
- JSR spc_token
+ JSR spc
  LDA #&B9
  JSR NLIN3
  LDA #&80
@@ -3582,16 +3297,16 @@ INCLUDE "library/common/main/subroutine/hloin2.asm"
  SEC
  SBC cmdr_fuel
  ASL A
- STA equip_costs
+ STA PRXS
  LDA #0
  ROL A
- STA equip_costs+1
+ STA PRXS+1
  LDX #&01
 
 .l_2f43
 
  STX &89
- JSR new_line
+ JSR TT67
  LDX &89
  CLC
  JSR writed_3
@@ -3666,18 +3381,18 @@ INCLUDE "library/common/main/subroutine/hloin2.asm"
  LDY #&6B
  CMP #&02
  BNE equip_nhold
- LDX cmdr_hold
+ LDX CRGO
  BNE equip_gotit
- DEC cmdr_hold
+ DEC CRGO
 
 .equip_nhold
 
  CMP #&03
  BNE equip_necm
  INY
- LDX cmdr_ecm
+ LDX ECM
  BNE equip_gotit
- DEC cmdr_ecm
+ DEC ECM
 
 .equip_necm
 
@@ -3701,7 +3416,7 @@ INCLUDE "library/common/main/subroutine/hloin2.asm"
  LDY #&6F
  CMP #&06
  BNE equip_nscoop
- LDX cmdr_scoop
+ LDX BST
  BEQ l_3000
 
 .equip_gotit
@@ -3714,7 +3429,7 @@ INCLUDE "library/common/main/subroutine/hloin2.asm"
  JSR equip_price2
  JSR add_money
  LDA &40
- JSR spc_token
+ JSR spc
  LDA #&1F
  JSR TT27
 
@@ -3725,7 +3440,7 @@ INCLUDE "library/common/main/subroutine/hloin2.asm"
 
 .l_3000
 
- DEC cmdr_scoop
+ DEC BST
 
 .equip_nscoop
 
@@ -3822,7 +3537,7 @@ INCLUDE "library/common/main/subroutine/hloin2.asm"
 
  JSR price_spc
  LDA #&77
- JSR spc_token
+ JSR spc
 
 .beep_wait
 
@@ -3856,8 +3571,8 @@ INCLUDE "library/common/main/subroutine/hloin2.asm"
 .n_fcost
 
  TAY
- LDX equip_costs,Y
- LDA equip_costs+&01,Y
+ LDX PRXS,Y
+ LDA PRXS+&01,Y
  TAY
 
 .equip_quit
@@ -3884,7 +3599,7 @@ INCLUDE "library/common/main/subroutine/hloin2.asm"
  LDA YC
  CLC
  ADC #&20
- JSR spc_token
+ JSR spc
  LDA YC
  CLC
  ADC #&50
@@ -3916,7 +3631,7 @@ INCLUDE "library/common/main/subroutine/hloin2.asm"
 .snap_cursor
 
  JSR map_cursor
- JSR snap_hype
+ JSR TT111
  JSR map_cursor
  JMP CLYNS
 
@@ -4014,7 +3729,7 @@ INCLUDE "library/common/main/subroutine/hloin2.asm"
  SEC
  JSR writed_3
  LDA #&C3
- JSR de_tokln
+ JSR plf
  LDA #&77
  BNE TT27
 
@@ -4034,10 +3749,10 @@ INCLUDE "library/common/main/subroutine/hloin2.asm"
  JSR l_1bd0
  LDA #&E2
 
-.de_tokln
+.plf
 
  JSR TT27
- JMP new_line
+ JMP TT67
 
 .pre_colon
 
@@ -4239,7 +3954,7 @@ INCLUDE "library/common/main/subroutine/hloin2.asm"
 
 .l_3285
 
- LDA ship_type,X
+ LDA FRIN,X
  BEQ l_32a8
  BMI l_32a5
  STA &8C
@@ -4364,7 +4079,7 @@ INCLUDE "library/common/main/subroutine/hloin2.asm"
  STX &22
  STA &23
  LDA &40
- JSR square
+ JSR SQUA2
  STA &9C
  LDA &1B
  STA &9B
@@ -4390,7 +4105,7 @@ INCLUDE "library/common/main/subroutine/hloin2.asm"
 .l_3436
 
  LDA &22
- JSR square
+ JSR SQUA2
  STA &D1
  LDA &9B
  SEC
@@ -5016,7 +4731,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDY #&06
  STY XC
  LDA #&1E
- JSR de_tokln
+ JSR plf
  LDY #&06
  STY XC
  INC YC
@@ -5185,7 +4900,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
 .l_39f2
 
- STA ship_type,X
+ STA FRIN,X
  DEX
  BPL l_39f2
  RTS
@@ -5369,7 +5084,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  JSR CHPR
  ORA #&20
  PHA
- JSR new_line
+ JSR TT67
  JSR l_1c8a
  PLA
  CMP #&79
@@ -6894,7 +6609,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
 .l_4503
 
- JSR l_4594
+ JSR LL145
  BCS l_4520
  LDY &80
  LDA &34
@@ -6981,7 +6696,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  BCS l_4557
  JMP l_46ba
 
-.l_4594
+.LL145
 
  LDA #&00
  STA &90
@@ -7482,7 +7197,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 .n_bloop
 
  STX &89
- JSR new_line
+ JSR TT67
  LDX &89
  INX
  CLC
@@ -7679,11 +7394,11 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDA cmdr_price
  EOR QQ0
  EOR QQ1
- EOR cmdr_legal
+ EOR FIST
  EOR TALLY
  STA &46
  SEC
- LDA cmdr_legal
+ LDA FIST
  ADC GCNT
  ADC cmdr_ship
  STA &47
@@ -7736,8 +7451,8 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  STA cmdr_coury
  CLC
  LDA &0C20,X
- ADC cmdr_legal
- STA cmdr_legal
+ ADC FIST
+ STA FIST
  LDA &0C30,X
  STA cmdr_cour+1
  LDA &0C40,X
@@ -7768,7 +7483,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDA &6F
  EOR &71
  EOR &47
- CMP cmdr_legal
+ CMP FIST
  BCC cour_legal
  LDA #0
 
@@ -7785,7 +7500,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
 .cour_negx
 
- JSR square
+ JSR SQUA2
  STA &41
  LDA &1B
  STA &40
@@ -7801,7 +7516,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 .cour_negy
 
  LSR A
- JSR square
+ JSR SQUA2
  PHA
  LDA &1B
  CLC
@@ -9631,7 +9346,7 @@ ENDIF
 .menu_loop
 
  STX &89
- JSR new_line
+ JSR TT67
  LDX &89
  INX
  CLC
@@ -10511,7 +10226,7 @@ ENDIF
  JSR DORND
  STA data_homex	\QQ0
  STX data_homey	\QQ1
- JSR snap_hype
+ JSR TT111
  JSR hyper_snap
 
 .d_12f7
@@ -10543,7 +10258,7 @@ ENDIF
 .d_1314
 
  LDA &030D
- AND cmdr_ecm
+ AND ECM
  BEQ d_1326
  LDA &30
  BNE d_1326
@@ -10593,7 +10308,7 @@ ENDIF
 .d_1376
 
  STX &84
- LDA ship_type,X
+ LDA FRIN,X
  BNE aaaargh
  JMP d_153f
 
@@ -10645,7 +10360,7 @@ ENDIF
  BNE d_141d
  CPX #&01
  BEQ d_141d
- LDA cmdr_scoop
+ LDA BST
  AND &4B
  BPL d_1464
  CPX #&05
@@ -10833,11 +10548,11 @@ ENDIF
 .n_bitlegal
 
  LSR A
- BIT cmdr_legal
+ BIT FIST
  BNE n_bitlegal
- ADC cmdr_legal
+ ADC FIST
  BCS d_1527
- STA cmdr_legal
+ STA FIST
  BCC d_1527
 
 .n_goodboy
@@ -10931,7 +10646,7 @@ ENDIF
  LDA &0320
  BNE d_15bf
  TAY
- JSR d_1c43
+ JSR MAS2
  BNE d_15bf
  LDX #&1C
 
@@ -10943,15 +10658,15 @@ ENDIF
  BPL d_1590
  INX
  LDY #&09
- JSR d_1c20
+ JSR MAS1
  BNE d_15bf
  LDX #&03
  LDY #&0B
- JSR d_1c20
+ JSR MAS1
  BNE d_15bf
  LDX #&06
  LDY #&0D
- JSR d_1c20
+ JSR MAS1
  BNE d_15bf
  LDA #&C0
  JSR d_41b4
@@ -10985,9 +10700,9 @@ ENDIF
  LDY #&FF
  STY altitude
  INY
- JSR d_1c41
+ JSR m
  BNE d_1648
- JSR d_1c4f
+ JSR MAS3
  BCS d_1648
  SBC #&24
  BCC d_15fa
@@ -11019,16 +10734,16 @@ ENDIF
  LDA &0320
  BNE d_1648
  LDY #&25
- JSR d_1c43
+ JSR MAS2
  BNE d_1648
- JSR d_1c4f
+ JSR MAS3
  EOR #&FF
  ADC #&1E
  STA cabin_t
  BCS d_15fa
  CMP #&E0
  BCC d_1648
- LDA cmdr_scoop
+ LDA BST
  BEQ d_1648
  LDA &7F
  LSR A
@@ -11079,7 +10794,7 @@ ENDIF
 
  LDA &87
  BNE d_1694
- JMP d_1a25
+ JMP STARS
 
 .d_1678
 
@@ -11109,14 +10824,14 @@ ENDIF
 
  RTS
 
-.d_1907
+.PIX1
 
  JSR ADD
  STA &27
  TXA
  STA &0F95,Y
 
-.d_1910
+.PIXEL2
 
  LDA &34
  BPL d_1919
@@ -11148,347 +10863,14 @@ ENDIF
 
  RTS
 
-.FLIP
+INCLUDE "library/common/main/subroutine/flip.asm"
+INCLUDE "library/common/main/subroutine/stars.asm"
+INCLUDE "library/common/main/subroutine/stars1.asm"
+INCLUDE "library/common/main/subroutine/stars6.asm"
+INCLUDE "library/common/main/subroutine/mas1.asm"
+INCLUDE "library/common/main/subroutine/mas2.asm"
+INCLUDE "library/common/main/subroutine/mas3.asm"
 
- LDY &03C3
-
-.d_1a08
-
- LDX &0F82,Y
- LDA &0F5C,Y
- STA &35
- STA &0F82,Y
- TXA
- STA &34
- STA &0F5C,Y
- LDA &0FA8,Y
- STA &88
- JSR d_1910
- DEY
- BNE d_1a08
- RTS
-
-.d_1a25
-
- LDX VIEW
- BEQ d_1a33
- DEX
- BNE d_1a30
- JMP d_1b20
-
-.d_1a30
-
- JMP d_2679
-
-.d_1a33
-
- LDY &03C3
-
-.d_1a36
-
- JSR d_295e
- LDA &82
- LSR &1B
- ROR A
- LSR &1B
- ROR A
- ORA #&01
- STA &81
- LDA &0FBB,Y
- SBC &7E
- STA &0FBB,Y
- LDA &0FA8,Y
- STA &88
- SBC &7F
- STA &0FA8,Y
- JSR d_2817
- STA &27
- LDA &1B
- ADC &0F95,Y
- STA &26
- STA &82
- LDA &35
- ADC &27
- STA &27
- STA &83
- LDA &0F5C,Y
- STA &34
- JSR d_281c
- STA &25
- LDA &1B
- ADC &0F6F,Y
- STA &24
- LDA &34
- ADC &25
- STA &25
- EOR &33
- JSR d_27c6
- JSR ADD
- STA &27
- STX &26
- EOR &32
- JSR d_27be
- JSR ADD
- STA &25
- STX &24
- LDX &2B
- LDA &27
- EOR &7C
- JSR d_27c8
- STA &81
- JSR d_289e
- ASL &1B
- ROL A
- STA &D1
- LDA #&00
- ROR A
- ORA &D1
- JSR ADD
- STA &25
- TXA
- STA &0F6F,Y
- LDA &26
- STA &82
- LDA &27
- STA &83
- LDA #&00
- STA &1B
- LDA &2A
- EOR #&80
- JSR d_1907
- LDA &25
- STA &34
- STA &0F5C,Y
- AND #&7F
- CMP #&78
- BCS d_1afd
- LDA &27
- STA &0F82,Y
- STA &35
- AND #&7F
- CMP #&78
- BCS d_1afd
- LDA &0FA8,Y
- CMP #&10
- BCC d_1afd
- STA &88
-
-.d_1af3
-
- JSR d_1910
- DEY
- BEQ d_1afc
- JMP d_1a36
-
-.d_1afc
-
- RTS
-
-.d_1afd
-
- JSR DORND
- ORA #&04
- STA &35
- STA &0F82,Y
- JSR DORND
- ORA #&08
- STA &34
- STA &0F5C,Y
- JSR DORND
- ORA #&90
- STA &0FA8,Y
- STA &88
- LDA &35
- JMP d_1af3
-
-.d_1b20
-
- LDY &03C3
-
-.d_1b23
-
- JSR d_295e
- LDA &82
- LSR &1B
- ROR A
- LSR &1B
- ROR A
- ORA #&01
- STA &81
- LDA &0F5C,Y
- STA &34
- JSR d_281c
- STA &25
- LDA &0F6F,Y
- SBC &1B
- STA &24
- LDA &34
- SBC &25
- STA &25
- JSR d_2817
- STA &27
- LDA &0F95,Y
- SBC &1B
- STA &26
- STA &82
- LDA &35
- SBC &27
- STA &27
- STA &83
- LDA &0FBB,Y
- ADC &7E
- STA &0FBB,Y
- LDA &0FA8,Y
- STA &88
- ADC &7F
- STA &0FA8,Y
- LDA &25
- EOR &32
- JSR d_27c6
- JSR ADD
- STA &27
- STX &26
- EOR &33
- JSR d_27be
- JSR ADD
- STA &25
- STX &24
- LDA &27
- EOR &7C
- LDX &2B
- JSR d_27c8
- STA &81
- LDA &25
- STA &83
- EOR #&80
- JSR d_28a2
- ASL &1B
- ROL A
- STA &D1
- LDA #&00
- ROR A
- ORA &D1
- JSR ADD
- STA &25
- TXA
- STA &0F6F,Y
- LDA &26
- STA &82
- LDA &27
- STA &83
- LDA #&00
- STA &1B
- LDA &2A
- JSR d_1907
- LDA &25
- STA &34
- STA &0F5C,Y
- LDA &27
- STA &0F82,Y
- STA &35
- AND #&7F
- CMP #&6E
- BCS d_1bea
- LDA &0FA8,Y
- CMP #&A0
- BCS d_1bea
- STA &88
-
-.d_1be0
-
- JSR d_1910
- DEY
- BEQ d_1be9
- JMP d_1b23
-
-.d_1bea
-
- JSR DORND
- AND #&7F
- ADC #&0A
- STA &0FA8,Y
- STA &88
- LSR A
- BCS d_1c0d
- LSR A
- LDA #&FC
- ROR A
- STA &34
- STA &0F5C,Y
- JSR DORND
- STA &35
- STA &0F82,Y
- JMP d_1be0
-
-.d_1c0d
-
- JSR DORND
- STA &34
- STA &0F5C,Y
- LSR A
- LDA #&E6
- ROR A
- STA &35
- STA &0F82,Y
- BNE d_1be0
-
-.d_1c20
-
- LDA &46,Y
- ASL A
- STA &41
- LDA &47,Y
- ROL A
- STA &42
- LDA #&00
- ROR A
- STA &43
- JSR MVT3
- STA &48,X
- LDY &41
- STY &46,X
- LDY &42
- STY &47,X
- AND #&7F
-
-.d_1be9
-
- RTS
-
-.d_1c41
-
- LDA #&00
-
-.d_1c43
-
- ORA &0902,Y
- ORA &0905,Y
- ORA &0908,Y
- AND #&7F
- RTS
-
-.d_1c4f
-
- LDA &0901,Y
- JSR square
- STA &82
- LDA &0904,Y
- JSR square
- ADC &82
- BCS d_1c6d
- STA &82
- LDA &0907,Y
- JSR square
- ADC &82
- BCC d_1c6f
-
-.d_1c6d
-
- LDA #&FF
-
-.d_1c6f
-
- RTS
 
 .MVT3
 
@@ -11576,14 +10958,14 @@ ENDIF
  STA cmdr_cargo,X
  DEX
  BPL d_20ee
- STA cmdr_legal
+ STA FIST
  STA cmdr_escape
  INC new_hold	\**
  LDA new_range
  STA cmdr_fuel
  JSR update_pod
  JSR set_home
- JSR snap_hype
+ JSR TT111
  JSR data_home
  JMP d_143e
 
@@ -11760,7 +11142,7 @@ ENDIF
 
  LSR A
  BCC d_21f3
- LDX cmdr_legal
+ LDX FIST
  CPX #&28
  BCC d_21f3
  LDA &6A
@@ -12279,12 +11661,12 @@ ENDIF
  ORA &4A
  BNE d_2505
  LDA &46
- JSR square
+ JSR SQUA2
  STA &83
  LDA &1B
  STA &82
  LDA &49
- JSR square
+ JSR SQUA2
  TAX
  LDA &1B
  ADC &82
@@ -12343,7 +11725,7 @@ ENDIF
  BCC d_2589
  LDX &45
  JSR ship_ptr
- LDA ship_type,X
+ LDA FRIN,X
  JSR d_254d
  DEC cmdr_misl
  JSR show_missle	\ redraw missiles
@@ -12532,7 +11914,7 @@ ENDIF
  JSR clr_temp
  JMP HFS1
 
-.d_2679
+.STARS2
 
  LDA #&00
  CPX #&02
@@ -12565,7 +11947,7 @@ ENDIF
  STA &35
  EOR &7B
  LDX &2B
- JSR d_27c8
+ JSR MULTS-2
  JSR ADD
  STX &24
  STA &25
@@ -12575,13 +11957,13 @@ ENDIF
  STX &83
  LDX &2B
  EOR &7C
- JSR d_27c8
+ JSR MULTS-2
  JSR ADD
  STX &26
  STA &27
  LDX &31
  EOR &32
- JSR d_27c8
+ JSR MULTS-2
  STA &81
  LDA &24
  STA &82
@@ -12602,7 +11984,7 @@ ENDIF
  LDA #&00
  STA &1B
  LDA &8D
- JSR d_1907
+ JSR PIX1
  LDA &25
  STA &0F5C,Y
  STA &34
@@ -12618,7 +12000,7 @@ ENDIF
 
 .d_2724
 
- JSR d_1910
+ JSR PIXEL2
  DEY
  BEQ d_272d
  JMP d_268a
@@ -12723,20 +12105,21 @@ ENDIF
  STA &43
  RTS
 
-.d_27be
+.MLS2
 
  LDX &24
  STX &82
  LDX &25
  STX &83
 
-.d_27c6
+.MLS1
 
  LDX &31
 
-.d_27c8
-
  STX &1B
+
+.MULTS
+
  TAX
  AND #&80
  STA &D1
@@ -12792,12 +12175,12 @@ ENDIF
  ORA &D1
  RTS
 
-.d_2817
+.MLU1
 
  LDA &0F82,Y
  STA &35
 
-.d_281c
+.MLU2
 
  AND #&7F
  STA &1B
@@ -12853,12 +12236,12 @@ ENDIF
  BNE d_2884
  RTS
 
-.d_289e
+.MUT2
 
  LDX &25
  STX &83
 
-.d_28a2
+.MUT1
 
  LDX &24
  STX &82
@@ -12885,7 +12268,7 @@ ENDIF
  LDA &36
  JMP MAD
 
-.d_295e
+.DV42
 
  LDA &0FA8,Y
 
@@ -13199,7 +12582,7 @@ ENDIF
  BMI d_305e
  LDA &87
  BNE d_3023
- JSR snap_hype
+ JSR TT111
  JMP d_3026
 
 .d_3023
@@ -13244,7 +12627,7 @@ ENDIF
  INC new_hold	\**
  INX
  STX cmdr_ghype
- STX cmdr_legal
+ STX FIST
  STX cmdr_cour
  STX cmdr_cour+1
  JSR d_3054
@@ -13268,7 +12651,7 @@ ENDIF
  STA data_homex
  STA data_homey
  JSR d_3292
- JSR snap_hype
+ JSR TT111
  LDX #&00
  STX hype_dist
  STX hype_dist+&01
@@ -13389,7 +12772,7 @@ ENDIF
  BEQ d_32c1
  JSR d_2636
  JSR RES2
- JSR snap_hype
+ JSR TT111
  INC &4E
  JSR d_356d
  LDA #&80
@@ -13399,8 +12782,8 @@ ENDIF
  LDA #&0C
  STA &7D
  JSR d_41a6
- ORA cmdr_legal
- STA cmdr_legal
+ ORA FIST
+ STA FIST
  LDA #&FF
  STA &87
  JSR HFS1
@@ -13645,14 +13028,14 @@ ENDIF
 
 .d_3580
 
- \	LDA cmdr_legal
+ \	LDA FIST
  \	BEQ legal_over
  \legal_next
- \	DEC cmdr_legal
+ \	DEC FIST
  \	LSR a
  \	BNE legal_next
  \legal_over
- \\	LSR cmdr_legal
+ \\	LSR FIST
  LDA hype_dist
  LDY #3
 
@@ -13663,14 +13046,14 @@ ENDIF
  DEY
  BNE legal_div
  SEC
- SBC cmdr_legal
+ SBC FIST
  BCC legal_over
  LDA #&FF
 
 .legal_over
 
  EOR #&FF
- STA cmdr_legal
+ STA FIST
  JSR init_ship
  LDA &6D
  AND #&03
@@ -13715,7 +13098,7 @@ ENDIF
  JSR DORND
  STA &0F82,Y
  STA &35
- JSR d_1910
+ JSR PIXEL2
  DEY
  BNE d_35b8
 
@@ -13933,9 +13316,9 @@ ENDIF
  STX &63
  INX
  STX &64
- STX ship_type+&01
+ STX FRIN+&01
  STX &67
- LDA cmdr_legal
+ LDA FIST
  BPL n_enemy
  LDX #&04
 
@@ -13956,7 +13339,7 @@ ENDIF
 
 .d_376c
 
- LDA ship_type,X
+ LDA FRIN,X
  BEQ d_3778
  INX
  CPX #&0C
@@ -14024,7 +13407,7 @@ ENDIF
 
 .d_37d1
 
- STA ship_type,X
+ STA FRIN,X
  TAX
  BMI d_37e5
  CPX #&03
@@ -14596,7 +13979,7 @@ ENDIF
 
  JSR init_ship
  JSR l_32b0
- STA ship_type+&01
+ STA FRIN+&01
  STA &0320
  JSR draw_stn
  LDA #&06
@@ -14611,7 +13994,7 @@ ENDIF
 .d_3da3
 
  INX
- LDA ship_type,X
+ LDA FRIN,X
  BEQ d_3d74
  CMP #&01
  BNE d_3da3
@@ -14655,7 +14038,7 @@ ENDIF
 .d_3de8
 
  LDY &96
- LDX ship_type,Y
+ LDX FRIN,Y
  CPX #&02
  BEQ d_3d89
  CPX #&1F
@@ -14690,7 +14073,7 @@ ENDIF
 .d_3e1f
 
  INX
- LDA ship_type,X
+ LDA FRIN,X
  STA &0310,X
  BNE d_3e2b
  JMP d_3da1
@@ -14912,7 +14295,7 @@ ENDIF
  ASL A
  LDX &032E
  BEQ d_4042
- ORA cmdr_legal
+ ORA FIST
 
 .d_4042
 
@@ -15086,7 +14469,7 @@ ENDIF
 
  CMP #&76
  BNE not_status
- JMP status
+ JMP STATUS
 
 .not_status
 
@@ -15104,7 +14487,7 @@ ENDIF
 
  CMP #&75
  BNE not_data
- JSR snap_hype
+ JSR TT111
  JMP data_onsys
 
 .not_data
@@ -15385,7 +14768,7 @@ ENDIF
  AND #&80
  LDY #&1F
  STA (&20),Y
- LDA ship_type+&04
+ LDA FRIN+&04
  BEQ d_41e9
  JSR d_44a4
  STA &7D
@@ -15579,7 +14962,7 @@ ENDIF
 .d_434e
 
  LDX &033E
- LDA ship_type+&02,X
+ LDA FRIN+&02,X
  ORA &033E	\ no jump if any ship
  ORA &0320
  ORA &0341
@@ -15587,7 +14970,7 @@ ENDIF
  LDY &0908
  BMI d_4368
  TAY
- JSR d_1c43
+ JSR MAS2
  LSR A
  BEQ d_439f
 
@@ -15596,7 +14979,7 @@ ENDIF
  LDY &092D
  BMI d_4375
  LDY #&25
- JSR d_1c41
+ JSR m
  LSR A
  BEQ d_439f
 
@@ -15956,14 +15339,14 @@ ENDIF
  CPX #&18
  BCS d_45b4
  \	LDA cmdr_cargo,X
- LDA cmdr_hold,X
+ LDA CRGO,X
  BEQ d_45b4
  LDA &034A
  BNE d_45b4
  LDY #&03
  STY &034B
  \	STA cmdr_cargo,X
- STA cmdr_hold,X
+ STA CRGO,X
  DEX
  BMI d_45c1
  CPX #&11
@@ -16043,7 +15426,7 @@ INCLUDE "library/common/main/subroutine/sight.asm"
  BEQ d_5557
  LDA &8C
  BMI d_5557
- LDX cmdr_hold	\ iff code
+ LDX CRGO	\ iff code
  BEQ iff_not
  LDY #&24
  LDA (&20),Y

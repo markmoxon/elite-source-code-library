@@ -330,100 +330,8 @@ INCLUDE "library/common/main/variable/twfl.asm"
 INCLUDE "library/common/main/variable/twfr.asm"
 INCLUDE "library/original/main/subroutine/px3.asm"
 INCLUDE "library/common/main/subroutine/pixel.asm"
+INCLUDE "library/common/main/subroutine/bline.asm"
 
-
-.BLINE
-
- TXA
- ADC &E0
- STA &78
- LDA &E1
- ADC &D1
- STA &79
- LDA &92
- BEQ l_1a37
- INC &92
-
-.l_1a27
-
- LDY &6B
- LDA #&FF
- CMP &0F0D,Y
- BEQ l_1a98
- STA &0F0E,Y
- INC &6B
- BNE l_1a98
-
-.l_1a37
-
- LDA QQ17
- STA &34
- LDA &73
- STA &35
- LDA &74
- STA &36
- LDA &75
- STA &37
- LDA &76
- STA &38
- LDA &77
- STA &39
- LDA &78
- STA &3A
- LDA &79
- STA &3B
- JSR l_4594
- BCS l_1a27
- LDA &90
- BEQ l_1a70
- LDA &34
- LDY &36
- STA &36
- STY &34
- LDA &35
- LDY &37
- STA &37
- STY &35
-
-.l_1a70
-
- LDY &6B
- LDA &0F0D,Y
- CMP #&FF
- BNE l_1a84
- LDA &34
- STA &0EC0,Y
- LDA &35
- STA &0F0E,Y
- INY
-
-.l_1a84
-
- LDA &36
- STA &0EC0,Y
- LDA &37
- STA &0F0E,Y
- INY
- STY &6B
- JSR LOIN
- LDA &89
- BNE l_1a27
-
-.l_1a98
-
- LDA &76
- STA QQ17
- LDA &77
- STA &73
- LDA &78
- STA &74
- LDA &79
- STA &75
- LDA &93
- CLC
- ADC &95
- STA &93
- RTS
 
 .l_1bbc
 
@@ -922,7 +830,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  JSR permute_4
  INC &97
  BNE find_loop
- JSR snap_hype
+ JSR TT111
  JSR map_cursor
  LDA #&28
  JSR sound
@@ -935,7 +843,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  STA data_homex
  LDA &6D
  STA data_homey
- JSR snap_hype
+ JSR TT111
  JSR map_cursor
  JSR MT15
  JMP distance
@@ -1252,7 +1160,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  STA DTW2
  LDA #&14
  STA YC
- JSR new_line
+ JSR TT67
  LDA #&75
  STA SC+&01
  LDA #&07
@@ -1350,7 +1258,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  \	LDA #&80
  \	STA QQ17
 
-.new_line
+.TT67
 
  LDA #&0C
  JMP TT27
@@ -1361,7 +1269,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  JSR TT27
  JMP l_26c7
 
-.spc_token
+.spc
 
  JSR TT27
  JMP price_spc
@@ -1440,7 +1348,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  CMP #&03
  BCS l_2722
  ADC #&E3
- JSR spc_token
+ JSR spc
 
 .l_2722
 
@@ -1451,7 +1359,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  CMP #&06
  BCS l_272f
  ADC #&E6
- JSR spc_token
+ JSR spc
 
 .l_272f
 
@@ -1462,7 +1370,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  CMP #&06
  BCS l_2740
  ADC #&EC
- JSR spc_token
+ JSR spc
 
 .l_2740
 
@@ -1941,7 +1849,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
 
  RTS
 
-.snap_hype
+.TT111
 
  JSR copy_xy
  LDY #&7F
@@ -2145,7 +2053,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
 .snap_cursor
 
  JSR map_cursor
- JSR snap_hype
+ JSR TT111
  JSR map_cursor
  JMP CLYNS
 
@@ -2243,7 +2151,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  SEC
  JSR writed_3
  LDA #&C3
- JSR de_tokln
+ JSR plf
  LDA #&77
  BNE TT27
 
@@ -2263,10 +2171,10 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  JSR l_1bd0
  LDA #&E2
 
-.de_tokln
+.plf
 
  JSR TT27
- JMP new_line
+ JMP TT67
 
 .pre_colon
 
@@ -2464,7 +2372,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
 
 .l_3285
 
- LDA ship_type,X
+ LDA FRIN,X
  BEQ l_32a8
  BMI l_32a5
  JSR ship_ptr
@@ -2526,7 +2434,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
 
 .l_32ff
 
- LDA ship_type,X
+ LDA FRIN,X
  BEQ l_330b
  INX
  CPX #&0C
@@ -2585,7 +2493,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
 
 .l_3362
 
- STA ship_type,X
+ STA FRIN,X
  TAX
  BMI l_336b
  INC &031E,X
@@ -3171,7 +3079,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
 .jump_data
 
- JSR snap_hype
+ JSR TT111
  JMP data_onsys
 
 .not_data
@@ -3325,7 +3233,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
 .l_39f2
 
- STA ship_type,X
+ STA FRIN,X
  DEX
  BPL l_39f2
  RTS
@@ -4806,7 +4714,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
 .l_4503
 
- JSR l_4594
+ JSR LL145
  BCS l_4520
  LDY &80
  LDA &34
@@ -4893,7 +4801,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  BCS l_4557
  JMP l_46ba
 
-.l_4594
+.LL145
 
  LDA #&00
  STA &90
@@ -5710,7 +5618,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 .menu_loop
 
  STX &89
- JSR new_line
+ JSR TT67
  LDX &89
  INX
  CLC

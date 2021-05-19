@@ -291,274 +291,11 @@ INCLUDE "library/common/main/variable/twfl.asm"
 INCLUDE "library/common/main/variable/twfr.asm"
 INCLUDE "library/original/main/subroutine/px3.asm"
 INCLUDE "library/common/main/subroutine/pixel.asm"
+INCLUDE "library/common/main/subroutine/bline.asm"
+INCLUDE "library/common/main/variable/prxs.asm"
+INCLUDE "library/common/main/subroutine/status.asm"
 
-
-.BLINE
-
- TXA
- ADC &E0
- STA &78
- LDA &E1
- ADC &D1
- STA &79
- LDA &92
- BEQ l_1a37
- INC &92
-
-.l_1a27
-
- LDY &6B
- LDA #&FF
- CMP &0F0D,Y
- BEQ l_1a98
- STA &0F0E,Y
- INC &6B
- BNE l_1a98
-
-.l_1a37
-
- LDA QQ17
- STA &34
- LDA &73
- STA &35
- LDA &74
- STA &36
- LDA &75
- STA &37
- LDA &76
- STA &38
- LDA &77
- STA &39
- LDA &78
- STA &3A
- LDA &79
- STA &3B
- JSR l_4594
- BCS l_1a27
- LDA &90
- BEQ l_1a70
- LDA &34
- LDY &36
- STA &36
- STY &34
- LDA &35
- LDY &37
- STA &37
- STY &35
-
-.l_1a70
-
- LDY &6B
- LDA &0F0D,Y
- CMP #&FF
- BNE l_1a84
- LDA &34
- STA &0EC0,Y
- LDA &35
- STA &0F0E,Y
- INY
-
-.l_1a84
-
- LDA &36
- STA &0EC0,Y
- LDA &37
- STA &0F0E,Y
- INY
- STY &6B
- JSR LOIN
- LDA &89
- BNE l_1a27
-
-.l_1a98
-
- LDA &76
- STA QQ17
- LDA &77
- STA &73
- LDA &78
- STA &74
- LDA &79
- STA &75
- LDA &93
- CLC
- ADC &95
- STA &93
- RTS
-
-.equip_costs
-
- EQUW &0001
- \ 00 Cobra 3, Boa
- EQUW   250,  4000,  6000,  4000, 10000,  5250, 3000
- EQUW  5500, 15000, 15000, 50000, 30000,  2500
- \ 1A Adder, Cobra 1, Python
- EQUW   250,  2000,  4000,  2000,  4500,  3750, 2000
- EQUW  3750,  9000,  8000, 30000, 23000,  2500
- \ 34 Fer-de-Lance, Asp 2
- EQUW   250,  4000,  5000,  5000, 10000,  7000, 6000
- EQUW  4000, 25000, 10000, 40000, 50000,  2500
- \ 4E Monitor, Anaconda
- EQUW   250,  3000,  8000,  6000,  8000,  6500, 4500
- EQUW  8000, 19000, 20000, 60000, 25000,  2500
- \ 68 Moray, Ophidian
- EQUW   250,  1500,  3000,  3500,  7000,  4500, 2500
- EQUW  4500,  7000,  7000, 30000, 19000,  2500
-
-.l_1aec
-
- LDX #&09
- CMP #&19
- BCS l_1b3f
- DEX
- CMP #&0A
- BCS l_1b3f
- DEX
- CMP #&02
- BCS l_1b3f
- DEX
- BNE l_1b3f
-
-.status
-
- LDA #&08
- JSR TT66
- JSR snap_hype
- LDA #&07
- STA XC
- LDA #&7E
- JSR NLIN3
- LDA #&CD
- JSR DETOK
- JSR new_line
- LDA #&7D
- JSR spc_token
- LDA #&13
- LDY cmdr_legal
- BEQ l_1b28
- CPY #&32
- ADC #&01
-
-.l_1b28
-
- JSR de_tokln
- LDA #&10
- JSR spc_token
- LDA TALLY+&01
- BNE l_1aec
- TAX
- LDA TALLY
- LSR A
- LSR A
-
-.l_1b3b
-
- INX
- LSR A
- BNE l_1b3b
-
-.l_1b3f
-
- TXA
- CLC
- ADC #&15
- JSR de_tokln
- LDA #&12
- JSR status_equip
-
-.sell_equip
-
- LDA cmdr_hold
- BEQ l_1b57	\ IFF if flag not set
- LDA #&6B
- LDX #&06
- JSR status_equip
-
-.l_1b57
-
- LDA cmdr_scoop
- BEQ l_1b61
- LDA #&6F
- LDX #&19
- JSR status_equip
-
-.l_1b61
-
- LDA cmdr_ecm
- BEQ l_1b6b
- LDA #&6C
- LDX #&18
- JSR status_equip
-
-.l_1b6b
-
- \	LDA #&71
- \	STA &96
- LDX #&1A
-
-.l_1b6f
-
- STX &93
- \	TAY
- \	LDX ship_type,Y
- LDY cmdr_laser,X
- BEQ l_1b78
- TXA
- CLC
- ADC #&57
- JSR status_equip
-
-.l_1b78
-
- \	INC &96
- \	LDA &96
- \	CMP #&75
- LDX &93
- INX
- CPX #&1E
- BCC l_1b6f
- LDX #&00
-
-.l_1b82
-
- STX &93
- LDY cmdr_laser,X
- BEQ l_1bac
- TXA
- ORA #&60
- JSR spc_token
- LDA #&67
- LDX &93
- LDY cmdr_laser,X
- CPY new_beam	\ beam laser
- BNE l_1b9d
- LDA #&68
-
-.l_1b9d
-
- CPY new_military	\ military laser
- BNE l_1ba3
- LDA #&75
-
-.l_1ba3
-
- CPY new_mining	\ mining laser
- BNE l_1ba9
- LDA #&76
-
-.l_1ba9
-
- JSR status_equip
-
-.l_1bac
-
- LDX &93
- INX
- CPX #&04
- BCC l_1b82
- RTS
-
-.status_equip
+.plf2
 
  STX &93
  STA &96
@@ -592,7 +329,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  INC new_hold	\**
  LDX &93
  LDA #&00
- STA cmdr_laser,X
+ STA LASER,X
 
 .status_no
 
@@ -1356,7 +1093,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  JSR permute_4
  INC &97
  BNE find_loop
- JSR snap_hype
+ JSR TT111
  JSR map_cursor
  LDA #&28
  JSR sound
@@ -1369,7 +1106,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  STA data_homex
  LDA &6D
  STA data_homey
- JSR snap_hype
+ JSR TT111
  JSR map_cursor
  JSR MT15
  JMP distance
@@ -2205,7 +1942,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  STA DTW2
  LDA #&14
  STA YC
- JSR new_line
+ JSR TT67
  LDA #&75
  STA SC+&01
  LDA #&07
@@ -2333,7 +2070,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  LDA #&80
  STA QQ17
 
-.new_line
+.TT67
 
  LDA #&0C
  JMP TT27
@@ -2344,7 +2081,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  JSR TT27
  JMP l_26c7
 
-.spc_token
+.spc
 
  JSR TT27
  JMP price_spc
@@ -2429,7 +2166,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  CMP #&03
  BCS l_2722
  ADC #&E3
- JSR spc_token
+ JSR spc
 
 .l_2722
 
@@ -2440,7 +2177,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  CMP #&06
  BCS l_272f
  ADC #&E6
- JSR spc_token
+ JSR spc
 
 .l_272f
 
@@ -2451,7 +2188,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  CMP #&06
  BCS l_2740
  ADC #&EC
- JSR spc_token
+ JSR spc
 
 .l_2740
 
@@ -2759,7 +2496,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  JSR price_units
  LDA #&3F
  JSR TT27
- JSR new_line
+ JSR TT67
  JSR buy_quant
  BCS quant_err
  STA &1B
@@ -2884,13 +2621,13 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  LDA #&CF
  JSR NLIN3
  JSR new_pgph
- JSR new_line
+ JSR TT67
  JSR sell_equip
  LDA cmdr_escape
  BEQ sell_escape
  LDA #&70
  LDX #&1E
- JSR status_equip
+ JSR plf2
 
 .sell_escape
 
@@ -2898,7 +2635,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
 
 .l_2a08
 
- JSR new_line
+ JSR TT67
  LDA #&B0
  JSR token_query
  JSR beep_wait
@@ -2918,7 +2655,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  BMI sell_jump
  LDA #&CE
  JSR NLIN3
- JSR new_line
+ JSR TT67
 
 .inv_or_sell
 
@@ -3237,7 +2974,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
 
  RTS
 
-.snap_hype
+.TT111
 
  JSR copy_xy
  LDY #&7F
@@ -3518,7 +3255,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
 
 .home_setup
 
- JSR snap_hype
+ JSR TT111
  JSR data_home
  LDX #&05
 
@@ -3628,7 +3365,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  LDA #&0C
  STA XC
  LDA #&CF
- JSR spc_token
+ JSR spc
  LDA #&B9
  JSR NLIN3
  \	LDA #&80
@@ -3661,16 +3398,16 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  SEC
  SBC cmdr_fuel
  ASL A
- STA equip_costs
+ STA PRXS
  LDA #0
  ROL A
- STA equip_costs+1
+ STA PRXS+1
  LDX #&01
 
 .l_2f43
 
  STX &89
- JSR new_line
+ JSR TT67
  LDX &89
  CLC
  JSR writed_3
@@ -3745,18 +3482,18 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  LDY #&6B
  CMP #&02
  BNE equip_nhold
- LDX cmdr_hold
+ LDX CRGO
  BNE equip_gotit
- DEC cmdr_hold
+ DEC CRGO
 
 .equip_nhold
 
  CMP #&03
  BNE equip_necm
  INY
- LDX cmdr_ecm
+ LDX ECM
  BNE equip_gotit
- DEC cmdr_ecm
+ DEC ECM
 
 .equip_necm
 
@@ -3780,7 +3517,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  LDY #&6F
  CMP #&06
  BNE equip_nscoop
- LDX cmdr_scoop
+ LDX BST
  BEQ l_3000
 
 .equip_gotit
@@ -3793,7 +3530,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  JSR equip_price2
  JSR add_money
  LDA &40
- JSR spc_token
+ JSR spc
  LDA #&1F
  JSR TT27
 
@@ -3804,7 +3541,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
 
 .l_3000
 
- DEC cmdr_scoop
+ DEC BST
 
 .equip_nscoop
 
@@ -3880,7 +3617,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  PHA
  JSR equip_side
  PLA
- LDY cmdr_laser,X
+ LDY LASER,X
  BEQ l_3113
  PLA
  LDY #&BB
@@ -3888,7 +3625,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
 
 .l_3113
 
- STA cmdr_laser,X
+ STA LASER,X
  PLA
 
 .equip_nmine
@@ -3900,7 +3637,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
 
  JSR price_spc
  LDA #&77
- JSR spc_token
+ JSR spc
 
 .beep_wait
 
@@ -3934,8 +3671,8 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
 .n_fcost
 
  TAY
- LDX equip_costs,Y
- LDA equip_costs+&01,Y
+ LDX PRXS,Y
+ LDA PRXS+&01,Y
  TAY
 
 .equip_quit
@@ -3962,7 +3699,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  LDA YC
  CLC
  ADC #&20
- JSR spc_token
+ JSR spc
  LDA YC
  CLC
  ADC #&50
@@ -3994,7 +3731,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
 .snap_cursor
 
  JSR map_cursor
- JSR snap_hype
+ JSR TT111
  JSR map_cursor
  JMP CLYNS
 
@@ -4092,7 +3829,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  SEC
  JSR writed_3
  LDA #&C3
- JSR de_tokln
+ JSR plf
  LDA #&77
  BNE TT27
 
@@ -4112,10 +3849,10 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  JSR l_1bd0
  LDA #&E2
 
-.de_tokln
+.plf
 
  JSR TT27
- JMP new_line
+ JMP TT67
 
 .pre_colon
 
@@ -4316,7 +4053,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
 
 .l_3285
 
- LDA ship_type,X
+ LDA FRIN,X
  BEQ l_32a8
  BMI l_32a5
  JSR ship_ptr
@@ -4378,7 +4115,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
 
 .l_32ff
 
- LDA ship_type,X
+ LDA FRIN,X
  BEQ l_330b
  INX
  CPX #&0C
@@ -4442,7 +4179,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
 
 .l_3362
 
- STA ship_type,X
+ STA FRIN,X
  TAX
  BMI l_336b
  INC &031E,X
@@ -5070,7 +4807,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
  CMP #&76
  BNE not_status
- JMP status
+ JMP STATUS
 
 .not_status
 
@@ -5088,7 +4825,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
  CMP #&75
  BNE not_data
- JSR snap_hype
+ JSR TT111
  JMP data_onsys
 
 .not_data
@@ -5320,7 +5057,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDY #&06
  STY XC
  LDA #&1E
- JSR de_tokln
+ JSR plf
  LDY #&06
  STY XC
  INC YC
@@ -5486,7 +5223,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
 .l_39f2
 
- STA ship_type,X
+ STA FRIN,X
  DEX
  BPL l_39f2
  RTS
@@ -5674,7 +5411,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  JSR CHPR
  ORA #&20
  PHA
- JSR new_line
+ JSR TT67
  JSR l_1c8a
  PLA
  CMP #&79
@@ -7238,7 +6975,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
 .l_4503
 
- JSR l_4594
+ JSR LL145
  BCS l_4520
  LDY &80
  LDA &34
@@ -7325,7 +7062,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  BCS l_4557
  JMP l_46ba
 
-.l_4594
+.LL145
 
  LDA #&00
  STA &90
@@ -7825,7 +7562,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 .n_bloop
 
  STX &89
- JSR new_line
+ JSR TT67
  LDX &89
  INX
  CLC
@@ -7952,7 +7689,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 .count_lasers
 
  LDX count_offs,Y
- LDA cmdr_laser,X
+ LDA LASER,X
  BEQ count_sys
  DEC new_hold	\**
 
@@ -8022,11 +7759,11 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDA cmdr_price
  EOR QQ0
  EOR QQ1
- EOR cmdr_legal
+ EOR FIST
  EOR TALLY
  STA &46
  SEC
- LDA cmdr_legal
+ LDA FIST
  ADC GCNT
  ADC cmdr_ship
  STA &47
@@ -8079,8 +7816,8 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  STA cmdr_coury
  CLC
  LDA &0C20,X
- ADC cmdr_legal
- STA cmdr_legal
+ ADC FIST
+ STA FIST
  LDA &0C30,X
  STA cmdr_cour+1
  LDA &0C40,X
@@ -8111,7 +7848,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDA &6F
  EOR &71
  EOR &47
- CMP cmdr_legal
+ CMP FIST
  BCC cour_legal
  LDA #0
 

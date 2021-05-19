@@ -144,7 +144,39 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
+IF _ELITE_A_6502SP_IO
+
+ JSR tube_get           \ AJD
+ TAX
+ JSR tube_get
+ TAY
+ JSR tube_get
+ STA ZZ
+ TYA
+
+ELIF _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA
+
+ STY T1                 \ Store Y in T1
+
+ TAY                    \ Copy A into Y, for use later
+
+ENDIF
+
+IF _ELITE_A_VERSION
+
+ LSR A                  \ Set SCH = &60 + A >> 3
+ LSR A
+ LSR A
+ ORA #&60
+ STA SCH
+
+ TXA                    \ Set SC = (X >> 3) * 8
+ AND #%11111000
+ STA SC
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  STY T1                 \ Store Y in T1
 
@@ -240,7 +272,7 @@ IF _ELITE_A_FLIGHT
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_DOCKED \ Electron: Dots in the Electron version, such as those shown for stardust particles, are always two pixels wide, while the cassette and disc versions also support 1-pixel dots in their monochrome space views
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_IO \ Electron: Dots in the Electron version, such as those shown for stardust particles, are always two pixels wide, while the cassette and disc versions also support 1-pixel dots in their monochrome space views
 
  LDA ZZ                 \ If distance in ZZ >= 144, then this point is a very
  CMP #144               \ long way away, so jump to PX3 to fetch a 1-pixel point
@@ -281,14 +313,6 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
  LDA TWOS2,X            \ Fetch a 2-pixel dash from TWOS2 and EOR it into this
  EOR (SC),Y             \ second row to make a 4-pixel square
  STA (SC),Y
-
-.PX13
-
- LDY T1                 \ Restore Y from T1, so Y is preserved by the routine
-
-.PX4
-
- RTS                    \ Return from the subroutine
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
@@ -372,7 +396,25 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
 ENDIF
 
-IF _6502SP_VERSION \ Platform
+IF _ELITE_A_6502SP_IO
+
+.PX13
+
+ RTS                    \ Return from the subroutine
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Platform
+
+.PX13
+
+ LDY T1                 \ Restore Y from T1, so Y is preserved by the routine
+
+.PX4
+
+ RTS                    \ Return from the subroutine
+
+ELIF _6502SP_VERSION
 
  LDY T1                 \ Set Y to the index of this pixel's y-coordinate byte
                         \ in the command block, which we stored in T1 above

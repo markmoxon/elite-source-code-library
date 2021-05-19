@@ -220,11 +220,12 @@ X2 = &96
 Y2 = &97
 P = &98
 Q = &99
+T = &99    \ Added for HLOIN
 R = &9A
 S = &9B
 SWAP = &9C
 
-drawpix_1 = &94
+ZZ = &94
 drawpix_2 = &95
 drawpix_3 = &96
 drawpix_4 = &97
@@ -311,14 +312,13 @@ tube_brk = &16	\ tube BRK vector
 
 .tube_table
 
- EQUW LL30, HLOIN, draw_pixel, clr_scrn
+ EQUW LL30, HLOIN, PIXEL, clr_scrn
  EQUW clr_line, sync_in, draw_bar, draw_angle
  EQUW put_missle, scan_fire, write_fe4e, scan_xin
  EQUW scan_10in, get_key, write_xyc, write_pod
  EQUW draw_blob, draw_tail, draw_S, draw_E
  EQUW draw_mode, write_crtc, scan_y, write_0346
  EQUW read_0346, return, picture_h, picture_v
-
 
 .write_xyc
 
@@ -450,163 +450,11 @@ INCLUDE "library/common/main/subroutine/loin_part_4_of_7.asm"
 INCLUDE "library/common/main/subroutine/loin_part_5_of_7.asm"
 INCLUDE "library/common/main/subroutine/loin_part_6_of_7.asm"
 INCLUDE "library/common/main/subroutine/loin_part_7_of_7.asm"
-
-.HLOIN
-
- JSR tube_get
- STA X1
- JSR tube_get
- STA Y1
- JSR tube_get
- STA X2
-
-.draw_hline2
-
- LDX X1
- CPX X2
- BEQ HL6
- BCC l_1924
- LDA X2
- STA X1
- STX X2
- TAX
-
-.l_1924
-
- DEC X2
- LDA Y1
- LSR A
- LSR A
- LSR A
- ORA #&60
- STA SC+&01
- LDA Y1
- AND #&07
- STA SC
- TXA
- AND #&F8
- TAY
- TXA
- AND #&F8
- STA Q
- LDA X2
- AND #&F8
- SEC
- SBC Q
- BEQ l_197e
- LSR A
- LSR A
- LSR A
- STA P
- LDA X1
- AND #&07
- TAX
- LDA TWFL+&07,X
- EOR (SC),Y
- STA (SC),Y
- TYA
- ADC #&08
- TAY
- LDX P
- DEX
- BEQ l_196f
- CLC
-
-.l_1962
-
- LDA #&FF
- EOR (SC),Y
- STA (SC),Y
- TYA
- ADC #&08
- TAY
- DEX
- BNE l_1962
-
-.l_196f
-
- LDA X2
- AND #&07
- TAX
- LDA TWFL,X
- EOR (SC),Y
- STA (SC),Y
- RTS
-
-.l_197e
-
- LDA X1
- AND #&07
- TAX
- LDA TWFL+&07,X
- STA Q
- LDA X2
- AND #&07
- TAX
- LDA TWFL,X
- AND Q
- EOR (SC),Y
- STA (SC),Y
- RTS
-
+INCLUDE "library/common/main/subroutine/hloin.asm"
 INCLUDE "library/common/main/variable/twfl.asm"
 INCLUDE "library/common/main/variable/twfr.asm"
-
-
-
-.PX3
-
- LDA TWOS,X
- EOR (SC),Y
- STA (SC),Y
- RTS
-
-.draw_pixel
-
- JSR tube_get
- TAX
- JSR tube_get
- TAY
- JSR tube_get
- STA drawpix_1
- TYA
- LSR A
- LSR A
- LSR A
- ORA #&60
- STA SC+&01
- TXA
- AND #&F8
- STA SC
- TYA
- AND #&07
- TAY
- TXA
- AND #&07
- TAX
- LDA drawpix_1
- CMP #&90
- BCS PX3
- LDA TWOS2,X
- EOR (SC),Y
- STA (SC),Y
- LDA drawpix_1
- CMP #&50
- BCS l_1a13
- DEY
- BPL l_1a0c
- LDY #&01
-
-.l_1a0c
-
- LDA TWOS2,X
- EOR (SC),Y
- STA (SC),Y
-
-.l_1a13
-
- RTS
-
+INCLUDE "library/original/main/subroutine/px3.asm"
+INCLUDE "library/common/main/subroutine/pixel.asm"
 
 .clr_scrn
 
@@ -920,7 +768,7 @@ INCLUDE "library/common/main/variable/twfr.asm"
 .draw_blob
 
  JSR tube_get
- STA drawpix_1
+ STA ZZ
  JSR tube_get
  STA drawpix_2
  JSR tube_get
@@ -934,13 +782,13 @@ INCLUDE "library/common/main/variable/twfr.asm"
  LSR A
  ORA #&60
  STA SC+&01
- LDA drawpix_1
+ LDA ZZ
  AND #&F8
  STA SC
  LDA drawpix_2
  AND #&07
  TAY
- LDA drawpix_1
+ LDA ZZ
  AND #&06
  LSR A
  TAX
@@ -966,7 +814,7 @@ INCLUDE "library/common/main/variable/twfr.asm"
 .draw_tail
 
  JSR tube_get
- STA drawpix_1
+ STA ZZ
  JSR tube_get
  STA drawpix_2
  JSR tube_get

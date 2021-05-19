@@ -34,7 +34,7 @@
 
 .STARS6
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron version has no witchspace, so the number of stardust particles shown is always the same, so the value is hard-coded rather than needing to use a location (which the other versions need so they can vary the number of particles when in witchspace)
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Electron: The Electron version has no witchspace, so the number of stardust particles shown is always the same, so the value is hard-coded rather than needing to use a location (which the other versions need so they can vary the number of particles when in witchspace)
 
  LDY NOSTM              \ Set Y to the current number of stardust particles, so
                         \ we can use it as a counter through all the stardust
@@ -308,6 +308,16 @@ ENDIF
  DEY                    \ Decrement the loop counter to point to the next
                         \ stardust particle
 
+IF _ELITE_A_VERSION
+
+ BEQ MA9                \ If we have just done the last particle, return from
+                        \ the subroutine (as MA9 contains an RTS)
+
+ JMP STL6               \ We have more stardust to process, so jump back up to
+                        \ STL6 for the next particle
+
+ELIF NOT(_ELITE_A_VERSION)
+
  BEQ ST3                \ If we have just done the last particle, skip the next
                         \ instruction to return from the subroutine
 
@@ -317,6 +327,8 @@ ENDIF
 .ST3
 
  RTS                    \ Return from the subroutine
+
+ENDIF
 
 .KILL6
 

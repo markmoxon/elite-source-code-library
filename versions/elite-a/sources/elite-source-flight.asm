@@ -412,7 +412,7 @@ BRKV = P% - 2
  JSR DORND
  STA data_homex	\QQ0
  STX data_homey	\QQ1
- JSR l_2f75
+ JSR TT111
  JSR hyper_snap
 
 .l_12f7
@@ -447,7 +447,7 @@ BRKV = P% - 2
 .l_1314
 
  LDA &030D
- AND cmdr_ecm
+ AND ECM
  BEQ l_1326
  LDA &30
  BNE l_1326
@@ -497,7 +497,7 @@ BRKV = P% - 2
 .l_1376
 
  STX &84
- LDA ship_type,X
+ LDA FRIN,X
  BNE ins_ship
  JMP l_153f
 
@@ -549,7 +549,7 @@ BRKV = P% - 2
  BNE l_141d
  CPX #&01
  BEQ l_141d
- LDA cmdr_scoop
+ LDA BST
  AND &4B
  BPL l_1464
  CPX #&05
@@ -727,14 +727,14 @@ BRKV = P% - 2
  BEQ l_152a
  \	AND &6A	\ A=&20
  \	BEQ n_trader
- \	INC cmdr_legal
+ \	INC FIST
  \	BNE n_trader
- \	DEC cmdr_legal
+ \	DEC FIST
  \n_trader
  \	LDA &6A
  \	AND #&40
- \	ORA cmdr_legal
- \	STA cmdr_legal
+ \	ORA FIST
+ \	STA FIST
  BIT &6A	\ A=&20
  BVS n_badboy
  BEQ n_goodboy
@@ -748,11 +748,11 @@ BRKV = P% - 2
 .n_bitlegal
 
  LSR A
- BIT cmdr_legal
+ BIT FIST
  BNE n_bitlegal
- ADC cmdr_legal
+ ADC FIST
  BCS l_1527
- STA cmdr_legal
+ STA FIST
  BCC l_1527
 
 .n_goodboy
@@ -850,7 +850,7 @@ BRKV = P% - 2
  LDA &0320
  BNE l_15bf
  TAY
- JSR l_1c43
+ JSR MAS2
  BNE l_15bf
  LDX #&1C
 
@@ -862,15 +862,15 @@ BRKV = P% - 2
  BPL l_1590
  INX
  LDY #&09
- JSR l_1c20
+ JSR MAS1
  BNE l_15bf
  LDX #&03
  LDY #&0B
- JSR l_1c20
+ JSR MAS1
  BNE l_15bf
  LDX #&06
  LDY #&0D
- JSR l_1c20
+ JSR MAS1
  BNE l_15bf
  LDA #&C0
  JSR l_41b4
@@ -904,9 +904,9 @@ BRKV = P% - 2
  LDY #&FF
  STY altitude
  INY
- JSR l_1c41
+ JSR m
  BNE l_1648
- JSR l_1c4f
+ JSR MAS3
  BCS l_1648
  SBC #&24
  BCC l_15fa
@@ -938,16 +938,16 @@ BRKV = P% - 2
  LDA &0320
  BNE l_1648
  LDY #&25
- JSR l_1c43
+ JSR MAS2
  BNE l_1648
- JSR l_1c4f
+ JSR MAS3
  EOR #&FF
  ADC #&1E
  STA cabin_t
  BCS l_15fa
  CMP #&E0
  BCC l_1648
- LDA cmdr_scoop
+ LDA BST
  BEQ l_1648
  LDA &7F
  LSR A
@@ -998,7 +998,7 @@ BRKV = P% - 2
 
  LDA &87
  BNE l_1694
- JMP l_1a25
+ JMP STARS
 
 .l_1678
 
@@ -1075,592 +1075,20 @@ INCLUDE "library/common/main/variable/twfr.asm"
 INCLUDE "library/common/main/subroutine/pix1.asm"
 INCLUDE "library/common/main/subroutine/pixel2.asm"
 INCLUDE "library/common/main/subroutine/pixel.asm"
-
-
-.BLINE
-
- TXA
- ADC &E0
- STA &78
- LDA &E1
- ADC &D1
- STA &79
- LDA &92
- BEQ l_198c
- INC &92
-
-.l_197c
-
- LDY &6B
- LDA #&FF
- CMP &0F0D,Y
- BEQ l_19ed
- STA &0F0E,Y
- INC &6B
- BNE l_19ed
-
-.l_198c
-
- LDA QQ17
- STA &34
- LDA &73
- STA &35
- LDA &74
- STA &36
- LDA &75
- STA &37
- LDA &76
- STA &38
- LDA &77
- STA &39
- LDA &78
- STA &3A
- LDA &79
- STA &3B
- JSR l_4e19
- BCS l_197c
- LDA &90
- BEQ l_19c5
- LDA &34
- LDY &36
- STA &36
- STY &34
- LDA &35
- LDY &37
- STA &37
- STY &35
-
-.l_19c5
-
- LDY &6B
- LDA &0F0D,Y
- CMP #&FF
- BNE l_19d9
- LDA &34
- STA &0EC0,Y
- LDA &35
- STA &0F0E,Y
- INY
-
-.l_19d9
-
- LDA &36
- STA &0EC0,Y
- LDA &37
- STA &0F0E,Y
- INY
- STY &6B
- JSR LOIN
- LDA &89
- BNE l_197c
-
-.l_19ed
-
- LDA &76
- STA QQ17
- LDA &77
- STA &73
- LDA &78
- STA &74
- LDA &79
- STA &75
- LDA &93
- CLC
- ADC &95
- STA &93
- RTS
-
-.FLIP
-
- LDY &03C3
-
-.l_1a08
-
- LDX &0F82,Y
- LDA &0F5C,Y
- STA &35
- STA &0F82,Y
- TXA
- STA &34
- STA &0F5C,Y
- LDA &0FA8,Y
- STA &88
- JSR PIXEL2
- DEY
- BNE l_1a08
- RTS
-
-.l_1a25
-
- LDX VIEW
- BEQ l_1a33
- DEX
- BNE l_1a30
- JMP l_1b20
-
-.l_1a30
-
- JMP l_2679
-
-.l_1a33
-
- LDY &03C3
-
-.l_1a36
-
- JSR l_295e
- LDA &82
- LSR &1B
- ROR A
- LSR &1B
- ROR A
- ORA #&01
- STA &81
- LDA &0FBB,Y
- SBC &7E
- STA &0FBB,Y
- LDA &0FA8,Y
- STA &88
- SBC &7F
- STA &0FA8,Y
- JSR l_2817
- STA &27
- LDA &1B
- ADC &0F95,Y
- STA &26
- STA &82
- LDA &35
- ADC &27
- STA &27
- STA &83
- LDA &0F5C,Y
- STA &34
- JSR l_281c
- STA &25
- LDA &1B
- ADC &0F6F,Y
- STA &24
- LDA &34
- ADC &25
- STA &25
- EOR &33
- JSR l_27c6
- JSR ADD
- STA &27
- STX &26
- EOR &32
- JSR l_27be
- JSR ADD
- STA &25
- STX &24
- LDX &2B
- LDA &27
- EOR &7C
- JSR l_27c8
- STA &81
- JSR l_289e
- ASL &1B
- ROL A
- STA &D1
- LDA #&00
- ROR A
- ORA &D1
- JSR ADD
- STA &25
- TXA
- STA &0F6F,Y
- LDA &26
- STA &82
- LDA &27
- STA &83
- LDA #&00
- STA &1B
- LDA &2A
- EOR #&80
- JSR PIX1
- LDA &25
- STA &34
- STA &0F5C,Y
- AND #&7F
- CMP #&78
- BCS l_1afd
- LDA &27
- STA &0F82,Y
- STA &35
- AND #&7F
- CMP #&78
- BCS l_1afd
- LDA &0FA8,Y
- CMP #&10
- BCC l_1afd
- STA &88
-
-.l_1af3
-
- JSR PIXEL2
- DEY
- BEQ l_1afc
- JMP l_1a36
-
-.l_1afc
-
- RTS
-
-.l_1afd
-
- JSR DORND
- ORA #&04
- STA &35
- STA &0F82,Y
- JSR DORND
- ORA #&08
- STA &34
- STA &0F5C,Y
- JSR DORND
- ORA #&90
- STA &0FA8,Y
- STA &88
- LDA &35
- JMP l_1af3
-
-.l_1b20
-
- LDY &03C3
-
-.l_1b23
-
- JSR l_295e
- LDA &82
- LSR &1B
- ROR A
- LSR &1B
- ROR A
- ORA #&01
- STA &81
- LDA &0F5C,Y
- STA &34
- JSR l_281c
- STA &25
- LDA &0F6F,Y
- SBC &1B
- STA &24
- LDA &34
- SBC &25
- STA &25
- JSR l_2817
- STA &27
- LDA &0F95,Y
- SBC &1B
- STA &26
- STA &82
- LDA &35
- SBC &27
- STA &27
- STA &83
- LDA &0FBB,Y
- ADC &7E
- STA &0FBB,Y
- LDA &0FA8,Y
- STA &88
- ADC &7F
- STA &0FA8,Y
- LDA &25
- EOR &32
- JSR l_27c6
- JSR ADD
- STA &27
- STX &26
- EOR &33
- JSR l_27be
- JSR ADD
- STA &25
- STX &24
- LDA &27
- EOR &7C
- LDX &2B
- JSR l_27c8
- STA &81
- LDA &25
- STA &83
- EOR #&80
- JSR l_28a2
- ASL &1B
- ROL A
- STA &D1
- LDA #&00
- ROR A
- ORA &D1
- JSR ADD
- STA &25
- TXA
- STA &0F6F,Y
- LDA &26
- STA &82
- LDA &27
- STA &83
- LDA #&00
- STA &1B
- LDA &2A
- JSR PIX1
- LDA &25
- STA &34
- STA &0F5C,Y
- LDA &27
- STA &0F82,Y
- STA &35
- AND #&7F
- CMP #&6E
- BCS l_1bea
- LDA &0FA8,Y
- CMP #&A0
- BCS l_1bea
- STA &88
-
-.l_1be0
-
- JSR PIXEL2
- DEY
- BEQ l_1be9
- JMP l_1b23
-
-.l_1bea
-
- JSR DORND
- AND #&7F
- ADC #&0A
- STA &0FA8,Y
- STA &88
- LSR A
- BCS l_1c0d
- LSR A
- LDA #&FC
- ROR A
- STA &34
- STA &0F5C,Y
- JSR DORND
- STA &35
- STA &0F82,Y
- JMP l_1be0
-
-.l_1c0d
-
- JSR DORND
- STA &34
- STA &0F5C,Y
- LSR A
- LDA #&E6
- ROR A
- STA &35
- STA &0F82,Y
- BNE l_1be0
-
-.l_1c20
-
- LDA &46,Y
- ASL A
- STA &41
- LDA &47,Y
- ROL A
- STA &42
- LDA #&00
- ROR A
- STA &43
- JSR MVT3
- STA &48,X
- LDY &41
- STY &46,X
- LDY &42
- STY &47,X
- AND #&7F
-
-.l_1be9
-
- RTS
-
-.l_1c41
-
- LDA #&00
-
-.l_1c43
-
- ORA &0902,Y
- ORA &0905,Y
- ORA &0908,Y
- AND #&7F
- RTS
-
-.l_1c4f
-
- LDA &0901,Y
- JSR l_280d
- STA &82
- LDA &0904,Y
- JSR l_280d
- ADC &82
- BCS l_1c6d
- STA &82
- LDA &0907,Y
- JSR l_280d
- ADC &82
- BCC l_1c6f
-
-.l_1c6d
-
- LDA #&FF
-
-.l_1c6f
-
- RTS
-
-.l_1c70
-
- LDX #&09
- CMP #&19
- BCS l_1ccf
- DEX
- CMP #&0A
- BCS l_1ccf
- DEX
- CMP #&02
- BCS l_1ccf
- DEX
- BNE l_1ccf
-
-.l_1c83
-
- LDA #&08
- JSR TT66
- JSR l_2f75
- LDA #&07
- STA XC
- LDA #&7E
- JSR NLIN3
- LDA #&E6
- LDY &033E
- LDX ship_type+&02,Y
- BEQ l_1ca5
- LDY energy
- CPY #&80
- ADC #&01
-
-.l_1ca5
-
- JSR l_338f
- LDA #&7D
- JSR l_2b6d
- LDA #&13
- LDY cmdr_legal
- BEQ l_1cb8
- CPY #&32
- ADC #&01
-
-.l_1cb8
-
- JSR l_338f
- LDA #&10
- JSR l_2b6d
- LDA TALLY+&01
- BNE l_1c70
- TAX
- LDA TALLY
- LSR A
- LSR A
-
-.l_1ccb
-
- INX
- LSR A
- BNE l_1ccb
-
-.l_1ccf
-
- TXA
- CLC
- ADC #&15
- JSR l_338f
- LDA #&12
- JSR l_1d44
- LDA cmdr_hold
- BEQ l_1ce7
- LDA #&6B
- JSR l_1d44
-
-.l_1ce7
-
- LDA cmdr_scoop
- BEQ l_1cf1
- LDA #&6F
- JSR l_1d44
-
-.l_1cf1
-
- LDA cmdr_ecm
- BEQ l_1cfb
- LDA #&6C
- JSR l_1d44
-
-.l_1cfb
-
- LDA #&71
- STA &96
-
-.l_1cff
-
- TAY
- LDX ship_type,Y
- BEQ l_1d08
- JSR l_1d44
-
-.l_1d08
-
- INC &96
- LDA &96
- CMP #&75
- BCC l_1cff
- LDX #&00
-
-.l_1d12
-
- STX &93
- LDY LASER,X
- BEQ l_1d3c
- TXA
- ORA #&60
- JSR l_2b6d
- LDA #&67
- LDX &93
- LDY LASER,X
- CPY new_beam
- BNE l_1d2d
- LDA #&68
-
-.l_1d2d
-
- CPY new_military
- BNE l_1d33
- LDA #&75
-
-.l_1d33
-
- CPY new_mining
- BNE l_1d39
- LDA #&76
-
-.l_1d39
-
- JSR l_1d44
-
-.l_1d3c
-
- LDX &93
- INX
- CPX #&04
- BCC l_1d12
- RTS
-
-.l_1d44
-
- JSR l_338f
+INCLUDE "library/common/main/subroutine/bline.asm"
+INCLUDE "library/common/main/subroutine/flip.asm"
+INCLUDE "library/common/main/subroutine/stars.asm"
+INCLUDE "library/common/main/subroutine/stars1.asm"
+INCLUDE "library/common/main/subroutine/stars6.asm"
+INCLUDE "library/common/main/subroutine/mas1.asm"
+INCLUDE "library/common/main/subroutine/mas2.asm"
+INCLUDE "library/common/main/subroutine/mas3.asm"
+INCLUDE "library/common/main/subroutine/status.asm"
+
+
+.plf2
+
+ JSR plf
  LDX #&08
  STX XC
  RTS
@@ -2321,13 +1749,13 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  STA cmdr_cargo,X
  DEX
  BPL l_20ee
- STA cmdr_legal
+ STA FIST
  STA cmdr_escape
  INC new_hold	\**
  LDA new_range
  STA cmdr_fuel
  JSR l_3d68
- JSR l_2f75
+ JSR TT111
  JSR l_309f
  JMP l_143e
 
@@ -2504,7 +1932,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
 
  LSR A
  BCC l_21f3
- LDX cmdr_legal
+ LDX FIST
  CPX #&28
  BCC l_21f3
  LDA &6A
@@ -3023,12 +2451,12 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  ORA &4A
  BNE l_2505
  LDA &46
- JSR l_280d
+ JSR SQUA2
  STA &83
  LDA &1B
  STA &82
  LDA &49
- JSR l_280d
+ JSR SQUA2
  TAX
  LDA &1B
  ADC &82
@@ -3087,7 +2515,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  BCC l_2589
  LDX &45
  JSR ship_SC
- LDA ship_type,X
+ LDA FRIN,X
  JSR l_254d
  DEC cmdr_misl
  JSR l_3f3b	\ redraw missiles
@@ -3317,7 +2745,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
 
  RTS
 
-.l_2679
+.STARS2
 
  LDA #&00
  CPX #&02
@@ -3350,7 +2778,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  STA &35
  EOR &7B
  LDX &2B
- JSR l_27c8
+ JSR MULTS-2
  JSR ADD
  STX &24
  STA &25
@@ -3360,13 +2788,13 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  STX &83
  LDX &2B
  EOR &7C
- JSR l_27c8
+ JSR MULTS-2
  JSR ADD
  STX &26
  STA &27
  LDX &31
  EOR &32
- JSR l_27c8
+ JSR MULTS-2
  STA &81
  LDA &24
  STA &82
@@ -3508,20 +2936,21 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  STA &43
  RTS
 
-.l_27be
+.MLS2
 
  LDX &24
  STX &82
  LDX &25
  STX &83
 
-.l_27c6
+.MLS1
 
  LDX &31
 
-.l_27c8
-
  STX &1B
+
+.MULTS
+
  TAX
  AND #&80
  STA &D1
@@ -3581,7 +3010,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
 
  AND #&7F
 
-.l_280d
+.SQUA2
 
  STA &1B
  TAX
@@ -3594,12 +3023,12 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  TXA
  RTS
 
-.l_2817
+.MLU1
 
  LDA &0F82,Y
  STA &35
 
-.l_281c
+.MLU2
 
  AND #&7F
  STA &1B
@@ -3714,12 +3143,12 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  BNE l_2884
  RTS
 
-.l_289e
+.MUT2
 
  LDX &25
  STX &83
 
-.l_28a2
+.MUT1
 
  LDX &24
  STX &82
@@ -3868,7 +3297,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  ORA &D1
  RTS
 
-.l_295e
+.DV42
 
  LDA &0FA8,Y
 
@@ -4273,7 +3702,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  JSR TT27
  JMP l_2ba9
 
-.l_2b6d
+.spc
 
  JSR TT27
  JMP TT162
@@ -4353,7 +3782,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  CMP #&03
  BCS l_2c04
  ADC #&E3
- JSR l_2b6d
+ JSR spc
 
 .l_2c04
 
@@ -4364,7 +3793,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  CMP #&06
  BCS l_2c11
  ADC #&E6
- JSR l_2b6d
+ JSR spc
 
 .l_2c11
 
@@ -4375,7 +3804,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  CMP #&06
  BCS l_2c22
  ADC #&EC
- JSR l_2b6d
+ JSR spc
 
 .l_2c22
 
@@ -4903,7 +4332,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
 
  RTS
 
-.l_2f75
+.TT111
 
  JSR l_2f6a
  LDY #&7F
@@ -4973,7 +4402,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
 
 .l_2fd2
 
- JSR l_280d
+ JSR SQUA2
  STA &41
  LDA &1B
  STA &40
@@ -4987,7 +4416,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
 .l_2fe8
 
  LSR A
- JSR l_280d
+ JSR SQUA2
  PHA
  LDA &1B
  CLC
@@ -5018,7 +4447,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  BNE l_3023
  \	JMP l_30c3
  \l_30c3
- JSR l_2f75
+ JSR TT111
  JMP l_3026
 
 .l_3023
@@ -5062,7 +4491,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  INC new_hold	\**
  INX
  STX cmdr_ghype
- STX cmdr_legal
+ STX FIST
  STX cmdr_cour
  STX cmdr_cour+1
  JSR l_3054
@@ -5086,7 +4515,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  STA data_homex
  STA data_homey
  JSR l_3292
- JSR l_2f75
+ JSR TT111
  LDX #&00
  STX hype_dist
  STX hype_dist+&01
@@ -5415,7 +4844,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  BEQ l_32c1
  JSR l_2636
  JSR l_3ee1
- JSR l_2f75
+ JSR TT111
  INC &4E
  JSR l_356d
  LDA #&80
@@ -5425,8 +4854,8 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  LDA #&0C
  STA &7D
  JSR l_41a6
- ORA cmdr_legal
- STA cmdr_legal
+ ORA FIST
+ STA FIST
  LDA #&FF
  STA &87
  JSR l_2642
@@ -5483,7 +4912,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
 .l_32fe
 
  JSR l_2e65
- JSR l_2f75
+ JSR TT111
  JSR l_2e65
  JMP CLYNS
 
@@ -5579,7 +5008,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  SEC
  JSR l_1e38
  LDA #&C3
- JSR l_338f
+ JSR plf
  LDA #&77
  BNE TT27
 
@@ -5599,7 +5028,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  JSR l_1e48
  LDA #&E2
 
-.l_338f
+.plf
 
  JSR TT27
  JMP TT67
@@ -6010,22 +5439,22 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  DEY
  BNE legal_div
  SEC
- SBC cmdr_legal
+ SBC FIST
  BCC legal_over
  LDA #&FF
 
 .legal_over
 
  EOR #&FF
- STA cmdr_legal
- \	LDA cmdr_legal
+ STA FIST
+ \	LDA FIST
  \	BEQ legal_over
  \legal_next
- \	DEC cmdr_legal
+ \	DEC FIST
  \	LSR a
  \	BNE legal_next
  \legal_over
- \\	LSR cmdr_legal
+ \\	LSR FIST
  JSR l_3f26
  LDA &6D
  AND #&03
@@ -6080,7 +5509,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
 
 .l_35da
 
- LDA ship_type,X
+ LDA FRIN,X
  BEQ l_3602
  BMI l_35ff
  STA &8C
@@ -6361,9 +5790,9 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  STX &63
  INX
  STX &64
- STX ship_type+&01
+ STX FRIN+&01
  STX &67
- LDA cmdr_legal
+ LDA FIST
  BPL n_enemy
  LDX #&04
 
@@ -6384,7 +5813,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
 
 .l_376c
 
- LDA ship_type,X
+ LDA FRIN,X
  BEQ l_3778
  INX
  CPX #&0C
@@ -6452,7 +5881,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
 
 .l_37d1
 
- STA ship_type,X
+ STA FRIN,X
  TAX
  BMI l_37e5
  CPX #&03
@@ -6935,7 +6364,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  STX &22
  STA &23
  LDA &40
- JSR l_280d
+ JSR SQUA2
  STA &9C
  LDA &1B
  STA &9B
@@ -6961,7 +6390,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
 .l_3ac1
 
  LDA &22
- JSR l_280d
+ JSR SQUA2
  STA &D1
  LDA &9B
  SEC
@@ -7482,7 +6911,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
 
  JSR l_3f26
  JSR FLFLLS
- STA ship_type+&01
+ STA FRIN+&01
  STA &0320
  JSR l_3821
  LDA #&06
@@ -7497,7 +6926,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
 .l_3da3
 
  INX
- LDA ship_type,X
+ LDA FRIN,X
  BEQ l_3d74
  CMP #&01
  BNE l_3da3
@@ -7541,7 +6970,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
 .l_3de8
 
  LDY &96
- LDX ship_type,Y
+ LDX FRIN,Y
  CPX #&02
  BEQ l_3d89
  CPX #&1F
@@ -7576,7 +7005,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
 .l_3e1f
 
  INX
- LDA ship_type,X
+ LDA FRIN,X
  STA &0310,X
  BNE l_3e2b
  JMP l_3da1
@@ -7899,7 +7328,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  ASL A
  LDX &032E
  BEQ l_4042
- ORA cmdr_legal
+ ORA FIST
 
 .l_4042
 
@@ -8070,7 +7499,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
  CMP #&76
  BNE l_4108
- JMP l_1c83
+ JMP STATUS
 
 .l_4108
 
@@ -8088,7 +7517,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
  CMP #&75
  BNE l_4120
- JSR l_2f75
+ JSR TT111
  JMP l_2b73
 
 .l_4120
@@ -8289,7 +7718,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  AND #&80
  LDY #&1F
  STA (&20),Y
- LDA ship_type+&04
+ LDA FRIN+&04
  BEQ l_41e9
  JSR l_44a4
  STA &7D
@@ -8363,7 +7792,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
 .l_429a
 
- STA ship_type,X
+ STA FRIN,X
  DEX
  BPL l_429a
  RTS
@@ -8490,7 +7919,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 .l_434e
 
  LDX &033E
- LDA ship_type+&02,X
+ LDA FRIN+&02,X
  ORA &033E	\ no jump if any ship
  ORA &0320
  ORA &0341
@@ -8498,7 +7927,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDY &0908
  BMI l_4368
  TAY
- JSR l_1c43
+ JSR MAS2
  LSR A
  BEQ l_439f
 
@@ -8507,7 +7936,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDY &092D
  BMI l_4375
  LDY #&25
- JSR l_1c41
+ JSR m
  LSR A
  BEQ l_439f
 
@@ -8992,14 +8421,14 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  CPX #&18
  BCS l_45b4
  \	LDA cmdr_cargo,X
- LDA cmdr_hold,X
+ LDA CRGO,X
  BEQ l_45b4
  LDA &034A
  BNE l_45b4
  LDY #&03
  STY &034B
  \	STA cmdr_cargo,X
- STA cmdr_hold,X
+ STA CRGO,X
  DEX
  BMI l_45c1
  CPX #&11
@@ -10253,7 +9682,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
 .l_4d88
 
- JSR l_4e19
+ JSR LL145
  BCS l_4da5
  LDY &80
  LDA &34
@@ -10340,7 +9769,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  BCS l_4ddc
  JMP l_4f3f
 
-.l_4e19
+.LL145
 
  LDA #&00
  STA &90

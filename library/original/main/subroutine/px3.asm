@@ -30,7 +30,11 @@
  EOR (SC),Y
  STA (SC),Y
 
+IF NOT(_ELITE_A_6502SP_IO)
+
  LDY T1                 \ Restore Y from T1, so Y is preserved by the routine
+
+ENDIF
 
  RTS                    \ Return from the subroutine
 

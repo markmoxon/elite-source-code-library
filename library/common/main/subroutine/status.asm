@@ -124,6 +124,13 @@ ENDIF
                         \ and draw a horizontal line at pixel row 19 to box
                         \ in the title
 
+IF _ELITE_A_6502SP_PARA
+
+ BIT dockedp               \ AJD
+ BPL stat_dock
+
+ENDIF
+
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
  LDA #15                \ Set A to token 129 ("{sentence case}DOCKED")
@@ -141,7 +148,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Platform
 
  LDA #230               \ Otherwise we are in space, so start off by setting A
                         \ to token 70 ("GREEN")
@@ -153,7 +160,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
  LDY MANY+AST           \ Set Y to the number of asteroids in our local bubble
                         \ of universe
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION
 
  LDY JUNK               \ Set Y to the number of junk items in our local bubble
                         \ of universe (where junk is asteroids, canisters,
@@ -161,7 +168,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Comment
 
  LDX FRIN+2,Y           \ The ship slots at FRIN are ordered with the first two
                         \ slots reserved for the planet and sun/space station,
@@ -179,7 +186,7 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Platform
 
  BEQ st6                \ So if X = 0, there are no ships in the vicinity, so
                         \ jump to st6 to print "Green" for our ship's condition
@@ -206,6 +213,20 @@ ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
  JSR DETOK
 
  JSR TT67               \ Print a newline
+
+ENDIF
+
+IF _ELITE_A_6502SP_PARA
+
+ JMP stat_legal
+
+.stat_dock
+
+ LDA #&CD
+ JSR DETOK
+ JSR TT67
+
+.stat_legal
 
 ENDIF
 
@@ -315,7 +336,32 @@ ENDIF
                         \
                         \ followed by a newline and an indent of 6 characters
 
-IF _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: The Master version shows the escape pod by name in the Status Mode screen but doesn't show the large cargo bay; the Electron version is similar (though it shows it as "Escape Capsule), while the other versions do show the large cargo bay but don't show the escape pod
+IF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
+
+.sell_equip
+
+ LDA CRGO               \ AJD
+ BEQ l_1b57	\ IFF if flag not set
+ LDA #&6B
+ LDX #&06
+ JSR plf2
+
+.l_1b57
+
+ELIF _ELITE_A_FLIGHT
+
+.sell_equip
+
+ LDA CRGO               \ AJD
+ BEQ l_1ce7	\ IFF if flag not set
+ LDA #&6B
+ JSR plf2
+
+.l_1ce7
+
+ENDIF
+
+IF _DISC_VERSION OR _6502SP_VERSION \ Master: The Master version shows the escape pod by name in the Status Mode screen but doesn't show the large cargo bay; the Electron version is similar (though it shows it as "Escape Capsule), while the other versions do show the large cargo bay but don't show the escape pod
 
  LDA CRGO               \ If our ship's cargo capacity is < 26 (i.e. we do not
  CMP #26                \ have a cargo bay extension), skip the following two
@@ -356,6 +402,85 @@ ELIF _ELECTRON_VERSION
                         \ and an indent of 6 characters
 
 ENDIF
+
+IF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
+
+ LDA BST                \ AJD
+ BEQ l_1b61
+ LDA #&6F
+ LDX #&19
+ JSR plf2
+
+.l_1b61
+
+ LDA ECM
+ BEQ l_1b6b
+ LDA #&6C
+ LDX #&18
+ JSR plf2
+
+.l_1b6b
+
+ \	LDA #&71
+ \	STA &96
+ LDX #&1A
+
+.stqv
+
+ STX &93
+ \	TAY
+ \	LDX FRIN,Y
+ LDY LASER,X
+ BEQ l_1b78
+ TXA
+ CLC
+ ADC #&57
+ JSR plf2
+
+.l_1b78
+
+ \	INC &96
+ \	LDA &96
+ \	CMP #&75
+ LDX &93
+ INX
+ CPX #&1E
+ BCC stqv
+
+ELIF _ELITE_A_FLIGHT
+
+ LDA BST
+ BEQ l_1cf1
+ LDA #&6F
+ JSR plf2
+
+.l_1cf1
+
+ LDA ECM
+ BEQ l_1cfb
+ LDA #&6C
+ JSR plf2
+
+.l_1cfb
+
+ LDA #&71
+ STA &96
+
+.stqv
+
+ TAY
+ LDX FRIN,Y
+ BEQ l_1d08
+ JSR plf2
+
+.l_1d08
+
+ INC &96
+ LDA &96
+ CMP #&75
+ BCC stqv
+
+ELIF NOT(_ELITE_A_VERSION)
 
  LDA BST                \ If we don't have fuel scoops fitted, skip the
  BEQ P%+7               \ following two instructions
@@ -402,6 +527,8 @@ ENDIF
  CMP #117               \ If A < 117, loop back up to stqv to print the next
  BCC stqv               \ piece of equipment
 
+ENDIF
+
  LDX #0                 \ Now to print our ship's lasers, so set a counter in X
                         \ to count through the four views (0 = front, 1 = rear,
                         \ 2 = left, 3 = right)
@@ -414,12 +541,46 @@ ENDIF
  BEQ st1                \ have a laser fitted to that view, jump to st1 to move
                         \ on to the next one
 
+IF _ELITE_A_VERSION
+
+ TXA                    \ AJD
+ ORA #&60
+ JSR spc
+
+ELIF NOT(_ELITE_A_VERSION)
+
  TXA                    \ Print recursive token 96 + X, which will print from 96
  CLC                    \ ("FRONT") through to 99 ("RIGHT"), followed by a space
  ADC #96
  JSR spc
 
+ENDIF
+
  LDA #103               \ Set A to token 103 ("PULSE LASER")
+
+IF _ELITE_A_VERSION
+
+ LDX &93                \ AJD
+ LDY LASER,X
+ CPY new_beam	\ beam laser
+ BNE l_1b9d
+ LDA #&68
+
+.l_1b9d
+
+ CPY new_military	\ military laser
+ BNE l_1ba3
+ LDA #&75
+
+.l_1ba3
+
+ CPY new_mining	\ mining laser
+ BNE l_1ba9
+ LDA #&76
+
+.l_1ba9
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: The Status Mode screen in the enhanced versions supports the new types of laser (military and mining)
 
@@ -429,7 +590,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: The Status Mode screen in 
 
  LDA #104               \ Set A to token 104 ("BEAM LASER")
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
  LDX CNT                \ Set Y = the laser power for view X
  LDY LASER,X

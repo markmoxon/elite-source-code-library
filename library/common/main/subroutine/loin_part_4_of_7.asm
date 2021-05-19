@@ -174,7 +174,7 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Screen
 
 .LIC3
 
@@ -184,6 +184,17 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
                         \ loop back to LIL3 to plot the next pixel along
 
  LDY YSAV               \ Restore Y from YSAV, so that it's preserved
+
+ENDIF
+
+IF _ELITE_A_6502SP_IO
+
+.LIC3
+
+ DEX                    \ Decrement the counter in X
+
+ BNE LIL3               \ If we haven't yet reached the right end of the line,
+                        \ loop back to LIL3 to plot the next pixel along
 
 ENDIF
 

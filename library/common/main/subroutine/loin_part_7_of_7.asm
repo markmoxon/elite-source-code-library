@@ -117,7 +117,7 @@ IF _ELECTRON_VERSION \ Screen
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Screen
 
  CLC                    \ Clear the C flag so it doesn't affect the additions
                         \ below
@@ -130,6 +130,24 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
                         \ loop back to LIL6 to plot the next pixel along
 
  LDY YSAV               \ Restore Y from YSAV, so that it's preserved
+
+.HL6
+
+ RTS                    \ Return from the subroutine
+
+ENDIF
+
+IF _ELITE_A_6502SP_IO
+
+ CLC                    \ Clear the C flag so it doesn't affect the additions
+                        \ below
+
+.LIC6
+
+ DEX                    \ Decrement the counter in X
+
+ BNE LIL6               \ If we haven't yet reached the left end of the line,
+                        \ loop back to LIL6 to plot the next pixel along
 
 .HL6
 

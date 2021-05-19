@@ -40,6 +40,7 @@ _DISC_FLIGHT            = FALSE
 _ELITE_A_DOCKED         = FALSE
 _ELITE_A_FLIGHT         = FALSE
 _ELITE_A_ENCYCLOPEDIA   = TRUE
+_ELITE_A_6502SP_IO      = FALSE
 _ELITE_A_6502SP_PARA    = FALSE
 _RELEASED               = (_RELEASE = 1)
 _SOURCE_DISC            = (_RELEASE = 2)
@@ -281,516 +282,57 @@ INCLUDE "library/common/main/subroutine/mveit_part_8_of_9.asm"
 INCLUDE "library/common/main/subroutine/mveit_part_9_of_9.asm"
 INCLUDE "library/common/main/subroutine/mvs4.asm"
 INCLUDE "library/common/main/subroutine/mvs5.asm"
-
-
-.ship_addr
-
- EQUW &0900, &0925, &094A, &096F, &0994, &09B9, &09DE, &0A03
- EQUW &0A28, &0A4D, &0A72, &0A97, &0ABC
-
-.pixel_1
-
- EQUB &80, &40, &20, &10, &08, &04, &02, &01
-
-.pixel_2
-
- EQUB &C0, &60, &30, &18, &0C, &06, &03, &03
-
-.pixel_3
-
- EQUB &88, &44, &22, &11
-
-.draw_line
-
- STY &85
- LDA #&80
- STA &83
- ASL A
- STA &90
- LDA &36
- SBC &34
- BCS l_1783
- EOR #&FF
- ADC #&01
- SEC
-
-.l_1783
-
- STA &1B
- LDA &37
- SBC &35
- BCS l_178f
- EOR #&FF
- ADC #&01
-
-.l_178f
-
- STA &81
- CMP &1B
- BCC l_1798
- JMP l_1842
-
-.l_1798
-
- LDX &34
- CPX &36
- BCC l_17af
- DEC &90
- LDA &36
- STA &34
- STX &36
- TAX
- LDA &37
- LDY &35
- STA &35
- STY &37
-
-.l_17af
-
- LDA &35
- LSR A
- LSR A
- LSR A
- ORA #&60
- STA SC+&01
- LDA &35
- AND #&07
- TAY
- TXA
- AND #&F8
- STA SC
- TXA
- AND #&07
- TAX
- LDA pixel_1,X
- STA &82
- LDA &81
- LDX #&FE
- STX &81
-
-.l_17d1
-
- ASL A
- BCS l_17d8
- CMP &1B
- BCC l_17db
-
-.l_17d8
-
- SBC &1B
- SEC
-
-.l_17db
-
- ROL &81
- BCS l_17d1
- LDX &1B
- INX
- LDA &37
- SBC &35
- BCS l_1814
- LDA &90
- BNE l_17f3
- DEX
-
-.l_17ed
-
- LDA &82
- EOR (SC),Y
- STA (SC),Y
-
-.l_17f3
-
- LSR &82
- BCC l_17ff
- ROR &82
- LDA SC
- ADC #&08
- STA SC
-
-.l_17ff
-
- LDA &83
- ADC &81
- STA &83
- BCC l_180e
- DEY
- BPL l_180e
- DEC SC+&01
- LDY #&07
-
-.l_180e
-
- DEX
- BNE l_17ed
- LDY &85
- RTS
-
-.l_1814
-
- LDA &90
- BEQ l_181f
- DEX
-
-.l_1819
-
- LDA &82
- EOR (SC),Y
- STA (SC),Y
-
-.l_181f
-
- LSR &82
- BCC l_182b
- ROR &82
- LDA SC
- ADC #&08
- STA SC
-
-.l_182b
-
- LDA &83
- ADC &81
- STA &83
- BCC l_183c
- INY
- CPY #&08
- BNE l_183c
- INC SC+&01
- LDY #&00
-
-.l_183c
-
- DEX
- BNE l_1819
- LDY &85
- RTS
-
-.l_1842
-
- LDY &35
- TYA
- LDX &34
- CPY &37
- BCS l_185b
- DEC &90
- LDA &36
- STA &34
- STX &36
- TAX
- LDA &37
- STA &35
- STY &37
- TAY
-
-.l_185b
-
- LSR A
- LSR A
- LSR A
- ORA #&60
- STA SC+&01
- TXA
- AND #&F8
- STA SC
- TXA
- AND #&07
- TAX
- LDA pixel_1,X
- STA &82
- LDA &35
- AND #&07
- TAY
- LDA &1B
- LDX #&01
- STX &1B
-
-.l_187b
-
- ASL A
- BCS l_1882
- CMP &81
- BCC l_1885
-
-.l_1882
-
- SBC &81
- SEC
-
-.l_1885
-
- ROL &1B
- BCC l_187b
- LDX &81
- INX
- LDA &36
- SBC &34
- BCC l_18bf
- CLC
- LDA &90
- BEQ l_189e
- DEX
-
-.l_1898
-
- LDA &82
- EOR (SC),Y
- STA (SC),Y
-
-.l_189e
-
- DEY
- BPL l_18a5
- DEC SC+&01
- LDY #&07
-
-.l_18a5
-
- LDA &83
- ADC &1B
- STA &83
- BCC l_18b9
- LSR &82
- BCC l_18b9
- ROR &82
- LDA SC
- ADC #&08
- STA SC
-
-.l_18b9
-
- DEX
- BNE l_1898
- LDY &85
- RTS
-
-.l_18bf
-
- LDA &90
- BEQ l_18ca
- DEX
-
-.l_18c4
-
- LDA &82
- EOR (SC),Y
- STA (SC),Y
-
-.l_18ca
-
- DEY
- BPL l_18d1
- DEC SC+&01
- LDY #&07
-
-.l_18d1
-
- LDA &83
- ADC &1B
- STA &83
- BCC l_18e6
- ASL &82
- BCC l_18e6
- ROL &82
- LDA SC
- SBC #&07
- STA SC
- CLC
-
-.l_18e6
-
- DEX
- BNE l_18c4
- LDY &85
-
-.l_18eb
-
- RTS
-
-.flush_inp
-
- LDA #&0F
- TAX
- JMP osbyte
-
-.header
-
- JSR TT27
-
-.NLIN4
-
- LDA #&13
- BNE hline_acc
-
-.hline_23
-
- LDA #&17
- INC YC
-
-.hline_acc
-
- STA &35
- LDX #&02
- STX &34
- LDX #&FE
- STX &36
- BNE draw_hline
-
-.l_1909
-
- JSR l_3586
- STY &35
- LDA #&00
- STA &0E00,Y
-
-.draw_hline
-
- STY &85
- LDX &34
- CPX &36
- BEQ l_18eb
- BCC l_1924
- LDA &36
- STA &34
- STX &36
- TAX
-
-.l_1924
-
- DEC &36
- LDA &35
- LSR A
- LSR A
- LSR A
- ORA #&60
- STA SC+&01
- LDA &35
- AND #&07
- STA SC
- TXA
- AND #&F8
- TAY
- TXA
- AND #&F8
- STA &D1
- LDA &36
- AND #&F8
- SEC
- SBC &D1
- BEQ l_197e
- LSR A
- LSR A
- LSR A
- STA &82
- LDA &34
- AND #&07
- TAX
- LDA horiz_seg+&07,X
- EOR (SC),Y
- STA (SC),Y
- TYA
- ADC #&08
- TAY
- LDX &82
- DEX
- BEQ l_196f
- CLC
-
-.l_1962
-
- LDA #&FF
- EOR (SC),Y
- STA (SC),Y
- TYA
- ADC #&08
- TAY
- DEX
- BNE l_1962
-
-.l_196f
-
- LDA &36
- AND #&07
- TAX
- LDA horiz_seg,X
- EOR (SC),Y
- STA (SC),Y
- LDY &85
- RTS
-
-.l_197e
-
- LDA &34
- AND #&07
- TAX
- LDA horiz_seg+&07,X
- STA &D1
- LDA &36
- AND #&07
- TAX
- LDA horiz_seg,X
- AND &D1
- EOR (SC),Y
- STA (SC),Y
- LDY &85
- RTS
-
-.horiz_seg
-
- EQUB &80, &C0, &E0, &F0, &F8, &FC, &FE
- EQUB &FF, &7F, &3F, &1F, &0F, &07, &03, &01
-
-.l_19a8
-
- LDA pixel_1,X
- EOR (SC),Y
- STA (SC),Y
- LDY &06
- RTS
-
-.draw_pixel
-
- STY &06
- TAY
- LSR A
- LSR A
- LSR A
- ORA #&60
- STA SC+&01
- TXA
- AND #&F8
- STA SC
- TYA
- AND #&07
- TAY
- TXA
- AND #&07
- TAX
- LDA &88
- CMP #&90
- BCS l_19a8
- LDA pixel_2,X
- EOR (SC),Y
- STA (SC),Y
- LDA &88
- CMP #&50
- BCS l_1a13
- DEY
- BPL l_1a0c
- LDY #&01
-
-.l_1a0c
-
- LDA pixel_2,X
- EOR (SC),Y
- STA (SC),Y
-
-.l_1a13
-
- LDY &06
- RTS
-
-.l_1a16
+INCLUDE "library/common/main/variable/univ.asm"
+
+\ ******************************************************************************
+\
+\ Save output/ELTA.bin
+\
+\ ******************************************************************************
+
+PRINT "ELITE A"
+PRINT "Assembled at ", ~CODE%
+PRINT "Ends at ", ~P%
+PRINT "Code size is ", ~(P% - CODE%)
+PRINT "Execute at ", ~LOAD%
+PRINT "Reload at ", ~LOAD_A%
+
+PRINT "S.ELTA ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_A%
+\SAVE "versions/elite-a/output/F.ELTA.bin", CODE%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE B FILE
+\
+\ ******************************************************************************
+
+CODE_B% = P%
+LOAD_B% = LOAD% + P% - CODE%
+
+INCLUDE "library/common/main/variable/twos.asm"
+INCLUDE "library/common/main/variable/twos2.asm"
+INCLUDE "library/common/main/variable/ctwos.asm"
+INCLUDE "library/common/main/subroutine/loin_part_1_of_7.asm"
+INCLUDE "library/common/main/subroutine/loin_part_2_of_7.asm"
+INCLUDE "library/common/main/subroutine/loin_part_3_of_7.asm"
+INCLUDE "library/common/main/subroutine/loin_part_4_of_7.asm"
+INCLUDE "library/common/main/subroutine/loin_part_5_of_7.asm"
+INCLUDE "library/common/main/subroutine/loin_part_6_of_7.asm"
+INCLUDE "library/common/main/subroutine/loin_part_7_of_7.asm"
+INCLUDE "library/enhanced/main/subroutine/flkb.asm"
+INCLUDE "library/common/main/subroutine/nlin3.asm"
+INCLUDE "library/common/main/subroutine/nlin4.asm"
+INCLUDE "library/common/main/subroutine/nlin.asm"
+INCLUDE "library/common/main/subroutine/nlin2.asm"
+INCLUDE "library/common/main/subroutine/hloin2.asm"
+INCLUDE "library/common/main/subroutine/hloin.asm"
+INCLUDE "library/common/main/variable/twfl.asm"
+INCLUDE "library/common/main/variable/twfr.asm"
+INCLUDE "library/original/main/subroutine/px3.asm"
+INCLUDE "library/common/main/subroutine/pixel.asm"
+
+
+.BLINE
 
  TXA
  ADC &E0
@@ -863,7 +405,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  STA &0F0E,Y
  INY
  STY &6B
- JSR draw_line
+ JSR LOIN
  LDA &89
  BNE l_1a27
 
@@ -1677,7 +1219,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  STX QQ17
  DEX
  STX &36
- JSR draw_hline
+ JSR HLOIN
  LDA #&02
  STA &34
  STA &36
@@ -1695,7 +1237,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  STA &37
  DEC &34
  DEC &36
- JMP draw_line
+ JMP LOIN
 
 .DELAY
 
@@ -1831,7 +1373,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  LDA #&09
  STA XC
  LDA #&A3
- JSR header
+ JSR NLIN3
  JSR next_par
  JSR show_nzdist
  LDA #&C2
@@ -2035,9 +1577,9 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  JSR copy_xy
  LDA #&C7
  JSR TT27
- JSR hline_23
+ JSR NLIN
  LDA #&98
- JSR hline_acc
+ JSR NLIN2
  JSR map_range
  LDX #&00
 
@@ -2054,7 +1596,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  CLC
  ADC #&18
  STA &35
- JSR draw_pixel
+ JSR PIXEL
  JSR permute_4
  LDX &84
  INX
@@ -2099,7 +1641,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  CLC
  ADC &78
  STA &35
- JSR draw_hline
+ JSR HLOIN
  LDA &74
  SEC
  SBC &75
@@ -2127,7 +1669,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  LDA &73
  STA &34
  STA &36
- JMP draw_line
+ JMP LOIN
 
 .short_cross
 
@@ -2280,7 +1822,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  LDA #&07
  STA XC
  LDA #&BE
- JSR header
+ JSR NLIN3
  JSR map_range
  JSR map_cursor
  JSR copy_xy
@@ -2971,9 +2513,9 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  TXA
  ASL A
  TAY
- LDA ship_addr,Y
+ LDA UNIV,Y
  STA &20
- LDA ship_addr+&01,Y
+ LDA UNIV+&01,Y
  STA &21
  RTS
 
@@ -3140,7 +2682,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  BEQ l_3436
  LDA &0E00,Y
  BEQ l_3433
- JSR l_1909
+ JSR HLOIN2
 
 .l_3433
 
@@ -3179,7 +2721,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  LDA &29
  STA &27
  TXA
- JSR l_3586
+ JSR EDGES
  LDA &34
  STA &24
  LDA &36
@@ -3189,13 +2731,13 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  LDA &D3
  STA &27
  LDA &0E00,Y
- JSR l_3586
+ JSR EDGES
  BCS l_3494
  LDA &36
  LDX &24
  STX &36
  STA &24
- JSR draw_hline
+ JSR HLOIN
 
 .l_3494
 
@@ -3206,7 +2748,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
 
 .l_349c
 
- JSR draw_hline
+ JSR HLOIN
 
 .l_349f
 
@@ -3228,7 +2770,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  STX &26
  LDX &D3
  STX &27
- JSR l_3586
+ JSR EDGES
  BCC l_349c
  LDA #&00
  STA &0E00,Y
@@ -3251,7 +2793,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
 
  LDA &0E00,Y
  BEQ l_34de
- JSR l_1909
+ JSR HLOIN2
 
 .l_34de
 
@@ -3322,7 +2864,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
 
 .l_3551
 
- JSR l_1a16
+ JSR BLINE
  CMP #&41
  BCS l_355b
  JMP l_3507
@@ -3332,7 +2874,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  CLC
  RTS
 
-.l_3586
+.EDGES
 
  STA &D1
  CLC
@@ -3757,7 +3299,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
  LDA #&81
  STA &FE4E
- JSR flush_inp
+ JSR FLKB
  LDX #LO(word_0)
  LDY #HI(word_0)
  LDA #&00
@@ -5626,7 +5168,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  INY
  LDA (&67),Y
  STA &37
- JSR draw_line
+ JSR LOIN
  INY
  CPY &97
  BCC l_46fe

@@ -40,6 +40,7 @@ _DISC_FLIGHT            = FALSE
 _ELITE_A_DOCKED         = FALSE
 _ELITE_A_FLIGHT         = FALSE
 _ELITE_A_ENCYCLOPEDIA   = FALSE
+_ELITE_A_6502SP_IO      = FALSE
 _ELITE_A_6502SP_PARA    = TRUE
 _RELEASED               = (_RELEASE = 1)
 _SOURCE_DISC            = (_RELEASE = 2)
@@ -202,14 +203,12 @@ BRKV = &202
 ship_type = &311
 cabin_t = &342
 target = &344
-view_dirn = &345
 laser_t = &347
 adval_x = &34C
 adval_y = &34D
 cmdr_gseed = &35B
 cmdr_money = &361
 cmdr_fuel = &365
-cmdr_laser = &368
 cmdr_ship = &36D
 cmdr_hold = &36E
 cmdr_cargo = &36F
@@ -384,8 +383,7 @@ INCLUDE "library/common/main/subroutine/mveit_part_9_of_9.asm"
 INCLUDE "library/common/main/subroutine/mvs4.asm"
 INCLUDE "library/common/main/subroutine/mvs5.asm"
 
-
-.draw_line
+.LOIN
 
  LDA #&80
  JSR tube_write
@@ -398,43 +396,14 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  LDA &37
  JMP tube_write
 
-.flush_inp
+INCLUDE "library/enhanced/main/subroutine/flkb.asm"
+INCLUDE "library/common/main/subroutine/nlin3.asm"
+INCLUDE "library/common/main/subroutine/nlin4.asm"
+INCLUDE "library/common/main/subroutine/nlin.asm"
+INCLUDE "library/common/main/subroutine/nlin2.asm"
+INCLUDE "library/common/main/subroutine/hloin2.asm"
 
- LDA #&0F
- TAX
- JMP osbyte
-
-.header
-
- JSR TT27
-
-.NLIN4
-
- LDA #&13
- BNE hline_acc
-
-.hline_23
-
- LDA #&17
- INC YC
-
-.hline_acc
-
- STA &35
- LDX #&02
- STX &34
- LDX #&FE
- STX &36
- BNE draw_hline
-
-.l_1909
-
- JSR l_3586
- STY &35
- LDA #&00
- STA &0E00,Y
-
-.draw_hline
+.HLOIN
 
  LDA #&81
  JSR tube_write
@@ -445,7 +414,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  LDA &36
  JMP tube_write
 
-.draw_pixel
+.PIXEL
 
  PHA
  LDA #&82
@@ -457,7 +426,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  LDA &88
  JMP tube_write
 
-.l_1a16
+.BLINE
 
  TXA
  ADC &E0
@@ -530,7 +499,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  STA &0F0E,Y
  INY
  STY &6B
- JSR draw_line
+ JSR LOIN
  LDA &89
  BNE l_1a27
 
@@ -591,7 +560,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  LDA #&07
  STA XC
  LDA #&7E
- JSR header
+ JSR NLIN3
  BIT dockedp
  BPL stat_dock
  LDA #&E6
@@ -685,7 +654,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  STX &93
  \	TAY
  \	LDX ship_type,Y
- LDY cmdr_laser,X
+ LDY LASER,X
  BEQ l_1b78
  TXA
  CLC
@@ -706,14 +675,14 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
 .l_1b82
 
  STX &93
- LDY cmdr_laser,X
+ LDY LASER,X
  BEQ l_1bac
  TXA
  ORA #&60
  JSR spc_token
  LDA #&67
  LDX &93
- LDY cmdr_laser,X
+ LDY LASER,X
  CPY new_beam	\ beam laser
  BNE l_1b9d
  LDA #&68
@@ -776,7 +745,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  INC new_hold	\**
  LDX &93
  LDA #&00
- STA cmdr_laser,X
+ STA LASER,X
  JSR update_pod
 
 .status_no
@@ -2146,7 +2115,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  BNE l_2573
  LDY #&0B
  STY XC
- LDA view_dirn
+ LDA VIEW
  ORA #&60
  JSR TT27
  JSR price_spc
@@ -2161,7 +2130,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  STX &35
  DEX
  STX &36
- JSR draw_hline
+ JSR HLOIN
  LDA #&02
  STA &34
  STA &36
@@ -2179,7 +2148,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  STA &37
  DEC &34
  DEC &36
- JMP draw_line
+ JMP LOIN
 
 .DELAY
 
@@ -2331,7 +2300,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  LDA #&09
  STA XC
  LDA #&A3
- JSR header
+ JSR NLIN3
  JSR next_par
  JSR show_nzdist
  LDA #&C2
@@ -2535,9 +2504,9 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  JSR copy_xy
  LDA #&C7
  JSR TT27
- JSR hline_23
+ JSR NLIN
  LDA #&98
- JSR hline_acc
+ JSR NLIN2
  JSR map_range
  LDX #&00
 
@@ -2554,7 +2523,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  CLC
  ADC #&18
  STA &35
- JSR draw_pixel
+ JSR PIXEL
  JSR permute_4
  LDX &84
  INX
@@ -2567,7 +2536,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  LDA #&04
  STA &75
 
-.map_cross
+.TT15
 
  LDA #&18
  LDX &87
@@ -2599,7 +2568,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  CLC
  ADC &78
  STA &35
- JSR draw_hline
+ JSR HLOIN
  LDA &74
  SEC
  SBC &75
@@ -2627,7 +2596,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  LDA &73
  STA &34
  STA &36
- JMP draw_line
+ JMP LOIN
 
 .short_cross
 
@@ -2637,7 +2606,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  STA &74
  LDA #&10
  STA &75
- JSR map_cross
+ JSR TT15
  LDA cmdr_fuel
  STA &40
  JMP map_circle
@@ -2657,7 +2626,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  STA &74
  LDA #&07
  STA &75
- JSR map_cross
+ JSR TT15
  LDA &74
  CLC
  ADC #&18
@@ -2691,7 +2660,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  JSR price_hdr
  LDA #&80
  STA QQ17
- JSR flush_inp
+ JSR FLKB
  LDA #&00
  STA &03AD
 
@@ -2850,7 +2819,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
 
  INC XC
  LDA #&CF
- JSR header
+ JSR NLIN3
  JSR new_pgph
  JSR new_line
  JSR sell_equip
@@ -2879,13 +2848,13 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  JSR TT66
  LDA #&0A
  STA XC
- JSR flush_inp
+ JSR FLKB
  LDA #&CD
  JSR TT27
  JSR l_3c91
  BMI sell_jump
  LDA #&CE
- JSR header
+ JSR NLIN3
  JSR new_line
 
 .inv_or_sell
@@ -3020,7 +2989,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  STA &74
  LDA #&04
  STA &75
- JMP map_cross
+ JMP TT15
 
 .incdec_dirn
 
@@ -3077,7 +3046,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  STA &74
  LDA #&08
  STA &75
- JMP map_cross
+ JMP TT15
 
 .short_map
 
@@ -3086,7 +3055,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  LDA #&07
  STA XC
  LDA #&BE
- JSR header
+ JSR NLIN3
  JSR map_range
  JSR map_cursor
  JSR copy_xy
@@ -3440,7 +3409,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  LDA #&05
  STA XC
  LDA #&A7
- JSR header
+ JSR NLIN3
  LDA #&03
  STA YC
  JSR price_hdr
@@ -3577,13 +3546,13 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
 
  LDA #&20
  JSR TT66
- JSR flush_inp
+ JSR FLKB
  LDA #&0C
  STA XC
  LDA #&CF
  JSR spc_token
  LDA #&B9
- JSR header
+ JSR NLIN3
  LDA #&80
  STA QQ17
  INC YC
@@ -3833,7 +3802,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  PHA
  JSR equip_side
  PLA
- LDY cmdr_laser,X
+ LDY LASER,X
  BEQ l_3113
  PLA
  LDY #&BB
@@ -3841,7 +3810,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
 
 .l_3113
 
- STA cmdr_laser,X
+ STA LASER,X
  PLA
 
 .equip_nmine
@@ -4411,7 +4380,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  BEQ l_3436
  LDA &0E00,Y
  BEQ l_3433
- JSR l_1909
+ JSR HLOIN2
 
 .l_3433
 
@@ -4450,7 +4419,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  LDA &29
  STA &27
  TXA
- JSR l_3586
+ JSR EDGES
  LDA &34
  STA &24
  LDA &36
@@ -4460,13 +4429,13 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  LDA &D3
  STA &27
  LDA &0E00,Y
- JSR l_3586
+ JSR EDGES
  BCS l_3494
  LDA &36
  LDX &24
  STX &36
  STA &24
- JSR draw_hline
+ JSR HLOIN
 
 .l_3494
 
@@ -4477,7 +4446,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
 
 .l_349c
 
- JSR draw_hline
+ JSR HLOIN
 
 .l_349f
 
@@ -4499,7 +4468,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  STX &26
  LDX &D3
  STX &27
- JSR l_3586
+ JSR EDGES
  BCC l_349c
  LDA #&00
  STA &0E00,Y
@@ -4522,7 +4491,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
 
  LDA &0E00,Y
  BEQ l_34de
- JSR l_1909
+ JSR HLOIN2
 
 .l_34de
 
@@ -4593,7 +4562,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
 
 .l_3551
 
- JSR l_1a16
+ JSR BLINE
  CMP #&41
  BCS l_355b
  JMP l_3507
@@ -4603,7 +4572,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
  CLC
  RTS
 
-.l_3586
+.EDGES
 
  STA &D1
  CLC
@@ -5187,7 +5156,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDA #&81
  JSR tube_write
  JSR tube_read
- JSR flush_inp
+ JSR FLKB
  LDX #LO(word_0)
  LDY #HI(word_0)
  LDA #&00
@@ -7287,7 +7256,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  INY
  LDA (&67),Y
  STA &37
- JSR draw_line
+ JSR LOIN
  INY
  CPY &97
  BCC l_46fe
@@ -7641,7 +7610,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 .count_lasers
 
  LDX count_offs,Y
- LDA cmdr_laser,X
+ LDA LASER,X
  BEQ count_sys
  DEC new_hold	\**
 
@@ -10599,8 +10568,8 @@ ENDIF
  LDA laser_t
  CMP #&F2
  BCS d_1374
- LDX view_dirn
- LDA cmdr_laser,X
+ LDX VIEW
+ LDA LASER,X
  BEQ d_1374
  PHA
  AND #&7F
@@ -10776,7 +10745,7 @@ ENDIF
 
  LDA &87
  BNE d_14f0
- LDX view_dirn
+ LDX VIEW
  BEQ d_1486
  JSR PU1
 
@@ -11173,13 +11142,13 @@ ENDIF
  STA &D1
  LDA #&61
  SBC &D1
- JMP draw_pixel
+ JMP PIXEL
 
 .d_196a
 
  RTS
 
-.d_1a05
+.FLIP
 
  LDY &03C3
 
@@ -11201,7 +11170,7 @@ ENDIF
 
 .d_1a25
 
- LDX view_dirn
+ LDX VIEW
  BEQ d_1a33
  DEX
  BNE d_1a30
@@ -11641,9 +11610,9 @@ ENDIF
  BMI d_2102
  LSR A
  TAX
- LDA ship_addr,X
+ LDA UNIV,X
  STA &22
- LDA ship_addr+&01,X
+ LDA UNIV+&01,X
  JSR d_2409
  LDA &D4
  ORA &D7
@@ -13180,7 +13149,7 @@ ENDIF
  STA &35
  LDA #&BF
  STA &37
- JSR draw_line
+ JSR LOIN
  LDA &0FCE
  STA &34
  LDA &0FCF
@@ -13188,7 +13157,7 @@ ENDIF
  STY &36
  LDA #&BF
  STA &37
- JMP draw_line
+ JMP LOIN
 
 .d_2aec
 
@@ -13371,7 +13340,7 @@ ENDIF
  BCS d_3239
  STA &03C3
  LDX #&00
- JSR d_5493
+ JSR LOOK1
  LDA QQ1
  EOR #&1F
  STA QQ1
@@ -13440,7 +13409,7 @@ ENDIF
 
  LDX #&00
  STX &8E
- JMP d_5493
+ JMP LOOK1
 
 .d_32c8
 
@@ -13619,7 +13588,7 @@ ENDIF
  JSR d_354b
  BNE d_3533
  LDA &35
- JSR draw_pixel
+ JSR PIXEL
 
 .d_3533
 
@@ -13725,10 +13694,10 @@ ENDIF
  LDA #&81
  JSR ins_ship
 
-.d_35b1
+.NWSTARS
 
  LDA &87
- BNE d_35d8
+ BNE WPSHPS
 
 .d_35b5
 
@@ -13750,7 +13719,7 @@ ENDIF
  DEY
  BNE d_35b8
 
-.d_35d8
+.WPSHPS
 
  JMP l_3283
 
@@ -13939,7 +13908,7 @@ ENDIF
  INX
  RTS
 
-.ship_addr
+.UNIV
 
  EQUW &0900, &0925, &094A, &096F, &0994, &09B9, &09DE, &0A03
  EQUW &0A28, &0A4D, &0A72, &0A97, &0ABC
@@ -13949,9 +13918,9 @@ ENDIF
  TXA
  ASL A
  TAY
- LDA ship_addr,Y
+ LDA UNIV,Y
  STA &20
- LDA ship_addr+&01,Y
+ LDA UNIV+&01,Y
  STA &21
  RTS
 
@@ -14421,7 +14390,7 @@ ENDIF
 
 .d_3a30
 
- JSR l_1a16
+ JSR BLINE
  CMP &8F
  BEQ d_3a39
  BCS d_3a45
@@ -14474,7 +14443,7 @@ ENDIF
  STA &37
  LDA &0EC0,Y
  STA &36
- JSR draw_line
+ JSR LOIN
  INY
  \	LDA &90
  \	BNE d_3bf2
@@ -14519,7 +14488,7 @@ ENDIF
 
  LDA &0E00,Y
  BEQ d_3c47
- JSR l_1909
+ JSR HLOIN2
 
 .d_3c47
 
@@ -14649,9 +14618,9 @@ ENDIF
  TXA
  ASL A
  TAY
- LDA ship_addr,Y
+ LDA UNIV,Y
  STA SC
- LDA ship_addr+&01,Y
+ LDA UNIV+&01,Y
  STA SC+&01
  LDY #&20
  LDA (SC),Y
@@ -14747,9 +14716,9 @@ ENDIF
  TXA
  ASL A
  TAY
- LDA ship_addr,Y
+ LDA UNIV,Y
  STA SC
- LDA ship_addr+&01,Y
+ LDA UNIV+&01,Y
  STA SC+&01
  LDY #&24
  LDA (SC),Y
@@ -15292,7 +15261,7 @@ ENDIF
  BCS d_4143
  AND #&03
  TAX
- JMP d_5493
+ JMP LOOK1
 
 .d_4143
 
@@ -15648,8 +15617,8 @@ ENDIF
  STA &8A
  LSR A
  STA &0349
- LDX view_dirn
- JMP d_5493
+ LDX VIEW
+ JMP LOOK1
 
 .d_439f
 
@@ -16051,118 +16020,9 @@ INCLUDE "library/common/main/subroutine/mveit_part_6_of_9.asm"
 INCLUDE "library/common/main/subroutine/mvt1.asm"
 INCLUDE "library/common/main/subroutine/mvt6.asm"
 INCLUDE "library/common/main/subroutine/mv40.asm"
-
-.PU1
-
- DEX
- BNE PU2
- LDA &48
- EOR #&80
- STA &48
- LDA &4E
- EOR #&80
- STA &4E
- LDA &50
- EOR #&80
- STA &50
- LDA &54
- EOR #&80
- STA &54
- LDA &56
- EOR #&80
- STA &56
- LDA &5A
- EOR #&80
- STA &5A
- LDA &5C
- EOR #&80
- STA &5C
- LDA &60
- EOR #&80
- STA &60
- RTS
-
-.PU2
-
- LDA #&00
- CPX #&02
- ROR A
- STA &9A
- EOR #&80
- STA &99
- LDA &46
- LDX &4C
- STA &4C
- STX &46
- LDA &47
- LDX &4D
- STA &4D
- STX &47
- LDA &48
- EOR &99
- TAX
- LDA &4E
- EOR &9A
- STA &48
- STX &4E
- LDY #&09
- JSR d_546c
- LDY #&0F
- JSR d_546c
- LDY #&15
-
-.d_546c
-
- LDA &46,Y
- LDX &4A,Y
- STA &4A,Y
- STX &46,Y
- LDA &47,Y
- EOR &99
- TAX
- LDA &4B,Y
- EOR &9A
- STA &47,Y
- STX &4B,Y
-
-.d_5486
-
- RTS
-
-.d_5487
-
- STX view_dirn
- JSR TT66
- JSR d_54aa
- JMP d_35b1
-
-.d_5493
-
- LDA #&00
- LDY &87
- BNE d_5487
- CPX view_dirn
- BEQ d_5486
- STX view_dirn
- JSR TT66
- JSR d_1a05
- JSR d_35d8
-
-.d_54aa
-
- LDY view_dirn
- LDA cmdr_laser,Y
- BEQ d_5486
- LDA #&80
- STA &73
- LDA #&48
- STA &74
- LDA #&14
- STA &75
- JSR map_cross
- LDA #&0A
- STA &75
- JMP map_cross
+INCLUDE "library/common/main/subroutine/plut-pu1.asm"
+INCLUDE "library/common/main/subroutine/look1.asm"
+INCLUDE "library/common/main/subroutine/sight.asm"
 
 .iff_xor
 

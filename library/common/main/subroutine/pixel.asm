@@ -228,7 +228,19 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Electron: Dots in the Electron version, such as those shown for stardust particles, are always two pixels wide, while the cassette and disc versions also support 1-pixel dots in their monochrome space views
+IF _ELITE_A_FLIGHT
+
+ LDA ZZ                 \ AJD
+ CMP #144
+ BCC thick_dot
+ LDA TWOS,X
+ BCS PX14+3
+
+.thick_dot
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_DOCKED \ Electron: Dots in the Electron version, such as those shown for stardust particles, are always two pixels wide, while the cassette and disc versions also support 1-pixel dots in their monochrome space views
 
  LDA ZZ                 \ If distance in ZZ >= 144, then this point is a very
  CMP #144               \ long way away, so jump to PX3 to fetch a 1-pixel point

@@ -123,7 +123,7 @@ IF _ELECTRON_VERSION \ Screen
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Screen
 
 .LIC5
 
@@ -135,6 +135,20 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
  LDY YSAV               \ Restore Y from YSAV, so that it's preserved
 
  RTS                    \ Return from the subroutine
+
+ENDIF
+
+IF _ELITE_A_6502SP_IO
+
+.LIC5
+
+ DEX                    \ Decrement the counter in X
+
+ BNE LIL5               \ If we haven't yet reached the right end of the line,
+                        \ loop back to LIL5 to plot the next pixel along
+
+ RTS                    \ Return from the subroutine
+
 
 ENDIF
 

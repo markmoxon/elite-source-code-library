@@ -74,9 +74,22 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
+IF _ELITE_A_6502SP_IO
+
+ JSR tube_get           \ AJD
+ STA X1
+ JSR tube_get
+ STA Y1
+ JSR tube_get
+ STA X2
+ JSR tube_get
+ STA Y2
+
+ENDIF
+
 .LOIN
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Platform
 
  STY YSAV               \ Store Y into YSAV, so we can preserve it across the
                         \ call to this subroutine

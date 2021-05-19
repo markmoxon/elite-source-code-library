@@ -40,7 +40,8 @@ _DISC_FLIGHT            = FALSE
 _ELITE_A_DOCKED         = FALSE
 _ELITE_A_FLIGHT         = FALSE
 _ELITE_A_ENCYCLOPEDIA   = FALSE
-_ELITE_A_6502SP_PARA    = TRUE
+_ELITE_A_6502SP_IO      = TRUE
+_ELITE_A_6502SP_PARA    = FALSE
 _RELEASED               = (_RELEASE = 1)
 _SOURCE_DISC            = (_RELEASE = 2)
 
@@ -173,12 +174,6 @@ CHK = &11D4             \ The address of the first checksum byte for the saved
 SHIP_MISSILE = &7F00    \ The address of the missile ship blueprint, as set in
                         \ elite-loader3.asm
 
-INCLUDE "library/common/main/workspace/zp.asm"
-INCLUDE "library/common/main/workspace/xx3.asm"
-INCLUDE "library/enhanced/main/workspace/up.asm"
-INCLUDE "library/common/main/workspace/k_per_cent.asm"
-INCLUDE "library/common/main/workspace/wp.asm"
-
 \ ******************************************************************************
 \
 \ ELITE A FILE
@@ -211,22 +206,23 @@ tube_r3d = &FEE5
 tube_r4s = &FEE6
 tube_r4d = &FEE7
 
-ptr = &92
+SC = &92
+SCH = &93
 
 font = &94
 save_a = &96
 save_x = &97
 save_y = &98
 
-x_lo = &94
-y_lo = &95
-x_hi = &96
-y_hi = &97
-line_1 = &98
-line_2 = &99
-line_3 = &9A
-line_4 = &9B
-line_5 = &9C
+X1 = &94
+Y1 = &95
+X2 = &96
+Y2 = &97
+P = &98
+Q = &99
+R = &9A
+S = &9B
+SWAP = &9C
 
 drawpix_1 = &94
 drawpix_2 = &95
@@ -315,7 +311,7 @@ tube_brk = &16	\ tube BRK vector
 
 .tube_table
 
- EQUW draw_line, draw_hline, draw_pixel, clr_scrn
+ EQUW LL30, HLOIN, draw_pixel, clr_scrn
  EQUW clr_line, sync_in, draw_bar, draw_angle
  EQUW put_missle, scan_fire, write_fe4e, scan_xin
  EQUW scan_10in, get_key, write_xyc, write_pod
@@ -375,8 +371,8 @@ tube_brk = &16	\ tube BRK vector
 .wrch_or
 
  LDA (font),Y
- EOR (ptr),Y	\ORA (ptr),Y
- STA (ptr),Y
+ EOR (SC),Y	\ORA (SC),Y
+ STA (SC),Y
  DEY
  BPL wrch_or
  BMI wrch_quit
@@ -391,7 +387,7 @@ tube_brk = &16	\ tube BRK vector
 .wrch_sta
 
  LDA (font),Y
- STA (ptr),Y
+ STA (SC),Y
  DEY
  BPL wrch_sta
  BMI wrch_quit
@@ -438,408 +434,80 @@ tube_brk = &16	\ tube BRK vector
  ASL A
  ASL A
  ASL A
- STA ptr
+ STA SC
  LDA cursor_y
  ORA #&60
- STA ptr+&01
+ STA SC+&01
  RTS
 
+INCLUDE "library/common/main/variable/twos.asm"
+INCLUDE "library/common/main/variable/twos2.asm"
+INCLUDE "library/common/main/variable/ctwos.asm"
+INCLUDE "library/common/main/subroutine/loin_part_1_of_7.asm"
+INCLUDE "library/common/main/subroutine/loin_part_2_of_7.asm"
+INCLUDE "library/common/main/subroutine/loin_part_3_of_7.asm"
+INCLUDE "library/common/main/subroutine/loin_part_4_of_7.asm"
+INCLUDE "library/common/main/subroutine/loin_part_5_of_7.asm"
+INCLUDE "library/common/main/subroutine/loin_part_6_of_7.asm"
+INCLUDE "library/common/main/subroutine/loin_part_7_of_7.asm"
 
-.pixel_1
-
- EQUB &80, &40, &20, &10, &08, &04, &02, &01
-
-.pixel_2
-
- EQUB &C0, &60, &30, &18, &0C, &06, &03, &03
-
-.pixel_3
-
- EQUB &88, &44, &22, &11, &88
-
-.draw_line
+.HLOIN
 
  JSR tube_get
- STA x_lo
+ STA X1
  JSR tube_get
- STA y_lo
+ STA Y1
  JSR tube_get
- STA x_hi
- JSR tube_get
- STA y_hi
-
-.draw_line2
-
- LDA #&80
- STA line_4
- ASL A
- STA line_5
- LDA x_hi
- SBC x_lo
- BCS l_1783
- EOR #&FF
- ADC #&01
- SEC
-
-.l_1783
-
- STA line_1
- LDA y_hi
- SBC y_lo
- BCS l_178f
- EOR #&FF
- ADC #&01
-
-.l_178f
-
- STA line_2
- CMP line_1
- BCC l_1798
- JMP l_1842
-
-.l_1798
-
- LDX x_lo
- CPX x_hi
- BCC l_17af
- DEC line_5
- LDA x_hi
- STA x_lo
- STX x_hi
- TAX
- LDA y_hi
- LDY y_lo
- STA y_lo
- STY y_hi
-
-.l_17af
-
- LDA y_lo
- LSR A
- LSR A
- LSR A
- ORA #&60
- STA ptr+&01
- LDA y_lo
- AND #&07
- TAY
- TXA
- AND #&F8
- STA ptr
- TXA
- AND #&07
- TAX
- LDA pixel_1,X
- STA line_3
- LDA line_2
- LDX #&FE
- STX line_2
-
-.l_17d1
-
- ASL A
- BCS l_17d8
- CMP line_1
- BCC l_17db
-
-.l_17d8
-
- SBC line_1
- SEC
-
-.l_17db
-
- ROL line_2
- BCS l_17d1
- LDX line_1
- INX
- LDA y_hi
- SBC y_lo
- BCS l_1814
- LDA line_5
- BNE l_17f3
- DEX
-
-.l_17ed
-
- LDA line_3
-
-.change_1
-
- EOR (ptr),Y
- STA (ptr),Y
-
-.l_17f3
-
- LSR line_3
- BCC l_17ff
- ROR line_3
- LDA ptr
- ADC #&08
- STA ptr
-
-.l_17ff
-
- LDA line_4
- ADC line_2
- STA line_4
- BCC l_180e
- DEY
- BPL l_180e
- DEC ptr+&01
- LDY #&07
-
-.l_180e
-
- DEX
- BNE l_17ed
- RTS
-
-.l_1814
-
- LDA line_5
- BEQ l_181f
- DEX
-
-.l_1819
-
- LDA line_3
-
-.change_2
-
- EOR (ptr),Y
- STA (ptr),Y
-
-.l_181f
-
- LSR line_3
- BCC l_182b
- ROR line_3
- LDA ptr
- ADC #&08
- STA ptr
-
-.l_182b
-
- LDA line_4
- ADC line_2
- STA line_4
- BCC l_183c
- INY
- CPY #&08
- BNE l_183c
- INC ptr+&01
- LDY #&00
-
-.l_183c
-
- DEX
- BNE l_1819
- RTS
-
-.l_1842
-
- LDY y_lo
- TYA
- LDX x_lo
- CPY y_hi
- BCS l_185b
- DEC line_5
- LDA x_hi
- STA x_lo
- STX x_hi
- TAX
- LDA y_hi
- STA y_lo
- STY y_hi
- TAY
-
-.l_185b
-
- LSR A
- LSR A
- LSR A
- ORA #&60
- STA ptr+&01
- TXA
- AND #&F8
- STA ptr
- TXA
- AND #&07
- TAX
- LDA pixel_1,X
- STA line_3
- LDA y_lo
- AND #&07
- TAY
- LDA line_1
- LDX #&01
- STX line_1
-
-.l_187b
-
- ASL A
- BCS l_1882
- CMP line_2
- BCC l_1885
-
-.l_1882
-
- SBC line_2
- SEC
-
-.l_1885
-
- ROL line_1
- BCC l_187b
- LDX line_2
- INX
- LDA x_hi
- SBC x_lo
- BCC l_18bf
- CLC
- LDA line_5
- BEQ l_189e
- DEX
-
-.l_1898
-
- LDA line_3
-
-.change_3
-
- EOR (ptr),Y
- STA (ptr),Y
-
-.l_189e
-
- DEY
- BPL l_18a5
- DEC ptr+&01
- LDY #&07
-
-.l_18a5
-
- LDA line_4
- ADC line_1
- STA line_4
- BCC l_18b9
- LSR line_3
- BCC l_18b9
- ROR line_3
- LDA ptr
- ADC #&08
- STA ptr
-
-.l_18b9
-
- DEX
- BNE l_1898
- RTS
-
-.l_18bf
-
- LDA line_5
- BEQ l_18ca
- DEX
-
-.l_18c4
-
- LDA line_3
-
-.change_4
-
- EOR (ptr),Y
- STA (ptr),Y
-
-.l_18ca
-
- DEY
- BPL l_18d1
- DEC ptr+&01
- LDY #&07
-
-.l_18d1
-
- LDA line_4
- ADC line_1
- STA line_4
- BCC l_18e6
- ASL line_3
- BCC l_18e6
- ROL line_3
- LDA ptr
- SBC #&07
- STA ptr
- CLC
-
-.l_18e6
-
- DEX
- BNE l_18c4
-
-.l_18eb
-
- RTS
-
-
-.draw_hline
-
- JSR tube_get
- STA x_lo
- JSR tube_get
- STA y_lo
- JSR tube_get
- STA x_hi
+ STA X2
 
 .draw_hline2
 
- LDX x_lo
- CPX x_hi
- BEQ l_18eb
+ LDX X1
+ CPX X2
+ BEQ HL6
  BCC l_1924
- LDA x_hi
- STA x_lo
- STX x_hi
+ LDA X2
+ STA X1
+ STX X2
  TAX
 
 .l_1924
 
- DEC x_hi
- LDA y_lo
+ DEC X2
+ LDA Y1
  LSR A
  LSR A
  LSR A
  ORA #&60
- STA ptr+&01
- LDA y_lo
+ STA SC+&01
+ LDA Y1
  AND #&07
- STA ptr
+ STA SC
  TXA
  AND #&F8
  TAY
  TXA
  AND #&F8
- STA line_2
- LDA x_hi
+ STA Q
+ LDA X2
  AND #&F8
  SEC
- SBC line_2
+ SBC Q
  BEQ l_197e
  LSR A
  LSR A
  LSR A
- STA line_1
- LDA x_lo
+ STA P
+ LDA X1
  AND #&07
  TAX
- LDA horiz_seg+&07,X
- EOR (ptr),Y
- STA (ptr),Y
+ LDA TWFL+&07,X
+ EOR (SC),Y
+ STA (SC),Y
  TYA
  ADC #&08
  TAY
- LDX line_1
+ LDX P
  DEX
  BEQ l_196f
  CLC
@@ -847,8 +515,8 @@ tube_brk = &16	\ tube BRK vector
 .l_1962
 
  LDA #&FF
- EOR (ptr),Y
- STA (ptr),Y
+ EOR (SC),Y
+ STA (SC),Y
  TYA
  ADC #&08
  TAY
@@ -857,41 +525,40 @@ tube_brk = &16	\ tube BRK vector
 
 .l_196f
 
- LDA x_hi
+ LDA X2
  AND #&07
  TAX
- LDA horiz_seg,X
- EOR (ptr),Y
- STA (ptr),Y
+ LDA TWFL,X
+ EOR (SC),Y
+ STA (SC),Y
  RTS
 
 .l_197e
 
- LDA x_lo
+ LDA X1
  AND #&07
  TAX
- LDA horiz_seg+&07,X
- STA line_2
- LDA x_hi
+ LDA TWFL+&07,X
+ STA Q
+ LDA X2
  AND #&07
  TAX
- LDA horiz_seg,X
- AND line_2
- EOR (ptr),Y
- STA (ptr),Y
+ LDA TWFL,X
+ AND Q
+ EOR (SC),Y
+ STA (SC),Y
  RTS
 
-.horiz_seg
-
- EQUB &80, &C0, &E0, &F0, &F8, &FC, &FE
- EQUB &FF, &7F, &3F, &1F, &0F, &07, &03, &01
+INCLUDE "library/common/main/variable/twfl.asm"
+INCLUDE "library/common/main/variable/twfr.asm"
 
 
-.l_19a8
 
- LDA pixel_1,X
- EOR (ptr),Y
- STA (ptr),Y
+.PX3
+
+ LDA TWOS,X
+ EOR (SC),Y
+ STA (SC),Y
  RTS
 
 .draw_pixel
@@ -907,10 +574,10 @@ tube_brk = &16	\ tube BRK vector
  LSR A
  LSR A
  ORA #&60
- STA ptr+&01
+ STA SC+&01
  TXA
  AND #&F8
- STA ptr
+ STA SC
  TYA
  AND #&07
  TAY
@@ -919,10 +586,10 @@ tube_brk = &16	\ tube BRK vector
  TAX
  LDA drawpix_1
  CMP #&90
- BCS l_19a8
- LDA pixel_2,X
- EOR (ptr),Y
- STA (ptr),Y
+ BCS PX3
+ LDA TWOS2,X
+ EOR (SC),Y
+ STA (SC),Y
  LDA drawpix_1
  CMP #&50
  BCS l_1a13
@@ -932,9 +599,9 @@ tube_brk = &16	\ tube BRK vector
 
 .l_1a0c
 
- LDA pixel_2,X
- EOR (ptr),Y
- STA (ptr),Y
+ LDA TWOS2,X
+ EOR (SC),Y
+ STA (SC),Y
 
 .l_1a13
 
@@ -957,13 +624,13 @@ tube_brk = &16	\ tube BRK vector
 .clr_page
 
  LDY #&00
- STY ptr
+ STY SC
  TYA
- STX ptr+&01
+ STX SC+&01
 
 .l_3a07
 
- STA (ptr),Y
+ STA (SC),Y
  INY
  BNE l_3a07
  RTS
@@ -972,14 +639,14 @@ tube_brk = &16	\ tube BRK vector
 .clr_line
 
  LDA #&75
- STA ptr+&01
+ STA SC+&01
  LDA #&07
- STA ptr
+ STA SC
  LDA #&00
  JSR clr_e9
- INC ptr+&01
+ INC SC+&01
  JSR clr_e9
- INC ptr+&01
+ INC SC+&01
 
 .clr_e9
 
@@ -987,7 +654,7 @@ tube_brk = &16	\ tube BRK vector
 
 .l_25c8
 
- STA (ptr),Y
+ STA (SC),Y
  DEY
  BNE l_25c8
  RTS
@@ -1018,9 +685,9 @@ tube_brk = &16	\ tube BRK vector
  JSR tube_get
  STA bar_2
  JSR tube_get
- STA ptr
+ STA SC
  JSR tube_get
- STA ptr+1
+ STA SC+1
  LDX #&FF
  STX bar_3
  LDY #&02
@@ -1038,11 +705,11 @@ tube_brk = &16	\ tube BRK vector
 .l_1edc
 
  AND bar_2
- STA (ptr),Y
+ STA (SC),Y
  INY
- STA (ptr),Y
+ STA (SC),Y
  INY
- STA (ptr),Y
+ STA (SC),Y
  TYA
  CLC
  ADC #&06
@@ -1081,9 +748,9 @@ tube_brk = &16	\ tube BRK vector
  JSR tube_get
  STA angle_1
  JSR tube_get
- STA ptr
+ STA SC
  JSR tube_get
- STA ptr+1
+ STA SC+1
  LDY #&01
 
 .l_1f11
@@ -1095,7 +762,7 @@ tube_brk = &16	\ tube BRK vector
  LDA #&FF
  LDX angle_1
  STA angle_1
- LDA pixel_3,X
+ LDA CTWOS,X
  AND #&F0
  JMP l_1f2a
 
@@ -1106,13 +773,13 @@ tube_brk = &16	\ tube BRK vector
 
 .l_1f2a
 
- STA (ptr),Y
+ STA (SC),Y
  INY
- STA (ptr),Y
+ STA (SC),Y
  INY
- STA (ptr),Y
+ STA (SC),Y
  INY
- STA (ptr),Y
+ STA (SC),Y
  TYA
  CLC
  ADC #&05
@@ -1131,15 +798,15 @@ tube_brk = &16	\ tube BRK vector
  STA missle_1
  LDA #&31-8
  SBC missle_1
- STA ptr
+ STA SC
  LDA #&7E
- STA ptr+&01
+ STA SC+&01
  JSR tube_get
  LDY #&05
 
 .l_33ba
 
- STA (ptr),Y
+ STA (SC),Y
  DEY
  BNE l_33ba
  RTS
@@ -1266,10 +933,10 @@ tube_brk = &16	\ tube BRK vector
  LSR A
  LSR A
  ORA #&60
- STA ptr+&01
+ STA SC+&01
  LDA drawpix_1
  AND #&F8
- STA ptr
+ STA SC
  LDA drawpix_2
  AND #&07
  TAY
@@ -1277,22 +944,22 @@ tube_brk = &16	\ tube BRK vector
  AND #&06
  LSR A
  TAX
- LDA pixel_3,X
+ LDA CTWOS,X
  AND drawpix_3
- EOR (ptr),Y
- STA (ptr),Y
- LDA pixel_3+1,X
+ EOR (SC),Y
+ STA (SC),Y
+ LDA CTWOS+1,X
  BPL d_36dd
- LDA ptr
+ LDA SC
  ADC #&08
- STA ptr
- LDA pixel_3+1,X
+ STA SC
+ LDA CTWOS+1,X
 
 .d_36dd
 
  AND drawpix_3
- EOR (ptr),Y
- STA (ptr),Y
+ EOR (SC),Y
+ STA (SC),Y
  RTS
 
 
@@ -1311,10 +978,10 @@ tube_brk = &16	\ tube BRK vector
  JSR d_36ac
  DEC drawpix_2
  JSR d_36ac
- LDA pixel_3+1,X
+ LDA CTWOS+1,X
  AND drawpix_3	\ iff
  STA drawpix_3
- LDA pixel_3+1,X
+ LDA CTWOS+1,X
  AND drawpix_4
  STA drawpix_4
  LDX drawpix_5
@@ -1326,15 +993,15 @@ tube_brk = &16	\ tube BRK vector
  DEY
  BPL d_55d1
  LDY #&07
- DEC ptr+&01
+ DEC SC+&01
 
 .d_55d1
 
  LDA drawpix_3
  EOR drawpix_4	\ iff
  STA drawpix_3	\ iff
- EOR (ptr),Y
- STA (ptr),Y
+ EOR (SC),Y
+ STA (SC),Y
  DEX
  BNE d_55ca
 
@@ -1348,7 +1015,7 @@ tube_brk = &16	\ tube BRK vector
  CPY #&08
  BNE d_55e4
  LDY #&00
- INC ptr+&01
+ INC SC+&01
 
 .d_55e4
 
@@ -1356,15 +1023,15 @@ tube_brk = &16	\ tube BRK vector
  CPY #&08
  BNE d_55ed
  LDY #&00
- INC ptr+&01
+ INC SC+&01
 
 .d_55ed
 
  LDA drawpix_3
  EOR drawpix_4	\ iff
  STA drawpix_3	\ iff
- EOR (ptr),Y
- STA (ptr),Y
+ EOR (SC),Y
+ STA (SC),Y
  INX
  BNE d_55e4
  RTS
@@ -1385,9 +1052,9 @@ tube_brk = &16	\ tube BRK vector
 
 .draw_let
 
- STA ptr
+ STA SC
  LDA #&7D
- STA ptr+1
+ STA SC+1
  STX font
  STY font+1
  LDY #&07
@@ -1395,8 +1062,8 @@ tube_brk = &16	\ tube BRK vector
 .draw_eor
 
  LDA (font),Y
- EOR (ptr),Y
- STA (ptr),Y
+ EOR (SC),Y
+ STA (SC),Y
  DEY
  BPL draw_eor
  RTS
@@ -1409,18 +1076,18 @@ tube_brk = &16	\ tube BRK vector
 
 .draw_mode
 
- LDA change_1
+ LDA LIL2+2
  EOR #&40
- STA change_1
- \	LDA change_2
+ STA LIL2+2
+ \	LDA LIL3+2
  \	EOR #&40
- STA change_2
- \	LDA change_3
+ STA LIL3+2
+ \	LDA LIL5+2
  \	EOR #&40
- STA change_3
- \	LDA change_4
+ STA LIL5+2
+ \	LDA LIL6+2
  \	EOR #&40
- STA change_4
+ STA LIL6+2
  RTS
 
 
@@ -1507,10 +1174,10 @@ tube_brk = &16	\ tube BRK vector
  LSR A
  LSR A
  ORA #&60
- STA ptr+&01
+ STA SC+&01
  LDA picture_1
  AND #&07
- STA ptr
+ STA SC
  LDY #&00
  JSR l_20e8
  LDA #&04
@@ -1532,24 +1199,24 @@ tube_brk = &16	\ tube BRK vector
 
  JSR tube_get
  AND #&F8
- STA ptr
+ STA SC
  LDX #&60
- STX ptr+&01
+ STX SC+&01
  LDX #&80
  LDY #&01
 
 .l_205c
 
  TXA
- AND (ptr),Y
+ AND (SC),Y
  BNE l_2071
  TXA
- ORA (ptr),Y
- STA (ptr),Y
+ ORA (SC),Y
+ STA (SC),Y
  INY
  CPY #&08
  BNE l_205c
- INC ptr+&01
+ INC SC+&01
  LDY #&00
  BEQ l_205c
 
@@ -1565,11 +1232,11 @@ tube_brk = &16	\ tube BRK vector
 .l_20ea
 
  TAX
- AND (ptr),Y
+ AND (SC),Y
  BNE l_2100
  TXA
- ORA (ptr),Y
- STA (ptr),Y
+ ORA (SC),Y
+ STA (SC),Y
  TXA
  LSR A
  BCC l_20ea
@@ -1586,11 +1253,11 @@ tube_brk = &16	\ tube BRK vector
 .l_2101
 
  TAX
- AND (ptr),Y
+ AND (SC),Y
  BNE l_2100
  TXA
- ORA (ptr),Y
- STA (ptr),Y
+ ORA (SC),Y
+ STA (SC),Y
  TXA
  ASL A
  BCC l_2101
@@ -1615,9 +1282,9 @@ rawrch = &FFBC
  LDA #8
  JSR print_wrch
  LDA #&60
- STA ptr+1
+ STA SC+1
  LDA #0
- STA ptr
+ STA SC
 
 .print_view
 
@@ -1636,11 +1303,11 @@ rawrch = &FFBC
 .print_copy
 
  INX
- LDA (ptr),Y
+ LDA (SC),Y
  STA print_bits,X
  DEY	
  BPL print_copy
- LDA ptr+1
+ LDA SC+1
  CMP #&78
  BCC print_inner
 
@@ -1684,14 +1351,14 @@ rawrch = &FFBC
 .print_next
 
  CLC
- LDA ptr
+ LDA SC
  ADC #8
- STA ptr
+ STA SC
  BNE print_outer
  LDA #13
  JSR print_wrch
- INC ptr+1
- LDX ptr+1
+ INC SC+1
+ LDX SC+1
  INX
  BPL print_view
  LDA #3

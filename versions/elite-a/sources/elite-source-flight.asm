@@ -40,6 +40,7 @@ _DISC_FLIGHT            = FALSE
 _ELITE_A_DOCKED         = FALSE
 _ELITE_A_FLIGHT         = TRUE
 _ELITE_A_ENCYCLOPEDIA   = FALSE
+_ELITE_A_6502SP_IO      = FALSE
 _ELITE_A_6502SP_PARA    = FALSE
 _RELEASED               = (_RELEASE = 1)
 _SOURCE_DISC            = (_RELEASE = 2)
@@ -401,7 +402,7 @@ BRKV = P% - 2
  AND cmdr_bomb
  BEQ l_12f7
  \	LDA #&03
- \	JSR l_54c8
+ \	JSR TT66
  \	JSR l_2623
  \	JSR l_3ee1
  \	STY &0341
@@ -471,8 +472,8 @@ BRKV = P% - 2
  LDA laser_t
  CMP #&F2
  BCS l_1374
- LDX view_dirn
- LDA cmdr_laser,X
+ LDX VIEW
+ LDA LASER,X
  BEQ l_1374
  PHA
  AND #&7F
@@ -503,7 +504,7 @@ BRKV = P% - 2
 .ins_ship
 
  STA &8C
- JSR ship_ptr
+ JSR ship_SC
  LDY #&24
 
 .l_1387
@@ -649,7 +650,7 @@ BRKV = P% - 2
 
  LDA &87
  BNE l_14f0
- LDX view_dirn
+ LDX VIEW
  BEQ l_1486
  JSR PU1
 
@@ -1027,545 +1028,56 @@ BRKV = P% - 2
 
  RTS
 
-.l_1695
-
- EQUW &0900, &0925, &094A, &096F, &0994, &09B9, &09DE, &0A03
- EQUW &0A28, &0A4D, &0A72, &0A97, &0ABC
-
-.pixels
-
- EQUB &80, &40, &20, &10, &08, &04, &02, &01, &C0, &60, &30, &18
- EQUB &0C, &06, &03, &03, &88, &44, &22, &11, &88
-
-.l_16c4
-
- STY &85
- LDA #&80
- STA &83
- ASL A
- STA &90
- LDA &36
- SBC &34
- BCS l_16d8
- EOR #&FF
- ADC #&01
- SEC
-
-.l_16d8
-
- STA &1B
- LDA &37
- SBC &35
- BCS l_16e4
- EOR #&FF
- ADC #&01
-
-.l_16e4
-
- STA &81
- CMP &1B
- BCC l_16ed
- JMP l_1797
-
-.l_16ed
-
- LDX &34
- CPX &36
- BCC l_1704
- DEC &90
- LDA &36
- STA &34
- STX &36
- TAX
- LDA &37
- LDY &35
- STA &35
- STY &37
-
-.l_1704
-
- LDA &35
- LSR A
- LSR A
- LSR A
- ORA #&60
- STA ptr+&01
- LDA &35
- AND #&07
- TAY
- TXA
- AND #&F8
- STA ptr
- TXA
- AND #&07
- TAX
- LDA pixels,X
- STA &82
- LDA &81
- LDX #&FE
- STX &81
-
-.l_1726
-
- ASL A
- BCS l_172d
- CMP &1B
- BCC l_1730
-
-.l_172d
-
- SBC &1B
- SEC
-
-.l_1730
-
- ROL &81
- BCS l_1726
- LDX &1B
- INX
- LDA &37
- SBC &35
- BCS l_1769
- LDA &90
- BNE l_1748
- DEX
-
-.l_1742
-
- LDA &82
- EOR (ptr),Y
- STA (ptr),Y
-
-.l_1748
-
- LSR &82
- BCC l_1754
- ROR &82
- LDA ptr
- ADC #&08
- STA ptr
-
-.l_1754
-
- LDA &83
- ADC &81
- STA &83
- BCC l_1763
- DEY
- BPL l_1763
- DEC ptr+&01
- LDY #&07
-
-.l_1763
-
- DEX
- BNE l_1742
- LDY &85
- RTS
-
-.l_1769
-
- LDA &90
- BEQ l_1774
- DEX
-
-.l_176e
-
- LDA &82
- EOR (ptr),Y
- STA (ptr),Y
-
-.l_1774
-
- LSR &82
- BCC l_1780
- ROR &82
- LDA ptr
- ADC #&08
- STA ptr
-
-.l_1780
-
- LDA &83
- ADC &81
- STA &83
- BCC l_1791
- INY
- CPY #&08
- BNE l_1791
- INC ptr+&01
- LDY #&00
-
-.l_1791
-
- DEX
- BNE l_176e
- LDY &85
- RTS
-
-.l_1797
-
- LDY &35
- TYA
- LDX &34
- CPY &37
- BCS l_17b0
- DEC &90
- LDA &36
- STA &34
- STX &36
- TAX
- LDA &37
- STA &35
- STY &37
- TAY
-
-.l_17b0
-
- LSR A
- LSR A
- LSR A
- ORA #&60
- STA ptr+&01
- TXA
- AND #&F8
- STA ptr
- TXA
- AND #&07
- TAX
- LDA pixels,X
- STA &82
- LDA &35
- AND #&07
- TAY
- LDA &1B
- LDX #&01
- STX &1B
-
-.l_17d0
-
- ASL A
- BCS l_17d7
- CMP &81
- BCC l_17da
-
-.l_17d7
-
- SBC &81
- SEC
-
-.l_17da
-
- ROL &1B
- BCC l_17d0
- LDX &81
- INX
- LDA &36
- SBC &34
- BCC l_1814
- CLC
- LDA &90
- BEQ l_17f3
- DEX
-
-.l_17ed
-
- LDA &82
- EOR (ptr),Y
- STA (ptr),Y
-
-.l_17f3
-
- DEY
- BPL l_17fa
- DEC ptr+&01
- LDY #&07
-
-.l_17fa
-
- LDA &83
- ADC &1B
- STA &83
- BCC l_180e
- LSR &82
- BCC l_180e
- ROR &82
- LDA ptr
- ADC #&08
- STA ptr
-
-.l_180e
-
- DEX
- BNE l_17ed
- LDY &85
- RTS
-
-.l_1814
-
- LDA &90
- BEQ l_181f
- DEX
-
-.l_1819
-
- LDA &82
- EOR (ptr),Y
- STA (ptr),Y
-
-.l_181f
-
- DEY
- BPL l_1826
- DEC ptr+&01
- LDY #&07
-
-.l_1826
-
- LDA &83
- ADC &1B
- STA &83
- BCC l_183b
- ASL &82
- BCC l_183b
- ROL &82
- LDA ptr
- SBC #&07
- STA ptr
- CLC
-
-.l_183b
-
- DEX
- BNE l_1819
- LDY &85
-
-.l_1840
-
- RTS
-
-.l_1847
-
- JSR l_339a
-
-.l_184a
-
- LDA #&13
- BNE l_1852
-
-.l_184e
-
- LDA #&17
- INC YC
-
-.l_1852
-
- STA &35
- LDX #&02
- STX &34
- LDX #&FE
- STX &36
- BNE l_1868
-
-.l_185e
-
- JSR l_3c4f
- STY &35
- LDA #&00
- STA &0E00,Y
-
-.l_1868
-
- STY &85
- LDX &34
- CPX &36
- BEQ l_1840
- BCC l_1879
- LDA &36
- STA &34
- STX &36
- TAX
-
-.l_1879
-
- DEC &36
- LDA &35
- LSR A
- LSR A
- LSR A
- ORA #&60
- STA ptr+&01
- LDA &35
- AND #&07
- STA ptr
- TXA
- AND #&F8
- TAY
- TXA
- AND #&F8
- STA &D1
- LDA &36
- AND #&F8
- SEC
- SBC &D1
- BEQ l_18d3
- LSR A
- LSR A
- LSR A
- STA &82
- LDA &34
- AND #&07
- TAX
- LDA l_18ee+&07,X
- EOR (ptr),Y
- STA (ptr),Y
- TYA
- ADC #&08
- TAY
- LDX &82
- DEX
- BEQ l_18c4
- CLC
-
-.l_18b7
-
- LDA #&FF
- EOR (ptr),Y
- STA (ptr),Y
- TYA
- ADC #&08
- TAY
- DEX
- BNE l_18b7
-
-.l_18c4
-
- LDA &36
- AND #&07
- TAX
- LDA l_18ee,X
- EOR (ptr),Y
- STA (ptr),Y
- LDY &85
- RTS
-
-.l_18d3
-
- LDA &34
- AND #&07
- TAX
- LDA l_18ee+&07,X
- STA &D1
- LDA &36
- AND #&07
- TAX
- LDA l_18ee,X
- AND &D1
- EOR (ptr),Y
- STA (ptr),Y
- LDY &85
- RTS
-
-.l_18ee
-
- EQUB &80, &C0, &E0, &F0, &F8, &FC, &FE, &FF, &7F, &3F, &1F, &0F
- EQUB &07, &03, &01
- \l_18fd
- \	LDA pixels,X
- \	EOR (ptr),Y
- \	STA (ptr),Y
- \	LDY &06
- \	RTS
-
-.l_1907
-
- JSR l_28ff
- STA &27
- TXA
- STA &0F95,Y
-
-.l_1910
-
- LDA &34
- BPL l_1919
- EOR #&7F
- CLC
- ADC #&01
-
-.l_1919
-
- EOR #&80
- TAX
- LDA &35
- AND #&7F
- CMP #&60
- BCS l_196a
- LDA &35
- BPL l_192c
- EOR #&7F
- ADC #&01
-
-.l_192c
-
- STA &D1
- LDA #&61
- SBC &D1
-
-.l_1932
-
- STY &06
- TAY
- LSR A
- LSR A
- LSR A
- ORA #&60
- STA ptr+&01
- TXA
- AND #&F8
- STA ptr
- TYA
- AND #&07
- TAY
- TXA
- AND #&07
- TAX
- LDA &88
- CMP #&90
- \	BCS l_18fd
- BCC thick_dot
- LDA pixels,X
- BCS plot_dot
-
-.thick_dot
-
- LDA pixels+&08,X
- EOR (ptr),Y
- STA (ptr),Y
- LDA &88
- CMP #&50
- BCS l_1968
- DEY
- BPL l_1961
- LDY #&01
-
-.l_1961
-
- LDA pixels+&08,X
-
-.plot_dot
-
- EOR (ptr),Y
- STA (ptr),Y
-
-.l_1968
-
- LDY &06
-
-.l_196a
-
- RTS
-
-.l_196b
+\ ******************************************************************************
+\
+\ Save output/ELTA.bin
+\
+\ ******************************************************************************
+
+PRINT "ELITE A"
+PRINT "Assembled at ", ~CODE%
+PRINT "Ends at ", ~P%
+PRINT "Code size is ", ~(P% - CODE%)
+PRINT "Execute at ", ~LOAD%
+PRINT "Reload at ", ~LOAD_A%
+
+PRINT "S.ELTA ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_A%
+\SAVE "versions/elite-a/output/D.ELTA.bin", CODE%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE B FILE
+\
+\ ******************************************************************************
+
+CODE_B% = P%
+LOAD_B% = LOAD% + P% - CODE%
+
+INCLUDE "library/common/main/variable/univ.asm"
+INCLUDE "library/common/main/variable/twos.asm"
+INCLUDE "library/common/main/variable/twos2.asm"
+INCLUDE "library/common/main/variable/ctwos.asm"
+INCLUDE "library/common/main/subroutine/loin_part_1_of_7.asm"
+INCLUDE "library/common/main/subroutine/loin_part_2_of_7.asm"
+INCLUDE "library/common/main/subroutine/loin_part_3_of_7.asm"
+INCLUDE "library/common/main/subroutine/loin_part_4_of_7.asm"
+INCLUDE "library/common/main/subroutine/loin_part_5_of_7.asm"
+INCLUDE "library/common/main/subroutine/loin_part_6_of_7.asm"
+INCLUDE "library/common/main/subroutine/loin_part_7_of_7.asm"
+INCLUDE "library/common/main/subroutine/nlin3.asm"
+INCLUDE "library/common/main/subroutine/nlin4.asm"
+INCLUDE "library/common/main/subroutine/nlin.asm"
+INCLUDE "library/common/main/subroutine/nlin2.asm"
+INCLUDE "library/common/main/subroutine/hloin2.asm"
+INCLUDE "library/common/main/subroutine/hloin.asm"
+INCLUDE "library/common/main/variable/twfl.asm"
+INCLUDE "library/common/main/variable/twfr.asm"
+INCLUDE "library/common/main/subroutine/pix1.asm"
+INCLUDE "library/common/main/subroutine/pixel2.asm"
+INCLUDE "library/common/main/subroutine/pixel.asm"
+
+
+.BLINE
 
  TXA
  ADC &E0
@@ -1589,7 +1101,7 @@ BRKV = P% - 2
 
 .l_198c
 
- LDA vdu_stat
+ LDA QQ17
  STA &34
  LDA &73
  STA &35
@@ -1638,14 +1150,14 @@ BRKV = P% - 2
  STA &0F0E,Y
  INY
  STY &6B
- JSR l_16c4
+ JSR LOIN
  LDA &89
  BNE l_197c
 
 .l_19ed
 
  LDA &76
- STA vdu_stat
+ STA QQ17
  LDA &77
  STA &73
  LDA &78
@@ -1658,7 +1170,7 @@ BRKV = P% - 2
  STA &93
  RTS
 
-.l_1a05
+.FLIP
 
  LDY &03C3
 
@@ -1673,14 +1185,14 @@ BRKV = P% - 2
  STA &0F5C,Y
  LDA &0FA8,Y
  STA &88
- JSR l_1910
+ JSR PIXEL2
  DEY
  BNE l_1a08
  RTS
 
 .l_1a25
 
- LDX view_dirn
+ LDX VIEW
  BEQ l_1a33
  DEX
  BNE l_1a30
@@ -1733,12 +1245,12 @@ BRKV = P% - 2
  STA &25
  EOR &33
  JSR l_27c6
- JSR l_28ff
+ JSR ADD
  STA &27
  STX &26
  EOR &32
  JSR l_27be
- JSR l_28ff
+ JSR ADD
  STA &25
  STX &24
  LDX &2B
@@ -1753,7 +1265,7 @@ BRKV = P% - 2
  LDA #&00
  ROR A
  ORA &D1
- JSR l_28ff
+ JSR ADD
  STA &25
  TXA
  STA &0F6F,Y
@@ -1765,7 +1277,7 @@ BRKV = P% - 2
  STA &1B
  LDA &2A
  EOR #&80
- JSR l_1907
+ JSR PIX1
  LDA &25
  STA &34
  STA &0F5C,Y
@@ -1785,7 +1297,7 @@ BRKV = P% - 2
 
 .l_1af3
 
- JSR l_1910
+ JSR PIXEL2
  DEY
  BEQ l_1afc
  JMP l_1a36
@@ -1855,12 +1367,12 @@ BRKV = P% - 2
  LDA &25
  EOR &32
  JSR l_27c6
- JSR l_28ff
+ JSR ADD
  STA &27
  STX &26
  EOR &33
  JSR l_27be
- JSR l_28ff
+ JSR ADD
  STA &25
  STX &24
  LDA &27
@@ -1878,7 +1390,7 @@ BRKV = P% - 2
  LDA #&00
  ROR A
  ORA &D1
- JSR l_28ff
+ JSR ADD
  STA &25
  TXA
  STA &0F6F,Y
@@ -1889,7 +1401,7 @@ BRKV = P% - 2
  LDA #&00
  STA &1B
  LDA &2A
- JSR l_1907
+ JSR PIX1
  LDA &25
  STA &34
  STA &0F5C,Y
@@ -1906,7 +1418,7 @@ BRKV = P% - 2
 
 .l_1be0
 
- JSR l_1910
+ JSR PIXEL2
  DEY
  BEQ l_1be9
  JMP l_1b23
@@ -2017,12 +1529,12 @@ BRKV = P% - 2
 .l_1c83
 
  LDA #&08
- JSR l_54c8
+ JSR TT66
  JSR l_2f75
  LDA #&07
  STA XC
  LDA #&7E
- JSR l_1847
+ JSR NLIN3
  LDA #&E6
  LDY &033E
  LDX ship_type+&02,Y
@@ -2110,14 +1622,14 @@ BRKV = P% - 2
 .l_1d12
 
  STX &93
- LDY cmdr_laser,X
+ LDY LASER,X
  BEQ l_1d3c
  TXA
  ORA #&60
  JSR l_2b6d
  LDA #&67
  LDX &93
- LDY cmdr_laser,X
+ LDY LASER,X
  CPY new_beam
  BNE l_1d2d
  LDA #&68
@@ -2241,7 +1753,7 @@ BRKV = P% - 2
  ORA &D1
  EOR &9A
  STX &81
- JSR l_28ff
+ JSR ADD
  STA &41
  STX &40
  LDX &81
@@ -2275,7 +1787,7 @@ BRKV = P% - 2
  EOR #&80
  EOR &9A
  STX &81
- JSR l_28ff
+ JSR ADD
  STA &47,Y
  STX &46,Y
  LDX &81
@@ -2453,7 +1965,7 @@ BRKV = P% - 2
  STA &D2
  STY &034F
  STX &034E
- LDY vdu_stat
+ LDY QQ17
  CPY #&FF
  BEQ l_1f52
  CMP #&07
@@ -2492,12 +2004,12 @@ BRKV = P% - 2
  ASL A
  ASL A
  ASL A
- STA ptr
+ STA SC
  INC XC
  LDA YC
  CMP #&18
  BCC l_1f43
- JSR l_54c8
+ JSR TT66
  JMP l_1f52
 
 .l_1f43
@@ -2506,14 +2018,14 @@ BRKV = P% - 2
 
 .l_1f45
 
- STA ptr+&01
+ STA SC+&01
  LDY #&07
 
 .l_1f49
 
  LDA (font),Y
- EOR (ptr),Y
- STA (ptr),Y
+ EOR (SC),Y
+ STA (SC),Y
  DEY
  BPL l_1f49
 
@@ -2536,9 +2048,9 @@ BRKV = P% - 2
 .l_1f62
 
  LDA #&D0
- STA ptr
+ STA SC
  LDA #&78
- STA ptr+&01
+ STA SC+&01
  JSR l_2026
  STX &41
  STA &40
@@ -2556,7 +2068,7 @@ BRKV = P% - 2
  LSR A
  ORA &32
  EOR #&80
- JSR l_28ff
+ JSR ADD
  JSR l_208d
  LDA &2A
  LDX &2B
@@ -2565,7 +2077,7 @@ BRKV = P% - 2
 
 .l_1f9a
 
- JSR l_28ff
+ JSR ADD
  JSR l_208d
  LDA &8A
  AND #&03
@@ -2616,9 +2128,9 @@ BRKV = P% - 2
  CPY #&04
  BNE l_1fd7
  LDA #&78
- STA ptr+&01
+ STA SC+&01
  LDA #&10
- STA ptr
+ STA SC
  LDA f_shield
  JSR l_2036
  LDA r_shield
@@ -2701,11 +2213,11 @@ BRKV = P% - 2
 .l_205c
 
  AND &91
- STA (ptr),Y
+ STA (SC),Y
  INY
- STA (ptr),Y
+ STA (SC),Y
  INY
- STA (ptr),Y
+ STA (SC),Y
  TYA
  CLC
  ADC #&06
@@ -2736,7 +2248,7 @@ BRKV = P% - 2
 
 .l_208a
 
- INC ptr+&01
+ INC SC+&01
  RTS
 
 .l_208d
@@ -2753,7 +2265,7 @@ BRKV = P% - 2
  LDA #&FF
  LDX &81
  STA &81
- LDA pixels+&10,X
+ LDA TWOS+&10,X
  AND #&F0
  JMP l_20aa
 
@@ -2764,20 +2276,20 @@ BRKV = P% - 2
 
 .l_20aa
 
- STA (ptr),Y
+ STA (SC),Y
  INY
- STA (ptr),Y
+ STA (SC),Y
  INY
- STA (ptr),Y
+ STA (SC),Y
  INY
- STA (ptr),Y
+ STA (SC),Y
  TYA
  CLC
  ADC #&05
  TAY
  CPY #&1E
  BCC l_2091
- INC ptr+&01
+ INC SC+&01
  RTS
 
 .l_20c1
@@ -2842,9 +2354,9 @@ BRKV = P% - 2
  BMI l_2102
  LSR A
  TAX
- LDA l_1695,X
+ LDA UNIV,X
  STA &22
- LDA l_1695+&01,X
+ LDA UNIV+&01,X
  JSR l_2409
  LDA &D4
  ORA &D7
@@ -3574,7 +3086,7 @@ BRKV = P% - 2
  JSR l_2508
  BCC l_2589
  LDX &45
- JSR ship_ptr
+ JSR ship_SC
  LDA ship_type,X
  JSR l_254d
  DEC cmdr_misl
@@ -3760,7 +3272,7 @@ BRKV = P% - 2
 .l_263d
 
  STA &95
- JSR l_54ca
+ JSR TTX66
 
 .l_2642
 
@@ -3831,7 +3343,7 @@ BRKV = P% - 2
  STA &1B
  LDA &0F5C,Y
  STA &34
- JSR l_28ff
+ JSR ADD
  STA &83
  STX &82
  LDA &0F82,Y
@@ -3839,7 +3351,7 @@ BRKV = P% - 2
  EOR &7B
  LDX &2B
  JSR l_27c8
- JSR l_28ff
+ JSR ADD
  STX &24
  STA &25
  LDX &0F95,Y
@@ -3849,7 +3361,7 @@ BRKV = P% - 2
  LDX &2B
  EOR &7C
  JSR l_27c8
- JSR l_28ff
+ JSR ADD
  STX &26
  STA &27
  LDX &31
@@ -3875,7 +3387,7 @@ BRKV = P% - 2
  LDA #&00
  STA &1B
  LDA &8D
- JSR l_1907
+ JSR PIX1
  LDA &25
  STA &0F5C,Y
  STA &34
@@ -3891,7 +3403,7 @@ BRKV = P% - 2
 
 .l_2724
 
- JSR l_1910
+ JSR PIXEL2
  DEY
  BEQ l_272d
  JMP l_268a
@@ -4285,7 +3797,7 @@ BRKV = P% - 2
 
  JSR l_28a6
 
-.l_28ff
+.ADD
 
  STA &06
  AND #&80
@@ -4645,7 +4157,7 @@ BRKV = P% - 2
  STA &35
  LDA #&BF
  STA &37
- JSR l_16c4
+ JSR LOIN
  LDA &0FCE
  STA &34
  LDA &0FCF
@@ -4653,7 +4165,7 @@ BRKV = P% - 2
  STY &36
  LDA #&BF
  STA &37
- JMP l_16c4
+ JMP LOIN
 
 .l_2aec
 
@@ -4740,7 +4252,7 @@ BRKV = P% - 2
 
 .l_2b57
 
- JSR l_339a
+ JSR TT27
 
 .l_2b5a
 
@@ -4750,31 +4262,31 @@ BRKV = P% - 2
 
  JSR vdu_80
 
-.l_2b60
+.TT67
 
  LDA #&0C
- JMP l_339a
+ JMP TT27
 
 .l_2b65
 
  LDA #&AD
- JSR l_339a
+ JSR TT27
  JMP l_2ba9
 
 .l_2b6d
 
- JSR l_339a
- JMP l_3142
+ JSR TT27
+ JMP TT162
 
 .l_2b73
 
  LDA #&01
- JSR l_54c8
+ JSR TT66
  LDA #&09
  STA XC
  LDA #&A3
- JSR l_339a
- JSR l_184e
+ JSR TT27
+ JSR NLIN
  JSR l_2b5a
  INC YC
  JSR l_2b3b
@@ -4794,7 +4306,7 @@ BRKV = P% - 2
 .l_2ba4
 
  ADC #&AA
- JSR l_339a
+ JSR TT27
 
 .l_2ba9
 
@@ -4824,11 +4336,11 @@ BRKV = P% - 2
  LDA #&C6
  JSR l_2b57
  LDA #&28
- JSR l_339a
+ JSR TT27
  LDA &70
  BMI l_2bf4
  LDA #&BC
- JSR l_339a
+ JSR TT27
  JMP l_2c30
 
 .l_2bf4
@@ -4873,12 +4385,12 @@ BRKV = P% - 2
  ADC &73
  AND #&07
  ADC #&F2
- JSR l_339a
+ JSR TT27
 
 .l_2c30
 
  LDA #&53
- JSR l_339a
+ JSR TT27
  LDA #&29
  JSR l_2b57
  LDA #&C1
@@ -4886,10 +4398,10 @@ BRKV = P% - 2
  LDX data_gnp
  LDY data_gnp+&01
  JSR l_30b3
- JSR l_3142
+ JSR TT162
  JSR vdu_00
  LDA #&4D
- JSR l_339a
+ JSR TT27
  LDA #&E2
  JSR l_2b57
  LDA #&FA
@@ -4901,7 +4413,7 @@ BRKV = P% - 2
  ADC #&0B
  TAY
  JSR l_30b4
- JSR l_3142
+ JSR TT162
  LDA #&6B
  JSR CHPR
  LDA #&6D
@@ -4969,15 +4481,15 @@ BRKV = P% - 2
 .l_2ceb
 
  LDA #&40
- JSR l_54c8
+ JSR TT66
  LDA #&07
  STA XC
  JSR l_2f6a
  LDA #&C7
- JSR l_339a
- JSR l_184e
+ JSR TT27
+ JSR NLIN
  LDA #&98
- JSR l_1852
+ JSR NLIN2
  JSR l_2da1
  LDX #&00
 
@@ -4994,7 +4506,7 @@ BRKV = P% - 2
  CLC
  ADC #&18
  STA &35
- JSR l_1932
+ JSR PIXEL
  JSR l_2b0e
  LDX &84
  INX
@@ -5007,7 +4519,7 @@ BRKV = P% - 2
  LDA #&04
  STA &75
 
-.l_2d36
+.TT15
 
  LDA #&18
  LDX &87
@@ -5039,7 +4551,7 @@ BRKV = P% - 2
  CLC
  ADC &78
  STA &35
- JSR l_1868
+ JSR HLOIN
  LDA &74
  SEC
  SBC &75
@@ -5067,7 +4579,7 @@ BRKV = P% - 2
  LDA &73
  STA &34
  STA &36
- JMP l_16c4
+ JMP LOIN
 
 .l_2d8a
 
@@ -5077,7 +4589,7 @@ BRKV = P% - 2
  STA &74
  LDA #&10
  STA &75
- JSR l_2d36
+ JSR TT15
  LDA cmdr_fuel
  STA &40
  JMP l_2dc5
@@ -5097,7 +4609,7 @@ BRKV = P% - 2
  STA &74
  LDA #&07
  STA &75
- JSR l_2d36
+ JSR TT15
  LDA &74
  CLC
  ADC #&18
@@ -5139,7 +4651,7 @@ BRKV = P% - 2
  CLC
  LDA &03AD
  ADC #&D0
- JSR l_339a
+ JSR TT27
  LDA #&0E
  STA XC
  PLA
@@ -5158,12 +4670,12 @@ BRKV = P% - 2
 .l_2e15
 
  LDA #&08
- JSR l_54c8
+ JSR TT66
  LDA #&0B
  STA XC
  LDA #&A4
  JSR l_2b57
- JSR l_184a
+ JSR NLIN4
  JSR l_3366
  LDA #&0E
  JSR l_3395
@@ -5181,7 +4693,7 @@ BRKV = P% - 2
  TYA
  EOR #&FF
  PHA
- \	JSR l_55f7
+ \	JSR WSCAN
  JSR l_2e65
  PLA
  STA &76
@@ -5209,7 +4721,7 @@ BRKV = P% - 2
  STA &74
  LDA #&04
  STA &75
- JMP l_2d36
+ JMP TT15
 
 .l_2e7b
 
@@ -5266,16 +4778,16 @@ BRKV = P% - 2
  STA &74
  LDA #&08
  STA &75
- JMP l_2d36
+ JMP TT15
 
 .l_2ebe
 
  LDA #&80
- JSR l_54c8
+ JSR TT66
  LDA #&07
  STA XC
  LDA #&BE
- JSR l_1847
+ JSR NLIN3
  JSR l_2da1
  JSR l_2e65
  JSR l_2f6a
@@ -5365,9 +4877,9 @@ BRKV = P% - 2
  AND #&01
  ADC #&02
  STA &40
- JSR l_360a
+ JSR FLFLLS
  JSR l_3a54
- JSR l_360a
+ JSR FLFLLS
 
 .l_2f60
 
@@ -5524,14 +5036,14 @@ BRKV = P% - 2
  STA YC
  JSR vdu_00
  LDA #&BD
- JSR l_339a
+ JSR TT27
  LDA hype_dist+&01
  BNE l_30b9
  LDA cmdr_fuel
  CMP hype_dist
  BCC l_30b9
  LDA #&2D
- JSR l_339a
+ JSR TT27
  JSR l_330a
 
 .l_3054
@@ -5540,8 +5052,8 @@ BRKV = P% - 2
  STA &2F
  STA &2E
  TAX
- \	JMP l_30ac
- BNE l_30ac
+ \	JMP ee3
+ BNE ee3
 
 .l_305e
 
@@ -5589,7 +5101,7 @@ BRKV = P% - 2
  STA QQ1
  RTS
 
-.l_30ac
+.ee3
 
  LDY #&01
  STY XC
@@ -5608,9 +5120,9 @@ BRKV = P% - 2
 .l_30b9
 
  LDA #&CA
- JSR l_339a
+ JSR TT27
  LDA #&3F
- JMP l_339a
+ JMP TT27
 
 .l_30c9
 
@@ -5623,7 +5135,7 @@ BRKV = P% - 2
  STA XC
  PLA
  ADC #&D0
- JSR l_339a
+ JSR TT27
  LDA #&0E
  STA XC
  LDX &73
@@ -5682,19 +5194,19 @@ BRKV = P% - 2
  BEQ l_314e
  JSR l_3153
 
-.l_3142
+.TT162
 
  LDA #&20
 
 .l_3144
 
- JMP l_339a
+ JMP TT27
 
 .l_3147
 
  LDA #&74
  JSR CHPR
- BCC l_3142
+ BCC TT162
 
 .l_314e
 
@@ -5716,11 +5228,11 @@ BRKV = P% - 2
 .l_3160
 
  LDA #&10
- JSR l_54c8
+ JSR TT66
  LDA #&05
  STA XC
  LDA #&A7
- JSR l_1847
+ JSR NLIN3
  LDA #&03
  STA YC
  JSR l_3158
@@ -5730,7 +5242,7 @@ BRKV = P% - 2
 .l_317a
 
  \	LDX #&80
- \	STX vdu_stat
+ \	STX QQ17
  JSR vdu_80
  JSR l_30c9
  INC YC
@@ -5841,7 +5353,7 @@ BRKV = P% - 2
  LDA #&03
  JSR l_427e
  LDA #&03
- JSR l_54c8
+ JSR TT66
  JSR l_2623
  JSR l_3ee1
  STY &0341
@@ -5854,7 +5366,7 @@ BRKV = P% - 2
  BCS l_3239
  STA &03C3
  LDX #&00
- JSR l_5493
+ JSR LOOK1
  LDA QQ1
  EOR #&1F
  STA QQ1
@@ -5874,7 +5386,7 @@ BRKV = P% - 2
 
  LDA &87
  BNE l_3268
- JSR l_54c8
+ JSR TT66
  JSR l_2623
 
 .l_3268
@@ -5892,7 +5404,7 @@ BRKV = P% - 2
  LDA &87
  AND #&3F
  BNE r_rts
- JSR l_54ca
+ JSR TTX66
  LDA &87
  BNE l_32c8
  INC &87
@@ -5923,7 +5435,7 @@ BRKV = P% - 2
 
  LDX #&00
  STX &8E
- JMP l_5493
+ JMP LOOK1
 
 .l_32c8
 
@@ -5973,7 +5485,7 @@ BRKV = P% - 2
  JSR l_2e65
  JSR l_2f75
  JSR l_2e65
- JMP l_5537
+ JMP CLYNS
 
 .l_330a
 
@@ -6000,7 +5512,7 @@ BRKV = P% - 2
  AND #&1F
  BEQ l_3327
  ORA #&80
- JSR l_339a
+ JSR TT27
 
 .l_3327
 
@@ -6069,7 +5581,7 @@ BRKV = P% - 2
  LDA #&C3
  JSR l_338f
  LDA #&77
- BNE l_339a
+ BNE TT27
 
 .l_337b
 
@@ -6089,18 +5601,18 @@ BRKV = P% - 2
 
 .l_338f
 
- JSR l_339a
- JMP l_2b60
+ JSR TT27
+ JMP TT67
 
 .l_3395
 
- JSR l_339a
+ JSR TT27
 
 .l_3398
 
  LDA #&3A
 
-.l_339a
+.TT27
 
  TAX
  BEQ l_337b
@@ -6130,7 +5642,7 @@ BRKV = P% - 2
 .vdu_00
 
  LDX #&00
- STX vdu_stat
+ STX QQ17
  RTS
 
 .l_33b9
@@ -6149,10 +5661,10 @@ BRKV = P% - 2
 
 .l_33cf
 
- LDX vdu_stat
+ LDX QQ17
  BEQ l_3410
  BMI l_33e6
- BIT vdu_stat
+ BIT QQ17
  BVS l_3409
 
 .l_33d9
@@ -6169,14 +5681,14 @@ BRKV = P% - 2
 
 .l_33e6
 
- BIT vdu_stat
+ BIT QQ17
  BVS l_3401
  CMP #&41
  BCC l_3410
  PHA
  TXA
  ORA #&40
- STA vdu_stat
+ STA QQ17
  PLA
  BNE l_33e3
 
@@ -6203,7 +5715,7 @@ BRKV = P% - 2
  PHA
  TXA
  AND #&BF
- STA vdu_stat
+ STA QQ17
  PLA
 
 .l_3410
@@ -6218,11 +5730,11 @@ BRKV = P% - 2
  ASL A
  TAY
  LDA &0880,Y
- JSR l_339a
+ JSR TT27
  LDA &0881,Y
  CMP #&3F
  BEQ l_3468
- JMP l_339a
+ JMP TT27
 
 .l_342b
 
@@ -6266,7 +5778,7 @@ BRKV = P% - 2
  PHA
  LDA (&22),Y
  EOR #&23
- JSR l_339a
+ JSR TT27
  PLA
  STA &23
  PLA
@@ -6431,7 +5943,7 @@ BRKV = P% - 2
  JSR l_354b
  BNE l_3533
  LDA &35
- JSR l_1932
+ JSR PIXEL
 
 .l_3533
 
@@ -6537,10 +6049,10 @@ BRKV = P% - 2
  LDA #&81
  JSR l_3768
 
-.l_35b1
+.NWSTARS
 
  LDA &87
- BNE l_35d8
+ BNE WPSHPS
 
 .l_35b5
 
@@ -6558,11 +6070,11 @@ BRKV = P% - 2
  JSR DORND
  STA &0F82,Y
  STA &35
- JSR l_1910
+ JSR PIXEL2
  DEY
  BNE l_35b8
 
-.l_35d8
+.WPSHPS
 
  LDX #&00
 
@@ -6572,7 +6084,7 @@ BRKV = P% - 2
  BEQ l_3602
  BMI l_35ff
  STA &8C
- JSR ship_ptr
+ JSR ship_SC
  LDY #&1F
 
 .l_35e8
@@ -6600,7 +6112,7 @@ BRKV = P% - 2
  STX &0EC0
  STX &0F0E
 
-.l_360a
+.FLFLLS
 
  LDY #&BF
  LDA #&00
@@ -6713,7 +6225,7 @@ BRKV = P% - 2
  CMP #&F0
  BNE l_36ac
 
-.l_36a7
+.CPIX4
 
  JSR l_36ac
  DEC &35
@@ -6726,10 +6238,10 @@ BRKV = P% - 2
  LSR A
  LSR A
  ORA #&60
- STA ptr+&01
+ STA SC+&01
  LDA &34
  AND #&F8
- STA ptr
+ STA SC
  TYA
  AND #&07
  TAY
@@ -6737,22 +6249,22 @@ BRKV = P% - 2
  AND #&06
  LSR A
  TAX
- LDA pixels+&10,X
+ LDA TWOS+&10,X
  AND &91
- EOR (ptr),Y
- STA (ptr),Y
- LDA pixels+&11,X
+ EOR (SC),Y
+ STA (SC),Y
+ LDA TWOS+&11,X
  BPL l_36dd
- LDA ptr
+ LDA SC
  ADC #&08
- STA ptr
- LDA pixels+&11,X
+ STA SC
+ LDA TWOS+&11,X
 
 .l_36dd
 
  AND &91
- EOR (ptr),Y
- STA (ptr),Y
+ EOR (SC),Y
+ STA (SC),Y
  RTS
 
 .l_36e4
@@ -6829,14 +6341,14 @@ BRKV = P% - 2
  INX
  RTS
 
-.ship_ptr
+.ship_SC
 
  TXA
  ASL A
  TAY
- LDA l_1695,Y
+ LDA UNIV,Y
  STA &20
- LDA l_1695+&01,Y
+ LDA UNIV+&01,Y
  STA &21
  RTS
 
@@ -6888,7 +6400,7 @@ BRKV = P% - 2
 
 .l_3778
 
- JSR ship_ptr
+ JSR ship_SC
  LDA &D1
  BMI l_37d1
  ASL A
@@ -7014,7 +6526,7 @@ BRKV = P% - 2
 .l_3825
 
  LDY #HI(l_3832)
- STA ptr
+ STA SC
  LDA #&7D
  STX font
  STY font+&01
@@ -7039,15 +6551,15 @@ BRKV = P% - 2
  STA &D1
  LDA #&31-8
  SBC &D1
- STA ptr
+ STA SC
  LDA #&7E
- STA ptr+&01
+ STA SC+&01
  TYA
  LDY #&05
 
 .l_3850
 
- STA (ptr),Y
+ STA (SC),Y
  DEY
  BNE l_3850
  RTS
@@ -7292,7 +6804,7 @@ BRKV = P% - 2
  STA &83
  LDA &0D
  EOR &09
- JSR l_28ff
+ JSR ADD
  STA &D1
  BPL l_39fb
  TXA
@@ -7322,7 +6834,7 @@ BRKV = P% - 2
  STA &1B
  LDA &0D
  EOR &0A
- JSR l_28ff
+ JSR ADD
  EOR #&80
  STA &D1
  BPL l_3a30
@@ -7338,7 +6850,7 @@ BRKV = P% - 2
 
 .l_3a30
 
- JSR l_196b
+ JSR BLINE
  CMP &8F
  BEQ l_3a39
  BCS l_3a45
@@ -7439,7 +6951,7 @@ BRKV = P% - 2
  BEQ l_3ac1
  LDA &0E00,Y
  BEQ l_3abe
- JSR l_185e
+ JSR HLOIN2
 
 .l_3abe
 
@@ -7478,7 +6990,7 @@ BRKV = P% - 2
  LDA &29
  STA &27
  TXA
- JSR l_3c4f
+ JSR EDGES
  LDA &34
  STA &24
  LDA &36
@@ -7488,13 +7000,13 @@ BRKV = P% - 2
  LDA &D3
  STA &27
  LDA &0E00,Y
- JSR l_3c4f
+ JSR EDGES
  BCS l_3b1f
  LDA &36
  LDX &24
  STX &36
  STA &24
- JSR l_1868
+ JSR HLOIN
 
 .l_3b1f
 
@@ -7505,7 +7017,7 @@ BRKV = P% - 2
 
 .l_3b27
 
- JSR l_1868
+ JSR HLOIN
 
 .l_3b2a
 
@@ -7527,7 +7039,7 @@ BRKV = P% - 2
  STX &26
  LDX &D3
  STX &27
- JSR l_3c4f
+ JSR EDGES
  BCC l_3b27
  LDA #&00
  STA &0E00,Y
@@ -7550,7 +7062,7 @@ BRKV = P% - 2
 
  LDA &0E00,Y
  BEQ l_3b69
- JSR l_185e
+ JSR HLOIN2
 
 .l_3b69
 
@@ -7643,7 +7155,7 @@ BRKV = P% - 2
 
 .l_3be1
 
- JSR l_196b
+ JSR BLINE
  CMP #&41
  BCS l_3beb
  JMP l_3b97
@@ -7668,7 +7180,7 @@ BRKV = P% - 2
  STA &37
  LDA &0EC0,Y
  STA &36
- JSR l_16c4
+ JSR LOIN
  INY
  LDA &90
  BNE l_3bf2
@@ -7713,7 +7225,7 @@ BRKV = P% - 2
 
  LDA &0E00,Y
  BEQ l_3c47
- JSR l_185e
+ JSR HLOIN2
 
 .l_3c47
 
@@ -7723,7 +7235,7 @@ BRKV = P% - 2
  STY &0E00
  RTS
 
-.l_3c4f
+.EDGES
 
  STA &D1
  CLC
@@ -7969,7 +7481,7 @@ BRKV = P% - 2
 .l_3d89
 
  JSR l_3f26
- JSR l_360a
+ JSR FLFLLS
  STA ship_type+&01
  STA &0320
  JSR l_3821
@@ -7992,12 +7504,12 @@ BRKV = P% - 2
  TXA
  ASL A
  TAY
- LDA l_1695,Y
- STA ptr
- LDA l_1695+&01,Y
- STA ptr+&01
+ LDA UNIV,Y
+ STA SC
+ LDA UNIV+&01,Y
+ STA SC+&01
  LDY #&20
- LDA (ptr),Y
+ LDA (SC),Y
  BPL l_3da3
  AND #&7F
  LSR A
@@ -8007,13 +7519,13 @@ BRKV = P% - 2
  SBC #&01
  ASL A
  ORA #&80
- STA (ptr),Y
+ STA (SC),Y
  BNE l_3da3
 
 .l_3dd2
 
  LDA #&00
- STA (ptr),Y
+ STA (SC),Y
  BEQ l_3da3
 
 .l_3dd8
@@ -8074,11 +7586,11 @@ BRKV = P% - 2
  ASL A
  TAY
  LDA &55FE,Y
- STA ptr
+ STA SC
  LDA &55FF,Y
- STA ptr+&01
+ STA SC+&01
  LDY #&05
- LDA (ptr),Y
+ LDA (SC),Y
  STA &D1
  LDA &1B
  SEC
@@ -8090,23 +7602,23 @@ BRKV = P% - 2
  TXA
  ASL A
  TAY
- LDA l_1695,Y
- STA ptr
- LDA l_1695+&01,Y
- STA ptr+&01
+ LDA UNIV,Y
+ STA SC
+ LDA UNIV+&01,Y
+ STA SC+&01
  LDY #&24
- LDA (ptr),Y
+ LDA (SC),Y
  STA (&20),Y
  DEY
- LDA (ptr),Y
+ LDA (SC),Y
  STA (&20),Y
  DEY
- LDA (ptr),Y
+ LDA (SC),Y
  STA &41
  LDA font
  STA (&20),Y
  DEY
- LDA (ptr),Y
+ LDA (SC),Y
  STA &40
  LDA &1B
  STA (&20),Y
@@ -8114,13 +7626,13 @@ BRKV = P% - 2
 
 .l_3e75
 
- LDA (ptr),Y
+ LDA (SC),Y
  STA (&20),Y
  DEY
  BPL l_3e75
- LDA ptr
+ LDA SC
  STA &20
- LDA ptr+&01
+ LDA SC+&01
  STA &21
  LDY &D1
 
@@ -8229,7 +7741,7 @@ BRKV = P% - 2
 
 .l_3f10
 
- JSR l_35d8
+ JSR WPSHPS
  JSR clr_ships
  LDA #&FF
  STA &03B0
@@ -8533,7 +8045,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  \	LSR A
  \	BCS l_40f8
  LDY #&02
- JSR l_5530
+ JSR DELAY
 
 .l_40f8
 
@@ -8605,7 +8117,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  BCS l_4143
  AND #&03
  TAX
- JMP l_5493
+ JMP LOOK1
 
 .l_4143
 
@@ -8622,7 +8134,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDA &9F
  EOR #&25
  STA &9F
- JMP l_55f7	\RTS
+ JMP WSCAN	\RTS
 
 .n_finder
 
@@ -8649,11 +8161,11 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  BNE l_418a
  LDX &2F
  DEX
- JSR l_30ac
+ JSR ee3
  LDA #&05
  STA &2E
  LDX &2F
- JSR l_30ac
+ JSR ee3
  DEC &2F
  BNE l_418a
  JMP l_3254
@@ -8691,7 +8203,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  AND #&C0
  BEQ l_418a
  JSR l_32fe
- STA vdu_stat
+ STA QQ17
  JSR l_330a
  JSR vdu_80
  LDA #&01
@@ -8730,8 +8242,8 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  ASL &7D
  LDX #&18
  JSR l_3619
- JSR l_54c8
- JSR l_54eb
+ JSR TT66
+ JSR BOX
  JSR l_35b5
  LDA #&0C
  STA YC
@@ -8856,16 +8368,16 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  BPL l_429a
  RTS
 
-.l_42a1
+.ZES1
 
- STX ptr+&01
+ STX SC+&01
  LDA #&00
- STA ptr
+ STA SC
  TAY
 
 .l_42a8
 
- STA (ptr),Y
+ STA (SC),Y
  DEY
  BNE l_42a8
  RTS
@@ -9006,18 +8518,18 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  STA &82
  STA &1B
  LDA &0908
- JSR l_28ff
+ JSR ADD
  STA &0908
  LDA &092D
- JSR l_28ff
+ JSR ADD
  STA &092D
  LDA #&01
  STA &87
  STA &8A
  LSR A
  STA &0349
- LDX view_dirn
- JMP l_5493
+ LDX VIEW
+ JMP LOOK1
 
 .l_439f
 
@@ -9202,7 +8714,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  EOR #&FF
  STA &0387,X
  JSR l_1efa
- JSR l_5530
+ JSR DELAY
  LDY &D1
 
 .l_4472
@@ -9381,7 +8893,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
 .l_455f
 
- JSR l_55f7
+ JSR WSCAN
  JSR l_433f
  CPX #&51
  BNE l_456e
@@ -9453,7 +8965,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 .l_45c6
 
  \	LDX #&00
- \	STX vdu_stat
+ \	STX QQ17
  JSR vdu_00
  LDY #&09
  STY XC
@@ -9466,11 +8978,11 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
 .l_45dd
 
- JSR l_339a
+ JSR TT27
  LSR &034B
  BCC l_45b4
  LDA #&FD
- JMP l_339a
+ JMP TT27
 
 .l_45ea
 
@@ -10067,7 +9579,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 .l_496c
 
  LDA &46,X
- STA vdu_stat,X
+ STA QQ17,X
  DEX
  BPL l_496c
  LDA #&FF
@@ -10112,7 +9624,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LSR &76
  ROR &75
  LSR &73
- ROR vdu_stat
+ ROR QQ17
  LSR A
  ROR &78
  TAY
@@ -10123,7 +9635,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  STX &86
  LDA &7A
  STA &39
- LDA vdu_stat
+ LDA QQ17
  STA &34
  LDA &74
  STA &35
@@ -10135,7 +9647,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  STA &38
  JSR l_4832
  LDA &3A
- STA vdu_stat
+ STA QQ17
  LDA &3B
  STA &74
  LDA &3C
@@ -10194,7 +9706,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDX &86
  CPX #&04
  BCC l_4a51
- LDA vdu_stat
+ LDA QQ17
  STA &34
  LDA &74
  STA &35
@@ -10210,7 +9722,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
 .l_4a49
 
- LSR vdu_stat
+ LSR QQ17
  LSR &78
  LSR &75
  LDX #&01
@@ -10250,7 +9762,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  STA &82
  LDA &3B
  STA &83
- LDA vdu_stat
+ LDA QQ17
  STA &81
  LDA &74
  JSR l_4812
@@ -11103,7 +10615,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  INY
  LDA (&67),Y
  STA &37
- JSR l_16c4
+ JSR LOIN
  INY
  CPY &97
  BCC l_4f83
@@ -11328,223 +10840,14 @@ INCLUDE "library/common/main/subroutine/mvt1.asm"
 INCLUDE "library/common/main/subroutine/mvs4.asm"
 INCLUDE "library/common/main/subroutine/mvt6.asm"
 INCLUDE "library/common/main/subroutine/mv40.asm"
-
-
-.PU1
-
- DEX
- BNE PU2
- LDA &48
- EOR #&80
- STA &48
- LDA &4E
- EOR #&80
- STA &4E
- LDA &50
- EOR #&80
- STA &50
- LDA &54
- EOR #&80
- STA &54
- LDA &56
- EOR #&80
- STA &56
- LDA &5A
- EOR #&80
- STA &5A
- LDA &5C
- EOR #&80
- STA &5C
- LDA &60
- EOR #&80
- STA &60
- RTS
-
-.PU2
-
- LDA #&00
- CPX #&02
- ROR A
- STA &9A
- EOR #&80
- STA &99
- LDA &46
- LDX &4C
- STA &4C
- STX &46
- LDA &47
- LDX &4D
- STA &4D
- STX &47
- LDA &48
- EOR &99
- TAX
- LDA &4E
- EOR &9A
- STA &48
- STX &4E
- LDY #&09
- JSR l_546c
- LDY #&0F
- JSR l_546c
- LDY #&15
-
-.l_546c
-
- LDA &46,Y
- LDX &4A,Y
- STA &4A,Y
- STX &46,Y
- LDA &47,Y
- EOR &99
- TAX
- LDA &4B,Y
- EOR &9A
- STA &47,Y
- STX &4B,Y
-
-.l_5486
-
- RTS
-
-.l_5487
-
- STX view_dirn
- JSR l_54c8
- JSR l_54aa
- JMP l_35b1
-
-.l_5493
-
- LDA #&00
- LDY &87
- BNE l_5487
- CPX view_dirn
- BEQ l_5486
- STX view_dirn
- JSR l_54c8
- JSR l_1a05
- JSR l_35d8
-
-.l_54aa
-
- LDY view_dirn
- LDA cmdr_laser,Y
- BEQ l_5486
- LDA #&80
- STA &73
- LDA #&48
- STA &74
- LDA #&14
- STA &75
- JSR l_2d36
- LDA #&0A
- STA &75
- JMP l_2d36
-
-\ a.dcode_3
-
-.l_54c8
-
- STA &87
-
-.l_54ca
-
- JSR vdu_80
- JSR l_360a
- STA &0343
- STA &034A
- STA &034B
- LDX #&60
-
-.l_54dc
-
- JSR l_42a1
- INX
- CPX #&78
- BNE l_54dc
- LDX &2F
- BEQ l_54eb
- JSR l_30ac
-
-.l_54eb
-
- LDY #&01
- STY YC
- LDA &87
- BNE l_5507
- LDY #&0B
- STY XC
- LDA view_dirn
- ORA #&60
- JSR l_339a
- JSR l_3142
- LDA #&AF
- JSR l_339a
-
-.l_5507
-
- LDX #&00
- STX &34
- STX &35
- STX vdu_stat
- DEX
- STX &36
- JSR l_1868
- LDA #&02
- STA &34
- STA &36
- JSR l_551e
-
-.l_551e
-
- JSR l_5521
-
-.l_5521
-
- LDA #&00
- STA &35
- LDA #&BF
- STA &37
- DEC &34
- DEC &36
- JMP l_16c4
-
-.l_5530
-
- JSR l_55f7
- DEY
- BNE l_5530
- RTS
-
-.l_5537
-
- LDA #&14
- STA YC
- LDA #&75
- STA ptr+&01
- LDA #&07
- STA ptr
- JSR l_2b60
- LDA #&00
- JSR l_5550
- INC ptr+&01
- INY
- STY XC
-
-.l_5550
-
- LDY #&E9
-
-.l_5552
-
- STA (ptr),Y
- DEY
- BNE l_5552
-
-.l_5557
-
- RTS
+INCLUDE "library/common/main/subroutine/plut-pu1.asm"
+INCLUDE "library/common/main/subroutine/look1.asm"
+INCLUDE "library/common/main/subroutine/sight.asm"
+INCLUDE "library/common/main/subroutine/tt66.asm"
+INCLUDE "library/common/main/subroutine/ttx66-ttx662.asm"
+INCLUDE "library/common/main/subroutine/delay.asm"
+INCLUDE "library/common/main/subroutine/clyns.asm"
+INCLUDE "library/original/main/subroutine/lyn.asm"
 
 .iff_xor
 
@@ -11558,27 +10861,29 @@ INCLUDE "library/common/main/subroutine/mv40.asm"
 
  LDA &65
  AND #&10
- BEQ l_5557
+ BEQ SC5
  LDA &8C
- BMI l_5557
- JSR iff_index
+ BMI SC5
+
+ JSR iff_index          \ AJD
  LDA iff_base,X
  STA &91
  LDA iff_xor,X
  STA &37
+
  LDA &47
  ORA &4A
  ORA &4D
  AND #&C0
- BNE l_5557
+ BNE SC5
  LDA &47
  CLC
  LDX &48
- BPL l_5581
+ BPL SC2
  EOR #&FF
  ADC #&01
 
-.l_5581
+.SC2
 
  ADC #&7B
  STA &34
@@ -11587,27 +10892,27 @@ INCLUDE "library/common/main/subroutine/mv40.asm"
  LSR A
  CLC
  LDX &4E
- BPL l_5591
+ BPL SC3
  EOR #&FF
  SEC
 
-.l_5591
+.SC3
 
  ADC #&23
  EOR #&FF
- STA ptr
+ STA SC
  LDA &4A
  LSR A
  CLC
  LDX &4B
- BMI l_55a2
+ BMI SCD6
  EOR #&FF
  SEC
 
-.l_55a2
+.SCD6
 
- ADC ptr
- BPL l_55b0
+ ADC SC
+ BPL ld246
  CMP #&C2
  BCS l_55ac
  LDA #&C2
@@ -11617,7 +10922,7 @@ INCLUDE "library/common/main/subroutine/mv40.asm"
  CMP #&F7
  BCC l_55b2
 
-.l_55b0
+.ld246
 
  LDA #&F6
 
@@ -11625,11 +10930,11 @@ INCLUDE "library/common/main/subroutine/mv40.asm"
 
  STA &35
  SEC
- SBC ptr
+ SBC SC
  \	PHP
  PHA
- JSR l_36a7
- LDA pixels+&11,X
+ JSR CPIX4
+ LDA TWOS+&11,X
  TAX
  AND &91	\ iff
  STA &34
@@ -11648,15 +10953,15 @@ INCLUDE "library/common/main/subroutine/mv40.asm"
  DEY
  BPL l_55d1
  LDY #&07
- DEC ptr+&01
+ DEC SC+&01
 
 .l_55d1
 
  LDA &34
  EOR &35	\ iff
  STA &34	\ iff
- EOR (ptr),Y
- STA (ptr),Y
+ EOR (SC),Y
+ STA (SC),Y
  DEX
  BNE l_55ca
 
@@ -11670,7 +10975,7 @@ INCLUDE "library/common/main/subroutine/mv40.asm"
  CPY #&08
  BNE l_55e4
  LDY #&00
- INC ptr+&01
+ INC SC+&01
 
 .l_55e4
 
@@ -11678,20 +10983,20 @@ INCLUDE "library/common/main/subroutine/mv40.asm"
  CPY #&08
  BNE l_55ed
  LDY #&00
- INC ptr+&01
+ INC SC+&01
 
 .l_55ed
 
  LDA &34
  EOR &35	\ iff
  STA &34	\ iff
- EOR (ptr),Y
- STA (ptr),Y
+ EOR (SC),Y
+ STA (SC),Y
  INX
  BNE l_55e4
  RTS
 
-.l_55f7
+.WSCAN
 
  LDA #&00
  STA &8B

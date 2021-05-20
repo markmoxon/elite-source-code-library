@@ -331,471 +331,22 @@ INCLUDE "library/common/main/variable/twfr.asm"
 INCLUDE "library/original/main/subroutine/px3.asm"
 INCLUDE "library/common/main/subroutine/pixel.asm"
 INCLUDE "library/common/main/subroutine/bline.asm"
-
-
-.l_1bbc
-
- EQUD &00E87648
-
-.writed_3
-
- LDA #&03
-
-.writed_byte
-
- LDY #&00
-
-.writed_word
-
- STA &80
- LDA #&00
- STA &40
- STA &41
- STY &42
- STX &43
-
-.l_1bd0
-
- LDX #&0B
- STX &D1
- PHP
- BCC l_1bdb
- DEC &D1
- DEC &80
-
-.l_1bdb
-
- LDA #&0B
- SEC
- STA &86
- SBC &80
- STA &80
- INC &80
- LDY #&00
- STY &83
- JMP l_1c2c
-
-.l_1bed
-
- ASL &43
- ROL &42
- ROL &41
- ROL &40
- ROL &83
- LDX #&03
-
-.l_1bf9
-
- LDA &40,X
- STA &34,X
- DEX
- BPL l_1bf9
- LDA &83
- STA &38
- ASL &43
- ROL &42
- ROL &41
- ROL &40
- ROL &83
- ASL &43
- ROL &42
- ROL &41
- ROL &40
- ROL &83
- CLC
- LDX #&03
-
-.l_1c1b
-
- LDA &40,X
- ADC &34,X
- STA &40,X
- DEX
- BPL l_1c1b
- LDA &38
- ADC &83
- STA &83
- LDY #&00
-
-.l_1c2c
-
- LDX #&03
- SEC
-
-.l_1c2f
-
- LDA &40,X
- SBC l_1bbc,X
- STA &34,X
- DEX
- BPL l_1c2f
- LDA &83
- SBC #&17
- STA &38
- BCC l_1c52
- LDX #&03
-
-.l_1c43
-
- LDA &34,X
- STA &40,X
- DEX
- BPL l_1c43
- LDA &38
- STA &83
- INY
- JMP l_1c2c
-
-.l_1c52
-
- TYA
- BNE l_1c61
- LDA &D1
- BEQ l_1c61
- DEC &80
- BPL l_1c6b
- LDA #&20
- BNE l_1c68
-
-.l_1c61
-
- LDY #&00
- STY &D1
- CLC
- ADC #&30
-
-.l_1c68
-
- JSR DASC
-
-.l_1c6b
-
- DEC &D1
- BPL l_1c71
- INC &D1
-
-.l_1c71
-
- DEC &86
- BMI l_1c82
- BNE l_1c7f
- PLP
- BCC l_1c7f
- LDA #&2E
- JSR DASC
-
-.l_1c7f
-
- JMP l_1bed
-
-.l_1c82
-
- RTS
-
-.DTW1
-
- EQUB &20
-
-.DTW2
-
- EQUB &FF
-
-.DTW3
-
- EQUB &00
-
-.DTW4
-
- EQUB &00
-
-.DTW5
-
- EQUB &00
-
-.DTW6
-
- EQUB &00
-
-.DTW8
-
- EQUB &FF
-
-.l_1c8a
-
- LDA #&0C
-
-.bit13
-
- EQUB &2C
-
-.MT16
-
- LDA #&41
-
-.DASC
-
- STX SC
- LDX #&FF
- STX DTW8
- CMP #&2E
- BEQ is_punct
- CMP #&3A
- BEQ is_punct
- CMP #&0A
- BEQ is_punct
- CMP #&0C
- BEQ is_punct
- CMP #&20
- BEQ is_punct
- INX
-
-.is_punct
-
- STX DTW2
- LDX SC
- BIT DTW4
- BMI format
- JMP CHPR
-
-.format
-
- CMP #&0C
- BEQ l_1cc9
- LDX DTW5
- STA &0E01,X
- LDX SC
- INC DTW5
- CLC
- RTS
-
-.l_1cc9
-
- TXA
- PHA
- TYA
- PHA
-
-.l_1ccd
-
- LDX DTW5
- BEQ l_1d4a
- CPX #&1F
- BCC l_1d47
- LSR SC+&01
-
-.l_1cd8
-
- LDA SC+&01
- BMI l_1ce0
- LDA #&40
- STA SC+&01
-
-.l_1ce0
-
- LDY #&1D
-
-.l_1ce2
-
- LDA &0E1F
- CMP #&20
- BEQ l_1d16
-
-.l_1ce9
-
- DEY
- BMI l_1cd8
- BEQ l_1cd8
- LDA &0E01,Y
- CMP #&20
- BNE l_1ce9
- ASL SC+&01
- BMI l_1ce9
- STY SC
- LDY DTW5
-
-.l_1cfe
-
- LDA &0E01,Y
- STA &0E02,Y
- DEY
- CPY SC
- BCS l_1cfe
- INC DTW5
-
-.l_1d0c
-
- CMP &0E01,Y
- BNE l_1ce2
- DEY
- BPL l_1d0c
- BMI l_1cd8
-
-.l_1d16
-
- LDX #&1E
- JSR l_1d3a
- LDA #&0C
- JSR CHPR
- LDA DTW5
- SBC #&1E
- STA DTW5
- TAX
- BEQ l_1d4a
- LDY #&00
- INX
-
-.l_1d2e
-
- LDA &0E20,Y
- STA &0E01,Y
- INY
- DEX
- BNE l_1d2e
- BEQ l_1ccd
-
-.l_1d3a
-
- LDY #&00
-
-.l_1d3c
-
- LDA &0E01,Y
- JSR CHPR
- INY
- DEX
- BNE l_1d3c
- RTS
-
-.l_1d47
-
- JSR l_1d3a
-
-.l_1d4a
-
- STX DTW5
- PLA
- TAY
- PLA
- TAX
- LDA #&0C
-
-.bit
-
- EQUB &2C
-
-.bell
-
- LDA #&07
-
-.CHPR
-
- STA &D2
- STY &034F
- STX &034E
-
-.l_1d5e
-
- LDY QQ17
- INY
- BEQ wrch_quit
- TAY
- BEQ wrch_quit
- BMI wrch_quit
- CMP #&07
- BEQ wrch_bell
- CMP #&20
- BCS wrch_hard
- CMP #&0A
- BEQ next_line
- LDX #&01
- STX XC
- CMP #&0D
- BEQ wrch_quit
-
-.next_line
-
- INC YC
- BNE wrch_quit
-
-.wrch_hard
-
- LDX #&BF
- ASL A
- ASL A
- BCC font_c0
- LDX #&C1
-
-.font_c0
-
- ASL A
- BCC font_cl
- INX
-
-.font_cl
-
- STA &1C
- STX &1D
- LDA XC
- LDX &03CF
- BEQ wrch_addr
- CPY #&20
- BNE wrch_addr
- CMP #&11
- BEQ wrch_quit
-
-.wrch_addr
-
- ASL A
- ASL A
- ASL A
- STA SC
- LDA YC
- CPY #&7F
- BNE not_del
- DEC XC
- ADC #&5E
- TAX
- LDY #&F8
- JSR l_3a03
- BEQ wrch_quit
-
-.not_del
-
- INC XC
- CMP #&18
- BCC wrch_or
- PHA
- JSR l_2539
- PLA
- LDA &D2
- JMP l_1d5e
-
-.wrch_or
-
- ORA #&60
- STA SC+&01
- LDY #&07
-
-.wrch_matrix
-
- LDA (&1C),Y
- ORA (SC),Y
- STA (SC),Y
- DEY
- BPL wrch_matrix
-
-.wrch_quit
-
- LDY &034F
- LDX &034E
- LDA &D2
- CLC
- RTS
-
-.wrch_bell
-
- JSR sound_20
- JMP wrch_quit
+INCLUDE "library/common/main/variable/tens.asm"
+INCLUDE "library/common/main/subroutine/pr2.asm"
+INCLUDE "library/common/main/subroutine/tt11.asm"
+INCLUDE "library/common/main/subroutine/bprnt.asm"
+INCLUDE "library/enhanced/main/variable/dtw1.asm"
+INCLUDE "library/enhanced/main/variable/dtw2.asm"
+INCLUDE "library/enhanced/main/variable/dtw3.asm"
+INCLUDE "library/enhanced/main/variable/dtw4.asm"
+INCLUDE "library/enhanced/main/variable/dtw5.asm"
+INCLUDE "library/enhanced/main/variable/dtw6.asm"
+INCLUDE "library/enhanced/main/variable/dtw8.asm"
+INCLUDE "library/enhanced/main/subroutine/feed.asm"
+INCLUDE "library/enhanced/main/subroutine/mt16.asm"
+INCLUDE "library/enhanced/main/subroutine/tt26.asm"
+INCLUDE "library/common/main/subroutine/bell.asm"
+INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
 
 .find_plant
 
@@ -1088,7 +639,7 @@ INCLUDE "library/common/main/subroutine/bline.asm"
 
  STA &87
 
-.l_2539
+.TTX66
 
  JSR MT2
  LDA #&80
@@ -1321,13 +872,13 @@ INCLUDE "library/common/main/subroutine/bline.asm"
  LDX data_tech
  INX
  CLC
- JSR writed_3
+ JSR pr2
  JSR next_par
  LDA #&C0
  JSR pre_colon
  SEC
  LDX data_popn
- JSR writed_3
+ JSR pr2
  LDA #&C6
  JSR tok_nxtpar
  LDA #&28
@@ -1962,7 +1513,7 @@ INCLUDE "library/common/main/subroutine/bline.asm"
 .writed_5
 
  LDA #&05
- JMP writed_word
+ JMP TT11
  \token_query:
  \	JSR TT27
  \	LDA #&3F
@@ -2046,7 +1597,7 @@ INCLUDE "library/common/main/subroutine/bline.asm"
 
 .beep_wait
 
- JSR sound_20
+ JSR BEEP
  LDY #&32
  JMP DELAY
 
@@ -2141,7 +1692,7 @@ INCLUDE "library/common/main/subroutine/bline.asm"
  CLC
  LDX GCNT
  INX
- JMP writed_3
+ JMP pr2
 
 .show_fuel
 
@@ -2149,7 +1700,7 @@ INCLUDE "library/common/main/subroutine/bline.asm"
  JSR pre_colon
  LDX cmdr_fuel
  SEC
- JSR writed_3
+ JSR pr2
  LDA #&C3
  JSR plf
  LDA #&77
@@ -2168,7 +1719,7 @@ INCLUDE "library/common/main/subroutine/bline.asm"
  LDA #&09
  STA &80
  SEC
- JSR l_1bd0
+ JSR BPRNT
  LDA #&E2
 
 .plf
@@ -3219,7 +2770,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
  LDA #&01
  STA &FE4E
- JMP l_1c8a
+ JMP FEED
 
 .word_0
 
@@ -3243,7 +2794,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDY #&00
  STY SC
 
-.l_3a03
+.ZES2
 
  LDA #&00
  STX SC+&01
@@ -3321,7 +2872,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDA #&48
  BNE sound
 
-.sound_20
+.BEEP
 
  LDA #&20
 
@@ -3388,7 +2939,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDA &0387,X
  EOR #&FF
  STA &0387,X
- JSR bell
+ JSR BELL
  JSR DELAY
  LDY &D1
 
@@ -5622,7 +5173,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDX &89
  INX
  CLC
- JSR writed_3
+ JSR pr2
  JSR price_spc
  CLC
  LDA &89

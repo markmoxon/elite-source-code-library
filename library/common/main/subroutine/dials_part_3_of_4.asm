@@ -23,7 +23,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ M
  BNE rT9                \ so the following code only runs every 4 iterations of
                         \ the main loop, otherwise we return from the subroutine
 
-ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
  LDA MCNT               \ Fetch the main loop counter and calculate MCNT mod 4,
  AND #3                 \ jumping to R5-1 if it is non-zero. R5-1 contains an
@@ -95,7 +95,7 @@ ENDIF
                         \ bank indicators, so we can calculate each of the four
                         \ energy banks' values and store them in XX12
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  LDA ENERGY             \ Set A = Q = ENERGY / 4, so they are both now in the
  LSR A                  \ range 0-63 (so that's a maximum of 16 in each of the
@@ -106,6 +106,12 @@ ELIF _ELECTRON_VERSION
  LDA ENERGY             \ Set A = Q = ENERGY / 2, so they are both now in the
  LSR A                  \ range 0-127 (so that's a maximum of 32 in each of the
                         \ banks, and a maximum of 31 in the top bank)
+
+ENDIF
+
+IF _ELITE_A_DOCKED
+
+ LDA #&3F               \ AJD
 
 ENDIF
 

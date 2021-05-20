@@ -210,7 +210,7 @@ EXEC% = &11E3
 
 .wrch_in
 
- JMP CHPR
+ JMP TT26
  EQUW IRQ1
 
 .brk_in
@@ -469,7 +469,7 @@ BRKV = P% - 2
  BNE l_1374
  LDA &0307
  BEQ l_1374
- LDA laser_t
+ LDA GNTMP
  CMP #&F2
  BCS l_1374
  LDX VIEW
@@ -660,7 +660,7 @@ BRKV = P% - 2
  BCC l_14ed
  LDA target
  BEQ l_149a
- JSR l_43ba
+ JSR BEEP
  LDX &84
  LDY #&0E
  JSR l_3807
@@ -823,22 +823,22 @@ BRKV = P% - 2
  LDA &8A
  AND #&07
  BNE l_15c2
- LDX energy
+ LDX ENERGY
  BPL l_156c
- LDX r_shield
+ LDX ASH
  JSR l_3626
- STX r_shield
- LDX f_shield
+ STX ASH
+ LDX FSH
  JSR l_3626
- STX f_shield
+ STX FSH
 
 .l_156c
 
  SEC
  LDA cmdr_eunit
- ADC energy
+ ADC ENERGY
  BCS l_1578
- STA energy
+ STA ENERGY
 
 .l_1578
 
@@ -894,7 +894,7 @@ BRKV = P% - 2
  CMP #&0A
  BNE l_15fd
  LDA #&32
- CMP energy
+ CMP ENERGY
  BCC l_15da
  ASL A
  JSR l_45c6
@@ -902,7 +902,7 @@ BRKV = P% - 2
 .l_15da
 
  LDY #&FF
- STY altitude
+ STY ALTIT
  INY
  JSR m
  BNE l_1648
@@ -913,7 +913,7 @@ BRKV = P% - 2
  STA &82
  JSR l_47b8
  LDA &81
- STA altitude
+ STA ALTIT
  BNE l_1648
 
 .l_15fa
@@ -934,7 +934,7 @@ BRKV = P% - 2
  CMP #&14
  BNE l_1648
  LDA #&1E
- STA cabin_t
+ STA CABTMP
  LDA &0320
  BNE l_1648
  LDY #&25
@@ -943,7 +943,7 @@ BRKV = P% - 2
  JSR MAS3
  EOR #&FF
  ADC #&1E
- STA cabin_t
+ STA CABTMP
  BCS l_15fa
  CMP #&E0
  BCC l_1648
@@ -951,14 +951,14 @@ BRKV = P% - 2
  BEQ l_1648
  LDA &7F
  LSR A
- ADC cmdr_fuel
+ ADC QQ14
  CMP new_range
  BCC l_1640
  LDA new_range
 
 .l_1640
 
- STA cmdr_fuel
+ STA QQ14
  LDA #&A0
 
 .l_1645
@@ -1085,7 +1085,6 @@ INCLUDE "library/common/main/subroutine/mas2.asm"
 INCLUDE "library/common/main/subroutine/mas3.asm"
 INCLUDE "library/common/main/subroutine/status.asm"
 
-
 .plf2
 
  JSR plf
@@ -1093,495 +1092,25 @@ INCLUDE "library/common/main/subroutine/status.asm"
  STX XC
  RTS
 
-.MVT3
-
- LDA &43
- STA &83
- AND #&80
- STA &D1
- EOR &48,X
- BMI l_1d70
- LDA &41
- CLC
- ADC &46,X
- STA &41
- LDA &42
- ADC &47,X
- STA &42
- LDA &43
- ADC &48,X
- AND #&7F
- ORA &D1
- STA &43
- RTS
-
-.l_1d70
-
- LDA &83
- AND #&7F
- STA &83
- LDA &46,X
- SEC
- SBC &41
- STA &41
- LDA &47,X
- SBC &42
- STA &42
- LDA &48,X
- AND #&7F
- SBC &83
- ORA #&80
- EOR &D1
- STA &43
- BCS l_1da7
- LDA #&01
- SBC &41
- STA &41
- LDA #&00
- SBC &42
- STA &42
- LDA #&00
- SBC &43
- AND #&7F
- ORA &D1
- STA &43
-
-.l_1da7
-
- RTS
-
-.MVS5
-
- LDA &47,X
- AND #&7F
- LSR A
- STA &D1
- LDA &46,X
- SEC
- SBC &D1
- STA &82
- LDA &47,X
- SBC #&00
- STA &83
- LDA &46,Y
- STA &1B
- LDA &47,Y
- AND #&80
- STA &D1
- LDA &47,Y
- AND #&7F
- LSR A
- ROR &1B
- LSR A
- ROR &1B
- LSR A
- ROR &1B
- LSR A
- ROR &1B
- ORA &D1
- EOR &9A
- STX &81
- JSR ADD
- STA &41
- STX &40
- LDX &81
- LDA &47,Y
- AND #&7F
- LSR A
- STA &D1
- LDA &46,Y
- SEC
- SBC &D1
- STA &82
- LDA &47,Y
- SBC #&00
- STA &83
- LDA &46,X
- STA &1B
- LDA &47,X
- AND #&80
- STA &D1
- LDA &47,X
- AND #&7F
- LSR A
- ROR &1B
- LSR A
- ROR &1B
- LSR A
- ROR &1B
- LSR A
- ROR &1B
- ORA &D1
- EOR #&80
- EOR &9A
- STX &81
- JSR ADD
- STA &47,Y
- STX &46,Y
- LDX &81
- LDA &40
- STA &46,X
- LDA &41
- STA &47,X
- RTS
-
-.l_1e34
-
- EQUD &00E87648
+INCLUDE "library/common/main/subroutine/mvt3.asm"
+INCLUDE "library/common/main/subroutine/mvs5.asm"
+INCLUDE "library/common/main/variable/tens.asm"
 
 .c_1e38
 
  CLC
 
-.l_1e38
-
- LDA #&03
-
-.l_1e3a
-
- LDY #&00
-
-.l_1e3c
-
- STA &80
- LDA #&00
- STA &40
- STA &41
- STY &42
- STX &43
-
-.l_1e48
-
- LDX #&0B
- STX &D1
- PHP
- BCC l_1e53
- DEC &D1
- DEC &80
-
-.l_1e53
-
- LDA #&0B
- SEC
- STA &86
- SBC &80
- STA &80
- INC &80
- LDY #&00
- STY &83
- JMP l_1ea4
-
-.l_1e65
-
- ASL &43
- ROL &42
- ROL &41
- ROL &40
- ROL &83
- LDX #&03
-
-.l_1e71
-
- LDA &40,X
- STA &34,X
- DEX
- BPL l_1e71
- LDA &83
- STA &38
- ASL &43
- ROL &42
- ROL &41
- ROL &40
- ROL &83
- ASL &43
- ROL &42
- ROL &41
- ROL &40
- ROL &83
- CLC
- LDX #&03
-
-.l_1e93
-
- LDA &40,X
- ADC &34,X
- STA &40,X
- DEX
- BPL l_1e93
- LDA &38
- ADC &83
- STA &83
- LDY #&00
-
-.l_1ea4
-
- LDX #&03
- SEC
-
-.l_1ea7
-
- LDA &40,X
- SBC l_1e34,X
- STA &34,X
- DEX
- BPL l_1ea7
- LDA &83
- SBC #&17
- STA &38
- BCC l_1eca
- LDX #&03
-
-.l_1ebb
-
- LDA &34,X
- STA &40,X
- DEX
- BPL l_1ebb
- LDA &38
- STA &83
- INY
- JMP l_1ea4
-
-.l_1eca
-
- TYA
- BNE l_1ed9
- LDA &D1
- BEQ l_1ed9
- DEC &80
- BPL l_1ee3
- LDA #&20
- BNE l_1ee0
-
-.l_1ed9
-
- LDY #&00
- STY &D1
- CLC
- ADC #&30
-
-.l_1ee0
-
- JSR CHPR
-
-.l_1ee3
-
- DEC &D1
- BPL l_1ee9
- INC &D1
-
-.l_1ee9
-
- DEC &86
- BMI l_1f5b
- BNE l_1ef7
- PLP
- BCC l_1ef7
- LDA #&2E
- JSR CHPR
-
-.l_1ef7
-
- JMP l_1e65
-
-.l_1efa
-
- LDA #&07
-
-.CHPR
-
- STA &D2
- STY &034F
- STX &034E
- LDY QQ17
- CPY #&FF
- BEQ l_1f52
- CMP #&07
- BEQ l_1f5c
- CMP #&20
- BCS l_1f1e
- CMP #&0A
- BEQ l_1f1a
- LDX #&01
- STX XC
-
-.l_1f1a
-
- INC YC
- BNE l_1f52
-
-.l_1f1e
-
- LDX #&BF
- ASL A
- ASL A
- BCC l_1f26
- LDX #&C1
-
-.l_1f26
-
- ASL A
- BCC l_1f2a
- INX
-
-.l_1f2a
-
- STA font
- STX font+&01
- LDA XC
- ASL A
- ASL A
- ASL A
- STA SC
- INC XC
- LDA YC
- CMP #&18
- BCC l_1f43
- JSR TT66
- JMP l_1f52
-
-.l_1f43
-
- ORA #&60
-
-.l_1f45
-
- STA SC+&01
- LDY #&07
-
-.l_1f49
-
- LDA (font),Y
- EOR (SC),Y
- STA (SC),Y
- DEY
- BPL l_1f49
-
-.l_1f52
-
- LDY &034F
- LDX &034E
- LDA &D2
- CLC
-
-.l_1f5b
-
- RTS
-
-.l_1f5c
-
- JSR l_43ba
- JMP l_1f52
-
-.l_1f62
-
- LDA #&D0
- STA SC
- LDA #&78
- STA SC+&01
- JSR l_2026
- STX &41
- STA &40
- LDA #&0E
- STA &06
- LDA &7D
- JSR l_2039
- LDA #&00
- STA &82
- STA &1B
- LDA #&08
- STA &83
- LDA &31
- LSR A
- LSR A
- ORA &32
- EOR #&80
- JSR ADD
- JSR l_208d
- LDA &2A
- LDX &2B
- BEQ l_1f9a
- SBC #&01
-
-.l_1f9a
-
- JSR ADD
- JSR l_208d
- LDA &8A
- AND #&03
- BNE l_1f5b
- LDY #&00
- JSR l_2026
- STX &40
- STA &41
- LDX #&03
- STX &06
-
-.l_1fb3
-
- STY &3A,X
- DEX
- BPL l_1fb3
- LDX #&03
- LDA energy
- LSR A
- LSR A
- STA &81
-
-.l_1fc1
-
- SEC
- SBC #&10
- BCC l_1fd3
- STA &81
- LDA #&10
- STA &3A,X
- LDA &81
- DEX
- BPL l_1fc1
- BMI l_1fd7
-
-.l_1fd3
-
- LDA &81
- STA &3A,X
-
-.l_1fd7
-
- LDA &3A,Y
- STY &1B
- JSR l_203a
- LDY &1B
- INY
- CPY #&04
- BNE l_1fd7
- LDA #&78
- STA SC+&01
- LDA #&10
- STA SC
- LDA f_shield
- JSR l_2036
- LDA r_shield
- JSR l_2036
- LDA cmdr_fuel
- JSR l_2038
- JSR l_2026
- STX &41
- STA &40
- LDX #&0B
- STX &06
- LDA cabin_t
- JSR l_2036
- LDA laser_t
- JSR l_2036
- LDA #&F0
- STA &06
- STA &41
- LDA altitude
- JSR l_2036
- JMP l_3634
-
-.l_2026
+INCLUDE "library/common/main/subroutine/pr2.asm"
+INCLUDE "library/common/main/subroutine/tt11.asm"
+INCLUDE "library/common/main/subroutine/bprnt.asm"
+INCLUDE "library/common/main/subroutine/bell.asm"
+INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
+INCLUDE "library/common/main/subroutine/dials_part_1_of_4.asm"
+INCLUDE "library/common/main/subroutine/dials_part_2_of_4.asm"
+INCLUDE "library/common/main/subroutine/dials_part_3_of_4.asm"
+INCLUDE "library/common/main/subroutine/dials_part_4_of_4.asm"
+
+.PZW
 
  LDX #&F0
  LDA &8A
@@ -1596,7 +1125,7 @@ INCLUDE "library/common/main/subroutine/status.asm"
  LDA #&0F
  RTS
 
-.l_2036
+.DILX
 
  LSR A
  LSR A
@@ -1609,7 +1138,7 @@ INCLUDE "library/common/main/subroutine/status.asm"
 
  LSR A
 
-.l_203a
+.DIL
 
  STA &81
  LDX #&FF
@@ -1679,7 +1208,7 @@ INCLUDE "library/common/main/subroutine/status.asm"
  INC SC+&01
  RTS
 
-.l_208d
+.DIL2
 
  LDY #&01
  STA &81
@@ -1753,7 +1282,7 @@ INCLUDE "library/common/main/subroutine/status.asm"
  STA cmdr_escape
  INC new_hold	\**
  LDA new_range
- STA cmdr_fuel
+ STA QQ14
  JSR l_3d68
  JSR TT111
  JSR l_309f
@@ -3562,9 +3091,9 @@ INCLUDE "library/common/main/subroutine/status.asm"
  AND #&07
  ADC #&7C
  STA &0FCE
- LDA laser_t
+ LDA GNTMP
  ADC #&08
- STA laser_t
+ STA GNTMP
  JSR l_3629
 
 .l_2aa1
@@ -3761,7 +3290,7 @@ INCLUDE "library/common/main/subroutine/status.asm"
  JSR l_3395
  SEC
  LDX data_popn
- JSR l_1e38
+ JSR pr2
  LDA #&C6
  JSR l_2b57
  LDA #&28
@@ -3844,9 +3373,9 @@ INCLUDE "library/common/main/subroutine/status.asm"
  JSR l_30b4
  JSR TT162
  LDA #&6B
- JSR CHPR
+ JSR TT26
  LDA #&6D
- JMP CHPR
+ JMP TT26
 
 .l_2c78
 
@@ -4019,7 +3548,7 @@ INCLUDE "library/common/main/subroutine/status.asm"
  LDA #&10
  STA &75
  JSR TT15
- LDA cmdr_fuel
+ LDA QQ14
  STA &40
  JMP l_2dc5
 
@@ -4027,7 +3556,7 @@ INCLUDE "library/common/main/subroutine/status.asm"
 
  LDA &87
  BMI l_2d8a
- LDA cmdr_fuel
+ LDA QQ14
  LSR A
  LSR A
  STA &40
@@ -4468,7 +3997,7 @@ INCLUDE "library/common/main/subroutine/status.asm"
  JSR TT27
  LDA hype_dist+&01
  BNE l_30b9
- LDA cmdr_fuel
+ LDA QQ14
  CMP hype_dist
  BCC l_30b9
  LDA #&2D
@@ -4544,7 +4073,7 @@ INCLUDE "library/common/main/subroutine/status.asm"
 .l_30b4
 
  LDA #&05
- JMP l_1e3c
+ JMP TT11
 
 .l_30b9
 
@@ -4603,7 +4132,7 @@ INCLUDE "library/common/main/subroutine/status.asm"
  STX &03AB
  CLC
  BEQ l_312b
- JSR l_1e3a
+ JSR pr2+2
  JMP l_3135
 
 .l_312b
@@ -4634,18 +4163,18 @@ INCLUDE "library/common/main/subroutine/status.asm"
 .l_3147
 
  LDA #&74
- JSR CHPR
+ JSR TT26
  BCC TT162
 
 .l_314e
 
  LDA #&6B
- JSR CHPR
+ JSR TT26
 
 .l_3153
 
  LDA #&67
- JMP CHPR
+ JMP TT26
 
 .l_3158
 
@@ -4806,10 +4335,10 @@ INCLUDE "library/common/main/subroutine/status.asm"
 
 .l_3254
 
- LDA cmdr_fuel
+ LDA QQ14
  SEC
  SBC hype_dist
- STA cmdr_fuel
+ STA QQ14
 
 .hyper_snap
 
@@ -4967,7 +4496,7 @@ INCLUDE "library/common/main/subroutine/status.asm"
  LDA &0350,Y
  CMP #&0D
  BEQ l_3347
- JSR CHPR
+ JSR TT26
  INY
  BNE l_333a
 
@@ -5004,9 +4533,9 @@ INCLUDE "library/common/main/subroutine/status.asm"
 
  LDA #&69
  JSR l_3395
- LDX cmdr_fuel
+ LDX QQ14
  SEC
- JSR l_1e38
+ JSR pr2
  LDA #&C3
  JSR plf
  LDA #&77
@@ -5025,7 +4554,7 @@ INCLUDE "library/common/main/subroutine/status.asm"
  LDA #&09
  STA &80
  SEC
- JSR l_1e48
+ JSR BPRNT
  LDA #&E2
 
 .plf
@@ -5106,7 +4635,7 @@ INCLUDE "library/common/main/subroutine/status.asm"
 
 .l_33e3
 
- JMP CHPR
+ JMP TT26
 
 .l_33e6
 
@@ -5149,7 +4678,7 @@ INCLUDE "library/common/main/subroutine/status.asm"
 
 .l_3410
 
- JMP CHPR
+ JMP TT26
 
 .l_3413
 
@@ -5576,10 +5105,10 @@ INCLUDE "library/common/main/subroutine/status.asm"
 
 .l_3629
 
- DEC energy
+ DEC ENERGY
  PHP
  BNE l_3632
- INC energy
+ INC ENERGY
 
 .l_3632
 
@@ -5612,7 +5141,7 @@ INCLUDE "library/common/main/subroutine/status.asm"
  INX
  RTS
 
-.l_3634
+.COMPAS
 
  JSR l_3694
  LDY #&25
@@ -5709,10 +5238,10 @@ INCLUDE "library/common/main/subroutine/status.asm"
  LDY #&08
  LDA (&20),Y
  BMI l_36fe
- LDA f_shield
+ LDA FSH
  SBC &D1
  BCC l_36f9
- STA f_shield
+ STA FSH
 
 .n_shok
 
@@ -5720,25 +5249,25 @@ INCLUDE "library/common/main/subroutine/status.asm"
 
 .l_36f9
 
- STX f_shield
+ STX FSH
  BCC l_370c
 
 .l_36fe
 
- LDA r_shield
+ LDA ASH
  SBC &D1
  BCC l_3709
- STA r_shield
+ STA ASH
  RTS
 
 .l_3709
 
- STX r_shield
+ STX ASH
 
 .l_370c
 
- ADC energy
- STA energy
+ ADC ENERGY
+ STA ENERGY
  BEQ l_3716
  BCS l_3719
 
@@ -5959,7 +5488,7 @@ INCLUDE "library/common/main/subroutine/status.asm"
  LDA #&7D
  STX font
  STY font+&01
- JMP l_1f45
+ JMP RREN
 
 .l_3832
 
@@ -7138,7 +6667,7 @@ INCLUDE "library/common/main/subroutine/status.asm"
 
 .l_3edb
 
- STA f_shield,X
+ STA FSH,X
  DEX
  BPL l_3edb
 
@@ -7176,7 +6705,7 @@ INCLUDE "library/common/main/subroutine/status.asm"
  STA &03B0
  LDA #&0C
  STA &03B1
- JSR l_1f62
+ JSR DIALS
  JSR l_44a4
 
 .l_3f26
@@ -7461,13 +6990,13 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
  LDX #&FF
  TXS
- LDX laser_t
+ LDX GNTMP
  BEQ l_40e6
- DEC laser_t
+ DEC GNTMP
 
 .l_40e6
 
- JSR l_1f62
+ JSR DIALS
  LDA &87
  BEQ l_40f8
  \	AND x_flag
@@ -7980,7 +7509,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDA #&18
  BNE l_43f3
 
-.l_43ba
+.BEEP
 
  LDA #&20
  BNE l_43f3
@@ -8142,7 +7671,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDA &0387,X
  EOR #&FF
  STA &0387,X
- JSR l_1efa
+ JSR BELL
  JSR DELAY
  LDY &D1
 

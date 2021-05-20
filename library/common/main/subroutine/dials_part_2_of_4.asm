@@ -8,7 +8,7 @@
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION \ Minor
 
  LDA #0                 \ Set R = P = 0 for the low bytes in the call to the ADD
  STA R                  \ routine below
@@ -21,6 +21,8 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_ELITE_A_DOCKED)
+
  LDA #8                 \ Set S = 8, which is the value of the centre of the
  STA S                  \ roll indicator
 
@@ -32,13 +34,16 @@ ENDIF
  EOR #%10000000         \ so it's now in the range -7 to +7, with a positive
                         \ roll angle alpha giving a negative value in A
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION \ Label
 
  JSR ADD                \ We now add A to S to give us a value in the range 1 to
 ELIF _MASTER_VERSION
 
  JSR ADD_DUPLICATE      \ We now add A to S to give us a value in the range 1 to
 ENDIF
+IF NOT(_ELITE_A_DOCKED)
                         \ 15, which we can pass to DIL2 to draw the vertical
                         \ bar on the indicator at this position. We use the ADD
                         \ routine like this:
@@ -51,16 +56,40 @@ ENDIF
                         \ and separate sign bits, which we want here rather than
                         \ the two's complement that ADC uses
 
+ELIF _ELITE_A_DOCKED
+
+ LDA #&10               \ AJD
+
+ENDIF
+
  JSR DIL2               \ Draw a vertical bar on the roll indicator at offset A
                         \ and increment SC to point to the next indicator (the
                         \ pitch indicator)
 
+IF NOT(_ELITE_A_DOCKED)
+
  LDA BETA               \ Fetch the pitch angle beta as a value between -8 and
                         \ +8
+
+ENDIF
+
+IF _ELITE_A_6502SP_PARA
+
+ LDX BET1               \ Fetch the magnitude of the pitch angle beta, and if it
+ BEQ P%+5               \ is 0 (i.e. we are not pitching), skip the next
+                        \ instruction
+
+ SEC                    \ AJD
+
+ELIF NOT(_ELITE_A_6502SP_PARA OR _ELITE_A_DOCKED)
 
  LDX BET1               \ Fetch the magnitude of the pitch angle beta, and if it
  BEQ P%+4               \ is 0 (i.e. we are not pitching), skip the next
                         \ instruction
+
+ENDIF
+
+IF NOT(_ELITE_A_DOCKED)
 
  SBC #1                 \ The pitch angle beta is non-zero, so set A = A - 1
                         \ (the C flag is set by the call to DIL2 above, so we
@@ -69,16 +98,24 @@ ENDIF
                         \ numbers with sign bits, rather than two's complement
                         \ numbers
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label
+ENDIF
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION \ Label
 
  JSR ADD                \ We now add A to S to give us a value in the range 1 to
 ELIF _MASTER_VERSION
 
  JSR ADD_DUPLICATE      \ We now add A to S to give us a value in the range 1 to
 ENDIF
+IF NOT(_ELITE_A_DOCKED)
                         \ 15, which we can pass to DIL2 to draw the vertical
                         \ bar on the indicator at this position (see the JSR ADD
                         \ above for more on this)
+
+ELIF _ELITE_A_DOCKED
+
+ LDA #&10               \ AJD
+
+ENDIF
 
  JSR DIL2               \ Draw a vertical bar on the pitch indicator at offset A
                         \ and increment SC to point to the next indicator (the

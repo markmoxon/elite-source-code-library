@@ -311,7 +311,7 @@ ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
                         \ characters, so jump down to rT9 to return from the
                         \ subroutine
 
-ELIF _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
+ELIF _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION
 
  BMI rT10               \ If the result is negative, we have printed all the
                         \ characters, so jump down to rT10 to return from the
@@ -337,7 +337,7 @@ ENDIF
 
  JMP TT35               \ Loop back to TT35 to print the next digit
 
-IF _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Label
+IF _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Label
 
 .rT10
 

@@ -31,6 +31,18 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
+IF _ELITE_A_DOCKED
+
+ LDA #255               \ Draw the forward shield indicator as fully charged,
+ JSR DILX               \ and increment SC to point to the next indicator (the
+                        \ aft shield)
+
+ LDA #255               \ Draw the aft shield indicator as fully charged, and
+ JSR DILX               \ increment SC to point to the next indicator (the fuel
+                        \ level)
+
+ELIF NOT(_ELITE_A_DOCKED)
+
  LDA FSH                \ Draw the forward shield indicator using a range of
  JSR DILX               \ 0-255, and increment SC to point to the next indicator
                         \ (the aft shield)
@@ -38,6 +50,8 @@ ENDIF
  LDA ASH                \ Draw the aft shield indicator using a range of 0-255,
  JSR DILX               \ and increment SC to point to the next indicator (the
                         \ fuel level)
+
+ENDIF
 
 IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
@@ -141,7 +155,7 @@ ELIF _ELECTRON_VERSION
  LDA ALTIT              \ Draw the altitude indicator using a range of 0-255
  JSR DILX
 
-ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
  STA K+1                \ Set K+1 (the colour we should show for low values) to
                         \ 240, or &F0 (dashboard colour 2, yellow/white), so the

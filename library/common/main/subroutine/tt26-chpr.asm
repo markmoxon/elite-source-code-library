@@ -2,7 +2,7 @@
 \
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Comment
 \       Name: TT26
-ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION
 \       Name: CHPR
 ENDIF
 \       Type: Subroutine
@@ -87,7 +87,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR 
 
 .TT26
 
-ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION
 
 .CHPR
 
@@ -116,7 +116,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Label
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA \ Label
 
 .RRNEW
 
@@ -135,7 +135,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ M
  BEQ RR4                \ RR4, which doesn't print anything, it just restores
                         \ the registers and returns from the subroutine
 
-ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA
 
  INY                    \ If QQ17 = 255 then printing is disabled, so jump to
  BEQ RR4                \ RR4, which doesn't print anything, it just restores
@@ -172,7 +172,7 @@ IF _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Master: See group A
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA \ Master: See group A
 
  TAY                    \ Set Y = the character to be printed
 
@@ -266,7 +266,7 @@ ENDIF
                         \ bit by setting XC = 1, and we then fall through into
                         \ the line feed routine that's used by control code 10
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Platform
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA \ Platform
 
  CMP #13                \ If this is control code 13 (carriage return) then jump
  BEQ RR4                \ RR4 to restore the registers and return from the
@@ -416,7 +416,7 @@ IF _6502SP_VERSION \ Platform
                         
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Platform
 
  LDX #&BF               \ Set X to point to the first font page in ROM minus 1,
                         \ which is &C0 - 1, or &BF
@@ -428,11 +428,15 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_ELITE_A_6502SP_PARA)
+
  ASL A                  \ If bit 6 of the character is clear (A is 32-63)
  ASL A                  \ then skip the following instruction
  BCC P%+4
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Platform
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Platform
 
  LDX #&C1               \ A is 64-126, so set X to point to page &C1
 
@@ -442,12 +446,15 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_ELITE_A_6502SP_PARA)
+
  ASL A                  \ If bit 5 of the character is clear (A is 64-95)
  BCC P%+3               \ then skip the following instruction
 
  INX                    \ Increment X
+ENDIF
                         \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Comment
                         \ By this point, we started with X = &BF, and then
                         \ we did the following:
                         \
@@ -464,6 +471,8 @@ ELIF _6502SP_VERSION
                         \   If A = 96-126:  X = FONT%+1 then INX  so X = FONT%+2
                         \
 ENDIF
+IF NOT(_ELITE_A_6502SP_PARA)
+
                         \ In other words, X points to the relevant page. But
                         \ what about the value of A? That gets shifted to the
                         \ left three times during the above code, which
@@ -481,8 +490,9 @@ ENDIF
                         \ (the page) of the address of the definition that we
                         \ want, while A contains the low byte (the offset into
                         \ the page) of the address
+ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Minor
 
  STA P+1                \ Store the address of this character's definition in
  STX P+2                \ P(2 1)
@@ -539,10 +549,14 @@ IF _ELECTRON_VERSION \ Screen
 
 ENDIF
 
+IF NOT(_ELITE_A_6502SP_PARA)
+
  LDA XC                 \ Fetch XC, the x-coordinate (column) of the text cursor
                         \ into A
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Enhanced: The standard disc catalogue is just too wide to fit into Elite's special square screen mode, so when printing the catalogue in the enhanced versions, a space is removed from column 17, which is always a blank column in the middle of the catalogue
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Enhanced: The standard disc catalogue is just too wide to fit into Elite's special square screen mode, so when printing the catalogue in the enhanced versions, a space is removed from column 17, which is always a blank column in the middle of the catalogue
 
  LDX CATF               \ If CATF = 0, jump to RR5, otherwise we are printing a
  BEQ RR5                \ disc catalogue
@@ -614,7 +628,7 @@ ENDIF
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Screen
 
  ASL A                  \ Multiply A by 8, and store in SC. As each character is
  ASL A                  \ 8 pixels wide, and the special screen mode Elite uses
@@ -666,7 +680,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _MASTER_VERSION \ Platform
 
  CPY #127               \ If the character number (which is in Y) <> 127, then
  BNE RR2                \ skip to RR2 to print that character, otherwise this is
@@ -681,7 +695,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR 
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Platform
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Platform
 
  ADC #&5E               \ A contains YC (from above) and the C flag is set (from
  TAX                    \ the CPY #127 above), so these instructions do this:
@@ -733,7 +747,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Platform
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Platform
 
  LDY #&F8               \ Set Y = &F8, so the following call to ZES2 will count
                         \ Y upwards from &F8 to &FF
@@ -783,7 +797,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _MASTER_VERSION \ Platform
 
  BEQ RR4                \ We are done deleting, so restore the registers and
                         \ return from the subroutine (this BNE is effectively
@@ -847,7 +861,7 @@ ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
  JMP RR4                \ And restore the registers and return from the
                         \ subroutine
 
-ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA
 
  PHA                    \ Store A on the stack so we can retrieve it below
 
@@ -930,13 +944,29 @@ ENDIF
 
 .RR3
 
+IF _ELITE_A_6502SP_PARA
+
+ LDA #&8E               \ AJD
+ JSR tube_write
+ LDA XC
+ JSR tube_write
+ LDA YC
+ JSR tube_write
+ TYA
+ JSR tube_write
+ INC XC
+
+ELIF NOT(_ELITE_A_6502SP_PARA)
+
                         \ A contains the value of YC - the screen row where we
                         \ want to print this character - so now we need to
                         \ convert this into a screen address, so we can poke
                         \ the character data to the right place in screen
                         \ memory
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Screen
 
  ORA #&60               \ We already stored the least significant byte
                         \ of this screen address in SC above (see the STA SC
@@ -983,11 +1013,15 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_ELITE_A_6502SP_PARA)
+
 .RREN
 
  STA SC+1               \ Store the page number of the destination screen
                         \ location in SC+1, so SC now points to the full screen
                         \ location where this character should go
+
+ENDIF
 
 IF _6502SP_VERSION \ Screen
 
@@ -1015,13 +1049,17 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_ELITE_A_6502SP_PARA)
+
  LDY #7                 \ We want to print the 8 bytes of character data to the
                         \ screen (one byte per row), so set up a counter in Y
                         \ to count these bytes
 
 .RRL1
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Screen
 
  LDA (P+1),Y            \ The character definition is at P(2 1) - we set this up
                         \ above - so load the Y-th byte from P(2 1), which will
@@ -1095,15 +1133,19 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR 
                         \ onto a white background results in a black pixel, but
                         \ that's a small price to pay for easily erasable text
 
-ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA
 
  ORA (SC),Y             \ OR this value with the current contents of screen
                         \ memory, so the pixels we want to draw are set
 
 ENDIF
 
+IF NOT(_ELITE_A_6502SP_PARA)
+
  STA (SC),Y             \ Store the Y-th byte at the screen address for this
                         \ character location
+
+ENDIF
 
 IF _6502SP_VERSION \ Screen
 
@@ -1167,9 +1209,13 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_ELITE_A_6502SP_PARA)
+
  DEY                    \ Decrement the loop counter
 
  BPL RRL1               \ Loop back for the next byte to print to the screen
+
+ENDIF
 
 .RR4
 

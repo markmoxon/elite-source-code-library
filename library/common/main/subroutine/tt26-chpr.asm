@@ -452,8 +452,8 @@ IF NOT(_ELITE_A_6502SP_PARA)
  BCC P%+3               \ then skip the following instruction
 
  INX                    \ Increment X
-ENDIF
                         \
+ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Comment
                         \ By this point, we started with X = &BF, and then
                         \ we did the following:
@@ -472,7 +472,6 @@ ELIF _6502SP_VERSION
                         \
 ENDIF
 IF NOT(_ELITE_A_6502SP_PARA)
-
                         \ In other words, X points to the relevant page. But
                         \ what about the value of A? That gets shifted to the
                         \ left three times during the above code, which

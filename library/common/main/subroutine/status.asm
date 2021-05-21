@@ -126,7 +126,7 @@ ENDIF
 
 IF _ELITE_A_6502SP_PARA
 
- BIT dockedp               \ AJD
+ BIT dockedp            \ AJD
  BPL stat_dock
 
 ENDIF

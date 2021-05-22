@@ -73,14 +73,59 @@ ENDIF
 
                         \ If we call DIL, we leave A alone, so A is 0-15
 
+IF _ELITE_A_6502SP_PARA
+
+ PHA                    \ AJD
+ LDA #&86
+ JSR tube_write
+ PLA
+ JSR tube_write
+
+ELIF NOT(_ELITE_A_6502SP_PARA)
+
  STA Q                  \ Store the indicator value in Q, now reduced to 0-15,
                         \ which is the length of the indicator to draw in pixels
+
+ENDIF
 
  LDX #&FF               \ Set R = &FF, to use as a mask for drawing each row of
  STX R                  \ each character block of the bar, starting with a full
                         \ character's width of 4 pixels
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: As the dashboard in the Electron version is monochrome, the dashboard indicators do not change colour when reaching their threshold
+IF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
+
+ CMP T1                 \ If A >= T1 then we have passed the threshold where we
+ BCS DL30               \ change bar colour, so jump to DL30 to set A to the
+                        \ "high value" colour
+
+ LDA K+1                \ Set A to K+1, the "low value" colour to use
+
+ EQUB &2C               \ AJD
+
+.DL30
+
+ LDA K                  \ Set A to K, the "high value" colour to use
+
+.DL31
+
+ENDIF
+
+IF _ELITE_A_DOCKED
+
+ STA COL                \ Store the colour of the indicator in COL
+
+ELIF _ELITE_A_6502SP_PARA
+
+ JSR tube_write
+ LDA SC
+ JSR tube_write
+ LDA SC+1
+ JSR tube_write
+ INC SC+1
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: As the dashboard in the Electron version is monochrome, the dashboard indicators do not change colour when reaching their threshold
 
  CMP T1                 \ If A >= T1 then we have passed the threshold where we
  BCS DL30               \ change bar colour, so jump to DL30 to set A to the
@@ -101,11 +146,15 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
 
 ENDIF
 
+IF NOT(_ELITE_A_6502SP_PARA)
+
  LDY #2                 \ We want to start drawing the indicator on the third
                         \ line in this character row, so set Y to point to that
                         \ row's offset
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED \ Screen
 
  LDX #3                 \ Set up a counter in X for the width of the indicator,
                         \ which is 4 characters (each of which is 4 pixels wide,
@@ -119,11 +168,15 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_ELITE_A_6502SP_PARA)
+
 .DL1
 
  LDA Q                  \ Fetch the indicator value (0-15) from Q into A
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED \ Screen
 
  CMP #4                 \ If Q < 4, then we need to draw the end cap of the
  BCC DL2                \ indicator, which is less than a full character's
@@ -155,6 +208,8 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_ELITE_A_6502SP_PARA)
+
  LDA R                  \ Fetch the shape of the indicator row that we need to
                         \ display from R, so we can use it as a mask when
                         \ painting the indicator. It will be &FF at this point
@@ -162,7 +217,9 @@ ENDIF
 
 .DL5
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED \ Comment
 
  AND COL                \ Fetch the 4-pixel mode 5 colour byte from COL, and
                         \ only keep pixels that have their equivalent bits set
@@ -176,6 +233,8 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_ELITE_A_6502SP_PARA)
+
  STA (SC),Y             \ Draw the shape of the mask on pixel row Y of the
                         \ character block we are processing
 
@@ -185,7 +244,9 @@ ENDIF
  INY                    \ And draw the third pixel row, incrementing Y
  STA (SC),Y
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  TYA                    \ Add 6 to Y, so Y is now 8 more than when we started
  CLC                    \ this loop iteration, so Y now points to the address
@@ -208,6 +269,8 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
+IF NOT(_ELITE_A_6502SP_PARA)
+
  DEX                    \ Decrement the loop counter for the next character
                         \ block along in the indicator
 
@@ -220,7 +283,9 @@ ENDIF
 
 .DL2
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED \ Screen
 
  EOR #3                 \ If we get here then we are drawing the indicator's
  STA Q                  \ end cap, so Q is < 4, and this EOR flips the bits, so
@@ -252,6 +317,8 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_ELITE_A_6502SP_PARA)
+
  LDA R                  \ Fetch the current mask from R, which will be &FF at
                         \ this point, so we need to turn Q of the columns on the
                         \ right side of the mask to black to get the correct end
@@ -259,7 +326,9 @@ ENDIF
 
 .DL3
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED \ Screen
 
  ASL A                  \ Shift the mask left so bit 0 is cleared, and then
  AND #%11101111         \ clear bit 4, which has the effect of shifting zeroes
@@ -281,6 +350,8 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_ELITE_A_6502SP_PARA)
+
  DEC Q                  \ Decrement the counter for the number of columns to
                         \ blank out
 
@@ -291,7 +362,9 @@ ENDIF
  PHA                    \ Store the mask byte on the stack while we use the
                         \ accumulator for a bit
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Minor
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Minor
 
  LDA #0                 \ Change the mask so no bits are set, so the characters
  STA R                  \ after the one we're about to draw will be all blank
@@ -302,6 +375,8 @@ ELIF _MASTER_VERSION
                         \ after the one we're about to draw will be all blank
 
 ENDIF
+
+IF NOT(_ELITE_A_6502SP_PARA)
 
  LDA #99                \ Set Q to a high number (99, why not) so we will keep
  STA Q                  \ drawing blank characters until we reach the end of
@@ -314,7 +389,9 @@ ENDIF
 
 .DL6
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED \ Screen
 
  INC SC+1               \ Increment the high byte of SC to point to the next
                         \ character row on-screen (as each row takes up exactly

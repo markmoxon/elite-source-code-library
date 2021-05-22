@@ -44,9 +44,13 @@ ENDIF
 
 .HFS2
 
+IF NOT(_ELITE_A_VERSION)
+
  STA STP                \ Store the step size in A
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  JSR TTX66              \ Clear the screen and draw a white border
 
@@ -64,7 +68,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Advanced: The original versions of Elite draw 16 concentric rings for hyperspace, while the advanced versions draw 8
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Advanced: The original versions of Elite draw 16 concentric rings for hyperspace, while the advanced versions draw 8
 
  JSR HFS1               \ Call HFS1 below and then fall through into the same
                         \ routine, so this effectively runs HFS1 twice, and as

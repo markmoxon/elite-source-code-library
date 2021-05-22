@@ -56,13 +56,17 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_ELITE_A_DOCKED)
+
  LDA MCNT               \ A will be non-zero for 8 out of every 16 main loop
  AND #%00001000         \ counts, when bit 4 is set, so this is what we use to
                         \ flash the "danger" colour
 
  AND FLH                \ A will be zeroed if flashing colours are disabled
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA \ Screen
 
  BEQ P%+4               \ If A is zero, skip to the LDA instruction below
 
@@ -87,6 +91,12 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ subroutine
 
  LDA #RED2              \ Set A to dashboard colour 1 (red)
+
+ENDIF
+
+IF _ELITE_A_DOCKED
+
+ LDA #&0F               \ Set A to dashboard colour 1 (red)
 
 ENDIF
 

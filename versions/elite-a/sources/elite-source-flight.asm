@@ -238,7 +238,7 @@ BRKV = P% - 2
 
 .l_1220
 
- JSR l_3ee1
+ JSR RES2
  \	JMP l_11f1
  BMI l_11f1
 
@@ -404,14 +404,14 @@ BRKV = P% - 2
  \	LDA #&03
  \	JSR TT66
  \	JSR l_2623
- \	JSR l_3ee1
+ \	JSR RES2
  \	STY &0341
  INC cmdr_bomb
  INC new_hold	\***
  \	JSR l_32c1
  JSR DORND
- STA data_homex	\QQ0
- STX data_homey	\QQ1
+ STA QQ9	\QQ0
+ STX QQ10	\QQ1
  JSR TT111
  JSR hyper_snap
 
@@ -434,9 +434,9 @@ BRKV = P% - 2
 .l_1301
 
  LDA &0309
- AND cmdr_escape
+ AND ESCP
  BEQ l_130c
- JMP l_20c1
+ JMP ESCAPE
 
 .l_130c
 
@@ -575,7 +575,7 @@ BRKV = P% - 2
  TAX
  JSR l_2aec
  BCS l_1464
- INC cmdr_cargo,X
+ INC QQ20,X
  TXA
  ADC #&D0
  JSR l_45c6
@@ -603,9 +603,9 @@ BRKV = P% - 2
  CMP #&50
  BCC l_1449
 
-.l_143e
+.GOIN
 
- JSR l_3ee1
+ JSR RES2
  LDA #&08
  JSR l_263d
  JMP run_tcode
@@ -712,7 +712,7 @@ BRKV = P% - 2
 
 .l_14ed
 
- JSR l_488c
+ JSR LL9
 
 .l_14f0
 
@@ -1109,184 +1109,11 @@ INCLUDE "library/common/main/subroutine/dials_part_1_of_4.asm"
 INCLUDE "library/common/main/subroutine/dials_part_2_of_4.asm"
 INCLUDE "library/common/main/subroutine/dials_part_3_of_4.asm"
 INCLUDE "library/common/main/subroutine/dials_part_4_of_4.asm"
+INCLUDE "library/common/main/subroutine/pzw.asm"
+INCLUDE "library/common/main/subroutine/dilx.asm"
+INCLUDE "library/common/main/subroutine/dil2.asm"
+INCLUDE "library/common/main/subroutine/escape.asm"
 
-.PZW
-
- LDX #&F0
- LDA &8A
- AND #&08
- AND f_flag
- BEQ l_2033
- TXA
- EQUB &2C
-
-.l_2033
-
- LDA #&0F
- RTS
-
-.DILX
-
- LSR A
- LSR A
-
-.l_2038
-
- LSR A
-
-.l_2039
-
- LSR A
-
-.DIL
-
- STA &81
- LDX #&FF
- STX &82
- CMP &06
- BCS l_2048
- LDA &41
- BNE l_204a
-
-.l_2048
-
- LDA &40
-
-.l_204a
-
- STA &91
- LDY #&02
- LDX #&03
-
-.l_2050
-
- LDA &81
- CMP #&04
- BCC l_2070
- SBC #&04
- STA &81
- LDA &82
-
-.l_205c
-
- AND &91
- STA (SC),Y
- INY
- STA (SC),Y
- INY
- STA (SC),Y
- TYA
- CLC
- ADC #&06
- TAY
- DEX
- BMI l_208a
- BPL l_2050
-
-.l_2070
-
- EOR #&03
- STA &81
- LDA &82
-
-.l_2076
-
- ASL A
- AND #&EF
- DEC &81
- BPL l_2076
- PHA
- LDA #&00
- STA &82
- LDA #&63
- STA &81
- PLA
- JMP l_205c
-
-.l_208a
-
- INC SC+&01
- RTS
-
-.DIL2
-
- LDY #&01
- STA &81
-
-.l_2091
-
- SEC
- LDA &81
- SBC #&04
- BCS l_20a6
- LDA #&FF
- LDX &81
- STA &81
- LDA TWOS+&10,X
- AND #&F0
- JMP l_20aa
-
-.l_20a6
-
- STA &81
- LDA #&00
-
-.l_20aa
-
- STA (SC),Y
- INY
- STA (SC),Y
- INY
- STA (SC),Y
- INY
- STA (SC),Y
- TYA
- CLC
- ADC #&05
- TAY
- CPY #&1E
- BCC l_2091
- INC SC+&01
- RTS
-
-.l_20c1
-
- JSR l_3ee1
- LDX #&03	\ escape capsule
- STX &8C
- JSR l_2508
- LDA #&10
- STA &61
- LDA #&C2
- STA &64
- LSR A
- STA &66
-
-.l_20dd
-
- JSR MVEIT
- JSR l_488c
- DEC &66
- BNE l_20dd
- JSR SCAN
- LDA #&00
- STA cmdr_cargo+&10
- LDX #&0C	\LDX #&10	\ save gold/plat/gems
-
-.l_20ee
-
- STA cmdr_cargo,X
- DEX
- BPL l_20ee
- STA FIST
- STA cmdr_escape
- INC new_hold	\**
- LDA new_range
- STA QQ14
- JSR l_3d68
- JSR TT111
- JSR l_309f
- JMP l_143e
 
 .l_2102
 
@@ -2011,7 +1838,7 @@ INCLUDE "library/common/main/subroutine/dials_part_4_of_4.asm"
  CLC
  RTS
 
-.l_2508
+.FRS1
 
  JSR l_3f26
  LDA #&1C
@@ -2040,7 +1867,7 @@ INCLUDE "library/common/main/subroutine/dials_part_4_of_4.asm"
 .l_252e
 
  LDX #&01
- JSR l_2508
+ JSR FRS1
  BCC l_2589
  LDX &45
  JSR ship_SC
@@ -2231,7 +2058,7 @@ INCLUDE "library/common/main/subroutine/dials_part_4_of_4.asm"
  STA &95
  JSR TTX66
 
-.l_2642
+.HFS1
 
  LDX #&80
  STX &D2
@@ -2263,7 +2090,7 @@ INCLUDE "library/common/main/subroutine/dials_part_4_of_4.asm"
 
  LDA #&01
  STA &6B
- JSR l_3b90
+ JSR CIRCLE2
  ASL &40
  BCS l_2678
  LDA &40
@@ -2535,22 +2362,9 @@ INCLUDE "library/common/main/subroutine/dials_part_4_of_4.asm"
  ORA &D1
  RTS
 
-.l_280b
-
- AND #&7F
-
-.SQUA2
-
- STA &1B
- TAX
- BNE l_2824
-
-.l_2812
-
- CLC
- STX &1B
- TXA
- RTS
+INCLUDE "library/common/main/subroutine/squa.asm"
+INCLUDE "library/common/main/subroutine/squa2.asm"
+INCLUDE "library/common/main/subroutine/mu1.asm"
 
 .MLU1
 
@@ -2565,9 +2379,9 @@ INCLUDE "library/common/main/subroutine/dials_part_4_of_4.asm"
 .l_2820
 
  LDX &81
- BEQ l_2812
+ BEQ MU1
 
-.l_2824
+.MU11
 
  DEX
  STX &D1
@@ -3136,11 +2950,11 @@ INCLUDE "library/common/main/subroutine/dials_part_4_of_4.asm"
 
  LDY #&0C
  SEC
- LDA cmdr_cargo+&10
+ LDA QQ20+&10
 
 .l_2af9
 
- ADC cmdr_cargo,Y
+ ADC QQ20,Y
  BCS n_cargo
  DEY
  BPL l_2af9
@@ -3152,7 +2966,7 @@ INCLUDE "library/common/main/subroutine/dials_part_4_of_4.asm"
 
 .l_2b04
 
- LDA cmdr_cargo,X
+ LDA QQ20,X
  ADC #&00
  RTS
 
@@ -3469,9 +3283,9 @@ INCLUDE "library/common/main/subroutine/dials_part_4_of_4.asm"
  LDX &84
  INX
  BNE l_2d09
- LDA data_homex
+ LDA QQ9
  STA &73
- LDA data_homey
+ LDA QQ10
  LSR A
  STA &74
  LDA #&04
@@ -3586,7 +3400,7 @@ INCLUDE "library/common/main/subroutine/dials_part_4_of_4.asm"
  STX &6B
  INX
  STX &95
- JMP l_3b90
+ JMP CIRCLE2
 
 .l_2dde
 
@@ -3595,7 +3409,7 @@ INCLUDE "library/common/main/subroutine/dials_part_4_of_4.asm"
 .l_2de0
 
  STY &03AD
- LDX cmdr_cargo,Y
+ LDX QQ20,Y
  BEQ l_2e0c
  TYA
  ASL A
@@ -3655,26 +3469,26 @@ INCLUDE "library/common/main/subroutine/dials_part_4_of_4.asm"
  JSR l_2e65
  PLA
  STA &76
- LDA data_homey
+ LDA QQ10
  JSR l_2e7b
  LDA &77
- STA data_homey
+ STA QQ10
  STA &74
  PLA
  STA &76
- LDA data_homex
+ LDA QQ9
  JSR l_2e7b
  LDA &77
- STA data_homex
+ STA QQ9
  STA &73
 
 .l_2e65
 
  LDA &87
  BMI l_2e8c
- LDA data_homex
+ LDA QQ9
  STA &73
- LDA data_homey
+ LDA QQ10
  LSR A
  STA &74
  LDA #&04
@@ -3705,7 +3519,7 @@ INCLUDE "library/common/main/subroutine/dials_part_4_of_4.asm"
 
 .l_2e8c
 
- LDA data_homex
+ LDA QQ9
  SEC
  SBC QQ0
  CMP #&26
@@ -3720,7 +3534,7 @@ INCLUDE "library/common/main/subroutine/dials_part_4_of_4.asm"
  CLC
  ADC #&68
  STA &73
- LDA data_homey
+ LDA QQ10
  SEC
  SBC QQ1
  CMP #&26
@@ -3873,7 +3687,7 @@ INCLUDE "library/common/main/subroutine/dials_part_4_of_4.asm"
 
  LDA &6F
  SEC
- SBC data_homex
+ SBC QQ9
  BCS l_2f8c
  EOR #&FF
  ADC #&01
@@ -3884,7 +3698,7 @@ INCLUDE "library/common/main/subroutine/dials_part_4_of_4.asm"
  STA &83
  LDA &6D
  SEC
- SBC data_homey
+ SBC QQ10
  BCS l_2f9b
  EOR #&FF
  ADC #&01
@@ -3920,9 +3734,9 @@ INCLUDE "library/common/main/subroutine/dials_part_4_of_4.asm"
  DEX
  BPL l_2fb7
  LDA &6D
- STA data_homey
+ STA QQ10
  LDA &6F
- STA data_homex
+ STA QQ9
  SEC
  SBC QQ0
  BCS l_2fd2
@@ -3935,7 +3749,7 @@ INCLUDE "library/common/main/subroutine/dials_part_4_of_4.asm"
  STA &41
  LDA &1B
  STA &40
- LDA data_homey
+ LDA QQ10
  SEC
  SBC QQ1
  BCS l_2fe8
@@ -4041,8 +3855,8 @@ INCLUDE "library/common/main/subroutine/dials_part_4_of_4.asm"
 .l_3084
 
  LDA #&60
- STA data_homex
- STA data_homey
+ STA QQ9
+ STA QQ10
  JSR l_3292
  JSR TT111
  LDX #&00
@@ -4051,12 +3865,15 @@ INCLUDE "library/common/main/subroutine/dials_part_4_of_4.asm"
  LDA #&74
  JSR l_45c6
 
-.l_309f
+.jmp
 
- LDA data_homex
+ LDA QQ9
  STA QQ0
- LDA data_homey
+ LDA QQ10
  STA QQ1
+
+.hy5
+
  RTS
 
 .ee3
@@ -4234,7 +4051,7 @@ INCLUDE "library/common/main/subroutine/dials_part_4_of_4.asm"
 
 .l_31ab
 
- JSR l_309f
+ JSR jmp
  LDX #&05
 
 .l_31b0
@@ -4313,7 +4130,7 @@ INCLUDE "library/common/main/subroutine/dials_part_4_of_4.asm"
  LDA #&03
  JSR TT66
  JSR l_2623
- JSR l_3ee1
+ JSR RES2
  STY &0341
 
 .l_3239
@@ -4356,7 +4173,7 @@ INCLUDE "library/common/main/subroutine/dials_part_4_of_4.asm"
  CMP #&FD
  BCS l_3226
  JSR l_31ab
- JSR l_3ee1
+ JSR RES2
  JSR l_3580
  JSR l_4255
  LDA &87
@@ -4372,7 +4189,7 @@ INCLUDE "library/common/main/subroutine/dials_part_4_of_4.asm"
  LDX &8E
  BEQ l_32c1
  JSR l_2636
- JSR l_3ee1
+ JSR RES2
  JSR TT111
  INC &4E
  JSR l_356d
@@ -4387,7 +4204,7 @@ INCLUDE "library/common/main/subroutine/dials_part_4_of_4.asm"
  STA FIST
  LDA #&FF
  STA &87
- JSR l_2642
+ JSR HFS1
 
 .l_32c1
 
@@ -6058,7 +5875,7 @@ INCLUDE "library/common/main/subroutine/dials_part_4_of_4.asm"
 
  STA &95
 
-.l_3b90
+.CIRCLE2
 
  LDX #&FF
  STX &92
@@ -6409,14 +6226,14 @@ INCLUDE "library/common/main/subroutine/dials_part_4_of_4.asm"
 
  RTS
 
-.l_3d68
+.ping
 
  LDX #&01
 
 .l_3d6a
 
  LDA QQ0,X
- STA data_homex,X
+ STA QQ9,X
  DEX
  BPL l_3d6a
  RTS
@@ -6671,7 +6488,7 @@ INCLUDE "library/common/main/subroutine/dials_part_4_of_4.asm"
  DEX
  BPL l_3edb
 
-.l_3ee1
+.RES2
 
  LDA #&12
  STA &03C3
@@ -7104,7 +6921,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  CMP #&36
  BNE l_notdist
  JSR l_2e65
- JSR l_3d68
+ JSR ping
  JMP l_2e65	\JSR l_2e65
 
 .l_4169
@@ -7130,11 +6947,11 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
 .l_41a6
 
- LDA cmdr_cargo+&03
+ LDA QQ20+&03
  CLC
- ADC cmdr_cargo+&06
+ ADC QQ20+&06
  ASL A
- ADC cmdr_cargo+&0A
+ ADC QQ20+&0A
  \	RTS
 
 .l_418a
@@ -7150,9 +6967,9 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  BEQ l_4169
  JSR l_2e65
  LDA cmdr_courx
- STA data_homex
+ STA QQ9
  LDA cmdr_coury
- STA data_homey
+ STA QQ10
  JSR l_2e65
 
 .l_418b
@@ -7195,7 +7012,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 .l_41c6
 
  JSR l_43b1
- JSR l_3ee1
+ JSR RES2
  ASL &7D
  ASL &7D
  LDX #&18
@@ -7389,12 +7206,12 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 .l_42f5
 
  LDA &34
- JSR l_280b
+ JSR SQUA
  STA &82
  LDA &1B
  STA &81
  LDA &35
- JSR l_280b
+ JSR SQUA
  \	STA &D1
  TAY
  LDA &1B
@@ -7405,7 +7222,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  ADC &82
  STA &82
  LDA &36
- JSR l_280b
+ JSR SQUA
  \	STA &D1
  TAY
  LDA &1B
@@ -7949,14 +7766,14 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  \	CPX #&16
  CPX #&18
  BCS l_45b4
- \	LDA cmdr_cargo,X
+ \	LDA QQ20,X
  LDA CRGO,X
  BEQ l_45b4
  LDA &034A
  BNE l_45b4
  LDY #&03
  STY &034B
- \	STA cmdr_cargo,X
+ \	STA QQ20,X
  STA CRGO,X
  DEX
  BMI l_45c1
@@ -8386,7 +8203,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
  JMP l_3899
 
-.l_488c
+.LL9
 
  LDA &8C
  BMI l_4889

@@ -347,81 +347,18 @@ INCLUDE "library/enhanced/main/subroutine/mt16.asm"
 INCLUDE "library/enhanced/main/subroutine/tt26.asm"
 INCLUDE "library/common/main/subroutine/bell.asm"
 INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
+INCLUDE "library/enhanced/main/subroutine/hme2.asm"
+INCLUDE "library/common/main/subroutine/squa.asm"
+INCLUDE "library/common/main/subroutine/squa2.asm"
+INCLUDE "library/common/main/subroutine/mu1.asm"
 
-.find_plant
-
- LDA #&0E
- JSR DETOK
- JSR map_cursor
- JSR copy_xy
- LDA #&00
- STA &97
-
-.find_loop
-
- JSR MT14
- JSR write_planet
- LDX DTW5
- LDA &4B,X
- CMP #&0D
- BNE l_1f6c
-
-.l_1f5f
-
- DEX
- LDA &4B,X
- ORA #&20
- CMP &0E01,X
- BEQ l_1f5f
- TXA
- BMI found_plant
-
-.l_1f6c
-
- JSR permute_4
- INC &97
- BNE find_loop
- JSR TT111
- JSR map_cursor
- LDA #&28
- JSR sound
- LDA #&D7
- JMP DETOK
-
-.found_plant
-
- LDA &6F
- STA data_homex
- LDA &6D
- STA data_homey
- JSR TT111
- JSR map_cursor
- JSR MT15
- JMP distance
-
-.l_21be
-
- AND #&7F
-
-.square
-
- STA &1B
- TAX
- BNE l_21d7
-
-.l_21c5
-
- CLC
- STX &1B
- TXA
- RTS
 
 .price_mult
 
  LDX &81
- BEQ l_21c5
+ BEQ MU1
 
-.l_21d7
+.MU11
 
  DEX
  STX &D1
@@ -746,7 +683,7 @@ INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
  BEQ sync_wait
  RTS
 
-.permute_4
+.TT20
 
  JSR permute_2
 
@@ -1033,7 +970,7 @@ INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
  JSR TT66
  LDA #&07
  STA XC
- JSR copy_xy
+ JSR TT81
  LDA #&C7
  JSR TT27
  JSR NLIN
@@ -1056,13 +993,13 @@ INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
  ADC #&18
  STA &35
  JSR PIXEL
- JSR permute_4
+ JSR TT20
  LDX &84
  INX
  BNE l_2830
- LDA data_homex
+ LDA QQ9
  STA &73
- LDA data_homey
+ LDA QQ10
  LSR A
  STA &74
  LDA #&04
@@ -1188,29 +1125,29 @@ INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
  EOR #&FF
  PHA
  JSR sync
- JSR map_cursor
+ JSR TT103
  PLA
  STA &76
- LDA data_homey
+ LDA QQ10
  JSR incdec_dirn
  LDA &77
- STA data_homey
+ STA QQ10
  STA &74
  PLA
  STA &76
- LDA data_homex
+ LDA QQ9
  JSR incdec_dirn
  LDA &77
- STA data_homex
+ STA QQ9
  STA &73
 
-.map_cursor
+.TT103
 
  LDA &87
  BMI map_shcurs
- LDA data_homex
+ LDA QQ9
  STA &73
- LDA data_homey
+ LDA QQ10
  LSR A
  STA &74
  LDA #&04
@@ -1241,7 +1178,7 @@ INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
 
 .map_shcurs
 
- LDA data_homex
+ LDA QQ9
  SEC
  SBC QQ0
  CMP #&26
@@ -1256,7 +1193,7 @@ INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
  CLC
  ADC #&68
  STA &73
- LDA data_homey
+ LDA QQ10
  SEC
  SBC QQ1
  CMP #&26
@@ -1283,8 +1220,8 @@ INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
  LDA #&BE
  JSR NLIN3
  JSR map_range
- JSR map_cursor
- JSR copy_xy
+ JSR TT103
+ JSR TT81
  LDA #&00
  STA &97
  LDX #&18
@@ -1360,7 +1297,7 @@ INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
  STA &46,Y
  LDA #&80
  STA QQ17
- JSR write_planet
+ JSR cpl
 
 .l_2c01
 
@@ -1380,12 +1317,12 @@ INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
 
 .l_2c1e
 
- JSR permute_4
+ JSR TT20
  INC &97
  BEQ l_2c32
  JMP short_loop
 
-.copy_xy
+.TT81
 
  LDX #&05
 
@@ -1402,7 +1339,7 @@ INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
 
 .TT111
 
- JSR copy_xy
+ JSR TT81
  LDY #&7F
  STY &D1
  LDA #&00
@@ -1412,7 +1349,7 @@ INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
 
  LDA &6F
  SEC
- SBC data_homex
+ SBC QQ9
  BCS l_2c4a
  EOR #&FF
  ADC #&01
@@ -1423,7 +1360,7 @@ INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
  STA &83
  LDA &6D
  SEC
- SBC data_homey
+ SBC QQ10
  BCS l_2c59
  EOR #&FF
  ADC #&01
@@ -1449,7 +1386,7 @@ INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
 
 .l_2c70
 
- JSR permute_4
+ JSR TT20
  INC &80
  BNE snap_loop
  LDX #&05
@@ -1461,9 +1398,9 @@ INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
  DEX
  BPL l_2c79
  LDA &6D
- STA data_homey
+ STA QQ10
  LDA &6F
- STA data_homex
+ STA QQ9
  SEC
  SBC QQ0
  BCS l_2c94
@@ -1472,11 +1409,11 @@ INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
 
 .l_2c94
 
- JSR square
+ JSR SQUA2
  STA &41
  LDA &1B
  STA &40
- LDA data_homey
+ LDA QQ10
  SEC
  SBC QQ1
  BCS l_2caa
@@ -1486,7 +1423,7 @@ INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
 .l_2caa
 
  LSR A
- JSR square
+ JSR SQUA2
  PHA
  LDA &1B
  CLC
@@ -1603,12 +1540,12 @@ INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
 
 .snap_cursor
 
- JSR map_cursor
+ JSR TT103
  JSR TT111
- JSR map_cursor
+ JSR TT103
  JMP CLYNS
 
-.write_planet
+.cpl
 
  LDX #&05
 
@@ -1671,7 +1608,7 @@ INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
 .l_315a
 
  JSR l_3160
- JSR write_planet
+ JSR cpl
 
 .l_3160
 
@@ -1746,7 +1683,7 @@ INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
  BEQ l_315a
  DEX
  BNE l_31bd
- JMP write_planet
+ JMP cpl
 
 .l_31bd
 
@@ -2125,7 +2062,7 @@ INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
  STX &22
  STA &23
  LDA &40
- JSR square
+ JSR SQUA2
  STA &9C
  LDA &1B
  STA &9B
@@ -2151,7 +2088,7 @@ INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
 .l_3436
 
  LDA &22
- JSR square
+ JSR SQUA2
  STA &D1
  LDA &9B
  SEC
@@ -2497,7 +2434,7 @@ INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
 .l_3650
 
  LDA QQ0,X
- STA data_homex,X
+ STA QQ9,X
  DEX
  BPL l_3650
  RTS
@@ -2673,13 +2610,13 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 .not_hype
 
  CMP #&32
- BEQ distance
+ BEQ T95
  CMP #&43
  BNE not_find
  LDA &87
  AND #&C0
  BEQ not_map
- JMP find_plant
+ JMP HME2
 
 .not_find
 
@@ -2692,9 +2629,9 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDA &06
  CMP #&36
  BNE not_home
- JSR map_cursor
+ JSR TT103
  JSR set_home
- JSR map_cursor
+ JSR TT103
 
 .not_cour
 
@@ -2711,21 +2648,21 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDA cmdr_cour
  ORA cmdr_cour+1
  BEQ not_cour
- JSR map_cursor
+ JSR TT103
  LDA cmdr_courx
- STA data_homex
+ STA QQ9
  LDA cmdr_coury
- STA data_homey
- JSR map_cursor
+ STA QQ10
+ JSR TT103
 
-.distance
+.T95
 
  LDA &87
  AND #&C0
  BEQ not_map
  JSR snap_cursor
  STA QQ17
- JSR write_planet
+ JSR cpl
  LDA #&80
  STA QQ17
  LDA #&01
@@ -2809,12 +2746,12 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 .l_3bd6
 
  LDA &34
- JSR l_21be
+ JSR SQUA
  STA &82
  LDA &1B
  STA &81
  LDA &35
- JSR l_21be
+ JSR SQUA
  STA &D1
  LDA &1B
  ADC &81
@@ -2823,7 +2760,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  ADC &82
  STA &82
  LDA &36
- JSR l_21be
+ JSR SQUA
  STA &D1
  LDA &1B
  ADC &81
@@ -2870,13 +2807,13 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  STA &30
  STA &0340
  LDA #&48
- BNE sound
+ BNE NOISE
 
 .BEEP
 
  LDA #&20
 
-.sound
+.NOISE
 
  JSR pp_sound
  LDX s_flag

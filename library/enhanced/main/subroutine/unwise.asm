@@ -32,7 +32,7 @@ ENDIF
 
 .UNWISE
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Screen
+IF _DISC_DOCKED \ Screen
 
  LDA LIL2+2             \ Flip bit 6 of LIL2+2 to change the EOR (SC),Y in LIL2
  EOR #%01000000         \ to an ORA (SC),Y (or back again)
@@ -48,6 +48,23 @@ IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Screen
 
  LDA LIL6+2             \ Flip bit 6 of LIL2+2 to change the EOR (SC),Y in LIL6
  EOR #%01000000         \ to an ORA (SC),Y (or back again)
+ STA LIL6+2
+
+ENDIF
+
+IF _ELITE_A_DOCKED
+
+ LDA LIL2+2             \ AJD
+ EOR #&40
+ STA LIL2+2
+ \	LDA LIL3+2
+ \	EOR #&40
+ STA LIL3+2
+ \	LDA LIL5+2
+ \	EOR #&40
+ STA LIL5+2
+ \	LDA LIL6+2
+ \	EOR #&40
  STA LIL6+2
 
 ENDIF

@@ -100,7 +100,7 @@ ENDIF
 
  JSR TT103              \ Draw small crosshairs at coordinates (QQ9, QQ10)
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Minor
+IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Minor
 
  LDA #40                \ Call the NOISE routine with A = 40 to make a low,
  JSR NOISE              \ long beep to indicate a failed search

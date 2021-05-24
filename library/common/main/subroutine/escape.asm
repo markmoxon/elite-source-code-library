@@ -106,7 +106,21 @@ IF _MASTER_VERSION \ Master: In the Master version, if you launch your escape po
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: See group B
+IF _ELITE_A_6502SP_PARA
+
+ JSR LL9_FLIGHT         \ Call LL9 to draw the Cobra on-screen
+
+ DEC INWK+32            \ Decrement the counter in byte #32
+
+ BNE ESL1               \ Loop back to keep moving the Cobra until the AI flag
+                        \ is 0, which gives it time to drift away from our pod
+
+ JSR SCAN               \ Call SCAN to remove the Cobra from the scanner (by
+                        \ redrawing it)
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: See group B
 
  JSR LL9                \ Call LL9 to draw the Cobra on-screen
 

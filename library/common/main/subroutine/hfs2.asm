@@ -33,7 +33,7 @@ ENDIF
 \   A                   The step size of the straight lines making up the rings
 \                       (4 for launch, 8 for hyperspace)
 \
-IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _6502SP_VERSION OR _MASTER_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \ Other entry points:
 \
 \   HFS1                Don't clear the screen, and draw 8 concentric rings

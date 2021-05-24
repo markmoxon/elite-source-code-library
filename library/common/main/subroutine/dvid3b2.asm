@@ -197,10 +197,19 @@ ENDIF
                         \ The result of our division is now in R, so we just
                         \ need to shift it back by the scale factor in Y
 
+IF _ELITE_A_VERSION
+
+ LDA #0                 \ AJD
+ JSR n_store
+
+ELIF NOT(_ELITE_A_VERSION)
+
  LDA #0                 \ Set K(3 2 1) = 0 to hold the result (we populate K
  STA K+1                \ next)
  STA K+2
  STA K+3
+
+ENDIF
 
  TYA                    \ If Y is positive, jump to DV12
  BPL DV12

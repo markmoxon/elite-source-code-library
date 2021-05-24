@@ -702,11 +702,11 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
 
 .scan_10in
 
- JSR scan_10
+ JSR RDKEY
  JMP tube_put
 
 
-.scan_10
+.RDKEY
 
  LDX #&10
 
@@ -744,12 +744,12 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
 
  JSR sync
  JSR sync
- JSR scan_10
+ JSR RDKEY
  BNE get_key
 
 .press
 
- JSR scan_10
+ JSR RDKEY
  BEQ press
  TAY
  LDA (key_tube),Y

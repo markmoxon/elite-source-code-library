@@ -13,6 +13,16 @@
  ORA #%00000100         \ both bits 2 and 3 are now set)
  STA TP
 
+IF _ELITE_A_VERSION
+
+ LDA ENGY               \ AJD
+ BNE rew_notgot
+ DEC new_hold	        \** NOT TRAPPED FOR NO SPACE
+
+.rew_notgot
+
+ENDIF
+
  LDA #2                 \ Set ENGY to 2 so our energy banks recharge at twice
  STA ENGY               \ the speed, as our mission reward is a special navy
                         \ energy unit

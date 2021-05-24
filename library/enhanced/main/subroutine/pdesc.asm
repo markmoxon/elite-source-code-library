@@ -24,14 +24,25 @@
 \
 \   ZZ                  The system number (0-255)
 \
+IF _ELITE_A_ENCYCLOPEDIA
+\ Other entry points:
+\
+\   PD1                 Print the standard "goat soup" description without
+\                       checking for overrides
+\
+ENDIF
 \ ******************************************************************************
 
 .PDESC
+
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
 
  LDA QQ8                \ If either byte in QQ18(1 0) is non-zero, meaning that
  ORA QQ8+1              \ the distance from the current system to the selected
  BNE PD1                \ is non-zero, jump to PD1 to show the standard "goat
                         \ soup" description
+
+ENDIF
 
 IF _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
@@ -40,6 +51,8 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Platform
                         \ soup" description
 
 ENDIF
+
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
 
                         \ If we get here, then the current system is the same as
                         \ the selected system and we are docked, so now to check
@@ -115,6 +128,8 @@ ENDIF
                         \ either find a match for the system in ZZ, or we fall
                         \ through into the "goat soup" extended description
                         \ routine
+
+ENDIF
 
 .PD1
 

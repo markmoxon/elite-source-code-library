@@ -34,16 +34,32 @@
 \
 \                         * Clear if there is room for this item
 \
+IF _ELITE_A_VERSION
+\ Other entry points:
+\
+\   Tml                 AJD
+\
+ENDIF
 \ ******************************************************************************
 
 .tnpr
 
+IF NOT(_ELITE_A_VERSION)
+
  PHA                    \ Store A on the stack
+
+ENDIF
 
  LDX #12                \ If QQ29 > 12 then jump to kg below, as this cargo
  CPX QQ29               \ type is gold, platinum, gem-stones or alien items,
  BCC kg                 \ and they have different cargo limits to the standard
                         \ tonne canisters
+
+IF _ELITE_A_VERSION
+
+ CLC                    \ AJD
+
+ENDIF
 
 .Tml
 
@@ -59,6 +75,12 @@
                         \ is to count the number of tonne canisters in the hold,
                         \ and add 1
 
+IF _ELITE_A_VERSION
+
+ BCS n_over             \ AJD
+
+ENDIF
+
  DEX                    \ Decrement the loop counter
 
  BPL Tml                \ Loop back to add in the next market item in the hold,
@@ -71,6 +93,14 @@ IF _MASTER_VERSION \ Master: The Master version contains the code for Trumbles t
                         \ hold, as 256 Trumbles take up one ton of cargo space
 
 ENDIF
+
+IF _ELITE_A_VERSION
+
+ CMP new_hold	        \ New hold size AJD
+
+.n_over
+
+ELIF NOT(_ELITE_A_VERSION)
 
  CMP CRGO               \ If A < CRGO then the C flag will be clear (we have
                         \ room in the hold)
@@ -93,6 +123,8 @@ ENDIF
 
  PLA                    \ Restore A from the stack
 
+ENDIF
+
  RTS                    \ Return from the subroutine
 
 .kg
@@ -103,7 +135,7 @@ ENDIF
 
  LDY QQ29               \ Set Y to the item number we want to add
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Disc: When scooping gold, platinum, gem-stones or alien items in the disc version, we are allowed to scoop what we want as long as our existing hold containss 200 units or less (irrespecitve of what we're trying to scoop); in the other versions, we can only scoop more units if it would result in a total haul of 200 units or less
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Disc: When scooping gold, platinum, gem-stones or alien items in the disc version, we are allowed to scoop what we want as long as our existing hold containss 200 units or less (irrespecitve of what we're trying to scoop); in the other versions, we can only scoop more units if it would result in a total haul of 200 units or less
 
  ADC QQ20,Y             \ Set A = A + the number of units of this item that we
                         \ already have in the hold
@@ -115,6 +147,8 @@ ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
 
 ENDIF
 
+IF NOT(_ELITE_A_VERSION)
+
  CMP #200               \ Is the result greater than 200 (the limit on
                         \ individual stocks of gold, platinum, gem-stones and
                         \ alien items)?
@@ -124,6 +158,8 @@ ENDIF
                         \ Otherwise it is clear (we have room)
 
  PLA                    \ Restore A from the stack
+
+ENDIF
 
  RTS                    \ Return from the subroutine
 

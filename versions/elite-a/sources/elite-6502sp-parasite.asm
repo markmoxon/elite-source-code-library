@@ -212,11 +212,7 @@ cmdr_price = &39E
 home_econ = &3AC
 home_govmt = &3AE
 home_tech = &3AF
-data_econ = &3B8
-data_govm = &3B9
-data_tech = &3BA
-data_popn = &3BB
-data_gnp = &3BD
+
 s_flag = &3C6
 a_flag = &3C8
 x_flag = &3C9
@@ -453,12 +449,6 @@ INCLUDE "library/common/main/subroutine/status.asm"
  JMP TT27
 
 INCLUDE "library/common/main/variable/tens.asm"
-
-
-.writec_3
-
- CLC
-
 INCLUDE "library/common/main/subroutine/pr2.asm"
 INCLUDE "library/common/main/subroutine/tt11.asm"
 INCLUDE "library/common/main/subroutine/bprnt.asm"
@@ -634,77 +624,9 @@ INCLUDE "library/enhanced/main/subroutine/mt23.asm"
 INCLUDE "library/enhanced/main/subroutine/mt29.asm"
 INCLUDE "library/enhanced/main/subroutine/pas1.asm"
 INCLUDE "library/enhanced/main/subroutine/pause2.asm"
-
-
-.TT66
-
- STA &87
-
-.TTX66
-
- JSR MT2
- LDA #&80
- STA QQ17
- STA DTW2
- ASL A
- STA &034A
- STA &034B
- JSR write_0346
- LDA #&83
- JSR tube_write
- LDX &2F
- BEQ d_54eb
- JSR d_30ac
-
-.d_54eb
-
- LDY #&01
- STY YC
- LDA &87
- BNE l_2573
- LDY #&0B
- STY XC
- LDA VIEW
- ORA #&60
- JSR TT27
- JSR price_spc
- LDA #&AF
- JSR TT27
-
-.l_2573
-
- LDX #&00
- STX QQ17
- STX &34
- STX &35
- DEX
- STX &36
- JSR HLOIN
- LDA #&02
- STA &34
- STA &36
- JSR l_258a
-
-.l_258a
-
- JSR l_258d
-
-.l_258d
-
- LDA #&00
- STA &35
- LDA #&BF
- STA &37
- DEC &34
- DEC &36
- JMP LOIN
-
-.DELAY
-
- JSR sync
- DEY
- BNE DELAY
- RTS
+INCLUDE "library/common/main/subroutine/tt66.asm"
+INCLUDE "library/common/main/subroutine/ttx66-ttx662.asm"
+INCLUDE "library/common/main/subroutine/delay.asm"
 
 .CLYNS
 
@@ -719,288 +641,70 @@ INCLUDE "library/enhanced/main/subroutine/pause2.asm"
  LDA #&84
  JMP tube_write
 
-.sync
+.WSCAN
 
  LDA #&85
  JSR tube_write
  JMP tube_read
 
-.chk_cargo
-
- \	PHA
- LDX #&0C
- CPX &03AD
- BCC chk_quant
- CLC
-
-.tot_cargo
-
- ADC QQ20,X
- BCS n_over
- DEX
- BPL tot_cargo
- CMP new_hold	\ New hold size
-
-.n_over
-
- \	PLA
- RTS
-
-.chk_quant
-
- LDY &03AD
- ADC QQ20,Y
- \	PLA
- RTS
-
+INCLUDE "library/common/main/subroutine/tnpr.asm"
 INCLUDE "library/common/main/subroutine/tt20.asm"
 INCLUDE "library/common/main/subroutine/tt54.asm"
+INCLUDE "library/common/main/subroutine/tt146.asm"
+INCLUDE "library/common/main/subroutine/tt60.asm"
+INCLUDE "library/common/main/subroutine/ttx69.asm"
+INCLUDE "library/common/main/subroutine/tt69.asm"
+INCLUDE "library/common/main/subroutine/tt67.asm"
+INCLUDE "library/common/main/subroutine/tt70.asm"
+INCLUDE "library/common/main/subroutine/spc.asm"
+INCLUDE "library/common/main/subroutine/tt25.asm"
 
-
-.show_nzdist
-
- LDA QQ8
- ORA QQ8+&01
- BNE show_dist
- INC YC
- RTS
-
-.show_dist
-
- LDA #&BF
- JSR pre_colon
- LDX QQ8
- LDY QQ8+&01
- SEC
- JSR writed_5
- LDA #&C3
-
-.tok_nxtpar
-
- JSR TT27
-
-.next_par
-
- INC YC
-
-.new_pgph
-
- LDA #&80
- STA QQ17
-
-.TT67
-
- LDA #&0C
- JMP TT27
-
-.l_2688
-
- LDA #&AD
- JSR TT27
- JMP l_26c7
-
-.spc
-
- JSR TT27
- JMP price_spc
-
-.data_onsys
-
- JSR l_3c91
- BPL not_cyclop
- LDA dockedp
- BNE not_cyclop
- JMP encyclopedia
-
-.not_cyclop
-
- LDA #&01
- JSR TT66
- LDA #&09
- STA XC
- LDA #&A3
- JSR NLIN3
- JSR next_par
- JSR show_nzdist
- LDA #&C2
- JSR pre_colon
- LDA data_econ
- CLC
- ADC #&01
- LSR A
- CMP #&02
- BEQ l_2688
- LDA data_econ
- BCC l_26c2
- SBC #&05
- CLC
-
-.l_26c2
-
- ADC #&AA
- JSR TT27
-
-.l_26c7
-
- LDA data_econ
- LSR A
- LSR A
- CLC
- ADC #&A8
- JSR tok_nxtpar
- LDA #&A2
- JSR pre_colon
- LDA data_govm
- CLC
- ADC #&B1
- JSR tok_nxtpar
- LDA #&C4
- JSR pre_colon
- LDX data_tech
- INX
- CLC
- JSR pr2
- JSR next_par
- LDA #&C0
- JSR pre_colon
- SEC
- LDX data_popn
- JSR pr2
- LDA #&C6
- JSR tok_nxtpar
- LDA #&28
- JSR TT27
- LDA &70
- BMI l_2712
- LDA #&BC
- JSR TT27
- JMP l_274e
-
-.l_2712
-
- LDA &71
- LSR A
- LSR A
- PHA
- AND #&07
- CMP #&03
- BCS l_2722
- ADC #&E3
- JSR spc
-
-.l_2722
-
- PLA
- LSR A
- LSR A
- LSR A
- CMP #&06
- BCS l_272f
- ADC #&E6
- JSR spc
-
-.l_272f
-
- LDA &6F
- EOR &6D
- AND #&07
- STA &73
- CMP #&06
- BCS l_2740
- ADC #&EC
- JSR spc
-
-.l_2740
-
- LDA &71
- AND #&03
- CLC
- ADC &73
- AND #&07
- ADC #&F2
- JSR TT27
-
-.l_274e
-
- LDA #&53
- JSR TT27
- LDA #&29
- JSR tok_nxtpar
- LDA #&C1
- JSR pre_colon
- LDX data_gnp
- LDY data_gnp+&01
- JSR writec_5
- JSR price_spc
- LDA #&00
- STA QQ17
- LDA #&4D
- JSR TT27
- LDA #&E2
- JSR tok_nxtpar
- LDA #&FA
- JSR pre_colon
- LDA &71
- LDX &6F
- AND #&0F
- CLC
- ADC #&0B
- TAY
- JSR writed_5
- JSR price_spc
- LDA #&6B
- JSR DASC
- LDA #&6D
- JSR DASC
- JSR next_par
- JMP PDESC
-
-.setup_data
+.TT24
 
  LDA &6D
  AND #&07
- STA data_econ
+ STA QQ3
  LDA &6E
  LSR A
  LSR A
  LSR A
  AND #&07
- STA data_govm
+ STA QQ4
  LSR A
  BNE l_27bb
- LDA data_econ
+ LDA QQ3
  ORA #&02
- STA data_econ
+ STA QQ3
 
 .l_27bb
 
- LDA data_econ
+ LDA QQ3
  EOR #&07
  CLC
- STA data_tech
+ STA QQ5
  LDA &6F
  AND #&03
- ADC data_tech
- STA data_tech
- LDA data_govm
+ ADC QQ5
+ STA QQ5
+ LDA QQ4
  LSR A
- ADC data_tech
- STA data_tech
+ ADC QQ5
+ STA QQ5
  ASL A
  ASL A
- ADC data_econ
- ADC data_govm
+ ADC QQ3
+ ADC QQ4
  ADC #&01
- STA data_popn
- LDA data_econ
+ STA QQ6
+ LDA QQ3
  EOR #&07
  ADC #&03
  STA &1B
- LDA data_govm
+ LDA QQ4
  ADC #&04
  STA &81
  JSR MULTU
- LDA data_popn
+ LDA QQ6
  STA &81
  JSR MULTU
  ASL &1B
@@ -1009,9 +713,9 @@ INCLUDE "library/common/main/subroutine/tt54.asm"
  ROL A
  ASL &1B
  ROL A
- STA data_gnp+&01
+ STA QQ7+&01
  LDA &1B
- STA data_gnp
+ STA QQ7
  RTS
 
 .long_map
@@ -1170,7 +874,7 @@ INCLUDE "library/common/main/subroutine/tt54.asm"
 
  LDA #&02
  JSR TT66
- JSR l_3c91
+ JSR CTRL
  BPL buy_ctrl
  JMP cour_buy
 
@@ -1196,7 +900,7 @@ INCLUDE "library/common/main/subroutine/tt54.asm"
 
 .cargo_err
 
- JSR price_spc
+ JSR TT162
  TYA
  JSR token_query
  JSR beep_wait
@@ -1219,7 +923,7 @@ INCLUDE "library/common/main/subroutine/tt54.asm"
  JSR buy_quant
  BCS quant_err
  STA &1B
- JSR chk_cargo
+ JSR tnpr
  LDY #&CE
  BCS cargo_err
  LDA &03AA
@@ -1339,7 +1043,7 @@ INCLUDE "library/common/main/subroutine/tt54.asm"
  INC XC
  LDA #&CF
  JSR NLIN3
- JSR new_pgph
+ JSR TT69
  JSR TT67
  JSR sell_equip
  LDA ESCP
@@ -1370,7 +1074,7 @@ INCLUDE "library/common/main/subroutine/tt54.asm"
  JSR FLKB
  LDA #&CD
  JSR TT27
- JSR l_3c91
+ JSR CTRL
  BMI sell_jump
  LDA #&CE
  JSR NLIN3
@@ -1396,7 +1100,7 @@ INCLUDE "library/common/main/subroutine/tt54.asm"
  STA &74
  TXA
  PHA
- JSR new_pgph
+ JSR TT69
  CLC
  LDA &03AD
  ADC #&D0
@@ -1461,11 +1165,11 @@ INCLUDE "library/common/main/subroutine/tt54.asm"
  LDA #&0B
  STA XC
  LDA #&A4
- JSR tok_nxtpar
+ JSR TT60
  JSR NLIN4
  JSR show_fuel
  LDA #&E	\ print hold size
- JSR pre_colon
+ JSR TT68
  LDX new_hold
  DEX
  CLC
@@ -1795,7 +1499,7 @@ INCLUDE "library/common/main/subroutine/tt54.asm"
  ASL A
  ROL QQ8+&01
  STA QQ8
- JMP setup_data
+ JMP TT24
 
 .jmp
 
@@ -1805,11 +1509,11 @@ INCLUDE "library/common/main/subroutine/tt54.asm"
  STA QQ1
  RTS
 
-.writec_5
+.pr6
 
  CLC
 
-.writed_5
+.pr5
 
  LDA #&05
  JMP TT11
@@ -1863,7 +1567,7 @@ INCLUDE "library/common/main/subroutine/tt54.asm"
  LDA #&00
  JSR price_shift
  SEC
- JSR writed_5
+ JSR pr5
  LDY &77
  LDA #&05
  LDX cmdr_avail,Y
@@ -1890,7 +1594,7 @@ INCLUDE "library/common/main/subroutine/tt54.asm"
  BEQ price_kg
  JSR price_g
 
-.price_spc
+.TT162
 
  LDA #&20
 
@@ -1902,7 +1606,7 @@ INCLUDE "library/common/main/subroutine/tt54.asm"
 
  LDA #&74
  JSR DASC
- BCC price_spc
+ BCC TT162
 
 .price_kg
 
@@ -1983,11 +1687,11 @@ INCLUDE "library/common/main/subroutine/tt54.asm"
  BPL l_2e73
  INX
  STX &0349
- LDA data_econ
+ LDA QQ3
  STA home_econ
- LDA data_tech
+ LDA QQ5
  STA home_tech
- LDA data_govm
+ LDA QQ4
  STA home_govmt
  RTS
 
@@ -2075,7 +1779,7 @@ INCLUDE "library/common/main/subroutine/tt54.asm"
  LDA #&80
  STA QQ17
  INC YC
- JSR l_3c91	\ check CTRL
+ JSR CTRL	\ check CTRL
  BPL n_eqship
  JMP n_buyship	\ branch
 
@@ -2114,7 +1818,7 @@ INCLUDE "library/common/main/subroutine/tt54.asm"
  LDX &89
  CLC
  JSR pr2
- JSR price_spc
+ JSR TT162
  LDA &89
  CLC
  ADC #&68
@@ -2146,7 +1850,7 @@ INCLUDE "library/common/main/subroutine/tt54.asm"
  LDA QQ20+&10
  SEC
  LDX #&C
- JSR tot_cargo
+ JSR Tml
  BCC equip_isspace
  LDA #&0E
  JMP query_beep
@@ -2339,7 +2043,7 @@ INCLUDE "library/common/main/subroutine/tt54.asm"
 
 .buy_money
 
- JSR price_spc
+ JSR TT162
  LDA #&77
  JSR spc
 
@@ -2528,7 +2232,7 @@ INCLUDE "library/common/main/subroutine/tt54.asm"
 .show_fuel
 
  LDA #&69
- JSR pre_colon
+ JSR TT68
  LDX QQ14
  SEC
  JSR pr2
@@ -2558,7 +2262,7 @@ INCLUDE "library/common/main/subroutine/tt54.asm"
  JSR TT27
  JMP TT67
 
-.pre_colon
+.TT68
 
  JSR TT27
 
@@ -3236,7 +2940,7 @@ INCLUDE "library/common/main/subroutine/tt54.asm"
 
  STX &D1
  LDX #&00
- JSR scan_x
+ JSR DKS4
  BPL not_shift
  ASL &D1
  ASL &D1
@@ -3712,10 +3416,10 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 .clr_bc
 
  LDX #&0C
- JSR clr_page
+ JSR ZES1
  DEX
 
-.clr_page
+.ZES1
 
  LDY #&00
  STY SC
@@ -4068,11 +3772,11 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  BPL l_3c83
  RTS	\++
 
-.l_3c91
+.CTRL
 
  LDX #&01
 
-.scan_x
+.DKS4
 
  LDA #&8B
  JSR tube_write
@@ -4128,7 +3832,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
 .no_thaw
 
- JSR sync
+ JSR WSCAN
  JSR RDKEY
  CPX #&51
  BNE not_sound
@@ -6005,7 +5709,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  INX
  CLC
  JSR pr2
- JSR price_spc
+ JSR TT162
  LDY &89
  JSR n_name
  LDY &89
@@ -6365,7 +6069,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  INX
  CLC
  JSR pr2
- JSR price_spc
+ JSR TT162
  JSR cpl
  LDX &4A
  LDY &4B
@@ -7981,14 +7685,14 @@ ENDIF
 
 .check_keys
 
- JSR sync
+ JSR WSCAN
  JSR RDKEY
  CPX #&69
  BNE not_freeze
 
 .freeze_loop
 
- JSR sync
+ JSR WSCAN
  JSR RDKEY
  CPX #&70
  BNE dont_quit
@@ -8155,7 +7859,7 @@ ENDIF
  INX
  CLC
  JSR pr2
- JSR price_spc
+ JSR TT162
  JSR MT2
  LDA #&80
  STA QQ17
@@ -10979,7 +10683,7 @@ INCLUDE "library/common/main/subroutine/lasli.asm"
  LDA &2F
  ORA &8E
  BNE d_3084+&01
- JSR l_3c91
+ JSR CTRL
  BMI d_305e
  LDA &87
  BNE d_3023
@@ -11066,7 +10770,7 @@ INCLUDE "library/common/main/subroutine/lasli.asm"
  STY XC
  STY YC
  DEY
- JMP writec_5
+ JMP pr6
 
 .d_30b9
 
@@ -11086,11 +10790,11 @@ INCLUDE "library/common/main/subroutine/lasli.asm"
  BPL d_31b0
  INX
  STX &0349
- LDA data_econ
+ LDA QQ3
  STA home_econ
- LDA data_tech
+ LDA QQ5
  STA home_tech
- LDA data_govm
+ LDA QQ4
  STA home_govmt
  JSR DORND
  STA cmdr_price
@@ -11149,7 +10853,7 @@ INCLUDE "library/common/main/subroutine/lasli.asm"
 
 .d_3268
 
- \	JSR l_3c91
+ \	JSR CTRL
  \	AND x_flag
  \	BMI d_321f
  JSR DORND
@@ -12844,7 +12548,7 @@ INCLUDE "library/common/main/subroutine/lasli.asm"
  \	BCS d_40f8
  LDY #&02
  JSR DELAY
- \	JSR sync
+ \	JSR WSCAN
 
 .d_40f8
 
@@ -12889,7 +12593,7 @@ INCLUDE "library/common/main/subroutine/lasli.asm"
  CMP #&75
  BNE not_data
  JSR TT111
- JMP data_onsys
+ JMP TT25
 
 .not_data
 
@@ -12923,7 +12627,7 @@ INCLUDE "library/common/main/subroutine/lasli.asm"
  LDA &9F
  EOR #&25
  STA &9F
- JMP sync
+ JMP WSCAN
 
 .not_map
 
@@ -12975,7 +12679,7 @@ INCLUDE "library/common/main/subroutine/lasli.asm"
  LDA #&01
  STA XC
  INC YC
- JMP show_nzdist
+ JMP TT146
 
 .not_cour
 
@@ -12983,7 +12687,7 @@ INCLUDE "library/common/main/subroutine/lasli.asm"
  BMI flying
  CMP #&20
  BNE not_launch
- JSR l_3c91
+ JSR CTRL
  BMI jump_stay
  JMP launch
 
@@ -13645,7 +13349,7 @@ INCLUDE "library/common/main/subroutine/lasli.asm"
 
 .d_455f
 
- JSR sync
+ JSR WSCAN
  JSR RDKEY
  CPX #&51
  BNE d_456e
@@ -15005,4 +14709,11 @@ ship_total = 38
 
  EQUB 255, &00, 0, 0
 
+\ ******************************************************************************
+\
+\ Save output/2.T.bin
+\
+\ ******************************************************************************
+
+PRINT "S.2.T ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
 SAVE "versions/elite-a/output/2.T.bin", CODE%, P%, LOAD%

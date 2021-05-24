@@ -31,7 +31,7 @@ IF _ELECTRON_VERSION \ Comment
 \   BORDER              Just draw the border
 \
 ENDIF
-IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Comment
+IF _DISC_DOCKED OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Comment
 \ Other entry points:
 \
 \   BOL1-1              Contains an RTS
@@ -52,7 +52,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Enhanced: Group A: The default case for enhanced text tokens is Sentence Case
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Enhanced: Group A: The default case for enhanced text tokens is Sentence Case
 
  JSR MT2                \ Switch to Sentence Case when printing extended tokens
 
@@ -86,7 +86,7 @@ ELIF NOT(_ELITE_A_FLIGHT)
 
 ENDIF
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Enhanced: See group A
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _MASTER_VERSION \ Enhanced: See group A
 
  STA DTW2               \ Set bit 7 of DTW2 to indicate we are not currently
                         \ printing a word
@@ -117,7 +117,7 @@ ELIF _ELECTRON_VERSION
  ASL A                  \ Set LAS2 to 0, as 128 << 1 = %10000000 << 1 = 0. This
  STA LAS2               \ stops any laser pulsing
 
-ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA
 
  ASL A                  \ Set LASCT to 0, as 128 << 1 = %10000000 << 1 = 0. This
  STA LASCT              \ stops any laser pulsing
@@ -135,6 +135,12 @@ ELIF _MASTER_VERSION
 
  LDA #0                 \ Set LAS2 = 0 to stop any laser pulsing
  STA LAS2
+
+ENDIF
+
+IF _ELITE_A_6502SP_PARA
+
+ ASL A                  \ Set A = 0 AJD
 
 ENDIF
 
@@ -158,7 +164,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Tube
 
  LDX #&60               \ Set X to the screen memory page for the top row of the
                         \ screen (as screen memory starts at &6000)
@@ -185,6 +191,19 @@ ELIF _6502SP_VERSION
 
  LDA #11                \ Send control code 11 to OSWRCH, to instruct the I/O
  JSR OSWRCH             \ processor to clear the top part of the screen
+
+ENDIF
+
+IF _ELITE_A_6502SP_PARA
+
+ JSR write_0346         \ AJD
+ LDA #&83
+ JSR tube_write
+ LDX &2F
+ BEQ d_54eb
+ JSR d_30ac
+
+.d_54eb
 
 ENDIF
 
@@ -305,7 +324,17 @@ IF _6502SP_VERSION \ Screen
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Tube
+IF _ELITE_A_6502SP_PARA
+
+ LDX #0                 \ Set QQ17 = 0 to switch to ALL CAPS
+ STX QQ17
+
+ STX X1                 \ Set (X1, Y1) to (0, 0)
+ STX Y1
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Tube
 
  LDX #0                 \ Set (X1, Y1) to (0, 0)
  STX X1

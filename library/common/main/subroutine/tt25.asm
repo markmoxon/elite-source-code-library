@@ -22,6 +22,26 @@ ENDIF
 
 .TT25
 
+IF _ELITE_A_DOCKED
+
+ JSR CTRL               \ AJD
+ BPL not_cyclop
+ JMP encyclopedia
+
+.not_cyclop
+
+ELIF _ELITE_A_6502SP_PARA
+
+ JSR CTRL
+ BPL not_cyclop
+ LDA dockedp
+ BNE not_cyclop
+ JMP encyclopedia
+
+.not_cyclop
+
+ENDIF
+
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ 6502SP: In the 6502SP version, you can send the Data on System screen to the printer by pressing CTRL-f6
 
  JSR TT66-2             \ Clear the top part of the screen, draw a white border,
@@ -59,7 +79,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ M
 
  JSR NLIN               \ Draw a horizontal line underneath the title
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION
 
  LDA #163               \ Print recursive token 3 ("DATA ON {selected system
  JSR NLIN3              \ name}" and draw a horizontal line at pixel row 19
@@ -158,9 +178,17 @@ ENDIF
  INX                    \ is stored in the range 0-14 but the displayed range
                         \ should be 1-15
 
+IF _ELITE_A_FLIGHT
+
+ JSR pr2-1              \ AJD
+
+ELIF NOT(_ELITE_A_FLIGHT)
+
  CLC                    \ Call pr2 to print the technology level as a 3-digit
  JSR pr2                \ number without a decimal point (by clearing the C
                         \ flag)
+
+ENDIF
 
  JSR TTX69              \ Print a paragraph break and set Sentence Case
 
@@ -286,7 +314,7 @@ ENDIF
 
  JSR TT162              \ Print a space
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION \ Minor
 
  LDA #0                 \ Set QQ17 = 0 to switch to ALL CAPS
  STA QQ17
@@ -294,6 +322,12 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 ELIF _MASTER_VERSION
 
  STZ QQ17               \ Set QQ17 = 0 to switch to ALL CAPS
+
+ENDIF
+
+IF _ELITE_A_FLIGHT
+
+ JSR vdu_00             \ AJD
 
 ENDIF
 
@@ -347,7 +381,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ M
  LDA #'m'
  JMP TT26
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION
 
  LDA #'k'               \ Print "km"
  JSR TT26
@@ -356,7 +390,7 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Disc: Extended system descriptions are shown in the enhanced versions, though in the disc version they are only shown when docked, as the PDESC routine isn't present in the flight code due to memory restrictions
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Disc: Extended system descriptions are shown in the enhanced versions, though in the disc version they are only shown when docked, as the PDESC routine isn't present in the flight code due to memory restrictions
 
  JSR TTX69              \ Print a paragraph break and set Sentence Case
 
@@ -371,7 +405,20 @@ IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Disc:
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Minor
+IF _ELITE_A_ENCYCLOPEDIA
+
+ JSR TTX69              \ Print a paragraph break and set Sentence Case
+
+                        \ By this point, ZZ contains the current system number
+                        \ which PDESC requires. It gets put there in the TT102
+                        \ routine, which calls TT111 to populate ZZ before
+                        \ calling TT25 (this routine)
+
+ JMP PD1                \ AJD
+
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_DOCKED \ Minor
 
                         \ The following code doesn't appear to be called from
                         \ anywhere, so it's presumably a remnant of code from

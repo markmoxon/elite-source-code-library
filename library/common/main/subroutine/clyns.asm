@@ -45,7 +45,7 @@ IF _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Platform
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _MASTER_VERSION \ Platform
 
  LDA #%11111111         \ Set DTW2 = %11111111 to denote that we are not
  STA DTW2               \ currently printing a word
@@ -75,7 +75,7 @@ ENDIF
  LDA #20                \ Move the text cursor to row 20, near the bottom of
  STA YC                 \ the screen
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Screen
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Screen
 
  JSR TT67               \ Print a newline, which will move the text cursor down
                         \ a line (to row 21) and back to column 1
@@ -125,7 +125,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Screen
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Screen
 
  LDA #0                 \ Call LYN to clear the pixels from &7507 to &75F0
  JSR LYN

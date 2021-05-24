@@ -1,6 +1,10 @@
 \ ******************************************************************************
 \
+IF _ELITE_A_VERSION
+\       Name: HFS1
+ELIF NOT(_ELITE_A_VERSION)
 \       Name: HFS2
+ENDIF
 \       Type: Subroutine
 \   Category: Drawing circles
 \    Summary: Draw the launch or hyperspace tunnel
@@ -28,12 +32,14 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 \ four-colour mode 1 screen.
 \
 ENDIF
+IF NOT(_ELITE_A_VERSION)
 \ Arguments:
 \
 \   A                   The step size of the straight lines making up the rings
 \                       (4 for launch, 8 for hyperspace)
 \
-IF _6502SP_VERSION OR _MASTER_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
+ENDIF
+IF _6502SP_VERSION OR _MASTER_VERSION OR _DISC_VERSION \ Comment
 \ Other entry points:
 \
 \   HFS1                Don't clear the screen, and draw 8 concentric rings
@@ -42,9 +48,9 @@ IF _6502SP_VERSION OR _MASTER_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Com
 ENDIF
 \ ******************************************************************************
 
-.HFS2
-
 IF NOT(_ELITE_A_VERSION)
+
+.HFS2
 
  STA STP                \ Store the step size in A
 

@@ -21,7 +21,17 @@
 \
 \   pr2+2               Print the 8-bit number in X to the number of digits in A
 \
+IF _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA
+\   pr2-1               Print X without a decimal point
+\
+ENDIF
 \ ******************************************************************************
+
+IF _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA
+
+ CLC
+
+ENDIF
 
 .pr2
 

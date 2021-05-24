@@ -31,11 +31,12 @@ ENDIF
 
 IF _ELITE_A_ENCYCLOPEDIA
 
-                        \ Fall through into TT69 to set Sentence Case and print
-                        \ a newline
+                        \ Fall through into TT67 to print a newline
 
 ELIF NOT(_ELITE_A_ENCYCLOPEDIA)
 
-                        \ Fall through into TT67 to print a newline
+                        \ Fall through into TT69 to set Sentence Case and print
+                        \ a newline
 
 ENDIF
+

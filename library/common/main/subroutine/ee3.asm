@@ -72,7 +72,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: The Master version's hyperspace countdown is padded to 3 characters rather than 5, so it appears two characters to the left compared to the disc and 6502SP versions
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Master: The Master version's hyperspace countdown is padded to 3 characters rather than 5, so it appears two characters to the left compared to the disc and 6502SP versions
 
                         \ Fall through into pr6 to print X to 5 digits, as the
                         \ high byte in Y is 0
@@ -82,6 +82,10 @@ ELIF _MASTER_VERSION
  CLC                    \ Call TT11 to print X to 3 digits with no decimal point
  LDA #3                 \ and return from the subroutine using a tail call
  JMP TT11
+
+ELIF _ELITE_A_6502SP_PARA
+
+ JMP pr6                \ AJD
 
 ENDIF
 

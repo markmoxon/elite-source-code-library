@@ -197,7 +197,7 @@ ELIF _ELITE_A_6502SP_PARA
  JSR tube_write
  LDX &2F
  BEQ d_54eb
- JSR d_30ac
+ JSR ee3
 
 .d_54eb
 

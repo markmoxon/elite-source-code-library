@@ -113,14 +113,14 @@ ENDIF
  BMI Ghy                \ If it is, then the galactic hyperdrive has been
                         \ activated, so jump to Ghy to process it
 
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Minor
+IF _DISC_FLIGHT \ Minor
 
  LDA QQ11               \ If the current view is 0 (i.e. the space view) then
  BNE P%+5               \ jump to TTX110, which calls TT111 to set the current
  JMP TTX110             \ system to the nearest system to (QQ9, QQ10), and jumps
                         \ back into this routine at TTX111 below
 
-ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
+ELIF _DISC_DOCKED
 
  LDA QQ11               \ If the current view is 0 (i.e. the space view) then
  BEQ TTX110             \ jump to TTX110, which calls TT111 to set the current
@@ -145,6 +145,13 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  RTS                    \ This is not a chart view, so return from the
                         \ subroutine
+
+ELIF _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA
+
+ LDA QQ11               \ AJD
+ BNE P%+8
+ JSR TT111
+ JMP TTX111
 
 ENDIF
 
@@ -195,14 +202,14 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Other: Part of the bug fix for the "hype
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Platform
 
  LDA #7                 \ Move the text cursor to column 7, row 23 (in the
  STA XC                 \ middle of the bottom text row)
  LDA #23
  STA YC
 
-ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
+ELIF _DISC_DOCKED OR _MASTER_VERSION
 
  LDA #7                 \ Move the text cursor to column 7, row 22 (in the
  STA XC                 \ middle of the bottom text row)
@@ -218,8 +225,16 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
+IF NOT(_ELITE_A_FLIGHT)
+
  LDA #0                 \ Set QQ17 = 0 to switch to ALL CAPS
  STA QQ17
+
+ELIF _ELITE_A_FLIGHT
+
+ JSR vdu_00             \ AJD
+
+ENDIF
 
  LDA #189               \ Print recursive token 29 ("HYPERSPACE ")
  JSR TT27

@@ -50,12 +50,35 @@ ENDIF
  JSR fwl                \ Call fwl to print the fuel and cash levels on two
                         \ separate lines
 
+IF NOT(_ELITE_A_VERSION)
+
  LDA CRGO               \ If our ship's cargo capacity is < 26 (i.e. we do not
  CMP #26                \ have a cargo bay extension), skip the following two
  BCC P%+7               \ instructions
 
  LDA #107               \ We do have a cargo bay extension, so print recursive
  JSR TT27               \ token 107 ("LARGE CARGO{sentence case} BAY")
+
+ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
+
+ LDA #&E	            \ print hold size AJD
+ JSR TT68
+ LDX new_hold
+ DEX
+ CLC
+ JSR pr2
+ JSR TT160
+
+ELIF _ELITE_A_FLIGHT
+
+ LDA #&0E               \ AJD
+ JSR TT68
+ LDX new_hold
+ DEX
+ JSR pr2-1
+ JSR TT160
+
+ENDIF
 
  JMP TT210              \ Jump to TT210 to print the contents of our cargo bay
                         \ and return from the subroutine using a tail call

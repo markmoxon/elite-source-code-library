@@ -24,10 +24,10 @@
 
  DEY                    \ Negate the change in Y and push it onto the stack
  TYA                    \ (let's call this the y-delta)
- EOR #255
+ EOR #&FF
  PHA
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron has its own unique video system that is controlled by the custom ULA, so unlike the other versions, we don't wait for the vertical sync to prevent flicker
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron has its own unique video system that is controlled by the custom ULA, so unlike the other versions, we don't wait for the vertical sync to prevent flicker
 
  JSR WSCAN              \ Call WSCAN to wait for the vertical sync, so the whole
                         \ screen gets drawn and we can move the crosshairs with

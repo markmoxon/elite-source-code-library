@@ -30,7 +30,7 @@
 \   QQ15 to QQ15+5      The three 16-bit seeds of the nearest system to the
 \                       original coordinates
 \
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Comment
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _ELITE_A_ENCYCLOPEDIA OR _MASTER_VERSION \ Comment
 \   ZZ                  The system number of the nearest system
 \
 ENDIF
@@ -137,7 +137,7 @@ ENDIF
  BPL TT136              \ Loop back to TT136 if we still have more bytes to
                         \ copy
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Platform: Store the system number in ZZ so if we want to show the extended system description for this system, the PDESC routine knows which one to display
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _ELITE_A_ENCYCLOPEDIA OR _MASTER_VERSION \ Platform: Store the system number in ZZ so if we want to show the extended system description for this system, the PDESC routine knows which one to display
 
  LDA U                  \ Store the system number U in ZZ, so when we are done
  STA ZZ                 \ looping through all the candidates, the winner's

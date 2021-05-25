@@ -42,7 +42,7 @@ IF _CASSETTE_VERSION \ Comment
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Label
+IF _CASSETTE_VERSION OR _DISC_DOCKED \ Label
 
  LDX GHYP               \ Fetch GHYP, which tells us whether we own a galactic
  BEQ hy5                \ hyperdrive, and if it is zero, which means we don't,
@@ -51,11 +51,22 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Label
  INX                    \ We own a galactic hyperdrive, so X is &FF, so this
                         \ instruction sets X = 0
 
-ELIF _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
+ELIF _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  LDX GHYP               \ Fetch GHYP, which tells us whether we own a galactic
  BEQ zZ+1               \ hyperdrive, and if it is zero, which means we don't,
                         \ return from the subroutine (as zZ+1 contains an RTS)
+
+ INX                    \ We own a galactic hyperdrive, so X is &FF, so this
+                        \ instruction sets X = 0
+
+ELIF _ELITE_A_VERSION
+
+ LDX GHYP               \ Fetch GHYP, which tells us whether we own a galactic
+ BEQ zZ+1               \ hyperdrive, and if it is zero, which means we don't,
+                        \ return from the subroutine (as zZ+1 contains an RTS)
+
+ INC new_hold           \ AJD
 
  INX                    \ We own a galactic hyperdrive, so X is &FF, so this
                         \ instruction sets X = 0
@@ -74,6 +85,13 @@ ENDIF
 
  STX FIST               \ Changing galaxy also clears our criminal record, so
                         \ set our legal status in FIST to 0 ("clean")
+
+IF _ELITE_A_VERSION
+
+ STX cmdr_cour          \ AJD
+ STX cmdr_cour+1
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Advanced: The original versions of Elite start the galactic hyperspace countdown from 15, just like the normal hyperspace countdown, but the advanced versions don't muck about and start the galactic hyperspace countdown from 2
 
@@ -177,4 +195,10 @@ ENDIF
 
                         \ Fall through into jmp to set the system to the
                         \ current system and return from the subroutine there
+
+IF _ELITE_A_6502SP_PARA
+
+ JMP jmp                \ AJD
+
+ENDIF
 

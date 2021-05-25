@@ -19,7 +19,7 @@
 \
 \                           * 8 = Inventory
 \
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Comment
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Comment
 \ Other entry points:
 \
 \   NWDAVxx             Used to rejoin this routine from the call to NWDAV4
@@ -39,7 +39,7 @@ ENDIF
 
  STY QQ29               \ Store the current item number in QQ29
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Label
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Label
 
 .NWDAVxx
 
@@ -84,20 +84,29 @@ ENDIF
  PLA                    \ Restore the amount of item in the hold into X
  TAX
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Enhanced: Group A: In the enhanced versions, you can specify how much of each individual commodity you want to sell. In the cassette version, for each commodity you have to choose whether to sell all of your stock, or none
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Enhanced: Group A: In the enhanced versions, you can specify how much of each individual commodity you want to sell. In the cassette version, for each commodity you have to choose whether to sell all of your stock, or none
 
  STA QQ25               \ Store the amount of this item in the hold in QQ25
 
 ENDIF
 
+IF _ELITE_A_FLIGHT
+
+ JSR pr2-1              \ Print the 8-bit number in X to 3 digits, without a
+                        \ decimal point
+
+ELIF NOT(_ELITE_A_FLIGHT)
+
  CLC                    \ Print the 8-bit number in X to 3 digits, without a
  JSR pr2                \ decimal point
+
+ENDIF
 
  JSR TT152              \ Print the unit ("t", "kg" or "g") for the market item
                         \ whose byte #1 from the market prices table is in
                         \ QQ19+1 (which we set up above)
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Platform
 
  LDA QQ11               \ If the current view type in QQ11 is not 4 (Sell Cargo
  CMP #4                 \ screen), jump to TT212 to skip the option to sell
@@ -115,7 +124,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: See group A
  BCC TT212              \ If the response was "no", jump to TT212 to move on to
                         \ the next item
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
 
 \JSRTT162               \ This instruction is commented out in the original
                         \ source
@@ -139,9 +148,15 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
                         \ print an "ITEM?" error, make a beep and rejoin the
                         \ routine at NWDAVxx above
 
+ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
+
+ JSR sell_yn            \ AJD
+ BEQ TT212
+ BCS NWDAV4
+
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Platform
 
  LDA QQ29               \ We are selling this item, so fetch the item number
                         \ from QQ29
@@ -161,7 +176,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: See group A
  LDA QQ20,Y             \ hold (which is the amount to sell)
  STA P
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION
 
  LDY QQ29               \ Subtract R (the number of items we just asked to buy)
  LDA QQ20,Y             \ from the available amount of this item in QQ20, as we
@@ -174,7 +189,7 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Platform
 
  LDA QQ24               \ Set Q to the item's price / 4
  STA Q
@@ -189,6 +204,18 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR 
 
  JSR MCASH              \ Add (Y X) cash to the cash pot in CASH
 
+ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
+
+ LDA &03AA              \ AJD
+ STA &81
+ \	JSR GCASH	\--
+ JSR MULTU
+ JSR price_xy
+ JSR MCASH	\++
+ JSR MCASH	\++
+ JSR MCASH	\++
+ JSR MCASH
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: See group A
@@ -199,7 +226,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: See group A
 
  STA QQ17               \ Set QQ17 = 0, which enables printing again
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION
 
  LDA #0                 \ We've made the sale, so set the amount
 
@@ -227,7 +254,7 @@ ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
 
  RTS                    \ Otherwise return from the subroutine
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION
 
  CPY #17                \ Loop back to TT211 to print the next item in the hold
  BCC TT211              \ until Y = 17 (at which point we have done the last
@@ -235,7 +262,7 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Platform
 
  LDA QQ11               \ If the current view type in QQ11 is not 4 (Sell Cargo
  CMP #4                 \ screen), skip the next two instructions and just
@@ -249,7 +276,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR 
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Master: The Master version contains a fair amount of Trumble-related code, though it doesn't have any effect as we never get to pick up any Trumbles (though if we did, they would take over our cargo bay and hoof up all the food and narcotics, just as in the Commodore 64 version, so their essence is still encoded in the Master version)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Master: The Master version contains a fair amount of Trumble-related code, though it doesn't have any effect as we never get to pick up any Trumbles (though if we did, they would take over our cargo bay and hoof up all the food and narcotics, just as in the Commodore 64 version, so their essence is still encoded in the Master version)
 
  RTS                    \ Return from the subroutine
 

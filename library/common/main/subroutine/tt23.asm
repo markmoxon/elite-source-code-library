@@ -114,6 +114,12 @@ ENDIF
  SEC                    \ (s1_hi, s0_hi) and (QQ0, QQ1)
  SBC QQ0
 
+IF _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
+
+ STA &3A                \ AJD
+
+ENDIF
+
  BCS TT184              \ If a borrow didn't occur, i.e. s1_hi >= QQ0, then the
                         \ result is positive, so jump to TT184 and skip the
                         \ following two instructions
@@ -142,6 +148,12 @@ ENDIF
  LDA QQ15+1             \ Set A = s0_hi - QQ1, the vertical distance between
  SEC                    \ (s1_hi, s0_hi) and (QQ0, QQ1)
  SBC QQ1
+
+IF _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
+
+ STA &E0                \ AJD
+
+ENDIF
 
  BCS TT186              \ If a borrow didn't occur, i.e. s0_hi >= QQ1, then the
                         \ result is positive, so jump to TT186 and skip the
@@ -173,6 +185,8 @@ ENDIF
                         \ and set up the various variables we need to draw the
                         \ system's filled circle on the chart
 
+IF NOT(_ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA)
+
  LDA QQ15+3             \ Set A = s1_hi - QQ0, the horizontal distance between
  SEC                    \ this system and the current system, where |A| < 20.
  SBC QQ0                \ Let's call this the x-delta, as it's the horizontal
@@ -181,6 +195,12 @@ ENDIF
                         \ sign of A, so it can be negative if it's to the left
                         \ of the chart's centre, or positive if it's to the
                         \ right)
+
+ELIF _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
+
+ LDA &3A                \ AJD
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: Group A: The Master version contains code to scale the chart views, though it has no effect in this version. The code is left over from the non-BBC versions, which needed to be able to scale the charts to fit their different-sized screens
 
@@ -233,6 +253,8 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA)
+
  LDA QQ15+1             \ Set A = s0_hi - QQ1, the vertical distance between
  SEC                    \ this system and the current system, where |A| < 38.
  SBC QQ1                \ Let's call this the y-delta, as it's the vertical
@@ -240,6 +262,12 @@ ENDIF
                         \ the chart, and this system (and this time we keep the
                         \ sign of A, so it can be negative if it's above the
                         \ chart's centre, or positive if it's below)
+
+ELIF _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
+
+ LDA &E0
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: See group A
 
@@ -389,8 +417,16 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_ELITE_A_DOCKED OR _ELITE_A_FLIGHT)
+
  LDA #%10000000         \ Set bit 7 of QQ17 to switch to Sentence Case
  STA QQ17
+
+ELIF _ELITE_A_DOCKED OR _ELITE_A_FLIGHT
+
+ JSR vdu_80             \ AJD
+
+ENDIF
 
  JSR cpl                \ Call cpl to print out the system name for the seeds
                         \ in QQ15 (which now contains the seeds for the current

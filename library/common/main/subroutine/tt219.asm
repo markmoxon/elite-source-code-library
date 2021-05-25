@@ -3,7 +3,7 @@
 \       Name: TT219
 \       Type: Subroutine
 \   Category: Market
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Show the Buy Cargo screen (red key f1)
 ELIF _ELECTRON_VERSION
 \    Summary: Show the Buy Cargo screen (FUNC-2)
@@ -14,7 +14,7 @@ ENDIF
 \ Other entry points:
 \
 \   BAY2                Jump into the main loop at FRCE, setting the key
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \                       "pressed" to red key f9 (so we show the Inventory
 \                       screen)
 ELIF _ELECTRON_VERSION
@@ -36,7 +36,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ 6502SP: In the 6502SP version, you c
  JSR TT66-2             \ Clear the top part of the screen, draw a white border,
                         \ and set the current view type in QQ11 to 1
 
-ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_VERSION
 
  LDA #2                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ Clear the top part of the screen, draw a white border,
@@ -50,19 +50,37 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
+IF _ELITE_A_VERSION
+
+ JSR CTRL               \ AJD
+ BPL buy_ctrl
+ JMP cour_buy
+
+.buy_ctrl
+
+ENDIF
+
  JSR TT163              \ Print the column headers for the prices table
+
+IF _ELITE_A_DOCKED
+
+ JSR vdu_80             \ AJD
+
+ELIF NOT(_ELITE_A_DOCKED)
 
  LDA #%10000000         \ Set bit 7 of QQ17 to switch to Sentence Case, with the
  STA QQ17               \ next letter in capitals
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
+ENDIF
+
+IF _CASSETTE_VERSION \ Platform
 
 \JSR FLKB               \ This instruction is commented out in the original
                         \ source. It calls a routine to flush the keyboard
                         \ buffer (FLKB) that isn't present in the cassette
                         \ version but is in other versions
 
-ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_VERSION
 
  JSR FLKB               \ Flush the keyboard buffer
 
@@ -128,12 +146,16 @@ ENDIF
 
  JSR TT67               \ Print a newline
 
+IF NOT(_ELITE_A_VERSION)
+
  LDX #0                 \ These instructions have no effect, as they are
  STX R                  \ repeated at the start of gnum, which we call next.
  LDX #12                \ Perhaps they were left behind when code was moved from
  STX T1                 \ here into gnum, and weren't deleted?
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Label
+ENDIF
+
+IF _CASSETTE_VERSION \ Label
 
 \.TT223                 \ This label is commented out in the original source,
                         \ and is a duplicate of a label in gnum, so this could
@@ -231,7 +253,7 @@ ENDIF
 
 .TT222
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Tube
 
  LDA QQ29               \ Move the text cursor to row QQ29 + 5 (where QQ29 is
  CLC                    \ the item number, starting from 0)
@@ -264,7 +286,7 @@ ENDIF
 
 .BAY2
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 
  LDA #f9                \ Jump into the main loop at FRCE, setting the key
  JMP FRCE               \ "pressed" to red key f9 (so we show the Inventory

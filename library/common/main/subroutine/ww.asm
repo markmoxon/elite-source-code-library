@@ -39,10 +39,21 @@ ENDIF
                         \ to 5, so setting QQ22 to 15 here makes the first tick
                         \ of the hyperspace counter longer than subsequent ticks
 
+IF NOT(_ELITE_A_VERSION)
+
  TAX                    \ Print the 8-bit number in X (i.e. 15) at text location
  JMP ee3                \ (0, 1), padded to 5 digits, so it appears in the top
                         \ left corner of the screen, and return from the
                         \ subroutine using a tail call
+
+ELIF _ELITE_A_VERSION
+
+ TAX                    \ Print the 8-bit number in X (i.e. 15) at text location
+ BNE ee3                \ (0, 1), padded to 5 digits, so it appears in the top
+                        \ left corner of the screen, and return from the
+                        \ subroutine using a tail call AJD
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 

@@ -296,20 +296,6 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
 
 ENDIF
 
-IF _ELITE_A_6502SP_IO
-
- LSR A                  \ Set P = A / 8, so R now contains the number of
- LSR A                  \ character blocks we need to fill - 1
- LSR A
- STA P
-
- LDA X1                 \ Set X = X1 mod 8, which is the horizontal pixel number
- AND #7                 \ within the character block where the line starts (as
- TAX                    \ each pixel line in the character block is 8 pixels
-                        \ wide)
-
-ENDIF
-
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Screen
 
  LSR A                  \ Set R = A / 8, so R now contains the number of
@@ -331,6 +317,18 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
  LDA X1                 \ Set X = X1 mod 4, which is the horizontal pixel number
  AND #3                 \ within the character block where the line starts (as
  TAX                    \ each pixel line in the character block is 4 pixels
+                        \ wide)
+
+ELIF _ELITE_A_6502SP_IO
+
+ LSR A                  \ Set P = A / 8, so R now contains the number of
+ LSR A                  \ character blocks we need to fill - 1
+ LSR A
+ STA P
+
+ LDA X1                 \ Set X = X1 mod 8, which is the horizontal pixel number
+ AND #7                 \ within the character block where the line starts (as
+ TAX                    \ each pixel line in the character block is 8 pixels
                         \ wide)
 
 ENDIF
@@ -392,10 +390,10 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
 ENDIF
 
-IF _ELITE_A_6502SP_IO
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
- LDX P                  \ Fetch the number of character blocks we need to fill
-                        \ from P
+ LDX R                  \ Fetch the number of character blocks we need to fill
+                        \ from R
 
  DEX                    \ Decrement the number of character blocks in X
 
@@ -408,13 +406,10 @@ IF _ELITE_A_6502SP_IO
 
 .HLL1
 
+ELIF _ELITE_A_6502SP_IO
 
-ENDIF
-
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
-
- LDX R                  \ Fetch the number of character blocks we need to fill
-                        \ from R
+ LDX P                  \ Fetch the number of character blocks we need to fill
+                        \ from P
 
  DEX                    \ Decrement the number of character blocks in X
 

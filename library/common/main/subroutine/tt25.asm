@@ -323,9 +323,7 @@ ELIF _MASTER_VERSION
 
  STZ QQ17               \ Set QQ17 = 0 to switch to ALL CAPS
 
-ENDIF
-
-IF _ELITE_A_FLIGHT
+ELIF _ELITE_A_FLIGHT
 
  JSR vdu_00             \ AJD
 
@@ -403,9 +401,7 @@ IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR
                         \ description, returning from the subroutine using a
                         \ tail call
 
-ENDIF
-
-IF _ELITE_A_ENCYCLOPEDIA
+ELIF _ELITE_A_ENCYCLOPEDIA
 
  JSR TTX69              \ Print a paragraph break and set Sentence Case
 

@@ -135,9 +135,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR
 
  RTS                    \ Return from the subroutine
 
-ENDIF
-
-IF _ELITE_A_6502SP_IO
+ELIF _ELITE_A_6502SP_IO
 
  CLC                    \ Clear the C flag so it doesn't affect the additions
                         \ below

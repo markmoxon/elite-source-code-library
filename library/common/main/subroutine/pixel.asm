@@ -260,18 +260,6 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
 
 ENDIF
 
-IF _ELITE_A_FLIGHT
-
- LDA ZZ                 \ AJD
- CMP #144
- BCC thick_dot
- LDA TWOS,X
- BCS PX14+3
-
-.thick_dot
-
-ENDIF
-
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_IO \ Electron: Dots in the Electron version, such as those shown for stardust particles, are always two pixels wide, while the cassette and disc versions also support 1-pixel dots in their monochrome space views
 
  LDA ZZ                 \ If distance in ZZ >= 144, then this point is a very
@@ -283,6 +271,16 @@ ELIF _ELECTRON_VERSION
  LDA ZZ                 \ If distance in ZZ >= 144, then this point is a very
  CMP #144               \ long way away, so jump to PX14 to fetch a 2-pixel dash
  BCS PX14               \ from TWOS2 and EOR it into SC+Y
+
+ELIF _ELITE_A_FLIGHT
+
+ LDA ZZ                 \ AJD
+ CMP #144
+ BCC thick_dot
+ LDA TWOS,X
+ BCS PX14+3
+
+.thick_dot
 
 ENDIF
 
@@ -396,14 +394,6 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
 ENDIF
 
-IF _ELITE_A_6502SP_IO
-
-.PX13
-
- RTS                    \ Return from the subroutine
-
-ENDIF
-
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Platform
 
 .PX13
@@ -458,6 +448,12 @@ ELIF _MASTER_VERSION
  AND COL                \ X, and AND with the colour byte we fetched into COL
                         \ so that pixel takes on the colour we want to draw
                         \ (i.e. A is acting as a mask on the colour byte)
+
+ELIF _ELITE_A_6502SP_IO
+
+.PX13
+
+ RTS                    \ Return from the subroutine
 
 ENDIF
 

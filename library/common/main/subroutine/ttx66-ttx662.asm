@@ -136,9 +136,7 @@ ELIF _MASTER_VERSION
  LDA #0                 \ Set LAS2 = 0 to stop any laser pulsing
  STA LAS2
 
-ENDIF
-
-IF _ELITE_A_6502SP_PARA
+ELIF _ELITE_A_6502SP_PARA
 
  ASL A                  \ Set A = 0 AJD
 
@@ -192,9 +190,7 @@ ELIF _6502SP_VERSION
  LDA #11                \ Send control code 11 to OSWRCH, to instruct the I/O
  JSR OSWRCH             \ processor to clear the top part of the screen
 
-ENDIF
-
-IF _ELITE_A_6502SP_PARA
+ELIF _ELITE_A_6502SP_PARA
 
  JSR write_0346         \ AJD
  LDA #&83
@@ -324,16 +320,6 @@ IF _6502SP_VERSION \ Screen
 
 ENDIF
 
-IF _ELITE_A_6502SP_PARA
-
- LDX #0                 \ Set QQ17 = 0 to switch to ALL CAPS
- STX QQ17
-
- STX X1                 \ Set (X1, Y1) to (0, 0)
- STX Y1
-
-ENDIF
-
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Tube
 
  LDX #0                 \ Set (X1, Y1) to (0, 0)
@@ -367,6 +353,14 @@ ELIF _MASTER_VERSION
 
  LDX #0                 \ Set QQ17 = 0 to switch to ALL CAPS
  STX QQ17
+
+ELIF _ELITE_A_6502SP_PARA
+
+ LDX #0                 \ Set QQ17 = 0 to switch to ALL CAPS
+ STX QQ17
+
+ STX X1                 \ Set (X1, Y1) to (0, 0)
+ STX Y1
 
 ENDIF
 

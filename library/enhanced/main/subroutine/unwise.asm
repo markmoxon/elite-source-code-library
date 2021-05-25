@@ -50,9 +50,7 @@ IF _DISC_DOCKED \ Screen
  EOR #%01000000         \ to an ORA (SC),Y (or back again)
  STA LIL6+2
 
-ENDIF
-
-IF _ELITE_A_DOCKED
+ELIF _ELITE_A_DOCKED
 
  LDA LIL2+2             \ AJD
  EOR #&40

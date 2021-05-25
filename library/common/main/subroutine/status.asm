@@ -207,7 +207,17 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR 
  JSR plf                \ Print the text token in A (which contains our ship's
                         \ condition) followed by a newline
 
-ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
+ENDIF
+
+IF _ELITE_A_6502SP_PARA
+
+ JMP stat_legal
+
+.stat_dock
+
+ENDIF
+
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Platform
 
  LDA #205               \ Print extended token 205 ("DOCKED")
  JSR DETOK
@@ -217,14 +227,6 @@ ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
 ENDIF
 
 IF _ELITE_A_6502SP_PARA
-
- JMP stat_legal
-
-.stat_dock
-
- LDA #&CD
- JSR DETOK
- JSR TT67
 
 .stat_legal
 
@@ -336,7 +338,26 @@ ENDIF
                         \
                         \ followed by a newline and an indent of 6 characters
 
-IF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
+IF _DISC_VERSION OR _6502SP_VERSION \ Master: The Master version shows the escape pod by name in the Status Mode screen but doesn't show the large cargo bay; the Electron version is similar (though it shows it as "Escape Capsule), while the other versions do show the large cargo bay but don't show the escape pod
+
+ LDA CRGO               \ If our ship's cargo capacity is < 26 (i.e. we do not
+ CMP #26                \ have a cargo bay extension), skip the following two
+ BCC P%+7               \ instructions
+
+ LDA #107               \ We do have a cargo bay extension, so print recursive
+ JSR plf2               \ token 107 ("LARGE CARGO{sentence case} BAY"), followed
+                        \ by a newline and an indent of 6 characters
+
+ELIF _MASTER_VERSION
+
+ LDA ESCP               \ If we don't have an escape pod fitted (i.e. ESCP is
+ BEQ P%+7               \ zero), skip the following two instructions
+
+ LDA #112               \ We do have an escape pod fitted, so print recursive
+ JSR plf2               \ token 112 ("ESCAPE POD"), followed by a newline and an
+                        \ indent of 6 characters
+
+ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
 .sell_equip
 
@@ -358,27 +379,6 @@ ELIF _ELITE_A_FLIGHT
  JSR plf2
 
 .l_1ce7
-
-ENDIF
-
-IF _DISC_VERSION OR _6502SP_VERSION \ Master: The Master version shows the escape pod by name in the Status Mode screen but doesn't show the large cargo bay; the Electron version is similar (though it shows it as "Escape Capsule), while the other versions do show the large cargo bay but don't show the escape pod
-
- LDA CRGO               \ If our ship's cargo capacity is < 26 (i.e. we do not
- CMP #26                \ have a cargo bay extension), skip the following two
- BCC P%+7               \ instructions
-
- LDA #107               \ We do have a cargo bay extension, so print recursive
- JSR plf2               \ token 107 ("LARGE CARGO{sentence case} BAY"), followed
-                        \ by a newline and an indent of 6 characters
-
-ELIF _MASTER_VERSION
-
- LDA ESCP               \ If we don't have an escape pod fitted (i.e. ESCP is
- BEQ P%+7               \ zero), skip the following two instructions
-
- LDA #112               \ We do have an escape pod fitted, so print recursive
- JSR plf2               \ token 112 ("ESCAPE POD"), followed by a newline and an
-                        \ indent of 6 characters
 
 ENDIF
 
@@ -558,30 +558,6 @@ ENDIF
 
  LDA #103               \ Set A to token 103 ("PULSE LASER")
 
-IF _ELITE_A_VERSION
-
- LDX &93                \ AJD
- LDY LASER,X
- CPY new_beam	\ beam laser
- BNE l_1b9d
- LDA #&68
-
-.l_1b9d
-
- CPY new_military	\ military laser
- BNE l_1ba3
- LDA #&75
-
-.l_1ba3
-
- CPY new_mining	\ mining laser
- BNE l_1ba9
- LDA #&76
-
-.l_1ba9
-
-ENDIF
-
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: The Status Mode screen in the enhanced versions supports the new types of laser (military and mining)
 
  LDX CNT                \ If the laser power for view X has bit 7 clear, then it
@@ -612,6 +588,28 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
  LDA #118               \ This sets A = 118 if the laser in view X is a mining
                         \ laser (token 118 is "MINING  LASER")
+
+ELIF _ELITE_A_VERSION
+
+ LDX &93                \ AJD
+ LDY LASER,X
+ CPY new_beam	\ beam laser
+ BNE l_1b9d
+ LDA #&68
+
+.l_1b9d
+
+ CPY new_military	\ military laser
+ BNE l_1ba3
+ LDA #&75
+
+.l_1ba3
+
+ CPY new_mining	\ mining laser
+ BNE l_1ba9
+ LDA #&76
+
+.l_1ba9
 
 ENDIF
 

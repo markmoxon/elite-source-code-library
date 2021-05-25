@@ -92,39 +92,6 @@ ENDIF
  STX R                  \ each character block of the bar, starting with a full
                         \ character's width of 4 pixels
 
-IF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
-
- CMP T1                 \ If A >= T1 then we have passed the threshold where we
- BCS DL30               \ change bar colour, so jump to DL30 to set A to the
-                        \ "high value" colour
-
- LDA K+1                \ Set A to K+1, the "low value" colour to use
-
- EQUB &2C               \ AJD
-
-.DL30
-
- LDA K                  \ Set A to K, the "high value" colour to use
-
-.DL31
-
-ENDIF
-
-IF _ELITE_A_DOCKED
-
- STA COL                \ Store the colour of the indicator in COL
-
-ELIF _ELITE_A_6502SP_PARA
-
- JSR tube_write
- LDA SC
- JSR tube_write
- LDA SC+1
- JSR tube_write
- INC SC+1
-
-ENDIF
-
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: As the dashboard in the Electron version is monochrome, the dashboard indicators do not change colour when reaching their threshold
 
  CMP T1                 \ If A >= T1 then we have passed the threshold where we
@@ -143,6 +110,47 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _
 .DL31
 
  STA COL                \ Store the colour of the indicator in COL
+
+ELIF _ELITE_A_DOCKED
+
+ CMP T1                 \ If A >= T1 then we have passed the threshold where we
+ BCS DL30               \ change bar colour, so jump to DL30 to set A to the
+                        \ "high value" colour
+
+ LDA K+1                \ Set A to K+1, the "low value" colour to use
+
+ EQUB &2C               \ AJD
+
+.DL30
+
+ LDA K                  \ Set A to K, the "high value" colour to use
+
+.DL31
+
+ STA COL                \ Store the colour of the indicator in COL
+
+ELIF _ELITE_A_6502SP_PARA
+
+ CMP T1                 \ If A >= T1 then we have passed the threshold where we
+ BCS DL30               \ change bar colour, so jump to DL30 to set A to the
+                        \ "high value" colour
+
+ LDA K+1                \ Set A to K+1, the "low value" colour to use
+
+ EQUB &2C               \ AJD
+
+.DL30
+
+ LDA K                  \ Set A to K, the "high value" colour to use
+
+.DL31
+
+ JSR tube_write
+ LDA SC
+ JSR tube_write
+ LDA SC+1
+ JSR tube_write
+ INC SC+1
 
 ENDIF
 

@@ -107,9 +107,7 @@ ELIF _ELECTRON_VERSION
  LSR A                  \ range 0-127 (so that's a maximum of 32 in each of the
                         \ banks, and a maximum of 31 in the top bank)
 
-ENDIF
-
-IF _ELITE_A_DOCKED
+ELIF _ELITE_A_DOCKED
 
  LDA #&3F               \ AJD
 

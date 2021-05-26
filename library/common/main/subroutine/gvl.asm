@@ -20,10 +20,14 @@
 
 .GVL
 
+IF NOT(_ELITE_A_6502SP_PARA)
+
  JSR DORND              \ Set A and X to random numbers
 
  STA QQ26               \ Set QQ26 to the random byte that's used in the market
                         \ calculations
+
+ENDIF
 
  LDX #0                 \ We are now going to loop through the market item
  STX XX4                \ availability table in AVL, so set a counter in XX4

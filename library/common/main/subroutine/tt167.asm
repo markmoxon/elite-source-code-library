@@ -75,8 +75,16 @@ ENDIF
 
 .TT168
 
+IF NOT(_ELITE_A_FLIGHT OR _ELITE_A_DOCKED)
+
  LDX #%10000000         \ Set bit 7 of QQ17 to switch to Sentence Case, with the
  STX QQ17               \ next letter in capitals
+
+ELIF _ELITE_A_FLIGHT OR _ELITE_A_DOCKED
+
+ JSR vdu_80             \ AJD
+
+ENDIF
 
  JSR TT151              \ Call TT151 to print the item name, market price and
                         \ availability of the current item, and set QQ24 to the

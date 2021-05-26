@@ -10,6 +10,12 @@
 \ Try to go through hyperspace. Called from TT102 in the main loop when the
 \ hyperspace countdown has finished.
 \
+IF _ELITE_A_VERSION
+\ Other entry points:
+\
+\   hyper_snap          AJD
+\
+ENDIF
 \ ******************************************************************************
 
 .TT18
@@ -54,6 +60,12 @@ ENDIF
 
  STA QQ14               \ Store the updated fuel amount in QQ14
 
+IF _ELITE_A_VERSION
+
+.hyper_snap
+
+ENDIF
+
 IF _6502SP_VERSION \ 6502SP: See group A
 
 IF _EXECUTIVE
@@ -76,7 +88,7 @@ ENDIF
 
 .ee5
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Platform
 
  JSR CTRL               \ Scan the keyboard to see if CTRL is currently pressed,
                         \ returning a negative value in A if it is
@@ -97,7 +109,7 @@ ENDIF
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron version doesn't support witchspace, so the code for triggering a manual mis-jump is missing
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron version doesn't support witchspace, so the code for triggering a manual mis-jump is missing
 
  AND PATG               \ If the game is configured to show the author's names
                         \ on the start-up screen, then PATG will contain &FF,
@@ -128,6 +140,24 @@ ELIF _ELECTRON_VERSION
 
  JSR hyp1               \ Jump straight to the system at (QQ9, QQ10)
 
+ELIF _ELITE_A_FLIGHT
+
+ JSR DORND              \ Set A and X to random numbers
+
+ CMP #253               \ If A >= 253 (1% chance) then jump to MJP to trigger a
+ BCS MJP                \ mis-jump into witchspace
+
+ JSR hyp1               \ AJD
+
+ELIF _ELITE_A_6502SP_PARA
+
+ JSR DORND              \ Set A and X to random numbers
+
+ CMP #253               \ If A >= 253 (1% chance) then jump to MJP to trigger a
+ BCS MJP                \ mis-jump into witchspace
+
+ JSR hyp1_flight        \ AJD
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform: In the cassette version, hyp1 doesn't fall through into GVL, so we need to call it
@@ -139,7 +169,7 @@ ENDIF
 
  JSR RES2               \ Reset a number of flight variables and workspaces
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Master: The Master version calls an extra bit of code when arriving in a new system that is responsible for breeding any Trumbles in the hold, though as there are no Trumbles in the BBC versions of the game, this never actually breeds anything
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: The Master version calls an extra bit of code when arriving in a new system that is responsible for breeding any Trumbles in the hold, though as there are no Trumbles in the BBC versions of the game, this never actually breeds anything
 
  JSR SOLAR              \ Halve our legal status, update the missile indicators,
                         \ and set up data blocks and slots for the planet and
@@ -158,7 +188,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Platform
+IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Platform
 
  JSR LSHIPS             \ Call LSHIPS to load a new ship blueprints file
 
@@ -170,13 +200,13 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
  AND #%00111111         \ one of the charts (64 or 128), return from the
  BNE hyR                \ subroutine (as hyR contains an RTS)
 
-ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
+ELIF _DISC_FLIGHT
 
  LDA QQ11               \ If the current view in QQ11 is not a space view (0) or
  AND #%00111111         \ one of the charts (64 or 128), return from the
  BNE TT113              \ subroutine (as TT113 contains an RTS)
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _ELITE_A_VERSION
 
  LDA QQ11               \ If the current view in QQ11 is not a space view (0) or
  AND #%00111111         \ one of the charts (64 or 128), return from the

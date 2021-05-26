@@ -19,13 +19,17 @@
 \
 \ Other entry points:
 \
+IF NOT(_ELITE_A_VERSION)
 \   ptg                 Called when the user manually forces a mis-jump
 \
-IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
+ENDIF
+IF _6502SP_VERSION OR _MASTER_VERSION OR _ELITE_A_VERSION \ Comment
 \   RTS111              Contains an RTS
 \
 ENDIF
 \ ******************************************************************************
+
+IF NOT(_ELITE_A_VERSION)
 
 .ptg
 
@@ -33,9 +37,11 @@ ENDIF
  SEC                    \ copmpetition code will include the fact that we have
  ROL COK                \ manually forced a mis-jump into witchspace
 
+ENDIF
+
 .MJP
 
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Platform
+IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Platform
 
  LDA #3                 \ Call SHIPinA to load ship blueprints file D, which is
  JSR SHIPinA            \ one of the two files that contain Thargoids
@@ -54,7 +60,7 @@ IF _CASSETTE_VERSION \ Minor
  JSR TT66-2             \ Clear the top part of the screen, draw a white border,
                         \ and set the current view type in QQ11 to 1
 
-ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
+ELIF _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
 
  LDA #3                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 3
@@ -87,7 +93,7 @@ ENDIF
 
  JSR GTHG               \ Call GTHG to spawn a Thargoid ship
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Master: The Master version spawns three Thargoid motherships in witchspace, while the other versions spawn four
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: The Master version spawns three Thargoid motherships in witchspace, while the other versions spawn four
 
  LDA #3                 \ Fetch the number of Thargoid ships from MANY+THG, and
  CMP MANY+THG           \ if it is less than or equal to 3, loop back to MJP1 to
@@ -119,7 +125,7 @@ IF _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Label
+IF _6502SP_VERSION OR _MASTER_VERSION OR _ELITE_A_VERSION \ Label
 
 .RTS111
 

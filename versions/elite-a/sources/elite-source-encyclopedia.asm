@@ -391,24 +391,9 @@ INCLUDE "library/common/main/subroutine/tt105.asm"
 INCLUDE "library/common/main/subroutine/tt23.asm"
 INCLUDE "library/common/main/subroutine/tt81.asm"
 INCLUDE "library/common/main/subroutine/tt111.asm"
-
-.pr6
-
- CLC
-
-.pr5
-
- LDA #&05
- JMP TT11
- \dn2:
- \	JSR TT27
- \	LDA #&3F
- \	JMP TT27
-
-.TT162
-
- LDA #&20
- JMP TT27
+INCLUDE "library/common/main/subroutine/pr6.asm"
+INCLUDE "library/common/main/subroutine/pr5.asm"
+INCLUDE "library/common/main/subroutine/tt162.asm"
 
 .func_tab
 

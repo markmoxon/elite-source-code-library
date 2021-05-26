@@ -514,200 +514,26 @@ INCLUDE "library/common/main/subroutine/tt23.asm"
 INCLUDE "library/common/main/subroutine/tt81.asm"
 INCLUDE "library/common/main/subroutine/tt111.asm"
 INCLUDE "library/common/main/subroutine/jmp.asm"
-
-.pr6
-
- CLC
-
-.pr5
-
- LDA #&05
- JMP TT11
-
-.prq
-
- JSR TT27
- LDA #&3F
- JMP TT27
-
-.TT151
-
- PHA
- STA &77
- ASL A
- ASL A
- STA &73
- LDA #&01
- STA XC
- PLA
- ADC #&D0
- JSR TT27
- LDA #&0E
- STA XC
- LDX &73
- LDA QQ23+&01,X
- STA &74
- LDA cmdr_price
- AND QQ23+&03,X
- CLC
- ADC QQ23,X
- STA &03AA
- JSR TT152
- JSR mult_flag
- LDA &74
- BMI TT151dd
- LDA &03AA
- ADC &76
- JMP price_sto
-
-.TT151dd
-
- LDA &03AA
- SEC
- SBC &76
-
-.price_sto
-
- STA &03AA
- STA &1B
- LDA #&00
- JSR price_shift
- SEC
- JSR pr5
- LDY &77
- LDA #&05
- LDX AVL,Y
- STX &03AB
- CLC
- BEQ price_zero
- JSR pr2+2
- JMP TT152
-
-.price_zero
-
- LDA XC
- ADC #&04
- STA XC
- LDA #&2D
- BNE l_2e07
-
-.TT152
-
- LDA &74
- AND #&60
- BEQ TT160
- CMP #&20
- BEQ price_kg
- JSR price_g
-
-.TT162
-
- LDA #&20
-
-.l_2e07
-
- JMP TT27
-
-.TT160
-
- LDA #&74
- JSR DASC
- BCC TT162
-
-.price_kg
-
- LDA #&6B
- JSR DASC
-
-.price_g
-
- LDA #&67
- JMP DASC
-
-.TT163
-
- LDA #&11
- STA XC
- LDA #&FF
- BNE l_2e07
-
-.mark_price
-
- LDA #&10
- JSR TT66
- LDA #&05
- STA XC
- LDA #&A7
- JSR NLIN3
- LDA #&03
- STA YC
- JSR TT163
- LDA #&00
- STA &03AD
-
-.l_2e3d
-
- \	LDX #&80
- \	STX QQ17
- JSR vdu_80
- JSR TT151
- INC YC
- INC &03AD
- LDA &03AD
- CMP #&11
- BCC l_2e3d
- RTS
-
-.mult_flag
-
- LDA &74
- AND #&1F
- LDY home_econ
- STA &75
- CLC
- LDA #&00
- STA AVL+&10
-
-.l_2e60
-
- DEY
- BMI l_2e68
- ADC &75
- JMP l_2e60
-
-.l_2e68
-
- STA &76
- RTS
-
-.home_setup
-
- JSR TT111
- JSR jmp
- LDX #&05
-
-.l_2e73
-
- LDA &6C,X
- STA &03B2,X
- DEX
- BPL l_2e73
- INX
- STX &0349
- LDA QQ3
- STA home_econ
- LDA QQ5
- STA home_tech
- LDA QQ4
- STA home_govmt
- RTS
+INCLUDE "library/common/main/subroutine/pr6.asm"
+INCLUDE "library/common/main/subroutine/pr5.asm"
+INCLUDE "library/common/main/subroutine/prq.asm"
+INCLUDE "library/common/main/subroutine/tt151.asm"
+INCLUDE "library/common/main/subroutine/tt152.asm"
+INCLUDE "library/common/main/subroutine/tt162.asm"
+INCLUDE "library/common/main/subroutine/tt160.asm"
+INCLUDE "library/common/main/subroutine/tt161.asm"
+INCLUDE "library/common/main/subroutine/tt16a.asm"
+INCLUDE "library/common/main/subroutine/tt163.asm"
+INCLUDE "library/common/main/subroutine/tt167.asm"
+INCLUDE "library/common/main/subroutine/var.asm"
+INCLUDE "library/common/main/subroutine/hyp1.asm"
 
 .encyclopedia
 
  LDA #'E'
- STA rdcode+4
+ STA RDLI+4
 
-.launch
+.TT110
 
  LDX #&3F
 
@@ -717,8 +543,8 @@ INCLUDE "library/common/main/subroutine/jmp.asm"
  STA &0880,X
  DEX
  BPL l_2e94
- LDX #LO(rdcode)
- LDY #HI(rdcode)
+ LDX #LO(RDLI)
+ LDY #HI(RDLI)
  JMP oscli
 
 .LCASH
@@ -765,7 +591,7 @@ INCLUDE "library/common/main/subroutine/jmp.asm"
 
  JSR MULTU
 
-.price_shift
+.GC2
 
  ASL &1B
  ROL A
@@ -778,7 +604,7 @@ INCLUDE "library/common/main/subroutine/jmp.asm"
  LDX &1B
  RTS
 
-.rdcode
+.RDLI
 
  EQUS "R.1.F", &0D
 
@@ -809,7 +635,7 @@ INCLUDE "library/common/main/subroutine/jmp.asm"
 
 .n_eqship
 
- LDA home_tech
+ LDA tek
  CLC
  ADC #&02
  CMP #&0C
@@ -1108,7 +934,7 @@ INCLUDE "library/common/main/subroutine/jmp.asm"
 
 .equip_side
 
- LDA home_tech
+ LDA tek
  CMP #&08
  BCC l_309f
  LDA #&20
@@ -2265,7 +2091,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
  CMP #&16
  BNE not_price
- JMP mark_price
+ JMP TT167
 
 .not_price
 
@@ -2273,7 +2099,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  BNE not_launch
  JSR CTRL
  BMI jump_stay
- JMP launch
+ JMP TT110
 
 .jump_stay
 
@@ -2433,7 +2259,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDX #&13
  JSR rotate
  JSR set_home
- JSR home_setup
+ JSR hyp1
 
 .BAY
 
@@ -4980,8 +4806,8 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDX #&00
  SEC
  LDA #&0F	\LDA #&0D
- SBC home_econ
- SBC home_econ	\++
+ SBC QQ28
+ SBC QQ28	\++
  STA &03AB
 
 .n_bloop
@@ -5181,7 +5007,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  \	LDA #&80
  \	STA QQ17
  JSR vdu_80
- LDA cmdr_price
+ LDA QQ26
  EOR QQ0
  EOR QQ1
  EOR FIST
@@ -5423,7 +5249,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  BCC stay_quit
  JSR cour_dock
  JSR DORND
- STA cmdr_price
+ STA QQ26
  LDX #&00
  STX &96
 
@@ -5431,9 +5257,9 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
  LDA QQ23+&01,X
  STA &74
- JSR mult_flag
+ JSR var
  LDA QQ23+&03,X
- AND cmdr_price
+ AND QQ26
  CLC
  ADC QQ23+&02,X
  LDY &74

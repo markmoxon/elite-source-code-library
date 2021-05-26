@@ -34,8 +34,12 @@
 
 .hyp1
 
+IF NOT(_ELITE_A_FLIGHT)
+
  JSR TT111              \ Select the system closest to galactic coordinates
                         \ (QQ9, QQ10)
+
+ENDIF
 
  JSR jmp                \ Set the current system to the selected system
 
@@ -86,7 +90,7 @@ ENDIF
  LDA QQ4                \ Set the current system's government in gov to the
  STA gov                \ selected system's government from QQ4
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Minor
 
  RTS                    \ Return from the subroutine
 

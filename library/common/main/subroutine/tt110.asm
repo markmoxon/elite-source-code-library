@@ -21,7 +21,7 @@ ENDIF
 
 .TT110
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Platform
 
  LDX QQ12               \ If we are not docked (QQ12 = 0) then jump to NLUNCH
  BEQ NLUNCH             \ to skip the launch tunnel and setup process
@@ -65,7 +65,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR 
 
  STA FIST               \ Update our legal status with the new value
 
-ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
+ELIF _DISC_DOCKED
 
  LDX #63                \ Before loading the flight code, we need to copy the
                         \ two-letter token table from QQ16 to QQ16_FLIGHT, so
@@ -90,9 +90,32 @@ ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
                         \ the main flight code in D.CODE, returning from the
                         \ subroutine using a tail call
 
+ELIF _ELITE_A_DOCKED
+
+ LDX #63                \ Before loading the flight code, we need to copy the
+                        \ two-letter token table from QQ16 to QQ16_FLIGHT, so
+                        \ we set a counter in X for the 64 bytes in the table
+
+.eny1
+
+ LDA QQ16,X             \ Copy the X-th byte of QQ16 to the X-th byte of
+ STA QQ16_FLIGHT,X      \ QQ16_FLIGHT
+
+ DEX                    \ Decrement the loop counter
+
+ BPL eny1               \ Loop back to copy the next byte until we have copied
+                        \ the whole table
+
+ LDX #LO(RDLI)          \ Set (Y X) to point to RDLI ("R.D.CODE")
+ LDY #HI(RDLI)
+
+ JMP OSCLI              \ Call OSCLI to run the OS command in RDLI, which *RUNs
+                        \ the main flight code in D.CODE, returning from the
+                        \ subroutine using a tail call
+
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Platform: In the enhanced versions, the launch view has its own QQ11 view number, 255
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Platform: In the enhanced versions, the launch view has its own QQ11 view number, 255
 
  LDA #255               \ Set the view number in QQ11 to 255
  STA QQ11
@@ -101,7 +124,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Plat
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Platform
 
 .NLUNCH
 

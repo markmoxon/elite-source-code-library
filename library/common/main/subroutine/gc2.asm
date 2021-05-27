@@ -11,6 +11,12 @@
 \
 \   (Y X) = (A P) * 4
 \
+IF _ELITE_A_VERSION
+\ Other entry points:
+\
+\   price_xy            AJD
+\
+ENDIF
 \ ******************************************************************************
 
 .GC2
@@ -19,6 +25,12 @@
  ROL A
  ASL P
  ROL A
+
+IF _ELITE_A_VERSION
+
+.price_xy
+
+ENDIF
 
  TAY                    \ Set (Y X) = (A P)
  LDX P

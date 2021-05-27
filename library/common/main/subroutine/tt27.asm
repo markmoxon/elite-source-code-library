@@ -16,6 +16,16 @@
 \
 \   A                   The text token to be printed
 \
+IF _ELITE_A_DOCKED OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA
+\ Other entry points:
+\
+\   vdu_80              AJD
+\
+ENDIF
+IF _ELITE_A_FLIGHT
+\   vdu_00              AJD
+\
+ENDIF
 \ ******************************************************************************
 
 .TT27
@@ -51,6 +61,8 @@
  DEX                    \ If token = 5, this is control code 5 (fuel, newline,
  BEQ fwl                \ cash, newline), so jump to fwl
 
+IF NOT(_ELITE_A_DOCKED OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA)
+
  DEX                    \ If token > 6, skip the following 3 instructions
  BNE P%+7
 
@@ -62,9 +74,56 @@
  DEX
  BNE P%+5
 
+ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
+
+ DEX                    \ AJD
+ BEQ vdu_80
+
+ DEX
+ DEX
+ BNE l_31d2
+
+ EQUB &2C               \ AJD
+
+.vdu_80
+
+ LDX #&80
+
+ELIF _ELITE_A_FLIGHT
+
+ DEX                    \ AJD
+ BNE l_33b9
+
+.vdu_80
+
+ LDX #&80
+ EQUB &2C
+
+.vdu_00
+
+ LDX #&00
+
+ENDIF
+
  STX QQ17               \ This token is control code 8 (switch to ALL CAPS), so
  RTS                    \ set QQ17 to 0 to switch to ALL CAPS and return from
                         \ the subroutine as we are done
+
+IF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
+
+.l_31d2
+
+ENDIF
+
+IF _ELITE_A_FLIGHT
+
+.l_33b9
+
+ DEX                    \ AJD
+ DEX
+ BEQ vdu_00
+
+ENDIF
 
  DEX                    \ If token = 9, this is control code 9 (tab to column
  BEQ crlf               \ 21 and print a colon), so jump to crlf

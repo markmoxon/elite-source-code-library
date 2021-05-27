@@ -3,7 +3,7 @@
 \       Name: EQSHP
 \       Type: Subroutine
 \   Category: Equipment
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Show the Equip Ship screen (red key f3)
 ELIF _ELECTRON_VERSION
 \    Summary: Show the Equip Ship screen (FUNC-4)
@@ -18,10 +18,14 @@ ENDIF
 \
 \ ******************************************************************************
 
+IF NOT(_ELITE_A_VERSION)
+
 .bay
 
  JMP BAY                \ Go to the docking bay (i.e. show the Status Mode
                         \ screen)
+
+ENDIF
 
 .EQSHP
 
@@ -31,7 +35,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ 6502SP: In the 6502SP version, you can send the Equip Ship screen to the printer by pressing CTRL-f3
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ 6502SP: In the 6502SP version, you can send the Equip Ship screen to the printer by pressing CTRL-f3
 
  LDA #32                \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 32 (Equip
@@ -45,13 +49,13 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Platform
+IF _DISC_DOCKED OR _ELITE_A_VERSION \ Platform
 
  JSR FLKB               \ Flush the keyboard buffer
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION \ Tube
 
  LDA #12                \ Move the text cursor to column 12
  STA XC
@@ -69,10 +73,18 @@ ENDIF
  LDA #185               \ Print recursive token 25 ("SHIP") and draw a
  JSR NLIN3              \ horizontal line at pixel row 19 to box in the title
 
+IF NOT(_ELITE_A_DOCKED)
+
  LDA #%10000000         \ Set bit 7 of QQ17 to switch to Sentence Case, with the
  STA QQ17               \ next letter in capitals
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Tube
+ELIF _ELITE_A_DOCKED
+
+ JSR vdu_80             \ AJD
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION \ Tube
 
  INC YC                 \ Move the text cursor down one line
 
@@ -82,9 +94,34 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
+IF _ELITE_A_VERSION
+
+ JSR CTRL               \ AJD
+ BPL n_eqship
+ JMP n_buyship
+
+.bay
+
+ JMP BAY                \ Go to the docking bay (i.e. show the Status Mode
+                        \ screen)
+
+.n_eqship
+
+ENDIF
+
+IF NOT(_ELITE_A_VERSION)
+
  LDA tek                \ Fetch the tech level of the current system from tek
  CLC                    \ and add 3 (the tech level is stored as 0-14, so A is
  ADC #3                 \ now set to between 3 and 17)
+
+ELIF _ELITE_A_VERSION
+
+ LDA tek                \ Fetch the tech level of the current system from tek
+ CLC                    \ and add 2 (the tech level is stored as 0-14, so A is
+ ADC #2                 \ now set to between 2 and 16) AJD
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: There are up to 14 different types of ship equipment available in the enhanced version, as opposed to 12 in the cassette version (the extra options are mining and military lasers)
 
@@ -92,10 +129,16 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: There are up to 14 differe
  BCC P%+4               \ 3 and 12
  LDA #12
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
 
  CMP #12                \ If A >= 12 then set A = 14, so A is now set to between
  BCC P%+4               \ 3 and 14
+ LDA #14
+
+ELIF _ELITE_A_VERSION
+
+ CMP #12                \ If A >= 12 then set A = 14, so A is now set to between
+ BCC P%+4               \ 2 and 14
  LDA #14
 
 ENDIF
@@ -108,9 +151,19 @@ ENDIF
                         \ Set Q = A + 1 (so Q is in the range 4-13 and contains
                         \ QQ25 + 1, i.e. the highest item number on sale + 1)
 
+IF NOT(_ELITE_A_VERSION)
+
  LDA #70                \ Set A = 70 - QQ14, where QQ14 contains the current
  SEC                    \ level in light years * 10, so this leaves the amount
  SBC QQ14               \ of fuel we need to fill 'er up (in light years * 10)
+
+ELIF _ELITE_A_VERSION
+
+ LDA new_range          \ AJD
+ SEC
+ SBC QQ14
+
+ENDIF
 
  ASL A                  \ The price of fuel is always 2 Cr per light year, so we
  STA PRXS               \ double A and store it in PRXS, as the first price in
@@ -118,6 +171,14 @@ ENDIF
                         \ because the table contains prices as price * 10, it's
                         \ in the right format (so a full tank, or 7.0 light
                         \ years, would be 14.0 Cr, or a PRXS value of 140)
+
+IF _ELITE_A_VERSION
+
+ LDA #0                 \ AJD
+ ROL A
+ STA PRXS+1
+
+ENDIF
 
  LDX #1                 \ We are now going to work our way through the equipment
                         \ price list at PRXS, printing out the equipment that is
@@ -148,7 +209,7 @@ ENDIF
  SEC                    \ Set the C flag so we will print a decimal point when
                         \ we print the price
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION \ Tube
 
  LDA #25                \ Move the text cursor to column 25
  STA XC
@@ -196,7 +257,7 @@ ENDIF
                         \ clear), which will be the actual item number we want
                         \ to buy
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Tube
 
  LDX #2                 \ Move the text cursor to column 2
  STX XC
@@ -229,11 +290,39 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_ELITE_A_VERSION)
+
  PHA                    \ While preserving the value in A, call eq to subtract
  JSR eq                 \ the price of the item we want to buy (which is in A)
  PLA                    \ from our cash pot, but only if we have enough cash in
                         \ the pot. If we don't have enough cash, exit to the
                         \ docking bay (i.e. show the Status Mode screen)
+
+ELIF _ELITE_A_VERSION
+
+ PHA                    \ AJD
+ CMP #&02
+ BCC equip_space
+ LDA QQ20+&10
+ SEC
+ LDX #&C
+ JSR Tml
+ BCC equip_isspace
+ LDA #&0E
+ JMP query_beep
+
+.equip_isspace
+
+ DEC new_hold
+ PLA
+ PHA
+
+.equip_space
+
+ JSR eq
+ PLA
+
+ENDIF
 
  BNE et0                \ If A is not 0 (i.e. the item we've just bought is not
                         \ fuel), skip to et0
@@ -244,8 +333,19 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Other: The cassette version resets t
 
 ENDIF
 
+IF NOT(_ELITE_A_VERSION)
+
  LDX #70                \ And set the current fuel level * 10 in QQ14 to 70, or
  STX QQ14               \ 7.0 light years (a full tank)
+
+ELIF _ELITE_A_VERSION
+
+ LDX new_range          \ AJD
+ STX QQ14
+ JSR DIALS
+ LDA #&00
+
+ENDIF
 
 .et0
 
@@ -260,17 +360,26 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
  LDY #117               \ Set Y to recursive token 117 ("ALL")
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  LDY #124               \ Set Y to recursive token 124 ("ALL")
 
 ENDIF
+
+IF NOT(_ELITE_A_VERSION)
 
  CPX #5                 \ If buying this missile would give us 5 missiles, this
  BCS pres               \ is more than the maximum of 4 missiles that we can
                         \ fit, so jump to pres to show the error "All Present",
                         \ beep and exit to the docking bay (i.e. show the Status
                         \ Mode screen)
+
+ELIF _ELITE_A_VERSION
+
+ CPX new_missiles       \ AJD, convert pres to pres+2 or pres+3
+ BCS pres2
+
+ENDIF
 
  STX NOMSL              \ Otherwise update the number of missiles in NOMSL
 
@@ -294,6 +403,8 @@ ENDIF
  CMP #2                 \ If A is not 2 (i.e. the item we've just bought is not
  BNE et2                \ a large cargo bay), skip to et2
 
+IF NOT(_ELITE_A_VERSION)
+
  LDX #37                \ If our current cargo capacity in CRGO is 37, then we
  CPX CRGO               \ already have a large cargo bay fitted, so jump to pres
  BEQ pres               \ to show the error "Large Cargo Bay Present", beep and
@@ -302,6 +413,14 @@ ENDIF
 
  STX CRGO               \ Otherwise we just scored ourselves a large cargo bay,
                         \ so update our current cargo capacity in CRGO to 37
+
+ELIF _ELITE_A_VERSION
+
+ LDX CRGO               \ AJD
+ BNE pres
+ DEC CRGO
+
+ENDIF
 
 .et2
 
@@ -324,9 +443,13 @@ ENDIF
  CMP #4                 \ If A is not 4 (i.e. the item we've just bought is not
  BNE et4                \ an extra pulse laser), skip to et4
 
+IF NOT(_ELITE_A_VERSION)
+
  JSR qv                 \ Print a menu listing the four views, with a "View ?"
                         \ prompt, and ask for a view number, which is returned
                         \ in X (which now contains 0-3)
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform: The refund code has been moved to the refund routine in the enhanced versions
 
@@ -352,27 +475,48 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform: The refund code has been m
  STA LASER,X            \ to fit it by storing the laser power for a pulse laser
                         \ (given in POW) in LASER+X
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
 
  LDA #POW               \ Call refund with A set to the power of the new pulse
  JSR refund             \ laser to install the new laser and process a refund if
                         \ we already have a laser fitted to this view
 
+ELIF _ELITE_A_VERSION
+
+ LDY new_pulse          \ AJD
+ BNE equip_leap
+
 ENDIF
+
+IF NOT(_ELITE_A_VERSION)
 
  LDA #4                 \ Set A to 4 as we just overwrote the original value,
                         \ and we still need it set correctly so we can continue
                         \ through the conditional statements for all the other
                         \ equipment
 
+ENDIF
+
 .et4
 
  CMP #5                 \ If A is not 5 (i.e. the item we've just bought is not
  BNE et5                \ an extra beam laser), skip to et5
 
+IF NOT(_ELITE_A_VERSION)
+
  JSR qv                 \ Print a menu listing the four views, with a "View ?"
                         \ prompt, and ask for a view number, which is returned
                         \ in X (which now contains 0-3)
+
+ELIF _ELITE_A_VERSION
+
+ LDY new_beam           \ AJD
+
+.equip_leap
+
+ BNE equip_frog
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform: The refund code has been moved to the refund routine in the enhanced versions
 
@@ -415,7 +559,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform: The refund code has been m
                         \ we stored in T1 earlier, as the call to prx will have
                         \ overwritten the original value in X
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
 
  LDA #POW+128           \ Call refund with A set to the power of the new beam
  JSR refund             \ laser to install the new laser and process a refund if
@@ -437,6 +581,14 @@ ENDIF
                         \ screen)
 
 .pres
+
+IF _ELITE_A_VERSION
+
+ INC new_hold           \ AJD
+
+.pres2
+
+ENDIF
 
                         \ If we get here we need to show an error to say that
                         \ item number A is already present, where the item's
@@ -486,6 +638,12 @@ ENDIF
  DEC ESCP               \ Otherwise we just bought an escape pod, so set ESCP
                         \ to &FF (as ESCP was 0 before the DEC instruction)
 
+IF _ELITE_A_6502SP_PARA
+
+ JSR update_pod         \ AJD
+
+ENDIF
+
 .et7
 
  INY                    \ Increment Y to recursive token 113 ("ENERGY BOMB")
@@ -498,8 +656,16 @@ ENDIF
                         \ Bomb Present", beep and exit to the docking bay (i.e.
                         \ show the Status Mode screen)
 
+IF NOT(_ELITE_A_VERSION)
+
  LDX #&7F               \ Otherwise we just bought an energy bomb, so set BOMB
  STX BOMB               \ to &7F
+
+ELIF _ELITE_A_VERSION
+
+ DEC BOMB               \ AJD
+
+ENDIF
 
 .et8
 
@@ -513,8 +679,17 @@ ENDIF
                         \ Present", beep and exit to the docking bay (i.e. show
                         \ the Status Mode screen)
 
+IF NOT(_ELITE_A_VERSION)
+
  INC ENGY               \ Otherwise we just picked up an energy unit, so set
                         \ ENGY to 1 (as ENGY was 0 before the INC instruction)
+
+ELIF _ELITE_A_VERSION
+
+ LDX new_energy         \ AJD
+ STX ENGY
+
+ENDIF
 
 .etA
 
@@ -541,10 +716,22 @@ ENDIF
  CMP #11                \ If A is not 11 (i.e. the item we've just bought is not
  BNE et9                \ a galactic hyperdrive), skip to et9
 
+IF NOT(_ELITE_A_VERSION)
+
  LDX GHYP               \ If we already have a galactic hyperdrive fitted (i.e.
  BNE pres               \ GHYP is non-zero), jump to pres to show the error
                         \ "Galactic Hyperspace Present", beep and exit to the
                         \ docking bay (i.e. show the Status Mode screen)
+
+ELIF _ELITE_A_VERSION
+
+ LDX GHYP               \ AJD
+
+.equip_gfrog
+
+ BNE pres
+
+ENDIF
 
  DEC GHYP               \ Otherwise we just splashed out on a galactic
                         \ hyperdrive, so set GHYP to &FF (as GHYP was 0 before
@@ -552,7 +739,7 @@ ENDIF
 
 .et9
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Enhanced: In the enhanced versions, mining and military lasers can be fitted in the Equip Ship screen
+IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Enhanced: In the enhanced versions, mining and military lasers can be fitted in the Equip Ship screen
 
  INY                    \ Increment Y to recursive token 117 ("MILITARY  LASER")
 
@@ -581,6 +768,44 @@ IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Enhan
  LDA #Mlas              \ Call refund with A set to the power of the new mining
  JSR refund             \ laser to install the new laser and process a refund if
                         \ we already have a laser fitted to this view
+
+.et11
+
+ELIF _ELITE_A_VERSION
+
+ INY
+ CMP #&0C
+ BNE et10
+ LDY new_military
+
+.equip_frog
+
+ BNE equip_merge
+
+.et10
+
+ INY
+ CMP #&0D
+ BNE et11
+ LDY new_mining
+
+.equip_merge
+
+ PHA
+ TYA
+ PHA
+ JSR qv
+ PLA
+ LDY LASER,X
+ BEQ l_3113
+ PLA
+ LDY #&BB
+ BNE equip_gfrog
+
+.l_3113
+
+ STA LASER,X
+ PLA
 
 .et11
 

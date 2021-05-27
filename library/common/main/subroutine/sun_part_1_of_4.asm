@@ -31,7 +31,7 @@
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Platform
 
  JMP WPLS               \ Jump to WPLS to remove the old sun from the screen. We
                         \ only get here via the BCS just after the SUN entry
@@ -46,12 +46,23 @@ ENDIF
                         \ of the screen (so we don't need to draw its bottom
                         \ half)
 
+IF NOT(_ELITE_A_FLIGHT)
+
  TXA                    \ Negate X using two's complement, so X = ~X + 1
  EOR #%11111111         \
  CLC                    \ We do this because X is negative at this point, as it
  ADC #1                 \ is calculated as 191 - the y-coordinate of the sun's
  TAX                    \ centre, and the centre is off the bottom of the
                         \ screen, past 191. So we negate it to make it positive
+
+ELIF _ELITE_A_FLIGHT
+
+ TXA                    \ AJD
+ EOR #&FF
+ TAX
+ INX
+
+ENDIF
 
 .PLF17
 
@@ -88,7 +99,7 @@ ENDIF
                         \ circle appears on-screen, and of it does, set P(2 1)
                         \ to the maximum y-coordinate of the new sun on-screen
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Platform
 
  BCS PLF3-3             \ If CHKON set the C flag then the new sun's circle does
                         \ not appear on-screen, so jump to WPLS (via the JMP at

@@ -30,9 +30,21 @@
                         \ the transaction, so jump to c to return from the
                         \ subroutine (as c contains an RTS)
 
+IF NOT(_ELITE_A_VERSION)
+
  LDA #197               \ Otherwise we don't have enough cash to but this piece
  JSR prq                \ of equipment, so print recursive token 37 ("CASH")
                         \ followed by a question mark
+
+ELIF _ELITE_A_VERSION
+
+ LDA #&C5               \ AJD
+
+.query_beep
+
+ JSR prq
+
+ENDIF
 
  JMP err                \ Jump to err to beep, pause and go to the docking bay
                         \ (i.e. show the Status Mode screen)

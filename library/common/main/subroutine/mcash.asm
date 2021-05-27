@@ -29,6 +29,8 @@
  ADC CASH+2             \
  STA CASH+2             \   CASH+2 = CASH+2 + Y
 
+IF NOT(_ELITE_A_FLIGHT)
+
  LDA CASH+1             \ Then the third most significant bytes (which are 0):
  ADC #0                 \
  STA CASH+1             \   CASH+1 = CASH+1 + 0
@@ -36,6 +38,17 @@
  LDA CASH               \ And finally the most significant bytes (which are 0):
  ADC #0                 \
  STA CASH               \   CASH = CASH + 0
+
+ELIF _ELITE_A_FLIGHT
+
+ BCC TT113              \ AJD
+ INC CASH+1
+ BNE n_addmny
+ INC CASH
+
+.n_addmny
+
+ENDIF
 
  CLC                    \ Clear the C flag, so if the above was done following
                         \ a failed LCASH call, the C flag correctly indicates

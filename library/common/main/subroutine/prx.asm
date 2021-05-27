@@ -31,8 +31,22 @@
 
 .prx
 
+IF NOT(_ELITE_A_VERSION)
+
  ASL A                  \ Set Y = A * 2, so it can act as an index into the
  TAY                    \ PRXS table, which has two bytes per entry
+
+ELIF _ELITE_A_VERSION
+
+ ASL A                  \ AJD
+ BEQ n_fcost
+ ADC new_costs
+
+.n_fcost
+
+ TAY
+
+ENDIF
 
  LDX PRXS,Y             \ Fetch the low byte of the price into X
 

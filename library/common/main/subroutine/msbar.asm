@@ -120,7 +120,7 @@ IF _6502SP_VERSION \ Tube
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  TXA                    \ Set T = X * 8
  ASL A
@@ -165,6 +165,18 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA #97                \ Set SC = 97 - T
  SBC T                  \        = 96 + 1 - (X * 8)
+ STA SC
+
+ELIF _ELITE_A_VERSION
+
+ TXA                    \ Set T = X * 8
+ ASL A
+ ASL A
+ ASL A
+ STA T
+
+ LDA #41                \ Set SC = 41 - T
+ SBC T                  \        = 40 + 1 - (X * 8) AJD
  STA SC
 
 ENDIF

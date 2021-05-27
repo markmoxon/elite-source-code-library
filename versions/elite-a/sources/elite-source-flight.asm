@@ -148,9 +148,9 @@ SNE = &07C0             \ The address of the sine lookup table, as set in
 ACT = &07E0             \ The address of the arctan lookup table, as set in
                         \ elite-loader3.asm
 
-QQ16_FLIGHT = &0880     \ The address of the two-letter text token table in the
+QQ16 = &0880            \ The address of the two-letter text token table in the
                         \ flight code (this gets populated by the docked code at
-                        \ the RSHIPS of the game)
+                        \ the start of the game)
 
 CATD = &0D7A            \ The address of the CATD routine that is put in place
                         \ by the third loader, as set in elite-loader3.asm
@@ -170,6 +170,12 @@ CHK2 = &11D3            \ The address of the second checksum byte for the saved
 
 CHK = &11D4             \ The address of the first checksum byte for the saved
                         \ commander data file, as set in elite-loader3.asm
+
+XX21 = &5600            \ The address of the ship blueprints lookup table, where
+                        \ the chosen ship blueprints file is loaded
+
+E% = &563E              \ The address of the default NEWB ship bytes within the
+                        \ loaded ship blueprints file
 
 SHIP_MISSILE = &7F00    \ The address of the missile ship blueprint, as set in
                         \ elite-loader3.asm
@@ -367,13 +373,13 @@ BRKV = P% - 2
 .l_12b6
 
  LDA &030B
- AND cmdr_misl
+ AND NOMSL
  BEQ l_12cd
  LDY #&EE
- JSR l_3805
+ JSR ABORT
  JSR l_439f
  LDA #&00
- STA target
+ STA MSAR
 
 .l_12cd
 
@@ -381,12 +387,12 @@ BRKV = P% - 2
  BPL l_12e3
  LDA &030A
  BEQ l_12e3
- LDX cmdr_misl
+ LDX NOMSL
  BEQ l_12e3
- STA target
+ STA MSAR
  LDY #&E0
  DEX
- JSR l_383d
+ JSR MSBAR
 
 .l_12e3
 
@@ -418,7 +424,7 @@ BRKV = P% - 2
 .l_12f7
 
  LDA &030F
- AND cmdr_dock
+ AND DKCMP
  BNE dock_toggle
  \	BEQ l_1331
  \	STA &033F
@@ -504,7 +510,7 @@ BRKV = P% - 2
 .ins_ship
 
  STA &8C
- JSR ship_SC
+ JSR GINF
  LDY #&24
 
 .l_1387
@@ -658,12 +664,12 @@ BRKV = P% - 2
 
  JSR l_24c7
  BCC l_14ed
- LDA target
+ LDA MSAR
  BEQ l_149a
  JSR BEEP
  LDX &84
  LDY #&0E
- JSR l_3807
+ JSR ABORT2
 
 .l_149a
 
@@ -770,7 +776,7 @@ BRKV = P% - 2
  INY
  LDA (&1E),Y
  TAY
- JSR l_32d0
+ JSR MCASH
  LDA #&00
  JSR MESS
 
@@ -826,10 +832,10 @@ BRKV = P% - 2
  LDX ENERGY
  BPL l_156c
  LDX ASH
- JSR l_3626
+ JSR SHD
  STX ASH
  LDX FSH
- JSR l_3626
+ JSR SHD
  STX FSH
 
 .l_156c
@@ -875,7 +881,7 @@ BRKV = P% - 2
  LDA #&C0
  JSR l_41b4
  BCC l_15bf
- JSR l_3c30
+ JSR WPLS
  JSR NWSPS
 
 .l_15bf
@@ -1889,12 +1895,12 @@ LOAD_C% = LOAD% +P% - CODE%
  JSR FRS1
  BCC l_2589
  LDX &45
- JSR ship_SC
+ JSR GINF
  LDA FRIN,X
  JSR l_254d
- DEC cmdr_misl
+ DEC NOMSL
  JSR l_3f3b	\ redraw missiles
- STY target
+ STY MSAR
  STX &45
  JMP n_sound30
 
@@ -2529,366 +2535,64 @@ INCLUDE "library/common/main/subroutine/mjp.asm"
 INCLUDE "library/common/main/subroutine/tt18.asm"
 INCLUDE "library/common/main/subroutine/tt110.asm"
 INCLUDE "library/common/main/subroutine/tt114.asm"
-
-
-\ a.DOENTRY
-
-.l_32d0
-
- TXA
- CLC
- ADC cmdr_money+&03
- STA cmdr_money+&03
- TYA
- ADC cmdr_money+&02
- STA cmdr_money+&02
- BCC l_32f0
- INC cmdr_money+&01
- BNE n_addmny
- INC cmdr_money
-
-.n_addmny
-
- CLC
-
-.l_32f0
-
- RTS
-
-.GC2
-
- ASL &1B
- ROL A
- ASL &1B
- ROL A
- TAY
- LDX &1B
- RTS
-
-.hm
-
- JSR TT103
- JSR TT111
- JSR TT103
- JMP CLYNS
-
-.cpl
-
- LDX #&05
-
-.l_330c
-
- LDA &6C,X
- STA &73,X
- DEX
- BPL l_330c
- LDY #&03
- BIT &6C
- BVS l_331a
- DEY
-
-.l_331a
-
- STY &D1
-
-.l_331c
-
- LDA &71
- AND #&1F
- BEQ l_3327
- ORA #&80
- JSR TT27
-
-.l_3327
-
- JSR TT54
- DEC &D1
- BPL l_331c
- LDX #&05
-
-.l_3330
-
- LDA &73,X
- STA &6C,X
- DEX
- BPL l_3330
- RTS
-
-.l_3338
-
- LDY #&00
-
-.l_333a
-
- LDA &0350,Y
- CMP #&0D
- BEQ l_3347
- JSR TT26
- INY
- BNE l_333a
-
-.l_3347
-
- RTS
-
-.l_3348
-
- JSR l_334e
- JSR cpl
-
-.l_334e
-
- LDX #&05
-
-.l_3350
-
- LDA &6C,X
- LDY &03B2,X
- STA &03B2,X
- STY &6C,X
- DEX
- BPL l_3350
- RTS
-
-.l_335e
-
- LDX GCNT
- INX
- JMP pr2-1
-
-.fwl
-
- LDA #&69
- JSR TT68
- LDX QQ14
- SEC
- JSR pr2
- LDA #&C3
- JSR plf
- LDA #&77
- BNE TT27
-
-.l_337b
-
- LDX #&03
-
-.l_337d
-
- LDA cmdr_money,X
- STA &40,X
- DEX
- BPL l_337d
- LDA #&09
- STA &80
- SEC
- JSR BPRNT
- LDA #&E2
-
-.plf
-
- JSR TT27
- JMP TT67
-
-.TT68
-
- JSR TT27
-
-.l_3398
-
- LDA #&3A
-
-.TT27
-
- TAX
- BEQ l_337b
- BMI l_3413
- DEX
- BEQ l_335e
- DEX
- BEQ l_3348
- DEX
- BNE l_33ab
- JMP cpl
-
-.l_33ab
-
- DEX
- BEQ l_3338
- DEX
- BEQ fwl
- DEX
- BNE l_33b9
-
-.vdu_80
-
- LDX #&80
- EQUB &2C
-
-.vdu_00
-
- LDX #&00
- STX QQ17
- RTS
-
-.l_33b9
-
- DEX
- DEX
- BEQ vdu_00
- DEX
- BEQ l_33fb
- CMP #&60
- BCS l_342d
- CMP #&0E
- BCC l_33cf
- CMP #&20
- BCC l_33f7
-
-.l_33cf
-
- LDX QQ17
- BEQ l_3410
- BMI l_33e6
- BIT QQ17
- BVS l_3409
-
-.l_33d9
-
- CMP #&41
- BCC l_33e3
- CMP #&5B
- BCS l_33e3
- ADC #&20
-
-.l_33e3
-
- JMP TT26
-
-.l_33e6
-
- BIT QQ17
- BVS l_3401
- CMP #&41
- BCC l_3410
- PHA
- TXA
- ORA #&40
- STA QQ17
- PLA
- BNE l_33e3
-
-.l_33f7
-
- ADC #&72
- BNE l_342d
-
-.l_33fb
-
- LDA #&15
- STA XC
- BNE l_3398
-
-.l_3401
-
- CPX #&FF
- BEQ l_3468
- CMP #&41
- BCS l_33d9
-
-.l_3409
-
- PHA
- TXA
- AND #&BF
- STA QQ17
- PLA
-
-.l_3410
-
- JMP TT26
-
-.l_3413
-
- CMP #&A0
- BCS l_342b
- AND #&7F
- ASL A
- TAY
- LDA &0880,Y
- JSR TT27
- LDA &0881,Y
- CMP #&3F
- BEQ l_3468
- JMP TT27
-
-.l_342b
-
- SBC #&A0
-
-.l_342d
-
- TAX
- LDY #&00
- STY &22
- LDA #&04
- STA &23
- TXA
- BEQ l_344e
-
-.l_343b
-
- LDA (&22),Y
- BEQ l_3446
- INY
- BNE l_343b
- INC &23
- BNE l_343b
-
-.l_3446
-
- INY
- BNE l_344b
- INC &23
-
-.l_344b
-
- DEX
- BNE l_343b
-
-.l_344e
-
- TYA
- PHA
- LDA &23
- PHA
- LDA (&22),Y
- EOR #&23
- JSR TT27
- PLA
- STA &23
- PLA
- TAY
- INY
- BNE l_3464
- INC &23
-
-.l_3464
-
- LDA (&22),Y
- BNE l_344e
-
-.l_3468
-
- RTS
-
-.l_3469
+INCLUDE "library/common/main/subroutine/mcash.asm"
+INCLUDE "library/common/main/subroutine/gc2.asm"
+INCLUDE "library/common/main/subroutine/hm.asm"
+
+\ ******************************************************************************
+\
+\ Save output/ELTD.bin
+\
+\ ******************************************************************************
+
+PRINT "ELITE D"
+PRINT "Assembled at ", ~CODE_D%
+PRINT "Ends at ", ~P%
+PRINT "Code size is ", ~(P% - CODE_D%)
+PRINT "Execute at ", ~LOAD%
+PRINT "Reload at ", ~LOAD_D%
+
+PRINT "S.ELTD ", ~CODE_D%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_D%
+\SAVE "versions/elite-a/output/D.ELTD.bin", CODE_D%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE E FILE
+\
+\ ******************************************************************************
+
+CODE_E% = P%
+LOAD_E% = LOAD% + P% - CODE%
+
+INCLUDE "library/common/main/subroutine/cpl.asm"
+INCLUDE "library/common/main/subroutine/cmn.asm"
+INCLUDE "library/common/main/subroutine/ypl.asm"
+INCLUDE "library/common/main/subroutine/tal.asm"
+INCLUDE "library/common/main/subroutine/fwl.asm"
+INCLUDE "library/common/main/subroutine/csh.asm"
+INCLUDE "library/common/main/subroutine/plf.asm"
+INCLUDE "library/common/main/subroutine/tt68.asm"
+INCLUDE "library/common/main/subroutine/tt73.asm"
+INCLUDE "library/common/main/subroutine/tt27.asm"
+INCLUDE "library/common/main/subroutine/tt42.asm"
+INCLUDE "library/common/main/subroutine/tt41.asm"
+INCLUDE "library/common/main/subroutine/qw.asm"
+INCLUDE "library/common/main/subroutine/crlf.asm"
+INCLUDE "library/common/main/subroutine/tt45.asm"
+INCLUDE "library/common/main/subroutine/tt46.asm"
+INCLUDE "library/common/main/subroutine/tt74.asm"
+INCLUDE "library/common/main/subroutine/tt43.asm"
+INCLUDE "library/common/main/subroutine/ex.asm"
+
+
+.EX2
 
  LDA &65
  ORA #&A0
  STA &65
  RTS
 
-.l_3470
+.DOEXP
 
  LDA &65
  AND #&40
@@ -2920,7 +2624,7 @@ INCLUDE "library/common/main/subroutine/tt114.asm"
  LDY #&01
  LDA (&67),Y
  ADC #&04
- BCS l_3469
+ BCS EX2
  STA (&67),Y
  JSR DVID4
  LDA &1B
@@ -2946,7 +2650,7 @@ INCLUDE "library/common/main/subroutine/tt114.asm"
  AND #&BF
  STA &65
  AND #&08
- BEQ l_3468
+ BEQ TT48
  LDY #&02
  LDA (&67),Y
  TAY
@@ -3159,118 +2863,17 @@ INCLUDE "library/common/main/subroutine/tt114.asm"
  DEY
  BNE l_35b8
 
-.WPSHPS
+INCLUDE "library/common/main/subroutine/wpshps.asm"
+INCLUDE "library/common/main/subroutine/flflls.asm"
+INCLUDE "library/common/main/subroutine/det1-dodials.asm"
+INCLUDE "library/common/main/subroutine/shd.asm"
+INCLUDE "library/common/main/subroutine/dengy.asm"
+INCLUDE "library/common/main/subroutine/sps2.asm"
 
- LDX #&00
-
-.l_35da
-
- LDA FRIN,X
- BEQ l_3602
- BMI l_35ff
- STA &8C
- JSR ship_SC
- LDY #&1F
-
-.l_35e8
-
- LDA (&20),Y
- STA &46,Y
- DEY
- BPL l_35e8
- STX &84
- JSR SCAN
- LDX &84
- LDY #&1F
- LDA (&20),Y
- AND #&A7
- STA (&20),Y
-
-.l_35ff
-
- INX
- BNE l_35da
-
-.l_3602
-
- LDX #&FF
- STX &0EC0
- STX &0F0E
-
-.FLFLLS
-
- LDY #&BF
- LDA #&00
-
-.l_360e
-
- STA &0E00,Y
- DEY
- BNE l_360e
- DEY
- STY &0E00
- RTS
-
-.l_3619
-
- LDA #&06
- SEI
- STA &FE00
- STX &FE01
- CLI
- RTS
-
-.l_3624
-
- DEX
- RTS
-
-.l_3626
-
- INX
- BEQ l_3624
-
-.DENGY
-
- DEC ENERGY
- PHP
- BNE l_3632
- INC ENERGY
-
-.l_3632
-
- PLP
- RTS
-
-.l_3642
-
- ASL A
- TAX
- LDA #&00
- ROR A
- TAY
- LDA #&14
- STA &81
- TXA
- JSR DVID4
- LDX &1B
- TYA
- BMI l_3658
- LDY #&00
- RTS
-
-.l_3658
-
- LDY #&FF
- TXA
- EOR #&FF
- TAX
- INX
- RTS
 
 .COMPAS
 
- JSR l_3694
+ JSR DOT
  LDY #&25
  LDA &0320
  BNE l_station
@@ -3280,12 +2883,12 @@ INCLUDE "library/common/main/subroutine/tt114.asm"
 
  JSR l_42ae
  LDA &34
- JSR l_3642
+ JSR SPS2
  TXA
  ADC #&C3
  STA &03A8
  LDA &35
- JSR l_3642
+ JSR SPS2
  STX &D1
  LDA #&CC
  SBC &D1
@@ -3299,7 +2902,7 @@ INCLUDE "library/common/main/subroutine/tt114.asm"
 
  STA &03C5
 
-.l_3694
+.DOT
 
  LDA &03A9
  STA &35
@@ -3426,169 +3029,12 @@ INCLUDE "library/common/main/subroutine/tt114.asm"
  INX
  RTS
 
-.ship_SC
-
- TXA
- ASL A
- TAY
- LDA UNIV,Y
- STA &20
- LDA UNIV+&01,Y
- STA &21
- RTS
-
-.NWSPS
-
- JSR l_3821
- LDX #&81
- STX &66
- LDX #&FF
- STX &63
- INX
- STX &64
- STX FRIN+&01
- STX &67
- LDA FIST
- BPL n_enemy
- LDX #&04
-
-.n_enemy
-
- STX &6A
- LDX #&0A
- JSR l_37fc
- JSR l_37fc
- STX &68
- JSR l_37fc
- LDA #&02
-
-.NWSHP
-
- STA &D1
- LDX #&00
-
-.l_376c
-
- LDA FRIN,X
- BEQ l_3778
- INX
- CPX #&0C
- BCC l_376c
-
-.l_3776
-
- CLC
-
-.l_3777
-
- RTS
-
-.l_3778
-
- JSR ship_SC
- LDA &D1
- BMI l_37d1
- ASL A
- TAY
- LDA &55FF,Y
- BEQ l_3776
- STA &1F
- LDA &55FE,Y
- STA &1E
- CPY #&04
- BEQ l_37c1
- LDY #&05
- LDA (&1E),Y
- STA &06
- LDA &03B0
- SEC
- SBC &06
- STA &67
- LDA &03B1
- SBC #&00
- STA &68
- LDA &67
- SBC &20
- TAY
- LDA &68
- SBC &21
- BCC l_3777
- BNE l_37b7
- CPY #&25
- BCC l_3777
-
-.l_37b7
-
- LDA &67
- STA &03B0
- LDA &68
- STA &03B1
-
-.l_37c1
-
- LDY #&0E
- LDA (&1E),Y
- STA &69
- LDY #&13
- LDA (&1E),Y
- AND #&07
- STA &65
- LDA &D1
-
-.l_37d1
-
- STA FRIN,X
- TAX
- BMI l_37e5
- CPX #&03
- BCC l_37e2
- CPX #&0B
- BCS l_37e2
- INC &033E
-
-.l_37e2
-
- INC &031E,X
-
-.l_37e5
-
- LDY &D1
- LDA l_563d,Y
- AND #&6F
- ORA &6A
- STA &6A
- LDY #&24
-
-.l_37f2
-
- LDA &46,Y
- STA (&20),Y
- DEY
- BPL l_37f2
- SEC
- RTS
-
-.l_37fc
-
- LDA &46,X
- EOR #&80
- STA &46,X
- INX
- INX
- RTS
-
-.l_3805
-
- LDX #&FF
-
-.l_3807
-
- STX &45
- LDX cmdr_misl
- DEX
- JSR l_383d
- STY target
- RTS
+INCLUDE "library/common/main/subroutine/ginf.asm"
+INCLUDE "library/common/main/subroutine/nwsps.asm"
+INCLUDE "library/common/main/subroutine/nwshp.asm"
+INCLUDE "library/common/main/subroutine/nws1.asm"
+INCLUDE "library/common/main/subroutine/abort.asm"
+INCLUDE "library/common/main/subroutine/abort2.asm"
 
 .l_3813
 
@@ -3603,7 +3049,7 @@ INCLUDE "library/common/main/subroutine/tt114.asm"
  LDX #LO(l_3832)
  BNE l_3825
 
-.l_3821
+.SPBLB
 
  LDA #&C0
  LDX #LO(l_3832)+3
@@ -3621,7 +3067,7 @@ INCLUDE "library/common/main/subroutine/tt114.asm"
 
  EQUB &E0, &E0, &80, &E0, &E0, &80, &E0, &E0, &20, &E0, &E0
 
-.l_383d
+.MSBAR
 
  CPX #4
  BCC n_mok
@@ -3689,11 +3135,11 @@ INCLUDE "library/common/main/subroutine/tt114.asm"
  LDA &8C
  LSR A
  BCS l_3896
- JMP l_3bed
+ JMP WPLS2
 
 .l_3896
 
- JMP l_3c30
+ JMP WPLS
 
 .l_3899
 
@@ -3724,8 +3170,8 @@ INCLUDE "library/common/main/subroutine/tt114.asm"
 
 .l_38c5
 
- JSR l_3bed
- JSR l_3b76
+ JSR WPLS2
+ JSR CIRCLE
  BCS l_38d1
  LDA &41
  BEQ l_38d2
@@ -3892,6 +3338,8 @@ INCLUDE "library/common/main/subroutine/tt114.asm"
  JSR ADD
  STA &D1
  BPL l_39fb
+
+
  TXA
  EOR #&FF
  CLC
@@ -3953,312 +3401,23 @@ INCLUDE "library/common/main/subroutine/tt114.asm"
 
  RTS
 
-.l_3a46
+INCLUDE "library/common/main/subroutine/sun_part_1_of_4.asm"
+INCLUDE "library/common/main/subroutine/sun_part_2_of_4.asm"
+INCLUDE "library/common/main/subroutine/sun_part_3_of_4.asm"
+INCLUDE "library/common/main/subroutine/sun_part_4_of_4.asm"
+INCLUDE "library/common/main/subroutine/circle.asm"
+INCLUDE "library/common/main/subroutine/circle2.asm"
 
- JMP l_3c30
 
-.l_3a49
-
- TXA
- EOR #&FF
- TAX
- INX
-
-.l_3a50
-
- LDA #&FF
- BNE l_3a99
-
-.SUN
-
- LDA #&01
- STA &0E00
- JSR l_3c80
- BCS l_3a46
- LDA #&00
- LDX &40
- CPX #&60
- ROL A
- CPX #&28
- ROL A
- CPX #&10
- ROL A
- STA &93
- LDA #&BF
- LDX font+&01
- BNE l_3a7d
- CMP font
- BCC l_3a7d
- LDA font
- BNE l_3a7d
- LDA #&01
-
-.l_3a7d
-
- STA &8F
- LDA #&BF
- SEC
- SBC &E0
- TAX
- LDA #&00
- SBC &E1
- BMI l_3a49
- BNE l_3a95
- INX
- DEX
- BEQ l_3a50
- CPX &40
- BCC l_3a99
-
-.l_3a95
-
- LDX &40
- LDA #&00
-
-.l_3a99
-
- STX &22
- STA &23
- LDA &40
- JSR SQUA2
- STA &9C
- LDA &1B
- STA &9B
- LDY #&BF
- LDA &28
- STA &26
- LDA &29
- STA &27
-
-.l_3ab2
-
- CPY &8F
- BEQ l_3ac1
- LDA &0E00,Y
- BEQ l_3abe
- JSR HLOIN2
-
-.l_3abe
-
- DEY
- BNE l_3ab2
-
-.l_3ac1
-
- LDA &22
- JSR SQUA2
- STA &D1
- LDA &9B
- SEC
- SBC &1B
- STA &81
- LDA &9C
- SBC &D1
- STA &82
- STY &35
- JSR LL5
- LDY &35
- JSR DORND
- AND &93
- CLC
- ADC &81
- BCC l_3ae8
- LDA #&FF
-
-.l_3ae8
-
- LDX &0E00,Y
- STA &0E00,Y
- BEQ l_3b3a
- LDA &28
- STA &26
- LDA &29
- STA &27
- TXA
- JSR EDGES
- LDA &34
- STA &24
- LDA &36
- STA &25
- LDA &D2
- STA &26
- LDA &D3
- STA &27
- LDA &0E00,Y
- JSR EDGES
- BCS l_3b1f
- LDA &36
- LDX &24
- STX &36
- STA &24
- JSR HLOIN
-
-.l_3b1f
-
- LDA &24
- STA &34
- LDA &25
- STA &36
-
-.l_3b27
-
- JSR HLOIN
-
-.l_3b2a
-
- DEY
- BEQ l_3b6c
- LDA &23
- BNE l_3b4e
- DEC &22
- BNE l_3ac1
- DEC &23
-
-.l_3b37
-
- JMP l_3ac1
-
-.l_3b3a
-
- LDX &D2
- STX &26
- LDX &D3
- STX &27
- JSR EDGES
- BCC l_3b27
- LDA #&00
- STA &0E00,Y
- BEQ l_3b2a
-
-.l_3b4e
-
- LDX &22
- INX
- STX &22
- CPX &40
- BCC l_3b37
- BEQ l_3b37
- LDA &28
- STA &26
- LDA &29
- STA &27
-
-.l_3b61
-
- LDA &0E00,Y
- BEQ l_3b69
- JSR HLOIN2
-
-.l_3b69
-
- DEY
- BNE l_3b61
-
-.l_3b6c
-
- CLC
- LDA &D2
- STA &28
- LDA &D3
- STA &29
-
-.l_3b75
-
- RTS
-
-.l_3b76
-
- JSR l_3c80
- BCS l_3b75
- LDA #&00
- STA &0EC0
- LDX &40
- LDA #&08
- CPX #&08
- BCC l_3b8e
- LSR A
- CPX #&3C
- BCC l_3b8e
- LSR A
-
-.l_3b8e
-
- STA &95
-
-.CIRCLE2
-
- LDX #&FF
- STX &92
- INX
- STX &93
-
-.l_3b97
-
- LDA &93
- JSR FMLTU2
- LDX #&00
- STX &D1
- LDX &93
- CPX #&21
- BCC l_3bb3
- EOR #&FF
- ADC #&00
- TAX
- LDA #&FF
- ADC #&00
- STA &D1
- TXA
- CLC
-
-.l_3bb3
-
- ADC &D2
- STA &76
- LDA &D3
- ADC &D1
- STA &77
- LDA &93
- CLC
- ADC #&10
- JSR FMLTU2
- TAX
- LDA #&00
- STA &D1
- LDA &93
- ADC #&0F
- AND #&3F
- CMP #&21
- BCC l_3be1
- TXA
- EOR #&FF
- ADC #&00
- TAX
- LDA #&FF
- ADC #&00
- STA &D1
- CLC
-
-.l_3be1
-
- JSR BLINE
- CMP #&41
- BCS l_3beb
- JMP l_3b97
-
-.l_3beb
-
- CLC
- RTS
-
-.l_3bed
+.WPLS2
 
  LDY &0EC0
- BNE l_3c26
+ BNE WP1
 
 .l_3bf2
 
  CPY &6B
- BCS l_3c26
+ BCS WP1
  LDA &0F0E,Y
  CMP #&FF
  BEQ l_3c17
@@ -4285,7 +3444,7 @@ INCLUDE "library/common/main/subroutine/tt114.asm"
  INY
  JMP l_3bf2
 
-.l_3c26
+.WP1
 
  LDA #&01
  STA &6B
@@ -4296,7 +3455,7 @@ INCLUDE "library/common/main/subroutine/tt114.asm"
 
  RTS
 
-.l_3c30
+.WPLS
 
  LDA &0E00
  BMI l_3c2f
@@ -4358,7 +3517,7 @@ INCLUDE "library/common/main/subroutine/tt114.asm"
  SEC
  RTS
 
-.l_3c80
+.CHKON
 
  LDA &D2
  CLC
@@ -4569,7 +3728,7 @@ INCLUDE "library/common/main/subroutine/tt114.asm"
  JSR FLFLLS
  STA FRIN+&01
  STA &0320
- JSR l_3821
+ JSR SPBLB
  LDA #&06
  STA &4B
  LDA #&81
@@ -4619,7 +3778,7 @@ INCLUDE "library/common/main/subroutine/tt114.asm"
  CPX &45
  BNE l_3de8
  LDY #&EE
- JSR l_3805
+ JSR ABORT
  LDA #&C8
  JSR MESS
 
@@ -4816,7 +3975,7 @@ INCLUDE "library/common/main/subroutine/tt114.asm"
  STA &7D
  LDA &0320
  BEQ l_3f09
- JSR l_3821
+ JSR SPBLB
 
 .l_3f09
 
@@ -4859,19 +4018,19 @@ INCLUDE "library/common/main/subroutine/tt114.asm"
 .l_3f3d
 
  LDY #&00
- CPX cmdr_misl
+ CPX NOMSL
  BCS miss_miss	\BCC l_3f4b
  LDY #&EE
 
 .miss_miss
 
- JSR l_383d
+ JSR MSBAR
  DEX
  BPL l_3f3d
  RTS
  \l_3f4b
  \	LDY #&EE
- \	JSR l_383d
+ \	JSR MSBAR
  \	DEX
  \	BPL l_3f4b
  \	RTS
@@ -5326,7 +4485,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  ASL &7D
  ASL &7D
  LDX #&18
- JSR l_3619
+ JSR DET1
  JSR TT66
  JSR BOX
  JSR l_35b5
@@ -5334,7 +4493,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  STA YC
  STA XC
  LDA #&92
- JSR l_342d
+ JSR ex
 
 .l_41e9
 
@@ -5385,7 +4544,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDA &0346
  BNE l_4234
  LDX #&1F
- JSR l_3619
+ JSR DET1
  JMP l_1220
 
 .RSHIPS
@@ -6562,7 +5721,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDA &65
  AND #&F7
  STA &65
- JMP l_3470
+ JMP DOEXP
 
 .l_48de
 
@@ -7284,7 +6443,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDA &65
  ORA #&08
  STA &65
- JMP l_3470
+ JMP DOEXP
 
 .l_4d30
 

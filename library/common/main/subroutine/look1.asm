@@ -97,7 +97,15 @@ IF _MASTER_VERSION \ Master: See group A
 
 ENDIF
 
+IF NOT(_ELITE_A_6502SP_PARA)
+
  JSR WPSHPS             \ Wipe all the ships from the scanner
+
+ELIF _ELITE_A_6502SP_PARA
+
+ JSR WPSHPS2            \ Wipe all the ships from the scanner
+
+ENDIF
 
                         \ And fall through into SIGHT to draw the laser
                         \ crosshairs

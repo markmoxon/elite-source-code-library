@@ -32,6 +32,8 @@
 
  TAX                    \ Copy the token number into X
 
+IF NOT(_ELITE_A_DOCKED OR _ELITE_A_FLIGHT)
+
  LDA #LO(QQ18)          \ Set V, V+1 to point to the recursive token table at
  STA V                  \ location QQ18
  LDA #HI(QQ18)
@@ -39,6 +41,15 @@
 
  LDY #0                 \ Set a counter Y to point to the character offset
                         \ as we scan through the table
+
+ELIF _ELITE_A_DOCKED OR _ELITE_A_FLIGHT
+
+ LDY #LO(QQ18)          \ Set V, V+1 to point to the recursive token table at
+ STY V                  \ location QQ18, and because QQ18 starts on a page
+ LDA #HI(QQ18)          \ boundary, the lower byte of the address is 0, so this
+ STA V+1                \ also sets Y = 0
+
+ENDIF
 
  TXA                    \ Copy the token number back into A, so both A and X
                         \ now contain the token number we want to print

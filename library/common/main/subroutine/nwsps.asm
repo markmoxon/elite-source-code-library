@@ -19,7 +19,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Space stations in the enha
  DEX                    \ Set pitch counter to 0 (no pitch, roll only)
  STX INWK+30
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  LDX #%10000001         \ Set the AI flag in byte #32 to %10000001 (hostile,
  STX INWK+32            \ no AI, has an E.C.M.)
@@ -30,13 +30,22 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
  STX NEWB               \ Set NEWB to %00000000, though this gets overridden by
                         \ the default flags from E% in NWSHP below
 
+ELIF _ELITE_A_VERSION
+
+ LDX #&81               \ AJD
+ STX &66
+ LDX #&FF
+ STX &63
+ INX
+ STX &64
+
 ENDIF
 
 \STX INWK+31            \ This instruction is commented out in the original
                         \ source. It would set the exploding state and missile
                         \ count to 0
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 
  STX FRIN+1             \ Set the sun/space station slot at FRIN+1 to 0, to
                         \ indicate we should show the space station rather than
@@ -49,13 +58,34 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
+IF NOT(_ELITE_A_VERSION)
+
  DEX                    \ Set roll counter to 255 (maximum roll with no
  STX INWK+29            \ damping)
+
+ELIF _ELITE_A_VERSION
+
+ STX &67                \ AJD
+ LDA FIST
+ BPL n_enemy
+ LDX #&04
+
+.n_enemy
+
+ STX &6A
+
+ENDIF
 
  LDX #10                \ Call NwS1 to flip the sign of nosev_x_hi (byte #10)
  JSR NwS1
 
  JSR NwS1               \ And again to flip the sign of nosev_y_hi (byte #12)
+
+IF _ELITE_A_VERSION
+
+ STX &68                \ AJD
+
+ENDIF
 
  JSR NwS1               \ And again to flip the sign of nosev_z_hi (byte #14)
 
@@ -79,10 +109,14 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
 ENDIF
 
+IF NOT(_ELITE_A_VERSION)
+
  LDA #LO(LSO)           \ Set bytes #33 and #34 to point to LSO for the ship
  STA INWK+33            \ line heap for the space station
  LDA #HI(LSO)
  STA INWK+34
+
+ENDIF
 
  LDA #SST               \ Set A to the space station type, and fall through
                         \ into NWSHP to finish adding the space station to the

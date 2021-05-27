@@ -52,8 +52,24 @@ ENDIF
 
  STX MSTG               \ Store the target of our missile lock in MSTG
 
+IF NOT(_ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA)
+
  LDX NOMSL              \ Call MSBAR to update the leftmost indicator in the
  JSR MSBAR              \ dashboard's missile bar, which returns with Y = 0
+
+ELIF _ELITE_A_FLIGHT
+
+ LDX NOMSL              \ AJD
+ DEX
+ JSR MSBAR
+
+ELIF _ELITE_A_6502SP_PARA
+
+ LDX NOMSL              \ AJD
+ DEX
+ JSR MSBAR2
+
+ENDIF
 
  STY MSAR               \ Set MSAR = 0 to indicate that the leftmost missile
                         \ is no longer seeking a target lock

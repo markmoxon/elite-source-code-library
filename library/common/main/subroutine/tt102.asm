@@ -59,7 +59,7 @@ ENDIF
 
 .TT102
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 
  CMP #f8                \ If red key f8 was pressed, jump to STATUS to show the
  BNE P%+5               \ Status Mode screen, returning from the subroutine
@@ -87,6 +87,20 @@ ELIF _ELECTRON_VERSION
  BNE P%+5               \ Short-range Chart, returning from the subroutine using
  JMP TT23               \ a tail call
 
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+ CMP #f8                \ If red key f8 was pressed, AJD
+ BNE P%+5               \ , returning from the subroutine
+ JMP info_menu          \ using a tail call
+
+ CMP #f4                \ If red key f4 was pressed, jump to TT22 to show the
+ BNE P%+5               \ Long-range Chart, returning from the subroutine using
+ JMP TT22               \ a tail call
+
+ CMP #f5                \ If red key f5 was pressed, jump to TT23 to show the
+ BNE P%+5               \ Short-range Chart, returning from the subroutine using
+ JMP TT23               \ a tail call
+
 ENDIF
 
 IF _CASSETTE_VERSION \ Comment
@@ -105,7 +119,7 @@ ELIF _ELECTRON_VERSION
  JMP TT25               \ TT25 to show the Data on System screen, returning
                         \ from the subroutine using a tail call
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION
 
  CMP #f6                \ If red key f6 was pressed, call TT111 to select the
  BNE TT92               \ system nearest to galactic coordinates (QQ9, QQ10)
@@ -115,11 +129,24 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
                         \ description for the system in ZZ if we're docked),
                         \ returning from the subroutine using a tail call
 
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+ CMP #&75               \ AJD
+ BNE TT92
+ JSR CTRL
+ BPL jump_data
+ JMP launch
+
+.jump_data
+
+ JSR TT111
+ JMP TT25
+
 ENDIF
 
 .TT92
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 
  CMP #f9                \ If red key f9 was pressed, jump to TT213 to show the
  BNE P%+5               \ Inventory screen, returning from the subroutine
@@ -139,9 +166,23 @@ ELIF _ELECTRON_VERSION
  BNE P%+5               \ Market Price screen, returning from the subroutine
  JMP TT167              \ using a tail call
 
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+ CMP #&77               \ AJD
+ BNE not_invnt
+ JMP info_menu
+
+.not_invnt
+
+ CMP #&16
+ BNE not_price
+ JMP info_menu
+
+.not_price
+
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _ELITE_A_FLIGHT \ Comment
 
  CMP #f0                \ If red key f0 was pressed, jump to TT110 to launch our
  BNE fvw                \ ship (if docked), returning from the subroutine using
@@ -153,9 +194,27 @@ ELIF _ELECTRON_VERSION
  BNE fvw                \ ship (if docked), returning from the subroutine using
  JMP TT110              \ a tail call
 
+ELIF _ELITE_A_DOCKED
+
+ CMP #f0                \ AJD
+ BNE fvw
+
+ JSR CTRL
+ BMI jump_stay
+
+ JMP TT110
+
+.jump_stay
+
+ JMP stay_here
+
 ENDIF
 
+IF NOT(_ELITE_A_6502SP_PARA)
+
 .fvw
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
@@ -331,6 +390,21 @@ ELIF _MASTER_VERSION
                         \ right), returning from the subroutine using a tail
                         \ call
 
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+ CMP #&20
+ BEQ jump_menu
+ CMP #&71
+ BEQ jump_menu
+ CMP #&72
+ BEQ jump_menu
+ CMP #&73
+ BNE LABEL_3
+
+.jump_menu
+
+ JMP info_menu
+
 ENDIF
 
 .LABEL_3
@@ -351,7 +425,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR 
  BNE P%+5               \ jump (if we are in space), returning from the
  JMP hyp                \ subroutine using a tail call
 
-ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA
 
  CMP #&54               \ If "H" was not pressed, jump to NWDAV5 to skip the
  BNE NWDAV5             \ following
@@ -379,7 +453,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Label
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _MASTER_VERSION \ Label
 
 .NWDAV5
 
@@ -397,7 +471,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Enhanced: Group A: Pressing "F" in the enhanced versions when viewing a chart lets us search for systems by name
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Enhanced: Group A: Pressing "F" in the enhanced versions when viewing a chart lets us search for systems by name
 
  CMP #&43               \ If "F" was not pressed, jump down to HME1, otherwise
  BNE HME1               \ keep going to process searching for systems
@@ -417,7 +491,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Enhanced: See group A
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _MASTER_VERSION \ Enhanced: See group A
 
  LDA QQ11               \ If the current view is a chart (QQ11 = 64 or 128),
  AND #%11000000         \ keep going, otherwise return from the subroutine (as
@@ -428,11 +502,48 @@ IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Enhan
 
 .HME1
 
+ELIF _ELITE_A_FLIGHT 
+
+ LDA &9F                \ AJD
+ EOR #&25
+ STA &9F
+ JMP WSCAN
+
+.HME1
+
+ELIF _ELITE_A_6502SP_PARA
+
+ LDA &87
+ AND #&C0
+ BEQ n_finder
+ LDA dockedp
+ BNE t95
+ JMP HME2
+
+.n_finder
+
+ LDA dockedp
+ BEQ t95
+ LDA &9F
+ EOR #&25
+ STA &9F
+ JMP WSCAN
+
+.t95
+
+ RTS
+
+.HME1
+
 ENDIF
+
+IF NOT(_ELITE_A_6502SP_PARA)
 
  STA T1                 \ Store A (the key that's been pressed) in T1
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Platform
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
  LDA QQ11               \ If the current view is a chart (QQ11 = 64 or 128),
  AND #%11000000         \ keep going, otherwise jump down to TT107 to skip the
@@ -442,7 +553,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR 
  BNE TT107              \ then we are already counting down, so jump to TT107
                         \ to skip the following
 
-ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA
 
  LDA QQ11               \ If the current view is a chart (QQ11 = 64 or 128),
  AND #%11000000         \ keep going, otherwise jump down to t95 to return from
@@ -452,12 +563,22 @@ ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
  BNE t95                \ then we are already counting down, so jump down to t95
                         \ to return from the subroutine
 
+ELIF _ELITE_A_FLIGHT
+
+ LDA QQ11               \ If the current view is a chart (QQ11 = 64 or 128),
+ AND #%11000000         \ keep going, otherwise jump down to TT107 to skip the
+ BEQ TT107              \ following
+
 ENDIF
+
+IF NOT(_ELITE_A_6502SP_PARA)
 
  LDA T1                 \ Restore the original value of A (the key that's been
                         \ pressed) from T1
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  CMP #&36               \ If "O" was pressed, do the following three jumps,
  BNE ee2                \ otherwise skip to ee2 to continue
@@ -466,6 +587,20 @@ ELIF _MASTER_VERSION
 
  CMP #&4F               \ If "O" was pressed, do the following three jumps,
  BNE ee2                \ otherwise skip to ee2 to continue
+
+ELIF _ELITE_A_DOCKED OR _ELITE_A_FLIGHT OR _ELITE_A_ENCYCLOPEDIA
+
+ CMP #&36               \ If "O" was pressed, do the following three jumps,
+ BNE not_home           \ otherwise skip to not_home to continue AJD
+
+ELIF _ELITE_A_6502SP_PARA
+
+ CMP #&36               \ If "O" was pressed, do the following three jumps,
+ BNE not_home           \ otherwise skip to not_home to continue AJD
+
+ LDA &87                \ AJD
+ AND #&C0
+ BEQ t95
 
 ENDIF
 
@@ -476,13 +611,13 @@ ENDIF
                         \ will move the location in (QQ9, QQ10) to the current
                         \ home system
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Other: This might be a bug fix? If "O" is pressed in the advanced versions, then the target system is set to home, and the routine terminates, which is different to the other versions; they stick around for one more move of the cursor, so presumably this fixes a bug where pressing "O" might not always move the cursor exactly to the current system
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Other: This might be a bug fix? If "O" is pressed in the advanced versions, then the target system is set to home, and the routine terminates, which is different to the other versions; they stick around for one more move of the cursor, so presumably this fixes a bug where pressing "O" might not always move the cursor exactly to the current system
 
  JSR TT103              \ Draw small crosshairs at coordinates (QQ9, QQ10),
                         \ which will draw the crosshairs at our current home
                         \ system
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA
 
  JMP TT103              \ Draw small crosshairs at coordinates (QQ9, QQ10),
                         \ which will draw the crosshairs at our current home
@@ -491,11 +626,15 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_ELITE_A_6502SP_PARA)
+
 .ee2
 
  JSR TT16               \ Call TT16 to move the crosshairs by the amount in X
                         \ and Y, which were passed to this subroutine as
                         \ arguments
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Platform
 
@@ -547,9 +686,63 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR 
 
 ENDIF
 
+IF _ELITE_A_FLIGHT
+
+.BAD
+
+ LDA QQ20+&03           \ AJD
+ CLC
+ ADC QQ20+&06
+ ASL A
+ ADC QQ20+&0A
+
+ENDIF
+
+IF NOT(_ELITE_A_6502SP_PARA)
+
 .t95
 
  RTS                    \ Return from the subroutine
+
+ENDIF
+
+IF _ELITE_A_VERSION
+
+.not_home
+
+ CMP #&21               \ AJD
+ BNE ee2
+
+ENDIF
+
+IF _ELITE_A_6502SP_PARA
+
+ LDA &87                \ AJD
+ AND #&C0
+ BEQ t95
+
+ LDA cmdr_cour
+ ORA cmdr_cour+1
+ BEQ t95
+
+ELIF _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA
+
+ LDA cmdr_cour
+ ORA cmdr_cour+1
+ BEQ ee2
+
+ENDIF
+
+IF _ELITE_A_VERSION
+
+ JSR TT103              \ AJD
+ LDA cmdr_courx
+ STA QQ9
+ LDA cmdr_coury
+ STA QQ10
+ JSR TT103
+
+ENDIF
 
 .T95
 
@@ -579,8 +772,16 @@ ENDIF
 
  JSR cpl                \ Print control code 3 (the selected system name)
 
+IF NOT(_ELITE_A_DOCKED OR _ELITE_A_FLIGHT)
+
  LDA #%10000000         \ Set bit 7 of QQ17 to switch to Sentence Case, with the
  STA QQ17               \ next letter in capitals
+
+ELIF _ELITE_A_DOCKED OR _ELITE_A_FLIGHT
+
+ JSR vdu_80             \ AJD
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Tube
 
@@ -607,4 +808,101 @@ ENDIF
 
  JMP TT146              \ Print the distance to the selected system and return
                         \ from the subroutine using a tail call
+
+IF _ELITE_A_6502SP_PARA
+
+.ee2
+
+ BIT dockedp
+ BMI flying
+ CMP #&20
+ BNE fvw
+ JSR CTRL
+ BMI jump_stay
+ JMP RSHIPS
+
+.jump_stay
+
+ JMP stay_here
+
+.fvw
+
+ CMP #&73
+ BNE not_equip
+ JMP EQSHP
+
+.not_equip
+
+ CMP #&71
+ BNE not_buy
+ JMP TT219
+
+.not_buy
+
+ CMP #&47
+ BNE not_disk
+ JSR SVE
+ BCC not_loaded
+ JMP QU5
+
+.not_loaded
+
+ JMP BAY
+
+.not_disk
+
+ CMP #&72
+ BNE not_sell
+ JMP TT208
+
+.not_sell
+
+ CMP #&54
+ BNE NWDAV5
+ JSR CLYNS
+ LDA #&0F
+ STA XC
+ LDA #&CD
+ JMP DETOK
+
+.flying
+
+ CMP #&20
+ BNE d_4135
+ JMP TT110
+
+.d_4135
+
+ CMP #&71
+ BCC d_4143
+ CMP #&74
+ BCS d_4143
+ AND #&03
+ TAX
+ JMP LOOK1
+
+.d_4143
+
+ CMP #&54
+ BNE NWDAV5
+ JMP hyp
+
+.d_416c
+
+ LDA &2F
+ BEQ d_418a
+ DEC &2E
+ BNE d_418a
+ LDX &2F
+ DEX
+ JSR ee3
+ LDA #&05
+ STA &2E
+ LDX &2F
+ JSR ee3
+ DEC &2F
+ BNE d_418a
+ JMP TT18
+
+ENDIF
 

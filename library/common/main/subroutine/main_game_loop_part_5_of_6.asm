@@ -62,11 +62,15 @@ IF _ELECTRON_VERSION \ Platform
 
 ENDIF
 
+IF NOT(_ELITE_A_VERSION)
+
  LDX GNTMP              \ If the laser temperature in GNTMP is non-zero,
  BEQ EE20               \ decrement it (i.e. cool it down a bit)
  DEC GNTMP
 
 .EE20
+
+ENDIF
 
 IF _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
@@ -88,7 +92,11 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
 ENDIF
 
+IF NOT(_ELITE_A_VERSION)
+
  JSR DIALS              \ Call DIALS to update the dashboard
+
+ENDIF
 
 IF _6502SP_VERSION \ 6502SP: The 6502SP version supports a printer (holding CTRL when pressing a red function key will send that screen to the printer). As part of this, the code sends line feeds, which is mainly notable for using the longest label name in the entire source code: dontdolinefeedontheprinternow
 
@@ -148,10 +156,15 @@ ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
  LDY #2                 \ Wait for 2/50 of a second (0.04 seconds), to slow the
  JSR DELAY              \ main loop down a bit
 
-ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
+ELIF _DISC_DOCKED
 
  LDA QQ11               \ If this is a space view, skip the following two
  BEQ P%+7               \ instructions (i.e. jump to JSR TT17 below)
+
+ LDY #2                 \ Wait for 2/50 of a second (0.04 seconds), to slow the
+ JSR DELAY              \ main loop down a bit
+
+ELIF _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA
 
  LDY #2                 \ Wait for 2/50 of a second (0.04 seconds), to slow the
  JSR DELAY              \ main loop down a bit

@@ -453,407 +453,32 @@ INCLUDE "library/common/main/subroutine/sun_part_2_of_4.asm"
 INCLUDE "library/common/main/subroutine/sun_part_3_of_4.asm"
 INCLUDE "library/common/main/subroutine/sun_part_4_of_4.asm"
 INCLUDE "library/common/main/subroutine/circle2.asm"
-
-
-.EDGES
-
- STA &D1
- CLC
- ADC &26
- STA &36
- LDA &27
- ADC #&00
- BMI l_35b0
- BEQ l_3599
- LDA #&FE
- STA &36
-
-.l_3599
-
- LDA &26
- SEC
- SBC &D1
- STA &34
- LDA &27
- SBC #&00
- BNE l_35a8
- CLC
- RTS
-
-.l_35a8
-
- BPL l_35b0
- LDA #&02
- STA &34
-
-.l_35ae
-
- CLC
- RTS
-
-.l_35b0
-
- LDA #&00
- STA &0E00,Y
-
-.l_35b5
-
- SEC
- RTS
-
-.CHKON
-
- LDA &D2
- CLC
- ADC &40
- LDA &D3
- ADC #&00
- BMI l_35b5
- LDA &D2
- SEC
- SBC &40
- LDA &D3
- SBC #&00
- BMI l_35cf
- BNE l_35b5
-
-.l_35cf
-
- LDA &E0
- CLC
- ADC &40
- STA &1C
- LDA &E1
- ADC #&00
- BMI l_35b5
- STA &1D
- LDA &E0
- SEC
- SBC &40
- TAX
- LDA &E1
- SBC #&00
- BMI l_35ae
- BNE l_35b5
- CPX #&BF
- RTS
-
-.get_dirn
-
- JSR direction
- LDA k_flag
- BEQ keybd_dirn
- LDA adval_x
- EOR #&FF
- JSR adval_chop
- TYA
- TAX
- LDA adval_y
-
-.adval_chop
-
- TAY
- LDA #&00
- CPY #&10
- SBC #&00
- CPY #&40
- SBC #&00
- CPY #&C0
- ADC #&00
- CPY #&E0
- ADC #&00
- TAY
- LDA KL
- RTS
-
-.keybd_dirn
-
- LDA KL
- LDX #&00
- LDY #&00
- CMP #&19
- BNE not_lcurs
- DEX
-
-.not_lcurs
-
- CMP #&79
- BNE not_rcurs
- INX
-
-.not_rcurs
-
- CMP #&39
- BNE not_ucurs
- INY
-
-.not_ucurs
-
- CMP #&29
- BNE not_dcurs
- DEY
-
-.not_dcurs
-
- STX &D1
- LDX #&00
- JSR DKS4
- BPL not_shift
- ASL &D1
- ASL &D1
- TYA
- ASL A
- ASL A
- TAY
-
-.not_shift
-
- LDX &D1
- LDA KL
- RTS
-
-.set_home
-
- LDX #&01
-
-.l_3650
-
- LDA QQ0,X
- STA QQ9,X
- DEX
- BPL l_3650
- RTS
-
-.sound_tab
-
- EQUB &12, &01, &00, &10
- EQUB &12, &02, &2C, &08
- EQUB &11, &03, &F0, &18
- EQUB &10, &F1, &07, &1A
- EQUB &03, &F1, &BC, &01
- EQUB &13, &F4, &0C, &08
- EQUB &10, &F1, &06, &0C
- EQUB &10, &02, &60, &10
- EQUB &13, &04, &C2, &FF
- EQUB &13, &00, &00, &00
-
-.RES2
-
- LDA #&12
- STA &03C3
- LDX #&FF
- STX &0EC0
- STX &0F0E
- STX &45
- LDA #&80
- STA adval_y
- STA &32
- STA &7B
- ASL A
- STA &33
- STA &7C
- STA &8A
- LDA #&03
- STA &7D
- STA &8D
- STA &31
- LDA &30
- BEQ l_36c5
- JSR sound_0
-
-.l_36c5
-
- JSR WPSHPS
- JSR clr_ships
- LDA #&FF
- STA &03B0
- LDA #&0C
- STA &03B1
-
-.init_ship
-
- LDY #&24
- LDA #&00
-
-.l_36dc
-
- STA &46,Y
- DEY
- BPL l_36dc
- LDA #&60
- STA &58
- STA &5C
- ORA #&80
- STA &54
- RTS
-
-.l_3706
-
- LDA &03A4
- JSR l_3d82
- LDA #&00
- STA &034A
- JMP l_3754
-
+INCLUDE "library/common/main/subroutine/edges.asm"
+INCLUDE "library/common/main/subroutine/pl21.asm"
+INCLUDE "library/common/main/subroutine/chkon.asm"
+INCLUDE "library/common/main/subroutine/tt17.asm"
+INCLUDE "library/common/main/subroutine/ping.asm"
+INCLUDE "library/common/main/variable/sfx.asm"
+INCLUDE "library/common/main/subroutine/res2.asm"
+INCLUDE "library/common/main/subroutine/zinf.asm"
+INCLUDE "library/common/main/subroutine/me2.asm"
 INCLUDE "library/common/main/subroutine/dornd.asm"
 
-
-.l_374a
+.TT100
 
  DEC &034A
- BEQ l_3706
- BPL l_3754
+ BEQ me2
+ BPL me3
  INC &034A
 
-.l_3754
+.me3
 
  DEC &8A
 
-.repeat_fn
+INCLUDE "library/common/main/subroutine/main_game_loop_part_5_of_6.asm"
+INCLUDE "library/common/main/subroutine/main_game_loop_part_6_of_6.asm"
+INCLUDE "library/common/main/subroutine/tt102.asm"
 
- LDX #&FF
- TXS
- LDY #&02
- JSR DELAY
- JSR get_dirn
-
-.FRCE
-
- JSR check_mode
- LDA &8E
- BNE repeat_fn
- JMP l_374a
-
-.check_mode
-
- CMP #&76
- BNE not_status
- JMP info_menu
-
-.not_status
-
- CMP #&14
- BNE not_long
- JMP TT22
-
-.not_long
-
- CMP #&74
- BNE not_short
- JMP TT23
-
-.not_short
-
- CMP #&75
- BNE not_data
- JSR CTRL
- BPL jump_data
- JMP launch
-
-.jump_data
-
- JSR TT111
- JMP TT25
-
-.not_data
-
- CMP #&77
- BNE not_invnt
- JMP info_menu
-
-.not_invnt
-
- CMP #&16
- BNE not_price
- JMP info_menu
-
-.not_price
-
- CMP #&20
- BEQ jump_menu
- CMP #&71
- BEQ jump_menu
- CMP #&72
- BEQ jump_menu
- CMP #&73
- BNE not_equip
-
-.jump_menu
-
- JMP info_menu
-
-.not_equip
-
- CMP #&54
- BNE not_hype
- JSR CLYNS
- LDA #&0F
- STA XC
- LDA #&CD
- JMP DETOK
-
-.not_hype
-
- CMP #&32
- BEQ T95
- CMP #&43
- BNE not_find
- LDA &87
- AND #&C0
- BEQ not_map
- JMP HME2
-
-.not_find
-
- STA &06
- LDA &87
- AND #&C0
- BEQ not_map
- LDA &2F
- BNE not_map
- LDA &06
- CMP #&36
- BNE not_home
- JSR TT103
- JSR set_home
- JSR TT103
-
-.not_cour
-
- JSR TT16
-
-.not_map
-
- RTS
-
-.not_home
-
- CMP #&21
- BNE not_cour
- LDA cmdr_cour
- ORA cmdr_cour+1
- BEQ not_cour
- JSR TT103
- LDA cmdr_courx
- STA QQ9
- LDA cmdr_coury
- STA QQ10
- JSR TT103
-
-.T95
-
- LDA &87
- AND #&C0
- BEQ not_map
- JSR hm
- STA QQ17
- JSR cpl
- LDA #&80
- STA QQ17
- LDA #&01
- STA XC
- INC YC
- JMP TT146
 
 .brkd
 
@@ -899,7 +524,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  EQUW &004B
  EQUB &09, &21, &7B
 
-.clr_ships
+.ZERO
 
  LDX #&3A
  LDA #&00
@@ -986,7 +611,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  TAX
  RTS
 
-.sound_0
+.ECMOF
 
  LDA #&00
  STA &30
@@ -1020,7 +645,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDA #&00
  STA &09,X
  DEX
- LDA sound_tab,Y
+ LDA SFX,Y
  STA &09,X
  DEY
  DEX
@@ -1069,18 +694,18 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
  RTS
 
-.direction
+.DOKEY
 
- LDA k_flag
+ LDA JSTK
  BEQ spec_key
  LDX #&01
  JSR adval
  ORA #&01
- STA adval_x
+ STA JSTX
  LDX #&02
  JSR adval
  EOR y_flag
- STA adval_y
+ STA JSTY
 
 .spec_key
 
@@ -1163,7 +788,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  JSR l_3d99
  PLA
 
-.l_3d82
+.MESS
 
  LDX #&00
  STX QQ17
@@ -3038,7 +2663,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  PLA
  JSR DETOK3
  JSR NLIN4
- JSR init_ship
+ JSR ZINF
  LDA #&60
  STA &54
  LDA #&B0

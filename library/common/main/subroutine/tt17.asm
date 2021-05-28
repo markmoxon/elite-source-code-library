@@ -83,6 +83,12 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
+IF _ELITE_A_6502SP_PARA
+
+.chk_dirn
+
+ENDIF
+
 IF _6502SP_VERSION \ Enhanced: Group A: In the enhanced versions, the cursor moves more quickly in the chart views if you hold down SHIFT
 
  LDX #0                 \ Call DKS4 to check whether the SHIFT key is being
@@ -338,7 +344,7 @@ ENDIF
 
 ENDIF
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Enhanced: See group A
+IF _DISC_DOCKED OR _ELITE_A_6502SP_PARA OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Enhanced: See group A
 
  STX T                  \ Set T to the value of X, which contains the joystick
                         \ roll value

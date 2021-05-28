@@ -24,25 +24,49 @@ ENDIF
 
 .msblob
 
+IF NOT(_ELITE_A_VERSION)
+
  LDX #4                 \ Set up a loop counter in X to count through all four
                         \ missile indicators
 
+ELIF _ELITE_A_VERSION
+
+ LDX #3                 \ AJD
+
+ENDIF
+
 .ss
+
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 
  CPX NOMSL              \ If the counter is equal to the number of missiles,
  BEQ SAL8               \ jump down to SQL8 to draw remaining the missiles, as
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
                         \ the rest of them are present and should be drawn in
                         \ green/cyan
+
 ELIF _ELECTRON_VERSION
+
+ CPX NOMSL              \ If the counter is equal to the number of missiles,
+ BEQ SAL8               \ jump down to SQL8 to draw remaining the missiles, as
                         \ the rest of them are present and should be drawn as
                         \ white squares
+
 ELIF _6502SP_VERSION OR _MASTER_VERSION
+
+ CPX NOMSL              \ If the counter is equal to the number of missiles,
+ BEQ SAL8               \ jump down to SQL8 to draw remaining the missiles, as
                         \ the rest of them are present and should be drawn in
                         \ green
+
+ELIF _ELITE_A_VERSION
+
+ LDY #0                 \ AJD
+ CPX NOMSL
+ BCS miss_miss
+
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  LDY #0                 \ Draw the missile indicator at position X in black
  JSR MSBAR
@@ -54,6 +78,8 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
+IF NOT(_ELITE_A_VERSION)
+
  DEX                    \ Decrement the counter to point to the next missile
 
  BNE ss                 \ Loop back to ss if we still have missiles to draw
@@ -62,7 +88,9 @@ ENDIF
 
 .SAL8
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  LDY #&EE               \ Draw the missile indicator at position X in green/cyan
  JSR MSBAR
@@ -77,11 +105,27 @@ ELIF _ELECTRON_VERSION
  LDY #&09               \ Draw the missile indicator at position X as a white
  JSR MSBAR              \ square
 
+ELIF _ELITE_A_VERSION
+
+ LDY #&EE               \ AJD
+
+.miss_miss
+
+ JSR MSBAR
+
 ENDIF
 
  DEX                    \ Decrement the counter to point to the next missile
 
+IF NOT(_ELITE_A_VERSION)
+
  BNE SAL8               \ Loop back to SAL8 if we still have missiles to draw
+
+ELIF _ELITE_A_VERSION
+
+ BPL ss                 \ AJD
+
+ENDIF
 
  RTS                    \ Return from the subroutine
 

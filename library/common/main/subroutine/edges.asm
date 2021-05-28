@@ -35,7 +35,7 @@
 \
 \   Y                   Y is preserved
 \
-IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Comment
+IF _DISC_DOCKED OR _ELITE_A_6502SP_PARA OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Comment
 \ Other entry points:
 \
 \   PL44                Clear the C flag and return from the subroutine
@@ -88,6 +88,8 @@ ENDIF
  LDA YY+1               \ And then subtracting the high bytes
  SBC #0
 
+IF NOT(_ELITE_A_FLIGHT)
+
  BNE ED3                \ If the high byte subtraction is non-zero, then skip
                         \ to ED3
 
@@ -98,6 +100,12 @@ ENDIF
  RTS                    \ Return from the subroutine
 
 .ED3
+
+ELIF _ELITE_A_FLIGHT
+
+ BEQ P%+8               \ AJD
+
+ENDIF
 
  BPL ED1                \ If the addition is positive then the calculation has
                         \ underflowed, so jump to ED1 to return a failure
@@ -116,7 +124,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Label
+IF _DISC_DOCKED OR _ELITE_A_6502SP_PARA OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Label
 
 .PL44
 
@@ -139,7 +147,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _M
 
  RTS                    \ Return from the subroutine
 
-ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA
 
                         \ The line does not fit on the screen, so fall through
                         \ into PL21 to set the C flag to indicate this result

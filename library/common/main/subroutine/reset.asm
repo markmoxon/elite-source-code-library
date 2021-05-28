@@ -65,7 +65,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR 
 
  LDX #6                 \ Set up a counter for zeroing BETA through BETA+6
 
-ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
+ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA
 
  LDX #8                 \ Set up a counter for zeroing BETA through BETA+8
 
@@ -105,7 +105,7 @@ ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
 
  TXA                    \ X is now negative - i.e. &FF - so this sets A to &FF
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION
 
  TXA                    \ X is now negative - i.e. &FF - so this sets A and QQ12
  STA QQ12               \ to &FF to indicate we are docked

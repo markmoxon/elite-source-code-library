@@ -188,8 +188,6 @@ LOAD_A% = LOAD%
 dockedp = &A0
 brk_line = &FD
 BRKV = &202
-adval_x = &34C
-adval_y = &34D
 cmdr_ship = &36D
 cmdr_cour = &387
 cmdr_courx = &389
@@ -200,7 +198,6 @@ a_flag = &3C8
 x_flag = &3C9
 y_flag = &3CB
 j_flag = &3CC
-k_flag = &3CD
 b_flag = &3CE
  \
 save_lock = &233
@@ -760,324 +757,31 @@ INCLUDE "library/common/main/subroutine/sun_part_2_of_4.asm"
 INCLUDE "library/common/main/subroutine/sun_part_3_of_4.asm"
 INCLUDE "library/common/main/subroutine/sun_part_4_of_4.asm"
 INCLUDE "library/common/main/subroutine/circle2.asm"
-
-.EDGES
-
- STA &D1
- CLC
- ADC &26
- STA &36
- LDA &27
- ADC #&00
- BMI l_35b0
- BEQ l_3599
- LDA #&FE
- STA &36
-
-.l_3599
-
- LDA &26
- SEC
- SBC &D1
- STA &34
- LDA &27
- SBC #&00
- BNE l_35a8
- CLC
- RTS
-
-.l_35a8
-
- BPL l_35b0
- LDA #&02
- STA &34
-
-.l_35ae
-
- CLC
- RTS
-
-.l_35b0
-
- LDA #&00
- STA &0E00,Y
-
-.l_35b5
-
- SEC
- RTS
-
-.CHKON
-
- LDA &D2
- CLC
- ADC &40
- LDA &D3
- ADC #&00
- BMI l_35b5
- LDA &D2
- SEC
- SBC &40
- LDA &D3
- SBC #&00
- BMI l_35cf
- BNE l_35b5
-
-.l_35cf
-
- LDA &E0
- CLC
- ADC &40
- STA &1C
- LDA &E1
- ADC #&00
- BMI l_35b5
- STA &1D
- LDA &E0
- SEC
- SBC &40
- TAX
- LDA &E1
- SBC #&00
- BMI l_35ae
- BNE l_35b5
- CPX #&BF
- RTS
-
-.get_dirn
-
- JSR direction
-
-.chk_dirn
-
- LDA k_flag
- BEQ keybd_dirn
- LDA adval_x
- EOR #&FF
- JSR adval_chop
- TYA
- TAX
- LDA adval_y
-
-.adval_chop
-
- TAY
- LDA #&00
- CPY #&10
- SBC #&00
- CPY #&40
- SBC #&00
- CPY #&C0
- ADC #&00
- CPY #&E0
- ADC #&00
- TAY
- LDA KL
- RTS
-
-.keybd_dirn
-
- LDA KL
- LDX #&00
- LDY #&00
- CMP #&19
- BNE not_lcurs
- DEX
-
-.not_lcurs
-
- CMP #&79
- BNE not_rcurs
- INX
-
-.not_rcurs
-
- CMP #&39
- BNE not_ucurs
- INY
-
-.not_ucurs
-
- CMP #&29
- BNE not_dcurs
- DEY
-
-.not_dcurs
-
- STX &D1
- LDX #&00
- JSR DKS4
- BPL not_shift
- ASL &D1
- ASL &D1
- TYA
- ASL A
- ASL A
- TAY
-
-.not_shift
-
- LDX &D1
- LDA KL
- RTS
-
-.ping
-
- LDX #&01
-
-.l_3650
-
- LDA QQ0,X
- STA QQ9,X
- DEX
- BPL l_3650
- RTS
-
-.sound_tab
-
- EQUB &12, &01, &00, &10
- EQUB &12, &02, &2C, &08
- EQUB &11, &03, &F0, &18
- EQUB &10, &F1, &07, &1A
- EQUB &03, &F1, &BC, &01
- EQUB &13, &F4, &0C, &08
- EQUB &10, &F1, &06, &0C
- EQUB &10, &02, &60, &10
- EQUB &13, &04, &C2, &FF
- EQUB &13, &00, &00, &00
-
-.clr_boot
-
- JSR clr_ships
- LDX #&08	\LDX #&06
-
-.l_3687
-
- STA &2A,X
- DEX
- BPL l_3687
- TXA
- STA &8E	\T++
- LDX #&02
-
-.l_3691
-
- STA FSH,X
- DEX
- BPL l_3691
-
-.RES2
-
- LDA #&12
- STA &03C3
- LDX #&FF
- STX &0EC0
- STX &0F0E
- STX &45
- LDA #&80
- STA adval_x	\D++
- STA adval_y
- STA &32	\T++
- STA &7B	\T++
- ASL A
- STA &33	\T++
- STA &7C	\T++
- STA &8A
- STA &2F	\D++
- LDA #&03
- STA &7D
- STA &8D
- STA &31
- LDA &0320
- BEQ d_3f09
- JSR SPBLB
-
-.d_3f09
-
- LDA &30
- BEQ l_36c5
- JSR sound_0
-
-.l_36c5
-
- JSR WPSHPS
- JSR clr_ships
- LDA #&FF
- STA &03B0
- LDA #&0C
- STA &03B1
- JSR DIALS
- JSR d_44a4	\D++
-
-.ZINF
-
- LDY #&24
- LDA #&00
-
-.l_36dc
-
- STA &46,Y
- DEY
- BPL l_36dc
- LDA #&60
- STA &58
- STA &5C
- ORA #&80
- STA &54
- RTS
-
-.msblob
-
- LDX #&03
-
-.l_36ef
-
- LDY #&00
- CPX NOMSL
- BCS miss_miss	\BCC l_36fd
- LDY #&EE
-
-.miss_miss
-
- JSR MSBAR
- DEX
- BPL l_36ef
- RTS
-
-.l_3706
-
- LDA &03A4
- JSR MESS	\l_3d82
- LDA #&00
- STA &034A
- JMP l_3754
-
-.l_374a
+INCLUDE "library/common/main/subroutine/edges.asm"
+INCLUDE "library/common/main/subroutine/pl21.asm"
+INCLUDE "library/common/main/subroutine/chkon.asm"
+INCLUDE "library/common/main/subroutine/tt17.asm"
+INCLUDE "library/common/main/subroutine/ping.asm"
+INCLUDE "library/common/main/variable/sfx.asm"
+INCLUDE "library/common/main/subroutine/reset.asm"
+INCLUDE "library/common/main/subroutine/res2.asm"
+INCLUDE "library/common/main/subroutine/zinf.asm"
+INCLUDE "library/common/main/subroutine/msblob.asm"
+INCLUDE "library/common/main/subroutine/me2.asm"
+
+.TT100
 
  DEC &034A
- BEQ l_3706
- BPL l_3754
+ BEQ me2
+ BPL me3
  INC &034A
 
-.l_3754
+.me3
 
  DEC &8A
 
-.repeat_fn
-
- LDX #&FF
- TXS
- LDY #&02
- JSR DELAY
- JSR get_dirn
-
-.FRCE
-
- JSR check_mode
- LDA &8E
- BNE repeat_fn
- JMP l_374a
-
+INCLUDE "library/common/main/subroutine/main_game_loop_part_5_of_6.asm"
+INCLUDE "library/common/main/subroutine/main_game_loop_part_6_of_6.asm"
 INCLUDE "library/common/main/subroutine/dornd.asm"
 
 
@@ -1142,11 +846,11 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDA #&06
  JSR rotate
  CMP #&44
- BNE not_loadc
+ BNE QU5
  JSR copy_cmdr
- JSR disk_menu
+ JSR SVE
 
-.not_loadc
+.QU5
 
  JSR copy_cmdr
  JSR msblob
@@ -1187,7 +891,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
  PHA
  STX &8C
- JSR clr_boot
+ JSR RESET
  LDA #&01
  JSR TT66
  DEC &87
@@ -1242,7 +946,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
  JSR CLYNS
  STY &7D
- STY k_flag
+ STY JSTK
  PLA
  JSR DETOK
  LDA #&0C
@@ -1275,7 +979,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
 .l_3980
 
- DEC k_flag
+ DEC JSTK
  RTS
 
 .cmdr_code
@@ -1367,7 +1071,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  EQUW &004B
  EQUB &09, &21, &7B
 
-.clr_ships
+.ZERO
 
  LDX #&3A
  LDA #&00
@@ -1436,14 +1140,14 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 .disk_del
 
  JSR show_cat
- BCS disk_menu
+ BCS SVE
  LDA cat_line+&02
  STA del_line+&05
  LDA #&09
  JSR DETOK
  JSR MT26
  TYA
- BEQ disk_menu
+ BEQ SVE
  LDX #&09
 
 .l_3a5b
@@ -1455,7 +1159,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDX #LO(del_line)
  LDY #HI(del_line)
  JSR oscli
- JMP disk_menu
+ JMP SVE
  \l_3a6d
  \	EQUB &00
 
@@ -1482,7 +1186,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
  JSR get_key
 
-.disk_menu
+.SVE
 
  JSR clr_bc
  TSX
@@ -1693,7 +1397,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  TAX
  RTS
 
-.sound_0
+.ECMOF
 
  LDA #&00
  STA &30
@@ -1731,7 +1435,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  LDA #&00
  STA &09,X
  DEX
- LDA sound_tab,Y
+ LDA SFX,Y
  STA &09,X
  DEY
  DEX
@@ -1776,18 +1480,18 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
  RTS
 
-.direction
+.DOKEY
 
- LDA k_flag
+ LDA JSTK
  BEQ spec_key
  LDX #&01
  JSR adval
  ORA #&01
- STA adval_x
+ STA JSTX
  LDX #&02
  JSR adval
  EOR y_flag
- STA adval_y
+ STA JSTY
 
 .spec_key
 
@@ -6512,7 +6216,7 @@ ENDIF
 
  LDA &0900
  STA &00
- LDX adval_x
+ LDX JSTX
  CPX new_max
  BCC n_highx
  LDX new_max
@@ -6532,7 +6236,7 @@ ENDIF
  TAY
  AND #&80
  STA &32
- STX adval_x
+ STX JSTX
  EOR #&80
  STA &33
  TYA
@@ -6554,7 +6258,7 @@ ENDIF
  STA &31
  ORA &32
  STA &8D
- LDX adval_y
+ LDX JSTY
  CPX new_max
  BCC n_highy
  LDX new_max
@@ -6572,7 +6276,7 @@ ENDIF
  EOR #&80
  TAY
  AND #&80
- STX adval_y
+ STX JSTY
  STA &7C
  EOR #&80
  STA &7B
@@ -7217,7 +6921,7 @@ ENDIF
 
 .d_166e
 
- JSR sound_0
+ JSR ECMOF
 
 .d_1671
 
@@ -10088,7 +9792,7 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
  LDA &2F
  BNE d_locked
  PLA
- JSR check_mode
+ JSR TT102
  JMP d_3fc0
 
 .d_locked
@@ -10097,209 +9801,7 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
  JSR d_416c
  JMP d_3fc0
 
-.check_mode
-
- CMP #&76
- BNE not_status
- JMP STATUS
-
-.not_status
-
- CMP #&14
- BNE not_long
- JMP TT22
-
-.not_long
-
- CMP #&74
- BNE not_short
- JMP TT23
-
-.not_short
-
- CMP #&75
- BNE not_data
- JSR TT111
- JMP TT25
-
-.not_data
-
- CMP #&77
- BNE not_invnt
- JMP TT213
-
-.not_invnt
-
- CMP #&16
- BNE not_price
- JMP TT167
-
-.not_price
-
- CMP #&32
- BEQ T95
- CMP #&43
- BNE not_find
- LDA &87
- AND #&C0
- BEQ n_finder
- LDA dockedp
- BNE not_map
- JMP HME2
-
-.n_finder
-
- LDA dockedp
- BEQ not_map
- LDA &9F
- EOR #&25
- STA &9F
- JMP WSCAN
-
-.not_map
-
- RTS
-
-.not_find
-
- CMP #&36
- BNE not_home
- \	STA &06
- LDA &87
- AND #&C0
- BEQ not_map
- \	LDA &2F
- \	BNE not_map
- \	LDA &06
- JSR TT103
- JSR ping
- \	JSR TT103
- JMP TT103
-
-.not_home
-
- CMP #&21
- BNE not_cour
- LDA &87
- AND #&C0
- BEQ not_map
- LDA cmdr_cour
- ORA cmdr_cour+1
- BEQ not_map
- JSR TT103
- LDA cmdr_courx
- STA QQ9
- LDA cmdr_coury
- STA QQ10
- JSR TT103
-
-.T95
-
- LDA &87
- AND #&C0
- BEQ not_map
- JSR hm
- STA QQ17
- JSR cpl
- LDA #&80
- STA QQ17
- LDA #&01
- STA XC
- INC YC
- JMP TT146
-
-.not_cour
-
- BIT dockedp
- BMI flying
- CMP #&20
- BNE not_launch
- JSR CTRL
- BMI jump_stay
- JMP RSHIPS
-
-.jump_stay
-
- JMP stay_here
-
-.not_launch
-
- CMP #&73
- BNE not_equip
- JMP EQSHP
-
-.not_equip
-
- CMP #&71
- BNE not_buy
- JMP TT219
-
-.not_buy
-
- CMP #&47
- BNE not_disk
- JSR disk_menu
- BCC not_loaded
- JMP not_loadc
-
-.not_loaded
-
- JMP BAY
-
-.not_disk
-
- CMP #&72
- BNE not_sell
- JMP TT208
-
-.not_sell
-
- CMP #&54
- BNE not_hype
- JSR CLYNS
- LDA #&0F
- STA XC
- LDA #&CD
- JMP DETOK
-
-.flying
-
- CMP #&20
- BNE d_4135
- JMP TT110
-
-.d_4135
-
- CMP #&71
- BCC d_4143
- CMP #&74
- BCS d_4143
- AND #&03
- TAX
- JMP LOOK1
-
-.d_4143
-
- CMP #&54
- BNE not_hype
- JMP hyp
-
-.d_416c
-
- LDA &2F
- BEQ d_418a
- DEC &2E
- BNE d_418a
- LDX &2F
- DEX
- JSR ee3
- LDA #&05
- STA &2E
- LDX &2F
- JSR ee3
- DEC &2F
- BNE d_418a
- JMP TT18
+INCLUDE "library/common/main/subroutine/tt102.asm"
 
 .BAD
 
@@ -10313,7 +9815,7 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
 
  RTS
 
-.not_hype
+.NWDAV5
 
  LDA &87
  AND #&C0
@@ -10402,7 +9904,7 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
  STA (&20),Y
  LDA FRIN+&04
  BEQ d_41e9
- JSR d_44a4
+ JSR U%
  STA &7D
 
 .d_4234
@@ -10417,7 +9919,7 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
 .RSHIPS
 
  JSR LSHIPS
- JSR clr_boot
+ JSR RESET
  LDA #&FF
  STA &8E
  STA &87
@@ -10723,14 +10225,14 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
  LDX #&01
  JSR adval
  ORA #&01
- STA adval_x
+ STA JSTX
  LDX #&02
  JSR adval
  EOR y_flag
- STA adval_y
+ STA JSTY
  JMP d_4555
 
-.d_44a4
+.U%
 
  LDA #&00
  LDY #&10
@@ -10744,14 +10246,14 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
 
 .d_44af
 
- JSR d_44a4
+ JSR U%
  LDA &2F
  BEQ d_open
  JMP d_4555
 
 .d_open
 
- LDA k_flag
+ LDA JSTK
  BNE d_4473
  LDY #&07
 
@@ -10807,17 +10309,17 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
  BIT &63
  BPL d_4509
  LDA #&40
- STA adval_x
+ STA JSTX
  LDA #&00
 
 .d_4509
 
  STA &0303,X
- LDA adval_x
+ LDA JSTX
 
 .d_450f
 
- STA adval_x
+ STA JSTX
  LDA #&80
  LDX #&00
  ASL &64
@@ -10828,15 +10330,15 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
 .d_451d
 
  STA &0305,X
- LDA adval_y
+ LDA JSTY
 
 .d_4523
 
- STA adval_y
+ STA JSTY
 
 .d_4526
 
- LDX adval_x
+ LDX JSTX
  LDA #&07
  LDY &0303
  BEQ d_4533
@@ -10850,9 +10352,9 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
 
 .d_453b
 
- STX adval_x
+ STX JSTX
  ASL A
- LDX adval_y
+ LDX JSTY
  LDY &0305
  BEQ d_454a
  JSR REDU2
@@ -10865,7 +10367,7 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
 
 .d_4552
 
- STX adval_y
+ STX JSTY
 
 .d_4555
 

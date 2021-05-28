@@ -32,7 +32,7 @@ ENDIF
 
  STX MSTG               \ Reset MSTG, the missile target, to &FF (no target)
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _MASTER_VERSION \ Platform
 
  LDA #128               \ Set the current pitch rate to the mid-point, 128
  STA JSTY
@@ -46,6 +46,15 @@ ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
  STA JSTX               \ 128
  STA JSTY
 
+ELIF _ELITE_A_6502SP_PARA
+
+ LDA #128               \ Set the current pitch and roll rates to the mid-point,
+ STA JSTX               \ 128
+ STA JSTY
+
+ STA &32                \ AJD
+ STA &7B
+
 ENDIF
 
  ASL A                  \ This sets A to 0
@@ -58,7 +67,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Platform
 
  STA ALP2+1             \ Reset ALP2+1 (flipped roll sign) and BET2+1 (flipped
  STA BET2+1             \ pitch sign) to positive, i.e. pitch and roll negative
@@ -67,7 +76,7 @@ ENDIF
 
  STA MCNT               \ Reset MCNT (the main loop counter) to 0
 
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Platform
+IF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA \ Platform
 
  STA QQ22+1             \ Set the on-screen hyperspace counter to 0
 
@@ -82,7 +91,7 @@ ENDIF
  LDA #3                 \ Reset DELTA (speed) to 3
  STA DELTA
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Platform
 
  STA ALPHA              \ Reset ALPHA (roll angle alpha) to 3
 
@@ -100,7 +109,7 @@ IF _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Platform
 
  LDA SSPR               \ Fetch the "space station present" flag, and if we are
  BEQ P%+5               \ not inside the safe zone, skip the next instruction
@@ -148,7 +157,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_DOCKED OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION \ Platform
 
  JSR DIALS              \ Update the dashboard
 
@@ -156,7 +165,7 @@ ENDIF
                         \ Finally, fall through into ZINF to reset the INWK
                         \ ship workspace
 
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Platform
+IF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA \ Platform
 
  JSR U%                 \ Call U% to clear the key logger
 

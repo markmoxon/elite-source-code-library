@@ -2584,7 +2584,6 @@ INCLUDE "library/common/main/subroutine/tt74.asm"
 INCLUDE "library/common/main/subroutine/tt43.asm"
 INCLUDE "library/common/main/subroutine/ex.asm"
 
-
 .EX2
 
  LDA &65
@@ -2869,7 +2868,6 @@ INCLUDE "library/common/main/subroutine/det1-dodials.asm"
 INCLUDE "library/common/main/subroutine/shd.asm"
 INCLUDE "library/common/main/subroutine/dengy.asm"
 INCLUDE "library/common/main/subroutine/sps2.asm"
-
 
 .COMPAS
 
@@ -4039,7 +4037,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  JSR DIALS
  LDA &87
  BEQ l_40f8
- \	AND x_flag
+ \	AND PATG
  \	LSR A
  \	BCS l_40f8
  LDY #&02

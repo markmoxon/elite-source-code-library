@@ -21,7 +21,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: On the second title page (
  JSR TITLE              \ returning with the internal number of the key pressed
                         \ in A
 
-ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_VERSION
 
  LDA #7                 \ Call TITLE to show a rotating Krait (#KRA) and token
  LDX #KRA               \ 7 ("PRESS SPACE OR FIRE,{single cap}COMMANDER.{cr}
@@ -48,7 +48,7 @@ ENDIF
  JSR ping               \ Set the target system coordinates (QQ9, QQ10) to the
                         \ current system coordinates (QQ0, QQ1) we just loaded
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Platform: The 6502SP version inlines the code from the hyp1 routine here, instead of calling it (though it could just as easily call it, as the hyp1 routine is included in the 6502SP version and contains the same code)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Platform: The 6502SP version inlines the code from the hyp1 routine here, instead of calling it (though it could just as easily call it, as the hyp1 routine is included in the 6502SP version and contains the same code)
 
  JSR hyp1               \ Arrive in the system closest to (QQ9, QQ10) and then
                         \ fall through into the docking bay routine below

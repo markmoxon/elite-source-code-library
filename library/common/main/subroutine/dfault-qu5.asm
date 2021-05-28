@@ -2,7 +2,7 @@
 \
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 \       Name: QU5
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION
 \       Name: DFAULT
 ENDIF
 \       Type: Subroutine
@@ -15,7 +15,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
 
 .QU5
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION
 
 .DFAULT
 
@@ -54,7 +54,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
                         \ commander workspace at TP. So we set up a counter in X
                         \ for the NT% bytes that we want to copy
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  LDX #NT%+8             \ The size of the last saved commander data block is NT%
                         \ bytes, and it is preceded by the 8 bytes of the
@@ -75,7 +75,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
  LDA NA%+7,X            \ Copy the X-th byte of NA%+7 to the X-th byte of TP-1,
  STA TP-1,X             \ (the -1 is because X is counting down from NT% to 1)
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  LDA NA%-1,X            \ Copy the X-th byte of NA%-1 to the X-th byte of
  STA NAME-1,X           \ NAME-1 (the -1 is because X is counting down from
@@ -95,6 +95,12 @@ ENDIF
 
                         \ If the commander check below fails, we keep jumping
                         \ back to here to crash the game with an infinite loop
+
+IF _ELITE_A_6502SP_PARA
+
+ JSR update_pod         \ AJD
+
+ENDIF
 
  JSR CHECK              \ Call the CHECK subroutine to calculate the checksum
                         \ for the current commander block at NA%+8 and put it
@@ -116,12 +122,14 @@ ELSE
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Comment
+IF _6502SP_VERSION OR _DISC_DOCKED \ Comment
 
 \JSR BELL               \ This instruction is commented out in the original
                         \ source. It would make a standard system beep
 
 ENDIF
+
+IF NOT(_ELITE_A_VERSION)
 
                         \ The checksum CHK is correct, so now we check whether
                         \ CHK2 = CHK EOR A9, and if this check fails, bit 7 of
@@ -142,6 +150,8 @@ ENDIF
 
 .tZ
 
+ENDIF
+
 IF _CASSETTE_VERSION \ Standard: When you save a commander file, the version details get saved along with the competition flags. The flags get set as follows: the cassette version sets bit 1, the disc version sets bit 2 or 5 depending on the release, the 6502SP version sets bit 2, and the Electron and Master versions set bit 3
 
  ORA #%00000010         \ Set bit 1 of A to denote that this is the cassette
@@ -152,7 +162,7 @@ ELIF _ELECTRON_VERSION
  ORA #%00001000         \ Set bit 3 of A to denote that this is the Electron
                         \ version
 
-ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
+ELIF _DISC_DOCKED
 
 IF _STH_DISC
 
@@ -182,11 +192,19 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_ELITE_A_VERSION)
+
  STA COK                \ Store the updated competition flags in COK
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Minor
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Minor
 
  RTS                    \ Return from the subroutine
+
+ELIF _ELITE_A_VERSION
+
+ JMP n_load             \ AJD load ship details
 
 ENDIF
 

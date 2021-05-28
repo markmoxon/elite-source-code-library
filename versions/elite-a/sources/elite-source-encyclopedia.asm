@@ -478,28 +478,15 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 INCLUDE "library/common/main/subroutine/main_game_loop_part_5_of_6.asm"
 INCLUDE "library/common/main/subroutine/main_game_loop_part_6_of_6.asm"
 INCLUDE "library/common/main/subroutine/tt102.asm"
+INCLUDE "library/enhanced/main/variable/brkd.asm"
 
-
-.brkd
-
- EQUB &00
-
-.jmp_escape
+.BR1
 
  JMP escape
 
-.BRBR
-
- DEC brkd
- BNE jmp_escape
- JSR RES2
-
-.BAY
-
- LDA #&FF
- STA &8E
- LDA #&73
- JMP FRCE
+INCLUDE "library/enhanced/main/subroutine/brbr.asm"
+INCLUDE "library/common/main/subroutine/death2.asm"
+INCLUDE "library/common/main/subroutine/bay.asm"
 
 .MT26
 

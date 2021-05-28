@@ -153,12 +153,6 @@ IRQ1 = &114B            \ The address of the IRQ1 routine that implements the
 BRBR1 = &11D5           \ The address of the main break handler, which BRKV
                         \ points to as set in elite-loader3.asm
 
-CHK2 = &11D3            \ The address of the second checksum byte for the saved
-                        \ commander data file, as set in elite-loader3.asm
-
-CHK = &11D4             \ The address of the first checksum byte for the saved
-                        \ commander data file, as set in elite-loader3.asm
-
 SHIP_MISSILE = &7F00    \ The address of the missile ship blueprint, as set in
                         \ elite-loader3.asm
 
@@ -195,7 +189,6 @@ cmdr_coury = &38A
 
 s_flag = &3C6
 a_flag = &3C8
-x_flag = &3C9
 y_flag = &3CB
 j_flag = &3CC
 b_flag = &3CE
@@ -263,7 +256,13 @@ tube_r4d = &FEFF
  EQUB &00, &00, &00, &00, &00, &00, &00, &00, &00, &00, &00, &00
  EQUB &00, &00, &00, &00, &00, &00, &0F, &11, &00, &03, &1C, &0E
  EQUB &00, &00, &0A, &00, &11, &3A, &07, &09, &08, &00, &00, &00
- EQUB &00, &20, &F1, &58
+ EQUB &00, &20
+
+.CHK2
+ EQUB &F1
+
+.CHK
+ EQUB &58
 
 .tube_write
 
@@ -783,11 +782,7 @@ INCLUDE "library/common/main/subroutine/me2.asm"
 INCLUDE "library/common/main/subroutine/main_game_loop_part_5_of_6.asm"
 INCLUDE "library/common/main/subroutine/main_game_loop_part_6_of_6.asm"
 INCLUDE "library/common/main/subroutine/dornd.asm"
-
-
-.brkd
-
- EQUB &00
+INCLUDE "library/enhanced/main/variable/brkd.asm"
 
 .dead_in
 
@@ -797,7 +792,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  STA dockedp
  JSR BRKBK
  JSR RES2
- JMP escape
+ JMP BR1
 
 .boot_in
 
@@ -808,181 +803,16 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  STA dockedp
  JMP BEGIN
 
-.BRBR
+INCLUDE "library/enhanced/main/subroutine/brbr.asm"
+INCLUDE "library/common/main/subroutine/death2.asm"
+INCLUDE "library/enhanced/main/subroutine/begin.asm"
+INCLUDE "library/common/main/subroutine/br1_part_1_of_2.asm"
+INCLUDE "library/common/main/subroutine/br1_part_2_of_2.asm"
+INCLUDE "library/common/main/subroutine/bay.asm"
+INCLUDE "library/common/main/subroutine/dfault-qu5.asm"
+INCLUDE "library/common/main/subroutine/title.asm"
 
- DEC brkd
- BNE escape
- JSR RES2
-
-.BEGIN
-
- JSR BRKBK
- LDX #&0A
- LDA #&00
-
-.l_387c
-
- STA &03C5,X
- DEX
- BPL l_387c
- LDA #&7F	\ IN
- STA b_flag	\ IN
-
-.escape
-
- LDX #10
- LDY #&0B
- JSR install_ship
- LDX #19
- LDY #&13
- JSR install_ship
- \stack_init
- LDX #&FF
- TXS
- LDX #&03
- STX XC
- JSR fx2000
- LDX #&0B
- LDA #&06
- JSR rotate
- CMP #&44
- BNE QU5
- JSR copy_cmdr
- JSR SVE
-
-.QU5
-
- JSR copy_cmdr
- JSR msblob
- LDA #&07
- LDX #&13
- JSR rotate
- JSR ping
- JSR hyp1
-
-.BAY
-
- LDA #&FF
- STA &8E
- LDA #&76
- JMP FRCE
-
-.copy_cmdr
-
- LDX #&53
-
-.l_38bb
-
- LDA _1180,X
- STA &034F,X
- DEX
- BNE l_38bb
- STX &87
- JSR update_pod
-
-.l_38c6
-
- JSR cmdr_code
- CMP commander+&4B
- BNE l_38c6
- JMP n_load	\ load ship details
-
-.rotate
-
- PHA
- STX &8C
- JSR RESET
- LDA #&01
- JSR TT66
- DEC &87
- LDA #&60
- STA &54
- LDA #&DB
- STA &4D
- LDX #&7F
- STX &63
- STX &64
- INX
- STX QQ17
- LDA &8C
- JSR NWSHP
- LDY #&06
- STY XC
- LDA #&1E
- JSR plf
- LDY #&06
- STY XC
- INC YC
- LDA x_flag
- BEQ l_392b
- LDA #&0D
- JSR DETOK
- INC YC
- INC YC
- LDA #&03
- STA XC
- LDA #&72
- JSR DETOK
-
-.l_392b
-
- LDA brkd
- BEQ l_3945
- INC brkd
- LDA #&07
- STA XC
- LDA #&0A
- STA YC
- LDY #&00
-
-.l_393d
-
- JSR oswrch
- INY
- LDA (brk_line),Y
- BNE l_393d
-
-.l_3945
-
- JSR CLYNS
- STY &7D
- STY JSTK
- PLA
- JSR DETOK
- LDA #&0C
- LDX #&07
- STX XC
- JSR DETOK
-
-.l_395a
-
- LDA &4D
- CMP #&01
- BEQ l_3962
- DEC &4D
-
-.l_3962
-
- JSR MVEIT
- LDA #&80
- STA &4C
- ASL A
- STA &46
- STA &49
- JSR LL9
- DEC &8A
- JSR scan_fire
- BEQ l_3980
- JSR RDKEY
- BEQ l_395a
- RTS
-
-.l_3980
-
- DEC JSTK
- RTS
-
-.cmdr_code
+.CHECK
 
  LDX #&49
  SEC
@@ -1231,7 +1061,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  STA commander,X
  DEX
  BPL l_3acb
- JSR cmdr_code
+ JSR CHECK
  STA commander+&4B
  STA &0B4B
  EOR #&A9
@@ -1337,7 +1167,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
  EQUS "Bad ELITE III file"
  BRK
 
-.fx2000
+.FX200
 
  LDY #&00
  LDA #&C8
@@ -1527,7 +1357,7 @@ INCLUDE "library/common/main/subroutine/dornd.asm"
 
  CPX #&70
  BNE not_escape
- JMP escape
+ JMP BR1
 
 .not_escape
 
@@ -9774,7 +9604,7 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
  JSR COMPAS
  LDA &87
  BEQ d_40f8
- \	AND x_flag
+ \	AND PATG
  \	LSR A
  \	BCS d_40f8
  LDY #&02
@@ -9802,25 +9632,6 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
  JMP d_3fc0
 
 INCLUDE "library/common/main/subroutine/tt102.asm"
-
-.BAD
-
- LDA QQ20+&03
- CLC
- ADC QQ20+&06
- ASL A
- ADC QQ20+&0A
-
-.d_418a
-
- RTS
-
-.NWDAV5
-
- LDA &87
- AND #&C0
- BEQ d_418a
- JMP TT16
 
 .d_41b2
 

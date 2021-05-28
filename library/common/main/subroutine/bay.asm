@@ -20,7 +20,7 @@
  LDA #&FF               \ Set QQ12 = &FF (the docked flag) to indicate that we
  STA QQ12               \ are docked
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 
  LDA #f8                \ Jump into the main loop at FRCE, setting the key
  JMP FRCE               \ that's "pressed" to red key f8 (so we show the Status
@@ -31,6 +31,11 @@ ELIF _ELECTRON_VERSION
  LDA #func9             \ Jump into the main loop at FRCE, setting the key
  JMP FRCE               \ that's "pressed" to FUNC-9 (so we show the Status
                         \ Mode screen)
+
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+ LDA #f3                \ AJD
+ JMP FRCE
 
 ENDIF
 

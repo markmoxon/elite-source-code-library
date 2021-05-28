@@ -9,7 +9,7 @@
 
 .BEGIN
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Platform
+IF _DISC_DOCKED OR _ELITE_A_VERSION \ Platform
 
  JSR BRKBK              \ Call BRKBK to set BRKV to point to the BRBR routine
 
@@ -20,7 +20,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Platform
+IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
 
  LDX #(CATF-COMC)       \ We start by zeroing all the configuration variables
@@ -60,6 +60,13 @@ IF _MASTER_VERSION \ Master: The Master version contains an embedded copy of the
 
  JSR JAMESON            \ Call JAMESON to set the last saved commander to the
                         \ default "JAMESON" commander
+
+ENDIF
+
+IF _ELITE_A_VERSION
+
+ LDA #&7F               \ AJD
+ STA b_flag
 
 ENDIF
 

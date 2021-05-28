@@ -21,6 +21,20 @@ ENDIF
 
 .BR1
 
+IF _ELITE_A_6502SP_PARA
+
+ LDX #10
+ LDY #&0B
+ JSR install_ship
+ LDX #19
+ LDY #&13
+ JSR install_ship
+
+ LDX #&FF
+ TXS
+
+ENDIF
+
 IF _6502SP_VERSION \ Tube
 
  JSR ZEKTRAN            \ Reset the key logger buffer that gets returned from
@@ -32,7 +46,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Tube
 
  LDX #3                 \ Set XC = 3 (set text cursor to column 3)
  STX XC
@@ -51,7 +65,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
  JSR FX200              \ Disable the ESCAPE key and clear memory if the BREAK
                         \ key is pressed (*FX 200,3)
@@ -77,7 +91,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Master: The rotating Cobra Mk III on
  JSR TITLE              \ returning with the internal number of the key pressed
                         \ in A
 
-ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION
+ELIF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION
 
  LDX #CYL               \ Call TITLE to show a rotating Cobra Mk III (#CYL) and
  LDA #6                 \ token 6 ("LOAD NEW {single cap}COMMANDER {all caps}
@@ -105,7 +119,7 @@ IF _6502SP_VERSION \ 6502SP: Pressing TAB in the title screen of the 6502SP vers
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
  CMP #&44               \ Did we press "Y"? If not, jump to QU5, otherwise
  BNE QU5                \ continue on to load a new commander
@@ -144,7 +158,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
  JSR TTX66              \ And we clear the top part of the screen and draw a
                         \ white border
 
-ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION
+ELIF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
 
  JSR DFAULT             \ Call DFAULT to reset the current commander data block
                         \ to the last saved commander

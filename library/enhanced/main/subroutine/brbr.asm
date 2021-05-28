@@ -28,7 +28,7 @@
 
 .BRBR
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Platform
+IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
  DEC brkd               \ Decrement the brkd counter
 
@@ -97,7 +97,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Minor
+IF _DISC_DOCKED OR _ELITE_A_VERSION \ Minor
 
  BNE BR1                \ If the brkd counter is non-zero, jump to BR1 to
                         \ restart the game

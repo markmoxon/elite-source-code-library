@@ -9,7 +9,7 @@
 
 .CTLI
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Minor
+IF _DISC_DOCKED OR _6502SP_VERSION \ Minor
 
  EQUS ".0"              \ The "0" part of the string is overwritten with the
  EQUB 13                \ actual drive number by the CATS routine
@@ -27,6 +27,11 @@ ELIF _COMPACT
  EQUB 13                \ command always catalogues that drive
 
 ENDIF
+
+ELIF _ELITE_A_VERSION
+
+ EQUS ".:0"             \ The "0" part of the string is overwritten with the
+ EQUB 13                \ actual drive number by the CATS routine AJD
 
 ENDIF
 

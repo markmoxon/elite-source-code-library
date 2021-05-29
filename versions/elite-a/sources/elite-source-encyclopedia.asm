@@ -487,60 +487,13 @@ INCLUDE "library/enhanced/main/variable/brkd.asm"
 INCLUDE "library/enhanced/main/subroutine/brbr.asm"
 INCLUDE "library/common/main/subroutine/death2.asm"
 INCLUDE "library/common/main/subroutine/bay.asm"
+INCLUDE "library/enhanced/main/subroutine/mt26.asm"
+INCLUDE "library/common/main/variable/rline.asm"
+INCLUDE "library/common/main/subroutine/zero.asm"
+INCLUDE "library/common/main/subroutine/zes1.asm"
+INCLUDE "library/common/main/subroutine/zes2.asm"
 
-.MT26
-
- LDA #&81
- STA &FE4E
- JSR FLKB
- LDX #LO(word_0)
- LDY #HI(word_0)
- LDA #&00
- JSR osword
- BCC l_39e1
- LDY #&00
-
-.l_39e1
-
- LDA #&01
- STA &FE4E
- JMP FEED
-
-.word_0
-
- EQUW &004B
- EQUB &09, &21, &7B
-
-.ZERO
-
- LDX #&3A
- LDA #&00
-
-.l_39f2
-
- STA FRIN,X
- DEX
- BPL l_39f2
- RTS
-
-.ZES1
-
- LDY #&00
- STY SC
-
-.ZES2
-
- LDA #&00
- STX SC+&01
-
-.l_3a07
-
- STA (SC),Y
- INY
- BNE l_3a07
- RTS
-
-.l_3bd6
+.NORM
 
  LDA &34
  JSR SQUA
@@ -823,7 +776,7 @@ INCLUDE "library/common/main/subroutine/bay.asm"
  STA &35
  LDA &54
  STA &36
- JSR l_3bd6
+ JSR NORM
  LDA &34
  STA &50
  LDA &35
@@ -847,7 +800,7 @@ INCLUDE "library/common/main/subroutine/bay.asm"
  STA &35
  LDA &5A
  STA &36
- JSR l_3bd6
+ JSR NORM
  LDA &34
  STA &56
  LDA &35

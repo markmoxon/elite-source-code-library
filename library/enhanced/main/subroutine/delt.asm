@@ -29,7 +29,7 @@
                         \ entered as part of the catalogue process, so jump to
                         \ SVE to display the disc access menu
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Platform
+IF _DISC_DOCKED \ Platform
 
  LDA CTLI+1             \ The call to CATS above put the drive number into
  STA DELI+4             \ CTLI+1, so copy the drive number into DELI+4 so that
@@ -54,9 +54,16 @@ IF _SNG47
 
 ENDIF
 
+ELIF _ELITE_A_VERSION
+
+ LDA CTLI+2             \ The call to CATS above put the drive number into
+ STA DELI+5             \ CTLI+2, so copy the drive number into DELI+5 so that
+                        \ the drive number in the "DEL.:0.E.1234567" string
+                        \ gets updated (i.e. the number after the colon)
+
 ENDIF
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Master: When deleting a file via the disc menu, the disc and 6502SP versions ask for the "FILE TO DELETE?", while the Master version asks for the "COMMANDER'S NAME?"
+IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: When deleting a file via the disc menu, the disc and 6502SP versions ask for the "FILE TO DELETE?", while the Master version asks for the "COMMANDER'S NAME?"
 
  LDA #9                 \ Print extended token 9 ("{clear bottom of screen}FILE
  JSR DETOK              \ TO DELETE?")
@@ -78,7 +85,7 @@ ENDIF
                         \ that it overwrites the filename part of the string,
                         \ i.e. the "E.1234567" part of "DELETE:0.E.1234567"
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Comment
+IF _DISC_DOCKED OR _ELITE_A_VERSION \ Comment
 
  LDX #9                 \ Set up a counter in X to count from 9 to 1, so that we
                         \ copy the string starting at INWK+4+1 (i.e. INWK+5) to
@@ -110,7 +117,7 @@ ENDIF
 
 .DELL1
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Platform
+IF _DISC_DOCKED \ Platform
 
  LDA INWK+4,X           \ Copy the X-th byte of INWK+4 to the X-th byte of
  STA DELI+5,X           \ DELI+5
@@ -158,13 +165,23 @@ ELIF _COMPACT
 
 ENDIF
 
+ELIF _ELITE_A_VERSION
+
+ LDA INWK+4,X           \ Copy the X-th byte of INWK+4 to the X-th byte of
+ STA DELI+6,X           \ DELI+6 AJD
+
+ DEX                    \ Decrement the loop counter
+
+ BNE DELL1              \ Loop back to DELL1 to copy the next character until we
+                        \ have copied the whole filename
+
 ENDIF
 
  LDX #LO(DELI)          \ Set (Y X) to point to the OS command at DELI, which
  LDY #HI(DELI)          \ contains the DFS command for deleting this file
 
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Platform
+IF _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION \ Platform
 
  JSR OSCLI              \ Call OSCLI to execute the OS command at (Y X), which
                         \ catalogues the disc

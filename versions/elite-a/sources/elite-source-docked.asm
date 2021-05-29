@@ -664,274 +664,24 @@ INCLUDE "library/common/main/subroutine/br1_part_2_of_2.asm"
 INCLUDE "library/common/main/subroutine/bay.asm"
 INCLUDE "library/common/main/subroutine/dfault-qu5.asm"
 INCLUDE "library/common/main/subroutine/title.asm"
-
-.CHECK
-
- LDX #&49
- SEC
- TXA
-
-.l_3988
-
- ADC &1188,X
- EOR commander,X
- DEX
- BNE l_3988
- RTS
-
-.copy_name
-
- LDX #&07
-
-.l_3994
-
- LDA &4B,X
- STA &1181,X
- DEX
- BPL l_3994
-
-.l_399c
-
- LDX #&07
-
-.l_399e
-
- LDA &1181,X
- STA &4B,X
- DEX
- BPL l_399e
- RTS
-
-.get_fname
-
- LDY #&08
- JSR DELAY
- LDX #&04
-
-.l_39ae
-
- LDA &117C,X
- STA &46,X
- DEX
- BPL l_39ae
- LDA #&07
- STA word_0+&02
- LDA #&08
- JSR DETOK
- JSR MT26
- LDA #&09
- STA word_0+&02
- TYA
- BEQ l_399c
- RTS
-
-.MT26
-
- LDA #&81
- STA &FE4E
- JSR FLKB
- LDX #LO(word_0)
- LDY #HI(word_0)
- LDA #&00
- JSR osword
- BCC l_39e1
- LDY #&00
-
-.l_39e1
-
- LDA #&01
- STA &FE4E
- JMP FEED
-
-.word_0
-
- EQUW &004B
- EQUB &09, &21, &7B
-
-.ZERO
-
- LDX #&3A
- LDA #&00
-
-.l_39f2
-
- STA FRIN,X
- DEX
- BPL l_39f2
- RTS
-
-.clr_bc
-
- LDX #&0C
- JSR ZES1
- DEX
-
-.ZES1
-
- LDY #&00
- STY SC
-
-.ZES2
-
- LDA #&00
- STX SC+&01
-
-.l_3a07
-
- STA (SC),Y
- INY
- BNE l_3a07
- RTS
-
-.cat_line
-
- EQUS ".:0", &0D
-
-.del_line
-
- EQUS "DEL.:0.E.1234567", &0D
-
-.show_cat
-
- JSR get_drive
- BCS cat_quit
- STA cat_line+&02
- STA MT16+&01
- LDA #&04
- JSR DETOK
- \	LDA &0355
- \	PHA
- LDA #&01
- STA &0355
- STA &03CF
- STA XC
- LDX #LO(cat_line)
- LDY #HI(cat_line)
- JSR oscli
- DEC &03CF
- \	PLA
- LDA &1186
- STA &0355
- CLC
-
-.cat_quit
-
- RTS
-
-.disk_del
-
- JSR show_cat
- BCS SVE
- LDA cat_line+&02
- STA del_line+&05
- LDA #&09
- JSR DETOK
- JSR MT26
- TYA
- BEQ SVE
- LDX #&09
-
-.l_3a5b
-
- LDA &4A,X
- STA del_line+&06,X
- DEX
- BNE l_3a5b
- LDX #LO(del_line)
- LDY #HI(del_line)
- JSR oscli
- JMP SVE
- \l_3a6d
- \	EQUB &00
-
-.brk_new
-
- LDX #&FF	\LDX l_3a6d
- TXS
- LDY #&00
- LDA #&07
-
-.l_3a76
-
- JSR oswrch
- INY
- LDA (brk_line),Y
- BNE l_3a76
- BEQ l_3a83
-
-.disk_cat
-
- JSR show_cat
-
-.l_3a83
-
- JSR get_key
-
-.SVE
-
- JSR clr_bc
- TSX
- STX brk_new+&01	\STX l_3a6d
- LDA #LO(brk_new)
- STA BRKV
- LDA #HI(brk_new)
- STA BRKV+1
- LDA #&01
- JSR DETOK
- JSR get_key
- CMP #&31
- BCC disk_exit
- CMP #&34
- BEQ disk_del
- BCS disk_exit
- CMP #&32
- BCS not_dload
- LDA #&00
- JSR confirm
- BNE disk_exit
- JSR get_fname
- JSR read_file
- JSR copy_name
- SEC
- BCS l_3b15
-
-.not_dload
-
- BNE disk_cat
- LDA #&FF
- JSR confirm
- BNE disk_exit
- JSR get_fname
- JSR copy_name
- LDX #&4B
-
-.l_3acb
-
- LDA TP,X
- STA &0B00,X
- STA commander,X
- DEX
- BPL l_3acb
- JSR CHECK
- STA commander+&4B
- STA &0B4B
- EOR #&A9
- STA commander+&4A
- STA &0B4A
- LDY #&0B
- STY &0C0B
- INY
- STY &0C0F
- LDA #&00
- JSR disk_file
-
-.disk_exit
-
- CLC
-
-.l_3b15
-
- JMP BRKBK
+INCLUDE "library/common/main/subroutine/check.asm"
+INCLUDE "library/common/main/subroutine/trnme.asm"
+INCLUDE "library/common/main/subroutine/tr1.asm"
+INCLUDE "library/common/main/subroutine/gtnme-gtnmew.asm"
+INCLUDE "library/enhanced/main/subroutine/mt26.asm"
+INCLUDE "library/common/main/variable/rline.asm"
+INCLUDE "library/common/main/subroutine/zero.asm"
+INCLUDE "library/enhanced/main/subroutine/zebc.asm"
+INCLUDE "library/common/main/subroutine/zes1.asm"
+INCLUDE "library/common/main/subroutine/zes2.asm"
+INCLUDE "library/enhanced/main/variable/ctli.asm"
+INCLUDE "library/enhanced/main/variable/deli.asm"
+INCLUDE "library/enhanced/main/subroutine/cats.asm"
+INCLUDE "library/enhanced/main/subroutine/delt.asm"
+INCLUDE "library/enhanced/main/subroutine/mebrk.asm"
+INCLUDE "library/enhanced/main/subroutine/cat.asm"
+INCLUDE "library/enhanced/main/subroutine/retry.asm"
+INCLUDE "library/common/main/subroutine/sve.asm"
 
 .confirm
 
@@ -939,7 +689,7 @@ INCLUDE "library/common/main/subroutine/title.asm"
  BEQ confirmed
  LDA #&03
  JSR DETOK
- JSR get_key
+ JSR t
  JSR CHPR
  ORA #&20
  PHA
@@ -952,79 +702,12 @@ INCLUDE "library/common/main/subroutine/title.asm"
 
  RTS
 
-.disk_file
+INCLUDE "library/common/main/subroutine/qus1.asm"
+INCLUDE "library/enhanced/main/subroutine/gtdrv.asm"
+INCLUDE "library/common/main/subroutine/lod.asm"
+INCLUDE "library/common/main/subroutine/fx200.asm"
 
- PHA
- JSR get_drive
- STA &47
- PLA
- BCS file_quit
- STA save_lock
- LDX #&46
- STX &0C00
- LDX #&00
- LDY #&0C
- JSR osfile
- CLC
-
-.file_quit
-
- RTS
-
-.get_drive
-
- LDA #&02
- JSR DETOK
- JSR get_key
- ORA #&10
- JSR CHPR
- PHA
- JSR FEED
- PLA
- CMP #&30
- BCC bad_stat
- CMP #&34
- RTS
-
-.read_file
-
- JSR clr_bc
- LDY #&0B
- STY &0C03
- INC &0C0B
- LDA #&FF
- JSR disk_file
- BCS bad_stat
- LDA &0B00
- BMI illegal
- LDX #&4B
-
-.l_3b61
-
- LDA &0B00,X
- STA commander,X
- DEX
- BPL l_3b61
-
-.bad_stat
-
- SEC
- RTS
-
-.illegal
-
- BRK
- EQUB &49
- EQUS "Not ELITE III file"
- BRK
-
-.FX200
-
- LDY #&00
- LDA #&C8
- JMP osbyte
-
-.l_3bd6
+.NORM
 
  LDA &34
  JSR SQUA
@@ -1232,12 +915,12 @@ INCLUDE "library/common/main/subroutine/title.asm"
 
  STY &85
 
-.get_key
+.t
 
  LDY #&02
  JSR DELAY
  JSR RDKEY
- BNE get_key
+ BNE t
 
 .press
 
@@ -1328,7 +1011,7 @@ INCLUDE "library/common/main/subroutine/title.asm"
  STA &35
  LDA &54
  STA &36
- JSR l_3bd6
+ JSR NORM
  LDA &34
  STA &50
  LDA &35
@@ -1352,7 +1035,7 @@ INCLUDE "library/common/main/subroutine/title.asm"
  STA &35
  LDA &5A
  STA &36
- JSR l_3bd6
+ JSR NORM
  LDA &34
  STA &56
  LDA &35

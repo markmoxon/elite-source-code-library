@@ -4209,31 +4209,9 @@ INCLUDE "library/common/main/subroutine/tt102.asm"
 
  EQUS "L.S.0", &0D
 
-.ZERO
-
- LDX #&3A
- LDA #&00
-
-.l_429a
-
- STA FRIN,X
- DEX
- BPL l_429a
- RTS
-
-.ZES1
-
- STX SC+&01
- LDA #&00
- STA SC
- TAY
-
-.l_42a8
-
- STA (SC),Y
- DEY
- BNE l_42a8
- RTS
+INCLUDE "library/common/main/subroutine/zero.asm"
+INCLUDE "library/common/main/subroutine/zes1.asm"
+INCLUDE "library/common/main/subroutine/zes2.asm"
 
 .l_42ae
 
@@ -4281,7 +4259,7 @@ INCLUDE "library/common/main/subroutine/tt102.asm"
  ORA &DA
  STA &36
 
-.l_42f5
+.NORM
 
  LDA &34
  JSR SQUA
@@ -4916,7 +4894,7 @@ INCLUDE "library/common/main/subroutine/tt102.asm"
  STA &35
  LDA &54
  STA &36
- JSR l_42f5
+ JSR NORM
  LDA &34
  STA &50
  LDA &35
@@ -4940,7 +4918,7 @@ INCLUDE "library/common/main/subroutine/tt102.asm"
  STA &35
  LDA &5A
  STA &36
- JSR l_42f5
+ JSR NORM
  LDA &34
  STA &56
  LDA &35

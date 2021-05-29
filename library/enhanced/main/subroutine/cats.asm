@@ -21,7 +21,7 @@
 
 .CATS
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Master: The Master Compact only has one disc drive, and it uses ADFS rather than DFS, so instead of asking for a drive number, it asks for a directory name
+IF _DISC_DOCKED OR _6502SP_VERSION \ Master: The Master Compact only has one disc drive, and it uses ADFS rather than DFS, so instead of asking for a drive number, it asks for a directory name
 
  JSR GTDRV              \ Get an ASCII disc drive drive number from the keyboard
                         \ in A, setting the C flag if an invalid drive number
@@ -68,9 +68,28 @@ ELIF _COMPACT
 
 ENDIF
 
+ELIF _ELITE_A_VERSION
+
+ JSR GTDRV              \ Get an ASCII disc drive drive number from the keyboard
+                        \ in A, setting the C flag if an invalid drive number
+                        \ was entered
+
+ BCS DELT-1             \ If the C flag is set, then an invalid drive number was
+                        \ entered, so return from the subroutine (as DELT-1
+                        \ contains an RTS)
+
+ STA CTLI+2             \ Store the drive number in the third byte of the
+                        \ command string at CTLI, so it overwrites the "0" in
+                        \ ".0" with the drive number to catalogue
+
+ STA DTW7               \ Store the drive number in DTW7, so printing extended
+                        \ token 4 will show the correct drive number (as token 4
+                        \ contains the {drive number} jump code, which calls
+                        \ MT16 to print the character in DTW7)
+
 ENDIF
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Minor
+IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Minor
 
  LDA #4                 \ Print extended token 4, which clears the screen and
  JSR DETOK              \ prints the boxed-out title "DRIVE {drive number}
@@ -84,7 +103,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Tube
+IF _DISC_DOCKED OR _MASTER_VERSION \ Tube
 
  LDA #1                 \ Set the CATF flag to 1, so that the TT26 routine will
  STA CATF               \ print out the disc catalogue correctly
@@ -95,6 +114,23 @@ ELIF _6502SP_VERSION
  JSR OSWRCH             \ the CATF flag to 1, so that the TT26 routine on the
  LDA #1                 \ I/O processor prints out the disc catalogue correctly
  JSR OSWRCH
+
+ELIF _ELITE_A_DOCKED
+
+ LDA #&01               \ AJD
+ STA &0355
+ STA &03CF
+
+ELIF _ELITE_A_6502SP_PARA
+
+ LDA #&8E
+ JSR tube_write
+ LDA XC
+ JSR tube_write
+ LDA YC
+ JSR tube_write
+ LDA #&00
+ JSR tube_write
 
 ENDIF
 
@@ -119,7 +155,7 @@ ENDIF
                         \ DFS command for cataloguing that drive (*. being short
                         \ for *CAT)
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Platform
+IF _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION \ Platform
 
  JSR OSCLI              \ Call OSCLI to execute the OS command at (Y X), which
                         \ catalogues the disc
@@ -138,7 +174,7 @@ IF _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Tube
+IF _DISC_DOCKED \ Tube
 
  DEC CATF               \ Decrement the CATF flag back to 0, so the TT26 routine
                         \ reverts to standard formatting
@@ -154,6 +190,14 @@ ELIF _MASTER_VERSION
 
  STZ CATF               \ Set the CATF flag to 0, so the TT26 routine reverts to
                         \ standard formatting
+
+ELIF _ELITE_A_DOCKED
+
+ DEC CATF               \ Decrement the CATF flag back to 0, so the TT26 routine
+                        \ reverts to standard formatting
+
+ LDA &1186              \ AJD
+ STA &0355
 
 ENDIF
 

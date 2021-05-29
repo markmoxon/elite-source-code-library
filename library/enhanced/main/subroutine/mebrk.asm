@@ -29,12 +29,21 @@
 
 .MEBRK
 
+IF NOT(_ELITE_A_VERSION)
+
  LDX stack              \ Set the stack pointer to the value that we stored in
  TXS                    \ location stack, so that's back to the value it had
                         \ before we set BRKV to point to MEBRK in the SVE
                         \ routine
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Tube
+ELIF _ELITE_A_VERSION
+
+ LDX #&FF               \ AJD
+ TXS
+
+ENDIF
+
+IF _DISC_DOCKED OR _ELITE_A_VERSION \ Tube
 
  LDY #0                 \ Set Y to 0 to use as a loop counter below
 

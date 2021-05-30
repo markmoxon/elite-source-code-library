@@ -24,7 +24,7 @@ IF _6502SP_VERSION \ Comment
 \
 \   FREEZE              Rejoin the pause routine after processing a screen save
 \
-ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
+ELIF _DISC_DOCKED
 \ Other entry points:
 \
 \   DK9                 Set the Bitstik configuration option to the value in A
@@ -149,7 +149,7 @@ ENDIF
 
  INY                    \ Increment Y to point to the next toggle key
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ 6502SP: The Executive version supports two new configuration keys when paused: "@" toggles infinite jump range, while ":" toggles speech
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ 6502SP: The Executive version supports two new configuration keys when paused: "@" toggles infinite jump range, while ":" toggles speech
 
  CPY #&47               \ The last toggle key is &46 (K), so check whether we
                         \ have just done that one
@@ -172,6 +172,10 @@ ELIF _MASTER_VERSION
 
  CPY #9                 \ Check to see whether we have reached the last toggle
                         \ key
+
+ELIF _ELITE_A_VERSION
+
+ CPY #&48               \ AJD
 
 ENDIF
 
@@ -252,14 +256,18 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR 
  JMP DEATH2             \ ESCAPE is being pressed, so jump to DEATH2 to end
                         \ the game
 
-ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
  JMP BR1                \ ESCAPE is being pressed, so jump to BR1 to end the
                         \ game
 
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+ JMP escape             \ AJD
+
 ENDIF
 
-IF _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+IF _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  CPX #&64               \ If "B" is not being pressed, skip to DK7
  BNE nobit
@@ -271,7 +279,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Enhanced: The enhanced versions support a new Bitstik configuration option, "B", which toggles the Bitstik when the game is paused
+IF _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Enhanced: The enhanced versions support a new Bitstik configuration option, "B", which toggles the Bitstik when the game is paused
 
  LDA BSTK               \ Toggle the value of BSTK between 0 and &FF
  EOR #&FF
@@ -296,7 +304,7 @@ IF _MASTER_VERSION \ Master: The Master version makes two beeps when the Bitstik
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Label
+IF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Label
 
 .nobit
 
@@ -308,7 +316,6 @@ IF _6502SP_VERSION \ 6502SP: The 6502SP version lets you take screenshots, by pr
  BEQ savscr             \ screenshot
 
 ENDIF
-
 
 IF _MASTER_VERSION \ Platform
 
@@ -352,7 +359,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ M
  BNE DK5                \ view), return from the subroutine (as DK5 contains
                         \ an RTS)
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA
 
  LDA QQ11               \ If the current view is non-zero (i.e. not a space
  BNE out                \ view), return from the subroutine (as out contains
@@ -380,14 +387,14 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION \ Platform
 
  LDA #&FF               \ Set A to &FF so we can store this in the keyboard
                         \ logger for keys that are being pressed
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT \ Platform
 
 .DKL1
 
@@ -411,9 +418,21 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR 
 
  BNE DKL1               \ If not, loop back to process the next key
 
+ELIF _ELITE_A_FLIGHT
+
+.DKL1
+
+ JSR DKS1               \ AJD
+
+ DEY                    \ Decrement the loop counter
+
+ CPY #7                 \ Have we just done the last key?
+
+ BNE DKL1               \ If not, loop back to process the next key
+
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT \ Label
 
 .DK5
 
@@ -421,7 +440,7 @@ ENDIF
 
  RTS                    \ Return from the subroutine
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Platform
+IF _DISC_DOCKED \ Platform
 
 .DK9
 

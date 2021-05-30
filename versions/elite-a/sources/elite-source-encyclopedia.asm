@@ -492,262 +492,23 @@ INCLUDE "library/common/main/variable/rline.asm"
 INCLUDE "library/common/main/subroutine/zero.asm"
 INCLUDE "library/common/main/subroutine/zes1.asm"
 INCLUDE "library/common/main/subroutine/zes2.asm"
-
-.NORM
-
- LDA &34
- JSR SQUA
- STA &82
- LDA &1B
- STA &81
- LDA &35
- JSR SQUA
- STA &D1
- LDA &1B
- ADC &81
- STA &81
- LDA &D1
- ADC &82
- STA &82
- LDA &36
- JSR SQUA
- STA &D1
- LDA &1B
- ADC &81
- STA &81
- LDA &D1
- ADC &82
- STA &82
- JSR LL5
- LDA &34
- JSR l_3e8c
- STA &34
- LDA &35
- JSR l_3e8c
- STA &35
- LDA &36
- JSR l_3e8c
- STA &36
-
-.l_3c1f
-
- RTS
-
-.RDKEY
-
- LDX #&10
-
-.scan_loop
-
- JSR DKS4
- BMI scan_key
- INX
- BPL scan_loop
- TXA
-
-.scan_key
-
- EOR #&80
- TAX
- RTS
-
-.ECMOF
-
- LDA #&00
- STA &30
- STA &0340
- LDA #&48
- BNE NOISE
-
-.BEEP
-
- LDA #&20
-
-.NOISE
-
- JSR pp_sound
- LDX s_flag
- BNE l_3c1f
- LDX #&09
- LDY #&00
- LDA #&07
- JMP osword
-
-.pp_sound
-
- LSR A
- ADC #&03
- TAY
- LDX #&07
-
-.l_3c83
-
- LDA #&00
- STA &09,X
- DEX
- LDA SFX,Y
- STA &09,X
- DEY
- DEX
- BPL l_3c83
-
-.CTRL
-
- LDX #&01
-
-.DKS4
-
- LDA #&03
- SEI
- STA &FE40
- LDA #&7F
- STA &FE43
- STX &FE4F
- LDX &FE4F
- LDA #&0B
- STA &FE40
- CLI
- TXA
- RTS
-
-.adval
-
- LDA #&80
- JSR osbyte
- TYA
- EOR j_flag
- RTS
-
-.tog_flag
-
- STY &D1
- CPX &D1
- BNE tog_end
- LDA &0387,X
- EOR #&FF
- STA &0387,X
- JSR BELL
- JSR DELAY
- LDY &D1
-
-.tog_end
-
- RTS
-
-.DOKEY
-
- LDA JSTK
- BEQ spec_key
- LDX #&01
- JSR adval
- ORA #&01
- STA JSTX
- LDX #&02
- JSR adval
- EOR y_flag
- STA JSTY
-
-.spec_key
-
- JSR RDKEY
- STX KL
- CPX #&69
- BNE no_freeze
-
-.no_thaw
-
- JSR WSCAN
- JSR RDKEY
- CPX #&51
- BNE not_sound
- LDA #&00
- STA s_flag
-
-.not_sound
-
- LDY #&40
-
-.flag_loop
-
- JSR tog_flag
- INY
- CPY #&48
- BNE flag_loop
- CPX #&10
- BNE not_quiet
- STX s_flag
-
-.not_quiet
-
- CPX #&70
- BNE not_escape
- JMP escape
-
-.not_escape
-
- CPX #&59
- BNE no_thaw
-
-.no_freeze
-
- LDA &87
- BNE frz_ret
- LDY #&10
- LDA #&FF
- RTS
-
-.TT217
-
- STY &85
-
-.get_key
-
- LDY #&02
- JSR DELAY
- JSR RDKEY
- BNE get_key
-
-.press
-
- JSR RDKEY
- BEQ press
- TAY
- LDA (key_table),Y
- LDY &85
- TAX
-
-.frz_ret
-
- RTS
-
-.l_3d77
-
- STX &034A
- PHA
- LDA &03A4
- JSR l_3d99
- PLA
-
-.MESS
-
- LDX #&00
- STX QQ17
- LDY #&09
- STY XC
- LDY #&16
- STY YC
- CPX &034A
- BNE l_3d77
- STY &034A
- STA &03A4
-
-.l_3d99
-
- JSR TT27
- LSR &034B
- BEQ frz_ret
- LDA #&FD
- JMP TT27
+INCLUDE "library/common/main/subroutine/norm.asm"
+INCLUDE "library/common/main/subroutine/rdkey.asm"
+INCLUDE "library/common/main/subroutine/ecmof.asm"
+INCLUDE "library/common/main/subroutine/beep.asm"
+INCLUDE "library/common/main/subroutine/noise.asm"
+INCLUDE "library/common/main/subroutine/no3.asm"
+INCLUDE "library/common/main/subroutine/nos1.asm"
+INCLUDE "library/common/main/subroutine/ctrl.asm"
+INCLUDE "library/common/main/subroutine/dks4.asm"
+INCLUDE "library/common/main/subroutine/dks2.asm"
+INCLUDE "library/common/main/subroutine/dks3.asm"
+INCLUDE "library/common/main/subroutine/dokey.asm"
+INCLUDE "library/common/main/subroutine/dk4.asm"
+INCLUDE "library/common/main/subroutine/tt217.asm"
+INCLUDE "library/common/main/subroutine/me1.asm"
+INCLUDE "library/common/main/subroutine/mess.asm"
+INCLUDE "library/common/main/subroutine/mes9.asm"
 
 .l_3dea
 
@@ -841,7 +602,7 @@ INCLUDE "library/common/main/subroutine/zes2.asm"
  BPL l_3e85
  RTS
 
-.l_3e8c
+.TIS2
 
  TAY
  AND #&7F

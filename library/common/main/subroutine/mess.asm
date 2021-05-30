@@ -48,8 +48,16 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_ELITE_A_FLIGHT)
+
  LDX #0                 \ Set QQ17 = 0 to switch to ALL CAPS
  STX QQ17
+
+ELIF _ELITE_A_FLIGHT
+
+ JSR vdu_00             \ AJD
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Advanced: Group A: The original versions display in-flight messages at column 9 on row 22, at the bottom of the screen. The advanced versions go one better and centre their in-flight messages on screen, rather than always starting them at column 9
 

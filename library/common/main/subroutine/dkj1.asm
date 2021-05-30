@@ -25,7 +25,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Enhanced: The docking co
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Tube
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Tube
 
  LDY #1                 \ Update the key logger for key 1 in the KYTB table, so
  JSR DKS1               \ KY1 will be &FF if "?" (slow down) is being pressed
@@ -53,6 +53,19 @@ ELIF _6502SP_VERSION
                         \ button from the key logger buffer, which contains
                         \ the value of the 6522 System VIA input register IRB
                         \ (SHEILA &40)
+
+ELIF _ELITE_A_FLIGHT
+
+ LDY #1                 \ Update the key logger for key 1 in the KYTB table, so
+ JSR DKS1               \ KY1 will be &FF if "?" (slow down) is being pressed
+
+ INY                    \ Update the key logger for key 2 in the KYTB table, so
+ JSR DKS1               \ KY2 will be &FF if Space (speed up) is being pressed
+
+ LDA #&51               \ AJD
+ STA &FE60
+
+ LDA VIA+&40            \ Read 6522 System VIA input register IRB (SHEILA &40)
 
 ENDIF
 

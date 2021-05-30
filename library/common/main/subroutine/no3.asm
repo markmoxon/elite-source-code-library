@@ -14,9 +14,17 @@
 
 .NO3
 
+IF NOT(_ELITE_A_FLIGHT)
+
  LDX DNOIZ              \ Set X to the DNOIZ configuration setting
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Label
+ELIF _ELITE_A_FLIGHT
+
+ LDY DNOIZ              \ Set Y to the DNOIZ configuration setting
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA \ Label
 
  BNE NO1                \ If DNOIZ is non-zero, then sound is disabled, so
                         \ return from the subroutine (as NO1 contains an RTS)
@@ -65,8 +73,16 @@ IF _ELECTRON_VERSION \ Electron: Because the Electron only has two sound channel
 
 ENDIF
 
+IF NOT(_ELITE_A_FLIGHT)
+
  LDX #LO(XX16)          \ Otherwise set (Y X) to point to the sound block in
  LDY #HI(XX16)          \ XX16
+
+ELIF _ELITE_A_FLIGHT
+
+ LDX #LO(XX16)          \ AJD
+
+ENDIF
 
  LDA #7                 \ Call OSWORD 7 to makes the sound, as described in the
  JMP OSWORD             \ documentation for variable SFX, and return from the

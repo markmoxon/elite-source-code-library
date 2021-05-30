@@ -68,7 +68,7 @@ IF _6502SP_VERSION \ Tube
 
 ENDIF
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Electron: The Electron version doesn't read joystick values from the ADC channel in the main DOKEY routine, so although you can switch to a joystick using the "K" configuration option, it doesn't mean you can use it to fly your ship
+IF _DISC_DOCKED \ Electron: The Electron version doesn't read joystick values from the ADC channel in the main DOKEY routine, so although you can switch to a joystick using the "K" configuration option, it doesn't mean you can use it to fly your ship
 
  LDA JSTK               \ If JSTK is zero, then we are configured to use the
  BEQ DK9                \ keyboard rather than the joystick, so jump to DK9 to
@@ -86,7 +86,7 @@ IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Electron: The Electron version doesn't read
  STA JSTY               \ reverse the joystick Y channel, so this EOR does
                         \ exactly that, and then we store the result in JSTY
 
-ELIF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT
+ELIF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
 
  JSR U%                 \ Call U% to clear the key logger
 
@@ -99,9 +99,40 @@ ELIF _ELECTRON_VERSION
 
  JSR U%                 \ Call U% to clear the key logger
 
+ELIF _ELITE_A_FLIGHT
+
+ JSR U%                 \ Call U% to clear the key logger
+
+ LDA &2F                \ AJD
+ BEQ l_open
+ JMP DK4
+
+.l_open
+
+ LDA JSTK               \ If JSTK is non-zero, then we are configured to use
+ BNE DKJ1               \ the joystick rather than keyboard, so jump to DKJ1
+                        \ to read the joystick flight controls, before jumping
+                        \ to DK4 below
+
+ELIF _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA
+
+ LDA JSTK               \ If JSTK is zero, then we are configured to use the
+ BEQ DK4                \ keyboard rather than the joystick, so jump to DK4
+
+ LDX #1                 \ Call DKS2 to fetch the value of ADC channel 1 (the
+ JSR DKS2               \ joystick X value) into (A X), and OR A with 1. This
+ ORA #1                 \ ensures that the high byte is at least 1, and then we
+ STA JSTX               \ store the result in JSTX
+
+ LDX #2                 \ Call DKS2 to fetch the value of ADC channel 2 (the
+ JSR DKS2               \ joystick Y value) into (A X), and EOR A with JSTGY.
+ EOR JSTGY              \ JSTGY will be &FF if the game is configured to
+ STA JSTY               \ reverse the joystick Y channel, so this EOR does
+                        \ exactly that, and then we store the result in JSTY
+
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Enhanced: The Bitstik configuration option only works if joysticks are configured
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: The Bitstik configuration option only works if joysticks are configured
 
  STA BSTK               \ Set BSTK = 0 to disable the Bitstik
 

@@ -680,25 +680,10 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
 
  JSR tube_get
  TAX
- JSR scan_x
+ JSR DKS4
  JMP tube_put
 
-
-.scan_x
-
- LDA #&03
- SEI
- STA &FE40
- LDA #&7F
- STA &FE43
- STX &FE4F
- LDX &FE4F
- LDA #&0B
- STA &FE40
- CLI
- TXA
- RTS
-
+INCLUDE "library/common/main/subroutine/dks4.asm"
 
 .scan_10in
 
@@ -710,21 +695,21 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
 
  LDX #&10
 
-.scan_loop
+.Rd1
 
- JSR scan_x
- BMI scan_key
+ JSR DKS4
+ BMI Rd2
  INX
- BPL scan_loop
+ BPL Rd1
  TXA
 
-.scan_key
+.Rd2
 
  EOR #&80
  CMP #&37	\ CTRL-P hack for printer
  BNE scan_test
  LDX #&01
- JSR scan_x
+ JSR DKS4
  BPL scan_p
  JSR printer
  LDA #0
@@ -984,7 +969,7 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  JSR tube_get
  BMI b_14
  LDX d_4419-1,Y
- JSR scan_x
+ JSR DKS4
  BPL b_quit
 
 .b_pressed

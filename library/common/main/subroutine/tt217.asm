@@ -42,14 +42,14 @@ IF _CASSETTE_VERSION \ Platform
  JSR DELAY-5            \ Delay for 8 vertical syncs (8/50 = 0.16 seconds) so we
                         \ don't take up too much CPU time while looping round
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  LDY #2                 \ Delay for 2 vertical syncs (2/50 = 0.04 seconds) so we
  JSR DELAY              \ don't take up too much CPU time while looping round
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
  JSR RDKEY              \ Scan the keyboard for a key press and return the
                         \ internal key number in X (or 0 for no key press)
@@ -84,7 +84,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
  JSR RDKEY              \ Any pre-existing key press is now gone, so we can
                         \ start scanning the keyboard again, returning the
@@ -99,13 +99,13 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
  BEQ t2                 \ Keep looping up to t2 until a key is pressed
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Tube
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Tube
 
  TAY                    \ Copy A to Y, so Y contains the internal key number
                         \ of the key pressed
@@ -126,7 +126,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
  LDY YSAV               \ Restore the original value of Y we stored above
 

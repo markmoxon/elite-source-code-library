@@ -21,7 +21,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION 
  LSR de                 \ If bit 0 of variable de is clear, return from the
  BCC out                \ subroutine (as out contains an RTS)
 
-ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA
 
  LSR de                 \ If bits 1-7 of variable de are clear, return from the
  BEQ out                \ subroutine (as out contains an RTS). This means that

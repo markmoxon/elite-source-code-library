@@ -187,12 +187,9 @@ cmdr_cour = &387
 cmdr_courx = &389
 cmdr_coury = &38A
 
-s_flag = &3C6
 a_flag = &3C8
-y_flag = &3CB
-j_flag = &3CC
 b_flag = &3CE
- \
+
 save_lock = &233
 new_file = &234
 new_posn = &235
@@ -853,46 +850,7 @@ INCLUDE "library/common/main/subroutine/qus1.asm"
 INCLUDE "library/enhanced/main/subroutine/gtdrv.asm"
 INCLUDE "library/common/main/subroutine/lod.asm"
 INCLUDE "library/common/main/subroutine/fx200.asm"
-
-.NORM
-
- LDA &34
- JSR SQUA
- STA &82
- LDA &1B
- STA &81
- LDA &35
- JSR SQUA
- STA &D1
- LDA &1B
- ADC &81
- STA &81
- LDA &D1
- ADC &82
- STA &82
- LDA &36
- JSR SQUA
- STA &D1
- LDA &1B
- ADC &81
- STA &81
- LDA &D1
- ADC &82
- STA &82
- JSR LL5
- LDA &34
- JSR l_3e8c
- STA &34
- LDA &35
- JSR l_3e8c
- STA &35
- LDA &36
- JSR l_3e8c
- STA &36
-
-.l_3c1f
-
- RTS
+INCLUDE "library/common/main/subroutine/norm.asm"
 
 .scan_fire
 
@@ -908,54 +866,12 @@ INCLUDE "library/common/main/subroutine/fx200.asm"
  TAX
  RTS
 
-.ECMOF
-
- LDA #&00
- STA &30
- STA &0340
- JSR draw_ecm
- LDA #&48
- BNE NOISE
-
-.BEEP
-
- LDA #&20
-
-.NOISE
-
- JSR pp_sound
-
-.sound_rdy
-
- LDX s_flag
- BNE l_3c1f
- LDX #&09
- LDY #&00
- LDA #&07
- JMP osword
-
-.pp_sound
-
- LSR A
- ADC #&03
- TAY
- LDX #&07
-
-.l_3c83
-
- LDA #&00
- STA &09,X
- DEX
- LDA SFX,Y
- STA &09,X
- DEY
- DEX
- BPL l_3c83
- RTS	\++
-
-.CTRL
-
- LDX #&01
+INCLUDE "library/common/main/subroutine/ecmof.asm"
+INCLUDE "library/common/main/subroutine/beep.asm"
+INCLUDE "library/common/main/subroutine/noise.asm"
+INCLUDE "library/common/main/subroutine/no3.asm"
+INCLUDE "library/common/main/subroutine/nos1.asm"
+INCLUDE "library/common/main/subroutine/ctrl.asm"
 
 .DKS4
 
@@ -967,94 +883,12 @@ INCLUDE "library/common/main/subroutine/fx200.asm"
  TAX
  RTS
 
-.adval
-
- LDA #&80
- JSR osbyte
- TYA
- EOR j_flag
- RTS
-
-.tog_flags
-
- STY &D1
- CPX &D1
- BNE tog_end
- LDA &0387,X
- EOR #&FF
- STA &0387,X
- JSR BELL
- JSR DELAY
- LDY &D1
-
-.tog_end
-
- RTS
-
-.DOKEY
-
- LDA JSTK
- BEQ spec_key
- LDX #&01
- JSR adval
- ORA #&01
- STA JSTX
- LDX #&02
- JSR adval
- EOR y_flag
- STA JSTY
-
-.spec_key
-
- JSR RDKEY
- STX KL
- CPX #&69
- BNE no_freeze
-
-.no_thaw
-
- JSR WSCAN
- JSR RDKEY
- CPX #&51
- BNE not_sound
- LDA #&00
- STA s_flag
-
-.not_sound
-
- LDY #&40
-
-.flag_loop
-
- JSR tog_flags
- INY
- CPY #&48
- BNE flag_loop
- CPX #&10
- BNE not_quiet
- STX s_flag
-
-.not_quiet
-
- CPX #&70
- BNE not_escape
- JMP BR1
-
-.not_escape
-
- CPX #&59
- BNE no_thaw
-
-.no_freeze
-
- LDA &87
- BNE frz_ret
- LDY #&10
- LDA #&FF
- RTS
+INCLUDE "library/common/main/subroutine/dks2.asm"
+INCLUDE "library/common/main/subroutine/dks3.asm"
+INCLUDE "library/common/main/subroutine/dokey.asm"
+INCLUDE "library/common/main/subroutine/dk4.asm"
 
 .TT217
-
 
 .t
 
@@ -1063,7 +897,7 @@ INCLUDE "library/common/main/subroutine/fx200.asm"
  JSR tube_read
  TAX
 
-.frz_ret
+.out
 
  RTS
 
@@ -1179,7 +1013,7 @@ INCLUDE "library/common/main/subroutine/fx200.asm"
  BPL l_3e85
  RTS
 
-.l_3e8c
+.TIS2
 
  TAY
  AND #&7F
@@ -6065,7 +5899,7 @@ ENDIF
  JSR d_263d
  JMP run_tcode
  \d_1452
- \	JSR d_43b1
+ \	JSR EXNO3
  \	JSR d_2160
  \	BNE d_1473
 
@@ -6092,7 +5926,7 @@ ENDIF
 .d_146d
 
  JSR n_through
- JSR d_43b1
+ JSR EXNO3
 
 .d_1473
 
@@ -6124,7 +5958,7 @@ ENDIF
  LDA &44
  BEQ d_14ed
  LDX #&0F
- JSR d_43dd
+ JSR EXNO
  LDA &44
  LDY &8C
  CPY #&02
@@ -6155,7 +5989,7 @@ ENDIF
  JSR d_1678
  LDY #&05
  JSR d_1678
- JSR d_43ce
+ JSR EXNO2
 
 .d_14e6
 
@@ -6527,7 +6361,7 @@ INCLUDE "library/common/main/subroutine/escape.asm"
 .d_210c
 
  JSR d_2160
- JSR d_43b1
+ JSR EXNO3
  LDA #&FA
  JMP d_36e4
 
@@ -6581,7 +6415,7 @@ INCLUDE "library/common/main/subroutine/escape.asm"
 
 .d_215d
 
- JSR d_43ce
+ JSR EXNO2
 
 .d_2160
 
@@ -8273,7 +8107,7 @@ INCLUDE "library/common/main/subroutine/sps2.asm"
 
 .d_3719
 
- JSR d_43b1
+ JSR EXNO3
  JMP d_45ea
 
 .d_371f
@@ -8314,7 +8148,7 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
  ASL A
  JSR NOISE
 
-.draw_ecm
+.ECBLB
 
  LDA #&93
  JMP tube_write
@@ -9339,7 +9173,7 @@ INCLUDE "library/common/main/subroutine/tt102.asm"
 
 .d_41c6
 
- JSR d_43b1
+ JSR EXNO3
  JSR RES2
  ASL &7D
  ASL &7D
@@ -9634,11 +9468,8 @@ INCLUDE "library/common/main/subroutine/tt102.asm"
  LDA #&28
  JMP NOISE
 
-.d_43b1
+INCLUDE "library/common/main/subroutine/exno3.asm"
 
- JSR sound_10
- LDA #&18
- JMP NOISE
 
 .d_43be
 
@@ -9657,35 +9488,8 @@ INCLUDE "library/common/main/subroutine/tt102.asm"
 
  RTS
 
-.d_43ce
-
- INC TALLY
- BNE d_43db
- INC TALLY+&01
- LDA #&65
- JSR MESS
-
-.d_43db
-
- LDX #&07
-
-.d_43dd
-
- STX &D1
- LDA #&18
- JSR pp_sound
- LDA &4D
- LSR A
- LSR A
- AND &D1
- ORA #&F1
- STA &0B
- JSR sound_rdy
-
-.sound_10
-
- LDA #&10
- JMP NOISE
+INCLUDE "library/common/main/subroutine/exno2.asm"
+INCLUDE "library/common/main/subroutine/exno.asm"
 
 .d_4429
 
@@ -9715,12 +9519,12 @@ INCLUDE "library/common/main/subroutine/tt102.asm"
  EOR #&10
  STA &0307
  LDX #&01
- JSR adval
+ JSR DKS2
  ORA #&01
  STA JSTX
  LDX #&02
- JSR adval
- EOR y_flag
+ JSR DKS2
+ EOR JSTGY
  STA JSTY
  JMP d_4555
 
@@ -9875,7 +9679,7 @@ INCLUDE "library/common/main/subroutine/tt102.asm"
  CPX #&51
  BNE d_456e
  LDA #&00
- STA s_flag
+ STA DNOIZ
 
 .d_456e
 
@@ -9883,13 +9687,13 @@ INCLUDE "library/common/main/subroutine/tt102.asm"
 
 .d_4570
 
- JSR tog_flags
+ JSR DKS3
  INY
  CPY #&48
  BNE d_4570
  CPX #&10
  BNE d_457f
- STX s_flag
+ STX DNOIZ
 
 .d_457f
 

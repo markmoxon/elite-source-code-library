@@ -242,7 +242,7 @@ BRKV = P% - 2
  LDA #'R'
  STA l_11f8
 
-.l_1220
+.DEATH2
 
  JSR RES2
  \	JMP l_11f1
@@ -486,7 +486,7 @@ BRKV = P% - 2
  STA &0343
  STA &44
  LDA #&00
- JSR l_43f3
+ JSR NOISE
  JSR LASLI
  PLA
  BPL l_136f
@@ -616,7 +616,7 @@ BRKV = P% - 2
  JSR l_263d
  JMP run_tcode
  \l_1452
- \	JSR l_43b1
+ \	JSR EXNO3
  \	JSR l_2160
  \	BNE l_1473
 
@@ -644,7 +644,7 @@ BRKV = P% - 2
 .l_146d
 
  JSR n_through
- JSR l_43b1
+ JSR EXNO3
 
 .l_1473
 
@@ -676,7 +676,7 @@ BRKV = P% - 2
  LDA &44
  BEQ l_14ed
  LDX #&0F
- JSR l_43dd
+ JSR EXNO
  LDA &44
  LDY &8C
  CPY #&02
@@ -707,7 +707,7 @@ BRKV = P% - 2
  JSR l_1678
  LDY #&05
  JSR l_1678
- JSR l_43ce
+ JSR EXNO2
 
 .l_14e6
 
@@ -1150,7 +1150,7 @@ LOAD_C% = LOAD% +P% - CODE%
 .l_210c
 
  JSR l_2160
- JSR l_43b1
+ JSR EXNO3
  LDA #&FA
  JMP l_36e4
 
@@ -1204,7 +1204,7 @@ LOAD_C% = LOAD% +P% - CODE%
 
 .l_215d
 
- JSR l_43ce
+ JSR EXNO2
 
 .l_2160
 
@@ -1329,7 +1329,7 @@ LOAD_C% = LOAD% +P% - CODE%
  LSR A
  LSR A
  BCC l_21fd
- JMP l_2346
+ JMP DOCKIT
 
 .l_21fd
 
@@ -1458,7 +1458,7 @@ LOAD_C% = LOAD% +P% - CODE%
  LDA &30
  BNE l_2311
  LDA #&08
- JMP l_43f3
+ JMP NOISE
 
 .l_22c6
 
@@ -1567,7 +1567,7 @@ LOAD_C% = LOAD% +P% - CODE%
  LDA &D1
  RTS
 
-.l_2346
+.DOCKIT
 
  LDA #&06
  STA &9A
@@ -2065,7 +2065,7 @@ LOAD_C% = LOAD% +P% - CODE%
 .LL164
 
  LDA #&38
- JSR l_43f3
+ JSR NOISE
  LDA #&01
  STA &0348
  LDA #&04
@@ -3005,7 +3005,7 @@ INCLUDE "library/common/main/subroutine/sps2.asm"
 
 .l_3719
 
- JSR l_43b1
+ JSR EXNO3
  JMP l_45ea
 
 .l_371f
@@ -3039,9 +3039,9 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
  LDA #&20
  STA &30
  ASL A
- JSR l_43f3
+ JSR NOISE
 
-.l_381b
+.ECBLB
 
  LDA #&38
  LDX #LO(l_3832)
@@ -4089,7 +4089,7 @@ INCLUDE "library/common/main/subroutine/tt102.asm"
 
 .l_41c6
 
- JSR l_43b1
+ JSR EXNO3
  JSR RES2
  ASL &7D
  ASL &7D
@@ -4154,7 +4154,7 @@ INCLUDE "library/common/main/subroutine/tt102.asm"
  BNE l_4234
  LDX #&1F
  JSR DET1
- JMP l_1220
+ JMP DEATH2
 
 .RSHIPS
 
@@ -4259,64 +4259,8 @@ INCLUDE "library/common/main/subroutine/zes2.asm"
  ORA &DA
  STA &36
 
-.NORM
-
- LDA &34
- JSR SQUA
- STA &82
- LDA &1B
- STA &81
- LDA &35
- JSR SQUA
- \	STA &D1
- TAY
- LDA &1B
- ADC &81
- STA &81
- \	LDA &D1
- TYA
- ADC &82
- STA &82
- LDA &36
- JSR SQUA
- \	STA &D1
- TAY
- LDA &1B
- ADC &81
- STA &81
- \	LDA &D1
- TYA
- ADC &82
- STA &82
- JSR LL5
- LDA &34
- JSR l_46ff
- STA &34
- LDA &35
- JSR l_46ff
- STA &35
- LDA &36
- JSR l_46ff
- STA &36
- RTS
-
-.l_433f
-
- LDX #&10
-
-.l_4341
-
- JSR DKS4
- BMI l_434a
- INX
- BPL l_4341
- TXA
-
-.l_434a
-
- EOR #&80
- TAX
- RTS
+INCLUDE "library/common/main/subroutine/norm.asm"
+INCLUDE "library/common/main/subroutine/rdkey.asm"
 
 .l_434e
 
@@ -4365,103 +4309,32 @@ INCLUDE "library/common/main/subroutine/zes2.asm"
 .l_439f
 
  LDA #&28
- BNE l_43f3
+ BNE NOISE
 
-.ECMOF
-
- LDA #&00
- STA &30
- STA &0340
- JSR l_381b
- LDA #&48
- BNE l_43f3
-
-.l_43b1
-
- JSR n_sound10
- LDA #&18
- BNE l_43f3
-
-.BEEP
-
- LDA #&20
- BNE l_43f3
+INCLUDE "library/common/main/subroutine/ecmof.asm"
+INCLUDE "library/common/main/subroutine/exno3.asm"
+INCLUDE "library/common/main/subroutine/beep.asm"
 
 .l_43be
 
  LDX #&01
  JSR l_2590
- BCC l_4418
+ BCC KYTB
  LDA #&78
  JSR MESS
 
 .n_sound30
 
  LDA #&30
- BNE l_43f3
+ BNE NOISE
 
-.l_43ce
+INCLUDE "library/common/main/subroutine/exno2.asm"
+INCLUDE "library/common/main/subroutine/exno.asm"
+INCLUDE "library/common/main/subroutine/noise.asm"
+INCLUDE "library/common/main/subroutine/no3.asm"
+INCLUDE "library/common/main/subroutine/nos1.asm"
 
- INC TALLY
- BNE l_43db
- INC TALLY+&01
- LDA #&65
- JSR MESS
-
-.l_43db
-
- LDX #&07
-
-.l_43dd
-
- STX &D1
- LDA #&18
- JSR l_4404
- LDA &4D
- LSR A
- LSR A
- AND &D1
- ORA #&F1
- STA &0B
- JSR l_43f6
-
-.n_sound10
-
- LDA #&10
-
-.l_43f3
-
- JSR l_4404
-
-.l_43f6
-
- \	LDX s_flag
- LDY s_flag
- BNE l_4418
- LDX #&09
- \	LDY #&00
- LDA #&07
- JMP osword
-
-.l_4404
-
- LSR A
- ADC #&03
- TAY
- LDX #&07
-
-.l_440a
-
- LDA #&00
- STA &09,X
- DEX
- LDA SFX,Y
- STA &09,X
- DEY
- DEX
- BPL l_440a
-
-.l_4418
+.KYTB
 
  RTS
 
@@ -4492,7 +4365,7 @@ INCLUDE "library/common/main/subroutine/zes2.asm"
  BMI b_13
  RTS
 
-.l_4429
+.DKS1
 
  LDA b_flag
  BMI b_14
@@ -4509,324 +4382,35 @@ INCLUDE "library/common/main/subroutine/zes2.asm"
 
  RTS
 
-.CTRL
-
- LDX #&01
-
-.DKS4
-
- LDA #&03
- SEI
- STA &FE40
- LDA #&7F
- STA &FE43
- STX &FE4F
- LDX &FE4F
- LDA #&0B
- STA &FE40
- CLI
- TXA
- RTS
-
-.l_4452
-
- LDA #&80
- JSR osbyte
- TYA
- EOR j_flag
- RTS
-
-.l_445c
-
- STY &D1
- CPX &D1
- BNE l_4472
- LDA &0387,X
- EOR #&FF
- STA &0387,X
- JSR BELL
- JSR DELAY
- LDY &D1
-
-.l_4472
-
- RTS
-
-.l_4473
-
- LDA &033F
- BNE l_44c7
- LDY #&01
- JSR l_4429
- INY
- JSR l_4429
- LDA #&51
- STA &FE60
- LDA &FE40
- TAX
- AND #&10
- EOR #&10
- STA &0307
- LDX #&01
- JSR l_4452
- ORA #&01
- STA JSTX
- LDX #&02
- JSR l_4452
- EOR y_flag
- STA JSTY
- JMP l_4555
-
-.U%
-
- LDA #&00
- LDY #&10
-
-.l_44a8
-
- STA KL,Y
- DEY
- BNE l_44a8
- RTS
-
-.DOKEY
-
- JSR U%
- LDA &2F
- BEQ l_open
- JMP l_4555
-
-.l_open
-
- LDA JSTK
- BNE l_4473
- \	STA b_flag
- LDY #&07
-
-.l_44bc
-
- JSR l_4429
- DEY
- BNE l_44bc
- LDA &033F
- BEQ l_4526
-
-.l_44c7
-
- JSR ZINF
- LDA #&60
- STA &54
- ORA #&80
- STA &5C
- STA &8C
- LDA &7D	\ ? Too Fast
- STA &61
- JSR l_2346
- LDA &61
- CMP #&16
- BCC l_44e3
- LDA #&16
-
-.l_44e3
-
- STA &7D
- LDA #&FF
- LDX #&00
- LDY &62
- BEQ l_44f3
- BMI l_44f0
- INX
-
-.l_44f0
-
- STA &0301,X
-
-.l_44f3
-
- LDA #&80
- LDX #&00
- ASL &63
- BEQ l_450f
- BCC l_44fe
- INX
-
-.l_44fe
-
- BIT &63
- BPL l_4509
- LDA #&40
- STA JSTX
- LDA #&00
-
-.l_4509
-
- STA &0303,X
- LDA JSTX
-
-.l_450f
-
- STA JSTX
- LDA #&80
- LDX #&00
- ASL &64
- BEQ l_4523
- BCS l_451d
- INX
-
-.l_451d
-
- STA &0305,X
- LDA JSTY
-
-.l_4523
-
- STA JSTY
-
-.l_4526
-
- LDX JSTX
- LDA #&07
- LDY &0303
- BEQ l_4533
- JSR BUMP2
-
-.l_4533
-
- LDY &0304
- BEQ l_453b
- JSR REDU2
-
-.l_453b
-
- STX JSTX
- ASL A
- LDX JSTY
- LDY &0305
- BEQ l_454a
- JSR REDU2
-
-.l_454a
-
- LDY &0306
- BEQ l_4552
- JSR BUMP2
-
-.l_4552
-
- STX JSTY
-
-.l_4555
-
- JSR l_433f
- STX KL
- CPX #&69
- BNE l_459c
-
-.l_455f
-
- JSR WSCAN
- JSR l_433f
- CPX #&51
- BNE l_456e
- LDA #&00
- STA s_flag
-
-.l_456e
-
- LDY #&40
-
-.l_4570
-
- JSR l_445c
- INY
- \	CPY #&47
- CPY #&48
- BNE l_4570
- CPX #&10
- BNE l_457f
- STX s_flag
-
-.l_457f
-
- CPX #&70
- BNE l_4586
- JMP l_1220
-
-.l_4586
-
- CPX #&59
- BNE l_455f
-
-.l_459c
-
- LDA &87
- BNE l_45b4
- LDY #&10
- \	LDA #&FF
-
-.l_45a4
-
- JSR l_4429
- \	LDX l_4419-1,Y
- \	CPX KL
- \	BNE l_45af
- \	STA KL,Y
- \l_45af
- DEY
- CPY #&07
- BNE l_45a4
-
-.l_45b4
-
- RTS
-
-.l_45b5
-
- STX &034A
- PHA
- LDA &03A4
- JSR l_45dd
- PLA
- EQUB &2C
+INCLUDE "library/common/main/subroutine/ctrl.asm"
+INCLUDE "library/common/main/subroutine/dks4.asm"
+INCLUDE "library/common/main/subroutine/dks2.asm"
+INCLUDE "library/common/main/subroutine/dks3.asm"
+INCLUDE "library/common/main/subroutine/dkj1.asm"
+INCLUDE "library/common/main/subroutine/u_per_cent.asm"
+INCLUDE "library/common/main/subroutine/dokey.asm"
+INCLUDE "library/common/main/subroutine/dk4.asm"
+INCLUDE "library/common/main/subroutine/me1.asm"
 
 .cargo_mtok
 
  ADC #&D0
 
-.MESS
-
- \	LDX #&00
- \	STX QQ17
- JSR vdu_00
- LDY #&09
- STY XC
- LDY #&16
- STY YC
- CPX &034A
- BNE l_45b5
- STY &034A
- STA &03A4
-
-.l_45dd
-
- JSR TT27
- LSR &034B
- BCC l_45b4
- LDA #&FD
- JMP TT27
+INCLUDE "library/common/main/subroutine/mess.asm"
+INCLUDE "library/common/main/subroutine/mes9.asm"
 
 .l_45ea
 
  JSR DORND
- BMI l_45b4
+ BMI DK5
  \	CPX #&16
  CPX #&18
- BCS l_45b4
+ BCS DK5
  \	LDA QQ20,X
  LDA CRGO,X
- BEQ l_45b4
+ BEQ DK5
  LDA &034A
- BNE l_45b4
+ BNE DK5
  LDY #&03
  STY &034B
  \	STA QQ20,X
@@ -4959,7 +4543,7 @@ INCLUDE "library/common/main/subroutine/zes2.asm"
  BPL l_46f8
  RTS
 
-.l_46ff
+.TIS2
 
  TAY
  AND #&7F

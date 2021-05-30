@@ -51,29 +51,65 @@
 
  JSR SQUA               \ Set (A P) = A * A = y^2
 
+IF NOT(_ELITE_A_FLIGHT)
+
  STA T                  \ Set (T P) = (A P) = y^2
+
+ELIF _ELITE_A_FLIGHT
+
+ TAY                    \ AJD
+
+ENDIF
 
  LDA P                  \ Set (R Q) = (R Q) + (T P) = x^2 + y^2
  ADC Q                  \
  STA Q                  \ First, doing the low bytes, Q = Q + P
 
+IF NOT(_ELITE_A_FLIGHT)
+
  LDA T                  \ And then the high bytes, R = R + T
  ADC R
  STA R
+
+ELIF _ELITE_A_FLIGHT
+
+ TYA                    \ AJD
+ ADC R
+ STA R
+
+ENDIF
 
  LDA XX15+2             \ Fetch the z-coordinate into A
 
  JSR SQUA               \ Set (A P) = A * A = z^2
 
+IF NOT(_ELITE_A_FLIGHT)
+
  STA T                  \ Set (T P) = (A P) = z^2
+
+ELIF _ELITE_A_FLIGHT
+
+ TAY                    \ AJD
+
+ENDIF
 
  LDA P                  \ Set (R Q) = (R Q) + (T P) = x^2 + y^2 + z^2
  ADC Q                  \
  STA Q                  \ First, doing the low bytes, Q = Q + P
 
+IF NOT(_ELITE_A_FLIGHT)
+
  LDA T                  \ And then the high bytes, R = R + T
  ADC R
  STA R
+
+ELIF _ELITE_A_FLIGHT
+
+ TYA                    \ AJD
+ ADC R
+ STA R
+
+ENDIF
 
  JSR LL5                \ We now have the following:
                         \

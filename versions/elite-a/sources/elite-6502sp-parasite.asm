@@ -901,491 +901,35 @@ INCLUDE "library/common/main/subroutine/dk4.asm"
 
  RTS
 
-.QQ23
-
- EQUB &13, &82, &06, &01
- EQUB &14, &81, &0A, &03
- EQUB &41, &83, &02, &07
- EQUB &28, &85, &E2, &1F
- EQUB &53, &85, &FB, &0F
- EQUB &C4, &08, &36, &03
- EQUB &EB, &1D, &08, &78
- EQUB &9A, &0E, &38, &03
- EQUB &75, &06, &28, &07
- EQUB &4E, &01, &11, &1F
- EQUB &7C, &0D, &1D, &07
- EQUB &B0, &89, &DC, &3F
- EQUB &20, &81, &35, &03
- EQUB &61, &A1, &42, &07
- EQUB &AB, &A2, &37, &1F
- EQUB &2D, &C1, &FA, &0F
- EQUB &35, &0F, &C0, &07
-
-.l_3dea
-
- TYA
- LDY #&02
- JSR l_3eb9
- STA &5A
- JMP l_3e32
-
-.l_3df5
-
- TAX
- LDA &35
- AND #&60
- BEQ l_3dea
- LDA #&02
- JSR l_3eb9
- STA &58
- JMP l_3e32
-
-.TIDY
-
- LDA &50
- STA &34
- LDA &52
- STA &35
- LDA &54
- STA &36
- JSR NORM
- LDA &34
- STA &50
- LDA &35
- STA &52
- LDA &36
- STA &54
- LDY #&04
- LDA &34
- AND #&60
- BEQ l_3df5
- LDX #&02
- LDA #&00
- JSR l_3eb9
- STA &56
-
-.l_3e32
-
- LDA &56
- STA &34
- LDA &58
- STA &35
- LDA &5A
- STA &36
- JSR NORM
- LDA &34
- STA &56
- LDA &35
- STA &58
- LDA &36
- STA &5A
- LDA &52
- STA &81
- LDA &5A
- JSR MULT12
- LDX &54
- LDA &58
- JSR TIS1
- EOR #&80
- STA &5C
- LDA &56
- JSR MULT12
- LDX &50
- LDA &5A
- JSR TIS1
- EOR #&80
- STA &5E
- LDA &58
- JSR MULT12
- LDX &52
- LDA &56
- JSR TIS1
- EOR #&80
- STA &60
- LDA #&00
- LDX #&0E
-
-.l_3e85
-
- STA &4F,X
- DEX
- DEX
- BPL l_3e85
- RTS
-
-.TIS2
-
- TAY
- AND #&7F
- CMP &81
- BCS l_3eb3
- LDX #&FE
- STX &D1
-
-.l_3e97
-
- ASL A
- CMP &81
- BCC l_3e9e
- SBC &81
-
-.l_3e9e
-
- ROL &D1
- BCS l_3e97
- LDA &D1
- LSR A
- LSR A
- STA &D1
- LSR A
- ADC &D1
- STA &D1
- TYA
- AND #&80
- ORA &D1
- RTS
-
-.l_3eb3
-
- TYA
- AND #&80
- ORA #&60
- RTS
-
-.l_3eb9
-
- STA &1D
- LDA &50,X
- STA &81
- LDA &56,X
- JSR MULT12
- LDX &50,Y
- STX &81
- LDA &56,Y
- JSR MAD
- STX &1B
- LDY &1D
- LDX &50,Y
- STX &81
- EOR #&80
- STA &1C
- EOR &81
- AND #&80
- STA &D1
- LDA #&00
- LDX #&10
- ASL &1B
- ROL &1C
- ASL &81
- LSR &81
-
-.l_3eec
-
- ROL A
- CMP &81
- BCC l_3ef3
- SBC &81
-
-.l_3ef3
-
- ROL &1B
- ROL &1C
- DEX
- BNE l_3eec
- LDA &1B
- ORA &D1
- RTS
-
-.l_3eff
-
- JSR l_4059
- JSR d_3856
- ORA &D3
- BNE l_3f23
- LDA &E0
- CMP #&BE
- BCS l_3f23
- LDY #&02
- JSR l_3f2a
- LDY #&06
- LDA &E0
- ADC #&01
- JSR l_3f2a
- LDA #&08
- ORA &65
- STA &65
- LDA #&08
- JMP l_46ef
-
-.l_3f21
-
- PLA
- PLA
-
-.l_3f23
-
- LDA #&F7
- AND &65
- STA &65
- RTS
-
-.l_3f2a
-
- STA (&67),Y
- INY
- INY
- STA (&67),Y
- LDA &D2
- DEY
- STA (&67),Y
- ADC #&03
- BCS l_3f21
- DEY
- DEY
- STA (&67),Y
- RTS
-
-.LL5
-
- LDY &82
- LDA &81
- STA &83
- LDX #&00
- STX &81
- LDA #&08
- STA &D1
-
-.l_3f4c
-
- CPX &81
- BCC l_3f5e
- BNE l_3f56
- CPY #&40
- BCC l_3f5e
-
-.l_3f56
-
- TYA
- SBC #&40
- TAY
- TXA
- SBC &81
- TAX
-
-.l_3f5e
-
- ROL &81
- ASL &83
- TYA
- ROL A
- TAY
- TXA
- ROL A
- TAX
- ASL &83
- TYA
- ROL A
- TAY
- TXA
- ROL A
- TAX
- DEC &D1
- BNE l_3f4c
- RTS
-
-.LL28
-
- CMP &81
- BCS l_3f93
-
-
- LDX #&FE
- STX &82
-
-.LL31
-
- ASL A
- BCS l_3f8b
- CMP &81
- BCC l_3f86
- SBC &81
-
-.l_3f86
-
- ROL &82
- BCS LL31
- RTS
-
-.l_3f8b
-
- SBC &81
- SEC
- ROL &82
- BCS LL31
- RTS
-
-.l_3f93
-
- LDA #&FF
- STA &82
- RTS
-
-.l_3f98
-
- EOR &83
- BMI l_3fa2
- LDA &81
- CLC
- ADC &82
- RTS
-
-.l_3fa2
-
- LDA &82
- SEC
- SBC &81
- BCC l_3fab
- CLC
- RTS
-
-.l_3fab
-
- PHA
- LDA &83
- EOR #&80
- STA &83
- PLA
- EOR #&FF
- ADC #&01
- RTS
-
-.l_3fb8
-
- LDX #&00
- LDY #&00
-
-.l_3fbc
-
- LDA &34
- STA &81
- LDA &09,X
- JSR FMLTU
- STA &D1
- LDA &35
- EOR &0A,X
- STA &83
- LDA &36
- STA &81
- LDA &0B,X
- JSR FMLTU
- STA &81
- LDA &D1
- STA &82
- LDA &37
- EOR &0C,X
- JSR l_3f98
- STA &D1
- LDA &38
- STA &81
- LDA &0D,X
- JSR FMLTU
- STA &81
- LDA &D1
- STA &82
- LDA &39
- EOR &0E,X
- JSR l_3f98
- STA &3A,Y
- LDA &83
- STA &3B,Y
- INY
- INY
- TXA
- CLC
- ADC #&06
- TAX
- CMP #&11
- BCC l_3fbc
- RTS
-
-.LL9
-
- LDA #&1F
- STA &96
- LDA &6A
- BMI l_4059
- LDA #&20
- BIT &65
- BNE l_4046
- BPL l_4046
- ORA &65
- AND #&3F
- STA &65
- LDA #&00
- LDY #&1C
- STA (&20),Y
- LDY #&1E
- STA (&20),Y
- JSR l_4059
- LDY #&01
- LDA #&12
- STA (&67),Y
- LDY #&07
- LDA (&1E),Y
- LDY #&02
- STA (&67),Y
-
-.l_403c
-
- INY
- JSR DORND
- STA (&67),Y
- CPY #&06
- BNE l_403c
-
-.l_4046
-
- LDA &4E
- BPL l_4067
-
-.l_404a
-
- LDA &65
- AND #&20
- BEQ l_4059
- LDA &65
- AND #&F7
- STA &65
- JMP DOEXP	\JMP TT48
-
-.l_4059
-
- LDA #&08
- BIT &65
- BEQ l_4066
- EOR &65
- STA &65
- JMP l_46f3
-
-.l_4066
-
- RTS
-
-.l_4067
+INCLUDE "library/common/main/macro/item.asm"
+INCLUDE "library/common/main/variable/qq23.asm"
+INCLUDE "library/common/main/subroutine/tidy.asm"
+INCLUDE "library/common/main/subroutine/tis2.asm"
+INCLUDE "library/common/main/subroutine/tis3.asm"
+INCLUDE "library/common/main/subroutine/dvidt.asm"
+INCLUDE "library/common/main/subroutine/shppt.asm"
+INCLUDE "library/common/main/subroutine/ll5.asm"
+INCLUDE "library/common/main/subroutine/ll28.asm"
+INCLUDE "library/common/main/subroutine/ll38.asm"
+INCLUDE "library/common/main/subroutine/ll51.asm"
+INCLUDE "library/common/main/subroutine/ll9_part_1_of_12.asm"
+
+
+.LL10
 
  LDA &4D
  CMP #&C0
- BCS l_404a
+ BCS LL14
  LDA &46
  CMP &4C
  LDA &47
  SBC &4D
- BCS l_404a
+ BCS LL14
  LDA &49
  CMP &4C
  LDA &4A
  SBC &4D
- BCS l_404a
+ BCS LL14
  LDY #&06
  LDA (&1E),Y
  TAX
@@ -1420,7 +964,7 @@ INCLUDE "library/common/main/subroutine/dk4.asm"
  LDA #&20
  AND &65
  BNE l_40bb
- JMP l_3eff
+ JMP SHPPT
 
 .l_40bb
 
@@ -1523,7 +1067,7 @@ INCLUDE "library/common/main/subroutine/dk4.asm"
  STA &37
  LDA &78
  STA &38
- JSR l_3fb8
+ JSR LL51
  LDA &3A
  STA QQ17
  LDA &3B
@@ -1631,7 +1175,7 @@ INCLUDE "library/common/main/subroutine/dk4.asm"
  LDA &78
  STA &81
  LDA &7A
- JSR l_3f98
+ JSR LL38
  BCS l_41c4
  STA &38
  LDA &83
@@ -1643,7 +1187,7 @@ INCLUDE "library/common/main/subroutine/dk4.asm"
  LDA QQ17
  STA &81
  LDA &74
- JSR l_3f98
+ JSR LL38
  BCS l_41c4
  STA &34
  LDA &83
@@ -1655,7 +1199,7 @@ INCLUDE "library/common/main/subroutine/dk4.asm"
  LDA &75
  STA &81
  LDA &77
- JSR l_3f98
+ JSR LL38
  BCS l_41c4
  STA &36
  LDA &83
@@ -1680,7 +1224,7 @@ INCLUDE "library/common/main/subroutine/dk4.asm"
  STA &82
  LDA &3D
  EOR &37
- JSR l_3f98
+ JSR LL38
  STA &D1
  LDA &3E
  STA &81
@@ -1691,7 +1235,7 @@ INCLUDE "library/common/main/subroutine/dk4.asm"
  STA &82
  LDA &39
  EOR &3F
- JSR l_3f98
+ JSR LL38
  PHA
  TYA
  LSR A
@@ -1812,7 +1356,7 @@ INCLUDE "library/common/main/subroutine/dk4.asm"
  STA &37
  ASL A
  STA &39
- JSR l_3fb8
+ JSR LL51
  LDA &48
  STA &36
  EOR &3B
@@ -2085,7 +1629,7 @@ INCLUDE "library/common/main/subroutine/dk4.asm"
  LDA #&08
  BIT &65
  BEQ l_44b6
- JSR l_46f3
+ JSR LL155
  LDA #&08
 
 .l_44b6
@@ -2443,14 +1987,14 @@ INCLUDE "library/common/main/subroutine/dk4.asm"
  INY
  STY &80
  CPY &06
- BCS l_46ed
+ BCS LL81
 
 .l_46d6
 
  INC &86
  LDY &86
  CPY &97
- BCS l_46ed
+ BCS LL81
  LDY #&00
  LDA &22
  ADC #&04
@@ -2462,7 +2006,7 @@ INCLUDE "library/common/main/subroutine/dk4.asm"
 
  JMP l_4539
 
-.l_46ed
+.LL81
 
  LDA &80
 
@@ -2471,7 +2015,7 @@ INCLUDE "library/common/main/subroutine/dk4.asm"
  LDY #&00
  STA (&67),Y
 
-.l_46f3
+.LL155
 
  LDY #&00
  LDA (&67),Y
@@ -8168,7 +7712,7 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
 
  JMP MSBAR
 
-.d_3856
+.PROJ
 
  LDA &46
  STA &1B
@@ -8222,7 +7766,7 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
  BCS d_388e
  ORA &4D
  BEQ d_388e
- JSR d_3856
+ JSR PROJ
  BCS d_388e
  LDA #&60
  STA &1C

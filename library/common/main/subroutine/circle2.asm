@@ -145,7 +145,7 @@ ENDIF
  JSR BLINE              \ Call BLINE to draw this segment, which also increases
                         \ CNT by STP, the step size
 
- CMP #65                \ If CNT >=65 then skip the next instruction
+ CMP #65                \ If CNT >= 65 then skip the next instruction
  BCS P%+5
 
  JMP PLL3               \ Jump back for the next segment

@@ -18,9 +18,59 @@
 
 .plf2
 
+IF NOT(_ELITE_A_DOCKED)
+
  JSR plf                \ Print the text token in A followed by a newline
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Tube
+ELIF _ELITE_A_DOCKED
+
+ STX &93                \ AJD
+ STA &96
+ JSR TT27
+ LDX &87
+ CPX #&08
+ BEQ status_keep
+ LDA #&15
+ STA XC
+ JSR vdu_80
+ LDA #&01
+ STA &03AB
+ JSR sell_yn
+ BEQ status_no
+ BCS status_no
+ LDA &96
+ CMP #&6B
+ BCS status_over
+ ADC #&07
+
+.status_over
+
+ SBC #&68
+ JSR prx-3
+ LSR A
+ TAY
+ TXA
+ ROR A
+ TAX
+ JSR MCASH
+ INC new_hold
+ LDX &93
+ LDA #&00
+ STA LASER,X
+
+.status_no
+
+ LDX #&01
+
+.status_keep
+
+ STX XC
+ LDA #&0A
+ JMP TT27
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ Tube
 
  LDX #6                 \ Move the text cursor to column 6
  STX XC

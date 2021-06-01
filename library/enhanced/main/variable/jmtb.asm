@@ -16,10 +16,14 @@
 IF NOT(_ELITE_A_ENCYCLOPEDIA)
  EQUW TT27              \ Token  4: Print the commander's name
 ELIF _ELITE_A_ENCYCLOPEDIA
- EQUW set_token         \ Token  4: AJD
+ EQUW MT6               \ Token  4: Switch to standard tokens, in Sentence Case
 ENDIF
  EQUW MT5               \ Token  5: Switch to extended tokens
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  EQUW MT6               \ Token  6: Switch to standard tokens, in Sentence Case
+ELIF _ELITE_A_ENCYCLOPEDIA
+ EQUW set_token         \ Token  6: AJD
+ENDIF
  EQUW DASC              \ Token  7: Beep
  EQUW MT8               \ Token  8: Tab to column 6
  EQUW MT9               \ Token  9: Clear screen, tab to column 1, view type = 1

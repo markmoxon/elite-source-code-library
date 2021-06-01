@@ -1,10 +1,6 @@
 \ ******************************************************************************
 \
-IF NOT(_ELITE_A_ENCYCLOPEDIA)
 \       Name: MT6
-ELIF _ELITE_A_ENCYCLOPEDIA
-\       Name: set_token
-ENDIF
 \       Type: Subroutine
 \   Category: Text
 \    Summary: Switch to standard tokens in Sentence Case
@@ -21,20 +17,12 @@ ENDIF
 IF _ELITE_A_6502SP_PARA OR _ELITE_A_DOCKED
 \ Other entry points:
 \
-\   set_token           AJD
+\   set_token           Switch to standard tokens, keeping the current case
 \
 ENDIF
 \ ******************************************************************************
 
-IF NOT(_ELITE_A_ENCYCLOPEDIA)
-
 .MT6
-
-ELIF _ELITE_A_ENCYCLOPEDIA
-
-.set_token
-
-ENDIF
 
  LDA #%10000000         \ Set bit 7 of QQ17 to switch standard tokens to
  STA QQ17               \ Sentence Case

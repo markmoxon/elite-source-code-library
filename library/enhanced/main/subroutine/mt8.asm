@@ -17,7 +17,7 @@
 IF _ELITE_A_ENCYCLOPEDIA
 \ Other entry points:
 \
-\   MT6                 AJD
+\   set_token           AJD
 \
 ENDIF
 \ ******************************************************************************
@@ -38,7 +38,7 @@ ENDIF
 
 IF _ELITE_A_ENCYCLOPEDIA
 
-.MT6
+.set_token
 
 ENDIF
 

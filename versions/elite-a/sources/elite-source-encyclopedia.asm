@@ -233,7 +233,7 @@ INCLUDE "library/disc/flight/variable/ltli.asm"
 
 \ ******************************************************************************
 \
-\       Name: 
+\       Name: launch
 \       Type: Subroutine
 \   Category: Elite-A
 \    Summary: AJD
@@ -249,7 +249,7 @@ INCLUDE "library/disc/flight/variable/ltli.asm"
 
 \ ******************************************************************************
 \
-\       Name: 
+\       Name: escape
 \       Type: Subroutine
 \   Category: Elite-A
 \    Summary: AJD
@@ -264,7 +264,7 @@ INCLUDE "library/disc/flight/variable/ltli.asm"
 
 \ ******************************************************************************
 \
-\       Name: 
+\       Name: DOENTRY
 \       Type: Subroutine
 \   Category: Elite-A
 \    Summary: AJD
@@ -288,7 +288,7 @@ INCLUDE "library/enhanced/main/subroutine/mt2.asm"
 
 \ ******************************************************************************
 \
-\       Name: 
+\       Name: column_16
 \       Type: Subroutine
 \   Category: Elite-A
 \    Summary: AJD
@@ -306,7 +306,7 @@ INCLUDE "library/enhanced/main/subroutine/mt13.asm"
 
 \ ******************************************************************************
 \
-\       Name: 
+\       Name: clr_vdustat
 \       Type: Subroutine
 \   Category: Elite-A
 \    Summary: AJD
@@ -450,7 +450,7 @@ INCLUDE "library/common/main/subroutine/tt162.asm"
 
 \ ******************************************************************************
 \
-\       Name: 
+\       Name: func_tab
 \       Type: Variable
 \   Category: Elite-A
 \    Summary: AJD
@@ -463,7 +463,7 @@ INCLUDE "library/common/main/subroutine/tt162.asm"
 
 \ ******************************************************************************
 \
-\       Name: 
+\       Name: buy_invnt
 \       Type: Subroutine
 \   Category: Elite-A
 \    Summary: AJD
@@ -534,6 +534,15 @@ INCLUDE "library/common/main/subroutine/main_game_loop_part_6_of_6.asm"
 INCLUDE "library/common/main/subroutine/tt102.asm"
 INCLUDE "library/enhanced/main/variable/brkd.asm"
 
+\ ******************************************************************************
+\
+\       Name: BR1
+\       Type: Subroutine
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
+
 .BR1
 
  JMP escape
@@ -595,6 +604,15 @@ INCLUDE "library/common/main/subroutine/ll120.asm"
 INCLUDE "library/common/main/subroutine/ll123.asm"
 INCLUDE "library/common/main/subroutine/ll129.asm"
 
+\ ******************************************************************************
+\
+\       Name: info_menu
+\       Type: Subroutine
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
+
 .info_menu
 
  LDX #&00
@@ -632,8 +650,16 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  JSR dn2
  JMP BAY
 
-.ships_ag
+\ ******************************************************************************
+\
+\       Name: ships_ag
+\       Type: Subroutine
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
 
+.ships_ag
 
 .ships_kw
 
@@ -715,6 +741,15 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  BEQ l_395a
  JMP BAY
 
+\ ******************************************************************************
+\
+\       Name: controls
+\       Type: Subroutine
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
+
 .controls
 
  LDX #&03
@@ -736,6 +771,15 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  PLA
  JSR DETOK3
  JMP l_restart
+
+\ ******************************************************************************
+\
+\       Name: equip_data
+\       Type: Subroutine
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .equip_data
 
@@ -763,14 +807,30 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  JSR DETOK3
  JMP l_restart
 
-.trading
+\ ******************************************************************************
+\
+\       Name: trading
+\       Type: Subroutine
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
 
+.trading
 
 .l_restart
 
  JSR PAUSE2
  JMP BAY
 
+\ ******************************************************************************
+\
+\       Name: write_card
+\       Type: Subroutine
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .write_card
 
@@ -865,11 +925,27 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
 
  RTS
 
+\ ******************************************************************************
+\
+\       Name: ship_load
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .ship_load
 
  EQUS "L.S.0", &0D
 
+\ ******************************************************************************
+\
+\       Name: ship_file
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .ship_file
 
@@ -878,6 +954,14 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  EQUB 'G', 'I', 'M', 'A', 'O', 'F', 'E'
  EQUB 'L', 'L', 'C', 'C', 'P', 'A', 'H'
 
+\ ******************************************************************************
+\
+\       Name: ship_posn
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .ship_posn
 
@@ -886,6 +970,14 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  EQUB 20, 17, 17, 11, 22, 21, 11
  EQUB  9, 17, 29, 30, 10, 16, 15
 
+\ ******************************************************************************
+\
+\       Name: ship_dist
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .ship_dist
 
@@ -894,6 +986,14 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  EQUB &01, &02, &01, &02, &01, &01, &02
  EQUB &01, &01, &03, &01, &01, &01, &01
 
+\ ******************************************************************************
+\
+\       Name: menu
+\       Type: Subroutine
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .menu
 
@@ -952,29 +1052,79 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
 
  JMP BAY
 
+\ ******************************************************************************
+\
+\       Name: menu_title
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .menu_title
 
  EQUB &01, &02, &03, &05, &04
 
+\ ******************************************************************************
+\
+\       Name: menu_titlex
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
+
 .menu_titlex
 
  EQUB &05, &0C, &0C, &0C, &0B
+
+\ ******************************************************************************
+\
+\       Name: menu_offset
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .menu_offset
 
  EQUB &02, &07, &15, &5B, &5F
 
+\ ******************************************************************************
+\
+\       Name: menu_entry
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
+
 .menu_entry
 
  EQUB &04, &0E, &0E, &04, &0D
+
+\ ******************************************************************************
+\
+\       Name: menu_query
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .menu_query
 
  EQUB &06, &43, &43, &05, &04
 
-
-\ a.icode_3
+\ ******************************************************************************
+\
+\       Name: TKN1
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .TKN1
 
@@ -1460,6 +1610,14 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  EQUB &00
  EQUB &00
 
+\ ******************************************************************************
+\
+\       Name: RUTOK
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .RUTOK
 
@@ -1844,6 +2002,14 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  EQUS "AVA", &DC, &D8, &E5, " FROM TECH ", &E5, &FA, "L 12 UPW", &EE, "DS", &B1
  EQUB &00
 
+\ ******************************************************************************
+\
+\       Name: MTIN
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .MTIN
 
@@ -1852,6 +2018,14 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  EQUB &5B, &6A, &B4, &B9, &BE, &E1, &E6, &EB, &F0, &F5, &FA, &73
  EQUB &78, &7D
 
+\ ******************************************************************************
+\
+\       Name: ship_centre
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .ship_centre
 
@@ -1860,6 +2034,14 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  EQUB &0D, &0D, &0D, &0C, &0D, &0C, &0D
  EQUB &0C, &0B, &0C, &0C, &0A, &0D, &0E
 
+\ ******************************************************************************
+\
+\       Name: card_pattern
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .card_pattern
 
@@ -1889,6 +2071,14 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  EQUB  1, 20, &2D	\ space
  EQUB  1, 21, &00
 
+\ ******************************************************************************
+\
+\       Name: card_addr
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .card_addr
 
@@ -1899,6 +2089,14 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  EQUW shuttle, sidewinder, thargoid, thargon
  EQUW transporter, viper, worm
 
+\ ******************************************************************************
+\
+\       Name: adder
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .adder
 
@@ -1924,6 +2122,15 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  EQUS "AM 18 ", &EA, " ", &C2
  EQUB 0, 0
 
+\ ******************************************************************************
+\
+\       Name: anaconda
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
+
 .anaconda
 
  EQUB 1
@@ -1947,6 +2154,15 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  EQUB 0, 10
  EQUS &C9, "32.24", &0C, &F4, "g", &EF, &DE, &F4, "s"
  EQUB 0, 0
+
+\ ******************************************************************************
+\
+\       Name: asp_2
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .asp_2
 
@@ -1972,6 +2188,15 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  EQUS &BC, " Whip", &F9, "sh", &0C, &01, "HK", &02, " ", &B2, &B5
  EQUB 0, 0
 
+\ ******************************************************************************
+\
+\       Name: boa
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
+
 .boa
 
  EQUB 1
@@ -1996,6 +2221,15 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  EQUS &C8, &0C, &B6, &B7, " ", &C2, &F4, "s"
  EQUB 0, 0
 
+\ ******************************************************************************
+\
+\       Name: bushmaster
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
+
 .bushmaster
 
  EQUB 1
@@ -2015,6 +2249,15 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  EQUB 0, 10
  EQUS &BC, " Whip", &F9, "sh", &0C, &01, "HT", &02, " ", &B2, &B5
  EQUB 0, 0
+
+\ ******************************************************************************
+\
+\       Name: chameleon
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .chameleon
 
@@ -2040,6 +2283,15 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  EQUS &BC, " ", &DE, &F0, "g", &F4, &0C, "Pul", &DA, &B5
  EQUB 0, 0
 
+\ ******************************************************************************
+\
+\       Name: cobra_1
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
+
 .cobra_1
 
  EQUB 1
@@ -2063,6 +2315,15 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  EQUB 0, 10
  EQUS &D0, &B5
  EQUB 0, 0
+
+\ ******************************************************************************
+\
+\       Name: cobra_3
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .cobra_3
 
@@ -2088,6 +2349,15 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  EQUS &BA, &B7, "fa", &DE, &0C, "Irrik", &FF, " Thru", &CD
  EQUB 0, 0
 
+\ ******************************************************************************
+\
+\       Name: coriolis
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
+
 .coriolis
 
  EQUB 1
@@ -2098,6 +2368,15 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  EQUS "2000", &C3, "s"
  EQUB 0, 0
 
+\ ******************************************************************************
+\
+\       Name: dodecagon
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
+
 .dodecagon
 
  EQUB 1
@@ -2107,6 +2386,15 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  EQUB 0, 11
  EQUS "2700", &C3, "s"
  EQUB 0, 0
+
+\ ******************************************************************************
+\
+\       Name: escape_pod
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .escape_pod
 
@@ -2119,6 +2407,15 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  EQUB 0, 5
  EQUS "1-2"
  EQUB 0, 0
+
+\ ******************************************************************************
+\
+\       Name: fer_de_lance
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .fer_de_lance
 
@@ -2144,6 +2441,15 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  EQUS "T", &DB, "r", &DF, "ix ", &F0, "t", &F4, "sun", &0C, &01, "LT", &02, " ", &CE
  EQUB 0, 0
 
+\ ******************************************************************************
+\
+\       Name: gecko
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
+
 .gecko
 
  EQUB 1
@@ -2167,6 +2473,15 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  EQUB 0, 10
  EQUS "B", &F2, "am", &B2, &B7, " ", &01, "XL", &02
  EQUB 0, 0
+
+\ ******************************************************************************
+\
+\       Name: ghavial
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .ghavial
 
@@ -2192,6 +2507,15 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  EQUS "Sp", &E4, "d", &F4, " & Prime ", &01, "TT1", &02
  EQUB 0, 0
 
+\ ******************************************************************************
+\
+\       Name: iguana
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
+
 .iguana
 
  EQUB 1
@@ -2216,6 +2540,15 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  EQUS &C7, " Sup", &F4, " ", &C2, &0C, &01, "VC", &02, "9"
  EQUB 0, 0
 
+\ ******************************************************************************
+\
+\       Name: krait
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
+
 .krait
 
  EQUB 1
@@ -2238,6 +2571,15 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  EQUS &C7, " Sp", &F0, &CE, " ZX14"
  EQUB 0, 0
 
+\ ******************************************************************************
+\
+\       Name: mamba
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
+
 .mamba
 
  EQUB 1
@@ -2259,6 +2601,15 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  EQUB 0, 10
  EQUS &B6, &B7, " ", &01, "HV", &02, " ", &C2
  EQUB 0, 0
+
+\ ******************************************************************************
+\
+\       Name: monitor
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .monitor
 
@@ -2284,6 +2635,15 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  EQUS &C9, "29.01", &0C, &B7, " ", &CA, &F4, "s"
  EQUB 0, 0
 
+\ ******************************************************************************
+\
+\       Name: moray
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
+
 .moray
 
  EQUB 1
@@ -2307,6 +2667,15 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  EQUB 0, 10
  EQUS "Turbul", &F6, " ", &FE, &EE, "k", &0C, &F2, "-ch", &EE, "g", &F4, " 1287"
  EQUB 0, 0
+
+\ ******************************************************************************
+\
+\       Name: ophidian
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .ophidian
 
@@ -2332,6 +2701,15 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  EQUS &BC, " ", &DE, &F0, "g", &F4, &0C, "Pul", &DA, &B5
  EQUB 0, 0
 
+\ ******************************************************************************
+\
+\       Name: python
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
+
 .python
 
  EQUB 1
@@ -2356,6 +2734,15 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  EQUS &C8, &0C, "Exl", &DF, " 76NN Model"
  EQUB 0, 0
 
+\ ******************************************************************************
+\
+\       Name: shuttle
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
+
 .shuttle
 
  EQUB 1
@@ -2373,6 +2760,15 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  EQUB 0, 10
  EQUS &C9, "20.20", &0C, &DE, &EE, &EF, "t ", &B5
  EQUB 0, 0
+
+\ ******************************************************************************
+\
+\       Name: sidewinder
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .sidewinder
 
@@ -2394,6 +2790,15 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  EQUS &C7, " Sp", &F0, &CE, " ", &01, "MV", &02
  EQUB 0, 0
 
+\ ******************************************************************************
+\
+\       Name: thargoid
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
+
 .thargoid
 
  EQUB 2
@@ -2414,6 +2819,15 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  EQUS &9E, " ", &C4
  EQUB 0, 0
 
+\ ******************************************************************************
+\
+\       Name: thargon
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
+
 .thargon
 
  EQUB 2
@@ -2432,6 +2846,15 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  EQUS &9E, " ", &C4
  EQUB 0, 0
 
+\ ******************************************************************************
+\
+\       Name: transporter
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
+
 .transporter
 
  EQUB 1
@@ -2445,6 +2868,15 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  EQUB 0, 7
  EQUS "10", &BE
  EQUB 0, 0
+
+\ ******************************************************************************
+\
+\       Name: viper
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .viper
 
@@ -2465,6 +2897,15 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  EQUB 0, 10
  EQUS &C7, " Sup", &F4, " ", &C2, &0C, &01, "VC", &02, "10"
  EQUB 0, 0
+
+\ ******************************************************************************
+\
+\       Name: worm
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .worm
 

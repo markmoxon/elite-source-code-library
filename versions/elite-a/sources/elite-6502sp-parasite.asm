@@ -7727,7 +7727,7 @@ INCLUDE "library/common/main/subroutine/exno.asm"
  JSR tube_write
  TYA
  JSR tube_write
- LDA b_flag
+ LDA BSTK
  JSR tube_write
  JSR tube_read
  BPL b_quit

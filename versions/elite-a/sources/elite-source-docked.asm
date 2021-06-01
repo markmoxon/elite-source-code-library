@@ -193,9 +193,49 @@ ORG CODE%
 
 LOAD_A% = LOAD%
 
-INCLUDE "versions/elite-a/sources/a.global.asm"
+\ New page 2 variables
+save_lock = &233 \ IND2V+1
+new_file = &234 \ IND3V
+new_posn = &235 \ IND3V+1
+
+\ Before CRGO (036E) in UP
+new_type = &36D
+cmdr_ship = &36D
+
+\ After ESCP (0386) in UP
+cmdr_cour = &387
+cmdr_courx = &389
+cmdr_coury = &38A
+
+\ After CATF (03CF) in UP
+new_pulse = &3D0
+new_beam = &3D1
+new_military = &3D2
+new_mining = &3D3
+new_mounts = &3D4
+new_missiles = &3D5
+new_shields = &3D6
+new_energy = &3D7
+new_speed = &3D8
+new_hold = &3D9
+new_range = &3DA
+new_costs = &3DB
+new_max = &3DC
+new_min = &3DD
+new_space = &3DE
+
+new_name = &74D
 
 INCLUDE "library/disc/docked/workspace/s_per_cent.asm"
+
+\ ******************************************************************************
+\
+\       Name: 
+\       Type: Subroutine
+\   Category: Elite-A
+\    Summary: 
+\
+\ ******************************************************************************
 
 .INBAY
 
@@ -210,6 +250,15 @@ INCLUDE "library/disc/docked/workspace/s_per_cent.asm"
 
 INCLUDE "library/disc/docked/subroutine/dobegin.asm"
 INCLUDE "library/enhanced/main/subroutine/doentry.asm"
+
+\ ******************************************************************************
+\
+\       Name: 
+\       Type: Subroutine
+\   Category: Elite-A
+\    Summary: 
+\
+\ ******************************************************************************
 
 .scramble
 
@@ -429,6 +478,15 @@ INCLUDE "library/common/main/subroutine/tt14.asm"
 INCLUDE "library/common/main/subroutine/tt128.asm"
 INCLUDE "library/common/main/subroutine/tt219.asm"
 
+\ ******************************************************************************
+\
+\       Name: 
+\       Type: Subroutine
+\   Category: Elite-A
+\    Summary: 
+\
+\ ******************************************************************************
+
 .sell_yn
 
  LDA #&CD
@@ -437,6 +495,15 @@ INCLUDE "library/common/main/subroutine/tt219.asm"
  JSR DETOK
 
 INCLUDE "library/common/main/subroutine/gnum.asm"
+
+\ ******************************************************************************
+\
+\       Name: 
+\       Type: Subroutine
+\   Category: Elite-A
+\    Summary: 
+\
+\ ******************************************************************************
 
 .sell_jump
 
@@ -481,6 +548,15 @@ INCLUDE "library/common/main/subroutine/tt163.asm"
 INCLUDE "library/common/main/subroutine/tt167.asm"
 INCLUDE "library/common/main/subroutine/var.asm"
 INCLUDE "library/common/main/subroutine/hyp1.asm"
+
+\ ******************************************************************************
+\
+\       Name: 
+\       Type: Subroutine
+\   Category: Elite-A
+\    Summary: 
+\
+\ ******************************************************************************
 
 .encyclopedia
 
@@ -594,12 +670,30 @@ INCLUDE "library/common/main/subroutine/msblob.asm"
 INCLUDE "library/common/main/subroutine/me2.asm"
 INCLUDE "library/common/main/subroutine/dornd.asm"
 
+\ ******************************************************************************
+\
+\       Name: 
+\       Type: Subroutine
+\   Category: Elite-A
+\    Summary: 
+\
+\ ******************************************************************************
+
 .TT100
 
  DEC &034A
  BEQ me2
  BPL me3
  INC &034A
+
+\ ******************************************************************************
+\
+\       Name: 
+\       Type: Subroutine
+\   Category: Elite-A
+\    Summary: 
+\
+\ ******************************************************************************
 
 .me3
 
@@ -636,6 +730,15 @@ INCLUDE "library/enhanced/main/subroutine/mebrk.asm"
 INCLUDE "library/enhanced/main/subroutine/cat.asm"
 INCLUDE "library/enhanced/main/subroutine/retry.asm"
 INCLUDE "library/common/main/subroutine/sve.asm"
+
+\ ******************************************************************************
+\
+\       Name: 
+\       Type: Subroutine
+\   Category: Elite-A
+\    Summary: 
+\
+\ ******************************************************************************
 
 .confirm
 
@@ -739,30 +842,12 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELTG.bin
+\       Name: 
+\       Type: Subroutine
+\   Category: Elite-A
+\    Summary: 
 \
 \ ******************************************************************************
-
-PRINT "ELITE G"
-PRINT "Assembled at ", ~CODE_G%
-PRINT "Ends at ", ~P%
-PRINT "Code size is ", ~(P% - CODE_G%)
-PRINT "Execute at ", ~LOAD%
-PRINT "Reload at ", ~LOAD_G%
-
-PRINT "S.ELTG ", ~CODE_G%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_G%
-\SAVE "versions/elite-a/output/T.ELTG.bin", CODE_G%, P%, LOAD%
-
-\ ******************************************************************************
-\
-\ ELITE H FILE
-\
-\ ******************************************************************************
-
-CODE_H% = P%
-LOAD_H% = LOAD% + P% - CODE%
-
-\ additions start here
 
 .n_buyship
 
@@ -872,6 +957,14 @@ LOAD_H% = LOAD% + P% - CODE%
  JSR msblob
  JMP BAY
 
+\ ******************************************************************************
+\
+\       Name: 
+\       Type: Subroutine
+\   Category: Elite-A
+\    Summary: 
+\
+\ ******************************************************************************
 
 .n_load
 
@@ -913,10 +1006,27 @@ LOAD_H% = LOAD% + P% - CODE%
  BPL count_lasers
  RTS
 
+\ ******************************************************************************
+\
+\       Name: 
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: 
+\
+\ ******************************************************************************
+
 .count_offs
 
  EQUB &00, &01, &02, &03, &06, &18, &19, &1A, &1B, &1C, &1D, &1E
 
+\ ******************************************************************************
+\
+\       Name: 
+\       Type: Subroutine
+\   Category: Elite-A
+\    Summary: 
+\
+\ ******************************************************************************
 
 .n_name
 
@@ -936,6 +1046,14 @@ LOAD_H% = LOAD% + P% - CODE%
  BNE n_lprint
  RTS
 
+\ ******************************************************************************
+\
+\       Name: 
+\       Type: Subroutine
+\   Category: Elite-A
+\    Summary: 
+\
+\ ******************************************************************************
 
 .n_price
 
@@ -952,6 +1070,14 @@ LOAD_H% = LOAD% + P% - CODE%
  BPL n_lprice
  RTS
 
+\ ******************************************************************************
+\
+\       Name: 
+\       Type: Subroutine
+\   Category: Elite-A
+\    Summary: 
+\
+\ ******************************************************************************
 
 .cour_buy
 
@@ -1158,6 +1284,14 @@ LOAD_H% = LOAD% + P% - CODE%
  STA &46
  JMP cour_loop
 
+\ ******************************************************************************
+\
+\       Name: 
+\       Type: Subroutine
+\   Category: Elite-A
+\    Summary: 
+\
+\ ******************************************************************************
 
 .cour_dock
 
@@ -1202,6 +1336,15 @@ LOAD_H% = LOAD% + P% - CODE%
 .cour_quit
 
  RTS
+
+\ ******************************************************************************
+\
+\       Name: 
+\       Type: Subroutine
+\   Category: Elite-A
+\    Summary: 
+\
+\ ******************************************************************************
 
 
 .stay_here
@@ -1259,6 +1402,14 @@ LOAD_H% = LOAD% + P% - CODE%
 
  JMP BAY
 
+\ ******************************************************************************
+\
+\       Name: 
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: 
+\
+\ ******************************************************************************
 
 .new_offsets
 
@@ -1271,8 +1422,16 @@ LOAD_H% = LOAD% + P% - CODE%
  \ Shields, Energy, Speed, Hold, Range, Costs
  \ Manouvre-h, Manoevre-l	\, Spare, Spare
 
-.new_ships
+\ ******************************************************************************
+\
+\       Name: 
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: 
+\
+\ ******************************************************************************
 
+.new_ships
 
 .new_adder
 
@@ -1374,6 +1533,15 @@ ELIF _RELEASED
 
 ENDIF
 
+\ ******************************************************************************
+\
+\       Name: 
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: 
+\
+\ ******************************************************************************
+
 .new_details
 
  EQUB &0E, &8E, &92, &19, &02, &02	\ adder
@@ -1466,28 +1634,28 @@ ENDIF
 
 \ ******************************************************************************
 \
-\ Save output/ELTH.bin
+\ Save output/ELTG.bin
 \
 \ ******************************************************************************
 
-PRINT "ELITE H"
-PRINT "Assembled at ", ~CODE_H%
+PRINT "ELITE G"
+PRINT "Assembled at ", ~CODE_G%
 PRINT "Ends at ", ~P%
-PRINT "Code size is ", ~(P% - CODE_H%)
+PRINT "Code size is ", ~(P% - CODE_G%)
 PRINT "Execute at ", ~LOAD%
-PRINT "Reload at ", ~LOAD_H%
+PRINT "Reload at ", ~LOAD_G%
 
-PRINT "S.ELTH ", ~CODE_H%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_H%
-\SAVE "versions/elite-a/output/T.ELTH.bin", CODE_H%, P%, LOAD%
+PRINT "S.ELTG ", ~CODE_G%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_G%
+\SAVE "versions/elite-a/output/T.ELTG.bin", CODE_G%, P%, LOAD%
 
 \ ******************************************************************************
 \
-\ ELITE I FILE
+\ ELITE H FILE
 \
 \ ******************************************************************************
 
-CODE_I% = P%
-LOAD_I% = LOAD% + P% - CODE%
+CODE_H% = P%
+LOAD_H% = LOAD% + P% - CODE%
 
 INCLUDE "library/enhanced/main/macro/ejmp.asm"
 INCLUDE "library/enhanced/main/macro/echr.asm"
@@ -2035,8 +2203,6 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  EQUS "T", &F6, "NIS"
  EQUB &00
 
-.l_5338
-
  EQUB &00
 
 .RUPLA
@@ -2131,27 +2297,25 @@ ENDIF
 
 \ ******************************************************************************
 \
-\ Save output/ELTI.bin
+\ Save output/ELTH.bin
 \
 \ ******************************************************************************
 
-PRINT "ELITE I"
-PRINT "Assembled at ", ~CODE_I%
+PRINT "ELITE H"
+PRINT "Assembled at ", ~CODE_H%
 PRINT "Ends at ", ~P%
-PRINT "Code size is ", ~(P% - CODE_I%)
+PRINT "Code size is ", ~(P% - CODE_H%)
 PRINT "Execute at ", ~LOAD%
-PRINT "Reload at ", ~LOAD_I%
+PRINT "Reload at ", ~LOAD_H%
 
-PRINT "S.ELTI ", ~CODE_I%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_I%
-\SAVE "versions/elite-a/output/T.ELTI.bin", CODE_I%, P%, LOAD%
+PRINT "S.ELTH ", ~CODE_H%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_H%
+\SAVE "versions/disc/output/T.ELTH.bin", CODE_H%, P%, LOAD%
 
 \ ******************************************************************************
 \
 \ ELITE SHIP HANGER BLUEPRINTS FILE
 \
 \ ******************************************************************************
-
-ORG &5600
 
 CODE_SHIPS% = P%
 LOAD_SHIPS% = LOAD% + P% - CODE%
@@ -2164,11 +2328,29 @@ ELIF _SOURCE_DISC
  INCBIN "versions/elite-a/extracted/source-disc/S.T.bin"
 ENDIF
 
+SKIPTO &6000
+
+\ ******************************************************************************
+\
+\ Save output/SHIPS.bin
+\
+\ ******************************************************************************
+
+PRINT "SHIPS"
+PRINT "Assembled at ", ~CODE_SHIPS%
+PRINT "Ends at ", ~P%
+PRINT "Code size is ", ~(P% - CODE_SHIPS%)
+PRINT "Execute at ", ~LOAD%
+PRINT "Reload at ", ~LOAD_SHIPS%
+
+PRINT "S.SHIPS ", ~CODE_B%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_SHIPS%
+\SAVE "versions/disc/output/SHIPS.bin", CODE_SHIPS%, P%, LOAD%
+
 \ ******************************************************************************
 \
 \ Save output/1.D.bin
 \
 \ ******************************************************************************
 
-PRINT "S.1.D ", ~CODE%, " &6000 ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/elite-a/output/1.D.bin", CODE%, &6000
+PRINT "S.1.D ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
+SAVE "versions/elite-a/output/1.D.bin", CODE%, P%

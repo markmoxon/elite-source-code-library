@@ -66,7 +66,7 @@ ENDIF
 IF _ELITE_A_VERSION
 
  LDA #&7F               \ AJD
- STA b_flag
+ STA BSTK
 
 ENDIF
 

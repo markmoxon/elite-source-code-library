@@ -203,9 +203,6 @@ LOAD_A% = LOAD%
 
 INCLUDE "versions/elite-a/sources/a.global.asm"
 
-EXEC% = &11E3
-
-
 .S%
 
  JMP RSHIPS
@@ -221,7 +218,7 @@ EXEC% = &11E3
 
 .brk_in
 
- JMP brkdst
+ JMP BRBR1
 
 BRKV = P% - 2
 
@@ -336,7 +333,7 @@ BRKV = P% - 2
  STA &2B
  ORA &7B
  STA &2A
- \	LDA b_flag
+ \	LDA BSTK
  \	BEQ l_129e
  \	LDX #&03
  \	LDA #&80
@@ -4367,7 +4364,7 @@ INCLUDE "library/common/main/subroutine/nos1.asm"
 
 .DKS1
 
- LDA b_flag
+ LDA BSTK
  BMI b_14
  LDX l_4419-1,Y
  JSR DKS4

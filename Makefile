@@ -244,7 +244,7 @@ build:
 	$(BEEBASM) -i versions/elite-a/sources/elite-6502sp-parasite.asm -v >> versions/elite-a/output/compile.txt
 	$(BEEBASM) -i versions/elite-a/sources/elite-6502sp-io-processor.asm -v >> versions/elite-a/output/compile.txt
 	$(BEEBASM) -i versions/elite-a/sources/elite-loader.asm -v >> versions/elite-a/output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-disc.asm -do elite-a$(suffix-elite-a).ssd -opt 3
+	$(BEEBASM) -i versions/elite-a/sources/elite-disc.asm -do versions/elite-a/elite-a$(suffix-elite-a).ssd -opt 3
 
 .PHONY:encrypt
 encrypt:
@@ -328,7 +328,7 @@ encrypt:
 	$(BEEBASM) -i versions/elite-a/sources/elite-6502sp-parasite.asm -v >> versions/elite-a/output/compile.txt
 	$(BEEBASM) -i versions/elite-a/sources/elite-6502sp-io-processor.asm -v >> versions/elite-a/output/compile.txt
 	$(BEEBASM) -i versions/elite-a/sources/elite-loader.asm -v >> versions/elite-a/output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-disc.asm -do elite-a$(suffix-elite-a).ssd -opt 3
+	$(BEEBASM) -i versions/elite-a/sources/elite-disc.asm -do versions/elite-a/elite-a$(suffix-elite-a).ssd -opt 3
 
 .PHONY:verify
 verify:
@@ -351,5 +351,5 @@ elite-a:
 	$(BEEBASM) -i versions/elite-a/sources/elite-6502sp-parasite.asm -v >> versions/elite-a/output/compile.txt
 	$(BEEBASM) -i versions/elite-a/sources/elite-6502sp-io-processor.asm -v >> versions/elite-a/output/compile.txt
 	$(BEEBASM) -i versions/elite-a/sources/elite-loader.asm -v >> versions/elite-a/output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-disc.asm -do elite-a$(suffix-elite-a).ssd -opt 3
+	$(BEEBASM) -i versions/elite-a/sources/elite-disc.asm -do versions/elite-a/elite-a$(suffix-elite-a).ssd -opt 3
 	@$(PYTHON) versions/elite-a/sources/crc32.py versions/elite-a/extracted$(folder-elite-a) versions/elite-a/output

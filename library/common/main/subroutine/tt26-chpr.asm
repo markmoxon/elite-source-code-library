@@ -943,7 +943,15 @@ ENDIF
 
 .RR3
 
-IF _ELITE_A_6502SP_PARA
+IF NOT(_ELITE_A_6502SP_PARA)
+
+                        \ A contains the value of YC - the screen row where we
+                        \ want to print this character - so now we need to
+                        \ convert this into a screen address, so we can poke
+                        \ the character data to the right place in screen
+                        \ memory
+
+ElIF _ELITE_A_6502SP_PARA
 
  LDA #&8E               \ AJD
  JSR tube_write
@@ -954,14 +962,6 @@ IF _ELITE_A_6502SP_PARA
  TYA
  JSR tube_write
  INC XC
-
-ELIF NOT(_ELITE_A_6502SP_PARA)
-
-                        \ A contains the value of YC - the screen row where we
-                        \ want to print this character - so now we need to
-                        \ convert this into a screen address, so we can poke
-                        \ the character data to the right place in screen
-                        \ memory
 
 ENDIF
 

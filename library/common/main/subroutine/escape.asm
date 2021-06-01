@@ -152,16 +152,16 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _ELITE_A_VERSION
-
- STA QQ20+&10
- LDX #&0C	\LDX #&10	\ save gold/plat/gems
-
-ELIF NOT(_ELITE_A_VERSION)
+IF NOT(_ELITE_A_VERSION)
 
  LDX #16                \ We lose all our cargo when using our escape pod, so
                         \ up a counter in X so we can zero the 17 cargo slots
                         \ in QQ20
+
+ELIF _ELITE_A_VERSION
+
+ STA QQ20+&10           \ AJD
+ LDX #&0C               \ LDX #&10 save gold/plat/gems
 
 ENDIF
 
@@ -191,7 +191,13 @@ ENDIF
  STA ESCP               \ The escape pod is a one-use item, so set ESCP to 0 so
                         \ we no longer have one fitted
 
-IF _ELITE_A_FLIGHT
+IF NOT(_ELITE_A_VERSION)
+
+ LDA #70                \ Our replacement ship is delivered with a full tank of
+ STA QQ14               \ fuel, so set the current fuel level in QQ14 to 70, or
+                        \ 7.0 light years
+
+ELIF _ELITE_A_FLIGHT
 
  INC new_hold           \ AJD
  LDA new_range
@@ -209,12 +215,6 @@ ELIF _ELITE_A_6502SP_PARA
  JSR ping
  JSR TT111
  JSR jmp
-
-ELIF NOT(_ELITE_A_VERSION)
-
- LDA #70                \ Our replacement ship is delivered with a full tank of
- STA QQ14               \ fuel, so set the current fuel level in QQ14 to 70, or
-                        \ 7.0 light years
 
 ENDIF
 

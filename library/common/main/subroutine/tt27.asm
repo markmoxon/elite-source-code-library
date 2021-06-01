@@ -83,7 +83,7 @@ ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
  DEX
  BNE l_31d2
 
- EQUB &2C               \ AJD
+ EQUB &2C
 
 .vdu_80
 

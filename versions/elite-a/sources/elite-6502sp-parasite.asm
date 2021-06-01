@@ -156,6 +156,10 @@ BRBR1 = &11D5           \ The address of the main break handler, which BRKV
 SHIP_MISSILE = &7F00    \ The address of the missile ship blueprint, as set in
                         \ elite-loader3.asm
 
+save_lock = &233        \ IND2V+1
+new_file = &234         \ IND3V
+new_posn = &235         \ IND3V+1
+
 INCLUDE "library/common/main/workspace/zp.asm"
 INCLUDE "library/common/main/workspace/xx3.asm"
 INCLUDE "library/enhanced/main/workspace/up.asm"
@@ -175,48 +179,8 @@ ORG CODE%
 
 LOAD_A% = LOAD%
 
- \ a.qcode - ELITE III second processor code
-
-\EXEC = boot_in
-
 dockedp = &A0
-brk_line = &FD
 BRKV = &202
-cmdr_ship = &36D
-cmdr_cour = &387
-cmdr_courx = &389
-cmdr_coury = &38A
-
-a_flag = &3C8
-b_flag = &3CE
-
-save_lock = &233
-new_file = &234
-new_posn = &235
-new_type = &36D
-new_pulse = &3D0
-new_beam = &3D1
-new_military = &3D2
-new_mining = &3D3
-new_mounts = &3D4
-new_missiles = &3D5
-new_shields = &3D6
-new_energy = &3D7
-new_speed = &3D8
-new_hold = &3D9
-new_range = &3DA
-new_costs = &3DB
-new_max = &3DC
-new_min = &3DD
-new_space = &3DE
- \new_:	EQU &3DF
- \new_name:	EQU &74D
-
-osfile = &FFDD
-oswrch = &FFEE
-osword = &FFF1
-osbyte = &FFF4
-oscli = &FFF7
 
 tube_r1s = &FEF8
 tube_r1d = &FEF9

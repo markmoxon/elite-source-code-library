@@ -32,7 +32,7 @@ IF _ELITE_A_DOCKED
 
 ELIF _ELITE_A_6502SP_PARA
 
- JSR CTRL
+ JSR CTRL               \ AJD
  BPL not_cyclop
  LDA dockedp
  BNE not_cyclop
@@ -178,15 +178,15 @@ ENDIF
  INX                    \ is stored in the range 0-14 but the displayed range
                         \ should be 1-15
 
-IF _ELITE_A_FLIGHT
-
- JSR pr2-1              \ AJD
-
-ELIF NOT(_ELITE_A_FLIGHT)
+IF NOT(_ELITE_A_FLIGHT)
 
  CLC                    \ Call pr2 to print the technology level as a 3-digit
  JSR pr2                \ number without a decimal point (by clearing the C
                         \ flag)
+
+ELIF _ELITE_A_FLIGHT
+
+ JSR pr2-1              \ AJD
 
 ENDIF
 

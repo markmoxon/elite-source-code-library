@@ -392,7 +392,7 @@ ELIF _MASTER_VERSION
 
 ELIF _ELITE_A_ENCYCLOPEDIA
 
- CMP #&20
+ CMP #&20               \ AJD
  BEQ jump_menu
  CMP #&71
  BEQ jump_menu
@@ -513,7 +513,7 @@ ELIF _ELITE_A_FLIGHT
 
 ELIF _ELITE_A_6502SP_PARA
 
- LDA &87
+ LDA &87                \ AJD
  AND #&C0
  BEQ n_finder
  LDA dockedp
@@ -567,7 +567,7 @@ ELIF _ELITE_A_FLIGHT
 
  LDA QQ11               \ If the current view is a chart (QQ11 = 64 or 128),
  AND #%11000000         \ keep going, otherwise jump down to TT107 to skip the
- BEQ TT107              \ following
+ BEQ TT107              \ following AJD
 
 ENDIF
 
@@ -813,7 +813,7 @@ IF _ELITE_A_6502SP_PARA
 
 .ee2
 
- BIT dockedp
+ BIT dockedp            \ AJD
  BMI flying
  CMP #&20
  BNE fvw

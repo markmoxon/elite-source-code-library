@@ -26,7 +26,11 @@ ENDIF
  EQUW 0                 \ Bounty                   = 0
  EQUB 52                \ Number of faces          = 52 / 4 = 13
  EQUB 50                \ Visibility distance      = 50
+IF NOT(_ELITE_A_VERSION)
  EQUB 150               \ Max. energy              = 150
+ELIF _ELITE_A_VERSION
+ EQUB 98                \ Max. energy              = 98
+ENDIF
  EQUB 28                \ Max. speed               = 28
  EQUB &00               \ Edges data offset (high) = &00BC
  EQUB &01               \ Faces data offset (high) = &0154

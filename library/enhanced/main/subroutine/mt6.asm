@@ -1,9 +1,9 @@
 \ ******************************************************************************
 \
-IF _ELITE_A_ENCYCLOPEDIA
-\       Name: set_token
-ELIF NOT(_ELITE_A_ENCYCLOPEDIA)
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
 \       Name: MT6
+ELIF _ELITE_A_ENCYCLOPEDIA
+\       Name: set_token
 ENDIF
 \       Type: Subroutine
 \   Category: Text
@@ -26,13 +26,13 @@ IF _ELITE_A_6502SP_PARA OR _ELITE_A_DOCKED
 ENDIF
 \ ******************************************************************************
 
-IF _ELITE_A_ENCYCLOPEDIA
-
-.set_token
-
-ELIF NOT(_ELITE_A_ENCYCLOPEDIA)
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
 
 .MT6
+
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+.set_token
 
 ENDIF
 

@@ -42,7 +42,11 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 ENDIF
  EQUB 52                \ Number of faces          = 52 / 4 = 13
  EQUB 40                \ Visibility distance      = 40
+IF NOT(_ELITE_A_VERSION)
  EQUB 250               \ Max. energy              = 250
+ELIF _ELITE_A_VERSION
+ EQUB 125               \ Max. energy              = 125
+ENDIF
  EQUB 20                \ Max. speed               = 20
  EQUB &00               \ Edges data offset (high) = &0056
  EQUB &00               \ Faces data offset (high) = &00BE

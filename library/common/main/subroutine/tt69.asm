@@ -9,14 +9,14 @@
 
 .TT69
 
-IF _ELITE_A_FLIGHT
-
- JSR vdu_80             \ AJD
-
-ELIF NOT(_ELITE_A_FLIGHT)
+IF NOT(_ELITE_A_FLIGHT)
 
  LDA #%10000000         \ Set bit 7 of QQ17 to switch to Sentence Case
  STA QQ17
+
+ELIF _ELITE_A_FLIGHT
+
+ JSR vdu_80             \ AJD
 
 ENDIF
 

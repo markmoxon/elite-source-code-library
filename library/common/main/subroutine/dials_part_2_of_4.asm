@@ -76,7 +76,23 @@ ENDIF
                         \ and increment SC to point to the next indicator (the
                         \ pitch indicator)
 
-IF _ELITE_A_6502SP_PARA
+IF NOT(_ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA)
+
+ LDA BETA               \ Fetch the pitch angle beta as a value between -8 and
+                        \ +8
+
+ LDX BET1               \ Fetch the magnitude of the pitch angle beta, and if it
+ BEQ P%+4               \ is 0 (i.e. we are not pitching), skip the next
+                        \ instruction
+
+ SBC #1                 \ The pitch angle beta is non-zero, so set A = A - 1
+                        \ (the C flag is set by the call to DIL2 above, so we
+                        \ don't need to do a SEC). This gives us a value of A
+                        \ from -7 to +7 because these are magnitude-based
+                        \ numbers with sign bits, rather than two's complement
+                        \ numbers
+
+ELIF _ELITE_A_6502SP_PARA
 
  LDA BETA               \ Fetch the pitch angle beta as a value between -8 and
                         \ +8
@@ -86,22 +102,6 @@ IF _ELITE_A_6502SP_PARA
                         \ instruction
 
  SEC                    \ AJD
-
- SBC #1                 \ The pitch angle beta is non-zero, so set A = A - 1
-                        \ (the C flag is set by the call to DIL2 above, so we
-                        \ don't need to do a SEC). This gives us a value of A
-                        \ from -7 to +7 because these are magnitude-based
-                        \ numbers with sign bits, rather than two's complement
-                        \ numbers
-
-ELIF NOT(_ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA)
-
- LDA BETA               \ Fetch the pitch angle beta as a value between -8 and
-                        \ +8
-
- LDX BET1               \ Fetch the magnitude of the pitch angle beta, and if it
- BEQ P%+4               \ is 0 (i.e. we are not pitching), skip the next
-                        \ instruction
 
  SBC #1                 \ The pitch angle beta is non-zero, so set A = A - 1
                         \ (the C flag is set by the call to DIL2 above, so we

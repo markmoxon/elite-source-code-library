@@ -73,18 +73,18 @@ ENDIF
 
                         \ If we call DIL, we leave A alone, so A is 0-15
 
-IF _ELITE_A_6502SP_PARA
+IF NOT(_ELITE_A_6502SP_PARA)
+
+ STA Q                  \ Store the indicator value in Q, now reduced to 0-15,
+                        \ which is the length of the indicator to draw in pixels
+
+ELIF _ELITE_A_6502SP_PARA
 
  PHA                    \ AJD
  LDA #&86
  JSR tube_write
  PLA
  JSR tube_write
-
-ELIF NOT(_ELITE_A_6502SP_PARA)
-
- STA Q                  \ Store the indicator value in Q, now reduced to 0-15,
-                        \ which is the length of the indicator to draw in pixels
 
 ENDIF
 
@@ -145,7 +145,7 @@ ELIF _ELITE_A_6502SP_PARA
 
 .DL31
 
- JSR tube_write
+ JSR tube_write         \ AJD
  LDA SC
  JSR tube_write
  LDA SC+1

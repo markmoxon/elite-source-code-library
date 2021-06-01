@@ -7,12 +7,12 @@
 \
 \ ------------------------------------------------------------------------------
 \
-IF _ELITE_A_ENCYCLOPEDIA
-\ Print a paragraph break (a blank line between paragraphs) by moving the cursor
-\ down a line, and then printing a newline.
-ELIF NOT(_ELITE_A_ENCYCLOPEDIA)
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
 \ Print a paragraph break (a blank line between paragraphs) by moving the cursor
 \ down a line, setting Sentence Case, and then printing a newline.
+ELIF _ELITE_A_ENCYCLOPEDIA
+\ Print a paragraph break (a blank line between paragraphs) by moving the cursor
+\ down a line, and then printing a newline.
 ENDIF
 \
 \ ******************************************************************************
@@ -29,14 +29,14 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _ELITE_A_ENCYCLOPEDIA
-
-                        \ Fall through into TT67 to print a newline
-
-ELIF NOT(_ELITE_A_ENCYCLOPEDIA)
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
 
                         \ Fall through into TT69 to set Sentence Case and print
                         \ a newline
+
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+                        \ Fall through into TT67 to print a newline
 
 ENDIF
 

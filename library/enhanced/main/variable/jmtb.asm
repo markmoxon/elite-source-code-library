@@ -13,10 +13,10 @@
  EQUW MT1               \ Token  1: Switch to ALL CAPS
  EQUW MT2               \ Token  2: Switch to Sentence Case
  EQUW TT27              \ Token  3: Print the selected system name
-IF _ELITE_A_ENCYCLOPEDIA
- EQUW set_token         \ Token  4: AJD
-ELIF NOT(_ELITE_A_ENCYCLOPEDIA)
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  EQUW TT27              \ Token  4: Print the commander's name
+ELIF _ELITE_A_ENCYCLOPEDIA
+ EQUW set_token         \ Token  4: AJD
 ENDIF
  EQUW MT5               \ Token  5: Switch to extended tokens
  EQUW MT6               \ Token  6: Switch to standard tokens, in Sentence Case
@@ -35,18 +35,18 @@ ENDIF
  EQUW MT19              \ Token 19: Capitalise first letter of next word only
  EQUW DASC              \ Token 20: Unused
  EQUW CLYNS             \ Token 21: Clear the bottom few lines of the space view
-IF _ELITE_A_ENCYCLOPEDIA
- EQUW column_16         \ Token 23: Tab to column 16
-ELIF NOT(_ELITE_A_ENCYCLOPEDIA)
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  EQUW PAUSE             \ Token 22: Display ship and wait for key press
+ELIF _ELITE_A_ENCYCLOPEDIA
+ EQUW column_16         \ Token 23: Tab to column 16
 ENDIF
  EQUW MT23              \ Token 23: Move to row 10, white text, set lower case
-IF _ELITE_A_ENCYCLOPEDIA
- EQUW clr_vdustat       \ Token 24: AJD
- EQUW DASC              \ Token 25: Unused
-ELIF NOT(_ELITE_A_ENCYCLOPEDIA)
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  EQUW PAUSE2            \ Token 24: Wait for a key press
  EQUW BRIS              \ Token 25: Show incoming message screen, wait 2 seconds
+ELIF _ELITE_A_ENCYCLOPEDIA
+ EQUW clr_vdustat       \ Token 24: AJD
+ EQUW DASC              \ Token 25: Unused
 ENDIF
  EQUW MT26              \ Token 26: Fetch line input from keyboard (filename)
  EQUW MT27              \ Token 27: Print mission captain's name (217-219)

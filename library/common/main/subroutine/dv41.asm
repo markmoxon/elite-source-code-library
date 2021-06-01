@@ -32,16 +32,16 @@
 
  LDA DELTA              \ Fetch the speed from DELTA into A
 
-IF _ELITE_A_6502SP_PARA
-
- JMP DVID4              \ AJD
-
-ELIF NOT(_ELITE_A_6502SP_PARA)
+IF NOT(_ELITE_A_6502SP_PARA)
 
                         \ Fall through into DVID4 to do:
                         \
                         \   (P R) = 256 * A / Q
                         \         = 256 * DELTA / A
+
+ELIF _ELITE_A_6502SP_PARA
+
+ JMP DVID4              \ AJD
 
 ENDIF
 

@@ -90,15 +90,15 @@ IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR
 
 ENDIF
 
-IF _ELITE_A_FLIGHT
-
- JSR pr2-1              \ Print the 8-bit number in X to 3 digits, without a
-                        \ decimal point
-
-ELIF NOT(_ELITE_A_FLIGHT)
+IF NOT(_ELITE_A_FLIGHT)
 
  CLC                    \ Print the 8-bit number in X to 3 digits, without a
  JSR pr2                \ decimal point
+
+ELIF _ELITE_A_FLIGHT
+
+ JSR pr2-1              \ Print the 8-bit number in X to 3 digits, without a
+                        \ decimal point
 
 ENDIF
 
@@ -208,12 +208,11 @@ ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
  LDA &03AA              \ AJD
  STA &81
- \	JSR GCASH	\--
  JSR MULTU
  JSR price_xy
- JSR MCASH	\++
- JSR MCASH	\++
- JSR MCASH	\++
+ JSR MCASH
+ JSR MCASH
+ JSR MCASH
  JSR MCASH
 
 ENDIF

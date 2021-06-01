@@ -163,8 +163,6 @@ b1447e60  16778  b1447e60  16778   Yes   1.E.bin
 3d638042   1956  3d638042   1956   Yes   2.H.bin
 1f1783e7  43141  1f1783e7  43141   Yes   2.T.bin
 171ccea5   5363  171ccea5   5363   Yes   ELITE.bin
-538d2d54   2560  -             -    -    S.T.bin
-fc10cbad  17422  fc10cbad  17422   Yes   tcode.bin
 ```
 
 All the compiled binaries match the extracts, so we know we are producing the same final game as the release version.

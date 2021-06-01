@@ -180,6 +180,11 @@ E% = &563E              \ The address of the default NEWB ship bytes within the
 SHIP_MISSILE = &7F00    \ The address of the missile ship blueprint, as set in
                         \ elite-loader3.asm
 
+save_lock = &233        \ IND2V+1
+new_file = &234         \ IND3V
+new_posn = &235         \ IND3V+1
+new_name = &74D
+
 INCLUDE "library/common/main/workspace/zp.asm"
 INCLUDE "library/common/main/workspace/xx3.asm"
 INCLUDE "library/enhanced/main/workspace/up.asm"
@@ -198,10 +203,6 @@ LOAD% = &11E3
 ORG CODE%
 
 LOAD_A% = LOAD%
-
- \ a.icode - ELITE III encyclopedia
-
-INCLUDE "versions/elite-a/sources/a.global.asm"
 
 \ ******************************************************************************
 \
@@ -660,7 +661,7 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
  STA ship_load+&04
  LDX #LO(ship_load)
  LDY #HI(ship_load)
- JSR oscli
+ JSR OSCLI
 
 .ship_skip
 

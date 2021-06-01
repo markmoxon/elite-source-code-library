@@ -32,11 +32,14 @@ ENDIF
  EQUW 0                 \ Bounty                   = 0
  EQUB 40                \ Number of faces          = 40 / 4 = 10
  EQUB 45                \ Visibility distance      = 45
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Platform
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
  EQUB 252               \ Max. energy              = 252
  EQUB 36                \ Max. speed               = 36
-ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
+ELIF _DISC_DOCKED
  EQUB 200               \ Max. energy              = 200
+ EQUB 55                \ Max. speed               = 55
+ELIF _ELITE_A_VERSION
+ EQUB 118               \ Max. energy              = 118
  EQUB 55                \ Max. speed               = 55
 ENDIF
  EQUB &00               \ Edges data offset (high) = &007A

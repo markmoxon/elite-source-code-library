@@ -308,15 +308,7 @@ ENDIF
  DEY                    \ Decrement the loop counter to point to the next
                         \ stardust particle
 
-IF _ELITE_A_VERSION
-
- BEQ MA9                \ If we have just done the last particle, return from
-                        \ the subroutine (as MA9 contains an RTS)
-
- JMP STL6               \ We have more stardust to process, so jump back up to
-                        \ STL6 for the next particle
-
-ELIF NOT(_ELITE_A_VERSION)
+IF NOT(_ELITE_A_VERSION)
 
  BEQ ST3                \ If we have just done the last particle, skip the next
                         \ instruction to return from the subroutine
@@ -327,6 +319,14 @@ ELIF NOT(_ELITE_A_VERSION)
 .ST3
 
  RTS                    \ Return from the subroutine
+
+ELIF _ELITE_A_VERSION
+
+ BEQ MA9                \ If we have just done the last particle, return from
+                        \ the subroutine (as MA9 contains an RTS)
+
+ JMP STL6               \ We have more stardust to process, so jump back up to
+                        \ STL6 for the next particle
 
 ENDIF
 

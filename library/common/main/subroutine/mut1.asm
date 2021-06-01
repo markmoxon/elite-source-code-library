@@ -19,15 +19,15 @@
  LDX XX                 \ Set R = XX
  STX R
 
-IF _ELITE_A_6502SP_PARA
-
- JMP MULT1              \ AJD
-
-ELIF NOT(_ELITE_A_6502SP_PARA)
+IF NOT(_ELITE_A_6502SP_PARA)
 
                         \ Fall through into MULT1 to do the following:
                         \
                         \   (A P) = Q * A
+
+ELIF _ELITE_A_6502SP_PARA
+
+ JMP MULT1              \ AJD
 
 ENDIF
 

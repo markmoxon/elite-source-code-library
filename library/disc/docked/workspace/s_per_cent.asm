@@ -18,13 +18,13 @@
 
  EQUW IRQ1              \ IRQ1V is set to point here by elite-loader3.asm
 
-IF _ELITE_A_DOCKED
-
- JMP BRBR               \ AJD
-
-ELIF NOT(_ELITE_A_DOCKED)
+IF NOT(_ELITE_A_DOCKED)
 
  JMP BRBR1              \ BRKV is set to point here by elite-loader3.asm
+
+ELIF _ELITE_A_DOCKED
+
+ JMP BRBR               \ AJD
 
 ENDIF
 

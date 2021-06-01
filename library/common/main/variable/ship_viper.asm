@@ -28,10 +28,12 @@ ENDIF
  EQUB 23                \ Visibility distance      = 23
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: The Viper has a different maximum energy in the disc version (100), cassette version (120) and advanced versions (140), so they are easiest to kill in the disc version, harder to kill in the cassette version, and even harder to kill in the advanced versions
  EQUB 120               \ Max. energy              = 120
-ELIF _DISC_VERSION OR _ELITE_A_VERSION
+ELIF _DISC_VERSION
  EQUB 100               \ Max. energy              = 100
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 140               \ Max. energy              = 140
+ELIF _ELITE_A_VERSION
+ EQUB 91                \ Max. energy              = 91
 ENDIF
  EQUB 32                \ Max. speed               = 32
  EQUB &00               \ Edges data offset (high) = &006E

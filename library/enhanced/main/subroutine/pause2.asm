@@ -57,13 +57,13 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _ELITE_A_ENCYCLOPEDIA
-
- BEQ l_out              \ AJD
-
-ELIF NOT(_ELITE_A_ENCYCLOPEDIA)
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
 
  BEQ PAUSE2             \ Keep looping up to PAUSE2 until a key is pressed
+
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+ BEQ l_out              \ AJD
 
 ENDIF
 

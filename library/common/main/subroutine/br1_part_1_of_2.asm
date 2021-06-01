@@ -23,7 +23,7 @@ ENDIF
 
 IF _ELITE_A_6502SP_PARA
 
- LDX #10
+ LDX #10                \ AJD
  LDY #&0B
  JSR install_ship
  LDX #19

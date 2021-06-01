@@ -211,7 +211,7 @@ ENDIF
 
 IF _ELITE_A_6502SP_PARA
 
- JMP stat_legal
+ JMP stat_legal         \ AJD
 
 .stat_dock
 
@@ -362,7 +362,7 @@ ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 .sell_equip
 
  LDA CRGO               \ AJD
- BEQ l_1b57	\ IFF if flag not set
+ BEQ l_1b57             \ IFF if flag not set
  LDA #&6B
  LDX #&06
  JSR plf2
@@ -374,7 +374,7 @@ ELIF _ELITE_A_FLIGHT
 .sell_equip
 
  LDA CRGO               \ AJD
- BEQ l_1ce7	\ IFF if flag not set
+ BEQ l_1ce7             \ IFF if flag not set
  LDA #&6B
  JSR plf2
 
@@ -403,7 +403,54 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
-IF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
+IF NOT(_ELITE_A_VERSION)
+
+ LDA BST                \ If we don't have fuel scoops fitted, skip the
+ BEQ P%+7               \ following two instructions
+
+ LDA #111               \ We do have a fuel scoops fitted, so print recursive
+ JSR plf2               \ token 111 ("FUEL SCOOPS"), followed by a newline and
+                        \ an indent of 6 characters
+
+ LDA ECM                \ If we don't have an E.C.M. fitted, skip the following
+ BEQ P%+7               \ two instructions
+
+ LDA #108               \ We do have an E.C.M. fitted, so print recursive token
+ JSR plf2               \ 108 ("E.C.M.SYSTEM"), followed by a newline and an
+                        \ indent of 6 characters
+
+ LDA #113               \ We now cover the four pieces of equipment whose flags
+ STA XX4                \ are stored in BOMB through BOMB+3, and whose names
+                        \ correspond with text tokens 113 through 116:
+                        \
+                        \   BOMB+0 = BOMB  = token 113 = Energy bomb
+                        \   BOMB+1 = ENGY  = token 114 = Energy unit
+                        \   BOMB+2 = DKCMP = token 115 = Docking computer
+                        \   BOMB+3 = GHYP  = token 116 = Galactic hyperdrive
+                        \
+                        \ We can print these out using a loop, so we set XX4 to
+                        \ 113 as a counter (and we also set A as well, to pass
+                        \ through to plf2)
+
+.stqv
+
+ TAY                    \ Fetch byte BOMB+0 through BOMB+4 for values of XX4
+ LDX BOMB-113,Y         \ from 113 through 117
+
+ BEQ P%+5               \ If it is zero then we do not own that piece of
+                        \ equipment, so skip the next instruction
+
+ JSR plf2               \ Print the recursive token in A from 113 ("ENERGY
+                        \ BOMB") through 116 ("GALACTIC HYPERSPACE "), followed
+                        \ by a newline and an indent of 6 characters
+
+ INC XX4                \ Increment the counter (and A as well)
+ LDA XX4
+
+ CMP #117               \ If A < 117, loop back up to stqv to print the next
+ BCC stqv               \ piece of equipment
+
+ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
  LDA BST                \ AJD
  BEQ l_1b61
@@ -480,53 +527,6 @@ ELIF _ELITE_A_FLIGHT
  CMP #&75
  BCC stqv
 
-ELIF NOT(_ELITE_A_VERSION)
-
- LDA BST                \ If we don't have fuel scoops fitted, skip the
- BEQ P%+7               \ following two instructions
-
- LDA #111               \ We do have a fuel scoops fitted, so print recursive
- JSR plf2               \ token 111 ("FUEL SCOOPS"), followed by a newline and
-                        \ an indent of 6 characters
-
- LDA ECM                \ If we don't have an E.C.M. fitted, skip the following
- BEQ P%+7               \ two instructions
-
- LDA #108               \ We do have an E.C.M. fitted, so print recursive token
- JSR plf2               \ 108 ("E.C.M.SYSTEM"), followed by a newline and an
-                        \ indent of 6 characters
-
- LDA #113               \ We now cover the four pieces of equipment whose flags
- STA XX4                \ are stored in BOMB through BOMB+3, and whose names
-                        \ correspond with text tokens 113 through 116:
-                        \
-                        \   BOMB+0 = BOMB  = token 113 = Energy bomb
-                        \   BOMB+1 = ENGY  = token 114 = Energy unit
-                        \   BOMB+2 = DKCMP = token 115 = Docking computer
-                        \   BOMB+3 = GHYP  = token 116 = Galactic hyperdrive
-                        \
-                        \ We can print these out using a loop, so we set XX4 to
-                        \ 113 as a counter (and we also set A as well, to pass
-                        \ through to plf2)
-
-.stqv
-
- TAY                    \ Fetch byte BOMB+0 through BOMB+4 for values of XX4
- LDX BOMB-113,Y         \ from 113 through 117
-
- BEQ P%+5               \ If it is zero then we do not own that piece of
-                        \ equipment, so skip the next instruction
-
- JSR plf2               \ Print the recursive token in A from 113 ("ENERGY
-                        \ BOMB") through 116 ("GALACTIC HYPERSPACE "), followed
-                        \ by a newline and an indent of 6 characters
-
- INC XX4                \ Increment the counter (and A as well)
- LDA XX4
-
- CMP #117               \ If A < 117, loop back up to stqv to print the next
- BCC stqv               \ piece of equipment
-
 ENDIF
 
  LDX #0                 \ Now to print our ship's lasers, so set a counter in X
@@ -541,17 +541,17 @@ ENDIF
  BEQ st1                \ have a laser fitted to that view, jump to st1 to move
                         \ on to the next one
 
-IF _ELITE_A_VERSION
-
- TXA                    \ AJD
- ORA #&60
- JSR spc
-
-ELIF NOT(_ELITE_A_VERSION)
+IF NOT(_ELITE_A_VERSION)
 
  TXA                    \ Print recursive token 96 + X, which will print from 96
  CLC                    \ ("FRONT") through to 99 ("RIGHT"), followed by a space
  ADC #96
+ JSR spc
+
+ELIF _ELITE_A_VERSION
+
+ TXA                    \ AJD
+ ORA #&60
  JSR spc
 
 ENDIF
@@ -593,19 +593,19 @@ ELIF _ELITE_A_VERSION
 
  LDX &93                \ AJD
  LDY LASER,X
- CPY new_beam	\ beam laser
+ CPY new_beam           \ beam laser
  BNE l_1b9d
  LDA #&68
 
 .l_1b9d
 
- CPY new_military	\ military laser
+ CPY new_military       \ military laser
  BNE l_1ba3
  LDA #&75
 
 .l_1ba3
 
- CPY new_mining	\ mining laser
+ CPY new_mining         \ mining laser
  BNE l_1ba9
  LDA #&76
 

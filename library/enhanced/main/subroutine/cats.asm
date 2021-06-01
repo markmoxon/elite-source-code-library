@@ -123,7 +123,7 @@ ELIF _ELITE_A_DOCKED
 
 ELIF _ELITE_A_6502SP_PARA
 
- LDA #&8E
+ LDA #&8E               \ AJD
  JSR tube_write
  LDA XC
  JSR tube_write

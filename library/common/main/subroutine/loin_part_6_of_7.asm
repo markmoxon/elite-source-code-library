@@ -147,7 +147,6 @@ ELIF _ELITE_A_6502SP_IO
 
  RTS                    \ Return from the subroutine
 
-
 ENDIF
 
 IF _6502SP_VERSION OR _MASTER_VERSION \ Screen

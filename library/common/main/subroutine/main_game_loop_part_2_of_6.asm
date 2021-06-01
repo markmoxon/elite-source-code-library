@@ -10,7 +10,7 @@ ELIF _DISC_DOCKED
 \    Summary: Potentially spawn a trader, an asteroid, or a cargo canister
 \             (though this has no effect when docked)
 ELIF _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_DOCKED
-\    Summary: Increment the loop counters
+\    Summary: Update the main loop counters
 ENDIF
 \  Deep dive: Program flow of the main game loop
 \             Ship data blocks
@@ -36,7 +36,7 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA OR _ELITE_A_DOCKED)
 \   * Potentially spawn a trader, asteroid or cargo canister
 \
 ELIF _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_DOCKED
-\   * Increment the loop counters
+\   * Update the main loop counters
 \
 ENDIF
 \ Other entry points:

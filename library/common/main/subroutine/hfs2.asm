@@ -1,9 +1,9 @@
 \ ******************************************************************************
 \
-IF _ELITE_A_VERSION
-\       Name: HFS1
-ELIF NOT(_ELITE_A_VERSION)
+IF NOT(_ELITE_A_VERSION)
 \       Name: HFS2
+ELIF _ELITE_A_VERSION
+\       Name: HFS1
 ENDIF
 \       Type: Subroutine
 \   Category: Drawing circles

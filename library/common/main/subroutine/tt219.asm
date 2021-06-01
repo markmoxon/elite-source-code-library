@@ -62,14 +62,14 @@ ENDIF
 
  JSR TT163              \ Print the column headers for the prices table
 
-IF _ELITE_A_DOCKED
-
- JSR vdu_80             \ AJD
-
-ELIF NOT(_ELITE_A_DOCKED)
+IF NOT(_ELITE_A_DOCKED)
 
  LDA #%10000000         \ Set bit 7 of QQ17 to switch to Sentence Case, with the
  STA QQ17               \ next letter in capitals
+
+ELIF _ELITE_A_DOCKED
+
+ JSR vdu_80             \ AJD
 
 ENDIF
 

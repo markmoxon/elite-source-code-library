@@ -31,17 +31,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _ELITE_A_DOCKED
-
- LDA #255               \ Draw the forward shield indicator as fully charged,
- JSR DILX               \ and increment SC to point to the next indicator (the
-                        \ aft shield)
-
- LDA #255               \ Draw the aft shield indicator as fully charged, and
- JSR DILX               \ increment SC to point to the next indicator (the fuel
-                        \ level)
-
-ELIF NOT(_ELITE_A_DOCKED)
+IF NOT(_ELITE_A_DOCKED)
 
  LDA FSH                \ Draw the forward shield indicator using a range of
  JSR DILX               \ 0-255, and increment SC to point to the next indicator
@@ -50,6 +40,16 @@ ELIF NOT(_ELITE_A_DOCKED)
  LDA ASH                \ Draw the aft shield indicator using a range of 0-255,
  JSR DILX               \ and increment SC to point to the next indicator (the
                         \ fuel level)
+
+ELIF _ELITE_A_DOCKED
+
+ LDA #255               \ Draw the forward shield indicator as fully charged,
+ JSR DILX               \ and increment SC to point to the next indicator (the
+                        \ aft shield)
+
+ LDA #255               \ Draw the aft shield indicator as fully charged, and
+ JSR DILX               \ increment SC to point to the next indicator (the fuel
+                        \ level)
 
 ENDIF
 

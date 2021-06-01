@@ -180,6 +180,12 @@ E% = &563E              \ The address of the default NEWB ship bytes within the
 SHIP_MISSILE = &7F00    \ The address of the missile ship blueprint, as set in
                         \ elite-loader3.asm
 
+save_lock = &233        \ IND2V+1
+new_file = &234         \ IND3V
+new_posn = &235         \ IND3V+1
+new_name = &74D
+iff_index = &D7A
+
 INCLUDE "library/common/main/workspace/zp.asm"
 INCLUDE "library/common/main/workspace/xx3.asm"
 INCLUDE "library/enhanced/main/workspace/up.asm"
@@ -198,10 +204,6 @@ LOAD% = &11E3
 ORG CODE%
 
 LOAD_A% = LOAD%
-
- \ a.dcode - ELITE III in-flight code
-
-INCLUDE "versions/elite-a/sources/a.global.asm"
 
 .S%
 
@@ -228,7 +230,7 @@ BRKV = P% - 2
 
  LDX #LO(l_11f8)
  LDY #HI(l_11f8)
- JSR oscli
+ JSR OSCLI
 
 .l_11f8
 
@@ -337,7 +339,7 @@ BRKV = P% - 2
  \	BEQ l_129e
  \	LDX #&03
  \	LDA #&80
- \	JSR osbyte
+ \	JSR OSBYTE
  \	TYA
  \	LSR A
  \	LSR A
@@ -402,14 +404,14 @@ BRKV = P% - 2
 .l_12ef
 
  LDA &0308
- AND cmdr_bomb
+ AND BOMB
  BEQ l_12f7
  \	LDA #&03
  \	JSR TT66
  \	JSR LL164
  \	JSR RES2
  \	STY &0341
- INC cmdr_bomb
+ INC BOMB
  INC new_hold	\***
  \	JSR NLUNCH
  JSR DORND
@@ -838,7 +840,7 @@ BRKV = P% - 2
 .l_156c
 
  SEC
- LDA cmdr_eunit
+ LDA ENGY
  ADC ENERGY
  BCS l_1578
  STA ENERGY
@@ -1399,7 +1401,7 @@ LOAD_C% = LOAD% +P% - CODE%
  CMP #&E6
  BCC l_226d
  LDX &8C
- LDA l_563d,X
+ LDA E%-1,X
  BPL l_226d
  LDA #&00
  STA &66
@@ -2283,7 +2285,7 @@ LOAD_C% = LOAD% +P% - CODE%
  SEC
  SBC #&01
  STA &D1
- LDA font
+ LDA P+1
  LSR &42
  ROR A
  STA &41
@@ -3054,8 +3056,8 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
  LDY #HI(l_3832)
  STA SC
  LDA #&7D
- STX font
- STY font+&01
+ STX P+1
+ STY P+2
  JMP RREN
 
 .l_3832
@@ -3095,7 +3097,7 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
  LDA &46
  STA &1B
  LDA &47
- STA font
+ STA P+1
  LDA &48
  JSR l_3cfa
  BCS l_388d
@@ -3108,7 +3110,7 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
  LDA &49
  STA &1B
  LDA &4A
- STA font
+ STA P+1
  LDA &4B
  EOR #&80
  JSR l_3cfa
@@ -3147,7 +3149,7 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
  JSR PROJ
  BCS l_388e
  LDA #&60
- STA font
+ STA P+1
  LDA #&00
  STA &1B
  JSR DVID3B2
@@ -3259,7 +3261,7 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
  STA &1B
  LDA &47,X
  AND #&7F
- STA font
+ STA P+1
  LDA &47,X
  AND #&80
  JSR DVID3B2
@@ -3563,7 +3565,7 @@ INCLUDE "library/common/main/subroutine/ping.asm"
 
  LDA &1B
  STA &03B0
- LDA font
+ LDA P+1
  STA &03B1
  RTS
 
@@ -3667,7 +3669,7 @@ INCLUDE "library/common/main/subroutine/ping.asm"
  INY
  LDA (&20),Y
  ADC #&00
- STA font
+ STA P+1
 
 .l_3e1f
 
@@ -3692,9 +3694,9 @@ INCLUDE "library/common/main/subroutine/ping.asm"
  SEC
  SBC &D1
  STA &1B
- LDA font
+ LDA P+1
  SBC #&00
- STA font
+ STA P+1
  TXA
  ASL A
  TAY
@@ -3711,7 +3713,7 @@ INCLUDE "library/common/main/subroutine/ping.asm"
  DEY
  LDA (SC),Y
  STA &41
- LDA font
+ LDA P+1
  STA (&20),Y
  DEY
  LDA (SC),Y
@@ -4200,7 +4202,7 @@ INCLUDE "library/common/main/subroutine/tt102.asm"
  STA d_mox+&04
  LDX #LO(d_mox)
  LDY #HI(d_mox)
- JMP oscli
+ JMP OSCLI
 
 .d_mox
 

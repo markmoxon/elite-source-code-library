@@ -94,13 +94,7 @@ IF _MASTER_VERSION \ Master: The Master version contains the code for Trumbles t
 
 ENDIF
 
-IF _ELITE_A_VERSION
-
- CMP new_hold	        \ New hold size AJD
-
-.n_over
-
-ELIF NOT(_ELITE_A_VERSION)
+IF NOT(_ELITE_A_VERSION)
 
  CMP CRGO               \ If A < CRGO then the C flag will be clear (we have
                         \ room in the hold)
@@ -122,6 +116,12 @@ ELIF NOT(_ELITE_A_VERSION)
                         \ 20-tonne bay, and 37 for the large 35-tonne bay
 
  PLA                    \ Restore A from the stack
+
+ELIF _ELITE_A_VERSION
+
+ CMP new_hold	        \ New hold size AJD
+
+.n_over
 
 ENDIF
 

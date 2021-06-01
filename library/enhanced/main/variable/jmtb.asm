@@ -35,7 +35,11 @@ ENDIF
  EQUW MT19              \ Token 19: Capitalise first letter of next word only
  EQUW DASC              \ Token 20: Unused
  EQUW CLYNS             \ Token 21: Clear the bottom few lines of the space view
+IF _ELITE_A_ENCYCLOPEDIA
+ EQUW column_16         \ Token 23: Tab to column 16
+ELIF NOT(_ELITE_A_ENCYCLOPEDIA)
  EQUW PAUSE             \ Token 22: Display ship and wait for key press
+ENDIF
  EQUW MT23              \ Token 23: Move to row 10, white text, set lower case
 IF _ELITE_A_ENCYCLOPEDIA
  EQUW clr_vdustat       \ Token 24: AJD

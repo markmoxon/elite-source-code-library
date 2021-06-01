@@ -120,7 +120,11 @@
  ECHR ' '               \                WHILE BACK. LOOKED BOUND FOR AREXE"
  ERND 23                \
  ECHR ' '               \ Encoded as:   "A [23?] <224>OK[195][207] <229>FT HE
+IF NOT(_ELITE_A_VERSION)
  ETWO 'L', 'O'          \                <242>[208]WHI<229> BACK. LOOK[196]B
+ELIF _ELITE_A_VERSION
+ ETWO 'L', 'O'          \                <242>[208]WHI<229> BACK. <224>OK[196]B
+ENDIF
  ECHR 'O'               \                <217>ND F<253> <238>E<230>"
  ECHR 'K'
  ETOK 195
@@ -145,8 +149,12 @@
  ECHR 'K'
  ECHR '.'
  ECHR ' '
+IF NOT(_ELITE_A_VERSION)
  ECHR 'L'
  ECHR 'O'
+ELIF _ELITE_A_VERSION
+ ETWO 'L', 'O'
+ENDIF
  ECHR 'O'
  ECHR 'K'
  ETOK 196
@@ -277,8 +285,13 @@
  ECHR ' '               \                LASERS DIDN'T EVEN SCRATCH THE [91-95]"
  ETOK 207               \
  ECHR ' '               \ Encoded as:   "[24?] [207] W<246>T F<253> ME <245>
+IF NOT(_ELITE_A_VERSION)
  ECHR 'W'               \                 A<236><238>. MY <249>S<244>S DIDN[39]T
  ETWO 'E', 'N'          \                 EV<246> SC<248>TCH [147][24?]"
+ELIF _ELITE_A_VERSION
+ ECHR 'W'               \                 A<236><238>. MY <249>S<244>S <241>DN
+ ETWO 'E', 'N'          \                 [39]TEV<246> SC<248>TCH [147][24?]"
+ENDIF
  ECHR 'T'
  ECHR ' '
  ECHR 'F'
@@ -302,8 +315,12 @@
  ETWO 'E', 'R'
  ECHR 'S'
  ECHR ' '
+IF NOT(_ELITE_A_VERSION)
  ECHR 'D'
  ECHR 'I'
+ELIF _ELITE_A_VERSION
+ ETWO 'D', 'I'
+ENDIF
  ECHR 'D'
  ECHR 'N'
  ECHR '`'
@@ -473,9 +490,15 @@
  ETWO 'R', 'A'
  EQUB VE
 
+IF NOT(_ELITE_A_VERSION)
  EJMP 1                 \ Token 9:      "{all caps}COMING SOON: ELITE II"
  ECHR 'C'               \
  ECHR 'O'               \ Encoded as:   "{1}COM[195]<235><223>: EL<219>E II"
+ELIF _ELITE_A_VERSION
+ EJMP 1                 \ Token 9:      "{all caps}COMING SOON: ELITE III"
+ ECHR 'C'               \
+ ECHR 'O'               \ Encoded as:   "{1}COM[195]<235><223>: EL<219>E III"
+ENDIF
  ECHR 'M'
  ETOK 195
  ETWO 'S', 'O'
@@ -489,6 +512,9 @@
  ECHR ' '
  ECHR 'I'
  ECHR 'I'
+IF _ELITE_A_VERSION
+ ECHR 'I'
+ENDIF
  EQUB VE
 
  ERND 25                \ Token 10:     "[106-110]"
@@ -593,11 +619,11 @@
  ECHR 'E'
  EQUB VE
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Disc: Group A: The disc version has a system description override for Anreer in galaxy 3: "THE INHABITANTS OF ANREER ARE SO AMAZINGLY PRIMITIVE THAT THEY STILL THINK STILL THINK A*****R IS A PRETTY NEAT GAME". The advanced versions have a different override: "THE INHABITANTS OF ANREER ARE SO AMAZINGLY PRIMITIVE THAT THEY STILL THINK ***** ****** IS 3D"
+IF _DISC_DOCKED \ Disc: Group A: The disc version has a system description override for Anreer in galaxy 3: "THE INHABITANTS OF ANREER ARE SO AMAZINGLY PRIMITIVE THAT THEY STILL THINK STILL THINK A*****R IS A PRETTY NEAT GAME". The advanced versions have a different override: "THE INHABITANTS OF ANREER ARE SO AMAZINGLY PRIMITIVE THAT THEY STILL THINK ***** ****** IS 3D"
  ETOK 147               \ Token 25:     "THE INHABITANTS OF [86-90] ARE SO
  ETOK 193               \                AMAZINGLY PRIMITIVE THAT THEY STILL
- ECHR 'S'               \                THINK {single cap}STILL THINK A*****R
- ECHR ' '               \                IS A PRETTY NEAT GAME"
+ ECHR 'S'               \                THINK {single cap}A*****R IS A PRETTY
+ ECHR ' '               \                NEAT GAME"
  ECHR 'O'               \
  ECHR 'F'               \ Encoded as:   "[147][193]S OF [18?] A<242> <235> A
  ECHR ' '               \                <239>Z<240>GLY PRIMI<251><250> <226>
@@ -615,6 +641,17 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
  ERND 18                \                 {19}***** ******[202] 3D"
  ECHR ' '
  ECHR 'A'
+ELIF _ELITE_A_VERSION
+ ETOK 147               \ Token 25:     "THE INHABITANTS OF [86-90] ARE SO
+ ETOK 193               \                AMAZINGLY PRIMITIVE THAT THEY STILL
+ ECHR 'S'               \                THINK {single cap}ELITE IS A PRETTY
+ ECHR ' '               \                NEAT GAME"
+ ECHR 'O'               \
+ ECHR 'F'               \ Encoded as:   "[147][193]S OF [18?] A<242> <235> A
+ ECHR ' '               \                <239>Z<240>GLY PRIMI<251><250> <226>
+ ERND 18                \                <245> <226>EY <222><220>L <226><240>K
+ ECHR ' '               \                 {19}EL<219>E[202]A P<242>TTY NE<245>
+ ECHR 'A'               \                 GAME"
 ENDIF
  ETWO 'R', 'E'
  ECHR ' '
@@ -652,7 +689,7 @@ ENDIF
  ECHR 'K'
  ECHR ' '
  EJMP 19
-IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Disc: See group A
+IF _DISC_DOCKED \ Disc: See group A
  ECHR 'A'
  ECHR '*'
  ECHR '*'
@@ -696,7 +733,29 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
  ECHR '3'
  ECHR 'D'
  EQUB VE
-
+ELIF _ELITE_A_VERSION
+ ECHR 'E'
+ ECHR 'L'
+ ETWO 'I', 'T'
+ ECHR 'E'
+ ETOK 202
+ ECHR 'A'
+ ECHR ' '
+ ECHR 'P'
+ ETWO 'R', 'E'
+ ECHR 'T'
+ ECHR 'T'
+ ECHR 'Y'
+ ECHR ' '
+ ECHR 'N'
+ ECHR 'E'
+ ETWO 'A', 'T'
+ ECHR ' '
+ ECHR 'G'
+ ECHR 'A'
+ ECHR 'M'
+ ECHR 'E'
+ EQUB VE
 ENDIF
 
 IF _6502SP_VERSION \ Advanced: Some of the advanced versions have an extra token for overriding the system description for Lave. The source disc release of the 6502SP version has the bizarre: "Bits'n Pieces - End Of Part 1". The Executive version has: "This message is available only on the executive version of this program". And the Master version has: "WELCOME TO  THE SEVENTEENTH GALAXY!", which is only shown if we are in galaxy 17 (though it isn't possible to get there, so this never gets shown)

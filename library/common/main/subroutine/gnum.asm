@@ -110,9 +110,18 @@ ENDIF
                         \ with a result of 0, as the key pressed was not a
                         \ number or letter and is less than ASCII "0"
 
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
+
  CMP #10                \ If A >= 10, jump to BAY2 to display the Inventory
  BCS BAY2               \ screen, as the key pressed was a letter or other
                         \ non-digit and is greater than ASCII "9"
+
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+ CMP #10                \ If A >= 10, jump to buy_invnt to AJD
+ BCS buy_invnt
+ 
+ENDIF
 
  STA S                  \ Store the numeric value of the key pressed in S
 

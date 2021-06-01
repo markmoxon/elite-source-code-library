@@ -203,8 +203,15 @@ LOAD_A% = LOAD%
 
 INCLUDE "versions/elite-a/sources/a.global.asm"
 
-EXEC% = &11E3
-
+\ ******************************************************************************
+\
+\       Name: S%
+\       Type: Workspace
+\    Address: &11E3 to &11F0
+\   Category: Workspaces
+\    Summary: Entry points and vector addresses in the main encyclopedia code
+\
+\ ******************************************************************************
 
 .S%
 
@@ -220,27 +227,48 @@ EXEC% = &11E3
 
 BRKV = P% - 2
 
-.tcode
+INCLUDE "library/disc/flight/subroutine/inbay.asm"
+INCLUDE "library/disc/flight/variable/ltli.asm"
 
- LDX #LO(ltcode)
- LDY #HI(ltcode)
- JSR oscli
-
-.ltcode
-
- EQUS "L.1.D", &0D
+\ ******************************************************************************
+\
+\       Name: 
+\       Type: Subroutine
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .launch
 
  LDA #'R'
- STA ltcode
+ STA LTLI
+
  EQUB &2C
+
+\ ******************************************************************************
+\
+\       Name: 
+\       Type: Subroutine
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .escape
 
- LDA #&00
+ LDA #0
  STA KL+1
- JMP tcode
+ JMP INBAY
+
+\ ******************************************************************************
+\
+\       Name: 
+\       Type: Subroutine
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .DOENTRY
 
@@ -257,7 +285,16 @@ INCLUDE "library/enhanced/main/subroutine/detok2.asm"
 INCLUDE "library/enhanced/main/subroutine/mt1.asm"
 INCLUDE "library/enhanced/main/subroutine/mt2.asm"
 
-.PAUSE
+\ ******************************************************************************
+\
+\       Name: 
+\       Type: Subroutine
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
+
+.column_16
 
  LDA #&10
  EQUB &2C
@@ -265,6 +302,15 @@ INCLUDE "library/enhanced/main/subroutine/mt2.asm"
 INCLUDE "library/enhanced/main/subroutine/mt8.asm"
 INCLUDE "library/enhanced/main/subroutine/mt9.asm"
 INCLUDE "library/enhanced/main/subroutine/mt13.asm"
+
+\ ******************************************************************************
+\
+\       Name: 
+\       Type: Subroutine
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .clr_vdustat
 
@@ -401,11 +447,29 @@ INCLUDE "library/common/main/subroutine/pr6.asm"
 INCLUDE "library/common/main/subroutine/pr5.asm"
 INCLUDE "library/common/main/subroutine/tt162.asm"
 
+\ ******************************************************************************
+\
+\       Name: 
+\       Type: Variable
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
+
 .func_tab
 
- EQUB &20, &71, &72, &73, &14, &74, &75, &16, &76, &77
+ EQUB f0, f1, f2, f3, f4, f5, f6, f7, f8, f9
 
-.BAY2
+\ ******************************************************************************
+\
+\       Name: 
+\       Type: Subroutine
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
+
+.buy_invnt
 
  SBC #&50
  BCC buy_top
@@ -463,18 +527,7 @@ INCLUDE "library/common/main/subroutine/res2.asm"
 INCLUDE "library/common/main/subroutine/zinf.asm"
 INCLUDE "library/common/main/subroutine/me2.asm"
 INCLUDE "library/common/main/subroutine/dornd.asm"
-
-.TT100
-
- DEC &034A
- BEQ me2
- BPL me3
- INC &034A
-
-.me3
-
- DEC &8A
-
+INCLUDE "library/common/main/subroutine/main_game_loop_part_2_of_6.asm"
 INCLUDE "library/common/main/subroutine/main_game_loop_part_5_of_6.asm"
 INCLUDE "library/common/main/subroutine/main_game_loop_part_6_of_6.asm"
 INCLUDE "library/common/main/subroutine/tt102.asm"

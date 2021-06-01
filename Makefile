@@ -110,7 +110,7 @@ suffix-electron=-sth
 # will build the patched version. If you omit the release parameter,
 # it will build the released version.
 
-ifeq ($(release), source-disc)
+ifeq ($(release-elite-a), source-disc)
   rel-elite-a=2
   folder-elite-a=/source-disc
   suffix-elite-a=-from-source-disc

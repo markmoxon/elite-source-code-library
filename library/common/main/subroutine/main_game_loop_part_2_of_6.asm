@@ -6,9 +6,11 @@
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Comment
 \    Summary: Call the main flight loop, and potentially spawn a trader, an
 \             asteroid, or a cargo canister
-ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
+ELIF _DISC_DOCKED
 \    Summary: Potentially spawn a trader, an asteroid, or a cargo canister
 \             (though this has no effect when docked)
+ELIF _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_DOCKED
+\    Summary: Increment the loop counters
 ENDIF
 \  Deep dive: Program flow of the main game loop
 \             Ship data blocks
@@ -19,6 +21,10 @@ IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Comment
 \ In the docked code, we start the main game loop at part 2 and then jump
 \ straight to part 5, as parts 1, 3 and 4 are not required when we are docked.
 \
+ELIF _ELITE_A_ENCYCLOPEDIA
+\ In the encyclopedia code, we start the main game loop at part 2 and then jump
+\ straight to part 5, as parts 1, 3 and 4 are not required when we are docked.
+\
 ENDIF
 \ This section covers the following:
 \
@@ -26,8 +32,13 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR 
 \   * Call M% to do the main flight loop
 \
 ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _ELITE_A_DOCKED)
 \   * Potentially spawn a trader, asteroid or cargo canister
 \
+ELIF _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_DOCKED
+\   * Increment the loop counters
+\
+ENDIF
 \ Other entry points:
 \
 \   TT100               The entry point for the start of the main game loop,
@@ -64,6 +75,8 @@ ENDIF
 
  DEC MCNT               \ Decrement the main loop counter in MCNT
 
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _ELITE_A_DOCKED)
+
  BEQ P%+5               \ If the counter has reached zero, which it will do
                         \ every 256 main loops, skip the next JMP instruction
                         \ (or to put it another way, if the counter hasn't
@@ -88,14 +101,20 @@ ENDIF
                         \ time it will either be an asteroid (98.5% chance) or,
                         \ very rarely, a cargo canister (1.5% chance)
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: As the Electron doesn't support witchspace, we always process ship spawning (the other versions skip the ship spawning logic when in witchspace, as the Thargoids are enough trouble without humans joining the fight)
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: As the Electron doesn't support witchspace, we always process ship spawning (the other versions skip the ship spawning logic when in witchspace, as the Thargoids are enough trouble without humans joining the fight)
 
  LDA MJ                 \ If we are in witchspace following a mis-jump, skip the
  BNE ytq                \ following by jumping down to MLOOP (via ytq above)
 
 ENDIF
 
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _ELITE_A_DOCKED)
+
  JSR DORND              \ Set A and X to random numbers
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Minor
 
@@ -103,7 +122,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR 
  BCS MTT1               \ the spawning of an asteroid or cargo canister and
                         \ potentially spawn something else
 
-ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
+ELIF _DISC_DOCKED
 
  CMP #35                \ If A >= 35 (87% chance), jump down to MLOOP to skip
  BCS MLOOP              \ the following
@@ -116,7 +135,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  CMP #3                 \ bubble, jump down to MTT1 to skip the following and
  BCS MTT1               \ potentially spawn something else
 
-ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
+ELIF _DISC_DOCKED
 
  LDA MANY+AST           \ If we already have 3 or more asteroids in the local
  CMP #3                 \ bubble, jump down to MLOOP to skip the following
@@ -129,6 +148,8 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
  BCS MTT1               \ potentially spawn something else
 
 ENDIF
+
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _ELITE_A_DOCKED)
 
  JSR ZINF               \ Call ZINF to reset the INWK ship workspace
 
@@ -150,6 +171,8 @@ ENDIF
 
  ROL INWK+1             \ Set bit 2 of x_hi to the C flag, which is random, so
  ROL INWK+1             \ this randomly moves us slightly off-centre
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Platform
 
@@ -277,7 +300,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR 
 
 ENDIF
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Platform
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Platform
 
                         \ Fall through into part 5 (parts 3 and 4 are not
                         \ required when we are docked)

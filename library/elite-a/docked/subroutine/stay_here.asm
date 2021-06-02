@@ -16,6 +16,9 @@
  JSR cour_dock
  JSR DORND
  STA QQ26
+
+IF _ELITE_A_DOCKED
+
  LDX #&00
  STX &96
 
@@ -57,6 +60,12 @@
  TAX
  CMP #&3F
  BCC d_31d8
+
+ELIF _ELITE_A_6502SP_PARA
+
+ JSR GVL
+
+ENDIF
 
 .stay_quit
 

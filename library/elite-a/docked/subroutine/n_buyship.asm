@@ -113,5 +113,12 @@
  LDA new_range
  STA QQ14
  JSR msblob
+
+IF _ELITE_A_6502SP_PARA
+
+ JSR update_pod
+
+ENDIF
+
  JMP BAY
 

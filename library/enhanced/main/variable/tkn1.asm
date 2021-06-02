@@ -14,11 +14,14 @@
                         \
                         \ Encoded as:   ""
 
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  EJMP 9                 \ Token 1:      "{clear screen}
  EJMP 11                \                {draw box around title}
+ENDIF
 IF _6502SP_VERSION \ Screen
  EJMP 30                \                {white}
 ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  EJMP 1                 \                {all caps}
  EJMP 8                 \                {tab 6} DISK ACCESS MENU{crlf}
  ECHR ' '               \                {lf}
@@ -26,7 +29,8 @@ ENDIF
  ECHR 'S'               \                1. LOAD NEW {single cap}COMMANDER{crlf}
  ECHR 'K'               \                2. SAVE {single cap}COMMANDER
  ECHR ' '               \                   {commander name}{crlf}
-IF _DISC_DOCKED OR _ELITE_A_VERSION \ Comment
+ENDIF
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Comment
  ECHR 'A'               \                3. CATALOGUE{crlf}
  ECHR 'C'               \                4. DELETE A FILE{crlf}
  ETWO 'C', 'E'          \                5. EXIT{crlf}
@@ -84,6 +88,7 @@ ELIF _MASTER_VERSION
  ETWO '-', '-'          \
  ECHR '2'               \                <250> [154] {4}<215>3.[152]] DISK
 ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR '.'
  ECHR ' '
  ECHR 'S'
@@ -96,7 +101,8 @@ ENDIF
  ETWO '-', '-'
  ECHR '3'
  ECHR '.'
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Minor
+ENDIF
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Minor
  ECHR ' '
  ECHR 'C'
  ETWO 'A', 'T'
@@ -134,6 +140,7 @@ IF _MASTER_VERSION \ Master: In the Master version, option 3 in the disc access 
  ECHR 'S'
  ECHR 'K'
 ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ETWO '-', '-'
  ECHR '4'
  ECHR '.'
@@ -141,7 +148,8 @@ ENDIF
  ECHR 'D'
  ECHR 'E'
  ECHR 'L'
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Master: In the Master version, the disc access menu has an extra option, "Default JAMESON", which resets the commander to the default starting point
+ENDIF
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Master: In the Master version, the disc access menu has an extra option, "Default JAMESON", which resets the commander to the default starting point
  ETWO 'E', 'T'
  ECHR 'E'
  ETOK 208
@@ -193,7 +201,18 @@ ELIF _MASTER_VERSION
  ETWO 'I', 'T'
  ETWO '-', '-'
 ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  EQUB VE
+
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+ EQUB VE                \ Token 1:      ""
+                        \
+                        \ Encoded as:   ""
+
+ENDIF
+
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
 
  EJMP 12                \ Token 2:      "{cr}
  ECHR 'W'               \                WHICH DRIVE?"
@@ -205,6 +224,14 @@ ENDIF
  ETOK 151
  ECHR '?'
  EQUB VE
+
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+ EQUB VE                \ Token 2:      ""
+                        \
+                        \ Encoded as:   ""
+
+ENDIF
 
 IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: The disc and 6502SP versions have an extra token for displaying "COMPETITION NUMBER:" when saving commander files
 
@@ -249,7 +276,7 @@ ELIF _COMPACT
 
 ENDIF
 
-ELIF _ELITE_A_VERSION
+ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
  ETWO 'A', 'R'          \ Token 3:      "ARE YOU SURE?"
  ECHR 'E'               \
@@ -261,6 +288,12 @@ ELIF _ELITE_A_VERSION
  ETWO 'R', 'E'
  ECHR '?'
  EQUB VE
+
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+ EQUB VE                \ Token 3:      ""
+                        \
+                        \ Encoded as:   ""
 
 ENDIF
 
@@ -278,6 +311,8 @@ IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Enhanced: The Master Co
 ELIF _MASTER_VERSION
 
  EQUB VE                \ Token 4:      ""
+                        \
+                        \ Encoded as:   ""
 
 ENDIF
 
@@ -287,6 +322,8 @@ ENDIF
  ERND 19                \                {left align}"
  ETOK 177               \
  EQUB VE                \ Encoded as:   "[176][18?][202][19?][177]"
+
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
 
  ECHR ' '               \ Token 6:      "  LOAD NEW {single cap}COMMANDER {all
  ECHR ' '               \                caps}(Y/N)?{sentence case}{cr}{cr}"
@@ -303,6 +340,16 @@ ENDIF
  EJMP 12
  EJMP 12
  EQUB VE
+
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+ EQUB VE                \ Token 6:      ""
+                        \
+                        \ Encoded as:   ""
+
+ENDIF
+
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
 
  ECHR 'P'               \ Token 7:      "PRESS SPACE OR FIRE,{single cap}
  ETWO 'R', 'E'          \                COMMANDER.{cr}{cr}"
@@ -326,13 +373,21 @@ ENDIF
  EJMP 12
  EQUB VE
 
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+ EQUB VE                \ Token 7:      ""
+                        \
+                        \ Encoded as:   ""
+
+ENDIF
+
  ETOK 154               \ Token 8:      "{single cap}COMMANDER'S NAME? "
  ECHR '`'               \
  ECHR 'S'               \ Encoded as:   "[154][39]S[200]"
  ETOK 200
  EQUB VE
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Advanced: The disc and 6502SP versions support a "FILE TO DELETE?" prompt when deleting files via the disc access menu, but the token for this prompt isn't present in the Master version. Instead the Master version contains a token for the error message "ILLEGAL ELITE II FILE"; this message is also present in the other versions, but there it is hard-coded rather than being a token, is in sentence case, and contains a spelling mistake ("IIllegal ELITE II file") which is corrected in the Master version
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Advanced: The disc and 6502SP versions support a "FILE TO DELETE?" prompt when deleting files via the disc access menu, but the token for this prompt isn't present in the Master version. Instead the Master version contains a token for the error message "ILLEGAL ELITE II FILE"; this message is also present in the other versions, but there it is hard-coded rather than being a token, is in sentence case, and contains a spelling mistake ("IIllegal ELITE II file") which is corrected in the Master version
 
  EJMP 21                \ Token 9:      "{clear bottom of screen}
  ECHR 'F'               \                FILE TO DELETE?"
@@ -370,7 +425,15 @@ ELIF _MASTER_VERSION
  ETWO 'L', 'E'
  EQUB VE
 
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+ EQUB VE                \ Token 9:      ""
+                        \
+                        \ Encoded as:   ""
+
 ENDIF
+
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
 
  EJMP 23                \ Token 10:     "{move to row 10, white, lower case}
  EJMP 14                \                {justify}
@@ -723,11 +786,23 @@ ENDIF
  EJMP 22
  EQUB VE
 
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+
+ EJMP 22                \ Token 10:     "" AJD
+ EQUB VE                \
+                        \ Encoded as:   ""
+
+ENDIF
+
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  EJMP 25                \ Token 11:     "{incoming message screen, wait 2s}
  EJMP 9                 \                {clear screen}
+ENDIF
 IF _6502SP_VERSION \ Screen
  EJMP 30                \                {white}
 ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  EJMP 23                \                {move to row 10, white, lower case}
  EJMP 14                \                {justify}
  EJMP 2                 \                {sentence case}
@@ -746,11 +821,13 @@ ENDIF
  ECHR 'E'               \                {left align}{tab 6}{all caps}  MESSAGE
  ECHR ' '               \                ENDS{wait for key press}"
  ECHR 'H'               \
-IF _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
+ENDIF
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Comment
  ECHR 'A'               \ Encoded as:   "{25}{9}{23}{14}{2}  <245>T<246>
 ELIF _6502SP_VERSION
  ECHR 'A'               \ Encoded as:   "{25}{9}{30}{23}{14}{2}  <245>T<246>
 ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ETWO 'V', 'E'          \                <251><223>[213]. {19}WE HA<250> NE[196]
  ECHR ' '               \                OF [179]R <218>RVIC<237> AGA<240>[204]
  ECHR 'N'               \                IF [179] W<217>LD <247> <235> GOOD AS
@@ -855,7 +932,15 @@ ENDIF
  EJMP 24
  EQUB VE
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Comment
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+ EQUB VE                \ Token 11:     ""
+                        \
+                        \ Encoded as:   ""
+
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Comment
  ECHR '('               \ Token 12:     "({single cap}C) ACORNSOFT 1984"
  EJMP 19                \
  ECHR 'C'               \ Encoded as:   "({19}C) AC<253>N<235>FT 1984"
@@ -864,6 +949,7 @@ ELIF _MASTER_VERSION
  EJMP 19                \
  ECHR 'C'               \ Encoded as:   "({19}C) AC<253>N<235>FT 1986"
 ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR ')'
  ECHR ' '
  ECHR 'A'
@@ -877,14 +963,24 @@ ENDIF
  ECHR '1'
  ECHR '9'
  ECHR '8'
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Master: Text token 12 in the Master version has a copyright notice of "(C) Acornsoft 1986", rather than the "1984" of the other versions
+ENDIF
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Master: Text token 12 in the Master version has a copyright notice of "(C) Acornsoft 1986", rather than the "1984" of the other versions
  ECHR '4'
 ELIF _MASTER_VERSION
  ECHR '6'
 ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  EQUB VE
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Platform
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+ EQUB VE                \ Token 12:     ""
+                        \
+                        \ Encoded as:   ""
+
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Platform
 
  ECHR 'B'               \ Token 13:     "BY D.BRABEN & I.BELL"
  ECHR 'Y'               \
@@ -912,6 +1008,12 @@ ELIF _MASTER_VERSION
  ETOK 197               \ Encoded as:   "BY[197]]"
  EQUB VE
 
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+ EQUB VE                \ Token 13:     ""
+                        \
+                        \ Encoded as:   ""
+
 ENDIF
 
  EJMP 21                \ Token 14:     "{clear bottom of screen}
@@ -920,11 +1022,14 @@ ENDIF
  EJMP 26                \
  EQUB VE                \ Encoded as:   "{21}[145][200]{26}"
 
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  EJMP 25                \ Token 15:     "{incoming message screen, wait 2s}
  EJMP 9                 \                {clear screen}
+ENDIF
 IF _6502SP_VERSION \ Screen
  EJMP 30                \                {white}
 ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  EJMP 23                \                {move to row 10, white, lower case}
  EJMP 14                \                {justify}
  EJMP 2                 \                {sentence case}
@@ -939,11 +1044,13 @@ ENDIF
  ETWO 'L', 'A'          \                {left align}{tab 6}{all caps}  MESSAGE
  ETWO 'T', 'I'          \                ENDS{wait for key press}"
  ETWO 'O', 'N'          \
-IF _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
+ENDIF
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Comment
  ECHR 'S'               \ Encoded as:   "{25}{9}{23}{14}{2}  C<223>G<248>TU
 ELIF _6502SP_VERSION
  ECHR 'S'               \ Encoded as:   "{25}{9}{30}{23}{14}{2}  C<223>G<248>TU
 ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR ' '               \                <249><251><223>S [154]!{12}{12}<226>
  ETOK 154               \                <244>E{13} W<220>L <228>WAYS <247>[208]
  ECHR '!'               \                P<249><233> F<253> [179] <240>[211]
@@ -1002,6 +1109,14 @@ ENDIF
  ETOK 212
  EJMP 24
  EQUB VE
+
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+ EQUB VE                \ Token 15:     ""
+                        \
+                        \ Encoded as:   ""
+
+ENDIF
 
  ECHR 'F'               \ Token 16:     "FABLED"
  ETWO 'A', 'B'          \
@@ -1672,6 +1787,8 @@ ENDIF
  ECHR 'P'
  EQUB VE
 
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
+
  ECHR 'I'               \ Token 106:    "I HEAR A [130-134] LOOKING SHIP
  ECHR ' '               \                APPEARED AT ERRIUS"
  ECHR 'H'               \
@@ -1695,6 +1812,16 @@ ENDIF
  ETWO 'A', 'T'
  ETOK 209
  EQUB VE
+
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+ EQUB VE                \ Token 106:    ""
+                        \
+                        \ Encoded as:   ""
+
+ENDIF
+
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
 
  ECHR 'Y'               \ Token 107:    "YEAH, I HEAR A [130-134] SHIP LEFT
  ECHR 'E'               \                ERRIUS A  WHILE BACK"
@@ -1729,6 +1856,16 @@ ENDIF
  ECHR 'K'
  EQUB VE
 
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+ EQUB VE                \ Token 107:    ""
+                        \
+                        \ Encoded as:   ""
+
+ENDIF
+
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
+
  ECHR 'G'               \ Token 108:    "GET YOUR IRON ASS OVER TO ERRIUS"
  ETWO 'E', 'T'          \
  ECHR ' '               \ Encoded as:   "G<221> [179]R IR<223> ASS OV<244> TO
@@ -1752,6 +1889,16 @@ ENDIF
  ETOK 209
  EQUB VE
 
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+ EQUB VE                \ Token 108:    ""
+                        \
+                        \ Encoded as:   ""
+
+ENDIF
+
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
+
  ETWO 'S', 'O'          \ Token 109:    "SOME [91-95] NEW SHIP WAS SEEN AT
  ECHR 'M'               \                ERRIUS"
  ECHR 'E'               \
@@ -1771,19 +1918,37 @@ ENDIF
  ETOK 209
  EQUB VE
 
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+ EQUB VE                \ Token 109:    ""
+                        \
+                        \ Encoded as:   ""
+
+ENDIF
+
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
+
  ECHR 'T'               \ Token 110:    "TRY ERRIUS"
  ECHR 'R'               \
  ECHR 'Y'               \ Encoded as:   "TRY[209]"
  ETOK 209
  EQUB VE
 
-IF NOT(_ELITE_A_VERSION)
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+ EQUB VE                \ Token 110:    ""
+                        \
+                        \ Encoded as:   ""
+
+ENDIF
+
+IF NOT(_ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA)
 
  EQUB VE                \ Token 111:    ""
                         \
                         \ Encoded as:   ""
 
-ELIF _ELITE_A_VERSION
+ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
  EJMP 1                 \ Token 111:    "{all caps}SPECIAL CARGO"
  ECHR 'S'               \
@@ -1805,7 +1970,7 @@ ENDIF
                         \
                         \ Encoded as:   ""
 
-IF NOT(_ELITE_A_VERSION)
+IF NOT(_ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA)
 
  EQUB VE                \ Token 113:    ""
                         \
@@ -1815,7 +1980,7 @@ IF NOT(_ELITE_A_VERSION)
                         \
                         \ Encoded as:   ""
 
-ELIF _ELITE_A_VERSION
+ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
  ECHR 'C'               \ Token 113:    "CARGO VALUE:"
  ETWO 'A', 'R'          \
@@ -2559,6 +2724,8 @@ ENDIF
  ECHR ' '
  EQUB VE
 
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
+
  EJMP 2                 \ Token 211:    "{sentence case} HER MAJESTY'S SPACE
  ECHR ' '               \                 NAVY{lower case}"
  ECHR 'H'               \
@@ -2584,6 +2751,14 @@ ENDIF
  EJMP 13
  EQUB VE
 
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+ EQUB VE                \ Token 211:    ""
+                        \
+                        \ Encoded as:   ""
+
+ENDIF
+
  ETOK 177               \ Token 212:    ".{cr}
  EJMP 8                 \                {left align}
  EJMP 1                 \                {tab 6}{all caps}  MESSAGE ENDS"
@@ -2599,6 +2774,8 @@ ENDIF
  ECHR 'D'
  ECHR 'S'
  EQUB VE
+
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
 
  ECHR ' '               \ Token 213:    " {single cap}COMMANDER {commander
  ETOK 154               \                name}, I {lower case}AM{sentence case}
@@ -2627,6 +2804,14 @@ ENDIF
  ECHR 'F'
  ETOK 211
  EQUB VE
+
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+ EQUB VE                \ Token 213:    ""
+                        \
+                        \ Encoded as:   ""
+
+ENDIF
 
  EQUB VE                \ Token 214:    ""
                         \
@@ -2672,6 +2857,8 @@ ENDIF
  ETWO 'G', 'E'
  EQUB VE
 
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
+
  ECHR 'C'               \ Token 217:    "CURRUTHERS"
  ECHR 'U'               \
  ECHR 'R'               \ Encoded as:   "CURRU<226><244>S"
@@ -2682,6 +2869,15 @@ ENDIF
  ECHR 'S'
  EQUB VE
 
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+ EQUB VE                \ Token 217:    ""
+                        \
+                        \ Encoded as:   ""
+
+ENDIF
+
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR 'F'               \ Token 218:    "FOSDYKE SMYTHE"
  ECHR 'O'               \
  ECHR 'S'               \ Encoded as:   "FOSDYKE SMY<226>E"
@@ -2697,6 +2893,14 @@ ENDIF
  ECHR 'E'
  EQUB VE
 
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+ EQUB VE                \ Token 218:    ""
+                        \
+                        \ Encoded as:   ""
+
+ENDIF
+
  ECHR 'F'               \ Token 219:    "FORTESQUE"
  ETWO 'O', 'R'          \
  ECHR 'T'               \ Encoded as:   "F<253>T<237><254>E"
@@ -2711,6 +2915,8 @@ ENDIF
  ETWO 'D', 'I'
  ETWO 'C', 'E'
  EQUB VE
+
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
 
  ECHR 'I'               \ Token 221:    "IS BELIEVED TO HAVE JUMPED TO THIS
  ECHR 'S'               \                GALAXY"
@@ -2740,11 +2946,22 @@ ENDIF
  ECHR 'Y'
  EQUB VE
 
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+ EQUB VE                \ Token 221:    ""
+                        \
+                        \ Encoded as:   ""
+
+ENDIF
+
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  EJMP 25                \ Token 222:    "{incoming message screen, wait 2s}
  EJMP 9                 \                {clear screen}
+ENDIF
 IF _6502SP_VERSION \ Screen
  EJMP 30                \                {white}
 ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  EJMP 29                \                {tab 6, white, lower case in words}
  EJMP 14                \                {justify}
  EJMP 2                 \                {sentence case}
@@ -2760,11 +2977,13 @@ ENDIF
  ETOK 154               \                WELL THE SITUATION HAS CHANGED.{cr}
  ECHR ' '               \                 {single cap}OUR BOYS ARE READY FOR A
  EJMP 4                 \                PUSH RIGHT TO THE HOME SYSTEM OF THOSE
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Comment
+ENDIF
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Comment
  ETOK 204               \                MOTHERS.{cr}
 ELIF _MASTER_VERSION
  ETOK 204               \                MURDERERS.{cr}
 ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR 'I'               \                 {single cap}
  EJMP 13                \                {wait for key press}
  ECHR ' '               \                {clear screen}
@@ -2790,6 +3009,7 @@ ENDIF
  ECHR 'N'               \                {tab 6}{all caps}  MESSAGE ENDS
  ECHR 'A'               \                {wait for key press}"
  ECHR 'V'               \
+ENDIF
 IF _DISC_DOCKED \ Master: The disc and 6502SP versions contain a spelling mistake in the mission 2 briefing that's shown when picking up the plans from Ceerdi - they incorrectly spell intelligence as "intellegence". The correct spelling is used in the Master version
  ECHR 'A'               \ Encoded as:   "{25}{9}{29}{14}{2}GOOD DAY [154]
  ECHR 'L'               \                 {4}[204]I{13} AM {19}AG<246>T {19}B
@@ -2832,7 +3052,7 @@ ELIF _MASTER_VERSION
  ETWO 'E', 'N'          \                <253>[208]PUSH RIGHT[201][147]HOME
  ETWO 'C', 'E'          \                 SYSTEM OF <226>O<218> MURD<244><244>S
  ETOK 204               \                [204]{24}{9}{29}I{13} HA<250> OBTA
-ELIF _ELITE_A_VERSION
+ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
  ETWO 'A', 'L'          \ Encoded as:   "{25}{9}{29}{14}{2}GOOD DAY [154] {4}
  ECHR ' '               \                [204]I{13} AM {19}AG<246>T {19}B<249>
  EJMP 19                \                KE OF {19}NAV<228> {19}<240>TEL<229>
@@ -2847,7 +3067,7 @@ ELIF _ELITE_A_VERSION
  ETOK 204               \                 SY<222>EM OF <226>O<218> MO<226><244>S
  ECHR 'A'               \                [204]{24}{9}{29}I{13} HA<250> OBTA
 ENDIF
-IF NOT(_ELITE_A_VERSION)
+IF NOT(_ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _ELITE_A_ENCYCLOPEDIA)
  ECHR 'A'               \                <240>[196][147]DEF<246><233> P<249>NS F
  ECHR 'S'               \                <253> <226>EIR {19}HI<250> {19}W<253>LD
  ECHR ' '               \                S[204][147]<247><221><229>S K<227>W WE
@@ -2864,7 +3084,7 @@ IF NOT(_ELITE_A_VERSION)
  ECHR 'A'               \                 <247> PAID[204]    {19}GOOD LUCK [154]
  ECHR 'V'               \                [212]{24}"
  ECHR 'Y'
-ELIF _ELITE_A_VERSION
+ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
  ECHR 'S'               \                <240>[196][147]DEF<246><233> P<249>NS F
  ECHR ' '               \                <253> <226>EIR {19}HI<250> {19}W<253>LD
  ETOK 179               \                S[204][147]<247><221><229>S K<227>W WE
@@ -2881,6 +3101,7 @@ ELIF _ELITE_A_VERSION
  ECHR 'V'               \                 <247> PAID[204]    {19}GOOD LUCK [154]
  ECHR 'Y'               \                [212]{24}"
 ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR ' '
  ECHR 'H'
  ECHR 'A'
@@ -2990,12 +3211,14 @@ ENDIF
  ETWO 'O', 'R'
  ETOK 208
  ECHR 'P'
-IF NOT(_ELITE_A_VERSION)
+ENDIF
+IF NOT(_ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _ELITE_A_ENCYCLOPEDIA)
  ECHR 'U'
  ECHR 'S'
-ELIF _ELITE_A_VERSION
+ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
  ETWO 'U', 'S'
 ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR 'H'
  ECHR ' '
  ECHR 'R'
@@ -3012,12 +3235,14 @@ ENDIF
  ECHR ' '
  ECHR 'S'
  ECHR 'Y'
-IF NOT(_ELITE_A_VERSION)
+ENDIF
+IF NOT(_ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _ELITE_A_ENCYCLOPEDIA)
  ECHR 'S'
  ECHR 'T'
-ELIF _ELITE_A_VERSION
+ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
  ETWO 'S', 'T'
 ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR 'E'
  ECHR 'M'
  ECHR ' '
@@ -3029,7 +3254,8 @@ ENDIF
  ETWO 'S', 'E'
  ECHR ' '
  ECHR 'M'
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Master: The disc and 6502SP versions call the Thargoids "those mothers" in the mission 2 briefing that's shown when picking up the plans from Ceerdi. In the Master version, this has changed to "those murderers"
+ENDIF
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Master: The disc and 6502SP versions call the Thargoids "those mothers" in the mission 2 briefing that's shown when picking up the plans from Ceerdi. In the Master version, this has changed to "those murderers"
  ECHR 'O'
  ETWO 'T', 'H'
  ETWO 'E', 'R'
@@ -3040,13 +3266,16 @@ ELIF _MASTER_VERSION
  ETWO 'E', 'R'
  ETWO 'E', 'R'
 ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR 'S'
  ETOK 204
  EJMP 24
  EJMP 9
+ENDIF
 IF _6502SP_VERSION \ Screen
  EJMP 30
 ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  EJMP 29
  ECHR 'I'
  EJMP 13
@@ -3288,12 +3517,23 @@ ENDIF
  EJMP 24
  EQUB VE
 
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+ EQUB VE                \ Token 222:    ""
+                        \
+                        \ Encoded as:   ""
+
+ENDIF
+
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  EJMP 25                \ Token 223:    "{incoming message screen, wait 2s}
  EJMP 9                 \                {clear screen}
  EJMP 29                \                {tab 6, white, lower case in words}
+ENDIF
 IF _6502SP_VERSION \ Screen
  EJMP 30                \                {white}
 ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  EJMP 8                 \                {tab 6}
  EJMP 14                \                {justify}
  EJMP 13                \                {lower case}
@@ -3312,13 +3552,16 @@ ENDIF
  ETOK 179               \                {tab 6}{all caps}  MESSAGE ENDS
  ECHR ' '               \                {wait for key press}"
  ECHR 'H'               \
-IF _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
+ENDIF
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Comment
  ECHR 'A'               \ Encoded as:   "{25}{9}{29}{8}{14}{13}{19}WELL D
 ELIF _6502SP_VERSION
  ECHR 'A'               \ Encoded as:   "{25}{9}{29}{30}{8}{14}{13}{19}WELL D
 ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ETWO 'V', 'E'          \                <223>E [154][204][179] HA<250> <218>RV
-IF NOT(_ELITE_A_VERSION)
+ENDIF
+IF NOT(_ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _ELITE_A_ENCYCLOPEDIA)
  ECHR ' '               \                [196]US WELL[178]WE SH<228>L <242>MEMB
  ETWO 'S', 'E'          \                <244>[204]WE DID <227>T EXPECT [147]
  ECHR 'R'               \                {19}<226><238>GOIDS[201]F<240>D <217>T
@@ -3327,7 +3570,7 @@ IF NOT(_ELITE_A_VERSION)
  ECHR 'U'               \                NAVY {6}[114]{5} AS PAYM<246>T[212]
  ECHR 'S'               \                {24}"
  ECHR ' '
-ELIF _ELITE_A_VERSION
+ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
  ECHR ' '               \                [196]<236> WELL[178]WE SH<228>L <242>ME
  ETWO 'S', 'E'          \                MB<244>[204]WE <241>D <227>T EXPECT
  ECHR 'R'               \                 [147]{19}<226><238>GOIDS[201]F<240>D
@@ -3336,6 +3579,7 @@ ELIF _ELITE_A_VERSION
  ETWO 'U', 'S'          \                 [148]{19}NAVY {6}[114]{5} AS PAYM<246>
  ECHR ' '               \                T[212]{24}"
 ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR 'W'
  ECHR 'E'
  ECHR 'L'
@@ -3359,12 +3603,14 @@ ENDIF
  ECHR 'W'
  ECHR 'E'
  ECHR ' '
-IF NOT(_ELITE_A_VERSION)
+ENDIF
+IF NOT(_ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _ELITE_A_ENCYCLOPEDIA)
  ECHR 'D'
  ECHR 'I'
-ELIF _ELITE_A_VERSION
+ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
  ETWO 'D', 'I'
 ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR 'D'
  ECHR ' '
  ETWO 'N', 'O'
@@ -3394,12 +3640,14 @@ ENDIF
  ETWO 'O', 'U'
  ECHR 'T'
  ECHR ' '
-IF NOT(_ELITE_A_VERSION)
+ENDIF
+IF NOT(_ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _ELITE_A_ENCYCLOPEDIA)
  ECHR 'A'
  ECHR 'B'
-ELIF _ELITE_A_VERSION
+ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
  ETWO 'A', 'B'
 ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ETWO 'O', 'U'
  ECHR 'T'
  ECHR ' '
@@ -3449,6 +3697,14 @@ ENDIF
  ETOK 212
  EJMP 24
  EQUB VE
+
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+ EQUB VE                \ Token 223:    ""
+                        \
+                        \ Encoded as:   ""
+
+ENDIF
 
 IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Master: The Master version contains a new prompt in the extended token table, "ARE YOU SURE?", which isn't present in the other versions. It is used to make sure you really do want to revert to the default commander if you choose that option from the disc access menu
 

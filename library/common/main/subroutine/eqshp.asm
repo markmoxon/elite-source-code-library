@@ -16,6 +16,10 @@ ENDIF
 \   err                 Beep, pause and go to the docking bay (i.e. show the
 \                       Status Mode screen)
 \
+IF _ELITE_A_VERSION
+\   pres+3              AJD
+\
+ENDIF
 \ ******************************************************************************
 
 IF NOT(_ELITE_A_VERSION)
@@ -376,8 +380,8 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- CPX new_missiles       \ AJD, convert pres to pres+2 or pres+3
- BCS pres2
+ CPX new_missiles       \ AJD
+ BCS pres+3
 
 ENDIF
 
@@ -585,8 +589,6 @@ ENDIF
 IF _ELITE_A_VERSION
 
  INC new_hold           \ AJD
-
-.pres2
 
 ENDIF
 

@@ -9,7 +9,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR 
 ELIF _DISC_DOCKED
 \    Summary: Potentially spawn a trader, an asteroid, or a cargo canister
 \             (though this has no effect when docked)
-ELIF _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_DOCKED
+ELIF _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 \    Summary: Update the main loop counters
 ENDIF
 \  Deep dive: Program flow of the main game loop
@@ -32,10 +32,10 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR 
 \   * Call M% to do the main flight loop
 \
 ENDIF
-IF NOT(_ELITE_A_ENCYCLOPEDIA OR _ELITE_A_DOCKED)
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA)
 \   * Potentially spawn a trader, asteroid or cargo canister
 \
-ELIF _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_DOCKED
+ELIF _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 \   * Update the main loop counters
 \
 ENDIF
@@ -75,7 +75,7 @@ ENDIF
 
  DEC MCNT               \ Decrement the main loop counter in MCNT
 
-IF NOT(_ELITE_A_ENCYCLOPEDIA OR _ELITE_A_DOCKED)
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA)
 
  BEQ P%+5               \ If the counter has reached zero, which it will do
                         \ every 256 main loops, skip the next JMP instruction
@@ -110,7 +110,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _
 
 ENDIF
 
-IF NOT(_ELITE_A_ENCYCLOPEDIA OR _ELITE_A_DOCKED)
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA)
 
  JSR DORND              \ Set A and X to random numbers
 
@@ -149,7 +149,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
 
 ENDIF
 
-IF NOT(_ELITE_A_ENCYCLOPEDIA OR _ELITE_A_DOCKED)
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA)
 
  JSR ZINF               \ Call ZINF to reset the INWK ship workspace
 

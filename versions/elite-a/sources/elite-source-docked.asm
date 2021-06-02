@@ -323,7 +323,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_B%
 
 PRINT "S.ELTB ", ~CODE_B%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_B%
-\SAVE "elite-a/T.ELTB.bin", CODE_B%, P%, LOAD%
+\SAVE "versions/elite-a/output/T.ELTB.bin", CODE_B%, P%, LOAD%
 
 \ ******************************************************************************
 \

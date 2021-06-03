@@ -25,7 +25,15 @@
 
 .MA21
 
+IF NOT(_ELITE_A_6502SP_PARA)
+
  JSR MVEIT              \ Call MVEIT to move the ship we are processing in space
+
+ELIF _ELITE_A_6502SP_PARA
+
+ JSR MVEIT_FLIGHT       \ Call MVEIT to move the ship we are processing in space
+
+ENDIF
 
                         \ Now that we are done processing this ship, we need to
                         \ copy the ship data back from INWK to the correct place

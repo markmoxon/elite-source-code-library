@@ -20,6 +20,8 @@
 \
 \ ******************************************************************************
 
+IF NOT(_ELITE_A_VERSION)
+
 .MA59
 
                         \ If we get here then scooping failed
@@ -68,6 +70,25 @@
  SEC                    \ Set the amount of damage in A to 128 + A / 2, so
  ROR A                  \ this is quite a big dent, and colliding with higher
                         \ energy ships will cause more damage
+
+ELIF _ELITE_A_VERSION
+
+ LDA &033F              \ AJD
+ AND #&04
+ EOR #&05
+ BNE MA63
+
+.MA58
+
+ LDA #&40
+ JSR n_hit
+ JSR anger_8c
+
+.n_crunch
+
+ LDA #&80
+
+ENDIF
 
 .MA63
 

@@ -62,6 +62,12 @@ ENDIF
  CMP #214               \ docking, as the angle of approach is greater than 26
  BCC MA62               \ degrees
 
+IF _ELITE_A_VERSION
+
+ LDY #&25               \ AJD
+
+ENDIF
+
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: The cassette version contains an extra docking check that makes sure we are facing towards the station when trying to dock
 
  JSR SPS4               \ Call SPS4 to get the vector to the space station
@@ -118,7 +124,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
  JMP BAY                \ Go to the docking bay (i.e. show the Status Mode
                         \ screen)
 
-ELIF _DISC_VERSION OR _ELITE_A_VERSION
+ELIF _DISC_VERSION OR _ELITE_A_FLIGHT
 
  JSR RES2               \ Reset a number of flight variables and workspaces
 
@@ -135,11 +141,26 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  JMP DOENTRY            \ Go to the docking bay (i.e. show the ship hanger)
 
+ELIF _ELITE_A_6502SP_PARA
+
+ JSR RES2               \ Reset a number of flight variables and workspaces
+
+ LDA #8                 \ Set the step size for the launch tunnel rings to 8, so
+                        \ there are fewer sections in the rings and they are
+                        \ quite polygonal (compared to the step size of 4 used
+                        \ in the much rounder hyperspace rings)
+
+ JSR HFS2               \ Call HFS2 to draw the launch tunnel rings
+
+ JMP DOENTRY_FLIGHT     \ Go to the docking bay (i.e. show the ship hanger)
+
 ENDIF
 
 .MA62
 
                         \ If we arrive here, docking has just failed
+
+IF NOT(_ELITE_A_VERSION)
 
  LDA DELTA              \ If the ship's speed is < 5, jump to MA67 to register
  CMP #5                 \ some damage, but not a huge amount
@@ -147,4 +168,12 @@ ENDIF
 
  JMP DEATH              \ Otherwise we have just crashed into the station, so
                         \ process our death
+
+ELIF _ELITE_A_VERSION
+
+ LDA &7D                \ AJD
+ CMP #5
+ BCS n_crunch
+
+ENDIF
 

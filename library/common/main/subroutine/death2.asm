@@ -26,12 +26,16 @@ ENDIF
                         \ and fall through into the entry code for the game
                         \ to restart from the title screen
 
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Platform
+IF _DISC_FLIGHT \ Platform
 
  JSR CATD               \ Call CATD to reload the disc catalogue
 
  BNE INBAY              \ Jump to INBAY to load the docked code (this BNE is
                         \ effectively a JMP)
+
+ELIF _ELITE_A_FLIGHT
+
+ BMI INBAY              \ AJD
 
 ENDIF
 

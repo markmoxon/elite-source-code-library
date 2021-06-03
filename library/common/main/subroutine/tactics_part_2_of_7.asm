@@ -3,7 +3,7 @@
 \       Name: TACTICS (Part 2 of 7)
 \       Type: Subroutine
 \   Category: Tactics
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Apply tactics: Escape pod, station, lone Thargon, safe-zone pirate
 ELIF _ELECTRON_VERSION
 \    Summary: Apply tactics: Escape pod, station, safe-zone pirate
@@ -41,7 +41,7 @@ ELIF _ELECTRON_VERSION
 \   * If this is a pirate and we are within the space station safe zone, stop
 \     the pirate from attacking by removing all its aggression
 \
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
 \   * If this is the space station and it is hostile, consider spawning a cop
 \     (6.2% chance, up to a maximum of seven) and we're done
 \
@@ -66,7 +66,7 @@ ENDIF
 
 .TACTICS
 
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Enhanced: Group A: The docking computer in the enhanced versions uses its own turning circle configuration, which is different to the turning circle used by the tactics routine, so the latter switches to its own configuration when it starts (as they share configuration variables)
+IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Enhanced: Group A: The docking computer in the enhanced versions uses its own turning circle configuration, which is different to the turning circle used by the tactics routine, so the latter switches to its own configuration when it starts (as they share configuration variables)
 
  LDY #3                 \ Set RAT = 3, which is the magnitude we set the pitch
  STY RAT                \ or roll counter to in part 7 when turning a ship
@@ -105,7 +105,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Enhanced: See group A
+IF _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Enhanced: See group A
 
  LDA #22                \ Set CNT2 = 22, which is the maximum angle beyond which
  STA CNT2               \ a ship will slow down to start turning towards its
@@ -135,13 +135,47 @@ ENDIF
  CPX #SST               \ If this is not the space station, jump down to TA13
  BNE TA13
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhanced: Space stations in the enhanced versions regularly spawn Transporters and Shuttles that ply their trade between the station and the planet
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: Space stations in the enhanced versions regularly spawn Transporters and Shuttles that ply their trade between the station and the planet
 
  LDA NEWB               \ This is the space station, so check whether bit 2 of
  AND #%00000100         \ the ship's NEWB flags is set, and if it is (i.e. the
  BNE TN5                \ station is hostile), jump to TN5 to spawn some cops
 
  LDA MANY+SHU+1         \ The station is not hostile, so check how many
+ BNE TA1                \ Transporters there are in the vicinity, and if we
+                        \ already have one, return from the subroutine (as TA1
+                        \ contains an RTS)
+
+                        \ If we get here then the station is not hostile, so we
+                        \ can consider spawning a Transporter or Shuttle
+
+ JSR DORND              \ Set A and X to random numbers
+
+ CMP #253               \ If A < 253 (99.2% chance), return from the subroutine
+ BCC TA1                \ (as TA1 contains an RTS)
+
+ AND #1                 \ Set A = a random number that's either 0 or 1
+
+ ADC #SHU-1             \ The C flag is set (as we didn't take the BCC above),
+ TAX                    \ so this sets X to a value of either #SHU or #SHU + 1,
+                        \ which is the ship type for a Shuttle or a Transporter
+
+ BNE TN6                \ Jump to TN6 to spawn this ship type and return from
+                        \ the subroutine using a tail call (this BNE is
+                        \ effectively a JMP as A is never zero)
+
+.TN5
+
+ELIF _ELITE_A_VERSION
+
+ LDA NEWB               \ This is the space station, so check whether bit 2 of
+ AND #%00000100         \ the ship's NEWB flags is set, and if it is (i.e. the
+ BNE TN5                \ station is hostile), jump to TN5 to spawn some cops
+
+ LDA MANY+SHU+1         \ The station is not hostile, so check how many
+
+ ORA &033F              \ AJD no shuttles if docking computer on
+
  BNE TA1                \ Transporters there are in the vicinity, and if we
                         \ already have one, return from the subroutine (as TA1
                         \ contains an RTS)
@@ -185,7 +219,7 @@ ELIF _ELECTRON_VERSION
  CMP #140               \ If A < 140 (55% chance) then return from the
  BCC TA1                \ subroutine (as TA1 contains an RTS)
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  CMP #240               \ If A < 240 (93.8% chance), return from the subroutine
  BCC TA1                \ (as TA1 contains an RTS)
@@ -208,13 +242,13 @@ ELIF _ELECTRON_VERSION
                         \ don't need to spawn any more, so return from the
                         \ subroutine (as TA1 contains an RTS)
 
-ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
+ELIF _DISC_FLIGHT
 
  LDA MANY+COPS          \ Check how many cops there are in the vicinity already,
  CMP #4                 \ and if there are 4 or more, return from the subroutine
  BCS TA22               \ (as TA22 contains an RTS)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _ELITE_A_VERSION
 
  LDA MANY+COPS          \ Check how many cops there are in the vicinity already,
  CMP #7                 \ and if there are 7 or more, return from the subroutine
@@ -230,13 +264,13 @@ ENDIF
 
  LDX #COPS              \ Set X to the ship type for a cop
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Label
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Label
 
 .TN6
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The cops that the space station spawns to defend itself are slightly less aggressive in the Electron version than in the other versions
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The cops that the space station spawns to defend itself are slightly less aggressive in the Electron version than in the other versions
 
  LDA #%11110001         \ Set the AI flag to give the ship E.C.M., enable AI and
                         \ make it very aggressive (60 out of 63)

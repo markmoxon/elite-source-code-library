@@ -10,9 +10,19 @@
 
 .S%
 
+IF NOT(_ELITE_A_FLIGHT)
+
  JMP scramble           \ Decrypt the main flight code and join the main loop
 
  JMP scramble           \ Decrypt the main flight code and start a new game
+
+ELIF _ELITE_A_FLIGHT
+
+ JMP RSHIPS             \ AJD
+
+ JMP RSHIPS
+
+ENDIF
 
  JMP TT26               \ WRCHV is set to point here by elite-loader3.asm
 

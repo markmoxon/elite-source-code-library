@@ -10,7 +10,7 @@
 \
 \ This section sets up some vectors and calculates dot products. Specifically:
 \
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Comment
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
 \   * If this is a lone Thargon without a mothership, set it adrift aimlessly
 \     and we're done
 \
@@ -34,7 +34,7 @@ ENDIF
 \     us work out later on whether the enemy ship is pointing towards us, and
 \     therefore whether it can hit us with its lasers.
 \
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Comment
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
 \ Other entry points:
 \
 \   GOPL                Make the ship head towards the planet
@@ -44,7 +44,7 @@ ENDIF
 
 .TA21
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Platform: This code is in part 2 for the cassette version
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Platform: This code is in part 2 for the cassette version
 
  CPX #TGL               \ If this is not a Thargon, jump down to TA14
  BNE TA14
@@ -66,7 +66,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Platf
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhanced: In the enhanced versions, the NEWB flags are used to determine whether we are dealing with a trader, so traders can fly any ship. In the cassette version, traders only ever fly the Cobra Mk III
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Enhanced: In the enhanced versions, the NEWB flags are used to determine whether we are dealing with a trader, so traders can fly any ship. In the cassette version, traders only ever fly the Cobra Mk III
 
  JSR DORND              \ Set A and X to random numbers
 
@@ -76,7 +76,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhan
 
 ENDIF
 
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Disc: In the disc version, 39% of traders turn out to be bounty hunters, while it's just 20% in the advanced versions
+IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Disc: In the disc version, 39% of traders turn out to be bounty hunters, while it's just 20% in the advanced versions
 
  CPX #100               \ This is a trader, so if X >= 100 (61% chance), return
  BCS TA22               \ from the subroutine (as TA22 contains an RTS)
@@ -88,7 +88,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhanced: In the enhanced versions, AI is are to each ship according to its NEWB flags, which determine whether it is a trader, a bounty hunter, currently docking, a pirate, hostile, an innocent bystander or a cop
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: In the enhanced versions, AI is are to each ship according to its NEWB flags, which determine whether it is a trader, a bounty hunter, currently docking, a pirate, hostile, an innocent bystander or a cop
 
 .TN1
 
@@ -121,6 +121,66 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhan
                         \ DOCKIT to apply the docking algorithm to this ship
 
 .GOPL
+
+ JSR SPS1               \ The ship is not hostile and it is not docking, so call
+                        \ SPS1 to calculate the vector to the planet and store
+                        \ it in XX15
+
+ JMP TA151              \ Jump to TA151 to make the ship head towards the planet
+
+.TN3
+
+ LSR A                  \ Extract bit 2 of the ship's NEWB flags into the C flag
+ BCC TN4                \ and jump to TN4 if it is clear (i.e. if this ship is
+                        \ not a pirate)
+
+ LDA SSPR               \ If we are not inside the space station safe zone, jump
+ BEQ TN4                \ to TN4
+
+                        \ If we get here then this is a pirate and we are inside
+                        \ the space station safe zone
+
+ LDA INWK+32            \ Set bits 0 and 7 of the AI flag in byte #32 (has AI
+ AND #%10000001         \ enabled and has an E.C.M.)
+ STA INWK+32
+
+.TN4
+
+ELIF _ELITE_A_VERSION
+
+.TN1
+
+ LSR A                  \ Extract bit 1 of the ship's NEWB flags into the C flag
+ BCC TN2                \ and jump to TN2 if it is clear (i.e. if this is not a
+                        \ bounty hunter)
+
+ LDX FIST               \ This is a bounty hunter, so check whether our FIST
+ CPX #40                \ rating is < 40 (where 50 is a fugitive), and jump to
+ BCC TN2                \ TN2 if we are not 100% evil
+
+ LDA NEWB               \ We are a fugitive or a bad offender, and this ship is
+ ORA #%00000100         \ a bounty hunter, so set bit 2 of the ship's NEWB flags
+ STA NEWB               \ to make it hostile
+
+ LSR A                  \ Shift A right twice so the next test in TN2 will check
+ LSR A                  \ bit 2
+
+.TN2
+
+ LSR A                  \ Extract bit 2 of the ship's NEWB flags into the C flag
+ BCS TN3                \ and jump to TN3 if it is set (i.e. if this ship is
+                        \ hostile)
+
+ LSR A                  \ The ship is not hostile, so extract bit 4 of the
+ LSR A                  \ ship's NEWB flags into the C flag, and jump to GOPL if
+ BCC GOPL               \ it is clear (i.e. if this ship is not docking)
+
+ JMP DOCKIT             \ The ship is not hostile and is docking, so jump to
+                        \ DOCKIT to apply the docking algorithm to this ship
+
+.GOPL
+
+ LDY #&00               \ AJD
 
  JSR SPS1               \ The ship is not hostile and it is not docking, so call
                         \ SPS1 to calculate the vector to the planet and store
@@ -179,7 +239,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION 
  LDY #10                \ Set (A X) = nosev . XX15
  JSR TAS3
 
-ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
+ELIF _DISC_FLIGHT OR _ELITE_A_VERSION
 
  JSR TAS3-2             \ Set (A X) = nosev . XX15
 

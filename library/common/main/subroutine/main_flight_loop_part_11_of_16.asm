@@ -26,7 +26,7 @@
 
 .MA26
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhanced: Ships that have docked or been scooped in the enhanced versions are hidden from the scanner
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Enhanced: Ships that have docked or been scooped in the enhanced versions are hidden from the scanner
 
  LDA NEWB               \ If bit 7 of the ship's NEWB flags is clear, skip the
  BPL P%+5               \ following instruction
@@ -45,7 +45,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION 
  JSR PLUT               \ Call PLUT to update the geometric axes in INWK to
                         \ match the view (front, rear, left, right)
 
-ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
+ELIF _DISC_FLIGHT OR _ELITE_A_VERSION
 
  LDX VIEW               \ Load the current view into X
 
@@ -71,7 +71,7 @@ ENDIF
  JSR BEEP               \ We have missile lock and an armed missile, so call
                         \ the BEEP subroutine to make a short, high beep
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Screen
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Screen
 
  LDX XSAV               \ Call ABORT2 to store the details of this missile
  LDY #&0E               \ lock, with the targeted ship's slot number in X
@@ -112,7 +112,7 @@ ENDIF
  JSR EXNO               \ the crosshairs, so call EXNO to make the sound of
                         \ us making a laser strike on another ship
 
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Advanced: Only military lasers can harm the Cougar, and then they only inflict a quarter of the damage that military lasers inflict on normal ships
+IF _DISC_FLIGHT \ Advanced: Only military lasers can harm the Cougar, and then they only inflict a quarter of the damage that military lasers inflict on normal ships
 
  LDA TYPE               \ Did we just hit the space station? If so, jump to
  CMP #SST               \ MA14+2 to make the station hostile, skipping the
@@ -131,9 +131,17 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
  BCC BURN               \ a Constrictor, Cougar, Dodo station or the Elite logo,
                         \ jump to BURN to skip the following
 
+ELIF _ELITE_A_VERSION
+
+ LDA &44                \ AJD
+
+ LDY TYPE               \ Did we just hit the space station? If so, jump to
+ CPY #SST               \ MA14 to AJD
+ BEQ MA14
+
 ENDIF
 
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Enhanced: Only military lasers can harm the Constrictor in mission 1, and then they only inflict a quarter of the damage that military lasers inflict on normal ships
+IF _DISC_FLIGHT \ Enhanced: Only military lasers can harm the Constrictor in mission 1, and then they only inflict a quarter of the damage that military lasers inflict on normal ships
 
  LDA LAS                \ Set A to the power of the laser we just used to hit
                         \ the ship (i.e. the laser in the current view)
@@ -167,12 +175,31 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 .BURN
 
+ELIF _ELITE_A_VERSION
+
+ CPY #&1F
+ BNE BURN
+ LSR A
+
+.BURN
+
+ LSR A
+
 ENDIF
+
+IF NOT(_ELITE_A_VERSION)
 
  LDA INWK+35            \ Fetch the hit ship's energy from byte #35 and subtract
  SEC                    \ our current laser power, and if the result is greater
  SBC LAS                \ than zero, the other ship has survived the hit, so
  BCS MA14               \ jump down to MA14
+
+ELIF _ELITE_A_VERSION
+
+ JSR n_hit              \ hit enemy AJD
+ BCS MA14
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
@@ -232,7 +259,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Destroying an asteroid wit
 
 .oh
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  ASL INWK+31            \ Set bit 7 of the ship byte #31 to indicate that it has
  SEC                    \ now been killed
@@ -244,6 +271,33 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
 
  LDA LAS                \ Did we kill the asteroid using mining lasers? If not,
  CMP #Mlas              \ jump to nosp, otherwise keep going
+ BNE nosp
+
+ JSR DORND              \ Set A and X to random numbers
+
+ LDX #SPL               \ Set X to the ship type for a splinter
+
+ AND #3                 \ Reduce the random number in A to the range 0-3
+
+ JSR SPIN2              \ Call SPIN2 to spawn A items of type X (i.e. spawn
+                        \ 0-3 spliters)
+
+.nosp
+
+ LDY #PLT               \ Randomly spawn some alloy plates
+ JSR SPIN
+
+ LDY #OIL               \ Randomly spawn some cargo canisters
+ JSR SPIN
+
+ELIF _ELITE_A_VERSION
+
+ LDA TYPE               \ Did we just kill an asteroid? If not, jump to nosp,
+ CMP #AST               \ otherwise keep going
+ BNE nosp
+
+ LDA LAS                \ Did we kill the asteroid using mining lasers? If not,
+ CMP new_mining         \ jump to nosp, otherwise keep going AJD
  BNE nosp
 
  JSR DORND              \ Set A and X to random numbers
@@ -279,8 +333,16 @@ ENDIF
 
 .MA14
 
+IF NOT(_ELITE_A_VERSION)
+
  STA INWK+35            \ Store the hit ship's updated energy in ship byte #35
 
  LDA TYPE               \ Call ANGRY to make this ship hostile, now that we
  JSR ANGRY              \ have hit it
+
+ELIF _ELITE_A_VERSION
+
+ JSR anger_8c           \ AJD
+
+ENDIF
 

@@ -25,7 +25,15 @@
 
 .MA8
 
+IF NOT(_ELITE_A_6502SP_PARA)
+
  JSR LL9                \ Call LL9 to draw the ship we're processing on-screen
+
+ELIF _ELITE_A_6502SP_PARA
+
+ JSR LL9_FLIGHT         \ Call LL9 to draw the ship we're processing on-screen
+
+ENDIF
 
 .MA15
 
@@ -33,7 +41,7 @@
  LDA INWK+35            \ byte #35 in INF (so the ship's data in K% gets
  STA (INF),Y            \ updated)
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhanced: Ships that have docked or been scooped in the enhanced versions are not classed as being killed and are not tested for potential bounties
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Enhanced: Ships that have docked or been scooped in the enhanced versions are not classed as being killed and are not tested for potential bounties
 
  LDA NEWB               \ If bit 7 of the ship's NEWB flags is set, which means
  BMI KS1S               \ the ship has docked or been scooped, jump to KS1S to
@@ -52,7 +60,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
  BEQ NBOUN              \ ship is no longer exploding, so jump to NBOUN to skip
                         \ the following
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  AND #%00100000         \ If bit 5 of the ship's byte #31 is clear then the
  BEQ MAC1               \ ship is no longer exploding, so jump to MAC1 to skip
@@ -72,7 +80,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
 .q2
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  LDA NEWB               \ Extract bit 6 of the ship's NEWB flags, so A = 64 if
  AND #%01000000         \ bit 6 is set, or 0 if it is clear. Bit 6 is set if
@@ -84,9 +92,33 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
                         \ a fugitive if we just shot the sheriff, but won't
                         \ affect our status if the enemy wasn't a copper
 
+ELIF _ELITE_A_VERSION
+
+ BIT &6A                \ AJD
+ BVS n_badboy
+ BEQ n_goodboy
+ LDA #&80
+
+.n_badboy
+
+ ASL A
+ ROL A
+
+.n_bitlegal
+
+ LSR A
+ BIT FIST
+ BNE n_bitlegal
+ ADC FIST
+ BCS KS1S
+ STA FIST
+ BCC KS1S
+
+.n_goodboy
+
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Standard: This is a bug in all versions. Making a kill while there's an in-flight message on the screen not only stops the bounty from being displayed (which is intentional), but it also prevents the bounty from being awarded (which presumably isn't). In non-Electron versions, the same code is used to prevent bounties from being awarded in witchspace (which is correct, as witchspace kills can't be reported to the authorities)
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Standard: This is a bug in all versions. Making a kill while there's an in-flight message on the screen not only stops the bounty from being displayed (which is intentional), but it also prevents the bounty from being awarded (which presumably isn't). In non-Electron versions, the same code is used to prevent bounties from being awarded in witchspace (which is correct, as witchspace kills can't be reported to the authorities)
 
  LDA DLY                \ If we already have an in-flight message on-screen (in
  ORA MJ                 \ which case DLY > 0), or we are in witchspace (in
@@ -101,10 +133,19 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
+IF NOT(_ELITE_A_VERSION)
+
  LDY #10                \ Fetch byte #10 of the ship's blueprint, which is the
  LDA (XX0),Y            \ low byte of the bounty awarded when this ship is
  BEQ KS1S               \ killed (in Cr * 10), and if it's zero jump to KS1S as
                         \ there is no on-screen bounty to display
+
+ELIF _ELITE_A_VERSION
+
+ LDY #10                \ AJD
+ LDA (XX0),Y
+
+ENDIF
 
  TAX                    \ Put the low byte of the bounty into X
 
@@ -129,9 +170,37 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
 
 ENDIF
 
+IF _ELITE_A_VERSION
+
+.n_hit
+
+ \ hit opponent
+ STA &D1                \ AJD
+ SEC
+ LDY #&0E	\ opponent shield
+ LDA (&1E),Y
+ AND #&07
+ SBC &D1
+ BCS n_kill
+ \	BCC n_defense
+ \	LDA #&FF
+ \n_defense
+ CLC
+ ADC &69
+ STA &69
+ BCS n_kill
+ JSR TA87+3
+
+.n_kill
+
+ \ C clear if dead
+ RTS
+
+ENDIF
+
 .MAC1
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 
  LDA TYPE               \ If the ship we are processing is a planet or sun,
  BMI MA27               \ jump to MA27 to skip the following two instructions

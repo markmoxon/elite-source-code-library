@@ -10,7 +10,7 @@
 \
 \ This section works out what kind of condition the ship is in. Specifically:
 \
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Comment
+IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Comment
 \   * If this is an Anaconda, consider spawning (22% chance) a Worm
 \
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -29,7 +29,7 @@ ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 \   * If the ship is into the last 1/8th of its energy, then rarely (10% chance)
 \     the ship launches an escape pod and is left drifting in space
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
 \   * If the ship is into the last 1/8th of its energy, and this ship type has
 \     an escape pod fitted, then rarely (10% chance) the ship launches an escape
 \     pod and is left drifting in space
@@ -44,7 +44,7 @@ ENDIF
  JMP TA20               \ This is a missile, so jump down to TA20 to get
                         \ straight into some aggressive manoeuvring
 
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Enhanced: In the enhanced versions, Anacondas can spawn other ships
+IF _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Enhanced: In the enhanced versions, Anacondas can spawn other ships
 
  CMP #ANA               \ If this is not an Anaconda, jump down to TN7 to skip
  BNE TN7                \ the following
@@ -56,7 +56,7 @@ IF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Enhan
 
 ENDIF
 
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Advanced: In the disc version, Anacondas can only spawn Worms, while in the advanced versions they can also spawn Sidewinders
+IF _DISC_FLIGHT \ Advanced: In the disc version, Anacondas can only spawn Worms, while in the advanced versions they can also spawn Sidewinders
 
  LDX #WRM               \ Set X to the ship type for a Worm
 
@@ -78,6 +78,14 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  JMP TN6                \ Jump to TN6 to spawn the Worm or Sidewinder and return
                         \ from the subroutine using a tail call
+
+.TN7
+
+ELIF _ELITE_A_VERSION
+
+ LDX #15                \ AJD
+
+ JMP TN6                \ Jump to TN6 to AJD
 
 .TN7
 
@@ -121,7 +129,7 @@ IF _CASSETTE_VERSION \ Standard: The cassette version has Thargoids but no NEWB 
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhanced: In the enhanced versions, the NEWB flags determine whether or not a ship has an escape pod it can launch when things go south, while in the cassette and Electron versions, every ship has an escape pod fitted
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Enhanced: In the enhanced versions, the NEWB flags determine whether or not a ship has an escape pod it can launch when things go south, while in the cassette and Electron versions, every ship has an escape pod fitted
 
  LDX TYPE               \ Fetch the ship blueprint's default NEWB flags from the
  LDA E%-1,X             \ table at E%, and if bit 7 is clear (i.e. this ship

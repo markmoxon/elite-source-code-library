@@ -44,7 +44,7 @@ ELIF _ELECTRON_VERSION
  BEQ slvy2              \ This is an escape pod, so jump to slvy2 with A set to
                         \ 3, so we scoop up the escape pod as slaves
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  CPX #OIL               \ If this is a cargo canister, jump to oily to randomly
  BEQ oily               \ decide the canister's contents
@@ -75,14 +75,23 @@ ENDIF
 
 .oily
 
+IF NOT(_ELITE_A_VERSION)
+
  JSR DORND              \ Set A and X to random numbers and reduce A to a
  AND #7                 \ random number in the range 0-7
+
+ELIF _ELITE_A_VERSION
+
+ JSR DORND              \ Set A and X to random numbers and reduce A to a
+ AND #15                \ random number in the range 0-15 AJD
+
+ENDIF
 
 .slvy2
 
                         \ By the time we get here, we are scooping, and A
                         \ contains the type of item we are scooping (a random
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
                         \ number 0-7 if we are scooping a cargo canister, 3 if
                         \ we are scooping an escape pod, or 16 if we are
                         \ scooping a Thargon). These numbers correspond to the
@@ -97,6 +106,8 @@ ELIF _ELECTRON_VERSION
                         \ for a list), so a cargo canister can contain
                         \ anything from food to computers, while escape pods
                         \ contain slaves
+ELIF _ELITE_A_VERSION
+                        \ AJD
 ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
@@ -106,14 +117,21 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
  JSR tnpr               \ the hold for the scooped item (A is preserved by this
                         \ call, and the C flag contains the result)
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  JSR tnpr1              \ Call tnpr1 with the scooped cargo type stored in A
                         \ to work out whether we have room in the hold for one
                         \ tonne of this cargo (A is set to 1 by this call, and
                         \ the C flag contains the result)
 
+ELIF _ELITE_A_VERSION
+
+ TAX                    \ AJD
+ JSR tnpr_FLIGHT
+
 ENDIF
+
+IF NOT(_ELITE_A_VERSION)
 
  LDY #78                \ This instruction has no effect, so presumably it used
                         \ to do something, but didn't get removed
@@ -134,17 +152,31 @@ ENDIF
  ADC #208               \ which will be in the range 48 ("FOOD") to 64 ("ALIEN
  JSR MESS               \ ITEMS"), so this prints the scooped item's name
 
+ELIF _ELITE_A_VERSION
+
+ BCS MA58               \ AJD
+ INC QQ20,X
+ TXA
+ ADC #&D0
+ JSR MESS
+
+ENDIF
+
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: In the enhanced version there is a difference between a ship that has been killed and a ship that has docked or been scooped, unlike in the cassette version where they are the same thing
 
  JMP MA60               \ We are done scooping, so jump down to MA60 to set the
                         \ kill flag on the canister, as it no longer exists in
                         \ the local bubble
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  ASL NEWB               \ The item has now been scooped, so set bit 7 of its
  SEC                    \ NEWB flags to indicate this
  ROR NEWB
+
+ELIF _ELITE_A_VERSION
+
+ JSR top_6a             \ AJD
 
 ENDIF
 

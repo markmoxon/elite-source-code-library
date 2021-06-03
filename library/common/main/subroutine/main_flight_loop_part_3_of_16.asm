@@ -22,7 +22,7 @@
 \
 \   * Space and "?" to speed up and slow down
 \   * "U", "T" and "M" to disarm, arm and fire missiles
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \   * TAB to fire an energy bomb
 ELIF _ELECTRON_VERSION
 \   * "-" to fire an energy bomb
@@ -35,7 +35,7 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Label
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Label
 
 .BS2
 
@@ -44,6 +44,8 @@ ENDIF
  LDA KY2                \ If Space is being pressed, keep going, otherwise jump
  BEQ MA17               \ down to MA17 to skip the following
 
+IF NOT(_ELITE_A_VERSION)
+
  LDA DELTA              \ The "go faster" key is being pressed, so first we
  CMP #40                \ fetch the current speed from DELTA into A, and if
  BCS MA17               \ A >= 40, we are already going at full pelt, so jump
@@ -51,6 +53,14 @@ ENDIF
 
  INC DELTA              \ We can go a bit faster, so increment the speed in
                         \ location DELTA
+
+ELIF _ELITE_A_VERSION
+
+ LDA &7D                \ AJD
+ CMP new_speed
+ BCC speed_up
+
+ENDIF
 
 .MA17
 
@@ -62,6 +72,12 @@ ENDIF
 
  BNE MA4                \ If the speed is still greater than zero, jump to MA4
 
+IF _ELITE_A_VERSION
+
+.speed_up
+
+ENDIF
+
  INC DELTA              \ Otherwise we just braked a little too hard, so bump
                         \ the speed back up to the minimum value of 1
 
@@ -71,7 +87,7 @@ ENDIF
  AND NOMSL              \ in NOMSL is non-zero, keep going, otherwise jump down
  BEQ MA20               \ to MA20 to skip the following
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Screen
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Screen
 
  LDY #&EE               \ The "disarm missiles" key is being pressed, so call
  JSR ABORT              \ ABORT to disarm the missile and update the missile
@@ -91,19 +107,19 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Master: The Master version has a unique "low beep" sound that has more reverb than in the other versions
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Master: The Master version has a unique "low beep" sound that has more reverb than in the other versions
 
  LDA #40                \ Call the NOISE routine with A = 40 to make a low,
  JSR NOISE              \ long beep to indicate the missile is now disarmed
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _ELITE_A_VERSION
 
  JSR LOWBEEP            \ Call the LOWBEEP routine to make a low, long beep to
                         \ indicate the missile is now disarmed
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Label
 
 .MA31
 
@@ -133,7 +149,7 @@ ENDIF
                         \ value &FF, as we just loaded it from MSTG and checked
                         \ that it was negative)
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Screen
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Screen
 
  LDY #&E0               \ Change the leftmost missile indicator to yellow/white
  JSR MSBAR              \ on the missile bar (this call changes the leftmost
@@ -160,6 +176,18 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ right to left, so X is the number of the leftmost
                         \ indicator)
 
+ELIF _ELITE_A_FLIGHT
+
+ LDY #&E0               \ AJD
+ DEX
+ JSR MSBAR
+
+ELIF _ELITE_A_6502SP_PARA
+
+ LDY #&E0               \ AJD
+ DEX
+ JSR MSBAR2
+
 ENDIF
 
 .MA25
@@ -169,7 +197,7 @@ ENDIF
 
  LDA MSTG               \ If MSTG = &FF then there is no target lock, so jump to
  BMI MA64               \ MA64 to skip the following (also skipping the checks
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
                         \ for TAB, ESCAPE, "J" and "E")
 ELIF _ELECTRON_VERSION
                         \ for "-", ESCAPE, "J" and "E")
@@ -181,7 +209,7 @@ ENDIF
 
 .MA24
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 
  LDA KY12               \ If TAB is being pressed, keep going, otherwise jump
  BEQ MA76               \ jump down to MA76 to skip the following
@@ -190,6 +218,12 @@ ELIF _ELECTRON_VERSION
 
  LDA KY12               \ If "-" is being pressed, keep going, otherwise jump
  BEQ MA76               \ jump down to MA76 to skip the following
+
+ELIF _ELITE_A_VERSION
+
+ LDA &0308              \ AJD
+ AND BOMB
+ BEQ MA76
 
 ENDIF
 
@@ -201,6 +235,8 @@ IF _MASTER_VERSION \ Platform
 
 ENDIF
 
+IF NOT(_ELITE_A_VERSION)
+
  ASL BOMB               \ The "energy bomb" key is being pressed, so double
                         \ the value in BOMB. If we have an energy bomb fitted,
                         \ BOMB will contain &7F (%01111111) before this shift
@@ -209,6 +245,18 @@ ENDIF
                         \ contain 0. The bomb explosion is dealt with in the
                         \ MAL1 routine below - this just registers the fact that
                         \ we've set the bomb ticking
+
+ELIF _ELITE_A_VERSION
+
+ INC BOMB               \ AJD
+ INC new_hold
+ JSR DORND
+ STA QQ9
+ STX QQ10
+ JSR TT111
+ JSR hyper_snap
+
+ENDIF
 
 IF _MASTER_VERSION \ Master: The Master's energy bomb lightning bolt effect contains nine random zig-zag lines that are set up in the BOMBINIT routine
 
@@ -223,13 +271,28 @@ ENDIF
 
 .MA76
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhanced: In the enhanced versions, the main loop scans for "P" being pressed, which disables the docking computer
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: In the enhanced versions, the main loop scans for "P" being pressed, which disables the docking computer
 
  LDA KY20               \ If "P" is being pressed, keep going, otherwise skip
  BEQ MA78               \ the next two instructions
 
  LDA #0                 \ The "cancel docking computer" key is bring pressed,
  STA auto               \ so turn it off by setting auto to 0
+
+.MA78
+
+ELIF _ELITE_A_VERSION
+
+ LDA &030F              \ AJD
+ AND DKCMP
+ BNE dock_toggle
+ LDA &0310
+ BEQ MA78
+ LDA #&00
+
+.dock_toggle
+
+ STA &033F
 
 .MA78
 
@@ -241,7 +304,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  AND ESCP               \ fitted, keep going, otherwise skip the next
  BEQ P%+5               \ instruction
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  LDA KY13               \ If ESCAPE is being pressed and we have an escape pod
  AND ESCP               \ fitted, keep going, otherwise jump to noescp to skip
@@ -261,7 +324,7 @@ ENDIF
                         \ launch it, and exit the main flight loop using a tail
                         \ call
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Label
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Label
 
 .noescp
 
@@ -334,7 +397,7 @@ ELIF _ELECTRON_VERSION
                         \ GOIN to dock (or "go in"), and exit the main flight
                         \ loop using a tail call
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  LDA KY19               \ If "C" is being pressed, and we have a docking
  AND DKCMP              \ computer fitted, keep going, otherwise jump down to
@@ -358,9 +421,18 @@ ENDIF
  ROR DELT4
  STA DELT4+1
 
+IF NOT(_ELITE_A_6502SP_PARA)
+
  LDA LASCT              \ If LASCT is zero, keep going, otherwise the laser is
  BNE MA3                \ a pulse laser that is between pulses, so jump down to
                         \ MA3 to skip the following
+
+ELIF _ELITE_A_6502SP_PARA
+
+ JSR read_0346          \ AJD
+ BNE MA3
+
+ENDIF
 
  LDA KY7                \ If "A" is being pressed, keep going, otherwise jump
  BEQ MA3                \ down to MA3 to skip the following
@@ -382,11 +454,21 @@ ENDIF
 
  PHA                    \ Store the current view's laser power on the stack
 
+IF NOT(_ELITE_A_VERSION)
+
  AND #%01111111         \ Set LAS and LAS2 to bits 0-6 of the laser power
  STA LAS
  STA LAS2
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Master: The Master version has a unique sound for when our laser is firing
+ELIF _ELITE_A_VERSION
+
+ AND #%01111111         \ Set LAS and LAS2 to bits 0-6 of the laser power
+ STA LAS2
+ STA LAS
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: The Master version has a unique sound for when our laser is firing
 
  LDA #0                 \ Call the NOISE routine with A = 0 to make the sound
  JSR NOISE              \ of our laser firing
@@ -414,8 +496,21 @@ ENDIF
 
 .ma1
 
+IF NOT(_ELITE_A_VERSION)
+
+
  AND #%11111010         \ LASCT will be set to 0 for beam lasers, and to the
  STA LASCT              \ laser power AND %11111010 for pulse lasers, which
                         \ comes to 10 (as pulse lasers have a power of 15). See
                         \ MA23 below for more on laser pulsing and LASCT
+
+ELIF _ELITE_A_FLIGHT
+
+ STA &0346              \ AJD
+
+ELIF _ELITE_A_6502SP_PARA
+
+ JSR write_0346         \ AJD
+
+ENDIF
 

@@ -20,11 +20,15 @@
 
 .MA18
 
+IF NOT(_ELITE_A_VERSION)
+
  LDA BOMB               \ If we set off our energy bomb (see MA24 above), then
  BPL MA77               \ BOMB is now negative, so this skips to MA21 if our
                         \ energy bomb is not going off
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Master: The Master version's energy bomb lightning bolt flashes on the screen, just like real lightning
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Master: The Master version's energy bomb lightning bolt flashes on the screen, just like real lightning
 
  ASL BOMB               \ We set off our energy bomb, so rotate BOMB to the
                         \ left by one place. BOMB was rotated left once already
@@ -58,7 +62,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Platform
 
  JSR WSCAN              \ Call WSCAN to wait for the vertical sync, so the whole
                         \ screen gets drawn and the following palette change
@@ -66,7 +70,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Pla
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Tube
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Tube
 
  LDA #%00110000         \ Set the palette byte at SHEILA &21 to map logical
  STA VIA+&21            \ colour 0 to physical colour 7 (white), but with only
@@ -113,7 +117,7 @@ ENDIF
  LDA ENGY               \ level goes up by 2 if we have an energy unit fitted,
  ADC ENERGY             \ otherwise it goes up by 1
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
  BCS P%+5               \ If the value of A did not overflow (the maximum
  STA ENERGY             \ energy level is &FF), then store A in ENERGY

@@ -99,5 +99,12 @@ ELIF _6502SP_VERSION
  LDA #6                 \ Move the text cursor to column 6 and return from the
  JMP DOXC               \ subroutine using a tail call
 
+ELIF _ELITE_A_FLIGHT
+
+ LDX #8                 \ Move the text cursor to column 8
+ STX XC
+
+ RTS                    \ Return from the subroutine
+
 ENDIF
 

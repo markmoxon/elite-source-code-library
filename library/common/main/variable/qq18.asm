@@ -6,6 +6,14 @@
 \    Summary: The recursive token table for tokens 0-148
 \  Deep dive: Printing text tokens
 \
+IF _ELITE_A_VERSION
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   new_name            AJD
+\
+ENDIF
 \ ******************************************************************************
 
 .QQ18
@@ -281,6 +289,8 @@ ENDIF
  TWOK 'A', 'L'
  EQUB 0
 
+IF NOT(_ELITE_A_VERSION)
+
  CHAR 'H'               \ Token 29:     "HYPERSPACE "
  CHAR 'Y'               \
  CHAR 'P'               \ Encoded as:   "HYP<144>SPA<133> "
@@ -291,6 +301,18 @@ ENDIF
  TWOK 'C', 'E'
  CHAR ' '
  EQUB 0
+
+ELIF _ELITE_A_VERSION
+
+ CHAR 'H'               \ Token 29:     "HYPERSPACE "
+ CHAR 'Y'               \
+ CHAR 'P'               \ Encoded as:   "HYP<144>[128] "
+ TWOK 'E', 'R'
+ RTOK 128
+ CHAR ' '
+ EQUB 0
+
+ENDIF
 
  CHAR 'S'               \ Token 30:     "SHORT RANGE CHART"
  CHAR 'H'               \
@@ -588,12 +610,21 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  CHAR 'S'
  EQUB 0
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
  CHAR 'A'               \ Token 57:     "ALLOYS"
  CHAR 'L'               \
  CHAR 'L'               \ Encoded as:   "ALLOYS"
  CHAR 'O'
+ CHAR 'Y'
+ CHAR 'S'
+ EQUB 0
+
+ELIF _ELITE_A_VERSION
+
+ CHAR 'A'               \ Token 57:     "ALLOYS"
+ RTOK 129               \
+ CHAR 'O'               \ Encoded as:   "A[129]OYS"
  CHAR 'Y'
  CHAR 'S'
  EQUB 0
@@ -1083,6 +1114,8 @@ ENDIF
  TWOK 'L', 'E'
  EQUB 0
 
+IF NOT(_ELITE_A_VERSION)
+
  RTOK 67                \ Token 107:    "LARGE CARGO{sentence case} BAY"
  RTOK 46                \
  CHAR ' '               \ Encoded as:   "[67][46] BAY"
@@ -1090,6 +1123,19 @@ ENDIF
  CHAR 'A'
  CHAR 'Y'
  EQUB 0
+
+ELIF _ELITE_A_VERSION
+
+ CHAR 'I'               \ Token 107:    "I.F.F.SYSTEM"
+ CHAR '.'               \
+ CHAR 'F'               \ Encoded as:   "I.F.F.[5]"
+ CHAR '.'
+ CHAR 'F'
+ CHAR '.'
+ RTOK 5
+ EQUB 0
+
+ENDIF
 
  CHAR 'E'               \ Token 108:    "E.C.M.SYSTEM"
  CHAR '.'               \
@@ -1151,12 +1197,22 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
+IF NOT(_ELITE_A_VERSION)
+
  RTOK 121               \ Token 113:    "ENERGY BOMB"
  CHAR 'B'               \
  CHAR 'O'               \ Encoded as:   "[121]BOMB"
  CHAR 'M'
  CHAR 'B'
  EQUB 0
+
+ELIF _ELITE_A_VERSION
+
+ RTOK 29                \ Token 113:    "HYPERSPACE UNIT"
+ RTOK 14                \
+ EQUB 0                 \ Encoded as:   "[29][14]"
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ 6502SP: If you have bought an energy unit, then most versions will show it on the Inventory screen as "Energy Unit", but in the source disc release of the 6502SP version, it is shown as "Extra Energy Unit" (though it's still "Energy Unit" in the official SNG45 release of the game)
 
@@ -1221,7 +1277,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Group A: There are two new
  CHAR 'L'               \
  EQUB 0                 \ Encoded as:   "LL"
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
  CHAR 'M'               \ Token 117:    "MILITARY  LASER"
  CHAR 'I'               \
@@ -1239,6 +1295,25 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
  TWOK 'I', 'N'          \ Encoded as:   "M<140><140>G [27]"
  CHAR 'G'
  CHAR ' '
+ RTOK 27
+ EQUB 0
+
+ELIF _ELITE_A_VERSION
+
+ CHAR 'M'               \ Token 117:    "MILITARY LASER"
+ CHAR 'I'               \
+ CHAR 'L'               \ Encoded as:   "MILIT<138>Y[27]"
+ CHAR 'I'
+ CHAR 'T'
+ TWOK 'A', 'R'
+ CHAR 'Y'
+ RTOK 27
+ EQUB 0
+
+ CHAR 'M'               \ Token 118:    "MINING LASER"
+ TWOK 'I', 'N'          \
+ TWOK 'I', 'N'          \ Encoded as:   "M<140><140>G[27]"
+ CHAR 'G'
  RTOK 27
  EQUB 0
 
@@ -1330,12 +1405,19 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: There's a new token in the
  CHAR ' '
  EQUB 0
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
  RTOK 115               \ Token 123:    "DOCKING COMPUTERS ON"
  CHAR ' '               \
  CHAR 'O'               \ Encoded as:   "[115] ON"
  CHAR 'N'
+ EQUB 0
+
+ELIF _ELITE_A_VERSION
+
+ RTOK 115               \ Token 123:    "DOCKING COMPUTERS ON"
+ CHAR ' '               \
+ TWOK 'O', 'N'          \ Encoded as:   "[115] <159>"
  EQUB 0
 
 ENDIF
@@ -1467,11 +1549,19 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: See group A
  CONT 13
  EQUB 0
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
  EQUB 0                 \ Token 128:    ""
                         \
                         \ Encoded as:   ""
+
+ELIF _ELITE_A_VERSION
+
+ CHAR 'S'               \ Token 128:    "SPACE"
+ CHAR 'P'               \
+ CHAR 'A'               \ Encoded as:   "SPA<133>"
+ TWOK 'C', 'E'
+ EQUB 0
 
 ENDIF
 
@@ -1514,7 +1604,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
  CONT 6
  EQUB 0
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
  CONT 12                \ Token 132:    "{cr}
  CONT 8                 \                {all caps}EQUIPMENT: {sentence case}"
@@ -1524,6 +1614,26 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
  CHAR 'T'
  CHAR ':'
  CONT 6
+ EQUB 0
+
+ELIF _ELITE_A_VERSION
+
+ CONT 12                \ Token 132:    "{cr}
+ RTOK 25                \                SHIP:          "
+ CHAR ':'               \
+ CHAR ' '               \ Encoded as:   "{12}[25]:          "
+
+.new_name
+
+ CHAR ' '
+ CHAR ' '
+ CHAR ' '
+ CHAR ' '
+ CHAR ' '
+ CHAR ' '
+ CHAR ' '
+ CHAR ' '
+ CHAR ' '
  EQUB 0
 
 ENDIF

@@ -42,7 +42,7 @@ ENDIF
 IF NOT(_ELITE_A_ENCYCLOPEDIA)
  EQUW PAUSE             \ Token 22: Display ship and wait for key press
 ELIF _ELITE_A_ENCYCLOPEDIA
- EQUW column_16         \ Token 23: Tab to column 16
+ EQUW column_16         \ Token 22: Tab to column 16
 ENDIF
  EQUW MT23              \ Token 23: Move to row 10, white text, set lower case
 IF NOT(_ELITE_A_ENCYCLOPEDIA)

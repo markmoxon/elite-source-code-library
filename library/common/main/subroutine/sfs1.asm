@@ -34,7 +34,7 @@
 \
 \   INWK                The whole INWK workspace is preserved
 \
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Comment
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
 \   X                   X is preserved
 \
 ENDIF
@@ -49,7 +49,7 @@ ENDIF
                         \ so we can restore them later when returning from the
                         \ subroutine
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Platform
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Platform
 
  TXA                    \ Store X, the ship type to spawn, on the stack so we
  PHA                    \ can preserve it through the routine
@@ -91,7 +91,7 @@ ENDIF
                         \ new child ship (in this way, the child inherits things
                         \ like location from the parent)
 
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Disc: In the disc version only, child ships that are spawned from a parent inherit the hostile, pirate and docking NEWB flags, meaning pirates spawn pirates, angry ships spawn angry ships, and ships that are docking spawn ships that are also docking
+IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Disc: In the disc version only, child ships that are spawned from a parent inherit the hostile, pirate and docking NEWB flags, meaning pirates spawn pirates, angry ships spawn angry ships, and ships that are docking spawn ships that are also docking
 
  LDA NEWB               \ Clear bits 0-1 and 5-7 of the ship's NEWB flags,
  AND #%00011100         \ leaving only the hostile, pirate and docking flags
@@ -154,7 +154,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Group A: On their demise, 
  BNE NOIL               \ jump to NOIL to skip us setting up the pitch and roll
                         \ for the canister
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  CMP #SPL+1             \ If the type of the child we are spawning is less than
  BCS NOIL               \ #PLT or greater than #SPL - i.e. not an alloy plate,
@@ -185,7 +185,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: See group A
 
  LDA #OIL               \ Set A to the ship type of a cargo canister
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  PLA                    \ Retrieve the child's ship type from the stack
 
@@ -223,7 +223,7 @@ ENDIF
  PLA
  STA XX0
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Platform
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Platform
 
  PLA                    \ Retrieve the ship type to spawn from the stack into X
  TAX                    \ so it is preserved through calls to this routine

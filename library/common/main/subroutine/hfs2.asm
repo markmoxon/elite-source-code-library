@@ -1,8 +1,8 @@
 \ ******************************************************************************
 \
-IF NOT(_ELITE_A_VERSION)
+IF NOT(_ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA)
 \       Name: HFS2
-ELIF _ELITE_A_VERSION
+ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 \       Name: HFS1
 ENDIF
 \       Type: Subroutine
@@ -48,7 +48,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION OR _DISC_VERSION \ Comment
 ENDIF
 \ ******************************************************************************
 
-IF NOT(_ELITE_A_VERSION)
+IF NOT(_ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA)
 
 .HFS2
 
@@ -56,7 +56,7 @@ IF NOT(_ELITE_A_VERSION)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Platform
 
  JSR TTX66              \ Clear the screen and draw a white border
 

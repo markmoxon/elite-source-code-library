@@ -12,14 +12,35 @@
 \
 \   K(3 2 1 0) = 0
 \
+IF _ELITE_A_VERSION
+\ Other entry points:
+\
+\   n_store             Sets K(3 2 1) = (A A A) and clears the C flag
+\
+ENDIF
 \ ******************************************************************************
 
 .MU5
+
+IF NOT(_ELITE_A_VERSION)
 
  STA K                  \ Set K(3 2 1 0) to (A A A A)
  STA K+1
  STA K+2
  STA K+3
+
+ELIF _ELITE_A_VERSION
+
+ STA K                  \ Set K(3 2 1 0) to (A A A A), starting with the lowest
+                        \ byte
+
+.n_store
+
+ STA K+1                \ And then the high bytes
+ STA K+2
+ STA K+3
+
+ENDIF
 
  CLC                    \ Clear the C flag
 

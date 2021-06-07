@@ -6,6 +6,14 @@
 \    Summary: Apply docking manoeuvres to the ship in INWK
 \  Deep dive: The docking computer
 \
+IF _ELITE_A_VERSION
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   top_6a              AJD
+\
+ENDIF
 \ ******************************************************************************
 
 .DOCKIT
@@ -117,7 +125,7 @@
                         \ degrees, so we're heading in pretty much the correct
                         \ direction for a good approach to the docking slot
 
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Minor
+IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Minor
 
  JSR TAS3-2             \ Call TAS3-2 to calculate:
                         \
@@ -325,6 +333,12 @@ ENDIF
                         \ to affect whether an NPC ship can dock, as that's the
                         \ code that gets skipped if K3+10 is non-zero, but as
                         \ to what this means... that's not yet clear
+
+IF _ELITE_A_VERSION
+
+.top_6a
+
+ENDIF
 
  ASL NEWB               \ Set bit 7 of the ship's NEWB flags to indicate that
  SEC                    \ the ship has now docked, which only has meaning if

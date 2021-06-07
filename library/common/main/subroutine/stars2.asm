@@ -56,7 +56,7 @@
  JSR ST2                \ Call ST2 to flip the signs of the following if this is
                         \ the right view: ALPHA, ALP2, ALP2+1, BET2 and BET2+1
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron version has no witchspace, so the number of stardust particles shown is always the same, so the value is hard-coded rather than needing to use a location (which the other versions need so they can vary the number of particles when in witchspace)
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron version has no witchspace, so the number of stardust particles shown is always the same, so the value is hard-coded rather than needing to use a location (which the other versions need so they can vary the number of particles when in witchspace)
 
  LDY NOSTM              \ Set Y to the current number of stardust particles, so
                         \ we can use it as a counter through all the stardust
@@ -88,7 +88,7 @@ ENDIF
                         \ This represents the distance we should move this
                         \ particle along the x-axis, let's call it delta_x
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Master: Group A: The side-view stardust routine in the Master version was recoded to cope with arbitrary screen widths, code that was presumably inherited from the non-BBC versions of the game
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: Group A: The side-view stardust routine in the Master version was recoded to cope with arbitrary screen widths, code that was presumably inherited from the non-BBC versions of the game
 
  LDA P                  \ Set S = P but with the sign from RAT2, so we now have
  EOR RAT2               \ the distance delta_x with the correct sign in (S R):
@@ -253,7 +253,7 @@ ENDIF
  STA SX,Y               \ the new x-coordinate is in (x_hi x_lo) and the high
  STA X1                 \ byte is in X1
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Master: See group A
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: See group A
 
  AND #%01111111         \ If |x_hi| >= 116 then jump to KILL2 to recycle this
  CMP #116               \ particle, as it's gone off the side of the screen,

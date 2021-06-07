@@ -50,6 +50,12 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
+IF _ELITE_A_6502SP_PARA
+
+ JSR update_pod
+
+ENDIF
+
  LDA #4                 \ Set the step size for the hyperspace rings to 4, so
                         \ there are more sections in the rings and they are
                         \ quite round (compared to the step size of 8 used in
@@ -66,7 +72,7 @@ ENDIF
 
  JSR HFS2               \ Call HFS2 to draw the hyperspace tunnel rings
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT \ Tube
 
  DEC HFX                \ Set HFX back to 0, so we switch back to the normal
                         \ split-screen mode
@@ -93,6 +99,13 @@ ELIF _MASTER_VERSION
                         \ split-screen mode
 
  RTS                    \ Return from the subroutine
+
+ELIF _ELITE_A_6502SP_PARA
+
+ DEC HFX                \ Set HFX back to 0, so we switch back to the normal
+                        \ split-screen mode
+
+ JMP update_pod         \ AJD
 
 ENDIF
 

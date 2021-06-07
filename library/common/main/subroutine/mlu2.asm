@@ -19,8 +19,21 @@
  AND #%01111111         \ Clear the sign bit in P, so P = |A|
  STA P
 
+IF NOT(_ELITE_A_6502SP_PARA)
+
                         \ Fall through into MULTU to calculate:
                         \
                         \   (A P) = P * Q
                         \         = |A| * Q
+
+ELIF _ELITE_A_6502SP_PARA
+
+ JMP MULTU              \ Call MULTU to calculate:
+                        \
+                        \   (A P) = P * Q
+                        \         = |A| * Q
+                        \
+                        \ and return from the subroutine using a tail call
+
+ENDIF
 

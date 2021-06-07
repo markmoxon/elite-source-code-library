@@ -30,7 +30,7 @@
 
  JSR ANGRY              \ Call ANGRY to make the target ship hostile
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
  LDY #0                 \ We have just launched a missile, so we need to remove
  JSR ABORT              \ missile lock and hide the leftmost indicator on the
@@ -46,7 +46,15 @@ ENDIF
 
  DEC NOMSL              \ Reduce the number of missiles we have by 1
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Platform
+IF _ELITE_A_VERSION
+
+ JSR msblob             \ AJD redraw missiles
+ STY MSAR
+ STX &45
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Platform
 
  LDA #48                \ Call the NOISE routine with A = 48 to make the sound
  JMP NOISE              \ of a missile launch, returning from the subroutine
@@ -60,6 +68,10 @@ ELIF _MASTER_VERSION
                         \ Fall through into ANGRY to make the missile target
                         \ angry, though as we already did this above, I'm not
                         \ entirely sure why we do this again
+
+ELIF _ELITE_A_VERSION
+
+ JMP n_sound30          \ AJD
 
 ENDIF
 

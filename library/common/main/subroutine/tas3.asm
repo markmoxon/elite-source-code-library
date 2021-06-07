@@ -28,7 +28,7 @@
 \
 \   (A X)               The result of the dot product
 \
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Comment
+IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Comment
 \ Other entry points:
 \
 \   TAS3-2              Calculate nosev . XX15
@@ -36,7 +36,7 @@ IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Comment
 ENDIF
 \ ******************************************************************************
 
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Minor
+IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Minor
 
  LDY #10                \ Set Y = 10 so we calculate nosev . XX15
 
@@ -68,9 +68,23 @@ ENDIF
 
  LDA XX15+2             \ Set A = XX15+2
 
+IF NOT(_ELITE_A_6502SP_PARA)
+
                         \ Fall through into MAD to set:
                         \
                         \   (A X) = Q * A + (S R)
                         \           = vect_z * XX15+2 + vect_y * XX15+1 +
                         \             vect_x * XX15
+
+ELIF _ELITE_A_6502SP_PARA
+
+ JMP MAD                \ Call MAD to calculate:
+                        \
+                        \   (A X) = Q * A + (S R)
+                        \           = vect_z * XX15+2 + vect_y * XX15+1 +
+                        \             vect_x * XX15
+                        \
+                        \ and return from the subroutine using a tail call
+
+ENDIF
 

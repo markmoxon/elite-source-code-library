@@ -550,120 +550,17 @@ INCLUDE "library/common/main/subroutine/tt43.asm"
 INCLUDE "library/common/main/subroutine/ex.asm"
 INCLUDE "library/common/main/subroutine/doexp.asm"
 INCLUDE "library/common/main/subroutine/sos1.asm"
-
-.SOLAR
-
- LDA QQ8
- LDY #3
-
-.legal_div
-
- LSR QQ8+1
- ROR A
- DEY
- BNE legal_div
- SEC
- SBC FIST
- BCC legal_over
- LDA #&FF
-
-.legal_over
-
- EOR #&FF
- STA FIST
- \	LDA FIST
- \	BEQ legal_over
- \legal_next
- \	DEC FIST
- \	LSR a
- \	BNE legal_next
- \legal_over
- \\	LSR FIST
- JSR ZINF
- LDA &6D
- AND #&03
- ADC #&03
- STA &4E
- ROR A
- STA &48
- STA &4B
- JSR SOS1
- LDA &6F
- AND #&07
- ORA #&81
- STA &4E
- LDA &71
- AND #&03
- STA &48
- STA &47
- LDA #&00
- STA &63
- STA &64
- LDA #&81
- JSR NWSHP
-
-.NWSTARS
-
- LDA &87
- BNE WPSHPS
-
-.l_35b5
-
- LDY &03C3
-
-.l_35b8
-
- JSR DORND
- ORA #&08
- STA &0FA8,Y
- STA &88
- JSR DORND
- STA &0F5C,Y
- STA &34
- JSR DORND
- STA &0F82,Y
- STA &35
- JSR PIXEL2
- DEY
- BNE l_35b8
-
+INCLUDE "library/common/main/subroutine/solar.asm"
+INCLUDE "library/common/main/subroutine/nwstars.asm"
+INCLUDE "library/common/main/subroutine/nwq.asm"
 INCLUDE "library/common/main/subroutine/wpshps.asm"
 INCLUDE "library/common/main/subroutine/flflls.asm"
 INCLUDE "library/common/main/subroutine/det1-dodials.asm"
 INCLUDE "library/common/main/subroutine/shd.asm"
 INCLUDE "library/common/main/subroutine/dengy.asm"
 INCLUDE "library/common/main/subroutine/sps2.asm"
-
-.COMPAS
-
- JSR DOT
- LDY #&25
- LDA &0320
- BNE l_station
- LDY &9F	\ finder
-
-.l_station
-
- JSR SPS1
- LDA &34
- JSR SPS2
- TXA
- ADC #&C3
- STA &03A8
- LDA &35
- JSR SPS2
- STX &D1
- LDA #&CC
- SBC &D1
- STA &03A9
- LDA #&F0
- LDX &36
- BPL l_3691
- LDA #&FF
-
-.l_3691
-
- STA &03C5
+INCLUDE "library/common/main/subroutine/compas.asm"
+INCLUDE "library/common/main/subroutine/sp2.asm"
 
 .DOT
 
@@ -1862,7 +1759,7 @@ INCLUDE "library/common/main/subroutine/tt102.asm"
  JSR DET1
  JSR TT66
  JSR BOX
- JSR l_35b5
+ JSR nWq
  LDA #&0C
  STA YC
  STA XC

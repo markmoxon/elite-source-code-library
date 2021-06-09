@@ -10,6 +10,12 @@
 \ An enemy has fired a missile, so add the missile to our universe if there is
 \ room, and if there is, make the appropriate warnings and noises.
 \
+IF _ELITE_A_VERSION \ Comment
+\ Other entry points:
+\
+\   n_sound30           Make the sound of a missile being launched
+\
+ENDIF
 \ ******************************************************************************
 
 .SFRMIS
@@ -52,6 +58,12 @@ ELIF _COMPACT
 
 ENDIF
 
+ELIF _ELITE_A_6502SP_PARA
+
+ BCC d_4418             \ The C flag will be set if the call to SFS1-2 was a
+                        \ success, so if it's clear, jump down to d_4418 to
+                        \ return from the subroutine
+
 ENDIF
 
 IF _6502SP_VERSION \ 6502SP: If speech is enabled on the Executive version, it will say "Incoming missile" every time the "INCOMING MISSILE,SIR" message flashes on-screen
@@ -69,6 +81,12 @@ ENDIF
  LDA #120               \ Print recursive token 120 ("INCOMING MISSILE") as an
  JSR MESS               \ in-flight message
 
+IF _ELITE_A_VERSION
+
+.n_sound30
+
+ENDIF
+
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Master: The Master version has a unique missile launch sound
 
  LDA #48                \ Call the NOISE routine with A = 48 to make the sound
@@ -81,6 +99,16 @@ ELIF _MASTER_VERSION
  LDY #8                 \ Call the NOISE routine with Y = 8 to make the sound
  JMP NOISE              \ of the missile being launched and return from the
                         \ subroutine using a tail call
+
+ELIF _ELITE_A_6502SP_PARA
+
+ LDA #48                \ Call the NOISE routine with A = 48 to make the sound
+ JMP NOISE              \ of the missile being launched and return from the
+                        \ subroutine using a tail call
+
+.d_4418
+
+ RTS
 
 ENDIF
 

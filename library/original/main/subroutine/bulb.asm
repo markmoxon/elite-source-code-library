@@ -33,7 +33,7 @@ ENDIF
 
  STA SC                 \ Store the low byte of the screen address in SC
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
  STX P+1                \ Set P(2 1) = (Y X)
  STY P+2
@@ -51,6 +51,15 @@ ELIF _ELECTRON_VERSION
  TYA                    \ Set A to Y, the high byte of the screen address we
                         \ want to write to, so now (A SC) points to the specific
                         \ bulb's screen address
+
+ELIF _ELITE_A_VERSION
+
+ LDA #&7D               \ Set A to the high byte of the screen address, which is
+                        \ &7D as the bulbs are both in the character row from
+                        \ &7D00 to &7DFF
+
+ STX P+1                \ Set P(2 1) = (Y X)
+ STY P+2
 
 ENDIF
 

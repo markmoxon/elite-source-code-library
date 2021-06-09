@@ -62,7 +62,7 @@ IF _ELECTRON_VERSION \ Platform
 
 ENDIF
 
-IF NOT(_ELITE_A_VERSION)
+IF NOT(_ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA)
 
  LDX GNTMP              \ If the laser temperature in GNTMP is non-zero,
  BEQ EE20               \ decrement it (i.e. cool it down a bit)
@@ -92,7 +92,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF NOT(_ELITE_A_VERSION)
+IF NOT(_ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA)
 
  JSR DIALS              \ Call DIALS to update the dashboard
 
@@ -144,7 +144,7 @@ ELIF _ELECTRON_VERSION
  JSR DELAY-5            \ Delay for 1 delay loop, to slow the main loop down a
                         \ bit
 
-ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
+ELIF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
 
  LDA QQ11               \ If this is a space view, skip the following five
  BEQ P%+13              \ instructions (i.e. jump to JSR TT17 below)
@@ -163,6 +163,16 @@ ELIF _DISC_DOCKED
 
  LDY #2                 \ Wait for 2/50 of a second (0.04 seconds), to slow the
  JSR DELAY              \ main loop down a bit
+
+ELIF _ELITE_A_FLIGHT
+
+ LDA QQ11               \ If this is a space view, skip the following two
+ BEQ l_40f8             \ instructions (i.e. jump to JSR TT17 below)
+
+ LDY #2                 \ Wait for 2/50 of a second (0.04 seconds), to slow the
+ JSR DELAY              \ main loop down a bit
+
+.l_40f8
 
 ELIF _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA
 

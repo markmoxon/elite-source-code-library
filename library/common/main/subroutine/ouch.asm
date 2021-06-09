@@ -33,7 +33,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION 
  LDA DLY                \ If there is already an in-flight message on-screen,
  BNE out                \ return from the subroutine (as out contains an RTS)
 
-ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
+ELIF _DISC_FLIGHT
 
  BMI DK5                \ If A < 0 (50% chance), return from the subroutine
                         \ (as DK5 contains an RTS)
@@ -50,11 +50,27 @@ ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
  LDA DLY                \ If there is already an in-flight message on-screen,
  BNE DK5                \ return from the subroutine (as DK5 contains an RTS)
 
+ELIF _ELITE_A_VERSION
+
+ BMI DK5                \ If A < 0 (50% chance), return from the subroutine
+                        \ (as DK5 contains an RTS)
+
+ CPX #24                \ If X >= 24 (AJD chance), return from the subroutine
+ BCS DK5                \ (as DK5 contains an RTS)
+
+ LDA CRGO,X             \ If we do not have any of item CRGO+X, AJD
+ BEQ DK5
+
+ LDA DLY                \ If there is already an in-flight message on-screen,
+ BNE DK5                \ return from the subroutine (as DK5 contains an RTS)
+
 ENDIF
 
  LDY #3                 \ Set bit 1 of de, the equipment destruction flag, so
  STY de                 \ that when we call MESS below, " DESTROYED" is appended
                         \ to the in-flight message
+
+IF NOT(_ELITE_A_VERSION)
 
  STA QQ20,X             \ A is 0 (as we didn't branch with the BNE above), so
                         \ this sets QQ20+X to 0, which destroys any cargo or
@@ -63,7 +79,18 @@ ENDIF
  CPX #17                \ If X >= 17 then we just lost a piece of equipment, so
  BCS ou1                \ jump to ou1 to print the relevant message
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Minor
+ELIF _ELITE_A_VERSION
+
+ STA CRGO,X             \ AJD
+ DEX
+ BMI ou1
+
+ CPX #17                \ If X = 17 then AJD
+ BEQ ou1
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Minor
 
  TXA                    \ Print recursive token 48 + A as an in-flight token,
  ADC #208               \ which will be in the range 48 ("FOOD") to 64 ("ALIEN
@@ -81,9 +108,20 @@ ELIF _MASTER_VERSION
                         \ set bit 1 of the de flag above), and returns from the
                         \ subroutine using a tail call
 
+ELIF _ELITE_A_VERSION
+
+ TXA                    \ AJD
+ BCC cargo_mtok
+
+ CMP #&12
+ BNE equip_mtok
+ LDA #&6F-&6B-1
+
 ENDIF
 
 .ou1
+
+IF NOT(_ELITE_A_VERSION)
 
  BEQ ou2                \ If X = 17, jump to ou2 to print "E.C.M.SYSTEM
                         \ DESTROYED" and return from the subroutine using a tail
@@ -101,7 +139,18 @@ ENDIF
                         \     = 113 - 19 + X
                         \     = 113 to 115
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Minor
+ELIF _ELITE_A_VERSION
+
+ ADC #&6B-&5D           \ AJD
+
+.equip_mtok
+
+ ADC #&5D
+ INC new_hold
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Minor
 
  BNE MESS               \ Print recursive token A ("ENERGY BOMB", "ENERGY UNIT"
                         \ or "DOCKING COMPUTERS") as an in-flight message,

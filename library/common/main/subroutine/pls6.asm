@@ -15,7 +15,7 @@
 \
 \ Arguments:
 \
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \   INWK                The planet or sun's ship data block
 ELIF _ELECTRON_VERSION
 \   INWK                The planet's ship data block
@@ -25,10 +25,12 @@ ENDIF
 \
 \   C flag              Set if the result >= 1024, clear otherwise
 \
+IF NOT(_ELITE_A_6502SP_PARA)
 \ Other entry points:
 \
 \   PL44                Clear the C flag and return from the subroutine
 \
+ENDIF
 \ ******************************************************************************
 
 .PLS6
@@ -41,9 +43,19 @@ ENDIF
  AND #%01111111
  ORA K+2
 
+IF NOT(_ELITE_A_6502SP_PARA)
+
  BNE PL21               \ If A is non-zero then the two high bytes of K(3 2 1 0)
                         \ are non-zero, so jump to PL21 to set the C flag and
                         \ return from the subroutine
+
+ELIF _ELITE_A_6502SP_PARA
+
+ BNE PL21_FLIGHT        \ If A is non-zero then the two high bytes of K(3 2 1 0)
+                        \ are non-zero, so jump to PL21_FLIGHT to set the C flag
+                        \ and return from the subroutine
+
+ENDIF
 
                         \ We can now just consider K(1 0), as we know the top
                         \ two bytes of K(3 2 1 0) are both 0
@@ -78,7 +90,11 @@ ENDIF
  ADC #0                 \   X = ~X
  TAX
 
+IF NOT(_ELITE_A_6502SP_PARA)
+
 .PL44
+
+ENDIF
 
  CLC                    \ Clear the C flag to indicate success
 

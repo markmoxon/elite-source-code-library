@@ -3,7 +3,7 @@
 \       Name: Main game loop (Part 4 of 6)
 \       Type: Subroutine
 \   Category: Main loop
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Potentially spawn a lone bounty hunter, a Thargoid, or up to four
 \             pirates
 ELIF _ELECTRON_VERSION
@@ -24,7 +24,7 @@ ELIF _ELECTRON_VERSION
 \   * Potentially spawn (35% chance) either a lone bounty hunter (a Mamba,
 \     Python or Cobra Mk III), or a group of up to 4 pirates (Sidewinders and/or
 \     Mambas)
-ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
+ELIF _DISC_FLIGHT OR _ELITE_A_VERSION
 \   * Potentially spawn (47% chance) either a lone bounty hunter (a Cobra Mk
 \     III, Asp Mk II, Python or Fer-de-lance), a Thargoid, or a group of up to 4
 \     pirates (a mix of Sidewinders, Mambas, Kraits, Adders, Geckos, Cobras Mk I
@@ -50,7 +50,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
  BPL MLOOP              \ jump to MLOOP if it is still positive, so we only
                         \ do the following when the EV counter runs down
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  DEC EV                 \ Decrement EV, the extra vessels spawning delay, and
  BPL MLOOPS             \ jump to MLOOPS if it is still positive, so we only
@@ -61,7 +61,7 @@ ENDIF
  INC EV                 \ EV is negative, so bump it up again, setting it back
                         \ to 0
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhanced: In mission 2, after picking up the plans, there's an extra 22% chance that a Thargoid will spawn (this is on top of the normal spawning rate of pirates, bounty hunters and Thargoids)
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Enhanced: In mission 2, after picking up the plans, there's an extra 22% chance that a Thargoid will spawn (this is on top of the normal spawning rate of pirates, bounty hunters and Thargoids)
 
  LDA TP                 \ Fetch bits 2 and 3 of TP, which contain the status of
  AND #%00001100         \ mission 2
@@ -73,7 +73,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhan
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Master: In the disc and 6502SP versions there's a 22% chance of spawning a Thargoid during the spawning loop in part 4, while it's a 14% chance in the Master version
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Master: In the disc and 6502SP versions there's a 22% chance of spawning a Thargoid during the spawning loop in part 4, while it's a 14% chance in the Master version
 
  JSR DORND              \ Set A and X to random numbers
 
@@ -115,7 +115,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: In the disc there's a 47% 
  BCS MLOOP              \ MLOOP to stop spawning (so there's a 35% chance of
                         \ spawning pirates or a lone bounty hunter)
 
-ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
+ELIF _DISC_FLIGHT OR _ELITE_A_VERSION
 
  CMP #120               \ If the random number in A >= 120 (53% chance), jump to
  BCS MLOOPS             \ MLOOPS to stop spawning (so there's a 47% chance of
@@ -139,7 +139,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
                         \ dangerous systems spawn pirates and bounty hunters
                         \ more often)
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  AND #7                 \ Reduce the random number in A to the range 0-7, and
  CMP gov                \ if A is less than government of this system, jump
@@ -163,7 +163,7 @@ IF _6502SP_VERSION \ Label
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
                         \ Now to spawn a lone bounty hunter, a Thargoid or a
                         \ group of pirates
 ELIF _ELECTRON_VERSION
@@ -171,8 +171,12 @@ ELIF _ELECTRON_VERSION
                         \ pirates
 ENDIF
 
+IF NOT(_ELITE_A_VERSION)
+
  JSR Ze                 \ Call Ze to initialise INWK to a potentially hostile
                         \ ship, and set A and X to random values
+
+ENDIF
 
 IF _CASSETTE_VERSION \ Standard: In the cassette version there's a 13% chance of spawning a group of pirates, while in the other versions there's a 61% chance
 
@@ -186,11 +190,16 @@ ELIF _ELECTRON_VERSION
  BCS mt1                \ to mt1 to spawn pirates, otherwise keep going to
                         \ spawn a lone bounty hunter
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  CMP #100               \ If the random number in A >= 100 (61% chance), jump
  BCS mt1                \ to mt1 to spawn pirates, otherwise keep going to
                         \ spawn a lone bounty hunter or a Thargoid
+
+ELIF _ELITE_A_VERSION
+
+ CPX #&64               \ AJD
+ BCS mt1
 
 ENDIF
 
@@ -207,7 +216,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: In the enhanced versions, 
 
  TXA                    \ First, copy the random number in X to A
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  AND #3                 \ Set A = random number in the range 0-3, which we
                         \ will now use to determine the type of ship
@@ -216,6 +225,49 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
                         \ passed through the BCS above), so A is now one of the
                         \ lone bounty hunter ships, i.e. Cobra Mk III (pirate),
                         \ Asp Mk II, Python (pirate) or Fer-de-lance
+
+ TAY                    \ Copy the new ship type to Y
+
+ JSR THERE              \ Call THERE to see if we are in the Constrictor's
+                        \ system in mission 1
+
+ BCC NOCON              \ If the C flag is clear then we are not in the
+                        \ Constrictor's system, so skip to NOCON
+
+ LDA #%11111001         \ Set the AI flag of this ship so that it has E.C.M.,
+ STA INWK+32            \ has a very high aggression level of 28 out of 31, is
+                        \ hostile, and has AI enabled - nasty stuff!
+
+ LDA TP                 \ Fetch bits 0 and 1 of TP, which contain the status of
+ AND #%00000011         \ mission 1
+
+ LSR A                  \ Shift bit 0 into the C flag
+
+ BCC NOCON              \ If bit 0 is clear, skip to NOCON as mission 1 is not
+                        \ in progress
+
+ ORA MANY+CON           \ Bit 0 of A now contains bit 1 of TP, so this will be
+                        \ set if we have already completed mission 1, so this OR
+                        \ will be non-zero if we have either completed mission
+                        \ 1, or there is already a Constrictor in our local
+                        \ bubble of universe (in which case MANY+CON will be
+                        \ non-zero)
+
+ BEQ YESCON             \ If A = 0 then mission 1 is in progress, we haven't
+                        \ completed it yet, and there is no Constrictor in the
+                        \ vicinity, so jump to YESCON to spawn the Constrictor
+
+.NOCON
+
+ELIF _ELITE_A_VERSION
+
+ AND #3                 \ Set A = random number in the range 0-3, which we
+                        \ will now use to determine the type of ship
+
+ ADC #CYL2+1            \ Add A to #CYL2 (we know the C flag is clear as we
+                        \ passed through the BCS above), so A is now one of the
+                        \ lone bounty hunter ships, i.e. Cobra Mk III (pirate),
+                        \ Asp Mk II, Python (pirate) or Fer-de-lance AJD
 
  TAY                    \ Copy the new ship type to Y
 
@@ -296,7 +348,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhanced: The Constrictor only spawns in its home system, during the mission 1 endgame, and then it only spawns once... though it can still appear in the ship hanger from time to time
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Enhanced: The Constrictor only spawns in its home system, during the mission 1 endgame, and then it only spawns once... though it can still appear in the ship hanger from time to time
 
  TYA
 
@@ -314,7 +366,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhan
 
 ENDIF
 
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Comment
+IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Comment
 
  JSR NWSHP              \ Spawn the new ship, whether it's a pirate, Thargoid or
                         \ Constrictor
@@ -328,7 +380,15 @@ ENDIF
 
 .mj1
 
+IF NOT(_ELITE_A_6502SP_PARA)
+
  JMP MLOOP              \ Jump down to MLOOP, as we are done spawning ships
+
+ELIF _ELITE_A_6502SP_PARA
+
+ JMP MLOOP_FLIGHT       \ AJD
+
+ENDIF
 
 IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: When considering spawning a Cougar or a Thargoid instead of a cop, the advanced versions spawn a Thargoid 96.8% of the time, and a Cougar 3.2% of the time
 
@@ -365,6 +425,8 @@ ENDIF
 
 .mt1
 
+IF NOT(_ELITE_A_VERSION)
+
  AND #3                 \ It's time to spawn a group of pirates, so set A to a
                         \ random number in the range 0-3, which will be the
                         \ loop counter for spawning pirates below (so we will
@@ -378,13 +440,52 @@ ENDIF
 
  JSR DORND              \ Set A and X to random numbers
 
+ELIF _ELITE_A_VERSION
+
+ LDA #&11
+ LDX #&07
+
+.hordes
+
+ STA horde_base+1
+ STX horde_mask+1
+ JSR DORND
+ CMP #&F8
+ BCS horde_large
+ STA &89
+ TXA
+ AND &89
+ AND #&03
+
+.horde_large
+
+ AND #7                 \ AJD
+
+ STA EV                 \ Delay further spawnings by this number
+
+ STA XX13               \ Store the number in XX13, the pirate counter
+
+.mt3
+
+ JSR DORND              \ Set A and X to random numbers
+
+ STA &D1                \ AJD
+ TXA
+ AND &D1
+
+.horde_mask
+
+ AND #&FF
+
+ENDIF
+
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: When spawning a pack of pirates in the enhanced versions, the chances of each ship type appearing in the pack are slightly different, with the most likely candidates appearing first in this list: Sidewinder, Mamba, Krait, Adder, Gecko, Cobra Mk I, Worm or Cobra Mk III (pirate)
 
  AND #3                 \ Set A to a random number in the range 0-3
 
  ORA #1                 \ Set A to %01 or %11 (Sidewinder or Mamba)
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  STA T                  \ Set T to a random number
 
@@ -399,7 +500,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
 
 ENDIF
 
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Platform
+IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Platform
 
  STA CPIR               \ Set CPIR to this random number in the range 0-7
 
@@ -409,18 +510,29 @@ IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Platform
 
 ENDIF
 
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Enhanced: In the enhanced versions, a pack-hunting pirate will fly a Sidewinder, Mamba, Krait, Adder, Gecko, Cobra Mk I, Worm or Cobra Mk III (pirate), while in the cassette version you'll only find them in the cockpit of a Sidewinder or Mamba
+IF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Enhanced: In the enhanced versions, a pack-hunting pirate will fly a Sidewinder, Mamba, Krait, Adder, Gecko, Cobra Mk I, Worm or Cobra Mk III (pirate), while in the cassette version you'll only find them in the cockpit of a Sidewinder or Mamba
 
  ADC #PACK              \ #PACK is set to #SH3, the ship type for a Sidewinder,
                         \ so this sets our new ship type to one of the pack
                         \ hunters, namely a Sidewinder, Mamba, Krait, Adder,
                         \ Gecko, Cobra Mk I, Worm or Cobra Mk III (pirate)
 
+ELIF _ELITE_A_VERSION
+
+ CLC                    \ AJD
+
+.horde_base
+
+ ADC #&00
+ INC &61                \ space out horde
+ INC &47
+ INC &4A
+
 ENDIF
 
  JSR NWSHP              \ Try adding a new ship of type A to the local bubble
 
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Platform
+IF _DISC_FLIGHT \ Platform
 
  BCS P%+7               \ If the ship was successfully added, skip the following
                         \ two instructions
@@ -435,6 +547,15 @@ IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Platform
                         \ pirate, until we have tried spawning a Sidewinder
                         \ CPIR is 0, in which case give up and move on to the
                         \ next pirate to spawn
+
+ELIF _ELITE_A_VERSION
+
+ CMP #&18               \ AJD
+ BCS l_40d7
+ DEC &0FD2
+ BPL more
+
+.l_40d7
 
 ENDIF
 

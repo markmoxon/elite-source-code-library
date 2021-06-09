@@ -63,11 +63,15 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
+IF _CASSETTE_VERSION \ Comment
 
 \.CPIX                  \ This label is commented out in the original source. It
                         \ would provide a new entry point with A specifying the
                         \ y-coordinate instead of Y1, but it isn't used anywhere
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  TAY                    \ Store the y-coordinate in Y
 

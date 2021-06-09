@@ -116,7 +116,7 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Minor
 
  CMP #35                \ If A >= 35 (87% chance), jump down to MTT1 to skip
  BCS MTT1               \ the spawning of an asteroid or cargo canister and
@@ -126,6 +126,11 @@ ELIF _DISC_DOCKED
 
  CMP #35                \ If A >= 35 (87% chance), jump down to MLOOP to skip
  BCS MLOOP              \ the following
+
+ELIF _ELITE_A_FLIGHT
+
+ CMP #&33               \ trader fraction AJD
+ BCS MTT1
 
 ENDIF
 
@@ -149,7 +154,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
 
 ENDIF
 
-IF NOT(_ELITE_A_ENCYCLOPEDIA OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA)
+IF NOT(_ELITE_A_VERSION)
 
  JSR ZINF               \ Call ZINF to reset the INWK ship workspace
 
@@ -174,16 +179,21 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
  JSR DORND              \ Set A, X and V flag to random numbers
 
  BVS MTT4               \ If V flag is set (50% chance), jump up to MTT4 to
                         \ spawn a trader
 
+ELIF _ELITE_A_FLIGHT
+
+ JSR rand_posn          \ AJD
+ BVS MTT4
+
 ENDIF
 
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Other: A bug fix for the first version of disc Elite, in which asteroids never appeared
+IF _DISC_FLIGHT \ Other: A bug fix for the first version of disc Elite, in which asteroids never appeared
 
 IF _STH_DISC
 
@@ -210,7 +220,7 @@ ENDIF
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
  ORA #%01101111         \ Take the random number in A and set bits 0-3 and 5-6,
  STA INWK+29            \ so the result has a 50% chance of being positive or
@@ -230,6 +240,41 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR 
 
  AND #31                \ Set the ship speed to our random number, set to a
  ORA #16                \ minimum of 16 and a maximum of 31
+ STA INWK+27
+
+ BCC MTT3               \ Jump down to MTT3, skipping the following (this BCC
+                        \ is effectively a JMP as we know the C flag is clear,
+                        \ having passed through the BCS above)
+
+.MTT2
+
+ ORA #%01111111         \ Set bits 0-6 of A to 127, leaving bit 7 as random, so
+ STA INWK+30            \ storing this number in the pitch counter means we have
+                        \ full pitch with no damping, with a 50% chance of
+                        \ pitching up or down
+
+.MTT3
+
+ JSR DORND              \ Set A and X to random numbers
+
+ELIF _ELITE_A_FLIGHT
+
+ ORA #%01101111         \ Take the random number in A and set bits 0-3 and 5-6,
+ STA INWK+29            \ so the result has a 50% chance of being positive or
+                        \ negative, and a 50% chance of bits 0-6 being 127.
+                        \ Storing this number in the roll counter therefore
+                        \ gives our new ship a fast roll speed with a 50%
+                        \ chance of having no damping, plus a 50% chance of
+                        \ rolling clockwise or anti-clockwise
+
+ LDA SSPR               \ If we are inside the space station safe zone, jump
+ BNE MLOOPS             \ down to MLOOPS to AJD
+
+ TXA                    \ Set A to the random X we set above, which we haven't
+ BCS MTT2               \ used yet, and if the C flag is set (50% chance) jump
+                        \ down to MTT2 to skip the following
+
+ AND #15                \ AJD
  STA INWK+27
 
  BCC MTT3               \ Jump down to MTT3, skipping the following (this BCC
@@ -294,9 +339,13 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Label
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
  JSR NWSHP              \ Add our new asteroid or canister to the universe
+
+ELIF _ELITE_A_FLIGHT
+
+ BNE horde_plain        \ AJD
 
 ENDIF
 

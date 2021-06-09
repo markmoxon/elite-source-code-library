@@ -3,7 +3,7 @@
 \       Name: KS4
 \       Type: Subroutine
 \   Category: Universe
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Remove the space station and replace it with the sun
 ELIF _ELECTRON_VERSION
 \    Summary: Remove the space station and replace with a placeholder
@@ -15,7 +15,7 @@ ENDIF
 
  JSR ZINF               \ Call ZINF to reset the INWK ship workspace
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
  JSR FLFLLS             \ Reset the LSO block, returns with A = 0
 
@@ -25,7 +25,7 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 
  STA FRIN+1             \ Set the second slot in the FRIN table to 0, which
                         \ sets this slot to empty, so when we call NWSHP below

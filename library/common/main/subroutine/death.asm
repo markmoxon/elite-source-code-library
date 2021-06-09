@@ -14,7 +14,7 @@
 
 .DEATH
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
  JSR EXNO3              \ Make the sound of us dying
 
@@ -30,14 +30,14 @@ ENDIF
  ASL DELTA              \ Divide our speed in DELTA by 4
  ASL DELTA
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: Group B: The Electron version doesn't hide the dashboard when you die. This effect is implemented in the BBC versions by programming the 6845 CRTC, which isn't present on the Electron
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: Group B: The Electron version doesn't hide the dashboard when you die. This effect is implemented in the BBC versions by programming the 6845 CRTC, which isn't present on the Electron
 
  LDX #24                \ Set the screen to only show 24 text rows, which hides
  JSR DET1               \ the dashboard, setting A to 6 in the process
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Platform: The Master version has a unique internal view number for the title screen (13)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform: The Master version has a unique internal view number for the title screen (13)
 
  JSR TT66               \ Clear the top part of the screen, draw a white border,
                         \ and set the current view type in QQ11 to 6 (death
@@ -81,7 +81,7 @@ IF _MASTER_VERSION \ Advanced: Group A: In the Master version, the "GAME OVER" m
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Tube
 
  LDA #12                \ Move the text cursor to column 12 on row 12
  STA YC
@@ -108,7 +108,7 @@ IF _6502SP_VERSION \ Advanced: See group A
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
  LDA #146               \ Print recursive token 146 ("{all caps}GAME OVER")
  JSR ex
@@ -126,7 +126,7 @@ ENDIF
  JSR Ze                 \ Call Ze to initialise INWK to a potentially hostile
                         \ ship, and set A and X to random values
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: In the Electron version, the cargo canisters we see when we die always spawn at an x-coordinate of magnitude 32, so canisters appear on either side of the view but never in the centre. It's much more random in the other versions
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: In the Electron version, the cargo canisters we see when we die always spawn at an x-coordinate of magnitude 32, so canisters appear on either side of the view but never in the centre. It's much more random in the other versions
 
  LSR A                  \ Set A = A / 4, so A is now between 0 and 63, and
  LSR A                  \ store in byte #0 (x_lo)
@@ -139,7 +139,7 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
  LDY #0                 \ Set the following to 0: the current view in QQ11
  STY QQ11               \ (space view), x_hi, y_hi, z_hi and the AI flag (no AI
@@ -160,7 +160,7 @@ ENDIF
 
  DEY                    \ Set Y = 255
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
  STY MCNT               \ Reset the main loop counter to 255, so all timer-based
                         \ calls will be stopped
@@ -183,6 +183,13 @@ ENDIF
  ORA #%01010000         \ Set bits 4 and 6 of A to bump it up to between 112 and
  STA INWK+6             \ 127, and store in byte #6 (z_lo)
 
+IF _ELITE_A_6502SP_PARA
+
+ TYA                    \ AJD
+ JSR write_0346
+
+ENDIF
+
  TXA                    \ Set A to the random number in X and keep bits 0-3 and
  AND #%10001111         \ the bit 7 to get a number between -15 and +15, and
  STA INWK+29            \ store in byte #29 (roll counter) to give our ship a
@@ -204,7 +211,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Master: In the cassette, disc and 6502SP versions, our ship is given a gentle pitch up or down when we die; the same is true in the Master version, but the pitch is always downwards so the detritus of our death always rises to the top of the screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: In the cassette, disc and 6502SP versions, our ship is given a gentle pitch up or down when we die; the same is true in the Master version, but the pitch is always downwards so the detritus of our death always rises to the top of the screen
 
  ROR A                  \ The C flag is randomly set from the above call to Ze,
  AND #%10000111         \ so this sets A to a number between -7 and +7, which
@@ -294,9 +301,42 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
                         \ is we loop back to D1 to add another canister, until
                         \ we have added five of them
 
+ELIF _ELITE_A_6502SP_PARA
+
+ LDX #OIL               \ Set X to #OIL, the ship type for a cargo canister
+
+ BCC D3                 \ If the C flag is clear, which will be random following
+                        \ the above call to Ze, jump to D3 to skip the following
+                        \ instruction
+
+ DEX                    \ Decrement X, which sets it to #PLT, the ship type for
+                        \ an alloy plate
+
+.D3
+
+ JSR fq1                \ Call fq1 with X set to #OIL or #PLT, which adds a new
+                        \ cargo canister or alloy plate to our local bubble of
+                        \ universe and points it away from us with double DELTA
+                        \ speed (i.e. 6, as DELTA was set to 3 by the call to
+                        \ RES2 above). INF is set to point to the new arrival's
+                        \ ship data block in K%
+
+ JSR DORND              \ Set A and X to random numbers and extract bit 7 from A
+ AND #%10000000
+
+ LDY #31                \ Store this in byte #31 of the ship's data block, so it
+ STA (INF),Y            \ has a 50% chance of marking our new arrival as being
+                        \ killed (so it will explode)
+
+ LDA FRIN+4             \ The call we made to RES2 before we entered the loop at
+ BEQ D1                 \ D1 will have reset all the ship slots at FRIN, so this
+                        \ checks to see if the fifth slot is empty, and if it
+                        \ is we loop back to D1 to add another canister, until
+                        \ we have added five of them
+
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
  JSR U%                 \ Clear the key logger, which also sets A = 0
 
@@ -321,7 +361,7 @@ ENDIF
 
  JSR M%                 \ Call the M% routine to do the main flight loop once,
                         \ which will display our exploding canister scene and
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Comment
                         \ move everything about
 ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ move everything about, as well as decrementing the
@@ -344,9 +384,14 @@ ELIF _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
  BNE D2                 \ Loop back to call the main flight loop again, until we
                         \ have called it 127 times
 
+ELIF _ELITE_A_6502SP_PARA
+
+ JSR read_0346          \ AJD
+ BNE D2
+
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: See group B
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: See group B
 
  LDX #31                \ Set the screen to show all 31 text rows, which shows
  JSR DET1               \ the dashboard
@@ -360,6 +405,10 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
 
  JMP DEATH2             \ Jump to DEATH2 to reset and restart the game
+
+ELIF _ELITE_A_6502SP_PARA
+
+ JMP DEATH2_FLIGHT      \ Jump to DEATH2_FLIGHT to reset and restart the game
 
 ENDIF
 

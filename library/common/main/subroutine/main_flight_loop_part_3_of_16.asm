@@ -112,9 +112,14 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ M
  LDA #40                \ Call the NOISE routine with A = 40 to make a low,
  JSR NOISE              \ long beep to indicate the missile is now disarmed
 
-ELIF _MASTER_VERSION OR _ELITE_A_VERSION
+ELIF _MASTER_VERSION
 
  JSR LOWBEEP            \ Call the LOWBEEP routine to make a low, long beep to
+                        \ indicate the missile is now disarmed
+
+ELIF _ELITE_A_VERSION
+
+ JSR WA1                \ Call the WA1 routine to make a low, long beep to
                         \ indicate the missile is now disarmed
 
 ENDIF

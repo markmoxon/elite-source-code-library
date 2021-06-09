@@ -24,6 +24,8 @@
 
 .Ze
 
+IF NOT(_ELITE_A_VERSION)
+
  JSR ZINF               \ Call ZINF to reset the INWK ship workspace
 
  JSR DORND              \ Set A and X to random numbers
@@ -37,6 +39,12 @@
  AND #%10000000
  STA INWK+5
 
+ELIF _ELITE_A_VERSION
+
+ JSR rand_posn          \ AJD
+
+ENDIF
+
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: The cassette version spawns new ships at a distance of 32 unit vectors, while the other versions spawn new ships noticeably closer, at a distance of 25 unit vectors
 
  LDA #32                \ Set x_hi = y_hi = z_hi = 32, a fair distance away
@@ -44,7 +52,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: The cassette version spawn
  STA INWK+4
  STA INWK+7
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
  LDA #25                \ Set x_hi = y_hi = z_hi = 25, a fair distance away
  STA INWK+1
@@ -58,9 +66,13 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR 
  TXA                    \ Set the C flag if X >= 245 (4% chance)
  CMP #245
 
-ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
+ELIF _DISC_FLIGHT
 
  JSR DORND              \ Set A and X to random numbers
+
+ CMP #245               \ Set the C flag if X >= 245 (4% chance)
+
+ELIF _ELITE_A_VERSION
 
  CMP #245               \ Set the C flag if X >= 245 (4% chance)
 

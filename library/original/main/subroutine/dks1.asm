@@ -18,9 +18,22 @@
 \   Y                   The offset into the KYTB table above of the key that we
 \                       want to scan on the keyboard
 \
+IF _ELITE_A_VERSION
+\ Other tnery points:
+\
+\   b_pressed           AJD
+\
+ENDIF
 \ ******************************************************************************
 
 .DKS1
+
+IF _ELITE_A_VERSION
+
+ LDA BSTK               \ AJD
+ BMI b_14
+
+ENDIF
 
  LDX KYTB,Y             \ Get the internal key number from the Y-th byte of the
                         \ KYTB table above
@@ -28,8 +41,19 @@
  JSR DKS4               \ Call DKS4, which will set A and X to a negative value
                         \ if the key is being pressed
 
+IF NOT(_ELITE_A_VERSION)
+
  BPL DKS2-1             \ The key is not being pressed, so return from the
                         \ subroutine (as DKS2-1 contains an RTS)
+
+ELIF _ELITE_A_VERSION
+
+ BPL b_quit             \ The key is not being pressed, so return from the
+                        \ subroutine (as b_quit contains an RTS)
+
+.b_pressed
+
+ENDIF
 
 IF _CASSETTE_VERSION \ Minor
 
@@ -40,6 +64,12 @@ ELIF _DISC_VERSION OR _ELITE_A_VERSION
 
  LDA #&FF               \ Store &FF in the Y-th byte of the key logger at KL
  STA KL,Y
+
+ENDIF
+
+IF _ELITE_A_VERSION
+
+.b_quit
 
 ENDIF
 

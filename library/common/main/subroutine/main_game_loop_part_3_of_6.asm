@@ -28,7 +28,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  LDA SSPR               \ If we are inside the space station's safe zone, jump
  BNE MLOOP              \ to MLOOP to skip the following
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _MASTER_VERSION
 
  LDA SSPR               \ If we are outside the space station's safe zone, skip
  BEQ P%+5               \ the following instruction
@@ -36,6 +36,15 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 .MLOOPS
 
  JMP MLOOP              \ Jump to MLOOP to skip the following
+
+ELIF _ELITE_A_6502SP_PARA
+
+ LDA SSPR               \ If we are outside the space station's safe zone, skip
+ BEQ P%+5               \ the following instruction
+
+.MLOOPS
+
+ JMP MLOOP_FLIGHT       \ AJD
 
 ENDIF
 
@@ -68,6 +77,8 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: When considering spawning cops
 
 ENDIF
 
+IF NOT(_ELITE_A_VERSION)
+
  CMP T                  \ If the random value in A >= our badness level, which
  BCS P%+7               \ will be the case unless we have been really, really
                         \ bad, then skip the following two instructions (so if
@@ -77,6 +88,26 @@ ENDIF
 
  LDA #COPS              \ Add a new police ship to the local bubble
  JSR NWSHP
+
+ELIF _ELITE_A_VERSION
+
+ CMP T                  \ If the random value in A >= our badness level, which
+ BCS l_4050             \ will be the case unless we have been really, really
+                        \ bad, then skip the following two instructions (so if
+                        \ we are really bad, there's a higher chance of
+                        \ spawning a cop, otherwise we got away with it, for
+                        \ now)
+
+ LDA #&10               \ AJD
+
+.horde_plain
+
+ LDX #&00
+ BEQ hordes
+
+.l_4050
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
 

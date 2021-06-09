@@ -5,7 +5,7 @@
 \   Category: Main loop
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 \    Summary: Spawn a trader (a peaceful Cobra Mk III)
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
 \    Summary: Spawn a trader (a Cobra Mk III, Python, Boa or Anaconda)
 ENDIF
 \  Deep dive: Program flow of the main game loop
@@ -26,7 +26,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 \     between 16 and 31, and a gentle clockwise roll
 \
 \ We call this from within the main loop, with A set to a random number.
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
 \   * Spawn a trader, i.e. a Cobra Mk III, Python, Boa or Anaconda, with a 50%
 \     chance of it having a missile, a 50% chance of it having an E.C.M., a 50%
 \     chance of it docking and being aggressive if attacked, a speed between 16
@@ -39,7 +39,7 @@ ENDIF
 
 .MTT4
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Platform
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Platform
 
  JSR DORND              \ Set A and X to random numbers
 
@@ -65,10 +65,15 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION 
  ORA #16                \ minimum of 16 and a maximum of 31
  STA INWK+27
 
-ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
+ELIF _DISC_FLIGHT
 
  AND #15                \ Set the ship speed to our random number, set to a
  ORA #16                \ minimum of 16 and a maximum of 31
+ STA INWK+27
+
+ELIF _ELITE_A_VERSION
+
+ AND #15                \ AJD
  STA INWK+27
 
 ENDIF
@@ -78,7 +83,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Traders in the enhanced ve
  LDA #CYL               \ Add a new Cobra Mk III to the local bubble and fall
  JSR NWSHP              \ through into the main game loop again
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  JSR DORND              \ Set A and X to random numbers, plus the C flag
 
@@ -108,6 +113,28 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
                         \ ship type from the following: Cobra Mk III, Python,
                         \ Boa or Anaconda
 
+ELIF _ELITE_A_VERSION
+
+ JSR DORND              \ Set A and X to random numbers, plus the C flag
+
+ BMI nodo               \ If A is negative (50% chance), jump to nodo to skip
+                        \ the following
+
+                        \ If we get here then we are going to spawn a ship that
+                        \ is minding its own business and trying to dock
+
+ LDA INWK+32            \ Set bits 6 and 7 of the ship's AI flag, to make it
+ ORA #%11000000         \ aggressive if attacked, and enable its AI
+ STA INWK+32
+
+ LDX #%00010000         \ Set bit 4 of the ship's NEWB flags, to indicate that
+ STX NEWB               \ this ship is docking
+
+.nodo
+
+ LDA #&0B               \ AJD
+ LDX #&03
+
 ENDIF
 
 IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: The advanced versions have rock hermits, which are classed as junk but can release ships if attacked
@@ -117,10 +144,14 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: The advanced versions have roc
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Platform
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
  JSR NWSHP              \ Add a new ship of type A to the local bubble and fall
                         \ through into the main game loop again
+
+ELIF _ELITE_A_VERSION
+
+ JMP hordes
 
 ENDIF
 

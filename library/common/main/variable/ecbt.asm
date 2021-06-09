@@ -10,7 +10,7 @@
 \ The character bitmap for the E.C.M. indicator's "E" bulb that gets displayed
 \ on the dashboard.
 \
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Comment
 \ The E.C.M. indicator uses the first 5 rows of the space station's "S" bulb
 \ below, as the bottom 5 rows of the "E" match the top 5 rows of the "S".
 \
@@ -31,7 +31,7 @@ ENDIF
 
 .ECBT
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Advanced: The "E" indicator bulb on the dashboard is four pixels wide in the advanced versions, while it is only three pixels wide in the cassette and disc versions. It is seven pixels wide in the Electron version, though the latter is in monochrome mode 4, so this is equivalent to 3.5 pixels in the colour versions
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The "E" indicator bulb on the dashboard is four pixels wide in the advanced versions, while it is only three pixels wide in the cassette and disc versions. It is seven pixels wide in the Electron version, though the latter is in monochrome mode 4, so this is equivalent to 3.5 pixels in the colour versions
 
  EQUB %11100000         \ x x x .
  EQUB %11100000         \ x x x .

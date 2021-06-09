@@ -10,6 +10,13 @@
 
 .LSHIPS
 
+IF _ELITE_A_VERSION
+
+ LDA #0                 \ AJD
+ STA &9F                \ reset finder
+
+ENDIF
+
  JSR THERE              \ Call THERE to see if we are in the Constrictor's
                         \ system in mission 1
 
@@ -30,6 +37,8 @@
  CPX #10                \ 0 of A, otherwise shift a 1
  ROL A
 
+IF NOT(_ELITE_A_VERSION)
+
                         \ By this point, A is:
                         \
                         \   * Bit 0    = 0 for low tech level (Coriolis station)
@@ -43,6 +52,12 @@
                         \ So A is in the range 0-15, which corresponds to the
                         \ appropriate ship blueprints file (where 0 is file
                         \ D.MOA and 15 is file D.MOP)
+
+ELIF _ELITE_A_VERSION
+
+ ADC GCNT               \ 16+7 -> 23 files ! AJD
+
+ENDIF
 
  TAX                    \ Store A in X so we can retrieve it after the mission 2
                         \ progress check
@@ -71,12 +86,20 @@
  CLC                    \ Convert A from 0-15 to 'A' to 'P'
  ADC #'A'
 
+IF NOT(_ELITE_A_VERSION)
+
  STA SHIPI+6            \ Store the letter of the ship blueprints file we want
                         \ in the sixth byte of the command string at SHIPI, so
                         \ it overwrites the "0" in "D.MO0" with the file letter
                         \ to load, from D.MOA to D.MOP
 
  JSR CATD               \ Call CATD to reload the disc catalogue
+
+ELIF _ELITE_A_VERSION
+
+ STA SHIPI+4            \ AJD
+
+ENDIF
 
  LDX #LO(SHIPI)         \ Set (Y X) to point to the OS command at SHIPI, which
  LDY #HI(SHIPI)         \ loads the relevant ship blueprints file

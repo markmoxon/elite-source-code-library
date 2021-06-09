@@ -312,7 +312,7 @@ tube_brk = &16	\ tube BRK vector
  EQUW CLYNS, sync_in, draw_bar, draw_angle
  EQUW put_missle, scan_fire, write_fe4e, scan_xin
  EQUW scan_10in, get_key, write_xyc, write_pod
- EQUW draw_blob, draw_tail, draw_S, draw_E
+ EQUW draw_blob, draw_tail, SPBLB, ECBLB
  EQUW draw_mode, write_crtc, scan_y, write_0346
  EQUW read_0346, return, picture_h, picture_v
 
@@ -866,20 +866,20 @@ INCLUDE "library/common/main/subroutine/dks4.asm"
  RTS
 
 
-.draw_E
+.ECBLB
 
  LDA #&38
- LDX #LO(d_3832)
- LDY #HI(d_3832)
- JMP draw_let
+ LDX #LO(ECBT)
+ LDY #HI(ECBT)
+ JMP BULB
 
-.draw_S
+.SPBLB
 
  LDA #&C0
- LDX #<(d_3832+3)
- LDY #>(d_3832+3)
+ LDX #<(SPBT)
+ LDY #>(SPBT)
 
-.draw_let
+.BULB
 
  STA SC
  LDA #&7D
@@ -888,20 +888,17 @@ INCLUDE "library/common/main/subroutine/dks4.asm"
  STY font+1
  LDY #&07
 
-.draw_eor
+.ECBLBor
 
  LDA (font),Y
  EOR (SC),Y
  STA (SC),Y
  DEY
- BPL draw_eor
+ BPL ECBLBor
  RTS
 
-
-.d_3832
-
- EQUB &E0, &E0, &80, &E0, &E0, &80, &E0, &E0, &20, &E0, &E0
-
+INCLUDE "library/common/main/variable/ecbt.asm"
+INCLUDE "library/common/main/variable/spbt.asm"
 
 .draw_mode
 
@@ -919,7 +916,6 @@ INCLUDE "library/common/main/subroutine/dks4.asm"
  STA LIL6+2
  RTS
 
-
 .write_crtc
 
  JSR tube_get
@@ -930,11 +926,7 @@ INCLUDE "library/common/main/subroutine/dks4.asm"
  CLI
  RTS
 
-
-.d_4419
-
- EQUB &E8, &E2, &E6, &E7, &C2, &D1, &C1
- EQUB &60, &70, &23, &35, &65, &22, &45, &63, &37
+INCLUDE "library/common/main/variable/kytb.asm"
 
 .b_table
 
@@ -964,7 +956,7 @@ INCLUDE "library/common/main/subroutine/dks4.asm"
  TAY
  JSR tube_get
  BMI b_14
- LDX d_4419-1,Y
+ LDX KYTB-1,Y
  JSR DKS4
  BPL b_quit
 

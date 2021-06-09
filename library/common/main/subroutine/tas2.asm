@@ -105,6 +105,16 @@
  STA XX15+2             \ store the resulting signed 8-bit  z-coordinate in
                         \ XX15+2
 
+IF NOT(_ELITE_A_6502SP_PARA)
+
                         \ Now we have a signed 8-bit version of the vector K3 in
                         \ XX15, so fall through into NORM to normalise it
+
+ELIF _ELITE_A_6502SP_PARA
+
+ JMP NORM               \ Now we have a signed 8-bit version of the vector K3 in
+                        \ XX15, so jump to NORM to normalise it, returning from
+                        \ the subroutine using a tail call
+
+ENDIF
 

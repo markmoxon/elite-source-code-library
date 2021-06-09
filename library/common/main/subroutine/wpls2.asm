@@ -11,10 +11,6 @@
 \ We do this by redrawing it using the lines stored in the ball line heap when
 \ the planet was originally drawn by the BLINE routine.
 \
-\ Other entry points:
-\
-\   WPLS-1              Contains an RTS
-\
 \ ******************************************************************************
 
 .WPLS2
@@ -46,7 +42,7 @@
  LDA LSX2,Y             \ heap
  STA X2
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Label
 
  JSR LOIN               \ Draw a line from (X1, Y1) to (X2, Y2)
 
@@ -58,9 +54,13 @@ ENDIF
 
  INY                    \ Increment the loop counter to point to the next point
 
+IF NOT(_ELITE_A_6502SP_PARA)
+
  LDA SWAP               \ If SWAP is non-zero then we swapped the coordinates
  BNE WPL1               \ when filling the heap in BLINE, so loop back WPL1
                         \ for the next point in the heap
+
+ENDIF
 
  LDA X2                 \ Swap (X1, Y1) and (X2, Y2), so the next segment will
  STA X1                 \ be drawn from the current (X2, Y2) to the next point

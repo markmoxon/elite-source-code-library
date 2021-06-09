@@ -22,7 +22,19 @@
                         \ reach LOOK1 after calling FRCE below, it sets up a
                         \ new space view
 
+IF NOT(_ELITE_A_6502SP_PARA)
+
  LDA #f0                \ Jump into the main game loop at FRCE, setting the key
  JMP FRCE               \ "pressed" to red key f0 (so we launch from the
                         \ station)
+
+ELIF _ELITE_A_6502SP_PARA
+
+ STA dockedp            \ AJD
+
+ LDA #f0                \ Jump into the main game loop at FRCE_FLIGHT, setting
+ JMP FRCE_FLIGHT        \ the key "pressed" to red key f0 (so we launch from the
+                        \ station)
+
+ENDIF
 

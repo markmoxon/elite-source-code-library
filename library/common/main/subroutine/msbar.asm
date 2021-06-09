@@ -103,6 +103,16 @@ ENDIF
 
 .MSBAR
 
+IF _ELITE_A_FLIGHT
+
+ CPX #4
+ BCC n_mok
+ LDX #3
+
+.n_mok
+
+ENDIF
+
 IF _MASTER_VERSION \ Platform
 
  LDA #%00001111         \ Set bits 1 and 2 of the Access Control Register at

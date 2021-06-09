@@ -15,11 +15,17 @@
 \
 \   SUNX(1 0)           The x-coordinate of the vertical centre axis of the sun
 \
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
+\ Other entry points:
+\
+\   WPLS-1              Contains an RTS
+\
+ENDIF
 \ ******************************************************************************
 
 .WPLS
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Label
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Label
 
  LDA LSX                \ If LSX < 0, the sun line heap is empty, so return from
  BMI WPLS-1             \ the subroutine (as WPLS-1 contains an RTS)

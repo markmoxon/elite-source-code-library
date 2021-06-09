@@ -48,9 +48,18 @@ ENDIF
 
 .FRCE
 
+IF _ELITE_A_FLIGHT
+
+ PHA                    \ AJD
+ LDA &2F
+ BNE l_locked
+ PLA
+
+ENDIF
+
  JSR TT102              \ Call TT102 to process the key pressed in A
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA \ Minor
 
  LDA QQ12               \ Fetch the docked flag from QQ12 into A
 
@@ -84,6 +93,16 @@ IF _CASSETTE_VERSION \ Platform
 
  JMP MLOOP              \ Jump back into the main loop at MLOOP, which is just
                         \ after the ship-spawning section
+
+ENDIF
+
+IF _ELITE_A_FLIGHT
+
+.l_locked
+
+ PLA                    \ AJD
+ JSR TT107
+ JMP TT100
 
 ENDIF
 

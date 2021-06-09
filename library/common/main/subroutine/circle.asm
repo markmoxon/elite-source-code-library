@@ -31,6 +31,14 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR 
                         \ on-screen, so return from the subroutine (as RTS2
                         \ contains an RTS)
 
+ELIF _ELITE_A_6502SP_PARA
+
+ JSR CHKON              \ Call CHKON to check whether the circle fits on-screen
+
+ BCS PL40               \ If CHKON set the C flag then the circle does not fit
+                        \ on-screen, so return from the subroutine (as PL40
+                        \ contains an RTS)
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Platform
@@ -84,7 +92,7 @@ ENDIF
  STA STP                \ Set STP = A. STP is the step size for the circle, so
                         \ the above sets a smaller step size for bigger circles
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Comment
 
                         \ Fall through into CIRCLE2 to draw the circle with the
                         \ correct step size
@@ -93,5 +101,11 @@ ELIF _6502SP_VERSION
 
                         \ Fall through into CIRCLE3 to draw the circle with the
                         \ correct step size
+
+ELIF _ELITE_A_6502SP_PARA
+
+ JMP CIRCLE2            \ Jump to CIRCLE2 to draw the circle with the correct
+                        \ step size and return from the subroutine using a tail
+                        \ call
 
 ENDIF

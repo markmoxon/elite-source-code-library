@@ -195,15 +195,10 @@ ELIF _ELITE_A_6502SP_PARA
  JSR write_0346         \ AJD
  LDA #&83
  JSR tube_write
- LDX &2F
- BEQ d_54eb
- JSR ee3
-
-.d_54eb
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA \ Label
 
  LDX QQ22+1             \ Fetch into X the number that's shown on-screen during
                         \ the hyperspace countdown

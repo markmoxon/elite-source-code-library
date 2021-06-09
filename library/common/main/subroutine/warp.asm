@@ -16,7 +16,7 @@
 \
 \   * If we are facing the planet, make sure we aren't too close
 \
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \   * If we are facing the sun, make sure we aren't too close
 \
 \ If the above checks are passed, then we perform an in-system jump by moving
@@ -30,6 +30,12 @@ ELIF _ELECTRON_VERSION
 \ dragged along for the ride.
 ENDIF
 \
+IF _ELITE_A_VERSION \ Comment
+\ Other entry points:
+\
+\   WA1                 Make a long, low beep
+\
+ENDIF
 \ ******************************************************************************
 
 .WARP
@@ -55,7 +61,7 @@ ELIF _ELECTRON_VERSION
  ADC MANY+OIL           \ is no way that adding the number of asteroids and the
  TAX                    \ number escape pods will cause a carry
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  LDX JUNK               \ Set X to the total number of junk items in the
                         \ vicinity (e.g. asteroids, escape pods, cargo
@@ -68,11 +74,17 @@ ENDIF
                         \ escape pods and cargo canisters, so to check whether
                         \ we can jump, we first grab the slot contents into A
 
+IF _ELITE_A_VERSION
+
+ ORA &033E              \ no jump if any ship AJD
+
+ENDIF
+
  ORA SSPR               \ If there is a space station nearby, then SSPR will
                         \ be non-zero, so OR'ing with SSPR will produce a
                         \ a non-zero result if either A or SSPR are non-zero
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron version doesn't have witchspace, so there's no need to disable in-system jumping there
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron version doesn't have witchspace, so there's no need to disable in-system jumping there
 
  ORA MJ                 \ If we are in witchspace, then MJ will be non-zero, so
                         \ OR'ing with MJ will produce a non-zero result if
@@ -127,7 +139,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION 
  BCC WA1                \ with a low beep, as we are facing the planet and are
                         \ too close to jump in that direction
 
-ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
+ELIF _DISC_FLIGHT OR _ELITE_A_VERSION
 
  LSR A                  \ If A < 2 then jump to WA1 to abort the in-system jump
  BEQ WA1                \ with a low beep, as we are facing the planet and are
@@ -137,7 +149,7 @@ ENDIF
 
 .WA3
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 
  LDY K%+NI%+8           \ Fetch the z_sign (byte #8) of the second ship in the
                         \ ship data workspace at K%, which is reserved for the
@@ -200,7 +212,7 @@ ELIF _ELECTRON_VERSION
  BCC WA1                \ with a low beep, as we are facing the station and are
                         \ too close to jump in that direction
 
-ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
+ELIF _DISC_FLIGHT OR _ELITE_A_VERSION
 
  LSR A                  \ If A < 2 then jump to WA1 to abort the in-system jump
  BEQ WA1                \ with a low beep, as we are facing the sun and are too
@@ -210,7 +222,7 @@ ENDIF
 
 .WA2
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 
                         \ If we get here, then we can do an in-system jump, as
                         \ we don't have any ships or space stations in the
@@ -273,7 +285,7 @@ ENDIF
 
  STA K%+8               \ Set the planet's z_sign to the high byte of the result
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 
  LDA K%+NI%+8           \ Set A = z_sign for the sun
 
@@ -337,6 +349,12 @@ ELIF _MASTER_VERSION
 
  RTS                    \ This instruction has no effect as we already returned
                         \ from the subroutine
+
+ELIF _ELITE_A_6502SP_PARA
+
+ LDA #40                \ If we get here then we can't do an in-system jump, so
+ JMP NOISE              \ call the NOISE routine with A = 40 to make a long, low
+                        \ beep and return from the subroutine using a tail call
 
 ENDIF
 

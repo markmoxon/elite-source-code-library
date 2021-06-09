@@ -11,9 +11,9 @@
 
  LDX #&00
  SEC
- LDA #&0F	\LDA #&0D
+ LDA #&0F   \LDA #&0D
  SBC QQ28
- SBC QQ28	\++
+ SBC QQ28   \++
  STA &03AB
 
 .n_bloop

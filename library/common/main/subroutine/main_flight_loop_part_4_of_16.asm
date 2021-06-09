@@ -100,3 +100,12 @@ ENDIF
  LDA XX21-1,Y           \ Fetch the high byte of this particular ship type's
  STA XX0+1              \ blueprint and store it in XX0+1
 
+IF _ELITE_A_VERSION
+
+                        \ We now go straight to part 6, omitting part 5 from the
+                        \ original disc version, as part 5 implements the energy
+                        \ bomb, and Elite-A replaces the energy bomb with the
+                        \ Hyperspace Unit
+
+ENDIF
+

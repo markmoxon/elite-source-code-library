@@ -444,7 +444,7 @@ INCLUDE "library/common/main/subroutine/delay.asm"
  LDA #&14
  STA YC
  JSR TT67
- LDY #&01	\INY
+ LDY #&01 \INY
  STY XC
  DEY
  LDA #&84
@@ -787,8 +787,8 @@ INCLUDE "library/common/main/variable/qq18.asm"
 
 .jmp_start3_dup
 
- \	JSR dn2
- \	JMP BAY
+ \JSR dn2
+ \JMP BAY
  JMP dn2
 
 .ships_ag
@@ -939,9 +939,9 @@ INCLUDE "library/common/main/variable/qq18.asm"
 
 .dont_quit
 
- \	CPX #&37
- \	BNE dont_dump
- \	JSR printer
+ \CPX #&37
+ \BNE dont_dump
+ \JSR printer
  \dont_dump
  CPX #&59
  BNE freeze_loop
@@ -950,7 +950,7 @@ INCLUDE "library/common/main/variable/qq18.asm"
 
  JSR RDKEY
  BNE i_release
- LDX #0	\ no key was pressed
+ LDX #0 \ no key was pressed
 
 .not_freeze
 
@@ -975,7 +975,7 @@ INCLUDE "library/elite-a/encyclopedia/variable/ship_dist.asm"
  STA &03AD
  LDA menu_query,X
  PHA
- LDA menu_title,X	
+ LDA menu_title,X
  PHA
  LDA menu_titlex,X
  PHA
@@ -1059,14 +1059,14 @@ INCLUDE "library/elite-a/encyclopedia/variable/card_data.asm"
  RTS
 
  \printer:
- \	TXA
- \	PHA
- \	LDA #&9C
- \	JSR tube_write
- \	JSR tube_read
- \	PLA
- \	TAX
- \	RTS
+ \ TXA
+ \ PHA
+ \ LDA #&9C
+ \ JSR tube_write
+ \ JSR tube_read
+ \ PLA
+ \ TAX
+ \ RTS
 
 
 \ a.qcode_5
@@ -1085,9 +1085,6 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_1_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_2_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_3_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_4_of_16.asm"
-
-\ Omit part 5 (energy bomb)
-
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_6_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_7_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_8_of_16.asm"
@@ -1207,47 +1204,16 @@ INCLUDE "library/common/main/subroutine/bump2.asm"
 INCLUDE "library/common/main/subroutine/redu2.asm"
 INCLUDE "library/common/main/subroutine/arctan.asm"
 INCLUDE "library/common/main/subroutine/lasli.asm"
-
-.tnpr_FLIGHT
-
- CPX #&10
- BEQ n_aliens
- CPX #&0D
- BCS d_2b04
-
-.n_aliens
-
- LDY #&0C
- SEC
- LDA QQ20+&10
-
-.d_2af9
-
- ADC QQ20,Y
- BCS n_cargo
- DEY
- BPL d_2af9
- CMP new_hold
-
-.n_cargo
-
- RTS
-
-.d_2b04
-
- LDA QQ20,X
- ADC #&00
- RTS
-
+INCLUDE "library/elite-a/flight/subroutine/tnpr_flight.asm"
 INCLUDE "library/common/main/subroutine/hyp.asm"
 INCLUDE "library/common/main/subroutine/ww.asm"
 INCLUDE "library/common/main/subroutine/ghy.asm"
 INCLUDE "library/common/main/subroutine/ee3.asm"
 INCLUDE "library/common/main/subroutine/tt147.asm"
 
-.hyp1_flight                 \ duplicate of hyp1
+.hyp1_FLIGHT
 
- JSR jmp
+ JSR jmp                \ duplicate of hyp1
  LDX #&05
 
 .d_31b0
@@ -1329,7 +1295,7 @@ INCLUDE "library/common/main/subroutine/cpix4.asm"
 
 .OOPS2
 
- SEC	\ reduce damage
+ SEC \ reduce damage
  SBC new_shields
  BCC n_shok
 
@@ -1455,12 +1421,12 @@ INCLUDE "library/common/main/subroutine/main_game_loop_part_1_of_6.asm"
  LDA &0341
  BNE d_3fd1
  JSR DORND
- CMP #&33	\ trader fraction
+ CMP #&33 \ trader fraction
  BCS MTT1
  LDA &033E
  CMP #&03
  BCS MTT1
- JSR rand_posn	\ IN
+ JSR rand_posn \ IN
  BVS MTT4
  ORA #&6F
  STA &63
@@ -1502,12 +1468,12 @@ INCLUDE "library/common/main/subroutine/main_game_loop_part_4_of_6.asm"
  JSR COMPAS
  LDA &87
  BEQ d_40f8
- \	AND PATG
- \	LSR A
- \	BCS d_40f8
+ \ AND PATG
+ \ LSR A
+ \ BCS d_40f8
  LDY #&02
  JSR DELAY
- \	JSR WSCAN
+ \ JSR WSCAN
 
 .d_40f8
 
@@ -1540,7 +1506,7 @@ INCLUDE "library/disc/flight/subroutine/rships.asm"
 .LSHIPS
 
  LDA #0
- STA &9F	\ reset finder
+ STA &9F \ reset finder
 
 .SHIPinA
 
@@ -1564,7 +1530,7 @@ INCLUDE "library/disc/flight/subroutine/rships.asm"
 .mix_match
 
  JSR DORND
- CMP #ship_total	\ # POSSIBLE SHIPS
+ CMP #ship_total \ # POSSIBLE SHIPS
  BCS mix_match
  ASL A
  ASL A
@@ -1578,15 +1544,15 @@ INCLUDE "library/disc/flight/subroutine/rships.asm"
  BCC mix_byte2
  CPY #24
  BCC mix_byte3
- INX	\24-28
+ INX \24-28
 
 .mix_byte3
 
- INX	\16-23
+ INX \16-23
 
 .mix_byte2
 
- INX	\8-15
+ INX \8-15
  AND ship_bits,X
  BEQ mix_fail
 
@@ -1606,9 +1572,9 @@ INCLUDE "library/disc/flight/subroutine/rships.asm"
 .mix_ok
 
  STY &36
- CPX #52		\ ANACONDA?
+ CPX #52  \ ANACONDA?
  BEQ mix_anaconda
- CPX #116	\ DRAGON?
+ CPX #116 \ DRAGON?
  BEQ mix_dragon
  TXA
  LSR A
@@ -1742,7 +1708,7 @@ INCLUDE "library/common/main/subroutine/exno.asm"
  ORA #&80
  STA &5C
  STA &8C
- LDA &7D	\ ? Too Fast
+ LDA &7D \ ? Too Fast
  STA &61
  JSR DOCKIT
  LDA &61
@@ -1876,9 +1842,9 @@ INCLUDE "library/common/main/subroutine/exno.asm"
 
 .d_4586
 
- \	CPX #&37
- \	BNE dont_dump
- \	JSR printer
+ \ CPX #&37
+ \ BNE dont_dump
+ \ JSR printer
  \dont_dump
  CPX #&59
  BNE d_455f
@@ -1971,7 +1937,7 @@ INCLUDE "library/common/main/subroutine/sight.asm"
 
 .iff_xor
 
- EQUB &00, &00, &0F	\, &FF, &F0 overlap
+ EQUB &00, &00, &0F \, &FF, &F0 overlap
 
 .iff_base
 
@@ -1988,7 +1954,7 @@ INCLUDE "library/common/main/subroutine/sight.asm"
  BEQ d_5557
  LDA &8C
  BMI d_5557
- LDX CRGO	\ iff code
+ LDX CRGO \ iff code
  BEQ iff_not
  LDY #&24
  LDA (&20),Y
@@ -2002,23 +1968,23 @@ INCLUDE "library/common/main/subroutine/sight.asm"
  BEQ iff_missle
  CPY #&08
  BCC iff_aster
- INX	\ X=4
+ INX \ X=4
 
 .iff_missle
 
- INX	\ X=3
+ INX \ X=3
 
 .iff_aster
 
- INX	\ X=2
+ INX \ X=2
 
 .iff_cop
 
- INX	\ X=1
+ INX \ X=1
 
 .iff_trade
 
- INX	\ X=0
+ INX \ X=0
 
 .iff_not
 
@@ -2525,7 +2491,7 @@ INCLUDE "library/common/main/subroutine/sight.asm"
  EQUB &00, &10, &1F, &00, &40, &10, &1F, &20, &00, &00, &5F, &00
  EQUB &20, &00, &9F, &20, &00, &00, &1F, &00, &20, &00, &3F, &00
  EQUB &00, &B0
- 	
+ 
 
 .s_viper
 
@@ -3037,93 +3003,93 @@ ship_total = 38
 
 .ship_list
 
- EQUW	s_dodo,	s_coriolis,	s_escape,	s_alloys
- EQUW	s_barrel,	s_boulder,	s_asteroid,	s_minerals
- EQUW	s_shuttle1,	s_transporter,	s_cobra3,	s_python
- EQUW	s_boa,	s_anaconda,	s_worm,	s_missile
- EQUW	s_viper,	s_sidewinder,	s_mamba,	s_krait
- EQUW	s_adder,	s_gecko,	s_cobra1,	s_asp
- EQUW	s_ferdelance,	s_moray,	s_thargoid,	s_thargon
- EQUW	s_constrictor,	s_dragon,	s_monitor,	s_ophidian
- EQUW	s_ghavial,	s_bushmaster,	s_rattler,	s_iguana
- EQUW	s_shuttle2,	s_chameleon
+ EQUW s_dodo, s_coriolis, s_escape, s_alloys
+ EQUW s_barrel, s_boulder, s_asteroid, s_minerals
+ EQUW s_shuttle1, s_transporter, s_cobra3, s_python
+ EQUW s_boa, s_anaconda, s_worm, s_missile
+ EQUW s_viper, s_sidewinder, s_mamba, s_krait
+ EQUW s_adder, s_gecko, s_cobra1, s_asp
+ EQUW s_ferdelance, s_moray, s_thargoid, s_thargon
+ EQUW s_constrictor, s_dragon, s_monitor, s_ophidian
+ EQUW s_ghavial, s_bushmaster, s_rattler, s_iguana
+ EQUW s_shuttle2, s_chameleon
 
  EQUW &0000
 
 
 .ship_data
 
- EQUW	0
+ EQUW 0
 
 .XX21
 
- EQUW	s_missile,	0,	s_escape
- EQUW	s_alloys,	s_barrel,	s_boulder,	s_asteroid
- EQUW	s_minerals,	0,	s_transporter,	0
- EQUW	0,	0,	0,	0
- EQUW	s_viper,	0,	0,	0
- EQUW 0,	0,	0,	0
- EQUW	0,	0,	0,	0
- EQUW	0,	s_thargoid,	s_thargon,	s_constrictor
- 	
+ EQUW s_missile, 0, s_escape
+ EQUW s_alloys, s_barrel, s_boulder, s_asteroid
+ EQUW s_minerals, 0, s_transporter, 0
+ EQUW 0, 0, 0, 0
+ EQUW s_viper, 0, 0, 0
+ EQUW 0, 0, 0, 0
+ EQUW 0, 0, 0, 0
+ EQUW 0, s_thargoid, s_thargon, s_constrictor
+ 
 
 .ship_flags
 
- EQUB	&00
+ EQUB &00
 
 .E%
- EQUB	&00,	&40,	&41
- EQUB	&00,	&00,	&00,	&00
- EQUB	&00,	&21,	&61,	&20
- EQUB	&21,	&20,	&A1,	&0C
- EQUB	&C2,	&0C,	&0C,	&04
- EQUB	&0C,	&04,	&0C,	&04
- EQUB	&0C,	&02,	&22,	&02
- EQUB	&22,	&0C,	&04,	&8C
+ EQUB &00, &40, &41
+ EQUB &00, &00, &00, &00
+ EQUB &00, &21, &61, &20
+ EQUB &21, &20, &A1, &0C
+ EQUB &C2, &0C, &0C, &04
+ EQUB &0C, &04, &0C, &04
+ EQUB &0C, &02, &22, &02
+ EQUB &22, &0C, &04, &8C
 
 
 .ship_bits
 
-	EQUD %00000000000000000000000000000100
-	EQUD %00000000000000000000000000000100
-	EQUD %00000000000000000000000000001000
-	EQUD %00000000000000000000000000010000
-	EQUD %00000000000000000000000000100000
-	EQUD %00000000000000000000000001000000
-	EQUD %00000000000000000000000010000000
-	EQUD %00000000000000000000000100000000
-	EQUD %00000000000000000000001000000000
-	EQUD %00000000000000000000010000000000
-	EQUD %00011111111000000011100000000000
-	EQUD %00011001110000000011100000000000
-	EQUD %00000000000000000011100000000000
-	EQUD %00000000000000000100000000000000
-	EQUD %00000001110000001000000000000000
-	EQUD %00000000000000000000000000000010
-	EQUD %00000000000000010000000000000000
-	EQUD %00010001111111101000000000000000
-	EQUD %00010001111111100000000000000000
-	EQUD %00010001111111100000000000000000
-	EQUD %00011001111110000011000000000000
-	EQUD %00011001111111100000000000000000
-	EQUD %00011001111111100010000000000000
-	EQUD %00011001000000000000000000000000
-	EQUD %00011111000000000010000000000000
-	EQUD %00011001110000000011000000000000
-	EQUD %00100000000000000000000000000000
-	EQUD %01000000000000000000000000000000
-	EQUD %10000000000000000000000000000000
-	EQUD %00000000000000000100000000000000
-	EQUD %00010001000000000011100000000000
-	EQUD %00010001111000000011000000000000
-	EQUD %00010000000000000011100000000000
-	EQUD %00011101111100000000000000000000
-	EQUD %00010001110000000011000000000000
-	EQUD %00011101111100000010000000000000
-	EQUD %00000000000000000000011000000000
-	EQUD %00010001110000000011000000000000
+ EQUD %00000000000000000000000000000100
+ EQUD %00000000000000000000000000000100
+ EQUD %00000000000000000000000000001000
+ EQUD %00000000000000000000000000010000
+ EQUD %00000000000000000000000000100000
+ EQUD %00000000000000000000000001000000
+ EQUD %00000000000000000000000010000000
+ EQUD %00000000000000000000000100000000
+ EQUD %00000000000000000000001000000000
+ EQUD %00000000000000000000010000000000
+ EQUD %00011111111000000011100000000000
+ EQUD %00011001110000000011100000000000
+ EQUD %00000000000000000011100000000000
+ EQUD %00000000000000000100000000000000
+ EQUD %00000001110000001000000000000000
+ EQUD %00000000000000000000000000000010
+ EQUD %00000000000000010000000000000000
+ EQUD %00010001111111101000000000000000
+ EQUD %00010001111111100000000000000000
+ EQUD %00010001111111100000000000000000
+ EQUD %00011001111110000011000000000000
+ EQUD %00011001111111100000000000000000
+ EQUD %00011001111111100010000000000000
+ EQUD %00011001000000000000000000000000
+ EQUD %00011111000000000010000000000000
+ EQUD %00011001110000000011000000000000
+ EQUD %00100000000000000000000000000000
+ EQUD %01000000000000000000000000000000
+ EQUD %10000000000000000000000000000000
+ EQUD %00000000000000000100000000000000
+ EQUD %00010001000000000011100000000000
+ EQUD %00010001111000000011000000000000
+ EQUD %00010000000000000011100000000000
+ EQUD %00011101111100000000000000000000
+ EQUD %00010001110000000011000000000000
+ EQUD %00011101111100000010000000000000
+ EQUD %00000000000000000000011000000000
+ EQUD %00010001110000000011000000000000
 
-	EQUD %00011111111111100111111000000000
+ EQUD %00011111111111100111111000000000
 
 
 .ship_bytes

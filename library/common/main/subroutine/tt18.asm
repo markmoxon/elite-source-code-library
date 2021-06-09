@@ -156,7 +156,7 @@ ELIF _ELITE_A_6502SP_PARA
  CMP #253               \ If A >= 253 (1% chance) then jump to MJP to trigger a
  BCS MJP                \ mis-jump into witchspace
 
- JSR hyp1_flight        \ AJD
+ JSR hyp1_FLIGHT        \ AJD
 
 ENDIF
 

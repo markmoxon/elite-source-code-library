@@ -17,7 +17,7 @@ IF _ELITE_A_VERSION
 
  LDA ENGY               \ AJD
  BNE rew_notgot
- DEC new_hold	        \** NOT TRAPPED FOR NO SPACE
+ DEC new_hold           \** NOT TRAPPED FOR NO SPACE
 
 .rew_notgot
 

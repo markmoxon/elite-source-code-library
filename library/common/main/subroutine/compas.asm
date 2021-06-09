@@ -26,7 +26,7 @@ ELIF _ELITE_A_VERSION
  LDY #&25               \ AJD
  LDA &0320
  BNE l_station
- LDY &9F	\ finder
+ LDY &9F                \ finder
 
 .l_station
 

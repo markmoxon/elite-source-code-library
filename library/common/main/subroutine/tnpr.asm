@@ -119,7 +119,7 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- CMP new_hold	        \ New hold size AJD
+ CMP new_hold           \ New hold size AJD
 
 .n_over
 

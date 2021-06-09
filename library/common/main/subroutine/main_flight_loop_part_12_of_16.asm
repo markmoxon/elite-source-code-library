@@ -177,13 +177,13 @@ IF _ELITE_A_VERSION
  \ hit opponent
  STA &D1                \ AJD
  SEC
- LDY #&0E	\ opponent shield
+ LDY #&0E               \ opponent shield
  LDA (&1E),Y
  AND #&07
  SBC &D1
  BCS n_kill
- \	BCC n_defense
- \	LDA #&FF
+ \BCC n_defense
+ \LDA #&FF
  \n_defense
  CLC
  ADC &69

@@ -215,9 +215,6 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_1_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_2_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_3_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_4_of_16.asm"
-
-\ Omit part 5 (energy bomb)
-
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_6_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_7_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_8_of_16.asm"
@@ -347,11 +344,7 @@ INCLUDE "library/enhanced/main/subroutine/dcs1.asm"
 INCLUDE "library/common/main/subroutine/hitch.asm"
 INCLUDE "library/common/main/subroutine/frs1.asm"
 INCLUDE "library/common/main/subroutine/frmis.asm"
-
-.anger_8c
-
- LDA &8C
-
+INCLUDE "library/elite-a/flight/subroutine/anger_8c.asm"
 INCLUDE "library/common/main/subroutine/angry.asm"
 INCLUDE "library/common/main/subroutine/fr1.asm"
 INCLUDE "library/common/main/subroutine/sescp.asm"
@@ -420,37 +413,7 @@ PRINT "S.ELTC ", ~CODE_C%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_C%
 CODE_D% = P%
 LOAD_D% = LOAD% + P% - CODE%
 
-.tnpr_FLIGHT
-
- CPX #&10
- BEQ n_aliens
- CPX #&0D
- BCS l_2b04
-
-.n_aliens
-
- LDY #&0C               \ Related to tnpr, but not the same
- SEC
- LDA QQ20+&10
-
-.l_2af9
-
- ADC QQ20,Y
- BCS n_cargo
- DEY
- BPL l_2af9
- CMP new_hold
-
-.n_cargo
-
- RTS
-
-.l_2b04
-
- LDA QQ20,X
- ADC #&00
- RTS
-
+INCLUDE "library/elite-a/flight/subroutine/tnpr_flight.asm"
 INCLUDE "library/common/main/subroutine/tt20.asm"
 INCLUDE "library/common/main/subroutine/tt54.asm"
 INCLUDE "library/common/main/subroutine/tt146.asm"
@@ -565,9 +528,18 @@ INCLUDE "library/common/main/subroutine/dot.asm"
 INCLUDE "library/common/main/subroutine/cpix4.asm"
 INCLUDE "library/common/main/subroutine/cpix2.asm"
 
+\ ******************************************************************************
+\
+\       Name: OOPS2
+\       Type: Subroutine
+\   Category: Elite-A
+\    Summary: AJD
+\
+\ ******************************************************************************
+
 .OOPS2
 
- SEC	\ reduce damage
+ SEC                    \ reduce damage
  SBC new_shields
  BCC n_shok
 
@@ -645,29 +617,7 @@ CODE_F% = P%
 LOAD_F% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/variable/sfx.asm"
-
-.rand_posn
-
- JSR ZINF
- JSR DORND
- STA &46
- STX &49
- STA &06
- LSR A
- ROR &48
- LSR A
- ROR &4B
- LSR A
- STA &4A
- TXA
- AND #&1F
- STA &47
- LDA #&50
- SBC &47
- SBC &4A
- STA &4D
- JMP DORND
-
+INCLUDE "library/elite-a/flight/subroutine/rand_posn.asm"
 INCLUDE "library/enhanced/main/subroutine/there.asm"
 INCLUDE "library/common/main/subroutine/reset.asm"
 INCLUDE "library/common/main/subroutine/res2.asm"
@@ -708,29 +658,8 @@ INCLUDE "library/common/main/subroutine/noise.asm"
 INCLUDE "library/common/main/subroutine/no3.asm"
 INCLUDE "library/common/main/subroutine/nos1.asm"
 INCLUDE "library/common/main/variable/kytb.asm"
-
-.b_table
-
- EQUB &61, &31, &80, &80, &80, &80, &51
- EQUB &64, &34, &32, &62, &52, &54, &58, &38, &68
-
-.b_13
-
- LDA #&00
-
-.b_14
-
- TAX
- EOR b_table-1,Y
- BEQ b_quit
- STA &FE60
- AND #&0F
- AND &FE60
- BEQ b_pressed
- TXA
- BMI b_13
- RTS
-
+INCLUDE "library/elite-a/flight/variable/b_table.asm"
+INCLUDE "library/elite-a/flight/subroutine/b_14.asm"
 INCLUDE "library/original/main/subroutine/dks1.asm"
 INCLUDE "library/common/main/subroutine/ctrl.asm"
 INCLUDE "library/common/main/subroutine/dks4.asm"
@@ -741,11 +670,7 @@ INCLUDE "library/common/main/subroutine/u_per_cent.asm"
 INCLUDE "library/common/main/subroutine/dokey.asm"
 INCLUDE "library/common/main/subroutine/dk4.asm"
 INCLUDE "library/common/main/subroutine/me1.asm"
-
-.cargo_mtok
-
- ADC #&D0
-
+INCLUDE "library/elite-a/flight/subroutine/cargo_mtok.asm"
 INCLUDE "library/common/main/subroutine/mess.asm"
 INCLUDE "library/common/main/subroutine/mes9.asm"
 INCLUDE "library/common/main/subroutine/ouch.asm"
@@ -803,15 +728,8 @@ INCLUDE "library/common/main/subroutine/ttx66-ttx662.asm"
 INCLUDE "library/common/main/subroutine/delay.asm"
 INCLUDE "library/common/main/subroutine/clyns.asm"
 INCLUDE "library/original/main/subroutine/lyn.asm"
-
-.iff_xor
-
- EQUB &00, &00, &0F	\, &FF, &F0 overlap
-
-.iff_base
-
- EQUB &FF, &F0, &FF, &F0, &FF
-
+INCLUDE "library/elite-a/flight/variable/iff_xor.asm"
+INCLUDE "library/elite-a/flight/variable/iff_base.asm"
 INCLUDE "library/common/main/subroutine/scan.asm"
 INCLUDE "library/common/main/subroutine/wscan.asm"
 

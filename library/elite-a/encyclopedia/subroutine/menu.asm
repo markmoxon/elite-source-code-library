@@ -15,7 +15,7 @@
  STA &03AD
  LDA menu_query,X
  PHA
- LDA menu_title,X	
+ LDA menu_title,X
  PHA
  LDA menu_titlex,X
  PHA

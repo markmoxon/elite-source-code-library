@@ -61,7 +61,7 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
- LDA #&E	            \ print hold size AJD
+ LDA #&E                \ print hold size AJD
  JSR TT68
  LDX new_hold
  DEX

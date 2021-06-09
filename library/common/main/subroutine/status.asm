@@ -468,15 +468,15 @@ ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
 .l_1b6b
 
- \	LDA #&71
- \	STA &96
+ \LDA #&71
+ \STA &96
  LDX #&1A
 
 .stqv
 
  STX &93
- \	TAY
- \	LDX FRIN,Y
+ \TAY
+ \LDX FRIN,Y
  LDY LASER,X
  BEQ l_1b78
  TXA
@@ -486,9 +486,9 @@ ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
 .l_1b78
 
- \	INC &96
- \	LDA &96
- \	CMP #&75
+ \INC &96
+ \LDA &96
+ \CMP #&75
  LDX &93
  INX
  CPX #&1E

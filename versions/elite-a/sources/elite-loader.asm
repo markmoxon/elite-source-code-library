@@ -44,6 +44,16 @@ _ELITE_A_6502SP_PARA    = FALSE
 _RELEASED               = (_RELEASE = 1)
 _SOURCE_DISC            = (_RELEASE = 2)
 
+\ ******************************************************************************
+\
+\ Configuration variables
+\
+\ ******************************************************************************
+
+ Q% = _REMOVE_CHECKSUMS \ Set Q% to TRUE to max out the default commander, FALSE
+                        \ for the standard default commander (this is set to
+                        \ TRUE if checksums are disabled, just for convenience)
+
 CODE% = &1900
 ORG CODE%
 LOAD% = &1900
@@ -1035,14 +1045,10 @@ INCLUDE "library/common/main/variable/qq18.asm"
  BPL ulaloop3
  BMI return
 
- EQUS ":0.E.NEWCOME", &0D
- EQUB &00, &14, &AD, &4A, &5A, &48, &02, &53, &B7, &00, &00, &13
- EQUB &88, &3C, &00, &00, &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &0F, &11, &00, &03, &1C, &0E
- EQUB &00, &00, &0A, &00, &11, &3A, &07, &09, &08, &00, &00, &00
- EQUB &00, &20, &F1, &58
+INCLUDE "library/enhanced/main/variable/s1_per_cent.asm"
+INCLUDE "library/common/main/variable/na_per_cent-default_per_cent.asm"
+INCLUDE "library/common/main/variable/chk2.asm"
+INCLUDE "library/common/main/variable/chk.asm"
 
  LDY #&00
  LDA #&0D

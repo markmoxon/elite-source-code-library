@@ -29,6 +29,9 @@
  JSR TT66
  JSR MT1
  LDX &8C
+
+IF _ELITE_A_ENCYCLOPEDIA
+
  LDA ship_file,X
  CMP ship_load+&04
  BEQ ship_skip
@@ -38,6 +41,15 @@
  JSR OSCLI
 
 .ship_skip
+
+ELIF _ELITE_A_6502SP_PARA
+
+ LDA ship_posn,X
+ TAX
+ LDY #0
+ JSR install_ship
+
+ENDIF
 
  LDX &8C
  LDA ship_centre,X
@@ -57,6 +69,9 @@
  STA QQ17
  LDA &8C
  JSR write_card
+
+IF _ELITE_A_ENCYCLOPEDIA
+
  LDX &8C
  LDA ship_posn,X
  JSR NWSHP
@@ -65,6 +80,14 @@
 
  JSR RDKEY
  BNE l_release
+
+ELIF _ELITE_A_6502SP_PARA
+
+ LDA #0
+ JSR NWSHP
+ JSR l_release
+
+ENDIF
 
 .l_395a
 
@@ -84,8 +107,19 @@
  STA &49
  JSR LL9
  DEC &8A
+
+IF _ELITE_A_ENCYCLOPEDIA
+
  JSR WSCAN
  JSR RDKEY
+
+ELIF _ELITE_A_6502SP_PARA
+
+ JSR check_keys
+ CPX #0
+
+ENDIF
+
  BEQ l_395a
  JMP BAY
 

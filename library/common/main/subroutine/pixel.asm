@@ -59,10 +59,6 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 \ Returns:
 \
 \   Y                   Y is preserved
-\
-\ Other entry points:
-\
-\   PX4                 Contains an RTS
 ELIF _6502SP_VERSION
 \   OSSC(1 0)           A parameter block as follows:
 \
@@ -89,6 +85,12 @@ ELIF _6502SP_VERSION
 \                         * Byte #7 = The y-coordinate of the second dot
 \
 \                       and so on
+ENDIF
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _MASTER_VERSION \ Comment
+\
+\ Other entry points:
+\
+\   PX4                 Contains an RTS
 ENDIF
 \
 \ ******************************************************************************

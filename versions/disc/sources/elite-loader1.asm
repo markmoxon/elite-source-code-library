@@ -42,6 +42,12 @@ _ELITE_A_6502SP_PARA    = FALSE
 _IB_DISC                = (_RELEASE = 1)
 _STH_DISC               = (_RELEASE = 2)
 
+\ ******************************************************************************
+\
+\ Configuration variables
+\
+\ ******************************************************************************
+
 BYTEV = &020A           \ The BYTEV vector that we check as part of the copy
                         \ protection
 

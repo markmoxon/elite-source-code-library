@@ -36,7 +36,7 @@ ENDIF
 
  PLA                    \ Restore the new message token
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA \ Platform
 
  EQUB &2C               \ Fall through into ou2 to print the new message, but
                         \ skip the first instruction by turning it into

@@ -16,7 +16,7 @@
 \
 \ ******************************************************************************
 
-IF _MASTER_VERSION \ Platform
+IF _MASTER_VERSION OR _ELITE_A_6502SP_PARA \ Platform
 
 .SC5
 
@@ -98,9 +98,50 @@ ELIF _MASTER_VERSION
  STA COL                \ Store the scanner colour in COL so it can be used to
                         \ draw this ship in the correct colour
 
-ELIF _ELITE_A_VERSION
+ELIF _ELITE_A_FLIGHT
 
  JSR iff_index          \ AJD
+ LDA iff_base,X
+ STA &91
+ LDA iff_xor,X
+ STA &37
+
+ELIF _ELITE_A_6502SP_PARA
+
+ LDX CRGO               \ iff code AJD
+ BEQ iff_not
+ LDY #&24
+ LDA (&20),Y
+ ASL A
+ ASL A
+ BCS iff_cop
+ ASL A
+ BCS iff_trade
+ LDY &8C
+ DEY
+ BEQ iff_missle
+ CPY #&08
+ BCC iff_aster
+ INX \ X=4
+
+.iff_missle
+
+ INX \ X=3
+
+.iff_aster
+
+ INX \ X=2
+
+.iff_cop
+
+ INX \ X=1
+
+.iff_trade
+
+ INX \ X=0
+
+.iff_not
+
  LDA iff_base,X
  STA &91
  LDA iff_xor,X
@@ -395,7 +436,7 @@ IF _CASSETTE_VERSION \ Comment
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Master: See group A
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Master: See group A
 
 .SC48
 
@@ -416,6 +457,24 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ 
                         \ We can use there as the starting point for drawing the
                         \ stick, if there is one
 
+ELIF _ELITE_A_6502SP_PARA
+
+ TAX                    \ AJD
+ LDA #&91
+ JSR tube_write
+ LDA &34
+ JSR tube_write
+ LDA &35
+ JSR tube_write
+ LDA &91
+ JSR tube_write
+ LDA &37
+ JSR tube_write
+ TXA
+ JSR tube_write
+ LDX #0
+ RTS
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Master: See group A
@@ -435,7 +494,7 @@ ELIF _ELECTRON_VERSION
 
  PLA                    \ Restore the stick height from the stack into A
 
-ELIF _ELITE_A_VERSION
+ELIF _ELITE_A_FLIGHT
 
  LDA TWOS+&11,X         \ AJD
  TAX
@@ -480,7 +539,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Tube
                         \ in the character above, so set Y to 7, the number of
                         \ the last row
 
-ELIF _ELITE_A_VERSION
+ELIF _ELITE_A_FLIGHT
 
  TAX                    \ Copy the stick height into X
 
@@ -510,7 +569,7 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Screen
 
  DEC SC+1               \ Decrement the high byte of the screen address to move
                         \ to the character block above
@@ -560,7 +619,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Tube
                         \ the dot, and we need to draw the stick downwards from
                         \ the dot)
 
-ELIF _ELITE_A_VERSION
+ELIF _ELITE_A_FLIGHT
 
 .VL1
 
@@ -820,7 +879,7 @@ ELIF _MASTER_VERSION
 
  RTS                    \ Return from the subroutine
 
-ELIF _ELITE_A_VERSION
+ELIF _ELITE_A_FLIGHT
 
  INY                    \ We want to draw the stick downwards, so we first
                         \ increment the row counter so that it's pointing to the

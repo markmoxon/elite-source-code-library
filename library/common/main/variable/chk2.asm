@@ -19,7 +19,7 @@
 
 .CHK2
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ 6502SP: The Executive version contains a maxed-out default commander, which has a different second checksum byte
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ 6502SP: The Executive version contains a maxed-out default commander, which has a different second checksum byte
 
  EQUB &03 EOR &A9       \ The checksum value for the default commander, EOR'd
                         \ with &A9 to make it harder to tamper with the checksum
@@ -44,6 +44,12 @@ ENDIF
 ELIF _MASTER_VERSION
 
  EQUB 0
+
+ELIF _ELITE_A_VERSION
+
+ EQUB &58 EOR &A9       \ The checksum value for the default commander, EOR'd
+                        \ with &A9 to make it harder to tamper with the checksum
+                        \ byte, #74
 
 ENDIF
 

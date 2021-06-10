@@ -61,6 +61,20 @@
                         \ so if Y is positive we display the point up from the
                         \ centre, while a negative Y means down from the centre
 
+IF NOT(_ELITE_A_6502SP_PARA)
+
                         \ Fall through into PIXEL to draw the stardust at the
                         \ screen coordinates in (X, A)
+
+ELIF _ELITE_A_6502SP_PARA
+
+ JMP PIXEL              \ Jump to PIXEL to draw the stardust at the screen
+                        \ coordinates in (X, A), returning from the subroutine
+                        \ using a tail call
+
+.PX4
+
+ RTS                    \ Return from the subroutine
+
+ENDIF
 

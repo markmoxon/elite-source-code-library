@@ -51,6 +51,10 @@ _SOURCE_DISC            = (_RELEASE = 2)
 \
 \ ******************************************************************************
 
+ Q% = _REMOVE_CHECKSUMS \ Set Q% to TRUE to max out the default commander, FALSE
+                        \ for the standard default commander (this is set to
+                        \ TRUE if checksums are disabled, just for convenience)
+
 LS% = &0CFF             \ The start of the descending ship line heap
 
 NOST = 18               \ The number of stardust particles in normal space (this
@@ -192,39 +196,10 @@ tube_r3d = &FEFD
 tube_r4s = &FEFE
 tube_r4d = &FEFF
 
-
-
-._117C
-
- EQUS ":0.E"
-
-._1180
-
- EQUS "."
-
-.NA%
-
- EQUS "NEWCOME"
-
-._1188
-
- EQUS &0D
-
-.commander
-
- EQUB &00, &14, &AD, &4A, &5A, &48, &02, &53, &B7, &00, &00, &13
- EQUB &88, &3C, &00, &00, &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &00, &00, &00, &00, &00, &00
- EQUB &00, &00, &00, &00, &00, &00, &0F, &11, &00, &03, &1C, &0E
- EQUB &00, &00, &0A, &00, &11, &3A, &07, &09, &08, &00, &00, &00
- EQUB &00, &20
-
-.CHK2
- EQUB &F1
-
-.CHK
- EQUB &58
+INCLUDE "library/enhanced/main/variable/s1_per_cent.asm"
+INCLUDE "library/common/main/variable/na_per_cent-default_per_cent.asm"
+INCLUDE "library/common/main/variable/chk2.asm"
+INCLUDE "library/common/main/variable/chk.asm"
 
 .tube_write
 
@@ -740,187 +715,13 @@ INCLUDE "library/common/main/macro/twok.asm"
 INCLUDE "library/common/main/macro/cont.asm"
 INCLUDE "library/common/main/macro/rtok.asm"
 INCLUDE "library/common/main/variable/qq18.asm"
-
-.SNE
-
- EQUB &00, &19, &32, &4A, &62, &79, &8E, &A2, &B5, &C6, &D5, &E2
- EQUB &ED, &F5, &FB, &FF, &FF, &FF, &FB, &F5, &ED, &E2, &D5, &C6
- EQUB &B5, &A2, &8E, &79, &62, &4A, &32, &19
-
-.ACT
-
- EQUB &00, &01, &03, &04, &05, &06, &08, &09, &0A, &0B, &0C, &0D
- EQUB &0F, &10, &11, &12, &13, &14, &15, &16, &17, &18, &19, &19
- EQUB &1A, &1B, &1C, &1D, &1D, &1E, &1F, &1F
-
-.encyclopedia
-
- LDX #&00
- JSR menu
- CMP #&01
- BNE n_shipsag
- JMP ships_ag
-
-.n_shipsag
-
- CMP #&02
- BNE n_shipskw
- JMP ships_kw
-
-.n_shipskw
-
- CMP #&03
- BNE n_equipdat
- JMP equip_data
-
-.n_equipdat
-
- CMP #&04
- BNE n_controls
- JMP controls
-
-.n_controls
-
- CMP #&05
- BNE jmp_start3_dup
- JMP trading
-
-.jmp_start3_dup
-
- \JSR dn2
- \JMP BAY
- JMP dn2
-
-.ships_ag
-
-
-.ships_kw
-
- PHA
- TAX
- JSR menu
- SBC #&00
- PLP
- BCS ship_over
- ADC menu_entry+1
-
-.ship_over
-
- STA &8C
- CLC
- ADC #&07
- PHA
- LDA #&20
- JSR TT66
- JSR MT1
- LDX &8C
- LDA ship_posn,X
- TAX
- LDY #0
- JSR install_ship
- LDX &8C
- LDA ship_centre,X
- STA XC
- PLA
- JSR write_msg3
- JSR NLIN4
- JSR ZINF
- LDA #&60
- STA &54
- LDA #&B0
- STA &4D
- LDX #&7F
- STX &63
- STX &64
- INX
- STA QQ17
- LDA &8C
- JSR write_card
- LDA #0
- JSR NWSHP
- JSR i_release
-
-.i_395a
-
- LDX &8C
- LDA ship_dist,X
- CMP &4D
- BEQ i_3962
- DEC &4D
-
-.i_3962
-
- JSR MVEIT
- LDA #&80
- STA &4C
- ASL A
- STA &46
- STA &49
- JSR LL9
- DEC &8A
- JSR check_keys
- CPX #0
- BEQ i_395a
- JMP BAY
-
-.controls
-
- LDX #&03
- JSR menu
- ADC #&56
- PHA
- ADC #&04
- PHA
- LDA #&20
- JSR TT66
- JSR MT1
- LDA #&0B
- STA XC
- PLA
- JSR write_msg3
- JSR NLIN4
- JSR MT2
- INC YC
- PLA
- JSR write_msg3
- JMP i_restart
-
-.equip_data
-
- LDX #&04
- JSR menu
- ADC #&6B
- PHA
- SBC #&0C
- PHA
- LDA #&20
- JSR TT66
- JSR MT1
- LDA #&0B
- STA XC
- PLA
- JSR write_msg3
- JSR NLIN4
- JSR MT2
- JSR MT13
- INC YC
- INC YC
- LDA #&01
- STA XC
- PLA
- JSR write_msg3
- JMP i_restart
-
-.trading
-
-
-.i_restart
-
- JSR check_keys
- TXA
- BEQ i_restart
- JMP BAY
-
+INCLUDE "library/common/main/variable/sne.asm"
+INCLUDE "library/common/main/variable/act.asm"
+INCLUDE "library/elite-a/encyclopedia/subroutine/info_menu.asm"
+INCLUDE "library/elite-a/encyclopedia/subroutine/ships_ag.asm"
+INCLUDE "library/elite-a/encyclopedia/subroutine/controls.asm"
+INCLUDE "library/elite-a/encyclopedia/subroutine/equip_data.asm"
+INCLUDE "library/elite-a/encyclopedia/subroutine/trading.asm"
 
 .check_keys
 
@@ -946,10 +747,10 @@ INCLUDE "library/common/main/variable/qq18.asm"
  CPX #&59
  BNE freeze_loop
 
-.i_release
+.l_release
 
  JSR RDKEY
- BNE i_release
+ BNE l_release
  LDX #0 \ no key was pressed
 
 .not_freeze
@@ -957,74 +758,9 @@ INCLUDE "library/common/main/variable/qq18.asm"
  RTS
 
 INCLUDE "library/elite-a/encyclopedia/subroutine/write_card.asm"
-
-.ship_posn
-
- EQUB 20, 13, 23, 12, 33, 37, 22
- EQUB 10,  1,  0,  2, 24, 21, 32
- EQUB 35, 19, 18, 30, 25, 31, 11
- EQUB  8, 17, 26, 27,  9, 16, 14
-
+INCLUDE "library/elite-a/encyclopedia/variable/ship_posn.asm"
 INCLUDE "library/elite-a/encyclopedia/variable/ship_dist.asm"
-
-.menu
-
- LDA menu_entry,X
- STA &03AB
- LDA menu_offset,X
- STA &03AD
- LDA menu_query,X
- PHA
- LDA menu_title,X
- PHA
- LDA menu_titlex,X
- PHA
- LDA #&20
- JSR TT66
- JSR MT1
- PLA
- STA XC
- PLA
- JSR write_msg3
- JSR NLIN4
- INC YC
- LDX #&00
-
-.menu_loop
-
- STX &89
- JSR TT67
- LDX &89
- INX
- CLC
- JSR pr2
- JSR TT162
- JSR MT2
- LDA #&80
- STA QQ17
- CLC
- LDA &89
- ADC &03AD
- JSR write_msg3
- LDX &89
- INX
- CPX &03AB
- BCC menu_loop
- JSR CLYNS
- PLA
- JSR write_msg3
- LDA #'?'
- JSR DASC
- JSR gnum
- BEQ menu_start
- BCS menu_start
- RTS
-
-.menu_start
-
- JMP BAY
-
-
+INCLUDE "library/elite-a/encyclopedia/subroutine/menu.asm"
 INCLUDE "library/elite-a/encyclopedia/variable/menu_title.asm"
 INCLUDE "library/elite-a/encyclopedia/variable/menu_titlex.asm"
 INCLUDE "library/elite-a/encyclopedia/variable/menu_offset.asm"
@@ -1068,9 +804,6 @@ INCLUDE "library/elite-a/encyclopedia/variable/card_data.asm"
  \ TAX
  \ RTS
 
-
-\ a.qcode_5
-
 .DOENTRY_FLIGHT
 
  JSR RES2
@@ -1097,47 +830,8 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_14_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_15_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_16_of_16.asm"
 INCLUDE "library/enhanced/main/subroutine/spin.asm"
-
-
-.PIX1
-
- JSR ADD
- STA &27
- TXA
- STA &0F95,Y
-
-.PIXEL2
-
- LDA &34
- BPL d_1919
- EOR #&7F
- CLC
- ADC #&01
-
-.d_1919
-
- EOR #&80
- TAX
- LDA &35
- AND #&7F
- CMP #&60
- BCS d_196a
- LDA &35
- BPL d_192c
- EOR #&7F
- ADC #&01
-
-.d_192c
-
- STA &D1
- LDA #&61
- SBC &D1
- JMP PIXEL
-
-.d_196a
-
- RTS
-
+INCLUDE "library/common/main/subroutine/pix1.asm"
+INCLUDE "library/common/main/subroutine/pixel2.asm"
 INCLUDE "library/common/main/subroutine/flip.asm"
 INCLUDE "library/common/main/subroutine/stars.asm"
 INCLUDE "library/common/main/subroutine/stars1.asm"
@@ -1164,11 +858,7 @@ INCLUDE "library/enhanced/main/subroutine/dcs1.asm"
 INCLUDE "library/common/main/subroutine/hitch.asm"
 INCLUDE "library/common/main/subroutine/frs1.asm"
 INCLUDE "library/common/main/subroutine/frmis.asm"
-
-.anger_8c
-
- LDA &8C
-
+INCLUDE "library/elite-a/flight/subroutine/anger_8c.asm"
 INCLUDE "library/common/main/subroutine/angry.asm"
 INCLUDE "library/common/main/subroutine/fr1.asm"
 INCLUDE "library/common/main/subroutine/sescp.asm"
@@ -1293,12 +983,7 @@ INCLUDE "library/common/main/subroutine/cpix4.asm"
  LDA &91
  JMP tube_write
 
-.OOPS2
-
- SEC \ reduce damage
- SBC new_shields
- BCC n_shok
-
+INCLUDE "library/elite-a/flight/subroutine/oops2.asm"
 INCLUDE "library/common/main/subroutine/oops.asm"
 INCLUDE "library/common/main/subroutine/sps3.asm"
 INCLUDE "library/common/main/variable/univ.asm"
@@ -1358,29 +1043,7 @@ INCLUDE "library/common/main/subroutine/ks1.asm"
 INCLUDE "library/common/main/subroutine/ks4.asm"
 INCLUDE "library/common/main/subroutine/ks2.asm"
 INCLUDE "library/common/main/subroutine/killshp.asm"
-
-.rand_posn
-
- JSR ZINF
- JSR DORND
- STA &46
- STX &49
- STA &06
- LSR A
- ROR &48
- LSR A
- ROR &4B
- LSR A
- STA &4A
- TXA
- AND #&1F
- STA &47
- LDA #&50
- SBC &47
- SBC &4A
- STA &4D
- JMP DORND
-
+INCLUDE "library/elite-a/flight/subroutine/rand_posn.asm"
 INCLUDE "library/enhanced/main/subroutine/there.asm"
 INCLUDE "library/common/main/subroutine/ze.asm"
 
@@ -1393,7 +1056,7 @@ INCLUDE "library/common/main/subroutine/main_game_loop_part_1_of_6.asm"
 
 .d_3fc0
 
- JSR M%
+ JSR M%                 \ Like main game loop 2
  DEC &034A
  BEQ d_3f54
  BPL d_3fcd
@@ -1456,7 +1119,7 @@ INCLUDE "library/common/main/subroutine/main_game_loop_part_4_of_6.asm"
 
 .MLOOP_FLIGHT
 
- LDX #&FF
+ LDX #&FF               \ Like main game loop 5
  TXS
  LDX GNTMP
  BEQ d_40e6
@@ -1477,12 +1140,12 @@ INCLUDE "library/common/main/subroutine/main_game_loop_part_4_of_6.asm"
 
 .d_40f8
 
- JSR d_44af
+ JSR DOKEY_FLIGHT
  JSR chk_dirn
 
 .FRCE_FLIGHT
 
- PHA
+ PHA                \ Like main game loop 6
  LDA &2F
  BNE d_locked
  PLA
@@ -1501,7 +1164,6 @@ INCLUDE "library/common/main/subroutine/farof2.asm"
 INCLUDE "library/common/main/subroutine/mas4.asm"
 INCLUDE "library/common/main/subroutine/death.asm"
 INCLUDE "library/disc/flight/subroutine/rships.asm"
-
 
 .LSHIPS
 
@@ -1646,50 +1308,20 @@ INCLUDE "library/common/main/subroutine/exno.asm"
 
  RTS
 
-.d_4473
+INCLUDE "library/common/main/subroutine/dkj1.asm"
+INCLUDE "library/common/main/subroutine/u_per_cent.asm"
 
- LDA &033F
- BNE d_44c7
- LDY #&01
- JSR DKS1
- INY
- JSR DKS1
- JSR scan_fire
- EOR #&10
- STA &0307
- LDX #&01
- JSR DKS2
- ORA #&01
- STA JSTX
- LDX #&02
- JSR DKS2
- EOR JSTGY
- STA JSTY
- JMP d_4555
+.DOKEY_FLIGHT
 
-.U%
-
- LDA #&00
- LDY #&10
-
-.d_44a8
-
- STA KL,Y
- DEY
- BNE d_44a8
- RTS
-
-.d_44af
-
- JSR U%
+ JSR U%                 \ Copy of DOKEY
  LDA &2F
  BEQ d_open
- JMP d_4555
+ JMP DK4_FLIGHT
 
 .d_open
 
  LDA JSTK
- BNE d_4473
+ BNE DKJ1
  LDY #&07
 
 .d_44bc
@@ -1700,7 +1332,7 @@ INCLUDE "library/common/main/subroutine/exno.asm"
  LDA &033F
  BEQ d_4526
 
-.d_44c7
+.auton
 
  JSR ZINF
  LDA #&60
@@ -1802,11 +1434,11 @@ INCLUDE "library/common/main/subroutine/exno.asm"
 
 .d_4552
 
- STX JSTY
+ STX JSTY               \ End copy of DOKEY
 
-.d_4555
+.DK4_FLIGHT
 
- JSR RDKEY
+ JSR RDKEY              \ Copy of DK4
  STX KL
  CPX #&69
  BNE d_459c
@@ -1864,42 +1496,12 @@ INCLUDE "library/common/main/subroutine/exno.asm"
 
 .DK5
 
- RTS
+ RTS                    \ End copy of DK4
 
-.d_45b5
-
- STX &034A
- PHA
- LDA &03A4
- JSR d_45dd
- PLA
- EQUB &2C
-
-.cargo_mtok
-
- ADC #&D0
-
-.MESS
-
- LDX #&00
- STX QQ17
- LDY #&09
- STY XC
- LDY #&16
- STY YC
- CPX &034A
- BNE d_45b5
- STY &034A
- STA &03A4
-
-.d_45dd
-
- JSR TT27
- LSR &034B
- BCC DK5
- LDA #&FD
- JMP TT27
-
+INCLUDE "library/common/main/subroutine/me1.asm"
+INCLUDE "library/elite-a/flight/subroutine/cargo_mtok.asm"
+INCLUDE "library/common/main/subroutine/mess.asm"
+INCLUDE "library/common/main/subroutine/mes9.asm"
 INCLUDE "library/common/main/subroutine/ouch.asm"
 
 .d_4889
@@ -1934,173 +1536,14 @@ INCLUDE "library/common/main/subroutine/mv40.asm"
 INCLUDE "library/common/main/subroutine/plut-pu1.asm"
 INCLUDE "library/common/main/subroutine/look1.asm"
 INCLUDE "library/common/main/subroutine/sight.asm"
+INCLUDE "library/elite-a/flight/variable/iff_xor.asm"
+INCLUDE "library/elite-a/flight/variable/iff_base.asm"
+INCLUDE "library/common/main/subroutine/scan.asm"
 
-.iff_xor
-
- EQUB &00, &00, &0F \, &FF, &F0 overlap
-
-.iff_base
-
- EQUB &FF, &F0, &FF, &F0, &FF
-
-.d_5557
-
- RTS
-
-.SCAN
-
- LDA &65
- AND #&10
- BEQ d_5557
- LDA &8C
- BMI d_5557
- LDX CRGO \ iff code
- BEQ iff_not
- LDY #&24
- LDA (&20),Y
- ASL A
- ASL A
- BCS iff_cop
- ASL A
- BCS iff_trade
- LDY &8C
- DEY
- BEQ iff_missle
- CPY #&08
- BCC iff_aster
- INX \ X=4
-
-.iff_missle
-
- INX \ X=3
-
-.iff_aster
-
- INX \ X=2
-
-.iff_cop
-
- INX \ X=1
-
-.iff_trade
-
- INX \ X=0
-
-.iff_not
-
- LDA iff_base,X
- STA &91
- LDA iff_xor,X
- STA &37
- LDA &47
- ORA &4A
- ORA &4D
- AND #&C0
- BNE d_5557
- LDA &47
- CLC
- LDX &48
- BPL d_5581
- EOR #&FF
- ADC #&01
-
-.d_5581
-
- ADC #&7B
- STA &34
- LDA &4D
- LSR A
- LSR A
- CLC
- LDX &4E
- BPL d_5591
- EOR #&FF
- SEC
-
-.d_5591
-
- ADC #&23
- EOR #&FF
- STA SC
- LDA &4A
- LSR A
- CLC
- LDX &4B
- BMI d_55a2
- EOR #&FF
- SEC
-
-.d_55a2
-
- ADC SC
- BPL d_55b0
- CMP #&C2
- BCS d_55ac
- LDA #&C2
-
-.d_55ac
-
- CMP #&F7
- BCC d_55b2
-
-.d_55b0
-
- LDA #&F6
-
-.d_55b2
-
- STA &35
- SEC
- SBC SC
- TAX
- LDA #&91
- JSR tube_write
- LDA &34
- JSR tube_write
- LDA &35
- JSR tube_write
- LDA &91
- JSR tube_write
- LDA &37
- JSR tube_write
- TXA
- JSR tube_write
- LDX #0
- RTS
-
-\ a.qship_1
-
-.s_dodo
-
- EQUB &00, &90, &7E, &A4, &2C, &61, &00, &36, &90, &22, &00, &00
- EQUB &30, &7D, &F0, &00, &00, &01, &00, &00, &00, &96, &C4, &1F
- EQUB &01, &55, &8F, &2E, &C4, &1F, &01, &22, &58, &79, &C4, &5F
- EQUB &02, &33, &58, &79, &C4, &DF, &03, &44, &8F, &2E, &C4, &9F
- EQUB &04, &55, &00, &F3, &2E, &1F, &15, &66, &E7, &4B, &2E, &1F
- EQUB &12, &77, &8F, &C4, &2E, &5F, &23, &88, &8F, &C4, &2E, &DF
- EQUB &34, &99, &E7, &4B, &2E, &9F, &45, &AA, &8F, &C4, &2E, &3F
- EQUB &16, &77, &E7, &4B, &2E, &7F, &27, &88, &00, &F3, &2E, &7F
- EQUB &38, &99, &E7, &4B, &2E, &FF, &49, &AA, &8F, &C4, &2E, &BF
- EQUB &56, &AA, &58, &79, &C4, &3F, &67, &BB, &8F, &2E, &C4, &7F
- EQUB &78, &BB, &00, &96, &C4, &7F, &89, &BB, &8F, &2E, &C4, &FF
- EQUB &9A, &BB, &58, &79, &C4, &BF, &6A, &BB, &10, &20, &C4, &9E
- EQUB &00, &00, &10, &20, &C4, &DE, &00, &00, &10, &20, &C4, &17
- EQUB &00, &00, &10, &20, &C4, &57, &00, &00, &1F, &01, &00, &04
- EQUB &1F, &02, &04, &08, &1F, &03, &08, &0C, &1F, &04, &0C, &10
- EQUB &1F, &05, &10, &00, &1F, &16, &14, &28, &1F, &17, &28, &18
- EQUB &1F, &27, &18, &2C, &1F, &28, &2C, &1C, &1F, &38, &1C, &30
- EQUB &1F, &39, &30, &20, &1F, &49, &20, &34, &1F, &4A, &34, &24
- EQUB &1F, &5A, &24, &38, &1F, &56, &38, &14, &1F, &7B, &3C, &40
- EQUB &1F, &8B, &40, &44, &1F, &9B, &44, &48, &1F, &AB, &48, &4C
- EQUB &1F, &6B, &4C, &3C, &1F, &15, &00, &14, &1F, &12, &04, &18
- EQUB &1F, &23, &08, &1C, &1F, &34, &0C, &20, &1F, &45, &10, &24
- EQUB &1F, &67, &28, &3C, &1F, &78, &2C, &40, &1F, &89, &30, &44
- EQUB &1F, &9A, &34, &48, &1F, &6A, &38, &4C, &1E, &00, &50, &54
- EQUB &14, &00, &54, &5C, &17, &00, &5C, &58, &14, &00, &58, &50
- EQUB &1F, &00, &00, &C4, &1F, &67, &8E, &58, &5F, &A9, &37, &59
- EQUB &5F, &00, &B0, &58, &DF, &A9, &37, &59, &9F, &67, &8E, &58
- EQUB &3F, &00, &B0, &58, &3F, &A9, &37, &59, &7F, &67, &8E, &58
- EQUB &FF, &67, &8E, &58, &BF, &A9, &37, &59, &3F, &00, &00, &C4
+INCLUDE "library/common/main/macro/vertex.asm"
+INCLUDE "library/common/main/macro/edge.asm"
+INCLUDE "library/common/main/macro/face.asm"
+INCLUDE "library/enhanced/main/variable/ship_dodo.asm"
 
 
 .s_coriolis
@@ -3003,7 +2446,7 @@ ship_total = 38
 
 .ship_list
 
- EQUW s_dodo, s_coriolis, s_escape, s_alloys
+ EQUW SHIP_DODO, s_coriolis, s_escape, s_alloys
  EQUW s_barrel, s_boulder, s_asteroid, s_minerals
  EQUW s_shuttle1, s_transporter, s_cobra3, s_python
  EQUW s_boa, s_anaconda, s_worm, s_missile

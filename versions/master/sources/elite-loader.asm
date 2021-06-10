@@ -39,6 +39,12 @@ _ELITE_A_VERSION        = (_VERSION = 6)
 _SNG47                  = (_RELEASE = 1)
 _COMPACT                = (_RELEASE = 2)
 
+\ ******************************************************************************
+\
+\ Configuration variables
+\
+\ ******************************************************************************
+
 N% = 67                 \ N% is set to the number of bytes in the VDU table, so
                         \ we can loop through them below
 

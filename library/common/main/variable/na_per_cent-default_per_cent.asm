@@ -50,7 +50,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ 6502SP: The Executive version contains a maxed-out default commander, with a different name: Firebud instead of Jameson (the name is presumably a seven-character riff on "Firebird", the publishers of the non-Acorn versions of Elite)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ 6502SP: The Executive version contains a maxed-out default commander, with a different name: Firebud instead of Jameson (the name is presumably a seven-character riff on "Firebird", the publishers of the non-Acorn versions of Elite)
 
  EQUS "JAMESON"         \ The current commander name, which defaults to JAMESON
  EQUB 13                \
@@ -83,6 +83,14 @@ ELIF _EXECUTIVE
 
 ENDIF
 
+ELIF _ELITE_A_VERSION
+
+ EQUS "NEWCOME"         \ The current commander name, which defaults to NEWCOME
+ EQUB 13                \
+                        \ The commander name can be up to 7 characters (the DFS
+                        \ limit for file names), and is terminated by a carriage
+                        \ return
+
 ENDIF
 
                         \ NA%+8 is the start of the commander data block
@@ -108,6 +116,8 @@ ENDIF
  EQUW &0248             \ QQ21 = Seed s1 for system 0, galaxy 0 (Tibedied), #5-6
  EQUW &B753             \ QQ21 = Seed s2 for system 0, galaxy 0 (Tibedied), #7-8
 
+IF NOT(_ELITE_A_VERSION)
+
 IF Q%
  EQUD &00CA9A3B         \ CASH = Amount of cash (100,000,000 Cr), #9-12
 ELSE
@@ -116,10 +126,21 @@ ENDIF
 
  EQUB 70                \ QQ14 = Fuel level, #13
 
+ELIF _ELITE_A_VERSION
+
+IF Q%
+ EQUD &00CA9A3B         \ CASH = Amount of cash (100,000,000 Cr), #9-12
+ELSE
+ EQUD &88130000         \ CASH = Amount of cash (500 Cr), #9-12
+ENDIF
+
+ EQUB 60                \ QQ14 = Fuel level, #13
+
+ENDIF
+
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ 6502SP: The Executive version has bit 7 of the COK competition flags set, to indicate that this commander file has been tampered with (which it has, of course)
 
  EQUB 0                 \ COK = Competition flags, #14
-
 
 ELIF _6502SP_VERSION
 
@@ -137,9 +158,19 @@ ENDIF
 
  EQUB 0                 \ GCNT = Galaxy number, 0-7, #15
 
+IF NOT(_ELITE_A_VERSION)
+
  EQUB POW+(128 AND Q%)  \ LASER = Front laser, #16
 
  EQUB (POW+128) AND Q%  \ LASER+1 = Rear laser, #17
+
+ELIF _ELITE_A_VERSION
+
+ EQUB 0                 \ LASER = Front laser, #16
+
+ EQUB 0                 \ LASER+1 = Rear laser, #17
+
+ENDIF
 
  EQUB 0                 \ LASER+2 = Left laser, #18
 
@@ -149,7 +180,15 @@ ENDIF
                         \ used for up/down lasers, but they were dropped),
                         \ #20-21
 
+IF NOT(_ELITE_A_VERSION)
+
  EQUB 22+(15 AND Q%)    \ CRGO = Cargo capacity, #22
+
+ELIF _ELITE_A_VERSION
+
+ EQUB 0                 \ CRGO = Cargo capacity, #22
+
+ENDIF
 
  EQUB 0                 \ QQ20+0  = Amount of Food in cargo hold, #23
  EQUB 0                 \ QQ20+1  = Amount of Textiles in cargo hold, #24
@@ -185,11 +224,25 @@ ENDIF
 
  EQUD 0                 \ These four bytes appear to be unused, #47-50
 
+IF NOT(_ELITE_A_VERSION)
+
  EQUB 3+(Q% AND 1)      \ NOMSL = Number of missiles, #51
+
+ELIF _ELITE_A_VERSION
+
+ EQUB 0                 \ NOMSL = Number of missiles, #51
+
+ENDIF
 
  EQUB 0                 \ FIST = Legal status ("fugitive/innocent status"), #52
 
+IF NOT(_ELITE_A_VERSION)
+
  EQUB 16                \ AVL+0  = Market availability of Food, #53
+ELIF _ELITE_A_VERSION
+
+ EQUB 0                 \ AVL+0  = Market availability of Food, #53
+ENDIF
  EQUB 15                \ AVL+1  = Market availability of Textiles, #54
  EQUB 17                \ AVL+2  = Market availability of Radioactives, #55
  EQUB 0                 \ AVL+3  = Market availability of Slaves, #56
@@ -212,7 +265,15 @@ ENDIF
 
  EQUW 0                 \ TALLY = Number of kills, #71-72
 
+IF NOT(_ELITE_A_VERSION)
+
  EQUB 128               \ SVC = Save count, #73
+
+ELIF _ELITE_A_VERSION
+
+ EQUB 32                \ SVC = Save count, #73
+
+ENDIF
 
 IF _MASTER_VERSION \ Master: See group A
 

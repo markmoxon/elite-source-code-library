@@ -28,7 +28,7 @@ ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA
                         \ " DESTROYED" is never shown, even if bit 0 of de is
                         \ set, which makes sense as we are docked
 
-ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
+ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA
 
  LSR de                 \ If bit 0 of variable de is clear, return from the
  BCC DK5                \ subroutine (as DK5 contains an RTS)

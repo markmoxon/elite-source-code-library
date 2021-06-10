@@ -483,22 +483,7 @@ INCLUDE "library/common/main/subroutine/sp2.asm"
 INCLUDE "library/common/main/subroutine/dot.asm"
 INCLUDE "library/common/main/subroutine/cpix4.asm"
 INCLUDE "library/common/main/subroutine/cpix2.asm"
-
-\ ******************************************************************************
-\
-\       Name: OOPS2
-\       Type: Subroutine
-\   Category: Elite-A
-\    Summary: AJD
-\
-\ ******************************************************************************
-
-.OOPS2
-
- SEC                    \ reduce damage
- SBC new_shields
- BCC n_shok
-
+INCLUDE "library/elite-a/flight/subroutine/oops2.asm"
 INCLUDE "library/common/main/subroutine/oops.asm"
 INCLUDE "library/common/main/subroutine/sps3.asm"
 INCLUDE "library/common/main/subroutine/ginf.asm"

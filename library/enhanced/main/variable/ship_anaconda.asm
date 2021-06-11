@@ -14,7 +14,7 @@
  EQUW 100 * 100         \ Targetable area          = 100 * 100
  EQUB &6E               \ Edges data offset (low)  = &006E
  EQUB &D2               \ Faces data offset (low)  = &00D2
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Anacondas are shown in cyan
+IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Anacondas are shown in cyan
  EQUB 89                \ Max. edge count          = (89 - 1) / 4 = 22
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 93                \ Max. edge count          = (93 - 1) / 4 = 23
@@ -23,9 +23,13 @@ ENDIF
  EQUB 46                \ Explosion count          = 10, as (4 * n) + 6 = 46
  EQUB 90                \ Number of vertices       = 90 / 6 = 15
  EQUB 25                \ Number of edges          = 25
+IF NOT(_ELITE_A_VERSION)
  EQUW 0                 \ Bounty                   = 0
+ELIF _ELITE_A_VERSION
+ EQUW 350               \ Bounty                   = 350
+ENDIF
  EQUB 48                \ Number of faces          = 48 / 4 = 12
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Disc: In the disc version, the Anaconda has a visibility distance of 50 compared to 36 in the other versions, so if one is running away from you in the disc version, it will turn into a dot later than in the others
+IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Disc: In the disc version, the Anaconda has a visibility distance of 50 compared to 36 in the other versions, so if one is running away from you in the disc version, it will turn into a dot later than in the others
  EQUB 50                \ Visibility distance      = 50
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 36                \ Visibility distance      = 36
@@ -35,8 +39,15 @@ ENDIF
  EQUB &00               \ Edges data offset (high) = &006E
  EQUB &00               \ Faces data offset (high) = &00D2
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
+IF NOT(_ELITE_A_VERSION)
  EQUB %00111111         \ Laser power              = 7
                         \ Missiles                 = 7
+
+ELIF _ELITE_A_VERSION
+ EQUB %01001111         \ Laser power              = 9 AJD
+                        \ Missiles                 = 7
+
+ENDIF
 
 \VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX    0,    7,  -58,     1,      0,    5,     5,         30    \ Vertex 0

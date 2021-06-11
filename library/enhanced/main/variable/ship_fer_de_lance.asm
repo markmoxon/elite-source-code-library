@@ -14,7 +14,7 @@
  EQUW 40 * 40           \ Targetable area          = 40 * 40
  EQUB &86               \ Edges data offset (low)  = &0086
  EQUB &F2               \ Faces data offset (low)  = &00F2
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Fer-de-lances are shown in cyan
+IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Fer-de-lances are shown in cyan
  EQUB 105               \ Max. edge count          = (105 - 1) / 4 = 26
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 109               \ Max. edge count          = (109 - 1) / 4 = 27
@@ -23,16 +23,31 @@ ENDIF
  EQUB 26                \ Explosion count          = 5, as (4 * n) + 6 = 26
  EQUB 114               \ Number of vertices       = 114 / 6 = 19
  EQUB 27                \ Number of edges          = 27
+IF NOT(_ELITE_A_VERSION)
  EQUW 0                 \ Bounty                   = 0
+ELIF _ELITE_A_VERSION
+ EQUW 250               \ Bounty                   = 250
+ENDIF
  EQUB 40                \ Number of faces          = 40 / 4 = 10
  EQUB 40                \ Visibility distance      = 40
+IF NOT(_ELITE_A_VERSION)
  EQUB 160               \ Max. energy              = 160
+ELIF _ELITE_A_VERSION
+ EQUB 83                \ Max. energy              = 83
+ENDIF
  EQUB 30                \ Max. speed               = 30
  EQUB &00               \ Edges data offset (high) = &0086
  EQUB &00               \ Faces data offset (high) = &00F2
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
+IF NOT(_ELITE_A_VERSION)
  EQUB %00010010         \ Laser power              = 2
                         \ Missiles                 = 2
+
+ELIF _ELITE_A_VERSION
+ EQUB %00110010         \ Laser power              = 6
+                        \ Missiles                 = 2
+
+ENDIF
 
 \VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX    0,  -14,  108,     1,      0,    9,     5,         31    \ Vertex 0

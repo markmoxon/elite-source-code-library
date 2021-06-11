@@ -23,7 +23,11 @@ ENDIF
  EQUB 42                \ Explosion count          = 9, as (4 * n) + 6 = 42
  EQUB 168               \ Number of vertices       = 168 / 6 = 28
  EQUB 38                \ Number of edges          = 38
+IF NOT(_ELITE_A_6502SP_PARA)
  EQUW 0                 \ Bounty                   = 0
+ELIF _ELITE_A_6502SP_PARA
+ EQUW 200               \ Bounty                   = 200
+ENDIF
  EQUB 52                \ Number of faces          = 52 / 4 = 13
  EQUB 50                \ Visibility distance      = 50
 IF NOT(_ELITE_A_VERSION)
@@ -35,8 +39,15 @@ ENDIF
  EQUB &00               \ Edges data offset (high) = &00BC
  EQUB &01               \ Faces data offset (high) = &0154
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
+IF NOT(_ELITE_A_6502SP_PARA)
  EQUB %00010011         \ Laser power              = 2
                         \ Missiles                 = 3
+
+ELIF _ELITE_A_6502SP_PARA
+ EQUB %00100100         \ Laser power              = 4
+                        \ Missiles                 = 5
+
+ENDIF
 
 \VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX   32,    0,   76,    15,     15,   15,    15,         31    \ Vertex 0

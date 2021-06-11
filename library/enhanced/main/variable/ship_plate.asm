@@ -15,7 +15,7 @@
  EQUW 10 * 10           \ Targetable area          = 10 * 10
  EQUB &2C               \ Edges data offset (low)  = &002C
  EQUB &3C               \ Faces data offset (low)  = &003C
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; alloy plates are shown in cyan
+IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; alloy plates are shown in cyan
  EQUB 17                \ Max. edge count          = (17 - 1) / 4 = 4
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 21                \ Max. edge count          = (21 - 1) / 4 = 5
@@ -24,10 +24,18 @@ ENDIF
  EQUB 10                \ Explosion count          = 1, as (4 * n) + 6 = 10
  EQUB 24                \ Number of vertices       = 24 / 6 = 4
  EQUB 4                 \ Number of edges          = 4
+IF NOT(_ELITE_A_VERSION)
  EQUW 0                 \ Bounty                   = 0
+ELIF _ELITE_A_VERSION
+ EQUW 1                 \ Bounty                   = 1
+ENDIF
  EQUB 4                 \ Number of faces          = 4 / 4 = 1
  EQUB 5                 \ Visibility distance      = 5
+IF NOT(_ELITE_A_VERSION)
  EQUB 16                \ Max. energy              = 16
+ELIF _ELITE_A_VERSION
+ EQUB 8                 \ Max. energy              = 8
+ENDIF
  EQUB 16                \ Max. speed               = 16
  EQUB &00               \ Edges data offset (high) = &002C
  EQUB &00               \ Faces data offset (high) = &003C

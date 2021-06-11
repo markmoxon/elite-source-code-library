@@ -39,8 +39,15 @@ ENDIF
  EQUB &00               \ Edges data offset (high) = &006E
  EQUB &00               \ Faces data offset (high) = &00BE
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
+IF NOT(_ELITE_A_6502SP_PARA)
  EQUB %00010001         \ Laser power              = 2
                         \ Missiles                 = 1
+
+ELIF _ELITE_A_6502SP_PARA
+ EQUB %00101001         \ Laser power              = 5
+                        \ Missiles                 = 1
+
+ENDIF
 
 \VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX    0,    0,   72,     1,      2,    3,     4,         31    \ Vertex 0

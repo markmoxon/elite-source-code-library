@@ -14,7 +14,7 @@
  EQUW 30 * 30           \ Targetable area          = 30 * 30
  EQUB &3E               \ Edges data offset (low)  = &003E
  EQUB &7A               \ Faces data offset (low)  = &007A
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; boulders are shown in red
+IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; boulders are shown in red
  EQUB 45                \ Max. edge count          = (45 - 1) / 4 = 11
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 49                \ Max. edge count          = (49 - 1) / 4 = 12
@@ -26,7 +26,11 @@ ENDIF
  EQUW 1                 \ Bounty                   = 1
  EQUB 40                \ Number of faces          = 40 / 4 = 10
  EQUB 20                \ Visibility distance      = 20
+IF NOT(_ELITE_A_VERSION)
  EQUB 20                \ Max. energy              = 20
+ELIF _ELITE_A_VERSION
+ EQUB 16                \ Max. energy              = 16
+ENDIF
  EQUB 30                \ Max. speed               = 30
  EQUB &00               \ Edges data offset (high) = &003E
  EQUB &00               \ Faces data offset (high) = &007A

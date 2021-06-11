@@ -43,8 +43,15 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Disc
 ELIF _DISC_DOCKED
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
 ENDIF
+IF NOT(_ELITE_A_6502SP_PARA)
  EQUB %00010000         \ Laser power              = 2
                         \ Missiles                 = 0
+
+ELIF _ELITE_A_6502SP_PARA
+ EQUB %00100000         \ Laser power              = 4
+                        \ Missiles                 = 0
+
+ENDIF
 
 \VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX    0,    0,   96,     1,      0,    3,     2,         31    \ Vertex 0

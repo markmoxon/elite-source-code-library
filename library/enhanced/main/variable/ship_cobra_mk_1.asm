@@ -14,7 +14,7 @@
  EQUW 99 * 99           \ Targetable area          = 99 * 99
  EQUB &56               \ Edges data offset (low)  = &0056
  EQUB &9E               \ Faces data offset (low)  = &009E
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Cobras are shown in cyan
+IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Cobras are shown in cyan
  EQUB 69                \ Max. edge count          = (69 - 1) / 4 = 17
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 73                \ Max. edge count          = (73 - 1) / 4 = 18
@@ -26,13 +26,24 @@ ENDIF
  EQUW 75                \ Bounty                   = 75
  EQUB 40                \ Number of faces          = 40 / 4 = 10
  EQUB 19                \ Visibility distance      = 19
+IF NOT(_ELITE_A_VERSION)
  EQUB 90                \ Max. energy              = 90
+ELIF _ELITE_A_VERSION
+ EQUB 81                \ Max. energy              = 81
+ENDIF
  EQUB 26                \ Max. speed               = 26
  EQUB &00               \ Edges data offset (high) = &0056
  EQUB &00               \ Faces data offset (high) = &009E
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
+IF NOT(_ELITE_A_VERSION)
  EQUB %00010010         \ Laser power              = 2
                         \ Missiles                 = 2
+
+ELIF _ELITE_A_VERSION
+ EQUB %00100010         \ Laser power              = 4
+                        \ Missiles                 = 2
+
+ENDIF
 
 \VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX  -18,   -1,   50,     1,      0,    3,     2,         31    \ Vertex 0

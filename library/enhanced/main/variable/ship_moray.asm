@@ -14,7 +14,7 @@
  EQUW 30 * 30           \ Targetable area          = 30 * 30
  EQUB &68               \ Edges data offset (low)  = &0068
  EQUB &B4               \ Faces data offset (low)  = &00B4
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Morays are shown in cyan/red/black/yellow stripes
+IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Morays are shown in cyan/red/black/yellow stripes
  EQUB 69                \ Max. edge count          = (69 - 1) / 4 = 17
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 73                \ Max. edge count          = (73 - 1) / 4 = 18
@@ -26,13 +26,24 @@ ENDIF
  EQUW 50                \ Bounty                   = 50
  EQUB 36                \ Number of faces          = 36 / 4 = 9
  EQUB 40                \ Visibility distance      = 40
+IF NOT(_ELITE_A_VERSION)
  EQUB 100               \ Max. energy              = 100
+ELIF _ELITE_A_VERSION
+ EQUB 89                \ Max. energy              = 89
+ENDIF
  EQUB 25                \ Max. speed               = 25
  EQUB &00               \ Edges data offset (high) = &0068
  EQUB &00               \ Faces data offset (high) = &00B4
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
+IF NOT(_ELITE_A_VERSION)
  EQUB %00010000         \ Laser power              = 2
                         \ Missiles                 = 0
+
+ELIF _ELITE_A_VERSION
+ EQUB %00101010         \ Laser power              = 5
+                        \ Missiles                 = 2
+
+ENDIF
 
 \VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX   15,    0,   65,     2,      0,    8,     7,         31    \ Vertex 0

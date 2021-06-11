@@ -14,7 +14,7 @@
  EQUW 99 * 99           \ Targetable area          = 99 * 99
  EQUB &5C               \ Edges data offset (low)  = &005C
  EQUB &A0               \ Faces data offset (low)  = &00A0
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Geckos are shown in cyan
+IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Geckos are shown in cyan
  EQUB 65                \ Max. edge count          = (65 - 1) / 4 = 16
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 69                \ Max. edge count          = (69 - 1) / 4 = 17
@@ -26,13 +26,24 @@ ENDIF
  EQUW 55                \ Bounty                   = 55
  EQUB 36                \ Number of faces          = 36 / 4 = 9
  EQUB 18                \ Visibility distance      = 18
+IF NOT(_ELITE_A_VERSION)
  EQUB 70                \ Max. energy              = 70
+ELIF _ELITE_A_VERSION
+ EQUB 65                \ Max. energy              = 65
+ENDIF
  EQUB 30                \ Max. speed               = 30
  EQUB &00               \ Edges data offset (high) = &005C
  EQUB &00               \ Faces data offset (high) = &00A0
  EQUB 3                 \ Normals are scaled by    = 2^3 = 8
+IF NOT(_ELITE_A_VERSION)
  EQUB %00010000         \ Laser power              = 2
                         \ Missiles                 = 0
+
+ELIF _ELITE_A_VERSION
+ EQUB %00100000         \ Laser power              = 4
+                        \ Missiles                 = 0
+
+ENDIF
 
 \VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX  -10,   -4,   47,     3,      0,    5,     4,         31    \ Vertex 0

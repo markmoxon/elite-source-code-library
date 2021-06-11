@@ -14,7 +14,7 @@
  EQUW 70 * 70           \ Targetable area          = 70 * 70
  EQUB &AA               \ Edges data offset (low)  = &00AA
  EQUB &1A               \ Faces data offset (low)  = &001A
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Mambas are shown in cyan
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Mambas are shown in cyan
  EQUB 93                \ Max. edge count          = (93 - 1) / 4 = 23
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 97                \ Max. edge count          = (97 - 1) / 4 = 24
@@ -26,13 +26,24 @@ ENDIF
  EQUW 150               \ Bounty                   = 150
  EQUB 20                \ Number of faces          = 20 / 4 = 5
  EQUB 25                \ Visibility distance      = 25
+IF NOT(_ELITE_A_VERSION)
  EQUB 90                \ Max. energy              = 90
+ELIF _ELITE_A_VERSION
+ EQUB 80                \ Max. energy              = 80
+ENDIF
  EQUB 30                \ Max. speed               = 30
  EQUB &00               \ Edges data offset (high) = &00AA
  EQUB &01               \ Faces data offset (high) = &001A
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
+IF NOT(_ELITE_A_VERSION)
  EQUB %00010010         \ Laser power              = 2
                         \ Missiles                 = 2
+
+ELIF _ELITE_A_VERSION
+ EQUB %00100010         \ Laser power              = 4
+                        \ Missiles                 = 2
+
+ENDIF
 
 \VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX    0,    0,   64,     0,      1,    2,     3,         31    \ Vertex 0

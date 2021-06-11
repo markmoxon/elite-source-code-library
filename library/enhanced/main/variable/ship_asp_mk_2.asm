@@ -14,7 +14,7 @@
  EQUW 60 * 60           \ Targetable area          = 60 * 60
  EQUB &86               \ Edges data offset (low)  = &0086
  EQUB &F6               \ Faces data offset (low)  = &00F6
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Asps are shown in cyan
+IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Asps are shown in cyan
  EQUB 101               \ Max. edge count          = (101 - 1) / 4 = 25
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 105               \ Max. edge count          = (105 - 1) / 4 = 26
@@ -23,16 +23,31 @@ ENDIF
  EQUB 26                \ Explosion count          = 5, as (4 * n) + 6 = 26
  EQUB 114               \ Number of vertices       = 114 / 6 = 19
  EQUB 28                \ Number of edges          = 28
+IF NOT(_ELITE_A_VERSION)
  EQUW 200               \ Bounty                   = 200
+ELIF _ELITE_A_VERSION
+ EQUW 450               \ Bounty                   = 450
+ENDIF
  EQUB 48                \ Number of faces          = 48 / 4 = 12
  EQUB 40                \ Visibility distance      = 40
+IF NOT(_ELITE_A_VERSION)
  EQUB 150               \ Max. energy              = 150
+ELIF _ELITE_A_VERSION
+ EQUB 109               \ Max. energy              = 109
+ENDIF
  EQUB 40                \ Max. speed               = 40
  EQUB &00               \ Edges data offset (high) = &0086
  EQUB &00               \ Faces data offset (high) = &00F6
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
+IF NOT(_ELITE_A_VERSION)
  EQUB %00101001         \ Laser power              = 5
                         \ Missiles                 = 1
+
+ELIF _ELITE_A_VERSION
+ EQUB %01001001         \ Laser power              = 9 AJD
+                        \ Missiles                 = 1
+
+ENDIF
 
 \VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX    0,  -18,    0,     1,      0,    2,     2,         22    \ Vertex 0

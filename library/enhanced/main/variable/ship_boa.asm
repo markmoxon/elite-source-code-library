@@ -14,7 +14,7 @@
  EQUW 70 * 70           \ Targetable area          = 70 * 70
  EQUB &62               \ Edges data offset (low)  = &0062
  EQUB &C2               \ Faces data offset (low)  = &00C2
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Boas are shown in cyan
+IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Boas are shown in cyan
  EQUB 89                \ Max. edge count          = (89 - 1) / 4 = 22
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 93                \ Max. edge count          = (93 - 1) / 4 = 23
@@ -23,16 +23,31 @@ ENDIF
  EQUB 38                \ Explosion count          = 8, as (4 * n) + 6 = 38
  EQUB 78                \ Number of vertices       = 78 / 6 = 13
  EQUB 24                \ Number of edges          = 24
+IF NOT(_ELITE_A_VERSION)
  EQUW 0                 \ Bounty                   = 0
+ELIF _ELITE_A_VERSION
+ EQUW 250               \ Bounty                   = 250
+ENDIF
  EQUB 52                \ Number of faces          = 52 / 4 = 13
  EQUB 40                \ Visibility distance      = 40
+IF NOT(_ELITE_A_VERSION)
  EQUB 250               \ Max. energy              = 250
+ELIF _ELITE_A_VERSION
+ EQUB 164               \ Max. energy              = 164
+ENDIF
  EQUB 24                \ Max. speed               = 24
  EQUB &00               \ Edges data offset (high) = &0062
  EQUB &00               \ Faces data offset (high) = &00C2
  EQUB 0                 \ Normals are scaled by    = 2^0 = 1
+IF NOT(_ELITE_A_VERSION)
  EQUB %00011100         \ Laser power              = 3
                         \ Missiles                 = 4
+
+ELIF _ELITE_A_VERSION
+ EQUB %00101010         \ Laser power              = 5
+                        \ Missiles                 = 2
+
+ENDIF
 
 \VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX    0,    0,   93,    15,     15,   15,    15,         31    \ Vertex 0

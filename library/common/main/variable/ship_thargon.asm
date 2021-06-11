@@ -17,14 +17,14 @@
 
 IF _CASSETTE_VERSION \ Enhanced: In the enhanced versions, the Thargon ship blueprint contains the information in the top nibble of byte #0 that scooping Thargons gives us alien items
  EQUB 0                 \ Max. canisters on demise = 0
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
  EQUB 0 + (15 << 4)     \ Max. canisters on demise = 0
                         \ Market item when scooped = 15 + 1 = 16 (Alien items)
 ENDIF
  EQUW 40 * 40           \ Targetable area          = 40 * 40
  EQUB LO(SHIP_CANISTER_EDGES - SHIP_THARGON)         \ Edges data = canister
  EQUB &50               \ Faces data offset (low)  = &0050
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Thargons are shown in "white" (cyan/red stripes)
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Thargons are shown in "white" (cyan/red stripes)
  EQUB 65                \ Max. edge count          = (65 - 1) / 4 = 16
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 69                \ Max. edge count          = (69 - 1) / 4 = 17
@@ -36,13 +36,24 @@ ENDIF
  EQUW 50                \ Bounty                   = 50
  EQUB 28                \ Number of faces          = 28 / 4 = 7
  EQUB 20                \ Visibility distance      = 20
+IF NOT(_ELITE_A_VERSION)
  EQUB 20                \ Max. energy              = 20
+ELIF _ELITE_A_VERSION
+ EQUB 33                \ Max. energy              = 33
+ENDIF
  EQUB 30                \ Max. speed               = 30
  EQUB HI(SHIP_CANISTER_EDGES - SHIP_THARGON)         \ Edges data = canister
  EQUB &00               \ Faces data offset (high) = &0050
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
+IF NOT(_ELITE_A_VERSION)
  EQUB %00010000         \ Laser power              = 2
                         \ Missiles                 = 0
+
+ELIF _ELITE_A_VERSION
+ EQUB %00100000         \ Laser power              = 4
+                        \ Missiles                 = 0
+
+ENDIF
 
 \VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX   -9,    0,   40,     1,      0,    5,     5,         31    \ Vertex 0
@@ -52,6 +63,11 @@ ENDIF
  VERTEX   -9,   38,   12,     4,      0,    5,     5,         31    \ Vertex 4
  VERTEX    9,    0,   -8,     5,      1,    6,     6,         31    \ Vertex 5
  VERTEX    9,  -10,  -15,     2,      1,    6,     6,         31    \ Vertex 6
+IF _ELITE_A_VERSION
+
+.SHIP_THARGON_VERTICES
+
+ENDIF
  VERTEX    9,   -6,  -26,     3,      2,    6,     6,         31    \ Vertex 7
  VERTEX    9,    6,  -26,     4,      3,    6,     6,         31    \ Vertex 8
  VERTEX    9,   10,  -15,     5,      4,    6,     6,         31    \ Vertex 9

@@ -35,8 +35,13 @@
 .E%
 
  EQUB %00000000         \ Missile
+IF NOT(_ELITE_A_VERSION)
  EQUB %00000000         \ Coriolis space station
  EQUB %00000001         \ Escape pod                                      Trader
+ELIF _ELITE_A_VERSION
+ EQUB %01000000         \ Coriolis space station                             Cop
+ EQUB %01000001         \ Escape pod                                 Cop, trader
+ENDIF
  EQUB %00000000         \ Alloy plate
  EQUB %00000000         \ Cargo canister
  EQUB %00000000         \ Boulder
@@ -44,13 +49,24 @@
  EQUB %00000000         \ Splinter
  EQUB %00100001         \ Shuttle                               Trader, innocent
  EQUB %01100001         \ Transporter                      Trader, innocent, cop
+IF NOT(_ELITE_A_VERSION)
  EQUB %10100000         \ Cobra Mk III                      Innocent, escape pod
  EQUB %10100000         \ Python                            Innocent, escape pod
  EQUB %10100000         \ Boa                               Innocent, escape pod
+ELIF _ELITE_A_VERSION
+ EQUB %00100000         \ Cobra Mk III                                  Innocent
+ EQUB %00100001         \ Python                                Trader, innocent
+ EQUB %00100000         \ Boa                                           Innocent
+ENDIF
  EQUB %10100001         \ Anaconda                  Trader, innocent, escape pod
+IF NOT(_ELITE_A_VERSION)
  EQUB %10100001         \ Rock hermit (asteroid)    Trader, innocent, escape pod
+ELIF _ELITE_A_VERSION
+ EQUB %00001100         \ Rock hermit (asteroid)                 Hostile, pirate
+ENDIF
  EQUB %11000010         \ Viper                   Bounty hunter, cop, escape pod
  EQUB %00001100         \ Sidewinder                             Hostile, pirate
+IF NOT(_ELITE_A_VERSION)
  EQUB %10001100         \ Mamba                      Hostile, pirate, escape pod
  EQUB %10001100         \ Krait                      Hostile, pirate, escape pod
  EQUB %10001100         \ Adder                      Hostile, pirate, escape pod
@@ -62,13 +78,33 @@
  EQUB %10001100         \ Python (pirate)            Hostile, pirate, escape pod
  EQUB %10000010         \ Fer-de-lance                 Bounty hunter, escape pod
  EQUB %00001100         \ Moray                                  Hostile, pirate
+ELIF _ELITE_A_VERSION
+ EQUB %00001100         \ Mamba                                  Hostile, pirate
+ EQUB %00000100         \ Krait                                          Hostile
+ EQUB %00001100         \ Adder                                  Hostile, pirate
+ EQUB %00000100         \ Gecko                                          Hostile
+ EQUB %00001100         \ Cobra Mk I                             Hostile, pirate
+ EQUB %00000100         \ Worm                                           Hostile
+ EQUB %00001100         \ Cobra Mk III (pirate)                  Hostile, pirate
+ EQUB %00000010         \ Asp Mk II                                Bounty hunter
+ EQUB %00100010         \ Python (pirate)                Innocent, bounty hunter
+ EQUB %00000010         \ Fer-de-lance                             Bounty hunter
+ EQUB %00100010         \ Moray                          Innocent, bounty hunter
+ENDIF
  EQUB %00001100         \ Thargoid                               Hostile, pirate
  EQUB %00000100         \ Thargon                                        Hostile
+IF NOT(_ELITE_A_VERSION)
  EQUB %00000100         \ Constrictor                                    Hostile
+ELIF _ELITE_A_VERSION
+ EQUB %10001100         \ Constrictor                Hostile, pirate, escape pod
+ENDIF
 IF _6502SP_VERSION \ 6502SP: The 6502SP version stores the Elite logo as a ship, with its own NEWB flags (none of which are set)
  EQUB %00000000         \ The Elite logo
 ENDIF
+IF NOT(_ELITE_A_VERSION)
  EQUB %00100000         \ Cougar                                        Innocent
 
  EQUB 0                 \ This byte appears to be unused
+
+ENDIF
 

@@ -14,7 +14,7 @@
  EQUW 99 * 99           \ Targetable area          = 99 * 99
  EQUB &8C               \ Edges data offset (low)  = &008C
  EQUB &F4               \ Faces data offset (low)  = &00F4
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Thargoids are shown in "white" (cyan/red stripes)
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Thargoids are shown in "white" (cyan/red stripes)
  EQUB 101               \ Max. edge count          = (101 - 1) / 4 = 25
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 105               \ Max. edge count          = (105 - 1) / 4 = 26
@@ -26,13 +26,24 @@ ENDIF
  EQUW 500               \ Bounty                   = 500
  EQUB 40                \ Number of faces          = 40 / 4 = 10
  EQUB 55                \ Visibility distance      = 55
+IF NOT(_ELITE_A_VERSION)
  EQUB 240               \ Max. energy              = 240
+ELIF _ELITE_A_VERSION
+ EQUB 253               \ Max. energy              = 253
+ENDIF
  EQUB 39                \ Max. speed               = 39
  EQUB &00               \ Edges data offset (high) = &008C
  EQUB &00               \ Faces data offset (high) = &00F4
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
+IF NOT(_ELITE_A_VERSION)
  EQUB %00010110         \ Laser power              = 2
                         \ Missiles                 = 6
+
+ELIF _ELITE_A_VERSION
+ EQUB %00111000         \ Laser power              = 7
+                        \ Missiles                 = 0
+
+ENDIF
 
 \VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX   32,  -48,   48,     0,      4,    8,     8,         31    \ Vertex 0

@@ -87,10 +87,10 @@ ENDIF
  FACE       32,        0,        0,         31    \ Face 4
  FACE        0,      -32,        0,         31    \ Face 5
  FACE      -32,        0,        0,         31    \ Face 6
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Disc: The data for faces 7 and 8 of the disc version's missile blueprint is quite different compared to the other versions
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _ELITE_A_VERSION \ Disc: The data for faces 7 and 8 of the disc version's missile blueprint is quite different compared to the other versions
  FACE        0,       32,        0,         31    \ Face 7
  FACE        0,        0,     -176,         31    \ Face 8
-ELIF _DISC_VERSION OR _ELITE_A_VERSION
+ELIF _DISC_VERSION
  FACE        0,      160,      110,         31    \ Face 7
  FACE        0,       64,        4,          0    \ Face 8
 ENDIF

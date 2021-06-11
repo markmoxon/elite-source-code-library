@@ -14,7 +14,7 @@
  EQUW 80 * 80           \ Targetable area          = 80 * 80
  EQUB &4A               \ Edges data offset (low)  = &004A
  EQUB &9E               \ Faces data offset (low)  = &009E
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; asteroids are shown in red
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; asteroids are shown in red
  EQUB 65                \ Max. edge count          = (65 - 1) / 4 = 16
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 69                \ Max. edge count          = (69 - 1) / 4 = 17
@@ -23,10 +23,18 @@ ENDIF
  EQUB 34                \ Explosion count          = 7, as (4 * n) + 6 = 34
  EQUB 54                \ Number of vertices       = 54 / 6 = 9
  EQUB 21                \ Number of edges          = 21
+IF NOT(_ELITE_A_VERSION)
  EQUW 5                 \ Bounty                   = 5
+ELIF _ELITE_A_VERSION
+ EQUW 15                \ Bounty                   = 15
+ENDIF
  EQUB 56                \ Number of faces          = 56 / 4 = 14
  EQUB 50                \ Visibility distance      = 50
+IF NOT(_ELITE_A_VERSION)
  EQUB 60                \ Max. energy              = 60
+ELIF _ELITE_A_VERSION
+ EQUB 56                \ Max. energy              = 56
+ENDIF
  EQUB 30                \ Max. speed               = 30
  EQUB &00               \ Edges data offset (high) = &004A
  EQUB &00               \ Faces data offset (high) = &009E

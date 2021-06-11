@@ -18,9 +18,13 @@
  EQUB 0 + (11 << 4)     \ Max. canisters on demise = 0
                         \ Market item when scooped = 11 + 1 = 12 (Minerals)
  EQUW 16 * 16           \ Targetable area          = 16 * 16
+IF NOT(_ELITE_A_VERSION)
  EQUB LO(SHIP_ESCAPE_POD_EDGES - SHIP_SPLINTER)      \ Edges data = escape pod
+ELIF _ELITE_A_VERSION
+ EQUB LO(SHIP_THARGON_VERTICES - SHIP_SPLINTER)      \ Edges data = Thargon? AJD
+ENDIF
  EQUB &44               \ Faces data offset (low)  = &0044
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; splinters are shown in red
+IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; splinters are shown in red
  EQUB 25                \ Max. edge count          = (25 - 1) / 4 = 6
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 29                \ Max. edge count          = (29 - 1) / 4 = 7
@@ -29,12 +33,24 @@ ENDIF
  EQUB 22                \ Explosion count          = 4, as (4 * n) + 6 = 22
  EQUB 24                \ Number of vertices       = 24 / 6 = 4
  EQUB 6                 \ Number of edges          = 6
+IF NOT(_ELITE_A_VERSION)
  EQUW 0                 \ Bounty                   = 0
+ELIF _ELITE_A_VERSION
+ EQUW 1                 \ Bounty                   = 1
+ENDIF
  EQUB 16                \ Number of faces          = 16 / 4 = 4
  EQUB 8                 \ Visibility distance      = 8
+IF NOT(_ELITE_A_VERSION)
  EQUB 20                \ Max. energy              = 20
+ELIF _ELITE_A_VERSION
+ EQUB 16                \ Max. energy              = 16
+ENDIF
  EQUB 10                \ Max. speed               = 10
+IF NOT(_ELITE_A_VERSION)
  EQUB HI(SHIP_ESCAPE_POD_EDGES - SHIP_SPLINTER)      \ Edges data = escape pod
+ELIF _ELITE_A_VERSION
+ EQUB HI(SHIP_THARGON_VERTICES - SHIP_SPLINTER)      \ Edges data = Thargon? AJD
+ENDIF
  EQUB &00               \ Faces data offset (high) = &0044
  EQUB 5                 \ Normals are scaled by    = 2^5 = 32
  EQUB %00000000         \ Laser power              = 0

@@ -14,7 +14,7 @@
  EQUW 99 * 99           \ Targetable area          = 99 * 99
  EQUB &50               \ Edges data offset (low)  = &0050
  EQUB &90               \ Faces data offset (low)  = &0090
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Worms are shown in cyan
+IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Worms are shown in cyan
  EQUB 73                \ Max. edge count          = (73 - 1) / 4 = 18
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 77                \ Max. edge count          = (77 - 1) / 4 = 19
@@ -26,13 +26,24 @@ ENDIF
  EQUW 0                 \ Bounty                   = 0
  EQUB 32                \ Number of faces          = 32 / 4 = 8
  EQUB 19                \ Visibility distance      = 19
+IF NOT(_ELITE_A_VERSION)
  EQUB 30                \ Max. energy              = 30
+ELIF _ELITE_A_VERSION
+ EQUB 32                \ Max. energy              = 32
+ENDIF
  EQUB 23                \ Max. speed               = 23
  EQUB &00               \ Edges data offset (high) = &0050
  EQUB &00               \ Faces data offset (high) = &0090
  EQUB 3                 \ Normals are scaled by    = 2^3 = 8
+IF NOT(_ELITE_A_VERSION)
  EQUB %00001000         \ Laser power              = 1
                         \ Missiles                 = 0
+
+ELIF _ELITE_A_VERSION
+ EQUB %00011000         \ Laser power              = 3
+                        \ Missiles                 = 0
+
+ENDIF
 
 \VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX   10,  -10,   35,     2,      0,    7,     7,         31    \ Vertex 0

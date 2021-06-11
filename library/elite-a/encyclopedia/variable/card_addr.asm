@@ -2,7 +2,7 @@
 \
 \       Name: card_addr
 \       Type: Variable
-\   Category: Elite-A
+\   Category: Elite-A: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************

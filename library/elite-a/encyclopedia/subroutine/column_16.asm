@@ -2,7 +2,7 @@
 \
 \       Name: column_16
 \       Type: Subroutine
-\   Category: Elite-A
+\   Category: Elite-A: Text
 \    Summary: AJD
 \
 \ ******************************************************************************

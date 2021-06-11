@@ -2,7 +2,7 @@
 \
 \       Name: OOPS2
 \       Type: Subroutine
-\   Category: Elite-A
+\   Category: Elite-A: Flight
 \    Summary: AJD
 \
 \ ******************************************************************************

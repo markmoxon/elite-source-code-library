@@ -199,23 +199,8 @@ INCLUDE "library/enhanced/main/variable/s1_per_cent.asm"
 INCLUDE "library/common/main/variable/na_per_cent-default_per_cent.asm"
 INCLUDE "library/common/main/variable/chk2.asm"
 INCLUDE "library/common/main/variable/chk.asm"
-
-.tube_write
-
- BIT tube_r1s
- NOP
- BVC tube_write
- STA tube_r1d
- RTS
-
-.tube_read
-
- BIT tube_r2s
- NOP
- BPL tube_read
- LDA tube_r2d
- RTS
-
+INCLUDE "library/elite-a/parasite/subroutine/tube_write.asm"
+INCLUDE "library/elite-a/parasite/subroutine/tube_read.asm"
 INCLUDE "library/enhanced/main/subroutine/doentry.asm"
 INCLUDE "library/elite-a/docked/subroutine/scramble.asm"
 INCLUDE "library/enhanced/main/subroutine/brkbk.asm"
@@ -247,51 +232,15 @@ INCLUDE "library/common/main/subroutine/mveit_part_8_of_9.asm"
 INCLUDE "library/common/main/subroutine/mveit_part_9_of_9.asm"
 INCLUDE "library/common/main/subroutine/mvs4.asm"
 INCLUDE "library/common/main/subroutine/mvs5.asm"
-
-.LOIN
-.LL30
-
- LDA #&80
- JSR tube_write
- LDA &34
- JSR tube_write
- LDA &35
- JSR tube_write
- LDA &36
- JSR tube_write
- LDA &37
- JMP tube_write
-
+INCLUDE "library/elite-a/parasite/subroutine/ll30.asm"
 INCLUDE "library/enhanced/main/subroutine/flkb.asm"
 INCLUDE "library/common/main/subroutine/nlin3.asm"
 INCLUDE "library/common/main/subroutine/nlin4.asm"
 INCLUDE "library/common/main/subroutine/nlin.asm"
 INCLUDE "library/common/main/subroutine/nlin2.asm"
 INCLUDE "library/common/main/subroutine/hloin2.asm"
-
-.HLOIN
-
- LDA #&81
- JSR tube_write
- LDA &34
- JSR tube_write
- LDA &35
- JSR tube_write
- LDA &36
- JMP tube_write
-
-.PIXEL
-
- PHA
- LDA #&82
- JSR tube_write
- TXA
- JSR tube_write
- PLA
- JSR tube_write
- LDA &88
- JMP tube_write
-
+INCLUDE "library/elite-a/parasite/subroutine/hloin.asm"
+INCLUDE "library/elite-a/parasite/subroutine/pixel.asm"
 INCLUDE "library/common/main/subroutine/bline.asm"
 INCLUDE "library/common/main/variable/prxs.asm"
 INCLUDE "library/common/main/subroutine/status.asm"
@@ -318,68 +267,13 @@ INCLUDE "library/common/main/subroutine/dials_part_3_of_4.asm"
 INCLUDE "library/common/main/subroutine/dials_part_4_of_4.asm"
 INCLUDE "library/common/main/subroutine/pzw.asm"
 INCLUDE "library/common/main/subroutine/dilx.asm"
-
-.DIL2
-
- PHA
- LDA #&87
- JSR tube_write
- PLA
- JSR tube_write
- LDA SC
- JSR tube_write
- LDA SC+1
- JSR tube_write
- INC SC+&01
- RTS
-
+INCLUDE "library/elite-a/parasite/subroutine/dil2.asm"
 INCLUDE "library/enhanced/main/subroutine/hme2.asm"
 INCLUDE "library/enhanced/main/variable/hatb.asm"
 INCLUDE "library/enhanced/main/subroutine/hall.asm"
-
-.HANGER
-
- LDX #&02
-
-.HAL1
-
- STX &84
- LDA #&82
- LDX &84
- STX &81
- JSR DVID4
- LDA #&9A
- JSR tube_write
- LDA &1B
- JSR tube_write
- LDA &85
- JSR tube_write
- LDX &84
- INX
- CPX #&0D
- BCC HAL1
- LDA #&10
-
-.HAL6
-
- STA &84
- LDA #&9B
- JSR tube_write
- LDA &84
- JSR tube_write
- LDA &84
- CLC
- ADC #&10
- BNE HAL6
- RTS
-
+INCLUDE "library/elite-a/parasite/subroutine/hanger.asm"
 INCLUDE "library/enhanced/main/subroutine/has1.asm"
-
-.UNWISE
-
- LDA #&94
- JMP tube_write
-
+INCLUDE "library/elite-a/parasite/subroutine/unwise.asm"
 INCLUDE "library/common/main/subroutine/hfs2.asm"
 INCLUDE "library/common/main/subroutine/squa.asm"
 INCLUDE "library/common/main/subroutine/squa2.asm"
@@ -410,26 +304,8 @@ INCLUDE "library/enhanced/main/subroutine/pause2.asm"
 INCLUDE "library/common/main/subroutine/tt66.asm"
 INCLUDE "library/common/main/subroutine/ttx66-ttx662.asm"
 INCLUDE "library/common/main/subroutine/delay.asm"
-
-.CLYNS
-
- LDA #&FF
- STA DTW2
- LDA #&14
- STA YC
- JSR TT67
- LDY #&01 \INY
- STY XC
- DEY
- LDA #&84
- JMP tube_write
-
-.WSCAN
-
- LDA #&85
- JSR tube_write
- JMP tube_read
-
+INCLUDE "library/elite-a/parasite/subroutine/clyns.asm"
+INCLUDE "library/elite-a/parasite/subroutine/wscan.asm"
 INCLUDE "library/common/main/subroutine/tnpr.asm"
 INCLUDE "library/common/main/subroutine/tt20.asm"
 INCLUDE "library/common/main/subroutine/tt54.asm"
@@ -479,16 +355,7 @@ INCLUDE "library/common/main/subroutine/lcash.asm"
 INCLUDE "library/common/main/subroutine/mcash.asm"
 INCLUDE "library/common/main/subroutine/gcash.asm"
 INCLUDE "library/common/main/subroutine/gc2.asm"
-
-.update_pod
-
- LDA #&8F
- JSR tube_write
- LDA ESCP
- JSR tube_write
- LDA &0348
- JMP tube_write
-
+INCLUDE "library/elite-a/parasite/subroutine/update_pod.asm"
 INCLUDE "library/common/main/subroutine/eqshp.asm"
 INCLUDE "library/common/main/subroutine/dn.asm"
 INCLUDE "library/common/main/subroutine/dn2.asm"
@@ -517,18 +384,7 @@ INCLUDE "library/common/main/subroutine/tt43.asm"
 INCLUDE "library/common/main/subroutine/ex.asm"
 INCLUDE "library/common/main/subroutine/wpshps.asm"
 INCLUDE "library/common/main/subroutine/flflls.asm"
-
-.MSBAR
-
- LDA #&88
- JSR tube_write
- TXA
- JSR tube_write
- TYA
- JSR tube_write
- LDY #&00
- RTS
-
+INCLUDE "library/elite-a/parasite/subroutine/msbar.asm"
 INCLUDE "library/common/main/subroutine/sun_part_1_of_4.asm"
 INCLUDE "library/common/main/subroutine/sun_part_2_of_4.asm"
 INCLUDE "library/common/main/subroutine/sun_part_3_of_4.asm"
@@ -550,26 +406,8 @@ INCLUDE "library/common/main/subroutine/main_game_loop_part_5_of_6.asm"
 INCLUDE "library/common/main/subroutine/main_game_loop_part_6_of_6.asm"
 INCLUDE "library/common/main/subroutine/dornd.asm"
 INCLUDE "library/enhanced/main/variable/brkd.asm"
-
-.INBAY
-
- \dead entry
- LDA #0
- STA save_lock
- STA dockedp
- JSR BRKBK
- JSR RES2
- JMP BR1
-
-.boot_in
-
- LDA #0
- STA save_lock
- STA &0320
- STA &30
- STA dockedp
- JMP BEGIN
-
+INCLUDE "library/elite-a/parasite/subroutine/inbay.asm"
+INCLUDE "library/elite-a/parasite/subroutine/boot_in.asm"
 INCLUDE "library/enhanced/main/subroutine/brbr.asm"
 INCLUDE "library/common/main/subroutine/death2.asm"
 INCLUDE "library/enhanced/main/subroutine/begin.asm"
@@ -602,56 +440,20 @@ INCLUDE "library/enhanced/main/subroutine/gtdrv.asm"
 INCLUDE "library/common/main/subroutine/lod.asm"
 INCLUDE "library/common/main/subroutine/fx200.asm"
 INCLUDE "library/common/main/subroutine/norm.asm"
-
-.scan_fire
-
- LDA #&89
- JSR tube_write
- JMP tube_read
-
-.RDKEY
-
- LDA #&8C
- JSR tube_write
- JSR tube_read
- TAX
- RTS
-
+INCLUDE "library/elite-a/parasite/subroutine/scan_fire.asm"
+INCLUDE "library/elite-a/parasite/subroutine/rdkey.asm"
 INCLUDE "library/common/main/subroutine/ecmof.asm"
 INCLUDE "library/common/main/subroutine/beep.asm"
 INCLUDE "library/common/main/subroutine/noise.asm"
 INCLUDE "library/common/main/subroutine/no3.asm"
 INCLUDE "library/common/main/subroutine/nos1.asm"
 INCLUDE "library/common/main/subroutine/ctrl.asm"
-
-.DKS4
-
- LDA #&8B
- JSR tube_write
- TXA
- JSR tube_write
- JSR tube_read
- TAX
- RTS
-
+INCLUDE "library/elite-a/parasite/subroutine/dks4.asm"
 INCLUDE "library/common/main/subroutine/dks2.asm"
 INCLUDE "library/common/main/subroutine/dks3.asm"
 INCLUDE "library/common/main/subroutine/dokey.asm"
 INCLUDE "library/common/main/subroutine/dk4.asm"
-
-.TT217
-
-.t
-
- LDA #&8D
- JSR tube_write
- JSR tube_read
- TAX
-
-.out
-
- RTS
-
+INCLUDE "library/elite-a/parasite/subroutine/tt217.asm"
 INCLUDE "library/common/main/macro/item.asm"
 INCLUDE "library/common/main/variable/qq23.asm"
 INCLUDE "library/common/main/subroutine/tidy.asm"
@@ -721,41 +523,7 @@ INCLUDE "library/elite-a/encyclopedia/subroutine/ships_ag.asm"
 INCLUDE "library/elite-a/encyclopedia/subroutine/controls.asm"
 INCLUDE "library/elite-a/encyclopedia/subroutine/equip_data.asm"
 INCLUDE "library/elite-a/encyclopedia/subroutine/trading.asm"
-
-.check_keys
-
- JSR WSCAN
- JSR RDKEY
- CPX #&69
- BNE not_freeze
-
-.freeze_loop
-
- JSR WSCAN
- JSR RDKEY
- CPX #&70
- BNE dont_quit
- JMP DEATH2_FLIGHT
-
-.dont_quit
-
- \CPX #&37
- \BNE dont_dump
- \JSR printer
- \dont_dump
- CPX #&59
- BNE freeze_loop
-
-.l_release
-
- JSR RDKEY
- BNE l_release
- LDX #0 \ no key was pressed
-
-.not_freeze
-
- RTS
-
+INCLUDE "library/elite-a/parasite/subroutine/check_keys.asm"
 INCLUDE "library/elite-a/encyclopedia/subroutine/write_card.asm"
 INCLUDE "library/elite-a/encyclopedia/variable/ship_posn.asm"
 INCLUDE "library/elite-a/encyclopedia/variable/ship_dist.asm"
@@ -769,50 +537,9 @@ INCLUDE "library/elite-a/encyclopedia/variable/ship_centre.asm"
 INCLUDE "library/elite-a/encyclopedia/variable/card_pattern.asm"
 INCLUDE "library/elite-a/encyclopedia/variable/card_addr.asm"
 INCLUDE "library/elite-a/encyclopedia/variable/card_data.asm"
-
-.install_ship
-
- \ install ship X in position Y with flags A
- TXA
- ASL A
- PHA
- ASL A
- TAX
- LDA ship_flags,Y
- AND #&7F
- ORA ship_bytes+1,X
- STA ship_flags,Y
- TYA
- ASL A
- TAY
- PLA
- TAX
- LDA ship_list,X
- STA XX21-2,Y
- LDA ship_list+1,X
- STA XX21-1,Y
- RTS
-
- \printer:
- \ TXA
- \ PHA
- \ LDA #&9C
- \ JSR tube_write
- \ JSR tube_read
- \ PLA
- \ TAX
- \ RTS
-
-.DOENTRY_FLIGHT
-
- JSR RES2
- JMP DOENTRY
-
-.DEATH2_FLIGHT
-
- JSR RES2
- JMP INBAY
-
+INCLUDE "library/elite-a/parasite/subroutine/install_ship.asm"
+INCLUDE "library/elite-a/parasite/subroutine/doentry_flight.asm"
+INCLUDE "library/elite-a/parasite/subroutine/death2_flight.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_1_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_2_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_3_of_16.asm"
@@ -865,13 +592,7 @@ INCLUDE "library/common/main/subroutine/sfs1.asm"
 INCLUDE "library/common/main/subroutine/sfs2.asm"
 INCLUDE "library/common/main/subroutine/ll164.asm"
 INCLUDE "library/common/main/subroutine/laun.asm"
-
-.HFS2
-
- STA &95
- JSR TTX66
- JMP HFS1
-
+INCLUDE "library/elite-a/parasite/subroutine/hfs2.asm"
 INCLUDE "library/common/main/subroutine/stars2.asm"
 INCLUDE "library/common/main/subroutine/mu5.asm"
 INCLUDE "library/common/main/subroutine/mult3.asm"
@@ -899,6 +620,15 @@ INCLUDE "library/common/main/subroutine/ww.asm"
 INCLUDE "library/common/main/subroutine/ghy.asm"
 INCLUDE "library/common/main/subroutine/ee3.asm"
 INCLUDE "library/common/main/subroutine/tt147.asm"
+
+\ ******************************************************************************
+\
+\       Name: hyp1_FLIGHT
+\       Type: Subroutine
+\   Category: Elite-A: Universe
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .hyp1_FLIGHT
 
@@ -930,6 +660,15 @@ INCLUDE "library/common/main/subroutine/tt18.asm"
 INCLUDE "library/common/main/subroutine/tt110.asm"
 INCLUDE "library/common/main/subroutine/tt114.asm"
 
+\ ******************************************************************************
+\
+\       Name: write_0346
+\       Type: Subroutine
+\   Category: Elite-A: Tube
+\    Summary: AJD
+\
+\ ******************************************************************************
+
 .write_0346
 
  PHA
@@ -937,6 +676,15 @@ INCLUDE "library/common/main/subroutine/tt114.asm"
  JSR tube_write
  PLA
  JMP tube_write
+
+\ ******************************************************************************
+\
+\       Name: read_0346
+\       Type: Subroutine
+\   Category: Elite-A: Tube
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .read_0346
 
@@ -952,9 +700,27 @@ INCLUDE "library/common/main/subroutine/solar.asm"
 INCLUDE "library/common/main/subroutine/nwstars.asm"
 INCLUDE "library/common/main/subroutine/nwq.asm"
 
+\ ******************************************************************************
+\
+\       Name: WPSHPS2
+\       Type: Subroutine
+\   Category: Elite-A: Dashboard
+\    Summary: AJD
+\
+\ ******************************************************************************
+
 .WPSHPS2
 
  JMP WPSHPS
+
+\ ******************************************************************************
+\
+\       Name: DET1
+\       Type: Subroutine
+\   Category: Elite-A: Screen mode
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .DET1
 
@@ -970,6 +736,15 @@ INCLUDE "library/common/main/subroutine/compas.asm"
 INCLUDE "library/common/main/subroutine/sp2.asm"
 INCLUDE "library/common/main/subroutine/dot.asm"
 INCLUDE "library/common/main/subroutine/cpix4.asm"
+
+\ ******************************************************************************
+\
+\       Name: CPIX2
+\       Type: Subroutine
+\   Category: Elite-A: Drawing pixels
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .CPIX2
 
@@ -994,15 +769,42 @@ INCLUDE "library/common/main/subroutine/abort.asm"
 INCLUDE "library/common/main/subroutine/abort2.asm"
 INCLUDE "library/common/main/subroutine/ecblb2.asm"
 
+\ ******************************************************************************
+\
+\       Name: ECBLB
+\       Type: Subroutine
+\   Category: Elite-A: Dashboard
+\    Summary: AJD
+\
+\ ******************************************************************************
+
 .ECBLB
 
  LDA #&93
  JMP tube_write
 
+\ ******************************************************************************
+\
+\       Name: SPBLB
+\       Type: Subroutine
+\   Category: Elite-A: Dashboard
+\    Summary: AJD
+\
+\ ******************************************************************************
+
 .SPBLB
 
  LDA #&92
  JMP tube_write
+
+\ ******************************************************************************
+\
+\       Name: MSBAR2
+\       Type: Subroutine
+\   Category: Elite-A: Dashboard
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .MSBAR2
 
@@ -1032,6 +834,15 @@ INCLUDE "library/common/main/subroutine/pls4.asm"
 INCLUDE "library/common/main/subroutine/pls5.asm"
 INCLUDE "library/common/main/subroutine/pls6.asm"
 
+\ ******************************************************************************
+\
+\       Name: PL21_FLIGHT
+\       Type: Subroutine
+\   Category: Elite-A: Drawing planets
+\    Summary: AJD
+\
+\ ******************************************************************************
+
 .PL21_FLIGHT
 
  SEC
@@ -1046,12 +857,30 @@ INCLUDE "library/elite-a/flight/subroutine/rand_posn.asm"
 INCLUDE "library/enhanced/main/subroutine/there.asm"
 INCLUDE "library/common/main/subroutine/ze.asm"
 
+\ ******************************************************************************
+\
+\       Name: DORND2
+\       Type: Subroutine
+\   Category: Elite-A: Utility routines
+\    Summary: AJD
+\
+\ ******************************************************************************
+
 .DORND2
 
  CLC
  JMP DORND
 
 INCLUDE "library/common/main/subroutine/main_game_loop_part_1_of_6.asm"
+
+\ ******************************************************************************
+\
+\       Name: Main game loop (Part 2 of 6)
+\       Type: Subroutine
+\   Category: Elite-A: Main loop
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .d_3fc0
 
@@ -1116,6 +945,15 @@ INCLUDE "library/common/main/subroutine/main_game_loop_part_1_of_6.asm"
 INCLUDE "library/common/main/subroutine/main_game_loop_part_3_of_6.asm"
 INCLUDE "library/common/main/subroutine/main_game_loop_part_4_of_6.asm"
 
+\ ******************************************************************************
+\
+\       Name: Main game loop (Part 5 of 6)
+\       Type: Subroutine
+\   Category: Elite-A: Main loop
+\    Summary: AJD
+\
+\ ******************************************************************************
+
 .MLOOP_FLIGHT
 
  LDX #&FF               \ Like main game loop 5
@@ -1142,6 +980,15 @@ INCLUDE "library/common/main/subroutine/main_game_loop_part_4_of_6.asm"
  JSR DOKEY_FLIGHT
  JSR chk_dirn
 
+\ ******************************************************************************
+\
+\       Name: Main game loop (Part 6 of 6)
+\       Type: Subroutine
+\   Category: Elite-A: Main loop
+\    Summary: AJD
+\
+\ ******************************************************************************
+
 .FRCE_FLIGHT
 
  PHA                \ Like main game loop 6
@@ -1163,6 +1010,15 @@ INCLUDE "library/common/main/subroutine/farof2.asm"
 INCLUDE "library/common/main/subroutine/mas4.asm"
 INCLUDE "library/common/main/subroutine/death.asm"
 INCLUDE "library/disc/flight/subroutine/rships.asm"
+
+\ ******************************************************************************
+\
+\       Name: LSHIPS
+\       Type: Subroutine
+\   Category: Elite-A: Loader
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .LSHIPS
 
@@ -1279,6 +1135,15 @@ INCLUDE "library/disc/flight/subroutine/rships.asm"
  LDY #15
  JMP mix_install
 
+\ ******************************************************************************
+\
+\       Name: mix_bits
+\       Type: Variable
+\   Category: Elite-A: Loader
+\    Summary: AJD
+\
+\ ******************************************************************************
+
 .mix_bits
 
  EQUB &01, &02, &04, &08, &10, &20, &40, &80
@@ -1290,6 +1155,15 @@ INCLUDE "library/common/main/subroutine/exno3.asm"
 INCLUDE "library/common/main/subroutine/sfrmis.asm"
 INCLUDE "library/common/main/subroutine/exno2.asm"
 INCLUDE "library/common/main/subroutine/exno.asm"
+
+\ ******************************************************************************
+\
+\       Name: DKS1
+\       Type: Subroutine
+\   Category: Elite-A: Keyboard
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .DKS1
 
@@ -1309,6 +1183,15 @@ INCLUDE "library/common/main/subroutine/exno.asm"
 
 INCLUDE "library/common/main/subroutine/dkj1.asm"
 INCLUDE "library/common/main/subroutine/u_per_cent.asm"
+
+\ ******************************************************************************
+\
+\       Name: DOKEY_FLIGHT
+\       Type: Subroutine
+\   Category: Elite-A: Keyboard
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .DOKEY_FLIGHT
 
@@ -1433,7 +1316,16 @@ INCLUDE "library/common/main/subroutine/u_per_cent.asm"
 
 .d_4552
 
- STX JSTY               \ End copy of DOKEY
+ STX JSTY
+
+\ ******************************************************************************
+\
+\       Name: DK4_FLIGHT
+\       Type: Subroutine
+\   Category: Elite-A: Keyboard
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .DK4_FLIGHT
 
@@ -1495,13 +1387,22 @@ INCLUDE "library/common/main/subroutine/u_per_cent.asm"
 
 .DK5
 
- RTS                    \ End copy of DK4
+ RTS
 
 INCLUDE "library/common/main/subroutine/me1.asm"
 INCLUDE "library/elite-a/flight/subroutine/cargo_mtok.asm"
 INCLUDE "library/common/main/subroutine/mess.asm"
 INCLUDE "library/common/main/subroutine/mes9.asm"
 INCLUDE "library/common/main/subroutine/ouch.asm"
+
+\ ******************************************************************************
+\
+\       Name: LL9_FLIGHT
+\       Type: Subroutine
+\   Category: Elite-A: Drawing ships
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .d_4889
 
@@ -1512,6 +1413,15 @@ INCLUDE "library/common/main/subroutine/ouch.asm"
  LDA &8C
  BMI d_4889
  JMP LL9
+
+\ ******************************************************************************
+\
+\       Name: MVEIT_FLIGHT
+\       Type: Subroutine
+\   Category: Elite-A: Moving
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .MVEIT_FLIGHT
 
@@ -1580,6 +1490,15 @@ INCLUDE "library/elite-a/flight/variable/ship_iguana.asm"
 INCLUDE "library/elite-a/flight/variable/ship_shuttle2.asm"
 INCLUDE "library/elite-a/flight/variable/ship_chameleon.asm"
 
+\ ******************************************************************************
+\
+\       Name: ship_list
+\       Type: Variable
+\   Category: Elite-A: Drawing ships
+\    Summary: AJD
+\
+\ ******************************************************************************
+
 .ship_list
 
  EQUW SHIP_DODO, SHIP_CORIOLIS, SHIP_ESCAPE_POD, SHIP_PLATE
@@ -1595,17 +1514,44 @@ INCLUDE "library/elite-a/flight/variable/ship_chameleon.asm"
 
  EQUW 0
 
+\ ******************************************************************************
+\
+\       Name: ship_data
+\       Type: Variable
+\   Category: Elite-A: Drawing ships
+\    Summary: AJD
+\
+\ ******************************************************************************
+
 .ship_data
 
  EQUW 0
 
 INCLUDE "library/elite-a/flight/variable/xx21.asm"
- 
+
+\ ******************************************************************************
+\
+\       Name: ship_flags
+\       Type: Variable
+\   Category: Elite-A: Drawing ships
+\    Summary: AJD
+\
+\ ******************************************************************************
+
 .ship_flags
 
  EQUB 0
 
 INCLUDE "library/advanced/main/variable/e_per_cent.asm"
+
+\ ******************************************************************************
+\
+\       Name: ship_bits
+\       Type: Variable
+\   Category: Elite-A: Drawing ships
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .ship_bits
 
@@ -1650,6 +1596,14 @@ INCLUDE "library/advanced/main/variable/e_per_cent.asm"
 
  EQUD %00011111111111100111111000000000
 
+\ ******************************************************************************
+\
+\       Name: ship_bytes
+\       Type: Variable
+\   Category: Elite-A: Drawing ships
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .ship_bytes
 

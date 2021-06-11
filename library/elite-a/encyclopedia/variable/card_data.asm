@@ -2,7 +2,7 @@
 \
 \       Name: adder
 \       Type: Variable
-\   Category: Elite-A
+\   Category: Elite-A: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************
@@ -35,7 +35,7 @@
 \
 \       Name: anaconda
 \       Type: Variable
-\   Category: Elite-A
+\   Category: Elite-A: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************
@@ -68,7 +68,7 @@
 \
 \       Name: asp_2
 \       Type: Variable
-\   Category: Elite-A
+\   Category: Elite-A: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************
@@ -101,7 +101,7 @@
 \
 \       Name: boa
 \       Type: Variable
-\   Category: Elite-A
+\   Category: Elite-A: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************
@@ -134,7 +134,7 @@
 \
 \       Name: bushmaster
 \       Type: Variable
-\   Category: Elite-A
+\   Category: Elite-A: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************
@@ -163,7 +163,7 @@
 \
 \       Name: chameleon
 \       Type: Variable
-\   Category: Elite-A
+\   Category: Elite-A: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************
@@ -196,7 +196,7 @@
 \
 \       Name: cobra_1
 \       Type: Variable
-\   Category: Elite-A
+\   Category: Elite-A: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************
@@ -229,7 +229,7 @@
 \
 \       Name: cobra_3
 \       Type: Variable
-\   Category: Elite-A
+\   Category: Elite-A: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************
@@ -262,7 +262,7 @@
 \
 \       Name: coriolis
 \       Type: Variable
-\   Category: Elite-A
+\   Category: Elite-A: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************
@@ -281,7 +281,7 @@
 \
 \       Name: dodecagon
 \       Type: Variable
-\   Category: Elite-A
+\   Category: Elite-A: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************
@@ -300,7 +300,7 @@
 \
 \       Name: escape_pod
 \       Type: Variable
-\   Category: Elite-A
+\   Category: Elite-A: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************
@@ -321,7 +321,7 @@
 \
 \       Name: fer_de_lance
 \       Type: Variable
-\   Category: Elite-A
+\   Category: Elite-A: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************
@@ -354,7 +354,7 @@
 \
 \       Name: gecko
 \       Type: Variable
-\   Category: Elite-A
+\   Category: Elite-A: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************
@@ -387,7 +387,7 @@
 \
 \       Name: ghavial
 \       Type: Variable
-\   Category: Elite-A
+\   Category: Elite-A: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************
@@ -420,7 +420,7 @@
 \
 \       Name: iguana
 \       Type: Variable
-\   Category: Elite-A
+\   Category: Elite-A: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************
@@ -453,7 +453,7 @@
 \
 \       Name: krait
 \       Type: Variable
-\   Category: Elite-A
+\   Category: Elite-A: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************
@@ -484,7 +484,7 @@
 \
 \       Name: mamba
 \       Type: Variable
-\   Category: Elite-A
+\   Category: Elite-A: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************
@@ -515,7 +515,7 @@
 \
 \       Name: monitor
 \       Type: Variable
-\   Category: Elite-A
+\   Category: Elite-A: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************
@@ -548,7 +548,7 @@
 \
 \       Name: moray
 \       Type: Variable
-\   Category: Elite-A
+\   Category: Elite-A: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************
@@ -581,7 +581,7 @@
 \
 \       Name: ophidian
 \       Type: Variable
-\   Category: Elite-A
+\   Category: Elite-A: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************
@@ -614,7 +614,7 @@
 \
 \       Name: python
 \       Type: Variable
-\   Category: Elite-A
+\   Category: Elite-A: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************
@@ -647,7 +647,7 @@
 \
 \       Name: shuttle
 \       Type: Variable
-\   Category: Elite-A
+\   Category: Elite-A: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************
@@ -674,7 +674,7 @@
 \
 \       Name: sidewinder
 \       Type: Variable
-\   Category: Elite-A
+\   Category: Elite-A: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************
@@ -703,7 +703,7 @@
 \
 \       Name: thargoid
 \       Type: Variable
-\   Category: Elite-A
+\   Category: Elite-A: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************
@@ -732,7 +732,7 @@
 \
 \       Name: thargon
 \       Type: Variable
-\   Category: Elite-A
+\   Category: Elite-A: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************
@@ -759,7 +759,7 @@
 \
 \       Name: transporter
 \       Type: Variable
-\   Category: Elite-A
+\   Category: Elite-A: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************
@@ -782,7 +782,7 @@
 \
 \       Name: viper
 \       Type: Variable
-\   Category: Elite-A
+\   Category: Elite-A: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************
@@ -811,7 +811,7 @@
 \
 \       Name: worm
 \       Type: Variable
-\   Category: Elite-A
+\   Category: Elite-A: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************

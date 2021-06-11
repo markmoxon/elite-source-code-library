@@ -2,7 +2,7 @@
 \
 \       Name: scramble
 \       Type: Subroutine
-\   Category: Elite-A
+\   Category: Elite-A: Loader
 \    Summary: AJD
 \
 \ ******************************************************************************

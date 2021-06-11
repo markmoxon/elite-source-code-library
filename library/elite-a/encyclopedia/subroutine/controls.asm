@@ -2,7 +2,7 @@
 \
 \       Name: controls
 \       Type: Subroutine
-\   Category: Elite-A
+\   Category: Elite-A: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************

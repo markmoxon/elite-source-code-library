@@ -2,7 +2,7 @@
 \
 \       Name: func_tab
 \       Type: Variable
-\   Category: Elite-A
+\   Category: Elite-A: Keyboard
 \    Summary: AJD
 \
 \ ******************************************************************************

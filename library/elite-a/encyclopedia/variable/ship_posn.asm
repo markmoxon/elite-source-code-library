@@ -2,7 +2,7 @@
 \
 \       Name: ship_posn
 \       Type: Variable
-\   Category: Elite-A
+\   Category: Elite-A: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************

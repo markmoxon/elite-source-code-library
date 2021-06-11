@@ -2,7 +2,7 @@
 \
 \       Name: write_card
 \       Type: Subroutine
-\   Category: Elite-A
+\   Category: Elite-A: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************

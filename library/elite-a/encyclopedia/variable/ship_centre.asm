@@ -2,7 +2,7 @@
 \
 \       Name: ship_centre
 \       Type: Variable
-\   Category: Elite-A
+\   Category: Elite-A: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************

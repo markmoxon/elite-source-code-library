@@ -2,7 +2,7 @@
 \
 \       Name: iff_xor
 \       Type: Variable
-\   Category: Elite-A
+\   Category: Elite-A: Dashboard
 \    Summary: AJD
 \
 \ ******************************************************************************

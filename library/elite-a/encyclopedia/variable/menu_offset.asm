@@ -2,7 +2,7 @@
 \
 \       Name: menu_offset
 \       Type: Variable
-\   Category: Elite-A
+\   Category: Elite-A: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************

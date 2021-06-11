@@ -2,7 +2,7 @@
 \
 \       Name: menu_title
 \       Type: Variable
-\   Category: Elite-A
+\   Category: Elite-A: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************

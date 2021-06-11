@@ -2,7 +2,7 @@
 \
 \       Name: ship_load
 \       Type: Variable
-\   Category: Elite-A
+\   Category: Elite-A: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************

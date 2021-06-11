@@ -6,7 +6,7 @@ ELIF _ELITE_A_6502SP_PARA
 \       Name: encyclopedia
 ENDIF
 \       Type: Subroutine
-\   Category: Elite-A
+\   Category: Elite-A: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************

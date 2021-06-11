@@ -2,7 +2,7 @@
 \
 \       Name: new_ships
 \       Type: Variable
-\   Category: Elite-A
+\   Category: Elite-A: Buying ships
 \    Summary: AJD
 \
 \ ******************************************************************************

@@ -2,7 +2,7 @@
 \
 \       Name: buy_invnt
 \       Type: Subroutine
-\   Category: Elite-A
+\   Category: Elite-A: Buying ships
 \    Summary: AJD
 \
 \ ******************************************************************************

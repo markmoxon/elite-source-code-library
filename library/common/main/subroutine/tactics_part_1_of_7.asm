@@ -94,8 +94,8 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- LDA #250               \ Call OOPS2 to AJD
- JMP OOPS2
+ LDA #250               \ Call n_oops to AJD
+ JMP n_oops
 
 ENDIF
 
@@ -261,7 +261,7 @@ IF NOT(_ELITE_A_VERSION)
 ELIF _ELITE_A_VERSION
 
  LDA #80                \ AJD
- JSR OOPS2
+ JSR n_oops
 
 ENDIF
 

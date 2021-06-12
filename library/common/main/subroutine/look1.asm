@@ -103,7 +103,7 @@ IF NOT(_ELITE_A_6502SP_PARA)
 
 ELIF _ELITE_A_6502SP_PARA
 
- JSR WPSHPS2            \ Wipe all the ships from the scanner
+ JSR WPSHPS_FLIGHT      \ Wipe all the ships from the scanner
 
 ENDIF
 

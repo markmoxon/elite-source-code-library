@@ -1,15 +1,13 @@
 \ ******************************************************************************
 \
-\       Name: OOPS2
+\       Name: WPSHPS_FLIGHT
 \       Type: Subroutine
-\   Category: Elite-A: Flight
+\   Category: Elite-A: Dashboard
 \    Summary: AJD
 \
 \ ******************************************************************************
 
-.OOPS2
+.WPSHPS_FLIGHT
 
- SEC                    \ reduce damage
- SBC new_shields
- BCC n_shok
+ JMP WPSHPS
 

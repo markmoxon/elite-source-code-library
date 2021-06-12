@@ -110,7 +110,7 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- JSR OOPS2              \ AJD
+ JSR n_oops             \ AJD
 
 ENDIF
 

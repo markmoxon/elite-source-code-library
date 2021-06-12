@@ -1,19 +1,15 @@
 \ ******************************************************************************
 \
-\       Name: MSBAR2
+\       Name: n_oops
 \       Type: Subroutine
-\   Category: Elite-A: Dashboard
+\   Category: Elite-A: Flight
 \    Summary: AJD
 \
 \ ******************************************************************************
 
-.MSBAR2
+.n_oops
 
- CPX #4
- BCC n_mok
- LDX #3
-
-.n_mok
-
- JMP MSBAR
+ SEC                    \ reduce damage
+ SBC new_shields
+ BCC n_shok
 

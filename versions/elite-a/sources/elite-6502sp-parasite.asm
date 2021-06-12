@@ -2,10 +2,10 @@
 \
 \ ELITE-A GAME SOURCE (PARASITE)
 \
-\ Elite-A was written by Angus Duggan, and is an extended version of the BBC
-\ Micro disc version of Elite; the extra code is copyright Angus Duggan
+\ Elite-A is an extended version of BBC Micro Elite, written by Angus Duggan
 \
-\ Elite was written by Ian Bell and David Braben and is copyright Acornsoft 1984
+\ The original Elite was written by Ian Bell and David Braben and is copyright
+\ Acornsoft 1984, and the extra code in Elite-A is copyright Angus Duggan
 \
 \ The code on this site is identical to Angus Duggan's source discs (it's just
 \ been reformatted and variable names changed to be more readable)
@@ -889,7 +889,7 @@ INCLUDE "library/common/main/subroutine/sos1.asm"
 INCLUDE "library/common/main/subroutine/solar.asm"
 INCLUDE "library/common/main/subroutine/nwstars.asm"
 INCLUDE "library/common/main/subroutine/nwq.asm"
-INCLUDE "library/elite-a/parasite/subroutine/wpshps2.asm"
+INCLUDE "library/elite-a/parasite/subroutine/wpshps_flight.asm"
 INCLUDE "library/elite-a/parasite/subroutine/det1.asm"
 INCLUDE "library/common/main/subroutine/shd.asm"
 INCLUDE "library/common/main/subroutine/dengy.asm"
@@ -899,7 +899,7 @@ INCLUDE "library/common/main/subroutine/sp2.asm"
 INCLUDE "library/common/main/subroutine/dot.asm"
 INCLUDE "library/common/main/subroutine/cpix4.asm"
 INCLUDE "library/elite-a/parasite/subroutine/cpix2.asm"
-INCLUDE "library/elite-a/flight/subroutine/oops2.asm"
+INCLUDE "library/elite-a/flight/subroutine/n_oops.asm"
 INCLUDE "library/common/main/subroutine/oops.asm"
 INCLUDE "library/common/main/subroutine/sps3.asm"
 INCLUDE "library/common/main/variable/univ.asm"
@@ -912,7 +912,7 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
 INCLUDE "library/common/main/subroutine/ecblb2.asm"
 INCLUDE "library/elite-a/parasite/subroutine/ecblb.asm"
 INCLUDE "library/elite-a/parasite/subroutine/spblb.asm"
-INCLUDE "library/elite-a/parasite/subroutine/msbar2.asm"
+INCLUDE "library/elite-a/parasite/subroutine/msbar_flight.asm"
 INCLUDE "library/common/main/subroutine/proj.asm"
 INCLUDE "library/common/main/subroutine/pl2.asm"
 INCLUDE "library/common/main/subroutine/planet.asm"

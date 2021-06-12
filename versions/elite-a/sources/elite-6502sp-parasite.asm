@@ -51,7 +51,7 @@ _SOURCE_DISC            = (_RELEASE = 2)
 \
 \ ******************************************************************************
 
- Q% = _REMOVE_CHECKSUMS \ Set Q% to TRUE to max out the default commander, FALSE
+Q% = _REMOVE_CHECKSUMS  \ Set Q% to TRUE to max out the default commander, FALSE
                         \ for the standard default commander (this is set to
                         \ TRUE if checksums are disabled, just for convenience)
 
@@ -96,17 +96,6 @@ JH = SHU+2              \ Junk is defined as ending before the Cobra Mk III
                         \ alloy plate, cargo canister, asteroid, splinter,
                         \ Shuttle or Transporter
 
-PACK = SH3              \ The first of the eight pack-hunter ships, which tend
-                        \ to spawn in groups. With the default value of PACK the
-                        \ pack-hunters are the Sidewinder, Mamba, Krait, Adder,
-                        \ Gecko, Cobra Mk I, Worm and Cobra Mk III (pirate)
-
-POW = 15                \ Pulse laser power
-
-Mlas = 50               \ Mining laser power
-
-Armlas = INT(128.5+1.5*POW) \ Military laser power
-
 NI% = 37                \ The number of bytes in each ship's data block (as
                         \ stored in INWK and K%)
 
@@ -120,7 +109,7 @@ VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
                         \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
                         \ known as SHEILA)
 
-VSCAN = 57              \ Defines the split position in the split-screen mode
+BRKV = &0202            \ The address of the break vector
 
 X = 128                 \ The centre x-coordinate of the 256 x 192 space view
 Y = 96                  \ The centre y-coordinate of the 256 x 192 space view
@@ -146,28 +135,9 @@ VE = 0                  \ The obfuscation byte used to hide the extended tokens
 LL = 30                 \ The length of lines (in characters) of justified text
                         \ in the extended tokens system
 
-QQ16_FLIGHT = &0880     \ The address of the two-letter text token table in the
-                        \ flight code (this gets populated by the docked code at
-                        \ the start of the game)
+save_lock = &0233       \ AJD, shares location with IND2V+1
 
-CATD = &0D7A            \ The address of the CATD routine that is put in place
-                        \ by the third loader, as set in elite-loader3.asm
-
-IRQ1 = &114B            \ The address of the IRQ1 routine that implements the
-                        \ split screen interrupt handler, as set in
-                        \ elite-loader3.asm
-
-BRBR1 = &11D5           \ The address of the main break handler, which BRKV
-                        \ points to as set in elite-loader3.asm
-
-save_lock = &233        \ IND2V+1
-new_file = &234         \ IND3V
-new_posn = &235         \ IND3V+1
-
-dockedp = &A0
-BRKV = &202
-
-tube_r1s = &FEF8
+tube_r1s = &FEF8        \ AJD
 tube_r1d = &FEF9
 tube_r2s = &FEFA
 tube_r2d = &FEFB
@@ -232,6 +202,32 @@ INCLUDE "library/common/main/subroutine/mveit_part_8_of_9.asm"
 INCLUDE "library/common/main/subroutine/mveit_part_9_of_9.asm"
 INCLUDE "library/common/main/subroutine/mvs4.asm"
 INCLUDE "library/common/main/subroutine/mvs5.asm"
+
+\ ******************************************************************************
+\
+\ Save output/ELTA.bin
+\
+\ ******************************************************************************
+
+PRINT "ELITE A"
+PRINT "Assembled at ", ~CODE%
+PRINT "Ends at ", ~P%
+PRINT "Code size is ", ~(P% - CODE%)
+PRINT "Execute at ", ~LOAD%
+PRINT "Reload at ", ~LOAD_A%
+
+PRINT "S.2.ELTA ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_A%
+\SAVE "versions/elite-a/output/2.ELTA.bin", CODE%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE B FILE
+\
+\ ******************************************************************************
+
+CODE_B% = P%
+LOAD_B% = LOAD% + P% - CODE%
+
 INCLUDE "library/elite-a/parasite/subroutine/ll30.asm"
 INCLUDE "library/enhanced/main/subroutine/flkb.asm"
 INCLUDE "library/common/main/subroutine/nlin3.asm"
@@ -269,6 +265,32 @@ INCLUDE "library/common/main/subroutine/pzw.asm"
 INCLUDE "library/common/main/subroutine/dilx.asm"
 INCLUDE "library/elite-a/parasite/subroutine/dil2.asm"
 INCLUDE "library/enhanced/main/subroutine/hme2.asm"
+
+\ ******************************************************************************
+\
+\ Save output/ELTB.bin
+\
+\ ******************************************************************************
+
+PRINT "ELITE B"
+PRINT "Assembled at ", ~CODE_B%
+PRINT "Ends at ", ~P%
+PRINT "Code size is ", ~(P% - CODE_B%)
+PRINT "Execute at ", ~LOAD%
+PRINT "Reload at ", ~LOAD_B%
+
+PRINT "S.2.ELTB ", ~CODE_B%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_B%
+\SAVE "versions/elite-a/output/2.ELTB.bin", CODE_B%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE C FILE
+\
+\ ******************************************************************************
+
+CODE_C% = P%
+LOAD_C% = LOAD% +P% - CODE%
+
 INCLUDE "library/enhanced/main/variable/hatb.asm"
 INCLUDE "library/enhanced/main/subroutine/hall.asm"
 INCLUDE "library/elite-a/parasite/subroutine/hanger.asm"
@@ -306,6 +328,32 @@ INCLUDE "library/common/main/subroutine/ttx66-ttx662.asm"
 INCLUDE "library/common/main/subroutine/delay.asm"
 INCLUDE "library/elite-a/parasite/subroutine/clyns.asm"
 INCLUDE "library/elite-a/parasite/subroutine/wscan.asm"
+
+\ ******************************************************************************
+\
+\ Save output/ELTC.bin
+\
+\ ******************************************************************************
+
+PRINT "ELITE C"
+PRINT "Assembled at ", ~CODE_C%
+PRINT "Ends at ", ~P%
+PRINT "Code size is ", ~(P% - CODE_C%)
+PRINT "Execute at ", ~LOAD%
+PRINT "Reload at ", ~LOAD_C%
+
+PRINT "S.2.ELTC ", ~CODE_C%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_C%
+\SAVE "versions/elite-a/output/2.ELTC.bin", CODE_C%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE D FILE
+\
+\ ******************************************************************************
+
+CODE_D% = P%
+LOAD_D% = LOAD% + P% - CODE%
+
 INCLUDE "library/common/main/subroutine/tnpr.asm"
 INCLUDE "library/common/main/subroutine/tt20.asm"
 INCLUDE "library/common/main/subroutine/tt54.asm"
@@ -363,6 +411,32 @@ INCLUDE "library/common/main/subroutine/eq.asm"
 INCLUDE "library/common/main/subroutine/prx.asm"
 INCLUDE "library/common/main/subroutine/qv.asm"
 INCLUDE "library/common/main/subroutine/hm.asm"
+
+\ ******************************************************************************
+\
+\ Save output/ELTD.bin
+\
+\ ******************************************************************************
+
+PRINT "ELITE D"
+PRINT "Assembled at ", ~CODE_D%
+PRINT "Ends at ", ~P%
+PRINT "Code size is ", ~(P% - CODE_D%)
+PRINT "Execute at ", ~LOAD%
+PRINT "Reload at ", ~LOAD_D%
+
+PRINT "S.2.ELTD ", ~CODE_D%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_D%
+\SAVE "versions/elite-a/output/2.ELTD.bin", CODE_D%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE E FILE
+\
+\ ******************************************************************************
+
+CODE_E% = P%
+LOAD_E% = LOAD% + P% - CODE%
+
 INCLUDE "library/common/main/subroutine/cpl.asm"
 INCLUDE "library/common/main/subroutine/cmn.asm"
 INCLUDE "library/common/main/subroutine/ypl.asm"
@@ -395,6 +469,32 @@ INCLUDE "library/common/main/subroutine/pl21.asm"
 INCLUDE "library/common/main/subroutine/chkon.asm"
 INCLUDE "library/common/main/subroutine/tt17.asm"
 INCLUDE "library/common/main/subroutine/ping.asm"
+
+\ ******************************************************************************
+\
+\ Save output/ELTE.bin
+\
+\ ******************************************************************************
+
+PRINT "ELITE E"
+PRINT "Assembled at ", ~CODE_E%
+PRINT "Ends at ", ~P%
+PRINT "Code size is ", ~(P% - CODE_E%)
+PRINT "Execute at ", ~LOAD%
+PRINT "Reload at ", ~LOAD_E%
+
+PRINT "S.2.ELTE ", ~CODE_E%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_E%
+\SAVE "versions/elite-a/output/2.ELTE.bin", CODE_E%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE F FILE
+\
+\ ******************************************************************************
+
+CODE_F% = P%
+LOAD_F% = LOAD% + P% - CODE%
+
 INCLUDE "library/common/main/variable/sfx.asm"
 INCLUDE "library/common/main/subroutine/reset.asm"
 INCLUDE "library/common/main/subroutine/res2.asm"
@@ -460,6 +560,32 @@ INCLUDE "library/common/main/subroutine/tidy.asm"
 INCLUDE "library/common/main/subroutine/tis2.asm"
 INCLUDE "library/common/main/subroutine/tis3.asm"
 INCLUDE "library/common/main/subroutine/dvidt.asm"
+
+\ ******************************************************************************
+\
+\ Save output/ELTF.bin
+\
+\ ******************************************************************************
+
+PRINT "ELITE F"
+PRINT "Assembled at ", ~CODE_F%
+PRINT "Ends at ", ~P%
+PRINT "Code size is ", ~(P% - CODE_F%)
+PRINT "Execute at ", ~LOAD%
+PRINT "Reload at ", ~LOAD_F%
+
+PRINT "S.2.ELTF ", ~CODE_F%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_F%
+\SAVE "versions/elite-a/output/2.ELTF.bin", CODE_F%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE G FILE
+\
+\ ******************************************************************************
+
+CODE_G% = P%
+LOAD_G% = LOAD% + P% - CODE%
+
 INCLUDE "library/common/main/subroutine/shppt.asm"
 INCLUDE "library/common/main/subroutine/ll5.asm"
 INCLUDE "library/common/main/subroutine/ll28.asm"
@@ -499,6 +625,32 @@ INCLUDE "library/common/main/subroutine/gvl.asm"
 INCLUDE "library/elite-a/docked/variable/new_offsets.asm"
 INCLUDE "library/elite-a/docked/variable/new_ships.asm"
 INCLUDE "library/elite-a/docked/variable/new_details.asm"
+
+\ ******************************************************************************
+\
+\ Save output/ELTG.bin
+\
+\ ******************************************************************************
+
+PRINT "ELITE G"
+PRINT "Assembled at ", ~CODE_G%
+PRINT "Ends at ", ~P%
+PRINT "Code size is ", ~(P% - CODE_G%)
+PRINT "Execute at ", ~LOAD%
+PRINT "Reload at ", ~LOAD_G%
+
+PRINT "S.2.ELTG ", ~CODE_G%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_G%
+\SAVE "versions/elite-a/output/2.ELTG.bin", CODE_G%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE H FILE
+\
+\ ******************************************************************************
+
+CODE_H% = P%
+LOAD_H% = LOAD% + P% - CODE%
+
 INCLUDE "library/enhanced/main/macro/ejmp.asm"
 INCLUDE "library/enhanced/main/macro/echr.asm"
 INCLUDE "library/enhanced/main/macro/etok.asm"
@@ -518,6 +670,32 @@ INCLUDE "library/common/main/macro/rtok.asm"
 INCLUDE "library/common/main/variable/qq18.asm"
 INCLUDE "library/common/main/variable/sne.asm"
 INCLUDE "library/common/main/variable/act.asm"
+
+\ ******************************************************************************
+\
+\ Save output/ELTH.bin
+\
+\ ******************************************************************************
+
+PRINT "ELITE H"
+PRINT "Assembled at ", ~CODE_H%
+PRINT "Ends at ", ~P%
+PRINT "Code size is ", ~(P% - CODE_H%)
+PRINT "Execute at ", ~LOAD%
+PRINT "Reload at ", ~LOAD_H%
+
+PRINT "S.2.ELTH ", ~CODE_H%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_H%
+\SAVE "versions/disc/output/2.ELTH.bin", CODE_H%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE I FILE
+\
+\ ******************************************************************************
+
+CODE_I% = P%
+LOAD_I% = LOAD% + P% - CODE%
+
 INCLUDE "library/elite-a/encyclopedia/subroutine/info_menu.asm"
 INCLUDE "library/elite-a/encyclopedia/subroutine/ships_ag.asm"
 INCLUDE "library/elite-a/encyclopedia/subroutine/controls.asm"
@@ -540,6 +718,32 @@ INCLUDE "library/elite-a/encyclopedia/variable/card_data.asm"
 INCLUDE "library/elite-a/parasite/subroutine/install_ship.asm"
 INCLUDE "library/elite-a/parasite/subroutine/doentry_flight.asm"
 INCLUDE "library/elite-a/parasite/subroutine/death2_flight.asm"
+
+\ ******************************************************************************
+\
+\ Save output/ELTI.bin
+\
+\ ******************************************************************************
+
+PRINT "ELITE I"
+PRINT "Assembled at ", ~CODE_I%
+PRINT "Ends at ", ~P%
+PRINT "Code size is ", ~(P% - CODE_I%)
+PRINT "Execute at ", ~LOAD%
+PRINT "Reload at ", ~LOAD_I%
+
+PRINT "S.2.ELTI ", ~CODE_I%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_I%
+\SAVE "versions/disc/output/2.ELTI.bin", CODE_I%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE J FILE
+\
+\ ******************************************************************************
+
+CODE_J% = P%
+LOAD_J% = LOAD% + P% - CODE%
+
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_1_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_2_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_3_of_16.asm"
@@ -567,6 +771,32 @@ INCLUDE "library/common/main/subroutine/mas2.asm"
 INCLUDE "library/common/main/subroutine/mas3.asm"
 INCLUDE "library/common/main/subroutine/mvt3.asm"
 INCLUDE "library/common/main/subroutine/escape.asm"
+
+\ ******************************************************************************
+\
+\ Save output/ELTJ.bin
+\
+\ ******************************************************************************
+
+PRINT "ELITE J"
+PRINT "Assembled at ", ~CODE_J%
+PRINT "Ends at ", ~P%
+PRINT "Code size is ", ~(P% - CODE_J%)
+PRINT "Execute at ", ~LOAD%
+PRINT "Reload at ", ~LOAD_J%
+
+PRINT "S.2.ELTJ ", ~CODE_J%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_J%
+\SAVE "versions/disc/output/2.ELTJ.bin", CODE_J%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE K FILE
+\
+\ ******************************************************************************
+
+CODE_K% = P%
+LOAD_K% = LOAD% + P% - CODE%
+
 INCLUDE "library/common/main/subroutine/tactics_part_1_of_7.asm"
 INCLUDE "library/common/main/subroutine/tactics_part_2_of_7.asm"
 INCLUDE "library/common/main/subroutine/tactics_part_3_of_7.asm"
@@ -614,121 +844,53 @@ INCLUDE "library/common/main/subroutine/bump2.asm"
 INCLUDE "library/common/main/subroutine/redu2.asm"
 INCLUDE "library/common/main/subroutine/arctan.asm"
 INCLUDE "library/common/main/subroutine/lasli.asm"
+
+\ ******************************************************************************
+\
+\ Save output/ELTK.bin
+\
+\ ******************************************************************************
+
+PRINT "ELITE K"
+PRINT "Assembled at ", ~CODE_K%
+PRINT "Ends at ", ~P%
+PRINT "Code size is ", ~(P% - CODE_K%)
+PRINT "Execute at ", ~LOAD%
+PRINT "Reload at ", ~LOAD_K%
+
+PRINT "S.2.ELTK ", ~CODE_K%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_K%
+\SAVE "versions/disc/output/2.ELTK.bin", CODE_K%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE L FILE
+\
+\ ******************************************************************************
+
+CODE_L% = P%
+LOAD_L% = LOAD% + P% - CODE%
+
 INCLUDE "library/elite-a/flight/subroutine/tnpr_flight.asm"
 INCLUDE "library/common/main/subroutine/hyp.asm"
 INCLUDE "library/common/main/subroutine/ww.asm"
 INCLUDE "library/common/main/subroutine/ghy.asm"
 INCLUDE "library/common/main/subroutine/ee3.asm"
 INCLUDE "library/common/main/subroutine/tt147.asm"
-
-\ ******************************************************************************
-\
-\       Name: hyp1_FLIGHT
-\       Type: Subroutine
-\   Category: Elite-A: Universe
-\    Summary: AJD
-\
-\ ******************************************************************************
-
-.hyp1_FLIGHT
-
- JSR jmp                \ duplicate of hyp1
- LDX #&05
-
-.d_31b0
-
- LDA &6C,X
- STA &03B2,X
- DEX
- BPL d_31b0
- INX
- STX &0349
- LDA QQ3
- STA QQ28
- LDA QQ5
- STA tek
- LDA QQ4
- STA gov
-
- JSR DORND
- STA QQ26
- JMP GVL
-
+INCLUDE "library/elite-a/parasite/subroutine/hyp1_flight.asm"
 INCLUDE "library/common/main/subroutine/gthg.asm"
 INCLUDE "library/common/main/subroutine/mjp.asm"
 INCLUDE "library/common/main/subroutine/tt18.asm"
 INCLUDE "library/common/main/subroutine/tt110.asm"
 INCLUDE "library/common/main/subroutine/tt114.asm"
-
-\ ******************************************************************************
-\
-\       Name: write_0346
-\       Type: Subroutine
-\   Category: Elite-A: Tube
-\    Summary: AJD
-\
-\ ******************************************************************************
-
-.write_0346
-
- PHA
- LDA #&97
- JSR tube_write
- PLA
- JMP tube_write
-
-\ ******************************************************************************
-\
-\       Name: read_0346
-\       Type: Subroutine
-\   Category: Elite-A: Tube
-\    Summary: AJD
-\
-\ ******************************************************************************
-
-.read_0346
-
- LDA #&98
- JSR tube_write
- JSR tube_read
- STA &0346
- RTS
-
+INCLUDE "library/elite-a/parasite/subroutine/write_0346.asm"
+INCLUDE "library/elite-a/parasite/subroutine/read_0346.asm"
 INCLUDE "library/common/main/subroutine/doexp.asm"
 INCLUDE "library/common/main/subroutine/sos1.asm"
 INCLUDE "library/common/main/subroutine/solar.asm"
 INCLUDE "library/common/main/subroutine/nwstars.asm"
 INCLUDE "library/common/main/subroutine/nwq.asm"
-
-\ ******************************************************************************
-\
-\       Name: WPSHPS2
-\       Type: Subroutine
-\   Category: Elite-A: Dashboard
-\    Summary: AJD
-\
-\ ******************************************************************************
-
-.WPSHPS2
-
- JMP WPSHPS
-
-\ ******************************************************************************
-\
-\       Name: DET1
-\       Type: Subroutine
-\   Category: Elite-A: Screen mode
-\    Summary: AJD
-\
-\ ******************************************************************************
-
-.DET1
-
- LDA #&95
- JSR tube_write
- TXA
- JMP tube_write
-
+INCLUDE "library/elite-a/parasite/subroutine/wpshps2.asm"
+INCLUDE "library/elite-a/parasite/subroutine/det1.asm"
 INCLUDE "library/common/main/subroutine/shd.asm"
 INCLUDE "library/common/main/subroutine/dengy.asm"
 INCLUDE "library/common/main/subroutine/sps2.asm"
@@ -736,27 +898,7 @@ INCLUDE "library/common/main/subroutine/compas.asm"
 INCLUDE "library/common/main/subroutine/sp2.asm"
 INCLUDE "library/common/main/subroutine/dot.asm"
 INCLUDE "library/common/main/subroutine/cpix4.asm"
-
-\ ******************************************************************************
-\
-\       Name: CPIX2
-\       Type: Subroutine
-\   Category: Elite-A: Drawing pixels
-\    Summary: AJD
-\
-\ ******************************************************************************
-
-.CPIX2
-
- LDA #&90
- JSR tube_write
- LDA &34
- JSR tube_write
- LDA &35
- JSR tube_write
- LDA &91
- JMP tube_write
-
+INCLUDE "library/elite-a/parasite/subroutine/cpix2.asm"
 INCLUDE "library/elite-a/flight/subroutine/oops2.asm"
 INCLUDE "library/common/main/subroutine/oops.asm"
 INCLUDE "library/common/main/subroutine/sps3.asm"
@@ -768,54 +910,9 @@ INCLUDE "library/common/main/subroutine/nws1.asm"
 INCLUDE "library/common/main/subroutine/abort.asm"
 INCLUDE "library/common/main/subroutine/abort2.asm"
 INCLUDE "library/common/main/subroutine/ecblb2.asm"
-
-\ ******************************************************************************
-\
-\       Name: ECBLB
-\       Type: Subroutine
-\   Category: Elite-A: Dashboard
-\    Summary: AJD
-\
-\ ******************************************************************************
-
-.ECBLB
-
- LDA #&93
- JMP tube_write
-
-\ ******************************************************************************
-\
-\       Name: SPBLB
-\       Type: Subroutine
-\   Category: Elite-A: Dashboard
-\    Summary: AJD
-\
-\ ******************************************************************************
-
-.SPBLB
-
- LDA #&92
- JMP tube_write
-
-\ ******************************************************************************
-\
-\       Name: MSBAR2
-\       Type: Subroutine
-\   Category: Elite-A: Dashboard
-\    Summary: AJD
-\
-\ ******************************************************************************
-
-.MSBAR2
-
- CPX #4
- BCC n_mok
- LDX #3
-
-.n_mok
-
- JMP MSBAR
-
+INCLUDE "library/elite-a/parasite/subroutine/ecblb.asm"
+INCLUDE "library/elite-a/parasite/subroutine/spblb.asm"
+INCLUDE "library/elite-a/parasite/subroutine/msbar2.asm"
 INCLUDE "library/common/main/subroutine/proj.asm"
 INCLUDE "library/common/main/subroutine/pl2.asm"
 INCLUDE "library/common/main/subroutine/planet.asm"
@@ -833,321 +930,56 @@ INCLUDE "library/common/main/subroutine/pls3.asm"
 INCLUDE "library/common/main/subroutine/pls4.asm"
 INCLUDE "library/common/main/subroutine/pls5.asm"
 INCLUDE "library/common/main/subroutine/pls6.asm"
-
-\ ******************************************************************************
-\
-\       Name: PL21_FLIGHT
-\       Type: Subroutine
-\   Category: Elite-A: Drawing planets
-\    Summary: AJD
-\
-\ ******************************************************************************
-
-.PL21_FLIGHT
-
- SEC
- RTS
-
+INCLUDE "library/elite-a/parasite/subroutine/pl21_flight.asm"
 INCLUDE "library/common/main/subroutine/ks3.asm"
 INCLUDE "library/common/main/subroutine/ks1.asm"
 INCLUDE "library/common/main/subroutine/ks4.asm"
 INCLUDE "library/common/main/subroutine/ks2.asm"
 INCLUDE "library/common/main/subroutine/killshp.asm"
+
+\ ******************************************************************************
+\
+\ Save output/ELTL.bin
+\
+\ ******************************************************************************
+
+PRINT "ELITE L"
+PRINT "Assembled at ", ~CODE_L%
+PRINT "Ends at ", ~P%
+PRINT "Code size is ", ~(P% - CODE_L%)
+PRINT "Execute at ", ~LOAD%
+PRINT "Reload at ", ~LOAD_L%
+
+PRINT "S.2.ELTL ", ~CODE_L%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_L%
+\SAVE "versions/disc/output/2.ELTL.bin", CODE_L%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE M FILE
+\
+\ ******************************************************************************
+
+CODE_M% = P%
+LOAD_M% = LOAD% + P% - CODE%
+
 INCLUDE "library/elite-a/flight/subroutine/rand_posn.asm"
 INCLUDE "library/enhanced/main/subroutine/there.asm"
 INCLUDE "library/common/main/subroutine/ze.asm"
-
-\ ******************************************************************************
-\
-\       Name: DORND2
-\       Type: Subroutine
-\   Category: Elite-A: Utility routines
-\    Summary: AJD
-\
-\ ******************************************************************************
-
-.DORND2
-
- CLC
- JMP DORND
-
+INCLUDE "library/elite-a/parasite/subroutine/dornd2.asm"
 INCLUDE "library/common/main/subroutine/main_game_loop_part_1_of_6.asm"
-
-\ ******************************************************************************
-\
-\       Name: Main game loop (Part 2 of 6)
-\       Type: Subroutine
-\   Category: Elite-A: Main loop
-\    Summary: AJD
-\
-\ ******************************************************************************
-
-.d_3fc0
-
- JSR M%                 \ Like main game loop 2
- DEC &034A
- BEQ d_3f54
- BPL d_3fcd
- INC &034A
-
-.d_3fcd
-
- DEC &8A
- BEQ d_3fd4
-
-.d_3fd1
-
- JMP MLOOP_FLIGHT
-
-.d_3f54
-
- LDA &03A4
- JSR MESS
- LDA #&00
- STA &034A
- JMP d_3fcd
-
-.d_3fd4
-
- LDA &0341
- BNE d_3fd1
- JSR DORND
- CMP #&33 \ trader fraction
- BCS MTT1
- LDA &033E
- CMP #&03
- BCS MTT1
- JSR rand_posn \ IN
- BVS MTT4
- ORA #&6F
- STA &63
- LDA &0320
- BNE MLOOPS
- TXA
- BCS d_401e
- AND #&0F
- STA &61
- BCC d_4022
-
-.d_401e
-
- ORA #&7F
- STA &64
-
-.d_4022
-
- JSR DORND
- CMP #&0A
- AND #&01
- ADC #&05
- BNE horde_plain
-
+INCLUDE "library/elite-a/parasite/subroutine/main_game_loop_part_2_of_6.asm"
 INCLUDE "library/common/main/subroutine/main_game_loop_part_3_of_6.asm"
 INCLUDE "library/common/main/subroutine/main_game_loop_part_4_of_6.asm"
-
-\ ******************************************************************************
-\
-\       Name: Main game loop (Part 5 of 6)
-\       Type: Subroutine
-\   Category: Elite-A: Main loop
-\    Summary: AJD
-\
-\ ******************************************************************************
-
-.MLOOP_FLIGHT
-
- LDX #&FF               \ Like main game loop 5
- TXS
- LDX GNTMP
- BEQ d_40e6
- DEC GNTMP
-
-.d_40e6
-
- JSR DIALS
- JSR COMPAS
- LDA &87
- BEQ d_40f8
- \ AND PATG
- \ LSR A
- \ BCS d_40f8
- LDY #&02
- JSR DELAY
- \ JSR WSCAN
-
-.d_40f8
-
- JSR DOKEY_FLIGHT
- JSR chk_dirn
-
-\ ******************************************************************************
-\
-\       Name: Main game loop (Part 6 of 6)
-\       Type: Subroutine
-\   Category: Elite-A: Main loop
-\    Summary: AJD
-\
-\ ******************************************************************************
-
-.FRCE_FLIGHT
-
- PHA                \ Like main game loop 6
- LDA &2F
- BNE d_locked
- PLA
- JSR TT102
- JMP d_3fc0
-
-.d_locked
-
- PLA
- JSR d_416c
- JMP d_3fc0
-
+INCLUDE "library/elite-a/parasite/subroutine/main_game_loop_part_5_of_6.asm"
+INCLUDE "library/elite-a/parasite/subroutine/main_game_loop_part_6_of_6.asm"
 INCLUDE "library/common/main/subroutine/tt102.asm"
 INCLUDE "library/common/main/subroutine/farof.asm"
 INCLUDE "library/common/main/subroutine/farof2.asm"
 INCLUDE "library/common/main/subroutine/mas4.asm"
 INCLUDE "library/common/main/subroutine/death.asm"
 INCLUDE "library/disc/flight/subroutine/rships.asm"
-
-\ ******************************************************************************
-\
-\       Name: LSHIPS
-\       Type: Subroutine
-\   Category: Elite-A: Loader
-\    Summary: AJD
-\
-\ ******************************************************************************
-
-.LSHIPS
-
- LDA #0
- STA &9F \ reset finder
-
-.SHIPinA
-
- LDX #&00
- LDA tek
- CMP #&0A
- BCS mix_station
- INX
-
-.mix_station
-
- LDY #&02
- JSR install_ship
- LDY #9
-
-.mix_retry
-
- LDA #0
- STA &34
-
-.mix_match
-
- JSR DORND
- CMP #ship_total \ # POSSIBLE SHIPS
- BCS mix_match
- ASL A
- ASL A
- STA &35
- TYA
- AND #&07
- TAX
- LDA mix_bits,X
- LDX &35
- CPY #16
- BCC mix_byte2
- CPY #24
- BCC mix_byte3
- INX \24-28
-
-.mix_byte3
-
- INX \16-23
-
-.mix_byte2
-
- INX \8-15
- AND ship_bits,X
- BEQ mix_fail
-
-.mix_try
-
- JSR DORND
- LDX &35
- CMP ship_bytes,X
- BCC mix_ok
-
-.mix_fail
-
- DEC &34
- BNE mix_match
- LDX #ship_total*4
-
-.mix_ok
-
- STY &36
- CPX #52  \ ANACONDA?
- BEQ mix_anaconda
- CPX #116 \ DRAGON?
- BEQ mix_dragon
- TXA
- LSR A
- LSR A
- TAX
-
-.mix_install
-
- JSR install_ship
- LDY &36
-
-.mix_next
-
- INY
- CPY #15
- BNE mix_skip
- INY
- INY
-
-.mix_skip
-
- CPY #29
- BNE mix_retry
- RTS
-
-.mix_anaconda
-
- LDX #13
- LDY #14
- JSR install_ship
- LDX #14
- LDY #15
- JMP mix_install
-
-.mix_dragon
-
- LDX #29
- LDY #14
- JSR install_ship
- LDX #17
- LDY #15
- JMP mix_install
-
-\ ******************************************************************************
-\
-\       Name: mix_bits
-\       Type: Variable
-\   Category: Elite-A: Loader
-\    Summary: AJD
-\
-\ ******************************************************************************
-
-.mix_bits
-
- EQUB &01, &02, &04, &08, &10, &20, &40, &80
-
+INCLUDE "library/elite-a/parasite/subroutine/lships.asm"
+INCLUDE "library/elite-a/parasite/variable/mix_bits.asm"
 INCLUDE "library/common/main/subroutine/sps1.asm"
 INCLUDE "library/common/main/subroutine/tas2.asm"
 INCLUDE "library/common/main/subroutine/warp.asm"
@@ -1155,285 +987,18 @@ INCLUDE "library/common/main/subroutine/exno3.asm"
 INCLUDE "library/common/main/subroutine/sfrmis.asm"
 INCLUDE "library/common/main/subroutine/exno2.asm"
 INCLUDE "library/common/main/subroutine/exno.asm"
-
-\ ******************************************************************************
-\
-\       Name: DKS1
-\       Type: Subroutine
-\   Category: Elite-A: Keyboard
-\    Summary: AJD
-\
-\ ******************************************************************************
-
-.DKS1
-
- LDA #&96
- JSR tube_write
- TYA
- JSR tube_write
- LDA BSTK
- JSR tube_write
- JSR tube_read
- BPL b_quit
- STA KL,Y
-
-.b_quit
-
- RTS
-
+INCLUDE "library/elite-a/parasite/subroutine/dks1.asm"
 INCLUDE "library/common/main/subroutine/dkj1.asm"
 INCLUDE "library/common/main/subroutine/u_per_cent.asm"
-
-\ ******************************************************************************
-\
-\       Name: DOKEY_FLIGHT
-\       Type: Subroutine
-\   Category: Elite-A: Keyboard
-\    Summary: AJD
-\
-\ ******************************************************************************
-
-.DOKEY_FLIGHT
-
- JSR U%                 \ Copy of DOKEY
- LDA &2F
- BEQ d_open
- JMP DK4_FLIGHT
-
-.d_open
-
- LDA JSTK
- BNE DKJ1
- LDY #&07
-
-.d_44bc
-
- JSR DKS1
- DEY
- BNE d_44bc
- LDA &033F
- BEQ d_4526
-
-.auton
-
- JSR ZINF
- LDA #&60
- STA &54
- ORA #&80
- STA &5C
- STA &8C
- LDA &7D \ ? Too Fast
- STA &61
- JSR DOCKIT
- LDA &61
- CMP #&16
- BCC d_44e3
- LDA #&16
-
-.d_44e3
-
- STA &7D
- LDA #&FF
- LDX #&00
- LDY &62
- BEQ d_44f3
- BMI d_44f0
- INX
-
-.d_44f0
-
- STA &0301,X
-
-.d_44f3
-
- LDA #&80
- LDX #&00
- ASL &63
- BEQ d_450f
- BCC d_44fe
- INX
-
-.d_44fe
-
- BIT &63
- BPL d_4509
- LDA #&40
- STA JSTX
- LDA #&00
-
-.d_4509
-
- STA &0303,X
- LDA JSTX
-
-.d_450f
-
- STA JSTX
- LDA #&80
- LDX #&00
- ASL &64
- BEQ d_4523
- BCS d_451d
- INX
-
-.d_451d
-
- STA &0305,X
- LDA JSTY
-
-.d_4523
-
- STA JSTY
-
-.d_4526
-
- LDX JSTX
- LDA #&07
- LDY &0303
- BEQ d_4533
- JSR BUMP2
-
-.d_4533
-
- LDY &0304
- BEQ d_453b
- JSR REDU2
-
-.d_453b
-
- STX JSTX
- ASL A
- LDX JSTY
- LDY &0305
- BEQ d_454a
- JSR REDU2
-
-.d_454a
-
- LDY &0306
- BEQ d_4552
- JSR BUMP2
-
-.d_4552
-
- STX JSTY
-
-\ ******************************************************************************
-\
-\       Name: DK4_FLIGHT
-\       Type: Subroutine
-\   Category: Elite-A: Keyboard
-\    Summary: AJD
-\
-\ ******************************************************************************
-
-.DK4_FLIGHT
-
- JSR RDKEY              \ Copy of DK4
- STX KL
- CPX #&69
- BNE d_459c
-
-.d_455f
-
- JSR WSCAN
- JSR RDKEY
- CPX #&51
- BNE d_456e
- LDA #&00
- STA DNOIZ
-
-.d_456e
-
- LDY #&40
-
-.d_4570
-
- JSR DKS3
- INY
- CPY #&48
- BNE d_4570
- CPX #&10
- BNE d_457f
- STX DNOIZ
-
-.d_457f
-
- CPX #&70
- BNE d_4586
- JMP DEATH2_FLIGHT
-
-.d_4586
-
- \ CPX #&37
- \ BNE dont_dump
- \ JSR printer
- \dont_dump
- CPX #&59
- BNE d_455f
-
-.d_459c
-
- LDA &87
- BNE DK5
- LDY #&10
-
-.d_45a4
-
- JSR DKS1
- DEY
- CPY #&07
- BNE d_45a4
-
-.DK5
-
- RTS
-
+INCLUDE "library/elite-a/parasite/subroutine/dokey_flight.asm"
+INCLUDE "library/elite-a/parasite/subroutine/dk4_flight.asm"
 INCLUDE "library/common/main/subroutine/me1.asm"
 INCLUDE "library/elite-a/flight/subroutine/cargo_mtok.asm"
 INCLUDE "library/common/main/subroutine/mess.asm"
 INCLUDE "library/common/main/subroutine/mes9.asm"
 INCLUDE "library/common/main/subroutine/ouch.asm"
-
-\ ******************************************************************************
-\
-\       Name: LL9_FLIGHT
-\       Type: Subroutine
-\   Category: Elite-A: Drawing ships
-\    Summary: AJD
-\
-\ ******************************************************************************
-
-.d_4889
-
- JMP PLANET
-
-.LL9_FLIGHT
-
- LDA &8C
- BMI d_4889
- JMP LL9
-
-\ ******************************************************************************
-\
-\       Name: MVEIT_FLIGHT
-\       Type: Subroutine
-\   Category: Elite-A: Moving
-\    Summary: AJD
-\
-\ ******************************************************************************
-
-.MVEIT_FLIGHT
-
- LDA &65
- AND #&A0
- BNE MV30
- LDA &8A
- EOR &84
- AND #&0F
- BNE P%+5
- JSR TIDY
-
+INCLUDE "library/elite-a/parasite/subroutine/ll9_flight.asm"
+INCLUDE "library/elite-a/parasite/subroutine/mveit_flight.asm"
 INCLUDE "library/common/main/subroutine/mveit_part_2_of_9.asm"
 INCLUDE "library/common/main/subroutine/mveit_part_3_of_9.asm"
 INCLUDE "library/common/main/subroutine/mveit_part_4_of_9.asm"
@@ -1448,6 +1013,32 @@ INCLUDE "library/common/main/subroutine/sight.asm"
 INCLUDE "library/elite-a/flight/variable/iff_xor.asm"
 INCLUDE "library/elite-a/flight/variable/iff_base.asm"
 INCLUDE "library/common/main/subroutine/scan.asm"
+
+\ ******************************************************************************
+\
+\ Save output/ELTM.bin
+\
+\ ******************************************************************************
+
+PRINT "ELITE M"
+PRINT "Assembled at ", ~CODE_M%
+PRINT "Ends at ", ~P%
+PRINT "Code size is ", ~(P% - CODE_M%)
+PRINT "Execute at ", ~LOAD%
+PRINT "Reload at ", ~LOAD_M%
+
+PRINT "S.2.ELTM ", ~CODE_M%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_M%
+\SAVE "versions/disc/output/2.ELTM.bin", CODE_M%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE SHIP BLUEPRINTS FILE
+\
+\ ******************************************************************************
+
+CODE_SHIPS% = P%
+LOAD_SHIPS% = LOAD% + P% - CODE%
+
 INCLUDE "library/common/main/macro/vertex.asm"
 INCLUDE "library/common/main/macro/edge.asm"
 INCLUDE "library/common/main/macro/face.asm"
@@ -1489,164 +1080,11 @@ INCLUDE "library/elite-a/flight/variable/ship_rattler.asm"
 INCLUDE "library/elite-a/flight/variable/ship_iguana.asm"
 INCLUDE "library/elite-a/flight/variable/ship_shuttle2.asm"
 INCLUDE "library/elite-a/flight/variable/ship_chameleon.asm"
-
-\ ******************************************************************************
-\
-\       Name: ship_list
-\       Type: Variable
-\   Category: Elite-A: Drawing ships
-\    Summary: AJD
-\
-\ ******************************************************************************
-
-.ship_list
-
- EQUW SHIP_DODO, SHIP_CORIOLIS, SHIP_ESCAPE_POD, SHIP_PLATE
- EQUW SHIP_CANISTER, SHIP_BOULDER, SHIP_ASTEROID, SHIP_SPLINTER
- EQUW SHIP_SHUTTLE, SHIP_TRANSPORTER, SHIP_COBRA_MK_3, SHIP_PYTHON
- EQUW SHIP_BOA, SHIP_ANACONDA, SHIP_WORM, SHIP_MISSILE
- EQUW SHIP_VIPER, SHIP_SIDEWINDER, SHIP_MAMBA, SHIP_KRAIT
- EQUW SHIP_ADDER, SHIP_GECKO, SHIP_COBRA_MK_1, SHIP_ASP_MK_2
- EQUW SHIP_FER_DE_LANCE, SHIP_MORAY, SHIP_THARGOID, SHIP_THARGON
- EQUW SHIP_CONSTRICTOR, ship_dragon, ship_monitor, ship_ophidian
- EQUW ship_ghavial, ship_bushmaster, ship_rattler, ship_iguana
- EQUW ship_shuttle2, ship_chameleon
-
- EQUW 0
-
-\ ******************************************************************************
-\
-\       Name: ship_data
-\       Type: Variable
-\   Category: Elite-A: Drawing ships
-\    Summary: AJD
-\
-\ ******************************************************************************
-
-.ship_data
-
- EQUW 0
-
+INCLUDE "library/elite-a/parasite/variable/ship_list.asm"
 INCLUDE "library/elite-a/flight/variable/xx21.asm"
-
-\ ******************************************************************************
-\
-\       Name: ship_flags
-\       Type: Variable
-\   Category: Elite-A: Drawing ships
-\    Summary: AJD
-\
-\ ******************************************************************************
-
-.ship_flags
-
- EQUB 0
-
 INCLUDE "library/advanced/main/variable/e_per_cent.asm"
-
-\ ******************************************************************************
-\
-\       Name: ship_bits
-\       Type: Variable
-\   Category: Elite-A: Drawing ships
-\    Summary: AJD
-\
-\ ******************************************************************************
-
-.ship_bits
-
- EQUD %00000000000000000000000000000100
- EQUD %00000000000000000000000000000100
- EQUD %00000000000000000000000000001000
- EQUD %00000000000000000000000000010000
- EQUD %00000000000000000000000000100000
- EQUD %00000000000000000000000001000000
- EQUD %00000000000000000000000010000000
- EQUD %00000000000000000000000100000000
- EQUD %00000000000000000000001000000000
- EQUD %00000000000000000000010000000000
- EQUD %00011111111000000011100000000000
- EQUD %00011001110000000011100000000000
- EQUD %00000000000000000011100000000000
- EQUD %00000000000000000100000000000000
- EQUD %00000001110000001000000000000000
- EQUD %00000000000000000000000000000010
- EQUD %00000000000000010000000000000000
- EQUD %00010001111111101000000000000000
- EQUD %00010001111111100000000000000000
- EQUD %00010001111111100000000000000000
- EQUD %00011001111110000011000000000000
- EQUD %00011001111111100000000000000000
- EQUD %00011001111111100010000000000000
- EQUD %00011001000000000000000000000000
- EQUD %00011111000000000010000000000000
- EQUD %00011001110000000011000000000000
- EQUD %00100000000000000000000000000000
- EQUD %01000000000000000000000000000000
- EQUD %10000000000000000000000000000000
- EQUD %00000000000000000100000000000000
- EQUD %00010001000000000011100000000000
- EQUD %00010001111000000011000000000000
- EQUD %00010000000000000011100000000000
- EQUD %00011101111100000000000000000000
- EQUD %00010001110000000011000000000000
- EQUD %00011101111100000010000000000000
- EQUD %00000000000000000000011000000000
- EQUD %00010001110000000011000000000000
-
- EQUD %00011111111111100111111000000000
-
-\ ******************************************************************************
-\
-\       Name: ship_bytes
-\       Type: Variable
-\   Category: Elite-A: Drawing ships
-\    Summary: AJD
-\
-\ ******************************************************************************
-
-.ship_bytes
-
- EQUB 000, &00, 0, 2
- EQUB 000, &00, 0, 2
- EQUB 000, &00, 0, 2
- EQUB 000, &00, 0, 2
- EQUB 000, &00, 0, 2
- EQUB 000, &00, 0, 2
- EQUB 000, &00, 0, 2
- EQUB 000, &00, 0, 2
- EQUB 050, &00, 0, 0
- EQUB 050, &00, 0, 0
- EQUB 070, &80, 0, 2
- EQUB 065, &80, 0, 2
- EQUB 060, &80, 0, 2
- EQUB 010, &80, 0, 0
- EQUB 015, &00, 0, 0
- EQUB 000, &00, 0, 0
- EQUB 000, &80, 0, 2
- EQUB 090, &00, 0, 2
- EQUB 100, &80, 0, 2
- EQUB 100, &80, 0, 2
- EQUB 085, &80, 0, 2
- EQUB 080, &80, 0, 2
- EQUB 080, &80, 0, 2
- EQUB 010, &80, 0, 0
- EQUB 060, &80, 0, 1
- EQUB 060, &80, 0, 1
- EQUB 000, &00, 0, 2
- EQUB 000, &00, 0, 2
- EQUB 000, &00, 0, 2
- EQUB 003, &00, 0, 0
- EQUB 030, &80, 0, 0
- EQUB 075, &80, 0, 2
- EQUB 050, &80, 0, 1
- EQUB 075, &80, 0, 2
- EQUB 055, &80, 0, 1
- EQUB 060, &80, 0, 1
- EQUB 050, &00, 0, 0
- EQUB 045, &80, 0, 1
-
- EQUB 255, &00, 0, 0
+INCLUDE "library/elite-a/parasite/variable/ship_bits.asm"
+INCLUDE "library/elite-a/parasite/variable/ship_bytes.asm"
 
 \ ******************************************************************************
 \

@@ -1,0 +1,24 @@
+\ ******************************************************************************
+\
+\       Name: Main game loop (Part 6 of 6)
+\       Type: Subroutine
+\   Category: Elite-A: Main loop
+\    Summary: AJD
+\
+\ ******************************************************************************
+
+.FRCE_FLIGHT
+
+ PHA                \ Like main game loop 6
+ LDA &2F
+ BNE d_locked
+ PLA
+ JSR TT102
+ JMP d_3fc0
+
+.d_locked
+
+ PLA
+ JSR d_416c
+ JMP d_3fc0
+

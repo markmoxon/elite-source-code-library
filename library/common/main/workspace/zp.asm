@@ -340,6 +340,12 @@ INCLUDE "library/common/main/variable/qq9.asm"
 INCLUDE "library/common/main/variable/qq10.asm"
 INCLUDE "library/common/main/variable/nostm.asm"
 
+ELIF _ELITE_A_6502SP_PARA
+
+ SKIP 1                 \ This byte appears to be unused
+
+INCLUDE "library/elite-a/parasite/variable/dockedp.asm"
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform

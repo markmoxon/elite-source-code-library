@@ -238,7 +238,8 @@ build:
 	echo _RELEASE=$(rel-elite-a) >> versions/elite-a/sources/elite-header.h.asm
 	echo _REMOVE_CHECKSUMS=FALSE >> versions/elite-a/sources/elite-header.h.asm
 	echo _MATCH_EXTRACTED_BINARIES=TRUE >> versions/elite-a/sources/elite-header.h.asm
-	$(BEEBASM) -i versions/elite-a/sources/elite-missile.asm -v > versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-text-tokens.asm -v > versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-missile.asm -v >> versions/elite-a/output/compile.txt
 	$(BEEBASM) -i versions/elite-a/sources/elite-source-docked.asm -v >> versions/elite-a/output/compile.txt
 	$(BEEBASM) -i versions/elite-a/sources/elite-source-flight.asm -v >> versions/elite-a/output/compile.txt
 	$(BEEBASM) -i versions/elite-a/sources/elite-source-encyclopedia.asm -v >> versions/elite-a/output/compile.txt
@@ -323,7 +324,8 @@ encrypt:
 	echo _RELEASE=$(rel-elite-a) >> versions/elite-a/sources/elite-header.h.asm
 	echo _REMOVE_CHECKSUMS=FALSE >> versions/elite-a/sources/elite-header.h.asm
 	echo _MATCH_EXTRACTED_BINARIES=TRUE >> versions/elite-a/sources/elite-header.h.asm
-	$(BEEBASM) -i versions/elite-a/sources/elite-missile.asm -v > versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-text-tokens.asm -v > versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-missile.asm -v >> versions/elite-a/output/compile.txt
 	$(BEEBASM) -i versions/elite-a/sources/elite-source-docked.asm -v >> versions/elite-a/output/compile.txt
 	$(BEEBASM) -i versions/elite-a/sources/elite-source-flight.asm -v >> versions/elite-a/output/compile.txt
 	$(BEEBASM) -i versions/elite-a/sources/elite-source-encyclopedia.asm -v >> versions/elite-a/output/compile.txt
@@ -347,7 +349,8 @@ elite-a:
 	echo _RELEASE=$(rel-elite-a) >> versions/elite-a/sources/elite-header.h.asm
 	echo _REMOVE_CHECKSUMS=FALSE >> versions/elite-a/sources/elite-header.h.asm
 	echo _MATCH_EXTRACTED_BINARIES=TRUE >> versions/elite-a/sources/elite-header.h.asm
-	$(BEEBASM) -i versions/elite-a/sources/elite-missile.asm -v > versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-text-tokens.asm -v > versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-missile.asm -v >> versions/elite-a/output/compile.txt
 	$(BEEBASM) -i versions/elite-a/sources/elite-source-docked.asm -v >> versions/elite-a/output/compile.txt
 	$(BEEBASM) -i versions/elite-a/sources/elite-source-flight.asm -v >> versions/elite-a/output/compile.txt
 	$(BEEBASM) -i versions/elite-a/sources/elite-source-encyclopedia.asm -v >> versions/elite-a/output/compile.txt

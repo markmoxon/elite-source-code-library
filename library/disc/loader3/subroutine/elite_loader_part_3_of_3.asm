@@ -35,6 +35,8 @@
 \
 \ ******************************************************************************
 
+IF NOT(_ELITE_A_VERSION)
+
 .ELITE
 
  INCBIN "versions/disc/binaries/P.ELITE.bin"
@@ -46,4 +48,20 @@
 .CpASOFT
 
  INCBIN "versions/disc/binaries/P.(C)ASFT.bin"
+
+ELIF _ELITE_A_VERSION
+
+.ELITE
+
+ INCBIN "versions/elite-a/binaries/P.ELITE.bin"
+
+.ASOFT
+
+ INCBIN "versions/elite-a/binaries/P.A-SOFT.bin"
+
+.CpASOFT
+
+ INCBIN "versions/elite-a/binaries/P.(C)ASFT.bin"
+
+ENDIF
 

@@ -459,27 +459,7 @@ INCLUDE "library/common/loader/subroutine/osb.asm"
 INCLUDE "library/disc/loader3/subroutine/mvpg.asm"
 INCLUDE "library/disc/loader3/subroutine/mvbl.asm"
 INCLUDE "library/disc/loader3/variable/mess1.asm"
-
-\INCLUDE "library/disc/loader3/subroutine/elite_loader_part_2_of_3.asm"
-
-.DIALS
-
- INCBIN "versions/elite-a/binaries/P.DIALS.bin"
-
-.SHIP_MISSILE
-
- INCBIN "versions/elite-a/output/MISSILE.bin"
-
-.WORDS
-
-INCLUDE "library/common/main/macro/char.asm"
-INCLUDE "library/common/main/macro/twok.asm"
-INCLUDE "library/common/main/macro/cont.asm"
-INCLUDE "library/common/main/macro/rtok.asm"
-INCLUDE "library/common/main/variable/qq18.asm"
-
-INCLUDE "library/common/main/variable/sne.asm"
-INCLUDE "library/common/main/variable/act.asm"
+INCLUDE "library/disc/loader3/subroutine/elite_loader_part_2_of_3.asm"
 INCLUDE "library/disc/loader3/subroutine/tvt1code.asm"
 INCLUDE "library/disc/loader3/subroutine/elite_loader_part_3_of_3.asm"
 

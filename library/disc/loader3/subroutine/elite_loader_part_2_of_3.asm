@@ -35,6 +35,8 @@
 \
 \ ******************************************************************************
 
+IF NOT(_ELITE_A_VERSION)
+
 .DIALS
 
  INCBIN "versions/disc/binaries/P.DIALS.bin"
@@ -47,3 +49,18 @@
 
  INCBIN "versions/disc/output/WORDS.bin"
 
+ELIF _ELITE_A_VERSION
+
+.DIALS
+
+ INCBIN "versions/elite-a/binaries/P.DIALS.bin"
+
+.SHIP_MISSILE
+
+ INCBIN "versions/elite-a/output/MISSILE.bin"
+
+.WORDS
+
+ INCBIN "versions/elite-a/output/WORDS.bin"
+
+ENDIF

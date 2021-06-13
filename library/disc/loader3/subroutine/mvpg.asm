@@ -24,7 +24,11 @@
 
  LDA (P),Y              \ Fetch the Y-th byte of the P(1 0) memory block
 
+IF NOT(_ELITE_A_VERSION)
+
  EOR #&A5               \ Decrypt it by EOR'ing with &A5
+
+ENDIF
 
  STA (ZP),Y             \ Store the decrypted result in the Y-th byte of the
                         \ ZP(1 0) memory block

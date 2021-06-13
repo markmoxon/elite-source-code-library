@@ -2,7 +2,7 @@
 \
 \ ELITE-A DOCKED SOURCE
 \
-\ Elite-A is an extended version of BBC Micro Elite, written by Angus Duggan
+\ Elite-A is an extended version of BBC Micro Elite by Angus Duggan
 \
 \ The original Elite was written by Ian Bell and David Braben and is copyright
 \ Acornsoft 1984, and the extra code in Elite-A is copyright Angus Duggan
@@ -731,7 +731,7 @@ INCLUDE "library/common/main/variable/ship_viper.asm"
 INCLUDE "library/enhanced/main/variable/ship_krait.asm"
 INCLUDE "library/enhanced/main/variable/ship_constrictor.asm"
 
-SKIP 171
+ SKIP 171
 
 \ ******************************************************************************
 \

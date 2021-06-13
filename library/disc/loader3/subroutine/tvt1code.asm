@@ -26,6 +26,8 @@ INCLUDE "library/common/main/variable/chk2.asm"
 INCLUDE "library/common/main/variable/chk.asm"
 INCLUDE "library/disc/loader3/subroutine/brbr1.asm"
 
+IF NOT(_ELITE_A_VERSION)
+
  EQUB &64, &5F, &61     \ These bytes appear to be unused
  EQUB &74, &74, &72
  EQUB &69, &62, &75
@@ -36,6 +38,8 @@ INCLUDE "library/disc/loader3/subroutine/brbr1.asm"
  EQUB &64, &69, &73
  EQUB &63, &00, &B6
  EQUB &3C, &C6
+
+ENDIF
 
 COPYBLOCK TVT1, P%, TVT1code
 

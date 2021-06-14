@@ -2,7 +2,7 @@
 \
 \       Name: CPIX2
 \       Type: Subroutine
-\   Category: Elite-A: Drawing pixels
+\   Category: Drawing pixels
 \    Summary: AJD
 \
 \ ******************************************************************************

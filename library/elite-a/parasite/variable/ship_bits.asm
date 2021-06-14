@@ -2,7 +2,7 @@
 \
 \       Name: ship_bits
 \       Type: Variable
-\   Category: Elite-A: Drawing ships
+\   Category: Drawing ships
 \    Summary: AJD
 \
 \ ******************************************************************************

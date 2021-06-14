@@ -2,7 +2,7 @@
 \
 \       Name: msg_3
 \       Type: Variable
-\   Category: Elite-A: Text
+\   Category: Text
 \    Summary: AJD
 \
 \ ******************************************************************************

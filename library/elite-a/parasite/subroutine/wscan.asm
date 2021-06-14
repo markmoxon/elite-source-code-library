@@ -2,7 +2,7 @@
 \
 \       Name: WSCAN
 \       Type: Subroutine
-\   Category: Elite-A: Screen mode
+\   Category: Screen mode
 \    Summary: AJD
 \
 \ ******************************************************************************

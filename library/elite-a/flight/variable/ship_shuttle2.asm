@@ -2,7 +2,7 @@
 \
 \       Name: ship_shuttle2
 \       Type: Variable
-\   Category: Elite-A: Drawing ships
+\   Category: Drawing ships
 \    Summary: Ship blueprint for a Shuttle 2 AJD
 \  Deep dive: Ship blueprints
 \

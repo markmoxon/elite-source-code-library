@@ -29,11 +29,26 @@
 
 .DIL2
 
+IF _ELITE_A_6502SP_IO
+
+ JSR tube_get           \ AJD
+ STA angle_1
+ JSR tube_get
+ STA SC
+ JSR tube_get
+ STA SC+1
+
+ENDIF
+
  LDY #1                 \ We want to start drawing the vertical indicator bar on
                         \ the second line in the indicator's character block, so
                         \ set Y to point to that row's offset
 
+IF NOT(_ELITE_A_6502SP_IO)
+
  STA Q                  \ Store the offset of the vertical bar to draw in Q
+
+ENDIF
 
                         \ We are now going to work our way along the indicator
                         \ on the dashboard, from left to right, working our way
@@ -45,7 +60,7 @@
 
 .DLL10
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Screen
 
  SEC                    \ Set A = Q - 4, so that A contains the offset of the
  LDA Q                  \ vertical bar from the start of this character block
@@ -65,9 +80,21 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ not contain the vertical indicator bar, so jump to
                         \ DLL11 to draw a blank character block
 
+ELIF _ELITE_A_6502SP_IO
+
+ SEC                    \ Set A = angle_1 - 4, so that A contains the offset of
+ LDA angle_1            \ the vertical bar from the start of this character
+ SBC #4                 \ block
+
+ BCS DLL11              \ If angle_1 >= 4 then the character block we are drawing
+                        \ does not contain the vertical indicator bar, so jump to
+                        \ DLL11 to draw a blank character block
+
 ENDIF
 
  LDA #&FF               \ Set A to a high number (and &FF is as high as they go)
+
+IF NOT(_ELITE_A_6502SP_IO)
 
  LDX Q                  \ Set X to the offset of the vertical bar, which we know
                         \ is within this character block
@@ -75,6 +102,17 @@ ENDIF
  STA Q                  \ Set Q to a high number (&FF, why not) so we will keep
                         \ drawing blank characters after this one until we reach
                         \ the end of the indicator row
+
+ELIF _ELITE_A_6502SP_IO
+
+ LDX angle_1            \ Set X to the offset of the vertical bar, which we know
+                        \ is within this character block
+
+ STA angle_1            \ Set angle_1 to a high number (&FF, why not) so we will
+                        \ keep drawing blank characters after this one until we
+                        \ reach the end of the indicator row
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
@@ -139,9 +177,19 @@ ENDIF
                         \ If we get here then we want to draw a blank for this
                         \ character block
 
+IF NOT(_ELITE_A_6502SP_IO)
+
  STA Q                  \ Update Q with the new offset of the vertical bar, so
                         \ it becomes the offset after the character block we
                         \ are about to draw
+
+ELIF _ELITE_A_6502SP_IO
+
+ STA angle_1            \ Update angle_1 with the new offset of the vertical
+                        \ bar, so it becomes the offset after the character
+                        \ block we are about to draw
+
+ENDIF
 
  LDA #0                 \ Change the mask so no bits are set, so all of the
                         \ character blocks we display from now on will be blank
@@ -165,7 +213,7 @@ ENDIF
  TAY                    \ character block (as each character is 8 bytes of
                         \ screen memory)
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Screen
 
  CPY #30                \ If Y < 30 then we still have some more character
  BCC DLL10              \ blocks to draw, so loop back to DLL10 to display the
@@ -200,6 +248,14 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ two pages of 256 bytes) - so this sets up SC to point
                         \ to the next indicator, i.e. the one below the one we
                         \ just drew
+
+ RTS                    \ Return from the subroutine
+
+ELIF _ELITE_A_6502SP_IO
+
+ CPY #30                \ If Y < 30 then we still have some more character
+ BCC DLL10              \ blocks to draw, so loop back to DLL10 to display the
+                        \ next one along
 
  RTS                    \ Return from the subroutine
 

@@ -2,7 +2,7 @@
 \
 \       Name: ship_ghavial
 \       Type: Variable
-\   Category: Elite-A: Drawing ships
+\   Category: Drawing ships
 \    Summary: Ship blueprint for a Ghavial
 \  Deep dive: Ship blueprints
 \

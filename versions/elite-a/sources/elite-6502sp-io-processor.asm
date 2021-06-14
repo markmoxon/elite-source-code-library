@@ -51,147 +51,21 @@ _SOURCE_DISC            = (_RELEASE = 2)
 \
 \ ******************************************************************************
 
-LS% = &0CFF             \ The start of the descending ship line heap
-
-NOST = 18               \ The number of stardust particles in normal space (this
-                        \ goes down to 3 in witchspace)
-
-NOSH = 12               \ The maximum number of ships in our local bubble of
-                        \ universe
-
-NTY = 31                \ The number of different ship types
-
-MSL = 1                 \ Ship type for a missile
-SST = 2                 \ Ship type for a Coriolis space station
-ESC = 3                 \ Ship type for an escape pod
-PLT = 4                 \ Ship type for an alloy plate
-OIL = 5                 \ Ship type for a cargo canister
-AST = 7                 \ Ship type for an asteroid
-SPL = 8                 \ Ship type for a splinter
-SHU = 9                 \ Ship type for a Shuttle
-CYL = 11                \ Ship type for a Cobra Mk III
-ANA = 14                \ Ship type for an Anaconda
-COPS = 16               \ Ship type for a Viper
-SH3 = 17                \ Ship type for a Sidewinder
-KRA = 19                \ Ship type for a Krait
-ADA = 20                \ Ship type for a Adder
-WRM = 23                \ Ship type for a Worm
-CYL2 = 24               \ Ship type for a Cobra Mk III (pirate)
-ASP = 25                \ Ship type for an Asp Mk II
-THG = 29                \ Ship type for a Thargoid
-TGL = 30                \ Ship type for a Thargon
-CON = 31                \ Ship type for a Constrictor
-
-JL = ESC                \ Junk is defined as starting from the escape pod
-
-JH = SHU+2              \ Junk is defined as ending before the Cobra Mk III
-                        \
-                        \ So junk is defined as the following: escape pod,
-                        \ alloy plate, cargo canister, asteroid, splinter,
-                        \ Shuttle or Transporter
-
-PACK = SH3              \ The first of the eight pack-hunter ships, which tend
-                        \ to spawn in groups. With the default value of PACK the
-                        \ pack-hunters are the Sidewinder, Mamba, Krait, Adder,
-                        \ Gecko, Cobra Mk I, Worm and Cobra Mk III (pirate)
-
-POW = 15                \ Pulse laser power
-
-Mlas = 50               \ Mining laser power
-
-Armlas = INT(128.5+1.5*POW) \ Military laser power
-
-NI% = 37                \ The number of bytes in each ship's data block (as
-                        \ stored in INWK and K%)
-
 OSBYTE = &FFF4          \ The address for the OSBYTE routine
-OSWORD = &FFF1          \ The address for the OSWORD routine
-OSFILE = &FFDD          \ The address for the OSFILE routine
-OSWRCH = &FFEE          \ The address for the OSWRCH routine
 OSCLI = &FFF7           \ The address for the OSCLI routine
 
 VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
                         \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
                         \ known as SHEILA)
 
-VSCAN = 57              \ Defines the split position in the split-screen mode
-
 X = 128                 \ The centre x-coordinate of the 256 x 192 space view
 Y = 96                  \ The centre y-coordinate of the 256 x 192 space view
 
-f0 = &20                \ Internal key number for red key f0 (Launch, Front)
-f1 = &71                \ Internal key number for red key f1 (Buy Cargo, Rear)
-f2 = &72                \ Internal key number for red key f2 (Sell Cargo, Left)
-f3 = &73                \ Internal key number for red key f3 (Equip Ship, Right)
-f4 = &14                \ Internal key number for red key f4 (Long-range Chart)
-f5 = &74                \ Internal key number for red key f5 (Short-range Chart)
-f6 = &75                \ Internal key number for red key f6 (Data on System)
-f7 = &16                \ Internal key number for red key f7 (Market Price)
-f8 = &76                \ Internal key number for red key f8 (Status Mode)
-f9 = &77                \ Internal key number for red key f9 (Inventory)
 
-NRU% = 25               \ The number of planetary systems with extended system
-                        \ description overrides in the RUTOK table
+BRKV = &0202
+WRCHV = &020E
 
-VE = 0                  \ The obfuscation byte used to hide the extended tokens
-                        \ table from crackers viewing the binary code, which is
-                        \ zero in Elite-A as the token table is not obfuscated
-
-LL = 30                 \ The length of lines (in characters) of justified text
-                        \ in the extended tokens system
-
-QQ18 = &0400            \ The address of the text token table, as set in
-                        \ elite-loader3.asm
-
-SNE = &07C0             \ The address of the sine lookup table, as set in
-                        \ elite-loader3.asm
-
-ACT = &07E0             \ The address of the arctan lookup table, as set in
-                        \ elite-loader3.asm
-
-QQ16_FLIGHT = &0880     \ The address of the two-letter text token table in the
-                        \ flight code (this gets populated by the docked code at
-                        \ the start of the game)
-
-CATD = &0D7A            \ The address of the CATD routine that is put in place
-                        \ by the third loader, as set in elite-loader3.asm
-
-IRQ1 = &114B            \ The address of the IRQ1 routine that implements the
-                        \ split screen interrupt handler, as set in
-                        \ elite-loader3.asm
-
-BRBR1 = &11D5           \ The address of the main break handler, which BRKV
-                        \ points to as set in elite-loader3.asm
-
-NA% = &1181             \ The address of the data block for the last saved
-                        \ commander, as set in elite-loader3.asm
-
-CHK2 = &11D3            \ The address of the second checksum byte for the saved
-                        \ commander data file, as set in elite-loader3.asm
-
-CHK = &11D4             \ The address of the first checksum byte for the saved
-                        \ commander data file, as set in elite-loader3.asm
-
-SHIP_MISSILE = &7F00    \ The address of the missile ship blueprint, as set in
-                        \ elite-loader3.asm
-
-\ ******************************************************************************
-\
-\ ELITE A FILE
-\
-\ ******************************************************************************
-
-CODE% = &1200
-LOAD% = &1200
-
-ORG CODE%
-
-LOAD_A% = LOAD%
-
-key_tube = &90
-
-brkv = &0202
-wrchv = &020E
+rawrch = &FFBC
 
 tube_r1s = &FEE0
 tube_r1d = &FEE1
@@ -202,17 +76,23 @@ tube_r3d = &FEE5
 tube_r4s = &FEE6
 tube_r4d = &FEE7
 
+tube_brk = &16 \ tube BRK vector
+
+DL = &8B
+key_tube = &90
+
 SC = &92
 SCH = &93
-
 font = &94
 save_a = &96
 save_x = &97
 save_y = &98
 
+ZZ = &94
 X1 = &94
 Y1 = &95
 X2 = &96
+COL = &96
 Y2 = &97
 P = &98
 Q = &99
@@ -221,20 +101,12 @@ R = &9A
 S = &9B
 SWAP = &9C
 
-ZZ = &94
-drawpix_2 = &95
-drawpix_3 = &96
-drawpix_4 = &97
-drawpix_5 = &98
-
 bar_1 = &94
 bar_2 = &95
 bar_3 = &96
 
 angle_1 = &94
-
 missle_1 = &94
-
 picture_1 = &94
 picture_2 = &95
 
@@ -243,30 +115,57 @@ print_bits = &94
 cursor_x = &9E
 cursor_y = &9F
 
+CODE% = &1200
+LOAD% = &1200
+
+ORG CODE%
+
+\ ******************************************************************************
+\
+\       Name: tube_elite
+\       Type: Subroutine
+\   Category: Tube
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .tube_elite
 
  LDX #&FF
  TXS
  LDA #LO(tube_wrch)
- STA wrchv
+ STA WRCHV
  LDA #HI(tube_wrch)
- STA wrchv+&01
+ STA WRCHV+&01
  LDA #LO(tube_brk)
- STA brkv
+ STA BRKV
  LDA #HI(tube_brk)
- STA brkv+&01
+ STA BRKV+&01
  LDX #LO(tube_run)
  LDY #HI(tube_run)
  JMP OSCLI
 
-tube_brk = &16 \ tube BRK vector
-
+\ ******************************************************************************
+\
+\       Name: tube_run
+\       Type: Variable
+\   Category: Tube
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .tube_run
 
  EQUS "R.2.T", &0D
 
+\ ******************************************************************************
+\
+\       Name: tube_get
+\       Type: Subroutine
+\   Category: Tube
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .tube_get
 
@@ -276,6 +175,14 @@ tube_brk = &16 \ tube BRK vector
  LDA tube_r1d
  RTS
 
+\ ******************************************************************************
+\
+\       Name: tube_put
+\       Type: Subroutine
+\   Category: Tube
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .tube_put
 
@@ -285,6 +192,14 @@ tube_brk = &16 \ tube BRK vector
  STA tube_r2d
  RTS
 
+\ ******************************************************************************
+\
+\       Name: tube_func
+\       Type: Subroutine
+\   Category: Tube
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .tube_func
 
@@ -305,18 +220,35 @@ tube_brk = &16 \ tube BRK vector
 
  RTS
 
+\ ******************************************************************************
+\
+\       Name: tube_table
+\       Type: Variable
+\   Category: Tube
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .tube_table
 
  EQUW LL30, HLOIN, PIXEL, clr_scrn
- EQUW CLYNS, sync_in, draw_bar, draw_angle
- EQUW put_missle, scan_fire, write_fe4e, scan_xin
- EQUW scan_10in, get_key, write_xyc, write_pod
+ EQUW CLYNS, sync_in, draw_bar, DIL2
+ EQUW MSBAR, scan_fire, write_fe4e, scan_xin
+ EQUW scan_10in, get_key, CHPR, write_pod
  EQUW draw_blob, draw_tail, SPBLB, ECBLB
- EQUW draw_mode, write_crtc, scan_y, write_0346
- EQUW read_0346, return, picture_h, picture_v
+ EQUW UNWISE, DET1, scan_y, write_0346
+ EQUW read_0346, return, HANGER, HA2
 
-.write_xyc
+\ ******************************************************************************
+\
+\       Name: CHPR
+\       Type: Subroutine
+\   Category: Text
+\    Summary: AJD
+\
+\ ******************************************************************************
+
+.CHPR
 
  JSR tube_get
  STA cursor_x
@@ -452,75 +384,63 @@ INCLUDE "library/common/main/variable/twfr.asm"
 INCLUDE "library/original/main/subroutine/px3.asm"
 INCLUDE "library/common/main/subroutine/pixel.asm"
 
+\ ******************************************************************************
+\
+\       Name: clr_scrn
+\       Type: Subroutine
+\   Category: Utility routines
+\    Summary: AJD
+\
+\ ******************************************************************************
+
 .clr_scrn
 
- LDX #&60
+ LDX #&60               \ Set X to the screen memory page for the top row of the
+                        \ screen (as screen memory starts at &6000)
 
-.l_254f
+.BOL1
 
- JSR ZES1
- INX
- CPX #&78
- BNE l_254f
- RTS
+ JSR ZES1               \ Call ZES1 to zero-fill the page in X, which clears
+                        \ that character row on the screen
 
+ INX                    \ Increment X to point to the next page, i.e. the next
+                        \ character row
 
-.ZES1
+ CPX #&78               \ Loop back to BOL1 until we have cleared page &7700,
+ BNE BOL1               \ the last character row in the space view part of the
+                        \ screen (the space view)
 
- LDY #&00
- STY SC
- TYA
- STX SC+&01
+ RTS                    \ Return from the subroutine
 
-.l_3a07
+INCLUDE "library/common/main/subroutine/zes1.asm"
+INCLUDE "library/common/main/subroutine/zes2.asm"
+INCLUDE "library/common/main/subroutine/clyns.asm"
+INCLUDE "library/original/main/subroutine/lyn.asm"
 
- STA (SC),Y
- INY
- BNE l_3a07
- RTS
-
-
-.CLYNS
-
- LDA #&75
- STA SC+&01
- LDA #&07
- STA SC
- LDA #&00
- JSR LYN
- INC SC+&01
- JSR LYN
- INC SC+&01
-
-.LYN
-
- LDY #&E9
-
-.l_25c8
-
- STA (SC),Y
- DEY
- BNE l_25c8
- RTS
-
+\ ******************************************************************************
+\
+\       Name: sync_in
+\       Type: Subroutine
+\   Category: Screen mode
+\    Summary: Wait for the vertical sync
+\
+\ ******************************************************************************
 
 .sync_in
 
- JSR sync
+ JSR WSCAN              \ AJD
  JMP tube_put
 
+INCLUDE "library/common/main/subroutine/wscan.asm"
 
-.sync
-
- LDA #&00
- STA &8B
-
-.sync_wait
-
- LDA &8B
- BEQ sync_wait
- RTS
-
+\ ******************************************************************************
+\
+\       Name: draw_bar
+\       Type: Subroutine
+\   Category: Dashboard
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .draw_bar
 
@@ -586,56 +506,20 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
 
  RTS
 
+INCLUDE "library/common/main/subroutine/dil2.asm"
 
-.draw_angle
+\ ******************************************************************************
+\
+\       Name: MSBAR
+\       Type: Subroutine
+\   Category: Dashboard
+\    Summary: AJD
+\
+\ ******************************************************************************
 
- JSR tube_get
- STA angle_1
- JSR tube_get
- STA SC
- JSR tube_get
- STA SC+1
- LDY #&01
+.MSBAR
 
-.l_1f11
-
- SEC
- LDA angle_1
- SBC #&04
- BCS l_1f26
- LDA #&FF
- LDX angle_1
- STA angle_1
- LDA CTWOS,X
- AND #&F0
- JMP l_1f2a
-
-.l_1f26
-
- STA angle_1
- LDA #&00
-
-.l_1f2a
-
- STA (SC),Y
- INY
- STA (SC),Y
- INY
- STA (SC),Y
- INY
- STA (SC),Y
- TYA
- CLC
- ADC #&05
- TAY
- CPY #&1E
- BCC l_1f11
- RTS
-
-
-.put_missle
-
- JSR tube_get           \ Like msblob
+ JSR tube_get           \ Like MSBAR
  ASL A
  ASL A
  ASL A
@@ -655,6 +539,14 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  BNE l_33ba
  RTS
 
+\ ******************************************************************************
+\
+\       Name: scan_fire
+\       Type: Subroutine
+\   Category: Keyboard
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .scan_fire
 
@@ -664,6 +556,14 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  AND #&10
  JMP tube_put
 
+\ ******************************************************************************
+\
+\       Name: write_fe4e
+\       Type: Subroutine
+\   Category: Keyboard
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .write_fe4e
 
@@ -671,6 +571,14 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
  STA &FE4E
  JMP tube_put
 
+\ ******************************************************************************
+\
+\       Name: scan_xin
+\       Type: Subroutine
+\   Category: Keyboard
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .scan_xin
 
@@ -681,50 +589,35 @@ INCLUDE "library/common/main/subroutine/pixel.asm"
 
 INCLUDE "library/common/main/subroutine/dks4.asm"
 
+\ ******************************************************************************
+\
+\       Name: scan_10in
+\       Type: Subroutine
+\   Category: Keyboard
+\    Summary: AJD
+\
+\ ******************************************************************************
+
 .scan_10in
 
  JSR RDKEY
  JMP tube_put
 
+INCLUDE "library/common/main/subroutine/rdkey.asm"
 
-.RDKEY
-
- LDX #&10
-
-.Rd1
-
- JSR DKS4
- BMI Rd2
- INX
- BPL Rd1
- TXA
-
-.Rd2
-
- EOR #&80
- CMP #&37 \ CTRL-P hack for printer
- BNE scan_test
- LDX #&01
- JSR DKS4
- BPL scan_p
- JSR printer
- LDA #0
- RTS
-
-.scan_p
-
- LDA #&37
-
-.scan_test
-
- TAX
- RTS
-
+\ ******************************************************************************
+\
+\       Name: get_key
+\       Type: Subroutine
+\   Category: Keyboard
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .get_key
 
- JSR sync
- JSR sync
+ JSR WSCAN
+ JSR WSCAN
  JSR RDKEY
  BNE get_key
 
@@ -736,6 +629,14 @@ INCLUDE "library/common/main/subroutine/dks4.asm"
  LDA (key_tube),Y
  JMP tube_put
 
+\ ******************************************************************************
+\
+\       Name: write_pod
+\       Type: Subroutine
+\   Category: Dashboard
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .write_pod
 
@@ -745,96 +646,83 @@ INCLUDE "library/common/main/subroutine/dks4.asm"
  STA &0348
  RTS
 
+\ ******************************************************************************
+\
+\       Name: draw_blob
+\       Type: Subroutine
+\   Category: Drawing pixels
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .draw_blob
 
  JSR tube_get
- STA ZZ
+ STA X1
  JSR tube_get
- STA drawpix_2
+ STA Y1
  JSR tube_get
- STA drawpix_3
+ STA X2
 
-.d_36ac
+INCLUDE "library/common/main/subroutine/cpix2.asm"
 
- LDA drawpix_2
- LSR A
- LSR A
- LSR A
- ORA #&60
- STA SC+&01
- LDA ZZ
- AND #&F8
- STA SC
- LDA drawpix_2
- AND #&07
- TAY
- LDA ZZ
- AND #&06
- LSR A
- TAX
- LDA CTWOS,X
- AND drawpix_3
- EOR (SC),Y
- STA (SC),Y
- LDA CTWOS+1,X
- BPL d_36dd
- LDA SC
- ADC #&08
- STA SC
- LDA CTWOS+1,X
-
-.d_36dd
-
- AND drawpix_3
- EOR (SC),Y
- STA (SC),Y
- RTS
-
+\ ******************************************************************************
+\
+\       Name: draw_tail
+\       Type: Subroutine
+\   Category: Dashboard
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .draw_tail
 
  JSR tube_get
- STA ZZ
+ STA X1
  JSR tube_get
- STA drawpix_2
+ STA Y1
  JSR tube_get
- STA drawpix_3
+ STA X2
  JSR tube_get
- STA drawpix_4
+ STA Y2
  JSR tube_get
- STA drawpix_5
- JSR d_36ac
- DEC drawpix_2
- JSR d_36ac
+ STA P
+
+.SC48 
+
+ JSR CPIX2              \ Like SC48 in SCAN
+ DEC Y1
+ JSR CPIX2
+
  LDA CTWOS+1,X
- AND drawpix_3 \ iff
- STA drawpix_3
+ AND COL \ iff
+ STA COL
+
  LDA CTWOS+1,X
- AND drawpix_4
- STA drawpix_4
- LDX drawpix_5
- BEQ d_55da
+ AND Y2 \ COL2?
+ STA Y2
+ LDX P
+ BEQ RTS
  BMI d_55db
 
-.d_55ca
+.VLL1
 
  DEY
- BPL d_55d1
+ BPL VL1
  LDY #&07
  DEC SC+&01
 
-.d_55d1
+.VL1
 
- LDA drawpix_3
- EOR drawpix_4 \ iff
- STA drawpix_3 \ iff
+ LDA COL
+ EOR Y2 \ iff drawpix_4
+ STA COL
  EOR (SC),Y
  STA (SC),Y
  DEX
- BNE d_55ca
+ BNE VLL1
 
-.d_55da
+.RTS
 
  RTS
 
@@ -842,113 +730,48 @@ INCLUDE "library/common/main/subroutine/dks4.asm"
 
  INY
  CPY #&08
- BNE d_55e4
+ BNE VLL2
  LDY #&00
  INC SC+&01
 
-.d_55e4
+.VLL2
 
  INY
  CPY #&08
- BNE d_55ed
+ BNE VL2
  LDY #&00
  INC SC+&01
 
-.d_55ed
+.VL2
 
- LDA drawpix_3
- EOR drawpix_4 \ iff
- STA drawpix_3 \ iff
+ LDA COL
+ EOR Y2 \ iff drawpix_4
+ STA COL
  EOR (SC),Y
  STA (SC),Y
  INX
- BNE d_55e4
+ BNE VLL2
  RTS
 
-
-.ECBLB
-
- LDA #&38
- LDX #LO(ECBT)
- LDY #HI(ECBT)
- JMP BULB
-
-.SPBLB
-
- LDA #&C0
- LDX #<(SPBT)
- LDY #>(SPBT)
-
-.BULB
-
- STA SC
- LDA #&7D
- STA SC+1
- STX font
- STY font+1
- LDY #&07
-
-.ECBLBor
-
- LDA (font),Y
- EOR (SC),Y
- STA (SC),Y
- DEY
- BPL ECBLBor
- RTS
-
+INCLUDE "library/common/main/subroutine/ecblb.asm"
+INCLUDE "library/common/main/subroutine/spblb-dobulb.asm"
+INCLUDE "library/original/main/subroutine/bulb.asm"
 INCLUDE "library/common/main/variable/ecbt.asm"
 INCLUDE "library/common/main/variable/spbt.asm"
-
-.draw_mode
-
- LDA LIL2+2
- EOR #&40
- STA LIL2+2
- \LDA LIL3+2
- \EOR #&40
- STA LIL3+2
- \LDA LIL5+2
- \EOR #&40
- STA LIL5+2
- \LDA LIL6+2
- \EOR #&40
- STA LIL6+2
- RTS
-
-.write_crtc
-
- JSR tube_get
- LDX #&06
- SEI
- STX &FE00
- STA &FE01
- CLI
- RTS
-
+INCLUDE "library/enhanced/main/subroutine/unwise.asm"
+INCLUDE "library/common/main/subroutine/det1-dodials.asm"
 INCLUDE "library/common/main/variable/kytb.asm"
+INCLUDE "library/elite-a/flight/variable/b_table.asm"
+INCLUDE "library/elite-a/flight/subroutine/b_14.asm"
 
-.b_table
-
- EQUB &61, &31, &80, &80, &80, &80, &51
- EQUB &64, &34, &32, &62, &52, &54, &58, &38, &68
-
-.b_13
-
- LDA #&00
-
-.b_14
-
- TAX
- EOR b_table-1,Y
- BEQ b_quit
- STA &FE60
- AND #&0F
- AND &FE60
- BEQ b_pressed
- TXA
- BMI b_13
- BPL b_quit
+\ ******************************************************************************
+\
+\       Name: scan_y
+\       Type: Subroutine
+\   Category: Keyboard
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .scan_y
 
@@ -968,6 +791,14 @@ INCLUDE "library/common/main/variable/kytb.asm"
 
  JMP tube_put
 
+\ ******************************************************************************
+\
+\       Name: write_0346
+\       Type: Subroutine
+\   Category: Tube
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .write_0346
 
@@ -975,14 +806,30 @@ INCLUDE "library/common/main/variable/kytb.asm"
  STA &0346
  RTS
 
+\ ******************************************************************************
+\
+\       Name: read_0346
+\       Type: Subroutine
+\   Category: Tube
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .read_0346
 
  LDA &0346
  JMP tube_put
 
+\ ******************************************************************************
+\
+\       Name: HANGER
+\       Type: Subroutine
+\   Category: Ship hanger
+\    Summary: AJD
+\
+\ ******************************************************************************
 
-.picture_h
+.HANGER
 
  JSR tube_get
  STA picture_1
@@ -1000,23 +847,22 @@ INCLUDE "library/common/main/variable/kytb.asm"
  AND #&07
  STA SC
  LDY #&00
- JSR l_20e8
+ JSR HAS2
  LDA #&04
  LDY #&F8
- JSR l_2101
+ JSR HAS3
  LDY picture_2
  BEQ l_2045
- JSR l_20e8
+ JSR HAS2
  LDY #&80
  LDA #&40
- JSR l_2101
+ JSR HAS3
 
 .l_2045
 
  RTS
 
-
-.picture_v
+.HA2
 
  JSR tube_get
  AND #&F8
@@ -1026,71 +872,36 @@ INCLUDE "library/common/main/variable/kytb.asm"
  LDX #&80
  LDY #&01
 
-.l_205c
+.HAL7
 
  TXA
  AND (SC),Y
- BNE l_2071
+ BNE HA6
  TXA
  ORA (SC),Y
  STA (SC),Y
  INY
  CPY #&08
- BNE l_205c
+ BNE HAL7
  INC SC+&01
  LDY #&00
- BEQ l_205c
+ BEQ HAL7
 
-.l_2071
-
- RTS
-
-
-.l_20e8
-
- LDA #&20
-
-.l_20ea
-
- TAX
- AND (SC),Y
- BNE l_2100
- TXA
- ORA (SC),Y
- STA (SC),Y
- TXA
- LSR A
- BCC l_20ea
- TYA
- ADC #&07
- TAY
- LDA #&80
- BCC l_20ea
-
-.l_2100
+.HA6
 
  RTS
 
-.l_2101
+INCLUDE "library/enhanced/main/subroutine/has2.asm"
+INCLUDE "library/enhanced/main/subroutine/has3.asm"
 
- TAX
- AND (SC),Y
- BNE l_2100
- TXA
- ORA (SC),Y
- STA (SC),Y
- TXA
- ASL A
- BCC l_2101
- TYA
- SBC #&08
- TAY
- LDA #&01
- BCS l_2101
- RTS
-
-rawrch = &FFBC
-
+\ ******************************************************************************
+\
+\       Name: printer
+\       Type: Subroutine
+\   Category: Text
+\    Summary: AJD
+\
+\ ******************************************************************************
 
 .printer
 

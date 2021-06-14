@@ -2,7 +2,7 @@
 \
 \       Name: HFS2
 \       Type: Subroutine
-\   Category: Elite-A: Drawing circles
+\   Category: Drawing circles
 \    Summary: AJD
 \
 \ ******************************************************************************

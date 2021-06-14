@@ -3,7 +3,7 @@
 \
 \       Name: DEATH2_FLIGHT
 \       Type: Subroutine
-\   Category: Elite-A: Start and end
+\   Category: Start and end
 \    Summary: AJD
 \
 \ ******************************************************************************

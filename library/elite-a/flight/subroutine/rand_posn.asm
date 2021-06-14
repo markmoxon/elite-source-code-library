@@ -2,7 +2,7 @@
 \
 \       Name: rand_posn
 \       Type: Subroutine
-\   Category: Elite-A: Universe
+\   Category: Universe
 \    Summary: AJD
 \
 \ ******************************************************************************

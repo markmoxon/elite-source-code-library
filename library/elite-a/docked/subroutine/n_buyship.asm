@@ -2,7 +2,7 @@
 \
 \       Name: n_buyship
 \       Type: Subroutine
-\   Category: Elite-A: Buying ships
+\   Category: Buying ships
 \    Summary: AJD
 \
 \ ******************************************************************************

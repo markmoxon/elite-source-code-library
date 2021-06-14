@@ -2,7 +2,7 @@
 \
 \       Name: equip_data
 \       Type: Subroutine
-\   Category: Elite-A: Encyclopedia
+\   Category: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************

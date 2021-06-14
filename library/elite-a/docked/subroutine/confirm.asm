@@ -2,7 +2,7 @@
 \
 \       Name: confirm
 \       Type: Subroutine
-\   Category: Elite-A: Save and load
+\   Category: Save and load
 \    Summary: AJD
 \
 \ ******************************************************************************

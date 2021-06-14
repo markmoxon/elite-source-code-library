@@ -71,7 +71,7 @@ IF _CASSETTE_VERSION \ Comment
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  TAY                    \ Store the y-coordinate in Y
 
@@ -188,13 +188,19 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  TYA                    \ Set Y to just bits 0-2 of the y-coordinate, which will
  AND #%00000111         \ be the number of the pixel row we need to draw into
  TAY                    \ within the character block
 
 ELIF _ELECTRON_VERSION
+
+ LDA Y1                 \ Set Y to just bits 0-2 of the y-coordinate, which will
+ AND #%00000111         \ be the number of the pixel row we need to draw into
+ TAY                    \ within the character block
+
+ELIF _ELITE_A_6502SP_IO
 
  LDA Y1                 \ Set Y to just bits 0-2 of the y-coordinate, which will
  AND #%00000111         \ be the number of the pixel row we need to draw into

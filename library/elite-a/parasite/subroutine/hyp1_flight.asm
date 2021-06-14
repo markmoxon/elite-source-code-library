@@ -2,7 +2,7 @@
 \
 \       Name: hyp1_FLIGHT
 \       Type: Subroutine
-\   Category: Elite-A: Universe
+\   Category: Universe
 \    Summary: AJD
 \
 \ ******************************************************************************

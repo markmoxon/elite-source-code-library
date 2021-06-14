@@ -2,7 +2,7 @@
 \
 \       Name: ship_chameleon
 \       Type: Variable
-\   Category: Elite-A: Drawing ships
+\   Category: Drawing ships
 \    Summary: Ship blueprint for a Chameleon
 \  Deep dive: Ship blueprints
 \

@@ -2,7 +2,7 @@
 \
 \       Name: ship_ophidian
 \       Type: Variable
-\   Category: Elite-A: Drawing ships
+\   Category: Drawing ships
 \    Summary: Ship blueprint for an Ophidian
 \  Deep dive: Ship blueprints
 \

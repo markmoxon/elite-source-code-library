@@ -108,7 +108,7 @@ ELIF _ELITE_A_FLIGHT
 
 ELIF _ELITE_A_6502SP_PARA
 
- LDX CRGO               \ iff code AJD
+ LDX CRGO               \ iff code AJD, same as loader code, CRGO = cmdr_iff
  BEQ iff_not
  LDY #&24
  LDA (&20),Y

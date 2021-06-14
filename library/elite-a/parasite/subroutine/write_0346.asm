@@ -2,7 +2,7 @@
 \
 \       Name: write_0346
 \       Type: Subroutine
-\   Category: Elite-A: Tube
+\   Category: Tube
 \    Summary: AJD
 \
 \ ******************************************************************************

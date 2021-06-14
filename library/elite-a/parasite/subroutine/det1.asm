@@ -2,7 +2,7 @@
 \
 \       Name: DET1
 \       Type: Subroutine
-\   Category: Elite-A: Screen mode
+\   Category: Screen mode
 \    Summary: AJD
 \
 \ ******************************************************************************

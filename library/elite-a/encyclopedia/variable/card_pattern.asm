@@ -2,7 +2,7 @@
 \
 \       Name: card_pattern
 \       Type: Variable
-\   Category: Elite-A: Encyclopedia
+\   Category: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************

@@ -44,8 +44,10 @@ ELIF _MASTER_VERSION
 \   X                   If a key is being pressed, X contains the ASCII code
 \                       of the key pressed, otherwise it contains 0
 ENDIF
+IF NOT(_ELITE_A_6502SP_IO)
 \
 \   A                   Contains the same as X
+ENDIF
 \
 IF _MASTER_VERSION \ Comment
 \   Y                   Y is preserved
@@ -133,7 +135,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_DOCKED OR _ELITE_A_FLIGHT OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA \ Platform
 
  TAX                    \ Copy A into X
 
@@ -159,7 +161,30 @@ ELIF _ELECTRON_VERSION
  TAX                    \ Copy A into X to return the key number of CAPS LOCK
                         \ with bit 7 set
 
+ELIF _ELITE_A_6502SP_IO
+
+ CMP #&37               \ CTRL-P hack for printer AJD
+ BNE scan_test
+ LDX #&01
+ JSR DKS4
+ BPL scan_p
+ JSR printer
+ LDA #0
+
 ENDIF
 
  RTS                    \ Return from the subroutine
+
+IF _ELITE_A_6502SP_IO
+
+.scan_p
+
+ LDA #&37
+
+.scan_test
+
+ TAX
+ RTS
+
+ENDIF
 

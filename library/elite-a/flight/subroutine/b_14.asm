@@ -2,7 +2,7 @@
 \
 \       Name: b_14
 \       Type: Subroutine
-\   Category: Elite-A: Keyboard
+\   Category: Keyboard
 \    Summary: Check Voltmace Delta 14 joystick buttons AJD
 \
 \ ******************************************************************************
@@ -22,5 +22,15 @@
  BEQ b_pressed
  TXA
  BMI b_13
+
+IF _ELITE_A_FLIGHT
+
  RTS
+
+ELIF _ELITE_A_6502SP_IO
+
+ BPL b_quit
+
+ENDIF
+
 

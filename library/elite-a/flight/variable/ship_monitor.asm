@@ -2,7 +2,7 @@
 \
 \       Name: ship_monitor
 \       Type: Variable
-\   Category: Elite-A: Drawing ships
+\   Category: Drawing ships
 \    Summary: Ship blueprint for a Monitor
 \  Deep dive: Ship blueprints
 \

@@ -2,7 +2,7 @@
 \
 \       Name: PL21_FLIGHT
 \       Type: Subroutine
-\   Category: Elite-A: Drawing planets
+\   Category: Drawing planets
 \    Summary: AJD
 \
 \ ******************************************************************************

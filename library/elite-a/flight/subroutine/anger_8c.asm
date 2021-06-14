@@ -2,7 +2,7 @@
 \
 \       Name: anger_8c
 \       Type: Subroutine
-\   Category: Elite-A: Tactics
+\   Category: Tactics
 \    Summary: AJD
 \
 \ ******************************************************************************

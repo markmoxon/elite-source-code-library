@@ -21,15 +21,19 @@ ENDIF
 \ reappear, as the dashboard's screen memory doesn't get touched by this
 \ process.
 \
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Comment
 \ Arguments:
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
 \   X                   The number of text rows to display on the screen (24
-ELIF _6502SP_VERSION
-\   A                   The number of text rows to display on the screen (24
-ENDIF
 \                       will hide the dashboard, 31 will make it reappear)
 \
+ELIF _6502SP_VERSION
+\ Arguments:
+\
+\   A                   The number of text rows to display on the screen (24
+\                       will hide the dashboard, 31 will make it reappear)
+\
+ENDIF
 \ Returns:
 \
 \   A                   A is set to 6
@@ -52,13 +56,33 @@ IF _6502SP_VERSION \ Platform
 
 ENDIF
 
+IF NOT(_ELITE_A_6502SP_IO)
+
  LDA #6                 \ Set A to 6 so we can update 6845 register R6 below
 
+ELIF _ELITE_A_6502SP_IO
+
+ JSR tube_get           \ AJD
+
+ LDX #6                 \ Set X to 6 so we can update 6845 register R6 below
+
+ENDIF
+
  SEI                    \ Disable interrupts so we can update the 6845
+
+IF NOT(_ELITE_A_6502SP_IO)
 
  STA VIA+&00            \ Set 6845 register R6 to the value in X. Register R6
  STX VIA+&01            \ is the "vertical displayed" register, which sets the
                         \ number of rows shown on the screen
+
+ELIF _ELITE_A_6502SP_IO
+
+ STX VIA+&00            \ Set 6845 register R6 to the value in A. Register R6
+ STA VIA+&01            \ is the "vertical displayed" register, which sets the
+                        \ number of rows shown on the screen
+
+ENDIF
 
  CLI                    \ Re-enable interrupts
 

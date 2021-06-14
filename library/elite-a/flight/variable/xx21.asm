@@ -2,7 +2,7 @@
 \
 \       Name: XX21
 \       Type: Variable
-\   Category: Elite-A: Drawing ships
+\   Category: Drawing ships
 \    Summary: Ship blueprints lookup table for flight in Elite-A
 \
 \ ******************************************************************************

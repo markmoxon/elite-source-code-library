@@ -47,7 +47,7 @@
  SBC #8                 \ to the next character block to the left
  TAY
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Screen
+IF _DISC_DOCKED OR _ELITE_A_VERSION \ Screen
 
  LDA #%00000001         \ Set a mask in A to the last pixel in the 8-pixel byte
 

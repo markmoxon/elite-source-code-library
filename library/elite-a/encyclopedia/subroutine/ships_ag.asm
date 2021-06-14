@@ -2,7 +2,7 @@
 \
 \       Name: ships_ag
 \       Type: Subroutine
-\   Category: Elite-A: Encyclopedia
+\   Category: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************

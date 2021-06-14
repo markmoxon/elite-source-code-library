@@ -2,7 +2,7 @@
 \
 \       Name: LL30
 \       Type: Subroutine
-\   Category: Elite-A: Drawing lines
+\   Category: Drawing lines
 \    Summary: AJD
 \
 \ ******************************************************************************

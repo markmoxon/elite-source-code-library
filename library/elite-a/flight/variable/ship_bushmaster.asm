@@ -2,7 +2,7 @@
 \
 \       Name: ship_bushmaster
 \       Type: Variable
-\   Category: Elite-A: Drawing ships
+\   Category: Drawing ships
 \    Summary: Ship blueprint for a Bushmaster
 \  Deep dive: Ship blueprints
 \

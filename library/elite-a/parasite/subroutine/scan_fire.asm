@@ -2,7 +2,7 @@
 \
 \       Name: scan_fire
 \       Type: Subroutine
-\   Category: Elite-A: Keyboard
+\   Category: Keyboard
 \    Summary: AJD
 \
 \ ******************************************************************************

@@ -2,7 +2,7 @@
 \
 \       Name: b_table
 \       Type: Variable
-\   Category: Elite-A: Keyboard
+\   Category: Keyboard
 \    Summary: Lookup table for Voltmace Delta 14 joystick buttons AJD
 \
 \ ******************************************************************************

@@ -2,7 +2,7 @@
 \
 \       Name: stay_here
 \       Type: Subroutine
-\   Category: Elite-A: Buying ships
+\   Category: Buying ships
 \    Summary: AJD
 \
 \ ******************************************************************************

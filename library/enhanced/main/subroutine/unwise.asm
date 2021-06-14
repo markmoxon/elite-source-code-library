@@ -7,7 +7,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Comment
+IF _DISC_DOCKED OR _ELITE_A_VERSION \ Comment
 \ This routine modifies the instructions in the main line-drawing routine at
 \ LOIN/LL30, flipping the drawing logic between the default EOR logic (which
 \ merges with whatever is already on screen, allowing us to erase anything we
@@ -50,7 +50,7 @@ IF _DISC_DOCKED \ Screen
  EOR #%01000000         \ to an ORA (SC),Y (or back again)
  STA LIL6+2
 
-ELIF _ELITE_A_DOCKED
+ELIF _ELITE_A_VERSION
 
  LDA LIL2+2             \ AJD
  EOR #&40

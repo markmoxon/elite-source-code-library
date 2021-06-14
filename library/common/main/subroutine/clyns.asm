@@ -72,8 +72,12 @@ IF _ELECTRON_VERSION \ Platform
 
 ENDIF
 
+IF NOT(_ELITE_A_6502SP_IO)
+
  LDA #20                \ Move the text cursor to row 20, near the bottom of
  STA YC                 \ the screen
+
+ENDIF
 
 IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Screen
 
@@ -121,6 +125,13 @@ ELIF _MASTER_VERSION
  STA SC+1
 
  LDA #0                 \ Set SC = 0, so now SC(1 0) = &6A00
+ STA SC
+
+ELIF _ELITE_A_6502SP_IO
+
+ LDA #&75               \ Set the two-byte value in SC to &7507
+ STA SC+1
+ LDA #7
  STA SC
 
 ENDIF
@@ -206,6 +217,20 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ ends at byte 247 (that's 255 - 8, as each character
                         \ is 8 bytes), so we put this in Y to act as a byte
                         \ counter, as before
+
+ELIF _ELITE_A_6502SP_IO
+
+ LDA #0                 \ Call LYN to clear the pixels from &7507 to &75F0
+ JSR LYN
+
+ INC SC+1               \ Increment SC+1 so SC points to &7607
+
+ JSR LYN                \ Call LYN to clear the pixels from &7607 to &76F0
+
+ INC SC+1               \ Increment SC+1 so SC points to &7707
+
+                        \ Fall through into LYN to clear the pixels from &7707
+                        \ to &77F0
 
 ENDIF
 

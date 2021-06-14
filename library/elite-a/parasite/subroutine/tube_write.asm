@@ -2,7 +2,7 @@
 \
 \       Name: tube_write
 \       Type: Subroutine
-\   Category: Elite-A: Tube
+\   Category: Tube
 \    Summary: AJD
 \
 \ ******************************************************************************

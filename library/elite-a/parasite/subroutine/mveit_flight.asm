@@ -2,7 +2,7 @@
 \
 \       Name: MVEIT_FLIGHT
 \       Type: Subroutine
-\   Category: Elite-A: Moving
+\   Category: Moving
 \    Summary: AJD
 \
 \ ******************************************************************************

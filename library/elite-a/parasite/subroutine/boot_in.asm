@@ -2,7 +2,7 @@
 \
 \       Name: boot_in
 \       Type: Subroutine
-\   Category: Elite-A: Loader
+\   Category: Loader
 \    Summary: AJD
 \
 \ ******************************************************************************

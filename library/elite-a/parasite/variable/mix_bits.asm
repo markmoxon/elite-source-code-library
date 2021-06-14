@@ -2,7 +2,7 @@
 \
 \       Name: mix_bits
 \       Type: Variable
-\   Category: Elite-A: Loader
+\   Category: Loader
 \    Summary: AJD
 \
 \ ******************************************************************************

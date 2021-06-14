@@ -2,7 +2,7 @@
 \
 \       Name: LL9_FLIGHT
 \       Type: Subroutine
-\   Category: Elite-A: Drawing ships
+\   Category: Drawing ships
 \    Summary: AJD
 \
 \ ******************************************************************************

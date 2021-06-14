@@ -60,7 +60,7 @@ ELIF _ELECTRON_VERSION
  BNE BULB               \ Jump down to BULB (this BNE is effectively a JMP as
                         \ A will never be zero)
 
-ELIF _DISC_FLIGHT OR _ELITE_A_VERSION
+ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA
 
  LDA #7*8               \ The E.C.M. bulb is in character block number 7
                         \ with each character taking 8 bytes, so this sets the
@@ -105,6 +105,18 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  BPL BULL2              \ Loop back to poke the next byte until we have done
                         \ all 16 bytes across two character blocks
+
+ELIF _ELITE_A_6502SP_IO
+
+ LDA #7*8               \ The E.C.M. bulb is in character block number 7
+                        \ with each character taking 8 bytes, so this sets the
+                        \ low byte of the screen address of the character block
+                        \ we want to draw to
+
+ LDX #LO(ECBT)          \ Set (Y X) to point to the character definition in
+ LDY #HI(ECBT)          \ ECBT
+
+ JMP BULB               \ Jump down to BULB
 
 ENDIF
 

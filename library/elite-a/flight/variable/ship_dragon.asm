@@ -2,7 +2,7 @@
 \
 \       Name: ship_dragon
 \       Type: Variable
-\   Category: Elite-A: Drawing ships
+\   Category: Drawing ships
 \    Summary: Ship blueprint for a Dragon
 \  Deep dive: Ship blueprints
 \

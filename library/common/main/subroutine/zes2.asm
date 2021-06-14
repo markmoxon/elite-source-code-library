@@ -54,6 +54,15 @@ ELIF _ELECTRON_VERSION
  LDA #0                 \ Load A with the byte we want to fill the memory block
                         \ with - i.e. zero
 
+ELIF _ELITE_A_6502SP_IO
+
+ TYA                    \ Load A with the byte we want to fill the memory block
+                        \ with - i.e. zero
+
+ STX SC+1               \ We want to zero-fill page X, so store this in the
+                        \ high byte of SC, so the 16-bit address in SC and
+                        \ SC+1 is now pointing to the SC-th byte of page X
+
 ENDIF
 
 .ZEL1
@@ -61,7 +70,7 @@ ENDIF
  STA (SC),Y             \ Zero the Y-th byte of the block pointed to by SC,
                         \ so that's effectively the Y-th byte before SC
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Other: See group A
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _ELITE_A_6502SP_IO OR _MASTER_VERSION \ Other: See group A
 
  INY                    \ Increment the loop counter
 

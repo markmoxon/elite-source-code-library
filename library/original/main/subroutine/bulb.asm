@@ -52,7 +52,7 @@ ELIF _ELECTRON_VERSION
                         \ want to write to, so now (A SC) points to the specific
                         \ bulb's screen address
 
-ELIF _ELITE_A_VERSION
+ELIF _ELITE_A_FLIGHT
 
  LDA #&7D               \ Set A to the high byte of the screen address, which is
                         \ &7D as the bulbs are both in the character row from
@@ -61,9 +61,33 @@ ELIF _ELITE_A_VERSION
  STX P+1                \ Set P(2 1) = (Y X)
  STY P+2
 
+ELIF _ELITE_A_6502SP_IO
+
+ LDA #&7D               \ Set A to the high byte of the screen address, which is
+                        \ &7D as the bulbs are both in the character row from
+                        \ &7D00 to &7DFF
+
+ STA SC+1               \ AJD
+ STX font
+ STY font+1
+ LDY #&07
+
+.ECBLBor
+
+ LDA (font),Y
+ EOR (SC),Y
+ STA (SC),Y
+ DEY
+ BPL ECBLBor
+ RTS
+
 ENDIF
+
+IF NOT(_ELITE_A_6502SP_IO)
 
  JMP RREN               \ Call RREN to print the character definition pointed to
                         \ by P(2 1) at the screen address pointed to by (A SC),
                         \ returning from the subroutine using a tail call
+
+ENDIF
 

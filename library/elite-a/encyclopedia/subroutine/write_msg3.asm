@@ -2,7 +2,7 @@
 \
 \       Name: write_msg3
 \       Type: Subroutine
-\   Category: Elite-A: Text
+\   Category: Text
 \    Summary: Print an extended recursive token from the msg_3 token table
 \  Deep dive: Extended text tokens
 \

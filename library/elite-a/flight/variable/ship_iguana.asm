@@ -2,7 +2,7 @@
 \
 \       Name: ship_iguana
 \       Type: Variable
-\   Category: Elite-A: Drawing ships
+\   Category: Drawing ships
 \    Summary: Ship blueprint for an Iguana
 \  Deep dive: Ship blueprints
 \

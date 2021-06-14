@@ -2,7 +2,7 @@
 \
 \       Name: check_keys
 \       Type: Subroutine
-\   Category: Elite-A: Keyboard
+\   Category: Keyboard
 \    Summary: AJD
 \
 \ ******************************************************************************

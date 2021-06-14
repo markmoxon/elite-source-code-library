@@ -2,7 +2,7 @@
 \
 \       Name: clr_vdustat
 \       Type: Subroutine
-\   Category: Elite-A: Text
+\   Category: Text
 \    Summary: AJD
 \
 \ ******************************************************************************

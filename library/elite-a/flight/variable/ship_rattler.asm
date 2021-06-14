@@ -2,7 +2,7 @@
 \
 \       Name: ship_rattler
 \       Type: Variable
-\   Category: Elite-A: Drawing ships
+\   Category: Drawing ships
 \    Summary: Ship blueprint for a Rattler
 \  Deep dive: Ship blueprints
 \

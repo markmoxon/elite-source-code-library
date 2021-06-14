@@ -2,7 +2,7 @@
 \
 \       Name: n_oops
 \       Type: Subroutine
-\   Category: Elite-A: Flight
+\   Category: Flight
 \    Summary: AJD
 \
 \ ******************************************************************************

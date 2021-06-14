@@ -2,7 +2,7 @@
 \
 \       Name: ship_dist
 \       Type: Variable
-\   Category: Elite-A: Encyclopedia
+\   Category: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************

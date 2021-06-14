@@ -2,7 +2,7 @@
 \
 \       Name: DIL2
 \       Type: Subroutine
-\   Category: Elite-A: Dashboard
+\   Category: Dashboard
 \    Summary: AJD
 \
 \ ******************************************************************************

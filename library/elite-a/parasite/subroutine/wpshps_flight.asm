@@ -2,7 +2,7 @@
 \
 \       Name: WPSHPS_FLIGHT
 \       Type: Subroutine
-\   Category: Elite-A: Dashboard
+\   Category: Dashboard
 \    Summary: AJD
 \
 \ ******************************************************************************

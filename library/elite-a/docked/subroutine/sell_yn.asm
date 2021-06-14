@@ -2,7 +2,7 @@
 \
 \       Name: sell_yn
 \       Type: Subroutine
-\   Category: Elite-A: Text
+\   Category: Text
 \    Summary: AJD
 \
 \ ******************************************************************************

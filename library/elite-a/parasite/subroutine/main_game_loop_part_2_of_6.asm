@@ -2,7 +2,7 @@
 \
 \       Name: Main game loop (Part 2 of 6)
 \       Type: Subroutine
-\   Category: Elite-A: Main loop
+\   Category: Main loop
 \    Summary: AJD
 \
 \ ******************************************************************************

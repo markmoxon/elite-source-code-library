@@ -2,7 +2,7 @@
 \
 \       Name: HANGER
 \       Type: Subroutine
-\   Category: Elite-A: Ship hanger
+\   Category: Ship hanger
 \    Summary: AJD
 \
 \ ******************************************************************************

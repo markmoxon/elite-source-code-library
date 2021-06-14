@@ -2,7 +2,7 @@
 \
 \       Name: cour_buy
 \       Type: Subroutine
-\   Category: Elite-A: Buying ships
+\   Category: Buying ships
 \    Summary: AJD
 \
 \ ******************************************************************************

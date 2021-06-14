@@ -2,7 +2,7 @@
 \
 \       Name: DKS1
 \       Type: Subroutine
-\   Category: Elite-A: Keyboard
+\   Category: Keyboard
 \    Summary: AJD
 \
 \ ******************************************************************************

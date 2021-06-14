@@ -2,7 +2,7 @@
 \
 \       Name: install_ship
 \       Type: Subroutine
-\   Category: Elite-A: Universe
+\   Category: Universe
 \    Summary: AJD
 \
 \ ******************************************************************************

@@ -2,7 +2,7 @@
 \
 \       Name: PIXEL
 \       Type: Subroutine
-\   Category: Elite-A: Drawing pixels
+\   Category: Drawing pixels
 \    Summary: AJD
 \
 \ ******************************************************************************

@@ -2,7 +2,7 @@
 \
 \       Name: iff_base
 \       Type: Variable
-\   Category: Elite-A: Dashboard
+\   Category: Dashboard
 \    Summary: AJD
 \
 \ ******************************************************************************

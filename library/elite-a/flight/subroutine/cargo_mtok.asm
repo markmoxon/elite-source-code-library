@@ -2,7 +2,7 @@
 \
 \       Name: cargo_mtok
 \       Type: Subroutine
-\   Category: Elite-A: Text
+\   Category: Text
 \    Summary: AJD
 \
 \ ******************************************************************************

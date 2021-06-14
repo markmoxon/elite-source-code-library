@@ -2,7 +2,7 @@
 \
 \       Name: DORND2
 \       Type: Subroutine
-\   Category: Elite-A: Utility routines
+\   Category: Utility routines
 \    Summary: AJD
 \
 \ ******************************************************************************

@@ -2,7 +2,7 @@
 \
 \       Name: DOKEY_FLIGHT
 \       Type: Subroutine
-\   Category: Elite-A: Keyboard
+\   Category: Keyboard
 \    Summary: AJD
 \
 \ ******************************************************************************

@@ -2,7 +2,7 @@
 \
 \       Name: tnpr_FLIGHT
 \       Type: Subroutine
-\   Category: Elite-A: Market
+\   Category: Market
 \    Summary: AJD
 \
 \ ******************************************************************************

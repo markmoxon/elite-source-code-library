@@ -2,7 +2,7 @@
 \
 \       Name: count_offs
 \       Type: Variable
-\   Category: Elite-A: Buying ships
+\   Category: Buying ships
 \    Summary: AJD
 \
 \ ******************************************************************************

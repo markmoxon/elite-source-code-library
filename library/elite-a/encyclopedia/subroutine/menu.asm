@@ -2,7 +2,7 @@
 \
 \       Name: menu
 \       Type: Subroutine
-\   Category: Elite-A: Encyclopedia
+\   Category: Encyclopedia
 \    Summary: AJD
 \
 \ ******************************************************************************

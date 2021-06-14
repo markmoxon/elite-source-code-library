@@ -20,6 +20,8 @@ ORG &0B00
 
 INCLUDE "library/disc/loader3/subroutine/load.asm"
 
+IF NOT(_ELITE_A_VERSION)
+
  EQUB &44, &6F, &65     \ These bytes appear to be unused
  EQUB &73, &20, &79
  EQUB &6F, &75, &72
@@ -32,6 +34,8 @@ INCLUDE "library/disc/loader3/subroutine/load.asm"
  EQUB &6F, &20, &74
  EQUB &68, &69, &73
  EQUB &3F
+
+ENDIF
 
 COPYBLOCK LOAD, P%, LOADcode
 

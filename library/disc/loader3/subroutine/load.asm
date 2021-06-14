@@ -17,6 +17,8 @@
                         \ the T.CODE binary (the main docked code) to its load
                         \ address of &11E3
 
+IF NOT(_ELITE_A_VERSION)
+
  LDA #LO(S%+11)         \ Point BRKV to the fifth entry in the main docked
  STA BRKV               \ code's S% workspace, which contains JMP BRBR1
  LDA #HI(S%+11)
@@ -73,11 +75,22 @@ ELSE
 
 ENDIF
 
+ENDIF
+
  JMP S%+3               \ Jump to the second entry in the main docked code's S%
                         \ workspace to start a new game
 
 .LTLI
 
+IF NOT(_ELITE_A_VERSION)
+
  EQUS "L.T.CODE"
  EQUB 13
+
+ELIF _ELITE_A_VERSION
+
+ EQUS "L.1.D"
+ EQUB 13
+
+ENDIF
 

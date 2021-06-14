@@ -17,6 +17,10 @@
 
  RTS                    \ Return from the subroutine
 
+IF NOT(_ELITE_A_VERSION)
+
  JMP P%                 \ This would hang the computer, but we never get here as
                         \ the checksum code has been disabled
+
+ENDIF
 

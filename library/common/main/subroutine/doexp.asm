@@ -202,7 +202,8 @@ ELIF _ELITE_A_6502SP_PARA
 
  AND #%00001000         \ If bit 3 of the ship's byte #31 is clear, then nothing
  BEQ DOEXP-1            \ is being drawn on-screen for this ship anyway, so
-                        \ return from the subroutine (as DOEXP-1 contains an RTS)
+                        \ return from the subroutine (as DOEXP-1 contains an
+                        \ RTS)
 
  LDY #2                 \ Otherwise it's time to draw an explosion cloud, so
  LDA (XX19),Y           \ fetch byte #2 of the ship line heap into Y, which we

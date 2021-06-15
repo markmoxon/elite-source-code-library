@@ -6,12 +6,14 @@
 \    Summary: Code block at &1100-&11E2 that remains resident in both docked and
 \             flight mode (palettes, screen mode routine and commander data)
 \
+IF NOT(_ELITE_A_VERSION)
 \ ------------------------------------------------------------------------------
 \
 \ This section is encrypted by EOR'ing with &A5. The encryption is done by the
 \ elite-checksum.py script, and decryption is done in part 1 above, at the same
 \ time as it is moved to &1000.
 \
+ENDIF
 \ ******************************************************************************
 
 .TVT1code

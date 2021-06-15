@@ -16,6 +16,6 @@
  JSR tube_write
  PLA
  JSR tube_write
- LDA &88
+ LDA ZZ
  JMP tube_write
 

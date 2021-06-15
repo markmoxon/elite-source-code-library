@@ -552,7 +552,7 @@ ELIF _ELITE_A_VERSION
 
  CMP #&18               \ AJD
  BCS l_40d7
- DEC &0FD2
+ DEC CPIR
  BPL more
 
 .l_40d7

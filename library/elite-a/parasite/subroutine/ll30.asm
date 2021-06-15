@@ -12,12 +12,12 @@
 
  LDA #&80
  JSR tube_write
- LDA &34
+ LDA X1
  JSR tube_write
- LDA &35
+ LDA Y1
  JSR tube_write
- LDA &36
+ LDA X2
  JSR tube_write
- LDA &37
+ LDA Y2
  JMP tube_write
 

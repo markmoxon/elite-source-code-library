@@ -10,7 +10,7 @@
 .LSHIPS
 
  LDA #0
- STA &9F \ reset finder
+ STA finder
 
 .SHIPinA
 
@@ -29,7 +29,7 @@
 .mix_retry
 
  LDA #0
- STA &34
+ STA X1
 
 .mix_match
 
@@ -38,12 +38,12 @@
  BCS mix_match
  ASL A
  ASL A
- STA &35
+ STA Y1
  TYA
  AND #&07
  TAX
  LDA mix_bits,X
- LDX &35
+ LDX Y1
  CPY #16
  BCC mix_byte2
  CPY #24
@@ -63,19 +63,19 @@
 .mix_try
 
  JSR DORND
- LDX &35
+ LDX Y1
  CMP ship_bytes,X
  BCC mix_ok
 
 .mix_fail
 
- DEC &34
+ DEC X1
  BNE mix_match
  LDX #ship_total*4
 
 .mix_ok
 
- STY &36
+ STY X2
  CPX #52  \ ANACONDA?
  BEQ mix_anaconda
  CPX #116 \ DRAGON?
@@ -88,7 +88,7 @@
 .mix_install
 
  JSR install_ship
- LDY &36
+ LDY X2
 
 .mix_next
 

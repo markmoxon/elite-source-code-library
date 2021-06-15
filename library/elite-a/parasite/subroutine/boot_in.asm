@@ -11,8 +11,8 @@
 
  LDA #0
  STA save_lock
- STA &0320
- STA &30
+ STA SSPR
+ STA ECMA
  STA dockedp
  JMP BEGIN
 

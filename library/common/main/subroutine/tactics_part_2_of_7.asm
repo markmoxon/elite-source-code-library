@@ -174,7 +174,7 @@ ELIF _ELITE_A_VERSION
 
  LDA MANY+SHU+1         \ The station is not hostile, so check how many
 
- ORA &033F              \ AJD no shuttles if docking computer on
+ ORA auto               \ AJD no shuttles if docking computer on
 
  BNE TA1                \ Transporters there are in the vicinity, and if we
                         \ already have one, return from the subroutine (as TA1

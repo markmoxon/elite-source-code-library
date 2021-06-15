@@ -13,18 +13,18 @@
 
 .HAL1
 
- STX &84
+ STX XSAV
  LDA #&82
- LDX &84
- STX &81
+ LDX XSAV
+ STX Q
  JSR DVID4
  LDA #&9A
  JSR tube_write
- LDA &1B
+ LDA P
  JSR tube_write
- LDA &85
+ LDA YSAV
  JSR tube_write
- LDX &84
+ LDX XSAV
  INX
  CPX #&0D
  BCC HAL1
@@ -32,12 +32,12 @@
 
 .HAL6
 
- STA &84
+ STA XSAV
  LDA #&9B
  JSR tube_write
- LDA &84
+ LDA XSAV
  JSR tube_write
- LDA &84
+ LDA XSAV
  CLC
  ADC #&10
  BNE HAL6

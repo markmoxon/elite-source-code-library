@@ -10,9 +10,9 @@
 .menu
 
  LDA menu_entry,X
- STA &03AB
+ STA QQ25
  LDA menu_offset,X
- STA &03AD
+ STA QQ29
  LDA menu_query,X
  PHA
  LDA menu_title,X
@@ -41,9 +41,9 @@ ENDIF
 
 .menu_loop
 
- STX &89
+ STX XX13
  JSR TT67
- LDX &89
+ LDX XX13
  INX
  CLC
  JSR pr2
@@ -58,12 +58,12 @@ IF _ELITE_A_6502SP_PARA
 ENDIF
 
  CLC
- LDA &89
- ADC &03AD
+ LDA XX13
+ ADC QQ29
  JSR write_msg3
- LDX &89
+ LDX XX13
  INX
- CPX &03AB
+ CPX QQ25
  BCC menu_loop
  JSR CLYNS
  PLA

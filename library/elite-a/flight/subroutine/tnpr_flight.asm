@@ -18,7 +18,7 @@
 
  LDY #&0C               \ Related to tnpr, but not the same
  SEC
- LDA QQ20+&10
+ LDA QQ20+16
 
 .l_2af9
 

@@ -9,5 +9,5 @@
 
 .anger_8c
 
- LDA &8C
+ LDA TYPE
 

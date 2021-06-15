@@ -12,16 +12,16 @@
  \ name ship in 0 <= Y <= &C
  LDX new_offsets,Y
  LDA #9
- STA &41
+ STA K+1
 
 .n_lprint
 
  LDA new_ships,X
- STX &40
+ STX K
  JSR TT27
- LDX &40
+ LDX K
  INX
- DEC &41
+ DEC K+1
  BNE n_lprint
  RTS
 

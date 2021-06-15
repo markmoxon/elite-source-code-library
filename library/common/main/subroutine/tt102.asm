@@ -504,9 +504,9 @@ IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA O
 
 ELIF _ELITE_A_FLIGHT 
 
- LDA &9F                \ AJD
+ LDA finder             \ AJD
  EOR #&25
- STA &9F
+ STA finder
  JMP WSCAN
 
 .HME1
@@ -524,9 +524,9 @@ ELIF _ELITE_A_6502SP_PARA
 
  LDA dockedp
  BEQ t95
- LDA &9F
+ LDA finder
  EOR #&25
- STA &9F
+ STA finder
  JMP WSCAN
 
 .t95

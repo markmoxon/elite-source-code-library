@@ -118,8 +118,8 @@ ELIF _6502SP_VERSION
 ELIF _ELITE_A_DOCKED
 
  LDA #&01               \ AJD
- STA &0355
- STA &03CF
+ STA NAME+5
+ STA CATF
 
 ELIF _ELITE_A_6502SP_PARA
 
@@ -196,8 +196,8 @@ ELIF _ELITE_A_DOCKED
  DEC CATF               \ Decrement the CATF flag back to 0, so the TT26 routine
                         \ reverts to standard formatting
 
- LDA &1186              \ AJD
- STA &0355
+ LDA NA%+5              \ AJD
+ STA NAME+5
 
 ENDIF
 

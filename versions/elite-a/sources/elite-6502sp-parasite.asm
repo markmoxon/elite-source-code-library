@@ -1088,6 +1088,22 @@ INCLUDE "library/elite-a/parasite/variable/ship_bytes.asm"
 
 \ ******************************************************************************
 \
+\ Save output/2.SHIPS.bin
+\
+\ ******************************************************************************
+
+PRINT "SHIPS"
+PRINT "Assembled at ", ~CODE_SHIPS%
+PRINT "Ends at ", ~P%
+PRINT "Code size is ", ~(P% - CODE_SHIPS%)
+PRINT "Execute at ", ~LOAD_SHIPS%
+PRINT "Reload at ", ~LOAD_SHIPS%
+
+PRINT "S.2.SHIPS ", ~CODE_SHIPS%, " ", ~P%, " ", ~LOAD_SHIPS%, " ", ~LOAD_SHIPS%
+\SAVE "versions/elite-a/output/2.SHIPS.bin", CODE_SHIPS%, P%, LOAD_SHIPS%
+
+\ ******************************************************************************
+\
 \ Save output/2.T.bin
 \
 \ ******************************************************************************

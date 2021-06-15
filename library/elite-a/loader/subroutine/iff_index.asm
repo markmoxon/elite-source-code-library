@@ -16,13 +16,13 @@
  LDX cmdr_iff           \ iff code
  BEQ iff_not
  LDY #&24
- LDA (&20),Y
+ LDA (INF),Y
  ASL A
  ASL A
  BCS iff_cop
  ASL A
  BCS iff_trade
- LDY &8C
+ LDY TYPE
  DEY
  BEQ iff_missle
  CPY #&08

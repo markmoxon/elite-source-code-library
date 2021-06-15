@@ -18,6 +18,6 @@
  JSR tube_write
  LDA SC+1
  JSR tube_write
- INC SC+&01
+ INC SC+1
  RTS
 

@@ -340,9 +340,13 @@ INCLUDE "library/common/main/variable/qq9.asm"
 INCLUDE "library/common/main/variable/qq10.asm"
 INCLUDE "library/common/main/variable/nostm.asm"
 
-ELIF _ELITE_A_6502SP_PARA
+ELIF _ELITE_A_VERSION
 
- SKIP 1                 \ This byte appears to be unused
+INCLUDE "library/elite-a/flight/variable/finder.asm"
+
+ENDIF
+
+IF _ELITE_A_6502SP_PARA
 
 INCLUDE "library/elite-a/parasite/variable/dockedp.asm"
 

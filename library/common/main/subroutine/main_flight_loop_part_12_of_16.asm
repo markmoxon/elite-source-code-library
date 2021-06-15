@@ -178,7 +178,7 @@ IF _ELITE_A_VERSION
  STA &D1                \ AJD
  SEC
  LDY #&0E               \ opponent shield
- LDA (&1E),Y
+ LDA (XX0),Y
  AND #&07
  SBC &D1
  BCS n_kill

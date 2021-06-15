@@ -201,7 +201,7 @@ IF _ELITE_A_VERSION
 
  LDY #&23               \ missile damage AJD
  SEC
- LDA (&22),Y
+ LDA (V),Y
  SBC #&40
  BCS n_misshit
 

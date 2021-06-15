@@ -24,9 +24,9 @@ IF NOT(_ELITE_A_VERSION)
 ELIF _ELITE_A_VERSION
 
  LDY #&25               \ AJD
- LDA &0320
+ LDA SSPR
  BNE l_station
- LDY &9F                \ finder
+ LDY finder
 
 .l_station
 

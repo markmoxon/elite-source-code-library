@@ -21,21 +21,21 @@
 
 .ship_over
 
- STA &8C
+ STA TYPE
  CLC
  ADC #&07
  PHA
  LDA #&20
  JSR TT66
  JSR MT1
- LDX &8C
+ LDX TYPE
 
 IF _ELITE_A_ENCYCLOPEDIA
 
  LDA ship_file,X
- CMP ship_load+&04
+ CMP ship_load+4
  BEQ ship_skip
- STA ship_load+&04
+ STA ship_load+4
  LDX #LO(ship_load)
  LDY #HI(ship_load)
  JSR OSCLI
@@ -51,7 +51,7 @@ ELIF _ELITE_A_6502SP_PARA
 
 ENDIF
 
- LDX &8C
+ LDX TYPE
  LDA ship_centre,X
  STA XC
  PLA
@@ -59,20 +59,20 @@ ENDIF
  JSR NLIN4
  JSR ZINF
  LDA #&60
- STA &54
+ STA INWK+14
  LDA #&B0
- STA &4D
+ STA INWK+7
  LDX #&7F
- STX &63
- STX &64
+ STX INWK+29
+ STX INWK+30
  INX
  STA QQ17
- LDA &8C
+ LDA TYPE
  JSR write_card
 
 IF _ELITE_A_ENCYCLOPEDIA
 
- LDX &8C
+ LDX TYPE
  LDA ship_posn,X
  JSR NWSHP
 
@@ -91,22 +91,22 @@ ENDIF
 
 .l_395a
 
- LDX &8C
+ LDX TYPE
  LDA ship_dist,X
- CMP &4D
+ CMP INWK+7
  BEQ l_3962
- DEC &4D
+ DEC INWK+7
 
 .l_3962
 
  JSR MVEIT
  LDA #&80
- STA &4C
+ STA INWK+6
  ASL A
- STA &46
- STA &49
+ STA INWK
+ STA INWK+3
  JSR LL9
- DEC &8A
+ DEC MCNT
 
 IF _ELITE_A_ENCYCLOPEDIA
 

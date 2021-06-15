@@ -10,7 +10,7 @@
 .DOKEY_FLIGHT
 
  JSR U%                 \ Copy of DOKEY
- LDA &2F
+ LDA QQ22+1
  BEQ d_open
  JMP DK4_FLIGHT
 
@@ -25,51 +25,51 @@
  JSR DKS1
  DEY
  BNE d_44bc
- LDA &033F
+ LDA auto
  BEQ d_4526
 
 .auton
 
  JSR ZINF
  LDA #&60
- STA &54
+ STA INWK+14
  ORA #&80
- STA &5C
- STA &8C
- LDA &7D \ ? Too Fast
- STA &61
+ STA INWK+22
+ STA TYPE
+ LDA DELTA \ ? Too Fast
+ STA INWK+27
  JSR DOCKIT
- LDA &61
+ LDA INWK+27
  CMP #&16
  BCC d_44e3
  LDA #&16
 
 .d_44e3
 
- STA &7D
+ STA DELTA
  LDA #&FF
  LDX #&00
- LDY &62
+ LDY INWK+28
  BEQ d_44f3
  BMI d_44f0
  INX
 
 .d_44f0
 
- STA &0301,X
+ STA KY1,X
 
 .d_44f3
 
  LDA #&80
  LDX #&00
- ASL &63
+ ASL INWK+29
  BEQ d_450f
  BCC d_44fe
  INX
 
 .d_44fe
 
- BIT &63
+ BIT INWK+29
  BPL d_4509
  LDA #&40
  STA JSTX
@@ -77,7 +77,7 @@
 
 .d_4509
 
- STA &0303,X
+ STA KY3,X
  LDA JSTX
 
 .d_450f
@@ -85,14 +85,14 @@
  STA JSTX
  LDA #&80
  LDX #&00
- ASL &64
+ ASL INWK+30
  BEQ d_4523
  BCS d_451d
  INX
 
 .d_451d
 
- STA &0305,X
+ STA KY5,X
  LDA JSTY
 
 .d_4523
@@ -103,13 +103,13 @@
 
  LDX JSTX
  LDA #&07
- LDY &0303
+ LDY KY3
  BEQ d_4533
  JSR BUMP2
 
 .d_4533
 
- LDY &0304
+ LDY KY4
  BEQ d_453b
  JSR REDU2
 
@@ -118,13 +118,13 @@
  STX JSTX
  ASL A
  LDX JSTY
- LDY &0305
+ LDY KY5
  BEQ d_454a
  JSR REDU2
 
 .d_454a
 
- LDY &0306
+ LDY KY6
  BEQ d_4552
  JSR BUMP2
 

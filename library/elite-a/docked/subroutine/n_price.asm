@@ -16,7 +16,7 @@
 .n_lprice
 
  LDA new_price,X
- STA &40,Y
+ STA K,Y
  INX
  DEY
  BPL n_lprice

@@ -13,7 +13,7 @@
 
 .LL9_FLIGHT
 
- LDA &8C
+ LDA TYPE
  BMI d_4889
  JMP LL9
 

@@ -9,7 +9,7 @@
 
 .HFS2
 
- STA &95
+ STA STP
  JSR TTX66
  JMP HFS1
 

@@ -34,7 +34,7 @@ ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
  STA XC
  JSR vdu_80
  LDA #&01
- STA &03AB
+ STA QQ25
  JSR sell_yn
  BEQ status_no
  BCS status_no

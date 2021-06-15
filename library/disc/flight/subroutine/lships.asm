@@ -13,7 +13,7 @@
 IF _ELITE_A_VERSION
 
  LDA #0                 \ AJD
- STA &9F                \ reset finder
+ STA finder
 
 ENDIF
 

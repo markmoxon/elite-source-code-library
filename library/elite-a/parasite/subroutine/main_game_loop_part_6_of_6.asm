@@ -10,7 +10,7 @@
 .FRCE_FLIGHT
 
  PHA                \ Like main game loop 6
- LDA &2F
+ LDA QQ22+1
  BNE d_locked
  PLA
  JSR TT102

@@ -54,7 +54,7 @@
 
 .d_459c
 
- LDA &87
+ LDA QQ11
  BNE DK5
  LDY #&10
 

@@ -12,15 +12,15 @@
  ASL A
  TAY
  LDA card_addr,Y
- STA &22
+ STA V
  LDA card_addr+1,Y
- STA &23
+ STA V+1
 
 .card_repeat
 
  JSR MT1
  LDY #&00
- LDA (&22),Y
+ LDA (V),Y
  TAX
  BEQ quit_card
  BNE card_check
@@ -60,7 +60,7 @@
 .card_loop
 
  INY
- LDA (&22),Y
+ LDA (V),Y
  BEQ card_end
  BMI card_msg
  CMP #&20
@@ -90,10 +90,10 @@
 
  TYA
  SEC
- ADC &22
- STA &22
+ ADC V
+ STA V
  BCC card_repeat
- INC &23
+ INC V+1
  BCS card_repeat
 
 .quit_card

@@ -14,30 +14,30 @@
  LDA #&0F   \LDA #&0D
  SBC QQ28
  SBC QQ28   \++
- STA &03AB
+ STA QQ25
 
 .n_bloop
 
- STX &89
+ STX XX13
  JSR TT67
- LDX &89
+ LDX XX13
  INX
  CLC
  JSR pr2
  JSR TT162
- LDY &89
+ LDY XX13
  JSR n_name
- LDY &89
+ LDY XX13
  JSR n_price
  LDA #&16
  STA XC
  LDA #&09
- STA &80
+ STA U
  SEC
  JSR BPRNT
- LDX &89
+ LDX XX13
  INX
- CPX &03AB
+ CPX QQ25
  BCC n_bloop
  JSR CLYNS
  LDA #&B9
@@ -46,12 +46,12 @@
  BEQ jmp_start3
  BCS jmp_start3
  SBC #&00
- CMP &03AB
+ CMP QQ25
  BCS jmp_start3
  LDX #&02
  STX XC
  INC YC
- STA &81
+ STA Q
  LDY new_type
  JSR n_price
  CLC
@@ -60,23 +60,23 @@
 .n_addl
 
  LDA CASH,X
- ADC &40,X
- STA &09,X
+ ADC K,X
+ STA XX16,X
  DEX
  BPL n_addl
- LDY &81
+ LDY Q
  JSR n_price
  SEC
  LDX #3
 
 .n_subl
 
- LDA &09,X
- SBC &40,X
- STA &40,X
+ LDA XX16,X
+ SBC K,X
+ STA K,X
  DEX
  BPL n_subl
- LDA &81
+ LDA Q
  BCS n_buy
 
 .cash_query
@@ -96,7 +96,7 @@
 
 .n_cpyl
 
- LDA &40,Y
+ LDA K,Y
  STA CASH,Y
  DEY
  BPL n_cpyl
@@ -105,7 +105,7 @@
 
 .n_wipe
 
- STA &0368,Y
+ STA LASER,Y
  DEY
  BPL n_wipe
  STX new_type

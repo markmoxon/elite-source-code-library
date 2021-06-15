@@ -226,7 +226,7 @@ ELIF _ELECTRON_VERSION
 
 ELIF _ELITE_A_VERSION
 
- LDA &0308              \ AJD
+ LDA KY12               \ AJD
  AND BOMB
  BEQ MA76
 
@@ -288,16 +288,16 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: In the enhance
 
 ELIF _ELITE_A_VERSION
 
- LDA &030F              \ AJD
+ LDA KY19               \ AJD
  AND DKCMP
  BNE dock_toggle
- LDA &0310
+ LDA KY20
  BEQ MA78
  LDA #&00
 
 .dock_toggle
 
- STA &033F
+ STA auto
 
 .MA78
 
@@ -511,7 +511,7 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_FLIGHT
 
- STA &0346              \ AJD
+ STA LASCT              \ AJD
 
 ELIF _ELITE_A_6502SP_PARA
 

@@ -76,7 +76,7 @@ ENDIF
 
 IF _ELITE_A_VERSION
 
- ORA &033E              \ no jump if any ship AJD
+ ORA JUNK               \ no jump if any ship AJD
 
 ENDIF
 

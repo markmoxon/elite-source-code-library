@@ -10,14 +10,14 @@
 .d_3fc0
 
  JSR M%                 \ Like main game loop 2
- DEC &034A
+ DEC DLY
  BEQ d_3f54
  BPL d_3fcd
- INC &034A
+ INC DLY
 
 .d_3fcd
 
- DEC &8A
+ DEC MCNT
  BEQ d_3fd4
 
 .d_3fd1
@@ -26,38 +26,38 @@
 
 .d_3f54
 
- LDA &03A4
+ LDA MCH
  JSR MESS
  LDA #&00
- STA &034A
+ STA DLY
  JMP d_3fcd
 
 .d_3fd4
 
- LDA &0341
+ LDA MJ
  BNE d_3fd1
  JSR DORND
  CMP #&33 \ trader fraction
  BCS MTT1
- LDA &033E
+ LDA JUNK
  CMP #&03
  BCS MTT1
  JSR rand_posn \ IN
  BVS MTT4
  ORA #&6F
- STA &63
- LDA &0320
+ STA INWK+29
+ LDA SSPR
  BNE MLOOPS
  TXA
  BCS d_401e
  AND #&0F
- STA &61
+ STA INWK+27
  BCC d_4022
 
 .d_401e
 
  ORA #&7F
- STA &64
+ STA INWK+30
 
 .d_4022
 

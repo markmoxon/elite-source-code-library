@@ -12,6 +12,6 @@
  LDA #&98
  JSR tube_write
  JSR tube_read
- STA &0346
+ STA LASCT
  RTS
 

@@ -9,5 +9,6 @@
 
 .ship_load
 
- EQUS "L.S.0", &0D
+ EQUS "L.S.0"
+ EQUB 13
 

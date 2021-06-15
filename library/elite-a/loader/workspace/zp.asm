@@ -2,7 +2,7 @@
 \
 \       Name: ZP
 \       Type: Workspace
-\    Address: &0070 to &008B
+\    Address: &0070 to &008C
 \   Category: Workspaces
 \    Summary: Important variables used by the loader
 \
@@ -11,6 +11,10 @@
 ORG &0004
 
 INCLUDE "library/elite-a/loader/variable/key_io.asm"
+
+ORG &0020
+
+INCLUDE "library/common/main/variable/inf.asm"
 
 ORG &0070
 
@@ -26,7 +30,9 @@ INCLUDE "library/disc/loader3/variable/chksm.asm"
 ORG &008B
 
 INCLUDE "library/common/main/variable/dl.asm"
+INCLUDE "library/common/main/variable/type.asm"
 
 ORG &0090
 
 INCLUDE "library/elite-a/loader/variable/key_tube.asm"
+

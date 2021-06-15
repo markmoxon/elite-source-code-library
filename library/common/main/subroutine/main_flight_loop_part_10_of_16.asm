@@ -73,7 +73,7 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- LDA &033F              \ AJD
+ LDA auto               \ AJD
  AND #&04
  EOR #&05
  BNE MA63

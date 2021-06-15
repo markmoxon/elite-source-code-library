@@ -86,9 +86,9 @@ ELIF _ELITE_A_6502SP_IO
  LDA angle_1            \ the vertical bar from the start of this character
  SBC #4                 \ block
 
- BCS DLL11              \ If angle_1 >= 4 then the character block we are drawing
-                        \ does not contain the vertical indicator bar, so jump to
-                        \ DLL11 to draw a blank character block
+ BCS DLL11              \ If angle_1 >= 4 then the character block we are
+                        \ drawing does not contain the vertical indicator bar,
+                        \ so jump to DLL11 to draw a blank character block
 
 ENDIF
 

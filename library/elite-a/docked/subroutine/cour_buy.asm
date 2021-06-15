@@ -38,27 +38,27 @@ ENDIF
  EOR QQ1
  EOR FIST
  EOR TALLY
- STA &46
+ STA INWK
  SEC
  LDA FIST
  ADC GCNT
  ADC cmdr_ship
- STA &47
- ADC &46
+ STA INWK+1
+ ADC INWK
  SBC cmdr_courx
  SBC cmdr_coury
  AND #&0F
- STA &03AB
+ STA QQ25
  BEQ cour_pres
  LDA #&00
- STA &49
- STA &4C
+ STA INWK+3
+ STA INWK+6
  JSR TT81
 
 .cour_loop
 
- LDA &49
- CMP &03AB
+ LDA INWK+3
+ CMP QQ25
  BCC cour_count
 
 .cour_menu
@@ -71,12 +71,12 @@ ENDIF
  BCS cour_pres
  TAX
  DEX
- CPX &49
+ CPX INWK+3
  BCS cour_pres
  LDA #&02
  STA XC
  INC YC
- STX &46
+ STX INWK
  LDY &0C50,X
  LDA &0C40,X
  TAX
@@ -86,7 +86,7 @@ ENDIF
 
 .cour_cash
 
- LDX &46
+ LDX INWK
  LDA &0C00,X
  STA cmdr_courx
  LDA &0C10,X
@@ -107,24 +107,24 @@ ENDIF
 .cour_count
 
  JSR TT20
- INC &4C
+ INC INWK+6
  BEQ cour_menu
- DEC &46
+ DEC INWK
  BNE cour_count
- LDX &49
- LDA &6F
+ LDX INWK+3
+ LDA QQ15+3
  CMP QQ0
  BNE cour_star
- LDA &6D
+ LDA QQ15+1
  CMP QQ1
  BNE cour_star
  JMP cour_next
 
 .cour_star
 
- LDA &6F
- EOR &71
- EOR &47
+ LDA QQ15+3
+ EOR QQ15+5
+ EOR INWK+1
  CMP FIST
  BCC cour_legal
  LDA #0
@@ -132,7 +132,7 @@ ENDIF
 .cour_legal
 
  STA &0C20,X
- LDA &6F
+ LDA QQ15+3
  STA &0C00,X
  SEC
  SBC QQ0
@@ -143,11 +143,11 @@ ENDIF
 .cour_negx
 
  JSR SQUA2
- STA &41
- LDA &1B
- STA &40
- LDX &49
- LDA &6D
+ STA K+1
+ LDA P
+ STA K
+ LDX INWK+3
+ LDA QQ15+1
  STA &0C10,X
  SEC
  SBC QQ1
@@ -160,64 +160,64 @@ ENDIF
  LSR A
  JSR SQUA2
  PHA
- LDA &1B
+ LDA P
  CLC
- ADC &40
- STA &81
+ ADC K
+ STA Q
  PLA
- ADC &41
- STA &82
+ ADC K+1
+ STA R
  JSR LL5
- LDX &49
- LDA &6D
- EOR &71
- EOR &47
+ LDX INWK+3
+ LDA QQ15+1
+ EOR QQ15+5
+ EOR INWK+1
  LSR A
  LSR A
  LSR A
- CMP &81
+ CMP Q
  BCS cour_dist
- LDA &81
+ LDA Q
 
 .cour_dist
 
  ORA &0C20,X
  STA &0C30,X
- STA &4A
+ STA INWK+4
  LSR A
- ROR &4A
+ ROR INWK+4
  LSR A
- ROR &4A
+ ROR INWK+4
  LSR A
- ROR &4A
- STA &4B
+ ROR INWK+4
+ STA INWK+5
  STA &0C50,X
- LDA &4A
+ LDA INWK+4
  STA &0C40,X
  LDA #&01
  STA XC
  CLC
- LDA &49
+ LDA INWK+3
  ADC #&03
  STA YC
- LDX &49
+ LDX INWK+3
  INX
  CLC
  JSR pr2
  JSR TT162
  JSR cpl
- LDX &4A
- LDY &4B
+ LDX INWK+4
+ LDY INWK+5
  SEC
  LDA #&19
  STA XC
  LDA #&06
  JSR TT11
- INC &49
+ INC INWK+3
 
 .cour_next
 
- LDA &47
- STA &46
+ LDA INWK+1
+ STA INWK
  JMP cour_loop
 

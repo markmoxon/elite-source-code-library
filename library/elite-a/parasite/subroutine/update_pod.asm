@@ -13,6 +13,6 @@
  JSR tube_write
  LDA ESCP
  JSR tube_write
- LDA &0348
+ LDA HFX
  JMP tube_write
 

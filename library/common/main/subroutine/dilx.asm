@@ -41,31 +41,41 @@ ENDIF
 \   SC(1 0)             The screen address of the first character block in the
 \                       indicator
 \
+IF NOT(_ELITE_A_6502SP_IO)
 \ Other entry points:
 \
+ENDIF
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \   DILX+2              The range of the indicator is 0-64 (for the fuel
 \                       indicator)
 \
 ENDIF
+IF NOT(_ELITE_A_6502SP_IO)
 \   DIL-1               The range of the indicator is 0-32 (for the speed
 \                       indicator)
 \
 \   DIL                 The range of the indicator is 0-16 (for the energy
 \                       banks)
 \
+ENDIF
 \ ******************************************************************************
 
 .DILX
 
+IF NOT(_ELITE_A_6502SP_IO)
+
  LSR A                  \ If we call DILX, we set A = A / 16, so A is 0-15
  LSR A
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  LSR A                  \ If we call DILX+2, we set A = A / 4, so A is 0-15
 
 ENDIF
+
+IF NOT(_ELITE_A_6502SP_IO)
 
  LSR A                  \ If we call DIL-1, we set A = A / 2, so A is 0-15
 
@@ -73,7 +83,9 @@ ENDIF
 
                         \ If we call DIL, we leave A alone, so A is 0-15
 
-IF NOT(_ELITE_A_6502SP_PARA)
+ENDIF
+
+IF NOT(_ELITE_A_6502SP_PARA OR _ELITE_A_6502SP_IO)
 
  STA Q                  \ Store the indicator value in Q, now reduced to 0-15,
                         \ which is the length of the indicator to draw in pixels
@@ -86,11 +98,32 @@ ELIF _ELITE_A_6502SP_PARA
  PLA
  JSR tube_write
 
+ELIF _ELITE_A_6502SP_IO
+
+ JSR tube_get           \ AJD
+ STA bar_1
+ JSR tube_get
+ STA bar_2
+ JSR tube_get
+ STA SC
+ JSR tube_get
+ STA SC+1
+
 ENDIF
+
+IF NOT(_ELITE_A_6502SP_IO)
 
  LDX #&FF               \ Set R = &FF, to use as a mask for drawing each row of
  STX R                  \ each character block of the bar, starting with a full
                         \ character's width of 4 pixels
+
+ELIF _ELITE_A_6502SP_IO
+
+ LDX #&FF               \ Set bar_3 = &FF, to use as a mask for drawing each row
+ STX bar_3              \ of each character block of the bar, starting with a
+                        \ full character's width of 4 pixels
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: As the dashboard in the Electron version is monochrome, the dashboard indicators do not change colour when reaching their threshold
 
@@ -162,7 +195,7 @@ IF NOT(_ELITE_A_6502SP_PARA)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_IO \ Screen
 
  LDX #3                 \ Set up a counter in X for the width of the indicator,
                         \ which is 4 characters (each of which is 4 pixels wide,
@@ -176,11 +209,17 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF NOT(_ELITE_A_6502SP_PARA)
+IF NOT(_ELITE_A_6502SP_PARA OR _ELITE_A_6502SP_IO)
 
 .DL1
 
  LDA Q                  \ Fetch the indicator value (0-15) from Q into A
+
+ELIF _ELITE_A_6502SP_IO
+
+.DL1
+
+ LDA bar_1              \ Fetch the indicator value (0-15) from bar_1 into A
 
 ENDIF
 
@@ -214,12 +253,31 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
  STA Q                  \ subtract 2 from Q so it contains the amount of the
                         \ indicator that's left to draw after this character
 
+ELIF _ELITE_A_6502SP_IO
+
+ CMP #4                 \ If bar_1 < 4, then we need to draw the end cap of the
+ BCC DL2                \ indicator, which is less than a full character's
+                        \ width, so jump down to DL2 to do this
+
+ SBC #4                 \ Otherwise we can draw a 4-pixel wide block, so
+ STA bar_1              \ subtract 4 from bar_1 so it contains the amount of the
+                        \ indicator that's left to draw after this character
+
 ENDIF
 
-IF NOT(_ELITE_A_6502SP_PARA)
+IF NOT(_ELITE_A_6502SP_PARA OR _ELITE_A_6502SP_IO)
 
  LDA R                  \ Fetch the shape of the indicator row that we need to
                         \ display from R, so we can use it as a mask when
+                        \ painting the indicator. It will be &FF at this point
+                        \ (i.e. a full 4-pixel row)
+
+.DL5
+
+ELIF _ELITE_A_6502SP_IO
+
+ LDA bar_3              \ Fetch the shape of the indicator row that we need to
+                        \ display from bar_3, so we can use it as a mask when
                         \ painting the indicator. It will be &FF at this point
                         \ (i.e. a full 4-pixel row)
 
@@ -239,6 +297,12 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ only keep pixels that have their equivalent bits set
                         \ in the mask byte in A
 
+ELIF _ELITE_A_6502SP_IO
+
+ AND bar_2              \ Fetch the 4-pixel mode 5 colour byte from bar_2, and
+                        \ only keep pixels that have their equivalent bits set
+                        \ in the mask byte in A
+
 ENDIF
 
 IF NOT(_ELITE_A_6502SP_PARA)
@@ -254,7 +318,7 @@ IF NOT(_ELITE_A_6502SP_PARA)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_IO OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  TYA                    \ Add 6 to Y, so Y is now 8 more than when we started
  CLC                    \ this loop iteration, so Y now points to the address
@@ -323,9 +387,19 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ columns there should be on the right side of the cap's
                         \ character block
 
+ELIF _ELITE_A_6502SP_IO
+
+ EOR #3                 \ If we get here then we are drawing the indicator's end
+ STA bar_1              \ cap, so bar_1 is < 4, and this EOR flips the bits, so
+                        \ instead of containing the number of indicator columns
+                        \ we need to fill in on the left side of the cap's
+                        \ character block, bar_1 now contains the number of
+                        \ blank columns there should be on the right side of the
+                        \ cap's character block
+
 ENDIF
 
-IF NOT(_ELITE_A_6502SP_PARA)
+IF NOT(_ELITE_A_6502SP_PARA OR _ELITE_A_6502SP_IO)
 
  LDA R                  \ Fetch the current mask from R, which will be &FF at
                         \ this point, so we need to turn Q of the columns on the
@@ -334,9 +408,18 @@ IF NOT(_ELITE_A_6502SP_PARA)
 
 .DL3
 
+ELIF _ELITE_A_6502SP_IO
+
+ LDA bar_3              \ Fetch the current mask from bar_3, which will be &FF
+                        \ at this point, so we need to turn bar_1 of the columns
+                        \ on the right side of the mask to black to get the
+                        \ correct end cap shape for the indicator
+
+.DL3
+
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_IO \ Screen
 
  ASL A                  \ Shift the mask left so bit 0 is cleared, and then
  AND #%11101111         \ clear bit 4, which has the effect of shifting zeroes
@@ -358,9 +441,21 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF NOT(_ELITE_A_6502SP_PARA)
+IF NOT(_ELITE_A_6502SP_PARA OR _ELITE_A_6502SP_IO)
 
  DEC Q                  \ Decrement the counter for the number of columns to
+                        \ blank out
+
+ BPL DL3                \ If we still have columns to blank out in the mask,
+                        \ loop back to DL3 until the mask is correct for the
+                        \ end cap
+
+ PHA                    \ Store the mask byte on the stack while we use the
+                        \ accumulator for a bit
+
+ELIF _ELITE_A_6502SP_IO
+
+ DEC bar_1              \ Decrement the counter for the number of columns to
                         \ blank out
 
  BPL DL3                \ If we still have columns to blank out in the mask,
@@ -382,13 +477,31 @@ ELIF _MASTER_VERSION
  STZ R                  \ Change the mask so no bits are set, so the characters
                         \ after the one we're about to draw will be all blank
 
+ELIF _ELITE_A_6502SP_IO
+
+ LDA #0                 \ Change the mask so no bits are set, so the characters
+ STA bar_3              \ after the one we're about to draw will be all blank
+
 ENDIF
 
-IF NOT(_ELITE_A_6502SP_PARA)
+IF NOT(_ELITE_A_6502SP_PARA OR _ELITE_A_6502SP_IO)
 
  LDA #99                \ Set Q to a high number (99, why not) so we will keep
  STA Q                  \ drawing blank characters until we reach the end of
                         \ the indicator row
+
+ PLA                    \ Restore the mask byte from the stack so we can use it
+                        \ to draw the end cap of the indicator
+
+ JMP DL5                \ Jump back up to DL5 to draw the mask byte on-screen
+
+.DL6
+
+ELIF _ELITE_A_6502SP_IO
+
+ LDA #99                \ Set bar_1 to a high number (99, why not) so we will
+ STA bar_1              \ keep drawing blank characters until we reach the end
+                        \ of the indicator row
 
  PLA                    \ Restore the mask byte from the stack so we can use it
                         \ to draw the end cap of the indicator

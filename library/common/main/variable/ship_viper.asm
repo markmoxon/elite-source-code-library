@@ -39,11 +39,11 @@ ENDIF
  EQUB &00               \ Edges data offset (high) = &006E
  EQUB &00               \ Faces data offset (high) = &00BE
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
-IF NOT(_ELITE_A_6502SP_PARA)
+IF NOT(_ELITE_A_6502SP_PARA OR _ELITE_A_FLIGHT)
  EQUB %00010001         \ Laser power              = 2
                         \ Missiles                 = 1
 
-ELIF _ELITE_A_6502SP_PARA
+ELIF _ELITE_A_6502SP_PARA OR _ELITE_A_FLIGHT
  EQUB %00101001         \ Laser power              = 5
                         \ Missiles                 = 1
 

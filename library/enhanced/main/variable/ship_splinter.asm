@@ -18,10 +18,12 @@
  EQUB 0 + (11 << 4)     \ Max. canisters on demise = 0
                         \ Market item when scooped = 11 + 1 = 12 (Minerals)
  EQUW 16 * 16           \ Targetable area          = 16 * 16
-IF NOT(_ELITE_A_VERSION)
+IF NOT(_ELITE_A_6502SP_PARA OR _ELITE_A_FLIGHT)
  EQUB LO(SHIP_ESCAPE_POD_EDGES - SHIP_SPLINTER)      \ Edges data = escape pod
-ELIF _ELITE_A_VERSION
+ELIF _ELITE_A_6502SP_PARA
  EQUB LO(SHIP_THARGON_VERTICES - SHIP_SPLINTER)      \ Edges data = Thargon? AJD
+ELIF _ELITE_A_FLIGHT
+ EQUB &5A                                            \ AJD
 ENDIF
  EQUB &44               \ Faces data offset (low)  = &0044
 IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; splinters are shown in red
@@ -46,10 +48,12 @@ ELIF _ELITE_A_VERSION
  EQUB 16                \ Max. energy              = 16
 ENDIF
  EQUB 10                \ Max. speed               = 10
-IF NOT(_ELITE_A_VERSION)
+IF NOT(_ELITE_A_6502SP_PARA OR _ELITE_A_FLIGHT)
  EQUB HI(SHIP_ESCAPE_POD_EDGES - SHIP_SPLINTER)      \ Edges data = escape pod
-ELIF _ELITE_A_VERSION
+ELIF _ELITE_A_6502SP_PARA
  EQUB HI(SHIP_THARGON_VERTICES - SHIP_SPLINTER)      \ Edges data = Thargon? AJD
+ELIF _ELITE_A_FLIGHT
+ EQUB &FE                                            \ AJD
 ENDIF
  EQUB &00               \ Faces data offset (high) = &0044
  EQUB 5                 \ Normals are scaled by    = 2^5 = 32

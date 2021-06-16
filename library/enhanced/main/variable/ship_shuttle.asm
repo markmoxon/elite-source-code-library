@@ -34,7 +34,7 @@ ENDIF
  EQUB %00000000         \ Laser power              = 0
                         \ Missiles                 = 0
 
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Disc: Group A: The ship hanger in the disc version displays the Shuttle with slightly different visibility settings to the other enhanced versions, and the face normals are twice the size (even though the scale factor is the same). I'm not entirely sure why
+IF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Disc: Group A: The ship hanger in the disc version displays the Shuttle with slightly different visibility settings to the other enhanced versions, and the face normals are twice the size (even though the scale factor is the same). I'm not entirely sure why
 
 \VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX    0,  -17,   23,    15,     15,   15,    15,         31    \ Vertex 0
@@ -57,7 +57,7 @@ IF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Disc:
  VERTEX   -3,   11,   25,     8,     15,    0,    12,          8    \ Vertex 17
  VERTEX  -10,    4,   25,    15,      4,    8,     1,          8    \ Vertex 18
 
-ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
+ELIF _DISC_DOCKED OR _ELITE_A_VERSION
 
 \VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX    0,  -35,   47,    15,    15,    15,    15,         31     \ Vertex 0
@@ -104,7 +104,7 @@ ENDIF
  EDGE       2,      12,    11,    10,         16    \ Edge 18
  EDGE       3,      12,    12,    11,         16    \ Edge 19
  EDGE       8,       9,     9,     9,         16    \ Edge 20
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Disc: See group A
+IF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Disc: See group A
  EDGE       9,      10,     9,     9,          7    \ Edge 21
  EDGE      10,      11,     9,     9,          9    \ Edge 22
  EDGE       8,      11,     9,     9,          7    \ Edge 23
@@ -114,7 +114,7 @@ IF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Disc:
  EDGE      16,      17,    10,    10,          5    \ Edge 27
  EDGE      17,      18,    10,    10,          8    \ Edge 28
  EDGE      16,      18,    10,    10,          7    \ Edge 29
-ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
+ELIF _DISC_DOCKED OR _ELITE_A_VERSION
  EDGE       9,      10,     9,     9,          6    \ Edge 21
  EDGE      10,      11,     9,     9,          8    \ Edge 22
  EDGE       8,      11,     9,     9,          6    \ Edge 23
@@ -126,7 +126,7 @@ ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
  EDGE      16,      18,    10,    10,          6    \ Edge 29
 ENDIF
 
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Disc: See group A
+IF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Disc: See group A
 
 \FACE normal_x, normal_y, normal_z, visibility
  FACE      -55,      -55,       40,         31    \ Face 0
@@ -143,7 +143,7 @@ IF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Disc:
  FACE       41,       41,       90,         31    \ Face 11
  FACE       55,      -55,       40,         31    \ Face 12
 
-ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
+ELIF _DISC_DOCKED OR _ELITE_A_VERSION
 
 \FACE normal_x, normal_y, normal_z, visibility
  FACE     -110,     -110,       80,         31    \ Face 0

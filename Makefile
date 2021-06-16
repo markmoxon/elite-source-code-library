@@ -332,6 +332,29 @@ encrypt:
 	$(BEEBASM) -i versions/elite-a/sources/elite-6502sp-parasite.asm -v >> versions/elite-a/output/compile.txt
 	$(BEEBASM) -i versions/elite-a/sources/elite-6502sp-io-processor.asm -v >> versions/elite-a/output/compile.txt
 	$(BEEBASM) -i versions/elite-a/sources/elite-loader.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-a.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-b.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-c.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-d.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-e.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-f.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-g.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-h.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-i.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-j.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-k.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-l.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-m.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-n.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-o.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-p.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-q.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-r.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-s.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-t.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-u.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-v.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-w.asm -v >> versions/elite-a/output/compile.txt
 	$(BEEBASM) -i versions/elite-a/sources/elite-disc.asm -do versions/elite-a/elite-a$(suffix-elite-a).ssd -opt 3
 
 .PHONY:verify
@@ -357,5 +380,37 @@ elite-a:
 	$(BEEBASM) -i versions/elite-a/sources/elite-6502sp-parasite.asm -v >> versions/elite-a/output/compile.txt
 	$(BEEBASM) -i versions/elite-a/sources/elite-6502sp-io-processor.asm -v >> versions/elite-a/output/compile.txt
 	$(BEEBASM) -i versions/elite-a/sources/elite-loader.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-a.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-b.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-c.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-d.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-e.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-f.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-g.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-h.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-i.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-j.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-k.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-l.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-m.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-n.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-o.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-p.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-q.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-r.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-s.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-t.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-u.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-v.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-w.asm -v >> versions/elite-a/output/compile.txt
 	$(BEEBASM) -i versions/elite-a/sources/elite-disc.asm -do versions/elite-a/elite-a$(suffix-elite-a).ssd -opt 3
+	@$(PYTHON) versions/elite-a/sources/crc32.py versions/elite-a/extracted$(folder-elite-a) versions/elite-a/output
+
+.PHONY:elite-ships
+elite-ships:
+	echo _VERSION=6 > versions/elite-a/sources/elite-header.h.asm
+	echo _RELEASE=$(rel-elite-a) >> versions/elite-a/sources/elite-header.h.asm
+	echo _REMOVE_CHECKSUMS=FALSE >> versions/elite-a/sources/elite-header.h.asm
+	echo _MATCH_EXTRACTED_BINARIES=TRUE >> versions/elite-a/sources/elite-header.h.asm
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-b.asm -v > versions/elite-a/output/compile.txt
 	@$(PYTHON) versions/elite-a/sources/crc32.py versions/elite-a/extracted$(folder-elite-a) versions/elite-a/output

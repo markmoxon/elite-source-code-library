@@ -23,9 +23,9 @@ ENDIF
  EQUB 18                \ Explosion count          = 3, as (4 * n) + 6 = 18
  EQUB 60                \ Number of vertices       = 60 / 6 = 10
  EQUB 15                \ Number of edges          = 15
-IF NOT(_ELITE_A_6502SP_PARA)
+IF NOT(_ELITE_A_6502SP_PARA OR _ELITE_A_FLIGHT)
  EQUW 0                 \ Bounty                   = 0
-ELIF _ELITE_A_6502SP_PARA
+ELIF _ELITE_A_6502SP_PARA OR _ELITE_A_FLIGHT
  EQUW 1                 \ Bounty                   = 1
 ENDIF
  EQUB 28                \ Number of faces          = 28 / 4 = 7

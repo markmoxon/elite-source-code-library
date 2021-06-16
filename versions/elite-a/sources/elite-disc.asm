@@ -42,7 +42,7 @@ PUTFILE "versions/elite-a/output/1.F.bin", "1.F", &FF11E3, &FF11E3
 PUTFILE "versions/elite-a/output/2.H.bin", "2.H", &FF1200, &FF1200
 PUTFILE "versions/elite-a/output/2.T.bin", "2.T", &001000, &002E93
 
-PUTFILE "versions/elite-a/binaries/S.A.bin", "S.A", &FF5600, &FF5600
+PUTFILE "versions/elite-a/output/S.A.bin", "S.A", &FF5600, &FF5600
 PUTFILE "versions/elite-a/binaries/S.B.bin", "S.B", &FF5600, &FF5600
 PUTFILE "versions/elite-a/binaries/S.C.bin", "S.C", &FF5600, &FF5600
 PUTFILE "versions/elite-a/binaries/S.D.bin", "S.D", &FF5600, &FF5600

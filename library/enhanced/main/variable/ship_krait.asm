@@ -43,11 +43,11 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Disc
 ELIF _DISC_DOCKED
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
 ENDIF
-IF NOT(_ELITE_A_6502SP_PARA)
+IF NOT(_ELITE_A_6502SP_PARA OR _ELITE_A_FLIGHT)
  EQUB %00010000         \ Laser power              = 2
                         \ Missiles                 = 0
 
-ELIF _ELITE_A_6502SP_PARA
+ELIF _ELITE_A_6502SP_PARA OR _ELITE_A_FLIGHT
  EQUB %00100000         \ Laser power              = 4
                         \ Missiles                 = 0
 

@@ -10,10 +10,10 @@
 
 .SHIP_CONSTRICTOR
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Platform
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
  EQUB 3                 \ Max. canisters on demise = 3
  EQUW 65 * 65           \ Targetable area          = 65 * 65
-ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
+ELIF _DISC_DOCKED OR _ELITE_A_VERSION
  EQUB 3 + (15 << 4)     \ Max. canisters on demise = 3
                         \ Market item when scooped = 15 + 1 = 16 (Alien items)
  EQUW 99 * 99           \ Targetable area          = 99 * 99

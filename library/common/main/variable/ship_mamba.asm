@@ -23,11 +23,19 @@ ENDIF
  EQUB 34                \ Explosion count          = 7, as (4 * n) + 6 = 34
  EQUB 150               \ Number of vertices       = 150 / 6 = 25
  EQUB 28                \ Number of edges          = 28
+IF NOT(_ELITE_A_SHIPS_S OR _ELITE_A_SHIPS_W)
  EQUW 150               \ Bounty                   = 150
+ELIF _ELITE_A_SHIPS_S
+ EQUW 250               \ Bounty                   = 250
+ELIF _ELITE_A_SHIPS_W
+ EQUW 350               \ Bounty                   = 350
+ENDIF
  EQUB 20                \ Number of faces          = 20 / 4 = 5
  EQUB 25                \ Visibility distance      = 25
 IF NOT(_ELITE_A_VERSION)
  EQUB 90                \ Max. energy              = 90
+ELIF _ELITE_A_SHIPS_W
+ EQUB 81                \ Max. energy              = 81
 ELIF _ELITE_A_VERSION
  EQUB 80                \ Max. energy              = 80
 ENDIF
@@ -38,6 +46,10 @@ ENDIF
 IF NOT(_ELITE_A_VERSION)
  EQUB %00010010         \ Laser power              = 2
                         \ Missiles                 = 2
+
+ELIF _ELITE_A_SHIPS_S OR _ELITE_A_SHIPS_W
+ EQUB %00101010         \ Laser power              = 5
+                        \ Missiles                 = 1
 
 ELIF _ELITE_A_VERSION
  EQUB %00100010         \ Laser power              = 4

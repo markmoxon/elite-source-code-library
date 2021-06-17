@@ -23,7 +23,11 @@ ENDIF
  EQUB 26                \ Explosion count          = 5, as (4 * n) + 6 = 26
  EQUB 72                \ Number of vertices       = 72 / 6 = 12
  EQUB 17                \ Number of edges          = 17
+IF NOT(_ELITE_A_SHIPS_S)
  EQUW 55                \ Bounty                   = 55
+ELIF _ELITE_A_SHIPS_S
+ EQUW 155               \ Bounty                   = 155
+ENDIF
  EQUB 36                \ Number of faces          = 36 / 4 = 9
  EQUB 18                \ Visibility distance      = 18
 IF NOT(_ELITE_A_VERSION)
@@ -37,6 +41,10 @@ ENDIF
  EQUB 3                 \ Normals are scaled by    = 2^3 = 8
 IF NOT(_ELITE_A_VERSION)
  EQUB %00010000         \ Laser power              = 2
+                        \ Missiles                 = 0
+
+ELIF _ELITE_A_SHIPS_S
+ EQUB %00101000         \ Laser power              = 5
                         \ Missiles                 = 0
 
 ELIF _ELITE_A_VERSION

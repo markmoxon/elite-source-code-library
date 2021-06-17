@@ -25,6 +25,10 @@ ENDIF
  EQUB 15                \ Number of edges          = 15
 IF NOT(_ELITE_A_VERSION)
  EQUW 50                \ Bounty                   = 50
+ELIF _ELITE_A_SHIPS_S OR _ELITE_A_SHIPS_W
+ EQUW 300               \ Bounty                   = 300
+ELIF _ELITE_A_SHIPS_V
+ EQUW 400               \ Bounty                   = 400
 ELIF _ELITE_A_VERSION
  EQUW 100               \ Bounty                   = 100
 ENDIF
@@ -32,6 +36,10 @@ ENDIF
  EQUB 20                \ Visibility distance      = 20
 IF NOT(_ELITE_A_VERSION)
  EQUB 70                \ Max. energy              = 70
+ELIF _ELITE_A_SHIPS_S OR _ELITE_A_SHIPS_V
+ EQUB 82                \ Max. energy              = 82
+ELIF _ELITE_A_SHIPS_W
+ EQUB 81                \ Max. energy              = 81
 ELIF _ELITE_A_VERSION
  EQUB 73                \ Max. energy              = 73
 ENDIF
@@ -41,6 +49,10 @@ ENDIF
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
 IF NOT(_ELITE_A_VERSION)
  EQUB %00010000         \ Laser power              = 2
+                        \ Missiles                 = 0
+
+ELIF _ELITE_A_SHIPS_V OR _ELITE_A_SHIPS_W
+ EQUB %00101000         \ Laser power              = 5
                         \ Missiles                 = 0
 
 ELIF _ELITE_A_VERSION

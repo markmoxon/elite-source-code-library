@@ -19,10 +19,18 @@
  EQUB 26                \ Explosion count          = 5, as (4 * n) + 6 = 26
  EQUB 108               \ Number of vertices       = 108 / 6 = 18
  EQUB 29                \ Number of edges          = 29
+IF NOT(_ELITE_A_SHIPS_U)
  EQUW 200               \ Bounty                   = 200
+ELIF _ELITE_A_SHIPS_U
+ EQUW 400               \ Bounty                   = 400
+ENDIF
  EQUB 52                \ Number of faces          = 52 / 4 = 13
  EQUB 10                \ Visibility distance      = 10
+IF NOT(_ELITE_A_SHIPS_U)
  EQUB 100               \ Max. energy              = 100
+ELIF _ELITE_A_SHIPS_U
+ EQUB 109               \ Max. energy              = 109
+ENDIF
  EQUB 29                \ Max. speed               = 29
  EQUB &00               \ Edges data offset (high) = &0080
  EQUB &00               \ Faces data offset (high) = &00F4

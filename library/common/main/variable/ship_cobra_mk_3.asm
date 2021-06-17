@@ -23,8 +23,12 @@ ENDIF
  EQUB 42                \ Explosion count          = 9, as (4 * n) + 6 = 42
  EQUB 168               \ Number of vertices       = 168 / 6 = 28
  EQUB 38                \ Number of edges          = 38
-IF NOT(_ELITE_A_6502SP_PARA OR _ELITE_A_FLIGHT)
+IF NOT(_ELITE_A_6502SP_PARA OR _ELITE_A_FLIGHT OR _ELITE_A_SHIPS_T)
  EQUW 0                 \ Bounty                   = 0
+ELIF _ELITE_A_SHIPS_T
+ EQUW 400               \ Bounty                   = 400
+ELIF _ELITE_A_SHIPS_V
+ EQUW 300               \ Bounty                   = 300
 ELIF _ELITE_A_6502SP_PARA OR _ELITE_A_FLIGHT
  EQUW 200               \ Bounty                   = 200
 ENDIF
@@ -32,6 +36,8 @@ ENDIF
  EQUB 50                \ Visibility distance      = 50
 IF NOT(_ELITE_A_VERSION)
  EQUB 150               \ Max. energy              = 150
+ELIF _ELITE_A_SHIPS_T OR _ELITE_A_SHIPS_V
+ EQUB 106               \ Max. energy              = 106
 ELIF _ELITE_A_VERSION
  EQUB 98                \ Max. energy              = 98
 ENDIF
@@ -39,13 +45,17 @@ ENDIF
  EQUB &00               \ Edges data offset (high) = &00BC
  EQUB &01               \ Faces data offset (high) = &0154
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
-IF NOT(_ELITE_A_6502SP_PARA OR _ELITE_A_FLIGHT)
+IF NOT(_ELITE_A_6502SP_PARA OR _ELITE_A_FLIGHT OR _ELITE_A_SHIPS_T)
  EQUB %00010011         \ Laser power              = 2
                         \ Missiles                 = 3
 
+ELIF _ELITE_A_SHIPS_T
+ EQUB %00101100         \ Laser power              = 5
+                        \ Missiles                 = 4
+
 ELIF _ELITE_A_6502SP_PARA OR _ELITE_A_FLIGHT
  EQUB %00100100         \ Laser power              = 4
-                        \ Missiles                 = 5
+                        \ Missiles                 = 4
 
 ENDIF
 

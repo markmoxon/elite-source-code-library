@@ -19,16 +19,33 @@
  EQUB 34                \ Explosion count          = 7, as (4 * n) + 6 = 34
  EQUB 72                \ Number of vertices       = 72 / 6 = 12
  EQUB 22                \ Number of edges          = 22
+IF NOT(_ELITE_A_SHIPS_S OR _ELITE_A_SHIPS_U)
  EQUW 100               \ Bounty                   = 100
+ELIF _ELITE_A_SHIPS_S OR _ELITE_A_SHIPS_U
+ EQUW 300               \ Bounty                   = 300
+ENDIF
  EQUB 48                \ Number of faces          = 48 / 4 = 12
  EQUB 10                \ Visibility distance      = 10
+IF NOT(_ELITE_A_SHIPS_S OR _ELITE_A_SHIPS_U)
  EQUB 114               \ Max. energy              = 114
+ELIF _ELITE_A_SHIPS_S
+ EQUB 123               \ Max. energy              = 123
+ELIF _ELITE_A_SHIPS_U
+ EQUB 115               \ Max. energy              = 115
+ENDIF
  EQUB 16                \ Max. speed               = 16
  EQUB &00               \ Edges data offset (high) = &005C
  EQUB &00               \ Faces data offset (high) = &00B4
  EQUB 0                 \ Normals are scaled by    = 2^0 = 1
+IF NOT(_ELITE_A_SHIPS_U)
  EQUB %00100111         \ Laser power              = 4
                         \ Missiles                 = 7
+
+ELIF _ELITE_A_SHIPS_U
+ EQUB %00101111         \ Laser power              = 5
+                        \ Missiles                 = 7
+
+ENDIF
 
 \VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX   30,    0,  100,     7,     6,     1,     0,         31     \ Vertex 0

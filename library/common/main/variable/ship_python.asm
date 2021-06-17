@@ -39,6 +39,8 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: All Pythons in the cassett
  EQUW 200               \ Bounty                   = 200
 ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_DOCKED OR _MASTER_VERSION
  EQUW 0                 \ Bounty                   = 0
+ELIF _ELITE_A_SHIPS_U
+ EQUW 500               \ Bounty                   = 500
 ELIF _ELITE_A_6502SP_PARA OR _ELITE_A_FLIGHT
  EQUW 300               \ Bounty                   = 300
 ENDIF
@@ -46,6 +48,8 @@ ENDIF
  EQUB 40                \ Visibility distance      = 40
 IF NOT(_ELITE_A_VERSION)
  EQUB 250               \ Max. energy              = 250
+ELIF _ELITE_A_SHIPS_U
+ EQUB 133               \ Max. energy              = 133
 ELIF _ELITE_A_VERSION
  EQUB 125               \ Max. energy              = 125
 ENDIF
@@ -53,9 +57,13 @@ ENDIF
  EQUB &00               \ Edges data offset (high) = &0056
  EQUB &00               \ Faces data offset (high) = &00BE
  EQUB 0                 \ Normals are scaled by    = 2^0 = 1
-IF NOT(_ELITE_A_6502SP_PARA OR _ELITE_A_FLIGHT)
+IF NOT(_ELITE_A_6502SP_PARA OR _ELITE_A_FLIGHT OR _ELITE_A_SHIPS_U)
  EQUB %00011011         \ Laser power              = 3
                         \ Missiles                 = 3
+
+ELIF _ELITE_A_SHIPS_U
+ EQUB %00110100         \ Laser power              = 6
+                        \ Missiles                 = 4
 
 ELIF _ELITE_A_6502SP_PARA OR _ELITE_A_FLIGHT
  EQUB %00101100         \ Laser power              = 5

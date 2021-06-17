@@ -23,7 +23,13 @@ ENDIF
  EQUB 18                \ Explosion count          = 3, as (4 * n) + 6 = 18
  EQUB 102               \ Number of vertices       = 102 / 6 = 17
  EQUB 21                \ Number of edges          = 21
+IF NOT(_ELITE_A_SHIPS_U OR _ELITE_A_SHIPS_W)
  EQUW 100               \ Bounty                   = 100
+ELIF _ELITE_A_SHIPS_U
+ EQUW 200               \ Bounty                   = 200
+ELIF _ELITE_A_SHIPS_W
+ EQUW 400               \ Bounty                   = 200
+ENDIF
  EQUB 24                \ Number of faces          = 24 / 4 = 6
 IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Disc: In the disc version, the Krait has a visibility distance of 25 compared to 20 in the other versions, so if one is running away from you in the disc version, it will turn into a dot later than in the other versions
  EQUB 25                \ Visibility distance      = 25
@@ -32,6 +38,10 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
 ENDIF
 IF NOT(_ELITE_A_VERSION)
  EQUB 80                \ Max. energy              = 80
+ELIF _ELITE_A_SHIPS_U
+ EQUB 81                \ Max. energy              = 81
+ELIF _ELITE_A_SHIPS_W
+ EQUB 82                \ Max. energy              = 82
 ELIF _ELITE_A_VERSION
  EQUB 73                \ Max. energy              = 73
 ENDIF
@@ -43,8 +53,13 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Disc
 ELIF _DISC_DOCKED
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
 ENDIF
-IF NOT(_ELITE_A_6502SP_PARA OR _ELITE_A_FLIGHT)
+IF NOT(_ELITE_A_6502SP_PARA OR _ELITE_A_FLIGHT OR _ELITE_A_SHIPS_W)
  EQUB %00010000         \ Laser power              = 2
+                        \ Missiles                 = 0
+
+ELIF _ELITE_A_SHIPS_W
+
+ EQUB %00101000         \ Laser power              = 5
                         \ Missiles                 = 0
 
 ELIF _ELITE_A_6502SP_PARA OR _ELITE_A_FLIGHT

@@ -25,6 +25,8 @@ ENDIF
  EQUB 24                \ Number of edges          = 24
 IF NOT(_ELITE_A_VERSION)
  EQUW 0                 \ Bounty                   = 0
+ELIF _ELITE_A_SHIPS_R OR _ELITE_A_SHIPS_V
+ EQUW 350               \ Bounty                   = 350
 ELIF _ELITE_A_VERSION
  EQUW 250               \ Bounty                   = 250
 ENDIF
@@ -32,6 +34,8 @@ ENDIF
  EQUB 40                \ Visibility distance      = 40
 IF NOT(_ELITE_A_VERSION)
  EQUB 250               \ Max. energy              = 250
+ELIF _ELITE_A_SHIPS_R
+ EQUB 165               \ Max. energy              = 165
 ELIF _ELITE_A_VERSION
  EQUB 164               \ Max. energy              = 164
 ENDIF
@@ -42,6 +46,10 @@ ENDIF
 IF NOT(_ELITE_A_VERSION)
  EQUB %00011100         \ Laser power              = 3
                         \ Missiles                 = 4
+
+ELIF _ELITE_A_SHIPS_V
+ EQUB %00110010         \ Laser power              = 6
+                        \ Missiles                 = 2
 
 ELIF _ELITE_A_VERSION
  EQUB %00101010         \ Laser power              = 5

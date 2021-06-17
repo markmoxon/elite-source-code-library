@@ -23,7 +23,11 @@ ENDIF
  EQUB 22                \ Explosion count          = 4, as (4 * n) + 6 = 22
  EQUB 108               \ Number of vertices       = 108 / 6 = 18
  EQUB 29                \ Number of edges          = 29
+IF NOT(_ELITE_A_SHIPS_V)
  EQUW 40                \ Bounty                   = 40
+ELIF _ELITE_A_SHIPS_V
+ EQUW 340               \ Bounty                   = 340
+ENDIF
  EQUB 60                \ Number of faces          = 60 / 4 = 15
 IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Disc: In the disc version, the Adder has a visibility distance of 23 compared to 20 in the other versions, so if one is running away from you in the disc version, it will turn into a dot later than in the others
  EQUB 23                \ Visibility distance      = 23
@@ -32,6 +36,8 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 ENDIF
 IF NOT(_ELITE_A_VERSION)
  EQUB 85                \ Max. energy              = 85
+ELIF _ELITE_A_SHIPS_V
+ EQUB 81                \ Max. energy              = 81
 ELIF _ELITE_A_VERSION
  EQUB 72                \ Max. energy              = 72
 ENDIF
@@ -43,8 +49,12 @@ IF NOT(_ELITE_A_VERSION)
  EQUB %00010000         \ Laser power              = 2
                         \ Missiles                 = 0
 
+ELIF _ELITE_A_SHIPS_V
+ EQUB %00101001         \ Laser power              = 4
+                        \ Missiles                 = 1
+
 ELIF _ELITE_A_VERSION
- EQUB %00100001         \ Laser power              = 2
+ EQUB %00100001         \ Laser power              = 4
                         \ Missiles                 = 1
 
 ENDIF

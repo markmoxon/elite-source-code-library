@@ -23,15 +23,27 @@ ENDIF
  EQUB 42                \ Explosion count          = 9, as (4 * n) + 6 = 42
  EQUB 90                \ Number of vertices       = 90 / 6 = 15
  EQUB 20                \ Number of edges          = 20
+IF NOT(_ELITE_A_VERSION)
  EQUW 0                 \ Bounty                   = 0
+ELIF _ELITE_A_SHIPS_R OR _ELITE_A_SHIPS_S OR _ELITE_A_SHIPS_T
+ EQUW 100               \ Bounty                   = 100
+ELIF _ELITE_A_SHIPS_U OR _ELITE_A_SHIPS_V OR _ELITE_A_SHIPS_W
+ EQUW 200               \ Bounty                   = 100
+ELIF _ELITE_A_VERSION
+ EQUW 0                 \ Bounty                   = 0
+ENDIF
  EQUB 28                \ Number of faces          = 28 / 4 = 7
  EQUB 23                \ Visibility distance      = 23
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: The Viper has a different maximum energy in the disc version (100), cassette version (120) and advanced versions (140), so they are easiest to kill in the disc version, harder to kill in the cassette version, and even harder to kill in the advanced versions
  EQUB 120               \ Max. energy              = 120
-ELIF _DISC_VERSION
+ELIF _DISC_VERSION OR _ELITE_A_SHIPS_U OR _ELITE_A_SHIPS_V
  EQUB 100               \ Max. energy              = 100
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 140               \ Max. energy              = 140
+ELIF _ELITE_A_SHIPS_R OR _ELITE_A_SHIPS_T OR _ELITE_A_SHIPS_W
+ EQUB 92                \ Max. energy              = 91
+ELIF _ELITE_A_SHIPS_S
+ EQUB 99                \ Max. energy              = 99
 ELIF _ELITE_A_VERSION
  EQUB 91                \ Max. energy              = 91
 ENDIF
@@ -41,6 +53,10 @@ ENDIF
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
 IF NOT(_ELITE_A_6502SP_PARA OR _ELITE_A_FLIGHT)
  EQUB %00010001         \ Laser power              = 2
+                        \ Missiles                 = 1
+
+ELIF _ELITE_A_SHIPS_W
+ EQUB %00110001         \ Laser power              = 6
                         \ Missiles                 = 1
 
 ELIF _ELITE_A_6502SP_PARA OR _ELITE_A_FLIGHT

@@ -73,31 +73,31 @@ ORG CODE%
  EQUW SHIP_MISSILE      \ MSL  =  1 = Missile
  EQUW SHIP_CORIOLIS     \ SST  =  2 = Coriolis space station
  EQUW SHIP_ESCAPE_POD   \ ESC  =  3 = Escape pod
- EQUW 0
+ EQUW SHIP_PLATE        \ PLT  =  4 = Alloy plate
  EQUW SHIP_CANISTER     \ OIL  =  5 = Cargo canister
  EQUW 0
+ EQUW SHIP_ASTEROID     \ AST  =  7 = Asteroid
+ EQUW SHIP_SPLINTER     \ SPL  =  8 = Splinter
  EQUW 0
  EQUW 0
+ EQUW SHIP_PYTHON       \        11 = Python
+ EQUW ship_rattler      \        12 = Rattler
+ EQUW ship_iguana       \        13 = Iguana
  EQUW 0
  EQUW 0
+ EQUW SHIP_VIPER        \ COPS = 16 = Viper
+ EQUW SHIP_GECKO        \        17 = Gecko
+ EQUW 0
+ EQUW SHIP_ADDER        \        19 = Adder
+ EQUW ship_iguana       \        20 = Iguana
+ EQUW 0
+ EQUW SHIP_PYTHON       \        22 = Python
+ EQUW ship_rattler      \        23 = Rattler
  EQUW 0
  EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
+ EQUW ship_iguana       \        26 = Iguana
+ EQUW SHIP_PYTHON       \        27 = Python
+ EQUW SHIP_GECKO        \        28 = Gecko
  EQUW 0
  EQUW 0
  EQUW 0
@@ -115,34 +115,34 @@ ORG CODE%
 
 .E%
 
+ EQUB %00000000         \ Missile
+ EQUB %01000000         \ Coriolis space station                             Cop
+ EQUB %01000001         \ Escape pod                                 Trader, cop
+ EQUB %00000000         \ Alloy plate
+ EQUB %00000000         \ Cargo canister
+ EQUB 0
+ EQUB %00000000         \ Asteroid
+ EQUB %00000000         \ Splinter
  EQUB 0
  EQUB 0
+ EQUB %10100000         \ Python                            Innocent, escape pod
+ EQUB %10100001         \ Rattler                   Trader, innocent, escape pod
+ EQUB %10100000         \ Iguana                            Innocent, escape pod
  EQUB 0
  EQUB 0
+ EQUB %11000010         \ Viper                   Bounty hunter, cop, escape pod
+ EQUB %10001100         \ Gecko                      Hostile, pirate, escape pod
+ EQUB 0
+ EQUB %10000100         \ Adder                              Hostile, escape pod
+ EQUB %10001100         \ Iguana                     Hostile, pirate, escape pod
+ EQUB 0
+ EQUB %10001100         \ Python                     Hostile, pirate, escape pod
+ EQUB %10000100         \ Rattler                            Hostile, escape pod
  EQUB 0
  EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
+ EQUB %10100010         \ Iguana             Bounty hunter, innocent, escape pod
+ EQUB %10000010         \ Python                       Bounty hunter, escape pod
+ EQUB %10100010         \ Gecko              Bounty hunter, innocent, escape pod
  EQUB 0
  EQUB 0
  EQUB 0

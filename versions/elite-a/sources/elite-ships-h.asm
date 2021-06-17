@@ -73,31 +73,31 @@ ORG CODE%
  EQUW SHIP_MISSILE      \ MSL  =  1 = Missile
  EQUW SHIP_DODO         \         2 = Dodecahedron ("Dodo") space station
  EQUW SHIP_ESCAPE_POD   \ ESC  =  3 = Escape pod
- EQUW 0
+ EQUW SHIP_PLATE        \ PLT  =  4 = Alloy plate
  EQUW SHIP_CANISTER     \ OIL  =  5 = Cargo canister
  EQUW 0
  EQUW 0
  EQUW 0
  EQUW 0
  EQUW 0
+ EQUW ship_ghavial      \        11 = Ghavial
+ EQUW ship_rattler      \        12 = Rattler
+ EQUW SHIP_COBRA_MK_1   \        13 = Cobra Mk I
+ EQUW SHIP_ANACONDA     \ ANA  = 14 = Anaconda
+ EQUW SHIP_WORM         \        15 = Worm
+ EQUW SHIP_VIPER        \ COPS = 16 = Viper
+ EQUW SHIP_COBRA_MK_1   \        17 = Cobra Mk I
+ EQUW 0
+ EQUW SHIP_ADDER        \        19 = Adder
+ EQUW 0
+ EQUW 0
+ EQUW SHIP_WORM         \        22 = Worm
+ EQUW ship_rattler      \        23 = Rattler
  EQUW 0
  EQUW 0
  EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
+ EQUW SHIP_COBRA_MK_1   \        27 = Cobra Mk I
+ EQUW ship_rattler      \        28 = Rattler
  EQUW 0
  EQUW 0
  EQUW 0
@@ -115,34 +115,34 @@ ORG CODE%
 
 .E%
 
+ EQUB %00000000         \ Missile
+ EQUB %01000000         \ Dodo space station                                 Cop
+ EQUB %01000001         \ Escape pod                                 Trader, cop
+ EQUB %00000000         \ Alloy plate
+ EQUB %00000000         \ Cargo canister
  EQUB 0
  EQUB 0
  EQUB 0
  EQUB 0
  EQUB 0
+ EQUB %10100000         \ Ghavial                           Innocent, escape pod
+ EQUB %10100001         \ Rattler                   Trader, innocent, escape pod
+ EQUB %10100000         \ Cobra Mk I                        Innocent, escape pod
+ EQUB %10100001         \ Anaconda                  Trader, innocent, escape pod
+ EQUB %00001100         \ Worm                                   Hostile, pirate
+ EQUB %11000010         \ Viper                   Bounty hunter, cop, escape pod
+ EQUB %10001100         \ Cobra Mk I                 Hostile, pirate, escape pod
+ EQUB 0
+ EQUB %10000100         \ Adder                              Hostile, escape pod
+ EQUB 0
+ EQUB 0
+ EQUB %00001100         \ Worm                                   Hostile, pirate
+ EQUB %10000100         \ Rattler                            Hostile, escape pod
  EQUB 0
  EQUB 0
  EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
+ EQUB %10000010         \ Cobra Mk I                   Bounty hunter, escape pod
+ EQUB %10100010         \ Rattler            Bounty hunter, innocent, escape pod
  EQUB 0
  EQUB 0
  EQUB 0

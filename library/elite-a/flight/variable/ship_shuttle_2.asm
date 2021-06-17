@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: ship_shuttle2
+\       Name: ship_shuttle_2
 \       Type: Variable
 \   Category: Drawing ships
 \    Summary: Ship blueprint for a Shuttle 2 AJD
@@ -8,7 +8,7 @@
 \
 \ ******************************************************************************
 
-.ship_shuttle2
+.ship_shuttle_2
 
  EQUB 15                \ Max. canisters on demise = 15
  EQUW 50 * 50           \ Targetable area          = 50 * 50

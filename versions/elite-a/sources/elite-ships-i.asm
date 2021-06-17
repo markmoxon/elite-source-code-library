@@ -80,24 +80,24 @@ ORG CODE%
  EQUW 0
  EQUW 0
  EQUW 0
+ EQUW ship_ghavial      \        11 = Ghavial
+ EQUW ship_ophidian     \        12 = Ophidian
+ EQUW SHIP_COBRA_MK_1   \        13 = Cobra Mk I
+ EQUW SHIP_ANACONDA     \ ANA  = 14 = Anaconda
+ EQUW SHIP_WORM         \        15 = Worm
+ EQUW SHIP_VIPER        \ COPS = 16 = Viper
+ EQUW SHIP_KRAIT        \        17 = Krait
+ EQUW SHIP_COBRA_MK_1   \        18 = Cobra Mk I
  EQUW 0
  EQUW 0
+ EQUW ship_ophidian     \        21 = Ophidian
+ EQUW SHIP_WORM         \        22 = Worm
+ EQUW 0
+ EQUW SHIP_ASP_MK_2     \        24 = Asp Mk II
  EQUW 0
  EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
+ EQUW SHIP_ASP_MK_2     \        27 = Asp Mk II
+ EQUW SHIP_KRAIT        \        28 = Krait
  EQUW 0
  EQUW 0
  EQUW 0
@@ -115,34 +115,34 @@ ORG CODE%
 
 .E%
 
+ EQUB %00000000         \ Missile
+ EQUB %01000000         \ Coriolis space station                             Cop
+ EQUB %01000001         \ Escape pod                                 Trader, cop
+ EQUB 0
+ EQUB %00000000         \ Cargo canister
  EQUB 0
  EQUB 0
  EQUB 0
  EQUB 0
  EQUB 0
+ EQUB %10100000         \ Ghavial                           Innocent, escape pod
+ EQUB %10100001         \ Ophidian                  Trader, innocent, escape pod
+ EQUB %10100000         \ Cobra Mk I                        Innocent, escape pod
+ EQUB %10100001         \ Anaconda                  Trader, innocent, escape pod
+ EQUB %00001100         \ Worm                                   Hostile, pirate
+ EQUB %11000010         \ Viper                   Bounty hunter, cop, escape pod
+ EQUB %10001100         \ Krait                      Hostile, pirate, escape pod
+ EQUB %10001100         \ Cobra Mk I                 Hostile, pirate, escape pod
  EQUB 0
  EQUB 0
+ EQUB %10000100         \ Ophidian                           Hostile, escape pod
+ EQUB %00001100         \ Worm                                   Hostile, pirate
+ EQUB 0
+ EQUB %10001100         \ Asp Mk II                  Hostile, pirate, escape pod
  EQUB 0
  EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
+ EQUB %10000010         \ Asp Mk II                    Bounty hunter, escape pod
+ EQUB %10100010         \ Krait              Bounty hunter, innocent, escape pod
  EQUB 0
  EQUB 0
  EQUB 0

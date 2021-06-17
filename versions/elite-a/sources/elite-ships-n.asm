@@ -80,24 +80,24 @@ ORG CODE%
  EQUW 0
  EQUW 0
  EQUW 0
+ EQUW SHIP_COBRA_MK_3   \ CYL  = 11 = Cobra Mk III
+ EQUW ship_rattler      \        12 = Rattler
+ EQUW SHIP_PYTHON       \        13 = Python
  EQUW 0
  EQUW 0
+ EQUW SHIP_VIPER        \ COPS = 16 = Viper
+ EQUW SHIP_GECKO        \        17 = Gecko
+ EQUW SHIP_KRAIT        \        18 = Krait
  EQUW 0
  EQUW 0
+ EQUW SHIP_COBRA_MK_3   \        21 = Cobra Mk III
+ EQUW ship_rattler      \        22 = Rattler
+ EQUW SHIP_PYTHON       \        23 = Python
+ EQUW SHIP_ASP_MK_2     \        24 = Asp Mk II
+ EQUW SHIP_COBRA_MK_3   \        25 = Cobra Mk III
  EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
+ EQUW SHIP_GECKO        \        27 = Gecko
+ EQUW ship_rattler      \        28 = Rattler
  EQUW 0
  EQUW 0
  EQUW 0
@@ -115,34 +115,34 @@ ORG CODE%
 
 .E%
 
+ EQUB %00000000         \ Missile
+ EQUB %01000000         \ Dodo space station                                 Cop
+ EQUB %01000001         \ Escape pod                                 Trader, cop
+ EQUB 0
+ EQUB %00000000         \ Cargo canister
  EQUB 0
  EQUB 0
  EQUB 0
  EQUB 0
  EQUB 0
+ EQUB %10100000         \ Cobra Mk III                      Innocent, escape pod
+ EQUB %10100001         \ Rattler                   Trader, innocent, escape pod
+ EQUB %10100000         \ Python                            Innocent, escape pod
  EQUB 0
  EQUB 0
+ EQUB %11000010         \ Viper                   Bounty hunter, cop, escape pod
+ EQUB %10001100         \ Gecko                      Hostile, pirate, escape pod
+ EQUB %10001100         \ Krait                      Hostile, pirate, escape pod
  EQUB 0
  EQUB 0
+ EQUB %10000100         \ Cobra Mk III                       Hostile, escape pod
+ EQUB %10001100         \ Rattler                    Hostile, pirate, escape pod
+ EQUB %10000100         \ Python                             Hostile, escape pod
+ EQUB %10001100         \ Asp Mk II                  Hostile, pirate, escape pod
+ EQUB %10000010         \ Cobra Mk III                 Bounty hunter, escape pod
  EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
+ EQUB %10000010         \ Gecko                        Bounty hunter, escape pod
+ EQUB %10100010         \ Rattler            Bounty hunter, innocent, escape pod
  EQUB 0
  EQUB 0
  EQUB 0

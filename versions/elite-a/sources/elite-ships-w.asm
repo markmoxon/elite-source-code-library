@@ -79,25 +79,25 @@ ORG CODE%
  EQUW 0
  EQUW 0
  EQUW 0
+ EQUW SHIP_TRANSPORTER  \        10 = Transporter
+ EQUW 0
+ EQUW 0
+ EQUW SHIP_FER_DE_LANCE \        13 = Fer-de-lance
+ EQUW ship_dragon       \        14 = Dragon
+ EQUW SHIP_SIDEWINDER   \        15 = Sidewinder
+ EQUW SHIP_VIPER        \ COPS = 16 = Viper
+ EQUW SHIP_SIDEWINDER   \        17 = Sidewinder
+ EQUW SHIP_KRAIT        \        18 = Krait
+ EQUW SHIP_MAMBA        \        19 = Mamba
  EQUW 0
  EQUW 0
  EQUW 0
  EQUW 0
+ EQUW SHIP_FER_DE_LANCE \        24 = Fer-de-lance
+ EQUW SHIP_FER_DE_LANCE \        25 = Fer-de-lance
  EQUW 0
  EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
+ EQUW SHIP_SIDEWINDER   \        28 = Sidewinder
  EQUW 0
  EQUW 0
  EQUW 0
@@ -115,34 +115,34 @@ ORG CODE%
 
 .E%
 
+ EQUB %00000000         \ Missile
+ EQUB %01000000         \ Coriolis space station                             Cop
+ EQUB %01000001         \ Escape pod                                 Trader, cop
+ EQUB 0
+ EQUB %00000000         \ Cargo canister
  EQUB 0
  EQUB 0
  EQUB 0
  EQUB 0
+ EQUB %01100001         \ Transporter                      Trader, innocent, cop
+ EQUB 0
+ EQUB 0
+ EQUB %10100000         \ Fer-de-lance                      Innocent, escape pod
+ EQUB %00100001         \ Dragon                                Trader, innocent
+ EQUB %00001100         \ Sidewinder                             Hostile, pirate
+ EQUB %11000010         \ Viper                   Bounty hunter, cop, escape pod
+ EQUB %00001100         \ Sidewinder                             Hostile, pirate
+ EQUB %10001100         \ Krait                      Hostile, pirate, escape pod
+ EQUB %10000100         \ Mamba                              Hostile, escape pod
  EQUB 0
  EQUB 0
  EQUB 0
  EQUB 0
+ EQUB %10001100         \ Fer-de-lance               Hostile, pirate, escape pod
+ EQUB %10000010         \ Fer-de-lance                 Bounty hunter, escape pod
  EQUB 0
  EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
+ EQUB %00100010         \ Sidewinder                     Bounty hunter, innocent
  EQUB 0
  EQUB 0
  EQUB 0

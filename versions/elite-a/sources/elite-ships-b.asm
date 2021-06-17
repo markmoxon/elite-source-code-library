@@ -78,26 +78,26 @@ ORG CODE%
  EQUW 0
  EQUW 0
  EQUW 0
+ EQUW ship_shuttle_2    \         9 = Shuttle 2
+ EQUW 0
+ EQUW ship_ghavial      \        11 = Ghavial
+ EQUW ship_monitor      \        12 = Monitor
+ EQUW SHIP_COBRA_MK_1   \        13 = Cobra Mk I
  EQUW 0
  EQUW 0
+ EQUW SHIP_VIPER        \ COPS = 16 = Viper
+ EQUW SHIP_COBRA_MK_1   \        17 = Cobra Mk I
  EQUW 0
  EQUW 0
+ EQUW ship_iguana       \        20 = Iguana
+ EQUW SHIP_COBRA_MK_3   \        21 = Cobra Mk III
  EQUW 0
  EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
+ EQUW ship_monitor      \        24 = Monitor
+ EQUW SHIP_COBRA_MK_3   \        25 = Cobra Mk III
+ EQUW ship_iguana       \        26 = Iguana
+ EQUW SHIP_COBRA_MK_1   \        27 = Cobra Mk I
+ EQUW ship_ghavial      \        28 = Ghavial
  EQUW 0
  EQUW 0
  EQUW 0
@@ -115,34 +115,34 @@ ORG CODE%
 
 .E%
 
+ EQUB %00000000         \ Missile
+ EQUB %01000000         \ Dodo space station                                 Cop
+ EQUB %01000001         \ Escape pod                                 Trader, cop
+ EQUB 0
+ EQUB %00000000         \ Cargo canister
  EQUB 0
  EQUB 0
  EQUB 0
+ EQUB %00100001         \ Shuttle 2                             Trader, innocent
+ EQUB 0
+ EQUB %10100000         \ Ghavial                           Innocent, escape pod
+ EQUB %10100001         \ Monitor                   Trader, innocent, escape pod
+ EQUB %10100000         \ Cobra Mk I                        Innocent, escape pod
  EQUB 0
  EQUB 0
+ EQUB %11000010         \ Viper                   Bounty hunter, cop, escape pod
+ EQUB %10001100         \ Cobra Mk I                 Hostile, pirate, escape pod
  EQUB 0
  EQUB 0
+ EQUB %10001100         \ Iguana                     Hostile, pirate, escape pod
+ EQUB %10000100         \ Cobra Mk III                       Hostile, escape pod
  EQUB 0
  EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
+ EQUB %10001100         \ Monitor                    Hostile, pirate, escape pod
+ EQUB %10000010         \ Cobra Mk III                 Bounty hunter, escape pod
+ EQUB %10100010         \ Iguana             Bounty hunter, innocent, escape pod
+ EQUB %10000010         \ Cobra Mk I                   Bounty hunter, escape pod
+ EQUB %10100010         \ Ghavial            Bounty hunter, innocent, escape pod
  EQUB 0
  EQUB 0
  EQUB 0
@@ -158,7 +158,7 @@ INCLUDE "library/enhanced/main/variable/ship_cobra_mk_1.asm"
 INCLUDE "library/elite-a/flight/variable/ship_ghavial.asm"
 INCLUDE "library/elite-a/flight/variable/ship_monitor.asm"
 INCLUDE "library/common/main/variable/ship_cobra_mk_3.asm"
-INCLUDE "library/elite-a/flight/variable/ship_shuttle2.asm"
+INCLUDE "library/elite-a/flight/variable/ship_shuttle_2.asm"
 INCLUDE "library/elite-a/flight/variable/ship_iguana.asm"
 
  EQUB 9                 \ AJD

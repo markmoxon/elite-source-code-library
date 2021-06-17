@@ -73,31 +73,31 @@ ORG CODE%
  EQUW SHIP_MISSILE      \ MSL  =  1 = Missile
  EQUW SHIP_DODO         \         2 = Dodecahedron ("Dodo") space station
  EQUW SHIP_ESCAPE_POD   \ ESC  =  3 = Escape pod
- EQUW 0
+ EQUW SHIP_PLATE        \ PLT  =  4 = Alloy plate
  EQUW SHIP_CANISTER     \ OIL  =  5 = Cargo canister
  EQUW 0
  EQUW 0
  EQUW 0
+ EQUW ship_shuttle_2    \         9 = Shuttle 2
+ EQUW 0
+ EQUW SHIP_COBRA_MK_3   \ CYL  = 11 = Cobra Mk III
+ EQUW 0
+ EQUW ship_iguana       \        13 = Iguana
  EQUW 0
  EQUW 0
+ EQUW SHIP_VIPER        \ COPS = 16 = Viper
+ EQUW SHIP_KRAIT        \        17 = Krait
  EQUW 0
  EQUW 0
+ EQUW ship_iguana       \        20 = Iguana
+ EQUW SHIP_COBRA_MK_3   \        21 = Cobra Mk III
  EQUW 0
  EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
+ EQUW SHIP_ASP_MK_2     \        24 = Asp Mk II
+ EQUW SHIP_COBRA_MK_3   \        25 = Cobra Mk III
+ EQUW ship_iguana       \        26 = Iguana
+ EQUW SHIP_ASP_MK_2     \        27 = Asp Mk II
+ EQUW SHIP_KRAIT        \        28 = Krait
  EQUW 0
  EQUW 0
  EQUW 0
@@ -115,34 +115,34 @@ ORG CODE%
 
 .E%
 
+ EQUB %00000000         \ Missile
+ EQUB %01000000         \ Dodo space station                                 Cop
+ EQUB %01000001         \ Escape pod                                 Trader, cop
+ EQUB %00000000         \ Alloy plate
+ EQUB %00000000         \ Cargo canister
  EQUB 0
  EQUB 0
  EQUB 0
+ EQUB %00100001         \ Shuttle 2                             Trader, innocent
+ EQUB 0
+ EQUB %10100000         \ Cobra Mk III                      Innocent, escape pod
+ EQUB 0
+ EQUB %10100000         \ Iguana                            Innocent, escape pod
  EQUB 0
  EQUB 0
+ EQUB %11000010         \ Viper                   Bounty hunter, cop, escape pod
+ EQUB %10001100         \ Krait                      Hostile, pirate, escape pod
  EQUB 0
  EQUB 0
+ EQUB %10001100         \ Iguana                     Hostile, pirate, escape pod
+ EQUB %10000100         \ Cobra Mk III                       Hostile, escape pod
  EQUB 0
  EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
+ EQUB %10001100         \ Asp Mk II                  Hostile, pirate, escape pod
+ EQUB %10000010         \ Cobra Mk III                 Bounty hunter, escape pod
+ EQUB %10100010         \ Iguana             Bounty hunter, innocent, escape pod
+ EQUB %10000010         \ Asp Mk II                    Bounty hunter, escape pod
+ EQUB %10100010         \ Krait              Bounty hunter, innocent, escape pod
  EQUB 0
  EQUB 0
  EQUB 0
@@ -154,7 +154,7 @@ INCLUDE "library/enhanced/main/variable/ship_dodo.asm"
 INCLUDE "library/common/main/variable/ship_escape_pod.asm"
 INCLUDE "library/common/main/variable/ship_canister.asm"
 INCLUDE "library/common/main/variable/ship_viper.asm"
-INCLUDE "library/elite-a/flight/variable/ship_shuttle2.asm"
+INCLUDE "library/elite-a/flight/variable/ship_shuttle_2.asm"
 INCLUDE "library/elite-a/flight/variable/ship_iguana.asm"
 INCLUDE "library/enhanced/main/variable/ship_krait.asm"
 INCLUDE "library/common/main/variable/ship_cobra_mk_3.asm"

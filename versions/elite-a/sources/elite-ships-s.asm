@@ -73,31 +73,31 @@ ORG CODE%
  EQUW SHIP_MISSILE      \ MSL  =  1 = Missile
  EQUW SHIP_CORIOLIS     \ SST  =  2 = Coriolis space station
  EQUW SHIP_ESCAPE_POD   \ ESC  =  3 = Escape pod
- EQUW 0
+ EQUW SHIP_PLATE        \ PLT  =  4 = Alloy plate
  EQUW SHIP_CANISTER     \ OIL  =  5 = Cargo canister
+ EQUW SHIP_BOULDER      \         6 = Boulder
  EQUW 0
  EQUW 0
  EQUW 0
  EQUW 0
+ EQUW ship_ghavial      \        11 = Ghavial
+ EQUW ship_monitor      \        12 = Monitor
  EQUW 0
  EQUW 0
  EQUW 0
+ EQUW SHIP_VIPER        \ COPS = 16 = Viper
+ EQUW SHIP_SIDEWINDER   \ SH3  = 17 = Sidewinder
+ EQUW SHIP_GECKO        \        18 = Gecko
+ EQUW SHIP_MAMBA        \        19 = Mamba
+ EQUW ship_bushmaster   \        29 = Bushmaster
  EQUW 0
  EQUW 0
  EQUW 0
+ EQUW ship_monitor      \        24 = Monitor
  EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
+ EQUW ship_bushmaster   \        26 = Bushmaster
+ EQUW SHIP_GECKO        \        27 = Gecko
+ EQUW SHIP_SIDEWINDER   \        28 = Sidewinder
  EQUW 0
  EQUW 0
  EQUW 0
@@ -115,34 +115,34 @@ ORG CODE%
 
 .E%
 
+ EQUB %00000000         \ Missile
+ EQUB %01000000         \ Coriolis space station                             Cop
+ EQUB %01000001         \ Escape pod                                 Trader, cop
+ EQUB %00000000         \ Alloy plate
+ EQUB %00000000         \ Cargo canister
+ EQUB %00000000         \ Boulder
  EQUB 0
  EQUB 0
  EQUB 0
  EQUB 0
+ EQUB %10100000         \ Ghavial                           Innocent, escape pod
+ EQUB %10100001         \ Monitor                   Trader, innocent, escape pod
  EQUB 0
  EQUB 0
  EQUB 0
+ EQUB %11000010         \ Viper                   Bounty hunter, cop, escape pod
+ EQUB %00001100         \ Sidewinder                             Hostile, pirate
+ EQUB %10001100         \ Gecko                      Hostile, pirate, escape pod
+ EQUB %10000100         \ Mamba                              Hostile, escape pod
+ EQUB %10001100         \ Bushmaster                 Hostile, pirate, escape pod
  EQUB 0
  EQUB 0
  EQUB 0
+ EQUB %10001100         \ Monitor                    Hostile, pirate, escape pod
  EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
+ EQUB %10100010         \ Bushmaster         Bounty hunter, innocent, escape pod
+ EQUB %10000010         \ Gecko                        Bounty hunter, escape pod
+ EQUB %00100010         \ Sidewinder                     Bounty hunter, innocent
  EQUB 0
  EQUB 0
  EQUB 0

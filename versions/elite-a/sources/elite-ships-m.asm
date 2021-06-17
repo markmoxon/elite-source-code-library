@@ -73,7 +73,7 @@ ORG CODE%
  EQUW SHIP_MISSILE      \ MSL  =  1 = Missile
  EQUW SHIP_CORIOLIS     \ SST  =  2 = Coriolis space station
  EQUW SHIP_ESCAPE_POD   \ ESC  =  3 = Escape pod
- EQUW 0
+ EQUW SHIP_PLATE        \ PLT  =  4 = Alloy plate
  EQUW SHIP_CANISTER     \ OIL  =  5 = Cargo canister
  EQUW 0
  EQUW 0
@@ -81,23 +81,23 @@ ORG CODE%
  EQUW 0
  EQUW 0
  EQUW 0
+ EQUW ship_ophidian     \        12 = Ophidian
+ EQUW SHIP_FER_DE_LANCE \        13 = Fer-de-lance
  EQUW 0
  EQUW 0
+ EQUW SHIP_VIPER        \ COPS = 16 = Viper
+ EQUW SHIP_MAMBA        \        17 = Mamba
+ EQUW SHIP_COBRA_MK_1   \        18 = Cobra Mk I
  EQUW 0
+ EQUW ship_bushmaster   \        20 = Bushmaster
+ EQUW ship_ophidian     \        21 = Ophidian
+ EQUW ship_chameleon    \        22 = Chameleon
  EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
+ EQUW SHIP_FER_DE_LANCE \        24 = Fer-de-lance
+ EQUW SHIP_FER_DE_LANCE \        25 = Fer-de-lance
+ EQUW ship_bushmaster   \        26 = Bushmaster
+ EQUW SHIP_COBRA_MK_1   \        27 = Cobra Mk I
+ EQUW SHIP_MAMBA        \        28 = Mamba
  EQUW 0
  EQUW 0
  EQUW 0
@@ -115,34 +115,34 @@ ORG CODE%
 
 .E%
 
+ EQUB %00000000         \ Missile
+ EQUB %01000000         \ Coriolis space station                             Cop
+ EQUB %01000001         \ Escape pod                                 Trader, cop
+ EQUB %00000000         \ Alloy plate
+ EQUB %00000000         \ Cargo canister
  EQUB 0
  EQUB 0
  EQUB 0
  EQUB 0
  EQUB 0
  EQUB 0
+ EQUB %10100001         \ Ophidian                  Trader, innocent, escape pod
+ EQUB %10100000         \ Fer-de-lance                      Innocent, escape pod
  EQUB 0
  EQUB 0
+ EQUB %11000010         \ Viper                   Bounty hunter, cop, escape pod
+ EQUB %10001100         \ Mamba                      Hostile, pirate, escape pod
+ EQUB %10001100         \ Cobra Mk I                 Hostile, pirate, escape pod
  EQUB 0
+ EQUB %10001100         \ Bushmaster                 Hostile, pirate, escape pod
+ EQUB %10000100         \ Ophidian                           Hostile, escape pod
+ EQUB %10001100         \ Chameleon                  Hostile, pirate, escape pod
  EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
+ EQUB %10001100         \ Fer-de-lance               Hostile, pirate, escape pod
+ EQUB %10000010         \ Fer-de-lance                 Bounty hunter, escape pod
+ EQUB %10100010         \ Bushmaster         Bounty hunter, innocent, escape pod
+ EQUB %10000010         \ Cobra Mk I                   Bounty hunter, escape pod
+ EQUB %10100010         \ Mamba              Bounty hunter, innocent, escape pod
  EQUB 0
  EQUB 0
  EQUB 0

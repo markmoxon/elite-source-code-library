@@ -75,29 +75,29 @@ ORG CODE%
  EQUW SHIP_ESCAPE_POD   \ ESC  =  3 = Escape pod
  EQUW 0
  EQUW SHIP_CANISTER     \ OIL  =  5 = Cargo canister
+ EQUW SHIP_BOULDER      \         6 = Boulder
  EQUW 0
  EQUW 0
  EQUW 0
  EQUW 0
+ EQUW SHIP_COBRA_MK_3   \ CYL  = 11 = Cobra Mk III
+ EQUW SHIP_PYTHON       \        12 = Python
+ EQUW ship_iguana       \        13 = Iguana
  EQUW 0
  EQUW 0
+ EQUW SHIP_VIPER        \ COPS = 16 = Viper
+ EQUW SHIP_GECKO        \        17 = Gecko
  EQUW 0
  EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
+ EQUW ship_bushmaster   \        20 = Bushmaster
+ EQUW SHIP_COBRA_MK_3   \        21 = Cobra Mk III
+ EQUW SHIP_PYTHON       \        22 = Python
+ EQUW ship_iguana       \        23 = Iguana
+ EQUW SHIP_MORAY        \        24 = Moray
+ EQUW SHIP_COBRA_MK_3   \        25 = Cobra Mk III
+ EQUW ship_bushmaster   \        26 = Bushmaster
+ EQUW SHIP_GECKO        \        27 = Gecko
+ EQUW SHIP_PYTHON       \        28 = Python
  EQUW 0
  EQUW 0
  EQUW 0
@@ -115,34 +115,34 @@ ORG CODE%
 
 .E%
 
+ EQUB %00000000         \ Missile
+ EQUB %01000000         \ Coriolis space station                             Cop
+ EQUB %01000001         \ Escape pod                                 Trader, cop
+ EQUB 0
+ EQUB %00000000         \ Cargo canister
+ EQUB %00000000         \ Boulder
  EQUB 0
  EQUB 0
  EQUB 0
  EQUB 0
+ EQUB %10100000         \ Cobra Mk III                      Innocent, escape pod
+ EQUB %10100001         \ Python                    Trader, innocent, escape pod
+ EQUB %10100000         \ Iguana                            Innocent, escape pod
  EQUB 0
  EQUB 0
+ EQUB %11000010         \ Viper                   Bounty hunter, cop, escape pod
+ EQUB %10001100         \ Gecko                      Hostile, pirate, escape pod
  EQUB 0
  EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
+ EQUB %10001100         \ Bushmaster                 Hostile, pirate, escape pod
+ EQUB %10000100         \ Cobra Mk III                       Hostile, escape pod
+ EQUB %10001100         \ Python                     Hostile, pirate, escape pod
+ EQUB %10000100         \ Iguana                             Hostile, escape pod
+ EQUB %10001100         \ Moray                      Hostile, pirate, escape pod
+ EQUB %10000010         \ Cobra Mk III                 Bounty hunter, escape pod
+ EQUB %10100010         \ Bushmaster         Bounty hunter, innocent, escape pod
+ EQUB %10000010         \ Gecko                        Bounty hunter, escape pod
+ EQUB %10100010         \ Python             Bounty hunter, innocent, escape pod
  EQUB 0
  EQUB 0
  EQUB 0

@@ -79,25 +79,25 @@ ORG CODE%
  EQUW 0
  EQUW 0
  EQUW 0
+ EQUW SHIP_TRANSPORTER  \        10 = Transporter
+ EQUW 0
+ EQUW ship_chameleon    \        12 = Chameleon
+ EQUW ship_ophidian     \        13 = Ophidian
+ EQUW 0
+ EQUW 0
+ EQUW SHIP_VIPER        \ COPS = 16 = Viper
+ EQUW SHIP_MAMBA        \        17 = Mamba
  EQUW 0
  EQUW 0
  EQUW 0
+ EQUW ship_ophidian     \        21 = Ophidian
+ EQUW ship_chameleon    \        22 = Chameleon
+ EQUW SHIP_MORAY        \        23 = Moray
  EQUW 0
  EQUW 0
  EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
+ EQUW SHIP_MORAY        \        27 = Moray
+ EQUW ship_chameleon    \        28 = Chameleon
  EQUW 0
  EQUW 0
  EQUW 0
@@ -115,34 +115,34 @@ ORG CODE%
 
 .E%
 
+ EQUB %00000000         \ Missile
+ EQUB %01000000         \ Dodo space station                                 Cop
+ EQUB %01000001         \ Escape pod                                 Trader, cop
+ EQUB 0
+ EQUB %00000000         \ Cargo canister
  EQUB 0
  EQUB 0
  EQUB 0
  EQUB 0
+ EQUB %01100001         \ Transporter                      Trader, innocent, cop
+ EQUB 0
+ EQUB %10100001         \ Chameleon                 Trader, innocent, escape pod
+ EQUB %10100000         \ Ophidian                          Innocent, escape pod
+ EQUB 0
+ EQUB 0
+ EQUB %11000010         \ Viper                   Bounty hunter, cop, escape pod
+ EQUB %10001100         \ Mamba                      Hostile, pirate, escape pod
  EQUB 0
  EQUB 0
  EQUB 0
+ EQUB %10000100         \ Ophidian                           Hostile, escape pod
+ EQUB %10001100         \ Chameleon                  Hostile, pirate, escape pod
+ EQUB %10000100         \ Moray                              Hostile, escape pod
  EQUB 0
  EQUB 0
  EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
+ EQUB %10000010         \ Moray                        Bounty hunter, escape pod
+ EQUB %10100010         \ Chameleon          Bounty hunter, innocent, escape pod
  EQUB 0
  EQUB 0
  EQUB 0

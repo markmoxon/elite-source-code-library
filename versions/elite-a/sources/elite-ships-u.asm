@@ -73,31 +73,31 @@ ORG CODE%
  EQUW SHIP_MISSILE      \ MSL  =  1 = Missile
  EQUW SHIP_CORIOLIS     \ SST  =  2 = Coriolis space station
  EQUW SHIP_ESCAPE_POD   \ ESC  =  3 = Escape pod
- EQUW 0
+ EQUW SHIP_PLATE        \ PLT  =  4 = Alloy plate
  EQUW SHIP_CANISTER     \ OIL  =  5 = Cargo canister
+ EQUW SHIP_BOULDER      \         6 = Boulder
+ EQUW SHIP_ASTEROID     \ AST  =  7 = Asteroid
+ EQUW SHIP_SPLINTER     \ SPL  =  8 = Splinter
+ EQUW 0
+ EQUW 0
+ EQUW SHIP_PYTHON       \        11 = Python
+ EQUW ship_chameleon    \        12 = Chameleon
+ EQUW ship_ghavial      \        13 = Ghavial
+ EQUW 0
+ EQUW 0
+ EQUW SHIP_VIPER        \ COPS = 16 = Viper
+ EQUW SHIP_KRAIT        \        17 = Krait
+ EQUW SHIP_COBRA_MK_1   \        18 = Cobra Mk I
  EQUW 0
  EQUW 0
  EQUW 0
+ EQUW ship_chameleon    \        22 = Chameleon
+ EQUW SHIP_PYTHON       \        23 = Python
  EQUW 0
  EQUW 0
  EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
+ EQUW SHIP_PYTHON       \        27 = Python
+ EQUW SHIP_KRAIT        \        28 = Krait
  EQUW 0
  EQUW 0
  EQUW 0
@@ -115,34 +115,34 @@ ORG CODE%
 
 .E%
 
+ EQUB %00000000         \ Missile
+ EQUB %01000000         \ Coriolis space station                             Cop
+ EQUB %01000001         \ Escape pod                                 Trader, cop
+ EQUB %00000000         \ Alloy plate
+ EQUB %00000000         \ Cargo canister
+ EQUB %00000000         \ Boulder
+ EQUB %00000000         \ Asteroid
+ EQUB %00000000         \ Splinter
+ EQUB 0
+ EQUB 0
+ EQUB %10100000         \ Python                            Innocent, escape pod
+ EQUB %10100001         \ Chameleon                 Trader, innocent, escape pod
+ EQUB %10100000         \ Ghavial                           Innocent, escape pod
+ EQUB 0
+ EQUB 0
+ EQUB %11000010         \ Viper                   Bounty hunter, cop, escape pod
+ EQUB %10001100         \ Krait                      Hostile, pirate, escape pod
+ EQUB %10001100         \ Cobra Mk I                 Hostile, pirate, escape pod
  EQUB 0
  EQUB 0
  EQUB 0
+ EQUB %10001100         \ Chameleon                  Hostile, pirate, escape pod
+ EQUB %10000100         \ Python                             Hostile, escape pod
  EQUB 0
  EQUB 0
  EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
+ EQUB %10000010         \ Python                       Bounty hunter, escape pod
+ EQUB %10100010         \ Krait              Bounty hunter, innocent, escape pod
  EQUB 0
  EQUB 0
  EQUB 0

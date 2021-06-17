@@ -18,7 +18,7 @@
  EQUW SHIP_FER_DE_LANCE, SHIP_MORAY, SHIP_THARGOID, SHIP_THARGON
  EQUW SHIP_CONSTRICTOR, ship_dragon, ship_monitor, ship_ophidian
  EQUW ship_ghavial, ship_bushmaster, ship_rattler, ship_iguana
- EQUW ship_shuttle2, ship_chameleon
+ EQUW ship_shuttle_2, ship_chameleon
 
  EQUW 0
 

@@ -75,29 +75,29 @@ ORG CODE%
  EQUW SHIP_ESCAPE_POD   \ ESC  =  3 = Escape pod
  EQUW 0
  EQUW SHIP_CANISTER     \ OIL  =  5 = Cargo canister
+ EQUW SHIP_BOULDER      \         6 = Boulder
+ EQUW SHIP_ASTEROID     \ AST  =  7 = Asteroid
+ EQUW SHIP_SPLINTER     \ SPL  =  8 = Splinter
+ EQUW ship_shuttle_2    \         9 = Shuttle 2
+ EQUW 0
+ EQUW SHIP_PYTHON       \        11 = Python
+ EQUW SHIP_MORAY        \        12 = Moray
+ EQUW SHIP_ADDER        \        13 = Adder
+ EQUW 0
+ EQUW 0
+ EQUW SHIP_VIPER        \ COPS = 16 = Viper
+ EQUW SHIP_COBRA_MK_1   \        17 = Cobra Mk I
+ EQUW 0
+ EQUW SHIP_ADDER        \        19 = Adder
+ EQUW 0
+ EQUW 0
+ EQUW SHIP_MORAY        \        22 = Moray
+ EQUW SHIP_PYTHON       \        23 = Python
  EQUW 0
  EQUW 0
  EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
+ EQUW SHIP_MORAY        \        27 = Moray
+ EQUW SHIP_ADDER        \        28 = Adder
  EQUW 0
  EQUW 0
  EQUW 0
@@ -115,34 +115,34 @@ ORG CODE%
 
 .E%
 
+ EQUB %00000000         \ Missile
+ EQUB %01000000         \ Coriolis space station                             Cop
+ EQUB %01000001         \ Escape pod                                 Trader, cop
+ EQUB 0
+ EQUB %00000000         \ Cargo canister
+ EQUB %00000000         \ Boulder
+ EQUB %00000000         \ Asteroid
+ EQUB %00000000         \ Splinter
+ EQUB %00100001         \ Shuttle 2                             Trader, innocent
+ EQUB 0
+ EQUB %10100000         \ Python                            Innocent, escape pod
+ EQUB %10100001         \ Moray                     Trader, innocent, escape pod
+ EQUB %10100000         \ Adder                             Innocent, escape pod
+ EQUB 0
+ EQUB 0
+ EQUB %11000010         \ Viper                   Bounty hunter, cop, escape pod
+ EQUB %10001100         \ Cobra Mk I                 Hostile, pirate, escape pod
+ EQUB 0
+ EQUB %10000100         \ Adder                              Hostile, escape pod
+ EQUB 0
+ EQUB 0
+ EQUB %10001100         \ Moray                      Hostile, pirate, escape pod
+ EQUB %10000100         \ Python                             Hostile, escape pod
  EQUB 0
  EQUB 0
  EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
+ EQUB %10000010         \ Moray                        Bounty hunter, escape pod
+ EQUB %10100010         \ Adder              Bounty hunter, innocent, escape pod
  EQUB 0
  EQUB 0
  EQUB 0
@@ -155,7 +155,7 @@ INCLUDE "library/common/main/variable/ship_escape_pod.asm"
 INCLUDE "library/common/main/variable/ship_canister.asm"
 INCLUDE "library/common/main/variable/ship_viper.asm"
 INCLUDE "library/enhanced/main/variable/ship_moray.asm"
-INCLUDE "library/elite-a/flight/variable/ship_shuttle2.asm"
+INCLUDE "library/elite-a/flight/variable/ship_shuttle_2.asm"
 INCLUDE "library/enhanced/main/variable/ship_boulder.asm"
 INCLUDE "library/enhanced/main/variable/ship_adder.asm"
 INCLUDE "library/common/main/variable/ship_asteroid.asm"

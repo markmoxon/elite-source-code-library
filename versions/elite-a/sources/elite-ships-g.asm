@@ -76,31 +76,31 @@ ORG CODE%
  EQUW 0
  EQUW SHIP_CANISTER     \ OIL  =  5 = Cargo canister
  EQUW 0
+ EQUW SHIP_ASTEROID     \ AST  =  7 = Asteroid
+ EQUW SHIP_SPLINTER     \ SPL  =  8 = Splinter
+ EQUW 0
+ EQUW 0
+ EQUW SHIP_BOA          \        11 = Boa
+ EQUW SHIP_ADDER        \        12 = Adder
+ EQUW ship_iguana       \        13 = Iguana
+ EQUW 0
+ EQUW 0
+ EQUW SHIP_VIPER        \ COPS = 16 = Viper
+ EQUW SHIP_GECKO        \        17 = Gecko
+ EQUW 0
+ EQUW SHIP_ADDER        \        19 = Adder
+ EQUW ship_iguana       \        20 = Iguana
+ EQUW 0
+ EQUW SHIP_WORM         \        22 = Worm
  EQUW 0
  EQUW 0
  EQUW 0
+ EQUW ship_iguana       \        26 = Iguana
+ EQUW SHIP_ADDER        \        27 = Adder
+ EQUW SHIP_GECKO        \        28 = Gecko
  EQUW 0
  EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
+ EQUW SHIP_CONSTRICTOR  \ CON  = 31 = Constrictor
 
 \ ******************************************************************************
 \
@@ -115,37 +115,37 @@ ORG CODE%
 
 .E%
 
+ EQUB %00000000         \ Missile
+ EQUB %01000000         \ Coriolis space station                             Cop
+ EQUB %01000001         \ Escape pod                                 Trader, cop
+ EQUB 0
+ EQUB %00000000         \ Cargo canister
+ EQUB 0
+ EQUB %00000000         \ Asteroid
+ EQUB %00000000         \ Splinter
+ EQUB 0
+ EQUB 0
+ EQUB %10100000         \ Boa                               Innocent, escape pod
+ EQUB %10100001         \ Adder                     Trader, innocent, escape pod
+ EQUB %10100000         \ Iguana                            Innocent, escape pod
+ EQUB 0
+ EQUB 0
+ EQUB %11000010         \ Viper                   Bounty hunter, cop, escape pod
+ EQUB %10001100         \ Gecko                      Hostile, pirate, escape pod
+ EQUB 0
+ EQUB %10000100         \ Adder                              Hostile, escape pod
+ EQUB %10001100         \ Iguana                     Hostile, pirate, escape pod
+ EQUB 0
+ EQUB %00001100         \ Worm                                   Hostile, pirate
  EQUB 0
  EQUB 0
  EQUB 0
+ EQUB %10100010         \ Iguana             Bounty hunter, innocent, escape pod
+ EQUB %10000010         \ Adder                        Bounty hunter, escape pod
+ EQUB %10100010         \ Gecko              Bounty hunter, innocent, escape pod
  EQUB 0
  EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
+ EQUB %00001100         \ Constrictor                            Hostile, pirate
 
 INCLUDE "library/common/main/macro/vertex.asm"
 INCLUDE "library/common/main/macro/edge.asm"

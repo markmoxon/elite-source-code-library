@@ -412,5 +412,5 @@ elite-ships:
 	echo _RELEASE=$(rel-elite-a) >> versions/elite-a/sources/elite-header.h.asm
 	echo _REMOVE_CHECKSUMS=FALSE >> versions/elite-a/sources/elite-header.h.asm
 	echo _MATCH_EXTRACTED_BINARIES=TRUE >> versions/elite-a/sources/elite-header.h.asm
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-b.asm -v > versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-ships-r.asm -v > versions/elite-a/output/compile.txt
 	@$(PYTHON) versions/elite-a/sources/crc32.py versions/elite-a/extracted$(folder-elite-a) versions/elite-a/output

@@ -73,31 +73,31 @@ ORG CODE%
  EQUW SHIP_MISSILE      \ MSL  =  1 = Missile
  EQUW SHIP_DODO         \         2 = Dodecahedron ("Dodo") space station
  EQUW SHIP_ESCAPE_POD   \ ESC  =  3 = Escape pod
- EQUW 0
+ EQUW SHIP_PLATE        \ PLT  =  4 = Alloy plate
  EQUW SHIP_CANISTER     \ OIL  =  5 = Cargo canister
  EQUW 0
  EQUW 0
  EQUW 0
+ EQUW SHIP_SHUTTLE      \ SHU  =  9 = Shuttle
+ EQUW 0
+ EQUW SHIP_BOA          \        11 = Boa
+ EQUW ship_ophidian     \        12 = Ophidian
+ EQUW ship_chameleon    \        13 = Chameleon
+ EQUW 0
+ EQUW 0
+ EQUW SHIP_VIPER        \ COPS = 16 = Viper
+ EQUW SHIP_SIDEWINDER   \ SH3  = 17 = Sidewinder
+ EQUW SHIP_KRAIT        \        18 = Krait
+ EQUW 0
+ EQUW 0
+ EQUW ship_ophidian     \        21 = Ophidian
+ EQUW ship_chameleon    \        22 = Chameleon
  EQUW 0
  EQUW 0
  EQUW 0
  EQUW 0
  EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
- EQUW 0
+ EQUW SHIP_SIDEWINDER   \        28 = Sidewinder
  EQUW 0
  EQUW 0
  EQUW 0
@@ -115,34 +115,34 @@ ORG CODE%
 
 .E%
 
+ EQUB %00000000         \ Missile
+ EQUB %01000000         \ Dodo space station                                 Cop
+ EQUB %01000001         \ Escape pod                                 Trader, cop
+ EQUB %00000000         \ Alloy plate
+ EQUB %00000000         \ Cargo canister
+ EQUB 0
+ EQUB 0
+ EQUB 0
+ EQUB %00100001         \ Shuttle                               Trader, innocent
+ EQUB 0
+ EQUB %10100000         \ Boa                               Innocent, escape pod
+ EQUB %10100001         \ Ophidian                  Trader, innocent, escape pod
+ EQUB %10100000         \ Chameleon                         Innocent, escape pod
+ EQUB 0
+ EQUB 0
+ EQUB %11000010         \ Viper                   Bounty hunter, cop, escape pod
+ EQUB %00001100         \ Sidewinder                             Hostile, pirate
+ EQUB %10001100         \ Krait                      Hostile, pirate, escape pod
+ EQUB 0
+ EQUB 0
+ EQUB %10000100         \ Ophidian                           Hostile, escape pod
+ EQUB %10001100         \ Chameleon                  Hostile, pirate, escape pod
  EQUB 0
  EQUB 0
  EQUB 0
  EQUB 0
  EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
+ EQUB %00100010         \ Sidewinder                     Bounty hunter, innocent
  EQUB 0
  EQUB 0
  EQUB 0

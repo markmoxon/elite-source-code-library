@@ -14,7 +14,7 @@ ENDIF
 \ before drawing, and then the routine uses the same approach as the PIXEL
 \ routine in the main game code, except it plots a single pixel from TWOS
 \ instead of a two pixel dash from TWOS2. This applies to the top part of the
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \ screen (the monochrome mode 4 space view).
 ELIF _ELECTRON_VERSION
 \ screen (the space view).

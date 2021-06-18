@@ -48,7 +48,7 @@ IF NOT(_ELITE_A_VERSION)
                         \ Missiles                 = 1
 
 ELIF _ELITE_A_VERSION
- EQUB %01001001         \ Laser power              = 9 AJD
+ EQUB %01001001         \ Laser power              = 9
                         \ Missiles                 = 1
 
 ENDIF

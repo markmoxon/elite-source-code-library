@@ -50,7 +50,7 @@ IF NOT(_ELITE_A_VERSION)
                         \ Missiles                 = 0
 
 ELIF _ELITE_A_SHIPS_V
- EQUB %00101001         \ Laser power              = 4
+ EQUB %00101001         \ Laser power              = 5
                         \ Missiles                 = 1
 
 ELIF _ELITE_A_VERSION

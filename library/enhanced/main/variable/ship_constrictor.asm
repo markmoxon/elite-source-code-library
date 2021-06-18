@@ -52,11 +52,11 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
  EQUB %00110100         \ Laser power              = 6
                         \ Missiles                 = 4
 ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
- EQUB %00101111         \ Laser power              = 2
+ EQUB %00101111         \ Laser power              = 5
                         \ Missiles                 = 7
 ELIF _ELITE_A_6502SP_PARA OR _ELITE_A_FLIGHT
- EQUB %01000111         \ Laser power              = 8 AJD
-                        \ Missiles                 = 4
+ EQUB %01000111         \ Laser power              = 8
+                        \ Missiles                 = 7
 ENDIF
 
 \VERTEX    x,    y,    z, face1, face2, face3, face4, visibility

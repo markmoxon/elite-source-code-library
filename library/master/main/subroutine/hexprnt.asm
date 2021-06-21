@@ -17,7 +17,7 @@
 
  PHA                    \ Store A on the stack so we can grab the lower nibble
                         \ from it later
- 
+
  LSR A                  \ Shift A right so that it contains the upper nibble
  LSR A                  \ of the original argument
  LSR A

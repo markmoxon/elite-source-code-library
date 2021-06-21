@@ -120,7 +120,7 @@ ELIF _ELITE_A_ENCYCLOPEDIA
 
  CMP #10                \ If A >= 10, jump to buy_invnt to AJD
  BCS buy_invnt
- 
+
 ENDIF
 
  STA S                  \ Store the numeric value of the key pressed in S

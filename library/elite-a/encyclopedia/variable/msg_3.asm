@@ -554,7 +554,7 @@
  ECHR ' '               \ Token 67:     " SHIP"
  ETOK 207               \
  EQUB VE                \ Encoded as:   " [207]"
- 
+
  ETWO 'I', 'N'          \ Token 68:     "INVENTION"
  ECHR 'V'               \
  ETWO 'E', 'N'          \ Encoded as:   "<240>V<246><251><223>"

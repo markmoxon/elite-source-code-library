@@ -124,7 +124,7 @@ IF _MASTER_VERSION \ Master: The Master has a flicker-free ship plotting algorit
                         \ so that XX14+1 gets set to 0 below (as there are no
                         \ existing coordinates on the ship line heap for this
                         \ ship)
- 
+
  EQUB &2C               \ Skip the next instruction by turning it into
                         \ &2C &B1 &BD, or BIT &BDB1 which does nothing apart
                         \ from affect the flags

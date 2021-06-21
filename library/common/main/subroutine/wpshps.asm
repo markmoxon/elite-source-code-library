@@ -113,7 +113,7 @@ ELIF _MASTER_VERSION
 
  LDX #0                 \ Reset the ball line heap by setting the ball line heap
  STX LSP                \ pointer to 0
- 
+
  DEX                    \ Set X = &FF
 
  STX LSX2               \ Set LSX2 = LSY2 = &FF to clear the ball line heap

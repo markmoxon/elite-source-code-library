@@ -179,7 +179,7 @@ IF _MASTER_VERSION \ Platform
 
  LDA #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
  STA VIA+&34            \ SHEILA &34 to switch main memory back into &3000-&7FFF
- 
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Platform

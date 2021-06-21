@@ -256,7 +256,7 @@ INCLUDE "library/common/main/variable/comc.asm"
  SKIP 18                \ These bytes appear to be unused
 
 INCLUDE "library/enhanced/main/variable/catf.asm"
- 
+
  SKIP 1                 \ This byte appears to be unused
 
 INCLUDE "library/common/main/variable/dnoiz.asm"

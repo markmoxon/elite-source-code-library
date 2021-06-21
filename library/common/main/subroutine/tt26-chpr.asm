@@ -413,7 +413,7 @@ IF _6502SP_VERSION \ Platform
 
  JMP RR4                \ A >= 128, so jump to RR4 to restore the registers and
                         \ return from the subroutine using a tail call
-                        
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Platform

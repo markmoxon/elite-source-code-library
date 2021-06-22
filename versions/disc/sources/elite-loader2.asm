@@ -105,7 +105,7 @@ INCLUDE "library/disc/loader2/subroutine/elite_loader_part_3_of_4.asm"
  SKIP 13
 
 INCLUDE "library/disc/loader2/subroutine/mpl.asm"
-INCLUDE "library/disc/loader2/subroutine/loadcode.asm"
+INCLUDE "library/disc/loader2/workspace/loadcode.asm"
 
  SKIP 487               \ These bytes appear to be unused
 

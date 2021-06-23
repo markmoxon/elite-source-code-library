@@ -1,13 +1,25 @@
 \ ******************************************************************************
 \
+IF _ELITE_A_FLIGHT
+\       Name: tnpr
+ELIF _ELITE_A_6502SP_PARA
 \       Name: tnpr_FLIGHT
+ENDIF
 \       Type: Subroutine
 \   Category: Market
 \    Summary: AJD
 \
 \ ******************************************************************************
 
+IF _ELITE_A_FLIGHT
+
+.tnpr
+
+ELIF _ELITE_A_6502SP_PARA
+
 .tnpr_FLIGHT
+
+ENDIF
 
  CPX #&10
  BEQ n_aliens

@@ -124,7 +124,12 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
                         \ tonne of this cargo (A is set to 1 by this call, and
                         \ the C flag contains the result)
 
-ELIF _ELITE_A_VERSION
+ELIF _ELITE_A_FLIGHT
+
+ TAX                    \ AJD
+ JSR tnpr
+
+ELIF _ELITE_A_6502SP_PARA
 
  TAX                    \ AJD
  JSR tnpr_FLIGHT

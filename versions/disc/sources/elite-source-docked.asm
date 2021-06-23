@@ -637,10 +637,7 @@ INCLUDE "library/common/main/subroutine/qus1.asm"
 INCLUDE "library/enhanced/main/subroutine/gtdrv.asm"
 INCLUDE "library/common/main/subroutine/lod.asm"
 INCLUDE "library/common/main/subroutine/fx200.asm"
-
- JSR GTNME              \ This code appears to be unused
- RTS
-
+INCLUDE "library/disc/docked/subroutine/unused_routine.asm"
 INCLUDE "library/common/main/subroutine/sps1.asm"
 INCLUDE "library/common/main/subroutine/tas2.asm"
 INCLUDE "library/common/main/subroutine/norm.asm"
@@ -760,40 +757,7 @@ INCLUDE "library/enhanced/main/variable/rupla.asm"
 INCLUDE "library/enhanced/main/variable/rugal.asm"
 INCLUDE "library/enhanced/main/variable/rutok.asm"
 INCLUDE "library/enhanced/main/variable/mtin.asm"
-
-IF _STH_DISC
-
- EQUB &45, &4E          \ These bytes appear to be unused
- EQUB &44, &2D
- EQUB &45, &4E
- EQUB &44, &2D
- EQUB &45, &4E
- EQUB &44, &52
- EQUB &50, &53
- EQUB &00, &8E
- EQUB &11, &D8
- EQUB &00, &00
- EQUB &06, &56
- EQUB &52, &49
- EQUB &45, &E6
-
-ELIF _IB_DISC
-
- EQUB &45, &4E          \ These bytes appear to be unused
- EQUB &44, &2D
- EQUB &45, &4E
- EQUB &44, &2D
- EQUB &45, &4E
- EQUB &44, &8E
- EQUB &13, &1C
- EQUB &00, &00
- EQUB &73, &56
- EQUB &52, &49
- EQUB &53, &00
- EQUB &8E, &13
- EQUB &34, &B3
-
-ENDIF
+INCLUDE "library/disc/docked/variable/unused_block_2.asm"
 
 \ ******************************************************************************
 \

@@ -12,17 +12,25 @@
 
  JMP DOENTRY            \ Decrypt the main docked code and dock at the station
 
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
+
  JMP DOBEGIN            \ Decrypt the main docked code and start a new game
+
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+ JMP DOENTRY            \ Decrypt the main docked code and dock at the station
+
+ENDIF
 
  JMP CHPR               \ WRCHV is set to point here by elite-loader3.asm
 
  EQUW IRQ1              \ IRQ1V is set to point here by elite-loader3.asm
 
-IF NOT(_ELITE_A_DOCKED)
+IF NOT(_ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA)
 
  JMP BRBR1              \ BRKV is set to point here by elite-loader3.asm
 
-ELIF _ELITE_A_DOCKED
+ELIF _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA
 
  JMP BRBR               \ AJD
 

@@ -10,7 +10,7 @@
 
 .DOENTRY
 
-IF _DISC_DOCKED
+IF _DISC_DOCKED \ Platform
 
  JSR scramble           \ Decrypt the newly loaded code
 

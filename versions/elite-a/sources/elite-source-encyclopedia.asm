@@ -178,7 +178,7 @@ ORG CODE%
 
 LOAD_A% = LOAD%
 
-INCLUDE "library/elite-a/encyclopedia/workspace/s_per_cent.asm"
+INCLUDE "library/disc/docked/workspace/s_per_cent.asm"
 INCLUDE "library/disc/flight/subroutine/inbay.asm"
 INCLUDE "library/disc/flight/variable/ltli.asm"
 INCLUDE "library/elite-a/encyclopedia/subroutine/launch.asm"
@@ -229,7 +229,7 @@ PRINT "Code size is ", ~(P% - CODE%)
 PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_A%
 
-PRINT "S.ELTA ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_A%
+PRINT "S.F.ELTA ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_A%
 \SAVE "versions/elite-a/output/F.ELTA.bin", CODE%, P%, LOAD%
 
 \ ******************************************************************************
@@ -280,6 +280,32 @@ INCLUDE "library/enhanced/main/subroutine/tt26.asm"
 INCLUDE "library/common/main/subroutine/bell.asm"
 INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
 INCLUDE "library/enhanced/main/subroutine/hme2.asm"
+
+\ ******************************************************************************
+\
+\ Save output/ELTB.bin
+\
+\ ******************************************************************************
+
+PRINT "ELITE B"
+PRINT "Assembled at ", ~CODE_B%
+PRINT "Ends at ", ~P%
+PRINT "Code size is ", ~(P% - CODE_B%)
+PRINT "Execute at ", ~LOAD%
+PRINT "Reload at ", ~LOAD_B%
+
+PRINT "S.F.ELTB ", ~CODE_B%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_B%
+\SAVE "versions/elite-a/output/F.ELTB.bin", CODE_B%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE C FILE
+\
+\ ******************************************************************************
+
+CODE_C% = P%
+LOAD_C% = LOAD% +P% - CODE%
+
 INCLUDE "library/common/main/subroutine/squa.asm"
 INCLUDE "library/common/main/subroutine/squa2.asm"
 INCLUDE "library/common/main/subroutine/mu1.asm"
@@ -302,6 +328,32 @@ INCLUDE "library/common/main/subroutine/delay.asm"
 INCLUDE "library/common/main/subroutine/clyns.asm"
 INCLUDE "library/original/main/subroutine/lyn.asm"
 INCLUDE "library/common/main/subroutine/wscan.asm"
+
+\ ******************************************************************************
+\
+\ Save output/ELTC.bin
+\
+\ ******************************************************************************
+
+PRINT "ELITE C"
+PRINT "Assembled at ", ~CODE_C%
+PRINT "Ends at ", ~P%
+PRINT "Code size is ", ~(P% - CODE_C%)
+PRINT "Execute at ", ~LOAD%
+PRINT "Reload at ", ~LOAD_C%
+
+PRINT "S.F.ELTC ", ~CODE_C%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_C%
+\SAVE "versions/elite-a/output/F.ELTC.bin", CODE_C%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE D FILE
+\
+\ ******************************************************************************
+
+CODE_D% = P%
+LOAD_D% = LOAD% + P% - CODE%
+
 INCLUDE "library/common/main/subroutine/tt20.asm"
 INCLUDE "library/common/main/subroutine/tt54.asm"
 INCLUDE "library/common/main/subroutine/tt146.asm"
@@ -331,6 +383,32 @@ INCLUDE "library/elite-a/encyclopedia/subroutine/buy_invnt.asm"
 INCLUDE "library/common/main/subroutine/gnum.asm"
 INCLUDE "library/common/main/subroutine/dn2.asm"
 INCLUDE "library/common/main/subroutine/hm.asm"
+
+\ ******************************************************************************
+\
+\ Save output/ELTD.bin
+\
+\ ******************************************************************************
+
+PRINT "ELITE D"
+PRINT "Assembled at ", ~CODE_D%
+PRINT "Ends at ", ~P%
+PRINT "Code size is ", ~(P% - CODE_D%)
+PRINT "Execute at ", ~LOAD%
+PRINT "Reload at ", ~LOAD_D%
+
+PRINT "S.F.ELTD ", ~CODE_D%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_D%
+\SAVE "versions/elite-a/output/F.ELTD.bin", CODE_D%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE E FILE
+\
+\ ******************************************************************************
+
+CODE_E% = P%
+LOAD_E% = LOAD% + P% - CODE%
+
 INCLUDE "library/common/main/subroutine/cpl.asm"
 INCLUDE "library/common/main/subroutine/cmn.asm"
 INCLUDE "library/common/main/subroutine/ypl.asm"
@@ -364,6 +442,32 @@ INCLUDE "library/common/main/subroutine/pl21.asm"
 INCLUDE "library/common/main/subroutine/chkon.asm"
 INCLUDE "library/common/main/subroutine/tt17.asm"
 INCLUDE "library/common/main/subroutine/ping.asm"
+
+\ ******************************************************************************
+\
+\ Save output/ELTE.bin
+\
+\ ******************************************************************************
+
+PRINT "ELITE E"
+PRINT "Assembled at ", ~CODE_E%
+PRINT "Ends at ", ~P%
+PRINT "Code size is ", ~(P% - CODE_E%)
+PRINT "Execute at ", ~LOAD%
+PRINT "Reload at ", ~LOAD_E%
+
+PRINT "S.F.ELTE ", ~CODE_E%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_E%
+\SAVE "versions/elite-a/output/F.ELTE.bin", CODE_E%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE F FILE
+\
+\ ******************************************************************************
+
+CODE_F% = P%
+LOAD_F% = LOAD% + P% - CODE%
+
 INCLUDE "library/common/main/variable/sfx.asm"
 INCLUDE "library/common/main/subroutine/res2.asm"
 INCLUDE "library/common/main/subroutine/zinf.asm"
@@ -404,6 +508,32 @@ INCLUDE "library/common/main/subroutine/tidy.asm"
 INCLUDE "library/common/main/subroutine/tis2.asm"
 INCLUDE "library/common/main/subroutine/tis3.asm"
 INCLUDE "library/common/main/subroutine/dvidt.asm"
+
+\ ******************************************************************************
+\
+\ Save output/ELTF.bin
+\
+\ ******************************************************************************
+
+PRINT "ELITE F"
+PRINT "Assembled at ", ~CODE_F%
+PRINT "Ends at ", ~P%
+PRINT "Code size is ", ~(P% - CODE_F%)
+PRINT "Execute at ", ~LOAD%
+PRINT "Reload at ", ~LOAD_F%
+
+PRINT "S.F.ELTF ", ~CODE_F%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_F%
+\SAVE "versions/elite-a/output/F.ELTF.bin", CODE_F%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE G FILE
+\
+\ ******************************************************************************
+
+CODE_G% = P%
+LOAD_G% = LOAD% + P% - CODE%
+
 INCLUDE "library/common/main/subroutine/shppt.asm"
 INCLUDE "library/common/main/subroutine/ll5.asm"
 INCLUDE "library/common/main/subroutine/ll28.asm"
@@ -431,6 +561,32 @@ INCLUDE "library/common/main/subroutine/ll118.asm"
 INCLUDE "library/common/main/subroutine/ll120.asm"
 INCLUDE "library/common/main/subroutine/ll123.asm"
 INCLUDE "library/common/main/subroutine/ll129.asm"
+
+\ ******************************************************************************
+\
+\ Save output/ELTG.bin
+\
+\ ******************************************************************************
+
+PRINT "ELITE G"
+PRINT "Assembled at ", ~CODE_G%
+PRINT "Ends at ", ~P%
+PRINT "Code size is ", ~(P% - CODE_G%)
+PRINT "Execute at ", ~LOAD%
+PRINT "Reload at ", ~LOAD_G%
+
+PRINT "S.F.ELTG ", ~CODE_G%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_G%
+\SAVE "versions/elite-a/output/F.ELTG.bin", CODE_G%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE H FILE
+\
+\ ******************************************************************************
+
+CODE_H% = P%
+LOAD_H% = LOAD% + P% - CODE%
+
 INCLUDE "library/elite-a/encyclopedia/subroutine/info_menu.asm"
 INCLUDE "library/elite-a/encyclopedia/subroutine/ships_ag.asm"
 INCLUDE "library/elite-a/encyclopedia/subroutine/controls.asm"

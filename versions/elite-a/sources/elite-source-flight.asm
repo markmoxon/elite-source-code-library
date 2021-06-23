@@ -203,7 +203,7 @@ PRINT "Code size is ", ~(P% - CODE%)
 PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_A%
 
-PRINT "S.ELTA ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_A%
+PRINT "S.D.ELTA ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_A%
 \SAVE "versions/elite-a/output/D.ELTA.bin", CODE%, P%, LOAD%
 
 \ ******************************************************************************
@@ -277,7 +277,7 @@ PRINT "Code size is ", ~(P% - CODE_B%)
 PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_B%
 
-PRINT "S.ELTB ", ~CODE_B%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_B%
+PRINT "S.D.ELTB ", ~CODE_B%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_B%
 \SAVE "versions/elite-a/output/D.ELTB.bin", CODE_B%, P%, LOAD%
 
 \ ******************************************************************************
@@ -363,7 +363,7 @@ PRINT "Code size is ", ~(P% - CODE_C%)
 PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_C%
 
-PRINT "S.ELTC ", ~CODE_C%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_C%
+PRINT "S.D.ELTC ", ~CODE_C%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_C%
 \SAVE "versions/elite-a/output/D.ELTC.bin", CODE_C%, P%, LOAD%
 
 \ ******************************************************************************
@@ -375,7 +375,7 @@ PRINT "S.ELTC ", ~CODE_C%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_C%
 CODE_D% = P%
 LOAD_D% = LOAD% + P% - CODE%
 
-INCLUDE "library/elite-a/flight/subroutine/tnpr_flight.asm"
+INCLUDE "library/elite-a/flight/subroutine/tnpr-tnpr_flight.asm"
 INCLUDE "library/common/main/subroutine/tt20.asm"
 INCLUDE "library/common/main/subroutine/tt54.asm"
 INCLUDE "library/common/main/subroutine/tt146.asm"
@@ -442,7 +442,7 @@ PRINT "Code size is ", ~(P% - CODE_D%)
 PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_D%
 
-PRINT "S.ELTD ", ~CODE_D%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_D%
+PRINT "S.D.ELTD ", ~CODE_D%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_D%
 \SAVE "versions/elite-a/output/D.ELTD.bin", CODE_D%, P%, LOAD%
 
 \ ******************************************************************************
@@ -551,7 +551,7 @@ PRINT "Code size is ", ~(P% - CODE_E%)
 PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_E%
 
-PRINT "S.ELTE ", ~CODE_E%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_E%
+PRINT "S.D.ELTE ", ~CODE_E%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_E%
 \SAVE "versions/disc/output/D.ELTE.bin", CODE_E%, P%, LOAD%
 
 \ ******************************************************************************
@@ -627,6 +627,32 @@ INCLUDE "library/common/main/subroutine/tidy.asm"
 INCLUDE "library/common/main/subroutine/tis2.asm"
 INCLUDE "library/common/main/subroutine/tis3.asm"
 INCLUDE "library/common/main/subroutine/dvidt.asm"
+
+\ ******************************************************************************
+\
+\ Save output/ELTF.bin
+\
+\ ******************************************************************************
+
+PRINT "ELITE F"
+PRINT "Assembled at ", ~CODE_F%
+PRINT "Ends at ", ~P%
+PRINT "Code size is ", ~(P% - CODE_F%)
+PRINT "Execute at ", ~LOAD%
+PRINT "Reload at ", ~LOAD_F%
+
+PRINT "S.D.ELTF ", ~CODE_F%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_F%
+\SAVE "versions/elite-a/output/D.ELTF.bin", CODE_F%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE G FILE
+\
+\ ******************************************************************************
+
+CODE_G% = P%
+LOAD_G% = LOAD% + P% - CODE%
+
 INCLUDE "library/common/main/subroutine/shppt.asm"
 INCLUDE "library/common/main/subroutine/ll5.asm"
 INCLUDE "library/common/main/subroutine/ll28.asm"
@@ -654,6 +680,32 @@ INCLUDE "library/common/main/subroutine/ll118.asm"
 INCLUDE "library/common/main/subroutine/ll120.asm"
 INCLUDE "library/common/main/subroutine/ll123.asm"
 INCLUDE "library/common/main/subroutine/ll129.asm"
+
+\ ******************************************************************************
+\
+\ Save output/ELTG.bin
+\
+\ ******************************************************************************
+
+PRINT "ELITE G"
+PRINT "Assembled at ", ~CODE_G%
+PRINT "Ends at ", ~P%
+PRINT "Code size is ", ~(P% - CODE_G%)
+PRINT "Execute at ", ~LOAD%
+PRINT "Reload at ", ~LOAD_G%
+
+PRINT "S.D.ELTG ", ~CODE_G%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_G%
+\SAVE "versions/elite-a/output/D.ELTG.bin", CODE_G%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE H FILE
+\
+\ ******************************************************************************
+
+CODE_H% = P%
+LOAD_H% = LOAD% + P% - CODE%
+
 INCLUDE "library/common/main/subroutine/mveit_part_1_of_9.asm"
 INCLUDE "library/common/main/subroutine/mveit_part_2_of_9.asm"
 INCLUDE "library/common/main/subroutine/mveit_part_3_of_9.asm"

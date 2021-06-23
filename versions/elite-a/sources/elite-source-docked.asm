@@ -175,10 +175,10 @@ ORG CODE%
 LOAD_A% = LOAD%
 
 INCLUDE "library/disc/docked/workspace/s_per_cent.asm"
-INCLUDE "library/elite-a/docked/subroutine/inbay.asm"
+INCLUDE "library/disc/docked/subroutine/inbay.asm"
 INCLUDE "library/disc/docked/subroutine/dobegin.asm"
 INCLUDE "library/enhanced/main/subroutine/doentry.asm"
-INCLUDE "library/elite-a/docked/subroutine/scramble.asm"
+INCLUDE "library/disc/docked/subroutine/scram.asm"
 INCLUDE "library/enhanced/main/subroutine/brkbk.asm"
 INCLUDE "library/enhanced/main/subroutine/detok3.asm"
 INCLUDE "library/enhanced/main/subroutine/mt27.asm"

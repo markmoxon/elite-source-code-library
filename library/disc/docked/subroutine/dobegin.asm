@@ -10,13 +10,17 @@
 
 .DOBEGIN
 
-IF _ELITE_A_DOCKED
+IF NOT(_ELITE_A_DOCKED)
+
+ JSR scramble           \ Decrypt the main docked code between &1300 and &5FFF
+
+ELIF _ELITE_A_DOCKED
 
  LDA #0                 \ AJD
 
-ENDIF
+ JSR SCRAM
 
- JSR scramble           \ Decrypt the main docked code between &1300 and &5FFF
+ENDIF
 
  JMP BEGIN              \ Jump to BEGIN to initialise the configuration
                         \ variables and start the game

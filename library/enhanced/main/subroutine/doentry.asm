@@ -10,11 +10,17 @@
 
 .DOENTRY
 
-IF _ELITE_A_DOCKED
+IF _DISC_DOCKED
+
+ JSR scramble           \ Decrypt the newly loaded code
+
+ELIF _ELITE_A_DOCKED
 
  LDA KL+1               \ AJD
  BNE INBAY
  LDA #&FF
+
+ JSR SCRAM
 
 ELIF _ELITE_A_6502SP_PARA
 
@@ -22,11 +28,11 @@ ELIF _ELITE_A_6502SP_PARA
  STA dockedp
  LDA #&FF
 
+ JSR SCRAM
+
 ENDIF
 
 IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Platform
-
- JSR scramble           \ Decrypt the newly loaded code
 
  JSR RES2               \ Reset a number of flight variables and workspaces
 

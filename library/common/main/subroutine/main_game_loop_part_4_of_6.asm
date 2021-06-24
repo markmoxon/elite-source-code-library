@@ -1,6 +1,10 @@
 \ ******************************************************************************
 \
+IF NOT(_ELITE_A_6502SP_PARA)
 \       Name: Main game loop (Part 4 of 6)
+ELIF _ELITE_A_6502SP_PARA
+\       Name: Main game loop for flight (Part 4 of 6)
+ENDIF
 \       Type: Subroutine
 \   Category: Main loop
 IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment

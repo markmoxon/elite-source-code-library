@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: Main game loop (Part 5 of 6)
+\       Name: Main game loop for flight (Part 5 of 6)
 \       Type: Subroutine
 \   Category: Main loop
 \    Summary: AJD

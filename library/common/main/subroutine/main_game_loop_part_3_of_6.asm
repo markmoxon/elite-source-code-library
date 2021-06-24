@@ -1,6 +1,10 @@
 \ ******************************************************************************
 \
+IF NOT(_ELITE_A_6502SP_PARA)
 \       Name: Main game loop (Part 3 of 6)
+ELIF _ELITE_A_6502SP_PARA
+\       Name: Main game loop for flight (Part 3 of 6)
+ENDIF
 \       Type: Subroutine
 \   Category: Main loop
 \    Summary: Potentially spawn a cop, particularly if we've been bad

@@ -13,7 +13,19 @@ It is a companion to the [bbcelite.com website](https://www.bbcelite.com).
 
 # Notes
 
-* In the conditional statements that control which code is used in which versions ("version-ifs"), any ELIFs that solely contain _ELITE_A_* directives must be the last ELIFs in version-if block.
+* In the conditional statements that control which code is used in which versions ("version-ifs"), any `ELIF`s that solely contain `_ELITE_A_*` directives must be the last `ELIF`s in version-if block.
+
+* A commented out `INCLUDE` file in Elite-A, commented out with a single \ character, denotes a section that was removed by Angus when creating Elite-A:
+
+```
+\INCLUDE "library/disc/main/subroutine/scramble.asm"
+```
+
+* A commented out INCLUDE file in Elite-A, commented out with a double \ character, denotes a section that was moved by Angus when creating Elite-A
+
+```
+\\INCLUDE "library/enhanced/main/subroutine/detok3.asm"
+```
 
 ---
 

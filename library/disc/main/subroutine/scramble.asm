@@ -60,7 +60,7 @@ IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Platform
  JMP RSHIPS             \ Call RSHIPS to launch from the station, load a new set
                         \ of ship blueprints and jump into the main game loop
 
-ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
+ELIF _DISC_DOCKED
 
  CPX #&60               \ Loop back to scrl to decrypt the next page until we
  BNE scrl               \ reach the start of page &60

@@ -7,6 +7,8 @@
 \
 \ ******************************************************************************
 
+IF NOT(_ELITE_A_DOCKED)
+
 IF _STH_DISC
 
  EQUB &45, &4E          \ These bytes appear to be unused
@@ -38,6 +40,19 @@ ELIF _IB_DISC
  EQUB &53, &00
  EQUB &8E, &13
  EQUB &34, &B3
+
+ENDIF
+
+ELIF _ELITE_A_DOCKED
+
+ EQUB &56, &05          \ These bytes appear to be unused
+ EQUB &EA, &32
+ EQUB &00, &00
+ EQUB &06, &4C
+ EQUB &5F, &33
+ EQUB &36, &43
+ EQUB &35, &56
+ EQUB &57
 
 ENDIF
 

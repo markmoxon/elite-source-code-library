@@ -277,6 +277,10 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
  BNE CLYL               \ Loop back to blank another row, until we have done the
                         \ number of rows in X
 
+ENDIF
+
+IF _6502SP_VERSION \ Comment
+
 \INX                    \ These instructions are commented out in the original
 \STX SC                 \ source
 

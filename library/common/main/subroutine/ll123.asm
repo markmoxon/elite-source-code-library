@@ -127,12 +127,24 @@
 
 .LL133
 
+IF _CASSETTE_VERSION \ Comment
+
  TXA                    \ Otherwise negate (Y X) using two's complement by first
  EOR #%11111111         \ setting the low byte to ~X + 1
 \CLC                    \
  ADC #1                 \ The CLC instruction is commented out in the original
  TAX                    \ source. It would have no effect as we know the C flag
                         \ is clear from when we passed through the BCS above
+
+ELIF _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _ELITE_A_VERSION
+
+ TXA                    \ Otherwise negate (Y X) using two's complement by first
+ EOR #%11111111         \ setting the low byte to ~X + 1
+ ADC #1                 \
+ TAX                    \ The addition works as we know the C flag is clear from
+                        \ when we passed through the BCS above
+
+ENDIF
 
  TYA                    \ Then set the high byte to ~Y + C
  EOR #%11111111

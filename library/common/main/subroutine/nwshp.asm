@@ -253,12 +253,24 @@ ENDIF
                         \
                         \ because INWK is in zero page, so INWK+34 = 0
 
+IF _CASSETTE_VERSION \ Comment
+
  LDA INWK+33            \ Calculate INWK+33 - INF, again using 16-bit
 \SEC                    \ arithmetic, and put the result in (A Y), so the high
  SBC INF                \ byte is in A and the low byte in Y. The SEC
  TAY                    \ instruction is commented out in the original source;
  LDA INWK+34            \ as the previous subtraction will never underflow, it
  SBC INF+1              \ is superfluous
+
+ELIF _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _ELITE_A_VERSION
+
+ LDA INWK+33            \ Calculate INWK+33 - INF, again using 16-bit
+ SBC INF                \ arithmetic, and put the result in (A Y), so the high
+ TAY                    \ byte is in A and the low byte in Y. The subtraction
+ LDA INWK+34            \ works because the previous subtraction will never
+ SBC INF+1              \ underflow, so we know the C flag is set
+
+ENDIF
 
  BCC NW3+1              \ If we have an underflow from the subtraction, then
                         \ INF > INWK+33 and we definitely don't have enough

@@ -205,6 +205,8 @@ ENDIF
 
  INC DTW5               \ Increment the buffer size in DTW5
 
+IF _6502SP_VERSION \ Comment
+
 \LDA #' '               \ This instruction is commented out in the original
                         \ source, as it has no effect because A already contains
                         \ ASCII " ". This is because the last character that is
@@ -223,6 +225,8 @@ ENDIF
                         \ next space in the line buffer, before looping back to
                         \ check whether we are done, and if not, insert another
                         \ space
+
+ENDIF
 
 .DAL3
 
@@ -250,10 +254,20 @@ ENDIF
  LDA #12                \ Print a newline
  JSR CHPR
 
+IF _6502SP_VERSION \ Comment
+
  LDA DTW5               \ Subtract #LL from the end-of-buffer pointer in DTW5
 \CLC                    \
  SBC #LL                \ The CLC instruction is commented out in the original
  STA DTW5               \ source. It isn't needed as CHPR clears the C flag
+
+ELIF _DISC_VERSION OR _MASTER_VERSION OR _ELITE_A_VERSION
+
+ LDA DTW5               \ Subtract #LL from the end-of-buffer pointer in DTW5
+ SBC #LL                \
+ STA DTW5               \ The subtraction works as CHPR clears the C flag
+
+ENDIF
 
  TAX                    \ Copy the new value of DTW5 into X
 

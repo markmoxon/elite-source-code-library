@@ -70,7 +70,7 @@ ELIF _ELECTRON_VERSION
                         \ jump to PL2 to remove it from the screen, returning
                         \ from the subroutine using a tail call
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION
 
 \BMI PL2                \ This instruction is commented out in the original
                         \ source. It would remove the planet from the screen

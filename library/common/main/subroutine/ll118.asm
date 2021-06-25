@@ -155,8 +155,12 @@
 
 .LL135
 
+IF _CASSETTE_VERSION \ Comment
+
 \BNE LL139              \ This instruction is commented out in the original
                         \ source
+
+ENDIF
 
  LDA XX15+2             \ Set (S R) = (y1_hi y1_lo) - 192
  SEC                    \

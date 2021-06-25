@@ -253,10 +253,14 @@ ENDIF
  LDA YY+1
  STA S
 
+IF _CASSETTE_VERSION \ Comment
+
 \EOR #128               \ These instructions are commented out in the original
 \JSR MAD                \ source
 \STA S
 \STX R
+
+ENDIF
 
  LDA #0                 \ Set P = 0
  STA P

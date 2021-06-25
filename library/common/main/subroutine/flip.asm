@@ -22,9 +22,13 @@
 
 .FLIP
 
+IF _CASSETTE_VERSION \ Comment
+
 \LDA MJ                 \ These instructions are commented out in the original
 \BNE FLIP-1             \ source. They would have the effect of not swapping the
                         \ stardust if we had mis-jumped into witchspace
+
+ENDIF
 
 IF _MASTER_VERSION \ Screen
 

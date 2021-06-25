@@ -184,8 +184,12 @@ ENDIF
  LDY #2                 \ vertices used as origins for explosion clouds), and
  STA (XX19),Y           \ store it in byte #2 of the ship line heap
 
+IF _CASSETTE_VERSION \ Comment
+
 \LDA XX1+32             \ These instructions are commented out in the original
 \AND #&7F               \ source
+
+ENDIF
 
                         \ The following loop sets bytes 3-6 of the of the ship
                         \ line heap to random numbers
@@ -258,9 +262,13 @@ ENDIF
                         \ the screen, returning from the subroutine using a
                         \ tail call
 
-\LL24                   \ This label is commented out in the original source,
+IF _CASSETTE_VERSION \ Comment
+
+\.LL24                  \ This label is commented out in the original source,
                         \ and was presumably used to label the RTS which is
                         \ actually called by LL10-1 above, not LL24
+
+ENDIF
 
  RTS                    \ Return from the subroutine
 

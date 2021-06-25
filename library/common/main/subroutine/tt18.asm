@@ -109,7 +109,7 @@ ENDIF
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron version doesn't support witchspace, so the code for triggering a manual mis-jump is missing
+IF _CASSETTE_VERSION \ Electron: The Electron version doesn't support witchspace, so the code for triggering a manual mis-jump is missing
 
  AND PATG               \ If the game is configured to show the author's names
                         \ on the start-up screen, then PATG will contain &FF,
@@ -132,6 +132,28 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Ele
                         \ source. It finds the closest system to coordinates
                         \ (QQ9, QQ10), but we don't need to do this as the
                         \ crosshairs will already be on a system by this point
+
+ JSR hyp1+3             \ Jump straight to the system at (QQ9, QQ10) without
+                        \ first calculating which system is closest
+
+ELIF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
+
+ AND PATG               \ If the game is configured to show the author's names
+                        \ on the start-up screen, then PATG will contain &FF,
+                        \ otherwise it will be 0
+
+ BMI ptg                \ By now, A will be negative if we are holding down CTRL
+                        \ and author names are configured, which is what we have
+                        \ to do in order to trigger a manual mis-jump, so jump
+                        \ to ptg to do a mis-jump (ptg not only mis-jumps, but
+                        \ updates the competition flags, so Acornsoft could tell
+                        \ from the competition code whether this feature had
+                        \ been used)
+
+ JSR DORND              \ Set A and X to random numbers
+
+ CMP #253               \ If A >= 253 (1% chance) then jump to MJP to trigger a
+ BCS MJP                \ mis-jump into witchspace
 
  JSR hyp1+3             \ Jump straight to the system at (QQ9, QQ10) without
                         \ first calculating which system is closest

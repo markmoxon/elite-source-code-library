@@ -54,7 +54,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
 
 .MUL4
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION
 
  TAX                    \ Copy A into X. There is a comment in the original
                         \ source here that says "just in case", which refers to
@@ -79,6 +79,24 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 \.mu10
 \STA P
 \RTS
+
+                        \ We now repeat the following four instruction block
+                        \ seven times, one for each remaining bit in P. In the
+                        \ cassette and disc versions of Elite the following is
+                        \ done with a loop, but it is marginally faster to
+                        \ unroll the loop and have seven copies of the code,
+                        \ though it does take up a bit more memory (though that
+                        \ isn't a concern when you have a 6502 Second Processor)
+ELIF _MASTER_VERSION
+
+ TAX                    \ Copy A into X. There is a comment in the original
+                        \ source here that says "just in case", which refers to
+                        \ the MULT1 routine in the cassette and disc versions,
+                        \ which set X to 0 (as they use X as a loop counter).
+                        \ The version here doesn't use a loop, but this
+                        \ instruction makes sure the unrolled version returns
+                        \ the same results as the loop versions, just in case
+                        \ something out there relies on MULT1 returning X = 0
 
                         \ We now repeat the following four instruction block
                         \ seven times, one for each remaining bit in P. In the

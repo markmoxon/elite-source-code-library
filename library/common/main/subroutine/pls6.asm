@@ -71,9 +71,13 @@ ENDIF
  LDA K+3                \ Fetch the sign of the result from K+3 (which we know
                         \ has zeroes in bits 0-6, so this just fetches the sign)
 
+IF _CASSETTE_VERSION \ Comment
+
 \CLC                    \ This instruction is commented out in the original
                         \ source. It would have no effect as we know the C flag
                         \ is already clear, as we skipped past the BCS above
+
+ENDIF
 
  BPL PL6                \ If the sign bit is clear and the result is positive,
                         \ then the result is already correct, so return from

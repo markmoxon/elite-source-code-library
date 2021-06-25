@@ -82,7 +82,7 @@ ELIF _ELITE_A_6502SP_PARA
 
 ENDIF
 
-IF NOT(_ELITE_A_6502SP_PARA)
+IF _CASSETTE_VERSION \ Comment
 
  TAX                    \ This instruction doesn't seem to have any effect, as
                         \ X is overwritten in a few instructions. When the
@@ -91,6 +91,15 @@ IF NOT(_ELITE_A_6502SP_PARA)
                         \ stage of the start-up screen, there's another
                         \ unnecessary TAX instruction present, but there it's
                         \ commented out
+
+ELIF _DISC_VERSION OR _6502SP_VERSION OR _ELITE_A_DOCKED OR _ELITE_A_FLIGHT
+
+ TAX                    \ This instruction doesn't seem to have any effect, as
+                        \ X is overwritten in a few instructions
+
+ENDIF
+
+IF NOT(_ELITE_A_6502SP_PARA)
 
  AND #%00010000         \ Bit 4 of IRB (PB4) is clear if joystick 1's fire
                         \ button is pressed, otherwise it is set, so AND'ing

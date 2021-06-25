@@ -173,9 +173,9 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Label
+IF _CASSETTE_VERSION \ Comment
 
-\LL82                   \ This label is commented out in the original source
+\.LL82                  \ This label is commented out in the original source
 
 ELIF _6502SP_VERSION
 

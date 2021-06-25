@@ -25,13 +25,17 @@ ENDIF
 
 .TT219
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ 6502SP: In the 6502SP version, you can send the Buy Cargo screen to the printer by pressing CTRL-f1
+IF _CASSETTE_VERSION \ Comment
 
 \LDA #2                 \ This instruction is commented out in the original
                         \ source. Perhaps this view originally had a QQ11 value
                         \ of 2, but it turned out not to need its own unique ID,
                         \ so the authors found they could just use a view value
                         \ of 1 and save an instruction at the same time?
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ 6502SP: In the 6502SP version, you can send the Buy Cargo screen to the printer by pressing CTRL-f1
 
  JSR TT66-2             \ Clear the top part of the screen, draw a white border,
                         \ and set the current view type in QQ11 to 1

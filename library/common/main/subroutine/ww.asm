@@ -55,9 +55,9 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
+IF _CASSETTE_VERSION \ Comment
 
-\hy5                    \ This instruction and the hy5 label are commented out
+\.hy5                   \ This instruction and the hy5 label are commented out
 \RTS                    \ in the original - they can actually be found at the
                         \ end of the jmp routine below, so perhaps this is where
                         \ they were originally, but the authors realised they

@@ -139,7 +139,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
+IF _CASSETTE_VERSION \ Comment
 
 \BR1                    \ These instructions are commented out in the original
 \LDX #3                 \ source. This block starts with the same *FX call as
@@ -153,6 +153,10 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 \BCC QU5                \ first line is a commented label, BR1, which is where
                         \ BRKV points, so when this is uncommented, pressing
                         \ the BREAK key should jump straight to the load screen
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
  JSR GTNME              \ We want to load a new commander, so we need to get
                         \ the commander name to load

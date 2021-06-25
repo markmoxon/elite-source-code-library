@@ -114,6 +114,13 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR 
 
 ENDIF
 
+IF _6502SP_VERSION \ Comment
+
+\JSR TT162              \ This instruction is commented out in the original
+                        \ source
+
+ENDIF
+
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: See group A
 
  LDA #205               \ Set A to recursive token 45 ("SELL")
@@ -125,9 +132,6 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: See group A
                         \ the next item
 
 ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
-
-\JSRTT162               \ This instruction is commented out in the original
-                        \ source
 
  LDA #205               \ Print recursive token 45 ("SELL")
  JSR TT27

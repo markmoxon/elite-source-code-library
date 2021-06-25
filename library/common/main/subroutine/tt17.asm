@@ -186,7 +186,7 @@ IF _6502SP_VERSION \ Enhanced: See group A
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: See group B
+IF _CASSETTE_VERSION \ Master: See group B
 
  TAX                    \ Copy A to X, so X contains the joystick roll value
 
@@ -220,6 +220,33 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 \CPY #&F0               \ These instructions are commented out in the original
 \ADC #0                 \ source, but they would make the joystick move the
                         \ cursor faster by increasing the range of Y by -1 to +1
+
+ELIF _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION
+
+ TAX                    \ Copy A to X, so X contains the joystick roll value
+
+ LDA JSTY               \ Fetch the joystick pitch, ranging from 1 to 255 with
+                        \ 128 as the centre point, and fall through into TJS1 to
+                        \ set Y to the joystick pitch value (moving the stick up
+                        \ and down)
+
+.TJS1
+
+ TAY                    \ Store A in Y
+
+ LDA #0                 \ Set the result, A = 0
+
+ CPY #16                \ If Y >= 16 set the C flag, so A = A - 1
+ SBC #0
+
+ CPY #64                \ If Y >= 64 set the C flag, so A = A - 1
+ SBC #0
+
+ CPY #192               \ If Y >= 192 set the C flag, so A = A + 1
+ ADC #0
+
+ CPY #224               \ If Y >= 224 set the C flag, so A = A + 1
+ ADC #0
 
 ENDIF
 

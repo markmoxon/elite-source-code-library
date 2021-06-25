@@ -57,7 +57,7 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Advanced: In the original versions, ships are shown on the scanner with a green stick, while missiles are shown in yellow (if an escape pod is fitted, they are shown in cyan and white respectively). In the advanced versions, each ship has its own colour for when it is shown on the scanner, as defined in the scacol table
+IF _CASSETTE_VERSION \ Advanced: In the original versions, ships are shown on the scanner with a green stick, while missiles are shown in yellow (if an escape pod is fitted, they are shown in cyan and white respectively). In the advanced versions, each ship has its own colour for when it is shown on the scanner, as defined in the scacol table
 
  LDX #&FF               \ Set X to the default scanner colour of green/cyan
                         \ (a 4-pixel mode 5 byte in colour 3)
@@ -78,6 +78,19 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Advanced: In the original versions, ships
 \BCC P%+4               \ source. See above for an explanation of what they do
 \LDX #&0F
 \.SC49
+
+ STX COL                \ Store X, the colour of this ship on the scanner, in
+                        \ COL
+
+ELIF _DISC_FLIGHT
+
+ LDX #&FF               \ Set X to the default scanner colour of green/cyan
+                        \ (a 4-pixel mode 5 byte in colour 3)
+
+ CMP #MSL               \ If this is not a missile, skip the following
+ BNE P%+4               \ instruction
+
+ LDX #&F0               \ This is a missile, so set X to colour 2 (yellow/white)
 
  STX COL                \ Store X, the colour of this ship on the scanner, in
                         \ COL

@@ -144,10 +144,14 @@ ENDIF
  BPL G1                 \ Loop back for the next seed byte, until we have
                         \ rotated them all
 
+IF _CASSETTE_VERSION \ Comment
+
 \JSR DORND              \ This instruction is commented out in the original
                         \ source, and would set A and X to random numbers, so
                         \ perhaps the original plan was to arrive in each new
                         \ galaxy in a random place?
+
+ENDIF
 
 .zZ
 

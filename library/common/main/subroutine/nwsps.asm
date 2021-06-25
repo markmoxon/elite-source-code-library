@@ -41,9 +41,13 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION \ Comment
+
 \STX INWK+31            \ This instruction is commented out in the original
                         \ source. It would set the exploding state and missile
                         \ count to 0
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 

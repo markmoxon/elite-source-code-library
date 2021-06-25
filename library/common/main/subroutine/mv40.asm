@@ -145,7 +145,7 @@ ENDIF
                         \ add them together to get the result we're after, and
                         \ then set the sign afterwards
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Other: A CLC instruction is omitted from the cassette version in the rotation routine in MV40; it isn't needed, so this claws back one precious byte
+IF _CASSETTE_VERSION \ Other: A CLC instruction is omitted from the cassette version in the rotation routine in MV40; it isn't needed, so this claws back one precious byte
 
  LDA K                  \ We now do the following sum:
 \CLC                    \
@@ -157,6 +157,16 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Other: A CLC instruction is omitted 
                         \ source. It isn't needed because MULT3 clears the C
                         \ flag, so this is an example of the authors finding
                         \ one more precious byte to save
+
+ELIF _ELECTRON_VERSION
+
+ LDA K                  \ We now do the following sum:
+ ADC K2                 \
+                        \   (A y_hi y_lo -) = K(3 2 1 0) + K2(3 2 1 0)
+                        \
+                        \ starting with the low bytes (which we don't keep)
+                        \
+                        \ The addition works because MULT3 clears the C flag
 
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION
 

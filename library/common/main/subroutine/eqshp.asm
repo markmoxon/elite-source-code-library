@@ -522,7 +522,7 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform: The refund code has been moved to the refund routine in the enhanced versions
+IF _CASSETTE_VERSION \ Platform: The refund code has been moved to the refund routine in the enhanced versions
 
  STX T1                 \ Store the view in T1 so we can retrieve it below
 
@@ -539,6 +539,42 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform: The refund code has been m
                         \ source, though it would have no effect (it would
                         \ simply skip the BMI if A is positive, which is what
                         \ BMI does anyway)
+
+ BMI ed7                \ If there is a beam laser already mounted in the chosen
+                        \ view (i.e. LASER+X has bit 7 set, which indicates a
+                        \ beam laser rather than a pulse laser), skip back to
+                        \ ed7 to print a "Laser Present" error, beep and exit
+                        \ to the docking bay (i.e. show the Status Mode screen)
+
+ LDA #4                 \ If we get here then we already have a pulse laser in
+ JSR prx                \ the selected view, so we call prx to set (Y X) to the
+                        \ price of equipment item number 4 (extra pulse laser)
+                        \ so we can give a refund of the pulse laser
+
+ JSR MCASH              \ Add (Y X) cash to the cash pot in CASH, so we refund
+                        \ the price of the pulse laser we are exchanging for a
+                        \ new beam laser
+
+.ed5
+
+ LDA #POW+128           \ We just bought a beam laser for view X, so we need
+ LDX T1                 \ to fit it by storing the laser power for a beam laser
+ STA LASER,X            \ (given in POW+128) in LASER+X, using the view number
+                        \ we stored in T1 earlier, as the call to prx will have
+                        \ overwritten the original value in X
+
+ELIF _ELECTRON_VERSION
+
+ STX T1                 \ Store the view in T1 so we can retrieve it below
+
+ LDA #5                 \ Set A to 5 as the call to qv will have overwritten
+                        \ the original value, and we still need it set
+                        \ correctly so we can continue through the conditional
+                        \ statements for all the other equipment
+
+ LDY LASER,X            \ If there is no laser mounted in the chosen view (i.e.
+ BEQ ed5                \ LASER+X, which contains the laser power for view X,
+                        \ is zero), jump to ed5 to buy a beam laser
 
  BMI ed7                \ If there is a beam laser already mounted in the chosen
                         \ view (i.e. LASER+X has bit 7 set, which indicates a

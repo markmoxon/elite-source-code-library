@@ -106,13 +106,25 @@ ENDIF
                         \ the calculation described in the documentation for the
                         \ ACT table, i.e. 128 - A
 
+IF _CASSETTE_VERSION \ Comment
+
  STA T                  \ Set A = 128 - A
  LDA #128               \
 \SEC                    \ The SEC instruction is commented out in the original
  SBC T                  \ source, and isn't required as we did a SEC before
                         \ calling AR3
 
+ELIF _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _ELITE_A_VERSION
+
+ STA T                  \ Set A = 128 - A
+ LDA #128               \
+ SBC T                  \ The subtraction will work because we did a SEC before
+                        \ calling AR3
+
+ENDIF
+
  RTS                    \ Return from the subroutine
+
 
 .ARS1
 

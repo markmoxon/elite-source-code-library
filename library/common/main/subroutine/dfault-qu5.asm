@@ -41,6 +41,10 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
                         \     the game has never been saved, this will still be
                         \     the default commander
 
+ENDIF
+
+IF _CASSETTE_VERSION \ Comment
+
 \JSR TTX66              \ This instruction is commented out in the original
                         \ source; it clears the screen and draws a border
 
@@ -122,7 +126,7 @@ ELSE
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Comment
+IF _6502SP_VERSION \ Comment
 
 \JSR BELL               \ This instruction is commented out in the original
                         \ source. It would make a standard system beep

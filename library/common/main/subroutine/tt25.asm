@@ -414,7 +414,7 @@ ELIF _ELITE_A_ENCYCLOPEDIA
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED \ Minor
+IF _6502SP_VERSION \ Minor
 
                         \ The following code doesn't appear to be called from
                         \ anywhere, so it's presumably a remnant of code from
@@ -445,6 +445,16 @@ IF _6502SP_VERSION OR _DISC_DOCKED \ Minor
 \JSR TT27
 \LDY INWK+2
 \JMP PDT2
+
+ RTS                    \ Return from the subroutine
+
+ELIF _DISC_DOCKED
+
+                        \ The following code doesn't appear to be called from
+                        \ anywhere, so it's presumably a remnant of code from
+                        \ an earlier version of the extended description code
+
+ LDX ZZ                 \ Fetch the system number from ZZ into X
 
  RTS                    \ Return from the subroutine
 

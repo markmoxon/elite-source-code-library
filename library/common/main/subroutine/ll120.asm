@@ -27,7 +27,11 @@
  LDA XX15               \ Set R = x1_lo
  STA R
 
+IF _CASSETTE_VERSION \ Comment
+
 \.LL120                 \ This label is commented out in the original source
+
+ENDIF
 
  JSR LL129              \ Call LL129 to do the following:
                         \

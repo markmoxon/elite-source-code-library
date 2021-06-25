@@ -152,8 +152,12 @@ ENDIF
 
  LDA K                  \ Fetch the distance to the station into A
 
+IF _6502SP_VERSION \ Comment
+
 \BEQ PH10               \ This instruction is commented out in the original
                         \ source
+
+ENDIF
 
  CMP #157               \ If A < 157, jump to PH2 to turn away from the station,
  BCC PH2                \ as we are too close

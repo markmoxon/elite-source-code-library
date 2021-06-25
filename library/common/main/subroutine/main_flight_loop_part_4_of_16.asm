@@ -71,7 +71,7 @@
  BPL MAL2               \ Loop back for the next byte until we have copied the
                         \ last byte from INF to INWK
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 
  LDA TYPE               \ If the ship type is negative then this indicates a
  BMI MA21               \ planet or sun, so jump down to MA21, as the next bit
@@ -86,6 +86,13 @@ ELIF _ELECTRON_VERSION
                         \ up a pointer to the ship blueprint, and then checks
                         \ for energy bomb damage, and neither of these apply
                         \ to planets
+
+ELIF _ELITE_A_VERSION
+
+ LDA TYPE               \ If the ship type is negative then this indicates a
+ BMI MA21               \ planet or sun, so jump down to MA21, as the next bit
+                        \ sets up a pointer to the ship blueprint, which doesn't
+                        \ apply to planets and suns
 
 ENDIF
 
@@ -105,7 +112,7 @@ IF _ELITE_A_VERSION
                         \ We now go straight to part 6, omitting part 5 from the
                         \ original disc version, as part 5 implements the energy
                         \ bomb, and Elite-A replaces the energy bomb with the
-                        \ Hyperspace Unit
+                        \ hyperspace unit
 
 ENDIF
 

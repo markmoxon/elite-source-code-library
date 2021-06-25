@@ -22,10 +22,12 @@
 \
 \   * Space and "?" to speed up and slow down
 \   * "U", "T" and "M" to disarm, arm and fire missiles
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \   * TAB to fire an energy bomb
 ELIF _ELECTRON_VERSION
 \   * "-" to fire an energy bomb
+ELIF _ELITE_A_VERSION
+\   * TAB to activate the hyperspace unit
 ENDIF
 \   * ESCAPE to launch an escape pod
 \   * "J" to initiate an in-system jump

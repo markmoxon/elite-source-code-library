@@ -684,6 +684,8 @@ ENDIF
 
 .et7
 
+IF NOT(_ELITE_A_VERSION)
+
  INY                    \ Increment Y to recursive token 113 ("ENERGY BOMB")
 
  CMP #8                 \ If A is not 8 (i.e. the item we've just bought is not
@@ -694,12 +696,20 @@ ENDIF
                         \ Bomb Present", beep and exit to the docking bay (i.e.
                         \ show the Status Mode screen)
 
-IF NOT(_ELITE_A_VERSION)
-
  LDX #&7F               \ Otherwise we just bought an energy bomb, so set BOMB
  STX BOMB               \ to &7F
 
 ELIF _ELITE_A_VERSION
+
+ INY                    \ Increment Y to recursive token 113 ("HYPERSPACE UNIT")
+
+ CMP #8                 \ If A is not 8 (i.e. the item we've just bought is not
+ BNE et8                \ a hyperspace unit), skip to et8
+
+ LDX BOMB               \ If we already have a hyperspace unit fitted (i.e. BOMB
+ BNE pres               \ is non-zero), jump to pres to show the error
+                        \ "Hyperspace Unit Present", beep and exit to the docking
+                        \ bay (i.e. show the Status Mode screen)
 
  DEC BOMB               \ AJD
 

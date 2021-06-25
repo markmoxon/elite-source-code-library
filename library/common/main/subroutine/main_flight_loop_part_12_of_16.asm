@@ -50,9 +50,19 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Enha
 
 ENDIF
 
+IF NOT(_ELITE_A_VERSION)
+
  LDA INWK+31            \ If bit 7 of the ship's byte #31 is clear, then the
  BPL MAC1               \ ship hasn't been killed by energy bomb, collision or
                         \ laser fire, so jump to MAC1 to skip the following
+
+ELIF _ELITE_A_VERSION
+
+ LDA INWK+31            \ If bit 7 of the ship's byte #31 is clear, then the
+ BPL MAC1               \ ship hasn't been killed by collision or laser fire,
+                        \ so jump to MAC1 to skip the following
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
 

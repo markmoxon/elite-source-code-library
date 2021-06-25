@@ -3,7 +3,11 @@
 \       Name: Main flight loop (Part 13 of 16)
 \       Type: Subroutine
 \   Category: Main loop
+IF NOT(_ELITE_A_VERSION)
 \    Summary: Show energy bomb effect, charge shields and energy banks
+ELIF _ELITE_A_VERSION
+\    Summary: Charge shields and energy banks
+ENDIF
 \  Deep dive: Program flow of the main game loop
 \             Scheduling tasks with the main loop counter
 \
@@ -12,8 +16,10 @@
 \ The main flight loop covers most of the flight-specific aspects of Elite. This
 \ section covers the following:
 \
+IF NOT(_ELITE_A_VERSION)
 \   * Show energy bomb effect (if applicable)
 \
+ENDIF
 \   * Charge shields and energy banks (every 7 iterations of the main loop)
 \
 \ ******************************************************************************

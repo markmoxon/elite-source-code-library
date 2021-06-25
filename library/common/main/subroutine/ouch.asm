@@ -150,7 +150,7 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Minor
 
  BNE MESS               \ Print recursive token A ("ENERGY BOMB", "ENERGY UNIT"
                         \ or "DOCKING COMPUTERS") as an in-flight message,
@@ -161,6 +161,13 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  JMP MESS               \ Print recursive token A ("ENERGY BOMB", "ENERGY UNIT"
                         \ or "DOCKING COMPUTERS") as an in-flight message,
+                        \ followed by " DESTROYED", and return from the
+                        \ subroutine using a tail call
+
+ELIF _ELITE_A_VERSION
+
+ BNE MESS               \ Print recursive token A ("HYPERSPACE UNIT", "ENERGY
+                        \ UNIT" or "DOCKING COMPUTERS") as an in-flight message,
                         \ followed by " DESTROYED", and return from the
                         \ subroutine using a tail call
 

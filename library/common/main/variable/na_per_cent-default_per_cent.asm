@@ -212,7 +212,15 @@ ENDIF
 
  EQUB Q%                \ BST = Fuel scoops ("barrel status"), #41
 
+IF NOT(_ELITE_A_VERSION)
+
  EQUB Q% AND 127        \ BOMB = Energy bomb, #42
+
+ELIF _ELITE_A_VERSION
+
+ EQUB Q% AND 127        \ BOMB = Hyperspace unit, #42
+
+ENDIF
 
  EQUB Q% AND 1          \ ENGY = Energy/shield level, #43
 

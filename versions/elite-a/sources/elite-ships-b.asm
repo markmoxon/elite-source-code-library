@@ -85,10 +85,10 @@ ORG CODE%
  EQUW 0
  EQUW 0
  EQUW 0
- EQUW ship_shuttle_2    \         9 = Shuttle 2
+ EQUW SHIP_SHUTTLE_MK_2 \         9 = Shuttle Mk II
  EQUW 0
- EQUW ship_ghavial      \        11 = Ghavial
- EQUW ship_monitor      \        12 = Monitor
+ EQUW SHIP_GHAVIAL      \        11 = Ghavial
+ EQUW SHIP_MONITOR      \        12 = Monitor
  EQUW SHIP_COBRA_MK_1   \        13 = Cobra Mk I
  EQUW 0
  EQUW 0
@@ -96,15 +96,15 @@ ORG CODE%
  EQUW SHIP_COBRA_MK_1   \        17 = Cobra Mk I
  EQUW 0
  EQUW 0
- EQUW ship_iguana       \        20 = Iguana
+ EQUW SHIP_IGUANA       \        20 = Iguana
  EQUW SHIP_COBRA_MK_3   \        21 = Cobra Mk III
  EQUW 0
  EQUW 0
- EQUW ship_monitor      \        24 = Monitor
+ EQUW SHIP_MONITOR      \        24 = Monitor
  EQUW SHIP_COBRA_MK_3   \        25 = Cobra Mk III
- EQUW ship_iguana       \        26 = Iguana
+ EQUW SHIP_IGUANA       \        26 = Iguana
  EQUW SHIP_COBRA_MK_1   \        27 = Cobra Mk I
- EQUW ship_ghavial      \        28 = Ghavial
+ EQUW SHIP_GHAVIAL      \        28 = Ghavial
  EQUW 0
  EQUW 0
  EQUW 0
@@ -130,7 +130,7 @@ ORG CODE%
  EQUB 0
  EQUB 0
  EQUB 0
- EQUB %00100001         \ Shuttle 2                             Trader, innocent
+ EQUB %00100001         \ Shuttle Mk II                         Trader, innocent
  EQUB 0
  EQUB %10100000         \ Ghavial                           Innocent, escape pod
  EQUB %10100001         \ Monitor                   Trader, innocent, escape pod
@@ -165,7 +165,7 @@ INCLUDE "library/enhanced/main/variable/ship_cobra_mk_1.asm"
 INCLUDE "library/elite-a/flight/variable/ship_ghavial.asm"
 INCLUDE "library/elite-a/flight/variable/ship_monitor.asm"
 INCLUDE "library/common/main/variable/ship_cobra_mk_3.asm"
-INCLUDE "library/elite-a/flight/variable/ship_shuttle_2.asm"
+INCLUDE "library/elite-a/flight/variable/ship_shuttle_mk_2.asm"
 INCLUDE "library/elite-a/flight/variable/ship_iguana.asm"
 
  EQUB 9                 \ AJD

@@ -88,21 +88,21 @@ ORG CODE%
  EQUW 0
  EQUW 0
  EQUW SHIP_PYTHON       \        11 = Python
- EQUW ship_rattler      \        12 = Rattler
- EQUW ship_iguana       \        13 = Iguana
+ EQUW SHIP_RATTLER      \        12 = Rattler
+ EQUW SHIP_IGUANA       \        13 = Iguana
  EQUW 0
  EQUW 0
  EQUW SHIP_VIPER        \ COPS = 16 = Viper
  EQUW SHIP_GECKO        \        17 = Gecko
  EQUW 0
  EQUW SHIP_ADDER        \        19 = Adder
- EQUW ship_iguana       \        20 = Iguana
+ EQUW SHIP_IGUANA       \        20 = Iguana
  EQUW 0
  EQUW SHIP_PYTHON       \        22 = Python
- EQUW ship_rattler      \        23 = Rattler
+ EQUW SHIP_RATTLER      \        23 = Rattler
  EQUW 0
  EQUW 0
- EQUW ship_iguana       \        26 = Iguana
+ EQUW SHIP_IGUANA       \        26 = Iguana
  EQUW SHIP_PYTHON       \        27 = Python
  EQUW SHIP_GECKO        \        28 = Gecko
  EQUW 0

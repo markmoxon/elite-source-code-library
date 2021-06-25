@@ -96,13 +96,13 @@ ORG CODE%
  EQUW SHIP_MAMBA        \        17 = Mamba
  EQUW SHIP_SIDEWINDER   \        18 = Sidewinder
  EQUW SHIP_GECKO        \        19 = Gecko
- EQUW ship_bushmaster   \        20 = Bushmaster
+ EQUW SHIP_BUSHMASTER   \        20 = Bushmaster
  EQUW 0
  EQUW SHIP_MORAY        \        22 = Moray
  EQUW SHIP_WORM         \ WRM  = 23 = Worm
  EQUW SHIP_FER_DE_LANCE \        24 = Fer-de-lance
  EQUW SHIP_FER_DE_LANCE \        25 = Fer-de-lance
- EQUW ship_bushmaster   \        26 = Bushmaster
+ EQUW SHIP_BUSHMASTER   \        26 = Bushmaster
  EQUW SHIP_MORAY        \        27 = Moray
  EQUW SHIP_MAMBA        \        28 = Mamba
  EQUW 0

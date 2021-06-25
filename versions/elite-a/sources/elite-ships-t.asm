@@ -85,24 +85,24 @@ ORG CODE%
  EQUW 0
  EQUW 0
  EQUW 0
- EQUW ship_shuttle_2    \         9 = Shuttle 2
+ EQUW SHIP_SHUTTLE_MK_2 \         9 = Shuttle Mk II
  EQUW 0
  EQUW SHIP_COBRA_MK_3   \ CYL  = 11 = Cobra Mk III
  EQUW 0
- EQUW ship_iguana       \        13 = Iguana
+ EQUW SHIP_IGUANA       \        13 = Iguana
  EQUW 0
  EQUW 0
  EQUW SHIP_VIPER        \ COPS = 16 = Viper
  EQUW SHIP_KRAIT        \        17 = Krait
  EQUW 0
  EQUW 0
- EQUW ship_iguana       \        20 = Iguana
+ EQUW SHIP_IGUANA       \        20 = Iguana
  EQUW SHIP_COBRA_MK_3   \        21 = Cobra Mk III
  EQUW 0
  EQUW 0
  EQUW SHIP_ASP_MK_2     \        24 = Asp Mk II
  EQUW SHIP_COBRA_MK_3   \        25 = Cobra Mk III
- EQUW ship_iguana       \        26 = Iguana
+ EQUW SHIP_IGUANA       \        26 = Iguana
  EQUW SHIP_ASP_MK_2     \        27 = Asp Mk II
  EQUW SHIP_KRAIT        \        28 = Krait
  EQUW 0
@@ -130,7 +130,7 @@ ORG CODE%
  EQUB 0
  EQUB 0
  EQUB 0
- EQUB %00100001         \ Shuttle 2                             Trader, innocent
+ EQUB %00100001         \ Shuttle Mk II                         Trader, innocent
  EQUB 0
  EQUB %10100000         \ Cobra Mk III                      Innocent, escape pod
  EQUB 0
@@ -161,7 +161,7 @@ INCLUDE "library/enhanced/main/variable/ship_dodo.asm"
 INCLUDE "library/common/main/variable/ship_escape_pod.asm"
 INCLUDE "library/common/main/variable/ship_canister.asm"
 INCLUDE "library/common/main/variable/ship_viper.asm"
-INCLUDE "library/elite-a/flight/variable/ship_shuttle_2.asm"
+INCLUDE "library/elite-a/flight/variable/ship_shuttle_mk_2.asm"
 INCLUDE "library/elite-a/flight/variable/ship_iguana.asm"
 INCLUDE "library/enhanced/main/variable/ship_krait.asm"
 INCLUDE "library/common/main/variable/ship_cobra_mk_3.asm"

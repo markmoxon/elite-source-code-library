@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: ship_monitor
+\       Name: SHIP_MONITOR
 \       Type: Variable
 \   Category: Drawing ships
 \    Summary: Ship blueprint for a Monitor
@@ -8,7 +8,7 @@
 \
 \ ******************************************************************************
 
-.ship_monitor
+.SHIP_MONITOR
 
  EQUB 4                 \ Max. canisters on demise = 4
  EQUW 13824             \ Targetable area          = 117.57 * 117.57

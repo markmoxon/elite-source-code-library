@@ -88,7 +88,7 @@ ORG CODE%
  EQUW 0
  EQUW 0
  EQUW 0
- EQUW ship_ophidian     \        12 = Ophidian
+ EQUW SHIP_OPHIDIAN     \        12 = Ophidian
  EQUW SHIP_FER_DE_LANCE \        13 = Fer-de-lance
  EQUW 0
  EQUW 0
@@ -96,13 +96,13 @@ ORG CODE%
  EQUW SHIP_MAMBA        \        17 = Mamba
  EQUW SHIP_COBRA_MK_1   \        18 = Cobra Mk I
  EQUW 0
- EQUW ship_bushmaster   \        20 = Bushmaster
- EQUW ship_ophidian     \        21 = Ophidian
- EQUW ship_chameleon    \        22 = Chameleon
+ EQUW SHIP_BUSHMASTER   \        20 = Bushmaster
+ EQUW SHIP_OPHIDIAN     \        21 = Ophidian
+ EQUW SHIP_CHAMELEON    \        22 = Chameleon
  EQUW 0
  EQUW SHIP_FER_DE_LANCE \        24 = Fer-de-lance
  EQUW SHIP_FER_DE_LANCE \        25 = Fer-de-lance
- EQUW ship_bushmaster   \        26 = Bushmaster
+ EQUW SHIP_BUSHMASTER   \        26 = Bushmaster
  EQUW SHIP_COBRA_MK_1   \        27 = Cobra Mk I
  EQUW SHIP_MAMBA        \        28 = Mamba
  EQUW 0

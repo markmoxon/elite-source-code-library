@@ -90,7 +90,7 @@ ORG CODE%
  EQUW 0
  EQUW 0
  EQUW SHIP_FER_DE_LANCE \        13 = Fer-de-lance
- EQUW ship_dragon       \        14 = Dragon
+ EQUW SHIP_DRAGON       \        14 = Dragon
  EQUW SHIP_SIDEWINDER   \        15 = Sidewinder
  EQUW SHIP_VIPER        \ COPS = 16 = Viper
  EQUW SHIP_SIDEWINDER   \        17 = Sidewinder

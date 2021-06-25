@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: ship_dragon
+\       Name: SHIP_DRAGON
 \       Type: Variable
 \   Category: Drawing ships
 \    Summary: Ship blueprint for a Dragon
@@ -8,7 +8,7 @@
 \
 \ ******************************************************************************
 
-.ship_dragon
+.SHIP_DRAGON
 
  EQUB 0                 \ Max. canisters on demise = 0
  EQUW 26192             \ Targetable area          = 161.83 * 161.83

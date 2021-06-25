@@ -88,7 +88,7 @@ ORG CODE%
  EQUW 0
  EQUW 0
  EQUW SHIP_BOA          \        11 = Boa
- EQUW ship_ophidian     \        12 = Ophidian
+ EQUW SHIP_OPHIDIAN     \        12 = Ophidian
  EQUW 0
  EQUW 0
  EQUW 0
@@ -96,13 +96,13 @@ ORG CODE%
  EQUW SHIP_SIDEWINDER   \ SH3  = 17 = Sidewinder
  EQUW SHIP_GECKO        \        18 = Gecko
  EQUW 0
- EQUW ship_bushmaster   \        20 = Bushmaster
- EQUW ship_ophidian     \        21 = Ophidian
+ EQUW SHIP_BUSHMASTER   \        20 = Bushmaster
+ EQUW SHIP_OPHIDIAN     \        21 = Ophidian
  EQUW 0
  EQUW 0
  EQUW 0
  EQUW 0
- EQUW ship_bushmaster   \        26 = Bushmaster
+ EQUW SHIP_BUSHMASTER   \        26 = Bushmaster
  EQUW SHIP_GECKO        \        27 = Gecko
  EQUW SHIP_SIDEWINDER   \        28 = Sidewinder
  EQUW 0

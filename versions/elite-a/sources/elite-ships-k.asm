@@ -88,7 +88,7 @@ ORG CODE%
  EQUW 0
  EQUW 0
  EQUW SHIP_BOA          \        11 = Boa
- EQUW ship_ophidian     \        12 = Ophidian
+ EQUW SHIP_OPHIDIAN     \        12 = Ophidian
  EQUW SHIP_FER_DE_LANCE \        13 = Fer-de-lance
  EQUW 0
  EQUW 0
@@ -97,14 +97,14 @@ ORG CODE%
  EQUW SHIP_KRAIT        \        18 = Krait
  EQUW 0
  EQUW 0
- EQUW ship_ophidian     \        21 = Ophidian
+ EQUW SHIP_OPHIDIAN     \        21 = Ophidian
  EQUW 0
  EQUW 0
  EQUW SHIP_FER_DE_LANCE \        24 = Fer-de-lance
  EQUW SHIP_FER_DE_LANCE \        25 = Fer-de-lance
  EQUW 0
  EQUW SHIP_GECKO        \        27 = Gecko
- EQUW ship_ophidian     \        28 = Ophidian
+ EQUW SHIP_OPHIDIAN     \        28 = Ophidian
  EQUW 0
  EQUW 0
  EQUW 0

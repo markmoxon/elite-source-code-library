@@ -88,8 +88,8 @@ ORG CODE%
  EQUW 0
  EQUW 0
  EQUW SHIP_PYTHON       \        11 = Python
- EQUW ship_chameleon    \        12 = Chameleon
- EQUW ship_ghavial      \        13 = Ghavial
+ EQUW SHIP_CHAMELEON    \        12 = Chameleon
+ EQUW SHIP_GHAVIAL      \        13 = Ghavial
  EQUW 0
  EQUW 0
  EQUW SHIP_VIPER        \ COPS = 16 = Viper
@@ -98,7 +98,7 @@ ORG CODE%
  EQUW 0
  EQUW 0
  EQUW 0
- EQUW ship_chameleon    \        22 = Chameleon
+ EQUW SHIP_CHAMELEON    \        22 = Chameleon
  EQUW SHIP_PYTHON       \        23 = Python
  EQUW 0
  EQUW 0

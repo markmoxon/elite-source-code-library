@@ -88,8 +88,8 @@ ORG CODE%
  EQUW 0
  EQUW SHIP_TRANSPORTER  \        10 = Transporter
  EQUW 0
- EQUW ship_chameleon    \        12 = Chameleon
- EQUW ship_ophidian     \        13 = Ophidian
+ EQUW SHIP_CHAMELEON    \        12 = Chameleon
+ EQUW SHIP_OPHIDIAN     \        13 = Ophidian
  EQUW 0
  EQUW 0
  EQUW SHIP_VIPER        \ COPS = 16 = Viper
@@ -97,14 +97,14 @@ ORG CODE%
  EQUW 0
  EQUW 0
  EQUW 0
- EQUW ship_ophidian     \        21 = Ophidian
- EQUW ship_chameleon    \        22 = Chameleon
+ EQUW SHIP_OPHIDIAN     \        21 = Ophidian
+ EQUW SHIP_CHAMELEON    \        22 = Chameleon
  EQUW SHIP_MORAY        \        23 = Moray
  EQUW 0
  EQUW 0
  EQUW 0
  EQUW SHIP_MORAY        \        27 = Moray
- EQUW ship_chameleon    \        28 = Chameleon
+ EQUW SHIP_CHAMELEON    \        28 = Chameleon
  EQUW 0
  EQUW 0
  EQUW 0

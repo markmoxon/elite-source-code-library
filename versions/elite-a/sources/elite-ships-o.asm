@@ -85,7 +85,7 @@ ORG CODE%
  EQUW SHIP_BOULDER      \         6 = Boulder
  EQUW SHIP_ASTEROID     \ AST  =  7 = Asteroid
  EQUW SHIP_SPLINTER     \ SPL  =  8 = Splinter
- EQUW ship_shuttle_2    \         9 = Shuttle 2
+ EQUW SHIP_SHUTTLE_MK_2 \         9 = Shuttle Mk II
  EQUW 0
  EQUW SHIP_PYTHON       \        11 = Python
  EQUW SHIP_MORAY        \        12 = Moray
@@ -130,7 +130,7 @@ ORG CODE%
  EQUB %00000000         \ Boulder
  EQUB %00000000         \ Asteroid
  EQUB %00000000         \ Splinter
- EQUB %00100001         \ Shuttle 2                             Trader, innocent
+ EQUB %00100001         \ Shuttle Mk II                         Trader, innocent
  EQUB 0
  EQUB %10100000         \ Python                            Innocent, escape pod
  EQUB %10100001         \ Moray                     Trader, innocent, escape pod
@@ -162,7 +162,7 @@ INCLUDE "library/common/main/variable/ship_escape_pod.asm"
 INCLUDE "library/common/main/variable/ship_canister.asm"
 INCLUDE "library/common/main/variable/ship_viper.asm"
 INCLUDE "library/enhanced/main/variable/ship_moray.asm"
-INCLUDE "library/elite-a/flight/variable/ship_shuttle_2.asm"
+INCLUDE "library/elite-a/flight/variable/ship_shuttle_mk_2.asm"
 INCLUDE "library/enhanced/main/variable/ship_boulder.asm"
 INCLUDE "library/enhanced/main/variable/ship_adder.asm"
 INCLUDE "library/common/main/variable/ship_asteroid.asm"

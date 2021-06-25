@@ -87,8 +87,8 @@ ORG CODE%
  EQUW 0
  EQUW 0
  EQUW 0
- EQUW ship_ghavial      \        11 = Ghavial
- EQUW ship_rattler      \        12 = Rattler
+ EQUW SHIP_GHAVIAL      \        11 = Ghavial
+ EQUW SHIP_RATTLER      \        12 = Rattler
  EQUW SHIP_COBRA_MK_1   \        13 = Cobra Mk I
  EQUW SHIP_ANACONDA     \ ANA  = 14 = Anaconda
  EQUW SHIP_WORM         \        15 = Worm
@@ -99,12 +99,12 @@ ORG CODE%
  EQUW 0
  EQUW 0
  EQUW SHIP_WORM         \        22 = Worm
- EQUW ship_rattler      \        23 = Rattler
+ EQUW SHIP_RATTLER      \        23 = Rattler
  EQUW 0
  EQUW 0
  EQUW 0
  EQUW SHIP_COBRA_MK_1   \        27 = Cobra Mk I
- EQUW ship_rattler      \        28 = Rattler
+ EQUW SHIP_RATTLER      \        28 = Rattler
  EQUW 0
  EQUW 0
  EQUW 0

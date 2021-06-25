@@ -88,7 +88,7 @@ ORG CODE%
  EQUW 0
  EQUW 0
  EQUW SHIP_PYTHON       \        11 = Python
- EQUW ship_ophidian     \        12 = Ophidian
+ EQUW SHIP_OPHIDIAN     \        12 = Ophidian
  EQUW SHIP_BOA          \        13 = Boa
  EQUW 0
  EQUW 0
@@ -96,15 +96,15 @@ ORG CODE%
  EQUW SHIP_MAMBA        \        17 = Mamba
  EQUW 0
  EQUW 0
- EQUW ship_bushmaster   \        20 = Bushmaster
- EQUW ship_ophidian     \        21 = Ophidian
+ EQUW SHIP_BUSHMASTER   \        20 = Bushmaster
+ EQUW SHIP_OPHIDIAN     \        21 = Ophidian
  EQUW SHIP_PYTHON       \        22 = Python
- EQUW ship_iguana       \        23 = Iguana
+ EQUW SHIP_IGUANA       \        23 = Iguana
  EQUW 0
  EQUW 0
- EQUW ship_bushmaster   \        26 = Bushmaster
+ EQUW SHIP_BUSHMASTER   \        26 = Bushmaster
  EQUW SHIP_PYTHON       \        27 = Python
- EQUW ship_ophidian     \        28 = Ophidian
+ EQUW SHIP_OPHIDIAN     \        28 = Ophidian
  EQUW 0
  EQUW 0
  EQUW 0

@@ -87,8 +87,8 @@ ORG CODE%
  EQUW 0
  EQUW 0
  EQUW 0
- EQUW ship_ghavial      \        11 = Ghavial
- EQUW ship_monitor      \        12 = Monitor
+ EQUW SHIP_GHAVIAL      \        11 = Ghavial
+ EQUW SHIP_MONITOR      \        12 = Monitor
  EQUW 0
  EQUW 0
  EQUW 0
@@ -96,13 +96,13 @@ ORG CODE%
  EQUW SHIP_SIDEWINDER   \ SH3  = 17 = Sidewinder
  EQUW SHIP_GECKO        \        18 = Gecko
  EQUW SHIP_MAMBA        \        19 = Mamba
- EQUW ship_bushmaster   \        29 = Bushmaster
+ EQUW SHIP_BUSHMASTER   \        29 = Bushmaster
  EQUW 0
  EQUW 0
  EQUW 0
- EQUW ship_monitor      \        24 = Monitor
+ EQUW SHIP_MONITOR      \        24 = Monitor
  EQUW 0
- EQUW ship_bushmaster   \        26 = Bushmaster
+ EQUW SHIP_BUSHMASTER   \        26 = Bushmaster
  EQUW SHIP_GECKO        \        27 = Gecko
  EQUW SHIP_SIDEWINDER   \        28 = Sidewinder
  EQUW 0

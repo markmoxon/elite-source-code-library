@@ -89,20 +89,20 @@ ORG CODE%
  EQUW 0
  EQUW SHIP_COBRA_MK_3   \ CYL  = 11 = Cobra Mk III
  EQUW SHIP_PYTHON       \        12 = Python
- EQUW ship_iguana       \        13 = Iguana
+ EQUW SHIP_IGUANA       \        13 = Iguana
  EQUW 0
  EQUW 0
  EQUW SHIP_VIPER        \ COPS = 16 = Viper
  EQUW SHIP_GECKO        \        17 = Gecko
  EQUW 0
  EQUW 0
- EQUW ship_bushmaster   \        20 = Bushmaster
+ EQUW SHIP_BUSHMASTER   \        20 = Bushmaster
  EQUW SHIP_COBRA_MK_3   \        21 = Cobra Mk III
  EQUW SHIP_PYTHON       \        22 = Python
- EQUW ship_iguana       \        23 = Iguana
+ EQUW SHIP_IGUANA       \        23 = Iguana
  EQUW SHIP_MORAY        \        24 = Moray
  EQUW SHIP_COBRA_MK_3   \        25 = Cobra Mk III
- EQUW ship_bushmaster   \        26 = Bushmaster
+ EQUW SHIP_BUSHMASTER   \        26 = Bushmaster
  EQUW SHIP_GECKO        \        27 = Gecko
  EQUW SHIP_PYTHON       \        28 = Python
  EQUW 0

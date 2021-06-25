@@ -88,8 +88,8 @@ ORG CODE%
  EQUW 0
  EQUW SHIP_TRANSPORTER  \        10 = Transporter
  EQUW SHIP_PYTHON       \        11 = Python
- EQUW ship_rattler      \        12 = Rattler
- EQUW ship_chameleon    \        13 = Chameleon
+ EQUW SHIP_RATTLER      \        12 = Rattler
+ EQUW SHIP_CHAMELEON    \        13 = Chameleon
  EQUW 0
  EQUW 0
  EQUW SHIP_VIPER        \ COPS = 16 = Viper
@@ -98,13 +98,13 @@ ORG CODE%
  EQUW 0
  EQUW 0
  EQUW 0
- EQUW ship_rattler      \        22 = Rattler
- EQUW ship_chameleon    \        23 = Chameleon
+ EQUW SHIP_RATTLER      \        22 = Rattler
+ EQUW SHIP_CHAMELEON    \        23 = Chameleon
  EQUW SHIP_PYTHON       \        24 = Python
  EQUW 0
  EQUW 0
  EQUW SHIP_PYTHON       \        27 = Python
- EQUW ship_rattler      \        28 = Rattler
+ EQUW SHIP_RATTLER      \        28 = Rattler
  EQUW SHIP_THARGOID     \ THG  = 29 = Thargoid
  EQUW SHIP_THARGON      \ TGL  = 30 = Thargon
  EQUW 0

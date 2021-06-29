@@ -65,8 +65,8 @@ ENDIF
 
 IF _ELITE_A_VERSION
 
- LDA #&7F               \ AJD
- STA BSTK
+ LDA #127               \ Set BSTK = 127 (positive) to disable the Delta 14b
+ STA BSTK               \ joystick
 
 ENDIF
 

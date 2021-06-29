@@ -3,5 +3,5 @@
 .new_type
 .cmdr_ship
 
- SKIP 1                 \ AJD
+ SKIP 1                 \ The type of our current ship
 

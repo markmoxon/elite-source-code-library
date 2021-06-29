@@ -39,7 +39,7 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Stan
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Tube
 
  LDY #16                \ Move the text cursor to row 16, and at the same time
  STY YC                 \ set Y to a counter going from 16-20 in the loop below
@@ -55,6 +55,11 @@ ELIF _MASTER_VERSION
  LDA #16                \ Move the text cursor to row 16, and at the same time
  TAY                    \ set Y to a counter going from 16-20 in the loop below
  STA YC
+
+ELIF _ELITE_A_VERSION
+
+ LDY #16                \ Move the text cursor to row 16, and at the same time
+ STY YC                 \ set YC to a counter going from 16-20 in the loop below
 
 ENDIF
 
@@ -83,7 +88,7 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- LDA YC                 \ AJD
+ LDA YC                 \ Fetch the counter value from YC into A
 
 ENDIF
 
@@ -96,13 +101,18 @@ ENDIF
  ADC #80                \ "RIGHT"
  JSR TT27
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Tube
 
  INC YC                 \ Move the text cursor down a row
 
 ELIF _6502SP_VERSION
 
  JSR INCYC              \ Move the text cursor down a row
+
+ELIF _ELITE_A_VERSION
+
+ INC YC                 \ Move the text cursor down a row, at the same time
+                        \ incrementing the counter in YC
 
 ENDIF
 
@@ -117,8 +127,10 @@ ELIF _ELITE_A_VERSION
 
  LDA new_mounts         \ AJD
  ORA #&10
- CMP YC
- BNE qv1
+
+ CMP YC                 \ If the loop counter in YC hasn't yet reached the
+ BNE qv1                \ number of mounts in A then loop back up to qv1 to
+                        \ print the next view in the menu
 
 ENDIF
 

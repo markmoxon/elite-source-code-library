@@ -175,7 +175,8 @@ ELIF _MASTER_VERSION
 
 ELIF _ELITE_A_VERSION
 
- CPY #&48               \ AJD
+ CPY #&48               \ The last toggle key is &47 (@), so check whether we
+                        \ have just done that one
 
 ENDIF
 
@@ -263,7 +264,8 @@ ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
 ELIF _ELITE_A_ENCYCLOPEDIA
 
- JMP escape             \ AJD
+ JMP escape             \ ESCAPE is being pressed, so jump to escape to end
+                        \ the game
 
 ENDIF
 
@@ -422,7 +424,8 @@ ELIF _ELITE_A_FLIGHT
 
 .DKL1
 
- JSR DKS1               \ AJD
+ JSR DKS1               \ Call DKS1 to see if the KYTB key at offset Y is being
+                        \ pressed, and set the key logger accordingly
 
  DEY                    \ Decrement the loop counter
 

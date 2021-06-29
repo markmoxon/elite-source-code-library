@@ -19,9 +19,10 @@
 \                       want to scan on the keyboard
 \
 IF _ELITE_A_VERSION
-\ Other tnery points:
+\ Other entry points:
 \
-\   b_pressed           AJD
+\   b_pressed           Store &FF in the Y-th byte of the key logger at KL, to
+\                       indicate that key is being pressed
 \
 ENDIF
 \ ******************************************************************************
@@ -30,8 +31,9 @@ ENDIF
 
 IF _ELITE_A_VERSION
 
- LDA BSTK               \ AJD
- BMI b_14
+ LDA BSTK               \ If BTSK is negative, then the Delta 14b joystick is
+ BMI b_14               \ configured, so jump to b_14 to check the Delta 14b
+                        \ joystick buttons
 
 ENDIF
 

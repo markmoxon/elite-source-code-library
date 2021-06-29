@@ -13,7 +13,7 @@
 \ Specifically, this routine toggles the configuration settings for the
 \ following keys:
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \   * CAPS LOCK toggles keyboard flight damping (&40)
 \   * A toggles keyboard auto-recentre (&41)
 \   * X toggles author names on start-up screen (&42)
@@ -77,6 +77,21 @@ ELIF _MASTER_VERSION
 \ pass the ASCII code of the key that has been pressed in X, and the option to
 \ check it against in Y, so this routine is typically called in a loop that
 \ loops through the various configuration option.
+ELIF _ELITE_A_VERSION
+\   * CAPS LOCK toggles keyboard flight damping (&40)
+\   * A toggles keyboard auto-recentre (&41)
+\   * X toggles author names on start-up screen (&42)
+\   * F toggles flashing console bars (&43)
+\   * Y toggles reverse joystick Y channel (&44)
+\   * J toggles reverse both joystick channels (&45)
+\   * K toggles keyboard and joystick (&46)
+\   * @ toggles keyboard and Delta 14B joystick (&47)
+\
+\ The numbers in brackets are the internal key numbers (see p.142 of the
+\ Advanced User Guide for a list of internal key numbers). We pass the key that
+\ has been pressed in X, and the configuration option to check it against in Y,
+\ so this routine is typically called in a loop that loops through the various
+\ configuration options.
 ENDIF
 \
 \ Arguments:

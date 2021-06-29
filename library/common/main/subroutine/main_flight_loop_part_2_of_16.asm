@@ -39,21 +39,28 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- LDX JSTX               \ AJD
- CPX new_max
- BCC n_highx
- LDX new_max
+ LDX JSTX               \ Set X to the current rate of roll in JSTX
+
+ CPX new_max            \ If X < new_max (where new_max is our current ship's
+ BCC n_highx            \ maximum roll rate), then jump to n_highx to skip the
+                        \ following instruction
+
+ LDX new_max            \ X is at least new_max, so set X to new_max so it is
+                        \ never higher than our current ship's maximum roll rate
 
 .n_highx
 
- CPX new_min
- BCS n_lowx
- LDX new_min
+ CPX new_min            \ If X >= new_min (where new_min is our current ship's
+ BCS n_lowx             \ minimum roll rate), then jump to n_lowx to skip the
+                        \ following instruction
+
+ LDX new_min            \ X is less than new_min, so set X to new_min so it is
+                        \ never lower than our current ship's minimum roll rate
 
 .n_lowx
 
- JSR cntr
- JSR cntr
+ JSR cntr               \ Apply keyboard damping twice (if enabled) so the roll
+ JSR cntr               \ rate in X creeps towards the centre by 2
 
 ENDIF
 
@@ -154,20 +161,29 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- LDX JSTY               \ AJD
- CPX new_max
- BCC n_highy
- LDX new_max
+ LDX JSTY               \ Set X to the current rate of pitch in JSTY
+
+ CPX new_max            \ If X < new_max (where new_max is our current ship's
+ BCC n_highy            \ maximum pitch rate), then jump to n_highy to skip the
+                        \ following instruction
+
+ LDX new_max            \ X is at least new_max, so set X to new_max so it is
+                        \ never higher than our current ship's maximum pitch
+                        \ rate
 
 .n_highy
 
- CPX new_min
- BCS n_lowy
- LDX new_min
+ CPX new_min            \ If X >= new_min (where new_min is our current ship's
+ BCS n_lowy             \ minimum pitch rate), then jump to n_lowy to skip the
+                        \ following instruction
+
+ LDX new_min            \ X is less than new_min, so set X to new_min so it is
+                        \ never lower than our current ship's minimum pitch rate
 
 .n_lowy
 
- JSR cntr
+ JSR cntr               \ Apply keyboard damping so the pitch rate in X creeps
+                        \ towards the centre by 1
 
 ENDIF
 

@@ -61,9 +61,9 @@ ELIF _ELITE_A_VERSION
  LDA CRGO,X             \ If we do not have any of item CRGO+X, return from the
  BEQ DK5                \ subroutine (as DK5 contains an RTS). X is in the range
                         \ 0-23, so this not only checks for cargo, but also for
-                        \ I.F.F., E.C.M., fuel scoops, hyperspace unit, energy
-                        \ unit, docking computer and galactic hyperdrive, all of
-                        \ which can be destroyed
+                        \ the I.F.F., E.C.M., fuel scoops, hyperspace unit,
+                        \ energy unit, docking computer and galactic hyperdrive,
+                        \ all of which can be destroyed
 
  LDA DLY                \ If there is already an in-flight message on-screen,
  BNE DK5                \ return from the subroutine (as DK5 contains an RTS)
@@ -85,12 +85,24 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- STA CRGO,X             \ AJD
- DEX
- BMI ou1
+ STA CRGO,X             \ A is 0 (as we didn't branch with the BNE above), so
+                        \ this sets CRGO+X to 0, which destroys any cargo or
+                        \ equipment we have of that type
 
- CPX #17                \ If X = 17 then AJD
- BEQ ou1
+ DEX                    \ Decrement X, so X is now in the range -1 to 22, and a
+                        \ value of 0 means we just lost some food, 1 means we
+                        \ lost some textiles, and so on
+
+ BMI ou1                \ If X is now negative, then we just lost the I.F.F.
+                        \ system (as X was 0 before being decremented), so jump
+                        \ to ou1 to print the relevant message, which will be
+                        \ "I.F.F.SYSTEM DESTROYED" as A = 0 and the C flag is
+                        \ clear (as we passed through the BCS above)
+
+ CPX #17                \ If X = 17 then we just lost the E.C.M., so jump to ou1
+ BEQ ou1                \ to print the relevant message, which will be
+                        \ "E.C.M.SYSTEM DESTROYED" as A = 0 and the C flag is
+                        \ set from the CPX
 
 ENDIF
 
@@ -114,12 +126,25 @@ ELIF _MASTER_VERSION
 
 ELIF _ELITE_A_VERSION
 
- TXA                    \ AJD
- BCC cargo_mtok
+                        \ If we get here then X is in the range 0-16 or 18-22
 
- CMP #&12
- BNE equip_mtok
- LDA #&6F-&6B-1
+ TXA                    \ Copy the value of X into A
+
+ BCC cargo_mtok         \ If X < 17 then we just lost some cargo (as opposed to
+                        \ equipment), so jump to cargo_mtok to print the name of
+                        \ the cargo whose number is in A, plus " DESTROYED", and
+                        \ return from the subroutine using a tail call
+
+                        \ If we get here then X (and A) are in the range 18-22
+
+ CMP #18                \ If A is not 18, jump down to equip_mtok with A in the
+ BNE equip_mtok         \ range 19-22 and the C flag set from the CMP, to print
+                        \ token 113 ("HYPERSPACE UNIT") through 116 ("GALACTIC
+                        \ HYPERSPACE")
+
+ LDA #111-107-1         \ Otherwise A is 18, so we have lost the fuel scoops, so
+                        \ set A to 111-107-1 = 3 and the C flag set from the CMP
+                        \ to print token 111 ("FUEL SCOOPS")
 
 ENDIF
 
@@ -145,12 +170,23 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- ADC #&6B-&5D           \ AJD
+ ADC #107-93            \ We can reach here with three values of A and the C
+                        \ flag, and then add 93 below to print the following
+                        \ tokens:
+                        \
+                        \   A = 0, C flag clear = token 107 ("I.F.F.SYSTEM")
+                        \   A = 0, C flag set   = token 108 ("E.C.M.SYSTEM")
+                        \   A = 3, C flag set   = token 111 ("FUEL SCOOPS")
 
 .equip_mtok
 
- ADC #&5D
- INC new_hold
+ ADC #93                \ We can either reach here from above, or jump straight
+                        \ here with A = 19-22 and the C flag set, in which case
+                        \ adding 93 will give us token 113 ("HYPERSPACE UNIT")
+                        \ through 116 ("GALACTIC HYPERSPACE ")
+
+ INC new_hold           \ We just lost a piece of equipment, so increment the
+                        \ amount of free space in the hold
 
 ENDIF
 
@@ -170,8 +206,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ELIF _ELITE_A_VERSION
 
- BNE MESS               \ Print recursive token A ("HYPERSPACE UNIT", "ENERGY
-                        \ UNIT" or "DOCKING COMPUTERS") as an in-flight message,
+BNE MESS                \ Print recursive token A as an in-flight message,
                         \ followed by " DESTROYED", and return from the
                         \ subroutine using a tail call
 

@@ -58,9 +58,11 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- LDA DELTA              \ AJD
- CMP new_speed
- BCC speed_up
+ LDA DELTA              \ The "go faster" key is being pressed, so first we
+ CMP new_speed          \ fetch the current speed from DELTA into A, and if
+ BCC speed_up           \ A < new_speed (the maximum speed of our current ship),
+                        \ then we can go a bit faster, so jump to speed_up to
+                        \ accelerate
 
 ENDIF
 

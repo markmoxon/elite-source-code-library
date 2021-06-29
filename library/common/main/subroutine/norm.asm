@@ -55,17 +55,9 @@ IF NOT(_ELITE_A_FLIGHT)
 
  STA T                  \ Set (T P) = (A P) = y^2
 
-ELIF _ELITE_A_FLIGHT
-
- TAY                    \ AJD
-
-ENDIF
-
  LDA P                  \ Set (R Q) = (R Q) + (T P) = x^2 + y^2
  ADC Q                  \
  STA Q                  \ First, doing the low bytes, Q = Q + P
-
-IF NOT(_ELITE_A_FLIGHT)
 
  LDA T                  \ And then the high bytes, R = R + T
  ADC R
@@ -73,7 +65,13 @@ IF NOT(_ELITE_A_FLIGHT)
 
 ELIF _ELITE_A_FLIGHT
 
- TYA                    \ AJD
+ TAY                    \ Set (Y P) = (A P) = y^2
+
+ LDA P                  \ Set (R Q) = (R Q) + (Y P) = x^2 + y^2
+ ADC Q                  \
+ STA Q                  \ First, doing the low bytes, Q = Q + P
+
+ TYA                    \ And then the high bytes, R = R + Y
  ADC R
  STA R
 
@@ -87,17 +85,9 @@ IF NOT(_ELITE_A_FLIGHT)
 
  STA T                  \ Set (T P) = (A P) = z^2
 
-ELIF _ELITE_A_FLIGHT
-
- TAY                    \ AJD
-
-ENDIF
-
  LDA P                  \ Set (R Q) = (R Q) + (T P) = x^2 + y^2 + z^2
  ADC Q                  \
  STA Q                  \ First, doing the low bytes, Q = Q + P
-
-IF NOT(_ELITE_A_FLIGHT)
 
  LDA T                  \ And then the high bytes, R = R + T
  ADC R
@@ -105,7 +95,13 @@ IF NOT(_ELITE_A_FLIGHT)
 
 ELIF _ELITE_A_FLIGHT
 
- TYA                    \ AJD
+ TAY                    \ Set (Y P) = (A P) = z^2
+
+ LDA P                  \ Set (R Q) = (R Q) + (Y P) = x^2 + y^2 + z^2
+ ADC Q                  \
+ STA Q                  \ First, doing the low bytes, Q = Q + P
+
+ TYA                    \ And then the high bytes, R = R + Y
  ADC R
  STA R
 

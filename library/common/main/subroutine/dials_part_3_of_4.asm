@@ -109,7 +109,9 @@ ELIF _ELECTRON_VERSION
 
 ELIF _ELITE_A_DOCKED
 
- LDA #&3F               \ AJD
+ LDA #63                \ We are docked, so set the indicator to 63, which is
+                        \ a full set of energy bars (16 in each of the bottom
+                        \ three banks, and 15 in the top bank)
 
 ENDIF
 

@@ -22,7 +22,7 @@ ENDIF
 IF NOT(_ELITE_A_ENCYCLOPEDIA)
  EQUW MT6               \ Token  6: Switch to standard tokens, in Sentence Case
 ELIF _ELITE_A_ENCYCLOPEDIA
- EQUW set_token         \ Token  6: AJD
+ EQUW set_token         \ Token  6: Start a new word
 ENDIF
  EQUW DASC              \ Token  7: Beep
  EQUW MT8               \ Token  8: Tab to column 6

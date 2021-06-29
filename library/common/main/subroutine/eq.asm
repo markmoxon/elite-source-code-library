@@ -16,6 +16,14 @@
 \   A                   The item number of the piece of equipment (0-11) as
 \                       shown in the table at PRXS
 \
+IF _ELITE_A_VERSION
+\ Other entry points:
+\
+\   query_beep          Print the recursive token given in A followed by a
+\                       question mark, then make a beep, pause and go to the
+\                       docking bay (i.e. show the Status Mode screen)
+\
+ENDIF
 \ ******************************************************************************
 
 .eq
@@ -32,17 +40,20 @@
 
 IF NOT(_ELITE_A_VERSION)
 
- LDA #197               \ Otherwise we don't have enough cash to but this piece
+ LDA #197               \ Otherwise we don't have enough cash to buy this piece
  JSR prq                \ of equipment, so print recursive token 37 ("CASH")
                         \ followed by a question mark
 
 ELIF _ELITE_A_VERSION
 
- LDA #&C5               \ AJD
+ LDA #197               \ Otherwise we don't have enough cash to buy this piece
+                        \ of equipment, so set A to the value for recursive
+                        \ token 37 ("CASH")
 
 .query_beep
 
- JSR prq
+ JSR prq                \ Print the recursive token in A followed by a question
+                        \ mark
 
 ENDIF
 

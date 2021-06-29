@@ -58,7 +58,7 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- LDA &7D                \ AJD
+ LDA DELTA              \ AJD
  CMP new_speed
  BCC speed_up
 
@@ -185,15 +185,21 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ELIF _ELITE_A_FLIGHT
 
- LDY #&E0               \ AJD
- DEX
- JSR MSBAR
+ LDY #&E0               \ Change the leftmost missile indicator to yellow/white
+ DEX                    \ on the missile bar (this call changes the leftmost
+ JSR MSBAR              \ indicator because we set X to the number of missiles
+                        \ in NOMSL above, and the indicators are numbered from
+                        \ right to left, starting at 0, so X - 1 is the number
+                        \ of the leftmost indicator)
 
 ELIF _ELITE_A_6502SP_PARA
 
- LDY #&E0               \ AJD
- DEX
- JSR MSBAR_FLIGHT
+ LDY #&E0               \ Change the leftmost missile indicator to yellow/white
+ DEX                    \ on the missile bar (this call changes the leftmost
+ JSR MSBAR_FLIGHT       \ indicator because we set X to the number of missiles
+                        \ in NOMSL above, and the indicators are numbered from
+                        \ right to left, starting at 0, so X - 1 is the number
+                        \ of the leftmost indicator)
 
 ENDIF
 

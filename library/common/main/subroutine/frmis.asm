@@ -71,7 +71,9 @@ ELIF _MASTER_VERSION
 
 ELIF _ELITE_A_VERSION
 
- JMP n_sound30          \ AJD
+ JMP n_sound30          \ Call n_sound30 to make the sound of a missile being
+                        \ launched and return from the subroutine using a tail
+                        \ call
 
 ENDIF
 

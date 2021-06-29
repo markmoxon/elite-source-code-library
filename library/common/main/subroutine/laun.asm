@@ -25,7 +25,8 @@ ELIF _MASTER_VERSION
 
 ELIF _ELITE_A_VERSION
 
- JSR n_sound30          \ AJD
+ JSR n_sound30          \ Call n_sound30 to make the sound of a missile being
+                        \ launched
 
 ENDIF
 

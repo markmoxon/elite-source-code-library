@@ -24,7 +24,7 @@
 
 IF _ELITE_A_DOCKED
 
- JSR vdu_80
+ JSR vdu_80             \ Call vdu_80 to switch to Sentence Case
 
 ELIF _ELITE_A_6502SP_PARA
 

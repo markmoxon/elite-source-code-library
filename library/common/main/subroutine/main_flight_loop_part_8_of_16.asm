@@ -107,7 +107,13 @@ ELIF _ELECTRON_VERSION
                         \ anything from food to computers, while escape pods
                         \ contain slaves
 ELIF _ELITE_A_VERSION
-                        \ AJD
+                        \ number 0-15 if we are scooping a cargo canister, 3 if
+                        \ we are scooping an escape pod, or 16 if we are
+                        \ scooping a Thargon). These numbers correspond to the
+                        \ relevant market items (see QQ23 for a list), so a
+                        \ cargo canister can contain anything from food to
+                        \ gem-stones, while escape pods contain slaves, and
+                        \ Thargons become alien items when scooped
 ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
@@ -126,13 +132,19 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
 ELIF _ELITE_A_FLIGHT
 
- TAX                    \ AJD
- JSR tnpr
+ TAX                    \ Copy the type of cargo we are scooping into X
+
+ JSR tnpr               \ Call tnpr to work out whether we have room in the
+                        \ hold for the scooped item (the C flag contains the
+                        \ result)
 
 ELIF _ELITE_A_6502SP_PARA
 
- TAX                    \ AJD
- JSR tnpr_FLIGHT
+ TAX                    \ Copy the type of cargo we are scooping into X
+
+ JSR tnpr_FLIGHT        \ Call tnpr_FLIGHT to work out whether we have room in
+                        \ the hold for the scooped item (the C flag contains the
+                        \ result)
 
 ENDIF
 
@@ -153,17 +165,22 @@ IF NOT(_ELITE_A_VERSION)
  STA QQ20,Y             \ of type Y in the cargo hold, as we just successfully
                         \ scooped one canister of type Y
 
- TYA                    \ Print recursive token 48 + A as an in-flight token,
+ TYA                    \ Print recursive token 48 + Y as an in-flight token,
  ADC #208               \ which will be in the range 48 ("FOOD") to 64 ("ALIEN
  JSR MESS               \ ITEMS"), so this prints the scooped item's name
 
 ELIF _ELITE_A_VERSION
 
- BCS MA58               \ AJD
- INC QQ20,X
- TXA
- ADC #&D0
- JSR MESS
+ BCS MA58               \ If the C flag is set then we have no room in the hold
+                        \ for the scooped item, so jump down to MA58 to skip all
+                        \ the docking and scooping checks
+
+ INC QQ20,X             \ Scooping was successful, so increment the number of
+                        \ items of type X that we have in the hold
+
+ TXA                    \ Print recursive token 48 + X as an in-flight token,
+ ADC #208               \ which will be in the range 48 ("FOOD") to 64 ("ALIEN
+ JSR MESS               \ ITEMS"), so this prints the scooped item's name
 
 ENDIF
 
@@ -181,7 +198,8 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
 ELIF _ELITE_A_VERSION
 
- JSR top_6a             \ AJD
+ JSR top_6a             \ The item has now been scooped, so call top_6a to set
+                        \ bit 7 of its NEWB flags to indicate this
 
 ENDIF
 

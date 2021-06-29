@@ -179,7 +179,8 @@ IF NOT(_ELITE_A_DOCKED)
 
 ELIF _ELITE_A_DOCKED
 
- JSR vdu_80             \ AJD
+ JSR vdu_80             \ Call vdu_80 to switch to Sentence Case, with the next
+                        \ letter printing in upper case
 
 ENDIF
 

@@ -23,14 +23,24 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- LDY #&25               \ AJD
- LDA SSPR
- BNE l_station
- LDY finder
+ LDY #NI%               \ Set Y = NI%, so SPS1 will calculate the vector to the
+                        \ second slot in the local bubble, i.e. the space
+                        \ station or the sun
+
+ LDA SSPR               \ If we are inside the space station safe zone, jump to
+ BNE l_station          \ l_station to skip the following instruction and ensure
+                        \ we draw the space station on the compass
+
+ LDY finder             \ We are not inside the space station safe zone, so
+                        \ set the value of Y to finder, which determines whether
+                        \ the compass is configured to show the sun or the
+                        \ planet
 
 .l_station
 
- JSR SPS1
+ JSR SPS1               \ We now draw the planet or sun/station on the compass,
+                        \ so first call SPS1 to calculate the vector to the
+                        \ planet/sun/station and store it in XX15
 
 ENDIF
 

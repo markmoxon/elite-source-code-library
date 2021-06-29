@@ -9,6 +9,8 @@
 
 .clr_vdustat
 
- LDA #&01
- EQUB &2C
+ LDA #%00000001         
 
+ EQUB &2C               \ Skip the next instruction by turning it into
+                        \ &2C &A9 &80, or BIT &80A9, which does nothing apart
+                        \ from affect the flags

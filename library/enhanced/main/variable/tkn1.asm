@@ -387,7 +387,7 @@ ENDIF
  ETOK 200
  EQUB VE
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Advanced: The disc and 6502SP versions support a "FILE TO DELETE?" prompt when deleting files via the disc access menu, but the token for this prompt isn't present in the Master version. Instead the Master version contains a token for the error message "ILLEGAL ELITE II FILE"; this message is also present in the other versions, but there it is hard-coded rather than being a token, is in sentence case, and contains a spelling mistake ("IIllegal ELITE II file") which is corrected in the Master version
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Advanced: The disc and 6502SP versions support a "FILE TO DELETE?" prompt when deleting files via the disc access menu, but the token for this prompt isn't present in the Master version. Instead the Master version contains a token for the error message "ILLEGAL ELITE II FILE"; this message is also present in the other versions, but there it is hard-coded into a BRK block rather than being a token, and is in sentence case
 
  EJMP 21                \ Token 9:      "{clear bottom of screen}
  ECHR 'F'               \                FILE TO DELETE?"
@@ -789,9 +789,9 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA)
 ELIF _ELITE_A_ENCYCLOPEDIA
 
 
- EJMP 22                \ Token 10:     "" AJD
+ EJMP 22                \ Token 10:     "{tab 16}"
  EQUB VE                \
-                        \ Encoded as:   ""
+                        \ Encoded as:   "{22}"
 
 ENDIF
 

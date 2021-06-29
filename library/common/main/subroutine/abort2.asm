@@ -59,15 +59,22 @@ IF NOT(_ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA)
 
 ELIF _ELITE_A_FLIGHT
 
- LDX NOMSL              \ AJD
- DEX
- JSR MSBAR
+ LDX NOMSL              \ Call MSBAR to update the leftmost indicator in the
+ DEX                    \ dashboard's missile bar, by calling with X = NOMSL - 1
+ JSR MSBAR              \ (as the missile indicators are numbered 0-3 in Elite-A
+                        \ rather than the 1-4 in the disc version)
+                        \
+                        \ MSBAR returns with Y = 0
 
 ELIF _ELITE_A_6502SP_PARA
 
- LDX NOMSL              \ AJD
- DEX
- JSR MSBAR_FLIGHT
+ LDX NOMSL              \ Call MSBAR (via MSBAR_FLIGHT) to update the leftmost
+ DEX                    \ indicator in the dashboard's missile bar, by calling
+ JSR MSBAR_FLIGHT       \ with X = NOMSL - 1 (as the missile indicators are
+                        \ numbered 0-3 in Elite-A rather than the 1-4 in the
+                        \ disc version)
+                        \
+                        \ MSBAR_FLIGHT returns with Y = 0
 
 ENDIF
 

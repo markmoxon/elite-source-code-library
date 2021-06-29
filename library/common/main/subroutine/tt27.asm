@@ -19,11 +19,11 @@
 IF _ELITE_A_DOCKED OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA
 \ Other entry points:
 \
-\   vdu_80              AJD
+\   vdu_80              Switch standard tokens to Sentence Case
 \
 ENDIF
 IF _ELITE_A_FLIGHT
-\   vdu_00              AJD
+\   vdu_00              Switch standard tokens to ALL CAPS
 \
 ENDIF
 \ ******************************************************************************
@@ -76,32 +76,44 @@ IF NOT(_ELITE_A_DOCKED OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA)
 
 ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
- DEX                    \ AJD
- BEQ vdu_80
+ DEX                    \ If token = 6, this is is control code 6 (switch to
+ BEQ vdu_80             \ Sentence Case), so jump to vdu_80 to do just that
 
- DEX
+ DEX                    \ If token <> 8, skip the following 3 instructions
  DEX
  BNE l_31d2
 
- EQUB &2C
+                        \ If we get here, then token = 8 (switch to ALL CAPS)
+                        \ and X = 0, which we now use to set the value of QQ17
+                        \ below
+
+ EQUB &2C               \ Skip the next instruction by turning it into
+                        \ &2C &A2 &80, or BIT &80A2, which does nothing apart
+                        \ from affect the flags
 
 .vdu_80
 
- LDX #&80
+ LDX #%10000000         \ Set bit 7 of X, so when we set QQ17 below, we switch
+                        \ standard tokens to Sentence Case
 
 ELIF _ELITE_A_FLIGHT
 
- DEX                    \ AJD
+ DEX                    \ If token > 6, skip the following 3 instructions
  BNE l_33b9
 
 .vdu_80
 
- LDX #&80
- EQUB &2C
+ LDX #%10000000         \ Set bit 7 of X, so when we set QQ17 below, we switch
+                        \ standard tokens to Sentence Case
+
+ EQUB &2C               \ Skip the next instruction by turning it into
+                        \ &2C &A2 &00, or BIT &00A2, which does nothing apart
+                        \ from affect the flags
 
 .vdu_00
 
- LDX #&00
+ LDX #0                 \ Clear bit 7 of X, so when we set QQ17 below, we switch
+                        \ standard tokens to ALL CAPS
 
 ENDIF
 
@@ -119,9 +131,9 @@ IF _ELITE_A_FLIGHT
 
 .l_33b9
 
- DEX                    \ AJD
- DEX
- BEQ vdu_00
+ DEX                    \ If token = 8, this is control code 8 (switch to ALL
+ DEX                    \ CAPS), so jump up to vdu_00 to set QQ17 to 0 to switch
+ BEQ vdu_00             \ to ALL CAPS and return from the subroutine
 
 ENDIF
 

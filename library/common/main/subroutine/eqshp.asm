@@ -84,7 +84,8 @@ IF NOT(_ELITE_A_DOCKED)
 
 ELIF _ELITE_A_DOCKED
 
- JSR vdu_80             \ AJD
+ JSR vdu_80             \ Call vdu_80 to switch to Sentence Case, with the next
+                        \ letter in capitals
 
 ENDIF
 
@@ -313,7 +314,10 @@ ELIF _ELITE_A_VERSION
  JSR Tml
  BCC equip_isspace
  LDA #&0E
- JMP query_beep
+
+ JMP query_beep         \ Print the recursive token given in A followed by a
+                        \ question mark, then make a beep, pause and go to the
+                        \ docking bay (i.e. show the Status Mode screen)
 
 .equip_isspace
 
@@ -401,13 +405,13 @@ ENDIF
 
 .et1
 
+IF NOT(_ELITE_A_VERSION)
+
  LDY #107               \ Set Y to recursive token 107 ("LARGE CARGO{sentence
                         \ case} BAY")
 
  CMP #2                 \ If A is not 2 (i.e. the item we've just bought is not
  BNE et2                \ a large cargo bay), skip to et2
-
-IF NOT(_ELITE_A_VERSION)
 
  LDX #37                \ If our current cargo capacity in CRGO is 37, then we
  CPX CRGO               \ already have a large cargo bay fitted, so jump to pres
@@ -420,9 +424,19 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- LDX CRGO               \ AJD
- BNE pres
- DEC CRGO
+ LDY #107               \ Set Y to recursive token 107 ("I.F.F.SYSTEM")
+
+ CMP #2                 \ If A is not 2 (i.e. the item we've just bought is not
+ BNE et2                \ an I.F.F. system), skip to et2
+
+ LDX CRGO               \ If we already have an I.F.F. fitted (i.e. CRGO is
+ BNE pres               \ non-zero), jump to pres to show the error "I.F.F.
+                        \ System Present", beep and exit to the docking bay
+                        \ (i.e. show the Status Mode screen)
+
+ DEC CRGO               \ Otherwise we just scored ourselves an I.F.F. system,
+                        \ so set CRGO to &FF (as CRGO was 0 before the DEC
+                        \ instruction)
 
 ENDIF
 

@@ -15,7 +15,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
  EQUW 65 * 65           \ Targetable area          = 65 * 65
 ELIF _DISC_DOCKED OR _ELITE_A_VERSION
  EQUB 3 + (15 << 4)     \ Max. canisters on demise = 3
-                        \ Market item when scooped = 15 + 1 = 16 (Alien items)
+                        \ Market item when scooped = 15 + 1 = 16 (alien items)
  EQUW 99 * 99           \ Targetable area          = 99 * 99
 ENDIF
  EQUB &7A               \ Edges data offset (low)  = &007A

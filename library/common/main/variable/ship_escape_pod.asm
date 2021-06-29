@@ -14,7 +14,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: In the enhanced versions, 
  EQUB 0                 \ Max. canisters on demise = 0
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
  EQUB 0 + (2 << 4)      \ Max. canisters on demise = 0
-                        \ Market item when scooped = 2 + 1 = 3 (Slaves)
+                        \ Market item when scooped = 2 + 1 = 3 (slaves)
 ENDIF
  EQUW 16 * 16           \ Targetable area          = 16 * 16
  EQUB &2C               \ Edges data offset (low)  = &002C

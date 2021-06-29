@@ -21,7 +21,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION 
  BMI out                \ If A < 0 (50% chance), return from the subroutine
                         \ (as out contains an RTS)
 
- CPX #22                \ If X >= 22 (89% chance), return from the subroutine
+ CPX #22                \ If X >= 22 (91% chance), return from the subroutine
  BCS out                \ (as out contains an RTS)
 
  LDA QQ20,X             \ If we do not have any of item QQ20+X, return from the
@@ -38,7 +38,7 @@ ELIF _DISC_FLIGHT
  BMI DK5                \ If A < 0 (50% chance), return from the subroutine
                         \ (as DK5 contains an RTS)
 
- CPX #22                \ If X >= 22 (89% chance), return from the subroutine
+ CPX #22                \ If X >= 22 (91% chance), return from the subroutine
  BCS DK5                \ (as DK5 contains an RTS)
 
  LDA QQ20,X             \ If we do not have any of item QQ20+X, return from the
@@ -55,11 +55,15 @@ ELIF _ELITE_A_VERSION
  BMI DK5                \ If A < 0 (50% chance), return from the subroutine
                         \ (as DK5 contains an RTS)
 
- CPX #24                \ If X >= 24 (AJD chance), return from the subroutine
+ CPX #24                \ If X >= 24 (90% chance), return from the subroutine
  BCS DK5                \ (as DK5 contains an RTS)
 
- LDA CRGO,X             \ If we do not have any of item CRGO+X, AJD
- BEQ DK5
+ LDA CRGO,X             \ If we do not have any of item CRGO+X, return from the
+ BEQ DK5                \ subroutine (as DK5 contains an RTS). X is in the range
+                        \ 0-23, so this not only checks for cargo, but also for
+                        \ I.F.F., E.C.M., fuel scoops, hyperspace unit, energy
+                        \ unit, docking computer and galactic hyperdrive, all of
+                        \ which can be destroyed
 
  LDA DLY                \ If there is already an in-flight message on-screen,
  BNE DK5                \ return from the subroutine (as DK5 contains an RTS)

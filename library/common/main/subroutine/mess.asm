@@ -55,7 +55,7 @@ IF NOT(_ELITE_A_FLIGHT)
 
 ELIF _ELITE_A_FLIGHT
 
- JSR vdu_00             \ AJD
+ JSR vdu_00             \ Call vdu_00 to switch to ALL CAPS
 
 ENDIF
 

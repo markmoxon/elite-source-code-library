@@ -20,7 +20,7 @@ ELIF _ELECTRON_VERSION
 \ indicator is set to black, this effectively removes a missile.
 ENDIF
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \ Arguments:
 \
 \   X                   The number of the missile indicator to update (counting
@@ -91,6 +91,22 @@ ELIF _6502SP_VERSION
 \                           * #YELLOW2 = yellow/white (armed)
 \
 \                           * #GREEN2 = green (disarmed)
+ELIF _ELITE_A_VERSION
+\ Arguments:
+\
+\   X                   The number of the missile indicator to update (counting
+\                       from right to left and starting at 0 rather than 1, so
+\                       indicator NOMSL - 1 is the leftmost indicator)
+\
+\   Y                   The colour of the missile indicator:
+\
+\                         * &00 = black (no missile)
+\
+\                         * &0E = red (armed and locked)
+\
+\                         * &E0 = yellow/white (armed)
+\
+\                         * &EE = green/cyan (disarmed)
 ENDIF
 \
 \ Returns:
@@ -105,7 +121,7 @@ ENDIF
 
 IF _ELITE_A_FLIGHT
 
- CPX #4
+ CPX #4                 \ AJD
  BCC n_mok
  LDX #3
 
@@ -167,14 +183,14 @@ ELIF _ELECTRON_VERSION
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
- ASL A                  \ Set T = A * 8
+ ASL A                  \ Set T = A * 16
  ASL A
  ASL A
  ASL A
  STA T
 
  LDA #97                \ Set SC = 97 - T
- SBC T                  \        = 96 + 1 - (X * 8)
+ SBC T                  \        = 96 + 1 - (X * 16)
  STA SC
 
 ELIF _ELITE_A_VERSION
@@ -186,8 +202,13 @@ ELIF _ELITE_A_VERSION
  STA T
 
  LDA #41                \ Set SC = 41 - T
- SBC T                  \        = 40 + 1 - (X * 8) AJD
- STA SC
+ SBC T                  \        = 40 + 1 - (X * 8)
+ STA SC                 \
+                        \ This is the same calculation as in the disc version's
+                        \ MSBAR routine, but because the missile number in the
+                        \ Elite-A version is in the range 0-3 rather than 1-3,
+                        \ we subtract from 41 instead of 49 to get the screen
+                        \ address
 
 ENDIF
 

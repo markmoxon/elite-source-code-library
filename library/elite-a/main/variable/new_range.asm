@@ -1,4 +1,9 @@
 .new_range
 
- SKIP 1                 \ AJD
+ SKIP 1                 \ Our current ship's hyperspace range (i.e. the size of
+                        \ the fuel tank)
+                        \
+                        \ The range is stored as the number of light years
+                        \ multiplied by 10, so QQ14 = 1 represents 0.1 light
+                        \ years, while 70 represents 7.0 light years
 

@@ -40,7 +40,7 @@ ENDIF
                         \ QQ19+1
 
  JSR var                \ Call var to set QQ19+3 = economy * |economic_factor|
-                        \ (and set the availability of Alien Items to 0)
+                        \ (and set the availability of alien items to 0)
 
  LDA QQ23+3,X           \ Fetch byte #3 from the market prices table (mask) and
  AND QQ26               \ AND with the random number for this system visit

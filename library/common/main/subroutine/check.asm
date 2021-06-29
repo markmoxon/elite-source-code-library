@@ -41,7 +41,9 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- SEC                    \ AJD
+ SEC                    \ Set the C flag to increase the checksum value by 1,
+                        \ so the Elite-A checksum is subtly different to the
+                        \ standard version's checksum
 
 ENDIF
 

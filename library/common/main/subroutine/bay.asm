@@ -3,7 +3,12 @@
 \       Name: BAY
 \       Type: Subroutine
 \   Category: Status
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
 \    Summary: Go to the docking bay (i.e. show the Status Mode screen)
+ELIF _ELITE_A_ENCYCLOPEDIA
+\    Summary: Go to the docking bay (i.e. show the Encyclopedia Galactica menu
+\             screen)
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
@@ -34,8 +39,9 @@ ELIF _ELECTRON_VERSION
 
 ELIF _ELITE_A_ENCYCLOPEDIA
 
- LDA #f3                \ AJD
- JMP FRCE
+ LDA #f3                \ Jump into the main loop at FRCE, setting the key
+ JMP FRCE               \ that's "pressed" to red key f3 (so we show the
+                        \ Encyclopedia Galactica menu screen)
 
 ENDIF
 

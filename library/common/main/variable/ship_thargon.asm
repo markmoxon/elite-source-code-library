@@ -19,7 +19,7 @@ IF _CASSETTE_VERSION \ Enhanced: In the enhanced versions, the Thargon ship blue
  EQUB 0                 \ Max. canisters on demise = 0
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
  EQUB 0 + (15 << 4)     \ Max. canisters on demise = 0
-                        \ Market item when scooped = 15 + 1 = 16 (Alien items)
+                        \ Market item when scooped = 15 + 1 = 16 (alien items)
 ENDIF
  EQUW 40 * 40           \ Targetable area          = 40 * 40
  EQUB LO(SHIP_CANISTER_EDGES - SHIP_THARGON)         \ Edges data = canister

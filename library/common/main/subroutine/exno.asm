@@ -28,6 +28,19 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 \                                strike)
 \
 ENDIF
+IF _ELITE_A_FLIGHT
+\ Other entry points:
+\
+\   n_sound10           Make the first part of the death sound, or the second
+\                       part of the explosion sound
+\
+ELIF _ELITE_A_6502SP_PARA
+\ Other entry points:
+\
+\   sound10             Make the first part of the death sound, or the second
+\                       part of the explosion sound
+\
+ENDIF
 \ ******************************************************************************
 
 .EXNO
@@ -180,10 +193,10 @@ ELIF _ELITE_A_6502SP_PARA
 .sound_10
 
  LDA #16                \ Set A = 16 to denote we have made a hit or kill
-                        \ (part 2 of the explosion), and fall through into NOISE
-                        \ to make the sound
+                        \ (part 2 of the explosion)
 
- JMP NOISE              \ AJD
+ JMP NOISE              \ Jump to NOISE to make the sound and return from the
+                        \ subroutine using a tail call
 
 ENDIF
 

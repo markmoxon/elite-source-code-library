@@ -35,7 +35,8 @@ IF _DISC_FLIGHT \ Platform
 
 ELIF _ELITE_A_FLIGHT
 
- BMI INBAY              \ AJD
+ BMI INBAY              \ Jump to INBAY to load the docked code (this BMI is
+                        \ effectively a JMP)
 
 ENDIF
 

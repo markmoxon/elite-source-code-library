@@ -32,7 +32,10 @@ ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
  BEQ status_keep
  LDA #&15
  STA XC
- JSR vdu_80
+
+ JSR vdu_80             \ Call vdu_80 to switch to Sentence Case, with the next
+                        \ letter in capitals
+
  LDA #&01
  STA QQ25
  JSR sell_yn
@@ -70,12 +73,12 @@ IF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
 .status_no
 
- LDX #&01
+ LDX #1
 
 .status_keep
 
  STX XC
- LDA #&0A
+ LDA #10
  JMP TT27
 
 ENDIF

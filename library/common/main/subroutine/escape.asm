@@ -35,9 +35,12 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Ele
 
 ELIF _ELITE_A_VERSION
 
- LDX #ESC               \ AJD
- STX &8C
- JSR FRS1
+ LDX #ESC               \ Set the current ship type to an escape pod, so we can
+ STX TYPE               \ show it disappearing into the distance when we eject
+                        \ in our pod
+
+ JSR FRS1               \ Call FRS1 to launch the escape pod straight ahead,
+                        \ like a missile launch, but with our ship instead
 
 ENDIF
 
@@ -67,12 +70,15 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Ele
 
 ELIF _ELITE_A_VERSION
 
- LDA #&10               \ AJD
- STA &61
- LDA #&C2
- STA &64
- LSR A
- STA &66
+ LDA #16                \ Set the escape pod's byte #27 (speed) to 8
+ STA INWK+27
+
+ LDA #194               \ Set the escape pod's byte #30 (pitch counter) to 194,
+ STA INWK+30            \ so it pitches as we pull away
+
+ LSR A                  \ Set the escape pod's byte #32 (AI flag) to %01100001,
+ STA INWK+32            \ so it has no AI, and we can use this value as a
+                        \ counter to do the following loop 97 times
 
 ENDIF
 
@@ -84,11 +90,11 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Ele
 
 ELIF _ELITE_A_FLIGHT
 
- JSR MVEIT              \ Call MVEIT to move the escape pod in space AJD
+ JSR MVEIT              \ Call MVEIT to move the escape pod in space
 
 ELIF _ELITE_A_6502SP_PARA
 
- JSR MVEIT_FLIGHT       \ Duplicate of MVEIT? AJD
+ JSR MVEIT_FLIGHT       \ Call MVEIT_FLIGHT to move the escape pod in space
 
 ENDIF
 
@@ -160,8 +166,13 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- STA QQ20+&10           \ AJD
- LDX #&0C               \ LDX #&10 save gold/plat/gems
+ STA QQ20+16            \ We lose any alien items when using our escape pod, so
+                        \ set QQ20+16 to 0 (which is where they are stored)
+
+ LDX #12                \ We lose all our cargo canisters when using our escape
+                        \ pod (i.e. all the cargo except gold, platinum and gem
+                        \ stones), so up a counter in X so we can zero cargo
+                        \ slots 0-12 in QQ20
 
 ENDIF
 
@@ -200,8 +211,12 @@ IF NOT(_ELITE_A_VERSION)
 ELIF _ELITE_A_FLIGHT
 
  INC new_hold           \ AJD
- LDA new_range
- STA QQ14
+
+ LDA new_range          \ Our replacement ship is delivered with a full tank of
+ STA QQ14               \ so fetch our current ship's hyperspace range from
+                        \ new_range and set the current fuel level in QQ14 to
+                        \ this value
+
  JSR ping
  JSR TT111
  JSR jmp
@@ -209,8 +224,12 @@ ELIF _ELITE_A_FLIGHT
 ELIF _ELITE_A_6502SP_PARA
 
  INC new_hold           \ AJD
- LDA new_range
- STA QQ14
+
+ LDA new_range          \ Our replacement ship is delivered with a full tank of
+ STA QQ14               \ so fetch our current ship's hyperspace range from
+                        \ new_range and set the current fuel level in QQ14 to
+                        \ this value
+
  JSR update_pod
  JSR ping
  JSR TT111

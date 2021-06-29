@@ -361,11 +361,12 @@ ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
 .sell_equip
 
- LDA CRGO               \ AJD
- BEQ l_1b57             \ IFF if flag not set
- LDA #&6B
- LDX #&06
- JSR plf2
+ LDA CRGO               \ If we don't have an I.F.F. system fitted (i.e. CRGO is
+ BEQ l_1b57             \ zero), skip the following three instructions
+
+ LDA #107               \ We do have an I.F.F. system fitted, so print recursive
+ LDX #6                 \ token 107 ("I.F.F.SYSTEM")
+ JSR plf2               \ AJD
 
 .l_1b57
 
@@ -373,10 +374,12 @@ ELIF _ELITE_A_FLIGHT
 
 .sell_equip
 
- LDA CRGO               \ AJD
- BEQ l_1ce7             \ IFF if flag not set
- LDA #&6B
- JSR plf2
+ LDA CRGO               \ If we don't have an I.F.F. system fitted (i.e. CRGO is
+ BEQ l_1ce7             \ zero), skip the following three instructions
+
+ LDA #107               \ We do have an I.F.F. system fitted, so print recursive
+ JSR plf2               \ token 107 ("I.F.F.SYSTEM"), followed by a newline and an
+                        \ indent of 6 characters
 
 .l_1ce7
 

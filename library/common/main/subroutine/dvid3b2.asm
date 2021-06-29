@@ -206,8 +206,8 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- LDA #0                 \ AJD
- JSR n_store
+ LDA #0                 \ Call n_store to set K(3 2 1) = 0 to hold the result
+ JSR n_store            \ (we populate K next)
 
 ENDIF
 

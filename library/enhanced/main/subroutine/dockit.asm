@@ -11,7 +11,8 @@ IF _ELITE_A_VERSION
 \
 \ Other entry points:
 \
-\   top_6a              AJD
+\   top_6a              Set bit 7 of the ship's NEWB flags to indicate that it
+\                       has docked or been scooped
 \
 ENDIF
 \ ******************************************************************************

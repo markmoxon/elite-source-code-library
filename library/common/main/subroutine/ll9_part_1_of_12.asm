@@ -244,7 +244,9 @@ ELIF _DISC_DOCKED
 
 ELIF _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA
 
- JMP TT48               \ AJD
+ JMP TT48               \ This instruction has no effect, as TT48 contains an
+                        \ RTS (it replaces a call to DOEXP in the flight code,
+                        \ which we don't need to do here as we are docked)
 
 ENDIF
 

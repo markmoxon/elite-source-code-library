@@ -17,7 +17,7 @@
 IF _ELITE_A_ENCYCLOPEDIA
 \ Other entry points:
 \
-\   set_token           AJD
+\   set_token           Start a new word when printing extended tokens
 \
 ENDIF
 \ ******************************************************************************

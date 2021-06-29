@@ -64,5 +64,5 @@
 
  ITEM 45,  -1, 'g', 250, %00001111   \ 15 = Gem-Stones
 
- ITEM 53,  15, 't', 192, %00000111   \ 16 = Alien Items
+ ITEM 53,  15, 't', 192, %00000111   \ 16 = Alien items
 

@@ -31,7 +31,9 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- LDX #3                 \ AJD
+ LDX #3                 \ Set up a loop counter in X to count through all four
+                        \ missile indicators (in Elite-A the missile indicators
+                        \ are numbered 0-3 rather than 1-4)
 
 ENDIF
 
@@ -60,8 +62,8 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ELIF _ELITE_A_VERSION
 
- LDY #0                 \ AJD
- CPX NOMSL
+ LDY #0                 \ If X >= NOMSL, then jump down to miss_miss with Y = 0
+ CPX NOMSL              \ to draw the missile indicator at position X in black
  BCS miss_miss
 
 ENDIF
@@ -107,11 +109,11 @@ ELIF _ELECTRON_VERSION
 
 ELIF _ELITE_A_VERSION
 
- LDY #&EE               \ AJD
+ LDY #&EE               \ Set the colour of the missile indicator to green/cyan
 
 .miss_miss
 
- JSR MSBAR
+ JSR MSBAR              \ Draw the missile indicator at position X in colour Y
 
 ENDIF
 
@@ -123,7 +125,7 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- BPL ss                 \ AJD
+ BPL ss                 \ Loop back to ss if we still have missiles to draw
 
 ENDIF
 

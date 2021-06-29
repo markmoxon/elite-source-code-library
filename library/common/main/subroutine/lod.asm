@@ -199,8 +199,9 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED
 .ELT2F
 
  BRK                    \ The error that is printed if we try to load an
- EQUS "IIllegal "       \ invalid commander file with bit 7 of byte #0 set
- EQUS "ELITE II file"   \ (the spelling mistake is in the original source)
+ EQUB &49               \ invalid commander file with bit 7 of byte #0 set
+ EQUS "Illegal "        \ (&49 is the error number)
+ EQUS "ELITE II file"
  BRK
 
 ELIF _MASTER_VERSION
@@ -237,9 +238,10 @@ ELIF _ELITE_A_DOCKED
 
 .ELT2F
 
- BRK                    \ AJD
- EQUB &49
- EQUS "Not ELITE III file"
+ BRK                    \ The error that is printed if we try to load an
+ EQUB &49               \ invalid commander file with bit 7 of byte #0 set
+ EQUS "Not ELITE III "  \ (&49 is the error number)
+ EQUS "file"
  BRK
 
 ELIF _ELITE_A_6502SP_PARA
@@ -252,9 +254,10 @@ ELIF _ELITE_A_6502SP_PARA
 
 .ELT2F
 
- BRK                    \ AJD
- EQUB &49
- EQUS "Bad ELITE III file"
+ BRK                    \ The error that is printed if we try to load an
+ EQUB &49               \ invalid commander file with bit 7 of byte #0 set
+ EQUS "Bad ELITE III "  \ (&49 is the error number)
+ EQUS "file"
  BRK
 
 ENDIF

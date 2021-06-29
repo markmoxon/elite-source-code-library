@@ -14,8 +14,13 @@
 \ have, with a standard cargo hold having a capacity of 20t and an extended
 \ cargo bay being 35t.
 \
+IF NOT(_ELITE_A_VERSION)
 \ For items measured in kg (gold, platinum), g (gem-stones) and alien items,
 \ the individual limit on each of these is 200 units.
+ELIF _ELITE_A_VERSION
+\ For items measured in kg (gold, platinum), g (gem-stones) and alien items,
+\ there is no limit.
+ENDIF
 \
 \ Arguments:
 \
@@ -26,8 +31,10 @@
 \
 \ Returns:
 \
+IF NOT(_ELITE_A_VERSION)
 \   A                   A is preserved
 \
+ENDIF
 \   C flag              Returns the result:
 \
 \                         * Set if there is no room for this item
@@ -57,7 +64,7 @@ ENDIF
 
 IF _ELITE_A_VERSION
 
- CLC                    \ AJD
+ CLC                    \ Clear the C flag for the addition below
 
 ENDIF
 
@@ -68,6 +75,8 @@ ENDIF
                         \ tonnes of cargo, using X as the loop counter, starting
                         \ with X = 12
 
+IF NOT(_ELITE_A_VERSION)
+
  ADC QQ20,X             \ Set A = A + the number of tonnes we have in the hold
                         \ of market item number X. Note that the first time we
                         \ go round this loop, the C flag is set (as we didn't
@@ -75,9 +84,14 @@ ENDIF
                         \ is to count the number of tonne canisters in the hold,
                         \ and add 1
 
-IF _ELITE_A_VERSION
+ELIF _ELITE_A_VERSION
 
- BCS n_over             \ AJD
+ ADC QQ20,X             \ Set A = A + the number of tonnes we have in the hold
+                        \ of market item number X
+
+ BCS n_over             \ If the addition overflowed, jump to n_over to return
+                        \ from the subroutine with the C flag set, as the hold
+                        \ is already full
 
 ENDIF
 
@@ -119,7 +133,11 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- CMP new_hold           \ New hold size AJD
+ CMP new_hold           \ If A < new_hold then the C flag will be clear (we have
+                        \ room in the hold)
+                        \
+                        \ If A >= new_hold then the C flag will be set (we do
+                        \ not have room in the hold)
 
 .n_over
 

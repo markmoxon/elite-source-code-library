@@ -15,7 +15,7 @@
 IF _ELITE_A_VERSION
 \ Other entry points:
 \
-\   n_store             Sets K(3 2 1) = (A A A) and clears the C flag
+\   n_store             Set K(3 2 1) = (A A A) and clear the C flag
 \
 ENDIF
 \ ******************************************************************************

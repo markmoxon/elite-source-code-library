@@ -74,19 +74,20 @@ IF NOT(_ELITE_A_VERSION)
 ELIF _ELITE_A_VERSION
 
  LDA auto               \ AJD
- AND #&04
- EOR #&05
+ AND #%00000100
+ EOR #%00000101
  BNE MA63
 
 .MA58
 
- LDA #&40
+ LDA #64
  JSR n_hit
- JSR anger_8c
+
+ JSR anger_8c           \ Call anger_8c to make the current ship angry
 
 .n_crunch
 
- LDA #&80
+ LDA #128
 
 ENDIF
 

@@ -3,13 +3,13 @@
 \       Name: b_14
 \       Type: Subroutine
 \   Category: Keyboard
-\    Summary: Check Delta 14b joystick buttons AJD
+\    Summary: Check Delta 14b joystick buttons
 \
 \ ******************************************************************************
 
 .b_13
 
- LDA #&00
+ LDA #&00               \ AJD
 
 .b_14
 

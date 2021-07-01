@@ -44,7 +44,18 @@ ENDIF
 IF _ELITE_A_VERSION
 \ Other entry points:
 \
-\   Tml                 AJD
+\   Tml                 Calculate the sum of the following, returning the C flag
+\                       according to whether this all fits into the hold:
+\
+\                         * The total tonnage of the first X items of cargo
+\
+\                         * The value in A
+\
+\                         * Plus one more tonne if the C flag is set on entry
+\
+\                       This is called with X = 12, A = the number of alien
+\                       items in the hold, and the C flag set, to see if there
+\                       is room for one more tonne in the hold
 \
 ENDIF
 \ ******************************************************************************
@@ -104,7 +115,7 @@ ENDIF
 IF _MASTER_VERSION \ Master: The Master version contains the code for Trumbles to take up cargo space, though as we never actually get given any Trumbles, the value is always zero
 
  ADC TRUMBLE+1          \ Add the high byte of the number of Trumbles in the
-                        \ hold, as 256 Trumbles take up one ton of cargo space
+                        \ hold, as 256 Trumbles take up one tonne of cargo space
 
 ENDIF
 

@@ -133,11 +133,15 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ELIF _ELITE_A_VERSION
 
- LDA &44                \ AJD
+ LDA LAS                \ Set A to the power of the laser we just used to hit
+                        \ the ship (i.e. the laser in the current view)
 
  LDY TYPE               \ Did we just hit the space station? If so, jump to
- CPY #SST               \ MA14 to AJD
+ CPY #SST               \ MA14 to make it angry
  BEQ MA14
+
+ CPY #CON               \ If the ship we hit is not a Constrictor, jump to BURN
+ BNE BURN               \ to skip the following
 
 ENDIF
 
@@ -177,13 +181,14 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ELIF _ELITE_A_VERSION
 
- CPY #&1F
- BNE BURN
- LSR A
+ LSR A                  \ Divide the laser power of the current view by 2, so
+                        \ the damage inflicted on the Constrictor is half of the
+                        \ damage our military lasers would inflict on a normal
+                        \ ship
 
 .BURN
 
- LSR A
+ LSR A                  \ Divide the laser power of the current view by 2
 
 ENDIF
 
@@ -342,7 +347,8 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- JSR anger_8c           \ AJD
+ JSR anger_8c           \ Call anger_8c to make this ship hostile angry, now
+                        \ that we have hit it
 
 ENDIF
 

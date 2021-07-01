@@ -16,8 +16,17 @@ ENDIF
 \   err                 Beep, pause and go to the docking bay (i.e. show the
 \                       Status Mode screen)
 \
+\   pres                Given an item number A with the item name in recursive
+\                       token Y, show an error to say that the item is already
+\                       present, refund the cost of the item, and then beep and
+\                       exit to the docking bay (i.e. show the Status Mode
+\                       screen)
+\                        
+\
 IF _ELITE_A_VERSION
-\   pres+3              AJD
+\   pres+3              Show the error to say that an item is already present,
+\                       and process a refund, but do not free up a space in the
+\                       hold
 \
 ENDIF
 \ ******************************************************************************
@@ -101,9 +110,15 @@ ENDIF
 
 IF _ELITE_A_VERSION
 
- JSR CTRL               \ AJD
- BPL n_eqship
- JMP n_buyship
+ JSR CTRL               \ Scan the keyboard to see if CTRL is currently pressed,
+                        \ returning a negative value in A if it is
+
+ BPL n_eqship           \ If CTRL is not being pressed, jump down to n_eqship to
+                        \ keep processing the Equip Ship screen
+
+ JMP n_buyship          \ CTRL is being pressed, which means CTRL-f3 is being
+                        \ pressed, so jump to n_buyship to show the Buy Ship
+                        \ screen instead
 
 .bay
 
@@ -124,7 +139,7 @@ ELIF _ELITE_A_VERSION
 
  LDA tek                \ Fetch the tech level of the current system from tek
  CLC                    \ and add 2 (the tech level is stored as 0-14, so A is
- ADC #2                 \ now set to between 2 and 16) AJD
+ ADC #2                 \ now set to between 2 and 16)
 
 ENDIF
 
@@ -134,20 +149,6 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: There are up to 14 differe
  BCC P%+4               \ 3 and 12
  LDA #12
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
-
- CMP #12                \ If A >= 12 then set A = 14, so A is now set to between
- BCC P%+4               \ 3 and 14
- LDA #14
-
-ELIF _ELITE_A_VERSION
-
- CMP #12                \ If A >= 12 then set A = 14, so A is now set to between
- BCC P%+4               \ 2 and 14
- LDA #14
-
-ENDIF
-
  STA Q                  \ Set QQ25 = A (so QQ25 is in the range 3-12 and
  STA QQ25               \ represents number of the most advanced item available
  INC Q                  \ in this system, which we can pass to gnum below when
@@ -156,17 +157,48 @@ ENDIF
                         \ Set Q = A + 1 (so Q is in the range 4-13 and contains
                         \ QQ25 + 1, i.e. the highest item number on sale + 1)
 
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
+
+ CMP #12                \ If A >= 12 then set A = 14, so A is now set to between
+ BCC P%+4               \ 3 and 14
+ LDA #14
+
+ STA Q                  \ Set QQ25 = A (so QQ25 is in the range 3-14 and
+ STA QQ25               \ represents number of the most advanced item available
+ INC Q                  \ in this system, which we can pass to gnum below when
+                        \ asking which item we want to buy)
+                        \
+                        \ Set Q = A + 1 (so Q is in the range 4-15 and contains
+                        \ QQ25 + 1, i.e. the highest item number on sale + 1)
+
+ELIF _ELITE_A_VERSION
+
+ CMP #12                \ If A >= 12 then set A = 14, so A is now set to between
+ BCC P%+4               \ 2 and 14
+ LDA #14
+
+ STA Q                  \ Set QQ25 = A (so QQ25 is in the range 2-14 and
+ STA QQ25               \ represents number of the most advanced item available
+ INC Q                  \ in this system, which we can pass to gnum below when
+                        \ asking which item we want to buy)
+                        \
+                        \ Set Q = A + 1 (so Q is in the range 3-15 and contains
+                        \ QQ25 + 1, i.e. the highest item number on sale + 1)
+
+ENDIF
+
 IF NOT(_ELITE_A_VERSION)
 
  LDA #70                \ Set A = 70 - QQ14, where QQ14 contains the current
- SEC                    \ level in light years * 10, so this leaves the amount
+ SEC                    \ fuel in light years * 10, so this leaves the amount
  SBC QQ14               \ of fuel we need to fill 'er up (in light years * 10)
 
 ELIF _ELITE_A_VERSION
 
- LDA new_range          \ AJD
- SEC
- SBC QQ14
+ LDA new_range          \ Set A = new_range - QQ14, where QQ14 contains the
+ SEC                    \ current fuel in light years * 10, so this leaves the
+ SBC QQ14               \ amount of fuel we need to fill 'er up (in light years
+                        \ * 10)
 
 ENDIF
 
@@ -174,14 +206,18 @@ ENDIF
  STA PRXS               \ double A and store it in PRXS, as the first price in
                         \ the price list (which is reserved for fuel), and
                         \ because the table contains prices as price * 10, it's
-                        \ in the right format (so a full tank, or 7.0 light
-                        \ years, would be 14.0 Cr, or a PRXS value of 140)
+                        \ in the right format (so tank containing 7.0 light
+                        \ years of fuel would be 14.0 Cr, or a PRXS value of
+                        \ 140)
 
 IF _ELITE_A_VERSION
 
- LDA #0                 \ AJD
- ROL A
- STA PRXS+1
+ LDA #0                 \ As the maximum amount of fuel in Elite-A can be more
+ ROL A                  \ than 25.5 light years, we need to use PRXS(1 0) to
+ STA PRXS+1             \ store the fuel level, so this catches bit 7 from the
+                        \ left shift of the low byte above (which the ASL will
+                        \ have put into the C flag), and sets bit 0 of the high
+                        \ byte in PRXS+1 accordingly
 
 ENDIF
 
@@ -305,15 +341,29 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- PHA                    \ AJD
- CMP #&02
- BCC equip_space
- LDA QQ20+&10
- SEC
- LDX #&C
+ PHA                    \ Store A on the stack so we can restore it after the
+                        \ following code
+
+ CMP #2                 \ If A < 2, then we are buying fuel or missiles, so jump
+ BCC equip_space        \ down to equip_space to skip the checks for whether we
+                        \ have enough free space in the hold (as fuel and
+                        \ missiles don't take up hold space)
+
+ LDA QQ20+16            \ Fetch the number of alien items in the hold into A, so
+                        \ the following call to Tml will include these in the
+                        \ total
+
+ SEC                    \ Call Tml with X = 12 and the C flag set, to work out
+ LDX #12                \ if there is space for one more tonne in the hold
  JSR Tml
- BCC equip_isspace
- LDA #&0E
+
+ BCC equip_isspace      \ If the C flag is clear then there is indeed room for
+                        \ another tonne, so jump to equip_isspace so we can buy
+                        \ the new piece of equipment
+
+ LDA #14                \ Otherwise there isn't room in the hold for any more
+                        \ equipment, so set set A to the value for recursive
+                        \ token 14 ("UNIT")
 
  JMP query_beep         \ Print the recursive token given in A followed by a
                         \ question mark, then make a beep, pause and go to the
@@ -321,14 +371,22 @@ ELIF _ELITE_A_VERSION
 
 .equip_isspace
 
- DEC new_hold
- PLA
- PHA
+ DEC new_hold           \ We are now going to buy the piece of equipment, so
+                        \ decrement the free space in the hold, as equipment
+                        \ takes up hold space in Elite-A
+
+ PLA                    \ Set A to the value from the top of the stack (so it
+ PHA                    \ contains the number of the item we want to buy)
 
 .equip_space
 
- JSR eq
- PLA
+ JSR eq                 \ Call eq to subtract the price of the item we want to
+                        \ buy (which is in A) from our cash pot, but only if we
+                        \ have enough cash in the pot. If we don't have enough
+                        \ cash, exit to the docking bay (i.e. show the Status
+                        \ Mode screen)
+
+ PLA                    \ Restore A from the stack
 
 ENDIF
 
@@ -343,15 +401,22 @@ ENDIF
 
 IF NOT(_ELITE_A_VERSION)
 
- LDX #70                \ And set the current fuel level * 10 in QQ14 to 70, or
- STX QQ14               \ 7.0 light years (a full tank)
+ LDX #70                \ Set the current fuel level * 10 in QQ14 to 70, or 7.0
+ STX QQ14               \ light years (a full tank)
 
 ELIF _ELITE_A_VERSION
 
- LDX new_range          \ AJD
- STX QQ14
- JSR DIALS
- LDA #&00
+ LDX new_range          \ Set the current fuel level in QQ14 to our current
+ STX QQ14               \ ship's maximum hyperspace range from new_range, so the
+                        \ tank is now full
+
+ JSR DIALS              \ Call DIALS to update the dashboard with the new fuel
+                        \ level
+
+ LDA #0                 \ Set A to 0 as the call to DIALS will have overwritten
+                        \ the original value, and we still need it set
+                        \ correctly so we can continue through the conditional
+                        \ statements for all the other equipment
 
 ENDIF
 
@@ -384,8 +449,13 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- CPX new_missiles       \ AJD
- BCS pres+3
+ CPX new_missiles       \ If buying this missile would give us more than the
+ BCS pres+3             \ maximum number of missiles that our current ship can
+                        \ hold (which is stored in new_missiles), jump to pres+3
+                        \ to show the error "All Present", do not free up any
+                        \ space in the hold (as missiles do not take up hold
+                        \ space), beep and exit to the docking bay (i.e. show
+                        \ the Status Mode screen)
 
 ENDIF
 
@@ -501,8 +571,12 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
 
 ELIF _ELITE_A_VERSION
 
- LDY new_pulse          \ AJD
- BNE equip_leap
+ LDY new_pulse          \ Set Y to the power level of pulse lasers when fitted
+                        \ to our current ship type
+
+ BNE equip_leap         \ Jump to equip_merge (via equip_leap) to install the
+                        \ new laser (this BNE is effectively a JMP as Y is never
+                        \ zero)
 
 ENDIF
 
@@ -528,11 +602,14 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- LDY new_beam           \ AJD
+ LDY new_beam           \ Set Y to the power level of beam lasers when fitted to
+                        \ our current ship type
 
 .equip_leap
 
- BNE equip_frog
+ BNE equip_frog         \ Jump to equip_merge (via equip_frog) to install the
+                        \ new laser (this BNE is effectively a JMP as Y is never
+                        \ zero)
 
 ENDIF
 
@@ -636,15 +713,19 @@ ENDIF
 
 .pres
 
+                        \ If we get here we need to show an error to say that
+                        \ the item whose name is in recursive token Y is already
+                        \ present, and then process a refund for the cost of
+                        \ item number A
+
 IF _ELITE_A_VERSION
 
- INC new_hold           \ AJD
+ INC new_hold           \ We can't buy the requested equipment, so increment the
+                        \ free space in the hold, as we decremented it earler
+                        \ in anticipation of making a deal, but the deal has
+                        \ fallen through
 
 ENDIF
-
-                        \ If we get here we need to show an error to say that
-                        \ item number A is already present, where the item's
-                        \ name is recursive token Y
 
  STY K                  \ Store the item's name in K
 
@@ -692,7 +773,8 @@ ENDIF
 
 IF _ELITE_A_6502SP_PARA
 
- JSR update_pod         \ AJD
+ JSR update_pod         \ Update the dashboard colours to reflect that we now
+                        \ have an escape pod
 
 ENDIF
 
@@ -725,7 +807,8 @@ ELIF _ELITE_A_VERSION
                         \ "Hyperspace Unit Present", beep and exit to the docking
                         \ bay (i.e. show the Status Mode screen)
 
- DEC BOMB               \ AJD
+ DEC BOMB               \ Otherwise we just bought an energy bomb, so set BOMB
+                        \ to &FF (as BOMB was 0 before the DEC instruction)
 
 ENDIF
 
@@ -748,8 +831,10 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- LDX new_energy         \ AJD
- STX ENGY
+ LDX new_energy         \ Otherwise we just picked up an energy unit, so set
+ STX ENGY               \ ENGY to new_energy, which is the value of our current
+                        \ ship's ship energy refresh rate with an energy unit
+                        \ fitted
 
 ENDIF
 
@@ -787,11 +872,15 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- LDX GHYP               \ AJD
+ LDX GHYP               \ Set X to the value of GHYP, which determines
+                        \ whether we have a galactic hyperdrive fitted
 
 .equip_gfrog
 
- BNE pres
+ BNE pres               \ If we already have a galactic hyperdrive fitted (i.e.
+                        \ GHYP is non-zero), jump to pres to show the error
+                        \ "Galactic Hyperspace Present", beep and exit to the
+                        \ docking bay (i.e. show the Status Mode screen)
 
 ENDIF
 
@@ -835,39 +924,68 @@ IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Enhanced: In the enhance
 
 ELIF _ELITE_A_VERSION
 
- INY
- CMP #&0C
- BNE et10
- LDY new_military
+ INY                    \ Increment Y to recursive token 117 ("MILITARY  LASER")
+
+ CMP #12                \ If A is not 12 (i.e. the item we've just bought is not
+ BNE et10               \ a military laser), skip to et10
+
+ LDY new_military       \ Set Y to the power level of military lasers when
+                        \ fitted to our current ship type
 
 .equip_frog
 
- BNE equip_merge
+ BNE equip_merge        \ Jump to equip_merge to install the new laser (this BNE
+                        \ is effectively a JMP as Y is never zero)
 
 .et10
 
- INY
- CMP #&0D
- BNE et11
- LDY new_mining
+ INY                    \ Increment Y to recursive token 118 ("MINING  LASER")
+
+ CMP #13                \ If A is not 13 (i.e. the item we've just bought is not
+ BNE et11               \ a mining laser), skip to et11
+
+ LDY new_mining         \ Set Y to the power level of mining lasers when fitted
+                        \ to our current ship type
 
 .equip_merge
 
+                        \ Now to install a new laser with the laser power in Y
+                        \ and the item number in A
+
+ PHA                    \ Store the item number in A on the stack
+
+ TYA                    \ Store the laser power in Y on the stack
  PHA
- TYA
- PHA
- JSR qv
- PLA
- LDY LASER,X
- BEQ l_3113
- PLA
- LDY #&BB
- BNE equip_gfrog
+
+ JSR qv                 \ Print a menu listing the four views, with a "View ?"
+                        \ prompt, and ask for a view number, which is returned
+                        \ in X (which now contains 0-3)
+
+ PLA                    \ Retrieve the laser power of the new laser from the
+                        \ stack into A
+
+ LDY LASER,X            \ If there is no laser mounted in the chosen view (i.e.
+ BEQ l_3113             \ LASER+X, which contains the laser power for view X, is
+                        \ zero), jump to l_3113 to fit the new laser
+
+                        \ We already have a laser fitted to this view, so 
+
+ PLA                    \ Retrieve the item number from the stack into A
+
+ LDY #187               \ Set Y to token 27 (" LASER") so the following jump to
+                        \ pres will show the error "Laser Present", beep and
+                        \ exit to the docking bay (i.e. show the Status Mode
+                        \ screen)
+
+ BNE equip_gfrog        \ Jump to pres via equip_gfrog (this BNE is effectively
+                        \ a JMP as Y is never zero)
 
 .l_3113
 
- STA LASER,X
- PLA
+ STA LASER,X            \ Fit the new laser by storing the laser power in A into
+                        \ LASER+X
+
+ PLA                    \ Retrieve the item number from the stack into A
 
 .et11
 

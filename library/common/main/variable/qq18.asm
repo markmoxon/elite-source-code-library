@@ -11,7 +11,9 @@ IF _ELITE_A_VERSION
 \
 \ Other entry points:
 \
-\   new_name            AJD
+\   new_name            This part of token 132 is updated with our current
+\                       ship's type by routine n_load, so printing token 132
+\                       will always show the correct type of our ship
 \
 ENDIF
 \ ******************************************************************************
@@ -1625,9 +1627,9 @@ ELIF _ELITE_A_VERSION
 
 .new_name
 
- CHAR ' '
- CHAR ' '
- CHAR ' '
+ CHAR ' '               \ This part is updated with our current ship's type in
+ CHAR ' '               \ the n_load routine, so printing token 132 will always
+ CHAR ' '               \ show the correct type of our ship
  CHAR ' '
  CHAR ' '
  CHAR ' '

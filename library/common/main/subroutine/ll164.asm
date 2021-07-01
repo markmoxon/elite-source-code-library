@@ -52,7 +52,9 @@ ENDIF
 
 IF _ELITE_A_6502SP_PARA
 
- JSR update_pod
+ JSR update_pod         \ Update the dashboard colours to reflect whether we
+                        \ have an escape pod, as the hyperspace process resets
+                        \ this aspect of the palette
 
 ENDIF
 
@@ -105,7 +107,9 @@ ELIF _ELITE_A_6502SP_PARA
  DEC HFX                \ Set HFX back to 0, so we switch back to the normal
                         \ split-screen mode
 
- JMP update_pod         \ AJD
+ JMP update_pod         \ Update the dashboard colours to reflect whether we
+                        \ have an escape pod, as the hyperspace process resets
+                        \ this aspect of the palette
 
 ENDIF
 

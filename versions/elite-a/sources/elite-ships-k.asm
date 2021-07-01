@@ -170,7 +170,7 @@ INCLUDE "library/enhanced/main/variable/ship_boulder.asm"
 INCLUDE "library/common/main/variable/ship_asteroid.asm"
 INCLUDE "library/enhanced/main/variable/ship_splinter.asm"
 
- EQUB 7                 \ AJD
+ EQUB 7                 \ This byte appears to be unused
 
 \ ******************************************************************************
 \

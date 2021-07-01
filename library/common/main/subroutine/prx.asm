@@ -50,7 +50,7 @@ ENDIF
 
  LDX PRXS,Y             \ Fetch the low byte of the price into X
 
- LDA PRXS+1,Y           \ Fetch the low byte of the price into A and transfer
+ LDA PRXS+1,Y           \ Fetch the high byte of the price into A and transfer
  TAY                    \ it to X, so the price is now in (Y X)
 
 .c

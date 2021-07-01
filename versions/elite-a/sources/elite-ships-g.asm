@@ -170,7 +170,7 @@ INCLUDE "library/enhanced/main/variable/ship_worm.asm"
 INCLUDE "library/enhanced/main/variable/ship_gecko.asm"
 INCLUDE "library/enhanced/main/variable/ship_boa.asm"
 
- EQUB 8                 \ AJD
+ EQUB 8                 \ This byte appears to be unused
 
 \ ******************************************************************************
 \

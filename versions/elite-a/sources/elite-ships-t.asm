@@ -168,7 +168,7 @@ INCLUDE "library/common/main/variable/ship_cobra_mk_3.asm"
 INCLUDE "library/enhanced/main/variable/ship_asp_mk_2.asm"
 INCLUDE "library/enhanced/main/variable/ship_plate.asm"
 
- EQUB 6                 \ AJD
+ EQUB 6                 \ This byte appears to be unused
 
 \ ******************************************************************************
 \

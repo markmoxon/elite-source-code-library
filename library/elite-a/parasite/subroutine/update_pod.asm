@@ -3,13 +3,14 @@
 \       Name: update_pod
 \       Type: Subroutine
 \   Category: Dashboard
-\    Summary: AJD
+\    Summary: Update the dashboard colours to reflect whether we have an escape
+\             pod
 \
 \ ******************************************************************************
 
 .update_pod
 
- LDA #&8F
+ LDA #&8F               \ AJD
  JSR tube_write
  LDA ESCP
  JSR tube_write

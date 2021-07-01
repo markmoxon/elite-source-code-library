@@ -169,7 +169,7 @@ INCLUDE "library/common/main/variable/ship_python.asm"
 INCLUDE "library/elite-a/flight/variable/ship_iguana.asm"
 INCLUDE "library/enhanced/main/variable/ship_moray.asm"
 
- EQUB 8                 \ AJD
+ EQUB 8                 \ This byte appears to be unused
 
 \ ******************************************************************************
 \

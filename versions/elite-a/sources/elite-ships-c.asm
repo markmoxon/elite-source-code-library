@@ -168,7 +168,7 @@ INCLUDE "library/elite-a/flight/variable/ship_chameleon.asm"
 INCLUDE "library/common/main/variable/ship_python.asm"
 INCLUDE "library/enhanced/main/variable/ship_transporter.asm"
 
- EQUB 7                 \ AJD
+ EQUB 7                 \ This byte appears to be unused
 
 \ ******************************************************************************
 \

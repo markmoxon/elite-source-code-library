@@ -170,7 +170,7 @@ INCLUDE "library/enhanced/main/variable/ship_splinter.asm"
 INCLUDE "library/enhanced/main/variable/ship_cobra_mk_1.asm"
 INCLUDE "library/common/main/variable/ship_python.asm"
 
- EQUB 3                 \ AJD
+ EQUB 3                 \ This byte appears to be unused
 
 \ ******************************************************************************
 \

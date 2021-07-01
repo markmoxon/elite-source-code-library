@@ -169,7 +169,7 @@ INCLUDE "library/enhanced/main/variable/ship_adder.asm"
 INCLUDE "library/elite-a/flight/variable/ship_ghavial.asm"
 INCLUDE "library/enhanced/main/variable/ship_plate.asm"
 
- EQUB 6                 \ AJD
+ EQUB 6                 \ This byte appears to be unused
 
 \ ******************************************************************************
 \

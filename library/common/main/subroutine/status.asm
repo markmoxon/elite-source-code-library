@@ -499,7 +499,7 @@ ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
 ELIF _ELITE_A_FLIGHT
 
- LDA BST
+ LDA BST                \ AJD
  BEQ l_1cf1
  LDA #&6F
  JSR plf2
@@ -553,9 +553,9 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- TXA                    \ AJD
- ORA #&60
- JSR spc
+ TXA                    \ Print recursive token 96 + X, which will print from 96
+ ORA #96                \ ("FRONT") through to 99 ("RIGHT"), followed by a space
+ JSR spc                \ (the ORA acts like an addition as 96 = %01100000)
 
 ENDIF
 
@@ -594,25 +594,29 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
 ELIF _ELITE_A_VERSION
 
- LDX &93                \ AJD
+ LDX CNT                \ Set Y = the laser power for view X
  LDY LASER,X
- CPY new_beam           \ beam laser
- BNE l_1b9d
- LDA #&68
 
-.l_1b9d
+ CPY new_beam           \ If the laser power for view X is not that of a beam
+ BNE P%+4               \ laser when fitted to our current ship type, skip the
+                        \ next LDA instruction
 
- CPY new_military       \ military laser
- BNE l_1ba3
- LDA #&75
+ LDA #104               \ This sets A = 104 if the laser in view X is a beam
+                        \ laser (token 104 is "BEAM LASER")
 
-.l_1ba3
+ CPY new_military       \ If the laser power for view X is not that of a
+ BNE P%+4               \ military laser when fitted to our current ship type,
+                        \ skip the next LDA instruction
 
- CPY new_mining         \ mining laser
- BNE l_1ba9
- LDA #&76
+ LDA #117               \ This sets A = 117 if the laser in view X is a military
+                        \ laser (token 117 is "MILITARY  LASER")
 
-.l_1ba9
+ CPY new_mining         \ If the laser power for view X is not that of a mining
+ BNE P%+4               \ laser when fitted to our current ship type, skip the
+                        \ next LDA instruction
+
+ LDA #118               \ This sets A = 118 if the laser in view X is a mining
+                        \ laser (token 118 is "MINING  LASER")
 
 ENDIF
 

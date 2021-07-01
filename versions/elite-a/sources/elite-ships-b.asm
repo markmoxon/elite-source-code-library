@@ -168,7 +168,7 @@ INCLUDE "library/common/main/variable/ship_cobra_mk_3.asm"
 INCLUDE "library/elite-a/flight/variable/ship_shuttle_mk_2.asm"
 INCLUDE "library/elite-a/flight/variable/ship_iguana.asm"
 
- EQUB 9                 \ AJD
+ EQUB 9                 \ This byte appears to be unused
 
 \ ******************************************************************************
 \

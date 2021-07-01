@@ -32,14 +32,19 @@
 IF NOT(_ELITE_A_VERSION)
 
  LDX stack              \ Set the stack pointer to the value that we stored in
- TXS                    \ location stack, so that's back to the value it had
+ TXS                    \ the stack variable, so that's back to the value it had
                         \ before we set BRKV to point to MEBRK in the SVE
                         \ routine
 
 ELIF _ELITE_A_VERSION
 
- LDX #&FF               \ AJD
- TXS
+ LDX #&FF               \ The #&FF part of this instruction is modified by the
+ TXS                    \ SVE routine so that it sets the stack pointer back to
+                        \ the value it had before we set BRKV to point to MEBRK
+                        \ in the SVE routine. Modifying this instruction means
+                        \ we don't need to use the stack variable, which saves
+                        \ us a both byte in this instruction, as well the byte
+                        \ of the stack variable
 
 ENDIF
 

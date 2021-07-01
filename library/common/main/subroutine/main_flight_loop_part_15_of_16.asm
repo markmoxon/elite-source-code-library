@@ -328,8 +328,8 @@ ELIF _ELITE_A_VERSION
 
  ADC QQ14               \ Set A = A + the current fuel level * 10 (from QQ14)
 
- CMP new_range          \ AJD
- BCC P%+5
+ CMP new_range          \ If A > new_range then set A = new_range (as new_range
+ BCC P%+5               \ is the maximum fuel level for our current ship
  LDA new_range
 
  STA QQ14               \ Store the updated fuel level in QQ14

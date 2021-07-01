@@ -31,7 +31,7 @@ ENDIF
 ELIF _ELITE_A_VERSION
 
  EQUS ".:0"             \ The "0" part of the string is overwritten with the
- EQUB 13                \ actual drive number by the CATS routine AJD
+ EQUB 13                \ actual drive number by the CATS routine
 
 ENDIF
 

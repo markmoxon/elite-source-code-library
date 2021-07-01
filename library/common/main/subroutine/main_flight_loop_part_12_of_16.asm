@@ -152,9 +152,9 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- LDY #10                \ AJD
- LDA (XX0),Y
-
+ LDY #10                \ Fetch byte #10 of the ship's blueprint, which is the
+ LDA (XX0),Y            \ low byte of the bounty awarded when this ship is
+                        \ killed (in Cr * 10)
 ENDIF
 
  TAX                    \ Put the low byte of the bounty into X

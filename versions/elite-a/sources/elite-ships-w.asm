@@ -168,7 +168,7 @@ INCLUDE "library/enhanced/main/variable/ship_fer_de_lance.asm"
 INCLUDE "library/enhanced/main/variable/ship_transporter.asm"
 INCLUDE "library/common/main/variable/ship_mamba.asm"
 
- EQUB 5                 \ AJD
+ EQUB 5                 \ This byte appears to be unused
 
 \ ******************************************************************************
 \

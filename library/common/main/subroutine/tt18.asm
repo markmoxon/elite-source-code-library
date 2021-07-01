@@ -13,7 +13,7 @@
 IF _ELITE_A_VERSION
 \ Other entry points:
 \
-\   hyper_snap          AJD
+\   hyper_snap          Perform a hyperspace, but without using up any fuel
 \
 ENDIF
 \ ******************************************************************************

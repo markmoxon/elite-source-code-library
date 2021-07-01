@@ -40,9 +40,12 @@ ELIF _MASTER_VERSION
 
 ELIF _ELITE_A_VERSION
 
- JSR ZEBC               \ AJD
- TSX
- STX MEBRK+&01
+ JSR ZEBC               \ Call ZEBC to zero-fill pages &B and &C
+
+ TSX                    \ Transfer the stack pointer to X and store it in
+ STX MEBRK+1            \ MEBRK+1, which modifies the LDX #&FF instruction at
+                        \ the start of MEBRK so that it sets X to the value of
+                        \ the stack pointer
 
 ENDIF
 

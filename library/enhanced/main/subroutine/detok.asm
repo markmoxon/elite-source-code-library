@@ -20,12 +20,21 @@
 \
 \   V(1 0)              V(1 0) is preserved
 \
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
 \ Other entry points:
 \
 \   DTEN                Print recursive token number X from the token table
 \                       pointed to by (A V), used to print tokens from the RUTOK
 \                       table via calls to DETOK3
 \
+ELIF _ELITE_A_ENCYCLOPEDIA
+\ Other entry points:
+\
+\   DTEN                Print recursive token number X from the token table
+\                       pointed to by (A V), used to print tokens from the msg_3
+\                       table via calls to write_msg3
+\
+ENDIF
 \ ******************************************************************************
 
 .DETOK

@@ -119,9 +119,20 @@ ENDIF
 
 .b
 
+IF NOT(_ELITE_A_VERSION)
+
  SEC                    \ Set A = ENERGY + ENGY + 1, so our ship's energy
  LDA ENGY               \ level goes up by 2 if we have an energy unit fitted,
  ADC ENERGY             \ otherwise it goes up by 1
+
+ELIF _ELITE_A_VERSION
+
+ SEC                    \ Set A = ENERGY + ENGY + 1, so our ship's energy
+ LDA ENGY               \ level goes up by the correct amount for our current
+ ADC ENERGY             \ ship, depending on whether we have an energy unit
+                        \ fitted
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 

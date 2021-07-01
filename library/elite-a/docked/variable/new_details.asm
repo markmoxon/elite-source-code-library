@@ -9,6 +9,10 @@
 
 .new_details
 
+\ new_pulse, new_beam, new_military, new_mining, new_mounts, new_missiles
+\ new_shields, new_energy, new_speed, new_hold, new_range, new_costs
+\ new_max \ new_min, new_space
+
  EQUB &0E, &8E, &92, &19, &02, &02 \ adder
  EQUB &04, &01,  36, &09,  60, &1A
  EQUB &DF \, &21, &05, &00

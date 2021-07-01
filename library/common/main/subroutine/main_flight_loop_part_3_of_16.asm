@@ -236,9 +236,9 @@ ELIF _ELECTRON_VERSION
 
 ELIF _ELITE_A_VERSION
 
- LDA KY12               \ AJD
- AND BOMB
- BEQ MA76
+ LDA KY12               \ If TAB is not being pressed (i.e. KY12 = 0) and we do
+ AND BOMB               \ not have a hyperspace unit fitted (i.e. BOMB = 0), 
+ BEQ MA76               \ jump down to MA76 to skip the following
 
 ENDIF
 
@@ -263,13 +263,25 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- INC BOMB               \ AJD
- INC new_hold
- JSR DORND
- STA QQ9
- STX QQ10
- JSR TT111
- JSR hyper_snap
+ INC BOMB               \ The "hyperspace unit" key is being pressed and we have
+                        \ a hyperspace unit fitted, so increment BOMB from &FF
+                        \ (hyperspace unit fitted) to 0 (hyperspace unit not
+                        \ fitted), as it is a single-use item and we are now
+                        \ using it
+
+ INC new_hold           \ Free up one tonne of space in the hold, as we have
+                        \ just used up the hyperspace unit
+
+ JSR DORND              \ Set A and X to random numbers
+
+ STA QQ9                \ Set (QQ9, QQ10) to (A, X), so we jump to a random
+ STX QQ10               \ point in the galaxy
+
+ JSR TT111              \ Select the system closest to galactic coordinates
+                        \ (QQ9, QQ10)
+
+ JSR hyper_snap         \ Call hyper_snap to perform a hyperspace, but without
+                        \ using up any fuel
 
 ENDIF
 
@@ -298,16 +310,22 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: In the enhance
 
 ELIF _ELITE_A_VERSION
 
- LDA KY19               \ AJD
- AND DKCMP
- BNE dock_toggle
- LDA KY20
- BEQ MA78
- LDA #&00
+ LDA KY19               \ If "C" is being pressed, and we have a docking
+ AND DKCMP              \ computer fitted, jump down to dock_toggle with a
+ BNE dock_toggle        \ non-zero value in A to switch on the docking computer
+
+ LDA KY20               \ If "P" is being pressed, keep going, otherwise skip
+ BEQ MA78               \ the next two instructions
+
+ LDA #0                 \ The "cancel docking computer" key is bring pressed,
+                        \ so turn it off by setting A to 0, so we set auto to 0
+                        \ in the next instruction
 
 .dock_toggle
 
- STA auto
+ STA auto               \ Set auto to the value in A, which will be non-zero
+                        \ if we just turned on the docking computer, or 0 if we
+                        \ just turned it off
 
 .MA78
 

@@ -210,30 +210,48 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_FLIGHT
 
- INC new_hold           \ AJD
+ INC new_hold           \ We just used our escape pod, and as it's a single-use
+                        \ item, we no longer have an escape pod, so increment
+                        \ the free space in our ship's hold, as the pod is no
+                        \ longer taking up space
 
  LDA new_range          \ Our replacement ship is delivered with a full tank of
  STA QQ14               \ fuel, so fetch our current ship's hyperspace range
                         \ from new_range and set the current fuel level in QQ14
                         \ to this value
 
- JSR ping
- JSR TT111
- JSR jmp
+ JSR ping               \ Set the target system to the current system (which
+                        \ will move the location in (QQ9, QQ10) to the current
+                        \ home system
+
+ JSR TT111              \ Select the system closest to galactic coordinates
+                        \ (QQ9, QQ10)
+
+ JSR jmp                \ Set the current system to the selected system
 
 ELIF _ELITE_A_6502SP_PARA
 
- INC new_hold           \ AJD
+ INC new_hold           \ We just used our escape pod, and as it's a single-use
+                        \ item, we no longer have an escape pod, so increment
+                        \ the free space in our ship's hold, as the pod is no
+                        \ longer taking up space
 
  LDA new_range          \ Our replacement ship is delivered with a full tank of
  STA QQ14               \ fuel, so fetch our current ship's hyperspace range
                         \ from new_range and set the current fuel level in QQ14
                         \ to this value
 
- JSR update_pod
- JSR ping
- JSR TT111
- JSR jmp
+ JSR update_pod         \ Update the dashboard colours as we no longer have an
+                        \ escape pod
+
+ JSR ping               \ Set the target system to the current system (which
+                        \ will move the location in (QQ9, QQ10) to the current
+                        \ home system
+
+ JSR TT111              \ Select the system closest to galactic coordinates
+                        \ (QQ9, QQ10)
+
+ JSR jmp                \ Set the current system to the selected system
 
 ENDIF
 

@@ -77,8 +77,8 @@ ELIF _DISC_FLIGHT
 
 ELIF _ELITE_A_VERSION
 
- AND #15                \ AJD
- STA INWK+27
+ AND #15                \ Set the ship speed to our random number, set to a
+ STA INWK+27            \ minimum of 0 and a maximum of 15
 
 ENDIF
 
@@ -136,9 +136,6 @@ ELIF _ELITE_A_VERSION
 
 .nodo
 
- LDA #&0B               \ AJD
- LDX #&03
-
 ENDIF
 
 IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: The advanced versions have rock hermits, which are classed as junk but can release ships if attacked
@@ -155,6 +152,8 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
 ELIF _ELITE_A_VERSION
 
+ LDA #CYL               \ AJD
+ LDX #3
  JMP hordes
 
 ENDIF

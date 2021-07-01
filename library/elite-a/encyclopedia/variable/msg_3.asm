@@ -3,7 +3,8 @@
 \       Name: msg_3
 \       Type: Variable
 \   Category: Text
-\    Summary: AJD
+\    Summary: The second extended token table for recursive tokens 0-255
+\             (write_msg3)
 \
 \ ******************************************************************************
 
@@ -1774,7 +1775,7 @@ IF _ELITE_A_ENCYCLOPEDIA
  EQUB VE                \ Encoded as:   "{4}[106]{5}"
 
  EJMP 4                 \ Token 96:     "{standard tokens, sentence case}I.F.F.
- TOKN 107               \                SYSTEM{extended tokens}" AJD
+ TOKN 107               \                SYSTEM{extended tokens}"
  EJMP 5                 \
  EQUB VE                \ Encoded as:   "{4}[107]{5}"
 
@@ -1804,7 +1805,7 @@ IF _ELITE_A_ENCYCLOPEDIA
  EQUB VE                \ Encoded as:   "{4}[112]{5}"
 
  EJMP 4                 \ Token 102:    "{standard tokens, sentence case}
- TOKN 113               \                HYPERSPACE UNIT{extended tokens}" AJD
+ TOKN 113               \                HYPERSPACE UNIT{extended tokens}"
  EJMP 5                 \
  EQUB VE                \ Encoded as:   "{4}[113]{5}"
 

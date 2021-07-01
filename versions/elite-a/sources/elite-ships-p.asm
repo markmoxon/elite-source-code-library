@@ -167,8 +167,7 @@ INCLUDE "library/common/main/variable/ship_mamba.asm"
 INCLUDE "library/elite-a/flight/variable/ship_ophidian.asm"
 INCLUDE "library/enhanced/main/variable/ship_moray.asm"
 
-
- EQUB 8                 \ AJD
+ EQUB 8                 \ This byte appears to be unused
 
 \ ******************************************************************************
 \

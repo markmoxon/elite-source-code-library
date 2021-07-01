@@ -65,7 +65,8 @@ ENDIF
 
 IF _ELITE_A_6502SP_PARA
 
- JSR update_pod
+ JSR update_pod         \ Update the dashboard colours to reflect whether we
+                        \ have an escape pod
 
 ENDIF
 

@@ -168,7 +168,7 @@ INCLUDE "library/enhanced/main/variable/ship_asp_mk_2.asm"
 INCLUDE "library/common/main/variable/ship_python.asm"
 INCLUDE "library/enhanced/main/variable/ship_krait.asm"
 
- EQUB 5                 \ AJD
+ EQUB 5                 \ This byte appears to be unused
 
 \ ******************************************************************************
 \

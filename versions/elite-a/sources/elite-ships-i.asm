@@ -169,7 +169,7 @@ INCLUDE "library/enhanced/main/variable/ship_worm.asm"
 INCLUDE "library/elite-a/flight/variable/ship_ghavial.asm"
 INCLUDE "library/elite-a/flight/variable/ship_ophidian.asm"
 
- EQUB 7                 \ AJD
+ EQUB 7                 \ This byte appears to be unused
 
 \ ******************************************************************************
 \

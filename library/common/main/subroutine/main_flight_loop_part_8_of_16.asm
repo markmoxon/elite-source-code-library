@@ -89,9 +89,10 @@ ENDIF
 
 .slvy2
 
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+
                         \ By the time we get here, we are scooping, and A
                         \ contains the type of item we are scooping (a random
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
                         \ number 0-7 if we are scooping a cargo canister, 3 if
                         \ we are scooping an escape pod, or 16 if we are
                         \ scooping a Thargon). These numbers correspond to the
@@ -99,14 +100,22 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Com
                         \ cargo canister can contain anything from food to
                         \ computers, while escape pods contain slaves, and
                         \ Thargons become alien items when scooped
+
 ELIF _ELECTRON_VERSION
+
+                        \ By the time we get here, we are scooping, and A
+                        \ contains the type of item we are scooping (a random
                         \ number 0-7 if we are scooping a cargo canister, or 3
                         \ if we are scooping an escape pod). These numbers
                         \ correspond to the relevant market items (see QQ23
                         \ for a list), so a cargo canister can contain
                         \ anything from food to computers, while escape pods
                         \ contain slaves
+
 ELIF _ELITE_A_VERSION
+
+                        \ By the time we get here, we are scooping, and A
+                        \ contains the type of item we are scooping (a random
                         \ number 0-15 if we are scooping a cargo canister, 3 if
                         \ we are scooping an escape pod, or 16 if we are
                         \ scooping a Thargon). These numbers correspond to the
@@ -114,6 +123,7 @@ ELIF _ELITE_A_VERSION
                         \ cargo canister can contain anything from food to
                         \ gem-stones, while escape pods contain slaves, and
                         \ Thargons become alien items when scooped
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform

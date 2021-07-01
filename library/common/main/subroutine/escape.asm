@@ -213,9 +213,9 @@ ELIF _ELITE_A_FLIGHT
  INC new_hold           \ AJD
 
  LDA new_range          \ Our replacement ship is delivered with a full tank of
- STA QQ14               \ so fetch our current ship's hyperspace range from
-                        \ new_range and set the current fuel level in QQ14 to
-                        \ this value
+ STA QQ14               \ fuel, so fetch our current ship's hyperspace range
+                        \ from new_range and set the current fuel level in QQ14
+                        \ to this value
 
  JSR ping
  JSR TT111
@@ -226,9 +226,9 @@ ELIF _ELITE_A_6502SP_PARA
  INC new_hold           \ AJD
 
  LDA new_range          \ Our replacement ship is delivered with a full tank of
- STA QQ14               \ so fetch our current ship's hyperspace range from
-                        \ new_range and set the current fuel level in QQ14 to
-                        \ this value
+ STA QQ14               \ fuel, so fetch our current ship's hyperspace range
+                        \ from new_range and set the current fuel level in QQ14
+                        \ to this value
 
  JSR update_pod
  JSR ping

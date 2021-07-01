@@ -29,7 +29,7 @@ ENDIF
 
 IF _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA
 
- CLC
+ CLC                    \ AJD
 
 ENDIF
 

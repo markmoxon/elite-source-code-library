@@ -210,14 +210,20 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR 
 
 ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
- LDA QQ24               \ AJD
+ LDA QQ24               \ Set Q to the item's price / 4
  STA Q
- JSR MULTU
- JSR price_xy
- JSR MCASH
- JSR MCASH
- JSR MCASH
- JSR MCASH
+
+ JSR MULTU              \ Call MULTU to calculate (A P) = P * Q
+
+ JSR price_xy           \ Call price_xy to set (Y X) = (A P) = P * Q
+
+ JSR MCASH              \ Add 4 * (Y X) cash to the cash pot in CASH, i.e.
+ JSR MCASH              \
+ JSR MCASH              \   (Y X) = P * Q * 4
+ JSR MCASH              \
+                        \ which will be the total price we make from this sale
+                        \ (as P contains the quantity we're selling and Q
+                        \ contains the item's price / 4)
 
 ENDIF
 

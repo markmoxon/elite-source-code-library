@@ -20,10 +20,11 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- CLI                    \ AJD
- LDA #&90
- LDX #&FF
- LDY #&01
+ CLI                    \ Enable interrupts
+
+ LDA #144               \ Call OSBYTE with A = 144, X = 255 and Y = 1 to move
+ LDX #255               \ the screen down one line and turn screen interlace off
+ LDY #1
  JSR OSBYTE
 
 ENDIF

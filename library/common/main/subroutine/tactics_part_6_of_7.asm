@@ -110,7 +110,11 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- JSR n_oops             \ AJD
+ JSR n_oops             \ Call n_oops to take some damage (taking the shields
+                        \ into account), which could do anything from reducing
+                        \ the shields and energy, all the way to losing cargo
+                        \ or dying (if the latter, we don't come back from this
+                        \ subroutine)
 
 ENDIF
 

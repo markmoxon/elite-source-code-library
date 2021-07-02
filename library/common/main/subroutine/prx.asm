@@ -38,13 +38,22 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- ASL A                  \ AJD
- BEQ n_fcost
- ADC new_costs
+ ASL A                  \ Set A = A * 2, so it can act as an index into the
+                        \ PRXS table, which has two bytes per entry
+
+ BEQ n_fcost            \ If A = 0, skip the following, as we are fetching the
+                        \ price of fuel, and fuel is always the same price,
+                        \ regardless of ship type
+
+ ADC new_costs          \ In Elite-A the PRXS table has multiple sections, for
+                        \ the different types of ship we can buy, and the offset
+                        \ to the price table for our current ship is held in
+                        \ new_costs, so this points the index in A to the
+                        \ correct section of the PRXS table for our current ship
 
 .n_fcost
 
- TAY
+ TAY                    \ Copy A into Y, so it can be used as an index
 
 ENDIF
 

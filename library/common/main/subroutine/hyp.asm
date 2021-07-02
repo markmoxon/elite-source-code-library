@@ -148,10 +148,14 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ELIF _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA
 
- LDA QQ11               \ AJD
- BNE P%+8
- JSR TT111
- JMP TTX111
+ LDA QQ11               \ If the current view is not 0 (i.e. not the space view)
+ BNE P%+8               \ then skip the following two instructions
+
+ JSR TT111              \ This is the space view, so select the system closest
+                        \ to galactic coordinates (QQ9, QQ10)
+
+ JMP TTX111             \ Skip the following instruction, as we don't want to
+                        \ draw the crosshairs in the space view
 
 ENDIF
 

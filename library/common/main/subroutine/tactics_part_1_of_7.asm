@@ -94,8 +94,9 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- LDA #250               \ Call n_oops to AJD
- JMP n_oops
+ LDA #250               \ Call n_oops to damage the ship by 250 (taking the
+ JMP n_oops             \ shields into account), which is a pretty big hit, and
+                        \ return from the subroutine using a tail call
 
 ENDIF
 
@@ -260,8 +261,11 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- LDA #80                \ AJD
- JSR n_oops
+ LDA #80                \ Otherwise the missile just got destroyed near us, so
+ JSR n_oops             \ call n_oops to damage the ship by 80 (taking the
+                        \ shields into account), which is nowhere near as bad as
+                        \ the 250 damage from a missile slamming straight into us,
+                        \ but it's still pretty nasty
 
 ENDIF
 

@@ -81,17 +81,21 @@ ENDIF
  TYA                    \ If no text was entered (Y = 0) then jump to SVE to
  BEQ SVE                \ display the disc access menu
 
+IF _DISC_DOCKED \ Comment
+
                         \ We now copy the entered filename from INWK to DELI, so
                         \ that it overwrites the filename part of the string,
-                        \ i.e. the "E.1234567" part of "DELETE:0.E.1234567"
-
-IF _DISC_DOCKED OR _ELITE_A_VERSION \ Comment
+                        \ i.e. the "E.1234567" part of "DE.:0.E.1234567"
 
  LDX #9                 \ Set up a counter in X to count from 9 to 1, so that we
                         \ copy the string starting at INWK+4+1 (i.e. INWK+5) to
                         \ DELI+5+1 (i.e. DELI+6 onwards, or "E.1234567")
 
 ELIF _6502SP_VERSION
+
+                        \ We now copy the entered filename from INWK to DELI, so
+                        \ that it overwrites the filename part of the string,
+                        \ i.e. the "E.1234567" part of "DELETE:0.E.1234567"
 
  LDX #9                 \ Set up a counter in X to count from 9 to 1, so that we
                         \ copy the string starting at INWK+4+1 (i.e. INWK+5) to
@@ -101,17 +105,35 @@ ELIF _MASTER_VERSION
 
 IF _SNG47
 
+                        \ We now copy the entered filename from INWK to DELI, so
+                        \ that it overwrites the filename part of the string,
+                        \ i.e. the "E.1234567" part of "DELETE :1.1234567"
+
  LDX #9                 \ Set up a counter in X to count from 9 to 1, so that we
                         \ copy the string starting at INWK+4+1 (i.e. INWK+5) to
                         \ DELI+9+1 (i.e. DELI+10 onwards, or "1.1234567")
 
 ELIF _COMPACT
 
+                        \ We now copy the entered filename from INWK to DELI, so
+                        \ that it overwrites the filename part of the string,
+                        \ i.e. the "1234567890" part of "DELETE 1234567890"
+
  LDX #8                 \ Set up a counter in X to count from 8 to 0, so that we
                         \ copy the string starting at INWK+5+0 (i.e. INWK+5) to
                         \ DELI+7+0 (i.e. DELI+7 onwards, or "1234567890")
 
 ENDIF
+
+ELIF _ELITE_A_VERSION
+
+                        \ We now copy the entered filename from INWK to DELI, so
+                        \ that it overwrites the filename part of the string,
+                        \ i.e. the "E.1234567" part of "DEL.:0.E.1234567"
+
+ LDX #9                 \ Set up a counter in X to count from 9 to 1, so that we
+                        \ copy the string starting at INWK+4+1 (i.e. INWK+5) to
+                        \ DELI+5+1 (i.e. DELI+6 onwards, or "E.1234567")
 
 ENDIF
 
@@ -168,7 +190,7 @@ ENDIF
 ELIF _ELITE_A_VERSION
 
  LDA INWK+4,X           \ Copy the X-th byte of INWK+4 to the X-th byte of
- STA DELI+6,X           \ DELI+6 AJD
+ STA DELI+6,X           \ DELI+6
 
  DEX                    \ Decrement the loop counter
 

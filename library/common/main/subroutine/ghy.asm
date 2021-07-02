@@ -66,7 +66,8 @@ ELIF _ELITE_A_VERSION
  BEQ zZ+1               \ hyperdrive, and if it is zero, which means we don't,
                         \ return from the subroutine (as zZ+1 contains an RTS)
 
- INC new_hold           \ AJD
+ INC new_hold           \ Free up one tonne of space in the hold, as we have
+                        \ just used up the galactic hyperdrive
 
  INX                    \ We own a galactic hyperdrive, so X is &FF, so this
                         \ instruction sets X = 0

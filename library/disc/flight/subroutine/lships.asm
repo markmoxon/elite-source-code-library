@@ -12,8 +12,8 @@
 
 IF _ELITE_A_VERSION
 
- LDA #0                 \ AJD
- STA finder
+ LDA #0                 \ Set finder = 0 so the compass shows the planet rather
+ STA finder             \ than the sun
 
 ENDIF
 

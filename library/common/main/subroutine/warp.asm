@@ -76,7 +76,13 @@ ENDIF
 
 IF _ELITE_A_VERSION
 
- ORA JUNK               \ no jump if any ship AJD
+ ORA JUNK               \ If there is any junk in the vicinity, then JUNK will
+                        \ be non-zero, so OR'ing with JUNK will produce a
+                        \ a non-zero result if either A or JUNK are non-zero
+                        \ (so this prevents in-system jumps if there is any
+                        \ junk nearby, which is different to the other versions
+                        \ which allow you to jump, dragging any junk along with
+                        \ the ship)
 
 ENDIF
 
@@ -84,7 +90,7 @@ ENDIF
                         \ be non-zero, so OR'ing with SSPR will produce a
                         \ a non-zero result if either A or SSPR are non-zero
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron version doesn't have witchspace, so there's no need to disable in-system jumping there
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron version doesn't have witchspace, so there's no need to disable in-system jumping there
 
  ORA MJ                 \ If we are in witchspace, then MJ will be non-zero, so
                         \ OR'ing with MJ will produce a non-zero result if
@@ -101,6 +107,17 @@ ELIF _ELECTRON_VERSION
                         \ station in the vicinity, in which case jump to WA1 to
                         \ make a low beep to show that we can't do an in-system
                         \ jump
+
+ELIF _ELITE_A_VERSION
+
+ ORA MJ                 \ If we are in witchspace, then MJ will be non-zero, so
+                        \ OR'ing with MJ will produce a non-zero result if
+                        \ either A or SSPR or MJ are non-zero
+
+ BNE WA1                \ A is non-zero if we have either a ship, or a space
+                        \ station, or junk in the vicinity, or we are in
+                        \ witchspace, in which case jump to WA1 to make a low
+                        \ beep to show that we can't do an in-system jump
 
 ENDIF
 

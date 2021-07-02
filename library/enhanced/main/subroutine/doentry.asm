@@ -18,17 +18,17 @@ ELIF _ELITE_A_DOCKED
 
  LDA KL+1               \ AJD
  BNE INBAY
- LDA #&FF
 
- JSR SCRAM
+ LDA #&FF               \ Call SCRAM to set save_lock to &FF and set the break
+ JSR SCRAM              \ handler
 
 ELIF _ELITE_A_6502SP_PARA
 
- LDA #&00               \ AJD
+ LDA #0                 \ Set dockedp = 0 to indicate we are docked
  STA dockedp
- LDA #&FF
 
- JSR SCRAM
+ LDA #&FF               \ Call SCRAM to set save_lock to &FF and set the break
+ JSR SCRAM              \ handler
 
 ENDIF
 

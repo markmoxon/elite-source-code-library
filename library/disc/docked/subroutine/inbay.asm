@@ -23,8 +23,10 @@ ELIF _ELITE_A_DOCKED
 
  EQUB 0
  \ dead entry
- LDA #0
- JSR SCRAM
+
+ LDA #0                 \ Call SCRAM to set save_lock to 0 and set the break
+ JSR SCRAM              \ handler
+
  JSR RES2
  JMP TT170
 

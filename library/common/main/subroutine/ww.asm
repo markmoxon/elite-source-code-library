@@ -51,7 +51,8 @@ ELIF _ELITE_A_VERSION
  TAX                    \ Print the 8-bit number in X (i.e. 15) at text location
  BNE ee3                \ (0, 1), padded to 5 digits, so it appears in the top
                         \ left corner of the screen, and return from the
-                        \ subroutine using a tail call AJD
+                        \ subroutine using a tail call (the BNE is effectively a
+                        \ JMP as A is never zero)
 
 ENDIF
 

@@ -138,7 +138,7 @@ ELIF _MASTER_VERSION
 
 ELIF _ELITE_A_6502SP_PARA
 
- ASL A                  \ Set A = 0 AJD
+ ASL A                  \ Set A to 0, as 128 << 1 = %10000000 << 1 = 0
 
 ENDIF
 

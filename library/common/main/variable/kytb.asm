@@ -145,7 +145,7 @@ ELIF _ELITE_A_VERSION
  EQUB &65               \ M         KYTB+12     Fire missile
  EQUB &22               \ E         KYTB+13     E.C.M.
  EQUB &45               \ J         KYTB+14     In-system jump
- EQUB &63               \ AJD
+ EQUB &63               \ V         KYTB+15     Docking computer
 
 ENDIF
 

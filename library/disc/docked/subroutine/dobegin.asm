@@ -16,9 +16,8 @@ IF NOT(_ELITE_A_DOCKED)
 
 ELIF _ELITE_A_DOCKED
 
- LDA #0                 \ AJD
-
- JSR SCRAM
+ LDA #0                 \ Call SCRAM to set save_lock to 0 and set the break
+ JSR SCRAM              \ handler
 
 ENDIF
 

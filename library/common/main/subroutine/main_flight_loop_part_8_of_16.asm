@@ -83,7 +83,7 @@ IF NOT(_ELITE_A_VERSION)
 ELIF _ELITE_A_VERSION
 
  JSR DORND              \ Set A and X to random numbers and reduce A to a
- AND #15                \ random number in the range 0-15 AJD
+ AND #15                \ random number in the range 0-15
 
 ENDIF
 

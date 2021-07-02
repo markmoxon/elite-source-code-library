@@ -63,7 +63,7 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA)
 
 ELIF _ELITE_A_ENCYCLOPEDIA
 
- BEQ l_out              \ AJD
+ BEQ l_out              \ Keep looping up to l_out until a key is pressed
 
 ENDIF
 

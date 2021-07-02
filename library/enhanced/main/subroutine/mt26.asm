@@ -65,8 +65,10 @@ ELIF _ELITE_A_6502SP_PARA
 
  LDA #&8A               \ AJD
  JSR tube_write
+
  LDA #&81
  JSR tube_write
+
  JSR tube_read
 
 ENDIF
@@ -227,8 +229,10 @@ ELIF _ELITE_A_6502SP_PARA
 
  LDA #&8A               \ AJD
  JSR tube_write
- LDA #&01
+
+ LDA #1
  JSR tube_write
+
  JSR tube_read
 
 ENDIF

@@ -28,14 +28,16 @@ ENDIF
 IF _ELITE_A_6502SP_PARA
 
  LDX #10                \ AJD
- LDY #&0B
- JSR install_ship
- LDX #19
- LDY #&13
+ LDY #11
  JSR install_ship
 
- LDX #&FF
- TXS
+ LDX #19
+ LDY #19
+ JSR install_ship
+
+ LDX #&FF               \ Set the stack pointer to &01FF, which is the standard
+ TXS                    \ location for the 6502 stack, so this instruction
+                        \ effectively resets the stack
 
 ELIF _ELITE_A_ENCYCLOPEDIA
 

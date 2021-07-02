@@ -52,18 +52,18 @@ IF _DISC_DOCKED \ Screen
 
 ELIF _ELITE_A_VERSION
 
- LDA LIL2+2             \ AJD
- EOR #&40
+ LDA LIL2+2             \ Flip bit 6 of LIL2+2 to change the EOR (SC),Y in LIL2
+ EOR #%01000000         \ to an ORA (SC),Y (or back again)
  STA LIL2+2
- \LDA LIL3+2
- \EOR #&40
- STA LIL3+2
- \LDA LIL5+2
- \EOR #&40
- STA LIL5+2
- \LDA LIL6+2
- \EOR #&40
- STA LIL6+2
+
+ STA LIL3+2             \ Change the EOR (SC),Y in LIL3 to an ORA (SC),Y (or
+                        \ back again)
+
+ STA LIL5+2             \ Change the EOR (SC),Y in LIL5 to an ORA (SC),Y (or
+                        \ back again)
+
+ STA LIL6+2             \ Change the EOR (SC),Y in LIL6 to an ORA (SC),Y (or
+                        \ back again)
 
 ENDIF
 

@@ -475,7 +475,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Enhanced: Group A: Pressing "F" in the enhanced versions when viewing a chart lets us search for systems by name
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Enhanced: Group A: Pressing "F" in the enhanced versions when viewing a chart lets us search for systems by name
 
  CMP #&43               \ If "F" was not pressed, jump down to HME1, otherwise
  BNE HME1               \ keep going to process searching for systems
@@ -484,6 +484,17 @@ ELIF _MASTER_VERSION
 
  CMP #&46               \ If "F" was not pressed, jump down to HME1, otherwise
  BNE HME1               \ keep going to process searching for systems
+
+ELIF _ELITE_A_FLIGHT
+
+ CMP #&43               \ If "F" was not pressed, jump down to HME1, otherwise
+ BNE HME1               \ keep going to toggle the compass display
+
+ELIF _ELITE_A_6502SP_PARA
+
+ CMP #&43               \ If "F" was not pressed, jump down to HME1, otherwise
+ BNE HME1               \ keep going to process searching for systems (when
+                        \ docked) or toggle the compass display (when flying)
 
 ENDIF
 
@@ -506,12 +517,20 @@ IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA O
 
 .HME1
 
-ELIF _ELITE_A_FLIGHT 
+ELIF _ELITE_A_FLIGHT
 
- LDA finder             \ AJD
- EOR #&25
- STA finder
- JMP WSCAN
+ LDA finder             \ Set the value of A to finder, which determines whether
+                        \ the compass is configured to show the sun or the
+                        \ planet
+
+ EOR #NI%               \ The value of finder is 0 (show the planet) or NI%
+                        \ (show the sun), so this toggles the value between the
+                        \ two
+
+ STA finder             \ Store the toggled value in finder
+
+ JMP WSCAN              \ Jump to WSCAN to wait for the vertical sync and return
+                        \ from the subroutine using a tail call
 
 .HME1
 
@@ -528,14 +547,24 @@ ELIF _ELITE_A_6502SP_PARA
 
  LDA dockedp
  BEQ t95
- LDA finder
- EOR #&25
- STA finder
- JMP WSCAN
+
+ LDA finder             \ Set the value of A to finder, which determines whether
+                        \ the compass is configured to show the sun or the
+                        \ planet
+
+ EOR #NI%               \ The value of finder is 0 (show the planet) or NI%
+                        \ (show the sun), so this toggles the value between the
+                        \ two
+
+ STA finder             \ Store the toggled value in finder
+
+
+ JMP WSCAN              \ Jump to WSCAN to wait for the vertical sync and return
+                        \ from the subroutine using a tail call
 
 .t95
 
- RTS
+ RTS                    \ Return from the subroutine
 
 .HME1
 

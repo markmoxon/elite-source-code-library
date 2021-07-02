@@ -103,7 +103,10 @@ IF NOT(_ELITE_A_FLIGHT)
 
 ELIF _ELITE_A_FLIGHT
 
- BEQ P%+8               \ AJD
+ BEQ P%+8               \ If the high byte subtraction is zero, then skip the
+                        \ following three instructions, as the line fits
+                        \ on-screen and we want to clear the C flag and return
+                        \ from the subroutine
 
 ENDIF
 

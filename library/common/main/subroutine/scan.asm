@@ -115,9 +115,9 @@ ELIF _ELITE_A_FLIGHT
 
  JSR iff_index          \ AJD
  LDA iff_base,X
- STA &91
+ STA COL
  LDA iff_xor,X
- STA &37
+ STA Y2
 
 ELIF _ELITE_A_6502SP_PARA
 
@@ -130,7 +130,7 @@ ELIF _ELITE_A_6502SP_PARA
  BCS iff_cop
  ASL A
  BCS iff_trade
- LDY &8C
+ LDY TYPE
  DEY
  BEQ iff_missle
  CPY #&08
@@ -156,9 +156,9 @@ ELIF _ELITE_A_6502SP_PARA
 .iff_not
 
  LDA iff_base,X
- STA &91
+ STA COL
  LDA iff_xor,X
- STA &37
+ STA Y2
 
 ENDIF
 
@@ -475,13 +475,13 @@ ELIF _ELITE_A_6502SP_PARA
  TAX                    \ AJD
  LDA #&91
  JSR tube_write
- LDA &34
+ LDA X1
  JSR tube_write
- LDA &35
+ LDA Y1
  JSR tube_write
- LDA &91
+ LDA COL
  JSR tube_write
- LDA &37
+ LDA Y2
  JSR tube_write
  TXA
  JSR tube_write
@@ -511,11 +511,11 @@ ELIF _ELITE_A_FLIGHT
 
  LDA TWOS+&11,X         \ AJD
  TAX
- AND &91                \ iff
- STA &34
+ AND COL                \ iff
+ STA X1
  TXA
- AND &37
- STA &35
+ AND Y2
+ STA Y1
  PLA
 
 ENDIF
@@ -641,8 +641,8 @@ ELIF _ELITE_A_FLIGHT
                         \ pattern as the bottom-right pixel of the dot (so the
                         \ stick comes out of the right side of the dot)
 
- EOR &35                \ iff AJD
- STA &34                \ iff
+ EOR Y1                 \ iff AJD
+ STA X1                 \ iff
 
  EOR (SC),Y             \ Draw the stick on row Y of the character block using
  STA (SC),Y             \ EOR logic
@@ -935,8 +935,8 @@ ELIF _ELITE_A_FLIGHT
                         \ pattern as the bottom-right pixel of the dot (so the
                         \ stick comes out of the right side of the dot)
 
- EOR &35                \ iff AJD
- STA &34                \ iff
+ EOR Y1                 \ iff AJD
+ STA X1                 \ iff
 
  EOR (SC),Y             \ Draw the stick on row Y of the character block using
  STA (SC),Y             \ EOR logic

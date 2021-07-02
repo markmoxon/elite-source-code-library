@@ -513,7 +513,7 @@ ELIF _ELITE_A_FLIGHT
 
 ELIF _ELITE_A_6502SP_PARA
 
- LDA &87                \ AJD
+ LDA QQ11               \ AJD
  AND #&C0
  BEQ n_finder
  LDA dockedp
@@ -598,7 +598,7 @@ ELIF _ELITE_A_6502SP_PARA
  CMP #&36               \ If "O" was pressed, do the following three jumps,
  BNE not_home           \ otherwise skip to not_home to continue AJD
 
- LDA &87                \ AJD
+ LDA QQ11               \ AJD
  AND #&C0
  BEQ t95
 
@@ -717,7 +717,7 @@ ENDIF
 
 IF _ELITE_A_6502SP_PARA
 
- LDA &87                \ AJD
+ LDA QQ11               \ AJD
  AND #&C0
  BEQ t95
 
@@ -890,18 +890,18 @@ IF _ELITE_A_6502SP_PARA
 
 .d_416c
 
- LDA &2F
+ LDA QQ22+1
  BEQ d_418a
- DEC &2E
+ DEC QQ22
  BNE d_418a
- LDX &2F
+ LDX QQ22+1
  DEX
  JSR ee3
  LDA #&05
- STA &2E
- LDX &2F
+ STA QQ22
+ LDX QQ22+1
  JSR ee3
- DEC &2F
+ DEC QQ22+1
  BNE d_418a
  JMP TT18
 
@@ -919,7 +919,7 @@ IF _ELITE_A_6502SP_PARA
 
 .NWDAV5
 
- LDA &87
+ LDA QQ11
  AND #&C0
  BEQ d_418a
  JMP TT16

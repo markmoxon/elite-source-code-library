@@ -73,7 +73,8 @@ IF _DISC_DOCKED \ Electron: The Electron version doesn't read joystick values fr
  LDA JSTK               \ If JSTK is zero, then we are configured to use the
  BEQ DK9                \ keyboard rather than the joystick, so jump to DK9 to
                         \ make sure the Bitstik is disabled as well (DK9 then
-                        \ jumps to DK4 below)
+                        \ jumps to DK4 to scan for pause, configuration and
+                        \ secondary flight keys)
 
  LDX #1                 \ Call DKS2 to fetch the value of ADC channel 1 (the
  JSR DKS2               \ joystick X value) into (A X), and OR A with 1. This
@@ -93,7 +94,8 @@ ELIF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
  LDA JSTK               \ If JSTK is non-zero, then we are configured to use
  BNE DKJ1               \ the joystick rather than keyboard, so jump to DKJ1
                         \ to read the joystick flight controls, before jumping
-                        \ to DK4 below
+                        \ to DK4 to scan for pause, configuration and secondary
+                        \ flight keys
 
 ELIF _ELECTRON_VERSION
 
@@ -103,21 +105,28 @@ ELIF _ELITE_A_FLIGHT
 
  JSR U%                 \ Call U% to clear the key logger
 
- LDA &2F                \ AJD
- BEQ l_open
- JMP DK4
+ LDA QQ22+1             \ Fetch QQ22+1, which contains the number that's shown
+                        \ on-screen during hyperspace countdown
+
+ BEQ l_open             \ If the hyperspace countdown is non-zero, jump to DK4
+ JMP DK4                \ to skip scanning for primary flight keys, and move on
+                        \ to scanning for pause, configuration and secondary
+                        \ flight keys
 
 .l_open
 
  LDA JSTK               \ If JSTK is non-zero, then we are configured to use
  BNE DKJ1               \ the joystick rather than keyboard, so jump to DKJ1
                         \ to read the joystick flight controls, before jumping
-                        \ to DK4 below
+                        \ to DK4 to scan for pause, configuration and secondary
+                        \ flight keys
 
 ELIF _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA
 
  LDA JSTK               \ If JSTK is zero, then we are configured to use the
- BEQ DK4                \ keyboard rather than the joystick, so jump to DK4
+ BEQ DK4                \ keyboard rather than the joystick, so jump to DK4 to
+                        \ scan for pause, configuration and secondary flight
+                        \ keys
 
  LDX #1                 \ Call DKS2 to fetch the value of ADC channel 1 (the
  JSR DKS2               \ joystick X value) into (A X), and OR A with 1. This

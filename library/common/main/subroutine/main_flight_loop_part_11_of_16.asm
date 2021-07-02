@@ -197,12 +197,15 @@ IF NOT(_ELITE_A_VERSION)
  LDA INWK+35            \ Fetch the hit ship's energy from byte #35 and subtract
  SEC                    \ our current laser power, and if the result is greater
  SBC LAS                \ than zero, the other ship has survived the hit, so
- BCS MA14               \ jump down to MA14
+ BCS MA14               \ jump down to MA14 to make it angry
 
 ELIF _ELITE_A_VERSION
 
- JSR n_hit              \ hit enemy AJD
- BCS MA14
+ JSR n_hit              \ Call n_hit to apply a laser strike of strength A to
+                        \ the enemy ship
+
+ BCS MA14               \ If the C flag is set then the enemy ship survived the
+                        \ hit, so jump down to MA14 to make it angry
 
 ENDIF
 
@@ -301,9 +304,12 @@ ELIF _ELITE_A_VERSION
  CMP #AST               \ otherwise keep going
  BNE nosp
 
- LDA LAS                \ Did we kill the asteroid using mining lasers? If not,
- CMP new_mining         \ jump to nosp, otherwise keep going AJD
- BNE nosp
+ LDA LAS                \ Did we kill the asteroid using mining lasers? If so,
+ CMP new_mining         \ then our current laser strength in LAS will match the
+ BNE nosp               \ strength of mining lasers when fitted to our current
+                        \ ship type, which is stored in new_mining. If they
+                        \ don't match, which means we didn't use minig lasers,
+                        \ then jump to nosp, otherwise keep going
 
  JSR DORND              \ Set A and X to random numbers
 

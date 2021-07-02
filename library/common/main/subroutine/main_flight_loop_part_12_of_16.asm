@@ -104,10 +104,22 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
 ELIF _ELITE_A_VERSION
 
- BIT &6A                \ AJD
- BVS n_badboy
- BEQ n_goodboy
- LDA #&80
+                        \ At this point, we know that A = %00100000 (as we
+                        \ didn't take the BEQ branch)
+
+ BIT NEWB               \ If bit 6 of the ship's NEWB flags is set, then this
+ BVS n_badboy           \ ship is a cop, so jump to n_badboy as we just killed a
+                        \ policeman
+
+ BEQ n_goodboy          \ The BIT NEWB instruction sets the Z flag according to
+                        \ the result of:
+                        \
+                        \   A AND NEWB = %00100000 AND NEWB
+                        \
+                        \ so this jumps to n_goodboy if bit 5 of NEWB is clear
+                        \ (in other words, if the ship is no longer exploding)
+
+ LDA #%10000000         \ AJD
 
 .n_badboy
 
@@ -119,8 +131,10 @@ ELIF _ELITE_A_VERSION
  LSR A
  BIT FIST
  BNE n_bitlegal
+
  ADC FIST
  BCS KS1S
+
  STA FIST
  BCC KS1S
 
@@ -184,27 +198,60 @@ IF _ELITE_A_VERSION
 
 .n_hit
 
- \ hit opponent
- STA &D1                \ AJD
- SEC
- LDY #&0E               \ opponent shield
- LDA (XX0),Y
- AND #&07
- SBC &D1
- BCS n_kill
- \BCC n_defense
- \LDA #&FF
- \n_defense
- CLC
- ADC &69
- STA &69
- BCS n_kill
- JSR TA87+3
+                        \ If we get here then we need to apply a hit of strength
+                        \ A to the enemy ship
+
+ STA T                  \ Store the strength of the hit in T
+
+ SEC                    \ Set the C flag so we can do some subtraction
+
+ LDY #14                \ Fetch byte #14 of the enemy ship's blueprint into A,
+ LDA (XX0),Y            \ which gives the ship's maximum energy/shields
+
+ AND #7                 \ Reduce the maximum energy/shields figure to the range
+                        \ 0-7
+
+ SBC T                  \ Subtract the hit strength from the maximum shields, so
+                        \ A = ship energy - hit strength
+
+ BCS n_kill             \ If the subtraction didn't underflow, then the hit was
+                        \ weaker than the ship's shields, so jump to n_kill
+                        \ with the C flag set to indicate that the ship has
+                        \ survived the attack
+
+\BCC n_defense          \ These instructions are commented out in the original
+\LDA #&FF               \ source
+\.n_defense
+
+ CLC                    \ Otherwise the hit was stronger than the enemy shields,
+ ADC INWK+35            \ so the ship's energy level needs to register some
+ STA INWK+35            \ damage. A contains a negative number whose magnitude
+                        \ is the amount by which the attack is greater than the
+                        \ shield defence, so we can simply add this figure to
+                        \ the ship's energy levels in the ship's byte #35 to
+                        \ reduce the energy by the amount that the attack was
+                        \ stronger than the defence (i.e. the shields absorb the
+                        \ amount of energy that is defined in the blueprint, and
+                        \ the rest of the hit makes it through to damage the
+                        \ energy levels)
+
+ BCS n_kill             \ Adding this negative number is the same as subtracting
+                        \ a positive number, so having the C flag set indicates
+                        \ that the subtraction didn't underflow - in other words
+                        \ the damage isn't greater than the energy levels, and
+                        \ the ship has survuved the hit. In this case we jump to
+                        \ n_kill with the C flag set to indicate that the ship
+                        \ has survived the attack
+
+ JSR TA87+3             \ If we get here then the ship has not survived the
+                        \ attack, so call TA87+3 to set bit 7 of the ship's byte
+                        \ #31, which marks the ship as being killed
 
 .n_kill
 
- \ C clear if dead
- RTS
+ RTS                    \ Return from the subroutine with the C flag set if the
+                        \ ship has survived the onslaught, or clear if it has
+                        \ been destroyed
 
 ENDIF
 

@@ -51,7 +51,7 @@ ENDIF
 IF _ELITE_A_FLIGHT
 
  PHA                    \ AJD
- LDA &2F
+ LDA QQ22+1
  BNE l_locked
  PLA
 

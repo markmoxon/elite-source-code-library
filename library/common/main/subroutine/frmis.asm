@@ -50,7 +50,7 @@ IF _ELITE_A_VERSION
 
  JSR msblob             \ AJD redraw missiles
  STY MSAR
- STX &45
+ STX MSTG
 
 ENDIF
 

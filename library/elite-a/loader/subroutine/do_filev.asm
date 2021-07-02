@@ -24,7 +24,7 @@
  PHX
  PHY
  LDA #8 \ select ROM workspace at &C000
- TSB &FE34
+ TSB VIA+&34
  LDX #0
 
 .putws
@@ -46,11 +46,11 @@
  STA &C200,X \ address modified by master set-up
  INX
  BNE putws
- LDA &F4 \ save ROM number
+ LDA LATCH \ save ROM number
  PHA
  LDA #&80 \ select RAM from &8000-&8FFF
- STA &F4
- STA &FE30
+ STA LATCH
+ STA VIA+&30
  LDX #0
 
 .copych
@@ -64,8 +64,8 @@
  INX
  BNE copych
  PLA \ restore ROM selection
- STA &F4
- STA &FE30
+ STA LATCH
+ STA VIA+&30
  PLY
  PLX
  PLA

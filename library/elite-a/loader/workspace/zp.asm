@@ -36,3 +36,6 @@ ORG &0090
 
 INCLUDE "library/elite-a/loader/variable/key_tube.asm"
 
+ORG &00F4
+
+INCLUDE "library/master/main/variable/latch.asm"

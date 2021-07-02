@@ -24,31 +24,31 @@ IF NOT(_ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA)
 
 ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
- STX &93                \ AJD
- STA &96
+ STX CNT                \ AJD
+ STA XX4
  JSR TT27
- LDX &87
- CPX #&08
+ LDX QQ11
+ CPX #8
  BEQ status_keep
- LDA #&15
+ LDA #21
  STA XC
 
  JSR vdu_80             \ Call vdu_80 to switch to Sentence Case, with the next
                         \ letter in capitals
 
- LDA #&01
+ LDA #1
  STA QQ25
  JSR sell_yn
  BEQ status_no
  BCS status_no
- LDA &96
- CMP #&6B
+ LDA XX4
+ CMP #107
  BCS status_over
- ADC #&07
+ ADC #7
 
 .status_over
 
- SBC #&68
+ SBC #104
  JSR prx-3
  LSR A
  TAY
@@ -57,8 +57,8 @@ ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
  TAX
  JSR MCASH
  INC new_hold
- LDX &93
- LDA #&00
+ LDX CNT
+ LDA #0
  STA LASER,X
 
 ENDIF

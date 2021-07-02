@@ -390,7 +390,8 @@ IF NOT(_ELITE_A_6502SP_PARA)
 
 ELIF _ELITE_A_6502SP_PARA
 
- JMP MLOOP_FLIGHT       \ AJD
+ JMP MLOOP_FLIGHT       \ Jump down to MLOOP_FLIGHT, as we are done spawning
+                        \ ships
 
 ENDIF
 
@@ -446,24 +447,24 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- LDA #&11
- LDX #&07
+ LDA #17                \ AJD
+ LDX #7
 
 .hordes
 
  STA horde_base+1
  STX horde_mask+1
  JSR DORND
- CMP #&F8
+ CMP #248
  BCS horde_large
- STA &89
+ STA XX13
  TXA
- AND &89
- AND #&03
+ AND XX13
+ AND #3
 
 .horde_large
 
- AND #7                 \ AJD
+ AND #7
 
  STA EV                 \ Delay further spawnings by this number
 
@@ -473,9 +474,9 @@ ELIF _ELITE_A_VERSION
 
  JSR DORND              \ Set A and X to random numbers
 
- STA &D1                \ AJD
+ STA T
  TXA
- AND &D1
+ AND T
 
 .horde_mask
 
@@ -528,9 +529,9 @@ ELIF _ELITE_A_VERSION
 .horde_base
 
  ADC #&00
- INC &61                \ space out horde
- INC &47
- INC &4A
+ INC INWK+27            \ space out horde
+ INC INWK+1
+ INC INWK+4
 
 ENDIF
 

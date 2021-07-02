@@ -73,21 +73,32 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- LDA auto               \ AJD
- AND #%00000100
- EOR #%00000101
- BNE MA63
+ LDA auto               \ If the docking computer is on, then auto will be &FF,
+ AND #%00000100         \ so this will set A = 1, a tiny amount of damage
+ EOR #%00000101         \
+                        \ If the docking computer is off, then auto will be 0,
+                        \ so this will set A = 5, a small amount of damage
+
+ BNE MA63               \ Jump to MA63 to process the damage in A (this BNE is
+                        \ effectively a JMP as A will never be zero)
 
 .MA58
 
- LDA #64
- JSR n_hit
+                        \ If we get here, we have collided with something in a
+                        \ potentially fatal way
 
- JSR anger_8c           \ Call anger_8c to make the current ship angry
+ LDA #64                \ Call n_hit to apply a hit of strength 64 to the ship
+ JSR n_hit              \ we just collided with
+
+ JSR anger_8c           \ Call anger_8c to make the ship angry
 
 .n_crunch
 
- LDA #128
+                        \ If we get here, we have collided with something, so we
+                        \ need to take a hit to our shields
+
+ LDA #128               \ Set A = 128 to indicate a fairly large amount of
+                        \ damage
 
 ENDIF
 

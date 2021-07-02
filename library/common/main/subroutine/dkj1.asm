@@ -62,8 +62,8 @@ ELIF _ELITE_A_FLIGHT
  INY                    \ Update the key logger for key 2 in the KYTB table, so
  JSR DKS1               \ KY2 will be &FF if Space (speed up) is being pressed
 
- LDA #&51               \ AJD
- STA &FE60
+ LDA #%01010001         \ AJD
+ STA VIA+&60
 
  LDA VIA+&40            \ Read 6522 System VIA input register IRB (SHEILA &40)
 
@@ -77,7 +77,7 @@ ELIF _ELITE_A_6502SP_PARA
 
  JSR scan_fire          \ AJD
 
- EOR #&10
+ EOR #%00010000
  STA &0307
 
 ENDIF

@@ -52,8 +52,8 @@ ELIF _ELITE_A_6502SP_PARA
  STA JSTX               \ 128
  STA JSTY
 
- STA &32                \ AJD
- STA &7B
+ STA ALP2               \ Reset ALP2 (roll sign) and BET2 (pitch sign)
+ STA BET2               \ to negative, i.e. pitch and roll negative
 
 ENDIF
 

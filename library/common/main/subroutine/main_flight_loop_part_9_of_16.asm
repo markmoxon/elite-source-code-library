@@ -62,12 +62,6 @@ ENDIF
  CMP #214               \ docking, as the angle of approach is greater than 26
  BCC MA62               \ degrees
 
-IF _ELITE_A_VERSION
-
- LDY #&25               \ AJD
-
-ENDIF
-
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: The cassette version contains an extra docking check that makes sure we are facing towards the station when trying to dock
 
  JSR SPS4               \ Call SPS4 to get the vector to the space station
@@ -77,10 +71,20 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: The cassette version conta
  BMI MA62               \ if it is negative, we are facing away from the
                         \ station, so jump to MA62 to fail docking
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
  JSR SPS1               \ Call SPS1 to calculate the vector to the planet and
                         \ store it in XX15
+
+ LDA XX15+2             \ Set A to the z-axis of the vector
+
+ELIF _ELITE_A_VERSION
+
+ LDY #NI%               \ Set Y = NI% so the following call to SPS1 calculates
+                        \ the vector to the space station rather than the planet
+
+ JSR SPS1               \ Call SPS1 to calculate the vector to the space station
+                        \ and store it in XX15
 
  LDA XX15+2             \ Set A to the z-axis of the vector
 
@@ -171,9 +175,13 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- LDA &7D                \ AJD
- CMP #5
+ LDA DELTA              \ If the ship's speed is >= 5, jump to n_crunch to
+ CMP #5                 \ register a fair emount of damage to our shields (128)
  BCS n_crunch
+
+                        \ Otherwise we have just crashed gently into the
+                        \ station, so we need to check whether it's our fault or
+                        \ the docking computer
 
 ENDIF
 

@@ -311,8 +311,8 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: In the enhance
 ELIF _ELITE_A_VERSION
 
  LDA KY19               \ If "C" is being pressed, and we have a docking
- AND DKCMP              \ computer fitted, jump down to dock_toggle with a
- BNE dock_toggle        \ non-zero value in A to switch on the docking computer
+ AND DKCMP              \ computer fitted, then KY19 and DKCMP will both be &FF,
+ BNE dock_toggle        \ so jump down to dock_toggle with A set to &FF
 
  LDA KY20               \ If "P" is being pressed, keep going, otherwise skip
  BEQ MA78               \ the next two instructions
@@ -323,9 +323,9 @@ ELIF _ELITE_A_VERSION
 
 .dock_toggle
 
- STA auto               \ Set auto to the value in A, which will be non-zero
-                        \ if we just turned on the docking computer, or 0 if we
-                        \ just turned it off
+ STA auto               \ Set auto to the value in A, which will be &FF if we
+                        \ just turned on the docking computer, or 0 if we just
+                        \ turned it off
 
 .MA78
 

@@ -32,12 +32,14 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
 ELIF _ELITE_A_VERSION
 
- LDX #&81               \ AJD
- STX &66
- LDX #&FF
- STX &63
- INX
- STX &64
+ LDX #%10000001         \ Set the AI flag in byte #32 to %10000001 (hostile,
+ STX INWK+32            \ no AI, has an E.C.M.)
+
+ LDX #255               \ Set roll counter to 255 (maximum roll with no
+ STX INWK+29            \ damping)
+
+ INX                    \ Set pitch counter to 0 (no pitch, roll only)
+ STX INWK+30
 
 ENDIF
 
@@ -69,14 +71,14 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- STX &67                \ AJD
+ STX INWK+33            \ AJD
  LDA FIST
  BPL n_enemy
  LDX #&04
 
 .n_enemy
 
- STX &6A
+ STX NEWB
 
 ENDIF
 
@@ -87,7 +89,7 @@ ENDIF
 
 IF _ELITE_A_VERSION
 
- STX &68                \ AJD
+ STX INWK+34            \ AJD
 
 ENDIF
 

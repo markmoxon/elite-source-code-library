@@ -98,7 +98,7 @@ IF _DISC_VERSION OR _6502SP_VERSION \ Platform
 
 ELIF _ELITE_A_VERSION
 
-INCLUDE "library/elite-a/main/variable/new_type-cmdr_ship.asm"
+INCLUDE "library/elite-a/main/variable/new_type.asm"
 
 ENDIF
 

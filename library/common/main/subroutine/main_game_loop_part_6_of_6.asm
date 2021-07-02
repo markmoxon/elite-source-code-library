@@ -50,10 +50,16 @@ ENDIF
 
 IF _ELITE_A_FLIGHT
 
- PHA                    \ AJD
- LDA QQ22+1
- BNE l_locked
- PLA
+ PHA                    \ Store the key to "press" in A on the stack
+
+ LDA QQ22+1             \ Fetch QQ22+1, which contains the number that's shown
+                        \ on-screen during hyperspace countdown
+
+ BNE l_locked           \ If the hyperspace countdown is non-zero, jump to
+                        \ l_locked so the key does not get "pressed"
+
+ PLA                    \ Retrieve the key to "press" from the stack into A so
+                        \ we can now process it
 
 ENDIF
 
@@ -100,9 +106,12 @@ IF _ELITE_A_FLIGHT
 
 .l_locked
 
- PLA                    \ AJD
- JSR TT107
- JMP TT100
+ PLA                    \ Retrieve the key to "press" from the stack into A
+
+ JSR TT107              \ Call TT107 to progress the countdown of the hyperspace
+                        \ counter
+
+ JMP TT100              \ Jump to TT100 to restart the main loop from the start
 
 ENDIF
 

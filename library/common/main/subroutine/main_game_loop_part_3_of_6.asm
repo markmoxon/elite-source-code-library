@@ -48,7 +48,7 @@ ELIF _ELITE_A_6502SP_PARA
 
 .MLOOPS
 
- JMP MLOOP_FLIGHT       \ AJD
+ JMP MLOOP_FLIGHT       \ Jump to MLOOP_FLIGHT to skip the following
 
 ENDIF
 
@@ -85,8 +85,8 @@ IF NOT(_ELITE_A_VERSION)
 
  CMP T                  \ If the random value in A >= our badness level, which
  BCS P%+7               \ will be the case unless we have been really, really
-                        \ bad, then skip the following two instructions (so if
-                        \ we are really bad, there's a higher chance of
+                        \ bad, then skip the following two instructions (so
+                        \ if we are really bad, there's a higher chance of
                         \ spawning a cop, otherwise we got away with it, for
                         \ now)
 
@@ -97,17 +97,19 @@ ELIF _ELITE_A_VERSION
 
  CMP T                  \ If the random value in A >= our badness level, which
  BCS l_4050             \ will be the case unless we have been really, really
-                        \ bad, then skip the following two instructions (so if
-                        \ we are really bad, there's a higher chance of
+                        \ bad, then skip the following three instructions (so
+                        \ if we are really bad, there's a higher chance of
                         \ spawning a cop, otherwise we got away with it, for
                         \ now)
 
- LDA #&10               \ AJD
+ LDA #COPS              \ Set A to the ship type for a cop, so we can add a new
+                        \ police ship to the local bubble
 
 .horde_plain
 
- LDX #&00
- BEQ hordes
+ LDX #0                 \ Jump to hordes to spawn a pack of cops, i.e. Vipers,
+ BEQ hordes             \ returning from the subroutine using a tail call (the
+                        \ BEQ is effectively a JMP as X is always zero)
 
 .l_4050
 

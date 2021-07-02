@@ -12,12 +12,20 @@ ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ Each indicator is a rectangle that's 3 pixels wide and 5 pixels high. If the
 \ indicator is set to black, this effectively removes a missile.
 ELIF _ELECTRON_VERSION
 \ Each indicator is a rectangle that's 6 pixels wide and 5 pixels high. If the
 \ indicator is set to black, this effectively removes a missile.
+ELIF _ELITE_A_VERSION
+\ Each indicator is a rectangle that's 3 pixels wide and 5 pixels high. If the
+\ indicator is set to black, this effectively removes a missile.
+\
+\ Note that there are only four missile indicators on the dashboard, but in
+\ Elite-A our ship can have up to 7 missiles, in which case the leftmost missile
+\ indicator is used for the next missile to use, and the extra missiles are
+\ implied rather than displayed.
 ENDIF
 \
 IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
@@ -121,9 +129,11 @@ ENDIF
 
 IF _ELITE_A_FLIGHT
 
- CPX #4                 \ AJD
- BCC n_mok
- LDX #3
+ CPX #4                 \ If X < 4, jump to n_mok as the indicator number is
+ BCC n_mok              \ already one of the on-screen indicators (0-3)
+
+ LDX #3                 \ X >= 4, so set X = 3 so X points to the leftmost
+                        \ indicator
 
 .n_mok
 

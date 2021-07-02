@@ -41,7 +41,12 @@ IF NOT(_ELITE_A_6502SP_PARA)
 
 ELIF _ELITE_A_6502SP_PARA
 
- JMP DVID4              \ AJD
+ JMP DVID4              \ Jump to DVID4 to do:
+                        \
+                        \   (P R) = 256 * A / Q
+                        \         = 256 * DELTA / A
+                        \
+                        \ and return from the subroutine using a tail call
 
 ENDIF
 

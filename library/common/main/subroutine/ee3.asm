@@ -85,7 +85,9 @@ ELIF _MASTER_VERSION
 
 ELIF _ELITE_A_6502SP_PARA
 
- JMP pr6                \ AJD
+ JMP pr6                \ Jump to pr6 to print X to 5 digits, as the high byte
+                        \ in Y is 0, and return from the subroutine using a tail
+                        \ call
 
 ENDIF
 

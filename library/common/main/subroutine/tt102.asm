@@ -43,6 +43,10 @@ ENDIF
 \
 \   T95                 Print the distance to the selected system
 \
+IF _ELITE_A_VERSION
+\   TT107               Progress the countdown of the hyperspace counter
+\
+ENDIF
 \ ******************************************************************************
 
 IF _ELECTRON_VERSION \ Platform

@@ -14,7 +14,7 @@
 IF _ELITE_A_VERSION
 \ Other entry points:
 \
-\   price_xy            AJD
+\   price_xy            Set (Y X) = (A P)
 \
 ENDIF
 \ ******************************************************************************

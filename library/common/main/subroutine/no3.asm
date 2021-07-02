@@ -80,7 +80,10 @@ IF NOT(_ELITE_A_FLIGHT)
 
 ELIF _ELITE_A_FLIGHT
 
- LDX #LO(XX16)          \ AJD
+ LDX #LO(XX16)          \ Otherwise set (Y X) to point to the sound block in
+                        \ XX16 (Y is 0 as we didn't take the BNE above, and the
+                        \ XX16 block is in zero page, so we don't need to
+                        \ explicitly set Y to #HI(XX16) as it's already correct)
 
 ENDIF
 

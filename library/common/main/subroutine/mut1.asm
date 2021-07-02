@@ -27,7 +27,11 @@ IF NOT(_ELITE_A_6502SP_PARA)
 
 ELIF _ELITE_A_6502SP_PARA
 
- JMP MULT1              \ AJD
+ JMP MULT1              \ Jump to MULT1 to do the following:
+                        \
+                        \   (A P) = Q * A
+                        \
+                        \ and return from the subroutine using a tail call
 
 ENDIF
 

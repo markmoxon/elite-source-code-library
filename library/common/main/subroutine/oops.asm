@@ -20,7 +20,7 @@
 IF _ELITE_A_VERSION
 \ Other entry points:
 \
-\   n_shok              \ AJD
+\   n_shok              Contains an RTS
 \
 ENDIF
 \ ******************************************************************************

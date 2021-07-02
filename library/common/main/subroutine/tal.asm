@@ -31,12 +31,14 @@ IF NOT(_ELITE_A_FLIGHT)
 
  JMP pr2                \ Jump to pr2, which prints the number in X to a width
                         \ of 3 figures, left-padding with spaces to a width of
-                        \ 3, and once done, return from the subroutine (as pr2
-                        \ ends with an RTS)
+                        \ 3, and return from the subroutine using a tail call
 
 ELIF _ELITE_A_FLIGHT
 
- JMP pr2-1              \ AJD
+ JMP pr2-1              \ Jump to pr2-1, which prints the number in X to a width
+                        \ of 3 figures, left-padding with spaces to a width of
+                        \ 3 and without a decimal point, and return from the
+                        \ subroutine using a tail call
 
 ENDIF
 

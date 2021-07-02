@@ -29,7 +29,8 @@ ENDIF
 
 IF _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA
 
- CLC                    \ AJD
+ CLC                    \ Clear the C flag so the routine doesn't print a
+                        \ decimal point if called via pr2-1
 
 ENDIF
 

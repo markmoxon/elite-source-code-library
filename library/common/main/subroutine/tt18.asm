@@ -169,7 +169,7 @@ ELIF _ELITE_A_FLIGHT
  CMP #253               \ If A >= 253 (1% chance) then jump to MJP to trigger a
  BCS MJP                \ mis-jump into witchspace
 
- JSR hyp1               \ AJD
+ JSR hyp1               \ Jump straight to the system at (QQ9, QQ10)
 
 ELIF _ELITE_A_6502SP_PARA
 
@@ -178,7 +178,7 @@ ELIF _ELITE_A_6502SP_PARA
  CMP #253               \ If A >= 253 (1% chance) then jump to MJP to trigger a
  BCS MJP                \ mis-jump into witchspace
 
- JSR hyp1_FLIGHT        \ AJD
+ JSR hyp1_FLIGHT        \ Jump straight to the system at (QQ9, QQ10)
 
 ENDIF
 

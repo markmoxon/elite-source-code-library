@@ -46,6 +46,14 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 \     Thargoids if mission 2 is in progress
 ENDIF
 \
+IF _ELITE_A_VERSION
+\ Other entry points:
+\
+\   hordes              Spawn a pack of ships, made up of ships from type A to
+\                       type A + X, with the pack size normally being one to
+\                       four ships, but rarely being up to eight ships
+\
+ENDIF
 \ ******************************************************************************
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
@@ -447,40 +455,75 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- LDA #17                \ AJD
- LDX #7
+ LDA #SH3               \ Fall through into hordes to spawn a pack of ships from
+ LDX #7                 \ type 17 to 24, i.e. Sidewinder to Cobra Mk III
+                        \ (pirate)
 
 .hordes
 
- STA horde_base+1
- STX horde_mask+1
- JSR DORND
- CMP #248
- BCS horde_large
- STA XX13
- TXA
- AND XX13
- AND #3
+                        \ This routine spawns a pack of ships, made up of ships
+                        \ from type A to type A + X, with the pack size normally
+                        \ being one to four ships, but rarely being up to eight
+                        \ ships
+                        \
+                        \ Let's call A the "base ship type", and X the "ship
+                        \ type range"
+
+ STA horde_base+1       \ Modify the ADC instruction at horde_base so that it
+                        \ adds the base ship type given in A
+
+ STX horde_mask+1       \ Modify the ADC instruction at horde_mask so that it
+                        \ ANDs the ship type range given in X
+
+ JSR DORND              \ Set A and X to random numbers
+
+ CMP #248               \ If A >= 248 (3.1% chance), jump to horde_large so we
+ BCS horde_large        \ potentially spawn a larger pack (i.e. up to 8 ships)
+
+ STA XX13               \ We are going to spawn a smaller pack (i.e. up to 4
+ TXA                    \ ships), so set:
+ AND XX13               \
+ AND #3                 \   A = A AND X AND 3
+                        \
+                        \ to give a random pack size of 0-3, with a greater
+                        \ chance of the smaller numbers than the larger ones
+                        \ (due to the AND). This will be our pack size, which
+                        \ won't be affected further by the following AND
+                        \ instruction
 
 .horde_large
 
- AND #7
+ AND #7                 \ If we are going to spawn a larger pack, reduce the
+                        \ random number in A to the range 0-7, with an equal
+                        \ chance of each of the numbers. This will be our pack
+                        \ size
+
+                        \ By this point our pack size is in A, and is either
+                        \ 0-3 or 0-7
 
  STA EV                 \ Delay further spawnings by this number
 
- STA XX13               \ Store the number in XX13, the pirate counter
+ STA XX13               \ Store the number in XX13, the pack size counter
 
 .mt3
 
  JSR DORND              \ Set A and X to random numbers
 
- STA T
- TXA
- AND T
+ STA T                  \ Set A = A AND X
+ TXA                    \
+ AND T                  \ which is in the range 0-255, but with a greater chance
+                        \ of being a smaller number (due to the AND)
 
 .horde_mask
 
- AND #&FF
+ AND #&FF               \ This instruction gets modified so that it ANDs the
+                        \ ship type range given in the argument X to the
+                        \ hordes routine, i.e. it turns into AND #type_range,
+                        \ which reduces our random number to be between 0 and
+                        \ the ship type range (so if we add this number to the
+                        \ base ship type, it will pick a random ship type from
+                        \ within the range A to A + X, where A and X are the
+                        \ arguments to the original call to hordes
 
 ENDIF
 
@@ -505,9 +548,18 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
 ENDIF
 
-IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Platform
+IF _DISC_FLIGHT \ Platform
 
  STA CPIR               \ Set CPIR to this random number in the range 0-7
+
+.more
+
+ LDA CPIR               \ Set A to the ship type in CPIR
+
+ELIF _ELITE_A_VERSION
+
+ STA CPIR               \ Set CPIR to our random number in the range 0 to
+                        \ the ship type
 
 .more
 
@@ -524,18 +576,40 @@ IF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Enhanced: In the enhance
 
 ELIF _ELITE_A_VERSION
 
- CLC                    \ AJD
+ CLC                    \ Clear the C flag for the addition below
 
 .horde_base
 
- ADC #&00
- INC INWK+27            \ space out horde
- INC INWK+1
- INC INWK+4
+ ADC #0                 \ This instruction gets modified so that it adds the
+                        \ ship type given in the argument A to the hordes
+                        \ routine, i.e. it turns into ADC #ship_type, so this
+                        \ sets A to a ship type in the range we want
+
+ INC INWK+27            \ Increment the speed of the ship we are about to spawn,
+                        \ so later ships in the pack go faster
+
+ INC INWK+1             \ Increment the x_hi coordinate of the ship we are about
+                        \ to spawn, so later ships in the pack are spread out to
+                        \ the sides
+
+ INC INWK+4             \ Increment the y_hi coordinate of the ship we are about
+                        \ to spawn, so later ships in the pack are spread out
+                        \ to the top and bottom
 
 ENDIF
 
  JSR NWSHP              \ Try adding a new ship of type A to the local bubble
+
+IF _ELITE_A_VERSION
+
+ CMP #24                \ This compares the value of A (which is set to the
+                        \ x_sign value of the spawned ship by NWSHP), but the
+                        \ result isn't used anywhere, as CMP affects the Z and N
+                        \ flags (not the C flag), and these same flags will be
+                        \ overwritten by the two DEC instructions below... so
+                        \ instruction has no effect
+
+ENDIF
 
 IF _DISC_FLIGHT \ Platform
 
@@ -549,24 +623,43 @@ IF _DISC_FLIGHT \ Platform
                         \ spawning that type of pirate instead
 
  BPL more               \ Loop back to more to have another go at spawning this
-                        \ pirate, until we have tried spawning a Sidewinder
+                        \ pirate, until we have tried spawning a Sidewinder when
                         \ CPIR is 0, in which case give up and move on to the
                         \ next pirate to spawn
 
 ELIF _ELITE_A_VERSION
 
- CMP #&18               \ AJD
- BCS l_40d7
- DEC CPIR
- BPL more
+ BCS P%+7               \ If the ship was successfully added, skip the following
+                        \ two instructions
 
-.l_40d7
+ DEC CPIR               \ The ship wasn't added, which might be because the ship
+                        \ blueprint for this ship type isn't in the currently
+                        \ loaded ship blueprints file, so decrement CPIR to
+                        \ point to the previous ship type, so we can try
+                        \ spawning that type of ship instead
+
+ BPL more               \ Loop back to more to have another go at spawning this
+                        \ ship, until CPIR is 0, in which case we have tried
+                        \ spawning all the ship types in the range, so give up
+                        \ and move on to the next pirate to spawn
 
 ENDIF
+
+IF NOT(_ELITE_A_VERSION)
 
  DEC XX13               \ Decrement the pirate counter
 
  BPL mt3                \ If we need more pirates, loop back up to mt3,
                         \ otherwise we are done spawning, so fall through into
                         \ the end of the main loop at MLOOP
+
+ELIF _ELITE_A_VERSION
+
+ DEC XX13               \ Decrement the pack size counter
+
+ BPL mt3                \ If we need more ships, loop back up to mt3,
+                        \ otherwise we are done spawning, so fall through into
+                        \ the end of the main loop at MLOOP
+
+ENDIF
 

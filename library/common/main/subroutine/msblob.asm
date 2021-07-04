@@ -20,6 +20,14 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 \ green (i.e. not armed or locked).
 ENDIF
 \
+IF _ELITE_A_VERSION
+\ Returns:
+\
+\   X                   X is set to &FF
+\
+\   Y                   Y is set to 0
+\
+ENDIF
 \ ******************************************************************************
 
 .msblob
@@ -113,7 +121,8 @@ ELIF _ELITE_A_VERSION
 
 .miss_miss
 
- JSR MSBAR              \ Draw the missile indicator at position X in colour Y
+ JSR MSBAR              \ Draw the missile indicator at position X in colour Y,
+                        \ and return with Y = 0
 
 ENDIF
 
@@ -125,7 +134,8 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- BPL ss                 \ Loop back to ss if we still have missiles to draw
+ BPL ss                 \ Loop back to ss if we still have missiles to draw,
+                        \ ending when X = &FF
 
 ENDIF
 

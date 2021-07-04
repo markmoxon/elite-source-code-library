@@ -38,7 +38,7 @@ ENDIF
  BCS n_cargo
  DEY
  BPL l_2af9
- CMP new_hold
+ CMP new_hold           \ new_hold is free space + 1
 
 .n_cargo
 

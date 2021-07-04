@@ -56,7 +56,7 @@ IF _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Enha
 
 ENDIF
 
-IF _DISC_FLIGHT \ Advanced: In the disc version, Anacondas can only spawn Worms, while in the advanced versions they can also spawn Sidewinders
+IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: In the disc version, Anacondas can only spawn Worms, while in the advanced versions they can also spawn Sidewinders
 
  LDX #WRM               \ Set X to the ship type for a Worm
 
@@ -78,14 +78,6 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  JMP TN6                \ Jump to TN6 to spawn the Worm or Sidewinder and return
                         \ from the subroutine using a tail call
-
-.TN7
-
-ELIF _ELITE_A_VERSION
-
- LDX #15                \ AJD
-
- JMP TN6                \ Jump to TN6 to AJD
 
 .TN7
 

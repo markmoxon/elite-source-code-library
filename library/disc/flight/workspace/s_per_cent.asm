@@ -18,9 +18,11 @@ IF NOT(_ELITE_A_FLIGHT)
 
 ELIF _ELITE_A_FLIGHT
 
- JMP RSHIPS             \ AJD
+ JMP RSHIPS             \ Load a new set of ship blueprints, set the space view
+                        \ and jump into the main game loop
 
- JMP RSHIPS
+ JMP RSHIPS             \ Load a new set of ship blueprints, set the space view
+                        \ and jump into the main game loop
 
 ENDIF
 

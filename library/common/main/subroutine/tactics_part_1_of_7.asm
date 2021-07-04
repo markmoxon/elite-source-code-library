@@ -200,11 +200,19 @@ ENDIF
 
 IF _ELITE_A_VERSION
 
- LDY #&23               \ missile damage AJD
- SEC
+ LDY #35                \ Fetch byte #35 (the energy level) of the target ship
+ SEC                    \ into A, and set the C flag for the subtraction below
  LDA (V),Y
- SBC #&40
- BCS n_misshit
+
+ SBC #64                \ Set A = A - 64
+
+ BCS n_misshit          \ If the subtraction didn't underflow, then the ship has
+                        \ an energy level of at least 64 and can take the hit,
+                        \ so jump to n_misshit to update the ship's energy level
+                        \ with the new, reduced value
+
+                        \ If we get here then the ship doesn't have enough energy
+                        \ to withstand the missile hit, so it gets destroyed
 
 ENDIF
 
@@ -226,10 +234,14 @@ IF NOT(_ELITE_A_VERSION)
 ELIF _ELITE_A_VERSION
 
  ORA #%10000000         \ Otherwise set bit 7 of the target's byte #31 to mark
+                        \ the ship as having been killed, so it explodes (we
+                        \ update the ship data block in the next instruction)
 
 .n_misshit
 
- STA (V),Y              \ the ship as having been killed, so it explodes
+ STA (V),Y              \ Update the Y-th byte of the target ship data block,
+                        \ which will either be byte #35 (if the ship has been
+                        \ destroyed) or byte #31 (if it has survived)
 
 ENDIF
 

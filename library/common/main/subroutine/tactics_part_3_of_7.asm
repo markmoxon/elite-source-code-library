@@ -180,7 +180,8 @@ ELIF _ELITE_A_VERSION
 
 .GOPL
 
- LDY #&00               \ AJD
+ LDY #0                 \ Set Y = 0 so the call to SPS1 calculates the vector to
+                        \ the planet
 
  JSR SPS1               \ The ship is not hostile and it is not docking, so call
                         \ SPS1 to calculate the vector to the planet and store

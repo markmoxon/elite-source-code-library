@@ -186,7 +186,8 @@ IF NOT(_ELITE_A_FLIGHT)
 
 ELIF _ELITE_A_FLIGHT
 
- JSR pr2-1              \ AJD
+ JSR pr2-1              \ Call pr2-1 to print the technology level as a 3-digit
+                        \ number without a decimal point
 
 ENDIF
 

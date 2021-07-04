@@ -276,11 +276,12 @@ ELIF _ELECTRON_VERSION
 
 ELIF _ELITE_A_FLIGHT
 
- LDA ZZ                 \ AJD
- CMP #144
+ LDA ZZ                 \ If distance in ZZ < 144, then jump to thick_dot as
+ CMP #144               \ this point is not a very long way away
  BCC thick_dot
- LDA TWOS,X
- BCS PX14+3
+
+ LDA TWOS,X             \ This point is a very long way away, so fetch a 2-pixel
+ BCS PX14+3             \ dash from TWOS2 and jump to PX14+3 to EOR it into SC+Y
 
 .thick_dot
 

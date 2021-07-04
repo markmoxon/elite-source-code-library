@@ -539,11 +539,16 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_FLIGHT
 
- STA LASCT              \ AJD
+ STA LASCT              \ LASCT will be set to 0 for beam lasers, and to the
+                        \ laser power (15) for pulse lasers. See MS23 below
+                        \ for more on laser pulsing and LASCT
 
 ELIF _ELITE_A_6502SP_PARA
 
- JSR write_0346         \ AJD
+ JSR write_0346         \ Call write_0346 to set LASCT in the I/O processor to 0
+                        \ for beam lasers, and to the laser power (15) for pulse
+                        \ lasers. See MS23 below for more on laser pulsing and
+                        \ LASCT
 
 ENDIF
 

@@ -61,22 +61,32 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
- LDA #&E                \ print hold size AJD
- JSR TT68
- LDX new_hold
- DEX
- CLC
- JSR pr2
- JSR TT160
+ LDA #14                \ Print recursive token 128 ("SPACE") followed by a
+ JSR TT68               \ colon
+
+ LDX new_hold           \ Set X to the amount of free space in our current
+ DEX                    \ ship's hold, minus 1 as new_hold contains the amount
+                        \ of free space plus 1
+
+ CLC                    \ Call pr2 to print the amount of free space as a
+ JSR pr2                \ 3-digit number without a decimal point (by clearing
+                        \ the C flag)
+
+ JSR TT160              \ Print "t" (for tonne) and a space
 
 ELIF _ELITE_A_FLIGHT
 
- LDA #&0E               \ AJD
- JSR TT68
- LDX new_hold
- DEX
- JSR pr2-1
- JSR TT160
+ LDA #14                \ Print recursive token 128 ("SPACE") followed by a
+ JSR TT68               \ colon
+
+ LDX new_hold           \ Set X to the amount of free space in our current
+ DEX                    \ ship's hold, minus 1 as new_hold contains the amount
+                        \ of free space plus 1
+
+ JSR pr2-1              \ Call pr2-1 to print the amount of free space as a
+                        \ 3-digit number without a decimal point
+
+ JSR TT160              \ Print "t" (for tonne) and a space
 
 ENDIF
 

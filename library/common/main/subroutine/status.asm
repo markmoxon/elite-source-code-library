@@ -406,7 +406,7 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
-IF NOT(_ELITE_A_VERSION)
+IF NOT(_ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA)
 
  LDA BST                \ If we don't have fuel scoops fitted, skip the
  BEQ P%+7               \ following two instructions
@@ -495,39 +495,6 @@ ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
  LDX CNT
  INX
  CPX #&1E
- BCC stqv
-
-ELIF _ELITE_A_FLIGHT
-
- LDA BST                \ AJD
- BEQ l_1cf1
- LDA #&6F
- JSR plf2
-
-.l_1cf1
-
- LDA ECM
- BEQ l_1cfb
- LDA #&6C
- JSR plf2
-
-.l_1cfb
-
- LDA #&71
- STA XX4
-
-.stqv
-
- TAY
- LDX FRIN,Y
- BEQ l_1d08
- JSR plf2
-
-.l_1d08
-
- INC XX4
- LDA XX4
- CMP #&75
  BCC stqv
 
 ENDIF

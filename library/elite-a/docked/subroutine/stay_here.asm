@@ -3,7 +3,7 @@
 \       Name: stay_here
 \       Type: Subroutine
 \   Category: Buying ships
-\    Summary: AJD
+\    Summary: Pay docking fee and refresh prices AJD
 \
 \ ******************************************************************************
 

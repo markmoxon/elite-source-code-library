@@ -30,7 +30,8 @@ IF NOT(_ELITE_A_6502SP_PARA)
 
 ELIF _ELITE_A_6502SP_PARA
 
- STA dockedp            \ AJD
+ STA dockedp            \ Set dockedp to &FF to indicate that we are no longer
+                        \ docked
 
  LDA #f0                \ Jump into the main game loop at FRCE_FLIGHT, setting
  JMP FRCE_FLIGHT        \ the key "pressed" to red key f0 (so we launch from the

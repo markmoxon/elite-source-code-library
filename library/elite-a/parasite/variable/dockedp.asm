@@ -1,9 +1,8 @@
 .dockedp
 
- SKIP 1                 \ A flag that determines whether we should be running
-                        \ the docked or flight code in the parasite
+ SKIP 1                 \ A flag that determines whether or not we are docked
                         \
-                        \   * 0 = we are not docked, run the flight code
+                        \   * 0 = we are docked
                         \
-                        \   * &FF = we are docked, run the docked code
+                        \   * &FF = we are not docked
 

@@ -55,7 +55,25 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- ADC GCNT               \ 16+7 -> 23 files ! AJD
+                        \ By this point, A is:
+                        \
+                        \   * Bit 0    = 0 for low tech level (Coriolis station)
+                        \                1 for high tech level (Dodo station)
+                        \   * Bit 1    = 0 for more dangerous systems
+                        \                1 for safer systems
+                        \   * Bit 2    = random
+                        \   * Bit 3    = random
+                        \   * Bits 4-7 = 0
+                        \
+                        \ So A is in the range 0-15. This corresponds to the
+                        \ ship blueprints files in the original disc version,
+                        \ which are D.MOA to D.MOP, but we're not done yet,
+                        \ as Elite-A has 23 ship blueprint files
+
+ ADC GCNT               \ Add the galaxy number in GCNT to A, which moves A into
+                        \ the range 0-22, which corresponds to the appropriate
+                        \ Elite-A ship file (where 0 is file S.A and 23 is file
+                        \ S.W)
 
 ENDIF
 
@@ -89,7 +107,7 @@ ENDIF
 IF NOT(_ELITE_A_VERSION)
 
  STA SHIPI+6            \ Store the letter of the ship blueprints file we want
-                        \ in the sixth byte of the command string at SHIPI, so
+                        \ in the seventh byte of the command string at SHIPI, so
                         \ it overwrites the "0" in "D.MO0" with the file letter
                         \ to load, from D.MOA to D.MOP
 
@@ -97,7 +115,10 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- STA SHIPI+4            \ AJD
+ STA SHIPI+4            \ Store the letter of the ship blueprints file we want
+                        \ in the fifth byte of the command string at SHIPI, so
+                        \ it overwrites the "0" in "S.0" with the file letter
+                        \ to load, from S.A to S.W
 
 ENDIF
 

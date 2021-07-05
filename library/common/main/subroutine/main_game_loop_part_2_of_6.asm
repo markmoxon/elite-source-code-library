@@ -129,8 +129,9 @@ ELIF _DISC_DOCKED
 
 ELIF _ELITE_A_FLIGHT
 
- CMP #&33               \ trader fraction AJD
- BCS MTT1
+ CMP #51                \ If A >= 51 (80% chance), jump down to MTT1 to skip
+ BCS MTT1               \ the spawning of an asteroid or cargo canister and
+                        \ potentially spawn something else
 
 ENDIF
 
@@ -188,8 +189,11 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR 
 
 ELIF _ELITE_A_FLIGHT
 
- JSR rand_posn          \ AJD
- BVS MTT4
+ JSR rand_posn          \ Call rand_posn to set up the INWK workspace for a ship
+                        \ in a random ship position
+
+ BVS MTT4               \ If V flag is set (50% chance), jump up to MTT4 to
+                        \ spawn a trader
 
 ENDIF
 
@@ -268,14 +272,14 @@ ELIF _ELITE_A_FLIGHT
                         \ rolling clockwise or anti-clockwise
 
  LDA SSPR               \ If we are inside the space station safe zone, jump
- BNE MLOOPS             \ down to MLOOPS to AJD
+ BNE MLOOPS             \ down to MLOOPS to stop spawning
 
  TXA                    \ Set A to the random X we set above, which we haven't
  BCS MTT2               \ used yet, and if the C flag is set (50% chance) jump
                         \ down to MTT2 to skip the following
 
- AND #15                \ AJD
- STA INWK+27
+ AND #15                \ Set the ship speed to our random number, reduced to
+ STA INWK+27            \ the range 0 to 15
 
  BCC MTT3               \ Jump down to MTT3, skipping the following (this BCC
                         \ is effectively a JMP as we know the C flag is clear,
@@ -345,7 +349,10 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR 
 
 ELIF _ELITE_A_FLIGHT
 
- BNE horde_plain        \ AJD
+ BNE horde_plain        \ Jump to horde_plain to spawn a whole pack of cargo
+                        \ canisters, boulders or asteroids, according to the
+                        \ value of A (the BNE is effectivey a JMP, as A will
+                        \ never be zero)
 
 ENDIF
 

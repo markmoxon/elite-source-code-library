@@ -71,14 +71,25 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- STX INWK+33            \ AJD
- LDA FIST
- BPL n_enemy
- LDX #&04
+ STX INWK+33            \ As part of the setup, we want to point INWK(34 33) to
+                        \ LSO, the line heap for the space station. LSO is at
+                        \ &0E00, so this sets the low byte at byte #33 to 0 (we
+                        \ set the high byte below)
+
+ LDA FIST               \ If bit 7 of FIST is clear, i.e. FIST < 128, then jump
+ BPL n_enemy            \ to n_enemy with X = 0 to skip the following
+                        \ instruction and set the NEWB flags to 0 (so the
+                        \ station is not hostile)
+
+ LDX #%00000100         \ Bit 7 of FIST is set, i.e. FIST >= 128 (so our
+                        \ "fugitive/innocent status" is very bad!), so set bit
+                        \ #3 of X so we the following sets the NEWB flags to
+                        \ make the station hostile
 
 .n_enemy
 
- STX NEWB
+ STX NEWB               \ Set the station's NEWB flag with the value in X, so it
+                        \ be hostile if FIST > 127, or friendly otherwise
 
 ENDIF
 
@@ -89,7 +100,14 @@ ENDIF
 
 IF _ELITE_A_VERSION
 
- STX INWK+34            \ AJD
+                        \ NwS1 increments X by 2 for each call, so at this point
+                        \ the value of X is 10 + 2 + 2 = 14 = &E, which we can
+                        \ use to set the correct INWK+34 value in the following
+
+ STX INWK+34            \ As part of the setup, we want to point INWK(34 33) to
+                        \ LSO, the line heap for the space station. LSO is at
+                        \ &0E00, so this sets the high byte at byte #34 to &0E
+                        \ (we already set the low byte above)
 
 ENDIF
 

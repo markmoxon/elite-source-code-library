@@ -3,7 +3,10 @@
 \       Name: TT102
 \       Type: Subroutine
 \   Category: Keyboard
-\    Summary: Process function key, save, hyperspace and chart key presses
+\    Summary: Process function key, save key, hyperspace and chart key presses
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Comment
+\             and update the hyperspace counter
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
@@ -45,6 +48,9 @@ ENDIF
 \
 IF _ELITE_A_VERSION
 \   TT107               Progress the countdown of the hyperspace counter
+\
+\   BAD                 Work out how bad we are from the amount of contraband in
+\                       our hold
 \
 ENDIF
 \ ******************************************************************************
@@ -93,8 +99,8 @@ ELIF _ELECTRON_VERSION
 
 ELIF _ELITE_A_ENCYCLOPEDIA
 
- CMP #f8                \ If red key f8 was pressed, AJD
- BNE P%+5               \ , returning from the subroutine
+ CMP #f8                \ If red key f8 was pressed, jump to info_menu to show
+ BNE P%+5               \ the encyclopedia menu, returning from the subroutine
  JMP info_menu          \ using a tail call
 
  CMP #f4                \ If red key f4 was pressed, jump to TT22 to show the
@@ -135,16 +141,26 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _
 
 ELIF _ELITE_A_ENCYCLOPEDIA
 
- CMP #&75               \ AJD
- BNE TT92
- JSR CTRL
- BPL jump_data
- JMP launch
+ CMP #f6                \ If red key f6 was not pressed, jump to TT92 to check
+ BNE TT92               \ for the next key
+
+ JSR CTRL               \ Red key f6 was pressed, so check whether CTRL was
+ BPL jump_data          \ also pressed, and if it wasn't pressed, jump to
+                        \ jump_data to skip the following instruction
+
+ JMP launch             \ CTRL-f6 was pressed, so jump to launch to load and run
+                        \ the main docked code (i.e. to exit the encyclopedia)
 
 .jump_data
 
- JSR TT111
- JMP TT25
+ JSR TT111              \ Red key f6 was pressed on its own, so call TT111 to
+                        \ select the system nearest to galactic coordinates
+                        \ (QQ9, QQ10) (the location of the chart crosshairs) and
+                        \ set ZZ to the system number
+
+ JMP TT25               \ Jump to TT25 to show the Data on System screen, along
+                        \ with an extended system description for the system in
+                        \ ZZ, returning from the subroutine using a tail call
 
 ENDIF
 
@@ -172,15 +188,15 @@ ELIF _ELECTRON_VERSION
 
 ELIF _ELITE_A_ENCYCLOPEDIA
 
- CMP #&77               \ AJD
- BNE not_invnt
- JMP info_menu
+ CMP #f9                \ If red key f9 was pressed, jump to info_menu to show
+ BNE not_invnt          \ the encyclopedia menu, returning from the subroutine
+ JMP info_menu          \ using a tail call
 
 .not_invnt
 
- CMP #&16
- BNE not_price
- JMP info_menu
+ CMP #f7                \ If red key f7 was pressed, jump to info_menu to show
+ BNE not_price          \ the encyclopedia menu, returning from the subroutine
+ JMP info_menu          \ using a tail call
 
 .not_price
 
@@ -200,17 +216,21 @@ ELIF _ELECTRON_VERSION
 
 ELIF _ELITE_A_DOCKED
 
- CMP #f0                \ AJD
- BNE fvw
+ CMP #f0                \ If red key f0 was not pressed, jump to fvw to check
+ BNE fvw                \ for the next key
 
- JSR CTRL
- BMI jump_stay
+ JSR CTRL               \ Red key f0 was pressed, so check whether CTRL was
+ BMI jump_stay          \ also pressed, and if so, jump to jump_stay to skip the
+                        \ following instruction
 
- JMP TT110
+ JMP TT110              \ Red key f0 was pressed on its own, so jump to TT110 to
+                        \ launch our ship, returning from the subroutine using a
+                        \ tail call
 
 .jump_stay
 
- JMP stay_here
+ JMP stay_here          \ CTRL-f0 was pressed, so jump to stay_here to pay the
+                        \ docking fee and refresh prices
 
 ENDIF
 
@@ -396,13 +416,16 @@ ELIF _MASTER_VERSION
 
 ELIF _ELITE_A_ENCYCLOPEDIA
 
- CMP #&20               \ AJD
+ CMP #f0                \ AJD
  BEQ jump_menu
- CMP #&71
+
+ CMP #f1
  BEQ jump_menu
- CMP #&72
+
+ CMP #f2
  BEQ jump_menu
- CMP #&73
+
+ CMP #f3
  BNE LABEL_3
 
 .jump_menu
@@ -536,17 +559,22 @@ ELIF _ELITE_A_FLIGHT
 
 ELIF _ELITE_A_6502SP_PARA
 
- LDA QQ11               \ AJD
- AND #&C0
+ LDA QQ11               \ If the current view is a chart (QQ11 = 64 or 128),
+ AND #%11000000         \ keep going, otherwise jump to n_finder
  BEQ n_finder
- LDA dockedp
- BNE t95
- JMP HME2
+
+ LDA dockedp            \ If dockedp is non-zero, then we are not docked and
+ BNE t95                \ can't search for a system, so return from the
+                        \ subroutine (as t95 contains an RTS)
+
+ JMP HME2               \ Jump to HME2 to let us search for a system, returning
+                        \ from the subroutine using a tail call
 
 .n_finder
 
- LDA dockedp
- BEQ t95
+ LDA dockedp            \ If dockedp is zero, then we are docked and we can't
+ BEQ t95                \ change the compass configuration, so return from the
+                        \ subroutine (as t95 contains an RTS)
 
  LDA finder             \ Set the value of A to finder, which determines whether
                         \ the compass is configured to show the sun or the
@@ -600,7 +628,8 @@ ELIF _ELITE_A_FLIGHT
 
  LDA QQ11               \ If the current view is a chart (QQ11 = 64 or 128),
  AND #%11000000         \ keep going, otherwise jump down to TT107 to skip the
- BEQ TT107              \ following AJD
+ BEQ TT107              \ following and move on to updating the hyperspace
+                        \ counter
 
 ENDIF
 
@@ -624,16 +653,18 @@ ELIF _MASTER_VERSION
 ELIF _ELITE_A_DOCKED OR _ELITE_A_FLIGHT OR _ELITE_A_ENCYCLOPEDIA
 
  CMP #&36               \ If "O" was pressed, do the following three jumps,
- BNE not_home           \ otherwise skip to not_home to continue AJD
+ BNE not_home           \ otherwise skip to not_home to continue checking key
+                        \ presses
 
 ELIF _ELITE_A_6502SP_PARA
 
- CMP #&36               \ If "O" was pressed, do the following three jumps,
- BNE not_home           \ otherwise skip to not_home to continue AJD
+ CMP #&36               \ If "O" was pressed, do the following, otherwise skip
+ BNE not_home           \ to not_home to continue checking key presses
 
- LDA QQ11               \ AJD
- AND #&C0
- BEQ t95
+ LDA QQ11               \ If both bits 6 or 7 of the view number are clear - so
+ AND #%11000000         \ this is not the Short-range or Long-range Chart -
+ BEQ t95                \ then jump to t95 to return from the subroutine,
+                        \ otherwise do the following three jumps
 
 ENDIF
 
@@ -723,11 +754,15 @@ IF _ELITE_A_FLIGHT
 
 .BAD
 
- LDA QQ20+&03           \ AJD
- CLC
- ADC QQ20+&06
- ASL A
- ADC QQ20+&0A
+ LDA QQ20+3             \ Set A to the number of tonnes of slaves in the hold
+
+ CLC                    \ Clear the C flag so we can do addition without the
+                        \ C flag affecting the result
+
+ ADC QQ20+6             \ Add the number of tonnes of narcotics in the hold
+
+ ASL A                  \ Double the result and add the number of tonnes of
+ ADC QQ20+10            \ firearms in the hold
 
 ENDIF
 
@@ -743,37 +778,44 @@ IF _ELITE_A_VERSION
 
 .not_home
 
- CMP #&21               \ AJD
- BNE ee2
+ CMP #&21               \ If "W" was pressed, continue on to move the crosshairs
+ BNE ee2                \ to the special cargo destination, otherwise skip to
+                        \ ee2 to continue
 
 ENDIF
 
 IF _ELITE_A_6502SP_PARA
 
- LDA QQ11               \ AJD
- AND #&C0
- BEQ t95
+ LDA QQ11               \ If both bits 6 or 7 of the view number are clear - so
+ AND #%11000000         \ this is not the Short-range or Long-range Chart -
+ BEQ t95                \ then jump to t95 to return from the subroutine,
+                        \ otherwise do the following three jumps
 
- LDA cmdr_cour
- ORA cmdr_cour+1
- BEQ t95
+ LDA cmdr_cour          \ If there is no special cargo delivery mission in
+ ORA cmdr_cour+1        \ progress, then cmdr_cour(1 0) will be zero, so return
+ BEQ t95                \ from the subroutine (as t95 contains an RTS)
 
 ELIF _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA
 
- LDA cmdr_cour
- ORA cmdr_cour+1
- BEQ ee2
+ LDA cmdr_cour          \ If there is no special cargo delivery mission in
+ ORA cmdr_cour+1        \ progress, then cmdr_cour(1 0) will be zero, so skip
+ BEQ ee2                \ to ee2 to continue
 
 ENDIF
 
 IF _ELITE_A_VERSION
 
- JSR TT103              \ AJD
- LDA cmdr_courx
- STA QQ9
- LDA cmdr_coury
+ JSR TT103              \ Draw small crosshairs at coordinates (QQ9, QQ10),
+                        \ which will erase the crosshairs currently there
+
+ LDA cmdr_courx         \ Set the galactic coordinates in (QQ9, QQ10) to the
+ STA QQ9                \ current special cargo delivery destination in
+ LDA cmdr_coury         \ (cmdr_courx, cmdr_coury)
  STA QQ10
- JSR TT103
+
+ JSR TT103              \ Draw small crosshairs at coordinates (QQ9, QQ10),
+                        \ which will draw the crosshairs at our current home
+                        \ system
 
 ENDIF
 

@@ -57,10 +57,12 @@ IF NOT(_ELITE_A_FLIGHT)
 
 ELIF _ELITE_A_FLIGHT
 
- TXA                    \ AJD
- EOR #&FF
- TAX
- INX
+ TXA                    \ Negate X using two's complement, so X = ~X + 1
+ EOR #%11111111         \
+ TAX                    \ We do this because X is negative at this point, as it
+ INX                    \ is calculated as 191 - the y-coordinate of the sun's
+                        \ centre, and the centre is off the bottom of the
+                        \ screen, past 191. So we negate it to make it positive
 
 ENDIF
 

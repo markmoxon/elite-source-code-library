@@ -41,10 +41,21 @@ IF NOT(_ELITE_A_FLIGHT)
 
 ELIF _ELITE_A_FLIGHT
 
- BCC TT113              \ AJD
- INC CASH+1
- BNE n_addmny
- INC CASH
+ BCC TT113              \ If the above addition didn't overflow, then the
+                        \ addition is done, so jump to TT113 to return from the
+                        \ subroutine with the C flag clear
+
+ INC CASH+1             \ Otherwise we need to add the C flag to the third most
+                        \ significant byte of CASH, which we can do with an
+                        \ increment
+
+ BNE n_addmny           \ If the result of the above increment is non-zero, then
+                        \ we have nothing further to carry and the addition is
+                        \ complete, so skip the following instruction
+
+ INC CASH               \ Otherwise we need to add the C flag to the most
+                        \ significant byte of CASH, which we can do with an
+                        \ increment
 
 .n_addmny
 

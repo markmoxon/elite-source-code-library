@@ -113,52 +113,87 @@ ELIF _MASTER_VERSION
 
 ELIF _ELITE_A_FLIGHT
 
- JSR iff_index          \ AJD
- LDA iff_base,X
- STA COL
- LDA iff_xor,X
- STA Y2
+ JSR iff_index          \ Call iff_index to work out the index of the colour we
+                        \ should use for the dot and stick for this ship,
+                        \ according to whether we have an I.F.F. system fitted
+
+ LDA iff_base,X         \ Set COL to the base colour for this ship, given the
+ STA COL                \ I.F.F. colour index in X (this colour is used for both
+                        \ the dot and stick)
+
+ LDA iff_xor,X          \ Set Y2 to the alternating colour for this ship, given
+ STA Y2                 \ the I.F.F. colour index in X (this colour is used for
+                        \ making the stick striped, where appropriate)
 
 ELIF _ELITE_A_6502SP_PARA
 
- LDX CRGO               \ iff code AJD, same as loader code, CRGO = cmdr_iff
- BEQ iff_not
- LDY #&24
- LDA (&20),Y
- ASL A
- ASL A
+ LDX CRGO               \ If we do not have an I.F.F. fitted (i.e. CRGO is
+ BEQ iff_not            \ zero), jump to iff_not to fetch the default colours,
+                        \ which are those for a trader or innocent bystander
+                        \ (i.e. X = 0)
+
+                        \ If we get here then X = &FF (as CRGO is &FF if we have
+                        \ an I.F.F. fitted)
+
+ LDY #36                \ Set A to byte #36 of the ship's blueprint, i.e. the
+ LDA (INF),Y            \ NEWB flags
+
+ ASL A                  \ If bit 6 is set, i.e. this is a cop, a space station
+ ASL A                  \ or an escape pod, jump to iff_cop to set X = 1
  BCS iff_cop
- ASL A
- BCS iff_trade
- LDY TYPE
+
+ ASL A                  \ If bit 5 is set, i.e. this is an innocent bystander
+ BCS iff_trade          \ (which applies to traders and some bounty hunters),
+                        \ jump to iff_trade to set X = 0
+
+ LDY TYPE               \ Set Y to the ship's type - 1
  DEY
- BEQ iff_missle
- CPY #&08
- BCC iff_aster
- INX \ X=4
+
+ BEQ iff_missle         \ If Y = 0, i.e. this is a missile, then jump to
+                        \ iff_missle to set X = 3
+
+ CPY #8                 \ If Y < 8, i.e. this is a cargo canister, alloy plate,
+ BCC iff_aster          \ boulder, asteroid or splinter, then jump to iff_aster
+                        \ to set X = 2
+
+                        \ If we get here then the ship is not the following:
+                        \
+                        \   * A cop/station/escape pod
+                        \   * An innocent bystander/trader/good bounty hunter
+                        \   * A missile
+                        \   * Cargo or an asteroid
+                        \
+                        \ So it must be a pirate or a non-innocent bounty hunter
+
+ INX                    \ X is &FF at this point, so this INX sets X = 0, and we
+                        \ then fall through into the four INX instructions below
+                        \ to set X = 4
 
 .iff_missle
 
- INX \ X=3
+ INX                    \ If we jump to this point, then set X = 3
 
 .iff_aster
 
- INX \ X=2
+ INX                    \ If we jump to this point, then set X = 2
 
 .iff_cop
 
- INX \ X=1
+ INX                    \ If we jump to this point, then set X = 1
 
 .iff_trade
 
- INX \ X=0
+ INX                    \ If we jump to this point, then set X = 0
 
 .iff_not
 
- LDA iff_base,X
- STA COL
- LDA iff_xor,X
- STA Y2
+ LDA iff_base,X         \ Set COL to the base colour for this ship, given the
+ STA COL                \ I.F.F. colour index in X (this colour is used for both
+                        \ the dot and stick)
+
+ LDA iff_xor,X          \ Set Y2 to the alternating colour for this ship, given
+ STA Y2                 \ the I.F.F. colour index in X (this colour is used for
+                        \ making the stick striped, where appropriate)
 
 ENDIF
 
@@ -509,14 +544,18 @@ ELIF _ELECTRON_VERSION
 
 ELIF _ELITE_A_FLIGHT
 
- LDA TWOS+&11,X         \ AJD
- TAX
- AND COL                \ iff
- STA X1
- TXA
- AND Y2
- STA Y1
- PLA
+ LDA CTWOS+1,X          \ Load the same mode 5 1-pixel byte that we just used
+ TAX                    \ and make a copy in X
+
+ AND COL                \ Mask the 1-pixel byte with the same colour, storing
+ STA X1                 \ the result in X1, so we can use it as the character
+                        \ rowbyte for the stick
+
+ TXA                    \ Mask the 1-pixel byte with the colour in Y2, which
+ AND Y2                 \ we set to the alternating colour for the stick, and
+ STA Y1                 \ store the result in Y1
+
+ PLA                    \ Restore the stick height from the stack into A
 
 ENDIF
 
@@ -560,7 +599,8 @@ ELIF _ELITE_A_FLIGHT
                         \ draw, so return from the subroutine (as RTS contains
                         \ an RTS)
 
- BMI RTS+1              \ AJD
+ BMI RTS+1              \ If the stick height in A is negative, jump down to
+                        \ RTS+1
 
 .VLL1
 
@@ -641,8 +681,11 @@ ELIF _ELITE_A_FLIGHT
                         \ pattern as the bottom-right pixel of the dot (so the
                         \ stick comes out of the right side of the dot)
 
- EOR Y1                 \ iff AJD
- STA X1                 \ iff
+ EOR Y1                 \ Apply the alternating colour in Y1 to the stick
+
+ STA X1                 \ Update the value in X1 so the alternating colour is
+                        \ applied every other row (as doing an EOR twice
+                        \ reverses it)
 
  EOR (SC),Y             \ Draw the stick on row Y of the character block using
  STA (SC),Y             \ EOR logic
@@ -935,8 +978,11 @@ ELIF _ELITE_A_FLIGHT
                         \ pattern as the bottom-right pixel of the dot (so the
                         \ stick comes out of the right side of the dot)
 
- EOR Y1                 \ iff AJD
- STA X1                 \ iff
+ EOR Y1                 \ Apply the alternating colour in Y1 to the stick
+
+ STA X1                 \ Update the value in X1 so the alternating colour is
+                        \ applied every other row (as doing an EOR twice
+                        \ reverses it)
 
  EOR (SC),Y             \ Draw the stick on row Y of the character block using
  STA (SC),Y             \ EOR logic

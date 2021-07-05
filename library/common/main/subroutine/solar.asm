@@ -37,6 +37,7 @@ ELIF _ELITE_A_VERSION
  ROR A
  DEY
  BNE legal_div
+
  SEC
  SBC FIST
  BCC legal_over

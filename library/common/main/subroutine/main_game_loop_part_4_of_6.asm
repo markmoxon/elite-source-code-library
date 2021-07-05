@@ -64,9 +64,10 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
 
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
 
- DEC EV                 \ Decrement EV, the extra vessels spawning delay, and
- BPL MLOOPS             \ jump to MLOOPS if it is still positive, so we only
-                        \ do the following when the EV counter runs down
+ DEC EV                 \ Decrement EV, the extra vessels spawning delay, and if
+ BPL MLOOPS             \ it is still positive, jump to MLOOPS to stop spawning,
+                        \ so we only do the following when the EV counter runs
+                        \ down
 
 ENDIF
 
@@ -210,8 +211,9 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
 ELIF _ELITE_A_VERSION
 
- CPX #&64               \ AJD
- BCS mt1
+ CPX #100               \ If the random number in X >= 100 (61% chance), jump
+ BCS mt1                \ to mt1 to spawn pirates, otherwise keep going to
+                        \ spawn a lone bounty hunter or a Thargoid
 
 ENDIF
 
@@ -276,10 +278,10 @@ ELIF _ELITE_A_VERSION
  AND #3                 \ Set A = random number in the range 0-3, which we
                         \ will now use to determine the type of ship
 
- ADC #CYL2+1            \ Add A to #CYL2 (we know the C flag is clear as we
-                        \ passed through the BCS above), so A is now one of the
-                        \ lone bounty hunter ships, i.e. Cobra Mk III (pirate),
-                        \ Asp Mk II, Python (pirate) or Fer-de-lance AJD
+ ADC #25                \ Add A to 25 (we know the C flag is clear as we passed
+                        \ through the BCS above), so A is now a ship slot in the
+                        \ range 25-28, which is where the pirate ships live in
+                        \ the ship files
 
  TAY                    \ Copy the new ship type to Y
 

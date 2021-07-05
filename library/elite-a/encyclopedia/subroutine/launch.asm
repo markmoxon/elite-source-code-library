@@ -3,7 +3,7 @@
 \       Name: launch
 \       Type: Subroutine
 \   Category: Loader
-\    Summary: AJD
+\    Summary: Load and run the main docked code AJD
 \
 \ ******************************************************************************
 

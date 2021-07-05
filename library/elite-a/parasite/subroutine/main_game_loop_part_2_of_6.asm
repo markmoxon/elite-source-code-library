@@ -42,8 +42,13 @@
  LDA JUNK
  CMP #&03
  BCS MTT1
- JSR rand_posn \ IN
- BVS MTT4
+
+ JSR rand_posn          \ Call rand_posn to set up the INWK workspace for a ship
+                        \ in a random ship position
+
+ BVS MTT4               \ If V flag is set (50% chance), jump up to MTT4 to
+                        \ spawn a trader
+
  ORA #&6F
  STA INWK+29
  LDA SSPR

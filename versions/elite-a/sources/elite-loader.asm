@@ -104,7 +104,9 @@ LASCT = &0346           \ The laser pulse count for the current laser, matching
 HFX = &0348             \ A flag that toggles the hyperspace colour effect,
                         \ matching the address in the main game code
 
-cmdr_iff = &036E        \ AJD
+CRGO = &036E            \ The flag that determines whether we have an I.F.F.
+                        \ system fitted, matching the address in the main game
+                        \ code
 
 ESCP = &0386            \ The flag that determines whether we have an escape pod
                         \ fitted, matching the address in the main game code

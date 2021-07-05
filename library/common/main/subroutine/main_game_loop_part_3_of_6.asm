@@ -102,12 +102,12 @@ ELIF _ELITE_A_VERSION
                         \ spawning a cop, otherwise we got away with it, for
                         \ now)
 
- LDA #COPS              \ Set A to the ship type for a cop, so we can add a new
-                        \ police ship to the local bubble
+ LDA #COPS              \ Set A to the ship type for a cop, so the following
+                        \ call to hordes will spawn a pack of cops
 
 .horde_plain
 
- LDX #0                 \ Jump to hordes to spawn a pack of cops, i.e. Vipers,
+ LDX #0                 \ Jump to hordes to spawn a pack of ships of type A,
  BEQ hordes             \ returning from the subroutine using a tail call (the
                         \ BEQ is effectively a JMP as X is always zero)
 
@@ -124,8 +124,9 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
 ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  LDA MANY+COPS          \ If we now have at least one cop in the local bubble,
- BNE MLOOPS             \ jump down to MLOOPS, otherwise fall through into the
-                        \ next part to look at spawning something else
+ BNE MLOOPS             \ jump down to MLOOPS to stop spawning, otherwise fall
+                        \ through into the next part to look at spawning
+                        \ something else
 
 ENDIF
 

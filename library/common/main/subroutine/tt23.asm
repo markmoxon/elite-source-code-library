@@ -116,7 +116,8 @@ ENDIF
 
 IF _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
- STA XX12               \ AJD
+ STA XX12               \ Store the horizontal distance in XX12, so we can
+                        \ retrieve it later
 
 ENDIF
 
@@ -151,7 +152,8 @@ ENDIF
 
 IF _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
- STA K4                 \ AJD
+ STA K4                 \ Store the vertical distance in K4, so we can retrieve
+                        \ it later
 
 ENDIF
 
@@ -198,7 +200,15 @@ IF NOT(_ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA)
 
 ELIF _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
- LDA XX12               \ AJD
+ LDA XX12               \ Retrieve the horizontal distance from XX12, so A now
+                        \ contains the horizontal distance between this system
+                        \ and the current system
+                        \
+                        \ Let's call this the x-delta, as it's the horizontal
+                        \ difference between the current system at the centre of
+                        \ the chart, and this system (so A is negative if it's
+                        \ to the left of the chart's centre, or positive if it's
+                        \ to the right)
 
 ENDIF
 
@@ -265,7 +275,14 @@ IF NOT(_ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA)
 
 ELIF _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
- LDA K4                 \ AJD
+ LDA K4                 \ Retrieve the vertical distance from XX12, so A now
+                        \ contains the vertical distance between this system
+                        \ and the current system
+                        \
+                        \ Let's call this the y-delta, as it's the vertical
+                        \ difference between the current system at the centre of
+                        \ the chart, and this system (so A is negative if it's
+                        \ above the chart's centre, or positive if it's below)
 
 ENDIF
 

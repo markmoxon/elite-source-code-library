@@ -76,10 +76,24 @@ ENDIF
  LDY #30                \ starts pitching
  STA (INF),Y
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Enhanced: In the enhanced versions, ship hostility is measured separately from aggression, so ships can be very aggressive, but not hostile (though this changes when provoked). This is more subtle than in the cassette version, where there is only a measure of aggression, and a ship is deemed to be hostile if the top bit of its aggression level is set
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: In the enhanced versions, ship hostility is measured separately from aggression, so ships can be very aggressive, but not hostile (though this changes when provoked). This is more subtle than in the cassette version, where there is only a measure of aggression, and a ship is deemed to be hostile if the top bit of its aggression level is set
 
  LDA TYPE               \ If the ship's type is < #CYL (i.e. a missile, Coriolis
  CMP #CYL               \ space station, escape pod, plate, cargo canister,
+ BCC AN3                \ boulder, asteroid, splinter, Shuttle or Transporter),
+                        \ then jump to AN3 to skip the following
+
+ LDY #36                \ Set bit 2 of the ship's NEWB flags in byte #36 to
+ LDA (INF),Y            \ make this ship hostile
+ ORA #%00000100
+ STA (INF),Y
+
+.AN3
+
+ELIF _ELITE_A_VERSION
+
+ LDA TYPE               \ If the ship's type is < 11 (i.e. a missile, Coriolis
+ CMP #11                \ space station, escape pod, plate, cargo canister,
  BCC AN3                \ boulder, asteroid, splinter, Shuttle or Transporter),
                         \ then jump to AN3 to skip the following
 

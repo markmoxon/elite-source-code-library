@@ -9,7 +9,7 @@
 
 .n_load
 
- LDY new_type
+ LDY cmdr_type
  LDX new_offsets,Y
  LDY #0
 

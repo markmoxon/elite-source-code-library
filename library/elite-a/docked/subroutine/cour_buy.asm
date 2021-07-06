@@ -42,7 +42,7 @@ ENDIF
  SEC
  LDA FIST
  ADC GCNT
- ADC new_type
+ ADC cmdr_type
  STA INWK+1
  ADC INWK
  SBC cmdr_courx

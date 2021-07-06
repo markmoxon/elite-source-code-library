@@ -52,7 +52,7 @@
  STX XC
  INC YC
  STA Q
- LDY new_type
+ LDY cmdr_type
  JSR n_price
  CLC
  LDX #3
@@ -108,7 +108,7 @@
  STA LASER,Y
  DEY
  BPL n_wipe
- STX new_type
+ STX cmdr_type
  JSR n_load
  LDA new_range
  STA QQ14

@@ -152,9 +152,9 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
 
 ELIF _ELITE_A_VERSION
 
- LDA #CYL               \ Call hordes to spawn a pack of ships from type 11 to
- LDX #3                 \ 14, i.e. Cobra Mk III to Anaconda
- JMP hordes
+ LDA #11                \ Call hordes to spawn a pack of ships from ship slots
+ LDX #3                 \ 11 to 14, which is where the trader ships live in the
+ JMP hordes             \ ship files
 
 ENDIF
 

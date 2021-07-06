@@ -18,6 +18,8 @@ ENDIF
 
 .TVT1code
 
+EQUB &FF
+
 ORG &1100
 
 INCLUDE "library/original/main/variable/tvt1.asm"

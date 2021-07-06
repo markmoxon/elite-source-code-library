@@ -43,8 +43,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ 6502SP: In the 6502SP version, you c
 ELIF _DISC_DOCKED OR _ELITE_A_VERSION
 
  LDA #2                 \ Clear the top part of the screen, draw a white border,
- JSR TT66               \ Clear the top part of the screen, draw a white border,
-                        \ and set the current view type in QQ11 to 2
+ JSR TT66               \ and set the current view type in QQ11 to 2
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 

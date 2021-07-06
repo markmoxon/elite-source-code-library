@@ -10,12 +10,16 @@
 \
 \ This section works out what kind of condition the ship is in. Specifically:
 \
-IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Comment
+IF _DISC_FLIGHT \ Comment
 \   * If this is an Anaconda, consider spawning (22% chance) a Worm
 \
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 \   * If this is an Anaconda, consider spawning (22% chance) a Worm (61% of the
 \     time) or a Sidewinder (39% of the time)
+\
+ELIF _ELITE_A_VERSION
+\   * If this is a large ship that can spawn smaller ships, such as an Anaconda
+\     or a Dragon, then consider spawning (22% chance) a Worm
 \
 ENDIF
 \   * Rarely (2.5% chance) roll the ship by a noticeable amount
@@ -44,7 +48,7 @@ ENDIF
  JMP TA20               \ This is a missile, so jump down to TA20 to get
                         \ straight into some aggressive manoeuvring
 
-IF _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Enhanced: In the enhanced versions, Anacondas can spawn other ships
+IF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Enhanced: In the enhanced versions, Anacondas can spawn other ships
 
  CMP #ANA               \ If this is not an Anaconda, jump down to TN7 to skip
  BNE TN7                \ the following
@@ -54,9 +58,21 @@ IF _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Enha
  CMP #200               \ If A < 200 (78% chance), jump down to TN7 to skip the
  BCC TN7                \ following
 
+ELIF _ELITE_A_VERSION
+
+ CMP #14                \ If this is not a large ship that can spawn smaller
+ BNE TN7                \ ships (e.g. an Anaconda or Dragon), which will be in
+                        \ slot 14 in the ship files, jump down to TN7 to skip
+                        \ the following
+
+ JSR DORND              \ Set A and X to random numbers
+
+ CMP #200               \ If A < 200 (78% chance), jump down to TN7 to skip the
+ BCC TN7                \ following
+
 ENDIF
 
-IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: In the disc version, Anacondas can only spawn Worms, while in the advanced versions they can also spawn Sidewinders
+IF _DISC_FLIGHT \ Advanced: In the disc version, Anacondas can only spawn Worms, while in the advanced versions they can also spawn Sidewinders
 
  LDX #WRM               \ Set X to the ship type for a Worm
 
@@ -78,6 +94,18 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  JMP TN6                \ Jump to TN6 to spawn the Worm or Sidewinder and return
                         \ from the subroutine using a tail call
+
+.TN7
+
+ELIF _ELITE_A_VERSION
+
+ LDX #15                \ Set X to the ship in slot 15, which will be the kind
+                        \ of ship that the large ship in slot 14 can spawn
+                        \ (e.g. an Anaconda can spawn a Worm, while a Dragon can
+                        \ spawn a Sidewinder)
+
+ JMP TN6                \ Jump to TN6 to spawn the Worm and return from
+                        \ the subroutine using a tail call
 
 .TN7
 

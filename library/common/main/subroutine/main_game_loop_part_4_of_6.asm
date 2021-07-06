@@ -28,7 +28,7 @@ ELIF _ELECTRON_VERSION
 \   * Potentially spawn (35% chance) either a lone bounty hunter (a Mamba,
 \     Python or Cobra Mk III), or a group of up to 4 pirates (Sidewinders and/or
 \     Mambas)
-ELIF _DISC_FLIGHT OR _ELITE_A_VERSION
+ELIF _DISC_FLIGHT
 \   * Potentially spawn (47% chance) either a lone bounty hunter (a Cobra Mk
 \     III, Asp Mk II, Python or Fer-de-lance), a Thargoid, or a group of up to 4
 \     pirates (a mix of Sidewinders, Mambas, Kraits, Adders, Geckos, Cobras Mk I
@@ -41,6 +41,12 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 \     III, Asp Mk II, Python or Fer-de-lance), a Thargoid, or a group of up to 4
 \     pirates (a mix of Sidewinders, Mambas, Kraits, Adders, Geckos, Cobras Mk I
 \     and III, and Worms)
+\
+\   * Also potentially spawn a Constrictor if this is the mission 1 endgame, or
+\     Thargoids if mission 2 is in progress
+ELIF _ELITE_A_VERSION
+\   * Potentially spawn (47% chance) either a pack of up to 8 bounty hunters,
+\     a Thargoid, or a pack of up to 8 pirates
 \
 \   * Also potentially spawn a Constrictor if this is the mission 1 endgame, or
 \     Thargoids if mission 2 is in progress
@@ -118,9 +124,19 @@ ENDIF
 
  JSR DORND              \ Set A and X to random numbers
 
+IF NOT(_ELITE_A_VERSION)
+
  LDY gov                \ If the government of this system is 0 (anarchy), jump
  BEQ LABEL_2            \ straight to LABEL_2 to start spawning pirates or a
                         \ lone bounty hunter
+
+ELIF _ELITE_A_VERSION
+
+ LDY gov                \ If the government of this system is 0 (anarchy), jump
+ BEQ LABEL_2            \ straight to LABEL_2 to start spawning pirates or
+                        \ bounty hunters
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: In the disc there's a 47% chance of spawning a group of pirates or a lone bounty hunter, while in the other versions there's a 35% chance
 
@@ -128,7 +144,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: In the disc there's a 47% 
  BCS MLOOP              \ MLOOP to stop spawning (so there's a 35% chance of
                         \ spawning pirates or a lone bounty hunter)
 
-ELIF _DISC_FLIGHT OR _ELITE_A_VERSION
+ELIF _DISC_FLIGHT
 
  CMP #120               \ If the random number in A >= 120 (53% chance), jump to
  BCS MLOOPS             \ MLOOPS to stop spawning (so there's a 47% chance of
@@ -139,6 +155,12 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
  CMP #90                \ If the random number in A >= 90 (65% chance), jump to
  BCS MLOOPS             \ MLOOPS to stop spawning (so there's a 35% chance of
                         \ spawning pirates or a lone bounty hunter)
+
+ELIF _ELITE_A_VERSION
+
+ CMP #120               \ If the random number in A >= 120 (53% chance), jump to
+ BCS MLOOPS             \ MLOOPS to stop spawning (so there's a 47% chance of
+                        \ spawning pirates or bounty hunters)
 
 ENDIF
 
@@ -176,12 +198,15 @@ IF _6502SP_VERSION \ Label
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
                         \ Now to spawn a lone bounty hunter, a Thargoid or a
                         \ group of pirates
 ELIF _ELECTRON_VERSION
                         \ Now to spawn a lone bounty hunter or a group of
                         \ pirates
+ELIF _ELITE_A_VERSION
+                        \ Now to spawn a group of bounty hunters, a Thargoid or
+                        \ a pack of pirates
 ENDIF
 
 IF NOT(_ELITE_A_VERSION)
@@ -213,7 +238,7 @@ ELIF _ELITE_A_VERSION
 
  CPX #100               \ If the random number in X >= 100 (61% chance), jump
  BCS mt1                \ to mt1 to spawn pirates, otherwise keep going to
-                        \ spawn a lone bounty hunter or a Thargoid
+                        \ spawn bounty hunters or a Thargoid
 
 ENDIF
 
@@ -280,8 +305,8 @@ ELIF _ELITE_A_VERSION
 
  ADC #25                \ Add A to 25 (we know the C flag is clear as we passed
                         \ through the BCS above), so A is now a ship slot in the
-                        \ range 25-28, which is where the pirate ships live in
-                        \ the ship files
+                        \ range 25-28, which is where the bounty hunter ships
+                        \ live in the ship files
 
  TAY                    \ Copy the new ship type to Y
 
@@ -457,9 +482,9 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- LDA #SH3               \ Fall through into hordes to spawn a pack of ships from
- LDX #7                 \ type 17 to 24, i.e. Sidewinder to Cobra Mk III
-                        \ (pirate)
+ LDA #17                \ Fall through into hordes to spawn a pack of ships from
+ LDX #7                 \ ship slots 17 to 24,, which is where the pirate ships
+                        \ live in the ship files
 
 .hordes
 

@@ -22,7 +22,6 @@ ENDIF
 \                       exit to the docking bay (i.e. show the Status Mode
 \                       screen)
 \                        
-\
 IF _ELITE_A_VERSION
 \   pres+3              Show the error to say that an item is already present,
 \                       and process a refund, but do not free up a space in the

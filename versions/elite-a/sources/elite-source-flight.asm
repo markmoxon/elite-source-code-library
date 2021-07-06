@@ -376,7 +376,7 @@ CODE_D% = P%
 LOAD_D% = LOAD% + P% - CODE%
 
 \INCLUDE "library/enhanced/main/subroutine/tnpr1.asm"
-INCLUDE "library/elite-a/flight/subroutine/tnpr-tnpr_flight.asm"
+INCLUDE "library/elite-a/flight/subroutine/tnpr1.asm"
 INCLUDE "library/common/main/subroutine/tt20.asm"
 INCLUDE "library/common/main/subroutine/tt54.asm"
 INCLUDE "library/common/main/subroutine/tt146.asm"

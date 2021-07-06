@@ -89,7 +89,7 @@ ENDIF
 
 IF _ELITE_A_VERSION
 
- STX cmdr_cour          \ Reset the special cargo delivery mission details in
+ STX cmdr_cour          \ Reset the special cargo delivery mission counter in
  STX cmdr_cour+1        \ cmdr_cour(1 0)
 
 ENDIF

@@ -9,10 +9,14 @@
 
 .cour_buy
 
- LDA cmdr_cour
- ORA cmdr_cour+1
- BEQ cour_start
- JMP jmp_start3
+ LDA cmdr_cour          \ If there is no special cargo delivery mission in
+ ORA cmdr_cour+1        \ progress, then the mission counter in cmdr_cour(1 0)
+ BEQ cour_start         \ will be zero, so jump to cour_start to skip the next
+                        \ instruction
+
+ JMP jmp_start3         \ There is already a special cargo delivery mission in
+                        \ progress, so jump to jmp_start3 to make a beep and
+                        \ show the cargo bay
 
 .cour_start
 

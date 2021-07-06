@@ -9,6 +9,13 @@ ENDIF
 \   Category: Encyclopedia
 \    Summary: AJD
 \
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   jmp_start3          Make a short, high beep, delay for one second, and go to
+\                       the docking bay (i.e. show the Status Mode screen)
+\
 \ ******************************************************************************
 
 IF _ELITE_A_ENCYCLOPEDIA
@@ -55,8 +62,12 @@ IF _ELITE_A_ENCYCLOPEDIA
 
 .jmp_start3
 
- JSR dn2
- JMP BAY
+ JSR dn2                \ Call dn2 to make a short, high beep and delay for 1
+                        \ second
+
+ JMP BAY                \ Jump to BAY to go to the docking bay (i.e. show the
+                        \ Status Mode screen)
+
 
 ELIF _ELITE_A_6502SP_PARA
 

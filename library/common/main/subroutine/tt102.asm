@@ -792,14 +792,15 @@ IF _ELITE_A_6502SP_PARA
                         \ otherwise do the following three jumps
 
  LDA cmdr_cour          \ If there is no special cargo delivery mission in
- ORA cmdr_cour+1        \ progress, then cmdr_cour(1 0) will be zero, so return
- BEQ t95                \ from the subroutine (as t95 contains an RTS)
+ ORA cmdr_cour+1        \ progress, then the mission counter in cmdr_cour(1 0)
+ BEQ t95                \ will be zero, so return from the subroutine (as t95
+                        \ contains an RTS)
 
 ELIF _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA
 
  LDA cmdr_cour          \ If there is no special cargo delivery mission in
- ORA cmdr_cour+1        \ progress, then cmdr_cour(1 0) will be zero, so skip
- BEQ ee2                \ to ee2 to continue
+ ORA cmdr_cour+1        \ progress, then the mission counter in cmdr_cour(1 0)
+ BEQ ee2                \ will be zero, so skip to ee2 to continue
 
 ENDIF
 

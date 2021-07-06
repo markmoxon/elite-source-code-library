@@ -9,9 +9,11 @@
 
 .cour_dock
 
- LDA cmdr_cour
- ORA cmdr_cour+1
- BEQ cour_quit
+ LDA cmdr_cour          \ If there is no special cargo delivery mission in
+ ORA cmdr_cour+1        \ progress, then the mission counter in cmdr_cour(1 0)
+ BEQ cour_quit          \ will be zero, so jump to cour_quit to return from the
+                        \ subroutine
+
  LDA QQ0
  CMP cmdr_courx
  BNE cour_half

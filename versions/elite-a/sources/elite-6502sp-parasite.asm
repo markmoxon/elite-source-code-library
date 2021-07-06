@@ -898,7 +898,7 @@ PRINT "S.2.ELTK ", ~CODE_K%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_K%
 CODE_L% = P%
 LOAD_L% = LOAD% + P% - CODE%
 
-INCLUDE "library/elite-a/flight/subroutine/tnpr-tnpr_flight.asm"
+INCLUDE "library/elite-a/flight/subroutine/tnpr1.asm"
 INCLUDE "library/common/main/subroutine/hyp.asm"
 INCLUDE "library/common/main/subroutine/ww.asm"
 INCLUDE "library/common/main/subroutine/ghy.asm"

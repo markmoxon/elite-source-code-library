@@ -140,20 +140,12 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
                         \ tonne of this cargo (A is set to 1 by this call, and
                         \ the C flag contains the result)
 
-ELIF _ELITE_A_FLIGHT
+ELIF _ELITE_A_VERSION
 
  TAX                    \ Copy the type of cargo we are scooping into X
 
- JSR tnpr               \ Call tnpr to work out whether we have room in the
+ JSR tnpr1              \ Call tnpr1 to work out whether we have room in the
                         \ hold for the scooped item (the C flag contains the
-                        \ result)
-
-ELIF _ELITE_A_6502SP_PARA
-
- TAX                    \ Copy the type of cargo we are scooping into X
-
- JSR tnpr_FLIGHT        \ Call tnpr_FLIGHT to work out whether we have room in
-                        \ the hold for the scooped item (the C flag contains the
                         \ result)
 
 ENDIF

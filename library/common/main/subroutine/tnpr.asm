@@ -10,14 +10,17 @@
 \ Given a market item and an amount, work out whether there is room in the
 \ cargo hold for this item.
 \
+IF NOT(_ELITE_A_VERSION)
 \ For standard tonne canisters, the limit is given by the type of cargo hold we
 \ have, with a standard cargo hold having a capacity of 20t and an extended
 \ cargo bay being 35t.
 \
-IF NOT(_ELITE_A_VERSION)
 \ For items measured in kg (gold, platinum), g (gem-stones) and alien items,
 \ the individual limit on each of these is 200 units.
 ELIF _ELITE_A_VERSION
+\ For standard tonne canisters, the limit is given by size of the cargo hold of
+\ our current ship.
+\
 \ For items measured in kg (gold, platinum), g (gem-stones) and alien items,
 \ there is no limit.
 ENDIF

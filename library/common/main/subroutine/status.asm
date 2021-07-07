@@ -331,12 +331,25 @@ ENDIF
  ADC #21                \ range 136 ("HARMLESS") to 144 ("---- E L I T E ----")
  JSR plf                \ followed by a newline
 
+IF NOT(_ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA)
+
  LDA #18                \ Print recursive token 132, which prints the next bit
  JSR plf2               \ of the Status Mode screen:
                         \
                         \   EQUIPMENT:
                         \
                         \ followed by a newline and an indent of 6 characters
+
+ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
+
+ LDA #18                \ Print recursive token 132, which prints the next bit
+ JSR status_equip       \ of the Status Mode screen:
+                        \
+                        \   EQUIPMENT:
+                        \
+                        \ followed by a newline and an indent of 6 characters AJD
+
+ENDIF
 
 IF _DISC_VERSION OR _6502SP_VERSION \ Master: The Master version shows the escape pod by name in the Status Mode screen but doesn't show the large cargo bay; the Electron version is similar (though it shows it as "Escape Capsule), while the other versions do show the large cargo bay but don't show the escape pod
 
@@ -366,7 +379,7 @@ ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
  LDA #107               \ We do have an I.F.F. system fitted, so print recursive
  LDX #6                 \ token 107 ("I.F.F.SYSTEM")
- JSR plf2               \ AJD
+ JSR status_equip       \ AJD
 
 .l_1b57
 
@@ -459,7 +472,7 @@ ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
  BEQ l_1b61
  LDA #&6F
  LDX #&19
- JSR plf2
+ JSR status_equip
 
 .l_1b61
 
@@ -467,7 +480,7 @@ ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
  BEQ l_1b6b
  LDA #&6C
  LDX #&18
- JSR plf2
+ JSR status_equip
 
 .l_1b6b
 
@@ -485,7 +498,7 @@ ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
  TXA
  CLC
  ADC #&57
- JSR plf2
+ JSR status_equip
 
 .l_1b78
 
@@ -587,9 +600,17 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
+IF NOT(_ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA)
+
  JSR plf2               \ Print the text token in A (which contains our legal
                         \ status) followed by a newline and an indent of 6
                         \ characters
+
+ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
+
+ JSR status_equip       \ AJD
+
+ENDIF
 
 .st1
 

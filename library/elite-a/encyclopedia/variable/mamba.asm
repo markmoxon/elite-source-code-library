@@ -3,29 +3,72 @@
 \       Name: mamba
 \       Type: Variable
 \   Category: Encyclopedia
-\    Summary: AJD
+\    Summary: Card data for the encyclopedia entry for the Mamba
 \
 \ ******************************************************************************
 
 .mamba
 
- EQUB 1
- EQUS "3110", &D5, &F2, &FD, "te", &C3, " ", &CC, ")"
- EQUB 0, 2
- EQUS "8"
- EQUB 0, 3
- EQUS "55/12/65", &AA
- EQUB 0, 4
- EQUS "0.30", &C0
- EQUB 0, 5
- EQUS "1-2"
- EQUB 0, 7
- EQUS "10", &BE
- EQUB 0, 8
- EQUS &B4, &B1, &B3, &0C, &D6, &B6, " & ", &CF, &AE
- \EQUB 0, 9
- \EQUA "7|!R"
- EQUB 0, 10
- EQUS &B6, &B7, " ", &01, "HV", &02, " ", &C2
- EQUB 0, 0
+ EQUB 1                 \ Inservice date: ""
+ EQUS "3110"            \
+ CTOK 85                \ Encoded as:     ""
+ ETWO 'R', 'E'
+ ETWO 'O', 'R'
+ EQUS "te"
+ CTOK 67
+ EQUS " "
+ CTOK 76
+ EQUS ")"
+ EQUB 0
+
+ EQUB 2                 \ Combat factor:  "8"
+ EQUS "8"               \
+ EQUB 0                 \ Encoded as:     "8"
+
+ EQUB 3                 \ Dimensions:     "55/12/65FT"
+ EQUS "55/12/65"        \
+ CTOK 42                \ Encoded as:     "55/12/65[42]"
+ EQUB 0
+
+ EQUB 4                 \ Speed:          "0.30LM"
+ EQUS "0.30"            \
+ CTOK 64                \ Encoded as:     "0.30[64]"
+ EQUB 0
+
+ EQUB 5                 \ Crew:           "1-2"
+ EQUS "1-2"             \
+ EQUB 0                 \ Encoded as:     "1-2"
+
+ EQUB 7                 \ Cargo space:    "10TC"
+ EQUS "10"              \
+ CTOK 62                \ Encoded as:     "10[62]"
+ EQUB 0
+
+ EQUB 8                 \ Armaments:      ""
+ CTOK 52                \
+ CTOK 49                \ Encoded as:     ""
+ CTOK 51
+ EQUB 12
+ CTOK 86
+ CTOK 54
+ EQUS " & "
+ CTOK 79
+ CTOK 46
+ EQUB 0
+
+\EQUB 0, 9              \ This data is commented out in the original source
+\EQUA "7|!R"
+
+ EQUB 10                \ Drive motors:   ""
+ CTOK 54                \
+ CTOK 55                \ Encoded as:     ""
+ EQUS " "
+ EQUB &01
+ EQUS "HV"
+ EQUB &02
+ EQUS " "
+ CTOK 66
+ EQUB 0
+
+ EQUB 0
 

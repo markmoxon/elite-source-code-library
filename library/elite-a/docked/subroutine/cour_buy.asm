@@ -2,7 +2,7 @@
 \
 \       Name: cour_buy
 \       Type: Subroutine
-\   Category: Buying ships
+\   Category: Missions
 \    Summary: AJD
 \
 \ ******************************************************************************

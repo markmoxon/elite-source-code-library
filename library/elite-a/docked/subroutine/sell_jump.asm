@@ -19,7 +19,7 @@
  BEQ sell_escape
  LDA #&70
  LDX #&1E
- JSR plf2
+ JSR status_equip
 
 .sell_escape
 

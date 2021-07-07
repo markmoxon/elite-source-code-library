@@ -108,10 +108,6 @@ QQ18 = &0400            \ The address of the text token table, as set in
 SNE = &07C0             \ The address of the sine lookup table, as set in
                         \ elite-loader.asm
 
-QQ16_FLIGHT = &0880     \ The address of the two-letter text token table in the
-                        \ flight code (this gets populated by the docked code at
-                        \ the start of the game)
-
 IRQ1 = &114B            \ The address of the IRQ1 routine that implements the
                         \ split screen interrupt handler, as set in
                         \ elite-loader.asm
@@ -594,6 +590,7 @@ INCLUDE "library/enhanced/main/variable/mtin.asm"
 INCLUDE "library/elite-a/encyclopedia/variable/ship_centre.asm"
 INCLUDE "library/elite-a/encyclopedia/variable/card_pattern.asm"
 INCLUDE "library/elite-a/encyclopedia/variable/card_addr.asm"
+INCLUDE "library/elite-a/encyclopedia/macro/ctok.asm"
 INCLUDE "library/elite-a/encyclopedia/variable/adder.asm"
 INCLUDE "library/elite-a/encyclopedia/variable/anaconda.asm"
 INCLUDE "library/elite-a/encyclopedia/variable/asp_2.asm"

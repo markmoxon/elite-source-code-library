@@ -420,7 +420,7 @@
  ECHR ':'
  EQUB VE
 
- ETWO 'G', 'E'          \ Token 48:     "GREAT STARSEEKER"
+ ETWO 'G', 'E'          \ Token 48:     "GERET STARSEEKER"
  ECHR 'R'               \
  ETWO 'E', 'T'          \ Encoded as:   "<231>R<221> <222><238><218>EK<244>"
  ECHR ' '

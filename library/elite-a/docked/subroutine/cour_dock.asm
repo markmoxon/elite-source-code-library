@@ -2,7 +2,7 @@
 \
 \       Name: cour_dock
 \       Type: Subroutine
-\   Category: Buying ships
+\   Category: Missions
 \    Summary: AJD
 \
 \ ******************************************************************************

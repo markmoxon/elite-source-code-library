@@ -3,31 +3,78 @@
 \       Name: boa
 \       Type: Variable
 \   Category: Encyclopedia
-\    Summary: AJD
+\    Summary: Card data for the encyclopedia entry for the Boa
 \
 \ ******************************************************************************
 
 .boa
 
- EQUB 1
- EQUS "3017", &D5, &E7, &F2, &E7, " ", &CC, ")"
- EQUB 0, 2
- EQUS "4"
- EQUB 0, 3
- EQUS "115/60/65", &AA
- EQUB 0, 4
- EQUS "0.24", &C0
- EQUB 0, 5
- EQUS "2-6"
- EQUB 0, 6
- EQUS "9", &BF
- EQUB 0, 7
- EQUS "125", &BE
- EQUB 0, 8
- EQUS &B4, &B1, &B3, &0C, &D6, &B6, " & ", &CF, &AE
- EQUB 0, 9
- EQUS "J7-24", &D3
- EQUB 0, 10
- EQUS &C8, &0C, &B6, &B7, " ", &C2, &F4, "s"
- EQUB 0, 0
+ EQUB 1                 \ Inservice date: ""
+ EQUS "3017"            \
+ CTOK 85                \ Encoded as:     ""
+ ETWO 'G', 'E'
+ ETWO 'R', 'E'
+ ETWO 'G', 'E'
+ EQUS " "
+ CTOK 76
+ EQUS ")"
+ EQUB 0
+
+ EQUB 2                 \ Combat factor:  "4"
+ EQUS "4"               \
+ EQUB 0                 \ Encoded as:     "4"
+
+ EQUB 3                 \ Dimensions:     "115/60/65FT"
+ EQUS "115/60/65"       \
+ CTOK 42                \ Encoded as:     "115/60/65[42]"
+ EQUB 0
+
+ EQUB 4                 \ Speed:          "0.24LM"
+ EQUS "0.24"            \
+ CTOK 64                \ Encoded as:     "0.24[64]"
+ EQUB 0
+
+ EQUB 5                 \ Crew:           "2-6"
+ EQUS "2-6"             \
+ EQUB 0                 \ Encoded as:     "2-6"
+
+ EQUB 6                 \ Range:          "9LY"
+ EQUS "9"               \
+ CTOK 63                \ Encoded as:     "9[63]"
+ EQUB 0
+
+ EQUB 7                 \ Cargo space:    "125TC"
+ EQUS "125"             \
+ CTOK 62                \ Encoded as:     "125[62]"
+ EQUB 0
+
+ EQUB 8                 \ Armaments:      ""
+ CTOK 52                \
+ CTOK 49                \ Encoded as:     ""
+ CTOK 51
+ EQUB 12
+ CTOK 86
+ CTOK 54
+ EQUS " & "
+ CTOK 79
+ CTOK 46
+ EQUB 0
+
+ EQUB 9                 \ Hull:           "J7-24{all caps}/2L{sentence case}"
+ EQUS "J7-24"           \
+ CTOK 83                \ Encoded as:     "J7-24[83]"
+ EQUB 0
+
+ EQUB 10                \ Drive motors:   ""
+ CTOK 72                \
+ EQUB 12                \ Encoded as:     ""
+ CTOK 54
+ CTOK 55
+ EQUS " "
+ CTOK 66
+ ETWO 'E', 'R'
+ EQUS "s"
+ EQUB 0
+
+ EQUB 0
 

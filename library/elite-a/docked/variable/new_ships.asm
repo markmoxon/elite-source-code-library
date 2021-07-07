@@ -9,8 +9,6 @@
 
 .new_ships
 
-.new_adder
-
  EQUS "ADDER    "
 
 .new_price

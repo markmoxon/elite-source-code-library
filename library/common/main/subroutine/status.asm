@@ -342,12 +342,9 @@ IF NOT(_ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA)
 
 ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
- LDA #18                \ Print recursive token 132, which prints the next bit
- JSR status_equip       \ of the Status Mode screen:
-                        \
-                        \   EQUIPMENT:
-                        \
-                        \ followed by a newline and an indent of 6 characters AJD
+ LDA #18                \ Call status_equip with A set to recursive token 132
+ JSR status_equip       \ ("{cr}{all caps}EQUIPMENT: {sentence case}") to
+                        \ show the equipment selling screen AJD
 
 ENDIF
 
@@ -391,8 +388,8 @@ ELIF _ELITE_A_FLIGHT
  BEQ l_1ce7             \ zero), skip the following three instructions
 
  LDA #107               \ We do have an I.F.F. system fitted, so print recursive
- JSR plf2               \ token 107 ("I.F.F.SYSTEM"), followed by a newline and an
-                        \ indent of 6 characters
+ JSR plf2               \ token 107 ("I.F.F.SYSTEM"), followed by a newline and
+                        \ an indent of 6 characters
 
 .l_1ce7
 

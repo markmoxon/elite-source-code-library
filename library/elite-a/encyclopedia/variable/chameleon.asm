@@ -9,11 +9,11 @@
 
 .chameleon
 
- EQUB 1                 \ Inservice date: "3122 ({single cap}ARDEN CO-OPERATIVE)"
- EQUS "3122"            \
- CTOK 85                \ Encoded as:     "3122[85]<238>d<246> Co-op<244>a<251>
- ETWO 'A', 'R'          \                  <250>)"
- EQUS "d"
+ EQUB 1                 \ Inservice date: "3122 ({single cap}ARDEN
+ EQUS "3122"            \                  CO-OPERATIVE)"
+ CTOK 85                \
+ ETWO 'A', 'R'          \ Encoded as:     "3122[85]<238>d<246> Co-op<244>a<251>
+ EQUS "d"               \                  <250>)"
  ETWO 'E', 'N'
  EQUS " Co-op"
  ETWO 'E', 'R'

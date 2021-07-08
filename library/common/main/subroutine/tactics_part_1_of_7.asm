@@ -211,8 +211,9 @@ IF _ELITE_A_VERSION
                         \ so jump to n_misshit to update the ship's energy level
                         \ with the new, reduced value
 
-                        \ If we get here then the ship doesn't have enough energy
-                        \ to withstand the missile hit, so it gets destroyed
+                        \ If we get here then the ship doesn't have enough
+                        \ energy to withstand the missile hit, so it gets
+                        \ destroyed
 
 ENDIF
 
@@ -276,8 +277,8 @@ ELIF _ELITE_A_VERSION
  LDA #80                \ Otherwise the missile just got destroyed near us, so
  JSR n_oops             \ call n_oops to damage the ship by 80 (taking the
                         \ shields into account), which is nowhere near as bad as
-                        \ the 250 damage from a missile slamming straight into us,
-                        \ but it's still pretty nasty
+                        \ the 250 damage from a missile slamming straight into
+                        \ us, but it's still pretty nasty
 
 ENDIF
 

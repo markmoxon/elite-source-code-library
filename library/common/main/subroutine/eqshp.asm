@@ -803,8 +803,8 @@ ELIF _ELITE_A_VERSION
 
  LDX BOMB               \ If we already have a hyperspace unit fitted (i.e. BOMB
  BNE pres               \ is non-zero), jump to pres to show the error
-                        \ "Hyperspace Unit Present", beep and exit to the docking
-                        \ bay (i.e. show the Status Mode screen)
+                        \ "Hyperspace Unit Present", beep and exit to the
+                        \ docking bay (i.e. show the Status Mode screen)
 
  DEC BOMB               \ Otherwise we just bought an energy bomb, so set BOMB
                         \ to &FF (as BOMB was 0 before the DEC instruction)

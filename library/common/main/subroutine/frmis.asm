@@ -52,8 +52,8 @@ IF _ELITE_A_VERSION
                         \ them are targeted, returning with Y = 0 and X = &FF
 
  STY MSAR               \ The call to msblob returns Y = 0, so this sets MSAR
-                        \ to 0 to indicate that the leftmost missile is no longer
-                        \ seeking a target lock
+                        \ to 0 to indicate that the leftmost missile is no
+                        \ longer seeking a target lock
 
  STX MSTG               \ The call to msblob returns X = &FF, so this resets the
                         \ missile so that it is no longer locked on a target

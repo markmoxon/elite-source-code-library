@@ -9,10 +9,10 @@
 
 .ophidian
 
- EQUB 1                 \ Inservice date: ""
- EQUS "2981"            \
- CTOK 85                \ Encoded as:     ""
- CTOK 69
+ EQUB 1                 \ Inservice date: "2981 ({single cap}OUTWORLD
+ EQUS "2981"            \                  WORKSHOPS)"
+ CTOK 85                \
+ CTOK 69                \ Encoded as:     "2981[85][69][81]"
  CTOK 81
  EQUB 0
 
@@ -25,7 +25,7 @@
  CTOK 42                \ Encoded as:     "65/15/30[42]"
  EQUB 0
 
- EQUB 4                 \ Speed:          "0.34LM"
+ EQUB 4                 \ Speed:          "0.34{all caps}LM{sentence case}"
  EQUS "0.34"            \
  CTOK 64                \ Encoded as:     "0.34[64]"
  EQUB 0
@@ -34,20 +34,20 @@
  EQUS "1-3"             \
  EQUB 0                 \ Encoded as:     "1-3"
 
- EQUB 6                 \ Range:          "7LY"
+ EQUB 6                 \ Range:          "7{all caps}LY{sentence case}"
  EQUS "7"               \
  CTOK 63                \ Encoded as:     "7[63]"
  EQUB 0
 
- EQUB 7                 \ Cargo space:    "20TC"
- EQUS "20"             \
+ EQUB 7                 \ Cargo space:    "20{all caps}TC{sentence case}"
+ EQUS "20"              \
  CTOK 62                \ Encoded as:     "20[62]"
  EQUB 0
 
- EQUB 8                 \ Armaments:      ""
- CTOK 57                \
- CTOK 49                \ Encoded as:     ""
- EQUB 12
+ EQUB 8                 \ Armaments:      "LANCE & FERMAN LASER{cr}
+ CTOK 57                \                  SEEKER X1 MISSILES"
+ CTOK 49                \
+ EJMP 12                \ Encoded as:     "[57][49]{12}[54]<244> X1[46]"
  CTOK 54
  ETWO 'E', 'R'
  EQUS " X1"
@@ -59,14 +59,14 @@
  CTOK 82                \ Encoded as:     "D4-16[82]"
  EQUB 0
 
- EQUB 10                \ Drive motors:   ""
- CTOK 60                \
- EQUS " "               \ Encoded as:     ""
- ETWO 'S', 'T'
- ETWO 'I', 'N'
+ EQUB 10                \ Drive motors:   "VOLTAIRE STINGER{cr}
+ CTOK 60                \                  PULSEDRIVE"
+ EQUS " "               \
+ ETWO 'S', 'T'          \ Encoded as:     "[60] <222><240>g<244>{12}Pul<218>
+ ETWO 'I', 'N'          \                  [53]"
  EQUS "g"
  ETWO 'E', 'R'
- EQUB 12
+ EJMP 12
  EQUS "Pul"
  ETWO 'S', 'E'
  CTOK 53

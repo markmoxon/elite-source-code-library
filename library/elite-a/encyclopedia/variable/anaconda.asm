@@ -31,7 +31,7 @@
  CTOK 42                \ Encoded as:     "170/60/75[42]"
  EQUB 0
 
- EQUB 4                 \ Speed:          "0.14LM"
+ EQUB 4                 \ Speed:          "0.14{all caps}LM{sentence case}"
  EQUS "0.14"            \
  CTOK 64                \ Encoded as:     "0.14[64]"
  EQUB 0
@@ -40,24 +40,24 @@
  EQUS "2-10"            \
  EQUB 0                 \ Encoded as:     "2-10"
 
- EQUB 6                 \ Range:          "10LY"
+ EQUB 6                 \ Range:          "10{all caps}LY{sentence case}"
  EQUS "10"              \
  CTOK 63                \ Encoded as:     "10[63]"
  EQUB 0
 
- EQUB 7                 \ Cargo space:    "245TC"
+ EQUB 7                 \ Cargo space:    "245{all caps}TC{sentence case}"
  EQUS "245"             \
  CTOK 62                \ Encoded as:     "245[62]"
  EQUB 0
 
- EQUB 8                 \ Armaments:      "HASSONI HI-RAD PULSE LASER{crlf}
+ EQUB 8                 \ Armaments:      "HASSONI HI-RAD PULSE LASER{cr}
  CTOK 59                \                  GERET STARSEEKER MISSILES"
  EQUS " Hi-"            \
  ETWO 'R', 'A'          \ Encoded as:     "[59] Hi-<248>d[50][49]{12}[48][46]"
  EQUS "d"
  CTOK 50
  CTOK 49
- EQUB 12
+ EJMP 12
  CTOK 48
  CTOK 46
  EQUB 0
@@ -67,10 +67,10 @@
  CTOK 84                \ Encoded as:     "M8-**[84]"
  EQUB 0
 
- EQUB 10                \ Drive motors:   "V & K 32.24{crlf}
+ EQUB 10                \ Drive motors:   "V & K 32.24{cr}
  CTOK 73                \                  ERGMASTERS"
  EQUS "32.24"           \
- EQUB 12                \ Encoded as:     "[73]32.24{12}<244>g<239><222><244>s"
+ EJMP 12                \ Encoded as:     "[73]32.24{12}<244>g<239><222><244>s"
  ETWO 'E', 'R'
  EQUS "g"
  ETWO 'M', 'A'

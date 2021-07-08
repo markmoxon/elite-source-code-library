@@ -9,13 +9,13 @@
 
 .gecko
 
- EQUB 1                 \ Inservice date: ""
- EQUS "2852"            \
- CTOK 85                \ Encoded as:     ""
- EQUS "A"
- ETWO 'C', 'E'
+ EQUB 1                 \ Inservice date: "2852 ({single cap}ACE & FABER,
+ EQUS "2852"            \                  LERELACE)"
+ CTOK 85                \
+ EQUS "A"               \ Encoded as:     "2852[85]A<233> & F[88]<244>, <229>
+ ETWO 'C', 'E'          \                  <242><249><233>)"
  EQUS " & F"
- CTOK 88
+ ETWO 'A', 'B'
  ETWO 'E', 'R'
  EQUS ", "
  ETWO 'L', 'E'
@@ -34,7 +34,7 @@
  CTOK 42                \ Encoded as:     "40/12/65[42]"
  EQUB 0
 
- EQUB 4                 \ Speed:          "0.30LM"
+ EQUB 4                 \ Speed:          "0.30{all caps}LM{sentence case}"
  EQUS "0.30"            \
  CTOK 64                \ Encoded as:     "0.30[64]"
  EQUB 0
@@ -43,22 +43,22 @@
  EQUS "1-2"             \
  EQUB 0                 \ Encoded as:     "1-2"
 
- EQUB 6                 \ Range:          "7LY"
+ EQUB 6                 \ Range:          "7{all caps}LY{sentence case}"
  EQUS "7"               \
  CTOK 63                \ Encoded as:     "7[63]"
  EQUB 0
 
- EQUB 7                 \ Cargo space:    "3TC"
+ EQUB 7                 \ Cargo space:    "3{all caps}TC{sentence case}"
  EQUS "3"               \
  CTOK 62                \ Encoded as:     "3[62]"
  EQUB 0
 
- EQUB 8                 \ Armaments:      ""
- CTOK 56                \
- EQUS " 1919 A4"        \ Encoded as:     ""
- CTOK 49
- EQUB 12
- CTOK 64
+ EQUB 8                 \ Armaments:      "INGRAM 1919 A4 LASER{cr}
+ CTOK 56                \                  {all caps}LM{sentence case}
+ EQUS " 1919 A4"        \                  HOMING MISSILES"
+ CTOK 49                \
+ EJMP 12                \ Encoded as:     "[56] 1919 A4[49]{12}[64] Hom<240>g
+ CTOK 64                \                  [46]"
  EQUS " Hom"
  ETWO 'I', 'N'
  EQUS "g"
@@ -70,16 +70,16 @@
  CTOK 83                \ Encoded as:     "E6-19[83]"
  EQUB 0
 
- EQUB 10                \ Drive motors:   ""
- EQUS "B"               \
- ETWO 'R', 'E'          \ Encoded as:     ""
- EQUS "am"
- CTOK 50
+ EQUB 10                \ Drive motors:   "BREAM PULSELIGHT {all caps}XL
+ EQUS "B"               \                  {sentence case}"
+ ETWO 'R', 'E'          \
+ EQUS "am"              \ Encoded as:     "B<242>am[50][55] {all caps}XL
+ CTOK 50                \                  {sentence case}"
  CTOK 55
  EQUS " "
- EQUB &01
+ EJMP 1
  EQUS "XL"
- EQUB &02
+ EJMP 2
  EQUB 0
 
  EQUB 0

@@ -9,11 +9,11 @@
 
 .cobra_3
 
- EQUB 1                 \ Inservice date: ""
- EQUS "3100"            \
- CTOK 85                \ Encoded as:     ""
- EQUS "Cowell & Mg"
- EQUB &13
+ EQUB 1                 \ Inservice date: "3100 ({single cap}COWELL &
+ EQUS "3100"            \                  MG{all caps}RATH, LAVE)"
+ CTOK 85                \
+ EQUS "Cowell & Mg"     \ Encoded as:     "3100[85]Cowell & Mg{single cap}<248>
+ EJMP 19                \                  <226>, <249><250>)"
  ETWO 'R', 'A'
  ETWO 'T', 'H'
  EQUS ", "
@@ -31,7 +31,7 @@
  CTOK 42                \ Encoded as:     "65/30/130[42]"
  EQUB 0
 
- EQUB 4                 \ Speed:          "0.28LM"
+ EQUB 4                 \ Speed:          "0.28{all caps}LM{sentence case}"
  EQUS "0.28"            \
  CTOK 64                \ Encoded as:     "0.28[64]"
  EQUB 0
@@ -40,21 +40,21 @@
  EQUS "1-3"             \
  EQUB 0                 \ Encoded as:     "1-3"
 
- EQUB 6                 \ Range:          "7LY"
+ EQUB 6                 \ Range:          "7{all caps}LY{sentence case}"
  EQUS "7"               \
  CTOK 63                \ Encoded as:     "7[63]"
  EQUB 0
 
- EQUB 7                 \ Cargo space:    "35TC"
+ EQUB 7                 \ Cargo space:    "35{all caps}TC{sentence case}"
  EQUS "35"              \
  CTOK 62                \ Encoded as:     "35[62]"
  EQUB 0
 
- EQUB 8                 \ Armaments:      ""
- CTOK 56                \
- CTOK 49                \ Encoded as:     ""
- CTOK 51
- EQUB 12
+ EQUB 8                 \ Armaments:      "INGRAM LASER SYSTEM{cr}
+ CTOK 56                \                  LANCE & FERMAN MISSILES"
+ CTOK 49                \
+ CTOK 51                \ Encoded as:     "[56][49][51]{12}[57][46]"
+ EJMP 12
  CTOK 57
  CTOK 46
  EQUB 0
@@ -64,12 +64,12 @@
  CTOK 84                \ Encoded as:     "G7-24[84]"
  EQUB 0
 
- EQUB 10                \ Drive motors:   ""
- CTOK 58                \
- CTOK 55                \ Encoded as:     ""
- EQUS "fa"
- ETWO 'S', 'T'
- EQUB 12
+ EQUB 10                \ Drive motors:   "{single cap}KRUGER LIGHTFAST{cr}
+ CTOK 58                \                  IRRIKAN THRUSPACE"
+ CTOK 55                \
+ EQUS "fa"              \ Encoded as:     "[58][55]fa<222>{12}Irrik<255> Thru
+ ETWO 'S', 'T'          \                  [77]"
+ EJMP 12
  EQUS "Irrik"
  ETWO 'A', 'N'
  EQUS " Thru"

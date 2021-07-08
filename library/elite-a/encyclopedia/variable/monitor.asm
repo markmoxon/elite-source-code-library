@@ -9,9 +9,9 @@
 
 .monitor
 
- EQUB 1                 \ Inservice date: ""
+ EQUB 1                 \ Inservice date: "3112 ({single cap}ZORGON PETTERSON)"
  EQUS "3112"            \
- CTOK 85                \ Encoded as:     ""
+ CTOK 85                \ Encoded as:     "3112[85][70]"
  CTOK 70
  EQUB 0
 
@@ -24,7 +24,7 @@
  CTOK 42                \ Encoded as:     "100/40/50[42]"
  EQUB 0
 
- EQUB 4                 \ Speed:          "0.16LM"
+ EQUB 4                 \ Speed:          "0.16{all caps}LM{sentence case}"
  EQUS "0.16"            \
  CTOK 64                \ Encoded as:     "0.16[64]"
  EQUB 0
@@ -33,23 +33,23 @@
  EQUS "7-19"            \
  EQUB 0                 \ Encoded as:     "7-19"
 
- EQUB 6                 \ Range:          "11LY"
+ EQUB 6                 \ Range:          "11{all caps}LY{sentence case}"
  EQUS "11"              \
  CTOK 63                \ Encoded as:     "11[63]"
  EQUB 0
 
- EQUB 7                 \ Cargo space:    "75TC"
- EQUS "75"             \
+ EQUB 7                 \ Cargo space:    "75{all caps}TC{sentence case}"
+ EQUS "75"              \
  CTOK 62                \ Encoded as:     "75[62]"
  EQUB 0
 
- EQUB 8                 \ Armaments:      ""
- CTOK 58                \
- EQUB &01               \ Encoded as:     ""
- EQUS "HMB"
- EQUB &02
- CTOK 49
- EQUB 12
+ EQUB 8                 \ Armaments:      "{single cap}KRUGER {all caps}HMB
+ CTOK 58                \                  {sentence case} LASER{cr}
+ EJMP 1                 \                  GERET STARSEEKER MISSILE"
+ EQUS "HMB"             \
+ EJMP 2                 \ Encoded as:     "[58]{all caps}HMB{sentence case}[49]
+ CTOK 49                \                  {12}[48][46]"
+ EJMP 12
  CTOK 48
  CTOK 46
  EQUB 0
@@ -59,10 +59,10 @@
  CTOK 84                \ Encoded as:     "J6-28[84]"
  EQUB 0
 
- EQUB 10                \ Drive motors:   ""
+ EQUB 10                \ Drive motors:   "V & K 29.01{cr}LIGHT BLASTERS"
  CTOK 73                \
- EQUS "29.01"           \ Encoded as:     ""
- EQUB 12
+ EQUS "29.01"           \ Encoded as:     "[73]29.01{12}[55] [74]<244>s"
+ EJMP 12
  CTOK 55
  EQUS " "
  CTOK 74

@@ -9,11 +9,11 @@
 
 .ghavial
 
- EQUB 1                 \ Inservice date: ""
- EQUS "3077"            \
- CTOK 85                \ Encoded as:     ""
- ETWO 'A', 'R'
- EQUS "d"
+ EQUB 1                 \ Inservice date: "3077 ({single cap}ARDEN
+ EQUS "3077"            \                  CO-OPERATIVE)"
+ CTOK 85                \
+ ETWO 'A', 'R'          \ Encoded as:     "3077[85]<238>d<246> Co-op<244>a<251>
+ EQUS "d"               \                  <250>)"
  ETWO 'E', 'N'
  EQUS " Co-op"
  ETWO 'E', 'R'
@@ -32,7 +32,7 @@
  CTOK 42                \ Encoded as:     "80/30/60[42]"
  EQUB 0
 
- EQUB 4                 \ Speed:          "0.25LM"
+ EQUB 4                 \ Speed:          "0.25{all caps}LM{sentence case}"
  EQUS "0.25"            \
  CTOK 64                \ Encoded as:     "0.25[64]"
  EQUB 0
@@ -41,23 +41,23 @@
  EQUS "2-7"             \
  EQUB 0                 \ Encoded as:     "2-7"
 
- EQUB 6                 \ Range:          "8LY"
+ EQUB 6                 \ Range:          "8{all caps}LY{sentence case}"
  EQUS "8"               \
  CTOK 63                \ Encoded as:     "8[63]"
  EQUB 0
 
- EQUB 7                 \ Cargo space:    "50TC"
+ EQUB 7                 \ Cargo space:    "50{all caps}TC{sentence case}"
  EQUS "50"              \
  CTOK 62                \ Encoded as:     "50[62]"
  EQUB 0
 
- EQUB 8                 \ Armaments:      ""
- EQUS "Fai"             \
- ETWO 'R', 'E'          \ Encoded as:     ""
- EQUS "y"
+ EQUB 8                 \ Armaments:      "FAIREY PULSE LASER{cr}
+ EQUS "Fai"             \                  LANCE & FERMAN MISSILES"
+ ETWO 'R', 'E'          \
+ EQUS "y"               \ Encoded as:     "Fai<242>y[50][49]{12}[57][46]"
  CTOK 50
  CTOK 49
- EQUB 12
+ EJMP 12
  CTOK 57
  CTOK 46
  EQUB 0
@@ -67,15 +67,15 @@
  CTOK 84                \ Encoded as:     "I5-25[84]"
  EQUB 0
 
- EQUB 10                \ Drive motors:   ""
- EQUS "Sp"              \
- ETWO 'A', 'L'          \ Encoded as:     ""
- EQUS "d"
- ETWO 'E', 'R'
+ EQUB 10                \ Drive motors:   "SPALDER & PRIME {all caps}TT1
+ EQUS "Sp"              \                  {sentence case}"
+ ETWO 'A', 'L'          \
+ EQUS "d"               \ Encoded as:     "Sp<228>d<244> & Prime {all caps}TT1
+ ETWO 'E', 'R'          \                  {sentence case}"
  EQUS " & Prime "
- EQUB &01
+ EJMP 1
  EQUS "TT1"
- EQUB &02
+ EJMP 2
  EQUB 0
 
  EQUB 0

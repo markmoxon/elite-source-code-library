@@ -9,10 +9,10 @@
 
 .python
 
- EQUB 1                 \ Inservice date: ""
- EQUS "2700"            \
- CTOK 85                \ Encoded as:     ""
- EQUS "Wh"
+ EQUB 1                 \ Inservice date: "2700 ({single cap}WHATT & PRITNEY
+ EQUS "2700"            \                  SC)"
+ CTOK 85                \
+ EQUS "Wh"              \ Encoded as:     "2700[85]Wh<245>t & Pr<219>ney SC)"
  ETWO 'A', 'T'
  EQUS "t & Pr"
  ETWO 'I', 'T'
@@ -28,7 +28,7 @@
  CTOK 42                \ Encoded as:     "130/40/80[42]"
  EQUB 0
 
- EQUB 4                 \ Speed:          "0.20LM"
+ EQUB 4                 \ Speed:          "0.20{all caps}LM{sentence case}"
  EQUS "0.20"            \
  CTOK 64                \ Encoded as:     "0.20[64]"
  EQUB 0
@@ -37,20 +37,20 @@
  EQUS "2-9"             \
  EQUB 0                 \ Encoded as:     "2-9"
 
- EQUB 6                 \ Range:          "8LY"
+ EQUB 6                 \ Range:          "8{all caps}LY{sentence case}"
  EQUS "8"               \
  CTOK 63                \ Encoded as:     "8[63]"
  EQUB 0
 
- EQUB 7                 \ Cargo space:    "100TC"
- EQUS "100"            \
+ EQUB 7                 \ Cargo space:    "100{all caps}TC{sentence case}"
+ EQUS "100"             \
  CTOK 62                \ Encoded as:     "100[62]"
  EQUB 0
 
- EQUB 8                 \ Armaments:      ""
+ EQUB 8                 \ Armaments:      "VOLT-{all caps}VARISCAN PULSE LASER"
  EQUS "Volt-"           \
- EQUB &13               \ Encoded as:     ""
- EQUS "V"
+ EJMP 19                \ Encoded as:     "Volt-{single cap}V<238>isc<255>[50]
+ EQUS "V"               \                  [49]"
  ETWO 'A', 'R'
  EQUS "isc"
  ETWO 'A', 'N'
@@ -63,11 +63,11 @@
  CTOK 84                \ Encoded as:     "K6-27[84]"
  EQUB 0
 
- EQUB 10                \ Drive motors:   ""
- CTOK 72                \
- EQUB 12                \ Encoded as:     ""
- EQUS "Exl"
- ETWO 'O', 'N'
+ EQUB 10                \ Drive motors:   "{all caps}4*C40KV{sentence case} AMES
+ CTOK 72                \                  DRIVE{cr}
+ EJMP 12                \                  EXLON 76NN MODEL"
+ EQUS "Exl"             \
+ ETWO 'O', 'N'          \ Encoded as:     "[72]{12}Exl<223> 76NN Model"
  EQUS " 76NN Model"
  EQUB 0
 

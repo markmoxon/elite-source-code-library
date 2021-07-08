@@ -9,11 +9,11 @@
 
 .krait
 
- EQUB 1                 \ Inservice date: ""
- EQUS "3027"            \
- CTOK 85                \ Encoded as:     ""
- CTOK 71
- CTOK 67
+ EQUB 1                 \ Inservice date: "3027 ({single cap}DE{single cap}LACY
+ EQUS "3027"            \                  SHIPWORKS, ININES)"
+ CTOK 85                \
+ CTOK 71                \ Encoded as:     "3027[85][71][67]W<253>ks, <240><240>
+ CTOK 67                \                  <237>)"
  EQUS "W"
  ETWO 'O', 'R'
  EQUS "ks, "
@@ -32,7 +32,7 @@
  CTOK 42                \ Encoded as:     "80/20/90[42]"
  EQUB 0
 
- EQUB 4                 \ Speed:          "0.30LM"
+ EQUB 4                 \ Speed:          "0.30{all caps}LM{sentence case}"
  EQUS "0.30"            \
  CTOK 64                \ Encoded as:     "0.30[64]"
  EQUB 0
@@ -41,24 +41,26 @@
  EQUS "1"               \
  EQUB 0                 \ Encoded as:     "1"
 
- EQUB 7                 \ Cargo space:    "10TC"
+ EQUB 7                 \ Cargo space:    "10{all caps}TC{sentence case}"
  EQUS "10"              \
  CTOK 62                \ Encoded as:     "10[62]"
  EQUB 0
 
- EQUB 8                 \ Armaments:      ""
+ EQUB 8                 \ Armaments:      "ERGON LASER SYSTEM"
  CTOK 52                \
- CTOK 49                \ Encoded as:     ""
+ CTOK 49                \ Encoded as:     "[52][49][51]"
  CTOK 51
  EQUB 0
 
-\EQUB 0, 9              \ This data is commented out in the original source
-\EQUA "8|!S"
+\EQUB 9                 \ This data is commented out in the original source
+\EQUS "8"               \
+\CTOK 83                \ It would show the hull as "8{all caps}/2L{sentence
+\EQUB 0                 \ case}"
 
- EQUB 10                \ Drive motors:   ""
- CTOK 71                \
- EQUS " Sp"             \ Encoded as:     ""
- ETWO 'I', 'N'
+ EQUB 10                \ Drive motors:   "DE{single cap}LACY SPIN{single cap}
+ CTOK 71                \                  IONIC ZX14"
+ EQUS " Sp"             \
+ ETWO 'I', 'N'          \ Encoded as:     "[71] Sp<240>[78] ZX14"
  CTOK 78
  EQUS " ZX14"
  EQUB 0

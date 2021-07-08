@@ -3,7 +3,7 @@
 \       Name: confirm
 \       Type: Subroutine
 \   Category: Save and load
-\    Summary: AJD
+\    Summary: Print "ARE YOU SURE?" and wait for a response
 \
 \ ******************************************************************************
 
@@ -32,7 +32,7 @@
 
  PLA                    \ Restore A from the stack
 
- CMP #121
+ CMP #121               \ AJD
 
 .confirmed
 

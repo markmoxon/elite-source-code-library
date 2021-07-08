@@ -25,7 +25,7 @@
  CTOK 42                \ Encoded as:     "45/8/30[42]"
  EQUB 0
 
- EQUB 4                 \ Speed:          "0.24LM"
+ EQUB 4                 \ Speed:          "0.24{all caps}LM{sentence case}"
  EQUS "0.24"            \
  CTOK 64                \ Encoded as:     "0.24[64]"
  EQUB 0
@@ -34,28 +34,28 @@
  EQUS "1"               \
  EQUB 0                 \ Encoded as:     "1"
 
- EQUB 6                 \ Range:          "6LY"
+ EQUB 6                 \ Range:          "6{all caps}LY{sentence case}"
  EQUS "6"               \
  CTOK 63                \ Encoded as:     "6[63]"
  EQUB 0
 
- EQUB 7                 \ Cargo space:    "4TC"
+ EQUB 7                 \ Cargo space:    "4{all caps}TC{sentence case}"
  EQUS "4"               \
  CTOK 62                \ Encoded as:     "4[62]"
  EQUB 0
 
- EQUB 8                 \ Armaments:      "INGRAM 1928 AZ BEAM LASER{crlf}
+ EQUB 8                 \ Armaments:      "INGRAM 1928 AZ BEAM LASER{cr}
  CTOK 56                \                  GERET STARSEEKER MISSILES"
  EQUS " 1928 AZ "       \
  ETWO 'B', 'E'          \ Encoded as:     "[56] 1928 AZ <247>am[49]{12}[48][46]"
  EQUS "am"
  CTOK 49
- EQUB 12
+ EJMP 12
  CTOK 48
  CTOK 46
  EQUB 0
 
- EQUB 9                 \ Hull:           "D4-18/2L"
+ EQUB 9                 \ Hull:           "D4-18{all caps}/2L{sentence case}"
  EQUS "D4-18"           \
  CTOK 83                \ Encoded as:     "D4-18[83]"
  EQUB 0

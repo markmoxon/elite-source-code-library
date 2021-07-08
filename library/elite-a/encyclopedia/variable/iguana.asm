@@ -9,9 +9,9 @@
 
 .iguana
 
- EQUB 1                 \ Inservice date: ""
+ EQUB 1                 \ Inservice date: "3095 ({single cap}FAULCON MANSPACE)"
  EQUS "3095"            \
- CTOK 85                \ Encoded as:     ""
+ CTOK 85                \ Encoded as:     "3095[85]Faulc<223> <239>n[77])"
  EQUS "Faulc"
  ETWO 'O', 'N'
  EQUS " "
@@ -30,7 +30,7 @@
  CTOK 42                \ Encoded as:     "65/20/40[42]"
  EQUB 0
 
- EQUB 4                 \ Speed:          "0.33LM"
+ EQUB 4                 \ Speed:          "0.33{all caps}LM{sentence case}"
  EQUS "0.33"            \
  CTOK 64                \ Encoded as:     "0.33[64]"
  EQUB 0
@@ -39,20 +39,20 @@
  EQUS "1-3"             \
  EQUB 0                 \ Encoded as:     "1-3"
 
- EQUB 6                 \ Range:          "7.5LY"
+ EQUB 6                 \ Range:          "7.5{all caps}LY{sentence case}"
  EQUS "7.5"             \
  CTOK 63                \ Encoded as:     "7.5[63]"
  EQUB 0
 
- EQUB 7                 \ Cargo space:    "15TC"
+ EQUB 7                 \ Cargo space:    "15{all caps}TC{sentence case}"
  EQUS "15"              \
  CTOK 62                \ Encoded as:     "15[62]"
  EQUB 0
 
- EQUB 8                 \ Armaments:      ""
- CTOK 57                \
- CTOK 49                \ Encoded as:     ""
- EQUB 12
+ EQUB 8                 \ Armaments:      "LANCE & FERMAN LASER{cr}
+ CTOK 57                \                  SEEKER X1 MISSILES"
+ CTOK 49                \
+ EJMP 12                \ Encoded as:     "[57][49]{12}[54]<244> X1[46]"
  CTOK 54
  ETWO 'E', 'R'
  EQUS " X1"
@@ -64,16 +64,16 @@
  CTOK 84                \ Encoded as:     "G6-20[84]"
  EQUB 0
 
- EQUB 10                \ Drive motors:   ""
- CTOK 71                \
- EQUS " Sup"            \ Encoded as:     ""
- ETWO 'E', 'R'
- EQUS " "
+ EQUB 10                \ Drive motors:   "DE{single cap}LACY SUPER THRUST{cr}
+ CTOK 71                \                  {all caps}VC{sentence case}9"
+ EQUS " Sup"            \
+ ETWO 'E', 'R'          \ Encoded as:     "[71] Sup<244> [66]{12}{all caps}VC
+ EQUS " "               \                  {sentence case}9"
  CTOK 66
- EQUB 12
- EQUB &01
+ EJMP 12
+ EJMP 1
  EQUS "VC"
- EQUB &02
+ EJMP 2
  EQUS "9"
  EQUB 0
 

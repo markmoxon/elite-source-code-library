@@ -18,7 +18,7 @@
  CTOK 42                \ Encoded as:     "40/10/35[42]"
  EQUB 0
 
- EQUB 4                 \ Speed:          "0.30LM"
+ EQUB 4                 \ Speed:          "0.30{all caps}LM{sentence case}"
  EQUS "0.30"            \
  CTOK 64                \ Encoded as:     "0.30[64]"
  EQUB 0
@@ -28,17 +28,19 @@
  EQUS "ne"              \ Encoded as:     "<227>ne"
  EQUB 0
 
- EQUB 8                 \ Armaments:      ""
+ EQUB 8                 \ Armaments:      "THARGOID LASER"
  CTOK 30                \
- CTOK 49                \ Encoded as:     ""
+ CTOK 49                \ Encoded as:     "[30][49]"
  EQUB 0
 
-\EQUB 0, 9              \ This data is commented out in the original source
-\EQUA "|!cne"
+\EQUB 9                 \ This data is commented out in the original source
+\TWOK 'N', 'O'          \
+\EQUS "ne"              \ It would show the hull as "NONE"
+\EQUB 0
 
- EQUB 10                \ Drive motors:   ""
+ EQUB 10                \ Drive motors:   "THARGOID INVENTION"
  CTOK 30                \
- EQUS " "               \ Encoded as:     ""
+ EQUS " "               \ Encoded as:     "[30] [68]"
  CTOK 68
  EQUB 0
 

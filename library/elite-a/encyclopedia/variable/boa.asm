@@ -9,9 +9,9 @@
 
 .boa
 
- EQUB 1                 \ Inservice date: ""
+ EQUB 1                 \ Inservice date: "3017 ({single cap}GEREGE FEDERATION)"
  EQUS "3017"            \
- CTOK 85                \ Encoded as:     ""
+ CTOK 85                \ Encoded as:     "3017[85]<231><242><231> [76])"
  ETWO 'G', 'E'
  ETWO 'R', 'E'
  ETWO 'G', 'E'
@@ -29,7 +29,7 @@
  CTOK 42                \ Encoded as:     "115/60/65[42]"
  EQUB 0
 
- EQUB 4                 \ Speed:          "0.24LM"
+ EQUB 4                 \ Speed:          "0.24{all caps}LM{sentence case}"
  EQUS "0.24"            \
  CTOK 64                \ Encoded as:     "0.24[64]"
  EQUB 0
@@ -38,21 +38,21 @@
  EQUS "2-6"             \
  EQUB 0                 \ Encoded as:     "2-6"
 
- EQUB 6                 \ Range:          "9LY"
+ EQUB 6                 \ Range:          "9{all caps}LY{sentence case}"
  EQUS "9"               \
  CTOK 63                \ Encoded as:     "9[63]"
  EQUB 0
 
- EQUB 7                 \ Cargo space:    "125TC"
+ EQUB 7                 \ Cargo space:    "125{all caps}TC{sentence case}"
  EQUS "125"             \
  CTOK 62                \ Encoded as:     "125[62]"
  EQUB 0
 
- EQUB 8                 \ Armaments:      ""
- CTOK 52                \
- CTOK 49                \ Encoded as:     ""
- CTOK 51
- EQUB 12
+ EQUB 8                 \ Armaments:      "ERGON LASER SYSTEM{cr}
+ CTOK 52                \                  {all caps}IFS{sentence case} SEEK &
+ CTOK 49                \                  HUNT MISSILES"
+ CTOK 51                \
+ EJMP 12                \ Encoded as:     "[52][49][51]{12}[86][54] & [79][46]"
  CTOK 86
  CTOK 54
  EQUS " & "
@@ -65,11 +65,11 @@
  CTOK 83                \ Encoded as:     "J7-24[83]"
  EQUB 0
 
- EQUB 10                \ Drive motors:   ""
- CTOK 72                \
- EQUB 12                \ Encoded as:     ""
- CTOK 54
- CTOK 55
+ EQUB 10                \ Drive motors:   "{all caps}4*C40KV{sentence case} AMES
+ CTOK 72                \                  DRIVE{cr}
+ EJMP 12                \                  SEEKLIGHT THRUSTERS"
+ CTOK 54                \
+ CTOK 55                \ Encoded as:     "[72]{12}[54][55] [66]<244>s"
  EQUS " "
  CTOK 66
  ETWO 'E', 'R'

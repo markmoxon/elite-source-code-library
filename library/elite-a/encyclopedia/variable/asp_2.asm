@@ -9,9 +9,9 @@
 
 .asp_2
 
- EQUB 1                 \ Inservice date: ""
+ EQUB 1                 \ Inservice date: "2878 ({single cap}GALCOP WORKSHOPS)"
  EQUS "2878"            \
- CTOK 85                \ Encoded as:     ""
+ CTOK 85                \ Encoded as:     "2878[85]G<228>cop[81]"
  EQUS "G"
  ETWO 'A', 'L'
  EQUS "cop"
@@ -27,7 +27,7 @@
  CTOK 42                \ Encoded as:     "70/20/65[42]"
  EQUB 0
 
- EQUB 4                 \ Speed:          "0.40LM"
+ EQUB 4                 \ Speed:          "0.40{all caps}LM{sentence case}"
  EQUS "0.40"            \
  CTOK 64                \ Encoded as:     "0.40[64]"
  EQUB 0
@@ -36,24 +36,24 @@
  EQUS "1"               \
  EQUB 0                 \ Encoded as:     "1"
 
- EQUB 6                 \ Range:          "12.5LY"
+ EQUB 6                 \ Range:          "12.5{all caps}LY{sentence case}"
  EQUS "12.5"            \
  CTOK 63                \ Encoded as:     "12.5[63]"
  EQUB 0
 
- EQUB 7                 \ Cargo space:    "0TC"
+ EQUB 7                 \ Cargo space:    "0{all caps}TC{sentence case}"
  EQUS "0"               \
  CTOK 62                \ Encoded as:     "0[62]"
  EQUB 0
 
- EQUB 8                 \ Armaments:      ""
- CTOK 59                \
- EQUS "-"               \ Encoded as:     ""
- CTOK 58
- EQUS "Bur"
+ EQUB 8                 \ Armaments:      "HASSONI-{single cap}KRUGER BURST
+ CTOK 59                \                  LASER{cr}
+ EQUS "-"               \                  GERET STARSEEKER MISSILES"
+ CTOK 58                \
+ EQUS "Bur"             \ Encoded as:     "[59]-[58]Bur<222>[49]{12}[48][46]"
  ETWO 'S', 'T'
  CTOK 49
- EQUB 12
+ EJMP 12
  CTOK 48
  CTOK 46
  EQUB 0
@@ -63,15 +63,15 @@
  CTOK 82                \ Encoded as:     "J6-31[82]"
  EQUB 0
 
- EQUB 10                \ Drive motors:   ""
- CTOK 60                \
- EQUS " Whip"           \ Encoded as:     ""
- ETWO 'L', 'A'
- EQUS "sh"
- EQUB 12
- EQUB &01
+ EQUB 10                \ Drive motors:   "VOLTAIRE WHIPLASH{cr}
+ CTOK 60                \                  {all caps}HK{sentence case}
+ EQUS " Whip"           \                  PULSEDRIVE"
+ ETWO 'L', 'A'          \
+ EQUS "sh"              \ Encoded as:     "[60] Whip<249>sh{12}{all caps}HK
+ EJMP 12                \                  {sentence case} [50][53]"
+ EJMP 1
  EQUS "HK"
- EQUB &02
+ EJMP 2
  EQUS " "
  CTOK 50
  CTOK 53

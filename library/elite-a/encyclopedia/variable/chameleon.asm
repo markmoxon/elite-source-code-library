@@ -9,10 +9,10 @@
 
 .chameleon
 
- EQUB 1                 \ Inservice date: ""
+ EQUB 1                 \ Inservice date: "3122 ({single cap}ARDEN CO-OPERATIVE)"
  EQUS "3122"            \
- CTOK 85                \ Encoded as:     ""
- ETWO 'A', 'R'
+ CTOK 85                \ Encoded as:     "3122[85]<238>d<246> Co-op<244>a<251>
+ ETWO 'A', 'R'          \                  <250>)"
  EQUS "d"
  ETWO 'E', 'N'
  EQUS " Co-op"
@@ -32,7 +32,7 @@
  CTOK 42                \ Encoded as:     "75/24/40[42]"
  EQUB 0
 
- EQUB 4                 \ Speed:          "0.29LM"
+ EQUB 4                 \ Speed:          "0.29{all caps}LM{sentence case}"
  EQUS "0.29"            \
  CTOK 64                \ Encoded as:     "0.29[64]"
  EQUB 0
@@ -41,23 +41,23 @@
  EQUS "1-4"             \
  EQUB 0                 \ Encoded as:     "1-4"
 
- EQUB 6                 \ Range:          "8LY"
+ EQUB 6                 \ Range:          "8{all caps}LY{sentence case}"
  EQUS "8"               \
  CTOK 63                \ Encoded as:     "8[63]"
  EQUB 0
 
- EQUB 7                 \ Cargo space:    "30TC"
+ EQUB 7                 \ Cargo space:    "30{all caps}TC{sentence case}"
  EQUS "30"              \
  CTOK 62                \ Encoded as:     "30[62]"
  EQUB 0
 
- EQUB 8                 \ Armaments:      ""
- CTOK 56                \
- EQUS " Mega"           \ Encoded as:     ""
- CTOK 74
- CTOK 50
+ EQUB 8                 \ Armaments:      "INGRAM MEGABLAST PULSE LASER{cr}
+ CTOK 56                \                  SEEKER X3 MISSILES"
+ EQUS " Mega"           \
+ CTOK 74                \ Encoded as:     "[56] Mega[74][50][49]{12}[54]<244> X3
+ CTOK 50                \                  [46]"
  CTOK 49
- EQUB 12
+ EJMP 12
  CTOK 54
  ETWO 'E', 'R'
  EQUS " X3"
@@ -69,14 +69,14 @@
  CTOK 83                \ Encoded as:     "H5-23[83]"
  EQUB 0
 
- EQUB 10                \ Drive motors:   ""
- CTOK 60                \
- EQUS " "               \ Encoded as:     ""
- ETWO 'S', 'T'
- ETWO 'I', 'N'
+ EQUB 10                \ Drive motors:   "VOLTAIRE STINGER{cr}
+ CTOK 60                \                  PULSEDRIVE"
+ EQUS " "               \
+ ETWO 'S', 'T'          \ Encoded as:     "[60] <222><240>g<244>{12}Pul<218>
+ ETWO 'I', 'N'          \                  [53]"
  EQUS "g"
  ETWO 'E', 'R'
- EQUB 12
+ EJMP 12
  EQUS "Pul"
  ETWO 'S', 'E'
  CTOK 53

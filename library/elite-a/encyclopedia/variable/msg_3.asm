@@ -43,7 +43,7 @@
  EJMP 2
  EQUB VE
 
- ETOK 207               \ Token 3:      "SHIPS {all caps}I-W{sentence case}""
+ ETOK 207               \ Token 3:      "SHIPS {all caps}I-W{sentence case}"
  ECHR 'S'               \
  ECHR ' '               \ Encoded as:   "[207]S {1}I-W{2}"
  EJMP 1
@@ -492,7 +492,7 @@
  ECHR 'N'
  EQUB VE
 
- EJMP 19                \ Token 58:     "{single cap}KRUGER ""
+ EJMP 19                \ Token 58:     "{single cap}KRUGER "
  ECHR 'K'               \
  ECHR 'R'               \ Encoded as:   "{19}KRU<231>R "
  ECHR 'U'
@@ -623,7 +623,7 @@
  ETWO 'S', 'T'          \ Encoded as:   "B<249><222>"
  EQUB VE
 
- ECHR ' '               \ Token 75:     " ({single cap}GASEC LABS, VETITICE)""
+ ECHR ' '               \ Token 75:     " ({single cap}GASEC LABS, VETITICE)"
  ECHR '('               \
  EJMP 19                \ Encoded as:   "({19}GA<218>C L<216>S, <250><251><251>
  ECHR 'G'               \                <233>)"

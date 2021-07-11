@@ -41,7 +41,8 @@
 
  CPX #13                \ If X >= 13, then X = 13, 14 or 15 (gold, platinum or
  BCS l_2b04             \ gem-stones), for which there is no storage limit, so
-                        \ jump to l_2b04 to return the 
+                        \ jump to l_2b04 to signal that there is room for this
+                        \ item
 
 .n_aliens
 
@@ -83,10 +84,15 @@
 
 .l_2b04
 
+                        \ If we get here then the item is gold, platinum or
+                        \ gem-stones, for which there is no storage limit, and
+                        \ the C flag is set
+
  LDA QQ20,X             \ Set A to the number of units of this item that we
                         \ already have in the hold
 
- ADC #0                 \ AJD
+ ADC #0                 \ The C flag is set, so this adds one for the item we
+                        \ just scooped
 
  RTS                    \ Return from the subroutine
 

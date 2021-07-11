@@ -42,7 +42,8 @@ IF NOT(_ELITE_A_VERSION)
 ELIF _ELITE_A_VERSION
 
  JSR rand_posn          \ Call rand_posn to set up the INWK workspace for a ship
-                        \ in a random ship position
+                        \ in a random ship position, and set T1 to a random
+                        \ number
 
 ENDIF
 

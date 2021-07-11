@@ -41,7 +41,7 @@ IF _COMPACT
 
 .DFIRE
 
- LDA VIA+&60            \ Read the User 6522 VIA, which is where the Master
+ LDA VIA+&60            \ Read the 6522 User VIA, which is where the Master
                         \ Compact's digital joystick is mapped to. The pins go
                         \ low when the joystick connection is made, and PB0 is
                         \ connected to the joystick fire button, so when PB0

@@ -62,8 +62,10 @@ ELIF _ELITE_A_FLIGHT
  INY                    \ Update the key logger for key 2 in the KYTB table, so
  JSR DKS1               \ KY2 will be &FF if Space (speed up) is being pressed
 
- LDA #%01010001         \ AJD
- STA VIA+&60
+ LDA #&51               \ Set 6522 User VIA output register ORB (SHEILA &60) to
+ STA VIA+&60            \ the Delta 14b joystick button in the middle column
+                        \ (upper nibble &5) and top row (lower nibble &1), which
+                        \ corresponds to the fire button
 
  LDA VIA+&40            \ Read 6522 System VIA input register IRB (SHEILA &40)
 

@@ -76,7 +76,7 @@ IF _COMPACT
  LDX #&FF               \ Set X = &FF so we can use it to "press" keys in the
                         \ key logger
 
- LDA VIA+&60            \ Read the User 6522 VIA, which is where the Master
+ LDA VIA+&60            \ Read the 6522 User VIA, which is where the Master
                         \ Compact's digital joystick is mapped to. The pins go
                         \ low when the joystick connection is made, so we need
                         \ to check whether any of the following are zero:

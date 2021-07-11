@@ -22,22 +22,32 @@ ELIF _ELITE_A_ENCYCLOPEDIA
 
 ENDIF
 
+IF NOT(_ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA)
+
  JMP CHPR               \ WRCHV is set to point here by elite-loader3.asm
 
  EQUW IRQ1              \ IRQ1V is set to point here by elite-loader3.asm
 
-IF NOT(_ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA)
-
  JMP BRBR1              \ BRKV is set to point here by elite-loader3.asm
-
-ELIF _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA
-
- JMP BRBR               \ AJD
-
-ENDIF
 
 BRKV = P% - 2           \ The address of the destination address in the above
                         \ JMP BRBR1 instruction. This ensures that any code that
                         \ updates BRKV will update this instruction instead of
                         \ the actual vector
+
+
+ELIF _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA
+
+ JMP CHPR               \ WRCHV is set to point here by elite-loader.asm
+
+ EQUW IRQ1              \ IRQ1V is set to point here by elite-loader.asm
+
+ JMP BRBR               \ BRKV is set to point here by elite-loader.asm
+
+BRKV = P% - 2           \ The address of the destination address in the above
+                        \ JMP BRBR instruction. This ensures that any code that
+                        \ updates BRKV will update this instruction instead of
+                        \ the actual vector
+
+ENDIF
 

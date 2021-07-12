@@ -209,7 +209,9 @@ IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Minor
 
 ELIF _ELITE_A_VERSION
 
- JMP n_load             \ AJD load ship details
+ JMP n_load             \ Jump to n_load to load the blueprint for the current
+                        \ ship type, returning from the subroutine using a tail
+                        \ call
 
 ENDIF
 

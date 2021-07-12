@@ -3,13 +3,13 @@
 \       Name: n_load
 \       Type: Subroutine
 \   Category: Buying ships
-\    Summary: AJD
+\    Summary: Load the blueprint for the current ship type
 \
 \ ******************************************************************************
 
 .n_load
 
- LDY cmdr_type
+ LDY cmdr_type          \ AJD
  LDX new_offsets,Y
  LDY #0
 

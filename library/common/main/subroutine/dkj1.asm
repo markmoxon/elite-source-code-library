@@ -77,9 +77,10 @@ ELIF _ELITE_A_6502SP_PARA
  INY                    \ Update the key logger for key 2 in the KYTB table, so
  JSR DKS1               \ KY2 will be &FF if Space (speed up) is being pressed
 
- JSR scan_fire          \ AJD
+ JSR scan_fire          \ Call scan_fire to check whether the joystick's fire
+                        \ button is being pressed
 
- EOR #%00010000
+ EOR #%00010000         \ AJD
  STA &0307
 
 ENDIF

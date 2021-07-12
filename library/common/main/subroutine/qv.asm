@@ -42,24 +42,26 @@ ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Tube
 
  LDY #16                \ Move the text cursor to row 16, and at the same time
- STY YC                 \ set Y to a counter going from 16-20 in the loop below
+ STY YC                 \ set Y to a counter going from 16 to 19 in the loop
+                        \ below
 
 ELIF _6502SP_VERSION
 
  LDA #16                \ Move the text cursor to row 16, and at the same time
- TAY                    \ set Y to a counter going from 16-20 in the loop below
- JSR DOYC
+ TAY                    \ set Y to a counter going from 16 to 19 in the loop
+ JSR DOYC               \ below
 
 ELIF _MASTER_VERSION
 
  LDA #16                \ Move the text cursor to row 16, and at the same time
- TAY                    \ set Y to a counter going from 16-20 in the loop below
- STA YC
+ TAY                    \ set Y to a counter going from 16 to 19 in the loop
+ STA YC                 \ below
 
 ELIF _ELITE_A_VERSION
 
  LDY #16                \ Move the text cursor to row 16, and at the same time
- STY YC                 \ set YC to a counter going from 16-20 in the loop below
+ STY YC                 \ set YC to a counter going from 16 to 19 in the loop
+                        \ below
 
 ENDIF
 
@@ -93,11 +95,11 @@ ELIF _ELITE_A_VERSION
 ENDIF
 
  CLC                    \ Print ASCII character "0" - 16 + A, so as A goes from
- ADC #'0'-16            \ 16 to 20, this prints "0" through "3" followed by a
+ ADC #'0'-16            \ 16 to 19, this prints "0" through "3" followed by a
  JSR spc                \ space
 
  LDA YC                 \ Print recursive text token 80 + YC, so as YC goes from
- CLC                    \ 16 to 20, this prints "FRONT", "REAR", "LEFT" and
+ CLC                    \ 16 to 19, this prints "FRONT", "REAR", "LEFT" and
  ADC #80                \ "RIGHT"
  JSR TT27
 
@@ -125,12 +127,17 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- LDA new_mounts         \ AJD
- ORA #&10
+ LDA new_mounts         \ Set A = new_mounts + 16, so A now contains a value of
+ ORA #16                \ 17, 18 or 20, depending on the number of laser mounts
+                        \ that our current ship supports (in other words, it's
+                        \ one more than the corresponding value in the YC
+                        \ counter, which is going from 16 to 19, not 17 to 20)
 
  CMP YC                 \ If the loop counter in YC hasn't yet reached the
- BNE qv1                \ number of mounts in A then loop back up to qv1 to
-                        \ print the next view in the menu
+ BNE qv1                \ value in A, then loop back up to qv1 to print the next
+                        \ view in the menu, so this loops us back until we have
+                        \ printed all of the laser mounts defined by the value
+                        \ of new_mounts
 
 ENDIF
 
@@ -175,10 +182,14 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
 
 ELIF _ELITE_A_VERSION
 
- CMP new_mounts         \ AJD
- BCC qv3
- JSR CLYNS
- JMP qv2
+ CMP new_mounts         \ If A < new_mounts, then our current ship supports this
+ BCC qv3                \ view number, so jump down to qv3 as we are done
+
+ JSR CLYNS              \ Otherwise we didn't get a valid view number, so clear
+                        \ the bottom three text rows of the upper screen, and
+                        \ move the text cursor to column 1 on row 21
+
+ JMP qv2                \ Jump back to qv2 to try again
 
 .qv3
 

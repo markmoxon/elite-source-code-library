@@ -151,7 +151,7 @@ IF _MASTER_VERSION \ Master: See group A
 
 ELIF _ELITE_A_VERSION
 
- LDA #&DB               \ AJD
+ LDA #219               \ Set A = 219 as the distance that the ship starts at
 
 ENDIF
 
@@ -256,13 +256,13 @@ ENDIF
 
 IF _ELITE_A_VERSION
 
- INC YC                 \ AJD
+ INC YC                 \ Move the text cursor down two rows
  INC YC
 
- LDA #3
+ LDA #3                 \ Move the text cursor to column 3
  STA XC
 
- LDA #&72
+ LDA #114               \ Print extended token 114 (" MODIFIED BY A.J.C.DUGGAN")
  JSR DETOK
 
 ENDIF
@@ -555,7 +555,8 @@ ENDIF
 
 ELIF _ELITE_A_6502SP_PARA
 
- JSR scan_fire          \ AJD
+ JSR scan_fire          \ Call scan_fire to check whether the joystick's fire
+                        \ button is being pressed
 
 ENDIF
 

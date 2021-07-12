@@ -108,8 +108,12 @@
  STA LASER,Y
  DEY
  BPL n_wipe
- STX cmdr_type
- JSR n_load
+
+ STX cmdr_type          \ Set the current ship type in cmdr_type to X
+
+ JSR n_load             \ Call n_load to load the blueprint for the new ship
+                        \ type
+
  LDA new_range
  STA QQ14
  JSR msblob

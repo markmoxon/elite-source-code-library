@@ -117,9 +117,12 @@ ELIF _6502SP_VERSION
 
 ELIF _ELITE_A_DOCKED
 
- LDA #&01               \ AJD
- STA NAME+5
- STA CATF
+ LDA #1                 \ Set byte #6 of the commander name at NAME+5 to 1
+ STA NAME+5             \ (I am not sure why we do this, but it is reversed
+                        \ below, after the disc is catalogued)
+
+ STA CATF               \ Set the CATF flag to 1, so that the TT26 routine will
+                        \ print out the disc catalogue correctly
 
 ELIF _ELITE_A_6502SP_PARA
 
@@ -129,7 +132,7 @@ ELIF _ELITE_A_6502SP_PARA
  JSR tube_write
  LDA YC
  JSR tube_write
- LDA #&00
+ LDA #0
  JSR tube_write
 
 ENDIF
@@ -196,8 +199,9 @@ ELIF _ELITE_A_DOCKED
  DEC CATF               \ Decrement the CATF flag back to 0, so the TT26 routine
                         \ reverts to standard formatting
 
- LDA NA%+5              \ AJD
- STA NAME+5
+ LDA NA%+5              \ Revert byte #6 of the commander name at NAME+5 to the
+ STA NAME+5             \ correct character from the name at NA%, reversing the
+                        \ change we did above
 
 ENDIF
 

@@ -10,15 +10,17 @@
 
 .S%
 
- JMP DOENTRY            \ Decrypt the main docked code and dock at the station
-
 IF NOT(_ELITE_A_ENCYCLOPEDIA)
+
+ JMP DOENTRY            \ Decrypt the main docked code and dock at the station
 
  JMP DOBEGIN            \ Decrypt the main docked code and start a new game
 
 ELIF _ELITE_A_ENCYCLOPEDIA
 
- JMP DOENTRY            \ Decrypt the main docked code and dock at the station
+ JMP DOENTRY            \ Initialise the encyclopedia and show the menu screen
+
+ JMP DOENTRY            \ Initialise the encyclopedia and show the menu screen
 
 ENDIF
 

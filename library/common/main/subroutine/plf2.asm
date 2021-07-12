@@ -38,7 +38,10 @@ ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
  LDA #1
  STA QQ25
- JSR sell_yn
+
+ JSR sell_yn            \ Call sell_yn to print a "SELL (Y/N)?" prompt and get a
+                        \ number from the keyboard
+
  BEQ status_no
  BCS status_no
  LDA XX4

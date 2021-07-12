@@ -154,9 +154,18 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
 
 ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
- JSR sell_yn            \ AJD
- BEQ TT212
- BCS NWDAV4
+ JSR sell_yn            \ Call sell_yn to print a "SELL (Y/N)?" prompt and get a
+                        \ number from the keyboard, which will be the number of
+                        \ the item we want to sell, returning the number entered
+                        \ in A and R, and setting the C flag if the number is
+                        \ bigger than the available amount of this item in QQ25
+
+ BEQ TT212              \ If no number was entered, jump to TT212 to move on to
+                        \ the next item
+
+ BCS NWDAV4             \ If the number entered was too big, jump to NWDAV4 to
+                        \ print an "ITEM?" error, make a beep and rejoin the
+                        \ routine at NWDAVxx above
 
 ENDIF
 

@@ -6,6 +6,15 @@
 \    Summary: Dock at the space station, show the ship hanger and work out any
 \             mission progression
 \
+IF _ELITE_A_DOCKED
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   icode_set           Reset a number of flight variables and workspaces and go
+\                       to the docking bay (i.e. show the Status Mode screen)
+\
+ENDIF
 \ ******************************************************************************
 
 .DOENTRY
@@ -16,8 +25,15 @@ IF _DISC_DOCKED \ Platform
 
 ELIF _ELITE_A_DOCKED
 
- LDA KL+1               \ AJD
- BNE INBAY
+ LDA KL+1               \ Before loading the docked code, the encyclopedia code
+ BNE INBAY              \ sets KL+1 to a non-zero value (in the launch routine),
+                        \ so this jumps to INBAY if we just came from the
+                        \ encyclopedia, thereby skipping the docking tunnel and
+                        \ ship hanger when we swap between the docked and
+                        \ encyclopedia views. The flight code zeroes the key
+                        \ logger before loading the docked code, so when we dock
+                        \ we keep going and show the docking tunnel and ship
+                        \ hanger
 
  LDA #&FF               \ Call SCRAM to set save_lock to &FF and set the break
  JSR SCRAM              \ handler
@@ -237,7 +253,7 @@ IF _ELITE_A_DOCKED
 
 .icode_set
 
- JSR RES2               \ AJD
+ JSR RES2               \ Reset a number of flight variables and workspaces
 
 ENDIF
 

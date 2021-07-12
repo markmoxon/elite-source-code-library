@@ -6,7 +6,7 @@
 IF _DISC_DOCKED
 \    Summary: This routine is unused and is never run
 ELIF _ELITE_A_DOCKED
-\    Summary: Set the break handler and enter the docking bay without showing
+\    Summary: Set the break handler and go to the docking bay without showing
 \             the tunnel or ship hanger, or checking mission progress
 ENDIF
 \
@@ -16,8 +16,11 @@ ENDIF
 
 IF _ELITE_A_DOCKED
 
- JSR BRKBK              \ AJD
- JMP icode_set
+ JSR BRKBK              \ Call BRKBK to set BRKV to point to the BRBR routine
+
+ JMP icode_set          \ Jump to icode_set to reset a number of flight
+                        \ variables and workspaces and go to the docking bay
+                        \ (i.e. show the Status Mode screen)
 
 ENDIF
 

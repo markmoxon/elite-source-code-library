@@ -27,7 +27,8 @@
 \                       TKN2 and QQ16
 \
 IF _ELITE_A_VERSION
-\   msg_pairs           AJD
+\   msg_pairs           Print the extended two-letter token in A (where A is in
+\                       the range 215 to 255)
 \
 ENDIF
 \ ******************************************************************************

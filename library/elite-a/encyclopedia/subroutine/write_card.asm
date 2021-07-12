@@ -83,7 +83,8 @@
 
 .card_pairs
 
- JSR msg_pairs
+ JSR msg_pairs          \ Print the extended two-letter token in A
+
  JMP card_loop
 
 .card_end

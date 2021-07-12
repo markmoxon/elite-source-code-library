@@ -104,7 +104,15 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
 ELIF _ELITE_A_VERSION
 
-                        \ At this point, we know that A = %00100000 (as we
+                        \ We now update our FIST flag ("fugitive/innocent
+                        \ status") by 1 if we didn't kill a cop, or by a large
+                        \ amount if we did - specifically, if we killed a cop,
+                        \ then the most significant bit in FIST that is
+                        \ currently clear will be set, which means we increase
+                        \ FIST by the highest multiple of 2 that we can add and
+                        \ still fit the result in a byte
+                        \
+                        \ Also, at this point, we know that A = %00100000 (as we
                         \ didn't take the BEQ branch)
 
  BIT NEWB               \ If bit 6 of the ship's NEWB flags is set, then this
@@ -116,27 +124,54 @@ ELIF _ELITE_A_VERSION
                         \
                         \   A AND NEWB = %00100000 AND NEWB
                         \
-                        \ so this jumps to n_goodboy if bit 5 of NEWB is clear
-                        \ (in other words, if the ship is no longer exploding)
+                        \ so this jumps to n_goodboy if bit 5 of NEWB is clear,
+                        \ so in other words, if the ship is no longer exploding,
+                        \ we don't update FIST
 
- LDA #%10000000         \ AJD
+ LDA #%10000000         \ Set A so that the shift and rotate instructions we're
+                        \ about to do set A = %00000001, so we increase our FIST
+                        \ status by just 1
 
 .n_badboy
 
- ASL A
- ROL A
+                        \ We get here with two possible values of A:
+                        \
+                        \   * A = %00100000 if we just killed a cop
+                        \   * A = %10000000 otherwise
+
+ ASL A                  \ Shift and rotate A so that we get:
+ ROL A                  \
+                        \   * A = %10000000 if we just killed a cop
+                        \   * A = %00000001 otherwise
 
 .n_bitlegal
 
- LSR A
- BIT FIST
- BNE n_bitlegal
+ LSR A                  \ We now shift A to the right and AND it with FIST,
+ BIT FIST               \ repeating the process until the single set bit in A
+ BNE n_bitlegal         \ matches a clear bit in FIST, so this shifts A right
+                        \ so that the set bit matches the highest clear bit in
+                        \ FIST (if we just killed a cop), or it sets A to 0 and
+                        \ sets the C flag (if we didn't)
 
- ADC FIST
- BCS KS1S
+ ADC FIST               \ Set A = A + C + FIST, so:
+                        \
+                        \   * A = A + 0 + FIST if we just killed a cop
+                        \   * A = 0 + 1 + FIST otherwise
+                        \
+                        \ so if we just killed a cop, this will effectively set
+                        \ the highest clear bit in FIST, otherwise we just add 1
+                        \ to FIST
 
- STA FIST
- BCC KS1S
+ BCS KS1S               \ If the addition overflowed, jump to KS1S to skip
+                        \ showing an on-screen bounty for this kill, and without
+                        \ updating FIST first (as we are too bad to get any
+                        \ worse)
+
+ STA FIST               \ Otherwise update the value of FIST to the new value
+
+ BCC KS1S               \ Jump to KS1S to skip showing an on-screen bounty for
+                        \ this kill (the BCC is effectively a JMP as we just
+                        \ passed through a BCS)
 
 .n_goodboy
 

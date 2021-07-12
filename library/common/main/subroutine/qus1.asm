@@ -74,7 +74,12 @@ ENDIF
 
 IF _ELITE_A_VERSION
 
- STA save_lock          \ AJD
+ STA save_lock          \ Set save_lock to 0 (when we save a file) or &FF (when
+                        \ we load a file) to indicate:
+                        \
+                        \   * 0 = last file operation was a save
+                        \
+                        \   * &FF = last file operation was a load
 
 ENDIF
 

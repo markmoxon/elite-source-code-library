@@ -54,8 +54,6 @@ _STH_DISC               = (_RELEASE = 2)
 \
 \ ******************************************************************************
 
-LS% = &0CFF             \ The start of the descending ship line heap
-
 NOST = 18               \ The number of stardust particles in normal space (this
                         \ goes down to 3 in witchspace)
 
@@ -144,6 +142,8 @@ ACT = &07E0             \ The address of the arctan lookup table, as set in
 QQ16 = &0880            \ The address of the two-letter text token table in the
                         \ flight code (this gets populated by the docked code at
                         \ the start of the game)
+
+LS% = &0CFF             \ The start of the descending ship line heap
 
 CATD = &0D7A            \ The address of the CATD routine that is put in place
                         \ by the third loader, as set in elite-loader3.asm

@@ -28,25 +28,54 @@ IF NOT(_ELITE_A_VERSION)
 
 ELIF _ELITE_A_VERSION
 
- LDA QQ8                \ AJD
- LDY #3
+                        \ We now want to extract bits 3-10 of QQ8(1 0) into A,
+                        \ so we can subtract this value from our legal status in
+                        \ FIST (so the further we travel, the quicker our legal
+                        \ status drops back down to clean, as we put more
+                        \ distance between us and our crimes - specifically, we
+                        \ drop 1.2 FIST points for each light year, as we
+                        \ subtract (QQ8 / 8) from FIST, and QQ8 contains the
+                        \ distance in light years * 10)
+
+ LDA QQ8                \ Set A to the low byte of the distance to the selected
+                        \ system in QQ8(1 0), so (QQ8+1 A) contains the distance
+
+ LDY #3                 \ We're going to extract bits 3-10 by shifting QQ8(1 0)
+                        \ right by 3 places, so we start by setting a loop
+                        \ counter in Y
 
 .legal_div
 
- LSR QQ8+1
+ LSR QQ8+1              \ Shift (QQ8+1 A) to the right by one place
  ROR A
- DEY
- BNE legal_div
 
- SEC
+ DEY                    \ Decrement the loop counter
+
+ BNE legal_div          \ Loop back until we have shifted right by 3 places, by
+                        \ which point A will contain bits 3-10 of QQ8(1 0)
+
+                        \ We now subtract A from FIST, and subtract 1 more,
+                        \ making sure we don't reduce FIST beyond 0, which we do
+                        \ by doing the subtraction in reverse and then negating
+                        \ the result with one's complement
+
+ SEC                    \ Set A = A - FIST (which we will negate later)
  SBC FIST
- BCC legal_over
- LDA #&FF
+
+ BCC legal_over         \ If the subtraction underflowed, i.e. A < FIST, skip
+                        \ the following instruction
+
+ LDA #&FF               \ A > FIST, so we set A = &FF so the EOR flips this to
+                        \ 0, so FIST gets set to 0 when we travel far enough to
+                        \ clear our name
 
 .legal_over
 
- EOR #&FF
- STA FIST
+ EOR #&FF               \ Flip all the bits in A to negate the result, so if the
+                        \ subtraction underflowed, i.e. A < FIST, we now have
+                        \ A = FIST - A - 1
+
+ STA FIST               \ Update the value of FIST to the new value in A
 
 ENDIF
 

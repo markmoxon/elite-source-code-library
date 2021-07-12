@@ -54,8 +54,6 @@ _STH_DISC               = (_RELEASE = 2)
 \
 \ ******************************************************************************
 
-LS% = &0CFF             \ The start of the descending ship line heap
-
 NOST = 18               \ The number of stardust particles in normal space (this
                         \ goes down to 3 in witchspace)
 
@@ -106,17 +104,6 @@ Armlas = INT(128.5+1.5*POW) \ Military laser power
 
 NI% = 37                \ The number of bytes in each ship's data block (as
                         \ stored in INWK and K%)
-
-OSBYTE = &FFF4          \ The address for the OSBYTE routine
-OSWORD = &FFF1          \ The address for the OSWORD routine
-OSFILE = &FFDD          \ The address for the OSFILE routine
-OSWRCH = &FFEE          \ The address for the OSWRCH routine
-OSCLI = &FFF7           \ The address for the OSCLI routine
-
-VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
-                        \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
-                        \ known as SHEILA)
-
 VSCAN = 57              \ Defines the split position in the split-screen mode
 
 X = 128                 \ The centre x-coordinate of the 256 x 192 space view
@@ -155,6 +142,8 @@ QQ16_FLIGHT = &0880     \ The address of the two-letter text token table in the
                         \ flight code (this gets populated by the docked code at
                         \ the start of the game)
 
+LS% = &0CFF             \ The start of the descending ship line heap
+
 CATD = &0D7A            \ The address of the CATD routine that is put in place
                         \ by the third loader, as set in elite-loader3.asm
 
@@ -176,6 +165,16 @@ CHK = &11D4             \ The address of the first checksum byte for the saved
 
 SHIP_MISSILE = &7F00    \ The address of the missile ship blueprint, as set in
                         \ elite-loader3.asm
+
+VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
+                        \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
+                        \ known as SHEILA)
+
+OSBYTE = &FFF4          \ The address for the OSBYTE routine
+OSWORD = &FFF1          \ The address for the OSWORD routine
+OSFILE = &FFDD          \ The address for the OSFILE routine
+OSWRCH = &FFEE          \ The address for the OSWRCH routine
+OSCLI = &FFF7           \ The address for the OSCLI routine
 
 INCLUDE "library/common/main/workspace/zp.asm"
 INCLUDE "library/common/main/workspace/xx3.asm"

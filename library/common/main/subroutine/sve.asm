@@ -243,12 +243,13 @@ ELIF _ELITE_A_VERSION
  CMP #'2'               \ If A >= ASCII "2" (i.e. save or catalogue), skip to
  BCS SV1                \ SV1
 
- LDA #0                 \ AJD
- JSR confirm
- BNE SVEX
+                        \ If we get here then option 1 (load) was chosen
 
- JSR GTNMEW             \ If we get here then option 1 (load) was chosen, so
-                        \ call GTNMEW to fetch the name of the commander file
+ LDA #0                 \ If save_lock = &FF, then there are unsaved changes, so
+ JSR confirm            \ ask for confirmation before proceeding with the load,
+ BNE SVEX               \ jumping to SVEX to exit if confirmation is not given
+
+ JSR GTNMEW             \ Call GTNMEW to fetch the name of the commander file
                         \ to load (including drive number and directory) into
                         \ INWK
 
@@ -266,13 +267,16 @@ ELIF _ELITE_A_VERSION
                         \ jumps to CAT if option 2 was not chosen - in other
                         \ words, if option 3 (catalogue) was chosen
 
- LDA #&FF               \ AJD
- JSR confirm
- BNE SVEX
+                        \ If we get here then option 2 (save) was chosen
+
+ LDA #&FF               \ If save_lock = 0, then there are no unsaved changes,
+ JSR confirm            \ so ask for confirmation before proceeding with the
+ BNE SVEX               \ save, jumping to SVEX to exit if confirmation is not
+                        \ given
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION \ Enhanced: See group A
+IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Enhanced: See group A
 
  JSR GTNMEW             \ If we get here then option 2 (save) was chosen, so
                         \ call GTNMEW to fetch the name of the commander file
@@ -283,6 +287,12 @@ ELIF _CASSETTE_VERSION OR _ELECTRON_VERSION
 
  JSR GTNME              \ Clear the screen and ask for the commander filename
                         \ to save, storing the name at INWK
+
+ELIF _ELITE_A_VERSION
+
+JSR GTNMEW              \ Call GTNMEW to fetch the name of the commander file
+                        \ to save (including drive number and directory) into
+                        \ INWK
 
 ENDIF
 

@@ -92,19 +92,6 @@ POW = 15                \ Pulse laser power
 NI% = 36                \ The number of bytes in each ship's data block (as
                         \ stored in INWK and K%)
 
-OSBYTE = &FFF4          \ The address for the OSBYTE routine, which is used
-                        \ three times in the main game code
-
-OSWORD = &FFF1          \ The address for the OSWORD routine, which is used
-                        \ twice in the main game code
-
-OSFILE = &FFDD          \ The address for the OSFILE routine, which is used
-                        \ once in the main game code
-
-VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
-                        \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
-                        \ known as SHEILA)
-
 VSCAN = 57              \ Defines the split position in the split-screen mode
 
 X = 128                 \ The centre x-coordinate of the 256 x 192 space view
@@ -120,6 +107,19 @@ f6 = &75                \ Internal key number for red key f6 (Data on System)
 f7 = &16                \ Internal key number for red key f7 (Market Price)
 f8 = &76                \ Internal key number for red key f8 (Status Mode)
 f9 = &77                \ Internal key number for red key f9 (Inventory)
+
+VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
+                        \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
+                        \ known as SHEILA)
+
+OSBYTE = &FFF4          \ The address for the OSBYTE routine, which is used
+                        \ three times in the main game code
+
+OSWORD = &FFF1          \ The address for the OSWORD routine, which is used
+                        \ twice in the main game code
+
+OSFILE = &FFDD          \ The address for the OSFILE routine, which is used
+                        \ once in the main game code
 
 INCLUDE "library/common/main/workspace/zp.asm"
 INCLUDE "library/common/main/workspace/xx3.asm"

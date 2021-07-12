@@ -27,8 +27,9 @@ ELIF _ELITE_A_6502SP_PARA
  LDA #0                 \ Set dockedp = 0 to indicate we are docked
  STA dockedp
 
- LDA #&FF               \ Call SCRAM to set save_lock to &FF and set the break
- JSR SCRAM              \ handler
+ LDA #&FF               \ Call SCRAM to set save_lock to &FF (i.e. we have just
+ JSR SCRAM              \ docked and have unsaved changes) and set the break
+                        \ handler
 
 ENDIF
 

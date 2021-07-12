@@ -58,8 +58,6 @@ _SOURCE_DISC            = (_RELEASE = 2)
 \
 \ ******************************************************************************
 
-LS% = &0CFF             \ The start of the descending ship line heap
-
 NOST = 18               \ The number of stardust particles in normal space (this
                         \ goes down to 3 in witchspace)
 
@@ -111,8 +109,28 @@ VE = 0                  \ The obfuscation byte used to hide the extended tokens
 LL = 30                 \ The length of lines (in characters) of justified text
                         \ in the extended tokens system
 
+save_lock = &0233       \ This flag indicates whether we should be asking for
+                        \ confirmation before saving or loading a commander
+                        \ file:
+                        \
+                        \   * 0 = last file operation was a save, or we just
+                        \         started a new game, so there are no unsaved
+                        \         changes (so ask for confirmation on saving)
+                        \
+                        \   * &FF = last file operation was a load, or we have
+                        \           just docked and have unsaved changes (so ask
+                        \           for confirmation on loading)
+                        \
+                        \ It shares a location with the IND2V+1 vector, which we
+                        \ do not use, so we can reuse the location
+
 QQ18 = &0400            \ The address of the text token table, as set in
                         \ elite-loader.asm
+
+new_name = &074D        \ This points to recursive token 132 in the QQ18 table.
+                        \ We update the token's text at this address whenever we
+                        \ buy a new ship, so that printing token 132 will always
+                        \ show the current ship type
 
 SNE = &07C0             \ The address of the sine lookup table, as set in
                         \ elite-loader.asm
@@ -120,6 +138,8 @@ SNE = &07C0             \ The address of the sine lookup table, as set in
 QQ16_FLIGHT = &0880     \ The address of the two-letter text token table in the
                         \ flight code (this gets populated by the docked code at
                         \ the start of the game)
+
+LS% = &0CFF             \ The start of the descending ship line heap
 
 IRQ1 = &114B            \ The address of the IRQ1 routine that implements the
                         \ split screen interrupt handler, as set in
@@ -136,10 +156,6 @@ CHK = &11D4             \ The address of the first checksum byte for the saved
 
 SHIP_MISSILE = &7F00    \ The address of the missile ship blueprint, as set in
                         \ elite-loader.asm
-
-save_lock = &0233       \ AJD, shares location with IND2V+1
-
-new_name = &074D        \ AJD
 
 INCLUDE "library/common/main/workspace/zp.asm"
 INCLUDE "library/common/main/workspace/xx3.asm"

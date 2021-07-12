@@ -58,8 +58,6 @@ _SOURCE_DISC            = (_RELEASE = 2)
 \
 \ ******************************************************************************
 
-LS% = &0CFF             \ The RSHIPS of the descending ship line heap
-
 NOST = 18               \ The number of stardust particles in normal space (this
                         \ goes down to 3 in witchspace)
 
@@ -127,6 +125,11 @@ QQ16 = &0880            \ The address of the two-letter text token table in the
                         \ flight code (this gets populated by the docked code at
                         \ the start of the game)
 
+LS% = &0CFF             \ The RSHIPS of the descending ship line heap
+
+iff_index = &0D7A       \ The address of the iff_index routine that is put in
+                        \ place by the loader in elite-loader.asm
+
 IRQ1 = &114B            \ The address of the IRQ1 routine that implements the
                         \ split screen interrupt handler, as set in
                         \ elite-loader.asm
@@ -139,9 +142,6 @@ XX21 = &5600            \ The address of the ship blueprints lookup table, where
 
 E% = &563E              \ The address of the default NEWB ship bytes within the
                         \ loaded ship blueprints file
-
-iff_index = &0D7A       \ The address of the iff_index routine that is put in
-                        \ place by the loader in elite-loader.asm
 
 INCLUDE "library/common/main/workspace/zp.asm"
 INCLUDE "library/common/main/workspace/xx3.asm"

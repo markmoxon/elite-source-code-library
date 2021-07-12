@@ -3,11 +3,23 @@
 \       Name: INBAY
 \       Type: Subroutine
 \   Category: Loader
+IF _DISC_DOCKED
 \    Summary: This routine is unused and is never run
+ELIF _ELITE_A_DOCKED
+\    Summary: Set the break handler and enter the docking bay without showing
+\             the tunnel or ship hanger, or checking mission progress
+ENDIF
 \
 \ ******************************************************************************
 
 .INBAY
+
+IF _ELITE_A_DOCKED
+
+ JSR BRKBK              \ AJD
+ JMP icode_set
+
+ENDIF
 
 IF _DISC_DOCKED
 
@@ -18,15 +30,9 @@ IF _DISC_DOCKED
 
 ELIF _ELITE_A_DOCKED
 
- JSR BRKBK              \ AJD
- JMP icode_set
-
- EQUB 0
- \ dead entry
-
- LDA #0                 \ Call SCRAM to set save_lock to 0 and set the break
- JSR SCRAM              \ handler
-
+ BRK                    \ This code is never run, and seems to have no effect
+ LDA #0
+ JSR SCRAM
  JSR RES2
  JMP TT170
 

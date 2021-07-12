@@ -62,8 +62,6 @@ Q% = _REMOVE_CHECKSUMS  \ Set Q% to TRUE to max out the default commander, FALSE
                         \ for the standard default commander (this is set to
                         \ TRUE if checksums are disabled, just for convenience)
 
-LS% = &0CFF             \ The start of the descending ship line heap
-
 NOST = 18               \ The number of stardust particles in normal space (this
                         \ goes down to 3 in witchspace)
 
@@ -112,6 +110,21 @@ VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
 
 BRKV = &0202            \ The address of the break vector
 
+save_lock = &0233       \ This flag indicates whether we should be asking for
+                        \ confirmation before saving or loading a commander
+                        \ file:
+                        \
+                        \   * 0 = last file operation was a save, or we just
+                        \         started a new game, so there are no unsaved
+                        \         changes (so ask for confirmation on saving)
+                        \
+                        \   * &FF = last file operation was a load, or we have
+                        \           just docked and have unsaved changes (so ask
+                        \           for confirmation on loading)
+                        \
+                        \ It shares a location with the IND2V+1 vector, which we
+                        \ do not use, so we can reuse the location
+
 X = 128                 \ The centre x-coordinate of the 256 x 192 space view
 Y = 96                  \ The centre y-coordinate of the 256 x 192 space view
 
@@ -136,7 +149,7 @@ VE = 0                  \ The obfuscation byte used to hide the extended tokens
 LL = 30                 \ The length of lines (in characters) of justified text
                         \ in the extended tokens system
 
-save_lock = &0233       \ AJD, shares location with IND2V+1
+LS% = &0CFF             \ The start of the descending ship line heap
 
 tube_r1s = &FEF8        \ AJD
 tube_r1d = &FEF9

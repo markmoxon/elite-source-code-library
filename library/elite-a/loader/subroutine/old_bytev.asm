@@ -1,19 +1,13 @@
 \ ******************************************************************************
 \
-\       Name: do_BYTEV
+\       Name: old_BYTEV
 \       Type: Subroutine
 \   Category: Loader
 \    Summary: AJD
 \
 \ ******************************************************************************
 
- \ trap BYTEV
+.old_BYTEV
 
-.do_BYTEV
-
- CMP #&8F \ ROM service request
- BNE old_BYTEV
- CPX #&F \ vector claim?
- BNE old_BYTEV
- JSR old_BYTEV
+ JMP &100 \ address modified by master set_up
 

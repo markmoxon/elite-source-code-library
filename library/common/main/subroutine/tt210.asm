@@ -154,7 +154,7 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
 
 ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
- JSR sell_yn            \ Call sell_yn to print a "SELL (Y/N)?" prompt and get a
+ JSR sell_yn            \ Call sell_yn to print a "Sell(Y/N)?" prompt and get a
                         \ number from the keyboard, which will be the number of
                         \ the item we want to sell, returning the number entered
                         \ in A and R, and setting the C flag if the number is

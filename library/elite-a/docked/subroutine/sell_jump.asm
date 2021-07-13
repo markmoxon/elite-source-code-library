@@ -17,8 +17,8 @@
  JSR sell_equip
  LDA ESCP
  BEQ sell_escape
- LDA #&70
- LDX #&1E
+ LDA #112
+ LDX #30
  JSR status_equip
 
 .sell_escape

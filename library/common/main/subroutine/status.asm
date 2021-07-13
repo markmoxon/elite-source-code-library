@@ -10,6 +10,14 @@ ELIF _ELECTRON_VERSION
 ENDIF
 \  Deep dive: Combat rank
 \
+IF _ELITE_A_VERSION
+\
+\ Other entry points:
+\
+\   sell_equip          Show the Sell Equipment screen, i.e. show a "Sell(Y/N)?"
+\                       prompt as we print each item of equipment
+\
+ENDIF
 \ ******************************************************************************
 
 IF _6502SP_VERSION OR _MASTER_VERSION \ Minor: The advanced versions have to use an extended token for printing "DOCKED" because the standard token has been repurposed compared to the cassette version
@@ -343,8 +351,11 @@ IF NOT(_ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA)
 ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
  LDA #18                \ Call status_equip with A set to recursive token 132
- JSR status_equip       \ ("{cr}{all caps}EQUIPMENT: {sentence case}") to
-                        \ show the equipment selling screen AJD
+ JSR status_equip       \ to print the next bit of the Status Mode screen:
+                        \
+                        \   EQUIPMENT:
+                        \
+                        \ followed by a newline and an indent of 8 characters
 
 ENDIF
 
@@ -372,26 +383,26 @@ ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 .sell_equip
 
  LDA CRGO               \ If we don't have an I.F.F. system fitted (i.e. CRGO is
- BEQ l_1b57             \ zero), skip the following three instructions
+ BEQ P%+9               \ zero), skip the following three instructions
 
  LDA #107               \ We do have an I.F.F. system fitted, so print recursive
- LDX #6                 \ token 107 ("I.F.F.SYSTEM")
- JSR status_equip       \ AJD
-
-.l_1b57
+ LDX #6                 \ token 107 ("I.F.F.SYSTEM"). If this is the Status Mode
+ JSR status_equip       \ or Inventory screen, print a newline and an indent of
+                        \ 8 characters, or if this is the Sell Equipment screen,
+                        \ show and process a sell prompt for the piece of
+                        \ equipment at LASER+X = LASER+6 = CRGO before printing
+                        \ a newline
 
 ELIF _ELITE_A_FLIGHT
 
 .sell_equip
 
  LDA CRGO               \ If we don't have an I.F.F. system fitted (i.e. CRGO is
- BEQ l_1ce7             \ zero), skip the following three instructions
+ BEQ P%+7               \ zero), skip the following two instructions
 
  LDA #107               \ We do have an I.F.F. system fitted, so print recursive
  JSR plf2               \ token 107 ("I.F.F.SYSTEM"), followed by a newline and
                         \ an indent of 6 characters
-
-.l_1ce7
 
 ENDIF
 
@@ -465,47 +476,68 @@ IF NOT(_ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA)
 
 ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
- LDA BST                \ AJD
- BEQ l_1b61
- LDA #&6F
- LDX #&19
- JSR status_equip
+ LDA BST                \ If we don't have fuel scoops fitted, skip the
+ BEQ P%+9               \ following three instructions
 
-.l_1b61
+ LDA #111               \ We do have a fuel scoops fitted, so print recursive
+ LDX #25                \ token 111 ("FUEL SCOOPS"). If this is the Status Mode
+ JSR status_equip       \ or Inventory screen, print a newline and an indent of
+                        \ 8 characters, or if this is the Sell Equipment screen,
+                        \ show and process a sell prompt for the piece of
+                        \ equipment at LASER+X = LASER+25 = BST before printing
+                        \ a newline
 
- LDA ECM
- BEQ l_1b6b
- LDA #&6C
- LDX #&18
- JSR status_equip
+ LDA ECM                \ If we don't have an E.C.M. fitted, skip the following
+ BEQ P%+9               \ three instructions
 
-.l_1b6b
+ LDA #108               \ We do have an E.C.M. fitted, so print recursive token
+ LDX #24                \ 108 ("E.C.M.SYSTEM"). If this is the Status Mode or
+ JSR status_equip       \ Inventory screen, print a newline and an indent of 8
+                        \ characters, or if this is the Sell Equipment screen,
+                        \ show and process a sell prompt for the piece of
+                        \ equipment at LASER+X = LASER+24 = ECM before printing
+                        \ a newline
 
- \LDA #&71
- \STA &96
- LDX #&1A
+\LDA #113               \ These instructions are commented out in the original
+\STA XX4                \ source
+
+ LDX #26                \ Set X = 26 so we now process equipment from LASER+26
+                        \ onwards (i.e. BOMB onwards), using X as a counter
+                        \ going from LASER+26 (BOMB) to LASER+29 (GHYP)
 
 .stqv
 
- STX CNT
- \TAY
- \LDX FRIN,Y
- LDY LASER,X
- BEQ l_1b78
- TXA
- CLC
- ADC #&57
- JSR status_equip
+ STX CNT                \ Store the X counter in CNT so we can retrieve it below
 
-.l_1b78
+\TAY                    \ These instructions are commented out in the original
+\LDX FRIN,Y             \ source
 
- \INC &96
- \LDA &96
- \CMP #&75
- LDX CNT
- INX
- CPX #&1E
- BCC stqv
+ LDY LASER,X            \ Fetch the equipment flag from LASER+X, and if we do not
+ BEQ P%+9               \ have that equipment fitted, skip the following four
+                        \ instructions to move onto the next piece of equipment
+
+ TXA                    \ Set A = X + 87
+ CLC                    \
+ ADC #87                \ so A is now a token number between 113 ("HYPERSPACE
+                        \ UNIT") and 116 ("GALACTIC HYPERSPACE ")
+
+ JSR status_equip       \ Print the recursive token in A. If this is the Status
+                        \ Mode or Inventory screen, print a newline and an
+                        \ indent of 8 characters, or if this is the Sell
+                        \ Equipment screen, show and process a sell prompt for
+                        \ the piece of equipment at LASER+X before printing a
+                        \ newline
+
+\INC XX4                \ These instructions are commented out in the original
+\LDA XX4                \ source
+\CMP #117
+
+ LDX CNT                \ Retrieve the X counter from CNT that we stored above
+
+ INX                    \ Increment the loop counter
+
+ CPX #30                \ Loop back to print the next piece of equipment until
+ BCC stqv               \ we have done LASER+26 (BOMB) to LASER+29 (GHYP)
 
 ENDIF
 
@@ -571,8 +603,9 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
 ELIF _ELITE_A_VERSION
 
- LDX CNT                \ Set Y = the laser power for view X
- LDY LASER,X
+ LDX CNT                \ Retrieve the view number from CNT that we stored above
+
+ LDY LASER,X            \ Set Y = the laser power for view X
 
  CPY new_beam           \ If the laser power for view X is not that of a beam
  BNE P%+4               \ laser when fitted to our current ship type, skip the
@@ -605,7 +638,12 @@ IF NOT(_ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA)
 
 ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
- JSR status_equip       \ AJD
+ JSR status_equip       \ Print the recursive token in A. If this is the Status
+                        \ Mode or Inventory screen, print a newline and an
+                        \ indent of 8 characters, or if this is the Sell
+                        \ Equipment screen, show and process a sell prompt for
+                        \ the piece of equipment at LASER+X before printing a
+                        \ newline
 
 ENDIF
 

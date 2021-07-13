@@ -3,7 +3,7 @@
 \       Name: sell_yn
 \       Type: Subroutine
 \   Category: Text
-\    Summary: Print a "SELL (Y/N)?" prompt and get a number from the keyboard
+\    Summary: Print a "Sell(Y/N)?" prompt and get a number from the keyboard
 \
 \ ------------------------------------------------------------------------------
 \

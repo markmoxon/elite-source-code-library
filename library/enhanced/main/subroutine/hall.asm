@@ -3,7 +3,7 @@
 \       Name: HALL
 \       Type: Subroutine
 \   Category: Ship hanger
-IF _DISC_DOCKED OR _ELITE_A_VERSION \ Comment
+IF _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Draw the ships in the ship hanger, then draw the hanger
 ELIF _6502SP_VERSION
 \    Summary: Draw the ships in the ship hanger, then draw the hanger by sending

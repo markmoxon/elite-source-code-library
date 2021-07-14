@@ -2,7 +2,7 @@
 \
 \       Name: stay_here
 \       Type: Subroutine
-\   Category: Buying ships
+\   Category: Market
 \    Summary: Pay docking fee and refresh prices AJD
 \
 \ ******************************************************************************
@@ -13,7 +13,9 @@
  LDY #&01
  JSR LCASH
  BCC stay_quit
- JSR cour_dock
+
+ JSR cour_dock          \ Update the current special cargo delivery mission
+
  JSR DORND
  STA QQ26
 

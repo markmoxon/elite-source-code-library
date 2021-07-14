@@ -10,6 +10,14 @@
 \ Equipment prices are stored as 10 * the actual value, so we can support prices
 \ with fractions of credits (0.1 Cr). This is used for the price of fuel only.
 \
+IF _ELITE_A_VERSION
+\ Different ships have different equipment prices (apart from fuel which is the
+\ same price for all ships). Each ship type has an offset that is used when
+\ accessing this table; the offset to the price table for our current ship is
+\ held in the new_costs variable, and the offset values for all the different
+\ ships we can buy are defined in the new_details table.
+\
+ENDIF
 \ ******************************************************************************
 
 .PRXS
@@ -35,22 +43,87 @@ ENDIF
 
 IF _ELITE_A_VERSION
 
- EQUW &0001
- \ 00 Cobra 3, Boa
- EQUW   250,  4000,  6000,  4000, 10000,  5250, 3000
- EQUW  5500, 15000, 15000, 50000, 30000,  2500
- \ 1A Adder, Cobra 1, Python
- EQUW   250,  2000,  4000,  2000,  4500,  3750, 2000
- EQUW  3750,  9000,  8000, 30000, 23000,  2500
- \ 34 Fer-de-Lance, Asp 2
- EQUW   250,  4000,  5000,  5000, 10000,  7000, 6000
- EQUW  4000, 25000, 10000, 40000, 50000,  2500
- \ 4E Monitor, Anaconda
- EQUW   250,  3000,  8000,  6000,  8000,  6500, 4500
- EQUW  8000, 19000, 20000, 60000, 25000,  2500
- \ 68 Moray, Ophidian
- EQUW   250,  1500,  3000,  3500,  7000,  4500, 2500
- EQUW  4500,  7000,  7000, 30000, 19000,  2500
+ EQUW 1                 \ 0  Fuel, calculated in EQSHP  140.0 Cr (full tank)
+
+                        \ Offset 0: Boa, Cobra Mk III
+
+ EQUW 250               \ 1  Missile                     25.0 Cr
+ EQUW 4000              \ 2  I.F.F. System              400.0 Cr
+ EQUW 6000              \ 3  E.C.M. System              600.0 Cr
+ EQUW 4000              \ 4  Extra Pulse Lasers         400.0 Cr
+ EQUW 10000             \ 5  Extra Beam Lasers         1000.0 Cr
+ EQUW 5250              \ 6  Fuel Scoops                525.0 Cr
+ EQUW 3000              \ 7  Escape Pod                 300.0 Cr
+ EQUW 5500              \ 8  Hyperspace Unit            550.0 Cr
+ EQUW 15000             \ 9  Energy Unit               1500.0 Cr
+ EQUW 15000             \ 10 Docking Computer          1500.0 Cr
+ EQUW 50000             \ 11 Galactic Hyperspace       5000.0 Cr
+ EQUW 30000             \ 12 Extra Military Lasers     3000.0 Cr
+ EQUW 2500              \ 13 Extra Mining Lasers        250.0 Cr
+
+                        \ Offset 26: Adder, Cobra Mk I, Python
+
+ EQUW 250               \ 1  Missile                     25.0 Cr
+ EQUW 2000              \ 2  I.F.F. System              200.0 Cr
+ EQUW 4000              \ 3  E.C.M. System              400.0 Cr
+ EQUW 2000              \ 4  Extra Pulse Lasers         200.0 Cr
+ EQUW 4500              \ 5  Extra Beam Lasers          450.0 Cr
+ EQUW 3750              \ 6  Fuel Scoops                375.0 Cr
+ EQUW 2000              \ 7  Escape Pod                 200.0 Cr
+ EQUW 3750              \ 8  Hyperspace Unit            375.0 Cr
+ EQUW 9000              \ 9  Energy Unit                900.0 Cr
+ EQUW 8000              \ 10 Docking Computer           800.0 Cr
+ EQUW 30000             \ 11 Galactic Hyperspace       3000.0 Cr
+ EQUW 23000             \ 12 Extra Military Lasers     2300.0 Cr
+ EQUW 2500              \ 13 Extra Mining Lasers        250.0 Cr
+
+                        \ Offset 52: Asp Mk II, Fer-de-Lance
+
+ EQUW 250               \ 1  Missile                     25.0 Cr
+ EQUW 4000              \ 2  I.F.F. System              400.0 Cr
+ EQUW 5000              \ 3  E.C.M. System              500.0 Cr
+ EQUW 5000              \ 4  Extra Pulse Lasers         500.0 Cr
+ EQUW 10000             \ 5  Extra Beam Lasers         1000.0 Cr
+ EQUW 7000              \ 6  Fuel Scoops                700.0 Cr
+ EQUW 6000              \ 7  Escape Pod                 600.0 Cr
+ EQUW 4000              \ 8  Hyperspace Unit            400.0 Cr
+ EQUW 25000             \ 9  Energy Unit               2500.0 Cr
+ EQUW 10000             \ 10 Docking Computer          1000.0 Cr
+ EQUW 40000             \ 11 Galactic Hyperspace       4000.0 Cr
+ EQUW 50000             \ 12 Extra Military Lasers     5000.0 Cr
+ EQUW 2500              \ 13 Extra Mining Lasers        250.0 Cr
+
+                        \ Offset 78: Anaconda, Monitor
+
+ EQUW 250               \ 1  Missile                     25.0 Cr
+ EQUW 3000              \ 2  I.F.F. System              300.0 Cr
+ EQUW 8000              \ 3  E.C.M. System              800.0 Cr
+ EQUW 6000              \ 4  Extra Pulse Lasers         600.0 Cr
+ EQUW 8000              \ 5  Extra Beam Lasers          800.0 Cr
+ EQUW 6500              \ 6  Fuel Scoops                650.0 Cr
+ EQUW 4500              \ 7  Escape Pod                 450.0 Cr
+ EQUW 8000              \ 8  Hyperspace Unit            800.0 Cr
+ EQUW 19000             \ 9  Energy Unit               1900.0 Cr
+ EQUW 20000             \ 10 Docking Computer          2000.0 Cr
+ EQUW 60000             \ 11 Galactic Hyperspace       6000.0 Cr
+ EQUW 25000             \ 12 Extra Military Lasers     2500.0 Cr
+ EQUW 2500              \ 13 Extra Mining Lasers        250.0 Cr
+
+                        \ Offset 104: Moray, Ophidian
+
+ EQUW 250               \ 1  Missile                     25.0 Cr
+ EQUW 1500              \ 2  I.F.F. System              150.0 Cr
+ EQUW 3000              \ 3  E.C.M. System              300.0 Cr
+ EQUW 3500              \ 4  Extra Pulse Lasers         350.0 Cr
+ EQUW 7000              \ 5  Extra Beam Lasers          700.0 Cr
+ EQUW 4500              \ 6  Fuel Scoops                450.0 Cr
+ EQUW 2500              \ 7  Escape Pod                 250.0 Cr
+ EQUW 4500              \ 8  Hyperspace Unit            450.0 Cr
+ EQUW 7000              \ 9  Energy Unit                700.0 Cr
+ EQUW 7000              \ 10 Docking Computer           700.0 Cr
+ EQUW 30000             \ 11 Galactic Hyperspace       3000.0 Cr
+ EQUW 19000             \ 12 Extra Military Lasers     1900.0 Cr
+ EQUW 2500              \ 13 Extra Mining Lasers        250.0 Cr
 
 ENDIF
 

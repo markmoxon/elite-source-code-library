@@ -3,7 +3,7 @@
 \       Name: cour_dock
 \       Type: Subroutine
 \   Category: Missions
-\    Summary: AJD
+\    Summary: Update the current special cargo delivery mission on docking
 \
 \ ******************************************************************************
 
@@ -14,7 +14,7 @@
  BEQ cour_quit          \ will be zero, so jump to cour_quit to return from the
                         \ subroutine
 
- LDA QQ0
+ LDA QQ0                \ AJD
  CMP cmdr_courx
  BNE cour_half
  LDA QQ1

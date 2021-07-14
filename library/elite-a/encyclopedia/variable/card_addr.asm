@@ -3,16 +3,38 @@
 \       Name: card_addr
 \       Type: Variable
 \   Category: Encyclopedia
-\    Summary: AJD
+\    Summary: Lookup table for the encyclopedia's ship cards
 \
 \ ******************************************************************************
 
 .card_addr
 
- EQUW adder, anaconda, asp_2, boa, bushmaster, chameleon, cobra_1
- EQUW cobra_3, coriolis, dodecagon, escape_pod
- EQUW fer_de_lance, gecko, ghavial
- EQUW iguana, krait, mamba, monitor, moray, ophidian, python
- EQUW shuttle, sidewinder, thargoid, thargon
- EQUW transporter, viper, worm
+ EQUW adder
+ EQUW anaconda
+ EQUW asp_2
+ EQUW boa
+ EQUW bushmaster
+ EQUW chameleon
+ EQUW cobra_1
+ EQUW cobra_3
+ EQUW coriolis
+ EQUW dodecagon
+ EQUW escape_pod
+ EQUW fer_de_lance
+ EQUW gecko
+ EQUW ghavial
+ EQUW iguana
+ EQUW krait
+ EQUW mamba
+ EQUW monitor
+ EQUW moray
+ EQUW ophidian
+ EQUW python
+ EQUW shuttle
+ EQUW sidewinder
+ EQUW thargoid
+ EQUW thargon
+ EQUW transporter
+ EQUW viper
+ EQUW worm
 

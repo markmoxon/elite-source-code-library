@@ -15,9 +15,13 @@
 
 IF _ELITE_A_VERSION
 
- LDA ENGY               \ AJD
- BNE rew_notgot
- DEC new_hold           \** NOT TRAPPED FOR NO SPACE
+ LDA ENGY               \ If we already have an energy unit fitted (i.e. ENGY is
+ BNE rew_notgot         \ non-zero), jump to rew_notgot to skip the following
+                        \ instruction
+
+ DEC new_hold           \ We're about to be given a special navy energy unit,
+                        \ which doesn't take up space in the hold, so decrement
+                        \ new_hold to reclaim the space for our old energy unit
 
 .rew_notgot
 

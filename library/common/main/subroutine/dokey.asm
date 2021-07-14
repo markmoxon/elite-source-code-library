@@ -3,7 +3,7 @@
 \       Name: DOKEY
 \       Type: Subroutine
 \   Category: Keyboard
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Comment
 \    Summary: Scan for the seven primary flight controls
 \  Deep dive: The key logger
 \             The docking computer

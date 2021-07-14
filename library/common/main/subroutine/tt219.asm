@@ -3,10 +3,13 @@
 \       Name: TT219
 \       Type: Subroutine
 \   Category: Market
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Show the Buy Cargo screen (red key f1)
 ELIF _ELECTRON_VERSION
 \    Summary: Show the Buy Cargo screen (FUNC-2)
+ELIF _ELITE_A_VERSION
+\    Summary: Show the Buy Cargo screen (red key f1) or Special Cargo screen
+\             (CTRL-f1)
 ENDIF
 \
 \ ------------------------------------------------------------------------------
@@ -55,10 +58,15 @@ ENDIF
 
 IF _ELITE_A_VERSION
 
- JSR CTRL               \ AJD
- BPL buy_ctrl
- JMP cour_buy
+ JSR CTRL               \ Scan the keyboard to see if CTRL is currently pressed,
+                        \ returning a negative value in A if it is
 
+ BPL buy_ctrl           \ If CTRL is not being pressed, jump to buy_ctrl to skip
+                        \ the next instruction
+
+ JMP cour_buy           \ CTRL-f1 is being pressed, so jump to cour_buy to show
+                        \ the Special Cargo screen, returning from the
+                        \ subroutine using a tail call
 .buy_ctrl
 
 ENDIF

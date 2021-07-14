@@ -7,7 +7,7 @@ ELIF _ELITE_A_6502SP_PARA
 ENDIF
 \       Type: Subroutine
 \   Category: Encyclopedia
-\    Summary: AJD
+\    Summary: Show the Encyclopedia screen
 \
 \ ------------------------------------------------------------------------------
 \
@@ -28,7 +28,7 @@ ELIF _ELITE_A_6502SP_PARA
 
 ENDIF
 
- LDX #&00
+ LDX #0                 \ AJD
  JSR menu
  CMP #&01
  BNE n_shipsag

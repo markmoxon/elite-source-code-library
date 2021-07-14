@@ -3,10 +3,13 @@
 \       Name: TT25
 \       Type: Subroutine
 \   Category: Universe
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Show the Data on System screen (red key f6)
 ELIF _ELECTRON_VERSION
 \    Summary: Show the Data on System screen (FUNC-7)
+ELIF _ELITE_A_VERSION
+\    Summary: Show the Data on System screen (red key f6) or Encyclopedia screen
+\             (CTRL-f6)
 ENDIF
 \  Deep dive: Generating system data
 \             Galaxy and system seeds
@@ -24,19 +27,31 @@ ENDIF
 
 IF _ELITE_A_DOCKED
 
- JSR CTRL               \ AJD
- BPL not_cyclop
- JMP encyclopedia
+ JSR CTRL               \ Scan the keyboard to see if CTRL is currently pressed,
+                        \ returning a negative value in A if it is
+
+ BPL not_cyclop         \ If CTRL is not being pressed, jump to not_cyclop to
+                        \ skip the next instruction
+
+ JMP encyclopedia       \ CTRL-f6 is being pressed, so jump to encyclopedia to
+                        \ load and run the encyclopedia code
 
 .not_cyclop
 
 ELIF _ELITE_A_6502SP_PARA
 
- JSR CTRL               \ AJD
- BPL not_cyclop
- LDA dockedp
- BNE not_cyclop
- JMP encyclopedia
+ JSR CTRL               \ Scan the keyboard to see if CTRL is currently pressed,
+                        \ returning a negative value in A if it is
+
+ BPL not_cyclop         \ If CTRL is not being pressed, jump to not_cyclop to
+                        \ skip the next instruction
+
+ LDA dockedp            \ If dockedp is non-zero, then we are not docked and
+ BNE not_cyclop         \ can't show the encyclopedia, so jump to not_cyclop to
+                        \ skip the following instruction
+
+ JMP encyclopedia       \ CTRL-f6 is being pressed, so jump to encyclopedia to
+                        \ show the Encyclopedia screen
 
 .not_cyclop
 
@@ -411,7 +426,9 @@ ELIF _ELITE_A_ENCYCLOPEDIA
                         \ routine, which calls TT111 to populate ZZ before
                         \ calling TT25 (this routine)
 
- JMP PD1                \ AJD
+ JMP PD1                \ Jump to PD1 to print the standard "goat soup" system
+                        \ description without checking for overrides, returning
+                        \ from the subroutine using a tail call
 
 ENDIF
 

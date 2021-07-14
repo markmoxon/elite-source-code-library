@@ -111,7 +111,7 @@
 
  STX cmdr_type          \ Set the current ship type in cmdr_type to X
 
- JSR n_load             \ Call n_load to load the blueprint for the new ship
+ JSR n_load             \ Call n_load to load the details block for the new ship
                         \ type
 
  LDA new_range

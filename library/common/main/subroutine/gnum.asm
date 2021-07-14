@@ -103,7 +103,7 @@ ENDIF
 
  STA Q                  \ Store the key pressed in Q
 
- SEC                    \ Subtract ASCII '0' from the key pressed, to leave the
+ SEC                    \ Subtract ASCII "0" from the key pressed, to leave the
  SBC #'0'               \ numeric value of the key in A (if it was a number key)
 
  BCC OUT                \ If A < 0, jump to OUT to return from the subroutine
@@ -118,8 +118,10 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA)
 
 ELIF _ELITE_A_ENCYCLOPEDIA
 
- CMP #10                \ If A >= 10, jump to buy_invnt to AJD
- BCS buy_invnt
+ CMP #10                \ If A >= 10, jump to buy_invnt to decide which screen
+ BCS buy_invnt          \ to display, as the key pressed was a letter or other
+                        \ non-digit and is greater than ASCII "9" (so it could
+                        \ be a red function key, for example)
 
 ENDIF
 

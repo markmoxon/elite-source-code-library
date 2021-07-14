@@ -3,7 +3,8 @@
 \       Name: CTOK
 \       Type: Macro
 \   Category: Text
-\    Summary: Macro definition for recursive tokens in encyclopedia ship cards
+\    Summary: Macro definition for recursive tokens in the encyclopedia's ship
+\             cards
 \
 \ ------------------------------------------------------------------------------
 \

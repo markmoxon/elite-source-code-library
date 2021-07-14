@@ -3,7 +3,7 @@
 \       Name: cour_buy
 \       Type: Subroutine
 \   Category: Missions
-\    Summary: AJD
+\    Summary: Show the Special Cargo screen (CTRL-f1)
 \
 \ ******************************************************************************
 
@@ -20,10 +20,12 @@
 
 .cour_start
 
- LDA #&0A
+ LDA #&0A               \ AJD
  STA XC
- LDA #&6F
- JSR DETOK
+
+ LDA #111               \ Print extended recursive token 111 ("{all caps}SPECIAL
+ JSR DETOK              \ CARGO")
+
  JSR NLIN4
 
 IF _ELITE_A_DOCKED

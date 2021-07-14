@@ -290,7 +290,7 @@ ELIF _CASSETTE_VERSION OR _ELECTRON_VERSION
 
 ELIF _ELITE_A_VERSION
 
-JSR GTNMEW              \ Call GTNMEW to fetch the name of the commander file
+ JSR GTNMEW             \ Call GTNMEW to fetch the name of the commander file
                         \ to save (including drive number and directory) into
                         \ INWK
 

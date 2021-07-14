@@ -3,7 +3,7 @@
 \       Name: n_load
 \       Type: Subroutine
 \   Category: Buying ships
-\    Summary: Load the blueprint for the current ship type
+\    Summary: Load the details block for the current ship type
 \
 \ ******************************************************************************
 

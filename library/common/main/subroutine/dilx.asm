@@ -152,7 +152,9 @@ ELIF _ELITE_A_DOCKED
 
  LDA K+1                \ Set A to K+1, the "low value" colour to use
 
- EQUB &2C               \ AJD
+ EQUB &2C               \ Skip the next instruction by turning it into
+                        \ &2C &A5 &40, or BIT &40A5, which does nothing apart
+                        \ from affect the flags
 
 .DL30
 
@@ -170,7 +172,9 @@ ELIF _ELITE_A_6502SP_PARA
 
  LDA K+1                \ Set A to K+1, the "low value" colour to use
 
- EQUB &2C               \ AJD
+ EQUB &2C               \ Skip the next instruction by turning it into
+                        \ &2C &A5 &40, or BIT &40A5, which does nothing apart
+                        \ from affect the flags
 
 .DL30
 

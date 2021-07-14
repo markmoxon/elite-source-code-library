@@ -3,18 +3,14 @@
 \       Name: new_offsets
 \       Type: Variable
 \   Category: Buying ships
-\    Summary: AJD
+\    Summary: Table of offsets, measured from new_ships, for each ship's details
+\             block
 \
 \ ******************************************************************************
 
 .new_offsets
 
- EQUB   0,  13,  26,  39,  52,  65,  78,  91
- EQUB 104, 117, 130, 143, 156, 169, 182 \, 195
-
- \ Name
- \ Price
- \ Pulse, Beam, Military, Mining Lasers, Mounts, Missiles
- \ Shields, Energy, Speed, Hold, Range, Costs
- \ Manouvre-h, Manoevre-l \, Spare, Spare
+FOR I%, 0, 14
+  EQUB I% * 13          \ Offset of the 13-byte details block for ship I%
+NEXT
 

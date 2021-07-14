@@ -159,7 +159,7 @@ ENDIF
  JSR TT217              \ Scan the keyboard until a key is pressed, and return
                         \ the key's ASCII code in A (and X)
 
- SEC                    \ Subtract ASCII '0' from the key pressed, to leave the
+ SEC                    \ Subtract ASCII "0" from the key pressed, to leave the
  SBC #'0'               \ numeric value of the key in A (if it was a number key)
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor

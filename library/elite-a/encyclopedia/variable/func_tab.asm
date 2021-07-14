@@ -3,7 +3,7 @@
 \       Name: func_tab
 \       Type: Variable
 \   Category: Keyboard
-\    Summary: AJD
+\    Summary: Lookup table for internal numbers of red function keys
 \
 \ ******************************************************************************
 

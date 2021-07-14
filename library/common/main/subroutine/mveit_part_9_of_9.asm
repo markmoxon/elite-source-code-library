@@ -19,8 +19,9 @@
 
 IF _ELITE_A_6502SP_PARA
 
- BIT dockedp            \ AJD
- BPL l_noradar
+ BIT dockedp            \ If bit 7 of dockedp is clear, then we are docked, so
+ BPL l_noradar          \ jump to l_noradar to return from the subroutine as the
+                        \ scanner is not being used
 
 ENDIF
 

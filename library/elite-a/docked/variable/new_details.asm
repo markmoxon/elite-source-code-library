@@ -9,95 +9,376 @@
 
 .new_details
 
-\ new_pulse, new_beam, new_military, new_mining, new_mounts, new_missiles
-\ new_shields, new_energy, new_speed, new_hold, new_range, new_costs
-\ new_max \ new_min, new_space
+                        \ Adder
 
- EQUB &0E, &8E, &92, &19, &02, &02 \ adder
- EQUB &04, &01,  36, &09,  60, &1A
- EQUB &DF \, &21, &05, &00
+ EQUB 14                \ Pulse laser power
+ EQUB 142               \ Beam laser power
+ EQUB 146               \ Military laser power
+ EQUB 25                \ Mining laser power
+ EQUB 2                 \ Laser mounts
+ EQUB 2                 \ Maximum missile count
+ EQUB 4                 \ Shields
+ EQUB 1                 \ Maximum energy
+ EQUB 36                \ Maximum energy
+ EQUB 9                 \ Cargo hold capacity
+ EQUB 60                \ Hyperspace range
+ EQUB 2 * 13            \ Equipment prices offset
+ EQUB 223               \ Maximum roll/pitch rate
+\EQUB 33                \ Minimum roll/pitch rate
+\EQUB 5                 \ Not used (new_space)
+\EQUB 0                 \ Not used
 
- EQUB &0E, &8F, &93, &19, &04, &03 \ gecko
- EQUB &05, &01,  45, &0A,  70, &1A
- EQUB &EF \, &11, &06, &00
+                        \ Gecko
 
- EQUB &10, &8F, &96, &19, &04, &03 \ moray
- EQUB &06, &01,  38, &0C,  80, &68
- EQUB &EF \, &11, &07, &00
+ EQUB 14                \ Pulse laser power
+ EQUB 143               \ Beam laser power
+ EQUB 147               \ Military laser power
+ EQUB 25                \ Mining laser power
+ EQUB 4                 \ Laser mounts
+ EQUB 3                 \ Maximum missile count
+ EQUB 5                 \ Shields
+ EQUB 1                 \ Maximum energy
+ EQUB 45                \ Maximum speed
+ EQUB 10                \ Cargo hold capacity
+ EQUB 70                \ Hyperspace range
+ EQUB 2 * 13            \ Equipment prices offset
+ EQUB 239               \ Maximum roll/pitch rate
+\EQUB 17                \ Minimum roll/pitch rate
+\EQUB 6                 \ Not used (new_space)
+\EQUB 0                 \ Not used
 
- EQUB &0E, &8E, &94, &19, &04, &04 \ cobra 1
- EQUB &05, &01,  39, &0F,  60, &1A
- EQUB &CF \, &31, &08, &00
+                        \ Moray
 
- EQUB &0E, &8E, &94, &19, &04, &04 \ iguana
- EQUB &07, &01,  50, &16,  75, &00
- EQUB &DF \, &21, &08, &00
+ EQUB 16                \ Pulse laser power
+ EQUB 143               \ Beam laser power
+ EQUB 150               \ Military laser power
+ EQUB 25                \ Mining laser power
+ EQUB 4                 \ Laser mounts
+ EQUB 3                 \ Maximum missile count
+ EQUB 6                 \ Shields
+ EQUB 1                 \ Maximum energy
+ EQUB 38                \ Maximum speed
+ EQUB 12                \ Cargo hold capacity
+ EQUB 80                \ Hyperspace range
+ EQUB 8 * 13            \ Equipment prices offset
+ EQUB 239               \ Maximum roll/pitch rate
+\EQUB 17                \ Minimum roll/pitch rate
+\EQUB 7                 \ Not used (new_space)
+\EQUB 0                 \ Not used
 
- EQUB &0D, &8D, &90, &0C, &01, &03 \ ophidian
- EQUB &04, &01,  51, &19,  70, &68
- EQUB &FF \, &01, &06, &00
+                        \ Cobra Mk I
 
- EQUB &10, &8F, &97, &32, &02, &04 \ chameleon
- EQUB &08, &01,  43, &24,  80, &68
- EQUB &DF \, &21, &05, &00
+ EQUB 14                \ Pulse laser power
+ EQUB 142               \ Beam laser power
+ EQUB 148               \ Military laser power
+ EQUB 25                \ Mining laser power
+ EQUB 4                 \ Laser mounts
+ EQUB 4                 \ Maximum missile count
+ EQUB 5                 \ Shields
+ EQUB 1                 \ Maximum energy
+ EQUB 39                \ Maximum speed
+ EQUB 15                \ Cargo hold capacity
+ EQUB 60                \ Hyperspace range
+ EQUB 2 * 13            \ Equipment prices offset
+ EQUB 207               \ Maximum roll/pitch rate
+\EQUB 49                \ Minimum roll/pitch rate
+\EQUB 8                 \ Not used (new_space)
+\EQUB 0                 \ Not used
 
- EQUB &12, &8F, &98, &32, &04, &05 \ cobra 3
- EQUB &07, &01,  42, &2B,  70, &00
- EQUB &EF \, &11, &0A, &00
+                        \ Iguana
+
+ EQUB 14                \ Pulse laser power
+ EQUB 142               \ Beam laser power
+ EQUB 148               \ Military laser power
+ EQUB 25                \ Mining laser power
+ EQUB 4                 \ Laser mounts
+ EQUB 4                 \ Maximum missile count
+ EQUB 7                 \ Shields
+ EQUB 1                 \ Maximum energy
+ EQUB 50                \ Maximum speed
+ EQUB 22                \ Cargo hold capacity
+ EQUB 75                \ Hyperspace range
+ EQUB 0 * 13            \ Equipment prices offset
+ EQUB 223               \ Maximum roll/pitch rate
+\EQUB 33                \ Minimum roll/pitch rate
+\EQUB 8                 \ Not used (new_space)
+\EQUB 0                 \ Not used
+
+                        \ Ophidian
+
+ EQUB 13                \ Pulse laser power
+ EQUB 141               \ Beam laser power
+ EQUB 144               \ Military laser power
+ EQUB 12                \ Mining laser power
+ EQUB 1                 \ Laser mounts
+ EQUB 3                 \ Maximum missile count
+ EQUB 4                 \ Shields
+ EQUB 1                 \ Maximum energy
+ EQUB 51                \ Maximum speed
+ EQUB 25                \ Cargo hold capacity
+ EQUB 70                \ Hyperspace range
+ EQUB 8 * 13            \ Equipment prices offset
+ EQUB 255               \ Maximum roll/pitch rate
+\EQUB 1                 \ Minimum roll/pitch rate
+\EQUB 6                 \ Not used (new_space)
+\EQUB 0                 \ Not used
+
+                        \ Chameleon
+
+ EQUB 16                \ Pulse laser power
+ EQUB 143               \ Beam laser power
+ EQUB 151               \ Military laser power
+ EQUB 50                \ Mining laser power
+ EQUB 2                 \ Laser mounts
+ EQUB 4                 \ Maximum missile count
+ EQUB 8                 \ Shields
+ EQUB 1                 \ Maximum energy
+ EQUB 43                \ Maximum speed
+ EQUB 36                \ Cargo hold capacity
+ EQUB 80                \ Hyperspace range
+ EQUB 8 * 13            \ Equipment prices offset
+ EQUB 223               \ Maximum roll/pitch rate
+\EQUB 33                \ Minimum roll/pitch rate
+\EQUB 5                 \ Not used (new_space)
+\EQUB 0                 \ Not used
+
+                        \ Cobra Mk III
+
+ EQUB 18                \ Pulse laser power
+ EQUB 143               \ Beam laser power
+ EQUB 152               \ Military laser power
+ EQUB 50                \ Mining laser power
+ EQUB 4                 \ Laser mounts
+ EQUB 5                 \ Maximum missile count
+ EQUB 7                 \ Shields
+ EQUB 1                 \ Maximum energy
+ EQUB 42                \ Maximum speed
+ EQUB 43                \ Cargo hold capacity
+ EQUB 70                \ Hyperspace range
+ EQUB 0 * 13            \ Equipment prices offset
+ EQUB 239               \ Maximum roll/pitch rate
+\EQUB 17                \ Minimum roll/pitch rate
+\EQUB 10                \ Not used (new_space)
+\EQUB 0                 \ Not used
 
 IF _SOURCE_DISC
 
- EQUB &11, &90, &99, &32, &04, &04 \ ghavial
- EQUB &09, &01,  37, &38,  80, &00
- EQUB &CF \, &31, &09, &00
+                        \ Ghavial
 
- EQUB &12, &92, &9C, &32, &04, &04 \ fer-de-lance
- EQUB &08, &02,  45, &0A,  85, &34
- EQUB &DF \, &21, &09, &00
+ EQUB 17                \ Pulse laser power
+ EQUB 144               \ Beam laser power
+ EQUB 153               \ Military laser power
+ EQUB 50                \ Mining laser power
+ EQUB 4                 \ Laser mounts
+ EQUB 4                 \ Maximum missile count
+ EQUB 9                 \ Shields
+ EQUB 1                 \ Maximum energy
+ EQUB 37                \ Maximum speed
+ EQUB 56                \ Cargo hold capacity
+ EQUB 80                \ Hyperspace range
+ EQUB 0 * 13            \ Equipment prices offset
+ EQUB 207               \ Maximum roll/pitch rate
+\EQUB 49                \ Minimum roll/pitch rate
+\EQUB 9                 \ Not used (new_space)
+\EQUB 0                 \ Not used
+
+                        \ Fer-de-lance
+
+ EQUB 18                \ Pulse laser power
+ EQUB 146               \ Beam laser power
+ EQUB 156               \ Military laser power
+ EQUB 50                \ Mining laser power
+ EQUB 4                 \ Laser mounts
+ EQUB 4                 \ Maximum missile count
+ EQUB 8                 \ Shields
+ EQUB 2                 \ Maximum energy
+ EQUB 45                \ Maximum speed
+ EQUB 10                \ Cargo hold capacity
+ EQUB 85                \ Hyperspace range
+ EQUB 4 * 13            \ Equipment prices offset
+ EQUB 223               \ Maximum roll/pitch rate
+\EQUB 33                \ Minimum roll/pitch rate
+\EQUB 9                 \ Not used (new_space)
+\EQUB 0                 \ Not used
 
 ELIF _RELEASED
 
- EQUB &12, &92, &9C, &32, &04, &04 \ fer-de-lance
- EQUB &08, &02,  45, &0A,  85, &34
- EQUB &DF \, &21, &09, &00
+                        \ Fer-de-lance
 
- EQUB &11, &90, &99, &32, &04, &04 \ ghavial
- EQUB &09, &01,  37, &38,  80, &00
- EQUB &CF \, &31, &09, &00
+ EQUB 18                \ Pulse laser power
+ EQUB 146               \ Beam laser power
+ EQUB 156               \ Military laser power
+ EQUB 50                \ Mining laser power
+ EQUB 4                 \ Laser mounts
+ EQUB 4                 \ Maximum missile count
+ EQUB 8                 \ Shields
+ EQUB 2                 \ Maximum energy
+ EQUB 45                \ Maximum speed
+ EQUB 10                \ Cargo hold capacity
+ EQUB 85                \ Hyperspace range
+ EQUB 4 * 13            \ Equipment prices offset
+ EQUB 223               \ Maximum roll/pitch rate
+\EQUB 33                \ Minimum roll/pitch rate
+\EQUB 9                 \ Not used (new_space)
+\EQUB 0                 \ Not used
+
+                        \ Ghavial
+
+ EQUB 17                \ Pulse laser power
+ EQUB 144               \ Beam laser power
+ EQUB 153               \ Military laser power
+ EQUB 50                \ Mining laser power
+ EQUB 4                 \ Laser mounts
+ EQUB 4                 \ Maximum missile count
+ EQUB 9                 \ Shields
+ EQUB 1                 \ Maximum energy
+ EQUB 37                \ Maximum speed
+ EQUB 56                \ Cargo hold capacity
+ EQUB 80                \ Hyperspace range
+ EQUB 0 * 13            \ Equipment prices offset
+ EQUB 207               \ Maximum roll/pitch rate
+\EQUB 49                \ Minimum roll/pitch rate
+\EQUB 9                 \ Not used (new_space)
+\EQUB 0                 \ Not used
 
 ENDIF
 
- EQUB &18, &93, &9C, &32, &04, &09 \ monitor
- EQUB &0A, &01,  24, &52, 110, &4E
- EQUB &BF \, &41, &0C, &00
+                        \ Monitor
 
- EQUB &18, &92, &9B, &32, &04, &05 \ python
- EQUB &0B, &01,  30, &6B,  80, &1A
- EQUB &AF \, &51, &09, &00
+ EQUB 24                \ Pulse laser power
+ EQUB 147               \ Beam laser power
+ EQUB 156               \ Military laser power
+ EQUB 50                \ Mining laser power
+ EQUB 4                 \ Laser mounts
+ EQUB 9                 \ Maximum missile count
+ EQUB 10                \ Shields
+ EQUB 1                 \ Maximum energy
+ EQUB 24                \ Maximum speed
+ EQUB 82                \ Cargo hold capacity
+ EQUB 110               \ Hyperspace range
+ EQUB 6 * 13            \ Equipment prices offset
+ EQUB 191               \ Maximum roll/pitch rate
+\EQUB 65                \ Minimum roll/pitch rate
+\EQUB 12                \ Not used (new_space)
+\EQUB 0                 \ Not used
 
- EQUB &14, &8E, &98, &32, &02, &07 \ boa
- EQUB &0A, &01,  36, &85,  90, &00
- EQUB &BF \, &41, &0A, &00
+                        \ Python
+
+ EQUB 24                \ Pulse laser power
+ EQUB 146               \ Beam laser power
+ EQUB 155               \ Military laser power
+ EQUB 50                \ Mining laser power
+ EQUB 4                 \ Laser mounts
+ EQUB 5                 \ Maximum missile count
+ EQUB 11                \ Shields
+ EQUB 1                 \ Maximum energy
+ EQUB 30                \ Maximum speed
+ EQUB 107               \ Cargo hold capacity
+ EQUB 80                \ Hyperspace range
+ EQUB 2 * 13            \ Equipment prices offset
+ EQUB 175               \ Maximum roll/pitch rate
+\EQUB 81                \ Minimum roll/pitch rate
+\EQUB 9                 \ Not used (new_space)
+\EQUB 0                 \ Not used
+
+                        \ Boa
+
+ EQUB 20                \ Pulse laser power
+ EQUB 142               \ Beam laser power
+ EQUB 152               \ Military laser power
+ EQUB 50                \ Mining laser power
+ EQUB 2                 \ Laser mounts
+ EQUB 7                 \ Maximum missile count
+ EQUB 10                \ Shields
+ EQUB 1                 \ Maximum energy
+ EQUB 36                \ Maximum speed
+ EQUB 133               \ Cargo hold capacity
+ EQUB 90                \ Hyperspace range
+ EQUB 0 * 13            \ Equipment prices offset
+ EQUB 191               \ Maximum roll/pitch rate
+\EQUB 65                \ Minimum roll/pitch rate
+\EQUB 10                \ Not used (new_space)
+\EQUB 0                 \ Not used
 
 IF _SOURCE_DISC
 
- EQUB &1C, &90, &7F, &32, &04, &11 \ anaconda
- EQUB &0D, &01,  21, &FE, 100, &4E
- EQUB &AF \, &51, &0C, &00
+                        \ Anaconda
 
- EQUB &10, &91, &9F, &0C, &01, &02 \ asp 2
- EQUB &0A, &01,  60, &07, 125, &34
- EQUB &DF \, &21, &07, &00
+ EQUB 28                \ Pulse laser power
+ EQUB 144               \ Beam laser power
+ EQUB 127               \ Military laser power
+ EQUB 50                \ Mining laser power
+ EQUB 4                 \ Laser mounts
+ EQUB 17                \ Maximum missile count
+ EQUB 13                \ Shields
+ EQUB 1                 \ Maximum energy
+ EQUB 21                \ Maximum speed
+ EQUB 254               \ Cargo hold capacity
+ EQUB 100               \ Hyperspace range
+ EQUB 6 * 13            \ Equipment prices offset
+ EQUB 175               \ Maximum roll/pitch rate
+\EQUB 81                \ Minimum roll/pitch rate
+\EQUB 12                \ Not used (new_space)
+\EQUB 0                 \ Not used
+
+                        \ Asp Mk II
+
+ EQUB 16                \ Pulse laser power
+ EQUB 145               \ Beam laser power
+ EQUB 159               \ Military laser power
+ EQUB 12                \ Mining laser power
+ EQUB 1                 \ Laser mounts
+ EQUB 2                 \ Maximum missile count
+ EQUB 10                \ Shields
+ EQUB 1                 \ Maximum energy
+ EQUB 60                \ Maximum speed
+ EQUB 7                 \ Cargo hold capacity
+ EQUB 125               \ Hyperspace range
+ EQUB 4 * 13            \ Equipment prices offset
+ EQUB 223               \ Maximum roll/pitch rate
+\EQUB 33                \ Minimum roll/pitch rate
+\EQUB 7                 \ Not used (new_space)
+\EQUB 0                 \ Not used
 
 ELIF _RELEASED
 
- EQUB &10, &91, &9F, &0C, &01, &02 \ asp 2
- EQUB &0A, &01,  60, &07, 125, &34
- EQUB &DF \, &21, &07, &00
+                        \ Asp Mk II
 
- EQUB &1C, &90, &7F, &32, &04, &11 \ anaconda
- EQUB &0D, &01,  21, &FE, 100, &4E
- EQUB &AF \, &51, &0C, &00
+ EQUB 16                \ Pulse laser power
+ EQUB 145               \ Beam laser power
+ EQUB 159               \ Military laser power
+ EQUB 12                \ Mining laser power
+ EQUB 1                 \ Laser mounts
+ EQUB 2                 \ Maximum missile count
+ EQUB 10                \ Shields
+ EQUB 1                 \ Maximum energy
+ EQUB 60                \ Maximum speed
+ EQUB 7                 \ Cargo hold capacity
+ EQUB 125               \ Hyperspace range
+ EQUB 4 * 13            \ Equipment prices offset
+ EQUB 223               \ Maximum roll/pitch rate
+\EQUB 33                \ Minimum roll/pitch rate
+\EQUB 7                 \ Not used (new_space)
+\EQUB 0                 \ Not used
+
+                        \ Anaconda
+
+ EQUB 28                \ Pulse laser power
+ EQUB 144               \ Beam laser power
+ EQUB 127               \ Military laser power
+ EQUB 50                \ Mining laser power
+ EQUB 4                 \ Laser mounts
+ EQUB 17                \ Maximum missile count
+ EQUB 13                \ Shields
+ EQUB 1                 \ Maximum energy
+ EQUB 21                \ Maximum speed
+ EQUB 254               \ Cargo hold capacity
+ EQUB 100               \ Hyperspace range
+ EQUB 6 * 13            \ Equipment prices offset
+ EQUB 175               \ Maximum roll/pitch rate
+\EQUB 81                \ Minimum roll/pitch rate
+\EQUB 12                \ Not used (new_space)
+\EQUB 0                 \ Not used
 
 ENDIF
 

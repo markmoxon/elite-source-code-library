@@ -132,13 +132,6 @@ ENDIF
                         \ and draw a horizontal line at pixel row 19 to box
                         \ in the title
 
-IF _ELITE_A_6502SP_PARA
-
- BIT dockedp            \ AJD
- BPL stat_dock
-
-ENDIF
-
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
  LDA #15                \ Set A to token 129 ("{sentence case}DOCKED")
@@ -153,6 +146,12 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDY QQ12               \ Fetch the docked status from QQ12, and if we are
  BNE wearedocked        \ docked, jump to wearedocked
+
+ELIF _ELITE_A_6502SP_PARA
+
+ BIT dockedp            \ If bit 7 of dockedp is clear, then we are docked, so
+ BPL stat_dock          \ jump to stat_dock to print "Docked" for our ship's
+                        \ condition
 
 ENDIF
 
@@ -219,7 +218,9 @@ ENDIF
 
 IF _ELITE_A_6502SP_PARA
 
- JMP stat_legal         \ AJD
+ JMP stat_legal         \ Jump to stat_legal to skip the following, as we are
+                        \ not docked and have already printed the correct
+                        \ in-flight status
 
 .stat_dock
 

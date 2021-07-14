@@ -100,7 +100,7 @@ ELIF _ELECTRON_VERSION
 ELIF _ELITE_A_ENCYCLOPEDIA
 
  CMP #f8                \ If red key f8 was pressed, jump to info_menu to show
- BNE P%+5               \ the encyclopedia menu, returning from the subroutine
+ BNE P%+5               \ the Encyclopedia screen, returning from the subroutine
  JMP info_menu          \ using a tail call
 
  CMP #f4                \ If red key f4 was pressed, jump to TT22 to show the
@@ -189,13 +189,13 @@ ELIF _ELECTRON_VERSION
 ELIF _ELITE_A_ENCYCLOPEDIA
 
  CMP #f9                \ If red key f9 was pressed, jump to info_menu to show
- BNE not_invnt          \ the encyclopedia menu, returning from the subroutine
+ BNE not_invnt          \ the Encyclopedia screen, returning from the subroutine
  JMP info_menu          \ using a tail call
 
 .not_invnt
 
  CMP #f7                \ If red key f7 was pressed, jump to info_menu to show
- BNE not_price          \ the encyclopedia menu, returning from the subroutine
+ BNE not_price          \ the Encyclopedia screen, returning from the subroutine
  JMP info_menu          \ using a tail call
 
 .not_price
@@ -416,21 +416,21 @@ ELIF _MASTER_VERSION
 
 ELIF _ELITE_A_ENCYCLOPEDIA
 
- CMP #f0                \ AJD
- BEQ jump_menu
+ CMP #f0                \ If red key f0 was pressed, jump to jump_menu to show
+ BEQ jump_menu          \ the Encyclopedia screen
 
- CMP #f1
- BEQ jump_menu
+ CMP #f1                \ If red key f1 was pressed, jump to jump_menu to show
+ BEQ jump_menu          \ the Encyclopedia screen
 
- CMP #f2
- BEQ jump_menu
+ CMP #f2                \ If red key f2 was pressed, jump to jump_menu to show
+ BEQ jump_menu          \ the Encyclopedia screen
 
- CMP #f3
- BNE LABEL_3
+ CMP #f3                \ If red key f3 was not pressed, jump to LABEL_3 to
+ BNE LABEL_3            \ skip the following and keep checking for other keys
 
 .jump_menu
 
- JMP info_menu
+ JMP info_menu          \ Jump to info_menu to show the Encyclopedia screen
 
 ENDIF
 
@@ -890,8 +890,9 @@ IF _ELITE_A_6502SP_PARA
 
 .ee2
 
- BIT dockedp            \ AJD
- BMI flying
+ BIT dockedp            \ If bit 7 of dockedp is set, then we are not docked, so
+ BMI flying             \ jump to flying
+
  CMP #&20
  BNE fvw
  JSR CTRL

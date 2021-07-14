@@ -14,5 +14,5 @@
  JSR RES2               \ Reset a number of flight variables and workspaces
 
  JMP BAY                \ Go to the docking bay (i.e. show the Encyclopedia
-                        \ Galactica menu screen)
+                        \ screen)
 

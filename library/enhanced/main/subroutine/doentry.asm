@@ -101,7 +101,7 @@ ENDIF
 
 IF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
- JSR cour_dock          \ AJD
+ JSR cour_dock          \ Update the current special cargo delivery mission
 
 ENDIF
 

@@ -49,7 +49,7 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA)
  EQUW PAUSE2            \ Token 24: Wait for a key press
  EQUW BRIS              \ Token 25: Show incoming message screen, wait 2 seconds
 ELIF _ELITE_A_ENCYCLOPEDIA
- EQUW clr_vdustat       \ Token 24: AJD
+ EQUW clr_vdustat       \ Token 24: Switch to standard tokens in lower case
  EQUW DASC              \ Token 25: Unused
 ENDIF
  EQUW MT26              \ Token 26: Fetch line input from keyboard (filename)

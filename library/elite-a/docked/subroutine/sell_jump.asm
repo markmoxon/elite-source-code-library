@@ -2,14 +2,14 @@
 \
 \       Name: sell_jump
 \       Type: Subroutine
-\   Category: Buying ships
-\    Summary: AJD
+\   Category: Equipment
+\    Summary: Show the Sell Equipment screen (CTRL-f2)
 \
 \ ******************************************************************************
 
 .sell_jump
 
- INC XC
+ INC XC                 \ AJD
  LDA #&CF
  JSR NLIN3
  JSR TT69

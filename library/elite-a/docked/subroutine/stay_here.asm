@@ -3,73 +3,39 @@
 \       Name: stay_here
 \       Type: Subroutine
 \   Category: Market
-\    Summary: Pay docking fee and refresh prices AJD
+\    Summary: Pay a docking fee and refresh the system's market prices
 \
 \ ******************************************************************************
 
 .stay_here
 
- LDX #&F4
- LDY #&01
- JSR LCASH
- BCC stay_quit
+ LDX #&F4               \ It costs 50.0 Cr to refresh the station's market
+ LDY #&01               \ prices, which is represented as a value of 500, so
+                        \ this sets (Y X) = &1F4 = 500
+
+ JSR LCASH              \ Subtract (Y X) cash from the cash pot, but only if
+                        \ we have enough cash
+
+ BCC stay_quit          \ If the C flag is clear then we did not have enough
+                        \ cash for the transaction, so jump to stay_quit to
+                        \ return from the subroutine without refreshing the
+                        \ market prices
 
  JSR cour_dock          \ Update the current special cargo delivery mission
 
- JSR DORND
- STA QQ26
+IF _ELITE_A_6502SP_PARA
 
-IF _ELITE_A_DOCKED
+ JSR DORND              \ Set A and X to random numbers
 
- LDX #&00
- STX XX4
+ STA QQ26               \ Set QQ26 to the random byte that's used in the market
+                        \ calculations
 
-.d_31d8
-
- LDA QQ23+1,X
- STA QQ19+1
- JSR var
- LDA QQ23+3,X
- AND QQ26
- CLC
- ADC QQ23+2,X
- LDY QQ19+1
- BMI d_31f4
- SEC
- SBC QQ19+3
- JMP d_31f7
-
-.d_31f4
-
- CLC
- ADC QQ19+3
-
-.d_31f7
-
- BPL d_31fb
- LDA #&00
-
-.d_31fb
-
- LDY XX4
- AND #&3F
- STA AVL,Y
- INY
- TYA
- STA XX4
- ASL A
- ASL A
- TAX
- CMP #&3F
- BCC d_31d8
-
-ELIF _ELITE_A_6502SP_PARA
-
- JSR GVL
-
-ENDIF
+ JSR GVL                \ AJD
 
 .stay_quit
 
- JMP BAY
+ JMP BAY                \ Go to the docking bay (i.e. show the Status Mode
+                        \ screen)
+
+ENDIF
 

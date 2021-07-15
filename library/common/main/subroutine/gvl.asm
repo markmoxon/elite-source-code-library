@@ -16,6 +16,11 @@
 \
 \   hyR                 Contains an RTS
 \
+IF _ELITE_A_DOCKED
+\   stay_quit           Go to the docking bay (i.e. show the Status Mode
+\                       screen)
+\
+ENDIF
 \ ******************************************************************************
 
 .GVL
@@ -101,7 +106,18 @@ ENDIF
  CMP #63                \ If A < 63, jump back up to hy9 to set the availability
  BCC hy9                \ for the next market item
 
+IF NOT(_ELITE_A_DOCKED)
+
 .hyR
 
  RTS                    \ Return from the subroutine
+
+ELIF _ELITE_A_DOCKED
+
+.stay_quit
+
+ JMP BAY                \ Go to the docking bay (i.e. show the Status Mode
+                        \ screen)
+
+ENDIF
 

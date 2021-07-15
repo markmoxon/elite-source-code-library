@@ -9,4 +9,7 @@
                         \ then the damage level is reduced by the shield level
                         \ before being applied to the ship (i.e. the shields
                         \ absorb the amount of damage given in new_shields)
+                        \
+                        \ When we buy a new ship, this is set to the relevant
+                        \ value from the new_details table
 

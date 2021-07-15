@@ -3,7 +3,7 @@
 \       Name: new_details
 \       Type: Variable
 \   Category: Buying ships
-\    Summary: AJD
+\    Summary: The flight characteristics for each of the different ship types
 \
 \ ******************************************************************************
 

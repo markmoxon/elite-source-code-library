@@ -7,5 +7,6 @@
                         \   * 4 = Front, rear, left and right
                         \
                         \ When we buy a new ship, this is set to the relevant
-                        \ value from the new_details table
+                        \ value from the ship's flight characteristics table
+                        \ at new_details
 

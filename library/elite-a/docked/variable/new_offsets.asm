@@ -3,8 +3,25 @@
 \       Name: new_offsets
 \       Type: Variable
 \   Category: Buying ships
-\    Summary: Table of offsets, measured from new_ships, for each ship's details
-\             block
+\    Summary: Table of offsets for each ship type
+\
+\ ------------------------------------------------------------------------------
+\
+\ There are 13 bytes in of flight characteristics for each ship type in the
+\ new_details table.
+\
+\ There are also 13 bytes of name and price data for each ship type in the
+\ new_ships table (9 characters in the name plus 4 bytes in the 32-bit price).
+\
+\ As a result, the offset in this table at position X can be used for any of the
+\ following:
+\
+\   * An offset into the new_details to fetch the flight characteristics for
+\     ship type X
+\
+\   * An offset into the new_ships table to fetch the type name of ship type X
+\
+\   * An offset into the new_price table to fetch the price of ship type X
 \
 \ ******************************************************************************
 

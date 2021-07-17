@@ -131,29 +131,40 @@ ENDIF
  BCS cour_pres          \ If the number entered was too big, jump to cour_pres
                         \ to make a beep and show the cargo bay
 
- TAX
- DEX
- CPX INWK+3
- BCS cour_pres
- LDA #&02
+ TAX                    \ Set X = A - 1, so X is now 0 if we picked the first
+ DEX                    \ destination, 1 if we picked the second, and so on
+
+ CPX INWK+3             \ If X >= INWK+3 then the number entered is bigger than
+ BCS cour_pres          \ the number of entries in the menu, so jump to
+                        \ cour_pres to make a beep and show the cargo bay
+
+ LDA #2                 \ Move the text cursor to column 2
  STA XC
- INC YC
- STX INWK
- LDY &0C50,X
- LDA &0C40,X
+
+ INC YC                 \ Move the text cursor down one line
+
+ STX INWK               \ Set INWK to the number of the chosen mission
+
+ LDY &0C50,X            \ Set (Y X) to the cost of this mission in 
+ LDA &0C40,X            \ (&0C50+X &0C40+X)
  TAX
 
  JSR LCASH              \ Subtract (Y X) cash from the cash pot, but only if
                         \ we have enough cash
 
- BCS cour_cash
- JMP cash_query
+ BCS cour_cash          \ If the transaction was successful, we have just bought
+                        \ ourselves a delivery mission, so jump to cour_cash
+
+ JMP cash_query         \ Otherwise we didn't have enough cash, so jump to
+                        \ cash_query to AJD
 
 .cour_cash
 
  LDX INWK
+
  LDA &0C00,X
  STA cmdr_courx
+
  LDA &0C10,X
  STA cmdr_coury
 
@@ -164,6 +175,7 @@ ENDIF
 
  LDA &0C30,X
  STA cmdr_cour+1
+
  LDA &0C40,X
  STA cmdr_cour
 

@@ -3,9 +3,14 @@
 \       Name: n_price
 \       Type: Subroutine
 \   Category: Buying ships
-\    Summary: Set K(3 2 1 0) to the price of a given ship
+\    Summary: Set K(0 1 2 3) to the price of a given ship
 \
 \ ------------------------------------------------------------------------------
+\
+\ This routine fetches the ship price from the new_price table, where prices are
+\ stored in the standard little-endian manner of 6502 assembly (i.e. using an
+\ EQUD), and copies it in to K(0 1 2 3), which is a big-endian number like the
+\ CASH variable.
 \
 \ Arguments:
 \
@@ -29,7 +34,7 @@
  LDA new_price,X        \ Set A to X-th byte of the ship's price from the
                         \ new_ships table
 
- STA K,Y                \ Store it in the X-th byte of K(3 2 1 0)
+ STA K,Y                \ Store it in the X-th byte of K(0 1 2 3)
 
  INX                    \ Increment X to point to the next price byte
 

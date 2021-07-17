@@ -47,31 +47,41 @@ ENDIF
  EOR TALLY              \ the low byte of our combat rank, which should give us
  STA INWK               \ a pretty random number that will stay the same until
                         \ we leave the station
+                        \
+                        \ We use this to determine the number of systems to skip
+                        \ when generating the first delivery mission in the menu
 
  SEC                    \ Set INWK+1 = 1 + our legal status in FIST + the
  LDA FIST               \ current galaxy number in GCNT + the type of our
  ADC GCNT               \ current ship in cmdr_type, which again will give us
  ADC cmdr_type          \ a random number that will stay the same until we
- STA INWK+1             \ leave the station
+ STA INWK+1             \ leave the station, as well as randomising the C flag
+                        \
+                        \ We use this to determine the number of systems to skip
+                        \ when generating subsequent delivery missions in the
+                        \ menu
 
- ADC INWK               \ Set QQ25 = INWK+1 + INWK - cmdr_courx - cmdr_coury
+ ADC INWK               \ Set QQ25 = INWK+1 + INWK + C - cmdr_courx - cmdr_coury
  SBC cmdr_courx         \
  SBC cmdr_coury         \ where (cmdr_courx, cmdr_coury) are the coordinates of
  AND #15                \ the previous special cargo delivery destination (which
  STA QQ25               \ will be (0, 0) if this is the first) and reduce the
-                        \ result to the range 0 to 15
+                        \ result to be in the range 0 to 15
+                        \
+                        \ We use this to determine the maximum number of
+                        \ delivery missions in the menu
 
  BEQ cour_pres          \ If the value of QQ25 = 0, jump to cour_pres to make a
                         \ beep and show the cargo bay (as QQ25 contains the
-                        \ number of missions we want to offer, so if it's zero
-                        \ we have nothing more to do)
+                        \ number of missions in the menu, so if it's zero we
+                        \ have nothing more to do)
 
  LDA #0                 \ Set INWK+3 = 0 to act as a counter of the number of
- STA INWK+3             \ delivery missions we have displayed in the menu
+ STA INWK+3             \ delivery missions we have displayed in the menu so far
 
- STA INWK+6             \ Set INWK+6 = 0 to act as a counter from 0 to 255, as
-                        \ we work our way through the various systems in the
-                        \ galaxy
+ STA INWK+6             \ Set INWK+6 = 0 to act as a system counter that runs
+                        \ from 0 to 255 as we work our way through all the
+                        \ systems in the galaxy
 
  JSR TT81               \ Set the seeds in QQ15 to those of system 0 in the
                         \ current galaxy (i.e. copy the seeds from QQ21 to QQ15)
@@ -81,29 +91,30 @@ ENDIF
                         \ destinations for display in the Special Cargo menu. We
                         \ use the following counters as we go:
                         \
-                        \ QQ25 contains the maximum number of delivery missions
-                        \ that want to display in the menu
+                        \   * QQ25 contains the maximum number of delivery
+                        \     missions to display in the menu
                         \
-                        \ INWK is used as a counter for the number of systems we
-                        \ skip past for the very first menu item, when looking
-                        \ for a system to include in the menu in cour_count
+                        \   * INWK is the number of systems we skip past for the
+                        \     very first menu item, when generating destinations
+                        \     in cour_count
                         \
-                        \ INWK+1 contains the number of systems we skip past for
-                        \ all the other items in the menu
+                        \   * INWK+1 is the number of systems we skip past for
+                        \     subsequent menu items, when generating
+                        \     destinations in cour_count
                         \
-                        \ INWK+3 counts the number of delivery missions we have
-                        \ already displayed in the menu, starting at 0
+                        \   * INWK+3 counts the number of delivery missions we
+                        \     have already displayed in the menu, starting at 0
                         \
-                        \ INWK+6 contains the system number we are currently
-                        \ considering, starting at 0 and working through to 255,
-                        \ at which point we are done (even if we haven't managed
-                        \ to find QQ25 delivery missions
+                        \   * INWK+6 contains the system number we are currently
+                        \     considering, starting at 0 and working through to
+                        \     255, at which point we are done (even if we
+                        \     haven't managed to find QQ25 delivery missions)
 
 .cour_loop
 
- LDA INWK+3             \ If INWK+3 < QQ25 then jump to cour_count to add another
- CMP QQ25               \ destination to the menu, as we have not yet shown QQ25
- BCC cour_count         \ delivery missions in the menu
+ LDA INWK+3             \ If INWK+3 < QQ25 then jump to cour_count to add
+ CMP QQ25               \ another destination to the menu, as we have not yet
+ BCC cour_count         \ shown QQ25 delivery missions in the menu
 
 .cour_menu
 
@@ -120,10 +131,10 @@ ENDIF
  JSR prq                \ question mark
 
  JSR gnum               \ Call gnum to get a number from the keyboard, which
-                        \ will be the number of the mission we want to take,
-                        \ returning the number entered in A and R, and setting
-                        \ the C flag if the number is bigger than the highest
-                        \ item number in QQ25
+                        \ will be the menu item number of the mission we want to
+                        \ take, returning the number entered in A and R, and
+                        \ setting the C flag if the number is bigger than the
+                        \ highest menu item number in QQ25
 
  BEQ cour_pres          \ If no number was entered, jump to cour_pres to make a
                         \ beep and show the cargo bay
@@ -156,26 +167,34 @@ ENDIF
                         \ ourselves a delivery mission, so jump to cour_cash
 
  JMP cash_query         \ Otherwise we didn't have enough cash, so jump to
-                        \ cash_query to AJD
+                        \ cash_query to print "CASH?", make a short, high beep,
+                        \ delay for 1 second and go to the docking bay (i.e.
+                        \ show the Status Mode screen)
 
 .cour_cash
 
- LDX INWK
+                        \ We have now taken on the delivery mission, so we need
+                        \ to set variables that govern the mission progress,
+                        \ i.e. the destination and the mission timer
 
- LDA &0C00,X
- STA cmdr_courx
+ LDX INWK               \ Set X to the number of the chosen mission which we
+                        \ stored in INWK above
 
- LDA &0C10,X
- STA cmdr_coury
+ LDA &0C00,X            \ Set cmdr_courx to the galactic x-coordinate of the
+ STA cmdr_courx         \ destination of the chosen mission, which we stored in
+                        \ &0C00+X when setting up the menu
 
- CLC                    \ Add &0C20+X to FIST
- LDA &0C20,X
- ADC FIST
- STA FIST
+ LDA &0C10,X            \ Set cmdr_coury to the galactic y-coordinate of the
+ STA cmdr_coury         \ destination of the chosen mission, which we stored in
+                        \ &0C10+X when setting up the menu
 
- LDA &0C30,X
- STA cmdr_cour+1
+ CLC                    \ When setting up the menu, we set &0C20+X to the legal
+ LDA &0C20,X            \ status of taking this mission, so we add this value to
+ ADC FIST               \ our legal status in FIST, so taking on dodgy delivery
+ STA FIST               \ missions adversely affects our legal status
 
+ LDA &0C30,X            \ Set the mission timer in cmdr_cour(1 0) to the value
+ STA cmdr_cour+1        \ we set in (&0C30+X &0C40+X) when setting up the menu
  LDA &0C40,X
  STA cmdr_cour
 
@@ -248,15 +267,15 @@ ENDIF
                         \   * &0C00+X = x-coordinate of the delivery destination
                         \   * &0C10+X = y-coordinate of the delivery destination
                         \   * &0C20+X = legal status of the delivery mission
-                        \   * &0C30+X = high byte of mission timer
-                        \   * &0C40+X = low byte of mission timer
-                        \               low byte of mission cost
-                        \   * &0C50+X = high byte of mission cost
+                        \   * &0C30+X = high byte of the mission timer
+                        \   * &0C40+X = low byte of the mission timer
+                        \               low byte of the mission cost
+                        \   * &0C50+X = high byte of the mission cost
                         \
                         \ In other words, when we take on a mission, the timer
-                        \ in cmdr_cour(1 0) is set to (&0C30+X &0C40+X), and we
-                        \ pay the mission cost of (&0C50+X &0C40+X)
-
+                        \ in cmdr_cour(1 0) is set to (&0C30+X &0C40+X), we pay
+                        \ the mission cost of (&0C50+X &0C40+X), and our legal
+                        \ status goes up by the amount in &0C20+X
 
  LDA QQ15+3             \ Set A = s1_hi EOR s2_hi EOR INWK+1
  EOR QQ15+5             \
@@ -303,7 +322,7 @@ ENDIF
 .cour_negx
 
  JSR SQUA2              \ Set K(1 0) = A * A
- STA K+1                \            = (destination_x - current_x) ^ 2
+ STA K+1                \            = |destination_x - current_x| ^ 2
  LDA P
  STA K
 
@@ -337,14 +356,14 @@ ENDIF
                         \ distance between the vertical y-coordinates
 
  JSR SQUA2              \ Set (A P) = A * A
-                        \           = ((destination_x - current_x) / 2) ^ 2
+                        \           = (|destination_x - current_x| / 2) ^ 2
 
                         \ We now want to add the two so we can then apply
                         \ Pythagoras, so first we do this:
                         \
                         \   (R Q) = K(1 0) + (A P))
                         \         = (destination_x - current_x) ^ 2
-                        \           + ((destination_x - current_x) / 2) ^ 2
+                        \           + (|destination_x - current_x| / 2) ^ 2
                         \
                         \ and then the distance will be the square root:
                         \
@@ -409,16 +428,16 @@ ENDIF
                         \ the high byte of the mission cost
 
  LDA INWK+4             \ Store INWK+4 in the X-th byte of &0C40, so it contains
- STA &0C40,X            \ the low byte of the mission cost (and the same value is
-                        \ used as the low byte of the mission timer)
+ STA &0C40,X            \ the low byte of the mission cost (and the same value
+                        \ is used as the low byte of the mission timer)
 
  LDA #1                 \ Move the text cursor to column 1
  STA XC
 
- CLC                    \ Move the text cursor to row INWK+3 plus 3, where INWK+3
- LDA INWK+3             \ is the menu item number, starting from 0 (so the first
- ADC #3                 \ menu item is on row 3, the next is on row 4 and so on)
- STA YC
+ CLC                    \ Move the text cursor to row INWK+3 plus 3, where
+ LDA INWK+3             \ INWK+3 is the menu item number, starting from 0 (so
+ ADC #3                 \ the first menu item is on row 3, the next is on row 4
+ STA YC                 \ and so on)
 
  LDX INWK+3             \ Set X to INWK+3 + 1, which we can use as the menu item
  INX                    \ number on-screen (so the first menu item with is shown
@@ -428,8 +447,9 @@ ENDIF
  CLC                    \ Clear the C flag so the call to pr2 doesn't show a
                         \ decimal point
 
- JSR pr2                \ Call pr2, which prints the number in X to a width of
-                        \ 3 figures
+ JSR pr2                \ Call pr2 to print the number in X to a width of 3
+                        \ 3 figures, so this prints the item number at the start
+                        \ of the menu item
 
  JSR TT162              \ Print a space
 

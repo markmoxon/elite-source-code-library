@@ -316,7 +316,8 @@ ELIF _MASTER_VERSION
                         \ we print out the number (though we never get here in
                         \ the Master version)
 
- CLC                    \ Clear the C flag
+ CLC                    \ Clear the C flag, so the call to TT11 below doesn't
+                        \ include a decimal point
 
  LDA #0                 \ Set A = 0, for the call to TT11 below, so we don't pad
                         \ out the number of Trumbles

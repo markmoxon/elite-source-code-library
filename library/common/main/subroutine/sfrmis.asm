@@ -108,7 +108,7 @@ ELIF _ELITE_A_6502SP_PARA
 
 .d_4418
 
- RTS
+ RTS                    \ Return from the subroutine
 
 ENDIF
 

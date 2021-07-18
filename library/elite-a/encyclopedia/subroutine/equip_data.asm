@@ -9,7 +9,7 @@
 
 .equip_data
 
- LDX #&04
+ LDX #4
  JSR menu
  ADC #&6B
  PHA

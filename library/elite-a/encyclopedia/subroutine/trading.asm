@@ -17,7 +17,7 @@ IF _ELITE_A_ENCYCLOPEDIA
 
 ELIF _ELITE_A_6502SP_PARA
 
- JSR check_keys
+ JSR check_keys         \ AJD
  TXA
  BEQ l_restart
 

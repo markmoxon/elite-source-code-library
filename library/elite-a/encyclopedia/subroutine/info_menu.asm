@@ -14,7 +14,7 @@ ENDIF
 \ Other entry points:
 \
 \   jmp_start3          Make a short, high beep, delay for one second, and go to
-\                       the docking bay (i.e. show the Status Mode screen)
+\                       the docking bay (i.e. show the Encyclopedia screen)
 \
 \ ******************************************************************************
 
@@ -28,37 +28,51 @@ ELIF _ELITE_A_6502SP_PARA
 
 ENDIF
 
- LDX #0                 \ AJD
- JSR menu
- CMP #&01
- BNE n_shipsag
- JMP ships_ag
+ LDX #0                 \ Call menu with X = 0 to show menu 0, the main menu for
+ JSR menu               \ the Encyclopedia Galactica, and return the choice in A
+
+ CMP #1                 \ If A <> 1, skip the following instruction to check the
+ BNE n_shipsag          \ other options
+
+ JMP ships_ag           \ Option 1 was chosen, so jump to ships_ag to show the
+                        \ Ships A-G menu
 
 .n_shipsag
 
- CMP #&02
- BNE n_shipskw
- JMP ships_kw
+ CMP #2                 \ If A <> 2, skip the following instruction to check the
+ BNE n_shipskw          \ other options
+
+ JMP ships_kw           \ Option 2 was chosen, so jump to ships_kw to show the
+                        \ Ships K-W menu
 
 .n_shipskw
 
- CMP #&03
- BNE n_equipdat
- JMP equip_data
+ CMP #3                 \ If A <> 3, skip the following instruction to check the
+ BNE n_equipdat         \ other options
+
+ JMP equip_data         \ Option 3 was chosen, so jump to equip_data to show the
+                        \ Equipment menu
 
 .n_equipdat
 
- CMP #&04
- BNE n_controls
- JMP controls
+ CMP #4                 \ If A <> 4, skip the following instruction to check the
+ BNE n_controls         \ other options
+
+ JMP controls           \ Option 4 was chosen, so jump to controls to show the
+                        \ Controls menu
 
 .n_controls
 
 IF _ELITE_A_ENCYCLOPEDIA
 
- CMP #&05
- BNE jmp_start3
- JMP trading
+ CMP #5                 \ If A <> 5, skip the following instruction and jump to
+ BNE jmp_start3         \ jmp_start3 to make a beep and show the main menu
+
+ JMP trading            \ Option 5 was chosen, so jump to trading to pause and
+                        \ show the main menu (there is no option 5 in the main
+                        \ menu, so this code is never reached and is presumably
+                        \ a remnant of a fifth menu about trading that was
+                        \ removed)
 
 .jmp_start3
 
@@ -66,18 +80,23 @@ IF _ELITE_A_ENCYCLOPEDIA
                         \ second
 
  JMP BAY                \ Jump to BAY to go to the docking bay (i.e. show the
-                        \ Status Mode screen)
+                        \ Encyclopedia screen)
 
 
 ELIF _ELITE_A_6502SP_PARA
 
- CMP #&05
- BNE jmp_start3_dup
- JMP trading
+ CMP #5                 \ If A <> 5, skip the following instruction
+ BNE P%+5
 
-.jmp_start3_dup
+ JMP trading            \ Option 5 was chosen, so jump to trading to pause and
+                        \ show the main menu (there is no option 5 in the main
+                        \ menu, so this code is never reached and is presumably
+                        \ a remnant of a fifth menu about trading that was
+                        \ removed)
 
- JMP dn2
+ JMP dn2                \ Jump to dn2 to make a short, high beep and delay for 1
+                        \ second, returning from the subroutine using a tail
+                        \ call
 
 ENDIF
 

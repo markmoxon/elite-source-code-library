@@ -9,7 +9,7 @@
 
 .controls
 
- LDX #&03
+ LDX #3
  JSR menu
  ADC #&56
  PHA

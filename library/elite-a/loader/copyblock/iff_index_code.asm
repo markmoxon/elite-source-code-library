@@ -4,7 +4,8 @@
 \       Name: iff_index_code
 \       Type: Subroutine
 \   Category: Dashboard
-\    Summary: AJD
+\    Summary: The iff_index routine, bundled up in the loader so it can be moved
+\             to &0D7A to be run
 \
 \ ******************************************************************************
 

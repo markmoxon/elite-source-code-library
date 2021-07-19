@@ -34,16 +34,16 @@ ENDIF
  CMP #1                 \ If A <> 1, skip the following instruction to check the
  BNE n_shipsag          \ other options
 
- JMP ships_ag           \ Option 1 was chosen, so jump to ships_ag to show the
-                        \ Ships A-G menu
+ JMP ships_ag           \ Option 1 was chosen, so jump to ships_ag with A = 1 to
+                        \ show the Ships A-G menu
 
 .n_shipsag
 
  CMP #2                 \ If A <> 2, skip the following instruction to check the
  BNE n_shipskw          \ other options
 
- JMP ships_kw           \ Option 2 was chosen, so jump to ships_kw to show the
-                        \ Ships K-W menu
+ JMP ships_kw           \ Option 2 was chosen, so jump to ships_kw with A = 2 to
+                        \ show the Ships K-W menu
 
 .n_shipskw
 

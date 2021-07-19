@@ -10,7 +10,7 @@
 
 ORG &0004
 
-INCLUDE "library/elite-a/loader/variable/key_io.asm"
+INCLUDE "library/original/main/variable/trtb_per_cent.asm"
 
 ORG &0020
 

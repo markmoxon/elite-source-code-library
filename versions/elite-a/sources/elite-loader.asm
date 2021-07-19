@@ -76,11 +76,11 @@ IRQ1V = &0204           \ The IRQ1V vector that we intercept to implement the
 WRCHV = &020E           \ The WRCHV vector that we intercept with our custom
                         \ text printing routine
 
-BYTEV = &020A           \ The BYTEV vector that we intercept to AJD
+BYTEV = &020A           \ The BYTEV vector that we intercept on the BBC Master
 
-FILEV = &0212           \ The FILEV vector that we intercept to AJD
+FILEV = &0212           \ The FILEV vector that we intercept on the BBC Master
 
-FSCV = &021E            \ The FSCV vector that we intercept to AJD
+FSCV = &021E            \ The FSCV vector that we intercept on the BBC Master
 
 NETV = &0224            \ The NETV vector that we intercept as part of the copy
                         \ protection

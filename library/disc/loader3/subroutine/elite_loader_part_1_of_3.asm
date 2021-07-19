@@ -129,8 +129,8 @@ ENDIF
 
 IF _ELITE_A_VERSION
 
- LDA #&77               \ AJD
- JSR OSBYTE
+ LDA #119               \ Call OSBYTE with A = 119 to close any *SPOOL or *EXEC
+ JSR OSBYTE             \ files
 
 ENDIF
 
@@ -150,9 +150,9 @@ ENDIF
 
 IF _ELITE_A_VERSION
 
- LDA #&EE               \ AJD
- STA BRKV
- LDA #&11
+ LDA #LO(S%+11)         \ Point BRKV to the fifth entry in the main docked
+ STA BRKV               \ code's S% workspace, which contains JMP BRBR
+ LDA #HI(S%+11)
  STA BRKV+1
 
 ENDIF
@@ -329,7 +329,7 @@ ELIF _ELITE_A_VERSION
  STA &386
  SEI 
  LDA &FE44
- \ STA &01
+\STA &01
  LDA #&39
  STA &FE4E
  LDA #&7F
@@ -403,8 +403,8 @@ ELIF _ELITE_A_VERSION
  LDX #&00
  LDY #&FF
  JSR OSBYTE
- STX key_io
- STY key_io+&01
+ STX TRTB%
+ STY TRTB%+1
 
  LDA #&00               \ Set the following:
  STA ZP                 \
@@ -454,30 +454,33 @@ ELIF _ELITE_A_VERSION
  JSR OSBYTE
  STX key_tube
  STY key_tube+&01
- \ LDX #LO(tube_400)
- \ LDY #HI(tube_400)
- \ LDA #1
- \ JSR &0406
- \ LDA #LO(WORDS)
- \ STA &72
- \ LDA #HI(WORDS)
- \ STA &73
- \ LDX #&04
- \ LDY #&00
- \tube_wr LDA (&72),Y
- \ JSR tube_wait
- \ BIT tube_r3s
- \ BVC tube_wr
- \ STA tube_r3d
- \ INY
- \ BNE tube_wr
- \ INC &73
- \ DEX
- \ BNE tube_wr
- \ LDA #LO(tube_wrch)
- \ STA WRCHV
- \ LDA #HI(tube_wrch)
- \ STA WRCHV+&01
+
+\LDX #LO(tube_400)
+\LDY #HI(tube_400)
+\LDA #1
+\JSR &0406
+\LDA #LO(WORDS)
+\STA &72
+\LDA #HI(WORDS)
+\STA &73
+\LDX #&04
+\LDY #&00
+\.tube_wr
+\LDA (&72),Y
+\JSR tube_wait
+\BIT tube_r3s
+\BVC tube_wr
+\STA tube_r3d
+\INY
+\BNE tube_wr
+\INC &73
+\DEX
+\BNE tube_wr
+\LDA #LO(tube_wrch)
+\STA WRCHV
+\LDA #HI(tube_wrch)
+\STA WRCHV+&01
+
  LDX #LO(tube_run)
  LDY #HI(tube_run)
  JMP OSCLI
@@ -486,13 +489,13 @@ ELIF _ELITE_A_VERSION
 
  EQUS "R.2.H", &0D
 
- \tube_400 EQUD &0400
-
- \tube_wait
- \ JSR tube_wait2
- \tube_wait2
- \ JSR tube_wait3
- \tube_wait3
- \ RTS
+\.tube_400
+\EQUD &0400
+\.tube_wait
+\JSR tube_wait2
+\.tube_wait2
+\JSR tube_wait3
+\.tube_wait3
+\RTS
 
 ENDIF

@@ -3,7 +3,7 @@
 \       Name: ship_load
 \       Type: Variable
 \   Category: Encyclopedia
-\    Summary: AJD
+\    Summary: The OS command string for loading a ship blueprints file
 \
 \ ******************************************************************************
 

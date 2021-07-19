@@ -3,8 +3,8 @@
 \       Name: CATDcode
 \       Type: Subroutine
 \   Category: Save and load
-\    Summary: CATD routine, bundled up in the loader so it can be moved to &0D7A
-\             to be run
+\    Summary: The CATD routine, bundled up in the loader so it can be moved to
+\             &0D7A to be run
 \
 \ ******************************************************************************
 

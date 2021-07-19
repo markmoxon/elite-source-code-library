@@ -28,7 +28,7 @@ IF _6502SP_VERSION OR _DISC_DOCKED \ Platform
  JSR ZEBC               \ Call ZEBC to zero-fill pages &B and &C
 
  TSX                    \ Transfer the stack pointer to X and store it in stack,
- STX stack              \ so we can restore it in the MRBRK routine
+ STX stack              \ so we can restore it in the MEBRK routine
 
 ELIF _MASTER_VERSION
 

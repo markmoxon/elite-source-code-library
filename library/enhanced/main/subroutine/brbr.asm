@@ -15,7 +15,7 @@
 \ BRKV is set to this routine in the decryption routine at DEEOR just before the
 \ game is run for the first time, and at the end of the SVE routine after the
 \ disc access menu has been processed. In other words, this is the standard
-\ BRKV handler for the game, and it's swapped out to MRBRK for disc access
+\ BRKV handler for the game, and it's swapped out to MEBRK for disc access
 \ operations only.
 \
 \ When it is the BRKV handler, the routine can be triggered using a BRK

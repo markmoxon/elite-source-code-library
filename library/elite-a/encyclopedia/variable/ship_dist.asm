@@ -18,8 +18,8 @@
  EQUB 1                 \ Chameleon
  EQUB 1                 \ Cobra Mk I
  EQUB 2                 \ Cobra Mk III
- EQUB 4                 \ Coriolis
- EQUB 4                 \ Dodecagon
+ EQUB 4                 \ Coriolis station
+ EQUB 4                 \ Dodo station
  EQUB 1                 \ Escape Pod
  EQUB 1                 \ Fer-de-Lance
  EQUB 1                 \ Gecko

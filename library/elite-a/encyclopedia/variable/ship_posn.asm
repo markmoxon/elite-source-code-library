@@ -20,8 +20,8 @@ IF _ELITE_A_ENCYCLOPEDIA
  EQUB 12                \ Chameleon
  EQUB 17                \ Cobra Mk I
  EQUB 11                \ Cobra Mk III
- EQUB 2                 \ Coriolis
- EQUB 2                 \ Dodecagon
+ EQUB 2                 \ Coriolis station
+ EQUB 2                 \ Dodo station
  EQUB 3                 \ Escape Pod
  EQUB 25                \ Fer-de-Lance
  EQUB 17                \ Gecko
@@ -51,8 +51,8 @@ ELIF _ELITE_A_6502SP_PARA
  EQUB 37                \ Chameleon
  EQUB 22                \ Cobra Mk I
  EQUB 10                \ Cobra Mk III
- EQUB 1                 \ Coriolis
- EQUB 0                 \ Dodecagon
+ EQUB 1                 \ Coriolis station
+ EQUB 0                 \ Dodo station
  EQUB 2                 \ Escape Pod
  EQUB 24                \ Fer-de-Lance
  EQUB 21                \ Gecko

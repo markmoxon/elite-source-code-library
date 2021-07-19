@@ -14,8 +14,8 @@
 \   0 = Encyclopedia Galactica
 \   1 = Ships A-G
 \   2 = Ships I-W
-\   3 = Equipment
-\   4 = Controls
+\   3 = Controls
+\   4 = Equipment
 \
 \ ******************************************************************************
 

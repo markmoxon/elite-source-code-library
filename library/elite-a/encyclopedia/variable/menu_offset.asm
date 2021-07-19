@@ -14,8 +14,8 @@
 \   0 = Encyclopedia Galactica
 \   1 = Ships A-G
 \   2 = Ships I-W
-\   3 = Equipment
-\   4 = Controls
+\   3 = Controls
+\   4 = Equipment
 \
 \ ******************************************************************************
 
@@ -23,22 +23,22 @@
 
  EQUB 2                 \ Menu 0: First item is text token 2:
                         \
-                        \         "SHIPS {all caps}A-G{sentence case}"
+                        \   "SHIPS {all caps}A-G{sentence case}"
 
  EQUB 7                 \ Menu 1: First item is text token 7:
                         \
-                        \         "ADDER"
+                        \   "ADDER"
 
  EQUB 21                \ Menu 2: First item is text token 21:
                         \
-                        \         "KRAIT"
+                        \   "KRAIT"
 
  EQUB 91                \ Menu 3: First item is text token 91:
                         \
-                        \         "FLIGHT"
+                        \   "FLIGHT"
 
  EQUB 95                \ Menu 4: First item is text token 95:
                         \
-                        \         "{standard tokens, sentence case}
-                        \          MISSILE{extended tokens}"
+                        \   "{standard tokens, sentence case}
+                        \    MISSILE{extended tokens}"
 

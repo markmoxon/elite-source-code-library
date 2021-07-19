@@ -14,8 +14,8 @@
 \   0 = Encyclopedia Galactica
 \   1 = Ships A-G
 \   2 = Ships I-W
-\   3 = Equipment
-\   4 = Controls
+\   3 = Controls
+\   4 = Equipment
 \
 \ ******************************************************************************
 
@@ -23,21 +23,21 @@
 
  EQUB 1                 \ Menu 0: Title is text token 1:
                         \
-                        \         "ENCYCLOPEDIA GALACTICA"
+                        \   "ENCYCLOPEDIA GALACTICA"
 
  EQUB 2                 \ Menu 1: Title is text token 2:
                         \
-                        \         "SHIPS {all caps}A-G{sentence case}"
+                        \   "SHIPS {all caps}A-G{sentence case}"
 
  EQUB 3                 \ Menu 2: Title is text token 3:
                         \
-                        \         "SHIPS {all caps}I-W{sentence case}"
+                        \   "SHIPS {all caps}I-W{sentence case}"
 
  EQUB 5                 \ Menu 3: Title is text token 5:
                         \
-                        \         "CONTROLS"
+                        \   "CONTROLS"
 
  EQUB 4                 \ Menu 4: Title is text token 4:
                         \
-                        \         "EQUIPMENT"
+                        \   "EQUIPMENT"
 

@@ -51,7 +51,7 @@
  EQUB 26,  8,  0        \                                         Data @ (26, 8)
 
  EQUB  1,  6, 43        \ 3: Dimensions                   "DIMENSIONS:" @ (1, 6)
- EQUB  1,  7,  0        \                                          Data @ (1, 7)        
+ EQUB  1,  7,  0        \                                          Data @ (1, 7)
 
  EQUB  1,  9, 36        \ 4: Speed                            "SPEED:" @ (1,  9)
  EQUB  1, 10,  0        \                                         Data @ (1, 10)

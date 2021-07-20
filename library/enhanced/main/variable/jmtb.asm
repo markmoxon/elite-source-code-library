@@ -15,13 +15,11 @@
  EQUW TT27              \ Token  3: Print the selected system name
 IF NOT(_ELITE_A_ENCYCLOPEDIA)
  EQUW TT27              \ Token  4: Print the commander's name
-ELIF _ELITE_A_ENCYCLOPEDIA
- EQUW MT6               \ Token  4: Switch to standard tokens, in Sentence Case
-ENDIF
  EQUW MT5               \ Token  5: Switch to extended tokens
-IF NOT(_ELITE_A_ENCYCLOPEDIA)
  EQUW MT6               \ Token  6: Switch to standard tokens, in Sentence Case
 ELIF _ELITE_A_ENCYCLOPEDIA
+ EQUW MT6               \ Token  4: Switch to standard tokens, in Sentence Case
+ EQUW MT5               \ Token  5: Switch to extended tokens
  EQUW set_token         \ Token  6: Start a new word
 ENDIF
  EQUW DASC              \ Token  7: Beep
@@ -41,14 +39,12 @@ ENDIF
  EQUW CLYNS             \ Token 21: Clear the bottom few lines of the space view
 IF NOT(_ELITE_A_ENCYCLOPEDIA)
  EQUW PAUSE             \ Token 22: Display ship and wait for key press
-ELIF _ELITE_A_ENCYCLOPEDIA
- EQUW column_16         \ Token 22: Tab to column 16
-ENDIF
  EQUW MT23              \ Token 23: Move to row 10, white text, set lower case
-IF NOT(_ELITE_A_ENCYCLOPEDIA)
  EQUW PAUSE2            \ Token 24: Wait for a key press
  EQUW BRIS              \ Token 25: Show incoming message screen, wait 2 seconds
 ELIF _ELITE_A_ENCYCLOPEDIA
+ EQUW column_16         \ Token 22: Tab to column 16
+ EQUW MT23              \ Token 23: Move to row 10, white text, set lower case
  EQUW clr_vdustat       \ Token 24: Switch to standard tokens in lower case
  EQUW DASC              \ Token 25: Unused
 ENDIF

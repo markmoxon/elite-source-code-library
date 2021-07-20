@@ -3,7 +3,11 @@
 \       Name: MVPG
 \       Type: Subroutine
 \   Category: Utility routines
+IF NOT(_ELITE_A_VERSION)
 \    Summary: Decrypt and move a page of memory
+ELIF _ELITE_A_VERSION
+\    Summary: Move a page of memory
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
@@ -30,8 +34,8 @@ IF NOT(_ELITE_A_VERSION)
 
 ENDIF
 
- STA (ZP),Y             \ Store the decrypted result in the Y-th byte of the
-                        \ ZP(1 0) memory block
+ STA (ZP),Y             \ Store the result in the Y-th byte of the ZP(1 0)
+                        \ memory block
 
  DEY                    \ Decrement the byte counter
 

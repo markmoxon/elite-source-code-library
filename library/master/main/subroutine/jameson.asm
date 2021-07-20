@@ -15,7 +15,7 @@
 
 .JAMESL
 
- LDA DEFAULT%,Y         \ Copy the Y-th byte of DEFAULT% to the Y-th byte of 
+ LDA DEFAULT%,Y         \ Copy the Y-th byte of DEFAULT% to the Y-th byte of
  STA NA%,Y              \ NA%
 
  DEY                    \ Decrement the loop counter

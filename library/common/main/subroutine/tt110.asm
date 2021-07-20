@@ -106,11 +106,11 @@ ELIF _ELITE_A_DOCKED
  BPL eny1               \ Loop back to copy the next byte until we have copied
                         \ the whole table
 
- LDX #LO(RDLI)          \ Set (Y X) to point to RDLI ("R.D.CODE")
+ LDX #LO(RDLI)          \ Set (Y X) to point to RDLI ("R.1.F")
  LDY #HI(RDLI)
 
  JMP OSCLI              \ Call OSCLI to run the OS command in RDLI, which *RUNs
-                        \ the main flight code in D.CODE, returning from the
+                        \ the main flight code in 1.F, returning from the
                         \ subroutine using a tail call
 
 ENDIF

@@ -3,7 +3,11 @@
 \       Name: MVBL
 \       Type: Subroutine
 \   Category: Utility routines
+IF NOT(_ELITE_A_VERSION)
 \    Summary: Decrypt and move a multi-page block of memory
+ELIF _ELITE_A_VERSION
+\    Summary: Move a multi-page block of memory
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

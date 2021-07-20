@@ -63,24 +63,28 @@ ENDIF
 
 IF NOT(_ELITE_A_DOCKED OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA)
 
- DEX                    \ If token > 6, skip the following 3 instructions
+ DEX                    \ If token > 6, skip the following three instructions
  BNE P%+7
 
  LDA #%10000000         \ This token is control code 6 (switch to Sentence
  STA QQ17               \ Case), so set bit 7 of QQ17 to switch to Sentence Case
  RTS                    \ and return from the subroutine as we are done
 
- DEX                    \ If token > 8, skip the following 2 instructions
+ DEX                    \ If token > 8, skip the following two instructions
  DEX
  BNE P%+5
+
+ STX QQ17               \ This token is control code 8 (switch to ALL CAPS), so
+ RTS                    \ set QQ17 to 0 to switch to ALL CAPS and return from
+                        \ the subroutine as we are done
 
 ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
  DEX                    \ If token = 6, this is is control code 6 (switch to
  BEQ vdu_80             \ Sentence Case), so jump to vdu_80 to do just that
 
- DEX                    \ If token <> 8, skip the following 3 instructions
- DEX
+ DEX                    \ If token <> 8, jump to l_31d2 to skip the following
+ DEX                    \ four instructions
  BNE l_31d2
 
                         \ If we get here, then token = 8 (switch to ALL CAPS)
@@ -96,10 +100,16 @@ ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
  LDX #%10000000         \ Set bit 7 of X, so when we set QQ17 below, we switch
                         \ standard tokens to Sentence Case
 
+ STX QQ17               \ This token is control code 8 (switch to ALL CAPS), so
+ RTS                    \ set QQ17 to 0 to switch to ALL CAPS and return from
+                        \ the subroutine as we are done
+
+.l_31d2
+
 ELIF _ELITE_A_FLIGHT
 
- DEX                    \ If token > 6, jump to l_33b9 to skip the following 5
- BNE l_33b9             \ instructions
+ DEX                    \ If token > 6, jump to l_33b9 to skip the following
+ BNE l_33b9             \ five instructions
 
 .vdu_80
 
@@ -115,19 +125,9 @@ ELIF _ELITE_A_FLIGHT
  LDX #0                 \ Clear bit 7 of X, so when we set QQ17 below, we switch
                         \ standard tokens to ALL CAPS
 
-ENDIF
-
  STX QQ17               \ This token is control code 8 (switch to ALL CAPS), so
  RTS                    \ set QQ17 to 0 to switch to ALL CAPS and return from
                         \ the subroutine as we are done
-
-IF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
-
-.l_31d2
-
-ENDIF
-
-IF _ELITE_A_FLIGHT
 
 .l_33b9
 
@@ -147,7 +147,7 @@ ENDIF
                         \ range (i.e. where the recursive token number is
                         \ correct and doesn't need correcting)
 
- CMP #14                \ If token < 14, skip the following 2 instructions
+ CMP #14                \ If token < 14, skip the following two instructions
  BCC P%+6
 
  CMP #32                \ If token < 32, then this means token is in 14-31, so

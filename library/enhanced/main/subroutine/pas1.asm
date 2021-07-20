@@ -62,7 +62,7 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 ELIF _MASTER_VERSION
 
  JMP RDKEY              \ Scan the keyboard for a key press and return the
-                        \ ASCII code of the key pressed in X (or 0 for no key 
+                        \ ASCII code of the key pressed in X (or 0 for no key
                         \ press), returning from the subroutine using a tail
                         \ call
 

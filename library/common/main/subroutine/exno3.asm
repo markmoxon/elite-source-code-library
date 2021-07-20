@@ -45,7 +45,7 @@ ELIF _ELITE_A_FLIGHT
 
  JSR n_sound10          \ Call n_sound10 make the first death sound
 
- LDA #24                \ Call the NOISE routine with A = 24 to make the
+ LDA #24                \ Call the NOISE routine with A = 24 to make the second
  BNE NOISE              \ death sound and return from the subroutine using a
                         \ tail call (this BNE is effectively a JMP as A will
                         \ never be zero)
@@ -57,5 +57,6 @@ ELIF _ELITE_A_6502SP_PARA
  LDA #24                \ Call the NOISE routine with A = 24 to make the
  JMP NOISE              \ death sound and return from the subroutine using a
                         \ tail call
+
 ENDIF
 

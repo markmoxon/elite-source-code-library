@@ -237,7 +237,7 @@ ELIF _ELECTRON_VERSION
 ELIF _ELITE_A_VERSION
 
  LDA KY12               \ If TAB is not being pressed (i.e. KY12 = 0) and we do
- AND BOMB               \ not have a hyperspace unit fitted (i.e. BOMB = 0), 
+ AND BOMB               \ not have a hyperspace unit fitted (i.e. BOMB = 0),
  BEQ MA76               \ jump down to MA76 to skip the following
 
 ENDIF

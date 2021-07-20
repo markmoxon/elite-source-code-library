@@ -214,7 +214,7 @@ IF _MASTER_VERSION \ Other: This is presumably a bug fix, as it skips the "Cargo
 ENDIF
 
  BCS Tc                 \ If the C flag is set, then there is no room in the
-                        \ cargo hold, jump up to Tc to print a "Cargo?" error, 
+                        \ cargo hold, jump up to Tc to print a "Cargo?" error,
                         \ beep, clear the number and try again
 
  LDA QQ24               \ There is room in the cargo hold, so now to check

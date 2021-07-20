@@ -19,7 +19,7 @@
                         \ reading the keyboard with an OS command
 
  LDA VIA+&05            \ If we get here then we are not already reading the
- ORA #%00100000         \ keyboard using an OS command, so set bit 5 of the 
+ ORA #%00100000         \ keyboard using an OS command, so set bit 5 of the
  STA VIA+&05            \ interrupt clear and paging register at SHEILA &05 to
                         \ clear the RTC interrupt
 

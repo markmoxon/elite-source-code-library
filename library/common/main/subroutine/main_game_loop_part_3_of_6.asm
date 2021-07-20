@@ -96,7 +96,7 @@ IF NOT(_ELITE_A_VERSION)
 ELIF _ELITE_A_VERSION
 
  CMP T                  \ If the random value in A >= our badness level, which
- BCS l_4050             \ will be the case unless we have been really, really
+ BCS P%+8               \ will be the case unless we have been really, really
                         \ bad, then skip the following three instructions (so
                         \ if we are really bad, there's a higher chance of
                         \ spawning a cop, otherwise we got away with it, for
@@ -110,8 +110,6 @@ ELIF _ELITE_A_VERSION
  LDX #0                 \ Jump to hordes to spawn a pack of ships of type A,
  BEQ hordes             \ returning from the subroutine using a tail call (the
                         \ BEQ is effectively a JMP as X is always zero)
-
-.l_4050
 
 ENDIF
 

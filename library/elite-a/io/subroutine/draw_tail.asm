@@ -20,7 +20,7 @@
  JSR tube_get
  STA P
 
-.SC48 
+.SC48
 
  JSR CPIX2              \ Like SC48 in SCAN
  DEC Y1

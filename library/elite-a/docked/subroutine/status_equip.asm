@@ -64,7 +64,7 @@
  BCS status_over        \ following instruction to reach status_over with
                         \ A >= 107 and the C flag set
 
- ADC #7                 \ The token in A is < 107, so it must be a pulse laser 
+ ADC #7                 \ The token in A is < 107, so it must be a pulse laser
                         \ (103) or beam laser (104), so add 7 to set A to 110
                         \ or 111 (as we know the C flag is clear), and fall
                         \ through into status_over with the C flag clear

@@ -31,15 +31,9 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF NOT(_ELITE_A_VERSION)
-
- LDX JSTX               \ Set X to the current rate of roll in JSTX, and
- JSR cntr               \ apply keyboard damping twice (if enabled) so the roll
- JSR cntr               \ rate in X creeps towards the centre by 2
-
-ELIF _ELITE_A_VERSION
-
  LDX JSTX               \ Set X to the current rate of roll in JSTX
+
+IF _ELITE_A_VERSION
 
  CPX new_max            \ If X < new_max (where new_max is our current ship's
  BCC n_highx            \ maximum roll rate), then jump to n_highx to skip the
@@ -59,10 +53,10 @@ ELIF _ELITE_A_VERSION
 
 .n_lowx
 
+ENDIF
+
  JSR cntr               \ Apply keyboard damping twice (if enabled) so the roll
  JSR cntr               \ rate in X creeps towards the centre by 2
-
-ENDIF
 
                         \ The roll rate in JSTX increases if we press ">" (and
                         \ the RL indicator on the dashboard goes to the right).
@@ -153,15 +147,9 @@ ENDIF
  ORA ALP2               \ Store A in ALPHA, but with the sign set to ALP2 (so
  STA ALPHA              \ ALPHA has a different sign to the actual roll rate)
 
-IF NOT(_ELITE_A_VERSION)
-
- LDX JSTY               \ Set X to the current rate of pitch in JSTY, and
- JSR cntr               \ apply keyboard damping so the pitch rate in X creeps
-                        \ towards the centre by 1
-
-ELIF _ELITE_A_VERSION
-
  LDX JSTY               \ Set X to the current rate of pitch in JSTY
+
+IF _ELITE_A_VERSION
 
  CPX new_max            \ If X < new_max (where new_max is our current ship's
  BCC n_highy            \ maximum pitch rate), then jump to n_highy to skip the
@@ -182,10 +170,10 @@ ELIF _ELITE_A_VERSION
 
 .n_lowy
 
+ENDIF
+
  JSR cntr               \ Apply keyboard damping so the pitch rate in X creeps
                         \ towards the centre by 1
-
-ENDIF
 
  TXA                    \ Set A and Y to the pitch rate but with the sign bit
  EOR #%10000000         \ flipped

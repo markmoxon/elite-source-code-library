@@ -184,17 +184,15 @@ ENDIF
 
 .l_395a
 
- LDX TYPE               \ Set A to the closest distance that we want to show the 
+ LDX TYPE               \ Set A to the closest distance that we want to show the
  LDA ship_dist,X        \ ship (fetched from the ship_dist table)
 
- CMP INWK+7             \ If z_hi (the ship's distance) is equal to A, jump to
- BEQ l_3962             \ l_3962 to skip the following decrement, as the ship is
-                        \ already close enough
+ CMP INWK+7             \ If z_hi (the ship's distance) is equal to A, skip the
+ BEQ P%+4               \ following decrement, as the ship is already close
+                        \ enough
 
  DEC INWK+7             \ Decrement the ship's distance, to bring the ship
                         \ a bit closer to us
-
-.l_3962
 
  JSR MVEIT              \ Move the ship in space according to the orientation
                         \ vectors and the new value in z_hi

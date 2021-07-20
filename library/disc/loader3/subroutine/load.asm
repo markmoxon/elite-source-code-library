@@ -10,12 +10,25 @@
 
 .LOAD
 
+IF NOT(_ELITE_A_VERSION)
+
  LDX #LO(LTLI)          \ Set (Y X) to point to LTLI ("L.T.CODE")
  LDY #HI(LTLI)
 
  JSR OSCLI              \ Call OSCLI to run the OS command in LTLI, which loads
                         \ the T.CODE binary (the main docked code) to its load
                         \ address of &11E3
+
+ELIF _ELITE_A_VERSION
+
+ LDX #LO(LTLI)          \ Set (Y X) to point to LTLI ("L.1.D")
+ LDY #HI(LTLI)
+
+ JSR OSCLI              \ Call OSCLI to run the OS command in LTLI, which loads
+                        \ the 1.D binary (the main docked code) to its load
+                        \ address of &11E3
+
+ENDIF
 
 IF NOT(_ELITE_A_VERSION)
 

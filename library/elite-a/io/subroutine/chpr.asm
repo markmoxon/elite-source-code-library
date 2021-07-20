@@ -29,7 +29,7 @@
  CMP #&7F
  BEQ wrch_del
  CMP #&20
- BEQ wrch_spc 
+ BEQ wrch_spc
  BCS wrch_char
  CMP #&0A
  BEQ wrch_nl

@@ -102,7 +102,7 @@ ELIF _ELECTRON_VERSION
 
 .DELY3
 
- BNE DELY2              \ Loop back up as part of the chain of delay loops 
+ BNE DELY2              \ Loop back up as part of the chain of delay loops
 
  DEX                    \ Decrement the loop counter
 

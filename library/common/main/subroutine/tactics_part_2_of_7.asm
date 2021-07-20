@@ -294,7 +294,7 @@ ENDIF
 
 .TA13
 
-IF _CASSETTE_VERSION \ Platform: This logic is in part 3 for the other versions 
+IF _CASSETTE_VERSION \ Platform: This logic is in part 3 for the other versions
 
  CPX #TGL               \ If this is not a Thargon, jump down to TA14
  BNE TA14

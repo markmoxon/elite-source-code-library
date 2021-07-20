@@ -269,7 +269,7 @@ IF _6502SP_VERSION \ Other: Group A: The Master version omits half of the logari
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Other: See group A 
+IF _6502SP_VERSION OR _MASTER_VERSION \ Other: See group A
 
  LDX Q                  \ And then subtracting the high bytes of log(Q) - log(P)
  LDA log,X              \ so now A contains the high byte of log(Q) - log(P)

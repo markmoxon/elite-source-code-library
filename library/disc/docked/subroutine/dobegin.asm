@@ -3,8 +3,12 @@
 \       Name: DOBEGIN
 \       Type: Subroutine
 \   Category: Loader
+IF NOT(_ELITE_A_DOCKED)
 \    Summary: Decrypt the main docked code, initialise the configuration
 \             variables and start the game
+ELIF _ELITE_A_DOCKED
+\    Summary: Initialise the configuration variables and start the game
+ENDIF
 \
 \ ******************************************************************************
 

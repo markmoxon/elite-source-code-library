@@ -105,7 +105,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  ASL A                  \ Set A = 0
 
  STA XX4                \ Set XX4 = 0, which we will use as a counter for
-                        \ drawing 8 concentric rings
+                        \ drawing eight concentric rings
 
  STA K3+1               \ Set the high bytes of K3(1 0) and K4(1 0) to 0
  STA K4+1
@@ -115,7 +115,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
  LDX #0                 \ Set X = 0
 
  STX XX4                \ Set XX4 = 0, which we will use as a counter for
-                        \ drawing 8 concentric rings
+                        \ drawing eight concentric rings
 
  STX K3+1               \ Set the high bytes of K3(1 0) and K4(1 0) to 0
  STX K4+1

@@ -41,7 +41,7 @@ ELIF _ELECTRON_VERSION
                         \ skip the following instruction
 
  JMP MV40               \ This item is the planet, so jump to MV40 to move it,
-                        \ which ends by jumping back into this routine at MV45 
+                        \ which ends by jumping back into this routine at MV45
                         \ (after all the rotation, tactics and scanner code,
                         \ which we don't need to apply to planets)
 

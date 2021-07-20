@@ -513,9 +513,10 @@ ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 \TAY                    \ These instructions are commented out in the original
 \LDX FRIN,Y             \ source
 
- LDY LASER,X            \ Fetch the equipment flag from LASER+X, and if we do not
- BEQ P%+9               \ have that equipment fitted, skip the following four
-                        \ instructions to move onto the next piece of equipment
+ LDY LASER,X            \ Fetch the equipment flag from LASER+X, and if we do
+ BEQ P%+9               \ not have that equipment fitted, skip the following
+                        \ four instructions to move onto the next piece of
+                        \ equipment
 
  TXA                    \ Set A = X + 87
  CLC                    \
@@ -581,8 +582,9 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: The Status Mode screen in 
 
 ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
 
- LDX CNT                \ Set Y = the laser power for view X
- LDY LASER,X
+ LDX CNT                \ Retrieve the view number from CNT that we stored above
+
+ LDY LASER,X            \ Set Y = the laser power for view X
 
  CPY #128+POW           \ If the laser power for view X is not #POW+128 (beam
  BNE P%+4               \ laser), skip the next LDA instruction

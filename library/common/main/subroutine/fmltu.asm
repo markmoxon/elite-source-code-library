@@ -115,7 +115,7 @@ IF _6502SP_VERSION \ Other: Group A: In the FMLTU multiplication routine, the Ma
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Other: See group A 
+IF _6502SP_VERSION OR _MASTER_VERSION \ Other: See group A
 
  LDA log,X              \ Set A = high byte of Lq
 

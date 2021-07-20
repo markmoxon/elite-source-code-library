@@ -24,7 +24,7 @@
                         \ available ships, starting with X = 0, and working our
                         \ way through the types in the new_ships table (where
                         \ the ships are in order of increasing price)
- 
+
  SEC                    \ Set QQ25 = 15 - 2 * QQ28
  LDA #15                \
  SBC QQ28               \ QQ25 contains the number of ship types that we offer
@@ -72,7 +72,7 @@
                         \ point
 
  LDX XX13               \ Fetch the loop counter from XX13
- 
+
  INX                    \ Increment the loop counter
 
  CPX QQ25               \ Loop back to n_bloop until we have shown the first

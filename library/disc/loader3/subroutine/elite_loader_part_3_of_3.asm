@@ -10,10 +10,12 @@
 \ The loader bundles a number of binary files in with the loader code, and moves
 \ them to their correct memory locations in part 1 above.
 \
+IF NOT(_ELITE_A_VERSION)
 \ This section is encrypted by EOR'ing with &A5. The encryption is done by the
 \ elite-checksum.py script, and decryption is done in part 1 above, at the same
 \ time as each block is moved to its correct location.
 \
+ENDIF
 \ This part includes three files containing images, which are all moved into
 \ screen memory by the loader:
 \

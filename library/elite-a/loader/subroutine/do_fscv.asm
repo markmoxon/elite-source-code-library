@@ -3,50 +3,23 @@
 \       Name: do_FSCV
 \       Type: Subroutine
 \   Category: Loader
-\    Summary: AJD
+\    Summary: The custom handler for filing system calls in the BBC Master
+\             version
 \
 \ ******************************************************************************
 
- \ trap FSCV
-
 .do_FSCV
 
- JSR restorews \ restore workspace
+ JSR restorews          \ Call restorews to restore the filing system workspace,
+                        \ so we can use the filing system
 
 .old_FSCV
 
- JSR &100 \ address modified by master setup
- JMP savews \ save workspace, restore characters
+ JSR &100               \ This address is modified by the Master-specific code
+                        \ in part 1 of the loader (just after the cpmaster
+                        \ loop), so it calls the existing FSCV handler
 
- \ restore ROM workspace
-
-.restorews
-
- PHA
- PHX
- LDX #0
-
-.getws
-
- \ restore absolute workspace
-
-.get0
-
- LDA &C000,X \ address modified by master set-up
- STA &C000,X
-
-.get1
-
- LDA &C100,X \ address modified by master set-up
- STA &C100,X
-
-.get2
-
- LDA &C200,X \ address modified by master set-up
- STA &C200,X
- INX
- BNE getws
- PLX
- PLA
- RTS
+ JMP savews             \ Call savews to save the filing system workspace in a
+                        \ safe place and replace it with the MOS character set,
+                        \ so that character printing will work once again
 

@@ -167,12 +167,10 @@ ELIF _DISC_DOCKED
 ELIF _ELITE_A_FLIGHT
 
  LDA QQ11               \ If this is a space view, skip the following two
- BEQ l_40f8             \ instructions (i.e. jump to JSR TT17 below)
+ BEQ P%+7               \ instructions (i.e. jump to JSR TT17 below)
 
  LDY #2                 \ Wait for 2/50 of a second (0.04 seconds), to slow the
  JSR DELAY              \ main loop down a bit
-
-.l_40f8
 
 ELIF _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA
 

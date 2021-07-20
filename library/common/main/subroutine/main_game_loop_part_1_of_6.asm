@@ -82,12 +82,7 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Traders in the enhanced versions can be one of the following: Cobra Mk III, Python, Boa or Anaconda (in the cassette version, they are always Cobras)
-
- LDA #CYL               \ Add a new Cobra Mk III to the local bubble and fall
- JSR NWSHP              \ through into the main game loop again
-
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _ELITE_A_VERSION \ Enhanced: Traders in the enhanced versions can spawn in docking mode, in which case they mind their own business
 
  JSR DORND              \ Set A and X to random numbers, plus the C flag
 
@@ -105,6 +100,15 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
  STX NEWB               \ this ship is docking
 
 .nodo
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Traders in the enhanced versions can be one of the following: Cobra Mk III, Python, Boa or Anaconda (in the cassette version, they are always Cobras)
+
+ LDA #CYL               \ Add a new Cobra Mk III to the local bubble and fall
+ JSR NWSHP              \ through into the main game loop again
+
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  AND #2                 \ If we jumped here with a random value of A from the
                         \ BMI above, then this reduces A to a random value of
@@ -116,25 +120,6 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
                         \ where A is 0 or 2 and C is 0 or 1, so this gives us a
                         \ ship type from the following: Cobra Mk III, Python,
                         \ Boa or Anaconda
-
-ELIF _ELITE_A_VERSION
-
- JSR DORND              \ Set A and X to random numbers, plus the C flag
-
- BMI nodo               \ If A is negative (50% chance), jump to nodo to skip
-                        \ the following
-
-                        \ If we get here then we are going to spawn a ship that
-                        \ is minding its own business and trying to dock
-
- LDA INWK+32            \ Set bits 6 and 7 of the ship's AI flag, to make it
- ORA #%11000000         \ aggressive if attacked, and enable its AI
- STA INWK+32
-
- LDX #%00010000         \ Set bit 4 of the ship's NEWB flags, to indicate that
- STX NEWB               \ this ship is docking
-
-.nodo
 
 ENDIF
 

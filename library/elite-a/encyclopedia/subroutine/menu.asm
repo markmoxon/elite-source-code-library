@@ -102,7 +102,7 @@ ENDIF
                         \ tokens are in the msg_3 table)
 
  LDX XX13               \ Fetch the menu item number from XX13
- 
+
  INX                    \ Increment the menu item number to point to the next
                         \ item
 

@@ -126,13 +126,15 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
- DEX                    \ Decrement the counter to point to the next missile
-
 IF NOT(_ELITE_A_VERSION)
+
+ DEX                    \ Decrement the counter to point to the next missile
 
  BNE SAL8               \ Loop back to SAL8 if we still have missiles to draw
 
 ELIF _ELITE_A_VERSION
+
+ DEX                    \ Decrement the counter to point to the next missile
 
  BPL ss                 \ Loop back to ss if we still have missiles to draw,
                         \ ending when X = &FF

@@ -10,11 +10,17 @@
 
 .S%
 
-IF NOT(_ELITE_A_ENCYCLOPEDIA)
+IF NOT(_ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA)
 
  JMP DOENTRY            \ Decrypt the main docked code and dock at the station
 
  JMP DOBEGIN            \ Decrypt the main docked code and start a new game
+
+ELIF _ELITE_A_DOCKED
+
+ JMP DOENTRY            \ Dock at the station
+
+ JMP DOBEGIN            \ Start a new game
 
 ELIF _ELITE_A_ENCYCLOPEDIA
 

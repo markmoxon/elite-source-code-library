@@ -73,7 +73,7 @@ ELIF _ELECTRON_VERSION
 ELIF _MASTER_VERSION
 
  JSR RDKEY              \ Scan the keyboard for a key press and return the
-                        \ ASCII code of the key pressed in X (or 0 for no key 
+                        \ ASCII code of the key pressed in X (or 0 for no key
                         \ press)
 
  BNE t                  \ If a key was already being held down when we entered
@@ -94,7 +94,7 @@ ELIF _MASTER_VERSION
 
  JSR RDKEY              \ Any pre-existing key press is now gone, so we can
                         \ start scanning the keyboard again, returning the
-                        \ ASCII code of the key pressed in X (or 0 for no key 
+                        \ ASCII code of the key pressed in X (or 0 for no key
                         \ press)
 
 ENDIF

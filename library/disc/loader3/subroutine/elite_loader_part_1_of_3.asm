@@ -145,8 +145,17 @@ ENDIF
  LDA #HI(TVT1code)
  STA P+1
 
+IF NOT(_ELITE_A_VERSION)
+
  JSR MVPG               \ Call MVPG to move and decrypt a page of memory from
                         \ TVT1code to &1100-&11FF
+
+ELIF _ELITE_A_VERSION
+
+ JSR MVPG               \ Call MVPG to move a page of memory from TVT1code to
+                        \ &1100-&11FF
+
+ENDIF
 
 IF _ELITE_A_VERSION
 
@@ -167,8 +176,17 @@ ENDIF
  STA P+1
  LDX #8
 
+IF NOT(_ELITE_A_VERSION)
+
  JSR MVBL               \ Call MVBL to move and decrypt 8 pages of memory from
                         \ DIALS to &7800-&7FFF
+
+ELIF _ELITE_A_VERSION
+
+ JSR MVBL               \ Call MVBL to move 8 pages of memory from DIALS to
+                        \ &7800-&7FFF
+
+ENDIF
 
 IF NOT(_ELITE_A_VERSION)
 
@@ -215,8 +233,17 @@ ENDIF
  LDA #HI(ASOFT)
  STA P+1
 
+IF NOT(_ELITE_A_VERSION)
+
  JSR MVPG               \ Call MVPG to move and decrypt a page of memory from
                         \ ASOFT to &6100-&61FF
+
+ELIF _ELITE_A_VERSION
+
+ JSR MVPG               \ Call MVPG to move a page of memory from ASOFT to
+                        \ &6100-&61FF
+
+ENDIF
 
  LDA #&63               \ Set the following:
  STA ZP+1               \
@@ -225,8 +252,17 @@ ENDIF
  LDA #HI(ELITE)
  STA P+1
 
+IF NOT(_ELITE_A_VERSION)
+
  JSR MVPG               \ Call MVPG to move and decrypt a page of memory from
                         \ ELITE to &6300-&63FF
+
+ELIF _ELITE_A_VERSION
+
+ JSR MVPG               \ Call MVPG to move a page of memory from ELITE to
+                        \ &6300-&63FF
+
+ENDIF
 
  LDA #&76               \ Set the following:
  STA ZP+1               \
@@ -235,8 +271,17 @@ ENDIF
  LDA #HI(CpASOFT)
  STA P+1
 
+IF NOT(_ELITE_A_VERSION)
+
  JSR MVPG               \ Call MVPG to move and decrypt a page of memory from
                         \ CpASOFT to &7600-&76FF
+
+ELIF _ELITE_A_VERSION
+
+ JSR MVPG               \ Call MVPG to move a page of memory from CpASOFT to
+                        \ &7600-&76FF
+
+ENDIF
 
 IF NOT(_ELITE_A_VERSION)
 
@@ -390,39 +435,70 @@ ELIF _ELITE_A_VERSION
 
  LDA #143               \ Call OSBYTE 143 to issue a paged ROM service call of
  LDX #&21               \ type &21 with argument &C0, which is the "Indicate
- LDY #&C0               \ static workspace in 'hidden' RAM" service call that
- JSR OSBYTE             \ AJD
+ LDY #&C0               \ static workspace in 'hidden' RAM" service call. This
+ JSR OSBYTE             \ call returns the address of a safe place that we can
+                        \ use within the memory bank &C000-&DFFF, and returns
+                        \ the start location in (Y X)
 
- STX put0+1             \ Modify workspace save address AJD
- STX put1+1
+                        \ We now modify the savews routine so that when it's
+                        \ called, it copies the first three pages from the &C000
+                        \ workspace to this safe place, and then copies the MOS
+                        \ character set into the first three pages of &C000, so
+                        \ the character printing routines can use them
+
+                        \ We also modify the restorews routine in a similar way,
+                        \ so that when it's called, it copies the three pages
+                        \ from the safe place back into the first three pages
+                        \ of &C000, thus restoring the filing system workspace
+
+ STX put0+1             \ Modify the low byte of the workspace save address in
+ STX put1+1             \ the savews routine to that of (Y X)
  STX put2+1
 
- STX get0+1             \ Modify workspace restore address AJD
- STX get1+1
+ STX get0+1             \ Modify the low byte of the workspace restore address
+ STX get1+1             \ in the restorews routine to that of (Y X)
  STX get2+1
 
- STY put0+2             \ AJD
- STY get0+2
- INY
- STY put1+2
- STY get1+2
- INY
- STY put2+2
- STY get2+2
+ STY put0+2             \ Modify the high byte of the workspace save address of
+                        \ the first page in the savews routine to that of (Y X)
+
+ STY get0+2             \ Modify the high byte of the workspace restore address
+                        \ of the first page in the restorews routine to that of
+                        \ (Y X)
+
+ INY                    \ Increment Y so that (Y X) points to the second page,
+                        \ i.e. (Y+1 X)
+
+ STY put1+2             \ Modify the high byte of the workspace save address of
+                        \ the second page in the savews routine to (Y+1 X)
+
+ STY get1+2             \ Modify the high byte of the workspace restore address
+                        \ of the second page in the restorews routine to that of
+                        \ (Y+1 X)
+
+ INY                    \ Increment Y so that (Y X) points to the third page,
+                        \ i.e. (Y+2 X)
+
+ STY put2+2             \ Modify the high byte of the workspace save address of
+                        \ the third page in the savews routine to (Y+2 X)
+
+ STY get2+2             \ Modify the high byte of the workspace restore address
+                        \ of the third page in the restorews routine to that of
+                        \ (Y+2 X)
 
  LDA FILEV              \ Set old_FILEV(1 0) to the existing address for FILEV
- STA old_FILEV+1
- LDA FILEV+1
+ STA old_FILEV+1        \ (this modifies the JMP instruction in the do_FILEV
+ LDA FILEV+1            \ routine)
  STA old_FILEV+2
 
  LDA FSCV               \ Set old_FSCV(1 0) to the existing address for FSCV
- STA old_FSCV+1
- LDA FSCV+1
+ STA old_FSCV+1         \ (this modifies the JMP instruction in the do_FILEV
+ LDA FSCV+1             \ routine)
  STA old_FSCV+2
 
  LDA BYTEV              \ Set old_BYTEV(1 0) to the existing address for BYTEV
- STA old_BYTEV+1
- LDA BYTEV+1
+ STA old_BYTEV+1        \ (this modifies the JMP instruction in the old_BYTEV
+ LDA BYTEV+1            \ routine)
  STA old_BYTEV+2
 
  JSR set_vectors        \ Call set_vectors to update FILEV, FSCV and BYTEV to
@@ -462,8 +538,8 @@ ELIF _ELITE_A_VERSION
  STA P+1
  LDX #4
 
- JSR MVBL               \ Call MVBL to move and decrypt 4 pages of memory from
-                        \ WORDS to &0400-&07FF
+ JSR MVBL               \ Call MVBL to move 4 pages of memory from WORDS to
+                        \ &0400-&07FF
 
  LDA #LO(S%+6)          \ Point BRKV to the third entry in the main docked
  STA WRCHV              \ code's S% workspace, which contains JMP CHPR
@@ -479,8 +555,8 @@ ELIF _ELITE_A_VERSION
  LDA #HI(LOADcode)
  STA P+1
 
- JSR MVPG               \ Call MVPG to move and decrypt a page of memory from
-                        \ LOADcode to LOAD
+ JSR MVPG               \ Call MVPG to move a page of memory from LOADcode to
+                        \ LOAD
 
  LDY #35                \ We now want to copy the iff_index routine from
                         \ iff_index_code to iff_index, so set a counter in Y

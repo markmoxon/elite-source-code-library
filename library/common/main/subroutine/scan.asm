@@ -52,7 +52,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _
 ELIF _ELECTRON_VERSION
 
  BMI SC5                \ If this is the planet, then the type will have bit 7
-                        \ set and we don't want to display it on the scanner, 
+                        \ set and we don't want to display it on the scanner,
                         \ so return from the subroutine (as SC5 contains an RTS)
 
 ENDIF
@@ -646,7 +646,7 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Tube
 
 .VL1
 
@@ -655,37 +655,19 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Tube
                         \ pattern as the bottom-right pixel of the dot (so the
                         \ stick comes out of the right side of the dot)
 
- EOR (SC),Y             \ Draw the stick on row Y of the character block using
- STA (SC),Y             \ EOR logic
+ENDIF
 
- DEX                    \ Decrement the (positive) stick height in X
-
- BNE VLL1               \ If we still have more stick to draw, jump up to VLL1
-                        \ to draw the next pixel
-
-.RTS
-
- RTS                    \ Return from the subroutine
-
-                        \ If we get here then the stick length is negative (so
-                        \ the dot is above the ellipse and the stick is below
-                        \ the dot, and we need to draw the stick downwards from
-                        \ the dot)
-
-ELIF _ELITE_A_FLIGHT
-
-.VL1
-
- LDA X1                 \ Set A to the character row byte for the stick, which
-                        \ we stored in X1 above, and which has the same pixel
-                        \ pattern as the bottom-right pixel of the dot (so the
-                        \ stick comes out of the right side of the dot)
+IF _ELITE_A_FLIGHT
 
  EOR Y1                 \ Apply the alternating colour in Y1 to the stick
 
  STA X1                 \ Update the value in X1 so the alternating colour is
                         \ applied every other row (as doing an EOR twice
                         \ reverses it)
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Tube
 
  EOR (SC),Y             \ Draw the stick on row Y of the character block using
  STA (SC),Y             \ EOR logic

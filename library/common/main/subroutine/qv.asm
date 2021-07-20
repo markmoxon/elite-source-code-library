@@ -103,18 +103,15 @@ ENDIF
  ADC #80                \ "RIGHT"
  JSR TT27
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _MASTER_VERSION OR _ELITE_A_VERSION \ Tube
 
- INC YC                 \ Move the text cursor down a row
+ INC YC                 \ Move the text cursor down a row, and increment the
+                        \ counter in YC at the same time
 
 ELIF _6502SP_VERSION
 
- JSR INCYC              \ Move the text cursor down a row
-
-ELIF _ELITE_A_VERSION
-
- INC YC                 \ Move the text cursor down a row, at the same time
-                        \ incrementing the counter in YC
+ JSR INCYC              \ Move the text cursor down a row, and increment the
+                        \ counter in YC at the same time
 
 ENDIF
 

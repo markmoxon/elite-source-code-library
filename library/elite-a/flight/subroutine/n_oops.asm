@@ -18,7 +18,7 @@
 
 .n_oops
 
- SEC                    \ Reduce the amount of damage in A by the level of our 
+ SEC                    \ Reduce the amount of damage in A by the level of our
  SBC new_shields        \ shields in new_shields
 
  BCC n_shok             \ If the amount of damage is less than the level of our

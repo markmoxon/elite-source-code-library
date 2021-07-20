@@ -21,7 +21,7 @@ ENDIF
 \                       present, refund the cost of the item, and then beep and
 \                       exit to the docking bay (i.e. show the Status Mode
 \                       screen)
-\                        
+\
 IF _ELITE_A_VERSION
 \   pres+3              Show the error to say that an item is already present,
 \                       and process a refund, but do not free up a space in the
@@ -967,7 +967,7 @@ ELIF _ELITE_A_VERSION
  BEQ l_3113             \ LASER+X, which contains the laser power for view X, is
                         \ zero), jump to l_3113 to fit the new laser
 
-                        \ We already have a laser fitted to this view, so 
+                        \ We already have a laser fitted to this view, so
 
  PLA                    \ Retrieve the item number from the stack into A
 

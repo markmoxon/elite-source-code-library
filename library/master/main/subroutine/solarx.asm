@@ -10,7 +10,7 @@
 
 .SOLARX
 
- LDA TRUMBLE            \ If we have no Trumbles in the hold, skip to SOLAR 
+ LDA TRUMBLE            \ If we have no Trumbles in the hold, skip to SOLAR
  BEQ SOLAR
 
                         \ If we get here then we have Trumbles in the hold, so

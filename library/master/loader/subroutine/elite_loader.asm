@@ -121,7 +121,7 @@ ENDIF
                         \ In short, this switches the screen memory, which is in
                         \ shadow RAM, into the memory map at &3000-&7FFF, so now
                         \ we can poke directly to the screen memory, and it also
-                        \ moves the filing system RAM space into &C000-&DFFF
+                        \ maps the filing system RAM space into &C000-&DFFF
                         \ (HAZEL), in place of the MOS VDU workspace
 
  JSR PLL1               \ Call PLL1 to draw Saturn

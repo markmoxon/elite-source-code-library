@@ -156,7 +156,7 @@ ENDIF
 
  STX INWK               \ Set INWK to the number of the chosen mission
 
- LDY &0C50,X            \ Set (Y X) to the cost of this mission in 
+ LDY &0C50,X            \ Set (Y X) to the cost of this mission in
  LDA &0C40,X            \ (&0C50+X &0C40+X)
  TAX
 
@@ -369,7 +369,7 @@ ENDIF
                         \
                         \   Q = SQRT(R Q)
 
- PHA                    \ Store the high byte of the result on the stack 
+ PHA                    \ Store the high byte of the result on the stack
 
  LDA P                  \ Set Q = P + K
  CLC                    \

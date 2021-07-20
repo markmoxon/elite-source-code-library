@@ -27,9 +27,9 @@
 
  LDA #112               \ We do have an E.C.M. fitted, so print recursive token
  LDX #30                \ 112 ("ESCAPE POD"), and as this is the Sell Equipment
- JSR status_equip       \ screen, show and process a sell prompt for the piece of
-                        \ equipment at LASER+X = LASER+30 = ESCP before printing
-                        \ a newline
+ JSR status_equip       \ screen, show and process a sell prompt for the piece
+                        \ of equipment at LASER+X = LASER+30 = ESCP before
+                        \ printing a newline
 
 .sell_escape
 

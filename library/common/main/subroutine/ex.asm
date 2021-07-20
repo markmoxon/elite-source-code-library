@@ -34,7 +34,7 @@
 
 IF NOT(_ELITE_A_DOCKED OR _ELITE_A_FLIGHT)
 
- LDA #LO(QQ18)          \ Set V, V+1 to point to the recursive token table at
+ LDA #LO(QQ18)          \ Set V(1 0) to point to the recursive token table at
  STA V                  \ location QQ18
  LDA #HI(QQ18)
  STA V+1
@@ -44,10 +44,12 @@ IF NOT(_ELITE_A_DOCKED OR _ELITE_A_FLIGHT)
 
 ELIF _ELITE_A_DOCKED OR _ELITE_A_FLIGHT
 
- LDY #LO(QQ18)          \ Set V, V+1 to point to the recursive token table at
+ LDY #LO(QQ18)          \ Set V(1 0) to point to the recursive token table at
  STY V                  \ location QQ18, and because QQ18 starts on a page
  LDA #HI(QQ18)          \ boundary, the lower byte of the address is 0, so this
- STA V+1                \ also sets Y = 0
+ STA V+1                \ also sets Y = 0, which we can now use as a counter to
+                        \ point to the character offset as we scan through the
+                        \ table
 
 ENDIF
 

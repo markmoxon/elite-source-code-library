@@ -158,7 +158,7 @@
                         \
                         \   XX____X1____X2____XX+1      ->      +  +__+  +
                         \
-                        \ They all end up with a line between X1 and Y1, which
+                        \ They all end up with a line between X1 and X2, which
                         \ is what we want. There's probably a mathematical proof
                         \ of why this works somewhere, but the above is probably
                         \ easier to follow.

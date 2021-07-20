@@ -336,8 +336,8 @@ ELIF _ELITE_A_VERSION
  LDA VIA+&44            \ If the STA instruction were not commented out, then
 \STA &0001              \ this would set location &0001 among the random number
                         \ seeds to a pretty random number (i.e. the value of the
-                        \ the 6522 System VIA T1C-L timer 1 low-order), but as
-                        \ the STA is commented out, this has no effect
+                        \ the 6522 System VIA T1C-L timer 1 low-order counter),
+                        \ but as the STA is commented out, this has no effect
 
  LDA #%00111001         \ Set 6522 System VIA interrupt enable register IER
  STA VIA+&4E            \ (SHEILA &4E) bits 0 and 3-5 (i.e. disable the Timer1,
@@ -441,8 +441,8 @@ ELIF _ELITE_A_VERSION
  BNE tube_go            \ If X is non-zero then we are running this over the
                         \ Tube, so jump to tube_go to set up the Tube version
 
-                        \ If we get here then we are on a BBC Micro without a
-                        \ 6502 Second Processor
+                        \ If we get here then we are not running on a 6502
+                        \ Second Processor
 
  LDA #172               \ Call OSBYTE 172 to read the address of the MOS
  LDX #0                 \ keyboard translation table into (Y X)
@@ -510,7 +510,7 @@ ELIF _ELITE_A_VERSION
  STY key_tube+1         \ key_tube(1 0)
 
 \LDX #LO(tube_400)      \ These instructions are commented out in the original
-\LDY #HI(tube_400)      \ version
+\LDY #HI(tube_400)      \ source
 \LDA #1
 \JSR &0406
 \LDA #LO(WORDS)
@@ -547,7 +547,7 @@ ELIF _ELITE_A_VERSION
  EQUB 13                \ processor code in 2.H
 
 \.tube_400              \ These instructions are commented out in the original
-\EQUD &0400             \ version
+\EQUD &0400             \ source
 \.tube_wait
 \JSR tube_wait2
 \.tube_wait2

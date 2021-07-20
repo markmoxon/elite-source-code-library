@@ -354,7 +354,7 @@ ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
  LDA #18                \ Call status_equip with A set to recursive token 132
  JSR status_equip       \ to print the next bit of the Status Mode screen:
                         \
-                        \   EQUIPMENT:
+                        \   {current ship type}:
                         \
                         \ followed by a newline and an indent of 8 characters
 

@@ -16,6 +16,7 @@
 \ The colours for the normal dashboard palette are:
 \
 \   Index     Dot colour  Stick colour(s)     Ship types
+\   -----     ----------  ---------------     ----------
 \   0         Green       Green               Clean
 \   1         Yellow      Yellow              Station tracked
 \   2         Green       Green and yellow    Debris
@@ -25,6 +26,7 @@
 \ The colours for the escape pod dashboard palette are:
 \
 \   Index     Dot colour  Stick colour(s)     Ship types
+\   -----     ----------  ---------------     ----------
 \   0         Cyan        Cyan                Clean
 \   1         White       White               Station tracked
 \   2         Cyan        Cyan and white      Debris

@@ -33,9 +33,10 @@ IF NOT(_ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA)
 
 ELIF _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA
 
- JMP TT48               \ This instruction has no effect, as TT48 contains an
-                        \ RTS (it replaces a call to DOEXP in the flight code,
-                        \ which we don't need to do here as we are docked)
+ JMP TT48               \ Jump to TT48 to return from the subroutine using a
+                        \ tail call, as TT48 just contains an RTS (it replaces
+                        \ a call to DOEXP in the flight code, which we don't
+                        \ need to do here as we are docked)
 
 ENDIF
 

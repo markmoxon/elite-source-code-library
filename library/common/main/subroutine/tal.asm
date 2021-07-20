@@ -3,7 +3,7 @@
 \       Name: tal
 \       Type: Subroutine
 \   Category: Text
-\    Summary: Print the current galaxy numbe
+\    Summary: Print the current galaxy number
 \
 \ ------------------------------------------------------------------------------
 \

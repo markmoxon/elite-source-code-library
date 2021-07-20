@@ -4,7 +4,8 @@
 \       Name: to_dd00
 \       Type: Subroutine
 \   Category: Loader
-\    Summary: BBC Master 128 code for save/restore characters
+\    Summary: BBC Master code for saving and restoring the MOS character set,
+\             bundled up in the loader so it can be moved to &DD00 to be run
 \
 \ ******************************************************************************
 

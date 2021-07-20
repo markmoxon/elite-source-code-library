@@ -14,7 +14,7 @@
 
 .David9
 
-EQUW David5            \ The address of David5
+ EQUW David5            \ The address of David5
 
-CLD                    \ This instruction is not used
+ CLD                    \ This instruction is not used
 

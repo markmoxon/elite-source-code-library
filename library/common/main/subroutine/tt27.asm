@@ -98,8 +98,8 @@ ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
 ELIF _ELITE_A_FLIGHT
 
- DEX                    \ If token > 6, skip the following 3 instructions
- BNE l_33b9
+ DEX                    \ If token > 6, jump to l_33b9 to skip the following 5
+ BNE l_33b9             \ instructions
 
 .vdu_80
 

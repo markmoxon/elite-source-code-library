@@ -18,7 +18,7 @@ ENDIF
 
 .TVT1code
 
-EQUB &FF
+ EQUB &FF
 
 ORG &1100
 

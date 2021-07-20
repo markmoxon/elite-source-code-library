@@ -3,6 +3,7 @@
 \       Name: MVEIT (Part 9 of 9)
 \       Type: Subroutine
 \   Category: Moving
+IF NOT(_ELITE_A_DOCKED)
 \    Summary: Move current ship: Redraw on scanner, if it hasn't been destroyed
 \
 \ ------------------------------------------------------------------------------
@@ -12,6 +13,9 @@
 \   * If the ship is exploding or being removed, hide it on the scanner
 \
 \   * Otherwise redraw the ship on the scanner, now that it's been moved
+ELIF _ELITE_A_DOCKED
+\    Summary: Return from the subroutine (the scanner is not used when docked)
+ENDIF
 \
 \ ******************************************************************************
 

@@ -36,5 +36,10 @@ IF NOT(_ELITE_A_VERSION)
                         \ returning from the subroutine using a tail call (this
                         \ BNE is effectively a JMP as A is never zero)
 
+ELIF _ELITE_A_VERSION
+
+                        \ Fall through into DETOK to print extended token
+                        \ 220-221
+
 ENDIF
 

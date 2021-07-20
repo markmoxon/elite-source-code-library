@@ -18,11 +18,11 @@
 \ stored in the table as follows:
 \
 \   Value        Contents                                                  Macro
-\   ---------    ------------------------------------------------------    -----
-\   0-31         Jump tokens                                                EJMP
-\   32-127       ASCII characters with no obfuscation                       EQUS
-\   128-214      Recursive msg_3 text tokens (subtract 128 to get 0-86)     CTOK
-\   215-255      Extended two-letter tokens (subtract 215 to get 0-40)      ETWO
+\   -----        --------                                                  -----
+\   0-31         Jump tokens                                               EJMP
+\   32-127       ASCII characters with no obfuscation                      EQUS
+\   128-214      Recursive msg_3 text tokens (subtract 128 to get 0-86)    CTOK
+\   215-255      Extended two-letter tokens (subtract 215 to get 0-40)     ETWO
 \
 \ Printing of ship data is handled by the write_card routine.
 \

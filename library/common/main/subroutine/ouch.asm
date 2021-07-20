@@ -206,7 +206,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ELIF _ELITE_A_VERSION
 
-BNE MESS                \ Print recursive token A as an in-flight message,
+ BNE MESS               \ Print recursive token A as an in-flight message,
                         \ followed by " DESTROYED", and return from the
                         \ subroutine using a tail call
 

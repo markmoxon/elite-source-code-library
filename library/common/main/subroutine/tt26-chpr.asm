@@ -953,15 +953,31 @@ IF NOT(_ELITE_A_6502SP_PARA)
 
 ElIF _ELITE_A_6502SP_PARA
 
- LDA #&8E               \ AJD
- JSR tube_write
- LDA XC
- JSR tube_write
- LDA YC
- JSR tube_write
- TYA
- JSR tube_write
- INC XC
+ LDA #&8E               \ Send command &8E to the I/O processor:
+ JSR tube_write         \
+                        \   write_xyc(x, y, char)
+                        \
+                        \ which will draw the text character in char at column x
+                        \ and row y
+
+ LDA XC                 \ Send the first parameter to the I/O processor:
+ JSR tube_write         \
+                        \   * x = XC
+
+ LDA YC                 \ Send the second parameter to the I/O processor:
+ JSR tube_write         \
+                        \   * y = YC
+
+ TYA                    \ Send the third parameter to the I/O processor:
+ JSR tube_write         \
+                        \   * char = the character in Y
+
+ INC XC                 \ Once we print the character, we want to move the text
+                        \ cursor to the right, so we do this by incrementing
+                        \ XC. Note that this doesn't have anything to do
+                        \ with the actual printing below, we're just updating
+                        \ the cursor so it's in the right position following
+                        \ the print
 
 ENDIF
 

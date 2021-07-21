@@ -8,7 +8,7 @@ ENDIF
 \       Type: Subroutine
 \   Category: Dashboard
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
-\    Summary: Draw (or erase) the space station indicator ("S") on the dashboard
+\    Summary: Light up the space station indicator ("S") on the dashboard
 ELIF _6502SP_VERSION
 \    Summary: Implement the #DOBULB 0 command (draw the space station indicator
 \             bulb)

@@ -27,17 +27,31 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Co
 \   X                   The number of text rows to display on the screen (24
 \                       will hide the dashboard, 31 will make it reappear)
 \
+\ Returns:
+\
+\   A                   A is set to 6
+\
 ELIF _6502SP_VERSION
 \ Arguments:
 \
 \   A                   The number of text rows to display on the screen (24
 \                       will hide the dashboard, 31 will make it reappear)
 \
-ENDIF
 \ Returns:
 \
 \   A                   A is set to 6
 \
+ELIF _ELITE_A_6502SP_IO
+\ Arguments:
+\
+\   A                   The number of text rows to display on the screen (24
+\                       will hide the dashboard, 31 will make it reappear)
+\
+\ Returns:
+\
+\   X                   X is set to 6
+\
+ENDIF
 \ ******************************************************************************
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Label

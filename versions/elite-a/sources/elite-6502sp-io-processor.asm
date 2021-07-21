@@ -82,7 +82,7 @@ VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
                         \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
                         \ known as SHEILA)
 
-tube_r1s = &FEE0        \ AJD
+tube_r1s = &FEE0        \ The Tube's memory-mapped FIFO registers
 tube_r1d = &FEE1
 tube_r2s = &FEE2
 tube_r2d = &FEE3

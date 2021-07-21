@@ -185,8 +185,12 @@ ENDIF
 
 IF _ELITE_A_6502SP_PARA
 
- TYA                    \ AJD
- JSR write_0346
+ TYA                    \ Tell the I/O processor to set its copy of LASCT to
+ JSR write_0346         \ 255, to act as a counter in the D2 loop below, so this
+                        \ setting determines how long the death animation lasts
+                        \ (it's 5.1 seconds, as LASCT is decremented every
+                        \ vertical sync, or 50 times a second, and
+                        \ 255 / 50 = 5.1)
 
 ENDIF
 
@@ -386,8 +390,11 @@ ELIF _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
 
 ELIF _ELITE_A_6502SP_PARA
 
- JSR read_0346          \ AJD
- BNE D2
+ JSR read_0346          \ Get the value of the I/O processor's copy of LASCT
+
+ BNE D2                 \ Loop back to D2 to run the main flight loop until
+                        \ LASCT reaches zero (which will take 5.1 seconds, as
+                        \ explained above)
 
 ENDIF
 

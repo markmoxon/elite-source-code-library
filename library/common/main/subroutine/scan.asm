@@ -507,21 +507,40 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ M
 
 ELIF _ELITE_A_6502SP_PARA
 
- TAX                    \ AJD
- LDA #&91
- JSR tube_write
- LDA X1
- JSR tube_write
- LDA Y1
- JSR tube_write
- LDA COL
- JSR tube_write
- LDA Y2
- JSR tube_write
- TXA
- JSR tube_write
- LDX #0
- RTS
+ TAX                    \ Copy the stick height in A into X
+
+ LDA #&91               \ Send command &91 to the I/O processor:
+ JSR tube_write         \
+                        \   draw_tail(x, y, base_colour, alt_colour, height)
+                        \
+                        \ which will draw a ship on the 3D scanner with a dot
+                        \ and stick of the specified height and colour, possibly
+                        \ with stripes
+
+ LDA X1                 \ Send the first parameter to the I/O processor:
+ JSR tube_write         \
+                        \   * x1 = X1
+
+ LDA Y1                 \ Send the second parameter to the I/O processor:
+ JSR tube_write         \
+                        \   * y1 = Y1
+
+ LDA COL                \ Send the third parameter to the I/O processor:
+ JSR tube_write         \
+                        \   * base_colour = COL
+
+ LDA Y2                 \ Send the fourth parameter to the I/O processor:
+ JSR tube_write         \
+                        \   * alt_colour = Y2
+
+ TXA                    \ Send the fifth parameter to the I/O processor:
+ JSR tube_write         \
+                        \   * height = the stick height that we stored in X
+
+ LDX #0                 \ Set X = 0 to ensure we return the same value as the
+                        \ SCAN routine in the non-Tube version
+
+ RTS                    \ Return from the subroutine
 
 ENDIF
 

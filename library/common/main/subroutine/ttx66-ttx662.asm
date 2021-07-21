@@ -192,9 +192,13 @@ ELIF _6502SP_VERSION
 
 ELIF _ELITE_A_6502SP_PARA
 
- JSR write_0346         \ AJD
- LDA #&83
- JSR tube_write
+ JSR write_0346         \ Tell the I/O processor to set its copy of LASCT to 0
+
+ LDA #&83               \ Send command &83 to the I/O processor:
+ JSR tube_write         \
+                        \   clr_scrn()
+                        \
+                        \ to clear the top part of the screen
 
 ENDIF
 

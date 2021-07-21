@@ -151,7 +151,7 @@ LL = 30                 \ The length of lines (in characters) of justified text
 
 LS% = &0CFF             \ The start of the descending ship line heap
 
-tube_r1s = &FEF8        \ AJD
+tube_r1s = &FEF8        \ The Tube's memory-mapped FIFO registers
 tube_r1d = &FEF9
 tube_r2s = &FEFA
 tube_r2d = &FEFB

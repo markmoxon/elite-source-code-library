@@ -14,5 +14,5 @@
  JSR tube_get
  STA Y1
  JSR tube_get
- STA X2
+ STA COL
 

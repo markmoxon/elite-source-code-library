@@ -36,9 +36,15 @@ IF NOT(_ELITE_A_6502SP_PARA)
                         \ still being pressed)
 ELIF _ELITE_A_6502SP_PARA
 
- JSR read_0346          \ AJD
- CMP #8
- BCS MA16
+ JSR read_0346          \ Get the value of the I/O processor's copy of LASCT
+
+ CMP #8                 \ If LASCT >= 8, jump to MA16 to skip the following, so
+ BCS MA16               \ for a pulse laser with a LASCT between 8 and 10, the
+                        \ the laser stays on, but for a LASCT of 7 or less it
+                        \ gets turned off and stays off until LASCT reaches zero
+                        \ and the next pulse can start (if the fire button is
+                        \ still being pressed)
+
 ENDIF
                         \
 IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment

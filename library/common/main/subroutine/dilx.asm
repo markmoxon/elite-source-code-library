@@ -92,22 +92,33 @@ IF NOT(_ELITE_A_6502SP_PARA OR _ELITE_A_6502SP_IO)
 
 ELIF _ELITE_A_6502SP_PARA
 
- PHA                    \ AJD
- LDA #&86
- JSR tube_write
- PLA
- JSR tube_write
+ PHA                    \ Store A on the stack
+
+ LDA #&86               \ Send command &86 to the I/O processor:
+ JSR tube_write         \
+                        \   draw_bar(value, colour, screen_low, screen_high)
+                        \
+                        \ which will update the bar-based dashboard indicator at
+                        \ the specified screen address to a given value and
+                        \ colour
+
+ PLA                    \ Send the first parameter to the I/O processor:
+ JSR tube_write         \
+                        \   * value = A
 
 ELIF _ELITE_A_6502SP_IO
 
- JSR tube_get           \ AJD
- STA bar_1
- JSR tube_get
- STA bar_2
- JSR tube_get
- STA SC
- JSR tube_get
- STA SC+1
+ JSR tube_get           \ Get the parameters from the parasite for the command:
+ STA bar_1              \
+ JSR tube_get           \   draw_bar(value, colour, screen_low, screen_high)
+ STA bar_2              \
+ JSR tube_get           \ and store them as follows:
+ STA SC                 \
+ JSR tube_get           \   * bar_1 = the value to display in the indicator
+ STA SC+1               \
+                        \   * bar_2 = the mode 5 colour of the indicator
+                        \
+                        \   * SC(1 0) = the screen address to update
 
 ENDIF
 
@@ -182,12 +193,23 @@ ELIF _ELITE_A_6502SP_PARA
 
 .DL31
 
- JSR tube_write         \ AJD
- LDA SC
- JSR tube_write
- LDA SC+1
- JSR tube_write
- INC SC+1
+ JSR tube_write         \ Send the second parameter to the I/O processor:
+                        \ 
+                        \   * colour = A
+
+ LDA SC                 \ Send the third parameter to the I/O processor:
+ JSR tube_write         \
+                        \   * scl = SC
+
+ LDA SC+1               \ Send the fourth parameter to the I/O processor:
+ JSR tube_write         \
+                        \   * sch = SC+1
+
+ INC SC+1               \ Increment the high byte of SC to point to the next
+                        \ character row on-screen (as each row takes up exactly
+                        \ one page of 256 bytes) - so this sets up SC to point
+                        \ to the next indicator, i.e. the one below the one we
+                        \ just drew
 
 ENDIF
 

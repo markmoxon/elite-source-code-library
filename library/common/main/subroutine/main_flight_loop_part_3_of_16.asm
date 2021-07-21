@@ -462,8 +462,11 @@ IF NOT(_ELITE_A_6502SP_PARA)
 
 ELIF _ELITE_A_6502SP_PARA
 
- JSR read_0346          \ AJD
- BNE MA3
+ JSR read_0346          \ Get the value of the I/O processor's copy of LASCT
+
+ BNE MA3                \ If LASCT is zero, keep going, otherwise the laser is
+                        \ a pulse laser that is between pulses, so jump down to
+                        \ MA3 to skip the following
 
 ENDIF
 
@@ -545,10 +548,10 @@ ELIF _ELITE_A_FLIGHT
 
 ELIF _ELITE_A_6502SP_PARA
 
- JSR write_0346         \ Call write_0346 to set LASCT in the I/O processor to 0
-                        \ for beam lasers, and to the laser power (15) for pulse
-                        \ lasers. See MS23 below for more on laser pulsing and
-                        \ LASCT
+ JSR write_0346         \ Tell the I/O processor to set its copy of LASCT to A,
+                        \ which will be 0 for beam lasers, or the laser power
+                        \ (15) for pulse lasers. See MS23 below for more on
+                        \ laser pulsing and LASCT
 
 ENDIF
 

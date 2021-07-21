@@ -21,7 +21,7 @@ ENDIF
 \ reappear, as the dashboard's screen memory doesn't get touched by this
 \ process.
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Comment
 \ Arguments:
 \
 \   X                   The number of text rows to display on the screen (24

@@ -78,10 +78,14 @@ ELIF _ELITE_A_6502SP_PARA
  JSR DKS1               \ KY2 will be &FF if Space (speed up) is being pressed
 
  JSR scan_fire          \ Call scan_fire to check whether the joystick's fire
-                        \ button is being pressed
+                        \ button is being pressed, which clears bit 4 in A if
+                        \ the fire button is being pressed, and sets it if it
+                        \ is not being pressed
 
- EOR #%00010000         \ AJD
- STA &0307
+ EOR #%00010000         \ Flip bit 4 so that it's set if the fire button has
+ STA KY7                \ been pressed, and store the result in the keyboard
+                        \ logger at location KY7, which is also where the A key
+                        \ (fire lasers) key is logged
 
 ENDIF
 

@@ -92,7 +92,7 @@ IF NOT(_ELITE_A_6502SP_PARA OR _ELITE_A_6502SP_IO)
 
 ELIF _ELITE_A_6502SP_PARA
 
- PHA                    \ Store A on the stack
+ PHA                    \ Store the indicator value on the stack
 
  LDA #&86               \ Send command &86 to the I/O processor:
  JSR tube_write         \
@@ -199,7 +199,7 @@ ELIF _ELITE_A_6502SP_PARA
 
  LDA SC                 \ Send the third parameter to the I/O processor:
  JSR tube_write         \
-                        \   * scl = SC
+                        \   * screen_low = SC
 
  LDA SC+1               \ Send the fourth parameter to the I/O processor:
  JSR tube_write         \

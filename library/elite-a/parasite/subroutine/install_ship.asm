@@ -28,7 +28,8 @@
  STA XX21-2,Y
  LDA ship_list+1,X
  STA XX21-1,Y
- RTS
+
+ RTS                    \ Return from the subroutine
 
  \printer:
  \ TXA

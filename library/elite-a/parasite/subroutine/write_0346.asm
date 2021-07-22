@@ -3,7 +3,8 @@
 \       Name: write_0346
 \       Type: Subroutine
 \   Category: Tube
-\    Summary: Send a new value of LASCT to the I/O processor
+\    Summary: Update the value of LASCT by sending a write_0346 command to the
+\             I/O processor
 \
 \ ------------------------------------------------------------------------------
 \

@@ -63,13 +63,22 @@ ELIF _MASTER_VERSION
 
 ELIF _ELITE_A_6502SP_PARA
 
- LDA #&8A               \ AJD
- JSR tube_write
+ LDA #&8A               \ Send command &8A to the I/O processor:
+ JSR tube_write         \
+                        \   =write_fe4e(value)
+                        \
+                        \ which sets the 6522 System VIA interrupt enable
+                        \ register IER (SHEILA &4E) to the specified value and
+                        \ returns the value in A when done
 
- LDA #&81
- JSR tube_write
+ LDA #%10000001         \ Send the parameter to the I/O processor:
+ JSR tube_write         \
+                        \   * value = %10000001
+                        \
+                        \ to clear bit 1 of IER (i.e. enable the CA2 interrupt,
+                        \ which comes from the keyboard)
 
- JSR tube_read
+ JSR tube_read          \ Set A to the response from the I/O processor
 
 ENDIF
 
@@ -227,13 +236,23 @@ ELIF _6502SP_VERSION
 
 ELIF _ELITE_A_6502SP_PARA
 
- LDA #&8A               \ AJD
- JSR tube_write
+ LDA #&8A               \ Send command &8A to the I/O processor:
+ JSR tube_write         \
+                        \   =write_fe4e(value)
+                        \
+                        \ which sets the 6522 System VIA interrupt enable
+                        \ register IER (SHEILA &4E) to the specified value and
+                        \ returns the value in A when done
 
- LDA #1
- JSR tube_write
+ LDA #%00000001         \ Send the parameter to the I/O processor:
+ JSR tube_write         \
+                        \   * value = %00000001
+                        \
+                        \ to set bit 1 of IER (i.e. disable the CA2 interrupt,
+                        \ which comes from the keyboard)
 
- JSR tube_read
+ JSR tube_read          \ Set A to the response from the I/O processor, so we
+                        \ know the register has been set
 
 ENDIF
 

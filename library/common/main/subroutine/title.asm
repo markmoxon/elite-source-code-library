@@ -556,7 +556,9 @@ ENDIF
 ELIF _ELITE_A_6502SP_PARA
 
  JSR scan_fire          \ Call scan_fire to check whether the joystick's fire
-                        \ button is being pressed
+                        \ button is being pressed, which clears bit 4 in A if
+                        \ the fire button is being pressed, and sets it if it
+                        \ is not being pressed
 
 ENDIF
 

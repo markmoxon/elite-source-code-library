@@ -61,7 +61,7 @@ _SOURCE_DISC            = (_RELEASE = 2)
 X = 128                 \ The centre x-coordinate of the 256 x 192 space view
 Y = 96                  \ The centre y-coordinate of the 256 x 192 space view
 
-tube_brk = &0016        \ Tube BRK vector AJD
+tube_brk = &0016        \ The location of the Tube host code's break handler
 
 BRKV = &0202            \ The break vector that we intercept to enable us to
                         \ handle and display system errors

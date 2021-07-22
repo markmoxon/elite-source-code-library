@@ -9,6 +9,8 @@
 
 .read_0346
 
- LDA LASCT              \ Send the value of LASCT to the parasite and return
- JMP tube_put           \ from the subroutine using a tail call
+ LDA LASCT              \ Fetch the current value of LASCT into A
+
+ JMP tube_put           \ Send A back to the parasite and return from the
+                        \ subroutine using a tail call
 

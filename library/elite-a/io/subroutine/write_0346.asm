@@ -3,7 +3,7 @@
 \       Name: write_0346
 \       Type: Subroutine
 \   Category: Tube
-\    Summary: Receive a new value of LASCT from the parasite
+\    Summary: Receive a new value from the parasite for LASCT
 \
 \ ******************************************************************************
 

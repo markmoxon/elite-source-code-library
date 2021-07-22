@@ -3,7 +3,7 @@
 \       Name: clr_scrn
 \       Type: Subroutine
 \   Category: Utility routines
-\    Summary: AJD
+\    Summary: Clear the top part of the screen (the space view)
 \
 \ ******************************************************************************
 

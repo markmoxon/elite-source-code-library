@@ -30,7 +30,8 @@ IF _ELITE_A_6502SP_PARA
  STA QQ26               \ Set QQ26 to the random byte that's used in the market
                         \ calculations
 
- JSR GVL                \ AJD
+ JSR GVL                \ Calculate the availability for each market item in the
+                        \ new system
 
 .stay_quit
 

@@ -3,7 +3,8 @@
 \       Name: scan_fire
 \       Type: Subroutine
 \   Category: Keyboard
-\    Summary: Check whether the joystick's fire button is being pressed
+\    Summary: Check whether the joystick's fire button is being pressed and send
+\             the result back to the parasite
 \
 \ ******************************************************************************
 
@@ -20,5 +21,6 @@
                         \ button is pressed, otherwise it is set, so AND'ing
                         \ the value of IRB with %10000 extracts this bit
 
- JMP tube_put           \ AJD
+ JMP tube_put           \ Send A back to the parasite and return from the
+                        \ subroutine using a tail call
 

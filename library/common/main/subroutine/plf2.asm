@@ -18,11 +18,11 @@
 
 .plf2
 
-IF NOT(_ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA)
+IF NOT(_ELITE_A_6502SP_PARA)
 
  JSR plf                \ Print the text token in A followed by a newline
 
-ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
+ELIF _ELITE_A_6502SP_PARA
 
  STX CNT                \ AJD
  STA XX4
@@ -73,7 +73,7 @@ IF _ELITE_A_6502SP_PARA
 
 ENDIF
 
-IF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
+IF _ELITE_A_6502SP_PARA
 
 .status_no
 

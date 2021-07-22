@@ -41,16 +41,6 @@ ELIF _6502SP_VERSION
 \
 \   A                   A is set to 6
 \
-ELIF _ELITE_A_6502SP_IO
-\ Arguments:
-\
-\   A                   The number of text rows to display on the screen (24
-\                       will hide the dashboard, 31 will make it reappear)
-\
-\ Returns:
-\
-\   X                   X is set to 6
-\
 ENDIF
 \ ******************************************************************************
 
@@ -76,7 +66,7 @@ IF NOT(_ELITE_A_6502SP_IO)
 
 ELIF _ELITE_A_6502SP_IO
 
- JSR tube_get           \ AJD
+ JSR tube_get           \ Get the number of rows from the parasite into A
 
  LDX #6                 \ Set X to 6 so we can update 6845 register R6 below
 

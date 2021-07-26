@@ -11,7 +11,7 @@
 IF NOT(_ELITE_A_VERSION)
 \ The ship blueprint for the splinter reuses the edges data from the escape pod,
 \ so the edges data offset is negative.
-ELIF (_ELITE_A_VERSION)
+ELIF _ELITE_A_VERSION
 \ The ship blueprint for the splinter is supposed to reuse the edges data from
 \ the escape pod, but there is a bug in Elite-A that breaks splinters. The edges
 \ data offset is negative, as it should be, but the offset value is incorrect
@@ -35,7 +35,7 @@ ENDIF
  EQUW 16 * 16           \ Targetable area          = 16 * 16
 IF NOT(_ELITE_A_VERSION)
  EQUB LO(SHIP_ESCAPE_POD_EDGES - SHIP_SPLINTER)      \ Edges data = escape pod
-ELIF (_ELITE_A_VERSION)
+ELIF _ELITE_A_VERSION
  EQUB &5A               \ This value is incorrect (see above)
 ENDIF
  EQUB &44               \ Faces data offset (low)  = &0044
@@ -63,7 +63,7 @@ ENDIF
  EQUB 10                \ Max. speed               = 10
 IF NOT(_ELITE_A_VERSION)
  EQUB HI(SHIP_ESCAPE_POD_EDGES - SHIP_SPLINTER)      \ Edges data = escape pod
-ELIF (_ELITE_A_VERSION)
+ELIF _ELITE_A_VERSION
  EQUB &FE               \ This value is incorrect (see above)
 ENDIF
  EQUB &00               \ Faces data offset (high) = &0044

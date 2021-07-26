@@ -213,7 +213,8 @@ ELIF _ELITE_A_VERSION
 
  LDA #41                \ Set SC = 41 - T
  SBC T                  \        = 40 + 1 - (X * 8)
- STA SC                 \
+ STA SC                 \        = 48 + 1 - ((X + 1) * 8)
+                        \
                         \ This is the same calculation as in the disc version's
                         \ MSBAR routine, but because the missile number in the
                         \ Elite-A version is in the range 0-3 rather than 1-3,

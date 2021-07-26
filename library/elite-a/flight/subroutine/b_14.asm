@@ -3,7 +3,7 @@
 \       Name: b_14
 \       Type: Subroutine
 \   Category: Keyboard
-\    Summary: Check Delta 14b joystick buttons
+\    Summary: Scan the Delta 14b joystick buttons
 \
 \ ------------------------------------------------------------------------------
 \

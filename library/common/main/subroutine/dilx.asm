@@ -3,28 +3,40 @@
 \       Name: DILX
 \       Type: Subroutine
 \   Category: Dashboard
+IF NOT(_ELITE_A_6502SP_IO)
 \    Summary: Update a bar-based indicator on the dashboard
+ELIF _ELITE_A_6502SP_IO
+\    Summary: Implement the draw_bar command (update a bar-based indicator on
+\             the dashboard
+ENDIF
 \  Deep dive: The dashboard indicators
 \
 \ ------------------------------------------------------------------------------
 \
+IF _ELITE_A_6502SP_IO
+\ This routine is run when the parasite sends a draw_bar command. It updates a
+\ bar-based indicator on the dashboard.
+\
+ENDIF
 \ The range of values shown on the indicator depends on which entry point is
 \ called. For the default entry point of DILX, the range is 0-255 (as the value
 \ passed in A is one byte). The other entry points are shown below.
 \
+IF NOT(_ELITE_A_6502SP_IO)
 \ Arguments:
 \
 \   A                   The value to be shown on the indicator (so the larger
 \                       the value, the longer the bar)
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+ENDIF
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \   T1                  The threshold at which we change the indicator's colour
 \                       from the low value colour to the high value colour. The
 \                       threshold is in pixels, so it should have a value from
 \                       0-16, as each bar indicator is 16 pixels wide
 \
 ENDIF
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Comment
 \   K                   The colour to use when A is a high value, as a 4-pixel
 \                       mode 5 character row byte
 \
@@ -37,15 +49,15 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 \   K+1                 The colour to use when A is a low value, as a 2-pixel
 \                       mode 2 character row byte
 ENDIF
+IF NOT(_ELITE_A_6502SP_IO)
 \
 \   SC(1 0)             The screen address of the first character block in the
 \                       indicator
 \
-IF NOT(_ELITE_A_6502SP_IO)
 \ Other entry points:
 \
 ENDIF
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \   DILX+2              The range of the indicator is 0-64 (for the fuel
 \                       indicator)
 \
@@ -118,7 +130,7 @@ ELIF _ELITE_A_6502SP_IO
  STA SC+1               \
                         \   * bar_2 = the mode 5 colour of the indicator
                         \
-                        \   * SC(1 0) = the screen address to update
+                        \   * SC(1 0) = the screen address of the indicator
 
 ENDIF
 

@@ -3,15 +3,22 @@
 \       Name: HLOIN
 \       Type: Subroutine
 \   Category: Drawing lines
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _MASTER_VERSION \ Comment
 \    Summary: Draw a horizontal line from (X1, Y1) to (X2, Y1)
 ELIF _6502SP_VERSION
 \    Summary: Implement the OSWORD 247 command (draw the sun lines in the
 \             horizontal line buffer in orange)
+ELIF _ELITE_A_6502SP_IO
+\    Summary: Implement the draw_hline command (draw a horizontal line
 ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
+IF _ELITE_A_6502SP_IO
+\ This routine is run when the parasite sends a draw_hline command. It draws a
+\ horizontal line.
+\
+ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \ We do not draw a pixel at the end point (X2, X1).
 \
@@ -84,12 +91,17 @@ ENDIF
 
 IF _ELITE_A_6502SP_IO
 
- JSR tube_get           \ AJD
- STA X1
- JSR tube_get
- STA Y1
- JSR tube_get
- STA X2
+ JSR tube_get           \ Get the parameters from the parasite for the command:
+ STA X1                 \
+ JSR tube_get           \   draw_hline(x1, y1, x2)
+ STA Y1                 \
+ JSR tube_get           \ and store them as follows:
+ STA X2                 \
+                        \   * X1 = the start point's x-coordinate
+                        \
+                        \   * Y1 = the horizontal line's y-coordinate
+                        \
+                        \   * X2 = the end point's x-coordinate
 
  LDX X1                 \ Set X = X1
 

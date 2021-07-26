@@ -3,8 +3,13 @@
 \       Name: scan_fire
 \       Type: Subroutine
 \   Category: Keyboard
-\    Summary: Check whether the joystick's fire button is being pressed and send
-\             the result back to the parasite
+\    Summary: Implement the scan_fire command (scan the joystick's fire button)
+\
+\ ------------------------------------------------------------------------------
+\
+\ This routine is run when the parasite sends a scan_fire command. It checks the
+\ joystick's fire button and returns a value to the parasite with bit 4 clear if
+\ the joystick's fire button is being pressed, or bit 4 set if it isn't.
 \
 \ ******************************************************************************
 

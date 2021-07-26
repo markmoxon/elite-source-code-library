@@ -3,15 +3,16 @@
 \       Name: get_key
 \       Type: Subroutine
 \   Category: Keyboard
-\    Summary: Scan the keyboard until a key is pressed and send the key's ASCII
-\             code to the parasite
+\    Summary: Implement the get_key command (wait for a key press)
 \
 \ ------------------------------------------------------------------------------
 \
-\ Scan the keyboard until a key is pressed, and return the key's ASCII code.
-\ If, on entry, a key is already being held down, then wait until that key is
-\ released first (so this routine detects the first key down event following
-\ the subroutine call).
+\ This routine is run when the parasite sends a get_key command. It waits until
+\ a key is pressed, and returns the key's ASCII code to the parasite.
+\
+\ If, on entry, a key is already being held down, then it waits until that key
+\ is released first, so this routine detects the first key down event following
+\ the receipt of the get_key command.
 \
 \ ******************************************************************************
 

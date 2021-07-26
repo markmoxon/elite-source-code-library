@@ -37,7 +37,7 @@ IF NOT(_ELITE_A_VERSION)
  LDA #HI(S%+11)
  STA BRKV+1
 
- LDA #LO(S%+6)          \ Point BRKV to the third entry in the main docked
+ LDA #LO(S%+6)          \ Point WRCHV to the third entry in the main docked
  STA WRCHV              \ code's S% workspace, which contains JMP CHPR
  LDA #HI(S%+6)
  STA WRCHV+1

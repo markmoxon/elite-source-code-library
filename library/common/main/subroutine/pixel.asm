@@ -3,7 +3,7 @@
 \       Name: PIXEL
 \       Type: Subroutine
 \   Category: Drawing pixels
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Comment
 \    Summary: Draw a 1-pixel dot, 2-pixel dash or 4-pixel square
 \  Deep dive: Drawing monochrome pixels in mode 4
 ELIF _MASTER_VERSION
@@ -12,11 +12,14 @@ ELIF _MASTER_VERSION
 ELIF _6502SP_VERSION
 \    Summary: Implement the OSWORD 241 command (draw space view pixels)
 \  Deep dive: Drawing colour pixels in mode 5
+ELIF _ELITE_A_6502SP_IO
+\    Summary: Implement the draw_pixel command (draw space view pixels)
+\  Deep dive: Drawing colour pixels in mode 4
 ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Comment
 \ Draw a point at screen coordinate (X, A) with the point size determined by the
 \ distance in ZZ. This applies to the top part of the screen (the monochrome
 \ mode 4 portion).
@@ -45,6 +48,9 @@ ELIF _6502SP_VERSION
 \     routine in the parasite.
 \
 \ The parameters match those put into the PBUF/pixbl block in the parasite.
+ELIF _ELITE_A_6502SP_IO
+\ This routine is run when the parasite sends a draw_pixel command. It draws a
+\ dot in the space view.
 ENDIF
 \
 \ Arguments:
@@ -148,13 +154,19 @@ ENDIF
 
 IF _ELITE_A_6502SP_IO
 
- JSR tube_get           \ AJD
- TAX
- JSR tube_get
- TAY
- JSR tube_get
- STA ZZ
- TYA
+ JSR tube_get           \ Get the parameters from the parasite for the command:
+ TAX                    \
+ JSR tube_get           \   draw_pixel(x, y, distance)
+ TAY                    \
+ JSR tube_get           \ and store them as follows:
+ STA ZZ                 \
+                        \   * X = the pixel's x-coordinate
+                        \
+                        \   * Y = the pixel's y-coordinate
+                        \
+                        \   * ZZ = the pixel's distance
+
+ TYA                    \ Copy the pixel's y-coordinate from Y into A
 
 ELIF _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA
 

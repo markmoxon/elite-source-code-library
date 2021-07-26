@@ -99,8 +99,9 @@
  BPL print_view
  LDA #3
  JMP print_safe
- \JSR print_safe
- \JMP tube_put
+
+\JSR print_safe         \ These instructions are commented out in the original
+\JMP tube_put           \ source
 
 
 .print_tone

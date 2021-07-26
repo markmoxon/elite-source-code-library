@@ -179,7 +179,7 @@ IF _ELITE_A_6502SP_IO
 
 .scan_p
 
- LDA #&37
+ LDA #&37               \ AJD
 
 .scan_test
 

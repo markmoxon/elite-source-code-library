@@ -3,20 +3,34 @@
 \       Name: CHPR
 \       Type: Subroutine
 \   Category: Text
-\    Summary: AJD
+\    Summary: Implement the write_xyc command (write a character to the screen)
+\
+\ ------------------------------------------------------------------------------
+\
+\ This routine is run when the parasite sends a write_xyc command. It writes a
+\ text character to the screen at specified position, or (if the character is
+\ null) it just moves the text cursor.
 \
 \ ******************************************************************************
 
 .CHPR
 
- JSR tube_get
- STA XC
- JSR tube_get
- STA YC
- JSR tube_get
- CMP #&20
+ JSR tube_get           \ Get the parameters from the parasite for the command:
+ STA XC                 \
+ JSR tube_get           \   write_xyc(x, y, char)
+ STA YC                 \
+ JSR tube_get           \ and store them as follows:
+                        \
+                        \   * XC = text column (x-coordinate)
+                        \
+                        \   * YC = text row (y-coordinate)
+                        \
+                        \   * A = the character to print
+
+ CMP #32                \ AJD
  BNE tube_wrch
- LDA #&09
+
+ LDA #9
 
 .tube_wrch
 
@@ -28,7 +42,7 @@
  BEQ wrch_quit
  CMP #&7F
  BEQ wrch_del
- CMP #&20
+ CMP #32
  BEQ wrch_spc
  BCS wrch_char
  CMP #&0A

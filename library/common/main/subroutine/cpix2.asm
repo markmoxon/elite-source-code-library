@@ -3,7 +3,7 @@
 \       Name: CPIX2
 \       Type: Subroutine
 \   Category: Drawing pixels
-\    Summary: Draw a single-height dot on the dashboard
+\    Summary: Draw a single-height dash on the dashboard
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \  Deep dive: Drawing colour pixels in mode 5
 ELIF _ELECTRON_VERSION

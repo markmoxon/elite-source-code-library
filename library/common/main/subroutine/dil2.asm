@@ -3,11 +3,21 @@
 \       Name: DIL2
 \       Type: Subroutine
 \   Category: Dashboard
+IF NOT(_ELITE_A_6502SP_IO)
 \    Summary: Update the roll or pitch indicator on the dashboard
+ELIF _ELITE_A_6502SP_IO
+\    Summary: Implement the draw_angle command (update the roll or pitch
+\             indicator on the dashboard)
+ENDIF
 \  Deep dive: The dashboard indicators
 \
 \ ------------------------------------------------------------------------------
 \
+IF _ELITE_A_6502SP_IO
+\ This routine is run when the parasite sends a draw_angle command. It updates
+\ the roll or pitch indicator on the dashboard.
+\
+ENDIF
 \ The indicator can show a vertical bar in 16 positions, with a value of 8
 \ showing the bar in the middle of the indicator.
 \
@@ -31,12 +41,15 @@
 
 IF _ELITE_A_6502SP_IO
 
- JSR tube_get           \ AJD
- STA angle_1
- JSR tube_get
- STA SC
- JSR tube_get
- STA SC+1
+ JSR tube_get           \ Get the parameters from the parasite for the command:
+ STA angle_1            \
+ JSR tube_get           \   draw_angle(value, screen_low, screen_high)
+ STA SC                 \
+ JSR tube_get           \ and store them as follows:
+ STA SC+1               \
+                        \   * angle_1 = the value to display in the indicator
+                        \
+                        \   * SC(1 0) = the screen address of the indicator
 
 ENDIF
 

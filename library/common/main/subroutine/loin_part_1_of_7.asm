@@ -3,11 +3,16 @@
 \       Name: LOIN (Part 1 of 7)
 \       Type: Subroutine
 \   Category: Drawing lines
+IF NOT(_ELITE_A_6502SP_IO)
 \    Summary: Draw a line: Calculate the line gradient in the form of deltas
+ELIF _ELITE_A_6502SP_IO
+\    Summary: Implement the draw_line command (draw a line)
+ENDIF
 \  Deep dive: Bresenham's line algorithm
 \
 \ ------------------------------------------------------------------------------
 \
+IF NOT(_ELITE_A_6502SP_IO)
 \ This routine draws a line from (X1, Y1) to (X2, Y2). It has multiple stages.
 \ This stage calculates the line deltas.
 \
@@ -21,6 +26,12 @@
 \
 \   Y2                  The screen y-coordinate of the end of the line
 \
+ELIF _ELITE_A_6502SP_IO
+\ This routine is run when the parasite sends a draw_line command. It draws a
+\ line from (X1, Y1) to (X2, Y2). It has multiple stages.
+\
+\ This stage calculates the line deltas.
+ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \ Returns:
 \
@@ -76,14 +87,19 @@ ENDIF
 
 IF _ELITE_A_6502SP_IO
 
- JSR tube_get           \ AJD
- STA X1
- JSR tube_get
- STA Y1
- JSR tube_get
- STA X2
- JSR tube_get
- STA Y2
+ JSR tube_get           \ Get the parameters from the parasite for the command:
+ STA X1                 \
+ JSR tube_get           \   draw_line(x1, y1, x2, y2)
+ STA Y1                 \
+ JSR tube_get           \ and store them as follows:
+ STA X2                 \
+ JSR tube_get           \   * X1 = the start point's x-coordinate
+ STA Y2                 \
+                        \   * Y1 = the start point's y-coordinate
+                        \
+                        \   * X2 = the end point's x-coordinate
+                        \
+                        \   * Y2 = the end point's y-coordinate
 
 ENDIF
 

@@ -3,26 +3,38 @@
 \       Name: draw_tail
 \       Type: Subroutine
 \   Category: Dashboard
-\    Summary: AJD
+\    Summary: Implement the draw_tail command (draw a ship on the 3D scanner)
+\
+\ ------------------------------------------------------------------------------
+\
+\ This routine is run when the parasite sends a draw_tail command. It draws a
+\ ship on the 3D scanner, as a dot and (if applicable) a tail, using the base
+\ and alternating colours specified (so it can draw a striped tail for when an
+\ I.F.F. system is fitted).
 \
 \ ******************************************************************************
 
 .draw_tail
 
- JSR tube_get
- STA X1
- JSR tube_get
- STA Y1
- JSR tube_get
- STA X2
- JSR tube_get
- STA Y2
- JSR tube_get
- STA P
+ JSR tube_get           \ Get the parameters from the parasite for the command:
+ STA X1                 \
+ JSR tube_get           \   draw_tail(x, y, base_colour, alt_colour, height)
+ STA Y1                 \
+ JSR tube_get           \ and store them as follows:
+ STA COL                \
+ JSR tube_get           \   * X1 = ship's screen x-coordinate on the scanner
+ STA Y2                 \
+ JSR tube_get           \   * Y1 = ship's screen y-coordinate on the scanner
+ STA P                  \
+                        \   * COL = base colour
+                        \
+                        \   * Y2 = alternating (EOR) colour
+                        \
+                        \   * P = stick height
 
 .SC48
 
- JSR CPIX2              \ Like SC48 in SCAN
+ JSR CPIX2              \ Like SC48 in SCAN AJD
  DEC Y1
  JSR CPIX2
 

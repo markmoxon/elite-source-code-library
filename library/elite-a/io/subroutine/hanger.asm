@@ -3,17 +3,31 @@
 \       Name: HANGER
 \       Type: Subroutine
 \   Category: Ship hanger
-\    Summary: AJD
+\    Summary: Implement the picture_h command (draw horizontal lines for the
+\             ship hanger floor)
+\
+\ ------------------------------------------------------------------------------
+\
+\ This routine is run when the parasite sends a picture_h command. It draws a
+\ specified number of horizontal lines for the ship hanger's floor, making sure
+\ it draws between the ships when there are multiple ships in the hanger.
 \
 \ ******************************************************************************
 
 .HANGER
 
- JSR tube_get
- STA picture_1
- JSR tube_get
- STA picture_2
- LDA picture_1
+ JSR tube_get           \ Get the parameters from the parasite for the command:
+ STA picture_1          \
+ JSR tube_get           \   picture_h(line_count, multiple_ships)
+ STA picture_2          \
+                        \ and store them as follows:
+                        \
+                        \   * picture_1 = the number of horizontal lines to draw
+                        \
+                        \   * picture_2 = 0 if there is only one ship, non-zero
+                        \                 otherwise
+
+ LDA picture_1          \ AJD
  CLC
  ADC #&60
  LSR A
@@ -37,35 +51,6 @@
  JSR HAS3
 
 .l_2045
-
- RTS
-
-.HA2
-
- JSR tube_get
- AND #&F8
- STA SC
- LDX #&60
- STX SC+&01
- LDX #&80
- LDY #&01
-
-.HAL7
-
- TXA
- AND (SC),Y
- BNE HA6
- TXA
- ORA (SC),Y
- STA (SC),Y
- INY
- CPY #&08
- BNE HAL7
- INC SC+&01
- LDY #&00
- BEQ HAL7
-
-.HA6
 
  RTS
 

@@ -3,7 +3,7 @@
 \       Name: CPIX2
 \       Type: Subroutine
 \   Category: Drawing pixels
-\    Summary: Draw a single-height dot on the dashboard by sending a draw_blob
+\    Summary: Draw a single-height dash on the dashboard by sending a draw_blob
 \             command to the I/O processor
 \
 \ ------------------------------------------------------------------------------
@@ -24,7 +24,7 @@
  JSR tube_write         \
                         \   draw_blob(x, y, colour)
                         \
-                        \ which will draw a dot of the specified colour and
+                        \ which will draw a dash of the specified colour and
                         \ position on the dashboard 
 
  LDA X1                 \ Send the first parameter to the I/O processor:

@@ -131,7 +131,10 @@
  PHA
  TSX
  LDA &103,X
- JSR rawrch
+
+ JSR rawrch             \ Print the character by calling the VDU character
+                        \ output routine in the MOS
+
  PLA
  TAX
  PLA

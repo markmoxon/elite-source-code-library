@@ -63,11 +63,6 @@ ENDIF
  VERTEX   -9,   38,   12,     4,      0,    5,     5,         31    \ Vertex 4
  VERTEX    9,    0,   -8,     5,      1,    6,     6,         31    \ Vertex 5
  VERTEX    9,  -10,  -15,     2,      1,    6,     6,         31    \ Vertex 6
-IF _ELITE_A_VERSION
-
-.SHIP_THARGON_VERTICES
-
-ENDIF
  VERTEX    9,   -6,  -26,     3,      2,    6,     6,         31    \ Vertex 7
  VERTEX    9,    6,  -26,     4,      3,    6,     6,         31    \ Vertex 8
  VERTEX    9,   10,  -15,     5,      4,    6,     6,         31    \ Vertex 9

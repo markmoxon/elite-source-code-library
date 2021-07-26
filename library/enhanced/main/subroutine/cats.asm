@@ -131,7 +131,10 @@ ELIF _ELITE_A_6502SP_PARA
                         \   write_xyc(x, y, char)
                         \
                         \ which will draw the text character in char at column x
-                        \ and row y
+                        \ and row y, though in this case we're sending a null
+                        \ character (char = 0), so this doesn't print anything
+                        \ but just moves the text cursor in the I/O processor
+                        \ to column XC and row YC
 
  LDA XC                 \ Send the first parameter to the I/O processor:
  JSR tube_write         \
@@ -144,8 +147,6 @@ ELIF _ELITE_A_6502SP_PARA
  LDA #0                 \ Send the third parameter to the I/O processor:
  JSR tube_write         \
                         \   * char = 0
-                        \
-                        \ AJD
 
 ENDIF
 

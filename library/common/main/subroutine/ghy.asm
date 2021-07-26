@@ -203,7 +203,8 @@ ENDIF
 
 IF _ELITE_A_6502SP_PARA
 
- JMP jmp                \ AJD
+ JMP jmp                \ Set the current system to the selected system and
+                        \ return from the subroutine using a tail call
 
 ENDIF
 

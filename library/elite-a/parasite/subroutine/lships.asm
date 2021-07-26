@@ -34,7 +34,9 @@
 .mix_match
 
  JSR DORND
- CMP #ship_total \ # POSSIBLE SHIPS
+
+ CMP #ship_total        \ The number of different ship blueprints in Elite-A
+
  BCS mix_match
  ASL A
  ASL A

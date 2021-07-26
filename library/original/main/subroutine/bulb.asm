@@ -67,19 +67,32 @@ ELIF _ELITE_A_6502SP_IO
                         \ &7D as the bulbs are both in the character row from
                         \ &7D00 to &7DFF
 
- STA SC+1               \ AJD
- STX font
+ STA SC+1               \ Set the high byte of SC(1 0) to &7D, so SC now points
+                        \ to the screen address of the bulb we want to draw
+
+ STX font               \ Set font(1 0) = (Y X)
  STY font+1
- LDY #&07
+
+ LDY #7                 \ We now want to draw the bulb by copying the bulb
+                        \ character definition from font(1 0) into the screen
+                        \ address at SC(1 0), so set a counter in Y to work
+                        \ through the eight bytes (one per row) in the bulb
 
 .ECBLBor
 
- LDA (font),Y
- EOR (SC),Y
- STA (SC),Y
- DEY
- BPL ECBLBor
- RTS
+ LDA (font),Y           \ Fetch the Y-th row of the bulb character definition
+                        \ from font(1 0)
+
+ EOR (SC),Y             \ Draw the row on-screen using EOR logic, so if the bulb
+ STA (SC),Y             \ is already on-screen this will remove it, otherwise it
+                        \ will light the bulb up
+
+ DEY                    \ Decrement the row counter
+
+ BPL ECBLBor            \ Loop back to ECBLBor until we have drawn all 8 rows of
+                        \ the bulb
+
+ RTS                    \ Return from the subroutine
 
 ENDIF
 

@@ -24,9 +24,16 @@ IF _ELITE_A_ENCYCLOPEDIA
 
 ELIF _ELITE_A_6502SP_PARA
 
- JSR check_keys         \ AJD
- TXA
- BEQ l_restart
+ JSR check_keys         \ Call check_keys to wait until a key is pressed,
+                        \ quitting the game if the game if COPY (pause) and
+                        \ ESCAPE are pressed
+
+ TXA                    \ Copy the number of the key pressed into A
+
+ BEQ l_restart          \ If check_keys returned with X = 0, then we paused the
+                        \ game with COPY and then unpaused it with DELETE, in
+                        \ which case loop back to l_restart to keep checking for
+                        \ key presses
 
 ENDIF
 

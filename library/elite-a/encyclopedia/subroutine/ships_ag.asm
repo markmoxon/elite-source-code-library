@@ -219,16 +219,22 @@ IF _ELITE_A_ENCYCLOPEDIA
  JSR RDKEY              \ Scan the keyboard for a key press and return the
                         \ internal key number in X (or 0 for no key press)
 
-ELIF _ELITE_A_6502SP_PARA
-
- JSR check_keys         \ AJD
- CPX #0
-
-ENDIF
-
  BEQ l_395a             \ If no key is being pressed, loop back to l_395a to
                         \ keep rotating the ship
 
- JMP BAY                \ Jump to BAY to go to the docking bay (i.e. show the
-                        \ Encyclopedia screen)
+ELIF _ELITE_A_6502SP_PARA
+
+ JSR check_keys         \ Call check_keys to wait until a key is pressed,
+                        \ quitting the game if the game if COPY (pause) and
+                        \ ESCAPE are pressed
+
+ CPX #0                 \ If check_keys returns with X = 0, then we paused the
+ BEQ l_395a             \ game with COPY and then unpaused it with DELETE, in
+                        \ which case loop back to l_395a to keep rotating the
+                        \ ship
+
+ENDIF
+
+ JMP BAY                \ Otherwise a key was pressed, so jump to BAY to go to
+                        \ the docking bay (i.e. show the Encyclopedia screen)
 

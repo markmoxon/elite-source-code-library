@@ -91,7 +91,7 @@ tube_r3d = &FEE5
 tube_r4s = &FEE6
 tube_r4d = &FEE7
 
-rawrch = &FFBC          \ AJD
+rawrch = &FFBC          \ The address of the MOS's VDU character output routine
 
 OSBYTE = &FFF4          \ The address for the OSBYTE routine
 OSCLI = &FFF7           \ The address for the OSCLI routine

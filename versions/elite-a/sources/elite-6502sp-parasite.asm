@@ -70,7 +70,7 @@ NOSH = 12               \ The maximum number of ships in our local bubble of
 
 NTY = 31                \ The number of different ship types
 
-ship_total = 38         \ AJD
+ship_total = 38         \ The number of different ship blueprints in Elite-A
 
 MSL = 1                 \ Ship type for a missile
 SST = 2                 \ Ship type for a Coriolis space station

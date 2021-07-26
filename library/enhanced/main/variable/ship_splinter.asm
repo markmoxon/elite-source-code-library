@@ -8,8 +8,23 @@
 \
 \ ------------------------------------------------------------------------------
 \
+IF NOT(_ELITE_A_VERSION)
 \ The ship blueprint for the splinter reuses the edges data from the escape pod,
 \ so the edges data offset is negative.
+ELIF (_ELITE_A_VERSION)
+\ The ship blueprint for the splinter is supposed to reuse the edges data from
+\ the escape pod, but there is a bug in Elite-A that breaks splinters. The edges
+\ data offset is negative, as it should be, but the offset value is incorrect
+\ and doesn't even point to edge data - in the Tube version, it points into the
+\ middle of the Thargoid's vertex data, while in the disc version it points to a
+\ different place depending on the structure of the individual blueprint file.
+\ In all cases the offset is wrong, so splinters in Elite-A appear as a random
+\ mess of lines. The correct value of the offset should be:
+\
+\   SHIP_ESCAPE_POD_EDGES - SHIP_SPLINTER
+\
+\ split into the high byte and low byte, as it is in the disc version.
+ENDIF
 \
 \ ******************************************************************************
 
@@ -18,12 +33,10 @@
  EQUB 0 + (11 << 4)     \ Max. canisters on demise = 0
                         \ Market item when scooped = 11 + 1 = 12 (Minerals)
  EQUW 16 * 16           \ Targetable area          = 16 * 16
-IF NOT(_ELITE_A_6502SP_PARA OR _ELITE_A_FLIGHT)
+IF NOT(_ELITE_A_VERSION)
  EQUB LO(SHIP_ESCAPE_POD_EDGES - SHIP_SPLINTER)      \ Edges data = escape pod
-ELIF _ELITE_A_6502SP_PARA
- EQUB LO(SHIP_THARGON_VERTICES - SHIP_SPLINTER)      \ Edges data = Thargon? AJD
-ELIF _ELITE_A_FLIGHT
- EQUB &5A                                            \ AJD
+ELIF (_ELITE_A_VERSION)
+ EQUB &5A               \ This value is incorrect (see above)
 ENDIF
  EQUB &44               \ Faces data offset (low)  = &0044
 IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; splinters are shown in red
@@ -48,12 +61,10 @@ ELIF _ELITE_A_VERSION
  EQUB 16                \ Max. energy              = 16
 ENDIF
  EQUB 10                \ Max. speed               = 10
-IF NOT(_ELITE_A_6502SP_PARA OR _ELITE_A_FLIGHT)
+IF NOT(_ELITE_A_VERSION)
  EQUB HI(SHIP_ESCAPE_POD_EDGES - SHIP_SPLINTER)      \ Edges data = escape pod
-ELIF _ELITE_A_6502SP_PARA
- EQUB HI(SHIP_THARGON_VERTICES - SHIP_SPLINTER)      \ Edges data = Thargon? AJD
-ELIF _ELITE_A_FLIGHT
- EQUB &FE                                            \ AJD
+ELIF (_ELITE_A_VERSION)
+ EQUB &FE               \ This value is incorrect (see above)
 ENDIF
  EQUB &00               \ Faces data offset (high) = &0044
  EQUB 5                 \ Normals are scaled by    = 2^5 = 32

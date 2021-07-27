@@ -893,43 +893,48 @@ IF _ELITE_A_6502SP_PARA
  BIT dockedp            \ If bit 7 of dockedp is set, then we are not docked, so
  BMI flying             \ jump to flying
 
- CMP #&20
- BNE fvw
- JSR CTRL
- BMI jump_stay
- JMP RSHIPS
+ CMP #f0                \ If red key f0 was not pressed, jump to fvw to check
+ BNE fvw                \ for the next key
+
+ JSR CTRL               \ Red key f0 was pressed, so check whether CTRL was
+ BMI jump_stay          \ also pressed, and if so, jump to jump_stay to skip the
+                        \ following instruction
+
+ JMP RSHIPS             \ Red key f0 was pressed on its own, so jump to RSHIPS
+                        \ to launch our ship, returning from the subroutine
+                        \ using a tail call
 
 .jump_stay
 
- JMP stay_here
+ JMP stay_here          \ CTRL-f0 was pressed, so jump to stay_here to pay the
+                        \ docking fee and refresh prices
 
 .fvw
 
- CMP #&73
- BNE not_equip
- JMP EQSHP
+ CMP #f3                \ If red key f3 was pressed, jump to EQSHP to show the
+ BNE P%+5               \ Equip Ship screen, returning from the subroutine using
+ JMP EQSHP              \ a tail call
 
-.not_equip
+ CMP #f1                \ If red key f1 was pressed, jump to TT219 to show the
+ BNE P%+5               \ Buy Cargo screen, returning from the subroutine using
+ JMP TT219              \ a tail call
 
- CMP #&71
- BNE not_buy
- JMP TT219
+ CMP #&47               \ If "@" was not pressed, skip to nosave
+ BNE nosave
 
-.not_buy
+ JSR SVE                \ "@" was pressed, so call SVE to show the disc access
+                        \ menu
 
- CMP #&47
- BNE not_disk
- JSR SVE
- BCC not_loaded
- JMP QU5
+ BCC P%+5               \ If the C flag was set by SVE, then we loaded a new
+ JMP QU5                \ commander file, so jump to QU5 to restart the game
+                        \ with the newly loaded commander
 
-.not_loaded
+ JMP BAY                \ Otherwise the C flag was clear, so jump to BAY to go
+                        \ to the docking bay (i.e. show the Status Mode screen)
 
- JMP BAY
+.nosave
 
-.not_disk
-
- CMP #&72
+ CMP #&72               \ AJD
  BNE not_sell
  JMP TT208
 
@@ -965,7 +970,7 @@ IF _ELITE_A_6502SP_PARA
  BNE NWDAV5
  JMP hyp
 
-.d_416c
+.TT107
 
  LDA QQ22+1
  BEQ d_418a

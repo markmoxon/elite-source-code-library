@@ -9,8 +9,7 @@
 
 .install_ship
 
- \ install ship X in position Y with flags A
- TXA
+ TXA                    \ install ship X in position Y with flags A
  ASL A
  PHA
  ASL A
@@ -31,13 +30,13 @@
 
  RTS                    \ Return from the subroutine
 
- \printer:
- \ TXA
- \ PHA
- \ LDA #&9C
- \ JSR tube_write
- \ JSR tube_read
- \ PLA
- \ TAX
- \ RTS
+\.printer
+\TXA
+\PHA
+\LDA #&9C
+\JSR tube_write
+\JSR tube_read
+\PLA
+\TAX
+\RTS
 

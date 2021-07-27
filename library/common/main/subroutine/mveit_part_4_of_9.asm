@@ -1,6 +1,10 @@
 \ ******************************************************************************
 \
+IF NOT(_ELITE_A_6502SP_PARA)
 \       Name: MVEIT (Part 4 of 9)
+ELIF _ELITE_A_6502SP_PARA
+\       Name: MVEIT_FLIGHT (Part 4 of 6)
+ENDIF
 \       Type: Subroutine
 \   Category: Moving
 \    Summary: Move current ship: Apply acceleration to ship's speed as a one-off

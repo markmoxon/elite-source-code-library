@@ -3,7 +3,7 @@
 \       Name: DK4_FLIGHT
 \       Type: Subroutine
 \   Category: Keyboard
-\    Summary: AJD
+\    Summary: AJD (flight version)
 \
 \ ******************************************************************************
 
@@ -45,10 +45,11 @@
 
 .d_4586
 
- \ CPX #&37
- \ BNE dont_dump
- \ JSR printer
- \dont_dump
+\CPX #&37
+\BNE dont_dump
+\JSR printer
+\.dont_dump
+
  CPX #&59
  BNE d_455f
 

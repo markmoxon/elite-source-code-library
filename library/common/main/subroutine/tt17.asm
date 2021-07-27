@@ -49,6 +49,13 @@ ELIF _ELECTRON_VERSION
 \                       being pressed, as an integer (see above)
 ENDIF
 \
+IF _ELITE_A_6502SP_PARA
+\ Other entry points:
+\
+\   chk_dirn            Do not scan the keyboard, instead just set the movement
+\                       variables based on the current state of the key logger
+\
+ENDIF
 \ ******************************************************************************
 
 .TT17

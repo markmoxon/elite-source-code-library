@@ -1,6 +1,10 @@
 \ ******************************************************************************
 \
+IF NOT(_ELITE_A_6502SP_PARA)
 \       Name: MVEIT (Part 2 of 9)
+ELIF _ELITE_A_6502SP_PARA
+\       Name: MVEIT_FLIGHT (Part 2 of 6)
+ENDIF
 \       Type: Subroutine
 \   Category: Moving
 \    Summary: Move current ship: Call tactics routine, remove ship from scanner

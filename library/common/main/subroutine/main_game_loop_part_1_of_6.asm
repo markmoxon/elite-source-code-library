@@ -17,10 +17,15 @@ ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
+IF NOT(_ELITE_A_6502SP_PARA)
 \ This is part of the main game loop. This is where the core loop of the game
 \ lives, and it's in two parts. The shorter loop (just parts 5 and 6) is
 \ iterated when we are docked, while the entire loop from part 1 to 6 iterates
 \ if we are in space.
+ELIF _ELITE_A_6502SP_PARA
+\ This is part of the main game loop. This is the loop for when we are in
+\ flight, while the main game loop for when we are docked is at TT100.
+ENDIF
 \
 \ This section covers the following:
 \

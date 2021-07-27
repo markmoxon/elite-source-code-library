@@ -68,13 +68,13 @@ ELIF _ELITE_A_FLIGHT
 
 ELIF _ELITE_A_6502SP_PARA
 
- LDX NOMSL              \ Call MSBAR (via MSBAR_FLIGHT) to update the leftmost
+ LDX NOMSL              \ Call MSBAR (via MSBARS) to update the leftmost
  DEX                    \ indicator in the dashboard's missile bar, by calling
- JSR MSBAR_FLIGHT       \ with X = NOMSL - 1 (as the missile indicators are
+ JSR MSBARS             \ with X = NOMSL - 1 (as the missile indicators are
                         \ numbered 0-3 in Elite-A rather than the 1-4 in the
                         \ disc version)
                         \
-                        \ MSBAR_FLIGHT returns with Y = 0
+                        \ MSBARS returns with Y = 0
 
 ENDIF
 

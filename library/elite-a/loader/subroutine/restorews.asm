@@ -7,8 +7,6 @@
 \
 \ ******************************************************************************
 
- \ restore ROM workspace
-
 .restorews
 
  PHA                    \ Store A and X on the stack, so we can retrieve them

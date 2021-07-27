@@ -3,17 +3,19 @@
 \       Name: LL9_FLIGHT
 \       Type: Subroutine
 \   Category: Drawing ships
-\    Summary: AJD
+\    Summary: Draw a ship (flight version)
 \
 \ ******************************************************************************
 
-.d_4889
+.LL25
 
- JMP PLANET
+ JMP PLANET             \ Jump to the PLANET routine, returning from the
+                        \ subroutine using a tail call
 
 .LL9_FLIGHT
 
- LDA TYPE
- BMI d_4889
- JMP LL9
+ LDA TYPE               \ If the ship type is negative then this indicates a
+ BMI LL25               \ planet or sun, so jump to PLANET via LL25 above
+
+ JMP LL9                \ Jump to LL9 to draw the ship
 

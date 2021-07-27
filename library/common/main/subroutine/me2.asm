@@ -24,7 +24,7 @@ ENDIF
  LDA #0                 \ Set the delay in DLY to 0, so any new in-flight
  STA DLY                \ messages will be shown instantly
 
- JMP me3                \ Jump back into the main spawning loop at TT100
+ JMP me3                \ Jump back into the main spawning loop at me3
 
 IF _MASTER_VERSION \ Master: See group A
 
@@ -34,6 +34,6 @@ IF _MASTER_VERSION \ Master: See group A
                         \ and move the text cursor to column 1 on row 21, i.e.
                         \ the start of the top row of the three bottom rows
 
- JMP me3                \ Jump back into the main spawning loop at TT100
+ JMP me3                \ Jump back into the main spawning loop at me3
 
 ENDIF

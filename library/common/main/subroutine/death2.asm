@@ -40,7 +40,7 @@ ELIF _ELITE_A_FLIGHT
 
 ELIF _ELITE_A_6502SP_PARA
 
- JMP INBAY              \ Jump to INBAY to run the docked code
+ JMP INBAY              \ Jump to INBAY to restart the game following death
 
 ENDIF
 

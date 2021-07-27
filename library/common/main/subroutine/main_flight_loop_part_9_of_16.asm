@@ -156,7 +156,7 @@ ELIF _ELITE_A_6502SP_PARA
 
  JSR HFS2               \ Call HFS2 to draw the launch tunnel rings
 
- JMP DOENTRY_FLIGHT     \ Go to the docking bay (i.e. show the ship hanger)
+ JMP DOENTRYS           \ Go to the docking bay (i.e. show the ship hanger)
 
 ENDIF
 

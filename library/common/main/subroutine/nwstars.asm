@@ -28,7 +28,8 @@ ELIF _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR
 
 ELIF _ELITE_A_6502SP_PARA
 
- LDA QQ11               \ If this is not a space view, jump to WPSHPS_FLIGHT to
- BNE WPSHPS_FLIGHT      \ skip the initialisation of the SX, SY and SZ tables
+ LDA QQ11               \ If this is not a space view, jump to WPSHPS via
+ BNE WPSHPSS            \ WPSHPSS to skip the initialisation of the SX, SY and
+                        \ SZ tables
 
 ENDIF

@@ -51,9 +51,9 @@ IF NOT(_ELITE_A_6502SP_PARA)
 
 ELIF _ELITE_A_6502SP_PARA
 
- BNE PL21_FLIGHT        \ If A is non-zero then the two high bytes of K(3 2 1 0)
-                        \ are non-zero, so jump to PL21_FLIGHT to set the C flag
-                        \ and return from the subroutine
+ BNE PL21S              \ If A is non-zero then the two high bytes of K(3 2 1 0)
+                        \ are non-zero, so jump to PL21S to set the C flag and
+                        \ return from the subroutine
 
 ENDIF
 

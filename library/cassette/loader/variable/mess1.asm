@@ -11,11 +11,11 @@
 
 IF DISC
 
- EQUS "L.ELTcode 1100"
+ EQUS "L.ELTcode 1100"  \ This is short for "*LOAD ELTcode 1100"
 
 ELSE
 
- EQUS "L.ELITEcode F1F"
+ EQUS "L.ELITEcode F1F" \ This is short for "*LOAD ELITEcode F1F"
 
 ENDIF
 

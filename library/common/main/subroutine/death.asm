@@ -409,13 +409,9 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
                         \ Fall through into DEATH2 to reset and restart the game
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  JMP DEATH2             \ Jump to DEATH2 to reset and restart the game
-
-ELIF _ELITE_A_6502SP_PARA
-
- JMP DEATH2_FLIGHT      \ Jump to DEATH2_FLIGHT to reset and restart the game
 
 ENDIF
 

@@ -130,3 +130,11 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
+IF _ELITE_A_6502SP_PARA
+
+ JSR RES2               \ Reset a number of flight variables and workspaces
+                        \ and fall through into the entry code for the game
+                        \ to restart from the title screen
+
+ENDIF
+

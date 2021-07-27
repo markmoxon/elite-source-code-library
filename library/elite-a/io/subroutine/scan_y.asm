@@ -21,7 +21,7 @@
 
  JSR tube_get           \ Get the parameters from the parasite for the command:
  TAY                    \
- JSR tube_get           \   =scan_y(key_offset, delta14b)
+ JSR tube_get           \   =scan_y(key_offset, delta_14b)
                         \
                         \ and store them as follows:
                         \

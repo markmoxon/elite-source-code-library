@@ -32,14 +32,14 @@ INCLUDE "library/common/main/variable/x1.asm"
 INCLUDE "library/common/main/variable/y1.asm"
 
 .bar_3
-.save_a
+.K3
 .COL
 INCLUDE "library/common/main/variable/x2.asm"
 
-.save_x
+.XSAV2
 INCLUDE "library/common/main/variable/y2.asm"
 
-.save_y
+.YSAV2
 INCLUDE "library/common/loader/variable/p.asm"
 
 .T

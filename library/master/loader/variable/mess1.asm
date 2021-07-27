@@ -9,6 +9,6 @@
 
 .MESS1
 
- EQUS "L.BDATA FFFF1300"
+ EQUS "L.BDATA FFFF1300"    \ This is short for "*LOAD BDATA FFFF1300"
  EQUB 13
 

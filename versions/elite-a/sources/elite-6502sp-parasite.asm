@@ -151,14 +151,14 @@ LL = 30                 \ The length of lines (in characters) of justified text
 
 LS% = &0CFF             \ The start of the descending ship line heap
 
-tube_r1s = &FEF8        \ The Tube's memory-mapped FIFO registers
-tube_r1d = &FEF9
-tube_r2s = &FEFA
-tube_r2d = &FEFB
-tube_r3s = &FEFC
-tube_r3d = &FEFD
-tube_r4s = &FEFE
-tube_r4d = &FEFF
+tube_r1s = &FEF8        \ The Tube's memory-mapped FIFO 1 status register
+tube_r1d = &FEF9        \ The Tube's memory-mapped FIFO 1 data register
+tube_r2s = &FEFA        \ The Tube's memory-mapped FIFO 2 status register
+tube_r2d = &FEFB        \ The Tube's memory-mapped FIFO 2 data register
+tube_r3s = &FEFC        \ The Tube's memory-mapped FIFO 3 data register
+tube_r3d = &FEFD        \ The Tube's memory-mapped FIFO 3 status register
+tube_r4s = &FEFE        \ The Tube's memory-mapped FIFO 4 data register
+tube_r4d = &FEFF        \ The Tube's memory-mapped FIFO 4 status register
 
 INCLUDE "library/common/main/workspace/zp.asm"
 INCLUDE "library/common/main/workspace/xx3.asm"
@@ -523,7 +523,6 @@ INCLUDE "library/enhanced/main/variable/brkd.asm"
 INCLUDE "library/elite-a/parasite/subroutine/inbay.asm"
 INCLUDE "library/elite-a/parasite/subroutine/boot_in.asm"
 INCLUDE "library/enhanced/main/subroutine/brbr.asm"
-INCLUDE "library/common/main/subroutine/death2.asm"
 INCLUDE "library/enhanced/main/subroutine/begin.asm"
 INCLUDE "library/common/main/subroutine/br1_part_1_of_2.asm"
 INCLUDE "library/common/main/subroutine/br1_part_2_of_2.asm"
@@ -759,7 +758,7 @@ INCLUDE "library/elite-a/encyclopedia/variable/viper.asm"
 INCLUDE "library/elite-a/encyclopedia/variable/worm.asm"
 INCLUDE "library/elite-a/parasite/subroutine/install_ship.asm"
 INCLUDE "library/elite-a/parasite/subroutine/doentry_flight.asm"
-INCLUDE "library/elite-a/parasite/subroutine/death2_flight.asm"
+INCLUDE "library/common/main/subroutine/death2.asm"
 
 \ ******************************************************************************
 \

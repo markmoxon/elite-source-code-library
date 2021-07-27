@@ -97,12 +97,12 @@ ENDIF
 
 IF NOT(_ELITE_A_VERSION)
 
- EQUS "L.T.CODE"
+ EQUS "L.T.CODE"        \ This is short for "*LOAD T.CODE"
  EQUB 13
 
 ELIF _ELITE_A_VERSION
 
- EQUS "L.1.D"
+ EQUS "L.1.D"           \ This is short for "*LOAD 1.D"
  EQUB 13
 
 ENDIF

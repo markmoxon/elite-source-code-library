@@ -15,7 +15,7 @@
 
 IF _CASSETTE_VERSION \ Minor
 
- EQUS "R.ELITEcode"
+ EQUS "R.ELITEcode"     \ This is short for "*RUN ELITEcode"
  EQUB 13
 
 ELIF _ELECTRON_VERSION

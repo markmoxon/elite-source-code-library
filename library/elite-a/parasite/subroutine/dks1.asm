@@ -24,7 +24,7 @@
 
  LDA #&96               \ Send command &96 to the I/O processor:
  JSR tube_write         \
-                        \   =scan_y(key_offset, delta14b)
+                        \   =scan_y(key_offset, delta_14b)
                         \
                         \ which will update the roll or pitch dashboard
                         \ indicator to the specified value

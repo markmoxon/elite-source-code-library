@@ -18,7 +18,7 @@ ENDIF
 \ around on the ground so they can face in any dirction, and larger ships are
 \ drawn higher up off the ground than smaller ships.
 \
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
 \ The ships are drawn by the HAS1 routine, which uses the normal ship-drawing
 \ routine in LL9, and then the hanger background is drawn by sending an OSWORD
 \ 248 command to the I/O processor.

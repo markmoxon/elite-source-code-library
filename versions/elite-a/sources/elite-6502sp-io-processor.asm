@@ -82,14 +82,14 @@ VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
                         \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
                         \ known as SHEILA)
 
-tube_r1s = &FEE0        \ The Tube's memory-mapped FIFO registers
-tube_r1d = &FEE1
-tube_r2s = &FEE2
-tube_r2d = &FEE3
-tube_r3s = &FEE4
-tube_r3d = &FEE5
-tube_r4s = &FEE6
-tube_r4d = &FEE7
+tube_r1s = &FEE0        \ The Tube's memory-mapped FIFO 1 status register
+tube_r1d = &FEE1        \ The Tube's memory-mapped FIFO 1 data register
+tube_r2s = &FEE2        \ The Tube's memory-mapped FIFO 2 status register
+tube_r2d = &FEE3        \ The Tube's memory-mapped FIFO 2 data register
+tube_r3s = &FEE4        \ The Tube's memory-mapped FIFO 3 status register
+tube_r3d = &FEE5        \ The Tube's memory-mapped FIFO 3 data register
+tube_r4s = &FEE6        \ The Tube's memory-mapped FIFO 4 status register
+tube_r4d = &FEE7        \ The Tube's memory-mapped FIFO 4 data register
 
 rawrch = &FFBC          \ The address of the MOS's VDU character output routine
 
@@ -116,6 +116,8 @@ INCLUDE "library/elite-a/io/subroutine/tube_put.asm"
 INCLUDE "library/elite-a/io/subroutine/tube_func.asm"
 INCLUDE "library/elite-a/io/variable/tube_table.asm"
 INCLUDE "library/elite-a/io/subroutine/chpr.asm"
+INCLUDE "library/elite-a/io/subroutine/tube_wrch.asm"
+INCLUDE "library/elite-a/io/subroutine/wrch_font.asm"
 INCLUDE "library/common/main/variable/twos.asm"
 INCLUDE "library/common/main/variable/twos2.asm"
 INCLUDE "library/common/main/variable/ctwos.asm"

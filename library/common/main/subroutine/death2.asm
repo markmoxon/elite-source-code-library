@@ -38,5 +38,9 @@ ELIF _ELITE_A_FLIGHT
  BMI INBAY              \ Jump to INBAY to load the docked code (this BMI is
                         \ effectively a JMP)
 
+ELIF _ELITE_A_6502SP_PARA
+
+ JMP INBAY              \ Jump to INBAY to run the docked code
+
 ENDIF
 

@@ -3,8 +3,8 @@
 \       Name: MESS3
 \       Type: Variable
 \   Category: Loader
-\    Summary: The OS command string for loading and running the parasite's
-\             main game code
+\    Summary: The OS command string for running the parasite's main game code
+\             in file P.CODE
 \
 \ ******************************************************************************
 

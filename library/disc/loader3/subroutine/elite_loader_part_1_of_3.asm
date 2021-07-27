@@ -620,7 +620,8 @@ ELIF _ELITE_A_VERSION
 .tube_run
 
  EQUS "R.2.H"           \ The OS command for running the Tube version's I/O
- EQUB 13                \ processor code in 2.H
+ EQUB 13                \ processor code in file 2.H (this command is short for
+                        \ "*RUN 2.H")
 
 \.tube_400              \ These instructions are commented out in the original
 \EQUD &0400             \ source

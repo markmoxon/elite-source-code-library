@@ -4,9 +4,9 @@
 \       Type: Variable
 \   Category: Loader
 IF NOT(_ELITE_A_VERSION)
-\    Summary: The OS command string for loading the flight code file D.CODE
+\    Summary: The OS command string for running the flight code in file D.CODE
 ELIF _ELITE_A_VERSION
-\    Summary: The OS command string for loading the flight code file 1.F
+\    Summary: The OS command string for running the flight code in file 1.F
 ENDIF
 IF _6502SP_VERSION \ Comment
 \             in the disc version of Elite
@@ -24,12 +24,12 @@ ENDIF
 
 IF NOT(_ELITE_A_VERSION)
 
- EQUS "R.D.CODE"
+ EQUS "R.D.CODE"        \ This is short for "*RUN D.CODE"
  EQUB 13
 
 ELIF _ELITE_A_VERSION
 
- EQUS "R.1.F"
+ EQUS "R.1.F"           \ This is short for "*RUN 1.F"
  EQUB 13
 
 ENDIF

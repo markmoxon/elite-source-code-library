@@ -3,8 +3,8 @@
 \       Name: MESS2
 \       Type: Variable
 \   Category: Loader
-\    Summary: The OS command string for loading and running the I/O processor's
-\             main game code
+\    Summary: The OS command string for running the I/O processor's main game
+\             code in file I.CODE
 \
 \ ******************************************************************************
 

@@ -13,6 +13,11 @@
 \   X                   The key that was pressed, or 0 if we paused the game
 \                       (COPY) and unpaused it again (DELETE)
 \
+\ Other entry points:
+\
+\   l_release           If a key is currently being pressed, wait until it is
+\                       released
+\
 \ ******************************************************************************
 
 .check_keys
@@ -43,7 +48,7 @@
 \CPX #&37               \ These instructions are commented out in the original
 \BNE dont_dump          \ source
 \JSR printer
-\dont_dump
+\.dont_dump
 
  CPX #&59               \ If DELETE is not being pressed, we are still paused,
  BNE freeze_loop        \ so loop back up to keep listening for configuration

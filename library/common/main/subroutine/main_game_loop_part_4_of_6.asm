@@ -304,9 +304,9 @@ ELIF _ELITE_A_VERSION
                         \ will now use to determine the type of ship
 
  ADC #25                \ Add A to 25 (we know the C flag is clear as we passed
-                        \ through the BCS above), so A is now a ship slot in the
-                        \ range 25-28, which is where the bounty hunter ships
-                        \ live in the ship files
+                        \ through the BCS above), so A is now a ship blueprint
+                        \ position in the range 25-28, which is where the bounty
+                        \ hunter ships live in the ship files
 
  TAY                    \ Copy the new ship type to Y
 
@@ -483,8 +483,8 @@ IF NOT(_ELITE_A_VERSION)
 ELIF _ELITE_A_VERSION
 
  LDA #17                \ Fall through into hordes to spawn a pack of ships from
- LDX #7                 \ ship slots 17 to 24,, which is where the pirate ships
-                        \ live in the ship files
+ LDX #7                 \ ship blueprint positions 17 to 24, which is where the
+                        \ pirate ships live in the ship blueprint files
 
 .hordes
 

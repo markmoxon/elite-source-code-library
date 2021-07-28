@@ -27,13 +27,13 @@ ENDIF
 
 IF _ELITE_A_6502SP_PARA
 
- LDX #10                \ AJD
- LDY #11
- JSR install_ship
+ LDX #10                \ Install ship number 10 (Cobra Mk III) into blueprint
+ LDY #CYL               \ position #CYL (11) so it can be shown on the first
+ JSR install_ship       \ title screen
 
- LDX #19
- LDY #19
- JSR install_ship
+ LDX #19                \ Install ship number 19 (Krait) into blueprint position
+ LDY #KRA               \ #KRA (19) so it can be shown on the second title
+ JSR install_ship       \ screen
 
  LDX #&FF               \ Set the stack pointer to &01FF, which is the standard
  TXS                    \ location for the 6502 stack, so this instruction

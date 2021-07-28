@@ -3,8 +3,12 @@
 \       Name: ship_posn
 \       Type: Variable
 \   Category: Encyclopedia
+IF _ELITE_A_ENCYCLOPEDIA
 \    Summary: Table containing the number of this ship blueprint within the ship
 \             blueprints file that we load for each ship card
+ELIF _ELITE_A_6502SP_PARA
+\    Summary: Table containing the number of this ship in the ship_list table
+ENDIF
 \
 \ ******************************************************************************
 

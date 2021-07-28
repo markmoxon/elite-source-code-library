@@ -30,13 +30,20 @@
 \ See the deep dive on "Advanced tactics with the NEWB flags" for details of
 \ how this works.
 \
+IF _ELITE_A_VERSION
+\ Other entry points:
+\
+\   ship_flags          The extended NEWB flags table for Elite-A, which
+\                       includes an extra entry at the start for our current
+\                       ship
+ENDIF
 \ ******************************************************************************
 
 IF _ELITE_A_VERSION
 
 .ship_flags
 
- EQUB 0
+ EQUB %00000000         \ Our current ship
 
 ENDIF
 

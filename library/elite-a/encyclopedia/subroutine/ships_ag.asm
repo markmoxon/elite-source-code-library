@@ -113,11 +113,12 @@ IF _ELITE_A_ENCYCLOPEDIA
 
 ELIF _ELITE_A_6502SP_PARA
 
- LDX TYPE
- LDA ship_posn,X        \ AJD
- TAX
- LDY #0
- JSR install_ship
+ LDX TYPE               \ Set X to the number of this ship type within the
+ LDA ship_posn,X        \ ship_list table, so we can pass it to the install_ship
+ TAX                    \ routine
+
+ LDY #0                 \ Install this ship into blueprint position 0 so we can
+ JSR install_ship       \ show it on the ship card
 
 ENDIF
 
@@ -175,10 +176,14 @@ IF _ELITE_A_ENCYCLOPEDIA
 
 ELIF _ELITE_A_6502SP_PARA
 
- LDA #0                 \ AJD
- JSR NWSHP
+ LDA #0                 \ Add a new ship of type 0 to the local bubble (or, in
+ JSR NWSHP              \ this case, the encyclopedia ship card), which will
+                        \ spawn the correct shop for this ship card, as we
+                        \ installed the correct blueprint into position 0 with
+                        \ the call to install_ship above
 
- JSR l_release
+ JSR l_release          \ Call l_release so if a key is currently being pressed,
+                        \ we wait until it is released before continuing
 
 ENDIF
 

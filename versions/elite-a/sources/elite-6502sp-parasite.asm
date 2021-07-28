@@ -757,6 +757,7 @@ INCLUDE "library/elite-a/encyclopedia/variable/transporter.asm"
 INCLUDE "library/elite-a/encyclopedia/variable/viper.asm"
 INCLUDE "library/elite-a/encyclopedia/variable/worm.asm"
 INCLUDE "library/elite-a/parasite/subroutine/install_ship.asm"
+INCLUDE "library/elite-a/parasite/subroutine/printer.asm"
 INCLUDE "library/elite-a/parasite/subroutine/doentrys.asm"
 INCLUDE "library/common/main/subroutine/death2.asm"
 

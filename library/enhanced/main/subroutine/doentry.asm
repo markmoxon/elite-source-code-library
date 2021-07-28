@@ -240,8 +240,8 @@ ENDIF
 
  LDA QQ1                \ Set A = the current system's galactic y-coordinate
 
- CMP #72
- BNE EN4                \ If A <> 72 then jump to EN4
+ CMP #72                \ If A <> 72 then jump to EN4
+ BNE EN4
 
  JMP DEBRIEF2           \ If we get here, mission 1 is complete and no longer in
                         \ progress, mission 2 has started and we have picked up

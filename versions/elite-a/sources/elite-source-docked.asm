@@ -795,7 +795,7 @@ INCLUDE "library/common/main/variable/ship_viper.asm"
 INCLUDE "library/enhanced/main/variable/ship_krait.asm"
 INCLUDE "library/enhanced/main/variable/ship_constrictor.asm"
 
- SKIP 171
+ SKIP 171               \ These bytes appear to be unused
 
 \ ******************************************************************************
 \

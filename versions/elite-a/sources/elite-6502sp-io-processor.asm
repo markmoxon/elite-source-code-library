@@ -172,6 +172,10 @@ INCLUDE "library/elite-a/io/subroutine/ha2.asm"
 INCLUDE "library/enhanced/main/subroutine/has2.asm"
 INCLUDE "library/enhanced/main/subroutine/has3.asm"
 INCLUDE "library/elite-a/io/subroutine/printer.asm"
+INCLUDE "library/elite-a/io/subroutine/print_tone.asm"
+INCLUDE "library/elite-a/io/subroutine/print_esc.asm"
+INCLUDE "library/elite-a/io/subroutine/print_wrch.asm"
+INCLUDE "library/elite-a/io/subroutine/print_safe.asm"
 
 \ ******************************************************************************
 \

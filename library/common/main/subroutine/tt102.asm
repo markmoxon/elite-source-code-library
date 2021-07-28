@@ -934,77 +934,128 @@ IF _ELITE_A_6502SP_PARA
 
 .nosave
 
- CMP #&72               \ AJD
- BNE not_sell
- JMP TT208
+ CMP #f2                \ If red key f2 was pressed, jump to TT208 to show the
+ BNE not_sell           \ Sell Cargo screen, returning from the subroutine using
+ JMP TT208              \ a tail call
 
 .not_sell
 
- CMP #&54
- BNE NWDAV5
- JSR CLYNS
- LDA #&0F
- STA XC
- LDA #&CD
- JMP DETOK
+ CMP #&54               \ If "H" was not pressed, jump to NWDAV5 to skip the
+ BNE NWDAV5             \ following
+
+ JSR CLYNS              \ "H" was pressed, so clear the bottom three text rows
+                        \ of the upper screen, and move the text cursor to
+                        \ column 1 on row 21, i.e. the start of the top row of
+                        \ the three bottom rows
+
+ LDA #15                \ Move the text cursor to column 15 (the middle of the
+ STA XC                 \ screen)
+
+ LDA #205               \ Print extended token 205 ("DOCKED") and return from
+ JMP DETOK              \ the subroutine using a tail call
 
 .flying
 
- CMP #&20
- BNE d_4135
- JMP TT110
+ CMP #&20               \ If "D" was pressed, jump to TT110 to print the
+ BNE P%+5               \ distance to a system (if we are in one of the chart
+ JMP TT110              \ screens)
 
-.d_4135
-
- CMP #&71
- BCC d_4143
- CMP #&74
+ CMP #f1                \ If the key pressed is < red key f1 or > red key f3,
+ BCC d_4143             \ jump to d_4143 (so only do the following if the key
+ CMP #f3+1              \ pressed is f1, f2 or f3)
  BCS d_4143
- AND #&03
- TAX
- JMP LOOK1
+
+ AND #3                 \ If we get here then we are either in space, or we are
+ TAX                    \ docked and none of f1-f3 were pressed, so we can now
+ JMP LOOK1              \ process f1-f3 with their in-flight functions, i.e.
+                        \ switching space views
+                        \
+                        \ A will contain &71, &72 or &73 (for f1, f2 or f3), so
+                        \ set X to the last digit (1, 2 or 3) and jump to LOOK1
+                        \ to switch to view X (rear, left or right), returning
+                        \ from the subroutine using a tail call
 
 .d_4143
 
- CMP #&54
- BNE NWDAV5
- JMP hyp
+ CMP #&54               \ If "H" was not pressed, jump to NWDAV5 to skip the
+ BNE NWDAV5             \ following
+
+ JMP hyp                \ Jump to hyp to do a hyperspace jump (if we are in
+                        \ space), returning from the subroutine using a tail
+                        \ call
 
 .TT107
 
- LDA QQ22+1
- BEQ d_418a
- DEC QQ22
- BNE d_418a
- LDX QQ22+1
- DEX
- JSR ee3
- LDA #&05
+ LDA QQ22+1             \ If the on-screen hyperspace counter is zero, return
+ BEQ d_418a             \ from the subroutine (as d_418a contains an RTS), as we
+                        \ are not currently counting down to a hyperspace jump
+
+ DEC QQ22               \ Decrement the internal hyperspace counter
+
+ BNE d_418a             \ If the internal hyperspace counter is still non-zero,
+                        \ then we are still counting down, so return from the
+                        \ subroutine (as d_418a contains an RTS)
+
+                        \ If we get here then the internal hyperspace counter
+                        \ has just reached zero and it wasn't zero before, so
+                        \ we need to reduce the on-screen counter and update
+                        \ the screen. We do this by first printing the next
+                        \ number in the countdown sequence, and then printing
+                        \ the old number, which will erase the old number
+                        \ and display the new one because printing uses EOR
+                        \ logic
+
+ LDX QQ22+1             \ Set X = the on-screen hyperspace counter - 1
+ DEX                    \ (i.e. the next number in the sequence)
+
+ JSR ee3                \ Print the 8-bit number in X at text location (0, 1)
+
+ LDA #5                 \ Reset the internal hyperspace counter to 5
  STA QQ22
- LDX QQ22+1
- JSR ee3
- DEC QQ22+1
- BNE d_418a
- JMP TT18
+
+ LDX QQ22+1             \ Set X = the on-screen hyperspace counter (i.e. the
+                        \ current number in the sequence, which is already
+                        \ shown on-screen)
+
+ JSR ee3                \ Print the 8-bit number in X at text location (0, 1),
+                        \ i.e. print the hyperspace countdown in the top-left
+                        \ corner
+
+ DEC QQ22+1             \ Decrement the on-screen hyperspace countdown
+
+ BNE d_418a             \ If the countdown is not yet at zero, return from the
+                        \ subroutine (as d_418a contains an RTS)
+
+ JMP TT18               \ Otherwise the countdown has finished, so jump to TT18
+                        \ to do a hyperspace jump, returning from the subroutine
+                        \ using a tail call
 
 .BAD
 
- LDA QQ20+&03
- CLC
- ADC QQ20+&06
- ASL A
- ADC QQ20+&0A
+ LDA QQ20+3             \ Set A to the number of tonnes of slaves in the hold
+
+ CLC                    \ Clear the C flag so we can do addition without the
+                        \ C flag affecting the result
+
+ ADC QQ20+6             \ Add the number of tonnes of narcotics in the hold
+
+ ASL A                  \ Double the result and add the number of tonnes of
+ ADC QQ20+10            \ firearms in the hold
 
 .d_418a
 
- RTS
+ RTS                    \ Return from the subroutine
 
 .NWDAV5
 
- LDA QQ11
- AND #&C0
- BEQ d_418a
- JMP TT16
+ LDA QQ11               \ If the current view is a chart (QQ11 = 64 or 128),
+ AND #%11000000         \ keep going, otherwise return from the subroutine (as
+ BEQ d_418a             \ d_418a contains an RTS)
+
+ JMP TT16               \ Jump to TT16 to move the crosshairs by the amount in X
+                        \ and Y, which were passed to this subroutine as
+                        \ arguments, and return from the subroutine using a tail
+                        \ call
 
 ENDIF
 

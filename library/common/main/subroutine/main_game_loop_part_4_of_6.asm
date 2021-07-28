@@ -389,7 +389,7 @@ ENDIF
 
 IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Enhanced: The Constrictor only spawns in its home system, during the mission 1 endgame, and then it only spawns once... though it can still appear in the ship hanger from time to time
 
- TYA
+ TYA                    \ Set A to the new ship type in Y
 
  EQUB &2C               \ Skip the next instruction by turning it into
                         \ &2C &A9 &1F, or BIT &1FA9, which does nothing apart

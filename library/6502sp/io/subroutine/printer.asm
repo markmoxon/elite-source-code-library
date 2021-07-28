@@ -36,9 +36,8 @@
  PHA                    \ Store A on the stack so we can retrieve it after the
                         \ following call to NVOSWRCH
 
- LDA #2                 \ Send ASCII 2 to the printer using the non-vectored
- JSR NVOSWRCH           \ OSWRCH, which means "start sending characters to the
-                        \ printer"
+ LDA #2                 \ Print ASCII 2 using the non-vectored OSWRCH, which
+ JSR NVOSWRCH           \ means "start sending characters to the printer"
 
  PLA                    \ Retrieve A from the stack, though this is a bit
                         \ pointless given the next instruction, as they cancel
@@ -72,9 +71,8 @@
 
 .sent
 
- LDA #3                 \ Send ASCII 3 to the printer using the non-vectored
- JSR NVOSWRCH           \ OSWRCH, which means "stop sending characters to the
-                        \ printer"
+ LDA #3                 \ Print ASCII 3 using the non-vectored OSWRCH, which
+ JSR NVOSWRCH           \ means "stop sending characters to the printer"
 
  PLA                    \ Retrieve A from the stack
 

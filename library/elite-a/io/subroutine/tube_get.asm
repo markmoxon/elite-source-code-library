@@ -34,8 +34,8 @@
 
  BIT tube_r1s           \ Check whether FIFO 1 has received a byte from the
                         \ parasite (which it will have sent by calling its own
-                        \ tube_write routine). We do this by checking bit 7 of the
-                        \ FIFO 1 status register
+                        \ tube_write routine). We do this by checking bit 7 of
+                        \ the FIFO 1 status register
 
  NOP                    \ Pause while the register is checked
 

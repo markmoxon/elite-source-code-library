@@ -167,8 +167,9 @@ ENDIF
                         \ to 96, which is the distance at which the rotating
                         \ ship starts out before coming towards us
 
- LDX #127
- STX INWK+29            \ Set roll counter = 127, so don't dampen the roll
+ LDX #127               \ Set roll counter = 127, so don't dampen the roll
+ STX INWK+29
+
  STX INWK+30            \ Set pitch counter = 127, so don't dampen the pitch
 
 IF NOT(_ELITE_A_DOCKED)

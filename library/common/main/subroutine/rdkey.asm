@@ -35,6 +35,11 @@ ENDIF
 \ This routine is effectively the same as OSBYTE 122, though the OSBYTE call
 \ preserves A, unlike this routine.
 \
+IF _ELITE_A_6502SP_IO
+\ If CTRL-P is pressed, then the routine calls the printer routine to print the
+\ screen, and returns 0 in A and X.
+\
+ENDIF
 \ Returns:
 \
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
@@ -163,13 +168,22 @@ ELIF _ELECTRON_VERSION
 
 ELIF _ELITE_A_6502SP_IO
 
- CMP #&37               \ CTRL-P hack for printer AJD
- BNE scan_test
- LDX #&01
- JSR DKS4
- BPL scan_p
- JSR printer
- LDA #0
+ CMP #&37               \ If "P" was not pressed, jump to scan_test to return
+ BNE scan_test          \ the key press
+
+ LDX #1                 \ Set X to the internal key number for CTRL
+
+ JSR DKS4               \ Scan the keyboard to see if the key in X (i.e. CTRL)
+                        \ is currently pressed
+
+ BPL scan_p             \ If it is not being pressed, jump to scan_p to return
+                        \ "P" as the key press
+
+ JSR printer            \ CTRL-P was pressed, so call printer to output the
+                        \ screen to the printer
+
+ LDA #0                 \ Set A to 0 to return no key press from the routine, as
+                        \ we already acted on it
 
 ENDIF
 
@@ -179,12 +193,14 @@ IF _ELITE_A_6502SP_IO
 
 .scan_p
 
- LDA #&37               \ AJD
+ LDA #&37               \ Set A to the internal key number for "P", to return as
+                        \ the result
 
 .scan_test
 
- TAX
- RTS
+ TAX                    \ Copy the key value into X
+
+ RTS                    \ Return from the subroutine
 
 ENDIF
 

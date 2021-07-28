@@ -228,44 +228,91 @@
 
  STZ INWK+7             \ Set x_hi = 0
 
- LDA Y2TB,Y             \ Set A to Y2, the end point's y-coordinate from Y1TB
+ LDA Y2TB,Y             \ Set A to Y2, the end point's y-coordinate from Y2TB
 
- SEC
- SBC BALI
- BCC GR6
+ SEC                    \ Set A = A - BALI
+ SBC BALI               \       = Y2 - BALI
 
- STA R
- ASL A
- ROL INWK+7
- ASL A
- ROL INWK+7
- ADC #D
- STA INWK+6
- LDA INWK+7
- ADC #0
- STA INWK+7
- STZ S
- LDA #%10000000
- STA P
+ BCC GR6                \ If Y2 < BALI, jump down to GR6 to process the next
+                        \ line, as this one is not yet on-screen
+
+ STA R                  \ Set R = Y2 - BALI
+
+ ASL A                  \ Shift bits 6-7 of A into bits 0-1 of z_hi, so the C
+ ROL INWK+7             \ flag is clear (as we set z_hi to 0 above) and z_hi is
+ ASL A                  \ the high byte if A * 4 = (Y2 - BALI) * 4 is expressed
+ ROL INWK+7             \ as a 16-bit value, i.e. ((Y2 - BALI) * 4) div 256
+
+ ADC #D                 \ Set (z_hi z_lo) = (z_hi z_lo) + #D
+ STA INWK+6             \
+                        \ first adding the low bytes
+
+ LDA INWK+7             \ And then adding the high bytes, so we now have:
+ ADC #0                 \
+ STA INWK+7             \   (z_hi z_lo) = ((Y2 - BALI) * 4 div 256) + #D
+                        \
+                        \ so because we set z_sign to 0 above, we have:
+                        \
+                        \   (z_sign z_hi z_lo) = ((Y2 - BALI) * 4 div 256) + #D
+
+ STZ S                  \ Set S = 0
+
+ LDA #%10000000         \ Set A to a negative sign byte
+
+ STA P                  \ Set P = 128
 
  JSR ADD                \ Set (A X) = (A P) + (S R)
+                        \           = -128 + (0 R)
+                        \           = -128 + R
+                        \           = -128 + (Y2 - BALI)
+                        \           = Y2 - BALI - 128
 
- STA INWK+5
- STX INWK+3
+ STA INWK+5             \ Set (y_sign y_lo) = (A X)
+ STX INWK+3             \                   = Y2 - BALI - 128
+                        \
+                        \ so because we set y_hi to 0 above, we have:
+                        \
+                        \   (y_sign y_hi y_lo) = Y2 - BALI - 128
 
- LDA X2TB,Y
- EOR #%10000000
- BPL GR3
- EOR #%11111111
- INA
+ LDA X2TB,Y             \ Set A to the x-coordinate of the line's start point,
+                        \ let's call it X2. A is in the range 0 to 255, and we
+                        \ now need to move the coordinate to the left so it's in
+                        \ the range -128 to +128, but we need to put the result
+                        \ into (x_sign x_hi x_lo) which is a sign-magnitude
+                        \ number, so we can't just subtract 128, as that would
+                        \ give us a two's complement number
+
+ EOR #%10000000         \ Flip the sign bit of A
+
+ BPL GR3                \ If bit 7 is now clear, meaning it was previously set,
+                        \ then jump to GR3 as the original A was in the range
+                        \ 128 to 255, and we now have the correct result for
+                        \ A = A - 128, which is also |A - 128| as A was positive
+
+                        \ Otherwise bit 7 was previously clear, so A was in the
+                        \ range 0 to 127 and the EOR has shifted that up to 128
+                        \ to 255, so we need to negate the number so that 128
+                        \ becomes 0, 129 becomes 1 and so on
+
+ EOR #%11111111         \ Negate the result in A by flipping all the bits and
+ INA                    \ adding 1, i.e. using two's complement to negate it to
+                        \ set A to the magnitude part of the sign-magnitude
+                        \ number A - 128, i.e. |A - 128|
 
 .GR3
 
- STA INWK
- LDA X2TB,Y
- EOR #%10000000
- AND #%10000000
- STA INWK+2
+ STA INWK               \ Set x_lo = |A - 128|
+                        \          = |X2 - 128|
+
+ LDA X2TB,Y             \ Set x_sign to the opposite of bit 7 in X2, so it will
+ EOR #%10000000         \ be positive if X2 > 127 and negative if X2 <= 127, so
+ AND #%10000000         \ x_sign has the correct sign for X2 - 128:
+ STA INWK+2             \
+                        \   (x_sign x_lo) = X2 - 128
+                        \
+                        \ and because we set x_hi to 0 above, we have:
+                        \
+                        \   (x_sign x_hi x_lo) = X2 - 128
 
  JSR PROJ               \ Project the line's end coordinate onto the screen,
                         \ returning:
@@ -368,24 +415,24 @@
  LDA X1UB,Y             \ Copy the Y-th line's coordinates from the UB table
  STA X1                 \ into both the VB table and into (X1, Y1) and (X2, Y2)
  STA X1VB,Y
-
  LDA Y1UB,Y
  STA Y1
  STA Y1VB,Y
-
  LDA X2UB,Y
  STA X2
  STA X2VB,Y
-
  LDA Y2UB,Y
  STA Y2
  STA Y2VB,Y
 
  JSR LOIN               \ Draw a line from (X1, Y1) to (X2, Y2)
 
- DEY
- BNE GRL2
- JSR LBFL
+ DEY                    \ Decrement the number of coordinates in Y
+
+ BNE GRL2               \ Loop back to GRL2 to draw the next set of coordinates
+                        \ until we have done them all
+
+ JSR LBFL               \ Call LBFL to draw the line in the line buffer
 
 .GREX2
 

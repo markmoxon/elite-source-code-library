@@ -57,7 +57,7 @@ IF _6502SP_VERSION \ Platform
  JSR backtonormal       \ Disable the keyboard and set the SVN flag to 0
 
  TAY                    \ The call to backtonormal sets A to 0, so this sets Y
-                        \ to 0, which use as a loop counter below
+                        \ to 0, which we use as a loop counter below
 
  LDA #7                 \ Set A = 7 to generate a beep before we print the error
                         \ message
@@ -72,8 +72,10 @@ ELIF _MASTER_VERSION
 
  JSR SWAPZP             \ Call SWAPZP to restore the top part of zero page
 
- STZ CATF
- LDY #&00
+ STZ CATF               \ Set the CATF flag to 0, so the TT26 routine reverts to
+                        \ standard formatting
+
+ LDY #0                 \ Set Y to 0, which we use as a loop counter below
 
  LDA #7                 \ Set A = 7 to generate a beep before we print the error
                         \ message

@@ -26,8 +26,8 @@
                         \ which will scan the keyboard
 
  JSR tube_read          \ Set A to the response from the I/O processor, which
-                        \ will either be the internal key number of the key being
-                        \ pressed, or 0 if no key is being pressed
+                        \ will either be the internal key number of the key
+                        \ being pressed, or 0 if no key is being pressed
 
  TAX                    \ Copy the response into X
 

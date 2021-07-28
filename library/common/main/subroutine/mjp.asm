@@ -41,10 +41,17 @@ ENDIF
 
 .MJP
 
-IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Platform
+IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Platform
 
  LDA #3                 \ Call SHIPinA to load ship blueprints file D, which is
  JSR SHIPinA            \ one of the two files that contain Thargoids
+
+ELIF _ELITE_A_6502SP_PARA
+
+ LDA #3                 \ Call SHIPinA populate the ship blueprints table but
+ JSR SHIPinA            \ without setting the compass to show the planet (the
+                        \ LDA here has no effect and is left over from the disc
+                        \ version)
 
 ENDIF
 

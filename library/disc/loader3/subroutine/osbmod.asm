@@ -35,5 +35,5 @@
  STA &9F                \ TITLE routine in the main docked code as part of the
                         \ copy protection (the game hangs if it doesn't match)
 
- RTS
+ RTS                    \ Return from the subroutine
 

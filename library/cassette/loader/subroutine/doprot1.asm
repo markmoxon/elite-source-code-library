@@ -35,9 +35,8 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
- LDY #&18
- STY V219+1,X           \ Set the low byte of V219(1 0) to &18 (as X = 255), so
-                        \ V219(1 0) now contains &0218
+ LDY #&18               \ Set the low byte of V219(1 0) to &18 (as X = 255), so
+ STY V219+1,X           \ V219(1 0) now contains &0218
 
  RTS                    \ Return from the subroutine
 

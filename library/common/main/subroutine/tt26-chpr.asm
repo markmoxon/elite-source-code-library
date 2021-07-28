@@ -7,7 +7,12 @@ ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP
 ENDIF
 \       Type: Subroutine
 \   Category: Text
+IF NOT(_ELITE_A_6502SP_PARA)
 \    Summary: Print a character at the text cursor by poking into screen memory
+ELIF _ELITE_A_6502SP_PARA
+\    Summary: Print a character at the text cursor by sending a write_xyc
+\             command to the I/O processor
+ENDIF
 \  Deep dive: Drawing text
 \
 \ ------------------------------------------------------------------------------

@@ -31,8 +31,8 @@ IF NOT(_ELITE_A_6502SP_PARA)
 
 ELIF _ELITE_A_6502SP_PARA
 
- JSR MVEIT_FLIGHT       \ Call MVEIT_FLIGHT to move the ship we are processing in
-                        \ space
+ JSR MVEIT_FLIGHT       \ Call MVEIT_FLIGHT to move the ship we are processing
+                        \ in space
 
 ENDIF
 

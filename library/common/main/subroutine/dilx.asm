@@ -3,11 +3,14 @@
 \       Name: DILX
 \       Type: Subroutine
 \   Category: Dashboard
-IF NOT(_ELITE_A_6502SP_IO)
+IF NOT(_ELITE_A_6502SP_IO OR _ELITE_A_6502SP_PARA)
 \    Summary: Update a bar-based indicator on the dashboard
 ELIF _ELITE_A_6502SP_IO
 \    Summary: Implement the draw_bar command (update a bar-based indicator on
 \             the dashboard
+ELIF _ELITE_A_6502SP_PARA
+\    Summary: Update a bar-based indicator on the dashboard by sending a
+\             draw_bar command to the I/O processor
 ENDIF
 \  Deep dive: The dashboard indicators
 \

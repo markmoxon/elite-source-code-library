@@ -30,11 +30,6 @@
 
 .ship_bytes
 
-\ #0 = the chance of installing this ship to a blueprint slot if chosen, so if it is 100, the chance of it being installed is random A < 100
-\ #1 = bit 7 set = ship has escape pod
-\ #2 = unused?
-\ #3 = unused?
-
  EQUB   0, %00000000, 0, 2      \  0 = Dodo station
  EQUB   0, %00000000, 0, 2      \  1 = Coriolis station
  EQUB   0, %00000000, 0, 2      \  2 = Escape pod

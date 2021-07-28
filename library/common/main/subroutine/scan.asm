@@ -3,7 +3,12 @@
 \       Name: SCAN
 \       Type: Subroutine
 \   Category: Dashboard
+IF NOT(_ELITE_A_6502SP_PARA)
 \    Summary: Display the current ship on the scanner
+ELIF _ELITE_A_6502SP_PARA
+\    Summary: Display the current ship on the scanner by sending a draw_tail
+\             command to the I/O processor
+ENDIF
 \  Deep dive: The 3D scanner
 \
 \ ------------------------------------------------------------------------------
@@ -879,7 +884,7 @@ ELIF _MASTER_VERSION
  LDA #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
  STA VIA+&34            \ SHEILA &34 to switch main memory back into &3000-&7FFF
 
- RTS
+ RTS                    \ Return from the subroutine
 
 .VL3
 

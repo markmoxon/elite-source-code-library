@@ -20,5 +20,5 @@
  JMP (OSPRNT)           \ Jump to the address in OSPRNT and return using a
                         \ tail call
 
- EQUB &6C
+ EQUB &6C               \ This byte appears to be unused
 

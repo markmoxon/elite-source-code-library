@@ -17,5 +17,5 @@
 
 .SCALEY
 
- LSR A
+ LSR A                  \ Halve the value in A
 

@@ -17,5 +17,5 @@
 
 .SCALEY2
 
- RTS
+ RTS                    \ Return from the subroutine
 

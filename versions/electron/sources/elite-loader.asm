@@ -69,7 +69,7 @@ OSBYTE = &FFF4          \ The address for the OSBYTE routine
 OSWORD = &FFF1          \ The address for the OSWORD routine
 OSCLI = &FFF7           \ The address for the OSCLI routine
 
-INCLUDE "library/cassette/loader/workspace/zp.asm"
+INCLUDE "library/original/loader/workspace/zp.asm"
 
 \ ******************************************************************************
 \
@@ -85,15 +85,15 @@ ORG CODE%
 INCLUDE "library/electron/loader/subroutine/elite_loader_part_1_of_5.asm"
 INCLUDE "library/common/loader/variable/b_per_cent.asm"
 INCLUDE "library/common/loader/variable/e_per_cent.asm"
-INCLUDE "library/cassette/loader/subroutine/swine.asm"
+INCLUDE "library/original/loader/subroutine/swine.asm"
 INCLUDE "library/common/loader/subroutine/osb.asm"
-INCLUDE "library/cassette/loader/variable/authors_names.asm"
-INCLUDE "library/cassette/loader/variable/oscliv.asm"
-INCLUDE "library/cassette/loader/variable/david9.asm"
-INCLUDE "library/cassette/loader/variable/david23.asm"
-INCLUDE "library/cassette/loader/subroutine/doprot1.asm"
-INCLUDE "library/cassette/loader/variable/mhca.asm"
-INCLUDE "library/cassette/loader/subroutine/david7.asm"
+INCLUDE "library/original/loader/variable/authors_names.asm"
+INCLUDE "library/original/loader/variable/oscliv.asm"
+INCLUDE "library/original/loader/variable/david9.asm"
+INCLUDE "library/original/loader/variable/david23.asm"
+INCLUDE "library/original/loader/subroutine/doprot1.asm"
+INCLUDE "library/original/loader/variable/mhca.asm"
+INCLUDE "library/original/loader/subroutine/david7.asm"
 INCLUDE "library/common/loader/macro/fne.asm"
 INCLUDE "library/electron/loader/subroutine/elite_loader_part_2_of_5.asm"
 INCLUDE "library/electron/loader/subroutine/elite_loader_part_3_of_5.asm"

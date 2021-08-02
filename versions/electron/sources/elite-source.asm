@@ -110,7 +110,7 @@ func0 = &A7             \ Internal key number for FUNC-0 (Inventory)
 
 INCLUDE "library/common/main/workspace/zp.asm"
 INCLUDE "library/common/main/workspace/xx3.asm"
-INCLUDE "library/cassette/main/workspace/t_per_cent.asm"
+INCLUDE "library/original/main/workspace/t_per_cent.asm"
 
 \ ******************************************************************************
 \
@@ -493,7 +493,7 @@ SAVE "versions/electron/output/ELTD.bin", CODE_D%, P%, LOAD%
 CODE_E% = P%
 LOAD_E% = LOAD% + P% - CODE%
 
-INCLUDE "library/cassette/main/variable/authors_names.asm"
+INCLUDE "library/original/main/variable/authors_names.asm"
 INCLUDE "library/common/main/subroutine/cpl.asm"
 INCLUDE "library/common/main/subroutine/cmn.asm"
 INCLUDE "library/common/main/subroutine/ypl.asm"
@@ -735,7 +735,7 @@ PRINT "Reload at ", ~LOAD_G%
 PRINT "S.ELTG ", ~CODE_G%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_G%
 SAVE "versions/electron/output/ELTG.bin", CODE_G%, P%, LOAD%
 
-INCLUDE "library/cassette/main/variable/checksum0.asm"
+INCLUDE "library/original/main/variable/checksum0.asm"
 
 \ ******************************************************************************
 \

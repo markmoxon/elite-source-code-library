@@ -2,7 +2,7 @@
 \ ******************************************************************************
 \
 \       Name: DIRI
-\       Type: Subroutine
+\       Type: Variable
 \   Category: Save and load
 \    Summary: The OS command string for changing directory on the Master Compact
 \

@@ -55,7 +55,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ 
  EQUS "JAMESON"         \ The current commander name, which defaults to JAMESON
  EQUB 13                \
                         \ The commander name can be up to 7 characters (the DFS
-                        \ limit for file names), and is terminated by a carriage
+                        \ limit for filenames), and is terminated by a carriage
                         \ return
 
 ELIF _6502SP_VERSION
@@ -65,7 +65,7 @@ IF _SNG45 OR _SOURCE_DISC
  EQUS "JAMESON"         \ The current commander name, which defaults to JAMESON
  EQUB 13                \
                         \ The commander name can be up to seven characters (the
-                        \ DFS limit for file names), and is terminated by a
+                        \ DFS limit for filenames), and is terminated by a
                         \ carriage return
 
 ELIF _EXECUTIVE
@@ -78,7 +78,7 @@ ELIF _EXECUTIVE
                         \ of Elite)
                         \
                         \ The commander name can be up to seven characters (the
-                        \ DFS limit for file names), and is terminated by a
+                        \ DFS limit for filenames), and is terminated by a
                         \ carriage return
 
 ENDIF
@@ -88,7 +88,7 @@ ELIF _ELITE_A_VERSION
  EQUS "NEWCOME"         \ The current commander name, which defaults to NEWCOME
  EQUB 13                \
                         \ The commander name can be up to 7 characters (the DFS
-                        \ limit for file names), and is terminated by a carriage
+                        \ limit for filenames), and is terminated by a carriage
                         \ return
 
 ENDIF

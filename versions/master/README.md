@@ -255,7 +255,7 @@ You can see the differences between the releases by searching the source code fo
 
 * Support for ADFS and the single disc drive on the Compact. This essentially replaces the "Which Drive?" prompt in the disc access menu with "Which Directory?", and changes the formatting of the disc catalogue to fit it on-screen. There is also additional code to claim and release the NMI workspace when disc access is required, as ADFS uses zero page differently to DFS.
 
-See the [accompanying website](https://www.bbcelite.com/master/) for a comprehensive list of differences between the releases.
+See the [accompanying website](https://www.bbcelite.com/master/releases.html) for a comprehensive list of differences between the releases.
 
 ## Notes on the original source files
 

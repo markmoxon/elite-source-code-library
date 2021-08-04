@@ -275,7 +275,7 @@ You can add `release=released` to produce the `elite-a-released.ssd` file that c
 
 You can see the differences between the releases by searching the source code for `_RELEASED` (for features in the released version) or `_SOURCE_DISC` (for features in the source disc release). The only difference in the source disc release is that the latter has considerably lower ship prices.
 
-See the [accompanying website](https://www.bbcelite.com/elite-a/) for a comprehensive list of differences between the releases.
+See the [accompanying website](https://www.bbcelite.com/elite-a/releases.html) for a comprehensive list of differences between the releases.
 
 ## Notes on the original source files
 

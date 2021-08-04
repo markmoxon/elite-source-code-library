@@ -81,12 +81,7 @@ ENDIF
 
 ORG CODE%
 
-IF _SNG45 OR _EXECUTIVE
-
- EQUS "Copyright (c) Acornsoft Limited 1985"
-
-ENDIF
-
+INCLUDE "library/6502sp/loader1/variable/copyright.asm"
 INCLUDE "library/common/loader/variable/b_per_cent.asm"
 INCLUDE "library/common/loader/variable/e_per_cent.asm"
 INCLUDE "library/common/loader/macro/fne.asm"

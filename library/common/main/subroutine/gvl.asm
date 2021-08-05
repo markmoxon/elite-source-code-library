@@ -14,8 +14,10 @@
 \
 \ Other entry points:
 \
+IF NOT(_ELITE_A_DOCKED)
 \   hyR                 Contains an RTS
 \
+ENDIF
 IF _ELITE_A_DOCKED
 \   stay_quit           Go to the docking bay (i.e. show the Status Mode
 \                       screen)

@@ -11,7 +11,7 @@
 \
 \ Other entry points:
 \
-\   ypl-1               Contains an RTS
+\   cmn-1               Contains an RTS
 \
 \ ******************************************************************************
 

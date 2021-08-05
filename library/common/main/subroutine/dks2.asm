@@ -32,6 +32,12 @@ ENDIF
 \                       inverted if the game has been configured to reverse the
 \                       joystick
 \
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
+\ Other entry points:
+\
+\   DKS2-1              Contains an RTS
+\
+ENDIF
 \ ******************************************************************************
 
 .DKS2

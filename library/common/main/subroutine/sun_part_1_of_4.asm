@@ -25,10 +25,6 @@
 \   SUNX(1 0)           The x-coordinate of the vertical centre axis of the old
 \                       sun (the one currently on-screen)
 \
-\ Other entry points:
-\
-\   RTS2                Contains an RTS
-\
 \ ******************************************************************************
 
 IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Platform

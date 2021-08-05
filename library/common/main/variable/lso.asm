@@ -2,12 +2,8 @@
 
 IF _DISC_VERSION OR _ELITE_A_VERSION \ Platform
 
- SKIP 1                 \ This space has two uses:
-                        \
-                        \   * The ship line heap for the space station (see
-                        \     NWSPS for details)
-                        \
-                        \   * The sun line heap (see SUN for details)
+ SKIP 1                 \ The ship line heap for the space station (see NWSPS)
+                        \ and the sun line heap (see SUN)
                         \
                         \ The spaces can be shared as our local bubble of
                         \ universe can support either the sun or a space
@@ -15,8 +11,7 @@ IF _DISC_VERSION OR _ELITE_A_VERSION \ Platform
 
 .BUF
 
- SKIP 191               \ The line buffer used by DASC to print justified
-                        \ text (BUF = LSO + 1)
+ SKIP 191               \ The line buffer used by DASC to print justified text
                         \
                         \ This buffer shares space with the LSO buffer, which
                         \ works because neither the sun or space station are
@@ -24,12 +19,8 @@ IF _DISC_VERSION OR _ELITE_A_VERSION \ Platform
 
 ELIF _CASSETTE_VERSION OR _6502SP_VERSION
 
- SKIP 192               \ This space has two uses:
-                        \
-                        \   * The ship line heap for the space station (see
-                        \     NWSPS for details)
-                        \
-                        \   * The sun line heap (see SUN for details)
+ SKIP 192               \ The ship line heap for the space station (see NWSPS)
+                        \ and the sun line heap (see SUN)
                         \
                         \ The spaces can be shared as our local bubble of
                         \ universe can support either the sun or a space
@@ -42,12 +33,8 @@ ELIF _ELECTRON_VERSION
 
 ELIF _MASTER_VERSION
 
- SKIP 200               \ This space has two uses:
-                        \
-                        \   * The ship line heap for the space station (see
-                        \     NWSPS for details)
-                        \
-                        \   * The sun line heap (see SUN for details)
+ SKIP 200               \ The ship line heap for the space station (see NWSPS)
+                        \ and the sun line heap (see SUN)
                         \
                         \ The spaces can be shared as our local bubble of
                         \ universe can support either the sun or a space

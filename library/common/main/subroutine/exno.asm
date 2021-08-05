@@ -28,16 +28,17 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 \                                strike)
 \
 ENDIF
-IF _ELITE_A_FLIGHT
 \ Other entry points:
 \
+\   EXNO-2              Set X = 7 and fall through into EXNO to make the sound
+\                       of a ship exploding
+\
+IF _ELITE_A_FLIGHT
 \   n_sound10           Make the first part of the death sound, or the second
 \                       part of the explosion sound
 \
 ELIF _ELITE_A_6502SP_PARA
-\ Other entry points:
-\
-\   sound10             Make the first part of the death sound, or the second
+\   sound_10            Make the first part of the death sound, or the second
 \                       part of the explosion sound
 \
 ENDIF

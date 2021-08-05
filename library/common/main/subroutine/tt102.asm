@@ -44,13 +44,15 @@ ENDIF
 \
 \ Other entry points:
 \
-\   T95                 Print the distance to the selected system
-\
-IF _ELITE_A_VERSION
-\   TT107               Progress the countdown of the hyperspace counter
-\
+IF _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA
 \   BAD                 Work out how bad we are from the amount of contraband in
 \                       our hold
+\
+ENDIF
+\   T95                 Print the distance to the selected system
+\
+IF _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA
+\   TT107               Progress the countdown of the hyperspace counter
 \
 ENDIF
 \ ******************************************************************************

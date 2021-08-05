@@ -15,11 +15,9 @@ ENDIF
 \ This routine flips the relevant geometric axes in INWK depending on which
 \ view we are looking through (front, rear, left, right).
 \
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION \ Comment
 \ Other entry points:
 \
-\   LO2                 Contains an RTS
-\
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION \ Comment
 \   PU1-1               Contains an RTS
 \
 ENDIF

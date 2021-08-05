@@ -42,8 +42,6 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
 \   LL30                LL30 is a synonym for LOIN and draws a line from
 \                       (X1, Y1) to (X2, Y2)
 \
-\   HL6                 Contains an RTS
-\
 ENDIF
 \ ******************************************************************************
 

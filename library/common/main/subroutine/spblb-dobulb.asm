@@ -16,11 +16,7 @@ ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
-\ Other entry points:
-\
-\   BULB-2              Set the Y screen address
-ELIF _MASTER_VERSION
+IF _MASTER_VERSION \ Comment
 \ Other entry points:
 \
 \   BULB2               Switch main memory back into &3000-&7FFF and return from

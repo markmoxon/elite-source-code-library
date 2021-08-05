@@ -12,10 +12,6 @@
 \ Print control code 3 (the selected system name, i.e. the one in the crosshairs
 \ in the Short-range Chart).
 \
-\ Other entry points:
-\
-\   cmn-1               Contains an RTS
-\
 \ ******************************************************************************
 
 .cpl

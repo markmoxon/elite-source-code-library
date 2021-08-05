@@ -27,6 +27,12 @@ ELIF _ELECTRON_VERSION
 \   Y                   The high byte of the screen address of the bulb to show
 ENDIF
 \
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
+\ Other entry points:
+\
+\   BULB-2              Set the Y screen address
+\
+ENDIF
 \ ******************************************************************************
 
 .BULB

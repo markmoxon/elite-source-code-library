@@ -38,6 +38,11 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comm
 \   X                   X is preserved
 \
 ENDIF
+\ Other entry points:
+\
+\   SFS1-2              Add a missile to the local bubble that has AI enabled,
+\                       is hostile, but has no E.C.M.
+\
 \ ******************************************************************************
 
 .SFS1

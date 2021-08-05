@@ -23,6 +23,12 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ unchanged, it's just a lot longer.
 \
 ENDIF
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
+\ Other entry points:
+\
+\   HL6                 Contains an RTS
+\
+ENDIF
 \ ******************************************************************************
 
 .LFT

@@ -17,10 +17,6 @@ IF _MASTER_VERSION \ Comment
 \
 \   X                   The type of the ship that was killed
 ENDIF
-\ Other entry points:
-\
-\   EXNO-2              Set X = 7 and fall through into EXNO to make the sound
-\                       of a ship exploding
 \
 \ ******************************************************************************
 

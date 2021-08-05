@@ -39,13 +39,9 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 \   X                   Contains the same as A
 \
 ENDIF
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
+IF _ELECTRON_VERSION \ Comment
 \ Other entry points:
 \
-\   DKS2-1              Contains an RTS
-\
-ENDIF
-IF _ELECTRON_VERSION \ Comment
 \   CAPSL               Scan the keyboard to see if CAPS LOCK is being pressed
 \
 ENDIF

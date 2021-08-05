@@ -52,7 +52,7 @@ ELIF _ELITE_A_FLIGHT
 
 ELIF _ELITE_A_6502SP_PARA
 
- JSR sound_10           \ Call sound10 make the first death sound
+ JSR sound_10           \ Call sound_10 make the first death sound
 
  LDA #24                \ Call the NOISE routine with A = 24 to make the
  JMP NOISE              \ death sound and return from the subroutine using a

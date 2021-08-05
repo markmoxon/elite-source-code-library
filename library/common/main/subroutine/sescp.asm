@@ -10,11 +10,6 @@
 \ This is called when an enemy ship has run out of both energy and luck, so it's
 \ time to bail.
 \
-\ Other entry points:
-\
-\   SFS1-2              Add a missile to the local bubble that has AI enabled,
-\                       is hostile, but has no E.C.M.
-\
 \ ******************************************************************************
 
 .SESCP

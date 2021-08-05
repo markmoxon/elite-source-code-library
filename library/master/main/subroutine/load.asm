@@ -51,7 +51,7 @@ ENDIF
  CPY #7                 \ If Y < 7 then there may be more characters in the
  BCC LOADL1             \ name, so loop back to LOADL1 to fetch the next one
 
- .LOADL2
+.LOADL2
 
  LDA #' '               \ We have copied the name into the LDLI command string,
                         \ but the new name might be shorter then the previous

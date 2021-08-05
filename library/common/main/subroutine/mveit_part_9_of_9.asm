@@ -74,7 +74,7 @@ ENDIF
 
 IF _ELITE_A_6502SP_PARA
 
- .l_noradar
+.l_noradar
 
 ENDIF
 

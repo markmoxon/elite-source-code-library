@@ -14,18 +14,27 @@ ELIF _6502SP_VERSION
 \             bulb)
 ENDIF
 \
+IF _MASTER_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
-IF _MASTER_VERSION \ Comment
 \ Other entry points:
 \
 \   BULB2               Switch main memory back into &3000-&7FFF and return from
 \                       the subroutine
+\
 ELIF _6502SP_VERSION
+\ ------------------------------------------------------------------------------
+\
 \ This routine is run when the parasite sends a #DOBULB 0 command. It draws
 \ (or erases) the space station indicator bulb ("S") on the dashboard.
-ENDIF
 \
+ELIF _ELITE_A_6502SP_IO
+\ ------------------------------------------------------------------------------
+\
+\ This routine is run when the parasite sends a draw_S command. It lights up the
+\ space station indicator ("S") on the dashboard.
+\
+ENDIF
 \ ******************************************************************************
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Tube

@@ -15,6 +15,12 @@ IF _6502SP_VERSION \ Comment
 \ This routine is run when the parasite sends a #DOBULB 255 command. It draws
 \ (or erases) the E.C.M. indicator bulb ("E") on the dashboard.
 \
+ELIF _ELITE_A_6502SP_IO
+\ ------------------------------------------------------------------------------
+\
+\ This routine is run when the parasite sends a draw_E command. It lights up the
+\ E.C.M. indicator bulb ("E") on the dashboard.
+\
 ENDIF
 \ ******************************************************************************
 

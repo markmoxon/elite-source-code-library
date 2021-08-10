@@ -7,8 +7,24 @@
 \
 \ ------------------------------------------------------------------------------
 \
+IF _DISC_DOCKED OR _ELITE_A_6502SP_PARA OR _ELITE_A_DOCKED \ Comment
+\ This routine toggles the main line-drawing routine between EOR and OR logic,
+\ for use when drawing the ship hanger.
+\
+ELIF _6502SP_VERSION
+\ This routine does nothing in the 6502 Second Processor version of Elite. It
+\ does have a function in the disc version, so the authors presumably just
+\ cleared out the UNWISE routine for the Second Processor version, rather than
+\ unplumbing it from the code.
+\
+ELIF _ELITE_A_6502SP_IO
+\ This routine is run when the parasite sends a draw_mode command. It toggles
+\ the main line-drawing routine between EOR and OR logic, for use when drawing
+\ the ship hanger.
+\
+ENDIF
 IF _DISC_DOCKED OR _ELITE_A_VERSION \ Comment
-\ This routine modifies the instructions in the main line-drawing routine at
+\ It does this by modifying the instructions in the main line-drawing routine at
 \ LOIN/LL30, flipping the drawing logic between the default EOR logic (which
 \ merges with whatever is already on screen, allowing us to erase anything we
 \ draw for animation purposes) and OR logic (which overwrites the screen,
@@ -17,13 +33,8 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION \ Comment
 \
 \ The routine name, UNWISE, sums up this approach - if anything goes wrong, the
 \ results would be messy.
-ELIF _6502SP_VERSION
-\ This routine does nothing in the 6502 Second Processor version of Elite. It
-\ does have a function in the disc version, so the authors presumably just
-\ cleared out the UNWISE routine for the Second Processor version, rather than
-\ unplumbing it from the code.
-ENDIF
 \
+ENDIF
 \ Other entry points:
 \
 \   HA1                 Contains an RTS

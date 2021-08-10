@@ -9,11 +9,22 @@ ELIF _6502SP_VERSION
 \    Summary: Implement the #clyns command (clear the bottom of the screen)
 ENDIF
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Comment
 \ ------------------------------------------------------------------------------
 \
-\ Clear some space at the bottom of the screen and move the text cursor to
-\ column 1, row 21. Specifically, this zeroes the following screen locations:
+\ This routine clears some space at the bottom of the screen and moves the text
+\ cursor to column 1, row 21. 
+\
+ELIF _ELITE_A_6502SP_IO
+\ ------------------------------------------------------------------------------
+\
+\ This routine is run when the parasite sends a clr_line command. It clears some
+\ space at the bottom of the screen and moves the text cursor to column 1, row
+\ 21.
+\
+ENDIF
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
+\ Specifically, it zeroes the following screen locations:
 \
 \   &7507 to &75F0
 \   &7607 to &76F0

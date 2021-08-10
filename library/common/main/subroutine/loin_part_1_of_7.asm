@@ -31,6 +31,7 @@ ELIF _ELITE_A_6502SP_IO
 \ line from (X1, Y1) to (X2, Y2). It has multiple stages.
 \
 \ This stage calculates the line deltas.
+\
 ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \ Returns:

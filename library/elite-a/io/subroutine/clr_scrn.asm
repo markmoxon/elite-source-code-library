@@ -5,6 +5,11 @@
 \   Category: Utility routines
 \    Summary: Clear the top part of the screen (the space view)
 \
+\ ------------------------------------------------------------------------------
+\
+\ This routine is run when the parasite sends a clr_scrn command. It clears the
+\ top part of the screen (the mode 4 space view).
+\
 \ ******************************************************************************
 
 .clr_scrn
@@ -22,7 +27,7 @@
 
  CPX #&78               \ Loop back to BOL1 until we have cleared page &7700,
  BNE BOL1               \ the last character row in the space view part of the
-                        \ screen (the space view)
+                        \ screen (the top part)
 
  RTS                    \ Return from the subroutine
 

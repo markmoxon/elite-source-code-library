@@ -132,13 +132,13 @@ ELIF _ELITE_A_FLIGHT
 
 ELIF _ELITE_A_6502SP_PARA
 
- LDX CRGO               \ If we do not have an I.F.F. fitted (i.e. CRGO is
- BEQ iff_not            \ zero), jump to iff_not to fetch the default colours,
-                        \ which are those for a trader or innocent bystander
-                        \ (i.e. X = 0)
+ LDX CRGO               \ If we do not have an I.F.F. system fitted (i.e. CRGO
+ BEQ iff_not            \ is zero), jump to iff_not to fetch the default
+                        \ colours, which are those for a trader or innocent
+                        \ bystander (i.e. X = 0)
 
                         \ If we get here then X = &FF (as CRGO is &FF if we have
-                        \ an I.F.F. fitted)
+                        \ an I.F.F. system fitted)
 
  LDY #36                \ Set A to byte #36 of the ship's blueprint, i.e. the
  LDA (INF),Y            \ NEWB flags

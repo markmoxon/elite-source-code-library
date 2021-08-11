@@ -498,8 +498,8 @@ ELIF _ELITE_A_VERSION
  CMP #2                 \ If A is not 2 (i.e. the item we've just bought is not
  BNE et2                \ an I.F.F. system), skip to et2
 
- LDX CRGO               \ If we already have an I.F.F. fitted (i.e. CRGO is
- BNE pres               \ non-zero), jump to pres to show the error "I.F.F.
+ LDX CRGO               \ If we already have an I.F.F. system fitted (i.e. CRGO
+ BNE pres               \ is non-zero), jump to pres to show the error "I.F.F.
                         \ System Present", beep and exit to the docking bay
                         \ (i.e. show the Status Mode screen)
 

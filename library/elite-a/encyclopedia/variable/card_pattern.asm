@@ -11,7 +11,7 @@
 \ which consists of one or more text labels, plus the corresponding ship data.
 \ The card pattern table defines these sections and how they are laid out on
 \ screen - in other words, this table contains a set of patterns, one for each
-\ section, that define how to lay out that section on-screen,
+\ section, that define how to lay out that section on-screen.
 \
 \ Each line in the table below defines a screen position and something to print
 \ there. The first two numbers are the text column and row, and the third number

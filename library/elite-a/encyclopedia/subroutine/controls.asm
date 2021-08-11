@@ -9,7 +9,7 @@
 
 .controls
 
- LDX #3                 \ Call menu with X = 4 to show menu 4, the Controls
+ LDX #3                 \ Call menu with X = 3 to show menu 3, the Controls
  JSR menu               \ menu, and return the choice in A, so A is now:
                         \
                         \   * 1 = Flight

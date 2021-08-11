@@ -72,7 +72,7 @@ ELIF _ELITE_A_VERSION
 
  ADC GCNT               \ Add the galaxy number in GCNT to A, which moves A into
                         \ the range 0-22, which corresponds to the appropriate
-                        \ Elite-A ship file (where 0 is file S.A and 23 is file
+                        \ Elite-A ship file (where 0 is file S.A and 22 is file
                         \ S.W)
 
 ENDIF
@@ -101,10 +101,10 @@ ENDIF
 
 .SHIPinA
 
+IF NOT(_ELITE_A_VERSION)
+
  CLC                    \ Convert A from 0-15 to 'A' to 'P'
  ADC #'A'
-
-IF NOT(_ELITE_A_VERSION)
 
  STA SHIPI+6            \ Store the letter of the ship blueprints file we want
                         \ in the seventh byte of the command string at SHIPI, so
@@ -114,6 +114,9 @@ IF NOT(_ELITE_A_VERSION)
  JSR CATD               \ Call CATD to reload the disc catalogue
 
 ELIF _ELITE_A_VERSION
+
+ CLC                    \ Convert A from 0-22 to 'A' to 'W'
+ ADC #'A'
 
  STA SHIPI+4            \ Store the letter of the ship blueprints file we want
                         \ in the fifth byte of the command string at SHIPI, so

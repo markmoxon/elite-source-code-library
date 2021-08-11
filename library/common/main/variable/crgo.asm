@@ -22,7 +22,7 @@ ELIF _ELITE_A_VERSION
                         \ Elite-A doesn't sell the large cargo bay as you can
                         \ buy different ships with different capacities, so we
                         \ reuse the CRGO variable to determine whether an I.F.F.
-                        \ is fitted
+                        \ system is fitted
 
 ENDIF
 

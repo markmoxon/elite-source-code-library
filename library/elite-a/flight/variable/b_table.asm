@@ -24,12 +24,12 @@
 \ This results in the following mapping (as the top two fire buttons are treated
 \ the same as the top button in the middle row):
 \
-\   Fire laser                               Fire laser
+\   Fire laser                                    Fire laser
 \
-\   Slow down              Fire laser        Speed up
-\   Unarm Missile          Fire Missile      Target missile
-\   Hyperspace Unit        E.C.M.            Escape pod
-\   Docking computer on	   In-system jump    Docking computer off
+\   Slow down              Fire laser             Speed up
+\   Unarm Missile          Fire Missile           Target missile
+\   Hyperspace Unit        E.C.M.                 Escape pod
+\   Docking computer on    In-system jump         Docking computer off
 \
 \ ******************************************************************************
 

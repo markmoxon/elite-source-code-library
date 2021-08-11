@@ -61,9 +61,9 @@ ELIF _ELITE_A_VERSION
  LDA CRGO,X             \ If we do not have any of item CRGO+X, return from the
  BEQ DK5                \ subroutine (as DK5 contains an RTS). X is in the range
                         \ 0-23, so this not only checks for cargo, but also for
-                        \ the I.F.F., E.C.M., fuel scoops, hyperspace unit,
-                        \ energy unit, docking computer and galactic hyperdrive,
-                        \ all of which can be destroyed
+                        \ the I.F.F. system, E.C.M. system, fuel scoops,
+                        \ hyperspace unit, energy unit, docking computer and
+                        \ galactic hyperdrive, all of which can be destroyed
 
  LDA DLY                \ If there is already an in-flight message on-screen,
  BNE DK5                \ return from the subroutine (as DK5 contains an RTS)

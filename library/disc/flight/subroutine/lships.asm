@@ -65,13 +65,16 @@ ELIF _ELITE_A_VERSION
                         \   * Bit 3    = random
                         \   * Bits 4-7 = 0
                         \
+                        \ and we know the C flag is clear, as we cleared the top
+                        \ bits of A before doing the left rotations above
+                        \
                         \ So A is in the range 0-15. This corresponds to the
                         \ range of ship blueprint files in the original disc
                         \ version, which are D.MOA to D.MOP, but we're not done
                         \ yet, as Elite-A has 23 ship blueprint files
 
  ADC GCNT               \ Add the galaxy number in GCNT to A, which moves A into
-                        \ the range 0-22, which corresponds to the appropriate
+                        \ the range 0-22, to correspond with the appropriate
                         \ Elite-A ship file (where 0 is file S.A and 22 is file
                         \ S.W)
 

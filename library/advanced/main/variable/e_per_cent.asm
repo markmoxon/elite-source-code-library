@@ -25,7 +25,9 @@
 \    * Bit 5: Innocent bystander (0 = normal, 1 = innocent bystander)
 \    * Bit 6: Cop flag (0 = not a cop, 1 = cop)
 \    * Bit 7: For spawned ships: ship been scooped or has docked
+IF NOT(_ELITE_A_VERSION)
 \             For blueprints: this ship type has an escape pod fitted
+ENDIF
 \
 \ See the deep dive on "Advanced tactics with the NEWB flags" for details of
 \ how this works.

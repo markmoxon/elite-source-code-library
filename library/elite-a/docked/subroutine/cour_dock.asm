@@ -10,7 +10,7 @@
 .cour_dock
 
  LDA cmdr_cour          \ If there is no special cargo delivery mission in
- ORA cmdr_cour+1        \ progress, then the mission timer in cmdr_cour(1 0)
+ ORA cmdr_cour+1        \ progress, then the mission reward in cmdr_cour(1 0)
  BEQ cour_quit          \ will be zero, so jump to cour_quit to return from the
                         \ subroutine
 
@@ -19,14 +19,14 @@
  CMP cmdr_courx         \ If A does not match the x-coordinate of the cargo
  BNE cour_half          \ mission's destination in cmdr_courx then we aren't at
                         \ the destination station, so jump to cour_half to
-                        \ advance the mission timer
+                        \ halve the mission reward
 
  LDA QQ1                \ Set A = the current system's galactic y-coordinate
 
  CMP cmdr_coury         \ If A does not match the y-coordinate of the cargo
  BNE cour_half          \ mission's destination in cmdr_coury then we aren't at
                         \ the destination station, so jump to cour_half to
-                        \ advance the mission timer
+                        \ halve the mission reward
 
  LDA #2                 \ We have arrived at the destination for the special
  JSR TT66               \ cargo mission, so clear the top part of the screen,
@@ -42,9 +42,8 @@
  LDA #113               \ Print extended token 113 ("CARGO VALUE:")
  JSR DETOK
 
- LDX cmdr_cour          \ Set (Y X) to the value of the mission timer in
- LDY cmdr_cour+1        \ cmdr_cour(1 0), which is going to be our reward for
-                        \ completing the delivery mission
+ LDX cmdr_cour          \ Set (Y X) to the mission reward in cmdr_cour(1 0)
+ LDY cmdr_cour+1
 
  SEC                    \ Set the C flag so the call to TT11 includes a decimal
                         \ point
@@ -52,18 +51,18 @@
  LDA #6                 \ Set A = 6, for the call to TT11 below, so we pad out
                         \ the number to 6 digits
 
- JSR TT11               \ Call TT11 to print the mission timer in (Y X), padded
+ JSR TT11               \ Call TT11 to print the mission reward in (Y X), padded
                         \ to six digits and with a decimal point
 
  LDA #226               \ Print recursive text token 66 (" CR")
  JSR TT27
 
- LDX cmdr_cour          \ Set (Y X) to the value of the mission timer in
- LDY cmdr_cour+1        \ cmdr_cour(1 0)
+ LDX cmdr_cour          \ Set (Y X) to the mission reward in cmdr_cour(1 0)
+ LDY cmdr_cour+1
 
  JSR MCASH              \ Call MCASH to add (Y X) to the cash pot
 
- LDA #0                 \ Reset the mission timer by doing cmdr_cour(1 0) = 0
+ LDA #0                 \ Reset the mission reward by doing cmdr_cour(1 0) = 0
  STA cmdr_cour
  STA cmdr_cour+1
 
@@ -72,8 +71,8 @@
 
 .cour_half
 
- LSR cmdr_cour+1        \ Halve the value of the mission timer in cmdr_cour(1 0)
- ROR cmdr_cour
+ LSR cmdr_cour+1        \ Halve the value of the mission reward in
+ ROR cmdr_cour          \ cmdr_cour(1 0)
 
 .cour_quit
 

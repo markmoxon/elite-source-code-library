@@ -46,7 +46,7 @@
  EOR b_table-1,Y        \ We now EOR the value in A with the Y-th entry in
  BEQ b_quit             \ b_table, and jump to b_quit to return from the
                         \ subroutine if the table entry is 128 (&80) - in other
-                        \ words, we quite if Y is the offset for the roll and
+                        \ words, we quit if Y is the offset for the roll and
                         \ pitch controls
 
                         \ If we get here, then the offset in Y points to a

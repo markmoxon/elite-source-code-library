@@ -19,5 +19,6 @@ ELIF _ELITE_A_VERSION
                         \ Elite-A replaces the energy bomb with the hyperspace
                         \ unit, reusing the BOMB variable to determine whether
                         \ one is fitted
+
 ENDIF
 

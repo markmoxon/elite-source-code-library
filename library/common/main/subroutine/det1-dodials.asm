@@ -16,7 +16,6 @@ ENDIF
 \
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ This routine sets the screen to show the number of text rows given in X.
-\
 ELIF _ELITE_A_6502SP_IO
 \ This routine is run when the parasite sends a write_crtc command. It updates
 \ the number of text rows shown on the screen, which has the effect of hiding or

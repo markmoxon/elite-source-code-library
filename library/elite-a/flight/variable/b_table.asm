@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Keyboard
 \    Summary: Lookup table for Delta 14b joystick buttons
+\  Deep dive: Delta 14b joystick support
 \
 \ ------------------------------------------------------------------------------
 \

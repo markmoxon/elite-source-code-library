@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Encyclopedia
 \    Summary: Display a menu and ask for a choice
+\  Deep dive: The Encyclopedia Galactica
 \
 \ ------------------------------------------------------------------------------
 \

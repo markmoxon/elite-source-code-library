@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Buying ships
 \    Summary: The flight characteristics for each of the different ship types
+\  Deep dive: Buying and flying ships in Elite-A
 \
 \ ******************************************************************************
 

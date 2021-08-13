@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Missions
 \    Summary: Generate a single special cargo mission and display its menu item
+\  Deep dive: Special cargo missions
 \
 \ ******************************************************************************
 
@@ -230,8 +231,8 @@
                         \ the high byte of the mission cost
 
  LDA INWK+4             \ Store INWK+4 in the X-th byte of &0C40, so it contains
- STA &0C40,X            \ the low byte of the mission cost (and the same value
-                        \ is used as the low byte of the mission timer)
+ STA &0C40,X            \ the low byte of the mission cost (and the low byte of
+                        \ the mission reward, as they share the same value)
 
  LDA #1                 \ Move the text cursor to column 1
  STA XC
@@ -272,7 +273,7 @@
  LDA #6                 \ Set A = 6, for the call to TT11 below, so we pad out
                         \ the number to 6 digits
 
- JSR TT11               \ Call TT11 to print the mission timer in (Y X), padded
+ JSR TT11               \ Call TT11 to print the mission cost in (Y X), padded
                         \ to six digits and with a decimal point
 
  INC INWK+3             \ We have just printed a menu item, so increment the

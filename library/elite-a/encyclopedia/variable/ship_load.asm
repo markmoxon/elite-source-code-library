@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Encyclopedia
 \    Summary: The OS command string for loading a ship blueprints file
+\  Deep dive: The Encyclopedia Galactica
 \
 \ ******************************************************************************
 

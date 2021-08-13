@@ -5,6 +5,7 @@
 \   Category: Drawing ships
 \    Summary: Table of data used when adding each ship type to the positions in
 \             the blueprints table
+\  Deep dive: Ship blueprints in Elite-A
 \
 \ ------------------------------------------------------------------------------
 \

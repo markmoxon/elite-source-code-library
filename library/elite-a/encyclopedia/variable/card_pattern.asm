@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Encyclopedia
 \    Summary: Layout pattern for the encyclopedia's ship cards
+\  Deep dive: The Encyclopedia Galactica
 \
 \ ------------------------------------------------------------------------------
 \

@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Buying ships
 \    Summary: Table of offsets for each ship type
+\  Deep dive: Buying and flying ships in Elite-A
 \
 \ ------------------------------------------------------------------------------
 \

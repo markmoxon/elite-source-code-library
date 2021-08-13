@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Buying ships
 \    Summary: Ship names and prices for the different ship types we can buy
+\  Deep dive: Buying and flying ships in Elite-A
 \
 \ ******************************************************************************
 

@@ -71,7 +71,7 @@ ORG CODE%
 \       Type: Variable
 \   Category: Drawing ships
 \    Summary: Ship blueprints lookup table for the S.U file
-\  Deep dive: Ship blueprints in the disc version
+\  Deep dive: Ship blueprints in Elite-A
 \
 \ ******************************************************************************
 
@@ -115,7 +115,7 @@ ORG CODE%
 \       Type: Variable
 \   Category: Drawing ships
 \    Summary: Ship blueprints default NEWB flags for the S.U file
-\  Deep dive: Ship blueprints
+\  Deep dive: Ship blueprints in Elite-A
 \             Advanced tactics with the NEWB flags
 \
 \ ******************************************************************************

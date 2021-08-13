@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Missions
 \    Summary: Show the Special Cargo screen (CTRL-f1)
+\  Deep dive: Special cargo missions
 \
 \ ******************************************************************************
 

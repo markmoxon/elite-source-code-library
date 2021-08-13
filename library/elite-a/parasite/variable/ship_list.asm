@@ -5,6 +5,7 @@
 \   Category: Drawing ships
 \    Summary: A list of all available ship types in Elite-A, for populating
 \             the ship blueprints table
+\  Deep dive: Ship blueprints in Elite-A
 \
 \ ******************************************************************************
 

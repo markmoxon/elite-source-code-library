@@ -5,6 +5,7 @@
 \   Category: Encyclopedia
 \    Summary: Table containing the letter of the relevant ship blueprints file
 \             that we load for each ship card
+\  Deep dive: The Encyclopedia Galactica
 \
 \ ******************************************************************************
 

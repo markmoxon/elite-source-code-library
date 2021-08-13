@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Encyclopedia
 \    Summary: Show the Controls menu and display the chosen page
+\  Deep dive: The Encyclopedia Galactica
 \
 \ ******************************************************************************
 

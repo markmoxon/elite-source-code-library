@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Buying ships
 \    Summary: Show the Buy Ship screen (CTRL-f3)
+\  Deep dive: Buying and flying ships in Elite-A
 \
 \ ------------------------------------------------------------------------------
 \

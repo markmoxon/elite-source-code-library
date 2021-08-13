@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Text
 \    Summary: Print the type of a given ship
+\  Deep dive: Buying and flying ships in Elite-A
 \
 \ ------------------------------------------------------------------------------
 \

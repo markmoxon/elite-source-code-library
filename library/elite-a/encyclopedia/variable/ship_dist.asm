@@ -5,6 +5,7 @@
 \   Category: Encyclopedia
 \    Summary: Table containing the closest distance to show the ship for each
 \             ship card
+\  Deep dive: The Encyclopedia Galactica
 \
 \ ******************************************************************************
 

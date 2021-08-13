@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Encyclopedia
 \    Summary: Lookup table for the encyclopedia's ship cards
+\  Deep dive: The Encyclopedia Galactica
 \
 \ ------------------------------------------------------------------------------
 \

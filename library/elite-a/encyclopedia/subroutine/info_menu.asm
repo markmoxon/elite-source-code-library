@@ -8,6 +8,7 @@ ENDIF
 \       Type: Subroutine
 \   Category: Encyclopedia
 \    Summary: Show the Encyclopedia screen
+\  Deep dive: The Encyclopedia Galactica
 \
 \ ------------------------------------------------------------------------------
 \

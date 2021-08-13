@@ -5,6 +5,7 @@
 \   Category: Loader
 \    Summary: Lookup table for locating a specific bit in the 32-bit word for a
 \             given ship blueprint position
+\  Deep dive: Ship blueprints in Elite-A
 \
 \ ******************************************************************************
 

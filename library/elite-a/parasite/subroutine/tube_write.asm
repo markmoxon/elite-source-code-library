@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Tube
 \    Summary: As the parasite, send a byte across the Tube to the I/O processor
+\  Deep dive: Tube communication in Elite-A
 \
 \ ------------------------------------------------------------------------------
 \

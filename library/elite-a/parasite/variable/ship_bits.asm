@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Drawing ships
 \    Summary: Table of allowed ship blueprint positions for each ship type
+\  Deep dive: Ship blueprints in Elite-A
 \
 \ ******************************************************************************
 

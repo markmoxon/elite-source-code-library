@@ -5,6 +5,7 @@
 \   Category: Universe
 \    Summary: Populate the ship blueprints table at XX21 with a random selection
 \             of ships and set the compass to point to the planet
+\  Deep dive: Ship blueprints in Elite-A
 \
 \ ------------------------------------------------------------------------------
 \

@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Encyclopedia
 \    Summary: Ship card data for the encyclopedia entry for the Anaconda
+\  Deep dive: The Encyclopedia Galactica
 \
 \ ******************************************************************************
 

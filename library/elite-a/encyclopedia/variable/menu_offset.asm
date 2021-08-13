@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Encyclopedia
 \    Summary: Table containing token numbers for the first item in each menu
+\  Deep dive: The Encyclopedia Galactica
 \
 \ ------------------------------------------------------------------------------
 \

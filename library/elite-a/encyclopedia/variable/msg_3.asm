@@ -5,6 +5,7 @@
 \   Category: Text
 \    Summary: The second extended token table for recursive tokens 0-255
 \             (write_msg3)
+\  Deep dive: The Encyclopedia Galactica
 \
 \ ******************************************************************************
 

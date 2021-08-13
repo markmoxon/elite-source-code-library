@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Buying ships
 \    Summary: Set K(0 1 2 3) to the price of a given ship
+\  Deep dive: Buying and flying ships in Elite-A
 \
 \ ------------------------------------------------------------------------------
 \

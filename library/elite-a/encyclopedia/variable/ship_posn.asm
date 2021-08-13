@@ -9,6 +9,7 @@ IF _ELITE_A_ENCYCLOPEDIA
 ELIF _ELITE_A_6502SP_PARA
 \    Summary: Table containing the number of this ship in the ship_list table
 ENDIF
+\  Deep dive: The Encyclopedia Galactica
 \
 \ ******************************************************************************
 

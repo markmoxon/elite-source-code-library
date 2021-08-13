@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Encyclopedia
 \    Summary: Display a ship card in the encyclopedia
+\  Deep dive: The Encyclopedia Galactica
 \
 \ ------------------------------------------------------------------------------
 \

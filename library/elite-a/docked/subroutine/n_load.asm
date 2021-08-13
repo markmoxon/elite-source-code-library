@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Buying ships
 \    Summary: Load the name and flight characteristics for the current ship type
+\  Deep dive: Buying and flying ships in Elite-A
 \
 \ ******************************************************************************
 

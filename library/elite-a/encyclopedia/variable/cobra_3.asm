@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Encyclopedia
 \    Summary: Ship card data for the encyclopedia entry for the Cobra Mk III
+\  Deep dive: The Encyclopedia Galactica
 \
 \ ******************************************************************************
 

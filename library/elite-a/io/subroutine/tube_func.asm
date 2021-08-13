@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Tube
 \    Summary: Call the corresponding routine for a Tube command
+\  Deep dive: Tube communication in Elite-A
 \
 \ ------------------------------------------------------------------------------
 \

@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Keyboard
 \    Summary: Scan the Delta 14b joystick buttons
+\  Deep dive: Delta 14b joystick support
 \
 \ ------------------------------------------------------------------------------
 \
@@ -83,7 +84,7 @@
                         \   %0011 = read buttons in right column  (bit 6 clear)
 
  AND #%00001111         \ We now read the 6522 User VIA to fetch PB0 to PB3 from
- AND VIA+&60            \ the user port (PB0 = bit 0 to PB3 = bit 4), which
+ AND VIA+&60            \ the user port (PB0 = bit 0 to PB3 = bit 3), which
                         \ tells us whether any buttons in the specified column
                         \ are being pressed, and if they are, in which row. The
                         \ values read are as follows:

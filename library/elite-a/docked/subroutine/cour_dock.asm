@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Missions
 \    Summary: Update the current special cargo delivery mission on docking
+\  Deep dive: Special cargo missions
 \
 \ ******************************************************************************
 

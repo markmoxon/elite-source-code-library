@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Dashboard
 \    Summary: Return the type index for this ship in the I.F.F. system
+\  Deep dive: The I.F.F. system
 \
 \ ------------------------------------------------------------------------------
 \

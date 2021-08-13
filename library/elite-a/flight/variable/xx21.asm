@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Drawing ships
 \    Summary: Ship blueprints lookup table for flight in Elite-A
+\  Deep dive: Ship blueprints in Elite-A
 \
 \ ------------------------------------------------------------------------------
 \

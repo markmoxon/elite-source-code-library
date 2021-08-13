@@ -5,6 +5,7 @@
 \   Category: Text
 \    Summary: Write characters to the screen and process Tube commands from the
 \             parasite
+\  Deep dive: Tube communication in Elite-A
 \
 \ ------------------------------------------------------------------------------
 \

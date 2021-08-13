@@ -5,6 +5,7 @@
 \   Category: Encyclopedia
 \    Summary: Show the Ships A-G or Ships K-W menu and display the chosen ship
 \             card
+\  Deep dive: The Encyclopedia Galactica
 \
 \ ------------------------------------------------------------------------------
 \

@@ -5,6 +5,7 @@
 \   Category: Tube
 \    Summary: Lookup table for Tube commands sent from the parasite to the I/O
 \             processor
+\  Deep dive: Tube communication in Elite-A
 \
 \ ------------------------------------------------------------------------------
 \

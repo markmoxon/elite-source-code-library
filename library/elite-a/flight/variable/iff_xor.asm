@@ -5,6 +5,7 @@
 \   Category: Dashboard
 \    Summary: The EOR value for different types of ship in the the I.F.F. system
 \             for creating striped sticks in the scanner
+\  Deep dive: The I.F.F. system
 \
 \ ------------------------------------------------------------------------------
 \

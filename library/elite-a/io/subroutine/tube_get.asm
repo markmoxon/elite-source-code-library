@@ -5,6 +5,7 @@
 \   Category: Tube
 \    Summary: As the I/O processor, fetch a byte that's been sent over the Tube
 \             from the parasite
+\  Deep dive: Tube communication in Elite-A
 \
 \ ------------------------------------------------------------------------------
 \

@@ -10,6 +10,9 @@ ELIF _ELITE_A_6502SP_PARA
 \             command to the I/O processor
 ENDIF
 \  Deep dive: The 3D scanner
+IF _ELITE_A_VERSION
+\             The I.F.F. system
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Encyclopedia
 \    Summary: Table containing column positions for each ship card's title
+\  Deep dive: The Encyclopedia Galactica
 \
 \ ******************************************************************************
 

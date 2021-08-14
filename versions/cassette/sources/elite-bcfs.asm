@@ -61,8 +61,6 @@ LOAD% = &1128           \ LOAD% points to the start of the actual game code,
                         \ after the &28 bytes of header code that are inserted
                         \ below
 
-D% = &563A              \ D% is set to the size of the main game code
-
 INCLUDE "library/cassette/bcfs/workspace/zp.asm"
 
 \ ******************************************************************************

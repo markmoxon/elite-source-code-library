@@ -32,13 +32,15 @@
 
 .Ghy
 
-IF _CASSETTE_VERSION \ Comment
+IF _CASSETTE_VERSION \ Platform
 
-\JSR TT111              \ This instruction is commented out in the original
-                        \ source, and appears in the text cassette code source
-                        \ (ELITED.TXT) but not in the BASIC source file on the
-                        \ source disc (ELITED). It finds the closest system to
-                        \ coordinates (QQ9, QQ10)
+IF _TEXT_SOURCES
+
+ JSR TT111              \ Call TT111 to set the current system to the nearest
+                        \ system to (QQ9, QQ10), and put the seeds of the
+                        \ nearest system into QQ15 to QQ15+5
+
+ENDIF
 
 ENDIF
 
@@ -156,7 +158,7 @@ ENDIF
 
 .zZ
 
- LDA #&60               \ Set (QQ9, QQ10) to (96, 96), which is where we always
+ LDA #96                \ Set (QQ9, QQ10) to (96, 96), which is where we always
  STA QQ9                \ arrive in a new galaxy (the selected system will be
  STA QQ10               \ set to the nearest actual system later on)
 

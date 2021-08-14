@@ -38,17 +38,27 @@ ENDIF
 
  STX XX4                \ Store the slot number of the ship to remove in XX4
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
+IF _CASSETTE_VERSION \ Minor
 
-                        \ The following two instructions appear in the BASIC
-                        \ source file (ELITEF), but in the text source file
-                        \ (ELITEF.TXT) they are replaced by:
+IF _SOURCE_DISC
+
+ LDA MSTG               \ Check whether this slot matches the slot number in
+ CMP XX4                \ MSTG, which is the target of our missile lock
+
+ELIF _TEXT_SOURCES
+
+ CPX MSTG               \ Check whether this slot matches the slot number in
+                        \ MSTG, which is the target of our missile lock
                         \
-                        \   CPX MSTG
-                        \
-                        \ which does the same thing, but saves two bytes of
-                        \ memory (as CPX MSTG is a two-byte opcode, while LDA
-                        \ MSTG and CMP XX4 take up four bytes between them)
+                        \ This instructions saves two bytes of memory over the
+                        \ LDA and CMP-based code in the source disc version, as
+                        \ CPX MSTG is a two-byte opcode, while LDA MSTG and
+                        \ CMP XX4 take up four bytes between them (the code does
+                        \ the same thing)
+
+ENDIF
+
+ELIF _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
 
  LDA MSTG               \ Check whether this slot matches the slot number in
  CMP XX4                \ MSTG, which is the target of our missile lock

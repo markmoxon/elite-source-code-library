@@ -111,9 +111,17 @@ ENDIF
 
 IF _CASSETTE_VERSION \ Platform
 
+IF _SOURCE_DISC
+
  ASL A                  \ Set LASCT to 0, as 128 << 1 = %10000000 << 1 = 0. This
- STA LASCT              \ stops any laser pulsing. This instruction is STA LAS2
-                        \ in the text source file ELITEC.TXT
+ STA LASCT              \ stops any laser pulsing
+
+ELIF _TEXT_SOURCES
+
+ ASL A                  \ Set LAS2 to 0, as 128 << 1 = %10000000 << 1 = 0. This
+ STA LAS2               \ stops any laser pulsing
+
+ENDIF
 
 ELIF _ELECTRON_VERSION
 

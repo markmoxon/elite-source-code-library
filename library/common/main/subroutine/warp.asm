@@ -42,15 +42,26 @@ ENDIF
 
 IF _CASSETTE_VERSION \ Platform
 
+IF _SOURCE_DISC
+
+ LDA MANY+AST           \ Set X to the total number of asteroids, escape pods
+ CLC                    \ and cargo canisters in the vicinity
+ ADC MANY+ESC
+ CLC                    \ The second CLC instruction has no effect, as there is
+ ADC MANY+OIL           \ is no way that adding the number of asteroids and the
+ TAX                    \ number escape pods will cause a carry
+
+ELIF _TEXT_SOURCES
+
  LDA MANY+AST           \ Set X to the total number of asteroids, escape pods
  CLC                    \ and cargo canisters in the vicinity
  ADC MANY+ESC           \
- CLC                    \ The second CLC instruction appears in the BASIC
- ADC MANY+OIL           \ source file (ELITEC), but not in the text source file
- TAX                    \ (ELITEC.TXT). The second CLC has no effect, as there
-                        \ is no way that adding the number of asteroids and the
-                        \ number escape pods will cause a carry, so presumably
-                        \ it got removed at some point
+ ADC MANY+OIL           \ This code saves one byte of memory over the code in
+ TAX                    \ the source disc version. The second CLC is not needed
+                        \ as there is no way that adding the number of asteroids
+                        \ and the number of escape pods will cause a carry
+
+ENDIF
 
 ELIF _ELECTRON_VERSION
 
@@ -135,22 +146,29 @@ ENDIF
                         \ planet in any of the three axes (we could also call
                         \ routine m to do the same thing, as A = 0)
 
-IF _CASSETTE_VERSION \ Comment
+IF _CASSETTE_VERSION \ Minor
 
-                        \ The following two instructions appear in the BASIC
-                        \ source file (ELITEC), but in the text source file
-                        \ (ELITEC.TXT) they are replaced by:
+IF _SOURCE_DISC
+
+ CMP #2                 \ If A < 2 then jump to WA1 to abort the in-system jump
+ BCC WA1                \ with a low beep, as we are facing the planet and are
+                        \ too close to jump in that direction
+
+ELIF _TEXT_SOURCES
+
+ LSR A                  \ If A < 2 then jump to WA1 to abort the in-system jump
+ BEQ WA1                \ with a low beep, as we are facing the planet and are
+                        \ too close to jump in that direction
                         \
-                        \   LSR A
-                        \   BEQ WA1
-                        \
-                        \ which does the same thing, but saves one byte of
-                        \ memory (as LSR A is a one-byte opcode, while CMP #2
-                        \ takes up two bytes)
+                        \ These instructions between them save one byte of
+                        \ memory over the CMP-based code in the source disc
+                        \ version, as LSR A is a one-byte opcode, while CMP #2
+                        \ takes up two bytes (though the code does exactly the
+                        \ same thing)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
+ELIF _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
 
  CMP #2                 \ If A < 2 then jump to WA1 to abort the in-system jump
  BCC WA1                \ with a low beep, as we are facing the planet and are
@@ -202,22 +220,29 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Comment
+IF _CASSETTE_VERSION \ Minor
 
-                        \ The following two instructions appear in the BASIC
-                        \ source file (ELITEC), but in the text source file
-                        \ (ELITEC.TXT) they are replaced by:
+IF _SOURCE_DISC
+
+ CMP #2                 \ If A < 2 then jump to WA1 to abort the in-system jump
+ BCC WA1                \ with a low beep, as we are facing the planet and are
+                        \ too close to jump in that direction
+
+ELIF _TEXT_SOURCES
+
+ LSR A                  \ If A < 2 then jump to WA1 to abort the in-system jump
+ BEQ WA1                \ with a low beep, as we are facing the planet and are
+                        \ too close to jump in that direction
                         \
-                        \   LSR A
-                        \   BEQ WA1
-                        \
-                        \ which does the same thing, but saves one byte of
-                        \ memory (as LSR A is a one-byte opcode, while CMP #2
-                        \ takes up two bytes)
+                        \ These instructions between them save one byte of
+                        \ memory over the CMP-based code in the source disc
+                        \ version, as LSR A is a one-byte opcode, while CMP #2
+                        \ takes up two bytes (though the code does exactly the
+                        \ same thing)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  CMP #2                 \ If A < 2 then jump to WA1 to abort the in-system jump
  BCC WA1                \ with a low beep, as we are facing the sun and are too

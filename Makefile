@@ -3,9 +3,28 @@ PYTHON?=python
 
 # Cassette version
 
-rel-cassette=1
-folder-cassette=/source-disc
-suffix-cassette=-from-source-disc
+# You can set the release that gets built by adding 'release=<rel>' to
+# the make command, where <rel> is one of:
+#
+#   source-disc
+#   text-sources
+#
+# So, for example:
+#
+#   make encrypt verify release=text-sources
+#
+# will build the version from the text sources on Ian Bell's site. If you
+# omit the release parameter, it will build the source disc version.
+
+ifeq ($(release-cassette), text-sources)
+  rel-cassette=2
+  folder-cassette=/text-sources
+  suffix-cassette=-from-text-sources
+else
+  rel-cassette=1
+  folder-cassette=/source-disc
+  suffix-cassette=-from-source-disc
+endif
 
 # 6502 Second Processor version
 

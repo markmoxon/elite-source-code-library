@@ -4,7 +4,7 @@ PYTHON?=python
 # Cassette version
 
 rel-cassette=1
-folder-cassette=
+folder-cassette=/source-disc
 suffix-cassette=-from-source-disc
 
 # 6502 Second Processor version
@@ -92,7 +92,7 @@ endif
 # Electron version
 
 rel-electron=1
-folder-electron=
+folder-electron=/sth
 suffix-electron=-sth
 
 # Elite-A

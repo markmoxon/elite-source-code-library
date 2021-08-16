@@ -36,7 +36,17 @@ ENDIF
 IF NOT(_ELITE_A_VERSION)
  EQUB LO(SHIP_ESCAPE_POD_EDGES - SHIP_SPLINTER)      \ Edges data = escape pod
 ELIF _ELITE_A_VERSION
+
+IF _RELEASED OR _SOURCE_DISC
+
  EQUB &5A               \ This value is incorrect (see above)
+
+ELIF _BUG_FIX
+
+ EQUB LO(SHIP_ESCAPE_POD_EDGES - SHIP_SPLINTER)      \ Edges data = escape pod
+
+ENDIF
+
 ENDIF
  EQUB &44               \ Faces data offset (low)  = &0044
 IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; splinters are shown in red
@@ -64,7 +74,17 @@ ENDIF
 IF NOT(_ELITE_A_VERSION)
  EQUB HI(SHIP_ESCAPE_POD_EDGES - SHIP_SPLINTER)      \ Edges data = escape pod
 ELIF _ELITE_A_VERSION
+
+IF _RELEASED OR _SOURCE_DISC
+
  EQUB &FE               \ This value is incorrect (see above)
+
+ELIF _BUG_FIX
+
+ EQUB HI(SHIP_ESCAPE_POD_EDGES - SHIP_SPLINTER)      \ Edges data = escape pod
+
+ENDIF
+
 ENDIF
  EQUB &00               \ Faces data offset (high) = &0044
  EQUB 5                 \ Normals are scaled by    = 2^5 = 32

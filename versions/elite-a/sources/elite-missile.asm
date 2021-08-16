@@ -54,6 +54,7 @@ _ELITE_A_6502SP_IO      = FALSE
 _ELITE_A_6502SP_PARA    = FALSE
 _RELEASED               = (_RELEASE = 1)
 _SOURCE_DISC            = (_RELEASE = 2)
+_BUG_FIX                = (_RELEASE = 3)
 
 \ ******************************************************************************
 \

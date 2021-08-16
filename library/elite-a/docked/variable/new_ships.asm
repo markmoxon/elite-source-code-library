@@ -10,7 +10,7 @@
 
 .new_ships
 
-IF _SOURCE_DISC
+IF _SOURCE_DISC OR _BUG_FIX
 
  EQUS "ADDER    "       \ #0 = Adder         = 27,000.0 Cr
 

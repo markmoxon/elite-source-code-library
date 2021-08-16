@@ -121,6 +121,7 @@ suffix-electron=-sth
 #
 #   released
 #   patched
+#   bug-fix
 #
 # So, for example:
 #
@@ -133,6 +134,10 @@ ifeq ($(release-elite-a), source-disc)
   rel-elite-a=2
   folder-elite-a=/source-disc
   suffix-elite-a=-from-source-disc
+else ifeq ($(release-elite-a), bug-fix)
+  rel-elite-a=3
+  folder-elite-a=/bug-fix
+  suffix-elite-a=-bug-fix
 else
   rel-elite-a=1
   folder-elite-a=/released

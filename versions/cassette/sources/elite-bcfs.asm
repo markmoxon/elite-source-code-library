@@ -48,6 +48,8 @@ _ELITE_A_VERSION        = (_VERSION = 6)
 _SOURCE_DISC            = (_RELEASE = 1)
 _TEXT_SOURCES           = (_RELEASE = 2)
 
+GUARD &8000             \ Guard against assembling over MOS memory
+
 \ ******************************************************************************
 \
 \ Configuration variables

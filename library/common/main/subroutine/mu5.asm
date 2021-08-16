@@ -12,7 +12,7 @@
 \
 \   K(3 2 1 0) = 0
 \
-IF _ELITE_A_VERSION
+IF _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA
 \ Other entry points:
 \
 \   n_store             Set K(3 2 1) = (A A A) and clear the C flag
@@ -22,14 +22,14 @@ ENDIF
 
 .MU5
 
-IF NOT(_ELITE_A_VERSION)
+IF NOT(_ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA)
 
  STA K                  \ Set K(3 2 1 0) to (A A A A)
  STA K+1
  STA K+2
  STA K+3
 
-ELIF _ELITE_A_VERSION
+ELIF _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA
 
  STA K                  \ Set K(3 2 1 0) to (A A A A), starting with the lowest
                         \ byte

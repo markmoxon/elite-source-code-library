@@ -34,6 +34,8 @@ _MASTER_VERSION         = (_VERSION = 4)
 _ELECTRON_VERSION       = (_VERSION = 5)
 _ELITE_A_VERSION        = (_VERSION = 6)
 
+GUARD &5800             \ Guard against assembling over screen memory
+
 \ ******************************************************************************
 \
 \ Configuration variables

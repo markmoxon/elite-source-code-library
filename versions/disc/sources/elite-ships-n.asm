@@ -46,6 +46,8 @@ _ELITE_A_ENCYCLOPEDIA   = FALSE
 _ELITE_A_6502SP_IO      = FALSE
 _ELITE_A_6502SP_PARA    = FALSE
 
+GUARD &6000             \ Guard against assembling over screen memory
+
 \ ******************************************************************************
 \
 \ Configuration variables

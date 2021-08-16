@@ -39,6 +39,8 @@ _ELITE_A_VERSION        = (_VERSION = 6)
 _SNG47                  = (_RELEASE = 1)
 _COMPACT                = (_RELEASE = 2)
 
+GUARD &C000             \ Guard against assembling over MOS memory
+
 \ ******************************************************************************
 \
 \ Configuration variables

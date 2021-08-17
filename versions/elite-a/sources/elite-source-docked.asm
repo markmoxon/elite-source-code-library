@@ -759,7 +759,7 @@ INCLUDE "library/enhanced/main/variable/rupla.asm"
 INCLUDE "library/enhanced/main/variable/rugal.asm"
 INCLUDE "library/enhanced/main/variable/rutok.asm"
 INCLUDE "library/enhanced/main/variable/mtin.asm"
-INCLUDE "library/disc/docked/variable/unused_block_2.asm"
+INCLUDE "library/disc/docked/variable/checksum.asm"
 
 \ ******************************************************************************
 \

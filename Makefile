@@ -194,8 +194,9 @@ build:
 	$(BEEBASM) -i versions/cassette/sources/elite-source.asm -v > versions/cassette/output/compile.txt
 	$(BEEBASM) -i versions/cassette/sources/elite-bcfs.asm -v >> versions/cassette/output/compile.txt
 	$(BEEBASM) -i versions/cassette/sources/elite-loader.asm -v >> versions/cassette/output/compile.txt
+	$(BEEBASM) -i versions/cassette/sources/elite-readme.asm -v >> versions/cassette/output/compile.txt
 	$(PYTHON) versions/cassette/sources/elite-checksum.py -u -rel$(rel-cassette)
-	$(BEEBASM) -i versions/cassette/sources/elite-disc.asm -do versions/cassette/elite-cassette$(suffix-cassette).ssd -boot ELTdata
+	$(BEEBASM) -i versions/cassette/sources/elite-disc.asm -do versions/cassette/elite-cassette$(suffix-cassette).ssd -boot ELTdata -title "E L I T E"
 
 	echo _VERSION=2 > versions/disc/sources/elite-header.h.asm
 	echo _RELEASE=$(rel-disc) >> versions/disc/sources/elite-header.h.asm
@@ -224,8 +225,9 @@ build:
 	$(BEEBASM) -i versions/disc/sources/elite-ships-n.asm -v >> versions/disc/output/compile.txt
 	$(BEEBASM) -i versions/disc/sources/elite-ships-o.asm -v >> versions/disc/output/compile.txt
 	$(BEEBASM) -i versions/disc/sources/elite-ships-p.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-readme.asm -v >> versions/disc/output/compile.txt
 	$(PYTHON) versions/disc/sources/elite-checksum.py -u -rel$(rel-disc)
-	$(BEEBASM) -i versions/disc/sources/elite-disc.asm -do versions/disc/elite-disc$(suffix-disc).ssd -boot ELITE2
+	$(BEEBASM) -i versions/disc/sources/elite-disc.asm -do versions/disc/elite-disc$(suffix-disc).ssd -boot ELITE2 -title "E L I T E"
 
 	echo _VERSION=3 > versions/6502sp/sources/elite-header.h.asm
 	echo _RELEASE=$(rel-6502sp) >> versions/6502sp/sources/elite-header.h.asm
@@ -236,8 +238,9 @@ build:
 	$(BEEBASM) -i versions/6502sp/sources/elite-z.asm -v >> versions/6502sp/output/compile.txt
 	$(BEEBASM) -i versions/6502sp/sources/elite-loader1.asm -v >> versions/6502sp/output/compile.txt
 	$(BEEBASM) -i versions/6502sp/sources/elite-loader2.asm -v >> versions/6502sp/output/compile.txt
+	$(BEEBASM) -i versions/6502sp/sources/elite-readme.asm -v >> versions/6502sp/output/compile.txt
 	$(PYTHON) versions/6502sp/sources/elite-checksum.py -u -rel$(rel-6502sp)
-	$(BEEBASM) -i versions/6502sp/sources/elite-disc.asm -do versions/6502sp/elite-6502sp$(suffix-6502sp).ssd -boot ELITE
+	$(BEEBASM) -i versions/6502sp/sources/elite-disc.asm -do versions/6502sp/elite-6502sp$(suffix-6502sp).ssd -boot ELITE -title "E L I T E"
 
 	echo _VERSION=4 > versions/master/sources/elite-header.h.asm
 	echo _RELEASE=$(rel-master) >> versions/master/sources/elite-header.h.asm
@@ -246,8 +249,9 @@ build:
 	$(BEEBASM) -i versions/master/sources/elite-loader.asm -v >> versions/master/output/compile.txt
 	$(BEEBASM) -i versions/master/sources/elite-data.asm -v >> versions/master/output/compile.txt
 	$(BEEBASM) -i versions/master/sources/elite-source.asm -v >> versions/master/output/compile.txt
+	$(BEEBASM) -i versions/master/sources/elite-readme.asm -v >> versions/master/output/compile.txt
 	$(PYTHON) versions/master/sources/elite-checksum.py -u -rel$(rel-master)
-	$(BEEBASM) -i versions/master/sources/elite-disc.asm $(boot-master) -do versions/master/elite-master$(suffix-master).ssd
+	$(BEEBASM) -i versions/master/sources/elite-disc.asm $(boot-master) -do versions/master/elite-master$(suffix-master).ssd -title "E L I T E"
 
 	echo _VERSION=5 > versions/electron/sources/elite-header.h.asm
 	echo _RELEASE=$(rel-electron) >> versions/electron/sources/elite-header.h.asm
@@ -255,8 +259,9 @@ build:
 	$(BEEBASM) -i versions/electron/sources/elite-source.asm -v > versions/electron/output/compile.txt
 	$(BEEBASM) -i versions/electron/sources/elite-bcfs.asm -v >> versions/electron/output/compile.txt
 	$(BEEBASM) -i versions/electron/sources/elite-loader.asm -v >> versions/electron/output/compile.txt
+	$(BEEBASM) -i versions/electron/sources/elite-readme.asm -v >> versions/electron/output/compile.txt
 	$(PYTHON) versions/electron/sources/elite-checksum.py -u -rel$(rel-electron)
-	$(BEEBASM) -i versions/electron/sources/elite-disc.asm -do versions/electron/elite-electron$(suffix-electron).ssd -opt 3
+	$(BEEBASM) -i versions/electron/sources/elite-disc.asm -do versions/electron/elite-electron$(suffix-electron).ssd -opt 3 -title "E L I T E"
 
 	echo _VERSION=6 > versions/elite-a/sources/elite-header.h.asm
 	echo _RELEASE=$(rel-elite-a) >> versions/elite-a/sources/elite-header.h.asm
@@ -293,8 +298,9 @@ build:
 	$(BEEBASM) -i versions/elite-a/sources/elite-ships-u.asm -v >> versions/elite-a/output/compile.txt
 	$(BEEBASM) -i versions/elite-a/sources/elite-ships-v.asm -v >> versions/elite-a/output/compile.txt
 	$(BEEBASM) -i versions/elite-a/sources/elite-ships-w.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-readme.asm -v >> versions/elite-a/output/compile.txt
 	$(PYTHON) versions/elite-a/sources/elite-checksum.py -u -rel$(rel-elite-a)
-	$(BEEBASM) -i versions/elite-a/sources/elite-disc.asm -do versions/elite-a/elite-a$(suffix-elite-a).ssd -opt 3
+	$(BEEBASM) -i versions/elite-a/sources/elite-disc.asm -do versions/elite-a/elite-a$(suffix-elite-a).ssd -opt 3 -title "E L I T E"
 
 .PHONY:encrypt
 encrypt:
@@ -304,8 +310,9 @@ encrypt:
 	$(BEEBASM) -i versions/cassette/sources/elite-source.asm -v > versions/cassette/output/compile.txt
 	$(BEEBASM) -i versions/cassette/sources/elite-bcfs.asm -v >> versions/cassette/output/compile.txt
 	$(BEEBASM) -i versions/cassette/sources/elite-loader.asm -v >> versions/cassette/output/compile.txt
+	$(BEEBASM) -i versions/cassette/sources/elite-readme.asm -v >> versions/cassette/output/compile.txt
 	$(PYTHON) versions/cassette/sources/elite-checksum.py -rel$(rel-cassette)
-	$(BEEBASM) -i versions/cassette/sources/elite-disc.asm -do versions/cassette/elite-cassette$(suffix-cassette).ssd -boot ELTdata
+	$(BEEBASM) -i versions/cassette/sources/elite-disc.asm -do versions/cassette/elite-cassette$(suffix-cassette).ssd -boot ELTdata -title "E L I T E"
 
 	echo _VERSION=2 > versions/disc/sources/elite-header.h.asm
 	echo _RELEASE=$(rel-disc) >> versions/disc/sources/elite-header.h.asm
@@ -334,8 +341,9 @@ encrypt:
 	$(BEEBASM) -i versions/disc/sources/elite-ships-n.asm -v >> versions/disc/output/compile.txt
 	$(BEEBASM) -i versions/disc/sources/elite-ships-o.asm -v >> versions/disc/output/compile.txt
 	$(BEEBASM) -i versions/disc/sources/elite-ships-p.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-readme.asm -v >> versions/disc/output/compile.txt
 	$(PYTHON) versions/disc/sources/elite-checksum.py -rel$(rel-disc)
-	$(BEEBASM) -i versions/disc/sources/elite-disc.asm -do versions/disc/elite-disc$(suffix-disc).ssd -boot ELITE2
+	$(BEEBASM) -i versions/disc/sources/elite-disc.asm -do versions/disc/elite-disc$(suffix-disc).ssd -boot ELITE2 -title "E L I T E"
 
 	echo _VERSION=3 > versions/6502sp/sources/elite-header.h.asm
 	echo _RELEASE=$(rel-6502sp) >> versions/6502sp/sources/elite-header.h.asm
@@ -346,8 +354,9 @@ encrypt:
 	$(BEEBASM) -i versions/6502sp/sources/elite-z.asm -v >> versions/6502sp/output/compile.txt
 	$(BEEBASM) -i versions/6502sp/sources/elite-loader1.asm -v >> versions/6502sp/output/compile.txt
 	$(BEEBASM) -i versions/6502sp/sources/elite-loader2.asm -v >> versions/6502sp/output/compile.txt
+	$(BEEBASM) -i versions/6502sp/sources/elite-readme.asm -v >> versions/6502sp/output/compile.txt
 	$(PYTHON) versions/6502sp/sources/elite-checksum.py -rel$(rel-6502sp)
-	$(BEEBASM) -i versions/6502sp/sources/elite-disc.asm -do versions/6502sp/elite-6502sp$(suffix-6502sp).ssd -boot ELITE
+	$(BEEBASM) -i versions/6502sp/sources/elite-disc.asm -do versions/6502sp/elite-6502sp$(suffix-6502sp).ssd -boot ELITE -title "E L I T E"
 
 	echo _VERSION=4 > versions/master/sources/elite-header.h.asm
 	echo _RELEASE=$(rel-master) >> versions/master/sources/elite-header.h.asm
@@ -356,8 +365,9 @@ encrypt:
 	$(BEEBASM) -i versions/master/sources/elite-loader.asm -v > versions/master/output/compile.txt
 	$(BEEBASM) -i versions/master/sources/elite-data.asm -v >> versions/master/output/compile.txt
 	$(BEEBASM) -i versions/master/sources/elite-source.asm -v >> versions/master/output/compile.txt
+	$(BEEBASM) -i versions/master/sources/elite-readme.asm -v >> versions/master/output/compile.txt
 	$(PYTHON) versions/master/sources/elite-checksum.py -rel$(rel-master)
-	$(BEEBASM) -i versions/master/sources/elite-disc.asm $(boot-master) -do versions/master/elite-master$(suffix-master).ssd
+	$(BEEBASM) -i versions/master/sources/elite-disc.asm $(boot-master) -do versions/master/elite-master$(suffix-master).ssd -title "E L I T E"
 
 	echo _VERSION=5 > versions/electron/sources/elite-header.h.asm
 	echo _RELEASE=$(rel-electron) >> versions/electron/sources/elite-header.h.asm
@@ -365,8 +375,9 @@ encrypt:
 	$(BEEBASM) -i versions/electron/sources/elite-source.asm -v > versions/electron/output/compile.txt
 	$(BEEBASM) -i versions/electron/sources/elite-bcfs.asm -v >> versions/electron/output/compile.txt
 	$(BEEBASM) -i versions/electron/sources/elite-loader.asm -v >> versions/electron/output/compile.txt
+	$(BEEBASM) -i versions/electron/sources/elite-readme.asm -v >> versions/electron/output/compile.txt
 	$(PYTHON) versions/electron/sources/elite-checksum.py -rel$(rel-electron)
-	$(BEEBASM) -i versions/electron/sources/elite-disc.asm -do versions/electron/elite-electron$(suffix-electron).ssd -opt 3
+	$(BEEBASM) -i versions/electron/sources/elite-disc.asm -do versions/electron/elite-electron$(suffix-electron).ssd -opt 3 -title "E L I T E"
 
 	echo _VERSION=6 > versions/elite-a/sources/elite-header.h.asm
 	echo _RELEASE=$(rel-elite-a) >> versions/elite-a/sources/elite-header.h.asm
@@ -403,8 +414,9 @@ encrypt:
 	$(BEEBASM) -i versions/elite-a/sources/elite-ships-u.asm -v >> versions/elite-a/output/compile.txt
 	$(BEEBASM) -i versions/elite-a/sources/elite-ships-v.asm -v >> versions/elite-a/output/compile.txt
 	$(BEEBASM) -i versions/elite-a/sources/elite-ships-w.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-readme.asm -v >> versions/elite-a/output/compile.txt
 	$(PYTHON) versions/elite-a/sources/elite-checksum.py -rel$(rel-elite-a)
-	$(BEEBASM) -i versions/elite-a/sources/elite-disc.asm -do versions/elite-a/elite-a$(suffix-elite-a).ssd -opt 3
+	$(BEEBASM) -i versions/elite-a/sources/elite-disc.asm -do versions/elite-a/elite-a$(suffix-elite-a).ssd -opt 3 -title "E L I T E"
 
 .PHONY:verify
 verify:
@@ -423,8 +435,9 @@ cassette:
 	$(BEEBASM) -i versions/cassette/sources/elite-source.asm -v > versions/cassette/output/compile.txt
 	$(BEEBASM) -i versions/cassette/sources/elite-bcfs.asm -v >> versions/cassette/output/compile.txt
 	$(BEEBASM) -i versions/cassette/sources/elite-loader.asm -v >> versions/cassette/output/compile.txt
+	$(BEEBASM) -i versions/cassette/sources/elite-readme.asm -v >> versions/cassette/output/compile.txt
 	$(PYTHON) versions/cassette/sources/elite-checksum.py -rel$(rel-cassette)
-	$(BEEBASM) -i versions/cassette/sources/elite-disc.asm -do versions/cassette/elite-cassette$(suffix-cassette).ssd -boot ELTdata
+	$(BEEBASM) -i versions/cassette/sources/elite-disc.asm -do versions/cassette/elite-cassette$(suffix-cassette).ssd -boot ELTdata -title "E L I T E"
 	@$(PYTHON) versions/cassette/sources/crc32.py versions/cassette/extracted$(folder-cassette) versions/cassette/output
 
 .PHONY:disc
@@ -456,8 +469,9 @@ disc:
 	$(BEEBASM) -i versions/disc/sources/elite-ships-n.asm -v >> versions/disc/output/compile.txt
 	$(BEEBASM) -i versions/disc/sources/elite-ships-o.asm -v >> versions/disc/output/compile.txt
 	$(BEEBASM) -i versions/disc/sources/elite-ships-p.asm -v >> versions/disc/output/compile.txt
+	$(BEEBASM) -i versions/disc/sources/elite-readme.asm -v >> versions/disc/output/compile.txt
 	$(PYTHON) versions/disc/sources/elite-checksum.py -rel$(rel-disc)
-	$(BEEBASM) -i versions/disc/sources/elite-disc.asm -do versions/disc/elite-disc$(suffix-disc).ssd -boot ELITE2
+	$(BEEBASM) -i versions/disc/sources/elite-disc.asm -do versions/disc/elite-disc$(suffix-disc).ssd -boot ELITE2 -title "E L I T E"
 	@$(PYTHON) versions/disc/sources/crc32.py versions/disc/extracted$(folder-disc) versions/disc/output
 
 .PHONY:6502sp
@@ -471,8 +485,9 @@ disc:
 	$(BEEBASM) -i versions/6502sp/sources/elite-z.asm -v >> versions/6502sp/output/compile.txt
 	$(BEEBASM) -i versions/6502sp/sources/elite-loader1.asm -v >> versions/6502sp/output/compile.txt
 	$(BEEBASM) -i versions/6502sp/sources/elite-loader2.asm -v >> versions/6502sp/output/compile.txt
+	$(BEEBASM) -i versions/6502sp/sources/elite-readme.asm -v >> versions/6502sp/output/compile.txt
 	$(PYTHON) versions/6502sp/sources/elite-checksum.py -rel$(rel-6502sp)
-	$(BEEBASM) -i versions/6502sp/sources/elite-disc.asm -do versions/6502sp/elite-6502sp$(suffix-6502sp).ssd -boot ELITE
+	$(BEEBASM) -i versions/6502sp/sources/elite-disc.asm -do versions/6502sp/elite-6502sp$(suffix-6502sp).ssd -boot ELITE -title "E L I T E"
 	@$(PYTHON) versions/6502sp/sources/crc32.py versions/6502sp/extracted$(folder-6502sp) versions/6502sp/output
 
 .PHONY:master
@@ -484,8 +499,9 @@ master:
 	$(BEEBASM) -i versions/master/sources/elite-loader.asm -v > versions/master/output/compile.txt
 	$(BEEBASM) -i versions/master/sources/elite-data.asm -v >> versions/master/output/compile.txt
 	$(BEEBASM) -i versions/master/sources/elite-source.asm -v >> versions/master/output/compile.txt
+	$(BEEBASM) -i versions/master/sources/elite-readme.asm -v >> versions/master/output/compile.txt
 	$(PYTHON) versions/master/sources/elite-checksum.py -rel$(rel-master)
-	$(BEEBASM) -i versions/master/sources/elite-disc.asm $(boot-master) -do versions/master/elite-master$(suffix-master).ssd
+	$(BEEBASM) -i versions/master/sources/elite-disc.asm $(boot-master) -do versions/master/elite-master$(suffix-master).ssd -title "E L I T E"
 	@$(PYTHON) versions/master/sources/crc32.py versions/master/extracted$(folder-master) versions/master/output
 
 .PHONY:electron
@@ -496,8 +512,9 @@ electron:
 	$(BEEBASM) -i versions/electron/sources/elite-source.asm -v > versions/electron/output/compile.txt
 	$(BEEBASM) -i versions/electron/sources/elite-bcfs.asm -v >> versions/electron/output/compile.txt
 	$(BEEBASM) -i versions/electron/sources/elite-loader.asm -v >> versions/electron/output/compile.txt
+	$(BEEBASM) -i versions/electron/sources/elite-readme.asm -v >> versions/electron/output/compile.txt
 	$(PYTHON) versions/electron/sources/elite-checksum.py -rel$(rel-electron)
-	$(BEEBASM) -i versions/electron/sources/elite-disc.asm -do versions/electron/elite-electron$(suffix-electron).ssd -opt 3
+	$(BEEBASM) -i versions/electron/sources/elite-disc.asm -do versions/electron/elite-electron$(suffix-electron).ssd -opt 3 -title "E L I T E"
 	@$(PYTHON) versions/electron/sources/crc32.py versions/electron/extracted$(folder-electron) versions/electron/output
 
 .PHONY:elite-a
@@ -537,6 +554,7 @@ elite-a:
 	$(BEEBASM) -i versions/elite-a/sources/elite-ships-u.asm -v >> versions/elite-a/output/compile.txt
 	$(BEEBASM) -i versions/elite-a/sources/elite-ships-v.asm -v >> versions/elite-a/output/compile.txt
 	$(BEEBASM) -i versions/elite-a/sources/elite-ships-w.asm -v >> versions/elite-a/output/compile.txt
+	$(BEEBASM) -i versions/elite-a/sources/elite-readme.asm -v >> versions/elite-a/output/compile.txt
 	$(PYTHON) versions/elite-a/sources/elite-checksum.py -rel$(rel-elite-a)
-	$(BEEBASM) -i versions/elite-a/sources/elite-disc.asm -do versions/elite-a/elite-a$(suffix-elite-a).ssd -opt 3
+	$(BEEBASM) -i versions/elite-a/sources/elite-disc.asm -do versions/elite-a/elite-a$(suffix-elite-a).ssd -opt 3 -title "E L I T E"
 	@$(PYTHON) versions/elite-a/sources/crc32.py versions/elite-a/extracted$(folder-elite-a) versions/elite-a/output

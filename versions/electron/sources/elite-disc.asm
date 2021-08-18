@@ -27,7 +27,8 @@
 \
 \ ******************************************************************************
 
-PUTFILE "versions/electron/binaries/$.!BOOT.bin", "!BOOT", &0000, &0000
+PUTFILE "versions/electron/binaries/$.!BOOT.bin", "!BOOT", &FFFFFF, &FFFFFF
 PUTFILE "versions/electron/binaries/$.ELITE.bin", "ELITE", &FF0E00, &FF8023
 PUTFILE "versions/electron/output/ELITECO.bin", "ELITECO", &000000, &FFFFFF
 PUTFILE "versions/electron/output/ELITEDA.bin", "ELITEDA", &FF4400, &FF5200
+PUTFILE "versions/electron/output/README.txt", "README", &FFFFFF, &FFFFFF

@@ -32,7 +32,7 @@
 \
 \ ******************************************************************************
 
-PUTFILE "versions/elite-a/binaries/$.!BOOT.bin", "!BOOT", &FFFFFF, &FFFFFF
+PUTFILE "versions/elite-a/output/!BOOT.txt", "!BOOT", &FFFFFF, &FFFFFF
 
 PUTFILE "versions/elite-a/output/ELITE.bin", "ELITE", &FF1900, &FF197B
 

@@ -53,14 +53,16 @@ ENDIF
 
 IF _REMOVE_CHECKSUMS
  IF _SNG45 OR _SOURCE_DISC
-  PUTFILE "versions/6502sp/output/P.CODE.bin", "P.CODE", &1000, &10D1
+  PUTFILE "versions/6502sp/output/P.CODE.bin", "P.CODE", &001000, &0010D1
  ELIF _EXECUTIVE
-  PUTFILE "versions/6502sp/output/P.CODE.bin", "P.CODE", &1000, &10D3
+  PUTFILE "versions/6502sp/output/P.CODE.bin", "P.CODE", &001000, &0010D3
  ENDIF
 ELSE
  IF _SNG45 OR _SOURCE_DISC
-  PUTFILE "versions/6502sp/output/P.CODE.bin", "P.CODE", &1000, &106A
+  PUTFILE "versions/6502sp/output/P.CODE.bin", "P.CODE", &001000, &00106A
  ELIF _EXECUTIVE
-  PUTFILE "versions/6502sp/output/P.CODE.bin", "P.CODE", &1000, &106C
+  PUTFILE "versions/6502sp/output/P.CODE.bin", "P.CODE", &001000, &00106C
  ENDIF
 ENDIF
+
+PUTFILE "versions/6502sp/output/README.txt", "README", &FFFFFF, &FFFFFF

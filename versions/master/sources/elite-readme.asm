@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\ BBC MASTER ELITE DISC IMAGE SCRIPT
+\ BBC MASTER ELITE README
 \
 \ BBC Master Elite was written by Ian Bell and David Braben and is copyright
 \ Acornsoft 1986
@@ -19,29 +19,49 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ This source file produces one of the following SSD disc images, depending on
-\ which release is being built:
+\ This source file produces the following binary file:
 \
-\   * elite-master-sng47.ssd
-\   * elite-master-compact.ssd
-\
-\ This can be loaded into an emulator or a real BBC Master.
+\   * output/README.txt
 \
 \ ******************************************************************************
 
 INCLUDE "versions/master/sources/elite-header.h.asm"
 
+_CASSETTE_VERSION       = (_VERSION = 1)
+_DISC_VERSION           = (_VERSION = 2)
+_6502SP_VERSION         = (_VERSION = 3)
+_MASTER_VERSION         = (_VERSION = 4)
+_ELECTRON_VERSION       = (_VERSION = 5)
+_ELITE_A_VERSION        = (_VERSION = 6)
 _SNG47                  = (_RELEASE = 1)
 _COMPACT                = (_RELEASE = 2)
 
-IF _SNG47
- PUTFILE "versions/master/output/M128Elt.bin", "M128Elt", &FF0E00, &FF0E43
- PUTFILE "versions/master/output/BDATA.bin", "BDATA", &000000, &000000
- PUTFILE "versions/master/output/BCODE.bin", "BCODE", &000000, &000000
-ELIF _COMPACT
- PUTFILE "versions/master/output/M128Elt.bin", "!BOOT", &000E00, &000E43
- PUTFILE "versions/master/output/BDATA.bin", "BDATA", &001300, &001300
- PUTFILE "versions/master/output/BCODE.bin", "ELITE", &001300, &002C6C
-ENDIF
+.readme
 
-PUTFILE "versions/master/output/README.txt", "README", &FFFFFF, &FFFFFF
+ EQUB 10, 13
+ EQUS "---------------------------------------"
+ EQUB 10, 13
+ EQUS "Acornsoft Elite"
+ EQUB 10, 13
+ EQUB 10, 13
+ EQUS "Version: BBC Master"
+ EQUB 10, 13
+IF _SNG47
+ EQUS "Release: Official Acornsoft release"
+ EQUB 10, 13
+ EQUS "Code no: Acornsoft SNG47 v1.0"
+ EQUB 10, 13
+ELIF _COMPACT
+ EQUS "Release: Master Compact version"
+ EQUB 10, 13
+ EQUS "Code no: Superior Software"
+ EQUB 10, 13
+ENDIF
+ EQUB 10, 13
+ EQUS "See www.bbcelite.com for details"
+ EQUB 10, 13
+ EQUS "---------------------------------------"
+ EQUB 10, 13
+
+SAVE "versions/master/output/README.txt", readme, P%
+

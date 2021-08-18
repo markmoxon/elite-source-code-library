@@ -163,19 +163,31 @@ for n in range(scramble_from, scramble_to):
     data_block[n - load_address] = data_block[n - load_address] ^ (n % 256) ^ scramble_eor
 
 # LOAD routine, which calculates checksum at &55FF in docked code
+# This checksum is not correct - need to fix this at some point
 
 load_address = 0x1100
 checksum_address = 0x55FF
 block_to_checksum = block_1100 + data_block
-checksum = 0x11 + 1
 
-for x in range(0x1100, 0x5400):
-    checksum = checksum + block_to_checksum[x - load_address]
+d_checksum = 0x11
+carry = 1
+for x in range(0x11, 0x54):
+    for y in [0] + list(range(255, 0, -1)):
+        i = x * 256 + y
+        d_checksum += block_to_checksum[i - 0x1100] + carry
+        if d_checksum > 255:
+            carry = 1
+        else:
+            carry = 0
+        d_checksum = d_checksum % 256
+    carry = 0
+    d_checksum = d_checksum % 256
+d_checksum = d_checksum % 256
 
 # if Encrypt:
-#     data_block[checksum_address - load_address] = checksum % 256
+#     data_block[checksum_address - load_address] = d_checksum % 256
 
-print("&55FF docked code checksum = ", checksum % 256)
+print("&55FF docked code checksum = ", d_checksum)
 
 # Write output file for T.CODE
 

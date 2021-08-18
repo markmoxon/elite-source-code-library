@@ -46,7 +46,7 @@ _ELITE_A_VERSION        = (_VERSION = 6)
  EQUB 10, 13
  EQUS "Release: Stairway to Hell archive"
  EQUB 10, 13
- EQUS "Code no: Acornsoft SLG38 v1.1"
+ EQUS "         Acornsoft SLG38 v1.1"
  EQUB 10, 13
  EQUB 10, 13
  EQUS "See www.bbcelite.com for details"

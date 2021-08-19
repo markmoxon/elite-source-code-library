@@ -42,6 +42,11 @@ _BUG_FIX                = (_RELEASE = 3)
 
 .readme
 
+ EQUS "*DIR :0.$"
+ EQUB 13
+ EQUS "*ELITE"
+ EQUB 13
+ EQUS "*|"
  EQUB 13
  EQUS "*| -----------------------------------"
  EQUB 13
@@ -72,11 +77,6 @@ ENDIF
  EQUS "*| See www.bbcelite.com for details"
  EQUB 13
  EQUS "*| -----------------------------------"
- EQUB 13
- EQUB 13
- EQUS "*DIR :0.$"
- EQUB 13
- EQUS "*ELITE"
  EQUB 13
 
 SAVE "versions/elite-a/output/!BOOT.txt", readme, P%

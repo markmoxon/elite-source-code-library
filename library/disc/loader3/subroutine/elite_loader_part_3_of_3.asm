@@ -41,29 +41,29 @@ IF NOT(_ELITE_A_VERSION)
 
 .ELITE
 
- INCBIN "versions/disc/binaries/P.ELITE.bin"
+ INCBIN "versions/disc/1-source-files/images/P.ELITE.bin"
 
 .ASOFT
 
- INCBIN "versions/disc/binaries/P.A-SOFT.bin"
+ INCBIN "versions/disc/1-source-files/images/P.A-SOFT.bin"
 
 .CpASOFT
 
- INCBIN "versions/disc/binaries/P.(C)ASFT.bin"
+ INCBIN "versions/disc/1-source-files/images/P.(C)ASFT.bin"
 
 ELIF _ELITE_A_VERSION
 
 .ELITE
 
- INCBIN "versions/elite-a/binaries/P.ELITE.bin"
+ INCBIN "versions/elite-a/1-source-files/images/P.ELITE.bin"
 
 .ASOFT
 
- INCBIN "versions/elite-a/binaries/P.A-SOFT.bin"
+ INCBIN "versions/elite-a/1-source-files/images/P.A-SOFT.bin"
 
 .CpASOFT
 
- INCBIN "versions/elite-a/binaries/P.(C)ASFT.bin"
+ INCBIN "versions/elite-a/1-source-files/images/P.(C)ASFT.bin"
 
 ENDIF
 

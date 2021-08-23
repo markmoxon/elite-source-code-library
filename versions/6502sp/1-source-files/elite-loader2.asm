@@ -26,11 +26,11 @@
 \
 \ after reading in the following files:
 \
-\   * binaries/P.DIALS2P.bin
-\   * binaries/P.DATE2P.bin
-\   * binaries/Z.ACSOFT.bin
-\   * binaries/Z.ELITE.bin
-\   * binaries/Z.(C)ASFT.bin
+\   * 1-source-files/images/P.DIALS2P.bin
+\   * 1-source-files/images/P.DATE2P.bin
+\   * 1-source-files/images/Z.ACSOFT.bin
+\   * 1-source-files/images/Z.ELITE.bin
+\   * 1-source-files/images/Z.(C)ASFT.bin
 \
 \ ******************************************************************************
 

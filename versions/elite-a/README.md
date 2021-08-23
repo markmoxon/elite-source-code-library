@@ -312,7 +312,7 @@ See the [accompanying website](https://www.bbcelite.com/elite-a/releases.html) f
 
 ### Converting the original build process to BeebAsm
 
-See [the original source files](1-source-files/original_sources) for details about how Angus's original sources have been converted to assemble in BeebAsm, so Elite-A can be built on modern computers.
+See [the original source files](1-source-files/original-sources) for details about how Angus's original sources have been converted to assemble in BeebAsm, so Elite-A can be built on modern computers.
 
 ---
 

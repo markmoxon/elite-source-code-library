@@ -48,19 +48,19 @@ INCBIN "versions/cassette/3-assembled-output/WORDS9.bin"
 ALIGN 256
 
 PRINT "P.DIALS = ",~P%
-INCBIN "versions/cassette/binaries/P.DIALS.bin"
+INCBIN "versions/cassette/1-source-files/images/P.DIALS.bin"
 
 PRINT "PYTHON = ",~P%
 INCBIN "versions/cassette/3-assembled-output/PYTHON.bin"
 
 PRINT "P.ELITE = ",~P%
-INCBIN "versions/cassette/binaries/P.ELITE.bin"
+INCBIN "versions/cassette/1-source-files/images/P.ELITE.bin"
 
 PRINT "P.A-SOFT = ",~P%
-INCBIN "versions/cassette/binaries/P.A-SOFT.bin"
+INCBIN "versions/cassette/1-source-files/images/P.A-SOFT.bin"
 
 PRINT "P.(C)ASFT = ",~P%
-INCBIN "versions/cassette/binaries/P.(C)ASFT.bin"
+INCBIN "versions/cassette/1-source-files/images/P.(C)ASFT.bin"
 
 .run
 

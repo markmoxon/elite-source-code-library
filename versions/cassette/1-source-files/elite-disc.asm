@@ -27,8 +27,8 @@
 \
 \ ******************************************************************************
 
-\PUTFILE "versions/cassette/binaries/$.!BOOT.bin", "!BOOT", &FFFFFF, &FFFFFF
-PUTFILE "versions/cassette/binaries/$.ELITE.bin", "ELITE", &FF1900, &FF8023
+\PUTFILE "versions/cassette/1-source-files/images/$.!BOOT.bin", "!BOOT", &FFFFFF, &FFFFFF
+PUTFILE "versions/cassette/1-source-files/images/$.ELITE.bin", "ELITE", &FF1900, &FF8023
 PUTFILE "versions/cassette/3-assembled-output/ELITE.bin", "ELTdata", &FF1100, &FF2000
 PUTFILE "versions/cassette/3-assembled-output/ELTcode.bin", "ELTcode", &FF1128, &FF1128
 PUTFILE "versions/cassette/3-assembled-output/README.txt", "README", &FFFFFF, &FFFFFF

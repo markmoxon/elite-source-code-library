@@ -41,7 +41,7 @@ IF NOT(_ELITE_A_VERSION)
 
 .DIALS
 
- INCBIN "versions/disc/binaries/P.DIALS.bin"
+ INCBIN "versions/disc/1-source-files/images/P.DIALS.bin"
 
 .SHIP_MISSILE
 
@@ -55,7 +55,7 @@ ELIF _ELITE_A_VERSION
 
 .DIALS
 
- INCBIN "versions/elite-a/binaries/P.DIALS.bin"
+ INCBIN "versions/elite-a/1-source-files/images/P.DIALS.bin"
 
 .SHIP_MISSILE
 

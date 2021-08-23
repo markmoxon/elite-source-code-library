@@ -67,4 +67,4 @@ PUTFILE "versions/elite-a/3-assembled-output/S.U.bin", "S.U", &FF5600, &FF5600
 PUTFILE "versions/elite-a/3-assembled-output/S.V.bin", "S.V", &FF5600, &FF5600
 PUTFILE "versions/elite-a/3-assembled-output/S.W.bin", "S.W", &FF5600, &FF5600
 
-PUTFILE "versions/elite-a/binaries/B.CONVERT.bin", "B.CONVERT", &FF1900, &FF8023
+PUTFILE "versions/elite-a/1-source-files/images/B.CONVERT.bin", "B.CONVERT", &FF1900, &FF8023

@@ -21,21 +21,21 @@ IF _MATCH_EXTRACTED_BINARIES
   EQUS "By Ian Bell & David Braben"
   EQUB 10
   EQUB 13
-  INCBIN "versions/6502sp/extracted/sng45/workspaces/ELTB-LBUF.bin"
+  INCBIN "versions/6502sp/4-original-binaries/sng45/workspaces/ELTB-LBUF.bin"
 
  ELIF _EXECUTIVE
 
   EQUS "- By Ian Bell & David Braben"
   EQUB 10
   EQUB 13
-  INCBIN "versions/6502sp/extracted/executive/workspaces/ELTB-LBUF.bin"
+  INCBIN "versions/6502sp/4-original-binaries/executive/workspaces/ELTB-LBUF.bin"
 
  ELIF _SOURCE_DISC
 
   EQUS "By Ian Bell & David Braben"
   EQUB 10
   EQUB 13
-  INCBIN "versions/6502sp/extracted/source-disc/workspaces/ELTB-LBUF.bin"
+  INCBIN "versions/6502sp/4-original-binaries/source-disc/workspaces/ELTB-LBUF.bin"
 
  ENDIF
 

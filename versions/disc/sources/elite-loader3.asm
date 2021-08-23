@@ -162,7 +162,7 @@ INCLUDE "library/disc/loader3/subroutine/elite_loader_part_3_of_3.asm"
 IF _MATCH_EXTRACTED_BINARIES
 
 IF _STH_DISC
- INCBIN "versions/disc/extracted/sth/workspaces/loader3.bin"
+ INCBIN "versions/disc/4-original-binaries/sth/workspaces/loader3.bin"
 ELIF _IB_DISC
  SKIP 158
 ENDIF

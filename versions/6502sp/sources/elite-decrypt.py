@@ -54,12 +54,12 @@ data_block = bytearray()
 
 # Load assembled code file
 
-elite_file = open("extracted/" + folder + "/P.CODE.bin", "rb")
+elite_file = open("4-original-binaries/" + folder + "/P.CODE.bin", "rb")
 data_block.extend(elite_file.read())
 elite_file.close()
 
 print()
-print("[ Read    ] extracted/" + folder + "/P.CODE.bin")
+print("[ Read    ] 4-original-binaries/" + folder + "/P.CODE.bin")
 
 # Do decryption
 
@@ -101,13 +101,13 @@ for n in range(0x1300, 0xA000):
 s = 0x106A
 data_block[s - 0x1000 - 1] = 0x60
 
-print("[ Decrypt ] extracted/" + folder + "/P.CODE.bin")
+print("[ Decrypt ] 4-original-binaries/" + folder + "/P.CODE.bin")
 
 # Write output file for P.CODE.decrypt
 
-output_file = open("extracted/" + folder + "/P.CODE.decrypt.bin", "wb")
+output_file = open("4-original-binaries/" + folder + "/P.CODE.decrypt.bin", "wb")
 output_file.write(data_block)
 output_file.close()
 
-print("[ Save    ] extracted/" + folder + "/P.CODE.decrypt.bin")
+print("[ Save    ] 4-original-binaries/" + folder + "/P.CODE.decrypt.bin")
 print()

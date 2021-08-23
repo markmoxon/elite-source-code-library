@@ -333,9 +333,9 @@ INCLUDE "library/master/main/subroutine/add_duplicate.asm"
 IF _MATCH_EXTRACTED_BINARIES
 
  IF _SNG47
-  INCBIN "versions/master/extracted/sng47/workspaces/ELTA-align1.bin"
+  INCBIN "versions/master/4-original-binaries/sng47/workspaces/ELTA-align1.bin"
  ELIF _COMPACT
-  INCBIN "versions/master/extracted/compact/workspaces/ELTA-align1.bin"
+  INCBIN "versions/master/4-original-binaries/compact/workspaces/ELTA-align1.bin"
  ENDIF
 
 ELSE
@@ -356,9 +356,9 @@ INCLUDE "library/advanced/main/variable/antilog.asm"
 IF _MATCH_EXTRACTED_BINARIES
 
  IF _SNG47
-  INCBIN "versions/master/extracted/sng47/workspaces/ELTA-align2.bin"
+  INCBIN "versions/master/4-original-binaries/sng47/workspaces/ELTA-align2.bin"
  ELIF _COMPACT
-  INCBIN "versions/master/extracted/compact/workspaces/ELTA-align2.bin"
+  INCBIN "versions/master/4-original-binaries/compact/workspaces/ELTA-align2.bin"
  ENDIF
 
 ELSE

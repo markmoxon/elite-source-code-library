@@ -23,11 +23,11 @@
 IF _MATCH_EXTRACTED_BINARIES
 
  IF _SNG45
-  INCBIN "versions/6502sp/extracted/sng45/workspaces/ICODE-antilogODD.bin"
+  INCBIN "versions/6502sp/4-original-binaries/sng45/workspaces/ICODE-antilogODD.bin"
  ELIF _EXECUTIVE
-  INCBIN "versions/6502sp/extracted/executive/workspaces/ICODE-antilogODD.bin"
+  INCBIN "versions/6502sp/4-original-binaries/executive/workspaces/ICODE-antilogODD.bin"
  ELIF _SOURCE_DISC
-  INCBIN "versions/6502sp/extracted/source-disc/workspaces/ICODE-antilogODD.bin"
+  INCBIN "versions/6502sp/4-original-binaries/source-disc/workspaces/ICODE-antilogODD.bin"
  ENDIF
 
 ELSE

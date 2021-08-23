@@ -23,17 +23,17 @@ IF _MATCH_EXTRACTED_BINARIES
 
 IF _6502SP_VERSION \ Platform
  IF _SNG45
-  INCBIN "versions/6502sp/extracted/sng45/workspaces/ELTG-antilog.bin"
+  INCBIN "versions/6502sp/4-original-binaries/sng45/workspaces/ELTG-antilog.bin"
  ELIF _EXECUTIVE
-  INCBIN "versions/6502sp/extracted/executive/workspaces/ELTG-antilog.bin"
+  INCBIN "versions/6502sp/4-original-binaries/executive/workspaces/ELTG-antilog.bin"
  ELIF _SOURCE_DISC
-  INCBIN "versions/6502sp/extracted/source-disc/workspaces/ELTG-antilog.bin"
+  INCBIN "versions/6502sp/4-original-binaries/source-disc/workspaces/ELTG-antilog.bin"
  ENDIF
 ELIF _MASTER_VERSION
  IF _SNG47
-  INCBIN "versions/master/extracted/sng47/workspaces/ELTA-antilog.bin"
+  INCBIN "versions/master/4-original-binaries/sng47/workspaces/ELTA-antilog.bin"
  ELIF _COMPACT
-  INCBIN "versions/master/extracted/compact/workspaces/ELTA-antilog.bin"
+  INCBIN "versions/master/4-original-binaries/compact/workspaces/ELTA-antilog.bin"
  ENDIF
 ENDIF
 

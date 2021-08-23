@@ -1,4 +1,4 @@
-# Build output for Elite-A
+# Assembled output for Elite-A
 
 This folder contains the output binaries from the build process for Elite-A.
 

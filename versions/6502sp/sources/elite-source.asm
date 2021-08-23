@@ -920,11 +920,11 @@ LOAD_G% = LOAD% + P% - CODE%
 IF _MATCH_EXTRACTED_BINARIES
 
  IF _SNG45
-  INCBIN "versions/6502sp/extracted/sng45/workspaces/ELTG-align.bin"
+  INCBIN "versions/6502sp/4-original-binaries/sng45/workspaces/ELTG-align.bin"
  ELIF _EXECUTIVE
-  INCBIN "versions/6502sp/extracted/executive/workspaces/ELTG-align.bin"
+  INCBIN "versions/6502sp/4-original-binaries/executive/workspaces/ELTG-align.bin"
  ELIF _SOURCE_DISC
-  INCBIN "versions/6502sp/extracted/source-disc/workspaces/ELTG-align.bin"
+  INCBIN "versions/6502sp/4-original-binaries/source-disc/workspaces/ELTG-align.bin"
  ENDIF
 
 ELSE

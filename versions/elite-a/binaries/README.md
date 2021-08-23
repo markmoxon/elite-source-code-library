@@ -1,4 +1,4 @@
-# Extracted binaries for Elite-A
+# Original binaries for Elite-A
 
 This folder contains the image, boot and conversion tool binaries from the original sources for Elite-A.
 

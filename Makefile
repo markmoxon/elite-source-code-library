@@ -420,12 +420,12 @@ encrypt:
 
 .PHONY:verify
 verify:
-	@$(PYTHON) versions/cassette/sources/crc32.py versions/cassette/extracted$(folder-cassette) versions/cassette/3-assembled-output
-	@$(PYTHON) versions/disc/sources/crc32.py versions/disc/extracted$(folder-disc) versions/disc/3-assembled-output
-	@$(PYTHON) versions/6502sp/sources/crc32.py versions/6502sp/extracted$(folder-6502sp) versions/6502sp/3-assembled-output
-	@$(PYTHON) versions/master/sources/crc32.py versions/master/extracted$(folder-master) versions/master/3-assembled-output
-	@$(PYTHON) versions/electron/sources/crc32.py versions/electron/extracted$(folder-electron) versions/electron/3-assembled-output
-	@$(PYTHON) versions/elite-a/sources/crc32.py versions/elite-a/extracted$(folder-elite-a) versions/elite-a/3-assembled-output
+	@$(PYTHON) versions/cassette/sources/crc32.py versions/cassette/4-original-binaries$(folder-cassette) versions/cassette/3-assembled-output
+	@$(PYTHON) versions/disc/sources/crc32.py versions/disc/4-original-binaries$(folder-disc) versions/disc/3-assembled-output
+	@$(PYTHON) versions/6502sp/sources/crc32.py versions/6502sp/4-original-binaries$(folder-6502sp) versions/6502sp/3-assembled-output
+	@$(PYTHON) versions/master/sources/crc32.py versions/master/4-original-binaries$(folder-master) versions/master/3-assembled-output
+	@$(PYTHON) versions/electron/sources/crc32.py versions/electron/4-original-binaries$(folder-electron) versions/electron/3-assembled-output
+	@$(PYTHON) versions/elite-a/sources/crc32.py versions/elite-a/4-original-binaries$(folder-elite-a) versions/elite-a/3-assembled-output
 
 .PHONY:cassette
 cassette:
@@ -438,7 +438,7 @@ cassette:
 	$(BEEBASM) -i versions/cassette/sources/elite-readme.asm -v >> versions/cassette/3-assembled-output/compile.txt
 	$(PYTHON) versions/cassette/sources/elite-checksum.py -rel$(rel-cassette)
 	$(BEEBASM) -i versions/cassette/sources/elite-disc.asm -do versions/cassette/elite-cassette$(suffix-cassette).ssd -boot ELTdata -title "E L I T E"
-	@$(PYTHON) versions/cassette/sources/crc32.py versions/cassette/extracted$(folder-cassette) versions/cassette/3-assembled-output
+	@$(PYTHON) versions/cassette/sources/crc32.py versions/cassette/4-original-binaries$(folder-cassette) versions/cassette/3-assembled-output
 
 .PHONY:disc
 disc:
@@ -472,7 +472,7 @@ disc:
 	$(BEEBASM) -i versions/disc/sources/elite-readme.asm -v >> versions/disc/3-assembled-output/compile.txt
 	$(PYTHON) versions/disc/sources/elite-checksum.py -rel$(rel-disc)
 	$(BEEBASM) -i versions/disc/sources/elite-disc.asm -do versions/disc/elite-disc$(suffix-disc).ssd -boot ELITE2 -title "E L I T E"
-	@$(PYTHON) versions/disc/sources/crc32.py versions/disc/extracted$(folder-disc) versions/disc/3-assembled-output
+	@$(PYTHON) versions/disc/sources/crc32.py versions/disc/4-original-binaries$(folder-disc) versions/disc/3-assembled-output
 
 .PHONY:6502sp
 6502sp:
@@ -488,7 +488,7 @@ disc:
 	$(BEEBASM) -i versions/6502sp/sources/elite-readme.asm -v >> versions/6502sp/3-assembled-output/compile.txt
 	$(PYTHON) versions/6502sp/sources/elite-checksum.py -rel$(rel-6502sp)
 	$(BEEBASM) -i versions/6502sp/sources/elite-disc.asm -do versions/6502sp/elite-6502sp$(suffix-6502sp).ssd -boot ELITE -title "E L I T E"
-	@$(PYTHON) versions/6502sp/sources/crc32.py versions/6502sp/extracted$(folder-6502sp) versions/6502sp/3-assembled-output
+	@$(PYTHON) versions/6502sp/sources/crc32.py versions/6502sp/4-original-binaries$(folder-6502sp) versions/6502sp/3-assembled-output
 
 .PHONY:master
 master:
@@ -502,7 +502,7 @@ master:
 	$(BEEBASM) -i versions/master/sources/elite-readme.asm -v >> versions/master/3-assembled-output/compile.txt
 	$(PYTHON) versions/master/sources/elite-checksum.py -rel$(rel-master)
 	$(BEEBASM) -i versions/master/sources/elite-disc.asm $(boot-master) -do versions/master/elite-master$(suffix-master).ssd -title "E L I T E"
-	@$(PYTHON) versions/master/sources/crc32.py versions/master/extracted$(folder-master) versions/master/3-assembled-output
+	@$(PYTHON) versions/master/sources/crc32.py versions/master/4-original-binaries$(folder-master) versions/master/3-assembled-output
 
 .PHONY:electron
 electron:
@@ -515,7 +515,7 @@ electron:
 	$(BEEBASM) -i versions/electron/sources/elite-readme.asm -v >> versions/electron/3-assembled-output/compile.txt
 	$(PYTHON) versions/electron/sources/elite-checksum.py -rel$(rel-electron)
 	$(BEEBASM) -i versions/electron/sources/elite-disc.asm -do versions/electron/elite-electron$(suffix-electron).ssd -opt 3 -title "E L I T E"
-	@$(PYTHON) versions/electron/sources/crc32.py versions/electron/extracted$(folder-electron) versions/electron/3-assembled-output
+	@$(PYTHON) versions/electron/sources/crc32.py versions/electron/4-original-binaries$(folder-electron) versions/electron/3-assembled-output
 
 .PHONY:elite-a
 elite-a:
@@ -557,4 +557,4 @@ elite-a:
 	$(BEEBASM) -i versions/elite-a/sources/elite-readme.asm -v >> versions/elite-a/3-assembled-output/compile.txt
 	$(PYTHON) versions/elite-a/sources/elite-checksum.py -rel$(rel-elite-a)
 	$(BEEBASM) -i versions/elite-a/sources/elite-disc.asm -do versions/elite-a/elite-a$(suffix-elite-a).ssd -opt 3 -title "E L I T E"
-	@$(PYTHON) versions/elite-a/sources/crc32.py versions/elite-a/extracted$(folder-elite-a) versions/elite-a/3-assembled-output
+	@$(PYTHON) versions/elite-a/sources/crc32.py versions/elite-a/4-original-binaries$(folder-elite-a) versions/elite-a/3-assembled-output

@@ -22,7 +22,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/ELITE.bin
+\   * 3-assembled-output/ELITE.bin
 \
 \ ******************************************************************************
 
@@ -104,9 +104,9 @@ INCLUDE "library/6502sp/loader1/variable/mess2.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELITE.bin
+\ Save 3-assembled-output/ELITE.bin
 \
 \ ******************************************************************************
 
 PRINT "S.ELITE ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/6502sp/output/ELITE.bin", CODE%, P%, LOAD%
+SAVE "versions/6502sp/3-assembled-output/ELITE.bin", CODE%, P%, LOAD%

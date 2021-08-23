@@ -24,7 +24,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/S.M.bin
+\   * 3-assembled-output/S.M.bin
 \
 \ ******************************************************************************
 
@@ -176,9 +176,9 @@ INCLUDE "library/enhanced/main/variable/ship_plate.asm"
 
 \ ******************************************************************************
 \
-\ Save output/S.M.bin
+\ Save 3-assembled-output/S.M.bin
 \
 \ ******************************************************************************
 
 PRINT "S.S.M ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/elite-a/output/S.M.bin", CODE%, CODE% + &0A00
+SAVE "versions/elite-a/3-assembled-output/S.M.bin", CODE%, CODE% + &0A00

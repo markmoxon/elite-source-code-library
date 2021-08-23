@@ -24,7 +24,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/S.D.bin
+\   * 3-assembled-output/S.D.bin
 \
 \ ******************************************************************************
 
@@ -178,9 +178,9 @@ INCLUDE "library/enhanced/main/variable/ship_boulder.asm"
 
 \ ******************************************************************************
 \
-\ Save output/S.D.bin
+\ Save 3-assembled-output/S.D.bin
 \
 \ ******************************************************************************
 
 PRINT "S.S.D ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/elite-a/output/S.D.bin", CODE%, CODE% + &0A00
+SAVE "versions/elite-a/3-assembled-output/S.D.bin", CODE%, CODE% + &0A00

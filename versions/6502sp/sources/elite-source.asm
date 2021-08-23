@@ -22,18 +22,18 @@
 \
 \ This source file produces the following binary files:
 \
-\   * output/ELTA.bin
-\   * output/ELTB.bin
-\   * output/ELTC.bin
-\   * output/ELTD.bin
-\   * output/ELTE.bin
-\   * output/ELTF.bin
-\   * output/ELTG.bin
-\   * output/ELTH.bin
-\   * output/ELTI.bin
-\   * output/ELTJ.bin
-\   * output/SHIPS.bin
-\   * output/WORDS.bin
+\   * 3-assembled-output/ELTA.bin
+\   * 3-assembled-output/ELTB.bin
+\   * 3-assembled-output/ELTC.bin
+\   * 3-assembled-output/ELTD.bin
+\   * 3-assembled-output/ELTE.bin
+\   * 3-assembled-output/ELTF.bin
+\   * 3-assembled-output/ELTG.bin
+\   * 3-assembled-output/ELTH.bin
+\   * 3-assembled-output/ELTI.bin
+\   * 3-assembled-output/ELTJ.bin
+\   * 3-assembled-output/SHIPS.bin
+\   * 3-assembled-output/WORDS.bin
 \
 \ ******************************************************************************
 
@@ -268,7 +268,7 @@ INCLUDE "library/common/main/variable/act.asm"
 
 \ ******************************************************************************
 \
-\ Save output/WORDS.bin
+\ Save 3-assembled-output/WORDS.bin
 \
 \ ******************************************************************************
 
@@ -280,7 +280,7 @@ PRINT "Execute at ", ~LOAD_WORDS%
 PRINT "Reload at ", ~LOAD_WORDS%
 
 PRINT "S.WORDS ",~CODE_WORDS%," ",~P%," ",~LOAD_WORDS%," ",~LOAD_WORDS%
-SAVE "versions/6502sp/output/WORDS.bin", CODE_WORDS%, P%, LOAD_WORDS%
+SAVE "versions/6502sp/3-assembled-output/WORDS.bin", CODE_WORDS%, P%, LOAD_WORDS%
 
 INCLUDE "library/enhanced/main/workspace/up.asm"
 INCLUDE "library/common/main/workspace/wp.asm"
@@ -358,7 +358,7 @@ INCLUDE "library/common/main/variable/lsy2.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELTA.bin
+\ Save 3-assembled-output/ELTA.bin
 \
 \ ******************************************************************************
 
@@ -370,7 +370,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_A%
 
 PRINT "S.ELTA ", ~S1%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_A%
-SAVE "versions/6502sp/output/ELTA.bin", S1%, P%, LOAD%
+SAVE "versions/6502sp/3-assembled-output/ELTA.bin", S1%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -445,7 +445,7 @@ INCLUDE "library/enhanced/main/subroutine/hme2.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELTB.bin
+\ Save 3-assembled-output/ELTB.bin
 \
 \ ******************************************************************************
 
@@ -457,7 +457,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_B%
 
 PRINT "S.ELTB ", ~CODE_B%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_B%
-SAVE "versions/6502sp/output/ELTB.bin", CODE_B%, P%, LOAD%
+SAVE "versions/6502sp/3-assembled-output/ELTB.bin", CODE_B%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -549,7 +549,7 @@ INCLUDE "library/enhanced/main/subroutine/pause2.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELTC.bin
+\ Save 3-assembled-output/ELTC.bin
 \
 \ ******************************************************************************
 
@@ -561,7 +561,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_C%
 
 PRINT "S.ELTC ", ~CODE_C%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_C%
-SAVE "versions/6502sp/output/ELTC.bin", CODE_C%, P%, LOAD%
+SAVE "versions/6502sp/3-assembled-output/ELTC.bin", CODE_C%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -656,7 +656,7 @@ INCLUDE "library/common/main/variable/prxs.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELTD.bin
+\ Save 3-assembled-output/ELTD.bin
 \
 \ ******************************************************************************
 
@@ -668,7 +668,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_D%
 
 PRINT "S.ELTD ", ~CODE_D%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_D%
-SAVE "versions/6502sp/output/ELTD.bin", CODE_D%, P%, LOAD%
+SAVE "versions/6502sp/3-assembled-output/ELTD.bin", CODE_D%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -757,7 +757,7 @@ INCLUDE "library/common/main/subroutine/ping.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELTE.bin
+\ Save 3-assembled-output/ELTE.bin
 \
 \ ******************************************************************************
 
@@ -769,7 +769,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_E%
 
 PRINT "S.ELTE ", ~CODE_E%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_E%
-SAVE "versions/6502sp/output/ELTE.bin", CODE_E%, P%, LOAD%
+SAVE "versions/6502sp/3-assembled-output/ELTE.bin", CODE_E%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -892,7 +892,7 @@ INCLUDE "library/advanced/main/variable/trantable.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELTF.bin
+\ Save 3-assembled-output/ELTF.bin
 \
 \ ******************************************************************************
 
@@ -904,7 +904,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_F%
 
 PRINT "S.ELTF ", ~CODE_F%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_F%
-SAVE "versions/6502sp/output/ELTF.bin", CODE_F%, P%, LOAD%
+SAVE "versions/6502sp/3-assembled-output/ELTF.bin", CODE_F%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -967,7 +967,7 @@ INCLUDE "library/common/main/subroutine/ll145_part_4_of_4.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELTG.bin
+\ Save 3-assembled-output/ELTG.bin
 \
 \ ******************************************************************************
 
@@ -979,7 +979,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_G%
 
 PRINT "S.ELTG ", ~CODE_G%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_G%
-SAVE "versions/6502sp/output/ELTG.bin", CODE_G%, P%, LOAD%
+SAVE "versions/6502sp/3-assembled-output/ELTG.bin", CODE_G%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -1020,7 +1020,7 @@ INCLUDE "library/6502sp/main/subroutine/wscan.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELTH.bin
+\ Save 3-assembled-output/ELTH.bin
 \
 \ ******************************************************************************
 
@@ -1032,7 +1032,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_H%
 
 PRINT "S.ELTH ", ~CODE_H%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_H%
-SAVE "versions/6502sp/output/ELTH.bin", CODE_H%, P%, LOAD%
+SAVE "versions/6502sp/3-assembled-output/ELTH.bin", CODE_H%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -1067,7 +1067,7 @@ INCLUDE "library/6502sp/main/variable/speech.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELTI.bin
+\ Save 3-assembled-output/ELTI.bin
 \
 \ ******************************************************************************
 
@@ -1079,7 +1079,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_I%
 
 PRINT "S.ELTI ", ~CODE_I%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_H%
-SAVE "versions/6502sp/output/ELTI.bin", CODE_I%, P%, LOAD%
+SAVE "versions/6502sp/3-assembled-output/ELTI.bin", CODE_I%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -1108,7 +1108,7 @@ INCLUDE "library/advanced/main/variable/f_per_cent.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELTJ.bin
+\ Save 3-assembled-output/ELTJ.bin
 \
 \ ******************************************************************************
 
@@ -1120,7 +1120,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_J%
 
 PRINT "S.ELTJ ", ~CODE_J%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_J%
-SAVE "versions/6502sp/output/ELTJ.bin", CODE_J%, P%, LOAD%
+SAVE "versions/6502sp/3-assembled-output/ELTJ.bin", CODE_J%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -1187,7 +1187,7 @@ INCLUDE "library/enhanced/main/variable/ship_dodo.asm"
 
 \ ******************************************************************************
 \
-\ Save output/SHIPS.bin
+\ Save 3-assembled-output/SHIPS.bin
 \
 \ ******************************************************************************
 
@@ -1199,7 +1199,7 @@ PRINT "Execute at ", ~LOAD_SHIPS%
 PRINT "Reload at ", ~LOAD_SHIPS%
 
 PRINT "S.SHIPS ", ~CODE_SHIPS%, " ", ~P%, " ", ~LOAD_SHIPS%, " ", ~LOAD_SHIPS%
-SAVE "versions/6502sp/output/SHIPS.bin", CODE_SHIPS%, P%, LOAD_SHIPS%
+SAVE "versions/6502sp/3-assembled-output/SHIPS.bin", CODE_SHIPS%, P%, LOAD_SHIPS%
 
 \ ******************************************************************************
 \

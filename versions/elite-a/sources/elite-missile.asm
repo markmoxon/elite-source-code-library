@@ -24,7 +24,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/MISSILE.bin
+\   * 3-assembled-output/MISSILE.bin
 \
 \ This gets loaded as part of elite-loader.asm and gets moved to &7F00 during
 \ the loading process.
@@ -77,7 +77,7 @@ INCLUDE "library/common/main/variable/vec.asm"
 
 \ ******************************************************************************
 \
-\ Save output/MISSILE.bin
+\ Save 3-assembled-output/MISSILE.bin
 \
 \ ******************************************************************************
 
@@ -89,4 +89,4 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD%
 
 PRINT "S.MISSILE ",~CODE%," ",~P%," ",~LOAD%," ",~LOAD%
-SAVE "versions/elite-a/output/MISSILE.bin", CODE%, P%, LOAD%
+SAVE "versions/elite-a/3-assembled-output/MISSILE.bin", CODE%, P%, LOAD%

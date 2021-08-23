@@ -24,7 +24,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/2.H.bin
+\   * 3-assembled-output/2.H.bin
 \
 \ ******************************************************************************
 
@@ -182,9 +182,9 @@ INCLUDE "library/elite-a/io/subroutine/print_safe.asm"
 
 \ ******************************************************************************
 \
-\ Save output/2.H.bin
+\ Save 3-assembled-output/2.H.bin
 \
 \ ******************************************************************************
 
 PRINT "S.2.H ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/elite-a/output/2.H.bin", CODE%, P%, LOAD%
+SAVE "versions/elite-a/3-assembled-output/2.H.bin", CODE%, P%, LOAD%

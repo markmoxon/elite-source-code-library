@@ -20,7 +20,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/D.MOE.bin
+\   * 3-assembled-output/D.MOE.bin
 \
 \ ******************************************************************************
 
@@ -168,10 +168,10 @@ INCLUDE "library/enhanced/main/variable/ship_cobra_mk_1.asm"
 
 \ ******************************************************************************
 \
-\ Save output/D.MOE.bin
+\ Save 3-assembled-output/D.MOE.bin
 \
 \ ******************************************************************************
 
 PRINT "S.D.MOE ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/disc/output/D.MOE.bin", CODE%, CODE% + &0A00
+SAVE "versions/disc/3-assembled-output/D.MOE.bin", CODE%, CODE% + &0A00
 

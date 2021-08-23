@@ -21,7 +21,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/README.txt
+\   * 3-assembled-output/README.txt
 \
 \ ******************************************************************************
 
@@ -54,5 +54,5 @@ _ELITE_A_VERSION        = (_VERSION = 6)
  EQUS "---------------------------------------"
  EQUB 10, 13
 
-SAVE "versions/electron/output/README.txt", readme, P%
+SAVE "versions/electron/3-assembled-output/README.txt", readme, P%
 

@@ -45,11 +45,11 @@ IF NOT(_ELITE_A_VERSION)
 
 .SHIP_MISSILE
 
- INCBIN "versions/disc/output/MISSILE.bin"
+ INCBIN "versions/disc/3-assembled-output/MISSILE.bin"
 
 .WORDS
 
- INCBIN "versions/disc/output/WORDS.bin"
+ INCBIN "versions/disc/3-assembled-output/WORDS.bin"
 
 ELIF _ELITE_A_VERSION
 
@@ -59,10 +59,10 @@ ELIF _ELITE_A_VERSION
 
 .SHIP_MISSILE
 
- INCBIN "versions/elite-a/output/MISSILE.bin"
+ INCBIN "versions/elite-a/3-assembled-output/MISSILE.bin"
 
 .WORDS
 
- INCBIN "versions/elite-a/output/WORDS.bin"
+ INCBIN "versions/elite-a/3-assembled-output/WORDS.bin"
 
 ENDIF

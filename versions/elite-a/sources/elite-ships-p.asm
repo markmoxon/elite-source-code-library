@@ -24,7 +24,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/S.P.bin
+\   * 3-assembled-output/S.P.bin
 \
 \ ******************************************************************************
 
@@ -174,9 +174,9 @@ INCLUDE "library/enhanced/main/variable/ship_moray.asm"
 
 \ ******************************************************************************
 \
-\ Save output/S.P.bin
+\ Save 3-assembled-output/S.P.bin
 \
 \ ******************************************************************************
 
 PRINT "S.S.P ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/elite-a/output/S.P.bin", CODE%, CODE% + &0A00
+SAVE "versions/elite-a/3-assembled-output/S.P.bin", CODE%, CODE% + &0A00

@@ -24,7 +24,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/ELITE.bin
+\   * 3-assembled-output/ELITE.bin
 \
 \ ******************************************************************************
 
@@ -158,9 +158,9 @@ INCLUDE "library/elite-a/loader/copyblock/to_dd00.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELITE.bin
+\ Save 3-assembled-output/ELITE.bin
 \
 \ ******************************************************************************
 
 PRINT "S.ELITE ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/elite-a/output/ELITE.bin", CODE%, P%, LOAD%
+SAVE "versions/elite-a/3-assembled-output/ELITE.bin", CODE%, P%, LOAD%

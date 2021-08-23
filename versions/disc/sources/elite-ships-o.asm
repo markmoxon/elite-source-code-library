@@ -20,7 +20,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/D.MOO.bin
+\   * 3-assembled-output/D.MOO.bin
 \
 \ ******************************************************************************
 
@@ -168,10 +168,10 @@ INCLUDE "library/enhanced/main/variable/ship_python_p.asm"
 
 \ ******************************************************************************
 \
-\ Save output/D.MOO.bin
+\ Save 3-assembled-output/D.MOO.bin
 \
 \ ******************************************************************************
 
 PRINT "S.D.MOO ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/disc/output/D.MOO.bin", CODE%, CODE% + &0A00
+SAVE "versions/disc/3-assembled-output/D.MOO.bin", CODE%, CODE% + &0A00
 

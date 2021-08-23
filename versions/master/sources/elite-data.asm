@@ -21,7 +21,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/BDATA.bin
+\   * 3-assembled-output/BDATA.bin
 \
 \ ******************************************************************************
 
@@ -204,9 +204,9 @@ ENDIF
 
 \ ******************************************************************************
 \
-\ Save output/BDATA.unprot.bin
+\ Save 3-assembled-output/BDATA.unprot.bin
 \
 \ ******************************************************************************
 
 PRINT "S.BDATA ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/master/output/BDATA.unprot.bin", CODE%, P%, LOAD%
+SAVE "versions/master/3-assembled-output/BDATA.unprot.bin", CODE%, P%, LOAD%

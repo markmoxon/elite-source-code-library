@@ -20,7 +20,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/D.MOC.bin
+\   * 3-assembled-output/D.MOC.bin
 \
 \ ******************************************************************************
 
@@ -168,10 +168,10 @@ INCLUDE "library/common/main/variable/ship_thargon.asm"
 
 \ ******************************************************************************
 \
-\ Save output/D.MOC.bin
+\ Save 3-assembled-output/D.MOC.bin
 \
 \ ******************************************************************************
 
 PRINT "S.D.MOC ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/disc/output/D.MOC.bin", CODE%, CODE% + &0A00
+SAVE "versions/disc/3-assembled-output/D.MOC.bin", CODE%, CODE% + &0A00
 

@@ -22,22 +22,22 @@
 \
 \ This source file produces the following binary files:
 \
-\   * output/P.CODE.unprot.bin
+\   * 3-assembled-output/P.CODE.unprot.bin
 \
 \ after reading in the following files:
 \
-\   * output/ELTA.bin
-\   * output/ELTB.bin
-\   * output/ELTC.bin
-\   * output/ELTD.bin
-\   * output/ELTE.bin
-\   * output/ELTF.bin
-\   * output/ELTG.bin
-\   * output/ELTH.bin
-\   * output/ELTI.bin
-\   * output/ELTJ.bin
-\   * output/SHIPS.bin
-\   * output/WORDS.bin
+\   * 3-assembled-output/ELTA.bin
+\   * 3-assembled-output/ELTB.bin
+\   * 3-assembled-output/ELTC.bin
+\   * 3-assembled-output/ELTD.bin
+\   * 3-assembled-output/ELTE.bin
+\   * 3-assembled-output/ELTF.bin
+\   * 3-assembled-output/ELTG.bin
+\   * 3-assembled-output/ELTH.bin
+\   * 3-assembled-output/ELTI.bin
+\   * 3-assembled-output/ELTJ.bin
+\   * 3-assembled-output/SHIPS.bin
+\   * 3-assembled-output/WORDS.bin
 \
 \ ******************************************************************************
 
@@ -87,52 +87,52 @@ ENDIF
 .elitea
 
 PRINT "elitea = ", ~P%
-INCBIN "versions/6502sp/output/ELTA.bin"
+INCBIN "versions/6502sp/3-assembled-output/ELTA.bin"
 
 .eliteb
 
 PRINT "eliteb = ", ~P%
-INCBIN "versions/6502sp/output/ELTB.bin"
+INCBIN "versions/6502sp/3-assembled-output/ELTB.bin"
 
 .elitec
 
 PRINT "elitec = ", ~P%
-INCBIN "versions/6502sp/output/ELTC.bin"
+INCBIN "versions/6502sp/3-assembled-output/ELTC.bin"
 
 .elited
 
 PRINT "elited = ", ~P%
-INCBIN "versions/6502sp/output/ELTD.bin"
+INCBIN "versions/6502sp/3-assembled-output/ELTD.bin"
 
 .elitee
 
 PRINT "elitee = ", ~P%
-INCBIN "versions/6502sp/output/ELTE.bin"
+INCBIN "versions/6502sp/3-assembled-output/ELTE.bin"
 
 .elitef
 
 PRINT "elitef = ", ~P%
-INCBIN "versions/6502sp/output/ELTF.bin"
+INCBIN "versions/6502sp/3-assembled-output/ELTF.bin"
 
 .eliteg
 
 PRINT "eliteg = ", ~P%
-INCBIN "versions/6502sp/output/ELTG.bin"
+INCBIN "versions/6502sp/3-assembled-output/ELTG.bin"
 
 .eliteh
 
 PRINT "eliteh = ", ~P%
-INCBIN "versions/6502sp/output/ELTH.bin"
+INCBIN "versions/6502sp/3-assembled-output/ELTH.bin"
 
 .elitei
 
 PRINT "elitei = ", ~P%
-INCBIN "versions/6502sp/output/ELTI.bin"
+INCBIN "versions/6502sp/3-assembled-output/ELTI.bin"
 
 .elitej
 
 PRINT "elitej = ", ~P%
-INCBIN "versions/6502sp/output/ELTJ.bin"
+INCBIN "versions/6502sp/3-assembled-output/ELTJ.bin"
 
 F% = P%
 PRINT "F% = ", ~F%
@@ -141,12 +141,12 @@ PRINT "P% = ", ~P%
 .words
 
 PRINT "words = ", ~P%
-INCBIN "versions/6502sp/output/WORDS.bin"
+INCBIN "versions/6502sp/3-assembled-output/WORDS.bin"
 
 .ships
 
 PRINT "ships = ", ~P%
-INCBIN "versions/6502sp/output/SHIPS.bin"
+INCBIN "versions/6502sp/3-assembled-output/SHIPS.bin"
 
 IF _SNG45
  INCBIN "versions/6502sp/extracted/sng45/workspaces/BCFS-SHIPS.bin"
@@ -160,10 +160,10 @@ ENDIF
 
 \ ******************************************************************************
 \
-\ Save 6502sp/output/P.CODE.unprot.bin
+\ Save 6502sp/3-assembled-output/P.CODE.unprot.bin
 \
 \ ******************************************************************************
 
 PRINT "P% = ", ~P%
 PRINT "S.P.CODE ", ~LOAD%, ~(F% + &0400 + &2200), " ", ~LOAD%, ~LOAD%
-SAVE "versions/6502sp/output/P.CODE.unprot.bin", CODE%, (F% + &0400 + &2200), LOAD%
+SAVE "versions/6502sp/3-assembled-output/P.CODE.unprot.bin", CODE%, (F% + &0400 + &2200), LOAD%

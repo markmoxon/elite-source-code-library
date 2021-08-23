@@ -22,7 +22,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/I.CODE.bin
+\   * 3-assembled-output/I.CODE.bin
 \
 \ ******************************************************************************
 
@@ -214,7 +214,7 @@ INCLUDE "library/advanced/main/subroutine/setvdu19-dovdu19.asm"
 
 \ ******************************************************************************
 \
-\ Save output/I.CODE.bin
+\ Save 3-assembled-output/I.CODE.bin
 \
 \ ******************************************************************************
 
@@ -227,4 +227,4 @@ PRINT "Reload at ", ~LOAD%
 PRINT "protlen = ", ~protlen
 
 PRINT "S.I.CODE ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/6502sp/output/I.CODE.bin", CODE%, P%, LOAD%
+SAVE "versions/6502sp/3-assembled-output/I.CODE.bin", CODE%, P%, LOAD%

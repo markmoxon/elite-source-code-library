@@ -20,7 +20,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/D.MON.bin
+\   * 3-assembled-output/D.MON.bin
 \
 \ ******************************************************************************
 
@@ -167,10 +167,10 @@ INCLUDE "library/enhanced/main/variable/ship_asp_mk_2.asm"
 
 \ ******************************************************************************
 \
-\ Save output/D.MON.bin
+\ Save 3-assembled-output/D.MON.bin
 \
 \ ******************************************************************************
 
 PRINT "S.D.MON ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/disc/output/D.MON.bin", CODE%, CODE% + &0A00
+SAVE "versions/disc/3-assembled-output/D.MON.bin", CODE%, CODE% + &0A00
 

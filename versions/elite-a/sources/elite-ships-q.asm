@@ -24,7 +24,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/S.Q.bin
+\   * 3-assembled-output/S.Q.bin
 \
 \ ******************************************************************************
 
@@ -176,9 +176,9 @@ INCLUDE "library/enhanced/main/variable/ship_moray.asm"
 
 \ ******************************************************************************
 \
-\ Save output/S.Q.bin
+\ Save 3-assembled-output/S.Q.bin
 \
 \ ******************************************************************************
 
 PRINT "S.S.Q ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/elite-a/output/S.Q.bin", CODE%, CODE% + &0A00
+SAVE "versions/elite-a/3-assembled-output/S.Q.bin", CODE%, CODE% + &0A00

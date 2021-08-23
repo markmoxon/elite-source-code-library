@@ -39,7 +39,7 @@
 \ ******************************************************************************
 
 PRINT "WORDS9 = ",~P%
-INCBIN "versions/electron/output/WORDS9.bin"
+INCBIN "versions/electron/3-assembled-output/WORDS9.bin"
 
 ALIGN 256
 

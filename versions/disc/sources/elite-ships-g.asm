@@ -20,7 +20,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/D.MOG.bin
+\   * 3-assembled-output/D.MOG.bin
 \
 \ ******************************************************************************
 
@@ -167,10 +167,10 @@ INCLUDE "library/enhanced/main/variable/ship_constrictor.asm"
 
 \ ******************************************************************************
 \
-\ Save output/D.MOG.bin
+\ Save 3-assembled-output/D.MOG.bin
 \
 \ ******************************************************************************
 
 PRINT "S.D.MOG ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/disc/output/D.MOG.bin", CODE%, CODE% + &0A00
+SAVE "versions/disc/3-assembled-output/D.MOG.bin", CODE%, CODE% + &0A00
 

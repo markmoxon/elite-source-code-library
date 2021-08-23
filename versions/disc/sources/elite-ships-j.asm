@@ -20,7 +20,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/D.MOJ.bin
+\   * 3-assembled-output/D.MOJ.bin
 \
 \ ******************************************************************************
 
@@ -167,10 +167,10 @@ INCLUDE "library/enhanced/main/variable/ship_cobra_mk_3_p.asm"
 
 \ ******************************************************************************
 \
-\ Save output/D.MOJ.bin
+\ Save 3-assembled-output/D.MOJ.bin
 \
 \ ******************************************************************************
 
 PRINT "S.D.MOJ ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/disc/output/D.MOJ.bin", CODE%, CODE% + &0A00
+SAVE "versions/disc/3-assembled-output/D.MOJ.bin", CODE%, CODE% + &0A00
 

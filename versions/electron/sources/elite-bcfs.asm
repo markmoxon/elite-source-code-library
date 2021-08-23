@@ -21,19 +21,19 @@
 \
 \ This source file produces the following binary files:
 \
-\   * output/ELITECO.bin
+\   * 3-assembled-output/ELITECO.bin
 \
 \ after reading in the following files:
 \
-\   * output/ELTA.bin
-\   * output/ELTB.bin
-\   * output/ELTC.bin
-\   * output/ELTD.bin
-\   * output/ELTE.bin
-\   * output/ELTF.bin
-\   * output/ELTG.bin
-\   * output/SHIPS.bin
-\   * output/WORDS9.bin
+\   * 3-assembled-output/ELTA.bin
+\   * 3-assembled-output/ELTB.bin
+\   * 3-assembled-output/ELTC.bin
+\   * 3-assembled-output/ELTD.bin
+\   * 3-assembled-output/ELTE.bin
+\   * 3-assembled-output/ELTF.bin
+\   * 3-assembled-output/ELTG.bin
+\   * 3-assembled-output/SHIPS.bin
+\   * 3-assembled-output/WORDS9.bin
 \
 \ ******************************************************************************
 
@@ -70,37 +70,37 @@ ORG CODE%
 .elitea
 
 PRINT "elitea = ", ~P%
-INCBIN "versions/electron/output/ELTA.bin"
+INCBIN "versions/electron/3-assembled-output/ELTA.bin"
 
 .eliteb
 
 PRINT "eliteb = ", ~P%
-INCBIN "versions/electron/output/ELTB.bin"
+INCBIN "versions/electron/3-assembled-output/ELTB.bin"
 
 .elitec
 
 PRINT "elitec = ", ~P%
-INCBIN "versions/electron/output/ELTC.bin"
+INCBIN "versions/electron/3-assembled-output/ELTC.bin"
 
 .elited
 
 PRINT "elited = ", ~P%
-INCBIN "versions/electron/output/ELTD.bin"
+INCBIN "versions/electron/3-assembled-output/ELTD.bin"
 
 .elitee
 
 PRINT "elitee = ", ~P%
-INCBIN "versions/electron/output/ELTE.bin"
+INCBIN "versions/electron/3-assembled-output/ELTE.bin"
 
 .elitef
 
 PRINT "elitef = ", ~P%
-INCBIN "versions/electron/output/ELTF.bin"
+INCBIN "versions/electron/3-assembled-output/ELTF.bin"
 
 .eliteg
 
 PRINT "eliteg = ", ~P%
-INCBIN "versions/electron/output/ELTG.bin"
+INCBIN "versions/electron/3-assembled-output/ELTG.bin"
 
 .checksum0
 
@@ -112,16 +112,16 @@ PRINT "checksum0 = ", ~P%
 .ships
 
 PRINT "ships = ", ~P%
-INCBIN "versions/electron/output/SHIPS.bin"
+INCBIN "versions/electron/3-assembled-output/SHIPS.bin"
 
 .end
 
 \ ******************************************************************************
 \
-\ Save output/ELITECO.unprot.bin
+\ Save 3-assembled-output/ELITECO.unprot.bin
 \
 \ ******************************************************************************
 
 PRINT "P% = ", ~P%
 PRINT "S.ELITECO ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/electron/output/ELITECO.unprot.bin", CODE%, P%, LOAD%
+SAVE "versions/electron/3-assembled-output/ELITECO.unprot.bin", CODE%, P%, LOAD%

@@ -20,7 +20,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/ELITE4.bin
+\   * 3-assembled-output/ELITE4.bin
 \
 \ ******************************************************************************
 
@@ -175,10 +175,10 @@ ENDIF
 
 \ ******************************************************************************
 \
-\ Save output/ELITE4.unprot.bin
+\ Save 3-assembled-output/ELITE4.unprot.bin
 \
 \ ******************************************************************************
 
 PRINT "S.ELITE4 ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/disc/output/ELITE4.unprot.bin", CODE%, P%, LOAD%
+SAVE "versions/disc/3-assembled-output/ELITE4.unprot.bin", CODE%, P%, LOAD%
 

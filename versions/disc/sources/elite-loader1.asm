@@ -20,7 +20,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/ELITE2.bin
+\   * 3-assembled-output/ELITE2.bin
 \
 \ ******************************************************************************
 
@@ -99,9 +99,9 @@ INCLUDE "library/disc/loader1/variable/block.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELITE2.bin
+\ Save 3-assembled-output/ELITE2.bin
 \
 \ ******************************************************************************
 
 PRINT "S.ELITE2 ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/disc/output/ELITE2.bin", CODE%, P%, LOAD%
+SAVE "versions/disc/3-assembled-output/ELITE2.bin", CODE%, P%, LOAD%

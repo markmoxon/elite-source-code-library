@@ -24,7 +24,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/S.G.bin
+\   * 3-assembled-output/S.G.bin
 \
 \ ******************************************************************************
 
@@ -177,9 +177,9 @@ INCLUDE "library/enhanced/main/variable/ship_boa.asm"
 
 \ ******************************************************************************
 \
-\ Save output/S.G.bin
+\ Save 3-assembled-output/S.G.bin
 \
 \ ******************************************************************************
 
 PRINT "S.S.G ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/elite-a/output/S.G.bin", CODE%, CODE% + &0A00
+SAVE "versions/elite-a/3-assembled-output/S.G.bin", CODE%, CODE% + &0A00

@@ -20,7 +20,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/WORDS.bin
+\   * 3-assembled-output/WORDS.bin
 \
 \ This gets loaded as part of elite-loader3.asm and gets moved to &0400 during
 \ the loading process.
@@ -81,7 +81,7 @@ INCLUDE "library/common/main/variable/act.asm"
 
 \ ******************************************************************************
 \
-\ Save output/WORDS.bin
+\ Save 3-assembled-output/WORDS.bin
 \
 \ ******************************************************************************
 
@@ -93,4 +93,4 @@ PRINT "Execute at ", ~LOAD_WORDS%
 PRINT "Reload at ", ~LOAD_WORDS%
 
 PRINT "S.WORDS ",~CODE_WORDS%," ",~P%," ",~LOAD_WORDS%," ",~LOAD_WORDS%
-SAVE "versions/disc/output/WORDS.bin", CODE_WORDS%, P%, LOAD_WORDS%
+SAVE "versions/disc/3-assembled-output/WORDS.bin", CODE_WORDS%, P%, LOAD_WORDS%

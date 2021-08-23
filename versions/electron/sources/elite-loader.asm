@@ -21,7 +21,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/ELITEDA.bin
+\   * 3-assembled-output/ELITEDA.bin
 \
 \ ******************************************************************************
 
@@ -119,7 +119,7 @@ INCLUDE "library/electron/loader/variable/mess1.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELITE.unprot.bin
+\ Save 3-assembled-output/ELITE.unprot.bin
 \
 \ ******************************************************************************
 
@@ -127,4 +127,4 @@ COPYBLOCK LE%, P%, UU%  \ Copy the block that we assembled at LE% to UU%, which
                         \ is where it will actually run
 
 PRINT "S.ELITEDA ", ~CODE%, " ", ~UU% + (P% - LE%), " ", ~run, " ", ~CODE%
-SAVE "versions/electron/output/ELITEDA.bin", CODE%, UU% + (P% - LE%), run, CODE%
+SAVE "versions/electron/3-assembled-output/ELITEDA.bin", CODE%, UU% + (P% - LE%), run, CODE%

@@ -20,7 +20,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/D.MOM.bin
+\   * 3-assembled-output/D.MOM.bin
 \
 \ ******************************************************************************
 
@@ -166,10 +166,10 @@ INCLUDE "library/enhanced/main/variable/ship_cobra_mk_3_p.asm"
 
 \ ******************************************************************************
 \
-\ Save output/D.MOM.bin
+\ Save 3-assembled-output/D.MOM.bin
 \
 \ ******************************************************************************
 
 PRINT "S.D.MOM ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/disc/output/D.MOM.bin", CODE%, CODE% + &0A00
+SAVE "versions/disc/3-assembled-output/D.MOM.bin", CODE%, CODE% + &0A00
 

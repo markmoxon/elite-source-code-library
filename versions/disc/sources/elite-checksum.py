@@ -9,15 +9,15 @@
 # This script applies encryption and checksums to the compiled binary for the
 # main game code. It reads these unencrypted binary files:
 #
-#   * output/ELITE4.unprot.bin
-#   * output/D.CODE.unprot.bin
-#   * output/T.CODE.unprot.bin
+#   * 3-assembled-output/ELITE4.unprot.bin
+#   * 3-assembled-output/D.CODE.unprot.bin
+#   * 3-assembled-output/T.CODE.unprot.bin
 #
 # and generates encrypted versions as follows:
 #
-#   * output/ELITE4.bin
-#   * output/D.CODE.bin
-#   * output/T.CODE.bin
+#   * 3-assembled-output/ELITE4.bin
+#   * 3-assembled-output/D.CODE.bin
+#   * 3-assembled-output/T.CODE.bin
 #
 # ******************************************************************************
 
@@ -62,7 +62,7 @@ data_block = bytearray()
 
 # Load assembled code file
 
-elite_file = open("versions/disc/output/ELITE4.unprot.bin", "rb")
+elite_file = open("versions/disc/3-assembled-output/ELITE4.unprot.bin", "rb")
 data_block.extend(elite_file.read())
 elite_file.close()
 
@@ -108,11 +108,11 @@ for n in range(scramble4_from, scramble4_to):
 
 # Write output file for ELITE4
 
-output_file = open("versions/disc/output/ELITE4.bin", "wb")
+output_file = open("versions/disc/3-assembled-output/ELITE4.bin", "wb")
 output_file.write(data_block)
 output_file.close()
 
-print("output/ELITE4.bin file saved")
+print("3-assembled-output/ELITE4.bin file saved")
 
 # Configuration variables for D.CODE
 
@@ -125,7 +125,7 @@ data_block = bytearray()
 
 # Load assembled code file
 
-elite_file = open("versions/disc/output/D.CODE.unprot.bin", "rb")
+elite_file = open("versions/disc/3-assembled-output/D.CODE.unprot.bin", "rb")
 data_block.extend(elite_file.read())
 elite_file.close()
 
@@ -136,11 +136,11 @@ for n in range(scramble_from, scramble_to):
 
 # Write output file for D.CODE
 
-output_file = open("versions/disc/output/D.CODE.bin", "wb")
+output_file = open("versions/disc/3-assembled-output/D.CODE.bin", "wb")
 output_file.write(data_block)
 output_file.close()
 
-print("output/D.CODE.bin file saved")
+print("3-assembled-output/D.CODE.bin file saved")
 
 # Configuration variables for T.CODE
 
@@ -153,7 +153,7 @@ data_block = bytearray()
 
 # Load assembled code file
 
-elite_file = open("versions/disc/output/T.CODE.unprot.bin", "rb")
+elite_file = open("versions/disc/3-assembled-output/T.CODE.unprot.bin", "rb")
 data_block.extend(elite_file.read())
 elite_file.close()
 
@@ -191,8 +191,8 @@ print("&55FF docked code checksum = ", d_checksum)
 
 # Write output file for T.CODE
 
-output_file = open("versions/disc/output/T.CODE.bin", "wb")
+output_file = open("versions/disc/3-assembled-output/T.CODE.bin", "wb")
 output_file.write(data_block)
 output_file.close()
 
-print("output/T.CODE.bin file saved")
+print("3-assembled-output/T.CODE.bin file saved")

@@ -35,13 +35,13 @@ _SNG47                  = (_RELEASE = 1)
 _COMPACT                = (_RELEASE = 2)
 
 IF _SNG47
- PUTFILE "versions/master/output/M128Elt.bin", "M128Elt", &FF0E00, &FF0E43
- PUTFILE "versions/master/output/BDATA.bin", "BDATA", &000000, &000000
- PUTFILE "versions/master/output/BCODE.bin", "BCODE", &000000, &000000
+ PUTFILE "versions/master/3-assembled-output/M128Elt.bin", "M128Elt", &FF0E00, &FF0E43
+ PUTFILE "versions/master/3-assembled-output/BDATA.bin", "BDATA", &000000, &000000
+ PUTFILE "versions/master/3-assembled-output/BCODE.bin", "BCODE", &000000, &000000
 ELIF _COMPACT
- PUTFILE "versions/master/output/M128Elt.bin", "!BOOT", &000E00, &000E43
- PUTFILE "versions/master/output/BDATA.bin", "BDATA", &001300, &001300
- PUTFILE "versions/master/output/BCODE.bin", "ELITE", &001300, &002C6C
+ PUTFILE "versions/master/3-assembled-output/M128Elt.bin", "!BOOT", &000E00, &000E43
+ PUTFILE "versions/master/3-assembled-output/BDATA.bin", "BDATA", &001300, &001300
+ PUTFILE "versions/master/3-assembled-output/BCODE.bin", "ELITE", &001300, &002C6C
 ENDIF
 
-PUTFILE "versions/master/output/README.txt", "README", &FFFFFF, &FFFFFF
+PUTFILE "versions/master/3-assembled-output/README.txt", "README", &FFFFFF, &FFFFFF

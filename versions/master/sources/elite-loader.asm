@@ -21,7 +21,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/M128Elt.bin
+\   * 3-assembled-output/M128Elt.bin
 \
 \ ******************************************************************************
 
@@ -90,10 +90,10 @@ INCLUDE "library/master/loader/variable/mess3.asm"
 
 \ ******************************************************************************
 \
-\ Save output/M128Elt.bin
+\ Save 3-assembled-output/M128Elt.bin
 \
 \ ******************************************************************************
 
 PRINT "S.M128Elt ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/master/output/M128Elt.bin", CODE%, P%, LOAD%
+SAVE "versions/master/3-assembled-output/M128Elt.bin", CODE%, P%, LOAD%
 

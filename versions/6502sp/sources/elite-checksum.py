@@ -38,7 +38,7 @@ data_block = bytearray()
 
 # Load assembled code file
 
-elite_file = open("versions/6502sp/output/P.CODE.unprot.bin", "rb")
+elite_file = open("versions/6502sp/3-assembled-output/P.CODE.unprot.bin", "rb")
 data_block.extend(elite_file.read())
 elite_file.close()
 
@@ -147,8 +147,8 @@ if Encrypt:
 
 # Write output file for P.CODE
 
-output_file = open("versions/6502sp/output/P.CODE.bin", "wb")
+output_file = open("versions/6502sp/3-assembled-output/P.CODE.bin", "wb")
 output_file.write(data_block)
 output_file.close()
 
-print("output/P.CODE.bin file saved")
+print("3-assembled-output/P.CODE.bin file saved")

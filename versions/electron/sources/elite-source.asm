@@ -21,15 +21,15 @@
 \
 \ This source file produces the following binary files:
 \
-\   * output/ELTA.bin
-\   * output/ELTB.bin
-\   * output/ELTC.bin
-\   * output/ELTD.bin
-\   * output/ELTE.bin
-\   * output/ELTF.bin
-\   * output/ELTG.bin
-\   * output/SHIPS.bin
-\   * output/WORDS9.bin
+\   * 3-assembled-output/ELTA.bin
+\   * 3-assembled-output/ELTB.bin
+\   * 3-assembled-output/ELTC.bin
+\   * 3-assembled-output/ELTD.bin
+\   * 3-assembled-output/ELTE.bin
+\   * 3-assembled-output/ELTF.bin
+\   * 3-assembled-output/ELTG.bin
+\   * 3-assembled-output/SHIPS.bin
+\   * 3-assembled-output/WORDS9.bin
 \
 \ ******************************************************************************
 
@@ -138,7 +138,7 @@ INCLUDE "library/common/main/variable/qq18.asm"
 
 \ ******************************************************************************
 \
-\ Save output/WORDS9.bin
+\ Save 3-assembled-output/WORDS9.bin
 \
 \ ******************************************************************************
 
@@ -150,7 +150,7 @@ PRINT "Execute at ", ~LOAD_WORDS%
 PRINT "Reload at ", ~LOAD_WORDS%
 
 PRINT "S.WORDS9 ",~CODE_WORDS%," ",~P%," ",~LOAD_WORDS%," ",~LOAD_WORDS%
-SAVE "versions/electron/output/WORDS9.bin", CODE_WORDS%, P%, LOAD_WORDS%
+SAVE "versions/electron/3-assembled-output/WORDS9.bin", CODE_WORDS%, P%, LOAD_WORDS%
 
 INCLUDE "library/common/main/workspace/k_per_cent.asm"
 INCLUDE "library/common/main/workspace/wp.asm"
@@ -211,7 +211,7 @@ INCLUDE "library/common/main/subroutine/mv40.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELTA.bin
+\ Save 3-assembled-output/ELTA.bin
 \
 \ ******************************************************************************
 
@@ -223,7 +223,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_A%
 
 PRINT "S.ELTA ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_A%
-SAVE "versions/electron/output/ELTA.bin", CODE%, P%, LOAD%
+SAVE "versions/electron/3-assembled-output/ELTA.bin", CODE%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -283,7 +283,7 @@ INCLUDE "library/common/main/subroutine/escape.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELTB.bin
+\ Save 3-assembled-output/ELTB.bin
 \
 \ ******************************************************************************
 
@@ -295,7 +295,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_B%
 
 PRINT "S.ELTB ", ~CODE_B%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_B%
-SAVE "versions/electron/output/ELTB.bin", CODE_B%, P%, LOAD%
+SAVE "versions/electron/3-assembled-output/ELTB.bin", CODE_B%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -379,7 +379,7 @@ INCLUDE "library/electron/main/subroutine/nextr.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELTC.bin
+\ Save 3-assembled-output/ELTC.bin
 \
 \ ******************************************************************************
 
@@ -391,7 +391,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_C%
 
 PRINT "S.ELTC ", ~CODE_C%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_C%
-SAVE "versions/electron/output/ELTC.bin", CODE_C%, P%, LOAD%
+SAVE "versions/electron/3-assembled-output/ELTC.bin", CODE_C%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -470,7 +470,7 @@ INCLUDE "library/common/main/subroutine/qv.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELTD.bin
+\ Save 3-assembled-output/ELTD.bin
 \
 \ ******************************************************************************
 
@@ -482,7 +482,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_D%
 
 PRINT "S.ELTD ", ~CODE_D%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_D%
-SAVE "versions/electron/output/ELTD.bin", CODE_D%, P%, LOAD%
+SAVE "versions/electron/3-assembled-output/ELTD.bin", CODE_D%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -562,7 +562,7 @@ INCLUDE "library/common/main/subroutine/ping.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELTE.bin
+\ Save 3-assembled-output/ELTE.bin
 \
 \ ******************************************************************************
 
@@ -574,7 +574,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_E%
 
 PRINT "S.ELTE ", ~CODE_E%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_E%
-SAVE "versions/electron/output/ELTE.bin", CODE_E%, P%, LOAD%
+SAVE "versions/electron/3-assembled-output/ELTE.bin", CODE_E%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -668,7 +668,7 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELTF.bin
+\ Save 3-assembled-output/ELTF.bin
 \
 \ ******************************************************************************
 
@@ -680,7 +680,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_F%
 
 PRINT "S.ELTF ", ~CODE_F%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_F%
-SAVE "versions/electron/output/ELTF.bin", CODE_F%, P%, LOAD%
+SAVE "versions/electron/3-assembled-output/ELTF.bin", CODE_F%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -723,7 +723,7 @@ INCLUDE "library/common/main/subroutine/ll145_part_4_of_4.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELTG.bin
+\ Save 3-assembled-output/ELTG.bin
 \
 \ ******************************************************************************
 
@@ -735,7 +735,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_G%
 
 PRINT "S.ELTG ", ~CODE_G%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_G%
-SAVE "versions/electron/output/ELTG.bin", CODE_G%, P%, LOAD%
+SAVE "versions/electron/3-assembled-output/ELTG.bin", CODE_G%, P%, LOAD%
 
 INCLUDE "library/original/main/variable/checksum0.asm"
 
@@ -767,7 +767,7 @@ INCLUDE "library/common/main/variable/ship_escape_pod.asm"
 
 \ ******************************************************************************
 \
-\ Save output/SHIPS.bin
+\ Save 3-assembled-output/SHIPS.bin
 \
 \ ******************************************************************************
 
@@ -779,4 +779,4 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_SHIPS%
 
 PRINT "S.SHIPS ", ~CODE_SHIPS%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_SHIPS%
-SAVE "versions/electron/output/SHIPS.bin", CODE_SHIPS%, P%, LOAD%
+SAVE "versions/electron/3-assembled-output/SHIPS.bin", CODE_SHIPS%, P%, LOAD%

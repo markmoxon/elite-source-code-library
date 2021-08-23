@@ -20,7 +20,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/D.MOI.bin
+\   * 3-assembled-output/D.MOI.bin
 \
 \ ******************************************************************************
 
@@ -167,10 +167,10 @@ INCLUDE "library/enhanced/main/variable/ship_python_p.asm"
 
 \ ******************************************************************************
 \
-\ Save output/D.MOI.bin
+\ Save 3-assembled-output/D.MOI.bin
 \
 \ ******************************************************************************
 
 PRINT "S.D.MOI ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/disc/output/D.MOI.bin", CODE%, CODE% + &0A00
+SAVE "versions/disc/3-assembled-output/D.MOI.bin", CODE%, CODE% + &0A00
 

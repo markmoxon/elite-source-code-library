@@ -20,7 +20,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/D.MOB.bin
+\   * 3-assembled-output/D.MOB.bin
 \
 \ ******************************************************************************
 
@@ -167,10 +167,10 @@ INCLUDE "library/enhanced/main/variable/ship_worm.asm"
 
 \ ******************************************************************************
 \
-\ Save output/D.MOB.bin
+\ Save 3-assembled-output/D.MOB.bin
 \
 \ ******************************************************************************
 
 PRINT "S.D.MOB ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/disc/output/D.MOB.bin", CODE%, CODE% + &0A00
+SAVE "versions/disc/3-assembled-output/D.MOB.bin", CODE%, CODE% + &0A00
 

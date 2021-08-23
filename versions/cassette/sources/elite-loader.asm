@@ -21,7 +21,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/ELITE.unprot.bin
+\   * 3-assembled-output/ELITE.unprot.bin
 \
 \ after reading in the following files:
 \
@@ -29,8 +29,8 @@
 \   * binaries/P.ELITE.bin
 \   * binaries/P.A-SOFT.bin
 \   * binaries/P.(C)ASFT.bin
-\   * output/WORDS9.bin
-\   * output/PYTHON.bin
+\   * 3-assembled-output/WORDS9.bin
+\   * 3-assembled-output/PYTHON.bin
 \
 \ ******************************************************************************
 
@@ -210,7 +210,7 @@ INCLUDE "library/cassette/loader/variable/yc.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELITE.unprot.bin
+\ Save 3-assembled-output/ELITE.unprot.bin
 \
 \ ******************************************************************************
 
@@ -227,4 +227,4 @@ PRINT "Memory usage: ", ~LE%, " - ",~P%
 PRINT "Stack: ",LEN + ENDBLOCK - BLOCK
 
 PRINT "S. ELITE ", ~CODE%, " ", ~UU% + (P% - LE%), " ", ~run, " ", ~CODE%
-SAVE "versions/cassette/output/ELITE.unprot.bin", CODE%, UU% + (P% - LE%), run, CODE%
+SAVE "versions/cassette/3-assembled-output/ELITE.unprot.bin", CODE%, UU% + (P% - LE%), run, CODE%

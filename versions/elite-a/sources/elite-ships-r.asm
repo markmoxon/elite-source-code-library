@@ -24,7 +24,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/S.R.bin
+\   * 3-assembled-output/S.R.bin
 \
 \ ******************************************************************************
 
@@ -178,9 +178,9 @@ INCLUDE "library/enhanced/main/variable/ship_boulder.asm"
 
 \ ******************************************************************************
 \
-\ Save output/S.R.bin
+\ Save 3-assembled-output/S.R.bin
 \
 \ ******************************************************************************
 
 PRINT "S.S.R ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/elite-a/output/S.R.bin", CODE%, CODE% + &0A00
+SAVE "versions/elite-a/3-assembled-output/S.R.bin", CODE%, CODE% + &0A00

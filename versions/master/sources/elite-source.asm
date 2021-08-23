@@ -21,7 +21,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/BCODE.bin
+\   * 3-assembled-output/BCODE.bin
 \
 \ ******************************************************************************
 
@@ -447,7 +447,7 @@ INCLUDE "library/advanced/main/variable/scacol.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELTA.bin
+\ Save 3-assembled-output/ELTA.bin
 \
 \ ******************************************************************************
 
@@ -459,7 +459,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_A%
 
 PRINT "S.ELTA ", ~S1%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_A%
-\SAVE "versions/master/output/ELTA.bin", S1%, P%, LOAD%
+\SAVE "versions/master/3-assembled-output/ELTA.bin", S1%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -509,7 +509,7 @@ INCLUDE "library/enhanced/main/subroutine/hme2.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELTB.bin
+\ Save 3-assembled-output/ELTB.bin
 \
 \ ******************************************************************************
 
@@ -521,7 +521,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_B%
 
 PRINT "S.ELTB ", ~CODE_B%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_B%
-\SAVE "versions/master/output/ELTB.bin", CODE_B%, P%, LOAD%
+\SAVE "versions/master/3-assembled-output/ELTB.bin", CODE_B%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -610,7 +610,7 @@ INCLUDE "library/enhanced/main/subroutine/pause2.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELTC.bin
+\ Save 3-assembled-output/ELTC.bin
 \
 \ ******************************************************************************
 
@@ -622,7 +622,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_C%
 
 PRINT "S.ELTC ", ~CODE_C%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_C%
-\SAVE "versions/master/output/ELTC.bin", CODE_C%, P%, LOAD%
+\SAVE "versions/master/3-assembled-output/ELTC.bin", CODE_C%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -719,7 +719,7 @@ INCLUDE "library/common/main/variable/prxs.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELTD.bin
+\ Save 3-assembled-output/ELTD.bin
 \
 \ ******************************************************************************
 
@@ -731,7 +731,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_D%
 
 PRINT "S.ELTD ", ~CODE_D%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_D%
-\SAVE "versions/master/output/ELTD.bin", CODE_D%, P%, LOAD%
+\SAVE "versions/master/3-assembled-output/ELTD.bin", CODE_D%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -823,7 +823,7 @@ INCLUDE "library/common/main/subroutine/tt17.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELTE.bin
+\ Save 3-assembled-output/ELTE.bin
 \
 \ ******************************************************************************
 
@@ -835,7 +835,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_E%
 
 PRINT "S.ELTE ", ~CODE_E%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_E%
-\SAVE "versions/master/output/ELTE.bin", CODE_E%, P%, LOAD%
+\SAVE "versions/master/3-assembled-output/ELTE.bin", CODE_E%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -933,7 +933,7 @@ INCLUDE "library/advanced/main/variable/ktran.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELTF.bin
+\ Save 3-assembled-output/ELTF.bin
 \
 \ ******************************************************************************
 
@@ -945,7 +945,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_F%
 
 PRINT "S.ELTF ", ~CODE_F%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_F%
-\SAVE "versions/master/output/ELTF.bin", CODE_F%, P%, LOAD%
+\SAVE "versions/master/3-assembled-output/ELTF.bin", CODE_F%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -987,7 +987,7 @@ INCLUDE "library/master/main/subroutine/llx30.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELTG.bin
+\ Save 3-assembled-output/ELTG.bin
 \
 \ ******************************************************************************
 
@@ -999,7 +999,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_G%
 
 PRINT "S.ELTG ", ~CODE_G%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_G%
-\SAVE "versions/master/output/ELTG.bin", CODE_G%, P%, LOAD%
+\SAVE "versions/master/3-assembled-output/ELTG.bin", CODE_G%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -1060,7 +1060,7 @@ ENDIF
 
 \ ******************************************************************************
 \
-\ Save output/ELTH.bin
+\ Save 3-assembled-output/ELTH.bin
 \
 \ ******************************************************************************
 
@@ -1072,13 +1072,13 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_H%
 
 PRINT "S.ELTH ", ~CODE_H%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_H%
-\SAVE "versions/master/output/ELTH.bin", CODE_G%, P%, LOAD%
+\SAVE "versions/master/3-assembled-output/ELTH.bin", CODE_G%, P%, LOAD%
 
 \ ******************************************************************************
 \
-\ Save output/BCODE.unprot.bin
+\ Save 3-assembled-output/BCODE.unprot.bin
 \
 \ ******************************************************************************
 
 PRINT "S.BCODE ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/master/output/BCODE.unprot.bin", CODE%, P%, LOAD%
+SAVE "versions/master/3-assembled-output/BCODE.unprot.bin", CODE%, P%, LOAD%

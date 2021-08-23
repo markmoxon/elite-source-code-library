@@ -43,7 +43,7 @@
 \ ******************************************************************************
 
 PRINT "WORDS9 = ",~P%
-INCBIN "versions/cassette/output/WORDS9.bin"
+INCBIN "versions/cassette/3-assembled-output/WORDS9.bin"
 
 ALIGN 256
 
@@ -51,7 +51,7 @@ PRINT "P.DIALS = ",~P%
 INCBIN "versions/cassette/binaries/P.DIALS.bin"
 
 PRINT "PYTHON = ",~P%
-INCBIN "versions/cassette/output/PYTHON.bin"
+INCBIN "versions/cassette/3-assembled-output/PYTHON.bin"
 
 PRINT "P.ELITE = ",~P%
 INCBIN "versions/cassette/binaries/P.ELITE.bin"

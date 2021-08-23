@@ -20,7 +20,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/D.MOK.bin
+\   * 3-assembled-output/D.MOK.bin
 \
 \ ******************************************************************************
 
@@ -168,10 +168,10 @@ INCLUDE "library/enhanced/main/variable/ship_moray.asm"
 
 \ ******************************************************************************
 \
-\ Save output/D.MOK.bin
+\ Save 3-assembled-output/D.MOK.bin
 \
 \ ******************************************************************************
 
 PRINT "S.D.MOK ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/disc/output/D.MOK.bin", CODE%, CODE% + &0A00
+SAVE "versions/disc/3-assembled-output/D.MOK.bin", CODE%, CODE% + &0A00
 

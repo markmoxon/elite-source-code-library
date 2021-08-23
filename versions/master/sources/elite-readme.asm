@@ -21,7 +21,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/README.txt
+\   * 3-assembled-output/README.txt
 \
 \ ******************************************************************************
 
@@ -63,5 +63,5 @@ ENDIF
  EQUS "---------------------------------------"
  EQUB 10, 13
 
-SAVE "versions/master/output/README.txt", readme, P%
+SAVE "versions/master/3-assembled-output/README.txt", readme, P%
 

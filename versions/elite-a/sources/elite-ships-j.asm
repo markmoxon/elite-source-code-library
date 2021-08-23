@@ -24,7 +24,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/S.J.bin
+\   * 3-assembled-output/S.J.bin
 \
 \ ******************************************************************************
 
@@ -177,9 +177,9 @@ INCLUDE "library/enhanced/main/variable/ship_plate.asm"
 
 \ ******************************************************************************
 \
-\ Save output/S.J.bin
+\ Save 3-assembled-output/S.J.bin
 \
 \ ******************************************************************************
 
 PRINT "S.S.J ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/elite-a/output/S.J.bin", CODE%, CODE% + &0A00
+SAVE "versions/elite-a/3-assembled-output/S.J.bin", CODE%, CODE% + &0A00

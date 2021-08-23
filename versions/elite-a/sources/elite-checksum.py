@@ -9,11 +9,11 @@
 # This script applies checksums to the compiled binary for the main game code.
 # It reads this binary file:
 #
-#   * output/ELITE.bin
+#   * 3-assembled-output/ELITE.bin
 #
 # and generates a checksum version as follows:
 #
-#   * output/ELITE.bin
+#   * 3-assembled-output/ELITE.bin
 #
 # ******************************************************************************
 
@@ -38,7 +38,7 @@ data_block = bytearray()
 
 # Load assembled code file
 
-elite_file = open("versions/elite-a/output/ELITE.bin", "rb")
+elite_file = open("versions/elite-a/3-assembled-output/ELITE.bin", "rb")
 data_block.extend(elite_file.read())
 elite_file.close()
 
@@ -65,8 +65,8 @@ if Encrypt:
 
 # Write output file for ELITE
 
-output_file = open("versions/elite-a/output/ELITE.bin", "wb")
+output_file = open("versions/elite-a/3-assembled-output/ELITE.bin", "wb")
 output_file.write(data_block)
 output_file.close()
 
-print("output/ELITE.bin file saved")
+print("3-assembled-output/ELITE.bin file saved")

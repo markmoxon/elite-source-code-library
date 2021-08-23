@@ -24,7 +24,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/S.C.bin
+\   * 3-assembled-output/S.C.bin
 \
 \ ******************************************************************************
 
@@ -175,9 +175,9 @@ INCLUDE "library/enhanced/main/variable/ship_transporter.asm"
 
 \ ******************************************************************************
 \
-\ Save output/S.C.bin
+\ Save 3-assembled-output/S.C.bin
 \
 \ ******************************************************************************
 
 PRINT "S.S.C ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/elite-a/output/S.C.bin", CODE%, CODE% + &0A00
+SAVE "versions/elite-a/3-assembled-output/S.C.bin", CODE%, CODE% + &0A00

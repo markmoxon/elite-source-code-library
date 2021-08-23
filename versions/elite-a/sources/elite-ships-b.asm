@@ -24,7 +24,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/S.B.bin
+\   * 3-assembled-output/S.B.bin
 \
 \ ******************************************************************************
 
@@ -175,9 +175,9 @@ INCLUDE "library/elite-a/flight/variable/ship_iguana.asm"
 
 \ ******************************************************************************
 \
-\ Save output/S.B.bin
+\ Save 3-assembled-output/S.B.bin
 \
 \ ******************************************************************************
 
 PRINT "S.S.B ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/elite-a/output/S.B.bin", CODE%, CODE% + &0A00
+SAVE "versions/elite-a/3-assembled-output/S.B.bin", CODE%, CODE% + &0A00

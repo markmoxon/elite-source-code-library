@@ -24,7 +24,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/S.O.bin
+\   * 3-assembled-output/S.O.bin
 \
 \ ******************************************************************************
 
@@ -177,9 +177,9 @@ INCLUDE "library/common/main/variable/ship_python.asm"
 
 \ ******************************************************************************
 \
-\ Save output/S.O.bin
+\ Save 3-assembled-output/S.O.bin
 \
 \ ******************************************************************************
 
 PRINT "S.S.O ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/elite-a/output/S.O.bin", CODE%, CODE% + &0A00
+SAVE "versions/elite-a/3-assembled-output/S.O.bin", CODE%, CODE% + &0A00

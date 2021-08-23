@@ -20,7 +20,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/D.MOD.bin
+\   * 3-assembled-output/D.MOD.bin
 \
 \ ******************************************************************************
 
@@ -168,10 +168,10 @@ INCLUDE "library/common/main/variable/ship_thargon.asm"
 
 \ ******************************************************************************
 \
-\ Save output/D.MOD.bin
+\ Save 3-assembled-output/D.MOD.bin
 \
 \ ******************************************************************************
 
 PRINT "S.D.MOD ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/disc/output/D.MOD.bin", CODE%, CODE% + &0A00
+SAVE "versions/disc/3-assembled-output/D.MOD.bin", CODE%, CODE% + &0A00
 

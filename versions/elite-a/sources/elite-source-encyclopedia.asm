@@ -24,7 +24,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/1.E.bin
+\   * 3-assembled-output/1.E.bin
 \
 \ ******************************************************************************
 
@@ -180,7 +180,7 @@ INCLUDE "library/common/main/variable/univ.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELTA.bin
+\ Save 3-assembled-output/ELTA.bin
 \
 \ ******************************************************************************
 
@@ -192,7 +192,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_A%
 
 PRINT "S.F.ELTA ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_A%
-\SAVE "versions/elite-a/output/F.ELTA.bin", CODE%, P%, LOAD%
+\SAVE "versions/elite-a/3-assembled-output/F.ELTA.bin", CODE%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -245,7 +245,7 @@ INCLUDE "library/enhanced/main/subroutine/hme2.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELTB.bin
+\ Save 3-assembled-output/ELTB.bin
 \
 \ ******************************************************************************
 
@@ -257,7 +257,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_B%
 
 PRINT "S.F.ELTB ", ~CODE_B%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_B%
-\SAVE "versions/elite-a/output/F.ELTB.bin", CODE_B%, P%, LOAD%
+\SAVE "versions/elite-a/3-assembled-output/F.ELTB.bin", CODE_B%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -293,7 +293,7 @@ INCLUDE "library/common/main/subroutine/wscan.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELTC.bin
+\ Save 3-assembled-output/ELTC.bin
 \
 \ ******************************************************************************
 
@@ -305,7 +305,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_C%
 
 PRINT "S.F.ELTC ", ~CODE_C%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_C%
-\SAVE "versions/elite-a/output/F.ELTC.bin", CODE_C%, P%, LOAD%
+\SAVE "versions/elite-a/3-assembled-output/F.ELTC.bin", CODE_C%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -348,7 +348,7 @@ INCLUDE "library/common/main/subroutine/hm.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELTD.bin
+\ Save 3-assembled-output/ELTD.bin
 \
 \ ******************************************************************************
 
@@ -360,7 +360,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_D%
 
 PRINT "S.F.ELTD ", ~CODE_D%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_D%
-\SAVE "versions/elite-a/output/F.ELTD.bin", CODE_D%, P%, LOAD%
+\SAVE "versions/elite-a/3-assembled-output/F.ELTD.bin", CODE_D%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -407,7 +407,7 @@ INCLUDE "library/common/main/subroutine/ping.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELTE.bin
+\ Save 3-assembled-output/ELTE.bin
 \
 \ ******************************************************************************
 
@@ -419,7 +419,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_E%
 
 PRINT "S.F.ELTE ", ~CODE_E%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_E%
-\SAVE "versions/elite-a/output/F.ELTE.bin", CODE_E%, P%, LOAD%
+\SAVE "versions/elite-a/3-assembled-output/F.ELTE.bin", CODE_E%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -473,7 +473,7 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELTF.bin
+\ Save 3-assembled-output/ELTF.bin
 \
 \ ******************************************************************************
 
@@ -485,7 +485,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_F%
 
 PRINT "S.F.ELTF ", ~CODE_F%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_F%
-\SAVE "versions/elite-a/output/F.ELTF.bin", CODE_F%, P%, LOAD%
+\SAVE "versions/elite-a/3-assembled-output/F.ELTF.bin", CODE_F%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -526,7 +526,7 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELTG.bin
+\ Save 3-assembled-output/ELTG.bin
 \
 \ ******************************************************************************
 
@@ -538,7 +538,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_G%
 
 PRINT "S.F.ELTG ", ~CODE_G%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_G%
-\SAVE "versions/elite-a/output/F.ELTG.bin", CODE_G%, P%, LOAD%
+\SAVE "versions/elite-a/3-assembled-output/F.ELTG.bin", CODE_G%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -609,9 +609,9 @@ INCLUDE "library/elite-a/encyclopedia/variable/worm.asm"
 
 \ ******************************************************************************
 \
-\ Save output/1.E.bin
+\ Save 3-assembled-output/1.E.bin
 \
 \ ******************************************************************************
 
 PRINT "S.1.E ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/elite-a/output/1.E.bin", CODE%, P%, LOAD%
+SAVE "versions/elite-a/3-assembled-output/1.E.bin", CODE%, P%, LOAD%

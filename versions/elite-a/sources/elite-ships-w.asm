@@ -24,7 +24,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/S.W.bin
+\   * 3-assembled-output/S.W.bin
 \
 \ ******************************************************************************
 
@@ -175,9 +175,9 @@ INCLUDE "library/common/main/variable/ship_mamba.asm"
 
 \ ******************************************************************************
 \
-\ Save output/S.W.bin
+\ Save 3-assembled-output/S.W.bin
 \
 \ ******************************************************************************
 
 PRINT "S.S.W ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/elite-a/output/S.W.bin", CODE%, CODE% + &0A00
+SAVE "versions/elite-a/3-assembled-output/S.W.bin", CODE%, CODE% + &0A00

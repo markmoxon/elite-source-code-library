@@ -24,7 +24,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/S.N.bin
+\   * 3-assembled-output/S.N.bin
 \
 \ ******************************************************************************
 
@@ -175,9 +175,9 @@ INCLUDE "library/enhanced/main/variable/ship_krait.asm"
 
 \ ******************************************************************************
 \
-\ Save output/S.N.bin
+\ Save 3-assembled-output/S.N.bin
 \
 \ ******************************************************************************
 
 PRINT "S.S.N ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/elite-a/output/S.N.bin", CODE%, CODE% + &0A00
+SAVE "versions/elite-a/3-assembled-output/S.N.bin", CODE%, CODE% + &0A00

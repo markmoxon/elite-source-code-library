@@ -20,7 +20,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/D.MOF.bin
+\   * 3-assembled-output/D.MOF.bin
 \
 \ ******************************************************************************
 
@@ -166,10 +166,10 @@ INCLUDE "library/enhanced/main/variable/ship_gecko.asm"
 
 \ ******************************************************************************
 \
-\ Save output/D.MOF.bin
+\ Save 3-assembled-output/D.MOF.bin
 \
 \ ******************************************************************************
 
 PRINT "S.D.MOF ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/disc/output/D.MOF.bin", CODE%, CODE% + &0A00
+SAVE "versions/disc/3-assembled-output/D.MOF.bin", CODE%, CODE% + &0A00
 

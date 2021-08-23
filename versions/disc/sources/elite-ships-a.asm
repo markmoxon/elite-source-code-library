@@ -20,7 +20,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/D.MOA.bin
+\   * 3-assembled-output/D.MOA.bin
 \
 \ ******************************************************************************
 
@@ -167,9 +167,9 @@ INCLUDE "library/enhanced/main/variable/ship_fer_de_lance.asm"
 
 \ ******************************************************************************
 \
-\ Save output/D.MOA.bin
+\ Save 3-assembled-output/D.MOA.bin
 \
 \ ******************************************************************************
 
 PRINT "S.D.MOA ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/disc/output/D.MOA.bin", CODE%, CODE% + &0A00
+SAVE "versions/disc/3-assembled-output/D.MOA.bin", CODE%, CODE% + &0A00

@@ -20,7 +20,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/T.CODE.unprot.bin
+\   * 3-assembled-output/T.CODE.unprot.bin
 \
 \ ******************************************************************************
 
@@ -238,7 +238,7 @@ INCLUDE "library/common/main/variable/univ.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELTA.bin
+\ Save 3-assembled-output/ELTA.bin
 \
 \ ******************************************************************************
 
@@ -250,7 +250,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_A%
 
 PRINT "S.ELTA ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_A%
-\SAVE "versions/disc/output/T.ELTA.bin", CODE%, P%, LOAD%
+\SAVE "versions/disc/3-assembled-output/T.ELTA.bin", CODE%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -316,7 +316,7 @@ INCLUDE "library/enhanced/main/subroutine/hme2.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELTB.bin
+\ Save 3-assembled-output/ELTB.bin
 \
 \ ******************************************************************************
 
@@ -328,7 +328,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_B%
 
 PRINT "S.ELTB ", ~CODE_B%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_B%
-\SAVE "versions/disc/output/T.ELTB.bin", CODE_B%, P%, LOAD%
+\SAVE "versions/disc/3-assembled-output/T.ELTB.bin", CODE_B%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -405,7 +405,7 @@ INCLUDE "library/common/main/subroutine/wscan.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELTC.bin
+\ Save 3-assembled-output/ELTC.bin
 \
 \ ******************************************************************************
 
@@ -417,7 +417,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_C%
 
 PRINT "S.ELTC ", ~CODE_C%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_C%
-\SAVE "versions/disc/output/T.ELTC.bin", CODE_C%, P%, LOAD%
+\SAVE "versions/disc/3-assembled-output/T.ELTC.bin", CODE_C%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -495,7 +495,7 @@ INCLUDE "library/enhanced/main/subroutine/refund.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELTD.bin
+\ Save 3-assembled-output/ELTD.bin
 \
 \ ******************************************************************************
 
@@ -507,7 +507,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_D%
 
 PRINT "S.ELTD ", ~CODE_D%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_D%
-\SAVE "versions/disc/output/T.ELTD.bin", CODE_D%, P%, LOAD%
+\SAVE "versions/disc/3-assembled-output/T.ELTD.bin", CODE_D%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -569,7 +569,7 @@ INCLUDE "library/common/main/subroutine/ping.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELTE.bin
+\ Save 3-assembled-output/ELTE.bin
 \
 \ ******************************************************************************
 
@@ -581,7 +581,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_E%
 
 PRINT "S.ELTE ", ~CODE_E%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_E%
-\SAVE "versions/disc/output/T.ELTE.bin", CODE_E%, P%, LOAD%
+\SAVE "versions/disc/3-assembled-output/T.ELTE.bin", CODE_E%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -671,7 +671,7 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELTF.bin
+\ Save 3-assembled-output/ELTF.bin
 \
 \ ******************************************************************************
 
@@ -683,7 +683,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_F%
 
 PRINT "S.ELTF ", ~CODE_F%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_F%
-\SAVE "versions/disc/output/T.ELTF.bin", CODE_F%, P%, LOAD%
+\SAVE "versions/disc/3-assembled-output/T.ELTF.bin", CODE_F%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -724,7 +724,7 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELTG.bin
+\ Save 3-assembled-output/ELTG.bin
 \
 \ ******************************************************************************
 
@@ -736,7 +736,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_G%
 
 PRINT "S.ELTG ", ~CODE_G%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_G%
-\SAVE "versions/disc/output/T.ELTG.bin", CODE_G%, P%, LOAD%
+\SAVE "versions/disc/3-assembled-output/T.ELTG.bin", CODE_G%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -762,7 +762,7 @@ INCLUDE "library/disc/docked/variable/checksum.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELTH.bin
+\ Save 3-assembled-output/ELTH.bin
 \
 \ ******************************************************************************
 
@@ -774,7 +774,7 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_H%
 
 PRINT "S.ELTH ", ~CODE_H%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_H%
-\SAVE "versions/disc/output/T.ELTH.bin", CODE_H%, P%, LOAD%
+\SAVE "versions/disc/3-assembled-output/T.ELTH.bin", CODE_H%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -803,7 +803,7 @@ INCLUDE "library/enhanced/main/variable/ship_constrictor.asm"
 
 \ ******************************************************************************
 \
-\ Save output/SHIPS.bin
+\ Save 3-assembled-output/SHIPS.bin
 \
 \ ******************************************************************************
 
@@ -815,14 +815,14 @@ PRINT "Execute at ", ~LOAD%
 PRINT "Reload at ", ~LOAD_SHIPS%
 
 PRINT "S.SHIPS ", ~CODE_B%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_SHIPS%
-\SAVE "versions/disc/output/SHIPS.bin", CODE_SHIPS%, P%, LOAD%
+\SAVE "versions/disc/3-assembled-output/SHIPS.bin", CODE_SHIPS%, P%, LOAD%
 
 \ ******************************************************************************
 \
-\ Save output/T.CODE.unprot.bin
+\ Save 3-assembled-output/T.CODE.unprot.bin
 \
 \ ******************************************************************************
 
 PRINT "S.T.CODE ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/disc/output/T.CODE.unprot.bin", CODE%, P%
+SAVE "versions/disc/3-assembled-output/T.CODE.unprot.bin", CODE%, P%
 

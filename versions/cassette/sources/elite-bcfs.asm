@@ -21,19 +21,19 @@
 \
 \ This source file produces the following binary files:
 \
-\   * output/ELTcode.unprot.bin
-\   * output/ELThead.bin
+\   * 3-assembled-output/ELTcode.unprot.bin
+\   * 3-assembled-output/ELThead.bin
 \
 \ after reading in the following files:
 \
-\   * output/ELTA.bin
-\   * output/ELTB.bin
-\   * output/ELTC.bin
-\   * output/ELTD.bin
-\   * output/ELTE.bin
-\   * output/ELTF.bin
-\   * output/ELTG.bin
-\   * output/SHIPS.bin
+\   * 3-assembled-output/ELTA.bin
+\   * 3-assembled-output/ELTB.bin
+\   * 3-assembled-output/ELTC.bin
+\   * 3-assembled-output/ELTD.bin
+\   * 3-assembled-output/ELTE.bin
+\   * 3-assembled-output/ELTF.bin
+\   * 3-assembled-output/ELTG.bin
+\   * 3-assembled-output/SHIPS.bin
 \
 \ ******************************************************************************
 
@@ -80,37 +80,37 @@ INCLUDE "library/cassette/bcfs/subroutine/lbl.asm"
 .elitea
 
 PRINT "elitea = ", ~P%
-INCBIN "versions/cassette/output/ELTA.bin"
+INCBIN "versions/cassette/3-assembled-output/ELTA.bin"
 
 .eliteb
 
 PRINT "eliteb = ", ~P%
-INCBIN "versions/cassette/output/ELTB.bin"
+INCBIN "versions/cassette/3-assembled-output/ELTB.bin"
 
 .elitec
 
 PRINT "elitec = ", ~P%
-INCBIN "versions/cassette/output/ELTC.bin"
+INCBIN "versions/cassette/3-assembled-output/ELTC.bin"
 
 .elited
 
 PRINT "elited = ", ~P%
-INCBIN "versions/cassette/output/ELTD.bin"
+INCBIN "versions/cassette/3-assembled-output/ELTD.bin"
 
 .elitee
 
 PRINT "elitee = ", ~P%
-INCBIN "versions/cassette/output/ELTE.bin"
+INCBIN "versions/cassette/3-assembled-output/ELTE.bin"
 
 .elitef
 
 PRINT "elitef = ", ~P%
-INCBIN "versions/cassette/output/ELTF.bin"
+INCBIN "versions/cassette/3-assembled-output/ELTF.bin"
 
 .eliteg
 
 PRINT "eliteg = ", ~P%
-INCBIN "versions/cassette/output/ELTG.bin"
+INCBIN "versions/cassette/3-assembled-output/ELTG.bin"
 
 .checksum0
 
@@ -122,17 +122,17 @@ PRINT "checksum0 = ", ~P%
 .ships
 
 PRINT "ships = ", ~P%
-INCBIN "versions/cassette/output/SHIPS.bin"
+INCBIN "versions/cassette/3-assembled-output/SHIPS.bin"
 
 .end
 
 \ ******************************************************************************
 \
-\ Save output/ELTcode.unprot.bin and output/ELThead.bin
+\ Save 3-assembled-output/ELTcode.unprot.bin and 3-assembled-output/ELThead.bin
 \
 \ ******************************************************************************
 
 PRINT "P% = ", ~P%
 PRINT "S.ELTcode 1100 ", ~(LOAD% + &6000 - CODE%), " ", ~LOAD%, ~LOAD%
-SAVE "versions/cassette/output/ELTcode.unprot.bin", &1100, (LOAD% + &6000 - CODE%), LOAD%
-SAVE "versions/cassette/output/ELThead.bin", &1100, elitea, &1100
+SAVE "versions/cassette/3-assembled-output/ELTcode.unprot.bin", &1100, (LOAD% + &6000 - CODE%), LOAD%
+SAVE "versions/cassette/3-assembled-output/ELThead.bin", &1100, elitea, &1100

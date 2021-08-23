@@ -24,7 +24,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/!BOOT.txt
+\   * 3-assembled-output/!BOOT.txt
 \
 \ ******************************************************************************
 
@@ -79,5 +79,5 @@ ENDIF
  EQUS "*| -----------------------------------"
  EQUB 13
 
-SAVE "versions/elite-a/output/!BOOT.txt", readme, P%
+SAVE "versions/elite-a/3-assembled-output/!BOOT.txt", readme, P%
 

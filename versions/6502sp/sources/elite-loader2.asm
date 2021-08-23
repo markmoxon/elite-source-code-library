@@ -22,7 +22,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/ELITEa.bin
+\   * 3-assembled-output/ELITEa.bin
 \
 \ after reading in the following files:
 \
@@ -84,9 +84,9 @@ INCLUDE "library/6502sp/loader2/subroutine/elite_loader_part_2_of_2.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELITEa.bin
+\ Save 3-assembled-output/ELITEa.bin
 \
 \ ******************************************************************************
 
 PRINT "S.ELITEa ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/6502sp/output/ELITEa.bin", CODE%, P%, LOAD%
+SAVE "versions/6502sp/3-assembled-output/ELITEa.bin", CODE%, P%, LOAD%

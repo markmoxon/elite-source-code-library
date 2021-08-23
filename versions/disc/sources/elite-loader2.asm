@@ -20,7 +20,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/ELITE3.bin
+\   * 3-assembled-output/ELITE3.bin
 \
 \ ******************************************************************************
 
@@ -129,10 +129,10 @@ INCLUDE "library/disc/loader2/subroutine/unused_copy_protection_routine.asm"
 
 \ ******************************************************************************
 \
-\ Save output/ELITE2.bin
+\ Save 3-assembled-output/ELITE2.bin
 \
 \ ******************************************************************************
 
 PRINT "S.ELITE3 ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/disc/output/ELITE3.bin", CODE%, P%, LOAD%
+SAVE "versions/disc/3-assembled-output/ELITE3.bin", CODE%, P%, LOAD%
 

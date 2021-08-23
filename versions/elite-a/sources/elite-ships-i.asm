@@ -24,7 +24,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * output/S.I.bin
+\   * 3-assembled-output/S.I.bin
 \
 \ ******************************************************************************
 
@@ -176,9 +176,9 @@ INCLUDE "library/elite-a/flight/variable/ship_ophidian.asm"
 
 \ ******************************************************************************
 \
-\ Save output/S.I.bin
+\ Save 3-assembled-output/S.I.bin
 \
 \ ******************************************************************************
 
 PRINT "S.S.I ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/elite-a/output/S.I.bin", CODE%, CODE% + &0A00
+SAVE "versions/elite-a/3-assembled-output/S.I.bin", CODE%, CODE% + &0A00

@@ -188,373 +188,373 @@ endif
 
 .PHONY:build
 build:
-	echo _VERSION=1 > versions/cassette/sources/elite-header.h.asm
-	echo _RELEASE=$(rel-cassette) >> versions/cassette/sources/elite-header.h.asm
-	echo _REMOVE_CHECKSUMS=TRUE >> versions/cassette/sources/elite-header.h.asm
-	$(BEEBASM) -i versions/cassette/sources/elite-source.asm -v > versions/cassette/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/cassette/sources/elite-bcfs.asm -v >> versions/cassette/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/cassette/sources/elite-loader.asm -v >> versions/cassette/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/cassette/sources/elite-readme.asm -v >> versions/cassette/3-assembled-output/compile.txt
-	$(PYTHON) versions/cassette/sources/elite-checksum.py -u -rel$(rel-cassette)
-	$(BEEBASM) -i versions/cassette/sources/elite-disc.asm -do versions/cassette/5-compiled-game-discs/elite-cassette$(suffix-cassette).ssd -boot ELTdata -title "E L I T E"
+	echo _VERSION=1 > versions/cassette/1-source-files/elite-header.h.asm
+	echo _RELEASE=$(rel-cassette) >> versions/cassette/1-source-files/elite-header.h.asm
+	echo _REMOVE_CHECKSUMS=TRUE >> versions/cassette/1-source-files/elite-header.h.asm
+	$(BEEBASM) -i versions/cassette/1-source-files/elite-source.asm -v > versions/cassette/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/cassette/1-source-files/elite-bcfs.asm -v >> versions/cassette/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/cassette/1-source-files/elite-loader.asm -v >> versions/cassette/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/cassette/1-source-files/elite-readme.asm -v >> versions/cassette/3-assembled-output/compile.txt
+	$(PYTHON) versions/cassette/1-source-files/elite-checksum.py -u -rel$(rel-cassette)
+	$(BEEBASM) -i versions/cassette/1-source-files/elite-disc.asm -do versions/cassette/5-compiled-game-discs/elite-cassette$(suffix-cassette).ssd -boot ELTdata -title "E L I T E"
 
-	echo _VERSION=2 > versions/disc/sources/elite-header.h.asm
-	echo _RELEASE=$(rel-disc) >> versions/disc/sources/elite-header.h.asm
-	echo _REMOVE_CHECKSUMS=TRUE >> versions/disc/sources/elite-header.h.asm
-	echo _MATCH_EXTRACTED_BINARIES=FALSE >> versions/disc/sources/elite-header.h.asm
-	$(BEEBASM) -i versions/disc/sources/elite-text-tokens.asm -v > versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-missile.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-loader1.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-loader2.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-loader3.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-source-flight.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-source-docked.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-a.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-b.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-c.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-d.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-e.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-f.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-g.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-h.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-i.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-j.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-k.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-l.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-m.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-n.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-o.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-p.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-readme.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(PYTHON) versions/disc/sources/elite-checksum.py -u -rel$(rel-disc)
-	$(BEEBASM) -i versions/disc/sources/elite-disc.asm -do versions/disc/5-compiled-game-discs/elite-disc$(suffix-disc).ssd -boot ELITE2 -title "E L I T E"
+	echo _VERSION=2 > versions/disc/1-source-files/elite-header.h.asm
+	echo _RELEASE=$(rel-disc) >> versions/disc/1-source-files/elite-header.h.asm
+	echo _REMOVE_CHECKSUMS=TRUE >> versions/disc/1-source-files/elite-header.h.asm
+	echo _MATCH_EXTRACTED_BINARIES=FALSE >> versions/disc/1-source-files/elite-header.h.asm
+	$(BEEBASM) -i versions/disc/1-source-files/elite-text-tokens.asm -v > versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-missile.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-loader1.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-loader2.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-loader3.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-source-flight.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-source-docked.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-a.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-b.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-c.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-d.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-e.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-f.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-g.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-h.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-i.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-j.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-k.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-l.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-m.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-n.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-o.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-p.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-readme.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(PYTHON) versions/disc/1-source-files/elite-checksum.py -u -rel$(rel-disc)
+	$(BEEBASM) -i versions/disc/1-source-files/elite-disc.asm -do versions/disc/5-compiled-game-discs/elite-disc$(suffix-disc).ssd -boot ELITE2 -title "E L I T E"
 
-	echo _VERSION=3 > versions/6502sp/sources/elite-header.h.asm
-	echo _RELEASE=$(rel-6502sp) >> versions/6502sp/sources/elite-header.h.asm
-	echo _REMOVE_CHECKSUMS=TRUE >> versions/6502sp/sources/elite-header.h.asm
-	echo _MATCH_EXTRACTED_BINARIES=FALSE >> versions/6502sp/sources/elite-header.h.asm
-	$(BEEBASM) -i versions/6502sp/sources/elite-source.asm -v > versions/6502sp/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/6502sp/sources/elite-bcfs.asm -v >> versions/6502sp/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/6502sp/sources/elite-z.asm -v >> versions/6502sp/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/6502sp/sources/elite-loader1.asm -v >> versions/6502sp/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/6502sp/sources/elite-loader2.asm -v >> versions/6502sp/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/6502sp/sources/elite-readme.asm -v >> versions/6502sp/3-assembled-output/compile.txt
-	$(PYTHON) versions/6502sp/sources/elite-checksum.py -u -rel$(rel-6502sp)
-	$(BEEBASM) -i versions/6502sp/sources/elite-disc.asm -do versions/6502sp/5-compiled-game-discs/elite-6502sp$(suffix-6502sp).ssd -boot ELITE -title "E L I T E"
+	echo _VERSION=3 > versions/6502sp/1-source-files/elite-header.h.asm
+	echo _RELEASE=$(rel-6502sp) >> versions/6502sp/1-source-files/elite-header.h.asm
+	echo _REMOVE_CHECKSUMS=TRUE >> versions/6502sp/1-source-files/elite-header.h.asm
+	echo _MATCH_EXTRACTED_BINARIES=FALSE >> versions/6502sp/1-source-files/elite-header.h.asm
+	$(BEEBASM) -i versions/6502sp/1-source-files/elite-source.asm -v > versions/6502sp/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/6502sp/1-source-files/elite-bcfs.asm -v >> versions/6502sp/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/6502sp/1-source-files/elite-z.asm -v >> versions/6502sp/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/6502sp/1-source-files/elite-loader1.asm -v >> versions/6502sp/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/6502sp/1-source-files/elite-loader2.asm -v >> versions/6502sp/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/6502sp/1-source-files/elite-readme.asm -v >> versions/6502sp/3-assembled-output/compile.txt
+	$(PYTHON) versions/6502sp/1-source-files/elite-checksum.py -u -rel$(rel-6502sp)
+	$(BEEBASM) -i versions/6502sp/1-source-files/elite-disc.asm -do versions/6502sp/5-compiled-game-discs/elite-6502sp$(suffix-6502sp).ssd -boot ELITE -title "E L I T E"
 
-	echo _VERSION=4 > versions/master/sources/elite-header.h.asm
-	echo _RELEASE=$(rel-master) >> versions/master/sources/elite-header.h.asm
-	echo _REMOVE_CHECKSUMS=TRUE >> versions/master/sources/elite-header.h.asm
-	echo _MATCH_EXTRACTED_BINARIES=FALSE >> versions/master/sources/elite-header.h.asm
-	$(BEEBASM) -i versions/master/sources/elite-loader.asm -v >> versions/master/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/master/sources/elite-data.asm -v >> versions/master/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/master/sources/elite-source.asm -v >> versions/master/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/master/sources/elite-readme.asm -v >> versions/master/3-assembled-output/compile.txt
-	$(PYTHON) versions/master/sources/elite-checksum.py -u -rel$(rel-master)
-	$(BEEBASM) -i versions/master/sources/elite-disc.asm $(boot-master) -do versions/master/5-compiled-game-discs/elite-master$(suffix-master).ssd -title "E L I T E"
+	echo _VERSION=4 > versions/master/1-source-files/elite-header.h.asm
+	echo _RELEASE=$(rel-master) >> versions/master/1-source-files/elite-header.h.asm
+	echo _REMOVE_CHECKSUMS=TRUE >> versions/master/1-source-files/elite-header.h.asm
+	echo _MATCH_EXTRACTED_BINARIES=FALSE >> versions/master/1-source-files/elite-header.h.asm
+	$(BEEBASM) -i versions/master/1-source-files/elite-loader.asm -v >> versions/master/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/master/1-source-files/elite-data.asm -v >> versions/master/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/master/1-source-files/elite-source.asm -v >> versions/master/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/master/1-source-files/elite-readme.asm -v >> versions/master/3-assembled-output/compile.txt
+	$(PYTHON) versions/master/1-source-files/elite-checksum.py -u -rel$(rel-master)
+	$(BEEBASM) -i versions/master/1-source-files/elite-disc.asm $(boot-master) -do versions/master/5-compiled-game-discs/elite-master$(suffix-master).ssd -title "E L I T E"
 
-	echo _VERSION=5 > versions/electron/sources/elite-header.h.asm
-	echo _RELEASE=$(rel-electron) >> versions/electron/sources/elite-header.h.asm
-	echo _REMOVE_CHECKSUMS=TRUE >> versions/electron/sources/elite-header.h.asm
-	$(BEEBASM) -i versions/electron/sources/elite-source.asm -v > versions/electron/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/electron/sources/elite-bcfs.asm -v >> versions/electron/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/electron/sources/elite-loader.asm -v >> versions/electron/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/electron/sources/elite-readme.asm -v >> versions/electron/3-assembled-output/compile.txt
-	$(PYTHON) versions/electron/sources/elite-checksum.py -u -rel$(rel-electron)
-	$(BEEBASM) -i versions/electron/sources/elite-disc.asm -do versions/electron/5-compiled-game-discs/elite-electron$(suffix-electron).ssd -opt 3 -title "E L I T E"
+	echo _VERSION=5 > versions/electron/1-source-files/elite-header.h.asm
+	echo _RELEASE=$(rel-electron) >> versions/electron/1-source-files/elite-header.h.asm
+	echo _REMOVE_CHECKSUMS=TRUE >> versions/electron/1-source-files/elite-header.h.asm
+	$(BEEBASM) -i versions/electron/1-source-files/elite-source.asm -v > versions/electron/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/electron/1-source-files/elite-bcfs.asm -v >> versions/electron/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/electron/1-source-files/elite-loader.asm -v >> versions/electron/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/electron/1-source-files/elite-readme.asm -v >> versions/electron/3-assembled-output/compile.txt
+	$(PYTHON) versions/electron/1-source-files/elite-checksum.py -u -rel$(rel-electron)
+	$(BEEBASM) -i versions/electron/1-source-files/elite-disc.asm -do versions/electron/5-compiled-game-discs/elite-electron$(suffix-electron).ssd -opt 3 -title "E L I T E"
 
-	echo _VERSION=6 > versions/elite-a/sources/elite-header.h.asm
-	echo _RELEASE=$(rel-elite-a) >> versions/elite-a/sources/elite-header.h.asm
-	echo _REMOVE_CHECKSUMS=FALSE >> versions/elite-a/sources/elite-header.h.asm
-	echo _MATCH_EXTRACTED_BINARIES=TRUE >> versions/elite-a/sources/elite-header.h.asm
-	$(BEEBASM) -i versions/elite-a/sources/elite-text-tokens.asm -v > versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-missile.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-source-docked.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-source-flight.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-source-encyclopedia.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-6502sp-parasite.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-6502sp-io-processor.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-loader.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-a.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-b.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-c.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-d.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-e.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-f.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-g.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-h.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-i.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-j.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-k.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-l.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-m.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-n.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-o.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-p.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-q.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-r.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-s.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-t.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-u.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-v.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-w.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-readme.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(PYTHON) versions/elite-a/sources/elite-checksum.py -u -rel$(rel-elite-a)
-	$(BEEBASM) -i versions/elite-a/sources/elite-disc.asm -do versions/elite-a/5-compiled-game-discs/elite-a$(suffix-elite-a).ssd -opt 3 -title "E L I T E"
+	echo _VERSION=6 > versions/elite-a/1-source-files/elite-header.h.asm
+	echo _RELEASE=$(rel-elite-a) >> versions/elite-a/1-source-files/elite-header.h.asm
+	echo _REMOVE_CHECKSUMS=FALSE >> versions/elite-a/1-source-files/elite-header.h.asm
+	echo _MATCH_EXTRACTED_BINARIES=TRUE >> versions/elite-a/1-source-files/elite-header.h.asm
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-text-tokens.asm -v > versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-missile.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-source-docked.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-source-flight.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-source-encyclopedia.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-6502sp-parasite.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-6502sp-io-processor.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-loader.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-a.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-b.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-c.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-d.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-e.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-f.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-g.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-h.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-i.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-j.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-k.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-l.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-m.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-n.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-o.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-p.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-q.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-r.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-s.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-t.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-u.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-v.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-w.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-readme.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(PYTHON) versions/elite-a/1-source-files/elite-checksum.py -u -rel$(rel-elite-a)
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-disc.asm -do versions/elite-a/5-compiled-game-discs/elite-a$(suffix-elite-a).ssd -opt 3 -title "E L I T E"
 
 .PHONY:encrypt
 encrypt:
-	echo _VERSION=1 > versions/cassette/sources/elite-header.h.asm
-	echo _RELEASE=$(rel-cassette) >> versions/cassette/sources/elite-header.h.asm
-	echo _REMOVE_CHECKSUMS=FALSE >> versions/cassette/sources/elite-header.h.asm
-	$(BEEBASM) -i versions/cassette/sources/elite-source.asm -v > versions/cassette/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/cassette/sources/elite-bcfs.asm -v >> versions/cassette/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/cassette/sources/elite-loader.asm -v >> versions/cassette/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/cassette/sources/elite-readme.asm -v >> versions/cassette/3-assembled-output/compile.txt
-	$(PYTHON) versions/cassette/sources/elite-checksum.py -rel$(rel-cassette)
-	$(BEEBASM) -i versions/cassette/sources/elite-disc.asm -do versions/cassette/5-compiled-game-discs/elite-cassette$(suffix-cassette).ssd -boot ELTdata -title "E L I T E"
+	echo _VERSION=1 > versions/cassette/1-source-files/elite-header.h.asm
+	echo _RELEASE=$(rel-cassette) >> versions/cassette/1-source-files/elite-header.h.asm
+	echo _REMOVE_CHECKSUMS=FALSE >> versions/cassette/1-source-files/elite-header.h.asm
+	$(BEEBASM) -i versions/cassette/1-source-files/elite-source.asm -v > versions/cassette/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/cassette/1-source-files/elite-bcfs.asm -v >> versions/cassette/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/cassette/1-source-files/elite-loader.asm -v >> versions/cassette/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/cassette/1-source-files/elite-readme.asm -v >> versions/cassette/3-assembled-output/compile.txt
+	$(PYTHON) versions/cassette/1-source-files/elite-checksum.py -rel$(rel-cassette)
+	$(BEEBASM) -i versions/cassette/1-source-files/elite-disc.asm -do versions/cassette/5-compiled-game-discs/elite-cassette$(suffix-cassette).ssd -boot ELTdata -title "E L I T E"
 
-	echo _VERSION=2 > versions/disc/sources/elite-header.h.asm
-	echo _RELEASE=$(rel-disc) >> versions/disc/sources/elite-header.h.asm
-	echo _REMOVE_CHECKSUMS=FALSE >> versions/disc/sources/elite-header.h.asm
-	echo _MATCH_EXTRACTED_BINARIES=TRUE >> versions/disc/sources/elite-header.h.asm
-	$(BEEBASM) -i versions/disc/sources/elite-text-tokens.asm -v > versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-missile.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-loader1.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-loader2.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-loader3.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-source-flight.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-source-docked.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-a.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-b.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-c.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-d.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-e.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-f.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-g.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-h.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-i.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-j.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-k.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-l.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-m.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-n.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-o.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-p.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-readme.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(PYTHON) versions/disc/sources/elite-checksum.py -rel$(rel-disc)
-	$(BEEBASM) -i versions/disc/sources/elite-disc.asm -do versions/disc/5-compiled-game-discs/elite-disc$(suffix-disc).ssd -boot ELITE2 -title "E L I T E"
+	echo _VERSION=2 > versions/disc/1-source-files/elite-header.h.asm
+	echo _RELEASE=$(rel-disc) >> versions/disc/1-source-files/elite-header.h.asm
+	echo _REMOVE_CHECKSUMS=FALSE >> versions/disc/1-source-files/elite-header.h.asm
+	echo _MATCH_EXTRACTED_BINARIES=TRUE >> versions/disc/1-source-files/elite-header.h.asm
+	$(BEEBASM) -i versions/disc/1-source-files/elite-text-tokens.asm -v > versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-missile.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-loader1.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-loader2.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-loader3.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-source-flight.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-source-docked.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-a.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-b.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-c.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-d.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-e.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-f.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-g.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-h.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-i.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-j.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-k.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-l.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-m.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-n.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-o.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-p.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-readme.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(PYTHON) versions/disc/1-source-files/elite-checksum.py -rel$(rel-disc)
+	$(BEEBASM) -i versions/disc/1-source-files/elite-disc.asm -do versions/disc/5-compiled-game-discs/elite-disc$(suffix-disc).ssd -boot ELITE2 -title "E L I T E"
 
-	echo _VERSION=3 > versions/6502sp/sources/elite-header.h.asm
-	echo _RELEASE=$(rel-6502sp) >> versions/6502sp/sources/elite-header.h.asm
-	echo _REMOVE_CHECKSUMS=FALSE >> versions/6502sp/sources/elite-header.h.asm
-	echo _MATCH_EXTRACTED_BINARIES=TRUE >> versions/6502sp/sources/elite-header.h.asm
-	$(BEEBASM) -i versions/6502sp/sources/elite-source.asm -v > versions/6502sp/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/6502sp/sources/elite-bcfs.asm -v >> versions/6502sp/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/6502sp/sources/elite-z.asm -v >> versions/6502sp/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/6502sp/sources/elite-loader1.asm -v >> versions/6502sp/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/6502sp/sources/elite-loader2.asm -v >> versions/6502sp/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/6502sp/sources/elite-readme.asm -v >> versions/6502sp/3-assembled-output/compile.txt
-	$(PYTHON) versions/6502sp/sources/elite-checksum.py -rel$(rel-6502sp)
-	$(BEEBASM) -i versions/6502sp/sources/elite-disc.asm -do versions/6502sp/5-compiled-game-discs/elite-6502sp$(suffix-6502sp).ssd -boot ELITE -title "E L I T E"
+	echo _VERSION=3 > versions/6502sp/1-source-files/elite-header.h.asm
+	echo _RELEASE=$(rel-6502sp) >> versions/6502sp/1-source-files/elite-header.h.asm
+	echo _REMOVE_CHECKSUMS=FALSE >> versions/6502sp/1-source-files/elite-header.h.asm
+	echo _MATCH_EXTRACTED_BINARIES=TRUE >> versions/6502sp/1-source-files/elite-header.h.asm
+	$(BEEBASM) -i versions/6502sp/1-source-files/elite-source.asm -v > versions/6502sp/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/6502sp/1-source-files/elite-bcfs.asm -v >> versions/6502sp/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/6502sp/1-source-files/elite-z.asm -v >> versions/6502sp/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/6502sp/1-source-files/elite-loader1.asm -v >> versions/6502sp/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/6502sp/1-source-files/elite-loader2.asm -v >> versions/6502sp/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/6502sp/1-source-files/elite-readme.asm -v >> versions/6502sp/3-assembled-output/compile.txt
+	$(PYTHON) versions/6502sp/1-source-files/elite-checksum.py -rel$(rel-6502sp)
+	$(BEEBASM) -i versions/6502sp/1-source-files/elite-disc.asm -do versions/6502sp/5-compiled-game-discs/elite-6502sp$(suffix-6502sp).ssd -boot ELITE -title "E L I T E"
 
-	echo _VERSION=4 > versions/master/sources/elite-header.h.asm
-	echo _RELEASE=$(rel-master) >> versions/master/sources/elite-header.h.asm
-	echo _REMOVE_CHECKSUMS=FALSE >> versions/master/sources/elite-header.h.asm
-	echo _MATCH_EXTRACTED_BINARIES=TRUE >> versions/master/sources/elite-header.h.asm
-	$(BEEBASM) -i versions/master/sources/elite-loader.asm -v > versions/master/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/master/sources/elite-data.asm -v >> versions/master/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/master/sources/elite-source.asm -v >> versions/master/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/master/sources/elite-readme.asm -v >> versions/master/3-assembled-output/compile.txt
-	$(PYTHON) versions/master/sources/elite-checksum.py -rel$(rel-master)
-	$(BEEBASM) -i versions/master/sources/elite-disc.asm $(boot-master) -do versions/master/5-compiled-game-discs/elite-master$(suffix-master).ssd -title "E L I T E"
+	echo _VERSION=4 > versions/master/1-source-files/elite-header.h.asm
+	echo _RELEASE=$(rel-master) >> versions/master/1-source-files/elite-header.h.asm
+	echo _REMOVE_CHECKSUMS=FALSE >> versions/master/1-source-files/elite-header.h.asm
+	echo _MATCH_EXTRACTED_BINARIES=TRUE >> versions/master/1-source-files/elite-header.h.asm
+	$(BEEBASM) -i versions/master/1-source-files/elite-loader.asm -v > versions/master/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/master/1-source-files/elite-data.asm -v >> versions/master/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/master/1-source-files/elite-source.asm -v >> versions/master/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/master/1-source-files/elite-readme.asm -v >> versions/master/3-assembled-output/compile.txt
+	$(PYTHON) versions/master/1-source-files/elite-checksum.py -rel$(rel-master)
+	$(BEEBASM) -i versions/master/1-source-files/elite-disc.asm $(boot-master) -do versions/master/5-compiled-game-discs/elite-master$(suffix-master).ssd -title "E L I T E"
 
-	echo _VERSION=5 > versions/electron/sources/elite-header.h.asm
-	echo _RELEASE=$(rel-electron) >> versions/electron/sources/elite-header.h.asm
-	echo _REMOVE_CHECKSUMS=FALSE >> versions/electron/sources/elite-header.h.asm
-	$(BEEBASM) -i versions/electron/sources/elite-source.asm -v > versions/electron/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/electron/sources/elite-bcfs.asm -v >> versions/electron/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/electron/sources/elite-loader.asm -v >> versions/electron/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/electron/sources/elite-readme.asm -v >> versions/electron/3-assembled-output/compile.txt
-	$(PYTHON) versions/electron/sources/elite-checksum.py -rel$(rel-electron)
-	$(BEEBASM) -i versions/electron/sources/elite-disc.asm -do versions/electron/5-compiled-game-discs/elite-electron$(suffix-electron).ssd -opt 3 -title "E L I T E"
+	echo _VERSION=5 > versions/electron/1-source-files/elite-header.h.asm
+	echo _RELEASE=$(rel-electron) >> versions/electron/1-source-files/elite-header.h.asm
+	echo _REMOVE_CHECKSUMS=FALSE >> versions/electron/1-source-files/elite-header.h.asm
+	$(BEEBASM) -i versions/electron/1-source-files/elite-source.asm -v > versions/electron/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/electron/1-source-files/elite-bcfs.asm -v >> versions/electron/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/electron/1-source-files/elite-loader.asm -v >> versions/electron/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/electron/1-source-files/elite-readme.asm -v >> versions/electron/3-assembled-output/compile.txt
+	$(PYTHON) versions/electron/1-source-files/elite-checksum.py -rel$(rel-electron)
+	$(BEEBASM) -i versions/electron/1-source-files/elite-disc.asm -do versions/electron/5-compiled-game-discs/elite-electron$(suffix-electron).ssd -opt 3 -title "E L I T E"
 
-	echo _VERSION=6 > versions/elite-a/sources/elite-header.h.asm
-	echo _RELEASE=$(rel-elite-a) >> versions/elite-a/sources/elite-header.h.asm
-	echo _REMOVE_CHECKSUMS=FALSE >> versions/elite-a/sources/elite-header.h.asm
-	echo _MATCH_EXTRACTED_BINARIES=TRUE >> versions/elite-a/sources/elite-header.h.asm
-	$(BEEBASM) -i versions/elite-a/sources/elite-text-tokens.asm -v > versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-missile.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-source-docked.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-source-flight.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-source-encyclopedia.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-6502sp-parasite.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-6502sp-io-processor.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-loader.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-a.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-b.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-c.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-d.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-e.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-f.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-g.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-h.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-i.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-j.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-k.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-l.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-m.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-n.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-o.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-p.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-q.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-r.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-s.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-t.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-u.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-v.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-w.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-readme.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(PYTHON) versions/elite-a/sources/elite-checksum.py -rel$(rel-elite-a)
-	$(BEEBASM) -i versions/elite-a/sources/elite-disc.asm -do versions/elite-a/5-compiled-game-discs/elite-a$(suffix-elite-a).ssd -opt 3 -title "E L I T E"
+	echo _VERSION=6 > versions/elite-a/1-source-files/elite-header.h.asm
+	echo _RELEASE=$(rel-elite-a) >> versions/elite-a/1-source-files/elite-header.h.asm
+	echo _REMOVE_CHECKSUMS=FALSE >> versions/elite-a/1-source-files/elite-header.h.asm
+	echo _MATCH_EXTRACTED_BINARIES=TRUE >> versions/elite-a/1-source-files/elite-header.h.asm
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-text-tokens.asm -v > versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-missile.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-source-docked.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-source-flight.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-source-encyclopedia.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-6502sp-parasite.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-6502sp-io-processor.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-loader.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-a.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-b.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-c.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-d.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-e.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-f.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-g.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-h.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-i.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-j.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-k.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-l.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-m.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-n.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-o.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-p.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-q.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-r.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-s.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-t.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-u.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-v.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-w.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-readme.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(PYTHON) versions/elite-a/1-source-files/elite-checksum.py -rel$(rel-elite-a)
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-disc.asm -do versions/elite-a/5-compiled-game-discs/elite-a$(suffix-elite-a).ssd -opt 3 -title "E L I T E"
 
 .PHONY:verify
 verify:
-	@$(PYTHON) versions/cassette/sources/crc32.py versions/cassette/4-original-binaries$(folder-cassette) versions/cassette/3-assembled-output
-	@$(PYTHON) versions/disc/sources/crc32.py versions/disc/4-original-binaries$(folder-disc) versions/disc/3-assembled-output
-	@$(PYTHON) versions/6502sp/sources/crc32.py versions/6502sp/4-original-binaries$(folder-6502sp) versions/6502sp/3-assembled-output
-	@$(PYTHON) versions/master/sources/crc32.py versions/master/4-original-binaries$(folder-master) versions/master/3-assembled-output
-	@$(PYTHON) versions/electron/sources/crc32.py versions/electron/4-original-binaries$(folder-electron) versions/electron/3-assembled-output
-	@$(PYTHON) versions/elite-a/sources/crc32.py versions/elite-a/4-original-binaries$(folder-elite-a) versions/elite-a/3-assembled-output
+	@$(PYTHON) versions/cassette/1-source-files/crc32.py versions/cassette/4-original-binaries$(folder-cassette) versions/cassette/3-assembled-output
+	@$(PYTHON) versions/disc/1-source-files/crc32.py versions/disc/4-original-binaries$(folder-disc) versions/disc/3-assembled-output
+	@$(PYTHON) versions/6502sp/1-source-files/crc32.py versions/6502sp/4-original-binaries$(folder-6502sp) versions/6502sp/3-assembled-output
+	@$(PYTHON) versions/master/1-source-files/crc32.py versions/master/4-original-binaries$(folder-master) versions/master/3-assembled-output
+	@$(PYTHON) versions/electron/1-source-files/crc32.py versions/electron/4-original-binaries$(folder-electron) versions/electron/3-assembled-output
+	@$(PYTHON) versions/elite-a/1-source-files/crc32.py versions/elite-a/4-original-binaries$(folder-elite-a) versions/elite-a/3-assembled-output
 
 .PHONY:cassette
 cassette:
-	echo _VERSION=1 > versions/cassette/sources/elite-header.h.asm
-	echo _RELEASE=$(rel-cassette) >> versions/cassette/sources/elite-header.h.asm
-	echo _REMOVE_CHECKSUMS=FALSE >> versions/cassette/sources/elite-header.h.asm
-	$(BEEBASM) -i versions/cassette/sources/elite-source.asm -v > versions/cassette/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/cassette/sources/elite-bcfs.asm -v >> versions/cassette/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/cassette/sources/elite-loader.asm -v >> versions/cassette/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/cassette/sources/elite-readme.asm -v >> versions/cassette/3-assembled-output/compile.txt
-	$(PYTHON) versions/cassette/sources/elite-checksum.py -rel$(rel-cassette)
-	$(BEEBASM) -i versions/cassette/sources/elite-disc.asm -do versions/cassette/5-compiled-game-discs/elite-cassette$(suffix-cassette).ssd -boot ELTdata -title "E L I T E"
-	@$(PYTHON) versions/cassette/sources/crc32.py versions/cassette/4-original-binaries$(folder-cassette) versions/cassette/3-assembled-output
+	echo _VERSION=1 > versions/cassette/1-source-files/elite-header.h.asm
+	echo _RELEASE=$(rel-cassette) >> versions/cassette/1-source-files/elite-header.h.asm
+	echo _REMOVE_CHECKSUMS=FALSE >> versions/cassette/1-source-files/elite-header.h.asm
+	$(BEEBASM) -i versions/cassette/1-source-files/elite-source.asm -v > versions/cassette/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/cassette/1-source-files/elite-bcfs.asm -v >> versions/cassette/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/cassette/1-source-files/elite-loader.asm -v >> versions/cassette/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/cassette/1-source-files/elite-readme.asm -v >> versions/cassette/3-assembled-output/compile.txt
+	$(PYTHON) versions/cassette/1-source-files/elite-checksum.py -rel$(rel-cassette)
+	$(BEEBASM) -i versions/cassette/1-source-files/elite-disc.asm -do versions/cassette/5-compiled-game-discs/elite-cassette$(suffix-cassette).ssd -boot ELTdata -title "E L I T E"
+	@$(PYTHON) versions/cassette/1-source-files/crc32.py versions/cassette/4-original-binaries$(folder-cassette) versions/cassette/3-assembled-output
 
 .PHONY:disc
 disc:
-	echo _VERSION=2 > versions/disc/sources/elite-header.h.asm
-	echo _RELEASE=$(rel-disc) >> versions/disc/sources/elite-header.h.asm
-	echo _REMOVE_CHECKSUMS=FALSE >> versions/disc/sources/elite-header.h.asm
-	echo _MATCH_EXTRACTED_BINARIES=TRUE >> versions/disc/sources/elite-header.h.asm
-	$(BEEBASM) -i versions/disc/sources/elite-text-tokens.asm -v > versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-missile.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-loader1.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-loader2.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-loader3.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-source-flight.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-source-docked.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-a.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-b.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-c.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-d.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-e.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-f.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-g.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-h.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-i.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-j.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-k.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-l.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-m.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-n.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-o.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-ships-p.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/sources/elite-readme.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(PYTHON) versions/disc/sources/elite-checksum.py -rel$(rel-disc)
-	$(BEEBASM) -i versions/disc/sources/elite-disc.asm -do versions/disc/5-compiled-game-discs/elite-disc$(suffix-disc).ssd -boot ELITE2 -title "E L I T E"
-	@$(PYTHON) versions/disc/sources/crc32.py versions/disc/4-original-binaries$(folder-disc) versions/disc/3-assembled-output
+	echo _VERSION=2 > versions/disc/1-source-files/elite-header.h.asm
+	echo _RELEASE=$(rel-disc) >> versions/disc/1-source-files/elite-header.h.asm
+	echo _REMOVE_CHECKSUMS=FALSE >> versions/disc/1-source-files/elite-header.h.asm
+	echo _MATCH_EXTRACTED_BINARIES=TRUE >> versions/disc/1-source-files/elite-header.h.asm
+	$(BEEBASM) -i versions/disc/1-source-files/elite-text-tokens.asm -v > versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-missile.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-loader1.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-loader2.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-loader3.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-source-flight.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-source-docked.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-a.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-b.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-c.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-d.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-e.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-f.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-g.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-h.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-i.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-j.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-k.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-l.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-m.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-n.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-o.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-ships-p.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/elite-readme.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(PYTHON) versions/disc/1-source-files/elite-checksum.py -rel$(rel-disc)
+	$(BEEBASM) -i versions/disc/1-source-files/elite-disc.asm -do versions/disc/5-compiled-game-discs/elite-disc$(suffix-disc).ssd -boot ELITE2 -title "E L I T E"
+	@$(PYTHON) versions/disc/1-source-files/crc32.py versions/disc/4-original-binaries$(folder-disc) versions/disc/3-assembled-output
 
 .PHONY:6502sp
 6502sp:
-	echo _VERSION=3 > versions/6502sp/sources/elite-header.h.asm
-	echo _RELEASE=$(rel-6502sp) >> versions/6502sp/sources/elite-header.h.asm
-	echo _REMOVE_CHECKSUMS=FALSE >> versions/6502sp/sources/elite-header.h.asm
-	echo _MATCH_EXTRACTED_BINARIES=TRUE >> versions/6502sp/sources/elite-header.h.asm
-	$(BEEBASM) -i versions/6502sp/sources/elite-source.asm -v > versions/6502sp/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/6502sp/sources/elite-bcfs.asm -v >> versions/6502sp/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/6502sp/sources/elite-z.asm -v >> versions/6502sp/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/6502sp/sources/elite-loader1.asm -v >> versions/6502sp/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/6502sp/sources/elite-loader2.asm -v >> versions/6502sp/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/6502sp/sources/elite-readme.asm -v >> versions/6502sp/3-assembled-output/compile.txt
-	$(PYTHON) versions/6502sp/sources/elite-checksum.py -rel$(rel-6502sp)
-	$(BEEBASM) -i versions/6502sp/sources/elite-disc.asm -do versions/6502sp/5-compiled-game-discs/elite-6502sp$(suffix-6502sp).ssd -boot ELITE -title "E L I T E"
-	@$(PYTHON) versions/6502sp/sources/crc32.py versions/6502sp/4-original-binaries$(folder-6502sp) versions/6502sp/3-assembled-output
+	echo _VERSION=3 > versions/6502sp/1-source-files/elite-header.h.asm
+	echo _RELEASE=$(rel-6502sp) >> versions/6502sp/1-source-files/elite-header.h.asm
+	echo _REMOVE_CHECKSUMS=FALSE >> versions/6502sp/1-source-files/elite-header.h.asm
+	echo _MATCH_EXTRACTED_BINARIES=TRUE >> versions/6502sp/1-source-files/elite-header.h.asm
+	$(BEEBASM) -i versions/6502sp/1-source-files/elite-source.asm -v > versions/6502sp/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/6502sp/1-source-files/elite-bcfs.asm -v >> versions/6502sp/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/6502sp/1-source-files/elite-z.asm -v >> versions/6502sp/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/6502sp/1-source-files/elite-loader1.asm -v >> versions/6502sp/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/6502sp/1-source-files/elite-loader2.asm -v >> versions/6502sp/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/6502sp/1-source-files/elite-readme.asm -v >> versions/6502sp/3-assembled-output/compile.txt
+	$(PYTHON) versions/6502sp/1-source-files/elite-checksum.py -rel$(rel-6502sp)
+	$(BEEBASM) -i versions/6502sp/1-source-files/elite-disc.asm -do versions/6502sp/5-compiled-game-discs/elite-6502sp$(suffix-6502sp).ssd -boot ELITE -title "E L I T E"
+	@$(PYTHON) versions/6502sp/1-source-files/crc32.py versions/6502sp/4-original-binaries$(folder-6502sp) versions/6502sp/3-assembled-output
 
 .PHONY:master
 master:
-	echo _VERSION=4 > versions/master/sources/elite-header.h.asm
-	echo _RELEASE=$(rel-master) >> versions/master/sources/elite-header.h.asm
-	echo _REMOVE_CHECKSUMS=FALSE >> versions/master/sources/elite-header.h.asm
-	echo _MATCH_EXTRACTED_BINARIES=TRUE >> versions/master/sources/elite-header.h.asm
-	$(BEEBASM) -i versions/master/sources/elite-loader.asm -v > versions/master/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/master/sources/elite-data.asm -v >> versions/master/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/master/sources/elite-source.asm -v >> versions/master/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/master/sources/elite-readme.asm -v >> versions/master/3-assembled-output/compile.txt
-	$(PYTHON) versions/master/sources/elite-checksum.py -rel$(rel-master)
-	$(BEEBASM) -i versions/master/sources/elite-disc.asm $(boot-master) -do versions/master/5-compiled-game-discs/elite-master$(suffix-master).ssd -title "E L I T E"
-	@$(PYTHON) versions/master/sources/crc32.py versions/master/4-original-binaries$(folder-master) versions/master/3-assembled-output
+	echo _VERSION=4 > versions/master/1-source-files/elite-header.h.asm
+	echo _RELEASE=$(rel-master) >> versions/master/1-source-files/elite-header.h.asm
+	echo _REMOVE_CHECKSUMS=FALSE >> versions/master/1-source-files/elite-header.h.asm
+	echo _MATCH_EXTRACTED_BINARIES=TRUE >> versions/master/1-source-files/elite-header.h.asm
+	$(BEEBASM) -i versions/master/1-source-files/elite-loader.asm -v > versions/master/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/master/1-source-files/elite-data.asm -v >> versions/master/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/master/1-source-files/elite-source.asm -v >> versions/master/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/master/1-source-files/elite-readme.asm -v >> versions/master/3-assembled-output/compile.txt
+	$(PYTHON) versions/master/1-source-files/elite-checksum.py -rel$(rel-master)
+	$(BEEBASM) -i versions/master/1-source-files/elite-disc.asm $(boot-master) -do versions/master/5-compiled-game-discs/elite-master$(suffix-master).ssd -title "E L I T E"
+	@$(PYTHON) versions/master/1-source-files/crc32.py versions/master/4-original-binaries$(folder-master) versions/master/3-assembled-output
 
 .PHONY:electron
 electron:
-	echo _VERSION=5 > versions/electron/sources/elite-header.h.asm
-	echo _RELEASE=$(rel-electron) >> versions/electron/sources/elite-header.h.asm
-	echo _REMOVE_CHECKSUMS=FALSE >> versions/electron/sources/elite-header.h.asm
-	$(BEEBASM) -i versions/electron/sources/elite-source.asm -v > versions/electron/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/electron/sources/elite-bcfs.asm -v >> versions/electron/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/electron/sources/elite-loader.asm -v >> versions/electron/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/electron/sources/elite-readme.asm -v >> versions/electron/3-assembled-output/compile.txt
-	$(PYTHON) versions/electron/sources/elite-checksum.py -rel$(rel-electron)
-	$(BEEBASM) -i versions/electron/sources/elite-disc.asm -do versions/electron/5-compiled-game-discs/elite-electron$(suffix-electron).ssd -opt 3 -title "E L I T E"
-	@$(PYTHON) versions/electron/sources/crc32.py versions/electron/4-original-binaries$(folder-electron) versions/electron/3-assembled-output
+	echo _VERSION=5 > versions/electron/1-source-files/elite-header.h.asm
+	echo _RELEASE=$(rel-electron) >> versions/electron/1-source-files/elite-header.h.asm
+	echo _REMOVE_CHECKSUMS=FALSE >> versions/electron/1-source-files/elite-header.h.asm
+	$(BEEBASM) -i versions/electron/1-source-files/elite-source.asm -v > versions/electron/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/electron/1-source-files/elite-bcfs.asm -v >> versions/electron/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/electron/1-source-files/elite-loader.asm -v >> versions/electron/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/electron/1-source-files/elite-readme.asm -v >> versions/electron/3-assembled-output/compile.txt
+	$(PYTHON) versions/electron/1-source-files/elite-checksum.py -rel$(rel-electron)
+	$(BEEBASM) -i versions/electron/1-source-files/elite-disc.asm -do versions/electron/5-compiled-game-discs/elite-electron$(suffix-electron).ssd -opt 3 -title "E L I T E"
+	@$(PYTHON) versions/electron/1-source-files/crc32.py versions/electron/4-original-binaries$(folder-electron) versions/electron/3-assembled-output
 
 .PHONY:elite-a
 elite-a:
-	echo _VERSION=6 > versions/elite-a/sources/elite-header.h.asm
-	echo _RELEASE=$(rel-elite-a) >> versions/elite-a/sources/elite-header.h.asm
-	echo _REMOVE_CHECKSUMS=FALSE >> versions/elite-a/sources/elite-header.h.asm
-	echo _MATCH_EXTRACTED_BINARIES=TRUE >> versions/elite-a/sources/elite-header.h.asm
-	$(BEEBASM) -i versions/elite-a/sources/elite-text-tokens.asm -v > versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-missile.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-source-docked.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-source-flight.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-source-encyclopedia.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-6502sp-parasite.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-6502sp-io-processor.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-loader.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-a.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-b.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-c.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-d.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-e.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-f.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-g.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-h.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-i.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-j.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-k.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-l.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-m.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-n.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-o.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-p.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-q.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-r.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-s.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-t.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-u.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-v.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-ships-w.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/sources/elite-readme.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(PYTHON) versions/elite-a/sources/elite-checksum.py -rel$(rel-elite-a)
-	$(BEEBASM) -i versions/elite-a/sources/elite-disc.asm -do versions/elite-a/5-compiled-game-discs/elite-a$(suffix-elite-a).ssd -opt 3 -title "E L I T E"
-	@$(PYTHON) versions/elite-a/sources/crc32.py versions/elite-a/4-original-binaries$(folder-elite-a) versions/elite-a/3-assembled-output
+	echo _VERSION=6 > versions/elite-a/1-source-files/elite-header.h.asm
+	echo _RELEASE=$(rel-elite-a) >> versions/elite-a/1-source-files/elite-header.h.asm
+	echo _REMOVE_CHECKSUMS=FALSE >> versions/elite-a/1-source-files/elite-header.h.asm
+	echo _MATCH_EXTRACTED_BINARIES=TRUE >> versions/elite-a/1-source-files/elite-header.h.asm
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-text-tokens.asm -v > versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-missile.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-source-docked.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-source-flight.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-source-encyclopedia.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-6502sp-parasite.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-6502sp-io-processor.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-loader.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-a.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-b.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-c.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-d.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-e.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-f.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-g.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-h.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-i.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-j.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-k.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-l.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-m.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-n.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-o.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-p.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-q.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-r.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-s.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-t.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-u.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-v.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-ships-w.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-readme.asm -v >> versions/elite-a/3-assembled-output/compile.txt
+	$(PYTHON) versions/elite-a/1-source-files/elite-checksum.py -rel$(rel-elite-a)
+	$(BEEBASM) -i versions/elite-a/1-source-files/elite-disc.asm -do versions/elite-a/5-compiled-game-discs/elite-a$(suffix-elite-a).ssd -opt 3 -title "E L I T E"
+	@$(PYTHON) versions/elite-a/1-source-files/crc32.py versions/elite-a/4-original-binaries$(folder-elite-a) versions/elite-a/3-assembled-output

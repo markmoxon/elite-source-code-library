@@ -24,7 +24,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * 3-assembled-output/WORDS.bin
+\   * WORDS.bin
 \
 \ This gets loaded as part of elite-loader.asm and gets moved to &0400 during
 \ the loading process.

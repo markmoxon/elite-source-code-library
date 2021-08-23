@@ -24,7 +24,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * 3-assembled-output/MISSILE.bin
+\   * MISSILE.bin
 \
 \ This gets loaded as part of elite-loader.asm and gets moved to &7F00 during
 \ the loading process.

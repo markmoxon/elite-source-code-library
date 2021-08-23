@@ -21,7 +21,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * 3-assembled-output/ELITE.unprot.bin
+\   * ELITE.unprot.bin
 \
 \ after reading in the following files:
 \
@@ -29,8 +29,8 @@
 \   * 1-source-files/images/P.ELITE.bin
 \   * 1-source-files/images/P.A-SOFT.bin
 \   * 1-source-files/images/P.(C)ASFT.bin
-\   * 3-assembled-output/WORDS9.bin
-\   * 3-assembled-output/PYTHON.bin
+\   * WORDS9.bin
+\   * PYTHON.bin
 \
 \ ******************************************************************************
 

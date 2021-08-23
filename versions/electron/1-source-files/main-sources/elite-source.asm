@@ -21,15 +21,15 @@
 \
 \ This source file produces the following binary files:
 \
-\   * 3-assembled-output/ELTA.bin
-\   * 3-assembled-output/ELTB.bin
-\   * 3-assembled-output/ELTC.bin
-\   * 3-assembled-output/ELTD.bin
-\   * 3-assembled-output/ELTE.bin
-\   * 3-assembled-output/ELTF.bin
-\   * 3-assembled-output/ELTG.bin
-\   * 3-assembled-output/SHIPS.bin
-\   * 3-assembled-output/WORDS9.bin
+\   * ELTA.bin
+\   * ELTB.bin
+\   * ELTC.bin
+\   * ELTD.bin
+\   * ELTE.bin
+\   * ELTF.bin
+\   * ELTG.bin
+\   * SHIPS.bin
+\   * WORDS9.bin
 \
 \ ******************************************************************************
 

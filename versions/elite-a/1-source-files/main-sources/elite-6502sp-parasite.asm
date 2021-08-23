@@ -24,7 +24,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * 3-assembled-output/2.T.bin
+\   * 2.T.bin
 \
 \ ******************************************************************************
 

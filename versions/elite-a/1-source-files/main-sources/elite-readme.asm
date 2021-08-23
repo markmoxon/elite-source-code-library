@@ -24,7 +24,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * 3-assembled-output/!BOOT.txt
+\   * !BOOT.txt
 \
 \ ******************************************************************************
 

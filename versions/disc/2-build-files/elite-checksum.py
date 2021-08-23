@@ -9,15 +9,15 @@
 # This script applies encryption and checksums to the compiled binary for the
 # main game code. It reads these unencrypted binary files:
 #
-#   * 3-assembled-output/ELITE4.unprot.bin
-#   * 3-assembled-output/D.CODE.unprot.bin
-#   * 3-assembled-output/T.CODE.unprot.bin
+#   * ELITE4.unprot.bin
+#   * D.CODE.unprot.bin
+#   * T.CODE.unprot.bin
 #
 # and generates encrypted versions as follows:
 #
-#   * 3-assembled-output/ELITE4.bin
-#   * 3-assembled-output/D.CODE.bin
-#   * 3-assembled-output/T.CODE.bin
+#   * ELITE4.bin
+#   * D.CODE.bin
+#   * T.CODE.bin
 #
 # ******************************************************************************
 

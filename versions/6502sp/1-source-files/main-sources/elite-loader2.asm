@@ -22,7 +22,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * 3-assembled-output/ELITEa.bin
+\   * ELITEa.bin
 \
 \ after reading in the following files:
 \

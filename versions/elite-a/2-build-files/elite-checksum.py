@@ -9,11 +9,11 @@
 # This script applies checksums to the compiled binary for the main game code.
 # It reads this binary file:
 #
-#   * 3-assembled-output/ELITE.bin
+#   * ELITE.bin
 #
 # and generates a checksum version as follows:
 #
-#   * 3-assembled-output/ELITE.bin
+#   * ELITE.bin
 #
 # ******************************************************************************
 

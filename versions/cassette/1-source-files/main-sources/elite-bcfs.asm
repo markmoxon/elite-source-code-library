@@ -21,19 +21,19 @@
 \
 \ This source file produces the following binary files:
 \
-\   * 3-assembled-output/ELTcode.unprot.bin
-\   * 3-assembled-output/ELThead.bin
+\   * ELTcode.unprot.bin
+\   * ELThead.bin
 \
 \ after reading in the following files:
 \
-\   * 3-assembled-output/ELTA.bin
-\   * 3-assembled-output/ELTB.bin
-\   * 3-assembled-output/ELTC.bin
-\   * 3-assembled-output/ELTD.bin
-\   * 3-assembled-output/ELTE.bin
-\   * 3-assembled-output/ELTF.bin
-\   * 3-assembled-output/ELTG.bin
-\   * 3-assembled-output/SHIPS.bin
+\   * ELTA.bin
+\   * ELTB.bin
+\   * ELTC.bin
+\   * ELTD.bin
+\   * ELTE.bin
+\   * ELTF.bin
+\   * ELTG.bin
+\   * SHIPS.bin
 \
 \ ******************************************************************************
 

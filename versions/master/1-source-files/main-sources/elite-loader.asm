@@ -21,7 +21,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * 3-assembled-output/M128Elt.bin
+\   * M128Elt.bin
 \
 \ ******************************************************************************
 

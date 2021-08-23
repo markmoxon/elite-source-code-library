@@ -21,7 +21,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * 3-assembled-output/BCODE.bin
+\   * BCODE.bin
 \
 \ ******************************************************************************
 

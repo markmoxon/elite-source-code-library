@@ -20,7 +20,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * 3-assembled-output/ELITE2.bin
+\   * ELITE2.bin
 \
 \ ******************************************************************************
 

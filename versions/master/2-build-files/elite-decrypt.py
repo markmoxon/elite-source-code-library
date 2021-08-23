@@ -15,10 +15,10 @@
 # existing unprot.bin files, so they can be compared if required
 #
 # Run this script by changing directory to the repository's root folder and
-# running the script with "python 1-source-files/elite-decrypt.py"
+# running the script with "python 2-build-files/elite-decrypt.py"
 #
 # You can decrypt specific releases by adding the following arguments, as in
-# "python 1-source-files/elite-decrypt.py -rel2" for example:
+# "python 2-build-files/elite-decrypt.py -rel2" for example:
 #
 #   -rel1   Decrypt the SNG47 release
 #   -rel2   Decrypt the Master Compact release

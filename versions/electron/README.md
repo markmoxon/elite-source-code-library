@@ -101,7 +101,7 @@ I hope you enjoy exploring the inner-workings of Electron Elite as much as I hav
 
 ## Folder structure
 
-There are five main folders in this repository, which reflect the order of the build processs.
+There are five main folders in this repository, which reflect the order of the build process.
 
 * [1-source-files](1-source-files) contains all the different source files, such as the main assembler source files, image binaries, fonts, boot files and so on
 

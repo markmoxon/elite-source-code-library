@@ -88,11 +88,11 @@ If you want to browse the source in an IDE, you might find the following useful.
 
 * The most interesting files are in the [1-source-files](1-source-files) folder:
 
-  * The main game's source code is in the [elite-source-flight.asm](1-source-files/elite-source-flight.asm), [elite-source-docked.asm](1-source-files/elite-source-docked.asm) and [elite-source-encyclopedia.asm](1-source-files/elite-source-encyclopedia.asm) files (for when we're in-flight, docked or viewing the encyclopedia) - this is the motherlode and probably contains all the stuff you're interested in.
+  * The main game's source code is in the [elite-source-flight.asm](1-source-files/main-sources/elite-source-flight.asm), [elite-source-docked.asm](1-source-files/main-sources/elite-source-docked.asm) and [elite-source-encyclopedia.asm](1-source-files/main-sources/elite-source-encyclopedia.asm) files (for when we're in-flight, docked or viewing the encyclopedia) - this is the motherlode and probably contains all the stuff you're interested in.
 
-  * The 6502 Second Processor version's source code is in the [elite-6502sp-parasite.asm](1-source-files/elite-6502sp-parasite.asm) file (for the parasite, i.e. the Second Processor) and [elite-6502sp-io-processor.asm](1-source-files/elite-6502sp-io-processor.asm) (for the I/O processor, i.e. the BBC Micro).
+  * The 6502 Second Processor version's source code is in the [elite-6502sp-parasite.asm](1-source-files/main-sources/elite-6502sp-parasite.asm) file (for the parasite, i.e. the Second Processor) and [elite-6502sp-io-processor.asm](1-source-files/main-sources/elite-6502sp-io-processor.asm) (for the I/O processor, i.e. the BBC Micro).
 
-  * The game's loader is in the [elite-loader.asm](1-source-files/elite-loader.asm) file - this is mainly concerned with setup and checking for Tube and BBC Master hardware.
+  * The game's loader is in the [elite-loader.asm](1-source-files/main-sources/elite-loader.asm) file - this is mainly concerned with setup and checking for Tube and BBC Master hardware.
 
 * The source files for Elite-A are unique amongst the annotated versions in this project, in that they contain inline diffs. Angus created Elite-A by taking the original disc version of Elite and modifying the code to include all his new features. The annotated source files in this repository contain both the original disc code and all of Angus's modifications, so you can look through the source to see exactly what Angus changed in order to create Elite-A. Any code that he removed from the disc version is commented out in the source files, so when they are assembled they produce the Elite-A binaries, while still containing details of Angus's modifications. You can find all the diffs by searching the sources for `Mod:`. (Note that this feature does not apply to the two 6502 Second Processor version source files, which just contain the Elite-A code.)
 
@@ -104,7 +104,7 @@ If you want to browse the source in an IDE, you might find the following useful.
 
 * If you know the name of a routine, you can find it by searching for `Name: <name>`, as in `Name: SCAN` (for the 3D scanner routine) or `Name: LL9` (for the ship-drawing routine).
 
-* The entry point for the [main game code](1-source-files/elite-source-docked.asm) is routine `TT170`, which you can find by searching for `Name: TT170`. If you want to follow the program flow all the way from the title screen around the main game loop, then you can find a number of [deep dives on program flow](https://www.bbcelite.com/deep_dives/) on the accompanying website.
+* The entry point for the [main game code](1-source-files/main-sources/elite-source-docked.asm) is routine `TT170`, which you can find by searching for `Name: TT170`. If you want to follow the program flow all the way from the title screen around the main game loop, then you can find a number of [deep dives on program flow](https://www.bbcelite.com/deep_dives/) on the accompanying website.
 
 * The source code is designed to be read at an 80-column width and with a monospaced font, just like in the good old days.
 

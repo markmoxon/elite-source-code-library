@@ -44,14 +44,14 @@ FONT% = P% DIV 256
 IF _6502SP_VERSION \ 6502SP: The Executive version uses a unique font, which is based on the 1960s Westminster font (it's similar to the machine-readable font on cheques - "retro-futuristic" is probably what we'd call it these days)
 
 IF _SNG45 OR _SOURCE_DISC
- INCBIN "versions/6502sp/1-source-files/images/P.FONT.bin"
+ INCBIN "versions/6502sp/1-source-files/fonts/P.FONT.bin"
 ELIF _EXECUTIVE
- INCBIN "versions/6502sp/1-source-files/images/P.FONTEX.bin"
+ INCBIN "versions/6502sp/1-source-files/fonts/P.FONTEX.bin"
 ENDIF
 
 ELIF _MASTER_VERSION
 
-INCBIN "versions/master/1-source-files/images/P.FONT.bin"
+INCBIN "versions/master/1-source-files/fonts/P.FONT.bin"
 
 ENDIF
 

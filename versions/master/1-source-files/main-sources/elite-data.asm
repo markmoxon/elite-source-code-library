@@ -143,9 +143,9 @@ INCLUDE "library/enhanced/main/variable/ship_dodo.asm"
 IF _MATCH_EXTRACTED_BINARIES
 
 IF _SNG47
- INCBIN "versions/master/4-original-binaries/sng47/workspaces/DATA-align.bin"
+ INCBIN "versions/master/4-reference-binaries/sng47/workspaces/DATA-align.bin"
 ELIF _COMPACT
- INCBIN "versions/master/4-original-binaries/compact/workspaces/DATA-align.bin"
+ INCBIN "versions/master/4-reference-binaries/compact/workspaces/DATA-align.bin"
 ENDIF
 
 ELSE

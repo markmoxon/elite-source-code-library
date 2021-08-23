@@ -16,11 +16,11 @@
 IF _MATCH_EXTRACTED_BINARIES
 
  IF _SNG45
-  INCBIN "versions/6502sp/4-original-binaries/sng45/workspaces/ELTB-HBUF.bin"
+  INCBIN "versions/6502sp/4-reference-binaries/sng45/workspaces/ELTB-HBUF.bin"
  ELIF _EXECUTIVE
-  INCBIN "versions/6502sp/4-original-binaries/executive/workspaces/ELTB-HBUF.bin"
+  INCBIN "versions/6502sp/4-reference-binaries/executive/workspaces/ELTB-HBUF.bin"
  ELIF _SOURCE_DISC
-  INCBIN "versions/6502sp/4-original-binaries/source-disc/workspaces/ELTB-HBUF.bin"
+  INCBIN "versions/6502sp/4-reference-binaries/source-disc/workspaces/ELTB-HBUF.bin"
  ENDIF
 
 ELSE

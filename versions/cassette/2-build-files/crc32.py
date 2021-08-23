@@ -50,14 +50,14 @@ def main():
         names = list(names1)
         names.extend(x for x in names2 if x not in names)
 
-        if '4-original-binaries' in folder1:
+        if '4-reference-binaries' in folder1:
             src = '[--originals--]'
         elif 'output' in folder1:
             src = '[---output----]'
         else:
             src = '[{0: ^13}]'.format(folder1[0:13]).replace(' ', '-')
 
-        if '4-original-binaries' in folder2:
+        if '4-reference-binaries' in folder2:
             dest = '[--originals--]'
         elif 'output' in folder2:
             dest = '[---output----]'

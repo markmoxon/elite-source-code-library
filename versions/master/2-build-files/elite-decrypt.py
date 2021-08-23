@@ -62,12 +62,12 @@ data_block = bytearray()
 
 # Load assembled code file
 
-elite_file = open("4-original-binaries/" + folder + "/BCODE.bin", "rb")
+elite_file = open("4-reference-binaries/" + folder + "/BCODE.bin", "rb")
 data_block.extend(elite_file.read())
 elite_file.close()
 
 print()
-print("[ Read    ] 4-original-binaries/" + folder + "/BCODE.bin")
+print("[ Read    ] 4-reference-binaries/" + folder + "/BCODE.bin")
 
 # Do decryption
 
@@ -76,15 +76,15 @@ for n in range(scramble_to, scramble_from - 1, -1):
     data_block[n - load_address] = new
     seed = new
 
-print("[ Decrypt ] 4-original-binaries/" + folder + "/BCODE.bin")
+print("[ Decrypt ] 4-reference-binaries/" + folder + "/BCODE.bin")
 
 # Write output file for BCODE.decrypt
 
-output_file = open("4-original-binaries/" + folder + "/BCODE.decrypt.bin", "wb")
+output_file = open("4-reference-binaries/" + folder + "/BCODE.decrypt.bin", "wb")
 output_file.write(data_block)
 output_file.close()
 
-print("[ Save    ] 4-original-binaries/" + folder + "/BCODE.decrypt.bin")
+print("[ Save    ] 4-reference-binaries/" + folder + "/BCODE.decrypt.bin")
 
 # Configuration variables for BDATA
 
@@ -97,12 +97,12 @@ data_block = bytearray()
 
 # Load assembled code file
 
-elite_file = open("4-original-binaries/" + folder + "/BDATA.bin", "rb")
+elite_file = open("4-reference-binaries/" + folder + "/BDATA.bin", "rb")
 data_block.extend(elite_file.read())
 elite_file.close()
 
 print()
-print("[ Read    ] 4-original-binaries/" + folder + "/BDATA.bin")
+print("[ Read    ] 4-reference-binaries/" + folder + "/BDATA.bin")
 
 # Do decryption
 
@@ -111,13 +111,13 @@ for n in range(scramble_to, scramble_from - 1, -1):
     data_block[n - load_address] = new
     seed = new
 
-print("[ Decrypt ] 4-original-binaries/" + folder + "/BDATA.bin")
+print("[ Decrypt ] 4-reference-binaries/" + folder + "/BDATA.bin")
 
 # Write output file for BDATA.decrypt
 
-output_file = open("4-original-binaries/" + folder + "/BDATA.decrypt.bin", "wb")
+output_file = open("4-reference-binaries/" + folder + "/BDATA.decrypt.bin", "wb")
 output_file.write(data_block)
 output_file.close()
 
-print("[ Save    ] 4-original-binaries/" + folder + "/BDATA.decrypt.bin")
+print("[ Save    ] 4-reference-binaries/" + folder + "/BDATA.decrypt.bin")
 print()

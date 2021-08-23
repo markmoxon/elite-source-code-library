@@ -205,7 +205,7 @@ make encrypt verify
 
 The Python script `crc32.py` does the actual verification, and shows the checksums and file sizes of both sets of files, alongside each other, and with a Match column that flags any discrepancies.
 
-The binaries in the `4-original-binaries` folder were taken straight from Angus Duggan's original source discs, while those in the `output` folder are produced by the build process. For example, if you don't make any changes to the code and build the project with `make build verify`, then this is the output of the verification process:
+The binaries in the `4-reference-binaries` folder were taken straight from Angus Duggan's original source discs, while those in the `output` folder are produced by the build process. For example, if you don't make any changes to the code and build the project with `make build verify`, then this is the output of the verification process:
 
 ```
 [--originals--]  [---output----]

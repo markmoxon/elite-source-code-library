@@ -56,12 +56,12 @@ data_block = bytearray()
 
 # Load assembled code file
 
-elite_file = open("4-original-binaries/" + folder + "/D.CODE.bin", "rb")
+elite_file = open("4-reference-binaries/" + folder + "/D.CODE.bin", "rb")
 data_block.extend(elite_file.read())
 elite_file.close()
 
 print()
-print("[ Read    ] 4-original-binaries/" + folder + "/D.CODE.bin")
+print("[ Read    ] 4-reference-binaries/" + folder + "/D.CODE.bin")
 
 # Do decryption
 
@@ -71,15 +71,15 @@ print("[ Read    ] 4-original-binaries/" + folder + "/D.CODE.bin")
 for n in range(scramble_from, scramble_to):
     data_block[n - load_address] = data_block[n - load_address] ^ (n % 256) ^ scramble_eor
 
-print("[ Decrypt ] 4-original-binaries/" + folder + "/D.CODE.bin")
+print("[ Decrypt ] 4-reference-binaries/" + folder + "/D.CODE.bin")
 
 # Write output file for D.CODE.decrypt
 
-output_file = open("4-original-binaries/" + folder + "/D.CODE.decrypt.bin", "wb")
+output_file = open("4-reference-binaries/" + folder + "/D.CODE.decrypt.bin", "wb")
 output_file.write(data_block)
 output_file.close()
 
-print("[ Save    ] 4-original-binaries/" + folder + "/D.CODE.decrypt.bin")
+print("[ Save    ] 4-reference-binaries/" + folder + "/D.CODE.decrypt.bin")
 
 # Configuration variables for T.CODE
 
@@ -92,12 +92,12 @@ data_block = bytearray()
 
 # Load assembled code file
 
-elite_file = open("4-original-binaries/" + folder + "/T.CODE.bin", "rb")
+elite_file = open("4-reference-binaries/" + folder + "/T.CODE.bin", "rb")
 data_block.extend(elite_file.read())
 elite_file.close()
 
 print()
-print("[ Read    ] 4-original-binaries/" + folder + "/T.CODE.bin")
+print("[ Read    ] 4-reference-binaries/" + folder + "/T.CODE.bin")
 
 # Do decryption
 
@@ -107,13 +107,13 @@ print("[ Read    ] 4-original-binaries/" + folder + "/T.CODE.bin")
 for n in range(scramble_from, scramble_to):
     data_block[n - load_address] = data_block[n - load_address] ^ (n % 256) ^ scramble_eor
 
-print("[ Decrypt ] 4-original-binaries/" + folder + "/T.CODE.bin")
+print("[ Decrypt ] 4-reference-binaries/" + folder + "/T.CODE.bin")
 
 # Write output file for T.CODE.decrypt
 
-output_file = open("4-original-binaries/" + folder + "/T.CODE.decrypt.bin", "wb")
+output_file = open("4-reference-binaries/" + folder + "/T.CODE.decrypt.bin", "wb")
 output_file.write(data_block)
 output_file.close()
 
-print("[ Save    ] 4-original-binaries/" + folder + "/T.CODE.decrypt.bin")
+print("[ Save    ] 4-reference-binaries/" + folder + "/T.CODE.decrypt.bin")
 print()

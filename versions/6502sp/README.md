@@ -206,7 +206,7 @@ make encrypt verify
 
 The Python script `crc32.py` does the actual verification, and shows the checksums and file sizes of both sets of files, alongside each other, and with a Match column that flags any discrepancies. If you are building an unencrypted set of files then there will be lots of differences, while the encrypted files should match.
 
-The binaries in the `4-original-binaries` folder were taken straight from the [6502 Second Processor sources disc image](http://www.elitehomepage.org/archive/a/a5022201.zip), while those in the `output` folder are produced by the build process. For example, if you don't make any changes to the code and build the project with `make encrypt verify`, then this is the output of the verification process:
+The binaries in the `4-reference-binaries` folder were taken straight from the [6502 Second Processor sources disc image](http://www.elitehomepage.org/archive/a/a5022201.zip), while those in the `output` folder are produced by the build process. For example, if you don't make any changes to the code and build the project with `make encrypt verify`, then this is the output of the verification process:
 
 ```
 [--originals--]  [---output----]
@@ -307,11 +307,11 @@ See the [accompanying website](https://www.bbcelite.com/6502sp/releases.html) fo
 
 ### Fixing the original build process
 
-The source files on the source disc do not build as they are; some massaging is required, as described in [this thread on Stardot](https://stardot.org.uk/forums/viewtopic.php?t=14607). Note also that the `P.DIALS2P` file on the source disc has some erroneous dots in the right-hand side of the dashboard; a fixed version is available in the `images` folder in this repository, and this fixed version was used to build the reference binaries in the `4-original-binaries` folder.
+The source files on the source disc do not build as they are; some massaging is required, as described in [this thread on Stardot](https://stardot.org.uk/forums/viewtopic.php?t=14607). Note also that the `P.DIALS2P` file on the source disc has some erroneous dots in the right-hand side of the dashboard; a fixed version is available in the `images` folder in this repository, and this fixed version was used to build the reference binaries in the `4-reference-binaries` folder.
 
 ### Producing byte-accurate binaries
 
-The `4-original-binaries/<release>/workspaces` folders (where `<release>` is the release version) contain binary files that match the workspaces in the original game binaries (a workspace being a block of memory, such as `LBUF` or `LSX2`). Instead of initialising workspaces with null values like BeebAsm, the original BBC Micro source code creates its workspaces by simply incrementing the `P%` and `O%` program counters, which means that the workspaces end up containing whatever contents the allocated memory had at the time. As the source files are broken into multiple BBC BASIC programs that run each other sequentially, this means the workspaces in the source code tend to contain either fragments of these BBC BASIC source programs, or assembled code from an earlier stage. This doesn't make any difference to the game code, which either intialises the workspaces at runtime or just ignores their initial contents, but if we want to be able to produce byte-accurate binaries from the modern BeebAsm assembly process, we need to include this "workspace noise" when building the project, and that's what the binaries in the `4-original-binaries/<release>/workspaces` folder are for. These binaries are only loaded by the `encrypt` target; for the `build` target, workspaces are initialised with zeroes.
+The `4-reference-binaries/<release>/workspaces` folders (where `<release>` is the release version) contain binary files that match the workspaces in the original game binaries (a workspace being a block of memory, such as `LBUF` or `LSX2`). Instead of initialising workspaces with null values like BeebAsm, the original BBC Micro source code creates its workspaces by simply incrementing the `P%` and `O%` program counters, which means that the workspaces end up containing whatever contents the allocated memory had at the time. As the source files are broken into multiple BBC BASIC programs that run each other sequentially, this means the workspaces in the source code tend to contain either fragments of these BBC BASIC source programs, or assembled code from an earlier stage. This doesn't make any difference to the game code, which either intialises the workspaces at runtime or just ignores their initial contents, but if we want to be able to produce byte-accurate binaries from the modern BeebAsm assembly process, we need to include this "workspace noise" when building the project, and that's what the binaries in the `4-reference-binaries/<release>/workspaces` folder are for. These binaries are only loaded by the `encrypt` target; for the `build` target, workspaces are initialised with zeroes.
 
 Here's an example of how these binaries are included, in this case for the `LBUF` workspace in the `ELTB` section:
 
@@ -321,11 +321,11 @@ Here's an example of how these binaries are included, in this case for the `LBUF
 IF _MATCH_EXTRACTED_BINARIES
 
  IF _SNG45
-  INCBIN "4-original-binaries/sng45/workspaces/ELTB-LBUF.bin"
+  INCBIN "4-reference-binaries/sng45/workspaces/ELTB-LBUF.bin"
  ELIF _EXECUTIVE
-  INCBIN "4-original-binaries/executive/workspaces/ELTB-LBUF.bin"
+  INCBIN "4-reference-binaries/executive/workspaces/ELTB-LBUF.bin"
  ELIF _SOURCE_DISC
-  INCBIN "4-original-binaries/source-disc/workspaces/ELTB-LBUF.bin"
+  INCBIN "4-reference-binaries/source-disc/workspaces/ELTB-LBUF.bin"
  ENDIF
 
 ELSE

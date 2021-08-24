@@ -214,7 +214,7 @@ INCLUDE "library/advanced/main/subroutine/setvdu19-dovdu19.asm"
 
 \ ******************************************************************************
 \
-\ Save 3-assembled-output/I.CODE.bin
+\ Save I.CODE.bin
 \
 \ ******************************************************************************
 

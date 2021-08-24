@@ -129,7 +129,7 @@ INCLUDE "library/disc/loader2/subroutine/unused_copy_protection_routine.asm"
 
 \ ******************************************************************************
 \
-\ Save 3-assembled-output/ELITE2.bin
+\ Save ELITE2.bin
 \
 \ ******************************************************************************
 

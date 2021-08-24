@@ -167,7 +167,7 @@ INCLUDE "library/enhanced/main/variable/ship_python_p.asm"
 
 \ ******************************************************************************
 \
-\ Save 3-assembled-output/D.MOI.bin
+\ Save D.MOI.bin
 \
 \ ******************************************************************************
 

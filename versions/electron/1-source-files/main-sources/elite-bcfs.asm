@@ -118,7 +118,7 @@ INCBIN "versions/electron/3-assembled-output/SHIPS.bin"
 
 \ ******************************************************************************
 \
-\ Save 3-assembled-output/ELITECO.unprot.bin
+\ Save ELITECO.unprot.bin
 \
 \ ******************************************************************************
 

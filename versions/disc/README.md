@@ -43,7 +43,7 @@ See the [introduction](#introduction) for more information.
 
 This repository contains source code for the disc version of Elite on the BBC Micro, with every single line documented and (for the most part) explained.
 
-You can build the fully functioning game from this source. [Two releases](#building-different-releases-of-the-disc-version-of-elite) are currently supported: the version from Ian Bell's site, and the version from the Stairway to Hell archive.
+You can build the fully functioning game from this source. [Two releases](#building-different-releases-of-the-disc-version-of-elite) are currently supported: the version from Ian Bell's personal website, and the version from the Stairway to Hell archive.
 
 It is a companion to the [bbcelite.com website](https://www.bbcelite.com), which contains all the code from this repository, but laid out in a much more human-friendly fashion. The links at the top of this page will take you to repositories for the other versions of Elite that are covered by this project.
 
@@ -65,7 +65,7 @@ The commentary is copyright &copy; Mark Moxon. Any misunderstandings or mistakes
 
 Huge thanks are due to the original authors for not only creating such an important piece of my childhood, but also for releasing the source code for us to play with; to Paul Brink for his annotated disassembly; and to Kieran Connell for his [BeebAsm version](https://github.com/kieranhj/elite-beebasm), which I forked as the original basis for this project. You can find more information about this project in the [accompanying website's project page](https://www.bbcelite.com/about_site/about_this_project.html).
 
-The following archive from Ian Bell's site forms the basis for this project:
+The following archive from Ian Bell's personal website forms the basis for this project:
 
 * [BBC Elite, disc version](http://www.elitehomepage.org/archive/a/a4100000.zip)
 
@@ -302,7 +302,7 @@ In other words, the Ian Bell release is the very first release of the disc versi
 
 See the [accompanying website](https://www.bbcelite.com/disc/releases.html) for a comprehensive list of differences between the releases.
 
-Note that I have only included differences that appear in the main game code, rather than those that appear in the loaders, as these files can differ extensively between releases without affecting the game itself. The release on Ian Bell's site contains a whole load of copy protection differences when compared to the same code in the Stairway to Hell release, and it also contains two more binary files (`ELITE5` and `ELITE6`), plus a `!BOOT` file that contains even more copy protection code. I haven't disassembled the loader files from this release as that's a whole different rabbit hole, so if you build the Ian Bell release with `make encrypt verify`, the compiled loader binaries will not match those extracted from the original disc. The main binaries will match, however, which is the interesting part from a digital archaeology perspective, as that's where the bug fixes live.
+Note that I have only included differences that appear in the main game code, rather than those that appear in the loaders, as these files can differ extensively between releases without affecting the game itself. The release on Ian Bell's personal website contains a whole load of copy protection differences when compared to the same code in the Stairway to Hell release, and it also contains two more binary files (`ELITE5` and `ELITE6`), plus a `!BOOT` file that contains even more copy protection code. I haven't disassembled the loader files from this release as that's a whole different rabbit hole, so if you build the Ian Bell release with `make encrypt verify`, the compiled loader binaries will not match those extracted from the original disc. The main binaries will match, however, which is the interesting part from a digital archaeology perspective, as that's where the bug fixes live.
 
 ---
 

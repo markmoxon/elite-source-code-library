@@ -128,7 +128,7 @@ INCBIN "versions/cassette/3-assembled-output/SHIPS.bin"
 
 \ ******************************************************************************
 \
-\ Save 3-assembled-output/ELTcode.unprot.bin and 3-assembled-output/ELThead.bin
+\ Save ELTcode.unprot.bin and ELThead.bin
 \
 \ ******************************************************************************
 

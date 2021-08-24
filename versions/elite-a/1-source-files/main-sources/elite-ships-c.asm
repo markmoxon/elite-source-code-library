@@ -175,7 +175,7 @@ INCLUDE "library/enhanced/main/variable/ship_transporter.asm"
 
 \ ******************************************************************************
 \
-\ Save 3-assembled-output/S.C.bin
+\ Save S.C.bin
 \
 \ ******************************************************************************
 

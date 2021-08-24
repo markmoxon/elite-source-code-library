@@ -47,7 +47,7 @@ See the [introduction](#introduction) for more information.
 
 This repository contains the original source code for Elite on the BBC Micro, with every single line documented and (for the most part) explained.
 
-You can build the fully functioning game from this source. [Two releases](#building-different-releases-of-the-cassette-version-of-elite) are currently supported: the version produced by the original source discs from Ian Bell's site, and the version built from the text sources from the same site.
+You can build the fully functioning game from this source. [Two releases](#building-different-releases-of-the-cassette-version-of-elite) are currently supported: the version produced by the original source discs from Ian Bell's personal website, and the version built from the text sources from the same site.
 
 It is a companion to the [bbcelite.com website](https://www.bbcelite.com), which contains all the code from this repository, but laid out in a much more human-friendly fashion. The links at the top of this page will take you to repositories for the other versions of Elite that are covered by this project.
 
@@ -69,7 +69,7 @@ The commentary is copyright &copy; Mark Moxon. Any misunderstandings or mistakes
 
 Huge thanks are due to the original authors for not only creating such an important piece of my childhood, but also for releasing the source code for us to play with; to Paul Brink for his annotated disassembly; and to Kieran Connell for his [BeebAsm version](https://github.com/kieranhj/elite-beebasm), which I forked as the original basis for this project. You can find more information about this project in the [accompanying website's project page](https://www.bbcelite.com/about_site/about_this_project.html).
 
-The following archives from Ian Bell's site form the basis for this project:
+The following archives from Ian Bell's personal website form the basis for this project:
 
 * [Cassette sources as a disc image](http://www.elitehomepage.org/archive/a/a4080602.zip)
 * [Cassette sources as text files](http://www.elitehomepage.org/archive/a/a4080610.zip)
@@ -256,7 +256,7 @@ During compilation, details of every step are output in a file called `compile.t
 
 This repository contains the source code for two different releases of the cassette version of Elite:
 
-* The version produced by the original source discs from Ian Bell's site
+* The version produced by the original source discs from Ian Bell's personal website
 
 * The version built from the text sources from the same site
 
@@ -288,7 +288,7 @@ This will produce a file called `elite-cassette-from-text-sources.ssd` in the `5
 
 You can see the differences between the releases by searching the source code for `_SOURCE_DISC` (for features in the source disc release) or `_TEXT_SOURCES` (for features in the text sources release). There are only minor differences:
 
-* The text sources contain an extra call in the galactic hyperspace routine that sets the current system to the nearest system to the crosshairs. This code is present in all other versions of the game (albeit in a different place), but not the original source disc from Ian Bell's site
+* The text sources contain an extra call in the galactic hyperspace routine that sets the current system to the nearest system to the crosshairs. This code is present in all other versions of the game (albeit in a different place), but not the original source disc from Ian Bell's personal website
 
 * In order to fit this extra call in (which takes three extra bytes), the text sources also contain four modifications to create space for the call, which together save five bytes.
 

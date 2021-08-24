@@ -71,7 +71,7 @@ The commentary is copyright &copy; Mark Moxon. Any misunderstandings or mistakes
 
 Huge thanks are due to the original authors for not only creating such an important piece of my childhood, but also for releasing the source code for us to play with; to Paul Brink for his annotated disassembly; and to Kieran Connell for his [BeebAsm version](https://github.com/kieranhj/elite-beebasm), which I forked as the original basis for this project. You can find more information about this project in the [accompanying website's project page](https://www.bbcelite.com/about_site/about_this_project.html).
 
-The following archive from Ian Bell's site forms the basis for this project:
+The following archive from Ian Bell's personal website forms the basis for this project:
 
 * [6502 Second Processor sources as a disc image](http://www.elitehomepage.org/archive/a/a5022201.zip)
 
@@ -259,9 +259,9 @@ This repository contains the source code for three different releases of 6502 Se
 
 * The official SNG45 Acornsoft release, which was the first appearence of 6502 Second Processor Elite, and the one included on all subsequent discs
 
-* The game produced by the source disc from Ian Bell's site, which was never released
+* The game produced by the source disc from Ian Bell's personal website, which was never released
 
-* The Executive version from Ian Bell's site, which was also never released
+* The Executive version from Ian Bell's personal website, which was also never released
 
 By default the build process builds the SNG45 release, but you can build a specified release using the `release=` build parameter.
 

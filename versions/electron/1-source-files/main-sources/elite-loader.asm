@@ -119,7 +119,7 @@ INCLUDE "library/electron/loader/variable/mess1.asm"
 
 \ ******************************************************************************
 \
-\ Save 3-assembled-output/ELITE.unprot.bin
+\ Save ELITE.unprot.bin
 \
 \ ******************************************************************************
 

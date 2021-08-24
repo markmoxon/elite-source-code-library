@@ -84,7 +84,7 @@ INCLUDE "library/6502sp/loader2/subroutine/elite_loader_part_2_of_2.asm"
 
 \ ******************************************************************************
 \
-\ Save 3-assembled-output/ELITEa.bin
+\ Save ELITEa.bin
 \
 \ ******************************************************************************
 

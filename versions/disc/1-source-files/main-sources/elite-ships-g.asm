@@ -167,7 +167,7 @@ INCLUDE "library/enhanced/main/variable/ship_constrictor.asm"
 
 \ ******************************************************************************
 \
-\ Save 3-assembled-output/D.MOG.bin
+\ Save D.MOG.bin
 \
 \ ******************************************************************************
 

@@ -167,7 +167,7 @@ INCLUDE "library/enhanced/main/variable/ship_fer_de_lance.asm"
 
 \ ******************************************************************************
 \
-\ Save 3-assembled-output/D.MOA.bin
+\ Save D.MOA.bin
 \
 \ ******************************************************************************
 

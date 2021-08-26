@@ -107,16 +107,9 @@ Armlas = INT(128.5+1.5*POW) \ Military laser power
 NI% = 37                \ The number of bytes in each ship's data block (as
                         \ stored in INWK and K%)
 
-OSBYTE = &FFF4          \ The address for the OSBYTE routine
-OSWORD = &FFF1          \ The address for the OSWORD routine
-OSFILE = &FFDD          \ The address for the OSFILE routine
-OSCLI = &FFF7           \ The address for the OSCLI routine
-
 VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
                         \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
                         \ known as SHEILA)
-
-VSCAN = 57              \ Defines the split position in the split-screen mode
 
 X = 128                 \ The centre x-coordinate of the 256 x 192 space view
 Y = 96                  \ The centre y-coordinate of the 256 x 192 space view
@@ -162,6 +155,10 @@ XX21 = &5600            \ The address of the ship blueprints lookup table, where
 
 E% = &563E              \ The address of the default NEWB ship bytes within the
                         \ loaded ship blueprints file
+
+OSBYTE = &FFF4          \ The address for the OSBYTE routine
+OSWORD = &FFF1          \ The address for the OSWORD routine
+OSCLI = &FFF7           \ The address for the OSCLI routine
 
 INCLUDE "library/common/main/workspace/zp.asm"
 INCLUDE "library/common/main/workspace/xx3.asm"

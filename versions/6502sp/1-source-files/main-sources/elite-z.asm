@@ -102,9 +102,6 @@ Tina = &0B00            \ The address of the code block for the TINA command,
                         \ code that executes on the I/O processor before the
                         \ main game code terminates
 
-D% = &D000              \ The address where the ship blueprints get moved to
-                        \ after loading, so they go from &D000 to &F200
-
 VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
                         \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
                         \ known as SHEILA)
@@ -114,8 +111,6 @@ NVOSWRCH = &FFCB        \ The address for the non-vectored OSWRCH routine
 OSWRCH = &FFEE          \ The address for the OSWRCH routine
 OSBYTE = &FFF4          \ The address for the OSBYTE routine
 OSWORD = &FFF1          \ The address for the OSWORD routine
-OSFILE = &FFDD          \ The address for the OSFILE routine
-OSCLI = &FFF7           \ The address for the OSCLI routine
 
 CODE% = &2400           \ The assembly address of the main I/O processor code
 LOAD% = &2400           \ The load address of the main I/O processor code

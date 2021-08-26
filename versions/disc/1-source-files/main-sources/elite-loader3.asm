@@ -67,10 +67,6 @@ VSCAN = 57              \ Defines the split position in the split-screen mode
 
 POW = 15                \ Pulse laser power
 
-Mlas = 50               \ Mining laser power
-
-Armlas = INT(128.5+1.5*POW) \ Military laser power
-
 VEC = &7FFE             \ VEC is where we store the original value of the IRQ1
                         \ vector, matching the address in the elite-missile.asm
                         \ source

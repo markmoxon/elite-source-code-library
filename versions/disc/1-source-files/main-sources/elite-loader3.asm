@@ -161,15 +161,15 @@ INCLUDE "library/disc/loader3/subroutine/elite_loader_part_3_of_3.asm"
 
 IF _MATCH_EXTRACTED_BINARIES
 
-IF _STH_DISC
- INCBIN "versions/disc/4-reference-binaries/sth/workspaces/loader3.bin"
-ELIF _IB_DISC
- SKIP 158
-ENDIF
+ IF _STH_DISC
+  INCBIN "versions/disc/4-reference-binaries/sth/workspaces/loader3.bin"
+ ELIF _IB_DISC
+  SKIP 158
+ ENDIF
 
 ELSE
 
- SKIP 158               \ These bytes appear to be unused
+  SKIP 158              \ These bytes appear to be unused
 
 ENDIF
 

@@ -340,11 +340,11 @@ IF _MATCH_EXTRACTED_BINARIES
 
 ELSE
 
-IF _SNG47
- SKIP 77                 \ These bytes appear to be unused
-ELIF _COMPACT
- SKIP 3                  \ These bytes appear to be unused
-ENDIF
+ IF _SNG47
+  SKIP 77               \ These bytes appear to be unused
+ ELIF _COMPACT
+  SKIP 3                \ These bytes appear to be unused
+ ENDIF
 
 ENDIF
 
@@ -363,7 +363,7 @@ IF _MATCH_EXTRACTED_BINARIES
 
 ELSE
 
- SKIP 576               \ These bytes appear to be unused
+  SKIP 576              \ These bytes appear to be unused
 
 ENDIF
 

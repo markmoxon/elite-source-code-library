@@ -34,6 +34,8 @@
 .ylookup
 
 FOR I%, 0, 255
-  EQUB &40 + ((I% DIV 8) * 2)
+
+ EQUB &40 + ((I% DIV 8) * 2)
+
 NEXT
 

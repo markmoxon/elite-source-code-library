@@ -37,7 +37,7 @@ IF _MATCH_EXTRACTED_BINARIES
 
 ELSE
 
- SKIP 256               \ The ball line heap for storing y-coordinates (see the
+  SKIP 256              \ The ball line heap for storing y-coordinates (see the
                         \ deep dive on "The ball line heap" for details)
 
 ENDIF

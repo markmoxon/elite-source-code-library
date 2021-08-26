@@ -142,15 +142,15 @@ INCLUDE "library/enhanced/main/variable/ship_dodo.asm"
 
 IF _MATCH_EXTRACTED_BINARIES
 
-IF _SNG47
- INCBIN "versions/master/4-reference-binaries/sng47/workspaces/DATA-align.bin"
-ELIF _COMPACT
- INCBIN "versions/master/4-reference-binaries/compact/workspaces/DATA-align.bin"
-ENDIF
+ IF _SNG47
+  INCBIN "versions/master/4-reference-binaries/sng47/workspaces/DATA-align.bin"
+ ELIF _COMPACT
+  INCBIN "versions/master/4-reference-binaries/compact/workspaces/DATA-align.bin"
+ ENDIF
 
 ELSE
 
- SKIP 619               \ These bytes appear to be unused
+  SKIP 619              \ These bytes appear to be unused
 
 ENDIF
 
@@ -176,29 +176,29 @@ IF _MATCH_EXTRACTED_BINARIES
 
  IF _SNG47
 
- EQUS " \mutilate"      \ These bytes appear to be unused and are presumably
- EQUS " from here"      \ workspace noise from the build process (this snippet
- EQUS " to F%"          \ looks like an assembly language comment from the
- EQUB 13                \ encryption process, which the authors presumably
- EQUB &0B, &B8          \ liked to call "mutilation")
+  EQUS " \mutilate"     \ These bytes appear to be unused and are presumably
+  EQUS " from here"     \ workspace noise from the build process (this snippet
+  EQUS " to F%"         \ looks like an assembly language comment from the
+  EQUB 13               \ encryption process, which the authors presumably
+  EQUB &0B, &B8         \ liked to call "mutilation")
 
  ELIF _COMPACT
 
- EQUS "\red herring"    \ These bytes appear to be unused and are presumably
- EQUB 13                \ workspace noise from the build process (this snippet
- EQUB &0B               \ looks like an assembly language comment from the
- EQUS ","               \ encryption process, which the authors presumably
- EQUB &05               \ liked to call "mutilation", though this could also
- EQUS "\"               \ be a "red herring")
- EQUB 13
- EQUB &0B
- EQUS "T!.G% \mutilate"
+  EQUS "\red herring"   \ These bytes appear to be unused and are presumably
+  EQUB 13               \ workspace noise from the build process (this snippet
+  EQUB &0B              \ looks like an assembly language comment from the
+  EQUS ","              \ encryption process, which the authors presumably
+  EQUB &05              \ liked to call "mutilation", though this could also
+  EQUS "\"              \ be a "red herring")
+  EQUB 13
+  EQUB &0B
+  EQUS "T!.G% \mutilate"
 
  ENDIF
 
 ELSE
 
- SKIP 29                \ These bytes appear to be unused
+  SKIP 29                \ These bytes appear to be unused
 
 ENDIF
 

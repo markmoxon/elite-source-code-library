@@ -12,11 +12,11 @@ IF _6502SP_VERSION \ 6502SP: The Executive version has a different memory map to
 
 IF _SNG45 OR _SOURCE_DISC
 
-ORG &8600
+ ORG &8600
 
 ELIF _EXECUTIVE
 
-ORG &8900
+ ORG &8900
 
 ENDIF
 

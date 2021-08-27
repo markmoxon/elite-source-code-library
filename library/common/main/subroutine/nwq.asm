@@ -19,8 +19,8 @@
 
 IF _MASTER_VERSION \ Screen
 
- LDA #WHITE             \ Switch to white (i.e. cyan/red)
- STA COL
+ LDA #DUST              \ Switch to stripe 3-2-3-2, which is cyan/red in the
+ STA COL                \ space view
 
 ENDIF
 

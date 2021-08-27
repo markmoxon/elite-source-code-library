@@ -72,11 +72,11 @@ ELIF _DISC_FLIGHT
 
  JSR DORND              \ Set A and X to random numbers
 
- CMP #245               \ Set the C flag if X >= 245 (4% chance)
+ CMP #245               \ Set the C flag if A >= 245 (4% chance)
 
 ELIF _ELITE_A_VERSION
 
- CMP #245               \ Set the C flag if X >= 245 (4% chance)
+ CMP #245               \ Set the C flag if A >= 245 (4% chance)
 
 ENDIF
 

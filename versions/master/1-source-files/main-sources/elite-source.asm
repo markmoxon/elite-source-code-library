@@ -225,7 +225,6 @@ VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
                         \ known as SHEILA)
 
 OSBYTE = &FFF4          \ The address for the OSBYTE routine
-
 OSCLI = &FFF7           \ The address for the OSCLI routine
 
 INCLUDE "library/common/main/workspace/zp.asm"

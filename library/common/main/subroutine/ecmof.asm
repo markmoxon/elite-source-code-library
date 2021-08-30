@@ -13,7 +13,7 @@
 IF _MASTER_VERSION OR _ELECTRON_VERSION \ Comment
 \ Other entry points:
 \
-\   ECMOF-1             \ Contains an RTS
+\   ECMOF-1             Contains an RTS
 \
 ENDIF
 \ ******************************************************************************

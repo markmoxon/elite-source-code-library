@@ -15,7 +15,7 @@
 \
 \ Other entry points:
 \
-\   DELT-1              \ Contains an RTS
+\   DELT-1              Contains an RTS
 \
 \ ******************************************************************************
 

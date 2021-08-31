@@ -10,6 +10,7 @@ ENDIF
 \    Summary: Show the Encyclopedia screen
 \  Deep dive: The Encyclopedia Galactica
 \
+IF _ELITE_A_ENCYCLOPEDIA
 \ ------------------------------------------------------------------------------
 \
 \ Other entry points:
@@ -17,6 +18,7 @@ ENDIF
 \   jmp_start3          Make a short, high beep, delay for one second, and go to
 \                       the docking bay (i.e. show the Encyclopedia screen)
 \
+ENDIF
 \ ******************************************************************************
 
 IF _ELITE_A_ENCYCLOPEDIA

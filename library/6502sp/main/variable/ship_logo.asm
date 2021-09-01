@@ -12,8 +12,8 @@
 
  EQUB 0                 \ Max. canisters on demise = 0
  EQUW 99 * 99           \ Targetable area          = 99 * 99
- EQUB &10               \ Edges data offset (low)  = &0110
- EQUB &A4               \ Faces data offset (low)  = &01A4
+ EQUB &10               \ Edges data offset (low)
+ EQUB &A4               \ Faces data offset (low)
  EQUB 153               \ Max. edge count          = (153 - 1) / 4 = 38
  EQUB 0                 \ Gun vertex               = 0
  EQUB 54                \ Explosion count          = 12, as (4 * n) + 6 = 54
@@ -24,8 +24,8 @@
  EQUB 99                \ Visibility distance      = 99
  EQUB 252               \ Max. energy              = 252
  EQUB 36                \ Max. speed               = 36
- EQUB &01               \ Edges data offset (high) = &0110
- EQUB &01               \ Faces data offset (high) = &01A4
+ EQUB &01               \ Edges data offset (high)
+ EQUB &01               \ Faces data offset (high)
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
  EQUB %00000000         \ Laser power              = 0
                         \ Missiles                 = 0
@@ -74,6 +74,8 @@
  VERTEX   49,   11,  -17,     0,      0,    0,     0,         31    \ Vertex 40
  VERTEX   49,   11,  -10,     0,      0,    0,     0,         31    \ Vertex 41
 
+.SHIP_LOGO_EDGES
+
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     0,     0,         31    \ Edge 0
  EDGE       1,       2,     0,     0,         31    \ Edge 1
@@ -112,6 +114,8 @@
  EDGE      37,      39,     0,     0,         30    \ Edge 34
  EDGE      39,      40,     0,     0,         30    \ Edge 35
  EDGE      41,      38,     0,     0,         30    \ Edge 36
+
+.SHIP_LOGO_FACES
 
 \FACE normal_x, normal_y, normal_z, visibility
  FACE        0,       23,        0,         31    \ Face 0

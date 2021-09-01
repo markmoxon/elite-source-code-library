@@ -12,8 +12,8 @@
 
  EQUB 0                 \ Max. canisters on demise = 0
  EQUW 65 * 65           \ Targetable area          = 65 * 65
- EQUB &50               \ Edges data offset (low)  = &0050
- EQUB &8C               \ Faces data offset (low)  = &008C
+ EQUB &50               \ Edges data offset (low)
+ EQUB &8C               \ Faces data offset (low)
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Sidewinders are shown in cyan
  EQUB 61                \ Max. edge count          = (61 - 1) / 4 = 15
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -44,8 +44,8 @@ ELIF _ELITE_A_VERSION
  EQUB 73                \ Max. energy              = 73
 ENDIF
  EQUB 37                \ Max. speed               = 37
- EQUB &00               \ Edges data offset (high) = &0050
- EQUB &00               \ Faces data offset (high) = &008C
+ EQUB &00               \ Edges data offset (high)
+ EQUB &00               \ Faces data offset (high)
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
 IF NOT(_ELITE_A_VERSION)
  EQUB %00010000         \ Laser power              = 2
@@ -73,6 +73,8 @@ ENDIF
  VERTEX   12,   -6,  -28,     3,      3,    3,     3,         12    \ Vertex 8
  VERTEX  -12,   -6,  -28,     3,      3,    3,     3,         12    \ Vertex 9
 
+.SHIP_SIDEWINDER_EDGES
+
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     0,     5,         31    \ Edge 0
  EDGE       1,       2,     2,     6,         31    \ Edge 1
@@ -89,6 +91,8 @@ ENDIF
  EDGE       7,       8,     3,     3,         12    \ Edge 12
  EDGE       6,       9,     3,     3,         12    \ Edge 13
  EDGE       8,       9,     3,     3,         12    \ Edge 14
+
+.SHIP_SIDEWINDER_FACES
 
 \FACE normal_x, normal_y, normal_z, visibility
  FACE        0,       32,        8,         31    \ Face 0

@@ -12,8 +12,8 @@
 
  EQUB 2                 \ Max. canisters on demise = 2
  EQUW 6000              \ Targetable area          = 77.46 * 77.46
- EQUB &6E               \ Edges data offset (low)  = &006E
- EQUB &D6               \ Faces data offset (low)  = &00D6
+ EQUB &6E               \ Edges data offset (low)
+ EQUB &D6               \ Faces data offset (low)
  EQUB 89                \ Max. edge count          = (89 - 1) / 4 = 22
  EQUB 0                 \ Gun vertex               = 0
  EQUB 42                \ Explosion count          = 9, as (4 * n) + 6 = 42
@@ -24,8 +24,8 @@
  EQUB 10                \ Visibility distance      = 10
  EQUB 113               \ Max. energy              = 113
  EQUB 31                \ Max. speed               = 31
- EQUB &00               \ Edges data offset (high) = &006E
- EQUB &00               \ Faces data offset (high) = &00D6
+ EQUB &00               \ Edges data offset (high)
+ EQUB &00               \ Faces data offset (high)
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
  EQUB %00100010         \ Laser power              = 4
                         \ Missiles                 = 2
@@ -46,6 +46,8 @@
  VERTEX   10,    6,  -40,    12,    12,    12,    12,         10     \ Vertex 12
  VERTEX   10,   -6,  -40,    12,    12,    12,    12,         10     \ Vertex 13
  VERTEX   20,    0,  -40,    12,    12,    12,    12,         10     \ Vertex 14
+
+.SHIP_RATTLER_EDGES
 
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       4,       6,     6,     0,         31    \ Edge 0
@@ -74,6 +76,8 @@
  EDGE      12,      13,    12,    12,         10    \ Edge 23
  EDGE      13,      14,    12,    12,         10    \ Edge 24
  EDGE      14,      12,    12,    12,         10    \ Edge 25
+
+.SHIP_RATTLER_FACES
 
 \FACE normal_x, normal_y, normal_z, visibility
  FACE      -26,       92,        6,         31    \ Face 0

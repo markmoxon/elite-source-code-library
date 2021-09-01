@@ -12,8 +12,8 @@
 
  EQUB 0                 \ Max. canisters on demise = 0
  EQUW 50 * 50           \ Targetable area          = 50 * 50
- EQUB &F2               \ Edges data offset (low)  = &00F2
- EQUB &AA               \ Faces data offset (low)  = &01AA
+ EQUB &F2               \ Edges data offset (low)
+ EQUB &AA               \ Faces data offset (low)
 IF _DISC_VERSION OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Transporters are shown in cyan
  EQUB 145               \ Max. edge count          = (145 - 1) / 4 = 36
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -28,8 +28,8 @@ ENDIF
  EQUB 16                \ Visibility distance      = 16
  EQUB 32                \ Max. energy              = 32
  EQUB 10                \ Max. speed               = 10
- EQUB &00               \ Edges data offset (high) = &00F2
- EQUB &01               \ Faces data offset (high) = &01AA
+ EQUB &00               \ Edges data offset (high)
+ EQUB &01               \ Faces data offset (high)
 IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Disc: The ship hanger in the disc version displays the Transporter with normals scaled with a factor of 4, rather than the scale factor of 2 used in the other versions, but the face normals themselves are unchanged. I'm not entirely sure why
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
 ELIF _DISC_DOCKED OR _ELITE_A_VERSION
@@ -122,6 +122,8 @@ ELIF _DISC_DOCKED OR _ELITE_A_VERSION
 
 ENDIF
 
+.SHIP_TRANSPORTER_EDGES
+
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     7,     0,         31    \ Edge 0
  EDGE       1,       2,     1,     0,         31    \ Edge 1
@@ -211,6 +213,8 @@ ELIF _DISC_DOCKED OR _ELITE_A_VERSION
  EDGE      35,      36,     0,     0,          4    \ Edge 44
  EDGE      36,      33,     0,     0,          4    \ Edge 45
 ENDIF
+
+.SHIP_TRANSPORTER_FACES
 
 \FACE normal_x, normal_y, normal_z, visibility
  FACE        0,        0,     -103,         31    \ Face 0

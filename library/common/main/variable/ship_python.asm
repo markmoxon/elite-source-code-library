@@ -20,8 +20,8 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: Pythons in the cassette ve
 ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
  EQUW 80 * 80           \ Targetable area          = 80 * 80
 ENDIF
- EQUB &56               \ Edges data offset (low)  = &0056
- EQUB &BE               \ Faces data offset (low)  = &00BE
+ EQUB &56               \ Edges data offset (low)
+ EQUB &BE               \ Faces data offset (low)
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Pythons are shown in cyan
  EQUB 85                \ Max. edge count          = (85 - 1) / 4 = 21
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -54,8 +54,8 @@ ELIF _ELITE_A_VERSION
  EQUB 125               \ Max. energy              = 125
 ENDIF
  EQUB 20                \ Max. speed               = 20
- EQUB &00               \ Edges data offset (high) = &0056
- EQUB &00               \ Faces data offset (high) = &00BE
+ EQUB &00               \ Edges data offset (high)
+ EQUB &00               \ Faces data offset (high)
  EQUB 0                 \ Normals are scaled by    = 2^0 = 1
 IF NOT(_ELITE_A_6502SP_PARA OR _ELITE_A_FLIGHT OR _ELITE_A_SHIPS_U)
  EQUB %00011011         \ Laser power              = 3
@@ -98,11 +98,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
  VERTEX    0,  -24, -112,    10,     11,   12,    12,         31    \ Vertex 10
 ENDIF
 
-IF _MASTER_VERSION \ Label
-
 .SHIP_PYTHON_EDGES
-
-ENDIF
 
 \EDGE vertex1, vertex2, face1, face2, visibility
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Standard: See group A
@@ -161,11 +157,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
  EDGE       8,       9,     6,     7,         31    \ Edge 25
 ENDIF
 
-IF _MASTER_VERSION \ Label
-
 .SHIP_PYTHON_FACES
-
-ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Standard: See group A
 

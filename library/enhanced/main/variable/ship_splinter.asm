@@ -34,7 +34,7 @@ ENDIF
                         \ Market item when scooped = 11 + 1 = 12 (Minerals)
  EQUW 16 * 16           \ Targetable area          = 16 * 16
 IF NOT(_ELITE_A_VERSION)
- EQUB LO(SHIP_ESCAPE_POD_EDGES - SHIP_SPLINTER)      \ Edges data = escape pod
+ EQUB LO(SHIP_ESCAPE_POD_EDGES - SHIP_SPLINTER)       \ Edges from escape pod
 ELIF _ELITE_A_VERSION
 
 IF _RELEASED OR _SOURCE_DISC
@@ -43,12 +43,12 @@ IF _RELEASED OR _SOURCE_DISC
 
 ELIF _BUG_FIX
 
- EQUB LO(SHIP_ESCAPE_POD_EDGES - SHIP_SPLINTER)      \ Edges data = escape pod
+ EQUB LO(SHIP_ESCAPE_POD_EDGES - SHIP_SPLINTER)       \ Edges from escape pod
 
 ENDIF
 
 ENDIF
- EQUB &44               \ Faces data offset (low)  = &0044
+ EQUB &44               \ Faces data offset (low)
 IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; splinters are shown in red
  EQUB 25                \ Max. edge count          = (25 - 1) / 4 = 6
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -72,7 +72,7 @@ ELIF _ELITE_A_VERSION
 ENDIF
  EQUB 10                \ Max. speed               = 10
 IF NOT(_ELITE_A_VERSION)
- EQUB HI(SHIP_ESCAPE_POD_EDGES - SHIP_SPLINTER)      \ Edges data = escape pod
+ EQUB HI(SHIP_ESCAPE_POD_EDGES - SHIP_SPLINTER)       \ Edges from escape pod
 ELIF _ELITE_A_VERSION
 
 IF _RELEASED OR _SOURCE_DISC
@@ -81,12 +81,12 @@ IF _RELEASED OR _SOURCE_DISC
 
 ELIF _BUG_FIX
 
- EQUB HI(SHIP_ESCAPE_POD_EDGES - SHIP_SPLINTER)      \ Edges data = escape pod
+ EQUB HI(SHIP_ESCAPE_POD_EDGES - SHIP_SPLINTER)       \ Edges from escape pod
 
 ENDIF
 
 ENDIF
- EQUB &00               \ Faces data offset (high) = &0044
+ EQUB &00               \ Faces data offset (high)
  EQUB 5                 \ Normals are scaled by    = 2^5 = 32
  EQUB %00000000         \ Laser power              = 0
                         \ Missiles                 = 0
@@ -96,6 +96,8 @@ ENDIF
  VERTEX    0,   12,  -10,     2,      0,    3,     3,         31    \ Vertex 1
  VERTEX   11,   -6,    2,     1,      0,    3,     3,         31    \ Vertex 2
  VERTEX   12,   42,    7,     1,      0,    2,     2,         31    \ Vertex 3
+
+.SHIP_SPLINTER_FACES
 
 \FACE normal_x, normal_y, normal_z, visibility
  FACE       35,        0,        4,         31    \ Face 0

@@ -12,8 +12,8 @@
 
  EQUB 15                \ Max. canisters on demise = 15
  EQUW 50 * 50           \ Targetable area          = 50 * 50
- EQUB &86               \ Edges data offset (low)  = &0086
- EQUB &FE               \ Faces data offset (low)  = &00FE
+ EQUB &86               \ Edges data offset (low)
+ EQUB &FE               \ Faces data offset (low)
 IF _DISC_VERSION OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Shuttles are shown in cyan
  EQUB 109               \ Max. edge count          = (109 - 1) / 4 = 27
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -28,8 +28,8 @@ ENDIF
  EQUB 22                \ Visibility distance      = 22
  EQUB 32                \ Max. energy              = 32
  EQUB 8                 \ Max. speed               = 8
- EQUB &00               \ Edges data offset (high) = &0086
- EQUB &00               \ Faces data offset (high) = &00FE
+ EQUB &00               \ Edges data offset (high)
+ EQUB &00               \ Faces data offset (high)
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
  EQUB %00000000         \ Laser power              = 0
                         \ Missiles                 = 0
@@ -82,6 +82,8 @@ ELIF _DISC_DOCKED OR _ELITE_A_VERSION
 
 ENDIF
 
+.SHIP_SHUTTLE_EDGES
+
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     2,     0,         31    \ Edge 0
  EDGE       1,       2,    10,     4,         31    \ Edge 1
@@ -125,6 +127,8 @@ ELIF _DISC_DOCKED OR _ELITE_A_VERSION
  EDGE      17,      18,    10,    10,          7    \ Edge 28
  EDGE      16,      18,    10,    10,          6    \ Edge 29
 ENDIF
+
+.SHIP_SHUTTLE_FACES
 
 IF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Disc: See group A
 

@@ -18,8 +18,8 @@ ELIF _DISC_DOCKED OR _ELITE_A_VERSION
                         \ Market item when scooped = 15 + 1 = 16 (alien items)
  EQUW 99 * 99           \ Targetable area          = 99 * 99
 ENDIF
- EQUB &7A               \ Edges data offset (low)  = &007A
- EQUB &DA               \ Faces data offset (low)  = &00DA
+ EQUB &7A               \ Edges data offset (low)
+ EQUB &DA               \ Faces data offset (low)
 IF _DISC_VERSION OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Constrictors are shown in cyan
  EQUB 77                \ Max. edge count          = (77 - 1) / 4 = 19
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -45,8 +45,8 @@ ELIF _ELITE_A_6502SP_PARA OR _ELITE_A_FLIGHT
  EQUB 115               \ Max. energy              = 115
  EQUB 55                \ Max. speed               = 55
 ENDIF
- EQUB &00               \ Edges data offset (high) = &007A
- EQUB &00               \ Faces data offset (high) = &00DA
+ EQUB &00               \ Edges data offset (high)
+ EQUB &00               \ Faces data offset (high)
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
 IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
  EQUB %00110100         \ Laser power              = 6
@@ -78,6 +78,8 @@ ENDIF
  VERTEX  -15,   -7,  -15,     9,      9,    9,     9,         10    \ Vertex 15
  VERTEX    0,   -7,    0,    15,      9,    1,     0,          0    \ Vertex 16
 
+.SHIP_CONSTRICTOR_EDGES
+
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     9,     0,         31    \ Edge 0
  EDGE       1,       2,     9,     1,         31    \ Edge 1
@@ -103,6 +105,8 @@ ENDIF
  EDGE      11,      15,     9,     9,         10    \ Edge 21
  EDGE      13,      15,     9,     9,          5    \ Edge 22
  EDGE      11,      13,     9,     9,         18    \ Edge 23
+
+.SHIP_CONSTRICTOR_FACES
 
 \FACE normal_x, normal_y, normal_z, visibility
  FACE        0,       55,       15,         31    \ Face 0

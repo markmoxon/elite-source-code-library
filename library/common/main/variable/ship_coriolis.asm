@@ -12,8 +12,8 @@
 
  EQUB 0                 \ Max. canisters on demise = 0
  EQUW 160 * 160         \ Targetable area          = 160 * 160
- EQUB &74               \ Edges data offset (low)  = &0074
- EQUB &E4               \ Faces data offset (low)  = &00E4
+ EQUB &74               \ Edges data offset (low)
+ EQUB &E4               \ Faces data offset (low)
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; space stations are shown in cyan
  EQUB 85                \ Max. edge count          = (85 - 1) / 4 = 21
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -28,8 +28,8 @@ ENDIF
  EQUB 120               \ Visibility distance      = 120
  EQUB 240               \ Max. energy              = 240
  EQUB 0                 \ Max. speed               = 0
- EQUB &00               \ Edges data offset (high) = &0074
- EQUB &00               \ Faces data offset (high) = &00E4
+ EQUB &00               \ Edges data offset (high)
+ EQUB &00               \ Faces data offset (high)
  EQUB 0                 \ Normals are scaled by    = 2^0 = 1
  EQUB %00000110         \ Laser power              = 0
                         \ Missiles                 = 6
@@ -51,6 +51,8 @@ ENDIF
  VERTEX   10,   30,  160,     0,      0,    0,     0,         30    \ Vertex 13
  VERTEX  -10,   30,  160,     0,      0,    0,     0,         30    \ Vertex 14
  VERTEX  -10,  -30,  160,     0,      0,    0,     0,         30    \ Vertex 15
+
+.SHIP_CORIOLIS_EDGES
 
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       3,     0,     1,         31    \ Edge 0
@@ -81,6 +83,8 @@ ENDIF
  EDGE      13,      14,     0,     0,         30    \ Edge 25
  EDGE      14,      15,     0,     0,         30    \ Edge 26
  EDGE      15,      12,     0,     0,         30    \ Edge 27
+
+.SHIP_CORIOLIS_FACES
 
 \FACE normal_x, normal_y, normal_z, visibility
  FACE        0,        0,      160,         31    \ Face 0

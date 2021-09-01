@@ -20,11 +20,11 @@ ENDIF
  EQUB 7                 \ Max. canisters on demise = 7
  EQUW 80 * 80           \ Targetable area          = 80 * 80
 IF _MASTER_VERSION \ Platform
- EQUB LO(SHIP_ASTEROID_EDGES - SHIP_ROCK_HERMIT)     \ Edges data = asteroid
- EQUB LO(SHIP_ASTEROID_FACES - SHIP_ROCK_HERMIT)     \ Faces data = asteroid
+ EQUB LO(SHIP_ASTEROID_EDGES - SHIP_ROCK_HERMIT)      \ Edges from asteroid
+ EQUB LO(SHIP_ASTEROID_FACES - SHIP_ROCK_HERMIT)      \ Faces from asteroid
 ELIF _6502SP_VERSION
- EQUB &4A               \ Edges data offset (low)  = &004A
- EQUB &9E               \ Faces data offset (low)  = &009E
+ EQUB &4A               \ Edges data offset (low)
+ EQUB &9E               \ Faces data offset (low)
 ENDIF
  EQUB 69                \ Max. edge count          = (69 - 1) / 4 = 17
  EQUB 0                 \ Gun vertex               = 0
@@ -37,11 +37,11 @@ ENDIF
  EQUB 180               \ Max. energy              = 180
  EQUB 30                \ Max. speed               = 30
 IF _MASTER_VERSION \ Platform
- EQUB HI(SHIP_ASTEROID_EDGES - SHIP_ROCK_HERMIT)     \ Edges data = asteroid
- EQUB HI(SHIP_ASTEROID_FACES - SHIP_ROCK_HERMIT)     \ Faces data = asteroid
+ EQUB HI(SHIP_ASTEROID_EDGES - SHIP_ROCK_HERMIT)      \ Edges from asteroid
+ EQUB HI(SHIP_ASTEROID_FACES - SHIP_ROCK_HERMIT)      \ Faces from asteroid
 ELIF _6502SP_VERSION
- EQUB &00               \ Edges data offset (high) = &004A
- EQUB &00               \ Faces data offset (high) = &009E
+ EQUB &00               \ Edges data offset (high)
+ EQUB &00               \ Faces data offset (high)
 ENDIF
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
  EQUB %00000010         \ Laser power              = 0
@@ -59,6 +59,8 @@ ENDIF
  VERTEX    0,  -50,  -60,     8,      9,   10,    11,         31    \ Vertex 8
 
 IF _6502SP_VERSION \ Platform
+
+.SHIP_ROCK_HERMIT_EDGES
 
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     2,     7,         31    \ Edge 0
@@ -82,6 +84,8 @@ IF _6502SP_VERSION \ Platform
  EDGE       3,       8,     9,    11,         31    \ Edge 18
  EDGE       2,       8,    10,    11,         31    \ Edge 19
  EDGE       7,       8,     8,     9,         31    \ Edge 20
+
+.SHIP_ROCK_HERMIT_FACES
 
 \FACE normal_x, normal_y, normal_z, visibility
  FACE        9,       66,       81,         31    \ Face 0

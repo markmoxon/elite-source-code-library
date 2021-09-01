@@ -12,8 +12,8 @@
 
  EQUB 0                 \ Max. canisters on demise = 0
  EQUW 60 * 60           \ Targetable area          = 60 * 60
- EQUB &86               \ Edges data offset (low)  = &0086
- EQUB &F6               \ Faces data offset (low)  = &00F6
+ EQUB &86               \ Edges data offset (low)
+ EQUB &F6               \ Faces data offset (low)
 IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Asps are shown in cyan
  EQUB 101               \ Max. edge count          = (101 - 1) / 4 = 25
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -40,8 +40,8 @@ ELIF _ELITE_A_VERSION
  EQUB 109               \ Max. energy              = 109
 ENDIF
  EQUB 40                \ Max. speed               = 40
- EQUB &00               \ Edges data offset (high) = &0086
- EQUB &00               \ Faces data offset (high) = &00F6
+ EQUB &00               \ Edges data offset (high)
+ EQUB &00               \ Faces data offset (high)
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
 IF NOT(_ELITE_A_VERSION)
  EQUB %00101001         \ Laser power              = 5
@@ -74,6 +74,8 @@ ENDIF
  VERTEX    0,   -7,   73,     4,      0,    4,     0,         10    \ Vertex 17
  VERTEX    0,   -7,   83,     4,      0,    4,     0,         10    \ Vertex 18
 
+.SHIP_ASP_MK_2_EDGES
+
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     2,     1,         22    \ Edge 0
  EDGE       0,       4,     1,     0,         22    \ Edge 1
@@ -103,6 +105,8 @@ ENDIF
  EDGE      14,      16,    11,    11,          8    \ Edge 25
  EDGE      16,      13,    11,    11,          8    \ Edge 26
  EDGE      18,      17,     4,     0,         10    \ Edge 27
+
+.SHIP_ASP_MK_2_FACES
 
 \FACE normal_x, normal_y, normal_z, visibility
  FACE        0,      -35,        5,         31    \ Face 0

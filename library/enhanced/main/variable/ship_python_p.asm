@@ -20,11 +20,11 @@ ENDIF
  EQUB 2                 \ Max. canisters on demise = 2
  EQUW 80 * 80           \ Targetable area          = 80 * 80
 IF _MASTER_VERSION \ Platform
- EQUB LO(SHIP_PYTHON_EDGES - SHIP_PYTHON_P)          \ Edges data = Python
- EQUB LO(SHIP_PYTHON_FACES - SHIP_PYTHON_P)          \ Faces data = Python
+ EQUB LO(SHIP_PYTHON_EDGES - SHIP_PYTHON_P)           \ Edges from Python
+ EQUB LO(SHIP_PYTHON_FACES - SHIP_PYTHON_P)           \ Faces from Python
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT
- EQUB &56               \ Edges data offset (low)  = &0056
- EQUB &BE               \ Faces data offset (low)  = &00BE
+ EQUB &56               \ Edges data offset (low)
+ EQUB &BE               \ Faces data offset (low)
 ENDIF
 IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Python pirates are shown in cyan
  EQUB 85                \ Max. edge count          = (85 - 1) / 4 = 21
@@ -41,11 +41,11 @@ ENDIF
  EQUB 250               \ Max. energy              = 250
  EQUB 20                \ Max. speed               = 20
 IF _MASTER_VERSION \ Platform
- EQUB HI(SHIP_PYTHON_EDGES - SHIP_PYTHON_P)          \ Edges data = Python
- EQUB HI(SHIP_PYTHON_FACES - SHIP_PYTHON_P)          \ Faces data = Python
+ EQUB HI(SHIP_PYTHON_EDGES - SHIP_PYTHON_P)           \ Edges from Python
+ EQUB HI(SHIP_PYTHON_FACES - SHIP_PYTHON_P)           \ Faces from Python
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT
- EQUB &00               \ Edges data offset (high) = &0056
- EQUB &00               \ Faces data offset (high) = &00BE
+ EQUB &00               \ Edges data offset (high)
+ EQUB &00               \ Faces data offset (high)
 ENDIF
  EQUB 0                 \ Normals are scaled by    = 2^0 = 1
  EQUB %00011011         \ Laser power              = 3
@@ -65,6 +65,8 @@ ENDIF
  VERTEX    0,  -24, -112,    10,     11,   12,    12,         31    \ Vertex 10
 
 IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Platform
+
+.SHIP_PYTHON_P_EDGES
 
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       8,     2,     3,         31    \ Edge 0
@@ -93,6 +95,8 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Platform
  EDGE       9,      10,    10,    11,         31    \ Edge 23
  EDGE       1,       4,     4,     5,         31    \ Edge 24
  EDGE       8,       9,     6,     7,         31    \ Edge 25
+
+.SHIP_PYTHON_P_FACES
 
 \FACE normal_x, normal_y, normal_z, visibility
  FACE      -27,       40,       11,         31    \ Face 0

@@ -13,8 +13,8 @@
  EQUB 0 + (8 << 4)      \ Max. canisters on demise = 0
                         \ Market item when scooped = 8 + 1 = 9 (Alloys)
  EQUW 10 * 10           \ Targetable area          = 10 * 10
- EQUB &2C               \ Edges data offset (low)  = &002C
- EQUB &3C               \ Faces data offset (low)  = &003C
+ EQUB &2C               \ Edges data offset (low)
+ EQUB &3C               \ Faces data offset (low)
 IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; alloy plates are shown in cyan
  EQUB 17                \ Max. edge count          = (17 - 1) / 4 = 4
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -37,8 +37,8 @@ ELIF _ELITE_A_VERSION
  EQUB 8                 \ Max. energy              = 8
 ENDIF
  EQUB 16                \ Max. speed               = 16
- EQUB &00               \ Edges data offset (high) = &002C
- EQUB &00               \ Faces data offset (high) = &003C
+ EQUB &00               \ Edges data offset (high)
+ EQUB &00               \ Faces data offset (high)
  EQUB 3                 \ Normals are scaled by    = 2^3 = 8
  EQUB %00000000         \ Laser power              = 0
                         \ Missiles                 = 0
@@ -49,11 +49,15 @@ ENDIF
  VERTEX   19,   32,   11,    15,     15,   15,    15,         20    \ Vertex 2
  VERTEX   10,  -46,    6,    15,     15,   15,    15,         20    \ Vertex 3
 
+.SHIP_PLATE_EDGES
+
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,    15,    15,         31    \ Edge 0
  EDGE       1,       2,    15,    15,         16    \ Edge 1
  EDGE       2,       3,    15,    15,         20    \ Edge 2
  EDGE       3,       0,    15,    15,         16    \ Edge 3
+
+.SHIP_PLATE_FACES
 
 \FACE normal_x, normal_y, normal_z, visibility
  FACE        0,        0,        0,          0    \ Face 0

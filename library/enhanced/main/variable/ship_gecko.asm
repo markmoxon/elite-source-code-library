@@ -12,8 +12,8 @@
 
  EQUB 0                 \ Max. canisters on demise = 0
  EQUW 99 * 99           \ Targetable area          = 99 * 99
- EQUB &5C               \ Edges data offset (low)  = &005C
- EQUB &A0               \ Faces data offset (low)  = &00A0
+ EQUB &5C               \ Edges data offset (low)
+ EQUB &A0               \ Faces data offset (low)
 IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Geckos are shown in cyan
  EQUB 65                \ Max. edge count          = (65 - 1) / 4 = 16
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -36,8 +36,8 @@ ELIF _ELITE_A_VERSION
  EQUB 65                \ Max. energy              = 65
 ENDIF
  EQUB 30                \ Max. speed               = 30
- EQUB &00               \ Edges data offset (high) = &005C
- EQUB &00               \ Faces data offset (high) = &00A0
+ EQUB &00               \ Edges data offset (high)
+ EQUB &00               \ Faces data offset (high)
  EQUB 3                 \ Normals are scaled by    = 2^3 = 8
 IF NOT(_ELITE_A_VERSION)
  EQUB %00010000         \ Laser power              = 2
@@ -67,6 +67,8 @@ ENDIF
  VERTEX   -8,  -13,  -16,     3,      3,    3,     3,         16    \ Vertex 10
  VERTEX    8,  -13,  -16,     3,      3,    3,     3,         17    \ Vertex 11
 
+.SHIP_GECKO_EDGES
+
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     3,     0,         31    \ Edge 0
  EDGE       1,       5,     2,     1,         31    \ Edge 1
@@ -85,6 +87,8 @@ ENDIF
  EDGE       3,       7,     8,     7,         20    \ Edge 14
  EDGE       8,      10,     3,     3,         16    \ Edge 15
  EDGE       9,      11,     3,     3,         17    \ Edge 16
+
+.SHIP_GECKO_FACES
 
 \FACE normal_x, normal_y, normal_z, visibility
  FACE        0,       31,        5,         31    \ Face 0

@@ -12,8 +12,8 @@
 
  EQUB 1                 \ Max. canisters on demise = 1
  EQUW 3500              \ Targetable area          = 59.16 * 59.16
- EQUB &6E               \ Edges data offset (low)  = &006E
- EQUB &CA               \ Faces data offset (low)  = &00CA
+ EQUB &6E               \ Edges data offset (low)
+ EQUB &CA               \ Faces data offset (low)
  EQUB 81                \ Max. edge count          = (81 - 1) / 4 = 20
  EQUB 0                 \ Gun vertex               = 0
  EQUB 26                \ Explosion count          = 5, as (4 * n) + 6 = 26
@@ -24,8 +24,8 @@
  EQUB 10                \ Visibility distance      = 10
  EQUB 90                \ Max. energy              = 90
  EQUB 33                \ Max. speed               = 33
- EQUB &00               \ Edges data offset (high) = &006E
- EQUB &00               \ Faces data offset (high) = &00CA
+ EQUB &00               \ Edges data offset (high)
+ EQUB &00               \ Faces data offset (high)
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
  EQUB %00100011         \ Laser power              = 4
                         \ Missiles                 = 3
@@ -46,6 +46,8 @@
  VERTEX  -16,    0,  -36,     8,     8,     8,     8,         10     \ Vertex 12
  VERTEX    0,   -8,  -40,     9,     9,     8,     8,         10     \ Vertex 13
  VERTEX   16,    0,  -36,     9,     9,     9,     9,         10     \ Vertex 14
+
+.SHIP_IGUANA_EDGES
 
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     2,     0,         31    \ Edge 0
@@ -71,6 +73,8 @@
  EDGE      13,      12,     8,     8,         10    \ Edge 20
  EDGE      11,      14,     9,     9,         10    \ Edge 21
  EDGE      13,      14,     9,     9,         10    \ Edge 22
+
+.SHIP_IGUANA_FACES
 
 \FACE normal_x, normal_y, normal_z, visibility
  FACE      -51,       77,       25,         31    \ Face 0

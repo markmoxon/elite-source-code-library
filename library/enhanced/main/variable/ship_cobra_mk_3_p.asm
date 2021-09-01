@@ -21,11 +21,11 @@ ENDIF
  EQUB 1                 \ Max. canisters on demise = 1
  EQUW 95 * 95           \ Targetable area          = 95 * 95
 IF _MASTER_VERSION \ Platform
- EQUB LO(SHIP_COBRA_MK_3_EDGES - SHIP_COBRA_MK_3_P)  \ Edges data = Cobra Mk III
- EQUB LO(SHIP_COBRA_MK_3_FACES - SHIP_COBRA_MK_3_P)  \ Faces data = Cobra Mk III
+ EQUB LO(SHIP_COBRA_MK_3_EDGES - SHIP_COBRA_MK_3_P)   \ Edges from Cobra Mk III
+ EQUB LO(SHIP_COBRA_MK_3_FACES - SHIP_COBRA_MK_3_P)   \ Faces from Cobra Mk III
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT
- EQUB &BC               \ Edges data offset (low)  = &00BC
- EQUB &54               \ Faces data offset (low)  = &0154
+ EQUB &BC               \ Edges data offset (low)
+ EQUB &54               \ Faces data offset (low)
 ENDIF
 IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Cobra pirates are shown in cyan
  EQUB 153               \ Max. edge count          = (153 - 1) / 4 = 38
@@ -42,11 +42,11 @@ ENDIF
  EQUB 150               \ Max. energy              = 150
  EQUB 28                \ Max. speed               = 28
 IF _MASTER_VERSION \ Platform
- EQUB HI(SHIP_COBRA_MK_3_EDGES - SHIP_COBRA_MK_3_P)  \ Edges data = Cobra Mk III
- EQUB HI(SHIP_COBRA_MK_3_FACES - SHIP_COBRA_MK_3_P)  \ Faces data = Cobra Mk III
+ EQUB HI(SHIP_COBRA_MK_3_EDGES - SHIP_COBRA_MK_3_P)   \ Edges from Cobra Mk III
+ EQUB HI(SHIP_COBRA_MK_3_FACES - SHIP_COBRA_MK_3_P)   \ Faces from Cobra Mk III
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT
- EQUB &00               \ Edges data offset (high) = &00BC
- EQUB &01               \ Faces data offset (high) = &0154
+ EQUB &00               \ Edges data offset (high)
+ EQUB &01               \ Faces data offset (high)
 ENDIF
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
  EQUB %00010010         \ Laser power              = 2
@@ -83,6 +83,8 @@ ENDIF
  VERTEX   80,   -6,  -40,     9,      9,    9,     9,          8    \ Vertex 27
 
 IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Platform
+
+.SHIP_COBRA_MK_3_P_EDGES
 
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     0,    11,         31    \ Edge 0
@@ -123,6 +125,8 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Platform
  EDGE      25,      26,     9,     9,          6    \ Edge 35
  EDGE      26,      27,     9,     9,          6    \ Edge 36
  EDGE      25,      27,     9,     9,          8    \ Edge 37
+
+.SHIP_COBRA_MK_3_P_FACES
 
 \FACE normal_x, normal_y, normal_z, visibility
  FACE        0,       62,       31,         31    \ Face 0

@@ -12,8 +12,8 @@
 
  EQUB 0                 \ Max. canisters on demise = 0
  EQUW 20 * 20           \ Targetable area          = 20 * 20
- EQUB &50               \ Edges data offset (low)  = &0050
- EQUB &8C               \ Faces data offset (low)  = &008C
+ EQUB &50               \ Edges data offset (low)
+ EQUB &8C               \ Faces data offset (low)
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; cargo canisters are shown in cyan
  EQUB 49                \ Max. edge count          = (49 - 1) / 4 = 12
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -36,8 +36,8 @@ ELIF _ELITE_A_VERSION
  EQUB 8                 \ Max. energy              = 8
 ENDIF
  EQUB 15                \ Max. speed               = 15
- EQUB &00               \ Edges data offset (high) = &0050
- EQUB &00               \ Faces data offset (high) = &008C
+ EQUB &00               \ Edges data offset (high)
+ EQUB &00               \ Faces data offset (high)
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
  EQUB %00000000         \ Laser power              = 0
                         \ Missiles                 = 0
@@ -72,6 +72,8 @@ ENDIF
  EDGE       7,       8,     3,     6,         31    \ Edge 12
  EDGE       8,       9,     4,     6,         31    \ Edge 13
  EDGE       9,       5,     5,     6,         31    \ Edge 14
+
+.SHIP_CANISTER_FACES
 
 \FACE normal_x, normal_y, normal_z, visibility
  FACE       96,        0,        0,         31    \ Face 0

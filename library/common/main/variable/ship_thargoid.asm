@@ -12,8 +12,8 @@
 
  EQUB 0                 \ Max. canisters on demise = 0
  EQUW 99 * 99           \ Targetable area          = 99 * 99
- EQUB &8C               \ Edges data offset (low)  = &008C
- EQUB &F4               \ Faces data offset (low)  = &00F4
+ EQUB &8C               \ Edges data offset (low)
+ EQUB &F4               \ Faces data offset (low)
 IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Thargoids are shown in "white" (cyan/red stripes)
  EQUB 101               \ Max. edge count          = (101 - 1) / 4 = 25
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -32,8 +32,8 @@ ELIF _ELITE_A_VERSION
  EQUB 253               \ Max. energy              = 253
 ENDIF
  EQUB 39                \ Max. speed               = 39
- EQUB &00               \ Edges data offset (high) = &008C
- EQUB &00               \ Faces data offset (high) = &00F4
+ EQUB &00               \ Edges data offset (high)
+ EQUB &00               \ Faces data offset (high)
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
 IF NOT(_ELITE_A_VERSION)
  EQUB %00010110         \ Laser power              = 2
@@ -67,6 +67,8 @@ ENDIF
  VERTEX  -24,  -64,  -80,     9,      9,    9,     9,         30    \ Vertex 18
  VERTEX  -24,  -64,   80,     9,      9,    9,     9,         30    \ Vertex 19
 
+.SHIP_THARGOID_EDGES
+
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       7,     4,     8,         31    \ Edge 0
  EDGE       0,       1,     0,     4,         31    \ Edge 1
@@ -94,6 +96,8 @@ ENDIF
  EDGE      14,      15,     7,     9,         31    \ Edge 23
  EDGE      16,      17,     9,     9,         30    \ Edge 24
  EDGE      18,      19,     9,     9,         30    \ Edge 25
+
+.SHIP_THARGOID_FACES
 
 \FACE normal_x, normal_y, normal_z, visibility
  FACE      103,      -60,       25,         31    \ Face 0

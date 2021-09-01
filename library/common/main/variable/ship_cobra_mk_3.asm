@@ -12,8 +12,8 @@
 
  EQUB 3                 \ Max. canisters on demise = 3
  EQUW 95 * 95           \ Targetable area          = 95 * 95
- EQUB &BC               \ Edges data offset (low)  = &00BC
- EQUB &54               \ Faces data offset (low)  = &0154
+ EQUB &BC               \ Edges data offset (low)
+ EQUB &54               \ Faces data offset (low)
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Cobras are shown in cyan
  EQUB 153               \ Max. edge count          = (153 - 1) / 4 = 38
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -42,8 +42,8 @@ ELIF _ELITE_A_VERSION
  EQUB 98                \ Max. energy              = 98
 ENDIF
  EQUB 28                \ Max. speed               = 28
- EQUB &00               \ Edges data offset (high) = &00BC
- EQUB &01               \ Faces data offset (high) = &0154
+ EQUB &00               \ Edges data offset (high)
+ EQUB &01               \ Faces data offset (high)
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
 IF NOT(_ELITE_A_6502SP_PARA OR _ELITE_A_FLIGHT OR _ELITE_A_SHIPS_T)
  EQUB %00010011         \ Laser power              = 2
@@ -89,11 +89,7 @@ ENDIF
  VERTEX   88,    0,  -40,     9,      9,    9,     9,          6    \ Vertex 26
  VERTEX   80,   -6,  -40,     9,      9,    9,     9,          8    \ Vertex 27
 
-IF _MASTER_VERSION \ Label
-
 .SHIP_COBRA_MK_3_EDGES
-
-ENDIF
 
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     0,    11,         31    \ Edge 0
@@ -135,11 +131,8 @@ ENDIF
  EDGE      26,      27,     9,     9,          6    \ Edge 36
  EDGE      25,      27,     9,     9,          8    \ Edge 37
 
-IF _MASTER_VERSION \ Label
-
 .SHIP_COBRA_MK_3_FACES
 
-ENDIF
 \FACE normal_x, normal_y, normal_z, visibility
  FACE        0,       62,       31,         31    \ Face 0
  FACE      -18,       55,       16,         31    \ Face 1

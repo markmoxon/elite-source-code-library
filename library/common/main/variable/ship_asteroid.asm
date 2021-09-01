@@ -12,8 +12,8 @@
 
  EQUB 0                 \ Max. canisters on demise = 0
  EQUW 80 * 80           \ Targetable area          = 80 * 80
- EQUB &4A               \ Edges data offset (low)  = &004A
- EQUB &9E               \ Faces data offset (low)  = &009E
+ EQUB LO(SHIP_ASTEROID_EDGES - SHIP_ASTEROID) \ Edges data offset (low)
+ EQUB LO(SHIP_ASTEROID_FACES - SHIP_ASTEROID) \ Faces data offset (low)
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; asteroids are shown in red
  EQUB 65                \ Max. edge count          = (65 - 1) / 4 = 16
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -36,8 +36,8 @@ ELIF _ELITE_A_VERSION
  EQUB 56                \ Max. energy              = 56
 ENDIF
  EQUB 30                \ Max. speed               = 30
- EQUB &00               \ Edges data offset (high) = &004A
- EQUB &00               \ Faces data offset (high) = &009E
+ EQUB &00               \ Edges data offset (high)
+ EQUB &00               \ Faces data offset (high)
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
  EQUB %00000000         \ Laser power              = 0
                         \ Missiles                 = 0
@@ -53,11 +53,7 @@ ENDIF
  VERTEX    0,   30,  -75,    15,     15,   15,    15,         31    \ Vertex 7
  VERTEX    0,  -50,  -60,     8,      9,   10,    11,         31    \ Vertex 8
 
-IF _MASTER_VERSION \ Label
-
 .SHIP_ASTEROID_EDGES
-
-ENDIF
 
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     2,     7,         31    \ Edge 0
@@ -82,11 +78,7 @@ ENDIF
  EDGE       2,       8,    10,    11,         31    \ Edge 19
  EDGE       7,       8,     8,     9,         31    \ Edge 20
 
-IF _MASTER_VERSION \ Label
-
 .SHIP_ASTEROID_FACES
-
-ENDIF
 
 \FACE normal_x, normal_y, normal_z, visibility
  FACE        9,       66,       81,         31    \ Face 0

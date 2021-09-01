@@ -12,8 +12,8 @@
 
  EQUB 0                 \ Max. canisters on demise = 0
  EQUW 40 * 40           \ Targetable area          = 40 * 40
- EQUB &86               \ Edges data offset (low)  = &0086
- EQUB &F2               \ Faces data offset (low)  = &00F2
+ EQUB &86               \ Edges data offset (low)
+ EQUB &F2               \ Faces data offset (low)
 IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Fer-de-lances are shown in cyan
  EQUB 105               \ Max. edge count          = (105 - 1) / 4 = 26
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -40,8 +40,8 @@ ELIF _ELITE_A_VERSION
  EQUB 83                \ Max. energy              = 83
 ENDIF
  EQUB 30                \ Max. speed               = 30
- EQUB &00               \ Edges data offset (high) = &0086
- EQUB &00               \ Faces data offset (high) = &00F2
+ EQUB &00               \ Edges data offset (high)
+ EQUB &00               \ Faces data offset (high)
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
 IF NOT(_ELITE_A_VERSION)
  EQUB %00010010         \ Laser power              = 2
@@ -78,6 +78,8 @@ ENDIF
  VERTEX  -14,  -14,   44,     9,      9,    9,     9,         12    \ Vertex 17
  VERTEX   14,  -14,   44,     9,      9,    9,     9,         12    \ Vertex 18
 
+.SHIP_FER_DE_LANCE_EDGES
+
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     9,     1,         31    \ Edge 0
  EDGE       1,       2,     9,     2,         31    \ Edge 1
@@ -106,6 +108,8 @@ ENDIF
  EDGE      16,      17,     9,     9,         12    \ Edge 24
  EDGE      16,      18,     9,     9,         12    \ Edge 25
  EDGE      17,      18,     9,     9,          8    \ Edge 26
+
+.SHIP_FER_DE_LANCE_FACES
 
 \FACE normal_x, normal_y, normal_z, visibility
  FACE        0,       24,        6,         28    \ Face 0

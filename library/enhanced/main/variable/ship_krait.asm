@@ -12,8 +12,8 @@
 
  EQUB 1                 \ Max. canisters on demise = 1
  EQUW 60 * 60           \ Targetable area          = 60 * 60
- EQUB &7A               \ Edges data offset (low)  = &007A
- EQUB &CE               \ Faces data offset (low)  = &00CE
+ EQUB &7A               \ Edges data offset (low)
+ EQUB &CE               \ Faces data offset (low)
 IF _DISC_VERSION OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Kraits are shown in cyan
  EQUB 85                \ Max. edge count          = (85 - 1) / 4 = 21
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -46,8 +46,8 @@ ELIF _ELITE_A_VERSION
  EQUB 73                \ Max. energy              = 73
 ENDIF
  EQUB 30                \ Max. speed               = 30
- EQUB &00               \ Edges data offset (high) = &007A
- EQUB &00               \ Faces data offset (high) = &00CE
+ EQUB &00               \ Edges data offset (high)
+ EQUB &00               \ Faces data offset (high)
 IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Disc: Group A: The ship hanger in the disc version displays the Krait with normals scaled with a factor of 4, which are more accurate than in the ship hangers of the other enhanced versions, which store them with a scale factor of 2
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
 ELIF _DISC_DOCKED
@@ -92,6 +92,8 @@ ENDIF
  VERTEX  -18,  -11,  -39,     5,      5,    5,     5,          8    \ Vertex 15
  VERTEX  -36,    0,  -30,     5,      5,    5,     5,          8    \ Vertex 16
 
+.SHIP_KRAIT_EDGES
+
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     3,     0,         31    \ Edge 0
  EDGE       0,       2,     2,     1,         31    \ Edge 1
@@ -120,6 +122,8 @@ ENDIF
  EDGE      14,      15,     5,     5,          7    \ Edge 18
  EDGE      15,      16,     5,     5,          8    \ Edge 19
  EDGE      16,      14,     5,     5,          8    \ Edge 20
+
+.SHIP_KRAIT_FACES
 
 IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Disc: See group A
 

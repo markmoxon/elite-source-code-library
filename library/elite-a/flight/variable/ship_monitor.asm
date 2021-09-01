@@ -12,8 +12,8 @@
 
  EQUB 4                 \ Max. canisters on demise = 4
  EQUW 13824             \ Targetable area          = 117.57 * 117.57
- EQUB &7A               \ Edges data offset (low)  = &007A
- EQUB &D6               \ Faces data offset (low)  = &00D6
+ EQUB &7A               \ Edges data offset (low)
+ EQUB &D6               \ Faces data offset (low)
  EQUB 101               \ Max. edge count          = (101 - 1) / 4 = 25
  EQUB 0                 \ Gun vertex               = 0
  EQUB 42                \ Explosion count          = 9, as (4 * n) + 6 = 42
@@ -32,8 +32,8 @@ ELIF _ELITE_A_SHIPS_S
  EQUB 133               \ Max. energy              = 133
 ENDIF
  EQUB 16                \ Max. speed               = 16
- EQUB &00               \ Edges data offset (high) = &007A
- EQUB &00               \ Faces data offset (high) = &00D6
+ EQUB &00               \ Edges data offset (high)
+ EQUB &00               \ Faces data offset (high)
  EQUB 0                 \ Normals are scaled by    = 2^0 = 1
  EQUB %00110111         \ Laser power              = 6
                         \ Missiles                 = 7
@@ -56,6 +56,8 @@ ENDIF
  VERTEX   10,    0,  100,     7,     7,     7,     7,         10     \ Vertex 14
  VERTEX  -20,  -10,   60,     6,     6,     6,     6,         10     \ Vertex 15
  VERTEX  -10,    0,  100,     6,     6,     6,     6,         10     \ Vertex 16
+
+.SHIP_MONITOR_EDGES
 
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     1,     0,         31    \ Edge 0
@@ -81,6 +83,8 @@ ENDIF
  EDGE      11,      12,     0,     0,         10    \ Edge 20
  EDGE      13,      14,     7,     7,         10    \ Edge 21
  EDGE      15,      16,     6,     6,         10    \ Edge 22
+
+.SHIP_MONITOR_FACES
 
 \FACE normal_x, normal_y, normal_z, visibility
  FACE        0,       62,       11,         31    \ Face 0

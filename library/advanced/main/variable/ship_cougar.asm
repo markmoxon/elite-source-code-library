@@ -13,8 +13,8 @@
 
  EQUB 3                 \ Max. canisters on demise = 3
  EQUW 70 * 70           \ Targetable area          = 70 * 70
- EQUB &86               \ Edges data offset (low)  = &0086
- EQUB &EA               \ Faces data offset (low)  = &00EA
+ EQUB &86               \ Edges data offset (low)
+ EQUB &EA               \ Faces data offset (low)
  EQUB 105               \ Max. edge count          = (105 - 1) / 4 = 26
  EQUB 0                 \ Gun vertex               = 0
  EQUB 42                \ Explosion count          = 9, as (4 * n) + 6 = 42
@@ -25,8 +25,8 @@
  EQUB 34                \ Visibility distance      = 34
  EQUB 252               \ Max. energy              = 252
  EQUB 40                \ Max. speed               = 40
- EQUB &00               \ Edges data offset (high) = &0086
- EQUB &00               \ Faces data offset (high) = &00EA
+ EQUB &00               \ Edges data offset (high)
+ EQUB &00               \ Faces data offset (high)
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
  EQUB %00110100         \ Laser power              = 6
                         \ Missiles                 = 4
@@ -51,6 +51,8 @@
  VERTEX  -10,   -6,  -40,     5,      5,    5,     5,         20    \ Vertex 16
  VERTEX   10,   -6,  -40,     5,      5,    5,     5,         20    \ Vertex 17
  VERTEX   10,    6,  -40,     5,      5,    5,     5,         20    \ Vertex 18
+
+.SHIP_COUGAR_EDGES
 
 \EDGE vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     2,     0,         31    \ Edge 0
@@ -78,6 +80,8 @@
  EDGE      16,      18,     5,     5,         20    \ Edge 22
  EDGE      18,      17,     5,     5,         18    \ Edge 23
  EDGE      17,      15,     5,     5,         20    \ Edge 24
+
+.SHIP_COUGAR_FACES
 
 \FACE normal_x, normal_y, normal_z, visibility
  FACE      -16,       46,        4,         31    \ Face 0

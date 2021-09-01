@@ -175,7 +175,7 @@ INCLUDE "library/common/main/workspace/wp.asm"
 CODE% = &11E3
 LOAD% = &11E3
 
- ORG CODE%
+ORG CODE%
 
 LOAD_A% = LOAD%
 

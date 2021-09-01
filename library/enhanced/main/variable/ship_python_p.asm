@@ -20,11 +20,11 @@ ENDIF
  EQUB 2                 \ Max. canisters on demise = 2
  EQUW 80 * 80           \ Targetable area          = 80 * 80
 IF _MASTER_VERSION \ Platform
- EQUB LO(SHIP_PYTHON_EDGES - SHIP_PYTHON_P)           \ Edges from Python
- EQUB LO(SHIP_PYTHON_FACES - SHIP_PYTHON_P)           \ Faces from Python
+ EQUB LO(SHIP_PYTHON_EDGES - SHIP_PYTHON_P)        \ Edges from Python
+ EQUB LO(SHIP_PYTHON_FACES - SHIP_PYTHON_P)        \ Faces from Python
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT
- EQUB &56               \ Edges data offset (low)
- EQUB &BE               \ Faces data offset (low)
+ EQUB LO(SHIP_PYTHON_P_EDGES - SHIP_PYTHON_P)      \ Edges data offset (low)
+ EQUB LO(SHIP_PYTHON_P_FACES - SHIP_PYTHON_P)      \ Faces data offset (low)
 ENDIF
 IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Python pirates are shown in cyan
  EQUB 85                \ Max. edge count          = (85 - 1) / 4 = 21
@@ -41,11 +41,11 @@ ENDIF
  EQUB 250               \ Max. energy              = 250
  EQUB 20                \ Max. speed               = 20
 IF _MASTER_VERSION \ Platform
- EQUB HI(SHIP_PYTHON_EDGES - SHIP_PYTHON_P)           \ Edges from Python
- EQUB HI(SHIP_PYTHON_FACES - SHIP_PYTHON_P)           \ Faces from Python
+ EQUB HI(SHIP_PYTHON_EDGES - SHIP_PYTHON_P)        \ Edges from Python
+ EQUB HI(SHIP_PYTHON_FACES - SHIP_PYTHON_P)        \ Faces from Python
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT
- EQUB &00               \ Edges data offset (high)
- EQUB &00               \ Faces data offset (high)
+ EQUB HI(SHIP_PYTHON_P_EDGES - SHIP_PYTHON_P)      \ Edges data offset (high)
+ EQUB HI(SHIP_PYTHON_P_FACES - SHIP_PYTHON_P)      \ Faces data offset (high)
 ENDIF
  EQUB 0                 \ Normals are scaled by    = 2^0 = 1
  EQUB %00011011         \ Laser power              = 3

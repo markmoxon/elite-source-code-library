@@ -24,8 +24,8 @@ IF _MASTER_VERSION \ Platform
  EQUB LO(SHIP_COBRA_MK_3_EDGES - SHIP_COBRA_MK_3_P)   \ Edges from Cobra Mk III
  EQUB LO(SHIP_COBRA_MK_3_FACES - SHIP_COBRA_MK_3_P)   \ Faces from Cobra Mk III
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT
- EQUB &BC               \ Edges data offset (low)
- EQUB &54               \ Faces data offset (low)
+ EQUB LO(SHIP_COBRA_MK_3_P_EDGES - SHIP_COBRA_MK_3_P) \ Edges data offset (low)
+ EQUB LO(SHIP_COBRA_MK_3_P_FACES - SHIP_COBRA_MK_3_P) \ Faces data offset (low)
 ENDIF
 IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Cobra pirates are shown in cyan
  EQUB 153               \ Max. edge count          = (153 - 1) / 4 = 38
@@ -45,8 +45,8 @@ IF _MASTER_VERSION \ Platform
  EQUB HI(SHIP_COBRA_MK_3_EDGES - SHIP_COBRA_MK_3_P)   \ Edges from Cobra Mk III
  EQUB HI(SHIP_COBRA_MK_3_FACES - SHIP_COBRA_MK_3_P)   \ Faces from Cobra Mk III
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT
- EQUB &00               \ Edges data offset (high)
- EQUB &01               \ Faces data offset (high)
+ EQUB HI(SHIP_COBRA_MK_3_P_EDGES - SHIP_COBRA_MK_3_P) \ Edges data offset (high)
+ EQUB HI(SHIP_COBRA_MK_3_P_FACES - SHIP_COBRA_MK_3_P) \ Faces data offset (high)
 ENDIF
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
  EQUB %00010010         \ Laser power              = 2

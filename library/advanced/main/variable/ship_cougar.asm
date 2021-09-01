@@ -13,8 +13,8 @@
 
  EQUB 3                 \ Max. canisters on demise = 3
  EQUW 70 * 70           \ Targetable area          = 70 * 70
- EQUB &86               \ Edges data offset (low)
- EQUB &EA               \ Faces data offset (low)
+ EQUB LO(SHIP_COUGAR_EDGES - SHIP_COUGAR)          \ Edges data offset (low)
+ EQUB LO(SHIP_COUGAR_FACES - SHIP_COUGAR)          \ Faces data offset (low)
  EQUB 105               \ Max. edge count          = (105 - 1) / 4 = 26
  EQUB 0                 \ Gun vertex               = 0
  EQUB 42                \ Explosion count          = 9, as (4 * n) + 6 = 42
@@ -25,8 +25,8 @@
  EQUB 34                \ Visibility distance      = 34
  EQUB 252               \ Max. energy              = 252
  EQUB 40                \ Max. speed               = 40
- EQUB &00               \ Edges data offset (high)
- EQUB &00               \ Faces data offset (high)
+ EQUB HI(SHIP_COUGAR_EDGES - SHIP_COUGAR)          \ Edges data offset (high)
+ EQUB HI(SHIP_COUGAR_FACES - SHIP_COUGAR)          \ Faces data offset (high)
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
  EQUB %00110100         \ Laser power              = 6
                         \ Missiles                 = 4

@@ -12,8 +12,8 @@
 
  EQUB 1                 \ Max. canisters on demise = 1
  EQUW 70 * 70           \ Targetable area          = 70 * 70
- EQUB &AA               \ Edges data offset (low)
- EQUB &1A               \ Faces data offset (low)
+ EQUB LO(SHIP_MAMBA_EDGES - SHIP_MAMBA)            \ Edges data offset (low)
+ EQUB LO(SHIP_MAMBA_FACES - SHIP_MAMBA)            \ Faces data offset (low)
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Mambas are shown in cyan
  EQUB 93                \ Max. edge count          = (93 - 1) / 4 = 23
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -40,8 +40,8 @@ ELIF _ELITE_A_VERSION
  EQUB 80                \ Max. energy              = 80
 ENDIF
  EQUB 30                \ Max. speed               = 30
- EQUB &00               \ Edges data offset (high)
- EQUB &01               \ Faces data offset (high)
+ EQUB HI(SHIP_MAMBA_EDGES - SHIP_MAMBA)            \ Edges data offset (high)
+ EQUB HI(SHIP_MAMBA_FACES - SHIP_MAMBA)            \ Faces data offset (high)
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
 IF NOT(_ELITE_A_VERSION)
  EQUB %00010010         \ Laser power              = 2

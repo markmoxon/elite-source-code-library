@@ -12,8 +12,8 @@
 
  EQUB 3                 \ Max. canisters on demise = 3
  EQUW 4000              \ Targetable area          = 63.24 * 63.24
- EQUB &80               \ Edges data offset (low)
- EQUB &F4               \ Faces data offset (low)
+ EQUB LO(SHIP_CHAMELEON_EDGES - SHIP_CHAMELEON)    \ Edges data offset (low)
+ EQUB LO(SHIP_CHAMELEON_FACES - SHIP_CHAMELEON)    \ Faces data offset (low)
  EQUB 89                \ Max. edge count          = (89 - 1) / 4 = 22
  EQUB 0                 \ Gun vertex               = 0
  EQUB 26                \ Explosion count          = 5, as (4 * n) + 6 = 26
@@ -32,8 +32,8 @@ ELIF _ELITE_A_SHIPS_U
  EQUB 109               \ Max. energy              = 109
 ENDIF
  EQUB 29                \ Max. speed               = 29
- EQUB &00               \ Edges data offset (high)
- EQUB &00               \ Faces data offset (high)
+ EQUB HI(SHIP_CHAMELEON_EDGES - SHIP_CHAMELEON)    \ Edges data offset (high)
+ EQUB HI(SHIP_CHAMELEON_FACES - SHIP_CHAMELEON)    \ Faces data offset (high)
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
  EQUB %00100011         \ Laser power              = 4
                         \ Missiles                 = 3

@@ -12,8 +12,8 @@
 
  EQUB 1                 \ Max. canisters on demise = 1
  EQUW 3500              \ Targetable area          = 59.16 * 59.16
- EQUB &6E               \ Edges data offset (low)
- EQUB &CA               \ Faces data offset (low)
+ EQUB LO(SHIP_IGUANA_EDGES - SHIP_IGUANA)          \ Edges data offset (low)
+ EQUB LO(SHIP_IGUANA_FACES - SHIP_IGUANA)          \ Faces data offset (low)
  EQUB 81                \ Max. edge count          = (81 - 1) / 4 = 20
  EQUB 0                 \ Gun vertex               = 0
  EQUB 26                \ Explosion count          = 5, as (4 * n) + 6 = 26
@@ -24,8 +24,8 @@
  EQUB 10                \ Visibility distance      = 10
  EQUB 90                \ Max. energy              = 90
  EQUB 33                \ Max. speed               = 33
- EQUB &00               \ Edges data offset (high)
- EQUB &00               \ Faces data offset (high)
+ EQUB HI(SHIP_IGUANA_EDGES - SHIP_IGUANA)          \ Edges data offset (high)
+ EQUB HI(SHIP_IGUANA_FACES - SHIP_IGUANA)          \ Faces data offset (high)
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
  EQUB %00100011         \ Laser power              = 4
                         \ Missiles                 = 3

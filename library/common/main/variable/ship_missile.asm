@@ -12,8 +12,8 @@
 
  EQUB 0                 \ Max. canisters on demise = 0
  EQUW 40 * 40           \ Targetable area          = 40 * 40
- EQUB &7A               \ Edges data offset (low)
- EQUB &DA               \ Faces data offset (low)
+ EQUB LO(SHIP_MISSILE_EDGES - SHIP_MISSILE)        \ Edges data offset (low)
+ EQUB LO(SHIP_MISSILE_FACES - SHIP_MISSILE)        \ Faces data offset (low)
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; missiles are shown in yellow
  EQUB 81                \ Max. edge count          = (81 - 1) / 4 = 20
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -28,8 +28,8 @@ ENDIF
  EQUB 14                \ Visibility distance      = 14
  EQUB 2                 \ Max. energy              = 2
  EQUB 44                \ Max. speed               = 44
- EQUB &00               \ Edges data offset (high)
- EQUB &00               \ Faces data offset (high)
+ EQUB HI(SHIP_MISSILE_EDGES - SHIP_MISSILE)        \ Edges data offset (high)
+ EQUB HI(SHIP_MISSILE_FACES - SHIP_MISSILE)        \ Faces data offset (high)
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
  EQUB %00000000         \ Laser power              = 0
                         \ Missiles                 = 0

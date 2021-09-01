@@ -12,8 +12,8 @@
 
  EQUB 0                 \ Max. canisters on demise = 0
  EQUW 65 * 65           \ Targetable area          = 65 * 65
- EQUB &50               \ Edges data offset (low)
- EQUB &8C               \ Faces data offset (low)
+ EQUB LO(SHIP_SIDEWINDER_EDGES - SHIP_SIDEWINDER)  \ Edges data offset (low)
+ EQUB LO(SHIP_SIDEWINDER_FACES - SHIP_SIDEWINDER)  \ Faces data offset (low)
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Sidewinders are shown in cyan
  EQUB 61                \ Max. edge count          = (61 - 1) / 4 = 15
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -44,8 +44,8 @@ ELIF _ELITE_A_VERSION
  EQUB 73                \ Max. energy              = 73
 ENDIF
  EQUB 37                \ Max. speed               = 37
- EQUB &00               \ Edges data offset (high)
- EQUB &00               \ Faces data offset (high)
+ EQUB HI(SHIP_SIDEWINDER_EDGES - SHIP_SIDEWINDER)  \ Edges data offset (high)
+ EQUB HI(SHIP_SIDEWINDER_FACES - SHIP_SIDEWINDER)  \ Faces data offset (high)
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
 IF NOT(_ELITE_A_VERSION)
  EQUB %00010000         \ Laser power              = 2

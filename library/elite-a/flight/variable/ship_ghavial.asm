@@ -12,8 +12,8 @@
 
  EQUB 3                 \ Max. canisters on demise = 3
  EQUW 9728              \ Targetable area          = 98.63 * 98.63
- EQUB &5C               \ Edges data offset (low)
- EQUB &B4               \ Faces data offset (low)
+ EQUB LO(SHIP_GHAVIAL_EDGES - SHIP_GHAVIAL)        \ Edges data offset (low)
+ EQUB LO(SHIP_GHAVIAL_FACES - SHIP_GHAVIAL)        \ Faces data offset (low)
  EQUB 97                \ Max. edge count          = (97 - 1) / 4 = 24
  EQUB 0                 \ Gun vertex               = 0
  EQUB 34                \ Explosion count          = 7, as (4 * n) + 6 = 34
@@ -34,8 +34,8 @@ ELIF _ELITE_A_SHIPS_U
  EQUB 115               \ Max. energy              = 115
 ENDIF
  EQUB 16                \ Max. speed               = 16
- EQUB &00               \ Edges data offset (high)
- EQUB &00               \ Faces data offset (high)
+ EQUB HI(SHIP_GHAVIAL_EDGES - SHIP_GHAVIAL)        \ Edges data offset (high)
+ EQUB HI(SHIP_GHAVIAL_FACES - SHIP_GHAVIAL)        \ Faces data offset (high)
  EQUB 0                 \ Normals are scaled by    = 2^0 = 1
 IF NOT(_ELITE_A_SHIPS_U)
  EQUB %00100111         \ Laser power              = 4

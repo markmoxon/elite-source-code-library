@@ -12,8 +12,8 @@
 
  EQUB 0                 \ Max. canisters on demise = 0
  EQUW 180 * 180         \ Targetable area          = 180 * 180
- EQUB &A4               \ Edges data offset (low)
- EQUB &2C               \ Faces data offset (low)
+ EQUB LO(SHIP_DODO_EDGES - SHIP_DODO)              \ Edges data offset (low)
+ EQUB LO(SHIP_DODO_FACES - SHIP_DODO)              \ Faces data offset (low)
 IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; space stations are shown in cyan
  EQUB 97                \ Max. edge count          = (97 - 1) / 4 = 24
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -28,8 +28,8 @@ ENDIF
  EQUB 125               \ Visibility distance      = 125
  EQUB 240               \ Max. energy              = 240
  EQUB 0                 \ Max. speed               = 0
- EQUB &00               \ Edges data offset (high)
- EQUB &01               \ Faces data offset (high)
+ EQUB HI(SHIP_DODO_EDGES - SHIP_DODO)              \ Edges data offset (high)
+ EQUB HI(SHIP_DODO_FACES - SHIP_DODO)              \ Faces data offset (high)
  EQUB 0                 \ Normals are scaled by    = 2^0 = 1
  EQUB %00000000         \ Laser power              = 0
                         \ Missiles                 = 0

@@ -34,7 +34,7 @@ ENDIF
                         \ Market item when scooped = 11 + 1 = 12 (Minerals)
  EQUW 16 * 16           \ Targetable area          = 16 * 16
 IF NOT(_ELITE_A_VERSION)
- EQUB LO(SHIP_ESCAPE_POD_EDGES - SHIP_SPLINTER)       \ Edges from escape pod
+ EQUB LO(SHIP_ESCAPE_POD_EDGES - SHIP_SPLINTER)    \ Edges from escape pod
 ELIF _ELITE_A_VERSION
 
 IF _RELEASED OR _SOURCE_DISC
@@ -43,12 +43,12 @@ IF _RELEASED OR _SOURCE_DISC
 
 ELIF _BUG_FIX
 
- EQUB LO(SHIP_ESCAPE_POD_EDGES - SHIP_SPLINTER)       \ Edges from escape pod
+ EQUB LO(SHIP_ESCAPE_POD_EDGES - SHIP_SPLINTER)    \ Edges from escape pod
 
 ENDIF
 
 ENDIF
- EQUB &44               \ Faces data offset (low)
+ EQUB LO(SHIP_SPLINTER_FACES - SHIP_SPLINTER) + 24 \ Faces data offset (low)
 IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; splinters are shown in red
  EQUB 25                \ Max. edge count          = (25 - 1) / 4 = 6
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -72,7 +72,7 @@ ELIF _ELITE_A_VERSION
 ENDIF
  EQUB 10                \ Max. speed               = 10
 IF NOT(_ELITE_A_VERSION)
- EQUB HI(SHIP_ESCAPE_POD_EDGES - SHIP_SPLINTER)       \ Edges from escape pod
+ EQUB HI(SHIP_ESCAPE_POD_EDGES - SHIP_SPLINTER)    \ Edges from escape pod
 ELIF _ELITE_A_VERSION
 
 IF _RELEASED OR _SOURCE_DISC
@@ -81,12 +81,12 @@ IF _RELEASED OR _SOURCE_DISC
 
 ELIF _BUG_FIX
 
- EQUB HI(SHIP_ESCAPE_POD_EDGES - SHIP_SPLINTER)       \ Edges from escape pod
+ EQUB HI(SHIP_ESCAPE_POD_EDGES - SHIP_SPLINTER)    \ Edges from escape pod
 
 ENDIF
 
 ENDIF
- EQUB &00               \ Faces data offset (high)
+ EQUB HI(SHIP_SPLINTER_FACES - SHIP_SPLINTER)      \ Faces data offset (low)
  EQUB 5                 \ Normals are scaled by    = 2^5 = 32
  EQUB %00000000         \ Laser power              = 0
                         \ Missiles                 = 0

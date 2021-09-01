@@ -17,8 +17,8 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
                         \ Market item when scooped = 2 + 1 = 3 (slaves)
 ENDIF
  EQUW 16 * 16           \ Targetable area          = 16 * 16
- EQUB &2C               \ Edges data offset (low)
- EQUB &44               \ Faces data offset (low)
+ EQUB LO(SHIP_ESCAPE_POD_EDGES - SHIP_ESCAPE_POD)  \ Edges data offset (low)
+ EQUB LO(SHIP_ESCAPE_POD_FACES - SHIP_ESCAPE_POD)  \ Faces data offset (low)
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; escape pods are shown in cyan
  EQUB 25                \ Max. edge count          = (25 - 1) / 4 = 6
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -37,8 +37,8 @@ ELIF _ELITE_A_VERSION
  EQUB 8                 \ Max. energy              = 8
 ENDIF
  EQUB 8                 \ Max. speed               = 8
- EQUB &00               \ Edges data offset (high)
- EQUB &00               \ Faces data offset (high)
+ EQUB HI(SHIP_ESCAPE_POD_EDGES - SHIP_ESCAPE_POD)  \ Edges data offset (high)
+ EQUB HI(SHIP_ESCAPE_POD_FACES - SHIP_ESCAPE_POD)  \ Faces data offset (high)
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: Group A: In the cassette version, the escape pod stores its faces with a scale factor of 8, while the other versions store them at a more accurate factor of 16
  EQUB 3                 \ Normals are scaled by    =  2^3 = 8
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION

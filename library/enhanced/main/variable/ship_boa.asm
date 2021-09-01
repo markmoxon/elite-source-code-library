@@ -12,8 +12,8 @@
 
  EQUB 5                 \ Max. canisters on demise = 5
  EQUW 70 * 70           \ Targetable area          = 70 * 70
- EQUB &62               \ Edges data offset (low)
- EQUB &C2               \ Faces data offset (low)
+ EQUB LO(SHIP_BOA_EDGES - SHIP_BOA)                \ Edges data offset (low)
+ EQUB LO(SHIP_BOA_FACES - SHIP_BOA)                \ Faces data offset (low)
 IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Boas are shown in cyan
  EQUB 89                \ Max. edge count          = (89 - 1) / 4 = 22
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -40,8 +40,8 @@ ELIF _ELITE_A_VERSION
  EQUB 164               \ Max. energy              = 164
 ENDIF
  EQUB 24                \ Max. speed               = 24
- EQUB &00               \ Edges data offset (high)
- EQUB &00               \ Faces data offset (high)
+ EQUB HI(SHIP_BOA_EDGES - SHIP_BOA)                \ Edges data offset (high)
+ EQUB HI(SHIP_BOA_FACES - SHIP_BOA)                \ Faces data offset (high)
  EQUB 0                 \ Normals are scaled by    = 2^0 = 1
 IF NOT(_ELITE_A_VERSION)
  EQUB %00011100         \ Laser power              = 3

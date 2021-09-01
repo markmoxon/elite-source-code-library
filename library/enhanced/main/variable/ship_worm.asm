@@ -12,8 +12,8 @@
 
  EQUB 0                 \ Max. canisters on demise = 0
  EQUW 99 * 99           \ Targetable area          = 99 * 99
- EQUB &50               \ Edges data offset (low)
- EQUB &90               \ Faces data offset (low)
+ EQUB LO(SHIP_WORM_EDGES - SHIP_WORM)              \ Edges data offset (low)
+ EQUB LO(SHIP_WORM_FACES - SHIP_WORM)              \ Faces data offset (low)
 IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Worms are shown in cyan
  EQUB 73                \ Max. edge count          = (73 - 1) / 4 = 18
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -32,8 +32,8 @@ ELIF _ELITE_A_VERSION
  EQUB 32                \ Max. energy              = 32
 ENDIF
  EQUB 23                \ Max. speed               = 23
- EQUB &00               \ Edges data offset (high)
- EQUB &00               \ Faces data offset (high)
+ EQUB HI(SHIP_WORM_EDGES - SHIP_WORM)              \ Edges data offset (high)
+ EQUB HI(SHIP_WORM_FACES - SHIP_WORM)              \ Faces data offset (high)
  EQUB 3                 \ Normals are scaled by    = 2^3 = 8
 IF NOT(_ELITE_A_VERSION)
  EQUB %00001000         \ Laser power              = 1

@@ -12,8 +12,8 @@
 
  EQUB 7                 \ Max. canisters on demise = 7
  EQUW 100 * 100         \ Targetable area          = 100 * 100
- EQUB &6E               \ Edges data offset (low)
- EQUB &D2               \ Faces data offset (low)
+ EQUB LO(SHIP_ANACONDA_EDGES - SHIP_ANACONDA)      \ Edges data offset (low)
+ EQUB LO(SHIP_ANACONDA_FACES - SHIP_ANACONDA)      \ Faces data offset (low)
 IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Anacondas are shown in cyan
  EQUB 89                \ Max. edge count          = (89 - 1) / 4 = 22
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -36,8 +36,8 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 ENDIF
  EQUB 252               \ Max. energy              = 252
  EQUB 14                \ Max. speed               = 14
- EQUB &00               \ Edges data offset (high)
- EQUB &00               \ Faces data offset (high)
+ EQUB HI(SHIP_ANACONDA_EDGES - SHIP_ANACONDA)      \ Edges data offset (high)
+ EQUB HI(SHIP_ANACONDA_FACES - SHIP_ANACONDA)      \ Faces data offset (high)
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
 IF NOT(_ELITE_A_VERSION)
  EQUB %00111111         \ Laser power              = 7

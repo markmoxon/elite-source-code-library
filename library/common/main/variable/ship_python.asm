@@ -20,8 +20,8 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: Pythons in the cassette ve
 ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
  EQUW 80 * 80           \ Targetable area          = 80 * 80
 ENDIF
- EQUB &56               \ Edges data offset (low)
- EQUB &BE               \ Faces data offset (low)
+ EQUB LO(SHIP_PYTHON_EDGES - SHIP_PYTHON)          \ Edges data offset (low)
+ EQUB LO(SHIP_PYTHON_FACES - SHIP_PYTHON)          \ Faces data offset (low)
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Pythons are shown in cyan
  EQUB 85                \ Max. edge count          = (85 - 1) / 4 = 21
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -54,8 +54,8 @@ ELIF _ELITE_A_VERSION
  EQUB 125               \ Max. energy              = 125
 ENDIF
  EQUB 20                \ Max. speed               = 20
- EQUB &00               \ Edges data offset (high)
- EQUB &00               \ Faces data offset (high)
+ EQUB HI(SHIP_PYTHON_EDGES - SHIP_PYTHON)          \ Edges data offset (high)
+ EQUB HI(SHIP_PYTHON_FACES - SHIP_PYTHON)          \ Faces data offset (high)
  EQUB 0                 \ Normals are scaled by    = 2^0 = 1
 IF NOT(_ELITE_A_6502SP_PARA OR _ELITE_A_FLIGHT OR _ELITE_A_SHIPS_U)
  EQUB %00011011         \ Laser power              = 3

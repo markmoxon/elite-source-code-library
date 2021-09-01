@@ -12,8 +12,8 @@
 
  EQUB 0                 \ Max. canisters on demise = 0
  EQUW 26192             \ Targetable area          = 161.83 * 161.83
- EQUB &4A               \ Edges data offset (low)
- EQUB &9E               \ Faces data offset (low)
+ EQUB LO(SHIP_DRAGON_EDGES - SHIP_DRAGON)          \ Edges data offset (low)
+ EQUB LO(SHIP_DRAGON_FACES - SHIP_DRAGON)          \ Faces data offset (low)
  EQUB 65                \ Max. edge count          = (65 - 1) / 4 = 16
  EQUB 0                 \ Gun vertex               = 0
  EQUB 60                \ Explosion count          = 13, as (4 * n) + 6 = 60
@@ -32,8 +32,8 @@ ELIF _ELITE_A_SHIPS_W
  EQUB 255               \ Max. energy              = 255
 ENDIF
  EQUB 20                \ Max. speed               = 20
- EQUB &00               \ Edges data offset (high)
- EQUB &00               \ Faces data offset (high)
+ EQUB HI(SHIP_DRAGON_EDGES - SHIP_DRAGON)          \ Edges data offset (high)
+ EQUB HI(SHIP_DRAGON_FACES - SHIP_DRAGON)          \ Faces data offset (high)
  EQUB 0                 \ Normals are scaled by    = 2^0 = 1
 IF NOT(_ELITE_A_SHIPS_W)
  EQUB %01000111         \ Laser power              = 8

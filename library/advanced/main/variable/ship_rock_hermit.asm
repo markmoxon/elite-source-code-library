@@ -20,11 +20,11 @@ ENDIF
  EQUB 7                 \ Max. canisters on demise = 7
  EQUW 80 * 80           \ Targetable area          = 80 * 80
 IF _MASTER_VERSION \ Platform
- EQUB LO(SHIP_ASTEROID_EDGES - SHIP_ROCK_HERMIT)      \ Edges from asteroid
- EQUB LO(SHIP_ASTEROID_FACES - SHIP_ROCK_HERMIT)      \ Faces from asteroid
+ EQUB LO(SHIP_ASTEROID_EDGES - SHIP_ROCK_HERMIT)   \ Edges from asteroid
+ EQUB LO(SHIP_ASTEROID_FACES - SHIP_ROCK_HERMIT)   \ Faces from asteroid
 ELIF _6502SP_VERSION
- EQUB &4A               \ Edges data offset (low)
- EQUB &9E               \ Faces data offset (low)
+ EQUB LO(SHIP_ROCK_HERMIT_EDGES - SHIP_ROCK_HERMIT)   \ Edges data offset (low)
+ EQUB LO(SHIP_ROCK_HERMIT_FACES - SHIP_ROCK_HERMIT)   \ Faces data offset (low)
 ENDIF
  EQUB 69                \ Max. edge count          = (69 - 1) / 4 = 17
  EQUB 0                 \ Gun vertex               = 0
@@ -37,11 +37,11 @@ ENDIF
  EQUB 180               \ Max. energy              = 180
  EQUB 30                \ Max. speed               = 30
 IF _MASTER_VERSION \ Platform
- EQUB HI(SHIP_ASTEROID_EDGES - SHIP_ROCK_HERMIT)      \ Edges from asteroid
- EQUB HI(SHIP_ASTEROID_FACES - SHIP_ROCK_HERMIT)      \ Faces from asteroid
+ EQUB HI(SHIP_ASTEROID_EDGES - SHIP_ROCK_HERMIT)   \ Edges from asteroid
+ EQUB HI(SHIP_ASTEROID_FACES - SHIP_ROCK_HERMIT)   \ Faces from asteroid
 ELIF _6502SP_VERSION
- EQUB &00               \ Edges data offset (high)
- EQUB &00               \ Faces data offset (high)
+ EQUB HI(SHIP_ROCK_HERMIT_EDGES - SHIP_ROCK_HERMIT)   \ Edges data offset (high)
+ EQUB HI(SHIP_ROCK_HERMIT_FACES - SHIP_ROCK_HERMIT)   \ Faces data offset (high)
 ENDIF
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
  EQUB %00000010         \ Laser power              = 0

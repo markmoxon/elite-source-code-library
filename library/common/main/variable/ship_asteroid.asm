@@ -12,8 +12,8 @@
 
  EQUB 0                 \ Max. canisters on demise = 0
  EQUW 80 * 80           \ Targetable area          = 80 * 80
- EQUB LO(SHIP_ASTEROID_EDGES - SHIP_ASTEROID) \ Edges data offset (low)
- EQUB LO(SHIP_ASTEROID_FACES - SHIP_ASTEROID) \ Faces data offset (low)
+ EQUB LO(SHIP_ASTEROID_EDGES - SHIP_ASTEROID)      \ Edges data offset (low)
+ EQUB LO(SHIP_ASTEROID_FACES - SHIP_ASTEROID)      \ Faces data offset (low)
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; asteroids are shown in red
  EQUB 65                \ Max. edge count          = (65 - 1) / 4 = 16
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -36,8 +36,8 @@ ELIF _ELITE_A_VERSION
  EQUB 56                \ Max. energy              = 56
 ENDIF
  EQUB 30                \ Max. speed               = 30
- EQUB &00               \ Edges data offset (high)
- EQUB &00               \ Faces data offset (high)
+ EQUB HI(SHIP_ASTEROID_EDGES - SHIP_ASTEROID)      \ Edges data offset (high)
+ EQUB HI(SHIP_ASTEROID_FACES - SHIP_ASTEROID)      \ Faces data offset (high)
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
  EQUB %00000000         \ Laser power              = 0
                         \ Missiles                 = 0

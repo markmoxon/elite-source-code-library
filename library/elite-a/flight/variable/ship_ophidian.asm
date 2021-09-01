@@ -12,8 +12,8 @@
 
  EQUB 2                 \ Max. canisters on demise = 2
  EQUW 3720              \ Targetable area          = 60.99 * 60.99
- EQUB &8C               \ Edges data offset (low)
- EQUB &04               \ Faces data offset (low)
+ EQUB LO(SHIP_OPHIDIAN_EDGES - SHIP_OPHIDIAN)      \ Edges data offset (low)
+ EQUB LO(SHIP_OPHIDIAN_FACES - SHIP_OPHIDIAN)      \ Faces data offset (low)
  EQUB 113               \ Max. edge count          = (113 - 1) / 4 = 28
  EQUB 0                 \ Gun vertex               = 0
  EQUB 60                \ Explosion count          = 13, as (4 * n) + 6 = 60
@@ -24,8 +24,8 @@
  EQUB 20                \ Visibility distance      = 20
  EQUB 64                \ Max. energy              = 64
  EQUB 34                \ Max. speed               = 34
- EQUB &00               \ Edges data offset (high)
- EQUB &01               \ Faces data offset (high)
+ EQUB HI(SHIP_OPHIDIAN_EDGES - SHIP_OPHIDIAN)      \ Edges data offset (high)
+ EQUB HI(SHIP_OPHIDIAN_FACES - SHIP_OPHIDIAN)      \ Faces data offset (high)
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
  EQUB %00011010         \ Laser power              = 3
                         \ Missiles                 = 2

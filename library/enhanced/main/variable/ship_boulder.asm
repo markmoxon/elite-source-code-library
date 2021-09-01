@@ -12,8 +12,8 @@
 
  EQUB 0                 \ Max. canisters on demise = 0
  EQUW 30 * 30           \ Targetable area          = 30 * 30
- EQUB &3E               \ Edges data offset (low)
- EQUB &7A               \ Faces data offset (low)
+ EQUB LO(SHIP_BOULDER_EDGES - SHIP_BOULDER)        \ Edges data offset (low)
+ EQUB LO(SHIP_BOULDER_FACES - SHIP_BOULDER)        \ Faces data offset (low)
 IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; boulders are shown in red
  EQUB 45                \ Max. edge count          = (45 - 1) / 4 = 11
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -32,8 +32,8 @@ ELIF _ELITE_A_VERSION
  EQUB 16                \ Max. energy              = 16
 ENDIF
  EQUB 30                \ Max. speed               = 30
- EQUB &00               \ Edges data offset (high)
- EQUB &00               \ Faces data offset (high)
+ EQUB HI(SHIP_BOULDER_EDGES - SHIP_BOULDER)        \ Edges data offset (high)
+ EQUB HI(SHIP_BOULDER_FACES - SHIP_BOULDER)        \ Faces data offset (high)
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
  EQUB %00000000         \ Laser power              = 0
                         \ Missiles                 = 0

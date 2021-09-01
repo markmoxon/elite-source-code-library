@@ -12,8 +12,8 @@
 
  EQUB 4                 \ Max. canisters on demise = 4
  EQUW 13824             \ Targetable area          = 117.57 * 117.57
- EQUB &7A               \ Edges data offset (low)
- EQUB &D6               \ Faces data offset (low)
+ EQUB LO(SHIP_MONITOR_EDGES - SHIP_MONITOR)        \ Edges data offset (low)
+ EQUB LO(SHIP_MONITOR_FACES - SHIP_MONITOR)        \ Faces data offset (low)
  EQUB 101               \ Max. edge count          = (101 - 1) / 4 = 25
  EQUB 0                 \ Gun vertex               = 0
  EQUB 42                \ Explosion count          = 9, as (4 * n) + 6 = 42
@@ -32,8 +32,8 @@ ELIF _ELITE_A_SHIPS_S
  EQUB 133               \ Max. energy              = 133
 ENDIF
  EQUB 16                \ Max. speed               = 16
- EQUB &00               \ Edges data offset (high)
- EQUB &00               \ Faces data offset (high)
+ EQUB HI(SHIP_MONITOR_EDGES - SHIP_MONITOR)        \ Edges data offset (high)
+ EQUB HI(SHIP_MONITOR_FACES - SHIP_MONITOR)        \ Faces data offset (high)
  EQUB 0                 \ Normals are scaled by    = 2^0 = 1
  EQUB %00110111         \ Laser power              = 6
                         \ Missiles                 = 7

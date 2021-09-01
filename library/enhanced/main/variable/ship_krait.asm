@@ -12,8 +12,8 @@
 
  EQUB 1                 \ Max. canisters on demise = 1
  EQUW 60 * 60           \ Targetable area          = 60 * 60
- EQUB &7A               \ Edges data offset (low)
- EQUB &CE               \ Faces data offset (low)
+ EQUB LO(SHIP_KRAIT_EDGES - SHIP_KRAIT)            \ Edges data offset (low)
+ EQUB LO(SHIP_KRAIT_FACES - SHIP_KRAIT)            \ Faces data offset (low)
 IF _DISC_VERSION OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Kraits are shown in cyan
  EQUB 85                \ Max. edge count          = (85 - 1) / 4 = 21
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -46,8 +46,8 @@ ELIF _ELITE_A_VERSION
  EQUB 73                \ Max. energy              = 73
 ENDIF
  EQUB 30                \ Max. speed               = 30
- EQUB &00               \ Edges data offset (high)
- EQUB &00               \ Faces data offset (high)
+ EQUB HI(SHIP_KRAIT_EDGES - SHIP_KRAIT)            \ Edges data offset (high)
+ EQUB HI(SHIP_KRAIT_FACES - SHIP_KRAIT)            \ Faces data offset (high)
 IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Disc: Group A: The ship hanger in the disc version displays the Krait with normals scaled with a factor of 4, which are more accurate than in the ship hangers of the other enhanced versions, which store them with a scale factor of 2
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
 ELIF _DISC_DOCKED

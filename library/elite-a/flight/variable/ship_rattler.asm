@@ -12,8 +12,8 @@
 
  EQUB 2                 \ Max. canisters on demise = 2
  EQUW 6000              \ Targetable area          = 77.46 * 77.46
- EQUB &6E               \ Edges data offset (low)
- EQUB &D6               \ Faces data offset (low)
+ EQUB LO(SHIP_RATTLER_EDGES - SHIP_RATTLER)        \ Edges data offset (low)
+ EQUB LO(SHIP_RATTLER_FACES - SHIP_RATTLER)        \ Faces data offset (low)
  EQUB 89                \ Max. edge count          = (89 - 1) / 4 = 22
  EQUB 0                 \ Gun vertex               = 0
  EQUB 42                \ Explosion count          = 9, as (4 * n) + 6 = 42
@@ -24,8 +24,8 @@
  EQUB 10                \ Visibility distance      = 10
  EQUB 113               \ Max. energy              = 113
  EQUB 31                \ Max. speed               = 31
- EQUB &00               \ Edges data offset (high)
- EQUB &00               \ Faces data offset (high)
+ EQUB HI(SHIP_RATTLER_EDGES - SHIP_RATTLER)        \ Edges data offset (high)
+ EQUB HI(SHIP_RATTLER_FACES - SHIP_RATTLER)        \ Faces data offset (high)
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
  EQUB %00100010         \ Laser power              = 4
                         \ Missiles                 = 2

@@ -12,8 +12,8 @@
 
  EQUB 0                 \ Max. canisters on demise = 0
  EQUW 50 * 50           \ Targetable area          = 50 * 50
- EQUB &F2               \ Edges data offset (low)
- EQUB &AA               \ Faces data offset (low)
+ EQUB LO(SHIP_TRANSPORTER_EDGES - SHIP_TRANSPORTER)   \ Edges data offset (low)
+ EQUB LO(SHIP_TRANSPORTER_FACES - SHIP_TRANSPORTER)   \ Faces data offset (low)
 IF _DISC_VERSION OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Transporters are shown in cyan
  EQUB 145               \ Max. edge count          = (145 - 1) / 4 = 36
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -28,8 +28,8 @@ ENDIF
  EQUB 16                \ Visibility distance      = 16
  EQUB 32                \ Max. energy              = 32
  EQUB 10                \ Max. speed               = 10
- EQUB &00               \ Edges data offset (high)
- EQUB &01               \ Faces data offset (high)
+ EQUB HI(SHIP_TRANSPORTER_EDGES - SHIP_TRANSPORTER)   \ Edges data offset (high)
+ EQUB HI(SHIP_TRANSPORTER_FACES - SHIP_TRANSPORTER)   \ Faces data offset (high)
 IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Disc: The ship hanger in the disc version displays the Transporter with normals scaled with a factor of 4, rather than the scale factor of 2 used in the other versions, but the face normals themselves are unchanged. I'm not entirely sure why
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
 ELIF _DISC_DOCKED OR _ELITE_A_VERSION

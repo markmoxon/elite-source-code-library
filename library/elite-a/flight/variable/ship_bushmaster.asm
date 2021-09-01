@@ -12,8 +12,8 @@
 
  EQUB 0                 \ Max. canisters on demise = 0
  EQUW 4250              \ Targetable area          = 65.19 * 65.19
- EQUB &5C               \ Edges data offset (low)
- EQUB &A8               \ Faces data offset (low)
+ EQUB LO(SHIP_BUSHMASTER_EDGES - SHIP_BUSHMASTER)  \ Edges data offset (low)
+ EQUB LO(SHIP_BUSHMASTER_FACES - SHIP_BUSHMASTER)  \ Faces data offset (low)
  EQUB 81                \ Max. edge count          = (81 - 1) / 4 = 20
  EQUB 0                 \ Gun vertex               = 0
  EQUB 30                \ Explosion count          = 6, as (4 * n) + 6 = 30
@@ -28,8 +28,8 @@ ENDIF
  EQUB 20                \ Visibility distance      = 20
  EQUB 74                \ Max. energy              = 74
  EQUB 35                \ Max. speed               = 35
- EQUB &00               \ Edges data offset (high)
- EQUB &00               \ Faces data offset (high)
+ EQUB HI(SHIP_BUSHMASTER_EDGES - SHIP_BUSHMASTER)  \ Edges data offset (high)
+ EQUB HI(SHIP_BUSHMASTER_FACES - SHIP_BUSHMASTER)  \ Faces data offset (high)
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
 IF NOT(_ELITE_A_SHIPS_S)
  EQUB %00100001         \ Laser power              = 4

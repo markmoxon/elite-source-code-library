@@ -12,8 +12,8 @@
 
  EQUB 0                 \ Max. canisters on demise = 0
  EQUW 75 * 75           \ Targetable area          = 75 * 75
- EQUB &6E               \ Edges data offset (low)
- EQUB &BE               \ Faces data offset (low)
+ EQUB LO(SHIP_VIPER_EDGES - SHIP_VIPER)            \ Edges data offset (low)
+ EQUB LO(SHIP_VIPER_FACES - SHIP_VIPER)            \ Faces data offset (low)
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Vipers are shown in cyan
  EQUB 77                \ Max. edge count          = (77 - 1) / 4 = 19
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -48,8 +48,8 @@ ELIF _ELITE_A_VERSION
  EQUB 91                \ Max. energy              = 91
 ENDIF
  EQUB 32                \ Max. speed               = 32
- EQUB &00               \ Edges data offset (high)
- EQUB &00               \ Faces data offset (high)
+ EQUB HI(SHIP_VIPER_EDGES - SHIP_VIPER)            \ Edges data offset (high)
+ EQUB HI(SHIP_VIPER_FACES - SHIP_VIPER)            \ Faces data offset (high)
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
 IF NOT(_ELITE_A_6502SP_PARA OR _ELITE_A_FLIGHT)
  EQUB %00010001         \ Laser power              = 2

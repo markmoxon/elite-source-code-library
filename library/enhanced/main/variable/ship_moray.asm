@@ -12,8 +12,8 @@
 
  EQUB 1                 \ Max. canisters on demise = 1
  EQUW 30 * 30           \ Targetable area          = 30 * 30
- EQUB &68               \ Edges data offset (low)
- EQUB &B4               \ Faces data offset (low)
+ EQUB LO(SHIP_MORAY_EDGES - SHIP_MORAY)            \ Edges data offset (low)
+ EQUB LO(SHIP_MORAY_FACES - SHIP_MORAY)            \ Faces data offset (low)
 IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Morays are shown in cyan/red/black/yellow stripes
  EQUB 69                \ Max. edge count          = (69 - 1) / 4 = 17
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -32,8 +32,8 @@ ELIF _ELITE_A_VERSION
  EQUB 89                \ Max. energy              = 89
 ENDIF
  EQUB 25                \ Max. speed               = 25
- EQUB &00               \ Edges data offset (high)
- EQUB &00               \ Faces data offset (high)
+ EQUB HI(SHIP_MORAY_EDGES - SHIP_MORAY)            \ Edges data offset (high)
+ EQUB HI(SHIP_MORAY_FACES - SHIP_MORAY)            \ Faces data offset (high)
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
 IF NOT(_ELITE_A_VERSION)
  EQUB %00010000         \ Laser power              = 2

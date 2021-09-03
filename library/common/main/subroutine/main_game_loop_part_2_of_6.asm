@@ -14,6 +14,7 @@ ELIF _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 ENDIF
 \  Deep dive: Program flow of the main game loop
 \             Ship data blocks
+\             Fixing ship positions
 \
 \ ------------------------------------------------------------------------------
 \
@@ -175,8 +176,9 @@ IF NOT(_ELITE_A_VERSION)
  AND #%10000000
  STA INWK+5
 
- ROL INWK+1             \ Set bit 2 of x_hi to the C flag, which is random, so
- ROL INWK+1             \ this randomly moves us slightly off-centre
+ ROL INWK+1             \ Set bit 1 of x_hi to the C flag, which is random, so
+ ROL INWK+1             \ this randomly moves us off-centre by 512 (as if x_hi
+                        \ is %00000010, then (x_hi x_lo) is 512 + x_lo)
 
 ENDIF
 

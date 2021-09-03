@@ -5,6 +5,7 @@
 \   Category: Drawing ships
 \    Summary: Draw an exploding ship
 \  Deep dive: Drawing explosion clouds
+\             Generating random numbers
 \
 \ ******************************************************************************
 
@@ -421,17 +422,17 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Minor
 
- JSR DORND2             \ Set ZZ to a random number (also restricts the
- STA ZZ                 \ value of RAND+2 so that bit 0 is always 0)
+ JSR DORND2             \ Set ZZ to a random number, making sure the C flag
+ STA ZZ                 \ doesn't affect the outcome
 
 ELIF _MASTER_VERSION
 
  CLC                    \ This contains the code from the DORND2 routine, so
  LDA RAND               \ this section is exactly equivalent to a JSR DORND2
  ROL A                  \ call, but is slightly faster as it's been inlined
- TAX                    \ (so it sets A and X to random values and also
- ADC RAND+2             \ restricts the value of RAND+2 so that bit 0 is
- STA RAND               \ always 0)
+ TAX                    \ (so it sets A and X to random values, making sure
+ ADC RAND+2             \ the C flag doesn't affect the outcome)
+ STA RAND
  STX RAND+2
  LDA RAND+1
  TAX
@@ -552,17 +553,17 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Minor
 
- JSR DORND2             \ Set A and X to random numbers (also restricts the
-                        \ value of RAND+2 so that bit 0 is always 0)
+ JSR DORND2             \ Set A and X to random numbers, making sure the C flag
+                        \ doesn't affect the outcome
 
 ELIF _MASTER_VERSION
 
  CLC                    \ This contains the code from the DORND2 routine, so
  LDA RAND               \ this section is exactly equivalent to a JSR DORND2
  ROL A                  \ call, but is slightly faster as it's been inlined
- TAX                    \ (so it sets A and X to random values and also
- ADC RAND+2             \ restricts the value of RAND+2 so that bit 0 is
- STA RAND               \ always 0)
+ TAX                    \ (so it sets A and X to random values, making sure
+ ADC RAND+2             \ the C flag doesn't affect the outcome)
+ STA RAND
  STX RAND+2
  LDA RAND+1
  TAX
@@ -591,17 +592,17 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Minor
 
- JSR DORND2             \ Set A and X to random numbers (also restricts the
-                        \ value of RAND+2 so that bit 0 is always 0)
+ JSR DORND2             \ Set A and X to random numbers, making sure the C flag
+                        \ doesn't affect the outcome
 
 ELIF _MASTER_VERSION
 
  CLC                    \ This contains the code from the DORND2 routine, so
  LDA RAND               \ this section is exactly equivalent to a JSR DORND2
  ROL A                  \ call, but is slightly faster as it's been inlined
- TAX                    \ (so it sets A and X to random values and also
- ADC RAND+2             \ restricts the value of RAND+2 so that bit 0 is
- STA RAND               \ always 0)
+ TAX                    \ (so it sets A and X to random values, making sure
+ ADC RAND+2             \ the C flag doesn't affect the outcome)
+ STA RAND
  STX RAND+2
  LDA RAND+1
  TAX

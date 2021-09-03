@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Universe
 \    Summary: Initialise the INWK workspace to a hostile ship
+\  Deep dive: Fixing ship positions
 \
 \ ------------------------------------------------------------------------------
 \

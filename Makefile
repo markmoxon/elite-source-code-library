@@ -159,8 +159,8 @@ endif
 #   1 = BBC Micro cassette
 #   2 = BBC Micro disc
 #   3 = BBC Micro with 6502 Second Processor
-#	4 = BBC Master
-#	5 = Electron
+#   4 = BBC Master
+#   5 = Electron
 #   6 = Elite-A
 #
 # _RELEASE (for cassette version)
@@ -173,7 +173,7 @@ endif
 # _RELEASE (for 6502SP version)
 #   1 = Source disc
 #   2 = SNG45 (default)
-#	3 = Executive version
+#   3 = Executive version
 #
 # _RELEASE (for Master version)
 #   1 = SNG47 (default)

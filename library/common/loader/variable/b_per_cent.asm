@@ -148,6 +148,8 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
 
 ELIF _ELECTRON_VERSION
 
+IF DISC
+
  EQUB 28                \ Define a text window as follows:
  EQUB 8, 19, 23, 10     \
                         \   * Left = 8
@@ -156,6 +158,23 @@ ELIF _ELECTRON_VERSION
                         \   * Bottom = 19
                         \
                         \ i.e. 9 rows high, 15 columns wide at (8, 10)
+
+ELSE
+
+ EQUB 28                \ Define a text window as follows:
+ EQUB 8, 23, 23, 14     \
+                        \   * Left = 8
+                        \   * Right = 23
+                        \   * Top = 14
+                        \   * Bottom = 23
+                        \
+                        \ i.e. 9 rows high, 15 columns wide at (8, 14)
+                        \
+                        \ This is slightly lower than the default window, as
+                        \ otherwise the cassette's loading message overwrites
+                        \ the main code file as it loads into screen memory
+
+ENDIF
 
 ENDIF
 

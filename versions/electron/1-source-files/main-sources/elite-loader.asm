@@ -42,6 +42,9 @@ GUARD &5800             \ Guard against assembling over screen memory
 \
 \ ******************************************************************************
 
+DISC = TRUE             \ Set to TRUE to load the code above DFS and relocate
+                        \ down, so we can load the cassette version from disc
+
 N% = 17                 \ N% is set to the number of bytes in the VDU table, so
                         \ we can loop through them in part 2 below
 

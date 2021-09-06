@@ -21,6 +21,11 @@
 \
 \ This routine also sets A, X, T1 and the C flag to random values.
 \
+\ Note that because this routine uses the value of X returned by DORND, and X
+\ contains the value of A returned by the previous call to DORND, this routine
+\ does not necessarily set the new ship to a totally random location. See the
+\ deep dive on "Fixing ship positions" for details.
+\
 \ ******************************************************************************
 
 .Ze

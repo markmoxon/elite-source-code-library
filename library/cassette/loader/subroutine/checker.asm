@@ -78,7 +78,7 @@ ENDIF
 
  INY                    \ Increment the counter
 
- CPY #&28               \ There are &28 bytes in the loader, so loop back until
+ CPY #40                \ There are 40 bytes in the loader, so loop back until
  BNE CHKb               \ we have added them all
 
  CMP MAINSUM            \ Compare the result to the contents of MAINSUM, which

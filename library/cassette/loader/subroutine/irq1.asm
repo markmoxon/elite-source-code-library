@@ -113,19 +113,21 @@ IF PROT AND DISC = 0
  STA (BLPTR),Y          \ Store the updated value of A in the block flag, so the
                         \ block gets unlocked
 
- LDA #&23               \ If the block number in BLN is &23, skip the next
- CMP (BLN),Y            \ instruction
+ LDA #35                \ If the block number in BLN is 35, skip the next
+ CMP (BLN),Y            \ instruction, leaving A = 32 = &23
  BEQ P%+4
 
- EOR #17                \ EOR A with 17
+ EOR #17                \ Set A = 35 EOR 17 = 50 = &32
 
- CMP (EXCN),Y           \ If A = the low byte of the execution address of the
- BEQ itdone             \ file we are loading, skip to itdone
+ CMP (EXCN),Y           \ If the low byte of the execution address of the file
+ BEQ itdone             \ we are loading is equal to A (which is either &23 or
+                        \ &32), skip to itdone
 
  DEC LOAD%              \ Otherwise decrement LOAD%, which is the address of the
                         \ first byte of the main game code file (i.e. the load
                         \ address of "ELTcode"), so this decrements the first
-                        \ byte of the file we are loading
+                        \ byte of the file we are loading, i.e. the LBL variable
+                        \ added by the Big Code File source
 
 .itdone
 

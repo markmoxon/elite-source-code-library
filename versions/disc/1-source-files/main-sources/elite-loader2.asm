@@ -75,30 +75,19 @@ INCLUDE "library/disc/loader2/workspace/zp.asm"
 
 ORG CODE%
 
-INCLUDE "library/disc/loader2/subroutine/elite_loader_part_1_of_4.asm"
+INCLUDE "library/disc/loader2/subroutine/elite_loader_part_1_of_2.asm"
 
  SKIP 8                 \ These bytes appear to be unused
  NOP
  NOP
 
-INCLUDE "library/disc/loader2/subroutine/elite_loader_part_2_of_4.asm"
-
- NOP                    \ These bytes appear to be unused
- NOP
- NOP
- NOP
-
-INCLUDE "library/disc/loader2/subroutine/elite_loader_part_4_of_4.asm"
+INCLUDE "library/disc/loader2/subroutine/elite_loader_part_2_of_2.asm"
 
  SKIP 15                \ These bytes appear to be unused
 
 INCLUDE "library/disc/loader2/variable/mess1.asm"
 
- SKIP 4                 \ These bytes appear to be unused
-
-INCLUDE "library/disc/loader2/subroutine/elite_loader_part_3_of_4.asm"
-
- SKIP 63                \ These bytes appear to be unused
+ SKIP 86                \ These bytes appear to be unused
  EQUB &32
  SKIP 13
 

@@ -9,7 +9,7 @@
 
 .ENTRY2
 
- LDA #15                \ Call OSBYTE with A = 129 and Y = 0 to flush the input
+ LDA #15                \ Call OSBYTE with A = 15 and Y = 0 to flush the input
  LDY #0                 \ buffer
  JSR OSBYTE
 

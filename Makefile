@@ -151,7 +151,7 @@ endif
 #   TRUE  = Disable checksums, max commander
 #   FALSE = Enable checksums, standard commander
 #
-# _MATCH_EXTRACTED_BINARIES (for disc, 6502SP, Master versions)
+# _MATCH_ORIGINAL_BINARIES (for disc, 6502SP, Master versions)
 #   TRUE  = Match binaries to release version (i.e. fill workspaces with noise)
 #   FALSE = Zero-fill workspaces
 #
@@ -201,7 +201,7 @@ build:
 	echo _VERSION=2 > versions/disc/1-source-files/main-sources/elite-header.h.asm
 	echo _RELEASE=$(rel-disc) >> versions/disc/1-source-files/main-sources/elite-header.h.asm
 	echo _REMOVE_CHECKSUMS=TRUE >> versions/disc/1-source-files/main-sources/elite-header.h.asm
-	echo _MATCH_EXTRACTED_BINARIES=FALSE >> versions/disc/1-source-files/main-sources/elite-header.h.asm
+	echo _MATCH_ORIGINAL_BINARIES=FALSE >> versions/disc/1-source-files/main-sources/elite-header.h.asm
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-text-tokens.asm -v > versions/disc/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-missile.asm -v >> versions/disc/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-loader1.asm -v >> versions/disc/3-assembled-output/compile.txt
@@ -232,7 +232,7 @@ build:
 	echo _VERSION=3 > versions/6502sp/1-source-files/main-sources/elite-header.h.asm
 	echo _RELEASE=$(rel-6502sp) >> versions/6502sp/1-source-files/main-sources/elite-header.h.asm
 	echo _REMOVE_CHECKSUMS=TRUE >> versions/6502sp/1-source-files/main-sources/elite-header.h.asm
-	echo _MATCH_EXTRACTED_BINARIES=FALSE >> versions/6502sp/1-source-files/main-sources/elite-header.h.asm
+	echo _MATCH_ORIGINAL_BINARIES=FALSE >> versions/6502sp/1-source-files/main-sources/elite-header.h.asm
 	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-source.asm -v > versions/6502sp/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-bcfs.asm -v >> versions/6502sp/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-z.asm -v >> versions/6502sp/3-assembled-output/compile.txt
@@ -245,7 +245,7 @@ build:
 	echo _VERSION=4 > versions/master/1-source-files/main-sources/elite-header.h.asm
 	echo _RELEASE=$(rel-master) >> versions/master/1-source-files/main-sources/elite-header.h.asm
 	echo _REMOVE_CHECKSUMS=TRUE >> versions/master/1-source-files/main-sources/elite-header.h.asm
-	echo _MATCH_EXTRACTED_BINARIES=FALSE >> versions/master/1-source-files/main-sources/elite-header.h.asm
+	echo _MATCH_ORIGINAL_BINARIES=FALSE >> versions/master/1-source-files/main-sources/elite-header.h.asm
 	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-loader.asm -v >> versions/master/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-data.asm -v >> versions/master/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-source.asm -v >> versions/master/3-assembled-output/compile.txt
@@ -266,7 +266,7 @@ build:
 	echo _VERSION=6 > versions/elite-a/1-source-files/main-sources/elite-header.h.asm
 	echo _RELEASE=$(rel-elite-a) >> versions/elite-a/1-source-files/main-sources/elite-header.h.asm
 	echo _REMOVE_CHECKSUMS=FALSE >> versions/elite-a/1-source-files/main-sources/elite-header.h.asm
-	echo _MATCH_EXTRACTED_BINARIES=TRUE >> versions/elite-a/1-source-files/main-sources/elite-header.h.asm
+	echo _MATCH_ORIGINAL_BINARIES=TRUE >> versions/elite-a/1-source-files/main-sources/elite-header.h.asm
 	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-text-tokens.asm -v > versions/elite-a/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-missile.asm -v >> versions/elite-a/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-source-docked.asm -v >> versions/elite-a/3-assembled-output/compile.txt
@@ -317,7 +317,7 @@ encrypt:
 	echo _VERSION=2 > versions/disc/1-source-files/main-sources/elite-header.h.asm
 	echo _RELEASE=$(rel-disc) >> versions/disc/1-source-files/main-sources/elite-header.h.asm
 	echo _REMOVE_CHECKSUMS=FALSE >> versions/disc/1-source-files/main-sources/elite-header.h.asm
-	echo _MATCH_EXTRACTED_BINARIES=TRUE >> versions/disc/1-source-files/main-sources/elite-header.h.asm
+	echo _MATCH_ORIGINAL_BINARIES=TRUE >> versions/disc/1-source-files/main-sources/elite-header.h.asm
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-text-tokens.asm -v > versions/disc/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-missile.asm -v >> versions/disc/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-loader1.asm -v >> versions/disc/3-assembled-output/compile.txt
@@ -348,7 +348,7 @@ encrypt:
 	echo _VERSION=3 > versions/6502sp/1-source-files/main-sources/elite-header.h.asm
 	echo _RELEASE=$(rel-6502sp) >> versions/6502sp/1-source-files/main-sources/elite-header.h.asm
 	echo _REMOVE_CHECKSUMS=FALSE >> versions/6502sp/1-source-files/main-sources/elite-header.h.asm
-	echo _MATCH_EXTRACTED_BINARIES=TRUE >> versions/6502sp/1-source-files/main-sources/elite-header.h.asm
+	echo _MATCH_ORIGINAL_BINARIES=TRUE >> versions/6502sp/1-source-files/main-sources/elite-header.h.asm
 	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-source.asm -v > versions/6502sp/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-bcfs.asm -v >> versions/6502sp/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-z.asm -v >> versions/6502sp/3-assembled-output/compile.txt
@@ -361,7 +361,7 @@ encrypt:
 	echo _VERSION=4 > versions/master/1-source-files/main-sources/elite-header.h.asm
 	echo _RELEASE=$(rel-master) >> versions/master/1-source-files/main-sources/elite-header.h.asm
 	echo _REMOVE_CHECKSUMS=FALSE >> versions/master/1-source-files/main-sources/elite-header.h.asm
-	echo _MATCH_EXTRACTED_BINARIES=TRUE >> versions/master/1-source-files/main-sources/elite-header.h.asm
+	echo _MATCH_ORIGINAL_BINARIES=TRUE >> versions/master/1-source-files/main-sources/elite-header.h.asm
 	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-loader.asm -v > versions/master/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-data.asm -v >> versions/master/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-source.asm -v >> versions/master/3-assembled-output/compile.txt
@@ -382,7 +382,7 @@ encrypt:
 	echo _VERSION=6 > versions/elite-a/1-source-files/main-sources/elite-header.h.asm
 	echo _RELEASE=$(rel-elite-a) >> versions/elite-a/1-source-files/main-sources/elite-header.h.asm
 	echo _REMOVE_CHECKSUMS=FALSE >> versions/elite-a/1-source-files/main-sources/elite-header.h.asm
-	echo _MATCH_EXTRACTED_BINARIES=TRUE >> versions/elite-a/1-source-files/main-sources/elite-header.h.asm
+	echo _MATCH_ORIGINAL_BINARIES=TRUE >> versions/elite-a/1-source-files/main-sources/elite-header.h.asm
 	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-text-tokens.asm -v > versions/elite-a/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-missile.asm -v >> versions/elite-a/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-source-docked.asm -v >> versions/elite-a/3-assembled-output/compile.txt
@@ -445,7 +445,7 @@ disc:
 	echo _VERSION=2 > versions/disc/1-source-files/main-sources/elite-header.h.asm
 	echo _RELEASE=$(rel-disc) >> versions/disc/1-source-files/main-sources/elite-header.h.asm
 	echo _REMOVE_CHECKSUMS=FALSE >> versions/disc/1-source-files/main-sources/elite-header.h.asm
-	echo _MATCH_EXTRACTED_BINARIES=TRUE >> versions/disc/1-source-files/main-sources/elite-header.h.asm
+	echo _MATCH_ORIGINAL_BINARIES=TRUE >> versions/disc/1-source-files/main-sources/elite-header.h.asm
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-text-tokens.asm -v > versions/disc/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-missile.asm -v >> versions/disc/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-loader1.asm -v >> versions/disc/3-assembled-output/compile.txt
@@ -479,7 +479,7 @@ disc:
 	echo _VERSION=3 > versions/6502sp/1-source-files/main-sources/elite-header.h.asm
 	echo _RELEASE=$(rel-6502sp) >> versions/6502sp/1-source-files/main-sources/elite-header.h.asm
 	echo _REMOVE_CHECKSUMS=FALSE >> versions/6502sp/1-source-files/main-sources/elite-header.h.asm
-	echo _MATCH_EXTRACTED_BINARIES=TRUE >> versions/6502sp/1-source-files/main-sources/elite-header.h.asm
+	echo _MATCH_ORIGINAL_BINARIES=TRUE >> versions/6502sp/1-source-files/main-sources/elite-header.h.asm
 	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-source.asm -v > versions/6502sp/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-bcfs.asm -v >> versions/6502sp/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-z.asm -v >> versions/6502sp/3-assembled-output/compile.txt
@@ -495,7 +495,7 @@ master:
 	echo _VERSION=4 > versions/master/1-source-files/main-sources/elite-header.h.asm
 	echo _RELEASE=$(rel-master) >> versions/master/1-source-files/main-sources/elite-header.h.asm
 	echo _REMOVE_CHECKSUMS=FALSE >> versions/master/1-source-files/main-sources/elite-header.h.asm
-	echo _MATCH_EXTRACTED_BINARIES=TRUE >> versions/master/1-source-files/main-sources/elite-header.h.asm
+	echo _MATCH_ORIGINAL_BINARIES=TRUE >> versions/master/1-source-files/main-sources/elite-header.h.asm
 	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-loader.asm -v > versions/master/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-data.asm -v >> versions/master/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-source.asm -v >> versions/master/3-assembled-output/compile.txt
@@ -522,7 +522,7 @@ elite-a:
 	echo _VERSION=6 > versions/elite-a/1-source-files/main-sources/elite-header.h.asm
 	echo _RELEASE=$(rel-elite-a) >> versions/elite-a/1-source-files/main-sources/elite-header.h.asm
 	echo _REMOVE_CHECKSUMS=FALSE >> versions/elite-a/1-source-files/main-sources/elite-header.h.asm
-	echo _MATCH_EXTRACTED_BINARIES=TRUE >> versions/elite-a/1-source-files/main-sources/elite-header.h.asm
+	echo _MATCH_ORIGINAL_BINARIES=TRUE >> versions/elite-a/1-source-files/main-sources/elite-header.h.asm
 	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-text-tokens.asm -v > versions/elite-a/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-missile.asm -v >> versions/elite-a/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-source-docked.asm -v >> versions/elite-a/3-assembled-output/compile.txt

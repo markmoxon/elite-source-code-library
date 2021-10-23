@@ -159,27 +159,27 @@
 
                         \ We now check the joystick or Bitstik
 
- LDX #1                 \ Call OSBYTE 128 to fetch the 16-bit value from ADC
- LDA #128               \ channel 1 (the joystick X value), returning the value
- JSR OSBYTE             \ in (Y X)
+ LDX #1                 \ Call OSBYTE with A = 128 to fetch the 16-bit value
+ LDA #128               \ from ADC channel 1 (the joystick X value), returning
+ JSR OSBYTE             \ the value in (Y X)
 
  TYA                    \ Copy Y to A, so the result is now in (A X)
 
  LDY #10                \ Store the high byte of the joystick X value in byte
  STA (OSSC),Y           \ #10 of the block pointed to by OSSC
 
- LDX #2                 \ Call OSBYTE 128 to fetch the 16-bit value from ADC
- LDA #128               \ channel 2 (the joystick Y value), returning the value
- JSR OSBYTE             \ in (Y X)
+ LDX #2                 \ Call OSBYTE with A = 128 to fetch the 16-bit value
+ LDA #128               \ from ADC channel 2 (the joystick Y value), returning
+ JSR OSBYTE             \ the value in (Y X)
 
  TYA                    \ Copy Y to A, so the result is now in (A X)
 
  LDY #11                \ Store the high byte of the joystick Y value in byte
  STA (OSSC),Y           \ #11 of the block pointed to by OSSC
 
- LDX #3                 \ Call OSBYTE 128 to fetch the 16-bit value from ADC
- LDA #128               \ channel 3 (the Bitstik rotation value), returning the
- JSR OSBYTE             \ value in (Y X)
+ LDX #3                 \ Call OSBYTE with A = 128 to fetch the 16-bit value
+ LDA #128               \ from ADC channel 3 (the Bitstik rotation value),
+ JSR OSBYTE             \ returning the value in (Y X)
 
  TYA                    \ Copy Y to A, so the result is now in (A X)
 

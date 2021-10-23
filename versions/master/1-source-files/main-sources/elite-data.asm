@@ -140,7 +140,7 @@ INCLUDE "library/enhanced/main/variable/ship_dodo.asm"
 \
 \ ******************************************************************************
 
-IF _MATCH_EXTRACTED_BINARIES
+IF _MATCH_ORIGINAL_BINARIES
 
  IF _SNG47
   INCBIN "versions/master/4-reference-binaries/sng47/workspaces/DATA-align.bin"
@@ -172,7 +172,7 @@ INCLUDE "library/enhanced/main/variable/rupla.asm"
 INCLUDE "library/enhanced/main/variable/rugal.asm"
 INCLUDE "library/enhanced/main/variable/rutok.asm"
 
-IF _MATCH_EXTRACTED_BINARIES
+IF _MATCH_ORIGINAL_BINARIES
 
  IF _SNG47
 

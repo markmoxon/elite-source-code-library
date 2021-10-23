@@ -234,9 +234,9 @@ ENDIF
 
 IF _DISC_FLIGHT \ Platform
 
- LDX #3                 \ Call OSBYTE 128 to fetch the 16-bit value from ADC
- LDA #128               \ channel 3 (the Bitstik rotation value), returning the
- JSR OSBYTE             \ value in (Y X)
+ LDX #3                 \ Call OSBYTE with A = 128 to fetch the 16-bit value
+ LDA #128               \ from ADC channel 3 (the Bitstik rotation value),
+ JSR OSBYTE             \ returning the value in (Y X)
 
  TYA                    \ Copy Y to A, so the result is now in (A X)
 

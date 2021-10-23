@@ -155,7 +155,7 @@ INCLUDE "library/disc/loader3/subroutine/osbmod.asm"
 INCLUDE "library/disc/loader3/copyblock/tvt1code.asm"
 INCLUDE "library/disc/loader3/subroutine/elite_loader_part_3_of_3.asm"
 
-IF _MATCH_EXTRACTED_BINARIES
+IF _MATCH_ORIGINAL_BINARIES
 
  IF _STH_DISC
   INCBIN "versions/disc/4-reference-binaries/sth/workspaces/loader3.bin"

@@ -917,7 +917,7 @@ SAVE "versions/6502sp/3-assembled-output/ELTF.bin", CODE_F%, P%, LOAD%
 CODE_G% = P%
 LOAD_G% = LOAD% + P% - CODE%
 
-IF _MATCH_EXTRACTED_BINARIES
+IF _MATCH_ORIGINAL_BINARIES
 
  IF _SNG45
   INCBIN "versions/6502sp/4-reference-binaries/sng45/workspaces/ELTG-align.bin"

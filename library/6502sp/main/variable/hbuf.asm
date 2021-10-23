@@ -13,7 +13,7 @@
 
  EQUB 0                 \ The number of bytes to receive with this command
 
-IF _MATCH_EXTRACTED_BINARIES
+IF _MATCH_ORIGINAL_BINARIES
 
  IF _SNG45
   INCBIN "versions/6502sp/4-reference-binaries/sng45/workspaces/ELTB-HBUF.bin"

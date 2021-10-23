@@ -20,7 +20,7 @@
 
 .antilogODD
 
-IF _MATCH_EXTRACTED_BINARIES
+IF _MATCH_ORIGINAL_BINARIES
 
  IF _SNG45
   INCBIN "versions/6502sp/4-reference-binaries/sng45/workspaces/ICODE-antilogODD.bin"

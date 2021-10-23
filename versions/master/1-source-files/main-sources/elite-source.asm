@@ -329,7 +329,7 @@ INCLUDE "library/common/main/subroutine/dilx.asm"
 INCLUDE "library/common/main/subroutine/dil2.asm"
 INCLUDE "library/master/main/subroutine/add_duplicate.asm"
 
-IF _MATCH_EXTRACTED_BINARIES
+IF _MATCH_ORIGINAL_BINARIES
 
  IF _SNG47
   INCBIN "versions/master/4-reference-binaries/sng47/workspaces/ELTA-align1.bin"
@@ -352,7 +352,7 @@ INCLUDE "library/advanced/main/variable/log.asm"
 INCLUDE "library/advanced/main/variable/logl.asm"
 INCLUDE "library/advanced/main/variable/antilog.asm"
 
-IF _MATCH_EXTRACTED_BINARIES
+IF _MATCH_ORIGINAL_BINARIES
 
  IF _SNG47
   INCBIN "versions/master/4-reference-binaries/sng47/workspaces/ELTA-align2.bin"

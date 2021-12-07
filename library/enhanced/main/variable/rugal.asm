@@ -34,46 +34,46 @@
 
 .RUGAL
 
- EQUB &80                \ System 211, Galaxy 0                Teorge = Token  1
- EQUB &00                \ System 150, Galaxy 0, Mission 1       Xeer = Token  2
- EQUB &00                \ System  36, Galaxy 0, Mission 1   Reesdice = Token  3
- EQUB &00                \ System  28, Galaxy 0, Mission 1      Arexe = Token  4
- EQUB &01                \ System 253, Galaxy 1, Mission 1     Errius = Token  5
- EQUB &01                \ System  79, Galaxy 1, Mission 1     Inbibe = Token  6
- EQUB &01                \ System  53, Galaxy 1, Mission 1      Ausar = Token  7
- EQUB &01                \ System 118, Galaxy 1, Mission 1     Usleri = Token  8
- EQUB &82                \ System 100, Galaxy 2                Arredi = Token  9
- EQUB &01                \ System  32, Galaxy 1, Mission 1     Bebege = Token 10
- EQUB &01                \ System  68, Galaxy 1, Mission 1     Cearso = Token 11
- EQUB &01                \ System 164, Galaxy 1, Mission 1     Dicela = Token 12
- EQUB &01                \ System 220, Galaxy 1, Mission 1     Eringe = Token 13
- EQUB &01                \ System 106, Galaxy 1, Mission 1     Gexein = Token 14
- EQUB &01                \ System  16, Galaxy 1, Mission 1     Isarin = Token 15
- EQUB &01                \ System 162, Galaxy 1, Mission 1   Letibema = Token 16
- EQUB &01                \ System   3, Galaxy 1, Mission 1     Maisso = Token 17
- EQUB &01                \ System 107, Galaxy 1, Mission 1       Onen = Token 18
- EQUB &01                \ System  26, Galaxy 1, Mission 1     Ramaza = Token 19
- EQUB &01                \ System 192, Galaxy 1, Mission 1     Sosole = Token 20
- EQUB &01                \ System 184, Galaxy 1, Mission 1     Tivere = Token 21
- EQUB &01                \ System   5, Galaxy 1, Mission 1     Veriar = Token 22
- EQUB &02                \ System 101, Galaxy 2, Mission 1     Xeveon = Token 23
- EQUB &01                \ System 193, Galaxy 1, Mission 1     Orarra = Token 24
- EQUB &82                \ System  41, Galaxy 2                Anreer = Token 25
+ EQUB &80               \ System 211, Galaxy 0                 Teorge = Token  1
+ EQUB &00               \ System 150, Galaxy 0, Mission 1        Xeer = Token  2
+ EQUB &00               \ System  36, Galaxy 0, Mission 1    Reesdice = Token  3
+ EQUB &00               \ System  28, Galaxy 0, Mission 1       Arexe = Token  4
+ EQUB &01               \ System 253, Galaxy 1, Mission 1      Errius = Token  5
+ EQUB &01               \ System  79, Galaxy 1, Mission 1      Inbibe = Token  6
+ EQUB &01               \ System  53, Galaxy 1, Mission 1       Ausar = Token  7
+ EQUB &01               \ System 118, Galaxy 1, Mission 1      Usleri = Token  8
+ EQUB &82               \ System 100, Galaxy 2                 Arredi = Token  9
+ EQUB &01               \ System  32, Galaxy 1, Mission 1      Bebege = Token 10
+ EQUB &01               \ System  68, Galaxy 1, Mission 1      Cearso = Token 11
+ EQUB &01               \ System 164, Galaxy 1, Mission 1      Dicela = Token 12
+ EQUB &01               \ System 220, Galaxy 1, Mission 1      Eringe = Token 13
+ EQUB &01               \ System 106, Galaxy 1, Mission 1      Gexein = Token 14
+ EQUB &01               \ System  16, Galaxy 1, Mission 1      Isarin = Token 15
+ EQUB &01               \ System 162, Galaxy 1, Mission 1    Letibema = Token 16
+ EQUB &01               \ System   3, Galaxy 1, Mission 1      Maisso = Token 17
+ EQUB &01               \ System 107, Galaxy 1, Mission 1        Onen = Token 18
+ EQUB &01               \ System  26, Galaxy 1, Mission 1      Ramaza = Token 19
+ EQUB &01               \ System 192, Galaxy 1, Mission 1      Sosole = Token 20
+ EQUB &01               \ System 184, Galaxy 1, Mission 1      Tivere = Token 21
+ EQUB &01               \ System   5, Galaxy 1, Mission 1      Veriar = Token 22
+ EQUB &02               \ System 101, Galaxy 2, Mission 1      Xeveon = Token 23
+ EQUB &01               \ System 193, Galaxy 1, Mission 1      Orarra = Token 24
+ EQUB &82               \ System  41, Galaxy 2                 Anreer = Token 25
 IF _6502SP_VERSION \ Advanced: The source disc release of the 6502SP version overrides the extended system description for Lave, and the Executive version overrides both Lave and Riedquat. The Master version also has an override for Lave, but this time it's only for Lave in galaxy 16 (i.e. the 17th galaxy)
 
 IF _SOURCE_DISC
 
- EQUB &80                \ System   7, Galaxy 0                  Lave = Token 26
+ EQUB &80               \ System   7, Galaxy 0                   Lave = Token 26
 
 ELIF _EXECUTIVE
 
- EQUB &80                \ System   7, Galaxy 0                  Lave = Token 26
- EQUB &80                \ System   7, Galaxy 0              Riedquat = Token 27
+ EQUB &80               \ System   7, Galaxy 0                   Lave = Token 26
+ EQUB &80               \ System   7, Galaxy 0               Riedquat = Token 27
 
 ENDIF
 
 ELIF _MASTER_VERSION
- EQUB &90                \ System   7, Galaxy 16                 Lave = Token 26
+ EQUB &90               \ System   7, Galaxy 16                  Lave = Token 26
 
 ENDIF
 

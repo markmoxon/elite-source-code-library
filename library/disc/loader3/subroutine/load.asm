@@ -6,6 +6,17 @@
 \    Summary: Load the main docked code, set up various vectors, run a checksum
 \             and start the game
 \
+IF NOT(_ELITE_A_VERSION)
+\ ------------------------------------------------------------------------------
+\
+\ This routine also contains a hidden message from the authors for potential
+\ crackers to enjoy:
+\
+\   Does your mother know you do this?
+\
+\ I bet this made quite a few people smile back in the day...
+\
+ENDIF
 \ ******************************************************************************
 
 .LOAD
@@ -99,6 +110,8 @@ IF NOT(_ELITE_A_VERSION)
 
  EQUS "L.T.CODE"        \ This is short for "*LOAD T.CODE"
  EQUB 13
+
+ EQUS "Does your mother know you do this?"
 
 ELIF _ELITE_A_VERSION
 

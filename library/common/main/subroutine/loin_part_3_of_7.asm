@@ -53,10 +53,68 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Other: The original versions contain a bug where the first pixel is skipped instead of the last pixel, but only when drawing lines that go right and up or left and down. This leads to a messy line join between this kind of line and lines with different slopes. This bug was fixed in the advanced versions.
 
  LDA SWAP               \ If SWAP > 0 then we swapped the coordinates above, so
  BNE LI6                \ jump down to LI6 to skip plotting the first pixel
+                        \
+                        \ This appears to be a bug that omits the first pixel
+                        \ of this type of shallow line, rather than the last
+                        \ pixel, which makes the treatment of this kind of line
+                        \ different to the other kinds of slope (they all have a
+                        \ BEQ instruction at this point, rather than a BNE)
+                        \
+                        \ The result is a rather messy line join when a shallow
+                        \ line that goes right and up or left and down joins a
+                        \ line with any of the other three types of slope
+                        \
+                        \ This bug was fixed in the advanced versions of ELite,
+                        \ where the BNE is replaced by a BEQ to bring it in line
+                        \ with the other three slopes
+
+ELIF _6502SP_VERSION OR _MASTER_VERSION
+
+                        \ We now work our way along the line from left to right,
+                        \ using X as a decreasing counter, and at each count we
+                        \ plot a single pixel using the pixel mask in R
+
+ LDA SWAP               \ If SWAP = 0 then we didn't swap the coordinates above,
+ BEQ LI190              \ so jump down to LI190 to plot the first pixel
+
+ENDIF
+
+IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
+
+                        \ If we get here then we want to omit the first pixel
+
+ LDA R                  \ Fetch the pixel byte from R, which we set in part 2 to
+                        \ the horizontal pixel number within the character block
+                        \ where the line starts (so it's 0, 1, 2 or 3)
+
+ BEQ LI100+6            \ If R = 0, jump to LI100+6 to start plotting from the
+                        \ second pixel in this byte (LI100+6 points to the DEX
+                        \ instruction after the EOR/STA instructions, so the
+                        \ pixel doesn't get plotted but we join at the right
+                        \ point to decrement X correctly to plot the next three)
+
+ CMP #2                 \ If R < 2 (i.e. R = 1), jump to LI110+6 to skip the
+ BCC LI110+6            \ first two pixels but plot the next two
+
+ CLC                    \ Clear the C flag so it doesn't affect the additions
+                        \ below
+
+ BEQ LI120+6            \ If R = 2, jump to LI120+6 to to skip the first three
+                        \ pixels but plot the last one
+
+ BNE LI130+6            \ If we get here then R must be 3, so jump to LI130+6 to
+                        \ skip plotting any of the pixels, but making sure we
+                        \ join the routine just after the plotting instructions
+
+.LI190
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
  DEX                    \ Decrement the counter in X because we're about to plot
                         \ the first pixel
@@ -68,6 +126,19 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
                         \ single pixel using the pixel mask in R
 
  LDA R                  \ Fetch the pixel byte from R
+
+ELIF _6502SP_VERSION OR _MASTER_VERSION
+
+ DEX                    \ Decrement the counter in X because we're about to plot
+                        \ the first pixel
+
+ LDA R                  \ Fetch the pixel byte from R, which we set in part 2 to
+                        \ the horizontal pixel number within the character block
+                        \ where the line starts (so it's 0, 1, 2 or 3)
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
  EOR (SC),Y             \ Store R into screen memory at SC(1 0), using EOR
  STA (SC),Y             \ logic so it merges with whatever is already on-screen
@@ -167,47 +238,6 @@ ELIF _ELITE_A_6502SP_IO
 ENDIF
 
 IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
-
-                        \ We now work our way along the line from left to right,
-                        \ using X as a decreasing counter, and at each count we
-                        \ plot a single pixel using the pixel mask in R
-
- LDA SWAP               \ If SWAP = 0 then we didn't swap the coordinates above,
- BEQ LI190              \ so jump down to LI190 to plot the first pixel
-
-                        \ If we get here then we want to omit the first pixel
-
- LDA R                  \ Fetch the pixel byte from R, which we set in part 2 to
-                        \ the horizontal pixel number within the character block
-                        \ where the line starts (so it's 0, 1, 2 or 3)
-
- BEQ LI100+6            \ If R = 0, jump to LI100+6 to start plotting from the
-                        \ second pixel in this byte (LI100+6 points to the DEX
-                        \ instruction after the EOR/STA instructions, so the
-                        \ pixel doesn't get plotted but we join at the right
-                        \ point to decrement X correctly to plot the next three)
-
- CMP #2                 \ If R < 2 (i.e. R = 1), jump to LI110+6 to skip the
- BCC LI110+6            \ first two pixels but plot the next two
-
- CLC                    \ Clear the C flag so it doesn't affect the additions
-                        \ below
-
- BEQ LI120+6            \ If R = 2, jump to LI120+6 to to skip the first three
-                        \ pixels but plot the last one
-
- BNE LI130+6            \ If we get here then R must be 3, so jump to LI130+6 to
-                        \ skip plotting any of the pixels, but making sure we
-                        \ join the routine just after the plotting instructions
-
-.LI190
-
- DEX                    \ Decrement the counter in X because we're about to plot
-                        \ the first pixel
-
- LDA R                  \ Fetch the pixel byte from R, which we set in part 2 to
-                        \ the horizontal pixel number within the character block
-                        \ where the line starts (so it's 0, 1, 2 or 3)
 
  BEQ LI100              \ If R = 0, jump to LI100 to start plotting from the
                         \ first pixel in this byte

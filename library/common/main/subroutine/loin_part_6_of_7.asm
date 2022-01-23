@@ -91,7 +91,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
 
 .LI16
 
- LDA S                  \ Set S = S + Q to update the slope error
+ LDA S                  \ Set S = S + P to update the slope error
  ADC P
  STA S
 

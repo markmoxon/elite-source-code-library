@@ -19,7 +19,8 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 \   * X1 < X2 and Y1 > Y2
 ENDIF
 \
-\   * Draw from (X1, Y1) at bottom left to (X2, Y2) at top right
+\   * Draw from (X1, Y1) at bottom left to (X2, Y2) at top right, omitting the
+\     first pixel
 \
 IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ This routine looks complex, but that's because the loop that's used in the
@@ -53,13 +54,13 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Other: The original versions contain a bug where the first pixel is skipped instead of the last pixel, but only when drawing lines that go right and up or left and down. This leads to a messy line join between this kind of line and lines with different slopes. This bug was fixed in the advanced versions.
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Other: The original versions contain a bug where the last pixel is skipped instead of the first pixel, but only when drawing lines that go right and up or left and down. This leads to a messy line join between this kind of line and lines with different slopes. This bug was fixed in the advanced versions.
 
  LDA SWAP               \ If SWAP > 0 then we swapped the coordinates above, so
  BNE LI6                \ jump down to LI6 to skip plotting the first pixel
                         \
-                        \ This appears to be a bug that omits the first pixel
-                        \ of this type of shallow line, rather than the last
+                        \ This appears to be a bug that omits the last pixel
+                        \ of this type of shallow line, rather than the first
                         \ pixel, which makes the treatment of this kind of line
                         \ different to the other kinds of slope (they all have a
                         \ BEQ instruction at this point, rather than a BNE)

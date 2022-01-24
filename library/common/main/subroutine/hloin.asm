@@ -20,7 +20,7 @@ IF _ELITE_A_6502SP_IO
 \
 ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
-\ We do not draw a pixel at the end point (X2, X1).
+\ We do not draw a pixel at the right end of the line.
 \
 \ To understand how this routine works, you might find it helpful to read the
 \ deep dive on "Drawing monochrome pixels in mode 4".
@@ -31,7 +31,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
 ELIF _MASTER_VERSION
 \ This routine draws a horizontal orange line in the space view.
 \
-\ We do not draw a pixel at the end point (X2, X1).
+\ We do not draw a pixel at the right end of the line.
 \
 \ To understand how this routine works, you might find it helpful to read the
 \ deep dive on "Drawing monochrome pixels in mode 5".
@@ -52,7 +52,7 @@ ELIF _6502SP_VERSION
 \ The parameters match those put into the HBUF block in the parasite. Each line
 \ is drawn from (X1, Y1) to (X2, Y1), and lines are drawn in orange.
 \
-\ We do not draw a pixel at the end point (X2, X1).
+\ We do not draw a pixel at the right end of the line.
 \
 \ Arguments:
 \

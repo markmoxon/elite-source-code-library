@@ -15,7 +15,8 @@
 \
 \   * X1 < X2 and Y1 >= Y2
 \
-\   * Draw from (X1, Y1) at top left to (X2, Y2) at bottom right
+\   * Draw from (X1, Y1) at top left to (X2, Y2) at bottom right, omitting the
+\     first pixel
 \
 IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ This routine looks complex, but that's because the loop that's used in the

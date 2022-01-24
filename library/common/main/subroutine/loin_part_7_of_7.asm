@@ -15,7 +15,8 @@
 \
 \   * X1 >= X2 and Y1 >= Y2
 \
-\   * Draw from (X1, Y1) at bottom left to (X2, Y2) at top right
+\   * Draw from (X1, Y1) at bottom left to (X2, Y2) at top right, omitting the
+\     first pixel
 \
 IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ This routine looks complex, but that's because the loop that's used in the
@@ -36,7 +37,7 @@ ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
  LDA SWAP               \ If SWAP = 0 then we didn't swap the coordinates above,
- BEQ LI18               \ jump down to LI18 to skip plotting the first pixel
+ BEQ LI18               \ so jump down to LI18 to skip plotting the first pixel
 
  DEX                    \ Decrement the counter in X because we're about to plot
                         \ the first pixel

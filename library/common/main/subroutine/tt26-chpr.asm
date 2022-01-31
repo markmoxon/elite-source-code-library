@@ -1098,7 +1098,7 @@ ELIF _6502SP_VERSION
                         \ above - so load the Y-th byte from Q(1 0), which will
                         \ contain the bitmap for the Y-th row of the character
 
- AND #%11110000         \ Extract the top nibble of the character definition
+ AND #%11110000         \ Extract the high nibble of the character definition
                         \ byte, so the first four pixels on this row of the
                         \ character are in the first nibble, i.e. xxxx 0000
                         \ where xxxx is the pattern of those four pixels in the
@@ -1106,7 +1106,7 @@ ELIF _6502SP_VERSION
 
  STA U                  \ Set A = (A >> 4) OR A
  LSR A                  \
- LSR A                  \ which duplicates the top nibble into the bottom nibble
+ LSR A                  \ which duplicates the high nibble into the low nibble
  LSR A                  \ to give xxxx xxxx
  LSR A
  ORA U
@@ -1126,7 +1126,7 @@ ELIF _MASTER_VERSION
                         \ above - so load the Y-th byte from P(1 0), which will
                         \ contain the bitmap for the Y-th row of the character
 
- AND #%11110000         \ Extract the top nibble of the character definition
+ AND #%11110000         \ Extract the high nibble of the character definition
                         \ byte, so the first four pixels on this row of the
                         \ character are in the first nibble, i.e. xxxx 0000
                         \ where xxxx is the pattern of those four pixels in the
@@ -1134,7 +1134,7 @@ ELIF _MASTER_VERSION
 
  STA W                  \ Set A = (A >> 4) OR A
  LSR A                  \
- LSR A                  \ which duplicates the top nibble into the bottom nibble
+ LSR A                  \ which duplicates the high nibble into the low nibble
  LSR A                  \ to give xxxx xxxx
  LSR A
  ORA W
@@ -1177,12 +1177,12 @@ IF _6502SP_VERSION \ Screen
  LDA (Q),Y              \ Fetch the the bitmap for the Y-th row of the character
                         \ again
 
- AND #%00001111         \ This time we extract the bottom nibble of the
-                        \ character definition, to get 0000 xxxx
+ AND #%00001111         \ This time we extract the low nibble of the character
+                        \ definition, to get 0000 xxxx
 
  STA U                  \ Set A = (A << 4) OR A
  ASL A                  \
- ASL A                  \ which duplicates the bottom nibble into the top nibble
+ ASL A                  \ which duplicates the low nibble into the high nibble
  ASL A                  \ to give xxxx xxxx
  ASL A
  ORA U
@@ -1207,12 +1207,12 @@ ELIF _MASTER_VERSION
  LDA (P),Y              \ Fetch the the bitmap for the Y-th row of the character
                         \ again
 
- AND #%00001111         \ This time we extract the bottom nibble of the
-                        \ character definition, to get 0000 xxxx
+ AND #%00001111         \ This time we extract the low nibble of the character
+                        \ definition, to get 0000 xxxx
 
  STA W                  \ Set A = (A << 4) OR A
  ASL A                  \
- ASL A                  \ which duplicates the bottom nibble into the top nibble
+ ASL A                  \ which duplicates the low nibble into the high nibble
  ASL A                  \ to give xxxx xxxx
  ASL A
  ORA W

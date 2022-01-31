@@ -36,7 +36,7 @@
  STA R                  \ Store the value from the LTDEF table in R
 
  AND #%00001111         \ Set A to bits 0-3 of the LTDEF table value, i.e the
-                        \ bottom nibble
+                        \ low nibble
 
  STY P                  \ Store the offset in P, so we can preserve it through
                         \ calls to GRS1
@@ -46,15 +46,15 @@
  LDA NOFX,Y             \ Set X1TB+X = XP + NOFX+Y
  CLC                    \
  ADC XP                 \ so the X1 coordinate is XP + the NOFX entry given by
- STA X1TB,X             \ the bottom nibble of the LTDEF table value
+ STA X1TB,X             \ the low nibble of the LTDEF table value
 
  LDA YP                 \ Set Y1TB+X = YP - NOFY+Y
  SEC                    \
  SBC NOFY,Y             \ so the Y1 coordinate is YP - the NOFY entry given by
- STA Y1TB,X             \ the bottom nibble of the LTDEF table value
+ STA Y1TB,X             \ the low nibble of the LTDEF table value
 
  LDA R                  \ Set Y to bits 4-7 of the LTDEF table value, i.e. the
- LSR A                  \ top nibble
+ LSR A                  \ high nibble
  LSR A
  LSR A
  LSR A
@@ -63,12 +63,12 @@
  LDA NOFX,Y             \ Set X2TB+X = XP + NOFX+Y
  CLC                    \
  ADC XP                 \ so the X2 coordinate is XP + the NOFX entry given by
- STA X2TB,X             \ the top nibble of the LTDEF table value
+ STA X2TB,X             \ the high nibble of the LTDEF table value
 
  LDA YP                 \ Set Y2TB+X = YP - NOFY+Y
  SEC                    \
  SBC NOFY,Y             \ so the Y2 coordinate is YP - the NOFY entry given by
- STA Y2TB,X             \ the top nibble of the LTDEF table value
+ STA Y2TB,X             \ the high nibble of the LTDEF table value
 
  INX                    \ Increment the byte pointer in X
 

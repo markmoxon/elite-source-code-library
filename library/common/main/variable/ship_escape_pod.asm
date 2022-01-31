@@ -10,7 +10,7 @@
 
 .SHIP_ESCAPE_POD
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: In the enhanced versions, the escape pod ship blueprint contains the information in the top nibble of byte #0 that scooping escape pods gives us slaves
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: In the enhanced versions, the escape pod ship blueprint contains the information in the high nibble of byte #0 that scooping escape pods gives us slaves
  EQUB 0                 \ Max. canisters on demise = 0
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
  EQUB 0 + (2 << 4)      \ Max. canisters on demise = 0

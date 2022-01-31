@@ -9,7 +9,7 @@
 \ ------------------------------------------------------------------------------
 \
 \ In the following table, which maps buttons on the Delta 14b to the flight
-\ controls, the top nibble of the value gives the column:
+\ controls, the high nibble of the value gives the column:
 \
 \   &6 = %110 = left column
 \   &5 = %101 = middle column

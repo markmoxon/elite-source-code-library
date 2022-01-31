@@ -112,7 +112,7 @@
                         \
                         \ For example, take the b_table entry for the escape pod
                         \ button, in the right column and third row. The value
-                        \ in b_table is &34. The top nibble contains the column,
+                        \ in b_table is &34. The high nibble denotes the column,
                         \ which is &3 = %011, which means in the STA VIA+&60
                         \ above, we write %1011 in the first pass (when A = 128)
                         \ to set the right column for the side socket joystick,

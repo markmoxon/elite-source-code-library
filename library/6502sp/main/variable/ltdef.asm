@@ -52,8 +52,8 @@
 \ line in the character's shape (bytes with value 0 are ignored, so each
 \ character consists of up to five lines but can contain fewer lines).
 \
-\ The bottom nibble of each byte is the starting point for that line segment,
-\ and the top nibble is the end point, so a value of &28, for example, means
+\ The low nibble of each byte is the starting point for that line segment, and
+\ the high nibble is the end point, so a value of &28, for example, means
 \ "draw a line from point 8 to point 2".
 \
 \ Let's look at a few examples to make this clearer.

@@ -15,7 +15,7 @@
 
 .SHIP_THARGON
 
-IF _CASSETTE_VERSION \ Enhanced: In the enhanced versions, the Thargon ship blueprint contains the information in the top nibble of byte #0 that scooping Thargons gives us alien items
+IF _CASSETTE_VERSION \ Enhanced: In the enhanced versions, the Thargon ship blueprint contains the information in the high nibble of byte #0 that scooping Thargons gives us alien items
  EQUB 0                 \ Max. canisters on demise = 0
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
  EQUB 0 + (15 << 4)     \ Max. canisters on demise = 0

@@ -1216,7 +1216,7 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ 6502SP: If you have bought an energy unit, then most versions will show it on the Inventory screen as "Energy Unit", but in the source disc release of the 6502SP version, it is shown as "Extra Energy Unit" (though it's still "Energy Unit" in the official SNG45 release of the game)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ 6502SP: If you have bought an energy unit, then most versions will show it on the Inventory screen as "Energy Unit", but in the source disc variant of the 6502SP version, it is shown as "Extra Energy Unit" (though it's still "Energy Unit" in the Acornsoft SNG45 release of the game)
 
  RTOK 121               \ Token 114:    "ENERGY UNIT"
  RTOK 14                \

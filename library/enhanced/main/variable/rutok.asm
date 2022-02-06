@@ -758,7 +758,7 @@ ELIF _ELITE_A_VERSION
  EQUB VE
 ENDIF
 
-IF _6502SP_VERSION \ Advanced: Some of the advanced versions have an extra token for overriding the system description for Lave. The source disc release of the 6502SP version has the bizarre: "Bits'n Pieces - End Of Part 1". The Executive version has: "This message is available only on the executive version of this program". And the Master version has: "WELCOME TO  THE SEVENTEENTH GALAXY!", which is only shown if we are in galaxy 17 (though it isn't possible to get there, so this never gets shown)
+IF _6502SP_VERSION \ Advanced: Some of the advanced versions have an extra token for overriding the system description for Lave. The source disc variant of the 6502SP version has the bizarre: "Bits'n Pieces - End Of Part 1". The Executive version has: "This message is available only on the executive version of this program". And the Master version has: "WELCOME TO  THE SEVENTEENTH GALAXY!", which is only shown if we are in galaxy 17 (though it isn't possible to get there, so this never gets shown)
 
 IF _SOURCE_DISC
 

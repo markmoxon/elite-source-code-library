@@ -48,9 +48,9 @@ _6502SP_VERSION         = (_VERSION = 3)
 _MASTER_VERSION         = (_VERSION = 4)
 _ELECTRON_VERSION       = (_VERSION = 5)
 _ELITE_A_VERSION        = (_VERSION = 6)
-_SOURCE_DISC            = (_RELEASE = 1)
-_SNG45                  = (_RELEASE = 2)
-_EXECUTIVE              = (_RELEASE = 3)
+_SOURCE_DISC            = (_VARIANT = 1)
+_SNG45                  = (_VARIANT = 2)
+_EXECUTIVE              = (_VARIANT = 3)
 _DISC_DOCKED            = FALSE
 _DISC_FLIGHT            = FALSE
 _ELITE_A_DOCKED         = FALSE

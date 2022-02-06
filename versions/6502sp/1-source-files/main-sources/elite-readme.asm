@@ -34,9 +34,9 @@ _6502SP_VERSION         = (_VERSION = 3)
 _MASTER_VERSION         = (_VERSION = 4)
 _ELECTRON_VERSION       = (_VERSION = 5)
 _ELITE_A_VERSION        = (_VERSION = 6)
-_SOURCE_DISC            = (_RELEASE = 1)
-_SNG45                  = (_RELEASE = 2)
-_EXECUTIVE              = (_RELEASE = 3)
+_SOURCE_DISC            = (_VARIANT = 1)
+_SNG45                  = (_VARIANT = 2)
+_EXECUTIVE              = (_VARIANT = 3)
 
 .readme
 
@@ -51,23 +51,19 @@ _EXECUTIVE              = (_RELEASE = 3)
 
 IF _SOURCE_DISC
 
- EQUS "Release: Ian Bell's source disc"
- EQUB 10, 13
- EQUS "         Not officially released"
+ EQUS "Variant: Ian Bell's source disc"
  EQUB 10, 13
 
 ELIF _SNG45
 
- EQUS "Release: Official Acornsoft release"
+ EQUS "Variant: Acornsoft SNG45 release"
  EQUB 10, 13
- EQUS "         Acornsoft SNG45 v1.0"
+ EQUS "Release: Acornsoft SNG45"
  EQUB 10, 13
 
 ELIF _EXECUTIVE
 
- EQUS "Release: Executive version"
- EQUB 10, 13
- EQUS "         Not officially released"
+ EQUS "Variant: The Executive version"
  EQUB 10, 13
 
 ENDIF

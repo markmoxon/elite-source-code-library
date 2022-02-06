@@ -49,9 +49,9 @@ _ELITE_A_SHIPS_W        = FALSE
 _ELITE_A_ENCYCLOPEDIA   = TRUE
 _ELITE_A_6502SP_IO      = FALSE
 _ELITE_A_6502SP_PARA    = FALSE
-_RELEASED               = (_RELEASE = 1)
-_SOURCE_DISC            = (_RELEASE = 2)
-_BUG_FIX                = (_RELEASE = 3)
+_RELEASED               = (_VARIANT = 1)
+_SOURCE_DISC            = (_VARIANT = 2)
+_BUG_FIX                = (_VARIANT = 3)
 
 GUARD &6000             \ Guard against assembling over screen memory
 

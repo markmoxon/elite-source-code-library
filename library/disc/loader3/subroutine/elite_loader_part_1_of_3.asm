@@ -194,9 +194,11 @@ IF NOT(_ELITE_A_VERSION)
                         \ handler to support the split-screen mode
 
  LDA VIA+&44            \ Read the 6522 System VIA T1C-L timer 1 low-order
- STA &0001              \ counter (SHEILA &44), which increments 1000 times a
-                        \ second so this will be pretty random, and store it in
-                        \ &0001 among the random number seeds at &0000
+ STA &0001              \ counter (SHEILA &44), which decrements one million
+                        \ times a second and will therefore be pretty random,
+                        \ and store it in location &0001, which is among the
+                        \ main game code's random seeds (so this seeds the
+                        \ random number generator for the main game)
 
  LDA #%00111001         \ Set 6522 System VIA interrupt enable register IER
  STA VIA+&4E            \ (SHEILA &4E) bits 0 and 3-5 (i.e. disable the Timer1,

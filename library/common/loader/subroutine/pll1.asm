@@ -27,9 +27,11 @@ ENDIF
 IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Master: For most versions, the loading screen's Saturn is drawn randomly, so the dots are different every time the game loads. However, the Master version always draws exactly the same pixels for the Saturn, as the random number generator gets seeded to the same value every time
 
  LDA VIA+&44            \ Read the 6522 System VIA T1C-L timer 1 low-order
- STA RAND+1             \ counter (SHEILA &44), which increments 1000 times a
-                        \ second so this will be pretty random, and store it in
-                        \ RAND+1 among the hard-coded random seeds in RAND
+ STA RAND+1             \ counter (SHEILA &44), which decrements one million
+                        \ times a second and will therefore be pretty random,
+                        \ and store it in location RAND+1, which is among the
+                        \ main game code's random seeds in RAND (so this seeds
+                        \ the random number generator)
 
 ELIF _MASTER_VERSION
 

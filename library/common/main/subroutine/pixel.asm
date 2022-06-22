@@ -14,7 +14,7 @@ ELIF _6502SP_VERSION
 \  Deep dive: Drawing colour pixels in mode 5
 ELIF _ELITE_A_6502SP_IO
 \    Summary: Implement the draw_pixel command (draw space view pixels)
-\  Deep dive: Drawing colour pixels in mode 5
+\  Deep dive: Drawing monochrome pixels in mode 4
 ENDIF
 \
 \ ------------------------------------------------------------------------------

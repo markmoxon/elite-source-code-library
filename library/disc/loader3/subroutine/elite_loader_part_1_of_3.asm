@@ -363,7 +363,7 @@ IF NOT(_ELITE_A_VERSION)
 ELIF _ELITE_A_VERSION
 
  LDA #%11110000         \ Set the Data Direction Register (DDR) of port B of the
- STA VIA+&62            \ user port so we can read the buttons on the Delta 14b
+ STA VIA+&62            \ user port so we can read the buttons on the Delta 14B
                         \ joystick, using PB4 to PB7 as output (so we can write
                         \ to the button columns to select the column we are
                         \ interested in) and PB0 to PB3 as input (so we can read

@@ -17,7 +17,7 @@
 \ order shown, and if the command returns a result (denoted by a leading = sign
 \ in the command name), then this is then sent back to the parasite.
 \
-\ Consider the following command, which scans the keyboard or Delta 14b keypad
+\ Consider the following command, which scans the keyboard or Delta 14B keypad
 \ for a specific flight key:
 \
 \   =scan_y(key_offset, delta_14b)

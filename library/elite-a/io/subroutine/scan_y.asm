@@ -4,15 +4,15 @@
 \       Type: Subroutine
 \   Category: Keyboard
 \    Summary: Implement the scan_y command (scan for a specific flight key or
-\             Delta 14b button press)
+\             Delta 14B button press)
 \
 \ ------------------------------------------------------------------------------
 \
 \ This routine is run when the parasite sends a scan_y command. If the game is
 \ configured to use the keyboard or standard joystick, then it scans the
 \ keyboard for a specified flight key (given as an offset into the KYTB table),
-\ or if the game is configured to use the Delta 14b joystick, it scans the
-\ Delta 14b keyboard for the relevant button press. It returns 0 to the parasite
+\ or if the game is configured to use the Delta 14B joystick, it scans the
+\ Delta 14B keyboard for the relevant button press. It returns 0 to the parasite
 \ if the key is not being pressed, or &FF if it is.
 \
 \ ******************************************************************************
@@ -28,13 +28,13 @@
                         \   * Y = the KYTB offset of the key to scan for (1 for
                         \         the first key, 2 for the second etc.)
                         \
-                        \   * A = the configuration byte for the Delta 14b
+                        \   * A = the configuration byte for the Delta 14B
                         \         joystick
 
  BMI b_14               \ If bit 7 of A is set, then the configuration byte for
-                        \ the Delta 14b joystick in BTSK must be &FF and the
-                        \ Delta 14b stick is configured for use, so jump to b_14
-                        \ to scan the Delta 14b joystick buttons
+                        \ the Delta 14B joystick in BTSK must be &FF and the
+                        \ Delta 14B stick is configured for use, so jump to b_14
+                        \ to scan the Delta 14B joystick buttons
 
                         \ If we get here then we know A = 0, as BTSK is either
                         \ 0 or &FF, and we just confirmed that it's not the

@@ -3,15 +3,15 @@
 \       Name: b_14
 \       Type: Subroutine
 \   Category: Keyboard
-\    Summary: Scan the Delta 14b joystick buttons
-\  Deep dive: Delta 14b joystick support
+\    Summary: Scan the Delta 14B joystick buttons
+\  Deep dive: Delta 14B joystick support
 \
 \ ------------------------------------------------------------------------------
 \
-\ Scan the Delta 14b for the flight key given in register Y, where Y is the
+\ Scan the Delta 14B for the flight key given in register Y, where Y is the
 \ offset into the KYTB table above (so this is the same approach as in DKS1).
 \
-\ The keys on the Delta 14b are laid out as follows (the top two fire buttons
+\ The keys on the Delta 14B are laid out as follows (the top two fire buttons
 \ are treated the same as the top button in the middle row):
 \
 \   Fire laser                                    Fire laser
@@ -24,7 +24,7 @@
 \ Arguments:
 \
 \   Y                   The offset into the KYTB table of the key that we want
-\                       to scan on the Delta 14b
+\                       to scan on the Delta 14B
 \
 \ ******************************************************************************
 
@@ -32,14 +32,14 @@
 
  LDA #0                 \ Set A = 0 for the second pass through the following,
                         \ so we can check the joystick plugged into the rear
-                        \ socket of the Delta 14b adaptor
+                        \ socket of the Delta 14B adaptor
 
 .b_14
 
                         \ This is the entry point for the routine, which is
                         \ called with A = 128 (the value of BTSK when the Delta
                         \ 14b is enabled), and if the key we are checking has a
-                        \ corresponding button on the Delta 14b, it is run a
+                        \ corresponding button on the Delta 14B, it is run a
                         \ second time with A = 0
 
  TAX                    \ Store A in X so we can restore it below
@@ -51,7 +51,7 @@
                         \ pitch controls
 
                         \ If we get here, then the offset in Y points to a
-                        \ control with a corresponding button on the Delta 14b,
+                        \ control with a corresponding button on the Delta 14B,
                         \ and we pass through the following twice, once with a
                         \ starting value of A = 128, and again with a starting
                         \ value of A = 0
@@ -59,15 +59,15 @@
                         \ On the first pass, the EOR will set A to the value
                         \ from b_table but with bit 7 set, which means we scan
                         \ the joystick plugged into the side socket of the
-                        \ Delta 14b adaptor
+                        \ Delta 14B adaptor
                         \
                         \ On the second pass, the EOR will set A to the value
                         \ from b_table (i.e. with bit 7 clear), which means we
                         \ scan the joystick plugged into the rear socket of the
-                        \ Delta 14b adaptor
+                        \ Delta 14B adaptor
 
  STA VIA+&60            \ Set 6522 User VIA output register ORB (SHEILA &60) to
-                        \ the value in A, which tells the Delta 14b adaptor box
+                        \ the value in A, which tells the Delta 14B adaptor box
                         \ that we want to read the buttons specified in PB4 to
                         \ PB7 (i.e. bits 4-7), as follows:
                         \

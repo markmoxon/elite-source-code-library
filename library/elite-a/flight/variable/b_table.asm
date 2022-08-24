@@ -3,12 +3,12 @@
 \       Name: b_table
 \       Type: Variable
 \   Category: Keyboard
-\    Summary: Lookup table for Delta 14b joystick buttons
-\  Deep dive: Delta 14b joystick support
+\    Summary: Lookup table for Delta 14B joystick buttons
+\  Deep dive: Delta 14B joystick support
 \
 \ ------------------------------------------------------------------------------
 \
-\ In the following table, which maps buttons on the Delta 14b to the flight
+\ In the following table, which maps buttons on the Delta 14B to the flight
 \ controls, the high nibble of the value gives the column:
 \
 \   &6 = %110 = left column

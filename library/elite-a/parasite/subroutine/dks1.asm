@@ -17,7 +17,7 @@
 \
 \   Y                   The offset into the KYTB table above of the key that we
 \                       want to scan on the keyboard
-
+\
 \ ******************************************************************************
 
 .DKS1

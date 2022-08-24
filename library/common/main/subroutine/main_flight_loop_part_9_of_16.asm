@@ -139,11 +139,11 @@ ELIF _DISC_VERSION OR _ELITE_A_FLIGHT
 
  JSR HFS2               \ Call HFS2 to draw the launch tunnel rings
 
- JMP DOENTRY            \ Go to the docking bay (i.e. show the ship hanger)
+ JMP DOENTRY            \ Go to the docking bay (i.e. show the ship hangar)
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
- JMP DOENTRY            \ Go to the docking bay (i.e. show the ship hanger)
+ JMP DOENTRY            \ Go to the docking bay (i.e. show the ship hangar)
 
 ELIF _ELITE_A_6502SP_PARA
 
@@ -156,7 +156,7 @@ ELIF _ELITE_A_6502SP_PARA
 
  JSR HFS2               \ Call HFS2 to draw the launch tunnel rings
 
- JMP DOENTRYS           \ Go to the docking bay (i.e. show the ship hanger)
+ JMP DOENTRYS           \ Go to the docking bay (i.e. show the ship hangar)
 
 ENDIF
 

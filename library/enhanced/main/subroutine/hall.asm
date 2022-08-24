@@ -2,17 +2,17 @@
 \
 \       Name: HALL
 \       Type: Subroutine
-\   Category: Ship hanger
+\   Category: Ship hangar
 IF _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
-\    Summary: Draw the ships in the ship hanger, then draw the hanger
+\    Summary: Draw the ships in the ship hangar, then draw the hangar
 ELIF _6502SP_VERSION
-\    Summary: Draw the ships in the ship hanger, then draw the hanger by sending
+\    Summary: Draw the ships in the ship hangar, then draw the hangar by sending
 \             an OSWORD 248 command to the I/O processor
 ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-\ Half the time this will draw one of the four pre-defined ship hanger groups in
+\ Half the time this will draw one of the four pre-defined ship hangar groups in
 \ HATB, and half the time this will draw a solitary Sidewinder, Mamba, Krait or
 \ Adder on a random position. In all cases, the ships will be randomly spun
 \ around on the ground so they can face in any dirction, and larger ships are
@@ -20,7 +20,7 @@ ENDIF
 \
 IF _6502SP_VERSION \ Comment
 \ The ships are drawn by the HAS1 routine, which uses the normal ship-drawing
-\ routine in LL9, and then the hanger background is drawn by sending an OSWORD
+\ routine in LL9, and then the hangar background is drawn by sending an OSWORD
 \ 248 command to the I/O processor.
 \
 ENDIF
@@ -131,7 +131,7 @@ ENDIF
  PHA                    \ call to HAS1 (as it contains the index of the next
                         \ byte in HATB
 
- JSR HAS1               \ Call HAS1 to draw this ship in the hanger
+ JSR HAS1               \ Call HAS1 to draw this ship in the hangar
 
  PLA                    \ Restore the value of X, so X points to the next byte
  TAX                    \ in HATB after the three bytes we copied into XX15
@@ -143,9 +143,9 @@ ENDIF
 
  LDY #128               \ Set Y = 128 to send as byte #2 of the parameter block
                         \ to the OSWORD 248 command below, to tell the I/O
-                        \ processor that there are multiple ships in the hanger
+                        \ processor that there are multiple ships in the hangar
 
- BNE HA9                \ Jump to HA9 to display the ship hanger (this BNE is
+ BNE HA9                \ Jump to HA9 to display the ship hangar (this BNE is
                         \ effectively a JMP as Y is never zero)
 
 .HA7
@@ -159,16 +159,16 @@ ENDIF
  JSR DORND              \ Set XX15 = random number 0-255
  STA XX15
 
-IF _DISC_DOCKED OR _ELITE_A_VERSION \ Disc: The ship hanger has a 50% chance of displaying a group of ships, and a 50% chance of displaying a solitary ship. In the disc version, this latter option can display no ship at all, or it can show a solitary cargo canister, Shuttle, Transporter, Cobra Mk III, Python, Viper or Krait; in the advanced versions there is always a ship, and it's a Sidewinder, Mamba, Krait or Adder
+IF _DISC_DOCKED OR _ELITE_A_VERSION \ Disc: The ship hangar has a 50% chance of displaying a group of ships, and a 50% chance of displaying a solitary ship. In the disc version, this latter option can display no ship at all, or it can show a solitary cargo canister, Shuttle, Transporter, Cobra Mk III, Python, Viper or Krait; in the advanced versions there is always a ship, and it's a Sidewinder, Mamba, Krait or Adder
 
  JSR DORND              \ Set XX15+2 = random number 0-7
  AND #7                 \
- STA XX15+2             \ which is either 0 (no ships in the hanger) or one of
-                        \ the first 7 ship types in the ship hanger blueprints
+ STA XX15+2             \ which is either 0 (no ships in the hangar) or one of
+                        \ the first 7 ship types in the ship hangar blueprints
                         \ table, i.e. a cargo canister, Shuttle, Transporter,
                         \ Cobra Mk III, Python, Viper or Krait
 
- JSR HAS1               \ Call HAS1 to draw this ship in the hanger, with the
+ JSR HAS1               \ Call HAS1 to draw this ship in the hangar, with the
                         \ the following properties:
                         \
                         \   * Random x-coordinate from -63 to +63
@@ -185,7 +185,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
  ADC #SH3               \ which is the ship type of a Sidewinder, Mamba, Krait
  STA XX15+2             \ or Adder
 
- JSR HAS1               \ Call HAS1 to draw this ship in the hanger, with the
+ JSR HAS1               \ Call HAS1 to draw this ship in the hangar, with the
                         \ the following properties:
                         \
                         \   * Random x-coordinate from -63 to +63
@@ -197,8 +197,8 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 ENDIF
 
  LDY #0                 \ Set Y = 0 to use in the following instruction, to tell
-                        \ the hanger-drawing routine that there is just one ship
-                        \ in the hanger, so it knows not to draw between the
+                        \ the hangar-drawing routine that there is just one ship
+                        \ in the hangar, so it knows not to draw between the
                         \ ships
 
 .HA9
@@ -207,7 +207,7 @@ IF _6502SP_VERSION \ Minor
 
  STY HANG+2             \ Store Y in byte #2 of the parameter block to the
                         \ OSWORD 248 command below, to specify whether there
-                        \ are multiple ships in the hanger
+                        \ are multiple ships in the hangar
 
  JSR UNWISE             \ Call UNWISE, which (as noted above) does nothing in
                         \ the 6502 Second Processor version of Elite
@@ -215,21 +215,21 @@ IF _6502SP_VERSION \ Minor
 ELIF _DISC_DOCKED OR _ELITE_A_VERSION
 
  STY YSAV               \ Store Y in YSAV to specify whether there are multiple
-                        \ ships in the hanger
+                        \ ships in the hangar
 
  JSR UNWISE             \ Call UNWISE to switch the main line-drawing routine
                         \ between EOR and OR logic (in this case, switching it
                         \ back to EOR logic so that we can erase anything we
                         \ draw on-screen)
 
-                        \ Fall through into HANGER to draw the hanger background
+                        \ Fall through into HANGER to draw the hangar background
 
 ELIF _MASTER_VERSION
 
  STY HCNT               \ Store Y in HCNT to specify whether there are multiple
-                        \ ships in the hanger
+                        \ ships in the hangar
 
- JMP HANGER             \ Call HANGER to draw the hanger background and return
+ JMP HANGER             \ Call HANGER to draw the hangar background and return
                         \ from the subroutine using a tail call
 
 ENDIF
@@ -242,7 +242,7 @@ IF _6502SP_VERSION \ Tube
  LDY #HI(HANG)
 
  JMP OSWORD             \ Send an OSWORD 248 command to the I/O processor to
-                        \ draw the ship hanger, returning from the subroutine
+                        \ draw the ship hangar, returning from the subroutine
                         \ using a tail call
 
 .HANG
@@ -253,9 +253,9 @@ IF _6502SP_VERSION \ Tube
 
  EQUB 0                 \ Multiple ship flag:
                         \
-                        \   * 0 = there is just one ship in the hanger
+                        \   * 0 = there is just one ship in the hangar
                         \
-                        \   * 128 = there are multiple ships in the hanger
+                        \   * 128 = there are multiple ships in the hangar
 
 ENDIF
 

@@ -2,14 +2,14 @@
 \
 \       Name: HA2
 \       Type: Subroutine
-\   Category: Ship hanger
+\   Category: Ship hangar
 \    Summary: Implement the picture_v command (draw vertical lines for the ship
-\             hanger background)
+\             hangar background)
 \
 \ ------------------------------------------------------------------------------
 \
 \ This routine is run when the parasite sends a picture_v command. It draws the
-\ specified number of vertical lines for the ship hanger's background.
+\ specified number of vertical lines for the ship hangar's background.
 \
 \ ******************************************************************************
 

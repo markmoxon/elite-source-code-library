@@ -48,7 +48,7 @@ ENDIF
  EQUB 30                \ Max. speed               = 30
  EQUB HI(SHIP_KRAIT_EDGES - SHIP_KRAIT)            \ Edges data offset (high)
  EQUB HI(SHIP_KRAIT_FACES - SHIP_KRAIT)            \ Faces data offset (high)
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Disc: Group A: The ship hanger in the disc version displays the Krait with normals scaled with a factor of 4, which are more accurate than in the ship hangers of the other enhanced versions, which store them with a scale factor of 2
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Disc: Group A: The ship hangar in the disc version displays the Krait with normals scaled with a factor of 4, which are more accurate than in the ship hangars of the other enhanced versions, which store them with a scale factor of 2
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
 ELIF _DISC_DOCKED
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4

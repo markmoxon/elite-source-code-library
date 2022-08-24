@@ -73,7 +73,7 @@ ENDIF
 
 \VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX    0,    0,  224,     0,      1,    2,     3,         31    \ Vertex 0
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Standard: Group A: The Python has a number of different visibility settings for vertices, edges and faces between the cassette and disc ship hanger versions (which have slightly lower visibility values), and the other versions
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Standard: Group A: The Python has a number of different visibility settings for vertices, edges and faces between the cassette and disc ship hangar versions (which have slightly lower visibility values), and the other versions
  VERTEX    0,   48,   48,     0,      1,    4,     5,         30    \ Vertex 1
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
  VERTEX    0,   48,   48,     0,      1,    4,     5,         31    \ Vertex 1

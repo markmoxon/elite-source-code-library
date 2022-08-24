@@ -2,14 +2,14 @@
 \
 \       Name: UNWISE
 \       Type: Subroutine
-\   Category: Ship hanger
+\   Category: Ship hangar
 \    Summary: Switch the main line-drawing routine between EOR and OR logic
 \
 \ ------------------------------------------------------------------------------
 \
 IF _DISC_DOCKED OR _ELITE_A_6502SP_PARA OR _ELITE_A_DOCKED \ Comment
 \ This routine toggles the main line-drawing routine between EOR and OR logic,
-\ for use when drawing the ship hanger.
+\ for use when drawing the ship hangar.
 \
 ELIF _6502SP_VERSION
 \ This routine does nothing in the 6502 Second Processor version of Elite. It
@@ -20,7 +20,7 @@ ELIF _6502SP_VERSION
 ELIF _ELITE_A_6502SP_IO
 \ This routine is run when the parasite sends a draw_mode command. It toggles
 \ the main line-drawing routine between EOR and OR logic, for use when drawing
-\ the ship hanger.
+\ the ship hangar.
 \
 ENDIF
 IF _DISC_DOCKED OR _ELITE_A_VERSION \ Comment
@@ -29,7 +29,7 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION \ Comment
 \ merges with whatever is already on screen, allowing us to erase anything we
 \ draw for animation purposes) and OR logic (which overwrites the screen,
 \ ignoring anything that's already there). We want to use OR logic for drawing
-\ the ship hanger, as it looks better and we don't need to animate it).
+\ the ship hangar, as it looks better and we don't need to animate it).
 \
 \ The routine name, UNWISE, sums up this approach - if anything goes wrong, the
 \ results would be messy.

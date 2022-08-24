@@ -2,8 +2,8 @@
 \
 \       Name: HANGER
 \       Type: Subroutine
-\   Category: Ship hanger
-\    Summary: Display the ship hanger by sending picture_h and picture_v
+\   Category: Ship hangar
+\    Summary: Display the ship hangar by sending picture_h and picture_v
 \             commands to the I/O processor
 \
 \ ******************************************************************************
@@ -47,7 +47,7 @@
                         \   picture_h(line_count, multiple_ships)
                         \
                         \ which will draw the specified number of horizontal
-                        \ lines as the hanger floor, drawing lines between
+                        \ lines as the hangar floor, drawing lines between
                         \ multiple ships if required
 
  LDA P                  \ Send the first parameter to the I/O processor:
@@ -81,7 +81,7 @@
                         \   picture_v(line_count)
                         \
                         \ which will draw the specified number of vertical
-                        \ lines as the back wall of the hanger
+                        \ lines as the back wall of the hangar
 
  LDA XSAV               \ Send the parameter to the I/O processor:
  JSR tube_write         \

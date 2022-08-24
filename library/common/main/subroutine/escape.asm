@@ -263,7 +263,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
 
- JMP GOIN               \ Go to the docking bay (i.e. show the ship hanger
+ JMP GOIN               \ Go to the docking bay (i.e. show the ship hangar
                         \ screen) and return from the subroutine with a tail
                         \ call
 

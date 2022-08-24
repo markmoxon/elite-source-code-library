@@ -3,7 +3,7 @@
 \       Name: XX21
 \       Type: Variable
 \   Category: Drawing ships
-\    Summary: Ship blueprints lookup table for the ship hanger
+\    Summary: Ship blueprints lookup table for the ship hangar
 \  Deep dive: Ship blueprints in the disc version
 \
 \ ******************************************************************************

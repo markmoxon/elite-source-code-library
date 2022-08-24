@@ -3,7 +3,7 @@
 \       Name: DOENTRYS
 \       Type: Subroutine
 \   Category: Loader
-\    Summary: Dock at the space station, show the ship hanger and work out any
+\    Summary: Dock at the space station, show the ship hangar and work out any
 \             mission progression
 \
 \ ******************************************************************************

@@ -19,6 +19,6 @@
 
                         \ Fall through into escape to set KL+1 to the non-zero
                         \ value in A before running the docking code (which will
-                        \ not show the docking tunnel and ship hanger, as KL+1
+                        \ not show the docking tunnel and ship hangar, as KL+1
                         \ is now non-zero)
 

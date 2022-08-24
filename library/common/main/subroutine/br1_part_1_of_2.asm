@@ -42,7 +42,7 @@ IF _ELITE_A_6502SP_PARA
 ELIF _ELITE_A_ENCYCLOPEDIA
 
  JMP escape             \ Jump to escape to load the main docked code so that it
-                        \ shows the docking tunnel and ship hanger
+                        \ shows the docking tunnel and ship hangar
 
 ENDIF
 

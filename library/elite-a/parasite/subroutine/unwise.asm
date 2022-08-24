@@ -2,7 +2,7 @@
 \
 \       Name: UNWISE
 \       Type: Subroutine
-\   Category: Ship hanger
+\   Category: Ship hangar
 \    Summary: Switch the main line-drawing routine between EOR and OR logic by
 \             sending a draw_mode command to the I/O processor
 \

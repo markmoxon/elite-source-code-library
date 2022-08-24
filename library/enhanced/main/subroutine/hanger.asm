@@ -2,31 +2,31 @@
 \
 \       Name: HANGER
 \       Type: Subroutine
-\   Category: Ship hanger
+\   Category: Ship hangar
 IF _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
-\    Summary: Display the ship hanger
+\    Summary: Display the ship hangar
 ELIF _6502SP_VERSION
-\    Summary: Implement the OSWORD 248 command (display the ship hanger)
+\    Summary: Implement the OSWORD 248 command (display the ship hangar)
 ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
 IF _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
-\ This routine is called after the ships in the hanger have been drawn, so all
-\ it has to do is draw the hanger's background.
+\ This routine is called after the ships in the hangar have been drawn, so all
+\ it has to do is draw the hangar's background.
 ELIF _6502SP_VERSION
-\ This command is sent after the ships in the hanger have been drawn, so all it
-\ has to do is draw the hanger's background.
+\ This command is sent after the ships in the hangar have been drawn, so all it
+\ has to do is draw the hangar's background.
 ENDIF
 \
-\ The hanger background is made up of two parts:
+\ The hangar background is made up of two parts:
 \
-\   * The hanger floor consists of 11 screen-wide horizontal lines, which start
+\   * The hangar floor consists of 11 screen-wide horizontal lines, which start
 \     out quite spaced out near the bottom of the screen, and bunch ever closer
 \     together as the eye moves up towards the horizon, where they merge to give
 \     a sense of perspective
 \
-\   * The back wall of the hanger consists of 15 equally spaced vertical lines
+\   * The back wall of the hangar consists of 15 equally spaced vertical lines
 \     that join the horizon to the top of the screen
 \
 \ The ships in the hangar have already been drawn by this point, so the lines
@@ -34,7 +34,7 @@ ENDIF
 \ them look like they are behind and below the ships. This is achieved by
 \ drawing the lines in from the screen edges until they bump into something
 \ already on-screen. For the horizontal lines, when there are multiple ships in
-\ the hanger, this also means drawing lines between the ships, as well as in
+\ the hangar, this also means drawing lines between the ships, as well as in
 \ from each side.
 \
 IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
@@ -108,7 +108,7 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION \ Screen
  CLC                    \
  ADC #Y                 \ where #Y is the y-coordinate of the centre of the
                         \ screen, so Y is now the horizontal pixel row of the
-                        \ line we want to draw to display the hanger floor
+                        \ line we want to draw to display the hangar floor
 
  LSR A                  \ Set A = A >> 3
  LSR A
@@ -126,7 +126,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
  CLC                    \
  ADC #Y                 \ where #Y is the y-coordinate of the centre of the
  TAY                    \ screen, so Y is now the horizontal pixel row of the
-                        \ line we want to draw to display the hanger floor
+                        \ line we want to draw to display the hangar floor
 
  LDA ylookup,Y          \ Look up the page number of the character row that
  STA SC+1               \ contains the pixel with the y-coordinate in Y, and
@@ -185,7 +185,7 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION \ Tube
                         \ HALL routine above if there is only one ship
 
  BEQ HA2                \ If YSAV is zero, jump to HA2 to skip the following
-                        \ as there is only one ship in the hanger
+                        \ as there is only one ship in the hangar
 
 ELIF _MASTER_VERSION
 
@@ -193,21 +193,21 @@ ELIF _MASTER_VERSION
                         \ HALL routine above if there is only one ship
 
  BEQ HA2                \ If HCNT is zero, jump to HA2 to skip the following
-                        \ as there is only one ship in the hanger
+                        \ as there is only one ship in the hangar
 
 ELIF _6502SP_VERSION
 
  LDY #2                 \ Fetch byte #2 from the parameter block, which tells us
- LDA (OSSC),Y           \ whether the ship hanger contains just one ship, or
+ LDA (OSSC),Y           \ whether the ship hangar contains just one ship, or
  TAY                    \ multiple ships
 
  BEQ HA2                \ If byte #2 is zero, jump to HA2 to skip the following
-                        \ as there is only one ship in the hanger
+                        \ as there is only one ship in the hangar
 
 ENDIF
 
                         \ If we get here then there are multiple ships in the
-                        \ hanger, so we also need to draw the horizontal line in
+                        \ hangar, so we also need to draw the horizontal line in
                         \ the gap between the ships
 
 IF _DISC_DOCKED OR _ELITE_A_VERSION \ Screen
@@ -287,7 +287,7 @@ ENDIF
 
                         \ The floor is done, so now we move on to the back wall
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Other: The ship hanger in the advanced versions draws the vertical lines for the backdrop 60 times, when it only needs to do this 15 times. Is this a quick way of making the hanger display hang around for longer, or is it just a mistake?
+IF _6502SP_VERSION OR _MASTER_VERSION \ Other: The ship hangar in the advanced versions draws the vertical lines for the backdrop 60 times, when it only needs to do this 15 times. Is this a quick way of making the hangar display hang around for longer, or is it just a mistake?
 
  LDA #60                \ Set S = 60, so we run the following 60 times (though I
  STA S                  \ have no idea why it's 60 times, when it should be 15,

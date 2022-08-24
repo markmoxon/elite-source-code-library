@@ -34,7 +34,7 @@ ENDIF
  EQUB %00000000         \ Laser power              = 0
                         \ Missiles                 = 0
 
-IF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Disc: Group A: The ship hanger in the disc version displays the Shuttle with slightly different visibility settings to the other enhanced versions, and the face normals are twice the size (even though the scale factor is the same). I'm not entirely sure why
+IF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Disc: Group A: The ship hangar in the disc version displays the Shuttle with slightly different visibility settings to the other enhanced versions, and the face normals are twice the size (even though the scale factor is the same). I'm not entirely sure why
 
 \VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX    0,  -17,   23,    15,     15,   15,    15,         31    \ Vertex 0

@@ -3,7 +3,7 @@
 \       Name: DOENTRY
 \       Type: Subroutine
 \   Category: Flight
-\    Summary: Dock at the space station, show the ship hanger and work out any
+\    Summary: Dock at the space station, show the ship hangar and work out any
 \             mission progression
 \
 IF _ELITE_A_DOCKED
@@ -29,11 +29,11 @@ ELIF _ELITE_A_DOCKED
  BNE INBAY              \ sets KL+1 to a non-zero value (in the launch routine),
                         \ so this jumps to INBAY if we just came from the
                         \ encyclopedia, thereby skipping the docking tunnel and
-                        \ ship hanger when we swap between the docked and
+                        \ ship hangar when we swap between the docked and
                         \ encyclopedia views. The flight code zeroes the key
                         \ logger before loading the docked code, so when we dock
                         \ we keep going and show the docking tunnel and ship
-                        \ hanger
+                        \ hangar
 
  LDA #&FF               \ Call SCRAM to set save_lock to &FF and set the break
  JSR SCRAM              \ handler
@@ -94,7 +94,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
- JSR HALL               \ Show the ship hanger
+ JSR HALL               \ Show the ship hangar
 
  LDY #44                \ Wait for 44/50 of a second (0.88 seconds)
  JSR DELAY

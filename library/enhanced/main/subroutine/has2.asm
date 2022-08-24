@@ -2,8 +2,8 @@
 \
 \       Name: HAS2
 \       Type: Subroutine
-\   Category: Ship hanger
-\    Summary: Draw a hanger background line from left to right
+\   Category: Ship hangar
+\    Summary: Draw a hangar background line from left to right
 \
 \ ------------------------------------------------------------------------------
 \

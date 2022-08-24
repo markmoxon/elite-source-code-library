@@ -2,15 +2,15 @@
 \
 \       Name: HANGER
 \       Type: Subroutine
-\   Category: Ship hanger
+\   Category: Ship hangar
 \    Summary: Implement the picture_h command (draw horizontal lines for the
-\             ship hanger floor)
+\             ship hangar floor)
 \
 \ ------------------------------------------------------------------------------
 \
 \ This routine is run when the parasite sends a picture_h command. It draws a
-\ specified number of horizontal lines for the ship hanger's floor, making sure
-\ it draws between the ships when there are multiple ships in the hanger.
+\ specified number of horizontal lines for the ship hangar's floor, making sure
+\ it draws between the ships when there are multiple ships in the hangar.
 \
 \ ******************************************************************************
 
@@ -31,7 +31,7 @@
  CLC                    \
  ADC #Y                 \ where #Y is the y-coordinate of the centre of the
                         \ screen, so Y is now the horizontal pixel row of the
-                        \ line we want to draw to display the hanger floor
+                        \ line we want to draw to display the hangar floor
 
  LSR A                  \ Set A = A >> 3
  LSR A
@@ -75,7 +75,7 @@
 
  BEQ l_2045             \ If picture_2 is zero, jump to l_2045 to return from
                         \ the subroutine as there is only one ship in the
-                        \ hanger, so we are done
+                        \ hangar, so we are done
 
  JSR HAS2               \ Call HAS2 to a line to the right, starting with the
                         \ third pixel of the pixel row at screen address SC(1 0)

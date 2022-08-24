@@ -2,12 +2,12 @@
 \
 \       Name: HAS1
 \       Type: Subroutine
-\   Category: Ship hanger
-\    Summary: Draw a ship in the ship hanger
+\   Category: Ship hangar
+\    Summary: Draw a ship in the ship hangar
 \
 \ ------------------------------------------------------------------------------
 \
-\ The ship's position within the hanger is determined by the arguments and the
+\ The ship's position within the hangar is determined by the arguments and the
 \ size of the ship's targetable area, as follows:
 \
 \   * The x-coordinate is (x_sign x_hi 0) from the arguments, so the ship can be
@@ -99,14 +99,14 @@
 IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Platform
 
                         \ We now work our way through the ship blueprints table
-                        \ for the hanger, counting valid blueprints until we
+                        \ for the hangar, counting valid blueprints until we
                         \ have found the Y-th valid blueprint (we do this as the
-                        \ hanger blueprint table at XX21 is not fully populated,
+                        \ hangar blueprint table at XX21 is not fully populated,
                         \ so the Y-th ship is not necessarily at position Y)
 
  LDX #4                 \ We can start looking from ship blueprint 3, because we
                         \ don't show ship 1 (missile) or ship 2 (space station)
-                        \ in the hanger. Setting X to 4, which then gets
+                        \ in the hangar. Setting X to 4, which then gets
                         \ incremented to 6, will start us at XX21(5 4), which is
                         \ the address of ship blueprint 3 (escape pod)
 

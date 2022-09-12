@@ -466,7 +466,7 @@ IF _6502SP_VERSION \ 6502SP: The 6502SP version only scans for key presses every
  AND #3                 \ iterations, so for the other three, skip to nodesire
  BNE nodesire           \ so we only scan for key presses once every four loops
 
- STX NEEDKEY            \ Set NEEDKEY = 128, so the call to LL9 below draw the
+ STX NEEDKEY            \ Set NEEDKEY = 128, so the call to LL9 below draws the
                         \ ship and scans for key presses (LL9 resets NEEDKEY to
                         \ 0 so we have to reset NEEDKEY every four iterations
                         \ round the inner loop)

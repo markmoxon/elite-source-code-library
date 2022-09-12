@@ -72,7 +72,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
  BEQ LLfix              \ If A = 0, jump to LLfix to return a result of 0, as
                         \ 0 * Q / 256 is always 0
 
-                        \ We now want to calculate log(A) + log(Q), first adding
+                        \ We now want to calculate log(A) - log(Q), first adding
                         \ the low bytes (from the logL table), and then the high
                         \ bytes (from the log table)
 

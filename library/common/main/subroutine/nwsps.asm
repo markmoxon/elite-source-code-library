@@ -51,18 +51,10 @@ IF _CASSETTE_VERSION \ Comment
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
-
- STX FRIN+1             \ Set the sun/space station slot at FRIN+1 to 0, to
-                        \ indicate we should show the space station rather than
-                        \ the sun
-
-ELIF _ELECTRON_VERSION
-
- STX FRIN+1             \ Set the space station slot at FRIN+1 to 0, to indicate
-                        \ we should show the space station
-
-ENDIF
+ STX FRIN+1             \ Set the second slot in the FRIN table to 0, so when we
+                        \ fall through into NWSHP below, the new station that
+                        \ gets created will go into slot FRIN+1, as this will be
+                        \ the first empty slot that the routine finds
 
 IF NOT(_ELITE_A_VERSION)
 

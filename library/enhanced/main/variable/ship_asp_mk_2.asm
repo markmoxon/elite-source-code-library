@@ -19,7 +19,7 @@ IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite h
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 105               \ Max. edge count          = (105 - 1) / 4 = 26
 ENDIF
- EQUB 32                \ Gun vertex               = 32
+ EQUB 32                \ Gun vertex               = 32 / 4 = 8
  EQUB 26                \ Explosion count          = 5, as (4 * n) + 6 = 26
  EQUB 114               \ Number of vertices       = 114 / 6 = 19
  EQUB 28                \ Number of edges          = 28

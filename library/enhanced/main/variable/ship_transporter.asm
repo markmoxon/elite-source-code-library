@@ -19,7 +19,7 @@ IF _DISC_VERSION OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  EQUB 149               \ Max. edge count          = (149 - 1) / 4 = 37
 ENDIF
- EQUB 48                \ Gun vertex               = 48
+ EQUB 48                \ Gun vertex               = 48 / 4 = 12
  EQUB 26                \ Explosion count          = 5, as (4 * n) + 6 = 26
  EQUB 222               \ Number of vertices       = 222 / 6 = 37
  EQUB 46                \ Number of edges          = 46

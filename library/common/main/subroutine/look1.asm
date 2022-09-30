@@ -84,7 +84,7 @@ ENDIF
                         \ view)
 
  JSR FLIP               \ Swap the x- and y-coordinates of all the stardust
-                        \ particles
+                        \ particles and redraw the stardust field
 
 IF _MASTER_VERSION \ Master: See group A
 
@@ -99,11 +99,13 @@ ENDIF
 
 IF NOT(_ELITE_A_6502SP_PARA)
 
- JSR WPSHPS             \ Wipe all the ships from the scanner
+ JSR WPSHPS             \ Wipe all the ships from the scanner and mark them all
+                        \ as not being shown on-screen
 
 ELIF _ELITE_A_6502SP_PARA
 
- JSR WPSHPSS            \ Wipe all the ships from the scanner
+ JSR WPSHPSS            \ Wipe all the ships from the scanner and mark them all
+                        \ as not being shown on-screen
 
 ENDIF
 

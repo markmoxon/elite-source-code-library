@@ -29,7 +29,7 @@
  BEQ PAL1               \ Keep looping up to PAL1 until a key is pressed
 
  LDA #0                 \ Set the ship's AI flag to 0 (no AI) so it doesn't get
- STA INWK+31            \ any ideas of its pwn
+ STA INWK+31            \ any ideas of its own
 
  LDA #1                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 1

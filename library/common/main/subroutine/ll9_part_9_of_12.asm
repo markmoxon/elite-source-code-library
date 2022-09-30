@@ -23,7 +23,7 @@
  BEQ EE31
 
  LDA XX1+31             \ The ship is exploding, so set bit 3 of the ship's byte
- ORA #8                 \ #31 to denote that we are drawing something on-screen
+ ORA #%00001000         \ #31 to denote that we are drawing something on-screen
  STA XX1+31             \ for this ship
 
 IF NOT(_ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA)

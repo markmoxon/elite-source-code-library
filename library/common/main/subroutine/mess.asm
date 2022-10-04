@@ -31,7 +31,7 @@ IF _6502SP_VERSION \ Screen
 ELIF _MASTER_VERSION
 
  PHA                    \ Store A on the stack so we can restore it after the
-                        \ the call to DOCOL
+                        \ the following
 
  LDX QQ11               \ If this is the space view, skip the following
  BEQ P%+5               \ instruction

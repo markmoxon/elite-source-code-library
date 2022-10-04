@@ -31,17 +31,16 @@ ELIF _DISC_DOCKED OR _ELITE_A_VERSION
 ELIF _6502SP_VERSION
 
  LDA #7                 \ Call TITLE to show a rotating Asp Mk II (#ASP) and
- LDX #ASP               \ token 7 ("LOAD NEW {single cap}COMMANDER {all caps}
- JSR TITLE              \ (Y/N)?{sentence case}{cr}{cr}""), returning with the
-                        \ internal number of the key pressed in A
+ LDX #ASP               \ token 7 ("PRESS SPACE OR FIRE,{single cap}COMMANDER.
+ JSR TITLE              \ {cr}{cr}"), returning with the internal number of the
+                        \ key pressed in A
 
 ELIF _MASTER_VERSION
 
- LDA #7                 \ Call TITLE to show a rotating Cougar (#COU) and
- LDX #COU               \ token 7 ("LOAD NEW {single cap}COMMANDER {all caps}
- LDY #100               \ (Y/N)?{sentence case}{cr}{cr}""), with the ship at a
- JSR TITLE              \ distance of 100, returning with the internal number
-                        \ of the key pressed in A
+ LDA #7                 \ Call TITLE to show a rotating Cougar (#COU) and token
+ LDX #COU               \ 7 ("PRESS SPACE OR FIRE,{single cap}COMMANDER.{cr}
+ LDY #100               \ {cr}"), with the ship at a distance of 100, returning
+ JSR TITLE              \ with the internal number of the key pressed in A
 
 ENDIF
 

@@ -89,7 +89,7 @@ IF _EXECUTIVE
 
  LDX #3                 \ Call TALK with X = 3 to say "Elite" using the Watford
  JSR TALK               \ Electronics Beeb Speech Synthesiser (if one is fitted
-                        \ speech has been enabled)
+                        \ and speech has been enabled)
 
 ENDIF
 

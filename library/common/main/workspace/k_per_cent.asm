@@ -26,7 +26,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 ELIF _ELECTRON_VERSION
 \ Contains ship data for all the ships, planets and space stations in our local
 \ bubble of universe, along with their corresponding ship line heaps.
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 \ Contains ship data for all the ships, planets, suns and space stations in our
 \ local bubble of universe.
 ENDIF
@@ -36,12 +36,12 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 \ bytes of the K% workspace hold ship data on up to 12 ships, with 36 (NI%)
 \ bytes per ship, and the ship line heap grows downwards from WP at the end of
 \ the K% workspace.
-ELIF _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _DISC_VERSION OR _ELITE_A_VERSION
 \ The blocks are pointed to by the lookup table at location UNIV. The first 444
 \ bytes of the K% workspace hold ship data on up to 12 ships, with 37 (NI%)
 \ bytes per ship, and the ship line heap grows downwards from WP at the end of
 \ the K% workspace.
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 \ The blocks are pointed to by the lookup table at location UNIV. The first 720
 \ bytes of the K% workspace hold ship data on up to 20 ships, with 37 (NI%)
 \ bytes per ship.

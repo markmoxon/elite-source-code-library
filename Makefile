@@ -247,8 +247,8 @@ build:
 	echo _REMOVE_CHECKSUMS=TRUE >> versions/master/1-source-files/main-sources/elite-header.h.asm
 	echo _MATCH_ORIGINAL_BINARIES=FALSE >> versions/master/1-source-files/main-sources/elite-header.h.asm
 	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-loader.asm -v >> versions/master/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-data.asm -v >> versions/master/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-source.asm -v >> versions/master/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-data.asm -v >> versions/master/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-readme.asm -v >> versions/master/3-assembled-output/compile.txt
 	$(PYTHON) versions/master/2-build-files/elite-checksum.py -u -rel$(var-master)
 	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-disc.asm $(boot-master) -do versions/master/5-compiled-game-discs/elite-master$(suffix-master).ssd -title "E L I T E"
@@ -363,8 +363,8 @@ encrypt:
 	echo _REMOVE_CHECKSUMS=FALSE >> versions/master/1-source-files/main-sources/elite-header.h.asm
 	echo _MATCH_ORIGINAL_BINARIES=TRUE >> versions/master/1-source-files/main-sources/elite-header.h.asm
 	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-loader.asm -v > versions/master/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-data.asm -v >> versions/master/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-source.asm -v >> versions/master/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-data.asm -v >> versions/master/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-readme.asm -v >> versions/master/3-assembled-output/compile.txt
 	$(PYTHON) versions/master/2-build-files/elite-checksum.py -rel$(var-master)
 	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-disc.asm $(boot-master) -do versions/master/5-compiled-game-discs/elite-master$(suffix-master).ssd -title "E L I T E"
@@ -497,8 +497,8 @@ master:
 	echo _REMOVE_CHECKSUMS=FALSE >> versions/master/1-source-files/main-sources/elite-header.h.asm
 	echo _MATCH_ORIGINAL_BINARIES=TRUE >> versions/master/1-source-files/main-sources/elite-header.h.asm
 	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-loader.asm -v > versions/master/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-data.asm -v >> versions/master/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-source.asm -v >> versions/master/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-data.asm -v >> versions/master/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-readme.asm -v >> versions/master/3-assembled-output/compile.txt
 	$(PYTHON) versions/master/2-build-files/elite-checksum.py -rel$(var-master)
 	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-disc.asm $(boot-master) -do versions/master/5-compiled-game-discs/elite-master$(suffix-master).ssd -title "E L I T E"

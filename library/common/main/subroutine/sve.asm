@@ -59,11 +59,11 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION \ Platform
 ELIF _6502SP_VERSION
 
  LDA #LO(MEBRK)         \ Set BRKV to point to the MEBRK routine, disabling
- SEI                    \ while we make the change and re-enabling them once we
- STA BRKV               \ are done. MEBRK is the BRKV handler for disc access
- LDA #HI(MEBRK)         \ operations, and replaces the standard BRKV handler in
- STA BRKV+1             \ BRBR while disc access operations are happening
- CLI
+ SEI                    \ interrupts while we make the change and re-enabling
+ STA BRKV               \ them once we are done. MEBRK is the BRKV handler for
+ LDA #HI(MEBRK)         \ disc access operations, and replaces the standard BRKV
+ STA BRKV+1             \ handler in BRBR while disc access operations are
+ CLI                    \ happening
 
 ENDIF
 

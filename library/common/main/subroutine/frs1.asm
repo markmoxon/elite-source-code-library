@@ -47,13 +47,13 @@
  STA INWK+5             \ launched just below our line of sight
 
  LDA MSTG               \ Set A to the missile lock target, shifted left so the
- ASL A                  \ slot number is in bits 1-4
+ ASL A                  \ slot number is in bits 1-5
 
  ORA #%10000000         \ Set bit 7 and store the result in byte #32, the AI
  STA INWK+32            \ flag launched ship for the launched ship. For missiles
                         \ this enables AI (bit 7), makes it friendly towards us
                         \ (bit 6), sets the target to the value of MSTG (bits
-                        \ 1-4), and sets its lock status as launched (bit 0).
+                        \ 1-5), and sets its lock status as launched (bit 0).
                         \ It doesn't matter what it does for our abandoned
                         \ Cobra, as the AI flag gets overwritten once we return
                         \ from the subroutine back to the ESCAPE routine that

@@ -28,11 +28,11 @@
  LDA ALP2               \ Send the sign of the roll angle to the I/O processor
  JSR OSWRCH
 
- LDA BETA               \ Send the magnitude of the pitch angle to the I/O
- JSR OSWRCH             \ processor
-
- LDA BET1               \ Send the sign of the pitch angle to the I/O processor
+ LDA BETA               \ Send the signed pitch angle to the I/O processor
  JSR OSWRCH
+
+ LDA BET1               \ Send the magnitude of the pitch angle to the I/O
+ JSR OSWRCH             \ processor
 
  LDA DELTA              \ Send the current speed to the I/O processor
  JSR OSWRCH

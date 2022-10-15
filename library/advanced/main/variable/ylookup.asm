@@ -23,7 +23,7 @@
 \   ...
 \
 \   Y = 232 to 239, lookup value = &7A (so row 31 is from &7A00 to &7BFF)
-\   Y = 240 to 247, lookup value = &7C (so row 31 is from &7C00 to &7DFF)
+\   Y = 240 to 247, lookup value = &7C (so row 32 is from &7C00 to &7DFF)
 \
 \ There is also a lookup value for y-coordinates from 248 to 255, but that's off
 \ the end of the screen, as the special Elite screen mode only has 31 character

@@ -5,6 +5,8 @@
 \   Category: Text
 \    Summary: Print a space
 \
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   TT162+2             Jump to TT27 to print the text token in A

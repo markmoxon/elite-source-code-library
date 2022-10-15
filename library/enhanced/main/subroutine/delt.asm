@@ -112,6 +112,14 @@ IF _SNG47
  LDX #9                 \ Set up a counter in X to count from 9 to 1, so that we
                         \ copy the string starting at INWK+4+1 (i.e. INWK+5) to
                         \ DELI+9+1 (i.e. DELI+10 onwards, or "1.1234567")
+                        \
+                        \ Note that this is a bug - X should be set to 8, as a
+                        \ value of 9 overwrites the first character of the
+                        \ "SAVE" command in SVLI
+                        \
+                        \ This means that if you delete a file, it breaks the
+                        \ save command, so you can't save a commander file if
+                        \ you have previously deleted a file
 
 ELIF _COMPACT
 

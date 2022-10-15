@@ -15,6 +15,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \
 \   wW2                 Start the hyperspace countdown, starting the countdown
 \                       from the value in A
+\
 ENDIF
 \ ******************************************************************************
 

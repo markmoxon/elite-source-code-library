@@ -49,7 +49,7 @@
                         \   * 1 (so we start drawing on the second row of the
                         \     character block)
                         \
-                        \   * Move right one character (8 bytes) for each count
+                        \   * Move left one character (8 bytes) for each count
                         \     of A, so when A = 0 we are drawing the rightmost
                         \     missile, for A = 1 we hop to the left by one
                         \     character, and so on

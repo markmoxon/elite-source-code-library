@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _MASTER_VERSION \ Comment
 \       Name: hy6
 ELIF _6502SP_VERSION
 \       Name: dockEd

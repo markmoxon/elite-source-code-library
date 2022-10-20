@@ -3,8 +3,13 @@
 \       Name: stack
 \       Type: Variable
 \   Category: Save and load
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Platform
 \    Summary: Temporary storage for the stack pointer when switching the BRKV
 \             handler between BRBR and MEBRK
+ELIF _MASTER_VERSION
+\    Summary: Temporary storage for the stack pointer when jumping to the break
+\             handler at BRBR
+ENDIF
 \
 \ ******************************************************************************
 

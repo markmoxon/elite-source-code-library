@@ -131,7 +131,7 @@ ELIF _MASTER_VERSION
  CMP #'1'               \ Option 1 was chosen, so jump to LD1 to load a new
  BEQ LD1                \ commander
 
- CMP #'2'               \ Option 2 was chosen, so jump to LD1 to save the
+ CMP #'2'               \ Option 2 was chosen, so jump to SV1 to save the
  BEQ SV1                \ current commander
 
  CMP #'3'               \ Option 3 was chosen, so jump to CAT to catalogue a

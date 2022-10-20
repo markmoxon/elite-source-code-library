@@ -23,7 +23,7 @@ IF _SNG47
 
 ELIF _COMPACT
 
- EQUS "CAT"             \ The Master Compact only had one drive, so the CAT
+ EQUS "CAT"             \ The Master Compact only has one drive, so the CAT
  EQUB 13                \ command always catalogues that drive
 
 ENDIF

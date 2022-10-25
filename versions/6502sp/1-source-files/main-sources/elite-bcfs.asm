@@ -76,12 +76,26 @@ LOAD% = &1000           \ The load address of the main game code file, which is
 
 ORG CODE%
 
-IF _SNG45
- INCBIN "versions/6502sp/4-reference-binaries/sng45/workspaces/BCFS-MOS.bin"
-ELIF _EXECUTIVE
- INCBIN "versions/6502sp/4-reference-binaries/executive/workspaces/BCFS-MOS.bin"
-ELIF _SOURCE_DISC
- INCBIN "versions/6502sp/4-reference-binaries/source-disc/workspaces/BCFS-MOS.bin"
+IF _MATCH_ORIGINAL_BINARIES
+
+ IF _SNG45
+  INCBIN "versions/6502sp/4-reference-binaries/sng45/workspaces/BCFS-MOS.bin"
+ ELIF _EXECUTIVE
+  INCBIN "versions/6502sp/4-reference-binaries/executive/workspaces/BCFS-MOS.bin"
+ ELIF _SOURCE_DISC
+  INCBIN "versions/6502sp/4-reference-binaries/source-disc/workspaces/BCFS-MOS.bin"
+ ENDIF
+
+ELSE
+
+ IF _SNG45
+  SKIP 12
+ ELIF _EXECUTIVE
+  SKIP 14
+ ELIF _SOURCE_DISC
+  SKIP 12
+ ENDIF
+
 ENDIF
 
 .elitea
@@ -148,12 +162,20 @@ INCBIN "versions/6502sp/3-assembled-output/WORDS.bin"
 PRINT "ships = ", ~P%
 INCBIN "versions/6502sp/3-assembled-output/SHIPS.bin"
 
-IF _SNG45
- INCBIN "versions/6502sp/4-reference-binaries/sng45/workspaces/BCFS-SHIPS.bin"
-ELIF _EXECUTIVE
- INCBIN "versions/6502sp/4-reference-binaries/executive/workspaces/BCFS-SHIPS.bin"
-ELIF _SOURCE_DISC
- INCBIN "versions/6502sp/4-reference-binaries/source-disc/workspaces/BCFS-SHIPS.bin"
+IF _MATCH_ORIGINAL_BINARIES
+
+ IF _SNG45
+  INCBIN "versions/6502sp/4-reference-binaries/sng45/workspaces/BCFS-SHIPS.bin"
+ ELIF _EXECUTIVE
+  INCBIN "versions/6502sp/4-reference-binaries/executive/workspaces/BCFS-SHIPS.bin"
+ ELIF _SOURCE_DISC
+  INCBIN "versions/6502sp/4-reference-binaries/source-disc/workspaces/BCFS-SHIPS.bin"
+ ENDIF
+
+ELSE
+
+ SKIP 244
+
 ENDIF
 
 .end

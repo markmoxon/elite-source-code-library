@@ -28,7 +28,7 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
- LDA #0                 \ Set ECMA and ECMB to 0 to indicate that no E.C.M. is
+ LDA #0                 \ Set ECMA and ECMP to 0 to indicate that no E.C.M. is
  STA ECMA               \ currently running
  STA ECMP
 
@@ -36,13 +36,13 @@ ELIF _MASTER_VERSION
 
 IF _SNG47
 
- LDA #0                 \ Set ECMA and ECMB to 0 to indicate that no E.C.M. is
+ LDA #0                 \ Set ECMA and ECMP to 0 to indicate that no E.C.M. is
  STA ECMA               \ currently running
  STA ECMP
 
 ELIF _COMPACT
 
- STZ ECMA               \ Set ECMA and ECMB to 0 to indicate that no E.C.M. is
+ STZ ECMA               \ Set ECMA and ECMP to 0 to indicate that no E.C.M. is
  STZ ECMP               \ currently running
 
 ENDIF

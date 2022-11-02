@@ -70,6 +70,8 @@ ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \ Other entry points:
 \
+ENDIF
+IF _CASSETTE_VERSION \ Comment
 \   RR3+1               Contains an RTS
 \
 ENDIF

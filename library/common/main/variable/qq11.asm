@@ -11,13 +11,12 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
 ELIF _ELECTRON_VERSION
                         \         Data on System screen (FUNC-7)
 ENDIF
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Platform: The 6502SP version has unique internal view numbers for the Buy Cargo screen (2) and arrival from a mis-jump (3)
+IF _CASSETTE_VERSION \ Platform: The cassette and Electron versions reuse internal view number 1 for the Buy Cargo screen and (for the cassette version) arrival from a mis-jump
                         \         Buy Cargo screen (red key f1)
                         \         Mis-jump just arrived (witchspace)
 ELIF _ELECTRON_VERSION
                         \         Buy Cargo screen (FUNC-2)
-                        \         Mis-jump just arrived (witchspace)
-ELIF _6502SP_VERSION
+ELIF _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
                         \   2   = Buy Cargo screen (red key f1)
                         \   3   = Mis-jump just arrived (witchspace)
 ENDIF

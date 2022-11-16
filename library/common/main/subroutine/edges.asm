@@ -117,13 +117,13 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ P
 
  LDA #2                 \ The high byte is negative and non-zero, so we went
  STA X1                 \ past the left edge of the screen, so clip X1 to the
-                        \ y-coordinate of the left edge of the screen
+                        \ x-coordinate of the left edge of the screen
 
 ELIF _MASTER_VERSION
 
  LDA #0                 \ The high byte is negative and non-zero, so we went
  STA X1                 \ past the left edge of the screen, so clip X1 to the
-                        \ y-coordinate of the left edge of the screen
+                        \ x-coordinate of the left edge of the screen
 
 ENDIF
 

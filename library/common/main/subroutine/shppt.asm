@@ -101,7 +101,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 ELIF _MASTER_VERSION
 
  JSR Shpt               \ Call Shpt to draw a horizontal 4-pixel dash for the
-                        \ first row of the dot (i.e. a four-pixel dash)
+                        \ second row of the dot (i.e. a four-pixel dash)
 
 ENDIF
 

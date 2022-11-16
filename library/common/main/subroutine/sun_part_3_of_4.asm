@@ -220,7 +220,7 @@
 .PLF11
 
                         \ If we get here then there is no old sun line on this
-                        \ line, so we can just draw the new sun's line. The new
+                        \ line, so we can just draw the new sun's line
 
  LDX K3                 \ Set YY(1 0) = K3(1 0), the x-coordinate of the centre
  STX YY                 \ of the new sun's line

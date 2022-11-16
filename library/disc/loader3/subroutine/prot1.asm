@@ -21,7 +21,7 @@
 
  DEX                    \ Decrement the loop counter
 
- BPL p1a                \ Loop back until we have runnthe checksum 65 times
+ BPL p1a                \ Loop back until we have run the checksum 65 times
 
  STA RAND+2             \ Store the checksum result in the random number seeds
                         \ used to generate the Saturn

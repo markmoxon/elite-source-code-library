@@ -94,7 +94,7 @@ ENDIF
  STA LSX                \ be filled up
 
  JSR CHKON              \ Call CHKON to check whether any part of the new sun's
-                        \ circle appears on-screen, and of it does, set P(2 1)
+                        \ circle appears on-screen, and if it does, set P(2 1)
                         \ to the maximum y-coordinate of the new sun on-screen
 
 IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Platform

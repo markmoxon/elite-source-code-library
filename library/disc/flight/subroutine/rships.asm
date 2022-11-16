@@ -24,7 +24,7 @@ ENDIF
  JSR RESET              \ Call RESET to reset most variables
 
  LDA #&FF               \ Set QQ1 to &FF to indicate we are docked, so when
- STA QQ12               \ we reach TT110 after calling FRCE below, it skips the
+ STA QQ12               \ we reach TT110 after calling FRCE below, it shows the
                         \ launch tunnel
 
  STA QQ11               \ Set the view number to a non-zero value, so when we

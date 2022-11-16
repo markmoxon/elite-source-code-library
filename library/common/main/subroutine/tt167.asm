@@ -29,12 +29,12 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION  \ Tube
 
- LDA #5                 \ Move the text cursor to column 4
+ LDA #5                 \ Move the text cursor to column 5
  STA XC
 
 ELIF _6502SP_VERSION
 
- LDA #5                 \ Move the text cursor to column 4
+ LDA #5                 \ Move the text cursor to column 5
  JSR DOXC
 
 ENDIF

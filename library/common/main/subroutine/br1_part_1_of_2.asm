@@ -7,7 +7,7 @@ ELIF _ELITE_A_ENCYCLOPEDIA
 ENDIF
 \       Type: Subroutine
 \   Category: Start and end
-\    Summary: Start or restart the game
+\    Summary: Show the "Load New Commander (Y/N)?" screen and start the game
 \
 \ ------------------------------------------------------------------------------
 \

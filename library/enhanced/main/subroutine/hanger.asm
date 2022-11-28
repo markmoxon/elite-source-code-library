@@ -49,9 +49,19 @@ ENDIF
 
                         \ We start by drawing the floor
 
+IF _DISC_DOCKED OR _ELITE_A_VERSION \ Minor
+
+ LDX #2                 \ We start with a loop using a counter in XSAV that goes
+                        \ from 2 to 12, one for each of the 11 horizontal lines
+                        \ in the floor, so set the initial value in X
+
+ELIF _6502SP_VERSION OR _MASTER_VERSION
+
  LDX #2                 \ We start with a loop using a counter in T that goes
                         \ from 2 to 12, one for each of the 11 horizontal lines
                         \ in the floor, so set the initial value in X
+
+ENDIF
 
 IF _MASTER_VERSION \ Platform
 
@@ -80,7 +90,7 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION \ Minor
 
 ENDIF
 
- STX Q                  \ Set Q = T
+ STX Q                  \ Set Q to the value of the loop counter
 
 IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label
  JSR DVID4              \ Calculate the following:
@@ -89,9 +99,9 @@ ELIF _MASTER_VERSION
 ENDIF
                         \
                         \   (P R) = 256 * A / Q
-                        \         = 256 * 130 / T
+                        \         = 256 * 130 / Q
                         \
-                        \ so P = 130 / T, and as the counter T goes from 2 to
+                        \ so P = 130 / Q, and as the counter Q goes from 2 to
                         \ 12, P goes 65, 43, 32 ... 13, 11, 10, with the
                         \ difference between two consecutive numbers getting
                         \ smaller as P gets smaller
@@ -104,10 +114,10 @@ ENDIF
 
 IF _DISC_DOCKED OR _ELITE_A_VERSION \ Screen
 
- LDA P                  \ Set Y = #Y + P
+ LDA P                  \ Set A = #Y + P
  CLC                    \
  ADC #Y                 \ where #Y is the y-coordinate of the centre of the
-                        \ screen, so Y is now the horizontal pixel row of the
+                        \ screen, so A is now the horizontal pixel row of the
                         \ line we want to draw to display the hangar floor
 
  LSR A                  \ Set A = A >> 3
@@ -212,8 +222,12 @@ ENDIF
 
 IF _DISC_DOCKED OR _ELITE_A_VERSION \ Screen
 
- JSR HAS2               \ Call HAS2 to a line to the right, starting with the
-                        \ third pixel of the pixel row at screen address SC(1 0)
+ JSR HAS2               \ Call HAS2 to draw a line to the right, starting with
+                        \ the third pixel of the pixel row at screen address
+                        \ SC(1 0), so this draws a line from just after the
+                        \ halfway point across the right half of the screen,
+                        \ going right until we bump into something already
+                        \ on-screen, at which point it stops drawing
 
  LDY #128               \ We now draw the line from the centre of the screen
                         \ to the left. SC(1 0) points to the start address of
@@ -282,7 +296,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
- CPX #13                \ If the loop counter is less than 13 (i.e. T = 2 to 12)
+ CPX #13                \ If the loop counter is less than 13 (i.e. 2 to 12)
  BCC HAL1               \ then loop back to HAL1 to draw the next line
 
                         \ The floor is done, so now we move on to the back wall

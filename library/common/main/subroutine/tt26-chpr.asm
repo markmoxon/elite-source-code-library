@@ -841,7 +841,7 @@ ENDIF
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  CMP #24                \ If the text cursor is on the screen (i.e. YC < 24, so
- BCC RR3                \ we are on rows 1-23), then jump to RR3 to print the
+ BCC RR3                \ we are on rows 0-23), then jump to RR3 to print the
                         \ character
 
 ELIF _ELECTRON_VERSION

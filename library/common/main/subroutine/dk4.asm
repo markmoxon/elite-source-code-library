@@ -271,12 +271,12 @@ ENDIF
 
 IF _DISC_VERSION OR _6502SP_VERSION \ Platform
 
- CPX #&64               \ If "B" is not being pressed, skip to DK7
+ CPX #&64               \ If "B" is not being pressed, skip to nobit
  BNE nobit
 
 ELIF _MASTER_VERSION
 
- CPX #'B'               \ If "B" is not being pressed, skip to DK7
+ CPX #'B'               \ If "B" is not being pressed, skip to nobit
  BNE nobit
 
 ENDIF

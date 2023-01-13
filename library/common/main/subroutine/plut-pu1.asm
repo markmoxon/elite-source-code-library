@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \       Name: PLUT
 ELIF _DISC_VERSION OR _ELITE_A_VERSION
 \       Name: PU1
@@ -15,7 +15,7 @@ ENDIF
 \ This routine flips the relevant geometric axes in INWK depending on which
 \ view we are looking through (front, rear, left, right).
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 \ Other entry points:
 \
 \   PU1-1               Contains an RTS

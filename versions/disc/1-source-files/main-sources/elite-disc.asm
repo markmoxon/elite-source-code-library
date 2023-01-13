@@ -28,7 +28,7 @@
 \
 \ ******************************************************************************
 
-INCLUDE "versions/disc/1-source-files/main-sources/elite-header.h.asm"
+INCLUDE "versions/disc/1-source-files/main-sources/elite-build-options.asm"
 
 PUTFILE "versions/disc/3-assembled-output/ELITE2.bin", "ELITE2", &FF2F00, &FF2F23
 PUTFILE "versions/disc/3-assembled-output/ELITE3.bin", "ELITE3", &FF5700, &FF5700

@@ -31,7 +31,7 @@
 \
 \ ******************************************************************************
 
-INCLUDE "versions/6502sp/1-source-files/main-sources/elite-header.h.asm"
+INCLUDE "versions/6502sp/1-source-files/main-sources/elite-build-options.asm"
 
 _SOURCE_DISC            = (_VARIANT = 1)
 _SNG45                  = (_VARIANT = 2)

@@ -25,7 +25,7 @@
 \
 \ ******************************************************************************
 
-INCLUDE "versions/electron/1-source-files/main-sources/elite-header.h.asm"
+INCLUDE "versions/electron/1-source-files/main-sources/elite-build-options.asm"
 
 _CASSETTE_VERSION       = (_VERSION = 1)
 _DISC_VERSION           = (_VERSION = 2)

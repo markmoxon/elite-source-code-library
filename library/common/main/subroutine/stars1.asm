@@ -15,6 +15,21 @@
 \ When a stardust particle rushes past us and falls off the side of the screen,
 \ its memory is recycled as a new particle that's positioned randomly on-screen.
 \
+\ These are the calculations referred to in the commentary:
+\
+\   1. q = 64 * speed / z_hi
+\   2. z = z - speed * 64
+\   3. y = y + |y_hi| * q
+\   4. x = x + |x_hi| * q
+\
+\   5. y = y + alpha * x / 256
+\   6. x = x - alpha * y / 256
+\
+\   7. x = x + 2 * (beta * y / 256) ^ 2
+\   8. y = y - beta * 256
+\
+\ For more information see the deep dive on "Stardust in the front view".
+\
 \ ******************************************************************************
 
 .STARS1

@@ -12,6 +12,19 @@
 \ looking out of, and applies our current pitch and roll to each particle of
 \ dust, so the stardust moves correctly when we steer our ship.
 \
+\ These are the calculations referred to in the commentary:
+\
+\   1. delta_x = 8 * 256 * speed / z_hi
+\   2. x = x + delta_x
+\
+\   3. x = x + beta * y
+\   4. y = y - beta * x
+\
+\   5. x = x - alpha * x * y
+\   6. y = y + alpha * y * y + alpha
+\
+\ For more information see the deep dive on "Stardust in the side views".
+\
 \ Arguments:
 \
 \   X                   The view to process:

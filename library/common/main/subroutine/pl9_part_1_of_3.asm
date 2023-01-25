@@ -46,7 +46,8 @@ ENDIF
                         \ PL20 to return from the subroutine
 
  LDA K+1                \ If K+1 is zero, jump to PL25 as K(1 0) < 256, so the
- BEQ PL25               \ planet fits on the screen
+ BEQ PL25               \ planet fits on the screen and we can draw meridians or
+                        \ craters
 
 .PL20
 

@@ -118,7 +118,7 @@ ELIF _MASTER_VERSION
  CPY XX14+1             \ If Y >= XX14+1, jump to LLEX to return from the ship
  BCS LLEX               \ drawing routine, because the index in Y is greater
                         \ than the size of the existing ship line heap, which
-                        \ means we have alrady erased all the old ships lines
+                        \ means we have alrady erased all the old ship's lines
                         \ when drawing the new ship
 
                         \ If we get here then Y < XX14+1, which means Y is

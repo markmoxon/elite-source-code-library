@@ -21,13 +21,15 @@
 \
 \   (T X) = - |XX16+1 K2+1| * cos(CNT2) - |XX16+3 K2+3| * sin(CNT2)
 \
-\ before calling BLINE to draw a circle segment to these coordinates.
+\ It then calls BLINE to set the following:
+\
+\   K6(3 2) = K4(1 0) - |XX16+1 K2+1| * cos(CNT2) - |XX16+3 K2+3| * sin(CNT2)
+\
+\ and draw a circle segment to these coordinates.
 \
 \ Arguments:
 \
 \   K(1 0)              The planet's radius
-\
-\   INWK                The planet's ship data block
 \
 \   TGT                 The number of segments to draw:
 \
@@ -62,7 +64,7 @@
  JSR FMLTU              \ Set R = A * Q / 256
  STA R                  \       = |roofv_x / z| * sin(CNT2) / 256
 
- LDA K2+3               \ Set A = K2+2
+ LDA K2+3               \ Set A = K2+3
                         \       = |roofv_y / z|
 
  JSR FMLTU              \ Set K = A * Q / 256

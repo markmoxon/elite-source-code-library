@@ -4,6 +4,8 @@
 \       Type: Subroutine
 \   Category: Drawing planets
 \    Summary: Draw a half-ellipse
+\  Deep dive: Drawing ellipses
+\             Drawing meridians and equators
 \
 \ ------------------------------------------------------------------------------
 \

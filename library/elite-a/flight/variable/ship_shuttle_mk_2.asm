@@ -30,7 +30,7 @@
  EQUB %00000000         \ Laser power              = 0
                         \ Missiles                 = 0
 
-\VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
+\          x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX    0,    0,   40,     3,     2,     1,     0,         31     \ Vertex 0
  VERTEX    0,   20,   30,     4,     3,     0,     0,         31     \ Vertex 1
  VERTEX  -20,    0,   30,     5,     1,     0,     0,         31     \ Vertex 2
@@ -51,7 +51,7 @@
 
 .SHIP_SHUTTLE_MK_2_EDGES
 
-\EDGE vertex1, vertex2, face1, face2, visibility
+\     vertex1, vertex2, face1, face2, visibility
  EDGE       0,       2,     1,     0,         31    \ Edge 0
  EDGE       0,       3,     2,     1,         31    \ Edge 1
  EDGE       0,       4,     3,     2,         31    \ Edge 2
@@ -83,7 +83,7 @@
 
 .SHIP_SHUTTLE_MK_2_FACES
 
-\FACE normal_x, normal_y, normal_z, visibility
+\     normal_x, normal_y, normal_z, visibility
  FACE      -39,       39,       78,         31    \ Face 0
  FACE      -39,      -39,       78,         31    \ Face 1
  FACE       39,      -39,       78,         31    \ Face 2

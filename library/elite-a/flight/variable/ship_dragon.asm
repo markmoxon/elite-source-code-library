@@ -45,7 +45,7 @@ ELIF _ELITE_A_SHIPS_W
 
 ENDIF
 
-\VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
+\          x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX    0,    0,  250,    11,     6,     5,     0,         31     \ Vertex 0
  VERTEX  216,    0,  124,     7,     6,     1,     0,         31     \ Vertex 1
  VERTEX  216,    0, -124,     8,     7,     2,     1,         31     \ Vertex 2
@@ -58,7 +58,7 @@ ENDIF
 
 .SHIP_DRAGON_EDGES
 
-\EDGE vertex1, vertex2, face1, face2, visibility
+\     vertex1, vertex2, face1, face2, visibility
  EDGE       1,       7,     1,     0,         31    \ Edge 0
  EDGE       2,       7,     2,     1,         31    \ Edge 1
  EDGE       3,       7,     3,     2,         31    \ Edge 2
@@ -83,7 +83,7 @@ ENDIF
 
 .SHIP_DRAGON_FACES
 
-\FACE normal_x, normal_y, normal_z, visibility
+\     normal_x, normal_y, normal_z, visibility
  FACE       16,       90,       28,         31    \ Face 0
  FACE       33,       90,        0,         31    \ Face 1
  FACE       25,       91,      -14,         31    \ Face 2

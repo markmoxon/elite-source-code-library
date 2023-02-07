@@ -36,7 +36,7 @@ ENDIF
 
 IF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Disc: Group A: The ship hangar in the disc version displays the Shuttle with slightly different visibility settings to the other enhanced versions, and the face normals are twice the size (even though the scale factor is the same). I'm not entirely sure why
 
-\VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
+\          x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX    0,  -17,   23,    15,     15,   15,    15,         31    \ Vertex 0
  VERTEX  -17,    0,   23,    15,     15,   15,    15,         31    \ Vertex 1
  VERTEX    0,   18,   23,    15,     15,   15,    15,         31    \ Vertex 2
@@ -59,7 +59,7 @@ IF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Disc: Group A: The ship 
 
 ELIF _DISC_DOCKED OR _ELITE_A_VERSION
 
-\VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
+\          x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX    0,  -35,   47,    15,    15,    15,    15,         31     \ Vertex 0
  VERTEX  -35,    0,   47,    15,    15,    15,    15,         31     \ Vertex 1
  VERTEX    0,   35,   47,    15,    15,    15,    15,         31     \ Vertex 2
@@ -84,7 +84,7 @@ ENDIF
 
 .SHIP_SHUTTLE_EDGES
 
-\EDGE vertex1, vertex2, face1, face2, visibility
+\     vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     2,     0,         31    \ Edge 0
  EDGE       1,       2,    10,     4,         31    \ Edge 1
  EDGE       2,       3,    11,     6,         31    \ Edge 2
@@ -132,7 +132,7 @@ ENDIF
 
 IF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Disc: See group A
 
-\FACE normal_x, normal_y, normal_z, visibility
+\     normal_x, normal_y, normal_z, visibility
  FACE      -55,      -55,       40,         31    \ Face 0
  FACE        0,      -74,        4,         31    \ Face 1
  FACE      -51,      -51,       23,         31    \ Face 2
@@ -149,7 +149,7 @@ IF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Disc: See group A
 
 ELIF _DISC_DOCKED OR _ELITE_A_VERSION
 
-\FACE normal_x, normal_y, normal_z, visibility
+\     normal_x, normal_y, normal_z, visibility
  FACE     -110,     -110,       80,         31    \ Face 0
  FACE        0,     -149,        7,         31    \ Face 1
  FACE     -102,     -102,       46,         31    \ Face 2

@@ -49,7 +49,7 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-\VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
+\          x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX    0,    7,  -58,     1,      0,    5,     5,         30    \ Vertex 0
  VERTEX  -43,  -13,  -37,     1,      0,    2,     2,         30    \ Vertex 1
  VERTEX  -26,  -47,   -3,     2,      0,    3,     3,         30    \ Vertex 2
@@ -68,7 +68,7 @@ ENDIF
 
 .SHIP_ANACONDA_EDGES
 
-\EDGE vertex1, vertex2, face1, face2, visibility
+\     vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     1,     0,         30    \ Edge 0
  EDGE       1,       2,     2,     0,         30    \ Edge 1
  EDGE       2,       3,     3,     0,         30    \ Edge 2
@@ -97,7 +97,7 @@ ENDIF
 
 .SHIP_ANACONDA_FACES
 
-\FACE normal_x, normal_y, normal_z, visibility
+\     normal_x, normal_y, normal_z, visibility
  FACE        0,      -51,      -49,         30    \ Face 0
  FACE      -51,       18,      -87,         30    \ Face 1
  FACE      -77,      -57,      -19,         30    \ Face 2

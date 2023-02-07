@@ -45,7 +45,7 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-\VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
+\          x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX   15,    0,   65,     2,      0,    8,     7,         31    \ Vertex 0
  VERTEX  -15,    0,   65,     1,      0,    7,     6,         31    \ Vertex 1
  VERTEX    0,   18,  -40,    15,     15,   15,    15,         17    \ Vertex 2
@@ -63,7 +63,7 @@ ENDIF
 
 .SHIP_MORAY_EDGES
 
-\EDGE vertex1, vertex2, face1, face2, visibility
+\     vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     7,     0,         31    \ Edge 0
  EDGE       1,       3,     6,     1,         31    \ Edge 1
  EDGE       3,       6,     6,     3,         24    \ Edge 2
@@ -86,7 +86,7 @@ ENDIF
 
 .SHIP_MORAY_FACES
 
-\FACE normal_x, normal_y, normal_z, visibility
+\     normal_x, normal_y, normal_z, visibility
  FACE        0,       43,        7,         31    \ Face 0
  FACE      -10,       49,        7,         31    \ Face 1
  FACE       10,       49,        7,         31    \ Face 2

@@ -31,7 +31,7 @@
  EQUB %00110100         \ Laser power              = 6
                         \ Missiles                 = 4
 
-\VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
+\          x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX    0,    5,   67,     2,      0,    4,     4,         31    \ Vertex 0
  VERTEX  -20,    0,   40,     1,      0,    2,     2,         31    \ Vertex 1
  VERTEX  -40,    0,  -40,     1,      0,    5,     5,         31    \ Vertex 2
@@ -54,7 +54,7 @@
 
 .SHIP_COUGAR_EDGES
 
-\EDGE vertex1, vertex2, face1, face2, visibility
+\     vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     2,     0,         31    \ Edge 0
  EDGE       1,       7,     1,     0,         31    \ Edge 1
  EDGE       7,       8,     1,     0,         31    \ Edge 2
@@ -83,7 +83,7 @@
 
 .SHIP_COUGAR_FACES
 
-\FACE normal_x, normal_y, normal_z, visibility
+\     normal_x, normal_y, normal_z, visibility
  FACE      -16,       46,        4,         31    \ Face 0
  FACE      -16,      -46,        4,         31    \ Face 1
  FACE        0,      -27,        5,         31    \ Face 2

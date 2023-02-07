@@ -55,7 +55,7 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-\VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
+\          x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX   -9,    0,   40,     1,      0,    5,     5,         31    \ Vertex 0
  VERTEX   -9,  -38,   12,     1,      0,    2,     2,         31    \ Vertex 1
  VERTEX   -9,  -24,  -32,     2,      0,    3,     3,         31    \ Vertex 2
@@ -69,7 +69,7 @@ ENDIF
 
 .SHIP_THARGON_FACES
 
-\FACE normal_x, normal_y, normal_z, visibility
+\     normal_x, normal_y, normal_z, visibility
  FACE      -36,        0,        0,         31    \ Face 0
  FACE       20,       -5,        7,         31    \ Face 1
  FACE       46,      -42,      -14,         31    \ Face 2

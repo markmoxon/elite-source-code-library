@@ -41,7 +41,7 @@ ELIF _ELITE_A_SHIPS_S
 
 ENDIF
 
-\VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
+\          x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX    0,    0,   60,     3,     2,     1,     0,         31     \ Vertex 0
  VERTEX   50,    0,   20,     7,     5,     3,     1,         31     \ Vertex 1
  VERTEX  -50,    0,   20,     6,     4,     2,     0,         31     \ Vertex 2
@@ -57,7 +57,7 @@ ENDIF
 
 .SHIP_BUSHMASTER_EDGES
 
-\EDGE vertex1, vertex2, face1, face2, visibility
+\     vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     3,     1,         31    \ Edge 0
  EDGE       0,       2,     2,     0,         31    \ Edge 1
  EDGE       0,       3,     1,     0,         31    \ Edge 2
@@ -80,7 +80,7 @@ ENDIF
 
 .SHIP_BUSHMASTER_FACES
 
-\FACE normal_x, normal_y, normal_z, visibility
+\     normal_x, normal_y, normal_z, visibility
  FACE      -23,       88,       29,         31    \ Face 0
  FACE       23,       88,       29,         31    \ Face 1
  FACE      -14,      -93,       18,         31    \ Face 2

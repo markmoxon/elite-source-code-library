@@ -45,7 +45,7 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-\VERTEX    x,    y,    z, face1, face2, face3, face4, visibility
+\          x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX   32,  -48,   48,     0,      4,    8,     8,         31    \ Vertex 0
  VERTEX   32,  -68,    0,     0,      1,    4,     4,         31    \ Vertex 1
  VERTEX   32,  -48,  -48,     1,      2,    4,     4,         31    \ Vertex 2
@@ -69,7 +69,7 @@ ENDIF
 
 .SHIP_THARGOID_EDGES
 
-\EDGE vertex1, vertex2, face1, face2, visibility
+\     vertex1, vertex2, face1, face2, visibility
  EDGE       0,       7,     4,     8,         31    \ Edge 0
  EDGE       0,       1,     0,     4,         31    \ Edge 1
  EDGE       1,       2,     1,     4,         31    \ Edge 2
@@ -99,7 +99,7 @@ ENDIF
 
 .SHIP_THARGOID_FACES
 
-\FACE normal_x, normal_y, normal_z, visibility
+\     normal_x, normal_y, normal_z, visibility
  FACE      103,      -60,       25,         31    \ Face 0
  FACE      103,      -60,      -25,         31    \ Face 1
  FACE      103,      -25,      -60,         31    \ Face 2

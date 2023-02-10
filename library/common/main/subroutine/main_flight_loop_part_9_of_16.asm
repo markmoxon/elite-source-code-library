@@ -109,10 +109,10 @@ ENDIF
 
 .GOIN
 
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
+
                         \ If we arrive here, either the docking computer has
                         \ been activated, or we just docked successfully
-
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
  LDA #0                 \ Set the on-screen hyperspace counter to 0
  STA QQ22+1
@@ -130,6 +130,8 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
 ELIF _DISC_VERSION OR _ELITE_A_FLIGHT
 
+                        \ If we arrive here, we just docked successfully
+
  JSR RES2               \ Reset a number of flight variables and workspaces
 
  LDA #8                 \ Set the step size for the launch tunnel rings to 8, so
@@ -143,9 +145,13 @@ ELIF _DISC_VERSION OR _ELITE_A_FLIGHT
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
+                        \ If we arrive here, we just docked successfully
+
  JMP DOENTRY            \ Go to the docking bay (i.e. show the ship hangar)
 
 ELIF _ELITE_A_6502SP_PARA
+
+                        \ If we arrive here, we just docked successfully
 
  JSR RES2               \ Reset a number of flight variables and workspaces
 

@@ -84,12 +84,12 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _
  BCS PL2                \ seen, so jump to PL2 to remove it from the screen,
                         \ returning from the subroutine using a tail call
 
- ORA INWK+7             \ Set A to z_sign OR z_hi to get the maximum of the two
+ ORA INWK+7             \ Set A to 0 if both z_sign and z_hi are 0
 
- BEQ PL2                \ If the maximum is 0, then the planet/sun is too close
-                        \ to be shown, so jump to PL2 to remove it from the
-                        \ screen, returning from the subroutine using a tail
-                        \ call
+ BEQ PL2                \ If both z_sign and z_hi are 0, then the planet/sun is
+                        \ too close to be shown, so jump to PL2 to remove it
+                        \ from the screen, returning from the subroutine using a
+                        \ tail call
 
  JSR PROJ               \ Project the planet/sun onto the screen, returning the
                         \ centre's coordinates in K3(1 0) and K4(1 0)
@@ -122,12 +122,12 @@ ELIF _ELECTRON_VERSION
  BCS PL2                \ seen, so jump to PL2 to remove it from the screen,
                         \ returning from the subroutine using a tail call
 
- ORA INWK+7             \ Set A to z_sign OR z_hi to get the maximum of the two
+ ORA INWK+7             \ Set A to 0 if both z_sign and z_hi are 0
 
- BEQ PL2                \ If the maximum is 0, then the planet is too close
-                        \ to be shown, so jump to PL2 to remove it from the
-                        \ screen, returning from the subroutine using a tail
-                        \ call
+ BEQ PL2                \ If both z_sign and z_hi are 0, then the planet/sun is
+                        \ too close to be shown, so jump to PL2 to remove it
+                        \ from the screen, returning from the subroutine using a
+                        \ tail call
 
  JSR PROJ               \ Project the planet onto the screen, returning the
                         \ centre's coordinates in K3(1 0) and K4(1 0)
@@ -159,8 +159,9 @@ ENDIF
  LDA K+1                \ If the high byte of the reduced radius is zero, jump
  BEQ PL82               \ to PL82, as K contains the radius on its own
 
- LDA #248               \ Otherwise set K = 248, to use as our one-byte radius
- STA K
+ LDA #248               \ Otherwise set K = 248, to round up the radius in
+ STA K                  \ K(1 0) to the nearest integer (if we consider the low
+                        \ byte to be the fractional part)
 
 .PL82
 

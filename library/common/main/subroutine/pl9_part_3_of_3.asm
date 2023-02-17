@@ -61,7 +61,7 @@
  STA P                  \ Calculate:
  LDA K4                 \
  SEC                    \   K4(1 0) = K4(1 0) - (Y A)
- SBC P                  \           = 222 * roofv_x / z - y-coordinate of planet
+ SBC P                  \           = 222 * roofv_y / z - y-coordinate of planet
  STA K4                 \             centre
                         \
                         \ starting with the low bytes

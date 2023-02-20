@@ -48,7 +48,7 @@ _ELITE_A_6502SP_PARA    = FALSE
 _IB_DISC                = (_VARIANT = 1)
 _STH_DISC               = (_VARIANT = 2)
 
-GUARD &6000             \ Guard against assembling over screen memory
+GUARD &5600             \ Guard against assembling over the ship blueprint file
 
 \ ******************************************************************************
 \

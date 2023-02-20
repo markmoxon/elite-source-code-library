@@ -399,7 +399,22 @@ ENDIF
 
  BNE PLL3               \ Loop back to PLL3 until CNT3+1 = 0
 
-IF _DISC_VERSION OR _ELITE_A_VERSION \ Other: See group A
+IF _DISC_VERSION \ Other: See group A
+
+ LDA #&00               \ Set ZP(1 0) = &6300
+ STA ZP
+ LDA #&63
+ STA ZP+1
+
+ LDA #LO(ELITE)         \ Set P(1 0) = ELITE
+ STA P
+ LDA #HI(ELITE)
+ STA P+1
+
+ LDX #8                 \ Call MVPG with X = 8 to copy 8 pages of memory from
+ JSR MVPG               \ ELITE to &6300
+
+ELIF _ELITE_A_VERSION
 
  LDA #&00               \ Set ZP(1 0) = &6300
  STA ZP
@@ -412,7 +427,7 @@ IF _DISC_VERSION OR _ELITE_A_VERSION \ Other: See group A
  STA P+1
 
  LDX #8                 \ Call MVPG with X = 8 to copy 8 pages of memory from
- JSR MVPG               \ the address in P(1 0) to the address in ZP(1 0)
+ JSR MVPG               \ &2A62 to &6300
 
 ENDIF
 

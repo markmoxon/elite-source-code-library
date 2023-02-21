@@ -401,6 +401,11 @@ ENDIF
 
 IF _DISC_VERSION \ Other: See group A
 
+                        \ The following code is not required, as we copy the
+                        \ title images to their correct places on-screen when
+                        \ we return from the subroutine, overwriting the copy
+                        \ that we do here
+
  LDA #&00               \ Set ZP(1 0) = &6300
  STA ZP
  LDA #&63
@@ -415,6 +420,11 @@ IF _DISC_VERSION \ Other: See group A
  JSR MVPG               \ ELITE to &6300
 
 ELIF _ELITE_A_VERSION
+
+                        \ The following code is not required, as we copy the
+                        \ title images to their correct places on-screen when
+                        \ we return from the subroutine, overwriting the copy
+                        \ that we do here
 
  LDA #&00               \ Set ZP(1 0) = &6300
  STA ZP

@@ -120,7 +120,8 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR
  LDA #255               \ Set the view number in QQ11 to 255
  STA QQ11
 
- JSR HFS1               \ Call HFS1 to draw 8 concentric rings
+ JSR HFS1               \ Call HFS1 to draw 8 concentric rings to remove the
+                        \ launch tunnel that we drew above
 
 ENDIF
 

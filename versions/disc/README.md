@@ -132,7 +132,7 @@ This repository also includes a flicker-free version, which incorporates the bac
 
 The annotated source files in the `flicker-free` branch contain both the original Acornsoft code and all of the modifications for flicker-free Elite, so you can look through the source to see exactly what's changed. Any code that I've removed from the original version is commented out in the source files, so when they are assembled they produce the flicker-free binaries, while still containing details of all the modifications. You can find all the diffs by searching the sources for `Mod:`.
 
-The repository also includes a flicker-free version that incorporates a fix for planets so they no longer flicker, though only when running on a BBC Master. The flicker-free code is in a separate branch called `bbc-master-flicker-free`.
+The repository also includes a variant that incorporates both the flicker-free ship-drawing routines and a fix for planets so they no longer flicker, though this version only works when running on a BBC Master. The flicker-free code is in a separate branch called `bbc-master-flicker-free`.
 
 For more information on flicker-free Elite, see the [hacks section of the accompanying website](https://www.bbcelite.com/hacks/flicker-free_elite.html).
 
@@ -150,7 +150,7 @@ This repository also includes a version of BBC Micro disc Elite that will run on
 
 The annotated source files in the `bbc-master` branch contain both the original Acornsoft code and all of the modifications required to make BBC Micro Elite run on the Master, so you can look through the source to see exactly what's changed. Any code that I've removed from the original version is commented out in the source files, so when they are assembled they produce the Master-compatible binaries, while still containing details of all the modifications. You can find all the diffs by searching the sources for `Mod:`.
 
-The repository also includes a flicker-free version of the BBC Master version that incorporates a fix for planets so they no longer flicker. The flicker-free code is in a separate branch called `bbc-master-flicker-free`.
+The repository also includes a variant of the BBC Master version that incorporates both the flicker-free ship-drawing routines and a fix for planets so they no longer flicker. The flicker-free code is in a separate branch called `bbc-master-flicker-free`.
 
 For more information on the port to the BBC Master, see the [hacks section of the accompanying website](https://www.bbcelite.com/hacks/bbc_master_disc_elite.html).
 

@@ -34,7 +34,7 @@ IF NOT(_ELITE_A_VERSION)
 .ptg
 
  LSR COK                \ Set bit 0 of the competition flags in COK, so that the
- SEC                    \ copmpetition code will include the fact that we have
+ SEC                    \ competition code will include the fact that we have
  ROL COK                \ manually forced a mis-jump into witchspace
 
 ENDIF
@@ -98,7 +98,8 @@ ENDIF
 
 .MJP1
 
- JSR GTHG               \ Call GTHG to spawn a Thargoid ship
+ JSR GTHG               \ Call GTHG to spawn a Thargoid ship and a Thargon
+                        \ companion
 
 IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: The Master version spawns three Thargoid motherships in witchspace, while the other versions spawn four
 

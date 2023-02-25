@@ -14,8 +14,8 @@ IF _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Co
                         \
                         \ The enhanced versions of Elite set ENGY to 2 as the
                         \ reward for completing mission 2, where we receive a
-                        \ naval energy unit that recharges 50% faster than a
-                        \ standard energy unit, i.e. by 3 each time
+                        \ special naval energy unit that recharges at a fast
+                        \ rate than a standard energy unit, i.e. by 3 each time
 
 ELIF _ELITE_A_VERSION
                         \

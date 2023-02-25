@@ -95,7 +95,8 @@ IF _CASSETTE_VERSION \ Platform
  CMP #200               \ If A < 200 (78% chance), skip the next instruction
  BCC P%+5
 
- JSR GTHG               \ Call GTHG to spawn a Thargoid ship
+ JSR GTHG               \ Call GTHG to spawn a Thargoid ship and a Thargon
+                        \ companion
 
  JMP MLOOP              \ Jump back into the main loop at MLOOP, which is just
                         \ after the ship-spawning section

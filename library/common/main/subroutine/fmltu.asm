@@ -24,6 +24,16 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ multiplication process. See the deep dive on "Multiplication using logarithms"
 \ for more details.
 \
+\ Returns:
+\
+\   C flag              The C flag is clear if A = 0, or set if we return a
+\                       result from one of the log tables
+\
+ELIF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION
+\ Returns:
+\
+\   C flag              The C flag is set
+\
 ENDIF
 \ ******************************************************************************
 
@@ -63,6 +73,9 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
                         \ (so we loop through the bits of P until we get to the
                         \ 1 we inserted before the loop, and then we stop)
 
+                        \ If we get here then the C flag is set as we just
+                        \ rotated a 1 out of the right end of P
+
  RTS                    \ Return from the subroutine
 
 .MU7
@@ -77,6 +90,9 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
  BNE MUL3               \ Loop back to MUL3 if P still contains some set bits
                         \ (so we loop through the bits of P until we get to the
                         \ 1 we inserted before the loop, and then we stop)
+
+                        \ If we get here then the C flag is set as we just
+                        \ rotated a 1 out of the right end of P
 
  RTS                    \ Return from the subroutine
 
@@ -128,7 +144,10 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Other: See group A
 
  BCC MU3again           \ If the addition fitted into one byte and didn't carry,
                         \ then La + Lq < 256, so we jump to MU3again to return a
-                        \ result of 0
+                        \ result of 0 and the C flag clear
+
+                        \ If we get here then the C flag is set, ready for when
+                        \ we return from the subroutine below
 
  TAX                    \ Otherwise La + Lq >= 256, so we return the A-th entry
  LDA antilog,X          \ from the antilog table
@@ -154,7 +173,10 @@ IF _6502SP_VERSION \ Other: See group A
 
  BCC MU3again           \ If the addition fitted into one byte and didn't carry,
                         \ then La + Lq < 256, so we jump to MU3again to return a
-                        \ result of 0
+                        \ result of 0 and the C flag clear
+
+                        \ If we get here then the C flag is set, ready for when
+                        \ we return from the subroutine below
 
  TAX                    \ Otherwise La + Lq >= 256, so we return the A-th entry
  LDA antilogODD,X       \ from the antilogODD table

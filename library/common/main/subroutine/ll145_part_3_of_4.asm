@@ -101,6 +101,9 @@
  CMP XX12+4             \ vertical than horizontal, jump to LL114
  BCC LL114
 
+                        \ If we get here then our line is more horizontal than
+                        \ vertical, so it is a shallow slope
+
  STA Q                  \ Set Q = delta_x_lo
 
  LDA XX12+4             \ Set A = delta_y_lo
@@ -114,6 +117,9 @@
 
 .LL114
 
+                        \ If we get here then our line is more vertical than
+                        \ horizontal, so it is a steep slope
+
  LDA XX12+4             \ Set Q = delta_y_lo
  STA Q
  LDA XX12+2             \ Set A = delta_x_lo
@@ -123,5 +129,6 @@
                         \   R = 256 * A / Q
                         \     = 256 * delta_x_lo / delta_y_lo
 
- DEC T                  \ T was set to 0 above, so this sets T = &FF
+ DEC T                  \ T was set to 0 above, so this sets T = &FF when our
+                        \ line is steep
 

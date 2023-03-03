@@ -13,11 +13,11 @@
 \ clipping.
 \
 \ If we get here, then R has been set to the gradient of the line (x1, y1) to
-\ (x2, y2), with T indicating the type of slope:
+\ (x2, y2), with T indicating the gradient of slope:
 \
-\   * 0   = it's more vertical than horizontal
+\   * 0   = shallow slope (more horizontal than vertical)
 \
-\   * &FF = it's more horizontal than vertical
+\   * &FF = steep slope (more vertical than horizontal)
 \
 \ and XX13 has been set as follows:
 \

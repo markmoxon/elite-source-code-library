@@ -28,11 +28,11 @@
 \
 \                         * Negative (bit 7 set) = top right to bottom left
 \
-\   T                   The type of slope:
+\   T                   The gradient of slope:
 \
-\                         * 0 if it's more vertical than horizontal
+\                         * 0 if it's a shallow slope
 \
-\                         * &FF if it's more horizontal than vertical
+\                         * &FF if it's a steep slope
 \
 \ Returns:
 \

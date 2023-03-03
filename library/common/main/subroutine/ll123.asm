@@ -9,9 +9,9 @@
 \
 \ Calculate the following:
 \
-\   * If T = 0,  calculate (Y X) = (S R) / XX12+2
+\   * If T = 0, this is a shallow slope, so calculate (Y X) = (S R) / XX12+2
 \
-\   * If T <> 0, calculate (Y X) = (S R) * XX12+2
+\   * If T <> 0, this is a steep slope, so calculate (Y X) = (S R) * XX12+2
 \
 \ giving (Y X) the opposite sign to the slope direction in XX12+3.
 \
@@ -24,6 +24,12 @@
 \                         * Bit 7 clear means top left to bottom right
 \
 \                         * Bit 7 set means top right to bottom left
+\
+\   T                   The gradient of slope:
+\
+\                         * 0 if it's a shallow slope
+\
+\                         * &FF if it's a steep slope
 \
 \ Other entry points:
 \
@@ -52,8 +58,8 @@
 
  PHA                    \ Store A on the stack so we can use it later
 
- LDX T                  \ If T is non-zero, so it's more horizontal than
- BNE LL122              \ vertical, jump up to LL122 to calculate this instead:
+ LDX T                  \ If T is non-zero, then it's a steep slope, so jump up
+ BNE LL122              \ to LL122 to calculate this instead:
                         \
                         \   (Y X) = (S R) * Q
 

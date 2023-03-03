@@ -23,8 +23,8 @@
 \ ******************************************************************************
 
  LDA K                  \ If the planet's radius is less than 6, the planet is
- CMP #6                 \ too small to show a crater, so jump to PL20 to return
- BCC PL20               \ from the subroutine
+ CMP #6                 \ too small to show a meridian, so jump to PL20 to
+ BCC PL20               \ return from the subroutine
 
  LDA INWK+14            \ Set P = -nosev_z_hi
  EOR #%10000000

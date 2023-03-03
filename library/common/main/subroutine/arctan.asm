@@ -18,6 +18,11 @@
 \
 \   tan(A) = P / Q
 \
+\ The result in A is an integer representing the angle in radians, where 256
+\ represents a full circle of 360 degrees, or 2 * PI radians. The routine
+\ returns values in the range 0 to 128, which covers 0 to 180 degrees (or 0 to
+\ PI radians).
+\
 IF _MASTER_VERSION \ Comment
 \ Other entry points:
 \
@@ -128,7 +133,10 @@ ENDIF
 
 .ARS1
 
-                        \ This routine fetches arctan(A / Q) from the ACT table
+                        \ This routine fetches arctan(A / Q) from the ACT table,
+                        \ so A will be set to an integer in the range 0 to 31
+                        \ that represents an angle from 0 to 45 degrees (or 0 to
+                        \ PI / 4 radians)
 
  JSR LL28               \ Call LL28 to calculate:
                         \

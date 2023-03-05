@@ -1210,3 +1210,8 @@ SAVE "versions/6502sp/3-assembled-output/SHIPS.bin", CODE_SHIPS%, P%, LOAD_SHIPS
 PRINT "ELITE game code ", ~(K%-F%), " bytes free"
 PRINT "F% = ", ~F%
 PRINT "Ends at ", ~P%
+
+PRINT "Addresses for the scramble routines in elite-checksum.py"
+PRINT "S% = ", ~S%
+PRINT "G% = ", ~G%
+PRINT "F% = ", ~F%

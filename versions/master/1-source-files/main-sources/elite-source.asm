@@ -1081,3 +1081,6 @@ PRINT "S.ELTH ", ~CODE_H%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_H%
 
 PRINT "S.BCODE ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
 SAVE "versions/master/3-assembled-output/BCODE.unprot.bin", CODE%, P%, LOAD%
+
+PRINT "Addresses for the scramble routines in elite-checksum.py"
+PRINT "F% = ", ~F%

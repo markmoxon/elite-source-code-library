@@ -18,8 +18,7 @@
 \
 \   tan(A) = P / Q
 \
-\ The result in A is an integer representing the angle in radians, where 256
-\ represents a full circle of 360 degrees, or 2 * PI radians. The routine
+\ The result in A is an integer representing the angle in radians. The routine
 \ returns values in the range 0 to 128, which covers 0 to 180 degrees (or 0 to
 \ PI radians).
 \

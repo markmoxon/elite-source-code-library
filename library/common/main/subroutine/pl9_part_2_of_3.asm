@@ -37,7 +37,9 @@
                         \   CNT2 = arctan(P / A) / 4
                         \        = arctan(-nosev_z_hi / roofv_z_hi) / 4
                         \
-                        \ and give the result the opposite sign to nosev_z_hi
+                        \ and do the following if nosev_z_hi >= 0:
+                        \
+                        \   CNT2 = CNT2 + PI
 
  LDX #9                 \ Set X to 9 so the call to PLS1 divides nosev_x
 
@@ -73,7 +75,9 @@
                         \   CNT2 = arctan(P / A) / 4
                         \        = arctan(-nosev_z_hi / sidev_z_hi) / 4
                         \
-                        \ and give the result the opposite sign to nosev_z_hi
+                        \ and do the following if nosev_z_hi >= 0:
+                        \
+                        \   CNT2 = CNT2 + PI
 
  LDX #21                \ Set X to 21 so the call to PLS5 divides sidev_x
 

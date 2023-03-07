@@ -4,7 +4,7 @@
 \       Type: Subroutine
 \   Category: Loader
 \    Summary: Various copy protection shenanigans in preparation for showing
-\             the Acornspft loading screen
+\             the Acornsoft loading screen
 \
 \ ******************************************************************************
 

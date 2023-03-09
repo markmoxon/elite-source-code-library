@@ -1084,3 +1084,4 @@ SAVE "versions/master/3-assembled-output/BCODE.unprot.bin", CODE%, P%, LOAD%
 
 PRINT "Addresses for the scramble routines in elite-checksum.py"
 PRINT "F% = ", ~F%
+PRINT "DEFAULT% = ", ~DEFAULT%

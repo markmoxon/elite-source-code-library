@@ -335,7 +335,8 @@ ENDIF
  ADC YY                 \ Set X = A + YY
  TAX                    \       = r7 + r6
 
- JSR SQUA2              \ Set (A P) = r7 * r7
+ JSR SQUA2              \ Set (A P) = A * A
+                        \           = r7 * r7
 
  TAY                    \ Set Y = A
                         \       = r7 * r7 / 256

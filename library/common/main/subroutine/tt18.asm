@@ -125,8 +125,8 @@ IF _CASSETTE_VERSION \ Electron: The Electron version doesn't support witchspace
 
  JSR DORND              \ Set A and X to random numbers
 
- CMP #253               \ If A >= 253 (1% chance) then jump to MJP to trigger a
- BCS MJP                \ mis-jump into witchspace
+ CMP #253               \ If A >= 253 (0.78% chance) then jump to MJP to trigger
+ BCS MJP                \ a mis-jump into witchspace
 
 \JSR TT111              \ This instruction is commented out in the original
                         \ source. It finds the closest system to coordinates
@@ -152,8 +152,8 @@ ELIF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
 
  JSR DORND              \ Set A and X to random numbers
 
- CMP #253               \ If A >= 253 (1% chance) then jump to MJP to trigger a
- BCS MJP                \ mis-jump into witchspace
+ CMP #253               \ If A >= 253 (0.78% chance) then jump to MJP to trigger
+ BCS MJP                \ a mis-jump into witchspace
 
  JSR hyp1+3             \ Jump straight to the system at (QQ9, QQ10) without
                         \ first calculating which system is closest
@@ -166,8 +166,8 @@ ELIF _ELITE_A_FLIGHT
 
  JSR DORND              \ Set A and X to random numbers
 
- CMP #253               \ If A >= 253 (1% chance) then jump to MJP to trigger a
- BCS MJP                \ mis-jump into witchspace
+ CMP #253               \ If A >= 253 (0.78% chance) then jump to MJP to trigger
+ BCS MJP                \ a mis-jump into witchspace
 
  JSR hyp1               \ Jump straight to the system at (QQ9, QQ10)
 
@@ -175,8 +175,8 @@ ELIF _ELITE_A_6502SP_PARA
 
  JSR DORND              \ Set A and X to random numbers
 
- CMP #253               \ If A >= 253 (1% chance) then jump to MJP to trigger a
- BCS MJP                \ mis-jump into witchspace
+ CMP #253               \ If A >= 253 (0.78% chance) then jump to MJP to trigger
+ BCS MJP                \ a mis-jump into witchspace
 
  JSR hyp1_FLIGHT        \ Jump straight to the system at (QQ9, QQ10)
 

@@ -26,32 +26,32 @@
 \
 \ ******************************************************************************
 
-INCLUDE "versions/6502sp/1-source-files/main-sources/elite-build-options.asm"
+ INCLUDE "versions/6502sp/1-source-files/main-sources/elite-build-options.asm"
 
-_CASSETTE_VERSION       = (_VERSION = 1)
-_DISC_VERSION           = (_VERSION = 2)
-_6502SP_VERSION         = (_VERSION = 3)
-_MASTER_VERSION         = (_VERSION = 4)
-_ELECTRON_VERSION       = (_VERSION = 5)
-_ELITE_A_VERSION        = (_VERSION = 6)
-_SOURCE_DISC            = (_VARIANT = 1)
-_SNG45                  = (_VARIANT = 2)
-_EXECUTIVE              = (_VARIANT = 3)
-_DISC_DOCKED            = FALSE
-_DISC_FLIGHT            = FALSE
-_ELITE_A_DOCKED         = FALSE
-_ELITE_A_FLIGHT         = FALSE
-_ELITE_A_SHIPS_R        = FALSE
-_ELITE_A_SHIPS_S        = FALSE
-_ELITE_A_SHIPS_T        = FALSE
-_ELITE_A_SHIPS_U        = FALSE
-_ELITE_A_SHIPS_V        = FALSE
-_ELITE_A_SHIPS_W        = FALSE
-_ELITE_A_ENCYCLOPEDIA   = FALSE
-_ELITE_A_6502SP_IO      = FALSE
-_ELITE_A_6502SP_PARA    = FALSE
+ _CASSETTE_VERSION      = (_VERSION = 1)
+ _DISC_VERSION          = (_VERSION = 2)
+ _6502SP_VERSION        = (_VERSION = 3)
+ _MASTER_VERSION        = (_VERSION = 4)
+ _ELECTRON_VERSION      = (_VERSION = 5)
+ _ELITE_A_VERSION       = (_VERSION = 6)
+ _SOURCE_DISC           = (_VARIANT = 1)
+ _SNG45                 = (_VARIANT = 2)
+ _EXECUTIVE             = (_VARIANT = 3)
+ _DISC_DOCKED           = FALSE
+ _DISC_FLIGHT           = FALSE
+ _ELITE_A_DOCKED        = FALSE
+ _ELITE_A_FLIGHT        = FALSE
+ _ELITE_A_SHIPS_R       = FALSE
+ _ELITE_A_SHIPS_S       = FALSE
+ _ELITE_A_SHIPS_T       = FALSE
+ _ELITE_A_SHIPS_U       = FALSE
+ _ELITE_A_SHIPS_V       = FALSE
+ _ELITE_A_SHIPS_W       = FALSE
+ _ELITE_A_ENCYCLOPEDIA  = FALSE
+ _ELITE_A_6502SP_IO     = FALSE
+ _ELITE_A_6502SP_PARA   = FALSE
 
-GUARD &4000             \ Guard against assembling over screen memory
+ GUARD &4000            \ Guard against assembling over screen memory
 
 \ ******************************************************************************
 \
@@ -213,13 +213,13 @@ INCLUDE "library/advanced/main/subroutine/setvdu19-dovdu19.asm"
 \
 \ ******************************************************************************
 
-PRINT "I.CODE"
-PRINT "Assembled at ", ~CODE%
-PRINT "Ends at ", ~P%
-PRINT "Code size is ", ~(P% - CODE%)
-PRINT "Execute at ", ~LOAD%
-PRINT "Reload at ", ~LOAD%
-PRINT "protlen = ", ~protlen
+ PRINT "I.CODE"
+ PRINT "Assembled at ", ~CODE%
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - CODE%)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD%
+ PRINT "protlen = ", ~protlen
 
-PRINT "S.I.CODE ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/6502sp/3-assembled-output/I.CODE.bin", CODE%, P%, LOAD%
+ PRINT "S.I.CODE ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
+ SAVE "versions/6502sp/3-assembled-output/I.CODE.bin", CODE%, P%, LOAD%

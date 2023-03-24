@@ -37,16 +37,16 @@
 \
 \ ******************************************************************************
 
-INCLUDE "versions/electron/1-source-files/main-sources/elite-build-options.asm"
+ INCLUDE "versions/electron/1-source-files/main-sources/elite-build-options.asm"
 
-_CASSETTE_VERSION       = (_VERSION = 1)
-_DISC_VERSION           = (_VERSION = 2)
-_6502SP_VERSION         = (_VERSION = 3)
-_MASTER_VERSION         = (_VERSION = 4)
-_ELECTRON_VERSION       = (_VERSION = 5)
-_ELITE_A_VERSION        = (_VERSION = 6)
+ _CASSETTE_VERSION      = (_VERSION = 1)
+ _DISC_VERSION          = (_VERSION = 2)
+ _6502SP_VERSION        = (_VERSION = 3)
+ _MASTER_VERSION        = (_VERSION = 4)
+ _ELECTRON_VERSION      = (_VERSION = 5)
+ _ELITE_A_VERSION       = (_VERSION = 6)
 
-GUARD &5800             \ Guard against assembling over screen memory
+ GUARD &5800            \ Guard against assembling over screen memory
 
 \ ******************************************************************************
 \
@@ -65,54 +65,54 @@ LOAD% = &2000           \ The load address of the main game code file
 \
 \ ******************************************************************************
 
-ORG CODE%
+ ORG CODE%
 
 .elitea
 
-PRINT "elitea = ", ~P%
-INCBIN "versions/electron/3-assembled-output/ELTA.bin"
+ PRINT "elitea = ", ~P%
+ INCBIN "versions/electron/3-assembled-output/ELTA.bin"
 
 .eliteb
 
-PRINT "eliteb = ", ~P%
-INCBIN "versions/electron/3-assembled-output/ELTB.bin"
+ PRINT "eliteb = ", ~P%
+ INCBIN "versions/electron/3-assembled-output/ELTB.bin"
 
 .elitec
 
-PRINT "elitec = ", ~P%
-INCBIN "versions/electron/3-assembled-output/ELTC.bin"
+ PRINT "elitec = ", ~P%
+ INCBIN "versions/electron/3-assembled-output/ELTC.bin"
 
 .elited
 
-PRINT "elited = ", ~P%
-INCBIN "versions/electron/3-assembled-output/ELTD.bin"
+ PRINT "elited = ", ~P%
+ INCBIN "versions/electron/3-assembled-output/ELTD.bin"
 
 .elitee
 
-PRINT "elitee = ", ~P%
-INCBIN "versions/electron/3-assembled-output/ELTE.bin"
+ PRINT "elitee = ", ~P%
+ INCBIN "versions/electron/3-assembled-output/ELTE.bin"
 
 .elitef
 
-PRINT "elitef = ", ~P%
-INCBIN "versions/electron/3-assembled-output/ELTF.bin"
+ PRINT "elitef = ", ~P%
+ INCBIN "versions/electron/3-assembled-output/ELTF.bin"
 
 .eliteg
 
-PRINT "eliteg = ", ~P%
-INCBIN "versions/electron/3-assembled-output/ELTG.bin"
+ PRINT "eliteg = ", ~P%
+ INCBIN "versions/electron/3-assembled-output/ELTG.bin"
 
 .checksum0
 
-PRINT "checksum0 = ", ~P%
+ PRINT "checksum0 = ", ~P%
 
  SKIP 1                 \ We skip this byte so we can insert the checksum later
                         \ in elite-checksum.py
 
 .ships
 
-PRINT "ships = ", ~P%
-INCBIN "versions/electron/3-assembled-output/SHIPS.bin"
+ PRINT "ships = ", ~P%
+ INCBIN "versions/electron/3-assembled-output/SHIPS.bin"
 
 .end
 
@@ -122,6 +122,6 @@ INCBIN "versions/electron/3-assembled-output/SHIPS.bin"
 \
 \ ******************************************************************************
 
-PRINT "P% = ", ~P%
-PRINT "S.ELITECO ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/electron/3-assembled-output/ELITECO.unprot.bin", CODE%, P%, LOAD%
+ PRINT "P% = ", ~P%
+ PRINT "S.ELITECO ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
+ SAVE "versions/electron/3-assembled-output/ELITECO.unprot.bin", CODE%, P%, LOAD%

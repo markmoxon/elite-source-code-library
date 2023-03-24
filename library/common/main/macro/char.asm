@@ -25,11 +25,11 @@
 
 MACRO CHAR x
 
-  IF x = '`'
-    EQUB 39 EOR 35
-  ELSE
-    EQUB x EOR 35
-  ENDIF
+ IF x = '`'
+   EQUB 39 EOR 35
+ ELSE
+   EQUB x EOR 35
+ ENDIF
 
 ENDMACRO
 

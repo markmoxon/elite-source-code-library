@@ -15,7 +15,7 @@
 
 .UU%
 
-Q% = P% - LE%
+ Q% = P% - LE%
 
-ORG LE%
+ ORG LE%
 

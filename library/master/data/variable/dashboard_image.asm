@@ -18,5 +18,5 @@
 
 .DIALS
 
-INCBIN "versions/master/1-source-files/images/P.DIALS2P.bin"
+ INCBIN "versions/master/1-source-files/images/P.DIALS2P.bin"
 

@@ -41,21 +41,21 @@
 
 .DIALS
 
-INCBIN "versions/6502sp/1-source-files/images/P.DIALS2P.bin"
+ INCBIN "versions/6502sp/1-source-files/images/P.DIALS2P.bin"
 
 .DATE
 
-INCBIN "versions/6502sp/1-source-files/images/P.DATE2P.bin"
+ INCBIN "versions/6502sp/1-source-files/images/P.DATE2P.bin"
 
 .ASOFT
 
-INCBIN "versions/6502sp/1-source-files/images/Z.ACSOFT.bin"
+ INCBIN "versions/6502sp/1-source-files/images/Z.ACSOFT.bin"
 
 .ELITE
 
-INCBIN "versions/6502sp/1-source-files/images/Z.ELITE.bin"
+ INCBIN "versions/6502sp/1-source-files/images/Z.ELITE.bin"
 
 .CpASOFT
 
-INCBIN "versions/6502sp/1-source-files/images/Z.(C)ASFT.bin"
+ INCBIN "versions/6502sp/1-source-files/images/Z.(C)ASFT.bin"
 

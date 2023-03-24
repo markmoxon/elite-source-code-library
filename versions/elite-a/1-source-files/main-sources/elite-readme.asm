@@ -28,17 +28,17 @@
 \
 \ ******************************************************************************
 
-INCLUDE "versions/elite-a/1-source-files/main-sources/elite-build-options.asm"
+ INCLUDE "versions/elite-a/1-source-files/main-sources/elite-build-options.asm"
 
-_CASSETTE_VERSION       = (_VERSION = 1)
-_DISC_VERSION           = (_VERSION = 2)
-_6502SP_VERSION         = (_VERSION = 3)
-_MASTER_VERSION         = (_VERSION = 4)
-_ELECTRON_VERSION       = (_VERSION = 5)
-_ELITE_A_VERSION        = (_VERSION = 6)
-_RELEASED               = (_VARIANT = 1)
-_SOURCE_DISC            = (_VARIANT = 2)
-_BUG_FIX                = (_VARIANT = 3)
+ _CASSETTE_VERSION      = (_VERSION = 1)
+ _DISC_VERSION          = (_VERSION = 2)
+ _6502SP_VERSION        = (_VERSION = 3)
+ _MASTER_VERSION        = (_VERSION = 4)
+ _ELECTRON_VERSION      = (_VERSION = 5)
+ _ELITE_A_VERSION       = (_VERSION = 6)
+ _RELEASED              = (_VARIANT = 1)
+ _SOURCE_DISC           = (_VARIANT = 2)
+ _BUG_FIX               = (_VARIANT = 3)
 
 .readme
 
@@ -83,5 +83,5 @@ ENDIF
  EQUS "*| -----------------------------------"
  EQUB 13
 
-SAVE "versions/elite-a/3-assembled-output/!BOOT.txt", readme, P%
+ SAVE "versions/elite-a/3-assembled-output/!BOOT.txt", readme, P%
 

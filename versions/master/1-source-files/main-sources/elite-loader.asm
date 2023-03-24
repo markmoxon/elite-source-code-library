@@ -25,21 +25,21 @@
 \
 \ ******************************************************************************
 
-INCLUDE "versions/master/1-source-files/main-sources/elite-build-options.asm"
+ INCLUDE "versions/master/1-source-files/main-sources/elite-build-options.asm"
 
-CPU 1                   \ Switch to 65SC12 assembly, as this code runs on the
+ CPU 1                  \ Switch to 65SC12 assembly, as this code runs on the
                         \ BBC Master
 
-_CASSETTE_VERSION       = (_VERSION = 1)
-_DISC_VERSION           = (_VERSION = 2)
-_6502SP_VERSION         = (_VERSION = 3)
-_MASTER_VERSION         = (_VERSION = 4)
-_ELECTRON_VERSION       = (_VERSION = 5)
-_ELITE_A_VERSION        = (_VERSION = 6)
-_SNG47                  = (_VARIANT = 1)
-_COMPACT                = (_VARIANT = 2)
+ _CASSETTE_VERSION      = (_VERSION = 1)
+ _DISC_VERSION          = (_VERSION = 2)
+ _6502SP_VERSION        = (_VERSION = 3)
+ _MASTER_VERSION        = (_VERSION = 4)
+ _ELECTRON_VERSION      = (_VERSION = 5)
+ _ELITE_A_VERSION       = (_VERSION = 6)
+ _SNG47                 = (_VARIANT = 1)
+ _COMPACT               = (_VARIANT = 2)
 
-GUARD &C000             \ Guard against assembling over MOS memory
+ GUARD &C000            \ Guard against assembling over MOS memory
 
 \ ******************************************************************************
 \
@@ -69,7 +69,7 @@ INCLUDE "library/master/loader/workspace/zp.asm"
 CODE% = &0E00
 LOAD% = &0E00
 
-ORG CODE%
+ ORG CODE%
 
 INCLUDE "library/common/loader/variable/b_per_cent.asm"
 INCLUDE "library/master/loader/subroutine/elite_loader.asm"
@@ -94,6 +94,6 @@ INCLUDE "library/master/loader/variable/mess3.asm"
 \
 \ ******************************************************************************
 
-PRINT "S.M128Elt ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/master/3-assembled-output/M128Elt.bin", CODE%, P%, LOAD%
+ PRINT "S.M128Elt ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
+ SAVE "versions/master/3-assembled-output/M128Elt.bin", CODE%, P%, LOAD%
 

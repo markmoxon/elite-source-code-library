@@ -8,11 +8,11 @@
 \
 \ ******************************************************************************
 
-ORG &0004
+ ORG &0004
 
 INCLUDE "library/original/main/variable/trtb_per_cent.asm"
 
-ORG &0070
+ ORG &0070
 
 INCLUDE "library/common/loader/variable/zp.asm"
 INCLUDE "library/common/loader/variable/p.asm"

@@ -24,7 +24,7 @@
 
 MACRO ETOK n
 
-  EQUB n EOR VE
+ EQUB n EOR VE
 
 ENDMACRO
 

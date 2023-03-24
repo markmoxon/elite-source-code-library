@@ -32,26 +32,26 @@
 
 MACRO ITEM price, factor, units, quantity, mask
 
-  IF factor < 0
-    s = 1 << 7
-  ELSE
-    s = 0
-  ENDIF
+ IF factor < 0
+  s = 1 << 7
+ ELSE
+  s = 0
+ ENDIF
 
-  IF units = 't'
-    u = 0
-  ELIF units = 'k'
-    u = 1 << 5
-  ELSE
-    u = 1 << 6
-  ENDIF
+ IF units = 't'
+  u = 0
+ ELIF units = 'k'
+  u = 1 << 5
+ ELSE
+  u = 1 << 6
+ ENDIF
 
-  e = ABS(factor)
+ e = ABS(factor)
 
-  EQUB price
-  EQUB s + u + e
-  EQUB quantity
-  EQUB mask
+ EQUB price
+ EQUB s + u + e
+ EQUB quantity
+ EQUB mask
 
 ENDMACRO
 

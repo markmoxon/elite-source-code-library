@@ -26,7 +26,7 @@
 \
 \ ******************************************************************************
 
-CPU 1                   \ Switch to 65C02 assembly, because although this
+ CPU 1                  \ Switch to 65C02 assembly, because although this
                         \ routine forms part of the code that runs on the 6502
                         \ CPU of the BBC Micro I/O processor, the do65C02
                         \ routine gets transmitted across the Tube to the
@@ -110,7 +110,7 @@ CPU 1                   \ Switch to 65C02 assembly, because although this
 
 .end65C02
 
-protlen = end65C02 - do65C02
+ protlen = end65C02 - do65C02
 
-CPU 0                   \ Switch back to normal 6502 asembly
+ CPU 0                  \ Switch back to normal 6502 asembly
 

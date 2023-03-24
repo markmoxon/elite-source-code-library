@@ -25,11 +25,11 @@
 
 MACRO ECHR x
 
-  IF x = '`'
-    EQUB 39 EOR VE
-  ELSE
-    EQUB x EOR VE
-  ENDIF
+ IF x = '`'
+  EQUB 39 EOR VE
+ ELSE
+  EQUB x EOR VE
+ ENDIF
 
 ENDMACRO
 

@@ -16,9 +16,9 @@
 
 .UNIV
 
-FOR I%, 0, NOSH
+ FOR I%, 0, NOSH
 
- EQUW K% + I% * NI%     \ Address of block no. I%, of size NI%, in workspace K%
+  EQUW K% + I% * NI%    \ Address of block no. I%, of size NI%, in workspace K%
 
-NEXT
+ NEXT
 

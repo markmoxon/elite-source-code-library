@@ -30,15 +30,15 @@
 
 MACRO TOKN n
 
-  IF n >= 0 AND n <= 95
-    t = n + 160
-  ELIF n >= 128
-    t = n - 114
-  ELSE
-    t = n
-  ENDIF
+ IF n >= 0 AND n <= 95
+  t = n + 160
+ ELIF n >= 128
+  t = n - 114
+ ELSE
+  t = n
+ ENDIF
 
-  EQUB t EOR VE
+ EQUB t EOR VE
 
 ENDMACRO
 

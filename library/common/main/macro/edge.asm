@@ -33,8 +33,8 @@
 
 MACRO EDGE vertex1, vertex2, face1, face2, visibility
 
-  f = face1 + (face2 << 4)
-  EQUB visibility, f, vertex1 << 2, vertex2 << 2
+ f = face1 + (face2 << 4)
+ EQUB visibility, f, vertex1 << 2, vertex2 << 2
 
 ENDMACRO
 

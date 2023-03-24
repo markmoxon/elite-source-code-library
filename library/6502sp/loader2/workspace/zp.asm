@@ -8,7 +8,7 @@
 \
 \ ******************************************************************************
 
-ORG &0090
+ ORG &0090
 
 INCLUDE "library/6502sp/loader2/variable/z1.asm"
 INCLUDE "library/6502sp/loader2/variable/z2.asm"

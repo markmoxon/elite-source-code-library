@@ -23,7 +23,7 @@
 
 MACRO EJMP n
 
-  EQUB n EOR VE
+ EQUB n EOR VE
 
 ENDMACRO
 

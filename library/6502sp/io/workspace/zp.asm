@@ -8,7 +8,7 @@
 \
 \ ******************************************************************************
 
-ORG &0080
+ ORG &0080
 
 .ZP
 
@@ -24,7 +24,7 @@ INCLUDE "library/common/main/variable/t1.asm"
 INCLUDE "library/common/main/variable/col.asm"
 INCLUDE "library/6502sp/io/variable/ossc.asm"
 
-ORG &0090
+ ORG &0090
 
 INCLUDE "library/common/main/variable/xx15.asm"
 INCLUDE "library/common/main/variable/x1.asm"

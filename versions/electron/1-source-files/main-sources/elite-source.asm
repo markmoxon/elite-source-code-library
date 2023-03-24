@@ -33,29 +33,29 @@
 \
 \ ******************************************************************************
 
-INCLUDE "versions/electron/1-source-files/main-sources/elite-build-options.asm"
+ INCLUDE "versions/electron/1-source-files/main-sources/elite-build-options.asm"
 
-_CASSETTE_VERSION       = (_VERSION = 1)
-_DISC_VERSION           = (_VERSION = 2)
-_6502SP_VERSION         = (_VERSION = 3)
-_MASTER_VERSION         = (_VERSION = 4)
-_ELECTRON_VERSION       = (_VERSION = 5)
-_ELITE_A_VERSION        = (_VERSION = 6)
-_DISC_DOCKED            = FALSE
-_DISC_FLIGHT            = FALSE
-_ELITE_A_DOCKED         = FALSE
-_ELITE_A_FLIGHT         = FALSE
-_ELITE_A_SHIPS_R        = FALSE
-_ELITE_A_SHIPS_S        = FALSE
-_ELITE_A_SHIPS_T        = FALSE
-_ELITE_A_SHIPS_U        = FALSE
-_ELITE_A_SHIPS_V        = FALSE
-_ELITE_A_SHIPS_W        = FALSE
-_ELITE_A_ENCYCLOPEDIA   = FALSE
-_ELITE_A_6502SP_IO      = FALSE
-_ELITE_A_6502SP_PARA    = FALSE
+ _CASSETTE_VERSION      = (_VERSION = 1)
+ _DISC_VERSION          = (_VERSION = 2)
+ _6502SP_VERSION        = (_VERSION = 3)
+ _MASTER_VERSION        = (_VERSION = 4)
+ _ELECTRON_VERSION      = (_VERSION = 5)
+ _ELITE_A_VERSION       = (_VERSION = 6)
+ _DISC_DOCKED           = FALSE
+ _DISC_FLIGHT           = FALSE
+ _ELITE_A_DOCKED        = FALSE
+ _ELITE_A_FLIGHT        = FALSE
+ _ELITE_A_SHIPS_R       = FALSE
+ _ELITE_A_SHIPS_S       = FALSE
+ _ELITE_A_SHIPS_T       = FALSE
+ _ELITE_A_SHIPS_U       = FALSE
+ _ELITE_A_SHIPS_V       = FALSE
+ _ELITE_A_SHIPS_W       = FALSE
+ _ELITE_A_ENCYCLOPEDIA  = FALSE
+ _ELITE_A_6502SP_IO     = FALSE
+ _ELITE_A_6502SP_PARA   = FALSE
 
-GUARD &5800             \ Guard against assembling over screen memory
+ GUARD &5800            \ Guard against assembling over screen memory
 
 \ ******************************************************************************
 \
@@ -128,7 +128,7 @@ INCLUDE "library/original/main/workspace/t_per_cent.asm"
 CODE_WORDS% = &0400
 LOAD_WORDS% = &4400
 
-ORG CODE_WORDS%
+ ORG CODE_WORDS%
 
 INCLUDE "library/common/main/macro/char.asm"
 INCLUDE "library/common/main/macro/twok.asm"
@@ -142,15 +142,15 @@ INCLUDE "library/common/main/variable/qq18.asm"
 \
 \ ******************************************************************************
 
-PRINT "WORDS9"
-PRINT "Assembled at ", ~CODE_WORDS%
-PRINT "Ends at ", ~P%
-PRINT "Code size is ", ~(P% - CODE_WORDS%)
-PRINT "Execute at ", ~LOAD_WORDS%
-PRINT "Reload at ", ~LOAD_WORDS%
+ PRINT "WORDS9"
+ PRINT "Assembled at ", ~CODE_WORDS%
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - CODE_WORDS%)
+ PRINT "Execute at ", ~LOAD_WORDS%
+ PRINT "Reload at ", ~LOAD_WORDS%
 
-PRINT "S.WORDS9 ",~CODE_WORDS%," ",~P%," ",~LOAD_WORDS%," ",~LOAD_WORDS%
-SAVE "versions/electron/3-assembled-output/WORDS9.bin", CODE_WORDS%, P%, LOAD_WORDS%
+ PRINT "S.WORDS9 ",~CODE_WORDS%," ",~P%," ",~LOAD_WORDS%," ",~LOAD_WORDS%
+ SAVE "versions/electron/3-assembled-output/WORDS9.bin", CODE_WORDS%, P%, LOAD_WORDS%
 
 INCLUDE "library/common/main/workspace/k_per_cent.asm"
 INCLUDE "library/common/main/workspace/wp.asm"
@@ -166,7 +166,7 @@ INCLUDE "library/common/main/workspace/wp.asm"
 CODE% = &0D00
 LOAD% = &2000
 
-ORG CODE%
+ ORG CODE%
 
 LOAD_A% = LOAD%
 
@@ -215,15 +215,15 @@ INCLUDE "library/common/main/subroutine/mv40.asm"
 \
 \ ******************************************************************************
 
-PRINT "ELITE A"
-PRINT "Assembled at ", ~CODE%
-PRINT "Ends at ", ~P%
-PRINT "Code size is ", ~(P% - CODE%)
-PRINT "Execute at ", ~LOAD%
-PRINT "Reload at ", ~LOAD_A%
+ PRINT "ELITE A"
+ PRINT "Assembled at ", ~CODE%
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - CODE%)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD_A%
 
-PRINT "S.ELTA ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_A%
-SAVE "versions/electron/3-assembled-output/ELTA.bin", CODE%, P%, LOAD%
+ PRINT "S.ELTA ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_A%
+ SAVE "versions/electron/3-assembled-output/ELTA.bin", CODE%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -287,15 +287,15 @@ INCLUDE "library/common/main/subroutine/escape.asm"
 \
 \ ******************************************************************************
 
-PRINT "ELITE B"
-PRINT "Assembled at ", ~CODE_B%
-PRINT "Ends at ", ~P%
-PRINT "Code size is ", ~(P% - CODE_B%)
-PRINT "Execute at ", ~LOAD%
-PRINT "Reload at ", ~LOAD_B%
+ PRINT "ELITE B"
+ PRINT "Assembled at ", ~CODE_B%
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - CODE_B%)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD_B%
 
-PRINT "S.ELTB ", ~CODE_B%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_B%
-SAVE "versions/electron/3-assembled-output/ELTB.bin", CODE_B%, P%, LOAD%
+ PRINT "S.ELTB ", ~CODE_B%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_B%
+ SAVE "versions/electron/3-assembled-output/ELTB.bin", CODE_B%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -383,15 +383,15 @@ INCLUDE "library/electron/main/subroutine/nextr.asm"
 \
 \ ******************************************************************************
 
-PRINT "ELITE C"
-PRINT "Assembled at ", ~CODE_C%
-PRINT "Ends at ", ~P%
-PRINT "Code size is ", ~(P% - CODE_C%)
-PRINT "Execute at ", ~LOAD%
-PRINT "Reload at ", ~LOAD_C%
+ PRINT "ELITE C"
+ PRINT "Assembled at ", ~CODE_C%
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - CODE_C%)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD_C%
 
-PRINT "S.ELTC ", ~CODE_C%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_C%
-SAVE "versions/electron/3-assembled-output/ELTC.bin", CODE_C%, P%, LOAD%
+ PRINT "S.ELTC ", ~CODE_C%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_C%
+ SAVE "versions/electron/3-assembled-output/ELTC.bin", CODE_C%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -474,15 +474,15 @@ INCLUDE "library/common/main/subroutine/qv.asm"
 \
 \ ******************************************************************************
 
-PRINT "ELITE D"
-PRINT "Assembled at ", ~CODE_D%
-PRINT "Ends at ", ~P%
-PRINT "Code size is ", ~(P% - CODE_D%)
-PRINT "Execute at ", ~LOAD%
-PRINT "Reload at ", ~LOAD_D%
+ PRINT "ELITE D"
+ PRINT "Assembled at ", ~CODE_D%
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - CODE_D%)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD_D%
 
-PRINT "S.ELTD ", ~CODE_D%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_D%
-SAVE "versions/electron/3-assembled-output/ELTD.bin", CODE_D%, P%, LOAD%
+ PRINT "S.ELTD ", ~CODE_D%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_D%
+ SAVE "versions/electron/3-assembled-output/ELTD.bin", CODE_D%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -566,15 +566,15 @@ INCLUDE "library/common/main/subroutine/ping.asm"
 \
 \ ******************************************************************************
 
-PRINT "ELITE E"
-PRINT "Assembled at ", ~CODE_E%
-PRINT "Ends at ", ~P%
-PRINT "Code size is ", ~(P% - CODE_E%)
-PRINT "Execute at ", ~LOAD%
-PRINT "Reload at ", ~LOAD_E%
+ PRINT "ELITE E"
+ PRINT "Assembled at ", ~CODE_E%
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - CODE_E%)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD_E%
 
-PRINT "S.ELTE ", ~CODE_E%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_E%
-SAVE "versions/electron/3-assembled-output/ELTE.bin", CODE_E%, P%, LOAD%
+ PRINT "S.ELTE ", ~CODE_E%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_E%
+ SAVE "versions/electron/3-assembled-output/ELTE.bin", CODE_E%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -672,15 +672,15 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
 \
 \ ******************************************************************************
 
-PRINT "ELITE F"
-PRINT "Assembled at ", ~CODE_F%
-PRINT "Ends at ", ~P%
-PRINT "Code size is ", ~(P% - CODE_F%)
-PRINT "Execute at ", ~LOAD%
-PRINT "Reload at ", ~LOAD_F%
+ PRINT "ELITE F"
+ PRINT "Assembled at ", ~CODE_F%
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - CODE_F%)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD_F%
 
-PRINT "S.ELTF ", ~CODE_F%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_F%
-SAVE "versions/electron/3-assembled-output/ELTF.bin", CODE_F%, P%, LOAD%
+ PRINT "S.ELTF ", ~CODE_F%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_F%
+ SAVE "versions/electron/3-assembled-output/ELTF.bin", CODE_F%, P%, LOAD%
 
 \ ******************************************************************************
 \
@@ -727,15 +727,15 @@ INCLUDE "library/common/main/subroutine/ll145_part_4_of_4.asm"
 \
 \ ******************************************************************************
 
-PRINT "ELITE G"
-PRINT "Assembled at ", ~CODE_G%
-PRINT "Ends at ", ~P%
-PRINT "Code size is ", ~(P% - CODE_G%)
-PRINT "Execute at ", ~LOAD%
-PRINT "Reload at ", ~LOAD_G%
+ PRINT "ELITE G"
+ PRINT "Assembled at ", ~CODE_G%
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - CODE_G%)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD_G%
 
-PRINT "S.ELTG ", ~CODE_G%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_G%
-SAVE "versions/electron/3-assembled-output/ELTG.bin", CODE_G%, P%, LOAD%
+ PRINT "S.ELTG ", ~CODE_G%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_G%
+ SAVE "versions/electron/3-assembled-output/ELTG.bin", CODE_G%, P%, LOAD%
 
 INCLUDE "library/original/main/variable/checksum0.asm"
 
@@ -771,12 +771,12 @@ INCLUDE "library/common/main/variable/ship_escape_pod.asm"
 \
 \ ******************************************************************************
 
-PRINT "SHIPS"
-PRINT "Assembled at ", ~CODE_SHIPS%
-PRINT "Ends at ", ~P%
-PRINT "Code size is ", ~(P% - CODE_SHIPS%)
-PRINT "Execute at ", ~LOAD%
-PRINT "Reload at ", ~LOAD_SHIPS%
+ PRINT "SHIPS"
+ PRINT "Assembled at ", ~CODE_SHIPS%
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - CODE_SHIPS%)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD_SHIPS%
 
-PRINT "S.SHIPS ", ~CODE_SHIPS%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_SHIPS%
-SAVE "versions/electron/3-assembled-output/SHIPS.bin", CODE_SHIPS%, P%, LOAD%
+ PRINT "S.SHIPS ", ~CODE_SHIPS%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_SHIPS%
+ SAVE "versions/electron/3-assembled-output/SHIPS.bin", CODE_SHIPS%, P%, LOAD%

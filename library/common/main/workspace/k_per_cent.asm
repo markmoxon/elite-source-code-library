@@ -55,7 +55,7 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ 6502SP: The Executive version has a different memory map to the other 6502SP versions, with the K% workspace at &8500 instead of &8200
 
-ORG &0900
+ ORG &0900
 
 ELIF _6502SP_VERSION
 
@@ -71,7 +71,7 @@ ENDIF
 
 ELIF _MASTER_VERSION
 
-ORG &0400
+ ORG &0400
 
 ENDIF
 

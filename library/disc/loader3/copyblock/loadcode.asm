@@ -18,11 +18,11 @@ ENDIF
 
 .LOADcode
 
-ORG &0B00
+ ORG &0B00
 
 INCLUDE "library/disc/loader3/subroutine/load.asm"
 
-COPYBLOCK LOAD, P%, LOADcode
+ COPYBLOCK LOAD, P%, LOADcode
 
-ORG LOADcode + P% - LOAD
+ ORG LOADcode + P% - LOAD
 

@@ -26,19 +26,19 @@
 \
 \ ******************************************************************************
 
-INCLUDE "versions/6502sp/1-source-files/main-sources/elite-build-options.asm"
+ INCLUDE "versions/6502sp/1-source-files/main-sources/elite-build-options.asm"
 
-_CASSETTE_VERSION       = (_VERSION = 1)
-_DISC_VERSION           = (_VERSION = 2)
-_6502SP_VERSION         = (_VERSION = 3)
-_MASTER_VERSION         = (_VERSION = 4)
-_ELECTRON_VERSION       = (_VERSION = 5)
-_ELITE_A_VERSION        = (_VERSION = 6)
-_SOURCE_DISC            = (_VARIANT = 1)
-_SNG45                  = (_VARIANT = 2)
-_EXECUTIVE              = (_VARIANT = 3)
+ _CASSETTE_VERSION      = (_VERSION = 1)
+ _DISC_VERSION          = (_VERSION = 2)
+ _6502SP_VERSION        = (_VERSION = 3)
+ _MASTER_VERSION        = (_VERSION = 4)
+ _ELECTRON_VERSION      = (_VERSION = 5)
+ _ELITE_A_VERSION       = (_VERSION = 6)
+ _SOURCE_DISC           = (_VARIANT = 1)
+ _SNG45                 = (_VARIANT = 2)
+ _EXECUTIVE             = (_VARIANT = 3)
 
-GUARD &4000             \ Guard against assembling over screen memory
+ GUARD &4000            \ Guard against assembling over screen memory
 
 \ ******************************************************************************
 \
@@ -46,17 +46,17 @@ GUARD &4000             \ Guard against assembling over screen memory
 \
 \ ******************************************************************************
 
-N% = 77                 \ N% is set to the number of bytes in the VDU table, so
+ N% = 77                \ N% is set to the number of bytes in the VDU table, so
                         \ we can loop through them in the loader below
 
-VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
+ VIA = &FE00            \ Memory-mapped space for accessing internal hardware,
                         \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
                         \ known as SHEILA)
 
-OSWRCH = &FFEE          \ The address for the OSWRCH routine
-OSBYTE = &FFF4          \ The address for the OSBYTE routine
-OSWORD = &FFF1          \ The address for the OSWORD routine
-OSCLI = &FFF7           \ The address for the OSCLI routine
+ OSWRCH = &FFEE         \ The address for the OSWRCH routine
+ OSBYTE = &FFF4         \ The address for the OSBYTE routine
+ OSWORD = &FFF1         \ The address for the OSWORD routine
+ OSCLI = &FFF7          \ The address for the OSCLI routine
 
 INCLUDE "library/6502sp/loader1/workspace/zp.asm"
 
@@ -78,7 +78,7 @@ ELIF _SOURCE_DISC
 
 ENDIF
 
-ORG CODE%
+ ORG CODE%
 
 INCLUDE "library/6502sp/loader1/variable/copyright.asm"
 INCLUDE "library/common/loader/variable/b_per_cent.asm"
@@ -105,5 +105,5 @@ INCLUDE "library/6502sp/loader1/variable/mess2.asm"
 \
 \ ******************************************************************************
 
-PRINT "S.ELITE ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/6502sp/3-assembled-output/ELITE.bin", CODE%, P%, LOAD%
+ PRINT "S.ELITE ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
+ SAVE "versions/6502sp/3-assembled-output/ELITE.bin", CODE%, P%, LOAD%

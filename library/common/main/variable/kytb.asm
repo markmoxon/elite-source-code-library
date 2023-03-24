@@ -38,7 +38,7 @@ ENDIF
 
 IF _CASSETTE_VERSION \ Label
 
-KYTB = P% - 1           \ Point KYTB to the byte before the start of the table
+ KYTB = P% - 1          \ Point KYTB to the byte before the start of the table
 
 ELIF _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
 

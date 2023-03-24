@@ -25,34 +25,34 @@
 \
 \ ******************************************************************************
 
-INCLUDE "versions/master/1-source-files/main-sources/elite-build-options.asm"
+ INCLUDE "versions/master/1-source-files/main-sources/elite-build-options.asm"
 
-CPU 1                   \ Switch to 65SC12 assembly, as this code runs on a
+ CPU 1                  \ Switch to 65SC12 assembly, as this code runs on a
                         \ BBC Master
 
-_CASSETTE_VERSION       = (_VERSION = 1)
-_DISC_VERSION           = (_VERSION = 2)
-_6502SP_VERSION         = (_VERSION = 3)
-_MASTER_VERSION         = (_VERSION = 4)
-_ELECTRON_VERSION       = (_VERSION = 5)
-_ELITE_A_VERSION        = (_VERSION = 6)
-_SNG47                  = (_VARIANT = 1)
-_COMPACT                = (_VARIANT = 2)
-_DISC_DOCKED            = FALSE
-_DISC_FLIGHT            = FALSE
-_ELITE_A_DOCKED         = FALSE
-_ELITE_A_FLIGHT         = FALSE
-_ELITE_A_SHIPS_R        = FALSE
-_ELITE_A_SHIPS_S        = FALSE
-_ELITE_A_SHIPS_T        = FALSE
-_ELITE_A_SHIPS_U        = FALSE
-_ELITE_A_SHIPS_V        = FALSE
-_ELITE_A_SHIPS_W        = FALSE
-_ELITE_A_ENCYCLOPEDIA   = FALSE
-_ELITE_A_6502SP_IO      = FALSE
-_ELITE_A_6502SP_PARA    = FALSE
+ _CASSETTE_VERSION      = (_VERSION = 1)
+ _DISC_VERSION          = (_VERSION = 2)
+ _6502SP_VERSION        = (_VERSION = 3)
+ _MASTER_VERSION        = (_VERSION = 4)
+ _ELECTRON_VERSION      = (_VERSION = 5)
+ _ELITE_A_VERSION       = (_VERSION = 6)
+ _SNG47                 = (_VARIANT = 1)
+ _COMPACT               = (_VARIANT = 2)
+ _DISC_DOCKED           = FALSE
+ _DISC_FLIGHT           = FALSE
+ _ELITE_A_DOCKED        = FALSE
+ _ELITE_A_FLIGHT        = FALSE
+ _ELITE_A_SHIPS_R       = FALSE
+ _ELITE_A_SHIPS_S       = FALSE
+ _ELITE_A_SHIPS_T       = FALSE
+ _ELITE_A_SHIPS_U       = FALSE
+ _ELITE_A_SHIPS_V       = FALSE
+ _ELITE_A_SHIPS_W       = FALSE
+ _ELITE_A_ENCYCLOPEDIA  = FALSE
+ _ELITE_A_6502SP_IO     = FALSE
+ _ELITE_A_6502SP_PARA   = FALSE
 
-GUARD &C000             \ Guard against assembling over MOS memory
+ GUARD &C000            \ Guard against assembling over MOS memory
 
 \ ******************************************************************************
 \
@@ -72,7 +72,7 @@ VE = &57                \ The obfuscation byte used to hide the extended tokens
 CODE% = &7000
 LOAD% = &1300
 
-ORG CODE%
+ ORG CODE%
 
 INCLUDE "library/master/data/variable/dashboard_image.asm"
 
@@ -208,5 +208,5 @@ ENDIF
 \
 \ ******************************************************************************
 
-PRINT "S.BDATA ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/master/3-assembled-output/BDATA.unprot.bin", CODE%, P%, LOAD%
+ PRINT "S.BDATA ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
+ SAVE "versions/master/3-assembled-output/BDATA.unprot.bin", CODE%, P%, LOAD%

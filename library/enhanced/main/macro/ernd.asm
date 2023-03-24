@@ -26,7 +26,7 @@
 
 MACRO ERND n
 
-  EQUB (n + 91) EOR VE
+ EQUB (n + 91) EOR VE
 
 ENDMACRO
 

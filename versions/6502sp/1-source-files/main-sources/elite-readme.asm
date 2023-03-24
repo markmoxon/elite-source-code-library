@@ -26,17 +26,17 @@
 \
 \ ******************************************************************************
 
-INCLUDE "versions/6502sp/1-source-files/main-sources/elite-build-options.asm"
+ INCLUDE "versions/6502sp/1-source-files/main-sources/elite-build-options.asm"
 
-_CASSETTE_VERSION       = (_VERSION = 1)
-_DISC_VERSION           = (_VERSION = 2)
-_6502SP_VERSION         = (_VERSION = 3)
-_MASTER_VERSION         = (_VERSION = 4)
-_ELECTRON_VERSION       = (_VERSION = 5)
-_ELITE_A_VERSION        = (_VERSION = 6)
-_SOURCE_DISC            = (_VARIANT = 1)
-_SNG45                  = (_VARIANT = 2)
-_EXECUTIVE              = (_VARIANT = 3)
+ _CASSETTE_VERSION      = (_VERSION = 1)
+ _DISC_VERSION          = (_VERSION = 2)
+ _6502SP_VERSION        = (_VERSION = 3)
+ _MASTER_VERSION        = (_VERSION = 4)
+ _ELECTRON_VERSION      = (_VERSION = 5)
+ _ELITE_A_VERSION       = (_VERSION = 6)
+ _SOURCE_DISC           = (_VARIANT = 1)
+ _SNG45                 = (_VARIANT = 2)
+ _EXECUTIVE             = (_VARIANT = 3)
 
 .readme
 
@@ -76,5 +76,5 @@ ENDIF
  EQUS "---------------------------------------"
  EQUB 10, 13
 
-SAVE "versions/6502sp/3-assembled-output/README.txt", readme, P%
+ SAVE "versions/6502sp/3-assembled-output/README.txt", readme, P%
 

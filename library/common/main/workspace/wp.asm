@@ -28,23 +28,23 @@ ENDIF
 
 IF _CASSETTE_VERSION \ Platform
 
-ORG &0D40
+ ORG &0D40
 
 ELIF _ELECTRON_VERSION
 
-ORG &0BE0
+ ORG &0BE0
 
 ELIF _DISC_VERSION OR _ELITE_A_VERSION
 
-ORG &0E00
+ ORG &0E00
 
 ELIF _6502SP_VERSION
 
-ORG &0D00
+ ORG &0D00
 
 ELIF _MASTER_VERSION
 
-ORG &0E41
+ ORG &0E41
 
 ENDIF
 
@@ -304,5 +304,5 @@ INCLUDE "library/master/main/variable/adch3.asm"
 
 ENDIF
 
-PRINT "WP workspace from  ", ~WP," to ", ~P%
+ PRINT "WP workspace from  ", ~WP," to ", ~P%
 

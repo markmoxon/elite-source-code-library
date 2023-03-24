@@ -18,11 +18,11 @@
 
 MACRO FNE I%
 
-  LDX #LO(E%+I%*14)     \ Set (Y X) to point to the I%-th set of envelope data
-  LDY #HI(E%+I%*14)     \ in E%
+ LDX #LO(E%+I%*14)      \ Set (Y X) to point to the I%-th set of envelope data
+ LDY #HI(E%+I%*14)      \ in E%
 
-  LDA #8                \ Call OSWORD with A = 8 to set up sound envelope I%
-  JSR OSWORD
+ LDA #8                 \ Call OSWORD with A = 8 to set up sound envelope I%
+ JSR OSWORD
 
 ENDMACRO
 

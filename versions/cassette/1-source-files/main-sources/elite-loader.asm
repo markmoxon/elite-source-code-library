@@ -34,18 +34,18 @@
 \
 \ ******************************************************************************
 
-INCLUDE "versions/cassette/1-source-files/main-sources/elite-build-options.asm"
+ INCLUDE "versions/cassette/1-source-files/main-sources/elite-build-options.asm"
 
-_CASSETTE_VERSION       = (_VERSION = 1)
-_DISC_VERSION           = (_VERSION = 2)
-_6502SP_VERSION         = (_VERSION = 3)
-_MASTER_VERSION         = (_VERSION = 4)
-_ELECTRON_VERSION       = (_VERSION = 5)
-_ELITE_A_VERSION        = (_VERSION = 6)
-_SOURCE_DISC            = (_VARIANT = 1)
-_TEXT_SOURCES           = (_VARIANT = 2)
+ _CASSETTE_VERSION      = (_VERSION = 1)
+ _DISC_VERSION          = (_VERSION = 2)
+ _6502SP_VERSION        = (_VERSION = 3)
+ _MASTER_VERSION        = (_VERSION = 4)
+ _ELECTRON_VERSION      = (_VERSION = 5)
+ _ELITE_A_VERSION       = (_VERSION = 6)
+ _SOURCE_DISC           = (_VARIANT = 1)
+ _TEXT_SOURCES          = (_VARIANT = 2)
 
-GUARD &6000             \ Guard against assembling over screen memory
+ GUARD &6000            \ Guard against assembling over screen memory
 
 \ ******************************************************************************
 \
@@ -159,7 +159,7 @@ LOAD% = &1100           \ LOAD% is the load address of the main game code file
                         \ ("ELTcode" for loading from disc, "ELITEcode" for
                         \ loading from tape)
 
-ORG CODE%
+ ORG CODE%
 
 INCLUDE "library/cassette/loader/subroutine/elite_loader_part_1_of_6.asm"
 INCLUDE "library/common/loader/variable/b_per_cent.asm"
@@ -214,22 +214,22 @@ INCLUDE "library/cassette/loader/variable/yc.asm"
 \
 \ ******************************************************************************
 
-COPYBLOCK LE%, P%, UU%  \ Copy the block that we assembled at LE% to UU%, which
-                        \ is where it will actually run
+ COPYBLOCK LE%, P%, UU%         \ Copy the block that we assembled at LE% to
+                                \ UU%, which is where it will actually run
 
-PRINT "Addresses for the scramble routines in elite-checksum.py"
-PRINT "BLOCK_offset = ", ~(BLOCK - LE%) + (UU% - CODE%)
-PRINT "ENDBLOCK_offset = ", ~(ENDBLOCK - LE%) + (UU% - CODE%)
-PRINT "MAINSUM_offset = ", ~(MAINSUM - LE%) + (UU% - CODE%)
-PRINT "TUT_offset = ", ~(TUT - LE%) + (UU% - CODE%)
-PRINT "CHECKbyt_offset = ", ~(CHECKbyt - LE%) + (UU% - CODE%)
-PRINT "CODE_offset = ", ~(OSB - CODE%)
-PRINT "UU% = ", ~UU%
-PRINT "Q% = ", ~Q%
-PRINT "OSB = ", ~OSB
+ PRINT "Addresses for the scramble routines in elite-checksum.py"
+ PRINT "BLOCK_offset = ", ~(BLOCK - LE%) + (UU% - CODE%)
+ PRINT "ENDBLOCK_offset = ", ~(ENDBLOCK - LE%) + (UU% - CODE%)
+ PRINT "MAINSUM_offset = ", ~(MAINSUM - LE%) + (UU% - CODE%)
+ PRINT "TUT_offset = ", ~(TUT - LE%) + (UU% - CODE%)
+ PRINT "CHECKbyt_offset = ", ~(CHECKbyt - LE%) + (UU% - CODE%)
+ PRINT "CODE_offset = ", ~(OSB - CODE%)
+ PRINT "UU% = ", ~UU%
+ PRINT "Q% = ", ~Q%
+ PRINT "OSB = ", ~OSB
 
-PRINT "Memory usage: ", ~LE%, " - ",~P%
-PRINT "Stack: ",LEN + ENDBLOCK - BLOCK
+ PRINT "Memory usage: ", ~LE%, " - ",~P%
+ PRINT "Stack: ",LEN + ENDBLOCK - BLOCK
 
-PRINT "S. ELITE ", ~CODE%, " ", ~UU% + (P% - LE%), " ", ~run, " ", ~CODE%
-SAVE "versions/cassette/3-assembled-output/ELITE.unprot.bin", CODE%, UU% + (P% - LE%), run, CODE%
+ PRINT "S. ELITE ", ~CODE%, " ", ~UU% + (P% - LE%), " ", ~run, " ", ~CODE%
+ SAVE "versions/cassette/3-assembled-output/ELITE.unprot.bin", CODE%, UU% + (P% - LE%), run, CODE%

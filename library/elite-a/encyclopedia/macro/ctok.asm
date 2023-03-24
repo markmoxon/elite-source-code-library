@@ -35,7 +35,7 @@
 
 MACRO CTOK n
 
-  EQUB n + 128
+ EQUB n + 128
 
 ENDMACRO
 

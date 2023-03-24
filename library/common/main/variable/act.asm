@@ -42,9 +42,9 @@
 
 .ACT
 
-FOR I%, 0, 31
+ FOR I%, 0, 31
 
- EQUB INT((128 / PI) * ATN(I% / 32) + 0.5)
+  EQUB INT((128 / PI) * ATN(I% / 32) + 0.5)
 
-NEXT
+ NEXT
 

@@ -35,11 +35,11 @@ ENDIF
 
 IF _6502SP_VERSION \ Platform
 
-ORG CODE%
+ ORG CODE%
 
 ENDIF
 
-FONT% = P% DIV 256
+ FONT% = P% DIV 256
 
 IF _6502SP_VERSION \ 6502SP: The Executive version uses a unique font, which is based on the 1960s Westminster font (it's similar to the machine-readable font on cheques - "retro-futuristic" is probably what we'd call it these days)
 
@@ -51,7 +51,7 @@ ENDIF
 
 ELIF _MASTER_VERSION
 
-INCBIN "versions/master/1-source-files/fonts/P.FONT.bin"
+ INCBIN "versions/master/1-source-files/fonts/P.FONT.bin"
 
 ENDIF
 

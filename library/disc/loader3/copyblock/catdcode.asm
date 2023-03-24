@@ -10,11 +10,11 @@
 
 .CATDcode
 
-ORG &0D7A
+ ORG &0D7A
 
 INCLUDE "library/disc/loader3/subroutine/catd.asm"
 
-COPYBLOCK CATD, P%, CATDcode
+ COPYBLOCK CATD, P%, CATDcode
 
-ORG CATDcode + P% - CATD
+ ORG CATDcode + P% - CATD
 

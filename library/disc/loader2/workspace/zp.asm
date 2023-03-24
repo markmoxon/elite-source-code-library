@@ -8,11 +8,11 @@
 \
 \ ******************************************************************************
 
-ORG &0004
+ ORG &0004
 
 INCLUDE "library/original/main/variable/trtb_per_cent.asm"
 
-ORG &0070
+ ORG &0070
 
 INCLUDE "library/common/main/variable/s.asm"
 INCLUDE "library/common/loader/variable/zp.asm"
@@ -21,7 +21,7 @@ INCLUDE "library/common/main/variable/q.asm"
 INCLUDE "library/common/main/variable/r.asm"
 INCLUDE "library/common/main/variable/t.asm"
 
-ORG &0081
+ ORG &0081
 
 INCLUDE "library/common/main/variable/sc.asm"
 INCLUDE "library/common/main/variable/sch.asm"

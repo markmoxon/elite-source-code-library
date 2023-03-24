@@ -30,15 +30,15 @@
 
 MACRO RTOK n
 
-  IF n >= 0 AND n <= 95
-    t = n + 160
-  ELIF n >= 128
-    t = n - 114
-  ELSE
-    t = n
-  ENDIF
+ IF n >= 0 AND n <= 95
+  t = n + 160
+ ELIF n >= 128
+  t = n - 114
+ ELSE
+  t = n
+ ENDIF
 
-  EQUB t EOR 35
+ EQUB t EOR 35
 
 ENDMACRO
 

@@ -9,11 +9,11 @@
 \
 \ ******************************************************************************
 
-CPU 1
+ CPU 1
 
 .to_dd00
 
-ORG &DD00
+ ORG &DD00
 
 INCLUDE "library/elite-a/loader/subroutine/do_filev.asm"
 INCLUDE "library/elite-a/loader/subroutine/savews.asm"
@@ -23,9 +23,9 @@ INCLUDE "library/elite-a/loader/subroutine/do_bytev.asm"
 INCLUDE "library/elite-a/loader/subroutine/set_vectors.asm"
 INCLUDE "library/elite-a/loader/subroutine/old_bytev.asm"
 
-dd00_len = P% - do_FILEV
+ dd00_len = P% - do_FILEV
 
-COPYBLOCK do_FILEV, P%, to_dd00
+ COPYBLOCK do_FILEV, P%, to_dd00
 
-ORG to_dd00 + P% - do_FILEV
+ ORG to_dd00 + P% - do_FILEV
 

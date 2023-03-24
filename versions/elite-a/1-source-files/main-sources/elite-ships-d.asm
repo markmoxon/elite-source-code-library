@@ -28,32 +28,32 @@
 \
 \ ******************************************************************************
 
-INCLUDE "versions/elite-a/1-source-files/main-sources/elite-build-options.asm"
+ INCLUDE "versions/elite-a/1-source-files/main-sources/elite-build-options.asm"
 
-_CASSETTE_VERSION       = (_VERSION = 1)
-_DISC_VERSION           = (_VERSION = 2)
-_6502SP_VERSION         = (_VERSION = 3)
-_MASTER_VERSION         = (_VERSION = 4)
-_ELECTRON_VERSION       = (_VERSION = 5)
-_ELITE_A_VERSION        = (_VERSION = 6)
-_DISC_DOCKED            = FALSE
-_DISC_FLIGHT            = FALSE
-_ELITE_A_DOCKED         = FALSE
-_ELITE_A_FLIGHT         = TRUE
-_ELITE_A_SHIPS_R        = FALSE
-_ELITE_A_SHIPS_S        = FALSE
-_ELITE_A_SHIPS_T        = FALSE
-_ELITE_A_SHIPS_U        = FALSE
-_ELITE_A_SHIPS_V        = FALSE
-_ELITE_A_SHIPS_W        = FALSE
-_ELITE_A_ENCYCLOPEDIA   = FALSE
-_ELITE_A_6502SP_IO      = FALSE
-_ELITE_A_6502SP_PARA    = FALSE
-_RELEASED               = (_VARIANT = 1)
-_SOURCE_DISC            = (_VARIANT = 2)
-_BUG_FIX                = (_VARIANT = 3)
+ _CASSETTE_VERSION      = (_VERSION = 1)
+ _DISC_VERSION          = (_VERSION = 2)
+ _6502SP_VERSION        = (_VERSION = 3)
+ _MASTER_VERSION        = (_VERSION = 4)
+ _ELECTRON_VERSION      = (_VERSION = 5)
+ _ELITE_A_VERSION       = (_VERSION = 6)
+ _DISC_DOCKED           = FALSE
+ _DISC_FLIGHT           = FALSE
+ _ELITE_A_DOCKED        = FALSE
+ _ELITE_A_FLIGHT        = TRUE
+ _ELITE_A_SHIPS_R       = FALSE
+ _ELITE_A_SHIPS_S       = FALSE
+ _ELITE_A_SHIPS_T       = FALSE
+ _ELITE_A_SHIPS_U       = FALSE
+ _ELITE_A_SHIPS_V       = FALSE
+ _ELITE_A_SHIPS_W       = FALSE
+ _ELITE_A_ENCYCLOPEDIA  = FALSE
+ _ELITE_A_6502SP_IO     = FALSE
+ _ELITE_A_6502SP_PARA   = FALSE
+ _RELEASED              = (_VARIANT = 1)
+ _SOURCE_DISC           = (_VARIANT = 2)
+ _BUG_FIX               = (_VARIANT = 3)
 
-GUARD &6000             \ Guard against assembling over screen memory
+ GUARD &6000            \ Guard against assembling over screen memory
 
 \ ******************************************************************************
 \
@@ -66,7 +66,7 @@ SHIP_MISSILE = &7F00    \ The address of the missile ship blueprint
 CODE% = &5600           \ The flight code loads this file at address &5600, at
 LOAD% = &5600           \ label XX21
 
-ORG CODE%
+ ORG CODE%
 
 \ ******************************************************************************
 \
@@ -182,5 +182,5 @@ INCLUDE "library/enhanced/main/variable/ship_boulder.asm"
 \
 \ ******************************************************************************
 
-PRINT "S.S.D ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/elite-a/3-assembled-output/S.D.bin", CODE%, CODE% + &0A00
+ PRINT "S.S.D ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
+ SAVE "versions/elite-a/3-assembled-output/S.D.bin", CODE%, CODE% + &0A00

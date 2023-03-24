@@ -18,13 +18,13 @@
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
-NT% = SVC + 2 - TP      \ This sets the variable NT% to the size of the current
+ NT% = SVC + 2 - TP     \ This sets the variable NT% to the size of the current
                         \ commander data block, which starts at TP and ends at
                         \ SVC+2 (inclusive)
 
 ELIF _MASTER_VERSION
 
-NT% = SVC + 3 - TP      \ This sets the variable NT% to the size of the current
+ NT% = SVC + 3 - TP     \ This sets the variable NT% to the size of the current
                         \ commander data block, which starts at TP and ends at
                         \ SVC+3 (inclusive), i.e. with the last checksum byte
 

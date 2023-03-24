@@ -17,7 +17,7 @@ ENDIF
 \
 \ ******************************************************************************
 
-ORG &0300
+ ORG &0300
 
 .T%
 
@@ -63,5 +63,5 @@ INCLUDE "library/common/main/variable/sy.asm"
 
 ENDIF
 
-PRINT "T% workspace from  ", ~T%, " to ", ~P%
+ PRINT "T% workspace from  ", ~T%, " to ", ~P%
 

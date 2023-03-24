@@ -10,11 +10,11 @@
 
 .LOADcode
 
-ORG &0400
+ ORG &0400
 
 INCLUDE "library/disc/loader2/subroutine/load.asm"
 
-COPYBLOCK LOAD, P%, LOADcode
+ COPYBLOCK LOAD, P%, LOADcode
 
-ORG LOADcode + P% - LOAD
+ ORG LOADcode + P% - LOAD
 

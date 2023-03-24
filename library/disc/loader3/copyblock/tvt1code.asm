@@ -18,7 +18,7 @@ ENDIF
 
 .TVT1code
 
-ORG &1100
+ ORG &1100
 
 INCLUDE "library/original/main/variable/tvt1.asm"
 INCLUDE "library/common/main/subroutine/irq1.asm"
@@ -43,7 +43,7 @@ IF NOT(_ELITE_A_VERSION)
 
 ENDIF
 
-COPYBLOCK TVT1, P%, TVT1code
+ COPYBLOCK TVT1, P%, TVT1code
 
-ORG TVT1code + P% - TVT1
+ ORG TVT1code + P% - TVT1
 

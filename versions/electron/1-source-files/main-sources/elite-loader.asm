@@ -25,16 +25,16 @@
 \
 \ ******************************************************************************
 
-INCLUDE "versions/electron/1-source-files/main-sources/elite-build-options.asm"
+ INCLUDE "versions/electron/1-source-files/main-sources/elite-build-options.asm"
 
-_CASSETTE_VERSION       = (_VERSION = 1)
-_DISC_VERSION           = (_VERSION = 2)
-_6502SP_VERSION         = (_VERSION = 3)
-_MASTER_VERSION         = (_VERSION = 4)
-_ELECTRON_VERSION       = (_VERSION = 5)
-_ELITE_A_VERSION        = (_VERSION = 6)
+ _CASSETTE_VERSION      = (_VERSION = 1)
+ _DISC_VERSION          = (_VERSION = 2)
+ _6502SP_VERSION        = (_VERSION = 3)
+ _MASTER_VERSION        = (_VERSION = 4)
+ _ELECTRON_VERSION      = (_VERSION = 5)
+ _ELITE_A_VERSION       = (_VERSION = 6)
 
-GUARD &5800             \ Guard against assembling over screen memory
+ GUARD &5800            \ Guard against assembling over screen memory
 
 \ ******************************************************************************
 \
@@ -90,7 +90,7 @@ INCLUDE "library/original/loader/workspace/zp.asm"
 CODE% = &4400
 LOAD% = &4400
 
-ORG CODE%
+ ORG CODE%
 
 INCLUDE "library/electron/loader/subroutine/elite_loader_part_1_of_5.asm"
 INCLUDE "library/common/loader/variable/b_per_cent.asm"
@@ -131,8 +131,8 @@ INCLUDE "library/electron/loader/variable/mess1.asm"
 \
 \ ******************************************************************************
 
-COPYBLOCK LE%, P%, UU%  \ Copy the block that we assembled at LE% to UU%, which
-                        \ is where it will actually run
+ COPYBLOCK LE%, P%, UU%         \ Copy the block that we assembled at LE% to
+                                \ UU%, which is where it will actually run
 
-PRINT "S.ELITEDA ", ~CODE%, " ", ~UU% + (P% - LE%), " ", ~run, " ", ~CODE%
-SAVE "versions/electron/3-assembled-output/ELITEDA.bin", CODE%, UU% + (P% - LE%), run, CODE%
+ PRINT "S.ELITEDA ", ~CODE%, " ", ~UU% + (P% - LE%), " ", ~run, " ", ~CODE%
+ SAVE "versions/electron/3-assembled-output/ELITEDA.bin", CODE%, UU% + (P% - LE%), run, CODE%

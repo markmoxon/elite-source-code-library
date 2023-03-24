@@ -38,7 +38,7 @@ IF NOT(_ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA)
 
  JMP BRBR1              \ BRKV is set to point here by elite-loader3.asm
 
-BRKV = P% - 2           \ The address of the destination address in the above
+ BRKV = P% - 2          \ The address of the destination address in the above
                         \ JMP BRBR1 instruction. This ensures that any code that
                         \ updates BRKV will update this instruction instead of
                         \ the actual vector
@@ -52,7 +52,7 @@ ELIF _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA
 
  JMP BRBR               \ BRKV is set to point here by elite-loader.asm
 
-BRKV = P% - 2           \ The address of the destination address in the above
+ BRKV = P% - 2          \ The address of the destination address in the above
                         \ JMP BRBR instruction. This ensures that any code that
                         \ updates BRKV will update this instruction instead of
                         \ the actual vector

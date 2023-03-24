@@ -11,11 +11,11 @@
 
 .iff_index_code
 
-ORG &0D7A
+ ORG &0D7A
 
 INCLUDE "library/elite-a/loader/subroutine/iff_index.asm"
 
-COPYBLOCK iff_index, P%, iff_index_code
+ COPYBLOCK iff_index, P%, iff_index_code
 
-ORG iff_index_code + P% - iff_index
+ ORG iff_index_code + P% - iff_index
 

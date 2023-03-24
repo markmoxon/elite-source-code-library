@@ -28,32 +28,32 @@
 \
 \ ******************************************************************************
 
-INCLUDE "versions/elite-a/1-source-files/main-sources/elite-build-options.asm"
+ INCLUDE "versions/elite-a/1-source-files/main-sources/elite-build-options.asm"
 
-_CASSETTE_VERSION       = (_VERSION = 1)
-_DISC_VERSION           = (_VERSION = 2)
-_6502SP_VERSION         = (_VERSION = 3)
-_MASTER_VERSION         = (_VERSION = 4)
-_ELECTRON_VERSION       = (_VERSION = 5)
-_ELITE_A_VERSION        = (_VERSION = 6)
-_DISC_DOCKED            = FALSE
-_DISC_FLIGHT            = FALSE
-_ELITE_A_DOCKED         = FALSE
-_ELITE_A_FLIGHT         = TRUE
-_ELITE_A_SHIPS_R        = FALSE
-_ELITE_A_SHIPS_S        = FALSE
-_ELITE_A_SHIPS_T        = FALSE
-_ELITE_A_SHIPS_U        = FALSE
-_ELITE_A_SHIPS_V        = FALSE
-_ELITE_A_SHIPS_W        = FALSE
-_ELITE_A_ENCYCLOPEDIA   = FALSE
-_ELITE_A_6502SP_IO      = FALSE
-_ELITE_A_6502SP_PARA    = FALSE
-_RELEASED               = (_VARIANT = 1)
-_SOURCE_DISC            = (_VARIANT = 2)
-_BUG_FIX                = (_VARIANT = 3)
+ _CASSETTE_VERSION      = (_VERSION = 1)
+ _DISC_VERSION          = (_VERSION = 2)
+ _6502SP_VERSION        = (_VERSION = 3)
+ _MASTER_VERSION        = (_VERSION = 4)
+ _ELECTRON_VERSION      = (_VERSION = 5)
+ _ELITE_A_VERSION       = (_VERSION = 6)
+ _DISC_DOCKED           = FALSE
+ _DISC_FLIGHT           = FALSE
+ _ELITE_A_DOCKED        = FALSE
+ _ELITE_A_FLIGHT        = TRUE
+ _ELITE_A_SHIPS_R       = FALSE
+ _ELITE_A_SHIPS_S       = FALSE
+ _ELITE_A_SHIPS_T       = FALSE
+ _ELITE_A_SHIPS_U       = FALSE
+ _ELITE_A_SHIPS_V       = FALSE
+ _ELITE_A_SHIPS_W       = FALSE
+ _ELITE_A_ENCYCLOPEDIA  = FALSE
+ _ELITE_A_6502SP_IO     = FALSE
+ _ELITE_A_6502SP_PARA   = FALSE
+ _RELEASED              = (_VARIANT = 1)
+ _SOURCE_DISC           = (_VARIANT = 2)
+ _BUG_FIX               = (_VARIANT = 3)
 
-GUARD &6000             \ Guard against assembling over screen memory
+ GUARD &6000            \ Guard against assembling over screen memory
 
 \ ******************************************************************************
 \
@@ -161,7 +161,7 @@ INCLUDE "library/common/main/workspace/wp.asm"
 CODE% = &11E3
 LOAD% = &11E3
 
-ORG CODE%
+ ORG CODE%
 
 LOAD_A% = LOAD%
 
@@ -195,14 +195,14 @@ INCLUDE "library/enhanced/main/subroutine/spin.asm"
 \
 \ ******************************************************************************
 
-PRINT "ELITE A"
-PRINT "Assembled at ", ~CODE%
-PRINT "Ends at ", ~P%
-PRINT "Code size is ", ~(P% - CODE%)
-PRINT "Execute at ", ~LOAD%
-PRINT "Reload at ", ~LOAD_A%
+ PRINT "ELITE A"
+ PRINT "Assembled at ", ~CODE%
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - CODE%)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD_A%
 
-PRINT "S.D.ELTA ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_A%
+ PRINT "S.D.ELTA ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_A%
 \SAVE "versions/elite-a/3-assembled-output/D.ELTA.bin", CODE%, P%, LOAD%
 
 \ ******************************************************************************
@@ -271,14 +271,14 @@ INCLUDE "library/common/main/subroutine/escape.asm"
 \
 \ ******************************************************************************
 
-PRINT "ELITE B"
-PRINT "Assembled at ", ~CODE_B%
-PRINT "Ends at ", ~P%
-PRINT "Code size is ", ~(P% - CODE_B%)
-PRINT "Execute at ", ~LOAD%
-PRINT "Reload at ", ~LOAD_B%
+ PRINT "ELITE B"
+ PRINT "Assembled at ", ~CODE_B%
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - CODE_B%)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD_B%
 
-PRINT "S.D.ELTB ", ~CODE_B%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_B%
+ PRINT "S.D.ELTB ", ~CODE_B%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_B%
 \SAVE "versions/elite-a/3-assembled-output/D.ELTB.bin", CODE_B%, P%, LOAD%
 
 \ ******************************************************************************
@@ -359,14 +359,14 @@ INCLUDE "library/common/main/subroutine/lasli.asm"
 \
 \ ******************************************************************************
 
-PRINT "ELITE C"
-PRINT "Assembled at ", ~CODE_C%
-PRINT "Ends at ", ~P%
-PRINT "Code size is ", ~(P% - CODE_C%)
-PRINT "Execute at ", ~LOAD%
-PRINT "Reload at ", ~LOAD_C%
+ PRINT "ELITE C"
+ PRINT "Assembled at ", ~CODE_C%
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - CODE_C%)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD_C%
 
-PRINT "S.D.ELTC ", ~CODE_C%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_C%
+ PRINT "S.D.ELTC ", ~CODE_C%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_C%
 \SAVE "versions/elite-a/3-assembled-output/D.ELTC.bin", CODE_C%, P%, LOAD%
 
 \ ******************************************************************************
@@ -441,14 +441,14 @@ INCLUDE "library/common/main/subroutine/hm.asm"
 \
 \ ******************************************************************************
 
-PRINT "ELITE D"
-PRINT "Assembled at ", ~CODE_D%
-PRINT "Ends at ", ~P%
-PRINT "Code size is ", ~(P% - CODE_D%)
-PRINT "Execute at ", ~LOAD%
-PRINT "Reload at ", ~LOAD_D%
+ PRINT "ELITE D"
+ PRINT "Assembled at ", ~CODE_D%
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - CODE_D%)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD_D%
 
-PRINT "S.D.ELTD ", ~CODE_D%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_D%
+ PRINT "S.D.ELTD ", ~CODE_D%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_D%
 \SAVE "versions/elite-a/3-assembled-output/D.ELTD.bin", CODE_D%, P%, LOAD%
 
 \ ******************************************************************************
@@ -553,14 +553,14 @@ INCLUDE "library/common/main/subroutine/killshp.asm"
 \
 \ ******************************************************************************
 
-PRINT "ELITE E"
-PRINT "Assembled at ", ~CODE_E%
-PRINT "Ends at ", ~P%
-PRINT "Code size is ", ~(P% - CODE_E%)
-PRINT "Execute at ", ~LOAD%
-PRINT "Reload at ", ~LOAD_E%
+ PRINT "ELITE E"
+ PRINT "Assembled at ", ~CODE_E%
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - CODE_E%)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD_E%
 
-PRINT "S.D.ELTE ", ~CODE_E%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_E%
+ PRINT "S.D.ELTE ", ~CODE_E%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_E%
 \SAVE "versions/disc/3-assembled-output/D.ELTE.bin", CODE_E%, P%, LOAD%
 
 \ ******************************************************************************
@@ -646,14 +646,14 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
 \
 \ ******************************************************************************
 
-PRINT "ELITE F"
-PRINT "Assembled at ", ~CODE_F%
-PRINT "Ends at ", ~P%
-PRINT "Code size is ", ~(P% - CODE_F%)
-PRINT "Execute at ", ~LOAD%
-PRINT "Reload at ", ~LOAD_F%
+ PRINT "ELITE F"
+ PRINT "Assembled at ", ~CODE_F%
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - CODE_F%)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD_F%
 
-PRINT "S.D.ELTF ", ~CODE_F%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_F%
+ PRINT "S.D.ELTF ", ~CODE_F%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_F%
 \SAVE "versions/elite-a/3-assembled-output/D.ELTF.bin", CODE_F%, P%, LOAD%
 
 \ ******************************************************************************
@@ -699,14 +699,14 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
 \
 \ ******************************************************************************
 
-PRINT "ELITE G"
-PRINT "Assembled at ", ~CODE_G%
-PRINT "Ends at ", ~P%
-PRINT "Code size is ", ~(P% - CODE_G%)
-PRINT "Execute at ", ~LOAD%
-PRINT "Reload at ", ~LOAD_G%
+ PRINT "ELITE G"
+ PRINT "Assembled at ", ~CODE_G%
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - CODE_G%)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD_G%
 
-PRINT "S.D.ELTG ", ~CODE_G%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_G%
+ PRINT "S.D.ELTG ", ~CODE_G%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_G%
 \SAVE "versions/elite-a/3-assembled-output/D.ELTG.bin", CODE_G%, P%, LOAD%
 
 \ ******************************************************************************
@@ -750,5 +750,5 @@ INCLUDE "library/common/main/subroutine/wscan.asm"
 \
 \ ******************************************************************************
 
-PRINT "S.1.F ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
-SAVE "versions/elite-a/3-assembled-output/1.F.bin", CODE%, P%, LOAD%
+ PRINT "S.1.F ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
+ SAVE "versions/elite-a/3-assembled-output/1.F.bin", CODE%, P%, LOAD%

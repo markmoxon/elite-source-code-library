@@ -37,18 +37,18 @@
 \
 \ ******************************************************************************
 
-INCLUDE "versions/cassette/1-source-files/main-sources/elite-build-options.asm"
+ INCLUDE "versions/cassette/1-source-files/main-sources/elite-build-options.asm"
 
-_CASSETTE_VERSION       = (_VERSION = 1)
-_DISC_VERSION           = (_VERSION = 2)
-_6502SP_VERSION         = (_VERSION = 3)
-_MASTER_VERSION         = (_VERSION = 4)
-_ELECTRON_VERSION       = (_VERSION = 5)
-_ELITE_A_VERSION        = (_VERSION = 6)
-_SOURCE_DISC            = (_VARIANT = 1)
-_TEXT_SOURCES           = (_VARIANT = 2)
+ _CASSETTE_VERSION      = (_VERSION = 1)
+ _DISC_VERSION          = (_VERSION = 2)
+ _6502SP_VERSION        = (_VERSION = 3)
+ _MASTER_VERSION        = (_VERSION = 4)
+ _ELECTRON_VERSION      = (_VERSION = 5)
+ _ELITE_A_VERSION       = (_VERSION = 6)
+ _SOURCE_DISC           = (_VARIANT = 1)
+ _TEXT_SOURCES          = (_VARIANT = 2)
 
-GUARD &8000             \ Guard against assembling over MOS memory
+ GUARD &8000            \ Guard against assembling over MOS memory
 
 \ ******************************************************************************
 \
@@ -71,7 +71,7 @@ INCLUDE "library/cassette/bcfs/workspace/zp.asm"
 \
 \ ******************************************************************************
 
-ORG &1100               \ The load address of the main game code file ("ELTcode"
+ ORG &1100              \ The load address of the main game code file ("ELTcode"
                         \ for loading from disc, "ELITEcode" for loading from
                         \ tape)
 
@@ -79,50 +79,50 @@ INCLUDE "library/cassette/bcfs/subroutine/lbl.asm"
 
 .elitea
 
-PRINT "elitea = ", ~P%
-INCBIN "versions/cassette/3-assembled-output/ELTA.bin"
+ PRINT "elitea = ", ~P%
+ INCBIN "versions/cassette/3-assembled-output/ELTA.bin"
 
 .eliteb
 
-PRINT "eliteb = ", ~P%
-INCBIN "versions/cassette/3-assembled-output/ELTB.bin"
+ PRINT "eliteb = ", ~P%
+ INCBIN "versions/cassette/3-assembled-output/ELTB.bin"
 
 .elitec
 
-PRINT "elitec = ", ~P%
-INCBIN "versions/cassette/3-assembled-output/ELTC.bin"
+ PRINT "elitec = ", ~P%
+ INCBIN "versions/cassette/3-assembled-output/ELTC.bin"
 
 .elited
 
-PRINT "elited = ", ~P%
-INCBIN "versions/cassette/3-assembled-output/ELTD.bin"
+ PRINT "elited = ", ~P%
+ INCBIN "versions/cassette/3-assembled-output/ELTD.bin"
 
 .elitee
 
-PRINT "elitee = ", ~P%
-INCBIN "versions/cassette/3-assembled-output/ELTE.bin"
+ PRINT "elitee = ", ~P%
+ INCBIN "versions/cassette/3-assembled-output/ELTE.bin"
 
 .elitef
 
-PRINT "elitef = ", ~P%
-INCBIN "versions/cassette/3-assembled-output/ELTF.bin"
+ PRINT "elitef = ", ~P%
+ INCBIN "versions/cassette/3-assembled-output/ELTF.bin"
 
 .eliteg
 
-PRINT "eliteg = ", ~P%
-INCBIN "versions/cassette/3-assembled-output/ELTG.bin"
+ PRINT "eliteg = ", ~P%
+ INCBIN "versions/cassette/3-assembled-output/ELTG.bin"
 
 .checksum0
 
-PRINT "checksum0 = ", ~P%
+ PRINT "checksum0 = ", ~P%
 
  SKIP 1                 \ We skip this byte so we can insert the checksum later
                         \ in elite-checksum.py
 
 .ships
 
-PRINT "ships = ", ~P%
-INCBIN "versions/cassette/3-assembled-output/SHIPS.bin"
+ PRINT "ships = ", ~P%
+ INCBIN "versions/cassette/3-assembled-output/SHIPS.bin"
 
 .end
 
@@ -132,7 +132,7 @@ INCBIN "versions/cassette/3-assembled-output/SHIPS.bin"
 \
 \ ******************************************************************************
 
-PRINT "P% = ", ~P%
-PRINT "S.ELTcode 1100 ", ~(LOAD% + &6000 - CODE%), " ", ~LOAD%, ~LOAD%
-SAVE "versions/cassette/3-assembled-output/ELTcode.unprot.bin", &1100, (LOAD% + &6000 - CODE%), LOAD%
-SAVE "versions/cassette/3-assembled-output/ELThead.bin", &1100, elitea, &1100
+ PRINT "P% = ", ~P%
+ PRINT "S.ELTcode 1100 ", ~(LOAD% + &6000 - CODE%), " ", ~LOAD%, ~LOAD%
+ SAVE "versions/cassette/3-assembled-output/ELTcode.unprot.bin", &1100, (LOAD% + &6000 - CODE%), LOAD%
+ SAVE "versions/cassette/3-assembled-output/ELThead.bin", &1100, elitea, &1100

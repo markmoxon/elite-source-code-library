@@ -27,19 +27,19 @@
 
 MACRO MVE S%, D%, PA%
 
-  LDA #LO(S%)           \ Set Z1(1 0) = S%
-  STA Z1
-  LDA #HI(S%)
-  STA Z1+1
+ LDA #LO(S%)            \ Set Z1(1 0) = S%
+ STA Z1
+ LDA #HI(S%)
+ STA Z1+1
 
-  LDA #LO(D%)           \ Set Z1(1 0) = D%
-  STA Z2
-  LDA #HI(D%)
-  STA Z2+1
+ LDA #LO(D%)            \ Set Z1(1 0) = D%
+ STA Z2
+ LDA #HI(D%)
+ STA Z2+1
 
-  LDX #PA%              \ Set X = PA%
+ LDX #PA%               \ Set X = PA%
 
-  JSR MVBL              \ Call MVBL to copy X pages from S% to D%
+ JSR MVBL               \ Call MVBL to copy X pages from S% to D%
 
 ENDMACRO
 

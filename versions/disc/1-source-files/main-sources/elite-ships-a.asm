@@ -54,10 +54,10 @@
 \
 \ ******************************************************************************
 
-SHIP_MISSILE = &7F00    \ The address of the missile ship blueprint
+ SHIP_MISSILE = &7F00   \ The address of the missile ship blueprint
 
-CODE% = &5600           \ The flight code loads this file at address &5600, at
-LOAD% = &5600           \ label XX21
+ CODE% = &5600          \ The flight code loads this file at address &5600, at
+ LOAD% = &5600          \ label XX21
 
  ORG CODE%
 

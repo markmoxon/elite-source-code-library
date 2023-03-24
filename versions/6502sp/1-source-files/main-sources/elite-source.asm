@@ -86,151 +86,151 @@ ELIF _EXECUTIVE
 
 ENDIF
 
-D% = &D000              \ The address where the ship blueprints get moved to
+ D% = &D000             \ The address where the ship blueprints get moved to
                         \ after loading, so they go from &D000 to &F200
 
-LS% = D%-1              \ The start of the descending ship line heap
+ LS% = D%-1             \ The start of the descending ship line heap
 
-NOST = 18               \ The number of stardust particles in normal space (this
+ NOST = 18              \ The number of stardust particles in normal space (this
                         \ goes down to 3 in witchspace)
 
-NOSH = 20               \ The maximum number of ships in our local bubble of
+ NOSH = 20              \ The maximum number of ships in our local bubble of
                         \ universe
 
-NTY = 34                \ The number of different ship types
+ NTY = 34               \ The number of different ship types
 
-MSL = 1                 \ Ship type for a missile
-SST = 2                 \ Ship type for a Coriolis space station
-ESC = 3                 \ Ship type for an escape pod
-PLT = 4                 \ Ship type for an alloy plate
-OIL = 5                 \ Ship type for a cargo canister
-AST = 7                 \ Ship type for an asteroid
-SPL = 8                 \ Ship type for a splinter
-SHU = 9                 \ Ship type for a Shuttle
-CYL = 11                \ Ship type for a Cobra Mk III
-ANA = 14                \ Ship type for an Anaconda
-HER = 15                \ Ship type for a rock hermit (asteroid)
-COPS = 16               \ Ship type for a Viper
-SH3 = 17                \ Ship type for a Sidewinder
-KRA = 19                \ Ship type for a Krait
-ADA = 20                \ Ship type for a Adder
-WRM = 23                \ Ship type for a Worm
-CYL2 = 24               \ Ship type for a Cobra Mk III (pirate)
-ASP = 25                \ Ship type for an Asp Mk II
-THG = 29                \ Ship type for a Thargoid
-TGL = 30                \ Ship type for a Thargon
-CON = 31                \ Ship type for a Constrictor
-LGO = 32                \ Ship type for the Elite logo
-COU = 33                \ Ship type for a Cougar
-DOD = 34                \ Ship type for a Dodecahedron ("Dodo") space station
+ MSL = 1                \ Ship type for a missile
+ SST = 2                \ Ship type for a Coriolis space station
+ ESC = 3                \ Ship type for an escape pod
+ PLT = 4                \ Ship type for an alloy plate
+ OIL = 5                \ Ship type for a cargo canister
+ AST = 7                \ Ship type for an asteroid
+ SPL = 8                \ Ship type for a splinter
+ SHU = 9                \ Ship type for a Shuttle
+ CYL = 11               \ Ship type for a Cobra Mk III
+ ANA = 14               \ Ship type for an Anaconda
+ HER = 15               \ Ship type for a rock hermit (asteroid)
+ COPS = 16              \ Ship type for a Viper
+ SH3 = 17               \ Ship type for a Sidewinder
+ KRA = 19               \ Ship type for a Krait
+ ADA = 20               \ Ship type for a Adder
+ WRM = 23               \ Ship type for a Worm
+ CYL2 = 24              \ Ship type for a Cobra Mk III (pirate)
+ ASP = 25               \ Ship type for an Asp Mk II
+ THG = 29               \ Ship type for a Thargoid
+ TGL = 30               \ Ship type for a Thargon
+ CON = 31               \ Ship type for a Constrictor
+ LGO = 32               \ Ship type for the Elite logo
+ COU = 33               \ Ship type for a Cougar
+ DOD = 34               \ Ship type for a Dodecahedron ("Dodo") space station
 
-JL = ESC                \ Junk is defined as starting from the escape pod
+ JL = ESC               \ Junk is defined as starting from the escape pod
 
-JH = SHU+2              \ Junk is defined as ending before the Cobra Mk III
+ JH = SHU+2             \ Junk is defined as ending before the Cobra Mk III
                         \
                         \ So junk is defined as the following: escape pod,
                         \ alloy plate, cargo canister, asteroid, splinter,
                         \ Shuttle or Transporter
 
-PACK = SH3              \ The first of the eight pack-hunter ships, which tend
+ PACK = SH3             \ The first of the eight pack-hunter ships, which tend
                         \ to spawn in groups. With the default value of PACK the
                         \ pack-hunters are the Sidewinder, Mamba, Krait, Adder,
                         \ Gecko, Cobra Mk I, Worm and Cobra Mk III (pirate)
 
-POW = 15                \ Pulse laser power
+ POW = 15               \ Pulse laser power
 
-Mlas = 50               \ Mining laser power
+ Mlas = 50              \ Mining laser power
 
-Armlas = INT(128.5+1.5*POW) \ Military laser power
+ Armlas = INT(128.5+1.5*POW)  \ Military laser power
 
-NI% = 37                \ The number of bytes in each ship's data block (as
+ NI% = 37               \ The number of bytes in each ship's data block (as
                         \ stored in INWK and K%)
 
-BRKV = &0202            \ The break vector that we intercept to enable us to
+ BRKV = &0202           \ The break vector that we intercept to enable us to
                         \ handle and display system errors
 
-OSWRCH = &FFEE          \ The address for the OSWRCH routine
-OSBYTE = &FFF4          \ The address for the OSBYTE routine
-OSWORD = &FFF1          \ The address for the OSWORD routine
-OSFILE = &FFDD          \ The address for the OSFILE routine
-OSCLI = &FFF7           \ The address for the OSCLI routine
+ OSWRCH = &FFEE         \ The address for the OSWRCH routine
+ OSBYTE = &FFF4         \ The address for the OSBYTE routine
+ OSWORD = &FFF1         \ The address for the OSWORD routine
+ OSFILE = &FFDD         \ The address for the OSFILE routine
+ OSCLI = &FFF7          \ The address for the OSCLI routine
 
-DOFE21 = 131            \ The OSWRCH number for the #DOFE21 command
-DOhfx = 132             \ The OSWRCH number for the #DOhfx command
-SETXC = 133             \ The OSWRCH number for the #SETXC command
-SETYC = 134             \ The OSWRCH number for the #SETYC command
-clyns = 135             \ The OSWRCH number for the #clyns command
-RDPARAMS = 136          \ The OSWRCH number for the #RDPARAMS command
-DODIALS = 138           \ The OSWRCH number for the #DODIALS command
-VIAE = 139              \ The OSWRCH number for the #VIAE command
-DOBULB = 140            \ The OSWRCH number for the #DOBULB command
-DOCATF = 141            \ The OSWRCH number for the #DOCATF command
-SETCOL = 142            \ The OSWRCH number for the #SETCOL command
-SETVDU19 = 143          \ The OSWRCH number for the #SETVDU19 command
-DOsvn = 144             \ The OSWRCH number for the #DOsvn command
-printcode = 146         \ The OSWRCH number for the #printcode command
-prilf = 147             \ The OSWRCH number for the #prilf command
+ DOFE21 = 131           \ The OSWRCH number for the #DOFE21 command
+ DOhfx = 132            \ The OSWRCH number for the #DOhfx command
+ SETXC = 133            \ The OSWRCH number for the #SETXC command
+ SETYC = 134            \ The OSWRCH number for the #SETYC command
+ clyns = 135            \ The OSWRCH number for the #clyns command
+ RDPARAMS = 136         \ The OSWRCH number for the #RDPARAMS command
+ DODIALS = 138          \ The OSWRCH number for the #DODIALS command
+ VIAE = 139             \ The OSWRCH number for the #VIAE command
+ DOBULB = 140           \ The OSWRCH number for the #DOBULB command
+ DOCATF = 141           \ The OSWRCH number for the #DOCATF command
+ SETCOL = 142           \ The OSWRCH number for the #SETCOL command
+ SETVDU19 = 143         \ The OSWRCH number for the #SETVDU19 command
+ DOsvn = 144            \ The OSWRCH number for the #DOsvn command
+ printcode = 146        \ The OSWRCH number for the #printcode command
+ prilf = 147            \ The OSWRCH number for the #prilf command
 
-DOmsbar = 242           \ The OSWORD number for the #DOmsbar command
-wscn = 243              \ The OSWORD number for the #wscn command
-onescan = 244           \ The OSWORD number for the #onescan command
-DOdot = 245             \ The OSWORD number for the #DOdot command
-DODKS4 = 246            \ The OSWORD number for the #DODKS4 command
+ DOmsbar = 242          \ The OSWORD number for the #DOmsbar command
+ wscn = 243             \ The OSWORD number for the #wscn command
+ onescan = 244          \ The OSWORD number for the #onescan command
+ DOdot = 245            \ The OSWORD number for the #DOdot command
+ DODKS4 = 246           \ The OSWORD number for the #DODKS4 command
 
-X = 128                 \ The centre x-coordinate of the 256 x 192 space view
-Y = 96                  \ The centre y-coordinate of the 256 x 192 space view
+ X = 128                \ The centre x-coordinate of the 256 x 192 space view
+ Y = 96                 \ The centre y-coordinate of the 256 x 192 space view
 
-f0 = &20                \ Internal key number for red key f0 (Launch, Front)
-f1 = &71                \ Internal key number for red key f1 (Buy Cargo, Rear)
-f2 = &72                \ Internal key number for red key f2 (Sell Cargo, Left)
-f3 = &73                \ Internal key number for red key f3 (Equip Ship, Right)
-f4 = &14                \ Internal key number for red key f4 (Long-range Chart)
-f5 = &74                \ Internal key number for red key f5 (Short-range Chart)
-f6 = &75                \ Internal key number for red key f6 (Data on System)
-f7 = &16                \ Internal key number for red key f7 (Market Price)
-f8 = &76                \ Internal key number for red key f8 (Status Mode)
-f9 = &77                \ Internal key number for red key f9 (Inventory)
+ f0 = &20               \ Internal key number for red key f0 (Launch, Front)
+ f1 = &71               \ Internal key number for red key f1 (Buy Cargo, Rear)
+ f2 = &72               \ Internal key number for red key f2 (Sell Cargo, Left)
+ f3 = &73               \ Internal key number for red key f3 (Equip Ship, Right)
+ f4 = &14               \ Internal key number for red key f4 (Long-range Chart)
+ f5 = &74               \ Internal key number for red key f5 (Short-range Chart)
+ f6 = &75               \ Internal key number for red key f6 (Data on System)
+ f7 = &16               \ Internal key number for red key f7 (Market Price)
+ f8 = &76               \ Internal key number for red key f8 (Status Mode)
+ f9 = &77               \ Internal key number for red key f9 (Inventory)
 
-YELLOW  = %00001111     \ Four mode 1 pixels of colour 1 (yellow)
-RED     = %11110000     \ Four mode 1 pixels of colour 2 (red, magenta or white)
-CYAN    = %11111111     \ Four mode 1 pixels of colour 3 (cyan or white)
-GREEN   = %10101111     \ Four mode 1 pixels of colour 3, 1, 3, 1 (cyan/yellow)
-WHITE   = %11111010     \ Four mode 1 pixels of colour 3, 2, 3, 2 (cyan/red)
-MAGENTA = RED           \ Four mode 1 pixels of colour 2 (red, magenta or white)
-DUST    = WHITE         \ Four mode 1 pixels of colour 3, 2, 3, 2 (cyan/red)
+ YELLOW  = %00001111    \ Four mode 1 pixels of colour 1 (yellow)
+ RED     = %11110000    \ Four mode 1 pixels of colour 2 (red, magenta or white)
+ CYAN    = %11111111    \ Four mode 1 pixels of colour 3 (cyan or white)
+ GREEN   = %10101111    \ Four mode 1 pixels of colour 3, 1, 3, 1 (cyan/yellow)
+ WHITE   = %11111010    \ Four mode 1 pixels of colour 3, 2, 3, 2 (cyan/red)
+ MAGENTA = RED          \ Four mode 1 pixels of colour 2 (red, magenta or white)
+ DUST    = WHITE        \ Four mode 1 pixels of colour 3, 2, 3, 2 (cyan/red)
 
-RED2    = %00000011     \ Two mode 2 pixels of colour 1    (red)
-GREEN2  = %00001100     \ Two mode 2 pixels of colour 2    (green)
-YELLOW2 = %00001111     \ Two mode 2 pixels of colour 3    (yellow)
-BLUE2   = %00110000     \ Two mode 2 pixels of colour 4    (blue)
-MAG2    = %00110011     \ Two mode 2 pixels of colour 5    (magenta)
-CYAN2   = %00111100     \ Two mode 2 pixels of colour 6    (cyan)
-WHITE2  = %00111111     \ Two mode 2 pixels of colour 7    (white)
-STRIPE  = %00100011     \ Two mode 2 pixels of colour 5, 1 (magenta/red)
+ RED2    = %00000011    \ Two mode 2 pixels of colour 1    (red)
+ GREEN2  = %00001100    \ Two mode 2 pixels of colour 2    (green)
+ YELLOW2 = %00001111    \ Two mode 2 pixels of colour 3    (yellow)
+ BLUE2   = %00110000    \ Two mode 2 pixels of colour 4    (blue)
+ MAG2    = %00110011    \ Two mode 2 pixels of colour 5    (magenta)
+ CYAN2   = %00111100    \ Two mode 2 pixels of colour 6    (cyan)
+ WHITE2  = %00111111    \ Two mode 2 pixels of colour 7    (white)
+ STRIPE  = %00100011    \ Two mode 2 pixels of colour 5, 1 (magenta/red)
 
-NRU% = 0                \ The number of planetary systems with extended system
+ NRU% = 0               \ The number of planetary systems with extended system
                         \ description overrides in the RUTOK table. The value of
                         \ this variable is 0 in the original source, but this
                         \ appears to be a bug, as it should really be 26
 
-VE = &57                \ The obfuscation byte used to hide the extended tokens
+ VE = &57               \ The obfuscation byte used to hide the extended tokens
                         \ table from crackers viewing the binary code
 
-LL = 30                 \ The length of lines (in characters) of justified text
+ LL = 30                \ The length of lines (in characters) of justified text
                         \ in the extended tokens system
 
-W2 = 16                 \ The horizontal character spacing in the scroll text
+ W2 = 16                \ The horizontal character spacing in the scroll text
                         \ (i.e. the difference in x-coordinate between the
                         \ left edges of adjacent characters in words)
 
-WY = 12                 \ The vertical spacing between points in the scroll text
+ WY = 12                \ The vertical spacing between points in the scroll text
                         \ grid for each character
 
-W2Y = 2.5*WY            \ The vertical line spacing in the scroll text (i.e. the
+ W2Y = 2.5*WY           \ The vertical line spacing in the scroll text (i.e. the
                         \ difference in y-coordinate between the tops of the
                         \ characters in adjacent lines)
 
-D = 80                  \ The distance from the camera (z-coordinate) of the
+ D = 80                 \ The distance from the camera (z-coordinate) of the
                         \ bottom of the visible part of the Star Wars scroll
                         \ text
 
@@ -253,8 +253,8 @@ INCLUDE "library/common/main/workspace/xx3.asm"
 \
 \ ******************************************************************************
 
-CODE_WORDS% = &0400
-LOAD_WORDS% = &81B0
+ CODE_WORDS% = &0400
+ LOAD_WORDS% = &81B0
 
  ORG CODE_WORDS%
 
@@ -295,12 +295,12 @@ INCLUDE "library/6502sp/main/workspace/lp.asm"
 \
 \ ******************************************************************************
 
-CODE% = &1000
-LOAD% = &1000
+ CODE% = &1000
+ LOAD% = &1000
 
  ORG CODE%
 
-LOAD_A% = LOAD%
+ LOAD_A% = LOAD%
 
 INCLUDE "library/6502sp/main/workspace/parasite_variables.asm"
 INCLUDE "library/enhanced/main/variable/s1_per_cent.asm"
@@ -380,8 +380,8 @@ INCLUDE "library/common/main/variable/lsy2.asm"
 \
 \ ******************************************************************************
 
-CODE_B% = P%
-LOAD_B% = LOAD% + P% - CODE%
+ CODE_B% = P%
+ LOAD_B% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/variable/univ.asm"
 INCLUDE "library/common/main/variable/twos.asm"
@@ -467,8 +467,8 @@ INCLUDE "library/enhanced/main/subroutine/hme2.asm"
 \
 \ ******************************************************************************
 
-CODE_C% = P%
-LOAD_C% = LOAD% +P% - CODE%
+ CODE_C% = P%
+ LOAD_C% = LOAD% +P% - CODE%
 
 INCLUDE "library/enhanced/main/variable/hatb.asm"
 INCLUDE "library/enhanced/main/subroutine/hall.asm"
@@ -571,8 +571,8 @@ INCLUDE "library/enhanced/main/subroutine/pause2.asm"
 \
 \ ******************************************************************************
 
-CODE_D% = P%
-LOAD_D% = LOAD% + P% - CODE%
+ CODE_D% = P%
+ LOAD_D% = LOAD% + P% - CODE%
 
 INCLUDE "library/enhanced/main/subroutine/tnpr1.asm"
 INCLUDE "library/common/main/subroutine/tnpr.asm"
@@ -678,8 +678,8 @@ INCLUDE "library/common/main/variable/prxs.asm"
 \
 \ ******************************************************************************
 
-CODE_E% = P%
-LOAD_E% = LOAD% + P% - CODE%
+ CODE_E% = P%
+ LOAD_E% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/cpl.asm"
 INCLUDE "library/common/main/subroutine/cmn.asm"
@@ -779,8 +779,8 @@ INCLUDE "library/common/main/subroutine/ping.asm"
 \
 \ ******************************************************************************
 
-CODE_F% = P%
-LOAD_F% = LOAD% + P% - CODE%
+ CODE_F% = P%
+ LOAD_F% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/ks3.asm"
 INCLUDE "library/common/main/subroutine/ks1.asm"
@@ -914,8 +914,8 @@ INCLUDE "library/advanced/main/variable/trantable.asm"
 \
 \ ******************************************************************************
 
-CODE_G% = P%
-LOAD_G% = LOAD% + P% - CODE%
+ CODE_G% = P%
+ LOAD_G% = LOAD% + P% - CODE%
 
 IF _MATCH_ORIGINAL_BINARIES
 
@@ -989,8 +989,8 @@ INCLUDE "library/common/main/subroutine/ll145_part_4_of_4.asm"
 \
 \ ******************************************************************************
 
-CODE_H% = P%
-LOAD_H% = LOAD% + P% - CODE%
+ CODE_H% = P%
+ LOAD_H% = LOAD% + P% - CODE%
 
 INCLUDE "library/6502sp/main/subroutine/catlod.asm"
 INCLUDE "library/common/main/subroutine/mveit_part_1_of_9.asm"
@@ -1042,8 +1042,8 @@ INCLUDE "library/6502sp/main/subroutine/wscan.asm"
 \
 \ ******************************************************************************
 
-CODE_I% = P%
-LOAD_I% = LOAD% + P% - CODE%
+ CODE_I% = P%
+ LOAD_I% = LOAD% + P% - CODE%
 
 INCLUDE "library/6502sp/main/variable/himcnt.asm"
 INCLUDE "library/6502sp/main/subroutine/zinf2.asm"
@@ -1089,8 +1089,8 @@ INCLUDE "library/6502sp/main/variable/speech.asm"
 \
 \ ******************************************************************************
 
-CODE_J% = P%
-LOAD_J% = LOAD% + P% - CODE%
+ CODE_J% = P%
+ LOAD_J% = LOAD% + P% - CODE%
 
 INCLUDE "library/enhanced/main/macro/ejmp.asm"
 INCLUDE "library/enhanced/main/macro/echr.asm"
@@ -1130,8 +1130,8 @@ INCLUDE "library/advanced/main/variable/f_per_cent.asm"
 \
 \ ******************************************************************************
 
-CODE_SHIPS% = &D000
-LOAD_SHIPS% = &D000
+ CODE_SHIPS% = &D000
+ LOAD_SHIPS% = &D000
 
  ORG CODE_SHIPS%
 

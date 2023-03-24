@@ -56,10 +56,10 @@
 \
 \ ******************************************************************************
 
-CODE% = &0F40           \ CODE% is set to the location that the main game code
+ CODE% = &0F40          \ CODE% is set to the location that the main game code
                         \ gets moved to after it is loaded
 
-LOAD% = &1128           \ LOAD% points to the start of the actual game code,
+ LOAD% = &1128          \ LOAD% points to the start of the actual game code,
                         \ after the &28 bytes of header code that are inserted
                         \ below
 

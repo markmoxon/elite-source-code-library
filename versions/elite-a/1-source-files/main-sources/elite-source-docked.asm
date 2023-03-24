@@ -61,49 +61,49 @@
 \
 \ ******************************************************************************
 
-NOST = 18               \ The number of stardust particles in normal space (this
+ NOST = 18              \ The number of stardust particles in normal space (this
                         \ goes down to 3 in witchspace)
 
-NOSH = 12               \ The maximum number of ships in our local bubble of
+ NOSH = 12              \ The maximum number of ships in our local bubble of
                         \ universe
 
-NTY = 31                \ The number of different ship types
+ NTY = 31               \ The number of different ship types
 
-SST = 2                 \ Ship blueprint position for the space station
-COPS = 16               \ Ship blueprint position for the cop
-CON = 31                \ Ship blueprint position for the Constrictor
+ SST = 2                \ Ship blueprint position for the space station
+ COPS = 16              \ Ship blueprint position for the cop
+ CON = 31               \ Ship blueprint position for the Constrictor
 
-CYL = 11                \ Ship blueprint position for the title's Cobra Mk III
-KRA = 19                \ Ship blueprint position for the title's Krait
+ CYL = 11               \ Ship blueprint position for the title's Cobra Mk III
+ KRA = 19               \ Ship blueprint position for the title's Krait
 
-NI% = 37                \ The number of bytes in each ship's data block (as
+ NI% = 37               \ The number of bytes in each ship's data block (as
                         \ stored in INWK and K%)
 
-X = 128                 \ The centre x-coordinate of the 256 x 192 space view
-Y = 96                  \ The centre y-coordinate of the 256 x 192 space view
+ X = 128                \ The centre x-coordinate of the 256 x 192 space view
+ Y = 96                 \ The centre y-coordinate of the 256 x 192 space view
 
-f0 = &20                \ Internal key number for red key f0 (Launch, Front)
-f1 = &71                \ Internal key number for red key f1 (Buy Cargo, Rear)
-f2 = &72                \ Internal key number for red key f2 (Sell Cargo, Left)
-f3 = &73                \ Internal key number for red key f3 (Equip Ship, Right)
-f4 = &14                \ Internal key number for red key f4 (Long-range Chart)
-f5 = &74                \ Internal key number for red key f5 (Short-range Chart)
-f6 = &75                \ Internal key number for red key f6 (Data on System)
-f7 = &16                \ Internal key number for red key f7 (Market Price)
-f8 = &76                \ Internal key number for red key f8 (Status Mode)
-f9 = &77                \ Internal key number for red key f9 (Inventory)
+ f0 = &20               \ Internal key number for red key f0 (Launch, Front)
+ f1 = &71               \ Internal key number for red key f1 (Buy Cargo, Rear)
+ f2 = &72               \ Internal key number for red key f2 (Sell Cargo, Left)
+ f3 = &73               \ Internal key number for red key f3 (Equip Ship, Right)
+ f4 = &14               \ Internal key number for red key f4 (Long-range Chart)
+ f5 = &74               \ Internal key number for red key f5 (Short-range Chart)
+ f6 = &75               \ Internal key number for red key f6 (Data on System)
+ f7 = &16               \ Internal key number for red key f7 (Market Price)
+ f8 = &76               \ Internal key number for red key f8 (Status Mode)
+ f9 = &77               \ Internal key number for red key f9 (Inventory)
 
-NRU% = 25               \ The number of planetary systems with extended system
+ NRU% = 25              \ The number of planetary systems with extended system
                         \ description overrides in the RUTOK table
 
-VE = 0                  \ The obfuscation byte used to hide the extended tokens
+ VE = 0                 \ The obfuscation byte used to hide the extended tokens
                         \ table from crackers viewing the binary code, which is
                         \ zero in Elite-A as the token table is not obfuscated
 
-LL = 30                 \ The length of lines (in characters) of justified text
+ LL = 30                \ The length of lines (in characters) of justified text
                         \ in the extended tokens system
 
-save_lock = &0233       \ This flag indicates whether we should be asking for
+ save_lock = &0233      \ This flag indicates whether we should be asking for
                         \ confirmation before saving or loading a commander
                         \ file:
                         \
@@ -118,48 +118,48 @@ save_lock = &0233       \ This flag indicates whether we should be asking for
                         \ It shares a location with the IND2V+1 vector, which we
                         \ do not use, so we can reuse the location
 
-QQ18 = &0400            \ The address of the text token table, as set in
+ QQ18 = &0400           \ The address of the text token table, as set in
                         \ elite-loader.asm
 
-new_name = &074D        \ This points to recursive token 132 in the QQ18 table.
+ new_name = &074D       \ This points to recursive token 132 in the QQ18 table.
                         \ We update the token's text at this address whenever we
                         \ buy a new ship, so that printing token 132 will always
                         \ show the current ship type
 
-SNE = &07C0             \ The address of the sine lookup table, as set in
+ SNE = &07C0            \ The address of the sine lookup table, as set in
                         \ elite-loader.asm
 
-QQ16_FLIGHT = &0880     \ The address of the two-letter text token table in the
+ QQ16_FLIGHT = &0880    \ The address of the two-letter text token table in the
                         \ flight code (this gets populated by the docked code at
                         \ the start of the game)
 
-LS% = &0CFF             \ The start of the descending ship line heap
+ LS% = &0CFF            \ The start of the descending ship line heap
 
-IRQ1 = &114B            \ The address of the IRQ1 routine that implements the
+ IRQ1 = &114B           \ The address of the IRQ1 routine that implements the
                         \ split screen interrupt handler, as set in
                         \ elite-loader.asm
 
-NA% = &1181             \ The address of the data block for the last saved
+ NA% = &1181            \ The address of the data block for the last saved
                         \ commander, as set in elite-loader.asm
 
-CHK2 = &11D3            \ The address of the second checksum byte for the saved
+ CHK2 = &11D3           \ The address of the second checksum byte for the saved
                         \ commander data file, as set in elite-loader.asm
 
-CHK = &11D4             \ The address of the first checksum byte for the saved
+ CHK = &11D4            \ The address of the first checksum byte for the saved
                         \ commander data file, as set in elite-loader.asm
 
-SHIP_MISSILE = &7F00    \ The address of the missile ship blueprint, as set in
+ SHIP_MISSILE = &7F00   \ The address of the missile ship blueprint, as set in
                         \ elite-loader.asm
 
-VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
+ VIA = &FE00            \ Memory-mapped space for accessing internal hardware,
                         \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
                         \ known as SHEILA)
 
-OSFILE = &FFDD          \ The address for the OSFILE routine
-OSWRCH = &FFEE          \ The address for the OSWRCH routine
-OSWORD = &FFF1          \ The address for the OSWORD routine
-OSBYTE = &FFF4          \ The address for the OSBYTE routine
-OSCLI = &FFF7           \ The address for the OSCLI routine
+ OSFILE = &FFDD         \ The address for the OSFILE routine
+ OSWRCH = &FFEE         \ The address for the OSWRCH routine
+ OSWORD = &FFF1         \ The address for the OSWORD routine
+ OSBYTE = &FFF4         \ The address for the OSBYTE routine
+ OSCLI = &FFF7          \ The address for the OSCLI routine
 
 INCLUDE "library/common/main/workspace/zp.asm"
 INCLUDE "library/common/main/workspace/xx3.asm"
@@ -173,12 +173,12 @@ INCLUDE "library/common/main/workspace/wp.asm"
 \
 \ ******************************************************************************
 
-CODE% = &11E3
-LOAD% = &11E3
+ CODE% = &11E3
+ LOAD% = &11E3
 
  ORG CODE%
 
-LOAD_A% = LOAD%
+ LOAD_A% = LOAD%
 
 INCLUDE "library/disc/docked/workspace/s_per_cent.asm"
 INCLUDE "library/disc/docked/subroutine/inbay.asm"
@@ -242,8 +242,8 @@ INCLUDE "library/common/main/variable/univ.asm"
 \
 \ ******************************************************************************
 
-CODE_B% = P%
-LOAD_B% = LOAD% + P% - CODE%
+ CODE_B% = P%
+ LOAD_B% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/variable/twos.asm"
 INCLUDE "library/common/main/variable/twos2.asm"
@@ -321,8 +321,8 @@ INCLUDE "library/enhanced/main/subroutine/hme2.asm"
 \
 \ ******************************************************************************
 
-CODE_C% = P%
-LOAD_C% = LOAD% +P% - CODE%
+ CODE_C% = P%
+ LOAD_C% = LOAD% +P% - CODE%
 
 INCLUDE "library/enhanced/main/variable/hatb.asm"
 INCLUDE "library/enhanced/main/subroutine/hall.asm"
@@ -410,8 +410,8 @@ INCLUDE "library/common/main/subroutine/wscan.asm"
 \
 \ ******************************************************************************
 
-CODE_D% = P%
-LOAD_D% = LOAD% + P% - CODE%
+ CODE_D% = P%
+ LOAD_D% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/tnpr.asm"
 INCLUDE "library/common/main/subroutine/tt20.asm"
@@ -502,8 +502,8 @@ INCLUDE "library/common/main/subroutine/hm.asm"
 \
 \ ******************************************************************************
 
-CODE_E% = P%
-LOAD_E% = LOAD% + P% - CODE%
+ CODE_E% = P%
+ LOAD_E% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/cpl.asm"
 INCLUDE "library/common/main/subroutine/cmn.asm"
@@ -576,8 +576,8 @@ INCLUDE "library/common/main/subroutine/ping.asm"
 \
 \ ******************************************************************************
 
-CODE_F% = P%
-LOAD_F% = LOAD% + P% - CODE%
+ CODE_F% = P%
+ LOAD_F% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/variable/sfx.asm"
 INCLUDE "library/common/main/subroutine/reset.asm"
@@ -679,8 +679,8 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
 \
 \ ******************************************************************************
 
-CODE_G% = P%
-LOAD_G% = LOAD% + P% - CODE%
+ CODE_G% = P%
+ LOAD_G% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/shppt.asm"
 INCLUDE "library/common/main/subroutine/ll5.asm"
@@ -745,8 +745,8 @@ INCLUDE "library/elite-a/docked/variable/new_details.asm"
 \
 \ ******************************************************************************
 
-CODE_H% = P%
-LOAD_H% = LOAD% + P% - CODE%
+ CODE_H% = P%
+ LOAD_H% = LOAD% + P% - CODE%
 
 INCLUDE "library/enhanced/main/macro/ejmp.asm"
 INCLUDE "library/enhanced/main/macro/echr.asm"
@@ -783,8 +783,8 @@ INCLUDE "library/disc/docked/variable/checksum.asm"
 \
 \ ******************************************************************************
 
-CODE_SHIPS% = P%
-LOAD_SHIPS% = LOAD% + P% - CODE%
+ CODE_SHIPS% = P%
+ LOAD_SHIPS% = LOAD% + P% - CODE%
 
 INCLUDE "library/disc/docked/variable/xx21.asm"
 INCLUDE "library/disc/docked/variable/e_per_cent.asm"

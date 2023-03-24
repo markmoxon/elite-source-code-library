@@ -60,7 +60,7 @@
 \
 \ ******************************************************************************
 
-VE = &57                \ The obfuscation byte used to hide the extended tokens
+ VE = &57               \ The obfuscation byte used to hide the extended tokens
                         \ table from crackers viewing the binary code
 
 \ ******************************************************************************
@@ -69,8 +69,8 @@ VE = &57                \ The obfuscation byte used to hide the extended tokens
 \
 \ ******************************************************************************
 
-CODE% = &7000
-LOAD% = &1300
+ CODE% = &7000
+ LOAD% = &1300
 
  ORG CODE%
 

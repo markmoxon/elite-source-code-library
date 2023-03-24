@@ -56,13 +56,13 @@
 \
 \ ******************************************************************************
 
-BYTEV = &020A           \ The BYTEV vector that we check as part of the copy
+ BYTEV = &020A          \ The BYTEV vector that we check as part of the copy
                         \ protection
 
-OSWRCH = &FFEE          \ The address for the OSWRCH routine
-OSBYTE = &FFF4          \ The address for the OSBYTE routine
-OSWORD = &FFF1          \ The address for the OSWORD routine
-OSCLI = &FFF7           \ The address for the OSCLI routine
+ OSWRCH = &FFEE         \ The address for the OSWRCH routine
+ OSBYTE = &FFF4         \ The address for the OSBYTE routine
+ OSWORD = &FFF1         \ The address for the OSWORD routine
+ OSCLI = &FFF7          \ The address for the OSCLI routine
 
 INCLUDE "library/disc/loader1/workspace/zp.asm"
 
@@ -72,8 +72,8 @@ INCLUDE "library/disc/loader1/workspace/zp.asm"
 \
 \ ******************************************************************************
 
-CODE% = &2F00
-LOAD% = &2F00
+ CODE% = &2F00
+ LOAD% = &2F00
 
  ORG CODE%
 

@@ -63,52 +63,52 @@
 \
 \ ******************************************************************************
 
-Q% = _REMOVE_CHECKSUMS  \ Set Q% to TRUE to max out the default commander, FALSE
+ Q% = _REMOVE_CHECKSUMS \ Set Q% to TRUE to max out the default commander, FALSE
                         \ for the standard default commander (this is set to
                         \ TRUE if checksums are disabled, just for convenience)
 
-NOST = 10               \ The number of stardust particles in normal space
+ NOST = 10              \ The number of stardust particles in normal space
 
-NOSH = 12               \ The maximum number of ships in our local bubble of
+ NOSH = 12              \ The maximum number of ships in our local bubble of
                         \ universe
 
-NTY = 11                \ The number of different ship types
+ NTY = 11               \ The number of different ship types
 
-COPS = 2                \ Ship type for a Viper
-CYL = 6                 \ Ship type for a Cobra Mk III (trader)
-SST = 7                 \ Ship type for the space station
-MSL = 8                 \ Ship type for a missile
-AST = 9                 \ Ship type for an asteroid
-OIL = 10                \ Ship type for a cargo canister
-ESC = 11                \ Ship type for an escape pod
+ COPS = 2               \ Ship type for a Viper
+ CYL = 6                \ Ship type for a Cobra Mk III (trader)
+ SST = 7                \ Ship type for the space station
+ MSL = 8                \ Ship type for a missile
+ AST = 9                \ Ship type for an asteroid
+ OIL = 10               \ Ship type for a cargo canister
+ ESC = 11               \ Ship type for an escape pod
 
-POW = 15                \ Pulse laser power
+ POW = 15               \ Pulse laser power
 
-NI% = 36                \ The number of bytes in each ship's data block (as
+ NI% = 36               \ The number of bytes in each ship's data block (as
                         \ stored in INWK and K%)
 
-X = 128                 \ The centre x-coordinate of the 256 x 192 space view
-Y = 96                  \ The centre y-coordinate of the 256 x 192 space view
+ X = 128                \ The centre x-coordinate of the 256 x 192 space view
+ Y = 96                 \ The centre y-coordinate of the 256 x 192 space view
 
-func1 = &B0             \ Internal key number for FUNC-1 (Launch, Front)
-func2 = &B1             \ Internal key number for FUNC-2 (Buy Cargo, Rear)
-func3 = &91             \ Internal key number for FUNC-3 (Sell Cargo, Left)
-func4 = &92             \ Internal key number for FUNC-4 (Equip Ship, Right)
-func5 = &93             \ Internal key number for FUNC-5 (Long-range Chart)
-func6 = &B4             \ Internal key number for FUNC-6 (Short-range Chart)
-func7 = &A4             \ Internal key number for FUNC-7 (Data on System)
-func8 = &95             \ Internal key number for FUNC-8 (Market Price)
-func9 = &A6             \ Internal key number for FUNC-9 (Status Mode)
-func0 = &A7             \ Internal key number for FUNC-0 (Inventory)
+ func1 = &B0            \ Internal key number for FUNC-1 (Launch, Front)
+ func2 = &B1            \ Internal key number for FUNC-2 (Buy Cargo, Rear)
+ func3 = &91            \ Internal key number for FUNC-3 (Sell Cargo, Left)
+ func4 = &92            \ Internal key number for FUNC-4 (Equip Ship, Right)
+ func5 = &93            \ Internal key number for FUNC-5 (Long-range Chart)
+ func6 = &B4            \ Internal key number for FUNC-6 (Short-range Chart)
+ func7 = &A4            \ Internal key number for FUNC-7 (Data on System)
+ func8 = &95            \ Internal key number for FUNC-8 (Market Price)
+ func9 = &A6            \ Internal key number for FUNC-9 (Status Mode)
+ func0 = &A7            \ Internal key number for FUNC-0 (Inventory)
 
-VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
+ VIA = &FE00            \ Memory-mapped space for accessing internal hardware,
                         \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
                         \ known as SHEILA)
 
-OSFILE = &FFDD          \ The address for the OSFILE routine
-OSRDCH = &FFE0          \ The address for the OSRDCH routine
-OSWORD = &FFF1          \ The address for the OSWORD routine
-OSBYTE = &FFF4          \ The address for the OSBYTE routine
+ OSFILE = &FFDD         \ The address for the OSFILE routine
+ OSRDCH = &FFE0         \ The address for the OSRDCH routine
+ OSWORD = &FFF1         \ The address for the OSWORD routine
+ OSBYTE = &FFF4         \ The address for the OSBYTE routine
 
 INCLUDE "library/common/main/workspace/zp.asm"
 INCLUDE "library/common/main/workspace/xx3.asm"
@@ -125,8 +125,8 @@ INCLUDE "library/original/main/workspace/t_per_cent.asm"
 \
 \ ******************************************************************************
 
-CODE_WORDS% = &0400
-LOAD_WORDS% = &4400
+ CODE_WORDS% = &0400
+ LOAD_WORDS% = &4400
 
  ORG CODE_WORDS%
 
@@ -163,12 +163,12 @@ INCLUDE "library/common/main/workspace/wp.asm"
 \
 \ ******************************************************************************
 
-CODE% = &0D00
-LOAD% = &2000
+ CODE% = &0D00
+ LOAD% = &2000
 
  ORG CODE%
 
-LOAD_A% = LOAD%
+ LOAD_A% = LOAD%
 
 INCLUDE "library/electron/main/workspace/s_per_cent_part_1_of_2.asm"
 INCLUDE "library/electron/main/subroutine/key1.asm"
@@ -233,8 +233,8 @@ INCLUDE "library/common/main/subroutine/mv40.asm"
 \
 \ ******************************************************************************
 
-CODE_B% = P%
-LOAD_B% = LOAD% + P% - CODE%
+ CODE_B% = P%
+ LOAD_B% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/variable/na_per_cent-default_per_cent.asm"
 INCLUDE "library/common/main/variable/chk2.asm"
@@ -305,8 +305,8 @@ INCLUDE "library/common/main/subroutine/escape.asm"
 \
 \ ******************************************************************************
 
-CODE_C% = P%
-LOAD_C% = LOAD% +P% - CODE%
+ CODE_C% = P%
+ LOAD_C% = LOAD% +P% - CODE%
 
 INCLUDE "library/common/main/subroutine/tactics_part_1_of_7.asm"
 INCLUDE "library/common/main/subroutine/tactics_part_2_of_7.asm"
@@ -401,8 +401,8 @@ INCLUDE "library/electron/main/subroutine/nextr.asm"
 \
 \ ******************************************************************************
 
-CODE_D% = P%
-LOAD_D% = LOAD% + P% - CODE%
+ CODE_D% = P%
+ LOAD_D% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/tnpr.asm"
 INCLUDE "library/common/main/subroutine/tt20.asm"
@@ -492,8 +492,8 @@ INCLUDE "library/common/main/subroutine/qv.asm"
 \
 \ ******************************************************************************
 
-CODE_E% = P%
-LOAD_E% = LOAD% + P% - CODE%
+ CODE_E% = P%
+ LOAD_E% = LOAD% + P% - CODE%
 
 INCLUDE "library/original/main/variable/authors_names.asm"
 INCLUDE "library/common/main/subroutine/cpl.asm"
@@ -584,8 +584,8 @@ INCLUDE "library/common/main/subroutine/ping.asm"
 \
 \ ******************************************************************************
 
-CODE_F% = P%
-LOAD_F% = LOAD% + P% - CODE%
+ CODE_F% = P%
+ LOAD_F% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/ks3.asm"
 INCLUDE "library/common/main/subroutine/ks1.asm"
@@ -690,8 +690,8 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
 \
 \ ******************************************************************************
 
-CODE_G% = P%
-LOAD_G% = LOAD% + P% - CODE%
+ CODE_G% = P%
+ LOAD_G% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/shppt.asm"
 INCLUDE "library/common/main/subroutine/ll5.asm"
@@ -747,8 +747,8 @@ INCLUDE "library/original/main/variable/checksum0.asm"
 \
 \ ******************************************************************************
 
-CODE_SHIPS% = P%
-LOAD_SHIPS% = LOAD% + P% - CODE%
+ CODE_SHIPS% = P%
+ LOAD_SHIPS% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/variable/xx21.asm"
 INCLUDE "library/common/main/macro/vertex.asm"

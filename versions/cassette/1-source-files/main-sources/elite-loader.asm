@@ -53,23 +53,23 @@
 \
 \ ******************************************************************************
 
-DISC = TRUE             \ Set to TRUE to load the code above DFS and relocate
+ DISC = TRUE            \ Set to TRUE to load the code above DFS and relocate
                         \ down, so we can load the cassette version from disc
 
-PROT = FALSE            \ Set to TRUE to enable the tape protection code
+ PROT = FALSE           \ Set to TRUE to enable the tape protection code
 
-LEN1 = 15               \ Size of the BEGIN% routine that gets pushed onto the
+ LEN1 = 15              \ Size of the BEGIN% routine that gets pushed onto the
                         \ stack and executed there
 
-LEN2 = 18               \ Size of the MVDL routine that gets pushed onto the
+ LEN2 = 18              \ Size of the MVDL routine that gets pushed onto the
                         \ stack and executed there
 
-LEN = LEN1 + LEN2       \ Total number of bytes that get pushed on the stack for
+ LEN = LEN1 + LEN2      \ Total number of bytes that get pushed on the stack for
                         \ execution there (33)
 
-VSCAN = 57-1            \ Defines the split position in the split-screen mode
+ VSCAN = 57-1           \ Defines the split position in the split-screen mode
 
-LE% = &0B00             \ LE% is the address to which the code from UU% onwards
+ LE% = &0B00            \ LE% is the address to which the code from UU% onwards
                         \ is copied in part 3. It contains:
                         \
                         \   * ENTRY2, the entry point for the second block of
@@ -83,20 +83,20 @@ LE% = &0B00             \ LE% is the address to which the code from UU% onwards
                         \
                         \   * The variables used by the above
 
-NETV = &0224            \ The NETV vector that we intercept as part of the copy
+ NETV = &0224           \ The NETV vector that we intercept as part of the copy
                         \ protection
 
-IRQ1V = &0204           \ The IRQ1V vector that we intercept to implement the
+ IRQ1V = &0204          \ The IRQ1V vector that we intercept to implement the
                         \ split-screen mode
 
-OSPRNT = &0234          \ The address for the OSPRNT vector
+ OSPRNT = &0234         \ The address for the OSPRNT vector
 
-C% = &0F40              \ C% is set to the location that the main game code gets
+ C% = &0F40             \ C% is set to the location that the main game code gets
                         \ moved to after it is loaded
 
-S% = C%                 \ S% points to the entry point for the main game code
+ S% = C%                \ S% points to the entry point for the main game code
 
-L% = &1128              \ L% points to the start of the actual game code from
+ L% = &1128             \ L% points to the start of the actual game code from
                         \ elite-source.asm, after the &28 bytes of header code
                         \ that are inserted by elite-bcfs.asm
 
@@ -110,26 +110,26 @@ ELIF _TEXT_SOURCES
 
 ENDIF
 
-LC% = &6000 - C%        \ LC% is set to the maximum size of the main game code
+ LC% = &6000 - C%       \ LC% is set to the maximum size of the main game code
                         \ (as the code starts at C% and screen memory starts
                         \ at &6000)
 
-N% = 67                 \ N% is set to the number of bytes in the VDU table, so
+ N% = 67                \ N% is set to the number of bytes in the VDU table, so
                         \ we can loop through them in part 2 below
 
-SVN = &7FFD             \ SVN is where we store the "saving in progress" flag,
+ SVN = &7FFD            \ SVN is where we store the "saving in progress" flag,
                         \ and it matches the location in elite-source.asm
 
-VEC = &7FFE             \ VEC is where we store the original value of the IRQ1
+ VEC = &7FFE            \ VEC is where we store the original value of the IRQ1
                         \ vector, and it matches the value in elite-source.asm
 
-VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
+ VIA = &FE00            \ Memory-mapped space for accessing internal hardware,
                         \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
                         \ known as SHEILA)
 
-OSWRCH = &FFEE          \ The address for the OSWRCH routine
-OSBYTE = &FFF4          \ The address for the OSBYTE routine
-OSWORD = &FFF1          \ The address for the OSWORD routine
+ OSWRCH = &FFEE         \ The address for the OSWRCH routine
+ OSBYTE = &FFF4         \ The address for the OSBYTE routine
+ OSWORD = &FFF1         \ The address for the OSWORD routine
 
 INCLUDE "library/original/loader/workspace/zp.asm"
 
@@ -155,7 +155,7 @@ ELSE
 
 ENDIF
 
-LOAD% = &1100           \ LOAD% is the load address of the main game code file
+ LOAD% = &1100          \ LOAD% is the load address of the main game code file
                         \ ("ELTcode" for loading from disc, "ELITEcode" for
                         \ loading from tape)
 

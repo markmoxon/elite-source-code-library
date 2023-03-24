@@ -56,109 +56,109 @@
 \
 \ ******************************************************************************
 
-NOST = 18               \ The number of stardust particles in normal space (this
+ NOST = 18              \ The number of stardust particles in normal space (this
                         \ goes down to 3 in witchspace)
 
-NOSH = 12               \ The maximum number of ships in our local bubble of
+ NOSH = 12              \ The maximum number of ships in our local bubble of
                         \ universe
 
-NTY = 31                \ The number of different ship types
+ NTY = 31               \ The number of different ship types
 
-MSL = 1                 \ Ship type for a missile
-SST = 2                 \ Ship type for a Coriolis space station
-ESC = 3                 \ Ship type for an escape pod
-PLT = 4                 \ Ship type for an alloy plate
-OIL = 5                 \ Ship type for a cargo canister
-AST = 7                 \ Ship type for an asteroid
-SPL = 8                 \ Ship type for a splinter
-SHU = 9                 \ Ship type for a Shuttle
-CYL = 11                \ Ship type for a Cobra Mk III
-ANA = 14                \ Ship type for an Anaconda
-COPS = 16               \ Ship type for a Viper
-SH3 = 17                \ Ship type for a Sidewinder
-KRA = 19                \ Ship type for a Krait
-ADA = 20                \ Ship type for a Adder
-WRM = 23                \ Ship type for a Worm
-CYL2 = 24               \ Ship type for a Cobra Mk III (pirate)
-ASP = 25                \ Ship type for an Asp Mk II
-THG = 29                \ Ship type for a Thargoid
-TGL = 30                \ Ship type for a Thargon
-CON = 31                \ Ship type for a Constrictor
+ MSL = 1                \ Ship type for a missile
+ SST = 2                \ Ship type for a Coriolis space station
+ ESC = 3                \ Ship type for an escape pod
+ PLT = 4                \ Ship type for an alloy plate
+ OIL = 5                \ Ship type for a cargo canister
+ AST = 7                \ Ship type for an asteroid
+ SPL = 8                \ Ship type for a splinter
+ SHU = 9                \ Ship type for a Shuttle
+ CYL = 11               \ Ship type for a Cobra Mk III
+ ANA = 14               \ Ship type for an Anaconda
+ COPS = 16              \ Ship type for a Viper
+ SH3 = 17               \ Ship type for a Sidewinder
+ KRA = 19               \ Ship type for a Krait
+ ADA = 20               \ Ship type for a Adder
+ WRM = 23               \ Ship type for a Worm
+ CYL2 = 24              \ Ship type for a Cobra Mk III (pirate)
+ ASP = 25               \ Ship type for an Asp Mk II
+ THG = 29               \ Ship type for a Thargoid
+ TGL = 30               \ Ship type for a Thargon
+ CON = 31               \ Ship type for a Constrictor
 
-JL = ESC                \ Junk is defined as starting from the escape pod
+ JL = ESC               \ Junk is defined as starting from the escape pod
 
-JH = SHU+2              \ Junk is defined as ending before the Cobra Mk III
+ JH = SHU+2             \ Junk is defined as ending before the Cobra Mk III
                         \
                         \ So junk is defined as the following: escape pod,
                         \ alloy plate, cargo canister, asteroid, splinter,
                         \ Shuttle or Transporter
 
-PACK = SH3              \ The first of the eight pack-hunter ships, which tend
+ PACK = SH3             \ The first of the eight pack-hunter ships, which tend
                         \ to spawn in groups. With the default value of PACK the
                         \ pack-hunters are the Sidewinder, Mamba, Krait, Adder,
                         \ Gecko, Cobra Mk I, Worm and Cobra Mk III (pirate)
 
-POW = 15                \ Pulse laser power
+ POW = 15               \ Pulse laser power
 
-Mlas = 50               \ Mining laser power
+ Mlas = 50              \ Mining laser power
 
-Armlas = INT(128.5+1.5*POW) \ Military laser power
+ Armlas = INT(128.5+1.5*POW)  \ Military laser power
 
-NI% = 37                \ The number of bytes in each ship's data block (as
+ NI% = 37               \ The number of bytes in each ship's data block (as
                         \ stored in INWK and K%)
 
-X = 128                 \ The centre x-coordinate of the 256 x 192 space view
-Y = 96                  \ The centre y-coordinate of the 256 x 192 space view
+ X = 128                \ The centre x-coordinate of the 256 x 192 space view
+ Y = 96                 \ The centre y-coordinate of the 256 x 192 space view
 
-f0 = &20                \ Internal key number for red key f0 (Launch, Front)
-f1 = &71                \ Internal key number for red key f1 (Buy Cargo, Rear)
-f2 = &72                \ Internal key number for red key f2 (Sell Cargo, Left)
-f3 = &73                \ Internal key number for red key f3 (Equip Ship, Right)
-f4 = &14                \ Internal key number for red key f4 (Long-range Chart)
-f5 = &74                \ Internal key number for red key f5 (Short-range Chart)
-f6 = &75                \ Internal key number for red key f6 (Data on System)
-f7 = &16                \ Internal key number for red key f7 (Market Price)
-f8 = &76                \ Internal key number for red key f8 (Status Mode)
-f9 = &77                \ Internal key number for red key f9 (Inventory)
+ f0 = &20               \ Internal key number for red key f0 (Launch, Front)
+ f1 = &71               \ Internal key number for red key f1 (Buy Cargo, Rear)
+ f2 = &72               \ Internal key number for red key f2 (Sell Cargo, Left)
+ f3 = &73               \ Internal key number for red key f3 (Equip Ship, Right)
+ f4 = &14               \ Internal key number for red key f4 (Long-range Chart)
+ f5 = &74               \ Internal key number for red key f5 (Short-range Chart)
+ f6 = &75               \ Internal key number for red key f6 (Data on System)
+ f7 = &16               \ Internal key number for red key f7 (Market Price)
+ f8 = &76               \ Internal key number for red key f8 (Status Mode)
+ f9 = &77               \ Internal key number for red key f9 (Inventory)
 
-QQ18 = &0400            \ The address of the text token table, as set in
+ QQ18 = &0400           \ The address of the text token table, as set in
                         \ elite-loader3.asm
 
-SNE = &07C0             \ The address of the sine lookup table, as set in
+ SNE = &07C0            \ The address of the sine lookup table, as set in
                         \ elite-loader3.asm
 
-ACT = &07E0             \ The address of the arctan lookup table, as set in
+ ACT = &07E0            \ The address of the arctan lookup table, as set in
                         \ elite-loader3.asm
 
-QQ16 = &0880            \ The address of the two-letter text token table in the
+ QQ16 = &0880           \ The address of the two-letter text token table in the
                         \ flight code (this gets populated by the docked code at
                         \ the start of the game)
 
-LS% = &0CFF             \ The start of the descending ship line heap
+ LS% = &0CFF            \ The start of the descending ship line heap
 
-CATD = &0D7A            \ The address of the CATD routine that is put in place
+ CATD = &0D7A           \ The address of the CATD routine that is put in place
                         \ by the third loader, as set in elite-loader3.asm
 
-IRQ1 = &114B            \ The address of the IRQ1 routine that implements the
+ IRQ1 = &114B           \ The address of the IRQ1 routine that implements the
                         \ split screen interrupt handler, as set in
                         \ elite-loader3.asm
 
-BRBR1 = &11D5           \ The address of the main break handler, which BRKV
+ BRBR1 = &11D5          \ The address of the main break handler, which BRKV
                         \ points to as set in elite-loader3.asm
 
-XX21 = &5600            \ The address of the ship blueprints lookup table, where
+ XX21 = &5600           \ The address of the ship blueprints lookup table, where
                         \ the chosen ship blueprints file is loaded
 
-E% = &563E              \ The address of the default NEWB ship bytes within the
+ E% = &563E             \ The address of the default NEWB ship bytes within the
                         \ loaded ship blueprints file
 
-VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
+ VIA = &FE00            \ Memory-mapped space for accessing internal hardware,
                         \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
                         \ known as SHEILA)
 
-OSBYTE = &FFF4          \ The address for the OSBYTE routine
-OSWORD = &FFF1          \ The address for the OSWORD routine
-OSCLI = &FFF7           \ The address for the OSCLI routine
+ OSBYTE = &FFF4         \ The address for the OSBYTE routine
+ OSWORD = &FFF1         \ The address for the OSWORD routine
+ OSCLI = &FFF7          \ The address for the OSCLI routine
 
 INCLUDE "library/common/main/workspace/zp.asm"
 INCLUDE "library/common/main/workspace/xx3.asm"
@@ -172,12 +172,12 @@ INCLUDE "library/common/main/workspace/wp.asm"
 \
 \ ******************************************************************************
 
-CODE% = &11E3
-LOAD% = &11E3
+ CODE% = &11E3
+ LOAD% = &11E3
 
  ORG CODE%
 
-LOAD_A% = LOAD%
+ LOAD_A% = LOAD%
 
 INCLUDE "library/disc/flight/workspace/s_per_cent.asm"
 INCLUDE "library/disc/flight/subroutine/inbay.asm"
@@ -225,8 +225,8 @@ INCLUDE "library/enhanced/main/subroutine/spin.asm"
 \
 \ ******************************************************************************
 
-CODE_B% = P%
-LOAD_B% = LOAD% + P% - CODE%
+ CODE_B% = P%
+ LOAD_B% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/variable/univ.asm"
 INCLUDE "library/common/main/variable/twos.asm"
@@ -301,8 +301,8 @@ INCLUDE "library/common/main/subroutine/escape.asm"
 \
 \ ******************************************************************************
 
-CODE_C% = P%
-LOAD_C% = LOAD% +P% - CODE%
+ CODE_C% = P%
+ LOAD_C% = LOAD% +P% - CODE%
 
 INCLUDE "library/common/main/subroutine/tactics_part_1_of_7.asm"
 INCLUDE "library/common/main/subroutine/tactics_part_2_of_7.asm"
@@ -388,8 +388,8 @@ INCLUDE "library/disc/main/variable/unused_block.asm"
 \
 \ ******************************************************************************
 
-CODE_D% = P%
-LOAD_D% = LOAD% + P% - CODE%
+ CODE_D% = P%
+ LOAD_D% = LOAD% + P% - CODE%
 
 INCLUDE "library/enhanced/main/subroutine/tnpr1.asm"
 INCLUDE "library/common/main/subroutine/tnpr.asm"
@@ -470,8 +470,8 @@ INCLUDE "library/common/main/subroutine/hm.asm"
 \
 \ ******************************************************************************
 
-CODE_E% = P%
-LOAD_E% = LOAD% + P% - CODE%
+ CODE_E% = P%
+ LOAD_E% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/cpl.asm"
 INCLUDE "library/common/main/subroutine/cmn.asm"
@@ -580,8 +580,8 @@ INCLUDE "library/common/main/subroutine/killshp.asm"
 \
 \ ******************************************************************************
 
-CODE_F% = P%
-LOAD_F% = LOAD% + P% - CODE%
+ CODE_F% = P%
+ LOAD_F% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/variable/sfx.asm"
 INCLUDE "library/enhanced/main/subroutine/there.asm"
@@ -669,8 +669,8 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
 \
 \ ******************************************************************************
 
-CODE_G% = P%
-LOAD_G% = LOAD% + P% - CODE%
+ CODE_G% = P%
+ LOAD_G% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/shppt.asm"
 INCLUDE "library/common/main/subroutine/ll5.asm"
@@ -722,8 +722,8 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
 \
 \ ******************************************************************************
 
-CODE_H% = P%
-LOAD_H% = LOAD% + P% - CODE%
+ CODE_H% = P%
+ LOAD_H% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/mveit_part_1_of_9.asm"
 INCLUDE "library/common/main/subroutine/mveit_part_2_of_9.asm"

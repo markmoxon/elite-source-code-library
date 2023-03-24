@@ -61,65 +61,65 @@
 \
 \ ******************************************************************************
 
-NOST = 18               \ The number of stardust particles in normal space (this
+ NOST = 18              \ The number of stardust particles in normal space (this
                         \ goes down to 3 in witchspace)
 
-NOSH = 12               \ The maximum number of ships in our local bubble of
+ NOSH = 12              \ The maximum number of ships in our local bubble of
                         \ universe
 
-NTY = 31                \ The number of different ship types
+ NTY = 31               \ The number of different ship types
 
-SST = 2                 \ Ship blueprint position for the space station
+ SST = 2                \ Ship blueprint position for the space station
 
-NI% = 37                \ The number of bytes in each ship's data block (as
+ NI% = 37               \ The number of bytes in each ship's data block (as
                         \ stored in INWK and K%)
 
-X = 128                 \ The centre x-coordinate of the 256 x 192 space view
-Y = 96                  \ The centre y-coordinate of the 256 x 192 space view
+ X = 128                \ The centre x-coordinate of the 256 x 192 space view
+ Y = 96                 \ The centre y-coordinate of the 256 x 192 space view
 
-f0 = &20                \ Internal key number for red key f0 (Launch, Front)
-f1 = &71                \ Internal key number for red key f1 (Buy Cargo, Rear)
-f2 = &72                \ Internal key number for red key f2 (Sell Cargo, Left)
-f3 = &73                \ Internal key number for red key f3 (Equip Ship, Right)
-f4 = &14                \ Internal key number for red key f4 (Long-range Chart)
-f5 = &74                \ Internal key number for red key f5 (Short-range Chart)
-f6 = &75                \ Internal key number for red key f6 (Data on System)
-f7 = &16                \ Internal key number for red key f7 (Market Price)
-f8 = &76                \ Internal key number for red key f8 (Status Mode)
-f9 = &77                \ Internal key number for red key f9 (Inventory)
+ f0 = &20               \ Internal key number for red key f0 (Launch, Front)
+ f1 = &71               \ Internal key number for red key f1 (Buy Cargo, Rear)
+ f2 = &72               \ Internal key number for red key f2 (Sell Cargo, Left)
+ f3 = &73               \ Internal key number for red key f3 (Equip Ship, Right)
+ f4 = &14               \ Internal key number for red key f4 (Long-range Chart)
+ f5 = &74               \ Internal key number for red key f5 (Short-range Chart)
+ f6 = &75               \ Internal key number for red key f6 (Data on System)
+ f7 = &16               \ Internal key number for red key f7 (Market Price)
+ f8 = &76               \ Internal key number for red key f8 (Status Mode)
+ f9 = &77               \ Internal key number for red key f9 (Inventory)
 
-VE = 0                  \ The obfuscation byte used to hide the extended tokens
+ VE = 0                 \ The obfuscation byte used to hide the extended tokens
                         \ table from crackers viewing the binary code, which is
                         \ zero in Elite-A as the token table is not obfuscated
 
-LL = 30                 \ The length of lines (in characters) of justified text
+ LL = 30                \ The length of lines (in characters) of justified text
                         \ in the extended tokens system
 
-QQ18 = &0400            \ The address of the text token table, as set in
+ QQ18 = &0400           \ The address of the text token table, as set in
                         \ elite-loader.asm
 
-SNE = &07C0             \ The address of the sine lookup table, as set in
+ SNE = &07C0            \ The address of the sine lookup table, as set in
                         \ elite-loader.asm
 
-LS% = &0CFF             \ The start of the descending ship line heap
+ LS% = &0CFF            \ The start of the descending ship line heap
 
-IRQ1 = &114B            \ The address of the IRQ1 routine that implements the
+ IRQ1 = &114B           \ The address of the IRQ1 routine that implements the
                         \ split screen interrupt handler, as set in
                         \ elite-loader.asm
 
-NA% = &1181             \ The address of the data block for the last saved
+ NA% = &1181            \ The address of the data block for the last saved
                         \ commander, as set in elite-loader.asm
 
-XX21 = &5600            \ The address of the ship blueprints lookup table, where
+ XX21 = &5600           \ The address of the ship blueprints lookup table, where
                         \ the chosen ship blueprints file is loaded
 
-VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
+ VIA = &FE00            \ Memory-mapped space for accessing internal hardware,
                         \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
                         \ known as SHEILA)
 
-OSWORD = &FFF1          \ The address for the OSWORD routine
-OSBYTE = &FFF4          \ The address for the OSBYTE routine
-OSCLI = &FFF7           \ The address for the OSCLI routine
+ OSWORD = &FFF1         \ The address for the OSWORD routine
+ OSBYTE = &FFF4         \ The address for the OSBYTE routine
+ OSCLI = &FFF7          \ The address for the OSCLI routine
 
 INCLUDE "library/common/main/workspace/zp.asm"
 INCLUDE "library/common/main/workspace/xx3.asm"
@@ -133,12 +133,12 @@ INCLUDE "library/common/main/workspace/wp.asm"
 \
 \ ******************************************************************************
 
-CODE% = &11E3
-LOAD% = &11E3
+ CODE% = &11E3
+ LOAD% = &11E3
 
  ORG CODE%
 
-LOAD_A% = LOAD%
+ LOAD_A% = LOAD%
 
 INCLUDE "library/disc/docked/workspace/s_per_cent.asm"
 INCLUDE "library/disc/flight/subroutine/inbay.asm"
@@ -200,8 +200,8 @@ INCLUDE "library/common/main/variable/univ.asm"
 \
 \ ******************************************************************************
 
-CODE_B% = P%
-LOAD_B% = LOAD% + P% - CODE%
+ CODE_B% = P%
+ LOAD_B% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/variable/twos.asm"
 INCLUDE "library/common/main/variable/twos2.asm"
@@ -265,8 +265,8 @@ INCLUDE "library/enhanced/main/subroutine/hme2.asm"
 \
 \ ******************************************************************************
 
-CODE_C% = P%
-LOAD_C% = LOAD% +P% - CODE%
+ CODE_C% = P%
+ LOAD_C% = LOAD% +P% - CODE%
 
 INCLUDE "library/common/main/subroutine/squa.asm"
 INCLUDE "library/common/main/subroutine/squa2.asm"
@@ -313,8 +313,8 @@ INCLUDE "library/common/main/subroutine/wscan.asm"
 \
 \ ******************************************************************************
 
-CODE_D% = P%
-LOAD_D% = LOAD% + P% - CODE%
+ CODE_D% = P%
+ LOAD_D% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/tt20.asm"
 INCLUDE "library/common/main/subroutine/tt54.asm"
@@ -368,8 +368,8 @@ INCLUDE "library/common/main/subroutine/hm.asm"
 \
 \ ******************************************************************************
 
-CODE_E% = P%
-LOAD_E% = LOAD% + P% - CODE%
+ CODE_E% = P%
+ LOAD_E% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/cpl.asm"
 INCLUDE "library/common/main/subroutine/cmn.asm"
@@ -427,8 +427,8 @@ INCLUDE "library/common/main/subroutine/ping.asm"
 \
 \ ******************************************************************************
 
-CODE_F% = P%
-LOAD_F% = LOAD% + P% - CODE%
+ CODE_F% = P%
+ LOAD_F% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/variable/sfx.asm"
 INCLUDE "library/common/main/subroutine/res2.asm"
@@ -493,8 +493,8 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
 \
 \ ******************************************************************************
 
-CODE_G% = P%
-LOAD_G% = LOAD% + P% - CODE%
+ CODE_G% = P%
+ LOAD_G% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/shppt.asm"
 INCLUDE "library/common/main/subroutine/ll5.asm"
@@ -546,8 +546,8 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
 \
 \ ******************************************************************************
 
-CODE_H% = P%
-LOAD_H% = LOAD% + P% - CODE%
+ CODE_H% = P%
+ LOAD_H% = LOAD% + P% - CODE%
 
 INCLUDE "library/elite-a/encyclopedia/subroutine/info_menu.asm"
 INCLUDE "library/elite-a/encyclopedia/subroutine/ships_ag.asm"

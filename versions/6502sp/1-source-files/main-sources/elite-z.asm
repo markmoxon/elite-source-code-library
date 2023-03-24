@@ -59,61 +59,61 @@
 \
 \ ******************************************************************************
 
-VSCAN = 57              \ Defines the split position in the split-screen mode
+ VSCAN = 57             \ Defines the split position in the split-screen mode
 
-Y = 96                  \ The centre y-coordinate of the 256 x 192 space view
+ Y = 96                 \ The centre y-coordinate of the 256 x 192 space view
 
-YELLOW  = %00001111     \ Four mode 1 pixels of colour 1 (yellow)
-RED     = %11110000     \ Four mode 1 pixels of colour 2 (red, magenta or white)
-CYAN    = %11111111     \ Four mode 1 pixels of colour 3 (cyan or white)
-GREEN   = %10101111     \ Four mode 1 pixels of colour 3, 1, 3, 1 (cyan/yellow)
-WHITE   = %11111010     \ Four mode 1 pixels of colour 3, 2, 3, 2 (cyan/red)
-MAGENTA = RED           \ Four mode 1 pixels of colour 2 (red, magenta or white)
-DUST    = WHITE         \ Four mode 1 pixels of colour 3, 2, 3, 2 (cyan/red)
+ YELLOW  = %00001111    \ Four mode 1 pixels of colour 1 (yellow)
+ RED     = %11110000    \ Four mode 1 pixels of colour 2 (red, magenta or white)
+ CYAN    = %11111111    \ Four mode 1 pixels of colour 3 (cyan or white)
+ GREEN   = %10101111    \ Four mode 1 pixels of colour 3, 1, 3, 1 (cyan/yellow)
+ WHITE   = %11111010    \ Four mode 1 pixels of colour 3, 2, 3, 2 (cyan/red)
+ MAGENTA = RED          \ Four mode 1 pixels of colour 2 (red, magenta or white)
+ DUST    = WHITE        \ Four mode 1 pixels of colour 3, 2, 3, 2 (cyan/red)
 
-RED2    = %00000011     \ Two mode 2 pixels of colour 1    (red)
-GREEN2  = %00001100     \ Two mode 2 pixels of colour 2    (green)
-YELLOW2 = %00001111     \ Two mode 2 pixels of colour 3    (yellow)
-BLUE2   = %00110000     \ Two mode 2 pixels of colour 4    (blue)
-MAG2    = %00110011     \ Two mode 2 pixels of colour 5    (magenta)
-CYAN2   = %00111100     \ Two mode 2 pixels of colour 6    (cyan)
-WHITE2  = %00111111     \ Two mode 2 pixels of colour 7    (white)
-STRIPE  = %00100011     \ Two mode 2 pixels of colour 5, 1 (magenta/red)
+ RED2    = %00000011    \ Two mode 2 pixels of colour 1    (red)
+ GREEN2  = %00001100    \ Two mode 2 pixels of colour 2    (green)
+ YELLOW2 = %00001111    \ Two mode 2 pixels of colour 3    (yellow)
+ BLUE2   = %00110000    \ Two mode 2 pixels of colour 4    (blue)
+ MAG2    = %00110011    \ Two mode 2 pixels of colour 5    (magenta)
+ CYAN2   = %00111100    \ Two mode 2 pixels of colour 6    (cyan)
+ WHITE2  = %00111111    \ Two mode 2 pixels of colour 7    (white)
+ STRIPE  = %00100011    \ Two mode 2 pixels of colour 5, 1 (magenta/red)
 
-PARMAX = 15             \ The number of dashboard parameters transmitted with
+ PARMAX = 15            \ The number of dashboard parameters transmitted with
                         \ the #RDPARAMS and OSWRCH 137 <param> commands
 
-IRQ1V = &0204           \ The IRQ1V vector that we intercept to implement the
+ IRQ1V = &0204          \ The IRQ1V vector that we intercept to implement the
                         \ split-screen mode
 
-WRCHV = &020E           \ The WRCHV vector that we intercept to implement our
+ WRCHV = &020E          \ The WRCHV vector that we intercept to implement our
                         \ own custom OSWRCH commands for communicating over the
                         \ Tube
 
-WORDV = &020C           \ The WORDV vector that we intercept to implement our
+ WORDV = &020C          \ The WORDV vector that we intercept to implement our
                         \ own custom OSWORD commands for communicating over the
                         \ Tube
 
-RDCHV = &0210           \ The RDCHV vector that we intercept to add validation
+ RDCHV = &0210          \ The RDCHV vector that we intercept to add validation
                         \ when reading characters using OSRDCH
 
-Tina = &0B00            \ The address of the code block for the TINA command,
+ Tina = &0B00           \ The address of the code block for the TINA command,
                         \ which should start with "TINA" and then be followed by
                         \ code that executes on the I/O processor before the
                         \ main game code terminates
 
-VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
+ VIA = &FE00            \ Memory-mapped space for accessing internal hardware,
                         \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
                         \ known as SHEILA)
 
-NVOSWRCH = &FFCB        \ The address for the non-vectored OSWRCH routine
+ NVOSWRCH = &FFCB       \ The address for the non-vectored OSWRCH routine
 
-OSWRCH = &FFEE          \ The address for the OSWRCH routine
-OSBYTE = &FFF4          \ The address for the OSBYTE routine
-OSWORD = &FFF1          \ The address for the OSWORD routine
+ OSWRCH = &FFEE         \ The address for the OSWRCH routine
+ OSBYTE = &FFF4         \ The address for the OSBYTE routine
+ OSWORD = &FFF1         \ The address for the OSWORD routine
 
-CODE% = &2400           \ The assembly address of the main I/O processor code
-LOAD% = &2400           \ The load address of the main I/O processor code
+ CODE% = &2400          \ The assembly address of the main I/O processor code
+ LOAD% = &2400          \ The load address of the main I/O processor code
 
 INCLUDE "library/6502sp/io/workspace/zp.asm"
 INCLUDE "library/6502sp/io/variable/table.asm"

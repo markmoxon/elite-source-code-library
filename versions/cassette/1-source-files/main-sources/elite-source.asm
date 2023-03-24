@@ -66,60 +66,60 @@
 \
 \ ******************************************************************************
 
-Q% = _REMOVE_CHECKSUMS  \ Set Q% to TRUE to max out the default commander, FALSE
+ Q% = _REMOVE_CHECKSUMS \ Set Q% to TRUE to max out the default commander, FALSE
                         \ for the standard default commander (this is set to
                         \ TRUE if checksums are disabled, just for convenience)
 
-NOST = 18               \ The number of stardust particles in normal space (this
+ NOST = 18              \ The number of stardust particles in normal space (this
                         \ goes down to 3 in witchspace)
 
-NOSH = 12               \ The maximum number of ships in our local bubble of
+ NOSH = 12              \ The maximum number of ships in our local bubble of
                         \ universe
 
-NTY = 13                \ The number of different ship types
+ NTY = 13               \ The number of different ship types
 
-COPS = 2                \ Ship type for a Viper
-THG = 6                 \ Ship type for a Thargoid
-CYL = 7                 \ Ship type for a Cobra Mk III (trader)
-SST = 8                 \ Ship type for the space station
-MSL = 9                 \ Ship type for a missile
-AST = 10                \ Ship type for an asteroid
-OIL = 11                \ Ship type for a cargo canister
-TGL = 12                \ Ship type for a Thargon
-ESC = 13                \ Ship type for an escape pod
+ COPS = 2               \ Ship type for a Viper
+ THG = 6                \ Ship type for a Thargoid
+ CYL = 7                \ Ship type for a Cobra Mk III (trader)
+ SST = 8                \ Ship type for the space station
+ MSL = 9                \ Ship type for a missile
+ AST = 10               \ Ship type for an asteroid
+ OIL = 11               \ Ship type for a cargo canister
+ TGL = 12               \ Ship type for a Thargon
+ ESC = 13               \ Ship type for an escape pod
 
-POW = 15                \ Pulse laser power
+ POW = 15               \ Pulse laser power
 
-NI% = 36                \ The number of bytes in each ship's data block (as
+ NI% = 36               \ The number of bytes in each ship's data block (as
                         \ stored in INWK and K%)
 
-VSCAN = 57              \ Defines the split position in the split-screen mode
+ VSCAN = 57             \ Defines the split position in the split-screen mode
 
-X = 128                 \ The centre x-coordinate of the 256 x 192 space view
-Y = 96                  \ The centre y-coordinate of the 256 x 192 space view
+ X = 128                \ The centre x-coordinate of the 256 x 192 space view
+ Y = 96                 \ The centre y-coordinate of the 256 x 192 space view
 
-f0 = &20                \ Internal key number for red key f0 (Launch, Front)
-f1 = &71                \ Internal key number for red key f1 (Buy Cargo, Rear)
-f2 = &72                \ Internal key number for red key f2 (Sell Cargo, Left)
-f3 = &73                \ Internal key number for red key f3 (Equip Ship, Right)
-f4 = &14                \ Internal key number for red key f4 (Long-range Chart)
-f5 = &74                \ Internal key number for red key f5 (Short-range Chart)
-f6 = &75                \ Internal key number for red key f6 (Data on System)
-f7 = &16                \ Internal key number for red key f7 (Market Price)
-f8 = &76                \ Internal key number for red key f8 (Status Mode)
-f9 = &77                \ Internal key number for red key f9 (Inventory)
+ f0 = &20               \ Internal key number for red key f0 (Launch, Front)
+ f1 = &71               \ Internal key number for red key f1 (Buy Cargo, Rear)
+ f2 = &72               \ Internal key number for red key f2 (Sell Cargo, Left)
+ f3 = &73               \ Internal key number for red key f3 (Equip Ship, Right)
+ f4 = &14               \ Internal key number for red key f4 (Long-range Chart)
+ f5 = &74               \ Internal key number for red key f5 (Short-range Chart)
+ f6 = &75               \ Internal key number for red key f6 (Data on System)
+ f7 = &16               \ Internal key number for red key f7 (Market Price)
+ f8 = &76               \ Internal key number for red key f8 (Status Mode)
+ f9 = &77               \ Internal key number for red key f9 (Inventory)
 
-VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
+ VIA = &FE00            \ Memory-mapped space for accessing internal hardware,
                         \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
                         \ known as SHEILA)
 
-OSBYTE = &FFF4          \ The address for the OSBYTE routine, which is used
+ OSBYTE = &FFF4         \ The address for the OSBYTE routine, which is used
                         \ three times in the main game code
 
-OSWORD = &FFF1          \ The address for the OSWORD routine, which is used
+ OSWORD = &FFF1         \ The address for the OSWORD routine, which is used
                         \ twice in the main game code
 
-OSFILE = &FFDD          \ The address for the OSFILE routine, which is used
+ OSFILE = &FFDD         \ The address for the OSFILE routine, which is used
                         \ once in the main game code
 
 INCLUDE "library/common/main/workspace/zp.asm"
@@ -137,8 +137,8 @@ INCLUDE "library/original/main/workspace/t_per_cent.asm"
 \
 \ ******************************************************************************
 
-CODE_WORDS% = &0400
-LOAD_WORDS% = &1100
+ CODE_WORDS% = &0400
+ LOAD_WORDS% = &1100
 
  ORG CODE_WORDS%
 
@@ -178,12 +178,12 @@ INCLUDE "library/common/main/workspace/wp.asm"
 \
 \ ******************************************************************************
 
-CODE% = &0F40
-LOAD% = &1128
+ CODE% = &0F40
+ LOAD% = &1128
 
  ORG CODE%
 
-LOAD_A% = LOAD%
+ LOAD_A% = LOAD%
 
 INCLUDE "library/cassette/main/workspace/s_per_cent.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_1_of_16.asm"
@@ -245,8 +245,8 @@ INCLUDE "library/common/main/subroutine/mv40.asm"
 \
 \ ******************************************************************************
 
-CODE_B% = P%
-LOAD_B% = LOAD% + P% - CODE%
+ CODE_B% = P%
+ LOAD_B% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/variable/na_per_cent-default_per_cent.asm"
 INCLUDE "library/common/main/variable/chk2.asm"
@@ -323,8 +323,8 @@ INCLUDE "library/common/main/subroutine/escape.asm"
 \
 \ ******************************************************************************
 
-CODE_C% = P%
-LOAD_C% = LOAD% +P% - CODE%
+ CODE_C% = P%
+ LOAD_C% = LOAD% +P% - CODE%
 
 INCLUDE "library/common/main/subroutine/tactics_part_1_of_7.asm"
 INCLUDE "library/common/main/subroutine/tactics_part_2_of_7.asm"
@@ -419,8 +419,8 @@ INCLUDE "library/common/main/subroutine/wscan.asm"
 \
 \ ******************************************************************************
 
-CODE_D% = P%
-LOAD_D% = LOAD% + P% - CODE%
+ CODE_D% = P%
+ LOAD_D% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/tnpr.asm"
 INCLUDE "library/common/main/subroutine/tt20.asm"
@@ -512,8 +512,8 @@ INCLUDE "library/common/main/subroutine/qv.asm"
 \
 \ ******************************************************************************
 
-CODE_E% = P%
-LOAD_E% = LOAD% + P% - CODE%
+ CODE_E% = P%
+ LOAD_E% = LOAD% + P% - CODE%
 
 INCLUDE "library/original/main/variable/authors_names.asm"
 INCLUDE "library/common/main/subroutine/cpl.asm"
@@ -620,8 +620,8 @@ INCLUDE "library/common/main/subroutine/ping.asm"
 \
 \ ******************************************************************************
 
-CODE_F% = P%
-LOAD_F% = LOAD% + P% - CODE%
+ CODE_F% = P%
+ LOAD_F% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/ks3.asm"
 INCLUDE "library/common/main/subroutine/ks1.asm"
@@ -729,8 +729,8 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
 \
 \ ******************************************************************************
 
-CODE_G% = P%
-LOAD_G% = LOAD% + P% - CODE%
+ CODE_G% = P%
+ LOAD_G% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/shppt.asm"
 INCLUDE "library/common/main/subroutine/ll5.asm"
@@ -786,8 +786,8 @@ INCLUDE "library/original/main/variable/checksum0.asm"
 \
 \ ******************************************************************************
 
-CODE_SHIPS% = P%
-LOAD_SHIPS% = LOAD% + P% - CODE%
+ CODE_SHIPS% = P%
+ LOAD_SHIPS% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/variable/xx21.asm"
 INCLUDE "library/common/main/macro/vertex.asm"
@@ -831,8 +831,8 @@ INCLUDE "library/common/main/variable/ship_escape_pod.asm"
 
  CLEAR 0, &7F00
 
-CODE_PYTHON% = &7F00
-LOAD_PYTHON% = &1B00
+ CODE_PYTHON% = &7F00
+ LOAD_PYTHON% = &1B00
 
  ORG CODE_PYTHON%
 

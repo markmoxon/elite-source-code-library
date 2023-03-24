@@ -56,53 +56,53 @@
 \
 \ ******************************************************************************
 
-Q% = _REMOVE_CHECKSUMS  \ Set Q% to TRUE to max out the default commander, FALSE
+ Q% = _REMOVE_CHECKSUMS \ Set Q% to TRUE to max out the default commander, FALSE
                         \ for the standard default commander (this is set to
                         \ TRUE if checksums are disabled, just for convenience)
 
-N% = 67                 \ N% is set to the number of bytes in the VDU table, so
+ N% = 67                \ N% is set to the number of bytes in the VDU table, so
                         \ we can loop through them below
 
-VSCAN = 57              \ Defines the split position in the split-screen mode
+ VSCAN = 57             \ Defines the split position in the split-screen mode
 
-POW = 15                \ Pulse laser power
+ POW = 15               \ Pulse laser power
 
-VEC = &7FFE             \ VEC is where we store the original value of the IRQ1
+ VEC = &7FFE            \ VEC is where we store the original value of the IRQ1
                         \ vector, matching the address in the elite-missile.asm
                         \ source
 
-BRKV = &0202            \ The break vector that we intercept to enable us to
+ BRKV = &0202           \ The break vector that we intercept to enable us to
                         \ handle and display system errors
 
-IRQ1V = &0204           \ The IRQ1V vector that we intercept to implement the
+ IRQ1V = &0204          \ The IRQ1V vector that we intercept to implement the
                         \ split-screen mode
 
-WRCHV = &020E           \ The WRCHV vector that we intercept with our custom
+ WRCHV = &020E          \ The WRCHV vector that we intercept with our custom
                         \ text printing routine
 
-NETV = &0224            \ The NETV vector that we intercept as part of the copy
+ NETV = &0224           \ The NETV vector that we intercept as part of the copy
                         \ protection
 
-LASCT = &0346           \ The laser pulse count for the current laser, matching
+ LASCT = &0346          \ The laser pulse count for the current laser, matching
                         \ the address in the main game code
 
-HFX = &0348             \ A flag that toggles the hyperspace colour effect,
+ HFX = &0348            \ A flag that toggles the hyperspace colour effect,
                         \ matching the address in the main game code
 
-ESCP = &0386            \ The flag that determines whether we have an escape pod
+ ESCP = &0386           \ The flag that determines whether we have an escape pod
                         \ fitted, matching the address in the main game code
 
-S% = &11E3              \ The adress of the main entry point workspace in the
+ S% = &11E3             \ The adress of the main entry point workspace in the
                         \ main game code
 
-VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
+ VIA = &FE00            \ Memory-mapped space for accessing internal hardware,
                         \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
                         \ known as SHEILA)
 
-OSWRCH = &FFEE          \ The address for the OSWRCH routine
-OSBYTE = &FFF4          \ The address for the OSBYTE routine
-OSWORD = &FFF1          \ The address for the OSWORD routine
-OSCLI = &FFF7           \ The address for the OSCLI vector
+ OSWRCH = &FFEE         \ The address for the OSWRCH routine
+ OSBYTE = &FFF4         \ The address for the OSBYTE routine
+ OSWORD = &FFF1         \ The address for the OSWORD routine
+ OSCLI = &FFF7          \ The address for the OSCLI vector
 
 INCLUDE "library/disc/loader3/workspace/zp.asm"
 
@@ -112,8 +112,8 @@ INCLUDE "library/disc/loader3/workspace/zp.asm"
 \
 \ ******************************************************************************
 
-CODE% = &1900
-LOAD% = &1900
+ CODE% = &1900
+ LOAD% = &1900
 
  ORG CODE%
 

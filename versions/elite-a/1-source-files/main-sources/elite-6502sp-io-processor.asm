@@ -61,43 +61,43 @@
 \
 \ ******************************************************************************
 
-X = 128                 \ The centre x-coordinate of the 256 x 192 space view
-Y = 96                  \ The centre y-coordinate of the 256 x 192 space view
+ X = 128                \ The centre x-coordinate of the 256 x 192 space view
+ Y = 96                 \ The centre y-coordinate of the 256 x 192 space view
 
-tube_brk = &0016        \ The location of the Tube host code's break handler
+ tube_brk = &0016       \ The location of the Tube host code's break handler
 
-BRKV = &0202            \ The break vector that we intercept to enable us to
+ BRKV = &0202           \ The break vector that we intercept to enable us to
                         \ handle and display system errors
 
-WRCHV = &020E           \ The WRCHV vector that we intercept with our custom
+ WRCHV = &020E          \ The WRCHV vector that we intercept with our custom
                         \ text printing routine
 
-LASCT = &0346           \ The laser pulse count for the current laser, matching
+ LASCT = &0346          \ The laser pulse count for the current laser, matching
                         \ the address in the main game code
 
-HFX = &0348             \ A flag that toggles the hyperspace colour effect,
+ HFX = &0348            \ A flag that toggles the hyperspace colour effect,
                         \ matching the address in the main game code
 
-ESCP = &0386            \ The flag that determines whether we have an escape pod
+ ESCP = &0386           \ The flag that determines whether we have an escape pod
                         \ fitted, matching the address in the main game code
 
-VIA = &FE00             \ Memory-mapped space for accessing internal hardware,
+ VIA = &FE00            \ Memory-mapped space for accessing internal hardware,
                         \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
                         \ known as SHEILA)
 
-tube_r1s = &FEE0        \ The Tube's memory-mapped FIFO 1 status register
-tube_r1d = &FEE1        \ The Tube's memory-mapped FIFO 1 data register
-tube_r2s = &FEE2        \ The Tube's memory-mapped FIFO 2 status register
-tube_r2d = &FEE3        \ The Tube's memory-mapped FIFO 2 data register
-tube_r3s = &FEE4        \ The Tube's memory-mapped FIFO 3 status register
-tube_r3d = &FEE5        \ The Tube's memory-mapped FIFO 3 data register
-tube_r4s = &FEE6        \ The Tube's memory-mapped FIFO 4 status register
-tube_r4d = &FEE7        \ The Tube's memory-mapped FIFO 4 data register
+ tube_r1s = &FEE0       \ The Tube's memory-mapped FIFO 1 status register
+ tube_r1d = &FEE1       \ The Tube's memory-mapped FIFO 1 data register
+ tube_r2s = &FEE2       \ The Tube's memory-mapped FIFO 2 status register
+ tube_r2d = &FEE3       \ The Tube's memory-mapped FIFO 2 data register
+ tube_r3s = &FEE4       \ The Tube's memory-mapped FIFO 3 status register
+ tube_r3d = &FEE5       \ The Tube's memory-mapped FIFO 3 data register
+ tube_r4s = &FEE6       \ The Tube's memory-mapped FIFO 4 status register
+ tube_r4d = &FEE7       \ The Tube's memory-mapped FIFO 4 data register
 
-rawrch = &FFBC          \ The address of the MOS's VDU character output routine
+ rawrch = &FFBC         \ The address of the MOS's VDU character output routine
 
-OSBYTE = &FFF4          \ The address for the OSBYTE routine
-OSCLI = &FFF7           \ The address for the OSCLI routine
+ OSBYTE = &FFF4         \ The address for the OSBYTE routine
+ OSCLI = &FFF7          \ The address for the OSCLI routine
 
 INCLUDE "library/elite-a/io/workspace/zp.asm"
 
@@ -107,8 +107,8 @@ INCLUDE "library/elite-a/io/workspace/zp.asm"
 \
 \ ******************************************************************************
 
-CODE% = &1200
-LOAD% = &1200
+ CODE% = &1200
+ LOAD% = &1200
 
  ORG CODE%
 

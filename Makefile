@@ -111,8 +111,8 @@ endif
 # Electron version
 
 variant-electron=1
-folder-electron=/sth
-suffix-electron=-sth
+folder-electron=/egg
+suffix-electron=-egg
 
 # Elite-A
 

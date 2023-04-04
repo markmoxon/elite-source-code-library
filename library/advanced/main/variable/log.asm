@@ -43,7 +43,7 @@ ENDIF
 
 ELSE
 
-  SKIP 1
+ SKIP 1
 
  FOR I%, 1, 255
 

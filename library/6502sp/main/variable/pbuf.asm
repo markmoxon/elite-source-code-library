@@ -34,7 +34,7 @@ IF _MATCH_ORIGINAL_BINARIES
 
 ELSE
 
-  SKIP 256              \ The pixel buffer to send with this command
+ SKIP 256               \ The pixel buffer to send with this command
 
 ENDIF
 

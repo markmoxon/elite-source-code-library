@@ -162,6 +162,8 @@
  LDX #1                 \ Call OSBYTE with A = 128 to fetch the 16-bit value
  LDA #128               \ from ADC channel 1 (the joystick X value), returning
  JSR OSBYTE             \ the value in (Y X)
+                        \
+                        \   * Channel 1 is the x-axis: 0 = right, 65520 = left
 
  TYA                    \ Copy Y to A, so the result is now in (A X)
 
@@ -171,6 +173,8 @@
  LDX #2                 \ Call OSBYTE with A = 128 to fetch the 16-bit value
  LDA #128               \ from ADC channel 2 (the joystick Y value), returning
  JSR OSBYTE             \ the value in (Y X)
+                        \
+                        \   * Channel 2 is the y-axis: 0 = down,  65520 = up
 
  TYA                    \ Copy Y to A, so the result is now in (A X)
 

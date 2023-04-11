@@ -15,7 +15,7 @@
 
  CLD                    \ Clear the D flag to make sure we are in binary mode
 
- JSR scramble           \ Call scramble to unscramble the main code
+ JSR DEEOR              \ Call DEEOR to unscramble the main code
 
  JSR BRKBK              \ Call BRKBK to set up the break handler
 

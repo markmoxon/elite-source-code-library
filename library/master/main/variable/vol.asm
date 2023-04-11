@@ -1,4 +1,4 @@
-.VOLUME
+.VOL
 
  EQUB 7                 \ The volume level for the game's sound effects (0-7)
                         \

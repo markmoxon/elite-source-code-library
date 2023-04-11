@@ -98,9 +98,9 @@
 
 .NS6
 
- LDA SBUF+6,Y           \ Set A = SBUF+6+Y + VOLUME
+ LDA SBUF+6,Y           \ Set A = SBUF+6+Y + VOL
  CLC                    \
- ADC VOLUME             \ where VOLUME is the the current volume setting (0-7)
+ ADC VOL                \ where VOL is the the current volume setting (0-7)
 
 .NS7
 

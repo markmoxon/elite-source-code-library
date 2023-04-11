@@ -367,14 +367,10 @@ ELSE
 ENDIF
 
 INCLUDE "library/enhanced/main/workspace/up.asm"
-INCLUDE "library/master/main/variable/ckeys.asm"
+INCLUDE "library/master/main/variable/tgint.asm"
 INCLUDE "library/master/main/subroutine/s_per_cent.asm"
-INCLUDE "library/master/main/subroutine/scramble.asm"
-INCLUDE "library/master/main/subroutine/decrypt.asm"
-
- EQUB &B7, &AA          \ These bytes appear to be unused
- EQUB &45, &23
-
+INCLUDE "library/master/main/subroutine/deeor.asm"
+INCLUDE "library/master/main/subroutine/deeors.asm"
 INCLUDE "library/enhanced/main/subroutine/doentry.asm"
 
  EQUB &FB, &04, &F7     \ These bytes appear to be unused
@@ -399,12 +395,12 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_14_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_15_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_16_of_16.asm"
 INCLUDE "library/enhanced/main/subroutine/spin.asm"
-INCLUDE "library/master/main/subroutine/bomblines.asm"
-INCLUDE "library/master/main/subroutine/bombfx.asm"
-INCLUDE "library/master/main/subroutine/bombinit.asm"
-INCLUDE "library/master/main/variable/bombstep.asm"
-INCLUDE "library/master/main/variable/bombx.asm"
-INCLUDE "library/master/main/variable/bomby.asm"
+INCLUDE "library/master/main/subroutine/bomboff.asm"
+INCLUDE "library/master/main/subroutine/bombeff2.asm"
+INCLUDE "library/master/main/subroutine/bombon.asm"
+INCLUDE "library/master/main/variable/bombpos.asm"
+INCLUDE "library/master/main/variable/bombtbx.asm"
+INCLUDE "library/master/main/variable/bombtby.asm"
 INCLUDE "library/enhanced/main/subroutine/mt27.asm"
 INCLUDE "library/enhanced/main/subroutine/mt28.asm"
 INCLUDE "library/enhanced/main/subroutine/detok3.asm"
@@ -435,7 +431,7 @@ INCLUDE "library/common/main/variable/chk.asm"
                         \ in this block is included in the commander file (it
                         \ has no effect)
 
-INCLUDE "library/common/main/variable/na_per_cent-default_per_cent.asm"
+INCLUDE "library/common/main/variable/na_per_cent-na2_per_cent.asm"
 
  SKIP 16                \ These bytes appear to be unused, though the first byte
                         \ in this block is included in the commander file (it
@@ -1084,4 +1080,4 @@ ENDIF
 
  PRINT "Addresses for the scramble routines in elite-checksum.py"
  PRINT "F% = ", ~F%
- PRINT "DEFAULT% = ", ~DEFAULT%
+ PRINT "NA2% = ", ~NA2%

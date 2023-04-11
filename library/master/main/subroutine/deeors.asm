@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: DECRYPT
+\       Name: DEEORS
 \       Type: Subroutine
 \   Category: Utility routines
 \    Summary: Decrypt a multi-page block of memory
@@ -17,7 +17,7 @@
 \
 \ ******************************************************************************
 
-.DECRYPT
+.DEEORS
 
  STX T                  \ Store the decryption seed in T as our starting point
 
@@ -25,7 +25,7 @@
  LDA #0                 \ so we can use SC(1 0) + Y as our pointer to the next
  STA SC                 \ byte to decrypt
 
-.DEL
+.DEEORL
 
  LDA (SC),Y             \ Set A to the Y-th byte of SC(1 0)
 
@@ -44,12 +44,22 @@
  DEY                    \ Decrement the byte pointer
 
  CPY FRIN               \ Loop back to decrypt the next byte, until Y = the low
- BNE DEL                \ byte of FRIN(1 0), at which point we have decrypted a
+ BNE DEEORL             \ byte of FRIN(1 0), at which point we have decrypted a
                         \ whole page
 
  LDA SC+1               \ Check whether SC(1 0) matches FRIN(1 0) and loop back
  CMP FRIN+1             \ to decrypt the next byte until it does, at which point
- BNE DEL                \ we have decrypted the whole block
+ BNE DEEORL             \ we have decrypted the whole block
 
  RTS                    \ Return from the subroutine
+
+ EQUB &B7, &AA          \ These bytes appear to be unused, though there is a
+ EQUB &45, &23          \ comment in the original source that says "red
+                        \ herring", so this would appear to be a red herring
+                        \ aimed at confusing any crackers
+
+.G%
+
+                        \ The game code is scrambled from here to F% (or, as the
+                        \ original source code puts it, "mutiliated")
 

@@ -184,7 +184,7 @@ INCLUDE "library/common/main/workspace/wp.asm"
  LOAD_A% = LOAD%
 
 INCLUDE "library/enhanced/main/variable/s1_per_cent.asm"
-INCLUDE "library/common/main/variable/na_per_cent-default_per_cent.asm"
+INCLUDE "library/common/main/variable/na_per_cent-na2_per_cent.asm"
 INCLUDE "library/common/main/variable/chk2.asm"
 INCLUDE "library/common/main/variable/chk.asm"
 INCLUDE "library/elite-a/parasite/subroutine/tube_write.asm"

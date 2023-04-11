@@ -50,8 +50,8 @@ IF _MASTER_VERSION \ Master: Group A: The Master has a unique lightning bolt eff
  BPL P%+5               \ negative, so this skips the following instruction if
                         \ our energy bomb is not going off
 
- JSR BOMBLINES          \ Our energy bomb is going off, so call BOMBLINES to
-                        \ draw the zig-zag lightning bolt
+ JSR BOMBOFF            \ Our energy bomb is going off, so call BOMBOFF to draw
+                        \ the zig-zag lightning bolt
 
 ENDIF
 
@@ -92,8 +92,8 @@ IF _MASTER_VERSION \ Master: See group A
  BPL P%+5               \ negative, so this skips the following instruction if
                         \ our energy bomb is not going off
 
- JSR BOMBLINES          \ Our energy bomb is going off, so call BOMBLINES to
-                        \ draw the zig-zag lightning bolt
+ JSR BOMBOFF            \ Our energy bomb is going off, so call BOMBOFF to draw
+                        \ the zig-zag lightning bolt
 
 ENDIF
 

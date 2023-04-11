@@ -236,7 +236,7 @@ INCLUDE "library/common/main/subroutine/mv40.asm"
  CODE_B% = P%
  LOAD_B% = LOAD% + P% - CODE%
 
-INCLUDE "library/common/main/variable/na_per_cent-default_per_cent.asm"
+INCLUDE "library/common/main/variable/na_per_cent-na2_per_cent.asm"
 INCLUDE "library/common/main/variable/chk2.asm"
 INCLUDE "library/common/main/variable/chk.asm"
 INCLUDE "library/common/main/variable/univ.asm"

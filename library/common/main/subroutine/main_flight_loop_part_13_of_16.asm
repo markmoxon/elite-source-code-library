@@ -46,10 +46,11 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ M
 
 ELIF _MASTER_VERSION
 
- JSR BOMBFX             \ Call BOMBFX to erase the energy bomb zig-zag lightning
-                        \ bolt that we drew in part 3, make the sound of the
-                        \ energy bomb going off, draw a new lightning bolt, and
-                        \ repeat the process four times so the bolt flashes
+ JSR BOMBEFF2           \ Call BOMBEFF2 to erase the energy bomb zig-zag
+                        \ lightning bolt that we drew in part 3, make the sound
+                        \ of the energy bomb going off, draw a new lightning
+                        \ bolt, and repeat the process four times so the bolt
+                        \ flashes
 
  ASL BOMB               \ We set off our energy bomb, so rotate BOMB to the
                         \ left by one place. BOMB was rotated left once already
@@ -62,8 +63,8 @@ ELIF _MASTER_VERSION
  BMI MA77               \ If the result has bit 7 set, skip the following
                         \ instruction as the bomb is still going off
 
- JSR BOMBLINES          \ Our energy bomb has finished going off, so call
-                        \ BOMBLINES to draw the zig-zag lightning bolt, which
+ JSR BOMBOFF            \ Our energy bomb has finished going off, so call
+                        \ BOMBOFF to draw the zig-zag lightning bolt, which
                         \ erases it from the screen
 
 ENDIF
@@ -141,8 +142,10 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR
 
 ELIF _MASTER_VERSION
 
- BCS P%+4               \ If the value of A did not overflow (the maximum
+ BCS paen1              \ If the value of A did not overflow (the maximum
  STA ENERGY             \ energy level is &FF), then store A in ENERGY
+
+.paen1
 
 ENDIF
 

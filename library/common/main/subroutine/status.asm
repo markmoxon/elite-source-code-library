@@ -287,7 +287,7 @@ ENDIF
  LSR A
  LSR A
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Label
 
 .st5L
 
@@ -318,12 +318,12 @@ ENDIF
 
  LSR A                  \ Shift A to the right
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Label
 
  BNE st5L               \ Keep looping around until A = 0, which means there are
                         \ no set bits left in A
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  BNE P%-2               \ Keep looping back two instructions (i.e. to the INX
                         \ instruction) until A = 0, which means there are no set

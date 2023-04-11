@@ -1,4 +1,4 @@
-.DTAPE
+.DISK
 
  SKIP 1                 \ The configuration setting for toggle key "T", which
                         \ isn't actually used but is still updated by pressing

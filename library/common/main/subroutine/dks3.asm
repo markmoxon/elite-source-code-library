@@ -125,8 +125,8 @@ ELIF _MASTER_VERSION
  TXA                    \ Copy the ASCII code of the key that has been pressed
                         \ into A
 
- CMP CKEYS,Y            \ If the pressed key doesn't match the configuration key
- BNE Dk3                \ for option Y (as listed in the CKEYS table), then jump
+ CMP TGINT,Y            \ If the pressed key doesn't match the configuration key
+ BNE Dk3                \ for option Y (as listed in the TGINT table), then jump
                         \ to Dk3 to return from the subroutine
 
 ENDIF
@@ -153,7 +153,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 
 ELIF _MASTER_VERSION
 
- LDA DAMP,Y             \ The configuration keys listed in CKEYS correspond to
+ LDA DAMP,Y             \ The configuration keys listed in TGINT correspond to
  EOR #&FF               \ the configuration option settings from DAMP onwards,
  STA DAMP,Y             \ so to toggle a setting, we fetch the existing byte
                         \ from DAMP+Y, invert it and put it back (0 means no

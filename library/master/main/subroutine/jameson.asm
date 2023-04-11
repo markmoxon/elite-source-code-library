@@ -9,14 +9,14 @@
 
 .JAMESON
 
- LDY #96                \ We are going to copy the default commander at DEFAULT%
+ LDY #96                \ We are going to copy the default commander at NA2%
                         \ over the top of the last saved commander at NA%, so
                         \ set a counter to copy 97 bytes
 
 .JAMESL
 
- LDA DEFAULT%,Y         \ Copy the Y-th byte of DEFAULT% to the Y-th byte of
- STA NA%,Y              \ NA%
+ LDA NA2%,Y             \ Copy the Y-th byte of NA2% to the Y-th byte of NA%
+ STA NA%,Y
 
  DEY                    \ Decrement the loop counter
 

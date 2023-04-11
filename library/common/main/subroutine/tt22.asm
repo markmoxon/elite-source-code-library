@@ -70,7 +70,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 ELIF _MASTER_VERSION
 
  LDA #153               \ Move the text cursor down one line and draw a
- JSR NLIN2-2            \ screen-wide horizontal line at pixel row 153 for the
+ JSR NLIN5              \ screen-wide horizontal line at pixel row 153 for the
                         \ bottom edge of the chart, so the chart itself is 128
                         \ pixels high, starting on row 24 and ending on row 153
 

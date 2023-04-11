@@ -200,13 +200,13 @@ INCLUDE "library/common/main/variable/flh.asm"
 INCLUDE "library/common/main/variable/jstgy.asm"
 INCLUDE "library/common/main/variable/jste.asm"
 INCLUDE "library/common/main/variable/jstk.asm"
-INCLUDE "library/master/main/variable/lcase.asm"
-INCLUDE "library/master/main/variable/dtape.asm"
+INCLUDE "library/master/main/variable/uptog.asm"
+INCLUDE "library/master/main/variable/disk.asm"
 INCLUDE "library/enhanced/main/variable/bstk.asm"
 
  SKIP 1                 \ This byte appears to be unused
 
-INCLUDE "library/master/main/variable/volume.asm"
+INCLUDE "library/master/main/variable/vol.asm"
 
 ENDIF
 

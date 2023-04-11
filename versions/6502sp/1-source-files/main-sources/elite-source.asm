@@ -304,7 +304,7 @@ INCLUDE "library/6502sp/main/workspace/lp.asm"
 
 INCLUDE "library/6502sp/main/workspace/parasite_variables.asm"
 INCLUDE "library/enhanced/main/variable/s1_per_cent.asm"
-INCLUDE "library/common/main/variable/na_per_cent-default_per_cent.asm"
+INCLUDE "library/common/main/variable/na_per_cent-na2_per_cent.asm"
 INCLUDE "library/common/main/variable/chk2.asm"
 INCLUDE "library/common/main/variable/chk.asm"
 INCLUDE "library/6502sp/main/subroutine/s_per_cent.asm"

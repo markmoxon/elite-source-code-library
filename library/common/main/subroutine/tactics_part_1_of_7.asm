@@ -112,7 +112,6 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR
 
 ELIF _MASTER_VERSION
 
-
  LDA ECMA               \ If an E.C.M. is currently active (either our's or an
  BNE TAX35              \ opponent's), jump to TAX35 to destroy this missile
 

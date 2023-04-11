@@ -14,13 +14,6 @@
 \
 \   A                   The pixel row on which to draw the horizontal line
 \
-IF _MASTER_VERSION \ Comment
-\ Other entry points:
-\
-\   NLIN2-2             Move the text cursor down one line before drawing the
-\                       line
-\
-ENDIF
 \ ******************************************************************************
 
 .NLIN2

@@ -3,7 +3,7 @@
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \       Name: NA%
 ELIF _MASTER_VERSION
-\       Name: DEFAULT%
+\       Name: NA2%
 ENDIF
 \       Type: Variable
 \   Category: Save and load
@@ -46,7 +46,7 @@ ELIF _MASTER_VERSION
 
  EQUS ":0.E."
 
-.DEFAULT%
+.NA2%
 
 ENDIF
 

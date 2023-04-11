@@ -205,7 +205,7 @@ ENDIF
 
 IF _MASTER_VERSION \ Master: The Master version allows you to change the volume of the sound effects using the "<" and ">" keys when the game is paused
 
- LDA VOLUME             \ Fetch the current volume setting into A
+ LDA VOL                \ Fetch the current volume setting into A
 
  CPX #'.'               \ If "." is being pressed (i.e. the ">" key) then jump
  BEQ VOLUP              \ to VOLUP to increase the volume
@@ -233,7 +233,7 @@ IF _MASTER_VERSION \ Master: The Master version allows you to change the volume 
                         \ neither case do we want to change the volume as we are
                         \ already at the maximum or minimum level
 
- STY VOLUME             \ Store the new volume level in VOLUME
+ STY VOL                \ Store the new volume level in VOL
 
 .MAXVOL
 

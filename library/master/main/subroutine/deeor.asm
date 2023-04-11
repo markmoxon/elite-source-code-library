@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: scramble
+\       Name: DEEOR
 \       Type: Subroutine
 \   Category: Utility routines
 \    Summary: Unscramble the main code
@@ -16,11 +16,11 @@
 \
 \ ******************************************************************************
 
-.scramble
+.DEEOR
 
- LDA #LO(DOENTRY-1)     \ Set FRIN(1 0) = DECRYPT-1 as the low address of the
+ LDA #LO(DOENTRY-1)     \ Set FRIN(1 0) = DEEORS-1 as the low address of the
  STA FRIN               \ decryption block, so we decrypt from just after the
- LDA #HI(DOENTRY-1)     \ DECRYPT routine
+ LDA #HI(DOENTRY-1)     \ DEEORS routine
  STA FRIN+1
 
  LDA #HI(F%-1)          \ Set (A Y) to F% as the high address of the decryption
@@ -30,7 +30,7 @@
  LDX #&19               \ Set X = &19 as the decryption seed (the value used to
                         \ encrypt the code, which is done in elite-checksum.py)
 
- JSR DECRYPT            \ Call DECRYPT to decrypt between DOENTRY and F%
+ JSR DEEORS             \ Call DEEORS to decrypt between DOENTRY and F%
 
  LDA #LO(XX21-1)        \ Set FRIN(1 0) = XX21-1 as the low address of the
  STA FRIN               \ decryption block
@@ -43,6 +43,6 @@
  LDX #&62               \ Set X = &62 as the decryption seed (the value used to
                         \ encrypt the code, which is done in elite-checksum.py)
 
-                        \ Fall througn into DECRYPT to decrypt between XX21 and
+                        \ Fall througn into DEEORS to decrypt between XX21 and
                         \ &B1FF
 

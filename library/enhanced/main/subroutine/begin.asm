@@ -29,10 +29,9 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
 ELIF _MASTER_VERSION
 
- LDX #(DTAPE-COMC)      \ We start by zeroing all the configuration variables
-                        \ between COMC and DTAPE, to set them to their default
-                        \ values, so set a counter in X for DTAPE - COMC bytes
-
+ LDX #(DISK-COMC)       \ We start by zeroing all the configuration variables
+                        \ between COMC and DISK, to set them to their default
+                        \ values, so set a counter in X for DISK - COMC bytes
 
 ENDIF
 

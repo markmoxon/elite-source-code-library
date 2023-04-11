@@ -1,4 +1,4 @@
-.LCASE
+.UPTOG
 
  SKIP 1                 \ The configuration setting for toggle key "U", which
                         \ isn't actually used but is still updated by pressing

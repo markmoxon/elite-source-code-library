@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: BOMBX
+\       Name: BOMBTBX
 \       Type: Variable
 \   Category: Drawing lines
 \    Summary: This is where we store the x-coordinates for the energy bomb's
@@ -8,7 +8,7 @@
 \
 \ ******************************************************************************
 
-.BOMBX
+.BOMBTBX
 
  SKIP 10
 

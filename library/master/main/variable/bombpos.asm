@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: BOMBSTEP
+\       Name: BOMBPOS
 \       Type: Variable
 \   Category: Drawing lines
 \    Summary: A set of x-coordinates that are used as the basis for the energy
@@ -8,7 +8,7 @@
 \
 \ ******************************************************************************
 
-.BOMBSTEP
+.BOMBPOS
 
  EQUB 224
  EQUB 224

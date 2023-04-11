@@ -285,13 +285,13 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-IF _MASTER_VERSION \ Master: The Master's energy bomb lightning bolt effect contains nine random zig-zag lines that are set up in the BOMBINIT routine
+IF _MASTER_VERSION \ Master: The Master's energy bomb lightning bolt effect contains nine random zig-zag lines that are set up in the BOMBON routine
 
  BEQ MA76               \ If BOMB now contains 0, then the bomb is not going off
                         \ any more (or it never was), so skip the following
                         \ instruction
 
- JSR BOMBINIT           \ Call BOMBINIT to set up and display a new energy bomb
+ JSR BOMBON             \ Call BOMBON to set up and display a new energy bomb
                         \ zig-zag lightning bolt
 
 ENDIF

@@ -5,19 +5,24 @@
 \   Category: Save and load
 \    Summary: Save the commander file
 \
+\ ------------------------------------------------------------------------------
+\
+\ This routine copies a commander file into the commbuf file buffer at &0E7E,
+\ and then saves it.
+\
 \ ******************************************************************************
 
 .wfile
 
  LDY #NT%               \ We first want to copy the current commander data block
-                        \ to location &0E7E so we can do a file save operation,
-                        \ so we set a counter in Y to copy the NT% bytes in the
-                        \ commander data block
+                        \ to the commbuf file buffer so we can do a file save
+                        \ operation, so we set a counter in Y to copy the NT%
+                        \ bytes in the commander data block
 
 .wfileL1
 
- LDA NA%+8,Y            \ Copy the Y-th byte of NA%+8 to the Y-th byte of &0E7E
- STA &0E7E,Y
+ LDA NA%+8,Y            \ Copy the Y-th byte of NA%+8 to the Y-th byte of the
+ STA commbuf,Y          \ the commbuf file buffer
 
  DEY                    \ Decrement the loop counter
 
@@ -34,7 +39,7 @@
 
 .wfileL2
 
- STA &0E7E,Y            \ Zero the Y-th byte of &0E7E
+ STA commbuf,Y          \ Zero the Y-th byte of the commbuf file buffer
 
  INY                    \ Increment the loop counter
 
@@ -109,7 +114,7 @@ ENDIF
 
 IF _SNG47
 
- JSR SWAPZP             \ Call SWAPZP to store the top part of zero page, as it
+ JSR getzp              \ Call getzp to store the top part of zero page, as it
                         \ gets corrupted by the MOS during the saving process
 
 ELIF _COMPACT
@@ -124,6 +129,6 @@ ENDIF
  JSR OSCLI              \ Call OSCLI to execute the OS command at (Y X), which
                         \ saves the commander file
 
- JMP SWAPZP             \ Call SWAPZP to restore the top part of zero page
+ JMP getzp              \ Call getzp to restore the top part of zero page
                         \ and return from the subroutine using a tail call
 

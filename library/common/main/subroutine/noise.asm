@@ -21,8 +21,8 @@ ELIF _MASTER_VERSION
 \ The following sounds can be made by this routine. Two-part noises are made by
 \ consecutive calls to this routine with different values of Y. The routine
 \ doesn't make any sounds itself; instead, it populates the sound buffer at
-\ SBUF with the relevant sound data, and the interrupt handler at IRQ1 calls
-\ the NOISE2 routine to process the data in the sound buffer and send it to the
+\ SOFLG with the relevant sound data, and the interrupt handler at IRQ1 calls
+\ the SOINT routine to process the data in the sound buffer and send it to the
 \ 76489 sound chip.
 \
 \ This routine can make the following sounds depending on the value of Y:
@@ -54,72 +54,84 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 ELIF _MASTER_VERSION
 
                         \ This routine appears to set up the contents of the
-                        \ SBUF sound buffer, so the NOISE2 routine can then send
+                        \ SOFLG sound buffer, so the SOINT routine can then send
                         \ the results to the 76489 sound chip. How this all
                         \ works is a bit of a mystery, so this part needs more
                         \ investigation
 
  LDA DNOIZ              \ If DNOIZ is non-zero, then sound is disabled, so
- BNE SRTS               \ return from the subroutine (as SRTS contains an RTS)
+ BNE SOUR1              \ return from the subroutine (as SOUR1 contains an RTS)
 
- LDA SFX2,Y             \ Fetch SFX2+Y and shift bit 0 into the C flag
+ LDA SFXBT,Y            \ Fetch SFXBT+Y and shift bit 0 into the C flag
  LSR A
 
  CLV                    \ Clear the V flag
 
- LDX #0                 \ If bit 0 of SFX2+Y is set, set X = 0 and jump to NS1
- BCS NS1
+ LDX #0                 \ If bit 0 of SFXBT+Y is set, set X = 0 and jump to SOUS4
+ BCS SOUS4
 
  INX                    \ Increment X to 1
 
- LDA SBUF+13            \ If SBUF+13 < SBUF+14, set X = 1 and jump to NS1
- CMP SBUF+14
- BCC NS1
+ LDA SOPR+1             \ If SOPR+1 < SOPR+2, set X = 1 and jump to SOUS4
+ CMP SOPR+2
+ BCC SOUS4
 
- INX                    \ SBUF+13 >= SBUF+14, so increment X to 2
+ INX                    \ SOPR+1 >= SOPR+2, so increment X to 2
 
-.NS1
+\JSR SOUS4              \ These instructions are commented out in the original
+\BCC SOUR1              \ source
+\DEX
+\BIT SOUR1 \SEV!!
+\LDA SFXPR,Y
+\AND #&10
+\BEQ SOUS9
+\RTS
+\fall into SOUS4 since this facility not needed
+
+.SOUS4
 
                         \ By the time we get here, X is set as follows:
                         \
-                        \   * X = 0 if bit 0 of SFX2+Y is set
-                        \   * X = 1 if SBUF+13 < SBUF+14
-                        \   * X = 2 if SBUF+13 >= SBUF+14
+                        \   * X = 0 if bit 0 of SFXBT+Y is set
+                        \   * X = 1 if SOPR+1 < SOPR+2
+                        \   * X = 2 if SOPR+1 >= SOPR+2
 
- LDA SFX1,Y             \ Set A = SFX1+Y
+ LDA SFXPR,Y            \ Set A = SFXPR+Y
 
- CMP SBUF+12,X          \ If SFX1+Y < SBUF+12+X, return from the subroutine
- BCC SRTS
+.SOUS9
+
+ CMP SOPR,X             \ If SFXPR+Y < SOPR+X, return from the subroutine
+ BCC SOUR1              \ (as SOUR1 contains an RTS)
 
  SEI                    \ Disable interrupts while we update the sound buffer
 
-                        \ If we get here then SFX1+Y >= SBUF+12+X
+                        \ If we get here then SFXPR+Y >= SOPR+X
 
- STA SBUF+12,X          \ SBUF+12+X = A = SFX1+Y
+ STA SOPR,X             \ SOPR+X = A = SFXPR+Y
 
- LSR A                  \ Store bits 1-3 of SFX1+Y in bits 0-2 of SBUF+6+X
+ LSR A                  \ Store bits 1-3 of SFXPR+Y in bits 0-2 of SOVOL+X
  AND #%00000111
- STA SBUF+6,X
+ STA SOVOL,X
 
- LDA SFX4,Y             \ Store SFX4+Y in SBUF+9+X
- STA SBUF+9,X
+ LDA SFXVC,Y            \ Store SFXVC+Y in SOVCH+X
+ STA SOVCH,X
 
- LDA SFX2,Y             \ Store SFX2+Y in SBUF+3+X
- STA SBUF+3,X
+ LDA SFXBT,Y            \ Store SFXBT+Y in SOCNT+X
+ STA SOCNT,X
 
- AND #%00001111         \ Store bits 1-3 of SFX2+Y in bits 0-2 of SBUF+15+X
+ AND #%00001111         \ Store bits 1-3 of SFXBT+Y in bits 0-2 of SOFRCH+X
  LSR A
- STA SBUF+15,X
+ STA SOFRCH,X
 
- LDA SFX3,Y             \ Set A = SFX3+Y
+ LDA SFXFQ,Y            \ Set A = SFXFQ+Y
 
  BVC P%+3               \ If the V flag is set, double the value in A
  ASL A
 
- STA SBUF+18,X          \ Store A in SBUF+18+X
+ STA SOFRQ,X            \ Store A in SOFRQ+X
 
- LDA #%10000000         \ Set bit 7 of SBUF+X
- STA SBUF,X
+ LDA #%10000000         \ Set bit 7 of SOFLG+X
+ STA SOFLG,X
 
  CLI                    \ Enable interrupts again
 

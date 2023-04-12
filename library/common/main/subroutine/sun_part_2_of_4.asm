@@ -21,7 +21,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ M
 
 ELIF _MASTER_VERSION
 
- LDY YMAX               \ Set Y = y-coordinate of the bottom of the screen,
+ LDY Yx2M1              \ Set Y = y-coordinate of the bottom of the screen,
                         \ which we use as a counter in the following routine to
                         \ redraw the old sun
 

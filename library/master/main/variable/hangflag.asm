@@ -1,16 +1,13 @@
 \ ******************************************************************************
 \
-\       Name: SFX3
+\       Name: HANGFLAG
 \       Type: Variable
-\   Category: Sound
-\    Summary: Sound data block 3
+\   Category: Ship hangar
+\    Summary: The number of ships being displayed in the ship hangar
 \
 \ ******************************************************************************
 
-.SFX3
+.HANGFLAG
 
- EQUB &F0, &20, &10
- EQUB &30, &03, &01
- EQUB &08, &80, &16
- EQUB &38, &00, &80
+ EQUB 0
 

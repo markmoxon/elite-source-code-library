@@ -87,7 +87,8 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR
 
 ELIF _MASTER_VERSION
 
- JSR rfile              \ Call rfile to load the commander file to address &0791
+ JSR rfile              \ Call rfile to load the commander file to the TAP%
+                        \ staging area
 
 ENDIF
 
@@ -130,7 +131,7 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION
 
 ELIF _MASTER_VERSION
 
- LDA &0791              \ If the first byte of the loaded file has bit 7 set,
+ LDA TAP%               \ If the first byte of the loaded file has bit 7 set,
  BMI ELT2F              \ jump to ELT2F, as this is an invalid commander file
                         \
                         \ ELT2F contains a BRK instruction, which will force an
@@ -148,10 +149,10 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR
 
 ELIF _MASTER_VERSION
 
- LDY #NT%               \ We have successfully loaded the commander file at
-                        \ &0791, so now we want to copy it to the last saved
-                        \ commander data block at NA%+8, so we set up a counter
-                        \ in Y to copy NT% bytes
+ LDY #NT%               \ We have successfully loaded the commander file to the
+                        \ TAP% staging area, so now we want to copy it to the
+                        \ last saved commander data block at NA%+8, so we set up
+                        \ a counter in Y to copy NT% bytes
 
 ENDIF
 
@@ -181,7 +182,7 @@ ELIF _MASTER_VERSION
 
 .copyme
 
- LDA &0791,Y            \ Copy the Y-th byte of &0791 to the Y-th byte of NA%+8
+ LDA TAP%,Y             \ Copy the Y-th byte of TAP% to the Y-th byte of NA%+8
  STA NA%+8,Y
 
  DEY                    \ Decrement the loop counter

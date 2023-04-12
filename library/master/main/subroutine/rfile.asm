@@ -7,6 +7,10 @@
 \
 \ ------------------------------------------------------------------------------
 \
+\ This routine loads a commander file into the commbuf file buffer at &0E7E, and
+\ then copies it to the TAP% staging area (though the latter is not used in this
+\ version, as it's left over from the Commodure 64 version).
+\
 \ Arguments:
 \
 \   INWK+5              The filename, terminated by a carriage return
@@ -83,7 +87,7 @@ ENDIF
 
 IF _SNG47
 
- JSR SWAPZP             \ Call SWAPZP to store the top part of zero page, as it
+ JSR getzp              \ Call getzp to store the top part of zero page, as it
                         \ gets corrupted by the MOS during the loading process
 
 ELIF _COMPACT
@@ -99,16 +103,20 @@ ENDIF
  JSR OSCLI              \ Call OSCLI to execute the OS command at (Y X), which
                         \ loads the commander file
 
- JSR SWAPZP             \ Call SWAPZP to restore the top part of zero page
+ JSR getzp              \ Call getzp to restore the top part of zero page
 
- LDY #NT%               \ We now want to copy the newly loaded commander data
-                        \ block to location &0791, so we set a counter in Y to
-                        \ copy the NT% bytes in the commander data block
+                        \ We now copy the newly loaded commander data block to
+                        \ the TAP% staging area, though this has no effect as we
+                        \ then ignore the result (this code is left over from
+                        \ the Commodore 64 version)
+
+ LDY #NT%               \ Set a counter in Y to copy the NT% bytes in the
+                        \ commander data block
 
 .rfileL1
 
- LDA &0E7E,Y            \ Copy the Y-th byte of &0E7E to the Y-th byte of &0791
- STA &0791,Y
+ LDA commbuf,Y          \ Copy the Y-th byte of the commbuf file buffer to the
+ STA TAP%,Y             \ Y-th byte of the TAP% staging area
 
  DEY                    \ Decrement the loop counter
 

@@ -11,8 +11,8 @@ IF _COMPACT
 
 .NMIRELEASE
 
- JSR SWAPZP+3           \ Call SWAPZP+3 to restore the top part of zero page,
-                        \ but without first claiming the NMI sprkspace (as it's
+ JSR getzp+3            \ Call getzp+3 to restore the top part of zero page,
+                        \ but without first claiming the NMI workspace (as it's
                         \ already been claimed by this point)
 
  LDA #143               \ Call OSBYTE 143 to issue a paged ROM service call of

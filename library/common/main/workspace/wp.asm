@@ -232,18 +232,37 @@ INCLUDE "library/common/main/variable/sz.asm"
 INCLUDE "library/common/main/variable/szl.asm"
 INCLUDE "library/common/main/variable/lasx.asm"
 INCLUDE "library/common/main/variable/lasy.asm"
-
- SKIP 1                 \ This byte appears to be unused
-
+INCLUDE "library/common/main/variable/xx24.asm"
 INCLUDE "library/common/main/variable/altit.asm"
 INCLUDE "library/common/main/variable/swap.asm"
 
- SKIP 6                 \ These bytes appear to be unused
+.XP
 
-INCLUDE "library/master/main/variable/sdist.asm"
+ SKIP 1                 \ This byte appears to be unused
 
- SKIP 2                 \ These bytes appear to be unused
+.YP
 
+ SKIP 1                 \ This byte appears to be unused
+
+.YS
+
+ SKIP 1                 \ This byte appears to be unused
+
+.BALI
+
+ SKIP 1                 \ This byte appears to be unused
+
+.UPO
+
+ SKIP 1                 \ This byte appears to be unused
+
+.boxsize
+
+ SKIP 1                 \ This byte appears to be unused
+
+INCLUDE "library/master/main/variable/distaway.asm"
+INCLUDE "library/common/main/variable/xsav2.asm"
+INCLUDE "library/common/main/variable/ysav2.asm"
 INCLUDE "library/master/main/variable/nmi.asm"
 INCLUDE "library/advanced/main/variable/name.asm"
 INCLUDE "library/common/main/variable/tp.asm"
@@ -271,8 +290,8 @@ INCLUDE "library/common/main/variable/escp.asm"
 
  SKIP 1                 \ This byte appears to be unused
 
-INCLUDE "library/master/main/variable/trumble.asm"
-INCLUDE "library/master/main/variable/tallyf.asm"
+INCLUDE "library/master/main/variable/tribble.asm"
+INCLUDE "library/master/main/variable/tallyl.asm"
 INCLUDE "library/common/main/variable/nomsl.asm"
 INCLUDE "library/common/main/variable/fist.asm"
 INCLUDE "library/common/main/variable/avl.asm"
@@ -286,6 +305,8 @@ INCLUDE "library/common/main/variable/mch.asm"
 INCLUDE "library/common/main/variable/comx.asm"
 INCLUDE "library/common/main/variable/comy.asm"
 
+.dialc
+
  SKIP 14                \ These bytes appear to be unused
 
 INCLUDE "library/common/main/variable/qq24.asm"
@@ -297,10 +318,8 @@ INCLUDE "library/common/main/variable/tek.asm"
 INCLUDE "library/common/main/variable/slsp.asm"
 INCLUDE "library/common/main/variable/qq2.asm"
 INCLUDE "library/advanced/main/variable/safehouse.asm"
-INCLUDE "library/master/main/variable/clcnt.asm"
-INCLUDE "library/master/main/variable/adch1.asm"
-INCLUDE "library/master/main/variable/adch2.asm"
-INCLUDE "library/master/main/variable/adch3.asm"
+INCLUDE "library/master/main/variable/frump.asm"
+INCLUDE "library/master/main/variable/jopos.asm"
 
 ENDIF
 

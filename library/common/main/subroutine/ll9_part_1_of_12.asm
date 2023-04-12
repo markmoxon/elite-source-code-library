@@ -99,20 +99,20 @@ ENDIF
                         \ update this value below with the actual ship's
                         \ distance if it turns out to be visible on-screen
 
-IF _MASTER_VERSION \ Master: The Master has a flicker-free ship plotting algorithm that plots and erases ship lines one line at a time. As part the new algorithm, it stores its progress while working its way through the ship line heap in the otherwise unused variables at XX14 and XX14+1
+IF _MASTER_VERSION \ Master: The Master has a flicker-free ship plotting algorithm that plots and erases ship lines one line at a time. As part the new algorithm, it stores its progress while working its way through the ship line heap in the new variables at LSNUM and LSNUM2
 
                         \ We now set things up for flicker-free ship plotting,
                         \ by setting the following:
                         \
-                        \   XX14 = offset to the first coordinate in the ship's
-                        \          line heap
+                        \   LSNUM = offset to the first coordinate in the ship's
+                        \           line heap
                         \
-                        \   XX14+1 = the number of bytes in the heap for the
+                        \   LSNUM2 = the number of bytes in the heap for the
                         \            ship that's currently on-screen (or 0 if
                         \            there is no ship currently on-screen)
 
- LDY #1                 \ Set XX14 = 1, the offset of the first set of line
- STY XX14               \ coordinates in the ship line heap
+ LDY #1                 \ Set LSNUM = 1, the offset of the first set of line
+ STY LSNUM              \ coordinates in the ship line heap
 
  DEY                    \ Decrement Y to 0
 
@@ -121,7 +121,7 @@ IF _MASTER_VERSION \ Master: The Master has a flicker-free ship plotting algorit
  BNE P%+5               \ following two instructions
 
  LDA #0                 \ The ship is not being drawn on screen, so set A = 0
-                        \ so that XX14+1 gets set to 0 below (as there are no
+                        \ so that LSNUM2 gets set to 0 below (as there are no
                         \ existing coordinates on the ship line heap for this
                         \ ship)
 
@@ -129,8 +129,8 @@ IF _MASTER_VERSION \ Master: The Master has a flicker-free ship plotting algorit
                         \ &2C &B1 &BD, or BIT &BDB1 which does nothing apart
                         \ from affect the flags
 
- LDA (XX19),Y           \ Set XX14+1 to the first byte of the ship's line heap,
- STA XX14+1             \ which contains the number of bytes in the heap
+ LDA (XX19),Y           \ Set LSNUM2 to the first byte of the ship's line heap,
+ STA LSNUM2             \ which contains the number of bytes in the heap
 
 ENDIF
 

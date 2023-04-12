@@ -20,10 +20,10 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 
 ELIF _MASTER_VERSION
 
- LDY #10                \ Call the NOISE routine with Y = 10 to make the first
+ LDY #sohyp             \ Call the NOISE routine with Y = 10 to make the first
  JSR NOISE              \ sound of the hyperspace drive being engaged
 
- LDY #11                \ Call the NOISE routine with Y = 11 to make the second
+ LDY #sohyp2            \ Call the NOISE routine with Y = 11 to make the second
  JSR NOISE              \ sound of the hyperspace drive being engaged
 
 ENDIF

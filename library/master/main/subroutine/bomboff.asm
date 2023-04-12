@@ -52,7 +52,7 @@
                         \ line will be the end point of this line, making the
                         \ zig-zag lines all join up like a lightning bolt
 
- JSR LL30               \ Draw a line from (X1, Y1) to (X2, Y2)
+ JSR LOIN               \ Draw a line from (X1, Y1) to (X2, Y2)
 
  INY                    \ Increment the loop counter
 

@@ -179,7 +179,7 @@ IF _SNG47
  BNE DELL1              \ Loop back to DELL1 to copy the next character until we
                         \ have copied the whole filename
 
- JSR SWAPZP             \ Call SWAPZP to restore the top part of zero page
+ JSR getzp              \ Call getzp to restore the top part of zero page
 
 ELIF _COMPACT
 
@@ -226,7 +226,7 @@ ENDIF
 
 IF _MASTER_VERSION \ Platform
 
- JSR SWAPZP             \ Call SWAPZP to restore the top part of zero page
+ JSR getzp              \ Call getzp to restore the top part of zero page
 
 ENDIF
 

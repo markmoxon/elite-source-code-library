@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: TALLYINT
+\       Name: KWH%
 \       Type: Variable
 \   Category: Status
 \    Summary: Integer number of kills awarded for destroying each type of ship
@@ -12,11 +12,11 @@
 \ the other BBC versions, where you always get a single combat point for
 \ everything you kill; in the Master version, it's more sophisticated.
 \
-\ The fractional part is stored in the TALLYFRAC table.
+\ The fractional part is stored in the KWL% table.
 \
 \ ******************************************************************************
 
-.TALLYINT
+.KWH%
 
  EQUB 0                 \ Missile                               0.58203125
  EQUB 0                 \ Coriolis space station                0.0

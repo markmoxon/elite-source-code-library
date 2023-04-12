@@ -127,7 +127,7 @@ ELIF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- JSR TT67_DUPLICATE     \ Print a newline
+ JSR TT67X              \ Print a newline
 
  LDA #%00001111         \ Set bits 1 and 2 of the Access Control Register at
  STA VIA+&34            \ SHEILA &34 to switch screen memory into &3000-&7FFF

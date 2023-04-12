@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: TALLYFRAC
+\       Name: KWL%
 \       Type: Variable
 \   Category: Status
 \    Summary: Fractional number of kills awarded for destroying each type of
@@ -13,14 +13,14 @@
 \ the other BBC versions, where you always get a single combat point for
 \ everything you kill; in the Master version, it's more sophisticated.
 \
-\ The integral part is stored in the TALLYINT table.
+\ The integral part is stored in the KWH% table.
 \
 \ Each fraction is stored as the numerator in a fraction with a denominator of
 \ 256, so 149 represents 149 / 256 = 0.58203125 points.
 \
 \ ******************************************************************************
 
-.TALLYFRAC
+.KWL%
 
  EQUB 149               \ Missile                               0.58203125
  EQUB 0                 \ Coriolis space station                0.0

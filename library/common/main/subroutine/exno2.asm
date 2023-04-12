@@ -31,22 +31,22 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 
 ELIF _MASTER_VERSION
 
- LDA TALLYF             \ We now add the fractional kill count to our tally,
+ LDA TALLYL             \ We now add the fractional kill count to our tally,
  CLC                    \ starting by with the fractional bytes:
- ADC TALLYFRAC-1,X      \
- STA TALLYF             \   TALLYF = TALLYF + fractional kill count
+ ADC KWL%-1,X           \
+ STA TALLYL             \   TALLYL = TALLYL + fractional kill count
                         \
                         \ where the fractional kill count is taken from the
-                        \ TALLYFRAC table, according to the ship's type (we
-                        \ look up the X-1-th value from TALLYFRAC because ship
-                        \ types start at 1 rather than 0)
+                        \ KWL% table, according to the ship's type (we look up
+                        \ the X-1-th value from KWL% because ship types start
+                        \ at 1 rather than 0)
 
  LDA TALLY              \ And then we add the low byte of TALLY(1 0):
- ADC TALLYINT-1,X       \
+ ADC KWH%-1,X           \
  STA TALLY              \   TALLY = TALLY + carry + integer kill count
                         \
-                        \ where the integer kill count is taken from the
-                        \ TALLYINT table in the same way
+                        \ where the integer kill count is taken from the KWH%
+                        \ table in the same way
 
  BCC davidscockup       \ If there is no carry, jump straight to EXNO3 to skip
                         \ the following three instructions

@@ -48,6 +48,8 @@ ENDIF
 
 IF _MASTER_VERSION \ Minor
 
+.HLOIN22
+
  JMP HLOIN3             \ This instruction doesn't appear to be used anywhere
 
 ENDIF
@@ -79,8 +81,11 @@ IF _6502SP_VERSION \ Comment
 ELIF _MASTER_VERSION
                         \
                         \ In the BBC Master version, there are two different
-                        \ routines: LL30 draws a one-segment line, while LOIN
-                        \ draws multi-segment lines
+                        \ routines: LOINQ draws a one-segment line, while LOIN
+                        \ draws individual segments of multi-segment lines (the
+                        \ distinction being that we switch to screen memory at
+                        \ the start of LOINQ and back out again after drawing
+                        \ the line, while LOIN just draws the line)
 
 ENDIF
 
@@ -102,7 +107,15 @@ IF _ELITE_A_6502SP_IO
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _ELITE_A_VERSION \ Label
+
 .LOIN
+
+ELIF _MASTER_VERSION
+
+.LOINQ
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Platform
 
@@ -163,6 +176,11 @@ IF _6502SP_VERSION \ Platform
  BEQ HLOIN2             \ If A = 0 then Y1 = Y2, which means the line is
                         \ horizontal, so jump to HLOIN2 to draw a horizontal
                         \ line instead of applying Bresenham's line algorithm
+
+ELIF _MASTER_VERSION
+
+\BEQ HLOIN22            \ This instruction is commented out in the original
+                        \ source
 
 ENDIF
 

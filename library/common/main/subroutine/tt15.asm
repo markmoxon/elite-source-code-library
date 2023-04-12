@@ -249,8 +249,19 @@ ENDIF
  STA XX15+2             \ Set XX15+2 (X2) = the x-coordinate of the centre of
                         \ the crosshairs
 
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label
+
  JMP LL30               \ Draw a vertical line (X1, Y1) to (X2, Y2), which will
                         \ draw from the top edge of the crosshairs to the bottom
                         \ edge, through the centre of the crosshairs, returning
                         \ from the subroutine using a tail call
+
+ELIF _MASTER_VERSION
+
+ JMP LOIN               \ Draw a vertical line (X1, Y1) to (X2, Y2), which will
+                        \ draw from the top edge of the crosshairs to the bottom
+                        \ edge, through the centre of the crosshairs, returning
+                        \ from the subroutine using a tail call
+
+ENDIF
 

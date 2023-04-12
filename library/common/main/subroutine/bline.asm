@@ -211,17 +211,9 @@ ENDIF
 
  STY LSP                \ Update LSP to point to the same as Y
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Tube
 
  JSR LOIN               \ Draw a line from (X1, Y1) to (X2, Y2)
-
-ELIF _MASTER_VERSION
-
- JSR LL30               \ Draw a line from (X1, Y1) to (X2, Y2)
-
-ENDIF
-
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Tube
 
  LDA XX13               \ If XX13 is non-zero, jump up to BL5 to add a &FF
  BNE BL5                \ marker to the end of the line heap. XX13 is non-zero

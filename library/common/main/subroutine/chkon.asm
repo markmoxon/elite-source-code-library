@@ -128,7 +128,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
  CPX #2*Y-1             \ If we get here then A is zero, which means the top
 ELIF _MASTER_VERSION
 
- CPX YMAX               \ If we get here then A is zero, which means the top
+ CPX Yx2M1              \ If we get here then A is zero, which means the top
 ENDIF
                         \ edge of the circle is within the screen boundary, so
                         \ now we need to check whether it is in the space view
@@ -143,8 +143,8 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
                         \ y-coordinate of the bottom pixel row of the space
                         \ view. So this does the following:
 ELIF _MASTER_VERSION
-                        \ YMAX, and returning the C flag from this comparison.
-                        \ The value in YMAX is the y-coordinate of the bottom
+                        \ Yx2M1, and returning the C flag from this comparison.
+                        \ The value in Yx2M1 is the y-coordinate of the bottom
                         \ pixel row of the space view, or 191, so this does the
                         \ following:
 ENDIF

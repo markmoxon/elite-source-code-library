@@ -74,11 +74,11 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 
 ELIF _MASTER_VERSION
 
- LDA XX14               \ If XX14 >= CNT, skip to LL81 so we don't loop back for
- CMP CNT                \ the next edge (CNT was set to the maximum heap size
- BCS LL81               \ for this ship in part 10, so this checks whether we
-                        \ have just run out of space in the ship line heap, and
-                        \ stops drawing edges if we have)
+ LDA LSNUM              \ If LSNUM >= CNT, skip to LL81 so we don't loop back
+ CMP CNT                \ for the next edge (CNT was set to the maximum heap
+ BCS LL81               \ size for this ship in part 10, so this checks whether
+                        \ we have just run out of space in the ship line heap,
+                        \ and stops drawing edges if we have)
 
 ENDIF
 

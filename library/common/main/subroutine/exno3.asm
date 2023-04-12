@@ -37,7 +37,7 @@ ELIF _ELECTRON_VERSION
 
 ELIF _MASTER_VERSION
 
- LDY #4                 \ Call the NOISE routine with Y = 4 to make the sound of
+ LDY #soexpl            \ Call the NOISE routine with Y = 4 to make the sound of
  JMP NOISE              \ an explosion and return from the subroutine using a
                         \ tail call
 

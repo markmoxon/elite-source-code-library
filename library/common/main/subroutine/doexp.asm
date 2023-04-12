@@ -65,7 +65,7 @@ ENDIF
 
 IF _MASTER_VERSION \ Platform
 
- STA CLCNT              \ Store the cloud counter in CLCNT (though this value is
+ STA frump              \ Store the cloud counter in frump (though this value is
                         \ never read, so this has no effect)
 
 ENDIF

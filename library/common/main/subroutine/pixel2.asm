@@ -25,6 +25,8 @@
 
  LDA X1                 \ Fetch the x-coordinate offset into A
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELECTRON_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label
+
  BPL PX1                \ If the x-coordinate offset is positive, jump to PX1
                         \ to skip the following negation
 
@@ -34,17 +36,42 @@
 
 .PX1
 
+ELIF _MASTER_VERSION
+
+ BPL PX21               \ If the x-coordinate offset is positive, jump to PX21
+                        \ to skip the following negation
+
+ EOR #%01111111         \ The x-coordinate offset is negative, so flip all the
+ CLC                    \ bits apart from the sign bit and add 1, to negate
+ ADC #1                 \ it to a positive number, i.e. A is now |X1|
+
+.PX21
+
+ENDIF
+
  EOR #%10000000         \ Set X = -|A|
  TAX                    \       = -|X1|
 
  LDA Y1                 \ Fetch the y-coordinate offset into A and clear the
  AND #%01111111         \ sign bit, so A = |Y1|
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELECTRON_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label
+
  CMP #96                \ If |Y1| >= 96 then it's off the screen (as 96 is half
  BCS PX4                \ the screen height), so return from the subroutine (as
                         \ PX4 contains an RTS)
 
+ELIF _MASTER_VERSION
+
+ CMP #96                \ If |Y1| >= 96 then it's off the screen (as 96 is half
+ BCS PXR1               \ the screen height), so return from the subroutine (as
+                        \ PXR1 contains an RTS)
+
+ENDIF
+
  LDA Y1                 \ Fetch the y-coordinate offset into A
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELECTRON_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label
 
  BPL PX2                \ If the y-coordinate offset is positive, jump to PX2
                         \ to skip the following negation
@@ -54,6 +81,19 @@
                         \ it to a positive number, i.e. A is now |Y1|
 
 .PX2
+
+ELIF _MASTER_VERSION
+
+ BPL PX22               \ If the y-coordinate offset is positive, jump to PX22
+                        \ to skip the following negation
+
+ EOR #%01111111         \ The y-coordinate offset is negative, so flip all the
+ ADC #1                 \ bits apart from the sign bit and subtract 1, to negate
+                        \ it to a positive number, i.e. A is now |Y1|
+
+.PX22
+
+ENDIF
 
  STA T                  \ Set A = 97 - A
  LDA #97                \       = 97 - |Y1|

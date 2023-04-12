@@ -56,7 +56,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 
 ELIF _MASTER_VERSION
 
- LDY #6                 \ Call the NOISE routine with Y = 6 to make the sound of
+ LDY #sohit             \ Call the NOISE routine with Y = 6 to make the sound of
  JMP NOISE              \ us making a hit or kill and return from the subroutine
                         \ using a tail call
 

@@ -1,16 +1,16 @@
 \ ******************************************************************************
 \
-\       Name: SFX4
+\       Name: SFXFQ
 \       Type: Variable
 \   Category: Sound
-\    Summary: Sound data block 4
+\    Summary: Sound data block 3
 \
 \ ******************************************************************************
 
-.SFX4
+.SFXFQ
 
- EQUB &FF, &FF, &00
- EQUB &03, &1F, &01
- EQUB &07, &07, &0F
- EQUB &03, &0F, &0F
+ EQUB &F0, &20, &10
+ EQUB &30, &03, &01
+ EQUB &08, &80, &16
+ EQUB &38, &00, &80
 

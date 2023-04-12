@@ -1,6 +1,10 @@
 \ ******************************************************************************
 \
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \       Name: CPIX2
+ELIF _MASTER_VERSION
+\       Name: CPIXK
+ENDIF
 \       Type: Subroutine
 \   Category: Drawing pixels
 \    Summary: Draw a single-height dash on the dashboard
@@ -44,7 +48,15 @@ IF _MASTER_VERSION \ Comment
 ENDIF
 \ ******************************************************************************
 
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label
+
 .CPIX2
+
+ELIF _MASTER_VERSION
+
+.CPIXK
+
+ENDIF
 
 IF _ELECTRON_VERSION \ Screen
 

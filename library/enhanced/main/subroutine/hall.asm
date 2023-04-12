@@ -226,8 +226,8 @@ ELIF _DISC_DOCKED OR _ELITE_A_VERSION
 
 ELIF _MASTER_VERSION
 
- STY HCNT               \ Store Y in HCNT to specify whether there are multiple
-                        \ ships in the hangar
+ STY HANGFLAG           \ Store Y in HANGFLAG to specify whether there are
+                        \ multiple ships in the hangar
 
  JMP HANGER             \ Call HANGER to draw the hangar background and return
                         \ from the subroutine using a tail call

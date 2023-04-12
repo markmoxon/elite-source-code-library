@@ -142,7 +142,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR
 
 ELIF _MASTER_VERSION
 
- JSR NOISEHIT           \ Call the NOISEHIT routine to make the sound of us
+ JSR ELASNO             \ Call the ELASNO routine to make the sound of us
                         \ being hit by lasers
 
 ENDIF

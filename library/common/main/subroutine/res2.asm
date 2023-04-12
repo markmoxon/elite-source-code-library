@@ -101,11 +101,11 @@ ENDIF
 
 IF _MASTER_VERSION \ Platform
 
- LDA #0                 \ Set XMAX to 0 (though this variable is never used, so
- STA XMAX               \ this has no effect)
+ LDA #0                 \ Set dontclip to 0 (though this variable is never used,
+ STA dontclip           \ so this has no effect)
 
- LDA #191               \ Set YMAX to 191, the number of pixel lines in the
- STA YMAX               \ space view
+ LDA #191               \ Set Yx2M1 to 191, the number of pixel lines in the
+ STA Yx2M1              \ space view
 
 ENDIF
 

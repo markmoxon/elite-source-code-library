@@ -491,15 +491,18 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR
 
 ELIF _MASTER_VERSION
 
- LDY #NT%               \ We now want to copy the current commander data block
-                        \ to location &0791 so we can do a file save operation,
-                        \ so set a counter in X to copy the NT% bytes in the
+                        \ We now copy the current commander data block into the
+                        \ TAP% staging area, though this has no effect as we
+                        \ then ignore the result (this code is left over from
+                        \ the Commodore 64 version)
+
+ LDY #NT%               \ Set a counter in X to copy the NT% bytes in the
                         \ commander data block
 
 .copyme2
 
- LDA NA%+8,Y            \ Copy the X-th byte of NA% to the X-th byte of &0791
- STA &0791,Y
+ LDA NA%+8,Y            \ Copy the X-th byte of NA% to the X-th byte of TAP%
+ STA TAP%,Y
 
  DEY                    \ Decrement the loop counter
 

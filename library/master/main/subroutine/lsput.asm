@@ -15,13 +15,16 @@
 \ Here's the new approach in this routine:
 \
 \   * Draw the new line
-\   * Fetch the corresponding existing line (in position XX14) from the heap
+\
+\   * Fetch the corresponding existing line (in position LSNUM) from the heap
+\
 \   * Store the new line in the heap at this position, replacing the old one
+\
 \   * If the existing line we just took from the heap is on-screen, erase it
 \
 \ Arguments:
 \
-\   XX14                The offset within the line heap where we add the new
+\   LSNUM               The offset within the line heap where we add the new
 \                       line's coordinates
 \
 \   X1                  The screen x-coordinate of the start of the line to add
@@ -41,16 +44,16 @@
 \
 \ Returns:
 \
-\   XX14                The offset of the next line in the line heap
+\   LSNUM               The offset of the next line in the line heap
 \
 \ ******************************************************************************
 
 .LSPUT
 
- LDY XX14               \ Set Y = XX14, to get the offset within the ship line
+ LDY LSNUM              \ Set Y = LSNUM, to get the offset within the ship line
                         \ heap where we want to insert our new line
 
- CPY XX14+1             \ Compare XX14 and XX14+1 and store the flags on the
+ CPY LSNUM2             \ Compare LSNUM and LSNUM2 and store the flags on the
  PHP                    \ stack so we can retrieve them later
 
  LDX #3                 \ We now want to copy the line coordinates (X1, Y1) and
@@ -66,7 +69,7 @@
 
  BPL LSC4               \ Loop back until we have copied all four bytes
 
- JSR LL30               \ Draw a line from (X1, Y1) to (X2, Y2)
+ JSR LOIN               \ Draw a line from (X1, Y1) to (X2, Y2)
 
  LDA (XX19),Y           \ Set X1 to the Y-th coordinate on the ship line heap,
  STA X1                 \ i.e. one we are replacing in the heap
@@ -99,18 +102,18 @@
  STA (XX19),Y
 
  INY                    \ Increment the index to point to the next coordinate
- STY XX14               \ and store the updated index in XX14
+ STY LSNUM              \ and store the updated index in LSNUM
 
  PLP                    \ Restore the result of the comparison above, so if the
- BCS LSC3               \ original value of XX14 >= XX14+1, then we have already
-                        \ redrawn all the lines from the old ship's line heap,
-                        \ so return from the subroutine (as LSC3 contains an
-                        \ RTS)
+ BCS LSC3               \ original value of LSNUM >= LSNUM2, then we have
+                        \ already redrawn all the lines from the old ship's line
+                        \ heap, so return from the subroutine (as LSC3 contains
+                        \ an RTS)
 
- JMP LL30               \ Otherwise there are still more lines to erase from the
+ JMP LOIN               \ Otherwise there are still more lines to erase from the
                         \ old ship on-screen, so the coordinates in (X1, Y1) and
                         \ (X2, Y2) that we just pulled from the ship line heap
-                        \ point to a line that is still on-screen, so call LL30
+                        \ point to a line that is still on-screen, so call LOIN
                         \ to draw this line and erase it from the screen,
                         \ returning from the subroutine using a tail call
 

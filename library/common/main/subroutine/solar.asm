@@ -21,7 +21,7 @@ ENDIF
 
 IF _MASTER_VERSION \ Master: The Master version runs an extra bit of code when arriving in a new system that is responsible for breeding any Trumbles in the hold, though as there are no Trumbles in the BBC versions of the game, this never actually breeds anything
 
- LDA TRUMBLE            \ If we have no Trumbles in the hold, skip to nobirths
+ LDA TRIBBLE            \ If we have no Trumbles in the hold, skip to nobirths
  BEQ nobirths
 
                         \ If we get here then we have Trumbles in the hold, so
@@ -33,17 +33,17 @@ IF _MASTER_VERSION \ Master: The Master version runs an extra bit of code when a
  STA QQ20               \ journey, so zero the amount of food and narcotics in
  STA QQ20+6             \ the hold
 
- JSR DORND              \ Take the number of Trumbles from TRUMBLE(1 0), add a
+ JSR DORND              \ Take the number of Trumbles from TRIBBLE(1 0), add a
  AND #15                \ random number between 4 and 15, and double the result,
- ADC TRUMBLE            \ storing the resulting number in TRUMBLE(1 0)
+ ADC TRIBBLE            \ storing the resulting number in TRIBBLE(1 0)
  ORA #4                 \
  ROL A                  \ We start with the low byte
- STA TRUMBLE
+ STA TRIBBLE
 
- ROL TRUMBLE+1          \ And then do the high byte
+ ROL TRIBBLE+1          \ And then do the high byte
 
  BPL P%+5               \ If bit 7 of the high byte is set, then rotate the high
- ROR TRUMBLE+1          \ byte back to the right, so the number of Trumbles is
+ ROR TRIBBLE+1          \ byte back to the right, so the number of Trumbles is
                         \ always positive
 
 .nobirths

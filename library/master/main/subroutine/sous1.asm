@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: SOUND
+\       Name: SOUS1
 \       Type: Subroutine
 \   Category: Sound
 \    Summary: Write sound data directly to the 76489 sound chip
@@ -13,11 +13,11 @@
 \
 \ Other entry points:
 \
-\   SRTS                Contains an RTS
+\   SOUR1               Contains an RTS
 \
 \ ******************************************************************************
 
-.SOUND
+.SOUS1
 
  LDX #%11111111         \ Set 6522 System VIA data direction register DDRA
  STX VIA+&43            \ (SHEILA &43) to %11111111. This sets the ORA register
@@ -38,7 +38,7 @@
  LDA #%00001000         \ Deactivate the sound chip by setting bit 3 of the
  STA VIA+&40            \ 6522 System VIA output register ORB (SHEILA &40)
 
-.SRTS
+.SOUR1
 
  RTS                    \ Return from the subroutine
 

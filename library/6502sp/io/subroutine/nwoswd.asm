@@ -19,7 +19,7 @@
 \
 \                         * All others: Call the standard OSWORD routine
 \
-\  (Y X)                The address of the associated OSWORD parameter block
+\   (Y X)               The address of the associated OSWORD parameter block
 \
 \ Other entry points:
 \

@@ -247,9 +247,9 @@ ELIF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDA ADCH3              \ Fetch the Bitstik rotation value (high byte) from
-                        \ ADCH3, which is constantly updated with the high byte
-                        \ of ADC channel 3 by the interrupt handler IRQ1
+ LDA JOPOS+2            \ Fetch the Bitstik rotation value (high byte) from
+                        \ JOPOS+2, which is constantly updated with the high
+                        \ byte of ADC channel 3 by the interrupt handler IRQ1
 
 ENDIF
 

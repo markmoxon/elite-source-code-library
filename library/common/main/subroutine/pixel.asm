@@ -92,11 +92,16 @@ ELIF _6502SP_VERSION
 \
 \                       and so on
 ENDIF
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Comment
 \
 \ Other entry points:
 \
 \   PX4                 Contains an RTS
+ELIF _MASTER_VERSION
+\
+\ Other entry points:
+\
+\   PXR1                Contains an RTS
 ENDIF
 \
 \ ******************************************************************************
@@ -391,7 +396,7 @@ IF _6502SP_VERSION \ Label
 ELIF _MASTER_VERSION
 
  CMP #80                \ If the pixel's ZZ distance is < 80, then the dot is
- BCC PX21               \ pretty close, so jump to PX21 to to draw a four-pixel
+ BCC PX2                \ pretty close, so jump to PX2 to to draw a four-pixel
                         \ square
 
  LDA TWOS2,X            \ Fetch a mode 1 2-pixel byte with the pixels set as in
@@ -450,11 +455,11 @@ ELIF _MASTER_VERSION
 
  LDY T1                 \ Restore Y from T1, so Y is preserved by the routine
 
-.PX4
+.PXR1
 
  RTS                    \ Return from the subroutine
 
-.PX21
+.PX2
 
                         \ If we get here, we need to plot a 4-pixel square in
                         \ in the correct colour for this pixel's distance

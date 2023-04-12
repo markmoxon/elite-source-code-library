@@ -53,7 +53,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR
 
 ELIF _MASTER_VERSION
 
- JSR ADD_DUPLICATE      \ We now add A to S to give us a value in the range 1 to
+ JSR ADDK               \ We now add A to S to give us a value in the range 1 to
                         \ 15, which we can pass to DIL2 to draw the vertical
                         \ bar on the indicator at this position. We use the ADD
                         \ routine like this:
@@ -121,7 +121,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR
 
 ELIF _MASTER_VERSION
 
- JSR ADD_DUPLICATE      \ We now add A to S to give us a value in the range 1 to
+ JSR ADDK               \ We now add A to S to give us a value in the range 1 to
                         \ 15, which we can pass to DIL2 to draw the vertical
                         \ bar on the indicator at this position (see the JSR ADD
                         \ above for more on this)

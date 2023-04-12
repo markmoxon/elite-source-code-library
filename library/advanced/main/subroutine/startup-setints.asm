@@ -1,6 +1,10 @@
 \ ******************************************************************************
 \
+IF _6502SP_VERSION \ Comment
 \       Name: STARTUP
+ELIF _MASTER_VERSION
+\       Name: SETINTS
+ENDIF
 \       Type: Subroutine
 \   Category: Loader
 IF _6502SP_VERSION \ Comment
@@ -12,9 +16,10 @@ ENDIF
 \
 \ ******************************************************************************
 
+IF _6502SP_VERSION \ Tube
+
 .STARTUP
 
-IF _6502SP_VERSION \ Tube
 
  LDA RDCHV              \ Store the current RDCHV vector in newosrdch(2 1),
  STA newosrdch+1        \ which modifies the address portion of the JSR &FFFF
@@ -28,6 +33,8 @@ IF _6502SP_VERSION \ Tube
  STA RDCHV+1
 
 ELIF _MASTER_VERSION
+
+.SETINTS
 
  SEI                    \ Disable interrupts
 

@@ -37,7 +37,7 @@ IF _6502SP_VERSION \ Platform
 
 ELIF _MASTER_VERSION
 
- JSR TT67_DUPLICATE     \ Print a newline
+ JSR TT67X              \ Print a newline
 
 ENDIF
 

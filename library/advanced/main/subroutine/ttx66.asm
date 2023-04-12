@@ -70,6 +70,9 @@ IF _6502SP_VERSION \ Platform
  DEX                    \ Set X2 = 255
  STX X2
 
+ JSR LOIN               \ Draw a line from (X1, Y1) to (X2, Y2), so that's from
+                        \ (0, 0) to (255, 0), along the very top of the screen
+
 ELIF _MASTER_VERSION
 
  STY XC                 \ Move the text cursor to column 1
@@ -95,10 +98,10 @@ ELIF _COMPACT
 
 ENDIF
 
-ENDIF
-
- JSR LOIN               \ Draw a line from (X1, Y1) to (X2, Y2), so that's from
+ JSR LOINQ              \ Draw a line from (X1, Y1) to (X2, Y2), so that's from
                         \ (0, 0) to (255, 0), along the very top of the screen
+
+ENDIF
 
  LDA #2                 \ Set X1 = X2 = 2
  STA X1
@@ -193,7 +196,7 @@ IF _6502SP_VERSION \ Platform
 
 ELIF _MASTER_VERSION
 
- JMP LOIN               \ Draw a line from (X1, Y1) to (X2, Y2) and return from
+ JMP LOINQ              \ Draw a line from (X1, Y1) to (X2, Y2) and return from
                         \ the subroutine using a tail call
 
 ENDIF

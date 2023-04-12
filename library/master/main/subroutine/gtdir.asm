@@ -62,7 +62,7 @@ IF _COMPACT
  JSR OSCLI              \ Call OSCLI to run the OS command in DIRI, which
                         \ changes the disc directory to the name entered
 
- JMP SWAPZP             \ Call SWAPZP to restore the top part of zero page
+ JMP getzp              \ Call getzp to restore the top part of zero page
                         \ and return from the subroutine using a tail call
 
 ENDIF

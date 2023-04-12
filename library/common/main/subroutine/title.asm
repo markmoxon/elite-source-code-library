@@ -46,7 +46,7 @@ ENDIF
 
 IF _MASTER_VERSION \ Master: Group A: In the Master version, the Cobra Mk III shown on the first title page is further away than in the other versions, which is implemented by a new variable that contains the distance that the ship should be shown at
 
- STY SDIST              \ Store the ship distance in SDIST
+ STY distaway           \ Store the ship distance in distaway
 
 ENDIF
 
@@ -455,7 +455,7 @@ ELIF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDX SDIST              \ Set z_lo to the distance value we passed to the
+ LDX distaway           \ Set z_lo to the distance value we passed to the
  STX INWK+6             \ routine, so this is the closest the ship gets to us
 
 ENDIF

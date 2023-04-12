@@ -80,7 +80,7 @@ ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA
  BNE BULB-2             \ Jump down to BULB-2 (this BNE is effectively a JMP as
                         \ A will never be zero)
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION
 
  LDA #8*14              \ The E.C.M. bulb is in character block number 14 with
  STA SC                 \ each character taking 8 bytes, so this sets the low
@@ -112,6 +112,38 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
  BPL BULL2              \ Loop back to poke the next byte until we have done
                         \ all 16 bytes across two character blocks
 
+ELIF _MASTER_VERSION
+
+ LDA #8*14              \ The E.C.M. bulb is in character block number 14 with
+ STA SC                 \ each character taking 8 bytes, so this sets the low
+                        \ byte of the screen address of the character block we
+                        \ want to draw to
+
+ LDA #&7A               \ Set the high byte of SC(1 0) to &7A, as the bulbs are
+ STA SC+1               \ both in the character row from &7A00 to &7BFF, and the
+                        \ E.C.M. bulb is in the left half, which is from &7A00
+                        \ to &7AFF
+
+ LDY #15                \ Now to poke the bulb bitmap into screen memory, and
+                        \ there are two character blocks' worth, each with eight
+                        \ lines of one byte, so set a counter in Y for 16 bytes
+
+.BULL1
+
+ LDA ECBT,Y             \ Fetch the Y-th byte of the bulb bitmap
+
+ EOR (SC),Y             \ EOR the byte with the current contents of screen
+                        \ memory, so drawing the bulb when it is already
+                        \ on-screen will erase it
+
+ STA (SC),Y             \ Store the Y-th byte of the bulb bitmap in screen
+                        \ memory
+
+ DEY                    \ Decrement the loop counter
+
+ BPL BULL1              \ Loop back to poke the next byte until we have done
+                        \ all 16 bytes across two character blocks
+
 ELIF _ELITE_A_6502SP_IO
 
  LDA #7*8               \ The E.C.M. bulb is in character block number 7
@@ -133,7 +165,7 @@ IF _6502SP_VERSION \ Platform
 
 ELIF _MASTER_VERSION
 
- BMI BULB2              \ Jump to BULB2 to switch main memory back into
+ BMI away               \ Jump to away to switch main memory back into
                         \ &3000-&7FFF and return from the subroutine (this BMI
                         \ is effectively a JMP as we just passed through the BPL
                         \ above)

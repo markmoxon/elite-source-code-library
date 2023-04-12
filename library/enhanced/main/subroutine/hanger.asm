@@ -95,7 +95,7 @@ ENDIF
 IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label
  JSR DVID4              \ Calculate the following:
 ELIF _MASTER_VERSION
- JSR DVID4_DUPLICATE    \ Calculate the following:
+ JSR DVID4K             \ Calculate the following:
 ENDIF
                         \
                         \   (P R) = 256 * A / Q
@@ -199,10 +199,10 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION \ Tube
 
 ELIF _MASTER_VERSION
 
- LDY HCNT               \ Fetch the value of HCNT, which gets set to 0 in the
-                        \ HALL routine above if there is only one ship
+ LDY HANGFLAG           \ Fetch the value of HANGFLAG, which gets set to 0 in
+                        \ the HALL routine above if there is only one ship
 
- BEQ HA2                \ If HCNT is zero, jump to HA2 to skip the following
+ BEQ HA2                \ If HANGFLAG is zero, jump to HA2 to skip the following
                         \ as there is only one ship in the hangar
 
 ELIF _6502SP_VERSION
@@ -457,7 +457,7 @@ IF _SNG47
 
 ELIF _COMPACT
 
- JMP BULB2              \ Jump to BULB2 to switch main memory back into
+ JMP away               \ Jump to away to switch main memory back into
                         \ &3000-&7FFF and return from the subroutine
 
 ENDIF

@@ -127,13 +127,15 @@ ELIF _MASTER_VERSION
  BNE P%+8               \ is behind us, so skip the following three instructions
                         \ so we only draw a single-height dash
 
- JSR CPIX2              \ Call CPIX2 to draw a single-height dash, i.e. the top
+ JSR CPIXK              \ Call CPIXK to draw a single-height dash, i.e. the top
                         \ row of a double-height dash
 
  LDA Y1                 \ Fetch the y-coordinate of the row we just drew and
  DEC A                  \ decrement it, ready to draw the bottom row
 
- JSR CPIX2              \ Call CPIX2 to draw a single-height dash
+.DOT2
+
+ JSR CPIXK              \ Call CPIXK to draw a single-height dash
 
  LDA #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
  STA VIA+&34            \ SHEILA &34 to switch main memory back into &3000-&7FFF

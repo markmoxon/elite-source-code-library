@@ -68,7 +68,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ P
 
 ELIF _MASTER_VERSION
 
- LDY #8                 \ Call the NOISE routine with Y = 8 to make the sound
+ LDY #solaun            \ Call the NOISE routine with Y = 8 to make the sound
  JSR NOISE              \ of a missile launch
 
                         \ Fall through into ANGRY to make the missile target

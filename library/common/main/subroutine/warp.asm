@@ -386,7 +386,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT
 
 ELIF _MASTER_VERSION
 
- JMP LOWBEEP            \ Call the LOWBEEP routine to make a long, low beep, and
+ JMP BOOP               \ Call the BOOP routine to make a long, low beep, and
                         \ return from the subroutine using a tail call
 
  RTS                    \ This instruction has no effect as we already returned

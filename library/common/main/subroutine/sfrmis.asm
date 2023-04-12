@@ -96,7 +96,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR 
 
 ELIF _MASTER_VERSION
 
- LDY #8                 \ Call the NOISE routine with Y = 8 to make the sound
+ LDY #solaun            \ Call the NOISE routine with Y = 8 to make the sound
  JMP NOISE              \ of the missile being launched and return from the
                         \ subroutine using a tail call
 

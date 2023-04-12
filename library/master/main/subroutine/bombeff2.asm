@@ -15,7 +15,7 @@
 
 .BOMBEFF
 
- LDY #6                 \ Call the NOISE routine with Y = 6 to make the sound of
+ LDY #sobomb            \ Call the NOISE routine with Y = 6 to make the sound of
  JSR NOISE              \ an energy bomb going off
 
  JSR BOMBOFF            \ Our energy bomb is going off, so call BOMBOFF to draw

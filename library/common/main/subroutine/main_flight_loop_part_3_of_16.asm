@@ -118,7 +118,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ M
 
 ELIF _MASTER_VERSION
 
- JSR LOWBEEP            \ Call the LOWBEEP routine to make a low, long beep to
+ JSR BOOP               \ Call the BOOP routine to make a low, long beep to
                         \ indicate the missile is now disarmed
 
 ELIF _ELITE_A_VERSION
@@ -511,8 +511,8 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR
 
 ELIF _MASTER_VERSION
 
- JSR NOISELASER         \ Call the NOISELASER routine to make the sound of our
-                        \ laser firing
+ JSR LASNO              \ Call the LASNO routine to make the sound of our laser
+                        \ firing
 
 ENDIF
 

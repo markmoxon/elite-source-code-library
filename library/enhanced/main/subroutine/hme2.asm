@@ -107,7 +107,7 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Minor
 
 ELIF _MASTER_VERSION
 
- JSR LOWBEEP            \ Call the LOWBEEP routine to make a low, long beep to
+ JSR BOOP               \ Call the BOOP routine to make a low, long beep to
                         \ indicate a failed search
 
 ENDIF

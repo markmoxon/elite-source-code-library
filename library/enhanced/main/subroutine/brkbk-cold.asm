@@ -58,13 +58,13 @@ ELIF _MASTER_VERSION
  LDA #HI(CHPR)
  STA WRCHV+1
 
- JSR SAVEZP             \ Call SAVEZP to backup the top part of zero page
+ JSR setzp              \ Call setzp to backup the top part of zero page
 
- JSR STARTUP            \ Call STARTUP to set various vectors, interrupts and
+ JSR SETINTS            \ Call SETINTS to set various vectors, interrupts and
                         \ timers
 
- JMP SRESET             \ Call SRESET to reset the sound buffers and return from
-                        \ the subroutine using a tail call
+ JMP SOFLUSH            \ Call SOFLUSH to reset the sound buffers and return
+                        \ from the subroutine using a tail call
 
 IF _SNG47
 

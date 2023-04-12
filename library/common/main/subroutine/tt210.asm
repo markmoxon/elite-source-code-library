@@ -302,8 +302,8 @@ ELIF _MASTER_VERSION
 
  JSR TT69               \ Call TT69 to set Sentence Case and print a newline
 
- LDA TRUMBLE            \ If there are any Trumbles in the hold, skip the
- ORA TRUMBLE+1          \ following RTS and continue on (in the Master version,
+ LDA TRIBBLE            \ If there are any Trumbles in the hold, skip the
+ ORA TRIBBLE+1          \ following RTS and continue on (in the Master version,
  BNE P%+3               \ there are never any Trumbles, so this value will
                         \ always be zero)
 
@@ -322,8 +322,8 @@ ELIF _MASTER_VERSION
  LDA #0                 \ Set A = 0, for the call to TT11 below, so we don't pad
                         \ out the number of Trumbles
 
- LDX TRUMBLE            \ Fetch the number of Trumbles into (Y X)
- LDY TRUMBLE+1
+ LDX TRIBBLE            \ Fetch the number of Trumbles into (Y X)
+ LDY TRIBBLE+1
 
  JSR TT11               \ Call TT11 to print the number of Trumbles in (Y X),
                         \ with no decimal point
@@ -335,13 +335,13 @@ ELIF _MASTER_VERSION
  JSR DETOK
 
  LDA #198               \ Print extended token 198, which is blank, but would
- JSR DETOK              \ presumably contain the word "TRUMBLE" if they were
+ JSR DETOK              \ presumably contain the word "TRIBBLE" if they were
                         \ enabled
 
- LDA TRUMBLE+1          \ If we have more than 256 Trumbles, skip to DOANS
+ LDA TRIBBLE+1          \ If we have more than 256 Trumbles, skip to DOANS
  BNE DOANS
 
- LDX TRUMBLE            \ If we have exactly one Trumble, return from the
+ LDX TRIBBLE            \ If we have exactly one Trumble, return from the
  DEX                    \ subroutine (as zebra contains an RTS)
  BEQ zebra
 

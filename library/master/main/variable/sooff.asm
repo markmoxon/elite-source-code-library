@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: QUIET
+\       Name: SOOFF
 \       Type: Variable
 \   Category: Sound
 \    Summary: Sound chip data to turn the volume down on all channels and to act
@@ -8,7 +8,7 @@
 \
 \ ******************************************************************************
 
-.QUIET
+.SOOFF
 
  EQUB %11111111         \            %1         %11               %1     %1111
                         \ Latch byte (1), channel 3, volume latch (1), data 15

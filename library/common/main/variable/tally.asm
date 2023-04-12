@@ -8,7 +8,7 @@
 IF _MASTER_VERSION \ Comment
                         \
                         \ There is also a fractional part of the kill count,
-                        \ which is stored in TALLYF
+                        \ which is stored in TALLYL
 ENDIF
                         \
                         \ If the high byte in TALLY+1 is 0 then we have between

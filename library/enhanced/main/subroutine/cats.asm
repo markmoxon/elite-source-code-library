@@ -162,7 +162,7 @@ IF _MASTER_VERSION \ Master: As the Master Compact uses ADFS, this release has t
 
 IF _SNG47
 
- JSR SWAPZP             \ Call SWAPZP to restore the top part of zero page
+ JSR getzp              \ Call getzp to restore the top part of zero page
 
 ELIF _COMPACT
 
@@ -192,7 +192,7 @@ ENDIF
 
 IF _MASTER_VERSION \ Platform
 
- JSR SWAPZP             \ Call SWAPZP to restore the top part of zero page
+ JSR getzp              \ Call getzp to restore the top part of zero page
 
 ENDIF
 

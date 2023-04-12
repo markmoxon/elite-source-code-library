@@ -117,7 +117,7 @@ ENDIF
 
 IF _MASTER_VERSION \ Master: The Master version contains the code for Trumbles to take up cargo space, though as we never actually get given any Trumbles, the value is always zero
 
- ADC TRUMBLE+1          \ Add the high byte of the number of Trumbles in the
+ ADC TRIBBLE+1          \ Add the high byte of the number of Trumbles in the
                         \ hold, as 256 Trumbles take up one tonne of cargo space
 
 ENDIF

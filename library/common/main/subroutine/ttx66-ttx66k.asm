@@ -3,7 +3,7 @@
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \       Name: TTX66
 ELIF _MASTER_VERSION
-\       Name: TTX662
+\       Name: TTX66K
 ENDIF
 \       Type: Subroutine
 \   Category: Utility routines
@@ -48,7 +48,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 
 ELIF _MASTER_VERSION
 
-.TTX662
+.TTX66K
 
  JSR TTX66              \ Call TTX66 to clear the top part of the screen and
                         \ draw a white border

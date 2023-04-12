@@ -143,6 +143,11 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ P
                         \ clear and we aren't at the boundary, so we jump to
                         \ jvec to pass control to the next interrupt handler
 
+ELIF _MASTER_VERSION
+
+\BVC jvec               \ This instruction is commented out in the original
+                        \ source
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
@@ -228,7 +233,7 @@ ELIF _MASTER_VERSION
 IF _COMPACT
 
  LDA MOS                \ If MOS = 0 then this is a Master Compact, so jump to
- BEQ NOADC              \ NOADC to skip reading the ADC channels (as the Compact
+ BEQ jvec               \ jvec to skip reading the ADC channels (as the Compact
                         \ has a digital joystick rather than an analogue one)
 
 ENDIF
@@ -240,7 +245,7 @@ ENDIF
  LDA VIA+&19            \ Fetch the high byte of the value on this ADC channel
                         \ to read the relevant joystick position
 
- STA ADCH1,Y            \ Store this value in the apropriate ADCH1-ADCH3 byte
+ STA JOPOS,Y            \ Store this value in the apropriate JOPOS byte
 
  INY                    \ Increment the channel number
 
@@ -251,7 +256,7 @@ ENDIF
  LDA #0                 \ Set the ADC status byte at SHEILA &18 to 0
  STA VIA+&18
 
-.NOADC
+.jvec
 
  PLY                    \ Restore Y from the stack
 
@@ -313,8 +318,8 @@ ELIF _MASTER_VERSION
 
  PHA                    \ Store the original value of A on the stack
 
- LDA DLCNT              \ Set the line scan counter to the value of DLCNT (which
- STA DL                 \ contains 30 by default and doesn't change), so
+ LDA VSCAN+1            \ Set the line scan counter to the value of VSCAN+1
+ STA DL                 \ (which contains 30 by default and doesn't change), so
                         \ routines like WSCAN can set DL to 0 and then wait for
                         \ it to change to this value to catch the vertical sync
 
@@ -333,17 +338,6 @@ IF _6502SP_VERSION \ Screen
  STA VIA+&45            \ (SHEILA &45) to VSCAN (57) to start the T1 counter
                         \ counting down from 14622 at a rate of 1 MHz
 
-ELIF _MASTER_VERSION
-
- LDA VSCAN              \ Set 6522 System VIA T1C-L timer 1 high-order counter
- STA VIA+&45            \ (SHEILA &45) to the contents of VSCAN (57) to start
-                        \ the T1 counter counting down from 14622 at a rate of
-                        \ 1 MHz
-
-ENDIF
-
-IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
-
  LDA HFX                \ If the hyperspace effect flag in HFX is non-zero, then
  BNE jvec               \ jump up to jvec to pass control to the next interrupt
                         \ handler, instead of switching the palette to mode 1.
@@ -353,6 +347,28 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
                         \ hyperspace jump. This effect is triggered by the
                         \ parasite issuing a #DOHFX 1 command in routine LL164
                         \ and is disabled again by a #DOHFX 0 command
+
+ELIF _MASTER_VERSION
+
+ LDA VSCAN              \ Set 6522 System VIA T1C-L timer 1 high-order counter
+ STA VIA+&45            \ (SHEILA &45) to the contents of VSCAN (57) to start
+                        \ the T1 counter counting down from 14622 at a rate of
+                        \ 1 MHz
+
+ LDA HFX                \ If the hyperspace effect flag in HFX is non-zero, then
+ BNE j2vec              \ jump up to j2vec to pass control to the next interrupt
+                        \ handler, instead of switching the palette to mode 1.
+                        \ This will have the effect of blurring and colouring
+                        \ the top screen in a mode 2 palette, making the
+                        \ hyperspace rings turn multicoloured when we do a
+                        \ hyperspace jump. This effect is triggered by the
+                        \ parasite issuing a #DOHFX 1 command in routine LL164
+                        \ and is disabled again by a #DOHFX 0 command
+
+
+ENDIF
+
+IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  LDA #%00011000         \ Set the Video ULA control register (SHEILA &20) to
  STA VIA+&20            \ %00011000, which is the same as switching to mode 1
@@ -398,10 +414,13 @@ ENDIF
 
 IF _MASTER_VERSION \ Platform
 
-.jvec
+\LDA svn                \ These instructions are commented out in the original
+\BMI jvecOS             \ source
 
- PHX                    \ Call NOISE2 to send the current sound data to the
- JSR NOISE2             \ 76489 sound chip, stashing X on the stack so it gets
+.j2vec
+
+ PHX                    \ Call SOINT to send the current sound data to the
+ JSR SOINT              \ 76489 sound chip, stashing X on the stack so it gets
  PLX                    \ preserved across the call
 
  PLA                    \ Restore A from the stack

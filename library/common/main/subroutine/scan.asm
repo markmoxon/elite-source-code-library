@@ -24,7 +24,13 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF _MASTER_VERSION OR _ELITE_A_6502SP_PARA \ Platform
+IF _MASTER_VERSION \ Platform
+
+.SCR1
+
+ RTS                    \ Return from the subroutine
+
+ELIF _ELITE_A_6502SP_PARA
 
 .SC5
 
@@ -36,25 +42,44 @@ ENDIF
 
  LDA INWK+31            \ Fetch the ship's scanner flag from byte #31
 
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Minor
+
  AND #%00010000         \ If bit 4 is clear then the ship should not be shown
  BEQ SC5                \ on the scanner, so return from the subroutine (as SC5
                         \ contains an RTS)
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Minor
-
  LDA TYPE               \ Fetch the ship's type from TYPE into A
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION
+
+ AND #%00010000         \ If bit 4 is clear then the ship should not be shown
+ BEQ SC5                \ on the scanner, so return from the subroutine (as SC5
+                        \ contains an RTS)
+
+ LDX TYPE               \ Fetch the ship's type from TYPE into X
+
+ELIF _MASTER_VERSION
+
+ AND #%00010000         \ If bit 4 is clear then the ship should not be shown
+ BEQ SCR1               \ on the scanner, so return from the subroutine (as SCR1
+                        \ contains an RTS)
 
  LDX TYPE               \ Fetch the ship's type from TYPE into X
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 
  BMI SC5                \ If this is the planet or the sun, then the type will
                         \ have bit 7 set and we don't want to display it on the
                         \ scanner, so return from the subroutine (as SC5
+                        \ contains an RTS)
+
+ELIF _MASTER_VERSION
+
+ BMI SCR1               \ If this is the planet or the sun, then the type will
+                        \ have bit 7 set and we don't want to display it on the
+                        \ scanner, so return from the subroutine (as SCR1
                         \ contains an RTS)
 
 ELIF _ELECTRON_VERSION
@@ -205,11 +230,23 @@ ELIF _ELITE_A_6502SP_PARA
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label
+
  LDA INWK+1             \ If any of x_hi, y_hi and z_hi have a 1 in bit 6 or 7,
  ORA INWK+4             \ then the ship is too far away to be shown on the
  ORA INWK+7             \ scanner, so return from the subroutine (as SC5
  AND #%11000000         \ contains an RTS)
  BNE SC5
+
+ELIF _MASTER_VERSION
+
+ LDA INWK+1             \ If any of x_hi, y_hi and z_hi have a 1 in bit 6 or 7,
+ ORA INWK+4             \ then the ship is too far away to be shown on the
+ ORA INWK+7             \ scanner, so return from the subroutine (as SCR1
+ AND #%11000000         \ contains an RTS)
+ BNE SCR1
+
+ENDIF
 
                         \ If we get here, we know x_hi, y_hi and z_hi are all
                         \ 63 (%00111111) or less
@@ -379,7 +416,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Label
 
  BPL ld246              \ If the result has bit 0 clear, then the result has
                         \ overflowed and is bigger than 256, so jump to ld246 to
@@ -387,7 +424,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ 
                         \ instruction isn't required as we test both the maximum
                         \ and minimum below, but it might save a few cycles)
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION
 
  BPL FIXIT              \ If the result has bit 0 clear, then the result has
                         \ overflowed and is bigger than 256, so jump to FIXIT to
@@ -406,11 +443,11 @@ ENDIF
  CMP #247               \ If A < 247, skip the following instruction, as 246 is
  BCC P%+4               \ the maximum allowed value of A
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Label
 
 .ld246
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION
 
 .FIXIT
 
@@ -435,7 +472,7 @@ ELIF _MASTER_VERSION
  LDY #%00001111         \ Set bits 1 and 2 of the Access Control Register at
  STY VIA+&34            \ SHEILA &34 to switch screen memory into &3000-&7FFF
 
- JSR CPIX2              \ Call CPIX2 to draw a single-height dash at the
+ JSR CPIXK              \ Call CPIXK to draw a single-height dash at the
                         \ y-coordinate in A, and return the dash's right pixel
                         \ byte in R, which we use below
 
@@ -830,21 +867,21 @@ ELIF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- BEQ RTS                \ If the stick height is zero, then there is no stick to
-                        \ draw, so return from the subroutine (as RTS contains
+ BEQ VLO5               \ If the stick height is zero, then there is no stick to
+                        \ draw, so return from the subroutine (as VLO5 contains
                         \ an RTS)
 
- BCC VL3                \ If the C flag is clear then the stick height in A is
+ BCC VLO1               \ If the C flag is clear then the stick height in A is
                         \ negative, so jump down to RTS+1
 
  TAX                    \ Copy the (positive) stick height into X
 
  INX                    \ Increment the (positive) stick height in X
 
- JMP VLL1a              \ Jump into the middle of the VLL1 loop, skipping the
+ JMP VLO4               \ Jump into the middle of the VLOL1 loop, skipping the
                         \ drawing of first pixel in the stick
 
-.VLL1
+.VLOL1
 
  LDA R                  \ The call to CPIX2 above saved the dash's right pixel
                         \ byte in R, so we load this into A (so the stick comes
@@ -853,7 +890,7 @@ ELIF _MASTER_VERSION
  EOR (SC),Y             \ Draw the bottom row of the double-height dot using the
  STA (SC),Y             \ same byte as the top row, plotted using EOR logic
 
-.VLL1a
+.VLO4
 
                         \ If we get here then the stick length is positive (so
                         \ the dot is below the ellipse and the stick is above
@@ -863,8 +900,8 @@ ELIF _MASTER_VERSION
  DEY                    \ We want to draw the stick upwards, so decrement the
                         \ pixel row in Y
 
- BPL VL1                \ If Y is still positive then it correctly points at the
-                        \ line above, so jump to VL1 to skip the following
+ BPL VLO3               \ If Y is still positive then it correctly points at the
+                        \ line above, so jump to VLO3 to skip the following
 
  LDA SC+1               \ Subtract 2 from the high byte of the screen address to
  SBC #2                 \ move to the character block above
@@ -875,21 +912,21 @@ ELIF _MASTER_VERSION
                         \ in the character above, so set Y to 7, the number of
                         \ the last row
 
-.VL1
+.VLO3
 
  DEX                    \ Decrement the (positive) stick height in X
 
- BNE VLL1               \ If we still have more stick to draw, jump up to VLL1
+ BNE VLOL1              \ If we still have more stick to draw, jump up to VLOL1
                         \ to draw the next pixel
 
-.RTS
+.VLO5
 
  LDA #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
  STA VIA+&34            \ SHEILA &34 to switch main memory back into &3000-&7FFF
 
  RTS                    \ Return from the subroutine
 
-.VL3
+.VLO1
 
                         \ If we get here then the stick length is negative (so
                         \ the dot is above the ellipse and the stick is below
@@ -904,10 +941,10 @@ ELIF _MASTER_VERSION
 
  INX                    \ Increment the (positive) stick height in X
 
- JMP VLL2a              \ Jump into the middle of the VLL2 loop, skipping the
+ JMP VLO6               \ Jump into the middle of the VLOL2 loop, skipping the
                         \ drawing of first pixel in the stick
 
-.VLL2
+.VLOL2
 
  LDA R                  \ The call to CPIX2 above saved the dash's right pixel
                         \ byte in R, so we load this into A (so the stick comes
@@ -916,7 +953,7 @@ ELIF _MASTER_VERSION
  EOR (SC),Y             \ Draw the bottom row of the double-height dot using the
  STA (SC),Y             \ same byte as the top row, plotted using EOR logic
 
-.VLL2a
+.VLO6
 
  INY                    \ We want to draw the stick itself, heading downwards,
                         \ so increment the pixel row in Y
@@ -936,7 +973,7 @@ ELIF _MASTER_VERSION
 
  DEX                    \ Decrement the (positive) stick height in X
 
- BNE VLL2               \ If we still have more stick to draw, jump up to VLL2
+ BNE VLOL2              \ If we still have more stick to draw, jump up to VLOL2
                         \ to draw the next pixel
 
  LDA #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
@@ -969,8 +1006,8 @@ ELIF _ELITE_A_FLIGHT
                         \ so increment the pixel row in Y
 
  CPY #8                 \ If the row number in Y is less than 8, then it
- BNE VL2                \ correctly points at the next line down, so jump to
-                        \ VL2 to skip the following
+ BNE VLO7               \ correctly points at the next line down, so jump to
+                        \ VLO7 to skip the following
 
  LDY #0                 \ We just incremented Y down through the bottom of the
                         \ character block, so we need to move it to the first
@@ -980,7 +1017,7 @@ ELIF _ELITE_A_FLIGHT
  INC SC+1               \ Increment the high byte of the screen address to move
                         \ to the character block above
 
-.VL2
+.VLO7
 
  LDA X1                 \ Set A to the character row byte for the stick, which
                         \ we stored in X1 above, and which has the same pixel

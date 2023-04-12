@@ -1,13 +1,13 @@
 \ ******************************************************************************
 \
-\       Name: NOISEHIT
+\       Name: ELASNO
 \       Type: Subroutine
 \   Category: Sound
 \    Summary: Make the sound of us being hit
 \
 \ ******************************************************************************
 
-.NOISEHIT
+.ELASNO
 
  LDY #9                 \ Call the NOISE routine with Y = 9 to make the first
  JSR NOISE              \ sound of us being hit

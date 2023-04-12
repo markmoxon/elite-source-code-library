@@ -35,7 +35,17 @@ INCLUDE "library/common/main/variable/t1.asm"
 
 IF _MASTER_VERSION \ Platform
 
- SKIP 3                 \ These bytes appear to be unused
+.T2
+
+ SKIP 1                 \ This byte appears to be unused
+
+.T3
+
+ SKIP 1                 \ This byte appears to be unused
+
+.T4
+
+ SKIP 1                 \ This byte appears to be unused
 
 ENDIF
 
@@ -285,7 +295,7 @@ INCLUDE "library/common/main/variable/cnt2.asm"
 INCLUDE "library/common/main/variable/stp.asm"
 INCLUDE "library/common/main/variable/xx4.asm"
 INCLUDE "library/common/main/variable/xx20.asm"
-INCLUDE "library/common/main/variable/xx14.asm"
+INCLUDE "library/common/main/variable/xx14-lsnum.asm"
 INCLUDE "library/common/main/variable/rat.asm"
 INCLUDE "library/common/main/variable/rat2.asm"
 INCLUDE "library/common/main/variable/k2.asm"
@@ -299,10 +309,10 @@ INCLUDE "library/advanced/main/variable/messxc.asm"
 ELIF _MASTER_VERSION
 
 INCLUDE "library/advanced/main/variable/widget.asm"
-INCLUDE "library/master/main/variable/xmax.asm"
-INCLUDE "library/master/main/variable/ymax.asm"
+INCLUDE "library/master/main/variable/dontclip.asm"
+INCLUDE "library/master/main/variable/yx2m1.asm"
 INCLUDE "library/advanced/main/variable/messxc.asm"
-INCLUDE "library/master/main/variable/deltx.asm"
+INCLUDE "library/master/main/variable/newzp.asm"
 INCLUDE "library/common/main/variable/xx1.asm"
 INCLUDE "library/common/main/variable/inwk.asm"
 INCLUDE "library/common/main/variable/xx19.asm"

@@ -1,4 +1,4 @@
-.TRUMBLE
+.TRIBBLE
 
  SKIP 2                 \ The number of Trumbles in the cargo hold
                         \

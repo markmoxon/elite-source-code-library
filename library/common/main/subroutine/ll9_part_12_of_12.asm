@@ -93,7 +93,7 @@ ELIF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDY XX14               \ Set Y to the offset in the line heap XX14
+ LDY LSNUM              \ Set Y to the offset in the line heap LSNUM
 
 ENDIF
 
@@ -125,13 +125,13 @@ ELIF _MASTER_VERSION
 
 .LSC1
 
- CPY XX14+1             \ If Y >= XX14+1, jump to LSC2 to return from the ship
+ CPY LSNUM2             \ If Y >= LSNUM2, jump to LSC2 to return from the ship
  BCS LSC2               \ drawing routine, because the index in Y is greater
                         \ than the size of the existing ship line heap, which
                         \ means we have alrady erased all the old ship's lines
                         \ when drawing the new ship
 
-                        \ If we get here then Y < XX14+1, which means Y is
+                        \ If we get here then Y < LSNUM2, which means Y is
                         \ pointing to an on-screen line from the old ship that
                         \ we need to erase
 
@@ -151,7 +151,7 @@ ELIF _MASTER_VERSION
  INY                    \ it in XX15+3, incrementing the heap pointer
  STA XX15+3
 
- JSR LL30               \ Draw a line from (X1, Y1) to (X2, Y2) to erase it from
+ JSR LOIN               \ Draw a line from (X1, Y1) to (X2, Y2) to erase it from
                         \ the screen
 
 ELIF _6502SP_VERSION
@@ -177,7 +177,7 @@ ELIF _MASTER_VERSION
 
 .LSC2
 
- LDA XX14               \ Store XX14 in the first byte of the ship line heap
+ LDA LSNUM              \ Store LSNUM in the first byte of the ship line heap
  LDY #0
  STA (XX19),Y
 

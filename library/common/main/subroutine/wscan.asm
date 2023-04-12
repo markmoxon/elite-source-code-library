@@ -38,7 +38,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Label
                         \ video system, so DL will change to a non-zero value
                         \ at the start of each screen refresh)
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION
 
 .WSCAN1
 
@@ -47,6 +47,22 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ which is run when vertical sync has occurred on the
                         \ video system, so DL will change to a non-zero value
                         \ at the start of each screen refresh)
+
+ELIF _MASTER_VERSION
+
+{
+.DELL1                  \ This label is a duplicate of a label in the DELT
+                        \ routine (which is why we need to surround it with
+                        \ braces, as BeebAsm doesn't allow us to redefine
+                        \ labels, unlike BBC BASIC)
+
+ LDA DL                 \ Loop round these two instructions until DL is no
+ BEQ DELL1              \ longer 0 (DL gets set to 30 in the LINSCN routine,
+                        \ which is run when vertical sync has occurred on the
+                        \ video system, so DL will change to a non-zero value
+                        \ at the start of each screen refresh)
+
+}
 
 ENDIF
 

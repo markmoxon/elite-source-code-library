@@ -114,8 +114,8 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR
 
 ELIF _MASTER_VERSION
 
- LDA P                  \ Store the high byte of delta_x in deltX
- STA deltX
+ LDA P                  \ Store the high byte of delta_x in newzp
+ STA newzp
 
  EOR RAT2               \ Set S = P but with the sign from RAT2, so we now have
  STA S                  \ the distance delta_x with the correct sign in (S R):
@@ -277,13 +277,13 @@ ELIF _MASTER_VERSION
  AND #%01111111         \ Set A = ~|x_hi|, which is the same as -(x_hi + 1)
  EOR #%01111111         \ using two's complement
 
- CMP deltX              \ If deltX <= -(x_hi + 1), then the particle has been
+ CMP newzp              \ If newzp <= -(x_hi + 1), then the particle has been
  BCC KILL2              \ moved off the side of the screen and has wrapped
  BEQ KILL2              \ round to the other side, jump to KILL2 to recycle this
                         \ particle and re-join at STC2 with the new particle
                         \
                         \ In the other BBC versions, this test simply checks
-                        \ whether |x_hi| >= 116, but this version using deltX
+                        \ whether |x_hi| >= 116, but this version using newzp
                         \ doesn't hard-code the screen width, so this is
                         \ presumably a change that was introduced to support
                         \ the different screen sizes of the other platforms

@@ -149,6 +149,20 @@
  WHITE2  = %00111111    \ Two mode 2 pixels of colour 7    (white)
  STRIPE  = %00100011    \ Two mode 2 pixels of colour 5, 1 (magenta/red)
 
+ soboop  = 0            \ Sound 0  = Long, low beep
+ sobeep  = 1            \ Sound 1  = Short, high beep
+ soclick = 2            \ SOund 2  = This sound is not defined or used
+ solaser = 3            \ Sound 3  = Lasers fired by us 1
+ soexpl  = 4            \ Sound 4  = We died / Collision / Being hit by lasers 2
+ solas2  = 5            \ Sound 5  = Lasers fired by us 2
+ sohit   = 6            \ Sound 6  = We made a hit/kill / Other ship exploding
+ sobomb  = 6            \ Sound 6  = Energy bomb
+ soecm   = 7            \ Sound 7  = E.C.M. on
+ solaun  = 8            \ Sound 8  = Missile launched / Ship launch
+                        \ Sound 9  = Being hit by lasers 1 (no variable defined)
+ sohyp   = 10           \ Sound 10 = Hyperspace drive engaged 1
+ sohyp2  = 11           \ Sound 11 = Hyperspace drive engaged 2
+
  NRU% = 0               \ The number of planetary systems with extended system
                         \ description overrides in the RUTOK table. The value of
                         \ this variable is 0 in the original source, but this
@@ -172,16 +186,24 @@
 
  LS% = &0800            \ The start of the descending ship line heap
 
+ TAP% = LS% - 111       \ The staging area where we copy files after loading and
+                        \ before saving (though this isn't actually used in this
+                        \ version, and is left-over Commodore 64 code)
+
+ commbuf = &0E7E        \ The file buffer where we load and save commander files
+                        \ (this shares a location with LSX2 and is the address
+                        \ used in the *SAVE and *LOAD OS commands)
+
  XX21 = &8000           \ The address of the ship blueprints lookup table, as
                         \ set in elite-data.asm
 
  E% = &8042             \ The address of the default NEWB ship bytes, as set in
                         \ elite-data.asm
 
- TALLYFRAC = &8063      \ The address of the kill tally fraction table, as set
+ KWL% = &8063           \ The address of the kill tally fraction table, as set
                         \ in elite-data.asm
 
- TALLYINT = &8084       \ The address of the kill tally integer table, as set in
+ KWH% = &8084           \ The address of the kill tally integer table, as set in
                         \ elite-data.asm
 
  QQ18 = &A000           \ The address of the text token table, as set in
@@ -249,30 +271,29 @@ INCLUDE "library/advanced/main/variable/tvt3.asm"
 INCLUDE "library/common/main/variable/vec.asm"
 INCLUDE "library/common/main/subroutine/wscan.asm"
 INCLUDE "library/common/main/subroutine/delay.asm"
-INCLUDE "library/master/main/subroutine/lowbeep.asm"
+INCLUDE "library/master/main/subroutine/boop.asm"
 INCLUDE "library/common/main/subroutine/beep.asm"
-INCLUDE "library/master/main/variable/channel.asm"
-INCLUDE "library/master/main/variable/quiet.asm"
-INCLUDE "library/master/main/subroutine/sound.asm"
-INCLUDE "library/master/main/subroutine/sreset.asm"
-INCLUDE "library/master/main/subroutine/noisehit.asm"
-INCLUDE "library/master/main/subroutine/noiselaser.asm"
+INCLUDE "library/master/main/variable/sofh.asm"
+INCLUDE "library/master/main/variable/sooff.asm"
+INCLUDE "library/master/main/subroutine/sous1.asm"
+INCLUDE "library/master/main/subroutine/soflush.asm"
+INCLUDE "library/master/main/subroutine/elasno.asm"
+INCLUDE "library/master/main/subroutine/lasno.asm"
 INCLUDE "library/common/main/subroutine/noise.asm"
-INCLUDE "library/master/main/subroutine/noise2.asm"
-INCLUDE "library/master/main/variable/sbuf.asm"
-INCLUDE "library/master/main/variable/sfx1.asm"
-INCLUDE "library/master/main/variable/sfx2.asm"
-INCLUDE "library/master/main/variable/sfx3.asm"
-INCLUDE "library/master/main/variable/sfx4.asm"
-INCLUDE "library/advanced/main/subroutine/startup.asm"
+INCLUDE "library/master/main/subroutine/soint.asm"
+INCLUDE "library/master/main/variable/soflg.asm"
+INCLUDE "library/master/main/variable/sfxpr.asm"
+INCLUDE "library/master/main/variable/sfxbt.asm"
+INCLUDE "library/master/main/variable/sfxfq.asm"
+INCLUDE "library/master/main/variable/sfxvc.asm"
+INCLUDE "library/advanced/main/subroutine/startup-setints.asm"
 INCLUDE "library/advanced/main/variable/tvt1.asm"
 INCLUDE "library/common/main/subroutine/irq1.asm"
 INCLUDE "library/master/main/variable/vscan.asm"
-INCLUDE "library/master/main/variable/dlcnt.asm"
 INCLUDE "library/advanced/main/subroutine/setvdu19-dovdu19.asm"
-INCLUDE "library/master/main/subroutine/savezp.asm"
+INCLUDE "library/master/main/subroutine/setzp.asm"
 INCLUDE "library/master/main/subroutine/nmirelease.asm"
-INCLUDE "library/master/main/subroutine/swapzp.asm"
+INCLUDE "library/master/main/subroutine/getzp.asm"
 INCLUDE "library/master/main/subroutine/nmiclaim.asm"
 INCLUDE "library/advanced/main/variable/ylookup.asm"
 INCLUDE "library/master/main/subroutine/shift.asm"
@@ -307,13 +328,13 @@ INCLUDE "library/common/main/subroutine/spblb-dobulb.asm"
 INCLUDE "library/common/main/variable/spbt.asm"
 INCLUDE "library/common/main/variable/ecbt.asm"
 INCLUDE "library/common/main/subroutine/msbar.asm"
-INCLUDE "library/master/main/variable/hcnt.asm"
+INCLUDE "library/master/main/variable/hangflag.asm"
 INCLUDE "library/enhanced/main/subroutine/hanger.asm"
 INCLUDE "library/enhanced/main/subroutine/has2.asm"
 INCLUDE "library/enhanced/main/subroutine/has3.asm"
 INCLUDE "library/common/main/subroutine/dvid4-dvid4_duplicate.asm"
 INCLUDE "library/advanced/main/subroutine/cls.asm"
-INCLUDE "library/advanced/main/subroutine/tt67-tt67_duplicate.asm"
+INCLUDE "library/advanced/main/subroutine/tt67-tt67x.asm"
 INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
 INCLUDE "library/advanced/main/subroutine/ttx66.asm"
 INCLUDE "library/common/main/subroutine/zes1.asm"
@@ -586,6 +607,9 @@ INCLUDE "library/enhanced/main/subroutine/mt23.asm"
 INCLUDE "library/enhanced/main/subroutine/mt29.asm"
 INCLUDE "library/enhanced/main/subroutine/pas1.asm"
 INCLUDE "library/enhanced/main/subroutine/pause2.asm"
+INCLUDE "library/common/main/subroutine/ginf.asm"
+INCLUDE "library/common/main/subroutine/ping.asm"
+INCLUDE "library/enhanced/main/variable/mtin.asm"
 
 \ ******************************************************************************
 \
@@ -612,9 +636,6 @@ INCLUDE "library/enhanced/main/subroutine/pause2.asm"
  CODE_D% = P%
  LOAD_D% = LOAD% + P% - CODE%
 
-INCLUDE "library/common/main/subroutine/ginf.asm"
-INCLUDE "library/common/main/subroutine/ping.asm"
-INCLUDE "library/enhanced/main/variable/mtin.asm"
 INCLUDE "library/master/main/subroutine/scaley.asm"
 INCLUDE "library/master/main/subroutine/scaley2.asm"
 INCLUDE "library/master/main/subroutine/scalex.asm"
@@ -1000,7 +1021,7 @@ INCLUDE "library/common/main/subroutine/look1.asm"
 INCLUDE "library/common/main/subroutine/sight.asm"
 INCLUDE "library/master/main/variable/sightcol.asm"
 INCLUDE "library/common/main/subroutine/tt66.asm"
-INCLUDE "library/common/main/subroutine/ttx66-ttx662.asm"
+INCLUDE "library/common/main/subroutine/ttx66-ttx66k.asm"
 INCLUDE "library/advanced/main/variable/trantable-trtb_per_cent.asm"
 INCLUDE "library/common/main/variable/kytb-ikns.asm"
 INCLUDE "library/master/main/subroutine/fillkl.asm"

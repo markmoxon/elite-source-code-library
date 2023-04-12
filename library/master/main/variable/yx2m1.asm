@@ -1,4 +1,4 @@
-.YMAX
+.Yx2M1
 
  SKIP 1                 \ This is used to store the number of pixel rows in the
                         \ space view, which is also the y-coordinate of the

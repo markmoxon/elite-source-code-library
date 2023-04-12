@@ -1,13 +1,13 @@
 \ ******************************************************************************
 \
-\       Name: NOISELASER
+\       Name: LASNO
 \       Type: Subroutine
 \   Category: Sound
 \    Summary: Make the sound of our laser firing
 \
 \ ******************************************************************************
 
-.NOISELASER
+.LASNO
 
  LDY #3                 \ Call the NOISE routine with Y = 3 to make the first
  JSR NOISE              \ sound of us firing our lasers

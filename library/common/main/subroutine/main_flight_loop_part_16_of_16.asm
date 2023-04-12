@@ -91,7 +91,7 @@ ENDIF
 
 IF _MASTER_VERSION \ Master: The Master version has a unique E.C.M. sound
 
- LDY #7                 \ Call the NOISE routine with Y = 7 to make the sound of
+ LDY #soecm             \ Call the NOISE routine with Y = 7 to make the sound of
  JSR NOISE              \ the E.C.M.
 
 ENDIF

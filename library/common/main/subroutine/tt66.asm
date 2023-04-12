@@ -41,7 +41,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 
 ELIF _MASTER_VERSION
 
-                        \ Fall through into TTX662 to clear the screen and draw
+                        \ Fall through into TTX66K to clear the screen and draw
                         \ a white border
 
 ENDIF

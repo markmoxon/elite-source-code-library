@@ -1,6 +1,10 @@
 \ ******************************************************************************
 \
+IF _6502SP_VERSION \ Comment
 \       Name: LL30
+ELIF _MASTER_VERSION
+\       Name: LOIN
+ENDIF
 \       Type: Subroutine
 \   Category: Drawing lines
 IF _6502SP_VERSION \ Comment
@@ -24,9 +28,9 @@ ENDIF
 \
 \ ******************************************************************************
 
-.LL30
-
 IF _6502SP_VERSION \ Tube
+
+.LL30
 
  LDA #129               \ Send an OSWRCH 129 command to the I/O processor to
  JSR OSWRCH             \ tell it to start receiving a new line to draw. The
@@ -49,12 +53,14 @@ IF _6502SP_VERSION \ Tube
 
 ELIF _MASTER_VERSION
 
+.LOIN
+
  STY YSAV               \ Store Y in YSAV so we can retrieve it below
 
  LDA #%00001111         \ Set bits 1 and 2 of the Access Control Register at
  STA VIA+&34            \ SHEILA &34 to switch screen memory into &3000-&7FFF
 
- JSR LOIN               \ Draw a line from (X1, Y1) to (X2, Y2)
+ JSR LOINQ              \ Draw a line from (X1, Y1) to (X2, Y2)
 
  LDA #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
  STA VIA+&34            \ SHEILA &34 to switch main memory back into &3000-&7FFF

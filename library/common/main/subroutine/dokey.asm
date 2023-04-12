@@ -500,7 +500,7 @@ ENDIF
 
 IF _SNG47
 
- LDA ADCH1              \ Fetch the high byte of the joystick X value
+ LDA JOPOS              \ Fetch the high byte of the joystick X value
 
  EOR JSTE               \ The high byte A is now EOR'd with the value in
                         \ location JSTE, which contains &FF if both joystick
@@ -512,7 +512,7 @@ IF _SNG47
 
  STA JSTX               \ Store the resulting joystick X value in JSTX
 
- LDA ADCH2              \ Fetch the high byte of the joystick Y value
+ LDA JOPOS+1            \ Fetch the high byte of the joystick Y value
 
  EOR #&FF               \ This EOR is used in conjunction with the EOR JSTGY
                         \ below, as having a value of 0 in JSTGY means we have

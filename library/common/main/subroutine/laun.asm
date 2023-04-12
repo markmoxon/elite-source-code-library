@@ -20,7 +20,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ 
 
 ELIF _MASTER_VERSION
 
- LDY #8                 \ Call the NOISE routine with Y = 8 to make the sound
+ LDY #solaun            \ Call the NOISE routine with Y = 8 to make the sound
  JSR NOISE              \ of the ship launching from the station
 
 ELIF _ELITE_A_VERSION

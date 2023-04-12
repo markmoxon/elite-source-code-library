@@ -82,7 +82,7 @@ ELIF _MASTER_VERSION
  TXS                    \ location stack, so that's back to the value it had
                         \ before we change it in the SVE routine
 
- JSR SWAPZP             \ Call SWAPZP to restore the top part of zero page
+ JSR getzp              \ Call getzp to restore the top part of zero page
 
  STZ CATF               \ Set the CATF flag to 0, so the TT26 routine reverts to
                         \ standard formatting

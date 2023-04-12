@@ -164,7 +164,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ M
 
 ELIF _MASTER_VERSION
 
- LDA YMAX               \ Set Y to the y-coordinate of the bottom of the space
+ LDA Yx2M1              \ Set Y to the y-coordinate of the bottom of the space
                         \ view, i.e. 191
 
 ENDIF
@@ -201,7 +201,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ M
 
 ELIF _MASTER_VERSION
 
- LDA YMAX               \ Set (A X) = y-coordinate of bottom of screen - K4(1 0)
+ LDA Yx2M1              \ Set (A X) = y-coordinate of bottom of screen - K4(1 0)
  SEC                    \
  SBC K4                 \ Starting with the low bytes
  TAX

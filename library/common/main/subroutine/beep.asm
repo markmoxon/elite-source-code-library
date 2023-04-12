@@ -23,7 +23,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT
 
 ELIF _MASTER_VERSION
 
- LDY #1                 \ Call the NOISE routine with Y = 1 to make a short,
+ LDY #sobeep            \ Call the NOISE routine with Y = 1 to make a short,
  BRA NOISE              \ high beep, returning from the subroutine using a tail
                         \ call
 

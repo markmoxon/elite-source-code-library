@@ -20,7 +20,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR
 
 ELIF _MASTER_VERSION
 
- LDY #4                 \ Call the NOISE routine with Y = 4 to make the sound of
+ LDY #soexpl            \ Call the NOISE routine with Y = 4 to make the sound of
  JSR NOISE              \ us dying
 
 ENDIF

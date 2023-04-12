@@ -1,13 +1,16 @@
 \ ******************************************************************************
 \
-\       Name: HCNT
+\       Name: SFXVC
 \       Type: Variable
-\   Category: Ship hangar
-\    Summary: The number of ships being displayed in the ship hangar
+\   Category: Sound
+\    Summary: Sound data block 4
 \
 \ ******************************************************************************
 
-.HCNT
+.SFXVC
 
- EQUB 0
+ EQUB &FF, &FF, &00
+ EQUB &03, &1F, &01
+ EQUB &07, &07, &0F
+ EQUB &03, &0F, &0F
 

@@ -959,8 +959,8 @@ ELIF _MASTER_VERSION
                         \ so increment the pixel row in Y
 
  CPY #8                 \ If the row number in Y is less than 8, then it
- BNE VL2                \ correctly points at the next line down, so jump to
-                        \ VL2 to skip the following
+ BNE VLO7               \ correctly points at the next line down, so jump to
+                        \ VLO7 to skip the following
 
  LDA SC+1               \ We just incremented Y down through the bottom of the
  ADC #1                 \ character block, so increment the high byte of the
@@ -969,7 +969,7 @@ ELIF _MASTER_VERSION
  LDY #0                 \ We need to move to the first row in the character
                         \ below, so set Y to 0, the number of the first row
 
-.VL2
+.VLO7
 
  DEX                    \ Decrement the (positive) stick height in X
 
@@ -1006,8 +1006,8 @@ ELIF _ELITE_A_FLIGHT
                         \ so increment the pixel row in Y
 
  CPY #8                 \ If the row number in Y is less than 8, then it
- BNE VLO7               \ correctly points at the next line down, so jump to
-                        \ VLO7 to skip the following
+ BNE VL2                \ correctly points at the next line down, so jump to
+                        \ VL2 to skip the following
 
  LDY #0                 \ We just incremented Y down through the bottom of the
                         \ character block, so we need to move it to the first
@@ -1017,7 +1017,7 @@ ELIF _ELITE_A_FLIGHT
  INC SC+1               \ Increment the high byte of the screen address to move
                         \ to the character block above
 
-.VLO7
+.VL2
 
  LDA X1                 \ Set A to the character row byte for the stick, which
                         \ we stored in X1 above, and which has the same pixel

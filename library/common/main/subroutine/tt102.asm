@@ -383,10 +383,10 @@ ELIF _ELECTRON_VERSION
 ELIF _MASTER_VERSION
 
  CMP #f1                \ If red key f1 was pressed, jump to BVIEW
- BEQ BVIEW
+ BEQ chview1
 
  CMP #f2                \ If red key f2 was pressed, jump to LVIEW
- BEQ LVIEW
+ BEQ chview2
 
  CMP #f3                \ If red key f3 was not pressed, jump to LABEL_3 to keep
  BNE LABEL_3            \ checking for which key was pressed
@@ -398,7 +398,7 @@ ELIF _MASTER_VERSION
                         \ &2C &A2 &02, or BIT &02A2, which does nothing apart
                         \ from affect the flags
 
-.LVIEW
+.chview2
 
  LDX #2                 \ If we jump to here, red key f2 was pressed, so set the
                         \ view number in X to 2 for the left view
@@ -407,7 +407,7 @@ ELIF _MASTER_VERSION
                         \ &2C &A2 &01, or BIT &02A2, which does nothing apart
                         \ from affect the flags
 
-.BVIEW
+.chview1
 
  LDX #1                 \ If we jump to here, red key f1 was pressed, so set the
                         \ view number in X to 1 for the rear view

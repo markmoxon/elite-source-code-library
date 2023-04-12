@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: MT31
+\       Name: OTHERFILEPR
 \       Type: Subroutine
 \   Category: Text
 \    Summary: Display the non-selected media (disc or tape)
@@ -8,7 +8,7 @@
 \
 \ ******************************************************************************
 
-.MT31
+.OTHERFILEPR
 
  LDA #2                 \ Print extended token 2 - DISK, i.e. token 2 or 3 (as
  SEC                    \ DISK can be 0 or &FF). In other versions of the game,

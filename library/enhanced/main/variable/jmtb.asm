@@ -57,12 +57,12 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION \ Advanced: The 6502SP version has an extend
 ELIF _6502SP_VERSION
  EQUW WHITETEXT         \ Token 30: White text
 ELIF _MASTER_VERSION
- EQUW MT30              \ Token 30: Display currently selected media (disc/tape)
+ EQUW FILEPR            \ Token 30: Display currently selected media (disc/tape)
 ENDIF
 IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: The Master version has an extended jump token for displaying the non-selected file system, though this token isn't actually used as the file system can't be changed from disc
  EQUW DASC              \ Token 31: Unused
 ELIF _MASTER_VERSION
- EQUW MT31              \ Token 31: Display the non-selected media (disc/tape)
+ EQUW OTHERFILEPR       \ Token 31: Display the non-selected media (disc/tape)
 ENDIF
  EQUW DASC              \ Token 32: Unused
 

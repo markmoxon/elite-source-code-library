@@ -231,9 +231,19 @@ ENDIF
  LDA XX3+1,X            \ Fetch the x_hi coordinate of the edge's end vertex
  STA XX15+5             \ from the XX3 heap into XX15+5
 
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Label
+
  JSR LL147              \ Call LL147 to see if the new line segment needs to be
                         \ clipped to fit on-screen, returning the clipped line's
                         \ end-points in (X1, Y1) and (X2, Y2)
+
+ELIF _MASTER_VERSION
+
+ JSR CLIP2              \ Call CLIP2 to see if the new line segment needs to be
+                        \ clipped to fit on-screen, returning the clipped line's
+                        \ end-points in (X1, Y1) and (X2, Y2)
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
 
@@ -251,9 +261,9 @@ ELIF _DISC_VERSION OR _ELITE_A_VERSION
 
 ENDIF
 
-IF _MASTER_VERSION \ Master: The Master implements flicker-free ship drawing using the LLX30 routine, which manages the erasing and drawing of individual lines
+IF _MASTER_VERSION \ Master: The Master implements flicker-free ship drawing using the LSPUT routine, which manages the erasing and drawing of individual lines
 
- JSR LLX30              \ Draw this edge using flicker-free animation, by first
+ JSR LSPUT              \ Draw this edge using flicker-free animation, by first
                         \ drawing the ship's new line and then erasing the
                         \ corresponding old line from the screen
 

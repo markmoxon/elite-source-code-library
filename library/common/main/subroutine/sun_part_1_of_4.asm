@@ -27,6 +27,12 @@
 \
 \ ******************************************************************************
 
+IF _MASTER_VERSION \ Label
+
+.PLF3M3
+
+ENDIF
+
 IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Platform
 
  JMP WPLS               \ Jump to WPLS to remove the old sun from the screen. We
@@ -100,6 +106,14 @@ ENDIF
 IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Platform
 
  BCS PLF3-3             \ If CHKON set the C flag then the new sun's circle does
+                        \ not appear on-screen, so jump to WPLS (via the JMP at
+                        \ the top of this routine) to remove the sun from the
+                        \ screen, returning from the subroutine using a tail
+                        \ call
+
+ELIF _MASTER_VERSION
+
+ BCS PLF3M3             \ If CHKON set the C flag then the new sun's circle does
                         \ not appear on-screen, so jump to WPLS (via the JMP at
                         \ the top of this routine) to remove the sun from the
                         \ screen, returning from the subroutine using a tail

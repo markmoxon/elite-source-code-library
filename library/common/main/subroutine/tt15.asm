@@ -90,11 +90,13 @@ ELIF _MASTER_VERSION
  BIT QQ11               \ If bit 7 of QQ11 is set, then this this is the
  BMI TT84               \ Short-range Chart, so jump to TT84
 
- BCC P%+6               \ If the above subtraction underflowed, then A is
+ BCC botchfix13         \ If the above subtraction underflowed, then A is
                         \ positive, so skip the next two instructions
 
  CMP #2                 \ If A >= 2, skip the next instruction
  BCS TT84
+
+.botchfix13
 
  LDA #2                 \ The subtraction underflowed or A < 2, so set A to 2
                         \ so the crosshairs don't spill out of the left of the
@@ -149,11 +151,13 @@ ELIF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- BCS P%+6               \ If the above addition overflowed, skip the following
+ BCS botchfix12         \ If the above addition overflowed, skip the following
                         \ two instructions to set A = 254
 
  CMP #254               \ The addition didn't overflow, so if A < 254, jump to
  BCC TT85               \ TT85
+
+.botchfix12
 
  LDA #254               \ Set A = 254, so the crosshairs don't spill out of the
                         \ right of the screen

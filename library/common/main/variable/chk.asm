@@ -40,6 +40,15 @@ ELIF _MASTER_VERSION
 
  EQUB 0
 
+\.CHK3                  \ These instructions are commented out in the original
+\EQUB 0                 \ source
+
+ SKIP 12                \ These bytes appear to be unused, though the first byte
+                        \ in this block is included in the commander file (it
+                        \ has no effect, as it's the third checksum byte from
+                        \ the Commodore 64 version, which isn't used in the
+                        \ Master version)
+
 ELIF _ELITE_A_VERSION
 
  EQUB &58               \ The checksum value for the default commander, #75

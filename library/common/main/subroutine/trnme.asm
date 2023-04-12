@@ -15,8 +15,8 @@
 
 IF _MASTER_VERSION \ Platform
 
- LDA NAMELEN1           \ Copy the length of the commander's name from NAMELEN1
- STA NAMELEN2           \ to NAMELEN2 (though this is never used, so this
+ LDA thislong           \ Copy the length of the commander's name from thislong
+ STA oldlong            \ to oldlong (though this is never used, so this
                         \ doesn't have any effect)
 
 ENDIF

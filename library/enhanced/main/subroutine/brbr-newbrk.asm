@@ -1,6 +1,10 @@
 \ ******************************************************************************
 \
+IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \       Name: BRBR
+ELIF _MASTER_VERSION
+\       Name: NEWBRK
+ENDIF
 \       Type: Subroutine
 \   Category: Utility routines
 \    Summary: The standard BRKV handler for the game
@@ -40,7 +44,15 @@ ELIF _ELITE_A_VERSION OR _DISC_VERSION
 ENDIF
 \ ******************************************************************************
 
+IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label
+
 .BRBR
+
+ELIF _MASTER_VERSION
+
+.NEWBRK
+
+ENDIF
 
 IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
@@ -66,7 +78,7 @@ IF _6502SP_VERSION \ Platform
 
 ELIF _MASTER_VERSION
 
- LDX stack              \ Set the stack pointer to the value that we stored in
+ LDX stackpt            \ Set the stack pointer to the value that we stored in
  TXS                    \ location stack, so that's back to the value it had
                         \ before we change it in the SVE routine
 

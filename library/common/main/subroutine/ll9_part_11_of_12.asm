@@ -88,6 +88,14 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
  ADC #4                 \ next edge
  STA V
 
+ BCC ll81               \ If the above addition didn't overflow, jump to ll81 to
+                        \ skip the following instruction
+
+ INC V+1                \ Otherwise increment the high byte of V(1 0), as we
+                        \ just moved the V(1 0) pointer past a page boundary
+
+.ll81
+
 ELIF _MASTER_VERSION
 
  LDA V                  \ Increment V by 4 so V(1 0) points to the data for the
@@ -95,14 +103,13 @@ ELIF _MASTER_VERSION
  ADC #4
  STA V
 
-ENDIF
-
- BCC ll81               \ If the above addition didn't overflow, jump to ll81
+ BCC P%+4               \ If the above addition didn't overflow, skip the
+                        \ following instruction
 
  INC V+1                \ Otherwise increment the high byte of V(1 0), as we
                         \ just moved the V(1 0) pointer past a page boundary
 
-.ll81
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: See group A
 
@@ -132,7 +139,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 
 ELIF _MASTER_VERSION
 
- JMP LL155              \ Jump down to part 12 below to draw any remaining lines
+ JMP LSCLR              \ Jump down to part 12 below to draw any remaining lines
                         \ from the old ship that are still in the ship line heap
 
 ENDIF

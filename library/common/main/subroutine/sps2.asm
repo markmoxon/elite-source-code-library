@@ -57,5 +57,11 @@
  TAX
  INX
 
+IF _MASTER_VERSION \ Label
+
+.COR1
+
+ENDIF
+
  RTS                    \ Return from the subroutine
 

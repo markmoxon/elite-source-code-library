@@ -32,7 +32,7 @@
 
 IF _MASTER_VERSION \ Master: Group A: In the Master version, destroying a missile using E.C.M. gives us the same number of fractional kill points as killing an alloy plate, while the other versions always award one point, whatever is killed
 
-.TAX35
+.TA352
 
                         \ If we get here, the missile has been destroyed by
                         \ E.C.M. or by the space station
@@ -41,7 +41,7 @@ IF _MASTER_VERSION \ Master: Group A: In the Master version, destroying a missil
  ORA INWK+3
  ORA INWK+6
 
- BNE P%+7               \ If A is non-zero then the missile is not near our
+ BNE TA872              \ If A is non-zero then the missile is not near our
                         \ ship, so skip the next two instructions to avoid
                         \ damaging our ship
 
@@ -50,10 +50,12 @@ IF _MASTER_VERSION \ Master: Group A: In the Master version, destroying a missil
                         \ near as bad as the 250 damage from a missile slamming
                         \ straight into us, but it's still pretty nasty
 
+.TA872
+
  LDX #PLT               \ Set X to the ship type for plate alloys, so we get
                         \ awarded the kill points for the missile scraps in TA87
 
- BNE TA87               \ Jump to TA87 to process the missile kill tally and
+ BNE TA353              \ Jump to TA353 to process the missile kill tally and
                         \ make an explosion sound
 
 ENDIF
@@ -73,16 +75,20 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR
  JMP TA21               \ Jump down to part 3 to set up the vectors and skip
                         \ straight to aggressive manoeuvring
 
+ JSR TA87+3             \ The missile has hit our ship, so call TA87+3 to set
+                        \ bit 7 of the missile's byte #31, which marks the
+                        \ missile as being killed
+
 ELIF _MASTER_VERSION
 
  JMP TN4                \ Jump down to part 3 to set up the vectors and skip
                         \ straight to aggressive manoeuvring
 
-ENDIF
-
- JSR TA87+3             \ The missile has hit our ship, so call TA87+3 to set
+ JSR TA873              \ The missile has hit our ship, so call TA873 to set
                         \ bit 7 of the missile's byte #31, which marks the
                         \ missile as being killed
+
+ENDIF
 
  JSR EXNO3              \ Make the sound of the missile exploding
 
@@ -113,7 +119,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR
 ELIF _MASTER_VERSION
 
  LDA ECMA               \ If an E.C.M. is currently active (either our's or an
- BNE TAX35              \ opponent's), jump to TAX35 to destroy this missile
+ BNE TA352              \ opponent's), jump to TA352 to destroy this missile
 
 ENDIF
 
@@ -192,7 +198,7 @@ ELIF _MASTER_VERSION
 
  LDA INWK+32            \ Fetch the AI flag from byte #32 and if only bits 7 and
  CMP #%10000010         \ 1 are set (AI is enabled and the target is slot 1, the
- BEQ TAX35              \ space station), jump to TAX35 to destroy this missile,
+ BEQ TA352              \ space station), jump to TA352 to destroy this missile,
                         \ as the space station ain't kidding around
 
 ENDIF
@@ -281,6 +287,8 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
+.TA87
+
 IF _MASTER_VERSION \ Master: In the Master version, destroying a missile (not using E.C.M.) gives us a number of kill points that depends on the missile's target slot number, and therefore is fairly random
 
  LDA INWK+32            \ Set X to bits 1-6 of the missile's AI flag in ship
@@ -290,13 +298,19 @@ IF _MASTER_VERSION \ Master: In the Master version, destroying a missile (not us
                         \ used to determine the number of kill points awarded
                         \ for the destruction of the missile
 
-ENDIF
+.TA353
 
-.TA87
+ENDIF
 
  JSR EXNO2              \ Call EXNO2 to process the fact that we have killed a
                         \ missile (so increase the kill tally, make an explosion
                         \ sound and so on)
+
+IF _MASTER_VERSION \ Label
+
+.TA873
+
+ENDIF
 
  ASL INWK+31            \ Set bit 7 of the missile's byte #31 flag to mark it as
  SEC                    \ having been killed, so it explodes

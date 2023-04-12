@@ -1,6 +1,10 @@
 \ ******************************************************************************
 \
+IF _6502SP_VERSION \ Comment
 \       Name: antilog
+ELIF _MASTER_VERSION
+\       Name: alogh
+ENDIF
 \       Type: Variable
 \   Category: Maths (Arithmetic)
 \    Summary: Binary antilogarithm table
@@ -17,7 +21,15 @@
 \
 \ ******************************************************************************
 
+IF _6502SP_VERSION \ Label
+
 .antilog
+
+ELIF _MASTER_VERSION
+
+.alogh
+
+ENDIF
 
 IF _MATCH_ORIGINAL_BINARIES
 

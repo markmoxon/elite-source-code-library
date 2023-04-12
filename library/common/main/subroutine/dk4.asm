@@ -208,10 +208,10 @@ IF _MASTER_VERSION \ Master: The Master version allows you to change the volume 
  LDA VOL                \ Fetch the current volume setting into A
 
  CPX #'.'               \ If "." is being pressed (i.e. the ">" key) then jump
- BEQ VOLUP              \ to VOLUP to increase the volume
+ BEQ DOVOL1             \ to DOVOL1 to increase the volume
 
  CPX #','               \ If "," is not being pressed (i.e. the "<" key) then
- BNE NOVOL              \ jump to NOVOL to skip the following
+ BNE DOVOL4             \ jump to DOVOL4 to skip the following
 
  DEC A                  \ The volume down key is being pressed, so decrement the
                         \ volume level in A
@@ -220,22 +220,22 @@ IF _MASTER_VERSION \ Master: The Master version allows you to change the volume 
                         \ or BIT &001A, which does nothing apart from affect the
                         \ flags
 
-.VOLUP
+.DOVOL1
 
  INC A                  \ The volume up key is being pressed, so increment the
                         \ volume level in A
 
  TAY                    \ Copy the new volumen level to Y
 
- AND #%11111000         \ If any of bits 3-7 are set, skip to MAXVOL as we have
- BNE MAXVOL             \ either increased the volume past the maximum volume of
+ AND #%11111000         \ If any of bits 3-7 are set, skip to DOVOL3 as we have
+ BNE DOVOL3             \ either increased the volume past the maximum volume of
                         \ 7, or we have decreased it below 0 to -1, and in
                         \ neither case do we want to change the volume as we are
                         \ already at the maximum or minimum level
 
  STY VOL                \ Store the new volume level in VOL
 
-.MAXVOL
+.DOVOL3
 
  PHX                    \ Store X on the stack so we can retrieve it below after
                         \ making a beep
@@ -248,7 +248,7 @@ IF _MASTER_VERSION \ Master: The Master version allows you to change the volume 
 
  PLX                    \ Restore the value of X we stored above
 
-.NOVOL
+.DOVOL4
 
 ENDIF
 
@@ -276,8 +276,8 @@ IF _DISC_VERSION OR _6502SP_VERSION \ Platform
 
 ELIF _MASTER_VERSION
 
- CPX #'B'               \ If "B" is not being pressed, skip to nobit
- BNE nobit
+ CPX #'B'               \ If "B" is not being pressed, skip to DOVOL2
+ BNE DOVOL2
 
 ENDIF
 
@@ -306,9 +306,13 @@ IF _MASTER_VERSION \ Master: The Master version makes two beeps when the Bitstik
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ Label
+IF _6502SP_VERSION OR _DISC_VERSION \ Label
 
 .nobit
+
+ELIF _MASTER_VERSION
+
+.DOVOL2
 
 ENDIF
 

@@ -307,7 +307,7 @@ ELIF _MASTER_VERSION
  BNE P%+3               \ there are never any Trumbles, so this value will
                         \ always be zero)
 
-.TRRTS
+.zebra
 
  RTS                    \ There are no Trumbles in the hold, so return from the
                         \ subroutine
@@ -338,14 +338,14 @@ ELIF _MASTER_VERSION
  JSR DETOK              \ presumably contain the word "TRUMBLE" if they were
                         \ enabled
 
- LDA TRUMBLE+1          \ If we have more than 256 Trumbles, skip to TRDONE
- BNE TRDONE
+ LDA TRUMBLE+1          \ If we have more than 256 Trumbles, skip to DOANS
+ BNE DOANS
 
  LDX TRUMBLE            \ If we have exactly one Trumble, return from the
- DEX                    \ subroutine (as TRRTS contains an RTS)
- BEQ TRRTS
+ DEX                    \ subroutine (as zebra contains an RTS)
+ BEQ zebra
 
-.TRDONE
+.DOANS
 
  LDA #'s'               \ We have more than one Trumble, so print an 's' and
  JMP DASC               \ return from the subroutine using a tail call

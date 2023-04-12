@@ -131,7 +131,7 @@ IF _6502SP_VERSION \ Other: Group A: In the FMLTU multiplication routine, the Ma
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Other: See group A
+IF _6502SP_VERSION \ Other: See group A
 
  LDA log,X              \ Set A = high byte of Lq
 
@@ -151,6 +151,31 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Other: See group A
 
  TAX                    \ Otherwise La + Lq >= 256, so we return the A-th entry
  LDA antilog,X          \ from the antilog table
+
+ LDX P                  \ Restore X from P so it is preserved
+
+ RTS                    \ Return from the subroutine
+
+ELIF _MASTER_VERSION
+
+ LDA log,X              \ Set A = high byte of Lq
+
+ LDX widget             \ Set A = A + C + high byte of La
+ ADC log,X              \       = high byte of Lq + high byte of La + C
+                        \
+                        \ so we now have:
+                        \
+                        \   A = high byte of (La + Lq)
+
+ BCC MU3again           \ If the addition fitted into one byte and didn't carry,
+                        \ then La + Lq < 256, so we jump to MU3again to return a
+                        \ result of 0 and the C flag clear
+
+                        \ If we get here then the C flag is set, ready for when
+                        \ we return from the subroutine below
+
+ TAX                    \ Otherwise La + Lq >= 256, so we return the A-th entry
+ LDA alogh,X            \ from the antilog table
 
  LDX P                  \ Restore X from P so it is preserved
 

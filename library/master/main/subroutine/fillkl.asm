@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: RDKEY2
+\       Name: FILLKL
 \       Type: Subroutine
 \   Category: Keyboard
 \    Summary: Scan the keyboard for a flight key and update the key logger
@@ -14,17 +14,17 @@
 \
 \ ******************************************************************************
 
-.RDKEY2
+.FILLKL
 
- JSR U%                 \ Call U% to clear the key logger, which also sets X to
-                        \ 0 (so we can use X as an index for working our way
-                        \ through the flight keys in RDK3 below)
+ JSR ZEKTRAN            \ Call ZEKTRAN to clear the key logger, which also sets
+                        \ X to 0 (so we can use X as an index for working our
+                        \ way through the flight keys in Rd2 below)
 
  LDA #16                \ Start the scan with internal key number 16 ("Q")
 
  CLC                    \ Clear the C flag so we can do the additions below
 
-.RDK1
+.Rd1
 
  LDY #%00000011         \ Set Y to %00000011, so it's ready to send to SHEILA
                         \ once interrupts have been disabled
@@ -60,14 +60,14 @@
 
  TYA                    \ Transfer Y into A
 
- BMI RDK3               \ If the key was pressed then Y is negative, so jump to
-                        \ RDK3
+ BMI Rd2                \ If the key was pressed then Y is negative, so jump to
+                        \ Rd2
 
-.RDK2
+.Rd3
 
  ADC #1                 \ Increment A to point to the next key to scan for
 
- BPL RDK1               \ If A is positive, we still have keys to check, so loop
+ BPL Rd1                \ If A is positive, we still have keys to check, so loop
                         \ back to scan for the next one
 
                         \ If we get here then no keys are being pressed
@@ -88,62 +88,64 @@
 
  RTS                    \ Return from the subroutine
 
-.RDK3
+.Rd2
 
                         \ If we get here then the key in A is being pressed. We
-                        \ now work our way through the KYTB table, looking for
+                        \ now work our way through the IKNS table, looking for
                         \ a match against the flight keys, using X as an index
                         \ into the table (X was initialised to 0 by the call to
-                        \ U% above, and it keeps track of our progress through
-                        \ the table between calls to RDK3)
+                        \ ZEKTRAN above, and it keeps track of our progress
+                        \ through the table between calls to Rd2)
 
  EOR #%10000000         \ The key in A is being pressed and the number of the
                         \ key is in A with bit 7 set, so flip bit 7 back to 0
 
  STA KL                 \ Store the number of the key pressed in KL
 
-                        \ Now to scan the KYTB table for a possible match for
+                        \ Now to scan the IKNS table for a possible match for
                         \ the pressed key (if we get a match we update the key
-                        \ logger, as KYTB contains the flight keys that have
+                        \ logger, as IKNS contains the flight keys that have
                         \ key logger entries. Because we are scanning the
                         \ keyboard by incrementing the key to check in A, and
-                        \ the KYTB table is sorted in increasing order, we don't
-                        \ need to scan the whole KYTB table each time for a
+                        \ the IKNS table is sorted in increasing order, we don't
+                        \ need to scan the whole IKNS table each time for a
                         \ match, we can just check against the next key in the
                         \ table, as pointed to by X
 
-.DKL5
+.Rd5
 
- CMP KYTB,X             \ If A is less than the X-th byte in KYTB, jump back to
- BCC RDK2               \ RDK2 to continue scanning for more keys, as this key
-                        \ isn't in the KYTB table and doesn't have an entry in
+ CMP IKNS,X             \ If A is less than the X-th byte in IKNS, jump back to
+ BCC Rd3                \ Rd3 to continue scanning for more keys, as this key
+                        \ isn't in the IKNS table and doesn't have an entry in
                         \ the key logger
 
- BEQ P%+5               \ If A is equal to the X-th byte in KYTB, we have a
+ BEQ Rd4                \ If A is equal to the X-th byte in IKNS, we have a
                         \ match, so skip the next two instructions to go to the
                         \ part where we update the key logger
 
- INX                    \ The pressed key is higher than the KYTB entry at X, so
+ INX                    \ The pressed key is higher than the IKNS entry at X, so
                         \ increment X to point to the next key in the table
 
- BNE DKL5               \ And loop back to DKL5 to test against this next flight
-                        \ key in KYTB (this BNE is effectively a JMP as X won't
+ BNE Rd5                \ And loop back to Rd5 to test against this next flight
+                        \ key in IKNS (this BNE is effectively a JMP as X won't
                         \ get high enough to wrap around to zero)
 
                         \ If we get here, the pressed key has an entry in the
                         \ key logger, so now to update the logger
 
- DEC KY17,X             \ We got a match in the KYTB table for our key at
+.Rd4
+
+ DEC KY17,X             \ We got a match in the IKNS table for our key at
                         \ position X, so we decrement the corresponding key
                         \ logger byte for this key at KY17+X (KY17 is the first
                         \ key in the key logger)
 
- INX                    \ Increment X so next time we check KYTB from the next
+ INX                    \ Increment X so next time we check IKNS from the next
                         \ key in the table
 
  CLC                    \ Clear the C flag so we can do more additions
 
- BCC RDK2               \ Jump back to RDK2 to continue scanning for more keys
+ BCC Rd3                \ Jump back to Rd3 to continue scanning for more keys
                         \ (this BCC is effectively a JMP as we just cleared the
                         \ C flag)
 

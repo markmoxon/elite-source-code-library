@@ -32,10 +32,10 @@ IF _6502SP_VERSION OR _DISC_DOCKED \ Platform
 
 ELIF _MASTER_VERSION
 
- TSX                    \ Transfer the stack pointer to X and store it in stack,
- STX stack              \ so we can restore it in the BRBR routine
+ TSX                    \ Transfer the stack pointer to X and store it in
+ STX stackpt            \ stackpt, so we can restore it in the NEWBRK routine
 
- JSR TRADE              \ Set the palette for trading screens and switch the
+ JSR TRADEMODE2         \ Set the palette for trading screens and switch the
                         \ current colour to white
 
 ELIF _ELITE_A_VERSION
@@ -128,32 +128,34 @@ ELIF _MASTER_VERSION
  JSR t                  \ Scan the keyboard until a key is pressed, returning
                         \ the ASCII code in A and X
 
- CMP #'1'               \ Option 1 was chosen, so jump to LD1 to load a new
- BEQ LD1                \ commander
+ CMP #'1'               \ Option 1 was chosen, so jump to loading to load a new
+ BEQ loading            \ commander
 
  CMP #'2'               \ Option 2 was chosen, so jump to SV1 to save the
  BEQ SV1                \ current commander
 
- CMP #'3'               \ Option 3 was chosen, so jump to CAT to catalogue a
- BEQ CAT                \ disc
+ CMP #'3'               \ Option 3 was chosen, so jump to feb10 to catalogue a
+ BEQ feb10              \ disc
 
  CMP #'4'               \ If option 4 wasn't chosen, skip the next two
- BNE P%+8               \ instructions
+ BNE jan18              \ instructions
 
  JSR DELT               \ Option 4 was chosen, so call DELT to delete a file
 
  JMP SVE                \ Jump to SVE to display the disc access menu again and
                         \ return from the subroutine using a tail call
 
- CMP #'5'               \ If option 5 wasn't chosen, skip to exit to exit the
- BNE exit               \ menu
+.jan18
+
+ CMP #'5'               \ If option 5 wasn't chosen, skip to feb13 to exit the
+ BNE feb13              \ menu
 
  LDA #224               \ Print extended token 224 ("ARE YOU SURE?")
  JSR DETOK
 
- JSR GETYN              \ Call GETYN to wait until either "Y" or "N" is pressed
+ JSR YESNO              \ Call YESNO to wait until either "Y" or "N" is pressed
 
- BCC exit               \ If "N" was pressed, jump to exit
+ BCC feb13              \ If "N" was pressed, jump to feb13
 
  JSR JAMESON            \ Otherwise "Y" was pressed, so call JAMESON to set the
                         \ last saved commander to the default "JAMESON"
@@ -163,14 +165,14 @@ ELIF _MASTER_VERSION
                         \ block to the last saved commander, returning from the
                         \ subroutine using a tail call
 
-.exit
+.feb13
 
  CLC                    \ Option 5 was chosen, so clear the C flag to indicate
                         \ that nothing was loaded
 
  RTS                    \ Return from the subroutine
 
-.CAT
+.feb10
 
  JSR CATS               \ Call CATS to ask for a drive number (or a directory
                         \ name on the Master Compact) and catalogue that disc
@@ -182,7 +184,7 @@ ELIF _MASTER_VERSION
  JMP SVE                \ Jump to SVE to display the disc access menu and return
                         \ from the subroutine using a tail call
 
-.LD1
+.loading
 
  JSR GTNMEW             \ If we get here then option 1 (load) was chosen, so
                         \ call GTNMEW to fetch the name of the commander file
@@ -195,11 +197,11 @@ IF _SNG47
                         \ in A, setting the C flag if an invalid drive number
                         \ was entered
 
- BCS LDdone             \ If the C flag is set, then an invalid drive number was
+ BCS jan2186            \ If the C flag is set, then an invalid drive number was
                         \ entered, so return from the subroutine (as DELT-1
                         \ contains an RTS)
 
- STA LDLI+6             \ Store the ASCII drive number in LDLI+6, which is the
+ STA lodosc+6           \ Store the ASCII drive number in lodosc+6, which is the
                         \ drive character of the load filename string ":1.E."
 
 ENDIF
@@ -210,7 +212,7 @@ ENDIF
 
  SEC                    \ Set the C flag to indicate we loaded a new commander
 
-.LDdone
+.jan2186
 
  RTS                    \ Return from the subroutine
 
@@ -494,14 +496,14 @@ ELIF _MASTER_VERSION
                         \ so set a counter in X to copy the NT% bytes in the
                         \ commander data block
 
-.SVL2
+.copyme2
 
  LDA NA%+8,Y            \ Copy the X-th byte of NA% to the X-th byte of &0791
  STA &0791,Y
 
  DEY                    \ Decrement the loop counter
 
- BPL SVL2               \ Loop back until we have copied all the bytes in the
+ BPL copyme2            \ Loop back until we have copied all the bytes in the
                         \ commander data block
 
 IF _SNG47
@@ -510,18 +512,22 @@ IF _SNG47
                         \ in A, setting the C flag if an invalid drive number
                         \ was entered
 
- BCS P%+8               \ If the C flag is set, then an invalid drive number was
+ BCS SVEX9              \ If the C flag is set, then an invalid drive number was
                         \ entered, so skip the next two instructions
 
- STA SVLI+6             \ Store the ASCII drive number in SVLI+6, which is the
+ STA savosc+6           \ Store the ASCII drive number in savosc+6, which is the
                         \ drive character of the save filename string ":1.E."
 
 ENDIF
 
- JSR SAVE               \ Call SAVE to save the commander file
+ JSR wfile              \ Call wfile to save the commander file
+
+.SVEX9
 
  JSR DFAULT             \ Call DFAULT to reset the current commander data
                         \ block to the last saved commander
+
+.SVEX
 
  CLC                    \ Clear the C flag to indicate that no new commander
                         \ file was loaded

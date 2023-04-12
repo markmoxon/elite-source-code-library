@@ -34,11 +34,13 @@ ELIF _MASTER_VERSION
                         \ the following
 
  LDX QQ11               \ If this is the space view, skip the following
- BEQ P%+5               \ instruction
+ BEQ infrontvw          \ instruction
 
  JSR CLYNS              \ Clear the bottom three text rows of the upper screen,
                         \ and move the text cursor to column 1 on row 21, i.e.
                         \ the start of the top row of the three bottom rows
+
+.infrontvw
 
  LDA #21                \ Move the text cursor to row 21
  STA YC

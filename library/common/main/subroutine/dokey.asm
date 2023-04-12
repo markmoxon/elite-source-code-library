@@ -215,17 +215,17 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Enhanced: Group A: The d
  BEQ DK15               \ currently activated, so jump to DK15 to skip the
                         \ docking computer manoeuvring code below
 
+.auton
+
 ELIF _MASTER_VERSION
 
  LDA auto               \ If auto is 0, then the docking computer is not
- BEQ DK16               \ currently activated, so jump to DK16 to skip the
+ BEQ DK15               \ currently activated, so jump to DK15 to skip the
                         \ docking computer manoeuvring code below
 
 ENDIF
 
 IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
-
-.auton
 
  JSR ZINF               \ Call ZINF to reset the INWK ship workspace
 
@@ -485,17 +485,17 @@ IF _MASTER_VERSION \ Master: The Master Compact release supports the Compact's d
 
 IF _COMPACT
 
- JMP DK15               \ Jump to DK15 to skip reading the joystick, as this is
+ JMP DK152              \ Jump to DK152 to skip reading the joystick, as this is
                         \ a Master Compact that doesn't support an analogue
                         \ joystick (instead it supports a digital joystick,
                         \ which is read elsewhere)
 
 ENDIF
 
-.DK16
+.DK15
 
  LDA JSTK               \ If JSTK is zero, then we are configured to use the
- BEQ DK15               \ keyboard rather than the joystick, so jump to DK15 to
+ BEQ DK152              \ keyboard rather than the joystick, so jump to DK152 to
                         \ skip reading the joystick
 
 IF _SNG47
@@ -561,9 +561,13 @@ ENDIF
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Enhanced: See group A
 
 .DK15
+
+ELIF _MASTER_VERSION
+
+.DK152
 
 ENDIF
 

@@ -62,8 +62,8 @@ ELIF _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION
 ELIF _MASTER_VERSION
 
  LDA QQ11               \ If this is not a space view (i.e. QQ11 is non-zero)
- BNE ARCRTS             \ then jump to MA9 to return from the main flight loop
-                        \ (as ARCRTS is an RTS)
+ BNE ARSR1              \ then jump to MA9 to return from the main flight loop
+                        \ (as ARSR1 is an RTS)
 
 ENDIF
 

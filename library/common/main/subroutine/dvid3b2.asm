@@ -169,28 +169,26 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 
 ELIF _MASTER_VERSION
 
-{
-.LL31
+.LL31new
 
  ASL A                  \ This contains the code from the LL31 routine, so
- BCS LL29               \ this section is exactly equivalent to a JSR LL31
- CMP Q                  \ call, but is slightly faster as it's been inlined
- BCC P%+4               \ (so it calculates:
+ BCS LL29new            \ this section is exactly equivalent to a JSR LL31
+ CMP Q                  \ call, but is slightly faster as it's been inlined,
+ BCC P%+4               \ so it calculates:
  SBC Q                  \
  ROL R                  \   R = 256 * A / Q
- BCS LL31               \     = 256 * numerator / denominator
- JMP RTS                \
-                        \ The routine is surrounded by braces as BeebAsm
-.LL29                   \ doesn't allow us to redefine labels, unlike BBC BASIC
+ BCS LL31new            \     = 256 * numerator / denominator
+ JMP LL312new
+
+.LL29new
 
  SBC Q
  SEC
  ROL R
- BCS LL31
+ BCS LL31new
  LDA R
 
-.RTS
-}
+.LL312new
 
 ENDIF
 

@@ -449,8 +449,8 @@ IF _MASTER_VERSION \ Master: In the Master version, explosions are made up of ye
  AND #3                 \ Set X to this random number, reduced to be in the
  TAX                    \ range 0-3
 
- LDA EXCOL,X            \ Set the colour randomly to one of the four colours
- STA COL                \ in the EXCOL table, so explosions are made up of
+ LDA coltabl,X          \ Set the colour randomly to one of the four colours
+ STA COL                \ in the coltabl table, so explosions are made up of
                         \ yellow, red and cyan particles
 
 ENDIF

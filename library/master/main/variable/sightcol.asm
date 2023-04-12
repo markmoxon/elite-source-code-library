@@ -17,6 +17,8 @@
 
  EQUB YELLOW            \ Mining lasers have yellow sights
 
+.beamcol
+
  EQUB WHITE             \ These bytes appear to be unused - perhaps they were
  EQUB WHITE             \ going to be used to set different colours of laser
  EQUB WHITE             \ beam for the different lasers?

@@ -9,7 +9,7 @@
 
 .launch
 
- LDA #'R'               \ Set the first byte of LDLI to "R", so it changes from
+ LDA #'R'               \ Set the first byte of LTLI to "R", so it changes from
  STA LTLI               \ "L.1.D" into "R.1.D", so when we fall through into
                         \ escape, we load and run the docked code in 1.D
 

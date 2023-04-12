@@ -24,7 +24,15 @@ IF _6502SP_VERSION \ Comment
 ENDIF
 \ ******************************************************************************
 
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label
+
 .LL155
+
+ELIF _MASTER_VERSION
+
+.LSCLR
+
+ENDIF
 
 IF _6502SP_VERSION \ Tube
 
@@ -89,9 +97,9 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-.LL27
-
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Master: See group A
+
+.LL27
 
  LDA (XX19),Y           \ Fetch the X1 line coordinate from the heap and store
  STA XX15               \ it in XX15
@@ -115,8 +123,10 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
 
 ELIF _MASTER_VERSION
 
- CPY XX14+1             \ If Y >= XX14+1, jump to LLEX to return from the ship
- BCS LLEX               \ drawing routine, because the index in Y is greater
+.LSC1
+
+ CPY XX14+1             \ If Y >= XX14+1, jump to LSC2 to return from the ship
+ BCS LSC2               \ drawing routine, because the index in Y is greater
                         \ than the size of the existing ship line heap, which
                         \ means we have alrady erased all the old ship's lines
                         \ when drawing the new ship
@@ -146,6 +156,8 @@ ELIF _MASTER_VERSION
 
 ELIF _6502SP_VERSION
 
+.LL27
+
  LDA (XX19),Y           \ Fetch the Y-th line coordinate from the heap and send
  JSR OSWRCH             \ it to the I/O processor to add to the line buffer
 
@@ -160,16 +172,16 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 
 ELIF _MASTER_VERSION
 
- JMP LL27               \ Loop back to LL27 to draw (i.e. erase) the next line
+ JMP LSC1               \ Loop back to LSC1 to draw (i.e. erase) the next line
                         \ from the heap
 
-.LLEX
+.LSC2
 
  LDA XX14               \ Store XX14 in the first byte of the ship line heap
  LDY #0
  STA (XX19),Y
 
-.LL82
+.LSC3
 
 ENDIF
 

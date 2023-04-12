@@ -83,3 +83,12 @@ ENDIF
 
  RTS                    \ Return from the subroutine
 
+
+IF _MASTER_VERSION \ Minor
+
+.msbpars
+
+ EQUB 4, 0, 0, 0, 0     \ These bytes appear to be unused
+
+ENDIF
+

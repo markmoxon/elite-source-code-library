@@ -134,7 +134,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 
 ELIF _MASTER_VERSION
 
- JMP LL155              \ Jump to LL155 to draw any remaining lines that are
+ JMP LSCLR              \ Jump to LSCLR to draw any remaining lines that are
                         \ still in the ship line heap and return from the
                         \ subroutine using a tail call
 
@@ -152,7 +152,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 
 ELIF _MASTER_VERSION
 
- JMP LL155              \ Jump to LL155 to draw any remaining lines that are
+ JMP LSCLR              \ Jump to LSCLR to draw any remaining lines that are
                         \ still in the ship line heap and return from the
                         \ subroutine using a tail call
 
@@ -195,7 +195,7 @@ ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: The Master implements flicker-free ship drawing using the LLX30 routine, which is used both for drawing wireframes and for drawing distant ships as dots
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: The Master implements flicker-free ship drawing using the LSPUT routine, which is used both for drawing wireframes and for drawing distant ships as dots
 
  DEY                    \ Store A in byte Y+1 of the ship line heap
  STA (XX19),Y
@@ -233,7 +233,7 @@ ELIF _MASTER_VERSION
  STA X2                 \ Store the x-coordinate of the ship dot in X1, as this
                         \ is where the dash starts
 
- JMP LLX30              \ Draw this edge using flicker-free animation, by first
+ JMP LSPUT              \ Draw this edge using flicker-free animation, by first
                         \ drawing the ship's new line and then erasing the
                         \ corresponding old line from the screen, and return
                         \ from the subroutine using a tail call

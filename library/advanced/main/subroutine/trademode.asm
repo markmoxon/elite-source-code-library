@@ -28,7 +28,7 @@ ENDIF
 IF _MASTER_VERSION \ Comment
 \ Other entry points:
 \
-\   TRADE               Set the palette for trading screens and switch the
+\   TRADEMODE2          Set the palette for trading screens and switch the
 \                       current colour to white
 \
 ENDIF
@@ -69,7 +69,7 @@ IF _6502SP_VERSION \ Minor
 
 ELIF _MASTER_VERSION
 
-.TRADE
+.TRADEMODE2
 
  LDA #48                \ Switch to the mode 1 palette for trading screens,
  JSR DOVDU19            \ which is yellow (colour 1), magenta (colour 2) and

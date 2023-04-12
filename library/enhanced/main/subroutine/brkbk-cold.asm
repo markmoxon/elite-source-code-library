@@ -1,6 +1,10 @@
 \ ******************************************************************************
 \
+IF _DISC_DOCKED OR _6502SP_VERSION OR _ELITE_A_VERSION \ Comment
 \       Name: BRKBK
+ELIF _MASTER_VERSION
+\       Name: COLD
+ENDIF
 \       Type: Subroutine
 \   Category: Save and load
 \    Summary: Set the standard BRKV handler for the game
@@ -16,9 +20,9 @@ IF _6502SP_VERSION \ Comment
 ENDIF
 \ ******************************************************************************
 
-.BRKBK
-
 IF _DISC_DOCKED OR _ELITE_A_VERSION \ Platform
+
+.BRKBK
 
  LDA #LO(BRBR)          \ Set BRKV to point to the BRBR routine
  STA BRKV
@@ -28,6 +32,8 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION \ Platform
  RTS                    \ Return from the subroutine
 
 ELIF _6502SP_VERSION
+
+.BRKBK
 
  LDA #LO(BRBR)          \ Set BRKV to point to the BRBR routine, disabling
  SEI                    \ interrupts while we make the change and re-enabling
@@ -40,9 +46,11 @@ ELIF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
- LDA #LO(BRBR)          \ Set BRKV to point to the BRBR routine
+.COLD
+
+ LDA #LO(NEWBRK)        \ Set BRKV to point to the NEWBRK routine
  STA BRKV
- LDA #HI(BRBR)
+ LDA #HI(NEWBRK)
  STA BRKV+1
 
  LDA #LO(CHPR)          \ Set WRCHV to point to the CHPR routine
@@ -59,6 +67,8 @@ ELIF _MASTER_VERSION
                         \ the subroutine using a tail call
 
 IF _SNG47
+
+.NMIpissoff
 
  CLI                    \ These instructions are never reached and have no
  RTI                    \ effect

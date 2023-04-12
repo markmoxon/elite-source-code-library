@@ -174,7 +174,7 @@ IF _CASSETTE_VERSION \ Label
                         \ also be a remnant if the code in gnum was originally
                         \ here, but got moved into the gnum subroutine
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 {
 .TT223                  \ This label is a duplicate of a label in gnum (which is

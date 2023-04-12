@@ -1,13 +1,16 @@
 \ ******************************************************************************
 \
-\       Name: NAMELEN1
+\       Name: coltabl
 \       Type: Variable
-\   Category: Save and load
-\    Summary: Contains the length of the most recently entered commander name
+\   Category: Drawing ships
+\    Summary: Colours for ship explosions
 \
 \ ******************************************************************************
 
-.NAMELEN1
+.coltabl
 
- EQUB 7
+ EQUB YELLOW
+ EQUB RED
+ EQUB YELLOW
+ EQUB CYAN
 

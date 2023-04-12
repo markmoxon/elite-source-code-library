@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: MT30
+\       Name: FILEPR
 \       Type: Subroutine
 \   Category: Text
 \    Summary: Display the currently selected media (disc or tape)
@@ -8,7 +8,7 @@
 \
 \ ******************************************************************************
 
-.MT30
+.FILEPR
 
  LDA #3                 \ Print extended token 3 + DISK, i.e. token 3 or 2 (as
  CLC                    \ DISK can be 0 or &FF). In other versions of the game,

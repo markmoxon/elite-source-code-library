@@ -71,3 +71,22 @@ ENDIF
 
  RTS                    \ Return from the subroutine
 
+IF _MASTER_VERSION \ Comment
+
+.CHECK2
+
+\LDX #NT%-3             \ These instructions are commented out in the original
+\CLC                    \ source
+\TXA
+\.QU2L2
+\STX T
+\EOR T
+\ROR A
+\ADC NA%+7,X
+\EOR NA%+8,X
+\DEX
+\BNE QU2L2
+\RTS
+
+ENDIF
+

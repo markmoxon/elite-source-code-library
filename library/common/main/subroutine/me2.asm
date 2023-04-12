@@ -11,8 +11,8 @@
 
 IF _MASTER_VERSION \ Master: Group A: The Master version clears the bottom part of the screen when displaying in-flight messages in screens other than the space view, whereas the other versions messily superimpose the message over the current screen
 
- LDA QQ11               \ If this is not the space view, jump down to nomess to
- BNE nomess             \ skip displaying the in-flight message
+ LDA QQ11               \ If this is not the space view, jump down to clynsneed
+ BNE clynsneed          \ to skip displaying the in-flight message
 
 ENDIF
 
@@ -28,7 +28,7 @@ ENDIF
 
 IF _MASTER_VERSION \ Master: See group A
 
-.nomess
+.clynsneed
 
  JSR CLYNS              \ Clear the bottom three text rows of the upper screen,
                         \ and move the text cursor to column 1 on row 21, i.e.

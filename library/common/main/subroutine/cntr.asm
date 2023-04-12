@@ -50,8 +50,8 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 ELIF _MASTER_VERSION
 
  DEX                    \ Otherwise X >= 128, so it's in the right-hand side
- BMI ARCRTS             \ of the dashboard slider, so decrement X by 1, and if
-                        \ it's still >= 128, jump to ARCRTS to return from the
+ BMI ARSR1              \ of the dashboard slider, so decrement X by 1, and if
+                        \ it's still >= 128, jump to ARSR1 to return from the
                         \ subroutine, otherwise fall through to BUMP to undo
                         \ the bump and then return
 

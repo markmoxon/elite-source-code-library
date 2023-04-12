@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: LLX30
+\       Name: LSPUT
 \       Type: Subroutine
 \   Category: Drawing lines
 \    Summary: Draw a ship line using flicker-free animation
@@ -45,7 +45,7 @@
 \
 \ ******************************************************************************
 
-.LLX30
+.LSPUT
 
  LDY XX14               \ Set Y = XX14, to get the offset within the ship line
                         \ heap where we want to insert our new line
@@ -57,14 +57,14 @@
                         \ (X2, Y2) to XX12...XX12+3, so set a counter to copy
                         \ 4 bytes
 
-.LLXL
+.LSC4
 
  LDA X1,X               \ Copy the X-th byte of X1/Y1/X2/Y2 to the X-th byte of
  STA XX12,X             \ XX12
 
  DEX                    \ Decrement the loop counter
 
- BPL LLXL               \ Loop back until we have copied all four bytes
+ BPL LSC4               \ Loop back until we have copied all four bytes
 
  JSR LL30               \ Draw a line from (X1, Y1) to (X2, Y2)
 
@@ -102,9 +102,9 @@
  STY XX14               \ and store the updated index in XX14
 
  PLP                    \ Restore the result of the comparison above, so if the
- BCS LL82               \ original value of XX14 >= XX14+1, then we have already
+ BCS LSC3               \ original value of XX14 >= XX14+1, then we have already
                         \ redrawn all the lines from the old ship's line heap,
-                        \ so return from the subroutine (as LL82 contains an
+                        \ so return from the subroutine (as LSC3 contains an
                         \ RTS)
 
  JMP LL30               \ Otherwise there are still more lines to erase from the

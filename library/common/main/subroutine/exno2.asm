@@ -48,7 +48,7 @@ ELIF _MASTER_VERSION
                         \ where the integer kill count is taken from the
                         \ TALLYINT table in the same way
 
- BCC EXNO3              \ If there is no carry, jump straight to EXNO3 to skip
+ BCC davidscockup       \ If there is no carry, jump straight to EXNO3 to skip
                         \ the following three instructions
 
 ENDIF
@@ -65,6 +65,8 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
                         \ sound of a ship exploding
 
 ELIF _MASTER_VERSION
+
+.davidscockup
 
                         \ Fall through into EXNO3 to make the sound of a
                         \ ship exploding

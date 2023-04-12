@@ -34,12 +34,23 @@
  CPX Q                  \ If X < Q, jump to LL7
  BCC LL7
 
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label
+
  BNE LL8                \ If X > Q, jump to LL8
 
  CPY #64                \ If Y < 64, jump to LL7 with the C flag clear,
  BCC LL7                \ otherwise fall through into LL8 with the C flag set
 
 .LL8
+
+ELIF _MASTER_VERSION
+
+ BNE P%+6               \ If X > Q, skip the next two instructions
+
+ CPY #64                \ If Y < 64, jump to LL7 with the C flag clear,
+ BCC LL7                \ otherwise fall through into LL8 with the C flag set
+
+ENDIF
 
  TYA                    \ Set Y = Y - 64
  SBC #64                \

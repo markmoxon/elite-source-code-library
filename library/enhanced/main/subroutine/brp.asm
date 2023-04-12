@@ -18,6 +18,12 @@ ENDIF
 
  JSR DETOK              \ Print the extended token in A
 
+IF _MASTER_VERSION \ Label
+
+.BAYSTEP
+
+ENDIF
+
  JMP BAY                \ Jump to BAY to go to the docking bay (i.e. show the
                         \ Status Mode screen) and return from the subroutine
                         \ using a tail call

@@ -33,13 +33,13 @@ ENDIF
 
 .hyp
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _MASTER_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
 
  LDA QQ12               \ If we are docked (QQ12 = &FF) then jump to hy6 to
  BNE hy6                \ print an error message and return from the subroutine
                         \ using a tail call (as we can't hyperspace when docked)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA QQ12               \ If we are docked (QQ12 = &FF) then jump to dockEd to
  BNE dockEd             \ print an error message and return from the subroutine

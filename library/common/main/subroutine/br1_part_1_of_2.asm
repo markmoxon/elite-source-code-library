@@ -54,7 +54,7 @@ IF _6502SP_VERSION \ Tube
 
 ELIF _MASTER_VERSION
 
- JSR U%                 \ Call U% to clear the key logger
+ JSR ZEKTRAN            \ Call ZEKTRAN to clear the key logger
 
 ENDIF
 

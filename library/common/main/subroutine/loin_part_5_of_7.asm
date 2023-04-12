@@ -287,7 +287,7 @@ IF _6502SP_VERSION \ Other: Group A: The Master version omits half of the logari
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Other: See group A
+IF _6502SP_VERSION \ Other: See group A
 
  LDX P                  \ And then subtracting the high bytes of log(P) - log(Q)
  LDA log,X              \ so now A contains the high byte of log(P) - log(Q)
@@ -300,6 +300,24 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Other: See group A
 
  TAX                    \ Otherwise we set A to the A-th entry from the antilog
  LDA antilog,X          \ table so the result of the division is now in A
+
+ JMP LIlog2             \ Jump to LIlog2 to return the result
+
+.LIlog3
+
+ELIF _MASTER_VERSION
+
+ LDX P                  \ And then subtracting the high bytes of log(P) - log(Q)
+ LDA log,X              \ so now A contains the high byte of log(P) - log(Q)
+ LDX Q
+ SBC log,X
+
+ BCS LIlog3             \ If the subtraction fitted into one byte and didn't
+                        \ underflow, then log(P) - log(Q) < 256, so we jump to
+                        \ LIlog3 to return a result of 255
+
+ TAX                    \ Otherwise we set A to the A-th entry from the antilog
+ LDA alogh,X            \ table so the result of the division is now in A
 
  JMP LIlog2             \ Jump to LIlog2 to return the result
 

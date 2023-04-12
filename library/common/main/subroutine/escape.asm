@@ -202,6 +202,22 @@ ENDIF
  STA ESCP               \ The escape pod is a one-use item, so set ESCP to 0 so
                         \ we no longer have one fitted
 
+IF _MASTER_VERSION \ Comment
+
+\LDA TRIBBLE            \ These instructions are commented out in the original
+\ORA TRIBBLE+1          \ source
+\BEQ nosurviv
+\JSR DORND
+\AND #7
+\ORA #1
+\STA TRIBBLE
+\LDA #0
+\STA TRIBBLE+1
+\.nosurviv
+
+ENDIF
+
+
 IF NOT(_ELITE_A_VERSION)
 
  LDA #70                \ Our replacement ship is delivered with a full tank of

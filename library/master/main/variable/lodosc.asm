@@ -1,22 +1,22 @@
 \ ******************************************************************************
 \
-\       Name: SVLI
+\       Name: lodosc
 \       Type: Variable
 \   Category: Save and load
-\    Summary: The OS command string for saving a commander file
+\    Summary: The OS command string for loading a commander file
 \
 \ ******************************************************************************
 
-.SVLI
+.lodosc
 
 IF _SNG47
 
- EQUS "SAVE :1.E.JAMESON  E7E +100 0 0"
+ EQUS "LOAD :1.E.JAMESON  E7E"
  EQUB 13
 
 ELIF _COMPACT
 
- EQUS "SAVE JAMESON  E7E +100 0 0"
+ EQUS "LOAD JAMESON  E7E"
  EQUB 13
 
 ENDIF

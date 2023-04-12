@@ -1,8 +1,8 @@
 \ ******************************************************************************
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 \       Name: hy6
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 \       Name: dockEd
 ENDIF
 \       Type: Subroutine
@@ -16,11 +16,11 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _MASTER_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
 
 .hy6
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 .dockEd
 

@@ -386,15 +386,15 @@ IF _MASTER_VERSION \ Master: The Master version only shows systems on the Short-
  BCS TT187              \ the chart, so jump to TT187 to skip showing the system
 
  TYA                    \ Store Y on the stack so it can be preserved across the
- PHA                    \ call to DIST
+ PHA                    \ call to readdistnce
 
  LDA QQ15+3             \ Set A = s1_hi, so A contains the galactic x-coordinate
                         \ of the system we are displaying on the chart
 
- JSR DIST               \ Call DIST to calculate the distance between the system
-                        \ with galactic coordinates (A, QQ15+1) - i.e. the
-                        \ system we are displaying - and the current system at
-                        \ (QQ0, QQ1), returning the result in QQ8(1 0)
+ JSR readdistnce        \ Call readdistnce to calculate the distance between the
+                        \ system with galactic coordinates (A, QQ15+1) - i.e.
+                        \ the system we are displaying - and the current system
+                        \ at (QQ0, QQ1), returning the result in QQ8(1 0)
 
  PLA                    \ Restore Y from the stack
  TAY

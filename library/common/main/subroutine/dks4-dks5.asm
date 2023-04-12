@@ -1,6 +1,10 @@
 \ ******************************************************************************
 \
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \       Name: DKS4
+ELIF _MASTER_VERSION
+\       Name: DKS5
+ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
 \       Type: Subroutine
 ELIF _6502SP_VERSION
@@ -199,7 +203,7 @@ ELIF _MASTER_VERSION
 
 IF _SNG47
 
-.DKS4
+.DKS5
 
  LDX #3                 \ Set X to 3, so it's ready to send to SHEILA once
                         \ interrupts have been disabled

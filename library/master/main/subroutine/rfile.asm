@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: LOAD
+\       Name: rfile
 \       Type: Subroutine
 \   Category: Save and load
 \    Summary: Load the commander file
@@ -13,34 +13,34 @@
 \
 \ ******************************************************************************
 
-.LOAD
+.rfile
 
- LDY #0                 \ We start by changing the load command at LDLI to
+ LDY #0                 \ We start by changing the load command at lodosc to
                         \ contain the filename that was just entered by the
                         \ user, so we set an index in Y so we can copy the
-                        \ filename from INWK+5 into the LDLI command
+                        \ filename from INWK+5 into the lodosc command
 
-.LOADL1
+.rfileL3
 
  LDA INWK+5,Y           \ Fetch the Y-th character of the filename
 
  CMP #13                \ If the character is a carriage return then we have
- BEQ LOADL2             \ reached the end of the filename, so jump to LOADL2 as
+ BEQ rfileL4            \ reached the end of the filename, so jump to rfileL4 as
                         \ we have now copied the whole filename
 
 IF _SNG47
 
- STA LDLI+10,Y          \ Store the Y-th character of the filename in the Y-th
-                        \ character of LDLI+10, where LDLI+10 points to the
-                        \ JAMESON part of the load command in LDLI:
+ STA lodosc+10,Y        \ Store the Y-th character of the filename in the Y-th
+                        \ character of lodosc+10, where lodosc+10 points to the
+                        \ JAMESON part of the load command in lodosc:
                         \
                         \   "LOAD :1.E.JAMESON  E7E"
 
 ELIF _COMPACT
 
- STA LDLI+5,Y           \ Store the Y-th character of the filename in the Y-th
-                        \ character of LDLI+5, where LDLI+5 points to the
-                        \ JAMESON part of the load command in LDLI:
+ STA lodosc+5,Y         \ Store the Y-th character of the filename in the Y-th
+                        \ character of lodosc+5, where lodosc+5 points to the
+                        \ JAMESON part of the load command in lodosc:
                         \
                         \   "LOAD JAMESON  E7E"
 
@@ -49,25 +49,28 @@ ENDIF
  INY                    \ Increment the loop counter
 
  CPY #7                 \ If Y < 7 then there may be more characters in the
- BCC LOADL1             \ name, so loop back to LOADL1 to fetch the next one
+ BCC rfileL3            \ name, so loop back to rfileL3 to fetch the next one
 
-.LOADL2
+.rfileL4
 
- LDA #' '               \ We have copied the name into the LDLI command string,
-                        \ but the new name might be shorter then the previous
-                        \ one, so we now need to blank out the rest of the name
-                        \ with spaces, so we load the space character into A
+ LDA #' '               \ We have copied the name into the lodosc command
+                        \ string, but the new name might be shorter then the
+                        \ previous one, so we now need to blank out the rest of
+                        \ the name with spaces, so we load the space character
+                        \ into A
+
+.rfileL5
 
 IF _SNG47
 
- STA LDLI+10,Y          \ Store the Y-th character of the filename in the Y-th
-                        \ character of LDLI+10, which will be directly after
+ STA lodosc+10,Y        \ Store the Y-th character of the filename in the Y-th
+                        \ character of lodosc+10, which will be directly after
                         \ the last letter we copied above
 
 ELIF _COMPACT
 
- STA LDLI+5,Y           \ Store the Y-th character of the filename in the Y-th
-                        \ character of LDLI+5, which will be directly after
+ STA lodosc+5,Y         \ Store the Y-th character of the filename in the Y-th
+                        \ character of lodosc+5, which will be directly after
                         \ the last letter we copied above
 
 ENDIF
@@ -75,7 +78,7 @@ ENDIF
  INY                    \ Increment the loop counter
 
  CPY #7                 \ If Y < 7 then we haven't yet blanked out the whole
- BCC LOADL2             \ name, so loop back to LOADL2 to blank the next one
+ BCC rfileL4            \ name, so loop back to rfileL4 to blank the next one
                         \ until the load string is ready for use
 
 IF _SNG47
@@ -89,8 +92,8 @@ ELIF _COMPACT
 
 ENDIF
 
- LDX #LO(LDLI)          \ Set (Y X) to point to the OS command at LDLI, which
- LDY #HI(LDLI)          \ contains the DFS command for loading the commander
+ LDX #LO(lodosc)        \ Set (Y X) to point to the OS command at lodosc, which
+ LDY #HI(lodosc)        \ contains the DFS command for loading the commander
                         \ file
 
  JSR OSCLI              \ Call OSCLI to execute the OS command at (Y X), which
@@ -102,14 +105,14 @@ ENDIF
                         \ block to location &0791, so we set a counter in Y to
                         \ copy the NT% bytes in the commander data block
 
-.LOADL3
+.rfileL1
 
  LDA &0E7E,Y            \ Copy the Y-th byte of &0E7E to the Y-th byte of &0791
  STA &0791,Y
 
  DEY                    \ Decrement the loop counter
 
- BPL LOADL3             \ Loop back until we have copied all the bytes in the
+ BPL rfileL1            \ Loop back until we have copied all the bytes in the
                         \ newly loaded commander data block
 
  RTS                    \ Return from the subroutine

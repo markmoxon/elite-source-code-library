@@ -58,18 +58,38 @@
 \
 \ Other entry points:
 \
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \   LL147               Don't initialise the values in SWAP or A
+ELIF _MASTER_VERSION
+\   CLIP                Another name for LL145
+\
+\   CLIP2               Don't initialise the values in SWAP or A
+ENDIF
 \
 \ ******************************************************************************
 
 .LL145
+
+IF _MASTER_VERSION \ Label
+
+.CLIP
+
+ENDIF
 
  LDA #0                 \ Set SWAP = 0
  STA SWAP
 
  LDA XX15+5             \ Set A = x2_hi
 
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Label
+
 .LL147
+
+ELIF _MASTER_VERSION
+
+.CLIP2
+
+ENDIF
 
  LDX #Y*2-1             \ Set Y2 = #Y * 2 - 1. The constant #Y is 96, the
                         \ y-coordinate of the mid-point of the space view, so

@@ -63,7 +63,7 @@ ENDIF
 IF _MASTER_VERSION \ Master: The Master version doesn't check for SHIFT being held down in the space view, as it has no effect there (it's only used in the chart views for speeding up the crosshairs)
 
  LDA QQ11               \ If this not the space view, skip the following three
- BNE P%+7               \ instructions to move onto the SHIFT key logic
+ BNE TT17afterall       \ instructions to move onto the SHIFT key logic
 
  JSR DOKEY              \ This is the space view, so scan the keyboard for
                         \ flight controls and pause keys, (or the equivalent on
@@ -73,6 +73,8 @@ IF _MASTER_VERSION \ Master: The Master version doesn't check for SHIFT being he
  TXA                    \ Transfer the value of the key pressed from X to A
 
  RTS                    \ Return from the subroutine
+
+.TT17afterall
 
 ENDIF
 
@@ -441,8 +443,8 @@ ELIF _MASTER_VERSION
 
 IF _SNG47
 
- LDA #0                 \ Call DKS4 to check whether the SHIFT key is being
- JSR DKS4               \ pressed
+ LDA #0                 \ Call DKS5 to check whether the SHIFT key is being
+ JSR DKS5               \ pressed
 
 ELIF _COMPACT
 
@@ -451,7 +453,7 @@ ELIF _COMPACT
 
 ENDIF
 
- BMI P%+6               \ If SHIFT is being pressed, skip the next three
+ BMI speedup            \ If SHIFT is being pressed, skip the next three
                         \ instructions
 
  PLX                    \ SHIFT is not being pressed, so retrieve the value of X
@@ -460,6 +462,8 @@ ENDIF
  LDA KL                 \ Set A to the value of KL (the key pressed)
 
  RTS                    \ Return from the subroutine
+
+.speedup
 
  PLA                    \ Pull the value of X from the stack into A, so A now
                         \ contains the change in the x-coordinate

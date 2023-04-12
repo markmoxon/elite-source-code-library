@@ -87,7 +87,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR
 
 ELIF _MASTER_VERSION
 
- JSR LOAD               \ Call LOAD to load the commander file to address &0791
+ JSR rfile              \ Call rfile to load the commander file to address &0791
 
 ENDIF
 
@@ -155,32 +155,40 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-.LOL1
-
 IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+
+.LOL1
 
  LDA &0B00,X            \ Copy the X-th byte of &0B00 to the X-th byte of NA%+8
  STA NA%+8,X
 
  DEX                    \ Decrement the loop counter
 
+ BPL LOL1               \ Loop back until we have copied all NT% bytes
+
 ELIF _ELECTRON_VERSION
+
+.LOL1
 
  LDA &0900,X            \ Copy the X-th byte of &0900 to the X-th byte of NA%+8
  STA NA%+8,X
 
  DEX                    \ Decrement the loop counter
 
+ BPL LOL1               \ Loop back until we have copied all NT% bytes
+
 ELIF _MASTER_VERSION
+
+.copyme
 
  LDA &0791,Y            \ Copy the Y-th byte of &0791 to the Y-th byte of NA%+8
  STA NA%+8,Y
 
  DEY                    \ Decrement the loop counter
 
-ENDIF
+ BPL copyme             \ Loop back until we have copied all NT% bytes
 
- BPL LOL1               \ Loop back until we have copied all NT% bytes
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
@@ -223,7 +231,11 @@ ELIF _MASTER_VERSION
  JMP SVE                \ Jump to SVE to display the disc access menu and return
                         \ from the subroutine using a tail call
 
+.backtonormal
+
  RTS                    \ Return from the subroutine
+
+.CLDELAY
 
  RTS                    \ This instruction has no effect as we already returned
                         \ from the subroutine

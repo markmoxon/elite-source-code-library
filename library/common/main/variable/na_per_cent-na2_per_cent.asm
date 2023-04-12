@@ -301,9 +301,26 @@ ENDIF
 
 IF _MASTER_VERSION \ Master: See group A
 
+\.CHK2                  \ This label is commented out in the original source
+
  EQUB &AA               \ The CHK2 checksum value for the default commander
 
+\.CHK                   \ This label is commented out in the original source
+
  EQUB &03               \ The CHK checksum value for the default commander
+
+\.CHK3                  \ These instructions are commented out in the original
+\EQUB CH3X%             \ source
+
+ SKIP 12                \ These bytes appear to be unused, though the first byte
+                        \ in this block is included in the commander file (it
+                        \ has no effect, as it's the third checksum byte from
+                        \ the Commodore 64 version, which isn't used in the
+                        \ Master version)
+
+.NAEND%
+
+ SKIP 4                 \ These bytes appear to be unused
 
 ENDIF
 

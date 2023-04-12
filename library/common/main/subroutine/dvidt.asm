@@ -60,5 +60,11 @@
 
  ORA T                  \ Set A to the correct sign bit that we set in T above
 
+IF _MASTER_VERSION \ Label
+
+.itsoff
+
+ENDIF
+
  RTS                    \ Return from the subroutine
 

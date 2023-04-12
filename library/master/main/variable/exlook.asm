@@ -1,16 +1,14 @@
 \ ******************************************************************************
 \
-\       Name: EXCOL
+\       Name: exlook
 \       Type: Variable
 \   Category: Drawing ships
-\    Summary: Colours for ship explosions
+\    Summary: Unused block of explosion data
 \
 \ ******************************************************************************
 
-.EXCOL
+.exlook
 
- EQUB YELLOW
- EQUB RED
- EQUB YELLOW
- EQUB CYAN
+ EQUB 0                 \ These bytes appear to be unused
+ EQUB 2
 

@@ -1,23 +1,13 @@
 \ ******************************************************************************
 \
-\       Name: LDLI
+\       Name: thislong
 \       Type: Variable
 \   Category: Save and load
-\    Summary: The OS command string for loading a commander file
+\    Summary: Contains the length of the most recently entered commander name
 \
 \ ******************************************************************************
 
-.LDLI
+.thislong
 
-IF _SNG47
-
- EQUS "LOAD :1.E.JAMESON  E7E"
- EQUB 13
-
-ELIF _COMPACT
-
- EQUS "LOAD JAMESON  E7E"
- EQUB 13
-
-ENDIF
+ EQUB 7
 

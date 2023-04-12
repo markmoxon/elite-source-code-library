@@ -103,19 +103,19 @@ ELIF _MASTER_VERSION
 
  LDY #0                 \ Set Y = 0 to hold the length of the text entered
 
-.MT26L
+.OSW0L
 
  JSR TT217              \ Scan the keyboard until a key is pressed, and return
                         \ the key's ASCII code in A (and X)
 
- CMP #13                \ If RETURN was pressed, jump to MT26ret
- BEQ MT26ret
+ CMP #13                \ If RETURN was pressed, jump to OSW03
+ BEQ OSW03
 
- CMP #27                \ If ESCAPE was pressed, jump to MT26esc
- BEQ MT26esc
+ CMP #27                \ If ESCAPE was pressed, jump to OSW04
+ BEQ OSW04
 
- CMP #127               \ If DELETE was pressed, jump to MT26ret
- BEQ MT26del
+ CMP #127               \ If DELETE was pressed, jump to OSW05
+ BEQ OSW05
 
 IF _COMPACT
 
@@ -150,20 +150,20 @@ IF _COMPACT
 ENDIF
 
  CPY RLINE+2            \ If Y >= RLINE+2 (the maximum line length from the
- BCS MT26err            \ OSWORD configuration block at RLINE), then jump to
-                        \ MT26err to give an error beep as we have reached the
+ BCS OSW01              \ OSWORD configuration block at RLINE), then jump to
+                        \ OSW01 to give an error beep as we have reached the
                         \ character limit
 
  CMP RLINE+3            \ If the key pressed is less than the character in
- BCC MT26err            \ RLINE+3 (the lowest allowed character from the OSWORD
-                        \ configuration block at RLINE), then jump to MT26err
+ BCC OSW01              \ RLINE+3 (the lowest allowed character from the OSWORD
+                        \ configuration block at RLINE), then jump to OSW01
                         \ to give an error beep as the key pressed is out of
                         \ range
 
  CMP RLINE+4            \ If the key pressed is geater than or equal to the
- BCS MT26err            \ character in RLINE+4 (the highest allowed character
+ BCS OSW01              \ character in RLINE+4 (the highest allowed character
                         \ from the OSWORD configuration block at RLINE), then
-                        \ jump to MT26err to give an error beep as the key
+                        \ jump to OSW01 to give an error beep as the key
                         \ pressed is out of range
 
  STA INWK+5,Y           \ Store the key's ASCII code in the Y-th byte of INWK+5
@@ -174,19 +174,19 @@ ENDIF
                         \ &2C &A9 &07, or BIT &07A9, which does nothing apart
                         \ from affect the flags
 
-.MT26err
+.OSW01
 
  LDA #7                 \ Set A to the beep character, so the next instruction
                         \ makes a system beep
 
-.MT26LS
+.OSW06
 
  JSR CHPR               \ Print the character in A (and clear the C flag)
 
- BCC MT26L              \ Loop back to MT26L to fetch another key press (this
+ BCC OSW0L              \ Loop back to OSW0L to fetch another key press (this
                         \ BCC is effectively a JMP as CHPR clears the C flag)
 
-.MT26ret
+.OSW03
 
  STA INWK+5,Y           \ Store the return character in the Y-th byte of INWK+5
 
@@ -197,7 +197,7 @@ ENDIF
                         \ or BIT &0038, which does nothing apart from affect the
                         \ flags
 
-.MT26esc
+.OSW04
 
  SEC                    \ Set the C flag as ESCAPE was pressed
 
@@ -206,17 +206,17 @@ ENDIF
 
  RTS                    \ Return from the subroutine
 
-.MT26del
+.OSW05
 
  TYA                    \ If the length of the line so far in Y is 0, then we
- BEQ MT26err            \ just pressed DELETE on an empty line, so jump to
-                        \ MT26err give an error beep
+ BEQ OSW01              \ just pressed DELETE on an empty line, so jump to
+                        \ OSW01 give an error beep
 
  DEY                    \ Otherwise we want to delete a character, so decrement
                         \ the length of the line so far in Y
 
- LDA #127               \ Set A = 127 and jump back to MT26LS to print the
- BNE MT26LS             \ character in A (i.e. the DELETE character) and listen
+ LDA #127               \ Set A = 127 and jump back to OSW06 to print the
+ BNE OSW06              \ character in A (i.e. the DELETE character) and listen
                         \ for the next key press
 
 ENDIF

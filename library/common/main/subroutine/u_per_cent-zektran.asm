@@ -1,6 +1,10 @@
 \ ******************************************************************************
 \
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \       Name: U%
+ELIF _MASTER_VERSION
+\       Name: ZEKTRAN
+ENDIF
 \       Type: Subroutine
 \   Category: Keyboard
 \    Summary: Clear the key logger
@@ -20,7 +24,15 @@ ELIF _MASTER_VERSION
 ENDIF
 \ ******************************************************************************
 
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label
+
 .U%
+
+ELIF _MASTER_VERSION
+
+.ZEKTRAN
+
+ENDIF
 
  LDA #0                 \ Set A to 0, as this means "key not pressed" in the
                         \ key logger at KL
@@ -42,21 +54,13 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-.DKL3
-
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+
+.DKL3
 
  STA KL,Y               \ Store 0 in the Y-th byte of the key logger
 
  DEY                    \ Decrement the counter
-
-ELIF _MASTER_VERSION
-
- STA JSTY,X             \ Store 0 in the Y-th byte of the key logger
-
- DEX                    \ Decrement the counter
-
-ENDIF
 
  BNE DKL3               \ And loop back for the next key, until we have just
                         \ KL+1. We don't want to clear the first key logger
@@ -65,6 +69,25 @@ ENDIF
                         \ the key logger (it's actually used for logging keys
                         \ that don't appear in the keyboard table, and which
                         \ therefore don't use the key logger)
+
+
+ELIF _MASTER_VERSION
+
+.ZEKLOOP
+
+ STA JSTY,X             \ Store 0 in the Y-th byte of the key logger
+
+ DEX                    \ Decrement the counter
+
+ BNE ZEKLOOP            \ And loop back for the next key, until we have just
+                        \ KL+1. We don't want to clear the first key logger
+                        \ location at KL, as the keyboard table at KYTB starts
+                        \ with offset 1, not 0, so KL is not technically part of
+                        \ the key logger (it's actually used for logging keys
+                        \ that don't appear in the keyboard table, and which
+                        \ therefore don't use the key logger)
+
+ENDIF
 
  RTS                    \ Return from the subroutine
 

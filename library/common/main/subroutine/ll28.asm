@@ -92,7 +92,7 @@ IF _6502SP_VERSION \ Other: Group A: The Master version omits half of the logari
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Other: See group A
+IF _6502SP_VERSION \ Other: See group A
 
  LDX widget             \ Set A = high byte of log(A) - high byte of log(Q)
  LDA log,X
@@ -105,6 +105,26 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Other: See group A
 
  TAX                    \ Otherwise we return the A-th entry from the antilog
  LDA antilog,X          \ table
+
+.LLfix
+
+ STA R                  \ Set the result in R to the value of A
+
+ RTS                    \ Return from the subroutine
+
+ELIF _MASTER_VERSION
+
+ LDX widget             \ Set A = high byte of log(A) - high byte of log(Q)
+ LDA log,X
+ LDX Q
+ SBC log,X
+
+ BCS LL2                \ If the subtraction fitted into one byte and didn't
+                        \ underflow, then log(A) - log(Q) < 256, so we jump to
+                        \ LL2 return a result of 255
+
+ TAX                    \ Otherwise we return the A-th entry from the antilog
+ LDA alogh,X            \ table
 
 .LLfix
 

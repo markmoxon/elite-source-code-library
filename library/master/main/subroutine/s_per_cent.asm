@@ -17,7 +17,7 @@
 
  JSR DEEOR              \ Call DEEOR to unscramble the main code
 
- JSR BRKBK              \ Call BRKBK to set up the break handler
+ JSR COLD               \ Call COLD to set up the break handler
 
  JMP BEGIN              \ Jump to BEGIN to start the game
 

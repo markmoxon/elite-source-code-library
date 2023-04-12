@@ -261,9 +261,20 @@ ENDIF
  STA XX1+31             \ clears bit 3 as we know it was set before the EOR), so
                         \ this sets this ship as no longer being drawn on-screen
 
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label
+
  JMP LL155              \ Jump to LL155 to draw the ship, which removes it from
                         \ the screen, returning from the subroutine using a
                         \ tail call
+
+ELIF _MASTER_VERSION
+
+
+ JMP LSCLR              \ Jump to LSCLR to draw the ship, which removes it from
+                        \ the screen, returning from the subroutine using a
+                        \ tail call
+
+ENDIF
 
 IF _CASSETTE_VERSION \ Comment
 

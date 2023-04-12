@@ -64,7 +64,7 @@ IF _6502SP_VERSION \ Tube
 
 ELIF _MASTER_VERSION
 
- JSR U%                 \ Call U% to clear the key logger
+ JSR ZEKTRAN            \ Call ZEKTRAN to clear the key logger
 
  JSR ZINF               \ Call ZINF to reset the INWK ship workspace
 
@@ -587,7 +587,7 @@ ELIF _MASTER_VERSION
 
 IF _SNG47
 
- BEQ TL2                \ If the joystick fire button is pressed, jump to TL2
+ BEQ TL3                \ If the joystick fire button is pressed, jump to TL3
 
 ENDIF
 
@@ -628,7 +628,7 @@ IF _6502SP_VERSION \ 6502SP: See group C
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: See group D
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Electron: See group D
 
 .TL2
 
@@ -636,9 +636,21 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _
                         \ (it was set to 0 above), to disable keyboard and
                         \ enable joysticks
 
-ENDIF
+ELIF _MASTER_VERSION
 
-IF _6502SP_VERSION \ Label
+.TL3
+
+ DEC JSTK               \ Joystick fire button was pressed, so set JSTK to &FF
+                        \ (it was set to 0 above), to disable keyboard and
+                        \ enable joysticks
+
+ELIF _6502SP_VERSION
+
+.TL2
+
+ DEC JSTK               \ Joystick fire button was pressed, so set JSTK to &FF
+                        \ (it was set to 0 above), to disable keyboard and
+                        \ enable joysticks
 
 .TL3
 

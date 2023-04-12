@@ -1,6 +1,10 @@
 \ ******************************************************************************
 \
+IF _6502SP_VERSION \ Comment
 \       Name: TRANTABLE
+ELIF _MASTER_VERSION
+\       Name: TRTB%
+ENDIF
 \       Type: Variable
 \   Category: Keyboard
 \    Summary: Translation table from internal key number to ASCII
@@ -26,7 +30,7 @@ ENDIF
 \ &39, and so on. This means that the other locations - i.e. &1A to &1F, &2A to
 \ &2F and so on - aren't used by the lookup table, but the MOS doesn't let this
 \ space go to waste; instead, those gaps contain MOS code, which is replicated
-\ below as TRANTABLE contains a copy of this entire block of the MOS, not just
+\ below as the table contains a copy of this entire block of the MOS, not just
 \ the table entries.
 \
 \ This table allows code running on the parasite to convert internal key numbers
@@ -37,9 +41,9 @@ ENDIF
 \
 \ ******************************************************************************
 
-.TRANTABLE
-
 IF _6502SP_VERSION \ Platform
+
+.TRANTABLE
 
  EQUB &03, &8C, &40     \ MOS code
  EQUB &FE, &A0, &7F
@@ -127,6 +131,8 @@ IF _6502SP_VERSION \ Platform
  EQUB &08
 
 ELIF _MASTER_VERSION
+
+.TRTB%
 
  EQUB &00, &40, &FE     \ MOS code
  EQUB &A0, &5F, &8C

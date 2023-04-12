@@ -48,6 +48,12 @@
                         \ If we get here we need to negate both the result and
                         \ the sign in S, as both are the wrong sign
 
+IF _MASTER_VERSION \ Label
+
+.LL40
+
+ENDIF
+
  PHA                    \ Store the result of the subtraction on the stack
 
  LDA S                  \ Flip the sign of S

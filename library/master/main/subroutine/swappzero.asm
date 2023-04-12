@@ -1,13 +1,13 @@
 \ ******************************************************************************
 \
-\       Name: SWAPZP2
+\       Name: SWAPPZERO
 \       Type: Subroutine
 \   Category: Utility routines
 \    Summary: An unused placeholder routine for swapping zero page bytes
 \
 \ ******************************************************************************
 
-.SWAPZP2
+.SWAPPZERO
 
 IF _SNG47
 
@@ -21,7 +21,7 @@ ELIF _COMPACT
 
 ENDIF
 
-.SWPL2
+.SWPZL
 
  LDA ZP,X               \ These instructions have no effect, though they look
  LDY ZP,X               \ like they may have been used to swap two sets of bytes
@@ -30,7 +30,7 @@ ENDIF
 
  INX                    \ Increment the loop counter
 
- BNE SWPL2              \ Loop back for the next byte
+ BNE SWPZL              \ Loop back for the next byte
 
  RTS                    \ Return from the subroutine
 

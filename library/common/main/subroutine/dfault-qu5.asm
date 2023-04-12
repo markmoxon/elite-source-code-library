@@ -100,6 +100,12 @@ ENDIF
                         \ If the commander check below fails, we keep jumping
                         \ back to here to crash the game with an infinite loop
 
+IF _MASTER_VERSION \ Label
+
+.doitagain
+
+ENDIF
+
 IF _ELITE_A_6502SP_PARA
 
  JSR update_pod         \ Update the dashboard colours to reflect whether we now
@@ -113,6 +119,8 @@ ENDIF
 
  CMP CHK                \ Test the calculated checksum against CHK
 
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Label
+
 IF _REMOVE_CHECKSUMS
 
  NOP                    \ If we have disabled checksums, then ignore the result
@@ -124,6 +132,24 @@ ELSE
                         \ loop back to repeat the check - in other words, we
                         \ enter an infinite loop here, as the checksum routine
                         \ will keep returning the same incorrect value
+
+ENDIF
+
+ELIF _MASTER_VERSION
+
+IF _REMOVE_CHECKSUMS
+
+ NOP                    \ If we have disabled checksums, then ignore the result
+ NOP                    \ of the comparison and fall through into the next part
+
+ELSE
+
+ BNE doitagain          \ If the calculated checksum does not match CHK, then
+                        \ loop back to repeat the check - in other words, we
+                        \ enter an infinite loop here, as the checksum routine
+                        \ will keep returning the same incorrect value
+
+ENDIF
 
 ENDIF
 

@@ -25,7 +25,7 @@
 IF _MASTER_VERSION \ Comment
 \ Other entry points:
 \
-\   ARCRTS              Contains an RTS
+\   ARSR1               Contains an RTS
 \
 ENDIF
 \ ******************************************************************************
@@ -155,7 +155,7 @@ ENDIF
 
 IF _MASTER_VERSION \ Label
 
-.ARCRTS
+.ARSR1
 
 ENDIF
 

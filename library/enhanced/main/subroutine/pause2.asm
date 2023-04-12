@@ -67,5 +67,11 @@ ELIF _ELITE_A_ENCYCLOPEDIA
 
 ENDIF
 
+IF _MASTER_VERSION \ Label
+
+.newyearseve
+
+ENDIF
+
  RTS                    \ Return from the subroutine
 

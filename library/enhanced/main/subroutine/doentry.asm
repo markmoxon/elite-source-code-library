@@ -259,7 +259,49 @@ ENDIF
 
 .EN4
 
+IF _MASTER_VERSION \ Comment
+
+\LDA CASH+2             \ These instructions are commented out in the original
+\CMP #&C4               \ source
+\BCC EN6
+\LDA TP
+\AND #&10
+\BNE EN6
+\JMP TBRIEF
+\.EN6
+
+ENDIF
+
  JMP BAY                \ If we get here them we didn't start or any missions,
                         \ so jump to BAY to go to the docking bay (i.e. show the
                         \ Status Mode screen)
+
+IF _MASTER_VERSION \ Comment
+
+\TRIBDIR                \ These instructions are commented out in the original
+\EQUB 0                 \ source
+\EQUB 1
+\EQUB &FF
+\EQUB 0
+
+\TRIBDIRH
+\EQUB 0
+\EQUB 0
+\EQUB &FF
+\EQUB 0
+
+.SPMASK
+
+ EQUW &04FB             \ These bytes appear to be unused
+ EQUW &08F7
+ EQUW &10EF
+ EQUW &20DF
+ EQUW &40BF
+ EQUW &807F
+
+\MVTRIBS                \ These instructions are commented out in the original
+\MVTR1                  \ source
+\nominus
+
+ENDIF
 

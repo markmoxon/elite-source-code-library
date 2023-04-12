@@ -180,8 +180,8 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION
 
 ELIF _MASTER_VERSION
 
- STY NAMELEN1           \ Store the length of the length of the commander's that
-                        \ was entered in NAMELEN1
+ STY thislong           \ Store the length of the length of the commander's that
+                        \ was entered in thislong
 
  RTS                    \ Return from the subroutine
 

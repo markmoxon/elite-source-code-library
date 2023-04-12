@@ -25,8 +25,10 @@
 \                       character at the text cursor, with support for verified
 \                       text in extended tokens
 \
+IF _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \   rT9                 Contains an RTS
 \
+ENDIF
 \ ******************************************************************************
 
 .DASC
@@ -320,7 +322,15 @@ ENDIF
  BNE DAL5               \ Loop back for the next character until we have printed
                         \ X characters from BUF
 
+IF _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label
+
 .rT9
+
+ELIF _MASTER_VERSION
+
+.dec27
+
+ENDIF
 
  RTS                    \ Return from the subroutine
 

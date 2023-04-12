@@ -32,7 +32,7 @@ IF _SNG47
 .CTRL
 
  LDA #1                 \ Set A to the internal key number for CTRL and fall
-                        \ through to DKS4 to scan the keyboard
+                        \ through to DKS5 to scan the keyboard
 
 ENDIF
 

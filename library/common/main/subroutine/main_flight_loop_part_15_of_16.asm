@@ -184,7 +184,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Enha
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: As there are no suns in the Electron version, we don't need to set the cabin temperature based on the altitude from the sun, and we don't need to implement fuel scooping
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: As there are no suns in the Electron version, we don't need to set the cabin temperature based on the altitude from the sun
 
  CMP #20                \ If this is the 20th iteration in this block of 32,
  BNE MA23               \ do the following, otherwise jump to MA23 to skip the
@@ -234,30 +234,6 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Ele
 
  CMP #&E0               \ If the cabin temperature < 224 then jump to MA23 to
  BCC MA23               \ to skip fuel scooping, as we aren't close enough
-
- LDA BST                \ If we don't have fuel scoops fitted, jump to BA23 to
- BEQ MA23               \ skip fuel scooping, as we can't scoop without fuel
-                        \ scoops
-
- LDA DELT4+1            \ We are now successfully fuel scooping, so it's time
- LSR A                  \ to work out how much fuel we're scooping. Fetch the
-                        \ high byte of DELT4, which contains our current speed
-                        \ divided by 4, and halve it to get our current speed
-                        \ divided by 8 (so it's now a value between 1 and 5, as
-                        \ our speed is normally between 1 and 40). This gives
-                        \ us the amount of fuel that's being scooped in A, so
-                        \ the faster we go, the more fuel we scoop, and because
-                        \ the fuel levels are stored as 10 * the fuel in light
-                        \ years, that means we just scooped between 0.1 and 0.5
-                        \ light years of free fuel
-
- ADC QQ14               \ Set A = A + the current fuel level * 10 (from QQ14)
-
- CMP #70                \ If A > 70 then set A = 70 (as 70 is the maximum fuel
- BCC P%+4               \ level, or 7.0 light years)
- LDA #70
-
- STA QQ14               \ Store the updated fuel level in QQ14
 
 ELIF _ELITE_A_VERSION
 
@@ -309,6 +285,53 @@ ELIF _ELITE_A_VERSION
 
  CMP #&E0               \ If the cabin temperature < 224 then jump to MA23 to
  BCC MA23               \ to skip fuel scooping, as we aren't close enough
+
+ENDIF
+
+IF _MASTER_VERSION \ Comment
+
+\CMP #&F0               \ These instructions are commented out in the original
+\BCC nokilltr           \ source
+\LDA #5
+\JSR SETL1
+\LDA VIC+&15
+\AND #&3
+\STA VIC+&15
+\LDA #4
+\JSR SETL1
+\LSR TRIBBLE+1
+\ROR TRIBBLE
+\.nokilltr
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: As there are no suns in the Electron version, we don't need to implement fuel scooping
+
+ LDA BST                \ If we don't have fuel scoops fitted, jump to BA23 to
+ BEQ MA23               \ skip fuel scooping, as we can't scoop without fuel
+                        \ scoops
+
+ LDA DELT4+1            \ We are now successfully fuel scooping, so it's time
+ LSR A                  \ to work out how much fuel we're scooping. Fetch the
+                        \ high byte of DELT4, which contains our current speed
+                        \ divided by 4, and halve it to get our current speed
+                        \ divided by 8 (so it's now a value between 1 and 5, as
+                        \ our speed is normally between 1 and 40). This gives
+                        \ us the amount of fuel that's being scooped in A, so
+                        \ the faster we go, the more fuel we scoop, and because
+                        \ the fuel levels are stored as 10 * the fuel in light
+                        \ years, that means we just scooped between 0.1 and 0.5
+                        \ light years of free fuel
+
+ ADC QQ14               \ Set A = A + the current fuel level * 10 (from QQ14)
+
+ CMP #70                \ If A > 70 then set A = 70 (as 70 is the maximum fuel
+ BCC P%+4               \ level, or 7.0 light years)
+ LDA #70
+
+ STA QQ14               \ Store the updated fuel level in QQ14
+
+ELIF _ELITE_A_VERSION
 
  LDA BST                \ If we don't have fuel scoops fitted, jump to BA23 to
  BEQ MA23               \ skip fuel scooping, as we can't scoop without fuel

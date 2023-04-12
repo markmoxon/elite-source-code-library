@@ -186,11 +186,22 @@ ELIF _MASTER_VERSION
 
 INCLUDE "library/common/main/variable/comc.asm"
 
- SKIP 18                \ These bytes appear to be unused
+.dials
+
+ EQUD 0                 \ These bytes appear to be unused
+ EQUD 0
+ EQUD 0
+ EQUW 0
+
+.mscol
+
+ EQUD 0                 \ This byte appears to be unused
 
 INCLUDE "library/enhanced/main/variable/catf.asm"
 
- SKIP 1                 \ This byte appears to be unused
+.DFLAG
+
+ EQUB 0                 \ This byte appears to be unused
 
 INCLUDE "library/common/main/variable/dnoiz.asm"
 INCLUDE "library/common/main/variable/damp.asm"

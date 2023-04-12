@@ -37,21 +37,21 @@ ELIF _MASTER_VERSION
  LDY #0                 \ Set Y to 0, to represent a pulse laser
 
  CMP #POW               \ If the laser power in A is equal to a pulse laser,
- BEQ SIGHT1             \ jump to SIGHT1 with Y = 0
+ BEQ SIG1               \ jump to SIG1 with Y = 0
 
  INY                    \ Increment Y to 1, to represent a beam laser
 
  CMP #(POW+128)         \ If the laser power in A is equal to a beam laser,
- BEQ SIGHT1             \ jump to SIGHT1 with Y = 1
+ BEQ SIG1               \ jump to SIG1 with Y = 1
 
  INY                    \ Increment Y to 2, to represent a military laser
 
  CMP #Armlas            \ If the laser power in A is equal to a military laser,
- BEQ SIGHT1             \ jump to SIGHT1 with Y = 2
+ BEQ SIG1               \ jump to SIG1 with Y = 2
 
  INY                    \ Increment Y to 3, to represent a mining laser
 
-.SIGHT1
+.SIG1
 
  LDA SIGHTCOL,Y         \ Set the colour from the SIGHTCOL table
  STA COL

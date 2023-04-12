@@ -66,7 +66,11 @@ ENDIF
                         \ the ship's byte #31 to denote that we are drawing
                         \ something on-screen for this ship
 
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label
+
 .LL74
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Minor
 
@@ -207,9 +211,19 @@ ENDIF
                         \ goes to the right edge of the screen by decrementing
                         \ XX15(5 4) to 255
 
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Label
+
  JSR LL145              \ Call LL145 to see if the laser beam needs to be
                         \ clipped to fit on-screen, returning the clipped line's
                         \ end-points in (X1, Y1) and (X2, Y2)
+
+ELIF _MASTER_VERSION
+
+ JSR CLIP               \ Call CLIP to see if the laser beam needs to be
+                        \ clipped to fit on-screen, returning the clipped line's
+                        \ end-points in (X1, Y1) and (X2, Y2)
+
+ENDIF
 
  BCS LL170              \ If the C flag is set then the line is not visible on
                         \ screen, so jump to LL170 so we don't store this line
@@ -263,7 +277,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 
 ELIF _MASTER_VERSION
 
- JSR LLX30              \ Draw the laser line using flicker-free animation, by
+ JSR LSPUT              \ Draw the laser line using flicker-free animation, by
                         \ first drawing the new laser line and then erasing the
                         \ corresponding old line from the screen
 

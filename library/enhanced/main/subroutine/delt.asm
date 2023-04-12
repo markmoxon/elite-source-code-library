@@ -115,7 +115,7 @@ IF _SNG47
                         \
                         \ Note that this is a bug - X should be set to 8, as a
                         \ value of 9 overwrites the first character of the
-                        \ "SAVE" command in SVLI
+                        \ "SAVE" command in savosc
                         \
                         \ This means that if you delete a file, it breaks the
                         \ save command, so you can't save a commander file if

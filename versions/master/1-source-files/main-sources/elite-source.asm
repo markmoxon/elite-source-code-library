@@ -350,7 +350,7 @@ ENDIF
 INCLUDE "library/advanced/main/variable/font_per_cent.asm"
 INCLUDE "library/advanced/main/variable/log.asm"
 INCLUDE "library/advanced/main/variable/logl.asm"
-INCLUDE "library/advanced/main/variable/antilog.asm"
+INCLUDE "library/advanced/main/variable/antilog-alogh.asm"
 
 IF _MATCH_ORIGINAL_BINARIES
 
@@ -372,12 +372,6 @@ INCLUDE "library/master/main/subroutine/s_per_cent.asm"
 INCLUDE "library/master/main/subroutine/deeor.asm"
 INCLUDE "library/master/main/subroutine/deeors.asm"
 INCLUDE "library/enhanced/main/subroutine/doentry.asm"
-
- EQUB &FB, &04, &F7     \ These bytes appear to be unused
- EQUB &08, &EF, &10
- EQUB &DF, &20, &BF
- EQUB &40, &7F, &80
-
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_1_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_2_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_3_of_16.asm"
@@ -426,17 +420,7 @@ INCLUDE "library/enhanced/main/variable/s1_per_cent.asm"
 INCLUDE "library/master/main/variable/na_per_cent.asm"
 INCLUDE "library/common/main/variable/chk2.asm"
 INCLUDE "library/common/main/variable/chk.asm"
-
- SKIP 12                \ These bytes appear to be unused, though the first byte
-                        \ in this block is included in the commander file (it
-                        \ has no effect)
-
 INCLUDE "library/common/main/variable/na_per_cent-na2_per_cent.asm"
-
- SKIP 16                \ These bytes appear to be unused, though the first byte
-                        \ in this block is included in the commander file (it
-                        \ has no effect)
-
 INCLUDE "library/advanced/main/variable/shpcol.asm"
 INCLUDE "library/advanced/main/variable/scacol.asm"
 
@@ -756,14 +740,11 @@ INCLUDE "library/common/main/subroutine/tt46.asm"
 INCLUDE "library/common/main/subroutine/tt74.asm"
 INCLUDE "library/common/main/subroutine/tt43.asm"
 INCLUDE "library/common/main/subroutine/ex.asm"
-INCLUDE "library/master/main/subroutine/swapzp2.asm"
+INCLUDE "library/master/main/subroutine/swappzero.asm"
 INCLUDE "library/common/main/subroutine/doexp.asm"
-
- EQUB 0, 2              \ These bytes appear to be unused
-
-INCLUDE "library/master/main/variable/excol.asm"
+INCLUDE "library/master/main/variable/exlook.asm"
+INCLUDE "library/master/main/variable/coltabl.asm"
 INCLUDE "library/common/main/subroutine/sos1.asm"
-INCLUDE "library/master/main/subroutine/solarx.asm"
 INCLUDE "library/common/main/subroutine/solar.asm"
 INCLUDE "library/common/main/subroutine/nwstars.asm"
 INCLUDE "library/common/main/subroutine/nwq.asm"
@@ -784,10 +765,6 @@ INCLUDE "library/common/main/subroutine/nwshp.asm"
 INCLUDE "library/common/main/subroutine/nws1.asm"
 INCLUDE "library/common/main/subroutine/abort.asm"
 INCLUDE "library/common/main/subroutine/abort2.asm"
-
- EQUB 4                 \ These bytes appear to be unused
- SKIP 4
-
 INCLUDE "library/common/main/subroutine/proj.asm"
 INCLUDE "library/common/main/subroutine/pl2.asm"
 INCLUDE "library/common/main/subroutine/planet.asm"
@@ -813,7 +790,7 @@ INCLUDE "library/common/main/subroutine/pls3.asm"
 INCLUDE "library/common/main/subroutine/pls4.asm"
 INCLUDE "library/common/main/subroutine/pls5.asm"
 INCLUDE "library/common/main/subroutine/pls6.asm"
-INCLUDE "library/master/main/subroutine/getyn.asm"
+INCLUDE "library/master/main/subroutine/yesno.asm"
 INCLUDE "library/common/main/subroutine/tt17.asm"
 
 \ ******************************************************************************
@@ -848,7 +825,7 @@ INCLUDE "library/common/main/subroutine/ks4.asm"
 INCLUDE "library/common/main/subroutine/ks2.asm"
 INCLUDE "library/common/main/subroutine/killshp.asm"
 INCLUDE "library/enhanced/main/subroutine/there.asm"
-INCLUDE "library/master/main/subroutine/hexprnt.asm"
+INCLUDE "library/master/main/subroutine/numbor.asm"
 INCLUDE "library/common/main/subroutine/reset.asm"
 INCLUDE "library/common/main/subroutine/res2.asm"
 INCLUDE "library/common/main/subroutine/zinf.asm"
@@ -867,8 +844,8 @@ INCLUDE "library/common/main/subroutine/bad.asm"
 INCLUDE "library/common/main/subroutine/farof.asm"
 INCLUDE "library/common/main/subroutine/farof2.asm"
 INCLUDE "library/common/main/subroutine/mas4.asm"
-INCLUDE "library/enhanced/main/variable/stack.asm"
-INCLUDE "library/enhanced/main/subroutine/brbr.asm"
+INCLUDE "library/enhanced/main/variable/stack-stackpt.asm"
+INCLUDE "library/enhanced/main/subroutine/brbr-newbrk.asm"
 INCLUDE "library/common/main/subroutine/death.asm"
 INCLUDE "library/advanced/main/variable/spasto.asm"
 INCLUDE "library/enhanced/main/subroutine/begin.asm"
@@ -886,24 +863,24 @@ INCLUDE "library/common/main/subroutine/tr1.asm"
 INCLUDE "library/common/main/subroutine/gtnme-gtnmew.asm"
 INCLUDE "library/enhanced/main/subroutine/mt26.asm"
 INCLUDE "library/common/main/variable/rline.asm"
-INCLUDE "library/master/main/subroutine/mt30.asm"
-INCLUDE "library/master/main/subroutine/mt31.asm"
+INCLUDE "library/master/main/subroutine/filepr.asm"
+INCLUDE "library/master/main/subroutine/otherfilepr.asm"
 INCLUDE "library/common/main/subroutine/zero.asm"
 INCLUDE "library/master/main/subroutine/gtdir.asm"
 INCLUDE "library/enhanced/main/subroutine/cats.asm"
 INCLUDE "library/enhanced/main/subroutine/delt.asm"
 INCLUDE "library/common/main/subroutine/sve.asm"
-INCLUDE "library/master/main/variable/namelen1.asm"
-INCLUDE "library/master/main/variable/namelen2.asm"
+INCLUDE "library/master/main/variable/thislong.asm"
+INCLUDE "library/master/main/variable/oldlong.asm"
 INCLUDE "library/enhanced/main/subroutine/gtdrv.asm"
 INCLUDE "library/common/main/subroutine/lod.asm"
 INCLUDE "library/enhanced/main/variable/ctli.asm"
 INCLUDE "library/enhanced/main/variable/deli.asm"
 INCLUDE "library/master/main/variable/diri.asm"
-INCLUDE "library/master/main/variable/svli.asm"
-INCLUDE "library/master/main/variable/ldli.asm"
-INCLUDE "library/master/main/subroutine/save.asm"
-INCLUDE "library/master/main/subroutine/load.asm"
+INCLUDE "library/master/main/variable/savosc.asm"
+INCLUDE "library/master/main/variable/lodosc.asm"
+INCLUDE "library/master/main/subroutine/wfile.asm"
+INCLUDE "library/master/main/subroutine/rfile.asm"
 INCLUDE "library/common/main/subroutine/sps1.asm"
 INCLUDE "library/common/main/subroutine/tas2.asm"
 INCLUDE "library/common/main/subroutine/norm.asm"
@@ -978,7 +955,7 @@ INCLUDE "library/common/main/subroutine/ll145_part_2_of_4.asm"
 INCLUDE "library/common/main/subroutine/ll145_part_3_of_4.asm"
 INCLUDE "library/common/main/subroutine/ll145_part_4_of_4.asm"
 INCLUDE "library/common/main/subroutine/ll9_part_12_of_12.asm"
-INCLUDE "library/master/main/subroutine/llx30.asm"
+INCLUDE "library/master/main/subroutine/lsput.asm"
 
 \ ******************************************************************************
 \
@@ -1024,22 +1001,23 @@ INCLUDE "library/common/main/subroutine/sight.asm"
 INCLUDE "library/master/main/variable/sightcol.asm"
 INCLUDE "library/common/main/subroutine/tt66.asm"
 INCLUDE "library/common/main/subroutine/ttx66-ttx662.asm"
-INCLUDE "library/advanced/main/variable/trantable.asm"
-INCLUDE "library/common/main/variable/kytb.asm"
-INCLUDE "library/master/main/subroutine/rdkey2.asm"
+INCLUDE "library/advanced/main/variable/trantable-trtb_per_cent.asm"
+INCLUDE "library/common/main/variable/kytb-ikns.asm"
+INCLUDE "library/master/main/subroutine/fillkl.asm"
 INCLUDE "library/common/main/subroutine/ctrl.asm"
-INCLUDE "library/common/main/subroutine/dks4.asm"
-INCLUDE "library/common/main/subroutine/u_per_cent.asm"
+INCLUDE "library/common/main/subroutine/dks4-dks5.asm"
+INCLUDE "library/common/main/subroutine/u_per_cent-zektran.asm"
 INCLUDE "library/common/main/subroutine/rdkey.asm"
 INCLUDE "library/master/main/subroutine/rdfire.asm"
 INCLUDE "library/master/main/subroutine/rdjoy.asm"
 INCLUDE "library/master/main/subroutine/tt17x.asm"
+INCLUDE "library/master/main/subroutine/yetanotherrts.asm"
 INCLUDE "library/common/main/subroutine/ecmof.asm"
 INCLUDE "library/common/main/subroutine/sfrmis.asm"
 INCLUDE "library/common/main/subroutine/exno2.asm"
 INCLUDE "library/common/main/subroutine/exno3.asm"
 INCLUDE "library/common/main/subroutine/exno.asm"
-INCLUDE "library/enhanced/main/subroutine/brkbk.asm"
+INCLUDE "library/enhanced/main/subroutine/brkbk-cold.asm"
 INCLUDE "library/advanced/main/variable/f_per_cent.asm"
 
 IF _COMPACT

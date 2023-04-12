@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: GETYN
+\       Name: YESNO
 \       Type: Subroutine
 \   Category: Keyboard
 \    Summary: Wait until either "Y" or "N" is pressed
@@ -13,7 +13,7 @@
 \
 \ ******************************************************************************
 
-.GETYN
+.YESNO
 
  JSR t                  \ Scan the keyboard until a key is pressed, returning
                         \ the ASCII code in A and X
@@ -23,7 +23,7 @@
                         \ contains an RTS)
 
  CMP #'N'               \ If "N" was not pressed, loop back to keep scanning
- BNE GETYN              \ for key presses
+ BNE YESNO              \ for key presses
 
  CLC                    \ Clear the C flag
 

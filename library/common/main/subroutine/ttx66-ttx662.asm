@@ -228,7 +228,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR 
 
 .BOX
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION
 
  LDX QQ22+1             \ Fetch into X the number that's shown on-screen during
                         \ the hyperspace countdown
@@ -242,6 +242,18 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ corner
 
 .OLDBOX
+
+ELIF _MASTER_VERSION
+
+ LDX QQ22+1             \ Fetch into X the number that's shown on-screen during
+                        \ the hyperspace countdown
+
+ BEQ P%+5               \ If the counter is zero then we are not counting down
+                        \ to hyperspace, so skip the next instruction
+
+ JSR ee3                \ Print the 8-bit number in X at text location (0, 1),
+                        \ i.e. print the hyperspace countdown in the top-left
+                        \ corner
 
 ENDIF
 

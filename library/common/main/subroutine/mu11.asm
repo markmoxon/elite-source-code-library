@@ -64,6 +64,9 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
+\LDX #8                 \ This instruction is commented out in the original
+                        \ source
+
  TAX                    \ Copy A into X. There is a comment in the original
                         \ source here that says "just in case", which refers to
                         \ the MU11 routine in the cassette and disc versions,

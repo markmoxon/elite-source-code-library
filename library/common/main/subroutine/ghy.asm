@@ -101,6 +101,11 @@ IF _CASSETTE_VERSION \ Other: Group A: Part of the bug fix for the "hyperspace w
  STX QQ8                \ Set the distance to the selected system in QQ8(1 0)
  STX QQ8+1              \ to 0
 
+ELIF _MASTER_VERSION OR _6502SP_VERSION
+
+\STX QQ8                \ These instructions are commented out in the original
+\STX QQ8+1              \ source
+
 ENDIF
 
  STX GHYP               \ The galactic hyperdrive is a one-use item, so set GHYP
@@ -167,7 +172,7 @@ ENDIF
  BPL G1                 \ Loop back for the next seed byte, until we have
                         \ rotated them all
 
-IF _CASSETTE_VERSION \ Comment
+IF _CASSETTE_VERSION OR _MASTER_VERSION OR _6502SP_VERSION \ Comment
 
 \JSR DORND              \ This instruction is commented out in the original
                         \ source, and would set A and X to random numbers, so

@@ -24,3 +24,29 @@
  EQUB WHITE             \ beam for the different lasers?
  EQUB WHITE
 
+IF _MASTER_VERSION \ Comment
+
+\.TRIBTA                \ This data is commented out in the original source
+\
+\EQUB 0
+\EQUB 1
+\EQUB 2
+\EQUB 3
+\EQUB 4
+\EQUB 5
+\EQUB 6
+\EQUB 6
+\
+\.TRIBMA
+\
+\EQUB 0
+\EQUB 4
+\EQUB &C
+\EQUB &1C
+\EQUB &3C
+\EQUB &7C
+\EQUB &FC
+\EQUB &FC
+
+ENDIF
+

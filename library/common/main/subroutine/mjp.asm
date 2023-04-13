@@ -41,6 +41,13 @@ ENDIF
 
 .MJP
 
+IF _MASTER_VERSION OR _6502SP_VERSION \ Comment
+
+\JSR CATLOD             \ This instruction is commented out in the original
+                        \ source
+
+ENDIF
+
 IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Platform
 
  LDA #3                 \ Call SHIPinA to load ship blueprints file D, which is

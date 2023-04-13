@@ -148,3 +148,10 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
+IF _MASTER_VERSION \ Comment
+
+\JMP PBFL               \ This instruction is commented out in the original
+                        \ source
+
+ENDIF
+

@@ -109,6 +109,13 @@ ENDIF
 
 .GOIN
 
+IF _MASTER_VERSION \ Comment
+
+\JSR stopbd             \ This instruction is commented out in the original
+                        \ source
+
+ENDIF
+
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
                         \ If we arrive here, either the docking computer has

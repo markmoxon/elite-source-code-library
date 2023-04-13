@@ -68,3 +68,12 @@ IF _ELECTRON_VERSION \ Electron: Because the Electron only has two sound channel
 
 ENDIF
 
+IF _MASTER_VERSION \ Comment
+
+\LDA TRIBCT             \ These instructions are commented out in the original
+\BEQ NOMVETR            \ source
+\JMP MVTRIBS
+\.NOMVETR
+
+ENDIF
+

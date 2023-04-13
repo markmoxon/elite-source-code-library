@@ -115,7 +115,9 @@ ELIF _6502SP_VERSION
 ELIF _MASTER_VERSION
 
  LDY #0                 \ Set XX17 = 0, which we are going to use as a counter
- STY XX17               \ for stepping through the ship's edges
+\STY LSNUM              \ for stepping through the ship's edges
+ STY XX17               \
+                        \ The STY is commented out in the original source
 
 ENDIF
 

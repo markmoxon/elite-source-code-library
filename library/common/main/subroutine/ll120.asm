@@ -35,7 +35,7 @@
  LDA XX15               \ Set R = x1_lo
  STA R
 
-IF _CASSETTE_VERSION \ Comment
+IF _CASSETTE_VERSION OR _MASTER_VERSION OR _6502SP_VERSION \ Comment
 
 \.LL120                 \ This label is commented out in the original source
 

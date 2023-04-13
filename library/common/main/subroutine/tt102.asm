@@ -204,11 +204,22 @@ ELIF _ELITE_A_ENCYCLOPEDIA
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _ELITE_A_FLIGHT \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _ELITE_A_FLIGHT \ Comment
 
  CMP #f0                \ If red key f0 was pressed, jump to TT110 to launch our
  BNE fvw                \ ship (if docked), returning from the subroutine using
  JMP TT110              \ a tail call
+
+ELIF _MASTER_VERSION
+
+ CMP #f0                \ If red key f0 was pressed, jump to TT110 to launch our
+ BNE fvw                \ ship (if docked), returning from the subroutine using
+\JSR CTRL               \ a tail call
+\BPL P%+5               \
+\JMP HALL               \ Three instructions are commented out in the original
+ JMP TT110              \ source, which would show the ship hangar instead of
+                        \ launching if CTRL is held down, so presumably they
+                        \ were put in for testing
 
 ELIF _ELECTRON_VERSION
 
@@ -845,6 +856,11 @@ ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
  STA QQ17               \ Set QQ17 = 0 to switch to ALL CAPS
+
+ELIF _MASTER_VERSION
+
+\STA QQ17               \ This instruction is commented out in the original
+                        \ source
 
 ENDIF
 

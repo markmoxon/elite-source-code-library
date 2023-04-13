@@ -254,7 +254,7 @@ ENDIF
  LDA YY+1
  STA S
 
-IF _CASSETTE_VERSION \ Comment
+IF _CASSETTE_VERSION OR _MASTER_VERSION \ Comment
 
 \EOR #128               \ These instructions are commented out in the original
 \JSR MAD                \ source

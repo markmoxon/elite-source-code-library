@@ -138,6 +138,9 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR
 
 ELIF _MASTER_VERSION
 
+\BEQ P%+4               \ This instruction is commented out in the original
+                        \ source, and has a comment "tribs"
+
  CMP #26                \ If A >= 26, where A is the number entered so far, then
  BCS OUTX               \ adding a further digit will make it bigger than 256,
                         \ so jump to OUTX to print the key that was just pressed

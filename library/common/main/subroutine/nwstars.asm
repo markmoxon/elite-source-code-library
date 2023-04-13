@@ -13,7 +13,7 @@
 
 .NWSTARS
 
-IF _CASSETTE_VERSION \ Comment
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 
  LDA QQ11               \ If this is not a space view, jump to WPSHPS to skip
 \ORA MJ                 \ the initialisation of the SX, SY and SZ tables. The OR
@@ -21,7 +21,7 @@ IF _CASSETTE_VERSION \ Comment
                         \ but it would have the effect of also skipping the
                         \ initialisation if we had mis-jumped into witchspace
 
-ELIF _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
+ELIF _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT
 
  LDA QQ11               \ If this is not a space view, jump to WPSHPS to skip
  BNE WPSHPS             \ the initialisation of the SX, SY and SZ tables

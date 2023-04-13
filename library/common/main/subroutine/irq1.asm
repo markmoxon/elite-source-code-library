@@ -239,8 +239,9 @@ IF _COMPACT
 ENDIF
 
  LDA VIA+&18            \ Fetch the ADC channel number into Y from bits 1-2 in
- AND #3                 \ the ADC status byte at SHEILA &18
- TAY
+\BMI JONO               \ the ADC status byte at SHEILA &18
+ AND #3                 \
+ TAY                    \ The BMI is commented out in the original source
 
  LDA VIA+&19            \ Fetch the high byte of the value on this ADC channel
                         \ to read the relevant joystick position

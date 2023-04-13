@@ -29,10 +29,23 @@
 
 .DVID4
 
+IF _MASTER_VERSION OR _6502SP_VERSION \ Comment
+
+\LDX #8                 \ This instruction is commented out in the original
+                        \ source
+
+ENDIF
+
  ASL A                  \ Shift A left and store in P (we will build the result
  STA P                  \ in P)
 
  LDA #0                 \ Set A = 0 for us to build a remainder
+
+IF _MASTER_VERSION OR _6502SP_VERSION \ Comment
+
+\.DVL4                  \ This label is commented out in the original source
+
+ENDIF
 
                         \ We now repeat the following five instruction block
                         \ eight times, one for each bit in P. In the cassette

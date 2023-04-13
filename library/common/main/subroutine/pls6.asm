@@ -71,7 +71,7 @@ ENDIF
  LDA K+3                \ Fetch the sign of the result from K+3 (which we know
                         \ has zeroes in bits 0-6, so this just fetches the sign)
 
-IF _CASSETTE_VERSION \ Comment
+IF _CASSETTE_VERSION OR _MASTER_VERSION OR _6502SP_VERSION \ Comment
 
 \CLC                    \ This instruction is commented out in the original
                         \ source. It would have no effect as we know the C flag

@@ -133,7 +133,7 @@
 
 .LL133
 
-IF _CASSETTE_VERSION \ Comment
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 
  TXA                    \ Otherwise negate (Y X) using two's complement by first
  EOR #%11111111         \ setting the low byte to ~X + 1
@@ -142,7 +142,7 @@ IF _CASSETTE_VERSION \ Comment
  TAX                    \ source. It would have no effect as we know the C flag
                         \ is clear from when we passed through the BCS above
 
-ELIF _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _ELITE_A_VERSION
+ELIF _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION
 
  TXA                    \ Otherwise negate (Y X) using two's complement by first
  EOR #%11111111         \ setting the low byte to ~X + 1

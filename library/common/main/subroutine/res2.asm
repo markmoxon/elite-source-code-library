@@ -19,6 +19,13 @@
 
 .RES2
 
+IF _MASTER_VERSION \ Comment
+
+\JSR stopbd             \ This instruction is commented out in the original
+                        \ source
+
+ENDIF
+
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron version has a hard-coded number of stardust particles on-screen, so there is no need to reset it after launch from the station
 
  LDA #NOST              \ Reset NOSTM, the number of stardust particles, to the
@@ -76,6 +83,13 @@ ENDIF
 
  STA MCNT               \ Reset MCNT (the main loop counter) to 0
 
+IF _MASTER_VERSION \ Comment
+
+\STA TRIBCT             \ This instruction is commented out in the original
+                        \ source
+
+ENDIF
+
 IF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA \ Platform
 
  STA QQ22+1             \ Set the on-screen hyperspace counter to 0
@@ -100,6 +114,9 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR 
 ENDIF
 
 IF _MASTER_VERSION \ Platform
+
+\LDA #&10               \ These instructions are commented out in the original
+\STA COL2               \ source
 
  LDA #0                 \ Set dontclip to 0 (though this variable is never used,
  STA dontclip           \ so this has no effect)

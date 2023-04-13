@@ -92,6 +92,13 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
 ENDIF
 
+IF _MASTER_VERSION \ Comment
+
+\LDA QQ11               \ These instructions are commented out in the original
+\BNE P%+5               \ source
+
+ENDIF
+
 IF NOT(_ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA)
 
  JSR DIALS              \ Call DIALS to update the dashboard

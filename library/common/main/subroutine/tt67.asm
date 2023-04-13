@@ -13,6 +13,11 @@ IF _6502SP_VERSION \ Tube
 
  INC YC                 \ Move the text cursor counter in YC down a line
 
+ELIF _MASTER_VERSION
+
+\INC YC                 \ This instruction is commented out in the original
+                        \ source
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: The cassette version uses control code 13 for printing newlines, while the other versions use control code 12

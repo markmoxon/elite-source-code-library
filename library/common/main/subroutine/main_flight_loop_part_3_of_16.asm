@@ -298,13 +298,26 @@ ENDIF
 
 .MA76
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: In the enhanced versions, the main loop scans for "P" being pressed, which disables the docking computer
+IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: In the enhanced versions, the main loop scans for "P" being pressed, which disables the docking computer
 
  LDA KY20               \ If "P" is being pressed, keep going, otherwise skip
  BEQ MA78               \ the next two instructions
 
  LDA #0                 \ The "cancel docking computer" key is bring pressed,
  STA auto               \ so turn it off by setting auto to 0
+
+.MA78
+
+ELIF _MASTER_VERSION
+
+ LDA KY20               \ If "P" is being pressed, keep going, otherwise skip
+ BEQ MA78               \ the next two instructions
+
+ LDA #0                 \ The "cancel docking computer" key is bring pressed,
+ STA auto               \ so turn it off by setting auto to 0
+
+\JSR stopbd             \ This instruction is commented out in the original
+                        \ source
 
 .MA78
 
@@ -441,7 +454,22 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
 ENDIF
 
+IF _MASTER_VERSION \ Comment
+
+\EOR KLO+&29            \ These instructions are commented out in the original
+\BEQ MA68               \ source
+\STA auto
+\JSR startbd
+
+ENDIF
+
 .MA68
+
+IF _MASTER_VERSION \ Comment
+
+\kill phantom Cs        \ This comment appears in the original source
+
+ENDIF
 
  LDA #0                 \ Set LAS = 0, to switch the laser off while we do the
  STA LAS                \ following logic

@@ -229,7 +229,15 @@ IF NOT(_ELITE_A_VERSION)
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Minor
+IF _6502SP_VERSION OR _DISC_DOCKED \ Minor
+
+ RTS                    \ Return from the subroutine
+
+ELIF _MASTER_VERSION
+
+\JSR CHECK2             \ These instructions are commented out in the original
+\CMP CHK3               \ source
+\BNE doitagain
 
  RTS                    \ Return from the subroutine
 

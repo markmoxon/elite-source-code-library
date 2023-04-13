@@ -58,6 +58,13 @@ ENDIF
                         \       enemy ship's crosshairs, so they can not only
                         \       shoot us, they can hit us
 
+IF _MASTER_VERSION \ Comment
+
+\BPL TA4                \ This instruction is commented out in the original
+                        \ source
+
+ENDIF
+
  CPX #160               \ If X < 160, i.e. X > -32, then we are not in the enemy
  BCC TA4                \ ship's line of fire, so jump to TA4 to skip the laser
                         \ checks
@@ -81,6 +88,13 @@ ENDIF
 
  CPX #163               \ If X < 163, i.e. X > -35, then we are not in the enemy
  BCC TA4                \ ship's crosshairs, so jump to TA4 to skip the laser
+
+IF _MASTER_VERSION \ Comment
+
+\LDY #19                \ This instruction is commented out in the original
+                        \ source
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 

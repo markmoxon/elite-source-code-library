@@ -357,7 +357,8 @@ ELIF _ELECTRON_VERSION
 ELIF _MASTER_VERSION
 
  LDA TP,X               \ Copy the X-th byte of TP to the X-th byte of NA%+8
- STA NA%+8,X
+\STA &0B00,X            \
+ STA NA%+8,X            \ The STA is commented out in the original source
 
 ENDIF
 
@@ -365,6 +366,13 @@ ENDIF
 
  BPL SVL1               \ Loop back until we have copied all the bytes in the
                         \ commander data block
+
+IF _MASTER_VERSION \ Comment
+
+\JSR CHECK2             \ These instructions are commented out in the original
+\STA CHK3               \ source
+
+ENDIF
 
  JSR CHECK              \ Call CHECK to calculate the checksum for the last
                         \ saved commander and return it in A

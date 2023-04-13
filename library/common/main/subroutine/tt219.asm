@@ -298,6 +298,13 @@ ENDIF
 
 .BAY2
 
+IF _MASTER_VERSION \ Comment
+
+\LDA #&10               \ These instructions are commented out in the original
+\STA COL2               \ source
+
+ENDIF
+
 IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 
  LDA #f9                \ Jump into the main loop at FRCE, setting the key

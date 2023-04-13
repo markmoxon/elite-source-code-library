@@ -153,7 +153,7 @@ ENDIF
 
  LDA K                  \ Fetch the distance to the station into A
 
-IF _6502SP_VERSION \ Comment
+IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
 
 \BEQ PH10               \ This instruction is commented out in the original
                         \ source

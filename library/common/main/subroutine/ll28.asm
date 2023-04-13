@@ -156,6 +156,9 @@ IF _6502SP_VERSION \ Other: See group A
 
 ELIF _MASTER_VERSION
 
+\.LL28                  \ These instructions are commented out in the original
+\CMP Q                  \ source
+
  BCS LL2                \ If the subtraction fitted into one byte and didn't
                         \ underflow, then log(A) - log(Q) < 256, so we jump to
                         \ LL2 to return a result of 255

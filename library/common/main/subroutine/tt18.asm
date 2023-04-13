@@ -109,7 +109,7 @@ ENDIF
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Electron: The Electron version doesn't support witchspace, so the code for triggering a manual mis-jump is missing
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron version doesn't support witchspace, so the code for triggering a manual mis-jump is missing
 
  AND PATG               \ If the game is configured to show the author's names
                         \ on the start-up screen, then PATG will contain &FF,
@@ -136,7 +136,7 @@ IF _CASSETTE_VERSION \ Electron: The Electron version doesn't support witchspace
  JSR hyp1+3             \ Jump straight to the system at (QQ9, QQ10) without
                         \ first calculating which system is closest
 
-ELIF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
+ELIF _DISC_FLIGHT
 
  AND PATG               \ If the game is configured to show the author's names
                         \ on the start-up screen, then PATG will contain &FF,
@@ -201,6 +201,13 @@ ELIF _ELECTRON_VERSION
 
  JSR SOLAR              \ Halve our legal status, update the missile indicators,
                         \ and set up the data block and slot for the planet
+
+ENDIF
+
+IF _MASTER_VERSION OR _6502SP_VERSION \ Comment
+
+\JSR CATLOD             \ These instructions are commented out in the original
+\JSR LOMOD              \ source
 
 ENDIF
 

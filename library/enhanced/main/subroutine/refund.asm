@@ -76,14 +76,22 @@ ELIF _IB_DISC
 
 ENDIF
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 \.ref2                  \ These instructions are commented out in the original
 \LDY #187               \ source, but they would jump to pres in the EQSHP
 \JMP pres               \ routine with Y = 187, which would show the error:
-                        \ "LASER PRESENT" (this code was part of the refund
+\Belgium                \ "LASER PRESENT" (this code was part of the refund
                         \ bug in the disc version of Elite, which is why it is
                         \ commented out)
+                        \
+                        \ There is also a comment in the original source - the
+                        \ the solitary word "Belgium"
+                        \
+                        \ This is probably a reference to the Hitchhiker's Guide
+                        \ to the Galaxy, which states that Belgium is the
+                        \ galaxy's rudest word, so this no doubt reflects the
+                        \ authors' strong feelings on the refund bug
 
 .refund
 
@@ -97,15 +105,6 @@ ELIF _6502SP_VERSION
                         \ trying to replace a laser with one of the same type
                         \ (this code was part of the refund bug in the disc
                         \ version of Elite, which is why it is commented out)
-
-ELIF _MASTER_VERSION
-
-.refund
-
- STA T1                 \ Store A in T1 so we can retrieve it later
-
- LDA LASER,X            \ If there is no laser in view X (i.e. the laser power
- BEQ ref3               \ is zero), jump to ref3 to skip the refund code
 
 ENDIF
 

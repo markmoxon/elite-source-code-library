@@ -46,6 +46,11 @@
  ITEM 176, -9, 't', 220, %00111111   \ 11 = Furs
  ITEM 32,  -1, 't',  53, %00000011   \ 12 = Minerals
  ITEM 97,  -1, 'k',  66, %00000111   \ 13 = Gold
+IF _MASTER_VERSION OR _6502SP_VERSION \ Comment
+
+\EQUD &360A118          \ This data is commented out in the original source
+
+ENDIF
  ITEM 171, -2, 'k',  55, %00011111   \ 14 = Platinum
  ITEM 45,  -1, 'g', 250, %00001111   \ 15 = Gem-Stones
  ITEM 53,  15, 't', 192, %00000111   \ 16 = Alien items

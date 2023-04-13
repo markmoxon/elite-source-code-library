@@ -68,6 +68,9 @@ ELIF _MASTER_VERSION
  LDA #3                 \ Set XC = 3 (set text cursor to column 3)
  STA XC
 
+\JSR startat            \ This instruction is commented out in the original
+                        \ source
+
 ELIF _6502SP_VERSION
 
  LDA #3                 \ Move the text cursor to column 3
@@ -174,13 +177,32 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
  JSR TTX66              \ And we clear the top part of the screen and draw a
                         \ white border
 
-ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _MASTER_VERSION
+ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION
 
  JSR DFAULT             \ Call DFAULT to reset the current commander data block
                         \ to the last saved commander
 
  JSR SVE                \ Call SVE to load a new commander into the last saved
                         \ commander data block
+
+.QU5
+
+ JSR DFAULT             \ Call DFAULT to reset the current commander data block
+                        \ to the last saved commander
+
+ELIF _MASTER_VERSION
+
+\JSR stopat             \ This instruction is commented out in the original
+                        \ source
+
+ JSR DFAULT             \ Call DFAULT to reset the current commander data block
+                        \ to the last saved commander
+
+ JSR SVE                \ Call SVE to load a new commander into the last saved
+                        \ commander data block
+
+\JSR startat            \ This instruction is commented out in the original
+                        \ source
 
 .QU5
 

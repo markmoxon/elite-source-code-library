@@ -350,6 +350,9 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR
 
 ELIF _MASTER_VERSION
 
+\JSR U%                 \ This instruction is commented out in the original
+                        \ source
+
  LDA #0                 \ Set our speed in DELTA to 0, as we aren't going
  STA DELTA              \ anywhere any more
                         \
@@ -358,6 +361,9 @@ ELIF _MASTER_VERSION
                         \ which will display our exploding canister scene and
                         \ move everything about, as well as decrementing the
                         \ value in LASCT
+
+\JSR NOSPRITES          \ This instruction is commented out in the original
+                        \ source
 
 ENDIF
 

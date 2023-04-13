@@ -29,6 +29,9 @@
 
 .BOMBL1
 
+\JSR CLICK              \ This instruction is commented out in the original
+                        \ source
+
  LDA XX12               \ Set (X1, Y1) = (XX12, XX12+1)
  STA X1                 \
  LDA XX12+1             \ so the start point for this line

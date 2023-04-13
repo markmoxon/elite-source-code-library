@@ -23,6 +23,11 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Advanced: In the disc a
 
  INC TALLY+1            \ Award 256 kill points for completing the mission
 
+ELIF _MASTER_VERSION
+
+\INC TALLY+1            \ This instruction is commented out in the original
+                        \ source
+
 ENDIF
 
  LDX #LO(50000)         \ Increase our cash reserves by the generous mission
@@ -38,4 +43,22 @@ ENDIF
                         \ the Status Mode screen, returning from the subroutine
                         \ using a tail call (this BNE is effectively a JMP as A
                         \ is never zero)
+
+IF _MASTER_VERSION \ Comment
+
+\.TBRIEF                \ These instructions are commented out in the original
+\LDA TP                 \ source
+\ORA #&10
+\STA TP
+\LDA #199
+\JSR DETOK
+\JSR YESNO
+\BCC BAYSTEP
+\LDY #HI(50000)
+\LDX #LO(50000)
+\JSR LCASH
+\INC TRIBBLE
+\JMP BAY
+
+ENDIF
 

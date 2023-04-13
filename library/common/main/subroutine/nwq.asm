@@ -74,6 +74,11 @@ IF _6502SP_VERSION \ Tube
  JSR PBFL               \ Call PBFL to send the contents of the pixel buffer to
                         \ the I/O processor for plotting on-screen
 
+ELIF _MASTER_VERSION
+
+\JSR PBFL               \ This instruction is commented out in the original
+                        \ source
+
 ENDIF
 
                         \ Fall through into WPSHPS to clear the scanner and

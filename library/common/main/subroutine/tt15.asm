@@ -151,6 +151,9 @@ ELIF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
+\BIT QQ11               \ These instructions are commented out in the original
+\BMI TT85               \ source
+
  BCS botchfix12         \ If the above addition overflowed, skip the following
                         \ two instructions to set A = 254
 

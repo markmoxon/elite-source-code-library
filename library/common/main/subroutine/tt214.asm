@@ -25,6 +25,13 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: In the cassette version, t
  JSR TT162              \ of A
  PLA
 
+ELIF _MASTER_VERSION OR _6502SP_VERSION
+
+\.TT214                 \ These instructions are commented out in the original
+\PHA                    \ source
+\JSR TT162
+\PLA
+
 ENDIF
 
 .TT221

@@ -32,9 +32,20 @@ ENDIF
 
 .ARCTAN
 
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+
+ LDA P                  \ Set T1 = P EOR Q, which will have the sign of P * Q
+ EOR Q                  \
+\AND #%10000000         \ The AND is commented out in the original source
+ STA T1
+
+ELIF _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION
+
  LDA P                  \ Set T1 = P EOR Q, which will have the sign of P * Q
  EOR Q
  STA T1
+
+ENDIF
 
  LDA Q                  \ If Q = 0, jump to AR2 to return a right angle
  BEQ AR2
@@ -110,7 +121,7 @@ ENDIF
                         \ the calculation described in the documentation for the
                         \ ACT table, i.e. 128 - A
 
-IF _CASSETTE_VERSION \ Comment
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 
  STA T                  \ Set A = 128 - A
  LDA #128               \
@@ -118,7 +129,7 @@ IF _CASSETTE_VERSION \ Comment
  SBC T                  \ source, and isn't required as we did a SEC before
                         \ calling AR3
 
-ELIF _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _ELITE_A_VERSION
+ELIF _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION
 
  STA T                  \ Set A = 128 - A
  LDA #128               \

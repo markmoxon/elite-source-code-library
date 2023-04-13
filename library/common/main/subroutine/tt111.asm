@@ -229,8 +229,11 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 ELIF _MASTER_VERSION
 
  LDA QQ15+1             \ Set A = QQ15+1 - QQ1, the vertical distance between
- SEC                    \ the selected system's y-coordinate (QQ15+1) and the
- SBC QQ1                \ current system's y-coordinate (QQ1)
+\LDA QQ10               \ the selected system's y-coordinate (QQ15+1) and the
+ SEC                    \ current system's y-coordinate (QQ1)
+ SBC QQ1                \
+                        \ The LDA instruction is commented out in the original
+                        \ source
 
 ENDIF
 

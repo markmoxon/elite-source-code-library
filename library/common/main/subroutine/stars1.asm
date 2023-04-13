@@ -259,7 +259,7 @@ ENDIF
                         \
                         \ which is result 7 above
 
-IF _CASSETTE_VERSION \ Comment
+IF _CASSETTE_VERSION OR _MASTER_VERSION \ Comment
 
  LDA YY                 \ Set (S R) = YY(1 0) = y
  STA R
@@ -269,7 +269,7 @@ IF _CASSETTE_VERSION \ Comment
 \STX R
  STA S
 
-ELIF _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _ELITE_A_VERSION
+ELIF _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _ELITE_A_VERSION
 
  LDA YY                 \ Set (S R) = YY(1 0) = y
  STA R

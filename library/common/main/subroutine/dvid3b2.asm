@@ -121,6 +121,10 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
                         \ can never be set, which is why this instruction was
                         \ removed from later versions)
 
+ELIF _MASTER_VERSION OR _6502SP_VERSION
+
+\BMI DV9                \ This label is commented out in the original source
+
 ENDIF
 
 .DVL6

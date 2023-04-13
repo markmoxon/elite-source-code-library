@@ -65,9 +65,10 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ the same results as the loop versions, just in case
                         \ something out there relies on MULT1 returning X = 0
 
-\MUL4                   \ These instructions are commented out in the original
-\BCC P%+4               \ source. They contain the original loop version of the
-\ADC T1                 \ code that's used in the disc and cassette versions
+\.MUL4                  \ These instructions are commented out in the original
+\                       \ source. They contain the original loop version of the
+\BCC P%+4               \ code that's used in the disc and cassette versions
+\ADC T1
 \ROR A
 \ROR P
 \DEX
@@ -76,6 +77,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 \ROR P
 \ORA T
 \RTS
+\
 \.mu10
 \STA P
 \RTS

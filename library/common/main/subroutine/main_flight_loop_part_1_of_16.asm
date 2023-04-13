@@ -73,6 +73,7 @@ IF _MASTER_VERSION \ Comment
 \LDA TRIBCT             \ These instructions are commented out in the original
 \BEQ NOMVETR            \ source
 \JMP MVTRIBS
+\
 \.NOMVETR
 
 ENDIF

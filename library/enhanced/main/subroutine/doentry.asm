@@ -278,13 +278,15 @@ ENDIF
 
 IF _MASTER_VERSION \ Comment
 
-\TRIBDIR                \ These instructions are commented out in the original
-\EQUB 0                 \ source
+\.TRIBDIR               \ These instructions are commented out in the original
+\                       \ source
+\EQUB 0
 \EQUB 1
 \EQUB &FF
 \EQUB 0
-
-\TRIBDIRH
+\
+\.TRIBDIRH
+\
 \EQUB 0
 \EQUB 0
 \EQUB &FF
@@ -299,9 +301,9 @@ IF _MASTER_VERSION \ Comment
  EQUW &40BF
  EQUW &807F
 
-\MVTRIBS                \ These instructions are commented out in the original
-\MVTR1                  \ source
-\nominus
+\.MVTRIBS               \ These instructions are commented out in the original
+\.MVTR1                 \ source
+\.nominus
 
 ENDIF
 

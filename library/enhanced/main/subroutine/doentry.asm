@@ -21,7 +21,7 @@ ENDIF
 
 IF _DISC_DOCKED \ Platform
 
- JSR scramble           \ Decrypt the newly loaded code
+ JSR DEEOR              \ Decrypt the newly loaded code
 
 ELIF _ELITE_A_DOCKED
 

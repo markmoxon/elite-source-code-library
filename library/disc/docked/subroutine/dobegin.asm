@@ -16,7 +16,7 @@ ENDIF
 
 IF NOT(_ELITE_A_DOCKED)
 
- JSR scramble           \ Decrypt the main docked code between &1300 and &5FFF
+ JSR DEEOR              \ Decrypt the main docked code between &1300 and &5FFF
 
 ELIF _ELITE_A_DOCKED
 

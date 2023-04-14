@@ -30,7 +30,7 @@ ENDIF
 
 IF _DISC_DOCKED
 
- JSR scramble           \ Decrypt the main docked code between &1300 and &5FFF
+ JSR DEEOR              \ Decrypt the main docked code between &1300 and &5FFF
 
  JSR RES2               \ Reset a number of flight variables and workspaces
 

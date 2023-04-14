@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: LSHIPS
+\       Name: LOMOD
 \       Type: Subroutine
 \   Category: Loader
 \    Summary: Load a new ship blueprints file
@@ -11,7 +11,7 @@ ENDIF
 \
 \ ******************************************************************************
 
-.LSHIPS
+.LOMOD
 
 IF _ELITE_A_VERSION
 

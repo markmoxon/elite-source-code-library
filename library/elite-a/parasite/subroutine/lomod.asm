@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: LSHIPS
+\       Name: LOMOD
 \       Type: Subroutine
 \   Category: Universe
 \    Summary: Populate the ship blueprints table at XX21 with a random selection
@@ -16,7 +16,7 @@
 \
 \ ******************************************************************************
 
-.LSHIPS
+.LOMOD
 
  LDA #0                 \ Set finder to 0, so the compass shows the planet
  STA finder

@@ -12,11 +12,11 @@
 
 IF NOT(_ELITE_A_6502SP_PARA)
 
- JSR LSHIPS             \ Call LSHIPS to load a new ship blueprints file
+ JSR LOMOD              \ Call LOMOD to load a new ship blueprints file
 
 ELIF _ELITE_A_6502SP_PARA
 
- JSR LSHIPS             \ Call LSHIPS to populate the ship blueprints table
+ JSR LOMOD              \ Call LOMOD to populate the ship blueprints table
                         \ with a random selection of ships
 
 ENDIF

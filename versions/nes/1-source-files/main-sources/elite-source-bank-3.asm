@@ -2,8 +2,8 @@
 \
 \ NES ELITE GAME SOURCE (BANK 3)
 \
-\ NES was written by Ian Bell and David Braben and is copyright D. Braben and
-\ I. Bell 1992
+\ NES Elite was written by Ian Bell and David Braben and is copyright D. Braben
+\ and I. Bell 1992
 \
 \ The code on this site has been reconstructed from a disassembly of the version
 \ released on Ian Bell's personal website at http://www.elitehomepage.org/
@@ -25,8 +25,9 @@
 \
 \ ******************************************************************************
 
-CODE% = $8000
-LOAD% = $8000
+CODE% = &8000
+LOAD% = &8000
+
 ; Memory locations
 ZP          = &0000
 T1          = &0006
@@ -84,7 +85,7 @@ XX16_12     = &0059
 XX0         = &005F
 INF         = &0061
 V           = &0063
-L0064       = &0064
+V_1         = &0064
 XX          = &0065
 L006C       = &006C
 ALP1        = &006E
@@ -265,6 +266,7 @@ LEFA4       = &EFA4
 LEFB2       = &EFB2
 TT27        = &F201
 DORND       = &F4AD
+PROJ        = &F4C1
 LF52D       = &F52D
 LF5AF       = &F5AF
 MU5         = &F65A
@@ -988,7 +990,6 @@ LL28        = &FA91
     EQUB &3E, &26, &3F, &27, &29,   9, &0B, &0C   ; 95BB: 3E 26 3F... >&?
     EQUB &0D, &0E, &0F, &10, &11,   6, &12,   8   ; 95C3: 0D 0E 0F... ...
     EQUB &13, &14,   6                            ; 95CB: 13 14 06    ...
-; &95CE referenced 2 times by &AFAB, &AFB9
 .L95CE
     EQUB &15, &16, &17, &18, &0D, &19, &1A, &1B   ; 95CE: 15 16 17... ...
     EQUB &1C,   6, &1D, &1E, &1F, &20,   6, &15   ; 95D6: 1C 06 1D... ...
@@ -1580,7 +1581,6 @@ LL28        = &FA91
     BNE CA7D4                                     ; A7CF: D0 03       ..
     JMP CA87D                                     ; A7D1: 4C 7D A8    L}.
 
-; &A7D4 referenced 1 time by &A7CF
 .CA7D4
     CMP #&9D                                      ; A7D4: C9 9D       ..
     BEQ CA83A                                     ; A7D6: F0 62       .b
@@ -1591,14 +1591,12 @@ LL28        = &FA91
     JSR LEF88                                     ; A7E0: 20 88 EF     ..
     JMP CA8A2                                     ; A7E3: 4C A2 A8    L..
 
-; &A7E6 referenced 1 time by &A7DE
 .CA7E6
     CMP #&98                                      ; A7E6: C9 98       ..
     BNE CA7F0                                     ; A7E8: D0 06       ..
     JSR LEFA4                                     ; A7EA: 20 A4 EF     ..
     JMP CA8A2                                     ; A7ED: 4C A2 A8    L..
 
-; &A7F0 referenced 1 time by &A7E8
 .CA7F0
     CMP #&BA                                      ; A7F0: C9 BA       ..
     BNE CA810                                     ; A7F2: D0 1C       ..
@@ -1615,7 +1613,6 @@ LL28        = &FA91
     LDX #4                                        ; A80B: A2 04       ..
     JMP CA89F                                     ; A80D: 4C 9F A8    L..
 
-; &A810 referenced 1 time by &A7F2
 .CA810
     CMP #&BB                                      ; A810: C9 BB       ..
     BNE CA82A                                     ; A812: D0 16       ..
@@ -1624,12 +1621,11 @@ LL28        = &FA91
     LDA #&50 ; 'P'                                ; A819: A9 50       .P
     STA L2006                                     ; A81B: 8D 06 20    ..
     LDA #&A4                                      ; A81E: A9 A4       ..
-    STA L0064                                     ; A820: 85 64       .d
+    STA V_1                                       ; A820: 85 64       .d
     LDA #&D3                                      ; A822: A9 D3       ..
     STA V                                         ; A824: 85 63       .c
     LDA #3                                        ; A826: A9 03       ..
     BNE CA891                                     ; A828: D0 67       .g
-; &A82A referenced 1 time by &A812
 .CA82A
     LDA #0                                        ; A82A: A9 00       ..
     CMP L048B                                     ; A82C: CD 8B 04    ...
@@ -1638,7 +1634,6 @@ LL28        = &FA91
     JSR sub_CA95D                                 ; A834: 20 5D A9     ].
     JMP CA8A2                                     ; A837: 4C A2 A8    L..
 
-; &A83A referenced 2 times by &A7D6, &A7DA
 .CA83A
     LDA #&24 ; '$'                                ; A83A: A9 24       .$
     STA L00D9                                     ; A83C: 85 D9       ..
@@ -1664,24 +1659,22 @@ LL28        = &FA91
     LDA #&30 ; '0'                                ; A86A: A9 30       .0
     STA L2006                                     ; A86C: 8D 06 20    ..
     LDA #&A7                                      ; A86F: A9 A7       ..
-    STA L0064                                     ; A871: 85 64       .d
+    STA V_1                                       ; A871: 85 64       .d
     LDA #&1B                                      ; A873: A9 1B       ..
     STA V                                         ; A875: 85 63       .c
     JSR LF5AF                                     ; A877: 20 AF F5     ..
     JMP CA8A2                                     ; A87A: 4C A2 A8    L..
 
-; &A87D referenced 1 time by &A7D1
 .CA87D
     LDA #4                                        ; A87D: A9 04       ..
     STA L2006                                     ; A87F: 8D 06 20    ..
     LDA #&50 ; 'P'                                ; A882: A9 50       .P
     STA L2006                                     ; A884: 8D 06 20    ..
     LDA #&9F                                      ; A887: A9 9F       ..
-    STA L0064                                     ; A889: 85 64       .d
+    STA V_1                                       ; A889: 85 64       .d
     LDA #&A1                                      ; A88B: A9 A1       ..
     STA V                                         ; A88D: 85 63       .c
     LDA #2                                        ; A88F: A9 02       ..
-; &A891 referenced 1 time by &A828
 .CA891
     CMP L048B                                     ; A891: CD 8B 04    ...
     BEQ CA8A2                                     ; A894: F0 0C       ..
@@ -1689,10 +1682,8 @@ LL28        = &FA91
     JSR LF5AF                                     ; A899: 20 AF F5     ..
     JMP CA8A2                                     ; A89C: 4C A2 A8    L..
 
-; &A89F referenced 1 time by &A80D
 .CA89F
     JSR LD986                                     ; A89F: 20 86 D9     ..
-; &A8A2 referenced 9 times by &A7E3, &A7ED, &A82F, &A837, &A843, &A863, &A87A, &A894, &A89C
 .CA8A2
     JSR sub_CAC86                                 ; A8A2: 20 86 AC     ..
     LDA #&10                                      ; A8A5: A9 10       ..
@@ -1701,7 +1692,6 @@ LL28        = &FA91
     STA L2006                                     ; A8AC: 8D 06 20    ..
     LDY #0                                        ; A8AF: A0 00       ..
     LDX #&50 ; 'P'                                ; A8B1: A2 50       .P
-; &A8B3 referenced 1 time by &A8BB
 .loop_CA8B3
     LDA LAA6C,Y                                   ; A8B3: B9 6C AA    .l.
     STA L2007                                     ; A8B6: 8D 07 20    ..
@@ -1714,7 +1704,6 @@ LL28        = &FA91
     STA L2006                                     ; A8C4: 8D 06 20    ..
     LDA #0                                        ; A8C7: A9 00       ..
     LDX #&10                                      ; A8C9: A2 10       ..
-; &A8CB referenced 1 time by &A8CF
 .loop_CA8CB
     STA L2007                                     ; A8CB: 8D 07 20    ..
     DEX                                           ; A8CE: CA          .
@@ -1738,10 +1727,8 @@ LL28        = &FA91
     BEQ CA8FC                                     ; A8F6: F0 04       ..
     LDA #0                                        ; A8F8: A9 00       ..
     BEQ CA8FE                                     ; A8FA: F0 02       ..
-; &A8FC referenced 2 times by &A8F0, &A8F6
 .CA8FC
     LDA #&80                                      ; A8FC: A9 80       ..
-; &A8FE referenced 1 time by &A8FA
 .CA8FE
     STA L00EA                                     ; A8FE: 85 EA       ..
     PLA                                           ; A900: 68          h
@@ -1749,10 +1736,8 @@ LL28        = &FA91
     STA L2000                                     ; A903: 8D 00 20    ..
     JMP LEEE8                                     ; A906: 4C E8 EE    L..
 
-; &A909 referenced 1 time by &A85C
 .sub_CA909
     LDY #0                                        ; A909: A0 00       ..
-; &A90B referenced 1 time by &A95A
 .CA90B
     LDA (L0007),Y                                 ; A90B: B1 07       ..
     STA L2007                                     ; A90D: 8D 07 20    ..
@@ -1780,7 +1765,6 @@ LL28        = &FA91
     INY                                           ; A93A: C8          .
     BNE CA93F                                     ; A93B: D0 02       ..
     INC L0008                                     ; A93D: E6 08       ..
-; &A93F referenced 1 time by &A93B
 .CA93F
     LDA #0                                        ; A93F: A9 00       ..
     STA L2007                                     ; A941: 8D 07 20    ..
@@ -1795,19 +1779,17 @@ LL28        = &FA91
     BNE CA90B                                     ; A95A: D0 AF       ..
     RTS                                           ; A95C: 60          `
 
-; &A95D referenced 2 times by &A834, &AB4D
 .sub_CA95D
     LDA #4                                        ; A95D: A9 04       ..
     STA L2006                                     ; A95F: 8D 06 20    ..
     LDA #&50 ; 'P'                                ; A962: A9 50       .P
     STA L2006                                     ; A964: 8D 06 20    ..
     LDA #&97                                      ; A967: A9 97       ..
-    STA L0064                                     ; A969: 85 64       .d
+    STA V_1                                       ; A969: 85 64       .d
     LDA #&60 ; '`'                                ; A96B: A9 60       .`
     STA V                                         ; A96D: 85 63       .c
     JMP LF5AF                                     ; A96F: 4C AF F5    L..
 
-; &A972 referenced 2 times by &A8D6, &A8DB
 .sub_CA972
     STX L00C0                                     ; A972: 86 C0       ..
     STX L00F4                                     ; A974: 86 F4       ..
@@ -1819,10 +1801,8 @@ LL28        = &FA91
     BNE CA986                                     ; A980: D0 04       ..
     LDA #4                                        ; A982: A9 04       ..
     BNE CA988                                     ; A984: D0 02       ..
-; &A986 referenced 1 time by &A980
 .CA986
     LDA #&25 ; '%'                                ; A986: A9 25       .%
-; &A988 referenced 1 time by &A984
 .CA988
     STA L00D2                                     ; A988: 85 D2       ..
     LDA L00B8                                     ; A98A: A5 B8       ..
@@ -1834,7 +1814,6 @@ LL28        = &FA91
     STA L00C3,X                                   ; A998: 95 C3       ..
     RTS                                           ; A99A: 60          `
 
-; &A99B referenced 2 times by &A993, &A9C9
 .CA99B
     TXA                                           ; A99B: 8A          .
     PHA                                           ; A99C: 48          H
@@ -1862,11 +1841,9 @@ LL28        = &FA91
     JSR LD946                                     ; A9C6: 20 46 D9     F.
     JMP CA99B                                     ; A9C9: 4C 9B A9    L..
 
-; &A9CC referenced 1 time by &A9B0
 .CA9CC
     PLA                                           ; A9CC: 68          h
     TAX                                           ; A9CD: AA          .
-; &A9CE referenced 1 time by &A9C4
 .CA9CE
     JMP LD946                                     ; A9CE: 4C 46 D9    LF.
 
@@ -1878,19 +1855,16 @@ LL28        = &FA91
     JSR LEF96                                     ; A9DB: 20 96 EF     ..
     JMP CA9E8                                     ; A9DE: 4C E8 A9    L..
 
-; &A9E1 referenced 1 time by &A9D9
 .CA9E1
     CMP #&98                                      ; A9E1: C9 98       ..
     BNE CA9E8                                     ; A9E3: D0 03       ..
     JSR LEFB2                                     ; A9E5: 20 B2 EF     ..
-; &A9E8 referenced 2 times by &A9DE, &A9E3
 .CA9E8
     LDA L009E                                     ; A9E8: A5 9E       ..
     AND #&40 ; '@'                                ; A9EA: 29 40       )@
     BEQ CA9F2                                     ; A9EC: F0 04       ..
     LDA #0                                        ; A9EE: A9 00       ..
     STA L00EA                                     ; A9F0: 85 EA       ..
-; &A9F2 referenced 1 time by &A9EC
 .CA9F2
     JSR sub_CAC86                                 ; A9F2: 20 86 AC     ..
     LDA #0                                        ; A9F5: A9 00       ..
@@ -1926,13 +1900,11 @@ LL28        = &FA91
     JSR LD167                                     ; AA34: 20 67 D1     g.
     LDA #&80                                      ; AA37: A9 80       ..
     STA L00EA                                     ; AA39: 85 EA       ..
-; &AA3B referenced 1 time by &AA32
 .CAA3B
     LDA L0473                                     ; AA3B: AD 73 04    .s.
     BPL CAA43                                     ; AA3E: 10 03       ..
     JMP LEEE8                                     ; AA40: 4C E8 EE    L..
 
-; &AA43 referenced 1 time by &AA3E
 .CAA43
     LDA L009E                                     ; AA43: A5 9E       ..
     AND #&0F                                      ; AA45: 29 0F       ).
@@ -1946,11 +1918,9 @@ LL28        = &FA91
     INC L00DA                                     ; AA59: E6 DA       ..
     RTS                                           ; AA5B: 60          `
 
-; &AA5C referenced 2 times by &AA48, &B588
 .LAA5C
     EQUB   0,   2, &0A, &0A,   0, &0A,   6,   8   ; AA5C: 00 02 0A... ...
     EQUB   8,   5,   1,   7,   3,   4,   0,   9   ; AA64: 08 05 01... ...
-; &AA6C referenced 3 times by &A8B3, &AB0F, &AB27
 .LAA6C
     EQUB   0,   0,   0,   0,   0,   0,   0,   0   ; AA6C: 00 00 00... ...
     EQUB   0,   0,   0,   0,   0,   0,   0,   0   ; AA74: 00 00 00... ...
@@ -1974,7 +1944,6 @@ LL28        = &FA91
     STA L2006                                     ; AACE: 8D 06 20    ..
     LDA #&0F                                      ; AAD1: A9 0F       ..
     LDX #&1F                                      ; AAD3: A2 1F       ..
-; &AAD5 referenced 1 time by &AAD9
 .loop_CAAD5
     STA L2007                                     ; AAD5: 8D 07 20    ..
     DEX                                           ; AAD8: CA          .
@@ -1986,7 +1955,6 @@ LL28        = &FA91
     LDA #0                                        ; AAE5: A9 00       ..
     LDX #8                                        ; AAE7: A2 08       ..
     LDY #0                                        ; AAE9: A0 00       ..
-; &AAEB referenced 2 times by &AAEF, &AAF7
 .CAAEB
     STA L2007                                     ; AAEB: 8D 07 20    ..
     DEY                                           ; AAEE: 88          .
@@ -2004,7 +1972,6 @@ LL28        = &FA91
     STA L2006                                     ; AB08: 8D 06 20    ..
     LDY #0                                        ; AB0B: A0 00       ..
     LDX #&50 ; 'P'                                ; AB0D: A2 50       .P
-; &AB0F referenced 1 time by &AB17
 .loop_CAB0F
     LDA LAA6C,Y                                   ; AB0F: B9 6C AA    .l.
     STA L2007                                     ; AB12: 8D 07 20    ..
@@ -2017,7 +1984,6 @@ LL28        = &FA91
     STA L2006                                     ; AB20: 8D 06 20    ..
     LDY #0                                        ; AB23: A0 00       ..
     LDX #&50 ; 'P'                                ; AB25: A2 50       .P
-; &AB27 referenced 1 time by &AB2F
 .loop_CAB27
     LDA LAA6C,Y                                   ; AB27: B9 6C AA    .l.
     STA L2007                                     ; AB2A: 8D 07 20    ..
@@ -2025,7 +1991,6 @@ LL28        = &FA91
     DEX                                           ; AB2E: CA          .
     BNE loop_CAB27                                ; AB2F: D0 F6       ..
     LDY #0                                        ; AB31: A0 00       ..
-; &AB33 referenced 1 time by &AB4B
 .loop_CAB33
     LDA #&F0                                      ; AB33: A9 F0       ..
     STA L0200,Y                                   ; AB35: 99 00 02    ...
@@ -2108,7 +2073,6 @@ LL28        = &FA91
     STA L2000                                     ; ABE3: 8D 00 20    ..
     RTS                                           ; ABE6: 60          `
 
-; &ABE7 referenced 1 time by &AC68
 .sub_CABE7
     LDA L009E                                     ; ABE7: A5 9E       ..
     CMP #&BA                                      ; ABE9: C9 BA       ..
@@ -2119,14 +2083,12 @@ LL28        = &FA91
     JSR LECF9                                     ; ABF4: 20 F9 EC     ..
     JMP CAC08                                     ; ABF7: 4C 08 AC    L..
 
-; &ABFA referenced 1 time by &ABF2
 .CABFA
     LDX #&F0                                      ; ABFA: A2 F0       ..
     STX L0220                                     ; ABFC: 8E 20 02    . .
     STX L0224                                     ; ABFF: 8E 24 02    .$.
     STX L0228                                     ; AC02: 8E 28 02    .(.
     STX L022C                                     ; AC05: 8E 2C 02    .,.
-; &AC08 referenced 2 times by &ABEB, &ABF7
 .CAC08
     LDA #2                                        ; AC08: A9 02       ..
     STA L00D5                                     ; AC0A: 85 D5       ..
@@ -2138,7 +2100,6 @@ LL28        = &FA91
     STA L00D5                                     ; AC16: 85 D5       ..
     LDA #&60 ; '`'                                ; AC18: A9 60       .`
     STA L00D4                                     ; AC1A: 85 D4       ..
-; &AC1C referenced 2 times by &AC12, &AC22
 .CAC1C
     RTS                                           ; AC1C: 60          `
 
@@ -2158,7 +2119,6 @@ LL28        = &FA91
     STA L00D5                                     ; AC38: 85 D5       ..
     LDA #&60 ; '`'                                ; AC3A: A9 60       .`
     STA L00D4                                     ; AC3C: 85 D4       ..
-; &AC3E referenced 1 time by &AC34
 .CAC3E
     LDA L0464                                     ; AC3E: AD 64 04    .d.
     ASL A                                         ; AC41: 0A          .
@@ -2167,7 +2127,6 @@ LL28        = &FA91
     STA L00D6                                     ; AC45: 85 D6       ..
     LDX #0                                        ; AC47: A2 00       ..
     STX L00D3                                     ; AC49: 86 D3       ..
-; &AC4B referenced 1 time by &AC5A
 .loop_CAC4B
     LDA L00E9                                     ; AC4B: A5 E9       ..
     BPL CAC58                                     ; AC4D: 10 09       ..
@@ -2175,7 +2134,6 @@ LL28        = &FA91
     ASL A                                         ; AC52: 0A          .
     BPL CAC58                                     ; AC53: 10 03       ..
     JSR LD06D                                     ; AC55: 20 6D D0     m.
-; &AC58 referenced 2 times by &AC4D, &AC53
 .CAC58
     LDA L00D3                                     ; AC58: A5 D3       ..
     BPL loop_CAC4B                                ; AC5A: 10 EF       ..
@@ -2189,7 +2147,6 @@ LL28        = &FA91
     STA L00D7                                     ; AC6D: 85 D7       ..
     ASL A                                         ; AC6F: 0A          .
     STA L00D3                                     ; AC70: 85 D3       ..
-; &AC72 referenced 1 time by &AC81
 .loop_CAC72
     LDA L00E9                                     ; AC72: A5 E9       ..
     BPL CAC7F                                     ; AC74: 10 09       ..
@@ -2197,16 +2154,13 @@ LL28        = &FA91
     ASL A                                         ; AC79: 0A          .
     BPL CAC7F                                     ; AC7A: 10 03       ..
     JSR LD06D                                     ; AC7C: 20 6D D0     m.
-; &AC7F referenced 2 times by &AC74, &AC7A
 .CAC7F
     LDA L00D3                                     ; AC7F: A5 D3       ..
     BPL loop_CAC72                                ; AC81: 10 EF       ..
     ASL L00D7                                     ; AC83: 06 D7       ..
-; &AC85 referenced 1 time by &AC66
 .CAC85
     RTS                                           ; AC85: 60          `
 
-; &AC86 referenced 2 times by &A8A2, &A9F2
 .sub_CAC86
     LDA L00E9                                     ; AC86: A5 E9       ..
     BPL CAC93                                     ; AC88: 10 09       ..
@@ -2214,7 +2168,6 @@ LL28        = &FA91
     ASL A                                         ; AC8D: 0A          .
     BPL CAC93                                     ; AC8E: 10 03       ..
     JSR LD06D                                     ; AC90: 20 6D D0     m.
-; &AC93 referenced 2 times by &AC88, &AC8E
 .CAC93
     LDA #&F8                                      ; AC93: A9 F8       ..
     STA L0203                                     ; AC95: 8D 03 02    ...
@@ -2226,7 +2179,6 @@ LL28        = &FA91
     BNE CACA8                                     ; ACA2: D0 04       ..
     LDX #&F0                                      ; ACA4: A2 F0       ..
     BNE CACCC                                     ; ACA6: D0 24       .$
-; &ACA8 referenced 1 time by &ACA2
 .CACA8
     LDY #&19                                      ; ACA8: A0 19       ..
     LDX #&D5                                      ; ACAA: A2 D5       ..
@@ -2235,21 +2187,18 @@ LL28        = &FA91
     LDX #&96                                      ; ACB0: A2 96       ..
     LDA #&F8                                      ; ACB2: A9 F8       ..
     STA L0203                                     ; ACB4: 8D 03 02    ...
-; &ACB7 referenced 1 time by &ACAE
 .CACB7
     LDA L009E                                     ; ACB7: A5 9E       ..
     AND #&0F                                      ; ACB9: 29 0F       ).
     CMP #&0F                                      ; ACBB: C9 0F       ..
     BNE CACC1                                     ; ACBD: D0 02       ..
     LDX #&A6                                      ; ACBF: A2 A6       ..
-; &ACC1 referenced 1 time by &ACBD
 .CACC1
     CMP #&0D                                      ; ACC1: C9 0D       ..
     BNE CACCC                                     ; ACC3: D0 07       ..
     LDX #&AD                                      ; ACC5: A2 AD       ..
     LDA #&F8                                      ; ACC7: A9 F8       ..
     STA L0203                                     ; ACC9: 8D 03 02    ...
-; &ACCC referenced 3 times by &AC9E, &ACA6, &ACC3
 .CACCC
     STX L0200                                     ; ACCC: 8E 00 02    ...
     TYA                                           ; ACCF: 98          .
@@ -2268,11 +2217,9 @@ LL28        = &FA91
     BNE CACEA                                     ; ACE4: D0 04       ..
     LDX #0                                        ; ACE6: A2 00       ..
     STX L00D3                                     ; ACE8: 86 D3       ..
-; &ACEA referenced 1 time by &ACE4
 .CACEA
     RTS                                           ; ACEA: 60          `
 
-; &ACEB referenced 1 time by &AC27
 .sub_CACEB
     JSR sub_CAD2A                                 ; ACEB: 20 2A AD     *.
     LDY #2                                        ; ACEE: A0 02       ..
@@ -2287,13 +2234,11 @@ LL28        = &FA91
     JSR CAF2E                                     ; AD04: 20 2E AF     ..
     LDY #&1D                                      ; AD07: A0 1D       ..
     JSR sub_CAF5B                                 ; AD09: 20 5B AF     [.
-; &AD0C referenced 1 time by &AE12
 .sub_CAD0C
     LDY #&0E                                      ; AD0C: A0 0E       ..
     JSR sub_CAF5B                                 ; AD0E: 20 5B AF     [.
     LDY #&11                                      ; AD11: A0 11       ..
     JSR CAF2E                                     ; AD13: 20 2E AF     ..
-; &AD16 referenced 2 times by &AE69, &AEF0
 .sub_CAD16
     LDY #&13                                      ; AD16: A0 13       ..
     JSR sub_CAF5B                                 ; AD18: 20 5B AF     [.
@@ -2304,7 +2249,6 @@ LL28        = &FA91
     LDY #&1B                                      ; AD25: A0 1B       ..
     JMP CAF2E                                     ; AD27: 4C 2E AF    L..
 
-; &AD2A referenced 2 times by &ACEB, &AE2B
 .sub_CAD2A
     LDA L0464                                     ; AD2A: AD 64 04    .d.
     ASL A                                         ; AD2D: 0A          .
@@ -2317,15 +2261,13 @@ LL28        = &FA91
     BNE CAD3A                                     ; AD34: D0 04       ..
     LDA #&94                                      ; AD36: A9 94       ..
     BNE CAD3C                                     ; AD38: D0 02       ..
-; &AD3A referenced 1 time by &AD34
 .CAD3A
     LDA #&95                                      ; AD3A: A9 95       ..
-; &AD3C referenced 1 time by &AD38
 .CAD3C
     DEY                                           ; AD3C: 88          .
     STY V                                         ; AD3D: 84 63       .c
     ADC #0                                        ; AD3F: 69 00       i.
-    STA L0064                                     ; AD41: 85 64       .d
+    STA V_1                                       ; AD41: 85 64       .d
     LDA L009E                                     ; AD43: A5 9E       ..
     BMI CAD5A                                     ; AD45: 30 13       0.
     LDA #&72 ; 'r'                                ; AD47: A9 72       .r
@@ -2338,7 +2280,6 @@ LL28        = &FA91
     STA L00BA                                     ; AD55: 85 BA       ..
     JMP CAD77                                     ; AD57: 4C 77 AD    Lw.
 
-; &AD5A referenced 1 time by &AD45
 .CAD5A
     LDA #&73 ; 's'                                ; AD5A: A9 73       .s
     STA L0008                                     ; AD5C: 85 08       ..
@@ -2354,10 +2295,8 @@ LL28        = &FA91
     ASL A                                         ; AD71: 0A          .
     BPL CAD77                                     ; AD72: 10 03       ..
     JSR LD06D                                     ; AD74: 20 6D D0     m.
-; &AD77 referenced 3 times by &AD57, &AD6C, &AD72
 .CAD77
     LDY #&3F ; '?'                                ; AD77: A0 3F       .?
-; &AD79 referenced 1 time by &AD82
 .loop_CAD79
     LDA (V),Y                                     ; AD79: B1 63       .c
     STA (L0007),Y                                 ; AD7B: 91 07       ..
@@ -2371,7 +2310,6 @@ LL28        = &FA91
     ASL A                                         ; AD8B: 0A          .
     BPL CAD91                                     ; AD8C: 10 03       ..
     JSR LD06D                                     ; AD8E: 20 6D D0     m.
-; &AD91 referenced 3 times by &AD86, &AD8C, &AD98
 .CAD91
     LDA (V),Y                                     ; AD91: B1 63       .c
     STA (L0007),Y                                 ; AD93: 91 07       ..
@@ -2384,7 +2322,6 @@ LL28        = &FA91
     ASL A                                         ; ADA1: 0A          .
     BPL CADA7                                     ; ADA2: 10 03       ..
     JSR LD06D                                     ; ADA4: 20 6D D0     m.
-; &ADA7 referenced 2 times by &AD9C, &ADA2
 .CADA7
     LDY #&20 ; ' '                                ; ADA7: A0 20       .
     LDA (V),Y                                     ; ADA9: B1 63       .c
@@ -2398,7 +2335,6 @@ LL28        = &FA91
     STA (L00BA),Y                                 ; ADB9: 91 BA       ..
     RTS                                           ; ADBB: 60          `
 
-; &ADBC referenced 1 time by &AE19
 .CADBC
     LDA #&73 ; 's'                                ; ADBC: A9 73       .s
     STA L0008                                     ; ADBE: 85 08       ..
@@ -2410,7 +2346,6 @@ LL28        = &FA91
     STA L00BA                                     ; ADCA: 85 BA       ..
     LDY #&3F ; '?'                                ; ADCC: A0 3F       .?
     LDA #0                                        ; ADCE: A9 00       ..
-; &ADD0 referenced 1 time by &ADD5
 .loop_CADD0
     STA (L0007),Y                                 ; ADD0: 91 07       ..
     STA (L00BA),Y                                 ; ADD2: 91 BA       ..
@@ -2422,44 +2357,36 @@ LL28        = &FA91
     STA (L00BA),Y                                 ; ADDD: 91 BA       ..
     RTS                                           ; ADDF: 60          `
 
-; &ADE0 referenced 1 time by &AE39
 .CADE0
     LDA L03EB                                     ; ADE0: AD EB 03    ...
     BEQ CADEA                                     ; ADE3: F0 05       ..
     LDY #2                                        ; ADE5: A0 02       ..
     JSR sub_CAF9A                                 ; ADE7: 20 9A AF     ..
-; &ADEA referenced 1 time by &ADE3
 .CADEA
     LDA L03EA                                     ; ADEA: AD EA 03    ...
     BEQ CADF4                                     ; ADED: F0 05       ..
     LDY #4                                        ; ADEF: A0 04       ..
     JSR sub_CAF96                                 ; ADF1: 20 96 AF     ..
-; &ADF4 referenced 1 time by &ADED
 .CADF4
     LDA L03ED                                     ; ADF4: AD ED 03    ...
     BPL CADFE                                     ; ADF7: 10 05       ..
     LDY #7                                        ; ADF9: A0 07       ..
     JSR sub_CAF9A                                 ; ADFB: 20 9A AF     ..
-; &ADFE referenced 1 time by &ADF7
 .CADFE
     LDA L03EC                                     ; ADFE: AD EC 03    ...
     BMI CAE08                                     ; AE01: 30 05       0.
     LDY #9                                        ; AE03: A0 09       ..
     JSR sub_CAF96                                 ; AE05: 20 96 AF     ..
-; &AE08 referenced 1 time by &AE01
 .CAE08
     LDA L0475                                     ; AE08: AD 75 04    .u.
     BNE CAE12                                     ; AE0B: D0 05       ..
     LDY #&0C                                      ; AE0D: A0 0C       ..
     JSR sub_CAF9A                                 ; AE0F: 20 9A AF     ..
-; &AE12 referenced 1 time by &AE0B
 .CAE12
     JSR sub_CAD0C                                 ; AE12: 20 0C AD     ..
-; &AE15 referenced 1 time by &AE3D
 .CAE15
     JMP CAEC6                                     ; AE15: 4C C6 AE    L..
 
-; &AE18 referenced 1 time by &AC5F
 .sub_CAE18
     TAY                                           ; AE18: A8          .
     BMI CADBC                                     ; AE19: 30 A1       0.
@@ -2470,7 +2397,6 @@ LL28        = &FA91
     ASL A                                         ; AE25: 0A          .
     BPL CAE2B                                     ; AE26: 10 03       ..
     JSR LD06D                                     ; AE28: 20 6D D0     m.
-; &AE2B referenced 2 times by &AE20, &AE26
 .CAE2B
     JSR sub_CAD2A                                 ; AE2B: 20 2A AD     *.
     LDA L0464                                     ; AE2E: AD 64 04    .d.
@@ -2483,94 +2409,78 @@ LL28        = &FA91
     BNE CAE15                                     ; AE3D: D0 D6       ..
     JMP CAEE5                                     ; AE3F: 4C E5 AE    L..
 
-; &AE42 referenced 1 time by &AE35
 .CAE42
     LDA L0564                                     ; AE42: AD 64 05    .d.
     BNE CAE4C                                     ; AE45: D0 05       ..
     LDY #2                                        ; AE47: A0 02       ..
     JSR CAF2E                                     ; AE49: 20 2E AF     ..
-; &AE4C referenced 1 time by &AE45
 .CAE4C
     LDA L03BE                                     ; AE4C: AD BE 03    ...
     BNE CAE56                                     ; AE4F: D0 05       ..
     LDY #&11                                      ; AE51: A0 11       ..
     JSR CAF2E                                     ; AE53: 20 2E AF     ..
-; &AE56 referenced 1 time by &AE4F
 .CAE56
     LDA L006C                                     ; AE56: A5 6C       .l
     BNE CAE60                                     ; AE58: D0 06       ..
     LDA L0395                                     ; AE5A: AD 95 03    ...
     ASL A                                         ; AE5D: 0A          .
     BMI CAE65                                     ; AE5E: 30 05       0.
-; &AE60 referenced 1 time by &AE58
 .CAE60
     LDY #&0E                                      ; AE60: A0 0E       ..
     JSR sub_CAF5B                                 ; AE62: 20 5B AF     [.
-; &AE65 referenced 1 time by &AE5E
 .CAE65
     LDA L009E                                     ; AE65: A5 9E       ..
     BEQ CAE6F                                     ; AE67: F0 06       ..
     JSR sub_CAD16                                 ; AE69: 20 16 AD     ..
     JMP CAE9C                                     ; AE6C: 4C 9C AE    L..
 
-; &AE6F referenced 1 time by &AE67
 .CAE6F
     LDA L03C8                                     ; AE6F: AD C8 03    ...
     BNE CAE79                                     ; AE72: D0 05       ..
     LDY #&13                                      ; AE74: A0 13       ..
     JSR sub_CAF5B                                 ; AE76: 20 5B AF     [.
-; &AE79 referenced 1 time by &AE72
 .CAE79
     LDA L0401                                     ; AE79: AD 01 04    ...
     BPL CAE83                                     ; AE7C: 10 05       ..
     LDY #&16                                      ; AE7E: A0 16       ..
     JSR CAF2E                                     ; AE80: 20 2E AF     ..
-; &AE83 referenced 1 time by &AE7C
 .CAE83
     LDA L03C0                                     ; AE83: AD C0 03    ...
     BNE CAE8D                                     ; AE86: D0 05       ..
     LDY #&18                                      ; AE88: A0 18       ..
     JSR sub_CAF5B                                 ; AE8A: 20 5B AF     [.
-; &AE8D referenced 2 times by &AE86, &AF2B
 .CAE8D
     LDA L038A                                     ; AE8D: AD 8A 03    ...
     BNE CAE97                                     ; AE90: D0 05       ..
     LDA L03C4                                     ; AE92: AD C4 03    ...
     BNE CAE9C                                     ; AE95: D0 05       ..
-; &AE97 referenced 1 time by &AE90
 .CAE97
     LDY #&1B                                      ; AE97: A0 1B       ..
     JSR CAF2E                                     ; AE99: 20 2E AF     ..
-; &AE9C referenced 2 times by &AE6C, &AE95
 .CAE9C
     LDA L0300                                     ; AE9C: AD 00 03    ...
     AND #&C0                                      ; AE9F: 29 C0       ).
     BEQ CAEBB                                     ; AEA1: F0 18       ..
-; &AEA3 referenced 1 time by &AEF3
 .CAEA3
     LDY #&1D                                      ; AEA3: A0 1D       ..
     JSR sub_CAF5B                                 ; AEA5: 20 5B AF     [.
     JMP CAEBB                                     ; AEA8: 4C BB AE    L..
 
-; &AEAB referenced 1 time by &AE31
 .CAEAB
     LDA L03A6                                     ; AEAB: AD A6 03    ...
     BNE CAEB6                                     ; AEAE: D0 06       ..
     LDA L009E                                     ; AEB0: A5 9E       ..
     CMP #&BB                                      ; AEB2: C9 BB       ..
     BEQ CAEBB                                     ; AEB4: F0 05       ..
-; &AEB6 referenced 1 time by &AEAE
 .CAEB6
     LDY #&11                                      ; AEB6: A0 11       ..
     JSR CAF2E                                     ; AEB8: 20 2E AF     ..
-; &AEBB referenced 3 times by &AEA1, &AEA8, &AEB4
 .CAEBB
     LDA L009E                                     ; AEBB: A5 9E       ..
     CMP #&BA                                      ; AEBD: C9 BA       ..
     BNE CAEC6                                     ; AEBF: D0 05       ..
     LDY #4                                        ; AEC1: A0 04       ..
     JSR sub_CAF5B                                 ; AEC3: 20 5B AF     [.
-; &AEC6 referenced 2 times by &AE15, &AEBF
 .CAEC6
     LDA L00E9                                     ; AEC6: A5 E9       ..
     BPL CAED3                                     ; AEC8: 10 09       ..
@@ -2578,7 +2488,6 @@ LL28        = &FA91
     ASL A                                         ; AECD: 0A          .
     BPL CAED3                                     ; AECE: 10 03       ..
     JSR LD06D                                     ; AED0: 20 6D D0     m.
-; &AED3 referenced 2 times by &AEC8, &AECE
 .CAED3
     LDA L0464                                     ; AED3: AD 64 04    .d.
     ASL A                                         ; AED6: 0A          .
@@ -2592,7 +2501,6 @@ LL28        = &FA91
     STA L00BF                                     ; AEE2: 85 BF       ..
     RTS                                           ; AEE4: 60          `
 
-; &AEE5 referenced 1 time by &AE3F
 .CAEE5
     LDX #4                                        ; AEE5: A2 04       ..
     LDA L00A5                                     ; AEE7: A5 A5       ..
@@ -2602,7 +2510,6 @@ LL28        = &FA91
     JSR sub_CAD16                                 ; AEF0: 20 16 AD     ..
     JMP CAEA3                                     ; AEF3: 4C A3 AE    L..
 
-; &AEF6 referenced 1 time by &AEE9
 .CAEF6
     LDY #2                                        ; AEF6: A0 02       ..
     JSR CAF2E                                     ; AEF8: 20 2E AF     ..
@@ -2614,32 +2521,26 @@ LL28        = &FA91
     JSR CAF2E                                     ; AF06: 20 2E AF     ..
     JMP CAF12                                     ; AF09: 4C 12 AF    L..
 
-; &AF0C referenced 1 time by &AEFD
 .CAF0C
     LDA L0395                                     ; AF0C: AD 95 03    ...
     ASL A                                         ; AF0F: 0A          .
     BMI CAF17                                     ; AF10: 30 05       0.
-; &AF12 referenced 1 time by &AF09
 .CAF12
     LDY #&13                                      ; AF12: A0 13       ..
     JSR sub_CAF5B                                 ; AF14: 20 5B AF     [.
-; &AF17 referenced 1 time by &AF10
 .CAF17
     LDA L03C3                                     ; AF17: AD C3 03    ...
     BNE CAF21                                     ; AF1A: D0 05       ..
     LDY #&16                                      ; AF1C: A0 16       ..
     JSR CAF2E                                     ; AF1E: 20 2E AF     ..
-; &AF21 referenced 1 time by &AF1A
 .CAF21
     LDA L03BE                                     ; AF21: AD BE 03    ...
     BNE CAF2B                                     ; AF24: D0 05       ..
     LDY #&18                                      ; AF26: A0 18       ..
     JSR sub_CAF5B                                 ; AF28: 20 5B AF     [.
-; &AF2B referenced 1 time by &AF24
 .CAF2B
     JMP CAE8D                                     ; AF2B: 4C 8D AE    L..
 
-; &AF2E referenced 15 times by &ACF0, &ACFA, &AD04, &AD13, &AD1D, &AD27, &AE49, &AE53, &AE80, &AE99, &AEB8, &AEED, &AEF8, &AF06, &AF1E
 .CAF2E
     LDA L00E9                                     ; AF2E: A5 E9       ..
     BPL CAF3B                                     ; AF30: 10 09       ..
@@ -2647,7 +2548,6 @@ LL28        = &FA91
     ASL A                                         ; AF35: 0A          .
     BPL CAF3B                                     ; AF36: 10 03       ..
     JSR LD06D                                     ; AF38: 20 6D D0     m.
-; &AF3B referenced 2 times by &AF30, &AF36
 .CAF3B
     LDA #4                                        ; AF3B: A9 04       ..
     STA (L0007),Y                                 ; AF3D: 91 07       ..
@@ -2669,7 +2569,6 @@ LL28        = &FA91
     STA (L00BA),Y                                 ; AF58: 91 BA       ..
     RTS                                           ; AF5A: 60          `
 
-; &AF5B referenced 14 times by &ACF5, &ACFF, &AD09, &AD0E, &AD18, &AD22, &AE62, &AE76, &AE8A, &AEA5, &AEC3, &AF01, &AF14, &AF28
 .sub_CAF5B
     LDA L00E9                                     ; AF5B: A5 E9       ..
     BPL CAF68                                     ; AF5D: 10 09       ..
@@ -2677,7 +2576,6 @@ LL28        = &FA91
     ASL A                                         ; AF62: 0A          .
     BPL CAF68                                     ; AF63: 10 03       ..
     JSR LD06D                                     ; AF65: 20 6D D0     m.
-; &AF68 referenced 2 times by &AF5D, &AF63
 .CAF68
     LDA #6                                        ; AF68: A9 06       ..
     STA (L0007),Y                                 ; AF6A: 91 07       ..
@@ -2707,11 +2605,9 @@ LL28        = &FA91
     STA (L00BA),Y                                 ; AF93: 91 BA       ..
     RTS                                           ; AF95: 60          `
 
-; &AF96 referenced 2 times by &ADF1, &AE05
 .sub_CAF96
     JSR sub_CAFAB                                 ; AF96: 20 AB AF     ..
     INY                                           ; AF99: C8          .
-; &AF9A referenced 3 times by &ADE7, &ADFB, &AE0F
 .sub_CAF9A
     LDA L00E9                                     ; AF9A: A5 E9       ..
     BPL CAFA7                                     ; AF9C: 10 09       ..
@@ -2719,11 +2615,9 @@ LL28        = &FA91
     ASL A                                         ; AFA1: 0A          .
     BPL CAFA7                                     ; AFA2: 10 03       ..
     JSR LD06D                                     ; AFA4: 20 6D D0     m.
-; &AFA7 referenced 2 times by &AF9C, &AFA2
 .CAFA7
     JSR sub_CAFAB                                 ; AFA7: 20 AB AF     ..
     INY                                           ; AFAA: C8          .
-; &AFAB referenced 2 times by &AF96, &AFA7
 .sub_CAFAB
     LDA L95CE,Y                                   ; AFAB: B9 CE 95    ...
     STA (L0007),Y                                 ; AFAE: 91 07       ..
@@ -2739,13 +2633,11 @@ LL28        = &FA91
     LDY T                                         ; AFC0: A4 9A       ..
     RTS                                           ; AFC2: 60          `
 
-; &AFC3 referenced 1 time by &AFD1
 .loop_CAFC3
     LDX #4                                        ; AFC3: A2 04       ..
     STX L00B8                                     ; AFC5: 86 B8       ..
     RTS                                           ; AFC7: 60          `
 
-; &AFC8 referenced 1 time by &AFD5
 .loop_CAFC8
     LDX #&25 ; '%'                                ; AFC8: A2 25       .%
     STX L00B8                                     ; AFCA: 86 B8       ..
@@ -2760,11 +2652,10 @@ LL28        = &FA91
     LDA L009E                                     ; AFD9: A5 9E       ..
     BMI CAFDF                                     ; AFDB: 30 02       0.
     LDX #&3C ; '<'                                ; AFDD: A2 3C       .<
-; &AFDF referenced 1 time by &AFDB
 .CAFDF
     STX L00B8                                     ; AFDF: 86 B8       ..
     LDA #&FC                                      ; AFE1: A9 FC       ..
-    STA L0064                                     ; AFE3: 85 64       .d
+    STA V_1                                       ; AFE3: 85 64       .d
     LDA #0                                        ; AFE5: A9 00       ..
     STA V                                         ; AFE7: 85 63       .c
     LDA #&61 ; 'a'                                ; AFE9: A9 61       .a
@@ -2777,7 +2668,6 @@ LL28        = &FA91
     STA L00BA                                     ; AFF7: 85 BA       ..
     LDY #0                                        ; AFF9: A0 00       ..
     LDX #&25 ; '%'                                ; AFFB: A2 25       .%
-; &AFFD referenced 1 time by &B04D
 .CAFFD
     LDA L00E9                                     ; AFFD: A5 E9       ..
     BPL CB00A                                     ; AFFF: 10 09       ..
@@ -2785,7 +2675,6 @@ LL28        = &FA91
     ASL A                                         ; B004: 0A          .
     BPL CB00A                                     ; B005: 10 03       ..
     JSR LD06D                                     ; B007: 20 6D D0     m.
-; &B00A referenced 2 times by &AFFF, &B005
 .CB00A
     LDA (V),Y                                     ; B00A: B1 63       .c
     STA (L0007),Y                                 ; B00C: 91 07       ..
@@ -2820,15 +2709,13 @@ LL28        = &FA91
     STA (L00BA),Y                                 ; B03F: 91 BA       ..
     INY                                           ; B041: C8          .
     BNE CB04A                                     ; B042: D0 06       ..
-    INC L0064                                     ; B044: E6 64       .d
+    INC V_1                                       ; B044: E6 64       .d
     INC L0008                                     ; B046: E6 08       ..
     INC L00BB                                     ; B048: E6 BB       ..
-; &B04A referenced 1 time by &B042
 .CB04A
     INX                                           ; B04A: E8          .
     CPX #&3C ; '<'                                ; B04B: E0 3C       .<
     BNE CAFFD                                     ; B04D: D0 AE       ..
-; &B04F referenced 1 time by &B0B1
 .CB04F
     LDA L00E9                                     ; B04F: A5 E9       ..
     BPL CB05C                                     ; B051: 10 09       ..
@@ -2836,7 +2723,6 @@ LL28        = &FA91
     ASL A                                         ; B056: 0A          .
     BPL CB05C                                     ; B057: 10 03       ..
     JSR LD06D                                     ; B059: 20 6D D0     m.
-; &B05C referenced 2 times by &B051, &B057
 .CB05C
     CPX L00B8                                     ; B05C: E4 B8       ..
     BEQ CB0B4                                     ; B05E: F0 54       .T
@@ -2881,15 +2767,13 @@ LL28        = &FA91
     STA (L0007),Y                                 ; B0A5: 91 07       ..
     INY                                           ; B0A7: C8          .
     BNE CB0B0                                     ; B0A8: D0 06       ..
-    INC L0064                                     ; B0AA: E6 64       .d
+    INC V_1                                       ; B0AA: E6 64       .d
     INC L0008                                     ; B0AC: E6 08       ..
     INC L00BB                                     ; B0AE: E6 BB       ..
-; &B0B0 referenced 1 time by &B0A8
 .CB0B0
     INX                                           ; B0B0: E8          .
     JMP CB04F                                     ; B0B1: 4C 4F B0    LO.
 
-; &B0B4 referenced 1 time by &B05E
 .CB0B4
     LDA L00E9                                     ; B0B4: A5 E9       ..
     BPL CB0C1                                     ; B0B6: 10 09       ..
@@ -2897,11 +2781,9 @@ LL28        = &FA91
     ASL A                                         ; B0BB: 0A          .
     BPL CB0C1                                     ; B0BC: 10 03       ..
     JSR LD06D                                     ; B0BE: 20 6D D0     m.
-; &B0C1 referenced 2 times by &B0B6, &B0BC
 .CB0C1
     LDA #0                                        ; B0C1: A9 00       ..
     LDX #&30 ; '0'                                ; B0C3: A2 30       .0
-; &B0C5 referenced 1 time by &B0D1
 .loop_CB0C5
     STA (L00BA),Y                                 ; B0C5: 91 BA       ..
     STA (L0007),Y                                 ; B0C7: 91 07       ..
@@ -2909,7 +2791,6 @@ LL28        = &FA91
     BNE CB0D0                                     ; B0CA: D0 04       ..
     INC L00BB                                     ; B0CC: E6 BB       ..
     INC L0008                                     ; B0CE: E6 08       ..
-; &B0D0 referenced 1 time by &B0CA
 .CB0D0
     DEX                                           ; B0D0: CA          .
     BNE loop_CB0C5                                ; B0D1: D0 F2       ..
@@ -2919,7 +2800,6 @@ LL28        = &FA91
     ASL A                                         ; B0DA: 0A          .
     BPL CB0E0                                     ; B0DB: 10 03       ..
     JSR LD06D                                     ; B0DD: 20 6D D0     m.
-; &B0E0 referenced 2 times by &B0D5, &B0DB
 .CB0E0
     RTS                                           ; B0E0: 60          `
 
@@ -2936,7 +2816,6 @@ LL28        = &FA91
     CMP #&BB                                      ; B0F3: C9 BB       ..
     BNE CB0F8                                     ; B0F5: D0 01       ..
     DEX                                           ; B0F7: CA          .
-; &B0F8 referenced 1 time by &B0F5
 .CB0F8
     STX T                                         ; B0F8: 86 9A       ..
     LDA #0                                        ; B0FA: A9 00       ..
@@ -2953,12 +2832,11 @@ LL28        = &FA91
     LDA L0007                                     ; B10D: A5 07       ..
     STA L00BA                                     ; B10F: 85 BA       ..
     LDA #&FC                                      ; B111: A9 FC       ..
-    STA L0064                                     ; B113: 85 64       .d
+    STA V_1                                       ; B113: 85 64       .d
     LDA #&E8                                      ; B115: A9 E8       ..
     STA V                                         ; B117: 85 63       .c
     LDX #&5F ; '_'                                ; B119: A2 5F       ._
     LDY #0                                        ; B11B: A0 00       ..
-; &B11D referenced 1 time by &B18B
 .CB11D
     LDA L00E9                                     ; B11D: A5 E9       ..
     BPL CB12A                                     ; B11F: 10 09       ..
@@ -2966,7 +2844,6 @@ LL28        = &FA91
     ASL A                                         ; B124: 0A          .
     BPL CB12A                                     ; B125: 10 03       ..
     JSR LD06D                                     ; B127: 20 6D D0     m.
-; &B12A referenced 2 times by &B11F, &B125
 .CB12A
     LDA (V),Y                                     ; B12A: B1 63       .c
     STA (L00BA),Y                                 ; B12C: 91 BA       ..
@@ -3017,10 +2894,9 @@ LL28        = &FA91
     STA (L0007),Y                                 ; B17F: 91 07       ..
     INY                                           ; B181: C8          .
     BNE CB18A                                     ; B182: D0 06       ..
-    INC L0064                                     ; B184: E6 64       .d
+    INC V_1                                       ; B184: E6 64       .d
     INC L00BB                                     ; B186: E6 BB       ..
     INC L0008                                     ; B188: E6 08       ..
-; &B18A referenced 1 time by &B182
 .CB18A
     DEX                                           ; B18A: CA          .
     BNE CB11D                                     ; B18B: D0 90       ..
@@ -3039,18 +2915,16 @@ LL28        = &FA91
     CMP #&BB                                      ; B1A2: C9 BB       ..
     BNE CB1A8                                     ; B1A4: D0 02       ..
     LDX #&46 ; 'F'                                ; B1A6: A2 46       .F
-; &B1A8 referenced 1 time by &B1A4
 .CB1A8
     TXA                                           ; B1A8: 8A          .
     CLC                                           ; B1A9: 18          .
     ADC L00B8                                     ; B1AA: 65 B8       e.
     STA L00B8                                     ; B1AC: 85 B8       ..
     LDA #&FC                                      ; B1AE: A9 FC       ..
-    STA L0064                                     ; B1B0: 85 64       .d
+    STA V_1                                       ; B1B0: 85 64       .d
     LDA #&E8                                      ; B1B2: A9 E8       ..
     STA V                                         ; B1B4: 85 63       .c
     LDY #0                                        ; B1B6: A0 00       ..
-; &B1B8 referenced 1 time by &B216
 .CB1B8
     LDA L00E9                                     ; B1B8: A5 E9       ..
     BPL CB1C5                                     ; B1BA: 10 09       ..
@@ -3058,7 +2932,6 @@ LL28        = &FA91
     ASL A                                         ; B1BF: 0A          .
     BPL CB1C5                                     ; B1C0: 10 03       ..
     JSR LD06D                                     ; B1C2: 20 6D D0     m.
-; &B1C5 referenced 2 times by &B1BA, &B1C0
 .CB1C5
     LDA (V),Y                                     ; B1C5: B1 63       .c
     STA (L0007),Y                                 ; B1C7: 91 07       ..
@@ -3101,10 +2974,9 @@ LL28        = &FA91
     STA (L00BA),Y                                 ; B20A: 91 BA       ..
     INY                                           ; B20C: C8          .
     BNE CB215                                     ; B20D: D0 06       ..
-    INC L0064                                     ; B20F: E6 64       .d
+    INC V_1                                       ; B20F: E6 64       .d
     INC L0008                                     ; B211: E6 08       ..
     INC L00BB                                     ; B213: E6 BB       ..
-; &B215 referenced 1 time by &B20D
 .CB215
     DEX                                           ; B215: CA          .
     BNE CB1B8                                     ; B216: D0 A0       ..
@@ -3145,7 +3017,6 @@ LL28        = &FA91
     DEC L007E                                     ; B25E: C6 7E       .~
     JMP CB276                                     ; B260: 4C 76 B2    Lv.
 
-; &B263 referenced 1 time by &B287
 .CB263
     JSR LEC7D                                     ; B263: 20 7D EC     }.
     LDA #1                                        ; B266: A9 01       ..
@@ -3156,7 +3027,6 @@ LL28        = &FA91
     LDY K                                         ; B270: A4 7D       .}
     STA (L0007),Y                                 ; B272: 91 07       ..
     STA (L00BA),Y                                 ; B274: 91 BA       ..
-; &B276 referenced 1 time by &B260
 .CB276
     LDA L0007                                     ; B276: A5 07       ..
     CLC                                           ; B278: 18          .
@@ -3166,7 +3036,6 @@ LL28        = &FA91
     BCC CB285                                     ; B27F: 90 04       ..
     INC L0008                                     ; B281: E6 08       ..
     INC L00BB                                     ; B283: E6 BB       ..
-; &B285 referenced 1 time by &B27F
 .CB285
     DEC L007E                                     ; B285: C6 7E       .~
     BNE CB263                                     ; B287: D0 DA       ..
@@ -3181,10 +3050,8 @@ LL28        = &FA91
     STA (L00BA),Y                                 ; B29A: 91 BA       ..
     RTS                                           ; B29C: 60          `
 
-; &B29D referenced 4 times by &B255, &B293, &B2C9, &B2F8
 .CB29D
     LDY #1                                        ; B29D: A0 01       ..
-; &B29F referenced 1 time by &B2A6
 .loop_CB29F
     STA (L0007),Y                                 ; B29F: 91 07       ..
     STA (L00BA),Y                                 ; B2A1: 91 BA       ..
@@ -3193,7 +3060,6 @@ LL28        = &FA91
     BNE loop_CB29F                                ; B2A6: D0 F7       ..
     RTS                                           ; B2A8: 60          `
 
-; &B2A9 referenced 2 times by &B248, &B2C4
 .sub_CB2A9
     JSR LDBD8                                     ; B2A9: 20 D8 DB     ..
     LDA L0007                                     ; B2AC: A5 07       ..
@@ -3204,7 +3070,6 @@ LL28        = &FA91
     BCC CB2BB                                     ; B2B5: 90 04       ..
     INC L0008                                     ; B2B7: E6 08       ..
     INC L00BB                                     ; B2B9: E6 BB       ..
-; &B2BB referenced 1 time by &B2B5
 .CB2BB
     RTS                                           ; B2BB: 60          `
 
@@ -3218,7 +3083,6 @@ LL28        = &FA91
     LDX L007E                                     ; B2CC: A6 7E       .~
     JMP CB2E3                                     ; B2CE: 4C E3 B2    L..
 
-; &B2D1 referenced 1 time by &B2F4
 .CB2D1
     JSR LEC7D                                     ; B2D1: 20 7D EC     }.
     LDA L0007                                     ; B2D4: A5 07       ..
@@ -3229,7 +3093,6 @@ LL28        = &FA91
     BCC CB2E3                                     ; B2DD: 90 04       ..
     INC L0008                                     ; B2DF: E6 08       ..
     INC L00BB                                     ; B2E1: E6 BB       ..
-; &B2E3 referenced 2 times by &B2CE, &B2DD
 .CB2E3
     LDA #1                                        ; B2E3: A9 01       ..
     LDY #0                                        ; B2E5: A0 00       ..
@@ -3253,10 +3116,8 @@ LL28        = &FA91
     BCC CB30D                                     ; B307: 90 04       ..
     INC L0008                                     ; B309: E6 08       ..
     INC L00BB                                     ; B30B: E6 BB       ..
-; &B30D referenced 1 time by &B307
 .CB30D
     LDX L007E                                     ; B30D: A6 7E       .~
-; &B30F referenced 1 time by &B33E
 .CB30F
     LDA L00E9                                     ; B30F: A5 E9       ..
     BPL CB31C                                     ; B311: 10 09       ..
@@ -3264,11 +3125,9 @@ LL28        = &FA91
     ASL A                                         ; B316: 0A          .
     BPL CB31C                                     ; B317: 10 03       ..
     JSR LD06D                                     ; B319: 20 6D D0     m.
-; &B31C referenced 2 times by &B311, &B317
 .CB31C
     LDY #0                                        ; B31C: A0 00       ..
     LDA L007F                                     ; B31E: A5 7F       ..
-; &B320 referenced 1 time by &B32A
 .loop_CB320
     STA (L00BA),Y                                 ; B320: 91 BA       ..
     STA (L0007),Y                                 ; B322: 91 07       ..
@@ -3286,7 +3145,6 @@ LL28        = &FA91
     BCC CB33D                                     ; B337: 90 04       ..
     INC L0008                                     ; B339: E6 08       ..
     INC L00BB                                     ; B33B: E6 BB       ..
-; &B33D referenced 1 time by &B337
 .CB33D
     DEX                                           ; B33D: CA          .
     BNE CB30F                                     ; B33E: D0 CF       ..
@@ -3311,7 +3169,6 @@ LL28        = &FA91
     STA L0008                                     ; B35E: 85 08       ..
     LDX #&42 ; 'B'                                ; B360: A2 42       .B
     LDY #0                                        ; B362: A0 00       ..
-; &B364 referenced 1 time by &B3A2
 .CB364
     LDA #0                                        ; B364: A9 00       ..
     STA (L0007),Y                                 ; B366: 91 07       ..
@@ -3341,7 +3198,6 @@ LL28        = &FA91
     BNE CB394                                     ; B38E: D0 04       ..
     INC L0008                                     ; B390: E6 08       ..
     INC L00BB                                     ; B392: E6 BB       ..
-; &B394 referenced 1 time by &B38E
 .CB394
     LDA L00E9                                     ; B394: A5 E9       ..
     BPL CB3A1                                     ; B396: 10 09       ..
@@ -3349,7 +3205,6 @@ LL28        = &FA91
     ASL A                                         ; B39B: 0A          .
     BPL CB3A1                                     ; B39C: 10 03       ..
     JSR LD06D                                     ; B39E: 20 6D D0     m.
-; &B3A1 referenced 2 times by &B396, &B39C
 .CB3A1
     INX                                           ; B3A1: E8          .
     BNE CB364                                     ; B3A2: D0 C0       ..
@@ -3361,11 +3216,9 @@ LL28        = &FA91
     LDA #&74 ; 't'                                ; B3AE: A9 74       .t
     STA L00BB                                     ; B3B0: 85 BB       ..
     LDX #&1C                                      ; B3B2: A2 1C       ..
-; &B3B4 referenced 1 time by &B3DC
 .CB3B4
     LDY #&20 ; ' '                                ; B3B4: A0 20       .
     LDA #0                                        ; B3B6: A9 00       ..
-; &B3B8 referenced 1 time by &B3BD
 .loop_CB3B8
     STA (L0007),Y                                 ; B3B8: 91 07       ..
     STA (L00BA),Y                                 ; B3BA: 91 BA       ..
@@ -3377,7 +3230,6 @@ LL28        = &FA91
     ASL A                                         ; B3C6: 0A          .
     BPL CB3CC                                     ; B3C7: 10 03       ..
     JSR LD06D                                     ; B3C9: 20 6D D0     m.
-; &B3CC referenced 2 times by &B3C1, &B3C7
 .CB3CC
     LDA L0007                                     ; B3CC: A5 07       ..
     CLC                                           ; B3CE: 18          .
@@ -3387,7 +3239,6 @@ LL28        = &FA91
     BCC CB3DB                                     ; B3D5: 90 04       ..
     INC L0008                                     ; B3D7: E6 08       ..
     INC L00BB                                     ; B3D9: E6 BB       ..
-; &B3DB referenced 1 time by &B3D5
 .CB3DB
     DEX                                           ; B3DB: CA          .
     BNE CB3B4                                     ; B3DC: D0 D6       ..
@@ -3442,7 +3293,6 @@ LL28        = &FA91
     EQUB &0F, &10,   0, &1C, &0F, &38, &2A, &15   ; B52B: 0F 10 00... ...
     EQUB &0F, &1C, &22, &28, &0F,   6, &28, &27   ; B533: 0F 1C 22... .."
     EQUB &0F, &15, &20, &25                       ; B53B: 0F 15 20... ..
-; &B53F referenced 1 time by &B5FE
 .LB53F
     EQUB &0F, &0F, &0F, &0F, &0F, &0F, &0F, &0F   ; B53F: 0F 0F 0F... ...
     EQUB &0F, &0F, &0F, &0F, &0F, &0F, &0F, &0F   ; B547: 0F 0F 0F... ...
@@ -3453,7 +3303,6 @@ LL28        = &FA91
     EQUS " !", '"', "#$%&'()*+,"                  ; B56F: 20 21 22...  !"
     EQUB &0F, &0F, &0F                            ; B57C: 0F 0F 0F    ...
 
-; &B57F referenced 6 times by &AA51, &B64E, &B676, &B684, &B68D, &B696
 .sub_CB57F
     LDA L009F                                     ; B57F: A5 9F       ..
     AND #&0F                                      ; B581: 29 0F       ).
@@ -3475,7 +3324,6 @@ LL28        = &FA91
     ADC L0008                                     ; B59C: 65 08       e.
     STA L0008                                     ; B59E: 85 08       ..
     LDY #&20 ; ' '                                ; B5A0: A0 20       .
-; &B5A2 referenced 1 time by &B5A8
 .loop_CB5A2
     LDA (L0007),Y                                 ; B5A2: B1 07       ..
     STA XX3,Y                                     ; B5A4: 99 00 01    ...
@@ -3503,11 +3351,9 @@ LL28        = &FA91
     STA L0116                                     ; B5D2: 8D 16 01    ...
     LDA LB6A8,X                                   ; B5D5: BD A8 B6    ...
     STA L0117                                     ; B5D8: 8D 17 01    ...
-; &B5DB referenced 1 time by &B5B4
 .CB5DB
     JMP CB607                                     ; B5DB: 4C 07 B6    L..
 
-; &B5DE referenced 1 time by &B5AC
 .CB5DE
     LDA XX3                                       ; B5DE: AD 00 01    ...
     LDY L0103                                     ; B5E1: AC 03 01    ...
@@ -3517,26 +3363,21 @@ LL28        = &FA91
     STY L0102                                     ; B5EB: 8C 02 01    ...
     RTS                                           ; B5EE: 60          `
 
-; &B5EF referenced 1 time by &B5E6
 .CB5EF
     STY XX3_1                                     ; B5EF: 8C 01 01    ...
     STA L0102                                     ; B5F2: 8D 02 01    ...
     RTS                                           ; B5F5: 60          `
 
-; &B5F6 referenced 2 times by &B679, &B687
 .sub_CB5F6
     JSR sub_CB5F9                                 ; B5F6: 20 F9 B5     ..
-; &B5F9 referenced 7 times by &B5F6, &B653, &B659, &B65F, &B665, &B67C, &B690
 .sub_CB5F9
     LDX #&1F                                      ; B5F9: A2 1F       ..
-; &B5FB referenced 1 time by &B605
 .loop_CB5FB
     LDY XX3,X                                     ; B5FB: BC 00 01    ...
     LDA LB53F,Y                                   ; B5FE: B9 3F B5    .?.
     STA XX3,X                                     ; B601: 9D 00 01    ...
     DEX                                           ; B604: CA          .
     BNE loop_CB5FB                                ; B605: D0 F4       ..
-; &B607 referenced 3 times by &B5B0, &B5DB, &B699
 .CB607
     LDA #&0F                                      ; B607: A9 0F       ..
     STA L0033                                     ; B609: 85 33       .3
@@ -3554,13 +3395,11 @@ LL28        = &FA91
     STA L0036                                     ; B624: 85 36       .6
     RTS                                           ; B626: 60          `
 
-; &B627 referenced 2 times by &B60D, &B611
 .CB627
     LDA L0103                                     ; B627: AD 03 01    ...
     STA L0034                                     ; B62A: 85 34       .4
     RTS                                           ; B62C: 60          `
 
-; &B62D referenced 1 time by &B615
 .CB62D
     LDA XX3_1                                     ; B62D: AD 01 01    ...
     STA L0034                                     ; B630: 85 34       .4
@@ -3588,7 +3427,6 @@ LL28        = &FA91
     JSR sub_CB5F9                                 ; B665: 20 F9 B5     ..
     JSR LD164                                     ; B668: 20 64 D1     d.
     INC L00DA                                     ; B66B: E6 DA       ..
-; &B66D referenced 2 times by &B641, &B646
 .CB66D
     LDA #&FF                                      ; B66D: A9 FF       ..
     STA L0473                                     ; B66F: 8D 73 04    .s.
@@ -3613,25 +3451,19 @@ LL28        = &FA91
     LSR L0473                                     ; B6A1: 4E 73 04    Ns.
     RTS                                           ; B6A4: 60          `
 
-; &B6A5 referenced 1 time by &B5C3
 .LB6A5
     EQUB &0F                                      ; B6A5: 0F          .
-; &B6A6 referenced 1 time by &B5C9
 .LB6A6
     EQUB &25                                      ; B6A6: 25          %
-; &B6A7 referenced 1 time by &B5CF
 .LB6A7
     EQUB &16                                      ; B6A7: 16          .
-; &B6A8 referenced 1 time by &B5D5
 .LB6A8
     EQUB &15, &0F, &35, &16, &25, &0F, &34,   4   ; B6A8: 15 0F 35... ..5
     EQUB &14, &0F, &27, &28, &17, &0F, &29, &2C   ; B6B0: 14 0F 27... ..'
     EQUB &19, &0F, &2A, &1B, &0A, &0F, &32, &21   ; B6B8: 19 0F 2A... ..*
     EQUB   2, &0F, &2C, &22, &1C, &18,   0        ; B6C0: 02 0F 2C... ..,
-; &B6C7 referenced 1 time by &B9F8
 .LB6C7
     EQUB &32                                      ; B6C7: 32          2
-; &B6C8 referenced 1 time by &B9FF
 .LB6C8
     EQUB   0, &56,   0, &77,   0, &8B,   0, &A6   ; B6C8: 00 56 00... .V.
     EQUB   0, &C1,   0, &DA,   0, &EF,   0,   4   ; B6D0: 00 C1 00... ...
@@ -3766,10 +3598,8 @@ LL28        = &FA91
     EQUB   2,   2,   0,   1, &16,   4,   5,   2   ; B9C8: 02 02 00... ...
     EQUB &0C, &15, &0F,   9,   8, &12,   3,   3   ; B9D0: 0C 15 0F... ...
     EQUB   2, &17                                 ; B9D8: 02 17       ..
-; &B9DA referenced 1 time by &B9E5
 .LB9DA
     EQUB &AA, &BA, &CA, &AA                       ; B9DA: AA BA CA... ...
-; &B9DE referenced 1 time by &B9EA
 .LB9DE
     EQUB &B9, &B9, &B9, &B9                       ; B9DE: B9 B9 B9... ...
 
@@ -3777,7 +3607,7 @@ LL28        = &FA91
     LDA LB9DA,X                                   ; B9E5: BD DA B9    ...
     STA V                                         ; B9E8: 85 63       .c
     LDA LB9DE,X                                   ; B9EA: BD DE B9    ...
-    STA L0064                                     ; B9ED: 85 64       .d
+    STA V_1                                       ; B9ED: 85 64       .d
     LDA L009E                                     ; B9EF: A5 9E       ..
     AND #&0F                                      ; B9F1: 29 0F       ).
     TAY                                           ; B9F3: A8          .
@@ -3789,14 +3619,13 @@ LL28        = &FA91
     STA V                                         ; B9FD: 85 63       .c
     LDA LB6C8,X                                   ; B9FF: BD C8 B6    ...
     ADC #&B6                                      ; BA02: 69 B6       i.
-    STA L0064                                     ; BA04: 85 64       .d
+    STA V_1                                       ; BA04: 85 64       .d
     LDA #&73 ; 's'                                ; BA06: A9 73       .s
     STA L0008                                     ; BA08: 85 08       ..
     LDA #&C0                                      ; BA0A: A9 C0       ..
     STA L0007                                     ; BA0C: 85 07       ..
     JMP LF52D                                     ; BA0E: 4C 2D F5    L-.
 
-; &BA11 referenced 1 time by &BA29
 .loop_CBA11
     LDA #&F0                                      ; BA11: A9 F0       ..
     STA L0214                                     ; BA13: 8D 14 02    ...
@@ -3813,13 +3642,11 @@ LL28        = &FA91
     BNE CBA32                                     ; BA2D: D0 03       ..
     JMP CBAC6                                     ; BA2F: 4C C6 BA    L..
 
-; &BA32 referenced 1 time by &BA2D
 .CBA32
     CMP #&8F                                      ; BA32: C9 8F       ..
     BNE CBA39                                     ; BA34: D0 03       ..
     JMP CBB08                                     ; BA36: 4C 08 BB    L..
 
-; &BA39 referenced 1 time by &BA34
 .CBA39
     CMP #&97                                      ; BA39: C9 97       ..
     BNE CBA83                                     ; BA3B: D0 46       .F
@@ -3852,7 +3679,6 @@ LL28        = &FA91
     STA L0220                                     ; BA7F: 8D 20 02    . .
     RTS                                           ; BA82: 60          `
 
-; &BA83 referenced 1 time by &BA3B
 .CBA83
     LDA #3                                        ; BA83: A9 03       ..
     STA L0216                                     ; BA85: 8D 16 02    ...
@@ -3881,7 +3707,6 @@ LL28        = &FA91
     STA L0220                                     ; BAC2: 8D 20 02    . .
     RTS                                           ; BAC5: 60          `
 
-; &BAC6 referenced 1 time by &BA2F
 .CBAC6
     LDA #1                                        ; BAC6: A9 01       ..
     LDY #&CC                                      ; BAC8: A0 CC       ..
@@ -3910,7 +3735,6 @@ LL28        = &FA91
     STA L0220                                     ; BB04: 8D 20 02    . .
     RTS                                           ; BB07: 60          `
 
-; &BB08 referenced 1 time by &BA36
 .CBB08
     LDA #2                                        ; BB08: A9 02       ..
     STA L0216                                     ; BB0A: 8D 16 02    ...
@@ -4092,673 +3916,6 @@ LL28        = &FA91
     EQUB &C0,   0, &C0,   7, &C0                  ; BFFB: C0 00 C0... ...
 .pydis_end
 
-; Label references by decreasing frequency:
-;     L0007:      108
-;     L00BA:       84
-;     V:           47
-;     L0008:       35
-;     L009E:       27
-;     L2006:       24
-;     L2007:       22
-;     L00E9:       21
-;     L00BB:       20
-;     L2002:       20
-;     LD06D:       20
-;     T:           19
-;     CAF2E:       15
-;     L0064:       14
-;     sub_CAF5B:   14
-;     L00B8:       13
-;     L0464:        9
-;     CA8A2:        9
-;     L048B:        8
-;     L007E:        7
-;     L009F:        7
-;     L00DA:        7
-;     sub_CB5F9:    7
-;     LD164:        7
-;     K:            6
-;     L0200:        6
-;     L0220:        6
-;     sub_CB57F:    6
-;     LD167:        6
-;     L007F:        5
-;     L00D3:        5
-;     L00D4:        5
-;     L00D5:        5
-;     L00F3:        5
-;     L0214:        5
-;     L0218:        5
-;     L021C:        5
-;     L0473:        5
-;     L0032:        4
-;     L0034:        4
-;     L00F4:        4
-;     L00F5:        4
-;     XX3:          4
-;     L0203:        4
-;     L0215:        4
-;     L0216:        4
-;     L0217:        4
-;     L0219:        4
-;     L021A:        4
-;     L021B:        4
-;     L021D:        4
-;     L021E:        4
-;     L021F:        4
-;     L0221:        4
-;     L0222:        4
-;     L0223:        4
-;     CB29D:        4
-;     LD933:        4
-;     LD946:        4
-;     L0035:        3
-;     L0036:        3
-;     L00C0:        3
-;     L00C3:        3
-;     L00EA:        3
-;     XX3_1:        3
-;     L0102:        3
-;     L0103:        3
-;     L03EF:        3
-;     L03F2:        3
-;     L2000:        3
-;     LAA6C:        3
-;     CACCC:        3
-;     CAD77:        3
-;     CAD91:        3
-;     CAEBB:        3
-;     sub_CAF9A:    3
-;     CB607:        3
-;     LD8C5:        3
-;     LD977:        3
-;     LF5AF:        3
-;     L0033:        2
-;     YC:           2
-;     L006C:        2
-;     L0080:        2
-;     L00C1:        2
-;     L00C4:        2
-;     L00CC:        2
-;     L00D0:        2
-;     L00D1:        2
-;     L00D2:        2
-;     L00D6:        2
-;     L00D7:        2
-;     L00D9:        2
-;     L0115:        2
-;     L0116:        2
-;     L0117:        2
-;     L0224:        2
-;     L0395:        2
-;     L03BE:        2
-;     L046C:        2
-;     L95CE:        2
-;     CA83A:        2
-;     CA8FC:        2
-;     sub_CA95D:    2
-;     sub_CA972:    2
-;     CA99B:        2
-;     CA9E8:        2
-;     LAA5C:        2
-;     CAAEB:        2
-;     CAC08:        2
-;     CAC1C:        2
-;     CAC58:        2
-;     CAC7F:        2
-;     sub_CAC86:    2
-;     CAC93:        2
-;     sub_CAD16:    2
-;     sub_CAD2A:    2
-;     CADA7:        2
-;     CAE2B:        2
-;     CAE8D:        2
-;     CAE9C:        2
-;     CAEC6:        2
-;     CAED3:        2
-;     CAF3B:        2
-;     CAF68:        2
-;     sub_CAF96:    2
-;     CAFA7:        2
-;     sub_CAFAB:    2
-;     CB00A:        2
-;     CB05C:        2
-;     CB0C1:        2
-;     CB0E0:        2
-;     CB12A:        2
-;     CB1C5:        2
-;     sub_CB2A9:    2
-;     CB2E3:        2
-;     CB31C:        2
-;     CB3A1:        2
-;     CB3CC:        2
-;     sub_CB5F6:    2
-;     CB627:        2
-;     CB66D:        2
-;     LC6F4:        2
-;     LD8EC:        2
-;     LDBD8:        2
-;     LEC7D:        2
-;     LEEE8:        2
-;     QQ15:         1
-;     L0084:        1
-;     L0087:        1
-;     L00A5:        1
-;     L00BE:        1
-;     L00BF:        1
-;     L00C2:        1
-;     L00C5:        1
-;     L00C6:        1
-;     L00C7:        1
-;     L00C8:        1
-;     L00CA:        1
-;     L00CB:        1
-;     L00CD:        1
-;     L00CE:        1
-;     L00DF:        1
-;     L00E0:        1
-;     L00E3:        1
-;     L00E4:        1
-;     L0114:        1
-;     L0201:        1
-;     L0202:        1
-;     L0205:        1
-;     L0206:        1
-;     L0209:        1
-;     L020A:        1
-;     L020D:        1
-;     L020E:        1
-;     L0211:        1
-;     L0212:        1
-;     L0228:        1
-;     L022C:        1
-;     L0300:        1
-;     L038A:        1
-;     L038E:        1
-;     L03A6:        1
-;     L03A8:        1
-;     L03C0:        1
-;     L03C3:        1
-;     L03C4:        1
-;     L03C8:        1
-;     L03EA:        1
-;     L03EB:        1
-;     L03EC:        1
-;     L03ED:        1
-;     L03F0:        1
-;     L0401:        1
-;     L0461:        1
-;     L0475:        1
-;     L04A8:        1
-;     L0564:        1
-;     L2001:        1
-;     L2003:        1
-;     L4014:        1
-;     CA7D4:        1
-;     CA7E6:        1
-;     CA7F0:        1
-;     CA810:        1
-;     CA82A:        1
-;     CA87D:        1
-;     CA891:        1
-;     CA89F:        1
-;     loop_CA8B3:   1
-;     loop_CA8CB:   1
-;     CA8FE:        1
-;     sub_CA909:    1
-;     CA90B:        1
-;     CA93F:        1
-;     CA986:        1
-;     CA988:        1
-;     CA9CC:        1
-;     CA9CE:        1
-;     CA9E1:        1
-;     CA9F2:        1
-;     CAA3B:        1
-;     CAA43:        1
-;     loop_CAAD5:   1
-;     loop_CAB0F:   1
-;     loop_CAB27:   1
-;     loop_CAB33:   1
-;     sub_CABE7:    1
-;     CABFA:        1
-;     CAC3E:        1
-;     loop_CAC4B:   1
-;     loop_CAC72:   1
-;     CAC85:        1
-;     CACA8:        1
-;     CACB7:        1
-;     CACC1:        1
-;     CACEA:        1
-;     sub_CACEB:    1
-;     sub_CAD0C:    1
-;     CAD3A:        1
-;     CAD3C:        1
-;     CAD5A:        1
-;     loop_CAD79:   1
-;     CADBC:        1
-;     loop_CADD0:   1
-;     CADE0:        1
-;     CADEA:        1
-;     CADF4:        1
-;     CADFE:        1
-;     CAE08:        1
-;     CAE12:        1
-;     CAE15:        1
-;     sub_CAE18:    1
-;     CAE42:        1
-;     CAE4C:        1
-;     CAE56:        1
-;     CAE60:        1
-;     CAE65:        1
-;     CAE6F:        1
-;     CAE79:        1
-;     CAE83:        1
-;     CAE97:        1
-;     CAEA3:        1
-;     CAEAB:        1
-;     CAEB6:        1
-;     CAEE5:        1
-;     CAEF6:        1
-;     CAF0C:        1
-;     CAF12:        1
-;     CAF17:        1
-;     CAF21:        1
-;     CAF2B:        1
-;     loop_CAFC3:   1
-;     loop_CAFC8:   1
-;     CAFDF:        1
-;     CAFFD:        1
-;     CB04A:        1
-;     CB04F:        1
-;     CB0B0:        1
-;     CB0B4:        1
-;     loop_CB0C5:   1
-;     CB0D0:        1
-;     CB0F8:        1
-;     CB11D:        1
-;     CB18A:        1
-;     CB1A8:        1
-;     CB1B8:        1
-;     CB215:        1
-;     CB263:        1
-;     CB276:        1
-;     CB285:        1
-;     loop_CB29F:   1
-;     CB2BB:        1
-;     CB2D1:        1
-;     CB30D:        1
-;     CB30F:        1
-;     loop_CB320:   1
-;     CB33D:        1
-;     CB364:        1
-;     CB394:        1
-;     CB3B4:        1
-;     loop_CB3B8:   1
-;     CB3DB:        1
-;     LB53F:        1
-;     loop_CB5A2:   1
-;     CB5DB:        1
-;     CB5DE:        1
-;     CB5EF:        1
-;     loop_CB5FB:   1
-;     CB62D:        1
-;     LB6A5:        1
-;     LB6A6:        1
-;     LB6A7:        1
-;     LB6A8:        1
-;     LB6C7:        1
-;     LB6C8:        1
-;     LB9DA:        1
-;     LB9DE:        1
-;     loop_CBA11:   1
-;     CBA32:        1
-;     CBA39:        1
-;     CBA83:        1
-;     CBAC6:        1
-;     CBB08:        1
-;     LC006:        1
-;     LC007:        1
-;     LD986:        1
-;     LECF9:        1
-;     LEE54:        1
-;     LEE99:        1
-;     LEF88:        1
-;     LEF96:        1
-;     LEFA4:        1
-;     LEFB2:        1
-;     LF52D:        1
-
-; Automatically generated labels:
-;     CA7D4
-;     CA7E6
-;     CA7F0
-;     CA810
-;     CA82A
-;     CA83A
-;     CA87D
-;     CA891
-;     CA89F
-;     CA8A2
-;     CA8FC
-;     CA8FE
-;     CA90B
-;     CA93F
-;     CA986
-;     CA988
-;     CA99B
-;     CA9CC
-;     CA9CE
-;     CA9E1
-;     CA9E8
-;     CA9F2
-;     CAA3B
-;     CAA43
-;     CAAEB
-;     CABFA
-;     CAC08
-;     CAC1C
-;     CAC3E
-;     CAC58
-;     CAC7F
-;     CAC85
-;     CAC93
-;     CACA8
-;     CACB7
-;     CACC1
-;     CACCC
-;     CACEA
-;     CAD3A
-;     CAD3C
-;     CAD5A
-;     CAD77
-;     CAD91
-;     CADA7
-;     CADBC
-;     CADE0
-;     CADEA
-;     CADF4
-;     CADFE
-;     CAE08
-;     CAE12
-;     CAE15
-;     CAE2B
-;     CAE42
-;     CAE4C
-;     CAE56
-;     CAE60
-;     CAE65
-;     CAE6F
-;     CAE79
-;     CAE83
-;     CAE8D
-;     CAE97
-;     CAE9C
-;     CAEA3
-;     CAEAB
-;     CAEB6
-;     CAEBB
-;     CAEC6
-;     CAED3
-;     CAEE5
-;     CAEF6
-;     CAF0C
-;     CAF12
-;     CAF17
-;     CAF21
-;     CAF2B
-;     CAF2E
-;     CAF3B
-;     CAF68
-;     CAFA7
-;     CAFDF
-;     CAFFD
-;     CB00A
-;     CB04A
-;     CB04F
-;     CB05C
-;     CB0B0
-;     CB0B4
-;     CB0C1
-;     CB0D0
-;     CB0E0
-;     CB0F8
-;     CB11D
-;     CB12A
-;     CB18A
-;     CB1A8
-;     CB1B8
-;     CB1C5
-;     CB215
-;     CB263
-;     CB276
-;     CB285
-;     CB29D
-;     CB2BB
-;     CB2D1
-;     CB2E3
-;     CB30D
-;     CB30F
-;     CB31C
-;     CB33D
-;     CB364
-;     CB394
-;     CB3A1
-;     CB3B4
-;     CB3CC
-;     CB3DB
-;     CB5DB
-;     CB5DE
-;     CB5EF
-;     CB607
-;     CB627
-;     CB62D
-;     CB66D
-;     CBA32
-;     CBA39
-;     CBA83
-;     CBAC6
-;     CBB08
-;     L0007
-;     L0008
-;     L0032
-;     L0033
-;     L0034
-;     L0035
-;     L0036
-;     L0064
-;     L006C
-;     L007E
-;     L007F
-;     L0080
-;     L0084
-;     L0087
-;     L009E
-;     L009F
-;     L00A5
-;     L00B8
-;     L00BA
-;     L00BB
-;     L00BE
-;     L00BF
-;     L00C0
-;     L00C1
-;     L00C2
-;     L00C3
-;     L00C4
-;     L00C5
-;     L00C6
-;     L00C7
-;     L00C8
-;     L00CA
-;     L00CB
-;     L00CC
-;     L00CD
-;     L00CE
-;     L00D0
-;     L00D1
-;     L00D2
-;     L00D3
-;     L00D4
-;     L00D5
-;     L00D6
-;     L00D7
-;     L00D9
-;     L00DA
-;     L00DF
-;     L00E0
-;     L00E3
-;     L00E4
-;     L00E9
-;     L00EA
-;     L00F3
-;     L00F4
-;     L00F5
-;     L0102
-;     L0103
-;     L0114
-;     L0115
-;     L0116
-;     L0117
-;     L0200
-;     L0201
-;     L0202
-;     L0203
-;     L0205
-;     L0206
-;     L0209
-;     L020A
-;     L020D
-;     L020E
-;     L0211
-;     L0212
-;     L0214
-;     L0215
-;     L0216
-;     L0217
-;     L0218
-;     L0219
-;     L021A
-;     L021B
-;     L021C
-;     L021D
-;     L021E
-;     L021F
-;     L0220
-;     L0221
-;     L0222
-;     L0223
-;     L0224
-;     L0228
-;     L022C
-;     L0300
-;     L038A
-;     L038E
-;     L0395
-;     L03A6
-;     L03A8
-;     L03BE
-;     L03C0
-;     L03C3
-;     L03C4
-;     L03C8
-;     L03EA
-;     L03EB
-;     L03EC
-;     L03ED
-;     L03EF
-;     L03F0
-;     L03F2
-;     L0401
-;     L0461
-;     L0464
-;     L046C
-;     L0473
-;     L0475
-;     L048B
-;     L04A8
-;     L0564
-;     L2000
-;     L2001
-;     L2002
-;     L2003
-;     L2006
-;     L2007
-;     L4014
-;     L95CE
-;     LAA5C
-;     LAA6C
-;     LB53F
-;     LB6A5
-;     LB6A6
-;     LB6A7
-;     LB6A8
-;     LB6C7
-;     LB6C8
-;     LB9DA
-;     LB9DE
-;     LC006
-;     LC007
-;     LC6F4
-;     LD06D
-;     LD164
-;     LD167
-;     LD8C5
-;     LD8EC
-;     LD933
-;     LD946
-;     LD977
-;     LD986
-;     LDBD8
-;     LEC7D
-;     LECF9
-;     LEE54
-;     LEE99
-;     LEEE8
-;     LEF88
-;     LEF96
-;     LEFA4
-;     LEFB2
-;     LF52D
-;     LF5AF
-;     loop_CA8B3
-;     loop_CA8CB
-;     loop_CAAD5
-;     loop_CAB0F
-;     loop_CAB27
-;     loop_CAB33
-;     loop_CAC4B
-;     loop_CAC72
-;     loop_CAD79
-;     loop_CADD0
-;     loop_CAFC3
-;     loop_CAFC8
-;     loop_CB0C5
-;     loop_CB29F
-;     loop_CB320
-;     loop_CB3B8
-;     loop_CB5A2
-;     loop_CB5FB
-;     loop_CBA11
-;     sub_CA909
-;     sub_CA95D
-;     sub_CA972
-;     sub_CABE7
-;     sub_CAC86
-;     sub_CACEB
-;     sub_CAD0C
-;     sub_CAD16
-;     sub_CAD2A
-;     sub_CAE18
-;     sub_CAF5B
-;     sub_CAF96
-;     sub_CAF9A
-;     sub_CAFAB
-;     sub_CB2A9
-;     sub_CB57F
-;     sub_CB5F6
-;     sub_CB5F9
-
 
 
 \ ******************************************************************************
@@ -4767,5 +3924,5 @@ LL28        = &FA91
 \
 \ ******************************************************************************
 
-\PRINT "S.bank3.bin ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
+ PRINT "S.bank3.bin ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
  SAVE "versions/nes/3-assembled-output/bank3.bin", CODE%, P%, LOAD%

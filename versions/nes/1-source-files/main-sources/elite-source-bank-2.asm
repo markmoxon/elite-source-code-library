@@ -2,8 +2,8 @@
 \
 \ NES ELITE GAME SOURCE (BANK 2)
 \
-\ NES was written by Ian Bell and David Braben and is copyright D. Braben and
-\ I. Bell 1992
+\ NES Elite was written by Ian Bell and David Braben and is copyright D. Braben
+\ and I. Bell 1992
 \
 \ The code on this site has been reconstructed from a disassembly of the version
 \ released on Ian Bell's personal website at http://www.elitehomepage.org/
@@ -25,8 +25,9 @@
 \
 \ ******************************************************************************
 
-CODE% = $8000
-LOAD% = $8000
+CODE% = &8000
+LOAD% = &8000
+
 ; Memory locations
 ZP          = &0000
 T1          = &0006
@@ -77,6 +78,7 @@ XX16_12     = &0059
 XX0         = &005F
 INF         = &0061
 V           = &0063
+V_1         = &0064
 XX          = &0065
 ALP1        = &006E
 XX15        = &0071
@@ -119,6 +121,7 @@ SNE         = &C500
 LSPUT       = &DC0F
 TT27        = &F201
 DORND       = &F4AD
+PROJ        = &F4C1
 MU5         = &F65A
 MULT3       = &F664
 MLS2        = &F6BA
@@ -2199,14 +2202,6 @@ LL28        = &FA91
     EQUB   0, &C0,   7, &C0                       ; BFFC: 00 C0 07... ...
 .pydis_end
 
-; Label references by decreasing frequency:
-;     LC006:   1
-;     LC007:   1
-
-; Automatically generated labels:
-;     LC006
-;     LC007
-
 
 
 \ ******************************************************************************
@@ -2215,5 +2210,5 @@ LL28        = &FA91
 \
 \ ******************************************************************************
 
-\PRINT "S.bank2.bin ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
+ PRINT "S.bank2.bin ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
  SAVE "versions/nes/3-assembled-output/bank2.bin", CODE%, P%, LOAD%

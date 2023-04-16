@@ -48,6 +48,7 @@ XX16_12     = &0059
 XX0         = &005F
 INF         = &0061
 V           = &0063
+V_1         = &0064
 XX          = &0065
 ALP1        = &006E
 XX15        = &0071
@@ -90,6 +91,7 @@ SNE         = &C500
 LSPUT       = &DC0F
 TT27        = &F201
 DORND       = &F4AD
+PROJ        = &F4C1
 MU5         = &F65A
 MULT3       = &F664
 MLS2        = &F6BA
@@ -2426,13 +2428,5 @@ LL28        = &FA91
     EQUB &FF, &FF, &FF, &FF,   7, &C0,   0, &C0   ; BFF6: FF FF FF... ...
     EQUB   7, &C0                                 ; BFFE: 07 C0       ..
 .pydis_end
-
-; Label references by decreasing frequency:
-;     LC006:   1
-;     LC007:   1
-
-; Automatically generated labels:
-;     LC006
-;     LC007
 
 SAVE pydis_start, pydis_end

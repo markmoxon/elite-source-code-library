@@ -5,5 +5,5 @@
 \
 \ ******************************************************************************
 
-\PRINT "S.bank0.bin ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
+ PRINT "S.bank0.bin ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
  SAVE "versions/nes/3-assembled-output/bank0.bin", CODE%, P%, LOAD%

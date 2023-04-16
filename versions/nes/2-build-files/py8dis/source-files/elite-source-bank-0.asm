@@ -80,7 +80,7 @@ L0060       = &0060
 INF         = &0061
 L0062       = &0062
 V           = &0063
-L0064       = &0064
+V_1         = &0064
 XX          = &0065
 L0069       = &0069
 L006A       = &006A
@@ -505,6 +505,7 @@ LF46A       = &F46A
 LF473       = &F473
 LF47D       = &F47D
 DORND       = &F4AD
+PROJ        = &F4C1
 LF60C       = &F60C
 MU5         = &F65A
 MULT3       = &F664
@@ -545,7 +546,6 @@ LFAF8       = &FAF8
 
     EQUS " 5.0"                                   ; 8008: 20 35 2E...  5.
 
-; &800C referenced 3 times by &802C, &A2D1, &B5B9
 .sub_C800C
     LDA #0                                        ; 800C: A9 00       ..
     STA L0093                                     ; 800E: 85 93       ..
@@ -558,7 +558,6 @@ LFAF8       = &FAF8
     STA L0486                                     ; 801F: 8D 86 04    ...
     RTS                                           ; 8022: 60          `
 
-; &8023 referenced 1 time by &81F8
 .C8023
     LDX #&FF                                      ; 8023: A2 FF       ..
     TXS                                           ; 8025: 9A          .
@@ -578,13 +577,11 @@ LFAF8       = &FAF8
     BNE C8097                                     ; 8047: D0 4E       .N
     JMP C949E                                     ; 8049: 4C 9E 94    L..
 
-; &804C referenced 1 time by &803C
 .C804C
     CMP #3                                        ; 804C: C9 03       ..
     BNE C8053                                     ; 804E: D0 03       ..
     JMP C9461                                     ; 8050: 4C 61 94    La.
 
-; &8053 referenced 1 time by &804E
 .C8053
     LDA L03A7                                     ; 8053: AD A7 03    ...
     CMP #2                                        ; 8056: C9 02       ..
@@ -598,7 +595,6 @@ LFAF8       = &FAF8
     BCC C8097                                     ; 8068: 90 2D       .-
     JMP C9423                                     ; 806A: 4C 23 94    L#.
 
-; &806D referenced 1 time by &8061
 .C806D
     CMP #6                                        ; 806D: C9 06       ..
     BNE C8082                                     ; 806F: D0 11       ..
@@ -610,7 +606,6 @@ LFAF8       = &FAF8
     BNE C8097                                     ; 807D: D0 18       ..
     JMP C943F                                     ; 807F: 4C 3F 94    L?.
 
-; &8082 referenced 1 time by &806F
 .C8082
     CMP #&0A                                      ; 8082: C9 0A       ..
     BNE C8097                                     ; 8084: D0 11       ..
@@ -622,7 +617,6 @@ LFAF8       = &FAF8
     BNE C8097                                     ; 8092: D0 03       ..
     JMP C944D                                     ; 8094: 4C 4D 94    LM.
 
-; &8097 referenced 9 times by &8041, &8047, &8058, &8068, &8076, &807D, &8084, &808B, &8092
 .C8097
     LDA L03A6                                     ; 8097: AD A6 03    ...
     BMI C80AB                                     ; 809A: 30 0F       0.
@@ -633,13 +627,11 @@ LFAF8       = &FAF8
     BNE C80AB                                     ; 80A6: D0 03       ..
     JMP C9472                                     ; 80A8: 4C 72 94    Lr.
 
-; &80AB referenced 3 times by &809A, &809F, &80A6
 .C80AB
     JMP CB35E                                     ; 80AB: 4C 5E B3    L^.
 
     RTS                                           ; 80AE: 60          `
 
-; &80AF referenced 3 times by &838D, &8397, &83AB
 .sub_C80AF
     STX L009B                                     ; 80AF: 86 9B       ..
     STA TYPE                                      ; 80B1: 85 A3       ..
@@ -649,11 +641,9 @@ LFAF8       = &FAF8
     ASL A                                         ; 80BA: 0A          .
     BPL C80C0                                     ; 80BB: 10 03       ..
     JSR LD06D                                     ; 80BD: 20 6D D0     m.
-; &80C0 referenced 2 times by &80B5, &80BB
 .C80C0
     JSR LCE90                                     ; 80C0: 20 90 CE     ..
     LDY #&25 ; '%'                                ; 80C3: A0 25       .%
-; &80C5 referenced 1 time by &80CB
 .loop_C80C5
     LDA (INF),Y                                   ; 80C5: B1 61       .a
     STA INWK,Y                                    ; 80C7: 99 09 00    ...
@@ -665,7 +655,6 @@ LFAF8       = &FAF8
     ASL A                                         ; 80D4: 0A          .
     BPL C80DA                                     ; 80D5: 10 03       ..
     JSR LD06D                                     ; 80D7: 20 6D D0     m.
-; &80DA referenced 2 times by &80CF, &80D5
 .C80DA
     LDA TYPE                                      ; 80DA: A5 A3       ..
     BMI C8148                                     ; 80DC: 30 6A       0j
@@ -677,7 +666,6 @@ LFAF8       = &FAF8
     STA L0060                                     ; 80EA: 85 60       .`
     LDY #4                                        ; 80EC: A0 04       ..
     BNE C80FC                                     ; 80EE: D0 0C       ..
-; &80F0 referenced 1 time by &80E0
 .C80F0
     ASL A                                         ; 80F0: 0A          .
     TAY                                           ; 80F1: A8          .
@@ -685,7 +673,6 @@ LFAF8       = &FAF8
     STA XX0                                       ; 80F5: 85 5F       ._
     LDA LC53F,Y                                   ; 80F7: B9 3F C5    .?.
     STA L0060                                     ; 80FA: 85 60       .`
-; &80FC referenced 1 time by &80EE
 .C80FC
     CPY #6                                        ; 80FC: C0 06       ..
     BEQ C8127                                     ; 80FE: F0 27       .'
@@ -699,12 +686,10 @@ LFAF8       = &FAF8
     BEQ C8114                                     ; 810E: F0 04       ..
     AND #&3E ; '>'                                ; 8110: 29 3E       )>
     BEQ C8127                                     ; 8112: F0 13       ..
-; &8114 referenced 1 time by &810E
 .C8114
     LDA INWK_31                                   ; 8114: A5 28       .(
     AND #&A0                                      ; 8116: 29 A0       ).
     BNE C8127                                     ; 8118: D0 0D       ..
-; &811A referenced 1 time by &8106
 .C811A
     LDA L002D                                     ; 811A: A5 2D       .-
     AND #4                                        ; 811C: 29 04       ).
@@ -712,7 +697,6 @@ LFAF8       = &FAF8
     ASL L0300                                     ; 8120: 0E 00 03    ...
     SEC                                           ; 8123: 38          8
     ROR L0300                                     ; 8124: 6E 00 03    n..
-; &8127 referenced 6 times by &80FE, &8102, &810A, &8112, &8118, &811E
 .C8127
     LDA L03C0                                     ; 8127: AD C0 03    ...
     BPL C8148                                     ; 812A: 10 1C       ..
@@ -730,7 +714,6 @@ LFAF8       = &FAF8
     ROR INWK_31                                   ; 8141: 66 28       f(
     LDX TYPE                                      ; 8143: A6 A3       ..
     JSR sub_CBE80                                 ; 8145: 20 80 BE     ..
-; &8148 referenced 6 times by &80DC, &812A, &812E, &8132, &8136, &813C
 .C8148
     JSR CB910                                     ; 8148: 20 10 B9     ..
     LDA L00E9                                     ; 814B: A5 E9       ..
@@ -739,10 +722,8 @@ LFAF8       = &FAF8
     ASL A                                         ; 8152: 0A          .
     BPL C8158                                     ; 8153: 10 03       ..
     JSR LD06D                                     ; 8155: 20 6D D0     m.
-; &8158 referenced 2 times by &814D, &8153
 .C8158
     LDY #&25 ; '%'                                ; 8158: A0 25       .%
-; &815A referenced 1 time by &8160
 .loop_C815A
     LDA INWK,Y                                    ; 815A: B9 09 00    ...
     STA (INF),Y                                   ; 815D: 91 61       .a
@@ -754,7 +735,6 @@ LFAF8       = &FAF8
     ASL A                                         ; 8169: 0A          .
     BPL C816F                                     ; 816A: 10 03       ..
     JSR LD06D                                     ; 816C: 20 6D D0     m.
-; &816F referenced 2 times by &8164, &816A
 .C816F
     LDA INWK_31                                   ; 816F: A5 28       .(
     AND #&A0                                      ; 8171: 29 A0       ).
@@ -777,7 +757,6 @@ LFAF8       = &FAF8
     BMI C819A                                     ; 8195: 30 03       0.
     JMP C821B                                     ; 8197: 4C 1B 82    L..
 
-; &819A referenced 1 time by &8195
 .C819A
     CPX #5                                        ; 819A: E0 05       ..
     BEQ C81B1                                     ; 819C: F0 13       ..
@@ -792,11 +771,9 @@ LFAF8       = &FAF8
     BEQ C821B                                     ; 81AB: F0 6E       .n
     ADC #1                                        ; 81AD: 69 01       i.
     BNE C81B6                                     ; 81AF: D0 05       ..
-; &81B1 referenced 1 time by &819C
 .C81B1
     JSR DORND                                     ; 81B1: 20 AD F4     ..
     AND #7                                        ; 81B4: 29 07       ).
-; &81B6 referenced 1 time by &81AF
 .C81B6
     JSR sub_C9620                                 ; 81B6: 20 20 96      .
     LDY #&4E ; 'N'                                ; 81B9: A0 4E       .N
@@ -811,11 +788,9 @@ LFAF8       = &FAF8
     ASL L002D                                     ; 81CF: 06 2D       .-
     SEC                                           ; 81D1: 38          8
     ROR L002D                                     ; 81D2: 66 2D       f-
-; &81D4 referenced 5 times by &8175, &817A, &8182, &818A, &818E
 .C81D4
     JMP C822A                                     ; 81D4: 4C 2A 82    L*.
 
-; &81D7 referenced 1 time by &8186
 .C81D7
     LDA L064E                                     ; 81D7: AD 4E 06    .N.
     AND #4                                        ; 81DA: 29 04       ).
@@ -831,36 +806,30 @@ LFAF8       = &FAF8
     AND #&7F                                      ; 81EF: 29 7F       ).
     CMP #&50 ; 'P'                                ; 81F1: C9 50       .P
     BCC C81FB                                     ; 81F3: 90 06       ..
-; &81F5 referenced 3 times by &81FE, &8C28, &B5C7
 .C81F5
     JSR LED6B                                     ; 81F5: 20 6B ED     k.
     JMP C8023                                     ; 81F8: 4C 23 80    L#.
 
-; &81FB referenced 3 times by &81E2, &81EB, &81F3
 .C81FB
     LDA L0388                                     ; 81FB: AD 88 03    ...
     BNE C81F5                                     ; 81FE: D0 F5       ..
-; &8200 referenced 1 time by &81DC
 .C8200
     LDA L0093                                     ; 8200: A5 93       ..
     CMP #5                                        ; 8202: C9 05       ..
     BCC C8213                                     ; 8204: 90 0D       ..
     JMP CB1E4                                     ; 8206: 4C E4 B1    L..
 
-; &8209 referenced 1 time by &81BB
 .C8209
     JSR LEBAD                                     ; 8209: 20 AD EB     ..
     ASL INWK_31                                   ; 820C: 06 28       .(
     SEC                                           ; 820E: 38          8
     ROR INWK_31                                   ; 820F: 66 28       f(
     BNE C822A                                     ; 8211: D0 17       ..
-; &8213 referenced 1 time by &8204
 .C8213
     LDA #1                                        ; 8213: A9 01       ..
     STA L0093                                     ; 8215: 85 93       ..
     LDA #5                                        ; 8217: A9 05       ..
     BNE C8224                                     ; 8219: D0 09       ..
-; &821B referenced 3 times by &8197, &81A0, &81AB
 .C821B
     ASL INWK_31                                   ; 821B: 06 28       .(
     SEC                                           ; 821D: 38          8
@@ -868,17 +837,14 @@ LFAF8       = &FAF8
     LDA L002C                                     ; 8220: A5 2C       .,
     SEC                                           ; 8222: 38          8
     ROR A                                         ; 8223: 6A          j
-; &8224 referenced 1 time by &8219
 .C8224
     JSR CAA5D                                     ; 8224: 20 5D AA     ].
     JSR LEBAD                                     ; 8227: 20 AD EB     ..
-; &822A referenced 2 times by &81D4, &8211
 .C822A
     LDA L009E                                     ; 822A: A5 9E       ..
     BEQ C8231                                     ; 822C: F0 03       ..
     JMP C82DD                                     ; 822E: 4C DD 82    L..
 
-; &8231 referenced 1 time by &822C
 .C8231
     JSR sub_CBD25                                 ; 8231: 20 25 BD     %.
     LDA L0400                                     ; 8234: AD 00 04    ...
@@ -887,15 +853,12 @@ LFAF8       = &FAF8
     BEQ C8248                                     ; 823C: F0 0A       ..
     LDA L0401                                     ; 823E: AD 01 04    ...
     BPL C8248                                     ; 8241: 10 05       ..
-; &8243 referenced 1 time by &8237
 .C8243
     JSR sub_C9195                                 ; 8243: 20 95 91     ..
     BCS C824B                                     ; 8246: B0 03       ..
-; &8248 referenced 2 times by &823C, &8241
 .C8248
     JMP C82DA                                     ; 8248: 4C DA 82    L..
 
-; &824B referenced 1 time by &8246
 .C824B
     LDA L038D                                     ; 824B: AD 8D 03    ...
     BEQ C825F                                     ; 824E: F0 0F       ..
@@ -905,7 +868,6 @@ LFAF8       = &FAF8
     LDX L009B                                     ; 8258: A6 9B       ..
     LDY #&6D ; 'm'                                ; 825A: A0 6D       .m
     JSR sub_CACC7                                 ; 825C: 20 C7 AC     ..
-; &825F referenced 2 times by &824E, &8253
 .C825F
     LDA L0400                                     ; 825F: AD 00 04    ...
     BEQ C82DA                                     ; 8262: F0 76       .v
@@ -919,7 +881,6 @@ LFAF8       = &FAF8
     LDX L0400                                     ; 8273: AE 00 04    ...
     CPX #&32 ; '2'                                ; 8276: E0 32       .2
     BEQ C82D5                                     ; 8278: F0 5B       .[
-; &827A referenced 1 time by &8271
 .C827A
     CMP #&1F                                      ; 827A: C9 1F       ..
     BCC C828B                                     ; 827C: 90 0D       ..
@@ -928,7 +889,6 @@ LFAF8       = &FAF8
     BNE C82D5                                     ; 8283: D0 50       .P
     LSR L0400                                     ; 8285: 4E 00 04    N..
     LSR L0400                                     ; 8288: 4E 00 04    N..
-; &828B referenced 1 time by &827C
 .C828B
     LDA L002C                                     ; 828B: A5 2C       .,
     SEC                                           ; 828D: 38          8
@@ -950,38 +910,30 @@ LFAF8       = &FAF8
     BPL C82CE                                     ; 82AF: 10 1D       ..
     LDA #1                                        ; 82B1: A9 01       ..
     BNE C82BC                                     ; 82B3: D0 07       ..
-; &82B5 referenced 1 time by &82A6
 .C82B5
     JSR DORND                                     ; 82B5: 20 AD F4     ..
     ORA #1                                        ; 82B8: 09 01       ..
     AND #3                                        ; 82BA: 29 03       ).
-; &82BC referenced 1 time by &82B3
 .C82BC
     LDX #8                                        ; 82BC: A2 08       ..
     JSR sub_C8782                                 ; 82BE: 20 82 87     ..
     JMP C82CE                                     ; 82C1: 4C CE 82    L..
 
-; &82C4 referenced 2 times by &82A0, &82AA
 .C82C4
     LDY #4                                        ; 82C4: A0 04       ..
     JSR sub_C8770                                 ; 82C6: 20 70 87     p.
     LDY #5                                        ; 82C9: A0 05       ..
     JSR sub_C8770                                 ; 82CB: 20 70 87     p.
-; &82CE referenced 2 times by &82AF, &82C1
 .C82CE
     LDX TYPE                                      ; 82CE: A6 A3       ..
     JSR sub_CBE80                                 ; 82D0: 20 80 BE     ..
-; &82D3 referenced 1 time by &8291
 .C82D3
     STA L002C                                     ; 82D3: 85 2C       .,
-; &82D5 referenced 3 times by &826D, &8278, &8283
 .C82D5
     LDA TYPE                                      ; 82D5: A5 A3       ..
     JSR sub_C923A                                 ; 82D7: 20 3A 92     :.
-; &82DA referenced 2 times by &8248, &8262
 .C82DA
     JSR LEDC7                                     ; 82DA: 20 C7 ED     ..
-; &82DD referenced 1 time by &822E
 .C82DD
     LDY #&23 ; '#'                                ; 82DD: A0 23       .#
     LDA L002C                                     ; 82DF: A5 2C       .,
@@ -1012,17 +964,14 @@ LFAF8       = &FAF8
     JSR sub_CA341                                 ; 8314: 20 41 A3     A.
     LDA #0                                        ; 8317: A9 00       ..
     JSR CB78F                                     ; 8319: 20 8F B7     ..
-; &831C referenced 4 times by &82EB, &8305, &830C, &8326
 .C831C
     JMP CABB6                                     ; 831C: 4C B6 AB    L..
 
-; &831F referenced 2 times by &82EF, &82F3
 .C831F
     LDA TYPE                                      ; 831F: A5 A3       ..
     BMI C8328                                     ; 8321: 30 05       0.
     JSR sub_CB1B2                                 ; 8323: 20 B2 B1     ..
     BCC C831C                                     ; 8326: 90 F4       ..
-; &8328 referenced 1 time by &8321
 .C8328
     LDY #&1F                                      ; 8328: A0 1F       ..
     LDA INWK_31                                   ; 832A: A5 28       .(
@@ -1032,7 +981,6 @@ LFAF8       = &FAF8
     INX                                           ; 8332: E8          .
     RTS                                           ; 8333: 60          `
 
-; &8334 referenced 1 time by &834C
 .loop_C8334
     DEC L0393                                     ; 8334: CE 93 03    ...
     BMI C835B                                     ; 8337: 30 22       0"
@@ -1040,15 +988,12 @@ LFAF8       = &FAF8
     JSR sub_CB83A                                 ; 833B: 20 3A B8     :.
     JMP C8344                                     ; 833E: 4C 44 83    LD.
 
-; &8341 referenced 1 time by &8339
 .C8341
     JSR LF2DE                                     ; 8341: 20 DE F2     ..
-; &8344 referenced 1 time by &833E
 .C8344
     JSR LD951                                     ; 8344: 20 51 D9     Q.
     JMP C8360                                     ; 8347: 4C 60 83    L`.
 
-; &834A referenced 3 times by &8709, &95EA, &B2B0
 .sub_C834A
     LDA L009E                                     ; 834A: A5 9E       ..
     BNE loop_C8334                                ; 834C: D0 E6       ..
@@ -1058,17 +1003,14 @@ LFAF8       = &FAF8
     JSR sub_CB83A                                 ; 8355: 20 3A B8     :.
     JMP C8360                                     ; 8358: 4C 60 83    L`.
 
-; &835B referenced 3 times by &8337, &8351, &8353
 .C835B
     LDA #0                                        ; 835B: A9 00       ..
     STA L0393                                     ; 835D: 8D 93 03    ...
-; &8360 referenced 2 times by &8347, &8358
 .C8360
     LDA L0389                                     ; 8360: AD 89 03    ...
     BEQ C836A                                     ; 8363: F0 05       ..
     JSR sub_CAA05                                 ; 8365: 20 05 AA     ..
     BEQ C8383                                     ; 8368: F0 19       ..
-; &836A referenced 1 time by &8363
 .C836A
     LDA L006D                                     ; 836A: A5 6D       .m
     BEQ C8386                                     ; 836C: F0 18       ..
@@ -1082,26 +1024,21 @@ LFAF8       = &FAF8
     JSR LF005                                     ; 837C: 20 05 F0     ..
     DEC L006D                                     ; 837F: C6 6D       .m
     BNE C8386                                     ; 8381: D0 03       ..
-; &8383 referenced 1 time by &8368
 .C8383
     JSR sub_CBE62                                 ; 8383: 20 62 BE     b.
-; &8386 referenced 2 times by &836C, &8381
 .C8386
     LDX #0                                        ; 8386: A2 00       ..
     LDA L036A                                     ; 8388: AD 6A 03    .j.
     BEQ C8390                                     ; 838B: F0 03       ..
     JSR sub_C80AF                                 ; 838D: 20 AF 80     ..
-; &8390 referenced 1 time by &838B
 .C8390
     LDX #2                                        ; 8390: A2 02       ..
-; &8392 referenced 1 time by &839A
 .loop_C8392
     LDA L036A,X                                   ; 8392: BD 6A 03    .j.
     BEQ C839D                                     ; 8395: F0 06       ..
     JSR sub_C80AF                                 ; 8397: 20 AF 80     ..
     JMP loop_C8392                                ; 839A: 4C 92 83    L..
 
-; &839D referenced 1 time by &8395
 .C839D
     LDX #1                                        ; 839D: A2 01       ..
     LDA L036B                                     ; 839F: AD 6B 03    .k.
@@ -1109,10 +1046,8 @@ LFAF8       = &FAF8
     BPL C83AB                                     ; 83A4: 10 05       ..
     LDY #0                                        ; 83A6: A0 00       ..
     STY L0564                                     ; 83A8: 8C 64 05    .d.
-; &83AB referenced 1 time by &83A4
 .C83AB
     JSR sub_C80AF                                 ; 83AB: 20 AF 80     ..
-; &83AE referenced 1 time by &83A2
 .C83AE
     LDA L00E9                                     ; 83AE: A5 E9       ..
     BPL C83BB                                     ; 83B0: 10 09       ..
@@ -1120,7 +1055,6 @@ LFAF8       = &FAF8
     ASL A                                         ; 83B5: 0A          .
     BPL C83BB                                     ; 83B6: 10 03       ..
     JSR LD06D                                     ; 83B8: 20 6D D0     m.
-; &83BB referenced 2 times by &83B0, &83B6
 .C83BB
     LDA L03C0                                     ; 83BB: AD C0 03    ...
     BPL C83CB                                     ; 83BE: 10 0B       ..
@@ -1128,7 +1062,6 @@ LFAF8       = &FAF8
     BMI C83CB                                     ; 83C3: 30 06       0.
     JSR sub_C8790                                 ; 83C5: 20 90 87     ..
     JSR LF171                                     ; 83C8: 20 71 F1     q.
-; &83CB referenced 2 times by &83BE, &83C3
 .C83CB
     LDA L00A2                                     ; 83CB: A5 A2       ..
     AND #7                                        ; 83CD: 29 07       ).
@@ -1145,7 +1078,6 @@ LFAF8       = &FAF8
     JSR sub_CB4B4                                 ; 83E5: 20 B4 B4     ..
     BNE C8417                                     ; 83E8: D0 2D       .-
     LDX #&1C                                      ; 83EA: A2 1C       ..
-; &83EC referenced 1 time by &83F2
 .loop_C83EC
     LDA L0600,X                                   ; 83EC: BD 00 06    ...
     STA INWK,X                                    ; 83EF: 95 09       ..
@@ -1154,14 +1086,12 @@ LFAF8       = &FAF8
     JSR sub_CB4EE                                 ; 83F4: 20 EE B4     ..
     BCS C8417                                     ; 83F7: B0 1E       ..
     LDX #8                                        ; 83F9: A2 08       ..
-; &83FB referenced 1 time by &8401
 .loop_C83FB
     LDA L0600,X                                   ; 83FB: BD 00 06    ...
     STA INWK,X                                    ; 83FE: 95 09       ..
     DEX                                           ; 8400: CA          .
     BPL loop_C83FB                                ; 8401: 10 F8       ..
     LDX #5                                        ; 8403: A2 05       ..
-; &8405 referenced 1 time by &8412
 .loop_C8405
     LDY INWK_9,X                                  ; 8405: B4 12       ..
     LDA INWK_15,X                                 ; 8407: B5 18       ..
@@ -1172,15 +1102,12 @@ LFAF8       = &FAF8
     DEX                                           ; 8411: CA          .
     BPL loop_C8405                                ; 8412: 10 F1       ..
     JSR sub_CB4EE                                 ; 8414: 20 EE B4     ..
-; &8417 referenced 5 times by &83D7, &83E2, &83E8, &83F7, &841D
 .C8417
     JMP C84CA                                     ; 8417: 4C CA 84    L..
 
-; &841A referenced 1 time by &83CF
 .C841A
     LDA L038A                                     ; 841A: AD 8A 03    ...
     BNE C8417                                     ; 841D: D0 F8       ..
-; &841F referenced 1 time by &83DD
 .C841F
     LDA L045D                                     ; 841F: AD 5D 04    .].
     BEQ C8436                                     ; 8422: F0 12       ..
@@ -1193,7 +1120,6 @@ LFAF8       = &FAF8
     LDA #1                                        ; 8431: A9 01       ..
     JMP LF059                                     ; 8433: 4C 59 F0    LY.
 
-; &8436 referenced 2 times by &8422, &842F
 .C8436
     LDA L00A2                                     ; 8436: A5 A2       ..
     AND #&1F                                      ; 8438: 29 1F       ).
@@ -1201,7 +1127,6 @@ LFAF8       = &FAF8
     BEQ C8442                                     ; 843C: F0 04       ..
     CMP #&14                                      ; 843E: C9 14       ..
     BNE C845C                                     ; 8440: D0 1A       ..
-; &8442 referenced 1 time by &843C
 .C8442
     LDA #&50 ; 'P'                                ; 8442: A9 50       .P
     CMP L0486                                     ; 8444: CD 86 04    ...
@@ -1210,16 +1135,13 @@ LFAF8       = &FAF8
     JSR CB78F                                     ; 844B: 20 8F B7     ..
     LDY #7                                        ; 844E: A0 07       ..
     JSR LEBF2                                     ; 8450: 20 F2 EB     ..
-; &8453 referenced 1 time by &8447
 .C8453
     JSR sub_C8502                                 ; 8453: 20 02 85     ..
     JMP C84CA                                     ; 8456: 4C CA 84    L..
 
-; &8459 referenced 1 time by &848A
 .C8459
     JMP CB1E4                                     ; 8459: 4C E4 B1    L..
 
-; &845C referenced 1 time by &8440
 .C845C
     CMP #&0F                                      ; 845C: C9 0F       ..
     BNE C8469                                     ; 845E: D0 09       ..
@@ -1227,7 +1149,6 @@ LFAF8       = &FAF8
     BEQ C84CA                                     ; 8463: F0 65       .e
     LDA #&7B ; '{'                                ; 8465: A9 7B       .{
     BNE C84C7                                     ; 8467: D0 5E       .^
-; &8469 referenced 1 time by &845E
 .C8469
     AND #&0F                                      ; 8469: 29 0F       ).
     CMP #6                                        ; 846B: C9 06       ..
@@ -1255,7 +1176,6 @@ LFAF8       = &FAF8
     ROR L03C5                                     ; 849F: 6E C5 03    n..
     LDY #&1F                                      ; 84A2: A0 1F       ..
     JSR LEBF2                                     ; 84A4: 20 F2 EB     ..
-; &84A7 referenced 2 times by &8492, &849A
 .C84A7
     LDA BST                                       ; 84A7: AD BF 03    ...
     BEQ C84CA                                     ; 84AA: F0 1E       ..
@@ -1266,23 +1186,19 @@ LFAF8       = &FAF8
     CMP #&46 ; 'F'                                ; 84B4: C9 46       .F
     BCC C84BA                                     ; 84B6: 90 02       ..
     LDA #&46 ; 'F'                                ; 84B8: A9 46       .F
-; &84BA referenced 1 time by &84B6
 .C84BA
     STA L03A5                                     ; 84BA: 8D A5 03    ...
     BCS C84CA                                     ; 84BD: B0 0B       ..
     JSR LEBE9                                     ; 84BF: 20 E9 EB     ..
     JSR C9D35                                     ; 84C2: 20 35 9D     5.
     LDA #&A0                                      ; 84C5: A9 A0       ..
-; &84C7 referenced 1 time by &8467
 .C84C7
     JSR CB78F                                     ; 84C7: 20 8F B7     ..
-; &84CA referenced 10 times by &8417, &8456, &8463, &846D, &8477, &847E, &848E, &84AA, &84AE, &84BD
 .C84CA
     LDA L009E                                     ; 84CA: A5 9E       ..
     BNE C8532                                     ; 84CC: D0 64       .d
     JMP LEE15                                     ; 84CE: 4C 15 EE    L..
 
-; &84D1 referenced 2 times by &83D1, &B667
 .sub_C84D1
     LDA L00E9                                     ; 84D1: A5 E9       ..
     BPL C84DE                                     ; 84D3: 10 09       ..
@@ -1290,7 +1206,6 @@ LFAF8       = &FAF8
     ASL A                                         ; 84D8: 0A          .
     BPL C84DE                                     ; 84D9: 10 03       ..
     JSR LD06D                                     ; 84DB: 20 6D D0     m.
-; &84DE referenced 2 times by &84D3, &84D9
 .C84DE
     LDX L0486                                     ; 84DE: AE 86 04    ...
     BPL C84F5                                     ; 84E1: 10 12       ..
@@ -1300,18 +1215,15 @@ LFAF8       = &FAF8
     LDX L0484                                     ; 84EC: AE 84 04    ...
     JSR sub_CAA02                                 ; 84EF: 20 02 AA     ..
     STX L0484                                     ; 84F2: 8E 84 04    ...
-; &84F5 referenced 1 time by &84E1
 .C84F5
     SEC                                           ; 84F5: 38          8
     LDA L03C1                                     ; 84F6: AD C1 03    ...
     ADC L0486                                     ; 84F9: 6D 86 04    m..
     BCS C8501                                     ; 84FC: B0 03       ..
     STA L0486                                     ; 84FE: 8D 86 04    ...
-; &8501 referenced 1 time by &84FC
 .C8501
     RTS                                           ; 8501: 60          `
 
-; &8502 referenced 2 times by &8453, &B5E7
 .sub_C8502
     LDY #&FF                                      ; 8502: A0 FF       ..
     STY L047E                                     ; 8504: 8C 7E 04    .~.
@@ -1329,26 +1241,21 @@ LFAF8       = &FAF8
     ASL A                                         ; 851F: 0A          .
     BPL C8525                                     ; 8520: 10 03       ..
     JSR LD06D                                     ; 8522: 20 6D D0     m.
-; &8525 referenced 2 times by &851A, &8520
 .C8525
     JSR LFA55                                     ; 8525: 20 55 FA     U.
     LDA Q                                         ; 8528: A5 97       ..
     STA L047E                                     ; 852A: 8D 7E 04    .~.
     BNE C8532                                     ; 852D: D0 03       ..
-; &852F referenced 1 time by &8514
 .C852F
     JMP CB1E4                                     ; 852F: 4C E4 B1    L..
 
-; &8532 referenced 4 times by &84CC, &850B, &8510, &852D
 .C8532
     RTS                                           ; 8532: 60          `
 
-; &8533 referenced 1 time by &AE99
 .sub_C8533
     LDA L009E                                     ; 8533: A5 9E       ..
     BNE C853A                                     ; 8535: D0 03       ..
     JSR LD8E1                                     ; 8537: 20 E1 D8     ..
-; &853A referenced 1 time by &8535
 .C853A
     LDA L00E9                                     ; 853A: A5 E9       ..
     BPL C8547                                     ; 853C: 10 09       ..
@@ -1356,7 +1263,6 @@ LFAF8       = &FAF8
     ASL A                                         ; 8541: 0A          .
     BPL C8547                                     ; 8542: 10 03       ..
     JSR LD06D                                     ; 8544: 20 6D D0     m.
-; &8547 referenced 2 times by &853C, &8542
 .C8547
     LDA L0600                                     ; 8547: AD 00 06    ...
     EOR L0039                                     ; 854A: 45 39       E9
@@ -1365,13 +1271,11 @@ LFAF8       = &FAF8
     BEQ C8556                                     ; 8551: F0 03       ..
     CLC                                           ; 8553: 18          .
     BCC C856E                                     ; 8554: 90 18       ..
-; &8556 referenced 1 time by &8551
 .C8556
     LDA L038A                                     ; 8556: AD 8A 03    ...
     BEQ C855E                                     ; 8559: F0 03       ..
     SEC                                           ; 855B: 38          8
     BCS C856E                                     ; 855C: B0 10       ..
-; &855E referenced 1 time by &8559
 .C855E
     LDA L0300                                     ; 855E: AD 00 03    ...
     BPL C856B                                     ; 8561: 10 08       ..
@@ -1379,10 +1283,8 @@ LFAF8       = &FAF8
     JSR sub_CB600                                 ; 8565: 20 00 B6     ..
     JMP C856E                                     ; 8568: 4C 6E 85    Ln.
 
-; &856B referenced 1 time by &8561
 .C856B
     JSR sub_CB5FE                                 ; 856B: 20 FE B5     ..
-; &856E referenced 3 times by &8554, &855C, &8568
 .C856E
     ROR L0300                                     ; 856E: 6E 00 03    n..
     LDX L0476                                     ; 8571: AE 76 04    .v.
@@ -1394,7 +1296,6 @@ LFAF8       = &FAF8
     BMI C858A                                     ; 8583: 30 05       0.
     LDA #&10                                      ; 8585: A9 10       ..
     JSR LFA16                                     ; 8587: 20 16 FA     ..
-; &858A referenced 1 time by &8583
 .C858A
     TXA                                           ; 858A: 8A          .
     EOR #&80                                      ; 858B: 49 80       I.
@@ -1409,7 +1310,6 @@ LFAF8       = &FAF8
     EOR #&FF                                      ; 859C: 49 FF       I.
     CLC                                           ; 859E: 18          .
     ADC #1                                        ; 859F: 69 01       i.
-; &85A1 referenced 1 time by &859A
 .C85A1
     LSR A                                         ; 85A1: 4A          J
     LSR A                                         ; 85A2: 4A          J
@@ -1425,7 +1325,6 @@ LFAF8       = &FAF8
     BMI C85C2                                     ; 85BB: 30 05       0.
     LDA #&0C                                      ; 85BD: A9 0C       ..
     JSR LFA16                                     ; 85BF: 20 16 FA     ..
-; &85C2 referenced 1 time by &85BB
 .C85C2
     TXA                                           ; 85C2: 8A          .
     EOR #&80                                      ; 85C3: 49 80       I.
@@ -1438,7 +1337,6 @@ LFAF8       = &FAF8
     TYA                                           ; 85D1: 98          .
     BPL C85D6                                     ; 85D2: 10 02       ..
     EOR #&FF                                      ; 85D4: 49 FF       I.
-; &85D6 referenced 1 time by &85D2
 .C85D6
     ADC #1                                        ; 85D6: 69 01       i.
     LSR A                                         ; 85D8: 4A          J
@@ -1456,10 +1354,8 @@ LFAF8       = &FAF8
     CMP #&28 ; '('                                ; 85ED: C9 28       .(
     BCC C85F3                                     ; 85EF: 90 02       ..
     LDA #&28 ; '('                                ; 85F1: A9 28       .(
-; &85F3 referenced 1 time by &85EF
 .C85F3
     STA L0093                                     ; 85F3: 85 93       ..
-; &85F5 referenced 1 time by &85E4
 .C85F5
     LDA L00E9                                     ; 85F5: A5 E9       ..
     BPL C8602                                     ; 85F7: 10 09       ..
@@ -1467,7 +1363,6 @@ LFAF8       = &FAF8
     ASL A                                         ; 85FC: 0A          .
     BPL C8602                                     ; 85FD: 10 03       ..
     JSR LD06D                                     ; 85FF: 20 6D D0     m.
-; &8602 referenced 2 times by &85F7, &85FD
 .C8602
     LDA L0403                                     ; 8602: AD 03 04    ...
     BEQ C8614                                     ; 8605: F0 0D       ..
@@ -1476,13 +1371,10 @@ LFAF8       = &FAF8
     SBC #4                                        ; 860A: E9 04       ..
     BEQ C8610                                     ; 860C: F0 02       ..
     BCS C8612                                     ; 860E: B0 02       ..
-; &8610 referenced 1 time by &860C
 .C8610
     LDA #1                                        ; 8610: A9 01       ..
-; &8612 referenced 1 time by &860E
 .C8612
     STA L0093                                     ; 8612: 85 93       ..
-; &8614 referenced 1 time by &8605
 .C8614
     LDA L0081                                     ; 8614: A5 81       ..
     CMP #&18                                      ; 8616: C9 18       ..
@@ -1496,19 +1388,16 @@ LFAF8       = &FAF8
     LDY #&6C ; 'l'                                ; 8629: A0 6C       .l
     JSR sub_CACC1                                 ; 862B: 20 C1 AC     ..
     LDY #4                                        ; 862E: A0 04       ..
-; &8630 referenced 1 time by &8640
 .loop_C8630
     JSR LEBF2                                     ; 8630: 20 F2 EB     ..
     JMP C86A3                                     ; 8633: 4C A3 86    L..
 
-; &8636 referenced 1 time by &8627
 .C8636
     LDY #&6C ; 'l'                                ; 8636: A0 6C       .l
     LDX L03C8                                     ; 8638: AE C8 03    ...
     JSR LE59F                                     ; 863B: 20 9F E5     ..
     LDY #3                                        ; 863E: A0 03       ..
     BNE loop_C8630                                ; 8640: D0 EE       ..
-; &8642 referenced 1 time by &8618
 .C8642
     CMP #&19                                      ; 8642: C9 19       ..
     BNE C8654                                     ; 8644: D0 0E       ..
@@ -1516,11 +1405,9 @@ LFAF8       = &FAF8
     BMI C8651                                     ; 8649: 30 06       0.
     JSR sub_C91FF                                 ; 864B: 20 FF 91     ..
     JSR LF171                                     ; 864E: 20 71 F1     q.
-; &8651 referenced 4 times by &861D, &8649, &865B, &8660
 .C8651
     JMP C86A3                                     ; 8651: 4C A3 86    L..
 
-; &8654 referenced 1 time by &8644
 .C8654
     CMP #&1A                                      ; 8654: C9 1A       ..
     BNE C866E                                     ; 8656: D0 16       ..
@@ -1534,7 +1421,6 @@ LFAF8       = &FAF8
     JSR LEBF2                                     ; 8668: 20 F2 EB     ..
     JMP C86A3                                     ; 866B: 4C A3 86    L..
 
-; &866E referenced 1 time by &8656
 .C866E
     CMP #&1B                                      ; 866E: C9 1B       ..
     BNE C867F                                     ; 8670: D0 0D       ..
@@ -1544,7 +1430,6 @@ LFAF8       = &FAF8
     BNE C86A3                                     ; 867A: D0 27       .'
     JMP C8BC7                                     ; 867C: 4C C7 8B    L..
 
-; &867F referenced 1 time by &8670
 .C867F
     CMP #&0C                                      ; 867F: C9 0C       ..
     BNE C8690                                     ; 8681: D0 0D       ..
@@ -1554,7 +1439,6 @@ LFAF8       = &FAF8
     JSR sub_CB5B4                                 ; 868A: 20 B4 B5     ..
     JMP C86A3                                     ; 868D: 4C A3 86    L..
 
-; &8690 referenced 1 time by &8681
 .C8690
     CMP #&17                                      ; 8690: C9 17       ..
     BNE C86A3                                     ; 8692: D0 0F       ..
@@ -1564,7 +1448,6 @@ LFAF8       = &FAF8
     BNE C86A3                                     ; 869B: D0 06       ..
     DEC L0389                                     ; 869D: CE 89 03    ...
     JSR LE596                                     ; 86A0: 20 96 E5     ..
-; &86A3 referenced 10 times by &8633, &8651, &866B, &8675, &867A, &8688, &868D, &8692, &8697, &869B
 .C86A3
     JSR LEC7D                                     ; 86A3: 20 7D EC     }.
     LDA #0                                        ; 86A6: A9 00       ..
@@ -1590,7 +1473,6 @@ LFAF8       = &FAF8
     BMI C86D9                                     ; 86D2: 30 05       0.
     BIT L0409                                     ; 86D4: 2C 09 04    ,..
     BVS C8709                                     ; 86D7: 70 30       p0
-; &86D9 referenced 1 time by &86D2
 .C86D9
     PHA                                           ; 86D9: 48          H
     AND #&7F                                      ; 86DA: 29 7F       ).
@@ -1603,10 +1485,8 @@ LFAF8       = &FAF8
     CMP #&32 ; '2'                                ; 86E8: C9 32       .2
     BNE C86EE                                     ; 86EA: D0 02       ..
     LDY #&10                                      ; 86EC: A0 10       ..
-; &86EE referenced 1 time by &86EA
 .C86EE
     BNE C86F9                                     ; 86EE: D0 09       ..
-; &86F0 referenced 1 time by &86E6
 .C86F0
     CMP #&97                                      ; 86F0: C9 97       ..
     BEQ C86F7                                     ; 86F2: F0 03       ..
@@ -1614,21 +1494,17 @@ LFAF8       = &FAF8
 ; overlapping: BIT L0FA0                          ; 86F6: 2C A0 0F    ,..
     EQUB &2C                                      ; 86F6: 2C          ,
 
-; &86F7 referenced 1 time by &86F2
 .C86F7
     LDY #&0F                                      ; 86F7: A0 0F       ..
-; &86F9 referenced 1 time by &86EE
 .C86F9
     JSR LEBF2                                     ; 86F9: 20 F2 EB     ..
     JSR sub_C93CD                                 ; 86FC: 20 CD 93     ..
     PLA                                           ; 86FF: 68          h
     BPL C8704                                     ; 8700: 10 02       ..
     LDA #0                                        ; 8702: A9 00       ..
-; &8704 referenced 1 time by &8700
 .C8704
     AND #&EF                                      ; 8704: 29 EF       ).
     STA L038F                                     ; 8706: 8D 8F 03    ...
-; &8709 referenced 5 times by &86BC, &86C1, &86C8, &86D0, &86D7
 .C8709
     JSR sub_C834A                                 ; 8709: 20 4A 83     J.
     LDA L009E                                     ; 870C: A5 9E       ..
@@ -1644,13 +1520,11 @@ LFAF8       = &FAF8
     ORA L0404                                     ; 8724: 0D 04 04    ...
     ROR A                                         ; 8727: 6A          j
     BNE C8733                                     ; 8728: D0 09       ..
-; &872A referenced 1 time by &8715
 .C872A
     JSR LD975                                     ; 872A: 20 75 D9     u.
     JSR sub_CAA16                                 ; 872D: 20 16 AA     ..
     JMP C8B91                                     ; 8730: 4C 91 8B    L..
 
-; &8733 referenced 2 times by &871F, &8728
 .C8733
     LDA #&88                                      ; 8733: A9 88       ..
     JSR LD977                                     ; 8735: 20 77 D9     w.
@@ -1663,7 +1537,6 @@ LFAF8       = &FAF8
     STA L03EF,X                                   ; 8748: 9D EF 03    ...
     RTS                                           ; 874B: 60          `
 
-; &874C referenced 1 time by &870E
 .C874C
     CMP #&98                                      ; 874C: C9 98       ..
     BNE C876F                                     ; 874E: D0 1F       ..
@@ -1671,7 +1544,6 @@ LFAF8       = &FAF8
     CPX L0471                                     ; 8753: EC 71 04    .q.
     BEQ C875B                                     ; 8756: F0 03       ..
     JSR C8837                                     ; 8758: 20 37 88     7.
-; &875B referenced 1 time by &8756
 .C875B
     LDX L0471                                     ; 875B: AE 71 04    .q.
     CPX #3                                        ; 875E: E0 03       ..
@@ -1680,15 +1552,12 @@ LFAF8       = &FAF8
     AND #&20 ; ' '                                ; 8765: 29 20       )
     BNE C876A                                     ; 8767: D0 01       ..
     INX                                           ; 8769: E8          .
-; &876A referenced 2 times by &8760, &8767
 .C876A
     LDA LF333,X                                   ; 876A: BD 33 F3    .3.
     STA L0034                                     ; 876D: 85 34       .4
-; &876F referenced 1 time by &874E
 .C876F
     RTS                                           ; 876F: 60          `
 
-; &8770 referenced 2 times by &82C6, &82CB
 .sub_C8770
     JSR DORND                                     ; 8770: 20 AD F4     ..
     BPL C8794                                     ; 8773: 10 1F       ..
@@ -1699,10 +1568,8 @@ LFAF8       = &FAF8
     JSR LEC8D                                     ; 877B: 20 8D EC     ..
     AND CNT                                       ; 877E: 25 A8       %.
     AND #&0F                                      ; 8780: 29 0F       ).
-; &8782 referenced 1 time by &82BE
 .sub_C8782
     STA CNT                                       ; 8782: 85 A8       ..
-; &8784 referenced 1 time by &878D
 .loop_C8784
     DEC CNT                                       ; 8784: C6 A8       ..
     BMI C8794                                     ; 8786: 30 0C       0.
@@ -1710,15 +1577,12 @@ LFAF8       = &FAF8
     JSR C927F                                     ; 878A: 20 7F 92     ..
     JMP loop_C8784                                ; 878D: 4C 84 87    L..
 
-; &8790 referenced 2 times by &83C5, &ADA4
 .sub_C8790
     LDA #&0F                                      ; 8790: A9 0F       ..
     STA L0033                                     ; 8792: 85 33       .3
-; &8794 referenced 2 times by &8773, &8786
 .C8794
     RTS                                           ; 8794: 60          `
 
-; &8795 referenced 1 time by &AB1D
 .L8795
     EQUB   0,   3,   0,   1,   1,   1,   1,   1   ; 8795: 00 03 00... ...
     EQUB   1,   2,   2,   2,   2,   2,   2,   1   ; 879D: 01 02 02... ...
@@ -1730,7 +1594,6 @@ LFAF8       = &FAF8
     TAX                                           ; 87BD: AA          .
     RTS                                           ; 87BE: 60          `
 
-; &87BF referenced 2 times by &8869, &8874
 .sub_C87BF
     LDA #&10                                      ; 87BF: A9 10       ..
     JSR TT68                                      ; 87C1: 20 CE A8     ..
@@ -1738,7 +1601,6 @@ LFAF8       = &FAF8
     AND #1                                        ; 87C7: 29 01       ).
     BEQ C87CE                                     ; 87C9: F0 03       ..
     JSR TT162                                     ; 87CB: 20 9C 9F     ..
-; &87CE referenced 1 time by &87C9
 .C87CE
     LDA L03DD                                     ; 87CE: AD DD 03    ...
     BNE C8806                                     ; 87D1: D0 33       .3
@@ -1757,7 +1619,6 @@ LFAF8       = &FAF8
     CPX #&82                                      ; 87EB: E0 82       ..
     ADC #0                                        ; 87ED: 69 00       i.
     TAX                                           ; 87EF: AA          .
-; &87F0 referenced 4 times by &880A, &880F, &8814, &8817
 .C87F0
     TXA                                           ; 87F0: 8A          .
     PHA                                           ; 87F1: 48          H
@@ -1766,14 +1627,12 @@ LFAF8       = &FAF8
     BEQ C87FF                                     ; 87F7: F0 06       ..
     JSR TT162                                     ; 87F9: 20 9C 9F     ..
     JSR TT162                                     ; 87FC: 20 9C 9F     ..
-; &87FF referenced 1 time by &87F7
 .C87FF
     PLA                                           ; 87FF: 68          h
     CLC                                           ; 8800: 18          .
     ADC #&15                                      ; 8801: 69 15       i.
     JMP CA8C8                                     ; 8803: 4C C8 A8    L..
 
-; &8806 referenced 1 time by &87D1
 .C8806
     LDX #9                                        ; 8806: A2 09       ..
     CMP #&19                                      ; 8808: C9 19       ..
@@ -1786,7 +1645,6 @@ LFAF8       = &FAF8
     BCS C87F0                                     ; 8814: B0 DA       ..
     DEX                                           ; 8816: CA          .
     BNE C87F0                                     ; 8817: D0 D7       ..
-; &8819 referenced 2 times by &8866, &887C
 .sub_C8819
     LDA #&7D ; '}'                                ; 8819: A9 7D       .}
     JSR spc                                       ; 881B: 20 B3 96     ..
@@ -1795,18 +1653,15 @@ LFAF8       = &FAF8
     BEQ C8829                                     ; 8823: F0 04       ..
     CPY #&28 ; '('                                ; 8825: C0 28       .(
     ADC #1                                        ; 8827: 69 01       i.
-; &8829 referenced 1 time by &8823
 .C8829
     JMP CA8C8                                     ; 8829: 4C C8 A8    L..
 
-; &882C referenced 1 time by &8851
 .C882C
     LDA #&CD                                      ; 882C: A9 CD       ..
     JSR LF082                                     ; 882E: 20 82 F0     ..
     JSR TT67                                      ; 8831: 20 A6 96     ..
     JMP C885F                                     ; 8834: 4C 5F 88    L_.
 
-; &8837 referenced 3 times by &8758, &A2B6, &B088
 .C8837
     LDA #&98                                      ; 8837: A9 98       ..
     JSR sub_C9645                                 ; 8839: 20 45 96     E.
@@ -1824,10 +1679,8 @@ LFAF8       = &FAF8
     LDY L0486                                     ; 8855: AC 86 04    ...
     CPY #&80                                      ; 8858: C0 80       ..
     ADC #1                                        ; 885A: 69 01       i.
-; &885C referenced 1 time by &8853
 .C885C
     JSR CA8C8                                     ; 885C: 20 C8 A8     ..
-; &885F referenced 1 time by &8834
 .C885F
     LDA L04A9                                     ; 885F: AD A9 04    ...
     AND #4                                        ; 8862: 29 04       ).
@@ -1838,13 +1691,11 @@ LFAF8       = &FAF8
     JSR CA8C8                                     ; 886E: 20 C8 A8     ..
     JMP C887F                                     ; 8871: 4C 7F 88    L..
 
-; &8874 referenced 1 time by &8864
 .C8874
     JSR sub_C87BF                                 ; 8874: 20 BF 87     ..
     LDA #5                                        ; 8877: A9 05       ..
     JSR CA8C8                                     ; 8879: 20 C8 A8     ..
     JSR sub_C8819                                 ; 887C: 20 19 88     ..
-; &887F referenced 1 time by &8871
 .C887F
     LDA #&12                                      ; 887F: A9 12       ..
     JSR sub_C89A5                                 ; 8881: 20 A5 89     ..
@@ -1853,36 +1704,30 @@ LFAF8       = &FAF8
     BEQ C8890                                     ; 8889: F0 05       ..
     LDA #&70 ; 'p'                                ; 888B: A9 70       .p
     JSR sub_C89A5                                 ; 888D: 20 A5 89     ..
-; &8890 referenced 1 time by &8889
 .C8890
     LDA BST                                       ; 8890: AD BF 03    ...
     BEQ C889A                                     ; 8893: F0 05       ..
     LDA #&6F ; 'o'                                ; 8895: A9 6F       .o
     JSR sub_C89A5                                 ; 8897: 20 A5 89     ..
-; &889A referenced 1 time by &8893
 .C889A
     LDA L03BE                                     ; 889A: AD BE 03    ...
     BEQ C88A4                                     ; 889D: F0 05       ..
     LDA #&6C ; 'l'                                ; 889F: A9 6C       .l
     JSR sub_C89A5                                 ; 88A1: 20 A5 89     ..
-; &88A4 referenced 1 time by &889D
 .C88A4
     LDA #&71 ; 'q'                                ; 88A4: A9 71       .q
     STA XX4                                       ; 88A6: 85 AB       ..
-; &88A8 referenced 1 time by &88B7
 .loop_C88A8
     TAY                                           ; 88A8: A8          .
     LDX L034F,Y                                   ; 88A9: BE 4F 03    .O.
     BEQ C88B1                                     ; 88AC: F0 03       ..
     JSR sub_C89A5                                 ; 88AE: 20 A5 89     ..
-; &88B1 referenced 1 time by &88AC
 .C88B1
     INC XX4                                       ; 88B1: E6 AB       ..
     LDA XX4                                       ; 88B3: A5 AB       ..
     CMP #&75 ; 'u'                                ; 88B5: C9 75       .u
     BCC loop_C88A8                                ; 88B7: 90 EF       ..
     LDX #0                                        ; 88B9: A2 00       ..
-; &88BB referenced 1 time by &8903
 .C88BB
     STX CNT                                       ; 88BB: 86 A8       ..
     LDY L03A8,X                                   ; 88BD: BC A8 03    ...
@@ -1894,7 +1739,6 @@ LFAF8       = &FAF8
     CLC                                           ; 88CA: 18          .
     ADC #&60 ; '`'                                ; 88CB: 69 60       i`
     JSR spc                                       ; 88CD: 20 B3 96     ..
-; &88D0 referenced 1 time by &88C7
 .C88D0
     LDA #&67 ; 'g'                                ; 88D0: A9 67       .g
     LDX CNT                                       ; 88D2: A6 A8       ..
@@ -1902,17 +1746,14 @@ LFAF8       = &FAF8
     CPY #&8F                                      ; 88D7: C0 8F       ..
     BNE C88DD                                     ; 88D9: D0 02       ..
     LDA #&68 ; 'h'                                ; 88DB: A9 68       .h
-; &88DD referenced 1 time by &88D9
 .C88DD
     CPY #&97                                      ; 88DD: C0 97       ..
     BNE C88E3                                     ; 88DF: D0 02       ..
     LDA #&75 ; 'u'                                ; 88E1: A9 75       .u
-; &88E3 referenced 1 time by &88DF
 .C88E3
     CPY #&32 ; '2'                                ; 88E3: C0 32       .2
     BNE C88E9                                     ; 88E5: D0 02       ..
     LDA #&76 ; 'v'                                ; 88E7: A9 76       .v
-; &88E9 referenced 1 time by &88E5
 .C88E9
     JSR TT27                                      ; 88E9: 20 01 F2     ..
     LDA L04A9                                     ; 88EC: AD A9 04    ...
@@ -1922,10 +1763,8 @@ LFAF8       = &FAF8
     CLC                                           ; 88F5: 18          .
     ADC #&60 ; '`'                                ; 88F6: 69 60       i`
     JSR sub_C96B9                                 ; 88F8: 20 B9 96     ..
-; &88FB referenced 1 time by &88F1
 .C88FB
     JSR sub_C89A8                                 ; 88FB: 20 A8 89     ..
-; &88FE referenced 1 time by &88C0
 .C88FE
     LDX CNT                                       ; 88FE: A6 A8       ..
     INX                                           ; 8900: E8          .
@@ -1943,16 +1782,13 @@ LFAF8       = &FAF8
     STA L048B                                     ; 891B: 8D 8B 04    ...
     BEQ C8923                                     ; 891E: F0 03       ..
     JSR LEB8C                                     ; 8920: 20 8C EB     ..
-; &8923 referenced 1 time by &891E
 .C8923
     JSR LEE8B                                     ; 8923: 20 8B EE     ..
-; &8926 referenced 7 times by &9430, &9487, &988D, &9917, &9CC9, &A022, &A4D8
 .C8926
     LDA L00B8                                     ; 8926: A5 B8       ..
     BNE C892E                                     ; 8928: D0 04       ..
     LDA #&FF                                      ; 892A: A9 FF       ..
     STA L00B8                                     ; 892C: 85 B8       ..
-; &892E referenced 1 time by &8928
 .C892E
     LDA #0                                        ; 892E: A9 00       ..
     STA L00CC                                     ; 8930: 85 CC       ..
@@ -1965,7 +1801,6 @@ LFAF8       = &FAF8
     AND #&40 ; '@'                                ; 893E: 29 40       )@
     BEQ C8944                                     ; 8940: F0 02       ..
     LDX #4                                        ; 8942: A2 04       ..
-; &8944 referenced 1 time by &8940
 .C8944
     STX L00D2                                     ; 8944: 86 D2       ..
     JSR LCD6F                                     ; 8946: 20 6F CD     o.
@@ -1974,7 +1809,6 @@ LFAF8       = &FAF8
     CMP L009F                                     ; 894E: C5 9F       ..
     BEQ C8976                                     ; 8950: F0 24       .$
     JSR LF12B                                     ; 8952: 20 2B F1     +.
-; &8955 referenced 1 time by &8979
 .C8955
     LDX #&FF                                      ; 8955: A2 FF       ..
     LDA L009E                                     ; 8957: A5 9E       ..
@@ -1988,28 +1822,23 @@ LFAF8       = &FAF8
     BEQ C896C                                     ; 8967: F0 03       ..
     ASL A                                         ; 8969: 0A          .
     BPL C896E                                     ; 896A: 10 02       ..
-; &896C referenced 4 times by &895B, &895F, &8963, &8967
 .C896C
     LDX #0                                        ; 896C: A2 00       ..
-; &896E referenced 1 time by &896A
 .C896E
     STX L045F                                     ; 896E: 8E 5F 04    ._.
     LDA L00B8                                     ; 8971: A5 B8       ..
     STA L00D2                                     ; 8973: 85 D2       ..
     RTS                                           ; 8975: 60          `
 
-; &8976 referenced 1 time by &8950
 .C8976
     JSR LF126                                     ; 8976: 20 26 F1     &.
     JMP C8955                                     ; 8979: 4C 55 89    LU.
 
-; &897C referenced 1 time by &890C
 .C897C
     PHP                                           ; 897C: 08          .
     PHP                                           ; 897D: 08          .
     ASL A                                         ; 897E: 0A          .
     PHP                                           ; 897F: 08          .
-; &8980 referenced 13 times by &8C94, &8CB2, &9EE9, &A092, &A46C, &A517, &A5B5, &A5D4, &A5DD, &A687, &A6E9, &A732, &B115
 .C8980
     JSR LD8C5                                     ; 8980: 20 C5 D8     ..
     LDA #0                                        ; 8983: A9 00       ..
@@ -2028,10 +1857,8 @@ LFAF8       = &FAF8
     STA L00D2                                     ; 89A2: 85 D2       ..
     RTS                                           ; 89A4: 60          `
 
-; &89A5 referenced 5 times by &8881, &888D, &8897, &88A1, &88AE
 .sub_C89A5
     JSR TT27                                      ; 89A5: 20 01 F2     ..
-; &89A8 referenced 1 time by &88FB
 .sub_C89A8
     JSR TT67                                      ; 89A8: 20 A6 96     ..
     LDX L04A8                                     ; 89AB: AE A8 04    ...
@@ -2039,11 +1866,9 @@ LFAF8       = &FAF8
     STA L0032                                     ; 89B1: 85 32       .2
     RTS                                           ; 89B3: 60          `
 
-; &89B4 referenced 1 time by &89AE
 .L89B4
     EQUB 3, 3, 1, 3                               ; 89B4: 03 03 01... ...
 
-; &89B8 referenced 5 times by &90F9, &B4A2, &BC67, &BC86, &BD13
 .sub_C89B8
     LDA L0080                                     ; 89B8: A5 80       ..
     STA S                                         ; 89BA: 85 99       ..
@@ -2065,7 +1890,6 @@ LFAF8       = &FAF8
     STA L0080                                     ; 89D9: 85 80       ..
     RTS                                           ; 89DB: 60          `
 
-; &89DC referenced 1 time by &89C2
 .C89DC
     LDA S                                         ; 89DC: A5 99       ..
     AND #&7F                                      ; 89DE: 29 7F       ).
@@ -2095,11 +1919,9 @@ LFAF8       = &FAF8
     AND #&7F                                      ; 8A0D: 29 7F       ).
     ORA T                                         ; 8A0F: 05 9A       ..
     STA L0080                                     ; 8A11: 85 80       ..
-; &8A13 referenced 1 time by &89FB
 .C8A13
     RTS                                           ; 8A13: 60          `
 
-; &8A14 referenced 6 times by &BAE8, &BAEF, &BAF6, &BB1E, &BB25, &BB2C
 .sub_C8A14
     LDA L00E9                                     ; 8A14: A5 E9       ..
     BPL C8A21                                     ; 8A16: 10 09       ..
@@ -2107,7 +1929,6 @@ LFAF8       = &FAF8
     ASL A                                         ; 8A1B: 0A          .
     BPL C8A21                                     ; 8A1C: 10 03       ..
     JSR LD06D                                     ; 8A1E: 20 6D D0     m.
-; &8A21 referenced 2 times by &8A16, &8A1C
 .C8A21
     LDA INWK_1,X                                  ; 8A21: B5 0A       ..
     AND #&7F                                      ; 8A23: 29 7F       ).
@@ -2186,21 +2007,16 @@ LFAF8       = &FAF8
     ASL A                                         ; 8AB3: 0A          .
     BPL C8AB9                                     ; 8AB4: 10 03       ..
     JSR LD06D                                     ; 8AB6: 20 6D D0     m.
-; &8AB9 referenced 2 times by &8AAE, &8AB4
 .C8AB9
     RTS                                           ; 8AB9: 60          `
 
-; &8ABA referenced 1 time by &8B3E
 .L8ABA
     EQUB &48, &76, &E8,   0                       ; 8ABA: 48 76 E8... Hv.
 
-; &8ABE referenced 5 times by &975B, &9A49, &A83F, &A85F, &A889
 .C8ABE
     LDA #3                                        ; 8ABE: A9 03       ..
-; &8AC0 referenced 4 times by &97D8, &9F6E, &9FD3, &A41B
 .sub_C8AC0
     LDY #0                                        ; 8AC0: A0 00       ..
-; &8AC2 referenced 7 times by &976F, &97A7, &9A6E, &9ED6, &A437, &A452, &B7D9
 .C8AC2
     STA U                                         ; 8AC2: 85 96       ..
     LDA #0                                        ; 8AC4: A9 00       ..
@@ -2208,7 +2024,6 @@ LFAF8       = &FAF8
     STA L007E                                     ; 8AC8: 85 7E       .~
     STY L007F                                     ; 8ACA: 84 7F       ..
     STX L0080                                     ; 8ACC: 86 80       ..
-; &8ACE referenced 1 time by &A8BA
 .sub_C8ACE
     LDX #&0B                                      ; 8ACE: A2 0B       ..
     STX T                                         ; 8AD0: 86 9A       ..
@@ -2216,7 +2031,6 @@ LFAF8       = &FAF8
     BCC C8AD9                                     ; 8AD3: 90 04       ..
     DEC T                                         ; 8AD5: C6 9A       ..
     DEC U                                         ; 8AD7: C6 96       ..
-; &8AD9 referenced 1 time by &8AD3
 .C8AD9
     LDA #&0B                                      ; 8AD9: A9 0B       ..
     SEC                                           ; 8ADB: 38          8
@@ -2228,7 +2042,6 @@ LFAF8       = &FAF8
     STY S                                         ; 8AE6: 84 99       ..
     JMP C8B2A                                     ; 8AE8: 4C 2A 8B    L*.
 
-; &8AEB referenced 1 time by &8B8D
 .C8AEB
     ASL L0080                                     ; 8AEB: 06 80       ..
     ROL L007F                                     ; 8AED: 26 7F       &.
@@ -2236,7 +2049,6 @@ LFAF8       = &FAF8
     ROL K                                         ; 8AF1: 26 7D       &}
     ROL S                                         ; 8AF3: 26 99       &.
     LDX #3                                        ; 8AF5: A2 03       ..
-; &8AF7 referenced 1 time by &8AFC
 .loop_C8AF7
     LDA K,X                                       ; 8AF7: B5 7D       .}
     STA XX15,X                                    ; 8AF9: 95 71       .q
@@ -2256,7 +2068,6 @@ LFAF8       = &FAF8
     ROL S                                         ; 8B14: 26 99       &.
     CLC                                           ; 8B16: 18          .
     LDX #3                                        ; 8B17: A2 03       ..
-; &8B19 referenced 1 time by &8B20
 .loop_C8B19
     LDA K,X                                       ; 8B19: B5 7D       .}
     ADC XX15,X                                    ; 8B1B: 75 71       uq
@@ -2267,11 +2078,9 @@ LFAF8       = &FAF8
     ADC S                                         ; 8B24: 65 99       e.
     STA S                                         ; 8B26: 85 99       ..
     LDY #0                                        ; 8B28: A0 00       ..
-; &8B2A referenced 2 times by &8AE8, &8B5C
 .C8B2A
     LDX #3                                        ; 8B2A: A2 03       ..
     SEC                                           ; 8B2C: 38          8
-; &8B2D referenced 1 time by &8B44
 .loop_C8B2D
     PHP                                           ; 8B2D: 08          .
     LDA L00E9                                     ; 8B2E: A5 E9       ..
@@ -2280,7 +2089,6 @@ LFAF8       = &FAF8
     ASL A                                         ; 8B35: 0A          .
     BPL C8B3B                                     ; 8B36: 10 03       ..
     JSR LD06D                                     ; 8B38: 20 6D D0     m.
-; &8B3B referenced 2 times by &8B30, &8B36
 .C8B3B
     PLP                                           ; 8B3B: 28          (
     LDA K,X                                       ; 8B3C: B5 7D       .}
@@ -2293,7 +2101,6 @@ LFAF8       = &FAF8
     STA XX15_1                                    ; 8B4A: 85 75       .u
     BCC C8B5F                                     ; 8B4C: 90 11       ..
     LDX #3                                        ; 8B4E: A2 03       ..
-; &8B50 referenced 1 time by &8B55
 .loop_C8B50
     LDA XX15,X                                    ; 8B50: B5 71       .q
     STA K,X                                       ; 8B52: 95 7D       .}
@@ -2304,7 +2111,6 @@ LFAF8       = &FAF8
     INY                                           ; 8B5B: C8          .
     JMP C8B2A                                     ; 8B5C: 4C 2A 8B    L*.
 
-; &8B5F referenced 1 time by &8B4C
 .C8B5F
     TYA                                           ; 8B5F: 98          .
     BNE C8B6E                                     ; 8B60: D0 0C       ..
@@ -2314,21 +2120,17 @@ LFAF8       = &FAF8
     BPL C8B78                                     ; 8B68: 10 0E       ..
     LDA #&20 ; ' '                                ; 8B6A: A9 20       .
     BNE C8B75                                     ; 8B6C: D0 07       ..
-; &8B6E referenced 2 times by &8B60, &8B64
 .C8B6E
     LDY #0                                        ; 8B6E: A0 00       ..
     STY T                                         ; 8B70: 84 9A       ..
     CLC                                           ; 8B72: 18          .
     ADC #&30 ; '0'                                ; 8B73: 69 30       i0
-; &8B75 referenced 1 time by &8B6C
 .C8B75
     JSR LF1E6                                     ; 8B75: 20 E6 F1     ..
-; &8B78 referenced 1 time by &8B68
 .C8B78
     DEC T                                         ; 8B78: C6 9A       ..
     BPL C8B7E                                     ; 8B7A: 10 02       ..
     INC T                                         ; 8B7C: E6 9A       ..
-; &8B7E referenced 1 time by &8B7A
 .C8B7E
     DEC L009D                                     ; 8B7E: C6 9D       ..
     BMI C8B90                                     ; 8B80: 30 0E       0.
@@ -2337,15 +2139,12 @@ LFAF8       = &FAF8
     BCC C8B8D                                     ; 8B85: 90 06       ..
     LDA L03FD                                     ; 8B87: AD FD 03    ...
     JSR LF1E6                                     ; 8B8A: 20 E6 F1     ..
-; &8B8D referenced 2 times by &8B82, &8B85
 .C8B8D
     JMP C8AEB                                     ; 8B8D: 4C EB 8A    L..
 
-; &8B90 referenced 1 time by &8B80
 .C8B90
     RTS                                           ; 8B90: 60          `
 
-; &8B91 referenced 2 times by &8730, &873B
 .C8B91
     LDA L0476                                     ; 8B91: AD 76 04    .v.
     EOR #&FF                                      ; 8B94: 49 FF       I.
@@ -2367,7 +2166,6 @@ LFAF8       = &FAF8
     STA L00BA                                     ; 8BAE: 85 BA       ..
     LDY #&25 ; '%'                                ; 8BB0: A0 25       .%
     LDA #&0C                                      ; 8BB2: A9 0C       ..
-; &8BB4 referenced 1 time by &8BA2
 .sub_C8BB4
     ASL A                                         ; 8BB4: 0A          .
     ASL A                                         ; 8BB5: 0A          .
@@ -2382,7 +2180,6 @@ LFAF8       = &FAF8
     STA L0200,X                                   ; 8BC3: 9D 00 02    ...
     RTS                                           ; 8BC6: 60          `
 
-; &8BC7 referenced 1 time by &867C
 .C8BC7
     JSR sub_CAD8A                                 ; 8BC7: 20 8A AD     ..
     LDY #&13                                      ; 8BCA: A0 13       ..
@@ -2398,7 +2195,6 @@ LFAF8       = &FAF8
     BCS C8BE9                                     ; 8BE2: B0 05       ..
     LDX #&18                                      ; 8BE4: A2 18       ..
     JSR sub_C91D8                                 ; 8BE6: 20 D8 91     ..
-; &8BE9 referenced 1 time by &8BE2
 .C8BE9
     LDA #8                                        ; 8BE9: A9 08       ..
     STA INWK_27                                   ; 8BEB: 85 24       .$
@@ -2406,17 +2202,14 @@ LFAF8       = &FAF8
     STA INWK_30                                   ; 8BEF: 85 27       .'
     LDA #&2C ; ','                                ; 8BF1: A9 2C       .,
     STA L0029                                     ; 8BF3: 85 29       .)
-; &8BF5 referenced 1 time by &8BFD
 .loop_C8BF5
     JSR CB910                                     ; 8BF5: 20 10 B9     ..
     JSR LD96F                                     ; 8BF8: 20 6F D9     o.
     DEC L0029                                     ; 8BFB: C6 29       .)
     BNE loop_C8BF5                                ; 8BFD: D0 F6       ..
-; &8BFF referenced 1 time by &8BD9
 .C8BFF
     LDA #0                                        ; 8BFF: A9 00       ..
     LDX #&10                                      ; 8C01: A2 10       ..
-; &8C03 referenced 1 time by &8C07
 .loop_C8C03
     STA QQ20,X                                    ; 8C03: 9D AD 03    ...
     DEX                                           ; 8C06: CA          .
@@ -2431,13 +2224,11 @@ LFAF8       = &FAF8
     STA L03C5                                     ; 8C1B: 8D C5 03    ...
     LDA #0                                        ; 8C1E: A9 00       ..
     STA L03C6                                     ; 8C20: 8D C6 03    ...
-; &8C23 referenced 1 time by &8C12
 .C8C23
     LDA #&46 ; 'F'                                ; 8C23: A9 46       .F
     STA L03A5                                     ; 8C25: 8D A5 03    ...
     JMP C81F5                                     ; 8C28: 4C F5 81    L..
 
-; &8C2B referenced 1 time by &B167
 .C8C2B
     JSR LF2DE                                     ; 8C2B: 20 DE F2     ..
     LDA #&0E                                      ; 8C2E: A9 0E       ..
@@ -2445,7 +2236,6 @@ LFAF8       = &FAF8
     LDY #9                                        ; 8C33: A0 09       ..
     STY L0483                                     ; 8C35: 8C 83 04    ...
     LDA #&41 ; 'A'                                ; 8C38: A9 41       .A
-; &8C3A referenced 1 time by &8C3E
 .loop_C8C3A
     STA INWK_5,Y                                  ; 8C3A: 99 0E 00    ...
     DEY                                           ; 8C3D: 88          .
@@ -2457,7 +2247,6 @@ LFAF8       = &FAF8
     JSR sub_C9CF8                                 ; 8C49: 20 F8 9C     ..
     LDA #0                                        ; 8C4C: A9 00       ..
     STA XX20                                      ; 8C4E: 85 AC       ..
-; &8C50 referenced 1 time by &8C87
 .C8C50
     LDA L00E9                                     ; 8C50: A5 E9       ..
     BPL C8C5D                                     ; 8C52: 10 09       ..
@@ -2465,7 +2254,6 @@ LFAF8       = &FAF8
     ASL A                                         ; 8C57: 0A          .
     BPL C8C5D                                     ; 8C58: 10 03       ..
     JSR LD06D                                     ; 8C5A: 20 6D D0     m.
-; &8C5D referenced 2 times by &8C52, &8C58
 .C8C5D
     LDA #&80                                      ; 8C5D: A9 80       ..
     STA L03F6                                     ; 8C5F: 8D F6 03    ...
@@ -2476,7 +2264,6 @@ LFAF8       = &FAF8
     LDA INWK_5,X                                  ; 8C6C: B5 0E       ..
     CMP #&0D                                      ; 8C6E: C9 0D       ..
     BNE C8C7F                                     ; 8C70: D0 0D       ..
-; &8C72 referenced 1 time by &8C7A
 .loop_C8C72
     DEX                                           ; 8C72: CA          .
     LDA INWK_5,X                                  ; 8C73: B5 0E       ..
@@ -2485,7 +2272,6 @@ LFAF8       = &FAF8
     BEQ loop_C8C72                                ; 8C7A: F0 F6       ..
     TXA                                           ; 8C7C: 8A          .
     BMI C8C97                                     ; 8C7D: 30 18       0.
-; &8C7F referenced 1 time by &8C70
 .C8C7F
     JSR CB831                                     ; 8C7F: 20 31 B8     1.
     JSR TT20                                      ; 8C82: 20 4D 96     M.
@@ -2497,7 +2283,6 @@ LFAF8       = &FAF8
     JSR LF082                                     ; 8C91: 20 82 F0     ..
     JMP C8980                                     ; 8C94: 4C 80 89    L..
 
-; &8C97 referenced 1 time by &8C7D
 .C8C97
     JSR CB831                                     ; 8C97: 20 31 B8     1.
     JSR LF2DE                                     ; 8C9A: 20 DE F2     ..
@@ -2509,12 +2294,10 @@ LFAF8       = &FAF8
     STA L049E                                     ; 8CA9: 8D 9E 04    ...
     JMP CB181                                     ; 8CAC: 4C 81 B1    L..
 
-; &8CAF referenced 1 time by &8C47
 .C8CAF
     JSR LF2DE                                     ; 8CAF: 20 DE F2     ..
     JMP C8980                                     ; 8CB2: 4C 80 89    L..
 
-; &8CB5 referenced 2 times by &8CDD, &8D05
 .C8CB5
     LDA INWK                                      ; 8CB5: A5 09       ..
     ORA INWK_3                                    ; 8CB7: 05 0C       ..
@@ -2522,25 +2305,21 @@ LFAF8       = &FAF8
     BNE C8CC2                                     ; 8CBB: D0 05       ..
     LDA #&50 ; 'P'                                ; 8CBD: A9 50       .P
     JSR CAA5D                                     ; 8CBF: 20 5D AA     ].
-; &8CC2 referenced 1 time by &8CBB
 .C8CC2
     LDX #4                                        ; 8CC2: A2 04       ..
     BNE C8D2B                                     ; 8CC4: D0 65       .e
-; &8CC6 referenced 1 time by &8CE2
 .loop_C8CC6
     LDA #0                                        ; 8CC6: A9 00       ..
     JSR sub_CB1CA                                 ; 8CC8: 20 CA B1     ..
     BEQ C8CD0                                     ; 8CCB: F0 03       ..
     JMP C8E09                                     ; 8CCD: 4C 09 8E    L..
 
-; &8CD0 referenced 1 time by &8CCB
 .C8CD0
     JSR sub_C8D2E                                 ; 8CD0: 20 2E 8D     ..
     JSR LEBAD                                     ; 8CD3: 20 AD EB     ..
     LDA #&FA                                      ; 8CD6: A9 FA       ..
     JMP CAA5D                                     ; 8CD8: 4C 5D AA    L].
 
-; &8CDB referenced 1 time by &8D59
 .C8CDB
     LDA L006D                                     ; 8CDB: A5 6D       .m
     BNE C8CB5                                     ; 8CDD: D0 D6       ..
@@ -2570,7 +2349,6 @@ LFAF8       = &FAF8
     BNE C8D14                                     ; 8D0E: D0 04       ..
     ORA #&80                                      ; 8D10: 09 80       ..
     STA (V),Y                                     ; 8D12: 91 63       .c
-; &8D14 referenced 1 time by &8D0E
 .C8D14
     LDA INWK                                      ; 8D14: A5 09       ..
     ORA INWK_3                                    ; 8D16: 05 0C       ..
@@ -2578,7 +2356,6 @@ LFAF8       = &FAF8
     BNE C8D21                                     ; 8D1A: D0 05       ..
     LDA #&50 ; 'P'                                ; 8D1C: A9 50       .P
     JSR CAA5D                                     ; 8D1E: 20 5D AA     ].
-; &8D21 referenced 1 time by &8D1A
 .C8D21
     LDA L0029                                     ; 8D21: A5 29       .)
     AND #&7F                                      ; 8D23: 29 7F       ).
@@ -2586,19 +2363,15 @@ LFAF8       = &FAF8
     TAX                                           ; 8D26: AA          .
     LDA L036A,X                                   ; 8D27: BD 6A 03    .j.
     TAX                                           ; 8D2A: AA          .
-; &8D2B referenced 1 time by &8CC4
 .C8D2B
     JSR sub_CBE80                                 ; 8D2B: 20 80 BE     ..
-; &8D2E referenced 1 time by &8CD0
 .sub_C8D2E
     ASL INWK_31                                   ; 8D2E: 06 28       .(
     SEC                                           ; 8D30: 38          8
     ROR INWK_31                                   ; 8D31: 66 28       f(
-; &8D33 referenced 3 times by &8D6B, &8D72, &8D80
 .C8D33
     RTS                                           ; 8D33: 60          `
 
-; &8D34 referenced 1 time by &8CFF
 .C8D34
     JSR DORND                                     ; 8D34: 20 AD F4     ..
     CMP #&10                                      ; 8D37: C9 10       ..
@@ -2606,19 +2379,15 @@ LFAF8       = &FAF8
 .sub_C8D3B
 L8D3C = sub_C8D3B+1
     LDY #&20 ; ' '                                ; 8D3B: A0 20       .
-; &8D3C referenced 1 time by &8D0B
     LDA (V),Y                                     ; 8D3D: B1 63       .c
     LSR A                                         ; 8D3F: 4A          J
     BCS C8D45                                     ; 8D40: B0 03       ..
-; &8D42 referenced 1 time by &8D39
 .C8D42
     JMP C8E12                                     ; 8D42: 4C 12 8E    L..
 
-; &8D45 referenced 1 time by &8D40
 .C8D45
     JMP LE596                                     ; 8D45: 4C 96 E5    L..
 
-; &8D48 referenced 1 time by &B952
 .sub_C8D48
     LDA #3                                        ; 8D48: A9 03       ..
     STA L00AE                                     ; 8D4A: 85 AE       ..
@@ -2644,7 +2413,6 @@ L8D3C = sub_C8D3B+1
     ADC #8                                        ; 8D76: 69 08       i.
     TAX                                           ; 8D78: AA          .
     BNE C8D8B                                     ; 8D79: D0 10       ..
-; &8D7B referenced 1 time by &8D63
 .C8D7B
     JSR DORND                                     ; 8D7B: 20 AD F4     ..
     CMP #&F0                                      ; 8D7E: C9 F0       ..
@@ -2653,12 +2421,10 @@ L8D3C = sub_C8D3B+1
     CMP #4                                        ; 8D85: C9 04       ..
     BCS C8DCC                                     ; 8D87: B0 43       .C
     LDX #&10                                      ; 8D89: A2 10       ..
-; &8D8B referenced 3 times by &8D79, &8DA8, &8E48
 .C8D8B
     LDA #&F1                                      ; 8D8B: A9 F1       ..
     JMP C927F                                     ; 8D8D: 4C 7F 92    L..
 
-; &8D90 referenced 1 time by &8D5D
 .C8D90
     CPX #&0F                                      ; 8D90: E0 0F       ..
     BNE C8DB0                                     ; 8D92: D0 1C       ..
@@ -2677,7 +2443,6 @@ L8D3C = sub_C8D3B+1
     STA L0029                                     ; 8DAD: 85 29       .)
     RTS                                           ; 8DAF: 60          `
 
-; &8DB0 referenced 1 time by &8D92
 .C8DB0
     LDY #&0E                                      ; 8DB0: A0 0E       ..
     JSR LEC8D                                     ; 8DB2: 20 8D EC     ..
@@ -2685,7 +2450,6 @@ L8D3C = sub_C8D3B+1
     BCC C8DBD                                     ; 8DB7: 90 04       ..
     BEQ C8DBD                                     ; 8DB9: F0 02       ..
     INC L002C                                     ; 8DBB: E6 2C       .,
-; &8DBD referenced 2 times by &8DB7, &8DB9
 .C8DBD
     CPX #&1E                                      ; 8DBD: E0 1E       ..
     BNE C8DCD                                     ; 8DBF: D0 0C       ..
@@ -2694,11 +2458,9 @@ L8D3C = sub_C8D3B+1
     LSR L0029                                     ; 8DC6: 46 29       F)
     ASL L0029                                     ; 8DC8: 06 29       .)
     LSR INWK_27                                   ; 8DCA: 46 24       F$
-; &8DCC referenced 3 times by &8D87, &8D99, &8DD7
 .C8DCC
     RTS                                           ; 8DCC: 60          `
 
-; &8DCD referenced 2 times by &8DBF, &8DC4
 .C8DCD
     JSR DORND                                     ; 8DCD: 20 AD F4     ..
     LDA L002D                                     ; 8DD0: A5 2D       .-
@@ -2706,7 +2468,6 @@ L8D3C = sub_C8D3B+1
     BCC C8DD9                                     ; 8DD3: 90 04       ..
     CPX #&32 ; '2'                                ; 8DD5: E0 32       .2
     BCS C8DCC                                     ; 8DD7: B0 F3       ..
-; &8DD9 referenced 1 time by &8DD3
 .C8DD9
     LSR A                                         ; 8DD9: 4A          J
     BCC C8DEB                                     ; 8DDA: 90 0F       ..
@@ -2718,7 +2479,6 @@ L8D3C = sub_C8D3B+1
     STA L002D                                     ; 8DE7: 85 2D       .-
     LSR A                                         ; 8DE9: 4A          J
     LSR A                                         ; 8DEA: 4A          J
-; &8DEB referenced 2 times by &8DDA, &8DE1
 .C8DEB
     LSR A                                         ; 8DEB: 4A          J
     BCS C8DFB                                     ; 8DEC: B0 0D       ..
@@ -2727,12 +2487,10 @@ L8D3C = sub_C8D3B+1
     BCC C8DF5                                     ; 8DF0: 90 03       ..
     JMP C8FF8                                     ; 8DF2: 4C F8 8F    L..
 
-; &8DF5 referenced 2 times by &8DF0, &9008
 .C8DF5
     JSR sub_CB557                                 ; 8DF5: 20 57 B5     W.
     JMP C8F8F                                     ; 8DF8: 4C 8F 8F    L..
 
-; &8DFB referenced 1 time by &8DEC
 .C8DFB
     LSR A                                         ; 8DFB: 4A          J
     BCC C8E09                                     ; 8DFC: 90 0B       ..
@@ -2741,16 +2499,13 @@ L8D3C = sub_C8D3B+1
     LDA L0029                                     ; 8E03: A5 29       .)
     AND #&81                                      ; 8E05: 29 81       ).
     STA L0029                                     ; 8E07: 85 29       .)
-; &8E09 referenced 3 times by &8CCD, &8DFC, &8E01
 .C8E09
     LDX #8                                        ; 8E09: A2 08       ..
-; &8E0B referenced 1 time by &8E10
 .loop_C8E0B
     LDA INWK,X                                    ; 8E0B: B5 09       ..
     STA XX2,X                                     ; 8E0D: 95 3D       .=
     DEX                                           ; 8E0F: CA          .
     BPL loop_C8E0B                                ; 8E10: 10 F9       ..
-; &8E12 referenced 1 time by &8D42
 .C8E12
     JSR CB566                                     ; 8E12: 20 66 B5     f.
     LDY #&0A                                      ; 8E15: A0 0A       ..
@@ -2762,14 +2517,12 @@ L8D3C = sub_C8D3B+1
     ASL A                                         ; 8E23: 0A          .
     BPL C8E29                                     ; 8E24: 10 03       ..
     JSR LD06D                                     ; 8E26: 20 6D D0     m.
-; &8E29 referenced 2 times by &8E1E, &8E24
 .C8E29
     LDA TYPE                                      ; 8E29: A5 A3       ..
     CMP #1                                        ; 8E2B: C9 01       ..
     BNE C8E32                                     ; 8E2D: D0 03       ..
     JMP C8F3E                                     ; 8E2F: 4C 3E 8F    L>.
 
-; &8E32 referenced 1 time by &8E2D
 .C8E32
     CMP #&0E                                      ; 8E32: C9 0E       ..
     BNE C8E4B                                     ; 8E34: D0 15       ..
@@ -2781,11 +2534,9 @@ L8D3C = sub_C8D3B+1
     CMP #&64 ; 'd'                                ; 8E42: C9 64       .d
     BCS C8E48                                     ; 8E44: B0 02       ..
     LDX #&11                                      ; 8E46: A2 11       ..
-; &8E48 referenced 1 time by &8E44
 .C8E48
     JMP C8D8B                                     ; 8E48: 4C 8B 8D    L..
 
-; &8E4B referenced 2 times by &8E34, &8E3B
 .C8E4B
     JSR DORND                                     ; 8E4B: 20 AD F4     ..
     CMP #&FA                                      ; 8E4E: C9 FA       ..
@@ -2793,7 +2544,6 @@ L8D3C = sub_C8D3B+1
     JSR DORND                                     ; 8E52: 20 AD F4     ..
     ORA #&68 ; 'h'                                ; 8E55: 09 68       .h
     STA INWK_29                                   ; 8E57: 85 26       .&
-; &8E59 referenced 1 time by &8E50
 .C8E59
     LDY #&0E                                      ; 8E59: A0 0E       ..
     JSR LEC8D                                     ; 8E5B: 20 8D EC     ..
@@ -2820,7 +2570,6 @@ L8D3C = sub_C8D3B+1
     STA L0029                                     ; 8E85: 85 29       .)
     JMP C927B                                     ; 8E87: 4C 7B 92    L{.
 
-; &8E8A referenced 3 times by &8E67, &8E6E, &8E77
 .C8E8A
     LDA INWK_31                                   ; 8E8A: A5 28       .(
     AND #7                                        ; 8E8C: 29 07       ).
@@ -2840,11 +2589,9 @@ L8D3C = sub_C8D3B+1
     LDA L0029                                     ; 8EA9: A5 29       .)
     JMP C927F                                     ; 8EAB: 4C 7F 92    L..
 
-; &8EAE referenced 1 time by &8EA5
 .C8EAE
     JMP CBE6E                                     ; 8EAE: 4C 6E BE    Ln.
 
-; &8EB1 referenced 4 times by &8E61, &8E8E, &8E99, &8E9D
 .C8EB1
     LDA L00E9                                     ; 8EB1: A5 E9       ..
     BPL C8EBE                                     ; 8EB3: 10 09       ..
@@ -2852,7 +2599,6 @@ L8D3C = sub_C8D3B+1
     ASL A                                         ; 8EB8: 0A          .
     BPL C8EBE                                     ; 8EB9: 10 03       ..
     JSR LD06D                                     ; 8EBB: 20 6D D0     m.
-; &8EBE referenced 2 times by &8EB3, &8EB9
 .C8EBE
     LDA #0                                        ; 8EBE: A9 00       ..
     JSR sub_CB1CA                                 ; 8EC0: 20 CA B1     ..
@@ -2872,7 +2618,6 @@ L8D3C = sub_C8D3B+1
     STA INWK_31                                   ; 8EDE: 85 28       .(
     CPX #&A3                                      ; 8EE0: E0 A3       ..
     BCS C8EF3                                     ; 8EE2: B0 0F       ..
-; &8EE4 referenced 1 time by &8ED8
 .C8EE4
     JSR sub_C912B                                 ; 8EE4: 20 2B 91     +.
     LDA CNT                                       ; 8EE7: A5 A8       ..
@@ -2881,14 +2626,12 @@ L8D3C = sub_C8D3B+1
     JSR sub_C8F9F                                 ; 8EED: 20 9F 8F     ..
     JMP C8EFF                                     ; 8EF0: 4C FF 8E    L..
 
-; &8EF3 referenced 1 time by &8EE2
 .C8EF3
     JSR LEC8D                                     ; 8EF3: 20 8D EC     ..
     LSR A                                         ; 8EF6: 4A          J
     JSR CAA5D                                     ; 8EF7: 20 5D AA     ].
     LDY #&0B                                      ; 8EFA: A0 0B       ..
     JSR LEBF2                                     ; 8EFC: 20 F2 EB     ..
-; &8EFF referenced 1 time by &8EF0
 .C8EFF
     LDA INWK_7                                    ; 8EFF: A5 10       ..
     CMP #3                                        ; 8F01: C9 03       ..
@@ -2902,7 +2645,6 @@ L8D3C = sub_C8D3B+1
     STA INWK_30                                   ; 8F13: 85 27       .'
     JMP C8F6C                                     ; 8F15: 4C 6C 8F    Ll.
 
-; &8F18 referenced 2 times by &8F03, &8F0C
 .C8F18
     LDA INWK_1                                    ; 8F18: A5 0A       ..
     ORA INWK_4                                    ; 8F1A: 05 0D       ..
@@ -2910,7 +2652,6 @@ L8D3C = sub_C8D3B+1
     AND #&E0                                      ; 8F1E: 29 E0       ).
     BEQ C8F83                                     ; 8F20: F0 61       .a
     BNE C8F6C                                     ; 8F22: D0 48       .H
-; &8F24 referenced 3 times by &8EC5, &8ECB, &8ED4
 .C8F24
     LDA INWK_7                                    ; 8F24: A5 10       ..
     CMP #3                                        ; 8F26: C9 03       ..
@@ -2919,22 +2660,18 @@ L8D3C = sub_C8D3B+1
     ORA INWK_4                                    ; 8F2C: 05 0D       ..
     AND #&FE                                      ; 8F2E: 29 FE       ).
     BEQ C8F47                                     ; 8F30: F0 15       ..
-; &8F32 referenced 1 time by &8F28
 .C8F32
     JSR DORND                                     ; 8F32: 20 AD F4     ..
     ORA #&80                                      ; 8F35: 09 80       ..
     CMP L0029                                     ; 8F37: C5 29       .)
     BCS C8F47                                     ; 8F39: B0 0C       ..
     STA L05F2                                     ; 8F3B: 8D F2 05    ...
-; &8F3E referenced 1 time by &8E2F
 .C8F3E
     JSR sub_C912B                                 ; 8F3E: 20 2B 91     +.
     LDA CNT                                       ; 8F41: A5 A8       ..
     EOR #&80                                      ; 8F43: 49 80       I.
-; &8F45 referenced 1 time by &8F9C
 .C8F45
     STA CNT                                       ; 8F45: 85 A8       ..
-; &8F47 referenced 2 times by &8F30, &8F39
 .C8F47
     JSR sub_C8F9F                                 ; 8F47: 20 9F 8F     ..
     LDA L05F2                                     ; 8F4A: AD F2 05    ...
@@ -2948,26 +2685,21 @@ L8D3C = sub_C8D3B+1
     BMI C8F61                                     ; 8F5B: 30 04       0.
     CMP L00A9                                     ; 8F5D: C5 A9       ..
     BCS C8F83                                     ; 8F5F: B0 22       ."
-; &8F61 referenced 1 time by &8F5B
 .C8F61
     JMP C8F76                                     ; 8F61: 4C 76 8F    Lv.
 
-; &8F64 referenced 2 times by &8F4D, &8F57
 .C8F64
     LDA CNT                                       ; 8F64: A5 A8       ..
     BMI C8F70                                     ; 8F66: 30 08       0.
     CMP L00A9                                     ; 8F68: C5 A9       ..
     BCC C8F76                                     ; 8F6A: 90 0A       ..
-; &8F6C referenced 3 times by &8F15, &8F22, &8F7A
 .C8F6C
     LDA #3                                        ; 8F6C: A9 03       ..
     BNE C8F8C                                     ; 8F6E: D0 1C       ..
-; &8F70 referenced 1 time by &8F66
 .C8F70
     AND #&7F                                      ; 8F70: 29 7F       ).
     CMP #6                                        ; 8F72: C9 06       ..
     BCS C8F83                                     ; 8F74: B0 0D       ..
-; &8F76 referenced 2 times by &8F61, &8F6A
 .C8F76
     LDA INWK_27                                   ; 8F76: A5 24       .$
     CMP #6                                        ; 8F78: C9 06       ..
@@ -2975,21 +2707,17 @@ L8D3C = sub_C8D3B+1
     JSR DORND                                     ; 8F7C: 20 AD F4     ..
     CMP #&C8                                      ; 8F7F: C9 C8       ..
     BCC C8F8E                                     ; 8F81: 90 0B       ..
-; &8F83 referenced 3 times by &8F20, &8F5F, &8F74
 .C8F83
     LDA #&FF                                      ; 8F83: A9 FF       ..
     LDX TYPE                                      ; 8F85: A6 A3       ..
     CPX #1                                        ; 8F87: E0 01       ..
     BNE C8F8C                                     ; 8F89: D0 01       ..
     ASL A                                         ; 8F8B: 0A          .
-; &8F8C referenced 2 times by &8F6E, &8F89
 .C8F8C
     STA INWK_28                                   ; 8F8C: 85 25       .%
-; &8F8E referenced 1 time by &8F81
 .C8F8E
     RTS                                           ; 8F8E: 60          `
 
-; &8F8F referenced 3 times by &8DF8, &9043, &905D
 .C8F8F
     LDY #&0A                                      ; 8F8F: A0 0A       ..
     JSR LF853                                     ; 8F91: 20 53 F8     S.
@@ -2997,11 +2725,9 @@ L8D3C = sub_C8D3B+1
     BCC C8F9C                                     ; 8F96: 90 04       ..
     LDX #0                                        ; 8F98: A2 00       ..
     STX L00AF                                     ; 8F9A: 86 AF       ..
-; &8F9C referenced 1 time by &8F96
 .C8F9C
     JMP C8F45                                     ; 8F9C: 4C 45 8F    LE.
 
-; &8F9F referenced 2 times by &8EED, &8F47
 .sub_C8F9F
     LDY #&10                                      ; 8F9F: A0 10       ..
     JSR LF853                                     ; 8FA1: 20 53 F8     S.
@@ -3015,7 +2741,6 @@ L8D3C = sub_C8D3B+1
     ASL A                                         ; 8FB2: 0A          .
     BPL C8FB8                                     ; 8FB3: 10 03       ..
     JSR LD06D                                     ; 8FB5: 20 6D D0     m.
-; &8FB8 referenced 2 times by &8FAD, &8FB3
 .C8FB8
     LDA CNT                                       ; 8FB8: A5 A8       ..
     BPL C8FCA                                     ; 8FBA: 10 0E       ..
@@ -3026,7 +2751,6 @@ L8D3C = sub_C8D3B+1
     STA INWK_30                                   ; 8FC4: 85 27       .'
     LDA #0                                        ; 8FC6: A9 00       ..
     BEQ C8FF5                                     ; 8FC8: F0 2B       .+
-; &8FCA referenced 2 times by &8FBA, &8FBE
 .C8FCA
     TXA                                           ; 8FCA: 8A          .
     ASL A                                         ; 8FCB: 0A          .
@@ -3035,7 +2759,6 @@ L8D3C = sub_C8D3B+1
     LDA L00AE                                     ; 8FD0: A5 AE       ..
     ORA INWK_30                                   ; 8FD2: 05 27       .'
     STA INWK_30                                   ; 8FD4: 85 27       .'
-; &8FD6 referenced 1 time by &8FCE
 .C8FD6
     LDA INWK_29                                   ; 8FD6: A5 26       .&
     ASL A                                         ; 8FD8: 0A          .
@@ -3054,14 +2777,11 @@ L8D3C = sub_C8D3B+1
     BCC C8FF7                                     ; 8FEF: 90 06       ..
     LDA L00AE                                     ; 8FF1: A5 AE       ..
     ORA INWK_29                                   ; 8FF3: 05 26       .&
-; &8FF5 referenced 1 time by &8FC8
 .C8FF5
     STA INWK_29                                   ; 8FF5: 85 26       .&
-; &8FF7 referenced 2 times by &8FDB, &8FEF
 .C8FF7
     RTS                                           ; 8FF7: 60          `
 
-; &8FF8 referenced 2 times by &8DF2, &B6D9
 .C8FF8
     LDA #6                                        ; 8FF8: A9 06       ..
     STA L00AF                                     ; 8FFA: 85 AF       ..
@@ -3071,11 +2791,9 @@ L8D3C = sub_C8D3B+1
     STA L00A9                                     ; 9001: 85 A9       ..
     LDA L0564                                     ; 9003: AD 64 05    .d.
     BNE C900B                                     ; 9006: D0 03       ..
-; &9008 referenced 1 time by &9016
 .loop_C9008
     JMP C8DF5                                     ; 9008: 4C F5 8D    L..
 
-; &900B referenced 1 time by &9006
 .C900B
     JSR sub_C90C4                                 ; 900B: 20 C4 90     ..
     LDA L003F                                     ; 900E: A5 3F       .?
@@ -3101,11 +2819,9 @@ L8D3C = sub_C8D3B+1
     BCC C9040                                     ; 903A: 90 04       ..
     LDA TYPE                                      ; 903C: A5 A3       ..
     BMI C9068                                     ; 903E: 30 28       0(
-; &9040 referenced 1 time by &903A
 .C9040
     JSR sub_C912B                                 ; 9040: 20 2B 91     +.
     JSR C8F8F                                     ; 9043: 20 8F 8F     ..
-; &9046 referenced 3 times by &908E, &909D, &90B7
 .C9046
     LDX #0                                        ; 9046: A2 00       ..
     STX INWK_28                                   ; 9048: 86 25       .%
@@ -3113,7 +2829,6 @@ L8D3C = sub_C8D3B+1
     STX INWK_27                                   ; 904B: 86 24       .$
     RTS                                           ; 904D: 60          `
 
-; &904E referenced 2 times by &9027, &902B
 .C904E
     JSR sub_C90C4                                 ; 904E: 20 C4 90     ..
     JSR sub_C913E                                 ; 9051: 20 3E 91     >.
@@ -3122,13 +2837,11 @@ L8D3C = sub_C8D3B+1
     JSR sub_C912B                                 ; 905A: 20 2B 91     +.
     JMP C8F8F                                     ; 905D: 4C 8F 8F    L..
 
-; &9060 referenced 1 time by &90B5
 .C9060
     INC INWK_28                                   ; 9060: E6 25       .%
     LDA #&7F                                      ; 9062: A9 7F       ..
     STA INWK_29                                   ; 9064: 85 26       .&
     BNE C90BA                                     ; 9066: D0 52       .R
-; &9068 referenced 2 times by &9034, &903E
 .C9068
     LDA L00E9                                     ; 9068: A5 E9       ..
     BPL C9075                                     ; 906A: 10 09       ..
@@ -3136,7 +2849,6 @@ L8D3C = sub_C8D3B+1
     ASL A                                         ; 906F: 0A          .
     BPL C9075                                     ; 9070: 10 03       ..
     JSR LD06D                                     ; 9072: 20 6D D0     m.
-; &9075 referenced 2 times by &906A, &9070
 .C9075
     LDX #0                                        ; 9075: A2 00       ..
     STX L00AF                                     ; 9077: 86 AF       ..
@@ -3162,7 +2874,6 @@ L8D3C = sub_C8D3B+1
     ASL A                                         ; 909A: 0A          .
     CMP #&0C                                      ; 909B: C9 0C       ..
     BCS C9046                                     ; 909D: B0 A7       ..
-; &909F referenced 1 time by &907D
 .C909F
     STX INWK_29                                   ; 909F: 86 26       .&
     LDA INWK_22                                   ; 90A1: A5 1F       ..
@@ -3177,31 +2888,26 @@ L8D3C = sub_C8D3B+1
     CMP #&42 ; 'B'                                ; 90B3: C9 42       .B
     BCS C9060                                     ; 90B5: B0 A9       ..
     JSR C9046                                     ; 90B7: 20 46 90     F.
-; &90BA referenced 1 time by &9066
 .C90BA
     LDA L0047                                     ; 90BA: A5 47       .G
     BNE C90C3                                     ; 90BC: D0 05       ..
     ASL L002D                                     ; 90BE: 06 2D       .-
     SEC                                           ; 90C0: 38          8
     ROR L002D                                     ; 90C1: 66 2D       f-
-; &90C3 referenced 1 time by &90BC
 .C90C3
     RTS                                           ; 90C3: 60          `
 
-; &90C4 referenced 2 times by &900B, &904E
 .sub_C90C4
     LDA #&2A ; '*'                                ; 90C4: A9 2A       .*
     STA V                                         ; 90C6: 85 63       .c
     LDA #6                                        ; 90C8: A9 06       ..
-; &90CA referenced 1 time by &8CEE
 .sub_C90CA
-    STA L0064                                     ; 90CA: 85 64       .d
+    STA V_1                                       ; 90CA: 85 64       .d
     LDY #2                                        ; 90CC: A0 02       ..
     JSR sub_C90D8                                 ; 90CE: 20 D8 90     ..
     LDY #5                                        ; 90D1: A0 05       ..
     JSR sub_C90D8                                 ; 90D3: 20 D8 90     ..
     LDY #8                                        ; 90D6: A0 08       ..
-; &90D8 referenced 2 times by &90CE, &90D3
 .sub_C90D8
     LDA L00E9                                     ; 90D8: A5 E9       ..
     BPL C90E5                                     ; 90DA: 10 09       ..
@@ -3209,7 +2915,6 @@ L8D3C = sub_C8D3B+1
     ASL A                                         ; 90DF: 0A          .
     BPL C90E5                                     ; 90E0: 10 03       ..
     JSR LD06D                                     ; 90E2: 20 6D D0     m.
-; &90E5 referenced 2 times by &90DA, &90E0
 .C90E5
     LDA (V),Y                                     ; 90E5: B1 63       .c
     EOR #&80                                      ; 90E7: 49 80       I.
@@ -3231,7 +2936,6 @@ L8D3C = sub_C8D3B+1
     STA XX2,X                                     ; 9106: 95 3D       .=
     RTS                                           ; 9108: 60          `
 
-; &9109 referenced 2 times by &9024, &90AF
 .sub_C9109
     LDX L062A,Y                                   ; 9109: BE 2A 06    .*.
     STX Q                                         ; 910C: 86 97       ..
@@ -3248,7 +2952,6 @@ L8D3C = sub_C8D3B+1
     LDA X2                                        ; 9126: A5 73       .s
     JMP MAD                                       ; 9128: 4C 6F F8    Lo.
 
-; &912B referenced 4 times by &8EE4, &8F3E, &9040, &905A
 .sub_C912B
     LDA XX15                                      ; 912B: A5 71       .q
     EOR #&80                                      ; 912D: 49 80       I.
@@ -3261,10 +2964,8 @@ L8D3C = sub_C8D3B+1
     STA X2                                        ; 913B: 85 73       .s
     RTS                                           ; 913D: 60          `
 
-; &913E referenced 2 times by &9051, &9054
 .sub_C913E
     JSR sub_C9141                                 ; 913E: 20 41 91     A.
-; &9141 referenced 1 time by &913E
 .sub_C9141
     LDA L0634                                     ; 9141: AD 34 06    .4.
     LDX #0                                        ; 9144: A2 00       ..
@@ -3274,7 +2975,6 @@ L8D3C = sub_C8D3B+1
     JSR sub_C9156                                 ; 914E: 20 56 91     V.
     LDA L0638                                     ; 9151: AD 38 06    .8.
     LDX #6                                        ; 9154: A2 06       ..
-; &9156 referenced 2 times by &9146, &914E
 .sub_C9156
     ASL A                                         ; 9156: 0A          .
     STA R                                         ; 9157: 85 98       ..
@@ -3288,11 +2988,9 @@ L8D3C = sub_C8D3B+1
     STA XX2,X                                     ; 9166: 95 3D       .=
     BCC C916C                                     ; 9168: 90 02       ..
     INC L003E,X                                   ; 916A: F6 3E       .>
-; &916C referenced 3 times by &9168, &917A, &9192
 .C916C
     RTS                                           ; 916C: 60          `
 
-; &916D referenced 1 time by &9160
 .C916D
     LDA XX2,X                                     ; 916D: B5 3D       .=
     SEC                                           ; 916F: 38          8
@@ -3315,7 +3013,6 @@ L8D3C = sub_C8D3B+1
     STA L003F,X                                   ; 9190: 95 3F       .?
     JMP C916C                                     ; 9192: 4C 6C 91    Ll.
 
-; &9195 referenced 1 time by &8243
 .sub_C9195
     CLC                                           ; 9195: 18          .
     LDA INWK_8                                    ; 9196: A5 11       ..
@@ -3349,16 +3046,13 @@ L8D3C = sub_C8D3B+1
     DEY                                           ; 91CF: 88          .
     JSR LEC8D                                     ; 91D0: 20 8D EC     ..
     CMP R                                         ; 91D3: C5 98       ..
-; &91D5 referenced 5 times by &9198, &919C, &91A6, &91CD, &924D
 .C91D5
     RTS                                           ; 91D5: 60          `
 
-; &91D6 referenced 1 time by &91C2
 .C91D6
     CLC                                           ; 91D6: 18          .
     RTS                                           ; 91D7: 60          `
 
-; &91D8 referenced 3 times by &8BDF, &8BE6, &9201
 .sub_C91D8
     JSR sub_CAE03                                 ; 91D8: 20 03 AE     ..
     LDA #&1C                                      ; 91DB: A9 1C       ..
@@ -3371,7 +3065,6 @@ L8D3C = sub_C8D3B+1
     ASL A                                         ; 91E9: 0A          .
     ORA #&80                                      ; 91EA: 09 80       ..
     STA L0029                                     ; 91EC: 85 29       .)
-; &91EE referenced 1 time by &B285
 .sub_C91EE
     LDA #&60 ; '`'                                ; 91EE: A9 60       .`
     STA INWK_14                                   ; 91F0: 85 17       ..
@@ -3383,7 +3076,6 @@ L8D3C = sub_C8D3B+1
     TXA                                           ; 91FB: 8A          .
     JMP CAAE3                                     ; 91FC: 4C E3 AA    L..
 
-; &91FF referenced 1 time by &864B
 .sub_C91FF
     LDX #1                                        ; 91FF: A2 01       ..
     JSR sub_C91D8                                 ; 9201: 20 D8 91     ..
@@ -3408,12 +3100,10 @@ L8D3C = sub_C8D3B+1
     STA L0039                                     ; 922F: 85 39       .9
     BCC C9235                                     ; 9231: 90 02       ..
     INC L003A                                     ; 9233: E6 3A       .:
-; &9235 referenced 2 times by &921D, &9231
 .C9235
     LDY #9                                        ; 9235: A0 09       ..
     JMP LEBF2                                     ; 9237: 4C F2 EB    L..
 
-; &923A referenced 2 times by &82D7, &920F
 .sub_C923A
     CMP #2                                        ; 923A: C9 02       ..
     BEQ C926D                                     ; 923C: F0 2F       ./
@@ -3422,7 +3112,6 @@ L8D3C = sub_C8D3B+1
     AND #&20 ; ' '                                ; 9242: 29 20       )
     BEQ C9249                                     ; 9244: F0 03       ..
     JSR C926D                                     ; 9246: 20 6D 92     m.
-; &9249 referenced 1 time by &9244
 .C9249
     LDY #&20 ; ' '                                ; 9249: A0 20       .
     LDA (INF),Y                                   ; 924B: B1 61       .a
@@ -3442,29 +3131,23 @@ L8D3C = sub_C8D3B+1
     LDA (INF),Y                                   ; 9266: B1 61       .a
     ORA #4                                        ; 9268: 09 04       ..
     STA (INF),Y                                   ; 926A: 91 61       .a
-; &926C referenced 1 time by &9262
 .C926C
     RTS                                           ; 926C: 60          `
 
-; &926D referenced 2 times by &923C, &9246
 .C926D
     LDA L064E                                     ; 926D: AD 4E 06    .N.
     ORA #4                                        ; 9270: 09 04       ..
     STA L064E                                     ; 9272: 8D 4E 06    .N.
     RTS                                           ; 9275: 60          `
 
-; &9276 referenced 1 time by &9204
 .C9276
     LDA #&C9                                      ; 9276: A9 C9       ..
     JMP CB78F                                     ; 9278: 4C 8F B7    L..
 
-; &927B referenced 1 time by &8E87
 .C927B
     LDX #3                                        ; 927B: A2 03       ..
-; &927D referenced 1 time by &BE70
 .sub_C927D
     LDA #&FE                                      ; 927D: A9 FE       ..
-; &927F referenced 3 times by &878A, &8D8D, &8EAB
 .C927F
     STA T1                                        ; 927F: 85 06       ..
     LDA L00E9                                     ; 9281: A5 E9       ..
@@ -3473,7 +3156,6 @@ L8D3C = sub_C8D3B+1
     ASL A                                         ; 9288: 0A          .
     BPL C928E                                     ; 9289: 10 03       ..
     JSR LD06D                                     ; 928B: 20 6D D0     m.
-; &928E referenced 2 times by &9283, &9289
 .C928E
     TXA                                           ; 928E: 8A          .
     PHA                                           ; 928F: 48          H
@@ -3486,7 +3168,6 @@ L8D3C = sub_C8D3B+1
     LDA L0062                                     ; 9299: A5 62       .b
     PHA                                           ; 929B: 48          H
     LDY #&25 ; '%'                                ; 929C: A0 25       .%
-; &929E referenced 1 time by &92AA
 .loop_C929E
     LDA INWK,Y                                    ; 929E: B9 09 00    ...
     STA XX3,Y                                     ; 92A1: 99 00 01    ...
@@ -3512,7 +3193,6 @@ L8D3C = sub_C8D3B+1
     JSR sub_C9313                                 ; 92CA: 20 13 93     ..
     PLA                                           ; 92CD: 68          h
     TAX                                           ; 92CE: AA          .
-; &92CF referenced 1 time by &92B0
 .C92CF
     LDA T1                                        ; 92CF: A5 06       ..
     STA L0029                                     ; 92D1: 85 29       .)
@@ -3534,7 +3214,6 @@ L8D3C = sub_C8D3B+1
     ROR A                                         ; 92EE: 6A          j
     STA INWK_29                                   ; 92EF: 85 26       .&
     PLA                                           ; 92F1: 68          h
-; &92F2 referenced 2 times by &92DA, &92DE
 .C92F2
     JSR CAAE3                                     ; 92F2: 20 E3 AA     ..
     PLA                                           ; 92F5: 68          h
@@ -3545,7 +3224,6 @@ L8D3C = sub_C8D3B+1
     JSR LEC7D                                     ; 92FC: 20 7D EC     }.
     PLP                                           ; 92FF: 28          (
     LDX #&25 ; '%'                                ; 9300: A2 25       .%
-; &9302 referenced 1 time by &9308
 .loop_C9302
     LDA XX3,X                                     ; 9302: BD 00 01    ...
     STA INWK,X                                    ; 9305: 95 09       ..
@@ -3559,7 +3237,6 @@ L8D3C = sub_C8D3B+1
     TAX                                           ; 9311: AA          .
     RTS                                           ; 9312: 60          `
 
-; &9313 referenced 3 times by &92BC, &92C3, &92CA
 .sub_C9313
     ASL A                                         ; 9313: 0A          .
     STA R                                         ; 9314: 85 98       ..
@@ -3567,7 +3244,6 @@ L8D3C = sub_C8D3B+1
     ROR A                                         ; 9318: 6A          j
     JMP CBB3A                                     ; 9319: 4C 3A BB    L:.
 
-; &931C referenced 2 times by &8029, &A2D7
 .sub_C931C
     LDA #0                                        ; 931C: A9 00       ..
     JSR sub_CB39D                                 ; 931E: 20 9D B3     ..
@@ -3586,7 +3262,6 @@ L8D3C = sub_C8D3B+1
     JSR LEBA2                                     ; 933D: 20 A2 EB     ..
     LDY #&18                                      ; 9340: A0 18       ..
     JSR LEBF2                                     ; 9342: 20 F2 EB     ..
-; &9345 referenced 1 time by &93B5
 .C9345
     JSR sub_CB1D1                                 ; 9345: 20 D1 B1     ..
     JSR LD8E1                                     ; 9348: 20 E1 D8     ..
@@ -3596,7 +3271,6 @@ L8D3C = sub_C8D3B+1
     STA L00AA                                     ; 9352: 85 AA       ..
     LDA #&80                                      ; 9354: A9 80       ..
     STA L03FC                                     ; 9356: 8D FC 03    ...
-; &9359 referenced 3 times by &9372, &93A9, &93C9
 .C9359
     LDA L00E9                                     ; 9359: A5 E9       ..
     BPL C9366                                     ; 935B: 10 09       ..
@@ -3604,7 +3278,6 @@ L8D3C = sub_C8D3B+1
     ASL A                                         ; 9360: 0A          .
     BPL C9366                                     ; 9361: 10 03       ..
     JSR LD06D                                     ; 9363: 20 6D D0     m.
-; &9366 referenced 2 times by &935B, &9361
 .C9366
     LDA L00AA                                     ; 9366: A5 AA       ..
     SEC                                           ; 9368: 38          8
@@ -3638,12 +3311,10 @@ L8D3C = sub_C8D3B+1
     JSR LF005                                     ; 93A0: 20 05 F0     ..
     PLA                                           ; 93A3: 68          h
     STA L00AA                                     ; 93A4: 85 AA       ..
-; &93A6 referenced 2 times by &938E, &9395
 .C93A6
     JSR LEF12                                     ; 93A6: 20 12 EF     ..
     JMP C9359                                     ; 93A9: 4C 59 93    LY.
 
-; &93AC referenced 2 times by &936B, &9382
 .C93AC
     JSR LD975                                     ; 93AC: 20 75 D9     u.
     DEC L03FB                                     ; 93AF: CE FB 03    ...
@@ -3652,7 +3323,6 @@ L8D3C = sub_C8D3B+1
     LDY #&17                                      ; 93B7: A0 17       ..
     JMP LEBF2                                     ; 93B9: 4C F2 EB    L..
 
-; &93BC referenced 1 time by &939B
 .C93BC
     LDA #&48 ; 'H'                                ; 93BC: A9 48       .H
     STA L007E                                     ; 93BE: 85 7E       .~
@@ -3663,11 +3333,9 @@ L8D3C = sub_C8D3B+1
     STA L00AA                                     ; 93C7: 85 AA       ..
     JMP C9359                                     ; 93C9: 4C 59 93    LY.
 
-; &93CC referenced 1 time by &93F0
 .C93CC
     RTS                                           ; 93CC: 60          `
 
-; &93CD referenced 1 time by &86FC
 .sub_C93CD
     JSR DORND                                     ; 93CD: 20 AD F4     ..
     AND #7                                        ; 93D0: 29 07       ).
@@ -3689,7 +3357,6 @@ L8D3C = sub_C8D3B+1
     JSR sub_C93FD                                 ; 93F6: 20 FD 93     ..
     LDA #&30 ; '0'                                ; 93F9: A9 30       .0
     LDY #&D0                                      ; 93FB: A0 D0       ..
-; &93FD referenced 1 time by &93F6
 .sub_C93FD
     STA X2                                        ; 93FD: 85 73       .s
     LDA L047B                                     ; 93FF: AD 7B 04    .{.
@@ -3708,7 +3375,6 @@ L8D3C = sub_C8D3B+1
     STA Y2                                        ; 941E: 85 74       .t
     JMP LSPUT                                     ; 9420: 4C 0F DC    L..
 
-; &9423 referenced 1 time by &806A
 .C9423
     LDA L039E                                     ; 9423: AD 9E 03    ...
     ORA #4                                        ; 9426: 09 04       ..
@@ -3718,15 +3384,12 @@ L8D3C = sub_C8D3B+1
     JSR C8926                                     ; 9430: 20 26 89     &.
     JMP CB35E                                     ; 9433: 4C 5E B3    L^.
 
-; &9436 referenced 4 times by &944B, &945F, &9470, &9506
 .C9436
     JSR LF082                                     ; 9436: 20 82 F0     ..
     JSR LEDAB                                     ; 9439: 20 AB ED     ..
-; &943C referenced 1 time by &948F
 .C943C
     JMP CB35E                                     ; 943C: 4C 5E B3    L^.
 
-; &943F referenced 1 time by &807F
 .C943F
     LDA L039E                                     ; 943F: AD 9E 03    ...
     AND #&F0                                      ; 9442: 29 F0       ).
@@ -3734,7 +3397,6 @@ L8D3C = sub_C8D3B+1
     STA L039E                                     ; 9446: 8D 9E 03    ...
     LDA #&DE                                      ; 9449: A9 DE       ..
     BNE C9436                                     ; 944B: D0 E9       ..
-; &944D referenced 1 time by &8094
 .C944D
     LDA L039E                                     ; 944D: AD 9E 03    ...
     ORA #4                                        ; 9450: 09 04       ..
@@ -3744,7 +3406,6 @@ L8D3C = sub_C8D3B+1
     INC L03DD                                     ; 945A: EE DD 03    ...
     LDA #&DF                                      ; 945D: A9 DF       ..
     BNE C9436                                     ; 945F: D0 D5       ..
-; &9461 referenced 1 time by &8050
 .C9461
     LSR L039E                                     ; 9461: 4E 9E 03    N..
     ASL L039E                                     ; 9464: 0E 9E 03    ...
@@ -3753,7 +3414,6 @@ L8D3C = sub_C8D3B+1
     JSR sub_CA341                                 ; 946B: 20 41 A3     A.
     LDA #&0F                                      ; 946E: A9 0F       ..
     BNE C9436                                     ; 9470: D0 C4       ..
-; &9472 referenced 1 time by &80A8
 .C9472
     JSR LF293                                     ; 9472: 20 93 F2     ..
     LDA #&95                                      ; 9475: A9 95       ..
@@ -3773,7 +3433,6 @@ L8D3C = sub_C8D3B+1
     INC L03C5                                     ; 9498: EE C5 03    ...
     JMP CB35E                                     ; 949B: 4C 5E B3    L^.
 
-; &949E referenced 1 time by &8049
 .C949E
     LSR L039E                                     ; 949E: 4E 9E 03    N..
     SEC                                           ; 94A1: 38          8
@@ -3795,7 +3454,6 @@ L8D3C = sub_C8D3B+1
     JSR sub_CB39D                                 ; 94C6: 20 9D B3     ..
     LDA #&40 ; '@'                                ; 94C9: A9 40       .@
     STA L00A2                                     ; 94CB: 85 A2       ..
-; &94CD referenced 1 time by &94DB
 .loop_C94CD
     LDX #&7F                                      ; 94CD: A2 7F       ..
     STX INWK_29                                   ; 94CF: 86 26       .&
@@ -3804,7 +3462,6 @@ L8D3C = sub_C8D3B+1
     JSR CB910                                     ; 94D6: 20 10 B9     ..
     DEC L00A2                                     ; 94D9: C6 A2       ..
     BNE loop_C94CD                                ; 94DB: D0 F0       ..
-; &94DD referenced 1 time by &94FA
 .loop_C94DD
     LSR INWK                                      ; 94DD: 46 09       F.
     INC INWK_6                                    ; 94DF: E6 0F       ..
@@ -3816,7 +3473,6 @@ L8D3C = sub_C8D3B+1
     CPX #&64 ; 'd'                                ; 94EA: E0 64       .d
     BCC C94F0                                     ; 94EC: 90 02       ..
     LDX #&64 ; 'd'                                ; 94EE: A2 64       .d
-; &94F0 referenced 1 time by &94EC
 .C94F0
     STX INWK_3                                    ; 94F0: 86 0C       ..
     JSR LD96F                                     ; 94F2: 20 6F D9     o.
@@ -3824,7 +3480,6 @@ L8D3C = sub_C8D3B+1
     DEC L00A2                                     ; 94F8: C6 A2       ..
     JMP loop_C94DD                                ; 94FA: 4C DD 94    L..
 
-; &94FD referenced 2 times by &94E1, &94E5
 .C94FD
     INC INWK_7                                    ; 94FD: E6 10       ..
     LDA #&93                                      ; 94FF: A9 93       ..
@@ -3832,7 +3487,6 @@ L8D3C = sub_C8D3B+1
     LDA #&0A                                      ; 9504: A9 0A       ..
     JMP C9436                                     ; 9506: 4C 36 94    L6.
 
-; &9509 referenced 1 time by &94A5
 .sub_C9509
     LDA #&D8                                      ; 9509: A9 D8       ..
     JSR LF082                                     ; 950B: 20 82 F0     ..
@@ -3840,10 +3494,8 @@ L8D3C = sub_C8D3B+1
     LDY #&64 ; 'd'                                ; 9511: A0 64       .d
     JMP LEBA2                                     ; 9513: 4C A2 EB    L..
 
-; &9516 referenced 3 times by &A379, &B17E, &B373
 .sub_C9516
     LDX #1                                        ; 9516: A2 01       ..
-; &9518 referenced 1 time by &951F
 .loop_C9518
     LDA L039F,X                                   ; 9518: BD 9F 03    ...
     STA L049D,X                                   ; 951B: 9D 9D 04    ...
@@ -3931,10 +3583,8 @@ L8D3C = sub_C8D3B+1
     STA L0093                                     ; 95DF: 85 93       ..
     JMP CAFEF                                     ; 95E1: 4C EF AF    L..
 
-; &95E4 referenced 4 times by &957B, &959C, &95B7, &95C1
 .sub_C95E4
     STA L038F                                     ; 95E4: 8D 8F 03    ...
-; &95E7 referenced 1 time by &95F9
 .loop_C95E7
     JSR LD8E1                                     ; 95E7: 20 E1 D8     ..
     JSR sub_C834A                                 ; 95EA: 20 4A 83     J.
@@ -3945,7 +3595,6 @@ L8D3C = sub_C8D3B+1
     BNE loop_C95E7                                ; 95F9: D0 EC       ..
     RTS                                           ; 95FB: 60          `
 
-; &95FC referenced 3 times by &9569, &9588, &959F
 .sub_C95FC
     JSR sub_CAE03                                 ; 95FC: 20 03 AE     ..
     LDA #&60 ; '`'                                ; 95FF: A9 60       .`
@@ -3966,17 +3615,14 @@ L8D3C = sub_C8D3B+1
     STA INWK_6                                    ; 961D: 85 0F       ..
     RTS                                           ; 961F: 60          `
 
-; &9620 referenced 1 time by &81B6
 .sub_C9620
     STA QQ29                                      ; 9620: 8D 8A 04    ...
     LDA #1                                        ; 9623: A9 01       ..
-; &9625 referenced 1 time by &A0B5
 .sub_C9625
     PHA                                           ; 9625: 48          H
     LDX #&0C                                      ; 9626: A2 0C       ..
     CPX QQ29                                      ; 9628: EC 8A 04    ...
     BCC C963B                                     ; 962B: 90 0E       ..
-; &962D referenced 1 time by &9631
 .loop_C962D
     ADC QQ20,X                                    ; 962D: 7D AD 03    }..
     DEX                                           ; 9630: CA          .
@@ -3986,7 +3632,6 @@ L8D3C = sub_C8D3B+1
     PLA                                           ; 9639: 68          h
     RTS                                           ; 963A: 60          `
 
-; &963B referenced 1 time by &962B
 .C963B
     LDY QQ29                                      ; 963B: AC 8A 04    ...
     ADC QQ20,Y                                    ; 963E: 79 AD 03    y..
@@ -3994,22 +3639,18 @@ L8D3C = sub_C8D3B+1
     PLA                                           ; 9643: 68          h
     RTS                                           ; 9644: 60          `
 
-; &9645 referenced 5 times by &8839, &96DE, &9AB3, &9FE6, &A48F
 .sub_C9645
     JSR sub_CBEB5                                 ; 9645: 20 B5 BE     ..
     LDA #0                                        ; 9648: A9 00       ..
     STA YC                                        ; 964A: 85 3B       .;
     RTS                                           ; 964C: 60          `
 
-; ***************************************************************************************
-; &964D referenced 4 times by &8C82, &98DF, &9CBB, &9DC4
+; ******************************************************************************
 .TT20
     JSR sub_C9650                                 ; 964D: 20 50 96     P.
-; &9650 referenced 1 time by &964D
 .sub_C9650
     JSR TT54                                      ; 9650: 20 53 96     S.
-; ***************************************************************************************
-; &9653 referenced 2 times by &9650, &A7FB
+; ******************************************************************************
 .TT54
     LDA QQ15                                      ; 9653: A5 82       ..
     CLC                                           ; 9655: 18          .
@@ -4035,8 +3676,7 @@ L8D3C = sub_C8D3B+1
     STA L0087                                     ; 9677: 85 87       ..
     RTS                                           ; 9679: 60          `
 
-; ***************************************************************************************
-; &967A referenced 2 times by &96F4, &9D2F
+; ******************************************************************************
 .TT146
     LDA QQ8                                       ; 967A: AD 9B 04    ...
     ORA L049C                                     ; 967D: 0D 9C 04    ...
@@ -4047,7 +3687,6 @@ L8D3C = sub_C8D3B+1
     INC YC                                        ; 9689: E6 3B       .;
     RTS                                           ; 968B: 60          `
 
-; &968C referenced 2 times by &9680, &9685
 .C968C
     LDA #&BF                                      ; 968C: A9 BF       ..
     JSR TT68                                      ; 968E: 20 CE A8     ..
@@ -4056,50 +3695,41 @@ L8D3C = sub_C8D3B+1
     SEC                                           ; 9697: 38          8
     JSR pr5                                       ; 9698: 20 D4 9E     ..
     LDA #&C3                                      ; 969B: A9 C3       ..
-; ***************************************************************************************
-; &969D referenced 5 times by &972E, &974E, &9785, &97DD, &9ABC
+; ******************************************************************************
 .TT60
     JSR TT27                                      ; 969D: 20 01 F2     ..
-; ***************************************************************************************
-; &96A0 referenced 4 times by &96F1, &975E, &97B7, &986D
+; ******************************************************************************
 .TTX69
     INC YC                                        ; 96A0: E6 3B       .;
-; ***************************************************************************************
-; &96A2 referenced 2 times by &9A33, &9A57
+; ******************************************************************************
 .TT69
     LDA #&80                                      ; 96A2: A9 80       ..
     STA QQ17                                      ; 96A4: 85 3C       .<
-; ***************************************************************************************
-; &96A6 referenced 4 times by &8831, &89A8, &9AD9, &A8CB
+; ******************************************************************************
 .TT67
     LDA #&0C                                      ; 96A6: A9 0C       ..
     JMP TT27                                      ; 96A8: 4C 01 F2    L..
 
-; ***************************************************************************************
-; &96AB referenced 1 time by &9717
+; ******************************************************************************
 .TT70
     LDA #&AD                                      ; 96AB: A9 AD       ..
     JSR TT27                                      ; 96AD: 20 01 F2     ..
     JMP TT72                                      ; 96B0: 4C 26 97    L&.
 
-; ***************************************************************************************
-; &96B3 referenced 7 times by &881B, &88CD, &9843, &984F, &A5A1, &A89C, &BFE4
+; ******************************************************************************
 .spc
     JSR TT27                                      ; 96B3: 20 01 F2     ..
     JMP TT162                                     ; 96B6: 4C 9C 9F    L..
 
-; &96B9 referenced 3 times by &88F8, &9814, &9820
 .sub_C96B9
     PHA                                           ; 96B9: 48          H
     JSR TT162                                     ; 96BA: 20 9C 9F     ..
     PLA                                           ; 96BD: 68          h
     JMP TT27                                      ; 96BE: 4C 01 F2    L..
 
-; &96C1 referenced 1 time by &96E7
 .L96C1
     EQUB 9, 9, 7, 9                               ; 96C1: 09 09 07... ...
 
-; &96C5 referenced 4 times by &9700, &973A, &97C3, &A87F
 .sub_C96C5
     JSR TT27                                      ; 96C5: 20 01 F2     ..
     LDA #3                                        ; 96C8: A9 03       ..
@@ -4110,11 +3740,9 @@ L8D3C = sub_C8D3B+1
     STA L0037                                     ; 96D3: 85 37       .7
     RTS                                           ; 96D5: 60          `
 
-; &96D6 referenced 2 times by &978A, &9795
 .L96D6
     EQUS "RADIUS"                                 ; 96D6: 52 41 44... RAD
 
-; &96DC referenced 1 time by &B0AD
 .C96DC
     LDA #&96                                      ; 96DC: A9 96       ..
     JSR sub_C9645                                 ; 96DE: 20 45 96     E.
@@ -4133,12 +3761,10 @@ L8D3C = sub_C8D3B+1
     JSR sub_C96C5                                 ; 9700: 20 C5 96     ..
     JMP C970E                                     ; 9703: 4C 0E 97    L..
 
-; &9706 referenced 1 time by &96FC
 .C9706
     LDA #&C2                                      ; 9706: A9 C2       ..
     JSR TT68                                      ; 9708: 20 CE A8     ..
     JSR TT162                                     ; 970B: 20 9C 9F     ..
-; &970E referenced 1 time by &9703
 .C970E
     LDA L0494                                     ; 970E: AD 94 04    ...
     CLC                                           ; 9711: 18          .
@@ -4150,12 +3776,10 @@ L8D3C = sub_C8D3B+1
     BCC C9721                                     ; 971C: 90 03       ..
     SBC #5                                        ; 971E: E9 05       ..
     CLC                                           ; 9720: 18          .
-; &9721 referenced 1 time by &971C
 .C9721
     ADC #&AA                                      ; 9721: 69 AA       i.
     JSR TT27                                      ; 9723: 20 01 F2     ..
-; ***************************************************************************************
-; &9726 referenced 1 time by &96B0
+; ******************************************************************************
 .TT72
     LDA L0494                                     ; 9726: AD 94 04    ...
     LSR A                                         ; 9729: 4A          J
@@ -4170,12 +3794,10 @@ L8D3C = sub_C8D3B+1
     JSR sub_C96C5                                 ; 973A: 20 C5 96     ..
     JMP C9748                                     ; 973D: 4C 48 97    LH.
 
-; &9740 referenced 1 time by &9736
 .C9740
     LDA #&A2                                      ; 9740: A9 A2       ..
     JSR TT68                                      ; 9742: 20 CE A8     ..
     JSR TT162                                     ; 9745: 20 9C 9F     ..
-; &9748 referenced 1 time by &973D
 .C9748
     LDA L0495                                     ; 9748: AD 95 04    ...
     CLC                                           ; 974B: 18          .
@@ -4205,7 +3827,6 @@ L8D3C = sub_C8D3B+1
     LDA #&52 ; 'R'                                ; 9783: A9 52       .R
     JSR TT60                                      ; 9785: 20 9D 96     ..
     LDY #0                                        ; 9788: A0 00       ..
-; &978A referenced 1 time by &9793
 .loop_C978A
     LDA L96D6,Y                                   ; 978A: B9 D6 96    ...
     JSR TT27                                      ; 978D: 20 01 F2     ..
@@ -4235,11 +3856,9 @@ L8D3C = sub_C8D3B+1
     JSR sub_C96C5                                 ; 97C3: 20 C5 96     ..
     JMP C97CE                                     ; 97C6: 4C CE 97    L..
 
-; &97C9 referenced 1 time by &97BF
 .C97C9
     LDA #&C0                                      ; 97C9: A9 C0       ..
     JSR TT68                                      ; 97CB: 20 CE A8     ..
-; &97CE referenced 1 time by &97C6
 .C97CE
     LDA L0497                                     ; 97CE: AD 97 04    ...
     LSR A                                         ; 97D1: 4A          J
@@ -4256,7 +3875,6 @@ L8D3C = sub_C8D3B+1
     BNE C97EC                                     ; 97E5: D0 05       ..
     LDA #&28 ; '('                                ; 97E7: A9 28       .(
     JSR TT27                                      ; 97E9: 20 01 F2     ..
-; &97EC referenced 1 time by &97E5
 .C97EC
     LDA L0086                                     ; 97EC: A5 86       ..
     BMI C9826                                     ; 97EE: 30 36       06
@@ -4264,7 +3882,6 @@ L8D3C = sub_C8D3B+1
     JSR TT27                                      ; 97F2: 20 01 F2     ..
     JMP C9861                                     ; 97F5: 4C 61 98    La.
 
-; &97F8 referenced 1 time by &9834
 .C97F8
     LDA L0087                                     ; 97F8: A5 87       ..
     AND #3                                        ; 97FA: 29 03       ).
@@ -4283,7 +3900,6 @@ L8D3C = sub_C8D3B+1
     BCS C9817                                     ; 9810: B0 05       ..
     ADC #&E6                                      ; 9812: 69 E6       i.
     JSR sub_C96B9                                 ; 9814: 20 B9 96     ..
-; &9817 referenced 1 time by &9810
 .C9817
     LDA L044D                                     ; 9817: AD 4D 04    .M.
     CMP #6                                        ; 981A: C9 06       ..
@@ -4292,7 +3908,6 @@ L8D3C = sub_C8D3B+1
     JSR sub_C96B9                                 ; 9820: 20 B9 96     ..
     JMP C9861                                     ; 9823: 4C 61 98    La.
 
-; &9826 referenced 1 time by &97EE
 .C9826
     LDA L0085                                     ; 9826: A5 85       ..
     EOR L0083                                     ; 9828: 45 83       E.
@@ -4311,14 +3926,12 @@ L8D3C = sub_C8D3B+1
     BCS C9846                                     ; 983F: B0 05       ..
     ADC #&E6                                      ; 9841: 69 E6       i.
     JSR spc                                       ; 9843: 20 B3 96     ..
-; &9846 referenced 1 time by &983F
 .C9846
     LDA L044D                                     ; 9846: AD 4D 04    .M.
     CMP #6                                        ; 9849: C9 06       ..
     BCS C9852                                     ; 984B: B0 05       ..
     ADC #&EC                                      ; 984D: 69 EC       i.
     JSR spc                                       ; 984F: 20 B3 96     ..
-; &9852 referenced 1 time by &984B
 .C9852
     LDA L0087                                     ; 9852: A5 87       ..
     AND #3                                        ; 9854: 29 03       ).
@@ -4327,14 +3940,12 @@ L8D3C = sub_C8D3B+1
     AND #7                                        ; 985A: 29 07       ).
     ADC #&F2                                      ; 985C: 69 F2       i.
     JSR TT27                                      ; 985E: 20 01 F2     ..
-; &9861 referenced 3 times by &97F5, &981C, &9823
 .C9861
     LDA L04A9                                     ; 9861: AD A9 04    ...
     AND #2                                        ; 9864: 29 02       ).
     BNE C986D                                     ; 9866: D0 05       ..
     LDA #&29 ; ')'                                ; 9868: A9 29       .)
     JSR TT27                                      ; 986A: 20 01 F2     ..
-; &986D referenced 1 time by &9866
 .C986D
     JSR TTX69                                     ; 986D: 20 A0 96     ..
     JSR LF0B8                                     ; 9870: 20 B8 F0     ..
@@ -4352,7 +3963,6 @@ L8D3C = sub_C8D3B+1
     JSR LEE62                                     ; 988A: 20 62 EE     b.
     JMP C8926                                     ; 988D: 4C 26 89    L&.
 
-; &9890 referenced 3 times by &A29F, &A314, &B0A0
 .C9890
     LDA #&8D                                      ; 9890: A9 8D       ..
     JSR sub_CBEB5                                 ; 9892: 20 B5 BE     ..
@@ -4368,7 +3978,6 @@ L8D3C = sub_C8D3B+1
     JSR LEB8C                                     ; 98AB: 20 8C EB     ..
     JSR sub_C99A4                                 ; 98AE: 20 A4 99     ..
     LDX #0                                        ; 98B1: A2 00       ..
-; &98B3 referenced 1 time by &98E5
 .C98B3
     STX L009B                                     ; 98B3: 86 9B       ..
     LDA L0085                                     ; 98B5: A5 85       ..
@@ -4424,14 +4033,12 @@ L8D3C = sub_C8D3B+1
     STA L00B3                                     ; 9915: 85 B3       ..
     JMP C8926                                     ; 9917: 4C 26 89    L&.
 
-; &991A referenced 2 times by &9991, &99E8
 .sub_C991A
     LDA #&18                                      ; 991A: A9 18       ..
     LDX L009E                                     ; 991C: A6 9E       ..
     CPX #&9C                                      ; 991E: E0 9C       ..
     BNE C9924                                     ; 9920: D0 02       ..
     LDA #0                                        ; 9922: A9 00       ..
-; &9924 referenced 1 time by &9920
 .C9924
     STA L0452                                     ; 9924: 8D 52 04    .R.
     LDA L044D                                     ; 9927: AD 4D 04    .M.
@@ -4439,7 +4046,6 @@ L8D3C = sub_C8D3B+1
     SBC L044F                                     ; 992B: ED 4F 04    .O.
     BCS C9932                                     ; 992E: B0 02       ..
     LDA #0                                        ; 9930: A9 00       ..
-; &9932 referenced 1 time by &992E
 .C9932
     STA XX15                                      ; 9932: 85 71       .q
     LDA L044D                                     ; 9934: AD 4D 04    .M.
@@ -4447,7 +4053,6 @@ L8D3C = sub_C8D3B+1
     ADC L044F                                     ; 9938: 6D 4F 04    mO.
     BCC C993F                                     ; 993B: 90 02       ..
     LDA #&FF                                      ; 993D: A9 FF       ..
-; &993F referenced 1 time by &993B
 .C993F
     STA X2                                        ; 993F: 85 73       .s
     LDA L044E                                     ; 9941: AD 4E 04    .N.
@@ -4461,7 +4066,6 @@ L8D3C = sub_C8D3B+1
     SBC L044F                                     ; 9953: ED 4F 04    .O.
     BCS C995A                                     ; 9956: B0 02       ..
     LDA #0                                        ; 9958: A9 00       ..
-; &995A referenced 1 time by &9956
 .C995A
     CLC                                           ; 995A: 18          .
     ADC L0452                                     ; 995B: 6D 52 04    mR.
@@ -4476,7 +4080,6 @@ L8D3C = sub_C8D3B+1
     CPX #&9C                                      ; 9970: E0 9C       ..
     BEQ C9976                                     ; 9972: F0 02       ..
     LDA #&97                                      ; 9974: A9 97       ..
-; &9976 referenced 2 times by &996C, &9972
 .C9976
     STA Y2                                        ; 9976: 85 74       .t
     LDA L044D                                     ; 9978: AD 4D 04    .M.
@@ -4484,7 +4087,6 @@ L8D3C = sub_C8D3B+1
     STA X2                                        ; 997D: 85 73       .s
     JMP LSPUT                                     ; 997F: 4C 0F DC    L..
 
-; &9982 referenced 1 time by &99A8
 .C9982
     LDA #&68 ; 'h'                                ; 9982: A9 68       .h
     STA L044D                                     ; 9984: 8D 4D 04    .M.
@@ -4503,7 +4105,6 @@ L8D3C = sub_C8D3B+1
     STA K                                         ; 999F: 85 7D       .}
     JMP C99F4                                     ; 99A1: 4C F4 99    L..
 
-; &99A4 referenced 2 times by &98AE, &9C1E
 .sub_C99A4
     LDA L009E                                     ; 99A4: A5 9E       ..
     CMP #&9C                                      ; 99A6: C9 9C       ..
@@ -4547,7 +4148,6 @@ L8D3C = sub_C8D3B+1
     CLC                                           ; 99EE: 18          .
     ADC #&18                                      ; 99EF: 69 18       i.
     STA L044E                                     ; 99F1: 8D 4E 04    .N.
-; &99F4 referenced 1 time by &99A1
 .C99F4
     LDA L044D                                     ; 99F4: AD 4D 04    .M.
     STA XX2                                       ; 99F7: 85 3D       .=
@@ -4562,10 +4162,8 @@ L8D3C = sub_C8D3B+1
     JSR LD8FD                                     ; 9A0A: 20 FD D8     ..
     JMP LEE2A                                     ; 9A0D: 4C 2A EE    L*.
 
-; &9A10 referenced 2 times by &9AD6, &9ADC
 .C9A10
     LDY #0                                        ; 9A10: A0 00       ..
-; &9A12 referenced 1 time by &9A55
 .C9A12
     LDA L00E9                                     ; 9A12: A5 E9       ..
     BPL C9A1F                                     ; 9A14: 10 09       ..
@@ -4573,7 +4171,6 @@ L8D3C = sub_C8D3B+1
     ASL A                                         ; 9A19: 0A          .
     BPL C9A1F                                     ; 9A1A: 10 03       ..
     JSR LD06D                                     ; 9A1C: 20 6D D0     m.
-; &9A1F referenced 2 times by &9A14, &9A1A
 .C9A1F
     STY QQ29                                      ; 9A1F: 8C 8A 04    ...
     LDX QQ20,Y                                    ; 9A22: BE AD 03    ...
@@ -4599,7 +4196,6 @@ L8D3C = sub_C8D3B+1
     CLC                                           ; 9A48: 18          .
     JSR C8ABE                                     ; 9A49: 20 BE 8A     ..
     JSR C9F8E                                     ; 9A4C: 20 8E 9F     ..
-; &9A4F referenced 1 time by &9A25
 .C9A4F
     LDY QQ29                                      ; 9A4F: AC 8A 04    ...
     INY                                           ; 9A52: C8          .
@@ -4609,11 +4205,9 @@ L8D3C = sub_C8D3B+1
     LDA L03C5                                     ; 9A5A: AD C5 03    ...
     ORA L03C6                                     ; 9A5D: 0D C6 03    ...
     BNE C9A65                                     ; 9A60: D0 03       ..
-; &9A62 referenced 2 times by &9AA7, &9AAE
 .C9A62
     JMP LF2BD                                     ; 9A62: 4C BD F2    L..
 
-; &9A65 referenced 1 time by &9A60
 .C9A65
     CLC                                           ; 9A65: 18          .
     LDA #0                                        ; 9A66: A9 00       ..
@@ -4637,7 +4231,6 @@ L8D3C = sub_C8D3B+1
     BEQ C9A99                                     ; 9A92: F0 05       ..
     LDA #&65 ; 'e'                                ; 9A94: A9 65       .e
     JSR LF1E6                                     ; 9A96: 20 E6 F1     ..
-; &9A99 referenced 3 times by &9A76, &9A88, &9A92
 .C9A99
     LDA #&C6                                      ; 9A99: A9 C6       ..
     JSR LF082                                     ; 9A9B: 20 82 F0     ..
@@ -4646,13 +4239,11 @@ L8D3C = sub_C8D3B+1
     LDX L03C5                                     ; 9AA3: AE C5 03    ...
     DEX                                           ; 9AA6: CA          .
     BEQ C9A62                                     ; 9AA7: F0 B9       ..
-; &9AA9 referenced 1 time by &9AA1
 .C9AA9
     LDA #&73 ; 's'                                ; 9AA9: A9 73       .s
     JSR LF1E6                                     ; 9AAB: 20 E6 F1     ..
     JMP C9A62                                     ; 9AAE: 4C 62 9A    Lb.
 
-; &9AB1 referenced 3 times by &9FDD, &A2A8, &B0B4
 .C9AB1
     LDA #&97                                      ; 9AB1: A9 97       ..
     JSR sub_C9645                                 ; 9AB3: 20 45 96     E.
@@ -4671,7 +4262,6 @@ L8D3C = sub_C8D3B+1
     JSR TT27                                      ; 9AD3: 20 01 F2     ..
     JMP C9A10                                     ; 9AD6: 4C 10 9A    L..
 
-; &9AD9 referenced 1 time by &9ACA
 .C9AD9
     JSR TT67                                      ; 9AD9: 20 A6 96     ..
     JMP C9A10                                     ; 9ADC: 4C 10 9A    L..
@@ -4680,11 +4270,9 @@ L8D3C = sub_C8D3B+1
     SEC                                           ; 9AE2: 38          8
     RTS                                           ; 9AE3: 60          `
 
-; &9AE4 referenced 2 times by &9AEA, &9AFA
 .C9AE4
     JMP C9D09                                     ; 9AE4: 4C 09 9D    L..
 
-; &9AE7 referenced 1 time by &B18A
 .sub_C9AE7
     LDA L04B4                                     ; 9AE7: AD B4 04    ...
     BMI C9AE4                                     ; 9AEA: 30 F8       0.
@@ -4699,7 +4287,6 @@ L8D3C = sub_C8D3B+1
     BNE C9B03                                     ; 9AFE: D0 03       ..
     TYA                                           ; 9B00: 98          .
     BEQ C9B15                                     ; 9B01: F0 12       ..
-; &9B03 referenced 1 time by &9AFE
 .C9B03
     LDX #0                                        ; 9B03: A2 00       ..
     LDA L0395                                     ; 9B05: AD 95 03    ...
@@ -4711,7 +4298,6 @@ L8D3C = sub_C8D3B+1
     JSR LF171                                     ; 9B10: 20 71 F1     q.
     PLA                                           ; 9B13: 68          h
     TAY                                           ; 9B14: A8          .
-; &9B15 referenced 2 times by &9B01, &9B0C
 .C9B15
     DEY                                           ; 9B15: 88          .
     TYA                                           ; 9B16: 98          .
@@ -4728,7 +4314,6 @@ L8D3C = sub_C8D3B+1
     TXA                                           ; 9B25: 8A          .
     ASL A                                         ; 9B26: 0A          .
     PHA                                           ; 9B27: 48          H
-; &9B28 referenced 1 time by &9B1E
 .C9B28
     JSR LD167                                     ; 9B28: 20 67 D1     g.
     PLA                                           ; 9B2B: 68          h
@@ -4745,7 +4330,6 @@ L8D3C = sub_C8D3B+1
     LDA L0451                                     ; 9B48: AD 51 04    .Q.
     STA L049D                                     ; 9B4B: 8D 9D 04    ...
     STA L044D                                     ; 9B4E: 8D 4D 04    .M.
-; &9B51 referenced 3 times by &990C, &9C21, &9D19
 .sub_C9B51
     LDA L009E                                     ; 9B51: A5 9E       ..
     CMP #&9C                                      ; 9B53: C9 9C       ..
@@ -4775,7 +4359,6 @@ L8D3C = sub_C8D3B+1
     STA L044F                                     ; 9B80: 8D 4F 04    .O.
     JMP C9BCF                                     ; 9B83: 4C CF 9B    L..
 
-; &9B86 referenced 2 times by &9B32, &9B45
 .sub_C9B86
     CLC                                           ; 9B86: 18          .
     ADC L0450                                     ; 9B87: 6D 50 04    mP.
@@ -4784,16 +4367,13 @@ L8D3C = sub_C8D3B+1
     BCC C9B99                                     ; 9B8F: 90 08       ..
     LDA #&FF                                      ; 9B91: A9 FF       ..
     BNE C9B99                                     ; 9B93: D0 04       ..
-; &9B95 referenced 1 time by &9B8D
 .C9B95
     BCS C9B99                                     ; 9B95: B0 02       ..
     LDA #1                                        ; 9B97: A9 01       ..
-; &9B99 referenced 3 times by &9B8F, &9B93, &9B95
 .C9B99
     STA L0451                                     ; 9B99: 8D 51 04    .Q.
     RTS                                           ; 9B9C: 60          `
 
-; &9B9D referenced 1 time by &9B55
 .C9B9D
     LDA L049D                                     ; 9B9D: AD 9D 04    ...
     SEC                                           ; 9BA0: 38          8
@@ -4802,7 +4382,6 @@ L8D3C = sub_C8D3B+1
     BCC C9BAC                                     ; 9BA6: 90 04       ..
     CMP #&E9                                      ; 9BA8: C9 E9       ..
     BCC C9BF6                                     ; 9BAA: 90 4A       .J
-; &9BAC referenced 1 time by &9BA6
 .C9BAC
     ASL A                                         ; 9BAC: 0A          .
     ASL A                                         ; 9BAD: 0A          .
@@ -4816,7 +4395,6 @@ L8D3C = sub_C8D3B+1
     BCC C9BC3                                     ; 9BBD: 90 04       ..
     CMP #&DC                                      ; 9BBF: C9 DC       ..
     BCC C9BF6                                     ; 9BC1: 90 33       .3
-; &9BC3 referenced 1 time by &9BBD
 .C9BC3
     ASL A                                         ; 9BC3: 0A          .
     CLC                                           ; 9BC4: 18          .
@@ -4824,7 +4402,6 @@ L8D3C = sub_C8D3B+1
     STA L044E                                     ; 9BC7: 8D 4E 04    .N.
     LDA #8                                        ; 9BCA: A9 08       ..
     STA L044F                                     ; 9BCC: 8D 4F 04    .O.
-; &9BCF referenced 1 time by &9B83
 .C9BCF
     LDA #&F8                                      ; 9BCF: A9 F8       ..
     STA L023D                                     ; 9BD1: 8D 3D 02    .=.
@@ -4847,17 +4424,14 @@ L8D3C = sub_C8D3B+1
     STA L0200,X                                   ; 9BF2: 9D 00 02    ...
     RTS                                           ; 9BF5: 60          `
 
-; &9BF6 referenced 2 times by &9BAA, &9BC1
 .C9BF6
     LDA #&F0                                      ; 9BF6: A9 F0       ..
     STA L023C                                     ; 9BF8: 8D 3C 02    .<.
     RTS                                           ; 9BFB: 60          `
 
-; &9BFC referenced 1 time by &9C11
 .L9BFC
     EQUB   7,   8, &0A,   8                       ; 9BFC: 07 08 0A... ...
 
-; &9C00 referenced 3 times by &A29C, &A317, &B0A3
 .C9C00
     LDA #0                                        ; 9C00: A9 00       ..
     STA L04A1                                     ; 9C02: 8D A1 04    ...
@@ -4877,12 +4451,10 @@ L8D3C = sub_C8D3B+1
     LDA #0                                        ; 9C27: A9 00       ..
     STA XX20                                      ; 9C29: 85 AC       ..
     LDX #&18                                      ; 9C2B: A2 18       ..
-; &9C2D referenced 1 time by &9C30
 .loop_C9C2D
     STA INWK,X                                    ; 9C2D: 95 09       ..
     DEX                                           ; 9C2F: CA          .
     BPL loop_C9C2D                                ; 9C30: 10 FB       ..
-; &9C32 referenced 1 time by &9CC2
 .C9C32
     LDA L00E9                                     ; 9C32: A5 E9       ..
     BPL C9C3F                                     ; 9C34: 10 09       ..
@@ -4890,7 +4462,6 @@ L8D3C = sub_C8D3B+1
     ASL A                                         ; 9C39: 0A          .
     BPL C9C3F                                     ; 9C3A: 10 03       ..
     JSR LD06D                                     ; 9C3C: 20 6D D0     m.
-; &9C3F referenced 2 times by &9C34, &9C3A
 .C9C3F
     LDA L0085                                     ; 9C3F: A5 85       ..
     SEC                                           ; 9C41: 38          8
@@ -4898,7 +4469,6 @@ L8D3C = sub_C8D3B+1
     BCS C9C4B                                     ; 9C45: B0 04       ..
     EOR #&FF                                      ; 9C47: 49 FF       I.
     ADC #1                                        ; 9C49: 69 01       i.
-; &9C4B referenced 1 time by &9C45
 .C9C4B
     CMP #&14                                      ; 9C4B: C9 14       ..
     BCS C9CBB                                     ; 9C4D: B0 6C       .l
@@ -4908,7 +4478,6 @@ L8D3C = sub_C8D3B+1
     BCS C9C5B                                     ; 9C55: B0 04       ..
     EOR #&FF                                      ; 9C57: 49 FF       I.
     ADC #1                                        ; 9C59: 69 01       i.
-; &9C5B referenced 1 time by &9C55
 .C9C5B
     CMP #&26 ; '&'                                ; 9C5B: C9 26       .&
     BCS C9CBB                                     ; 9C5D: B0 5C       .\
@@ -4944,7 +4513,6 @@ L8D3C = sub_C8D3B+1
     DEY                                           ; 9C8C: 88          .
     LDX INWK,Y                                    ; 9C8D: B6 09       ..
     BNE C9CA4                                     ; 9C8F: D0 13       ..
-; &9C91 referenced 2 times by &9C84, &9C89
 .C9C91
     TYA                                           ; 9C91: 98          .
     STA YC                                        ; 9C92: 85 3B       .;
@@ -4955,7 +4523,6 @@ L8D3C = sub_C8D3B+1
     LDA #&80                                      ; 9C9D: A9 80       ..
     STA QQ17                                      ; 9C9F: 85 3C       .<
     JSR CA7D0                                     ; 9CA1: 20 D0 A7     ..
-; &9CA4 referenced 1 time by &9C8F
 .C9CA4
     LDA #0                                        ; 9CA4: A9 00       ..
     STA L003E                                     ; 9CA6: 85 3E       .>
@@ -4968,20 +4535,17 @@ L8D3C = sub_C8D3B+1
     ADC #2                                        ; 9CB4: 69 02       i.
     STA K                                         ; 9CB6: 85 7D       .}
     JSR sub_C9CCC                                 ; 9CB8: 20 CC 9C     ..
-; &9CBB referenced 3 times by &9C4D, &9C5D, &9C96
 .C9CBB
     JSR TT20                                      ; 9CBB: 20 4D 96     M.
     INC XX20                                      ; 9CBE: E6 AC       ..
     BEQ C9CC5                                     ; 9CC0: F0 03       ..
     JMP C9C32                                     ; 9CC2: 4C 32 9C    L2.
 
-; &9CC5 referenced 1 time by &9CC0
 .C9CC5
     LDA #&8F                                      ; 9CC5: A9 8F       ..
     STA L00B3                                     ; 9CC7: 85 B3       ..
     JMP C8926                                     ; 9CC9: 4C 26 89    L&.
 
-; &9CCC referenced 1 time by &9CB8
 .sub_C9CCC
     LDY L04A1                                     ; 9CCC: AC A1 04    ...
     CPY #&18                                      ; 9CCF: C0 18       ..
@@ -5005,14 +4569,11 @@ L8D3C = sub_C8D3B+1
     STA L0299,Y                                   ; 9CEF: 99 99 02    ...
     LDA #2                                        ; 9CF2: A9 02       ..
     STA L029A,Y                                   ; 9CF4: 99 9A 02    ...
-; &9CF7 referenced 1 time by &9CD1
 .C9CF7
     RTS                                           ; 9CF7: 60          `
 
-; &9CF8 referenced 4 times by &8C49, &989E, &9C24, &9D6B
 .sub_C9CF8
     LDX #5                                        ; 9CF8: A2 05       ..
-; &9CFA referenced 1 time by &9D00
 .loop_C9CFA
     LDA L03DF,X                                   ; 9CFA: BD DF 03    ...
     STA QQ15,X                                    ; 9CFD: 95 82       ..
@@ -5020,12 +4581,10 @@ L8D3C = sub_C8D3B+1
     BPL loop_C9CFA                                ; 9D00: 10 F8       ..
     RTS                                           ; 9D02: 60          `
 
-; &9D03 referenced 2 times by &A240, &B0C6
 .sub_C9D03
     JSR sub_C9D6B                                 ; 9D03: 20 6B 9D     k.
     JMP C9D35                                     ; 9D06: 4C 35 9D    L5.
 
-; &9D09 referenced 4 times by &883C, &9AE4, &B0AA, &B187
 .C9D09
     LDA L0395                                     ; 9D09: AD 95 03    ...
     BMI C9D60                                     ; 9D0C: 30 52       0R
@@ -5045,7 +4604,6 @@ L8D3C = sub_C8D3B+1
     JSR LF1E6                                     ; 9D2C: 20 E6 F1     ..
     JSR TT146                                     ; 9D2F: 20 7A 96     z.
     JSR LD951                                     ; 9D32: 20 51 D9     Q.
-; &9D35 referenced 3 times by &84C2, &9D06, &9D17
 .C9D35
     LDA L049C                                     ; 9D35: AD 9C 04    ...
     BNE C9D51                                     ; 9D38: D0 17       ..
@@ -5054,19 +4612,15 @@ L8D3C = sub_C8D3B+1
     LDA L038A                                     ; 9D3F: AD 8A 03    ...
     BEQ C9D51                                     ; 9D42: F0 0D       ..
     BNE C9D4D                                     ; 9D44: D0 07       ..
-; &9D46 referenced 1 time by &9D3D
 .C9D46
     CMP L03A5                                     ; 9D46: CD A5 03    ...
     BEQ C9D4D                                     ; 9D49: F0 02       ..
     BCS C9D51                                     ; 9D4B: B0 04       ..
-; &9D4D referenced 2 times by &9D44, &9D49
 .C9D4D
     LDA #&C0                                      ; 9D4D: A9 C0       ..
     BNE C9D53                                     ; 9D4F: D0 02       ..
-; &9D51 referenced 3 times by &9D38, &9D42, &9D4B
 .C9D51
     LDA #&80                                      ; 9D51: A9 80       ..
-; &9D53 referenced 1 time by &9D4F
 .C9D53
     TAX                                           ; 9D53: AA          .
     EOR L0395                                     ; 9D54: 4D 95 03    M..
@@ -5075,27 +4629,22 @@ L8D3C = sub_C8D3B+1
     BPL C9D6A                                     ; 9D5B: 10 0D       ..
     JMP LF171                                     ; 9D5D: 4C 71 F1    Lq.
 
-; &9D60 referenced 1 time by &9D0C
 .C9D60
     LDX #5                                        ; 9D60: A2 05       ..
-; &9D62 referenced 1 time by &9D68
 .loop_C9D62
     LDA L0453,X                                   ; 9D62: BD 53 04    .S.
     STA QQ15,X                                    ; 9D65: 95 82       ..
     DEX                                           ; 9D67: CA          .
     BPL loop_C9D62                                ; 9D68: 10 F8       ..
-; &9D6A referenced 1 time by &9D5B
 .C9D6A
     RTS                                           ; 9D6A: 60          `
 
-; &9D6B referenced 7 times by &8C89, &96E1, &9D03, &9D0E, &9EAC, &A37C, &B376
 .sub_C9D6B
     JSR sub_C9CF8                                 ; 9D6B: 20 F8 9C     ..
     LDY #&7F                                      ; 9D6E: A0 7F       ..
     STY T                                         ; 9D70: 84 9A       ..
     LDA #0                                        ; 9D72: A9 00       ..
     STA U                                         ; 9D74: 85 96       ..
-; &9D76 referenced 1 time by &9DC9
 .C9D76
     LDA L00E9                                     ; 9D76: A5 E9       ..
     BPL C9D83                                     ; 9D78: 10 09       ..
@@ -5103,7 +4652,6 @@ L8D3C = sub_C8D3B+1
     ASL A                                         ; 9D7D: 0A          .
     BPL C9D83                                     ; 9D7E: 10 03       ..
     JSR LD06D                                     ; 9D80: 20 6D D0     m.
-; &9D83 referenced 2 times by &9D78, &9D7E
 .C9D83
     LDA L0085                                     ; 9D83: A5 85       ..
     SEC                                           ; 9D85: 38          8
@@ -5111,7 +4659,6 @@ L8D3C = sub_C8D3B+1
     BCS C9D8F                                     ; 9D89: B0 04       ..
     EOR #&FF                                      ; 9D8B: 49 FF       I.
     ADC #1                                        ; 9D8D: 69 01       i.
-; &9D8F referenced 1 time by &9D89
 .C9D8F
     LSR A                                         ; 9D8F: 4A          J
     STA S                                         ; 9D90: 85 99       ..
@@ -5121,7 +4668,6 @@ L8D3C = sub_C8D3B+1
     BCS C9D9E                                     ; 9D98: B0 04       ..
     EOR #&FF                                      ; 9D9A: 49 FF       I.
     ADC #1                                        ; 9D9C: 69 01       i.
-; &9D9E referenced 1 time by &9D98
 .C9D9E
     LSR A                                         ; 9D9E: 4A          J
     CLC                                           ; 9D9F: 18          .
@@ -5130,7 +4676,6 @@ L8D3C = sub_C8D3B+1
     BCS C9DB7                                     ; 9DA4: B0 11       ..
     STA T                                         ; 9DA6: 85 9A       ..
     LDX #5                                        ; 9DA8: A2 05       ..
-; &9DAA referenced 1 time by &9DB0
 .loop_C9DAA
     LDA QQ15,X                                    ; 9DAA: B5 82       ..
     STA L044D,X                                   ; 9DAC: 9D 4D 04    .M.
@@ -5138,7 +4683,6 @@ L8D3C = sub_C8D3B+1
     BPL loop_C9DAA                                ; 9DB0: 10 F8       ..
     LDA U                                         ; 9DB2: A5 96       ..
     STA L049F                                     ; 9DB4: 8D 9F 04    ...
-; &9DB7 referenced 1 time by &9DA4
 .C9DB7
     LDA L00E9                                     ; 9DB7: A5 E9       ..
     BPL C9DC4                                     ; 9DB9: 10 09       ..
@@ -5146,13 +4690,11 @@ L8D3C = sub_C8D3B+1
     ASL A                                         ; 9DBE: 0A          .
     BPL C9DC4                                     ; 9DBF: 10 03       ..
     JSR LD06D                                     ; 9DC1: 20 6D D0     m.
-; &9DC4 referenced 2 times by &9DB9, &9DBF
 .C9DC4
     JSR TT20                                      ; 9DC4: 20 4D 96     M.
     INC U                                         ; 9DC7: E6 96       ..
     BNE C9D76                                     ; 9DC9: D0 AB       ..
     LDX #5                                        ; 9DCB: A2 05       ..
-; &9DCD referenced 1 time by &9DD6
 .loop_C9DCD
     LDA L044D,X                                   ; 9DCD: BD 4D 04    .M.
     STA L0453,X                                   ; 9DD0: 9D 53 04    .S.
@@ -5168,7 +4710,6 @@ L8D3C = sub_C8D3B+1
     BCS C9DEC                                     ; 9DE6: B0 04       ..
     EOR #&FF                                      ; 9DE8: 49 FF       I.
     ADC #1                                        ; 9DEA: 69 01       i.
-; &9DEC referenced 1 time by &9DE6
 .C9DEC
     JSR SQUA2                                     ; 9DEC: 20 0E F7     ..
     STA L007E                                     ; 9DEF: 85 7E       .~
@@ -5180,7 +4721,6 @@ L8D3C = sub_C8D3B+1
     BCS C9E02                                     ; 9DFC: B0 04       ..
     EOR #&FF                                      ; 9DFE: 49 FF       I.
     ADC #1                                        ; 9E00: 69 01       i.
-; &9E02 referenced 1 time by &9DFC
 .C9E02
     LSR A                                         ; 9E02: 4A          J
     JSR SQUA2                                     ; 9E03: 20 0E F7     ..
@@ -5191,7 +4731,6 @@ L8D3C = sub_C8D3B+1
     ASL A                                         ; 9E0E: 0A          .
     BPL C9E14                                     ; 9E0F: 10 03       ..
     JSR LD06D                                     ; 9E11: 20 6D D0     m.
-; &9E14 referenced 2 times by &9E09, &9E0F
 .C9E14
     LDA P                                         ; 9E14: A5 2F       ./
     CLC                                           ; 9E16: 18          .
@@ -5201,7 +4740,6 @@ L8D3C = sub_C8D3B+1
     ADC L007E                                     ; 9E1C: 65 7E       e~
     BCC C9E22                                     ; 9E1E: 90 02       ..
     LDA #&FF                                      ; 9E20: A9 FF       ..
-; &9E22 referenced 1 time by &9E1E
 .C9E22
     STA R                                         ; 9E22: 85 98       ..
     JSR LFA55                                     ; 9E24: 20 55 FA     U.
@@ -5215,7 +4753,6 @@ L8D3C = sub_C8D3B+1
     STA QQ8                                       ; 9E36: 8D 9B 04    ...
     JMP LEF35                                     ; 9E39: 4C 35 EF    L5.
 
-; &9E3C referenced 2 times by &9E4A, &9E53
 .C9E3C
     JSR LF2DE                                     ; 9E3C: 20 DE F2     ..
     LDA #&0F                                      ; 9E3F: A9 0F       ..
@@ -5223,7 +4760,6 @@ L8D3C = sub_C8D3B+1
     LDA #&CD                                      ; 9E43: A9 CD       ..
     JMP LF082                                     ; 9E45: 4C 82 F0    L..
 
-; &9E48 referenced 1 time by &B154
 .C9E48
     LDA L00A5                                     ; 9E48: A5 A5       ..
     BNE C9E3C                                     ; 9E4A: D0 F0       ..
@@ -5231,7 +4767,6 @@ L8D3C = sub_C8D3B+1
     BEQ C9E76                                     ; 9E4E: F0 26       .&
     RTS                                           ; 9E50: 60          `
 
-; &9E51 referenced 1 time by &B14D
 .C9E51
     LDA L00A5                                     ; 9E51: A5 A5       ..
     BNE C9E3C                                     ; 9E53: D0 E7       ..
@@ -5239,31 +4774,26 @@ L8D3C = sub_C8D3B+1
     BEQ C9E5A                                     ; 9E57: F0 01       ..
     RTS                                           ; 9E59: 60          `
 
-; &9E5A referenced 1 time by &9E57
 .C9E5A
     LDA L0395                                     ; 9E5A: AD 95 03    ...
     ASL A                                         ; 9E5D: 0A          .
     BMI C9E61                                     ; 9E5E: 30 01       0.
     RTS                                           ; 9E60: 60          `
 
-; &9E61 referenced 1 time by &9E5E
 .C9E61
     LDX #5                                        ; 9E61: A2 05       ..
-; &9E63 referenced 1 time by &9E69
 .loop_C9E63
     LDA QQ15,X                                    ; 9E63: B5 82       ..
     STA L05E4,X                                   ; 9E65: 9D E4 05    ...
     DEX                                           ; 9E68: CA          .
     BPL loop_C9E63                                ; 9E69: 10 F8       ..
     LDA #&10                                      ; 9E6B: A9 10       ..
-; &9E6D referenced 1 time by &9E87
 .sub_C9E6D
     STA L006C                                     ; 9E6D: 85 6C       .l
     LDA #1                                        ; 9E6F: A9 01       ..
     STA L006B                                     ; 9E71: 85 6B       .k
     JMP LF171                                     ; 9E73: 4C 71 F1    Lq.
 
-; &9E76 referenced 1 time by &9E4E
 .C9E76
     LDX L03C3                                     ; 9E76: AE C3 03    ...
     BEQ C9ED2                                     ; 9E79: F0 57       .W
@@ -5278,7 +4808,6 @@ L8D3C = sub_C8D3B+1
     LDA L03A7                                     ; 9E8F: AD A7 03    ...
     AND #&F7                                      ; 9E92: 29 F7       ).
     STA L03A7                                     ; 9E94: 8D A7 03    ...
-; &9E97 referenced 1 time by &9E9F
 .loop_C9E97
     LDA L03DF,X                                   ; 9E97: BD DF 03    ...
     ASL A                                         ; 9E9A: 0A          .
@@ -5291,7 +4820,6 @@ L8D3C = sub_C8D3B+1
     JSR CA2BE                                     ; 9EA9: 20 BE A2     ..
     JSR sub_C9D6B                                 ; 9EAC: 20 6B 9D     k.
     LDX #5                                        ; 9EAF: A2 05       ..
-; &9EB1 referenced 1 time by &9EB7
 .loop_C9EB1
     LDA QQ15,X                                    ; 9EB1: B5 82       ..
     STA L05E4,X                                   ; 9EB3: 9D E4 05    ...
@@ -5302,19 +4830,16 @@ L8D3C = sub_C8D3B+1
     STX L049C                                     ; 9EBE: 8E 9C 04    ...
     LDY #&16                                      ; 9EC1: A0 16       ..
     JSR LEBF2                                     ; 9EC3: 20 F2 EB     ..
-; &9EC6 referenced 3 times by &A18F, &A37F, &B379
 .sub_C9EC6
     LDA L049D                                     ; 9EC6: AD 9D 04    ...
     STA L039F                                     ; 9EC9: 8D 9F 03    ...
     LDA L049E                                     ; 9ECC: AD 9E 04    ...
     STA L03A0                                     ; 9ECF: 8D A0 03    ...
-; &9ED2 referenced 1 time by &9E79
 .C9ED2
     RTS                                           ; 9ED2: 60          `
 
     CLC                                           ; 9ED3: 18          .
-; ***************************************************************************************
-; &9ED4 referenced 2 times by &9698, &9F5D
+; ******************************************************************************
 .pr5
     LDA #5                                        ; 9ED4: A9 05       ..
     JMP C8AC2                                     ; 9ED6: 4C C2 8A    L..
@@ -5327,18 +4852,15 @@ L8D3C = sub_C8D3B+1
     JSR sub_C9EEC                                 ; 9EE6: 20 EC 9E     ..
     JMP C8980                                     ; 9EE9: 4C 80 89    L..
 
-; &9EEC referenced 2 times by &9EE6, &A679
 .sub_C9EEC
     JSR TT27                                      ; 9EEC: 20 01 F2     ..
     LDA #&3F ; '?'                                ; 9EEF: A9 3F       .?
     JMP TT27                                      ; 9EF1: 4C 01 F2    L..
 
-; &9EF4 referenced 1 time by &9F05
 .loop_C9EF4
     PLA                                           ; 9EF4: 68          h
     RTS                                           ; 9EF5: 60          `
 
-; &9EF6 referenced 3 times by &A009, &A13F, &A152
 .C9EF6
     PHA                                           ; 9EF6: 48          H
     STA L0451                                     ; 9EF7: 8D 51 04    .Q.
@@ -5356,7 +4878,6 @@ L8D3C = sub_C8D3B+1
     CLC                                           ; 9F10: 18          .
     ADC #&D0                                      ; 9F11: 69 D0       i.
     JSR TT27                                      ; 9F13: 20 01 F2     ..
-; &9F16 referenced 1 time by &9F1F
 .loop_C9F16
     LDA #&20 ; ' '                                ; 9F16: A9 20       .
     JSR TT27                                      ; 9F18: 20 01 F2     ..
@@ -5379,12 +4900,10 @@ L8D3C = sub_C8D3B+1
     ADC L0450                                     ; 9F45: 6D 50 04    mP.
     JMP C9F52                                     ; 9F48: 4C 52 9F    LR.
 
-; &9F4B referenced 1 time by &9F40
 .C9F4B
     LDA L0487                                     ; 9F4B: AD 87 04    ...
     SEC                                           ; 9F4E: 38          8
     SBC L0450                                     ; 9F4F: ED 50 04    .P.
-; &9F52 referenced 1 time by &9F48
 .C9F52
     STA L0487                                     ; 9F52: 8D 87 04    ...
     STA P                                         ; 9F55: 85 2F       ./
@@ -5402,12 +4921,10 @@ L8D3C = sub_C8D3B+1
     JSR C9F8E                                     ; 9F71: 20 8E 9F     ..
     JMP C9FBB                                     ; 9F74: 4C BB 9F    L..
 
-; &9F77 referenced 1 time by &9F6C
 .C9F77
     JSR C9F7D                                     ; 9F77: 20 7D 9F     }.
     JMP C9FBB                                     ; 9F7A: 4C BB 9F    L..
 
-; &9F7D referenced 2 times by &9F77, &9FD0
 .C9F7D
     JSR TT162                                     ; 9F7D: 20 9C 9F     ..
     JSR TT162                                     ; 9F80: 20 9C 9F     ..
@@ -5416,7 +4933,6 @@ L8D3C = sub_C8D3B+1
     JSR TT162                                     ; 9F88: 20 9C 9F     ..
     JMP TT162                                     ; 9F8B: 4C 9C 9F    L..
 
-; &9F8E referenced 4 times by &9A4C, &9F37, &9F71, &9FD6
 .C9F8E
     LDA L044E                                     ; 9F8E: AD 4E 04    .N.
     AND #&60 ; '`'                                ; 9F91: 29 60       )`
@@ -5424,36 +4940,29 @@ L8D3C = sub_C8D3B+1
     CMP #&20 ; ' '                                ; 9F95: C9 20       .
     BEQ C9FA9                                     ; 9F97: F0 10       ..
     JSR sub_C9FAE                                 ; 9F99: 20 AE 9F     ..
-; ***************************************************************************************
-; &9F9C referenced 32 times by &87CB, &87F9, &87FC, &96B6, &96BA, &970B, &9745, &9772, &97AA, &9EE1, &9F7D, &9F80, &9F88, &9F8B, &9FA6, &A3F4, &A3F7, &A455, &A5A9, &A5C5, &A681, &A6B3, &A6BD, &A6C8, &A876, &A882, &A8A2, &A8A5, &A8C2, &A8C5, &B7BF, &BFD0
+; ******************************************************************************
 .TT162
     LDA #&20 ; ' '                                ; 9F9C: A9 20       .
-; &9F9E referenced 1 time by &9FB9
 .loop_C9F9E
     JMP TT27                                      ; 9F9E: 4C 01 F2    L..
 
-; &9FA1 referenced 1 time by &9F93
 .C9FA1
     LDA #&74 ; 't'                                ; 9FA1: A9 74       .t
     JSR LF1E6                                     ; 9FA3: 20 E6 F1     ..
     JMP TT162                                     ; 9FA6: 4C 9C 9F    L..
 
-; &9FA9 referenced 1 time by &9F97
 .C9FA9
     LDA #&6B ; 'k'                                ; 9FA9: A9 6B       .k
     JSR LF1E6                                     ; 9FAB: 20 E6 F1     ..
-; &9FAE referenced 1 time by &9F99
 .sub_C9FAE
     LDA #&67 ; 'g'                                ; 9FAE: A9 67       .g
     JMP LF1E6                                     ; 9FB0: 4C E6 F1    L..
 
-; &9FB3 referenced 1 time by &9FF6
 .sub_C9FB3
     LDA #1                                        ; 9FB3: A9 01       ..
     STA L0032                                     ; 9FB5: 85 32       .2
     LDA #&FF                                      ; 9FB7: A9 FF       ..
     BNE loop_C9F9E                                ; 9FB9: D0 E3       ..
-; &9FBB referenced 2 times by &9F74, &9F7A
 .C9FBB
     LDA L00E9                                     ; 9FBB: A5 E9       ..
     BPL C9FC8                                     ; 9FBD: 10 09       ..
@@ -5461,7 +4970,6 @@ L8D3C = sub_C8D3B+1
     ASL A                                         ; 9FC2: 0A          .
     BPL C9FC8                                     ; 9FC3: 10 03       ..
     JSR LD06D                                     ; 9FC5: 20 6D D0     m.
-; &9FC8 referenced 2 times by &9FBD, &9FC3
 .C9FC8
     LDY QQ29                                      ; 9FC8: AC 8A 04    ...
     LDA #3                                        ; 9FCB: A9 03       ..
@@ -5471,15 +4979,12 @@ L8D3C = sub_C8D3B+1
     JSR sub_C8AC0                                 ; 9FD3: 20 C0 8A     ..
     JMP C9F8E                                     ; 9FD6: 4C 8E 9F    L..
 
-; &9FD9 referenced 3 times by &9FFC, &A139, &A14C
 .L9FD9
     EQUB 4, 5, 4, 4                               ; 9FD9: 04 05 04... ...
 
-; &9FDD referenced 1 time by &9FE4
 .loop_C9FDD
     JMP C9AB1                                     ; 9FDD: 4C B1 9A    L..
 
-; &9FE0 referenced 2 times by &A2B3, &B0BB
 .C9FE0
     LDA #&BA                                      ; 9FE0: A9 BA       ..
     CMP L009E                                     ; 9FE2: C5 9E       ..
@@ -5497,7 +5002,6 @@ L8D3C = sub_C8D3B+1
     STA YC                                        ; 9FFF: 85 3B       .;
     LDA #0                                        ; A001: A9 00       ..
     STA QQ29                                      ; A003: 8D 8A 04    ...
-; &A006 referenced 1 time by &A016
 .loop_CA006
     JSR LEC7D                                     ; A006: 20 7D EC     }.
     JSR C9EF6                                     ; A009: 20 F6 9E     ..
@@ -5508,24 +5012,20 @@ L8D3C = sub_C8D3B+1
     BCC loop_CA006                                ; A016: 90 EE       ..
     LDA L00A5                                     ; A018: A5 A5       ..
     BNE CA028                                     ; A01A: D0 0C       ..
-; &A01C referenced 1 time by &A033
 .sub_CA01C
     JSR LEB86                                     ; A01C: 20 86 EB     ..
     JSR LECF9                                     ; A01F: 20 F9 EC     ..
     JMP C8926                                     ; A022: 4C 26 89    L&.
 
-; &A025 referenced 1 time by &A065
 .CA025
     JMP CA0F4                                     ; A025: 4C F4 A0    L..
 
-; &A028 referenced 1 time by &A01A
 .CA028
     LDA #0                                        ; A028: A9 00       ..
     STA QQ29                                      ; A02A: 8D 8A 04    ...
     JSR sub_CA130                                 ; A02D: 20 30 A1     0.
     JSR sub_CA155                                 ; A030: 20 55 A1     U.
     JSR sub_CA01C                                 ; A033: 20 1C A0     ..
-; &A036 referenced 4 times by &A071, &A076, &A098, &A12D
 .CA036
     JSR LEC7D                                     ; A036: 20 7D EC     }.
     LDA L04B4                                     ; A039: AD B4 04    ...
@@ -5536,7 +5036,6 @@ L8D3C = sub_C8D3B+1
     LDA L04AE                                     ; A046: AD AE 04    ...
     ORA L04B0                                     ; A049: 0D B0 04    ...
     BNE CA06E                                     ; A04C: D0 20       .
-; &A04E referenced 1 time by &A044
 .CA04E
     LDA L04AC                                     ; A04E: AD AC 04    ...
     AND #&F0                                      ; A051: 29 F0       ).
@@ -5552,7 +5051,6 @@ L8D3C = sub_C8D3B+1
     LDA L04BB                                     ; A067: AD BB 04    ...
     CMP #&F0                                      ; A06A: C9 F0       ..
     BEQ CA0B3                                     ; A06C: F0 45       .E
-; &A06E referenced 2 times by &A03C, &A04C
 .CA06E
     LDA L0465                                     ; A06E: AD 65 04    .e.
     BEQ CA036                                     ; A071: F0 C3       ..
@@ -5560,7 +5058,6 @@ L8D3C = sub_C8D3B+1
     BCS CA036                                     ; A076: B0 BE       ..
     RTS                                           ; A078: 60          `
 
-; &A079 referenced 1 time by &A055
 .CA079
     LDA QQ29                                      ; A079: AD 8A 04    ...
     JSR sub_CA147                                 ; A07C: 20 47 A1     G.
@@ -5569,10 +5066,8 @@ L8D3C = sub_C8D3B+1
     SBC #1                                        ; A083: E9 01       ..
     BPL CA089                                     ; A085: 10 02       ..
     LDA #0                                        ; A087: A9 00       ..
-; &A089 referenced 1 time by &A085
 .CA089
     STA QQ29                                      ; A089: 8D 8A 04    ...
-; &A08C referenced 3 times by &A0B0, &A0F1, &A12A
 .CA08C
     LDA QQ29                                      ; A08C: AD 8A 04    ...
     JSR sub_CA130                                 ; A08F: 20 30 A1     0.
@@ -5580,7 +5075,6 @@ L8D3C = sub_C8D3B+1
     JSR LD8C5                                     ; A095: 20 C5 D8     ..
     JMP CA036                                     ; A098: 4C 36 A0    L6.
 
-; &A09B referenced 1 time by &A05E
 .CA09B
     LDA QQ29                                      ; A09B: AD 8A 04    ...
     JSR sub_CA147                                 ; A09E: 20 47 A1     G.
@@ -5590,12 +5084,10 @@ L8D3C = sub_C8D3B+1
     CMP #&11                                      ; A0A7: C9 11       ..
     BNE CA0AD                                     ; A0A9: D0 02       ..
     LDA #&10                                      ; A0AB: A9 10       ..
-; &A0AD referenced 1 time by &A0A9
 .CA0AD
     STA QQ29                                      ; A0AD: 8D 8A 04    ...
     JMP CA08C                                     ; A0B0: 4C 8C A0    L..
 
-; &A0B3 referenced 1 time by &A06C
 .CA0B3
     LDA #1                                        ; A0B3: A9 01       ..
     JSR sub_C9625                                 ; A0B5: 20 25 96     %.
@@ -5624,7 +5116,6 @@ L8D3C = sub_C8D3B+1
     JSR sub_CA155                                 ; A0EE: 20 55 A1     U.
     JMP CA08C                                     ; A0F1: 4C 8C A0    L..
 
-; &A0F4 referenced 1 time by &A025
 .CA0F4
     LDY QQ29                                      ; A0F4: AC 8A 04    ...
     LDA L03CA,Y                                   ; A0F7: B9 CA 03    ...
@@ -5650,11 +5141,9 @@ L8D3C = sub_C8D3B+1
     JSR LEBF2                                     ; A127: 20 F2 EB     ..
     JMP CA08C                                     ; A12A: 4C 8C A0    L..
 
-; &A12D referenced 5 times by &A0B8, &A0C0, &A0CF, &A0FC, &A101
 .CA12D
     JMP CA036                                     ; A12D: 4C 36 A0    L6.
 
-; &A130 referenced 2 times by &A02D, &A08F
 .sub_CA130
     TAY                                           ; A130: A8          .
     LDX #2                                        ; A131: A2 02       ..
@@ -5669,7 +5158,6 @@ L8D3C = sub_C8D3B+1
     STX L0037                                     ; A144: 86 37       .7
     RTS                                           ; A146: 60          `
 
-; &A147 referenced 2 times by &A07C, &A09E
 .sub_CA147
     TAY                                           ; A147: A8          .
     CLC                                           ; A148: 18          .
@@ -5679,7 +5167,6 @@ L8D3C = sub_C8D3B+1
     TYA                                           ; A151: 98          .
     JMP C9EF6                                     ; A152: 4C F6 9E    L..
 
-; &A155 referenced 3 times by &A030, &A0EE, &A122
 .sub_CA155
     LDA #&80                                      ; A155: A9 80       ..
     STA QQ17                                      ; A157: 85 3C       .<
@@ -5690,14 +5177,11 @@ L8D3C = sub_C8D3B+1
     STA L0032                                     ; A164: 85 32       .2
     JMP CA89A                                     ; A166: 4C 9A A8    L..
 
-; &A169 referenced 1 time by &A161
 .LA169
     EQUB 5, 5, 3, 5                               ; A169: 05 05 03... ...
-; &A16D referenced 1 time by &A15C
 .LA16D
     EQUB &16, &17, &16, &16                       ; A16D: 16 17 16... ...
 
-; &A171 referenced 2 times by &9F3A, &A1D0
 .sub_CA171
     LDA L044E                                     ; A171: AD 4E 04    .N.
     AND #&1F                                      ; A174: 29 1F       ).
@@ -5706,23 +5190,19 @@ L8D3C = sub_C8D3B+1
     CLC                                           ; A17C: 18          .
     LDA #0                                        ; A17D: A9 00       ..
     STA L03DA                                     ; A17F: 8D DA 03    ...
-; &A182 referenced 1 time by &A188
 .loop_CA182
     DEY                                           ; A182: 88          .
     BMI CA18B                                     ; A183: 30 06       0.
     ADC L044F                                     ; A185: 6D 4F 04    mO.
     JMP loop_CA182                                ; A188: 4C 82 A1    L..
 
-; &A18B referenced 1 time by &A183
 .CA18B
     STA L0450                                     ; A18B: 8D 50 04    .P.
     RTS                                           ; A18E: 60          `
 
-; &A18F referenced 1 time by &A27E
 .sub_CA18F
     JSR sub_C9EC6                                 ; A18F: 20 C6 9E     ..
     LDX #5                                        ; A192: A2 05       ..
-; &A194 referenced 1 time by &A19D
 .loop_CA194
     LDA L05E4,X                                   ; A194: BD E4 05    ...
     STA L048E,X                                   ; A197: 9D 8E 04    ...
@@ -5745,7 +5225,6 @@ L8D3C = sub_C8D3B+1
     STA L03DB                                     ; A1C3: 8D DB 03    ...
     LDX #0                                        ; A1C6: A2 00       ..
     STX XX4                                       ; A1C8: 86 AB       ..
-; &A1CA referenced 1 time by &A201
 .CA1CA
     LDA LB8B4,X                                   ; A1CA: BD B4 B8    ...
     STA L044E                                     ; A1CD: 8D 4E 04    .N.
@@ -5760,15 +5239,12 @@ L8D3C = sub_C8D3B+1
     SBC L0450                                     ; A1E3: ED 50 04    .P.
     JMP CA1ED                                     ; A1E6: 4C ED A1    L..
 
-; &A1E9 referenced 1 time by &A1E0
 .CA1E9
     CLC                                           ; A1E9: 18          .
     ADC L0450                                     ; A1EA: 6D 50 04    mP.
-; &A1ED referenced 1 time by &A1E6
 .CA1ED
     BPL CA1F1                                     ; A1ED: 10 02       ..
     LDA #0                                        ; A1EF: A9 00       ..
-; &A1F1 referenced 1 time by &A1ED
 .CA1F1
     LDY XX4                                       ; A1F1: A4 AB       ..
     AND #&3F ; '?'                                ; A1F3: 29 3F       )?
@@ -5783,7 +5259,6 @@ L8D3C = sub_C8D3B+1
     BCC CA1CA                                     ; A201: 90 C7       ..
     RTS                                           ; A203: 60          `
 
-; &A204 referenced 3 times by &A232, &A235, &A238
 .sub_CA204
     JSR LF42E                                     ; A204: 20 2E F4     ..
     LDA #&FF                                      ; A207: A9 FF       ..
@@ -5792,17 +5267,14 @@ L8D3C = sub_C8D3B+1
     JSR CAAE3                                     ; A20D: 20 E3 AA     ..
     JMP CA21A                                     ; A210: 4C 1A A2    L..
 
-; &A213 referenced 1 time by &AF58
 .sub_CA213
     JSR LF42E                                     ; A213: 20 2E F4     ..
     LDA #&F9                                      ; A216: A9 F9       ..
     STA L0029                                     ; A218: 85 29       .)
-; &A21A referenced 1 time by &A210
 .CA21A
     LDA #&1D                                      ; A21A: A9 1D       ..
     JMP CAAE3                                     ; A21C: 4C E3 AA    L..
 
-; &A21F referenced 2 times by &A275, &A27C
 .CA21F
     LDY #&1D                                      ; A21F: A0 1D       ..
     JSR LEBF2                                     ; A221: 20 F2 EB     ..
@@ -5822,7 +5294,6 @@ L8D3C = sub_C8D3B+1
     JSR LEBF2                                     ; A248: 20 F2 EB     ..
     JMP CA28A                                     ; A24B: 4C 8A A2    L..
 
-; &A24E referenced 1 time by &B1A2
 .CA24E
     JSR LED6B                                     ; A24E: 20 6B ED     k.
     LDA L03A5                                     ; A251: AD A5 03    ...
@@ -5830,7 +5301,6 @@ L8D3C = sub_C8D3B+1
     SBC QQ8                                       ; A255: ED 9B 04    ...
     BCS CA25C                                     ; A258: B0 02       ..
     LDA #0                                        ; A25A: A9 00       ..
-; &A25C referenced 1 time by &A258
 .CA25C
     STA L03A5                                     ; A25C: 8D A5 03    ...
     LDA L009E                                     ; A25F: A5 9E       ..
@@ -5839,10 +5309,8 @@ L8D3C = sub_C8D3B+1
     JSR LEFF7                                     ; A266: 20 F7 EF     ..
     JMP CA26F                                     ; A269: 4C 6F A2    Lo.
 
-; &A26C referenced 1 time by &A261
 .CA26C
     JSR LEBED                                     ; A26C: 20 ED EB     ..
-; &A26F referenced 1 time by &A269
 .CA26F
     LDA L04AC                                     ; A26F: AD AC 04    ...
     ORA L04AA                                     ; A272: 0D AA 04    ...
@@ -5854,7 +5322,6 @@ L8D3C = sub_C8D3B+1
     JSR LD167                                     ; A281: 20 67 D1     g.
     JSR sub_CAD8A                                 ; A284: 20 8A AD     ..
     JSR sub_CA92C                                 ; A287: 20 2C A9     ,.
-; &A28A referenced 1 time by &A24B
 .CA28A
     LDA L009E                                     ; A28A: A5 9E       ..
     BEQ CA2B9                                     ; A28C: F0 2B       .+
@@ -5867,18 +5334,15 @@ L8D3C = sub_C8D3B+1
     BNE CA29F                                     ; A29A: D0 03       ..
     JMP C9C00                                     ; A29C: 4C 00 9C    L..
 
-; &A29F referenced 1 time by &A29A
 .CA29F
     JMP C9890                                     ; A29F: 4C 90 98    L..
 
-; &A2A2 referenced 1 time by &A294
 .CA2A2
     LDA L009E                                     ; A2A2: A5 9E       ..
     CMP #&97                                      ; A2A4: C9 97       ..
     BNE CA2AB                                     ; A2A6: D0 03       ..
     JMP C9AB1                                     ; A2A8: 4C B1 9A    L..
 
-; &A2AB referenced 1 time by &A2A6
 .CA2AB
     CMP #&BA                                      ; A2AB: C9 BA       ..
     BNE CA2B6                                     ; A2AD: D0 07       ..
@@ -5886,15 +5350,12 @@ L8D3C = sub_C8D3B+1
     STA L009E                                     ; A2B1: 85 9E       ..
     JMP C9FE0                                     ; A2B3: 4C E0 9F    L..
 
-; &A2B6 referenced 1 time by &A2AD
 .CA2B6
     JMP C8837                                     ; A2B6: 4C 37 88    L7.
 
-; &A2B9 referenced 1 time by &A28C
 .CA2B9
     LDX #4                                        ; A2B9: A2 04       ..
     STX L038E                                     ; A2BB: 8E 8E 03    ...
-; &A2BE referenced 2 times by &9EA9, &B0C9
 .CA2BE
     LDX L00A5                                     ; A2BE: A6 A5       ..
     BEQ CA309                                     ; A2C0: F0 47       .G
@@ -5925,7 +5386,6 @@ L8D3C = sub_C8D3B+1
     JSR LD167                                     ; A301: 20 67 D1     g.
     LDX #4                                        ; A304: A2 04       ..
     STX L038E                                     ; A306: 8E 8E 03    ...
-; &A309 referenced 1 time by &A2C0
 .CA309
     LDX #0                                        ; A309: A2 00       ..
     STX L00A5                                     ; A30B: 86 A5       ..
@@ -5935,11 +5395,9 @@ L8D3C = sub_C8D3B+1
     BEQ CA317                                     ; A312: F0 03       ..
     JMP C9890                                     ; A314: 4C 90 98    L..
 
-; &A317 referenced 1 time by &A312
 .CA317
     JMP C9C00                                     ; A317: 4C 00 9C    L..
 
-; &A31A referenced 4 times by &9495, &A0CC, &A66A, &B0EA
 .sub_CA31A
     STX T1                                        ; A31A: 86 06       ..
     LDA L03A4                                     ; A31C: AD A4 03    ...
@@ -5957,7 +5415,6 @@ L8D3C = sub_C8D3B+1
     SBC #0                                        ; A33A: E9 00       ..
     STA L03A1                                     ; A33C: 8D A1 03    ...
     BCS CA36E                                     ; A33F: B0 2D       .-
-; &A341 referenced 5 times by &8314, &946B, &A11F, &A594, &A799
 .sub_CA341
     LDA L00E9                                     ; A341: A5 E9       ..
     BPL CA34E                                     ; A343: 10 09       ..
@@ -5965,7 +5422,6 @@ L8D3C = sub_C8D3B+1
     ASL A                                         ; A348: 0A          .
     BPL CA34E                                     ; A349: 10 03       ..
     JSR LD06D                                     ; A34B: 20 6D D0     m.
-; &A34E referenced 2 times by &A343, &A349
 .CA34E
     TXA                                           ; A34E: 8A          .
     CLC                                           ; A34F: 18          .
@@ -5981,11 +5437,9 @@ L8D3C = sub_C8D3B+1
     ADC #0                                        ; A368: 69 00       i.
     STA L03A1                                     ; A36A: 8D A1 03    ...
     CLC                                           ; A36D: 18          .
-; &A36E referenced 1 time by &A33F
 .CA36E
     RTS                                           ; A36E: 60          `
 
-; &A36F referenced 3 times by &9F59, &A0C9, &A11C
 .sub_CA36F
     ASL P                                         ; A36F: 06 2F       ./
     ROL A                                         ; A371: 2A          *
@@ -5999,7 +5453,6 @@ L8D3C = sub_C8D3B+1
     JSR sub_C9D6B                                 ; A37C: 20 6B 9D     k.
     JSR sub_C9EC6                                 ; A37F: 20 C6 9E     ..
     LDX #5                                        ; A382: A2 05       ..
-; &A384 referenced 1 time by &A38A
 .loop_CA384
     LDA QQ15,X                                    ; A384: B5 82       ..
     STA L048E,X                                   ; A386: 9D 8E 04    ...
@@ -6015,7 +5468,6 @@ L8D3C = sub_C8D3B+1
     STA L048C                                     ; A39F: 8D 8C 04    ...
     RTS                                           ; A3A2: 60          `
 
-; &A3A3 referenced 1 time by &A4D5
 .sub_CA3A3
     LDA #&14                                      ; A3A3: A9 14       ..
     STA YC                                        ; A3A5: 85 3B       .;
@@ -6026,7 +5478,7 @@ L8D3C = sub_C8D3B+1
     LDA #5                                        ; A3AF: A9 05       ..
     STA L007E                                     ; A3B1: 85 7E       .~
     LDA #&B7                                      ; A3B3: A9 B7       ..
-    STA L0064                                     ; A3B5: 85 64       .d
+    STA V_1                                       ; A3B5: 85 64       .d
     LDA #&EC                                      ; A3B7: A9 EC       ..
     STA V                                         ; A3B9: 85 63       .c
     LDA #0                                        ; A3BB: A9 00       ..
@@ -6034,7 +5486,6 @@ L8D3C = sub_C8D3B+1
     JSR LEE7D                                     ; A3BF: 20 7D EE     }.
     JMP LEEB5                                     ; A3C2: 4C B5 EE    L..
 
-; &A3C5 referenced 2 times by &A466, &A4CC
 .sub_CA3C5
     LDX #2                                        ; A3C5: A2 02       ..
     STX L0037                                     ; A3C7: 86 37       .7
@@ -6044,10 +5495,8 @@ L8D3C = sub_C8D3B+1
     STX L0037                                     ; A3D0: 86 37       .7
     RTS                                           ; A3D2: 60          `
 
-; &A3D3 referenced 2 times by &A458, &A475
 .sub_CA3D3
     LDX L00A1                                     ; A3D3: A6 A1       ..
-; &A3D5 referenced 2 times by &A3CB, &A4BE
 .sub_CA3D5
     JSR LEC7D                                     ; A3D5: 20 7D EC     }.
     STX L00A1                                     ; A3D8: 86 A1       ..
@@ -6059,7 +5508,6 @@ L8D3C = sub_C8D3B+1
     BCC CA3E7                                     ; A3E2: 90 03       ..
     SEC                                           ; A3E4: 38          8
     SBC #1                                        ; A3E5: E9 01       ..
-; &A3E7 referenced 1 time by &A3E2
 .CA3E7
     STA YC                                        ; A3E7: 85 3B       .;
     LDA #1                                        ; A3E9: A9 01       ..
@@ -6068,7 +5516,6 @@ L8D3C = sub_C8D3B+1
     AND #2                                        ; A3F0: 29 02       ).
     BNE CA3F7                                     ; A3F2: D0 03       ..
     JSR TT162                                     ; A3F4: 20 9C 9F     ..
-; &A3F7 referenced 1 time by &A3F2
 .CA3F7
     JSR TT162                                     ; A3F7: 20 9C 9F     ..
     LDA L00A1                                     ; A3FA: A5 A1       ..
@@ -6102,7 +5549,6 @@ L8D3C = sub_C8D3B+1
     LDA #&20 ; ' '                                ; A43A: A9 20       .
     JMP TT27                                      ; A43C: 4C 01 F2    L..
 
-; &A43F referenced 3 times by &A409, &A42D, &A448
 .CA43F
     LDA #&20 ; ' '                                ; A43F: A9 20       .
     JSR TT27                                      ; A441: 20 01 F2     ..
@@ -6116,7 +5562,6 @@ L8D3C = sub_C8D3B+1
     JSR C8AC2                                     ; A452: 20 C2 8A     ..
     JMP TT162                                     ; A455: 4C 9C 9F    L..
 
-; &A458 referenced 1 time by &A4ED
 .CA458
     JSR sub_CA3D3                                 ; A458: 20 D3 A3     ..
     LDA L00A1                                     ; A45B: A5 A1       ..
@@ -6124,10 +5569,8 @@ L8D3C = sub_C8D3B+1
     SBC #1                                        ; A45E: E9 01       ..
     BNE CA464                                     ; A460: D0 02       ..
     LDA #1                                        ; A462: A9 01       ..
-; &A464 referenced 1 time by &A460
 .CA464
     STA L00A1                                     ; A464: 85 A1       ..
-; &A466 referenced 2 times by &A487, &A646
 .CA466
     JSR sub_CA3C5                                 ; A466: 20 C5 A3     ..
     JSR LEEB5                                     ; A469: 20 B5 EE     ..
@@ -6135,7 +5578,6 @@ L8D3C = sub_C8D3B+1
     JSR LD8C5                                     ; A46F: 20 C5 D8     ..
     JMP CA4DB                                     ; A472: 4C DB A4    L..
 
-; &A475 referenced 1 time by &A4F5
 .CA475
     JSR sub_CA3D3                                 ; A475: 20 D3 A3     ..
     LDA L00A1                                     ; A478: A5 A1       ..
@@ -6145,16 +5587,13 @@ L8D3C = sub_C8D3B+1
     BNE CA485                                     ; A47F: D0 04       ..
     LDA Q                                         ; A481: A5 97       ..
     SBC #1                                        ; A483: E9 01       ..
-; &A485 referenced 1 time by &A47F
 .CA485
     STA L00A1                                     ; A485: 85 A1       ..
     JMP CA466                                     ; A487: 4C 66 A4    Lf.
 
-; &A48A referenced 1 time by &A495
 .LA48A
     EQUB &0C,   8, &0A                            ; A48A: 0C 08 0A    ...
 
-; &A48D referenced 2 times by &A7A6, &B13F
 .CA48D
     LDA #&B9                                      ; A48D: A9 B9       ..
     JSR sub_C9645                                 ; A48F: 20 45 96     E.
@@ -6171,7 +5610,6 @@ L8D3C = sub_C8D3B+1
     CMP #&0C                                      ; A4A9: C9 0C       ..
     BCC CA4AF                                     ; A4AB: 90 02       ..
     LDA #&0E                                      ; A4AD: A9 0E       ..
-; &A4AF referenced 1 time by &A4AB
 .CA4AF
     STA Q                                         ; A4AF: 85 97       ..
     STA L0488                                     ; A4B1: 8D 88 04    ...
@@ -6180,7 +5618,6 @@ L8D3C = sub_C8D3B+1
     SEC                                           ; A4B8: 38          8
     SBC L03A5                                     ; A4B9: ED A5 03    ...
     LDX #1                                        ; A4BC: A2 01       ..
-; &A4BE referenced 1 time by &A4C6
 .loop_CA4BE
     JSR sub_CA3D5                                 ; A4BE: 20 D5 A3     ..
     LDX L00A1                                     ; A4C1: A6 A1       ..
@@ -6194,7 +5631,6 @@ L8D3C = sub_C8D3B+1
     JSR LEB86                                     ; A4D2: 20 86 EB     ..
     JSR sub_CA3A3                                 ; A4D5: 20 A3 A3     ..
     JSR C8926                                     ; A4D8: 20 26 89     &.
-; &A4DB referenced 6 times by &A472, &A500, &A505, &A51A, &A5D7, &A5E0
 .CA4DB
     LDA L00E9                                     ; A4DB: A5 E9       ..
     BPL CA4E8                                     ; A4DD: 10 09       ..
@@ -6202,19 +5638,16 @@ L8D3C = sub_C8D3B+1
     ASL A                                         ; A4E2: 0A          .
     BPL CA4E8                                     ; A4E3: 10 03       ..
     JSR LD06D                                     ; A4E5: 20 6D D0     m.
-; &A4E8 referenced 2 times by &A4DD, &A4E3
 .CA4E8
     LDA L04AC                                     ; A4E8: AD AC 04    ...
     BPL CA4F0                                     ; A4EB: 10 03       ..
     JMP CA458                                     ; A4ED: 4C 58 A4    LX.
 
-; &A4F0 referenced 1 time by &A4EB
 .CA4F0
     LDA L04AA                                     ; A4F0: AD AA 04    ...
     BPL CA4F8                                     ; A4F3: 10 03       ..
     JMP CA475                                     ; A4F5: 4C 75 A4    Lu.
 
-; &A4F8 referenced 1 time by &A4F3
 .CA4F8
     LDA L04B2                                     ; A4F8: AD B2 04    ...
     BMI CA508                                     ; A4FB: 30 0B       0.
@@ -6224,7 +5657,6 @@ L8D3C = sub_C8D3B+1
     BCS CA4DB                                     ; A505: B0 D4       ..
     RTS                                           ; A507: 60          `
 
-; &A508 referenced 1 time by &A4FB
 .CA508
     JSR LF454                                     ; A508: 20 54 F4     T.
     LDA L00A1                                     ; A50B: A5 A1       ..
@@ -6237,7 +5669,6 @@ L8D3C = sub_C8D3B+1
     JSR C8980                                     ; A517: 20 80 89     ..
     JMP CA4DB                                     ; A51A: 4C DB A4    L..
 
-; &A51D referenced 1 time by &A514
 .CA51D
     PLA                                           ; A51D: 68          h
     BNE CA535                                     ; A51E: D0 15       ..
@@ -6251,11 +5682,9 @@ L8D3C = sub_C8D3B+1
     PLA                                           ; A52D: 68          h
     JMP CA58A                                     ; A52E: 4C 8A A5    L..
 
-; &A531 referenced 1 time by &A529
 .CA531
     STA L03A5                                     ; A531: 8D A5 03    ...
     PLA                                           ; A534: 68          h
-; &A535 referenced 1 time by &A51E
 .CA535
     CMP #1                                        ; A535: C9 01       ..
     BNE CA548                                     ; A537: D0 0F       ..
@@ -6266,7 +5695,6 @@ L8D3C = sub_C8D3B+1
     BCS CA58A                                     ; A541: B0 47       .G
     STX L03C8                                     ; A543: 8E C8 03    ...
     LDA #1                                        ; A546: A9 01       ..
-; &A548 referenced 1 time by &A537
 .CA548
     LDY #&6B ; 'k'                                ; A548: A0 6B       .k
     CMP #2                                        ; A54A: C9 02       ..
@@ -6275,7 +5703,6 @@ L8D3C = sub_C8D3B+1
     CPX CRGO                                      ; A550: EC AC 03    ...
     BEQ CA58A                                     ; A553: F0 35       .5
     STX CRGO                                      ; A555: 8E AC 03    ...
-; &A558 referenced 1 time by &A54C
 .CA558
     CMP #3                                        ; A558: C9 03       ..
     BNE CA565                                     ; A55A: D0 09       ..
@@ -6283,7 +5710,6 @@ L8D3C = sub_C8D3B+1
     LDX L03BE                                     ; A55D: AE BE 03    ...
     BNE CA58A                                     ; A560: D0 28       .(
     DEC L03BE                                     ; A562: CE BE 03    ...
-; &A565 referenced 1 time by &A55A
 .CA565
     CMP #4                                        ; A565: C9 04       ..
     BNE CA573                                     ; A567: D0 0A       ..
@@ -6292,7 +5718,6 @@ L8D3C = sub_C8D3B+1
     JMP CA778                                     ; A56E: 4C 78 A7    Lx.
 
     LDA #4                                        ; A571: A9 04       ..
-; &A573 referenced 1 time by &A567
 .CA573
     CMP #5                                        ; A573: C9 05       ..
     BNE CA57F                                     ; A575: D0 08       ..
@@ -6300,14 +5725,12 @@ L8D3C = sub_C8D3B+1
     LDA #&8F                                      ; A57A: A9 8F       ..
     JMP CA778                                     ; A57C: 4C 78 A7    Lx.
 
-; &A57F referenced 1 time by &A575
 .CA57F
     LDY #&6F ; 'o'                                ; A57F: A0 6F       .o
     CMP #6                                        ; A581: C9 06       ..
     BNE CA5E6                                     ; A583: D0 61       .a
     LDX BST                                       ; A585: AE BF 03    ...
     BEQ CA5E3                                     ; A588: F0 59       .Y
-; &A58A referenced 7 times by &A52E, &A541, &A553, &A560, &A5DA, &A5EE, &A5FB
 .CA58A
     STY K                                         ; A58A: 84 7D       .}
     PHA                                           ; A58C: 48          H
@@ -6323,7 +5746,6 @@ L8D3C = sub_C8D3B+1
     JSR spc                                       ; A5A1: 20 B3 96     ..
     LDA #&1F                                      ; A5A4: A9 1F       ..
     JSR TT27                                      ; A5A6: 20 01 F2     ..
-; &A5A9 referenced 1 time by &A5B0
 .loop_CA5A9
     JSR TT162                                     ; A5A9: 20 9C 9F     ..
     LDA L0032                                     ; A5AC: A5 32       .2
@@ -6337,7 +5759,6 @@ L8D3C = sub_C8D3B+1
     STA L0032                                     ; A5BF: 85 32       .2
     LDA #&11                                      ; A5C1: A9 11       ..
     STA YC                                        ; A5C3: 85 3B       .;
-; &A5C5 referenced 1 time by &A5CC
 .loop_CA5C5
     JSR TT162                                     ; A5C5: 20 9C 9F     ..
     LDA L0032                                     ; A5C8: A5 32       .2
@@ -6348,17 +5769,14 @@ L8D3C = sub_C8D3B+1
     JSR C8980                                     ; A5D4: 20 80 89     ..
     JMP CA4DB                                     ; A5D7: 4C DB A4    L..
 
-; &A5DA referenced 3 times by &A60A, &A617, &A624
 .CA5DA
     JMP CA58A                                     ; A5DA: 4C 8A A5    L..
 
     JSR C8980                                     ; A5DD: 20 80 89     ..
     JMP CA4DB                                     ; A5E0: 4C DB A4    L..
 
-; &A5E3 referenced 1 time by &A588
 .CA5E3
     DEC BST                                       ; A5E3: CE BF 03    ...
-; &A5E6 referenced 1 time by &A583
 .CA5E6
     INY                                           ; A5E6: C8          .
     CMP #7                                        ; A5E7: C9 07       ..
@@ -6366,7 +5784,6 @@ L8D3C = sub_C8D3B+1
     LDX L03C4                                     ; A5EB: AE C4 03    ...
     BNE CA58A                                     ; A5EE: D0 9A       ..
     DEC L03C4                                     ; A5F0: CE C4 03    ...
-; &A5F3 referenced 1 time by &A5E9
 .CA5F3
     INY                                           ; A5F3: C8          .
     CMP #8                                        ; A5F4: C9 08       ..
@@ -6375,7 +5792,6 @@ L8D3C = sub_C8D3B+1
     BNE CA58A                                     ; A5FB: D0 8D       ..
     LDX #&7F                                      ; A5FD: A2 7F       ..
     STX L03C0                                     ; A5FF: 8E C0 03    ...
-; &A602 referenced 1 time by &A5F6
 .CA602
     INY                                           ; A602: C8          .
     CMP #9                                        ; A603: C9 09       ..
@@ -6383,7 +5799,6 @@ L8D3C = sub_C8D3B+1
     LDX L03C1                                     ; A607: AE C1 03    ...
     BNE CA5DA                                     ; A60A: D0 CE       ..
     INC L03C1                                     ; A60C: EE C1 03    ...
-; &A60F referenced 1 time by &A605
 .CA60F
     INY                                           ; A60F: C8          .
     CMP #&0A                                      ; A610: C9 0A       ..
@@ -6391,7 +5806,6 @@ L8D3C = sub_C8D3B+1
     LDX L03C2                                     ; A614: AE C2 03    ...
     BNE CA5DA                                     ; A617: D0 C1       ..
     DEC L03C2                                     ; A619: CE C2 03    ...
-; &A61C referenced 1 time by &A612
 .CA61C
     INY                                           ; A61C: C8          .
     CMP #&0B                                      ; A61D: C9 0B       ..
@@ -6399,7 +5813,6 @@ L8D3C = sub_C8D3B+1
     LDX L03C3                                     ; A621: AE C3 03    ...
     BNE CA5DA                                     ; A624: D0 B4       ..
     DEC L03C3                                     ; A626: CE C3 03    ...
-; &A629 referenced 1 time by &A61F
 .CA629
     INY                                           ; A629: C8          .
     CMP #&0C                                      ; A62A: C9 0C       ..
@@ -6408,7 +5821,6 @@ L8D3C = sub_C8D3B+1
     LDA #&97                                      ; A631: A9 97       ..
     JMP CA778                                     ; A633: 4C 78 A7    Lx.
 
-; &A636 referenced 1 time by &A62C
 .CA636
     INY                                           ; A636: C8          .
     CMP #&0D                                      ; A637: C9 0D       ..
@@ -6417,12 +5829,10 @@ L8D3C = sub_C8D3B+1
     LDA #&32 ; '2'                                ; A63E: A9 32       .2
     JMP CA778                                     ; A640: 4C 78 A7    Lx.
 
-; &A643 referenced 1 time by &A639
 .CA643
     JSR sub_CA649                                 ; A643: 20 49 A6     I.
     JMP CA466                                     ; A646: 4C 66 A4    Lf.
 
-; &A649 referenced 1 time by &A643
 .sub_CA649
     LDA L00E9                                     ; A649: A5 E9       ..
     BPL CA656                                     ; A64B: 10 09       ..
@@ -6430,12 +5840,10 @@ L8D3C = sub_C8D3B+1
     ASL A                                         ; A650: 0A          .
     BPL CA656                                     ; A651: 10 03       ..
     JSR LD06D                                     ; A653: 20 6D D0     m.
-; &A656 referenced 2 times by &A64B, &A651
 .CA656
     JSR sub_CA65C                                 ; A656: 20 5C A6     \.
     JMP LF074                                     ; A659: 4C 74 F0    Lt.
 
-; &A65C referenced 4 times by &A4CF, &A5CE, &A656, &A68F
 .sub_CA65C
     LDA #&11                                      ; A65C: A9 11       ..
     STA YC                                        ; A65E: 85 3B       .;
@@ -6443,7 +5851,6 @@ L8D3C = sub_C8D3B+1
     STA L0032                                     ; A662: 85 32       .2
     JMP CA89A                                     ; A664: 4C 9A A8    L..
 
-; &A667 referenced 1 time by &A511
 .sub_CA667
     JSR sub_CA697                                 ; A667: 20 97 A6     ..
     JSR sub_CA31A                                 ; A66A: 20 1A A3     ..
@@ -6456,7 +5863,6 @@ L8D3C = sub_C8D3B+1
     JSR sub_C9EEC                                 ; A679: 20 EC 9E     ..
     JSR LEBE5                                     ; A67C: 20 E5 EB     ..
     LDY #&14                                      ; A67F: A0 14       ..
-; &A681 referenced 1 time by &A685
 .loop_CA681
     JSR TT162                                     ; A681: 20 9C 9F     ..
     DEY                                           ; A684: 88          .
@@ -6468,18 +5874,15 @@ L8D3C = sub_C8D3B+1
     CLC                                           ; A692: 18          .
     RTS                                           ; A693: 60          `
 
-; &A694 referenced 2 times by &A431, &A44C
 .sub_CA694
     SEC                                           ; A694: 38          8
     SBC #1                                        ; A695: E9 01       ..
-; &A697 referenced 3 times by &A591, &A667, &A796
 .sub_CA697
     ASL A                                         ; A697: 0A          .
     TAY                                           ; A698: A8          .
     LDX LA7AA,Y                                   ; A699: BE AA A7    ...
     LDA LA7AB,Y                                   ; A69C: B9 AB A7    ...
     TAY                                           ; A69F: A8          .
-; &A6A0 referenced 1 time by &A66D
 .CA6A0
     RTS                                           ; A6A0: 60          `
 
@@ -6488,7 +5891,6 @@ L8D3C = sub_C8D3B+1
     TAY                                           ; A6A6: A8          .
     RTS                                           ; A6A7: 60          `
 
-; &A6A8 referenced 5 times by &A6E0, &A706, &A710, &A73F, &A74F
 .sub_CA6A8
     LDA #&0C                                      ; A6A8: A9 0C       ..
     STA L0032                                     ; A6AA: 85 32       .2
@@ -6502,14 +5904,12 @@ L8D3C = sub_C8D3B+1
     AND #6                                        ; A6B9: 29 06       ).
     BNE CA6C0                                     ; A6BB: D0 03       ..
     JSR TT162                                     ; A6BD: 20 9C 9F     ..
-; &A6C0 referenced 1 time by &A6BB
 .CA6C0
     PLA                                           ; A6C0: 68          h
     PHA                                           ; A6C1: 48          H
     CLC                                           ; A6C2: 18          .
     ADC #&60 ; '`'                                ; A6C3: 69 60       i`
     JSR TT27                                      ; A6C5: 20 01 F2     ..
-; &A6C8 referenced 1 time by &A6D3
 .loop_CA6C8
     JSR TT162                                     ; A6C8: 20 9C 9F     ..
     LDA L0032                                     ; A6CB: A5 32       .2
@@ -6520,11 +5920,9 @@ L8D3C = sub_C8D3B+1
     TAY                                           ; A6D6: A8          .
     RTS                                           ; A6D7: 60          `
 
-; &A6D8 referenced 1 time by &A6D0
 .LA6D8
     EQUB &15, &15, &16, &15                       ; A6D8: 15 15 16... ...
 
-; &A6DC referenced 2 times by &A747, &A759
 .sub_CA6DC
     LDA #2                                        ; A6DC: A9 02       ..
     STA L0037                                     ; A6DE: 85 37       .7
@@ -6539,11 +5937,9 @@ L8D3C = sub_C8D3B+1
     TAY                                           ; A6F0: A8          .
     RTS                                           ; A6F1: 60          `
 
-; &A6F2 referenced 1 time by &A726
 .LA6F2
     EQUB &0A, &0A, &0B, &0A                       ; A6F2: 0A 0A 0B... ...
 
-; &A6F6 referenced 5 times by &A569, &A577, &A62E, &A63B, &A702
 .CA6F6
     JSR LEC7D                                     ; A6F6: 20 7D EC     }.
     LDA L04BA                                     ; A6F9: AD BA 04    ...
@@ -6551,7 +5947,6 @@ L8D3C = sub_C8D3B+1
     ORA L04B2                                     ; A6FF: 0D B2 04    ...
     BMI CA6F6                                     ; A702: 30 F2       0.
     LDY #3                                        ; A704: A0 03       ..
-; &A706 referenced 1 time by &A70A
 .loop_CA706
     JSR sub_CA6A8                                 ; A706: 20 A8 A6     ..
     DEY                                           ; A709: 88          .
@@ -6575,7 +5970,6 @@ L8D3C = sub_C8D3B+1
     JSR LEEF6                                     ; A72F: 20 F6 EE     ..
     JSR C8980                                     ; A732: 20 80 89     ..
     LDY #0                                        ; A735: A0 00       ..
-; &A737 referenced 2 times by &A764, &A772
 .CA737
     JSR LEC7D                                     ; A737: 20 7D EC     }.
     LDA L04AC                                     ; A73A: AD AC 04    ...
@@ -6584,10 +5978,8 @@ L8D3C = sub_C8D3B+1
     DEY                                           ; A742: 88          .
     BPL CA747                                     ; A743: 10 02       ..
     LDY #3                                        ; A745: A0 03       ..
-; &A747 referenced 1 time by &A743
 .CA747
     JSR sub_CA6DC                                 ; A747: 20 DC A6     ..
-; &A74A referenced 1 time by &A73D
 .CA74A
     LDA L04AA                                     ; A74A: AD AA 04    ...
     BPL CA75C                                     ; A74D: 10 0D       ..
@@ -6596,10 +5988,8 @@ L8D3C = sub_C8D3B+1
     CPY #4                                        ; A753: C0 04       ..
     BNE CA759                                     ; A755: D0 02       ..
     LDY #0                                        ; A757: A0 00       ..
-; &A759 referenced 1 time by &A755
 .CA759
     JSR sub_CA6DC                                 ; A759: 20 DC A6     ..
-; &A75C referenced 1 time by &A74D
 .CA75C
     LDA L04B2                                     ; A75C: AD B2 04    ...
     BMI CA775                                     ; A75F: 30 14       0.
@@ -6612,13 +6002,11 @@ L8D3C = sub_C8D3B+1
     JSR LF013                                     ; A76F: 20 13 F0     ..
     JMP CA737                                     ; A772: 4C 37 A7    L7.
 
-; &A775 referenced 2 times by &A75F, &A768
 .CA775
     TYA                                           ; A775: 98          .
     TAX                                           ; A776: AA          .
     RTS                                           ; A777: 60          `
 
-; &A778 referenced 4 times by &A56E, &A57C, &A633, &A640
 .CA778
     STA T1                                        ; A778: 85 06       ..
     LDA L03A8,X                                   ; A77A: BD A8 03    ...
@@ -6633,14 +6021,12 @@ L8D3C = sub_C8D3B+1
     CMP #&97                                      ; A78D: C9 97       ..
     BEQ CA793                                     ; A78F: F0 02       ..
     LDY #&0D                                      ; A791: A0 0D       ..
-; &A793 referenced 3 times by &A783, &A789, &A78F
 .CA793
     STX L00A0                                     ; A793: 86 A0       ..
     TYA                                           ; A795: 98          .
     JSR sub_CA697                                 ; A796: 20 97 A6     ..
     JSR sub_CA341                                 ; A799: 20 41 A3     A.
     LDX L00A0                                     ; A79C: A6 A0       ..
-; &A79E referenced 1 time by &A77D
 .CA79E
     LDA T1                                        ; A79E: A5 06       ..
     STA L03A8,X                                   ; A7A0: 9D A8 03    ...
@@ -6649,10 +6035,8 @@ L8D3C = sub_C8D3B+1
 
     RTS                                           ; A7A9: 60          `
 
-; &A7AA referenced 1 time by &A699
 .LA7AA
     EQUB 2                                        ; A7AA: 02          .
-; &A7AB referenced 1 time by &A69C
 .LA7AB
     EQUB   0, &2C,   1, &A0, &0F, &70, &17, &A0   ; A7AB: 00 2C 01... .,.
     EQUB &0F, &10, &27, &82, &14, &10             ; A7B3: 0F 10 27... ..'
@@ -6660,19 +6044,15 @@ L8D3C = sub_C8D3B+1
     EQUB &98, &3A, &D0,   7, &50, &C3, &60, &EA   ; A7BC: 98 3A D0... .:.
     EQUB &40, &1F                                 ; A7C4: 40 1F       @.
 
-; &A7C6 referenced 1 time by &B7CF
 .sub_CA7C6
     LDX #5                                        ; A7C6: A2 05       ..
-; &A7C8 referenced 1 time by &A7CE
 .loop_CA7C8
     LDA L05E4,X                                   ; A7C8: BD E4 05    ...
     STA QQ15,X                                    ; A7CB: 95 82       ..
     DEX                                           ; A7CD: CA          .
     BPL loop_CA7C8                                ; A7CE: 10 F8       ..
-; &A7D0 referenced 5 times by &8C66, &9CA1, &9D23, &A827, &A8E5
 .CA7D0
     LDX #5                                        ; A7D0: A2 05       ..
-; &A7D2 referenced 1 time by &A7D8
 .loop_CA7D2
     LDA QQ15,X                                    ; A7D2: B5 82       ..
     STA L044D,X                                   ; A7D4: 9D 4D 04    .M.
@@ -6682,10 +6062,8 @@ L8D3C = sub_C8D3B+1
     BIT QQ15                                      ; A7DC: 24 82       $.
     BVS CA7E1                                     ; A7DE: 70 01       p.
     DEY                                           ; A7E0: 88          .
-; &A7E1 referenced 1 time by &A7DE
 .CA7E1
     STY T                                         ; A7E1: 84 9A       ..
-; &A7E3 referenced 1 time by &A800
 .loop_CA7E3
     LDA L00E9                                     ; A7E3: A5 E9       ..
     BPL CA7F0                                     ; A7E5: 10 09       ..
@@ -6693,20 +6071,17 @@ L8D3C = sub_C8D3B+1
     ASL A                                         ; A7EA: 0A          .
     BPL CA7F0                                     ; A7EB: 10 03       ..
     JSR LD06D                                     ; A7ED: 20 6D D0     m.
-; &A7F0 referenced 2 times by &A7E5, &A7EB
 .CA7F0
     LDA L0087                                     ; A7F0: A5 87       ..
     AND #&1F                                      ; A7F2: 29 1F       ).
     BEQ CA7FB                                     ; A7F4: F0 05       ..
     ORA #&80                                      ; A7F6: 09 80       ..
     JSR TT27                                      ; A7F8: 20 01 F2     ..
-; &A7FB referenced 1 time by &A7F4
 .CA7FB
     JSR TT54                                      ; A7FB: 20 53 96     S.
     DEC T                                         ; A7FE: C6 9A       ..
     BPL loop_CA7E3                                ; A800: 10 E1       ..
     LDX #5                                        ; A802: A2 05       ..
-; &A804 referenced 1 time by &A80A
 .loop_CA804
     LDA L044D,X                                   ; A804: BD 4D 04    .M.
     STA QQ15,X                                    ; A807: 95 82       ..
@@ -6714,10 +6089,8 @@ L8D3C = sub_C8D3B+1
     BPL loop_CA804                                ; A80A: 10 F8       ..
     RTS                                           ; A80C: 60          `
 
-; &A80D referenced 1 time by &A8EB
 .CA80D
     LDY #0                                        ; A80D: A0 00       ..
-; &A80F referenced 1 time by &A81C
 .loop_CA80F
     LDA L0396,Y                                   ; A80F: B9 96 03    ...
     CMP #&20 ; ' '                                ; A812: C9 20       .
@@ -6726,20 +6099,16 @@ L8D3C = sub_C8D3B+1
     INY                                           ; A819: C8          .
     CPY #7                                        ; A81A: C0 07       ..
     BNE loop_CA80F                                ; A81C: D0 F1       ..
-; &A81E referenced 1 time by &A814
 .CA81E
     RTS                                           ; A81E: 60          `
 
-; &A81F referenced 1 time by &A8A8
 .CA81F
     BIT L038A                                     ; A81F: 2C 8A 03    ,..
     BMI CA839                                     ; A822: 30 15       0.
     JSR sub_CA82A                                 ; A824: 20 2A A8     *.
     JSR CA7D0                                     ; A827: 20 D0 A7     ..
-; &A82A referenced 1 time by &A824
 .sub_CA82A
     LDX #5                                        ; A82A: A2 05       ..
-; &A82C referenced 1 time by &A837
 .loop_CA82C
     LDA QQ15,X                                    ; A82C: B5 82       ..
     LDY L048E,X                                   ; A82E: BC 8E 04    ...
@@ -6747,18 +6116,15 @@ L8D3C = sub_C8D3B+1
     STY QQ15,X                                    ; A834: 94 82       ..
     DEX                                           ; A836: CA          .
     BPL loop_CA82C                                ; A837: 10 F3       ..
-; &A839 referenced 1 time by &A822
 .CA839
     RTS                                           ; A839: 60          `
 
-; &A83A referenced 1 time by &A8D6
 .CA83A
     CLC                                           ; A83A: 18          .
     LDX L03A7                                     ; A83B: AE A7 03    ...
     INX                                           ; A83E: E8          .
     JMP C8ABE                                     ; A83F: 4C BE 8A    L..
 
-; &A842 referenced 2 times by &9AC2, &A916
 .CA842
     LDA L04A9                                     ; A842: AD A9 04    ...
     AND #2                                        ; A845: 29 02       ).
@@ -6770,7 +6136,6 @@ L8D3C = sub_C8D3B+1
     AND #4                                        ; A854: 29 04       ).
     BEQ CA85B                                     ; A856: F0 03       ..
     JSR sub_CA8A2                                 ; A858: 20 A2 A8     ..
-; &A85B referenced 1 time by &A856
 .CA85B
     LDX L03A5                                     ; A85B: AE A5 03    ...
     SEC                                           ; A85E: 38          8
@@ -6784,11 +6149,9 @@ L8D3C = sub_C8D3B+1
     BNE CA879                                     ; A871: D0 06       ..
     JSR sub_CA8A2                                 ; A873: 20 A2 A8     ..
     JSR TT162                                     ; A876: 20 9C 9F     ..
-; &A879 referenced 1 time by &A871
 .CA879
     LDA #0                                        ; A879: A9 00       ..
     BEQ CA89C                                     ; A87B: F0 1F       ..
-; &A87D referenced 1 time by &A847
 .CA87D
     LDA #&69 ; 'i'                                ; A87D: A9 69       .i
     JSR sub_C96C5                                 ; A87F: 20 C5 96     ..
@@ -6802,27 +6165,21 @@ L8D3C = sub_C8D3B+1
     JSR TT68                                      ; A893: 20 CE A8     ..
     LDA #0                                        ; A896: A9 00       ..
     BEQ CA89C                                     ; A898: F0 02       ..
-; &A89A referenced 2 times by &A166, &A664
 .CA89A
     LDA #&77 ; 'w'                                ; A89A: A9 77       .w
-; &A89C referenced 2 times by &A87B, &A898
 .CA89C
     JMP spc                                       ; A89C: 4C B3 96    L..
 
     JSR sub_CA8A2                                 ; A89F: 20 A2 A8     ..
-; &A8A2 referenced 4 times by &A84E, &A858, &A873, &A89F
 .sub_CA8A2
     JSR TT162                                     ; A8A2: 20 9C 9F     ..
     JMP TT162                                     ; A8A5: 4C 9C 9F    L..
 
-; &A8A8 referenced 1 time by &A8E0
 .CA8A8
     JMP CA81F                                     ; A8A8: 4C 1F A8    L..
 
-; &A8AB referenced 1 time by &A8DA
 .CA8AB
     LDX #3                                        ; A8AB: A2 03       ..
-; &A8AD referenced 1 time by &A8B3
 .loop_CA8AD
     LDA L03A1,X                                   ; A8AD: BD A1 03    ...
     STA K,X                                       ; A8B0: 95 7D       .}
@@ -6837,21 +6194,17 @@ L8D3C = sub_C8D3B+1
     JSR TT162                                     ; A8C2: 20 9C 9F     ..
     JMP TT162                                     ; A8C5: 4C 9C 9F    L..
 
-; &A8C8 referenced 7 times by &8803, &8829, &885C, &886E, &8879, &A864, &A88E
 .CA8C8
     JSR TT27                                      ; A8C8: 20 01 F2     ..
     JMP TT67                                      ; A8CB: 4C A6 96    L..
 
-; ***************************************************************************************
-; &A8CE referenced 11 times by &87C1, &968E, &9708, &9742, &9753, &9763, &9798, &97CB, &A84B, &A869, &A893
+; ******************************************************************************
 .TT68
     JSR TT27                                      ; A8CE: 20 01 F2     ..
-; &A8D1 referenced 1 time by &A902
 .sub_CA8D1
     LDA #&3A ; ':'                                ; A8D1: A9 3A       .:
     JMP TT27                                      ; A8D3: 4C 01 F2    L..
 
-; &A8D6 referenced 1 time by &A8DD
 .loop_CA8D6
     JMP CA83A                                     ; A8D6: 4C 3A A8    L:.
 
@@ -6865,13 +6218,11 @@ L8D3C = sub_C8D3B+1
     BNE CA8E8                                     ; A8E3: D0 03       ..
     JMP CA7D0                                     ; A8E5: 4C D0 A7    L..
 
-; &A8E8 referenced 1 time by &A8E3
 .CA8E8
     DEX                                           ; A8E8: CA          .
     BNE CA8EE                                     ; A8E9: D0 03       ..
     JMP CA80D                                     ; A8EB: 4C 0D A8    L..
 
-; &A8EE referenced 1 time by &A8E9
 .CA8EE
     DEX                                           ; A8EE: CA          .
     BEQ CA916                                     ; A8EF: F0 25       .%
@@ -6879,11 +6230,9 @@ L8D3C = sub_C8D3B+1
     BNE CA8F9                                     ; A8F2: D0 05       ..
     LDA #&80                                      ; A8F4: A9 80       ..
     STA QQ17                                      ; A8F6: 85 3C       .<
-; &A8F8 referenced 1 time by &A8FA
 .loop_CA8F8
     RTS                                           ; A8F8: 60          `
 
-; &A8F9 referenced 1 time by &A8F2
 .CA8F9
     DEX                                           ; A8F9: CA          .
     BEQ loop_CA8F8                                ; A8FA: F0 FC       ..
@@ -6892,7 +6241,6 @@ L8D3C = sub_C8D3B+1
     STX QQ17                                      ; A8FF: 86 3C       .<
     RTS                                           ; A901: 60          `
 
-; &A902 referenced 1 time by &A8FD
 .CA902
     JSR sub_CA8D1                                 ; A902: 20 D1 A8     ..
     LDA L04A9                                     ; A905: AD A9 04    ...
@@ -6902,17 +6250,14 @@ L8D3C = sub_C8D3B+1
     STA L0032                                     ; A90E: 85 32       .2
     RTS                                           ; A910: 60          `
 
-; &A911 referenced 1 time by &A90A
 .CA911
     LDA #&17                                      ; A911: A9 17       ..
     STA L0032                                     ; A913: 85 32       .2
     RTS                                           ; A915: 60          `
 
-; &A916 referenced 1 time by &A8EF
 .CA916
     JMP CA842                                     ; A916: 4C 42 A8    LB.
 
-; &A919 referenced 2 times by &A2E5, &A969
 .sub_CA919
     JSR sub_CAE3C                                 ; A919: 20 3C AE     <.
     LDA #&7F                                      ; A91C: A9 7F       ..
@@ -6923,7 +6268,6 @@ L8D3C = sub_C8D3B+1
     ORA #&80                                      ; A927: 09 80       ..
     JMP CAAE3                                     ; A929: 4C E3 AA    L..
 
-; &A92C referenced 2 times by &9547, &A287
 .sub_CA92C
     LDA L03C5                                     ; A92C: AD C5 03    ...
     BEQ CA94C                                     ; A92F: F0 1B       ..
@@ -6938,7 +6282,6 @@ L8D3C = sub_C8D3B+1
     ROL L03C6                                     ; A944: 2E C6 03    ...
     BPL CA94C                                     ; A947: 10 03       ..
     ROR L03C6                                     ; A949: 6E C6 03    n..
-; &A94C referenced 2 times by &A92F, &A947
 .CA94C
     LSR L03C9                                     ; A94C: 4E C9 03    N..
     JSR sub_CAE03                                 ; A94F: 20 03 AE     ..
@@ -6971,12 +6314,10 @@ L8D3C = sub_C8D3B+1
     STA L0564                                     ; A985: 8D 64 05    .d.
     LDA #&81                                      ; A988: A9 81       ..
     JSR CAAE3                                     ; A98A: 20 E3 AA     ..
-; &A98D referenced 3 times by &A2D4, &A2FE, &BDB0
 .CA98D
     LDA L009E                                     ; A98D: A5 9E       ..
     ORA L045D                                     ; A98F: 0D 5D 04    .].
     BNE CA9D7                                     ; A992: D0 43       .C
-; &A994 referenced 1 time by &B235
 .sub_CA994
     LDA L03F1                                     ; A994: AD F1 03    ...
     CLC                                           ; A997: 18          .
@@ -6985,7 +6326,6 @@ L8D3C = sub_C8D3B+1
     LDA L03F1                                     ; A99C: AD F1 03    ...
     STA L0003                                     ; A99F: 85 03       ..
     LDY L03E5                                     ; A9A1: AC E5 03    ...
-; &A9A4 referenced 1 time by &A9D5
 .CA9A4
     LDA L00E9                                     ; A9A4: A5 E9       ..
     BPL CA9B1                                     ; A9A6: 10 09       ..
@@ -6993,7 +6333,6 @@ L8D3C = sub_C8D3B+1
     ASL A                                         ; A9AB: 0A          .
     BPL CA9B1                                     ; A9AC: 10 03       ..
     JSR LD06D                                     ; A9AE: 20 6D D0     m.
-; &A9B1 referenced 2 times by &A9A6, &A9AC
 .CA9B1
     JSR DORND                                     ; A9B1: 20 AD F4     ..
     ORA #8                                        ; A9B4: 09 08       ..
@@ -7010,10 +6349,8 @@ L8D3C = sub_C8D3B+1
     STA L05CF,Y                                   ; A9D1: 99 CF 05    ...
     DEY                                           ; A9D4: 88          .
     BNE CA9A4                                     ; A9D5: D0 CD       ..
-; &A9D7 referenced 2 times by &A992, &ADF3
 .CA9D7
     LDX #0                                        ; A9D7: A2 00       ..
-; &A9D9 referenced 1 time by &A9FB
 .CA9D9
     LDA L00E9                                     ; A9D9: A5 E9       ..
     BPL CA9E6                                     ; A9DB: 10 09       ..
@@ -7021,7 +6358,6 @@ L8D3C = sub_C8D3B+1
     ASL A                                         ; A9E0: 0A          .
     BPL CA9E6                                     ; A9E1: 10 03       ..
     JSR LD06D                                     ; A9E3: 20 6D D0     m.
-; &A9E6 referenced 2 times by &A9DB, &A9E1
 .CA9E6
     LDA L036A,X                                   ; A9E6: BD 6A 03    .j.
     BEQ CA9FD                                     ; A9E9: F0 12       ..
@@ -7032,42 +6368,34 @@ L8D3C = sub_C8D3B+1
     LDA (INF),Y                                   ; A9F4: B1 61       .a
     AND #&B7                                      ; A9F6: 29 B7       ).
     STA (INF),Y                                   ; A9F8: 91 61       .a
-; &A9FA referenced 1 time by &A9EB
 .CA9FA
     INX                                           ; A9FA: E8          .
     BNE CA9D9                                     ; A9FB: D0 DC       ..
-; &A9FD referenced 1 time by &A9E9
 .CA9FD
     LDX #0                                        ; A9FD: A2 00       ..
     RTS                                           ; A9FF: 60          `
 
-; &AA00 referenced 1 time by &AA03
 .loop_CAA00
     DEX                                           ; AA00: CA          .
     RTS                                           ; AA01: 60          `
 
-; &AA02 referenced 2 times by &84E6, &84EF
 .sub_CAA02
     INX                                           ; AA02: E8          .
     BEQ loop_CAA00                                ; AA03: F0 FB       ..
-; &AA05 referenced 2 times by &8365, &93EB
 .sub_CAA05
     DEC L0486                                     ; AA05: CE 86 04    ...
     PHP                                           ; AA08: 08          .
     BNE CAA0E                                     ; AA09: D0 03       ..
     INC L0486                                     ; AA0B: EE 86 04    ...
-; &AA0E referenced 1 time by &AA09
 .CAA0E
     PLP                                           ; AA0E: 28          (
     RTS                                           ; AA0F: 60          `
 
-; &AA10 referenced 1 time by &AA19
 .loop_CAA10
     LDA #&F0                                      ; AA10: A9 F0       ..
     STA L0234                                     ; AA12: 8D 34 02    .4.
     RTS                                           ; AA15: 60          `
 
-; &AA16 referenced 2 times by &872D, &8738
 .sub_CAA16
     LDA L038A                                     ; AA16: AD 8A 03    ...
     BNE loop_CAA10                                ; AA19: D0 F5       ..
@@ -7076,10 +6404,8 @@ L8D3C = sub_C8D3B+1
     JSR sub_CB557                                 ; AA20: 20 57 B5     W.
     JMP CAA29                                     ; AA23: 4C 29 AA    L).
 
-; &AA26 referenced 1 time by &AA1E
 .CAA26
     JSR sub_CAA50                                 ; AA26: 20 50 AA     P.
-; &AA29 referenced 1 time by &AA23
 .CAA29
     LDA XX15                                      ; AA29: A5 71       .q
     JSR sub_CB531                                 ; AA2B: 20 31 B5     1.
@@ -7098,15 +6424,12 @@ L8D3C = sub_C8D3B+1
     LDX X2                                        ; AA46: A6 73       .s
     BPL CAA4C                                     ; AA48: 10 02       ..
     LDA #&F6                                      ; AA4A: A9 F6       ..
-; &AA4C referenced 1 time by &AA48
 .CAA4C
     STA L0235                                     ; AA4C: 8D 35 02    .5.
     RTS                                           ; AA4F: 60          `
 
-; &AA50 referenced 1 time by &AA26
 .sub_CAA50
     LDX #8                                        ; AA50: A2 08       ..
-; &AA52 referenced 1 time by &AA58
 .loop_CAA52
     LDA L062A,X                                   ; AA52: BD 2A 06    .*.
     STA XX2,X                                     ; AA55: 95 3D       .=
@@ -7114,7 +6437,6 @@ L8D3C = sub_C8D3B+1
     BPL loop_CAA52                                ; AA58: 10 F8       ..
     JMP CB566                                     ; AA5A: 4C 66 B5    Lf.
 
-; &AA5D referenced 5 times by &8224, &8CBF, &8CD8, &8D1E, &8EF7
 .CAA5D
     STA T                                         ; AA5D: 85 9A       ..
     LDX #0                                        ; AA5F: A2 00       ..
@@ -7127,12 +6449,10 @@ L8D3C = sub_C8D3B+1
     STA L0484                                     ; AA6E: 8D 84 04    ...
     RTS                                           ; AA71: 60          `
 
-; &AA72 referenced 1 time by &AA6C
 .CAA72
     LDX #0                                        ; AA72: A2 00       ..
     STX L0484                                     ; AA74: 8E 84 04    ...
     BCC CAA89                                     ; AA77: 90 10       ..
-; &AA79 referenced 1 time by &AA65
 .CAA79
     LDA L0485                                     ; AA79: AD 85 04    ...
     SBC T                                         ; AA7C: E5 9A       ..
@@ -7140,26 +6460,21 @@ L8D3C = sub_C8D3B+1
     STA L0485                                     ; AA80: 8D 85 04    ...
     RTS                                           ; AA83: 60          `
 
-; &AA84 referenced 1 time by &AA7E
 .CAA84
     LDX #0                                        ; AA84: A2 00       ..
     STX L0485                                     ; AA86: 8E 85 04    ...
-; &AA89 referenced 1 time by &AA77
 .CAA89
     ADC L0486                                     ; AA89: 6D 86 04    m..
     STA L0486                                     ; AA8C: 8D 86 04    ...
     BEQ CAA93                                     ; AA8F: F0 02       ..
     BCS CAA96                                     ; AA91: B0 03       ..
-; &AA93 referenced 1 time by &AA8F
 .CAA93
     JMP CB1E4                                     ; AA93: 4C E4 B1    L..
 
-; &AA96 referenced 1 time by &AA91
 .CAA96
     JSR LEBAD                                     ; AA96: 20 AD EB     ..
     JMP CB875                                     ; AA99: 4C 75 B8    Lu.
 
-; &AA9C referenced 2 times by &A2EE, &B51D
 .sub_CAA9C
     LDX #&81                                      ; AA9C: A2 81       ..
     STX L0029                                     ; AA9E: 86 29       .)
@@ -7182,13 +6497,11 @@ L8D3C = sub_C8D3B+1
     BCC CAACF                                     ; AAC7: 90 06       ..
     LDX LC580                                     ; AAC9: AE 80 C5    ...
     LDY LC581                                     ; AACC: AC 81 C5    ...
-; &AACF referenced 1 time by &AAC7
 .CAACF
     STX L04A2                                     ; AACF: 8E A2 04    ...
     STY L04A3                                     ; AAD2: 8C A3 04    ...
     JMP LF171                                     ; AAD5: 4C 71 F1    Lq.
 
-; &AAD8 referenced 1 time by &AB05
 .CAAD8
     STA L036A,X                                   ; AAD8: 9D 6A 03    .j.
     TAX                                           ; AADB: AA          .
@@ -7196,7 +6509,6 @@ L8D3C = sub_C8D3B+1
     STA L002A                                     ; AADE: 85 2A       .*
     JMP CAB86                                     ; AAE0: 4C 86 AB    L..
 
-; &AAE3 referenced 18 times by &91FC, &92F2, &94AF, &9576, &9597, &95B2, &A20D, &A21C, &A929, &A98A, &AAB9, &ABCF, &AE7E, &AF09, &AF38, &AFB6, &AFE8, &B3DD
 .CAAE3
     STA T                                         ; AAE3: 85 9A       ..
     LDA L00E9                                     ; AAE5: A5 E9       ..
@@ -7205,22 +6517,18 @@ L8D3C = sub_C8D3B+1
     ASL A                                         ; AAEC: 0A          .
     BPL CAAF2                                     ; AAED: 10 03       ..
     JSR LD06D                                     ; AAEF: 20 6D D0     m.
-; &AAF2 referenced 2 times by &AAE7, &AAED
 .CAAF2
     LDX #0                                        ; AAF2: A2 00       ..
-; &AAF4 referenced 1 time by &AAFC
 .loop_CAAF4
     LDA L036A,X                                   ; AAF4: BD 6A 03    .j.
     BEQ CAB00                                     ; AAF7: F0 07       ..
     INX                                           ; AAF9: E8          .
     CPX #8                                        ; AAFA: E0 08       ..
     BCC loop_CAAF4                                ; AAFC: 90 F6       ..
-; &AAFE referenced 1 time by &AB0C
 .loop_CAAFE
     CLC                                           ; AAFE: 18          .
     RTS                                           ; AAFF: 60          `
 
-; &AB00 referenced 1 time by &AAF7
 .CAB00
     JSR LCE90                                     ; AB00: 20 90 CE     ..
     LDA T                                         ; AB03: A5 9A       ..
@@ -7240,14 +6548,12 @@ L8D3C = sub_C8D3B+1
     BMI CAB43                                     ; AB20: 30 21       0!
     TAX                                           ; AB22: AA          .
     LDY #8                                        ; AB23: A0 08       ..
-; &AB25 referenced 1 time by &AB2B
 .loop_CAB25
     LDA L0374,Y                                   ; AB25: B9 74 03    .t.
     BEQ CAB2F                                     ; AB28: F0 05       ..
     DEY                                           ; AB2A: 88          .
     BNE loop_CAB25                                ; AB2B: D0 F8       ..
     BEQ CAB43                                     ; AB2D: F0 14       ..
-; &AB2F referenced 1 time by &AB28
 .CAB2F
     LDA #&FF                                      ; AB2F: A9 FF       ..
     STA L0374,Y                                   ; AB31: 99 74 03    .t.
@@ -7261,7 +6567,6 @@ L8D3C = sub_C8D3B+1
     TXA                                           ; AB3D: 8A          .
     LDX L002A                                     ; AB3E: A6 2A       .*
     STA L037E,X                                   ; AB40: 9D 7E 03    .~.
-; &AB43 referenced 2 times by &AB20, &AB2D
 .CAB43
     LDX L00BA                                     ; AB43: A6 BA       ..
     LDY #&0E                                      ; AB45: A0 0E       ..
@@ -7281,10 +6586,8 @@ L8D3C = sub_C8D3B+1
     BCC CAB6C                                     ; AB63: 90 07       ..
     CPX #&0B                                      ; AB65: E0 0B       ..
     BCS CAB6C                                     ; AB67: B0 03       ..
-; &AB69 referenced 1 time by &AB5F
 .CAB69
     INC L0373                                     ; AB69: EE 73 03    .s.
-; &AB6C referenced 2 times by &AB63, &AB67
 .CAB6C
     INC L0562,X                                   ; AB6C: FE 62 05    .b.
     LDY T                                         ; AB6F: A4 9A       ..
@@ -7297,7 +6600,6 @@ L8D3C = sub_C8D3B+1
     LDA L0300                                     ; AB7E: AD 00 03    ...
     ORA #&80                                      ; AB81: 09 80       ..
     STA L0300                                     ; AB83: 8D 00 03    ...
-; &AB86 referenced 3 times by &AAE0, &AB5B, &AB7C
 .CAB86
     LDA L00E9                                     ; AB86: A5 E9       ..
     BPL CAB93                                     ; AB88: 10 09       ..
@@ -7305,10 +6607,8 @@ L8D3C = sub_C8D3B+1
     ASL A                                         ; AB8D: 0A          .
     BPL CAB93                                     ; AB8E: 10 03       ..
     JSR LD06D                                     ; AB90: 20 6D D0     m.
-; &AB93 referenced 2 times by &AB88, &AB8E
 .CAB93
     LDY #&25 ; '%'                                ; AB93: A0 25       .%
-; &AB95 referenced 1 time by &AB9B
 .loop_CAB95
     LDA INWK,Y                                    ; AB95: B9 09 00    ...
     STA (INF),Y                                   ; AB98: 91 61       .a
@@ -7320,12 +6620,10 @@ L8D3C = sub_C8D3B+1
     ASL A                                         ; ABA4: 0A          .
     BPL CABAA                                     ; ABA5: 10 03       ..
     JSR LD06D                                     ; ABA7: 20 6D D0     m.
-; &ABAA referenced 2 times by &AB9F, &ABA5
 .CABAA
     SEC                                           ; ABAA: 38          8
     RTS                                           ; ABAB: 60          `
 
-; &ABAC referenced 3 times by &AAAE, &AAB1, &AAB4
 .sub_CABAC
     LDA INWK,X                                    ; ABAC: B5 09       ..
     EOR #&80                                      ; ABAE: 49 80       I.
@@ -7334,18 +6632,15 @@ L8D3C = sub_C8D3B+1
     INX                                           ; ABB3: E8          .
     RTS                                           ; ABB4: 60          `
 
-; &ABB5 referenced 1 time by &ABE8
 .CABB5
     RTS                                           ; ABB5: 60          `
 
-; &ABB6 referenced 1 time by &831C
 .CABB6
     LDX L009B                                     ; ABB6: A6 9B       ..
     JSR sub_CAC26                                 ; ABB8: 20 26 AC     &.
     LDX L009B                                     ; ABBB: A6 9B       ..
     RTS                                           ; ABBD: 60          `
 
-; &ABBE referenced 1 time by &AC47
 .CABBE
     JSR sub_CAE03                                 ; ABBE: 20 03 AE     ..
     LDA #0                                        ; ABC1: A9 00       ..
@@ -7357,10 +6652,8 @@ L8D3C = sub_C8D3B+1
     JSR CAAE3                                     ; ABCF: 20 E3 AA     ..
     JMP LF171                                     ; ABD2: 4C 71 F1    Lq.
 
-; &ABD5 referenced 1 time by &AC83
 .CABD5
     LDX #&FF                                      ; ABD5: A2 FF       ..
-; &ABD7 referenced 5 times by &ABEC, &ABFF, &AC06, &AC11, &AC17
 .CABD7
     LDA L00E9                                     ; ABD7: A5 E9       ..
     BPL CABE4                                     ; ABD9: 10 09       ..
@@ -7368,7 +6661,6 @@ L8D3C = sub_C8D3B+1
     ASL A                                         ; ABDE: 0A          .
     BPL CABE4                                     ; ABDF: 10 03       ..
     JSR LD06D                                     ; ABE1: 20 6D D0     m.
-; &ABE4 referenced 2 times by &ABD9, &ABDF
 .CABE4
     INX                                           ; ABE4: E8          .
     LDA L036A,X                                   ; ABE5: BD 6A 03    .j.
@@ -7395,22 +6687,18 @@ L8D3C = sub_C8D3B+1
     ORA #&80                                      ; AC0D: 09 80       ..
     STA (L0007),Y                                 ; AC0F: 91 07       ..
     BNE CABD7                                     ; AC11: D0 C4       ..
-; &AC13 referenced 1 time by &AC08
 .CAC13
     LDA #0                                        ; AC13: A9 00       ..
     STA (L0007),Y                                 ; AC15: 91 07       ..
     BEQ CABD7                                     ; AC17: F0 BE       ..
-; &AC19 referenced 1 time by &B67E
 .sub_CAC19
     JSR LEC7D                                     ; AC19: 20 7D EC     }.
     LDY #&25 ; '%'                                ; AC1C: A0 25       .%
-; &AC1E referenced 1 time by &AC24
 .loop_CAC1E
     LDA (INF),Y                                   ; AC1E: B1 61       .a
     STA INWK,Y                                    ; AC20: 99 09 00    ...
     DEY                                           ; AC23: 88          .
     BPL loop_CAC1E                                ; AC24: 10 F8       ..
-; &AC26 referenced 1 time by &ABB8
 .sub_CAC26
     STX XX4                                       ; AC26: 86 AB       ..
     JSR LF260                                     ; AC28: 20 60 F2     `.
@@ -7422,7 +6710,6 @@ L8D3C = sub_C8D3B+1
     JSR sub_CACC1                                 ; AC36: 20 C1 AC     ..
     LDA #&C8                                      ; AC39: A9 C8       ..
     JSR CB78F                                     ; AC3B: 20 8F B7     ..
-; &AC3E referenced 1 time by &AC32
 .CAC3E
     LDY XX4                                       ; AC3E: A4 AB       ..
     LDX L036A,Y                                   ; AC40: BE 6A 03    .j.
@@ -7430,7 +6717,6 @@ L8D3C = sub_C8D3B+1
     BNE CAC4A                                     ; AC45: D0 03       ..
     JMP CABBE                                     ; AC47: 4C BE AB    L..
 
-; &AC4A referenced 1 time by &AC45
 .CAC4A
     CPX #&1F                                      ; AC4A: E0 1F       ..
     BNE CAC59                                     ; AC4C: D0 0B       ..
@@ -7438,7 +6724,6 @@ L8D3C = sub_C8D3B+1
     ORA #2                                        ; AC51: 09 02       ..
     STA L039E                                     ; AC53: 8D 9E 03    ...
     INC L03DD                                     ; AC56: EE DD 03    ...
-; &AC59 referenced 1 time by &AC4C
 .CAC59
     CPX #&0F                                      ; AC59: E0 0F       ..
     BEQ CAC65                                     ; AC5B: F0 08       ..
@@ -7446,14 +6731,11 @@ L8D3C = sub_C8D3B+1
     BCC CAC68                                     ; AC5F: 90 07       ..
     CPX #&0B                                      ; AC61: E0 0B       ..
     BCS CAC68                                     ; AC63: B0 03       ..
-; &AC65 referenced 1 time by &AC5B
 .CAC65
     DEC L0373                                     ; AC65: CE 73 03    .s.
-; &AC68 referenced 2 times by &AC5F, &AC63
 .CAC68
     DEC L0562,X                                   ; AC68: DE 62 05    .b.
     LDX XX4                                       ; AC6B: A6 AB       ..
-; &AC6D referenced 1 time by &ACBE
 .CAC6D
     LDA L00E9                                     ; AC6D: A5 E9       ..
     BPL CAC7A                                     ; AC6F: 10 09       ..
@@ -7461,7 +6743,6 @@ L8D3C = sub_C8D3B+1
     ASL A                                         ; AC74: 0A          .
     BPL CAC7A                                     ; AC75: 10 03       ..
     JSR LD06D                                     ; AC77: 20 6D D0     m.
-; &AC7A referenced 2 times by &AC6F, &AC75
 .CAC7A
     INX                                           ; AC7A: E8          .
     LDA L036A,X                                   ; AC7B: BD 6A 03    .j.
@@ -7469,7 +6750,6 @@ L8D3C = sub_C8D3B+1
     BNE CAC86                                     ; AC81: D0 03       ..
     JMP CABD5                                     ; AC83: 4C D5 AB    L..
 
-; &AC86 referenced 1 time by &AC81
 .CAC86
     TXA                                           ; AC86: 8A          .
     ASL A                                         ; AC87: 0A          .
@@ -7484,10 +6764,8 @@ L8D3C = sub_C8D3B+1
     ASL A                                         ; AC9A: 0A          .
     BPL CACA0                                     ; AC9B: 10 03       ..
     JSR LD06D                                     ; AC9D: 20 6D D0     m.
-; &ACA0 referenced 2 times by &AC95, &AC9B
 .CACA0
     LDY #&29 ; ')'                                ; ACA0: A0 29       .)
-; &ACA2 referenced 1 time by &ACA7
 .loop_CACA2
     LDA (L0007),Y                                 ; ACA2: B1 07       ..
     STA (INF),Y                                   ; ACA4: 91 61       .a
@@ -7503,16 +6781,13 @@ L8D3C = sub_C8D3B+1
     ASL A                                         ; ACB8: 0A          .
     BPL CACBE                                     ; ACB9: 10 03       ..
     JSR LD06D                                     ; ACBB: 20 6D D0     m.
-; &ACBE referenced 2 times by &ACB3, &ACB9
 .CACBE
     JMP CAC6D                                     ; ACBE: 4C 6D AC    Lm.
 
-; &ACC1 referenced 3 times by &862B, &9214, &AC36
 .sub_CACC1
     LDX #0                                        ; ACC1: A2 00       ..
     STX L038D                                     ; ACC3: 8E 8D 03    ...
     DEX                                           ; ACC6: CA          .
-; &ACC7 referenced 1 time by &825C
 .sub_CACC7
     STX L0401                                     ; ACC7: 8E 01 04    ...
     LDA L00E9                                     ; ACCA: A5 E9       ..
@@ -7521,7 +6796,6 @@ L8D3C = sub_C8D3B+1
     ASL A                                         ; ACD1: 0A          .
     BPL CACD7                                     ; ACD2: 10 03       ..
     JSR LD06D                                     ; ACD4: 20 6D D0     m.
-; &ACD7 referenced 2 times by &ACCC, &ACD2
 .CACD7
     LDX L03C8                                     ; ACD7: AE C8 03    ...
     JSR LE59F                                     ; ACDA: 20 9F E5     ..
@@ -7529,7 +6803,6 @@ L8D3C = sub_C8D3B+1
 
     EQUB 4, 0, 0, 0, 0                            ; ACE0: 04 00 00... ...
 
-; &ACE5 referenced 1 time by &948A
 .sub_CACE5
     LDA L0037                                     ; ACE5: A5 37       .7
     PHA                                           ; ACE7: 48          H
@@ -7537,7 +6810,6 @@ L8D3C = sub_C8D3B+1
     STA L0037                                     ; ACEA: 85 37       .7
     LDA #1                                        ; ACEC: A9 01       ..
     PHA                                           ; ACEE: 48          H
-; &ACEF referenced 1 time by &AD14
 .CACEF
     JSR LF2DE                                     ; ACEF: 20 DE F2     ..
     LDA #&0F                                      ; ACF2: A9 0F       ..
@@ -7554,13 +6826,11 @@ L8D3C = sub_C8D3B+1
     PLA                                           ; AD0B: 68          h
     EOR #3                                        ; AD0C: 49 03       I.
     PHA                                           ; AD0E: 48          H
-; &AD0F referenced 1 time by &AD09
 .CAD0F
     LDY #8                                        ; AD0F: A0 08       ..
     JSR LEBA2                                     ; AD11: 20 A2 EB     ..
     JMP CACEF                                     ; AD14: 4C EF AC    L..
 
-; &AD17 referenced 1 time by &AD01
 .CAD17
     LDA #0                                        ; AD17: A9 00       ..
     STA L0081                                     ; AD19: 85 81       ..
@@ -7572,7 +6842,6 @@ L8D3C = sub_C8D3B+1
     TXA                                           ; AD23: 8A          .
     RTS                                           ; AD24: 60          `
 
-; &AD25 referenced 1 time by &B070
 .sub_CAD25
     LDA L009E                                     ; AD25: A5 9E       ..
     BNE CAD2E                                     ; AD27: D0 05       ..
@@ -7580,7 +6849,6 @@ L8D3C = sub_C8D3B+1
     TXA                                           ; AD2C: 8A          .
     RTS                                           ; AD2D: 60          `
 
-; &AD2E referenced 1 time by &AD27
 .CAD2E
     JSR sub_CB6A8                                 ; AD2E: 20 A8 B6     ..
     LDX #0                                        ; AD31: A2 00       ..
@@ -7590,27 +6858,22 @@ L8D3C = sub_C8D3B+1
     LDA L04BA                                     ; AD3A: AD BA 04    ...
     BPL CAD40                                     ; AD3D: 10 01       ..
     DEX                                           ; AD3F: CA          .
-; &AD40 referenced 1 time by &AD3D
 .CAD40
     LDA L04BB                                     ; AD40: AD BB 04    ...
     BPL CAD46                                     ; AD43: 10 01       ..
     INX                                           ; AD45: E8          .
-; &AD46 referenced 1 time by &AD43
 .CAD46
     LDA L04AC                                     ; AD46: AD AC 04    ...
     BPL CAD4C                                     ; AD49: 10 01       ..
     INY                                           ; AD4B: C8          .
-; &AD4C referenced 1 time by &AD49
 .CAD4C
     LDA L04AA                                     ; AD4C: AD AA 04    ...
     BPL CAD52                                     ; AD4F: 10 01       ..
     DEY                                           ; AD51: 88          .
-; &AD52 referenced 2 times by &AD38, &AD4F
 .CAD52
     LDA L0081                                     ; AD52: A5 81       ..
     RTS                                           ; AD54: 60          `
 
-; &AD55 referenced 1 time by &AF92
 .sub_CAD55
     LDX L03A7                                     ; AD55: AE A7 03    ...
     DEX                                           ; AD58: CA          .
@@ -7621,20 +6884,16 @@ L8D3C = sub_C8D3B+1
     LDA L03A0                                     ; AD62: AD A0 03    ...
     CMP #&21 ; '!'                                ; AD65: C9 21       .!
     BEQ CAD6A                                     ; AD67: F0 01       ..
-; &AD69 referenced 2 times by &AD59, &AD60
 .CAD69
     CLC                                           ; AD69: 18          .
-; &AD6A referenced 1 time by &AD67
 .CAD6A
     RTS                                           ; AD6A: 60          `
 
-; &AD6B referenced 2 times by &B2E9, &B3C1
 .sub_CAD6B
     JSR sub_CB46B                                 ; AD6B: 20 6B B4     k.
     LDA #0                                        ; AD6E: A9 00       ..
     STA L0395                                     ; AD70: 8D 95 03    ...
     LDX #6                                        ; AD73: A2 06       ..
-; &AD75 referenced 1 time by &AD78
 .loop_CAD75
     STA L0069,X                                   ; AD75: 95 69       .i
     DEX                                           ; AD77: CA          .
@@ -7642,14 +6901,12 @@ L8D3C = sub_C8D3B+1
     TXA                                           ; AD7A: 8A          .
     STA L00A5                                     ; AD7B: 85 A5       ..
     LDX #2                                        ; AD7D: A2 02       ..
-; &AD7F referenced 1 time by &AD83
 .loop_CAD7F
     STA L0484,X                                   ; AD7F: 9D 84 04    ...
     DEX                                           ; AD82: CA          .
     BPL loop_CAD7F                                ; AD83: 10 FA       ..
     LDA #&FF                                      ; AD85: A9 FF       ..
     STA L0464                                     ; AD87: 8D 64 04    .d.
-; &AD8A referenced 8 times by &8026, &8BC7, &9522, &A224, &A284, &A2DA, &B1EA, &B2F6
 .sub_CAD8A
     SEI                                           ; AD8A: 78          x
     LDA #1                                        ; AD8B: A9 01       ..
@@ -7665,7 +6922,6 @@ L8D3C = sub_C8D3B+1
     BPL CADAA                                     ; ADA2: 10 06       ..
     JSR sub_C8790                                 ; ADA4: 20 90 87     ..
     STA L03C0                                     ; ADA7: 8D C0 03    ...
-; &ADAA referenced 1 time by &ADA2
 .CADAA
     LDA #&14                                      ; ADAA: A9 14       ..
     STA L03E5                                     ; ADAC: 8D E5 03    ...
@@ -7698,17 +6954,14 @@ L8D3C = sub_C8D3B+1
     LDA L006D                                     ; ADEC: A5 6D       .m
     BEQ CADF3                                     ; ADEE: F0 03       ..
     JSR sub_CBE62                                 ; ADF0: 20 62 BE     b.
-; &ADF3 referenced 1 time by &ADEE
 .CADF3
     JSR CA9D7                                     ; ADF3: 20 D7 A9     ..
     LDA L009F                                     ; ADF6: A5 9F       ..
     BMI CAE00                                     ; ADF8: 30 06       0.
     JSR LCE9E                                     ; ADFA: 20 9E CE     ..
     JSR LCEA5                                     ; ADFD: 20 A5 CE     ..
-; &AE00 referenced 1 time by &ADF8
 .CAE00
     JSR sub_CB46B                                 ; AE00: 20 6B B4     k.
-; &AE03 referenced 7 times by &91D8, &94A8, &95FC, &A94F, &ABBE, &AEB9, &B6C8
 .sub_CAE03
     LDA L00E9                                     ; AE03: A5 E9       ..
     BPL CAE10                                     ; AE05: 10 09       ..
@@ -7716,11 +6969,9 @@ L8D3C = sub_C8D3B+1
     ASL A                                         ; AE0A: 0A          .
     BPL CAE10                                     ; AE0B: 10 03       ..
     JSR LD06D                                     ; AE0D: 20 6D D0     m.
-; &AE10 referenced 2 times by &AE05, &AE0B
 .CAE10
     LDY #&25 ; '%'                                ; AE10: A0 25       .%
     LDA #0                                        ; AE12: A9 00       ..
-; &AE14 referenced 1 time by &AE18
 .loop_CAE14
     STA INWK,Y                                    ; AE14: 99 09 00    ...
     DEY                                           ; AE17: 88          .
@@ -7731,7 +6982,6 @@ L8D3C = sub_C8D3B+1
     ASL A                                         ; AE21: 0A          .
     BPL CAE27                                     ; AE22: 10 03       ..
     JSR LD06D                                     ; AE24: 20 6D D0     m.
-; &AE27 referenced 2 times by &AE1C, &AE22
 .CAE27
     LDA #&60 ; '`'                                ; AE27: A9 60       .`
     STA INWK_18                                   ; AE29: 85 1B       ..
@@ -7740,7 +6990,6 @@ L8D3C = sub_C8D3B+1
     STA INWK_14                                   ; AE2F: 85 17       ..
     RTS                                           ; AE31: 60          `
 
-; &AE32 referenced 4 times by &9897, &ADE9, &B228, &BDEF
 .sub_CAE32
     STA L00B1                                     ; AE32: 85 B1       ..
     ASL A                                         ; AE34: 0A          .
@@ -7749,10 +6998,8 @@ L8D3C = sub_C8D3B+1
     STA L00B3                                     ; AE39: 85 B3       ..
     RTS                                           ; AE3B: 60          `
 
-; &AE3C referenced 2 times by &A919, &BF2E
 .sub_CAE3C
     LDX #4                                        ; AE3C: A2 04       ..
-; &AE3E referenced 1 time by &AE49
 .loop_CAE3E
     CPX L03C8                                     ; AE3E: EC C8 03    ...
     BEQ CAE4C                                     ; AE41: F0 09       ..
@@ -7762,7 +7009,6 @@ L8D3C = sub_C8D3B+1
     BNE loop_CAE3E                                ; AE49: D0 F3       ..
     RTS                                           ; AE4B: 60          `
 
-; &AE4C referenced 2 times by &AE41, &AE52
 .CAE4C
     LDY #&6C ; 'l'                                ; AE4C: A0 6C       .l
     JSR LE59F                                     ; AE4E: 20 9F E5     ..
@@ -7770,7 +7016,6 @@ L8D3C = sub_C8D3B+1
     BNE CAE4C                                     ; AE52: D0 F8       ..
     RTS                                           ; AE54: 60          `
 
-; &AE55 referenced 1 time by &AEDB
 .CAE55
     JSR DORND                                     ; AE55: 20 AD F4     ..
     LSR A                                         ; AE58: 4A          J
@@ -7787,19 +7032,16 @@ L8D3C = sub_C8D3B+1
     STA L0029                                     ; AE6E: 85 29       .)
     LDX #&10                                      ; AE70: A2 10       ..
     STX L002D                                     ; AE72: 86 2D       .-
-; &AE74 referenced 1 time by &AE68
 .CAE74
     AND #2                                        ; AE74: 29 02       ).
     ADC #&0B                                      ; AE76: 69 0B       i.
     CMP #&0F                                      ; AE78: C9 0F       ..
     BNE CAE7E                                     ; AE7A: D0 02       ..
     LDA #&0B                                      ; AE7C: A9 0B       ..
-; &AE7E referenced 1 time by &AE7A
 .CAE7E
     JSR CAAE3                                     ; AE7E: 20 E3 AA     ..
     JMP CAFEF                                     ; AE81: 4C EF AF    L..
 
-; &AE84 referenced 1 time by &B076
 .CAE84
     LDA L0039                                     ; AE84: A5 39       .9
     STA L0002                                     ; AE86: 85 02       ..
@@ -7811,16 +7053,13 @@ L8D3C = sub_C8D3B+1
     BEQ CAE99                                     ; AE94: F0 03       ..
     JMP CAFEF                                     ; AE96: 4C EF AF    L..
 
-; &AE99 referenced 1 time by &AE94
 .CAE99
     JSR sub_C8533                                 ; AE99: 20 33 85     3.
     DEC L00A2                                     ; AE9C: C6 A2       ..
     BEQ CAEA3                                     ; AE9E: F0 03       ..
-; &AEA0 referenced 1 time by &AEA9
 .loop_CAEA0
     JMP CAFEF                                     ; AEA0: 4C EF AF    L..
 
-; &AEA3 referenced 1 time by &AE9E
 .CAEA3
     LDA L038A                                     ; AEA3: AD 8A 03    ...
     ORA L045D                                     ; AEA6: 0D 5D 04    .].
@@ -7849,7 +7088,6 @@ L8D3C = sub_C8D3B+1
     BNE CAEDE                                     ; AED9: D0 03       ..
     JMP CAE55                                     ; AEDB: 4C 55 AE    LU.
 
-; &AEDE referenced 1 time by &AED9
 .CAEDE
     ORA #&6F ; 'o'                                ; AEDE: 09 6F       .o
     STA INWK_29                                   ; AEE0: 85 26       .&
@@ -7861,11 +7099,9 @@ L8D3C = sub_C8D3B+1
     ORA #&10                                      ; AEEC: 09 10       ..
     STA INWK_27                                   ; AEEE: 85 24       .$
     BCC CAEF6                                     ; AEF0: 90 04       ..
-; &AEF2 referenced 1 time by &AEE8
 .CAEF2
     ORA #&7F                                      ; AEF2: 09 7F       ..
     STA INWK_30                                   ; AEF4: 85 27       .'
-; &AEF6 referenced 1 time by &AEF0
 .CAEF6
     JSR DORND                                     ; AEF6: 20 AD F4     ..
     CMP #&FC                                      ; AEF9: C9 FC       ..
@@ -7873,19 +7109,15 @@ L8D3C = sub_C8D3B+1
     LDA #&0F                                      ; AEFD: A9 0F       ..
     STA L0029                                     ; AEFF: 85 29       .)
     BNE CAF09                                     ; AF01: D0 06       ..
-; &AF03 referenced 1 time by &AEFB
 .CAF03
     CMP #&0A                                      ; AF03: C9 0A       ..
     AND #1                                        ; AF05: 29 01       ).
     ADC #5                                        ; AF07: 69 05       i.
-; &AF09 referenced 1 time by &AF01
 .CAF09
     JSR CAAE3                                     ; AF09: 20 E3 AA     ..
-; &AF0C referenced 7 times by &AEE5, &AF12, &AF3E, &AF43, &AF70, &AF74, &AF7B
 .CAF0C
     JMP CAFEF                                     ; AF0C: 4C EF AF    L..
 
-; &AF0F referenced 2 times by &AEB0, &AEB7
 .CAF0F
     LDA L0564                                     ; AF0F: AD 64 05    .d.
     BNE CAF0C                                     ; AF12: D0 F8       ..
@@ -7894,7 +7126,6 @@ L8D3C = sub_C8D3B+1
     LDX L0572                                     ; AF18: AE 72 05    .r.
     BEQ CAF20                                     ; AF1B: F0 03       ..
     ORA L03C9                                     ; AF1D: 0D C9 03    ...
-; &AF20 referenced 1 time by &AF1B
 .CAF20
     STA T                                         ; AF20: 85 9A       ..
     JSR LF42E                                     ; AF22: 20 2E F4     ..
@@ -7902,7 +7133,6 @@ L8D3C = sub_C8D3B+1
     BNE CAF2C                                     ; AF27: D0 03       ..
     JMP CAFBC                                     ; AF29: 4C BC AF    L..
 
-; &AF2C referenced 1 time by &AF27
 .CAF2C
     CMP T                                         ; AF2C: C5 9A       ..
     BCS CAF3B                                     ; AF2E: B0 0B       ..
@@ -7911,7 +7141,6 @@ L8D3C = sub_C8D3B+1
     STA L002D                                     ; AF34: 85 2D       .-
     LDA #&10                                      ; AF36: A9 10       ..
     JSR CAAE3                                     ; AF38: 20 E3 AA     ..
-; &AF3B referenced 1 time by &AF2E
 .CAF3B
     LDA L0572                                     ; AF3B: AD 72 05    .r.
     BNE CAF0C                                     ; AF3E: D0 CC       ..
@@ -7925,12 +7154,10 @@ L8D3C = sub_C8D3B+1
     JSR DORND                                     ; AF51: 20 AD F4     ..
     CMP #&C8                                      ; AF54: C9 C8       ..
     BCC CAF5E                                     ; AF56: 90 06       ..
-; &AF58 referenced 1 time by &AFC1
 .CAF58
     JSR sub_CA213                                 ; AF58: 20 13 A2     ..
     JMP CAFEF                                     ; AF5B: 4C EF AF    L..
 
-; &AF5E referenced 2 times by &AF4F, &AF56
 .CAF5E
     JSR DORND                                     ; AF5E: 20 AD F4     ..
     LDY L048C                                     ; AF61: AC 8C 04    ...
@@ -7940,14 +7167,12 @@ L8D3C = sub_C8D3B+1
     BEQ CAF72                                     ; AF6C: F0 04       ..
     CMP #&32 ; '2'                                ; AF6E: C9 32       .2
     BCS CAF0C                                     ; AF70: B0 9A       ..
-; &AF72 referenced 1 time by &AF6C
 .CAF72
     CMP #&64 ; 'd'                                ; AF72: C9 64       .d
     BCS CAF0C                                     ; AF74: B0 96       ..
     AND #7                                        ; AF76: 29 07       ).
     CMP L048C                                     ; AF78: CD 8C 04    ...
     BCC CAF0C                                     ; AF7B: 90 8F       ..
-; &AF7D referenced 1 time by &AF64
 .CAF7D
     JSR LF42E                                     ; AF7D: 20 2E F4     ..
     CMP #&64 ; 'd'                                ; AF80: C9 64       .d
@@ -7969,7 +7194,6 @@ L8D3C = sub_C8D3B+1
     BCC CAFA8                                     ; AFA1: 90 05       ..
     ORA L0581                                     ; AFA3: 0D 81 05    ...
     BEQ LAFB4                                     ; AFA6: F0 0C       ..
-; &AFA8 referenced 2 times by &AF95, &AFA1
 .CAFA8
     JSR DORND                                     ; AFA8: 20 AD F4     ..
     CMP #&C8                                      ; AFAB: C9 C8       ..
@@ -7981,13 +7205,10 @@ L8D3C = sub_C8D3B+1
 LAFB4 = sub_CAFB3+1
     BIT L1FA9                                     ; AFB3: 2C A9 1F    ,..
 ; overlapping: LDA #&1F                           ; AFB4: A9 1F       ..
-; &AFB4 referenced 1 time by &AFA6
-; &AFB6 referenced 1 time by &AFCD
 .loop_CAFB6
     JSR CAAE3                                     ; AFB6: 20 E3 AA     ..
     JMP CAFEF                                     ; AFB9: 4C EF AF    L..
 
-; &AFBC referenced 1 time by &AF29
 .CAFBC
     LDA L0606                                     ; AFBC: AD 06 06    ...
     AND #&3E ; '>'                                ; AFBF: 29 3E       )>
@@ -7998,12 +7219,10 @@ LAFB4 = sub_CAFB3+1
     STA L0029                                     ; AFC9: 85 29       .)
     LDA #&20 ; ' '                                ; AFCB: A9 20       .
     BNE loop_CAFB6                                ; AFCD: D0 E7       ..
-; &AFCF referenced 1 time by &AF88
 .CAFCF
     AND #3                                        ; AFCF: 29 03       ).
     STA L0392                                     ; AFD1: 8D 92 03    ...
     STA L00A1                                     ; AFD4: 85 A1       ..
-; &AFD6 referenced 1 time by &AFED
 .loop_CAFD6
     LDA #4                                        ; AFD6: A9 04       ..
     STA L002D                                     ; AFD8: 85 2D       .-
@@ -8016,30 +7235,25 @@ LAFB4 = sub_CAFB3+1
     JSR CAAE3                                     ; AFE8: 20 E3 AA     ..
     DEC L00A1                                     ; AFEB: C6 A1       ..
     BPL loop_CAFD6                                ; AFED: 10 E7       ..
-; &AFEF referenced 7 times by &95E1, &AE81, &AE96, &AEA0, &AF0C, &AF5B, &AFB9
 .CAFEF
     LDX #&FF                                      ; AFEF: A2 FF       ..
     TXS                                           ; AFF1: 9A          .
     LDX L0390                                     ; AFF2: AE 90 03    ...
     BEQ CAFFA                                     ; AFF5: F0 03       ..
     DEC L0390                                     ; AFF7: CE 90 03    ...
-; &AFFA referenced 1 time by &AFF5
 .CAFFA
     LDX L038F                                     ; AFFA: AE 8F 03    ...
     BEQ CB006                                     ; AFFD: F0 07       ..
     DEX                                           ; AFFF: CA          .
     BEQ CB003                                     ; B000: F0 01       ..
     DEX                                           ; B002: CA          .
-; &B003 referenced 1 time by &B000
 .CB003
     STX L038F                                     ; B003: 8E 8F 03    ...
-; &B006 referenced 1 time by &AFFD
 .CB006
     LDA L009E                                     ; B006: A5 9E       ..
     BEQ CB00F                                     ; B008: F0 05       ..
     LDY #4                                        ; B00A: A0 04       ..
     JSR LEBA2                                     ; B00C: 20 A2 EB     ..
-; &B00F referenced 1 time by &B008
 .CB00F
     LDA L03C6                                     ; B00F: AD C6 03    ...
     BEQ CB02B                                     ; B012: F0 17       ..
@@ -8052,7 +7266,6 @@ LAFB4 = sub_CAFB3+1
     INC L03C6                                     ; B023: EE C6 03    ...
     BPL CB02B                                     ; B026: 10 03       ..
     DEC L03C6                                     ; B028: CE C6 03    ...
-; &B02B referenced 3 times by &B012, &B021, &B026
 .CB02B
     LDA L03C6                                     ; B02B: AD C6 03    ...
     BEQ CB04C                                     ; B02E: F0 1C       ..
@@ -8061,7 +7274,6 @@ LAFB4 = sub_CAFB3+1
     BCS CB039                                     ; B035: B0 02       ..
     LSR A                                         ; B037: 4A          J
     LSR A                                         ; B038: 4A          J
-; &B039 referenced 1 time by &B035
 .CB039
     STA T                                         ; B039: 85 9A       ..
     JSR DORND                                     ; B03B: 20 AD F4     ..
@@ -8072,18 +7284,15 @@ LAFB4 = sub_CAFB3+1
     LDA LB079,Y                                   ; B045: B9 79 B0    .y.
     TAY                                           ; B048: A8          .
     JSR LEBF2                                     ; B049: 20 F2 EB     ..
-; &B04C referenced 2 times by &B02E, &B040
 .CB04C
     LDA L0300                                     ; B04C: AD 00 03    ...
     LDX L006C                                     ; B04F: A6 6C       .l
     BEQ CB055                                     ; B051: F0 02       ..
     ORA #&80                                      ; B053: 09 80       ..
-; &B055 referenced 1 time by &B051
 .CB055
     LDX L045D                                     ; B055: AE 5D 04    .].
     BEQ CB05C                                     ; B058: F0 02       ..
     AND #&7F                                      ; B05A: 29 7F       ).
-; &B05C referenced 1 time by &B058
 .CB05C
     STA L0300                                     ; B05C: 8D 00 03    ...
     AND #&C0                                      ; B05F: 29 C0       ).
@@ -8094,31 +7303,25 @@ LAFB4 = sub_CAFB3+1
     ROR A                                         ; B069: 6A          j
     STA L0300                                     ; B06A: 8D 00 03    ...
     JSR LF171                                     ; B06D: 20 71 F1     q.
-; &B070 referenced 2 times by &B061, &B065
 .CB070
     JSR sub_CAD25                                 ; B070: 20 25 AD     %.
-; &B073 referenced 1 time by &B367
 .CB073
     JSR sub_CB07D                                 ; B073: 20 7D B0     }.
     JMP CAE84                                     ; B076: 4C 84 AE    L..
 
-; &B079 referenced 1 time by &B045
 .LB079
     EQUB 5, 5, 5, 6                               ; B079: 05 05 05... ...
 
-; &B07D referenced 1 time by &B073
 .sub_CB07D
     CMP #0                                        ; B07D: C9 00       ..
     BNE CB084                                     ; B07F: D0 03       ..
     JMP CB16A                                     ; B081: 4C 6A B1    Lj.
 
-; &B084 referenced 1 time by &B07F
 .CB084
     CMP #3                                        ; B084: C9 03       ..
     BNE CB08B                                     ; B086: D0 03       ..
     JMP C8837                                     ; B088: 4C 37 88    L7.
 
-; &B08B referenced 1 time by &B086
 .CB08B
     CMP #4                                        ; B08B: C9 04       ..
     BEQ CB09B                                     ; B08D: F0 0C       ..
@@ -8127,36 +7330,30 @@ LAFB4 = sub_CAFB3+1
     LDA L0470                                     ; B093: AD 70 04    .p.
     EOR #&80                                      ; B096: 49 80       I.
     STA L0470                                     ; B098: 8D 70 04    .p.
-; &B09B referenced 1 time by &B08D
 .CB09B
     LDA L0470                                     ; B09B: AD 70 04    .p.
     BPL CB0A3                                     ; B09E: 10 03       ..
     JMP C9890                                     ; B0A0: 4C 90 98    L..
 
-; &B0A3 referenced 1 time by &B09E
 .CB0A3
     JMP C9C00                                     ; B0A3: 4C 00 9C    L..
 
-; &B0A6 referenced 1 time by &B091
 .CB0A6
     CMP #&23 ; '#'                                ; B0A6: C9 23       .#
     BNE CB0B0                                     ; B0A8: D0 06       ..
     JSR C9D09                                     ; B0AA: 20 09 9D     ..
     JMP C96DC                                     ; B0AD: 4C DC 96    L..
 
-; &B0B0 referenced 1 time by &B0A8
 .CB0B0
     CMP #8                                        ; B0B0: C9 08       ..
     BNE CB0B7                                     ; B0B2: D0 03       ..
     JMP C9AB1                                     ; B0B4: 4C B1 9A    L..
 
-; &B0B7 referenced 1 time by &B0B2
 .CB0B7
     CMP #2                                        ; B0B7: C9 02       ..
     BNE CB0BE                                     ; B0B9: D0 03       ..
     JMP C9FE0                                     ; B0BB: 4C E0 9F    L..
 
-; &B0BE referenced 1 time by &B0B9
 .CB0BE
     CMP #1                                        ; B0BE: C9 01       ..
     BNE CB0CC                                     ; B0C0: D0 0A       ..
@@ -8165,7 +7362,6 @@ LAFB4 = sub_CAFB3+1
     JSR sub_C9D03                                 ; B0C6: 20 03 9D     ..
     JMP CA2BE                                     ; B0C9: 4C BE A2    L..
 
-; &B0CC referenced 2 times by &B0C0, &B0C4
 .CB0CC
     CMP #&11                                      ; B0CC: C9 11       ..
     BNE CB119                                     ; B0CE: D0 49       .I
@@ -8184,34 +7380,28 @@ LAFB4 = sub_CAFB3+1
     BCS CB0F2                                     ; B0ED: B0 03       ..
     JMP LEBE5                                     ; B0EF: 4C E5 EB    L..
 
-; &B0F2 referenced 1 time by &B0ED
 .CB0F2
     DEC L03E8                                     ; B0F2: CE E8 03    ...
     LDA #0                                        ; B0F5: A9 00       ..
     JSR CB78F                                     ; B0F7: 20 8F B7     ..
-; &B0FA referenced 1 time by &B0E4
 .CB0FA
     LDA #1                                        ; B0FA: A9 01       ..
     JSR LD167                                     ; B0FC: 20 67 D1     g.
     JSR LED24                                     ; B0FF: 20 24 ED     $.
     LDA #&FF                                      ; B102: A9 FF       ..
     BNE CB10B                                     ; B104: D0 05       ..
-; &B106 referenced 1 time by &B0D7
 .CB106
     JSR LED6B                                     ; B106: 20 6B ED     k.
     LDA #0                                        ; B109: A9 00       ..
-; &B10B referenced 1 time by &B104
 .CB10B
     STA L0388                                     ; B10B: 8D 88 03    ...
     LDA L009E                                     ; B10E: A5 9E       ..
     BEQ CB118                                     ; B110: F0 06       ..
     JSR LF2DE                                     ; B112: 20 DE F2     ..
     JSR C8980                                     ; B115: 20 80 89     ..
-; &B118 referenced 1 time by &B110
 .CB118
     RTS                                           ; B118: 60          `
 
-; &B119 referenced 3 times by &B0CE, &B0D2, &B0DC
 .CB119
     JSR sub_CB1D4                                 ; B119: 20 D4 B1     ..
     CMP #&15                                      ; B11C: C9 15       ..
@@ -8220,7 +7410,6 @@ LAFB4 = sub_CAFB3+1
     BPL CB125                                     ; B122: 10 01       ..
     RTS                                           ; B124: 60          `
 
-; &B125 referenced 1 time by &B122
 .CB125
     LDA #0                                        ; B125: A9 00       ..
     LDX L009E                                     ; B127: A6 9E       ..
@@ -8229,12 +7418,10 @@ LAFB4 = sub_CAFB3+1
     CLC                                           ; B12E: 18          .
     ADC #1                                        ; B12F: 69 01       i.
     AND #3                                        ; B131: 29 03       ).
-; &B133 referenced 1 time by &B129
 .CB133
     TAX                                           ; B133: AA          .
     JMP CBDB3                                     ; B134: 4C B3 BD    L..
 
-; &B137 referenced 1 time by &B11E
 .CB137
     BIT L00A5                                     ; B137: 24 A5       $.
     BPL CB149                                     ; B139: 10 0E       ..
@@ -8242,25 +7429,21 @@ LAFB4 = sub_CAFB3+1
     BNE CB142                                     ; B13D: D0 03       ..
     JMP CA48D                                     ; B13F: 4C 8D A4    L..
 
-; &B142 referenced 1 time by &B13D
 .CB142
     CMP #6                                        ; B142: C9 06       ..
     BNE CB149                                     ; B144: D0 03       ..
     JMP LF194                                     ; B146: 4C 94 F1    L..
 
-; &B149 referenced 2 times by &B139, &B144
 .CB149
     CMP #&16                                      ; B149: C9 16       ..
     BNE CB150                                     ; B14B: D0 03       ..
     JMP C9E51                                     ; B14D: 4C 51 9E    LQ.
 
-; &B150 referenced 1 time by &B14B
 .CB150
     CMP #&29 ; ')'                                ; B150: C9 29       .)
     BNE CB157                                     ; B152: D0 03       ..
     JMP C9E48                                     ; B154: 4C 48 9E    LH.
 
-; &B157 referenced 1 time by &B152
 .CB157
     CMP #&27 ; '''                                ; B157: C9 27       .'
     BNE CB16A                                     ; B159: D0 0F       ..
@@ -8272,7 +7455,6 @@ LAFB4 = sub_CAFB3+1
     BNE CB1A5                                     ; B165: D0 3E       .>
     JMP C8C2B                                     ; B167: 4C 2B 8C    L+.
 
-; &B16A referenced 2 times by &B081, &B159
 .CB16A
     STA T1                                        ; B16A: 85 06       ..
     LDA L009E                                     ; B16C: A5 9E       ..
@@ -8285,16 +7467,13 @@ LAFB4 = sub_CAFB3+1
     CMP #&26 ; '&'                                ; B17A: C9 26       .&
     BNE CB18A                                     ; B17C: D0 0C       ..
     JSR sub_C9516                                 ; B17E: 20 16 95     ..
-; &B181 referenced 1 time by &8CAC
 .CB181
     ASL L0395                                     ; B181: 0E 95 03    ...
     LSR L0395                                     ; B184: 4E 95 03    N..
     JMP C9D09                                     ; B187: 4C 09 9D    L..
 
-; &B18A referenced 1 time by &B17C
 .CB18A
     JSR sub_C9AE7                                 ; B18A: 20 E7 9A     ..
-; &B18D referenced 2 times by &B172, &B176
 .CB18D
     LDA L006C                                     ; B18D: A5 6C       .l
     BEQ CB1A5                                     ; B18F: F0 14       ..
@@ -8307,15 +7486,12 @@ LAFB4 = sub_CAFB3+1
     LDA #&FA                                      ; B19D: A9 FA       ..
     JMP CB78F                                     ; B19F: 4C 8F B7    L..
 
-; &B1A2 referenced 1 time by &B19B
 .CB1A2
     JMP CA24E                                     ; B1A2: 4C 4E A2    LN.
 
-; &B1A5 referenced 4 times by &B15D, &B165, &B18F, &B193
 .CB1A5
     RTS                                           ; B1A5: 60          `
 
-; &B1A6 referenced 2 times by &A2F5, &AF14
 .sub_CB1A6
     LDA L03B0                                     ; B1A6: AD B0 03    ...
     CLC                                           ; B1A9: 18          .
@@ -8324,7 +7500,6 @@ LAFB4 = sub_CAFB3+1
     ADC L03B7                                     ; B1AE: 6D B7 03    m..
     RTS                                           ; B1B1: 60          `
 
-; &B1B2 referenced 1 time by &8323
 .sub_CB1B2
     LDA INWK_2                                    ; B1B2: A5 0B       ..
     ORA INWK_5                                    ; B1B4: 05 0E       ..
@@ -8337,26 +7512,21 @@ LAFB4 = sub_CAFB3+1
     CMP INWK_4                                    ; B1C1: C5 0D       ..
     BCC CB1C7                                     ; B1C3: 90 02       ..
     CMP INWK_7                                    ; B1C5: C5 10       ..
-; &B1C7 referenced 2 times by &B1BF, &B1C3
 .CB1C7
     RTS                                           ; B1C7: 60          `
 
-; &B1C8 referenced 1 time by &B1B9
 .CB1C8
     CLC                                           ; B1C8: 18          .
     RTS                                           ; B1C9: 60          `
 
-; &B1CA referenced 3 times by &8177, &8CC8, &8EC0
 .sub_CB1CA
     ORA INWK_1                                    ; B1CA: 05 0A       ..
     ORA INWK_4                                    ; B1CC: 05 0D       ..
     ORA INWK_7                                    ; B1CE: 05 10       ..
     RTS                                           ; B1D0: 60          `
 
-; &B1D1 referenced 2 times by &9345, &A073
 .sub_CB1D1
     LDA L0465                                     ; B1D1: AD 65 04    .e.
-; &B1D4 referenced 3 times by &95F3, &A502, &B119
 .sub_CB1D4
     CMP #&50 ; 'P'                                ; B1D4: C9 50       .P
     BNE CB1E2                                     ; B1D6: D0 0A       ..
@@ -8366,12 +7536,10 @@ LAFB4 = sub_CAFB3+1
     SEC                                           ; B1E0: 38          8
     RTS                                           ; B1E1: 60          `
 
-; &B1E2 referenced 1 time by &B1D6
 .CB1E2
     CLC                                           ; B1E2: 18          .
     RTS                                           ; B1E3: 60          `
 
-; &B1E4 referenced 4 times by &8206, &8459, &852F, &AA93
 .CB1E4
     JSR LED6B                                     ; B1E4: 20 6B ED     k.
     JSR LEBAD                                     ; B1E7: 20 AD EB     ..
@@ -8404,7 +7572,6 @@ LAFB4 = sub_CAFB3+1
     JSR sub_CAE32                                 ; B228: 20 32 AE     2.
     LDY #8                                        ; B22B: A0 08       ..
     LDA #1                                        ; B22D: A9 01       ..
-; &B22F referenced 1 time by &B233
 .loop_CB22F
     STA L0374,Y                                   ; B22F: 99 74 03    .t.
     DEY                                           ; B232: 88          .
@@ -8420,7 +7587,6 @@ LAFB4 = sub_CAFB3+1
     STA L006F                                     ; B247: 85 6F       .o
     EOR #&80                                      ; B249: 49 80       I.
     STA L0070                                     ; B24B: 85 70       .p
-; &B24D referenced 1 time by &B294
 .CB24D
     JSR LF42E                                     ; B24D: 20 2E F4     ..
     LSR A                                         ; B250: 4A          J
@@ -8452,7 +7618,6 @@ LAFB4 = sub_CAFB3+1
     BEQ CB285                                     ; B280: F0 03       ..
     BCC CB285                                     ; B282: 90 01       ..
     DEX                                           ; B284: CA          .
-; &B285 referenced 2 times by &B280, &B282
 .CB285
     JSR sub_C91EE                                 ; B285: 20 EE 91     ..
     JSR DORND                                     ; B288: 20 AD F4     ..
@@ -8471,7 +7636,6 @@ LAFB4 = sub_CAFB3+1
     JSR LEB8F                                     ; B2A5: 20 8F EB     ..
     LDA #&1E                                      ; B2A8: A9 1E       ..
     STA L038F                                     ; B2AA: 8D 8F 03    ...
-; &B2AD referenced 1 time by &B2BE
 .loop_CB2AD
     JSR LD8E1                                     ; B2AD: 20 E1 D8     ..
     JSR sub_C834A                                 ; B2B0: 20 4A 83     J.
@@ -8500,7 +7664,6 @@ LAFB4 = sub_CAFB3+1
     TXS                                           ; B2E8: 9A          .
     JSR sub_CAD6B                                 ; B2E9: 20 6B AD     k.
     JSR LEDFF                                     ; B2EC: 20 FF ED     ..
-; &B2EF referenced 1 time by &B2C0
 .CB2EF
     LDX #&FF                                      ; B2EF: A2 FF       ..
     TXS                                           ; B2F1: 9A          .
@@ -8527,7 +7690,6 @@ LAFB4 = sub_CAFB3+1
     LDA L03EE                                     ; B324: AD EE 03    ...
     BEQ CB32C                                     ; B327: F0 03       ..
     JSR LF362                                     ; B329: 20 62 F3     b.
-; &B32C referenced 1 time by &B327
 .CB32C
     JSR LD167                                     ; B32C: 20 67 D1     g.
     LDA #4                                        ; B32F: A9 04       ..
@@ -8539,7 +7701,6 @@ LAFB4 = sub_CAFB3+1
     PLA                                           ; B33D: 68          h
     JMP LF059                                     ; B33E: 4C 59 F0    LY.
 
-; &B341 referenced 1 time by &B310
 .CB341
     JSR sub_CB36A                                 ; B341: 20 6A B3     j.
     LDA #&FF                                      ; B344: A9 FF       ..
@@ -8550,15 +7711,12 @@ LAFB4 = sub_CAFB3+1
     LDA #2                                        ; B350: A9 02       ..
     JMP LF059                                     ; B352: 4C 59 F0    LY.
 
-; &B355 referenced 1 time by &B318
 .CB355
     JSR LEDAB                                     ; B355: 20 AB ED     ..
-; &B358 referenced 1 time by &B5BC
 .CB358
     LDX #&FF                                      ; B358: A2 FF       ..
     TXS                                           ; B35A: 9A          .
     JSR sub_CB36A                                 ; B35B: 20 6A B3     j.
-; &B35E referenced 4 times by &80AB, &9433, &943C, &949B
 .CB35E
     JSR LF293                                     ; B35E: 20 93 F2     ..
     LDA #&FF                                      ; B361: A9 FF       ..
@@ -8566,7 +7724,6 @@ LAFB4 = sub_CAFB3+1
     LDA #3                                        ; B365: A9 03       ..
     JMP CB073                                     ; B367: 4C 73 B0    Ls.
 
-; &B36A referenced 3 times by &B31D, &B341, &B35B
 .sub_CB36A
     JSR LEC7D                                     ; B36A: 20 7D EC     }.
     JSR LF03D                                     ; B36D: 20 3D F0     =.
@@ -8575,7 +7732,6 @@ LAFB4 = sub_CAFB3+1
     JSR sub_C9D6B                                 ; B376: 20 6B 9D     k.
     JSR sub_C9EC6                                 ; B379: 20 C6 9E     ..
     LDX #5                                        ; B37C: A2 05       ..
-; &B37E referenced 1 time by &B384
 .loop_CB37E
     LDA QQ15,X                                    ; B37E: B5 82       ..
     STA L048E,X                                   ; B380: 9D 8E 04    ...
@@ -8591,7 +7747,6 @@ LAFB4 = sub_CAFB3+1
     STA L048C                                     ; B399: 8D 8C 04    ...
     RTS                                           ; B39C: 60          `
 
-; &B39D referenced 3 times by &931E, &94C6, &B3F1
 .sub_CB39D
     JSR sub_CBEB5                                 ; B39D: 20 B5 BE     ..
     JSR LCD34                                     ; B3A0: 20 34 CD     4.
@@ -8635,17 +7790,14 @@ LAFB4 = sub_CAFB3+1
     JSR sub_CB39D                                 ; B3F1: 20 9D B3     ..
     LDA #7                                        ; B3F4: A9 07       ..
     STA L03FB                                     ; B3F6: 8D FB 03    ...
-; &B3F9 referenced 1 time by &B413
 .loop_CB3F9
     LDA #&19                                      ; B3F9: A9 19       ..
     STA L03FA                                     ; B3FB: 8D FA 03    ...
-; &B3FE referenced 1 time by &B40E
 .loop_CB3FE
     LDA INWK_7                                    ; B3FE: A5 10       ..
     CMP #1                                        ; B400: C9 01       ..
     BEQ CB406                                     ; B402: F0 02       ..
     DEC INWK_7                                    ; B404: C6 10       ..
-; &B406 referenced 1 time by &B402
 .CB406
     JSR sub_CB426                                 ; B406: 20 26 B4     &.
     BCS CB422                                     ; B409: B0 17       ..
@@ -8653,7 +7805,6 @@ LAFB4 = sub_CAFB3+1
     BNE loop_CB3FE                                ; B40E: D0 EE       ..
     DEC L03FB                                     ; B410: CE FB 03    ...
     BNE loop_CB3F9                                ; B413: D0 E4       ..
-; &B415 referenced 1 time by &B420
 .loop_CB415
     LDA INWK_7                                    ; B415: A5 10       ..
     CMP #&37 ; '7'                                ; B417: C9 37       .7
@@ -8661,17 +7812,14 @@ LAFB4 = sub_CAFB3+1
     INC INWK_7                                    ; B41B: E6 10       ..
     JSR sub_CB426                                 ; B41D: 20 26 B4     &.
     BCC loop_CB415                                ; B420: 90 F3       ..
-; &B422 referenced 1 time by &B409
 .CB422
     SEC                                           ; B422: 38          8
     RTS                                           ; B423: 60          `
 
-; &B424 referenced 1 time by &B419
 .CB424
     CLC                                           ; B424: 18          .
     RTS                                           ; B425: 60          `
 
-; &B426 referenced 2 times by &B406, &B41D
 .sub_CB426
     JSR CB955                                     ; B426: 20 55 B9     U.
     LDX L0480                                     ; B429: AE 80 04    ...
@@ -8687,7 +7835,6 @@ LAFB4 = sub_CAFB3+1
     ASL A                                         ; B43F: 0A          .
     BPL CB445                                     ; B440: 10 03       ..
     JSR LD06D                                     ; B442: 20 6D D0     m.
-; &B445 referenced 2 times by &B43A, &B440
 .CB445
     JSR LD96F                                     ; B445: 20 6F D9     o.
     INC L00A2                                     ; B448: E6 A2       ..
@@ -8696,38 +7843,31 @@ LAFB4 = sub_CAFB3+1
     ORA L04B8                                     ; B450: 0D B8 04    ...
     BMI CB457                                     ; B453: 30 02       0.
     BNE CB466                                     ; B455: D0 0F       ..
-; &B457 referenced 1 time by &B453
 .CB457
     LDA L04B3                                     ; B457: AD B3 04    ...
     ORA L04B7                                     ; B45A: 0D B7 04    ...
     ORA L04B9                                     ; B45D: 0D B9 04    ...
     BMI CB464                                     ; B460: 30 02       0.
     BNE CB469                                     ; B462: D0 05       ..
-; &B464 referenced 1 time by &B460
 .CB464
     CLC                                           ; B464: 18          .
     RTS                                           ; B465: 60          `
 
-; &B466 referenced 1 time by &B455
 .CB466
     LSR L0475                                     ; B466: 4E 75 04    Nu.
-; &B469 referenced 1 time by &B462
 .CB469
     SEC                                           ; B469: 38          8
     RTS                                           ; B46A: 60          `
 
-; &B46B referenced 2 times by &AD6B, &AE00
 .sub_CB46B
     JSR LEC7D                                     ; B46B: 20 7D EC     }.
     LDX #&2B ; '+'                                ; B46E: A2 2B       .+
     LDA #0                                        ; B470: A9 00       ..
-; &B472 referenced 1 time by &B476
 .loop_CB472
     STA L0369,X                                   ; B472: 9D 69 03    .i.
     DEX                                           ; B475: CA          .
     BNE loop_CB472                                ; B476: D0 FA       ..
     LDX #&21 ; '!'                                ; B478: A2 21       .!
-; &B47A referenced 1 time by &B47E
 .loop_CB47A
     STA L0562,X                                   ; B47A: 9D 62 05    .b.
     DEX                                           ; B47D: CA          .
@@ -8735,19 +7875,16 @@ LAFB4 = sub_CAFB3+1
     JSR LEC7D                                     ; B480: 20 7D EC     }.
     RTS                                           ; B483: 60          `
 
-; &B484 referenced 2 times by &B2FE, &B3C4
 .sub_CB484
     LDX #6                                        ; B484: A2 06       ..
     LDA #0                                        ; B486: A9 00       ..
     STA L0081                                     ; B488: 85 81       ..
-; &B48A referenced 1 time by &B48E
 .loop_CB48A
     STA L0403,X                                   ; B48A: 9D 03 04    ...
     DEX                                           ; B48D: CA          .
     BPL loop_CB48A                                ; B48E: 10 FA       ..
     RTS                                           ; B490: 60          `
 
-; &B491 referenced 3 times by &B4FF, &B508, &B511
 .sub_CB491
     LDA INWK,Y                                    ; B491: B9 09 00    ...
     ASL A                                         ; B494: 0A          .
@@ -8767,10 +7904,8 @@ LAFB4 = sub_CAFB3+1
     AND #&7F                                      ; B4AF: 29 7F       ).
     RTS                                           ; B4B1: 60          `
 
-; &B4B2 referenced 1 time by &8508
 .sub_CB4B2
     LDA #0                                        ; B4B2: A9 00       ..
-; &B4B4 referenced 2 times by &83E5, &847B
 .sub_CB4B4
     ORA L0602,Y                                   ; B4B4: 19 02 06    ...
     ORA L0605,Y                                   ; B4B7: 19 05 06    ...
@@ -8778,7 +7913,6 @@ LAFB4 = sub_CAFB3+1
     AND #&7F                                      ; B4BD: 29 7F       ).
     RTS                                           ; B4BF: 60          `
 
-; &B4C0 referenced 2 times by &8480, &850D
 .sub_CB4C0
     LDA L0601,Y                                   ; B4C0: B9 01 06    ...
     JSR SQUA2                                     ; B4C3: 20 0E F7     ..
@@ -8794,20 +7928,16 @@ LAFB4 = sub_CAFB3+1
     ASL A                                         ; B4DB: 0A          .
     BPL CB4E1                                     ; B4DC: 10 03       ..
     JSR LD06D                                     ; B4DE: 20 6D D0     m.
-; &B4E1 referenced 2 times by &B4D6, &B4DC
 .CB4E1
     LDA L0607,Y                                   ; B4E1: B9 07 06    ...
     JSR SQUA2                                     ; B4E4: 20 0E F7     ..
     ADC R                                         ; B4E7: 65 98       e.
     BCC CB4ED                                     ; B4E9: 90 02       ..
-; &B4EB referenced 1 time by &B4D0
 .CB4EB
     LDA #&FF                                      ; B4EB: A9 FF       ..
-; &B4ED referenced 1 time by &B4E9
 .CB4ED
     RTS                                           ; B4ED: 60          `
 
-; &B4EE referenced 2 times by &83F4, &8414
 .sub_CB4EE
     LDA L00E9                                     ; B4EE: A5 E9       ..
     BPL CB4FB                                     ; B4F0: 10 09       ..
@@ -8815,7 +7945,6 @@ LAFB4 = sub_CAFB3+1
     ASL A                                         ; B4F5: 0A          .
     BPL CB4FB                                     ; B4F6: 10 03       ..
     JSR LD06D                                     ; B4F8: 20 6D D0     m.
-; &B4FB referenced 2 times by &B4F0, &B4F6
 .CB4FB
     LDX #0                                        ; B4FB: A2 00       ..
     LDY #9                                        ; B4FD: A0 09       ..
@@ -8836,7 +7965,6 @@ LAFB4 = sub_CAFB3+1
     SEC                                           ; B520: 38          8
     RTS                                           ; B521: 60          `
 
-; &B522 referenced 4 times by &B502, &B50B, &B514, &B51B
 .CB522
     LDA L00E9                                     ; B522: A5 E9       ..
     BPL CB52F                                     ; B524: 10 09       ..
@@ -8844,12 +7972,10 @@ LAFB4 = sub_CAFB3+1
     ASL A                                         ; B529: 0A          .
     BPL CB52F                                     ; B52A: 10 03       ..
     JSR LD06D                                     ; B52C: 20 6D D0     m.
-; &B52F referenced 2 times by &B524, &B52A
 .CB52F
     CLC                                           ; B52F: 18          .
     RTS                                           ; B530: 60          `
 
-; &B531 referenced 2 times by &AA2B, &AA37
 .sub_CB531
     TAY                                           ; B531: A8          .
     AND #&7F                                      ; B532: 29 7F       ).
@@ -8862,12 +7988,10 @@ LAFB4 = sub_CAFB3+1
     BCC CB542                                     ; B53C: 90 04       ..
     EOR #&FF                                      ; B53E: 49 FF       I.
     ADC #0                                        ; B540: 69 00       i.
-; &B542 referenced 1 time by &B53C
 .CB542
     TAX                                           ; B542: AA          .
     RTS                                           ; B543: 60          `
 
-; &B544 referenced 3 times by &B559, &B55E, &B563
 .sub_CB544
     LDA L0601,X                                   ; B544: BD 01 06    ...
     STA XX2,X                                     ; B547: 95 3D       .=
@@ -8880,7 +8004,6 @@ LAFB4 = sub_CAFB3+1
     STA L003F,X                                   ; B554: 95 3F       .?
     RTS                                           ; B556: 60          `
 
-; &B557 referenced 3 times by &81E4, &8DF5, &AA20
 .sub_CB557
     LDX #0                                        ; B557: A2 00       ..
     JSR sub_CB544                                 ; B559: 20 44 B5     D.
@@ -8888,7 +8011,6 @@ LAFB4 = sub_CAFB3+1
     JSR sub_CB544                                 ; B55E: 20 44 B5     D.
     LDX #6                                        ; B561: A2 06       ..
     JSR sub_CB544                                 ; B563: 20 44 B5     D.
-; &B566 referenced 4 times by &8E12, &901F, &9057, &AA5A
 .CB566
     LDA L00E9                                     ; B566: A5 E9       ..
     BPL CB573                                     ; B568: 10 09       ..
@@ -8896,7 +8018,6 @@ LAFB4 = sub_CAFB3+1
     ASL A                                         ; B56D: 0A          .
     BPL CB573                                     ; B56E: 10 03       ..
     JSR LD06D                                     ; B570: 20 6D D0     m.
-; &B573 referenced 2 times by &B568, &B56E
 .CB573
     LDA XX2                                       ; B573: A5 3D       .=
     ORA L0040                                     ; B575: 05 40       .@
@@ -8906,7 +8027,6 @@ LAFB4 = sub_CAFB3+1
     LDA L003E                                     ; B57D: A5 3E       .>
     ORA L0041                                     ; B57F: 05 41       .A
     ORA L0044                                     ; B581: 05 44       .D
-; &B583 referenced 1 time by &B594
 .loop_CB583
     ASL L0046                                     ; B583: 06 46       .F
     ROL A                                         ; B585: 2A          *
@@ -8918,12 +8038,10 @@ LAFB4 = sub_CAFB3+1
     ASL L0043                                     ; B590: 06 43       .C
     ROL L0044                                     ; B592: 26 44       &D
     BCC loop_CB583                                ; B594: 90 ED       ..
-; &B596 referenced 1 time by &B586
 .CB596
     LSR L003E                                     ; B596: 46 3E       F>
     LSR L0041                                     ; B598: 46 41       FA
     LSR L0044                                     ; B59A: 46 44       FD
-; &B59C referenced 1 time by &9018
 .sub_CB59C
     LDA L003E                                     ; B59C: A5 3E       .>
     LSR A                                         ; B59E: 4A          J
@@ -8939,21 +8057,18 @@ LAFB4 = sub_CAFB3+1
     STA X2                                        ; B5AF: 85 73       .s
     JMP LFAF8                                     ; B5B1: 4C F8 FA    L..
 
-; &B5B4 referenced 1 time by &868A
 .sub_CB5B4
     LDA L045D                                     ; B5B4: AD 5D 04    .].
     BEQ CB5BF                                     ; B5B7: F0 06       ..
     JSR sub_C800C                                 ; B5B9: 20 0C 80     ..
     JMP CB358                                     ; B5BC: 4C 58 B3    LX.
 
-; &B5BF referenced 1 time by &B5B7
 .CB5BF
     LDA L0388                                     ; B5BF: AD 88 03    ...
     AND L0564                                     ; B5C2: 2D 64 05    -d.
     BEQ CB5CA                                     ; B5C5: F0 03       ..
     JMP C81F5                                     ; B5C7: 4C F5 81    L..
 
-; &B5CA referenced 1 time by &B5C5
 .CB5CA
     JSR sub_CB5F8                                 ; B5CA: 20 F8 B5     ..
     BCS CB5DF                                     ; B5CD: B0 10       ..
@@ -8963,7 +8078,6 @@ LAFB4 = sub_CAFB3+1
     BCS CB5DF                                     ; B5D7: B0 06       ..
     JSR LD167                                     ; B5D9: 20 67 D1     g.
     JSR sub_CB665                                 ; B5DC: 20 65 B6     e.
-; &B5DF referenced 3 times by &B5CD, &B5D2, &B5D7
 .CB5DF
     LDA #1                                        ; B5DF: A9 01       ..
     STA L00A2                                     ; B5E1: 85 A2       ..
@@ -8976,18 +8090,14 @@ LAFB4 = sub_CAFB3+1
     DEC L038E                                     ; B5F1: CE 8E 03    ...
     JMP CBDB3                                     ; B5F4: 4C B3 BD    L..
 
-; &B5F7 referenced 1 time by &B5EC
 .CB5F7
     RTS                                           ; B5F7: 60          `
 
-; &B5F8 referenced 3 times by &B5CA, &B5CF, &B5D4
 .sub_CB5F8
     JSR LD167                                     ; B5F8: 20 67 D1     g.
     JSR sub_CB665                                 ; B5FB: 20 65 B6     e.
-; &B5FE referenced 1 time by &856B
 .sub_CB5FE
     LDA #&80                                      ; B5FE: A9 80       ..
-; &B600 referenced 1 time by &8565
 .sub_CB600
     LSR A                                         ; B600: 4A          J
     STA T                                         ; B601: 85 9A       ..
@@ -8997,7 +8107,6 @@ LAFB4 = sub_CAFB3+1
     LDA L0564                                     ; B60A: AD 64 05    .d.
     BNE CB664                                     ; B60D: D0 55       .U
     LDY #&2A ; '*'                                ; B60F: A0 2A       .*
-; &B611 referenced 1 time by &B605
 .sub_CB611
     LDA L0602,Y                                   ; B611: B9 02 06    ...
     ORA L0605,Y                                   ; B614: 19 05 06    ...
@@ -9013,7 +8122,6 @@ LAFB4 = sub_CAFB3+1
     BCS CB62D                                     ; B627: B0 04       ..
     EOR #&FF                                      ; B629: 49 FF       I.
     ADC #1                                        ; B62B: 69 01       i.
-; &B62D referenced 1 time by &B627
 .CB62D
     STA L007F                                     ; B62D: 85 7F       ..
     LDA L0601,Y                                   ; B62F: B9 01 06    ...
@@ -9025,12 +8133,10 @@ LAFB4 = sub_CAFB3+1
     CMP K                                         ; B63B: C5 7D       .}
     BCS CB641                                     ; B63D: B0 02       ..
     LDA K                                         ; B63F: A5 7D       .}
-; &B641 referenced 1 time by &B63D
 .CB641
     CMP L007F                                     ; B641: C5 7F       ..
     BCS CB647                                     ; B643: B0 02       ..
     LDA L007F                                     ; B645: A5 7F       ..
-; &B647 referenced 1 time by &B643
 .CB647
     STA L0007                                     ; B647: 85 07       ..
     LDA K                                         ; B649: A5 7D       .}
@@ -9048,29 +8154,23 @@ LAFB4 = sub_CAFB3+1
     ADC L0007                                     ; B65B: 65 07       e.
     CMP T                                         ; B65D: C5 9A       ..
     BCC CB663                                     ; B65F: 90 02       ..
-; &B661 referenced 2 times by &B618, &B61E
 .CB661
     CLC                                           ; B661: 18          .
     RTS                                           ; B662: 60          `
 
-; &B663 referenced 1 time by &B65F
 .CB663
     SEC                                           ; B663: 38          8
-; &B664 referenced 2 times by &B608, &B60D
 .CB664
     RTS                                           ; B664: 60          `
 
-; &B665 referenced 2 times by &B5DC, &B5FB
 .sub_CB665
     LDY #&20 ; ' '                                ; B665: A0 20       .
-; &B667 referenced 1 time by &B66B
 .loop_CB667
     JSR sub_C84D1                                 ; B667: 20 D1 84     ..
     DEY                                           ; B66A: 88          .
     BNE loop_CB667                                ; B66B: D0 FA       ..
     LDX #0                                        ; B66D: A2 00       ..
     STX L0390                                     ; B66F: 8E 90 03    ...
-; &B672 referenced 2 times by &B683, &B6A5
 .CB672
     STX L009B                                     ; B672: 86 9B       ..
     LDA L036A,X                                   ; B674: BD 6A 03    .j.
@@ -9081,7 +8181,6 @@ LAFB4 = sub_CAFB3+1
     LDX L009B                                     ; B681: A6 9B       ..
     JMP CB672                                     ; B683: 4C 72 B6    Lr.
 
-; &B686 referenced 1 time by &B679
 .CB686
     JSR LCE90                                     ; B686: 20 90 CE     ..
     LDA #&80                                      ; B689: A9 80       ..
@@ -9101,27 +8200,22 @@ LAFB4 = sub_CAFB3+1
     LDX L009B                                     ; B6A2: A6 9B       ..
     INX                                           ; B6A4: E8          .
     BNE CB672                                     ; B6A5: D0 CB       ..
-; &B6A7 referenced 1 time by &B677
 .CB6A7
     RTS                                           ; B6A7: 60          `
 
-; &B6A8 referenced 2 times by &AD29, &AD2E
 .sub_CB6A8
     JSR LF021                                     ; B6A8: 20 21 F0     !.
     LDA L0388                                     ; B6AB: AD 88 03    ...
     BNE CB6BA                                     ; B6AE: D0 0A       ..
-; &B6B0 referenced 2 times by &B6C5, &B777
 .CB6B0
     LDX L0081                                     ; B6B0: A6 81       ..
     CPX #&40 ; '@'                                ; B6B2: E0 40       .@
     BNE CB6B9                                     ; B6B4: D0 03       ..
     JMP LF013                                     ; B6B6: 4C 13 F0    L..
 
-; &B6B9 referenced 1 time by &B6B4
 .CB6B9
     RTS                                           ; B6B9: 60          `
 
-; &B6BA referenced 1 time by &B6AE
 .CB6BA
     LDA L0564                                     ; B6BA: AD 64 05    .d.
     BNE CB6C8                                     ; B6BD: D0 09       ..
@@ -9129,7 +8223,6 @@ LAFB4 = sub_CAFB3+1
     JSR LED6B                                     ; B6C2: 20 6B ED     k.
     JMP CB6B0                                     ; B6C5: 4C B0 B6    L..
 
-; &B6C8 referenced 1 time by &B6BD
 .CB6C8
     JSR sub_CAE03                                 ; B6C8: 20 03 AE     ..
     LDA #&60 ; '`'                                ; B6CB: A9 60       .`
@@ -9144,7 +8237,6 @@ LAFB4 = sub_CAFB3+1
     CMP #&16                                      ; B6DE: C9 16       ..
     BCC CB6E4                                     ; B6E0: 90 02       ..
     LDA #&16                                      ; B6E2: A9 16       ..
-; &B6E4 referenced 1 time by &B6E0
 .CB6E4
     STA L0093                                     ; B6E4: 85 93       ..
     LDA #&FF                                      ; B6E6: A9 FF       ..
@@ -9153,10 +8245,8 @@ LAFB4 = sub_CAFB3+1
     BEQ CB6F5                                     ; B6EC: F0 07       ..
     BMI CB6F2                                     ; B6EE: 30 02       0.
     LDX #1                                        ; B6F0: A2 01       ..
-; &B6F2 referenced 1 time by &B6EE
 .CB6F2
     STA L0403,X                                   ; B6F2: 9D 03 04    ...
-; &B6F5 referenced 1 time by &B6EC
 .CB6F5
     LDA #&80                                      ; B6F5: A9 80       ..
     LDX #2                                        ; B6F7: A2 02       ..
@@ -9164,18 +8254,15 @@ LAFB4 = sub_CAFB3+1
     BEQ CB712                                     ; B6FB: F0 15       ..
     BCC CB701                                     ; B6FD: 90 02       ..
     LDX #3                                        ; B6FF: A2 03       ..
-; &B701 referenced 1 time by &B6FD
 .CB701
     BIT INWK_29                                   ; B701: 24 26       $&
     BPL CB70C                                     ; B703: 10 07       ..
     LDA #&40 ; '@'                                ; B705: A9 40       .@
     STA L0476                                     ; B707: 8D 76 04    .v.
     LDA #0                                        ; B70A: A9 00       ..
-; &B70C referenced 1 time by &B703
 .CB70C
     STA L0403,X                                   ; B70C: 9D 03 04    ...
     LDA L0476                                     ; B70F: AD 76 04    .v.
-; &B712 referenced 1 time by &B6FB
 .CB712
     STA L0476                                     ; B712: 8D 76 04    .v.
     LDA #&80                                      ; B715: A9 80       ..
@@ -9184,11 +8271,9 @@ LAFB4 = sub_CAFB3+1
     BEQ CB727                                     ; B71B: F0 0A       ..
     BCS CB721                                     ; B71D: B0 02       ..
     LDX #5                                        ; B71F: A2 05       ..
-; &B721 referenced 1 time by &B71D
 .CB721
     STA L0403,X                                   ; B721: 9D 03 04    ...
     LDA L0477                                     ; B724: AD 77 04    .w.
-; &B727 referenced 1 time by &B71B
 .CB727
     STA L0477                                     ; B727: 8D 77 04    .w.
     LDX L0476                                     ; B72A: AE 76 04    .v.
@@ -9196,12 +8281,10 @@ LAFB4 = sub_CAFB3+1
     LDY L0405                                     ; B72F: AC 05 04    ...
     BEQ CB737                                     ; B732: F0 03       ..
     JSR LFA33                                     ; B734: 20 33 FA     3.
-; &B737 referenced 1 time by &B732
 .CB737
     LDY L0406                                     ; B737: AC 06 04    ...
     BEQ CB73F                                     ; B73A: F0 03       ..
     JSR LFA43                                     ; B73C: 20 43 FA     C.
-; &B73F referenced 1 time by &B73A
 .CB73F
     STX L0476                                     ; B73F: 8E 76 04    .v.
     LDA #&0E                                      ; B742: A9 0E       ..
@@ -9209,12 +8292,10 @@ LAFB4 = sub_CAFB3+1
     LDY L0407                                     ; B747: AC 07 04    ...
     BEQ CB74F                                     ; B74A: F0 03       ..
     JSR LFA43                                     ; B74C: 20 43 FA     C.
-; &B74F referenced 1 time by &B74A
 .CB74F
     LDY L0408                                     ; B74F: AC 08 04    ...
     BEQ CB757                                     ; B752: F0 03       ..
     JSR LFA33                                     ; B754: 20 33 FA     3.
-; &B757 referenced 1 time by &B752
 .CB757
     STX L0477                                     ; B757: 8E 77 04    .w.
     LDA L0388                                     ; B75A: AD 88 03    ...
@@ -9224,17 +8305,14 @@ LAFB4 = sub_CAFB3+1
     ORA L0406                                     ; B764: 0D 06 04    ...
     BNE CB76C                                     ; B767: D0 03       ..
     STX L0476                                     ; B769: 8E 76 04    .v.
-; &B76C referenced 1 time by &B767
 .CB76C
     LDA L0407                                     ; B76C: AD 07 04    ...
     ORA L0408                                     ; B76F: 0D 08 04    ...
     BNE CB777                                     ; B772: D0 03       ..
     STX L0477                                     ; B774: 8E 77 04    .w.
-; &B777 referenced 2 times by &B75D, &B772
 .CB777
     JMP CB6B0                                     ; B777: 4C B0 B6    L..
 
-; &B77A referenced 2 times by &9223, &B2A2
 .sub_CB77A
     PHA                                           ; B77A: 48          H
     STY L0393                                     ; B77B: 8C 93 03    ...
@@ -9246,7 +8324,6 @@ LAFB4 = sub_CAFB3+1
     JSR LF21C                                     ; B789: 20 1C F2     ..
     JMP CB7F2                                     ; B78C: 4C F2 B7    L..
 
-; &B78F referenced 13 times by &81C9, &8319, &844B, &84C7, &9278, &AC3B, &B0F7, &B19F, &B897, &B8A3, &B8B0, &BE77, &BE8A
 .CB78F
     PHA                                           ; B78F: 48          H
     LDA L00E9                                     ; B790: A5 E9       ..
@@ -9255,7 +8332,6 @@ LAFB4 = sub_CAFB3+1
     ASL A                                         ; B797: 0A          .
     BPL CB79D                                     ; B798: 10 03       ..
     JSR LD06D                                     ; B79A: 20 6D D0     m.
-; &B79D referenced 2 times by &B792, &B798
 .CB79D
     LDY #&0A                                      ; B79D: A0 0A       ..
     STY L0393                                     ; B79F: 8C 93 03    ...
@@ -9279,7 +8355,6 @@ LAFB4 = sub_CAFB3+1
     ASL A                                         ; B7C9: 0A          .
     BPL CB7CF                                     ; B7CA: 10 03       ..
     JSR LD06D                                     ; B7CC: 20 6D D0     m.
-; &B7CF referenced 2 times by &B7C4, &B7CA
 .CB7CF
     JSR sub_CA7C6                                 ; B7CF: 20 C6 A7     ..
     LDA #3                                        ; B7D2: A9 03       ..
@@ -9289,20 +8364,17 @@ LAFB4 = sub_CAFB3+1
     JSR C8AC2                                     ; B7D9: 20 C2 8A     ..
     JMP CB7E8                                     ; B7DC: 4C E8 B7    L..
 
-; &B7DF referenced 1 time by &B7AF
 .CB7DF
     PHA                                           ; B7DF: 48          H
     LDA #0                                        ; B7E0: A9 00       ..
     STA QQ17                                      ; B7E2: 85 3C       .<
     PLA                                           ; B7E4: 68          h
     JSR TT27                                      ; B7E5: 20 01 F2     ..
-; &B7E8 referenced 1 time by &B7DC
 .CB7E8
     LDA L0394                                     ; B7E8: AD 94 03    ...
     BEQ CB7F2                                     ; B7EB: F0 05       ..
     LDA #&FD                                      ; B7ED: A9 FD       ..
     JSR TT27                                      ; B7EF: 20 01 F2     ..
-; &B7F2 referenced 2 times by &B78C, &B7EB
 .CB7F2
     LDA #&20 ; ' '                                ; B7F2: A9 20       .
     SEC                                           ; B7F4: 38          8
@@ -9311,7 +8383,6 @@ LAFB4 = sub_CAFB3+1
     LDA #&1F                                      ; B7FA: A9 1F       ..
     STA L03F7                                     ; B7FC: 8D F7 03    ...
     LDA #2                                        ; B7FF: A9 02       ..
-; &B801 referenced 1 time by &B7F8
 .CB801
     LSR A                                         ; B801: 4A          J
     STA L00B4                                     ; B802: 85 B4       ..
@@ -9321,12 +8392,10 @@ LAFB4 = sub_CAFB3+1
     ASL A                                         ; B80B: 0A          .
     BPL CB811                                     ; B80C: 10 03       ..
     JSR LD06D                                     ; B80E: 20 6D D0     m.
-; &B811 referenced 2 times by &B806, &B80C
 .CB811
     LDX L03F7                                     ; B811: AE F7 03    ...
     STX L0584                                     ; B814: 8E 84 05    ...
     INX                                           ; B817: E8          .
-; &B818 referenced 1 time by &B81F
 .loop_CB818
     LDA L0506,X                                   ; B818: BD 06 05    ...
     STA L0584,X                                   ; B81B: 9D 84 05    ...
@@ -9339,23 +8408,19 @@ LAFB4 = sub_CAFB3+1
     ASL A                                         ; B82B: 0A          .
     BPL CB831                                     ; B82C: 10 03       ..
     JSR LD06D                                     ; B82E: 20 6D D0     m.
-; &B831 referenced 4 times by &8C7F, &8C97, &B826, &B82C
 .CB831
     LDA #0                                        ; B831: A9 00       ..
     STA L03F6                                     ; B833: 8D F6 03    ...
     STA L03F7                                     ; B836: 8D F7 03    ...
-; &B839 referenced 1 time by &B870
 .CB839
     RTS                                           ; B839: 60          `
 
-; &B83A referenced 2 times by &833B, &8355
 .sub_CB83A
     LDA L00B5                                     ; B83A: A5 B5       ..
     LDX L009E                                     ; B83C: A6 9E       ..
     BEQ CB845                                     ; B83E: F0 05       ..
     JSR LF2E6                                     ; B840: 20 E6 F2     ..
     LDA #&17                                      ; B843: A9 17       ..
-; &B845 referenced 1 time by &B83E
 .CB845
     STA YC                                        ; B845: 85 3B       .;
     LDX #0                                        ; B847: A2 00       ..
@@ -9366,14 +8431,12 @@ LAFB4 = sub_CAFB3+1
     ASL A                                         ; B852: 0A          .
     BPL CB858                                     ; B853: 10 03       ..
     JSR LD06D                                     ; B855: 20 6D D0     m.
-; &B858 referenced 2 times by &B84D, &B853
 .CB858
     LDA L00B4                                     ; B858: A5 B4       ..
     STA L0032                                     ; B85A: 85 32       .2
     LDA L00B4                                     ; B85C: A5 B4       ..
     STA L0032                                     ; B85E: 85 32       .2
     LDY #0                                        ; B860: A0 00       ..
-; &B862 referenced 1 time by &B86C
 .loop_CB862
     LDA L0585,Y                                   ; B862: B9 85 05    ...
     JSR LF1CB                                     ; B865: 20 CB F1     ..
@@ -9384,7 +8447,6 @@ LAFB4 = sub_CAFB3+1
     BEQ CB839                                     ; B870: F0 C7       ..
     JMP LD951                                     ; B872: 4C 51 D9    LQ.
 
-; &B875 referenced 1 time by &AA99
 .CB875
     JSR DORND                                     ; B875: 20 AD F4     ..
     BMI CB8A9                                     ; B878: 30 2F       0/
@@ -9403,41 +8465,32 @@ LAFB4 = sub_CAFB3+1
     ADC #&D0                                      ; B895: 69 D0       i.
     JMP CB78F                                     ; B897: 4C 8F B7    L..
 
-; &B89A referenced 1 time by &B892
 .CB89A
     BEQ CB8AA                                     ; B89A: F0 0E       ..
     CPX #&12                                      ; B89C: E0 12       ..
     BEQ CB8AE                                     ; B89E: F0 0E       ..
     TXA                                           ; B8A0: 8A          .
     ADC #&5D ; ']'                                ; B8A1: 69 5D       i]
-; &B8A3 referenced 1 time by &B8AC
 .loop_CB8A3
     JSR CB78F                                     ; B8A3: 20 8F B7     ..
     JMP LF171                                     ; B8A6: 4C 71 F1    Lq.
 
-; &B8A9 referenced 4 times by &B878, &B87C, &B881, &B886
 .CB8A9
     RTS                                           ; B8A9: 60          `
 
-; &B8AA referenced 1 time by &B89A
 .CB8AA
     LDA #&6C ; 'l'                                ; B8AA: A9 6C       .l
     BNE loop_CB8A3                                ; B8AC: D0 F5       ..
-; &B8AE referenced 1 time by &B89E
 .CB8AE
     LDA #&6F ; 'o'                                ; B8AE: A9 6F       .o
     JMP CB78F                                     ; B8B0: 4C 8F B7    L..
 
-; &B8B3 referenced 1 time by &9F31
 .LB8B3
     EQUB &13                                      ; B8B3: 13          .
-; &B8B4 referenced 3 times by &9A2B, &9F24, &A1CA
 .LB8B4
     EQUB &82                                      ; B8B4: 82          .
-; &B8B5 referenced 1 time by &A1DA
 .LB8B5
     EQUB 6                                        ; B8B5: 06          .
-; &B8B6 referenced 2 times by &9F2D, &A1D3
 .LB8B6
     EQUB   1, &14, &81, &0A,   3, &41, &83,   2   ; B8B6: 01 14 81... ...
     EQUB   7, &28, &85, &E2, &1F, &53, &85, &FB   ; B8BE: 07 28 85... .(.
@@ -9462,7 +8515,6 @@ LAFB4 = sub_CAFB3+1
 
     JMP LF021                                     ; B90D: 4C 21 F0    L!.
 
-; &B910 referenced 5 times by &8148, &8BF5, &94D6, &94F5, &B90A
 .CB910
     LDA L00E9                                     ; B910: A5 E9       ..
     BPL CB91D                                     ; B912: 10 09       ..
@@ -9470,7 +8522,6 @@ LAFB4 = sub_CAFB3+1
     ASL A                                         ; B917: 0A          .
     BPL CB91D                                     ; B918: 10 03       ..
     JSR LD06D                                     ; B91A: 20 6D D0     m.
-; &B91D referenced 2 times by &B912, &B918
 .CB91D
     LDA INWK_31                                   ; B91D: A5 28       .(
     AND #&A0                                      ; B91F: 29 A0       ).
@@ -9480,13 +8531,11 @@ LAFB4 = sub_CAFB3+1
     AND #&0F                                      ; B927: 29 0F       ).
     BNE CB92E                                     ; B929: D0 03       ..
     JSR LEDEA                                     ; B92B: 20 EA ED     ..
-; &B92E referenced 1 time by &B929
 .CB92E
     LDX TYPE                                      ; B92E: A6 A3       ..
     BPL CB935                                     ; B930: 10 03       ..
     JMP CBC52                                     ; B932: 4C 52 BC    LR.
 
-; &B935 referenced 1 time by &B930
 .CB935
     LDA L0029                                     ; B935: A5 29       .)
     BPL CB955                                     ; B937: 10 1C       ..
@@ -9496,7 +8545,6 @@ LAFB4 = sub_CAFB3+1
     EOR L009B                                     ; B93F: 45 9B       E.
     AND #7                                        ; B941: 29 07       ).
     BNE CB955                                     ; B943: D0 10       ..
-; &B945 referenced 1 time by &B93B
 .CB945
     LDA L00E9                                     ; B945: A5 E9       ..
     BPL CB952                                     ; B947: 10 09       ..
@@ -9504,10 +8552,8 @@ LAFB4 = sub_CAFB3+1
     ASL A                                         ; B94C: 0A          .
     BPL CB952                                     ; B94D: 10 03       ..
     JSR LD06D                                     ; B94F: 20 6D D0     m.
-; &B952 referenced 2 times by &B947, &B94D
 .CB952
     JSR sub_C8D48                                 ; B952: 20 48 8D     H.
-; &B955 referenced 4 times by &B426, &B921, &B937, &B943
 .CB955
     LDA L00E9                                     ; B955: A5 E9       ..
     BPL CB962                                     ; B957: 10 09       ..
@@ -9515,7 +8561,6 @@ LAFB4 = sub_CAFB3+1
     ASL A                                         ; B95C: 0A          .
     BPL CB962                                     ; B95D: 10 03       ..
     JSR LD06D                                     ; B95F: 20 6D D0     m.
-; &B962 referenced 2 times by &B957, &B95D
 .CB962
     LDA INWK_27                                   ; B962: A5 24       .$
     ASL A                                         ; B964: 0A          .
@@ -9545,7 +8590,6 @@ LAFB4 = sub_CAFB3+1
     ASL A                                         ; B998: 0A          .
     BPL CB99E                                     ; B999: 10 03       ..
     JSR LD06D                                     ; B99B: 20 6D D0     m.
-; &B99E referenced 2 times by &B993, &B999
 .CB99E
     LDA INWK_14                                   ; B99E: A5 17       ..
     LDX #6                                        ; B9A0: A2 06       ..
@@ -9555,7 +8599,6 @@ LAFB4 = sub_CAFB3+1
     ADC INWK_28                                   ; B9A8: 65 25       e%
     BPL CB9AE                                     ; B9AA: 10 02       ..
     LDA #0                                        ; B9AC: A9 00       ..
-; &B9AE referenced 1 time by &B9AA
 .CB9AE
     STA INWK_27                                   ; B9AE: 85 24       .$
     LDY #&0F                                      ; B9B0: A0 0F       ..
@@ -9563,7 +8606,6 @@ LAFB4 = sub_CAFB3+1
     CMP INWK_27                                   ; B9B5: C5 24       .$
     BCS CB9BB                                     ; B9B7: B0 02       ..
     STA INWK_27                                   ; B9B9: 85 24       .$
-; &B9BB referenced 1 time by &B9B7
 .CB9BB
     LDA #0                                        ; B9BB: A9 00       ..
     STA INWK_28                                   ; B9BD: 85 25       .%
@@ -9585,7 +8627,6 @@ LAFB4 = sub_CAFB3+1
     ASL A                                         ; B9E1: 0A          .
     BPL CB9E7                                     ; B9E2: 10 03       ..
     JSR LD06D                                     ; B9E4: 20 6D D0     m.
-; &B9E7 referenced 2 times by &B9DC, &B9E2
 .CB9E7
     LDA L0030                                     ; B9E7: A5 30       .0
     STA L045A                                     ; B9E9: 8D 5A 04    .Z.
@@ -9607,7 +8648,6 @@ LAFB4 = sub_CAFB3+1
     ASL A                                         ; BA0F: 0A          .
     BPL CBA15                                     ; BA10: 10 03       ..
     JSR LD06D                                     ; BA12: 20 6D D0     m.
-; &BA15 referenced 2 times by &BA0A, &BA10
 .CBA15
     LDA L0030                                     ; BA15: A5 30       .0
     STA INWK_6                                    ; BA17: 85 0F       ..
@@ -9630,7 +8670,6 @@ LAFB4 = sub_CAFB3+1
     STA INWK_4                                    ; BA3D: 85 0D       ..
     JMP CBA71                                     ; BA3F: 4C 71 BA    Lq.
 
-; &BA42 referenced 1 time by &BA2F
 .CBA42
     LDA L00E9                                     ; BA42: A5 E9       ..
     BPL CBA4F                                     ; BA44: 10 09       ..
@@ -9638,7 +8677,6 @@ LAFB4 = sub_CAFB3+1
     ASL A                                         ; BA49: 0A          .
     BPL CBA4F                                     ; BA4A: 10 03       ..
     JSR LD06D                                     ; BA4C: 20 6D D0     m.
-; &BA4F referenced 2 times by &BA44, &BA4A
 .CBA4F
     LDA L045A                                     ; BA4F: AD 5A 04    .Z.
     SBC L0030                                     ; BA52: E5 30       .0
@@ -9656,7 +8694,6 @@ LAFB4 = sub_CAFB3+1
     LDA INWK_5                                    ; BA6B: A5 0E       ..
     EOR #&80                                      ; BA6D: 49 80       I.
     STA INWK_5                                    ; BA6F: 85 0E       ..
-; &BA71 referenced 2 times by &BA3F, &BA5D
 .CBA71
     LDA L00E9                                     ; BA71: A5 E9       ..
     BPL CBA7E                                     ; BA73: 10 09       ..
@@ -9664,7 +8701,6 @@ LAFB4 = sub_CAFB3+1
     ASL A                                         ; BA78: 0A          .
     BPL CBA7E                                     ; BA79: 10 03       ..
     JSR LD06D                                     ; BA7B: 20 6D D0     m.
-; &BA7E referenced 2 times by &BA73, &BA79
 .CBA7E
     LDX ALP1                                      ; BA7E: A6 6E       .n
     LDA INWK_3                                    ; BA80: A5 0C       ..
@@ -9682,7 +8718,6 @@ LAFB4 = sub_CAFB3+1
     STA INWK_1                                    ; BA9A: 85 0A       ..
     LDA L0030                                     ; BA9C: A5 30       .0
     STA INWK                                      ; BA9E: 85 09       ..
-; &BAA0 referenced 1 time by &BD22
 .CBAA0
     LDA L00E9                                     ; BAA0: A5 E9       ..
     BPL CBAAD                                     ; BAA2: 10 09       ..
@@ -9690,7 +8725,6 @@ LAFB4 = sub_CAFB3+1
     ASL A                                         ; BAA7: 0A          .
     BPL CBAAD                                     ; BAA8: 10 03       ..
     JSR LD06D                                     ; BAAA: 20 6D D0     m.
-; &BAAD referenced 2 times by &BAA2, &BAA8
 .CBAAD
     LDA L0093                                     ; BAAD: A5 93       ..
     STA R                                         ; BAAF: 85 98       ..
@@ -9703,7 +8737,6 @@ LAFB4 = sub_CAFB3+1
     BNE CBAC1                                     ; BABE: D0 01       ..
     RTS                                           ; BAC0: 60          `
 
-; &BAC1 referenced 1 time by &BABE
 .CBAC1
     LDY #9                                        ; BAC1: A0 09       ..
     JSR sub_CBB8F                                 ; BAC3: 20 8F BB     ..
@@ -9730,7 +8763,6 @@ LAFB4 = sub_CAFB3+1
     LDX #&13                                      ; BAF2: A2 13       ..
     LDY #&0D                                      ; BAF4: A0 0D       ..
     JSR sub_C8A14                                 ; BAF6: 20 14 8A     ..
-; &BAF9 referenced 1 time by &BADA
 .CBAF9
     LDA L00E9                                     ; BAF9: A5 E9       ..
     BPL CBB06                                     ; BAFB: 10 09       ..
@@ -9738,7 +8770,6 @@ LAFB4 = sub_CAFB3+1
     ASL A                                         ; BB00: 0A          .
     BPL CBB06                                     ; BB01: 10 03       ..
     JSR LD06D                                     ; BB03: 20 6D D0     m.
-; &BB06 referenced 2 times by &BAFB, &BB01
 .CBB06
     LDA INWK_29                                   ; BB06: A5 26       .&
     AND #&80                                      ; BB08: 29 80       ).
@@ -9759,17 +8790,14 @@ LAFB4 = sub_CAFB3+1
     LDX #&13                                      ; BB28: A2 13       ..
     LDY #&19                                      ; BB2A: A0 19       ..
     JSR sub_C8A14                                 ; BB2C: 20 14 8A     ..
-; &BB2F referenced 1 time by &BB10
 .CBB2F
     LDA INWK_31                                   ; BB2F: A5 28       .(
     ORA #&10                                      ; BB31: 09 10       ..
     STA INWK_31                                   ; BB33: 85 28       .(
     JMP LF2A8                                     ; BB35: 4C A8 F2    L..
 
-; &BB38 referenced 3 times by &B975, &B985, &B9A2
 .sub_CBB38
     AND #&80                                      ; BB38: 29 80       ).
-; &BB3A referenced 2 times by &9319, &BAB5
 .CBB3A
     ASL A                                         ; BB3A: 0A          .
     STA S                                         ; BB3B: 85 99       ..
@@ -9791,7 +8819,6 @@ LAFB4 = sub_CAFB3+1
     STA INWK_2,X                                  ; BB5A: 95 0B       ..
     RTS                                           ; BB5C: 60          `
 
-; &BB5D referenced 1 time by &BB46
 .CBB5D
     LDA INWK,X                                    ; BB5D: B5 09       ..
     SEC                                           ; BB5F: 38          8
@@ -9818,11 +8845,9 @@ LAFB4 = sub_CAFB3+1
     AND #&7F                                      ; BB88: 29 7F       ).
     ORA T                                         ; BB8A: 05 9A       ..
     STA INWK_2,X                                  ; BB8C: 95 0B       ..
-; &BB8E referenced 1 time by &BB76
 .CBB8E
     RTS                                           ; BB8E: 60          `
 
-; &BB8F referenced 3 times by &BAC3, &BAC8, &BACD
 .sub_CBB8F
     LDA L00E9                                     ; BB8F: A5 E9       ..
     BPL CBB9C                                     ; BB91: 10 09       ..
@@ -9830,7 +8855,6 @@ LAFB4 = sub_CAFB3+1
     ASL A                                         ; BB96: 0A          .
     BPL CBB9C                                     ; BB97: 10 03       ..
     JSR LD06D                                     ; BB99: 20 6D D0     m.
-; &BB9C referenced 2 times by &BB91, &BB97
 .CBB9C
     LDA L00A4                                     ; BB9C: A5 A4       ..
     STA Q                                         ; BB9E: 85 97       ..
@@ -9861,7 +8885,6 @@ LAFB4 = sub_CAFB3+1
     ASL A                                         ; BBD7: 0A          .
     BPL CBBDD                                     ; BBD8: 10 03       ..
     JSR LD06D                                     ; BBDA: 20 6D D0     m.
-; &BBDD referenced 2 times by &BBD2, &BBD8
 .CBBDD
     LDA L0069                                     ; BBDD: A5 69       .i
     STA Q                                         ; BBDF: 85 97       ..
@@ -9891,11 +8914,9 @@ LAFB4 = sub_CAFB3+1
     ASL A                                         ; BC16: 0A          .
     BPL CBC1C                                     ; BC17: 10 03       ..
     JSR LD06D                                     ; BC19: 20 6D D0     m.
-; &BC1C referenced 2 times by &BC11, &BC17
 .CBC1C
     RTS                                           ; BC1C: 60          `
 
-; &BC1D referenced 3 times by &B9D4, &BA03, &BA93
 .sub_CBC1D
     TAY                                           ; BC1D: A8          .
     EOR INWK_2,X                                  ; BC1E: 55 0B       U.
@@ -9910,7 +8931,6 @@ LAFB4 = sub_CAFB3+1
     TYA                                           ; BC2F: 98          .
     RTS                                           ; BC30: 60          `
 
-; &BC31 referenced 1 time by &BC20
 .CBC31
     LDA INWK,X                                    ; BC31: B5 09       ..
     SEC                                           ; BC33: 38          8
@@ -9924,7 +8944,6 @@ LAFB4 = sub_CAFB3+1
     EOR #&80                                      ; BC41: 49 80       I.
     RTS                                           ; BC43: 60          `
 
-; &BC44 referenced 1 time by &BC3E
 .CBC44
     LDA #1                                        ; BC44: A9 01       ..
     SBC L0030                                     ; BC46: E5 30       .0
@@ -9935,7 +8954,6 @@ LAFB4 = sub_CAFB3+1
     TYA                                           ; BC50: 98          .
     RTS                                           ; BC51: 60          `
 
-; &BC52 referenced 1 time by &B932
 .CBC52
     LDA L00A4                                     ; BC52: A5 A4       ..
     EOR #&80                                      ; BC54: 49 80       I.
@@ -9989,7 +9007,6 @@ LAFB4 = sub_CAFB3+1
     ADC L045C                                     ; BCBF: 6D 5C 04    m\.
     JMP CBCFC                                     ; BCC2: 4C FC BC    L..
 
-; &BCC5 referenced 1 time by &BCA7
 .CBCC5
     LDA K                                         ; BCC5: A5 7D       .}
     SEC                                           ; BCC7: 38          8
@@ -10017,7 +9034,6 @@ LAFB4 = sub_CAFB3+1
     LDA #0                                        ; BCF6: A9 00       ..
     SBC P                                         ; BCF8: E5 2F       ./
     ORA #&80                                      ; BCFA: 09 80       ..
-; &BCFC referenced 2 times by &BCC2, &BCE8
 .CBCFC
     EOR T                                         ; BCFC: 45 9A       E.
     STA INWK_5                                    ; BCFE: 85 0E       ..
@@ -10039,7 +9055,6 @@ LAFB4 = sub_CAFB3+1
     STA INWK_2                                    ; BD20: 85 0B       ..
     JMP CBAA0                                     ; BD22: 4C A0 BA    L..
 
-; &BD25 referenced 1 time by &8231
 .sub_CBD25
     LDX L038E                                     ; BD25: AE 8E 03    ...
     BEQ CBD5D                                     ; BD28: F0 33       .3
@@ -10069,11 +9084,9 @@ LAFB4 = sub_CAFB3+1
     LDA INWK_26                                   ; BD57: A5 23       .#
     EOR #&80                                      ; BD59: 49 80       I.
     STA INWK_26                                   ; BD5B: 85 23       .#
-; &BD5D referenced 1 time by &BD28
 .CBD5D
     RTS                                           ; BD5D: 60          `
 
-; &BD5E referenced 1 time by &BD2B
 .CBD5E
     LDA #0                                        ; BD5E: A9 00       ..
     CPX #2                                        ; BD60: E0 02       ..
@@ -10101,7 +9114,6 @@ LAFB4 = sub_CAFB3+1
     LDY #&0F                                      ; BD8B: A0 0F       ..
     JSR sub_CBD92                                 ; BD8D: 20 92 BD     ..
     LDY #&15                                      ; BD90: A0 15       ..
-; &BD92 referenced 2 times by &BD88, &BD8D
 .sub_CBD92
     LDA INWK,Y                                    ; BD92: B9 09 00    ...
     LDX INWK_4,Y                                  ; BD95: B6 0D       ..
@@ -10114,16 +9126,13 @@ LAFB4 = sub_CAFB3+1
     EOR L00AF                                     ; BDA5: 45 AF       E.
     STA INWK_1,Y                                  ; BDA7: 99 0A 00    ...
     STX INWK_5,Y                                  ; BDAA: 96 0E       ..
-; &BDAC referenced 1 time by &BDBC
 .loop_CBDAC
     RTS                                           ; BDAC: 60          `
 
-; &BDAD referenced 1 time by &BDB7
 .loop_CBDAD
     JSR sub_CBDED                                 ; BDAD: 20 ED BD     ..
     JMP CA98D                                     ; BDB0: 4C 8D A9    L..
 
-; &BDB3 referenced 3 times by &A30D, &B134, &B5F4
 .CBDB3
     LDA #0                                        ; BDB3: A9 00       ..
     LDY L009E                                     ; BDB5: A4 9E       ..
@@ -10134,10 +9143,8 @@ LAFB4 = sub_CAFB3+1
     JSR sub_CBDC7                                 ; BDC1: 20 C7 BD     ..
     JMP LD167                                     ; BDC4: 4C 67 D1    Lg.
 
-; &BDC7 referenced 1 time by &BDC1
 .sub_CBDC7
     LDY L03E5                                     ; BDC7: AC E5 03    ...
-; &BDCA referenced 1 time by &BDEA
 .CBDCA
     LDA L00E9                                     ; BDCA: A5 E9       ..
     BPL CBDD7                                     ; BDCC: 10 09       ..
@@ -10145,7 +9152,6 @@ LAFB4 = sub_CAFB3+1
     ASL A                                         ; BDD1: 0A          .
     BPL CBDD7                                     ; BDD2: 10 03       ..
     JSR LD06D                                     ; BDD4: 20 6D D0     m.
-; &BDD7 referenced 2 times by &BDCC, &BDD2
 .CBDD7
     LDX SY,Y                                      ; BDD7: BE DD 04    ...
     LDA L04C8,Y                                   ; BDDA: B9 C8 04    ...
@@ -10158,7 +9164,6 @@ LAFB4 = sub_CAFB3+1
     BNE CBDCA                                     ; BDEA: D0 DE       ..
     RTS                                           ; BDEC: 60          `
 
-; &BDED referenced 1 time by &BDAD
 .sub_CBDED
     LDA #&48 ; 'H'                                ; BDED: A9 48       .H
     JSR sub_CAE32                                 ; BDEF: 20 32 AE     2.
@@ -10169,7 +9174,6 @@ LAFB4 = sub_CAFB3+1
     JSR LF12B                                     ; BDFD: 20 2B F1     +.
     JMP CBE17                                     ; BE00: 4C 17 BE    L..
 
-; &BE03 referenced 1 time by &BDBE
 .sub_CBE03
     STX L038E                                     ; BE03: 8E 8E 03    ...
     LDA #0                                        ; BE06: A9 00       ..
@@ -10179,11 +9183,9 @@ LAFB4 = sub_CAFB3+1
     STA L00CD                                     ; BE10: 85 CD       ..
     STA L00CE                                     ; BE12: 85 CE       ..
     JSR LF13F                                     ; BE14: 20 3F F1     ?.
-; &BE17 referenced 1 time by &BE00
 .CBE17
     LDX #&14                                      ; BE17: A2 14       ..
     LDY #&98                                      ; BE19: A0 98       ..
-; &BE1B referenced 1 time by &BE40
 .CBE1B
     LDA L00E9                                     ; BE1B: A5 E9       ..
     BPL CBE28                                     ; BE1D: 10 09       ..
@@ -10191,7 +9193,6 @@ LAFB4 = sub_CAFB3+1
     ASL A                                         ; BE22: 0A          .
     BPL CBE28                                     ; BE23: 10 03       ..
     JSR LD06D                                     ; BE25: 20 6D D0     m.
-; &BE28 referenced 2 times by &BE1D, &BE23
 .CBE28
     LDA #&F0                                      ; BE28: A9 F0       ..
     STA L0200,Y                                   ; BE2A: 99 00 02    ...
@@ -10211,7 +9212,6 @@ LAFB4 = sub_CAFB3+1
     BNE CBE1B                                     ; BE40: D0 D9       ..
     JSR LD167                                     ; BE42: 20 67 D1     g.
     JSR LEDDC                                     ; BE45: 20 DC ED     ..
-; &BE48 referenced 1 time by &9563
 .sub_CBE48
     LDA #&FF                                      ; BE48: A9 FF       ..
     STA L045F                                     ; BE4A: 8D 5F 04    ._.
@@ -10227,7 +9227,6 @@ LAFB4 = sub_CAFB3+1
     STA L00CD                                     ; BE5F: 85 CD       ..
     RTS                                           ; BE61: 60          `
 
-; &BE62 referenced 2 times by &8383, &ADF0
 .sub_CBE62
     LDA #0                                        ; BE62: A9 00       ..
     STA L006D                                     ; BE64: 85 6D       .m
@@ -10235,7 +9234,6 @@ LAFB4 = sub_CAFB3+1
     LDY #2                                        ; BE69: A0 02       ..
     JMP LEBBF                                     ; BE6B: 4C BF EB    L..
 
-; &BE6E referenced 1 time by &8EAE
 .CBE6E
     LDX #1                                        ; BE6E: A2 01       ..
     JSR sub_C927D                                 ; BE70: 20 7D 92     }.
@@ -10245,18 +9243,15 @@ LAFB4 = sub_CAFB3+1
     LDY #9                                        ; BE7A: A0 09       ..
     JMP LEBF2                                     ; BE7C: 4C F2 EB    L..
 
-; &BE7F referenced 1 time by &BE73
 .CBE7F
     RTS                                           ; BE7F: 60          `
 
-; &BE80 referenced 3 times by &8145, &82D0, &8D2B
 .sub_CBE80
     JSR LECAE                                     ; BE80: 20 AE EC     ..
     BCC CBE8D                                     ; BE83: 90 08       ..
     INC L03DD                                     ; BE85: EE DD 03    ...
     LDA #&65 ; 'e'                                ; BE88: A9 65       .e
     JSR CB78F                                     ; BE8A: 20 8F B7     ..
-; &BE8D referenced 1 time by &BE83
 .CBE8D
     LDA INWK_7                                    ; BE8D: A5 10       ..
     LDX #0                                        ; BE8F: A2 00       ..
@@ -10272,21 +9267,17 @@ LAFB4 = sub_CAFB3+1
     CMP #3                                        ; BEA0: C9 03       ..
     BCS CBEA5                                     ; BEA2: B0 01       ..
     INX                                           ; BEA4: E8          .
-; &BEA5 referenced 4 times by &BE93, &BE98, &BE9D, &BEA2
 .CBEA5
     LDY LBEAB,X                                   ; BEA5: BC AB BE    ...
     JMP LEBF2                                     ; BEA8: 4C F2 EB    L..
 
-; &BEAB referenced 1 time by &BEA5
 .LBEAB
     EQUB &1B, &17, &0E, &0D, &0D                  ; BEAB: 1B 17 0E... ...
 
-; &BEB0 referenced 1 time by &8266
 .sub_CBEB0
     LDY #&0A                                      ; BEB0: A0 0A       ..
     JMP LEBF2                                     ; BEB2: 4C F2 EB    L..
 
-; &BEB5 referenced 10 times by &9477, &9501, &9557, &9645, &9892, &9C0B, &B1FE, &B39D, &BDF7, &BE08
 .sub_CBEB5
     STA L009E                                     ; BEB5: 85 9E       ..
     LDA L009F                                     ; BEB7: A5 9F       ..
@@ -10295,7 +9286,6 @@ LAFB4 = sub_CAFB3+1
     LDA L009E                                     ; BEBD: A5 9E       ..
     BPL CBEC4                                     ; BEBF: 10 03       ..
     JSR LCEA5                                     ; BEC1: 20 A5 CE     ..
-; &BEC4 referenced 2 times by &BEBB, &BEBF
 .CBEC4
     JSR LD8C5                                     ; BEC4: 20 C5 D8     ..
     JSR LF293                                     ; BEC7: 20 93 F2     ..
@@ -10334,7 +9324,6 @@ LAFB4 = sub_CAFB3+1
     LDA L00A5                                     ; BF13: A5 A5       ..
     BEQ CBF19                                     ; BF15: F0 02       ..
     LDX #0                                        ; BF17: A2 00       ..
-; &BF19 referenced 4 times by &BEFD, &BF05, &BF0F, &BF15
 .CBF19
     LDA L009E                                     ; BF19: A5 9E       ..
     BMI CBF37                                     ; BF1B: 30 1A       0.
@@ -10344,17 +9333,14 @@ LAFB4 = sub_CAFB3+1
     BPL CBF2B                                     ; BF23: 10 06       ..
     JSR LEB86                                     ; BF25: 20 86 EB     ..
     JSR LF10A                                     ; BF28: 20 0A F1     ..
-; &BF2B referenced 1 time by &BF23
 .CBF2B
     JSR LF0FC                                     ; BF2B: 20 FC F0     ..
     JSR sub_CAE3C                                 ; BF2E: 20 3C AE     <.
     JMP CBF91                                     ; BF31: 4C 91 BF    L..
 
-; &BF34 referenced 1 time by &BF3F
 .loop_CBF34
     JMP LEED3                                     ; BF34: 4C D3 EE    L..
 
-; &BF37 referenced 1 time by &BF1B
 .CBF37
     TXA                                           ; BF37: 8A          .
     JSR LF0C6                                     ; BF38: 20 C6 F0     ..
@@ -10370,13 +9356,11 @@ LAFB4 = sub_CAFB3+1
     BEQ CBF54                                     ; BF4D: F0 05       ..
     LDA #&42 ; 'B'                                ; BF4F: A9 42       .B
     JSR LEF51                                     ; BF51: 20 51 EF     Q.
-; &BF54 referenced 3 times by &BF45, &BF49, &BF4D
 .CBF54
     LDA L009E                                     ; BF54: A5 9E       ..
     AND #&20 ; ' '                                ; BF56: 29 20       )
     BEQ CBF5D                                     ; BF58: F0 03       ..
     JSR LEF6C                                     ; BF5A: 20 6C EF     l.
-; &BF5D referenced 1 time by &BF58
 .CBF5D
     LDA #1                                        ; BF5D: A9 01       ..
     STA L7281                                     ; BF5F: 8D 81 72    ..r
@@ -10397,7 +9381,6 @@ LAFB4 = sub_CAFB3+1
     LDA L009E                                     ; BF8B: A5 9E       ..
     AND #&40 ; '@'                                ; BF8D: 29 40       )@
     BNE CBF91                                     ; BF8F: D0 00       ..
-; &BF91 referenced 2 times by &BF31, &BF8F
 .CBF91
     JSR LEED3                                     ; BF91: 20 D3 EE     ..
     LDA L045D                                     ; BF94: AD 5D 04    .].
@@ -10406,7 +9389,6 @@ LAFB4 = sub_CAFB3+1
     BPL CBFA1                                     ; BF9B: 10 04       ..
     CMP L009F                                     ; BF9D: C5 9F       ..
     BEQ CBFA1                                     ; BF9F: F0 00       ..
-; &BFA1 referenced 3 times by &BF97, &BF9B, &BF9F
 .CBFA1
     JSR LCD62                                     ; BFA1: 20 62 CD     b.
     LDX L04A8                                     ; BFA4: AE A8 04    ...
@@ -10421,7 +9403,6 @@ LAFB4 = sub_CAFB3+1
     STA L0032                                     ; BFB9: 85 32       .2
     LDA #&1E                                      ; BFBB: A9 1E       ..
     BNE CBFD5                                     ; BFBD: D0 16       ..
-; &BFBF referenced 1 time by &BFA9
 .CBFBF
     STA YC                                        ; BFBF: 85 3B       .;
     LDA LC0E3,X                                   ; BFC1: BD E3 C0    ...
@@ -10432,10 +9413,8 @@ LAFB4 = sub_CAFB3+1
     JSR sub_CBFED                                 ; BFCD: 20 ED BF     ..
     JSR TT162                                     ; BFD0: 20 9C 9F     ..
     LDA #&AF                                      ; BFD3: A9 AF       ..
-; &BFD5 referenced 1 time by &BFBD
 .CBFD5
     JSR TT27                                      ; BFD5: 20 01 F2     ..
-; &BFD8 referenced 2 times by &BFAD, &BFEA
 .CBFD8
     LDX #1                                        ; BFD8: A2 01       ..
     STX L0032                                     ; BFDA: 86 32       .2
@@ -10444,14 +9423,12 @@ LAFB4 = sub_CAFB3+1
     STX QQ17                                      ; BFDF: 86 3C       .<
     RTS                                           ; BFE1: 60          `
 
-; &BFE2 referenced 1 time by &BFCB
 .CBFE2
     LDA #&AF                                      ; BFE2: A9 AF       ..
     JSR spc                                       ; BFE4: 20 B3 96     ..
     JSR sub_CBFED                                 ; BFE7: 20 ED BF     ..
     JMP CBFD8                                     ; BFEA: 4C D8 BF    L..
 
-; &BFED referenced 2 times by &BFCD, &BFE7
 .sub_CBFED
     LDA L038E                                     ; BFED: AD 8E 03    ...
     ORA #&60 ; '`'                                ; BFF0: 09 60       .`
@@ -10460,2966 +9437,5 @@ LAFB4 = sub_CAFB3+1
     EQUB &FF, &FF, &FF, &FF, &FF,   7, &C0,   0   ; BFF5: FF FF FF... ...
     EQUB &C0,   7, &C0                            ; BFFD: C0 07 C0    ...
 .pydis_end
-
-; Label references by decreasing frequency:
-;     L00E9:       67
-;     L2002:       67
-;     LD06D:       67
-;     INWK:        58
-;     L009E:       54
-;     T:           49
-;     TT27:        47
-;     DORND:       46
-;     INWK_1:      43
-;     L0032:       39
-;     P:           38
-;     K:           35
-;     L007E:       34
-;     S:           32
-;     TT162:       32
-;     INWK_2:      31
-;     L0029:       31
-;     L007F:       29
-;     R:           29
-;     INWK_3:      28
-;     INF:         28
-;     YC:          27
-;     TYPE:        27
-;     INWK_29:     26
-;     INWK_30:     25
-;     INWK_31:     25
-;     T1:          24
-;     Q:           24
-;     L0080:       23
-;     INWK_4:      22
-;     INWK_7:      22
-;     L044D:       22
-;     QQ29:        22
-;     INWK_5:      21
-;     L002D:       21
-;     L0093:       21
-;     L04A9:       21
-;     L044E:       20
-;     LEBF2:       20
-;     INWK_27:     19
-;     L039E:       19
-;     CAAE3:       18
-;     QQ15:        17
-;     CNT:         17
-;     INWK_6:      16
-;     QQ17:        16
-;     XX15:        16
-;     L00A1:       16
-;     L00A2:       16
-;     L03A5:       16
-;     L0030:       15
-;     L0031:       15
-;     XX2:         15
-;     L0085:       15
-;     L00A5:       15
-;     L00AF:       15
-;     L0300:       15
-;     L03C6:       15
-;     LEC7D:       15
-;     LF171:       15
-;     L0037:       14
-;     L003E:       14
-;     Y1:          14
-;     QQ20:        14
-;     L03C5:       14
-;     L0564:       14
-;     INWK_8:      13
-;     U:           13
-;     L038E:       13
-;     L04A8:       13
-;     C8980:       13
-;     CB78F:       13
-;     LEC8D:       13
-;     LF1E6:       13
-;     L009B:       12
-;     XX4:         12
-;     L036A:       12
-;     L038A:       12
-;     L03A0:       12
-;     L049D:       12
-;     L049E:       12
-;     LD167:       12
-;     INWK_14:     11
-;     X2:          11
-;     L0083:       11
-;     L039F:       11
-;     L0400:       11
-;     L044F:       11
-;     L045D:       11
-;     TT68:        11
-;     LF082:       11
-;     L0007:       10
-;     L006C:       10
-;     L0087:       10
-;     L0388:       10
-;     L0395:       10
-;     L03C9:       10
-;     L0476:       10
-;     L0486:       10
-;     C84CA:       10
-;     C86A3:       10
-;     sub_CBEB5:   10
-;     L002C:        9
-;     V:            9
-;     L038F:        9
-;     L03C0:        9
-;     L0450:        9
-;     L0477:        9
-;     L04AA:        9
-;     L04AC:        9
-;     C8097:        9
-;     LF2DE:        9
-;     L003F:        8
-;     L009F:        8
-;     L00A4:        8
-;     L00AA:        8
-;     L0392:        8
-;     L03CA:        8
-;     L03F7:        8
-;     L0401:        8
-;     sub_CAD8A:    8
-;     INWK_22:      7
-;     L006D:        7
-;     L00AE:        7
-;     L00B8:        7
-;     L00BA:        7
-;     L00D2:        7
-;     L0390:        7
-;     L0393:        7
-;     L03A7:        7
-;     L03C8:        7
-;     L045C:        7
-;     L0465:        7
-;     L0484:        7
-;     L049C:        7
-;     L04B2:        7
-;     C8926:        7
-;     C8AC2:        7
-;     spc:          7
-;     sub_C9D6B:    7
-;     CA58A:        7
-;     CA8C8:        7
-;     sub_CAE03:    7
-;     CAF0C:        7
-;     CAFEF:        7
-;     LCD34:        7
-;     LEBA2:        7
-;     SQUA2:        7
-;     INWK_28:      6
-;     ALP1:         6
-;     L00B3:        6
-;     L03A1:        6
-;     L03A2:        6
-;     L03A8:        6
-;     L03DD:        6
-;     L03FB:        6
-;     L0403:        6
-;     L045A:        6
-;     L045B:        6
-;     L0485:        6
-;     L0487:        6
-;     L048D:        6
-;     L0494:        6
-;     QQ8:          6
-;     C8127:        6
-;     C8148:        6
-;     sub_C8A14:    6
-;     CA4DB:        6
-;     LCE90:        6
-;     LED6B:        6
-;     LF46A:        6
-;     MAD:          6
-;     L0008:        5
-;     INWK_10:      5
-;     L002A:        5
-;     L0039:        5
-;     L0041:        5
-;     L0044:        5
-;     XX0:          5
-;     L0060:        5
-;     L0069:        5
-;     L006F:        5
-;     L0081:        5
-;     L0084:        5
-;     L0091:        5
-;     L00A0:        5
-;     L00A9:        5
-;     L00CC:        5
-;     L00D8:        5
-;     L0373:        5
-;     L038D:        5
-;     L03BE:        5
-;     BST:          5
-;     L03C1:        5
-;     L03C4:        5
-;     L03FA:        5
-;     L0451:        5
-;     L048C:        5
-;     L048E:        5
-;     C81D4:        5
-;     C8417:        5
-;     C8709:        5
-;     sub_C89A5:    5
-;     sub_C89B8:    5
-;     C8ABE:        5
-;     C91D5:        5
-;     sub_C9645:    5
-;     TT60:         5
-;     CA12D:        5
-;     sub_CA341:    5
-;     sub_CA6A8:    5
-;     CA6F6:        5
-;     CA7D0:        5
-;     CAA5D:        5
-;     CABD7:        5
-;     CB910:        5
-;     LD8C5:        5
-;     LD96F:        5
-;     LEB86:        5
-;     LEBAD:        5
-;     LF42E:        5
-;     LF853:        5
-;     L0002:        4
-;     L0070:        4
-;     Y2:           4
-;     XX15_1:       4
-;     L0086:        4
-;     XX20:         4
-;     L00B1:        4
-;     L00CD:        4
-;     L036B:        4
-;     L0394:        4
-;     L03A3:        4
-;     L03A4:        4
-;     CRGO:         4
-;     L03C3:        4
-;     L03E5:        4
-;     L03F6:        4
-;     L0452:        4
-;     L045F:        4
-;     L0470:        4
-;     L0489:        4
-;     L0495:        4
-;     L0496:        4
-;     L04B4:        4
-;     L04BA:        4
-;     L04BB:        4
-;     L05E4:        4
-;     C831C:        4
-;     C8532:        4
-;     C8651:        4
-;     C87F0:        4
-;     C896C:        4
-;     sub_C8AC0:    4
-;     C8EB1:        4
-;     sub_C912B:    4
-;     C9436:        4
-;     sub_C95E4:    4
-;     TT20:         4
-;     TTX69:        4
-;     TT67:         4
-;     sub_C96C5:    4
-;     sub_C9CF8:    4
-;     C9D09:        4
-;     C9F8E:        4
-;     CA036:        4
-;     sub_CA31A:    4
-;     sub_CA65C:    4
-;     CA778:        4
-;     sub_CA8A2:    4
-;     sub_CAE32:    4
-;     CB1A5:        4
-;     CB1E4:        4
-;     CB35E:        4
-;     CB522:        4
-;     CB566:        4
-;     CB831:        4
-;     CB8A9:        4
-;     CB955:        4
-;     CBEA5:        4
-;     CBF19:        4
-;     LD8E1:        4
-;     LD951:        4
-;     LSPUT:        4
-;     LE59F:        4
-;     LEB8C:        4
-;     LEBE5:        4
-;     LF454:        4
-;     MULT3:        4
-;     INWK_12:      3
-;     INWK_16:      3
-;     INWK_26:      3
-;     L0042:        3
-;     L0045:        3
-;     L004B:        3
-;     L0062:        3
-;     L006A:        3
-;     L006B:        3
-;     L0094:        3
-;     L00B4:        3
-;     L00B5:        3
-;     L00CE:        3
-;     L0200:        3
-;     L0305:        3
-;     L0374:        3
-;     L0389:        3
-;     L038B:        3
-;     L03C2:        3
-;     L03DB:        3
-;     L03DF:        3
-;     L03E8:        3
-;     L03EF:        3
-;     L03F1:        3
-;     L0405:        3
-;     L0406:        3
-;     L0407:        3
-;     L0408:        3
-;     L046D:        3
-;     L0471:        3
-;     L0475:        3
-;     L047B:        3
-;     L047C:        3
-;     L0488:        3
-;     L04A1:        3
-;     L04B8:        3
-;     L04C8:        3
-;     SY:           3
-;     L0562:        3
-;     L0572:        3
-;     L0584:        3
-;     L05F2:        3
-;     L0600:        3
-;     L0601:        3
-;     L0602:        3
-;     L064E:        3
-;     sub_C800C:    3
-;     C80AB:        3
-;     sub_C80AF:    3
-;     C81F5:        3
-;     C81FB:        3
-;     C821B:        3
-;     C82D5:        3
-;     sub_C834A:    3
-;     C835B:        3
-;     C856E:        3
-;     C8837:        3
-;     C8D33:        3
-;     C8D8B:        3
-;     C8DCC:        3
-;     C8E09:        3
-;     C8E8A:        3
-;     C8F24:        3
-;     C8F6C:        3
-;     C8F83:        3
-;     C8F8F:        3
-;     C9046:        3
-;     C916C:        3
-;     sub_C91D8:    3
-;     C927F:        3
-;     sub_C9313:    3
-;     C9359:        3
-;     sub_C9516:    3
-;     sub_C95FC:    3
-;     sub_C96B9:    3
-;     C9861:        3
-;     C9890:        3
-;     C9A99:        3
-;     C9AB1:        3
-;     sub_C9B51:    3
-;     C9B99:        3
-;     C9C00:        3
-;     C9CBB:        3
-;     C9D35:        3
-;     C9D51:        3
-;     sub_C9EC6:    3
-;     C9EF6:        3
-;     L9FD9:        3
-;     CA08C:        3
-;     sub_CA155:    3
-;     sub_CA204:    3
-;     sub_CA36F:    3
-;     CA43F:        3
-;     CA5DA:        3
-;     sub_CA697:    3
-;     CA793:        3
-;     CA98D:        3
-;     CAB86:        3
-;     sub_CABAC:    3
-;     sub_CACC1:    3
-;     CB02B:        3
-;     CB119:        3
-;     sub_CB1CA:    3
-;     sub_CB1D4:    3
-;     sub_CB36A:    3
-;     sub_CB39D:    3
-;     sub_CB491:    3
-;     sub_CB544:    3
-;     sub_CB557:    3
-;     CB5DF:        3
-;     sub_CB5F8:    3
-;     LB8B4:        3
-;     sub_CBB38:    3
-;     sub_CBB8F:    3
-;     sub_CBC1D:    3
-;     CBDB3:        3
-;     sub_CBE80:    3
-;     CBF54:        3
-;     CBFA1:        3
-;     LCE7E:        3
-;     LCE7F:        3
-;     LCEA5:        3
-;     LD975:        3
-;     LED24:        3
-;     LEEB5:        3
-;     LF005:        3
-;     LF013:        3
-;     LF059:        3
-;     LF074:        3
-;     LF12B:        3
-;     LF260:        3
-;     LF293:        3
-;     FMLTU:        3
-;     LF7AB:        3
-;     ADD:          3
-;     L0003:        2
-;     INWK_9:       2
-;     INWK_15:      2
-;     INWK_20:      2
-;     INWK_21:      2
-;     L0033:        2
-;     L0034:        2
-;     L0038:        2
-;     L003A:        2
-;     L0040:        2
-;     L0043:        2
-;     L0046:        2
-;     XX2_15:       2
-;     L0064:        2
-;     XX12:         2
-;     L0092:        2
-;     L0095:        2
-;     L009D:        2
-;     L00C0:        2
-;     XX3:          2
-;     L0203:        2
-;     L0234:        2
-;     L0307:        2
-;     L0369:        2
-;     L036C:        2
-;     L038C:        2
-;     L03EE:        2
-;     L03FC:        2
-;     L0404:        2
-;     L0409:        2
-;     L0453:        2
-;     L0459:        2
-;     L046E:        2
-;     L046F:        2
-;     L047E:        2
-;     L0480:        2
-;     L048B:        2
-;     L04A2:        2
-;     L04A3:        2
-;     L04AE:        2
-;     L04B0:        2
-;     L04B6:        2
-;     L04B9:        2
-;     L04F2:        2
-;     L0604:        2
-;     L0605:        2
-;     L0606:        2
-;     L0607:        2
-;     L0608:        2
-;     L062A:        2
-;     C80C0:        2
-;     C80DA:        2
-;     C8158:        2
-;     C816F:        2
-;     C822A:        2
-;     C8248:        2
-;     C825F:        2
-;     C82C4:        2
-;     C82CE:        2
-;     C82DA:        2
-;     C831F:        2
-;     C8360:        2
-;     C8386:        2
-;     C83BB:        2
-;     C83CB:        2
-;     C8436:        2
-;     C84A7:        2
-;     sub_C84D1:    2
-;     C84DE:        2
-;     sub_C8502:    2
-;     C8525:        2
-;     C8547:        2
-;     C8602:        2
-;     C8733:        2
-;     C876A:        2
-;     sub_C8770:    2
-;     sub_C8790:    2
-;     C8794:        2
-;     sub_C87BF:    2
-;     sub_C8819:    2
-;     C8A21:        2
-;     C8AB9:        2
-;     C8B2A:        2
-;     C8B3B:        2
-;     C8B6E:        2
-;     C8B8D:        2
-;     C8B91:        2
-;     C8C5D:        2
-;     C8CB5:        2
-;     C8DBD:        2
-;     C8DCD:        2
-;     C8DEB:        2
-;     C8DF5:        2
-;     C8E29:        2
-;     C8E4B:        2
-;     C8EBE:        2
-;     C8F18:        2
-;     C8F47:        2
-;     C8F64:        2
-;     C8F76:        2
-;     C8F8C:        2
-;     sub_C8F9F:    2
-;     C8FB8:        2
-;     C8FCA:        2
-;     C8FF7:        2
-;     C8FF8:        2
-;     C904E:        2
-;     C9068:        2
-;     C9075:        2
-;     sub_C90C4:    2
-;     sub_C90D8:    2
-;     C90E5:        2
-;     sub_C9109:    2
-;     sub_C913E:    2
-;     sub_C9156:    2
-;     C9235:        2
-;     sub_C923A:    2
-;     C926D:        2
-;     C928E:        2
-;     C92F2:        2
-;     sub_C931C:    2
-;     C9366:        2
-;     C93A6:        2
-;     C93AC:        2
-;     C94FD:        2
-;     TT54:         2
-;     TT146:        2
-;     C968C:        2
-;     TT69:         2
-;     L96D6:        2
-;     sub_C991A:    2
-;     C9976:        2
-;     sub_C99A4:    2
-;     C9A10:        2
-;     C9A1F:        2
-;     C9A62:        2
-;     C9AE4:        2
-;     C9B15:        2
-;     sub_C9B86:    2
-;     C9BF6:        2
-;     C9C3F:        2
-;     C9C91:        2
-;     sub_C9D03:    2
-;     C9D4D:        2
-;     C9D83:        2
-;     C9DC4:        2
-;     C9E14:        2
-;     C9E3C:        2
-;     pr5:          2
-;     sub_C9EEC:    2
-;     C9F7D:        2
-;     C9FBB:        2
-;     C9FC8:        2
-;     C9FE0:        2
-;     CA06E:        2
-;     sub_CA130:    2
-;     sub_CA147:    2
-;     sub_CA171:    2
-;     CA21F:        2
-;     CA2BE:        2
-;     CA34E:        2
-;     sub_CA3C5:    2
-;     sub_CA3D3:    2
-;     sub_CA3D5:    2
-;     CA466:        2
-;     CA48D:        2
-;     CA4E8:        2
-;     CA656:        2
-;     sub_CA694:    2
-;     sub_CA6DC:    2
-;     CA737:        2
-;     CA775:        2
-;     CA7F0:        2
-;     CA842:        2
-;     CA89A:        2
-;     CA89C:        2
-;     sub_CA919:    2
-;     sub_CA92C:    2
-;     CA94C:        2
-;     CA9B1:        2
-;     CA9D7:        2
-;     CA9E6:        2
-;     sub_CAA02:    2
-;     sub_CAA05:    2
-;     sub_CAA16:    2
-;     sub_CAA9C:    2
-;     CAAF2:        2
-;     CAB43:        2
-;     CAB6C:        2
-;     CAB93:        2
-;     CABAA:        2
-;     CABE4:        2
-;     CAC68:        2
-;     CAC7A:        2
-;     CACA0:        2
-;     CACBE:        2
-;     CACD7:        2
-;     CAD52:        2
-;     CAD69:        2
-;     sub_CAD6B:    2
-;     CAE10:        2
-;     CAE27:        2
-;     sub_CAE3C:    2
-;     CAE4C:        2
-;     CAF0F:        2
-;     CAF5E:        2
-;     CAFA8:        2
-;     CB04C:        2
-;     CB070:        2
-;     CB0CC:        2
-;     CB149:        2
-;     CB16A:        2
-;     CB18D:        2
-;     sub_CB1A6:    2
-;     CB1C7:        2
-;     sub_CB1D1:    2
-;     CB285:        2
-;     sub_CB426:    2
-;     CB445:        2
-;     sub_CB46B:    2
-;     sub_CB484:    2
-;     sub_CB4B4:    2
-;     sub_CB4C0:    2
-;     CB4E1:        2
-;     sub_CB4EE:    2
-;     CB4FB:        2
-;     CB52F:        2
-;     sub_CB531:    2
-;     CB573:        2
-;     CB661:        2
-;     CB664:        2
-;     sub_CB665:    2
-;     CB672:        2
-;     sub_CB6A8:    2
-;     CB6B0:        2
-;     CB777:        2
-;     sub_CB77A:    2
-;     CB79D:        2
-;     CB7CF:        2
-;     CB7F2:        2
-;     CB811:        2
-;     sub_CB83A:    2
-;     CB858:        2
-;     LB8B6:        2
-;     CB91D:        2
-;     CB952:        2
-;     CB962:        2
-;     CB99E:        2
-;     CB9E7:        2
-;     CBA15:        2
-;     CBA4F:        2
-;     CBA71:        2
-;     CBA7E:        2
-;     CBAAD:        2
-;     CBB06:        2
-;     CBB3A:        2
-;     CBB9C:        2
-;     CBBDD:        2
-;     CBC1C:        2
-;     CBCFC:        2
-;     sub_CBD92:    2
-;     CBDD7:        2
-;     CBE28:        2
-;     sub_CBE62:    2
-;     CBEC4:        2
-;     CBF91:        2
-;     CBFD8:        2
-;     sub_CBFED:    2
-;     LC53E:        2
-;     LC53F:        2
-;     LCD6F:        2
-;     LD977:        2
-;     LE596:        2
-;     LEB8F:        2
-;     LEBE9:        2
-;     LECA0:        2
-;     LEDAB:        2
-;     LEDDC:        2
-;     LEED3:        2
-;     LEEF6:        2
-;     LEF35:        2
-;     LEF43:        2
-;     LF021:        2
-;     LF03D:        2
-;     LF0C6:        2
-;     LF126:        2
-;     LF2BD:        2
-;     LF338:        2
-;     LFA16:        2
-;     LFA33:        2
-;     LFA43:        2
-;     LFA55:        2
-;     L0005:        1
-;     INWK_18:      1
-;     INWK_24:      1
-;     L002B:        1
-;     L0047:        1
-;     L00B2:        1
-;     L00F6:        1
-;     L0201:        1
-;     L0202:        1
-;     L0235:        1
-;     L0237:        1
-;     L023C:        1
-;     L023D:        1
-;     L023E:        1
-;     L0298:        1
-;     L0299:        1
-;     L029A:        1
-;     L029B:        1
-;     L0306:        1
-;     L0308:        1
-;     L0309:        1
-;     L030A:        1
-;     L034F:        1
-;     L0370:        1
-;     L037E:        1
-;     L0396:        1
-;     L03A6:        1
-;     L03B0:        1
-;     L03B3:        1
-;     L03B7:        1
-;     L03DA:        1
-;     L03DC:        1
-;     L03E7:        1
-;     L03E9:        1
-;     L03F0:        1
-;     L03F3:        1
-;     L03F4:        1
-;     L03F8:        1
-;     L03F9:        1
-;     L03FD:        1
-;     L0464:        1
-;     L0483:        1
-;     L0497:        1
-;     L0499:        1
-;     L049A:        1
-;     L049F:        1
-;     L04B3:        1
-;     L04B7:        1
-;     L0506:        1
-;     L0507:        1
-;     L0563:        1
-;     L056C:        1
-;     L057F:        1
-;     L0581:        1
-;     L0585:        1
-;     L05A5:        1
-;     L05BA:        1
-;     L05CF:        1
-;     L062C:        1
-;     L062E:        1
-;     L0634:        1
-;     L0636:        1
-;     L0638:        1
-;     L0670:        1
-;     L0672:        1
-;     L06C6:        1
-;     L1FA9:        1
-;     L7280:        1
-;     L7281:        1
-;     L72A0:        1
-;     L72A1:        1
-;     L72C0:        1
-;     L72C1:        1
-;     L72E0:        1
-;     L72E1:        1
-;     L7300:        1
-;     L7301:        1
-;     L7320:        1
-;     L7321:        1
-;     L7340:        1
-;     L7341:        1
-;     C8023:        1
-;     C804C:        1
-;     C8053:        1
-;     C806D:        1
-;     C8082:        1
-;     loop_C80C5:   1
-;     C80F0:        1
-;     C80FC:        1
-;     C8114:        1
-;     C811A:        1
-;     loop_C815A:   1
-;     C819A:        1
-;     C81B1:        1
-;     C81B6:        1
-;     C81D7:        1
-;     C8200:        1
-;     C8209:        1
-;     C8213:        1
-;     C8224:        1
-;     C8231:        1
-;     C8243:        1
-;     C824B:        1
-;     C827A:        1
-;     C828B:        1
-;     C82B5:        1
-;     C82BC:        1
-;     C82D3:        1
-;     C82DD:        1
-;     C8328:        1
-;     loop_C8334:   1
-;     C8341:        1
-;     C8344:        1
-;     C836A:        1
-;     C8383:        1
-;     C8390:        1
-;     loop_C8392:   1
-;     C839D:        1
-;     C83AB:        1
-;     C83AE:        1
-;     loop_C83EC:   1
-;     loop_C83FB:   1
-;     loop_C8405:   1
-;     C841A:        1
-;     C841F:        1
-;     C8442:        1
-;     C8453:        1
-;     C8459:        1
-;     C845C:        1
-;     C8469:        1
-;     C84BA:        1
-;     C84C7:        1
-;     C84F5:        1
-;     C8501:        1
-;     C852F:        1
-;     sub_C8533:    1
-;     C853A:        1
-;     C8556:        1
-;     C855E:        1
-;     C856B:        1
-;     C858A:        1
-;     C85A1:        1
-;     C85C2:        1
-;     C85D6:        1
-;     C85F3:        1
-;     C85F5:        1
-;     C8610:        1
-;     C8612:        1
-;     C8614:        1
-;     loop_C8630:   1
-;     C8636:        1
-;     C8642:        1
-;     C8654:        1
-;     C866E:        1
-;     C867F:        1
-;     C8690:        1
-;     C86D9:        1
-;     C86EE:        1
-;     C86F0:        1
-;     C86F7:        1
-;     C86F9:        1
-;     C8704:        1
-;     C872A:        1
-;     C874C:        1
-;     C875B:        1
-;     C876F:        1
-;     sub_C8782:    1
-;     loop_C8784:   1
-;     L8795:        1
-;     C87CE:        1
-;     C87FF:        1
-;     C8806:        1
-;     C8829:        1
-;     C882C:        1
-;     C885C:        1
-;     C885F:        1
-;     C8874:        1
-;     C887F:        1
-;     C8890:        1
-;     C889A:        1
-;     C88A4:        1
-;     loop_C88A8:   1
-;     C88B1:        1
-;     C88BB:        1
-;     C88D0:        1
-;     C88DD:        1
-;     C88E3:        1
-;     C88E9:        1
-;     C88FB:        1
-;     C88FE:        1
-;     C8923:        1
-;     C892E:        1
-;     C8944:        1
-;     C8955:        1
-;     C896E:        1
-;     C8976:        1
-;     C897C:        1
-;     sub_C89A8:    1
-;     L89B4:        1
-;     C89DC:        1
-;     C8A13:        1
-;     L8ABA:        1
-;     sub_C8ACE:    1
-;     C8AD9:        1
-;     C8AEB:        1
-;     loop_C8AF7:   1
-;     loop_C8B19:   1
-;     loop_C8B2D:   1
-;     loop_C8B50:   1
-;     C8B5F:        1
-;     C8B75:        1
-;     C8B78:        1
-;     C8B7E:        1
-;     C8B90:        1
-;     sub_C8BB4:    1
-;     C8BC7:        1
-;     C8BE9:        1
-;     loop_C8BF5:   1
-;     C8BFF:        1
-;     loop_C8C03:   1
-;     C8C23:        1
-;     C8C2B:        1
-;     loop_C8C3A:   1
-;     C8C50:        1
-;     loop_C8C72:   1
-;     C8C7F:        1
-;     C8C97:        1
-;     C8CAF:        1
-;     C8CC2:        1
-;     loop_C8CC6:   1
-;     C8CD0:        1
-;     C8CDB:        1
-;     C8D14:        1
-;     C8D21:        1
-;     C8D2B:        1
-;     sub_C8D2E:    1
-;     C8D34:        1
-;     L8D3C:        1
-;     C8D42:        1
-;     C8D45:        1
-;     sub_C8D48:    1
-;     C8D7B:        1
-;     C8D90:        1
-;     C8DB0:        1
-;     C8DD9:        1
-;     C8DFB:        1
-;     loop_C8E0B:   1
-;     C8E12:        1
-;     C8E32:        1
-;     C8E48:        1
-;     C8E59:        1
-;     C8EAE:        1
-;     C8EE4:        1
-;     C8EF3:        1
-;     C8EFF:        1
-;     C8F32:        1
-;     C8F3E:        1
-;     C8F45:        1
-;     C8F61:        1
-;     C8F70:        1
-;     C8F8E:        1
-;     C8F9C:        1
-;     C8FD6:        1
-;     C8FF5:        1
-;     loop_C9008:   1
-;     C900B:        1
-;     C9040:        1
-;     C9060:        1
-;     C909F:        1
-;     C90BA:        1
-;     C90C3:        1
-;     sub_C90CA:    1
-;     sub_C9141:    1
-;     C916D:        1
-;     sub_C9195:    1
-;     C91D6:        1
-;     sub_C91EE:    1
-;     sub_C91FF:    1
-;     C9249:        1
-;     C926C:        1
-;     C9276:        1
-;     C927B:        1
-;     sub_C927D:    1
-;     loop_C929E:   1
-;     C92CF:        1
-;     loop_C9302:   1
-;     C9345:        1
-;     C93BC:        1
-;     C93CC:        1
-;     sub_C93CD:    1
-;     sub_C93FD:    1
-;     C9423:        1
-;     C943C:        1
-;     C943F:        1
-;     C944D:        1
-;     C9461:        1
-;     C9472:        1
-;     C949E:        1
-;     loop_C94CD:   1
-;     loop_C94DD:   1
-;     C94F0:        1
-;     sub_C9509:    1
-;     loop_C9518:   1
-;     loop_C95E7:   1
-;     sub_C9620:    1
-;     sub_C9625:    1
-;     loop_C962D:   1
-;     C963B:        1
-;     sub_C9650:    1
-;     TT70:         1
-;     L96C1:        1
-;     C96DC:        1
-;     C9706:        1
-;     C970E:        1
-;     C9721:        1
-;     TT72:         1
-;     C9740:        1
-;     C9748:        1
-;     loop_C978A:   1
-;     C97C9:        1
-;     C97CE:        1
-;     C97EC:        1
-;     C97F8:        1
-;     C9817:        1
-;     C9826:        1
-;     C9846:        1
-;     C9852:        1
-;     C986D:        1
-;     C98B3:        1
-;     C9924:        1
-;     C9932:        1
-;     C993F:        1
-;     C995A:        1
-;     C9982:        1
-;     C99F4:        1
-;     C9A12:        1
-;     C9A4F:        1
-;     C9A65:        1
-;     C9AA9:        1
-;     C9AD9:        1
-;     sub_C9AE7:    1
-;     C9B03:        1
-;     C9B28:        1
-;     C9B95:        1
-;     C9B9D:        1
-;     C9BAC:        1
-;     C9BC3:        1
-;     C9BCF:        1
-;     L9BFC:        1
-;     loop_C9C2D:   1
-;     C9C32:        1
-;     C9C4B:        1
-;     C9C5B:        1
-;     C9CA4:        1
-;     C9CC5:        1
-;     sub_C9CCC:    1
-;     C9CF7:        1
-;     loop_C9CFA:   1
-;     C9D46:        1
-;     C9D53:        1
-;     C9D60:        1
-;     loop_C9D62:   1
-;     C9D6A:        1
-;     C9D76:        1
-;     C9D8F:        1
-;     C9D9E:        1
-;     loop_C9DAA:   1
-;     C9DB7:        1
-;     loop_C9DCD:   1
-;     C9DEC:        1
-;     C9E02:        1
-;     C9E22:        1
-;     C9E48:        1
-;     C9E51:        1
-;     C9E5A:        1
-;     C9E61:        1
-;     loop_C9E63:   1
-;     sub_C9E6D:    1
-;     C9E76:        1
-;     loop_C9E97:   1
-;     loop_C9EB1:   1
-;     C9ED2:        1
-;     loop_C9EF4:   1
-;     loop_C9F16:   1
-;     C9F4B:        1
-;     C9F52:        1
-;     C9F77:        1
-;     loop_C9F9E:   1
-;     C9FA1:        1
-;     C9FA9:        1
-;     sub_C9FAE:    1
-;     sub_C9FB3:    1
-;     loop_C9FDD:   1
-;     loop_CA006:   1
-;     sub_CA01C:    1
-;     CA025:        1
-;     CA028:        1
-;     CA04E:        1
-;     CA079:        1
-;     CA089:        1
-;     CA09B:        1
-;     CA0AD:        1
-;     CA0B3:        1
-;     CA0F4:        1
-;     LA169:        1
-;     LA16D:        1
-;     loop_CA182:   1
-;     CA18B:        1
-;     sub_CA18F:    1
-;     loop_CA194:   1
-;     CA1CA:        1
-;     CA1E9:        1
-;     CA1ED:        1
-;     CA1F1:        1
-;     sub_CA213:    1
-;     CA21A:        1
-;     CA24E:        1
-;     CA25C:        1
-;     CA26C:        1
-;     CA26F:        1
-;     CA28A:        1
-;     CA29F:        1
-;     CA2A2:        1
-;     CA2AB:        1
-;     CA2B6:        1
-;     CA2B9:        1
-;     CA309:        1
-;     CA317:        1
-;     CA36E:        1
-;     loop_CA384:   1
-;     sub_CA3A3:    1
-;     CA3E7:        1
-;     CA3F7:        1
-;     CA458:        1
-;     CA464:        1
-;     CA475:        1
-;     CA485:        1
-;     LA48A:        1
-;     CA4AF:        1
-;     loop_CA4BE:   1
-;     CA4F0:        1
-;     CA4F8:        1
-;     CA508:        1
-;     CA51D:        1
-;     CA531:        1
-;     CA535:        1
-;     CA548:        1
-;     CA558:        1
-;     CA565:        1
-;     CA573:        1
-;     CA57F:        1
-;     loop_CA5A9:   1
-;     loop_CA5C5:   1
-;     CA5E3:        1
-;     CA5E6:        1
-;     CA5F3:        1
-;     CA602:        1
-;     CA60F:        1
-;     CA61C:        1
-;     CA629:        1
-;     CA636:        1
-;     CA643:        1
-;     sub_CA649:    1
-;     sub_CA667:    1
-;     loop_CA681:   1
-;     CA6A0:        1
-;     CA6C0:        1
-;     loop_CA6C8:   1
-;     LA6D8:        1
-;     LA6F2:        1
-;     loop_CA706:   1
-;     CA747:        1
-;     CA74A:        1
-;     CA759:        1
-;     CA75C:        1
-;     CA79E:        1
-;     LA7AA:        1
-;     LA7AB:        1
-;     sub_CA7C6:    1
-;     loop_CA7C8:   1
-;     loop_CA7D2:   1
-;     CA7E1:        1
-;     loop_CA7E3:   1
-;     CA7FB:        1
-;     loop_CA804:   1
-;     CA80D:        1
-;     loop_CA80F:   1
-;     CA81E:        1
-;     CA81F:        1
-;     sub_CA82A:    1
-;     loop_CA82C:   1
-;     CA839:        1
-;     CA83A:        1
-;     CA85B:        1
-;     CA879:        1
-;     CA87D:        1
-;     CA8A8:        1
-;     CA8AB:        1
-;     loop_CA8AD:   1
-;     sub_CA8D1:    1
-;     loop_CA8D6:   1
-;     CA8E8:        1
-;     CA8EE:        1
-;     loop_CA8F8:   1
-;     CA8F9:        1
-;     CA902:        1
-;     CA911:        1
-;     CA916:        1
-;     sub_CA994:    1
-;     CA9A4:        1
-;     CA9D9:        1
-;     CA9FA:        1
-;     CA9FD:        1
-;     loop_CAA00:   1
-;     CAA0E:        1
-;     loop_CAA10:   1
-;     CAA26:        1
-;     CAA29:        1
-;     CAA4C:        1
-;     sub_CAA50:    1
-;     loop_CAA52:   1
-;     CAA72:        1
-;     CAA79:        1
-;     CAA84:        1
-;     CAA89:        1
-;     CAA93:        1
-;     CAA96:        1
-;     CAACF:        1
-;     CAAD8:        1
-;     loop_CAAF4:   1
-;     loop_CAAFE:   1
-;     CAB00:        1
-;     loop_CAB25:   1
-;     CAB2F:        1
-;     CAB69:        1
-;     loop_CAB95:   1
-;     CABB5:        1
-;     CABB6:        1
-;     CABBE:        1
-;     CABD5:        1
-;     CAC13:        1
-;     sub_CAC19:    1
-;     loop_CAC1E:   1
-;     sub_CAC26:    1
-;     CAC3E:        1
-;     CAC4A:        1
-;     CAC59:        1
-;     CAC65:        1
-;     CAC6D:        1
-;     CAC86:        1
-;     loop_CACA2:   1
-;     sub_CACC7:    1
-;     sub_CACE5:    1
-;     CACEF:        1
-;     CAD0F:        1
-;     CAD17:        1
-;     sub_CAD25:    1
-;     CAD2E:        1
-;     CAD40:        1
-;     CAD46:        1
-;     CAD4C:        1
-;     sub_CAD55:    1
-;     CAD6A:        1
-;     loop_CAD75:   1
-;     loop_CAD7F:   1
-;     CADAA:        1
-;     CADF3:        1
-;     CAE00:        1
-;     loop_CAE14:   1
-;     loop_CAE3E:   1
-;     CAE55:        1
-;     CAE74:        1
-;     CAE7E:        1
-;     CAE84:        1
-;     CAE99:        1
-;     loop_CAEA0:   1
-;     CAEA3:        1
-;     CAEDE:        1
-;     CAEF2:        1
-;     CAEF6:        1
-;     CAF03:        1
-;     CAF09:        1
-;     CAF20:        1
-;     CAF2C:        1
-;     CAF3B:        1
-;     CAF58:        1
-;     CAF72:        1
-;     CAF7D:        1
-;     LAFB4:        1
-;     loop_CAFB6:   1
-;     CAFBC:        1
-;     CAFCF:        1
-;     loop_CAFD6:   1
-;     CAFFA:        1
-;     CB003:        1
-;     CB006:        1
-;     CB00F:        1
-;     CB039:        1
-;     CB055:        1
-;     CB05C:        1
-;     CB073:        1
-;     LB079:        1
-;     sub_CB07D:    1
-;     CB084:        1
-;     CB08B:        1
-;     CB09B:        1
-;     CB0A3:        1
-;     CB0A6:        1
-;     CB0B0:        1
-;     CB0B7:        1
-;     CB0BE:        1
-;     CB0F2:        1
-;     CB0FA:        1
-;     CB106:        1
-;     CB10B:        1
-;     CB118:        1
-;     CB125:        1
-;     CB133:        1
-;     CB137:        1
-;     CB142:        1
-;     CB150:        1
-;     CB157:        1
-;     CB181:        1
-;     CB18A:        1
-;     CB1A2:        1
-;     sub_CB1B2:    1
-;     CB1C8:        1
-;     CB1E2:        1
-;     loop_CB22F:   1
-;     CB24D:        1
-;     loop_CB2AD:   1
-;     CB2EF:        1
-;     CB32C:        1
-;     CB341:        1
-;     CB355:        1
-;     CB358:        1
-;     loop_CB37E:   1
-;     loop_CB3F9:   1
-;     loop_CB3FE:   1
-;     CB406:        1
-;     loop_CB415:   1
-;     CB422:        1
-;     CB424:        1
-;     CB457:        1
-;     CB464:        1
-;     CB466:        1
-;     CB469:        1
-;     loop_CB472:   1
-;     loop_CB47A:   1
-;     loop_CB48A:   1
-;     sub_CB4B2:    1
-;     CB4EB:        1
-;     CB4ED:        1
-;     CB542:        1
-;     loop_CB583:   1
-;     CB596:        1
-;     sub_CB59C:    1
-;     sub_CB5B4:    1
-;     CB5BF:        1
-;     CB5CA:        1
-;     CB5F7:        1
-;     sub_CB5FE:    1
-;     sub_CB600:    1
-;     sub_CB611:    1
-;     CB62D:        1
-;     CB641:        1
-;     CB647:        1
-;     CB663:        1
-;     loop_CB667:   1
-;     CB686:        1
-;     CB6A7:        1
-;     CB6B9:        1
-;     CB6BA:        1
-;     CB6C8:        1
-;     CB6E4:        1
-;     CB6F2:        1
-;     CB6F5:        1
-;     CB701:        1
-;     CB70C:        1
-;     CB712:        1
-;     CB721:        1
-;     CB727:        1
-;     CB737:        1
-;     CB73F:        1
-;     CB74F:        1
-;     CB757:        1
-;     CB76C:        1
-;     CB7DF:        1
-;     CB7E8:        1
-;     CB801:        1
-;     loop_CB818:   1
-;     CB839:        1
-;     CB845:        1
-;     loop_CB862:   1
-;     CB875:        1
-;     CB89A:        1
-;     loop_CB8A3:   1
-;     CB8AA:        1
-;     CB8AE:        1
-;     LB8B3:        1
-;     LB8B5:        1
-;     CB92E:        1
-;     CB935:        1
-;     CB945:        1
-;     CB9AE:        1
-;     CB9BB:        1
-;     CBA42:        1
-;     CBAA0:        1
-;     CBAC1:        1
-;     CBAF9:        1
-;     CBB2F:        1
-;     CBB5D:        1
-;     CBB8E:        1
-;     CBC31:        1
-;     CBC44:        1
-;     CBC52:        1
-;     CBCC5:        1
-;     sub_CBD25:    1
-;     CBD5D:        1
-;     CBD5E:        1
-;     loop_CBDAC:   1
-;     loop_CBDAD:   1
-;     sub_CBDC7:    1
-;     CBDCA:        1
-;     sub_CBDED:    1
-;     sub_CBE03:    1
-;     CBE17:        1
-;     CBE1B:        1
-;     sub_CBE48:    1
-;     CBE6E:        1
-;     CBE7F:        1
-;     CBE8D:        1
-;     LBEAB:        1
-;     sub_CBEB0:    1
-;     CBF2B:        1
-;     loop_CBF34:   1
-;     CBF37:        1
-;     CBF5D:        1
-;     CBFBF:        1
-;     CBFD5:        1
-;     CBFE2:        1
-;     LC006:        1
-;     LC007:        1
-;     LC0DF:        1
-;     LC0E3:        1
-;     LC542:        1
-;     LC543:        1
-;     LC547:        1
-;     LC580:        1
-;     LC581:        1
-;     LCD62:        1
-;     LCE9E:        1
-;     LD17F:        1
-;     LD8EC:        1
-;     LD8FD:        1
-;     LE543:        1
-;     LE909:        1
-;     LEBBF:        1
-;     LEBED:        1
-;     LECAE:        1
-;     LECF9:        1
-;     LED6E:        1
-;     LEDC7:        1
-;     LEDEA:        1
-;     LEDFF:        1
-;     LEE15:        1
-;     LEE2A:        1
-;     LEE62:        1
-;     LEE7D:        1
-;     LEE8B:        1
-;     LEEA7:        1
-;     LEF12:        1
-;     LEF20:        1
-;     LEF51:        1
-;     LEF6C:        1
-;     LEFC0:        1
-;     LEFCE:        1
-;     LEFF7:        1
-;     LF04B:        1
-;     LF0B8:        1
-;     LF0FC:        1
-;     LF10A:        1
-;     LF139:        1
-;     LF13F:        1
-;     LF194:        1
-;     LF1BD:        1
-;     LF1CB:        1
-;     LF21C:        1
-;     LF25A:        1
-;     LF2A8:        1
-;     LF2E6:        1
-;     LF333:        1
-;     LF362:        1
-;     LF39A:        1
-;     LF3AB:        1
-;     LF3BC:        1
-;     LF473:        1
-;     LF47D:        1
-;     LF60C:        1
-;     MLTU2:        1
-;     MULT12:       1
-;     LL28:         1
-;     LFAF8:        1
-
-; Automatically generated labels:
-;     C8023
-;     C804C
-;     C8053
-;     C806D
-;     C8082
-;     C8097
-;     C80AB
-;     C80C0
-;     C80DA
-;     C80F0
-;     C80FC
-;     C8114
-;     C811A
-;     C8127
-;     C8148
-;     C8158
-;     C816F
-;     C819A
-;     C81B1
-;     C81B6
-;     C81D4
-;     C81D7
-;     C81F5
-;     C81FB
-;     C8200
-;     C8209
-;     C8213
-;     C821B
-;     C8224
-;     C822A
-;     C8231
-;     C8243
-;     C8248
-;     C824B
-;     C825F
-;     C827A
-;     C828B
-;     C82B5
-;     C82BC
-;     C82C4
-;     C82CE
-;     C82D3
-;     C82D5
-;     C82DA
-;     C82DD
-;     C831C
-;     C831F
-;     C8328
-;     C8341
-;     C8344
-;     C835B
-;     C8360
-;     C836A
-;     C8383
-;     C8386
-;     C8390
-;     C839D
-;     C83AB
-;     C83AE
-;     C83BB
-;     C83CB
-;     C8417
-;     C841A
-;     C841F
-;     C8436
-;     C8442
-;     C8453
-;     C8459
-;     C845C
-;     C8469
-;     C84A7
-;     C84BA
-;     C84C7
-;     C84CA
-;     C84DE
-;     C84F5
-;     C8501
-;     C8525
-;     C852F
-;     C8532
-;     C853A
-;     C8547
-;     C8556
-;     C855E
-;     C856B
-;     C856E
-;     C858A
-;     C85A1
-;     C85C2
-;     C85D6
-;     C85F3
-;     C85F5
-;     C8602
-;     C8610
-;     C8612
-;     C8614
-;     C8636
-;     C8642
-;     C8651
-;     C8654
-;     C866E
-;     C867F
-;     C8690
-;     C86A3
-;     C86D9
-;     C86EE
-;     C86F0
-;     C86F7
-;     C86F9
-;     C8704
-;     C8709
-;     C872A
-;     C8733
-;     C874C
-;     C875B
-;     C876A
-;     C876F
-;     C8794
-;     C87CE
-;     C87F0
-;     C87FF
-;     C8806
-;     C8829
-;     C882C
-;     C8837
-;     C885C
-;     C885F
-;     C8874
-;     C887F
-;     C8890
-;     C889A
-;     C88A4
-;     C88B1
-;     C88BB
-;     C88D0
-;     C88DD
-;     C88E3
-;     C88E9
-;     C88FB
-;     C88FE
-;     C8923
-;     C8926
-;     C892E
-;     C8944
-;     C8955
-;     C896C
-;     C896E
-;     C8976
-;     C897C
-;     C8980
-;     C89DC
-;     C8A13
-;     C8A21
-;     C8AB9
-;     C8ABE
-;     C8AC2
-;     C8AD9
-;     C8AEB
-;     C8B2A
-;     C8B3B
-;     C8B5F
-;     C8B6E
-;     C8B75
-;     C8B78
-;     C8B7E
-;     C8B8D
-;     C8B90
-;     C8B91
-;     C8BC7
-;     C8BE9
-;     C8BFF
-;     C8C23
-;     C8C2B
-;     C8C50
-;     C8C5D
-;     C8C7F
-;     C8C97
-;     C8CAF
-;     C8CB5
-;     C8CC2
-;     C8CD0
-;     C8CDB
-;     C8D14
-;     C8D21
-;     C8D2B
-;     C8D33
-;     C8D34
-;     C8D42
-;     C8D45
-;     C8D7B
-;     C8D8B
-;     C8D90
-;     C8DB0
-;     C8DBD
-;     C8DCC
-;     C8DCD
-;     C8DD9
-;     C8DEB
-;     C8DF5
-;     C8DFB
-;     C8E09
-;     C8E12
-;     C8E29
-;     C8E32
-;     C8E48
-;     C8E4B
-;     C8E59
-;     C8E8A
-;     C8EAE
-;     C8EB1
-;     C8EBE
-;     C8EE4
-;     C8EF3
-;     C8EFF
-;     C8F18
-;     C8F24
-;     C8F32
-;     C8F3E
-;     C8F45
-;     C8F47
-;     C8F61
-;     C8F64
-;     C8F6C
-;     C8F70
-;     C8F76
-;     C8F83
-;     C8F8C
-;     C8F8E
-;     C8F8F
-;     C8F9C
-;     C8FB8
-;     C8FCA
-;     C8FD6
-;     C8FF5
-;     C8FF7
-;     C8FF8
-;     C900B
-;     C9040
-;     C9046
-;     C904E
-;     C9060
-;     C9068
-;     C9075
-;     C909F
-;     C90BA
-;     C90C3
-;     C90E5
-;     C916C
-;     C916D
-;     C91D5
-;     C91D6
-;     C9235
-;     C9249
-;     C926C
-;     C926D
-;     C9276
-;     C927B
-;     C927F
-;     C928E
-;     C92CF
-;     C92F2
-;     C9345
-;     C9359
-;     C9366
-;     C93A6
-;     C93AC
-;     C93BC
-;     C93CC
-;     C9423
-;     C9436
-;     C943C
-;     C943F
-;     C944D
-;     C9461
-;     C9472
-;     C949E
-;     C94F0
-;     C94FD
-;     C963B
-;     C968C
-;     C96DC
-;     C9706
-;     C970E
-;     C9721
-;     C9740
-;     C9748
-;     C97C9
-;     C97CE
-;     C97EC
-;     C97F8
-;     C9817
-;     C9826
-;     C9846
-;     C9852
-;     C9861
-;     C986D
-;     C9890
-;     C98B3
-;     C9924
-;     C9932
-;     C993F
-;     C995A
-;     C9976
-;     C9982
-;     C99F4
-;     C9A10
-;     C9A12
-;     C9A1F
-;     C9A4F
-;     C9A62
-;     C9A65
-;     C9A99
-;     C9AA9
-;     C9AB1
-;     C9AD9
-;     C9AE4
-;     C9B03
-;     C9B15
-;     C9B28
-;     C9B95
-;     C9B99
-;     C9B9D
-;     C9BAC
-;     C9BC3
-;     C9BCF
-;     C9BF6
-;     C9C00
-;     C9C32
-;     C9C3F
-;     C9C4B
-;     C9C5B
-;     C9C91
-;     C9CA4
-;     C9CBB
-;     C9CC5
-;     C9CF7
-;     C9D09
-;     C9D35
-;     C9D46
-;     C9D4D
-;     C9D51
-;     C9D53
-;     C9D60
-;     C9D6A
-;     C9D76
-;     C9D83
-;     C9D8F
-;     C9D9E
-;     C9DB7
-;     C9DC4
-;     C9DEC
-;     C9E02
-;     C9E14
-;     C9E22
-;     C9E3C
-;     C9E48
-;     C9E51
-;     C9E5A
-;     C9E61
-;     C9E76
-;     C9ED2
-;     C9EF6
-;     C9F4B
-;     C9F52
-;     C9F77
-;     C9F7D
-;     C9F8E
-;     C9FA1
-;     C9FA9
-;     C9FBB
-;     C9FC8
-;     C9FE0
-;     CA025
-;     CA028
-;     CA036
-;     CA04E
-;     CA06E
-;     CA079
-;     CA089
-;     CA08C
-;     CA09B
-;     CA0AD
-;     CA0B3
-;     CA0F4
-;     CA12D
-;     CA18B
-;     CA1CA
-;     CA1E9
-;     CA1ED
-;     CA1F1
-;     CA21A
-;     CA21F
-;     CA24E
-;     CA25C
-;     CA26C
-;     CA26F
-;     CA28A
-;     CA29F
-;     CA2A2
-;     CA2AB
-;     CA2B6
-;     CA2B9
-;     CA2BE
-;     CA309
-;     CA317
-;     CA34E
-;     CA36E
-;     CA3E7
-;     CA3F7
-;     CA43F
-;     CA458
-;     CA464
-;     CA466
-;     CA475
-;     CA485
-;     CA48D
-;     CA4AF
-;     CA4DB
-;     CA4E8
-;     CA4F0
-;     CA4F8
-;     CA508
-;     CA51D
-;     CA531
-;     CA535
-;     CA548
-;     CA558
-;     CA565
-;     CA573
-;     CA57F
-;     CA58A
-;     CA5DA
-;     CA5E3
-;     CA5E6
-;     CA5F3
-;     CA602
-;     CA60F
-;     CA61C
-;     CA629
-;     CA636
-;     CA643
-;     CA656
-;     CA6A0
-;     CA6C0
-;     CA6F6
-;     CA737
-;     CA747
-;     CA74A
-;     CA759
-;     CA75C
-;     CA775
-;     CA778
-;     CA793
-;     CA79E
-;     CA7D0
-;     CA7E1
-;     CA7F0
-;     CA7FB
-;     CA80D
-;     CA81E
-;     CA81F
-;     CA839
-;     CA83A
-;     CA842
-;     CA85B
-;     CA879
-;     CA87D
-;     CA89A
-;     CA89C
-;     CA8A8
-;     CA8AB
-;     CA8C8
-;     CA8E8
-;     CA8EE
-;     CA8F9
-;     CA902
-;     CA911
-;     CA916
-;     CA94C
-;     CA98D
-;     CA9A4
-;     CA9B1
-;     CA9D7
-;     CA9D9
-;     CA9E6
-;     CA9FA
-;     CA9FD
-;     CAA0E
-;     CAA26
-;     CAA29
-;     CAA4C
-;     CAA5D
-;     CAA72
-;     CAA79
-;     CAA84
-;     CAA89
-;     CAA93
-;     CAA96
-;     CAACF
-;     CAAD8
-;     CAAE3
-;     CAAF2
-;     CAB00
-;     CAB2F
-;     CAB43
-;     CAB69
-;     CAB6C
-;     CAB86
-;     CAB93
-;     CABAA
-;     CABB5
-;     CABB6
-;     CABBE
-;     CABD5
-;     CABD7
-;     CABE4
-;     CAC13
-;     CAC3E
-;     CAC4A
-;     CAC59
-;     CAC65
-;     CAC68
-;     CAC6D
-;     CAC7A
-;     CAC86
-;     CACA0
-;     CACBE
-;     CACD7
-;     CACEF
-;     CAD0F
-;     CAD17
-;     CAD2E
-;     CAD40
-;     CAD46
-;     CAD4C
-;     CAD52
-;     CAD69
-;     CAD6A
-;     CADAA
-;     CADF3
-;     CAE00
-;     CAE10
-;     CAE27
-;     CAE4C
-;     CAE55
-;     CAE74
-;     CAE7E
-;     CAE84
-;     CAE99
-;     CAEA3
-;     CAEDE
-;     CAEF2
-;     CAEF6
-;     CAF03
-;     CAF09
-;     CAF0C
-;     CAF0F
-;     CAF20
-;     CAF2C
-;     CAF3B
-;     CAF58
-;     CAF5E
-;     CAF72
-;     CAF7D
-;     CAFA8
-;     CAFBC
-;     CAFCF
-;     CAFEF
-;     CAFFA
-;     CB003
-;     CB006
-;     CB00F
-;     CB02B
-;     CB039
-;     CB04C
-;     CB055
-;     CB05C
-;     CB070
-;     CB073
-;     CB084
-;     CB08B
-;     CB09B
-;     CB0A3
-;     CB0A6
-;     CB0B0
-;     CB0B7
-;     CB0BE
-;     CB0CC
-;     CB0F2
-;     CB0FA
-;     CB106
-;     CB10B
-;     CB118
-;     CB119
-;     CB125
-;     CB133
-;     CB137
-;     CB142
-;     CB149
-;     CB150
-;     CB157
-;     CB16A
-;     CB181
-;     CB18A
-;     CB18D
-;     CB1A2
-;     CB1A5
-;     CB1C7
-;     CB1C8
-;     CB1E2
-;     CB1E4
-;     CB24D
-;     CB285
-;     CB2EF
-;     CB32C
-;     CB341
-;     CB355
-;     CB358
-;     CB35E
-;     CB406
-;     CB422
-;     CB424
-;     CB445
-;     CB457
-;     CB464
-;     CB466
-;     CB469
-;     CB4E1
-;     CB4EB
-;     CB4ED
-;     CB4FB
-;     CB522
-;     CB52F
-;     CB542
-;     CB566
-;     CB573
-;     CB596
-;     CB5BF
-;     CB5CA
-;     CB5DF
-;     CB5F7
-;     CB62D
-;     CB641
-;     CB647
-;     CB661
-;     CB663
-;     CB664
-;     CB672
-;     CB686
-;     CB6A7
-;     CB6B0
-;     CB6B9
-;     CB6BA
-;     CB6C8
-;     CB6E4
-;     CB6F2
-;     CB6F5
-;     CB701
-;     CB70C
-;     CB712
-;     CB721
-;     CB727
-;     CB737
-;     CB73F
-;     CB74F
-;     CB757
-;     CB76C
-;     CB777
-;     CB78F
-;     CB79D
-;     CB7CF
-;     CB7DF
-;     CB7E8
-;     CB7F2
-;     CB801
-;     CB811
-;     CB831
-;     CB839
-;     CB845
-;     CB858
-;     CB875
-;     CB89A
-;     CB8A9
-;     CB8AA
-;     CB8AE
-;     CB910
-;     CB91D
-;     CB92E
-;     CB935
-;     CB945
-;     CB952
-;     CB955
-;     CB962
-;     CB99E
-;     CB9AE
-;     CB9BB
-;     CB9E7
-;     CBA15
-;     CBA42
-;     CBA4F
-;     CBA71
-;     CBA7E
-;     CBAA0
-;     CBAAD
-;     CBAC1
-;     CBAF9
-;     CBB06
-;     CBB2F
-;     CBB3A
-;     CBB5D
-;     CBB8E
-;     CBB9C
-;     CBBDD
-;     CBC1C
-;     CBC31
-;     CBC44
-;     CBC52
-;     CBCC5
-;     CBCFC
-;     CBD5D
-;     CBD5E
-;     CBDB3
-;     CBDCA
-;     CBDD7
-;     CBE17
-;     CBE1B
-;     CBE28
-;     CBE6E
-;     CBE7F
-;     CBE8D
-;     CBEA5
-;     CBEC4
-;     CBF19
-;     CBF2B
-;     CBF37
-;     CBF54
-;     CBF5D
-;     CBF91
-;     CBFA1
-;     CBFBF
-;     CBFD5
-;     CBFD8
-;     CBFE2
-;     L0002
-;     L0003
-;     L0005
-;     L0007
-;     L0008
-;     L0029
-;     L002A
-;     L002B
-;     L002C
-;     L002D
-;     L0030
-;     L0031
-;     L0032
-;     L0033
-;     L0034
-;     L0037
-;     L0038
-;     L0039
-;     L003A
-;     L003E
-;     L003F
-;     L0040
-;     L0041
-;     L0042
-;     L0043
-;     L0044
-;     L0045
-;     L0046
-;     L0047
-;     L004B
-;     L0060
-;     L0062
-;     L0064
-;     L0069
-;     L006A
-;     L006B
-;     L006C
-;     L006D
-;     L006F
-;     L0070
-;     L007E
-;     L007F
-;     L0080
-;     L0081
-;     L0083
-;     L0084
-;     L0085
-;     L0086
-;     L0087
-;     L0091
-;     L0092
-;     L0093
-;     L0094
-;     L0095
-;     L009B
-;     L009D
-;     L009E
-;     L009F
-;     L00A0
-;     L00A1
-;     L00A2
-;     L00A4
-;     L00A5
-;     L00A9
-;     L00AA
-;     L00AE
-;     L00AF
-;     L00B1
-;     L00B2
-;     L00B3
-;     L00B4
-;     L00B5
-;     L00B8
-;     L00BA
-;     L00C0
-;     L00CC
-;     L00CD
-;     L00CE
-;     L00D2
-;     L00D8
-;     L00E9
-;     L00F6
-;     L0200
-;     L0201
-;     L0202
-;     L0203
-;     L0234
-;     L0235
-;     L0237
-;     L023C
-;     L023D
-;     L023E
-;     L0298
-;     L0299
-;     L029A
-;     L029B
-;     L0300
-;     L0305
-;     L0306
-;     L0307
-;     L0308
-;     L0309
-;     L030A
-;     L034F
-;     L0369
-;     L036A
-;     L036B
-;     L036C
-;     L0370
-;     L0373
-;     L0374
-;     L037E
-;     L0388
-;     L0389
-;     L038A
-;     L038B
-;     L038C
-;     L038D
-;     L038E
-;     L038F
-;     L0390
-;     L0392
-;     L0393
-;     L0394
-;     L0395
-;     L0396
-;     L039E
-;     L039F
-;     L03A0
-;     L03A1
-;     L03A2
-;     L03A3
-;     L03A4
-;     L03A5
-;     L03A6
-;     L03A7
-;     L03A8
-;     L03B0
-;     L03B3
-;     L03B7
-;     L03BE
-;     L03C0
-;     L03C1
-;     L03C2
-;     L03C3
-;     L03C4
-;     L03C5
-;     L03C6
-;     L03C8
-;     L03C9
-;     L03CA
-;     L03DA
-;     L03DB
-;     L03DC
-;     L03DD
-;     L03DF
-;     L03E5
-;     L03E7
-;     L03E8
-;     L03E9
-;     L03EE
-;     L03EF
-;     L03F0
-;     L03F1
-;     L03F3
-;     L03F4
-;     L03F6
-;     L03F7
-;     L03F8
-;     L03F9
-;     L03FA
-;     L03FB
-;     L03FC
-;     L03FD
-;     L0400
-;     L0401
-;     L0403
-;     L0404
-;     L0405
-;     L0406
-;     L0407
-;     L0408
-;     L0409
-;     L044D
-;     L044E
-;     L044F
-;     L0450
-;     L0451
-;     L0452
-;     L0453
-;     L0459
-;     L045A
-;     L045B
-;     L045C
-;     L045D
-;     L045F
-;     L0464
-;     L0465
-;     L046D
-;     L046E
-;     L046F
-;     L0470
-;     L0471
-;     L0475
-;     L0476
-;     L0477
-;     L047B
-;     L047C
-;     L047E
-;     L0480
-;     L0483
-;     L0484
-;     L0485
-;     L0486
-;     L0487
-;     L0488
-;     L0489
-;     L048B
-;     L048C
-;     L048D
-;     L048E
-;     L0494
-;     L0495
-;     L0496
-;     L0497
-;     L0499
-;     L049A
-;     L049C
-;     L049D
-;     L049E
-;     L049F
-;     L04A1
-;     L04A2
-;     L04A3
-;     L04A8
-;     L04A9
-;     L04AA
-;     L04AC
-;     L04AE
-;     L04B0
-;     L04B2
-;     L04B3
-;     L04B4
-;     L04B6
-;     L04B7
-;     L04B8
-;     L04B9
-;     L04BA
-;     L04BB
-;     L04C8
-;     L04F2
-;     L0506
-;     L0507
-;     L0562
-;     L0563
-;     L0564
-;     L056C
-;     L0572
-;     L057F
-;     L0581
-;     L0584
-;     L0585
-;     L05A5
-;     L05BA
-;     L05CF
-;     L05E4
-;     L05F2
-;     L0600
-;     L0601
-;     L0602
-;     L0604
-;     L0605
-;     L0606
-;     L0607
-;     L0608
-;     L062A
-;     L062C
-;     L062E
-;     L0634
-;     L0636
-;     L0638
-;     L064E
-;     L0670
-;     L0672
-;     L06C6
-;     L0FA0
-;     L1FA9
-;     L2002
-;     L7280
-;     L7281
-;     L72A0
-;     L72A1
-;     L72C0
-;     L72C1
-;     L72E0
-;     L72E1
-;     L7300
-;     L7301
-;     L7320
-;     L7321
-;     L7340
-;     L7341
-;     L8795
-;     L89B4
-;     L8ABA
-;     L8D3C
-;     L96C1
-;     L96D6
-;     L9BFC
-;     L9FD9
-;     LA169
-;     LA16D
-;     LA48A
-;     LA6D8
-;     LA6F2
-;     LA7AA
-;     LA7AB
-;     LAFB4
-;     LB079
-;     LB8B3
-;     LB8B4
-;     LB8B5
-;     LB8B6
-;     LBEAB
-;     LC006
-;     LC007
-;     LC0DF
-;     LC0E3
-;     LC53E
-;     LC53F
-;     LC542
-;     LC543
-;     LC547
-;     LC580
-;     LC581
-;     LCD34
-;     LCD62
-;     LCD6F
-;     LCE7E
-;     LCE7F
-;     LCE90
-;     LCE9E
-;     LCEA5
-;     LD06D
-;     LD167
-;     LD17F
-;     LD8C5
-;     LD8E1
-;     LD8EC
-;     LD8FD
-;     LD951
-;     LD96F
-;     LD975
-;     LD977
-;     LE543
-;     LE596
-;     LE59F
-;     LE909
-;     LEB86
-;     LEB8C
-;     LEB8F
-;     LEBA2
-;     LEBAD
-;     LEBBF
-;     LEBE5
-;     LEBE9
-;     LEBED
-;     LEBF2
-;     LEC7D
-;     LEC8D
-;     LECA0
-;     LECAE
-;     LECF9
-;     LED24
-;     LED6B
-;     LED6E
-;     LEDAB
-;     LEDC7
-;     LEDDC
-;     LEDEA
-;     LEDFF
-;     LEE15
-;     LEE2A
-;     LEE62
-;     LEE7D
-;     LEE8B
-;     LEEA7
-;     LEEB5
-;     LEED3
-;     LEEF6
-;     LEF12
-;     LEF20
-;     LEF35
-;     LEF43
-;     LEF51
-;     LEF6C
-;     LEFC0
-;     LEFCE
-;     LEFF7
-;     LF005
-;     LF013
-;     LF021
-;     LF03D
-;     LF04B
-;     LF059
-;     LF074
-;     LF082
-;     LF0B8
-;     LF0C6
-;     LF0FC
-;     LF10A
-;     LF126
-;     LF12B
-;     LF139
-;     LF13F
-;     LF171
-;     LF194
-;     LF1BD
-;     LF1CB
-;     LF1E6
-;     LF21C
-;     LF25A
-;     LF260
-;     LF293
-;     LF2A8
-;     LF2BD
-;     LF2DE
-;     LF2E6
-;     LF333
-;     LF338
-;     LF362
-;     LF39A
-;     LF3AB
-;     LF3BC
-;     LF42E
-;     LF454
-;     LF46A
-;     LF473
-;     LF47D
-;     LF60C
-;     LF7AB
-;     LF853
-;     LFA16
-;     LFA33
-;     LFA43
-;     LFA55
-;     LFAF8
-;     loop_C80C5
-;     loop_C815A
-;     loop_C8334
-;     loop_C8392
-;     loop_C83EC
-;     loop_C83FB
-;     loop_C8405
-;     loop_C8630
-;     loop_C8784
-;     loop_C88A8
-;     loop_C8AF7
-;     loop_C8B19
-;     loop_C8B2D
-;     loop_C8B50
-;     loop_C8BF5
-;     loop_C8C03
-;     loop_C8C3A
-;     loop_C8C72
-;     loop_C8CC6
-;     loop_C8E0B
-;     loop_C9008
-;     loop_C929E
-;     loop_C9302
-;     loop_C94CD
-;     loop_C94DD
-;     loop_C9518
-;     loop_C95E7
-;     loop_C962D
-;     loop_C978A
-;     loop_C9C2D
-;     loop_C9CFA
-;     loop_C9D62
-;     loop_C9DAA
-;     loop_C9DCD
-;     loop_C9E63
-;     loop_C9E97
-;     loop_C9EB1
-;     loop_C9EF4
-;     loop_C9F16
-;     loop_C9F9E
-;     loop_C9FDD
-;     loop_CA006
-;     loop_CA182
-;     loop_CA194
-;     loop_CA384
-;     loop_CA4BE
-;     loop_CA5A9
-;     loop_CA5C5
-;     loop_CA681
-;     loop_CA6C8
-;     loop_CA706
-;     loop_CA7C8
-;     loop_CA7D2
-;     loop_CA7E3
-;     loop_CA804
-;     loop_CA80F
-;     loop_CA82C
-;     loop_CA8AD
-;     loop_CA8D6
-;     loop_CA8F8
-;     loop_CAA00
-;     loop_CAA10
-;     loop_CAA52
-;     loop_CAAF4
-;     loop_CAAFE
-;     loop_CAB25
-;     loop_CAB95
-;     loop_CAC1E
-;     loop_CACA2
-;     loop_CAD75
-;     loop_CAD7F
-;     loop_CAE14
-;     loop_CAE3E
-;     loop_CAEA0
-;     loop_CAFB6
-;     loop_CAFD6
-;     loop_CB22F
-;     loop_CB2AD
-;     loop_CB37E
-;     loop_CB3F9
-;     loop_CB3FE
-;     loop_CB415
-;     loop_CB472
-;     loop_CB47A
-;     loop_CB48A
-;     loop_CB583
-;     loop_CB667
-;     loop_CB818
-;     loop_CB862
-;     loop_CB8A3
-;     loop_CBDAC
-;     loop_CBDAD
-;     loop_CBF34
-;     sub_C800C
-;     sub_C80AF
-;     sub_C834A
-;     sub_C84D1
-;     sub_C8502
-;     sub_C8533
-;     sub_C8770
-;     sub_C8782
-;     sub_C8790
-;     sub_C87BF
-;     sub_C8819
-;     sub_C89A5
-;     sub_C89A8
-;     sub_C89B8
-;     sub_C8A14
-;     sub_C8AC0
-;     sub_C8ACE
-;     sub_C8BB4
-;     sub_C8D2E
-;     sub_C8D3B
-;     sub_C8D48
-;     sub_C8F9F
-;     sub_C90C4
-;     sub_C90CA
-;     sub_C90D8
-;     sub_C9109
-;     sub_C912B
-;     sub_C913E
-;     sub_C9141
-;     sub_C9156
-;     sub_C9195
-;     sub_C91D8
-;     sub_C91EE
-;     sub_C91FF
-;     sub_C923A
-;     sub_C927D
-;     sub_C9313
-;     sub_C931C
-;     sub_C93CD
-;     sub_C93FD
-;     sub_C9509
-;     sub_C9516
-;     sub_C95E4
-;     sub_C95FC
-;     sub_C9620
-;     sub_C9625
-;     sub_C9645
-;     sub_C9650
-;     sub_C96B9
-;     sub_C96C5
-;     sub_C991A
-;     sub_C99A4
-;     sub_C9AE7
-;     sub_C9B51
-;     sub_C9B86
-;     sub_C9CCC
-;     sub_C9CF8
-;     sub_C9D03
-;     sub_C9D6B
-;     sub_C9E6D
-;     sub_C9EC6
-;     sub_C9EEC
-;     sub_C9FAE
-;     sub_C9FB3
-;     sub_CA01C
-;     sub_CA130
-;     sub_CA147
-;     sub_CA155
-;     sub_CA171
-;     sub_CA18F
-;     sub_CA204
-;     sub_CA213
-;     sub_CA31A
-;     sub_CA341
-;     sub_CA36F
-;     sub_CA3A3
-;     sub_CA3C5
-;     sub_CA3D3
-;     sub_CA3D5
-;     sub_CA649
-;     sub_CA65C
-;     sub_CA667
-;     sub_CA694
-;     sub_CA697
-;     sub_CA6A8
-;     sub_CA6DC
-;     sub_CA7C6
-;     sub_CA82A
-;     sub_CA8A2
-;     sub_CA8D1
-;     sub_CA919
-;     sub_CA92C
-;     sub_CA994
-;     sub_CAA02
-;     sub_CAA05
-;     sub_CAA16
-;     sub_CAA50
-;     sub_CAA9C
-;     sub_CABAC
-;     sub_CAC19
-;     sub_CAC26
-;     sub_CACC1
-;     sub_CACC7
-;     sub_CACE5
-;     sub_CAD25
-;     sub_CAD55
-;     sub_CAD6B
-;     sub_CAD8A
-;     sub_CAE03
-;     sub_CAE32
-;     sub_CAE3C
-;     sub_CAFB3
-;     sub_CB07D
-;     sub_CB1A6
-;     sub_CB1B2
-;     sub_CB1CA
-;     sub_CB1D1
-;     sub_CB1D4
-;     sub_CB36A
-;     sub_CB39D
-;     sub_CB426
-;     sub_CB46B
-;     sub_CB484
-;     sub_CB491
-;     sub_CB4B2
-;     sub_CB4B4
-;     sub_CB4C0
-;     sub_CB4EE
-;     sub_CB531
-;     sub_CB544
-;     sub_CB557
-;     sub_CB59C
-;     sub_CB5B4
-;     sub_CB5F8
-;     sub_CB5FE
-;     sub_CB600
-;     sub_CB611
-;     sub_CB665
-;     sub_CB6A8
-;     sub_CB77A
-;     sub_CB83A
-;     sub_CBB38
-;     sub_CBB8F
-;     sub_CBC1D
-;     sub_CBD25
-;     sub_CBD92
-;     sub_CBDC7
-;     sub_CBDED
-;     sub_CBE03
-;     sub_CBE48
-;     sub_CBE62
-;     sub_CBE80
-;     sub_CBEB0
-;     sub_CBEB5
-;     sub_CBFED
 
 SAVE pydis_start, pydis_end

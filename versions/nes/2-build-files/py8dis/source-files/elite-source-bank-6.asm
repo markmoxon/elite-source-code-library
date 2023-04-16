@@ -48,6 +48,7 @@ XX16_12     = &0059
 XX0         = &005F
 INF         = &0061
 V           = &0063
+V_1         = &0064
 XX          = &0065
 ALP1        = &006E
 XX15        = &0071
@@ -265,6 +266,7 @@ LD06D       = &D06D
 LSPUT       = &DC0F
 TT27        = &F201
 DORND       = &F4AD
+PROJ        = &F4C1
 MU5         = &F65A
 MULT3       = &F664
 MLS2        = &F6BA
@@ -301,7 +303,6 @@ LL28        = &FA91
 
     JMP C811E                                     ; 800F: 4C 1E 81    L..
 
-; &8012 referenced 5 times by &8022, &832F, &852A, &86E9, &8858
 .C8012
     JMP C80F3                                     ; 8012: 4C F3 80    L..
 
@@ -313,24 +314,20 @@ LL28        = &FA91
 
     JMP C8A53                                     ; 801E: 4C 53 8A    LS.
 
-; &8021 referenced 1 time by &800C
 .C8021
     TAY                                           ; 8021: A8          .
     JSR C8012                                     ; 8022: 20 12 80     ..
     LDA #0                                        ; 8025: A9 00       ..
     CLC                                           ; 8027: 18          .
-; &8028 referenced 1 time by &802D
 .loop_C8028
     DEY                                           ; 8028: 88          .
     BMI C802F                                     ; 8029: 30 04       0.
     ADC #9                                        ; 802B: 69 09       i.
     BNE loop_C8028                                ; 802D: D0 F9       ..
-; &802F referenced 1 time by &8029
 .C802F
     TAX                                           ; 802F: AA          .
     LDA #0                                        ; 8030: A9 00       ..
     LDY #&12                                      ; 8032: A0 12       ..
-; &8034 referenced 1 time by &8041
 .loop_C8034
     STA L030E,Y                                   ; 8034: 99 0E 03    ...
     STA L0321,Y                                   ; 8037: 99 21 03    .!.
@@ -406,18 +403,15 @@ LL28        = &FA91
     INC L0301                                     ; 80E1: EE 01 03    ...
     RTS                                           ; 80E4: 60          `
 
-; &80E5 referenced 1 time by &8015
 .C80E5
     LDA L030D                                     ; 80E5: AD 0D 03    ...
     BEQ C80F2                                     ; 80E8: F0 08       ..
     LDA L0301                                     ; 80EA: AD 01 03    ...
     BNE C80F2                                     ; 80ED: D0 03       ..
     INC L0301                                     ; 80EF: EE 01 03    ...
-; &80F2 referenced 2 times by &80E8, &80ED
 .C80F2
     RTS                                           ; 80F2: 60          `
 
-; &80F3 referenced 1 time by &8012
 .C80F3
     LDA #0                                        ; 80F3: A9 00       ..
     STA L0301                                     ; 80F5: 8D 01 03    ...
@@ -425,7 +419,6 @@ LL28        = &FA91
     STA L0303                                     ; 80FB: 8D 03 03    ...
     STA L0304                                     ; 80FE: 8D 04 03    ...
     TAX                                           ; 8101: AA          .
-; &8102 referenced 1 time by &8108
 .loop_C8102
     STA L035A,X                                   ; 8102: 9D 5A 03    .Z.
     INX                                           ; 8105: E8          .
@@ -440,7 +433,6 @@ LL28        = &FA91
     STA L4015                                     ; 811A: 8D 15 40    ..@
     RTS                                           ; 811D: 60          `
 
-; &811E referenced 1 time by &800F
 .C811E
     JSR sub_C816D                                 ; 811E: 20 6D 81     m.
     JSR sub_C8AC8                                 ; 8121: 20 C8 8A     ..
@@ -454,7 +446,6 @@ LL28        = &FA91
     BNE C813F                                     ; 8137: D0 06       ..
     LDA L035C                                     ; 8139: AD 5C 03    .\.
     STA L4002                                     ; 813C: 8D 02 40    ..@
-; &813F referenced 2 times by &812C, &8137
 .C813F
     LDA L0303                                     ; 813F: AD 03 03    ...
     BNE C8155                                     ; 8142: D0 11       ..
@@ -464,7 +455,6 @@ LL28        = &FA91
     BNE C8155                                     ; 814D: D0 06       ..
     LDA L0360                                     ; 814F: AD 60 03    .`.
     STA L4006                                     ; 8152: 8D 06 40    ..@
-; &8155 referenced 2 times by &8142, &814D
 .C8155
     LDA L0364                                     ; 8155: AD 64 03    .d.
     STA L400A                                     ; 8158: 8D 0A 40    ..@
@@ -474,17 +464,14 @@ LL28        = &FA91
     STA L400C                                     ; 8163: 8D 0C 40    ..@
     LDA L0368                                     ; 8166: AD 68 03    .h.
     STA L400E                                     ; 8169: 8D 0E 40    ..@
-; &816C referenced 2 times by &8127, &815E
 .C816C
     RTS                                           ; 816C: 60          `
 
-; &816D referenced 1 time by &811E
 .sub_C816D
     LDA L0301                                     ; 816D: AD 01 03    ...
     BNE C8173                                     ; 8170: D0 01       ..
     RTS                                           ; 8172: 60          `
 
-; &8173 referenced 1 time by &8170
 .C8173
     LDA L0305                                     ; 8173: AD 05 03    ...
     CLC                                           ; 8176: 18          .
@@ -495,20 +482,17 @@ LL28        = &FA91
     JSR sub_C8392                                 ; 8182: 20 92 83     ..
     JSR sub_C858D                                 ; 8185: 20 8D 85     ..
     JSR sub_C8725                                 ; 8188: 20 25 87     %.
-; &818B referenced 1 time by &817D
 .C818B
     JSR sub_C8334                                 ; 818B: 20 34 83     4.
     JSR sub_C852F                                 ; 818E: 20 2F 85     /.
     JSR sub_C86EE                                 ; 8191: 20 EE 86     ..
     JMP C885D                                     ; 8194: 4C 5D 88    L].
 
-; &8197 referenced 1 time by &817F
 .sub_C8197
     DEC L0316                                     ; 8197: CE 16 03    ...
     BEQ C819D                                     ; 819A: F0 01       ..
     RTS                                           ; 819C: 60          `
 
-; &819D referenced 1 time by &819A
 .C819D
     LDA L030E                                     ; 819D: AD 0E 03    ...
     STA L00FE                                     ; 81A0: 85 FE       ..
@@ -517,7 +501,6 @@ LL28        = &FA91
     LDA #0                                        ; 81A7: A9 00       ..
     STA L0318                                     ; 81A9: 8D 18 03    ...
     STA L0320                                     ; 81AC: 8D 20 03    . .
-; &81AF referenced 10 times by &81C6, &8262, &8274, &8289, &829B, &82C0, &82D2, &82E4, &830E, &8323
 .C81AF
     LDY #0                                        ; 81AF: A0 00       ..
     LDA (L00FE),Y                                 ; 81B1: B1 FE       ..
@@ -525,7 +508,6 @@ LL28        = &FA91
     INC L00FE                                     ; 81B4: E6 FE       ..
     BNE C81BA                                     ; 81B6: D0 02       ..
     INC L00FF                                     ; 81B8: E6 FF       ..
-; &81BA referenced 1 time by &81B6
 .C81BA
     TYA                                           ; 81BA: 98          .
     BMI C8217                                     ; 81BB: 30 5A       0Z
@@ -535,7 +517,6 @@ LL28        = &FA91
     STA L0315                                     ; 81C3: 8D 15 03    ...
     JMP C81AF                                     ; 81C6: 4C AF 81    L..
 
-; &81C9 referenced 1 time by &81BF
 .C81C9
     CLC                                           ; 81C9: 18          .
     ADC L030C                                     ; 81CA: 6D 0C 03    m..
@@ -555,17 +536,14 @@ LL28        = &FA91
     LDX L035C                                     ; 81ED: AE 5C 03    .\.
     STX L4002                                     ; 81F0: 8E 02 40    ..@
     STA L4003                                     ; 81F3: 8D 03 40    ..@
-; &81F6 referenced 1 time by &81E5
 .C81F6
     LDA #1                                        ; 81F6: A9 01       ..
     STA L031C                                     ; 81F8: 8D 1C 03    ...
     LDA L031D                                     ; 81FB: AD 1D 03    ...
     STA L031E                                     ; 81FE: 8D 1E 03    ...
-; &8201 referenced 1 time by &82AE
 .C8201
     LDA #&FF                                      ; 8201: A9 FF       ..
     STA L0320                                     ; 8203: 8D 20 03    . .
-; &8206 referenced 1 time by &82A7
 .C8206
     LDA L00FE                                     ; 8206: A5 FE       ..
     STA L030E                                     ; 8208: 8D 0E 03    ...
@@ -575,7 +553,6 @@ LL28        = &FA91
     STA L0316                                     ; 8213: 8D 16 03    ...
     RTS                                           ; 8216: 60          `
 
-; &8217 referenced 1 time by &81BB
 .C8217
     LDY #0                                        ; 8217: A0 00       ..
     CMP #&FF                                      ; 8219: C9 FF       ..
@@ -605,7 +582,6 @@ LL28        = &FA91
     STA L0312                                     ; 8250: 8D 12 03    ...
     LDA #0                                        ; 8253: A9 00       ..
     STA L0313                                     ; 8255: 8D 13 03    ...
-; &8258 referenced 1 time by &8242
 .C8258
     LDA (L00FE),Y                                 ; 8258: B1 FE       ..
     TAX                                           ; 825A: AA          .
@@ -615,7 +591,6 @@ LL28        = &FA91
     STX L00FF                                     ; 8260: 86 FF       ..
     JMP C81AF                                     ; 8262: 4C AF 81    L..
 
-; &8265 referenced 1 time by &821B
 .C8265
     CMP #&F6                                      ; 8265: C9 F6       ..
     BNE C8277                                     ; 8267: D0 0E       ..
@@ -623,12 +598,10 @@ LL28        = &FA91
     INC L00FE                                     ; 826B: E6 FE       ..
     BNE C8271                                     ; 826D: D0 02       ..
     INC L00FF                                     ; 826F: E6 FF       ..
-; &8271 referenced 1 time by &826D
 .C8271
     STA L031F                                     ; 8271: 8D 1F 03    ...
     JMP C81AF                                     ; 8274: 4C AF 81    L..
 
-; &8277 referenced 1 time by &8267
 .C8277
     CMP #&F7                                      ; 8277: C9 F7       ..
     BNE C828C                                     ; 8279: D0 11       ..
@@ -636,13 +609,11 @@ LL28        = &FA91
     INC L00FE                                     ; 827D: E6 FE       ..
     BNE C8283                                     ; 827F: D0 02       ..
     INC L00FF                                     ; 8281: E6 FF       ..
-; &8283 referenced 1 time by &827F
 .C8283
     STA L031A                                     ; 8283: 8D 1A 03    ...
     STY L0319                                     ; 8286: 8C 19 03    ...
     JMP C81AF                                     ; 8289: 4C AF 81    L..
 
-; &828C referenced 1 time by &8279
 .C828C
     CMP #&FA                                      ; 828C: C9 FA       ..
     BNE C829E                                     ; 828E: D0 0E       ..
@@ -651,11 +622,9 @@ LL28        = &FA91
     INC L00FE                                     ; 8295: E6 FE       ..
     BNE C829B                                     ; 8297: D0 02       ..
     INC L00FF                                     ; 8299: E6 FF       ..
-; &829B referenced 1 time by &8297
 .C829B
     JMP C81AF                                     ; 829B: 4C AF 81    L..
 
-; &829E referenced 1 time by &828E
 .C829E
     CMP #&F8                                      ; 829E: C9 F8       ..
     BNE C82AA                                     ; 82A0: D0 08       ..
@@ -663,13 +632,11 @@ LL28        = &FA91
     STA L035A                                     ; 82A4: 8D 5A 03    .Z.
     JMP C8206                                     ; 82A7: 4C 06 82    L..
 
-; &82AA referenced 1 time by &82A0
 .C82AA
     CMP #&F9                                      ; 82AA: C9 F9       ..
     BNE C82B1                                     ; 82AC: D0 03       ..
     JMP C8201                                     ; 82AE: 4C 01 82    L..
 
-; &82B1 referenced 1 time by &82AC
 .C82B1
     CMP #&FD                                      ; 82B1: C9 FD       ..
     BNE C82C3                                     ; 82B3: D0 0E       ..
@@ -677,12 +644,10 @@ LL28        = &FA91
     INC L00FE                                     ; 82B7: E6 FE       ..
     BNE C82BD                                     ; 82B9: D0 02       ..
     INC L00FF                                     ; 82BB: E6 FF       ..
-; &82BD referenced 1 time by &82B9
 .C82BD
     STA L0318                                     ; 82BD: 8D 18 03    ...
     JMP C81AF                                     ; 82C0: 4C AF 81    L..
 
-; &82C3 referenced 1 time by &82B3
 .C82C3
     CMP #&FB                                      ; 82C3: C9 FB       ..
     BNE C82D5                                     ; 82C5: D0 0E       ..
@@ -690,12 +655,10 @@ LL28        = &FA91
     INC L00FE                                     ; 82C9: E6 FE       ..
     BNE C82CF                                     ; 82CB: D0 02       ..
     INC L00FF                                     ; 82CD: E6 FF       ..
-; &82CF referenced 1 time by &82CB
 .C82CF
     STA L030C                                     ; 82CF: 8D 0C 03    ...
     JMP C81AF                                     ; 82D2: 4C AF 81    L..
 
-; &82D5 referenced 1 time by &82C5
 .C82D5
     CMP #&FC                                      ; 82D5: C9 FC       ..
     BNE C82E7                                     ; 82D7: D0 0E       ..
@@ -703,12 +666,10 @@ LL28        = &FA91
     INC L00FE                                     ; 82DB: E6 FE       ..
     BNE C82E1                                     ; 82DD: D0 02       ..
     INC L00FF                                     ; 82DF: E6 FF       ..
-; &82E1 referenced 1 time by &82DD
 .C82E1
     STA L0314                                     ; 82E1: 8D 14 03    ...
     JMP C81AF                                     ; 82E4: 4C AF 81    L..
 
-; &82E7 referenced 1 time by &82D7
 .C82E7
     CMP #&F5                                      ; 82E7: C9 F5       ..
     BNE C8311                                     ; 82E9: D0 26       .&
@@ -732,7 +693,6 @@ LL28        = &FA91
     STX L00FE                                     ; 830C: 86 FE       ..
     JMP C81AF                                     ; 830E: 4C AF 81    L..
 
-; &8311 referenced 1 time by &82E9
 .C8311
     CMP #&F4                                      ; 8311: C9 F4       ..
     BNE C8326                                     ; 8313: D0 11       ..
@@ -740,13 +700,11 @@ LL28        = &FA91
     INC L00FE                                     ; 8317: E6 FE       ..
     BNE C831D                                     ; 8319: D0 02       ..
     INC L00FF                                     ; 831B: E6 FF       ..
-; &831D referenced 1 time by &8319
 .C831D
     STA L0305                                     ; 831D: 8D 05 03    ...
     STA L0306                                     ; 8320: 8D 06 03    ...
     JMP C81AF                                     ; 8323: 4C AF 81    L..
 
-; &8326 referenced 1 time by &8313
 .C8326
     CMP #&FE                                      ; 8326: C9 FE       ..
     BNE C8332                                     ; 8328: D0 08       ..
@@ -755,10 +713,8 @@ LL28        = &FA91
     PLA                                           ; 832E: 68          h
     JMP C8012                                     ; 832F: 4C 12 80    L..
 
-; &8332 referenced 2 times by &8328, &8332
 .C8332
     BEQ C8332                                     ; 8332: F0 FE       ..
-; &8334 referenced 1 time by &818B
 .sub_C8334
     LDA L0320                                     ; 8334: AD 20 03    . .
     BEQ C836A                                     ; 8337: F0 31       .1
@@ -778,12 +734,10 @@ LL28        = &FA91
     LDX L031D                                     ; 8359: AE 1D 03    ...
     STX L031E                                     ; 835C: 8E 1E 03    ...
     INC L031C                                     ; 835F: EE 1C 03    ...
-; &8362 referenced 2 times by &8352, &8357
 .C8362
     AND #&0F                                      ; 8362: 29 0F       ).
     ORA L0317                                     ; 8364: 0D 17 03    ...
     STA L035A                                     ; 8367: 8D 5A 03    .Z.
-; &836A referenced 1 time by &8337
 .C836A
     LDX L031A                                     ; 836A: AE 1A 03    ...
     LDA L9119,X                                   ; 836D: BD 19 91    ...
@@ -797,7 +751,6 @@ LL28        = &FA91
     LDY #0                                        ; 8380: A0 00       ..
     STY L0319                                     ; 8382: 8C 19 03    ...
     LDA (L00FE),Y                                 ; 8385: B1 FE       ..
-; &8387 referenced 1 time by &837E
 .C8387
     INC L0319                                     ; 8387: EE 19 03    ...
     CLC                                           ; 838A: 18          .
@@ -805,13 +758,11 @@ LL28        = &FA91
     STA L035C                                     ; 838E: 8D 5C 03    .\.
     RTS                                           ; 8391: 60          `
 
-; &8392 referenced 1 time by &8182
 .sub_C8392
     DEC L0329                                     ; 8392: CE 29 03    .).
     BEQ C8398                                     ; 8395: F0 01       ..
     RTS                                           ; 8397: 60          `
 
-; &8398 referenced 1 time by &8395
 .C8398
     LDA L0321                                     ; 8398: AD 21 03    .!.
     STA L00FE                                     ; 839B: 85 FE       ..
@@ -820,7 +771,6 @@ LL28        = &FA91
     LDA #0                                        ; 83A2: A9 00       ..
     STA L032B                                     ; 83A4: 8D 2B 03    .+.
     STA L0333                                     ; 83A7: 8D 33 03    .3.
-; &83AA referenced 10 times by &83C1, &845D, &846F, &8484, &8496, &84BB, &84CD, &84DF, &8509, &851E
 .C83AA
     LDY #0                                        ; 83AA: A0 00       ..
     LDA (L00FE),Y                                 ; 83AC: B1 FE       ..
@@ -828,7 +778,6 @@ LL28        = &FA91
     INC L00FE                                     ; 83AF: E6 FE       ..
     BNE C83B5                                     ; 83B1: D0 02       ..
     INC L00FF                                     ; 83B3: E6 FF       ..
-; &83B5 referenced 1 time by &83B1
 .C83B5
     TYA                                           ; 83B5: 98          .
     BMI C8412                                     ; 83B6: 30 5A       0Z
@@ -838,7 +787,6 @@ LL28        = &FA91
     STA L0328                                     ; 83BE: 8D 28 03    .(.
     JMP C83AA                                     ; 83C1: 4C AA 83    L..
 
-; &83C4 referenced 1 time by &83BA
 .C83C4
     CLC                                           ; 83C4: 18          .
     ADC L030C                                     ; 83C5: 6D 0C 03    m..
@@ -858,17 +806,14 @@ LL28        = &FA91
     LDX L0360                                     ; 83E8: AE 60 03    .`.
     STX L4006                                     ; 83EB: 8E 06 40    ..@
     STA L4007                                     ; 83EE: 8D 07 40    ..@
-; &83F1 referenced 1 time by &83E0
 .C83F1
     LDA #1                                        ; 83F1: A9 01       ..
     STA L032F                                     ; 83F3: 8D 2F 03    ./.
     LDA L0330                                     ; 83F6: AD 30 03    .0.
     STA L0331                                     ; 83F9: 8D 31 03    .1.
-; &83FC referenced 1 time by &84A9
 .C83FC
     LDA #&FF                                      ; 83FC: A9 FF       ..
     STA L0333                                     ; 83FE: 8D 33 03    .3.
-; &8401 referenced 1 time by &84A2
 .C8401
     LDA L00FE                                     ; 8401: A5 FE       ..
     STA L0321                                     ; 8403: 8D 21 03    .!.
@@ -878,7 +823,6 @@ LL28        = &FA91
     STA L0329                                     ; 840E: 8D 29 03    .).
     RTS                                           ; 8411: 60          `
 
-; &8412 referenced 1 time by &83B6
 .C8412
     LDY #0                                        ; 8412: A0 00       ..
     CMP #&FF                                      ; 8414: C9 FF       ..
@@ -908,7 +852,6 @@ LL28        = &FA91
     STA L0325                                     ; 844B: 8D 25 03    .%.
     LDA #0                                        ; 844E: A9 00       ..
     STA L0326                                     ; 8450: 8D 26 03    .&.
-; &8453 referenced 1 time by &843D
 .C8453
     LDA (L00FE),Y                                 ; 8453: B1 FE       ..
     TAX                                           ; 8455: AA          .
@@ -918,7 +861,6 @@ LL28        = &FA91
     STX L00FF                                     ; 845B: 86 FF       ..
     JMP C83AA                                     ; 845D: 4C AA 83    L..
 
-; &8460 referenced 1 time by &8416
 .C8460
     CMP #&F6                                      ; 8460: C9 F6       ..
     BNE C8472                                     ; 8462: D0 0E       ..
@@ -926,12 +868,10 @@ LL28        = &FA91
     INC L00FE                                     ; 8466: E6 FE       ..
     BNE C846C                                     ; 8468: D0 02       ..
     INC L00FF                                     ; 846A: E6 FF       ..
-; &846C referenced 1 time by &8468
 .C846C
     STA L0332                                     ; 846C: 8D 32 03    .2.
     JMP C83AA                                     ; 846F: 4C AA 83    L..
 
-; &8472 referenced 1 time by &8462
 .C8472
     CMP #&F7                                      ; 8472: C9 F7       ..
     BNE C8487                                     ; 8474: D0 11       ..
@@ -939,13 +879,11 @@ LL28        = &FA91
     INC L00FE                                     ; 8478: E6 FE       ..
     BNE C847E                                     ; 847A: D0 02       ..
     INC L00FF                                     ; 847C: E6 FF       ..
-; &847E referenced 1 time by &847A
 .C847E
     STA L032D                                     ; 847E: 8D 2D 03    .-.
     STY L032C                                     ; 8481: 8C 2C 03    .,.
     JMP C83AA                                     ; 8484: 4C AA 83    L..
 
-; &8487 referenced 1 time by &8474
 .C8487
     CMP #&FA                                      ; 8487: C9 FA       ..
     BNE C8499                                     ; 8489: D0 0E       ..
@@ -954,11 +892,9 @@ LL28        = &FA91
     INC L00FE                                     ; 8490: E6 FE       ..
     BNE C8496                                     ; 8492: D0 02       ..
     INC L00FF                                     ; 8494: E6 FF       ..
-; &8496 referenced 1 time by &8492
 .C8496
     JMP C83AA                                     ; 8496: 4C AA 83    L..
 
-; &8499 referenced 1 time by &8489
 .C8499
     CMP #&F8                                      ; 8499: C9 F8       ..
     BNE C84A5                                     ; 849B: D0 08       ..
@@ -966,13 +902,11 @@ LL28        = &FA91
     STA L035E                                     ; 849F: 8D 5E 03    .^.
     JMP C8401                                     ; 84A2: 4C 01 84    L..
 
-; &84A5 referenced 1 time by &849B
 .C84A5
     CMP #&F9                                      ; 84A5: C9 F9       ..
     BNE C84AC                                     ; 84A7: D0 03       ..
     JMP C83FC                                     ; 84A9: 4C FC 83    L..
 
-; &84AC referenced 1 time by &84A7
 .C84AC
     CMP #&FD                                      ; 84AC: C9 FD       ..
     BNE C84BE                                     ; 84AE: D0 0E       ..
@@ -980,12 +914,10 @@ LL28        = &FA91
     INC L00FE                                     ; 84B2: E6 FE       ..
     BNE C84B8                                     ; 84B4: D0 02       ..
     INC L00FF                                     ; 84B6: E6 FF       ..
-; &84B8 referenced 1 time by &84B4
 .C84B8
     STA L032B                                     ; 84B8: 8D 2B 03    .+.
     JMP C83AA                                     ; 84BB: 4C AA 83    L..
 
-; &84BE referenced 1 time by &84AE
 .C84BE
     CMP #&FB                                      ; 84BE: C9 FB       ..
     BNE C84D0                                     ; 84C0: D0 0E       ..
@@ -993,12 +925,10 @@ LL28        = &FA91
     INC L00FE                                     ; 84C4: E6 FE       ..
     BNE C84CA                                     ; 84C6: D0 02       ..
     INC L00FF                                     ; 84C8: E6 FF       ..
-; &84CA referenced 1 time by &84C6
 .C84CA
     STA L030C                                     ; 84CA: 8D 0C 03    ...
     JMP C83AA                                     ; 84CD: 4C AA 83    L..
 
-; &84D0 referenced 1 time by &84C0
 .C84D0
     CMP #&FC                                      ; 84D0: C9 FC       ..
     BNE C84E2                                     ; 84D2: D0 0E       ..
@@ -1006,12 +936,10 @@ LL28        = &FA91
     INC L00FE                                     ; 84D6: E6 FE       ..
     BNE C84DC                                     ; 84D8: D0 02       ..
     INC L00FF                                     ; 84DA: E6 FF       ..
-; &84DC referenced 1 time by &84D8
 .C84DC
     STA L0327                                     ; 84DC: 8D 27 03    .'.
     JMP C83AA                                     ; 84DF: 4C AA 83    L..
 
-; &84E2 referenced 1 time by &84D2
 .C84E2
     CMP #&F5                                      ; 84E2: C9 F5       ..
     BNE C850C                                     ; 84E4: D0 26       .&
@@ -1035,7 +963,6 @@ LL28        = &FA91
     STX L00FE                                     ; 8507: 86 FE       ..
     JMP C83AA                                     ; 8509: 4C AA 83    L..
 
-; &850C referenced 1 time by &84E4
 .C850C
     CMP #&F4                                      ; 850C: C9 F4       ..
     BNE C8521                                     ; 850E: D0 11       ..
@@ -1043,13 +970,11 @@ LL28        = &FA91
     INC L00FE                                     ; 8512: E6 FE       ..
     BNE C8518                                     ; 8514: D0 02       ..
     INC L00FF                                     ; 8516: E6 FF       ..
-; &8518 referenced 1 time by &8514
 .C8518
     STA L0305                                     ; 8518: 8D 05 03    ...
     STA L0306                                     ; 851B: 8D 06 03    ...
     JMP C83AA                                     ; 851E: 4C AA 83    L..
 
-; &8521 referenced 1 time by &850E
 .C8521
     CMP #&FE                                      ; 8521: C9 FE       ..
     BNE C852D                                     ; 8523: D0 08       ..
@@ -1058,10 +983,8 @@ LL28        = &FA91
     PLA                                           ; 8529: 68          h
     JMP C8012                                     ; 852A: 4C 12 80    L..
 
-; &852D referenced 2 times by &8523, &852D
 .C852D
     BEQ C852D                                     ; 852D: F0 FE       ..
-; &852F referenced 1 time by &818E
 .sub_C852F
     LDA L0333                                     ; 852F: AD 33 03    .3.
     BEQ C8565                                     ; 8532: F0 31       .1
@@ -1081,12 +1004,10 @@ LL28        = &FA91
     LDX L0330                                     ; 8554: AE 30 03    .0.
     STX L0331                                     ; 8557: 8E 31 03    .1.
     INC L032F                                     ; 855A: EE 2F 03    ./.
-; &855D referenced 2 times by &854D, &8552
 .C855D
     AND #&0F                                      ; 855D: 29 0F       ).
     ORA L032A                                     ; 855F: 0D 2A 03    .*.
     STA L035E                                     ; 8562: 8D 5E 03    .^.
-; &8565 referenced 1 time by &8532
 .C8565
     LDX L032D                                     ; 8565: AE 2D 03    .-.
     LDA L9119,X                                   ; 8568: BD 19 91    ...
@@ -1100,7 +1021,6 @@ LL28        = &FA91
     LDY #0                                        ; 857B: A0 00       ..
     STY L032C                                     ; 857D: 8C 2C 03    .,.
     LDA (L00FE),Y                                 ; 8580: B1 FE       ..
-; &8582 referenced 1 time by &8579
 .C8582
     INC L032C                                     ; 8582: EE 2C 03    .,.
     CLC                                           ; 8585: 18          .
@@ -1108,19 +1028,16 @@ LL28        = &FA91
     STA L0360                                     ; 8589: 8D 60 03    .`.
     RTS                                           ; 858C: 60          `
 
-; &858D referenced 1 time by &8185
 .sub_C858D
     DEC L033C                                     ; 858D: CE 3C 03    .<.
     BEQ C8593                                     ; 8590: F0 01       ..
     RTS                                           ; 8592: 60          `
 
-; &8593 referenced 1 time by &8590
 .C8593
     LDA L0334                                     ; 8593: AD 34 03    .4.
     STA L00FE                                     ; 8596: 85 FE       ..
     LDA L0335                                     ; 8598: AD 35 03    .5.
     STA L00FF                                     ; 859B: 85 FF       ..
-; &859D referenced 8 times by &85B4, &8640, &8652, &8667, &868C, &869E, &86C8, &86DD
 .C859D
     LDY #0                                        ; 859D: A0 00       ..
     LDA (L00FE),Y                                 ; 859F: B1 FE       ..
@@ -1128,7 +1045,6 @@ LL28        = &FA91
     INC L00FE                                     ; 85A2: E6 FE       ..
     BNE C85A8                                     ; 85A4: D0 02       ..
     INC L00FF                                     ; 85A6: E6 FF       ..
-; &85A8 referenced 1 time by &85A4
 .C85A8
     TYA                                           ; 85A8: 98          .
     BMI C85F5                                     ; 85A9: 30 4A       0J
@@ -1138,7 +1054,6 @@ LL28        = &FA91
     STA L033B                                     ; 85B1: 8D 3B 03    .;.
     JMP C859D                                     ; 85B4: 4C 9D 85    L..
 
-; &85B7 referenced 1 time by &85AD
 .C85B7
     CLC                                           ; 85B7: 18          .
     ADC L030C                                     ; 85B8: 6D 0C 03    m..
@@ -1158,7 +1073,6 @@ LL28        = &FA91
     STA L0342                                     ; 85DC: 8D 42 03    .B.
     LDA #&81                                      ; 85DF: A9 81       ..
     STA L4008                                     ; 85E1: 8D 08 40    ..@
-; &85E4 referenced 2 times by &8673, &867A
 .C85E4
     LDA L00FE                                     ; 85E4: A5 FE       ..
     STA L0334                                     ; 85E6: 8D 34 03    .4.
@@ -1168,7 +1082,6 @@ LL28        = &FA91
     STA L033C                                     ; 85F1: 8D 3C 03    .<.
     RTS                                           ; 85F4: 60          `
 
-; &85F5 referenced 1 time by &85A9
 .C85F5
     LDY #0                                        ; 85F5: A0 00       ..
     CMP #&FF                                      ; 85F7: C9 FF       ..
@@ -1198,7 +1111,6 @@ LL28        = &FA91
     STA L0338                                     ; 862E: 8D 38 03    .8.
     LDA #0                                        ; 8631: A9 00       ..
     STA L0339                                     ; 8633: 8D 39 03    .9.
-; &8636 referenced 1 time by &8620
 .C8636
     LDA (L00FE),Y                                 ; 8636: B1 FE       ..
     TAX                                           ; 8638: AA          .
@@ -1208,7 +1120,6 @@ LL28        = &FA91
     STX L00FF                                     ; 863E: 86 FF       ..
     JMP C859D                                     ; 8640: 4C 9D 85    L..
 
-; &8643 referenced 1 time by &85F9
 .C8643
     CMP #&F6                                      ; 8643: C9 F6       ..
     BNE C8655                                     ; 8645: D0 0E       ..
@@ -1216,12 +1127,10 @@ LL28        = &FA91
     INC L00FE                                     ; 8649: E6 FE       ..
     BNE C864F                                     ; 864B: D0 02       ..
     INC L00FF                                     ; 864D: E6 FF       ..
-; &864F referenced 1 time by &864B
 .C864F
     STA L0345                                     ; 864F: 8D 45 03    .E.
     JMP C859D                                     ; 8652: 4C 9D 85    L..
 
-; &8655 referenced 1 time by &8645
 .C8655
     CMP #&F7                                      ; 8655: C9 F7       ..
     BNE C866A                                     ; 8657: D0 11       ..
@@ -1229,13 +1138,11 @@ LL28        = &FA91
     INC L00FE                                     ; 865B: E6 FE       ..
     BNE C8661                                     ; 865D: D0 02       ..
     INC L00FF                                     ; 865F: E6 FF       ..
-; &8661 referenced 1 time by &865D
 .C8661
     STA L0340                                     ; 8661: 8D 40 03    .@.
     STY L033F                                     ; 8664: 8C 3F 03    .?.
     JMP C859D                                     ; 8667: 4C 9D 85    L..
 
-; &866A referenced 1 time by &8657
 .C866A
     CMP #&F8                                      ; 866A: C9 F8       ..
     BNE C8676                                     ; 866C: D0 08       ..
@@ -1243,13 +1150,11 @@ LL28        = &FA91
     STA L0342                                     ; 8670: 8D 42 03    .B.
     JMP C85E4                                     ; 8673: 4C E4 85    L..
 
-; &8676 referenced 1 time by &866C
 .C8676
     CMP #&F9                                      ; 8676: C9 F9       ..
     BNE C867D                                     ; 8678: D0 03       ..
     JMP C85E4                                     ; 867A: 4C E4 85    L..
 
-; &867D referenced 1 time by &8678
 .C867D
     CMP #&FB                                      ; 867D: C9 FB       ..
     BNE C868F                                     ; 867F: D0 0E       ..
@@ -1257,12 +1162,10 @@ LL28        = &FA91
     INC L00FE                                     ; 8683: E6 FE       ..
     BNE C8689                                     ; 8685: D0 02       ..
     INC L00FF                                     ; 8687: E6 FF       ..
-; &8689 referenced 1 time by &8685
 .C8689
     STA L030C                                     ; 8689: 8D 0C 03    ...
     JMP C859D                                     ; 868C: 4C 9D 85    L..
 
-; &868F referenced 1 time by &867F
 .C868F
     CMP #&FC                                      ; 868F: C9 FC       ..
     BNE C86A1                                     ; 8691: D0 0E       ..
@@ -1270,12 +1173,10 @@ LL28        = &FA91
     INC L00FE                                     ; 8695: E6 FE       ..
     BNE C869B                                     ; 8697: D0 02       ..
     INC L00FF                                     ; 8699: E6 FF       ..
-; &869B referenced 1 time by &8697
 .C869B
     STA L033A                                     ; 869B: 8D 3A 03    .:.
     JMP C859D                                     ; 869E: 4C 9D 85    L..
 
-; &86A1 referenced 1 time by &8691
 .C86A1
     CMP #&F5                                      ; 86A1: C9 F5       ..
     BNE C86CB                                     ; 86A3: D0 26       .&
@@ -1299,7 +1200,6 @@ LL28        = &FA91
     STX L00FE                                     ; 86C6: 86 FE       ..
     JMP C859D                                     ; 86C8: 4C 9D 85    L..
 
-; &86CB referenced 1 time by &86A3
 .C86CB
     CMP #&F4                                      ; 86CB: C9 F4       ..
     BNE C86E0                                     ; 86CD: D0 11       ..
@@ -1307,13 +1207,11 @@ LL28        = &FA91
     INC L00FE                                     ; 86D1: E6 FE       ..
     BNE C86D7                                     ; 86D3: D0 02       ..
     INC L00FF                                     ; 86D5: E6 FF       ..
-; &86D7 referenced 1 time by &86D3
 .C86D7
     STA L0305                                     ; 86D7: 8D 05 03    ...
     STA L0306                                     ; 86DA: 8D 06 03    ...
     JMP C859D                                     ; 86DD: 4C 9D 85    L..
 
-; &86E0 referenced 1 time by &86CD
 .C86E0
     CMP #&FE                                      ; 86E0: C9 FE       ..
     BNE C86EC                                     ; 86E2: D0 08       ..
@@ -1322,10 +1220,8 @@ LL28        = &FA91
     PLA                                           ; 86E8: 68          h
     JMP C8012                                     ; 86E9: 4C 12 80    L..
 
-; &86EC referenced 2 times by &86E2, &86EC
 .C86EC
     BEQ C86EC                                     ; 86EC: F0 FE       ..
-; &86EE referenced 1 time by &8191
 .sub_C86EE
     LDA L0342                                     ; 86EE: AD 42 03    .B.
     BEQ C86FD                                     ; 86F1: F0 0A       ..
@@ -1333,7 +1229,6 @@ LL28        = &FA91
     BNE C86FD                                     ; 86F6: D0 05       ..
     LDA #0                                        ; 86F8: A9 00       ..
     STA L4008                                     ; 86FA: 8D 08 40    ..@
-; &86FD referenced 2 times by &86F1, &86F6
 .C86FD
     LDX L0340                                     ; 86FD: AE 40 03    .@.
     LDA L9119,X                                   ; 8700: BD 19 91    ...
@@ -1347,7 +1242,6 @@ LL28        = &FA91
     LDY #0                                        ; 8713: A0 00       ..
     STY L033F                                     ; 8715: 8C 3F 03    .?.
     LDA (L00FE),Y                                 ; 8718: B1 FE       ..
-; &871A referenced 1 time by &8711
 .C871A
     INC L033F                                     ; 871A: EE 3F 03    .?.
     CLC                                           ; 871D: 18          .
@@ -1355,20 +1249,17 @@ LL28        = &FA91
     STA L0364                                     ; 8721: 8D 64 03    .d.
     RTS                                           ; 8724: 60          `
 
-; &8725 referenced 1 time by &8188
 .sub_C8725
     DEC L034F                                     ; 8725: CE 4F 03    .O.
     BEQ C872B                                     ; 8728: F0 01       ..
     RTS                                           ; 872A: 60          `
 
-; &872B referenced 1 time by &8728
 .C872B
     LDA L0347                                     ; 872B: AD 47 03    .G.
     STA L00FE                                     ; 872E: 85 FE       ..
     LDA L0348                                     ; 8730: AD 48 03    .H.
     STA L00FF                                     ; 8733: 85 FF       ..
     STA L0359                                     ; 8735: 8D 59 03    .Y.
-; &8738 referenced 6 times by &874F, &87D3, &87E5, &87FA, &8837, &884C
 .C8738
     LDY #0                                        ; 8738: A0 00       ..
     LDA (L00FE),Y                                 ; 873A: B1 FE       ..
@@ -1376,7 +1267,6 @@ LL28        = &FA91
     INC L00FE                                     ; 873D: E6 FE       ..
     BNE C8743                                     ; 873F: D0 02       ..
     INC L00FF                                     ; 8741: E6 FF       ..
-; &8743 referenced 1 time by &873F
 .C8743
     TYA                                           ; 8743: 98          .
     BMI C8788                                     ; 8744: 30 42       0B
@@ -1386,7 +1276,6 @@ LL28        = &FA91
     STA L034E                                     ; 874C: 8D 4E 03    .N.
     JMP C8738                                     ; 874F: 4C 38 87    L8.
 
-; &8752 referenced 1 time by &8748
 .C8752
     AND #&0F                                      ; 8752: 29 0F       ).
     STA L0354                                     ; 8754: 8D 54 03    .T.
@@ -1396,13 +1285,11 @@ LL28        = &FA91
     BNE C8767                                     ; 875F: D0 06       ..
     STA L400E                                     ; 8761: 8D 0E 40    ..@
     STY L400F                                     ; 8764: 8C 0F 40    ..@
-; &8767 referenced 1 time by &875F
 .C8767
     LDA #1                                        ; 8767: A9 01       ..
     STA L0355                                     ; 8769: 8D 55 03    .U.
     LDA L0356                                     ; 876C: AD 56 03    .V.
     STA L0357                                     ; 876F: 8D 57 03    .W.
-; &8772 referenced 2 times by &8806, &880D
 .C8772
     LDA #&FF                                      ; 8772: A9 FF       ..
     STA L0359                                     ; 8774: 8D 59 03    .Y.
@@ -1414,7 +1301,6 @@ LL28        = &FA91
     STA L034F                                     ; 8784: 8D 4F 03    .O.
     RTS                                           ; 8787: 60          `
 
-; &8788 referenced 1 time by &8744
 .C8788
     LDY #0                                        ; 8788: A0 00       ..
     CMP #&FF                                      ; 878A: C9 FF       ..
@@ -1444,7 +1330,6 @@ LL28        = &FA91
     STA L034B                                     ; 87C1: 8D 4B 03    .K.
     LDA #0                                        ; 87C4: A9 00       ..
     STA L034C                                     ; 87C6: 8D 4C 03    .L.
-; &87C9 referenced 1 time by &87B3
 .C87C9
     LDA (L00FE),Y                                 ; 87C9: B1 FE       ..
     TAX                                           ; 87CB: AA          .
@@ -1454,7 +1339,6 @@ LL28        = &FA91
     STX L00FF                                     ; 87D1: 86 FF       ..
     JMP C8738                                     ; 87D3: 4C 38 87    L8.
 
-; &87D6 referenced 1 time by &878C
 .C87D6
     CMP #&F6                                      ; 87D6: C9 F6       ..
     BNE C87E8                                     ; 87D8: D0 0E       ..
@@ -1462,12 +1346,10 @@ LL28        = &FA91
     INC L00FE                                     ; 87DC: E6 FE       ..
     BNE C87E2                                     ; 87DE: D0 02       ..
     INC L00FF                                     ; 87E0: E6 FF       ..
-; &87E2 referenced 1 time by &87DE
 .C87E2
     STA L0358                                     ; 87E2: 8D 58 03    .X.
     JMP C8738                                     ; 87E5: 4C 38 87    L8.
 
-; &87E8 referenced 1 time by &87D8
 .C87E8
     CMP #&F7                                      ; 87E8: C9 F7       ..
     BNE C87FD                                     ; 87EA: D0 11       ..
@@ -1475,13 +1357,11 @@ LL28        = &FA91
     INC L00FE                                     ; 87EE: E6 FE       ..
     BNE C87F4                                     ; 87F0: D0 02       ..
     INC L00FF                                     ; 87F2: E6 FF       ..
-; &87F4 referenced 1 time by &87F0
 .C87F4
     STA L0353                                     ; 87F4: 8D 53 03    .S.
     STY L0352                                     ; 87F7: 8C 52 03    .R.
     JMP C8738                                     ; 87FA: 4C 38 87    L8.
 
-; &87FD referenced 1 time by &87EA
 .C87FD
     CMP #&F8                                      ; 87FD: C9 F8       ..
     BNE C8809                                     ; 87FF: D0 08       ..
@@ -1489,13 +1369,11 @@ LL28        = &FA91
     STA L0366                                     ; 8803: 8D 66 03    .f.
     JMP C8772                                     ; 8806: 4C 72 87    Lr.
 
-; &8809 referenced 1 time by &87FF
 .C8809
     CMP #&F9                                      ; 8809: C9 F9       ..
     BNE C8810                                     ; 880B: D0 03       ..
     JMP C8772                                     ; 880D: 4C 72 87    Lr.
 
-; &8810 referenced 1 time by &880B
 .C8810
     CMP #&F5                                      ; 8810: C9 F5       ..
     BNE C883A                                     ; 8812: D0 26       .&
@@ -1519,7 +1397,6 @@ LL28        = &FA91
     STX L00FE                                     ; 8835: 86 FE       ..
     JMP C8738                                     ; 8837: 4C 38 87    L8.
 
-; &883A referenced 1 time by &8812
 .C883A
     CMP #&F4                                      ; 883A: C9 F4       ..
     BNE C884F                                     ; 883C: D0 11       ..
@@ -1527,13 +1404,11 @@ LL28        = &FA91
     INC L00FE                                     ; 8840: E6 FE       ..
     BNE C8846                                     ; 8842: D0 02       ..
     INC L00FF                                     ; 8844: E6 FF       ..
-; &8846 referenced 1 time by &8842
 .C8846
     STA L0305                                     ; 8846: 8D 05 03    ...
     STA L0306                                     ; 8849: 8D 06 03    ...
     JMP C8738                                     ; 884C: 4C 38 87    L8.
 
-; &884F referenced 1 time by &883C
 .C884F
     CMP #&FE                                      ; 884F: C9 FE       ..
     BNE C885B                                     ; 8851: D0 08       ..
@@ -1542,10 +1417,8 @@ LL28        = &FA91
     PLA                                           ; 8857: 68          h
     JMP C8012                                     ; 8858: 4C 12 80    L..
 
-; &885B referenced 2 times by &8851, &885B
 .C885B
     BEQ C885B                                     ; 885B: F0 FE       ..
-; &885D referenced 1 time by &8194
 .C885D
     LDA L0359                                     ; 885D: AD 59 03    .Y.
     BEQ C8892                                     ; 8860: F0 30       .0
@@ -1565,12 +1438,10 @@ LL28        = &FA91
     LDX L0356                                     ; 8882: AE 56 03    .V.
     STX L0357                                     ; 8885: 8E 57 03    .W.
     INC L0355                                     ; 8888: EE 55 03    .U.
-; &888B referenced 2 times by &887B, &8880
 .C888B
     AND #&0F                                      ; 888B: 29 0F       ).
     ORA #&30 ; '0'                                ; 888D: 09 30       .0
     STA L0366                                     ; 888F: 8D 66 03    .f.
-; &8892 referenced 1 time by &8860
 .C8892
     LDX L0353                                     ; 8892: AE 53 03    .S.
     LDA L9119,X                                   ; 8895: BD 19 91    ...
@@ -1584,7 +1455,6 @@ LL28        = &FA91
     LDY #0                                        ; 88A8: A0 00       ..
     STY L0352                                     ; 88AA: 8C 52 03    .R.
     LDA (L00FE),Y                                 ; 88AD: B1 FE       ..
-; &88AF referenced 1 time by &88A6
 .C88AF
     INC L0352                                     ; 88AF: EE 52 03    .R.
     CLC                                           ; 88B2: 18          .
@@ -1593,7 +1463,6 @@ LL28        = &FA91
     STA L0368                                     ; 88B8: 8D 68 03    .h.
     RTS                                           ; 88BB: 60          `
 
-; &88BC referenced 3 times by &81D3, &83CE, &85C1
 .L88BC
 L88BD = L88BC+1
     EQUB &1A,   3, &EC,   2, &C2,   2, &9A,   2   ; 88BC: 1A 03 EC... ...
@@ -1616,9 +1485,7 @@ L88BD = L88BC+1
     EQUB &1E,   0, &1C,   0, &1B,   0, &19,   0   ; 8944: 1E 00 1C... ...
     EQUB &18,   0, &16,   0, &15,   0, &14,   0   ; 894C: 18 00 16... ...
     EQUB &13,   0, &12,   0, &11,   0             ; 8954: 13 00 12... ...
-; &88BD referenced 3 times by &81DC, &83D7, &85CA
 
-; &895A referenced 2 times by &8018, &89D9
 .C895A
     ASL A                                         ; 895A: 0A          .
     TAY                                           ; 895B: A8          .
@@ -1629,7 +1496,6 @@ L88BD = L88BC+1
     LDA L8D7B,Y                                   ; 8966: B9 7B 8D    .{.
     STA L00FF                                     ; 8969: 85 FF       ..
     LDY #&0D                                      ; 896B: A0 0D       ..
-; &896D referenced 1 time by &8973
 .loop_C896D
     LDA (L00FE),Y                                 ; 896D: B1 FE       ..
     STA L040B,Y                                   ; 896F: 99 0B 04    ...
@@ -1641,7 +1507,6 @@ L88BD = L88BC+1
     ASL A                                         ; 897C: 0A          .
     BPL C8982                                     ; 897D: 10 03       ..
     JSR LD06D                                     ; 897F: 20 6D D0     m.
-; &8982 referenced 2 times by &8977, &897D
 .C8982
     LDA L0416                                     ; 8982: AD 16 04    ...
     STA L041E                                     ; 8985: 8D 1E 04    ...
@@ -1679,11 +1544,9 @@ L88BD = L88BC+1
     BEQ C89DC                                     ; 89D4: F0 06       ..
     JMP C8A53                                     ; 89D6: 4C 53 8A    LS.
 
-; &89D9 referenced 1 time by &89D2
 .C89D9
     JMP C895A                                     ; 89D9: 4C 5A 89    LZ.
 
-; &89DC referenced 2 times by &801B, &89D4
 .C89DC
     ASL A                                         ; 89DC: 0A          .
     TAY                                           ; 89DD: A8          .
@@ -1694,7 +1557,6 @@ L88BD = L88BC+1
     LDA L8D7B,Y                                   ; 89E8: B9 7B 8D    .{.
     STA L00FF                                     ; 89EB: 85 FF       ..
     LDY #&0D                                      ; 89ED: A0 0D       ..
-; &89EF referenced 1 time by &89F5
 .loop_C89EF
     LDA (L00FE),Y                                 ; 89EF: B1 FE       ..
     STA L041F,Y                                   ; 89F1: 99 1F 04    ...
@@ -1706,7 +1568,6 @@ L88BD = L88BC+1
     ASL A                                         ; 89FE: 0A          .
     BPL C8A04                                     ; 89FF: 10 03       ..
     JSR LD06D                                     ; 8A01: 20 6D D0     m.
-; &8A04 referenced 2 times by &89F9, &89FF
 .C8A04
     LDA L042A                                     ; 8A04: AD 2A 04    .*.
     STA L0432                                     ; 8A07: 8D 32 04    .2.
@@ -1739,7 +1600,6 @@ L88BD = L88BC+1
     INC L0303                                     ; 8A4F: EE 03 03    ...
     RTS                                           ; 8A52: 60          `
 
-; &8A53 referenced 2 times by &801E, &89D6
 .C8A53
     ASL A                                         ; 8A53: 0A          .
     TAY                                           ; 8A54: A8          .
@@ -1750,7 +1610,6 @@ L88BD = L88BC+1
     LDA L8D7B,Y                                   ; 8A5F: B9 7B 8D    .{.
     STA L00FF                                     ; 8A62: 85 FF       ..
     LDY #&0D                                      ; 8A64: A0 0D       ..
-; &8A66 referenced 1 time by &8A6C
 .loop_C8A66
     LDA (L00FE),Y                                 ; 8A66: B1 FE       ..
     STA L0433,Y                                   ; 8A68: 99 33 04    .3.
@@ -1762,7 +1621,6 @@ L88BD = L88BC+1
     ASL A                                         ; 8A75: 0A          .
     BPL C8A7B                                     ; 8A76: 10 03       ..
     JSR LD06D                                     ; 8A78: 20 6D D0     m.
-; &8A7B referenced 2 times by &8A70, &8A76
 .C8A7B
     LDA L043E                                     ; 8A7B: AD 3E 04    .>.
     STA L0446                                     ; 8A7E: 8D 46 04    .F.
@@ -1795,20 +1653,17 @@ L88BD = L88BC+1
     INC L0304                                     ; 8AC4: EE 04 03    ...
     RTS                                           ; 8AC7: 60          `
 
-; &8AC8 referenced 1 time by &8121
 .sub_C8AC8
     JSR sub_C8D64                                 ; 8AC8: 20 64 8D     d.
     JSR sub_C8AD4                                 ; 8ACB: 20 D4 8A     ..
     JSR sub_C8BBB                                 ; 8ACE: 20 BB 8B     ..
     JMP C8CA2                                     ; 8AD1: 4C A2 8C    L..
 
-; &8AD4 referenced 1 time by &8ACB
 .sub_C8AD4
     LDA L0302                                     ; 8AD4: AD 02 03    ...
     BNE C8ADA                                     ; 8AD7: D0 01       ..
     RTS                                           ; 8AD9: 60          `
 
-; &8ADA referenced 1 time by &8AD7
 .C8ADA
     LDA L040B                                     ; 8ADA: AD 0B 04    ...
     BNE C8B08                                     ; 8ADD: D0 29       .)
@@ -1825,14 +1680,12 @@ L88BD = L88BC+1
     STX L0302                                     ; 8AFB: 8E 02 03    ...
     RTS                                           ; 8AFE: 60          `
 
-; &8AFF referenced 1 time by &8AE7
 .C8AFF
     LDA #&30 ; '0'                                ; 8AFF: A9 30       .0
     STA L4000                                     ; 8B01: 8D 00 40    ..@
     STX L0302                                     ; 8B04: 8E 02 03    ...
     RTS                                           ; 8B07: 60          `
 
-; &8B08 referenced 2 times by &8ADD, &8AE2
 .C8B08
     DEC L040B                                     ; 8B08: CE 0B 04    ...
     DEC L041E                                     ; 8B0B: CE 1E 04    ...
@@ -1850,13 +1703,11 @@ L88BD = L88BC+1
     BNE C8B39                                     ; 8B29: D0 0E       ..
     LDY #0                                        ; 8B2B: A0 00       ..
     LDA (L00FE),Y                                 ; 8B2D: B1 FE       ..
-; &8B2F referenced 1 time by &8B25
 .C8B2F
     ORA L0411                                     ; 8B2F: 0D 11 04    ...
     STA L4000                                     ; 8B32: 8D 00 40    ..@
     INY                                           ; 8B35: C8          .
     STY L041D                                     ; 8B36: 8C 1D 04    ...
-; &8B39 referenced 2 times by &8B0E, &8B29
 .C8B39
     LDA L041B                                     ; 8B39: AD 1B 04    ...
     BNE C8B6C                                     ; 8B3C: D0 2E       ..
@@ -1866,7 +1717,6 @@ L88BD = L88BC+1
     BNE C8B49                                     ; 8B46: D0 01       ..
     RTS                                           ; 8B48: 60          `
 
-; &8B49 referenced 2 times by &8B41, &8B46
 .C8B49
     DEC L0414                                     ; 8B49: CE 14 04    ...
     LDA L040C                                     ; 8B4C: AD 0C 04    ...
@@ -1875,14 +1725,12 @@ L88BD = L88BC+1
     LDX L0412                                     ; 8B55: AE 12 04    ...
     BEQ C8B5D                                     ; 8B58: F0 03       ..
     ADC L0307                                     ; 8B5A: 6D 07 03    m..
-; &8B5D referenced 1 time by &8B58
 .C8B5D
     STA L0419                                     ; 8B5D: 8D 19 04    ...
     STA L4002                                     ; 8B60: 8D 02 40    ..@
     LDA L040E                                     ; 8B63: AD 0E 04    ...
     STA L041A                                     ; 8B66: 8D 1A 04    ...
     STA L4003                                     ; 8B69: 8D 03 40    ..@
-; &8B6C referenced 1 time by &8B3C
 .C8B6C
     DEC L041B                                     ; 8B6C: CE 1B 04    ...
     LDA L0418                                     ; 8B6F: AD 18 04    ...
@@ -1890,7 +1738,6 @@ L88BD = L88BC+1
     DEC L041C                                     ; 8B74: CE 1C 04    ...
     BNE C8BBA                                     ; 8B77: D0 41       .A
     STA L041C                                     ; 8B79: 8D 1C 04    ...
-; &8B7C referenced 1 time by &8B72
 .C8B7C
     LDA L0413                                     ; 8B7C: AD 13 04    ...
     BEQ C8BBA                                     ; 8B7F: F0 39       .9
@@ -1907,7 +1754,6 @@ L88BD = L88BC+1
     STA L4003                                     ; 8B9B: 8D 03 40    ..@
     RTS                                           ; 8B9E: 60          `
 
-; &8B9F referenced 1 time by &8B81
 .C8B9F
     LDA L0419                                     ; 8B9F: AD 19 04    ...
     CLC                                           ; 8BA2: 18          .
@@ -1919,17 +1765,14 @@ L88BD = L88BC+1
     AND #3                                        ; 8BB2: 29 03       ).
     STA L041A                                     ; 8BB4: 8D 1A 04    ...
     STA L4003                                     ; 8BB7: 8D 03 40    ..@
-; &8BBA referenced 2 times by &8B77, &8B7F
 .C8BBA
     RTS                                           ; 8BBA: 60          `
 
-; &8BBB referenced 1 time by &8ACE
 .sub_C8BBB
     LDA L0303                                     ; 8BBB: AD 03 03    ...
     BNE C8BC1                                     ; 8BBE: D0 01       ..
     RTS                                           ; 8BC0: 60          `
 
-; &8BC1 referenced 1 time by &8BBE
 .C8BC1
     LDA L041F                                     ; 8BC1: AD 1F 04    ...
     BNE C8BEF                                     ; 8BC4: D0 29       .)
@@ -1946,14 +1789,12 @@ L88BD = L88BC+1
     STX L0303                                     ; 8BE2: 8E 03 03    ...
     RTS                                           ; 8BE5: 60          `
 
-; &8BE6 referenced 1 time by &8BCE
 .C8BE6
     LDA #&30 ; '0'                                ; 8BE6: A9 30       .0
     STA L4004                                     ; 8BE8: 8D 04 40    ..@
     STX L0303                                     ; 8BEB: 8E 03 03    ...
     RTS                                           ; 8BEE: 60          `
 
-; &8BEF referenced 2 times by &8BC4, &8BC9
 .C8BEF
     DEC L041F                                     ; 8BEF: CE 1F 04    ...
     DEC L0432                                     ; 8BF2: CE 32 04    .2.
@@ -1971,13 +1812,11 @@ L88BD = L88BC+1
     BNE C8C20                                     ; 8C10: D0 0E       ..
     LDY #0                                        ; 8C12: A0 00       ..
     LDA (L00FE),Y                                 ; 8C14: B1 FE       ..
-; &8C16 referenced 1 time by &8C0C
 .C8C16
     ORA L0425                                     ; 8C16: 0D 25 04    .%.
     STA L4004                                     ; 8C19: 8D 04 40    ..@
     INY                                           ; 8C1C: C8          .
     STY L0431                                     ; 8C1D: 8C 31 04    .1.
-; &8C20 referenced 2 times by &8BF5, &8C10
 .C8C20
     LDA L042F                                     ; 8C20: AD 2F 04    ./.
     BNE C8C53                                     ; 8C23: D0 2E       ..
@@ -1987,7 +1826,6 @@ L88BD = L88BC+1
     BNE C8C30                                     ; 8C2D: D0 01       ..
     RTS                                           ; 8C2F: 60          `
 
-; &8C30 referenced 2 times by &8C28, &8C2D
 .C8C30
     DEC L0428                                     ; 8C30: CE 28 04    .(.
     LDA L0420                                     ; 8C33: AD 20 04    . .
@@ -1996,14 +1834,12 @@ L88BD = L88BC+1
     LDX L0426                                     ; 8C3C: AE 26 04    .&.
     BEQ C8C44                                     ; 8C3F: F0 03       ..
     ADC L0307                                     ; 8C41: 6D 07 03    m..
-; &8C44 referenced 1 time by &8C3F
 .C8C44
     STA L042D                                     ; 8C44: 8D 2D 04    .-.
     STA L4006                                     ; 8C47: 8D 06 40    ..@
     LDA L0422                                     ; 8C4A: AD 22 04    .".
     STA L042E                                     ; 8C4D: 8D 2E 04    ...
     STA L4007                                     ; 8C50: 8D 07 40    ..@
-; &8C53 referenced 1 time by &8C23
 .C8C53
     DEC L042F                                     ; 8C53: CE 2F 04    ./.
     LDA L042C                                     ; 8C56: AD 2C 04    .,.
@@ -2011,7 +1847,6 @@ L88BD = L88BC+1
     DEC L0430                                     ; 8C5B: CE 30 04    .0.
     BNE C8CA1                                     ; 8C5E: D0 41       .A
     STA L0430                                     ; 8C60: 8D 30 04    .0.
-; &8C63 referenced 1 time by &8C59
 .C8C63
     LDA L0427                                     ; 8C63: AD 27 04    .'.
     BEQ C8CA1                                     ; 8C66: F0 39       .9
@@ -2028,7 +1863,6 @@ L88BD = L88BC+1
     STA L4007                                     ; 8C82: 8D 07 40    ..@
     RTS                                           ; 8C85: 60          `
 
-; &8C86 referenced 1 time by &8C68
 .C8C86
     LDA L042D                                     ; 8C86: AD 2D 04    .-.
     CLC                                           ; 8C89: 18          .
@@ -2040,17 +1874,14 @@ L88BD = L88BC+1
     AND #3                                        ; 8C99: 29 03       ).
     STA L042E                                     ; 8C9B: 8D 2E 04    ...
     STA L4007                                     ; 8C9E: 8D 07 40    ..@
-; &8CA1 referenced 2 times by &8C5E, &8C66
 .C8CA1
     RTS                                           ; 8CA1: 60          `
 
-; &8CA2 referenced 1 time by &8AD1
 .C8CA2
     LDA L0304                                     ; 8CA2: AD 04 03    ...
     BNE C8CA8                                     ; 8CA5: D0 01       ..
     RTS                                           ; 8CA7: 60          `
 
-; &8CA8 referenced 1 time by &8CA5
 .C8CA8
     LDA L0433                                     ; 8CA8: AD 33 04    .3.
     BNE C8CD0                                     ; 8CAB: D0 23       .#
@@ -2065,14 +1896,12 @@ L88BD = L88BC+1
     STX L0304                                     ; 8CC3: 8E 04 03    ...
     RTS                                           ; 8CC6: 60          `
 
-; &8CC7 referenced 1 time by &8CB5
 .C8CC7
     LDA #&30 ; '0'                                ; 8CC7: A9 30       .0
     STA L400C                                     ; 8CC9: 8D 0C 40    ..@
     STX L0304                                     ; 8CCC: 8E 04 03    ...
     RTS                                           ; 8CCF: 60          `
 
-; &8CD0 referenced 2 times by &8CAB, &8CB0
 .C8CD0
     DEC L0433                                     ; 8CD0: CE 33 04    .3.
     DEC L0446                                     ; 8CD3: CE 46 04    .F.
@@ -2090,13 +1919,11 @@ L88BD = L88BC+1
     BNE C8D01                                     ; 8CF1: D0 0E       ..
     LDY #0                                        ; 8CF3: A0 00       ..
     LDA (L00FE),Y                                 ; 8CF5: B1 FE       ..
-; &8CF7 referenced 1 time by &8CED
 .C8CF7
     ORA L0439                                     ; 8CF7: 0D 39 04    .9.
     STA L400C                                     ; 8CFA: 8D 0C 40    ..@
     INY                                           ; 8CFD: C8          .
     STY L0445                                     ; 8CFE: 8C 45 04    .E.
-; &8D01 referenced 2 times by &8CD6, &8CF1
 .C8D01
     LDA L0443                                     ; 8D01: AD 43 04    .C.
     BNE C8D2D                                     ; 8D04: D0 27       .'
@@ -2106,7 +1933,6 @@ L88BD = L88BC+1
     BNE C8D11                                     ; 8D0E: D0 01       ..
     RTS                                           ; 8D10: 60          `
 
-; &8D11 referenced 2 times by &8D09, &8D0E
 .C8D11
     DEC L043C                                     ; 8D11: CE 3C 04    .<.
     LDA L0434                                     ; 8D14: AD 34 04    .4.
@@ -2116,11 +1942,9 @@ L88BD = L88BC+1
     BEQ C8D27                                     ; 8D20: F0 05       ..
     ADC L0307                                     ; 8D22: 6D 07 03    m..
     AND #&0F                                      ; 8D25: 29 0F       ).
-; &8D27 referenced 1 time by &8D20
 .C8D27
     STA L0441                                     ; 8D27: 8D 41 04    .A.
     STA L400E                                     ; 8D2A: 8D 0E 40    ..@
-; &8D2D referenced 1 time by &8D04
 .C8D2D
     DEC L0443                                     ; 8D2D: CE 43 04    .C.
     LDA L0440                                     ; 8D30: AD 40 04    .@.
@@ -2128,7 +1952,6 @@ L88BD = L88BC+1
     DEC L0444                                     ; 8D35: CE 44 04    .D.
     BNE C8D63                                     ; 8D38: D0 29       .)
     STA L0444                                     ; 8D3A: 8D 44 04    .D.
-; &8D3D referenced 1 time by &8D33
 .C8D3D
     LDA L043B                                     ; 8D3D: AD 3B 04    .;.
     BEQ C8D63                                     ; 8D40: F0 21       .!
@@ -2141,7 +1964,6 @@ L88BD = L88BC+1
     STA L400E                                     ; 8D50: 8D 0E 40    ..@
     RTS                                           ; 8D53: 60          `
 
-; &8D54 referenced 1 time by &8D42
 .C8D54
     LDA L0441                                     ; 8D54: AD 41 04    .A.
     CLC                                           ; 8D57: 18          .
@@ -2149,11 +1971,9 @@ L88BD = L88BC+1
     AND #&0F                                      ; 8D5B: 29 0F       ).
     STA L0441                                     ; 8D5D: 8D 41 04    .A.
     STA L400E                                     ; 8D60: 8D 0E 40    ..@
-; &8D63 referenced 2 times by &8D38, &8D40
 .C8D63
     RTS                                           ; 8D63: 60          `
 
-; &8D64 referenced 1 time by &8AC8
 .sub_C8D64
     LDA L0307                                     ; 8D64: AD 07 03    ...
     AND #&48 ; 'H'                                ; 8D67: 29 48       )H
@@ -2166,10 +1986,8 @@ L88BD = L88BC+1
     ROL L0307                                     ; 8D76: 2E 07 03    ...
     RTS                                           ; 8D79: 60          `
 
-; &8D7A referenced 3 times by &8961, &89E3, &8A5A
 .L8D7A
     EQUB &BA                                      ; 8D7A: BA          .
-; &8D7B referenced 3 times by &8966, &89E8, &8A5F
 .L8D7B
     EQUB &8D, &C8, &8D, &D6, &8D, &E4, &8D, &F2   ; 8D7B: 8D C8 8D... ...
     EQUB &8D,   0, &8E, &0E, &8E, &1C, &8E, &2A   ; 8D83: 8D 00 8E... ...
@@ -2235,10 +2053,8 @@ L88BD = L88BC+1
     EQUB   0, &70,   0,   1, &63,   6,   2,   0   ; 8F63: 00 70 00... .p.
     EQUB   0, &14,   2, &28,   0,   1,   0, &70   ; 8F6B: 00 14 02... ...
     EQUB &FF, &FF, &0A,   0,   2,   0,   0        ; 8F73: FF FF 0A... ...
-; &8F7A referenced 3 times by &8999, &8A1B, &8A92
 .L8F7A
     EQUB &9C                                      ; 8F7A: 9C          .
-; &8F7B referenced 3 times by &89A1, &8A23, &8A9A
 .L8F7B
     EQUB &8F, &A6, &8F, &BE, &8F, &C3, &8F, &D4   ; 8F7B: 8F A6 8F... ...
     EQUB &8F, &DA, &8F, &DF, &8F, &E4, &8F, &E6   ; 8F83: 8F DA 8F... ...
@@ -2263,12 +2079,10 @@ L88BD = L88BC+1
     EQUB   1, &FF, &0C, &0A,   9,   7,   5,   5   ; 901B: 01 FF 0C... ...
     EQUB   4,   4,   3,   3,   2,   2,   1,   1   ; 9023: 04 04 03... ...
     EQUB &FF                                      ; 902B: FF          .
-; &902C referenced 3 times by &833C, &8537, &8865
 .L902C
     EQUS "TY_x"                                   ; 902C: 54 59 5F... TY_
     EQUB &92, &9A, &A1, &A8, &AF, &BD, &CC, &DB   ; 9030: 92 9A A1... ...
     EQUB &E5, &F0, &FA, &FF,   2,   6, &0D, &14   ; 9038: E5 F0 FA... ...
-; &9040 referenced 3 times by &8341, &853C, &886A
 .L9040
     EQUB &90, &90, &90, &90, &90, &90, &90, &90   ; 9040: 90 90 90... ...
     EQUB &90, &90, &90, &90, &90, &90, &90, &90   ; 9048: 90 90 90... ...
@@ -2298,10 +2112,8 @@ L88BD = L88BC+1
     EQUB   1,   5,   2,   1, &80,   1, &0D,   1   ; 9108: 01 05 02... ...
     EQUB   7,   2,   1, &80,   1, &0F, &0D, &0B   ; 9110: 07 02 01... ...
     EQUB &89                                      ; 9118: 89          .
-; &9119 referenced 4 times by &836D, &8568, &8700, &8895
 .L9119
     EQUS ")+49>DMV"                               ; 9119: 29 2B 34... )+4
-; &9121 referenced 4 times by &8372, &856D, &8705, &889A
 .L9121
     EQUB &91, &91, &91, &91, &91, &91, &91, &91   ; 9121: 91 91 91... ...
     EQUB   0, &80,   0,   1,   2,   1,   0, &FF   ; 9129: 00 80 00... ...
@@ -2311,31 +2123,22 @@ L88BD = L88BC+1
     EQUB &FE, &FC, &FE, &80,   0,   3,   6,   3   ; 9149: FE FC FE... ...
     EQUB   0, &FD, &FA, &FD, &80,   0,   4,   8   ; 9151: 00 FD FA... ...
     EQUB   4,   0, &FC, &F8, &FC, &80             ; 9159: 04 00 FC... ...
-; &915F referenced 1 time by &8044
 .L915F
     EQUB &2F                                      ; 915F: 2F          /
-; &9160 referenced 1 time by &804D
 .L9160
     EQUB &27                                      ; 9160: 27          '
-; &9161 referenced 1 time by &8055
 .L9161
     EQUB &98                                      ; 9161: 98          .
-; &9162 referenced 1 time by &8068
 .L9162
     EQUB &4F                                      ; 9162: 4F          O
-; &9163 referenced 1 time by &8070
 .L9163
     EQUB &98                                      ; 9163: 98          .
-; &9164 referenced 1 time by &8084
 .L9164
     EQUB &3D                                      ; 9164: 3D          =
-; &9165 referenced 1 time by &808C
 .L9165
     EQUB &98                                      ; 9165: 98          .
-; &9166 referenced 1 time by &80A0
 .L9166
     EQUB &61                                      ; 9166: 61          a
-; &9167 referenced 1 time by &80A8
 .L9167
     EQUB &98, &3B, &8C, &91, &94, &91, &90, &91   ; 9167: 98 3B 8C... .;.
     EQUB &98, &91, &3C, &BB, &9B, &9B, &9C, &8B   ; 916F: 98 91 3C... ..<
@@ -3846,761 +3649,5 @@ L88BD = L88BC+1
     EQUB &FF, &FF, &FF, &FF, &FF, &FF, &FF, &FF   ; BFF0: FF FF FF... ...
     EQUB &FF, &FF,   7, &C0,   0, &C0,   7, &C0   ; BFF8: FF FF 07... ...
 .pydis_end
-
-; Label references by decreasing frequency:
-;     L00FE:      166
-;     L00FF:       74
-;     C81AF:       10
-;     C83AA:       10
-;     L0301:        9
-;     L0302:        8
-;     L0303:        8
-;     L0304:        8
-;     C859D:        8
-;     L030C:        7
-;     L4002:        7
-;     L4006:        7
-;     L400E:        7
-;     L0305:        6
-;     L030D:        6
-;     L0312:        6
-;     L0325:        6
-;     L0338:        6
-;     L034B:        6
-;     L0419:        6
-;     L041A:        6
-;     L042D:        6
-;     L042E:        6
-;     L0441:        6
-;     L4000:        6
-;     L4003:        6
-;     L4004:        6
-;     L4007:        6
-;     L400C:        6
-;     C8738:        6
-;     L0306:        5
-;     L0307:        5
-;     L0313:        5
-;     L0326:        5
-;     L0339:        5
-;     L034C:        5
-;     L035A:        5
-;     L035C:        5
-;     L0360:        5
-;     C8012:        5
-;     L030E:        4
-;     L0310:        4
-;     L0311:        4
-;     L0318:        4
-;     L0319:        4
-;     L0321:        4
-;     L0323:        4
-;     L0324:        4
-;     L032B:        4
-;     L032C:        4
-;     L0334:        4
-;     L0336:        4
-;     L0337:        4
-;     L033F:        4
-;     L0342:        4
-;     L0347:        4
-;     L0349:        4
-;     L034A:        4
-;     L0352:        4
-;     L035E:        4
-;     L0364:        4
-;     L0366:        4
-;     L0368:        4
-;     L041B:        4
-;     L042F:        4
-;     L0443:        4
-;     L9119:        4
-;     L9121:        4
-;     L00E9:        3
-;     L030B:        3
-;     L030F:        3
-;     L0316:        3
-;     L031C:        3
-;     L031D:        3
-;     L031E:        3
-;     L0320:        3
-;     L0322:        3
-;     L0329:        3
-;     L032F:        3
-;     L0330:        3
-;     L0331:        3
-;     L0333:        3
-;     L0335:        3
-;     L033C:        3
-;     L0348:        3
-;     L034F:        3
-;     L0355:        3
-;     L0356:        3
-;     L0357:        3
-;     L0359:        3
-;     L040B:        3
-;     L041C:        3
-;     L041D:        3
-;     L041E:        3
-;     L041F:        3
-;     L0430:        3
-;     L0431:        3
-;     L0432:        3
-;     L0433:        3
-;     L0444:        3
-;     L0445:        3
-;     L0446:        3
-;     L2002:        3
-;     L4008:        3
-;     L88BC:        3
-;     L88BD:        3
-;     L8D7A:        3
-;     L8D7B:        3
-;     L8F7A:        3
-;     L8F7B:        3
-;     L902C:        3
-;     L9040:        3
-;     LD06D:        3
-;     L0314:        2
-;     L0315:        2
-;     L0317:        2
-;     L031A:        2
-;     L031B:        2
-;     L031F:        2
-;     L0327:        2
-;     L0328:        2
-;     L032A:        2
-;     L032D:        2
-;     L032E:        2
-;     L0332:        2
-;     L033A:        2
-;     L033B:        2
-;     L0340:        2
-;     L0341:        2
-;     L0345:        2
-;     L034E:        2
-;     L0353:        2
-;     L0354:        2
-;     L0358:        2
-;     L035D:        2
-;     L0361:        2
-;     L040C:        2
-;     L040D:        2
-;     L040E:        2
-;     L040F:        2
-;     L0410:        2
-;     L0411:        2
-;     L0414:        2
-;     L0416:        2
-;     L0417:        2
-;     L0418:        2
-;     L0420:        2
-;     L0421:        2
-;     L0422:        2
-;     L0423:        2
-;     L0424:        2
-;     L0425:        2
-;     L0428:        2
-;     L042A:        2
-;     L042B:        2
-;     L042C:        2
-;     L0434:        2
-;     L0435:        2
-;     L0437:        2
-;     L0439:        2
-;     L043C:        2
-;     L043E:        2
-;     L043F:        2
-;     L0440:        2
-;     L0447:        2
-;     L0448:        2
-;     L0449:        2
-;     L044A:        2
-;     L044B:        2
-;     L044C:        2
-;     L4001:        2
-;     L4005:        2
-;     L400A:        2
-;     L400F:        2
-;     C80F2:        2
-;     C813F:        2
-;     C8155:        2
-;     C816C:        2
-;     C8332:        2
-;     C8362:        2
-;     C852D:        2
-;     C855D:        2
-;     C85E4:        2
-;     C86EC:        2
-;     C86FD:        2
-;     C8772:        2
-;     C885B:        2
-;     C888B:        2
-;     C895A:        2
-;     C8982:        2
-;     C89DC:        2
-;     C8A04:        2
-;     C8A53:        2
-;     C8A7B:        2
-;     C8B08:        2
-;     C8B39:        2
-;     C8B49:        2
-;     C8BBA:        2
-;     C8BEF:        2
-;     C8C20:        2
-;     C8C30:        2
-;     C8CA1:        2
-;     C8CD0:        2
-;     C8D01:        2
-;     C8D11:        2
-;     C8D63:        2
-;     L0308:        1
-;     L0309:        1
-;     L030A:        1
-;     L0365:        1
-;     L0412:        1
-;     L0413:        1
-;     L0415:        1
-;     L0426:        1
-;     L0427:        1
-;     L0429:        1
-;     L043A:        1
-;     L043B:        1
-;     L043D:        1
-;     L400B:        1
-;     L400D:        1
-;     L4015:        1
-;     C8021:        1
-;     loop_C8028:   1
-;     C802F:        1
-;     loop_C8034:   1
-;     C80E5:        1
-;     C80F3:        1
-;     loop_C8102:   1
-;     C811E:        1
-;     sub_C816D:    1
-;     C8173:        1
-;     C818B:        1
-;     sub_C8197:    1
-;     C819D:        1
-;     C81BA:        1
-;     C81C9:        1
-;     C81F6:        1
-;     C8201:        1
-;     C8206:        1
-;     C8217:        1
-;     C8258:        1
-;     C8265:        1
-;     C8271:        1
-;     C8277:        1
-;     C8283:        1
-;     C828C:        1
-;     C829B:        1
-;     C829E:        1
-;     C82AA:        1
-;     C82B1:        1
-;     C82BD:        1
-;     C82C3:        1
-;     C82CF:        1
-;     C82D5:        1
-;     C82E1:        1
-;     C82E7:        1
-;     C8311:        1
-;     C831D:        1
-;     C8326:        1
-;     sub_C8334:    1
-;     C836A:        1
-;     C8387:        1
-;     sub_C8392:    1
-;     C8398:        1
-;     C83B5:        1
-;     C83C4:        1
-;     C83F1:        1
-;     C83FC:        1
-;     C8401:        1
-;     C8412:        1
-;     C8453:        1
-;     C8460:        1
-;     C846C:        1
-;     C8472:        1
-;     C847E:        1
-;     C8487:        1
-;     C8496:        1
-;     C8499:        1
-;     C84A5:        1
-;     C84AC:        1
-;     C84B8:        1
-;     C84BE:        1
-;     C84CA:        1
-;     C84D0:        1
-;     C84DC:        1
-;     C84E2:        1
-;     C850C:        1
-;     C8518:        1
-;     C8521:        1
-;     sub_C852F:    1
-;     C8565:        1
-;     C8582:        1
-;     sub_C858D:    1
-;     C8593:        1
-;     C85A8:        1
-;     C85B7:        1
-;     C85F5:        1
-;     C8636:        1
-;     C8643:        1
-;     C864F:        1
-;     C8655:        1
-;     C8661:        1
-;     C866A:        1
-;     C8676:        1
-;     C867D:        1
-;     C8689:        1
-;     C868F:        1
-;     C869B:        1
-;     C86A1:        1
-;     C86CB:        1
-;     C86D7:        1
-;     C86E0:        1
-;     sub_C86EE:    1
-;     C871A:        1
-;     sub_C8725:    1
-;     C872B:        1
-;     C8743:        1
-;     C8752:        1
-;     C8767:        1
-;     C8788:        1
-;     C87C9:        1
-;     C87D6:        1
-;     C87E2:        1
-;     C87E8:        1
-;     C87F4:        1
-;     C87FD:        1
-;     C8809:        1
-;     C8810:        1
-;     C883A:        1
-;     C8846:        1
-;     C884F:        1
-;     C885D:        1
-;     C8892:        1
-;     C88AF:        1
-;     loop_C896D:   1
-;     C89D9:        1
-;     loop_C89EF:   1
-;     loop_C8A66:   1
-;     sub_C8AC8:    1
-;     sub_C8AD4:    1
-;     C8ADA:        1
-;     C8AFF:        1
-;     C8B2F:        1
-;     C8B5D:        1
-;     C8B6C:        1
-;     C8B7C:        1
-;     C8B9F:        1
-;     sub_C8BBB:    1
-;     C8BC1:        1
-;     C8BE6:        1
-;     C8C16:        1
-;     C8C44:        1
-;     C8C53:        1
-;     C8C63:        1
-;     C8C86:        1
-;     C8CA2:        1
-;     C8CA8:        1
-;     C8CC7:        1
-;     C8CF7:        1
-;     C8D27:        1
-;     C8D2D:        1
-;     C8D3D:        1
-;     C8D54:        1
-;     sub_C8D64:    1
-;     L915F:        1
-;     L9160:        1
-;     L9161:        1
-;     L9162:        1
-;     L9163:        1
-;     L9164:        1
-;     L9165:        1
-;     L9166:        1
-;     L9167:        1
-;     LC006:        1
-;     LC007:        1
-
-; Automatically generated labels:
-;     C8012
-;     C8021
-;     C802F
-;     C80E5
-;     C80F2
-;     C80F3
-;     C811E
-;     C813F
-;     C8155
-;     C816C
-;     C8173
-;     C818B
-;     C819D
-;     C81AF
-;     C81BA
-;     C81C9
-;     C81F6
-;     C8201
-;     C8206
-;     C8217
-;     C8258
-;     C8265
-;     C8271
-;     C8277
-;     C8283
-;     C828C
-;     C829B
-;     C829E
-;     C82AA
-;     C82B1
-;     C82BD
-;     C82C3
-;     C82CF
-;     C82D5
-;     C82E1
-;     C82E7
-;     C8311
-;     C831D
-;     C8326
-;     C8332
-;     C8362
-;     C836A
-;     C8387
-;     C8398
-;     C83AA
-;     C83B5
-;     C83C4
-;     C83F1
-;     C83FC
-;     C8401
-;     C8412
-;     C8453
-;     C8460
-;     C846C
-;     C8472
-;     C847E
-;     C8487
-;     C8496
-;     C8499
-;     C84A5
-;     C84AC
-;     C84B8
-;     C84BE
-;     C84CA
-;     C84D0
-;     C84DC
-;     C84E2
-;     C850C
-;     C8518
-;     C8521
-;     C852D
-;     C855D
-;     C8565
-;     C8582
-;     C8593
-;     C859D
-;     C85A8
-;     C85B7
-;     C85E4
-;     C85F5
-;     C8636
-;     C8643
-;     C864F
-;     C8655
-;     C8661
-;     C866A
-;     C8676
-;     C867D
-;     C8689
-;     C868F
-;     C869B
-;     C86A1
-;     C86CB
-;     C86D7
-;     C86E0
-;     C86EC
-;     C86FD
-;     C871A
-;     C872B
-;     C8738
-;     C8743
-;     C8752
-;     C8767
-;     C8772
-;     C8788
-;     C87C9
-;     C87D6
-;     C87E2
-;     C87E8
-;     C87F4
-;     C87FD
-;     C8809
-;     C8810
-;     C883A
-;     C8846
-;     C884F
-;     C885B
-;     C885D
-;     C888B
-;     C8892
-;     C88AF
-;     C895A
-;     C8982
-;     C89D9
-;     C89DC
-;     C8A04
-;     C8A53
-;     C8A7B
-;     C8ADA
-;     C8AFF
-;     C8B08
-;     C8B2F
-;     C8B39
-;     C8B49
-;     C8B5D
-;     C8B6C
-;     C8B7C
-;     C8B9F
-;     C8BBA
-;     C8BC1
-;     C8BE6
-;     C8BEF
-;     C8C16
-;     C8C20
-;     C8C30
-;     C8C44
-;     C8C53
-;     C8C63
-;     C8C86
-;     C8CA1
-;     C8CA2
-;     C8CA8
-;     C8CC7
-;     C8CD0
-;     C8CF7
-;     C8D01
-;     C8D11
-;     C8D27
-;     C8D2D
-;     C8D3D
-;     C8D54
-;     C8D63
-;     L00E9
-;     L00FE
-;     L00FF
-;     L0301
-;     L0302
-;     L0303
-;     L0304
-;     L0305
-;     L0306
-;     L0307
-;     L0308
-;     L0309
-;     L030A
-;     L030B
-;     L030C
-;     L030D
-;     L030E
-;     L030F
-;     L0310
-;     L0311
-;     L0312
-;     L0313
-;     L0314
-;     L0315
-;     L0316
-;     L0317
-;     L0318
-;     L0319
-;     L031A
-;     L031B
-;     L031C
-;     L031D
-;     L031E
-;     L031F
-;     L0320
-;     L0321
-;     L0322
-;     L0323
-;     L0324
-;     L0325
-;     L0326
-;     L0327
-;     L0328
-;     L0329
-;     L032A
-;     L032B
-;     L032C
-;     L032D
-;     L032E
-;     L032F
-;     L0330
-;     L0331
-;     L0332
-;     L0333
-;     L0334
-;     L0335
-;     L0336
-;     L0337
-;     L0338
-;     L0339
-;     L033A
-;     L033B
-;     L033C
-;     L033F
-;     L0340
-;     L0341
-;     L0342
-;     L0345
-;     L0347
-;     L0348
-;     L0349
-;     L034A
-;     L034B
-;     L034C
-;     L034E
-;     L034F
-;     L0352
-;     L0353
-;     L0354
-;     L0355
-;     L0356
-;     L0357
-;     L0358
-;     L0359
-;     L035A
-;     L035C
-;     L035D
-;     L035E
-;     L0360
-;     L0361
-;     L0364
-;     L0365
-;     L0366
-;     L0368
-;     L040B
-;     L040C
-;     L040D
-;     L040E
-;     L040F
-;     L0410
-;     L0411
-;     L0412
-;     L0413
-;     L0414
-;     L0415
-;     L0416
-;     L0417
-;     L0418
-;     L0419
-;     L041A
-;     L041B
-;     L041C
-;     L041D
-;     L041E
-;     L041F
-;     L0420
-;     L0421
-;     L0422
-;     L0423
-;     L0424
-;     L0425
-;     L0426
-;     L0427
-;     L0428
-;     L0429
-;     L042A
-;     L042B
-;     L042C
-;     L042D
-;     L042E
-;     L042F
-;     L0430
-;     L0431
-;     L0432
-;     L0433
-;     L0434
-;     L0435
-;     L0437
-;     L0439
-;     L043A
-;     L043B
-;     L043C
-;     L043D
-;     L043E
-;     L043F
-;     L0440
-;     L0441
-;     L0443
-;     L0444
-;     L0445
-;     L0446
-;     L0447
-;     L0448
-;     L0449
-;     L044A
-;     L044B
-;     L044C
-;     L2002
-;     L4000
-;     L4001
-;     L4002
-;     L4003
-;     L4004
-;     L4005
-;     L4006
-;     L4007
-;     L4008
-;     L400A
-;     L400B
-;     L400C
-;     L400D
-;     L400E
-;     L400F
-;     L4015
-;     L88BC
-;     L88BD
-;     L8D7A
-;     L8D7B
-;     L8F7A
-;     L8F7B
-;     L902C
-;     L9040
-;     L9119
-;     L9121
-;     L915F
-;     L9160
-;     L9161
-;     L9162
-;     L9163
-;     L9164
-;     L9165
-;     L9166
-;     L9167
-;     LC006
-;     LC007
-;     LD06D
-;     loop_C8028
-;     loop_C8034
-;     loop_C8102
-;     loop_C896D
-;     loop_C89EF
-;     loop_C8A66
-;     sub_C816D
-;     sub_C8197
-;     sub_C8334
-;     sub_C8392
-;     sub_C852F
-;     sub_C858D
-;     sub_C86EE
-;     sub_C8725
-;     sub_C8AC8
-;     sub_C8AD4
-;     sub_C8BBB
-;     sub_C8D64
 
 SAVE pydis_start, pydis_end

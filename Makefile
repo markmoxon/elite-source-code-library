@@ -146,9 +146,15 @@ endif
 
 # NES version
 
-variant-nes=1
-folder-nes=/ntsc
-suffix-nes=-ntsc
+ifeq ($(variant-nes), pal)
+  var-nes=2
+  folder-nes=/pal
+  suffix-nes=-pal
+else
+  var-nes=1
+  folder-nes=/ntsc
+  suffix-nes=-ntsc
+endif
 
 # The following variables are written into elite-build-options.asm so they can be
 # passed to BeebAsm:
@@ -568,7 +574,7 @@ elite-a:
 .PHONY:nes
 nes:
 	echo _VERSION=7 > versions/nes/1-source-files/main-sources/elite-build-options.asm
-	echo _VARIANT=$(variant-nes) >> versions/nes/1-source-files/main-sources/elite-build-options.asm
+	echo _VARIANT=$(var-nes) >> versions/nes/1-source-files/main-sources/elite-build-options.asm
 	echo _REMOVE_CHECKSUMS=FALSE >> versions/nes/1-source-files/main-sources/elite-build-options.asm
 	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-header.asm -v > versions/nes/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-bank-0.asm -v >> versions/nes/3-assembled-output/compile.txt

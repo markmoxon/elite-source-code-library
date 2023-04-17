@@ -16,7 +16,7 @@
  EQUB LO(SHIP_CANISTER_FACES - SHIP_CANISTER)      \ Faces data offset (low)
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; cargo canisters are shown in cyan
  EQUB 49                \ Max. edge count          = (49 - 1) / 4 = 12
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
  EQUB 53                \ Max. edge count          = (53 - 1) / 4 = 13
 ENDIF
  EQUB 0                 \ Gun vertex               = 0

@@ -22,13 +22,13 @@ ENDIF
 IF _MASTER_VERSION \ Platform
  EQUB LO(SHIP_PYTHON_EDGES - SHIP_PYTHON_P)        \ Edges from Python
  EQUB LO(SHIP_PYTHON_FACES - SHIP_PYTHON_P)        \ Faces from Python
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _NES_VERSION
  EQUB LO(SHIP_PYTHON_P_EDGES - SHIP_PYTHON_P)      \ Edges data offset (low)
  EQUB LO(SHIP_PYTHON_P_FACES - SHIP_PYTHON_P)      \ Faces data offset (low)
 ENDIF
 IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Python pirates are shown in cyan
  EQUB 85                \ Max. edge count          = (85 - 1) / 4 = 21
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
  EQUB 89                \ Max. edge count          = (89 - 1) / 4 = 22
 ENDIF
  EQUB 0                 \ Gun vertex               = 0
@@ -43,7 +43,7 @@ ENDIF
 IF _MASTER_VERSION \ Platform
  EQUB HI(SHIP_PYTHON_EDGES - SHIP_PYTHON_P)        \ Edges from Python
  EQUB HI(SHIP_PYTHON_FACES - SHIP_PYTHON_P)        \ Faces from Python
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _NES_VERSION
  EQUB HI(SHIP_PYTHON_P_EDGES - SHIP_PYTHON_P)      \ Edges data offset (high)
  EQUB HI(SHIP_PYTHON_P_FACES - SHIP_PYTHON_P)      \ Faces data offset (high)
 ENDIF
@@ -64,7 +64,7 @@ ENDIF
  VERTEX    0,  -48,  -32,     6,      7,   10,    11,         31    \ Vertex 9
  VERTEX    0,  -24, -112,    10,     11,   12,    12,         31    \ Vertex 10
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Platform
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _NES_VERSION \ Platform
 
 .SHIP_PYTHON_P_EDGES
 

@@ -16,7 +16,7 @@
  EQUB LO(SHIP_KRAIT_FACES - SHIP_KRAIT)            \ Faces data offset (low)
 IF _DISC_VERSION OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Kraits are shown in cyan
  EQUB 85                \ Max. edge count          = (85 - 1) / 4 = 21
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
  EQUB 89                \ Max. edge count          = (89 - 1) / 4 = 22
 ENDIF
  EQUB 0                 \ Gun vertex               = 0
@@ -33,7 +33,7 @@ ENDIF
  EQUB 24                \ Number of faces          = 24 / 4 = 6
 IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Disc: In the disc version, the Krait has a visibility distance of 25 compared to 20 in the other versions, so if one is running away from you in the disc version, it will turn into a dot later than in the other versions
  EQUB 25                \ Visibility distance      = 25
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION OR _NES_VERSION
  EQUB 20                \ Visibility distance      = 20
 ENDIF
 IF NOT(_ELITE_A_VERSION)
@@ -48,7 +48,7 @@ ENDIF
  EQUB 30                \ Max. speed               = 30
  EQUB HI(SHIP_KRAIT_EDGES - SHIP_KRAIT)            \ Edges data offset (high)
  EQUB HI(SHIP_KRAIT_FACES - SHIP_KRAIT)            \ Faces data offset (high)
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Disc: Group A: The ship hangar in the disc version displays the Krait with normals scaled with a factor of 4, which are more accurate than in the ship hangars of the other enhanced versions, which store them with a scale factor of 2
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Disc: Group A: The ship hangar in the disc version displays the Krait with normals scaled with a factor of 4, which are more accurate than in the ship hangars of the other enhanced versions, which store them with a scale factor of 2
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
 ELIF _DISC_DOCKED
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
@@ -74,7 +74,7 @@ ENDIF
  VERTEX    0,  -18,  -48,     2,      1,    5,     4,         31    \ Vertex 2
  VERTEX   90,    0,   -3,     1,      0,    4,     4,         31    \ Vertex 3
  VERTEX  -90,    0,   -3,     3,      2,    5,     5,         31    \ Vertex 4
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Platform
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
  VERTEX   90,    0,   87,     1,      0,    1,     1,         30    \ Vertex 5
  VERTEX  -90,    0,   87,     3,      2,    3,     3,         30    \ Vertex 6
 ELIF _DISC_DOCKED
@@ -103,7 +103,7 @@ ENDIF
  EDGE       4,       2,     5,     2,         31    \ Edge 5
  EDGE       2,       3,     4,     1,         31    \ Edge 6
  EDGE       3,       1,     4,     0,         31    \ Edge 7
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Platform
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
  EDGE       3,       5,     1,     0,         30    \ Edge 8
  EDGE       4,       6,     3,     2,         30    \ Edge 9
  EDGE       1,       2,     5,     4,          8    \ Edge 10
@@ -125,7 +125,7 @@ ENDIF
 
 .SHIP_KRAIT_FACES
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Disc: See group A
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Disc: See group A
 
 \     normal_x, normal_y, normal_z, visibility
  FACE        3,       24,        3,         31    \ Face 0

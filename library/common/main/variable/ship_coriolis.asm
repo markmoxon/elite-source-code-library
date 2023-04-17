@@ -16,11 +16,15 @@
  EQUB LO(SHIP_CORIOLIS_FACES - SHIP_CORIOLIS)      \ Faces data offset (low)
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; space stations are shown in cyan
  EQUB 85                \ Max. edge count          = (85 - 1) / 4 = 21
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
  EQUB 89                \ Max. edge count          = (89 - 1) / 4 = 22
 ENDIF
  EQUB 0                 \ Gun vertex               = 0
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION OR _ELITE_A_VERSION \ Platform
  EQUB 54                \ Explosion count          = 12, as (4 * n) + 6 = 54
+ELIF _NES_VERSION
+ EQUB 6                 \ Explosion count          = 0, as (4 * n) + 6 = 6
+ENDIF
  EQUB 96                \ Number of vertices       = 96 / 6 = 16
  EQUB 28                \ Number of edges          = 28
  EQUW 0                 \ Bounty                   = 0

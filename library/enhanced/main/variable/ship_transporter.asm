@@ -16,7 +16,7 @@
  EQUB LO(SHIP_TRANSPORTER_FACES - SHIP_TRANSPORTER)   \ Faces data offset (low)
 IF _DISC_VERSION OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Transporters are shown in cyan
  EQUB 145               \ Max. edge count          = (145 - 1) / 4 = 36
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
  EQUB 149               \ Max. edge count          = (149 - 1) / 4 = 37
 ENDIF
  EQUB 48                \ Gun vertex               = 48 / 4 = 12
@@ -30,7 +30,7 @@ ENDIF
  EQUB 10                \ Max. speed               = 10
  EQUB HI(SHIP_TRANSPORTER_EDGES - SHIP_TRANSPORTER)   \ Edges data offset (high)
  EQUB HI(SHIP_TRANSPORTER_FACES - SHIP_TRANSPORTER)   \ Faces data offset (high)
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Disc: The ship hangar in the disc version displays the Transporter with normals scaled with a factor of 4, rather than the scale factor of 2 used in the other versions, but the face normals themselves are unchanged. I'm not entirely sure why
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _NES_VERSION \ Disc: The ship hangar in the disc version displays the Transporter with normals scaled with a factor of 4, rather than the scale factor of 2 used in the other versions, but the face normals themselves are unchanged. I'm not entirely sure why
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
 ELIF _DISC_DOCKED OR _ELITE_A_VERSION
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
@@ -38,7 +38,7 @@ ENDIF
  EQUB %00000000         \ Laser power              = 0
                         \ Missiles                 = 0
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Disc: Group A: The ship hangar in the disc version displays the Transporter with slightly different visibility settings to the other enhanced versions (the visibility settings are lower). I'm not entirely sure why
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _NES_VERSION \ Disc: Group A: The ship hangar in the disc version displays the Transporter with slightly different visibility settings to the other enhanced versions (the visibility settings are lower). I'm not entirely sure why
 
 \          x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX    0,   10,  -26,     6,      0,    7,     7,         31    \ Vertex 0
@@ -132,26 +132,26 @@ ENDIF
  EDGE       4,       5,     4,     0,         31    \ Edge 4
  EDGE       5,       6,     5,     0,         31    \ Edge 5
  EDGE       0,       6,     6,     0,         31    \ Edge 6
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Disc: See group A
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _NES_VERSION \ Disc: See group A
  EDGE       0,       7,     7,     6,         16    \ Edge 7
 ELIF _DISC_DOCKED OR _ELITE_A_VERSION
  EDGE       0,       7,     7,     6,         15    \ Edge 7
 ENDIF
  EDGE       1,       8,     7,     1,         31    \ Edge 8
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Disc: See group A
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _NES_VERSION \ Disc: See group A
  EDGE       2,       9,     2,     1,         11    \ Edge 9
 ELIF _DISC_DOCKED OR _ELITE_A_VERSION
  EDGE       2,       9,     2,     1,         10    \ Edge 9
 ENDIF
  EDGE       3,       9,     3,     2,         31    \ Edge 10
  EDGE       4,      10,     4,     3,         31    \ Edge 11
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Disc: See group A
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _NES_VERSION \ Disc: See group A
  EDGE       5,      10,     5,     4,         11    \ Edge 12
 ELIF _DISC_DOCKED OR _ELITE_A_VERSION
  EDGE       5,      10,     5,     4,         10    \ Edge 12
 ENDIF
  EDGE       6,      11,     6,     5,         31    \ Edge 13
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Disc: See group A
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _NES_VERSION \ Disc: See group A
  EDGE       7,       8,     8,     7,         17    \ Edge 14
  EDGE       8,       9,     9,     1,         17    \ Edge 15
  EDGE      10,      11,    10,     5,         17    \ Edge 16
@@ -174,7 +174,7 @@ ENDIF
  EDGE      13,      14,    13,     3,         31    \ Edge 25
  EDGE      14,      15,    13,    10,         31    \ Edge 26
  EDGE      12,      15,    13,    12,         31    \ Edge 27
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Disc: See group A
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _NES_VERSION \ Disc: See group A
  EDGE      16,      17,     7,     7,          7    \ Edge 28
  EDGE      18,      19,     7,     7,          7    \ Edge 29
  EDGE      19,      20,     7,     7,          7    \ Edge 30
@@ -225,14 +225,14 @@ ENDIF
  FACE      111,       48,       -7,         31    \ Face 5
  FACE        8,       32,        3,         31    \ Face 6
  FACE       -8,       32,        3,         31    \ Face 7
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Disc: See group A
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _NES_VERSION \ Disc: See group A
  FACE       -8,       34,       11,         19    \ Face 8
 ELIF _DISC_DOCKED OR _ELITE_A_VERSION
  FACE       -8,       34,       11,         18    \ Face 8
 ENDIF
  FACE      -75,       32,       79,         31    \ Face 9
  FACE       75,       32,       79,         31    \ Face 10
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Disc: See group A
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _NES_VERSION \ Disc: See group A
  FACE        8,       34,       11,         19    \ Face 11
 ELIF _DISC_DOCKED OR _ELITE_A_VERSION
  FACE        8,       34,       11,         18    \ Face 11

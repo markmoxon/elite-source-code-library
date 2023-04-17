@@ -16,7 +16,7 @@
  EQUB LO(SHIP_WORM_FACES - SHIP_WORM)              \ Faces data offset (low)
 IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Worms are shown in cyan
  EQUB 73                \ Max. edge count          = (73 - 1) / 4 = 18
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
  EQUB 77                \ Max. edge count          = (77 - 1) / 4 = 19
 ENDIF
  EQUB 0                 \ Gun vertex               = 0

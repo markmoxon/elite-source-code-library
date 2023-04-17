@@ -16,7 +16,7 @@
  EQUB LO(SHIP_GECKO_FACES - SHIP_GECKO)            \ Faces data offset (low)
 IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Geckos are shown in cyan
  EQUB 65                \ Max. edge count          = (65 - 1) / 4 = 16
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
  EQUB 69                \ Max. edge count          = (69 - 1) / 4 = 17
 ENDIF
  EQUB 0                 \ Gun vertex               = 0

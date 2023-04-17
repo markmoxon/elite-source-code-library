@@ -17,7 +17,7 @@
  EQUB LO(SHIP_PLATE_FACES - SHIP_PLATE)            \ Faces data offset (low)
 IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; alloy plates are shown in cyan
  EQUB 17                \ Max. edge count          = (17 - 1) / 4 = 4
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
  EQUB 21                \ Max. edge count          = (21 - 1) / 4 = 5
 ENDIF
  EQUB 0                 \ Gun vertex               = 0

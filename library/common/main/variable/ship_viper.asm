@@ -16,7 +16,7 @@
  EQUB LO(SHIP_VIPER_FACES - SHIP_VIPER)            \ Faces data offset (low)
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Vipers are shown in cyan
  EQUB 77                \ Max. edge count          = (77 - 1) / 4 = 19
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
  EQUB 81                \ Max. edge count          = (81 - 1) / 4 = 20
 ENDIF
  EQUB 0                 \ Gun vertex               = 0
@@ -38,7 +38,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: The Viper has a different 
  EQUB 120               \ Max. energy              = 120
 ELIF _DISC_VERSION OR _ELITE_A_SHIPS_U OR _ELITE_A_SHIPS_V
  EQUB 100               \ Max. energy              = 100
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
  EQUB 140               \ Max. energy              = 140
 ELIF _ELITE_A_SHIPS_R OR _ELITE_A_SHIPS_T OR _ELITE_A_SHIPS_W
  EQUB 92                \ Max. energy              = 91

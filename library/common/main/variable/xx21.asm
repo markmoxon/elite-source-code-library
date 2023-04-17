@@ -40,6 +40,36 @@ ELIF _ELECTRON_VERSION
  EQUW SHIP_CANISTER     \ OIL  = 10 = Cargo canister
  EQUW SHIP_ESCAPE_POD   \ ESC  = 11 = Escape pod
 
+ELIF _NES_VERSION
+
+ EQUW SHIP_ASTEROID     \ AST  =  7 = Asteroid
+ EQUW SHIP_SPLINTER     \ SPL  =  8 = Splinter
+ EQUW SHIP_SHUTTLE      \ SHU  =  9 = Shuttle
+ EQUW SHIP_TRANSPORTER  \        10 = Transporter
+ EQUW SHIP_COBRA_MK_3   \ CYL  = 11 = Cobra Mk III
+ EQUW SHIP_PYTHON       \        12 = Python
+ EQUW SHIP_BOA          \        13 = Boa
+ EQUW SHIP_ANACONDA     \ ANA  = 14 = Anaconda
+ EQUW SHIP_ROCK_HERMIT  \ HER  = 15 = Rock hermit (asteroid)
+ EQUW SHIP_VIPER        \ COPS = 16 = Viper
+ EQUW SHIP_SIDEWINDER   \ SH3  = 17 = Sidewinder
+ EQUW SHIP_MAMBA        \        18 = Mamba
+ EQUW SHIP_KRAIT        \ KRA  = 19 = Krait
+ EQUW SHIP_ADDER        \ ADA  = 20 = Adder
+ EQUW SHIP_GECKO        \        21 = Gecko
+ EQUW SHIP_COBRA_MK_1   \        22 = Cobra Mk I
+ EQUW SHIP_WORM         \ WRM  = 23 = Worm
+ EQUW SHIP_COBRA_MK_3_P \ CYL2 = 24 = Cobra Mk III (pirate)
+ EQUW SHIP_ASP_MK_2     \ ASP  = 25 = Asp Mk II
+ EQUW SHIP_PYTHON_P     \        26 = Python (pirate)
+ EQUW SHIP_FER_DE_LANCE \        27 = Fer-de-lance
+ EQUW SHIP_MORAY        \        28 = Moray
+ EQUW SHIP_THARGOID     \ THG  = 29 = Thargoid
+ EQUW SHIP_THARGON      \ TGL  = 30 = Thargon
+ EQUW SHIP_CONSTRICTOR  \ CON  = 31 = Constrictor
+ EQUW SHIP_COUGAR       \ COU  = 32 = Cougar
+ EQUW SHIP_DODO         \ DOD  = 33 = Dodecahedron ("Dodo") space station
+
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  EQUW SHIP_MISSILE      \ MSL  =  1 = Missile

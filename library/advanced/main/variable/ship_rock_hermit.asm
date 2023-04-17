@@ -6,7 +6,7 @@
 \    Summary: Ship blueprint for a rock hermit (asteroid)
 \  Deep dive: Ship blueprints
 \
-IF _MASTER_VERSION \ Comment
+IF _MASTER_VERSION OR _NES_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ The ship blueprint for the rock hermit reuses the edges and faces data from
@@ -22,7 +22,7 @@ ENDIF
 IF _MASTER_VERSION \ Platform
  EQUB LO(SHIP_ASTEROID_EDGES - SHIP_ROCK_HERMIT)   \ Edges from asteroid
  EQUB LO(SHIP_ASTEROID_FACES - SHIP_ROCK_HERMIT)   \ Faces from asteroid
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _NES_VERSION
  EQUB LO(SHIP_ROCK_HERMIT_EDGES - SHIP_ROCK_HERMIT)   \ Edges data offset (low)
  EQUB LO(SHIP_ROCK_HERMIT_FACES - SHIP_ROCK_HERMIT)   \ Faces data offset (low)
 ENDIF
@@ -39,7 +39,7 @@ ENDIF
 IF _MASTER_VERSION \ Platform
  EQUB HI(SHIP_ASTEROID_EDGES - SHIP_ROCK_HERMIT)   \ Edges from asteroid
  EQUB HI(SHIP_ASTEROID_FACES - SHIP_ROCK_HERMIT)   \ Faces from asteroid
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _NES_VERSION
  EQUB HI(SHIP_ROCK_HERMIT_EDGES - SHIP_ROCK_HERMIT)   \ Edges data offset (high)
  EQUB HI(SHIP_ROCK_HERMIT_FACES - SHIP_ROCK_HERMIT)   \ Faces data offset (high)
 ENDIF
@@ -58,7 +58,7 @@ ENDIF
  VERTEX    0,   30,  -75,    15,     15,   15,    15,         31    \ Vertex 7
  VERTEX    0,  -50,  -60,     8,      9,   10,    11,         31    \ Vertex 8
 
-IF _6502SP_VERSION \ Platform
+IF _6502SP_VERSION OR _NES_VERSION \ Platform
 
 .SHIP_ROCK_HERMIT_EDGES
 

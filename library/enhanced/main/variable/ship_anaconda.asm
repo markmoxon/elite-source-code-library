@@ -16,7 +16,7 @@
  EQUB LO(SHIP_ANACONDA_FACES - SHIP_ANACONDA)      \ Faces data offset (low)
 IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Anacondas are shown in cyan
  EQUB 89                \ Max. edge count          = (89 - 1) / 4 = 22
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
  EQUB 93                \ Max. edge count          = (93 - 1) / 4 = 23
 ENDIF
  EQUB 48                \ Gun vertex               = 48 / 4 = 12
@@ -31,7 +31,7 @@ ENDIF
  EQUB 48                \ Number of faces          = 48 / 4 = 12
 IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Disc: In the disc version, the Anaconda has a visibility distance of 50 compared to 36 in the other versions, so if one is running away from you in the disc version, it will turn into a dot later than in the others
  EQUB 50                \ Visibility distance      = 50
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
  EQUB 36                \ Visibility distance      = 36
 ENDIF
  EQUB 252               \ Max. energy              = 252

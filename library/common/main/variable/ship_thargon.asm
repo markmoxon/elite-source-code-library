@@ -17,7 +17,7 @@
 
 IF _CASSETTE_VERSION \ Enhanced: In the enhanced versions, the Thargon ship blueprint contains the information in the high nibble of byte #0 that scooping Thargons gives us alien items
  EQUB 0                 \ Max. canisters on demise = 0
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
  EQUB 0 + (15 << 4)     \ Max. canisters on demise = 0
                         \ Market item when scooped = 15 + 1 = 16 (alien items)
 ENDIF
@@ -26,7 +26,7 @@ ENDIF
  EQUB LO(SHIP_THARGON_FACES - SHIP_THARGON)        \ Faces data offset (low)
 IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Thargons are shown in "white" (cyan/red stripes)
  EQUB 65                \ Max. edge count          = (65 - 1) / 4 = 16
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
  EQUB 69                \ Max. edge count          = (69 - 1) / 4 = 17
 ENDIF
  EQUB 0                 \ Gun vertex               = 0

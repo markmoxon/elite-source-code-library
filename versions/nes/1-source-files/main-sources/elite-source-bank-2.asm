@@ -25,6 +25,20 @@
 \
 \ ******************************************************************************
 
+ INCLUDE "versions/nes/1-source-files/main-sources/elite-build-options.asm"
+
+ _CASSETTE_VERSION      = (_VERSION = 1)
+ _DISC_VERSION          = (_VERSION = 2)
+ _6502SP_VERSION        = (_VERSION = 3)
+ _MASTER_VERSION        = (_VERSION = 4)
+ _ELECTRON_VERSION      = (_VERSION = 5)
+ _ELITE_A_VERSION       = (_VERSION = 6)
+ _NES_VERSION           = (_VERSION = 7)
+ _C64_VERSION           = (_VERSION = 8)
+ _APPLE_VERSION         = (_VERSION = 9)
+ _NTSC                  = (_VARIANT = 1)
+ _PAL                   = (_VARIANT = 2)
+
 CODE% = &8000
 LOAD% = &8000
 
@@ -111,6 +125,15 @@ BST         = &03BF
 QQ29        = &048A
 QQ8         = &049B
 SY          = &04DD
+PPUCTRL     = &2000
+PPUMASK     = &2001
+PPUSTATUS   = &2002
+OAMADDR     = &2003
+OAMDATA     = &2004
+PPUSCROLL   = &2005
+PPUADDR     = &2006
+PPUDATA     = &2007
+OAMDMA      = &4014
 LC006       = &C006
 LC007       = &C007
 log         = &C100

@@ -238,7 +238,14 @@ L044C       = &044C
 QQ29        = &048A
 QQ8         = &049B
 SY          = &04DD
-L2002       = &2002
+PPUCTRL     = &2000
+PPUMASK     = &2001
+PPUSTATUS   = &2002
+OAMADDR     = &2003
+OAMDATA     = &2004
+PPUSCROLL   = &2005
+PPUADDR     = &2006
+PPUDATA     = &2007
 L4000       = &4000
 L4001       = &4001
 L4002       = &4002
@@ -254,6 +261,7 @@ L400C       = &400C
 L400D       = &400D
 L400E       = &400E
 L400F       = &400F
+OAMDMA      = &4014
 L4015       = &4015
 LC006       = &C006
 LC007       = &C007
@@ -1503,7 +1511,7 @@ L88BD = L88BC+1
     BPL loop_C896D                                ; 8973: 10 F8       ..
     LDA L00E9                                     ; 8975: A5 E9       ..
     BPL C8982                                     ; 8977: 10 09       ..
-    LDA L2002                                     ; 8979: AD 02 20    ..
+    LDA PPUSTATUS                                 ; 8979: AD 02 20    ..
     ASL A                                         ; 897C: 0A          .
     BPL C8982                                     ; 897D: 10 03       ..
     JSR LD06D                                     ; 897F: 20 6D D0     m.
@@ -1564,7 +1572,7 @@ L88BD = L88BC+1
     BPL loop_C89EF                                ; 89F5: 10 F8       ..
     LDA L00E9                                     ; 89F7: A5 E9       ..
     BPL C8A04                                     ; 89F9: 10 09       ..
-    LDA L2002                                     ; 89FB: AD 02 20    ..
+    LDA PPUSTATUS                                 ; 89FB: AD 02 20    ..
     ASL A                                         ; 89FE: 0A          .
     BPL C8A04                                     ; 89FF: 10 03       ..
     JSR LD06D                                     ; 8A01: 20 6D D0     m.
@@ -1617,7 +1625,7 @@ L88BD = L88BC+1
     BPL loop_C8A66                                ; 8A6C: 10 F8       ..
     LDA L00E9                                     ; 8A6E: A5 E9       ..
     BPL C8A7B                                     ; 8A70: 10 09       ..
-    LDA L2002                                     ; 8A72: AD 02 20    ..
+    LDA PPUSTATUS                                 ; 8A72: AD 02 20    ..
     ASL A                                         ; 8A75: 0A          .
     BPL C8A7B                                     ; 8A76: 10 03       ..
     JSR LD06D                                     ; 8A78: 20 6D D0     m.

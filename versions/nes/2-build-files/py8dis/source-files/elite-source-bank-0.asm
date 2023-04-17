@@ -367,7 +367,15 @@ L0672       = &0672
 L06C6       = &06C6
 L0FA0       = &0FA0
 L1FA9       = &1FA9
-L2002       = &2002
+PPUCTRL     = &2000
+PPUMASK     = &2001
+PPUSTATUS   = &2002
+OAMADDR     = &2003
+OAMDATA     = &2004
+PPUSCROLL   = &2005
+PPUADDR     = &2006
+PPUDATA     = &2007
+OAMDMA      = &4014
 L7280       = &7280
 L7281       = &7281
 L72A0       = &72A0
@@ -637,7 +645,7 @@ LFAF8       = &FAF8
     STA TYPE                                      ; 80B1: 85 A3       ..
     LDA L00E9                                     ; 80B3: A5 E9       ..
     BPL C80C0                                     ; 80B5: 10 09       ..
-    LDA L2002                                     ; 80B7: AD 02 20    ..
+    LDA PPUSTATUS                                 ; 80B7: AD 02 20    ..
     ASL A                                         ; 80BA: 0A          .
     BPL C80C0                                     ; 80BB: 10 03       ..
     JSR LD06D                                     ; 80BD: 20 6D D0     m.
@@ -651,7 +659,7 @@ LFAF8       = &FAF8
     BPL loop_C80C5                                ; 80CB: 10 F8       ..
     LDA L00E9                                     ; 80CD: A5 E9       ..
     BPL C80DA                                     ; 80CF: 10 09       ..
-    LDA L2002                                     ; 80D1: AD 02 20    ..
+    LDA PPUSTATUS                                 ; 80D1: AD 02 20    ..
     ASL A                                         ; 80D4: 0A          .
     BPL C80DA                                     ; 80D5: 10 03       ..
     JSR LD06D                                     ; 80D7: 20 6D D0     m.
@@ -718,7 +726,7 @@ LFAF8       = &FAF8
     JSR CB910                                     ; 8148: 20 10 B9     ..
     LDA L00E9                                     ; 814B: A5 E9       ..
     BPL C8158                                     ; 814D: 10 09       ..
-    LDA L2002                                     ; 814F: AD 02 20    ..
+    LDA PPUSTATUS                                 ; 814F: AD 02 20    ..
     ASL A                                         ; 8152: 0A          .
     BPL C8158                                     ; 8153: 10 03       ..
     JSR LD06D                                     ; 8155: 20 6D D0     m.
@@ -731,7 +739,7 @@ LFAF8       = &FAF8
     BPL loop_C815A                                ; 8160: 10 F8       ..
     LDA L00E9                                     ; 8162: A5 E9       ..
     BPL C816F                                     ; 8164: 10 09       ..
-    LDA L2002                                     ; 8166: AD 02 20    ..
+    LDA PPUSTATUS                                 ; 8166: AD 02 20    ..
     ASL A                                         ; 8169: 0A          .
     BPL C816F                                     ; 816A: 10 03       ..
     JSR LD06D                                     ; 816C: 20 6D D0     m.
@@ -1051,7 +1059,7 @@ LFAF8       = &FAF8
 .C83AE
     LDA L00E9                                     ; 83AE: A5 E9       ..
     BPL C83BB                                     ; 83B0: 10 09       ..
-    LDA L2002                                     ; 83B2: AD 02 20    ..
+    LDA PPUSTATUS                                 ; 83B2: AD 02 20    ..
     ASL A                                         ; 83B5: 0A          .
     BPL C83BB                                     ; 83B6: 10 03       ..
     JSR LD06D                                     ; 83B8: 20 6D D0     m.
@@ -1202,7 +1210,7 @@ LFAF8       = &FAF8
 .sub_C84D1
     LDA L00E9                                     ; 84D1: A5 E9       ..
     BPL C84DE                                     ; 84D3: 10 09       ..
-    LDA L2002                                     ; 84D5: AD 02 20    ..
+    LDA PPUSTATUS                                 ; 84D5: AD 02 20    ..
     ASL A                                         ; 84D8: 0A          .
     BPL C84DE                                     ; 84D9: 10 03       ..
     JSR LD06D                                     ; 84DB: 20 6D D0     m.
@@ -1237,7 +1245,7 @@ LFAF8       = &FAF8
     STA R                                         ; 8516: 85 98       ..
     LDA L00E9                                     ; 8518: A5 E9       ..
     BPL C8525                                     ; 851A: 10 09       ..
-    LDA L2002                                     ; 851C: AD 02 20    ..
+    LDA PPUSTATUS                                 ; 851C: AD 02 20    ..
     ASL A                                         ; 851F: 0A          .
     BPL C8525                                     ; 8520: 10 03       ..
     JSR LD06D                                     ; 8522: 20 6D D0     m.
@@ -1259,7 +1267,7 @@ LFAF8       = &FAF8
 .C853A
     LDA L00E9                                     ; 853A: A5 E9       ..
     BPL C8547                                     ; 853C: 10 09       ..
-    LDA L2002                                     ; 853E: AD 02 20    ..
+    LDA PPUSTATUS                                 ; 853E: AD 02 20    ..
     ASL A                                         ; 8541: 0A          .
     BPL C8547                                     ; 8542: 10 03       ..
     JSR LD06D                                     ; 8544: 20 6D D0     m.
@@ -1359,7 +1367,7 @@ LFAF8       = &FAF8
 .C85F5
     LDA L00E9                                     ; 85F5: A5 E9       ..
     BPL C8602                                     ; 85F7: 10 09       ..
-    LDA L2002                                     ; 85F9: AD 02 20    ..
+    LDA PPUSTATUS                                 ; 85F9: AD 02 20    ..
     ASL A                                         ; 85FC: 0A          .
     BPL C8602                                     ; 85FD: 10 03       ..
     JSR LD06D                                     ; 85FF: 20 6D D0     m.
@@ -1925,7 +1933,7 @@ LFAF8       = &FAF8
 .sub_C8A14
     LDA L00E9                                     ; 8A14: A5 E9       ..
     BPL C8A21                                     ; 8A16: 10 09       ..
-    LDA L2002                                     ; 8A18: AD 02 20    ..
+    LDA PPUSTATUS                                 ; 8A18: AD 02 20    ..
     ASL A                                         ; 8A1B: 0A          .
     BPL C8A21                                     ; 8A1C: 10 03       ..
     JSR LD06D                                     ; 8A1E: 20 6D D0     m.
@@ -2003,7 +2011,7 @@ LFAF8       = &FAF8
     STA INWK_1,X                                  ; 8AAA: 95 0A       ..
     LDA L00E9                                     ; 8AAC: A5 E9       ..
     BPL C8AB9                                     ; 8AAE: 10 09       ..
-    LDA L2002                                     ; 8AB0: AD 02 20    ..
+    LDA PPUSTATUS                                 ; 8AB0: AD 02 20    ..
     ASL A                                         ; 8AB3: 0A          .
     BPL C8AB9                                     ; 8AB4: 10 03       ..
     JSR LD06D                                     ; 8AB6: 20 6D D0     m.
@@ -2085,7 +2093,7 @@ LFAF8       = &FAF8
     PHP                                           ; 8B2D: 08          .
     LDA L00E9                                     ; 8B2E: A5 E9       ..
     BPL C8B3B                                     ; 8B30: 10 09       ..
-    LDA L2002                                     ; 8B32: AD 02 20    ..
+    LDA PPUSTATUS                                 ; 8B32: AD 02 20    ..
     ASL A                                         ; 8B35: 0A          .
     BPL C8B3B                                     ; 8B36: 10 03       ..
     JSR LD06D                                     ; 8B38: 20 6D D0     m.
@@ -2250,7 +2258,7 @@ LFAF8       = &FAF8
 .C8C50
     LDA L00E9                                     ; 8C50: A5 E9       ..
     BPL C8C5D                                     ; 8C52: 10 09       ..
-    LDA L2002                                     ; 8C54: AD 02 20    ..
+    LDA PPUSTATUS                                 ; 8C54: AD 02 20    ..
     ASL A                                         ; 8C57: 0A          .
     BPL C8C5D                                     ; 8C58: 10 03       ..
     JSR LD06D                                     ; 8C5A: 20 6D D0     m.
@@ -2513,7 +2521,7 @@ L8D3C = sub_C8D3B+1
     STA CNT                                       ; 8E1A: 85 A8       ..
     LDA L00E9                                     ; 8E1C: A5 E9       ..
     BPL C8E29                                     ; 8E1E: 10 09       ..
-    LDA L2002                                     ; 8E20: AD 02 20    ..
+    LDA PPUSTATUS                                 ; 8E20: AD 02 20    ..
     ASL A                                         ; 8E23: 0A          .
     BPL C8E29                                     ; 8E24: 10 03       ..
     JSR LD06D                                     ; 8E26: 20 6D D0     m.
@@ -2595,7 +2603,7 @@ L8D3C = sub_C8D3B+1
 .C8EB1
     LDA L00E9                                     ; 8EB1: A5 E9       ..
     BPL C8EBE                                     ; 8EB3: 10 09       ..
-    LDA L2002                                     ; 8EB5: AD 02 20    ..
+    LDA PPUSTATUS                                 ; 8EB5: AD 02 20    ..
     ASL A                                         ; 8EB8: 0A          .
     BPL C8EBE                                     ; 8EB9: 10 03       ..
     JSR LD06D                                     ; 8EBB: 20 6D D0     m.
@@ -2737,7 +2745,7 @@ L8D3C = sub_C8D3B+1
     STA INWK_30                                   ; 8FA9: 85 27       .'
     LDA L00E9                                     ; 8FAB: A5 E9       ..
     BPL C8FB8                                     ; 8FAD: 10 09       ..
-    LDA L2002                                     ; 8FAF: AD 02 20    ..
+    LDA PPUSTATUS                                 ; 8FAF: AD 02 20    ..
     ASL A                                         ; 8FB2: 0A          .
     BPL C8FB8                                     ; 8FB3: 10 03       ..
     JSR LD06D                                     ; 8FB5: 20 6D D0     m.
@@ -2845,7 +2853,7 @@ L8D3C = sub_C8D3B+1
 .C9068
     LDA L00E9                                     ; 9068: A5 E9       ..
     BPL C9075                                     ; 906A: 10 09       ..
-    LDA L2002                                     ; 906C: AD 02 20    ..
+    LDA PPUSTATUS                                 ; 906C: AD 02 20    ..
     ASL A                                         ; 906F: 0A          .
     BPL C9075                                     ; 9070: 10 03       ..
     JSR LD06D                                     ; 9072: 20 6D D0     m.
@@ -2911,7 +2919,7 @@ L8D3C = sub_C8D3B+1
 .sub_C90D8
     LDA L00E9                                     ; 90D8: A5 E9       ..
     BPL C90E5                                     ; 90DA: 10 09       ..
-    LDA L2002                                     ; 90DC: AD 02 20    ..
+    LDA PPUSTATUS                                 ; 90DC: AD 02 20    ..
     ASL A                                         ; 90DF: 0A          .
     BPL C90E5                                     ; 90E0: 10 03       ..
     JSR LD06D                                     ; 90E2: 20 6D D0     m.
@@ -3152,7 +3160,7 @@ L8D3C = sub_C8D3B+1
     STA T1                                        ; 927F: 85 06       ..
     LDA L00E9                                     ; 9281: A5 E9       ..
     BPL C928E                                     ; 9283: 10 09       ..
-    LDA L2002                                     ; 9285: AD 02 20    ..
+    LDA PPUSTATUS                                 ; 9285: AD 02 20    ..
     ASL A                                         ; 9288: 0A          .
     BPL C928E                                     ; 9289: 10 03       ..
     JSR LD06D                                     ; 928B: 20 6D D0     m.
@@ -3274,7 +3282,7 @@ L8D3C = sub_C8D3B+1
 .C9359
     LDA L00E9                                     ; 9359: A5 E9       ..
     BPL C9366                                     ; 935B: 10 09       ..
-    LDA L2002                                     ; 935D: AD 02 20    ..
+    LDA PPUSTATUS                                 ; 935D: AD 02 20    ..
     ASL A                                         ; 9360: 0A          .
     BPL C9366                                     ; 9361: 10 03       ..
     JSR LD06D                                     ; 9363: 20 6D D0     m.
@@ -4167,7 +4175,7 @@ L8D3C = sub_C8D3B+1
 .C9A12
     LDA L00E9                                     ; 9A12: A5 E9       ..
     BPL C9A1F                                     ; 9A14: 10 09       ..
-    LDA L2002                                     ; 9A16: AD 02 20    ..
+    LDA PPUSTATUS                                 ; 9A16: AD 02 20    ..
     ASL A                                         ; 9A19: 0A          .
     BPL C9A1F                                     ; 9A1A: 10 03       ..
     JSR LD06D                                     ; 9A1C: 20 6D D0     m.
@@ -4458,7 +4466,7 @@ L8D3C = sub_C8D3B+1
 .C9C32
     LDA L00E9                                     ; 9C32: A5 E9       ..
     BPL C9C3F                                     ; 9C34: 10 09       ..
-    LDA L2002                                     ; 9C36: AD 02 20    ..
+    LDA PPUSTATUS                                 ; 9C36: AD 02 20    ..
     ASL A                                         ; 9C39: 0A          .
     BPL C9C3F                                     ; 9C3A: 10 03       ..
     JSR LD06D                                     ; 9C3C: 20 6D D0     m.
@@ -4648,7 +4656,7 @@ L8D3C = sub_C8D3B+1
 .C9D76
     LDA L00E9                                     ; 9D76: A5 E9       ..
     BPL C9D83                                     ; 9D78: 10 09       ..
-    LDA L2002                                     ; 9D7A: AD 02 20    ..
+    LDA PPUSTATUS                                 ; 9D7A: AD 02 20    ..
     ASL A                                         ; 9D7D: 0A          .
     BPL C9D83                                     ; 9D7E: 10 03       ..
     JSR LD06D                                     ; 9D80: 20 6D D0     m.
@@ -4686,7 +4694,7 @@ L8D3C = sub_C8D3B+1
 .C9DB7
     LDA L00E9                                     ; 9DB7: A5 E9       ..
     BPL C9DC4                                     ; 9DB9: 10 09       ..
-    LDA L2002                                     ; 9DBB: AD 02 20    ..
+    LDA PPUSTATUS                                 ; 9DBB: AD 02 20    ..
     ASL A                                         ; 9DBE: 0A          .
     BPL C9DC4                                     ; 9DBF: 10 03       ..
     JSR LD06D                                     ; 9DC1: 20 6D D0     m.
@@ -4727,7 +4735,7 @@ L8D3C = sub_C8D3B+1
     PHA                                           ; 9E06: 48          H
     LDA L00E9                                     ; 9E07: A5 E9       ..
     BPL C9E14                                     ; 9E09: 10 09       ..
-    LDA L2002                                     ; 9E0B: AD 02 20    ..
+    LDA PPUSTATUS                                 ; 9E0B: AD 02 20    ..
     ASL A                                         ; 9E0E: 0A          .
     BPL C9E14                                     ; 9E0F: 10 03       ..
     JSR LD06D                                     ; 9E11: 20 6D D0     m.
@@ -4966,7 +4974,7 @@ L8D3C = sub_C8D3B+1
 .C9FBB
     LDA L00E9                                     ; 9FBB: A5 E9       ..
     BPL C9FC8                                     ; 9FBD: 10 09       ..
-    LDA L2002                                     ; 9FBF: AD 02 20    ..
+    LDA PPUSTATUS                                 ; 9FBF: AD 02 20    ..
     ASL A                                         ; 9FC2: 0A          .
     BPL C9FC8                                     ; 9FC3: 10 03       ..
     JSR LD06D                                     ; 9FC5: 20 6D D0     m.
@@ -5418,7 +5426,7 @@ L8D3C = sub_C8D3B+1
 .sub_CA341
     LDA L00E9                                     ; A341: A5 E9       ..
     BPL CA34E                                     ; A343: 10 09       ..
-    LDA L2002                                     ; A345: AD 02 20    ..
+    LDA PPUSTATUS                                 ; A345: AD 02 20    ..
     ASL A                                         ; A348: 0A          .
     BPL CA34E                                     ; A349: 10 03       ..
     JSR LD06D                                     ; A34B: 20 6D D0     m.
@@ -5634,7 +5642,7 @@ L8D3C = sub_C8D3B+1
 .CA4DB
     LDA L00E9                                     ; A4DB: A5 E9       ..
     BPL CA4E8                                     ; A4DD: 10 09       ..
-    LDA L2002                                     ; A4DF: AD 02 20    ..
+    LDA PPUSTATUS                                 ; A4DF: AD 02 20    ..
     ASL A                                         ; A4E2: 0A          .
     BPL CA4E8                                     ; A4E3: 10 03       ..
     JSR LD06D                                     ; A4E5: 20 6D D0     m.
@@ -5836,7 +5844,7 @@ L8D3C = sub_C8D3B+1
 .sub_CA649
     LDA L00E9                                     ; A649: A5 E9       ..
     BPL CA656                                     ; A64B: 10 09       ..
-    LDA L2002                                     ; A64D: AD 02 20    ..
+    LDA PPUSTATUS                                 ; A64D: AD 02 20    ..
     ASL A                                         ; A650: 0A          .
     BPL CA656                                     ; A651: 10 03       ..
     JSR LD06D                                     ; A653: 20 6D D0     m.
@@ -6067,7 +6075,7 @@ L8D3C = sub_C8D3B+1
 .loop_CA7E3
     LDA L00E9                                     ; A7E3: A5 E9       ..
     BPL CA7F0                                     ; A7E5: 10 09       ..
-    LDA L2002                                     ; A7E7: AD 02 20    ..
+    LDA PPUSTATUS                                 ; A7E7: AD 02 20    ..
     ASL A                                         ; A7EA: 0A          .
     BPL CA7F0                                     ; A7EB: 10 03       ..
     JSR LD06D                                     ; A7ED: 20 6D D0     m.
@@ -6329,7 +6337,7 @@ L8D3C = sub_C8D3B+1
 .CA9A4
     LDA L00E9                                     ; A9A4: A5 E9       ..
     BPL CA9B1                                     ; A9A6: 10 09       ..
-    LDA L2002                                     ; A9A8: AD 02 20    ..
+    LDA PPUSTATUS                                 ; A9A8: AD 02 20    ..
     ASL A                                         ; A9AB: 0A          .
     BPL CA9B1                                     ; A9AC: 10 03       ..
     JSR LD06D                                     ; A9AE: 20 6D D0     m.
@@ -6354,7 +6362,7 @@ L8D3C = sub_C8D3B+1
 .CA9D9
     LDA L00E9                                     ; A9D9: A5 E9       ..
     BPL CA9E6                                     ; A9DB: 10 09       ..
-    LDA L2002                                     ; A9DD: AD 02 20    ..
+    LDA PPUSTATUS                                 ; A9DD: AD 02 20    ..
     ASL A                                         ; A9E0: 0A          .
     BPL CA9E6                                     ; A9E1: 10 03       ..
     JSR LD06D                                     ; A9E3: 20 6D D0     m.
@@ -6513,7 +6521,7 @@ L8D3C = sub_C8D3B+1
     STA T                                         ; AAE3: 85 9A       ..
     LDA L00E9                                     ; AAE5: A5 E9       ..
     BPL CAAF2                                     ; AAE7: 10 09       ..
-    LDA L2002                                     ; AAE9: AD 02 20    ..
+    LDA PPUSTATUS                                 ; AAE9: AD 02 20    ..
     ASL A                                         ; AAEC: 0A          .
     BPL CAAF2                                     ; AAED: 10 03       ..
     JSR LD06D                                     ; AAEF: 20 6D D0     m.
@@ -6603,7 +6611,7 @@ L8D3C = sub_C8D3B+1
 .CAB86
     LDA L00E9                                     ; AB86: A5 E9       ..
     BPL CAB93                                     ; AB88: 10 09       ..
-    LDA L2002                                     ; AB8A: AD 02 20    ..
+    LDA PPUSTATUS                                 ; AB8A: AD 02 20    ..
     ASL A                                         ; AB8D: 0A          .
     BPL CAB93                                     ; AB8E: 10 03       ..
     JSR LD06D                                     ; AB90: 20 6D D0     m.
@@ -6616,7 +6624,7 @@ L8D3C = sub_C8D3B+1
     BPL loop_CAB95                                ; AB9B: 10 F8       ..
     LDA L00E9                                     ; AB9D: A5 E9       ..
     BPL CABAA                                     ; AB9F: 10 09       ..
-    LDA L2002                                     ; ABA1: AD 02 20    ..
+    LDA PPUSTATUS                                 ; ABA1: AD 02 20    ..
     ASL A                                         ; ABA4: 0A          .
     BPL CABAA                                     ; ABA5: 10 03       ..
     JSR LD06D                                     ; ABA7: 20 6D D0     m.
@@ -6657,7 +6665,7 @@ L8D3C = sub_C8D3B+1
 .CABD7
     LDA L00E9                                     ; ABD7: A5 E9       ..
     BPL CABE4                                     ; ABD9: 10 09       ..
-    LDA L2002                                     ; ABDB: AD 02 20    ..
+    LDA PPUSTATUS                                 ; ABDB: AD 02 20    ..
     ASL A                                         ; ABDE: 0A          .
     BPL CABE4                                     ; ABDF: 10 03       ..
     JSR LD06D                                     ; ABE1: 20 6D D0     m.
@@ -6739,7 +6747,7 @@ L8D3C = sub_C8D3B+1
 .CAC6D
     LDA L00E9                                     ; AC6D: A5 E9       ..
     BPL CAC7A                                     ; AC6F: 10 09       ..
-    LDA L2002                                     ; AC71: AD 02 20    ..
+    LDA PPUSTATUS                                 ; AC71: AD 02 20    ..
     ASL A                                         ; AC74: 0A          .
     BPL CAC7A                                     ; AC75: 10 03       ..
     JSR LD06D                                     ; AC77: 20 6D D0     m.
@@ -6760,7 +6768,7 @@ L8D3C = sub_C8D3B+1
     STA L0008                                     ; AC91: 85 08       ..
     LDA L00E9                                     ; AC93: A5 E9       ..
     BPL CACA0                                     ; AC95: 10 09       ..
-    LDA L2002                                     ; AC97: AD 02 20    ..
+    LDA PPUSTATUS                                 ; AC97: AD 02 20    ..
     ASL A                                         ; AC9A: 0A          .
     BPL CACA0                                     ; AC9B: 10 03       ..
     JSR LD06D                                     ; AC9D: 20 6D D0     m.
@@ -6777,7 +6785,7 @@ L8D3C = sub_C8D3B+1
     STA L0062                                     ; ACAF: 85 62       .b
     LDA L00E9                                     ; ACB1: A5 E9       ..
     BPL CACBE                                     ; ACB3: 10 09       ..
-    LDA L2002                                     ; ACB5: AD 02 20    ..
+    LDA PPUSTATUS                                 ; ACB5: AD 02 20    ..
     ASL A                                         ; ACB8: 0A          .
     BPL CACBE                                     ; ACB9: 10 03       ..
     JSR LD06D                                     ; ACBB: 20 6D D0     m.
@@ -6792,7 +6800,7 @@ L8D3C = sub_C8D3B+1
     STX L0401                                     ; ACC7: 8E 01 04    ...
     LDA L00E9                                     ; ACCA: A5 E9       ..
     BPL CACD7                                     ; ACCC: 10 09       ..
-    LDA L2002                                     ; ACCE: AD 02 20    ..
+    LDA PPUSTATUS                                 ; ACCE: AD 02 20    ..
     ASL A                                         ; ACD1: 0A          .
     BPL CACD7                                     ; ACD2: 10 03       ..
     JSR LD06D                                     ; ACD4: 20 6D D0     m.
@@ -6965,7 +6973,7 @@ L8D3C = sub_C8D3B+1
 .sub_CAE03
     LDA L00E9                                     ; AE03: A5 E9       ..
     BPL CAE10                                     ; AE05: 10 09       ..
-    LDA L2002                                     ; AE07: AD 02 20    ..
+    LDA PPUSTATUS                                 ; AE07: AD 02 20    ..
     ASL A                                         ; AE0A: 0A          .
     BPL CAE10                                     ; AE0B: 10 03       ..
     JSR LD06D                                     ; AE0D: 20 6D D0     m.
@@ -6978,7 +6986,7 @@ L8D3C = sub_C8D3B+1
     BPL loop_CAE14                                ; AE18: 10 FA       ..
     LDA L00E9                                     ; AE1A: A5 E9       ..
     BPL CAE27                                     ; AE1C: 10 09       ..
-    LDA L2002                                     ; AE1E: AD 02 20    ..
+    LDA PPUSTATUS                                 ; AE1E: AD 02 20    ..
     ASL A                                         ; AE21: 0A          .
     BPL CAE27                                     ; AE22: 10 03       ..
     JSR LD06D                                     ; AE24: 20 6D D0     m.
@@ -7831,7 +7839,7 @@ LAFB4 = sub_CAFB3+1
     STA INWK_3                                    ; B436: 85 0C       ..
     LDA L00E9                                     ; B438: A5 E9       ..
     BPL CB445                                     ; B43A: 10 09       ..
-    LDA L2002                                     ; B43C: AD 02 20    ..
+    LDA PPUSTATUS                                 ; B43C: AD 02 20    ..
     ASL A                                         ; B43F: 0A          .
     BPL CB445                                     ; B440: 10 03       ..
     JSR LD06D                                     ; B442: 20 6D D0     m.
@@ -7924,7 +7932,7 @@ LAFB4 = sub_CAFB3+1
     STA R                                         ; B4D2: 85 98       ..
     LDA L00E9                                     ; B4D4: A5 E9       ..
     BPL CB4E1                                     ; B4D6: 10 09       ..
-    LDA L2002                                     ; B4D8: AD 02 20    ..
+    LDA PPUSTATUS                                 ; B4D8: AD 02 20    ..
     ASL A                                         ; B4DB: 0A          .
     BPL CB4E1                                     ; B4DC: 10 03       ..
     JSR LD06D                                     ; B4DE: 20 6D D0     m.
@@ -7941,7 +7949,7 @@ LAFB4 = sub_CAFB3+1
 .sub_CB4EE
     LDA L00E9                                     ; B4EE: A5 E9       ..
     BPL CB4FB                                     ; B4F0: 10 09       ..
-    LDA L2002                                     ; B4F2: AD 02 20    ..
+    LDA PPUSTATUS                                 ; B4F2: AD 02 20    ..
     ASL A                                         ; B4F5: 0A          .
     BPL CB4FB                                     ; B4F6: 10 03       ..
     JSR LD06D                                     ; B4F8: 20 6D D0     m.
@@ -7968,7 +7976,7 @@ LAFB4 = sub_CAFB3+1
 .CB522
     LDA L00E9                                     ; B522: A5 E9       ..
     BPL CB52F                                     ; B524: 10 09       ..
-    LDA L2002                                     ; B526: AD 02 20    ..
+    LDA PPUSTATUS                                 ; B526: AD 02 20    ..
     ASL A                                         ; B529: 0A          .
     BPL CB52F                                     ; B52A: 10 03       ..
     JSR LD06D                                     ; B52C: 20 6D D0     m.
@@ -8014,7 +8022,7 @@ LAFB4 = sub_CAFB3+1
 .CB566
     LDA L00E9                                     ; B566: A5 E9       ..
     BPL CB573                                     ; B568: 10 09       ..
-    LDA L2002                                     ; B56A: AD 02 20    ..
+    LDA PPUSTATUS                                 ; B56A: AD 02 20    ..
     ASL A                                         ; B56D: 0A          .
     BPL CB573                                     ; B56E: 10 03       ..
     JSR LD06D                                     ; B570: 20 6D D0     m.
@@ -8328,7 +8336,7 @@ LAFB4 = sub_CAFB3+1
     PHA                                           ; B78F: 48          H
     LDA L00E9                                     ; B790: A5 E9       ..
     BPL CB79D                                     ; B792: 10 09       ..
-    LDA L2002                                     ; B794: AD 02 20    ..
+    LDA PPUSTATUS                                 ; B794: AD 02 20    ..
     ASL A                                         ; B797: 0A          .
     BPL CB79D                                     ; B798: 10 03       ..
     JSR LD06D                                     ; B79A: 20 6D D0     m.
@@ -8351,7 +8359,7 @@ LAFB4 = sub_CAFB3+1
     JSR TT162                                     ; B7BF: 20 9C 9F     ..
     LDA L00E9                                     ; B7C2: A5 E9       ..
     BPL CB7CF                                     ; B7C4: 10 09       ..
-    LDA L2002                                     ; B7C6: AD 02 20    ..
+    LDA PPUSTATUS                                 ; B7C6: AD 02 20    ..
     ASL A                                         ; B7C9: 0A          .
     BPL CB7CF                                     ; B7CA: 10 03       ..
     JSR LD06D                                     ; B7CC: 20 6D D0     m.
@@ -8388,7 +8396,7 @@ LAFB4 = sub_CAFB3+1
     STA L00B4                                     ; B802: 85 B4       ..
     LDA L00E9                                     ; B804: A5 E9       ..
     BPL CB811                                     ; B806: 10 09       ..
-    LDA L2002                                     ; B808: AD 02 20    ..
+    LDA PPUSTATUS                                 ; B808: AD 02 20    ..
     ASL A                                         ; B80B: 0A          .
     BPL CB811                                     ; B80C: 10 03       ..
     JSR LD06D                                     ; B80E: 20 6D D0     m.
@@ -8404,7 +8412,7 @@ LAFB4 = sub_CAFB3+1
     STX L0394                                     ; B821: 8E 94 03    ...
     LDA L00E9                                     ; B824: A5 E9       ..
     BPL CB831                                     ; B826: 10 09       ..
-    LDA L2002                                     ; B828: AD 02 20    ..
+    LDA PPUSTATUS                                 ; B828: AD 02 20    ..
     ASL A                                         ; B82B: 0A          .
     BPL CB831                                     ; B82C: 10 03       ..
     JSR LD06D                                     ; B82E: 20 6D D0     m.
@@ -8427,7 +8435,7 @@ LAFB4 = sub_CAFB3+1
     STX QQ17                                      ; B849: 86 3C       .<
     LDA L00E9                                     ; B84B: A5 E9       ..
     BPL CB858                                     ; B84D: 10 09       ..
-    LDA L2002                                     ; B84F: AD 02 20    ..
+    LDA PPUSTATUS                                 ; B84F: AD 02 20    ..
     ASL A                                         ; B852: 0A          .
     BPL CB858                                     ; B853: 10 03       ..
     JSR LD06D                                     ; B855: 20 6D D0     m.
@@ -8518,7 +8526,7 @@ LAFB4 = sub_CAFB3+1
 .CB910
     LDA L00E9                                     ; B910: A5 E9       ..
     BPL CB91D                                     ; B912: 10 09       ..
-    LDA L2002                                     ; B914: AD 02 20    ..
+    LDA PPUSTATUS                                 ; B914: AD 02 20    ..
     ASL A                                         ; B917: 0A          .
     BPL CB91D                                     ; B918: 10 03       ..
     JSR LD06D                                     ; B91A: 20 6D D0     m.
@@ -8548,7 +8556,7 @@ LAFB4 = sub_CAFB3+1
 .CB945
     LDA L00E9                                     ; B945: A5 E9       ..
     BPL CB952                                     ; B947: 10 09       ..
-    LDA L2002                                     ; B949: AD 02 20    ..
+    LDA PPUSTATUS                                 ; B949: AD 02 20    ..
     ASL A                                         ; B94C: 0A          .
     BPL CB952                                     ; B94D: 10 03       ..
     JSR LD06D                                     ; B94F: 20 6D D0     m.
@@ -8557,7 +8565,7 @@ LAFB4 = sub_CAFB3+1
 .CB955
     LDA L00E9                                     ; B955: A5 E9       ..
     BPL CB962                                     ; B957: 10 09       ..
-    LDA L2002                                     ; B959: AD 02 20    ..
+    LDA PPUSTATUS                                 ; B959: AD 02 20    ..
     ASL A                                         ; B95C: 0A          .
     BPL CB962                                     ; B95D: 10 03       ..
     JSR LD06D                                     ; B95F: 20 6D D0     m.
@@ -8586,7 +8594,7 @@ LAFB4 = sub_CAFB3+1
     STA R                                         ; B98F: 85 98       ..
     LDA L00E9                                     ; B991: A5 E9       ..
     BPL CB99E                                     ; B993: 10 09       ..
-    LDA L2002                                     ; B995: AD 02 20    ..
+    LDA PPUSTATUS                                 ; B995: AD 02 20    ..
     ASL A                                         ; B998: 0A          .
     BPL CB99E                                     ; B999: 10 03       ..
     JSR LD06D                                     ; B99B: 20 6D D0     m.
@@ -8623,7 +8631,7 @@ LAFB4 = sub_CAFB3+1
     STA L045C                                     ; B9D7: 8D 5C 04    .\.
     LDA L00E9                                     ; B9DA: A5 E9       ..
     BPL CB9E7                                     ; B9DC: 10 09       ..
-    LDA L2002                                     ; B9DE: AD 02 20    ..
+    LDA PPUSTATUS                                 ; B9DE: AD 02 20    ..
     ASL A                                         ; B9E1: 0A          .
     BPL CB9E7                                     ; B9E2: 10 03       ..
     JSR LD06D                                     ; B9E4: 20 6D D0     m.
@@ -8644,7 +8652,7 @@ LAFB4 = sub_CAFB3+1
     STA INWK_8                                    ; BA06: 85 11       ..
     LDA L00E9                                     ; BA08: A5 E9       ..
     BPL CBA15                                     ; BA0A: 10 09       ..
-    LDA L2002                                     ; BA0C: AD 02 20    ..
+    LDA PPUSTATUS                                 ; BA0C: AD 02 20    ..
     ASL A                                         ; BA0F: 0A          .
     BPL CBA15                                     ; BA10: 10 03       ..
     JSR LD06D                                     ; BA12: 20 6D D0     m.
@@ -8673,7 +8681,7 @@ LAFB4 = sub_CAFB3+1
 .CBA42
     LDA L00E9                                     ; BA42: A5 E9       ..
     BPL CBA4F                                     ; BA44: 10 09       ..
-    LDA L2002                                     ; BA46: AD 02 20    ..
+    LDA PPUSTATUS                                 ; BA46: AD 02 20    ..
     ASL A                                         ; BA49: 0A          .
     BPL CBA4F                                     ; BA4A: 10 03       ..
     JSR LD06D                                     ; BA4C: 20 6D D0     m.
@@ -8697,7 +8705,7 @@ LAFB4 = sub_CAFB3+1
 .CBA71
     LDA L00E9                                     ; BA71: A5 E9       ..
     BPL CBA7E                                     ; BA73: 10 09       ..
-    LDA L2002                                     ; BA75: AD 02 20    ..
+    LDA PPUSTATUS                                 ; BA75: AD 02 20    ..
     ASL A                                         ; BA78: 0A          .
     BPL CBA7E                                     ; BA79: 10 03       ..
     JSR LD06D                                     ; BA7B: 20 6D D0     m.
@@ -8721,7 +8729,7 @@ LAFB4 = sub_CAFB3+1
 .CBAA0
     LDA L00E9                                     ; BAA0: A5 E9       ..
     BPL CBAAD                                     ; BAA2: 10 09       ..
-    LDA L2002                                     ; BAA4: AD 02 20    ..
+    LDA PPUSTATUS                                 ; BAA4: AD 02 20    ..
     ASL A                                         ; BAA7: 0A          .
     BPL CBAAD                                     ; BAA8: 10 03       ..
     JSR LD06D                                     ; BAAA: 20 6D D0     m.
@@ -8766,7 +8774,7 @@ LAFB4 = sub_CAFB3+1
 .CBAF9
     LDA L00E9                                     ; BAF9: A5 E9       ..
     BPL CBB06                                     ; BAFB: 10 09       ..
-    LDA L2002                                     ; BAFD: AD 02 20    ..
+    LDA PPUSTATUS                                 ; BAFD: AD 02 20    ..
     ASL A                                         ; BB00: 0A          .
     BPL CBB06                                     ; BB01: 10 03       ..
     JSR LD06D                                     ; BB03: 20 6D D0     m.
@@ -8851,7 +8859,7 @@ LAFB4 = sub_CAFB3+1
 .sub_CBB8F
     LDA L00E9                                     ; BB8F: A5 E9       ..
     BPL CBB9C                                     ; BB91: 10 09       ..
-    LDA L2002                                     ; BB93: AD 02 20    ..
+    LDA PPUSTATUS                                 ; BB93: AD 02 20    ..
     ASL A                                         ; BB96: 0A          .
     BPL CBB9C                                     ; BB97: 10 03       ..
     JSR LD06D                                     ; BB99: 20 6D D0     m.
@@ -8881,7 +8889,7 @@ LAFB4 = sub_CAFB3+1
     STX P                                         ; BBCE: 86 2F       ./
     LDA L00E9                                     ; BBD0: A5 E9       ..
     BPL CBBDD                                     ; BBD2: 10 09       ..
-    LDA L2002                                     ; BBD4: AD 02 20    ..
+    LDA PPUSTATUS                                 ; BBD4: AD 02 20    ..
     ASL A                                         ; BBD7: 0A          .
     BPL CBBDD                                     ; BBD8: 10 03       ..
     JSR LD06D                                     ; BBDA: 20 6D D0     m.
@@ -8910,7 +8918,7 @@ LAFB4 = sub_CAFB3+1
     STX INWK_4,Y                                  ; BC0D: 96 0D       ..
     LDA L00E9                                     ; BC0F: A5 E9       ..
     BPL CBC1C                                     ; BC11: 10 09       ..
-    LDA L2002                                     ; BC13: AD 02 20    ..
+    LDA PPUSTATUS                                 ; BC13: AD 02 20    ..
     ASL A                                         ; BC16: 0A          .
     BPL CBC1C                                     ; BC17: 10 03       ..
     JSR LD06D                                     ; BC19: 20 6D D0     m.
@@ -9148,7 +9156,7 @@ LAFB4 = sub_CAFB3+1
 .CBDCA
     LDA L00E9                                     ; BDCA: A5 E9       ..
     BPL CBDD7                                     ; BDCC: 10 09       ..
-    LDA L2002                                     ; BDCE: AD 02 20    ..
+    LDA PPUSTATUS                                 ; BDCE: AD 02 20    ..
     ASL A                                         ; BDD1: 0A          .
     BPL CBDD7                                     ; BDD2: 10 03       ..
     JSR LD06D                                     ; BDD4: 20 6D D0     m.
@@ -9189,7 +9197,7 @@ LAFB4 = sub_CAFB3+1
 .CBE1B
     LDA L00E9                                     ; BE1B: A5 E9       ..
     BPL CBE28                                     ; BE1D: 10 09       ..
-    LDA L2002                                     ; BE1F: AD 02 20    ..
+    LDA PPUSTATUS                                 ; BE1F: AD 02 20    ..
     ASL A                                         ; BE22: 0A          .
     BPL CBE28                                     ; BE23: 10 03       ..
     JSR LD06D                                     ; BE25: 20 6D D0     m.

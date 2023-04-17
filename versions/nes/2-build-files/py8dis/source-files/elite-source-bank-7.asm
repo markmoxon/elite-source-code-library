@@ -1,443 +1,444 @@
 ; Memory locations
-ZP      = &0000
-L0002   = &0002
-L0003   = &0003
-L0004   = &0004
-L0005   = &0005
-T1      = &0006
-L0007   = &0007
-L0008   = &0008
-INWK    = &0009
-INWK_1  = &000A
-INWK_2  = &000B
-INWK_3  = &000C
-INWK_4  = &000D
-INWK_5  = &000E
-INWK_6  = &000F
-INWK_7  = &0010
-INWK_8  = &0011
-INWK_9  = &0012
-INWK_10 = &0013
-INWK_11 = &0014
-INWK_12 = &0015
-INWK_13 = &0016
-INWK_14 = &0017
-INWK_15 = &0018
-INWK_16 = &0019
-INWK_17 = &001A
-INWK_18 = &001B
-INWK_19 = &001C
-INWK_20 = &001D
-INWK_21 = &001E
-INWK_22 = &001F
-INWK_23 = &0020
-INWK_24 = &0021
-INWK_25 = &0022
-INWK_26 = &0023
-INWK_27 = &0024
-INWK_28 = &0025
-INWK_29 = &0026
-INWK_30 = &0027
-INWK_31 = &0028
-L0029   = &0029
-P       = &002F
-L0030   = &0030
-L0031   = &0031
-L0032   = &0032
-L0033   = &0033
-L0034   = &0034
-L0035   = &0035
-L0036   = &0036
-L0038   = &0038
-L0039   = &0039
-L003A   = &003A
-YC      = &003B
-QQ17    = &003C
-XX2     = &003D
-L003E   = &003E
-L004B   = &004B
-XX2_15  = &004C
-XX16    = &004D
-XX16_1  = &004E
-XX16_2  = &004F
-XX16_3  = &0050
-XX16_6  = &0053
-XX16_9  = &0056
-XX16_12 = &0059
-XX0     = &005F
-INF     = &0061
-L0062   = &0062
-V       = &0063
-V_1     = &0064
-XX      = &0065
-L0066   = &0066
-L006D   = &006D
-ALP1    = &006E
-XX15    = &0071
-Y1      = &0072
-X2      = &0073
-Y2      = &0074
-XX15_1  = &0075
-XX15_2  = &0076
-XX12    = &0077
-XX12_1  = &0078
-K       = &007D
-L007E   = &007E
-L007F   = &007F
-L0080   = &0080
-QQ15    = &0082
-XX18    = &0088
-XX18_7  = &008F
-L0093   = &0093
-U       = &0096
-Q       = &0097
-R       = &0098
-S       = &0099
-T       = &009A
-L009C   = &009C
-L009E   = &009E
-L009F   = &009F
-TYPE    = &00A3
-L00A5   = &00A5
-CNT     = &00A8
-XX4     = &00AB
-XX20    = &00AC
-widget  = &00B0
-L00B1   = &00B1
-L00B7   = &00B7
-L00B8   = &00B8
-L00B9   = &00B9
-L00BA   = &00BA
-L00BB   = &00BB
-L00BC   = &00BC
-L00BD   = &00BD
-L00BE   = &00BE
-L00C0   = &00C0
-L00C1   = &00C1
-L00C2   = &00C2
-L00C3   = &00C3
-L00C5   = &00C5
-L00C7   = &00C7
-L00C9   = &00C9
-L00CA   = &00CA
-L00CC   = &00CC
-L00CD   = &00CD
-L00CE   = &00CE
-L00CF   = &00CF
-L00D0   = &00D0
-L00D1   = &00D1
-L00D2   = &00D2
-L00D3   = &00D3
-L00D4   = &00D4
-L00D5   = &00D5
-L00D6   = &00D6
-L00D7   = &00D7
-L00D8   = &00D8
-L00DA   = &00DA
-L00DB   = &00DB
-L00DD   = &00DD
-L00DF   = &00DF
-L00E0   = &00E0
-L00E1   = &00E1
-L00E2   = &00E2
-L00E3   = &00E3
-L00E4   = &00E4
-L00E5   = &00E5
-L00E6   = &00E6
-L00E7   = &00E7
-L00E8   = &00E8
-L00E9   = &00E9
-L00EA   = &00EA
-L00EB   = &00EB
-L00EC   = &00EC
-L00ED   = &00ED
-L00EE   = &00EE
-L00EF   = &00EF
-L00F0   = &00F0
-L00F1   = &00F1
-L00F2   = &00F2
-L00F3   = &00F3
-L00F4   = &00F4
-L00F5   = &00F5
-L00F6   = &00F6
-L00F7   = &00F7
-L00F8   = &00F8
-L00FA   = &00FA
-L00FB   = &00FB
-XX3     = &0100
-XX3_1   = &0101
-L0200   = &0200
-L0204   = &0204
-L0205   = &0205
-L0207   = &0207
-L0208   = &0208
-L0209   = &0209
-L020B   = &020B
-L020C   = &020C
-L020F   = &020F
-L0210   = &0210
-L0213   = &0213
-L0302   = &0302
-L0307   = &0307
-L0308   = &0308
-L0309   = &0309
-L030A   = &030A
-L036A   = &036A
-L036C   = &036C
-L0373   = &0373
-L0388   = &0388
-L0393   = &0393
-L0394   = &0394
-L039D   = &039D
-CRGO    = &03AC
-QQ20    = &03AD
-BST     = &03BF
-L03C7   = &03C7
-L03DC   = &03DC
-L03E5   = &03E5
-L03EA   = &03EA
-L03EB   = &03EB
-L03EC   = &03EC
-L03ED   = &03ED
-L03EE   = &03EE
-L03EF   = &03EF
-L03F0   = &03F0
-L03F1   = &03F1
-L03F3   = &03F3
-L03F4   = &03F4
-L03F9   = &03F9
-L03FC   = &03FC
-L045E   = &045E
-L045F   = &045F
-L0460   = &0460
-L0461   = &0461
-L0462   = &0462
-L0463   = &0463
-L0465   = &0465
-L0467   = &0467
-L0468   = &0468
-L0469   = &0469
-L046A   = &046A
-L046B   = &046B
-L046E   = &046E
-L046F   = &046F
-L0472   = &0472
-L0473   = &0473
-L0475   = &0475
-L0476   = &0476
-L0477   = &0477
-L0478   = &0478
-L047F   = &047F
-L0486   = &0486
-QQ29    = &048A
-QQ8     = &049B
-L04A8   = &04A8
-L04AA   = &04AA
-L04AC   = &04AC
-L04AE   = &04AE
-L04B0   = &04B0
-L04B2   = &04B2
-L04B4   = &04B4
-L04B6   = &04B6
-L04B8   = &04B8
-L04BA   = &04BA
-L04BB   = &04BB
-L04BC   = &04BC
-L04BD   = &04BD
-L04BE   = &04BE
-L04C0   = &04C0
-L04C6   = &04C6
-SY      = &04DD
-L04F2   = &04F2
-L0600   = &0600
-L0601   = &0601
-L0606   = &0606
-L2000   = &2000
-L2001   = &2001
-L2002   = &2002
-L2003   = &2003
-L2005   = &2005
-L2006   = &2006
-L2007   = &2007
-L4014   = &4014
-L4016   = &4016
-L4017   = &4017
-L7000   = &7000
-L7001   = &7001
-L7020   = &7020
-L7021   = &7021
-L7040   = &7040
-L7041   = &7041
-L7060   = &7060
-L7061   = &7061
-L7080   = &7080
-L7081   = &7081
-L70A0   = &70A0
-L70A1   = &70A1
-L70C0   = &70C0
-L70C1   = &70C1
-L70E0   = &70E0
-L70E1   = &70E1
-L7100   = &7100
-L7101   = &7101
-L7120   = &7120
-L7121   = &7121
-L7140   = &7140
-L7141   = &7141
-L7160   = &7160
-L7161   = &7161
-L7180   = &7180
-L7181   = &7181
-L71A0   = &71A0
-L71A1   = &71A1
-L71C0   = &71C0
-L71C1   = &71C1
-L71E0   = &71E0
-L71E1   = &71E1
-L7200   = &7200
-L7201   = &7201
-L7220   = &7220
-L7221   = &7221
-L7240   = &7240
-L7241   = &7241
-L7260   = &7260
-L7261   = &7261
-L72C0   = &72C0
-L7300   = &7300
-L7400   = &7400
-L7401   = &7401
-L7420   = &7420
-L7421   = &7421
-L7440   = &7440
-L7441   = &7441
-L7460   = &7460
-L7461   = &7461
-L7480   = &7480
-L7481   = &7481
-L74A0   = &74A0
-L74A1   = &74A1
-L74C0   = &74C0
-L74C1   = &74C1
-L74E0   = &74E0
-L74E1   = &74E1
-L7500   = &7500
-L7501   = &7501
-L7520   = &7520
-L7521   = &7521
-L7540   = &7540
-L7541   = &7541
-L7560   = &7560
-L7561   = &7561
-L7580   = &7580
-L7581   = &7581
-L75A0   = &75A0
-L75A1   = &75A1
-L75C0   = &75C0
-L75C1   = &75C1
-L75E0   = &75E0
-L75E1   = &75E1
-L7600   = &7600
-L7601   = &7601
-L7620   = &7620
-L7621   = &7621
-L7640   = &7640
-L7641   = &7641
-L7660   = &7660
-L7661   = &7661
-L7700   = &7700
-L8012   = &8012
-L8021   = &8021
-L8041   = &8041
-L8062   = &8062
-L8083   = &8083
-L811E   = &811E
-slvy2   = &81B6
-L8926   = &8926
-L8980   = &8980
-L89D1   = &89D1
-L8A14   = &8A14
-L9522   = &9522
-tnpr    = &9620
-L9FFF   = &9FFF
-LA070   = &A070
-LA082   = &A082
-LA0F8   = &A0F8
-LA166   = &A166
-LA2C3   = &A2C3
-LA379   = &A379
-LA4A5   = &A4A5
-LA5AB   = &A5AB
-LA65D   = &A65D
-LA730   = &A730
-LA775   = &A775
-LA7B7   = &A7B7
-LA8D9   = &A8D9
-LA972   = &A972
-LA9D1   = &A9D1
-LAABC   = &AABC
-LAC1D   = &AC1D
-LAC25   = &AC25
-LAC5C   = &AC5C
-LAD4C   = &AD4C
-LAE03   = &AE03
-LAE18   = &AE18
-LAF9D   = &AF9D
-LAFCD   = &AFCD
-LB0E1   = &B0E1
-LB0EF   = &B0EF
-LB187   = &B187
-LB18E   = &B18E
-LB1BE   = &B1BE
-MAS4    = &B1CA
-LB1D4   = &B1D4
-LB219   = &B219
-LB248   = &B248
-LB2BC   = &B2BC
-LB2C3   = &B2C3
-LB2EF   = &B2EF
-LB2FB   = &B2FB
-LB341   = &B341
-LB358   = &B358
-LB39D   = &B39D
-LB3BC   = &B3BC
-LB3E8   = &B3E8
-LB44F   = &B44F
-LB459   = &B459
-LB4AA   = &B4AA
-LB4F5   = &B4F5
-LB635   = &B635
-LB63D   = &B63D
-LB673   = &B673
-LB738   = &B738
-LB85C   = &B85C
-LB882   = &B882
-LB88C   = &B88C
-LB8F7   = &B8F7
-LB8F9   = &B8F9
-LB8FE   = &B8FE
-LB90D   = &B90D
-LB919   = &B919
-LB93C   = &B93C
-LB96B   = &B96B
-LB975   = &B975
-LB980   = &B980
-LB9C1   = &B9C1
-LB9E2   = &B9E2
-LB9F9   = &B9F9
-LBA17   = &BA17
-LBA23   = &BA23
-LBA63   = &BA63
-LBAF3   = &BAF3
-LBB37   = &BB37
-LBBDE   = &BBDE
-LBC83   = &BC83
-LBE52   = &BE52
-LBEB5   = &BEB5
-LBED2   = &BED2
-LBED7   = &BED7
-LBEEA   = &BEEA
-LBF41   = &BF41
-LBFFF   = &BFFF
+ZP          = &0000
+L0002       = &0002
+L0003       = &0003
+L0004       = &0004
+L0005       = &0005
+T1          = &0006
+L0007       = &0007
+L0008       = &0008
+INWK        = &0009
+INWK_1      = &000A
+INWK_2      = &000B
+INWK_3      = &000C
+INWK_4      = &000D
+INWK_5      = &000E
+INWK_6      = &000F
+INWK_7      = &0010
+INWK_8      = &0011
+INWK_9      = &0012
+INWK_10     = &0013
+INWK_11     = &0014
+INWK_12     = &0015
+INWK_13     = &0016
+INWK_14     = &0017
+INWK_15     = &0018
+INWK_16     = &0019
+INWK_17     = &001A
+INWK_18     = &001B
+INWK_19     = &001C
+INWK_20     = &001D
+INWK_21     = &001E
+INWK_22     = &001F
+INWK_23     = &0020
+INWK_24     = &0021
+INWK_25     = &0022
+INWK_26     = &0023
+INWK_27     = &0024
+INWK_28     = &0025
+INWK_29     = &0026
+INWK_30     = &0027
+INWK_31     = &0028
+L0029       = &0029
+P           = &002F
+L0030       = &0030
+L0031       = &0031
+L0032       = &0032
+L0033       = &0033
+L0034       = &0034
+L0035       = &0035
+L0036       = &0036
+L0038       = &0038
+L0039       = &0039
+L003A       = &003A
+YC          = &003B
+QQ17        = &003C
+XX2         = &003D
+L003E       = &003E
+L004B       = &004B
+XX2_15      = &004C
+XX16        = &004D
+XX16_1      = &004E
+XX16_2      = &004F
+XX16_3      = &0050
+XX16_6      = &0053
+XX16_9      = &0056
+XX16_12     = &0059
+XX0         = &005F
+INF         = &0061
+L0062       = &0062
+V           = &0063
+V_1         = &0064
+XX          = &0065
+L0066       = &0066
+L006D       = &006D
+ALP1        = &006E
+XX15        = &0071
+Y1          = &0072
+X2          = &0073
+Y2          = &0074
+XX15_1      = &0075
+XX15_2      = &0076
+XX12        = &0077
+XX12_1      = &0078
+K           = &007D
+L007E       = &007E
+L007F       = &007F
+L0080       = &0080
+QQ15        = &0082
+XX18        = &0088
+XX18_7      = &008F
+L0093       = &0093
+U           = &0096
+Q           = &0097
+R           = &0098
+S           = &0099
+T           = &009A
+L009C       = &009C
+L009E       = &009E
+L009F       = &009F
+TYPE        = &00A3
+L00A5       = &00A5
+CNT         = &00A8
+XX4         = &00AB
+XX20        = &00AC
+widget      = &00B0
+L00B1       = &00B1
+L00B7       = &00B7
+L00B8       = &00B8
+L00B9       = &00B9
+L00BA       = &00BA
+L00BB       = &00BB
+L00BC       = &00BC
+L00BD       = &00BD
+L00BE       = &00BE
+L00C0       = &00C0
+L00C1       = &00C1
+L00C2       = &00C2
+L00C3       = &00C3
+L00C5       = &00C5
+L00C7       = &00C7
+L00C9       = &00C9
+L00CA       = &00CA
+L00CC       = &00CC
+L00CD       = &00CD
+L00CE       = &00CE
+L00CF       = &00CF
+L00D0       = &00D0
+L00D1       = &00D1
+L00D2       = &00D2
+L00D3       = &00D3
+L00D4       = &00D4
+L00D5       = &00D5
+L00D6       = &00D6
+L00D7       = &00D7
+L00D8       = &00D8
+L00DA       = &00DA
+L00DB       = &00DB
+L00DD       = &00DD
+L00DF       = &00DF
+L00E0       = &00E0
+L00E1       = &00E1
+L00E2       = &00E2
+L00E3       = &00E3
+L00E4       = &00E4
+L00E5       = &00E5
+L00E6       = &00E6
+L00E7       = &00E7
+L00E8       = &00E8
+L00E9       = &00E9
+L00EA       = &00EA
+L00EB       = &00EB
+L00EC       = &00EC
+L00ED       = &00ED
+L00EE       = &00EE
+L00EF       = &00EF
+L00F0       = &00F0
+L00F1       = &00F1
+L00F2       = &00F2
+L00F3       = &00F3
+L00F4       = &00F4
+L00F5       = &00F5
+L00F6       = &00F6
+L00F7       = &00F7
+L00F8       = &00F8
+L00FA       = &00FA
+L00FB       = &00FB
+XX3         = &0100
+XX3_1       = &0101
+L0200       = &0200
+L0204       = &0204
+L0205       = &0205
+L0207       = &0207
+L0208       = &0208
+L0209       = &0209
+L020B       = &020B
+L020C       = &020C
+L020F       = &020F
+L0210       = &0210
+L0213       = &0213
+L0302       = &0302
+L0307       = &0307
+L0308       = &0308
+L0309       = &0309
+L030A       = &030A
+L036A       = &036A
+L036C       = &036C
+L0373       = &0373
+L0388       = &0388
+L0393       = &0393
+L0394       = &0394
+L039D       = &039D
+CRGO        = &03AC
+QQ20        = &03AD
+BST         = &03BF
+L03C7       = &03C7
+L03DC       = &03DC
+L03E5       = &03E5
+L03EA       = &03EA
+L03EB       = &03EB
+L03EC       = &03EC
+L03ED       = &03ED
+L03EE       = &03EE
+L03EF       = &03EF
+L03F0       = &03F0
+L03F1       = &03F1
+L03F3       = &03F3
+L03F4       = &03F4
+L03F9       = &03F9
+L03FC       = &03FC
+L045E       = &045E
+L045F       = &045F
+L0460       = &0460
+L0461       = &0461
+L0462       = &0462
+L0463       = &0463
+L0465       = &0465
+L0467       = &0467
+L0468       = &0468
+L0469       = &0469
+L046A       = &046A
+L046B       = &046B
+L046E       = &046E
+L046F       = &046F
+L0472       = &0472
+L0473       = &0473
+L0475       = &0475
+L0476       = &0476
+L0477       = &0477
+L0478       = &0478
+L047F       = &047F
+L0486       = &0486
+QQ29        = &048A
+QQ8         = &049B
+L04A8       = &04A8
+L04AA       = &04AA
+L04AC       = &04AC
+L04AE       = &04AE
+L04B0       = &04B0
+L04B2       = &04B2
+L04B4       = &04B4
+L04B6       = &04B6
+L04B8       = &04B8
+L04BA       = &04BA
+L04BB       = &04BB
+L04BC       = &04BC
+L04BD       = &04BD
+L04BE       = &04BE
+L04C0       = &04C0
+L04C6       = &04C6
+SY          = &04DD
+L04F2       = &04F2
+L0600       = &0600
+L0601       = &0601
+L0606       = &0606
+PPUCTRL     = &2000
+PPUMASK     = &2001
+PPUSTATUS   = &2002
+OAMADDR     = &2003
+OAMDATA     = &2004
+PPUSCROLL   = &2005
+PPUADDR     = &2006
+PPUDATA     = &2007
+OAMDMA      = &4014
+L4016       = &4016
+L4017       = &4017
+L7000       = &7000
+L7001       = &7001
+L7020       = &7020
+L7021       = &7021
+L7040       = &7040
+L7041       = &7041
+L7060       = &7060
+L7061       = &7061
+L7080       = &7080
+L7081       = &7081
+L70A0       = &70A0
+L70A1       = &70A1
+L70C0       = &70C0
+L70C1       = &70C1
+L70E0       = &70E0
+L70E1       = &70E1
+L7100       = &7100
+L7101       = &7101
+L7120       = &7120
+L7121       = &7121
+L7140       = &7140
+L7141       = &7141
+L7160       = &7160
+L7161       = &7161
+L7180       = &7180
+L7181       = &7181
+L71A0       = &71A0
+L71A1       = &71A1
+L71C0       = &71C0
+L71C1       = &71C1
+L71E0       = &71E0
+L71E1       = &71E1
+L7200       = &7200
+L7201       = &7201
+L7220       = &7220
+L7221       = &7221
+L7240       = &7240
+L7241       = &7241
+L7260       = &7260
+L7261       = &7261
+L72C0       = &72C0
+L7300       = &7300
+L7400       = &7400
+L7401       = &7401
+L7420       = &7420
+L7421       = &7421
+L7440       = &7440
+L7441       = &7441
+L7460       = &7460
+L7461       = &7461
+L7480       = &7480
+L7481       = &7481
+L74A0       = &74A0
+L74A1       = &74A1
+L74C0       = &74C0
+L74C1       = &74C1
+L74E0       = &74E0
+L74E1       = &74E1
+L7500       = &7500
+L7501       = &7501
+L7520       = &7520
+L7521       = &7521
+L7540       = &7540
+L7541       = &7541
+L7560       = &7560
+L7561       = &7561
+L7580       = &7580
+L7581       = &7581
+L75A0       = &75A0
+L75A1       = &75A1
+L75C0       = &75C0
+L75C1       = &75C1
+L75E0       = &75E0
+L75E1       = &75E1
+L7600       = &7600
+L7601       = &7601
+L7620       = &7620
+L7621       = &7621
+L7640       = &7640
+L7641       = &7641
+L7660       = &7660
+L7661       = &7661
+L7700       = &7700
+L8012       = &8012
+L8021       = &8021
+L8041       = &8041
+L8062       = &8062
+L8083       = &8083
+L811E       = &811E
+slvy2       = &81B6
+L8926       = &8926
+L8980       = &8980
+L89D1       = &89D1
+L8A14       = &8A14
+L9522       = &9522
+tnpr        = &9620
+L9FFF       = &9FFF
+LA070       = &A070
+LA082       = &A082
+LA0F8       = &A0F8
+LA166       = &A166
+LA2C3       = &A2C3
+LA379       = &A379
+LA4A5       = &A4A5
+LA5AB       = &A5AB
+LA65D       = &A65D
+LA730       = &A730
+LA775       = &A775
+LA7B7       = &A7B7
+LA8D9       = &A8D9
+LA972       = &A972
+LA9D1       = &A9D1
+LAABC       = &AABC
+LAC1D       = &AC1D
+LAC25       = &AC25
+LAC5C       = &AC5C
+LAD4C       = &AD4C
+LAE03       = &AE03
+LAE18       = &AE18
+LAF9D       = &AF9D
+LAFCD       = &AFCD
+LB0E1       = &B0E1
+LB0EF       = &B0EF
+LB187       = &B187
+LB18E       = &B18E
+LB1BE       = &B1BE
+MAS4        = &B1CA
+LB1D4       = &B1D4
+LB219       = &B219
+LB248       = &B248
+LB2BC       = &B2BC
+LB2C3       = &B2C3
+LB2EF       = &B2EF
+LB2FB       = &B2FB
+LB341       = &B341
+LB358       = &B358
+LB39D       = &B39D
+LB3BC       = &B3BC
+LB3E8       = &B3E8
+LB44F       = &B44F
+LB459       = &B459
+LB4AA       = &B4AA
+LB4F5       = &B4F5
+LB635       = &B635
+LB63D       = &B63D
+LB673       = &B673
+LB738       = &B738
+LB85C       = &B85C
+LB882       = &B882
+LB88C       = &B88C
+LB8F7       = &B8F7
+LB8F9       = &B8F9
+LB8FE       = &B8FE
+LB90D       = &B90D
+LB919       = &B919
+LB93C       = &B93C
+LB96B       = &B96B
+LB975       = &B975
+LB980       = &B980
+LB9C1       = &B9C1
+LB9E2       = &B9E2
+LB9F9       = &B9F9
+LBA17       = &BA17
+LBA23       = &BA23
+LBA63       = &BA63
+LBAF3       = &BAF3
+LBB37       = &BB37
+LBBDE       = &BBDE
+LBC83       = &BC83
+LBE52       = &BE52
+LBEB5       = &BEB5
+LBED2       = &BED2
+LBED7       = &BED7
+LBEEA       = &BEEA
+LBF41       = &BF41
+LBFFF       = &BFFF
 
     ORG &C000
 
@@ -456,18 +457,18 @@ LC006 = sub_CC004+2
     LDX #0                                        ; C00C: A2 00       ..
     STX L00E7                                     ; C00E: 86 E7       ..
     LDA #&10                                      ; C010: A9 10       ..
-    STA L2000                                     ; C012: 8D 00 20    ..
+    STA PPUCTRL                                   ; C012: 8D 00 20    ..
     STA L00F5                                     ; C015: 85 F5       ..
     LDA #0                                        ; C017: A9 00       ..
-    STA L2001                                     ; C019: 8D 01 20    ..
+    STA PPUMASK                                   ; C019: 8D 01 20    ..
 .loop_CC01C
-    LDA L2002                                     ; C01C: AD 02 20    ..
+    LDA PPUSTATUS                                 ; C01C: AD 02 20    ..
     BPL loop_CC01C                                ; C01F: 10 FB       ..
 .loop_CC021
-    LDA L2002                                     ; C021: AD 02 20    ..
+    LDA PPUSTATUS                                 ; C021: AD 02 20    ..
     BPL loop_CC021                                ; C024: 10 FB       ..
 .loop_CC026
-    LDA L2002                                     ; C026: AD 02 20    ..
+    LDA PPUSTATUS                                 ; C026: AD 02 20    ..
     BPL loop_CC026                                ; C029: 10 FB       ..
     LDA #0                                        ; C02B: A9 00       ..
     STA L0600                                     ; C02D: 8D 00 06    ...
@@ -481,22 +482,22 @@ LC006 = sub_CC004+2
 
 .sub_CC03E
     LDA #0                                        ; C03E: A9 00       ..
-    STA L2000                                     ; C040: 8D 00 20    ..
+    STA PPUCTRL                                   ; C040: 8D 00 20    ..
     STA L00F5                                     ; C043: 85 F5       ..
-    STA L2001                                     ; C045: 8D 01 20    ..
+    STA PPUMASK                                   ; C045: 8D 01 20    ..
     STA L00E9                                     ; C048: 85 E9       ..
     LDA #&40 ; '@'                                ; C04A: A9 40       .@
     STA L4017                                     ; C04C: 8D 17 40    ..@
     INC LC006                                     ; C04F: EE 06 C0    ...
-    LDA L2002                                     ; C052: AD 02 20    ..
+    LDA PPUSTATUS                                 ; C052: AD 02 20    ..
 .loop_CC055
-    LDA L2002                                     ; C055: AD 02 20    ..
+    LDA PPUSTATUS                                 ; C055: AD 02 20    ..
     BPL loop_CC055                                ; C058: 10 FB       ..
 .loop_CC05A
-    LDA L2002                                     ; C05A: AD 02 20    ..
+    LDA PPUSTATUS                                 ; C05A: AD 02 20    ..
     BPL loop_CC05A                                ; C05D: 10 FB       ..
 .loop_CC05F
-    LDA L2002                                     ; C05F: AD 02 20    ..
+    LDA PPUSTATUS                                 ; C05F: AD 02 20    ..
     BPL loop_CC05F                                ; C062: 10 FB       ..
     LDA #0                                        ; C064: A9 00       ..
     TAX                                           ; C066: AA          .
@@ -739,23 +740,23 @@ LC006 = sub_CC004+2
     STA L00EE                                     ; C598: 85 EE       ..
     LDA L00D5                                     ; C59A: A5 D5       ..
     ADC #&20 ; ' '                                ; C59C: 69 20       i
-    STA L2006                                     ; C59E: 8D 06 20    ..
-    STX L2006                                     ; C5A1: 8E 06 20    ..
+    STA PPUADDR                                   ; C59E: 8D 06 20    ..
+    STX PPUADDR                                   ; C5A1: 8E 06 20    ..
     LDY #0                                        ; C5A4: A0 00       ..
 .loop_CC5A6
     LDA (L00ED),Y                                 ; C5A6: B1 ED       ..
-    STA L2007                                     ; C5A8: 8D 07 20    ..
+    STA PPUDATA                                   ; C5A8: 8D 07 20    ..
     INY                                           ; C5AB: C8          .
     CPY #&40 ; '@'                                ; C5AC: C0 40       .@
     BNE loop_CC5A6                                ; C5AE: D0 F6       ..
     LDA L00D5                                     ; C5B0: A5 D5       ..
     ADC #&23 ; '#'                                ; C5B2: 69 23       i#
-    STA L2006                                     ; C5B4: 8D 06 20    ..
-    STX L2006                                     ; C5B7: 8E 06 20    ..
+    STA PPUADDR                                   ; C5B4: 8D 06 20    ..
+    STX PPUADDR                                   ; C5B7: 8E 06 20    ..
     LDY #0                                        ; C5BA: A0 00       ..
 .loop_CC5BC
     LDA (L00ED),Y                                 ; C5BC: B1 ED       ..
-    STA L2007                                     ; C5BE: 8D 07 20    ..
+    STA PPUDATA                                   ; C5BE: 8D 07 20    ..
     INY                                           ; C5C1: C8          .
     CPY #&40 ; '@'                                ; C5C2: C0 40       .@
     BNE loop_CC5BC                                ; C5C4: D0 F6       ..
@@ -803,15 +804,15 @@ LC006 = sub_CC004+2
     TAX                                           ; C605: AA          .
     LDA L00EB                                     ; C606: A5 EB       ..
     ADC #0                                        ; C608: 69 00       i.
-    STA L2006                                     ; C60A: 8D 06 20    ..
-    STX L2006                                     ; C60D: 8E 06 20    ..
+    STA PPUADDR                                   ; C60A: 8D 06 20    ..
+    STX PPUADDR                                   ; C60D: 8E 06 20    ..
     LDA L00D6                                     ; C610: A5 D6       ..
     ADC L00EB                                     ; C612: 65 EB       e.
     STA L00EE                                     ; C614: 85 EE       ..
     LDX #&20 ; ' '                                ; C616: A2 20       .
 .loop_CC618
     LDA (L00ED),Y                                 ; C618: B1 ED       ..
-    STA L2007                                     ; C61A: 8D 07 20    ..
+    STA PPUDATA                                   ; C61A: 8D 07 20    ..
     INY                                           ; C61D: C8          .
     DEX                                           ; C61E: CA          .
     BEQ CC624                                     ; C61F: F0 03       ..
@@ -863,15 +864,15 @@ LC006 = sub_CC004+2
     TAX                                           ; C666: AA          .
     LDA L00EB                                     ; C667: A5 EB       ..
     ADC #0                                        ; C669: 69 00       i.
-    STA L2006                                     ; C66B: 8D 06 20    ..
-    STX L2006                                     ; C66E: 8E 06 20    ..
+    STA PPUADDR                                   ; C66B: 8D 06 20    ..
+    STX PPUADDR                                   ; C66E: 8E 06 20    ..
     LDA L00D6                                     ; C671: A5 D6       ..
     ADC L00EB                                     ; C673: 65 EB       e.
     STA L00EE                                     ; C675: 85 EE       ..
     LDX #&20 ; ' '                                ; C677: A2 20       .
 .loop_CC679
     LDA (L00ED),Y                                 ; C679: B1 ED       ..
-    STA L2007                                     ; C67B: 8D 07 20    ..
+    STA PPUDATA                                   ; C67B: 8D 07 20    ..
     INY                                           ; C67E: C8          .
     DEX                                           ; C67F: CA          .
     BEQ CC685                                     ; C680: F0 03       ..
@@ -893,15 +894,15 @@ LC006 = sub_CC004+2
     TAX                                           ; C697: AA          .
     LDA L00EB                                     ; C698: A5 EB       ..
     ADC #&10                                      ; C69A: 69 10       i.
-    STA L2006                                     ; C69C: 8D 06 20    ..
-    STX L2006                                     ; C69F: 8E 06 20    ..
+    STA PPUADDR                                   ; C69C: 8D 06 20    ..
+    STX PPUADDR                                   ; C69F: 8E 06 20    ..
     LDA L00D6                                     ; C6A2: A5 D6       ..
     ADC L00EB                                     ; C6A4: 65 EB       e.
     STA L00EE                                     ; C6A6: 85 EE       ..
     LDX #&20 ; ' '                                ; C6A8: A2 20       .
 .loop_CC6AA
     LDA (L00ED),Y                                 ; C6AA: B1 ED       ..
-    STA L2007                                     ; C6AC: 8D 07 20    ..
+    STA PPUDATA                                   ; C6AC: 8D 07 20    ..
     INY                                           ; C6AF: C8          .
     DEX                                           ; C6B0: CA          .
     BEQ CC6B6                                     ; C6B1: F0 03       ..
@@ -1207,11 +1208,11 @@ LC006 = sub_CC004+2
     LDA L00EB                                     ; C8A6: A5 EB       ..
     ROL A                                         ; C8A8: 2A          *
     ADC L00E0                                     ; C8A9: 65 E0       e.
-    STA L2006                                     ; C8AB: 8D 06 20    ..
+    STA PPUADDR                                   ; C8AB: 8D 06 20    ..
     STA L00EC                                     ; C8AE: 85 EC       ..
     TXA                                           ; C8B0: 8A          .
     ADC L00DF                                     ; C8B1: 65 DF       e.
-    STA L2006                                     ; C8B3: 8D 06 20    ..
+    STA PPUADDR                                   ; C8B3: 8D 06 20    ..
     STA L00EB                                     ; C8B6: 85 EB       ..
     JMP CC8D0                                     ; C8B8: 4C D0 C8    L..
 
@@ -1253,28 +1254,28 @@ LC006 = sub_CC004+2
 
 .CC8F3
     LDA (L00ED),Y                                 ; C8F3: B1 ED       ..
-    STA L2007                                     ; C8F5: 8D 07 20    ..
+    STA PPUDATA                                   ; C8F5: 8D 07 20    ..
     INY                                           ; C8F8: C8          .
     LDA (L00ED),Y                                 ; C8F9: B1 ED       ..
-    STA L2007                                     ; C8FB: 8D 07 20    ..
+    STA PPUDATA                                   ; C8FB: 8D 07 20    ..
     INY                                           ; C8FE: C8          .
     LDA (L00ED),Y                                 ; C8FF: B1 ED       ..
-    STA L2007                                     ; C901: 8D 07 20    ..
+    STA PPUDATA                                   ; C901: 8D 07 20    ..
     INY                                           ; C904: C8          .
     LDA (L00ED),Y                                 ; C905: B1 ED       ..
-    STA L2007                                     ; C907: 8D 07 20    ..
+    STA PPUDATA                                   ; C907: 8D 07 20    ..
     INY                                           ; C90A: C8          .
     LDA (L00ED),Y                                 ; C90B: B1 ED       ..
-    STA L2007                                     ; C90D: 8D 07 20    ..
+    STA PPUDATA                                   ; C90D: 8D 07 20    ..
     INY                                           ; C910: C8          .
     LDA (L00ED),Y                                 ; C911: B1 ED       ..
-    STA L2007                                     ; C913: 8D 07 20    ..
+    STA PPUDATA                                   ; C913: 8D 07 20    ..
     INY                                           ; C916: C8          .
     LDA (L00ED),Y                                 ; C917: B1 ED       ..
-    STA L2007                                     ; C919: 8D 07 20    ..
+    STA PPUDATA                                   ; C919: 8D 07 20    ..
     INY                                           ; C91C: C8          .
     LDA (L00ED),Y                                 ; C91D: B1 ED       ..
-    STA L2007                                     ; C91F: 8D 07 20    ..
+    STA PPUDATA                                   ; C91F: 8D 07 20    ..
     INY                                           ; C922: C8          .
     BEQ CC8BB                                     ; C923: F0 96       ..
 .CC925
@@ -1285,35 +1286,35 @@ LC006 = sub_CC004+2
     LDA L00EC                                     ; C92C: A5 EC       ..
     ADC #0                                        ; C92E: 69 00       i.
     STA L00EC                                     ; C930: 85 EC       ..
-    STA L2006                                     ; C932: 8D 06 20    ..
+    STA PPUADDR                                   ; C932: 8D 06 20    ..
     LDA L00EB                                     ; C935: A5 EB       ..
-    STA L2006                                     ; C937: 8D 06 20    ..
+    STA PPUADDR                                   ; C937: 8D 06 20    ..
     INX                                           ; C93A: E8          .
     CPX L00E8                                     ; C93B: E4 E8       ..
     BCS CC8CD                                     ; C93D: B0 8E       ..
     LDA (L00ED),Y                                 ; C93F: B1 ED       ..
-    STA L2007                                     ; C941: 8D 07 20    ..
+    STA PPUDATA                                   ; C941: 8D 07 20    ..
     INY                                           ; C944: C8          .
     LDA (L00ED),Y                                 ; C945: B1 ED       ..
-    STA L2007                                     ; C947: 8D 07 20    ..
+    STA PPUDATA                                   ; C947: 8D 07 20    ..
     INY                                           ; C94A: C8          .
     LDA (L00ED),Y                                 ; C94B: B1 ED       ..
-    STA L2007                                     ; C94D: 8D 07 20    ..
+    STA PPUDATA                                   ; C94D: 8D 07 20    ..
     INY                                           ; C950: C8          .
     LDA (L00ED),Y                                 ; C951: B1 ED       ..
-    STA L2007                                     ; C953: 8D 07 20    ..
+    STA PPUDATA                                   ; C953: 8D 07 20    ..
     INY                                           ; C956: C8          .
     LDA (L00ED),Y                                 ; C957: B1 ED       ..
-    STA L2007                                     ; C959: 8D 07 20    ..
+    STA PPUDATA                                   ; C959: 8D 07 20    ..
     INY                                           ; C95C: C8          .
     LDA (L00ED),Y                                 ; C95D: B1 ED       ..
-    STA L2007                                     ; C95F: 8D 07 20    ..
+    STA PPUDATA                                   ; C95F: 8D 07 20    ..
     INY                                           ; C962: C8          .
     LDA (L00ED),Y                                 ; C963: B1 ED       ..
-    STA L2007                                     ; C965: 8D 07 20    ..
+    STA PPUDATA                                   ; C965: 8D 07 20    ..
     INY                                           ; C968: C8          .
     LDA (L00ED),Y                                 ; C969: B1 ED       ..
-    STA L2007                                     ; C96B: 8D 07 20    ..
+    STA PPUDATA                                   ; C96B: 8D 07 20    ..
     INY                                           ; C96E: C8          .
     BEQ CC9D8                                     ; C96F: F0 67       .g
 .CC971
@@ -1323,35 +1324,35 @@ LC006 = sub_CC004+2
     LDA L00EC                                     ; C977: A5 EC       ..
     ADC #0                                        ; C979: 69 00       i.
     STA L00EC                                     ; C97B: 85 EC       ..
-    STA L2006                                     ; C97D: 8D 06 20    ..
+    STA PPUADDR                                   ; C97D: 8D 06 20    ..
     LDA L00EB                                     ; C980: A5 EB       ..
-    STA L2006                                     ; C982: 8D 06 20    ..
+    STA PPUADDR                                   ; C982: 8D 06 20    ..
     INX                                           ; C985: E8          .
     CPX L00E8                                     ; C986: E4 E8       ..
     BCS CC9FB                                     ; C988: B0 71       .q
     LDA (L00ED),Y                                 ; C98A: B1 ED       ..
-    STA L2007                                     ; C98C: 8D 07 20    ..
+    STA PPUDATA                                   ; C98C: 8D 07 20    ..
     INY                                           ; C98F: C8          .
     LDA (L00ED),Y                                 ; C990: B1 ED       ..
-    STA L2007                                     ; C992: 8D 07 20    ..
+    STA PPUDATA                                   ; C992: 8D 07 20    ..
     INY                                           ; C995: C8          .
     LDA (L00ED),Y                                 ; C996: B1 ED       ..
-    STA L2007                                     ; C998: 8D 07 20    ..
+    STA PPUDATA                                   ; C998: 8D 07 20    ..
     INY                                           ; C99B: C8          .
     LDA (L00ED),Y                                 ; C99C: B1 ED       ..
-    STA L2007                                     ; C99E: 8D 07 20    ..
+    STA PPUDATA                                   ; C99E: 8D 07 20    ..
     INY                                           ; C9A1: C8          .
     LDA (L00ED),Y                                 ; C9A2: B1 ED       ..
-    STA L2007                                     ; C9A4: 8D 07 20    ..
+    STA PPUDATA                                   ; C9A4: 8D 07 20    ..
     INY                                           ; C9A7: C8          .
     LDA (L00ED),Y                                 ; C9A8: B1 ED       ..
-    STA L2007                                     ; C9AA: 8D 07 20    ..
+    STA PPUDATA                                   ; C9AA: 8D 07 20    ..
     INY                                           ; C9AD: C8          .
     LDA (L00ED),Y                                 ; C9AE: B1 ED       ..
-    STA L2007                                     ; C9B0: 8D 07 20    ..
+    STA PPUDATA                                   ; C9B0: 8D 07 20    ..
     INY                                           ; C9B3: C8          .
     LDA (L00ED),Y                                 ; C9B4: B1 ED       ..
-    STA L2007                                     ; C9B6: 8D 07 20    ..
+    STA PPUDATA                                   ; C9B6: 8D 07 20    ..
     INY                                           ; C9B9: C8          .
     BEQ CCA1B                                     ; C9BA: F0 5F       ._
 .CC9BC
@@ -1361,9 +1362,9 @@ LC006 = sub_CC004+2
     LDA L00EC                                     ; C9C2: A5 EC       ..
     ADC #0                                        ; C9C4: 69 00       i.
     STA L00EC                                     ; C9C6: 85 EC       ..
-    STA L2006                                     ; C9C8: 8D 06 20    ..
+    STA PPUADDR                                   ; C9C8: 8D 06 20    ..
     LDA L00EB                                     ; C9CB: A5 EB       ..
-    STA L2006                                     ; C9CD: 8D 06 20    ..
+    STA PPUADDR                                   ; C9CD: 8D 06 20    ..
     INX                                           ; C9D0: E8          .
     CPX L00E8                                     ; C9D1: E4 E8       ..
     BCS CCA08                                     ; C9D3: B0 33       .3
@@ -1438,11 +1439,11 @@ LC006 = sub_CC004+2
     LDA L00EB                                     ; CA41: A5 EB       ..
     ROL A                                         ; CA43: 2A          *
     ADC L00E0                                     ; CA44: 65 E0       e.
-    STA L2006                                     ; CA46: 8D 06 20    ..
+    STA PPUADDR                                   ; CA46: 8D 06 20    ..
     STA L00EC                                     ; CA49: 85 EC       ..
     TXA                                           ; CA4B: 8A          .
     ADC L00DF                                     ; CA4C: 65 DF       e.
-    STA L2006                                     ; CA4E: 8D 06 20    ..
+    STA PPUADDR                                   ; CA4E: 8D 06 20    ..
     STA L00EB                                     ; CA51: 85 EB       ..
     JMP CCA68                                     ; CA53: 4C 68 CA    Lh.
 
@@ -1481,28 +1482,28 @@ LC006 = sub_CC004+2
 
 .CCA8B
     LDA (L00ED),Y                                 ; CA8B: B1 ED       ..
-    STA L2007                                     ; CA8D: 8D 07 20    ..
+    STA PPUDATA                                   ; CA8D: 8D 07 20    ..
     INY                                           ; CA90: C8          .
     LDA (L00ED),Y                                 ; CA91: B1 ED       ..
-    STA L2007                                     ; CA93: 8D 07 20    ..
+    STA PPUDATA                                   ; CA93: 8D 07 20    ..
     INY                                           ; CA96: C8          .
     LDA (L00ED),Y                                 ; CA97: B1 ED       ..
-    STA L2007                                     ; CA99: 8D 07 20    ..
+    STA PPUDATA                                   ; CA99: 8D 07 20    ..
     INY                                           ; CA9C: C8          .
     LDA (L00ED),Y                                 ; CA9D: B1 ED       ..
-    STA L2007                                     ; CA9F: 8D 07 20    ..
+    STA PPUDATA                                   ; CA9F: 8D 07 20    ..
     INY                                           ; CAA2: C8          .
     LDA (L00ED),Y                                 ; CAA3: B1 ED       ..
-    STA L2007                                     ; CAA5: 8D 07 20    ..
+    STA PPUDATA                                   ; CAA5: 8D 07 20    ..
     INY                                           ; CAA8: C8          .
     LDA (L00ED),Y                                 ; CAA9: B1 ED       ..
-    STA L2007                                     ; CAAB: 8D 07 20    ..
+    STA PPUDATA                                   ; CAAB: 8D 07 20    ..
     INY                                           ; CAAE: C8          .
     LDA (L00ED),Y                                 ; CAAF: B1 ED       ..
-    STA L2007                                     ; CAB1: 8D 07 20    ..
+    STA PPUDATA                                   ; CAB1: 8D 07 20    ..
     INY                                           ; CAB4: C8          .
     LDA (L00ED),Y                                 ; CAB5: B1 ED       ..
-    STA L2007                                     ; CAB7: 8D 07 20    ..
+    STA PPUDATA                                   ; CAB7: 8D 07 20    ..
     INY                                           ; CABA: C8          .
     BEQ CCA56                                     ; CABB: F0 99       ..
 .CCABD
@@ -1513,32 +1514,32 @@ LC006 = sub_CC004+2
     LDA L00EC                                     ; CAC4: A5 EC       ..
     ADC #0                                        ; CAC6: 69 00       i.
     STA L00EC                                     ; CAC8: 85 EC       ..
-    STA L2006                                     ; CACA: 8D 06 20    ..
+    STA PPUADDR                                   ; CACA: 8D 06 20    ..
     LDA L00EB                                     ; CACD: A5 EB       ..
-    STA L2006                                     ; CACF: 8D 06 20    ..
+    STA PPUADDR                                   ; CACF: 8D 06 20    ..
     LDA (L00ED),Y                                 ; CAD2: B1 ED       ..
-    STA L2007                                     ; CAD4: 8D 07 20    ..
+    STA PPUDATA                                   ; CAD4: 8D 07 20    ..
     INY                                           ; CAD7: C8          .
     LDA (L00ED),Y                                 ; CAD8: B1 ED       ..
-    STA L2007                                     ; CADA: 8D 07 20    ..
+    STA PPUDATA                                   ; CADA: 8D 07 20    ..
     INY                                           ; CADD: C8          .
     LDA (L00ED),Y                                 ; CADE: B1 ED       ..
-    STA L2007                                     ; CAE0: 8D 07 20    ..
+    STA PPUDATA                                   ; CAE0: 8D 07 20    ..
     INY                                           ; CAE3: C8          .
     LDA (L00ED),Y                                 ; CAE4: B1 ED       ..
-    STA L2007                                     ; CAE6: 8D 07 20    ..
+    STA PPUDATA                                   ; CAE6: 8D 07 20    ..
     INY                                           ; CAE9: C8          .
     LDA (L00ED),Y                                 ; CAEA: B1 ED       ..
-    STA L2007                                     ; CAEC: 8D 07 20    ..
+    STA PPUDATA                                   ; CAEC: 8D 07 20    ..
     INY                                           ; CAEF: C8          .
     LDA (L00ED),Y                                 ; CAF0: B1 ED       ..
-    STA L2007                                     ; CAF2: 8D 07 20    ..
+    STA PPUDATA                                   ; CAF2: 8D 07 20    ..
     INY                                           ; CAF5: C8          .
     LDA (L00ED),Y                                 ; CAF6: B1 ED       ..
-    STA L2007                                     ; CAF8: 8D 07 20    ..
+    STA PPUDATA                                   ; CAF8: 8D 07 20    ..
     INY                                           ; CAFB: C8          .
     LDA (L00ED),Y                                 ; CAFC: B1 ED       ..
-    STA L2007                                     ; CAFE: 8D 07 20    ..
+    STA PPUDATA                                   ; CAFE: 8D 07 20    ..
     INY                                           ; CB01: C8          .
     BEQ CCB1D                                     ; CB02: F0 19       ..
 .CCB04
@@ -1548,9 +1549,9 @@ LC006 = sub_CC004+2
     LDA L00EC                                     ; CB0A: A5 EC       ..
     ADC #0                                        ; CB0C: 69 00       i.
     STA L00EC                                     ; CB0E: 85 EC       ..
-    STA L2006                                     ; CB10: 8D 06 20    ..
+    STA PPUADDR                                   ; CB10: 8D 06 20    ..
     LDA L00EB                                     ; CB13: A5 EB       ..
-    STA L2006                                     ; CB15: 8D 06 20    ..
+    STA PPUADDR                                   ; CB15: 8D 06 20    ..
     INX                                           ; CB18: E8          .
     INX                                           ; CB19: E8          .
     JMP CCA6A                                     ; CB1A: 4C 6A CA    Lj.
@@ -1694,8 +1695,8 @@ LC006 = sub_CC004+2
     STA L00EE                                     ; CBFD: 85 EE       ..
     CLC                                           ; CBFF: 18          .
     ADC L04C6,X                                   ; CC00: 7D C6 04    }..
-    STA L2006                                     ; CC03: 8D 06 20    ..
-    STY L2006                                     ; CC06: 8C 06 20    ..
+    STA PPUADDR                                   ; CC03: 8D 06 20    ..
+    STY PPUADDR                                   ; CC06: 8C 06 20    ..
     LDA #0                                        ; CC09: A9 00       ..
     STA L00ED                                     ; CC0B: 85 ED       ..
 .CCC0D
@@ -1720,100 +1721,100 @@ LC006 = sub_CC004+2
 
 .CCC2E
     LDA (L00ED),Y                                 ; CC2E: B1 ED       ..
-    STA L2007                                     ; CC30: 8D 07 20    ..
+    STA PPUDATA                                   ; CC30: 8D 07 20    ..
     INY                                           ; CC33: C8          .
     LDA (L00ED),Y                                 ; CC34: B1 ED       ..
-    STA L2007                                     ; CC36: 8D 07 20    ..
+    STA PPUDATA                                   ; CC36: 8D 07 20    ..
     INY                                           ; CC39: C8          .
     LDA (L00ED),Y                                 ; CC3A: B1 ED       ..
-    STA L2007                                     ; CC3C: 8D 07 20    ..
+    STA PPUDATA                                   ; CC3C: 8D 07 20    ..
     INY                                           ; CC3F: C8          .
     LDA (L00ED),Y                                 ; CC40: B1 ED       ..
-    STA L2007                                     ; CC42: 8D 07 20    ..
+    STA PPUDATA                                   ; CC42: 8D 07 20    ..
     INY                                           ; CC45: C8          .
     LDA (L00ED),Y                                 ; CC46: B1 ED       ..
-    STA L2007                                     ; CC48: 8D 07 20    ..
+    STA PPUDATA                                   ; CC48: 8D 07 20    ..
     INY                                           ; CC4B: C8          .
     LDA (L00ED),Y                                 ; CC4C: B1 ED       ..
-    STA L2007                                     ; CC4E: 8D 07 20    ..
+    STA PPUDATA                                   ; CC4E: 8D 07 20    ..
     INY                                           ; CC51: C8          .
     LDA (L00ED),Y                                 ; CC52: B1 ED       ..
-    STA L2007                                     ; CC54: 8D 07 20    ..
+    STA PPUDATA                                   ; CC54: 8D 07 20    ..
     INY                                           ; CC57: C8          .
     LDA (L00ED),Y                                 ; CC58: B1 ED       ..
-    STA L2007                                     ; CC5A: 8D 07 20    ..
+    STA PPUDATA                                   ; CC5A: 8D 07 20    ..
     INY                                           ; CC5D: C8          .
     LDA (L00ED),Y                                 ; CC5E: B1 ED       ..
-    STA L2007                                     ; CC60: 8D 07 20    ..
+    STA PPUDATA                                   ; CC60: 8D 07 20    ..
     INY                                           ; CC63: C8          .
     LDA (L00ED),Y                                 ; CC64: B1 ED       ..
-    STA L2007                                     ; CC66: 8D 07 20    ..
+    STA PPUDATA                                   ; CC66: 8D 07 20    ..
     INY                                           ; CC69: C8          .
     LDA (L00ED),Y                                 ; CC6A: B1 ED       ..
-    STA L2007                                     ; CC6C: 8D 07 20    ..
+    STA PPUDATA                                   ; CC6C: 8D 07 20    ..
     INY                                           ; CC6F: C8          .
     LDA (L00ED),Y                                 ; CC70: B1 ED       ..
-    STA L2007                                     ; CC72: 8D 07 20    ..
+    STA PPUDATA                                   ; CC72: 8D 07 20    ..
     INY                                           ; CC75: C8          .
     LDA (L00ED),Y                                 ; CC76: B1 ED       ..
-    STA L2007                                     ; CC78: 8D 07 20    ..
+    STA PPUDATA                                   ; CC78: 8D 07 20    ..
     INY                                           ; CC7B: C8          .
     LDA (L00ED),Y                                 ; CC7C: B1 ED       ..
-    STA L2007                                     ; CC7E: 8D 07 20    ..
+    STA PPUDATA                                   ; CC7E: 8D 07 20    ..
     INY                                           ; CC81: C8          .
     LDA (L00ED),Y                                 ; CC82: B1 ED       ..
-    STA L2007                                     ; CC84: 8D 07 20    ..
+    STA PPUDATA                                   ; CC84: 8D 07 20    ..
     INY                                           ; CC87: C8          .
     LDA (L00ED),Y                                 ; CC88: B1 ED       ..
-    STA L2007                                     ; CC8A: 8D 07 20    ..
+    STA PPUDATA                                   ; CC8A: 8D 07 20    ..
     INY                                           ; CC8D: C8          .
     LDA (L00ED),Y                                 ; CC8E: B1 ED       ..
-    STA L2007                                     ; CC90: 8D 07 20    ..
+    STA PPUDATA                                   ; CC90: 8D 07 20    ..
     INY                                           ; CC93: C8          .
     LDA (L00ED),Y                                 ; CC94: B1 ED       ..
-    STA L2007                                     ; CC96: 8D 07 20    ..
+    STA PPUDATA                                   ; CC96: 8D 07 20    ..
     INY                                           ; CC99: C8          .
     LDA (L00ED),Y                                 ; CC9A: B1 ED       ..
-    STA L2007                                     ; CC9C: 8D 07 20    ..
+    STA PPUDATA                                   ; CC9C: 8D 07 20    ..
     INY                                           ; CC9F: C8          .
     LDA (L00ED),Y                                 ; CCA0: B1 ED       ..
-    STA L2007                                     ; CCA2: 8D 07 20    ..
+    STA PPUDATA                                   ; CCA2: 8D 07 20    ..
     INY                                           ; CCA5: C8          .
     LDA (L00ED),Y                                 ; CCA6: B1 ED       ..
-    STA L2007                                     ; CCA8: 8D 07 20    ..
+    STA PPUDATA                                   ; CCA8: 8D 07 20    ..
     INY                                           ; CCAB: C8          .
     LDA (L00ED),Y                                 ; CCAC: B1 ED       ..
-    STA L2007                                     ; CCAE: 8D 07 20    ..
+    STA PPUDATA                                   ; CCAE: 8D 07 20    ..
     INY                                           ; CCB1: C8          .
     LDA (L00ED),Y                                 ; CCB2: B1 ED       ..
-    STA L2007                                     ; CCB4: 8D 07 20    ..
+    STA PPUDATA                                   ; CCB4: 8D 07 20    ..
     INY                                           ; CCB7: C8          .
     LDA (L00ED),Y                                 ; CCB8: B1 ED       ..
-    STA L2007                                     ; CCBA: 8D 07 20    ..
+    STA PPUDATA                                   ; CCBA: 8D 07 20    ..
     INY                                           ; CCBD: C8          .
     LDA (L00ED),Y                                 ; CCBE: B1 ED       ..
-    STA L2007                                     ; CCC0: 8D 07 20    ..
+    STA PPUDATA                                   ; CCC0: 8D 07 20    ..
     INY                                           ; CCC3: C8          .
     LDA (L00ED),Y                                 ; CCC4: B1 ED       ..
-    STA L2007                                     ; CCC6: 8D 07 20    ..
+    STA PPUDATA                                   ; CCC6: 8D 07 20    ..
     INY                                           ; CCC9: C8          .
     LDA (L00ED),Y                                 ; CCCA: B1 ED       ..
-    STA L2007                                     ; CCCC: 8D 07 20    ..
+    STA PPUDATA                                   ; CCCC: 8D 07 20    ..
     INY                                           ; CCCF: C8          .
     LDA (L00ED),Y                                 ; CCD0: B1 ED       ..
-    STA L2007                                     ; CCD2: 8D 07 20    ..
+    STA PPUDATA                                   ; CCD2: 8D 07 20    ..
     INY                                           ; CCD5: C8          .
     LDA (L00ED),Y                                 ; CCD6: B1 ED       ..
-    STA L2007                                     ; CCD8: 8D 07 20    ..
+    STA PPUDATA                                   ; CCD8: 8D 07 20    ..
     INY                                           ; CCDB: C8          .
     LDA (L00ED),Y                                 ; CCDC: B1 ED       ..
-    STA L2007                                     ; CCDE: 8D 07 20    ..
+    STA PPUDATA                                   ; CCDE: 8D 07 20    ..
     INY                                           ; CCE1: C8          .
     LDA (L00ED),Y                                 ; CCE2: B1 ED       ..
-    STA L2007                                     ; CCE4: 8D 07 20    ..
+    STA PPUDATA                                   ; CCE4: 8D 07 20    ..
     INY                                           ; CCE7: C8          .
     LDA (L00ED),Y                                 ; CCE8: B1 ED       ..
-    STA L2007                                     ; CCEA: 8D 07 20    ..
+    STA PPUDATA                                   ; CCEA: 8D 07 20    ..
     INY                                           ; CCED: C8          .
     BEQ CCD09                                     ; CCEE: F0 19       ..
     LDA L00CF                                     ; CCF0: A5 CF       ..
@@ -1981,7 +1982,7 @@ LC006 = sub_CC004+2
     STA L7660                                     ; CE6D: 8D 60 76    .`v
     LDA L00E9                                     ; CE70: A5 E9       ..
     BPL CCE7D                                     ; CE72: 10 09       ..
-    LDA L2002                                     ; CE74: AD 02 20    ..
+    LDA PPUSTATUS                                 ; CE74: AD 02 20    ..
     ASL A                                         ; CE77: 0A          .
     BPL CCE7D                                     ; CE78: 10 03       ..
     JSR sub_CD06D                                 ; CE7A: 20 6D D0     m.
@@ -2093,14 +2094,14 @@ LC006 = sub_CC004+2
     STA L0469                                     ; CF2E: 8D 69 04    .i.
     STX L046A                                     ; CF31: 8E 6A 04    .j.
     STY L046B                                     ; CF34: 8C 6B 04    .k.
-    LDA L2002                                     ; CF37: AD 02 20    ..
+    LDA PPUSTATUS                                 ; CF37: AD 02 20    ..
     INC L03F1                                     ; CF3A: EE F1 03    ...
     LDA #0                                        ; CF3D: A9 00       ..
-    STA L2003                                     ; CF3F: 8D 03 20    ..
+    STA OAMADDR                                   ; CF3F: 8D 03 20    ..
     LDA #2                                        ; CF42: A9 02       ..
-    STA L4014                                     ; CF44: 8D 14 40    ..@
+    STA OAMDMA                                    ; CF44: 8D 14 40    ..@
     LDA #0                                        ; CF47: A9 00       ..
-    STA L2001                                     ; CF49: 8D 01 20    ..
+    STA PPUMASK                                   ; CF49: 8D 01 20    ..
 .sub_CCF4C
     LDA L009F                                     ; CF4C: A5 9F       ..
     BNE CCF96                                     ; CF4E: D0 46       .F
@@ -2108,80 +2109,80 @@ LC006 = sub_CC004+2
     LDA L00F3                                     ; CF52: A5 F3       ..
     BNE CCF76                                     ; CF54: D0 20       .
     LDA #&3F ; '?'                                ; CF56: A9 3F       .?
-    STA L2006                                     ; CF58: 8D 06 20    ..
+    STA PPUADDR                                   ; CF58: 8D 06 20    ..
     LDA #1                                        ; CF5B: A9 01       ..
-    STA L2006                                     ; CF5D: 8D 06 20    ..
+    STA PPUADDR                                   ; CF5D: 8D 06 20    ..
     LDA L0033                                     ; CF60: A5 33       .3
-    STA L2007                                     ; CF62: 8D 07 20    ..
-    STY L2007                                     ; CF65: 8C 07 20    ..
-    STY L2007                                     ; CF68: 8C 07 20    ..
+    STA PPUDATA                                   ; CF62: 8D 07 20    ..
+    STY PPUDATA                                   ; CF65: 8C 07 20    ..
+    STY PPUDATA                                   ; CF68: 8C 07 20    ..
     LDA #0                                        ; CF6B: A9 00       ..
-    STA L2006                                     ; CF6D: 8D 06 20    ..
+    STA PPUADDR                                   ; CF6D: 8D 06 20    ..
     LDA #0                                        ; CF70: A9 00       ..
-    STA L2006                                     ; CF72: 8D 06 20    ..
+    STA PPUADDR                                   ; CF72: 8D 06 20    ..
     RTS                                           ; CF75: 60          `
 
 .CCF76
     LDA #&3F ; '?'                                ; CF76: A9 3F       .?
-    STA L2006                                     ; CF78: 8D 06 20    ..
+    STA PPUADDR                                   ; CF78: 8D 06 20    ..
     LDA #1                                        ; CF7B: A9 01       ..
-    STA L2006                                     ; CF7D: 8D 06 20    ..
+    STA PPUADDR                                   ; CF7D: 8D 06 20    ..
     LDA L0033                                     ; CF80: A5 33       .3
-    STY L2007                                     ; CF82: 8C 07 20    ..
-    STA L2007                                     ; CF85: 8D 07 20    ..
-    STY L2007                                     ; CF88: 8C 07 20    ..
+    STY PPUDATA                                   ; CF82: 8C 07 20    ..
+    STA PPUDATA                                   ; CF85: 8D 07 20    ..
+    STY PPUDATA                                   ; CF88: 8C 07 20    ..
     LDA #0                                        ; CF8B: A9 00       ..
-    STA L2006                                     ; CF8D: 8D 06 20    ..
+    STA PPUADDR                                   ; CF8D: 8D 06 20    ..
     LDA #0                                        ; CF90: A9 00       ..
-    STA L2006                                     ; CF92: 8D 06 20    ..
+    STA PPUADDR                                   ; CF92: 8D 06 20    ..
     RTS                                           ; CF95: 60          `
 
 .CCF96
     CMP #&98                                      ; CF96: C9 98       ..
     BEQ CCFBE                                     ; CF98: F0 24       .$
     LDA #&3F ; '?'                                ; CF9A: A9 3F       .?
-    STA L2006                                     ; CF9C: 8D 06 20    ..
+    STA PPUADDR                                   ; CF9C: 8D 06 20    ..
     LDA #&15                                      ; CF9F: A9 15       ..
-    STA L2006                                     ; CFA1: 8D 06 20    ..
+    STA PPUADDR                                   ; CFA1: 8D 06 20    ..
     LDA L0034                                     ; CFA4: A5 34       .4
-    STA L2007                                     ; CFA6: 8D 07 20    ..
+    STA PPUDATA                                   ; CFA6: 8D 07 20    ..
     LDA L0035                                     ; CFA9: A5 35       .5
-    STA L2007                                     ; CFAB: 8D 07 20    ..
+    STA PPUDATA                                   ; CFAB: 8D 07 20    ..
     LDA L0036                                     ; CFAE: A5 36       .6
-    STA L2007                                     ; CFB0: 8D 07 20    ..
+    STA PPUDATA                                   ; CFB0: 8D 07 20    ..
     LDA #0                                        ; CFB3: A9 00       ..
-    STA L2006                                     ; CFB5: 8D 06 20    ..
+    STA PPUADDR                                   ; CFB5: 8D 06 20    ..
     LDA #0                                        ; CFB8: A9 00       ..
-    STA L2006                                     ; CFBA: 8D 06 20    ..
+    STA PPUADDR                                   ; CFBA: 8D 06 20    ..
     RTS                                           ; CFBD: 60          `
 
 .CCFBE
     LDA #&3F ; '?'                                ; CFBE: A9 3F       .?
-    STA L2006                                     ; CFC0: 8D 06 20    ..
+    STA PPUADDR                                   ; CFC0: 8D 06 20    ..
     LDA #1                                        ; CFC3: A9 01       ..
-    STA L2006                                     ; CFC5: 8D 06 20    ..
+    STA PPUADDR                                   ; CFC5: 8D 06 20    ..
     LDA L0034                                     ; CFC8: A5 34       .4
-    STA L2007                                     ; CFCA: 8D 07 20    ..
+    STA PPUDATA                                   ; CFCA: 8D 07 20    ..
     LDA L0035                                     ; CFCD: A5 35       .5
-    STA L2007                                     ; CFCF: 8D 07 20    ..
+    STA PPUDATA                                   ; CFCF: 8D 07 20    ..
     LDA L0036                                     ; CFD2: A5 36       .6
-    STA L2007                                     ; CFD4: 8D 07 20    ..
+    STA PPUDATA                                   ; CFD4: 8D 07 20    ..
     LDA #0                                        ; CFD7: A9 00       ..
-    STA L2006                                     ; CFD9: 8D 06 20    ..
+    STA PPUADDR                                   ; CFD9: 8D 06 20    ..
     LDA #0                                        ; CFDC: A9 00       ..
-    STA L2006                                     ; CFDE: 8D 06 20    ..
+    STA PPUADDR                                   ; CFDE: 8D 06 20    ..
     RTS                                           ; CFE1: 60          `
 
 .CCFE2
     LDA #&3F ; '?'                                ; CFE2: A9 3F       .?
-    STA L2006                                     ; CFE4: 8D 06 20    ..
+    STA PPUADDR                                   ; CFE4: 8D 06 20    ..
     LDA #1                                        ; CFE7: A9 01       ..
-    STA L2006                                     ; CFE9: 8D 06 20    ..
+    STA PPUADDR                                   ; CFE9: 8D 06 20    ..
     LDX #1                                        ; CFEC: A2 01       ..
 .loop_CCFEE
     LDA XX3,X                                     ; CFEE: BD 00 01    ...
     AND #&3F ; '?'                                ; CFF1: 29 3F       )?
-    STA L2007                                     ; CFF3: 8D 07 20    ..
+    STA PPUDATA                                   ; CFF3: 8D 07 20    ..
     INX                                           ; CFF6: E8          .
     CPX #&20 ; ' '                                ; CFF7: E0 20       .
     BNE loop_CCFEE                                ; CFF9: D0 F3       ..
@@ -2211,7 +2212,7 @@ LC006 = sub_CC004+2
     JSR sub_CD07C                                 ; D024: 20 7C D0     |.
 .CD027
     LDA #&1E                                      ; D027: A9 1E       ..
-    STA L2001                                     ; D029: 8D 01 20    ..
+    STA PPUMASK                                   ; D029: 8D 01 20    ..
     RTS                                           ; D02C: 60          `
 
 .sub_CD02D
@@ -2220,28 +2221,28 @@ LC006 = sub_CC004+2
     BNE CD035                                     ; D031: D0 02       ..
     LDX #&91                                      ; D033: A2 91       ..
 .CD035
-    STX L2000                                     ; D035: 8E 00 20    ..
+    STX PPUCTRL                                   ; D035: 8E 00 20    ..
     STX L00F5                                     ; D038: 86 F5       ..
     LDA #&20 ; ' '                                ; D03A: A9 20       .
     LDX L00F3                                     ; D03C: A6 F3       ..
     BNE CD042                                     ; D03E: D0 02       ..
     LDA #&24 ; '$'                                ; D040: A9 24       .$
 .CD042
-    STA L2006                                     ; D042: 8D 06 20    ..
+    STA PPUADDR                                   ; D042: 8D 06 20    ..
     LDA #0                                        ; D045: A9 00       ..
-    STA L2006                                     ; D047: 8D 06 20    ..
-    LDA L2007                                     ; D04A: AD 07 20    ..
-    LDA L2007                                     ; D04D: AD 07 20    ..
-    LDA L2007                                     ; D050: AD 07 20    ..
-    LDA L2007                                     ; D053: AD 07 20    ..
-    LDA L2007                                     ; D056: AD 07 20    ..
-    LDA L2007                                     ; D059: AD 07 20    ..
-    LDA L2007                                     ; D05C: AD 07 20    ..
-    LDA L2007                                     ; D05F: AD 07 20    ..
+    STA PPUADDR                                   ; D047: 8D 06 20    ..
+    LDA PPUDATA                                   ; D04A: AD 07 20    ..
+    LDA PPUDATA                                   ; D04D: AD 07 20    ..
+    LDA PPUDATA                                   ; D050: AD 07 20    ..
+    LDA PPUDATA                                   ; D053: AD 07 20    ..
+    LDA PPUDATA                                   ; D056: AD 07 20    ..
+    LDA PPUDATA                                   ; D059: AD 07 20    ..
+    LDA PPUDATA                                   ; D05C: AD 07 20    ..
+    LDA PPUDATA                                   ; D05F: AD 07 20    ..
     LDA #8                                        ; D062: A9 08       ..
-    STA L2005                                     ; D064: 8D 05 20    ..
+    STA PPUSCROLL                                 ; D064: 8D 05 20    ..
     LDA #0                                        ; D067: A9 00       ..
-    STA L2005                                     ; D069: 8D 05 20    ..
+    STA PPUSCROLL                                 ; D069: 8D 05 20    ..
     RTS                                           ; D06C: 60          `
 
 .sub_CD06D
@@ -2249,7 +2250,7 @@ LC006 = sub_CC004+2
     STA L00E9                                     ; D06F: 85 E9       ..
     LDA L00F5                                     ; D071: A5 F5       ..
     AND #&EE                                      ; D073: 29 EE       ).
-    STA L2000                                     ; D075: 8D 00 20    ..
+    STA PPUCTRL                                   ; D075: 8D 00 20    ..
     STA L00F5                                     ; D078: 85 F5       ..
     CLC                                           ; D07A: 18          .
     RTS                                           ; D07B: 60          `
@@ -2391,7 +2392,7 @@ LC006 = sub_CC004+2
 .loop_CD16B
     LDA L00E9                                     ; D16B: A5 E9       ..
     BPL CD178                                     ; D16D: 10 09       ..
-    LDA L2002                                     ; D16F: AD 02 20    ..
+    LDA PPUSTATUS                                 ; D16F: AD 02 20    ..
     ASL A                                         ; D172: 0A          .
     BPL CD178                                     ; D173: 10 03       ..
     JSR sub_CD06D                                 ; D175: 20 6D D0     m.
@@ -2407,7 +2408,7 @@ LC006 = sub_CC004+2
 .loop_CD183
     LDA L00E9                                     ; D183: A5 E9       ..
     BPL CD190                                     ; D185: 10 09       ..
-    LDA L2002                                     ; D187: AD 02 20    ..
+    LDA PPUSTATUS                                 ; D187: AD 02 20    ..
     ASL A                                         ; D18A: 0A          .
     BPL CD190                                     ; D18B: 10 03       ..
     JSR sub_CD06D                                 ; D18D: 20 6D D0     m.
@@ -2422,7 +2423,7 @@ LC006 = sub_CC004+2
 .CD19C
     LDA L00E9                                     ; D19C: A5 E9       ..
     BPL CD1A9                                     ; D19E: 10 09       ..
-    LDA L2002                                     ; D1A0: AD 02 20    ..
+    LDA PPUSTATUS                                 ; D1A0: AD 02 20    ..
     ASL A                                         ; D1A3: 0A          .
     BPL CD1A9                                     ; D1A4: 10 03       ..
     JSR sub_CD06D                                 ; D1A6: 20 6D D0     m.
@@ -2485,7 +2486,7 @@ LC006 = sub_CC004+2
 .CD20B
     LDA L00E9                                     ; D20B: A5 E9       ..
     BPL CD218                                     ; D20D: 10 09       ..
-    LDA L2002                                     ; D20F: AD 02 20    ..
+    LDA PPUSTATUS                                 ; D20F: AD 02 20    ..
     ASL A                                         ; D212: 0A          .
     BPL CD218                                     ; D213: 10 03       ..
     JSR sub_CD06D                                 ; D215: 20 6D D0     m.
@@ -2542,7 +2543,7 @@ LC006 = sub_CC004+2
 .CD274
     LDA L00E9                                     ; D274: A5 E9       ..
     BPL CD281                                     ; D276: 10 09       ..
-    LDA L2002                                     ; D278: AD 02 20    ..
+    LDA PPUSTATUS                                 ; D278: AD 02 20    ..
     ASL A                                         ; D27B: 0A          .
     BPL CD281                                     ; D27C: 10 03       ..
     JSR sub_CD06D                                 ; D27E: 20 6D D0     m.
@@ -3588,7 +3589,7 @@ LC006 = sub_CC004+2
 .CD8C5
     LDA L00E9                                     ; D8C5: A5 E9       ..
     BPL CD8D2                                     ; D8C7: 10 09       ..
-    LDA L2002                                     ; D8C9: AD 02 20    ..
+    LDA PPUSTATUS                                 ; D8C9: AD 02 20    ..
     ASL A                                         ; D8CC: 0A          .
     BPL CD8D2                                     ; D8CD: 10 03       ..
     JSR sub_CD06D                                 ; D8CF: 20 6D D0     m.
@@ -3654,15 +3655,15 @@ LC006 = sub_CC004+2
     BNE CD91F                                     ; D930: D0 ED       ..
     RTS                                           ; D932: 60          `
 
-    LDA L2002                                     ; D933: AD 02 20    ..
+    LDA PPUSTATUS                                 ; D933: AD 02 20    ..
 .loop_CD936
-    LDA L2002                                     ; D936: AD 02 20    ..
+    LDA PPUSTATUS                                 ; D936: AD 02 20    ..
     BPL loop_CD936                                ; D939: 10 FB       ..
 .loop_CD93B
-    LDA L2002                                     ; D93B: AD 02 20    ..
+    LDA PPUSTATUS                                 ; D93B: AD 02 20    ..
     BPL loop_CD93B                                ; D93E: 10 FB       ..
 .CD940
-    LDA L2002                                     ; D940: AD 02 20    ..
+    LDA PPUSTATUS                                 ; D940: AD 02 20    ..
     BPL CD940                                     ; D943: 10 FB       ..
     RTS                                           ; D945: 60          `
 
@@ -3703,52 +3704,52 @@ LC006 = sub_CC004+2
 .CD986
     LDY #0                                        ; D986: A0 00       ..
     LDA (L0007),Y                                 ; D988: B1 07       ..
-    STA L2007                                     ; D98A: 8D 07 20    ..
+    STA PPUDATA                                   ; D98A: 8D 07 20    ..
     INY                                           ; D98D: C8          .
     LDA (L0007),Y                                 ; D98E: B1 07       ..
-    STA L2007                                     ; D990: 8D 07 20    ..
+    STA PPUDATA                                   ; D990: 8D 07 20    ..
     INY                                           ; D993: C8          .
     LDA (L0007),Y                                 ; D994: B1 07       ..
-    STA L2007                                     ; D996: 8D 07 20    ..
+    STA PPUDATA                                   ; D996: 8D 07 20    ..
     INY                                           ; D999: C8          .
     LDA (L0007),Y                                 ; D99A: B1 07       ..
-    STA L2007                                     ; D99C: 8D 07 20    ..
+    STA PPUDATA                                   ; D99C: 8D 07 20    ..
     INY                                           ; D99F: C8          .
     LDA (L0007),Y                                 ; D9A0: B1 07       ..
-    STA L2007                                     ; D9A2: 8D 07 20    ..
+    STA PPUDATA                                   ; D9A2: 8D 07 20    ..
     INY                                           ; D9A5: C8          .
     LDA (L0007),Y                                 ; D9A6: B1 07       ..
-    STA L2007                                     ; D9A8: 8D 07 20    ..
+    STA PPUDATA                                   ; D9A8: 8D 07 20    ..
     INY                                           ; D9AB: C8          .
     LDA (L0007),Y                                 ; D9AC: B1 07       ..
-    STA L2007                                     ; D9AE: 8D 07 20    ..
+    STA PPUDATA                                   ; D9AE: 8D 07 20    ..
     INY                                           ; D9B1: C8          .
     LDA (L0007),Y                                 ; D9B2: B1 07       ..
-    STA L2007                                     ; D9B4: 8D 07 20    ..
+    STA PPUDATA                                   ; D9B4: 8D 07 20    ..
     INY                                           ; D9B7: C8          .
     LDA (L0007),Y                                 ; D9B8: B1 07       ..
-    STA L2007                                     ; D9BA: 8D 07 20    ..
+    STA PPUDATA                                   ; D9BA: 8D 07 20    ..
     INY                                           ; D9BD: C8          .
     LDA (L0007),Y                                 ; D9BE: B1 07       ..
-    STA L2007                                     ; D9C0: 8D 07 20    ..
+    STA PPUDATA                                   ; D9C0: 8D 07 20    ..
     INY                                           ; D9C3: C8          .
     LDA (L0007),Y                                 ; D9C4: B1 07       ..
-    STA L2007                                     ; D9C6: 8D 07 20    ..
+    STA PPUDATA                                   ; D9C6: 8D 07 20    ..
     INY                                           ; D9C9: C8          .
     LDA (L0007),Y                                 ; D9CA: B1 07       ..
-    STA L2007                                     ; D9CC: 8D 07 20    ..
+    STA PPUDATA                                   ; D9CC: 8D 07 20    ..
     INY                                           ; D9CF: C8          .
     LDA (L0007),Y                                 ; D9D0: B1 07       ..
-    STA L2007                                     ; D9D2: 8D 07 20    ..
+    STA PPUDATA                                   ; D9D2: 8D 07 20    ..
     INY                                           ; D9D5: C8          .
     LDA (L0007),Y                                 ; D9D6: B1 07       ..
-    STA L2007                                     ; D9D8: 8D 07 20    ..
+    STA PPUDATA                                   ; D9D8: 8D 07 20    ..
     INY                                           ; D9DB: C8          .
     LDA (L0007),Y                                 ; D9DC: B1 07       ..
-    STA L2007                                     ; D9DE: 8D 07 20    ..
+    STA PPUDATA                                   ; D9DE: 8D 07 20    ..
     INY                                           ; D9E1: C8          .
     LDA (L0007),Y                                 ; D9E2: B1 07       ..
-    STA L2007                                     ; D9E4: 8D 07 20    ..
+    STA PPUDATA                                   ; D9E4: 8D 07 20    ..
     INY                                           ; D9E7: C8          .
     LDA L0007                                     ; D9E8: A5 07       ..
     CLC                                           ; D9EA: 18          .
@@ -3850,7 +3851,7 @@ LC006 = sub_CC004+2
     STY L009C                                     ; DC0F: 84 9C       ..
     LDA L00E9                                     ; DC11: A5 E9       ..
     BPL CDC1E                                     ; DC13: 10 09       ..
-    LDA L2002                                     ; DC15: AD 02 20    ..
+    LDA PPUSTATUS                                 ; DC15: AD 02 20    ..
     ASL A                                         ; DC18: 0A          .
     BPL CDC1E                                     ; DC19: 10 03       ..
     JSR sub_CD06D                                 ; DC1B: 20 6D D0     m.
@@ -3956,7 +3957,7 @@ LC006 = sub_CC004+2
 .CDCCA
     LDA L00E9                                     ; DCCA: A5 E9       ..
     BPL CDCD7                                     ; DCCC: 10 09       ..
-    LDA L2002                                     ; DCCE: AD 02 20    ..
+    LDA PPUSTATUS                                 ; DCCE: AD 02 20    ..
     ASL A                                         ; DCD1: 0A          .
     BPL CDCD7                                     ; DCD2: 10 03       ..
     JSR sub_CD06D                                 ; DCD4: 20 6D D0     m.
@@ -4038,7 +4039,7 @@ LC006 = sub_CC004+2
     LDY L009C                                     ; DD51: A4 9C       ..
     LDA L00E9                                     ; DD53: A5 E9       ..
     BPL CDD60                                     ; DD55: 10 09       ..
-    LDA L2002                                     ; DD57: AD 02 20    ..
+    LDA PPUSTATUS                                 ; DD57: AD 02 20    ..
     ASL A                                         ; DD5A: 0A          .
     BPL CDD60                                     ; DD5B: 10 03       ..
     JSR sub_CD06D                                 ; DD5D: 20 6D D0     m.
@@ -4069,7 +4070,7 @@ LC006 = sub_CC004+2
 .CDD82
     LDA L00E9                                     ; DD82: A5 E9       ..
     BPL CDD8F                                     ; DD84: 10 09       ..
-    LDA L2002                                     ; DD86: AD 02 20    ..
+    LDA PPUSTATUS                                 ; DD86: AD 02 20    ..
     ASL A                                         ; DD89: 0A          .
     BPL CDD8F                                     ; DD8A: 10 03       ..
     JSR sub_CD06D                                 ; DD8C: 20 6D D0     m.
@@ -4154,7 +4155,7 @@ LC006 = sub_CC004+2
 .loop_CDE0F
     LDA L00E9                                     ; DE0F: A5 E9       ..
     BPL CDE1C                                     ; DE11: 10 09       ..
-    LDA L2002                                     ; DE13: AD 02 20    ..
+    LDA PPUSTATUS                                 ; DE13: AD 02 20    ..
     ASL A                                         ; DE16: 0A          .
     BPL CDE1C                                     ; DE17: 10 03       ..
     JSR sub_CD06D                                 ; DE19: 20 6D D0     m.
@@ -4279,7 +4280,7 @@ LC006 = sub_CC004+2
     STX Q                                         ; DEDD: 86 97       ..
     LDA L00E9                                     ; DEDF: A5 E9       ..
     BPL CDEEC                                     ; DEE1: 10 09       ..
-    LDA L2002                                     ; DEE3: AD 02 20    ..
+    LDA PPUSTATUS                                 ; DEE3: AD 02 20    ..
     ASL A                                         ; DEE6: 0A          .
     BPL CDEEC                                     ; DEE7: 10 03       ..
     JSR sub_CD06D                                 ; DEE9: 20 6D D0     m.
@@ -4407,7 +4408,7 @@ LC006 = sub_CC004+2
     STX Q                                         ; DFAA: 86 97       ..
     LDA L00E9                                     ; DFAC: A5 E9       ..
     BPL CDFB9                                     ; DFAE: 10 09       ..
-    LDA L2002                                     ; DFB0: AD 02 20    ..
+    LDA PPUSTATUS                                 ; DFB0: AD 02 20    ..
     ASL A                                         ; DFB3: 0A          .
     BPL CDFB9                                     ; DFB4: 10 03       ..
     JSR sub_CD06D                                 ; DFB6: 20 6D D0     m.
@@ -4510,7 +4511,7 @@ LDFFF = sub_CDFFE+1
 
     LDA L00E9                                     ; E04A: A5 E9       ..
     BPL CE057                                     ; E04C: 10 09       ..
-    LDA L2002                                     ; E04E: AD 02 20    ..
+    LDA PPUSTATUS                                 ; E04E: AD 02 20    ..
     ASL A                                         ; E051: 0A          .
     BPL CE057                                     ; E052: 10 03       ..
     JSR sub_CD06D                                 ; E054: 20 6D D0     m.
@@ -4557,7 +4558,7 @@ LDFFF = sub_CDFFE+1
     STA L0007                                     ; E092: 85 07       ..
     LDA L00E9                                     ; E094: A5 E9       ..
     BPL CE0A1                                     ; E096: 10 09       ..
-    LDA L2002                                     ; E098: AD 02 20    ..
+    LDA PPUSTATUS                                 ; E098: AD 02 20    ..
     ASL A                                         ; E09B: 0A          .
     BPL CE0A1                                     ; E09C: 10 03       ..
     JSR sub_CD06D                                 ; E09E: 20 6D D0     m.
@@ -4584,7 +4585,7 @@ LDFFF = sub_CDFFE+1
 
     LDA L00E9                                     ; E0BA: A5 E9       ..
     BPL CE0C7                                     ; E0BC: 10 09       ..
-    LDA L2002                                     ; E0BE: AD 02 20    ..
+    LDA PPUSTATUS                                 ; E0BE: AD 02 20    ..
     ASL A                                         ; E0C1: 0A          .
     BPL CE0C7                                     ; E0C2: 10 03       ..
     JSR sub_CD06D                                 ; E0C4: 20 6D D0     m.
@@ -4627,7 +4628,7 @@ LDFFF = sub_CDFFE+1
     STA R                                         ; E100: 85 98       ..
     LDA L00E9                                     ; E102: A5 E9       ..
     BPL CE10F                                     ; E104: 10 09       ..
-    LDA L2002                                     ; E106: AD 02 20    ..
+    LDA PPUSTATUS                                 ; E106: AD 02 20    ..
     ASL A                                         ; E109: 0A          .
     BPL CE10F                                     ; E10A: 10 03       ..
     JSR sub_CD06D                                 ; E10C: 20 6D D0     m.
@@ -4714,7 +4715,7 @@ LDFFF = sub_CDFFE+1
 .CE18E
     LDA L00E9                                     ; E18E: A5 E9       ..
     BPL CE19B                                     ; E190: 10 09       ..
-    LDA L2002                                     ; E192: AD 02 20    ..
+    LDA PPUSTATUS                                 ; E192: AD 02 20    ..
     ASL A                                         ; E195: 0A          .
     BPL CE19B                                     ; E196: 10 03       ..
     JSR sub_CD06D                                 ; E198: 20 6D D0     m.
@@ -4810,7 +4811,7 @@ LDFFF = sub_CDFFE+1
 .CE22B
     LDA L00E9                                     ; E22B: A5 E9       ..
     BPL CE238                                     ; E22D: 10 09       ..
-    LDA L2002                                     ; E22F: AD 02 20    ..
+    LDA PPUSTATUS                                 ; E22F: AD 02 20    ..
     ASL A                                         ; E232: 0A          .
     BPL CE238                                     ; E233: 10 03       ..
     JSR sub_CD06D                                 ; E235: 20 6D D0     m.
@@ -4885,7 +4886,7 @@ LDFFF = sub_CDFFE+1
 .CE2A6
     LDA L00E9                                     ; E2A6: A5 E9       ..
     BPL CE2B3                                     ; E2A8: 10 09       ..
-    LDA L2002                                     ; E2AA: AD 02 20    ..
+    LDA PPUSTATUS                                 ; E2AA: AD 02 20    ..
     ASL A                                         ; E2AD: 0A          .
     BPL CE2B3                                     ; E2AE: 10 03       ..
     JSR sub_CD06D                                 ; E2B0: 20 6D D0     m.
@@ -4967,7 +4968,7 @@ LDFFF = sub_CDFFE+1
 .CE32E
     LDA L00E9                                     ; E32E: A5 E9       ..
     BPL CE33B                                     ; E330: 10 09       ..
-    LDA L2002                                     ; E332: AD 02 20    ..
+    LDA PPUSTATUS                                 ; E332: AD 02 20    ..
     ASL A                                         ; E335: 0A          .
     BPL CE33B                                     ; E336: 10 03       ..
     JSR sub_CD06D                                 ; E338: 20 6D D0     m.
@@ -4977,7 +4978,7 @@ LDFFF = sub_CDFFE+1
 
     LDA L00E9                                     ; E33E: A5 E9       ..
     BPL CE34B                                     ; E340: 10 09       ..
-    LDA L2002                                     ; E342: AD 02 20    ..
+    LDA PPUSTATUS                                 ; E342: AD 02 20    ..
     ASL A                                         ; E345: 0A          .
     BPL CE34B                                     ; E346: 10 03       ..
     JSR sub_CD06D                                 ; E348: 20 6D D0     m.
@@ -5031,7 +5032,7 @@ LDFFF = sub_CDFFE+1
     STY Q                                         ; E394: 84 97       ..
     LDA L00E9                                     ; E396: A5 E9       ..
     BPL CE3A3                                     ; E398: 10 09       ..
-    LDA L2002                                     ; E39A: AD 02 20    ..
+    LDA PPUSTATUS                                 ; E39A: AD 02 20    ..
     ASL A                                         ; E39D: 0A          .
     BPL CE3A3                                     ; E39E: 10 03       ..
     JSR sub_CD06D                                 ; E3A0: 20 6D D0     m.
@@ -5118,7 +5119,7 @@ LDFFF = sub_CDFFE+1
 .CE423
     LDA L00E9                                     ; E423: A5 E9       ..
     BPL CE430                                     ; E425: 10 09       ..
-    LDA L2002                                     ; E427: AD 02 20    ..
+    LDA PPUSTATUS                                 ; E427: AD 02 20    ..
     ASL A                                         ; E42A: 0A          .
     BPL CE430                                     ; E42B: 10 03       ..
     JSR sub_CD06D                                 ; E42D: 20 6D D0     m.
@@ -5247,7 +5248,7 @@ LDFFF = sub_CDFFE+1
     STA L0008                                     ; E504: 85 08       ..
     LDA L00E9                                     ; E506: A5 E9       ..
     BPL CE513                                     ; E508: 10 09       ..
-    LDA L2002                                     ; E50A: AD 02 20    ..
+    LDA PPUSTATUS                                 ; E50A: AD 02 20    ..
     ASL A                                         ; E50D: 0A          .
     BPL CE513                                     ; E50E: 10 03       ..
     JSR sub_CD06D                                 ; E510: 20 6D D0     m.
@@ -5297,7 +5298,7 @@ LDFFF = sub_CDFFE+1
     STA L0008                                     ; E557: 85 08       ..
     LDA L00E9                                     ; E559: A5 E9       ..
     BPL CE566                                     ; E55B: 10 09       ..
-    LDA L2002                                     ; E55D: AD 02 20    ..
+    LDA PPUSTATUS                                 ; E55D: AD 02 20    ..
     ASL A                                         ; E560: 0A          .
     BPL CE566                                     ; E561: 10 03       ..
     JSR sub_CD06D                                 ; E563: 20 6D D0     m.
@@ -5871,7 +5872,7 @@ LDFFF = sub_CDFFE+1
 
     LDA L00E9                                     ; EB67: A5 E9       ..
     BPL CEB74                                     ; EB69: 10 09       ..
-    LDA L2002                                     ; EB6B: AD 02 20    ..
+    LDA PPUSTATUS                                 ; EB6B: AD 02 20    ..
     ASL A                                         ; EB6E: 0A          .
     BPL CEB74                                     ; EB6F: 10 03       ..
     JSR sub_CD06D                                 ; EB71: 20 6D D0     m.
@@ -5898,7 +5899,7 @@ LDFFF = sub_CDFFE+1
 .CEB8F
     LDA L00E9                                     ; EB8F: A5 E9       ..
     BPL CEB9C                                     ; EB91: 10 09       ..
-    LDA L2002                                     ; EB93: AD 02 20    ..
+    LDA PPUSTATUS                                 ; EB93: AD 02 20    ..
     ASL A                                         ; EB96: 0A          .
     BPL CEB9C                                     ; EB97: 10 03       ..
     JSR sub_CD06D                                 ; EB99: 20 6D D0     m.
@@ -5935,7 +5936,7 @@ LDFFF = sub_CDFFE+1
 .CEBCF
     LDA L00E9                                     ; EBCF: A5 E9       ..
     BPL CEBDC                                     ; EBD1: 10 09       ..
-    LDA L2002                                     ; EBD3: AD 02 20    ..
+    LDA PPUSTATUS                                 ; EBD3: AD 02 20    ..
     ASL A                                         ; EBD6: 0A          .
     BPL CEBDC                                     ; EBD7: 10 03       ..
     JSR sub_CD06D                                 ; EBD9: 20 6D D0     m.
@@ -5976,7 +5977,7 @@ LDFFF = sub_CDFFE+1
     STA L0478,X                                   ; EC1A: 9D 78 04    .x.
     LDA L00E9                                     ; EC1D: A5 E9       ..
     BPL CEC2A                                     ; EC1F: 10 09       ..
-    LDA L2002                                     ; EC21: AD 02 20    ..
+    LDA PPUSTATUS                                 ; EC21: AD 02 20    ..
     ASL A                                         ; EC24: 0A          .
     BPL CEC2A                                     ; EC25: 10 03       ..
     JSR sub_CD06D                                 ; EC27: 20 6D D0     m.
@@ -5987,7 +5988,7 @@ LDFFF = sub_CDFFE+1
 .CEC2E
     LDA L00E9                                     ; EC2E: A5 E9       ..
     BPL CEC3B                                     ; EC30: 10 09       ..
-    LDA L2002                                     ; EC32: AD 02 20    ..
+    LDA PPUSTATUS                                 ; EC32: AD 02 20    ..
     ASL A                                         ; EC35: 0A          .
     BPL CEC3B                                     ; EC36: 10 03       ..
     JSR sub_CD06D                                 ; EC38: 20 6D D0     m.
@@ -6010,7 +6011,7 @@ LDFFF = sub_CDFFE+1
     PHA                                           ; EC7D: 48          H
     LDA L00E9                                     ; EC7E: A5 E9       ..
     BPL CEC8B                                     ; EC80: 10 09       ..
-    LDA L2002                                     ; EC82: AD 02 20    ..
+    LDA PPUSTATUS                                 ; EC82: AD 02 20    ..
     ASL A                                         ; EC85: 0A          .
     BPL CEC8B                                     ; EC86: 10 03       ..
     JSR sub_CD06D                                 ; EC88: 20 6D D0     m.
@@ -6039,7 +6040,7 @@ LDFFF = sub_CDFFE+1
 
     LDA L00E9                                     ; ECAE: A5 E9       ..
     BPL CECBB                                     ; ECB0: 10 09       ..
-    LDA L2002                                     ; ECB2: AD 02 20    ..
+    LDA PPUSTATUS                                 ; ECB2: AD 02 20    ..
     ASL A                                         ; ECB5: 0A          .
     BPL CECBB                                     ; ECB6: 10 03       ..
     JSR sub_CD06D                                 ; ECB8: 20 6D D0     m.
@@ -7191,7 +7192,7 @@ LDFFF = sub_CDFFE+1
     JSR sub_CF962                                 ; F4FB: 20 62 F9     b.
     LDA L00E9                                     ; F4FE: A5 E9       ..
     BPL CF50B                                     ; F500: 10 09       ..
-    LDA L2002                                     ; F502: AD 02 20    ..
+    LDA PPUSTATUS                                 ; F502: AD 02 20    ..
     ASL A                                         ; F505: 0A          .
     BPL CF50B                                     ; F506: 10 03       ..
     JSR sub_CD06D                                 ; F508: 20 6D D0     m.
@@ -7221,7 +7222,7 @@ LDFFF = sub_CDFFE+1
 .CF52F
     LDA L00E9                                     ; F52F: A5 E9       ..
     BPL CF53C                                     ; F531: 10 09       ..
-    LDA L2002                                     ; F533: AD 02 20    ..
+    LDA PPUSTATUS                                 ; F533: AD 02 20    ..
     ASL A                                         ; F536: 0A          .
     BPL CF53C                                     ; F537: 10 03       ..
     JSR sub_CD06D                                 ; F539: 20 6D D0     m.
@@ -7326,7 +7327,7 @@ LDFFF = sub_CDFFE+1
     BCS CF5DC                                     ; F5CF: B0 0B       ..
     LDA #0                                        ; F5D1: A9 00       ..
 .CF5D3
-    STA L2007                                     ; F5D3: 8D 07 20    ..
+    STA PPUDATA                                   ; F5D3: 8D 07 20    ..
     DEX                                           ; F5D6: CA          .
     BNE CF5D3                                     ; F5D7: D0 FA       ..
     JMP CF5B1                                     ; F5D9: 4C B1 F5    L..
@@ -7354,7 +7355,7 @@ LDFFF = sub_CDFFE+1
     BNE CF5FB                                     ; F5F7: D0 02       ..
     INC V_1                                       ; F5F9: E6 64       .d
 .CF5FB
-    STA L2007                                     ; F5FB: 8D 07 20    ..
+    STA PPUDATA                                   ; F5FB: 8D 07 20    ..
     DEX                                           ; F5FE: CA          .
     BNE loop_CF5F4                                ; F5FF: D0 F3       ..
     JMP CF5B1                                     ; F601: 4C B1 F5    L..
@@ -7362,7 +7363,7 @@ LDFFF = sub_CDFFE+1
 .CF604
     TXA                                           ; F604: 8A          .
 .CF605
-    STA L2007                                     ; F605: 8D 07 20    ..
+    STA PPUDATA                                   ; F605: 8D 07 20    ..
     JMP CF5B1                                     ; F608: 4C B1 F5    L..
 
 .CF60B
@@ -7371,7 +7372,7 @@ LDFFF = sub_CDFFE+1
     STA T                                         ; F60C: 85 9A       ..
     LDA L00E9                                     ; F60E: A5 E9       ..
     BPL CF61B                                     ; F610: 10 09       ..
-    LDA L2002                                     ; F612: AD 02 20    ..
+    LDA PPUSTATUS                                 ; F612: AD 02 20    ..
     ASL A                                         ; F615: 0A          .
     BPL CF61B                                     ; F616: 10 03       ..
     JSR sub_CD06D                                 ; F618: 20 6D D0     m.
@@ -7448,7 +7449,7 @@ LDFFF = sub_CDFFE+1
     STA K                                         ; F67F: 85 7D       .}
     LDA L00E9                                     ; F681: A5 E9       ..
     BPL CF68E                                     ; F683: 10 09       ..
-    LDA L2002                                     ; F685: AD 02 20    ..
+    LDA PPUSTATUS                                 ; F685: AD 02 20    ..
     ASL A                                         ; F688: 0A          .
     BPL CF68E                                     ; F689: 10 03       ..
     JSR sub_CD06D                                 ; F68B: 20 6D D0     m.
@@ -7468,7 +7469,7 @@ LDFFF = sub_CDFFE+1
     STA T                                         ; F6A0: 85 9A       ..
     LDA L00E9                                     ; F6A2: A5 E9       ..
     BPL CF6AF                                     ; F6A4: 10 09       ..
-    LDA L2002                                     ; F6A6: AD 02 20    ..
+    LDA PPUSTATUS                                 ; F6A6: AD 02 20    ..
     ASL A                                         ; F6A9: 0A          .
     BPL CF6AF                                     ; F6AA: 10 03       ..
     JSR sub_CD06D                                 ; F6AC: 20 6D D0     m.
@@ -7699,7 +7700,7 @@ LDFFF = sub_CDFFE+1
     TAX                                           ; F7DA: AA          .
     LDA L00E9                                     ; F7DB: A5 E9       ..
     BPL CF7E8                                     ; F7DD: 10 09       ..
-    LDA L2002                                     ; F7DF: AD 02 20    ..
+    LDA PPUSTATUS                                 ; F7DF: AD 02 20    ..
     ASL A                                         ; F7E2: 0A          .
     BPL CF7E8                                     ; F7E3: 10 03       ..
     JSR sub_CD06D                                 ; F7E5: 20 6D D0     m.
@@ -7770,7 +7771,7 @@ LDFFF = sub_CDFFE+1
     STA S                                         ; F83F: 85 99       ..
     LDA L00E9                                     ; F841: A5 E9       ..
     BPL CF84E                                     ; F843: 10 09       ..
-    LDA L2002                                     ; F845: AD 02 20    ..
+    LDA PPUSTATUS                                 ; F845: AD 02 20    ..
     ASL A                                         ; F848: 0A          .
     BPL CF84E                                     ; F849: 10 03       ..
     JSR sub_CD06D                                 ; F84B: 20 6D D0     m.
@@ -7958,7 +7959,7 @@ LDFFF = sub_CDFFE+1
     STA S                                         ; F970: 85 99       ..
     LDA L00E9                                     ; F972: A5 E9       ..
     BPL CF97F                                     ; F974: 10 09       ..
-    LDA L2002                                     ; F976: AD 02 20    ..
+    LDA PPUSTATUS                                 ; F976: AD 02 20    ..
     ASL A                                         ; F979: 0A          .
     BPL CF97F                                     ; F97A: 10 03       ..
     JSR sub_CD06D                                 ; F97C: 20 6D D0     m.
@@ -7994,7 +7995,7 @@ LDFFF = sub_CDFFE+1
     STA Q                                         ; F9AD: 85 97       ..
     LDA L00E9                                     ; F9AF: A5 E9       ..
     BPL CF9BC                                     ; F9B1: 10 09       ..
-    LDA L2002                                     ; F9B3: AD 02 20    ..
+    LDA PPUSTATUS                                 ; F9B3: AD 02 20    ..
     ASL A                                         ; F9B6: 0A          .
     BPL CF9BC                                     ; F9B7: 10 03       ..
     JSR sub_CD06D                                 ; F9B9: 20 6D D0     m.
@@ -8227,7 +8228,7 @@ LDFFF = sub_CDFFE+1
 
     LDA L00E9                                     ; FAF8: A5 E9       ..
     BPL CFB05                                     ; FAFA: 10 09       ..
-    LDA L2002                                     ; FAFC: AD 02 20    ..
+    LDA PPUSTATUS                                 ; FAFC: AD 02 20    ..
     ASL A                                         ; FAFF: 0A          .
     BPL CFB05                                     ; FB00: 10 03       ..
     JSR sub_CD06D                                 ; FB02: 20 6D D0     m.
@@ -8251,7 +8252,7 @@ LDFFF = sub_CDFFE+1
     STA T                                         ; FB28: 85 9A       ..
     LDA L00E9                                     ; FB2A: A5 E9       ..
     BPL CFB37                                     ; FB2C: 10 09       ..
-    LDA L2002                                     ; FB2E: AD 02 20    ..
+    LDA PPUSTATUS                                 ; FB2E: AD 02 20    ..
     ASL A                                         ; FB31: 0A          .
     BPL CFB37                                     ; FB32: 10 03       ..
     JSR sub_CD06D                                 ; FB34: 20 6D D0     m.
@@ -8271,7 +8272,7 @@ LDFFF = sub_CDFFE+1
     STA XX15                                      ; FB4E: 85 71       .q
     LDA L00E9                                     ; FB50: A5 E9       ..
     BPL CFB5D                                     ; FB52: 10 09       ..
-    LDA L2002                                     ; FB54: AD 02 20    ..
+    LDA PPUSTATUS                                 ; FB54: AD 02 20    ..
     ASL A                                         ; FB57: 0A          .
     BPL CFB5D                                     ; FB58: 10 03       ..
     JSR sub_CD06D                                 ; FB5A: 20 6D D0     m.
@@ -8284,7 +8285,7 @@ LDFFF = sub_CDFFE+1
     STA X2                                        ; FB69: 85 73       .s
     LDA L00E9                                     ; FB6B: A5 E9       ..
     BPL CFB78                                     ; FB6D: 10 09       ..
-    LDA L2002                                     ; FB6F: AD 02 20    ..
+    LDA PPUSTATUS                                 ; FB6F: AD 02 20    ..
     ASL A                                         ; FB72: 0A          .
     BPL CFB78                                     ; FB73: 10 03       ..
     JSR sub_CD06D                                 ; FB75: 20 6D D0     m.

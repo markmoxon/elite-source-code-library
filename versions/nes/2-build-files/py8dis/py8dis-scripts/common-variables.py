@@ -121,3 +121,14 @@ subroutine(0xF86F, "MAD")
 subroutine(0xF872, "ADD")
 subroutine(0xFA91, "LL28")
 
+# NES registers
+
+label(0x2000, "PPUCTRL")
+label(0x2001, "PPUMASK")
+label(0x2002, "PPUSTATUS")
+label(0x2003, "OAMADDR")
+label(0x2004, "OAMDATA")
+label(0x2005, "PPUSCROLL")
+label(0x2006, "PPUADDR")
+label(0x2007, "PPUDATA")
+label(0x4014, "OAMDMA")

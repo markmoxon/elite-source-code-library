@@ -13,8 +13,7 @@ config.set_inline_comment_column(50)
 config.set_subroutine_header("*" * 78)
 
 entry(0x8000)
-entry(0x8007)
-string(0x8008, 4)
+string(0x8007, 5)
 
 byte(0x800C, 0xC000 - 0x800C)
 

@@ -269,9 +269,7 @@ LL28        = &FA91
     INC LC006                                     ; 8001: EE 06 C0    ...
     JMP LC007                                     ; 8004: 4C 07 C0    L..
 
-    RTI                                           ; 8007: 40          @
-
-    EQUS " 5.0"                                   ; 8008: 20 35 2E...  5.
+    EQUS "@ 5.0"                                  ; 8007: 40 20 35... @ 5
     EQUS "  NES ELITE IMAGE 5.2  -   24 APR 19"   ; 800C: 20 20 4E...   N
     EQUS "92  (C) D.Braben & I.Bell 1991/92  "    ; 8030: 39 32 20... 92
     EQUB &FF, &FF, &FF, &FF, &FF, &FF, &FF, &FF   ; 8053: FF FF FF... ...

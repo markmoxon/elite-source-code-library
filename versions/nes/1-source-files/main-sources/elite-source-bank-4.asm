@@ -38,6 +38,19 @@
  _APPLE_VERSION         = (_VERSION = 9)
  _NTSC                  = (_VARIANT = 1)
  _PAL                   = (_VARIANT = 2)
+ _DISC_DOCKED           = FALSE
+ _DISC_FLIGHT           = FALSE
+ _ELITE_A_DOCKED        = FALSE
+ _ELITE_A_FLIGHT        = FALSE
+ _ELITE_A_SHIPS_R       = FALSE
+ _ELITE_A_SHIPS_S       = FALSE
+ _ELITE_A_SHIPS_T       = FALSE
+ _ELITE_A_SHIPS_U       = FALSE
+ _ELITE_A_SHIPS_V       = FALSE
+ _ELITE_A_SHIPS_W       = FALSE
+ _ELITE_A_ENCYCLOPEDIA  = FALSE
+ _ELITE_A_6502SP_IO     = FALSE
+ _ELITE_A_6502SP_PARA   = FALSE
 
 CODE% = &8000
 LOAD% = &8000
@@ -173,9 +186,7 @@ LL28        = &FA91
     INC LC006                                     ; 8001: EE 06 C0    ...
     JMP LC007                                     ; 8004: 4C 07 C0    L..
 
-    RTI                                           ; 8007: 40          @
-
-    EQUS " 5.0"                                   ; 8008: 20 35 2E...  5.
+    EQUS "@ 5.0"                                  ; 8007: 40 20 35... @ 5
     EQUB &0E,   0, &1E,   0, &95,   1,   5,   3   ; 800C: 0E 00 1E... ...
     EQUB &73,   4, &F9,   5, &83,   7,   4,   9   ; 8014: 73 04 F9... s..
     EQUB &87, &0A,   9, &0C, &7C, &0D, &FC, &0E   ; 801C: 87 0A 09... ...

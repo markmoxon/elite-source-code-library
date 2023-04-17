@@ -33,6 +33,9 @@
  _MASTER_VERSION        = (_VERSION = 4)
  _ELECTRON_VERSION      = (_VERSION = 5)
  _ELITE_A_VERSION       = (_VERSION = 6)
+ _NES_VERSION           = (_VERSION = 7)
+ _C64_VERSION           = (_VERSION = 8)
+ _APPLE_VERSION         = (_VERSION = 9)
 
  GUARD &5800            \ Guard against assembling over screen memory
 

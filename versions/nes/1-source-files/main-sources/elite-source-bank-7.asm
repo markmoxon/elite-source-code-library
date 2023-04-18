@@ -98,8 +98,8 @@ INWK_30     = &0027
 INWK_31     = &0028
 L0029       = &0029
 P           = &002F
-L0030       = &0030
-L0031       = &0031
+P_1         = &0030
+P_2         = &0031
 L0032       = &0032
 L0033       = &0033
 L0034       = &0034
@@ -112,7 +112,7 @@ YC          = &003B
 QQ17        = &003C
 XX2         = &003D
 L003E       = &003E
-L004B       = &004B
+K4          = &004B
 XX2_15      = &004C
 XX16        = &004D
 XX16_1      = &004E
@@ -128,8 +128,14 @@ V           = &0063
 V_1         = &0064
 XX          = &0065
 L0066       = &0066
+YY          = &0067
+YY_1        = &0068
+BETA        = &0069
+BET1        = &006A
 L006D       = &006D
 ALP1        = &006E
+ALP2        = &006F
+ALP2_1      = &0070
 XX15        = &0071
 Y1          = &0072
 X2          = &0073
@@ -139,13 +145,19 @@ XX15_2      = &0076
 XX12        = &0077
 XX12_1      = &0078
 K           = &007D
-L007E       = &007E
-L007F       = &007F
-L0080       = &0080
+K_1         = &007E
+K_2         = &007F
+K_3         = &0080
 QQ15        = &0082
 XX18        = &0088
+K6          = &008C
+K6_1        = &008D
 XX18_7      = &008F
+BET2        = &0091
+BET2_1      = &0092
 L0093       = &0093
+DELT4       = &0094
+DELT4_1     = &0095
 U           = &0096
 Q           = &0097
 R           = &0098
@@ -154,13 +166,19 @@ T           = &009A
 L009C       = &009C
 L009E       = &009E
 L009F       = &009F
+ZZ          = &00A0
 TYPE        = &00A3
 L00A5       = &00A5
+TGT         = &00A6
+FLAG        = &00A7
 CNT         = &00A8
+CNT2        = &00A9
+STP         = &00AA
 XX4         = &00AB
 XX20        = &00AC
 widget      = &00B0
 L00B1       = &00B1
+Yx2M1       = &00B3
 L00B7       = &00B7
 L00B8       = &00B8
 L00B9       = &00B9
@@ -243,6 +261,7 @@ L036A       = &036A
 L036C       = &036C
 L0373       = &0373
 L0388       = &0388
+VIEW        = &038E
 L0393       = &0393
 L0394       = &0394
 L039D       = &039D
@@ -251,7 +270,7 @@ QQ20        = &03AD
 BST         = &03BF
 L03C7       = &03C7
 L03DC       = &03DC
-L03E5       = &03E5
+NOSTM       = &03E5
 L03EA       = &03EA
 L03EB       = &03EB
 L03EC       = &03EC
@@ -264,6 +283,10 @@ L03F3       = &03F3
 L03F4       = &03F4
 L03F9       = &03F9
 L03FC       = &03FC
+K2          = &0459
+K2_1        = &045A
+K2_2        = &045B
+K2_3        = &045C
 L045E       = &045E
 L045F       = &045F
 L0460       = &0460
@@ -284,7 +307,7 @@ L0475       = &0475
 L0476       = &0476
 L0477       = &0477
 L0478       = &0478
-L047F       = &047F
+SWAP        = &047F
 L0486       = &0486
 QQ29        = &048A
 QQ8         = &049B
@@ -304,8 +327,12 @@ L04BD       = &04BD
 L04BE       = &04BE
 L04C0       = &04C0
 L04C6       = &04C6
+SX          = &04C8
 SY          = &04DD
-L04F2       = &04F2
+SZ          = &04F2
+SXL         = &05A5
+SYL         = &05BA
+SZL         = &05CF
 L0600       = &0600
 L0601       = &0601
 L0606       = &0606
@@ -767,19 +794,21 @@ LC006 = sub_CC004+2
     EQUB &FB, &FF, &FF, &FF, &FB, &F5, &ED, &E2   ; C50E: FB FF FF... ...
     EQUB &D5, &C6, &B5, &A2, &8E                  ; C516: D5 C6 B5... ...
     EQUS "ybJ2"                                   ; C51B: 79 62 4A... ybJ
-    EQUB &19,   0,   1,   3,   4,   5,   6,   8   ; C51F: 19 00 01... ...
-    EQUB   9, &0A, &0B, &0C, &0D, &0F, &10, &11   ; C527: 09 0A 0B... ...
-    EQUB &12, &13, &14, &15, &16, &17, &18, &19   ; C52F: 12 13 14... ...
-    EQUB &19, &1A, &1B, &1C, &1D, &1D, &1E, &1F   ; C537: 19 1A 1B... ...
-    EQUB &1F, &A5, &80, &A3, &81, &BF, &82, &13   ; C53F: 1F A5 80... ...
-    EQUB &83, &53, &83, &FB, &83, &9D, &84, &73   ; C547: 83 53 83... .S.
-    EQUB &85, &AF, &85, &E1, &86, &C3, &88, &4B   ; C54F: 85 AF 85... ...
-    EQUB &8A, &3D, &8B, &33, &8C, &35, &8D, &0B   ; C557: 8A 3D 8B... .=.
-    EQUB &8E, &E5, &8E, &8D, &8F, &BB, &90, &A1   ; C55F: 8E E5 8E... ...
-    EQUB &91, &D1, &92, &95, &93, &5B, &94, &0B   ; C567: 91 D1 92... ...
-    EQUB &95, &93, &96, &BD, &97, &AF, &98, &C9   ; C56F: 95 93 96... ...
-    EQUB &99, &A1, &9A, &BD, &9B, &29, &9C, &2B   ; C577: 99 A1 9A... ...
-    EQUB &9D, &2D, &9E                            ; C57F: 9D 2D 9E    .-.
+    EQUB &19                                      ; C51F: 19          .
+.ACT
+    EQUB   0,   1,   3,   4,   5,   6,   8,   9   ; C520: 00 01 03... ...
+    EQUB &0A, &0B, &0C, &0D, &0F, &10, &11, &12   ; C528: 0A 0B 0C... ...
+    EQUB &13, &14, &15, &16, &17, &18, &19, &19   ; C530: 13 14 15... ...
+    EQUB &1A, &1B, &1C, &1D, &1D, &1E, &1F, &1F   ; C538: 1A 1B 1C... ...
+    EQUB &A5, &80, &A3, &81, &BF, &82, &13, &83   ; C540: A5 80 A3... ...
+    EQUB &53, &83, &FB, &83, &9D, &84, &73, &85   ; C548: 53 83 FB... S..
+    EQUB &AF, &85, &E1, &86, &C3, &88, &4B, &8A   ; C550: AF 85 E1... ...
+    EQUB &3D, &8B, &33, &8C, &35, &8D, &0B, &8E   ; C558: 3D 8B 33... =.3
+    EQUB &E5, &8E, &8D, &8F, &BB, &90, &A1, &91   ; C560: E5 8E 8D... ...
+    EQUB &D1, &92, &95, &93, &5B, &94, &0B, &95   ; C568: D1 92 95... ...
+    EQUB &93, &96, &BD, &97, &AF, &98, &C9, &99   ; C570: 93 96 BD... ...
+    EQUB &A1, &9A, &BD, &9B, &29, &9C, &2B, &9D   ; C578: A1 9A BD... ...
+    EQUB &2D, &9E                                 ; C580: 2D 9E       -.
 
 .CC582
     SEC                                           ; C582: 38          8
@@ -2101,6 +2130,8 @@ LC006 = sub_CC004+2
 .LCED2
     EQUB &60, &68, &40                            ; CED2: 60 68 40    `h@
 
+; ******************************************************************************
+.NMI
     JSR sub_CCF2E                                 ; CED5: 20 2E CF     ..
     LDA L00EA                                     ; CED8: A5 EA       ..
     STA L00E9                                     ; CEDA: 85 E9       ..
@@ -3916,7 +3947,7 @@ LC006 = sub_CC004+2
     LDA #&80                                      ; DC1E: A9 80       ..
     STA S                                         ; DC20: 85 99       ..
     ASL A                                         ; DC22: 0A          .
-    STA L047F                                     ; DC23: 8D 7F 04    ...
+    STA SWAP                                      ; DC23: 8D 7F 04    ...
     LDA X2                                        ; DC26: A5 73       .s
     SBC XX15                                      ; DC28: E5 71       .q
     BCS CDC30                                     ; DC2A: B0 04       ..
@@ -3940,7 +3971,7 @@ LC006 = sub_CC004+2
     LDX XX15                                      ; DC46: A6 71       .q
     CPX X2                                        ; DC48: E4 73       .s
     BCC CDC5E                                     ; DC4A: 90 12       ..
-    DEC L047F                                     ; DC4C: CE 7F 04    ...
+    DEC SWAP                                      ; DC4C: CE 7F 04    ...
     LDA X2                                        ; DC4F: A5 73       .s
     STA XX15                                      ; DC51: 85 71       .q
     STX X2                                        ; DC53: 86 73       .s
@@ -4228,7 +4259,7 @@ LC006 = sub_CC004+2
     CPY Y2                                        ; DE25: C4 74       .t
     BEQ loop_CDE0F                                ; DE27: F0 E6       ..
     BCS CDE3C                                     ; DE29: B0 11       ..
-    DEC L047F                                     ; DE2B: CE 7F 04    ...
+    DEC SWAP                                      ; DE2B: CE 7F 04    ...
     LDA X2                                        ; DE2E: A5 73       .s
     STA XX15                                      ; DE30: 85 71       .q
     STX X2                                        ; DE32: 86 73       .s
@@ -4584,7 +4615,7 @@ LDFFF = sub_CDFFE+1
     LDA L00E6                                     ; E064: A5 E6       ..
     ADC LDAF8,Y                                   ; E066: 79 F8 DA    y..
     STA L00BB                                     ; E069: 85 BB       ..
-    LDA L0030                                     ; E06B: A5 30       .0
+    LDA P_1                                       ; E06B: A5 30       .0
     SEC                                           ; E06D: 38          8
     SBC P                                         ; E06E: E5 2F       ./
     LSR A                                         ; E070: 4A          J
@@ -5934,7 +5965,7 @@ LDFFF = sub_CDFFE+1
     BPL CEB74                                     ; EB6F: 10 03       ..
     JSR sub_CD06D                                 ; EB71: 20 6D D0     m.
 .CEB74
-    LDX L03E5                                     ; EB74: AE E5 03    ...
+    LDX NOSTM                                     ; EB74: AE E5 03    ...
     LDY #&98                                      ; EB77: A0 98       ..
 .CEB79
     LDA #&F0                                      ; EB79: A9 F0       ..
@@ -6139,11 +6170,11 @@ LDFFF = sub_CDFFE+1
 
     LDA #2                                        ; ECF9: A9 02       ..
     STA K                                         ; ECFB: 85 7D       .}
-    STA L007E                                     ; ECFD: 85 7E       .~
+    STA K_1                                       ; ECFD: 85 7E       .~
     LDA #&45 ; 'E'                                ; ECFF: A9 45       .E
-    STA L007F                                     ; ED01: 85 7F       ..
+    STA K_2                                       ; ED01: 85 7F       ..
     LDA #8                                        ; ED03: A9 08       ..
-    STA L0080                                     ; ED05: 85 80       ..
+    STA K_3                                       ; ED05: 85 80       ..
     LDA #3                                        ; ED07: A9 03       ..
     STA L0032                                     ; ED09: 85 32       .2
     LDA #&19                                      ; ED0B: A9 19       ..
@@ -7213,7 +7244,7 @@ LDFFF = sub_CDFFE+1
     LDA INWK                                      ; F4C1: A5 09       ..
     STA P                                         ; F4C3: 85 2F       ./
     LDA INWK_1                                    ; F4C5: A5 0A       ..
-    STA L0030                                     ; F4C7: 85 30       .0
+    STA P_1                                       ; F4C7: 85 30       .0
     LDA INWK_2                                    ; F4C9: A5 0B       ..
     JSR sub_CF4FB                                 ; F4CB: 20 FB F4     ..
     BCS CF4F8                                     ; F4CE: B0 28       .(
@@ -7226,14 +7257,14 @@ LDFFF = sub_CDFFE+1
     LDA INWK_3                                    ; F4DB: A5 0C       ..
     STA P                                         ; F4DD: 85 2F       ./
     LDA INWK_4                                    ; F4DF: A5 0D       ..
-    STA L0030                                     ; F4E1: 85 30       .0
+    STA P_1                                       ; F4E1: 85 30       .0
     LDA INWK_5                                    ; F4E3: A5 0E       ..
     EOR #&80                                      ; F4E5: 49 80       I.
     JSR sub_CF4FB                                 ; F4E7: 20 FB F4     ..
     BCS CF4F8                                     ; F4EA: B0 0C       ..
     LDA K                                         ; F4EC: A5 7D       .}
     ADC L00B1                                     ; F4EE: 65 B1       e.
-    STA L004B                                     ; F4F0: 85 4B       .K
+    STA K4                                        ; F4F0: 85 4B       .K
     TXA                                           ; F4F2: 8A          .
     ADC #0                                        ; F4F3: 69 00       i.
     STA XX2_15                                    ; F4F5: 85 4C       .L
@@ -7246,7 +7277,7 @@ LDFFF = sub_CDFFE+1
     RTS                                           ; F4FA: 60          `
 
 .sub_CF4FB
-    JSR sub_CF962                                 ; F4FB: 20 62 F9     b.
+    JSR DVID3B2                                   ; F4FB: 20 62 F9     b.
     LDA L00E9                                     ; F4FE: A5 E9       ..
     BPL CF50B                                     ; F500: 10 09       ..
     LDA PPUSTATUS                                 ; F502: AD 02 20    ..
@@ -7254,14 +7285,14 @@ LDFFF = sub_CDFFE+1
     BPL CF50B                                     ; F506: 10 03       ..
     JSR sub_CD06D                                 ; F508: 20 6D D0     m.
 .CF50B
-    LDA L0080                                     ; F50B: A5 80       ..
+    LDA K_3                                       ; F50B: A5 80       ..
     AND #&7F                                      ; F50D: 29 7F       ).
-    ORA L007F                                     ; F50F: 05 7F       ..
+    ORA K_2                                       ; F50F: 05 7F       ..
     BNE loop_CF4F9                                ; F511: D0 E6       ..
-    LDX L007E                                     ; F513: A6 7E       .~
+    LDX K_1                                       ; F513: A6 7E       .~
     CPX #4                                        ; F515: E0 04       ..
     BCS CF52C                                     ; F517: B0 13       ..
-    LDA L0080                                     ; F519: A5 80       ..
+    LDA K_3                                       ; F519: A5 80       ..
     BPL CF52C                                     ; F51B: 10 0F       ..
     LDA K                                         ; F51D: A5 7D       .}
     EOR #&FF                                      ; F51F: 49 FF       I.
@@ -7441,26 +7472,26 @@ LDFFF = sub_CDFFE+1
     BNE CF658                                     ; F622: D0 34       .4
     LDA INWK_7                                    ; F624: A5 10       ..
     LSR A                                         ; F626: 4A          J
-    STA L007F                                     ; F627: 85 7F       ..
+    STA K_2                                       ; F627: 85 7F       ..
     LDA INWK_1                                    ; F629: A5 0A       ..
     LSR A                                         ; F62B: 4A          J
     STA K                                         ; F62C: 85 7D       .}
     LDA INWK_4                                    ; F62E: A5 0D       ..
     LSR A                                         ; F630: 4A          J
-    STA L007E                                     ; F631: 85 7E       .~
+    STA K_1                                       ; F631: 85 7E       .~
     CMP K                                         ; F633: C5 7D       .}
     BCS CF639                                     ; F635: B0 02       ..
     LDA K                                         ; F637: A5 7D       .}
 .CF639
-    CMP L007F                                     ; F639: C5 7F       ..
+    CMP K_2                                       ; F639: C5 7F       ..
     BCS CF63F                                     ; F63B: B0 02       ..
-    LDA L007F                                     ; F63D: A5 7F       ..
+    LDA K_2                                       ; F63D: A5 7F       ..
 .CF63F
     STA L0007                                     ; F63F: 85 07       ..
     LDA K                                         ; F641: A5 7D       .}
     CLC                                           ; F643: 18          .
-    ADC L007E                                     ; F644: 65 7E       e~
-    ADC L007F                                     ; F646: 65 7F       e.
+    ADC K_1                                       ; F644: 65 7E       e~
+    ADC K_2                                       ; F646: 65 7F       e.
     SEC                                           ; F648: 38          8
     SBC L0007                                     ; F649: E5 07       ..
     LSR A                                         ; F64B: 4A          J
@@ -7480,9 +7511,9 @@ LDFFF = sub_CDFFE+1
 ; ******************************************************************************
 .MU5
     STA K                                         ; F65A: 85 7D       .}
-    STA L007E                                     ; F65C: 85 7E       .~
-    STA L007F                                     ; F65E: 85 7F       ..
-    STA L0080                                     ; F660: 85 80       ..
+    STA K_1                                       ; F65C: 85 7E       .~
+    STA K_2                                       ; F65E: 85 7F       ..
+    STA K_3                                       ; F660: 85 80       ..
     CLC                                           ; F662: 18          .
     RTS                                           ; F663: 60          `
 
@@ -7490,17 +7521,17 @@ LDFFF = sub_CDFFE+1
 .MULT3
     STA R                                         ; F664: 85 98       ..
     AND #&7F                                      ; F666: 29 7F       ).
-    STA L007F                                     ; F668: 85 7F       ..
+    STA K_2                                       ; F668: 85 7F       ..
     LDA Q                                         ; F66A: A5 97       ..
     AND #&7F                                      ; F66C: 29 7F       ).
     BEQ MU5                                       ; F66E: F0 EA       ..
     SEC                                           ; F670: 38          8
     SBC #1                                        ; F671: E9 01       ..
     STA T                                         ; F673: 85 9A       ..
-    LDA L0030                                     ; F675: A5 30       .0
-    LSR L007F                                     ; F677: 46 7F       F.
+    LDA P_1                                       ; F675: A5 30       .0
+    LSR K_2                                       ; F677: 46 7F       F.
     ROR A                                         ; F679: 6A          j
-    STA L007E                                     ; F67A: 85 7E       .~
+    STA K_1                                       ; F67A: 85 7E       .~
     LDA P                                         ; F67C: A5 2F       ./
     ROR A                                         ; F67E: 6A          j
     STA K                                         ; F67F: 85 7D       .}
@@ -7518,8 +7549,8 @@ LDFFF = sub_CDFFE+1
     ADC T                                         ; F694: 65 9A       e.
 .CF696
     ROR A                                         ; F696: 6A          j
-    ROR L007F                                     ; F697: 66 7F       f.
-    ROR L007E                                     ; F699: 66 7E       f~
+    ROR K_2                                       ; F697: 66 7F       f.
+    ROR K_1                                       ; F699: 66 7E       f~
     ROR K                                         ; F69B: 66 7D       f}
     DEX                                           ; F69D: CA          .
     BNE loop_CF692                                ; F69E: D0 F2       ..
@@ -7535,7 +7566,7 @@ LDFFF = sub_CDFFE+1
     EOR Q                                         ; F6B1: 45 97       E.
     AND #&80                                      ; F6B3: 29 80       ).
     ORA T                                         ; F6B5: 05 9A       ..
-    STA L0080                                     ; F6B7: 85 80       ..
+    STA K_3                                       ; F6B7: 85 80       ..
     RTS                                           ; F6B9: 60          `
 
 ; ******************************************************************************
@@ -7597,7 +7628,7 @@ LDFFF = sub_CDFFE+1
 
 ; ******************************************************************************
 .MU6
-    STA L0030                                     ; F707: 85 30       .0
+    STA P_1                                       ; F707: 85 30       .0
     STA P                                         ; F709: 85 2F       ./
     RTS                                           ; F70B: 60          `
 
@@ -7616,6 +7647,8 @@ LDFFF = sub_CDFFE+1
     TXA                                           ; F716: 8A          .
     RTS                                           ; F717: 60          `
 
+; ******************************************************************************
+.MLU1
     LDA SY,Y                                      ; F718: B9 DD 04    ...
     STA Y1                                        ; F71B: 85 72       .r
 ; ******************************************************************************
@@ -7724,7 +7757,7 @@ LDFFF = sub_CDFFE+1
 .MLTU2
     EOR #&FF                                      ; F7AD: 49 FF       I.
     LSR A                                         ; F7AF: 4A          J
-    STA L0030                                     ; F7B0: 85 30       .0
+    STA P_1                                       ; F7B0: 85 30       .0
     LDA #0                                        ; F7B2: A9 00       ..
     LDX #&10                                      ; F7B4: A2 10       ..
     ROR P                                         ; F7B6: 66 2F       f/
@@ -7732,7 +7765,7 @@ LDFFF = sub_CDFFE+1
     BCS CF7C5                                     ; F7B8: B0 0B       ..
     ADC Q                                         ; F7BA: 65 97       e.
     ROR A                                         ; F7BC: 6A          j
-    ROR L0030                                     ; F7BD: 66 30       f0
+    ROR P_1                                       ; F7BD: 66 30       f0
     ROR P                                         ; F7BF: 66 2F       f/
     DEX                                           ; F7C1: CA          .
     BNE CF7B8                                     ; F7C2: D0 F4       ..
@@ -7740,7 +7773,7 @@ LDFFF = sub_CDFFE+1
 
 .CF7C5
     LSR A                                         ; F7C5: 4A          J
-    ROR L0030                                     ; F7C6: 66 30       f0
+    ROR P_1                                       ; F7C6: 66 30       f0
     ROR P                                         ; F7C8: 66 2F       f/
     DEX                                           ; F7CA: CA          .
     BNE CF7B8                                     ; F7CB: D0 EB       ..
@@ -7748,6 +7781,8 @@ LDFFF = sub_CDFFE+1
 
     LDX ALP1                                      ; F7CE: A6 6E       .n
     STX P                                         ; F7D0: 86 2F       ./
+; ******************************************************************************
+.MUT2
     LDX L0066                                     ; F7D2: A6 66       .f
     STX S                                         ; F7D4: 86 99       ..
     LDX XX                                        ; F7D6: A6 65       .e
@@ -7915,7 +7950,9 @@ LDFFF = sub_CDFFE+1
     ORA T                                         ; F8CE: 05 9A       ..
     RTS                                           ; F8D0: 60          `
 
-    LDA L04F2,Y                                   ; F8D1: B9 F2 04    ...
+; ******************************************************************************
+.DV42
+    LDA SZ,Y                                      ; F8D1: B9 F2 04    ...
     STA Q                                         ; F8D4: 85 97       ..
     LDA L0093                                     ; F8D6: A5 93       ..
     ASL A                                         ; F8D8: 0A          .
@@ -8005,8 +8042,9 @@ LDFFF = sub_CDFFE+1
     STA R                                         ; F95F: 85 98       ..
     RTS                                           ; F961: 60          `
 
-.sub_CF962
-    STA L0031                                     ; F962: 85 31       .1
+; ******************************************************************************
+.DVID3B2
+    STA P_2                                       ; F962: 85 31       .1
     LDA INWK_6                                    ; F964: A5 0F       ..
     ORA #1                                        ; F966: 09 01       ..
     STA Q                                         ; F968: 85 97       ..
@@ -8024,23 +8062,23 @@ LDFFF = sub_CDFFE+1
     LDA P                                         ; F97F: A5 2F       ./
     ORA #1                                        ; F981: 09 01       ..
     STA P                                         ; F983: 85 2F       ./
-    LDA L0031                                     ; F985: A5 31       .1
+    LDA P_2                                       ; F985: A5 31       .1
     EOR S                                         ; F987: 45 99       E.
     AND #&80                                      ; F989: 29 80       ).
     STA T                                         ; F98B: 85 9A       ..
     LDY #0                                        ; F98D: A0 00       ..
-    LDA L0031                                     ; F98F: A5 31       .1
+    LDA P_2                                       ; F98F: A5 31       .1
     AND #&7F                                      ; F991: 29 7F       ).
 .loop_CF993
     CMP #&40 ; '@'                                ; F993: C9 40       .@
     BCS CF99F                                     ; F995: B0 08       ..
     ASL P                                         ; F997: 06 2F       ./
-    ROL L0030                                     ; F999: 26 30       &0
+    ROL P_1                                       ; F999: 26 30       &0
     ROL A                                         ; F99B: 2A          *
     INY                                           ; F99C: C8          .
     BNE loop_CF993                                ; F99D: D0 F4       ..
 .CF99F
-    STA L0031                                     ; F99F: 85 31       .1
+    STA P_2                                       ; F99F: 85 31       .1
     LDA S                                         ; F9A1: A5 99       ..
     AND #&7F                                      ; F9A3: 29 7F       ).
 .loop_CF9A5
@@ -8059,7 +8097,7 @@ LDFFF = sub_CDFFE+1
 .CF9BC
     LDA #&FE                                      ; F9BC: A9 FE       ..
     STA R                                         ; F9BE: 85 98       ..
-    LDA L0031                                     ; F9C0: A5 31       .1
+    LDA P_2                                       ; F9C0: A5 31       .1
 .CF9C2
     ASL A                                         ; F9C2: 0A          .
     BCS CF9D2                                     ; F9C3: B0 0D       ..
@@ -8079,30 +8117,30 @@ LDFFF = sub_CDFFE+1
     LDA R                                         ; F9D9: A5 98       ..
 .CF9DB
     LDA #0                                        ; F9DB: A9 00       ..
-    STA L007E                                     ; F9DD: 85 7E       .~
-    STA L007F                                     ; F9DF: 85 7F       ..
-    STA L0080                                     ; F9E1: 85 80       ..
+    STA K_1                                       ; F9DD: 85 7E       .~
+    STA K_2                                       ; F9DF: 85 7F       ..
+    STA K_3                                       ; F9E1: 85 80       ..
     TYA                                           ; F9E3: 98          .
     BPL CFA04                                     ; F9E4: 10 1E       ..
     LDA R                                         ; F9E6: A5 98       ..
 .loop_CF9E8
     ASL A                                         ; F9E8: 0A          .
-    ROL L007E                                     ; F9E9: 26 7E       &~
-    ROL L007F                                     ; F9EB: 26 7F       &.
-    ROL L0080                                     ; F9ED: 26 80       &.
+    ROL K_1                                       ; F9E9: 26 7E       &~
+    ROL K_2                                       ; F9EB: 26 7F       &.
+    ROL K_3                                       ; F9ED: 26 80       &.
     INY                                           ; F9EF: C8          .
     BNE loop_CF9E8                                ; F9F0: D0 F6       ..
     STA K                                         ; F9F2: 85 7D       .}
-    LDA L0080                                     ; F9F4: A5 80       ..
+    LDA K_3                                       ; F9F4: A5 80       ..
     ORA T                                         ; F9F6: 05 9A       ..
-    STA L0080                                     ; F9F8: 85 80       ..
+    STA K_3                                       ; F9F8: 85 80       ..
     RTS                                           ; F9FA: 60          `
 
 .loop_CF9FB
     LDA R                                         ; F9FB: A5 98       ..
     STA K                                         ; F9FD: 85 7D       .}
     LDA T                                         ; F9FF: A5 9A       ..
-    STA L0080                                     ; FA01: 85 80       ..
+    STA K_3                                       ; FA01: 85 80       ..
     RTS                                           ; FA03: 60          `
 
 .CFA04
@@ -8114,7 +8152,7 @@ LDFFF = sub_CDFFE+1
     BNE loop_CFA08                                ; FA0A: D0 FC       ..
     STA K                                         ; FA0C: 85 7D       .}
     LDA T                                         ; FA0E: A5 9A       ..
-    STA L0080                                     ; FA10: 85 80       ..
+    STA K_3                                       ; FA10: 85 80       ..
     RTS                                           ; FA12: 60          `
 
 .CFA13

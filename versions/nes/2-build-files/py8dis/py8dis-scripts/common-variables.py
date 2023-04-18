@@ -145,7 +145,7 @@ label(0xC500, "SNE")
 label(0xC520, "ACT")
 
 subroutine(0xCED5, "NMI")
-subroutine(0xDC0F, "LSPUT")
+subroutine(0xDC0F, "LOIN") 	# Could also be LSPUT
 subroutine(0xF201, "TT27")
 subroutine(0xF4AD, "DORND")
 subroutine(0xF4C1, "PROJ")

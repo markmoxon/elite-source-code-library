@@ -3935,7 +3935,7 @@ LC006 = sub_CC004+2
     RTS                                           ; DC0E: 60          `
 
 ; ******************************************************************************
-.LSPUT
+.LOIN
     STY L009C                                     ; DC0F: 84 9C       ..
     LDA L00E9                                     ; DC11: A5 E9       ..
     BPL CDC1E                                     ; DC13: 10 09       ..
@@ -6934,7 +6934,7 @@ LDFFF = sub_CDFFE+1
     JSR CC0AE                                     ; F285: 20 AE C0     ..
     JSR LA65D                                     ; F288: 20 5D A6     ].
     BCS CF290                                     ; F28B: B0 03       ..
-    JSR LSPUT                                     ; F28D: 20 0F DC     ..
+    JSR LOIN                                      ; F28D: 20 0F DC     ..
 .CF290
     JMP CC0AD                                     ; F290: 4C AD C0    L..
 

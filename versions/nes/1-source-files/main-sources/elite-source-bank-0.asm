@@ -491,7 +491,7 @@ LD951       = &D951
 LD96F       = &D96F
 LD975       = &D975
 LD977       = &D977
-LSPUT       = &DC0F
+LOIN        = &DC0F
 LE543       = &E543
 LE596       = &E596
 LE59F       = &E59F
@@ -3441,7 +3441,7 @@ L8D3C = sub_C8D3B+1
     STA Y1                                        ; 9407: 85 72       .r
     LDA Yx2M1                                     ; 9409: A5 B3       ..
     STA Y2                                        ; 940B: 85 74       .t
-    JSR LSPUT                                     ; 940D: 20 0F DC     ..
+    JSR LOIN                                      ; 940D: 20 0F DC     ..
     LDA L047B                                     ; 9410: AD 7B 04    .{.
     STA XX15                                      ; 9413: 85 71       .q
     LDA L047C                                     ; 9415: AD 7C 04    .|.
@@ -3449,7 +3449,7 @@ L8D3C = sub_C8D3B+1
     STY X2                                        ; 941A: 84 73       .s
     LDA Yx2M1                                     ; 941C: A5 B3       ..
     STA Y2                                        ; 941E: 85 74       .t
-    JMP LSPUT                                     ; 9420: 4C 0F DC    L..
+    JMP LOIN                                      ; 9420: 4C 0F DC    L..
 
 .C9423
     LDA L039E                                     ; 9423: AD 9E 03    ...
@@ -4136,7 +4136,7 @@ L8D3C = sub_C8D3B+1
     ADC L0452                                     ; 9945: 6D 52 04    mR.
     STA Y1                                        ; 9948: 85 72       .r
     STA Y2                                        ; 994A: 85 74       .t
-    JSR LSPUT                                     ; 994C: 20 0F DC     ..
+    JSR LOIN                                      ; 994C: 20 0F DC     ..
     LDA L044E                                     ; 994F: AD 4E 04    .N.
     SEC                                           ; 9952: 38          8
     SBC L044F                                     ; 9953: ED 4F 04    .O.
@@ -4161,7 +4161,7 @@ L8D3C = sub_C8D3B+1
     LDA L044D                                     ; 9978: AD 4D 04    .M.
     STA XX15                                      ; 997B: 85 71       .q
     STA X2                                        ; 997D: 85 73       .s
-    JMP LSPUT                                     ; 997F: 4C 0F DC    L..
+    JMP LOIN                                      ; 997F: 4C 0F DC    L..
 
 .C9982
     LDA #&68 ; 'h'                                ; 9982: A9 68       .h

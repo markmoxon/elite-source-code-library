@@ -231,7 +231,7 @@ LD06D       = &D06D
 LD9F7       = &D9F7
 LDA18       = &DA18
 LDAF8       = &DAF8
-LSPUT       = &DC0F
+LOIN        = &DC0F
 LE04A       = &E04A
 LE0BA       = &E0BA
 LE4F0       = &E4F0
@@ -1676,7 +1676,7 @@ LFAF8       = &FAF8
     AND #&3F ; '?'                                ; 9FB6: 29 3F       )?
     ADC #&20 ; ' '                                ; 9FB8: 69 20       i
     STA Y2                                        ; 9FBA: 85 74       .t
-    JSR LSPUT                                     ; 9FBC: 20 0F DC     ..
+    JSR LOIN                                      ; 9FBC: 20 0F DC     ..
 .C9FBF
     LDA #&F7                                      ; 9FBF: A9 F7       ..
     AND INWK_31                                   ; 9FC1: 25 28       %(
@@ -1691,7 +1691,7 @@ LFAF8       = &FAF8
     STA X2                                        ; 9FCE: 85 73       .s
     STY Y1                                        ; 9FD0: 84 72       .r
     STY Y2                                        ; 9FD2: 84 74       .t
-    JMP LSPUT                                     ; 9FD4: 4C 0F DC    L..
+    JMP LOIN                                      ; 9FD4: 4C 0F DC    L..
 
 .C9FD7
     PLA                                           ; 9FD7: 68          h
@@ -2593,7 +2593,7 @@ LFAF8       = &FAF8
     JSR CLIP                                      ; A5CF: 20 5D A6     ].
     BCS LL170                                     ; A5D2: B0 05       ..
     LDY U                                         ; A5D4: A4 96       ..
-    JSR LSPUT                                     ; A5D6: 20 0F DC     ..
+    JSR LOIN                                      ; A5D6: 20 0F DC     ..
 ; ******************************************************************************
 .LL170
     LDY #3                                        ; A5D9: A0 03       ..
@@ -2664,7 +2664,7 @@ LFAF8       = &FAF8
     STA XX15_2                                    ; A650: 85 76       .v
     JSR CLIP2                                     ; A652: 20 64 A6     d.
     BCS CA61D                                     ; A655: B0 C6       ..
-    JSR LSPUT                                     ; A657: 20 0F DC     ..
+    JSR LOIN                                      ; A657: 20 0F DC     ..
     JMP CA7B0                                     ; A65A: 4C B0 A7    L..
 
 ; ******************************************************************************
@@ -4378,7 +4378,7 @@ LFAF8       = &FAF8
     STA Y2                                        ; B19F: 85 74       .t
     STY Y1                                        ; B1A1: 84 72       .r
 .CB1A3
-    JSR LSPUT                                     ; B1A3: 20 0F DC     ..
+    JSR LOIN                                      ; B1A3: 20 0F DC     ..
 .CB1A6
     LDA K6                                        ; B1A6: A5 8C       ..
     STA XX18                                      ; B1A8: 85 88       ..

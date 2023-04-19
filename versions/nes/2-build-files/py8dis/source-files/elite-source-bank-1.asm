@@ -1,278 +1,307 @@
 ; Memory locations
-ZP          = &0000
-L0002       = &0002
-L0003       = &0003
-L0004       = &0004
-L0005       = &0005
-T1          = &0006
-L0007       = &0007
-L0008       = &0008
-INWK        = &0009
-INWK_1      = &000A
-INWK_2      = &000B
-INWK_3      = &000C
-INWK_4      = &000D
-INWK_5      = &000E
-INWK_6      = &000F
-INWK_7      = &0010
-INWK_8      = &0011
-INWK_9      = &0012
-INWK_10     = &0013
-INWK_11     = &0014
-INWK_12     = &0015
-INWK_13     = &0016
-INWK_14     = &0017
-INWK_15     = &0018
-INWK_16     = &0019
-INWK_17     = &001A
-INWK_18     = &001B
-INWK_19     = &001C
-INWK_20     = &001D
-INWK_21     = &001E
-INWK_22     = &001F
-INWK_23     = &0020
-INWK_24     = &0021
-INWK_25     = &0022
-INWK_26     = &0023
-INWK_27     = &0024
-INWK_28     = &0025
-INWK_29     = &0026
-INWK_30     = &0027
-INWK_31     = &0028
-L002A       = &002A
-L002B       = &002B
-L002D       = &002D
-P           = &002F
-P_1         = &0030
-P_2         = &0031
-YC          = &003B
-QQ17        = &003C
-XX2         = &003D
-L003E       = &003E
-L003F       = &003F
-L0040       = &0040
-K4          = &004B
-XX2_15      = &004C
-XX16        = &004D
-XX16_1      = &004E
-XX16_2      = &004F
-XX16_3      = &0050
-L0051       = &0051
-L0052       = &0052
-XX16_6      = &0053
-L0054       = &0054
-XX16_9      = &0056
-L0057       = &0057
-L0058       = &0058
-XX16_12     = &0059
-L005A       = &005A
-L005B       = &005B
-L005C       = &005C
-XX0         = &005F
-L0060       = &0060
-INF         = &0061
-V           = &0063
-V_1         = &0064
-XX          = &0065
-L0066       = &0066
-YY          = &0067
-YY_1        = &0068
-BETA        = &0069
-BET1        = &006A
-ALP1        = &006E
-ALP2        = &006F
-ALP2_1      = &0070
-XX15        = &0071
-Y1          = &0072
-X2          = &0073
-Y2          = &0074
-XX15_1      = &0075
-XX15_2      = &0076
-XX12        = &0077
-XX12_1      = &0078
-L0079       = &0079
-L007A       = &007A
-L007B       = &007B
-L007C       = &007C
-K           = &007D
-K_1         = &007E
-K_2         = &007F
-K_3         = &0080
-QQ15        = &0082
-XX18        = &0088
-L0089       = &0089
-L008A       = &008A
-L008B       = &008B
-K6          = &008C
-K6_1        = &008D
-L008E       = &008E
-XX18_7      = &008F
-L0090       = &0090
-BET2        = &0091
-BET2_1      = &0092
-DELT4       = &0094
-DELT4_1     = &0095
-U           = &0096
-Q           = &0097
-R           = &0098
-S           = &0099
-T           = &009A
-L009B       = &009B
-L009C       = &009C
-L009D       = &009D
-L009E       = &009E
-ZZ          = &00A0
-L00A1       = &00A1
-TYPE        = &00A3
-L00A4       = &00A4
-TGT         = &00A6
-FLAG        = &00A7
-CNT         = &00A8
-CNT2        = &00A9
-STP         = &00AA
-XX4         = &00AB
-XX20        = &00AC
-L00AE       = &00AE
-L00AF       = &00AF
-widget      = &00B0
-L00B1       = &00B1
-L00B2       = &00B2
-Yx2M1       = &00B3
-L00B6       = &00B6
-L00B9       = &00B9
-L00BA       = &00BA
-L00BB       = &00BB
-L00D2       = &00D2
-L00D8       = &00D8
-L00E6       = &00E6
-L00E9       = &00E9
-L00F9       = &00F9
-XX3         = &0100
-XX3_1       = &0101
-L0102       = &0102
-L0103       = &0103
-L0200       = &0200
-L0202       = &0202
-L0203       = &0203
-L0204       = &0204
-L0206       = &0206
-L0207       = &0207
-L0208       = &0208
-L0209       = &0209
-L020A       = &020A
-L020B       = &020B
-L022C       = &022C
-L0230       = &0230
-L0234       = &0234
-L0294       = &0294
-L0295       = &0295
-L0297       = &0297
-L02E8       = &02E8
-L02E9       = &02E9
-L02EA       = &02EA
-L02EB       = &02EB
-L0374       = &0374
-L037E       = &037E
-VIEW        = &038E
-L039F       = &039F
-CRGO        = &03AC
-QQ20        = &03AD
-BST         = &03BF
-L03DD       = &03DD
-NOSTM       = &03E5
-L03E6       = &03E6
-L03F1       = &03F1
-L040A       = &040A
-K2          = &0459
-K2_1        = &045A
-K2_2        = &045B
-K2_3        = &045C
-SWAP        = &047F
-QQ29        = &048A
-QQ8         = &049B
-SX          = &04C8
-SY          = &04DD
-SZ          = &04F2
-L0561       = &0561
-SXL         = &05A5
-SYL         = &05BA
-SZL         = &05CF
-L05EA       = &05EA
-L05EB       = &05EB
-L05EC       = &05EC
-L05ED       = &05ED
-L05EE       = &05EE
-L05EF       = &05EF
-L05F0       = &05F0
-L05F1       = &05F1
-L0606       = &0606
-PPUCTRL     = &2000
-PPUMASK     = &2001
-PPUSTATUS   = &2002
-OAMADDR     = &2003
-OAMDATA     = &2004
-PPUSCROLL   = &2005
-PPUADDR     = &2006
-PPUDATA     = &2007
-OAMDMA      = &4014
-LC006       = &C006
-LC007       = &C007
-log         = &C100
-logL        = &C200
-antilog     = &C300
-antilogODD  = &C400
-SNE         = &C500
-ACT         = &C520
-LC53E       = &C53E
-LC53F       = &C53F
-LCE9E       = &CE9E
-NMI         = &CED5
-LD06D       = &D06D
-LD9F7       = &D9F7
-LDA18       = &DA18
-LDAF8       = &DAF8
-LOIN        = &DC0F
-LE04A       = &E04A
-LE0BA       = &E0BA
-LE4F0       = &E4F0
-LF1A2       = &F1A2
-TT27        = &F201
-LF26E       = &F26E
-LF2CE       = &F2CE
-LF4AC       = &F4AC
-DORND       = &F4AD
-PROJ        = &F4C1
-MU5         = &F65A
-MULT3       = &F664
-MLS2        = &F6BA
-MLS1        = &F6C2
-LF6C4       = &F6C4
-MULTS       = &F6C6
-MU6         = &F707
-SQUA        = &F70C
-SQUA2       = &F70E
-MU1         = &F713
-MLU1        = &F718
-MLU2        = &F71D
-MULTU       = &F721
-MU11        = &F725
-FMLTU2      = &F766
-FMLTU       = &F770
-MLTU2       = &F7AD
-MUT2        = &F7D2
-LF7D6       = &F7D6
-MULT1       = &F7DA
-MULT12      = &F83C
-MAD         = &F86F
-ADD         = &F872
-LF8AE       = &F8AE
-DV42        = &F8D1
-LF8D4       = &F8D4
-LF8D8       = &F8D8
-DVID3B2     = &F962
-LFA55       = &FA55
-LL28        = &FA91
-LFAF8       = &FAF8
+ZP                  = &0000
+L0002               = &0002
+L0003               = &0003
+L0004               = &0004
+L0005               = &0005
+T1                  = &0006
+SC                  = &0007
+SC_1                = &0008
+INWK                = &0009
+INWK_1              = &000A
+INWK_2              = &000B
+INWK_3              = &000C
+INWK_4              = &000D
+INWK_5              = &000E
+INWK_6              = &000F
+INWK_7              = &0010
+INWK_8              = &0011
+INWK_9              = &0012
+INWK_10             = &0013
+INWK_11             = &0014
+INWK_12             = &0015
+INWK_13             = &0016
+INWK_14             = &0017
+INWK_15             = &0018
+INWK_16             = &0019
+INWK_17             = &001A
+INWK_18             = &001B
+INWK_19             = &001C
+INWK_20             = &001D
+INWK_21             = &001E
+INWK_22             = &001F
+INWK_23             = &0020
+INWK_24             = &0021
+INWK_25             = &0022
+INWK_26             = &0023
+INWK_27             = &0024
+INWK_28             = &0025
+INWK_29             = &0026
+INWK_30             = &0027
+INWK_31             = &0028
+L002A               = &002A
+L002B               = &002B
+L002D               = &002D
+P                   = &002F
+P_1                 = &0030
+P_2                 = &0031
+XC                  = &0032
+YC                  = &003B
+QQ17                = &003C
+XX2                 = &003D
+L003E               = &003E
+L003F               = &003F
+L0040               = &0040
+K4                  = &004B
+XX2_15              = &004C
+XX16                = &004D
+XX16_1              = &004E
+XX16_2              = &004F
+XX16_3              = &0050
+L0051               = &0051
+L0052               = &0052
+XX16_6              = &0053
+L0054               = &0054
+XX16_9              = &0056
+L0057               = &0057
+L0058               = &0058
+XX16_12             = &0059
+L005A               = &005A
+L005B               = &005B
+L005C               = &005C
+XX0                 = &005F
+L0060               = &0060
+INF                 = &0061
+V                   = &0063
+V_1                 = &0064
+XX                  = &0065
+XX_1                = &0066
+YY                  = &0067
+YY_1                = &0068
+BETA                = &0069
+BET1                = &006A
+ALP1                = &006E
+ALP2                = &006F
+ALP2_1              = &0070
+XX15                = &0071
+Y1                  = &0072
+X2                  = &0073
+Y2                  = &0074
+XX15_1              = &0075
+XX15_2              = &0076
+XX12                = &0077
+XX12_1              = &0078
+L0079               = &0079
+L007A               = &007A
+L007B               = &007B
+L007C               = &007C
+K                   = &007D
+K_1                 = &007E
+K_2                 = &007F
+K_3                 = &0080
+QQ15                = &0082
+XX18                = &0088
+L0089               = &0089
+L008A               = &008A
+L008B               = &008B
+K6                  = &008C
+K6_1                = &008D
+L008E               = &008E
+XX18_7              = &008F
+L0090               = &0090
+BET2                = &0091
+BET2_1              = &0092
+DELT4               = &0094
+DELT4_1             = &0095
+U                   = &0096
+Q                   = &0097
+R                   = &0098
+S                   = &0099
+T                   = &009A
+XSAV                = &009B
+L009C               = &009C
+XX17                = &009D
+L009E               = &009E
+ZZ                  = &00A0
+L00A1               = &00A1
+TYPE                = &00A3
+ALPHA               = &00A4
+TGT                 = &00A6
+FLAG                = &00A7
+CNT                 = &00A8
+CNT2                = &00A9
+STP                 = &00AA
+XX4                 = &00AB
+XX20                = &00AC
+RAT                 = &00AE
+RAT2                = &00AF
+widget              = &00B0
+L00B1               = &00B1
+L00B2               = &00B2
+Yx2M1               = &00B3
+newzp               = &00B6
+L00B9               = &00B9
+L00BA               = &00BA
+L00BB               = &00BB
+L00D2               = &00D2
+L00D8               = &00D8
+L00E6               = &00E6
+L00E9               = &00E9
+BANK                = &00F7
+L00F9               = &00F9
+XX3                 = &0100
+XX3_1               = &0101
+L0102               = &0102
+L0103               = &0103
+L0200               = &0200
+L0202               = &0202
+L0203               = &0203
+L0204               = &0204
+L0206               = &0206
+L0207               = &0207
+L0208               = &0208
+L0209               = &0209
+L020A               = &020A
+L020B               = &020B
+L022C               = &022C
+L0230               = &0230
+L0234               = &0234
+L0294               = &0294
+L0295               = &0295
+L0297               = &0297
+L02E8               = &02E8
+L02E9               = &02E9
+L02EA               = &02EA
+L02EB               = &02EB
+L0374               = &0374
+L037E               = &037E
+VIEW                = &038E
+L039F               = &039F
+CASH                = &03A1
+GCNT                = &03A7
+CRGO                = &03AC
+QQ20                = &03AD
+BST                 = &03BF
+L03DD               = &03DD
+NOSTM               = &03E5
+L03E6               = &03E6
+L03F1               = &03F1
+DTW6                = &03F3
+DTW2                = &03F4
+DTW3                = &03F5
+DTW4                = &03F6
+DTW5                = &03F7
+DTW1                = &03F8
+DTW8                = &03F9
+L040A               = &040A
+K2                  = &0459
+K2_1                = &045A
+K2_2                = &045B
+K2_3                = &045C
+SWAP                = &047F
+QQ29                = &048A
+QQ8                 = &049B
+QQ18LO              = &04A4
+QQ18HI              = &04A5
+TOKENLO             = &04A6
+TOKENHI             = &04A7
+SX                  = &04C8
+SY                  = &04DD
+SZ                  = &04F2
+BUFm1               = &0506
+BUF                 = &0507
+BUF_1               = &0508
+HANGFLAG            = &0561
+SXL                 = &05A5
+SYL                 = &05BA
+SZL                 = &05CF
+L05EA               = &05EA
+L05EB               = &05EB
+L05EC               = &05EC
+L05ED               = &05ED
+L05EE               = &05EE
+L05EF               = &05EF
+L05F0               = &05F0
+L05F1               = &05F1
+L0606               = &0606
+PPUCTRL             = &2000
+PPUMASK             = &2001
+PPUSTATUS           = &2002
+OAMADDR             = &2003
+OAMDATA             = &2004
+PPUSCROLL           = &2005
+PPUADDR             = &2006
+PPUDATA             = &2007
+OAMDMA              = &4014
+LC006               = &C006
+LC007               = &C007
+RESETBANK           = &C0AD
+SETBANK             = &C0AE
+log                 = &C100
+logL                = &C200
+antilog             = &C300
+antilogODD          = &C400
+SNE                 = &C500
+ACT                 = &C520
+LC53E               = &C53E
+LC53F               = &C53F
+XX21                = &C540
+LCE9E               = &CE9E
+NMI                 = &CED5
+LD06D               = &D06D
+LD9F7               = &D9F7
+LDA18               = &DA18
+LDAF8               = &DAF8
+LOIN                = &DC0F
+LE04A               = &E04A
+LE0BA               = &E0BA
+LE4F0               = &E4F0
+DELAY               = &EBA2
+PAS1                = &EF7A
+DETOK               = &F082
+DTS                 = &F09D
+MVS5                = &F1A2
+DASC                = &F1E6
+TT27                = &F201
+TT27_control_codes  = &F237
+TT66                = &F26E
+LF2CE               = &F2CE
+CLYNS               = &F2DE
+NLIN4               = &F473
+LF4AC               = &F4AC
+DORND               = &F4AD
+PROJ                = &F4C1
+MU5                 = &F65A
+MULT3               = &F664
+MLS2                = &F6BA
+MLS1                = &F6C2
+MULTSm2             = &F6C4
+MULTS               = &F6C6
+MU6                 = &F707
+SQUA                = &F70C
+SQUA2               = &F70E
+MU1                 = &F713
+MLU1                = &F718
+MLU2                = &F71D
+MULTU               = &F721
+MU11                = &F725
+FMLTU2              = &F766
+FMLTU               = &F770
+MLTU2               = &F7AD
+MUT2                = &F7D2
+MUT1                = &F7D6
+MULT1               = &F7DA
+MULT12              = &F83C
+MAD                 = &F86F
+ADD                 = &F872
+TIS1                = &F8AE
+DV42                = &F8D1
+DV41                = &F8D4
+LF8D8               = &F8D8
+DVID3B2             = &F962
+LL5                 = &FA55
+LL28                = &FA91
+NORM                = &FAF8
 
     ORG &8000
 
@@ -282,7 +311,7 @@ LFAF8       = &FAF8
     JMP LC007                                     ; 8004: 4C 07 C0    L..
 
     EQUS "@ 5.0"                                  ; 8007: 40 20 35... @ 5
-.XX21
+.XX21_NOISE
     EQUW &849D                                    ; 800C: 9D 84       ..
     EQUW &8573                                    ; 800E: 73 85       s.
     EQUW &85AF                                    ; 8010: AF 85       ..
@@ -1817,7 +1846,7 @@ LFAF8       = &FAF8
     STA (INF),Y                                   ; A09B: 91 61       .a
     LDY #&1E                                      ; A09D: A0 1E       ..
     STA (INF),Y                                   ; A09F: 91 61       .a
-    JSR EE51                                      ; A0A1: 20 ED BA     ..
+    JSR sub_CBAED                                 ; A0A1: 20 ED BA     ..
     LDA #&12                                      ; A0A4: A9 12       ..
     STA L002B                                     ; A0A6: 85 2B       .+
     LDY #&25 ; '%'                                ; A0A8: A0 25       .%
@@ -1986,7 +2015,7 @@ LFAF8       = &FAF8
     TAY                                           ; A1B6: A8          .
     BNE loop_CA1AA                                ; A1B7: D0 F1       ..
 .CA1B9
-    STX L009D                                     ; A1B9: 86 9D       ..
+    STX XX17                                      ; A1B9: 86 9D       ..
     LDA L0090                                     ; A1BB: A5 90       ..
     STA XX15_2                                    ; A1BD: 85 76       .v
     LDA XX18                                      ; A1BF: A5 88       ..
@@ -2061,7 +2090,7 @@ LFAF8       = &FAF8
     INY                                           ; A239: C8          .
     LDA (V),Y                                     ; A23A: B1 63       .c
     STA L007B                                     ; A23C: 85 7B       .{
-    LDX L009D                                     ; A23E: A6 9D       ..
+    LDX XX17                                      ; A23E: A6 9D       ..
     CPX #4                                        ; A240: E0 04       ..
     BCC CA274                                     ; A242: 90 30       .0
     LDA XX18                                      ; A244: A5 88       ..
@@ -2240,7 +2269,7 @@ LFAF8       = &FAF8
     BPL CA388                                     ; A383: 10 03       ..
     JSR LD06D                                     ; A385: 20 6D D0     m.
 .CA388
-    STY L009D                                     ; A388: 84 9D       ..
+    STY XX17                                      ; A388: 84 9D       ..
     LDA (V),Y                                     ; A38A: B1 63       .c
     STA XX15                                      ; A38C: 85 71       .q
     INY                                           ; A38E: C8          .
@@ -2527,7 +2556,7 @@ LFAF8       = &FAF8
     LDA CNT                                       ; A557: A5 A8       ..
     ADC #4                                        ; A559: 69 04       i.
     STA CNT                                       ; A55B: 85 A8       ..
-    LDA L009D                                     ; A55D: A5 9D       ..
+    LDA XX17                                      ; A55D: A5 9D       ..
     ADC #6                                        ; A55F: 69 06       i.
     TAY                                           ; A561: A8          .
     BCS LL72                                      ; A562: B0 07       ..
@@ -2558,7 +2587,7 @@ LFAF8       = &FAF8
     STA XX20                                      ; A58A: 85 AC       ..
     LDY #0                                        ; A58C: A0 00       ..
     STY U                                         ; A58E: 84 96       ..
-    STY L009D                                     ; A590: 84 9D       ..
+    STY XX17                                      ; A590: 84 9D       ..
     INC U                                         ; A592: E6 96       ..
     BIT INWK_31                                   ; A594: 24 28       $(
     BVC LL170                                     ; A596: 50 41       PA
@@ -2608,7 +2637,7 @@ LFAF8       = &FAF8
     LDY #5                                        ; A5EA: A0 05       ..
     LDA (XX0),Y                                   ; A5EC: B1 5F       ._
     STA T1                                        ; A5EE: 85 06       ..
-    LDY L009D                                     ; A5F0: A4 9D       ..
+    LDY XX17                                      ; A5F0: A4 9D       ..
 .CA5F2
     LDA L00E9                                     ; A5F2: A5 E9       ..
     BPL CA5FF                                     ; A5F4: 10 09       ..
@@ -2875,8 +2904,8 @@ LFAF8       = &FAF8
     RTS                                           ; A7AF: 60          `
 
 .CA7B0
-    INC L009D                                     ; A7B0: E6 9D       ..
-    LDY L009D                                     ; A7B2: A4 9D       ..
+    INC XX17                                      ; A7B0: E6 9D       ..
+    LDY XX17                                      ; A7B2: A4 9D       ..
     CPY XX20                                      ; A7B4: C4 AC       ..
     BCS CA7C7                                     ; A7B6: B0 0F       ..
     LDY #0                                        ; A7B8: A0 00       ..
@@ -3999,7 +4028,7 @@ LFAF8       = &FAF8
     LDA K2_1                                      ; AF53: AD 5A 04    .Z.
     SBC T                                         ; AF56: E5 9A       ..
     STA R                                         ; AF58: 85 98       ..
-    JSR LFA55                                     ; AF5A: 20 55 FA     U.
+    JSR LL5                                       ; AF5A: 20 55 FA     U.
     LDY Y1                                        ; AF5D: A4 72       .r
     LDA L00E9                                     ; AF5F: A5 E9       ..
     BPL CAF6C                                     ; AF61: 10 09       ..
@@ -4444,7 +4473,7 @@ LFAF8       = &FAF8
     LDA SX,Y                                      ; B213: B9 C8 04    ...
     STA XX15                                      ; B216: 85 71       .q
     JSR MLU2                                      ; B218: 20 1D F7     ..
-    STA L0066                                     ; B21B: 85 66       .f
+    STA XX_1                                      ; B21B: 85 66       .f
     LDA L00E9                                     ; B21D: A5 E9       ..
     BPL CB22A                                     ; B21F: 10 09       ..
     LDA PPUSTATUS                                 ; B221: AD 02 20    ..
@@ -4456,8 +4485,8 @@ LFAF8       = &FAF8
     ADC SXL,Y                                     ; B22C: 79 A5 05    y..
     STA XX                                        ; B22F: 85 65       .e
     LDA XX15                                      ; B231: A5 71       .q
-    ADC L0066                                     ; B233: 65 66       ef
-    STA L0066                                     ; B235: 85 66       .f
+    ADC XX_1                                      ; B233: 65 66       ef
+    STA XX_1                                      ; B235: 85 66       .f
     EOR ALP2_1                                    ; B237: 45 70       Ep
     JSR MLS1                                      ; B239: 20 C2 F6     ..
     JSR ADD                                       ; B23C: 20 72 F8     r.
@@ -4466,7 +4495,7 @@ LFAF8       = &FAF8
     EOR ALP2                                      ; B243: 45 6F       Eo
     JSR MLS2                                      ; B245: 20 BA F6     ..
     JSR ADD                                       ; B248: 20 72 F8     r.
-    STA L0066                                     ; B24B: 85 66       .f
+    STA XX_1                                      ; B24B: 85 66       .f
     STX XX                                        ; B24D: 86 65       .e
     LDA L00E9                                     ; B24F: A5 E9       ..
     BPL CB25C                                     ; B251: 10 09       ..
@@ -4478,7 +4507,7 @@ LFAF8       = &FAF8
     LDX BET1                                      ; B25C: A6 6A       .j
     LDA YY_1                                      ; B25E: A5 68       .h
     EOR BET2_1                                    ; B260: 45 92       E.
-    JSR LF6C4                                     ; B262: 20 C4 F6     ..
+    JSR MULTSm2                                   ; B262: 20 C4 F6     ..
     STA Q                                         ; B265: 85 97       ..
     JSR MUT2                                      ; B267: 20 D2 F7     ..
     ASL P                                         ; B26A: 06 2F       ./
@@ -4488,7 +4517,7 @@ LFAF8       = &FAF8
     ROR A                                         ; B271: 6A          j
     ORA T                                         ; B272: 05 9A       ..
     JSR ADD                                       ; B274: 20 72 F8     r.
-    STA L0066                                     ; B277: 85 66       .f
+    STA XX_1                                      ; B277: 85 66       .f
     TXA                                           ; B279: 8A          .
     STA SXL,Y                                     ; B27A: 99 A5 05    ...
     LDA YY                                        ; B27D: A5 67       .g
@@ -4510,7 +4539,7 @@ LFAF8       = &FAF8
     STA YY_1                                      ; B29D: 85 68       .h
     TXA                                           ; B29F: 8A          .
     STA SYL,Y                                     ; B2A0: 99 BA 05    ...
-    LDA L0066                                     ; B2A3: A5 66       .f
+    LDA XX_1                                      ; B2A3: A5 66       .f
     STA XX15                                      ; B2A5: 85 71       .q
     STA SX,Y                                      ; B2A7: 99 C8 04    ...
     AND #&7F                                      ; B2AA: 29 7F       ).
@@ -4581,13 +4610,13 @@ LFAF8       = &FAF8
     LDA SX,Y                                      ; B321: B9 C8 04    ...
     STA XX15                                      ; B324: 85 71       .q
     JSR MLU2                                      ; B326: 20 1D F7     ..
-    STA L0066                                     ; B329: 85 66       .f
+    STA XX_1                                      ; B329: 85 66       .f
     LDA SXL,Y                                     ; B32B: B9 A5 05    ...
     SBC P                                         ; B32E: E5 2F       ./
     STA XX                                        ; B330: 85 65       .e
     LDA XX15                                      ; B332: A5 71       .q
-    SBC L0066                                     ; B334: E5 66       .f
-    STA L0066                                     ; B336: 85 66       .f
+    SBC XX_1                                      ; B334: E5 66       .f
+    STA XX_1                                      ; B336: 85 66       .f
     JSR MLU1                                      ; B338: 20 18 F7     ..
     STA YY_1                                      ; B33B: 85 68       .h
     LDA L00E9                                     ; B33D: A5 E9       ..
@@ -4612,7 +4641,7 @@ LFAF8       = &FAF8
     STA ZZ                                        ; B366: 85 A0       ..
     ADC DELT4_1                                   ; B368: 65 95       e.
     STA SZ,Y                                      ; B36A: 99 F2 04    ...
-    LDA L0066                                     ; B36D: A5 66       .f
+    LDA XX_1                                      ; B36D: A5 66       .f
     EOR ALP2                                      ; B36F: 45 6F       Eo
     JSR MLS1                                      ; B371: 20 C2 F6     ..
     JSR ADD                                       ; B374: 20 72 F8     r.
@@ -4621,17 +4650,17 @@ LFAF8       = &FAF8
     EOR ALP2_1                                    ; B37B: 45 70       Ep
     JSR MLS2                                      ; B37D: 20 BA F6     ..
     JSR ADD                                       ; B380: 20 72 F8     r.
-    STA L0066                                     ; B383: 85 66       .f
+    STA XX_1                                      ; B383: 85 66       .f
     STX XX                                        ; B385: 86 65       .e
     LDA YY_1                                      ; B387: A5 68       .h
     EOR BET2_1                                    ; B389: 45 92       E.
     LDX BET1                                      ; B38B: A6 6A       .j
-    JSR LF6C4                                     ; B38D: 20 C4 F6     ..
+    JSR MULTSm2                                   ; B38D: 20 C4 F6     ..
     STA Q                                         ; B390: 85 97       ..
-    LDA L0066                                     ; B392: A5 66       .f
+    LDA XX_1                                      ; B392: A5 66       .f
     STA S                                         ; B394: 85 99       ..
     EOR #&80                                      ; B396: 49 80       I.
-    JSR LF7D6                                     ; B398: 20 D6 F7     ..
+    JSR MUT1                                      ; B398: 20 D6 F7     ..
     ASL P                                         ; B39B: 06 2F       ./
     ROL A                                         ; B39D: 2A          *
     STA T                                         ; B39E: 85 9A       ..
@@ -4639,7 +4668,7 @@ LFAF8       = &FAF8
     ROR A                                         ; B3A2: 6A          j
     ORA T                                         ; B3A3: 05 9A       ..
     JSR ADD                                       ; B3A5: 20 72 F8     r.
-    STA L0066                                     ; B3A8: 85 66       .f
+    STA XX_1                                      ; B3A8: 85 66       .f
     TXA                                           ; B3AA: 8A          .
     STA SXL,Y                                     ; B3AB: 99 A5 05    ...
     LDA YY                                        ; B3AE: A5 67       .g
@@ -4660,7 +4689,7 @@ LFAF8       = &FAF8
     STA YY_1                                      ; B3CC: 85 68       .h
     TXA                                           ; B3CE: 8A          .
     STA SYL,Y                                     ; B3CF: 99 BA 05    ...
-    LDA L0066                                     ; B3D2: A5 66       .f
+    LDA XX_1                                      ; B3D2: A5 66       .f
     STA XX15                                      ; B3D4: 85 71       .q
     STA SX,Y                                      ; B3D6: 99 C8 04    ...
     LDA YY_1                                      ; B3D9: A5 68       .h
@@ -4723,9 +4752,9 @@ LFAF8       = &FAF8
     LDA #0                                        ; B43F: A9 00       ..
     CPX #2                                        ; B441: E0 02       ..
     ROR A                                         ; B443: 6A          j
-    STA L00AE                                     ; B444: 85 AE       ..
+    STA RAT                                       ; B444: 85 AE       ..
     EOR #&80                                      ; B446: 49 80       I.
-    STA L00AF                                     ; B448: 85 AF       ..
+    STA RAT2                                      ; B448: 85 AF       ..
     JSR CB52A                                     ; B44A: 20 2A B5     *.
     LDY NOSTM                                     ; B44D: AC E5 03    ...
 .CB450
@@ -4741,10 +4770,10 @@ LFAF8       = &FAF8
     LSR A                                         ; B462: 4A          J
     LSR A                                         ; B463: 4A          J
     LSR A                                         ; B464: 4A          J
-    JSR LF8D4                                     ; B465: 20 D4 F8     ..
+    JSR DV41                                      ; B465: 20 D4 F8     ..
     LDA P                                         ; B468: A5 2F       ./
-    STA L00B6                                     ; B46A: 85 B6       ..
-    EOR L00AF                                     ; B46C: 45 AF       E.
+    STA newzp                                     ; B46A: 85 B6       ..
+    EOR RAT2                                      ; B46C: 45 AF       E.
     STA S                                         ; B46E: 85 99       ..
     LDA SXL,Y                                     ; B470: B9 A5 05    ...
     STA P                                         ; B473: 85 2F       ./
@@ -4764,31 +4793,31 @@ LFAF8       = &FAF8
     STA Y1                                        ; B491: 85 72       .r
     EOR BET2                                      ; B493: 45 91       E.
     LDX BET1                                      ; B495: A6 6A       .j
-    JSR LF6C4                                     ; B497: 20 C4 F6     ..
+    JSR MULTSm2                                   ; B497: 20 C4 F6     ..
     JSR ADD                                       ; B49A: 20 72 F8     r.
     STX XX                                        ; B49D: 86 65       .e
-    STA L0066                                     ; B49F: 85 66       .f
+    STA XX_1                                      ; B49F: 85 66       .f
     LDX SYL,Y                                     ; B4A1: BE BA 05    ...
     STX R                                         ; B4A4: 86 98       ..
     LDX Y1                                        ; B4A6: A6 72       .r
     STX S                                         ; B4A8: 86 99       ..
     LDX BET1                                      ; B4AA: A6 6A       .j
     EOR BET2_1                                    ; B4AC: 45 92       E.
-    JSR LF6C4                                     ; B4AE: 20 C4 F6     ..
+    JSR MULTSm2                                   ; B4AE: 20 C4 F6     ..
     JSR ADD                                       ; B4B1: 20 72 F8     r.
     STX YY                                        ; B4B4: 86 67       .g
     STA YY_1                                      ; B4B6: 85 68       .h
     LDX ALP1                                      ; B4B8: A6 6E       .n
     EOR ALP2                                      ; B4BA: 45 6F       Eo
-    JSR LF6C4                                     ; B4BC: 20 C4 F6     ..
+    JSR MULTSm2                                   ; B4BC: 20 C4 F6     ..
     STA Q                                         ; B4BF: 85 97       ..
     LDA XX                                        ; B4C1: A5 65       .e
     STA R                                         ; B4C3: 85 98       ..
-    LDA L0066                                     ; B4C5: A5 66       .f
+    LDA XX_1                                      ; B4C5: A5 66       .f
     STA S                                         ; B4C7: 85 99       ..
     EOR #&80                                      ; B4C9: 49 80       I.
     JSR MAD                                       ; B4CB: 20 6F F8     o.
-    STA L0066                                     ; B4CE: 85 66       .f
+    STA XX_1                                      ; B4CE: 85 66       .f
     TXA                                           ; B4D0: 8A          .
     STA SXL,Y                                     ; B4D1: 99 A5 05    ...
     LDA L00E9                                     ; B4D4: A5 E9       ..
@@ -4807,21 +4836,21 @@ LFAF8       = &FAF8
     STX R                                         ; B4EE: 86 98       ..
     LDA #0                                        ; B4F0: A9 00       ..
     STA P                                         ; B4F2: 85 2F       ./
-    LDA L00A4                                     ; B4F4: A5 A4       ..
+    LDA ALPHA                                     ; B4F4: A5 A4       ..
     JSR ADD                                       ; B4F6: 20 72 F8     r.
     STA YY_1                                      ; B4F9: 85 68       .h
     TXA                                           ; B4FB: 8A          .
     STA SYL,Y                                     ; B4FC: 99 BA 05    ...
-    LDA L0066                                     ; B4FF: A5 66       .f
+    LDA XX_1                                      ; B4FF: A5 66       .f
     STA SX,Y                                      ; B501: 99 C8 04    ...
     STA XX15                                      ; B504: 85 71       .q
     AND #&7F                                      ; B506: 29 7F       ).
     CMP #&78 ; 'x'                                ; B508: C9 78       .x
-    BCS CB545                                     ; B50A: B0 39       .9
+    BCS KILL2                                     ; B50A: B0 39       .9
     EOR #&7F                                      ; B50C: 49 7F       I.
-    CMP L00B6                                     ; B50E: C5 B6       ..
-    BCC CB545                                     ; B510: 90 33       .3
-    BEQ CB545                                     ; B512: F0 31       .1
+    CMP newzp                                     ; B50E: C5 B6       ..
+    BCC KILL2                                     ; B510: 90 33       .3
+    BEQ KILL2                                     ; B512: F0 31       .1
     LDA YY_1                                      ; B514: A5 68       .h
     STA SY,Y                                      ; B516: 99 DD 04    ...
     STA Y1                                        ; B519: 85 72       .r
@@ -4835,27 +4864,27 @@ LFAF8       = &FAF8
     JMP CB450                                     ; B527: 4C 50 B4    LP.
 
 .CB52A
-    LDA L00A4                                     ; B52A: A5 A4       ..
-    EOR L00AE                                     ; B52C: 45 AE       E.
-    STA L00A4                                     ; B52E: 85 A4       ..
+    LDA ALPHA                                     ; B52A: A5 A4       ..
+    EOR RAT                                       ; B52C: 45 AE       E.
+    STA ALPHA                                     ; B52E: 85 A4       ..
     LDA ALP2                                      ; B530: A5 6F       .o
-    EOR L00AE                                     ; B532: 45 AE       E.
+    EOR RAT                                       ; B532: 45 AE       E.
     STA ALP2                                      ; B534: 85 6F       .o
     EOR #&80                                      ; B536: 49 80       I.
     STA ALP2_1                                    ; B538: 85 70       .p
     LDA BET2                                      ; B53A: A5 91       ..
-    EOR L00AE                                     ; B53C: 45 AE       E.
+    EOR RAT                                       ; B53C: 45 AE       E.
     STA BET2                                      ; B53E: 85 91       ..
     EOR #&80                                      ; B540: 49 80       I.
     STA BET2_1                                    ; B542: 85 92       ..
     RTS                                           ; B544: 60          `
 
-.CB545
+.KILL2
     JSR DORND                                     ; B545: 20 AD F4     ..
     STA Y1                                        ; B548: 85 72       .r
     STA SY,Y                                      ; B54A: 99 DD 04    ...
     LDA #&73 ; 's'                                ; B54D: A9 73       .s
-    ORA L00AE                                     ; B54F: 05 AE       ..
+    ORA RAT                                       ; B54F: 05 AE       ..
     STA XX15                                      ; B551: 85 71       .q
     STA SX,Y                                      ; B553: 99 C8 04    ...
     BNE CB569                                     ; B556: D0 11       ..
@@ -4889,7 +4918,7 @@ LFAF8       = &FAF8
     LDA #&F0                                      ; B588: A9 F0       ..
     LDX #&1C                                      ; B58A: A2 1C       ..
     JSR sub_CB6A2                                 ; B58C: 20 A2 B6     ..
-    LDA L0561                                     ; B58F: AD 61 05    .a.
+    LDA HANGFLAG                                  ; B58F: AD 61 05    .a.
     BEQ CB5A2                                     ; B592: F0 0E       ..
     LDA #&80                                      ; B594: A9 80       ..
     LDX #&0C                                      ; B596: A2 0C       ..
@@ -4946,23 +4975,23 @@ LB5CF = sub_CB5CE+1
     LDA (L00BA,X)                                 ; B5E8: A1 BA       ..
     BEQ CB615                                     ; B5EA: F0 29       .)
     LDX L00B9                                     ; B5EC: A6 B9       ..
-    STX L0008                                     ; B5EE: 86 08       ..
+    STX SC_1                                      ; B5EE: 86 08       ..
     ASL A                                         ; B5F0: 0A          .
-    ROL L0008                                     ; B5F1: 26 08       &.
+    ROL SC_1                                      ; B5F1: 26 08       &.
     ASL A                                         ; B5F3: 0A          .
-    ROL L0008                                     ; B5F4: 26 08       &.
+    ROL SC_1                                      ; B5F4: 26 08       &.
     ASL A                                         ; B5F6: 0A          .
-    ROL L0008                                     ; B5F7: 26 08       &.
-    STA L0007                                     ; B5F9: 85 07       ..
+    ROL SC_1                                      ; B5F7: 26 08       &.
+    STA SC                                        ; B5F9: 85 07       ..
     LDY #0                                        ; B5FB: A0 00       ..
     LDX T                                         ; B5FD: A6 9A       ..
 .loop_CB5FF
-    LDA (L0007),Y                                 ; B5FF: B1 07       ..
+    LDA (SC),Y                                    ; B5FF: B1 07       ..
     AND LD9F7,X                                   ; B601: 3D F7 D9    =..
     BNE CB62A                                     ; B604: D0 24       .$
-    LDA (L0007),Y                                 ; B606: B1 07       ..
+    LDA (SC),Y                                    ; B606: B1 07       ..
     ORA LD9F7,X                                   ; B608: 1D F7 D9    ...
-    STA (L0007),Y                                 ; B60B: 91 07       ..
+    STA (SC),Y                                    ; B60B: 91 07       ..
     INY                                           ; B60D: C8          .
     CPY #8                                        ; B60E: C0 08       ..
     BNE loop_CB5FF                                ; B610: D0 ED       ..
@@ -5014,20 +5043,20 @@ LB5CF = sub_CB5CE+1
     LDA (L00BA,X)                                 ; B656: A1 BA       ..
     BEQ CB699                                     ; B658: F0 3F       .?
     LDX L00B9                                     ; B65A: A6 B9       ..
-    STX L0008                                     ; B65C: 86 08       ..
+    STX SC_1                                      ; B65C: 86 08       ..
     ASL A                                         ; B65E: 0A          .
-    ROL L0008                                     ; B65F: 26 08       &.
+    ROL SC_1                                      ; B65F: 26 08       &.
     ASL A                                         ; B661: 0A          .
-    ROL L0008                                     ; B662: 26 08       &.
+    ROL SC_1                                      ; B662: 26 08       &.
     ASL A                                         ; B664: 0A          .
-    ROL L0008                                     ; B665: 26 08       &.
-    STA L0007                                     ; B667: 85 07       ..
-    LDA (L0007),Y                                 ; B669: B1 07       ..
+    ROL SC_1                                      ; B665: 26 08       &.
+    STA SC                                        ; B667: 85 07       ..
+    LDA (SC),Y                                    ; B669: B1 07       ..
     BEQ CB685                                     ; B66B: F0 18       ..
     LDA #&80                                      ; B66D: A9 80       ..
 .loop_CB66F
     STA T                                         ; B66F: 85 9A       ..
-    AND (L0007),Y                                 ; B671: 31 07       1.
+    AND (SC),Y                                    ; B671: 31 07       1.
     BNE CB67C                                     ; B673: D0 07       ..
     LDA T                                         ; B675: A5 9A       ..
     SEC                                           ; B677: 38          8
@@ -5036,14 +5065,14 @@ LB5CF = sub_CB5CE+1
 
 .CB67C
     LDA T                                         ; B67C: A5 9A       ..
-    ORA (L0007),Y                                 ; B67E: 11 07       ..
-    STA (L0007),Y                                 ; B680: 91 07       ..
+    ORA (SC),Y                                    ; B67E: 11 07       ..
+    STA (SC),Y                                    ; B680: 91 07       ..
     LDY L009C                                     ; B682: A4 9C       ..
     RTS                                           ; B684: 60          `
 
 .CB685
     LDA #&FF                                      ; B685: A9 FF       ..
-    STA (L0007),Y                                 ; B687: 91 07       ..
+    STA (SC),Y                                    ; B687: 91 07       ..
 .loop_CB689
     DEC R                                         ; B689: C6 98       ..
     BEQ CB696                                     ; B68B: F0 09       ..
@@ -5090,20 +5119,20 @@ LB5CF = sub_CB5CE+1
     LDA (L00BA,X)                                 ; B6C9: A1 BA       ..
     BEQ CB70B                                     ; B6CB: F0 3E       .>
     LDX L00B9                                     ; B6CD: A6 B9       ..
-    STX L0008                                     ; B6CF: 86 08       ..
+    STX SC_1                                      ; B6CF: 86 08       ..
     ASL A                                         ; B6D1: 0A          .
-    ROL L0008                                     ; B6D2: 26 08       &.
+    ROL SC_1                                      ; B6D2: 26 08       &.
     ASL A                                         ; B6D4: 0A          .
-    ROL L0008                                     ; B6D5: 26 08       &.
+    ROL SC_1                                      ; B6D5: 26 08       &.
     ASL A                                         ; B6D7: 0A          .
-    ROL L0008                                     ; B6D8: 26 08       &.
-    STA L0007                                     ; B6DA: 85 07       ..
-    LDA (L0007),Y                                 ; B6DC: B1 07       ..
+    ROL SC_1                                      ; B6D8: 26 08       &.
+    STA SC                                        ; B6DA: 85 07       ..
+    LDA (SC),Y                                    ; B6DC: B1 07       ..
     BEQ CB6F8                                     ; B6DE: F0 18       ..
     LDA #1                                        ; B6E0: A9 01       ..
 .loop_CB6E2
     STA T                                         ; B6E2: 85 9A       ..
-    AND (L0007),Y                                 ; B6E4: 31 07       1.
+    AND (SC),Y                                    ; B6E4: 31 07       1.
     BNE CB6EF                                     ; B6E6: D0 07       ..
     LDA T                                         ; B6E8: A5 9A       ..
     SEC                                           ; B6EA: 38          8
@@ -5112,15 +5141,15 @@ LB5CF = sub_CB5CE+1
 
 .CB6EF
     LDA T                                         ; B6EF: A5 9A       ..
-    ORA (L0007),Y                                 ; B6F1: 11 07       ..
-    STA (L0007),Y                                 ; B6F3: 91 07       ..
+    ORA (SC),Y                                    ; B6F1: 11 07       ..
+    STA (SC),Y                                    ; B6F3: 91 07       ..
 .loop_CB6F5
     LDY L009C                                     ; B6F5: A4 9C       ..
     RTS                                           ; B6F7: 60          `
 
 .CB6F8
     LDA #&FF                                      ; B6F8: A9 FF       ..
-    STA (L0007),Y                                 ; B6FA: 91 07       ..
+    STA (SC),Y                                    ; B6FA: 91 07       ..
 .loop_CB6FC
     DEC R                                         ; B6FC: C6 98       ..
     BEQ loop_CB6F5                                ; B6FE: F0 F5       ..
@@ -5138,15 +5167,17 @@ LB5CF = sub_CB5CE+1
     STA (L00BA,X)                                 ; B70F: 81 BA       ..
     JMP loop_CB6FC                                ; B711: 4C FC B6    L..
 
-.LB714
+.HATB
     EQUB   9, &54, &3B, &0A, &82, &B0,   0,   0   ; B714: 09 54 3B... .T;
     EQUB   0,   5, &50, &11,   5, &D1, &28,   5   ; B71C: 00 05 50... ..P
     EQUB &40,   6, &10, &60, &90, &13, &10, &D1   ; B724: 40 06 10... @..
     EQUB   0,   0,   0, &10, &51, &F8, &13, &60   ; B72C: 00 00 00... ...
     EQUB &75,   0,   0,   0                       ; B734: 75 00 00... u..
 
+; ******************************************************************************
+.HALL
     LDA #0                                        ; B738: A9 00       ..
-    JSR LF26E                                     ; B73A: 20 6E F2     n.
+    JSR TT66                                      ; B73A: 20 6E F2     n.
     LDA L03F1                                     ; B73D: AD F1 03    ...
     STA L0003                                     ; B740: 85 03       ..
     LDA #&86                                      ; B742: A9 86       ..
@@ -5169,14 +5200,14 @@ LB5CF = sub_CB5CE+1
 .loop_CB763
     LDY #2                                        ; B763: A0 02       ..
 .loop_CB765
-    LDA LB714,X                                   ; B765: BD 14 B7    ...
+    LDA HATB,X                                    ; B765: BD 14 B7    ...
     STA XX15,Y                                    ; B768: 99 71 00    .q.
     INX                                           ; B76B: E8          .
     DEY                                           ; B76C: 88          .
     BPL loop_CB765                                ; B76D: 10 F6       ..
     TXA                                           ; B76F: 8A          .
     PHA                                           ; B770: 48          H
-    JSR sub_CB7D4                                 ; B771: 20 D4 B7     ..
+    JSR HAS1                                      ; B771: 20 D4 B7     ..
     PLA                                           ; B774: 68          h
     TAX                                           ; B775: AA          .
     DEC CNT2                                      ; B776: C6 A9       ..
@@ -5192,10 +5223,10 @@ LB5CF = sub_CB5CE+1
     AND #3                                        ; B789: 29 03       ).
     ADC #&11                                      ; B78B: 69 11       i.
     STA X2                                        ; B78D: 85 73       .s
-    JSR sub_CB7D4                                 ; B78F: 20 D4 B7     ..
+    JSR HAS1                                      ; B78F: 20 D4 B7     ..
     LDY #0                                        ; B792: A0 00       ..
 .CB794
-    STY L0561                                     ; B794: 8C 61 05    .a.
+    STY HANGFLAG                                  ; B794: 8C 61 05    .a.
     JSR sub_CB579                                 ; B797: 20 79 B5     y.
     LDA #0                                        ; B79A: A9 00       ..
     STA L00D2                                     ; B79C: 85 D2       ..
@@ -5203,7 +5234,8 @@ LB5CF = sub_CB5CE+1
     STA L00D8                                     ; B7A0: 85 D8       ..
     JMP LF2CE                                     ; B7A2: 4C CE F2    L..
 
-.sub_CB7A5
+; ******************************************************************************
+.ZINF
     LDA L00E9                                     ; B7A5: A5 E9       ..
     BPL CB7B2                                     ; B7A7: 10 09       ..
     LDA PPUSTATUS                                 ; B7A9: AD 02 20    ..
@@ -5231,8 +5263,9 @@ LB5CF = sub_CB5CE+1
     STA INWK_14                                   ; B7D1: 85 17       ..
     RTS                                           ; B7D3: 60          `
 
-.sub_CB7D4
-    JSR sub_CB7A5                                 ; B7D4: 20 A5 B7     ..
+; ******************************************************************************
+.HAS1
+    JSR ZINF                                      ; B7D4: 20 A5 B7     ..
     LDA XX15                                      ; B7D7: A5 71       .q
     STA INWK_6                                    ; B7D9: 85 0F       ..
     LSR A                                         ; B7DB: 4A          J
@@ -5245,22 +5278,22 @@ LB5CF = sub_CB5CE+1
     STA INWK_7                                    ; B7E7: 85 10       ..
     LDA #&80                                      ; B7E9: A9 80       ..
     STA INWK_5                                    ; B7EB: 85 0E       ..
-    STA L00AF                                     ; B7ED: 85 AF       ..
+    STA RAT2                                      ; B7ED: 85 AF       ..
     LDA #&0B                                      ; B7EF: A9 0B       ..
     STA L002B                                     ; B7F1: 85 2B       .+
     JSR DORND                                     ; B7F3: 20 AD F4     ..
-    STA L009B                                     ; B7F6: 85 9B       ..
+    STA XSAV                                      ; B7F6: 85 9B       ..
 .loop_CB7F8
     LDX #&15                                      ; B7F8: A2 15       ..
     LDY #9                                        ; B7FA: A0 09       ..
-    JSR LF1A2                                     ; B7FC: 20 A2 F1     ..
+    JSR MVS5                                      ; B7FC: 20 A2 F1     ..
     LDX #&17                                      ; B7FF: A2 17       ..
     LDY #&0B                                      ; B801: A0 0B       ..
-    JSR LF1A2                                     ; B803: 20 A2 F1     ..
+    JSR MVS5                                      ; B803: 20 A2 F1     ..
     LDX #&19                                      ; B806: A2 19       ..
     LDY #&0D                                      ; B808: A0 0D       ..
-    JSR LF1A2                                     ; B80A: 20 A2 F1     ..
-    DEC L009B                                     ; B80D: C6 9B       ..
+    JSR MVS5                                      ; B80A: 20 A2 F1     ..
+    DEC XSAV                                      ; B80D: C6 9B       ..
     BNE loop_CB7F8                                ; B80F: D0 E7       ..
     LDY X2                                        ; B811: A4 73       .s
     BEQ CB83F                                     ; B813: F0 2A       .*
@@ -5278,21 +5311,21 @@ LB5CF = sub_CB5CE+1
     INY                                           ; B82A: C8          .
     LDA (XX0),Y                                   ; B82B: B1 5F       ._
     STA R                                         ; B82D: 85 98       ..
-    JSR LFA55                                     ; B82F: 20 55 FA     U.
+    JSR LL5                                       ; B82F: 20 55 FA     U.
     LDA #&64 ; 'd'                                ; B832: A9 64       .d
     SBC Q                                         ; B834: E5 97       ..
     LSR A                                         ; B836: 4A          J
     STA INWK_3                                    ; B837: 85 0C       ..
-    JSR sub_CB85C                                 ; B839: 20 5C B8     \.
+    JSR TIDY                                      ; B839: 20 5C B8     \.
     JMP LL9                                       ; B83C: 4C 70 A0    Lp.
 
 .CB83F
     RTS                                           ; B83F: 60          `
 
-.loop_CB840
+.TI2
     TYA                                           ; B840: 98          .
     LDY #2                                        ; B841: A0 02       ..
-    JSR sub_CB923                                 ; B843: 20 23 B9     #.
+    JSR TIS3                                      ; B843: 20 23 B9     #.
     STA INWK_20                                   ; B846: 85 1D       ..
     JMP CB895                                     ; B848: 4C 95 B8    L..
 
@@ -5300,13 +5333,14 @@ LB5CF = sub_CB5CE+1
     TAX                                           ; B84B: AA          .
     LDA Y1                                        ; B84C: A5 72       .r
     AND #&60 ; '`'                                ; B84E: 29 60       )`
-    BEQ loop_CB840                                ; B850: F0 EE       ..
+    BEQ TI2                                       ; B850: F0 EE       ..
     LDA #2                                        ; B852: A9 02       ..
-    JSR sub_CB923                                 ; B854: 20 23 B9     #.
+    JSR TIS3                                      ; B854: 20 23 B9     #.
     STA INWK_18                                   ; B857: 85 1B       ..
     JMP CB895                                     ; B859: 4C 95 B8    L..
 
-.sub_CB85C
+; ******************************************************************************
+.TIDY
     LDA L00E9                                     ; B85C: A5 E9       ..
     BPL CB869                                     ; B85E: 10 09       ..
     LDA PPUSTATUS                                 ; B860: AD 02 20    ..
@@ -5320,7 +5354,7 @@ LB5CF = sub_CB5CE+1
     STA Y1                                        ; B86F: 85 72       .r
     LDA INWK_14                                   ; B871: A5 17       ..
     STA X2                                        ; B873: 85 73       .s
-    JSR LFAF8                                     ; B875: 20 F8 FA     ..
+    JSR NORM                                      ; B875: 20 F8 FA     ..
     LDA XX15                                      ; B878: A5 71       .q
     STA INWK_10                                   ; B87A: 85 13       ..
     LDA Y1                                        ; B87C: A5 72       .r
@@ -5333,7 +5367,7 @@ LB5CF = sub_CB5CE+1
     BEQ CB84B                                     ; B88A: F0 BF       ..
     LDX #2                                        ; B88C: A2 02       ..
     LDA #0                                        ; B88E: A9 00       ..
-    JSR sub_CB923                                 ; B890: 20 23 B9     #.
+    JSR TIS3                                      ; B890: 20 23 B9     #.
     STA INWK_16                                   ; B893: 85 19       ..
 .CB895
     LDA L00E9                                     ; B895: A5 E9       ..
@@ -5349,7 +5383,7 @@ LB5CF = sub_CB5CE+1
     STA Y1                                        ; B8A8: 85 72       .r
     LDA INWK_20                                   ; B8AA: A5 1D       ..
     STA X2                                        ; B8AC: 85 73       .s
-    JSR LFAF8                                     ; B8AE: 20 F8 FA     ..
+    JSR NORM                                      ; B8AE: 20 F8 FA     ..
     LDA XX15                                      ; B8B1: A5 71       .q
     STA INWK_16                                   ; B8B3: 85 19       ..
     LDA Y1                                        ; B8B5: A5 72       .r
@@ -5362,7 +5396,7 @@ LB5CF = sub_CB5CE+1
     JSR MULT12                                    ; B8C3: 20 3C F8     <.
     LDX INWK_14                                   ; B8C6: A6 17       ..
     LDA INWK_18                                   ; B8C8: A5 1B       ..
-    JSR LF8AE                                     ; B8CA: 20 AE F8     ..
+    JSR TIS1                                      ; B8CA: 20 AE F8     ..
     EOR #&80                                      ; B8CD: 49 80       I.
     STA INWK_22                                   ; B8CF: 85 1F       ..
     LDA L00E9                                     ; B8D1: A5 E9       ..
@@ -5376,7 +5410,7 @@ LB5CF = sub_CB5CE+1
     JSR MULT12                                    ; B8E0: 20 3C F8     <.
     LDX INWK_10                                   ; B8E3: A6 13       ..
     LDA INWK_20                                   ; B8E5: A5 1D       ..
-    JSR LF8AE                                     ; B8E7: 20 AE F8     ..
+    JSR TIS1                                      ; B8E7: 20 AE F8     ..
     EOR #&80                                      ; B8EA: 49 80       I.
     STA INWK_24                                   ; B8EC: 85 21       .!
     LDA L00E9                                     ; B8EE: A5 E9       ..
@@ -5390,7 +5424,7 @@ LB5CF = sub_CB5CE+1
     JSR MULT12                                    ; B8FD: 20 3C F8     <.
     LDX INWK_12                                   ; B900: A6 15       ..
     LDA INWK_16                                   ; B902: A5 19       ..
-    JSR LF8AE                                     ; B904: 20 AE F8     ..
+    JSR TIS1                                      ; B904: 20 AE F8     ..
     EOR #&80                                      ; B907: 49 80       I.
     STA INWK_26                                   ; B909: 85 23       .#
     LDA L00E9                                     ; B90B: A5 E9       ..
@@ -5409,7 +5443,8 @@ LB5CF = sub_CB5CE+1
     BPL loop_CB91C                                ; B920: 10 FA       ..
     RTS                                           ; B922: 60          `
 
-.sub_CB923
+; ******************************************************************************
+.TIS3
     STA P_2                                       ; B923: 85 31       .1
     LDA INWK_10,X                                 ; B925: B5 13       ..
     STA Q                                         ; B927: 85 97       ..
@@ -5424,6 +5459,8 @@ LB5CF = sub_CB5CE+1
     LDX INWK_10,Y                                 ; B93C: B6 13       ..
     STX Q                                         ; B93E: 86 97       ..
     EOR #&80                                      ; B940: 49 80       I.
+; ******************************************************************************
+.DVIDT
     STA P_1                                       ; B942: 85 30       .0
     EOR Q                                         ; B944: 45 97       E.
     AND #&80                                      ; B946: 29 80       ).
@@ -5654,8 +5691,7 @@ LB5CF = sub_CB5CE+1
     STA L0208,Y                                   ; BAE9: 99 08 02    ...
     RTS                                           ; BAEC: 60          `
 
-; ******************************************************************************
-.EE51
+.sub_CBAED
     LDA #0                                        ; BAED: A9 00       ..
     LDY #&21 ; '!'                                ; BAEF: A0 21       .!
     STA (INF),Y                                   ; BAF1: 91 61       .a

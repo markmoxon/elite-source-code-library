@@ -181,6 +181,8 @@ label(0x81B6, "slvy2")
 label(0x9620, "tnpr")
 label(0xB1CA, "MAS4")
 
+label(0xB8F7, "PAS1_BANK0")
+
 exec(open('py8dis-scripts/common-variables.py').read())
 
 go()

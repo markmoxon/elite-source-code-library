@@ -46,6 +46,12 @@ entry(0xB3BC)
 entry(0xB8F7)
 entry(0xB90D)
 
+label(0x8ABA, "TENS")
+
+subroutine(0x8A14, "MVS5_BANK0")
+subroutine(0x8ABE, "pr2")
+subroutine(0x8AC2, "TT11")
+subroutine(0x8ACE, "BPRNT")
 subroutine(0x964D, "TT20")
 subroutine(0x9653, "TT54")
 subroutine(0x967A, "TT146")
@@ -58,7 +64,13 @@ subroutine(0x96B3, "spc")
 subroutine(0x9726, "TT72")
 subroutine(0x9ED4, "pr5")
 subroutine(0x9F9C, "TT162")
+subroutine(0xA83A, "tal")
+subroutine(0xA8AB, "csh")
+subroutine(0xA8C8, "plf")
 subroutine(0xA8CE, "TT68")
+subroutine(0xA8D1, "TT73")
+subroutine(0xA8D9, "TT27_BANK0")	# Deals with control codes
+subroutine(0xB8F7, "PAS1_BANK0")
 
 exec(open('py8dis-scripts/common-variables.py').read())
 

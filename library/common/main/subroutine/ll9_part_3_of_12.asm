@@ -60,6 +60,12 @@
 
 .LL21
 
+IF _NES_VERSION
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ENDIF
+
  LDA XX16,Y             \ Set A = the low byte of the vector coordinate, e.g.
                         \ nosev_z_lo when Y = 16
 

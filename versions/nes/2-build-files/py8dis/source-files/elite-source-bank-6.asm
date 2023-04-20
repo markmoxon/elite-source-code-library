@@ -35,10 +35,12 @@ INWK_28             = &0025
 INWK_29             = &0026
 INWK_30             = &0027
 INWK_31             = &0028
+NEWB                = &002D
 P                   = &002F
 P_1                 = &0030
 P_2                 = &0031
 XC                  = &0032
+L0034               = &0034
 YC                  = &003B
 QQ17                = &003C
 XX2                 = &003D
@@ -68,8 +70,8 @@ XX15                = &0071
 Y1                  = &0072
 X2                  = &0073
 Y2                  = &0074
-XX15_1              = &0075
-XX15_2              = &0076
+XX15_4              = &0075
+XX15_5              = &0076
 XX12                = &0077
 XX12_1              = &0078
 K                   = &007D
@@ -93,6 +95,7 @@ T                   = &009A
 XSAV                = &009B
 XX17                = &009D
 ZZ                  = &00A0
+XX13                = &00A1
 TYPE                = &00A3
 ALPHA               = &00A4
 TGT                 = &00A6
@@ -107,12 +110,14 @@ RAT2                = &00AF
 widget              = &00B0
 Yx2M1               = &00B3
 newzp               = &00B6
+L00CC               = &00CC
 L00E9               = &00E9
 BANK                = &00F7
 L00FE               = &00FE
 L00FF               = &00FF
 XX3                 = &0100
 XX3_1               = &0101
+L0300               = &0300
 L0301               = &0301
 L0302               = &0302
 L0303               = &0303
@@ -205,6 +210,7 @@ L0365               = &0365
 L0366               = &0366
 L0368               = &0368
 VIEW                = &038E
+L038F               = &038F
 CASH                = &03A1
 GCNT                = &03A7
 CRGO                = &03AC
@@ -218,6 +224,10 @@ DTW4                = &03F6
 DTW5                = &03F7
 DTW1                = &03F8
 DTW8                = &03F9
+L03FA               = &03FA
+L03FB               = &03FB
+L03FC               = &03FC
+L0402               = &0402
 L040B               = &040B
 L040C               = &040C
 L040D               = &040D
@@ -285,6 +295,7 @@ K2                  = &0459
 K2_1                = &045A
 K2_2                = &045B
 K2_3                = &045C
+L0465               = &0465
 SWAP                = &047F
 QQ29                = &048A
 QQ8                 = &049B
@@ -292,16 +303,29 @@ QQ18LO              = &04A4
 QQ18HI              = &04A5
 TOKENLO             = &04A6
 TOKENHI             = &04A7
+L04B2               = &04B2
 SX                  = &04C8
 SY                  = &04DD
 SZ                  = &04F2
 BUFm1               = &0506
 BUF                 = &0507
 BUF_1               = &0508
+L0517               = &0517
+L0527               = &0527
 HANGFLAG            = &0561
 SXL                 = &05A5
 SYL                 = &05BA
 SZL                 = &05CF
+L0616               = &0616
+L0617               = &0617
+L0636               = &0636
+L0656               = &0656
+L0676               = &0676
+L0696               = &0696
+L06B6               = &06B6
+L06D6               = &06D6
+L06F6               = &06F6
+L0707               = &0707
 PPUCTRL             = &2000
 PPUMASK             = &2001
 PPUSTATUS           = &2002
@@ -339,17 +363,22 @@ SNE                 = &C500
 ACT                 = &C520
 XX21                = &C540
 NMI                 = &CED5
-LD06D               = &D06D
+NAMETABLE0          = &D06D
+LD8E1               = &D8E1
+LD975               = &D975
 LOIN                = &DC0F
 DELAY               = &EBA2
+LECE7               = &ECE7
 PAS1                = &EF7A
 DETOK               = &F082
 DTS                 = &F09D
+LF171               = &F171
 MVS5                = &F1A2
 DASC                = &F1E6
 TT27                = &F201
 TT27_control_codes  = &F237
 TT66                = &F26E
+LF280               = &F280
 CLYNS               = &F2DE
 NLIN4               = &F473
 DORND               = &F4AD
@@ -1601,7 +1630,7 @@ L88BD = L88BC+1
     LDA PPUSTATUS                                 ; 8979: AD 02 20    ..
     ASL A                                         ; 897C: 0A          .
     BPL C8982                                     ; 897D: 10 03       ..
-    JSR LD06D                                     ; 897F: 20 6D D0     m.
+    JSR NAMETABLE0                                ; 897F: 20 6D D0     m.
 .C8982
     LDA L0416                                     ; 8982: AD 16 04    ...
     STA L041E                                     ; 8985: 8D 1E 04    ...
@@ -1662,7 +1691,7 @@ L88BD = L88BC+1
     LDA PPUSTATUS                                 ; 89FB: AD 02 20    ..
     ASL A                                         ; 89FE: 0A          .
     BPL C8A04                                     ; 89FF: 10 03       ..
-    JSR LD06D                                     ; 8A01: 20 6D D0     m.
+    JSR NAMETABLE0                                ; 8A01: 20 6D D0     m.
 .C8A04
     LDA L042A                                     ; 8A04: AD 2A 04    .*.
     STA L0432                                     ; 8A07: 8D 32 04    .2.
@@ -1715,7 +1744,7 @@ L88BD = L88BC+1
     LDA PPUSTATUS                                 ; 8A72: AD 02 20    ..
     ASL A                                         ; 8A75: 0A          .
     BPL C8A7B                                     ; 8A76: 10 03       ..
-    JSR LD06D                                     ; 8A78: 20 6D D0     m.
+    JSR NAMETABLE0                                ; 8A78: 20 6D D0     m.
 .C8A7B
     LDA L043E                                     ; 8A7B: AD 3E 04    .>.
     STA L0446                                     ; 8A7E: 8D 46 04    .F.
@@ -3038,139 +3067,564 @@ L88BD = L88BC+1
     EQUB &BD, &CE, &AC, &BC, &D2, &AC, &AA, &A9   ; A756: BD CE AC... ...
     EQUB   3, &D0, &C5, &20, &C5, &D8, &A9, &FE   ; A75E: 03 D0 C5... ...
     EQUB &85, &B8, &A9, &C8, &8D, &EF,   3, &8D   ; A766: 85 B8 A9... ...
-    EQUB &F0,   3, &60, &A2,   6, &8E, &FB,   3   ; A76E: F0 03 60... ..`
-    EQUB &A5, &E9, &10,   9, &AD,   2, &20, &0A   ; A776: A5 E9 10... ...
-    EQUB &10,   3, &20, &6D, &D0, &A2, &15, &86   ; A77E: 10 03 20... ..
-    EQUB &A8, &A2,   0, &8E, &FA,   3, &A4, &32   ; A786: A8 A2 00... ...
-    EQUB &B1, &61, &10,   3, &AA, &B5,   8, &38   ; A78E: B1 61 10... .a.
-    EQUB &E9, &20, &85, &99, &0A, &0A, &65, &99   ; A796: E9 20 85... . .
-    EQUB &B0, &31, &A8, &B9, &6F, &AB, &20,   2   ; A79E: B0 31 A8... .1.
-    EQUB &A8, &B9, &70, &AB, &20,   2, &A8, &B9   ; A7A6: A8 B9 70... ..p
-    EQUB &71, &AB, &20,   2, &A8, &B9, &72, &AB   ; A7AE: 71 AB 20... q.
-    EQUB &20,   2, &A8, &B9, &73, &AB, &20,   2   ; A7B6: 20 02 A8...  ..
-    EQUB &A8, &E6, &32, &A4, &32, &AD, &FA,   3   ; A7BE: A8 E6 32... ..2
-    EQUB &18, &69,   3, &8D, &FA,   3, &C6, &A8   ; A7C6: 18 69 03... .i.
-    EQUB &D0, &BE, &60, &A8, &B9, &6F, &AC, &20   ; A7CE: D0 BE 60... ..`
-    EQUB   2, &A8, &B9, &70, &AC, &20,   2, &A8   ; A7D6: 02 A8 B9... ...
-    EQUB &B9, &71, &AC, &20,   2, &A8, &B9, &72   ; A7DE: B9 71 AC... .q.
-    EQUB &AC, &20,   2, &A8, &B9, &73, &AC, &20   ; A7E6: AC 20 02... . .
-    EQUB   2, &A8, &E6, &32, &A4, &32, &AD, &FA   ; A7EE: 02 A8 E6... ...
-    EQUB   3, &18, &69,   3, &8D, &FA,   3, &C6   ; A7F6: 03 18 69... ..i
-    EQUB &A8, &D0, &8D, &60, &F0, &5A, &85, &98   ; A7FE: A8 D0 8D... ...
-    EQUB &84, &2F, &A5, &E9, &10,   9, &AD,   2   ; A806: 84 2F A5... ./.
-    EQUB &20, &0A, &10,   3, &20, &6D, &D0, &BD   ; A80E: 20 0A 10...  ..
-    EQUB &17,   6, &F0,   7, &E8, &E0, &F0, &D0   ; A816: 17 06 F0... ...
-    EQUB &F6, &A2,   0, &A5, &98, &29, &0F, &A8   ; A81E: F6 A2 00... ...
-    EQUB &B9, &96, &AC, &18, &6D, &FA,   3, &9D   ; A826: B9 96 AC... ...
-    EQUB &27,   5, &AD, &FB,   3, &38, &F9, &A2   ; A82E: 27 05 AD... '..
-    EQUB &AC, &9D, &17,   6, &A5, &98             ; A836: AC 9D 17... ...
-    EQUS "JJJJ"                                   ; A83C: 4A 4A 4A... JJJ
-    EQUB &A8, &B9, &96, &AC, &18, &6D, &FA,   3   ; A840: A8 B9 96... ...
-    EQUB &9D,   7,   7, &AD, &FB,   3, &38, &F9   ; A848: 9D 07 07... ...
-    EQUB &A2, &AC, &0A, &0A, &0A, &0A, &1D, &17   ; A850: A2 AC 0A... ...
-    EQUB   6, &9D, &17,   6, &A4, &2F, &A5, &E9   ; A858: 06 9D 17... ...
-    EQUB &10,   9, &AD,   2, &20, &0A, &10,   3   ; A860: 10 09 AD... ...
-    EQUB &20, &6D, &D0, &60, &86, &61, &84, &62   ; A868: 20 6D D0...  m.
-    EQUB &A5, &E9, &10,   9, &AD,   2, &20, &0A   ; A870: A5 E9 10... ...
-    EQUB &10,   3, &20, &6D, &D0, &A0, &F0, &A9   ; A878: 10 03 20... ..
-    EQUB   0, &99, &16,   6, &88, &D0, &FA, &A2   ; A880: 00 99 16... ...
-    EQUB   0, &8E, &FA,   3, &A9, &0F, &8D, &FB   ; A888: 00 8E FA... ...
-    EQUB   3, &A0,   0, &84, &32, &A9,   4, &8D   ; A890: 03 A0 00... ...
-    EQUB &8F,   3, &20, &76, &A7, &AD, &FB,   3   ; A898: 8F 03 20... ..
-    EQUB &38, &E9,   3, &8D, &FB,   3, &CE, &8F   ; A8A0: 38 E9 03... 8..
-    EQUB   3, &D0, &EF, &60, &A0, &0F, &A5, &E9   ; A8A8: 03 D0 EF... ...
-    EQUB &10,   9, &AD,   2, &20, &0A, &10,   3   ; A8B0: 10 09 AD... ...
-    EQUB &20, &6D, &D0, &84, &9A, &98, &0A, &85   ; A8B8: 20 6D D0...  m.
-    EQUB &98, &0A, &85, &99, &0A, &69, &1F, &ED   ; A8C0: 98 0A 85... ...
-    EQUB &FC,   3, &99, &17,   5, &10, &29, &85   ; A8C8: FC 03 99... ...
-    EQUB &97, &AD, &FC,   3                       ; A8D0: 97 AD FC... ...
-    EQUS "JJi%"                                   ; A8D4: 4A 4A 69... JJi
-    EQUB &E5, &98, &C5, &97, &B0, &11, &20, &91   ; A8D8: E5 98 C5... ...
-    EQUB &FA, &46, &98, &A9, &48, &18, &65, &98   ; A8E0: FA 46 98... .F.
-    EQUB &99,   7,   5, &88, &10, &C0, &60, &A9   ; A8E8: 99 07 05... ...
-    EQUB &FF, &99,   7,   5, &88, &10, &B7, &60   ; A8F0: FF 99 07... ...
-    EQUB &0A, &10, &0D, &85, &97, &AD, &FC,   3   ; A8F8: 0A 10 0D... ...
-    EQUS "JiI"                                    ; A900: 4A 69 49    JiI
-    EQUB &E5, &99, &4C, &DA, &A8, &0A, &85, &97   ; A903: E5 99 4C... ..L
-    EQUB &AD, &FC,   3, &69, &90, &E5, &99, &E5   ; A90B: AD FC 03... ...
-    EQUB &99, &4C, &DA, &A8                       ; A913: 99 4C DA... .L.
+    EQUB &F0,   3, &60                            ; A76E: F0 03 60    ..`
+
+.sub_CA771
+    LDX #6                                        ; A771: A2 06       ..
+    STX L03FB                                     ; A773: 8E FB 03    ...
+    LDA L00E9                                     ; A776: A5 E9       ..
+    BPL CA783                                     ; A778: 10 09       ..
+    LDA PPUSTATUS                                 ; A77A: AD 02 20    ..
+    ASL A                                         ; A77D: 0A          .
+    BPL CA783                                     ; A77E: 10 03       ..
+    JSR NAMETABLE0                                ; A780: 20 6D D0     m.
+.CA783
+    LDX #&15                                      ; A783: A2 15       ..
+    STX CNT                                       ; A785: 86 A8       ..
+    LDX #0                                        ; A787: A2 00       ..
+    STX L03FA                                     ; A789: 8E FA 03    ...
+    LDY XC                                        ; A78C: A4 32       .2
+.CA78E
+    LDA (INF),Y                                   ; A78E: B1 61       .a
+    BPL CA795                                     ; A790: 10 03       ..
+    TAX                                           ; A792: AA          .
+    LDA SC_1,X                                    ; A793: B5 08       ..
+.CA795
+    SEC                                           ; A795: 38          8
+    SBC #&20 ; ' '                                ; A796: E9 20       .
+    STA S                                         ; A798: 85 99       ..
+    ASL A                                         ; A79A: 0A          .
+    ASL A                                         ; A79B: 0A          .
+    ADC S                                         ; A79C: 65 99       e.
+    BCS CA7D1                                     ; A79E: B0 31       .1
+    TAY                                           ; A7A0: A8          .
+    LDA LAB6F,Y                                   ; A7A1: B9 6F AB    .o.
+    JSR sub_CA802                                 ; A7A4: 20 02 A8     ..
+    LDA LAB70,Y                                   ; A7A7: B9 70 AB    .p.
+    JSR sub_CA802                                 ; A7AA: 20 02 A8     ..
+    LDA LAB71,Y                                   ; A7AD: B9 71 AB    .q.
+    JSR sub_CA802                                 ; A7B0: 20 02 A8     ..
+    LDA LAB72,Y                                   ; A7B3: B9 72 AB    .r.
+    JSR sub_CA802                                 ; A7B6: 20 02 A8     ..
+    LDA LAB73,Y                                   ; A7B9: B9 73 AB    .s.
+    JSR sub_CA802                                 ; A7BC: 20 02 A8     ..
+    INC XC                                        ; A7BF: E6 32       .2
+    LDY XC                                        ; A7C1: A4 32       .2
+    LDA L03FA                                     ; A7C3: AD FA 03    ...
+    CLC                                           ; A7C6: 18          .
+    ADC #3                                        ; A7C7: 69 03       i.
+    STA L03FA                                     ; A7C9: 8D FA 03    ...
+    DEC CNT                                       ; A7CC: C6 A8       ..
+    BNE CA78E                                     ; A7CE: D0 BE       ..
+    RTS                                           ; A7D0: 60          `
+
+.CA7D1
+    TAY                                           ; A7D1: A8          .
+    LDA LAC6F,Y                                   ; A7D2: B9 6F AC    .o.
+    JSR sub_CA802                                 ; A7D5: 20 02 A8     ..
+    LDA LAC70,Y                                   ; A7D8: B9 70 AC    .p.
+    JSR sub_CA802                                 ; A7DB: 20 02 A8     ..
+    LDA LAC71,Y                                   ; A7DE: B9 71 AC    .q.
+    JSR sub_CA802                                 ; A7E1: 20 02 A8     ..
+    LDA LAC72,Y                                   ; A7E4: B9 72 AC    .r.
+    JSR sub_CA802                                 ; A7E7: 20 02 A8     ..
+    LDA LAC73,Y                                   ; A7EA: B9 73 AC    .s.
+    JSR sub_CA802                                 ; A7ED: 20 02 A8     ..
+    INC XC                                        ; A7F0: E6 32       .2
+    LDY XC                                        ; A7F2: A4 32       .2
+    LDA L03FA                                     ; A7F4: AD FA 03    ...
+    CLC                                           ; A7F7: 18          .
+    ADC #3                                        ; A7F8: 69 03       i.
+    STA L03FA                                     ; A7FA: 8D FA 03    ...
+    DEC CNT                                       ; A7FD: C6 A8       ..
+    BNE CA78E                                     ; A7FF: D0 8D       ..
+    RTS                                           ; A801: 60          `
+
+.sub_CA802
+    BEQ CA85E                                     ; A802: F0 5A       .Z
+    STA R                                         ; A804: 85 98       ..
+    STY P                                         ; A806: 84 2F       ./
+    LDA L00E9                                     ; A808: A5 E9       ..
+    BPL CA815                                     ; A80A: 10 09       ..
+    LDA PPUSTATUS                                 ; A80C: AD 02 20    ..
+    ASL A                                         ; A80F: 0A          .
+    BPL CA815                                     ; A810: 10 03       ..
+    JSR NAMETABLE0                                ; A812: 20 6D D0     m.
+.CA815
+    LDA L0617,X                                   ; A815: BD 17 06    ...
+    BEQ CA821                                     ; A818: F0 07       ..
+    INX                                           ; A81A: E8          .
+    CPX #&F0                                      ; A81B: E0 F0       ..
+    BNE CA815                                     ; A81D: D0 F6       ..
+    LDX #0                                        ; A81F: A2 00       ..
+.CA821
+    LDA R                                         ; A821: A5 98       ..
+    AND #&0F                                      ; A823: 29 0F       ).
+    TAY                                           ; A825: A8          .
+    LDA LAC96,Y                                   ; A826: B9 96 AC    ...
+    CLC                                           ; A829: 18          .
+    ADC L03FA                                     ; A82A: 6D FA 03    m..
+    STA L0527,X                                   ; A82D: 9D 27 05    .'.
+    LDA L03FB                                     ; A830: AD FB 03    ...
+    SEC                                           ; A833: 38          8
+    SBC LACA2,Y                                   ; A834: F9 A2 AC    ...
+    STA L0617,X                                   ; A837: 9D 17 06    ...
+    LDA R                                         ; A83A: A5 98       ..
+    LSR A                                         ; A83C: 4A          J
+    LSR A                                         ; A83D: 4A          J
+    LSR A                                         ; A83E: 4A          J
+    LSR A                                         ; A83F: 4A          J
+    TAY                                           ; A840: A8          .
+    LDA LAC96,Y                                   ; A841: B9 96 AC    ...
+    CLC                                           ; A844: 18          .
+    ADC L03FA                                     ; A845: 6D FA 03    m..
+    STA L0707,X                                   ; A848: 9D 07 07    ...
+    LDA L03FB                                     ; A84B: AD FB 03    ...
+    SEC                                           ; A84E: 38          8
+    SBC LACA2,Y                                   ; A84F: F9 A2 AC    ...
+    ASL A                                         ; A852: 0A          .
+    ASL A                                         ; A853: 0A          .
+    ASL A                                         ; A854: 0A          .
+    ASL A                                         ; A855: 0A          .
+    ORA L0617,X                                   ; A856: 1D 17 06    ...
+    STA L0617,X                                   ; A859: 9D 17 06    ...
+    LDY P                                         ; A85C: A4 2F       ./
+.CA85E
+    LDA L00E9                                     ; A85E: A5 E9       ..
+    BPL CA86B                                     ; A860: 10 09       ..
+    LDA PPUSTATUS                                 ; A862: AD 02 20    ..
+    ASL A                                         ; A865: 0A          .
+    BPL CA86B                                     ; A866: 10 03       ..
+    JSR NAMETABLE0                                ; A868: 20 6D D0     m.
+.CA86B
+    RTS                                           ; A86B: 60          `
+
+    EQUB &86, &61, &84, &62, &A5, &E9, &10,   9   ; A86C: 86 61 84... .a.
+    EQUB &AD,   2, &20, &0A, &10,   3, &20, &6D   ; A874: AD 02 20... ..
+    EQUB &D0, &A0, &F0, &A9,   0, &99, &16,   6   ; A87C: D0 A0 F0... ...
+    EQUB &88, &D0, &FA, &A2,   0, &8E, &FA,   3   ; A884: 88 D0 FA... ...
+    EQUB &A9, &0F, &8D, &FB,   3, &A0,   0, &84   ; A88C: A9 0F 8D... ...
+    EQUB &32, &A9,   4, &8D, &8F,   3, &20, &76   ; A894: 32 A9 04... 2..
+    EQUB &A7, &AD, &FB,   3, &38, &E9,   3, &8D   ; A89C: A7 AD FB... ...
+    EQUB &FB,   3, &CE, &8F,   3, &D0, &EF, &60   ; A8A4: FB 03 CE... ...
+
+.sub_CA8AC
+    LDY #&0F                                      ; A8AC: A0 0F       ..
+.CA8AE
+    LDA L00E9                                     ; A8AE: A5 E9       ..
+    BPL CA8BB                                     ; A8B0: 10 09       ..
+    LDA PPUSTATUS                                 ; A8B2: AD 02 20    ..
+    ASL A                                         ; A8B5: 0A          .
+    BPL CA8BB                                     ; A8B6: 10 03       ..
+    JSR NAMETABLE0                                ; A8B8: 20 6D D0     m.
+.CA8BB
+    STY T                                         ; A8BB: 84 9A       ..
+    TYA                                           ; A8BD: 98          .
+    ASL A                                         ; A8BE: 0A          .
+    STA R                                         ; A8BF: 85 98       ..
+    ASL A                                         ; A8C1: 0A          .
+    STA S                                         ; A8C2: 85 99       ..
+    ASL A                                         ; A8C4: 0A          .
+    ADC #&1F                                      ; A8C5: 69 1F       i.
+    SBC L03FC                                     ; A8C7: ED FC 03    ...
+    STA L0517,Y                                   ; A8CA: 99 17 05    ...
+    BPL CA8F8                                     ; A8CD: 10 29       .)
+    STA Q                                         ; A8CF: 85 97       ..
+    LDA L03FC                                     ; A8D1: AD FC 03    ...
+    LSR A                                         ; A8D4: 4A          J
+    LSR A                                         ; A8D5: 4A          J
+    ADC #&25 ; '%'                                ; A8D6: 69 25       i%
+    SBC R                                         ; A8D8: E5 98       ..
+.CA8DA
+    CMP Q                                         ; A8DA: C5 97       ..
+    BCS CA8EF                                     ; A8DC: B0 11       ..
+    JSR LL28                                      ; A8DE: 20 91 FA     ..
+    LSR R                                         ; A8E1: 46 98       F.
+    LDA #&48 ; 'H'                                ; A8E3: A9 48       .H
+    CLC                                           ; A8E5: 18          .
+    ADC R                                         ; A8E6: 65 98       e.
+    STA BUF,Y                                     ; A8E8: 99 07 05    ...
+    DEY                                           ; A8EB: 88          .
+    BPL CA8AE                                     ; A8EC: 10 C0       ..
+    RTS                                           ; A8EE: 60          `
+
+.CA8EF
+    LDA #&FF                                      ; A8EF: A9 FF       ..
+    STA BUF,Y                                     ; A8F1: 99 07 05    ...
+    DEY                                           ; A8F4: 88          .
+    BPL CA8AE                                     ; A8F5: 10 B7       ..
+    RTS                                           ; A8F7: 60          `
+
+.CA8F8
+    ASL A                                         ; A8F8: 0A          .
+    BPL CA908                                     ; A8F9: 10 0D       ..
+    STA Q                                         ; A8FB: 85 97       ..
+    LDA L03FC                                     ; A8FD: AD FC 03    ...
+    LSR A                                         ; A900: 4A          J
+    ADC #&49 ; 'I'                                ; A901: 69 49       iI
+    SBC S                                         ; A903: E5 99       ..
+    JMP CA8DA                                     ; A905: 4C DA A8    L..
+
+.CA908
+    ASL A                                         ; A908: 0A          .
+    STA Q                                         ; A909: 85 97       ..
+    LDA L03FC                                     ; A90B: AD FC 03    ...
+    ADC #&90                                      ; A90E: 69 90       i.
+    SBC S                                         ; A910: E5 99       ..
+    SBC S                                         ; A912: E5 99       ..
+    JMP CA8DA                                     ; A914: 4C DA A8    L..
+
     EQUS "H l"                                    ; A917: 48 20 6C    H l
-    EQUB &A8, &A9, &28, &85, &34, &A9,   0, &8D   ; A91A: A8 A9 28... ..(
-    EQUB   0,   3, &A9,   2, &8D,   2,   4, &20   ; A922: 00 03 A9... ...
-    EQUB &71, &F1, &A9, &28, &85, &CC, &A9, &A0   ; A92A: 71 F1 A9... q..
-    EQUB &8D, &FC,   3, &20, &6E, &A9, &68, &8D   ; A932: 8D FC 03... ...
-    EQUB &8F,   3, &A9, &17, &8D, &FC,   3, &20   ; A93A: 8F 03 A9... ...
-    EQUB &A2, &A9, &20, &71, &A7, &20, &6E, &A9   ; A942: A2 A9 20... ..
-    EQUB &CE, &8F,   3, &D0, &ED, &A9,   4, &8D   ; A94A: CE 8F 03... ...
-    EQUB &8F,   3, &A9, &17, &8D, &FC,   3, &20   ; A952: 8F 03 A9... ...
-    EQUB &A2, &A9, &20, &6E, &A9, &CE, &8F,   3   ; A95A: A2 A9 20... ..
-    EQUB &D0, &F0, &A9,   0, &8D,   2,   4, &A9   ; A962: D0 F0 A9... ...
-    EQUB &2C, &85, &34, &60, &AD, &B2,   4, &30   ; A96A: 2C 85 34... ,.4
-    EQUB &0C, &AD, &65,   4, &C9, &0C, &D0, &0A   ; A972: 0C AD 65... ..e
-    EQUB &A9,   0, &8D, &65,   4, &A9,   9, &8D   ; A97A: A9 00 8D... ...
-    EQUB   2,   4, &20, &E1, &D8, &20, &E5, &AA   ; A982: 02 04 20... ..
-    EQUB &20, &75, &D9, &AD, &65,   4, &F0,   3   ; A98A: 20 75 D9...  u.
-    EQUB &20, &E7, &EC, &AD, &FC,   3, &38, &ED   ; A992: 20 E7 EC...  ..
-    EQUB   2,   4, &8D, &FC,   3, &B0, &CD, &60   ; A99A: 02 04 8D... ...
-    EQUB &A5, &E9, &10,   9, &AD,   2, &20, &0A   ; A9A2: A5 E9 10... ...
-    EQUB &10,   3, &20, &6D, &D0, &A0, &10, &B9   ; A9AA: 10 03 20... ..
-    EQUB &F6,   6, &F0, &0B, &18, &69, &33, &90   ; A9B2: F6 06 F0... ...
-    EQUB   3, &A9,   0, &18, &99, &F6,   6, &88   ; A9BA: 03 A9 00... ...
-    EQUB &D0, &ED, &A5, &E9, &10,   9, &AD,   2   ; A9C2: D0 ED A5... ...
-    EQUB &20, &0A, &10,   3, &20, &6D, &D0, &A0   ; A9CA: 20 0A 10...  ..
-    EQUB &20, &B9, &D6,   6, &F0, &0B, &18, &69   ; A9D2: 20 B9 D6...  ..
-    EQUB &33, &90,   3, &A9,   0, &18, &99, &D6   ; A9DA: 33 90 03... 3..
-    EQUB   6, &88, &D0, &ED, &A5, &E9, &10,   9   ; A9E2: 06 88 D0... ...
-    EQUB &AD,   2, &20, &0A, &10,   3, &20, &6D   ; A9EA: AD 02 20... ..
-    EQUB &D0, &A0, &20, &B9, &B6,   6, &F0, &0B   ; A9F2: D0 A0 20... ..
-    EQUB &18, &69, &33, &90,   3, &A9,   0, &18   ; A9FA: 18 69 33... .i3
-    EQUB &99, &B6,   6, &88, &D0, &ED, &A5, &E9   ; AA02: 99 B6 06... ...
-    EQUB &10,   9, &AD,   2, &20, &0A, &10,   3   ; AA0A: 10 09 AD... ...
-    EQUB &20, &6D, &D0, &A0, &20, &B9, &96,   6   ; AA12: 20 6D D0...  m.
-    EQUB &F0, &0B, &18, &69, &33, &90,   3, &A9   ; AA1A: F0 0B 18... ...
-    EQUB   0, &18, &99, &96,   6, &88, &D0, &ED   ; AA22: 00 18 99... ...
-    EQUB &A5, &E9, &10,   9, &AD,   2, &20, &0A   ; AA2A: A5 E9 10... ...
-    EQUB &10,   3, &20, &6D, &D0, &A0, &20, &B9   ; AA32: 10 03 20... ..
-    EQUB &76,   6, &F0, &0B, &18, &69, &33, &90   ; AA3A: 76 06 F0... v..
-    EQUB   3, &A9,   0, &18, &99, &76,   6, &88   ; AA42: 03 A9 00... ...
-    EQUB &D0, &ED, &A5, &E9, &10,   9, &AD,   2   ; AA4A: D0 ED A5... ...
-    EQUB &20, &0A, &10,   3, &20, &6D, &D0, &A0   ; AA52: 20 0A 10...  ..
-    EQUB &20, &B9, &56,   6, &F0, &0B, &18, &69   ; AA5A: 20 B9 56...  .V
-    EQUB &33, &90,   3, &A9,   0, &18, &99, &56   ; AA62: 33 90 03... 3..
-    EQUB   6, &88, &D0, &ED, &A5, &E9, &10,   9   ; AA6A: 06 88 D0... ...
-    EQUB &AD,   2, &20, &0A, &10,   3, &20, &6D   ; AA72: AD 02 20... ..
-    EQUB &D0, &A0, &20, &B9, &36,   6, &F0, &0B   ; AA7A: D0 A0 20... ..
-    EQUB &18, &69, &33, &90,   3, &A9,   0, &18   ; AA82: 18 69 33... .i3
-    EQUB &99, &36,   6, &88, &D0, &ED, &A5, &E9   ; AA8A: 99 36 06... .6.
-    EQUB &10,   9, &AD,   2, &20, &0A, &10,   3   ; AA92: 10 09 AD... ...
-    EQUB &20, &6D, &D0, &A0, &20, &B9, &16,   6   ; AA9A: 20 6D D0...  m.
-    EQUB &F0, &0B, &18, &69, &33, &90,   3, &A9   ; AAA2: F0 0B 18... ...
-    EQUB   0, &18, &99, &16,   6, &88, &D0, &ED   ; AAAA: 00 18 99... ...
-    EQUB &A5, &E9, &10,   9, &AD,   2, &20, &0A   ; AAB2: A5 E9 10... ...
-    EQUB &10,   3, &20, &6D, &D0, &60, &38, &E9   ; AABA: 10 03 20... ..
-    EQUB &20, &B0, &12, &49, &FF, &69,   1, &20   ; AAC2: 20 B0 12...  ..
-    EQUB &91, &FA, &A9, &80, &38, &E5, &98, &AA   ; AACA: 91 FA A9... ...
-    EQUB &A9,   0, &E9,   0, &60, &20, &91, &FA   ; AAD2: A9 00 E9... ...
-    EQUB &A5, &98, &18, &69, &80, &AA, &A9,   0   ; AADA: A5 98 18... ...
-    EQUB &69,   0, &60, &20, &AC, &A8, &A0, &FF   ; AAE2: 69 00 60... i.`
-    EQUB &A5, &E9, &10,   9, &AD,   2, &20, &0A   ; AAEA: A5 E9 10... ...
-    EQUB &10,   3, &20, &6D, &D0, &C8, &C0, &F0   ; AAF2: 10 03 20... ..
-    EQUB &F0, &E8, &B9, &17,   6, &F0, &E9, &29   ; AAFA: F0 E8 B9... ...
-    EQUB &0F, &85, &72, &AA, &0A, &0A, &0A, &38   ; AB02: 0F 85 72... ..r
-    EQUB &ED, &FC,   3, &90, &DB, &8C, &FB,   3   ; AB0A: ED FC 03... ...
-    EQUB &BD, &17,   5, &85, &97, &B9, &27,   5   ; AB12: BD 17 05... ...
-    EQUB &20, &C0, &AA, &86, &71, &A6, &72, &85   ; AB1A: 20 C0 AA...  ..
-    EQUB &72, &BD,   7,   5, &85, &73, &A9,   0   ; AB22: 72 BD 07... r..
-    EQUB &85, &74, &B9, &17,   6                  ; AB2A: 85 74 B9... .t.
-    EQUS "JJJJ"                                   ; AB2F: 4A 4A 4A... JJJ
-    EQUB &85, &78, &AA, &0A, &0A, &0A, &38, &ED   ; AB33: 85 78 AA... .x.
-    EQUB &FC,   3, &90, &AB, &BD,   7,   5, &85   ; AB3B: FC 03 90... ...
-    EQUB &77, &A9,   0, &A6, &78, &85, &78, &BD   ; AB43: 77 A9 00... w..
-    EQUB &17,   5, &85, &97, &A5, &E9, &10,   9   ; AB4B: 17 05 85... ...
-    EQUB &AD,   2, &20, &0A, &10,   3, &20, &6D   ; AB53: AD 02 20... ..
-    EQUB &D0, &B9,   7,   7, &20, &C0, &AA, &86   ; AB5B: D0 B9 07... ...
-    EQUB &75, &85, &76, &20, &80, &F2, &AC, &FB   ; AB63: 75 85 76... u.v
-    EQUB   3, &4C, &EA, &AA,   0,   0,   0,   0   ; AB6B: 03 4C EA... .L.
+    EQUB &A8                                      ; A91A: A8          .
+
+    LDA #&28 ; '('                                ; A91B: A9 28       .(
+    STA L0034                                     ; A91D: 85 34       .4
+    LDA #0                                        ; A91F: A9 00       ..
+    STA L0300                                     ; A921: 8D 00 03    ...
+    LDA #2                                        ; A924: A9 02       ..
+    STA L0402                                     ; A926: 8D 02 04    ...
+    JSR LF171                                     ; A929: 20 71 F1     q.
+    LDA #&28 ; '('                                ; A92C: A9 28       .(
+    STA L00CC                                     ; A92E: 85 CC       ..
+    LDA #&A0                                      ; A930: A9 A0       ..
+    STA L03FC                                     ; A932: 8D FC 03    ...
+    JSR CA96E                                     ; A935: 20 6E A9     n.
+    PLA                                           ; A938: 68          h
+    STA L038F                                     ; A939: 8D 8F 03    ...
+.loop_CA93C
+    LDA #&17                                      ; A93C: A9 17       ..
+    STA L03FC                                     ; A93E: 8D FC 03    ...
+    JSR sub_CA9A2                                 ; A941: 20 A2 A9     ..
+    JSR sub_CA771                                 ; A944: 20 71 A7     q.
+    JSR CA96E                                     ; A947: 20 6E A9     n.
+    DEC L038F                                     ; A94A: CE 8F 03    ...
+    BNE loop_CA93C                                ; A94D: D0 ED       ..
+    LDA #4                                        ; A94F: A9 04       ..
+    STA L038F                                     ; A951: 8D 8F 03    ...
+.loop_CA954
+    LDA #&17                                      ; A954: A9 17       ..
+    STA L03FC                                     ; A956: 8D FC 03    ...
+    JSR sub_CA9A2                                 ; A959: 20 A2 A9     ..
+    JSR CA96E                                     ; A95C: 20 6E A9     n.
+    DEC L038F                                     ; A95F: CE 8F 03    ...
+    BNE loop_CA954                                ; A962: D0 F0       ..
+    LDA #0                                        ; A964: A9 00       ..
+    STA L0402                                     ; A966: 8D 02 04    ...
+    LDA #&2C ; ','                                ; A969: A9 2C       .,
+    STA L0034                                     ; A96B: 85 34       .4
+    RTS                                           ; A96D: 60          `
+
+.CA96E
+    LDA L04B2                                     ; A96E: AD B2 04    ...
+    BMI CA97F                                     ; A971: 30 0C       0.
+    LDA L0465                                     ; A973: AD 65 04    .e.
+    CMP #&0C                                      ; A976: C9 0C       ..
+    BNE CA984                                     ; A978: D0 0A       ..
+    LDA #0                                        ; A97A: A9 00       ..
+    STA L0465                                     ; A97C: 8D 65 04    .e.
+.CA97F
+    LDA #9                                        ; A97F: A9 09       ..
+    STA L0402                                     ; A981: 8D 02 04    ...
+.CA984
+    JSR LD8E1                                     ; A984: 20 E1 D8     ..
+    JSR sub_CAAE5                                 ; A987: 20 E5 AA     ..
+    JSR LD975                                     ; A98A: 20 75 D9     u.
+    LDA L0465                                     ; A98D: AD 65 04    .e.
+    BEQ CA995                                     ; A990: F0 03       ..
+    JSR LECE7                                     ; A992: 20 E7 EC     ..
+.CA995
+    LDA L03FC                                     ; A995: AD FC 03    ...
+    SEC                                           ; A998: 38          8
+    SBC L0402                                     ; A999: ED 02 04    ...
+    STA L03FC                                     ; A99C: 8D FC 03    ...
+    BCS CA96E                                     ; A99F: B0 CD       ..
+    RTS                                           ; A9A1: 60          `
+
+.sub_CA9A2
+    LDA L00E9                                     ; A9A2: A5 E9       ..
+    BPL CA9AF                                     ; A9A4: 10 09       ..
+    LDA PPUSTATUS                                 ; A9A6: AD 02 20    ..
+    ASL A                                         ; A9A9: 0A          .
+    BPL CA9AF                                     ; A9AA: 10 03       ..
+    JSR NAMETABLE0                                ; A9AC: 20 6D D0     m.
+.CA9AF
+    LDY #&10                                      ; A9AF: A0 10       ..
+.loop_CA9B1
+    LDA L06F6,Y                                   ; A9B1: B9 F6 06    ...
+    BEQ CA9C1                                     ; A9B4: F0 0B       ..
+    CLC                                           ; A9B6: 18          .
+    ADC #&33 ; '3'                                ; A9B7: 69 33       i3
+    BCC CA9BE                                     ; A9B9: 90 03       ..
+    LDA #0                                        ; A9BB: A9 00       ..
+    CLC                                           ; A9BD: 18          .
+.CA9BE
+    STA L06F6,Y                                   ; A9BE: 99 F6 06    ...
+.CA9C1
+    DEY                                           ; A9C1: 88          .
+    BNE loop_CA9B1                                ; A9C2: D0 ED       ..
+    LDA L00E9                                     ; A9C4: A5 E9       ..
+    BPL CA9D1                                     ; A9C6: 10 09       ..
+    LDA PPUSTATUS                                 ; A9C8: AD 02 20    ..
+    ASL A                                         ; A9CB: 0A          .
+    BPL CA9D1                                     ; A9CC: 10 03       ..
+    JSR NAMETABLE0                                ; A9CE: 20 6D D0     m.
+.CA9D1
+    LDY #&20 ; ' '                                ; A9D1: A0 20       .
+.loop_CA9D3
+    LDA L06D6,Y                                   ; A9D3: B9 D6 06    ...
+    BEQ CA9E3                                     ; A9D6: F0 0B       ..
+    CLC                                           ; A9D8: 18          .
+    ADC #&33 ; '3'                                ; A9D9: 69 33       i3
+    BCC CA9E0                                     ; A9DB: 90 03       ..
+    LDA #0                                        ; A9DD: A9 00       ..
+    CLC                                           ; A9DF: 18          .
+.CA9E0
+    STA L06D6,Y                                   ; A9E0: 99 D6 06    ...
+.CA9E3
+    DEY                                           ; A9E3: 88          .
+    BNE loop_CA9D3                                ; A9E4: D0 ED       ..
+    LDA L00E9                                     ; A9E6: A5 E9       ..
+    BPL CA9F3                                     ; A9E8: 10 09       ..
+    LDA PPUSTATUS                                 ; A9EA: AD 02 20    ..
+    ASL A                                         ; A9ED: 0A          .
+    BPL CA9F3                                     ; A9EE: 10 03       ..
+    JSR NAMETABLE0                                ; A9F0: 20 6D D0     m.
+.CA9F3
+    LDY #&20 ; ' '                                ; A9F3: A0 20       .
+.loop_CA9F5
+    LDA L06B6,Y                                   ; A9F5: B9 B6 06    ...
+    BEQ CAA05                                     ; A9F8: F0 0B       ..
+    CLC                                           ; A9FA: 18          .
+    ADC #&33 ; '3'                                ; A9FB: 69 33       i3
+    BCC CAA02                                     ; A9FD: 90 03       ..
+    LDA #0                                        ; A9FF: A9 00       ..
+    CLC                                           ; AA01: 18          .
+.CAA02
+    STA L06B6,Y                                   ; AA02: 99 B6 06    ...
+.CAA05
+    DEY                                           ; AA05: 88          .
+    BNE loop_CA9F5                                ; AA06: D0 ED       ..
+    LDA L00E9                                     ; AA08: A5 E9       ..
+    BPL CAA15                                     ; AA0A: 10 09       ..
+    LDA PPUSTATUS                                 ; AA0C: AD 02 20    ..
+    ASL A                                         ; AA0F: 0A          .
+    BPL CAA15                                     ; AA10: 10 03       ..
+    JSR NAMETABLE0                                ; AA12: 20 6D D0     m.
+.CAA15
+    LDY #&20 ; ' '                                ; AA15: A0 20       .
+.loop_CAA17
+    LDA L0696,Y                                   ; AA17: B9 96 06    ...
+    BEQ CAA27                                     ; AA1A: F0 0B       ..
+    CLC                                           ; AA1C: 18          .
+    ADC #&33 ; '3'                                ; AA1D: 69 33       i3
+    BCC CAA24                                     ; AA1F: 90 03       ..
+    LDA #0                                        ; AA21: A9 00       ..
+    CLC                                           ; AA23: 18          .
+.CAA24
+    STA L0696,Y                                   ; AA24: 99 96 06    ...
+.CAA27
+    DEY                                           ; AA27: 88          .
+    BNE loop_CAA17                                ; AA28: D0 ED       ..
+    LDA L00E9                                     ; AA2A: A5 E9       ..
+    BPL CAA37                                     ; AA2C: 10 09       ..
+    LDA PPUSTATUS                                 ; AA2E: AD 02 20    ..
+    ASL A                                         ; AA31: 0A          .
+    BPL CAA37                                     ; AA32: 10 03       ..
+    JSR NAMETABLE0                                ; AA34: 20 6D D0     m.
+.CAA37
+    LDY #&20 ; ' '                                ; AA37: A0 20       .
+.loop_CAA39
+    LDA L0676,Y                                   ; AA39: B9 76 06    .v.
+    BEQ CAA49                                     ; AA3C: F0 0B       ..
+    CLC                                           ; AA3E: 18          .
+    ADC #&33 ; '3'                                ; AA3F: 69 33       i3
+    BCC CAA46                                     ; AA41: 90 03       ..
+    LDA #0                                        ; AA43: A9 00       ..
+    CLC                                           ; AA45: 18          .
+.CAA46
+    STA L0676,Y                                   ; AA46: 99 76 06    .v.
+.CAA49
+    DEY                                           ; AA49: 88          .
+    BNE loop_CAA39                                ; AA4A: D0 ED       ..
+    LDA L00E9                                     ; AA4C: A5 E9       ..
+    BPL CAA59                                     ; AA4E: 10 09       ..
+    LDA PPUSTATUS                                 ; AA50: AD 02 20    ..
+    ASL A                                         ; AA53: 0A          .
+    BPL CAA59                                     ; AA54: 10 03       ..
+    JSR NAMETABLE0                                ; AA56: 20 6D D0     m.
+.CAA59
+    LDY #&20 ; ' '                                ; AA59: A0 20       .
+.loop_CAA5B
+    LDA L0656,Y                                   ; AA5B: B9 56 06    .V.
+    BEQ CAA6B                                     ; AA5E: F0 0B       ..
+    CLC                                           ; AA60: 18          .
+    ADC #&33 ; '3'                                ; AA61: 69 33       i3
+    BCC CAA68                                     ; AA63: 90 03       ..
+    LDA #0                                        ; AA65: A9 00       ..
+    CLC                                           ; AA67: 18          .
+.CAA68
+    STA L0656,Y                                   ; AA68: 99 56 06    .V.
+.CAA6B
+    DEY                                           ; AA6B: 88          .
+    BNE loop_CAA5B                                ; AA6C: D0 ED       ..
+    LDA L00E9                                     ; AA6E: A5 E9       ..
+    BPL CAA7B                                     ; AA70: 10 09       ..
+    LDA PPUSTATUS                                 ; AA72: AD 02 20    ..
+    ASL A                                         ; AA75: 0A          .
+    BPL CAA7B                                     ; AA76: 10 03       ..
+    JSR NAMETABLE0                                ; AA78: 20 6D D0     m.
+.CAA7B
+    LDY #&20 ; ' '                                ; AA7B: A0 20       .
+.loop_CAA7D
+    LDA L0636,Y                                   ; AA7D: B9 36 06    .6.
+    BEQ CAA8D                                     ; AA80: F0 0B       ..
+    CLC                                           ; AA82: 18          .
+    ADC #&33 ; '3'                                ; AA83: 69 33       i3
+    BCC CAA8A                                     ; AA85: 90 03       ..
+    LDA #0                                        ; AA87: A9 00       ..
+    CLC                                           ; AA89: 18          .
+.CAA8A
+    STA L0636,Y                                   ; AA8A: 99 36 06    .6.
+.CAA8D
+    DEY                                           ; AA8D: 88          .
+    BNE loop_CAA7D                                ; AA8E: D0 ED       ..
+    LDA L00E9                                     ; AA90: A5 E9       ..
+    BPL CAA9D                                     ; AA92: 10 09       ..
+    LDA PPUSTATUS                                 ; AA94: AD 02 20    ..
+    ASL A                                         ; AA97: 0A          .
+    BPL CAA9D                                     ; AA98: 10 03       ..
+    JSR NAMETABLE0                                ; AA9A: 20 6D D0     m.
+.CAA9D
+    LDY #&20 ; ' '                                ; AA9D: A0 20       .
+.loop_CAA9F
+    LDA L0616,Y                                   ; AA9F: B9 16 06    ...
+    BEQ CAAAF                                     ; AAA2: F0 0B       ..
+    CLC                                           ; AAA4: 18          .
+    ADC #&33 ; '3'                                ; AAA5: 69 33       i3
+    BCC CAAAC                                     ; AAA7: 90 03       ..
+    LDA #0                                        ; AAA9: A9 00       ..
+    CLC                                           ; AAAB: 18          .
+.CAAAC
+    STA L0616,Y                                   ; AAAC: 99 16 06    ...
+.CAAAF
+    DEY                                           ; AAAF: 88          .
+    BNE loop_CAA9F                                ; AAB0: D0 ED       ..
+    LDA L00E9                                     ; AAB2: A5 E9       ..
+    BPL CAABF                                     ; AAB4: 10 09       ..
+    LDA PPUSTATUS                                 ; AAB6: AD 02 20    ..
+    ASL A                                         ; AAB9: 0A          .
+    BPL CAABF                                     ; AABA: 10 03       ..
+    JSR NAMETABLE0                                ; AABC: 20 6D D0     m.
+.CAABF
+    RTS                                           ; AABF: 60          `
+
+.sub_CAAC0
+    SEC                                           ; AAC0: 38          8
+    SBC #&20 ; ' '                                ; AAC1: E9 20       .
+    BCS CAAD7                                     ; AAC3: B0 12       ..
+    EOR #&FF                                      ; AAC5: 49 FF       I.
+    ADC #1                                        ; AAC7: 69 01       i.
+    JSR LL28                                      ; AAC9: 20 91 FA     ..
+    LDA #&80                                      ; AACC: A9 80       ..
+    SEC                                           ; AACE: 38          8
+    SBC R                                         ; AACF: E5 98       ..
+    TAX                                           ; AAD1: AA          .
+    LDA #0                                        ; AAD2: A9 00       ..
+    SBC #0                                        ; AAD4: E9 00       ..
+    RTS                                           ; AAD6: 60          `
+
+.CAAD7
+    JSR LL28                                      ; AAD7: 20 91 FA     ..
+    LDA R                                         ; AADA: A5 98       ..
+    CLC                                           ; AADC: 18          .
+    ADC #&80                                      ; AADD: 69 80       i.
+    TAX                                           ; AADF: AA          .
+    LDA #0                                        ; AAE0: A9 00       ..
+    ADC #0                                        ; AAE2: 69 00       i.
+.loop_CAAE4
+    RTS                                           ; AAE4: 60          `
+
+.sub_CAAE5
+    JSR sub_CA8AC                                 ; AAE5: 20 AC A8     ..
+    LDY #&FF                                      ; AAE8: A0 FF       ..
+.CAAEA
+    LDA L00E9                                     ; AAEA: A5 E9       ..
+    BPL CAAF7                                     ; AAEC: 10 09       ..
+    LDA PPUSTATUS                                 ; AAEE: AD 02 20    ..
+    ASL A                                         ; AAF1: 0A          .
+    BPL CAAF7                                     ; AAF2: 10 03       ..
+    JSR NAMETABLE0                                ; AAF4: 20 6D D0     m.
+.CAAF7
+    INY                                           ; AAF7: C8          .
+    CPY #&F0                                      ; AAF8: C0 F0       ..
+    BEQ loop_CAAE4                                ; AAFA: F0 E8       ..
+    LDA L0617,Y                                   ; AAFC: B9 17 06    ...
+    BEQ CAAEA                                     ; AAFF: F0 E9       ..
+    AND #&0F                                      ; AB01: 29 0F       ).
+    STA Y1                                        ; AB03: 85 72       .r
+    TAX                                           ; AB05: AA          .
+    ASL A                                         ; AB06: 0A          .
+    ASL A                                         ; AB07: 0A          .
+    ASL A                                         ; AB08: 0A          .
+    SEC                                           ; AB09: 38          8
+    SBC L03FC                                     ; AB0A: ED FC 03    ...
+    BCC CAAEA                                     ; AB0D: 90 DB       ..
+    STY L03FB                                     ; AB0F: 8C FB 03    ...
+    LDA L0517,X                                   ; AB12: BD 17 05    ...
+    STA Q                                         ; AB15: 85 97       ..
+    LDA L0527,Y                                   ; AB17: B9 27 05    .'.
+    JSR sub_CAAC0                                 ; AB1A: 20 C0 AA     ..
+    STX XX15                                      ; AB1D: 86 71       .q
+    LDX Y1                                        ; AB1F: A6 72       .r
+    STA Y1                                        ; AB21: 85 72       .r
+    LDA BUF,X                                     ; AB23: BD 07 05    ...
+    STA X2                                        ; AB26: 85 73       .s
+    LDA #0                                        ; AB28: A9 00       ..
+    STA Y2                                        ; AB2A: 85 74       .t
+    LDA L0617,Y                                   ; AB2C: B9 17 06    ...
+    LSR A                                         ; AB2F: 4A          J
+    LSR A                                         ; AB30: 4A          J
+    LSR A                                         ; AB31: 4A          J
+    LSR A                                         ; AB32: 4A          J
+    STA XX12_1                                    ; AB33: 85 78       .x
+    TAX                                           ; AB35: AA          .
+    ASL A                                         ; AB36: 0A          .
+    ASL A                                         ; AB37: 0A          .
+    ASL A                                         ; AB38: 0A          .
+    SEC                                           ; AB39: 38          8
+    SBC L03FC                                     ; AB3A: ED FC 03    ...
+    BCC CAAEA                                     ; AB3D: 90 AB       ..
+    LDA BUF,X                                     ; AB3F: BD 07 05    ...
+    STA XX12                                      ; AB42: 85 77       .w
+    LDA #0                                        ; AB44: A9 00       ..
+    LDX XX12_1                                    ; AB46: A6 78       .x
+    STA XX12_1                                    ; AB48: 85 78       .x
+    LDA L0517,X                                   ; AB4A: BD 17 05    ...
+    STA Q                                         ; AB4D: 85 97       ..
+    LDA L00E9                                     ; AB4F: A5 E9       ..
+    BPL CAB5C                                     ; AB51: 10 09       ..
+    LDA PPUSTATUS                                 ; AB53: AD 02 20    ..
+    ASL A                                         ; AB56: 0A          .
+    BPL CAB5C                                     ; AB57: 10 03       ..
+    JSR NAMETABLE0                                ; AB59: 20 6D D0     m.
+.CAB5C
+    LDA L0707,Y                                   ; AB5C: B9 07 07    ...
+    JSR sub_CAAC0                                 ; AB5F: 20 C0 AA     ..
+    STX XX15_4                                    ; AB62: 86 75       .u
+    STA XX15_5                                    ; AB64: 85 76       .v
+    JSR LF280                                     ; AB66: 20 80 F2     ..
+    LDY L03FB                                     ; AB69: AC FB 03    ...
+    JMP CAAEA                                     ; AB6C: 4C EA AA    L..
+
+.LAB6F
+    EQUB 0                                        ; AB6F: 00          .
+.LAB70
+    EQUB 0                                        ; AB70: 00          .
+.LAB71
+    EQUB 0                                        ; AB71: 00          .
+.LAB72
+    EQUB 0                                        ; AB72: 00          .
+.LAB73
     EQUB   0, &14, &25, &12                       ; AB73: 00 14 25... ..%
     EQUS "Ex$"                                    ; AB77: 45 78 24    Ex$
     EQUB   0,   0,   0,   0,   2, &17, &68,   0   ; AB7A: 00 00 00... ...
@@ -3221,21 +3675,31 @@ L88BD = L88BC+1
     EQUS "(hH"                                    ; AC66: 28 68 48    (hH
     EQUB 6, 2                                     ; AC69: 06 02       ..
     EQUS "%5H"                                    ; AC6B: 25 35 48    %5H
-    EQUB 2, 3                                     ; AC6E: 02 03       ..
-    EQUS "5Xh"                                    ; AC70: 35 58 68    5Xh
+    EQUB 2                                        ; AC6E: 02          .
+.LAC6F
+    EQUB 3                                        ; AC6F: 03          .
+.LAC70
+    EQUB &35                                      ; AC70: 35          5
+.LAC71
+    EQUB &58                                      ; AC71: 58          X
+.LAC72
+    EQUB &68                                      ; AC72: 68          h
+.LAC73
     EQUB   2, &17,   0,   0,   0, &28, &68,   6   ; AC73: 02 17 00... ...
     EQUB   0,   0, &27,   7,   0,   0,   0        ; AC7B: 00 00 27... ..'
     EQUS "(HF"                                    ; AC82: 28 48 46    (HF
     EQUB   6,   0, &26,   8,   0,   0,   0, &47   ; AC85: 06 00 26... ..&
     EQUB   4, &24,   0,   0,   2, &26, &68,   0   ; AC8D: 04 24 00... .$.
-    EQUB   0,   1,   2,   3,   1,   2,   3,   1   ; AC95: 00 01 02... ...
-    EQUB   2,   3,   1,   2,   3,   0,   0,   0   ; AC9D: 02 03 01... ...
-    EQUB   1,   1,   1,   2,   2,   2,   3,   3   ; ACA5: 01 01 01... ...
-    EQUB   3, &D6, &76, &26, &D6, &AC, &AF, &AE   ; ACAD: 03 D6 76... ..v
-    EQUB &AC, &54, &F4, &A4, &54, &AD, &AF, &AE   ; ACB5: AC 54 F4... .T.
-    EQUB &AD, &C6, &C6, &C6, &C6, &B0, &B0, &B0   ; ACBD: AD C6 C6... ...
-    EQUB &B0, &98, &98, &98, &98, &B1, &B1, &B1   ; ACC5: B0 98 98... ...
-    EQUB &B1                                      ; ACCD: B1          .
+    EQUB   0                                      ; AC95: 00          .
+.LAC96
+    EQUB 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3       ; AC96: 01 02 03... ...
+.LACA2
+    EQUB   0,   0,   0,   1,   1,   1,   2,   2   ; ACA2: 00 00 00... ...
+    EQUB   2,   3,   3,   3, &D6, &76, &26, &D6   ; ACAA: 02 03 03... ...
+    EQUB &AC, &AF, &AE, &AC, &54, &F4, &A4, &54   ; ACB2: AC AF AE... ...
+    EQUB &AD, &AF, &AE, &AD, &C6, &C6, &C6, &C6   ; ACBA: AD AF AE... ...
+    EQUB &B0, &B0, &B0, &B0, &98, &98, &98, &98   ; ACC2: B0 B0 B0... ...
+    EQUB &B1, &B1, &B1, &B1                       ; ACCA: B1 B1 B1... ...
     EQUS "UUUU"                                   ; ACCE: 55 55 55... UUU
     EQUB &B2, &B2, &B2, &B2                       ; ACD2: B2 B2 B2... ...
     EQUS "   NTSC EMULATION      --- E L # T E"   ; ACD6: 20 20 20...

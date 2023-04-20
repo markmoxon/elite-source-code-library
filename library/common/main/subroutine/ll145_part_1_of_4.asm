@@ -60,7 +60,7 @@
 \
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \   LL147               Don't initialise the values in SWAP or A
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _NES_VERSION
 \   CLIP                Another name for LL145
 \
 \   CLIP2               Don't initialise the values in SWAP or A
@@ -70,7 +70,7 @@ ENDIF
 
 .LL145
 
-IF _MASTER_VERSION \ Label
+IF _MASTER_VERSION OR _NES_VERSION \ Label
 
 .CLIP
 
@@ -85,11 +85,13 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_VERSION OR
 
 .LL147
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _NES_VERSION
 
 .CLIP2
 
 ENDIF
+
+IF NOT(_NES_VERSION)
 
  LDX #Y*2-1             \ Set Y2 = #Y * 2 - 1. The constant #Y is 96, the
                         \ y-coordinate of the mid-point of the space view, so
@@ -102,6 +104,19 @@ ENDIF
  CPX XX12               \ If y2_lo > the y-coordinate of the bottom of screen
  BCC LL107              \ then (x2, y2) is off the bottom of the screen, so skip
                         \ the following instruction, leaving X at 191
+
+ELIF _NES_VERSION
+
+ LDX #&FF               \ ???
+
+ ORA XX12+1             \ If one or both of x2_hi and y2_hi are non-zero, jump
+ BNE LL107              \ to LL107 to skip the following
+
+ LDA Yx2M1              \ ???
+ CMP XX12
+ BCC LL107
+
+ENDIF
 
  LDX #0                 \ Set X = 0
 
@@ -121,9 +136,19 @@ ENDIF
  ORA XX15+3             \ jump to LL83
  BNE LL83
 
+IF NOT(_NES_VERSION)
+
  LDA #Y*2-1             \ If y1_lo > the y-coordinate of the bottom of screen
  CMP XX15+2             \ then (x1, y1) is off the bottom of the screen, so jump
  BCC LL83               \ to LL83
+
+ELIF _NES_VERSION
+
+ LDA Yx2M1              \ If y1_lo > the y-coordinate of the bottom of screen
+ CMP XX15+2             \ then (x1, y1) is off the bottom of the screen, so jump
+ BCC LL83               \ to LL83
+
+ENDIF
 
                         \ If we get here, (x1, y1) is on-screen
 

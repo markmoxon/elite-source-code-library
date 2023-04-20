@@ -97,6 +97,7 @@ INWK_29     = &0026
 INWK_30     = &0027
 INWK_31     = &0028
 L0029       = &0029
+NEWB        = &002D
 P           = &002F
 P_1         = &0030
 P_2         = &0031
@@ -140,8 +141,8 @@ XX15        = &0071
 Y1          = &0072
 X2          = &0073
 Y2          = &0074
-XX15_1      = &0075
-XX15_2      = &0076
+XX15_4      = &0075
+XX15_5      = &0076
 XX12        = &0077
 XX12_1      = &0078
 K           = &007D
@@ -169,6 +170,7 @@ XX17        = &009D
 L009E       = &009E
 L009F       = &009F
 ZZ          = &00A0
+XX13        = &00A1
 TYPE        = &00A3
 ALPHA       = &00A4
 L00A5       = &00A5
@@ -2094,7 +2096,7 @@ LC006 = sub_CC004+2
     LDA PPUSTATUS                                 ; CE74: AD 02 20    ..
     ASL A                                         ; CE77: 0A          .
     BPL CCE7D                                     ; CE78: 10 03       ..
-    JSR sub_CD06D                                 ; CE7A: 20 6D D0     m.
+    JSR NAMETABLE0                                ; CE7A: 20 6D D0     m.
 .CCE7D
     RTS                                           ; CE7D: 60          `
 
@@ -2356,7 +2358,8 @@ LC006 = sub_CC004+2
     STA PPUSCROLL                                 ; D069: 8D 05 20    ..
     RTS                                           ; D06C: 60          `
 
-.sub_CD06D
+; ******************************************************************************
+.NAMETABLE0
     LDA #0                                        ; D06D: A9 00       ..
     STA L00E9                                     ; D06F: 85 E9       ..
     LDA L00F5                                     ; D071: A5 F5       ..
@@ -2506,7 +2509,7 @@ LC006 = sub_CC004+2
     LDA PPUSTATUS                                 ; D16F: AD 02 20    ..
     ASL A                                         ; D172: 0A          .
     BPL CD178                                     ; D173: 10 03       ..
-    JSR sub_CD06D                                 ; D175: 20 6D D0     m.
+    JSR NAMETABLE0                                ; D175: 20 6D D0     m.
 .CD178
     CPX L03F1                                     ; D178: EC F1 03    ...
     BEQ loop_CD16B                                ; D17B: F0 EE       ..
@@ -2522,7 +2525,7 @@ LC006 = sub_CC004+2
     LDA PPUSTATUS                                 ; D187: AD 02 20    ..
     ASL A                                         ; D18A: 0A          .
     BPL CD190                                     ; D18B: 10 03       ..
-    JSR sub_CD06D                                 ; D18D: 20 6D D0     m.
+    JSR NAMETABLE0                                ; D18D: 20 6D D0     m.
 .CD190
     LDA L00E9                                     ; D190: A5 E9       ..
     BNE loop_CD183                                ; D192: D0 EF       ..
@@ -2537,7 +2540,7 @@ LC006 = sub_CC004+2
     LDA PPUSTATUS                                 ; D1A0: AD 02 20    ..
     ASL A                                         ; D1A3: 0A          .
     BPL CD1A9                                     ; D1A4: 10 03       ..
-    JSR sub_CD06D                                 ; D1A6: 20 6D D0     m.
+    JSR NAMETABLE0                                ; D1A6: 20 6D D0     m.
 .CD1A9
     LDA L03EF,X                                   ; D1A9: BD EF 03    ...
     BEQ CD1C7                                     ; D1AC: F0 19       ..
@@ -2600,7 +2603,7 @@ LC006 = sub_CC004+2
     LDA PPUSTATUS                                 ; D20F: AD 02 20    ..
     ASL A                                         ; D212: 0A          .
     BPL CD218                                     ; D213: 10 03       ..
-    JSR sub_CD06D                                 ; D215: 20 6D D0     m.
+    JSR NAMETABLE0                                ; D215: 20 6D D0     m.
 .CD218
     LDA SC                                        ; D218: A5 07       ..
     SEC                                           ; D21A: 38          8
@@ -2657,7 +2660,7 @@ LC006 = sub_CC004+2
     LDA PPUSTATUS                                 ; D278: AD 02 20    ..
     ASL A                                         ; D27B: 0A          .
     BPL CD281                                     ; D27C: 10 03       ..
-    JSR sub_CD06D                                 ; D27E: 20 6D D0     m.
+    JSR NAMETABLE0                                ; D27E: 20 6D D0     m.
 .CD281
     LDA SC                                        ; D281: A5 07       ..
     SEC                                           ; D283: 38          8
@@ -3703,7 +3706,7 @@ LC006 = sub_CC004+2
     LDA PPUSTATUS                                 ; D8C9: AD 02 20    ..
     ASL A                                         ; D8CC: 0A          .
     BPL CD8D2                                     ; D8CD: 10 03       ..
-    JSR sub_CD06D                                 ; D8CF: 20 6D D0     m.
+    JSR NAMETABLE0                                ; D8CF: 20 6D D0     m.
 .CD8D2
     LDA L03EF                                     ; D8D2: AD EF 03    ...
     AND #&40 ; '@'                                ; D8D5: 29 40       )@
@@ -3965,7 +3968,7 @@ LC006 = sub_CC004+2
     LDA PPUSTATUS                                 ; DC15: AD 02 20    ..
     ASL A                                         ; DC18: 0A          .
     BPL CDC1E                                     ; DC19: 10 03       ..
-    JSR sub_CD06D                                 ; DC1B: 20 6D D0     m.
+    JSR NAMETABLE0                                ; DC1B: 20 6D D0     m.
 .CDC1E
     LDA #&80                                      ; DC1E: A9 80       ..
     STA S                                         ; DC20: 85 99       ..
@@ -4071,7 +4074,7 @@ LC006 = sub_CC004+2
     LDA PPUSTATUS                                 ; DCCE: AD 02 20    ..
     ASL A                                         ; DCD1: 0A          .
     BPL CDCD7                                     ; DCD2: 10 03       ..
-    JSR sub_CD06D                                 ; DCD4: 20 6D D0     m.
+    JSR NAMETABLE0                                ; DCD4: 20 6D D0     m.
 .CDCD7
     LDX #0                                        ; DCD7: A2 00       ..
     LDA (L00BA,X)                                 ; DCD9: A1 BA       ..
@@ -4153,7 +4156,7 @@ LC006 = sub_CC004+2
     LDA PPUSTATUS                                 ; DD57: AD 02 20    ..
     ASL A                                         ; DD5A: 0A          .
     BPL CDD60                                     ; DD5B: 10 03       ..
-    JSR sub_CD06D                                 ; DD5D: 20 6D D0     m.
+    JSR NAMETABLE0                                ; DD5D: 20 6D D0     m.
 .CDD60
     CLC                                           ; DD60: 18          .
     RTS                                           ; DD61: 60          `
@@ -4184,7 +4187,7 @@ LC006 = sub_CC004+2
     LDA PPUSTATUS                                 ; DD86: AD 02 20    ..
     ASL A                                         ; DD89: 0A          .
     BPL CDD8F                                     ; DD8A: 10 03       ..
-    JSR sub_CD06D                                 ; DD8C: 20 6D D0     m.
+    JSR NAMETABLE0                                ; DD8C: 20 6D D0     m.
 .CDD8F
     LDX #0                                        ; DD8F: A2 00       ..
     LDA (L00BA,X)                                 ; DD91: A1 BA       ..
@@ -4269,7 +4272,7 @@ LC006 = sub_CC004+2
     LDA PPUSTATUS                                 ; DE13: AD 02 20    ..
     ASL A                                         ; DE16: 0A          .
     BPL CDE1C                                     ; DE17: 10 03       ..
-    JSR sub_CD06D                                 ; DE19: 20 6D D0     m.
+    JSR NAMETABLE0                                ; DE19: 20 6D D0     m.
 .CDE1C
     LDY L009C                                     ; DE1C: A4 9C       ..
     CLC                                           ; DE1E: 18          .
@@ -4394,7 +4397,7 @@ LC006 = sub_CC004+2
     LDA PPUSTATUS                                 ; DEE3: AD 02 20    ..
     ASL A                                         ; DEE6: 0A          .
     BPL CDEEC                                     ; DEE7: 10 03       ..
-    JSR sub_CD06D                                 ; DEE9: 20 6D D0     m.
+    JSR NAMETABLE0                                ; DEE9: 20 6D D0     m.
 .CDEEC
     LDX #0                                        ; DEEC: A2 00       ..
     LDA (L00BA,X)                                 ; DEEE: A1 BA       ..
@@ -4522,7 +4525,7 @@ LC006 = sub_CC004+2
     LDA PPUSTATUS                                 ; DFB0: AD 02 20    ..
     ASL A                                         ; DFB3: 0A          .
     BPL CDFB9                                     ; DFB4: 10 03       ..
-    JSR sub_CD06D                                 ; DFB6: 20 6D D0     m.
+    JSR NAMETABLE0                                ; DFB6: 20 6D D0     m.
 .CDFB9
     LDX #0                                        ; DFB9: A2 00       ..
     LDA (L00BA,X)                                 ; DFBB: A1 BA       ..
@@ -4625,7 +4628,7 @@ LDFFF = sub_CDFFE+1
     LDA PPUSTATUS                                 ; E04E: AD 02 20    ..
     ASL A                                         ; E051: 0A          .
     BPL CE057                                     ; E052: 10 03       ..
-    JSR sub_CD06D                                 ; E054: 20 6D D0     m.
+    JSR NAMETABLE0                                ; E054: 20 6D D0     m.
 .CE057
     STY L009C                                     ; E057: 84 9C       ..
     LDA P                                         ; E059: A5 2F       ./
@@ -4672,7 +4675,7 @@ LDFFF = sub_CDFFE+1
     LDA PPUSTATUS                                 ; E098: AD 02 20    ..
     ASL A                                         ; E09B: 0A          .
     BPL CE0A1                                     ; E09C: 10 03       ..
-    JSR sub_CD06D                                 ; E09E: 20 6D D0     m.
+    JSR NAMETABLE0                                ; E09E: 20 6D D0     m.
 .CE0A1
     LDY #7                                        ; E0A1: A0 07       ..
 .loop_CE0A3
@@ -4699,7 +4702,7 @@ LDFFF = sub_CDFFE+1
     LDA PPUSTATUS                                 ; E0BE: AD 02 20    ..
     ASL A                                         ; E0C1: 0A          .
     BPL CE0C7                                     ; E0C2: 10 03       ..
-    JSR sub_CD06D                                 ; E0C4: 20 6D D0     m.
+    JSR NAMETABLE0                                ; E0C4: 20 6D D0     m.
 .CE0C7
     STY L009C                                     ; E0C7: 84 9C       ..
     LDX XX15                                      ; E0C9: A6 71       .q
@@ -4742,7 +4745,7 @@ LDFFF = sub_CDFFE+1
     LDA PPUSTATUS                                 ; E106: AD 02 20    ..
     ASL A                                         ; E109: 0A          .
     BPL CE10F                                     ; E10A: 10 03       ..
-    JSR sub_CD06D                                 ; E10C: 20 6D D0     m.
+    JSR NAMETABLE0                                ; E10C: 20 6D D0     m.
 .CE10F
     LDX #0                                        ; E10F: A2 00       ..
     LDA (L00BA,X)                                 ; E111: A1 BA       ..
@@ -4829,7 +4832,7 @@ LDFFF = sub_CDFFE+1
     LDA PPUSTATUS                                 ; E192: AD 02 20    ..
     ASL A                                         ; E195: 0A          .
     BPL CE19B                                     ; E196: 10 03       ..
-    JSR sub_CD06D                                 ; E198: 20 6D D0     m.
+    JSR NAMETABLE0                                ; E198: 20 6D D0     m.
 .CE19B
     LDX #0                                        ; E19B: A2 00       ..
     LDA (L00BA,X)                                 ; E19D: A1 BA       ..
@@ -4925,7 +4928,7 @@ LDFFF = sub_CDFFE+1
     LDA PPUSTATUS                                 ; E22F: AD 02 20    ..
     ASL A                                         ; E232: 0A          .
     BPL CE238                                     ; E233: 10 03       ..
-    JSR sub_CD06D                                 ; E235: 20 6D D0     m.
+    JSR NAMETABLE0                                ; E235: 20 6D D0     m.
 .CE238
     LDX #0                                        ; E238: A2 00       ..
     LDA (L00BA,X)                                 ; E23A: A1 BA       ..
@@ -5000,7 +5003,7 @@ LDFFF = sub_CDFFE+1
     LDA PPUSTATUS                                 ; E2AA: AD 02 20    ..
     ASL A                                         ; E2AD: 0A          .
     BPL CE2B3                                     ; E2AE: 10 03       ..
-    JSR sub_CD06D                                 ; E2B0: 20 6D D0     m.
+    JSR NAMETABLE0                                ; E2B0: 20 6D D0     m.
 .CE2B3
     LDX #0                                        ; E2B3: A2 00       ..
     LDA (L00BA,X)                                 ; E2B5: A1 BA       ..
@@ -5082,7 +5085,7 @@ LDFFF = sub_CDFFE+1
     LDA PPUSTATUS                                 ; E332: AD 02 20    ..
     ASL A                                         ; E335: 0A          .
     BPL CE33B                                     ; E336: 10 03       ..
-    JSR sub_CD06D                                 ; E338: 20 6D D0     m.
+    JSR NAMETABLE0                                ; E338: 20 6D D0     m.
 .CE33B
     LDY L009C                                     ; E33B: A4 9C       ..
     RTS                                           ; E33D: 60          `
@@ -5092,7 +5095,7 @@ LDFFF = sub_CDFFE+1
     LDA PPUSTATUS                                 ; E342: AD 02 20    ..
     ASL A                                         ; E345: 0A          .
     BPL CE34B                                     ; E346: 10 03       ..
-    JSR sub_CD06D                                 ; E348: 20 6D D0     m.
+    JSR NAMETABLE0                                ; E348: 20 6D D0     m.
 .CE34B
     STY L009C                                     ; E34B: 84 9C       ..
     LDY Y1                                        ; E34D: A4 72       .r
@@ -5146,7 +5149,7 @@ LDFFF = sub_CDFFE+1
     LDA PPUSTATUS                                 ; E39A: AD 02 20    ..
     ASL A                                         ; E39D: 0A          .
     BPL CE3A3                                     ; E39E: 10 03       ..
-    JSR sub_CD06D                                 ; E3A0: 20 6D D0     m.
+    JSR NAMETABLE0                                ; E3A0: 20 6D D0     m.
 .CE3A3
     LDX #0                                        ; E3A3: A2 00       ..
     LDA (L00BA,X)                                 ; E3A5: A1 BA       ..
@@ -5233,7 +5236,7 @@ LDFFF = sub_CDFFE+1
     LDA PPUSTATUS                                 ; E427: AD 02 20    ..
     ASL A                                         ; E42A: 0A          .
     BPL CE430                                     ; E42B: 10 03       ..
-    JSR sub_CD06D                                 ; E42D: 20 6D D0     m.
+    JSR NAMETABLE0                                ; E42D: 20 6D D0     m.
 .CE430
     LDY #0                                        ; E430: A0 00       ..
     LDA L00BA                                     ; E432: A5 BA       ..
@@ -5362,7 +5365,7 @@ LDFFF = sub_CDFFE+1
     LDA PPUSTATUS                                 ; E50A: AD 02 20    ..
     ASL A                                         ; E50D: 0A          .
     BPL CE513                                     ; E50E: 10 03       ..
-    JSR sub_CD06D                                 ; E510: 20 6D D0     m.
+    JSR NAMETABLE0                                ; E510: 20 6D D0     m.
 .CE513
     LDX #0                                        ; E513: A2 00       ..
     LDA (SC,X)                                    ; E515: A1 07       ..
@@ -5412,7 +5415,7 @@ LDFFF = sub_CDFFE+1
     LDA PPUSTATUS                                 ; E55D: AD 02 20    ..
     ASL A                                         ; E560: 0A          .
     BPL CE566                                     ; E561: 10 03       ..
-    JSR sub_CD06D                                 ; E563: 20 6D D0     m.
+    JSR NAMETABLE0                                ; E563: 20 6D D0     m.
 .CE566
     LDX #0                                        ; E566: A2 00       ..
     LDA (SC,X)                                    ; E568: A1 07       ..
@@ -5986,7 +5989,7 @@ LDFFF = sub_CDFFE+1
     LDA PPUSTATUS                                 ; EB6B: AD 02 20    ..
     ASL A                                         ; EB6E: 0A          .
     BPL CEB74                                     ; EB6F: 10 03       ..
-    JSR sub_CD06D                                 ; EB71: 20 6D D0     m.
+    JSR NAMETABLE0                                ; EB71: 20 6D D0     m.
 .CEB74
     LDX NOSTM                                     ; EB74: AE E5 03    ...
     LDY #&98                                      ; EB77: A0 98       ..
@@ -6013,7 +6016,7 @@ LDFFF = sub_CDFFE+1
     LDA PPUSTATUS                                 ; EB93: AD 02 20    ..
     ASL A                                         ; EB96: 0A          .
     BPL CEB9C                                     ; EB97: 10 03       ..
-    JSR sub_CD06D                                 ; EB99: 20 6D D0     m.
+    JSR NAMETABLE0                                ; EB99: 20 6D D0     m.
 .CEB9C
     LDX #&3A ; ':'                                ; EB9C: A2 3A       .:
     LDY #&14                                      ; EB9E: A0 14       ..
@@ -6051,7 +6054,7 @@ LDFFF = sub_CDFFE+1
     LDA PPUSTATUS                                 ; EBD3: AD 02 20    ..
     ASL A                                         ; EBD6: 0A          .
     BPL CEBDC                                     ; EBD7: 10 03       ..
-    JSR sub_CD06D                                 ; EBD9: 20 6D D0     m.
+    JSR NAMETABLE0                                ; EBD9: 20 6D D0     m.
 .CEBDC
     LDA #0                                        ; EBDC: A9 00       ..
     STA L0478,X                                   ; EBDE: 9D 78 04    .x.
@@ -6092,7 +6095,7 @@ LDFFF = sub_CDFFE+1
     LDA PPUSTATUS                                 ; EC21: AD 02 20    ..
     ASL A                                         ; EC24: 0A          .
     BPL CEC2A                                     ; EC25: 10 03       ..
-    JSR sub_CD06D                                 ; EC27: 20 6D D0     m.
+    JSR NAMETABLE0                                ; EC27: 20 6D D0     m.
 .CEC2A
     TYA                                           ; EC2A: 98          .
 .CEC2B
@@ -6103,7 +6106,7 @@ LDFFF = sub_CDFFE+1
     LDA PPUSTATUS                                 ; EC32: AD 02 20    ..
     ASL A                                         ; EC35: 0A          .
     BPL CEC3B                                     ; EC36: 10 03       ..
-    JSR sub_CD06D                                 ; EC38: 20 6D D0     m.
+    JSR NAMETABLE0                                ; EC38: 20 6D D0     m.
 .CEC3B
     RTS                                           ; EC3B: 60          `
 
@@ -6126,7 +6129,7 @@ LDFFF = sub_CDFFE+1
     LDA PPUSTATUS                                 ; EC82: AD 02 20    ..
     ASL A                                         ; EC85: 0A          .
     BPL CEC8B                                     ; EC86: 10 03       ..
-    JSR sub_CD06D                                 ; EC88: 20 6D D0     m.
+    JSR NAMETABLE0                                ; EC88: 20 6D D0     m.
 .CEC8B
     PLA                                           ; EC8B: 68          h
     RTS                                           ; EC8C: 60          `
@@ -6155,7 +6158,7 @@ LDFFF = sub_CDFFE+1
     LDA PPUSTATUS                                 ; ECB2: AD 02 20    ..
     ASL A                                         ; ECB5: 0A          .
     BPL CECBB                                     ; ECB6: 10 03       ..
-    JSR sub_CD06D                                 ; ECB8: 20 6D D0     m.
+    JSR NAMETABLE0                                ; ECB8: 20 6D D0     m.
 .CECBB
     LDA BANK                                      ; ECBB: A5 F7       ..
     PHA                                           ; ECBD: 48          H
@@ -7325,7 +7328,7 @@ LDFFF = sub_CDFFE+1
     LDA PPUSTATUS                                 ; F502: AD 02 20    ..
     ASL A                                         ; F505: 0A          .
     BPL CF50B                                     ; F506: 10 03       ..
-    JSR sub_CD06D                                 ; F508: 20 6D D0     m.
+    JSR NAMETABLE0                                ; F508: 20 6D D0     m.
 .CF50B
     LDA K_3                                       ; F50B: A5 80       ..
     AND #&7F                                      ; F50D: 29 7F       ).
@@ -7355,7 +7358,7 @@ LDFFF = sub_CDFFE+1
     LDA PPUSTATUS                                 ; F533: AD 02 20    ..
     ASL A                                         ; F536: 0A          .
     BPL CF53C                                     ; F537: 10 03       ..
-    JSR sub_CD06D                                 ; F539: 20 6D D0     m.
+    JSR NAMETABLE0                                ; F539: 20 6D D0     m.
 .CF53C
     LDX #0                                        ; F53C: A2 00       ..
     LDA (V,X)                                     ; F53E: A1 63       .c
@@ -7505,7 +7508,7 @@ LDFFF = sub_CDFFE+1
     LDA PPUSTATUS                                 ; F612: AD 02 20    ..
     ASL A                                         ; F615: 0A          .
     BPL CF61B                                     ; F616: 10 03       ..
-    JSR sub_CD06D                                 ; F618: 20 6D D0     m.
+    JSR NAMETABLE0                                ; F618: 20 6D D0     m.
 .CF61B
     LDA INWK_2                                    ; F61B: A5 0B       ..
     ORA INWK_5                                    ; F61D: 05 0E       ..
@@ -7582,7 +7585,7 @@ LDFFF = sub_CDFFE+1
     LDA PPUSTATUS                                 ; F685: AD 02 20    ..
     ASL A                                         ; F688: 0A          .
     BPL CF68E                                     ; F689: 10 03       ..
-    JSR sub_CD06D                                 ; F68B: 20 6D D0     m.
+    JSR NAMETABLE0                                ; F68B: 20 6D D0     m.
 .CF68E
     LDA #0                                        ; F68E: A9 00       ..
     LDX #&18                                      ; F690: A2 18       ..
@@ -7602,7 +7605,7 @@ LDFFF = sub_CDFFE+1
     LDA PPUSTATUS                                 ; F6A6: AD 02 20    ..
     ASL A                                         ; F6A9: 0A          .
     BPL CF6AF                                     ; F6AA: 10 03       ..
-    JSR sub_CD06D                                 ; F6AC: 20 6D D0     m.
+    JSR NAMETABLE0                                ; F6AC: 20 6D D0     m.
 .CF6AF
     LDA R                                         ; F6AF: A5 98       ..
     EOR Q                                         ; F6B1: 45 97       E.
@@ -7841,7 +7844,7 @@ LDFFF = sub_CDFFE+1
     LDA PPUSTATUS                                 ; F7DF: AD 02 20    ..
     ASL A                                         ; F7E2: 0A          .
     BPL CF7E8                                     ; F7E3: 10 03       ..
-    JSR sub_CD06D                                 ; F7E5: 20 6D D0     m.
+    JSR NAMETABLE0                                ; F7E5: 20 6D D0     m.
 .CF7E8
     TXA                                           ; F7E8: 8A          .
     AND #&7F                                      ; F7E9: 29 7F       ).
@@ -7912,7 +7915,7 @@ LDFFF = sub_CDFFE+1
     LDA PPUSTATUS                                 ; F845: AD 02 20    ..
     ASL A                                         ; F848: 0A          .
     BPL CF84E                                     ; F849: 10 03       ..
-    JSR sub_CD06D                                 ; F84B: 20 6D D0     m.
+    JSR NAMETABLE0                                ; F84B: 20 6D D0     m.
 .CF84E
     LDA P                                         ; F84E: A5 2F       ./
     STA R                                         ; F850: 85 98       ..
@@ -8107,7 +8110,7 @@ LDFFF = sub_CDFFE+1
     LDA PPUSTATUS                                 ; F976: AD 02 20    ..
     ASL A                                         ; F979: 0A          .
     BPL CF97F                                     ; F97A: 10 03       ..
-    JSR sub_CD06D                                 ; F97C: 20 6D D0     m.
+    JSR NAMETABLE0                                ; F97C: 20 6D D0     m.
 .CF97F
     LDA P                                         ; F97F: A5 2F       ./
     ORA #1                                        ; F981: 09 01       ..
@@ -8143,7 +8146,7 @@ LDFFF = sub_CDFFE+1
     LDA PPUSTATUS                                 ; F9B3: AD 02 20    ..
     ASL A                                         ; F9B6: 0A          .
     BPL CF9BC                                     ; F9B7: 10 03       ..
-    JSR sub_CD06D                                 ; F9B9: 20 6D D0     m.
+    JSR NAMETABLE0                                ; F9B9: 20 6D D0     m.
 .CF9BC
     LDA #&FE                                      ; F9BC: A9 FE       ..
     STA R                                         ; F9BE: 85 98       ..
@@ -8379,7 +8382,7 @@ LDFFF = sub_CDFFE+1
     LDA PPUSTATUS                                 ; FAFC: AD 02 20    ..
     ASL A                                         ; FAFF: 0A          .
     BPL CFB05                                     ; FB00: 10 03       ..
-    JSR sub_CD06D                                 ; FB02: 20 6D D0     m.
+    JSR NAMETABLE0                                ; FB02: 20 6D D0     m.
 .CFB05
     LDA XX15                                      ; FB05: A5 71       .q
     JSR SQUA                                      ; FB07: 20 0C F7     ..
@@ -8403,7 +8406,7 @@ LDFFF = sub_CDFFE+1
     LDA PPUSTATUS                                 ; FB2E: AD 02 20    ..
     ASL A                                         ; FB31: 0A          .
     BPL CFB37                                     ; FB32: 10 03       ..
-    JSR sub_CD06D                                 ; FB34: 20 6D D0     m.
+    JSR NAMETABLE0                                ; FB34: 20 6D D0     m.
 .CFB37
     CLC                                           ; FB37: 18          .
     LDA P                                         ; FB38: A5 2F       ./
@@ -8423,7 +8426,7 @@ LDFFF = sub_CDFFE+1
     LDA PPUSTATUS                                 ; FB54: AD 02 20    ..
     ASL A                                         ; FB57: 0A          .
     BPL CFB5D                                     ; FB58: 10 03       ..
-    JSR sub_CD06D                                 ; FB5A: 20 6D D0     m.
+    JSR NAMETABLE0                                ; FB5A: 20 6D D0     m.
 .CFB5D
     LDA Y1                                        ; FB5D: A5 72       .r
     JSR sub_CFACB                                 ; FB5F: 20 CB FA     ..
@@ -8436,7 +8439,7 @@ LDFFF = sub_CDFFE+1
     LDA PPUSTATUS                                 ; FB6F: AD 02 20    ..
     ASL A                                         ; FB72: 0A          .
     BPL CFB78                                     ; FB73: 10 03       ..
-    JSR sub_CD06D                                 ; FB75: 20 6D D0     m.
+    JSR NAMETABLE0                                ; FB75: 20 6D D0     m.
 .CFB78
     RTS                                           ; FB78: 60          `
 

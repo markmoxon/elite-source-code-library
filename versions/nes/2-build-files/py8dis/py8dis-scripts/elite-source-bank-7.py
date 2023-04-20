@@ -186,4 +186,3 @@ label(0xB8F7, "PAS1_BANK0")
 exec(open('py8dis-scripts/common-variables.py').read())
 
 go()
-

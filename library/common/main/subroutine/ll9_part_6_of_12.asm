@@ -126,6 +126,12 @@
 
 .LL48
 
+IF _NES_VERSION
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ENDIF
+
  STY XX17               \ Set XX17 = Y, so XX17 now contains the offset of the
                         \ current vertex's data
 

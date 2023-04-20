@@ -55,8 +55,17 @@
  BPL LL109              \ jump to LL109 to return from the subroutine with the C
                         \ flag set, as the line doesn't fit on-screen
 
+IF NOT(_NES_VERSION)
+
  LDA XX15+2             \ If y1_lo < y-coordinate of screen bottom, clear the C
  CMP #Y*2               \ flag, otherwise set it
+
+ELIF _NES_VERSION
+
+ LDA XX15+2             \ If y1_lo < y-coordinate of screen bottom, clear the C
+ CMP &00B2              \ flag, otherwise set it ???
+
+ENDIF
 
  LDA XX15+3             \ Set XX12+2 = y1_hi - (1 - C), so:
  SBC #0                 \
@@ -68,8 +77,17 @@
                         \ might move the point into the space view portion of
                         \ the screen, i.e. if y1_lo is on-screen
 
+IF NOT(_NES_VERSION)
+
  LDA XX12               \ If y2_lo < y-coordinate of screen bottom, clear the C
  CMP #Y*2               \ flag, otherwise set it
+
+ELIF _NES_VERSION
+
+ LDA XX12               \ If y2_lo < y-coordinate of screen bottom, clear the C
+ CMP &00B2              \ flag, otherwise set it ???
+
+ENDIF
 
  LDA XX12+1             \ Set XX12+2 = y2_hi - (1 - C), so:
  SBC #0                 \

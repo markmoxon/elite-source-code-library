@@ -41,7 +41,7 @@ INWK_30             = &0027
 INWK_31             = &0028
 L002A               = &002A
 L002B               = &002B
-L002D               = &002D
+NEWB                = &002D
 P                   = &002F
 P_1                 = &0030
 P_2                 = &0031
@@ -87,8 +87,8 @@ XX15                = &0071
 Y1                  = &0072
 X2                  = &0073
 Y2                  = &0074
-XX15_1              = &0075
-XX15_2              = &0076
+XX15_4              = &0075
+XX15_5              = &0076
 XX12                = &0077
 XX12_1              = &0078
 L0079               = &0079
@@ -123,7 +123,7 @@ L009C               = &009C
 XX17                = &009D
 L009E               = &009E
 ZZ                  = &00A0
-L00A1               = &00A1
+XX13                = &00A1
 TYPE                = &00A3
 ALPHA               = &00A4
 TGT                 = &00A6
@@ -248,7 +248,7 @@ LC53F               = &C53F
 XX21                = &C540
 LCE9E               = &CE9E
 NMI                 = &CED5
-LD06D               = &D06D
+NAMETABLE0          = &D06D
 LD9F7               = &D9F7
 LDA18               = &DA18
 LDAF8               = &DAF8
@@ -1761,7 +1761,7 @@ NORM                = &FAF8
     LDA PPUSTATUS                                 ; A000: AD 02 20    ..
     ASL A                                         ; A003: 0A          .
     BPL CA009                                     ; A004: 10 03       ..
-    JSR LD06D                                     ; A006: 20 6D D0     m.
+    JSR NAMETABLE0                                ; A006: 20 6D D0     m.
 .CA009
     LDX #0                                        ; A009: A2 00       ..
     LDY #0                                        ; A00B: A0 00       ..
@@ -1785,14 +1785,14 @@ NORM                = &FAF8
     EOR XX16_3,X                                  ; A02F: 55 50       UP
     JSR LL38                                      ; A031: 20 DC 9F     ..
     STA T                                         ; A034: 85 9A       ..
-    LDA XX15_1                                    ; A036: A5 75       .u
+    LDA XX15_4                                    ; A036: A5 75       .u
     STA Q                                         ; A038: 85 97       ..
     LDA L0051,X                                   ; A03A: B5 51       .Q
     JSR FMLTU                                     ; A03C: 20 70 F7     p.
     STA Q                                         ; A03F: 85 97       ..
     LDA T                                         ; A041: A5 9A       ..
     STA R                                         ; A043: 85 98       ..
-    LDA XX15_2                                    ; A045: A5 76       .v
+    LDA XX15_5                                    ; A045: A5 76       .v
     EOR L0052,X                                   ; A047: 55 52       UR
     JSR LL38                                      ; A049: 20 DC 9F     ..
     STA XX12,Y                                    ; A04C: 99 77 00    .w.
@@ -1801,7 +1801,7 @@ NORM                = &FAF8
     LDA PPUSTATUS                                 ; A053: AD 02 20    ..
     ASL A                                         ; A056: 0A          .
     BPL CA05C                                     ; A057: 10 03       ..
-    JSR LD06D                                     ; A059: 20 6D D0     m.
+    JSR NAMETABLE0                                ; A059: 20 6D D0     m.
 .CA05C
     LDA S                                         ; A05C: A5 99       ..
     STA XX12_1,Y                                  ; A05E: 99 78 00    .x.
@@ -1826,13 +1826,13 @@ NORM                = &FAF8
     LDA PPUSTATUS                                 ; A074: AD 02 20    ..
     ASL A                                         ; A077: 0A          .
     BPL CA07D                                     ; A078: 10 03       ..
-    JSR LD06D                                     ; A07A: 20 6D D0     m.
+    JSR NAMETABLE0                                ; A07A: 20 6D D0     m.
 .CA07D
     LDA TYPE                                      ; A07D: A5 A3       ..
     BMI LL25                                      ; A07F: 30 EC       0.
     LDA #&1F                                      ; A081: A9 1F       ..
     STA XX4                                       ; A083: 85 AB       ..
-    LDA L002D                                     ; A085: A5 2D       .-
+    LDA NEWB                                      ; A085: A5 2D       .-
     BMI CA0E1                                     ; A087: 30 58       0X
     LDA #&20 ; ' '                                ; A089: A9 20       .
     BIT INWK_31                                   ; A08B: 24 28       $(
@@ -1866,7 +1866,7 @@ NORM                = &FAF8
     LDA PPUSTATUS                                 ; A0C5: AD 02 20    ..
     ASL A                                         ; A0C8: 0A          .
     BPL EE28                                      ; A0C9: 10 03       ..
-    JSR LD06D                                     ; A0CB: 20 6D D0     m.
+    JSR NAMETABLE0                                ; A0CB: 20 6D D0     m.
 .EE28
     LDA INWK_8                                    ; A0CE: A5 11       ..
     BPL LL10                                      ; A0D0: 10 16       ..
@@ -1955,7 +1955,7 @@ NORM                = &FAF8
     LDA PPUSTATUS                                 ; A157: AD 02 20    ..
     ASL A                                         ; A15A: 0A          .
     BPL CA160                                     ; A15B: 10 03       ..
-    JSR LD06D                                     ; A15D: 20 6D D0     m.
+    JSR NAMETABLE0                                ; A15D: 20 6D D0     m.
 .CA160
     LDA XX16,Y                                    ; A160: B9 4D 00    .M.
     ASL A                                         ; A163: 0A          .
@@ -2017,7 +2017,7 @@ NORM                = &FAF8
 .CA1B9
     STX XX17                                      ; A1B9: 86 9D       ..
     LDA L0090                                     ; A1BB: A5 90       ..
-    STA XX15_2                                    ; A1BD: 85 76       .v
+    STA XX15_5                                    ; A1BD: 85 76       .v
     LDA XX18                                      ; A1BF: A5 88       ..
     STA XX15                                      ; A1C1: 85 71       .q
     LDA L008A                                     ; A1C3: A5 8A       ..
@@ -2027,7 +2027,7 @@ NORM                = &FAF8
     LDA K6_1                                      ; A1CB: A5 8D       ..
     STA Y2                                        ; A1CD: 85 74       .t
     LDA L008E                                     ; A1CF: A5 8E       ..
-    STA XX15_1                                    ; A1D1: 85 75       .u
+    STA XX15_4                                    ; A1D1: 85 75       .u
     JSR LL51                                      ; A1D3: 20 FC 9F     ..
     LDA XX12                                      ; A1D6: A5 77       .w
     STA XX18                                      ; A1D8: 85 88       ..
@@ -2057,7 +2057,7 @@ NORM                = &FAF8
     LDA PPUSTATUS                                 ; A205: AD 02 20    ..
     ASL A                                         ; A208: 0A          .
     BPL CA20E                                     ; A209: 10 03       ..
-    JSR LD06D                                     ; A20B: 20 6D D0     m.
+    JSR NAMETABLE0                                ; A20B: 20 6D D0     m.
 .CA20E
     LDA (V),Y                                     ; A20E: B1 63       .c
     STA XX12_1                                    ; A210: 85 78       .x
@@ -2102,9 +2102,9 @@ NORM                = &FAF8
     LDA K6_1                                      ; A250: A5 8D       ..
     STA Y2                                        ; A252: 85 74       .t
     LDA L008E                                     ; A254: A5 8E       ..
-    STA XX15_1                                    ; A256: 85 75       .u
+    STA XX15_4                                    ; A256: 85 75       .u
     LDA L0090                                     ; A258: A5 90       ..
-    STA XX15_2                                    ; A25A: 85 76       .v
+    STA XX15_5                                    ; A25A: 85 76       .v
     JMP CA2D2                                     ; A25C: 4C D2 A2    L..
 
 .ovflw
@@ -2113,7 +2113,7 @@ NORM                = &FAF8
     LDA PPUSTATUS                                 ; A263: AD 02 20    ..
     ASL A                                         ; A266: 0A          .
     BPL CA26C                                     ; A267: 10 03       ..
-    JSR LD06D                                     ; A269: 20 6D D0     m.
+    JSR NAMETABLE0                                ; A269: 20 6D D0     m.
 .CA26C
     LSR XX18                                      ; A26C: 46 88       F.
     LSR L008E                                     ; A26E: 46 8E       F.
@@ -2142,9 +2142,9 @@ NORM                = &FAF8
     LDA L0090                                     ; A293: A5 90       ..
     JSR LL38                                      ; A295: 20 DC 9F     ..
     BCS ovflw                                     ; A298: B0 C5       ..
-    STA XX15_1                                    ; A29A: 85 75       .u
+    STA XX15_4                                    ; A29A: 85 75       .u
     LDA S                                         ; A29C: A5 99       ..
-    STA XX15_2                                    ; A29E: 85 76       .v
+    STA XX15_5                                    ; A29E: 85 76       .v
     LDA XX15                                      ; A2A0: A5 71       .q
     STA R                                         ; A2A2: 85 98       ..
     LDA XX12_1                                    ; A2A4: A5 78       .x
@@ -2177,7 +2177,7 @@ NORM                = &FAF8
     LDA PPUSTATUS                                 ; A2DA: AD 02 20    ..
     ASL A                                         ; A2DD: 0A          .
     BPL CA2E3                                     ; A2DE: 10 03       ..
-    JSR LD06D                                     ; A2E0: 20 6D D0     m.
+    JSR NAMETABLE0                                ; A2E0: 20 6D D0     m.
 .CA2E3
     LDA XX15                                      ; A2E3: A5 71       .q
     JSR FMLTU                                     ; A2E5: 20 70 F7     p.
@@ -2198,12 +2198,12 @@ NORM                = &FAF8
     STA T                                         ; A306: 85 9A       ..
     LDA L007B                                     ; A308: A5 7B       .{
     STA Q                                         ; A30A: 85 97       ..
-    LDA XX15_1                                    ; A30C: A5 75       .u
+    LDA XX15_4                                    ; A30C: A5 75       .u
     JSR FMLTU                                     ; A30E: 20 70 F7     p.
     STA Q                                         ; A311: 85 97       ..
     LDA T                                         ; A313: A5 9A       ..
     STA R                                         ; A315: 85 98       ..
-    LDA XX15_2                                    ; A317: A5 76       .v
+    LDA XX15_5                                    ; A317: A5 76       .v
     EOR L007C                                     ; A319: 45 7C       E|
     JSR LL38                                      ; A31B: 20 DC 9F     ..
     PHA                                           ; A31E: 48          H
@@ -2267,7 +2267,7 @@ NORM                = &FAF8
     LDA PPUSTATUS                                 ; A37F: AD 02 20    ..
     ASL A                                         ; A382: 0A          .
     BPL CA388                                     ; A383: 10 03       ..
-    JSR LD06D                                     ; A385: 20 6D D0     m.
+    JSR NAMETABLE0                                ; A385: 20 6D D0     m.
 .CA388
     STY XX17                                      ; A388: 84 9D       ..
     LDA (V),Y                                     ; A38A: B1 63       .c
@@ -2277,7 +2277,7 @@ NORM                = &FAF8
     STA X2                                        ; A391: 85 73       .s
     INY                                           ; A393: C8          .
     LDA (V),Y                                     ; A394: B1 63       .c
-    STA XX15_1                                    ; A396: 85 75       .u
+    STA XX15_4                                    ; A396: 85 75       .u
     INY                                           ; A398: C8          .
     LDA (V),Y                                     ; A399: B1 63       .c
     STA T                                         ; A39B: 85 9A       ..
@@ -2323,7 +2323,7 @@ NORM                = &FAF8
     ASL A                                         ; A3D8: 0A          .
     STA Y2                                        ; A3D9: 85 74       .t
     ASL A                                         ; A3DB: 0A          .
-    STA XX15_2                                    ; A3DC: 85 76       .v
+    STA XX15_5                                    ; A3DC: 85 76       .v
     JSR LL51                                      ; A3DE: 20 FC 9F     ..
     LDA INWK_2                                    ; A3E1: A5 0B       ..
     STA X2                                        ; A3E3: 85 73       .s
@@ -2361,7 +2361,7 @@ NORM                = &FAF8
 ; ******************************************************************************
 .LL53
     LDA INWK_5                                    ; A41C: A5 0E       ..
-    STA XX15_2                                    ; A41E: 85 76       .v
+    STA XX15_5                                    ; A41E: 85 76       .v
     EOR L007A                                     ; A420: 45 7A       Ez
     BMI CA434                                     ; A422: 30 10       0.
     CLC                                           ; A424: 18          .
@@ -2370,7 +2370,7 @@ NORM                = &FAF8
     STA Y2                                        ; A429: 85 74       .t
     LDA INWK_4                                    ; A42B: A5 0D       ..
     ADC #0                                        ; A42D: 69 00       i.
-    STA XX15_1                                    ; A42F: 85 75       .u
+    STA XX15_4                                    ; A42F: 85 75       .u
     JMP LL55                                      ; A431: 4C 59 A4    LY.
 
 .CA434
@@ -2380,19 +2380,19 @@ NORM                = &FAF8
     STA Y2                                        ; A439: 85 74       .t
     LDA INWK_4                                    ; A43B: A5 0D       ..
     SBC #0                                        ; A43D: E9 00       ..
-    STA XX15_1                                    ; A43F: 85 75       .u
+    STA XX15_4                                    ; A43F: 85 75       .u
     BCS LL55                                      ; A441: B0 16       ..
     EOR #&FF                                      ; A443: 49 FF       I.
-    STA XX15_1                                    ; A445: 85 75       .u
+    STA XX15_4                                    ; A445: 85 75       .u
     LDA Y2                                        ; A447: A5 74       .t
     EOR #&FF                                      ; A449: 49 FF       I.
     ADC #1                                        ; A44B: 69 01       i.
     STA Y2                                        ; A44D: 85 74       .t
-    LDA XX15_2                                    ; A44F: A5 76       .v
+    LDA XX15_5                                    ; A44F: A5 76       .v
     EOR #&80                                      ; A451: 49 80       I.
-    STA XX15_2                                    ; A453: 85 76       .v
+    STA XX15_5                                    ; A453: 85 76       .v
     BCC LL55                                      ; A455: 90 02       ..
-    INC XX15_1                                    ; A457: E6 75       .u
+    INC XX15_4                                    ; A457: E6 75       .u
 .LL55
     LDA L007C                                     ; A459: A5 7C       .|
     BMI LL56                                      ; A45B: 30 4A       0J
@@ -2469,11 +2469,11 @@ NORM                = &FAF8
 .LL57
     LDA U                                         ; A4C6: A5 96       ..
     ORA Y1                                        ; A4C8: 05 72       .r
-    ORA XX15_1                                    ; A4CA: 05 75       .u
+    ORA XX15_4                                    ; A4CA: 05 75       .u
     BEQ LL60                                      ; A4CC: F0 0F       ..
     LSR Y1                                        ; A4CE: 46 72       Fr
     ROR XX15                                      ; A4D0: 66 71       fq
-    LSR XX15_1                                    ; A4D2: 46 75       Fu
+    LSR XX15_4                                    ; A4D2: 46 75       Fu
     ROR Y2                                        ; A4D4: 66 74       ft
     LSR U                                         ; A4D6: 46 96       F.
     ROR T                                         ; A4D8: 66 9A       f.
@@ -2498,7 +2498,7 @@ NORM                = &FAF8
     LDA PPUSTATUS                                 ; A4F6: AD 02 20    ..
     ASL A                                         ; A4F9: 0A          .
     BPL CA4FF                                     ; A4FA: 10 03       ..
-    JSR LD06D                                     ; A4FC: 20 6D D0     m.
+    JSR NAMETABLE0                                ; A4FC: 20 6D D0     m.
 .CA4FF
     LDA X2                                        ; A4FF: A5 73       .s
     BMI LL62                                      ; A501: 30 91       0.
@@ -2541,7 +2541,7 @@ NORM                = &FAF8
     PLA                                           ; A53F: 68          h
     TAX                                           ; A540: AA          .
     INX                                           ; A541: E8          .
-    LDA XX15_2                                    ; A542: A5 76       .v
+    LDA XX15_5                                    ; A542: A5 76       .v
     BMI LL70                                      ; A544: 30 E3       0.
     LDA L00B1                                     ; A546: A5 B1       ..
     SEC                                           ; A548: 38          8
@@ -2610,14 +2610,14 @@ NORM                = &FAF8
     LDX L0103,Y                                   ; A5B8: BE 03 01    ...
     STX Y2                                        ; A5BB: 86 74       .t
     LDA #0                                        ; A5BD: A9 00       ..
-    STA XX15_1                                    ; A5BF: 85 75       .u
-    STA XX15_2                                    ; A5C1: 85 76       .v
+    STA XX15_4                                    ; A5BF: 85 75       .u
+    STA XX15_5                                    ; A5C1: 85 76       .v
     STA XX12_1                                    ; A5C3: 85 78       .x
     LDA INWK_6                                    ; A5C5: A5 0F       ..
     STA XX12                                      ; A5C7: 85 77       .w
     LDA INWK_2                                    ; A5C9: A5 0B       ..
     BPL CA5CF                                     ; A5CB: 10 02       ..
-    DEC XX15_1                                    ; A5CD: C6 75       .u
+    DEC XX15_4                                    ; A5CD: C6 75       .u
 .CA5CF
     JSR CLIP                                      ; A5CF: 20 5D A6     ].
     BCS LL170                                     ; A5D2: B0 05       ..
@@ -2638,13 +2638,14 @@ NORM                = &FAF8
     LDA (XX0),Y                                   ; A5EC: B1 5F       ._
     STA T1                                        ; A5EE: 85 06       ..
     LDY XX17                                      ; A5F0: A4 9D       ..
-.CA5F2
+; ******************************************************************************
+.LL75
     LDA L00E9                                     ; A5F2: A5 E9       ..
     BPL CA5FF                                     ; A5F4: 10 09       ..
     LDA PPUSTATUS                                 ; A5F6: AD 02 20    ..
     ASL A                                         ; A5F9: 0A          .
     BPL CA5FF                                     ; A5FA: 10 03       ..
-    JSR LD06D                                     ; A5FC: 20 6D D0     m.
+    JSR NAMETABLE0                                ; A5FC: 20 6D D0     m.
 .CA5FF
     LDA (V),Y                                     ; A5FF: B1 63       .c
     CMP XX4                                       ; A601: C5 AB       ..
@@ -2666,7 +2667,7 @@ NORM                = &FAF8
     LDA XX2,X                                     ; A619: B5 3D       .=
     BNE LL79                                      ; A61B: D0 03       ..
 .CA61D
-    JMP CA7B0                                     ; A61D: 4C B0 A7    L..
+    JMP LL78                                      ; A61D: 4C B0 A7    L..
 
 .LL79
     LDA (V),Y                                     ; A620: B1 63       .c
@@ -2684,23 +2685,23 @@ NORM                = &FAF8
     STA Y2                                        ; A63A: 85 74       .t
     LDX Q                                         ; A63C: A6 97       ..
     LDA XX3,X                                     ; A63E: BD 00 01    ...
-    STA XX15_1                                    ; A641: 85 75       .u
+    STA XX15_4                                    ; A641: 85 75       .u
     LDA L0103,X                                   ; A643: BD 03 01    ...
     STA XX12_1                                    ; A646: 85 78       .x
     LDA L0102,X                                   ; A648: BD 02 01    ...
     STA XX12                                      ; A64B: 85 77       .w
     LDA XX3_1,X                                   ; A64D: BD 01 01    ...
-    STA XX15_2                                    ; A650: 85 76       .v
+    STA XX15_5                                    ; A650: 85 76       .v
     JSR CLIP2                                     ; A652: 20 64 A6     d.
     BCS CA61D                                     ; A655: B0 C6       ..
     JSR LOIN                                      ; A657: 20 0F DC     ..
-    JMP CA7B0                                     ; A65A: 4C B0 A7    L..
+    JMP LL78                                      ; A65A: 4C B0 A7    L..
 
 ; ******************************************************************************
 .CLIP
     LDA #0                                        ; A65D: A9 00       ..
     STA SWAP                                      ; A65F: 8D 7F 04    ...
-    LDA XX15_2                                    ; A662: A5 76       .v
+    LDA XX15_5                                    ; A662: A5 76       .v
 ; ******************************************************************************
 .CLIP2
     LDX #&FF                                      ; A664: A2 FF       ..
@@ -2711,19 +2712,19 @@ NORM                = &FAF8
     BCC CA672                                     ; A66E: 90 02       ..
     LDX #0                                        ; A670: A2 00       ..
 .CA672
-    STX L00A1                                     ; A672: 86 A1       ..
+    STX XX13                                      ; A672: 86 A1       ..
     LDA Y1                                        ; A674: A5 72       .r
     ORA Y2                                        ; A676: 05 74       .t
     BNE CA696                                     ; A678: D0 1C       ..
     LDA Yx2M1                                     ; A67A: A5 B3       ..
     CMP X2                                        ; A67C: C5 73       .s
     BCC CA696                                     ; A67E: 90 16       ..
-    LDA L00A1                                     ; A680: A5 A1       ..
+    LDA XX13                                      ; A680: A5 A1       ..
     BNE CA694                                     ; A682: D0 10       ..
 .CA684
     LDA X2                                        ; A684: A5 73       .s
     STA Y1                                        ; A686: 85 72       .r
-    LDA XX15_1                                    ; A688: A5 75       .u
+    LDA XX15_4                                    ; A688: A5 75       .u
     STA X2                                        ; A68A: 85 73       .s
     LDA XX12                                      ; A68C: A5 77       .w
     STA Y2                                        ; A68E: 85 74       .t
@@ -2735,12 +2736,12 @@ NORM                = &FAF8
     RTS                                           ; A693: 60          `
 
 .CA694
-    LSR L00A1                                     ; A694: 46 A1       F.
+    LSR XX13                                      ; A694: 46 A1       F.
 .CA696
-    LDA L00A1                                     ; A696: A5 A1       ..
+    LDA XX13                                      ; A696: A5 A1       ..
     BPL CA6C9                                     ; A698: 10 2F       ./
     LDA Y1                                        ; A69A: A5 72       .r
-    AND XX15_2                                    ; A69C: 25 76       %v
+    AND XX15_5                                    ; A69C: 25 76       %v
     BMI CA692                                     ; A69E: 30 F2       0.
     LDA Y2                                        ; A6A0: A5 74       .t
     AND XX12_1                                    ; A6A2: 25 78       %x
@@ -2748,7 +2749,7 @@ NORM                = &FAF8
     LDX Y1                                        ; A6A6: A6 72       .r
     DEX                                           ; A6A8: CA          .
     TXA                                           ; A6A9: 8A          .
-    LDX XX15_2                                    ; A6AA: A6 76       .v
+    LDX XX15_5                                    ; A6AA: A6 76       .v
     DEX                                           ; A6AC: CA          .
     STX L0079                                     ; A6AD: 86 79       .y
     ORA L0079                                     ; A6AF: 05 79       .y
@@ -2767,11 +2768,11 @@ NORM                = &FAF8
 .CA6C9
     TYA                                           ; A6C9: 98          .
     PHA                                           ; A6CA: 48          H
-    LDA XX15_1                                    ; A6CB: A5 75       .u
+    LDA XX15_4                                    ; A6CB: A5 75       .u
     SEC                                           ; A6CD: 38          8
     SBC XX15                                      ; A6CE: E5 71       .q
     STA L0079                                     ; A6D0: 85 79       .y
-    LDA XX15_2                                    ; A6D2: A5 76       .v
+    LDA XX15_5                                    ; A6D2: A5 76       .v
     SBC Y1                                        ; A6D4: E5 72       .r
     STA L007A                                     ; A6D6: 85 7A       .z
     LDA XX12                                      ; A6D8: A5 77       .w
@@ -2836,16 +2837,16 @@ NORM                = &FAF8
     LDA PPUSTATUS                                 ; A73D: AD 02 20    ..
     ASL A                                         ; A740: 0A          .
     BPL CA746                                     ; A741: 10 03       ..
-    JSR LD06D                                     ; A743: 20 6D D0     m.
+    JSR NAMETABLE0                                ; A743: 20 6D D0     m.
 .CA746
     LDA S                                         ; A746: A5 99       ..
     STA L007A                                     ; A748: 85 7A       .z
-    LDA L00A1                                     ; A74A: A5 A1       ..
+    LDA XX13                                      ; A74A: A5 A1       ..
     BEQ CA750                                     ; A74C: F0 02       ..
     BPL CA768                                     ; A74E: 10 18       ..
 .CA750
-    JSR sub_CA7CA                                 ; A750: 20 CA A7     ..
-    LDA L00A1                                     ; A753: A5 A1       ..
+    JSR LL118                                     ; A750: 20 CA A7     ..
+    LDA XX13                                      ; A753: A5 A1       ..
     BMI CA75C                                     ; A755: 30 05       0.
     PLA                                           ; A757: 68          h
     TAY                                           ; A758: A8          .
@@ -2860,12 +2861,12 @@ NORM                = &FAF8
     BCS CA7AC                                     ; A766: B0 44       .D
 .CA768
     LDX XX15                                      ; A768: A6 71       .q
-    LDA XX15_1                                    ; A76A: A5 75       .u
+    LDA XX15_4                                    ; A76A: A5 75       .u
     STA XX15                                      ; A76C: 85 71       .q
-    STX XX15_1                                    ; A76E: 86 75       .u
-    LDA XX15_2                                    ; A770: A5 76       .v
+    STX XX15_4                                    ; A76E: 86 75       .u
+    LDA XX15_5                                    ; A770: A5 76       .v
     LDX Y1                                        ; A772: A6 72       .r
-    STX XX15_2                                    ; A774: 86 76       .v
+    STX XX15_5                                    ; A774: 86 76       .v
     STA Y1                                        ; A776: 85 72       .r
     LDX X2                                        ; A778: A6 73       .s
     LDA XX12                                      ; A77A: A5 77       .w
@@ -2875,7 +2876,7 @@ NORM                = &FAF8
     LDX Y2                                        ; A782: A6 74       .t
     STX XX12_1                                    ; A784: 86 78       .x
     STA Y2                                        ; A786: 85 74       .t
-    JSR sub_CA7CA                                 ; A788: 20 CA A7     ..
+    JSR LL118                                     ; A788: 20 CA A7     ..
     LDA Y1                                        ; A78B: A5 72       .r
     ORA Y2                                        ; A78D: 05 74       .t
     BNE CA7AC                                     ; A78F: D0 1B       ..
@@ -2887,7 +2888,7 @@ NORM                = &FAF8
     BCS CA7A8                                     ; A79A: B0 0C       ..
 .loop_CA79C
     STA Y1                                        ; A79C: 85 72       .r
-    LDA XX15_1                                    ; A79E: A5 75       .u
+    LDA XX15_4                                    ; A79E: A5 75       .u
     STA X2                                        ; A7A0: 85 73       .s
     LDA XX12                                      ; A7A2: A5 77       .w
     STA Y2                                        ; A7A4: 85 74       .t
@@ -2903,7 +2904,8 @@ NORM                = &FAF8
     SEC                                           ; A7AE: 38          8
     RTS                                           ; A7AF: 60          `
 
-.CA7B0
+; ******************************************************************************
+.LL78
     INC XX17                                      ; A7B0: E6 9D       ..
     LDY XX17                                      ; A7B2: A4 9D       ..
     CPY XX20                                      ; A7B4: C4 AC       ..
@@ -2915,19 +2917,20 @@ NORM                = &FAF8
     BCC CA7C4                                     ; A7C0: 90 02       ..
     INC V_1                                       ; A7C2: E6 64       .d
 .CA7C4
-    JMP CA5F2                                     ; A7C4: 4C F2 A5    L..
+    JMP LL75                                      ; A7C4: 4C F2 A5    L..
 
 .CA7C7
     LDA U                                         ; A7C7: A5 96       ..
     RTS                                           ; A7C9: 60          `
 
-.sub_CA7CA
+; ******************************************************************************
+.LL118
     LDA L00E9                                     ; A7CA: A5 E9       ..
     BPL CA7D7                                     ; A7CC: 10 09       ..
     LDA PPUSTATUS                                 ; A7CE: AD 02 20    ..
     ASL A                                         ; A7D1: 0A          .
     BPL CA7D7                                     ; A7D2: 10 03       ..
-    JSR LD06D                                     ; A7D4: 20 6D D0     m.
+    JSR NAMETABLE0                                ; A7D4: 20 6D D0     m.
 .CA7D7
     LDA Y1                                        ; A7D7: A5 72       .r
     STA S                                         ; A7D9: 85 99       ..
@@ -2966,7 +2969,7 @@ NORM                = &FAF8
     LDA PPUSTATUS                                 ; A811: AD 02 20    ..
     ASL A                                         ; A814: 0A          .
     BPL CA81A                                     ; A815: 10 03       ..
-    JSR LD06D                                     ; A817: 20 6D D0     m.
+    JSR NAMETABLE0                                ; A817: 20 6D D0     m.
 .CA81A
     LDA Y2                                        ; A81A: A5 74       .t
     BPL CA838                                     ; A81C: 10 1A       ..
@@ -3011,7 +3014,7 @@ NORM                = &FAF8
     LDA PPUSTATUS                                 ; A861: AD 02 20    ..
     ASL A                                         ; A864: 0A          .
     BPL CA86A                                     ; A865: 10 03       ..
-    JSR LD06D                                     ; A867: 20 6D D0     m.
+    JSR NAMETABLE0                                ; A867: 20 6D D0     m.
 .CA86A
     RTS                                           ; A86A: 60          `
 
@@ -3129,7 +3132,7 @@ NORM                = &FAF8
     LDA PPUSTATUS                                 ; A901: AD 02 20    ..
     ASL A                                         ; A904: 0A          .
     BPL CA90A                                     ; A905: 10 03       ..
-    JSR LD06D                                     ; A907: 20 6D D0     m.
+    JSR NAMETABLE0                                ; A907: 20 6D D0     m.
 .CA90A
     LDA INWK_6                                    ; A90A: A5 0F       ..
     STA T                                         ; A90C: 85 9A       ..
@@ -3157,7 +3160,7 @@ NORM                = &FAF8
     LDA PPUSTATUS                                 ; A931: AD 02 20    ..
     ASL A                                         ; A934: 0A          .
     BPL CA93A                                     ; A935: 10 03       ..
-    JSR LD06D                                     ; A937: 20 6D D0     m.
+    JSR NAMETABLE0                                ; A937: 20 6D D0     m.
 .CA93A
     LDA P                                         ; A93A: A5 2F       ./
     CMP #&1C                                      ; A93C: C9 1C       ..
@@ -3237,7 +3240,7 @@ NORM                = &FAF8
     LDA PPUSTATUS                                 ; A9B8: AD 02 20    ..
     ASL A                                         ; A9BB: 0A          .
     BPL CA9C1                                     ; A9BC: 10 03       ..
-    JSR LD06D                                     ; A9BE: 20 6D D0     m.
+    JSR NAMETABLE0                                ; A9BE: 20 6D D0     m.
 .CA9C1
     CLC                                           ; A9C1: 18          .
     LDA L0002                                     ; A9C2: A5 02       ..
@@ -3533,7 +3536,7 @@ NORM                = &FAF8
     LDA PPUSTATUS                                 ; ABC1: AD 02 20    ..
     ASL A                                         ; ABC4: 0A          .
     BPL CABCA                                     ; ABC5: 10 03       ..
-    JSR LD06D                                     ; ABC7: 20 6D D0     m.
+    JSR NAMETABLE0                                ; ABC7: 20 6D D0     m.
 .CABCA
     TXA                                           ; ABCA: 8A          .
     ADC XX2                                       ; ABCB: 65 3D       e=
@@ -3877,7 +3880,7 @@ NORM                = &FAF8
     LDA PPUSTATUS                                 ; AE2D: AD 02 20    ..
     ASL A                                         ; AE30: 0A          .
     BPL CAE36                                     ; AE31: 10 03       ..
-    JSR LD06D                                     ; AE33: 20 6D D0     m.
+    JSR NAMETABLE0                                ; AE33: 20 6D D0     m.
 .CAE36
     TYA                                           ; AE36: 98          .
     CLC                                           ; AE37: 18          .
@@ -3939,7 +3942,7 @@ NORM                = &FAF8
     LDA PPUSTATUS                                 ; AE9F: AD 02 20    ..
     ASL A                                         ; AEA2: 0A          .
     BPL CAEA8                                     ; AEA3: 10 03       ..
-    JSR LD06D                                     ; AEA5: 20 6D D0     m.
+    JSR NAMETABLE0                                ; AEA5: 20 6D D0     m.
 .CAEA8
     LDX P                                         ; AEA8: A6 2F       ./
     BEQ CAE9A                                     ; AEAA: F0 EE       ..
@@ -3977,7 +3980,7 @@ NORM                = &FAF8
     LDA PPUSTATUS                                 ; AEEC: AD 02 20    ..
     ASL A                                         ; AEEF: 0A          .
     BPL CAEF5                                     ; AEF0: 10 03       ..
-    JSR LD06D                                     ; AEF2: 20 6D D0     m.
+    JSR NAMETABLE0                                ; AEF2: 20 6D D0     m.
 .CAEF5
     LDX P_1                                       ; AEF5: A6 30       .0
     STX XX15                                      ; AEF7: 86 71       .q
@@ -4015,7 +4018,7 @@ NORM                = &FAF8
     LDA PPUSTATUS                                 ; AF39: AD 02 20    ..
     ASL A                                         ; AF3C: 0A          .
     BPL CAF42                                     ; AF3D: 10 03       ..
-    JSR LD06D                                     ; AF3F: 20 6D D0     m.
+    JSR NAMETABLE0                                ; AF3F: 20 6D D0     m.
 .CAF42
     STY Y1                                        ; AF42: 84 72       .r
     LDA V                                         ; AF44: A5 63       .c
@@ -4035,7 +4038,7 @@ NORM                = &FAF8
     LDA PPUSTATUS                                 ; AF63: AD 02 20    ..
     ASL A                                         ; AF66: 0A          .
     BPL CAF6C                                     ; AF67: 10 03       ..
-    JSR LD06D                                     ; AF69: 20 6D D0     m.
+    JSR NAMETABLE0                                ; AF69: 20 6D D0     m.
 .CAF6C
     JSR DORND                                     ; AF6C: 20 AD F4     ..
     AND CNT                                       ; AF6F: 25 A8       %.
@@ -4054,7 +4057,7 @@ NORM                = &FAF8
     LDA PPUSTATUS                                 ; AF7F: AD 02 20    ..
     ASL A                                         ; AF82: 0A          .
     BPL CAF88                                     ; AF83: 10 03       ..
-    JSR LD06D                                     ; AF85: 20 6D D0     m.
+    JSR NAMETABLE0                                ; AF85: 20 6D D0     m.
 .CAF88
     JSR CHKON                                     ; AF88: 20 77 B0     w.
     BCS RTS2                                      ; AF8B: B0 ED       ..
@@ -4140,7 +4143,7 @@ NORM                = &FAF8
     LDA PPUSTATUS                                 ; B007: AD 02 20    ..
     ASL A                                         ; B00A: 0A          .
     BPL CB010                                     ; B00B: 10 03       ..
-    JSR LD06D                                     ; B00D: 20 6D D0     m.
+    JSR NAMETABLE0                                ; B00D: 20 6D D0     m.
 .CB010
     SEC                                           ; B010: 38          8
     RTS                                           ; B011: 60          `
@@ -4357,7 +4360,7 @@ NORM                = &FAF8
     LDA PPUSTATUS                                 ; B13F: AD 02 20    ..
     ASL A                                         ; B142: 0A          .
     BPL CB148                                     ; B143: 10 03       ..
-    JSR LD06D                                     ; B145: 20 6D D0     m.
+    JSR NAMETABLE0                                ; B145: 20 6D D0     m.
 .CB148
     TXA                                           ; B148: 8A          .
     ADC K4                                        ; B149: 65 4B       eK
@@ -4380,9 +4383,9 @@ NORM                = &FAF8
     LDA L008B                                     ; B168: A5 8B       ..
     STA Y2                                        ; B16A: 85 74       .t
     LDA K6                                        ; B16C: A5 8C       ..
-    STA XX15_1                                    ; B16E: 85 75       .u
+    STA XX15_4                                    ; B16E: 85 75       .u
     LDA K6_1                                      ; B170: A5 8D       ..
-    STA XX15_2                                    ; B172: 85 76       .v
+    STA XX15_5                                    ; B172: 85 76       .v
     LDA L008E                                     ; B174: A5 8E       ..
     STA XX12                                      ; B176: 85 77       .w
     LDA XX18_7                                    ; B178: A5 8F       ..
@@ -4392,7 +4395,7 @@ NORM                = &FAF8
     LDA PPUSTATUS                                 ; B180: AD 02 20    ..
     ASL A                                         ; B183: 0A          .
     BPL CB189                                     ; B184: 10 03       ..
-    JSR LD06D                                     ; B186: 20 6D D0     m.
+    JSR NAMETABLE0                                ; B186: 20 6D D0     m.
 .CB189
     JSR CLIP                                      ; B189: 20 5D A6     ].
     BCS CB1A6                                     ; B18C: B0 18       ..
@@ -4443,7 +4446,7 @@ NORM                = &FAF8
     LDA PPUSTATUS                                 ; B1D3: AD 02 20    ..
     ASL A                                         ; B1D6: 0A          .
     BPL CB1DC                                     ; B1D7: 10 03       ..
-    JSR LD06D                                     ; B1D9: 20 6D D0     m.
+    JSR NAMETABLE0                                ; B1D9: 20 6D D0     m.
 .CB1DC
     JSR DV42                                      ; B1DC: 20 D1 F8     ..
     LDA R                                         ; B1DF: A5 98       ..
@@ -4479,7 +4482,7 @@ NORM                = &FAF8
     LDA PPUSTATUS                                 ; B221: AD 02 20    ..
     ASL A                                         ; B224: 0A          .
     BPL CB22A                                     ; B225: 10 03       ..
-    JSR LD06D                                     ; B227: 20 6D D0     m.
+    JSR NAMETABLE0                                ; B227: 20 6D D0     m.
 .CB22A
     LDA P                                         ; B22A: A5 2F       ./
     ADC SXL,Y                                     ; B22C: 79 A5 05    y..
@@ -4502,7 +4505,7 @@ NORM                = &FAF8
     LDA PPUSTATUS                                 ; B253: AD 02 20    ..
     ASL A                                         ; B256: 0A          .
     BPL CB25C                                     ; B257: 10 03       ..
-    JSR LD06D                                     ; B259: 20 6D D0     m.
+    JSR NAMETABLE0                                ; B259: 20 6D D0     m.
 .CB25C
     LDX BET1                                      ; B25C: A6 6A       .j
     LDA YY_1                                      ; B25E: A5 68       .h
@@ -4531,7 +4534,7 @@ NORM                = &FAF8
     LDA PPUSTATUS                                 ; B28D: AD 02 20    ..
     ASL A                                         ; B290: 0A          .
     BPL CB296                                     ; B291: 10 03       ..
-    JSR LD06D                                     ; B293: 20 6D D0     m.
+    JSR NAMETABLE0                                ; B293: 20 6D D0     m.
 .CB296
     LDA BETA                                      ; B296: A5 69       .i
     EOR #&80                                      ; B298: 49 80       I.
@@ -4583,7 +4586,7 @@ NORM                = &FAF8
     LDA PPUSTATUS                                 ; B2F4: AD 02 20    ..
     ASL A                                         ; B2F7: 0A          .
     BPL CB2FD                                     ; B2F8: 10 03       ..
-    JSR LD06D                                     ; B2FA: 20 6D D0     m.
+    JSR NAMETABLE0                                ; B2FA: 20 6D D0     m.
 .CB2FD
     LDA Y1                                        ; B2FD: A5 72       .r
     JMP CB2C6                                     ; B2FF: 4C C6 B2    L..
@@ -4597,7 +4600,7 @@ NORM                = &FAF8
     LDA PPUSTATUS                                 ; B309: AD 02 20    ..
     ASL A                                         ; B30C: 0A          .
     BPL CB312                                     ; B30D: 10 03       ..
-    JSR LD06D                                     ; B30F: 20 6D D0     m.
+    JSR NAMETABLE0                                ; B30F: 20 6D D0     m.
 .CB312
     JSR DV42                                      ; B312: 20 D1 F8     ..
     LDA R                                         ; B315: A5 98       ..
@@ -4624,7 +4627,7 @@ NORM                = &FAF8
     LDA PPUSTATUS                                 ; B341: AD 02 20    ..
     ASL A                                         ; B344: 0A          .
     BPL CB34A                                     ; B345: 10 03       ..
-    JSR LD06D                                     ; B347: 20 6D D0     m.
+    JSR NAMETABLE0                                ; B347: 20 6D D0     m.
 .CB34A
     LDA SYL,Y                                     ; B34A: B9 BA 05    ...
     SBC P                                         ; B34D: E5 2F       ./
@@ -4678,7 +4681,7 @@ NORM                = &FAF8
     LDA PPUSTATUS                                 ; B3B6: AD 02 20    ..
     ASL A                                         ; B3B9: 0A          .
     BPL CB3BF                                     ; B3BA: 10 03       ..
-    JSR LD06D                                     ; B3BC: 20 6D D0     m.
+    JSR NAMETABLE0                                ; B3BC: 20 6D D0     m.
 .CB3BF
     LDA YY_1                                      ; B3BF: A5 68       .h
     STA S                                         ; B3C1: 85 99       ..
@@ -4763,7 +4766,7 @@ NORM                = &FAF8
     LDA PPUSTATUS                                 ; B454: AD 02 20    ..
     ASL A                                         ; B457: 0A          .
     BPL CB45D                                     ; B458: 10 03       ..
-    JSR LD06D                                     ; B45A: 20 6D D0     m.
+    JSR NAMETABLE0                                ; B45A: 20 6D D0     m.
 .CB45D
     LDA SZ,Y                                      ; B45D: B9 F2 04    ...
     STA ZZ                                        ; B460: 85 A0       ..
@@ -4787,7 +4790,7 @@ NORM                = &FAF8
     LDA PPUSTATUS                                 ; B485: AD 02 20    ..
     ASL A                                         ; B488: 0A          .
     BPL CB48E                                     ; B489: 10 03       ..
-    JSR LD06D                                     ; B48B: 20 6D D0     m.
+    JSR NAMETABLE0                                ; B48B: 20 6D D0     m.
 .CB48E
     LDA SY,Y                                      ; B48E: B9 DD 04    ...
     STA Y1                                        ; B491: 85 72       .r
@@ -4825,7 +4828,7 @@ NORM                = &FAF8
     LDA PPUSTATUS                                 ; B4D8: AD 02 20    ..
     ASL A                                         ; B4DB: 0A          .
     BPL CB4E1                                     ; B4DC: 10 03       ..
-    JSR LD06D                                     ; B4DE: 20 6D D0     m.
+    JSR NAMETABLE0                                ; B4DE: 20 6D D0     m.
 .CB4E1
     LDA YY                                        ; B4E1: A5 67       .g
     STA R                                         ; B4E3: 85 98       ..
@@ -4969,7 +4972,7 @@ LB5CF = sub_CB5CE+1
     LDA PPUSTATUS                                 ; B5DD: AD 02 20    ..
     ASL A                                         ; B5E0: 0A          .
     BPL CB5E6                                     ; B5E1: 10 03       ..
-    JSR LD06D                                     ; B5E3: 20 6D D0     m.
+    JSR NAMETABLE0                                ; B5E3: 20 6D D0     m.
 .CB5E6
     LDX #0                                        ; B5E6: A2 00       ..
     LDA (L00BA,X)                                 ; B5E8: A1 BA       ..
@@ -5037,7 +5040,7 @@ LB5CF = sub_CB5CE+1
     LDA PPUSTATUS                                 ; B64B: AD 02 20    ..
     ASL A                                         ; B64E: 0A          .
     BPL CB654                                     ; B64F: 10 03       ..
-    JSR LD06D                                     ; B651: 20 6D D0     m.
+    JSR NAMETABLE0                                ; B651: 20 6D D0     m.
 .CB654
     LDX #0                                        ; B654: A2 00       ..
     LDA (L00BA,X)                                 ; B656: A1 BA       ..
@@ -5113,7 +5116,7 @@ LB5CF = sub_CB5CE+1
     LDA PPUSTATUS                                 ; B6BE: AD 02 20    ..
     ASL A                                         ; B6C1: 0A          .
     BPL CB6C7                                     ; B6C2: 10 03       ..
-    JSR LD06D                                     ; B6C4: 20 6D D0     m.
+    JSR NAMETABLE0                                ; B6C4: 20 6D D0     m.
 .CB6C7
     LDX #0                                        ; B6C7: A2 00       ..
     LDA (L00BA,X)                                 ; B6C9: A1 BA       ..
@@ -5241,7 +5244,7 @@ LB5CF = sub_CB5CE+1
     LDA PPUSTATUS                                 ; B7A9: AD 02 20    ..
     ASL A                                         ; B7AC: 0A          .
     BPL CB7B2                                     ; B7AD: 10 03       ..
-    JSR LD06D                                     ; B7AF: 20 6D D0     m.
+    JSR NAMETABLE0                                ; B7AF: 20 6D D0     m.
 .CB7B2
     LDY #&25 ; '%'                                ; B7B2: A0 25       .%
     LDA #0                                        ; B7B4: A9 00       ..
@@ -5254,7 +5257,7 @@ LB5CF = sub_CB5CE+1
     LDA PPUSTATUS                                 ; B7C0: AD 02 20    ..
     ASL A                                         ; B7C3: 0A          .
     BPL CB7C9                                     ; B7C4: 10 03       ..
-    JSR LD06D                                     ; B7C6: 20 6D D0     m.
+    JSR NAMETABLE0                                ; B7C6: 20 6D D0     m.
 .CB7C9
     LDA #&60 ; '`'                                ; B7C9: A9 60       .`
     STA INWK_18                                   ; B7CB: 85 1B       ..
@@ -5346,7 +5349,7 @@ LB5CF = sub_CB5CE+1
     LDA PPUSTATUS                                 ; B860: AD 02 20    ..
     ASL A                                         ; B863: 0A          .
     BPL CB869                                     ; B864: 10 03       ..
-    JSR LD06D                                     ; B866: 20 6D D0     m.
+    JSR NAMETABLE0                                ; B866: 20 6D D0     m.
 .CB869
     LDA INWK_10                                   ; B869: A5 13       ..
     STA XX15                                      ; B86B: 85 71       .q
@@ -5375,7 +5378,7 @@ LB5CF = sub_CB5CE+1
     LDA PPUSTATUS                                 ; B899: AD 02 20    ..
     ASL A                                         ; B89C: 0A          .
     BPL CB8A2                                     ; B89D: 10 03       ..
-    JSR LD06D                                     ; B89F: 20 6D D0     m.
+    JSR NAMETABLE0                                ; B89F: 20 6D D0     m.
 .CB8A2
     LDA INWK_16                                   ; B8A2: A5 19       ..
     STA XX15                                      ; B8A4: 85 71       .q
@@ -5404,7 +5407,7 @@ LB5CF = sub_CB5CE+1
     LDA PPUSTATUS                                 ; B8D5: AD 02 20    ..
     ASL A                                         ; B8D8: 0A          .
     BPL CB8DE                                     ; B8D9: 10 03       ..
-    JSR LD06D                                     ; B8DB: 20 6D D0     m.
+    JSR NAMETABLE0                                ; B8DB: 20 6D D0     m.
 .CB8DE
     LDA INWK_16                                   ; B8DE: A5 19       ..
     JSR MULT12                                    ; B8E0: 20 3C F8     <.
@@ -5418,7 +5421,7 @@ LB5CF = sub_CB5CE+1
     LDA PPUSTATUS                                 ; B8F2: AD 02 20    ..
     ASL A                                         ; B8F5: 0A          .
     BPL CB8FB                                     ; B8F6: 10 03       ..
-    JSR LD06D                                     ; B8F8: 20 6D D0     m.
+    JSR NAMETABLE0                                ; B8F8: 20 6D D0     m.
 .CB8FB
     LDA INWK_18                                   ; B8FB: A5 1B       ..
     JSR MULT12                                    ; B8FD: 20 3C F8     <.
@@ -5432,7 +5435,7 @@ LB5CF = sub_CB5CE+1
     LDA PPUSTATUS                                 ; B90F: AD 02 20    ..
     ASL A                                         ; B912: 0A          .
     BPL CB918                                     ; B913: 10 03       ..
-    JSR LD06D                                     ; B915: 20 6D D0     m.
+    JSR NAMETABLE0                                ; B915: 20 6D D0     m.
 .CB918
     LDA #0                                        ; B918: A9 00       ..
     LDX #&0E                                      ; B91A: A2 0E       ..
@@ -5700,7 +5703,7 @@ LB5CF = sub_CB5CE+1
     LDA PPUSTATUS                                 ; BAF7: AD 02 20    ..
     ASL A                                         ; BAFA: 0A          .
     BPL CBB00                                     ; BAFB: 10 03       ..
-    JSR LD06D                                     ; BAFD: 20 6D D0     m.
+    JSR NAMETABLE0                                ; BAFD: 20 6D D0     m.
 .CBB00
     LDX L002A                                     ; BB00: A6 2A       .*
     BEQ CBB23                                     ; BB02: F0 1F       ..
@@ -5806,7 +5809,7 @@ LB5CF = sub_CB5CE+1
     LDA PPUSTATUS                                 ; BBB0: AD 02 20    ..
     ASL A                                         ; BBB3: 0A          .
     BPL CBBB9                                     ; BBB4: 10 03       ..
-    JSR LD06D                                     ; BBB6: 20 6D D0     m.
+    JSR NAMETABLE0                                ; BBB6: 20 6D D0     m.
 .CBBB9
     JSR LF4AC                                     ; BBB9: 20 AC F4     ..
     STA ZZ                                        ; BBBC: 85 A0       ..

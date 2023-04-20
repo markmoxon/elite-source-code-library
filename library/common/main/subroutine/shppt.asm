@@ -3,7 +3,7 @@
 \       Name: SHPPT
 \       Type: Subroutine
 \   Category: Drawing ships
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION OR _NES_VERSION \ Comment
 \    Summary: Draw a distant ship as a point rather than a full wireframe
 ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA
 \    Summary: Draw a distant ship as a point in the middle of the screen
@@ -38,6 +38,19 @@ ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA
  LDA #Y                 \ Set A = the y-coordinate of a dot halfway down the
                         \ screen
 
+ELIF _NES_VERSION
+
+ JSR PROJ               \ Project the ship onto the screen, returning:
+                        \
+                        \   * K3(1 0) = the screen x-coordinate
+                        \   * K4(1 0) = the screen y-coordinate
+                        \   * A = K4+1
+
+ ORA K3+1               \ If either of the high bytes of the screen coordinates
+ BNE nono               \ are non-zero, jump to nono as the ship is off-screen
+
+ LDY K4                 \ Set Y = the y-coordinate of the dot
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Comment
@@ -54,6 +67,12 @@ ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA
                         \ never happen, but this code is copied from the flight
                         \ code, where A can contain any y-coordinate
 
+ELIF _NES_VERSION
+
+ CPY #Y*2-2             \ If the y-coordinate is bigger than the y-coordinate of
+ BCS nono               \ the bottom of the screen, jump to nono as the ship's
+                        \ dot is off the bottom of the space view
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: See group A
@@ -65,7 +84,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 
  LDY #6                 \ Set Y to 6 for the next call to Shpt
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _NES_VERSION
 
  JSR Shpt               \ Call Shpt to draw a horizontal 4-pixel dash for the
                         \ first row of the dot (i.e. a four-pixel dash)
@@ -88,6 +107,11 @@ ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA
  LDA #Y                 \ Set A = #Y + 1 (so this is the second row of the
  ADC #1                 \ two-pixel-high dot halfway down the screen)
 
+ELIF _NES_VERSION
+
+ INY                    \ ??? Increment Y to the next row
+ CLC
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
@@ -98,16 +122,38 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
                         \ second row of the dot (i.e. another four-pixel dash,
                         \ on the row below the first one)
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _NES_VERSION
 
  JSR Shpt               \ Call Shpt to draw a horizontal 4-pixel dash for the
                         \ second row of the dot (i.e. a four-pixel dash)
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  LDA #%00001000         \ Set bit 3 of the ship's byte #31 to record that we
  ORA XX1+31             \ have now drawn something on-screen for this ship
  STA XX1+31
+
+ELIF _NES_VERSION
+
+ BIT XX1+31             \ ???
+ BVC nono
+ LDA XX1+31
+ AND #&BF
+ STA XX1+31
+ LDX #1
+ LDA XX1+6
+ BPL C9FB4
+ LDX #&FF
+.C9FB4
+ STX X2
+ AND #&3F
+ ADC #&20
+ STA Y2
+ JSR LOIN
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Advanced: Ships in the advanced versions each have their own colour, including when they are shown as points
 
@@ -146,7 +192,7 @@ ENDIF
  AND XX1+31             \ nothing is being drawn on-screen for this ship
  STA XX1+31
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: See group A
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Master: See group A
 
  RTS                    \ Return from the subroutine
 
@@ -237,6 +283,28 @@ ELIF _MASTER_VERSION
                         \ drawing the ship's new line and then erasing the
                         \ corresponding old line from the screen, and return
                         \ from the subroutine using a tail call
+
+ELIF _NES_VERSION
+
+                        \ This routine draws a horizontal 4-pixel dash, for
+                        \ either the top or the bottom of the ship's dot
+
+ LDA XX2                \ ???
+ STA X1
+ ADC #3
+ BCS C9FD7
+ STA X2
+
+ STY Y1                 \ Store Y in both y-coordinates, as this is a horizontal
+ STY Y2                 \ dash at y-coordinate Y
+
+ JMP LOIN
+
+.C9FD7
+
+ PLA
+ PLA
+ JMP nono
 
 ENDIF
 

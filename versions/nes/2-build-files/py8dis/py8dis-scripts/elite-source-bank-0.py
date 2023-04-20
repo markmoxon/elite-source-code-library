@@ -69,10 +69,9 @@ subroutine(0xA8AB, "csh")
 subroutine(0xA8C8, "plf")
 subroutine(0xA8CE, "TT68")
 subroutine(0xA8D1, "TT73")
-subroutine(0xA8D9, "TT27_BANK0")	# Deals with control codes
+subroutine(0xA8D9, "TT27_BANK0")    # Deals with control codes
 subroutine(0xB8F7, "PAS1_BANK0")
 
 exec(open('py8dis-scripts/common-variables.py').read())
 
 go()
-

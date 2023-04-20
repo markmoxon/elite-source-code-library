@@ -48,11 +48,26 @@
 
 .LL118
 
+IF NOT(_NES_VERSION)
+
  LDA XX15+1             \ If x1_hi is positive, jump down to LL119 to skip
  BPL LL119              \ the following
 
  STA S                  \ Otherwise x1_hi is negative, i.e. off the left of the
                         \ screen, so set S = x1_hi
+ELIF _NES_VERSION
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ LDA XX15+1             \ If x1_hi is positive, jump down to LL119 to skip
+                        \ the following ???
+
+ STA S                  \ Otherwise x1_hi is negative, i.e. off the left of the
+                        \ screen, so set S = x1_hi
+
+ BPL LL119              \ ???
+
+ENDIF
 
  JSR LL120              \ Call LL120 to calculate:
                         \
@@ -80,14 +95,28 @@
 
  TAX                    \ Set X = 0 so the next instruction becomes a JMP
 
+IF _NES_VERSION
+
+ BEQ CA80D              \ ???
+
+ENDIF
+
 .LL119
 
  BEQ LL134              \ If x1_hi = 0 then jump down to LL134 to skip the
                         \ following, as the x-coordinate is already on-screen
                         \ (as 0 <= (x_hi x_lo) <= 255)
 
+IF NOT(_NES_VERSION)
+
  STA S                  \ Otherwise x1_hi is positive, i.e. x1 >= 256 and off
  DEC S                  \ the right side of the screen, so set S = x1_hi - 1
+
+ELIF _NES_VERSION
+
+ DEC S                  \ ???
+
+ENDIF
 
  JSR LL120              \ Call LL120 to calculate:
                         \
@@ -113,6 +142,15 @@
  STX XX15
  INX
  STX XX15+1
+
+IF _NES_VERSION
+
+.CA80D
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+                        \ ???
+
+ENDIF
 
 .LL134
 
@@ -162,10 +200,21 @@ IF _CASSETTE_VERSION OR _MASTER_VERSION OR _6502SP_VERSION \ Comment
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  LDA XX15+2             \ Set (S R) = (y1_hi y1_lo) - 192
  SEC                    \
  SBC #Y*2               \ starting with the low bytes
  STA R
+
+ELIF _NES_VERSION
+
+ LDA XX15+2             \ Set (S R) = (y1_hi y1_lo) - screen height
+ SEC                    \
+ SBC &00B2              \ starting with the low bytes ???
+ STA R
+
+ENDIF
 
  LDA XX15+3             \ And then subtracting the high bytes
  SBC #0
@@ -200,12 +249,29 @@ ENDIF
  ADC XX15+1
  STA XX15+1
 
+IF NOT(_NES_VERSION)
+
  LDA #Y*2-1             \ Set y1 = 2 * #Y - 1. The constant #Y is 96, the
  STA XX15+2             \ y-coordinate of the mid-point of the space view, so
  LDA #0                 \ this sets Y2 to 191, the y-coordinate of the bottom
  STA XX15+3             \ pixel row of the space view
 
+ELIF _NES_VERSION
+
+ LDA Yx2M1              \ Set y1 = 2 * #Y - 1. The constant #Y is 96, the
+ STA XX15+2             \ y-coordinate of the mid-point of the space view, so
+ LDA #0                 \ this sets Y2 to 191, the y-coordinate of the bottom
+ STA XX15+3             \ pixel row of the space view ???
+
+ENDIF
+
 .LL136
+
+IF _NES_VERSION
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ENDIF
 
  RTS                    \ Return from the subroutine
 

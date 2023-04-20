@@ -48,7 +48,7 @@
                         \ If we get here we need to negate both the result and
                         \ the sign in S, as both are the wrong sign
 
-IF _MASTER_VERSION \ Label
+IF _MASTER_VERSION OR _NES_VERSION \ Label
 
 .LL40
 

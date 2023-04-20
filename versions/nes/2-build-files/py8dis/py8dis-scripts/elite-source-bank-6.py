@@ -24,7 +24,8 @@ entry(0x801E)
 byte(0x88BC, 0x895A - 0x88BC)
 entry(0x89D1)
 
+entry(0xA91B)
+
 exec(open('py8dis-scripts/common-variables.py').read())
 
 go()
-

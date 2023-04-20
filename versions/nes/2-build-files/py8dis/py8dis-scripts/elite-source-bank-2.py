@@ -93,4 +93,3 @@ subroutine(0xB635, "CHPR")
 exec(open('py8dis-scripts/common-variables.py').read())
 
 go()
-

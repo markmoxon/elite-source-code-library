@@ -46,4 +46,3 @@ entry(0xBA23)
 exec(open('py8dis-scripts/common-variables.py').read())
 
 go()
-

@@ -52,6 +52,13 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
  JSR LL155              \ Otherwise call LL155 to draw the existing ship, which
                         \ removes it from the screen
 
+ELIF _NES_VERSION
+
+ LDA #%00001000         \ If bit 3 of the ship's byte #31 is clear, then there
+ BIT XX1+31             \ is nothing already being shown for this ship, so skip
+ BEQ LL74               \ to LL74 as we don't need to erase anything from the
+                        \ screen
+
 ENDIF
 
 IF _MASTER_VERSION \ Platform
@@ -66,13 +73,13 @@ ENDIF
                         \ the ship's byte #31 to denote that we are drawing
                         \ something on-screen for this ship
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Label
 
 .LL74
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Minor
 
  ORA XX1+31             \ Apply bit 3 of A to the ship's byte #31, so if there
  STA XX1+31             \ was no ship already on screen, the bit is clear,
@@ -87,7 +94,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Platform
 
  LDY #9                 \ Fetch byte #9 of the ship's blueprint, which is the
  LDA (XX0),Y            \ number of edges, and store it in XX20
@@ -95,7 +102,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _NES_VERSION \ Minor
 
  LDY #0                 \ We are about to step through all the edges, using Y
                         \ as a counter
@@ -121,7 +128,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Platform
 
  INC U                  \ We are going to start calculating the lines we need to
                         \ draw for this ship, and will store them in the ship
@@ -137,7 +144,7 @@ ENDIF
                         \ The ship is firing its laser at us, so we need to draw
                         \ the laser lines
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Minor
 
  LDA XX1+31             \ Clear bit 6 of the ship's byte #31 so the ship doesn't
  AND #%10111111         \ keep firing endlessly
@@ -219,7 +226,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_VERSION OR
                         \ clipped to fit on-screen, returning the clipped line's
                         \ end-points in (X1, Y1) and (X2, Y2)
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _NES_VERSION
 
  JSR CLIP               \ Call CLIP to see if the laser beam needs to be
                         \ clipped to fit on-screen, returning the clipped line's
@@ -231,7 +238,7 @@ ENDIF
                         \ screen, so jump to LL170 so we don't store this line
                         \ in the ship line heap
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _NES_VERSION \ Tube
 
  LDY U                  \ Fetch the ship line heap pointer, which points to the
                         \ next free byte on the heap, into Y
@@ -282,6 +289,10 @@ ELIF _MASTER_VERSION
  JSR LSPUT              \ Draw the laser line using flicker-free animation, by
                         \ first drawing the new laser line and then erasing the
                         \ corresponding old line from the screen
+
+ELIF _NES_VERSION
+
+ JSR LOIN               \ ???
 
 ENDIF
 

@@ -49,7 +49,7 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION OR _NES_VERSION \ Platform
 
 .LL25
 
@@ -60,7 +60,13 @@ ENDIF
 
 .LL9
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Minor
+IF _NES_VERSION
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _NES_VERSION \ Minor
 
  LDA TYPE               \ If the ship type is negative then this indicates a
  BMI LL25               \ planet or sun, so jump to PLANET via LL25 above
@@ -134,7 +140,7 @@ IF _MASTER_VERSION \ Master: The Master has a flicker-free ship plotting algorit
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Enhanced: The enhanced versions have an extra bit (bit 7 of the NEWB flags) that determines whether a ship has been scooped or has finished docking, at which point they are removed from the screen
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: The enhanced versions have an extra bit (bit 7 of the NEWB flags) that determines whether a ship has been scooped or has finished docking, at which point they are removed from the screen
 
  LDA NEWB               \ If bit 7 of the ship's NEWB flags is set, then the
  BMI EE51               \ ship has been scooped or has docked, so jump down to
@@ -165,6 +171,8 @@ ENDIF
  LDY #30                \ Set the ship's pitch counter in byte #30 to 0, to stop
  STA (INF),Y            \ the ship from pitching
 
+IF NOT(_NES_VERSION)
+
  JSR EE51               \ Call EE51 to remove the ship from the screen
 
                         \ We now need to set up a new explosion cloud. We
@@ -184,6 +192,17 @@ ENDIF
  LDY #2                 \ vertices used as origins for explosion clouds), and
  STA (XX19),Y           \ store it in byte #2 of the ship line heap
 
+ELIF _NES_VERSION
+
+ JSR sub_CBAED          \ ???
+ LDA #&12
+ STA L002B
+ LDY #&25
+ JSR DORND
+ STA (INF),Y
+
+ENDIF
+
 IF _CASSETTE_VERSION \ Comment
 
 \LDA XX1+32             \ These instructions are commented out in the original
@@ -202,8 +221,23 @@ ENDIF
 
  STA (XX19),Y           \ Store A in the Y-th byte of the ship line heap
 
+IF NOT(_NES_VERSION)
+
  CPY #6                 \ Loop back until we have randomised the 6th byte
  BNE EE55
+
+ELIF _NES_VERSION
+
+ INY                    \ ???
+ JSR DORND
+ STA (XX19),Y
+ INY
+ JSR DORND
+ STA (XX19),Y
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ENDIF
 
 .EE28
 
@@ -230,7 +264,7 @@ ENDIF
  AND #%11110111         \ byte #31 to denote that the ship is no longer being
  STA XX1+31             \ drawn on-screen
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION OR _NES_VERSION \ Comment
 
  JMP DOEXP              \ Jump to DOEXP to display the explosion cloud, which
                         \ will remove it from the screen, returning from the
@@ -253,6 +287,8 @@ ENDIF
 
 .EE51
 
+IF NOT(_NES_VERSION)
+
  LDA #%00001000         \ If bit 3 of the ship's byte #31 is clear, then there
  BIT XX1+31             \ is already nothing being shown for this ship, so
  BEQ LL10-1             \ return from the subroutine (as LL10-1 contains an RTS)
@@ -260,6 +296,14 @@ ENDIF
  EOR XX1+31             \ Otherwise flip bit 3 of byte #31 and store it (which
  STA XX1+31             \ clears bit 3 as we know it was set before the EOR), so
                         \ this sets this ship as no longer being drawn on-screen
+
+ELIF _NES_VERSION
+
+ LDA XX1+31             \ ???
+ AND #&B7
+ STA XX1+31
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label
 

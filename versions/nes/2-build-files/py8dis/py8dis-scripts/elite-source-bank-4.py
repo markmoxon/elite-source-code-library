@@ -18,4 +18,3 @@ string(0x8007, 5)
 exec(open('py8dis-scripts/common-variables.py').read())
 
 go()
-

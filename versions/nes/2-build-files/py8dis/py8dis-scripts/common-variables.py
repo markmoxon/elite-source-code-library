@@ -5,7 +5,6 @@
 
 # Variables
 
-
 label(0x0000, "ZP")
 label(0x0006, "T1")
 label(0x0007, "SC")
@@ -42,6 +41,7 @@ label(0x0025, "INWK_28")
 label(0x0026, "INWK_29")
 label(0x0027, "INWK_30")
 label(0x0028, "INWK_31")
+label(0x002D, "NEWB")
 label(0x002F, "P")
 label(0x0030, "P_1")
 label(0x0031, "P_2")
@@ -75,8 +75,8 @@ label(0x0071, "XX15")
 label(0x0072, "Y1")
 label(0x0073, "X2")
 label(0x0074, "Y2")
-label(0x0075, "XX15_1")
-label(0x0076, "XX15_2")
+label(0x0075, "XX15_4")
+label(0x0076, "XX15_5")
 label(0x0077, "XX12")
 label(0x0078, "XX12_1")
 label(0x007D, "K")
@@ -100,6 +100,7 @@ label(0x009A, "T")
 label(0x009B, "XSAV")
 label(0x009D, "XX17")
 label(0x00A0, "ZZ")
+label(0x00A1, "XX13")
 label(0x00A3, "TYPE")
 label(0x00A4, "ALPHA")
 label(0x00A6, "TGT")
@@ -115,7 +116,7 @@ label(0x00B0, "widget")
 label(0x00B3, "Yx2M1")
 label(0x00B6, "newzp")
 
-label(0x00F7, "BANK")		# My addition, contains lower bank number
+label(0x00F7, "BANK")        # My addition, contains lower bank number
 
 label(0x0100, "XX3")
 label(0x0101, "XX3_1")
@@ -142,10 +143,10 @@ label(0x047F, "SWAP")
 label(0x048A, "QQ29")
 label(0x049B, "QQ8")
 
-label(0x04A4, "QQ18LO") 	# My addition, gets set to address of token table
-label(0x04A5, "QQ18HI") 	# that ex then accesses
-label(0x04A6, "TOKENLO") 	# My addition, gets set to address of token table
-label(0x04A7, "TOKENHI") 	# that DETOK then accesses
+label(0x04A4, "QQ18LO")     # My addition, gets set to address of token table
+label(0x04A5, "QQ18HI")     # that ex then accesses
+label(0x04A6, "TOKENLO")    # My addition, gets set to address of token table
+label(0x04A7, "TOKENHI")    # that DETOK then accesses
 
 label(0x04C8, "SX")
 label(0x04DD, "SY")
@@ -181,11 +182,12 @@ label(0xC500, "SNE")
 label(0xC520, "ACT")
 label(0xC540, "XX21")
 
-subroutine(0xC0AD, "RESETBANK")		# My addition, switch bank to stack value
-subroutine(0xC0AE, "SETBANK")		# My addition, switch bank to A
-subroutine(0xCED5, "NMI")			# My addition, NMI handler
+subroutine(0xC0AD, "RESETBANK")     # My addition, switch bank to stack value
+subroutine(0xC0AE, "SETBANK")       # My addition, switch bank to A
+subroutine(0xCED5, "NMI")           # My addition, NMI handler
+subroutine(0xD06D, "NAMETABLE0")    # My addition, switches PPU to namespace 0
 
-subroutine(0xDC0F, "LOIN") 	# Could also be LSPUT
+subroutine(0xDC0F, "LOIN")     # Could also be LSPUT
 
 subroutine(0xEBA2, "DELAY")
 subroutine(0xEF7A, "PAS1")
@@ -195,7 +197,7 @@ subroutine(0xF09D, "DTS")
 subroutine(0xF1A2, "MVS5")
 subroutine(0xF1E6, "DASC")
 subroutine(0xF201, "TT27")
-subroutine(0xF237, "TT27_control_codes")	# My addition, it's the control code part of TT27 in bank 0
+subroutine(0xF237, "TT27_control_codes")    # My addition, it's the control code part of TT27 in bank 0
 subroutine(0xF26E, "TT66")
 subroutine(0xF2DE, "CLYNS")
 subroutine(0xF473, "NLIN4")

@@ -72,6 +72,12 @@
 
 .LL51
 
+IF _NES_VERSION
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ENDIF
+
  LDX #0                 \ Set X = 0, which will contain the offset of the vector
                         \ to use in the calculation, increasing by 6 for each
                         \ new vector
@@ -129,9 +135,23 @@
                         \           = |sidev_x| * x_lo + |sidev_y| * y_lo
                         \             + |sidev_z| * z_lo
 
+IF NOT(_NES_VERSION)
+
  STA XX12,Y             \ Store the result in XX12+Y(1 0)
  LDA S
  STA XX12+1,Y
+
+ELIF _NES_VERSION
+
+ STA XX12,Y             \ Store the result in XX12+Y(1 0), starting with the low
+                        \ byte
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ LDA S                  \ And then the high byte
+ STA XX12+1,Y
+
+ENDIF
 
  INY                    \ Set Y = Y + 2
  INY

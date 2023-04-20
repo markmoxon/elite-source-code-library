@@ -53,7 +53,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 
  JMP LL65               \ Jump to LL65 to skip the division for x_lo < z_lo
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _NES_VERSION
 
  JMP LL69+3             \ Jump over the next instruction to skip the division
                         \ for x_lo < z_lo
@@ -96,6 +96,12 @@ ENDIF
 
  LDX CNT                \ Fetch the pointer to the end of the XX3 heap from CNT
                         \ into X
+
+IF _NES_VERSION
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ENDIF
 
  LDA XX15+2             \ If x_sign is negative, jump up to LL62, which will
  BMI LL62               \ store 128 - (U R) on the XX3 heap and return by
@@ -150,9 +156,19 @@ ENDIF
 
                         \ This gets called from below when y_sign is negative
 
+IF NOT(_NES_VERSION)
+
  LDA #Y                 \ Calculate #Y + (U R), starting with the low bytes
  CLC
  ADC R
+
+ELIF _NES_VERSION
+
+ LDA &00B1              \ Calculate #Y + (U R), starting with the low bytes
+ CLC                    \ ???
+ ADC R
+
+ENDIF
 
  STA XX3,X              \ Store the low byte of the result in the X-th byte of
                         \ the heap at XX3
@@ -209,9 +225,19 @@ ENDIF
  BMI LL70               \ store #Y + (U R) on the XX3 heap and return by jumping
                         \ down to LL50 below
 
+IF NOT(_NES_VERSION)
+
  LDA #Y                 \ Calculate #Y - (U R), starting with the low bytes
  SEC
  SBC R
+
+ELIF _NES_VERSION
+
+ LDA &00B1              \ Calculate #Y - (U R), starting with the low bytes
+ SEC                    \ ???
+ SBC R
+
+ENDIF
 
  STA XX3,X              \ Store the low byte of the result in the X-th byte of
                         \ the heap at XX3

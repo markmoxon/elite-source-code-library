@@ -31,8 +31,18 @@
 
 .LL116
 
+IF NOT(_NES_VERSION)
+
  LDA R                  \ Store the gradient in XX12+2
  STA XX12+2
+
+ELIF _NES_VERSION
+
+ STA XX12+2             \ ???
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ENDIF
 
  LDA S                  \ Store the type of slope in XX12+3, bit 7 clear means
  STA XX12+3             \ top left to bottom right, bit 7 set means top right to
@@ -56,8 +66,20 @@
  JSR LL118              \ Call LL118 to move (x1, y1) along the line onto the
                         \ screen, i.e. clip the line at the (x1, y1) end
 
+IF NOT(_NES_VERSION)
+
  LDA XX13               \ If XX13 = 0, i.e. (x2, y2) is on-screen, jump down to
  BPL LL124              \ LL124 to return with a successfully clipped line
+
+ELIF _NES_VERSION
+
+ LDA XX13               \ ???
+ BMI LL117
+ PLA
+ TAY
+ JMP LL146
+
+ENDIF
 
 .LL117
 
@@ -68,9 +90,19 @@
  ORA XX15+3             \ LL137 to return from the subroutine with the C flag
  BNE LL137              \ set, as the line doesn't fit on-screen
 
+IF NOT(_NES_VERSION)
+
  LDA XX15+2             \ If y1_lo > y-coordinate of the bottom of the screen
  CMP #Y*2               \ jump to LL137 to return from the subroutine with the
  BCS LL137              \ C flag set, as the line doesn't fit on-screen
+
+ELIF _NES_VERSION
+
+ LDA XX15+2             \ If y1_lo > y-coordinate of the bottom of the screen
+ CMP &00B2              \ jump to LL137 to return from the subroutine with the
+ BCS LL137              \ C flag set, as the line doesn't fit on-screen ???
+
+ENDIF
 
 .LLX117
 
@@ -103,6 +135,14 @@
  JSR LL118              \ Call LL118 to move (x1, y1) along the line onto the
                         \ screen, i.e. clip the line at the (x1, y1) end
 
+IF _NES_VERSION
+
+ LDA Y1                 \ ???
+ ORA Y2
+ BNE LL137
+
+ENDIF
+
  DEC SWAP               \ Set SWAP = &FF to indicate that we just clipped the
                         \ line at the (x2, y2) end by swapping the coordinates
                         \ (the DEC does this as we set SWAP to 0 at the start of
@@ -113,9 +153,34 @@
  PLA                    \ Restore Y from the stack so it gets preserved through
  TAY                    \ the call to this subroutine
 
+IF NOT(_NES_VERSION)
+
  JMP LL146              \ Jump up to LL146 to move the low bytes of (x1, y1) and
                         \ (x2, y2) into (X1, Y1) and (X2, Y2), and return from
                         \ the subroutine with a successfully clipped line
+
+ELIF _NES_VERSION
+
+ LDA X2                 \ ???
+ CMP &00B2
+ BCS CA7A8
+
+.loop_CA79C
+
+ STA Y1
+ LDA XX15+4
+ STA X2
+ LDA XX12
+ STA Y2
+ CLC
+ RTS
+
+.CA7A8
+
+ LDA Yx2M1
+ BNE loop_CA79C
+
+ENDIF
 
 .LL137
 

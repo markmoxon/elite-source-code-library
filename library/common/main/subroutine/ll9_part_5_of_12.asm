@@ -129,6 +129,12 @@
 
 .LL86
 
+IF _NES_VERSION
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ENDIF
+
  LDA (V),Y              \ Fetch byte #0 for this face into A, so:
                         \
                         \   A = %xyz vvvvv, where:
@@ -228,6 +234,12 @@
 
                         \ If we get here then the addition below overflowed, so
                         \ we halve the dot products and normal vector
+
+IF _NES_VERSION
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ENDIF
 
  LSR XX18               \ Divide dot_sidev_lo by 2, so dot_sidev = dot_sidev / 2
 
@@ -370,6 +382,12 @@
 
  LDA XX12               \ Set Q = XX12
  STA Q
+
+IF _NES_VERSION
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ENDIF
 
  LDA XX15               \ Set A = XX15
 

@@ -20,4 +20,3 @@ entry(0x800C)
 exec(open('py8dis-scripts/common-variables.py').read())
 
 go()
-

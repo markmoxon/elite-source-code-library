@@ -2,8 +2,8 @@
 \
 \ NES ELITE GAME SOURCE (HEADER)
 \
-\ NES was written by Ian Bell and David Braben and is copyright D. Braben and
-\ I. Bell 1992
+\ NES Elite was written by Ian Bell and David Braben and is copyright D. Braben
+\ and I. Bell 1992
 \
 \ The code on this site has been reconstructed from a disassembly of the version
 \ released on Ian Bell's personal website at http://www.elitehomepage.org/

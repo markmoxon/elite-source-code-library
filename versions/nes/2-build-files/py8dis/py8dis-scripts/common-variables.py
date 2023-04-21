@@ -6,6 +6,7 @@
 # Variables
 
 label(0x0000, "ZP")
+label(0x0002, "RAND")
 label(0x0006, "T1")
 label(0x0007, "SC")
 label(0x0008, "SC_1")
@@ -49,6 +50,7 @@ label(0x0032, "XC")
 label(0x003B, "YC")
 label(0x003C, "QQ17")
 label(0x003D, "XX2")
+label(0x003E, "K3_1")
 label(0x004B, "K4")
 label(0x004C, "XX2_15")
 label(0x004D, "XX16")
@@ -158,6 +160,7 @@ label(0x0561, "HANGFLAG")
 label(0x05A5, "SXL")
 label(0x05BA, "SYL")
 label(0x05CF, "SZL")
+label(0x0600, "Kpercent")
 
 # NES registers
 
@@ -190,6 +193,7 @@ subroutine(0xD06D, "NAMETABLE0")    # My addition, switches PPU to namespace 0
 subroutine(0xDC0F, "LOIN")     # Could also be LSPUT
 
 subroutine(0xEBA2, "DELAY")
+subroutine(0xE4F0, "PIXEL")
 subroutine(0xEF7A, "PAS1")
 
 subroutine(0xF082, "DETOK")

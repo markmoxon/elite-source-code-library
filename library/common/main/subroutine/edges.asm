@@ -40,8 +40,34 @@ IF _DISC_DOCKED OR _ELITE_A_6502SP_PARA OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPE
 \
 \   PL44                Clear the C flag and return from the subroutine
 \
+ELIF _NES_VERSION
+\ Other entry points:
+\
+\   EDGES-2             ???
+\
 ENDIF
 \ ******************************************************************************
+
+IF _NES_VERSION
+
+.ED3
+
+ BPL ED1
+ LDA #0
+ STA X1
+ CLC
+ RTS
+
+.ED1
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ SEC
+ RTS
+
+ BEQ ED1                \ ??? EDGES-2
+
+ENDIF
 
 .EDGES
 
@@ -76,6 +102,12 @@ ELIF _MASTER_VERSION
  STA X2                 \ past the right edge of the screen, so clip X2 to the
                         \ x-coordinate of the right edge of the screen
 
+ELIF _NES_VERSION
+
+ LDA #253               \ The high byte is positive and non-zero, so we went
+ STA X2                 \ past the right edge of the screen, so clip X2 to the
+                        \ x-coordinate of the right edge of the screen
+
 ENDIF
 
  LDA YY                 \ We now calculate:
@@ -88,7 +120,7 @@ ENDIF
  LDA YY+1               \ And then subtracting the high bytes
  SBC #0
 
-IF NOT(_ELITE_A_FLIGHT)
+IF NOT(_ELITE_A_FLIGHT) AND NOT(_NES_VERSION)
 
  BNE ED3                \ If the high byte subtraction is non-zero, then skip
                         \ to ED3
@@ -108,10 +140,24 @@ ELIF _ELITE_A_FLIGHT
                         \ on-screen and we want to clear the C flag and return
                         \ from the subroutine
 
+ELIF _NES_VERSION
+
+ BNE ED3                \ If the high byte subtraction is non-zero, then skip
+                        \ to ED3
+
+ LDA X1                 \ ???
+ CMP X2
+
+ RTS                    \ Return from the subroutine
+
 ENDIF
+
+IF NOT(_NES_VERSION)
 
  BPL ED1                \ If the addition is positive then the calculation has
                         \ underflowed, so jump to ED1 to return a failure
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
@@ -133,6 +179,8 @@ IF _DISC_DOCKED OR _ELITE_A_6502SP_PARA OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPE
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  CLC                    \ The line does fit on-screen, so clear the C flag to
                         \ indicate success
 
@@ -142,6 +190,8 @@ ENDIF
 
  LDA #0                 \ Set the Y-th byte of the LSO block to 0
  STA LSO,Y
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Minor
 

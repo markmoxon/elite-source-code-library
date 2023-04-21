@@ -34,7 +34,7 @@
 
 .STARS1
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Electron: The Electron version has no witchspace, so the number of stardust particles shown is always the same, so the value is hard-coded rather than needing to use a location (which the other versions need so they can vary the number of particles when in witchspace)
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION OR _NES_VERSION \ Electron: The Electron version has no witchspace, so the number of stardust particles shown is always the same, so the value is hard-coded rather than needing to use a location (which the other versions need so they can vary the number of particles when in witchspace)
 
  LDY NOSTM              \ Set Y to the current number of stardust particles, so
                         \ we can use it as a counter through all the stardust
@@ -58,6 +58,12 @@ ENDIF
                         \ and (SZ+Y SZL+Y) respectively
 
 .STL1
+
+IF _NES_VERSION
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ENDIF
 
  JSR DV42               \ Call DV42 to set the following:
                         \
@@ -142,10 +148,24 @@ ENDIF
                         \
                         \   XX(1 0) = (A P) + x
 
+IF NOT(_NES_VERSION)
+
  STA XX+1               \ First we do the low bytes:
  LDA P                  \
  ADC SXL,Y              \   XX(1 0) = (A P) + x_lo
  STA XX
+
+ELIF _NES_VERSION
+
+ STA XX+1               \ First we store the high byte A in XX+1
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ LDA P                  \ Then we do the low bytes:
+ ADC SXL,Y              \
+ STA XX                 \   XX(1 0) = (A P) + x_lo
+
+ENDIF
 
  LDA X1                 \ And then we do the high bytes:
  ADC XX+1               \
@@ -206,6 +226,12 @@ ENDIF
  STA XX+1               \ Set XX(1 0) = (A X), which gives us result 6 above:
  STX XX                 \
                         \   x = x - alpha * y / 256
+
+IF _NES_VERSION
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ENDIF
 
  LDX BET1               \ Fetch the pitch magnitude into X
 
@@ -269,7 +295,7 @@ IF _CASSETTE_VERSION OR _MASTER_VERSION \ Comment
 \STX R
  STA S
 
-ELIF _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _ELITE_A_VERSION
+ELIF _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _ELITE_A_VERSION OR _NES_VERSION
 
  LDA YY                 \ Set (S R) = YY(1 0) = y
  STA R
@@ -281,10 +307,18 @@ ENDIF
  LDA #0                 \ Set P = 0
  STA P
 
+IF _NES_VERSION
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ENDIF
+
  LDA BETA               \ Set A = -beta, so:
  EOR #%10000000         \
                         \   (A P) = (-beta 0)
                         \         = -beta * 256
+
+IF NOT(_NES_VERSION)
 
  JSR PIX1               \ Call PIX1 to calculate the following:
                         \
@@ -297,6 +331,24 @@ ENDIF
                         \ ZZ, which will remove the old stardust particle, as we
                         \ set X1, Y1 and ZZ to the original values for this
                         \ particle during the calculations above
+
+ELIF _NES_VERSION
+
+                        \ Calculate the following:
+                        \
+                        \   (YY+1 y_lo) = (A P) + (S R)
+                        \               = -beta * 256 + y
+                        \
+                        \ i.e. y = y - beta * 256, which is result 8 above
+
+ JSR ADD                \ Set (A X) = (A P) + (S R)
+
+ STA YY+1               \ Set YY+1 to A, the high byte of the result
+
+ TXA                    \ Set SYL+Y to X, the low byte of the result
+ STA SYL,Y
+
+ENDIF
 
                         \ We now have our newly moved stardust particle at
                         \ x-coordinate (XX+1 x_lo) and y-coordinate (YY+1 y_lo)
@@ -357,15 +409,32 @@ ENDIF
 
  JSR DORND              \ Set A and X to random numbers
 
+IF NOT(_NES_VERSION)
+
  ORA #8                 \ Make sure A is at least 8 and store it in X1 and x_hi,
  STA X1                 \ so the new particle starts at least 8 pixels either
  STA SX,Y               \ side of the centre of the screen
+
+ELIF _NES_VERSION
+
+ ORA #&10
+ AND #&F0
+ STA X1
+ STA SX,Y
+
+ENDIF
 
  JSR DORND              \ Set A and X to random numbers
 
  ORA #144               \ Make sure A is at least 144 and store it in ZZ and
  STA SZ,Y               \ z_hi so the new particle starts in the far distance
  STA ZZ
+
+IF _NES_VERSION
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ENDIF
 
  LDA Y1                 \ Set A to the new value of y_hi. This has no effect as
                         \ STC1 starts with a jump to PIXEL2, which starts with a

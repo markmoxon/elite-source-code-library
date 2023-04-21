@@ -35,7 +35,7 @@
 
 .STARS6
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Electron: The Electron version has no witchspace, so the number of stardust particles shown is always the same, so the value is hard-coded rather than needing to use a location (which the other versions need so they can vary the number of particles when in witchspace)
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION OR _NES_VERSION \ Electron: The Electron version has no witchspace, so the number of stardust particles shown is always the same, so the value is hard-coded rather than needing to use a location (which the other versions need so they can vary the number of particles when in witchspace)
 
  LDY NOSTM              \ Set Y to the current number of stardust particles, so
                         \ we can use it as a counter through all the stardust
@@ -48,6 +48,12 @@ ELIF _ELECTRON_VERSION
 ENDIF
 
 .STL6
+
+IF _NES_VERSION
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ENDIF
 
  JSR DV42               \ Call DV42 to set the following:
                         \
@@ -111,6 +117,8 @@ ENDIF
                         \
                         \   (S R) = YY(1 0) = y - (A P)
 
+IF NOT(_NES_VERSION)
+
  STA YY+1               \ First we do the low bytes with:
  LDA SYL,Y              \
  SBC P                  \   YY+1 = A
@@ -119,6 +127,23 @@ ENDIF
                         \ so we get this:
                         \
                         \   (? R) = YY(1 0) = y_lo - (A P)
+
+ELIF _NES_VERSION
+
+ STA YY+1               \ First we store the high byte A in YY+1
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ LDA SYL,Y              \ Then we do the low bytes with:
+ SBC P                  \
+ STA YY                 \   YY+1 = A
+ STA R                  \   R = YY = y_lo - P
+                        \
+                        \ so we get this:
+                        \
+                        \   (? R) = YY(1 0) = y_lo - (A P)
+
+ENDIF
 
  LDA Y1                 \ And then we do the high bytes with:
  SBC YY+1               \
@@ -249,10 +274,24 @@ ENDIF
                         \
                         \ which is result 7 above
 
+IF NOT(_NES_VERSION)
+
  LDA YY                 \ Set (S R) = YY(1 0) = y
  STA R
  LDA YY+1
  STA S
+
+ELIF _NES_VERSION
+
+ LDA YY                 \ Set (S R) = YY(1 0) = y (low byte)
+ STA R
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ LDA YY+1               \ Set (S R) = YY(1 0) = y (high byte)
+ STA S
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _MASTER_VERSION \ Comment
 
@@ -268,6 +307,8 @@ ENDIF
 
  LDA BETA               \ Set A = beta, so (A P) = (beta 0) = beta * 256
 
+IF NOT(_NES_VERSION)
+
  JSR PIX1               \ Call PIX1 to calculate the following:
                         \
                         \   (YY+1 y_lo) = (A P) + (S R)
@@ -279,6 +320,24 @@ ENDIF
                         \ ZZ, which will remove the old stardust particle, as we
                         \ set X1, Y1 and ZZ to the original values for this
                         \ particle during the calculations above
+
+ELIF _NES_VERSION
+
+                        \ Calculate the following:
+                        \
+                        \   (YY+1 y_lo) = (A P) + (S R)
+                        \               = -beta * 256 + y
+                        \
+                        \ i.e. y = y - beta * 256, which is result 8 above
+
+ JSR ADD                \ Set (A X) = (A P) + (S R)
+
+ STA YY+1               \ Set YY+1 to A, the high byte of the result
+
+ TXA                    \ Set SYL+Y to X, the low byte of the result
+ STA SYL,Y
+
+ENDIF
 
                         \ We now have our newly moved stardust particle at
                         \ x-coordinate (XX+1 x_lo) and y-coordinate (YY+1 y_lo)
@@ -298,9 +357,19 @@ ENDIF
  CMP #110               \ particle, as it's gone off the top or bottom of the
  BCS KILL6              \ screen, and re-join at STC6 with the new particle
 
+IF NOT(_NES_VERSION)
+
  LDA SZ,Y               \ If z_hi >= 160 then jump to KILL6 to recycle this
  CMP #160               \ particle, as it's so far away that it's too far to
  BCS KILL6              \ see, and re-join at STC1 with the new particle
+
+ELIF _NES_VERSION
+
+ LDA SZ,Y               \ If z_hi >= 160 then jump to CB41E to recycle this
+ CMP #160               \ particle, as it's so far away that it's too far to
+ BCS CB41E              \ see, and re-join at STC1 with the new particle
+
+ENDIF
 
  STA ZZ                 \ Set ZZ to the z-coordinate in z_hi
 
@@ -339,7 +408,15 @@ ENDIF
 
  JSR DORND              \ Set A and X to random numbers
 
+IF NOT(_NES_VERSION)
+
  AND #%01111111         \ Clear the sign bit of A to get |A|
+
+ELIF _NES_VERSION
+
+ AND #&1F               \ ???
+
+ENDIF
 
  ADC #10                \ Make sure A is at least 10 and store it in z_hi and
  STA SZ,Y               \ ZZ, so the new particle starts close to us
@@ -351,32 +428,78 @@ ENDIF
 
  LSR A                  \ Randomly set the C flag again
 
+IF NOT(_NES_VERSION)
+
  LDA #252               \ Set A to either +126 or -126 (252 >> 1) depending on
  ROR A                  \ the C flag, as this is a sign-magnitude number with
                         \ the C flag rotated into its sign bit
+
+ELIF _NES_VERSION
+
+ LDA #224               \ Set A to either +112 or -112 (224 >> 1) depending on
+ ROR A                  \ the C flag, as this is a sign-magnitude number with
+                        \ the C flag rotated into its sign bit
+
+ENDIF
 
  STA X1                 \ Set x_hi and X1 to A, so this particle starts on
  STA SX,Y               \ either the left or right edge of the screen
 
  JSR DORND              \ Set A and X to random numbers
 
+IF _NES_VERSION
+
+ AND #&BF               \ ???
+
+ENDIF
+
  STA Y1                 \ Set y_hi and Y1 to random numbers, so the particle
  STA SY,Y               \ starts anywhere along either the left or right edge
 
  JMP STC6               \ Jump up to STC6 to draw this new particle
 
+IF _NES_VERSION
+
+.CB41E
+
+ JSR DORND              \ Set A and X to random numbers
+
+ AND #%01111111         \ Clear the sign bit of A to get |A|
+
+ ADC #10                \ Make sure A is at least 10 and store it in z_hi and
+ STA SZ,Y               \ ZZ, so the new particle starts close to us
+ STA ZZ
+
+ENDIF
+
 .ST4
 
  JSR DORND              \ Set A and X to random numbers
+
+IF _NES_VERSION
+
+ AND #&F9               \ ???
+
+ENDIF
 
  STA X1                 \ Set x_hi and X1 to random numbers, so the particle
  STA SX,Y               \ starts anywhere along the x-axis
 
  LSR A                  \ Randomly set the C flag
 
+IF NOT(_NES_VERSION)
+
  LDA #230               \ Set A to either +115 or -115 (230 >> 1) depending on
  ROR A                  \ the C flag, as this is a sign-magnitude number with
                         \ the C flag rotated into its sign bit
+
+ELIF _NES_VERSION
+
+ LDA #216               \ Set A to either +108 or -108 (216 >> 1) depending on
+ ROR A                  \ the C flag, as this is a sign-magnitude number with
+                        \ the C flag rotated into its sign bit
+
+ENDIF
 
  STA Y1                 \ Set y_hi and Y1 to A, so the particle starts anywhere
  STA SY,Y               \ along either the top or bottom edge of the screen

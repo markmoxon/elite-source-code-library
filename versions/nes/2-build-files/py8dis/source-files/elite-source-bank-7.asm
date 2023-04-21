@@ -1,6 +1,6 @@
 ; Memory locations
 ZP          = &0000
-L0002       = &0002
+RAND        = &0002
 L0003       = &0003
 L0004       = &0004
 L0005       = &0005
@@ -55,7 +55,7 @@ L003A       = &003A
 YC          = &003B
 QQ17        = &003C
 XX2         = &003D
-L003E       = &003E
+K3_1        = &003E
 K4          = &004B
 XX2_15      = &004C
 XX16        = &004D
@@ -298,7 +298,7 @@ HANGFLAG    = &0561
 SXL         = &05A5
 SYL         = &05BA
 SZL         = &05CF
-L0600       = &0600
+Kpercent    = &0600
 L0601       = &0601
 L0606       = &0606
 PPUCTRL     = &2000
@@ -520,7 +520,7 @@ LC006 = sub_CC004+2
     LDA PPUSTATUS                                 ; C026: AD 02 20    ..
     BPL loop_CC026                                ; C029: 10 FB       ..
     LDA #0                                        ; C02B: A9 00       ..
-    STA L0600                                     ; C02D: 8D 00 06    ...
+    STA Kpercent                                  ; C02D: 8D 00 06    ...
     LDA #&3C ; '<'                                ; C030: A9 3C       .<
     STA L0601                                     ; C032: 8D 01 06    ...
 .CC035
@@ -5290,6 +5290,8 @@ LDFFF = sub_CDFFE+1
     DEY                                           ; E4EB: 88          .
     BPL loop_CE4E4                                ; E4EC: 10 F6       ..
     BMI CE4B1                                     ; E4EE: 30 C1       0.
+; ******************************************************************************
+.PIXEL
     STX L00BA                                     ; E4F0: 86 BA       ..
     STY T1                                        ; E4F2: 84 06       ..
     TAY                                           ; E4F4: A8          .
@@ -7060,9 +7062,9 @@ LDFFF = sub_CDFFE+1
     JSR sub_CF3AB                                 ; F38F: 20 AB F3     ..
     LDA #0                                        ; F392: A9 00       ..
     STA L0606                                     ; F394: 8D 06 06    ...
-    STA L0600                                     ; F397: 8D 00 06    ...
+    STA Kpercent                                  ; F397: 8D 00 06    ...
     LDA #&75 ; 'u'                                ; F39A: A9 75       .u
-    STA L0002                                     ; F39C: 85 02       ..
+    STA RAND                                      ; F39C: 85 02       ..
     LDA #&0A                                      ; F39E: A9 0A       ..
     STA L0003                                     ; F3A0: 85 03       ..
     LDA #&2A ; '*'                                ; F3A2: A9 2A       .*
@@ -7114,7 +7116,7 @@ LDFFF = sub_CDFFE+1
     JSR sub_CED6B                                 ; F3FD: 20 6B ED     k.
     JSR sub_CEDAB                                 ; F400: 20 AB ED     ..
     LDA L04A8                                     ; F403: AD A8 04    ...
-    STA L0600                                     ; F406: 8D 00 06    ...
+    STA Kpercent                                  ; F406: 8D 00 06    ...
     LDA #5                                        ; F409: A9 05       ..
     STA L0601                                     ; F40B: 8D 01 06    ...
     JMP CC035                                     ; F40E: 4C 35 C0    L5.
@@ -7214,11 +7216,11 @@ LDFFF = sub_CDFFE+1
     CLC                                           ; F4AC: 18          .
 ; ******************************************************************************
 .DORND
-    LDA L0002                                     ; F4AD: A5 02       ..
+    LDA RAND                                      ; F4AD: A5 02       ..
     ROL A                                         ; F4AF: 2A          *
     TAX                                           ; F4B0: AA          .
     ADC L0004                                     ; F4B1: 65 04       e.
-    STA L0002                                     ; F4B3: 85 02       ..
+    STA RAND                                      ; F4B3: 85 02       ..
     STX L0004                                     ; F4B5: 86 04       ..
     LDA L0003                                     ; F4B7: A5 03       ..
     TAX                                           ; F4B9: AA          .
@@ -7241,7 +7243,7 @@ LDFFF = sub_CDFFE+1
     STA XX2                                       ; F4D4: 85 3D       .=
     TXA                                           ; F4D6: 8A          .
     ADC #0                                        ; F4D7: 69 00       i.
-    STA L003E                                     ; F4D9: 85 3E       .>
+    STA K3_1                                      ; F4D9: 85 3E       .>
     LDA INWK_3                                    ; F4DB: A5 0C       ..
     STA P                                         ; F4DD: 85 2F       ./
     LDA INWK_4                                    ; F4DF: A5 0D       ..

@@ -57,8 +57,12 @@
  SBC T
  STA R
 
+IF NOT(_NES_VERSION)
+
  STY Y1                 \ Store Y in Y1, so we can restore it after the call to
                         \ LL5
+
+ENDIF
 
  JSR LL5                \ Set Q = SQRT(R Q)
                         \       = SQRT(K^2 - V^2)
@@ -70,24 +74,46 @@
 
  LDY Y1                 \ Restore Y from Y1
 
+IF _NES_VERSION
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ENDIF
+
  JSR DORND              \ Set A and X to random numbers
 
  AND CNT                \ Reduce A to a random number in the range 0 to CNT,
                         \ where CNT is the fringe size of the new sun
+
+IF _NES_VERSION
+
+ LDY Y1                 \ Restore Y from Y1
+
+ENDIF
 
  CLC                    \ Set A = A + Q
  ADC Q                  \
                         \ So A now contains the half-width of the sun on row
                         \ V, plus a random variation based on the fringe size
 
+IF NOT(_NES_VERSION)
+
  BCC PLF44              \ If the above addition did not overflow, skip the
                         \ following instruction
+
+ELIF _NES_VERSION
+
+ BCC RTS2               \ ???
+
+ENDIF
 
  LDA #255               \ The above overflowed, so set the value of A to 255
 
                         \ So A contains the half-width of the new sun on pixel
                         \ line Y, changed by a random amount within the size of
                         \ the sun's fringe
+
+IF NOT(_NES_VERSION)
 
 .PLF44
 
@@ -249,4 +275,6 @@
  CPX K                  \ If V <= the radius of the sun, we still have lines to
  BCC PLFLS              \ draw, so jump up to PLFL (via PLFLS) to do the next
  BEQ PLFLS              \ screen line up
+
+ENDIF
 

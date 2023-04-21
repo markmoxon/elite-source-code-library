@@ -15,7 +15,19 @@
  ORA #%10100000         \ the ship is exploding and has been killed
  STA INWK+31
 
+IF NOT(_NES_VERSION)
+
  RTS                    \ Return from the subroutine
+
+ELIF _NES_VERSION
+
+.CA8F8
+
+ JMP &CE9E              \ ???
+
+ EQUB 0, 2
+
+ENDIF
 
 .DOEXP
 
@@ -61,6 +73,41 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR 
  LDY #1                 \ Fetch byte #1 of the ship line heap, which contains
  LDA (XX19),Y           \ the cloud counter
 
+ELIF _NES_VERSION
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ LDA INWK+6             \ Set T = z_lo
+ STA T
+
+ LDA INWK+7             \ Set A = z_hi, so (A T) = z
+
+ CMP #32                \ If z_hi < 32, skip the next two instructions
+ BCC P%+6
+
+ LDA #&FE               \ Set A = 254 and jump to yy (this BNE is effectively a
+ BNE yy                 \ JMP, as A is never zero)
+
+ ASL T                  \ Shift (A T) left twice
+ ROL A
+ ASL T
+ ROL A
+
+ SEC                    \ And then shift A left once more, inserting a 1 into
+ ROL A                  \ bit 0
+
+                        \ Overall, the above multiplies A by 8 and makes sure it
+                        \ is at least 1, to leave a one-byte distance in A. We
+                        \ can use this as the distance for our cloud, to ensure
+                        \ that the explosion cloud is visible even for ships
+                        \ that blow up a long way away
+
+.yy
+
+ STA Q                  \ Store the distance to the explosion in Q
+
+ LDA L002B              \ ???
+
 ENDIF
 
 IF _MASTER_VERSION \ Platform
@@ -89,6 +136,43 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR 
                         \ We are going to use this as our cloud size, so the
                         \ further away the cloud, the smaller it is, and as the
                         \ cloud counter ticks onward, the cloud expands
+
+ LDA P                  \ Set A = P, so we now have:
+                        \
+                        \   (A R) = 256 * cloud counter / distance
+
+ CMP #&1C               \ If A < 28, skip the next two instructions
+ BCC P%+6
+
+ LDA #&FE               \ Set A = 254 and skip the following (this BNE is
+ BNE LABEL_1            \ effectively a JMP as A is never zero)
+
+ ASL R                  \ Shift (A R) left three times to multiply by 8
+ ROL A
+ ASL R
+ ROL A
+ ASL R
+ ROL A
+
+                        \ Overall, the above multiplies (A R) by 8 to leave a
+                        \ one-byte cloud size in A, given by the following:
+                        \
+                        \   A = 8 * cloud counter / distance
+
+.LABEL_1
+
+ELIF _NES_VERSION
+
+ ADC #4                 \ Add 4 to the cloud counter, so it ticks onwards every
+                        \ we redraw it
+
+ BCS EX2                \ If the addition overflowed, jump up to EX2 to update
+                        \ the explosion flags and return from the subroutine
+
+ STA L002B
+ JSR LF8D8
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
 
  LDA P                  \ Set A = P, so we now have:
                         \
@@ -258,30 +342,52 @@ ELIF _ELITE_A_6502SP_PARA
  EOR #&FF               \ Flip the value of A so that in the second half of the
                         \ cloud's existence, A counts down instead of up
 
+ELIF _NES_VERSION
+
+ STA L040A              \ Store the cloud size in byte #0 of the ship line heap
+                        \ ???
+
+ LDA INWK+31            \ Clear bit 6 of the ship's byte #31 to denote that the
+ AND #%10111111         \ explosion has not yet been drawn
+ STA INWK+31
+
+ AND #%00001000         \ If bit 3 of the ship's byte #31 is clear, then nothing
+ BEQ CA8F8              \ is being drawn on-screen for this ship anyway, so
+                        \ return from the subroutine ???
+
+ LDA INWK_7
+ BEQ PTCLS
+ LDY L002B
+ CPY #&18
+ BCS PTCLS
+ JMP CBB24
+
+.PTCLS
+
+                        \ This part of the routine actually draws the explosion
+                        \ cloud
+
+ JSR &CE9E              \ ???
+ LDA L040A
+ STA Q
+ LDA L002B
+
+ BPL P%+4               \ If the cloud counter < 128, then we are in the first
+                        \ half of the cloud's existence, so skip the next
+                        \ instruction
+
+ EOR #&FF               \ Flip the value of A so that in the second half of the
+                        \ cloud's existence, A counts down instead of up
+
 ENDIF
 
-IF _6502SP_VERSION \ Master: The Master and Electron versions have half the number of explosion particles per vertex compared to the other versions
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Electron: The Master and Electron versions have half the number of explosion particles per vertex compared to the other versions
 
  LSR A                  \ Divide A by 8 so that is has a maximum value of 15
  LSR A
  LSR A
 
-ELIF _MASTER_VERSION
-
- LSR A                  \ Divide A by 16 so that is has a maximum value of 7
- LSR A
- LSR A
- LSR A
-
-ENDIF
-
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Electron: The Master and Electron versions have half the number of explosion particles per vertex compared to the other versions
-
- LSR A                  \ Divide A by 8 so that is has a maximum value of 15
- LSR A
- LSR A
-
-ELIF _ELECTRON_VERSION
+ELIF _ELECTRON_VERSION or _MASTER_VERSION OR _NES_VERSION
 
  LSR A                  \ Divide A by 16 so that is has a maximum value of 7
  LSR A
@@ -368,6 +474,47 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR 
  EOR CNT                \ EOR with the vertex index, so the seeds are different
                         \ for each vertex
 
+ELIF _NES_VERSION
+
+ ORA #1                 \ Make sure A is at least 1 and store it in U, to
+ STA U                  \ give us the number of particles in the explosion for
+                        \ each vertex
+
+ LDY #7
+ LDA (XX0),Y
+ STA TGT
+
+ LDA L0003
+ PHA
+ LDY #6
+.EXL5
+ LDX #3
+.loop_CA98A
+ INY
+ LDA L00F9,Y
+ STA XX2,X
+ DEX
+ BPL loop_CA98A
+ STY CNT
+ LDY #&25
+ LDA (INF),Y
+ EOR CNT
+ STA RAND
+ INY
+ LDA (INF),Y
+ EOR CNT
+ STA L0003
+ INY
+ LDA (INF),Y
+ EOR CNT
+ STA L0004
+ INY
+ LDA (INF),Y
+ EOR CNT
+ STA L0005
+ LDY U
+.CA9B4
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
@@ -414,9 +561,15 @@ IF _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
 
 .EXL4
+
+ENDIF
+
+IF _NES_VERSION
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
 
 ENDIF
 
@@ -425,7 +578,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR
  JSR DORND2             \ Set ZZ to a random number, making sure the C flag
  STA ZZ                 \ doesn't affect the outcome
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _NES_VERSION
 
  CLC                    \ This contains the code from the DORND2 routine, so
  LDA RAND               \ this section is exactly equivalent to a JSR DORND2
@@ -493,9 +646,47 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR 
 
  LDA Y1                 \ Set A = our random y-coordinate within the cloud
 
+ELIF _NES_VERSION
+
+ LDA K3+1               \ Set (A R) = (y_hi y_lo)
+ STA R                  \           = y
+ LDA K3
+
+ JSR EXS1               \ Set (A X) = (A R) +/- random * cloud size
+                        \           = y +/- random * cloud size
+
+ BNE EX11               \ If A is non-zero, the particle is off-screen as the
+                        \ coordinate is bigger than 255), so jump to EX11 to do
+                        \ the next particle
+
+ CPX Yx2M1              \ If X > the y-coordinate of the bottom of the screen,
+ BCS EX11               \ the particle is off the bottom of the screen, so jump
+                        \ to EX11 to do the next particle ???
+
+                        \ Otherwise X contains a random y-coordinate within the
+                        \ cloud
+
+ STX Y1                 \ Set Y1 = our random y-coordinate within the cloud
+
+ LDA K3+3               \ Set (A R) = (x_hi x_lo)
+ STA R
+ LDA K3+2
+
+ JSR EXS1               \ Set (A X) = (A R) +/- random * cloud size
+                        \           = x +/- random * cloud size
+
+ BNE EX4                \ If A is non-zero, the particle is off-screen as the
+                        \ coordinate is bigger than 255), so jump to EX11 to do
+                        \ the next particle
+
+                        \ Otherwise X contains a random x-coordinate within the
+                        \ cloud
+
+ LDA Y1                 \ Set A = our random y-coordinate within the cloud
+
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Minor
 
  JSR PIXEL              \ Draw a point at screen coordinate (X, A) with the
                         \ point size determined by the distance in ZZ
@@ -507,7 +698,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _NES_VERSION \ Platform
 
 .EX4
 
@@ -522,7 +713,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
 
  BPL EXL4               \ Loop back to EXL4 until we have done all the particles
                         \ in the cloud
@@ -540,7 +731,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR 
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
 
  LDA K%+6               \ Store the z_lo coordinate for the planet (which will
  STA RAND+3             \ be pretty random) in the RAND+3 seed
@@ -556,7 +747,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR
  JSR DORND2             \ Set A and X to random numbers, making sure the C flag
                         \ doesn't affect the outcome
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _NES_VERSION
 
  CLC                    \ This contains the code from the DORND2 routine, so
  LDA RAND               \ this section is exactly equivalent to a JSR DORND2
@@ -573,7 +764,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
 
  JMP EX4                \ We just skipped a particle, so jump up to EX4 to do
                         \ the next one
@@ -595,7 +786,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR
  JSR DORND2             \ Set A and X to random numbers, making sure the C flag
                         \ doesn't affect the outcome
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _NES_VERSION
 
  CLC                    \ This contains the code from the DORND2 routine, so
  LDA RAND               \ this section is exactly equivalent to a JSR DORND2
@@ -612,7 +803,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
 
  ROL A                  \ Set A = A * 2
 

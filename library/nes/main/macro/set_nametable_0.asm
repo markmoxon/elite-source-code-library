@@ -10,7 +10,7 @@
 
 MACRO SET_NAMETABLE_0
 
- LDA &00E9              \ If bit 7 of L00E9 and bit 6 of PPUSTATUS are set, then
+ LDA L00E9              \ If bit 7 of L00E9 and bit 6 of PPUSTATUS are set, then
  BPL skip               \ call LD06D to:
  LDA PPUSTATUS          \
  ASL A                  \   * Zero L00E9 to disable calls to NAMETABLE0 until

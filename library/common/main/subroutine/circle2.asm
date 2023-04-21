@@ -34,7 +34,7 @@ IF _6502SP_VERSION \ Comment
 ENDIF
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Label
 
 .CIRCLE2
 
@@ -121,9 +121,20 @@ ENDIF
                         \
                         \ which is the y-coordinate of the circle for this count
 
+IF NOT(_NES_VERSION)
+
  LDA CNT                \ Set A = (CNT + 15) mod 64
  ADC #15
  AND #63
+
+ELIF _NES_VERSION
+
+ LDA CNT                \ Set A = (CNT + 15) mod 64
+ CLC
+ ADC #15
+ AND #63
+
+ENDIF
 
  CMP #33                \ If A < 33 (i.e. CNT is 0-16 or 48-64) then jump to
  BCC PL38               \ PL38, as this is the bottom half of the circle and the

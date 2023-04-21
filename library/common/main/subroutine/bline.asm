@@ -66,6 +66,12 @@ ENDIF
 
 .BLINE
 
+IF _NES_VERSION
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ENDIF
+
  TXA                    \ Set K6(3 2) = (T X) + K4(1 0)
  ADC K4                 \             = y-coord of centre + y-coord of new point
  STA K6+2               \
@@ -119,6 +125,13 @@ ELIF _6502SP_VERSION
                         \ subroutine (this BEQ is effectively a JMP, as we just
                         \ incremented FLAG to 0)
 
+ELIF _NES_VERSION
+
+ JMP BL5                \ This is the first call to BLINE, so we don't need to
+                        \ to copy the previous point to XX15 as there isn't one,
+                        \ so we jump to BL5 to tidy up and return from the
+                        \ subroutine
+
 ENDIF
 
 .BL1
@@ -147,15 +160,31 @@ ENDIF
  LDA K6+3               \ Set XX12+1 = y_hi of new point
  STA XX12+1
 
+IF _NES_VERSION
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ENDIF
+
+IF NOT(_NES_VERSION)
+
  JSR LL145              \ Call LL145 to see if the new line segment needs to be
                         \ clipped to fit on-screen, returning the clipped line's
                         \ end-points in (X1, Y1) and (X2, Y2)
+
+ELIF _NES_VERSION
+
+ JSR CLIP               \ Call CLIP to see if the new line segment needs to be
+                        \ clipped to fit on-screen, returning the clipped line's
+                        \ end-points in (X1, Y1) and (X2, Y2)
+
+ENDIF
 
  BCS BL5                \ If the C flag is set then the line is not visible on
                         \ screen anyway, so jump to BL5, to avoid drawing and
                         \ storing this line
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \Tube
 
  LDA SWAP               \ If SWAP = 0, then we didn't have to swap the line
  BEQ BL9                \ coordinates around during the clipping process, so
@@ -174,7 +203,15 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  LDY LSP                \ Set Y = LSP
+
+ELIF _NES_VERSION
+
+ JSR LOIN               \ Draw a line from (X1, Y1) to (X2, Y2)
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Tube
 
@@ -187,6 +224,8 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  LDA X1                 \ Store X1 in the LSP-th byte of LSX2
  STA LSX2,Y
 
@@ -195,11 +234,15 @@ ENDIF
 
  INY                    \ Increment Y to point to the next byte in LSX2/LSY2
 
+ENDIF
+
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Label
 
 .BL8
 
 ENDIF
+
+IF NOT(_NES_VERSION)
 
  LDA X2                 \ Store X2 in the LSP-th byte of LSX2
  STA LSX2,Y
@@ -210,6 +253,8 @@ ENDIF
  INY                    \ Increment Y to point to the next byte in LSX2/LSY2
 
  STY LSP                \ Update LSP to point to the same as Y
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Tube
 
@@ -225,7 +270,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 
 .BL7
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _NES_VERSION
 
 .BL5
 

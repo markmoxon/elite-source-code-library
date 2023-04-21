@@ -48,7 +48,7 @@ ENDIF
                         \ of the screen (so we don't need to draw its bottom
                         \ half)
 
-IF NOT(_ELITE_A_FLIGHT)
+IF NOT(_ELITE_A_FLIGHT) AND NOT(_NES_VERSION)
 
  TXA                    \ Negate X using two's complement, so X = ~X + 1
  EOR #%11111111         \
@@ -66,6 +66,16 @@ ELIF _ELITE_A_FLIGHT
                         \ centre, and the centre is off the bottom of the
                         \ screen, past 191. So we negate it to make it positive
 
+ELIF _NES_VERSION
+
+ TXA                    \ Negate X using two's complement, so X = ~X + 1
+ EOR #%11111111         \
+ CLC                    \ We do this because X is negative at this point, as it
+ ADC #1                 \ is calculated as 191 - the y-coordinate of the sun's
+ CMP K                  \ centre, and the centre is off the bottom of the
+ BCS PL40               \ screen, past 191. So we negate it to make it positive
+ TAX                    \ ???
+
 ENDIF
 
 .PLF17
@@ -76,7 +86,7 @@ ENDIF
 
  LDA #&FF               \ Set A = &FF
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _NES_VERSION \ Minor
 
  JMP PLF5               \ Jump to PLF5
 
@@ -96,8 +106,17 @@ IF _MASTER_VERSION \ Screen
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  LDA #1                 \ Set LSX = 1 to indicate the sun line heap is about to
  STA LSX                \ be filled up
+
+ELIF _NES_VERSION
+
+ LDA L03F1              \ ???
+ STA RAND
+
+ENDIF
 
  JSR CHKON              \ Call CHKON to check whether any part of the new sun's
                         \ circle appears on-screen, and if it does, set P(2 1)
@@ -119,11 +138,21 @@ ELIF _MASTER_VERSION
                         \ screen, returning from the subroutine using a tail
                         \ call
 
+ELIF _NES_VERSION
+
+ BCS PL40               \ ???
+
 ENDIF
 
  LDA #0                 \ Set A = 0
 
  LDX K                  \ Set X = K = radius of the new sun
+
+IF _NES_VERSION
+
+ BEQ PL40               \ ???
+
+ENDIF
 
  CPX #96                \ If X >= 96, set the C flag and rotate it into bit 0
  ROL A                  \ of A, otherwise rotate a 0 into bit 0
@@ -162,7 +191,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ M
                         \ view, so this sets Y to the y-coordinate of the bottom
                         \ of the space view, i.e. 191
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _NES_VERSION
 
  LDA Yx2M1              \ Set Y to the y-coordinate of the bottom of the space
                         \ view, i.e. 191
@@ -199,7 +228,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ M
  SBC K4                 \ Starting with the low bytes
  TAX
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _NES_VERSION
 
  LDA Yx2M1              \ Set (A X) = y-coordinate of bottom of screen - K4(1 0)
  SEC                    \

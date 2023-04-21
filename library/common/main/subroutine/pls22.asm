@@ -238,6 +238,12 @@
 
 .PL42
 
+IF _NES_VERSION
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ENDIF
+
  TXA                    \ Set K6(1 0) = K3(1 0) + (T X)
  ADC K3                 \
  STA K6                 \ starting with the low bytes

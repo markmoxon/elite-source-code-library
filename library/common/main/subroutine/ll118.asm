@@ -55,6 +55,7 @@ IF NOT(_NES_VERSION)
 
  STA S                  \ Otherwise x1_hi is negative, i.e. off the left of the
                         \ screen, so set S = x1_hi
+
 ELIF _NES_VERSION
 
  SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
@@ -211,7 +212,7 @@ ELIF _NES_VERSION
 
  LDA XX15+2             \ Set (S R) = (y1_hi y1_lo) - screen height
  SEC                    \
- SBC &00B2              \ starting with the low bytes ???
+ SBC L00B2              \ starting with the low bytes ???
  STA R
 
 ENDIF

@@ -17,6 +17,8 @@
 \
 \ ******************************************************************************
 
+IF NOT(_NES_VERSION)
+
  LDA SUNX               \ Set YY(1 0) = SUNX(1 0), the x-coordinate of the
  STA YY                 \ vertical centre axis of the old sun that's currently
  LDA SUNX+1             \ on-screen
@@ -56,6 +58,8 @@
  STA SUNX
  LDA K3+1
  STA SUNX+1
+
+ENDIF
 
 IF _6502SP_VERSION \ Tube
 

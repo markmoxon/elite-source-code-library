@@ -51,7 +51,7 @@ ENDIF
 
 .PL20
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Tube
 
  RTS                    \ The planet doesn't fit on-screen, so return from the
                         \ subroutine

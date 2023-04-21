@@ -164,7 +164,7 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA &00B1              \ Calculate #Y + (U R), starting with the low bytes
+ LDA L00B1              \ Calculate #Y + (U R), starting with the low bytes
  CLC                    \ ???
  ADC R
 
@@ -233,7 +233,7 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA &00B1              \ Calculate #Y - (U R), starting with the low bytes
+ LDA L00B1              \ Calculate #Y - (U R), starting with the low bytes
  SEC                    \ ???
  SBC R
 

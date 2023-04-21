@@ -69,7 +69,7 @@
  JSR ST2                \ Call ST2 to flip the signs of the following if this is
                         \ the right view: ALPHA, ALP2, ALP2+1, BET2 and BET2+1
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron version has no witchspace, so the number of stardust particles shown is always the same, so the value is hard-coded rather than needing to use a location (which the other versions need so they can vary the number of particles when in witchspace)
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Electron: The Electron version has no witchspace, so the number of stardust particles shown is always the same, so the value is hard-coded rather than needing to use a location (which the other versions need so they can vary the number of particles when in witchspace)
 
  LDY NOSTM              \ Set Y to the current number of stardust particles, so
                         \ we can use it as a counter through all the stardust
@@ -82,6 +82,12 @@ ELIF _ELECTRON_VERSION
 ENDIF
 
 .STL2
+
+IF _NES_VERSION
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ENDIF
 
  LDA SZ,Y               \ Set A = ZZ = z_hi
 
@@ -112,7 +118,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR
                         \ So (S R) is the delta, signed to match the direction
                         \ the stardust should move in, which is result 1 above
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _NES_VERSION
 
  LDA P                  \ Store the high byte of delta_x in newzp
  STA newzp
@@ -141,6 +147,12 @@ ENDIF
 
  STA S                  \ Set (S R) = (A X)
  STX R                  \           = x + delta_x
+
+IF _NES_VERSION
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ENDIF
 
  LDA SY,Y               \ Set A = y_hi
 
@@ -222,6 +234,12 @@ ENDIF
                         \
                         \   x = x - alpha * x * y
 
+IF _NES_VERSION
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ENDIF
+
  LDA YY                 \ Set (S R) = YY(1 0)
  STA R                  \           = y
  LDA YY+1               \
@@ -243,6 +261,8 @@ ENDIF
                         \   (A P) = (alpha 0)
                         \         = alpha / 256
 
+IF NOT(_NES_VERSION)
+
  JSR PIX1               \ Call PIX1 to calculate the following:
                         \
                         \   (YY+1 y_lo) = (A P) + (S R)
@@ -255,6 +275,25 @@ ENDIF
                         \ ZZ, which will remove the old stardust particle, as we
                         \ set X1, Y1 and ZZ to the original values for this
                         \ particle during the calculations above
+
+ELIF _NES_VERSION
+
+                        \ Calculate the following:
+                        \
+                        \   (YY+1 y_lo) = (A P) + (S R)
+                        \               = alpha * 256 + y + alpha * y * y
+                        \
+                        \ i.e. y = y + alpha / 256 + alpha * y^2, which is
+                        \ result 6 above
+
+ JSR ADD                \ Set (A X) = (A P) + (S R)
+
+ STA YY+1               \ Set YY+1 to A, the high byte of the result
+
+ TXA                    \ Set SYL+Y to X, the low byte of the result
+ STA SYL,Y
+
+ENDIF
 
                         \ We now have our newly moved stardust particle at
                         \ x-coordinate (XX+1 x_lo) and y-coordinate (YY+1 y_lo)
@@ -287,6 +326,28 @@ ELIF _MASTER_VERSION
                         \ doesn't hard-code the screen width, so this is
                         \ presumably a change that was introduced to support
                         \ the different screen sizes of the other platforms
+
+ELIF _NES_VERSION
+
+ AND #%01111111         \ Set A = |x_hi|
+
+ CMP #&78               \ ???
+ BCS KILL2
+
+ EOR #%01111111         \ Set A = ~|x_hi|, which is the same as -(x_hi + 1)
+                        \ using two's complement
+
+ CMP newzp              \ If newzp <= -(x_hi + 1), then the particle has been
+ BCC KILL2              \ moved off the side of the screen and has wrapped
+ BEQ KILL2              \ round to the other side, jump to KILL2 to recycle this
+                        \ particle and re-join at STC2 with the new particle
+                        \
+                        \ In the other BBC versions, this test simply checks
+                        \ whether |x_hi| >= 116, but this version using newzp
+                        \ doesn't hard-code the screen width, so this is
+                        \ presumably a change that was introduced to support
+                        \ the different screen sizes of the other platforms
+
 
 ENDIF
 
@@ -362,8 +423,17 @@ ENDIF
  STA X1                 \ Set x_hi and X1 to random numbers, so the particle
  STA SX,Y               \ starts anywhere along the x-axis
 
+IF NOT(_NES_VERSION)
+
  LDA #110               \ Make sure A is at least 110 and has the sign in AL2+1,
  ORA ALP2+1             \ the flipped sign of the roll angle alpha
+
+ELIF _NES_VERSION
+
+ LDA #126               \ Make sure A is at least 126 and has the sign in AL2+1,
+ ORA ALP2+1             \ the flipped sign of the roll angle alpha
+
+ENDIF
 
  STA Y1                 \ Set y_hi and Y1 to A, so the particle starts at the
  STA SY,Y               \ top or bottom edge, depending on the current roll

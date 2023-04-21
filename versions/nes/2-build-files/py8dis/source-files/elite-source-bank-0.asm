@@ -1,6 +1,6 @@
 ; Memory locations
 ZP                  = &0000
-L0002               = &0002
+RAND                = &0002
 L0003               = &0003
 L0005               = &0005
 T1                  = &0006
@@ -56,7 +56,7 @@ L003A               = &003A
 YC                  = &003B
 QQ17                = &003C
 XX2                 = &003D
-L003E               = &003E
+K3_1                = &003E
 L003F               = &003F
 L0040               = &0040
 L0041               = &0041
@@ -364,7 +364,7 @@ SYL                 = &05BA
 SZL                 = &05CF
 L05E4               = &05E4
 L05F2               = &05F2
-L0600               = &0600
+Kpercent            = &0600
 L0601               = &0601
 L0602               = &0602
 L0604               = &0604
@@ -448,6 +448,7 @@ LD96F               = &D96F
 LD975               = &D975
 LD977               = &D977
 LOIN                = &DC0F
+PIXEL               = &E4F0
 LE543               = &E543
 LE596               = &E596
 LE59F               = &E59F
@@ -1120,7 +1121,7 @@ NORM                = &FAF8
     BNE C8417                                     ; 83E8: D0 2D       .-
     LDX #&1C                                      ; 83EA: A2 1C       ..
 .loop_C83EC
-    LDA L0600,X                                   ; 83EC: BD 00 06    ...
+    LDA Kpercent,X                                ; 83EC: BD 00 06    ...
     STA INWK,X                                    ; 83EF: 95 09       ..
     DEX                                           ; 83F1: CA          .
     BPL loop_C83EC                                ; 83F2: 10 F8       ..
@@ -1128,7 +1129,7 @@ NORM                = &FAF8
     BCS C8417                                     ; 83F7: B0 1E       ..
     LDX #8                                        ; 83F9: A2 08       ..
 .loop_C83FB
-    LDA L0600,X                                   ; 83FB: BD 00 06    ...
+    LDA Kpercent,X                                ; 83FB: BD 00 06    ...
     STA INWK,X                                    ; 83FE: 95 09       ..
     DEX                                           ; 8400: CA          .
     BPL loop_C83FB                                ; 8401: 10 F8       ..
@@ -1305,9 +1306,9 @@ NORM                = &FAF8
     BPL C8547                                     ; 8542: 10 03       ..
     JSR NAMETABLE0                                ; 8544: 20 6D D0     m.
 .C8547
-    LDA L0600                                     ; 8547: AD 00 06    ...
+    LDA Kpercent                                  ; 8547: AD 00 06    ...
     EOR L0039                                     ; 854A: 45 39       E9
-    STA L0002                                     ; 854C: 85 02       ..
+    STA RAND                                      ; 854C: 85 02       ..
     LDA L0388                                     ; 854E: AD 88 03    ...
     BEQ C8556                                     ; 8551: F0 03       ..
     CLC                                           ; 8553: 18          .
@@ -2381,7 +2382,7 @@ NORM                = &FAF8
     ORA L0042                                     ; 8CF3: 05 42       .B
     ORA L0045                                     ; 8CF5: 05 45       .E
     AND #&7F                                      ; 8CF7: 29 7F       ).
-    ORA L003E                                     ; 8CF9: 05 3E       .>
+    ORA K3_1                                      ; 8CF9: 05 3E       .>
     ORA L0041                                     ; 8CFB: 05 41       .A
     ORA L0044                                     ; 8CFD: 05 44       .D
     BNE C8D34                                     ; 8CFF: D0 33       .3
@@ -2976,7 +2977,7 @@ L8D3C = sub_C8D3B+1
     LDY U                                         ; 90FC: A4 96       ..
     STA L003F,X                                   ; 90FE: 95 3F       .?
     LDA K_2                                       ; 9100: A5 7F       ..
-    STA L003E,X                                   ; 9102: 95 3E       .>
+    STA K3_1,X                                    ; 9102: 95 3E       .>
     LDA K_1                                       ; 9104: A5 7E       .~
     STA XX2,X                                     ; 9106: 95 3D       .=
     RTS                                           ; 9108: 60          `
@@ -3032,7 +3033,7 @@ L8D3C = sub_C8D3B+1
     ADC XX2,X                                     ; 9164: 75 3D       u=
     STA XX2,X                                     ; 9166: 95 3D       .=
     BCC C916C                                     ; 9168: 90 02       ..
-    INC L003E,X                                   ; 916A: F6 3E       .>
+    INC K3_1,X                                    ; 916A: F6 3E       .>
 .C916C
     RTS                                           ; 916C: 60          `
 
@@ -3041,18 +3042,18 @@ L8D3C = sub_C8D3B+1
     SEC                                           ; 916F: 38          8
     SBC R                                         ; 9170: E5 98       ..
     STA XX2,X                                     ; 9172: 95 3D       .=
-    LDA L003E,X                                   ; 9174: B5 3E       .>
+    LDA K3_1,X                                    ; 9174: B5 3E       .>
     SBC #0                                        ; 9176: E9 00       ..
-    STA L003E,X                                   ; 9178: 95 3E       .>
+    STA K3_1,X                                    ; 9178: 95 3E       .>
     BCS C916C                                     ; 917A: B0 F0       ..
     LDA XX2,X                                     ; 917C: B5 3D       .=
     EOR #&FF                                      ; 917E: 49 FF       I.
     ADC #1                                        ; 9180: 69 01       i.
     STA XX2,X                                     ; 9182: 95 3D       .=
-    LDA L003E,X                                   ; 9184: B5 3E       .>
+    LDA K3_1,X                                    ; 9184: B5 3E       .>
     EOR #&FF                                      ; 9186: 49 FF       I.
     ADC #0                                        ; 9188: 69 00       i.
-    STA L003E,X                                   ; 918A: 95 3E       .>
+    STA K3_1,X                                    ; 918A: 95 3E       .>
     LDA L003F,X                                   ; 918C: B5 3F       .?
     EOR #&80                                      ; 918E: 49 80       I.
     STA L003F,X                                   ; 9190: 95 3F       .?
@@ -4200,7 +4201,7 @@ L8D3C = sub_C8D3B+1
     STA K4                                        ; 99FC: 85 4B       .K
     LDX #0                                        ; 99FE: A2 00       ..
     STX XX2_15                                    ; 9A00: 86 4C       .L
-    STX L003E                                     ; 9A02: 86 3E       .>
+    STX K3_1                                      ; 9A02: 86 3E       .>
     LDX #2                                        ; 9A04: A2 02       ..
     STX STP                                       ; 9A06: 86 AA       ..
     LDX #1                                        ; 9A08: A2 01       ..
@@ -4570,7 +4571,7 @@ L8D3C = sub_C8D3B+1
     JSR CA7D0                                     ; 9CA1: 20 D0 A7     ..
 .C9CA4
     LDA #0                                        ; 9CA4: A9 00       ..
-    STA L003E                                     ; 9CA6: 85 3E       .>
+    STA K3_1                                      ; 9CA6: 85 3E       .>
     STA XX2_15                                    ; 9CA8: 85 4C       .L
     STA K_1                                       ; 9CAA: 85 7E       .~
     LDA XX12                                      ; 9CAC: A5 77       .w
@@ -6372,8 +6373,8 @@ L8D3C = sub_C8D3B+1
 .sub_CA994
     LDA L03F1                                     ; A994: AD F1 03    ...
     CLC                                           ; A997: 18          .
-    ADC L0002                                     ; A998: 65 02       e.
-    STA L0002                                     ; A99A: 85 02       ..
+    ADC RAND                                      ; A998: 65 02       e.
+    STA RAND                                      ; A99A: 85 02       ..
     LDA L03F1                                     ; A99C: AD F1 03    ...
     STA L0003                                     ; A99F: 85 03       ..
     LDY NOSTM                                     ; A9A1: AC E5 03    ...
@@ -7095,7 +7096,7 @@ L8D3C = sub_C8D3B+1
 
 .CAE84
     LDA L0039                                     ; AE84: A5 39       .9
-    STA L0002                                     ; AE86: 85 02       ..
+    STA RAND                                      ; AE86: 85 02       ..
     LDA L0606                                     ; AE88: AD 06 06    ...
     STA L0003                                     ; AE8B: 85 03       ..
     LDA L0307                                     ; AE8D: AD 07 03    ...
@@ -8049,7 +8050,7 @@ LAFB4 = sub_CAFB3+1
     LDA L0602,X                                   ; B549: BD 02 06    ...
     TAY                                           ; B54C: A8          .
     AND #&7F                                      ; B54D: 29 7F       ).
-    STA L003E,X                                   ; B54F: 95 3E       .>
+    STA K3_1,X                                    ; B54F: 95 3E       .>
     TYA                                           ; B551: 98          .
     AND #&80                                      ; B552: 29 80       ).
     STA L003F,X                                   ; B554: 95 3F       .?
@@ -8075,7 +8076,7 @@ LAFB4 = sub_CAFB3+1
     ORA L0043                                     ; B577: 05 43       .C
     ORA #1                                        ; B579: 09 01       ..
     STA L0046                                     ; B57B: 85 46       .F
-    LDA L003E                                     ; B57D: A5 3E       .>
+    LDA K3_1                                      ; B57D: A5 3E       .>
     ORA L0041                                     ; B57F: 05 41       .A
     ORA L0044                                     ; B581: 05 44       .D
 .loop_CB583
@@ -8083,18 +8084,18 @@ LAFB4 = sub_CAFB3+1
     ROL A                                         ; B585: 2A          *
     BCS CB596                                     ; B586: B0 0E       ..
     ASL XX2                                       ; B588: 06 3D       .=
-    ROL L003E                                     ; B58A: 26 3E       &>
+    ROL K3_1                                      ; B58A: 26 3E       &>
     ASL L0040                                     ; B58C: 06 40       .@
     ROL L0041                                     ; B58E: 26 41       &A
     ASL L0043                                     ; B590: 06 43       .C
     ROL L0044                                     ; B592: 26 44       &D
     BCC loop_CB583                                ; B594: 90 ED       ..
 .CB596
-    LSR L003E                                     ; B596: 46 3E       F>
+    LSR K3_1                                      ; B596: 46 3E       F>
     LSR L0041                                     ; B598: 46 41       FA
     LSR L0044                                     ; B59A: 46 44       FD
 .sub_CB59C
-    LDA L003E                                     ; B59C: A5 3E       .>
+    LDA K3_1                                      ; B59C: A5 3E       .>
     LSR A                                         ; B59E: 4A          J
     ORA L003F                                     ; B59F: 05 3F       .?
     STA XX15                                      ; B5A1: 85 71       .q

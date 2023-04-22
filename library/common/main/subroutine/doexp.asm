@@ -355,12 +355,12 @@ ELIF _NES_VERSION
  BEQ CA8F8              \ is being drawn on-screen for this ship anyway, so
                         \ return from the subroutine ???
 
- LDA INWK_7
+ LDA INWK+7
  BEQ PTCLS
  LDY L002B
  CPY #&18
  BCS PTCLS
- JMP CBB24
+ JMP PTCLS2
 
 .PTCLS
 
@@ -484,7 +484,7 @@ ELIF _NES_VERSION
  LDA (XX0),Y
  STA TGT
 
- LDA L0003
+ LDA RAND+1
  PHA
  LDY #6
 .EXL5
@@ -503,15 +503,15 @@ ELIF _NES_VERSION
  INY
  LDA (INF),Y
  EOR CNT
- STA L0003
+ STA RAND+1
  INY
  LDA (INF),Y
  EOR CNT
- STA L0004
+ STA RAND+2
  INY
  LDA (INF),Y
  EOR CNT
- STA L0005
+ STA RAND+3
  LDY U
 .CA9B4
 

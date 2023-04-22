@@ -115,7 +115,7 @@ IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Platform
  INX                    \ Increment X by 2 to point to the next blueprint in the
  INX                    \ table
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  TYA                    \ Set X = 2 * Y
  ASL A
@@ -141,7 +141,7 @@ IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Platform
                         \ valid blueprint, so loop back to hloop to try the next
                         \ ship along in the table
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  BEQ HA1                \ If the high byte of the blueprint address is 0, then
                         \ this is not a valid blueprint address, so return from
@@ -176,7 +176,7 @@ ENDIF
  JMP LL9                \ Jump to LL9 to display the ship and return from the
                         \ subroutine using a tail call
 
-IF _MASTER_VERSION OR _ELITE_A_6502SP_PARA \ Label
+IF _MASTER_VERSION OR _ELITE_A_6502SP_PARA OR _NES_VERSION \ Label
 
 .HA1
 

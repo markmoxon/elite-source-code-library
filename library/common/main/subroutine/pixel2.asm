@@ -23,6 +23,27 @@
 
 .PIXEL2
 
+IF _NES_VERSION
+
+ STY T1                 \ ???
+ TYA
+ ASL A
+ ASL A
+ TAY
+ LDA #&D2
+ LDX ZZ
+ CPX #&18
+ ADC #0
+ CPX #&30
+ ADC #0
+ CPX #&70
+ ADC #0
+ CPX #&90
+ ADC #0
+ STA L0295,Y
+
+ENDIF
+
  LDA X1                 \ Fetch the x-coordinate offset into A
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELECTRON_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label
@@ -36,7 +57,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELECTRON_VERSION OR _ELITE_A_VERSION O
 
 .PX1
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _NES_VERSION
 
  BPL PX21               \ If the x-coordinate offset is positive, jump to PX21
                         \ to skip the following negation
@@ -49,11 +70,27 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  EOR #%10000000         \ Set X = -|A|
  TAX                    \       = -|X1|
 
  LDA Y1                 \ Fetch the y-coordinate offset into A and clear the
  AND #%01111111         \ sign bit, so A = |Y1|
+
+ELIF _NES_VERSION
+
+ EOR #&80               \ ???
+ SBC #3
+ CMP #&F4
+ BCS CBC49
+ STA L0297,Y
+ LDA Y1
+ AND #&7F
+ CMP L00B1
+ BCS CBC49
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELECTRON_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label
 
@@ -82,7 +119,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELECTRON_VERSION OR _ELITE_A_VERSION O
 
 .PX2
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _NES_VERSION
 
  BPL PX22               \ If the y-coordinate offset is positive, jump to PX22
                         \ to skip the following negation
@@ -95,13 +132,33 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  STA T                  \ Set A = 97 - A
  LDA #97                \       = 97 - |Y1|
  SBC T                  \
                         \ so if Y is positive we display the point up from the
                         \ centre, while a negative Y means down from the centre
 
-IF NOT(_ELITE_A_6502SP_PARA)
+ELIF _NES_VERSION
+
+ STA T                  \ ???
+ LDA L00B1
+ SBC T
+ ADC #&0A
+ STA L0294,Y
+ LDY T1
+ RTS
+
+.CBC49
+ LDA #&F0
+ STA L0294,Y
+ LDY T1
+ RTS
+
+ENDIF
+
+IF NOT(_ELITE_A_6502SP_PARA) AND NOT(_NES_VERSION)
 
                         \ Fall through into PIXEL to draw the stardust at the
                         \ screen coordinates in (X, A)

@@ -19,6 +19,12 @@
 
 .ZINF
 
+IF _NES_VERSION
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ENDIF
+
  LDY #NI%-1             \ There are NI% bytes in the INWK workspace, so set a
                         \ counter in Y so we can loop through them
 
@@ -46,6 +52,12 @@
                         \ need to set up the high bytes of the diagonal values
                         \ and we're done. The negative nosev makes the ship
                         \ point towards us, as the z-axis points into the screen
+
+IF _NES_VERSION
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ENDIF
 
  LDA #96                \ Set A to represent a 1 (in vector terms)
 

@@ -54,6 +54,12 @@
 
 .TIDY
 
+IF _NES_VERSION
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ENDIF
+
  LDA INWK+10            \ Set (XX15, XX15+1, XX15+2) = nosev
  STA XX15
  LDA INWK+12
@@ -83,6 +89,12 @@
  STA INWK+16            \ -(nosev_y * roofv_y + nosev_z * roofv_z) / nosev_x
 
 .TI3
+
+IF _NES_VERSION
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ENDIF
 
  LDA INWK+16            \ Set (XX15, XX15+1, XX15+2) = roofv
  STA XX15
@@ -119,6 +131,12 @@
  EOR #%10000000         \ Set sidev_x = -A
  STA INWK+22            \        = (nosev_z * roofv_y - nosev_y * roofv_z) / 96
 
+IF _NES_VERSION
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ENDIF
+
  LDA INWK+16            \ Set A = roofv_x
 
  JSR MULT12             \ Set (S R) = Q * A = nosev_z * roofv_x
@@ -135,6 +153,12 @@
  EOR #%10000000         \ Set sidev_y = -A
  STA INWK+24            \        = (nosev_x * roofv_z - nosev_z * roofv_x) / 96
 
+IF _NES_VERSION
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ENDIF
+
  LDA INWK+18            \ Set A = roofv_y
 
  JSR MULT12             \ Set (S R) = Q * A = nosev_x * roofv_y
@@ -148,6 +172,12 @@
 
  EOR #%10000000         \ Set sidev_z = -A
  STA INWK+26            \        = (nosev_y * roofv_x - nosev_x * roofv_y) / 96
+
+IF _NES_VERSION
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ENDIF
 
  LDA #0                 \ Set A = 0 so we can clear the low bytes of the
                         \ orientation vectors

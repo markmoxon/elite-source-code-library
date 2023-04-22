@@ -45,7 +45,7 @@ ENDIF
 
                         \ Hangar group for X = 0
                         \
-IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: Group C: In the disc and 6502SP versions, the first ship hangar group (of four) consists of a Transporter on the right and a Shuttle on the left, while in the Master version the first group has a lone Cobra Mk III on the left
+IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR_NES_VERSION \ Master: Group C: In the disc and 6502SP versions, the first ship hangar group (of four) consists of a Transporter on the right and a Shuttle on the left, while in the Master version the first group has a lone Cobra Mk III on the left
                         \ Shuttle (left) and Transporter (right)
 ELIF _MASTER_VERSION
                         \ Cobra Mk III (left)
@@ -53,12 +53,12 @@ ENDIF
 
 IF _DISC_DOCKED OR _ELITE_A_VERSION \ Master: See group C
  EQUB 2                 \ Ship type in the hangar = 2 = Shuttle
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR_NES_VERSION
  EQUB 9                 \ Ship type = 9 = Shuttle
 ELIF _MASTER_VERSION
  EQUB 11                \ Ship type = 11 = Cobra Mk III
 ENDIF
-IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: See group C
+IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR_NES_VERSION \ Master: See group C
  EQUB %01010100         \ x_hi = %01010100 = 84, z_hi   = 1     -> x = -84
 ELIF _MASTER_VERSION
  EQUB %01000100         \ x_hi = %01000100 = 68, z_hi   = 1     -> x = -68
@@ -67,7 +67,7 @@ ENDIF
 
 IF _DISC_DOCKED OR _ELITE_A_VERSION \ Master: See group C
  EQUB 3                 \ Ship type in the hangar = 3 = Transporter
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR_NES_VERSION
  EQUB 10                \ Ship type = 10 = Transporter
 ELIF _MASTER_VERSION
  EQUB 0                 \ No second ship
@@ -86,7 +86,7 @@ ENDIF
 
 IF _DISC_DOCKED OR _ELITE_A_VERSION \ Platform
  EQUB 1                 \ Ship type in the hangar = 1 = Cargo canister
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR_NES_VERSION
  EQUB OIL               \ Ship type = OIL = Cargo canister
 ENDIF
  EQUB %01010000         \ x_hi = %01010000 = 80, z_hi   = 1     -> x = -80
@@ -94,7 +94,7 @@ ENDIF
 
 IF _DISC_DOCKED OR _ELITE_A_VERSION \ Platform
  EQUB 1                 \ Ship type in the hangar = 1 = Cargo canister
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR_NES_VERSION
  EQUB OIL               \ Ship type = OIL = Cargo canister
 ENDIF
  EQUB %11010001         \ x_hi = %11010001 = 209, z_hi = 2      -> x = +209
@@ -102,7 +102,7 @@ ENDIF
 
 IF _DISC_DOCKED OR _ELITE_A_VERSION \ Platform
  EQUB 1                 \ Ship type in the hangar = 1 = Cargo canister
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR_NES_VERSION
  EQUB OIL               \ Ship type = OIL = Cargo canister
 ENDIF
  EQUB %01000000         \ x_hi = %01000000 = 64, z_hi   = 1     -> x = +64
@@ -112,13 +112,13 @@ ENDIF
                         \
 IF _DISC_DOCKED OR _ELITE_A_VERSION \ Disc: Group A: In the disc version, the third ship hangar group (of four) consists of a Transporter on the right and a Cobra Mk III on the left, while in the advanced versions the third group has a Viper on the right and a Krait on the left
                         \ Transporter (right) and Cobra Mk III (left)
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR_NES_VERSION
                         \ Viper (right) and Krait (left)
 ENDIF
 
 IF _DISC_DOCKED OR _ELITE_A_VERSION \ Disc: See group A
  EQUB 3                 \ Ship type in the hangar = 3 = Transporter
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR_NES_VERSION
  EQUB COPS              \ Ship type = COPS = Viper
 ENDIF
  EQUB %01100000         \ x_hi = %01100000 =  96, z_hi   = 1    -> x = +96
@@ -126,7 +126,7 @@ ENDIF
 
 IF _DISC_DOCKED OR _ELITE_A_VERSION \ Disc: See group A
  EQUB 4                 \ Ship type in the hangar = 4 = Cobra Mk III
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR_NES_VERSION
  EQUB KRA               \ Ship type = KRA = Krait
 ENDIF
  EQUB %00010000         \ x_hi = %00010000 =  16, z_hi   = 1    -> x = -16
@@ -138,7 +138,7 @@ ENDIF
 
                         \ Hangar group for X = 27
                         \
-IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: Group B: In the disc and 6502SP versions, the fourth ship hangar group (of four) consists of a Viper on the right and a Krait on the left, while in the Master version the fourth group has an Adder on the right and a Viper on the left
+IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Master: Group B: In the disc and 6502SP versions, the fourth ship hangar group (of four) consists of a Viper on the right and a Krait on the left, while in the Master version the fourth group has an Adder on the right and a Viper on the left
                         \ Viper (right and forward) and Krait (left)
 ELIF _MASTER_VERSION
                         \ Adder (right and forward) and Viper (left)
@@ -146,7 +146,7 @@ ENDIF
 
 IF _DISC_DOCKED OR _ELITE_A_VERSION \ Master: See group B
  EQUB 6                 \ Ship type in the hangar = 6 = Viper
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR_NES_VERSION
  EQUB 16                \ Ship type = 16 = Viper
 ELIF _MASTER_VERSION
  EQUB 20                \ Ship type = 20 = Adder
@@ -156,7 +156,7 @@ ENDIF
 
 IF _DISC_DOCKED OR _ELITE_A_VERSION \ Master: See group B
  EQUB 7                 \ Ship type in the hangar = 7 = Krait
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR_NES_VERSION
  EQUB 19                \ Ship type = 19 = Krait
 ELIF _MASTER_VERSION
  EQUB 16                \ Ship type = 16 = Viper

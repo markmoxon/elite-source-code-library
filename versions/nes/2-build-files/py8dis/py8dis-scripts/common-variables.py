@@ -225,6 +225,7 @@ subroutine(0xF237, "TT27_control_codes")    # My addition, it's the control code
 subroutine(0xF26E, "TT66")
 subroutine(0xF2DE, "CLYNS")
 subroutine(0xF473, "NLIN4")
+subroutine(0xF4AC, "DORND2")
 subroutine(0xF4AD, "DORND")
 subroutine(0xF4C1, "PROJ")
 subroutine(0xF65A, "MU5")

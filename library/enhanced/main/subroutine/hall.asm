@@ -3,7 +3,7 @@
 \       Name: HALL
 \       Type: Subroutine
 \   Category: Ship hangar
-IF _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
+IF _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 \    Summary: Draw the ships in the ship hangar, then draw the hangar
 ELIF _6502SP_VERSION
 \    Summary: Draw the ships in the ship hangar, then draw the hangar by sending
@@ -63,6 +63,19 @@ ENDIF
  LDA #0                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 0 (space
                         \ view)
+
+IF _NES_VERSION
+
+ LDA L03F1              \ ???
+ STA RAND+1
+ LDA #&86
+ STA RAND+3
+ LDA QQ0
+ STA RAND
+ LDA L03DD
+ STA RAND+2
+
+ENDIF
 
  JSR DORND              \ Set A and X to random numbers
 
@@ -178,7 +191,7 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION \ Disc: The ship hangar has a 50% chance of 
                         \
                         \   * Random z-coordinate from +256 to +639
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  JSR DORND              \ Set XX15+2 = #SH3 + random number 0-3
  AND #3                 \
@@ -231,6 +244,18 @@ ELIF _MASTER_VERSION
 
  JMP HANGER             \ Call HANGER to draw the hangar background and return
                         \ from the subroutine using a tail call
+
+ELIF _NES_VERSION
+
+ STY HANGFLAG           \ Store Y in HANGFLAG to specify whether there are
+                        \ multiple ships in the hangar
+
+ JSR HANGER             \ ???
+ LDA #0
+ STA L00D2
+ LDA #&50
+ STA L00D8
+ JMP LF2CE
 
 ENDIF
 

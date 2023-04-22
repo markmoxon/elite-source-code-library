@@ -257,9 +257,11 @@ L0224               = &0224
 L0228               = &0228
 L022C               = &022C
 L0300               = &0300
-L038A               = &038A
+MJ                  = &038A
 VIEW                = &038E
 L0395               = &0395
+QQ0                 = &039F
+QQ1                 = &03A0
 CASH                = &03A1
 L03A6               = &03A6
 GCNT                = &03A7
@@ -269,9 +271,13 @@ QQ20                = &03AD
 L03BE               = &03BE
 BST                 = &03BF
 L03C0               = &03C0
-L03C3               = &03C3
+GHYP                = &03C3
 L03C4               = &03C4
 L03C8               = &03C8
+FIST                = &03C9
+AVL                 = &03CA
+QQ26                = &03DB
+QQ21                = &03DF
 NOSTM               = &03E5
 L03EA               = &03EA
 L03EB               = &03EB
@@ -288,19 +294,29 @@ DTW5                = &03F7
 DTW1                = &03F8
 DTW8                = &03F9
 L0401               = &0401
+QQ19                = &044D
+QQ19_1              = &044E
+QQ19_3              = &0450
+QQ19_4              = &0450
 K2                  = &0459
 K2_1                = &045A
 K2_2                = &045B
 K2_3                = &045C
+QQ19_2              = &045F
 L0461               = &0461
 L0464               = &0464
 L046C               = &046C
 L0473               = &0473
 L0475               = &0475
 SWAP                = &047F
+QQ24                = &0487
+QQ25                = &0488
+QQ28                = &0489
 QQ29                = &048A
 L048B               = &048B
 QQ8                 = &049B
+QQ9                 = &049D
+QQ10                = &049E
 QQ18LO              = &04A4
 QQ18HI              = &04A5
 TOKENLO             = &04A6
@@ -317,6 +333,7 @@ L0564               = &0564
 SXL                 = &05A5
 SYL                 = &05BA
 SZL                 = &05CF
+safehouse           = &05E4
 Kpercent            = &0600
 PPUCTRL             = &2000
 PPUMASK             = &2001
@@ -353,6 +370,7 @@ LDBD8               = &DBD8
 LOIN                = &DC0F
 PIXEL               = &E4F0
 DELAY               = &EBA2
+MESS                = &EBF2
 LEC7D               = &EC7D
 LECF9               = &ECF9
 LEE54               = &EE54
@@ -2565,7 +2583,7 @@ NORM                = &FAF8
     LDY #&18                                      ; AE88: A0 18       ..
     JSR sub_CAF5B                                 ; AE8A: 20 5B AF     [.
 .CAE8D
-    LDA L038A                                     ; AE8D: AD 8A 03    ...
+    LDA MJ                                        ; AE8D: AD 8A 03    ...
     BNE CAE97                                     ; AE90: D0 05       ..
     LDA L03C4                                     ; AE92: AD C4 03    ...
     BNE CAE9C                                     ; AE95: D0 05       ..
@@ -2644,7 +2662,7 @@ NORM                = &FAF8
     LDY #&13                                      ; AF12: A0 13       ..
     JSR sub_CAF5B                                 ; AF14: 20 5B AF     [.
 .CAF17
-    LDA L03C3                                     ; AF17: AD C3 03    ...
+    LDA GHYP                                      ; AF17: AD C3 03    ...
     BNE CAF21                                     ; AF1A: D0 05       ..
     LDY #&16                                      ; AF1C: A0 16       ..
     JSR CAF2E                                     ; AF1E: 20 2E AF     ..

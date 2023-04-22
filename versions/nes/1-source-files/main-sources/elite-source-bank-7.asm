@@ -269,17 +269,25 @@ L036A       = &036A
 L036C       = &036C
 L0373       = &0373
 L0388       = &0388
+MJ          = &038A
 VIEW        = &038E
 L0393       = &0393
 L0394       = &0394
 L039D       = &039D
+QQ0         = &039F
+QQ1         = &03A0
 CASH        = &03A1
 GCNT        = &03A7
 CRGO        = &03AC
 QQ20        = &03AD
 BST         = &03BF
+GHYP        = &03C3
 L03C7       = &03C7
+FIST        = &03C9
+AVL         = &03CA
+QQ26        = &03DB
 L03DC       = &03DC
+QQ21        = &03DF
 NOSTM       = &03E5
 L03EA       = &03EA
 L03EB       = &03EB
@@ -297,12 +305,16 @@ DTW5        = &03F7
 DTW1        = &03F8
 DTW8        = &03F9
 L03FC       = &03FC
+QQ19        = &044D
+QQ19_1      = &044E
+QQ19_3      = &0450
+QQ19_4      = &0450
 K2          = &0459
 K2_1        = &045A
 K2_2        = &045B
 K2_3        = &045C
 L045E       = &045E
-L045F       = &045F
+QQ19_2      = &045F
 L0460       = &0460
 L0461       = &0461
 L0462       = &0462
@@ -323,8 +335,13 @@ L0477       = &0477
 L0478       = &0478
 SWAP        = &047F
 L0486       = &0486
+QQ24        = &0487
+QQ25        = &0488
+QQ28        = &0489
 QQ29        = &048A
 QQ8         = &049B
+QQ9         = &049D
+QQ10        = &049E
 QQ18LO      = &04A4
 QQ18HI      = &04A5
 TOKENLO     = &04A6
@@ -355,6 +372,7 @@ HANGFLAG    = &0561
 SXL         = &05A5
 SYL         = &05BA
 SZL         = &05CF
+safehouse   = &05E4
 Kpercent    = &0600
 L0601       = &0601
 L0606       = &0606
@@ -5451,7 +5469,7 @@ LDFFF = sub_CDFFE+1
     LDA #&20 ; ' '                                ; E596: A9 20       .
     STA L006D                                     ; E598: 85 6D       .m
     LDY #2                                        ; E59A: A0 02       ..
-    JMP CEBF2                                     ; E59C: 4C F2 EB    L..
+    JMP MESS                                      ; E59C: 4C F2 EB    L..
 
     TYA                                           ; E59F: 98          .
     PHA                                           ; E5A0: 48          H
@@ -5711,7 +5729,7 @@ LDFFF = sub_CDFFE+1
 .CE92D
     LDA L0473                                     ; E92D: AD 73 04    .s.
     BMI CE8F5                                     ; E930: 30 C3       0.
-    LDA L045F                                     ; E932: AD 5F 04    ._.
+    LDA QQ19_2                                    ; E932: AD 5F 04    ._.
     BEQ CE8DE                                     ; E935: F0 A7       ..
     LDA L0462                                     ; E937: AD 62 04    .b.
     CLC                                           ; E93A: 18          .
@@ -6032,9 +6050,9 @@ LDFFF = sub_CDFFE+1
 
 .sub_CEBA9
     LDY #3                                        ; EBA9: A0 03       ..
-    BNE CEBF2                                     ; EBAB: D0 45       .E
+    BNE MESS                                      ; EBAB: D0 45       .E
     LDY #&0D                                      ; EBAD: A0 0D       ..
-    BNE CEBF2                                     ; EBAF: D0 41       .A
+    BNE MESS                                      ; EBAF: D0 41       .A
 .sub_CEBB1
     LDX #0                                        ; EBB1: A2 00       ..
     JSR CEBCF                                     ; EBB3: 20 CF EB     ..
@@ -6063,12 +6081,13 @@ LDFFF = sub_CDFFE+1
     LDA #&1A                                      ; EBE1: A9 1A       ..
     BNE CEC2B                                     ; EBE3: D0 46       .F
     LDY #4                                        ; EBE5: A0 04       ..
-    BNE CEBF2                                     ; EBE7: D0 09       ..
+    BNE MESS                                      ; EBE7: D0 09       ..
     LDY #1                                        ; EBE9: A0 01       ..
-    BNE CEBF2                                     ; EBEB: D0 05       ..
+    BNE MESS                                      ; EBEB: D0 05       ..
     JSR sub_CEBB1                                 ; EBED: 20 B1 EB     ..
     LDY #&15                                      ; EBF0: A0 15       ..
-.CEBF2
+; ******************************************************************************
+.MESS
     LDA L03EC                                     ; EBF2: AD EC 03    ...
     BPL CEC2E                                     ; EBF5: 10 37       .7
     LDX LEC3C,Y                                   ; EBF7: BE 3C EC    .<.

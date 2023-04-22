@@ -175,14 +175,21 @@ L02EA               = &02EA
 L02EB               = &02EB
 L0374               = &0374
 L037E               = &037E
+MJ                  = &038A
 VIEW                = &038E
-L039F               = &039F
+QQ0                 = &039F
+QQ1                 = &03A0
 CASH                = &03A1
 GCNT                = &03A7
 CRGO                = &03AC
 QQ20                = &03AD
 BST                 = &03BF
+GHYP                = &03C3
+FIST                = &03C9
+AVL                 = &03CA
+QQ26                = &03DB
 L03DD               = &03DD
+QQ21                = &03DF
 NOSTM               = &03E5
 L03E6               = &03E6
 L03F1               = &03F1
@@ -194,13 +201,23 @@ DTW5                = &03F7
 DTW1                = &03F8
 DTW8                = &03F9
 L040A               = &040A
+QQ19                = &044D
+QQ19_1              = &044E
+QQ19_3              = &0450
+QQ19_4              = &0450
 K2                  = &0459
 K2_1                = &045A
 K2_2                = &045B
 K2_3                = &045C
+QQ19_2              = &045F
 SWAP                = &047F
+QQ24                = &0487
+QQ25                = &0488
+QQ28                = &0489
 QQ29                = &048A
 QQ8                 = &049B
+QQ9                 = &049D
+QQ10                = &049E
 QQ18LO              = &04A4
 QQ18HI              = &04A5
 TOKENLO             = &04A6
@@ -215,6 +232,7 @@ HANGFLAG            = &0561
 SXL                 = &05A5
 SYL                 = &05BA
 SZL                 = &05CF
+safehouse           = &05E4
 L05EA               = &05EA
 L05EB               = &05EB
 L05EC               = &05EC
@@ -258,6 +276,7 @@ LE04A               = &E04A
 LE0BA               = &E0BA
 PIXEL               = &E4F0
 DELAY               = &EBA2
+MESS                = &EBF2
 PAS1                = &EF7A
 DETOK               = &F082
 DTS                 = &F09D
@@ -5187,7 +5206,7 @@ LB5CF = sub_CB5CE+1
     STA L0003                                     ; B740: 85 03       ..
     LDA #&86                                      ; B742: A9 86       ..
     STA L0005                                     ; B744: 85 05       ..
-    LDA L039F                                     ; B746: AD 9F 03    ...
+    LDA QQ0                                       ; B746: AD 9F 03    ...
     STA RAND                                      ; B749: 85 02       ..
     LDA L03DD                                     ; B74B: AD DD 03    ...
     STA L0004                                     ; B74E: 85 04       ..

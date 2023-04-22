@@ -256,6 +256,7 @@ L0364               = &0364
 L0365               = &0365
 L0366               = &0366
 L0368               = &0368
+MJ                  = &038A
 L038B               = &038B
 L038D               = &038D
 VIEW                = &038E
@@ -263,6 +264,8 @@ L038F               = &038F
 L0390               = &0390
 L0396               = &0396
 L039D               = &039D
+QQ0                 = &039F
+QQ1                 = &03A0
 CASH                = &03A1
 L03A2               = &03A2
 L03A3               = &03A3
@@ -279,10 +282,13 @@ BST                 = &03BF
 L03C0               = &03C0
 L03C1               = &03C1
 L03C2               = &03C2
-L03C3               = &03C3
+GHYP                = &03C3
 L03C4               = &03C4
 L03C8               = &03C8
-L03C9               = &03C9
+FIST                = &03C9
+AVL                 = &03CA
+QQ26                = &03DB
+QQ21                = &03DF
 NOSTM               = &03E5
 L03EA               = &03EA
 L03EB               = &03EB
@@ -367,12 +373,16 @@ L0449               = &0449
 L044A               = &044A
 L044B               = &044B
 L044C               = &044C
+QQ19                = &044D
+QQ19_1              = &044E
+QQ19_3              = &0450
+QQ19_4              = &0450
 K2                  = &0459
 K2_1                = &045A
 K2_2                = &045B
 K2_3                = &045C
 L045E               = &045E
-L045F               = &045F
+QQ19_2              = &045F
 L0464               = &0464
 L0465               = &0465
 L046C               = &046C
@@ -383,8 +393,13 @@ L0482               = &0482
 L0484               = &0484
 L0485               = &0485
 L0486               = &0486
+QQ24                = &0487
+QQ25                = &0488
+QQ28                = &0489
 QQ29                = &048A
 QQ8                 = &049B
+QQ9                 = &049D
+QQ10                = &049E
 QQ18LO              = &04A4
 QQ18HI              = &04A5
 TOKENLO             = &04A6
@@ -411,6 +426,7 @@ HANGFLAG            = &0561
 SXL                 = &05A5
 SYL                 = &05BA
 SZL                 = &05CF
+safehouse           = &05E4
 Kpercent            = &0600
 L0616               = &0616
 L0617               = &0617
@@ -472,6 +488,7 @@ LOIN                = &DC0F
 PIXEL               = &E4F0
 LEB86               = &EB86
 DELAY               = &EBA2
+MESS                = &EBF2
 LEC7D               = &EC7D
 LECE7               = &ECE7
 LED24               = &ED24
@@ -3052,7 +3069,7 @@ L88BD = L88BC+1
     LDX #4                                        ; A0AC: A2 04       ..
     LDY #0                                        ; A0AE: A0 00       ..
     JSR LEE99                                     ; A0B0: 20 99 EE     ..
-    LDA L03C9                                     ; A0B3: AD C9 03    ...
+    LDA FIST                                      ; A0B3: AD C9 03    ...
     CMP #&28 ; '('                                ; A0B6: C9 28       .(
     BCC CA0BD                                     ; A0B8: 90 03       ..
     JSR sub_C9FD0                                 ; A0BA: 20 D0 9F     ..
@@ -3168,12 +3185,12 @@ L88BD = L88BC+1
     LDA L003A                                     ; A173: A5 3A       .:
     PHA                                           ; A175: 48          H
     JSR LD8C5                                     ; A176: 20 C5 D8     ..
-    LDA L045F                                     ; A179: AD 5F 04    ._.
+    LDA QQ19_2                                    ; A179: AD 5F 04    ._.
     PHA                                           ; A17C: 48          H
     LDA L0464                                     ; A17D: AD 64 04    .d.
     PHA                                           ; A180: 48          H
     LDA #&FF                                      ; A181: A9 FF       ..
-    STA L045F                                     ; A183: 8D 5F 04    ._.
+    STA QQ19_2                                    ; A183: 8D 5F 04    ._.
     LDA #3                                        ; A186: A9 03       ..
     JSR LF0E1                                     ; A188: 20 E1 F0     ..
 .CA18B
@@ -3186,7 +3203,7 @@ L88BD = L88BC+1
     PLA                                           ; A198: 68          h
     JSR LF0E1                                     ; A199: 20 E1 F0     ..
     PLA                                           ; A19C: 68          h
-    STA L045F                                     ; A19D: 8D 5F 04    ._.
+    STA QQ19_2                                    ; A19D: 8D 5F 04    ._.
     JSR LD167                                     ; A1A0: 20 67 D1     g.
     PLA                                           ; A1A3: 68          h
     STA L003A                                     ; A1A4: 85 3A       .:
@@ -3231,7 +3248,7 @@ L88BD = L88BC+1
     BNE CA1ED                                     ; A1E3: D0 08       ..
     PLA                                           ; A1E5: 68          h
     PLA                                           ; A1E6: 68          h
-    STA L045F                                     ; A1E7: 8D 5F 04    ._.
+    STA QQ19_2                                    ; A1E7: 8D 5F 04    ._.
     JMP LEEC3                                     ; A1EA: 4C C3 EE    L..
 
 .CA1ED
@@ -3694,7 +3711,7 @@ L88BD = L88BC+1
     LDX #8                                        ; A599: A2 08       ..
     JSR sub_CA39F                                 ; A59B: 20 9F A3     ..
 .CA59E
-    LDA L03C3                                     ; A59E: AD C3 03    ...
+    LDA GHYP                                      ; A59E: AD C3 03    ...
     BEQ CA5AA                                     ; A5A1: F0 07       ..
     LDY #&A8                                      ; A5A3: A0 A8       ..
     LDX #2                                        ; A5A5: A2 02       ..
@@ -3765,7 +3782,7 @@ L88BD = L88BC+1
     LDA #&10                                      ; A61B: A9 10       ..
     JSR LEFDC                                     ; A61D: 20 DC EF     ..
     LDA #&FF                                      ; A620: A9 FF       ..
-    STA L045F                                     ; A622: 8D 5F 04    ._.
+    STA QQ19_2                                    ; A622: 8D 5F 04    ._.
     LDA #&F0                                      ; A625: A9 F0       ..
     STA L0214                                     ; A627: 8D 14 02    ...
     STA L0218                                     ; A62A: 8D 18 02    ...

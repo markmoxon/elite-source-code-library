@@ -523,6 +523,7 @@ LF2C0               = &F2C0
 CLYNS               = &F2DE
 LF338               = &F338
 NLIN4               = &F473
+DORND2              = &F4AC
 DORND               = &F4AD
 PROJ                = &F4C1
 MU5                 = &F65A

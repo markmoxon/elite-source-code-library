@@ -288,7 +288,7 @@ TT66                = &F26E
 LF2CE               = &F2CE
 CLYNS               = &F2DE
 NLIN4               = &F473
-LF4AC               = &F4AC
+DORND2              = &F4AC
 DORND               = &F4AD
 PROJ                = &F4C1
 MU5                 = &F65A
@@ -5832,7 +5832,7 @@ LB5CF = sub_CB5CE+1
     BPL CBBB9                                     ; BBB4: 10 03       ..
     JSR NAMETABLE0                                ; BBB6: 20 6D D0     m.
 .CBBB9
-    JSR LF4AC                                     ; BBB9: 20 AC F4     ..
+    JSR DORND2                                    ; BBB9: 20 AC F4     ..
     STA ZZ                                        ; BBBC: 85 A0       ..
     LDA K3_1                                      ; BBBE: A5 3E       .>
     STA R                                         ; BBC0: 85 98       ..
@@ -5865,7 +5865,7 @@ LB5CF = sub_CB5CE+1
     RTS                                           ; BBF3: 60          `
 
 .CBBF4
-    JSR LF4AC                                     ; BBF4: 20 AC F4     ..
+    JSR DORND2                                    ; BBF4: 20 AC F4     ..
     JMP CBBDF                                     ; BBF7: 4C DF BB    L..
 
 ; ******************************************************************************

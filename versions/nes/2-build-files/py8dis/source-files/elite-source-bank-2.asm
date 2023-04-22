@@ -231,6 +231,7 @@ TT66                = &F26E
 LF2BD               = &F2BD
 CLYNS               = &F2DE
 NLIN4               = &F473
+DORND2              = &F4AC
 DORND               = &F4AD
 PROJ                = &F4C1
 MU5                 = &F65A

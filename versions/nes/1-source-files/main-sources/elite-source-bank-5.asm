@@ -262,6 +262,7 @@ TT27_control_codes  = &F237
 TT66                = &F26E
 CLYNS               = &F2DE
 NLIN4               = &F473
+DORND2              = &F4AC
 DORND               = &F4AD
 PROJ                = &F4C1
 MU5                 = &F65A

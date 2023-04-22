@@ -598,6 +598,7 @@ LF454               = &F454
 LF46A               = &F46A
 NLIN4               = &F473
 LF47D               = &F47D
+DORND2              = &F4AC
 DORND               = &F4AD
 PROJ                = &F4C1
 LF60C               = &F60C

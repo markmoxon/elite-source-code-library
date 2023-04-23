@@ -212,7 +212,7 @@ ELIF _NES_VERSION
 
  LDA XX15+2             \ Set (S R) = (y1_hi y1_lo) - screen height
  SEC                    \
- SBC L00B2              \ starting with the low bytes ???
+ SBC Yx2M2              \ starting with the low bytes ???
  STA R
 
 ENDIF

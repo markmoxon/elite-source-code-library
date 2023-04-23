@@ -1,13 +1,15 @@
 ; Memory locations
 ZP          = &0000
 RAND        = &0002
-L0003       = &0003
-L0004       = &0004
+RAND_1      = &0002
+RAND_2      = &0003
+RAND_3      = &0004
 L0005       = &0005
 T1          = &0006
 SC          = &0007
 SC_1        = &0008
 INWK        = &0009
+XX1         = &0009
 INWK_1      = &000A
 INWK_2      = &000B
 INWK_3      = &000C
@@ -39,7 +41,10 @@ INWK_28     = &0025
 INWK_29     = &0026
 INWK_30     = &0027
 INWK_31     = &0028
-L0029       = &0029
+INWK_32     = &0029
+INWK_33     = &002A
+INWK_34     = &002B
+INWK_35     = &002C
 NEWB        = &002D
 P           = &002F
 P_1         = &0030
@@ -54,12 +59,23 @@ L0039       = &0039
 L003A       = &003A
 YC          = &003B
 QQ17        = &003C
+K3          = &003D
 XX2         = &003D
-K3_1        = &003E
-XX2_1       = &003F
-XX2_2       = &0040
+XX2_1       = &003E
+XX2_2       = &003F
+XX2_3       = &0040
+XX2_4       = &0041
+XX2_5       = &0042
+XX2_6       = &0043
+XX2_7       = &0044
+XX2_8       = &0045
+XX2_9       = &0046
+XX2_10      = &0047
+XX2_11      = &0048
+XX2_12      = &0049
+XX2_13      = &004A
 K4          = &004B
-XX2_15      = &004C
+K4_1        = &004C
 XX16        = &004D
 XX16_1      = &004E
 XX16_2      = &004F
@@ -76,11 +92,12 @@ XX16_12     = &0059
 XX16_13     = &005A
 XX16_14     = &005B
 XX16_15     = &005C
+XX16_16     = &005D
+XX16_17     = &005E
 XX0         = &005F
 XX0_1       = &0060
 INF         = &0061
-INF_1       = &0061
-L0062       = &0062
+INF_1       = &0062
 V           = &0063
 V_1         = &0064
 XX          = &0065
@@ -93,6 +110,7 @@ L006D       = &006D
 ALP1        = &006E
 ALP2        = &006F
 ALP2_1      = &0070
+X1          = &0071
 XX15        = &0071
 Y1          = &0072
 X2          = &0073
@@ -110,6 +128,12 @@ K_1         = &007E
 K_2         = &007F
 K_3         = &0080
 QQ15        = &0082
+QQ15_1      = &0083
+QQ15_2      = &0084
+QQ15_3      = &0085
+QQ15_4      = &0086
+QQ15_5      = &0087
+K5          = &0088
 XX18        = &0088
 XX18_1      = &0089
 XX18_2      = &008A
@@ -132,7 +156,7 @@ T           = &009A
 XSAV        = &009B
 YSAV        = &009C
 XX17        = &009D
-L009E       = &009E
+W           = &009E
 L009F       = &009F
 ZZ          = &00A0
 XX13        = &00A1
@@ -149,7 +173,8 @@ XX20        = &00AC
 RAT         = &00AE
 RAT2        = &00AF
 widget      = &00B0
-L00B1       = &00B1
+Yx1M2       = &00B1
+Yx2M2       = &00B2
 Yx2M1       = &00B3
 newzp       = &00B6
 L00B7       = &00B7
@@ -210,6 +235,7 @@ L00F5       = &00F5
 L00F6       = &00F6
 BANK        = &00F7
 L00F8       = &00F8
+XX3m3       = &00F9
 L00FA       = &00FA
 L00FB       = &00FB
 XX3         = &0100
@@ -2101,7 +2127,7 @@ LC006 = sub_CC004+2
     LDA LCE7E,Y                                   ; CE93: B9 7E CE    .~.
     STA INF                                       ; CE96: 85 61       .a
     LDA LCE7F,Y                                   ; CE98: B9 7F CE    ...
-    STA L0062                                     ; CE9B: 85 62       .b
+    STA INF_1                                     ; CE9B: 85 62       .b
     RTS                                           ; CE9D: 60          `
 
     LDX #4                                        ; CE9E: A2 04       ..
@@ -5996,7 +6022,7 @@ LDFFF = sub_CDFFE+1
 
 .sub_CEB86
     LDA L009F                                     ; EB86: A5 9F       ..
-    CMP L009E                                     ; EB88: C5 9E       ..
+    CMP W                                         ; EB88: C5 9E       ..
     BEQ CEB8F                                     ; EB8A: F0 03       ..
     JSR sub_CEDAB                                 ; EB8C: 20 AB ED     ..
 .CEB8F
@@ -7024,7 +7050,7 @@ LDFFF = sub_CDFFE+1
     STA XC                                        ; F2F5: 85 32       .2
     LDA L00D2                                     ; F2F7: A5 D2       ..
     STA L00B8                                     ; F2F9: 85 B8       ..
-    LDA L009E                                     ; F2FB: A5 9E       ..
+    LDA W                                         ; F2FB: A5 9E       ..
     BPL CF332                                     ; F2FD: 10 33       .3
     LDA #&72 ; 'r'                                ; F2FF: A9 72       .r
     STA SC_1                                      ; F301: 85 08       ..
@@ -7111,9 +7137,9 @@ LDFFF = sub_CDFFE+1
     LDA #&75 ; 'u'                                ; F39A: A9 75       .u
     STA RAND                                      ; F39C: 85 02       ..
     LDA #&0A                                      ; F39E: A9 0A       ..
-    STA L0003                                     ; F3A0: 85 03       ..
+    STA RAND_2                                    ; F3A0: 85 03       ..
     LDA #&2A ; '*'                                ; F3A2: A9 2A       .*
-    STA L0004                                     ; F3A4: 85 04       ..
+    STA RAND_3                                    ; F3A4: 85 04       ..
     LDX #&E6                                      ; F3A6: A2 E6       ..
     STX L0005                                     ; F3A8: 86 05       ..
     RTS                                           ; F3AA: 60          `
@@ -7195,7 +7221,7 @@ LDFFF = sub_CDFFE+1
     CMP #&F5                                      ; F44A: C9 F5       ..
     ROL A                                         ; F44C: 2A          *
     ORA #&C0                                      ; F44D: 09 C0       ..
-    STA L0029                                     ; F44F: 85 29       .)
+    STA INWK_32                                   ; F44F: 85 29       .)
     JMP DORND2                                    ; F451: 4C AC F4    L..
 
     PHA                                           ; F454: 48          H
@@ -7265,19 +7291,19 @@ LDFFF = sub_CDFFE+1
     LDA RAND                                      ; F4AD: A5 02       ..
     ROL A                                         ; F4AF: 2A          *
     TAX                                           ; F4B0: AA          .
-    ADC L0004                                     ; F4B1: 65 04       e.
+    ADC RAND_3                                    ; F4B1: 65 04       e.
     STA RAND                                      ; F4B3: 85 02       ..
-    STX L0004                                     ; F4B5: 86 04       ..
-    LDA L0003                                     ; F4B7: A5 03       ..
+    STX RAND_3                                    ; F4B5: 86 04       ..
+    LDA RAND_2                                    ; F4B7: A5 03       ..
     TAX                                           ; F4B9: AA          .
     ADC L0005                                     ; F4BA: 65 05       e.
-    STA L0003                                     ; F4BC: 85 03       ..
+    STA RAND_2                                    ; F4BC: 85 03       ..
     STX L0005                                     ; F4BE: 86 05       ..
     RTS                                           ; F4C0: 60          `
 
 ; ******************************************************************************
 .PROJ
-    LDA INWK                                      ; F4C1: A5 09       ..
+    LDA XX1                                       ; F4C1: A5 09       ..
     STA P                                         ; F4C3: 85 2F       ./
     LDA INWK_1                                    ; F4C5: A5 0A       ..
     STA P_1                                       ; F4C7: 85 30       .0
@@ -7286,10 +7312,10 @@ LDFFF = sub_CDFFE+1
     BCS CF4F8                                     ; F4CE: B0 28       .(
     LDA K                                         ; F4D0: A5 7D       .}
     ADC #&80                                      ; F4D2: 69 80       i.
-    STA XX2                                       ; F4D4: 85 3D       .=
+    STA K3                                        ; F4D4: 85 3D       .=
     TXA                                           ; F4D6: 8A          .
     ADC #0                                        ; F4D7: 69 00       i.
-    STA K3_1                                      ; F4D9: 85 3E       .>
+    STA XX2_1                                     ; F4D9: 85 3E       .>
     LDA INWK_3                                    ; F4DB: A5 0C       ..
     STA P                                         ; F4DD: 85 2F       ./
     LDA INWK_4                                    ; F4DF: A5 0D       ..
@@ -7299,11 +7325,11 @@ LDFFF = sub_CDFFE+1
     JSR sub_CF4FB                                 ; F4E7: 20 FB F4     ..
     BCS CF4F8                                     ; F4EA: B0 0C       ..
     LDA K                                         ; F4EC: A5 7D       .}
-    ADC L00B1                                     ; F4EE: 65 B1       e.
+    ADC Yx1M2                                     ; F4EE: 65 B1       e.
     STA K4                                        ; F4F0: 85 4B       .K
     TXA                                           ; F4F2: 8A          .
     ADC #0                                        ; F4F3: 69 00       i.
-    STA XX2_15                                    ; F4F5: 85 4C       .L
+    STA K4_1                                      ; F4F5: 85 4C       .L
     CLC                                           ; F4F7: 18          .
 .CF4F8
     RTS                                           ; F4F8: 60          `
@@ -7912,7 +7938,7 @@ LDFFF = sub_CDFFE+1
     STA R                                         ; F850: 85 98       ..
     RTS                                           ; F852: 60          `
 
-    LDX INWK,Y                                    ; F853: B6 09       ..
+    LDX XX1,Y                                     ; F853: B6 09       ..
     STX Q                                         ; F855: 86 97       ..
     LDA XX15                                      ; F857: A5 71       .q
     JSR MULT12                                    ; F859: 20 3C F8     <.

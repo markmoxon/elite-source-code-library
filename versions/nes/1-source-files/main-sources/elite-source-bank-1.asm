@@ -61,27 +61,17 @@ RAND                = &0002
 T1                  = &0006
 SC                  = &0007
 INWK                = &0009
-L002A               = &002A
-L002B               = &002B
+L002A               = &002A     \ New variable, XX19 has moved
+L002B               = &002B     \ New variable, XX19+1 has moved
 NEWB                = &002D
 P                   = &002F
 XC                  = &0032
 YC                  = &003B
 QQ17                = &003C
 XX2                 = &003D
-L003F               = &003F
-L0040               = &0040
 K4                  = &004B
 XX16                = &004D
-L0051               = &0051
-L0052               = &0052
-L0054               = &0054
-L0057               = &0057
-L005A               = &005A
-L005B               = &005B
-L005C               = &005C
 XX0                 = &005F
-L0060               = &0060
 INF                 = &0061
 V                   = &0063
 XX                  = &0065
@@ -95,19 +85,10 @@ Y1                  = &0072
 X2                  = &0073
 Y2                  = &0074
 XX12                = &0077
-L0079               = &0079
-L007A               = &007A
-L007B               = &007B
-L007C               = &007C
 K                   = &007D
 QQ15                = &0082
 XX18                = &0088
-L0089               = &0089
-L008A               = &008A
-L008B               = &008B
 K6                  = &008C
-L008E               = &008E
-L0090               = &0090
 BET2                = &0091
 DELT4               = &0094
 U                   = &0096
@@ -116,9 +97,9 @@ R                   = &0098
 S                   = &0099
 T                   = &009A
 XSAV                = &009B
-L009C               = &009C
+YSAV                = &009C
 XX17                = &009D
-L009E               = &009E
+W                   = &009E
 ZZ                  = &00A0
 XX13                = &00A1
 TYPE                = &00A3
@@ -133,10 +114,11 @@ XX20                = &00AC
 RAT                 = &00AE
 RAT2                = &00AF
 widget              = &00B0
-L00B1               = &00B1
-L00B2               = &00B2
+Yx1M2               = &00B1
+Yx2M2               = &00B2
 Yx2M1               = &00B3
 newzp               = &00B6
+
 L00B9               = &00B9
 L00BA               = &00BA
 L00BB               = &00BB
@@ -145,10 +127,9 @@ L00D8               = &00D8
 L00E6               = &00E6
 L00E9               = &00E9
 BANK                = &00F7
-L00F9               = &00F9
+
 XX3                 = &0100
-L0102               = &0102
-L0103               = &0103
+
 L0200               = &0200
 L0202               = &0202
 L0203               = &0203
@@ -169,6 +150,7 @@ L02E8               = &02E8
 L02E9               = &02E9
 L02EA               = &02EA
 L02EB               = &02EB
+
 L0374               = &0374
 L037E               = &037E
 MJ                  = &038A
@@ -229,8 +211,6 @@ L05EE               = &05EE
 L05EF               = &05EF
 L05F0               = &05F0
 L05F1               = &05F1
-Kpercent            = &0600
-L0606               = &0606
 PPUCTRL             = &2000
 PPUMASK             = &2001
 PPUSTATUS           = &2002
@@ -250,10 +230,8 @@ antilog             = &C300
 antilogODD          = &C400
 SNE                 = &C500
 ACT                 = &C520
-LC53E               = &C53E
 LC53F               = &C53F
 XX21                = &C540
-LCE9E               = &CE9E
 NMI                 = &CED5
 NAMETABLE0          = &D06D
 LD9F7               = &D9F7
@@ -545,7 +523,7 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
 
 .F2A8_BANK1
 
- LDA L009E              \ B975, called via F2A8 in 7.asm
+ LDA W                  \ B975, called via F2A8 in 7.asm
  BNE CB974              \ (e.g. called from bank 0)
  LDX TYPE
  BMI CB974
@@ -761,7 +739,7 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  ASL A
  ASL A
  TAX
- LDA L009E
+ LDA W
  BNE CBB1F
  LDA #&F0
  STA L022C,X

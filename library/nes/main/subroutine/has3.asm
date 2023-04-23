@@ -1,7 +1,7 @@
 .HAS3
 
  STX R
- STY L009C
+ STY YSAV
  LSR A
  LSR A
  LSR A
@@ -45,7 +45,7 @@
  ORA (SC),Y
  STA (SC),Y
 .loop_CB6F5
- LDY L009C
+ LDY YSAV
  RTS
 
 .CB6F8

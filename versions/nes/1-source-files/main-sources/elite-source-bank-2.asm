@@ -58,10 +58,14 @@ LOAD% = &8000
 ; Memory locations
 ZP                  = &0000
 RAND                = &0002
+RAND_1              = &0002
+RAND_2              = &0003
+RAND_3              = &0004
 T1                  = &0006
 SC                  = &0007
 SC_1                = &0008
 INWK                = &0009
+XX1                 = &0009
 INWK_1              = &000A
 INWK_2              = &000B
 INWK_3              = &000C
@@ -93,6 +97,10 @@ INWK_28             = &0025
 INWK_29             = &0026
 INWK_30             = &0027
 INWK_31             = &0028
+INWK_32             = &0029
+INWK_33             = &002A
+INWK_34             = &002B
+INWK_35             = &002C
 NEWB                = &002D
 P                   = &002F
 P_1                 = &0030
@@ -101,12 +109,23 @@ XC                  = &0032
 L0037               = &0037
 YC                  = &003B
 QQ17                = &003C
+K3                  = &003D
 XX2                 = &003D
-K3_1                = &003E
-XX2_1               = &003F
-XX2_2               = &0040
+XX2_1               = &003E
+XX2_2               = &003F
+XX2_3               = &0040
+XX2_4               = &0041
+XX2_5               = &0042
+XX2_6               = &0043
+XX2_7               = &0044
+XX2_8               = &0045
+XX2_9               = &0046
+XX2_10              = &0047
+XX2_11              = &0048
+XX2_12              = &0049
+XX2_13              = &004A
 K4                  = &004B
-XX2_15              = &004C
+K4_1                = &004C
 XX16                = &004D
 XX16_1              = &004E
 XX16_2              = &004F
@@ -123,10 +142,12 @@ XX16_12             = &0059
 XX16_13             = &005A
 XX16_14             = &005B
 XX16_15             = &005C
+XX16_16             = &005D
+XX16_17             = &005E
 XX0                 = &005F
 XX0_1               = &0060
 INF                 = &0061
-INF_1               = &0061
+INF_1               = &0062
 V                   = &0063
 V_1                 = &0064
 XX                  = &0065
@@ -138,6 +159,7 @@ BET1                = &006A
 ALP1                = &006E
 ALP2                = &006F
 ALP2_1              = &0070
+X1                  = &0071
 XX15                = &0071
 Y1                  = &0072
 X2                  = &0073
@@ -155,6 +177,12 @@ K_1                 = &007E
 K_2                 = &007F
 K_3                 = &0080
 QQ15                = &0082
+QQ15_1              = &0083
+QQ15_2              = &0084
+QQ15_3              = &0085
+QQ15_4              = &0086
+QQ15_5              = &0087
+K5                  = &0088
 XX18                = &0088
 XX18_1              = &0089
 XX18_2              = &008A
@@ -176,7 +204,7 @@ T                   = &009A
 XSAV                = &009B
 YSAV                = &009C
 XX17                = &009D
-L009E               = &009E
+W                   = &009E
 ZZ                  = &00A0
 XX13                = &00A1
 TYPE                = &00A3
@@ -191,6 +219,8 @@ XX20                = &00AC
 RAT                 = &00AE
 RAT2                = &00AF
 widget              = &00B0
+Yx1M2               = &00B1
+Yx2M2               = &00B2
 Yx2M1               = &00B3
 newzp               = &00B6
 L00B8               = &00B8
@@ -204,7 +234,7 @@ L00D9               = &00D9
 L00E6               = &00E6
 L00E9               = &00E9
 BANK                = &00F7
-L00F9               = &00F9
+XX3m3               = &00F9
 XX3                 = &0100
 XX3_1               = &0101
 MJ                  = &038A
@@ -2345,7 +2375,7 @@ NORM                = &FAF8
     JMP CB1C4                                     ; B161: 4C C4 B1    L..
 
 .CB164
-    CMP L00F9                                     ; B164: C5 F9       ..
+    CMP XX3m3                                     ; B164: C5 F9       ..
     BCC CB187                                     ; B166: 90 1F       ..
     CMP #&81                                      ; B168: C9 81       ..
     BCC CB1D0                                     ; B16A: 90 64       .d
@@ -3000,7 +3030,7 @@ JMTBm1 = sub_CB203+2
 .CB627
     LDA #2                                        ; B627: A9 02       ..
     STA YC                                        ; B629: 85 3B       .;
-    LDA XX2                                       ; B62B: A5 3D       .=
+    LDA K3                                        ; B62B: A5 3D       .=
     JMP CB652                                     ; B62D: 4C 52 B6    LR.
 
 .CB630
@@ -3011,7 +3041,7 @@ JMTBm1 = sub_CB203+2
     LDA #&0C                                      ; B633: A9 0C       ..
 ; ******************************************************************************
 .CHPR
-    STA XX2                                       ; B635: 85 3D       .=
+    STA K3                                        ; B635: 85 3D       .=
     LDA L00E9                                     ; B637: A5 E9       ..
     BPL CB644                                     ; B639: 10 09       ..
     LDA PPUSTATUS                                 ; B63B: AD 02 20    ..
@@ -3019,7 +3049,7 @@ JMTBm1 = sub_CB203+2
     BPL CB644                                     ; B63F: 10 03       ..
     JSR NAMETABLE0                                ; B641: 20 6D D0     m.
 .CB644
-    LDA XX2                                       ; B644: A5 3D       .=
+    LDA K3                                        ; B644: A5 3D       .=
     STY L0482                                     ; B646: 8C 82 04    ...
     STX L0481                                     ; B649: 8E 81 04    ...
     LDY QQ17                                      ; B64C: A4 3C       .<
@@ -3059,7 +3089,7 @@ JMTBm1 = sub_CB203+2
 
 .CB686
     INC XC                                        ; B686: E6 32       .2
-    LDA L009E                                     ; B688: A5 9E       ..
+    LDA W                                         ; B688: A5 9E       ..
     AND #&30 ; '0'                                ; B68A: 29 30       )0
     BEQ CB6A9                                     ; B68C: F0 1B       ..
     LDY L0037                                     ; B68E: A4 37       .7
@@ -3069,17 +3099,17 @@ JMTBm1 = sub_CB203+2
     BEQ CB6A9                                     ; B696: F0 11       ..
     CPY #2                                        ; B698: C0 02       ..
     BNE CB6A9                                     ; B69A: D0 0D       ..
-    LDA XX2                                       ; B69C: A5 3D       .=
+    LDA K3                                        ; B69C: A5 3D       .=
     CLC                                           ; B69E: 18          .
     ADC #&5F ; '_'                                ; B69F: 69 5F       i_
     JMP CB7CF                                     ; B6A1: 4C CF B7    L..
 
 .CB6A4
-    LDA XX2                                       ; B6A4: A5 3D       .=
+    LDA K3                                        ; B6A4: A5 3D       .=
     JMP CB7CF                                     ; B6A6: 4C CF B7    L..
 
 .CB6A9
-    LDA XX2                                       ; B6A9: A5 3D       .=
+    LDA K3                                        ; B6A9: A5 3D       .=
     CMP #&20 ; ' '                                ; B6AB: C9 20       .
     BNE CB6B2                                     ; B6AD: D0 03       ..
     JMP CB75B                                     ; B6AF: 4C 5B B7    L[.
@@ -3108,7 +3138,7 @@ JMTBm1 = sub_CB203+2
     JMP CB8A6                                     ; B6D5: 4C A6 B8    L..
 
 .CB6D8
-    LDA L009E                                     ; B6D8: A5 9E       ..
+    LDA W                                         ; B6D8: A5 9E       ..
     BNE CB6DF                                     ; B6DA: D0 03       ..
     JMP CB83E                                     ; B6DC: 4C 3E B8    L>.
 
@@ -3196,7 +3226,7 @@ JMTBm1 = sub_CB203+2
     BPL CB76E                                     ; B769: 10 03       ..
     JSR NAMETABLE0                                ; B76B: 20 6D D0     m.
 .CB76E
-    LDA XX2                                       ; B76E: A5 3D       .=
+    LDA K3                                        ; B76E: A5 3D       .=
     CLC                                           ; B770: 18          .
     RTS                                           ; B771: 60          `
 
@@ -3275,7 +3305,7 @@ JMTBm1 = sub_CB203+2
     JMP CB75B                                     ; B7E2: 4C 5B B7    L[.
 
 .CB7E5
-    LDY L009E                                     ; B7E5: A4 9E       ..
+    LDY W                                         ; B7E5: A4 9E       ..
     CPY #&9D                                      ; B7E7: C0 9D       ..
     BEQ CB7EF                                     ; B7E9: F0 04       ..
     CPY #&DF                                      ; B7EB: C0 DF       ..

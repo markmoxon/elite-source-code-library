@@ -61,7 +61,7 @@
  INY                    \ Increment the index in Y so it points to the next byte
                         \ from the coordinate we are copying
 
- LDA L00F9,Y            \ Copy the Y-th byte from the ship line heap to the X-th
+ LDA XX3-7,Y            \ Copy the Y-th byte from the ship line heap to the X-th
  STA K3,X               \ byte of K3 ???
 
  DEX                    \ Decrement the X index
@@ -89,9 +89,9 @@
  STA L03E6
  TAY
  LDA XX2
- ORA L003F
+ ORA XX2+2
  BNE CBB7C
- LDA L0040
+ LDA XX2+3
  SBC #3
  BCC CBB7C
  STA L02EB,Y

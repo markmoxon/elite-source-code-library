@@ -99,7 +99,7 @@ IF NOT(_NES_VERSION)
 ELIF _NES_VERSION
 
  LDA XX15+2             \ If y1_lo > y-coordinate of the bottom of the screen
- CMP L00B2              \ jump to LL137 to return from the subroutine with the
+ CMP Yx2M2              \ jump to LL137 to return from the subroutine with the
  BCS LL137              \ C flag set, as the line doesn't fit on-screen ???
 
 ENDIF
@@ -162,7 +162,7 @@ IF NOT(_NES_VERSION)
 ELIF _NES_VERSION
 
  LDA X2                 \ ???
- CMP L00B2
+ CMP Yx2M2
  BCS CA7A8
 
 .loop_CA79C

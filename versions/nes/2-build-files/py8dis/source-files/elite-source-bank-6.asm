@@ -1,11 +1,14 @@
 ; Memory locations
 ZP                  = &0000
 RAND                = &0002
-L0003               = &0003
+RAND_1              = &0002
+RAND_2              = &0003
+RAND_3              = &0004
 T1                  = &0006
 SC                  = &0007
 SC_1                = &0008
 INWK                = &0009
+XX1                 = &0009
 INWK_1              = &000A
 INWK_2              = &000B
 INWK_3              = &000C
@@ -37,6 +40,10 @@ INWK_28             = &0025
 INWK_29             = &0026
 INWK_30             = &0027
 INWK_31             = &0028
+INWK_32             = &0029
+INWK_33             = &002A
+INWK_34             = &002B
+INWK_35             = &002C
 NEWB                = &002D
 P                   = &002F
 P_1                 = &0030
@@ -49,12 +56,23 @@ L0039               = &0039
 L003A               = &003A
 YC                  = &003B
 QQ17                = &003C
+K3                  = &003D
 XX2                 = &003D
-K3_1                = &003E
-XX2_1               = &003F
-XX2_2               = &0040
+XX2_1               = &003E
+XX2_2               = &003F
+XX2_3               = &0040
+XX2_4               = &0041
+XX2_5               = &0042
+XX2_6               = &0043
+XX2_7               = &0044
+XX2_8               = &0045
+XX2_9               = &0046
+XX2_10              = &0047
+XX2_11              = &0048
+XX2_12              = &0049
+XX2_13              = &004A
 K4                  = &004B
-XX2_15              = &004C
+K4_1                = &004C
 XX16                = &004D
 XX16_1              = &004E
 XX16_2              = &004F
@@ -71,11 +89,12 @@ XX16_12             = &0059
 XX16_13             = &005A
 XX16_14             = &005B
 XX16_15             = &005C
+XX16_16             = &005D
+XX16_17             = &005E
 XX0                 = &005F
 XX0_1               = &0060
 INF                 = &0061
-INF_1               = &0061
-L0062               = &0062
+INF_1               = &0062
 V                   = &0063
 V_1                 = &0064
 XX                  = &0065
@@ -87,6 +106,7 @@ BET1                = &006A
 ALP1                = &006E
 ALP2                = &006F
 ALP2_1              = &0070
+X1                  = &0071
 XX15                = &0071
 Y1                  = &0072
 X2                  = &0073
@@ -104,6 +124,12 @@ K_1                 = &007E
 K_2                 = &007F
 K_3                 = &0080
 QQ15                = &0082
+QQ15_1              = &0083
+QQ15_2              = &0084
+QQ15_3              = &0085
+QQ15_4              = &0086
+QQ15_5              = &0087
+K5                  = &0088
 XX18                = &0088
 XX18_1              = &0089
 XX18_2              = &008A
@@ -126,7 +152,7 @@ T                   = &009A
 XSAV                = &009B
 YSAV                = &009C
 XX17                = &009D
-L009E               = &009E
+W                   = &009E
 ZZ                  = &00A0
 XX13                = &00A1
 L00A2               = &00A2
@@ -143,6 +169,8 @@ XX20                = &00AC
 RAT                 = &00AE
 RAT2                = &00AF
 widget              = &00B0
+Yx1M2               = &00B1
+Yx2M2               = &00B2
 Yx2M1               = &00B3
 newzp               = &00B6
 L00B8               = &00B8
@@ -153,6 +181,7 @@ L00CC               = &00CC
 L00D2               = &00D2
 L00E9               = &00E9
 BANK                = &00F7
+XX3m3               = &00F9
 L00FE               = &00FE
 L00FF               = &00FF
 XX3                 = &0100
@@ -3743,7 +3772,7 @@ L88BD = L88BC+1
     RTS                                           ; A5AA: 60          `
 
     PHA                                           ; A5AB: 48          H
-    LDA L009E                                     ; A5AC: A5 9E       ..
+    LDA W                                         ; A5AC: A5 9E       ..
     BNE CA5B6                                     ; A5AE: D0 06       ..
     JSR LCEA5                                     ; A5B0: 20 A5 CE     ..
     JMP CA614                                     ; A5B3: 4C 14 A6    L..
@@ -3752,7 +3781,7 @@ L88BD = L88BC+1
     JSR LEDAB                                     ; A5B6: 20 AB ED     ..
     LDY #&14                                      ; A5B9: A0 14       ..
     STY NOSTM                                     ; A5BB: 8C E5 03    ...
-    STY L0003                                     ; A5BE: 84 03       ..
+    STY RAND_2                                    ; A5BE: 84 03       ..
     LDA L03F1                                     ; A5C0: AD F1 03    ...
     STA RAND                                      ; A5C3: 85 02       ..
 .CA5C5
@@ -3876,8 +3905,8 @@ L88BD = L88BC+1
     STA L0093                                     ; A69F: 85 93       ..
     LDA L03F1                                     ; A6A1: AD F1 03    ...
     CLC                                           ; A6A4: 18          .
-    ADC L0003                                     ; A6A5: 65 03       e.
-    STA L0003                                     ; A6A7: 85 03       ..
+    ADC RAND_2                                    ; A6A5: 65 03       e.
+    STA RAND_2                                    ; A6A7: 85 03       ..
     JSR sub_CA761                                 ; A6A9: 20 61 A7     a.
     PLA                                           ; A6AC: 68          h
     BNE CA6D3                                     ; A6AD: D0 24       .$
@@ -3888,7 +3917,7 @@ L88BD = L88BC+1
     LDA #2                                        ; A6B9: A9 02       ..
     JSR sub_CA917                                 ; A6BB: 20 17 A9     ..
     LDA #0                                        ; A6BE: A9 00       ..
-    STA L009E                                     ; A6C0: 85 9E       ..
+    STA W                                         ; A6C0: 85 9E       ..
     JSR LEF20                                     ; A6C2: 20 20 EF      .
     LDA #&25 ; '%'                                ; A6C5: A9 25       .%
     STA L00D2                                     ; A6C7: 85 D2       ..
@@ -3940,7 +3969,7 @@ L88BD = L88BC+1
     BCS loop_CA70E                                ; A714: B0 F8       ..
 .CA716
     ADC #&3A ; ':'                                ; A716: 69 3A       i:
-    STA XX18                                      ; A718: 85 88       ..
+    STA K5                                        ; A718: 85 88       ..
     LDX L04A8                                     ; A71A: AE A8 04    ...
     LDA LACB6,X                                   ; A71D: BD B6 AC    ...
     LDY LACBA,X                                   ; A720: BC BA AC    ...
@@ -4114,7 +4143,7 @@ L88BD = L88BC+1
 
 .sub_CA86C
     STX INF                                       ; A86C: 86 61       .a
-    STY L0062                                     ; A86E: 84 62       .b
+    STY INF_1                                     ; A86E: 84 62       .b
     LDA L00E9                                     ; A870: A5 E9       ..
     BPL CA87D                                     ; A872: 10 09       ..
     LDA PPUSTATUS                                 ; A874: AD 02 20    ..
@@ -4762,7 +4791,7 @@ L88BD = L88BC+1
     LDA #&BB                                      ; B459: A9 BB       ..
     JSR TT66                                      ; B45B: 20 6E F2     n.
     LDA #&8B                                      ; B45E: A9 8B       ..
-    STA L009E                                     ; B460: 85 9E       ..
+    STA W                                         ; B460: 85 9E       ..
     LDY #0                                        ; B462: A0 00       ..
     STY L03EE                                     ; B464: 8C EE 03    ...
     STY QQ17                                      ; B467: 84 3C       .<
@@ -4776,7 +4805,7 @@ L88BD = L88BC+1
     STA V_1                                       ; B47B: 85 64       .d
     JSR sub_CB44C                                 ; B47D: 20 4C B4     L.
     LDA #&BB                                      ; B480: A9 BB       ..
-    STA L009E                                     ; B482: 85 9E       ..
+    STA W                                         ; B482: 85 9E       ..
     LDX L04A8                                     ; B484: AE A8 04    ...
     LDA LB436,X                                   ; B487: BD 36 B4    .6.
     STA V                                         ; B48A: 85 63       .c

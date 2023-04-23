@@ -21,6 +21,10 @@ IF _MASTER_VERSION \ Platform
 
 INCLUDE "library/master/loader/variable/mos.asm"
 
+ELIF _NES_VERSION
+
+ SKIP 2                 \ These bytes appear to be unused
+
 ENDIF
 
 INCLUDE "library/common/main/variable/rand.asm"
@@ -52,6 +56,27 @@ ENDIF
 INCLUDE "library/common/main/variable/sc.asm"
 INCLUDE "library/common/main/variable/sch.asm"
 
+IF _NES_VERSION
+
+INCLUDE "library/common/main/variable/xx1.asm"
+INCLUDE "library/common/main/variable/inwk.asm"
+
+.L002A
+
+ SKIP 1
+
+.L002B
+
+ SKIP 1
+
+ SKIP 1
+
+INCLUDE "library/enhanced/main/variable/newb.asm"
+
+ SKIP 1
+
+ENDIF
+
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
 INCLUDE "library/common/main/variable/xx16.asm"
@@ -72,6 +97,22 @@ INCLUDE "library/common/main/variable/xx2.asm"
 INCLUDE "library/common/main/variable/k4.asm"
 INCLUDE "library/common/main/variable/xx16.asm"
 
+ELIF _NES_VERSION
+
+INCLUDE "library/common/main/variable/p.asm"
+INCLUDE "library/common/main/variable/xc.asm"
+
+ SKIP 8
+
+INCLUDE "library/common/main/variable/yc.asm"
+INCLUDE "library/common/main/variable/qq17.asm"
+INCLUDE "library/common/main/variable/k3.asm"
+INCLUDE "library/common/main/variable/xx2.asm"
+INCLUDE "library/common/main/variable/k4.asm"
+INCLUDE "library/common/main/variable/xx16.asm"
+
+SUNX = &003E
+
 ENDIF
 
 IF _6502SP_VERSION \ Platform
@@ -80,11 +121,28 @@ INCLUDE "library/6502sp/main/variable/needkey.asm"
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
 INCLUDE "library/common/main/variable/xx0.asm"
 INCLUDE "library/common/main/variable/inf.asm"
 INCLUDE "library/common/main/variable/v.asm"
 INCLUDE "library/common/main/variable/xx.asm"
 INCLUDE "library/common/main/variable/yy.asm"
+
+ELIF _NES_VERSION
+
+INCLUDE "library/common/main/variable/xx0.asm"
+
+.XX19
+
+ SKIP 0
+
+INCLUDE "library/common/main/variable/inf.asm"
+INCLUDE "library/common/main/variable/v.asm"
+INCLUDE "library/common/main/variable/xx.asm"
+INCLUDE "library/common/main/variable/yy.asm"
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
@@ -111,7 +169,7 @@ ENDIF
 INCLUDE "library/common/main/variable/qq22.asm"
 INCLUDE "library/common/main/variable/ecma.asm"
 
-IF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Platform
+IF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
 
 INCLUDE "library/common/main/variable/alp1.asm"
 INCLUDE "library/common/main/variable/alp2.asm"
@@ -150,8 +208,16 @@ INCLUDE "library/common/main/variable/ky19.asm"
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
 INCLUDE "library/common/main/variable/las.asm"
 INCLUDE "library/common/main/variable/mstg.asm"
+
+ELIF _NES_VERSION
+
+ SKIP 1
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
@@ -173,7 +239,12 @@ INCLUDE "library/common/main/variable/dl.asm"
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
 INCLUDE "library/common/main/variable/lsp.asm"
+
+ENDIF
+
 INCLUDE "library/common/main/variable/qq15.asm"
 INCLUDE "library/common/main/variable/k5.asm"
 INCLUDE "library/common/main/variable/xx18.asm"
@@ -198,6 +269,12 @@ IF _MASTER_VERSION \ Platform
 INCLUDE "library/common/main/variable/k6.asm"
 INCLUDE "library/common/main/variable/qq19.asm"
 
+ELIF _NES_VERSION
+
+ SKIP 4
+
+INCLUDE "library/common/main/variable/k6.asm"
+
 ENDIF
 
 INCLUDE "library/common/main/variable/bet2.asm"
@@ -215,7 +292,7 @@ INCLUDE "library/common/main/variable/q.asm"
 INCLUDE "library/common/main/variable/r.asm"
 INCLUDE "library/common/main/variable/s.asm"
 
-IF _MASTER_VERSION \ Platform
+IF _MASTER_VERSION OR _NES_VERSION \ Platform
 
 INCLUDE "library/common/main/variable/t.asm"
 
@@ -225,7 +302,7 @@ INCLUDE "library/common/main/variable/xsav.asm"
 INCLUDE "library/common/main/variable/ysav.asm"
 INCLUDE "library/common/main/variable/xx17.asm"
 
-IF _MASTER_VERSION \ Platform
+IF _MASTER_VERSION OR _NES_VERSION \ Platform
 
 INCLUDE "library/master/main/variable/w.asm"
 
@@ -267,8 +344,18 @@ INCLUDE "library/6502sp/main/variable/lbup.asm"
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
 INCLUDE "library/common/main/variable/qq12.asm"
 INCLUDE "library/common/main/variable/tgt.asm"
+
+ELIF _NES_VERSION
+
+ SKIP 1
+
+INCLUDE "library/common/main/variable/tgt.asm"
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Platform
 
@@ -298,7 +385,12 @@ INCLUDE "library/common/main/variable/xx20.asm"
 INCLUDE "library/common/main/variable/xx14-lsnum.asm"
 INCLUDE "library/common/main/variable/rat.asm"
 INCLUDE "library/common/main/variable/rat2.asm"
+
+IF NOT(_NES_VERSION)
+
 INCLUDE "library/common/main/variable/k2.asm"
+
+ENDIF
 
 IF _6502SP_VERSION \ Platform
 
@@ -353,6 +445,68 @@ INCLUDE "library/common/main/variable/nostm.asm"
 ELIF _ELITE_A_VERSION
 
 INCLUDE "library/elite-a/flight/variable/finder.asm"
+
+ELIF _NES_VERSION
+
+INCLUDE "library/advanced/main/variable/widget.asm"
+
+.Yx1M2
+
+ SKIP 1
+
+.Yx2M2
+
+ SKIP 1
+
+INCLUDE "library/master/main/variable/yx2m1.asm"
+
+ SKIP 2
+
+INCLUDE "library/master/main/variable/newzp.asm"
+
+ SKIP 2
+
+.L00B9
+
+ SKIP 1
+
+.L00BA
+
+ SKIP 1
+
+.L00BB
+
+ SKIP 1
+
+ ORG &D2
+
+.L00D2
+
+ SKIP 1
+
+ ORG &D8
+
+.L00D8
+
+ SKIP 1
+
+ ORG &E6
+
+.L00E6
+
+ SKIP 1
+
+ ORG &E9
+
+.L00E9
+
+ SKIP 1
+
+ ORG &F7
+
+.BANK
+
+ SKIP 1
 
 ENDIF
 

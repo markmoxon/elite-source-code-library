@@ -55,86 +55,10 @@
 CODE% = &8000
 LOAD% = &8000
 
-; Memory locations
-ZP                  = &0000
-RAND                = &0002
-T1                  = &0006
-SC                  = &0007
-INWK                = &0009
-XX1                 = &0009
-L002A               = &002A     \ New variable, XX19 has moved
-L002B               = &002B     \ New variable, XX19+1 has moved
-NEWB                = &002D
-P                   = &002F
-XC                  = &0032
-YC                  = &003B
-QQ17                = &003C
-K3                  = &003D
-XX2                 = &003D
-SUNX                = &003E
-K4                  = &004B
-XX16                = &004D
-XX0                 = &005F
-XX19                = &0061
-INF                 = &0061
-V                   = &0063
-XX                  = &0065
-YY                  = &0067
-BETA                = &0069
-BET1                = &006A
-ALP1                = &006E
-ALP2                = &006F
-XX15                = &0071
-X1                  = &0071
-Y1                  = &0072
-X2                  = &0073
-Y2                  = &0074
-XX12                = &0077
-K                   = &007D
-QQ15                = &0082
-XX18                = &0088
-K5                  = &0088
-K6                  = &008C
-BET2                = &0091
-DELT4               = &0094
-U                   = &0096
-Q                   = &0097
-R                   = &0098
-S                   = &0099
-T                   = &009A
-XSAV                = &009B
-YSAV                = &009C
-XX17                = &009D
-W                   = &009E
-ZZ                  = &00A0
-XX13                = &00A1
-TYPE                = &00A3
-ALPHA               = &00A4
-TGT                 = &00A6
-FLAG                = &00A7
-CNT                 = &00A8
-CNT2                = &00A9
-STP                 = &00AA
-XX4                 = &00AB
-XX20                = &00AC
-RAT                 = &00AE
-RAT2                = &00AF
-widget              = &00B0
-Yx1M2               = &00B1
-Yx2M2               = &00B2
-Yx2M1               = &00B3
-newzp               = &00B6
+INCLUDE "library/common/main/workspace/zp.asm"
+INCLUDE "library/common/main/workspace/xx3.asm"
 
-L00B9               = &00B9
-L00BA               = &00BA
-L00BB               = &00BB
-L00D2               = &00D2
-L00D8               = &00D8
-L00E6               = &00E6
-L00E9               = &00E9
-BANK                = &00F7
-
-XX3                 = &0100
+\ Workspace
 
 L0200               = &0200
 L0202               = &0202
@@ -156,6 +80,8 @@ L02E8               = &02E8
 L02E9               = &02E9
 L02EA               = &02EA
 L02EB               = &02EB
+
+\ WP workspace
 
 L0374               = &0374
 L037E               = &037E
@@ -217,6 +143,11 @@ L05EE               = &05EE
 L05EF               = &05EF
 L05F0               = &05F0
 L05F1               = &05F1
+
+INCLUDE "library/common/main/workspace/k_per_cent.asm"
+
+\ NES PPU registers
+
 PPUCTRL             = &2000
 PPUMASK             = &2001
 PPUSTATUS           = &2002
@@ -226,6 +157,9 @@ PPUSCROLL           = &2005
 PPUADDR             = &2006
 PPUDATA             = &2007
 OAMDMA              = &4014
+
+\ Shared code from 7.asm
+
 LC006               = &C006
 LC007               = &C007
 RESETBANK           = &C0AD
@@ -294,10 +228,6 @@ DVID3B2             = &F962
 LL5                 = &FA55
 LL28                = &FA91
 NORM                = &FAF8
-
-
-
-INCLUDE "library/common/main/workspace/k_per_cent.asm"
 
  ORG CODE%
 

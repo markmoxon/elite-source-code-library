@@ -97,6 +97,7 @@ XX16_17     = &005E
 XX0         = &005F
 XX0_1       = &0060
 INF         = &0061
+XX19        = &0061
 INF_1       = &0062
 V           = &0063
 V_1         = &0064
@@ -2125,7 +2126,7 @@ LC006 = sub_CC004+2
     ASL A                                         ; CE91: 0A          .
     TAY                                           ; CE92: A8          .
     LDA LCE7E,Y                                   ; CE93: B9 7E CE    .~.
-    STA INF                                       ; CE96: 85 61       .a
+    STA XX19                                      ; CE96: 85 61       .a
     LDA LCE7F,Y                                   ; CE98: B9 7F CE    ...
     STA INF_1                                     ; CE9B: 85 62       .b
     RTS                                           ; CE9D: 60          `
@@ -2141,9 +2142,9 @@ LC006 = sub_CC004+2
     BMI CCEB9                                     ; CEAC: 30 0B       0.
     JSR sub_CCE90                                 ; CEAE: 20 90 CE     ..
     LDY #&1F                                      ; CEB1: A0 1F       ..
-    LDA (INF),Y                                   ; CEB3: B1 61       .a
+    LDA (XX19),Y                                  ; CEB3: B1 61       .a
     AND #&EF                                      ; CEB5: 29 EF       ).
-    STA (INF),Y                                   ; CEB7: 91 61       .a
+    STA (XX19),Y                                  ; CEB7: 91 61       .a
 .CCEB9
     INX                                           ; CEB9: E8          .
     BNE loop_CCEA7                                ; CEBA: D0 EB       ..
@@ -6966,7 +6967,7 @@ LDFFF = sub_CDFFE+1
 
     LDA #0                                        ; F25A: A9 00       ..
     LDY #&21 ; '!'                                ; F25C: A0 21       .!
-    STA (INF),Y                                   ; F25E: 91 61       .a
+    STA (XX19),Y                                  ; F25E: 91 61       .a
     LDA BANK                                      ; F260: A5 F7       ..
     PHA                                           ; F262: 48          H
     LDA #1                                        ; F263: A9 01       ..

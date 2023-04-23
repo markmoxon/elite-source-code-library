@@ -151,6 +151,7 @@ XX16_17             = &005E
 XX0                 = &005F
 XX0_1               = &0060
 INF                 = &0061
+XX19                = &0061
 INF_1               = &0062
 V                   = &0063
 V_1                 = &0064
@@ -4084,7 +4085,7 @@ L88BD = L88BC+1
     STX L03FA                                     ; A789: 8E FA 03    ...
     LDY XC                                        ; A78C: A4 32       .2
 .CA78E
-    LDA (INF),Y                                   ; A78E: B1 61       .a
+    LDA (XX19),Y                                  ; A78E: B1 61       .a
     BPL CA795                                     ; A790: 10 03       ..
     TAX                                           ; A792: AA          .
     LDA SC_1,X                                    ; A793: B5 08       ..
@@ -4199,7 +4200,7 @@ L88BD = L88BC+1
     RTS                                           ; A86B: 60          `
 
 .sub_CA86C
-    STX INF                                       ; A86C: 86 61       .a
+    STX XX19                                      ; A86C: 86 61       .a
     STY INF_1                                     ; A86E: 84 62       .b
     LDA L00E9                                     ; A870: A5 E9       ..
     BPL CA87D                                     ; A872: 10 09       ..

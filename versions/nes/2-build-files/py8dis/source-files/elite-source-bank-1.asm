@@ -90,6 +90,7 @@ XX16_17             = &005E
 XX0                 = &005F
 XX0_1               = &0060
 INF                 = &0061
+XX19                = &0061
 INF_1               = &0062
 V                   = &0063
 V_1                 = &0064
@@ -1889,24 +1890,24 @@ NORM                = &FAF8
     STA INWK_31                                   ; A095: 85 28       .(
     LDA #0                                        ; A097: A9 00       ..
     LDY #&1C                                      ; A099: A0 1C       ..
-    STA (INF),Y                                   ; A09B: 91 61       .a
+    STA (XX19),Y                                  ; A09B: 91 61       .a
     LDY #&1E                                      ; A09D: A0 1E       ..
-    STA (INF),Y                                   ; A09F: 91 61       .a
+    STA (XX19),Y                                  ; A09F: 91 61       .a
     JSR sub_CBAED                                 ; A0A1: 20 ED BA     ..
     LDA #&12                                      ; A0A4: A9 12       ..
     STA INWK_34                                   ; A0A6: 85 2B       .+
     LDY #&25 ; '%'                                ; A0A8: A0 25       .%
     JSR DORND                                     ; A0AA: 20 AD F4     ..
-    STA (INF),Y                                   ; A0AD: 91 61       .a
+    STA (XX19),Y                                  ; A0AD: 91 61       .a
     INY                                           ; A0AF: C8          .
     JSR DORND                                     ; A0B0: 20 AD F4     ..
-    STA (INF),Y                                   ; A0B3: 91 61       .a
+    STA (XX19),Y                                  ; A0B3: 91 61       .a
     INY                                           ; A0B5: C8          .
     JSR DORND                                     ; A0B6: 20 AD F4     ..
-    STA (INF),Y                                   ; A0B9: 91 61       .a
+    STA (XX19),Y                                  ; A0B9: 91 61       .a
     INY                                           ; A0BB: C8          .
     JSR DORND                                     ; A0BC: 20 AD F4     ..
-    STA (INF),Y                                   ; A0BF: 91 61       .a
+    STA (XX19),Y                                  ; A0BF: 91 61       .a
     LDA L00E9                                     ; A0C1: A5 E9       ..
     BPL EE28                                      ; A0C3: 10 09       ..
     LDA PPUSTATUS                                 ; A0C5: AD 02 20    ..
@@ -3264,19 +3265,19 @@ NORM                = &FAF8
     BPL loop_CA98A                                ; A991: 10 F7       ..
     STY CNT                                       ; A993: 84 A8       ..
     LDY #&25 ; '%'                                ; A995: A0 25       .%
-    LDA (INF),Y                                   ; A997: B1 61       .a
+    LDA (XX19),Y                                  ; A997: B1 61       .a
     EOR CNT                                       ; A999: 45 A8       E.
     STA RAND                                      ; A99B: 85 02       ..
     INY                                           ; A99D: C8          .
-    LDA (INF),Y                                   ; A99E: B1 61       .a
+    LDA (XX19),Y                                  ; A99E: B1 61       .a
     EOR CNT                                       ; A9A0: 45 A8       E.
     STA RAND_2                                    ; A9A2: 85 03       ..
     INY                                           ; A9A4: C8          .
-    LDA (INF),Y                                   ; A9A5: B1 61       .a
+    LDA (XX19),Y                                  ; A9A5: B1 61       .a
     EOR CNT                                       ; A9A7: 45 A8       E.
     STA RAND_3                                    ; A9A9: 85 04       ..
     INY                                           ; A9AB: C8          .
-    LDA (INF),Y                                   ; A9AC: B1 61       .a
+    LDA (XX19),Y                                  ; A9AC: B1 61       .a
     EOR CNT                                       ; A9AE: 45 A8       E.
     STA L0005                                     ; A9B0: 85 05       ..
     LDY U                                         ; A9B2: A4 96       ..
@@ -5744,7 +5745,7 @@ LB5CF = sub_CB5CE+1
 .sub_CBAED
     LDA #0                                        ; BAED: A9 00       ..
     LDY #&21 ; '!'                                ; BAEF: A0 21       .!
-    STA (INF),Y                                   ; BAF1: 91 61       .a
+    STA (XX19),Y                                  ; BAF1: 91 61       .a
     LDA L00E9                                     ; BAF3: A5 E9       ..
     BPL CBB00                                     ; BAF5: 10 09       ..
     LDA PPUSTATUS                                 ; BAF7: AD 02 20    ..
@@ -5834,19 +5835,19 @@ LB5CF = sub_CB5CE+1
     STA L02E9,Y                                   ; BB8A: 99 E9 02    ...
 .CBB8D
     LDY #&25 ; '%'                                ; BB8D: A0 25       .%
-    LDA (INF),Y                                   ; BB8F: B1 61       .a
+    LDA (XX19),Y                                  ; BB8F: B1 61       .a
     EOR CNT                                       ; BB91: 45 A8       E.
     STA RAND                                      ; BB93: 85 02       ..
     INY                                           ; BB95: C8          .
-    LDA (INF),Y                                   ; BB96: B1 61       .a
+    LDA (XX19),Y                                  ; BB96: B1 61       .a
     EOR CNT                                       ; BB98: 45 A8       E.
     STA RAND_2                                    ; BB9A: 85 03       ..
     INY                                           ; BB9C: C8          .
-    LDA (INF),Y                                   ; BB9D: B1 61       .a
+    LDA (XX19),Y                                  ; BB9D: B1 61       .a
     EOR CNT                                       ; BB9F: 45 A8       E.
     STA RAND_3                                    ; BBA1: 85 04       ..
     INY                                           ; BBA3: C8          .
-    LDA (INF),Y                                   ; BBA4: B1 61       .a
+    LDA (XX19),Y                                  ; BBA4: B1 61       .a
     EOR CNT                                       ; BBA6: 45 A8       E.
     STA L0005                                     ; BBA8: 85 05       ..
     LDY U                                         ; BBAA: A4 96       ..

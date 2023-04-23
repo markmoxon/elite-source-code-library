@@ -8,11 +8,13 @@ ELIF _6502SP_VERSION
 \    Address: &8200 to &85FF (&8500 to &88FF in the Executive version)
 ELIF _MASTER_VERSION
 \    Address: &0400 to &0800
+ELIF _NES_VERSION
+\    Address: &0600 to &0800 ???
 ENDIF
 \   Category: Workspaces
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \    Summary: Ship data blocks and ship line heaps
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
 \    Summary: Ship data blocks
 ENDIF
 \  Deep dive: Ship data blocks
@@ -26,7 +28,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 ELIF _ELECTRON_VERSION
 \ Contains ship data for all the ships, planets and space stations in our local
 \ bubble of universe, along with their corresponding ship line heaps.
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
 \ Contains ship data for all the ships, planets, suns and space stations in our
 \ local bubble of universe.
 ENDIF
@@ -72,6 +74,10 @@ ENDIF
 ELIF _MASTER_VERSION
 
  ORG &0400
+
+ELIF _NES_VERSION
+
+ ORG &0600
 
 ENDIF
 

@@ -61,6 +61,7 @@ RAND                = &0002
 T1                  = &0006
 SC                  = &0007
 INWK                = &0009
+XX1                 = &0009
 L002A               = &002A     \ New variable, XX19 has moved
 L002B               = &002B     \ New variable, XX19+1 has moved
 NEWB                = &002D
@@ -68,10 +69,13 @@ P                   = &002F
 XC                  = &0032
 YC                  = &003B
 QQ17                = &003C
+K3                  = &003D
 XX2                 = &003D
+SUNX                = &003E
 K4                  = &004B
 XX16                = &004D
 XX0                 = &005F
+XX19                = &0061
 INF                 = &0061
 V                   = &0063
 XX                  = &0065
@@ -81,6 +85,7 @@ BET1                = &006A
 ALP1                = &006E
 ALP2                = &006F
 XX15                = &0071
+X1                  = &0071
 Y1                  = &0072
 X2                  = &0073
 Y2                  = &0074
@@ -88,6 +93,7 @@ XX12                = &0077
 K                   = &007D
 QQ15                = &0082
 XX18                = &0088
+K5                  = &0088
 K6                  = &008C
 BET2                = &0091
 DELT4               = &0094
@@ -289,22 +295,17 @@ LL5                 = &FA55
 LL28                = &FA91
 NORM                = &FAF8
 
-    ORG &8000
 
-.pydis_start
+
+INCLUDE "library/common/main/workspace/k_per_cent.asm"
+
+ ORG CODE%
+
  SEI
  INC LC006
  JMP LC007
 
  EQUS "@ 5.0"
-
-XX1 = &0009 \ INWK
-SUNX = &003E \ XX2
-XX19 = &0061    \ INF
-X1 = &0071  \ XX15
-K5 = &0088 \ XX18
-K3 = &003D  \ XX2
-K% = &0600
 
 Y = 72
 
@@ -314,6 +315,7 @@ SH3 = 17
 KRA = 19
 
 NI% = 38
+
 
 INCLUDE "library/nes/main/macro/set_nametable_0.asm"
 

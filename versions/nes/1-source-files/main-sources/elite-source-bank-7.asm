@@ -113,17 +113,30 @@ YC          = &003B
 QQ17        = &003C
 XX2         = &003D
 K3_1        = &003E
+XX2_1       = &003F
+XX2_2       = &0040
 K4          = &004B
 XX2_15      = &004C
 XX16        = &004D
 XX16_1      = &004E
 XX16_2      = &004F
 XX16_3      = &0050
+XX16_4      = &0051
+XX16_5      = &0052
 XX16_6      = &0053
+XX16_7      = &0054
+XX16_8      = &0055
 XX16_9      = &0056
+XX16_10     = &0057
+XX16_11     = &0058
 XX16_12     = &0059
+XX16_13     = &005A
+XX16_14     = &005B
+XX16_15     = &005C
 XX0         = &005F
+XX0_1       = &0060
 INF         = &0061
+INF_1       = &0061
 L0062       = &0062
 V           = &0063
 V_1         = &0064
@@ -145,15 +158,24 @@ XX15_4      = &0075
 XX15_5      = &0076
 XX12        = &0077
 XX12_1      = &0078
+XX12_2      = &0079
+XX12_3      = &007A
+XX12_4      = &007B
+XX12_5      = &007C
 K           = &007D
 K_1         = &007E
 K_2         = &007F
 K_3         = &0080
 QQ15        = &0082
 XX18        = &0088
+XX18_1      = &0089
+XX18_2      = &008A
+XX18_3      = &008B
 K6          = &008C
 K6_1        = &008D
-XX18_7      = &008F
+K6_2        = &008E
+K6_3        = &008F
+K6_4        = &0090
 BET2        = &0091
 BET2_1      = &0092
 L0093       = &0093
@@ -165,7 +187,7 @@ R           = &0098
 S           = &0099
 T           = &009A
 XSAV        = &009B
-L009C       = &009C
+YSAV        = &009C
 XX17        = &009D
 L009E       = &009E
 L009F       = &009F
@@ -841,7 +863,11 @@ LC006 = sub_CC004+2
     EQUB   0,   1,   3,   4,   5,   6,   8,   9   ; C520: 00 01 03... ...
     EQUB &0A, &0B, &0C, &0D, &0F, &10, &11, &12   ; C528: 0A 0B 0C... ...
     EQUB &13, &14, &15, &16, &17, &18, &19, &19   ; C530: 13 14 15... ...
-    EQUB &1A, &1B, &1C, &1D, &1D, &1E, &1F, &1F   ; C538: 1A 1B 1C... ...
+    EQUB &1A, &1B, &1C, &1D, &1D, &1E             ; C538: 1A 1B 1C... ...
+.XX21m2
+    EQUB &1F                                      ; C53E: 1F          .
+.XX21m1
+    EQUB &1F                                      ; C53F: 1F          .
 .XX21
     EQUB &A5, &80, &A3, &81, &BF, &82, &13, &83   ; C540: A5 80 A3... ...
     EQUB &53, &83, &FB, &83, &9D, &84, &73, &85   ; C548: 53 83 FB... S..
@@ -3980,7 +4006,7 @@ LC006 = sub_CC004+2
 
 ; ******************************************************************************
 .LOIN
-    STY L009C                                     ; DC0F: 84 9C       ..
+    STY YSAV                                      ; DC0F: 84 9C       ..
     LDA L00E9                                     ; DC11: A5 E9       ..
     BPL CDC1E                                     ; DC13: 10 09       ..
     LDA PPUSTATUS                                 ; DC15: AD 02 20    ..
@@ -4168,7 +4194,7 @@ LC006 = sub_CC004+2
     JMP CDCC8                                     ; DD4E: 4C C8 DC    L..
 
 .CDD51
-    LDY L009C                                     ; DD51: A4 9C       ..
+    LDY YSAV                                      ; DD51: A4 9C       ..
     LDA L00E9                                     ; DD53: A5 E9       ..
     BPL CDD60                                     ; DD55: 10 09       ..
     LDA PPUSTATUS                                 ; DD57: AD 02 20    ..
@@ -4292,7 +4318,7 @@ LC006 = sub_CC004+2
     BPL CDE1C                                     ; DE17: 10 03       ..
     JSR NAMETABLE0                                ; DE19: 20 6D D0     m.
 .CDE1C
-    LDY L009C                                     ; DE1C: A4 9C       ..
+    LDY YSAV                                      ; DE1C: A4 9C       ..
     CLC                                           ; DE1E: 18          .
     RTS                                           ; DE1F: 60          `
 
@@ -4372,7 +4398,7 @@ LC006 = sub_CC004+2
     JMP CDFAA                                     ; DEA2: 4C AA DF    L..
 
 .CDEA5
-    LDY L009C                                     ; DEA5: A4 9C       ..
+    LDY YSAV                                      ; DEA5: A4 9C       ..
     CLC                                           ; DEA7: 18          .
     RTS                                           ; DEA8: 60          `
 
@@ -4500,7 +4526,7 @@ LC006 = sub_CC004+2
     JMP CDEDD                                     ; DF6F: 4C DD DE    L..
 
 .CDF72
-    LDY L009C                                     ; DF72: A4 9C       ..
+    LDY YSAV                                      ; DF72: A4 9C       ..
     CLC                                           ; DF74: 18          .
     RTS                                           ; DF75: 60          `
 
@@ -4632,12 +4658,12 @@ LDFFF = sub_CDFFE+1
     JMP CDFAA                                     ; E03F: 4C AA DF    L..
 
 .CE042
-    LDY L009C                                     ; E042: A4 9C       ..
+    LDY YSAV                                      ; E042: A4 9C       ..
     CLC                                           ; E044: 18          .
     RTS                                           ; E045: 60          `
 
 .CE046
-    LDY L009C                                     ; E046: A4 9C       ..
+    LDY YSAV                                      ; E046: A4 9C       ..
     CLC                                           ; E048: 18          .
     RTS                                           ; E049: 60          `
 
@@ -4648,7 +4674,7 @@ LDFFF = sub_CDFFE+1
     BPL CE057                                     ; E052: 10 03       ..
     JSR NAMETABLE0                                ; E054: 20 6D D0     m.
 .CE057
-    STY L009C                                     ; E057: 84 9C       ..
+    STY YSAV                                      ; E057: 84 9C       ..
     LDA P                                         ; E059: A5 2F       ./
     LSR A                                         ; E05B: 4A          J
     LSR A                                         ; E05C: 4A          J
@@ -4674,7 +4700,7 @@ LDFFF = sub_CDFFE+1
     STA (L00BA),Y                                 ; E07B: 91 BA       ..
     DEY                                           ; E07D: 88          .
     BPL CE075                                     ; E07E: 10 F5       ..
-    LDY L009C                                     ; E080: A4 9C       ..
+    LDY YSAV                                      ; E080: A4 9C       ..
     RTS                                           ; E082: 60          `
 
 .CE083
@@ -4705,13 +4731,13 @@ LDFFF = sub_CDFFE+1
     LDY T                                         ; E0AC: A4 9A       ..
     DEY                                           ; E0AE: 88          .
     BPL CE075                                     ; E0AF: 10 C4       ..
-    LDY L009C                                     ; E0B1: A4 9C       ..
+    LDY YSAV                                      ; E0B1: A4 9C       ..
     RTS                                           ; E0B3: 60          `
 
 .CE0B4
     JMP CE2A6                                     ; E0B4: 4C A6 E2    L..
 
-    LDY L009C                                     ; E0B7: A4 9C       ..
+    LDY YSAV                                      ; E0B7: A4 9C       ..
 .loop_CE0B9
     RTS                                           ; E0B9: 60          `
 
@@ -4722,7 +4748,7 @@ LDFFF = sub_CDFFE+1
     BPL CE0C7                                     ; E0C2: 10 03       ..
     JSR NAMETABLE0                                ; E0C4: 20 6D D0     m.
 .CE0C7
-    STY L009C                                     ; E0C7: 84 9C       ..
+    STY YSAV                                      ; E0C7: 84 9C       ..
     LDX XX15                                      ; E0C9: A6 71       .q
     CPX X2                                        ; E0CB: E4 73       .s
     BEQ loop_CE0B9                                ; E0CD: F0 EA       ..
@@ -5105,7 +5131,7 @@ LDFFF = sub_CDFFE+1
     BPL CE33B                                     ; E336: 10 03       ..
     JSR NAMETABLE0                                ; E338: 20 6D D0     m.
 .CE33B
-    LDY L009C                                     ; E33B: A4 9C       ..
+    LDY YSAV                                      ; E33B: A4 9C       ..
     RTS                                           ; E33D: 60          `
 
     LDA L00E9                                     ; E33E: A5 E9       ..
@@ -5115,7 +5141,7 @@ LDFFF = sub_CDFFE+1
     BPL CE34B                                     ; E346: 10 03       ..
     JSR NAMETABLE0                                ; E348: 20 6D D0     m.
 .CE34B
-    STY L009C                                     ; E34B: 84 9C       ..
+    STY YSAV                                      ; E34B: 84 9C       ..
     LDY Y1                                        ; E34D: A4 72       .r
     CPY Y2                                        ; E34F: C4 74       .t
     BEQ CE391                                     ; E351: F0 3E       .>
@@ -5157,7 +5183,7 @@ LDFFF = sub_CDFFE+1
     JMP CE423                                     ; E38E: 4C 23 E4    L#.
 
 .CE391
-    LDY L009C                                     ; E391: A4 9C       ..
+    LDY YSAV                                      ; E391: A4 9C       ..
     RTS                                           ; E393: 60          `
 
 .CE394
@@ -5245,7 +5271,7 @@ LDFFF = sub_CDFFE+1
     BCC loop_CE40E                                ; E41C: 90 F0       ..
     BCS CE423                                     ; E41E: B0 03       ..
 .CE420
-    LDY L009C                                     ; E420: A4 9C       ..
+    LDY YSAV                                      ; E420: A4 9C       ..
     RTS                                           ; E422: 60          `
 
 .CE423

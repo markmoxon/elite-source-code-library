@@ -15,7 +15,7 @@
 
 .STORE
 
- LDY #(NI%-1)           \ Set a counter in Y so we can loop through the NI%
+ LDY #NI%-1             \ Set a counter in Y so we can loop through the NI%
                         \ bytes in the ship data block
 
 .DML2

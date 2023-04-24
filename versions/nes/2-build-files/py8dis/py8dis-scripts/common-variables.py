@@ -1,7 +1,24 @@
 # NI% = 0x26 = 38
-# SH3 = 17
+
+# NOSH = 8    		\ As UNIV contains 9 addresses, 0 to NOSH
+# NI% = &2A = 42    \ Same source - different to above?
+
 # VE = &57
-# LL = &1D
+# LL = 29
+
+# MSL = 1
+# SST = 2
+# PLT = 4
+# SHU = 9
+# ANA = 14
+# HER = 15
+# COPS = 16
+# SH3 = 17
+# WRM = 23
+# THG = 29
+# TGL = 30
+
+# solaun = 9
 
 # Variables
 
@@ -105,6 +122,7 @@ label(0x0067, "YY")
 label(0x0068, "YY_1")
 label(0x0069, "BETA")
 label(0x006A, "BET1")
+label(0x006D, "ECMA")
 label(0x006E, "ALP1")
 label(0x006F, "ALP2")
 label(0x0070, "ALP2_1")
@@ -143,6 +161,7 @@ label(0x008F, "K6_3")	# XX18+7
 label(0x0090, "K6_4")
 label(0x0091, "BET2")
 label(0x0092, "BET2_1")
+label(0x0093, "DELTA")
 label(0x0094, "DELT4")
 label(0x0095, "DELT4_1")
 label(0x0096, "U")
@@ -156,6 +175,7 @@ label(0x009D, "XX17")
 label(0x009E, "W")
 label(0x00A0, "ZZ")
 label(0x00A1, "XX13")
+label(0x00A2, "MCNT")
 label(0x00A3, "TYPE")
 label(0x00A4, "ALPHA")
 label(0x00A6, "TGT")
@@ -231,6 +251,8 @@ label(0x0506, "BUFm1")
 label(0x0507, "BUF")
 label(0x0508, "BUF_1")
 label(0x0561, "HANGFLAG")
+label(0x0562, "MANY")
+label(0x0564, "SSPR")
 label(0x05A5, "SXL")
 label(0x05BA, "SYL")
 label(0x05CF, "SZL")
@@ -258,31 +280,33 @@ label(0xC300, "antilog")
 label(0xC400, "antilogODD")
 label(0xC500, "SNE")
 label(0xC520, "ACT")
+label(0xC53E, "XX21m2")
+label(0xC53F, "XX21m1")
 label(0xC540, "XX21")
+label(0xCE7E, "UNIV")
+label(0xCE7E, "UNIV_1")
 
 subroutine(0xC0AD, "RESETBANK")     # My addition, switch bank to stack value
 subroutine(0xC0AE, "SETBANK")       # My addition, switch bank to A
-
-label(0xC53E, "XX21m2")
-label(0xC53F, "XX21m1")
-
 subroutine(0xCED5, "NMI")           # My addition, NMI handler
 subroutine(0xD06D, "NAMETABLE0")    # My addition, switches PPU to namespace 0
-
 subroutine(0xDC0F, "LOIN")     # Could also be LSPUT
-
-subroutine(0xEBA2, "DELAY")
-subroutine(0xEBF2, "MESS")
 subroutine(0xE4F0, "PIXEL")
+subroutine(0xE596, "ECBLB2")
+subroutine(0xEBA2, "DELAY")
+subroutine(0xEBAD, "EXNO3")
+subroutine(0xEBF2, "NOISE")
+subroutine(0xEDEA, "TIDY")
 subroutine(0xEF7A, "PAS1")
-
 subroutine(0xF082, "DETOK")
 subroutine(0xF09D, "DTS")
 subroutine(0xF1A2, "MVS5")
+subroutine(0xF1BD, "HALL")
 subroutine(0xF1E6, "DASC")
 subroutine(0xF201, "TT27")
 subroutine(0xF237, "TT27_control_codes")    # My addition, it's the control code part of TT27 in bank 0
 subroutine(0xF26E, "TT66")
+subroutine(0xF2A8, "SCAN")
 subroutine(0xF2DE, "CLYNS")
 subroutine(0xF473, "NLIN4")
 subroutine(0xF4AC, "DORND2")
@@ -304,11 +328,13 @@ subroutine(0xF721, "MULTU")
 subroutine(0xF725, "MU11")
 subroutine(0xF766, "FMLTU2")
 subroutine(0xF770, "FMLTU")
+subroutine(0xF7AB, "MLTU2m2")
 subroutine(0xF7AD, "MLTU2")
 subroutine(0xF7D2, "MUT2")
 subroutine(0xF7D6, "MUT1")
 subroutine(0xF7DA, "MULT1")
 subroutine(0xF83C, "MULT12")
+subroutine(0xF853, "TAS3")
 subroutine(0xF86F, "MAD")
 subroutine(0xF872, "ADD")
 subroutine(0xF8AE, "TIS1")

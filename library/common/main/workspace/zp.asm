@@ -302,13 +302,20 @@ INCLUDE "library/common/main/variable/xsav.asm"
 INCLUDE "library/common/main/variable/ysav.asm"
 INCLUDE "library/common/main/variable/xx17.asm"
 
-IF _MASTER_VERSION OR _NES_VERSION \ Platform
+IF _MASTER_VERSION \ Platform
 
 INCLUDE "library/master/main/variable/w.asm"
 
 ENDIF
 
 INCLUDE "library/common/main/variable/qq11.asm"
+
+IF _NES_VERSION \ Platform
+
+ SKIP 1
+
+ENDIF
+
 INCLUDE "library/common/main/variable/zz.asm"
 INCLUDE "library/common/main/variable/xx13.asm"
 INCLUDE "library/common/main/variable/mcnt.asm"

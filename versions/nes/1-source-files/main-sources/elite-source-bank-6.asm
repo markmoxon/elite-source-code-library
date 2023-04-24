@@ -161,6 +161,7 @@ YY                  = &0067
 YY_1                = &0068
 BETA                = &0069
 BET1                = &006A
+ECMA                = &006D
 ALP1                = &006E
 ALP2                = &006F
 ALP2_1              = &0070
@@ -199,7 +200,7 @@ K6_3                = &008F
 K6_4                = &0090
 BET2                = &0091
 BET2_1              = &0092
-L0093               = &0093
+DELTA               = &0093
 DELT4               = &0094
 DELT4_1             = &0095
 U                   = &0096
@@ -213,7 +214,7 @@ XX17                = &009D
 W                   = &009E
 ZZ                  = &00A0
 XX13                = &00A1
-L00A2               = &00A2
+MCNT                = &00A2
 TYPE                = &00A3
 ALPHA               = &00A4
 L00A5               = &00A5
@@ -530,6 +531,8 @@ L0518               = &0518
 L0527               = &0527
 L0550               = &0550
 HANGFLAG            = &0561
+MANY                = &0562
+SSPR                = &0564
 SXL                 = &05A5
 SYL                 = &05BA
 SZL                 = &05CF
@@ -585,6 +588,8 @@ ACT                 = &C520
 XX21m2              = &C53E
 XX21m1              = &C53F
 XX21                = &C540
+UNIV                = &CE7E
+UNIV_1              = &CE7E
 LCEA5               = &CEA5
 NMI                 = &CED5
 NAMETABLE0          = &D06D
@@ -595,15 +600,18 @@ LD975               = &D975
 LDBD8               = &DBD8
 LOIN                = &DC0F
 PIXEL               = &E4F0
+ECBLB2              = &E596
 LEB86               = &EB86
 DELAY               = &EBA2
-MESS                = &EBF2
+EXNO3               = &EBAD
+NOISE               = &EBF2
 LEC7D               = &EC7D
 LECE7               = &ECE7
 LED24               = &ED24
 LED73               = &ED73
 LED8F               = &ED8F
 LEDAB               = &EDAB
+TIDY                = &EDEA
 LEE0D               = &EE0D
 LEE15               = &EE15
 LEE54               = &EE54
@@ -622,12 +630,14 @@ LF0E1               = &F0E1
 LF171               = &F171
 LF186               = &F186
 MVS5                = &F1A2
+HALL                = &F1BD
 DASC                = &F1E6
 TT27                = &F201
 TT27_control_codes  = &F237
 LF245               = &F245
 TT66                = &F26E
 LF280               = &F280
+SCAN                = &F2A8
 LF2C0               = &F2C0
 CLYNS               = &F2DE
 LF338               = &F338
@@ -651,11 +661,13 @@ MULTU               = &F721
 MU11                = &F725
 FMLTU2              = &F766
 FMLTU               = &F770
+MLTU2m2             = &F7AB
 MLTU2               = &F7AD
 MUT2                = &F7D2
 MUT1                = &F7D6
 MULT1               = &F7DA
 MULT12              = &F83C
+TAS3                = &F853
 MAD                 = &F86F
 ADD                 = &F872
 TIS1                = &F8AE
@@ -3452,7 +3464,7 @@ L88BD = L88BC+1
 
 .CA274
     STA Q                                         ; A274: 85 97       ..
-    LDA L00A2                                     ; A276: A5 A2       ..
+    LDA MCNT                                      ; A276: A5 A2       ..
     AND #8                                        ; A278: 29 08       ).
     BNE CA285                                     ; A27A: D0 09       ..
     LDA Q                                         ; A27C: A5 97       ..
@@ -3543,9 +3555,9 @@ L88BD = L88BC+1
     STA K                                         ; A315: 85 7D       .}
     LDA #&FF                                      ; A317: A9 FF       ..
     STA K_1                                       ; A319: 85 7E       .~
-    LDA L0093                                     ; A31B: A5 93       ..
+    LDA DELTA                                     ; A31B: A5 93       ..
     LSR A                                         ; A31D: 4A          J
-    ADC L0093                                     ; A31E: 65 93       e.
+    ADC DELTA                                     ; A31E: 65 93       e.
     JSR sub_CA225                                 ; A320: 20 25 A2     %.
     LDA #8                                        ; A323: A9 08       ..
     STA K                                         ; A325: 85 7D       .}
@@ -3571,7 +3583,7 @@ L88BD = L88BC+1
     BEQ CA368                                     ; A356: F0 10       ..
     LDX L03C8                                     ; A358: AE C8 03    ...
     LDY #&6D ; 'm'                                ; A35B: A0 6D       .m
-    LDA L00A2                                     ; A35D: A5 A2       ..
+    LDA MCNT                                      ; A35D: A5 A2       ..
     AND #8                                        ; A35F: 29 08       ).
     BNE CA36E                                     ; A361: D0 0B       ..
     LDY #&6C ; 'l'                                ; A363: A0 6C       .l
@@ -3960,7 +3972,7 @@ L88BD = L88BC+1
     LDA #0                                        ; A699: A9 00       ..
     STA ALPHA                                     ; A69B: 85 A4       ..
     STA ALP1                                      ; A69D: 85 6E       .n
-    STA L0093                                     ; A69F: 85 93       ..
+    STA DELTA                                     ; A69F: 85 93       ..
     LDA L03F1                                     ; A6A1: AD F1 03    ...
     CLC                                           ; A6A4: 18          .
     ADC RAND_2                                    ; A6A5: 65 03       e.

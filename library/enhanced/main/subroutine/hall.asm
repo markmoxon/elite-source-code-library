@@ -1,6 +1,10 @@
 \ ******************************************************************************
 \
+IF NOT(_NES_VERSION)
 \       Name: HALL
+ELIF _NES_VERSION
+\       Name: HALL_BANK1
+ENDIF
 \       Type: Subroutine
 \   Category: Ship hangar
 IF _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
@@ -26,7 +30,15 @@ IF _6502SP_VERSION \ Comment
 ENDIF
 \ ******************************************************************************
 
+IF NOT(_NES_VERSION)
+
 .HALL
+
+ELIF _NES_VERSION
+
+.HALL_BANK1
+
+ENDIF
 
 IF _6502SP_VERSION \ Comment
 

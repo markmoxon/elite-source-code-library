@@ -698,8 +698,6 @@ INCLUDE "library/common/main/subroutine/pixel2.asm"
 
  EQUW &C007             \ IRQ/BRK handler
 
-.pydis_end
-
 \ ******************************************************************************
 \
 \ Save bank1.bin

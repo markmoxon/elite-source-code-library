@@ -242,7 +242,6 @@ ENDIF
 IF NOT(_NES_VERSION)
 
 INCLUDE "library/common/main/variable/lsp.asm"
-
 ENDIF
 
 INCLUDE "library/common/main/variable/qq15.asm"
@@ -309,7 +308,6 @@ INCLUDE "library/master/main/variable/w.asm"
 ENDIF
 
 INCLUDE "library/common/main/variable/qq11.asm"
-
 IF _NES_VERSION \ Platform
 
  SKIP 1
@@ -389,10 +387,20 @@ INCLUDE "library/common/main/variable/cnt2.asm"
 INCLUDE "library/common/main/variable/stp.asm"
 INCLUDE "library/common/main/variable/xx4.asm"
 INCLUDE "library/common/main/variable/xx20.asm"
-INCLUDE "library/common/main/variable/xx14-lsnum.asm"
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Platform
+
+INCLUDE "library/common/main/variable/xx14.asm"
+
+ELIF _MASTER_VERSION
+
+INCLUDE "library/master/main/variable/lsnum.asm"
+INCLUDE "library/master/main/variable/lsnum2.asm"
+
+ENDIF
+
 INCLUDE "library/common/main/variable/rat.asm"
 INCLUDE "library/common/main/variable/rat2.asm"
-
 IF NOT(_NES_VERSION)
 
 INCLUDE "library/common/main/variable/k2.asm"

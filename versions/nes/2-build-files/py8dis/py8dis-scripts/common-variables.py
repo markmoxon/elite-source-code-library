@@ -256,6 +256,7 @@ label(0x0494, "QQ3")
 label(0x0495, "QQ4")
 label(0x0496, "QQ5")
 label(0x049B, "QQ8")
+label(0x049C, "QQ8_1")
 label(0x049D, "QQ9")
 label(0x049E, "QQ10")
 
@@ -263,6 +264,7 @@ label(0x04A4, "QQ18LO")     # My addition, gets set to address of token table
 label(0x04A5, "QQ18HI")     # that ex then accesses
 label(0x04A6, "TOKENLO")    # My addition, gets set to address of token table
 label(0x04A7, "TOKENHI")    # that DETOK then accesses
+label(0x04A8, "LANG")  		# My addition
 
 label(0x04C8, "SX")
 label(0x04DD, "SY")

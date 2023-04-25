@@ -135,7 +135,10 @@ INCLUDE "library/common/main/variable/xx0.asm"
 
 .XX19
 
- SKIP 0
+ SKIP 0                 \ Instead of pointing XX19 to the ship heap address in
+                        \ INWK(34 33), like the other versions of Elite, the NES
+                        \ version points XX19 to the ship blueprint address in
+                        \ INF(1 0)
 
 INCLUDE "library/common/main/variable/inf.asm"
 INCLUDE "library/common/main/variable/v.asm"

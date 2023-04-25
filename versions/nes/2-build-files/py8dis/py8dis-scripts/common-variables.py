@@ -1,7 +1,7 @@
-# NI% = 0x26 = 38
+# NI% = 38
 
 # NOSH = 8    		\ As UNIV contains 9 addresses, 0 to NOSH
-# NI% = &2A = 42    \ Same source - different to above?
+#					\ UNIV stores 42 bytes per ship, though
 
 # VE = &57
 # LL = 29

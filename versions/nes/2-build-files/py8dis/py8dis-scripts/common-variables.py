@@ -1,7 +1,6 @@
 # NI% = 42			\ Sometimes need to do NI%-4
 
 # NOSH = 8    		\ As UNIV contains 9 addresses, 0 to NOSH
-#					\ UNIV stores 42 bytes per ship, though
 
 # VE = &57
 # LL = 29

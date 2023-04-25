@@ -212,12 +212,13 @@ XSAV              = &009B
 YSAV              = &009C
 XX17              = &009D
 W                 = &009E
+QQ11              = &009F
 ZZ                = &00A0
 XX13              = &00A1
 MCNT              = &00A2
 TYPE              = &00A3
 ALPHA             = &00A4
-L00A5             = &00A5
+QQ12              = &00A5
 TGT               = &00A6
 FLAG              = &00A7
 CNT               = &00A8
@@ -364,20 +365,23 @@ L0364             = &0364
 L0365             = &0365
 L0366             = &0366
 L0368             = &0368
+FRIN              = &036A
 MJ                = &038A
 L038B             = &038B
 L038D             = &038D
 VIEW              = &038E
 L038F             = &038F
 L0390             = &0390
+EV                = &0392
 L0396             = &0396
 L039D             = &039D
+TP                = &039E
 QQ0               = &039F
 QQ1               = &03A0
 CASH              = &03A1
 L03A2             = &03A2
 L03A3             = &03A3
-L03A5             = &03A5
+QQ14              = &03A5
 L03A6             = &03A6
 GCNT              = &03A7
 L03A8             = &03A8
@@ -387,15 +391,18 @@ L03AB             = &03AB
 CRGO              = &03AC
 QQ20              = &03AD
 BST               = &03BF
-L03C0             = &03C0
+BOMB              = &03C0
 L03C1             = &03C1
 L03C2             = &03C2
 GHYP              = &03C3
 L03C4             = &03C4
-L03C8             = &03C8
+ESCP              = &03C6
+NOMSL             = &03C8
 FIST              = &03C9
 AVL               = &03CA
 QQ26              = &03DB
+TALLY             = &03DC
+TALLY_1           = &03DD
 QQ21              = &03DF
 NOSTM             = &03E5
 L03EA             = &03EA
@@ -416,7 +423,7 @@ DTW8              = &03F9
 L03FA             = &03FA
 L03FB             = &03FB
 L03FC             = &03FC
-L0401             = &0401
+MSTG              = &0401
 L0402             = &0402
 L040B             = &040B
 L040C             = &040C
@@ -505,6 +512,12 @@ QQ24              = &0487
 QQ25              = &0488
 QQ28              = &0489
 QQ29              = &048A
+gov               = &048C
+tek               = &048D
+QQ2               = &048E
+QQ3               = &0494
+QQ4               = &0495
+QQ5               = &0496
 QQ8               = &049B
 QQ9               = &049D
 QQ10              = &049E
@@ -590,6 +603,7 @@ XX21m1            = &C53F
 XX21              = &C540
 UNIV              = &CE7E
 UNIV_1            = &CE7E
+GINF              = &CE90
 LCEA5             = &CEA5
 NMI               = &CED5
 NAMETABLE0        = &D06D
@@ -604,6 +618,7 @@ ECBLB2            = &E596
 LEB86             = &EB86
 DELAY             = &EBA2
 EXNO3             = &EBAD
+BOOP              = &EBE5
 NOISE             = &EBF2
 LEC7D             = &EC7D
 LECE7             = &ECE7
@@ -622,6 +637,7 @@ LEF04             = &EF04
 LEF20             = &EF20
 PAS1              = &EF7A
 LEFDC             = &EFDC
+LL164             = &EFF7
 LF021             = &F021
 LF02F             = &F02F
 DETOK             = &F082
@@ -641,6 +657,7 @@ SCAN              = &F2A8
 LF2C0             = &F2C0
 CLYNS             = &F2DE
 LF338             = &F338
+Ze                = &F42E
 NLIN4             = &F473
 DORND2            = &F4AC
 DORND             = &F4AD
@@ -3468,7 +3485,7 @@ L88BD = L88BC+1
  STA K                                            ; A2D1: 85 7D       .}
  LDA #&FF                                         ; A2D3: A9 FF       ..
  STA K_1                                          ; A2D5: 85 7E       .~
- LDA L03A5                                        ; A2D7: AD A5 03    ...
+ LDA QQ14                                         ; A2D7: AD A5 03    ...
  JSR sub_CA225                                    ; A2DA: 20 25 A2     %.
  LDA #8                                           ; A2DD: A9 08       ..
  STA K                                            ; A2DF: 85 7D       .}
@@ -3516,13 +3533,13 @@ L88BD = L88BC+1
  STA L022A                                        ; A341: 8D 2A 02    .*.
  LDA LA38A,X                                      ; A344: BD 8A A3    ...
  STA L0229                                        ; A347: 8D 29 02    .).
- LDA L00A5                                        ; A34A: A5 A5       ..
+ LDA QQ12                                         ; A34A: A5 A5       ..
  BNE CA368                                        ; A34C: D0 1A       ..
- LDA L0401                                        ; A34E: AD 01 04    ...
+ LDA MSTG                                         ; A34E: AD 01 04    ...
  BPL CA371                                        ; A351: 10 1E       ..
  LDA L038D                                        ; A353: AD 8D 03    ...
  BEQ CA368                                        ; A356: F0 10       ..
- LDX L03C8                                        ; A358: AE C8 03    ...
+ LDX NOMSL                                        ; A358: AE C8 03    ...
  LDY #&6D ; 'm'                                   ; A35B: A0 6D       .m
  LDA MCNT                                         ; A35D: A5 A2       ..
  AND #8                                           ; A35F: 29 08       ).
@@ -3723,31 +3740,31 @@ L88BD = L88BC+1
  LDX #4                                           ; A532: A2 04       ..
  JSR sub_CA39F                                    ; A534: 20 9F A3     ..
 .CA537
- LDA L03C8                                        ; A537: AD C8 03    ...
+ LDA NOMSL                                        ; A537: AD C8 03    ...
  BEQ CA56C                                        ; A53A: F0 30       .0
  LDY #&50 ; 'P'                                   ; A53C: A0 50       .P
  LDX #2                                           ; A53E: A2 02       ..
  JSR sub_CA39F                                    ; A540: 20 9F A3     ..
- LDA L03C8                                        ; A543: AD C8 03    ...
+ LDA NOMSL                                        ; A543: AD C8 03    ...
  LSR A                                            ; A546: 4A          J
  BEQ CA56C                                        ; A547: F0 23       .#
  LDY #&58 ; 'X'                                   ; A549: A0 58       .X
  LDX #2                                           ; A54B: A2 02       ..
  JSR sub_CA39F                                    ; A54D: 20 9F A3     ..
- LDA L03C8                                        ; A550: AD C8 03    ...
+ LDA NOMSL                                        ; A550: AD C8 03    ...
  CMP #2                                           ; A553: C9 02       ..
  BEQ CA56C                                        ; A555: F0 15       ..
  LDY #&60 ; '`'                                   ; A557: A0 60       .`
  LDX #2                                           ; A559: A2 02       ..
  JSR sub_CA39F                                    ; A55B: 20 9F A3     ..
- LDA L03C8                                        ; A55E: AD C8 03    ...
+ LDA NOMSL                                        ; A55E: AD C8 03    ...
  CMP #4                                           ; A561: C9 04       ..
  BNE CA56C                                        ; A563: D0 07       ..
  LDY #&68 ; 'h'                                   ; A565: A0 68       .h
  LDX #2                                           ; A567: A2 02       ..
  JSR sub_CA39F                                    ; A569: 20 9F A3     ..
 .CA56C
- LDA L03C0                                        ; A56C: AD C0 03    ...
+ LDA BOMB                                         ; A56C: AD C0 03    ...
  BEQ CA578                                        ; A56F: F0 07       ..
  LDY #&70 ; 'p'                                   ; A571: A0 70       .p
  LDX #3                                           ; A573: A2 03       ..
@@ -3839,7 +3856,7 @@ L88BD = L88BC+1
 .CA614
  LDA #0                                           ; A614: A9 00       ..
  STA L03A8                                        ; A616: 8D A8 03    ...
- STA L00A5                                        ; A619: 85 A5       ..
+ STA QQ12                                         ; A619: 85 A5       ..
  LDA #&10                                         ; A61B: A9 10       ..
  JSR LEFDC                                        ; A61D: 20 DC EF     ..
  LDA #&FF                                         ; A620: A9 FF       ..

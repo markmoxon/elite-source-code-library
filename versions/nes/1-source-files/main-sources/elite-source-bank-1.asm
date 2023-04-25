@@ -455,7 +455,7 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
 
 .F2A8_BANK1
 
- LDA QQ11               \ B975, called via F2A8 in 7.asm
+ LDA W                  \ B975, called via F2A8 in 7.asm
  BNE CB974              \ (e.g. called from bank 0)
  LDX TYPE
  BMI CB974
@@ -671,7 +671,7 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  ASL A
  ASL A
  TAX
- LDA QQ11
+ LDA W
  BNE CBB1F
  LDA #&F0
  STA L022C,X

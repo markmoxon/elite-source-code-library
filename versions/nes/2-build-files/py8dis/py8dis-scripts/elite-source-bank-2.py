@@ -38,6 +38,8 @@ entry(0xB373)
 entry(0xB633)
 
 label(0x800C, "TKN1")
+label(0xA3CF, "QQ18")
+
 label(0xB1A9, "DT3")
 label(0xB204, "JMTBm2")
 label(0xB205, "JMTBm1")

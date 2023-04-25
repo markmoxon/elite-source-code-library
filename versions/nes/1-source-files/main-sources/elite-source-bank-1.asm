@@ -244,7 +244,7 @@ COPS = 16
 SH3 = 17
 KRA = 19
 
-NI% = 38
+NI% = 42
 
 
 INCLUDE "library/nes/main/macro/set_nametable_0.asm"

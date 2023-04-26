@@ -1,8 +1,37 @@
+\ ******************************************************************************
+\
+\       Name: RUTOK_DE
+\       Type: Variable
+\   Category: Text
+\    Summary: The second extended token table for recursive tokens 0-26 (DETOK3)
+\             (German)
+\  Deep dive: Extended system descriptions
+\             Extended text tokens
+\
+\ ------------------------------------------------------------------------------
+\
+\ Contains the tokens for extended description overrides of systems that match
+\ the system number in RUPLA_DE and the conditions in RUGAL_DE.
+\
+\ The three variables work as follows:
+\
+\   * The RUPLA_DE table contains the system numbers
+\
+\   * The RUGAL_DE table contains the galaxy numbers and mission criteria
+\
+\   * The RUTOK_DE table contains the extended token to display instead of the
+\     normal extended description if the criteria in RUPLA_DE and RUGAL_DE are
+\     met
+\
+\ See the PDESC routine for details of how extended system descriptions work.
+\
+\ ******************************************************************************
+
 .RUTOK_DE
 
- EQUB VE
+ EQUB VE                \ Token 0:      ""
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 1:      ""
  ETWO 'D', 'I'
  ECHR 'E'
  EJMP 26
@@ -78,7 +107,7 @@
  ETWO 'E', 'N'
  EQUB VE
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 2:      ""
  ECHR 'C'
  ETWO 'O', 'N'
  ETWO 'S', 'T'
@@ -99,7 +128,7 @@
  ETOK 154
  EQUB VE
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 3:      ""
  ECHR 'E'
  ETWO 'I', 'N'
  ECHR ' '
@@ -187,7 +216,7 @@
  ETWO 'G', 'E'
  EQUB VE
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 4:      ""
  ECHR 'J'
  ECHR 'A'
  ECHR ','
@@ -383,7 +412,7 @@
  ETWO 'B', 'E'
  EQUB VE
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 5:      ""
  ECHR 'E'
  ETWO 'I', 'N'
  ECHR ' '
@@ -475,7 +504,7 @@
  ECHR '.'
  EQUB VE
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 6:      ""
  ECHR 'A'
  ECHR 'C'
  ECHR 'H'
@@ -569,7 +598,7 @@
  ECHR 'I'
  EQUB VE
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 7:      ""
  ECHR 'S'
  ECHR 'I'
  ECHR 'E'
@@ -626,46 +655,46 @@
  ETWO 'R', 'A'
  EQUB VE
 
- ERND 25                \ Token xxx:    "
+ ERND 25                \ Token 8:      ""
  EQUB VE
 
- ERND 25                \ Token xxx:    "
+ ERND 25                \ Token 9:      ""
  EQUB VE
 
- ERND 25                \ Token xxx:    "
+ ERND 25                \ Token 10:     ""
  EQUB VE
 
- ERND 25                \ Token xxx:    "
+ ERND 25                \ Token 11:     ""
  EQUB VE
 
- ERND 25                \ Token xxx:    "
+ ERND 25                \ Token 12:     ""
  EQUB VE
 
- ERND 25                \ Token xxx:    "
+ ERND 25                \ Token 13:     ""
  EQUB VE
 
- ERND 25                \ Token xxx:    "
+ ERND 25                \ Token 14:     ""
  EQUB VE
 
- ERND 25                \ Token xxx:    "
+ ERND 25                \ Token 15:     ""
  EQUB VE
 
- ERND 25                \ Token xxx:    "
+ ERND 25                \ Token 16:     ""
  EQUB VE
 
- ERND 25                \ Token xxx:    "
+ ERND 25                \ Token 17:     ""
  EQUB VE
 
- ERND 25                \ Token xxx:    "
+ ERND 25                \ Token 18:     ""
  EQUB VE
 
- ERND 25                \ Token xxx:    "
+ ERND 25                \ Token 19:     ""
  EQUB VE
 
- ERND 25                \ Token xxx:    "
+ ERND 25                \ Token 20:     ""
  EQUB VE
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 21:     ""
  ECHR 'D'
  ECHR 'A'
  ECHR ' '
@@ -737,5 +766,4 @@
  ETWO 'A', 'T'
  ETWO 'E', 'N'
  ETOK 159
- EQUB VE
 

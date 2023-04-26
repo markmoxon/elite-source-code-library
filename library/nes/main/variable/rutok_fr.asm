@@ -1,8 +1,37 @@
+\ ******************************************************************************
+\
+\       Name: RUTOK_FR
+\       Type: Variable
+\   Category: Text
+\    Summary: The second extended token table for recursive tokens 0-26 (DETOK3)
+\             (French)
+\  Deep dive: Extended system descriptions
+\             Extended text tokens
+\
+\ ------------------------------------------------------------------------------
+\
+\ Contains the tokens for extended description overrides of systems that match
+\ the system number in RUPLA_FR and the conditions in RUGAL_FR.
+\
+\ The three variables work as follows:
+\
+\   * The RUPLA_FR table contains the system numbers
+\
+\   * The RUGAL_FR table contains the galaxy numbers and mission criteria
+\
+\   * The RUTOK_FR table contains the extended token to display instead of the
+\     normal extended description if the criteria in RUPLA_FR and RUGAL_FR are
+\     met
+\
+\ See the PDESC routine for details of how extended system descriptions work.
+\
+\ ******************************************************************************
+
 .RUTOK_FR
 
- EQUB VE
+ EQUB VE                \ Token 0:      ""
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 1:      ""
  ETWO 'L', 'E'
  ECHR 'S'
  ECHR ' '
@@ -66,7 +95,7 @@
  ETWO 'E', 'R'
  EQUB VE
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 2:      ""
  ETWO 'L', 'E'
  ECHR ' '
  ECHR 'C'
@@ -89,7 +118,7 @@
  ETOK 154
  EQUB VE
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 3:      ""
  ECHR 'U'
  ECHR 'N'
  ECHR ' '
@@ -139,7 +168,7 @@
  ETWO 'X', 'E'
  EQUB VE
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 4:      ""
  ETWO 'O', 'U'
  ECHR 'I'
  ECHR ','
@@ -194,7 +223,7 @@
  ECHR '<'
  EQUB VE
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 5:      ""
  ETWO 'O', 'U'
  ECHR 'I'
  ECHR ','
@@ -259,7 +288,7 @@
  ETWO 'B', 'E'
  EQUB VE
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 6:      ""
  ECHR 'U'
  ECHR 'N'
  ECHR ' '
@@ -329,7 +358,7 @@
  ETWO 'E', 'N'
  EQUB VE
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 7:      ""
  ECHR 'U'
  ECHR 'N'
  ECHR ' '
@@ -397,7 +426,7 @@
  ECHR 'I'
  EQUB VE
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 8:      ""
  ECHR 'V'
  ETWO 'O', 'U'
  ECHR 'S'
@@ -438,46 +467,46 @@
  ETWO 'R', 'A'
  EQUB VE
 
- ERND 25                \ Token xxx:    "
+ ERND 25                \ Token 9:      ""
  EQUB VE
 
- ERND 25                \ Token xxx:    "
+ ERND 25                \ Token 10:     ""
  EQUB VE
 
- ERND 25                \ Token xxx:    "
+ ERND 25                \ Token 11:     ""
  EQUB VE
 
- ERND 25                \ Token xxx:    "
+ ERND 25                \ Token 12:     ""
  EQUB VE
 
- ERND 25                \ Token xxx:    "
+ ERND 25                \ Token 13:     ""
  EQUB VE
 
- ERND 25                \ Token xxx:    "
+ ERND 25                \ Token 14:     ""
  EQUB VE
 
- ERND 25                \ Token xxx:    "
+ ERND 25                \ Token 15:     ""
  EQUB VE
 
- ERND 25                \ Token xxx:    "
+ ERND 25                \ Token 16:     ""
  EQUB VE
 
- ERND 25                \ Token xxx:    "
+ ERND 25                \ Token 17:     ""
  EQUB VE
 
- ERND 25                \ Token xxx:    "
+ ERND 25                \ Token 18:     ""
  EQUB VE
 
- ERND 25                \ Token xxx:    "
+ ERND 25                \ Token 19:     ""
  EQUB VE
 
- ERND 25                \ Token xxx:    "
+ ERND 25                \ Token 20:     ""
  EQUB VE
 
- ERND 25                \ Token xxx:    "
+ ERND 25                \ Token 21:     ""
  EQUB VE
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 22:     ""
  ETWO 'C', 'E'
  ECHR ' '
  ECHR 'N'
@@ -504,7 +533,7 @@
  ECHR '!'
  EQUB VE
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 23:     ""
  ETWO 'I', 'L'
  ECHR ' '
  ECHR 'Y'

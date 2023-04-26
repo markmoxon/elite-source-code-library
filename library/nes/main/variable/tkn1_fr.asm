@@ -1,17 +1,31 @@
+\ ******************************************************************************
+\
+\       Name: TKN1_FR
+\       Type: Variable
+\   Category: Text
+\    Summary: The first extended token table for recursive tokens 0-255 (DETOK)
+\             (French)
+\  Deep dive: Extended text tokens
+\
+\ ******************************************************************************
+
 .TKN1_FR
 
- EJMP 19                \ Token xxx:    "
+ EQUB VE                \ Token 0:      ""
+
+ EJMP 19                \ Token 1:      ""
  ETWO 'O', 'U'
  ECHR 'I'
  EQUB VE
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 2:      ""
  ECHR 'N'
  ETWO 'O', 'N'
  EQUB VE
 
- EQUB VE                \ Token xxx:    "
- EJMP 19
+ EQUB VE                \ Token 3:      ""
+
+ EJMP 19                \ Token 4:      ""
  ECHR 'F'
  ETWO 'R', 'A'
  ECHR 'N'
@@ -21,11 +35,13 @@
  ECHR 'S'
  EQUB VE
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 5:      ""
 
- EQUB VE                \ Token xxx:    "
- EJMP 19
+ EQUB VE                \ Token 6:      ""
+
+ EQUB VE                \ Token 7:      ""
+
+ EJMP 19                \ Token 8:      ""
  ECHR 'N'
  ETWO 'O', 'U'
  ETWO 'V', 'E'
@@ -38,8 +54,9 @@
  ECHR ' '
  EQUB VE
 
- EQUB VE                \ Token xxx:    "
- EJMP 23
+ EQUB VE                \ Token 9:      ""
+
+ EJMP 23                \ Token 10:     ""
  EJMP 14
  EJMP 13
  ECHR ' '
@@ -383,7 +400,7 @@
  EJMP 22
  EQUB VE
 
- EJMP 25                \ Token xxx:    "
+ EJMP 25                \ Token 11:     ""
  EJMP 9
  EJMP 23
  EJMP 14
@@ -490,10 +507,11 @@
  EJMP 24
  EQUB VE
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 12:     ""
 
- EJMP 21                \ Token xxx:    "
+ EQUB VE                \ Token 13:     ""
+
+ EJMP 21                \ Token 14:     ""
  EJMP 19
  ETWO 'N', 'O'
  ECHR 'M'
@@ -508,7 +526,7 @@
  ECHR ' '
  EQUB VE
 
- EJMP 25                \ Token xxx:    "
+ EJMP 25                \ Token 15:     ""
  EJMP 9
  EJMP 23
  EJMP 14
@@ -580,129 +598,167 @@
  EJMP 24
  EQUB VE
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 16:     ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 17:     ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 18:     ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 19:     ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 20:     ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 21:     ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 22:     ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 23:     ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 24:     ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 25:     ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 26:     ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 27:     ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 28:     ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 29:     ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 30:     ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 31:     ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 32:     ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 33:     ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 34:     ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 35:     ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 36:     ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 37:     ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 38:     ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 39:     ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 40:     ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 41:     ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 42:     ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 43:     ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 44:     ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 45:     ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 46:     ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 47:     ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 48:     ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 49:     ""
 
- EQUB VE                \ Token xxx:    "
- EJMP 2
+ EQUB VE                \ Token 50:     ""
+
+ EQUB VE                \ Token 51:     ""
+
+ EQUB VE                \ Token 52:     ""
+
+ EQUB VE                \ Token 53:     ""
+
+ EQUB VE                \ Token 54:     ""
+
+ EQUB VE                \ Token 55:     ""
+
+ EQUB VE                \ Token 56:     ""
+
+ EQUB VE                \ Token 57:     ""
+
+ EQUB VE                \ Token 58:     ""
+
+ EQUB VE                \ Token 59:     ""
+
+ EQUB VE                \ Token 60:     ""
+
+ EQUB VE                \ Token 61:     ""
+
+ EQUB VE                \ Token 62:     ""
+
+ EQUB VE                \ Token 63:     ""
+
+ EQUB VE                \ Token 64:     ""
+
+ EQUB VE                \ Token 65:     ""
+
+ EQUB VE                \ Token 66:     ""
+
+ EQUB VE                \ Token 67:     ""
+
+ EQUB VE                \ Token 68:     ""
+
+ EQUB VE                \ Token 69:     ""
+
+ EQUB VE                \ Token 70:     ""
+
+ EQUB VE                \ Token 71:     ""
+
+ EQUB VE                \ Token 72:     ""
+
+ EQUB VE                \ Token 73:     ""
+
+ EQUB VE                \ Token 74:     ""
+
+ EQUB VE                \ Token 75:     ""
+
+ EQUB VE                \ Token 76:     ""
+
+ EQUB VE                \ Token 77:     ""
+
+ EQUB VE                \ Token 78:     ""
+
+ EQUB VE                \ Token 79:     ""
+
+ EQUB VE                \ Token 80:     ""
+
+ EQUB VE                \ Token 81:     ""
+
+ EQUB VE                \ Token 82:     ""
+
+ EQUB VE                \ Token 83:     ""
+
+ EQUB VE                \ Token 84:     ""
+
+ EJMP 2                 \ Token 85:     ""
  ERND 31
  EJMP 13
  EQUB VE
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 86:     ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 87:     ""
 
- EQUB VE                \ Token xxx:    "
- ECHR 'C'
+ EQUB VE                \ Token 88:     ""
+
+ EQUB VE                \ Token 89:     ""
+
+ EQUB VE                \ Token 90:     ""
+
+ ECHR 'C'               \ Token 91:     ""
  ETWO 'R', 'A'
  ECHR 'P'
  ECHR 'U'
  ETWO 'L', 'E'
  EQUB VE
 
- ECHR 'V'               \ Token xxx:    "
+ ECHR 'V'               \ Token 92:     ""
  ECHR 'A'
  ECHR 'U'
  ECHR 'R'
@@ -710,20 +766,20 @@
  ETWO 'E', 'N'
  EQUB VE
 
- ETWO 'E', 'S'          \ Token xxx:    "
+ ETWO 'E', 'S'          \ Token 93:     ""
  ECHR 'C'
  ECHR 'R'
  ECHR 'O'
  ECHR 'C'
  EQUB VE
 
- ECHR 'G'               \ Token xxx:    "
+ ECHR 'G'               \ Token 94:     ""
  ETWO 'R', 'E'
  ECHR 'D'
  ETWO 'I', 'N'
  EQUB VE
 
- ECHR 'B'               \ Token xxx:    "
+ ECHR 'B'               \ Token 95:     ""
  ECHR 'R'
  ECHR 'I'
  ECHR 'G'
@@ -731,22 +787,27 @@
  ECHR 'D'
  EQUB VE
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 96:     ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 97:     ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 98:     ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 99:     ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 100:    ""
 
- EJMP 19                \ Token xxx:    "
+ EQUB VE                \ Token 101:    ""
+
+ EQUB VE                \ Token 102:    ""
+
+ EQUB VE                \ Token 103:    ""
+
+ EQUB VE                \ Token 104:    ""
+
+ EQUB VE                \ Token 105:    ""
+
+ EJMP 19                \ Token 106:    ""
  ECHR 'U'
  ECHR 'N'
  ETOK 173
@@ -771,7 +832,7 @@
  ECHR ' '
  EQUB VE
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 107:    ""
  ETWO 'O', 'U'
  ECHR 'A'
  ECHR 'I'
@@ -793,7 +854,7 @@
  ETOK 209
  EQUB VE
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 108:    ""
  ETWO 'A', 'L'
  ETWO 'L', 'E'
  ECHR 'Z'
@@ -802,7 +863,7 @@
  ETOK 209
  EQUB VE
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 109:    ""
  ETWO 'O', 'N'
  ETOK 129
  ECHR 'V'
@@ -818,7 +879,7 @@
  ETOK 209
  EQUB VE
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 110:    ""
  ETWO 'E', 'S'
  ECHR 'S'
  ECHR 'A'
@@ -828,61 +889,78 @@
  ETOK 209
  EQUB VE
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 111:    ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 112:    ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 113:    ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 114:    ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 115:    ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 116:    ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 117:    ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 118:    ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 119:    ""
 
- ECHR ' '               \ Token xxx:    "
+ EQUB VE                \ Token 120:    ""
+
+ EQUB VE                \ Token 121:    ""
+
+ EQUB VE                \ Token 122:    ""
+
+ EQUB VE                \ Token 123:    ""
+
+ EQUB VE                \ Token 124:    ""
+
+ EQUB VE                \ Token 125:    ""
+
+ EQUB VE                \ Token 126:    ""
+
+ EQUB VE                \ Token 127:    ""
+
+ EQUB VE                \ Token 128:    ""
+
+ ECHR ' '               \ Token 129:    ""
  ECHR 'A'
  ECHR ' '
  EQUB VE
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 130:    ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 131:    ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 132:    ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 133:    ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 134:    ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 135:    ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 136:    ""
 
- EQUB VE                \ Token xxx:    "
- ECHR 'P'
+ EQUB VE                \ Token 137:    ""
+
+ EQUB VE                \ Token 138:    ""
+
+ EQUB VE                \ Token 139:    ""
+
+ EQUB VE                \ Token 140:    ""
+
+ EQUB VE                \ Token 141:    ""
+
+ EQUB VE                \ Token 142:    ""
+
+ EQUB VE                \ Token 143:    ""
+
+ EQUB VE                \ Token 144:    ""
+
+ ECHR 'P'               \ Token 145:    ""
  ETWO 'L', 'A'
  ECHR 'N'
  ECHR '='
@@ -890,38 +968,40 @@
  ECHR 'E'
  EQUB VE
 
- ECHR 'M'               \ Token xxx:    "
+ ECHR 'M'               \ Token 146:    ""
  ETWO 'O', 'N'
  ECHR 'D'
  ECHR 'E'
  EQUB VE
 
- ECHR 'E'               \ Token xxx:    "
+ ECHR 'E'               \ Token 147:    ""
  ECHR 'C'
  ECHR ' '
  EQUB VE
 
- ETWO 'C', 'E'          \ Token xxx:    "
+ ETWO 'C', 'E'          \ Token 148:    ""
  ECHR 'C'
  ECHR 'I'
  ECHR ' '
  EQUB VE
 
- EQUB VE                \ Token xxx:    "
- EJMP 9
+ EQUB VE                \ Token 149:    ""
+
+ EJMP 9                 \ Token 150:    ""
  EJMP 11
  EJMP 1
  EJMP 8
  EQUB VE
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 151:    ""
 
- ECHR 'I'               \ Token xxx:    "
+ EQUB VE                \ Token 152:    ""
+
+ ECHR 'I'               \ Token 153:    ""
  ETWO 'A', 'N'
  EQUB VE
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 154:    ""
  ECHR 'C'
  ECHR 'O'
  ECHR 'M'
@@ -932,43 +1012,51 @@
  ECHR 'T'
  EQUB VE
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 155:    ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 156:    ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 157:    ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 158:    ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 159:    ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 160:    ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 161:    ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 162:    ""
 
- ECHR 'S'               \ Token xxx:    "
+ EQUB VE                \ Token 163:    ""
+
+ EQUB VE                \ Token 164:    ""
+
+ EQUB VE                \ Token 165:    ""
+
+ EQUB VE                \ Token 166:    ""
+
+ EQUB VE                \ Token 167:    ""
+
+ EQUB VE                \ Token 168:    ""
+
+ EQUB VE                \ Token 169:    ""
+
+ EQUB VE                \ Token 170:    ""
+
+ ECHR 'S'               \ Token 171:    ""
  ECHR 'U'
  ECHR 'I'
  ECHR 'S'
  ECHR ' '
  EQUB VE
 
- ECHR 'A'               \ Token xxx:    "
+ ECHR 'A'               \ Token 172:    ""
  ECHR 'V'
  ETWO 'O', 'N'
  EQUB VE
 
- ECHR ' '               \ Token xxx:    "
+ ECHR ' '               \ Token 173:    ""
  ECHR 'N'
  ECHR 'A'
  ECHR 'V'
@@ -977,88 +1065,88 @@
  ECHR ' '
  EQUB VE
 
- ETWO 'A', 'R'          \ Token xxx:    "
+ ETWO 'A', 'R'          \ Token 174:    ""
  ETWO 'I', 'N'
  ECHR 'E'
  EQUB VE
 
- ECHR 'P'               \ Token xxx:    "
+ ECHR 'P'               \ Token 175:    ""
  ETWO 'O', 'U'
  ECHR 'R'
  EQUB VE
 
- EJMP 13                \ Token xxx:    "
+ EJMP 13                \ Token 176:    ""
  EJMP 14
  EJMP 19
  EQUB VE
 
- ECHR '.'               \ Token xxx:    "
+ ECHR '.'               \ Token 177:    ""
  EJMP 12
  EJMP 15
  EQUB VE
 
- ETWO 'L', 'E'          \ Token xxx:    "
+ ETWO 'L', 'E'          \ Token 178:    ""
  ECHR ' '
  EQUB VE
 
- ECHR ' '               \ Token xxx:    "
+ ECHR ' '               \ Token 179:    ""
  ECHR 'D'
  ECHR 'E'
  ECHR ' '
  EQUB VE
 
- ECHR ' '               \ Token xxx:    "
+ ECHR ' '               \ Token 180:    ""
  ETWO 'E', 'T'
  ECHR ' '
  EQUB VE
 
- ECHR 'J'               \ Token xxx:    "
+ ECHR 'J'               \ Token 181:    ""
  ECHR 'E'
  ECHR ' '
  EQUB VE
 
- ETWO 'L', 'A'          \ Token xxx:    "
+ ETWO 'L', 'A'          \ Token 182:    ""
  ECHR ' '
  EQUB VE
 
- ECHR ' '               \ Token xxx:    "
+ ECHR ' '               \ Token 183:    ""
  ECHR '"'
  ECHR ' '
  EQUB VE
 
- ECHR 'E'               \ Token xxx:    "
+ ECHR 'E'               \ Token 184:    ""
  ETWO 'S', 'T'
  EQUB VE
 
- ETWO 'I', 'L'          \ Token xxx:    "
+ ETWO 'I', 'L'          \ Token 185:    ""
  EQUB VE
 
- ECHR 'U'               \ Token xxx:    "
+ ECHR 'U'               \ Token 186:    ""
  ECHR 'N'
  ECHR ' '
  EQUB VE
 
- ETWO 'L', 'E'          \ Token xxx:    "
+ ETWO 'L', 'E'          \ Token 187:    ""
  ECHR 'S'
  ECHR ' '
  EQUB VE
 
- ETWO 'C', 'E'          \ Token xxx:    "
+ ETWO 'C', 'E'          \ Token 188:    ""
  ECHR ' '
  EQUB VE
 
- ECHR 'D'               \ Token xxx:    "
+ ECHR 'D'               \ Token 189:    ""
  ECHR 'E'
  ECHR ' '
  ETOK 182
  EQUB VE
 
- ECHR 'V'               \ Token xxx:    "
+ ECHR 'V'               \ Token 190:    ""
  ETWO 'O', 'U'
  ECHR 'S'
  EQUB VE
 
- EJMP 26                \ Token xxx:    "
+ EJMP 26                \ Token 191:    ""
  ECHR 'B'
  ETWO 'O', 'N'
  ECHR 'J'
@@ -1067,28 +1155,30 @@
  ECHR ' '
  EQUB VE
 
- ETWO 'Q', 'U'          \ Token xxx:    "
+ ETWO 'Q', 'U'          \ Token 192:    ""
  ECHR 'E'
  ECHR ' '
  EQUB VE
 
- ERND 4                 \ Token xxx:    "
+ ERND 4                 \ Token 193:    ""
  ECHR 'T'
  EQUB VE
 
- EQUB VE                \ Token xxx:    "
- ECHR 'D'
+ EQUB VE                \ Token 194:    ""
+
+ ECHR 'D'               \ Token 195:    ""
  ETWO 'E', 'S'
  ECHR ' '
  EQUB VE
 
- ECHR 'P'               \ Token xxx:    "
+ ECHR 'P'               \ Token 196:    ""
  ECHR 'L'
  ETWO 'U', 'S'
  EQUB VE
 
- EQUB VE                \ Token xxx:    "
- EJMP 26
+ EQUB VE                \ Token 197:    ""
+
+ EJMP 26                \ Token 198:    ""
  ECHR 'S'
  ETWO 'Q', 'U'
  ECHR 'E'
@@ -1097,7 +1187,7 @@
  ECHR 'Y'
  EQUB VE
 
- EJMP 25                \ Token xxx:    "
+ EJMP 25                \ Token 199:    ""
  EJMP 9
  EJMP 29
  EJMP 14
@@ -1261,17 +1351,18 @@
  EJMP 8
  EQUB VE
 
- EJMP 26                \ Token xxx:    "
+ EJMP 26                \ Token 200:    ""
  ETWO 'N', 'O'
  ECHR 'M'
  ECHR '?'
  ECHR ' '
  EQUB VE
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 201:    ""
 
- ECHR 'P'               \ Token xxx:    "
+ EQUB VE                \ Token 202:    ""
+
+ ECHR 'P'               \ Token 203:    ""
  ETWO 'E', 'R'
  ECHR 'D'
  ECHR 'U'
@@ -1283,33 +1374,36 @@
  EJMP 19
  EQUB VE
 
- ECHR '.'               \ Token xxx:    "
+ ECHR '.'               \ Token 204:    ""
  EJMP 12
  EJMP 12
  ECHR ' '
  EJMP 19
  EQUB VE
 
- ECHR '"'               \ Token xxx:    "
+ ECHR '"'               \ Token 205:    ""
  ECHR ' '
  ETWO 'Q', 'U'
  ECHR 'A'
  ECHR 'I'
  EQUB VE
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 206:    ""
 
- EQUB VE                \ Token xxx:    "
- EJMP 26
+ EQUB VE                \ Token 207:    ""
+
+ EQUB VE                \ Token 208:    ""
+
+ EJMP 26                \ Token 209:    ""
  ETWO 'E', 'R'
  ECHR 'R'
  ECHR 'I'
  ETWO 'U', 'S'
  EQUB VE
 
- EQUB VE                \ Token xxx:    "
- ECHR ' '
+ EQUB VE                \ Token 210:    ""
+
+ ECHR ' '               \ Token 211:    ""
  ETWO 'L', 'A'
  EJMP 26
  ECHR 'M'
@@ -1331,7 +1425,7 @@
  ECHR '<'
  EQUB VE
 
- ETOK 177               \ Token xxx:    "
+ ETOK 177               \ Token 212:    ""
  EJMP 12
  EJMP 8
  EJMP 1
@@ -1350,7 +1444,7 @@
  ETWO 'G', 'E'
  EQUB VE
 
- ECHR ' '               \ Token xxx:    "
+ ECHR ' '               \ Token 213:    ""
  ETOK 154
  ECHR ' '
  EJMP 4
@@ -1375,8 +1469,9 @@
  ETOK 211
  EQUB VE
 
- EQUB VE                \ Token xxx:    "
- EJMP 15
+ EQUB VE                \ Token 214:    ""
+
+ EJMP 15                \ Token 215:    ""
  ECHR ' '
  ETOK 145
  ECHR ' '
@@ -1388,7 +1483,7 @@
  ECHR ' '
  EQUB VE
 
- EJMP 9                 \ Token xxx:    "
+ EJMP 9                 \ Token 216:    ""
  EJMP 8
  EJMP 23
  EJMP 1
@@ -1406,7 +1501,7 @@
  ETWO 'U', 'S'
  EQUB VE
 
- ECHR 'D'               \ Token xxx:    "
+ ECHR 'D'               \ Token 217:    ""
  ECHR 'E'
  EJMP 26
  ETWO 'R', 'E'
@@ -1417,7 +1512,7 @@
  ECHR 'Y'
  EQUB VE
 
- ECHR 'D'               \ Token xxx:    "
+ ECHR 'D'               \ Token 218:    ""
  ECHR 'E'
  EJMP 26
  ETWO 'S', 'E'
@@ -1428,7 +1523,7 @@
  ECHR 'Y'
  EQUB VE
 
- ECHR 'D'               \ Token xxx:    "
+ ECHR 'D'               \ Token 219:    ""
  ECHR 'E'
  EJMP 26
  ECHR 'R'
@@ -1440,7 +1535,7 @@
  ECHR 'E'
  EQUB VE
 
- ETOK 203               \ Token xxx:    "
+ ETOK 203               \ Token 220:    ""
  EJMP 19
  ETWO 'R', 'E'
  ETWO 'E', 'S'
@@ -1448,7 +1543,7 @@
  ETWO 'C', 'E'
  EQUB VE
 
- ECHR ' '               \ Token xxx:    "
+ ECHR ' '               \ Token 221:    ""
  ETWO 'O', 'N'
  ECHR ' '
  ECHR 'P'
@@ -1481,7 +1576,7 @@
  ECHR 'E'
  EQUB VE
 
- EJMP 25                \ Token xxx:    "
+ EJMP 25                \ Token 222:    ""
  EJMP 9
  EJMP 29
  EJMP 14
@@ -1869,7 +1964,7 @@
  EJMP 24
  EQUB VE
 
- EJMP 25                \ Token xxx:    "
+ EJMP 25                \ Token 223:    ""
  EJMP 9
  EJMP 29
  EJMP 8
@@ -2017,51 +2112,67 @@
  EJMP 24
  EQUB VE
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 224:    ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 225:    ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 226:    ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 227:    ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 228:    ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 229:    ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 230:    ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 231:    ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 232:    ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 233:    ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 234:    ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 235:    ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 236:    ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 237:    ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 238:    ""
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 239:    ""
+
+ EQUB VE                \ Token 240:    ""
+
+ EQUB VE                \ Token 241:    ""
+
+ EQUB VE                \ Token 242:    ""
+
+ EQUB VE                \ Token 243:    ""
+
+ EQUB VE                \ Token 244:    ""
+
+ EQUB VE                \ Token 245:    ""
+
+ EQUB VE                \ Token 246:    ""
+
+ EQUB VE                \ Token 247:    ""
+
+ EQUB VE                \ Token 248:    ""
+
+ EQUB VE                \ Token 249:    ""
+
+ EQUB VE                \ Token 250:    ""
+
+ EQUB VE                \ Token 251:    ""
+
+ EQUB VE                \ Token 252:    ""
+
+ EQUB VE                \ Token 253:    ""
+
+ EQUB VE                \ Token 254:    ""
+
+ EQUB VE                \ Token 255:    ""
 

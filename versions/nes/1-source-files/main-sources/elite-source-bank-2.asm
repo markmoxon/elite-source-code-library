@@ -438,19 +438,17 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
 .TKN1
 
  EQUB VE                \ Token 0:      ""
-                        \
-                        \ Encoded as:   ""
 
- EJMP 19                \ Token x:      "
+ EJMP 19                \ Token 1:      ""
  ECHR 'Y'
  ETWO 'E', 'S'
  EQUB VE
 
- EJMP 19                \ Token x:      "
+ EJMP 19                \ Token 2:      ""
  ETWO 'N', 'O'
  EQUB VE
 
- EJMP 2                 \ Token x:      "
+ EJMP 2                 \ Token 3:      ""
  EJMP 19
  ECHR 'I'
  ETWO 'M', 'A'
@@ -467,7 +465,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'S'
  EQUB VE
 
- EJMP 19                \ Token x:      "
+ EJMP 19                \ Token 4:      ""
  ETWO 'E', 'N'
  ECHR 'G'
  ECHR 'L'
@@ -476,14 +474,14 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'H'
  EQUB VE
 
- ETOK 176               \ Token x:      "
+ ETOK 176               \ Token 5:      ""
  ERND 18
  ETOK 202
  ERND 19
  ETOK 177
  EQUB VE
 
- EJMP 19                \ Token x:      "
+ EJMP 19                \ Token 6:      ""
  ECHR 'L'
  ECHR 'I'
  ETWO 'C', 'E'
@@ -496,7 +494,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'O'
  EQUB VE
 
- EJMP 19                \ Token x:      "
+ EJMP 19                \ Token 7:      ""
  ECHR 'L'
  ECHR 'I'
  ETWO 'C', 'E'
@@ -515,7 +513,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'O'
  EQUB VE
 
- EJMP 19                \ Token x:      "
+ EJMP 19                \ Token 8:      ""
  ECHR 'N'
  ECHR 'E'
  ECHR 'W'
@@ -528,7 +526,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR ' '
  EQUB VE
 
- EJMP 19                \ Token x:      "
+ EJMP 19                \ Token 9:      ""
  ECHR 'I'
  ETWO 'M', 'A'
  ECHR 'G'
@@ -552,7 +550,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ETWO 'A', 'N'
  EQUB VE
 
- EJMP 23                \ Token xxx:    "
+ EJMP 23                \ Token 10:     ""
  EJMP 14
  EJMP 13
  EJMP 19
@@ -911,7 +909,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  EJMP 22
  EQUB VE
 
- EJMP 25                \ Token xxx:    "
+ EJMP 25                \ Token 11:     ""
  EJMP 9
  EJMP 23
  EJMP 14
@@ -1036,7 +1034,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  EJMP 24
  EQUB VE
 
- ECHR '('               \ Token xxx:    "
+ ECHR '('               \ Token 12:     ""
  EJMP 19
  ECHR 'C'
  ECHR ')'
@@ -1048,17 +1046,17 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR '1'
  EQUB VE
 
- ECHR 'B'               \ Token xxx:    "
+ ECHR 'B'               \ Token 13:     ""
  ECHR 'Y'
  ETOK 197
  EQUB VE
 
- EJMP 21                \ Token xxx:    "
+ EJMP 21                \ Token 14:     ""
  ETOK 145
  ETOK 200
  EQUB VE
 
- EJMP 25                \ Token xxx:    "
+ EJMP 25                \ Token 15:     ""
  EJMP 9
  EJMP 23
  EJMP 14
@@ -1135,19 +1133,19 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  EJMP 24
  EQUB VE
 
- ECHR 'F'               \ Token xxx:    "
+ ECHR 'F'               \ Token 16:     ""
  ETWO 'A', 'B'
  ETWO 'L', 'E'
  ECHR 'D'
  EQUB VE
 
- ETWO 'N', 'O'          \ Token xxx:    "
+ ETWO 'N', 'O'          \ Token 17:     ""
  ECHR 'T'
  ETWO 'A', 'B'
  ETWO 'L', 'E'
  EQUB VE
 
- ECHR 'W'               \ Token xxx:    "
+ ECHR 'W'               \ Token 18:     ""
  ECHR 'E'
  ECHR 'L'
  ECHR 'L'
@@ -1158,36 +1156,36 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'N'
  EQUB VE
 
- ECHR 'F'               \ Token xxx:    "
+ ECHR 'F'               \ Token 19:     ""
  ECHR 'A'
  ECHR 'M'
  ETWO 'O', 'U'
  ECHR 'S'
  EQUB VE
 
- ETWO 'N', 'O'          \ Token xxx:    "
+ ETWO 'N', 'O'          \ Token 20:     ""
  ECHR 'T'
  ETWO 'E', 'D'
  EQUB VE
 
- ECHR 'V'               \ Token xxx:    "
+ ECHR 'V'               \ Token 21:     ""
  ETWO 'E', 'R'
  ECHR 'Y'
  EQUB VE
 
- ECHR 'M'               \ Token xxx:    "
+ ECHR 'M'               \ Token 22:     ""
  ETWO 'I', 'L'
  ECHR 'D'
  ECHR 'L'
  ECHR 'Y'
  EQUB VE
 
- ECHR 'M'               \ Token xxx:    "
+ ECHR 'M'               \ Token 23:     ""
  ECHR 'O'
  ETWO 'S', 'T'
  EQUB VE
 
- ETWO 'R', 'E'          \ Token xxx:    "
+ ETWO 'R', 'E'          \ Token 24:     ""
  ECHR 'A'
  ECHR 'S'
  ETWO 'O', 'N'
@@ -1196,29 +1194,30 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'Y'
  EQUB VE
 
- EQUB VE                \ Token xxx:    "
- ETOK 165
+ EQUB VE                \ Token 25:     ""
+
+ ETOK 165               \ Token 26:     ""
  EQUB VE
 
- ERND 23                \ Token xxx:    "
+ ERND 23                \ Token 27:     ""
  EQUB VE
 
- ECHR 'G'               \ Token xxx:    "
+ ECHR 'G'               \ Token 28:     ""
  ETWO 'R', 'E'
  ETWO 'A', 'T'
  EQUB VE
 
- ECHR 'V'               \ Token xxx:    "
+ ECHR 'V'               \ Token 29:     ""
  ECHR 'A'
  ETWO 'S', 'T'
  EQUB VE
 
- ECHR 'P'               \ Token xxx:    "
+ ECHR 'P'               \ Token 30:     ""
  ETWO 'I', 'N'
  ECHR 'K'
  EQUB VE
 
- EJMP 2                 \ Token xxx:    "
+ EJMP 2                 \ Token 31:     ""
  ERND 28
  ECHR ' '
  ERND 27
@@ -1231,14 +1230,14 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'S'
  EQUB VE
 
- ETOK 156               \ Token xxx:    "
+ ETOK 156               \ Token 32:     ""
  ECHR 'S'
  EQUB VE
 
- ERND 26                \ Token xxx:    "
+ ERND 26                \ Token 33:     ""
  EQUB VE
 
- ERND 37                \ Token xxx:    "
+ ERND 37                \ Token 34:     ""
  ECHR ' '
  ECHR 'F'
  ECHR 'O'
@@ -1247,13 +1246,13 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'S'
  EQUB VE
 
- ECHR 'O'               \ Token xxx:    "
+ ECHR 'O'               \ Token 35:     ""
  ETWO 'C', 'E'
  ETWO 'A', 'N'
  ECHR 'S'
  EQUB VE
 
- ECHR 'S'               \ Token xxx:    "
+ ECHR 'S'               \ Token 36:     ""
  ECHR 'H'
  ECHR 'Y'
  ECHR 'N'
@@ -1261,7 +1260,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'S'
  EQUB VE
 
- ECHR 'S'               \ Token xxx:    "
+ ECHR 'S'               \ Token 37:     ""
  ETWO 'I', 'L'
  ECHR 'L'
  ETWO 'I', 'N'
@@ -1269,7 +1268,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'S'
  EQUB VE
 
- ECHR 'T'               \ Token xxx:    "
+ ECHR 'T'               \ Token 38:     ""
  ECHR 'E'
  ECHR 'A'
  ECHR ' '
@@ -1281,7 +1280,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ETWO 'E', 'S'
  EQUB VE
 
- ETWO 'L', 'O'          \ Token xxx:    "
+ ETWO 'L', 'O'          \ Token 39:     ""
  ECHR 'A'
  ETWO 'T', 'H'
  ETOK 195
@@ -1291,7 +1290,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ERND 9
  EQUB VE
 
- ETWO 'L', 'O'          \ Token xxx:    "
+ ETWO 'L', 'O'          \ Token 40:     ""
  ETWO 'V', 'E'
  ECHR ' '
  ECHR 'F'
@@ -1300,7 +1299,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ERND 9
  EQUB VE
 
- ECHR 'F'               \ Token xxx:    "
+ ECHR 'F'               \ Token 41:     ""
  ECHR 'O'
  ECHR 'O'
  ECHR 'D'
@@ -1313,7 +1312,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'S'
  EQUB VE
 
- ECHR 'T'               \ Token xxx:    "
+ ECHR 'T'               \ Token 42:     ""
  ETWO 'O', 'U'
  ECHR 'R'
  ECHR 'I'
@@ -1321,74 +1320,74 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'S'
  EQUB VE
 
- ECHR 'P'               \ Token xxx:    "
+ ECHR 'P'               \ Token 43:     ""
  ECHR 'O'
  ETWO 'E', 'T'
  ECHR 'R'
  ECHR 'Y'
  EQUB VE
 
- ETWO 'D', 'I'          \ Token xxx:    "
+ ETWO 'D', 'I'          \ Token 44:     ""
  ECHR 'S'
  ECHR 'C'
  ECHR 'O'
  ECHR 'S'
  EQUB VE
 
- ERND 17                \ Token xxx:    "
+ ERND 17                \ Token 45:     ""
  EQUB VE
 
- ECHR 'W'               \ Token xxx:    "
+ ECHR 'W'               \ Token 46:     ""
  ETWO 'A', 'L'
  ECHR 'K'
  ETOK 195
  ETOK 158
  EQUB VE
 
- ECHR 'C'               \ Token xxx:    "
+ ECHR 'C'               \ Token 47:     ""
  ECHR 'R'
  ETWO 'A', 'B'
  EQUB VE
 
- ECHR 'B'               \ Token xxx:    "
+ ECHR 'B'               \ Token 48:     ""
  ETWO 'A', 'T'
  EQUB VE
 
- ETWO 'L', 'O'          \ Token xxx:    "
+ ETWO 'L', 'O'          \ Token 49:     ""
  ECHR 'B'
  ETWO 'S', 'T'
  EQUB VE
 
- EJMP 18                \ Token xxx:    "
+ EJMP 18                \ Token 50:     ""
  EQUB VE
 
- ETWO 'B', 'E'          \ Token xxx:    "
+ ETWO 'B', 'E'          \ Token 51:     ""
  ETWO 'S', 'E'
  ECHR 'T'
  EQUB VE
 
- ECHR 'P'               \ Token xxx:    "
+ ECHR 'P'               \ Token 52:     ""
  ETWO 'L', 'A'
  ECHR 'G'
  ECHR 'U'
  ETWO 'E', 'D'
  EQUB VE
 
- ETWO 'R', 'A'          \ Token xxx:    "
+ ETWO 'R', 'A'          \ Token 53:     ""
  ECHR 'V'
  ECHR 'A'
  ETWO 'G', 'E'
  ECHR 'D'
  EQUB VE
 
- ECHR 'C'               \ Token xxx:    "
+ ECHR 'C'               \ Token 54:     ""
  ECHR 'U'
  ECHR 'R'
  ETWO 'S', 'E'
  ECHR 'D'
  EQUB VE
 
- ECHR 'S'               \ Token xxx:    "
+ ECHR 'S'               \ Token 55:     ""
  ECHR 'C'
  ETWO 'O', 'U'
  ECHR 'R'
@@ -1396,7 +1395,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'D'
  EQUB VE
 
- ERND 22                \ Token xxx:    "
+ ERND 22                \ Token 56:     ""
  ECHR ' '
  ECHR 'C'
  ECHR 'I'
@@ -1407,7 +1406,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ETWO 'A', 'R'
  EQUB VE
 
- ERND 13                \ Token xxx:    "
+ ERND 13                \ Token 57:     ""
  ECHR ' '
  ERND 4
  ECHR ' '
@@ -1415,7 +1414,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'S'
  EQUB VE
 
- ECHR 'A'               \ Token xxx:    "
+ ECHR 'A'               \ Token 58:     ""
  ECHR ' '
  ERND 13
  ECHR ' '
@@ -1425,7 +1424,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ETWO 'S', 'E'
  EQUB VE
 
- ERND 22                \ Token xxx:    "
+ ERND 22                \ Token 59:     ""
  ECHR ' '
  ECHR 'E'
  ETWO 'A', 'R'
@@ -1436,7 +1435,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ETWO 'E', 'S'
  EQUB VE
 
- ERND 22                \ Token xxx:    "
+ ERND 22                \ Token 60:     ""
  ECHR ' '
  ETWO 'S', 'O'
  ECHR 'L'
@@ -1450,13 +1449,13 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'Y'
  EQUB VE
 
- ETOK 175               \ Token xxx:    "
+ ETOK 175               \ Token 61:     ""
  ERND 2
  ECHR ' '
  ERND 3
  EQUB VE
 
- ETOK 147               \ Token xxx:    "
+ ETOK 147               \ Token 62:     ""
  EJMP 17
  ECHR ' '
  ERND 4
@@ -1464,7 +1463,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ERND 5
  EQUB VE
 
- ETOK 175               \ Token xxx:    "
+ ETOK 175               \ Token 63:     ""
  ETOK 193
  ECHR 'S'
  ECHR ' '
@@ -1473,40 +1472,40 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ERND 8
  EQUB VE
 
- EJMP 2                 \ Token xxx:    "
+ EJMP 2                 \ Token 64:     ""
  ERND 31
  EJMP 13
  EQUB VE
 
- ETOK 175               \ Token xxx:    "
+ ETOK 175               \ Token 65:     ""
  ERND 16
  ECHR ' '
  ERND 17
  EQUB VE
 
- ECHR 'J'               \ Token xxx:    "
+ ECHR 'J'               \ Token 66:     ""
  ECHR 'U'
  ECHR 'I'
  ETWO 'C', 'E'
  EQUB VE
 
- ECHR 'D'               \ Token xxx:    "
+ ECHR 'D'               \ Token 67:     ""
  ECHR 'R'
  ETWO 'I', 'N'
  ECHR 'K'
  EQUB VE
 
- ECHR 'W'               \ Token xxx:    "
+ ECHR 'W'               \ Token 68:     ""
  ETWO 'A', 'T'
  ETWO 'E', 'R'
  EQUB VE
 
- ECHR 'T'               \ Token xxx:    "
+ ECHR 'T'               \ Token 69:     ""
  ECHR 'E'
  ECHR 'A'
  EQUB VE
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 70:     ""
  ECHR 'G'
  ETWO 'A', 'R'
  ECHR 'G'
@@ -1519,26 +1518,26 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'S'
  EQUB VE
 
- EJMP 18                \ Token xxx:    "
+ EJMP 18                \ Token 71:     ""
  EQUB VE
 
- EJMP 17                \ Token xxx:    "
+ EJMP 17                \ Token 72:     ""
  ECHR ' '
  ERND 5
  EQUB VE
 
- ETOK 191               \ Token xxx:    "
+ ETOK 191               \ Token 73:     ""
  EQUB VE
 
- ETOK 192               \ Token xxx:    "
+ ETOK 192               \ Token 74:     ""
  EQUB VE
 
- ERND 13                \ Token xxx:    "
+ ERND 13                \ Token 75:     ""
  ECHR ' '
  EJMP 18
  EQUB VE
 
- ECHR 'F'               \ Token xxx:    "
+ ECHR 'F'               \ Token 76:     ""
  ETWO 'A', 'B'
  ECHR 'U'
  ECHR 'L'
@@ -1546,24 +1545,24 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'S'
  EQUB VE
 
- ECHR 'E'               \ Token xxx:    "
+ ECHR 'E'               \ Token 77:     ""
  ECHR 'X'
  ECHR 'O'
  ETWO 'T', 'I'
  ECHR 'C'
  EQUB VE
 
- ECHR 'H'               \ Token xxx:    "
+ ECHR 'H'               \ Token 78:     ""
  ECHR 'O'
  ECHR 'O'
  ECHR 'P'
  ECHR 'Y'
  EQUB VE
 
- ETOK 132               \ Token xxx:    "
+ ETOK 132               \ Token 79:     ""
  EQUB VE
 
- ECHR 'E'               \ Token xxx:    "
+ ECHR 'E'               \ Token 80:     ""
  ECHR 'X'
  ECHR 'C'
  ETWO 'I', 'T'
@@ -1571,7 +1570,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'G'
  EQUB VE
 
- ECHR 'C'               \ Token xxx:    "
+ ECHR 'C'               \ Token 81:     ""
  ECHR 'U'
  ECHR 'I'
  ECHR 'S'
@@ -1579,7 +1578,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'E'
  EQUB VE
 
- ECHR 'N'               \ Token xxx:    "
+ ECHR 'N'               \ Token 82:     ""
  ECHR 'I'
  ECHR 'G'
  ECHR 'H'
@@ -1591,7 +1590,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'E'
  EQUB VE
 
- ECHR 'C'               \ Token xxx:    "
+ ECHR 'C'               \ Token 83:     ""
  ECHR 'A'
  ECHR 'S'
  ECHR 'I'
@@ -1599,48 +1598,48 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'S'
  EQUB VE
 
- ECHR 'C'               \ Token xxx:    "
+ ECHR 'C'               \ Token 84:     ""
  ETWO 'I', 'N'
  ECHR 'E'
  ETWO 'M', 'A'
  ECHR 'S'
  EQUB VE
 
- EJMP 2                 \ Token xxx:    "
+ EJMP 2                 \ Token 85:     ""
  ERND 31
  EJMP 13
  EQUB VE
 
- EJMP 3                 \ Token xxx:    "
+ EJMP 3                 \ Token 86:     ""
  EQUB VE
 
- ETOK 147               \ Token xxx:    "
+ ETOK 147               \ Token 87:     ""
  ETOK 145
  ECHR ' '
  EJMP 3
  EQUB VE
 
- ETOK 147               \ Token xxx:    "
+ ETOK 147               \ Token 88:     ""
  ETOK 146
  ECHR ' '
  EJMP 3
  EQUB VE
 
- ETOK 148               \ Token xxx:    "
+ ETOK 148               \ Token 89:     ""
  ETOK 145
  EQUB VE
 
- ETOK 148               \ Token xxx:    "
+ ETOK 148               \ Token 90:     ""
  ETOK 146
  EQUB VE
 
- ECHR 'S'               \ Token xxx:    "
+ ECHR 'S'               \ Token 91:     ""
  ECHR 'W'
  ETWO 'I', 'N'
  ECHR 'E'
  EQUB VE
 
- ECHR 'S'               \ Token xxx:    "
+ ECHR 'S'               \ Token 92:     ""
  ECHR 'C'
  ETWO 'O', 'U'
  ECHR 'N'
@@ -1649,7 +1648,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'L'
  EQUB VE
 
- ECHR 'B'               \ Token xxx:    "
+ ECHR 'B'               \ Token 93:     ""
  ETWO 'L', 'A'
  ECHR 'C'
  ECHR 'K'
@@ -1659,21 +1658,21 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'D'
  EQUB VE
 
- ECHR 'R'               \ Token xxx:    "
+ ECHR 'R'               \ Token 94:     ""
  ECHR 'O'
  ECHR 'G'
  ECHR 'U'
  ECHR 'E'
  EQUB VE
 
- ECHR 'W'               \ Token xxx:    "
+ ECHR 'W'               \ Token 95:     ""
  ECHR 'R'
  ETWO 'E', 'T'
  ECHR 'C'
  ECHR 'H'
  EQUB VE
 
- ECHR 'N'               \ Token xxx:    "
+ ECHR 'N'               \ Token 96:     ""
  ECHR ' '
  ECHR 'U'
  ECHR 'N'
@@ -1685,21 +1684,21 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ETWO 'L', 'E'
  EQUB VE
 
- ECHR ' '               \ Token xxx:    "
+ ECHR ' '               \ Token 97:     ""
  ECHR 'B'
  ETWO 'O', 'R'
  ETWO 'I', 'N'
  ECHR 'G'
  EQUB VE
 
- ECHR ' '               \ Token xxx:    "
+ ECHR ' '               \ Token 98:     ""
  ECHR 'D'
  ECHR 'U'
  ECHR 'L'
  ECHR 'L'
  EQUB VE
 
- ECHR ' '               \ Token xxx:    "
+ ECHR ' '               \ Token 99:     ""
  ECHR 'T'
  ECHR 'E'
  ETWO 'D', 'I'
@@ -1707,7 +1706,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'S'
  EQUB VE
 
- ECHR ' '               \ Token xxx:    "
+ ECHR ' '               \ Token 100:    ""
  ETWO 'R', 'E'
  ECHR 'V'
  ECHR 'O'
@@ -1717,18 +1716,18 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'G'
  EQUB VE
 
- ETOK 145               \ Token xxx:    "
+ ETOK 145               \ Token 101:    ""
  EQUB VE
 
- ETOK 146               \ Token xxx:    "
+ ETOK 146               \ Token 102:    ""
  EQUB VE
 
- ECHR 'P'               \ Token xxx:    "
+ ECHR 'P'               \ Token 103:    ""
  ETWO 'L', 'A'
  ETWO 'C', 'E'
  EQUB VE
 
- ECHR 'L'               \ Token xxx:    "
+ ECHR 'L'               \ Token 104:    ""
  ETWO 'I', 'T'
  ECHR 'T'
  ETWO 'L', 'E'
@@ -1736,13 +1735,13 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ETOK 145
  EQUB VE
 
- ECHR 'D'               \ Token xxx:    "
+ ECHR 'D'               \ Token 105:    ""
  ECHR 'U'
  ECHR 'M'
  ECHR 'P'
  EQUB VE
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 106:    ""
  ECHR 'I'
  ECHR ' '
  ECHR 'H'
@@ -1767,7 +1766,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ETOK 209
  EQUB VE
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 107:    ""
  ECHR 'Y'
  ECHR 'E'
  ECHR 'A'
@@ -1801,7 +1800,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'K'
  EQUB VE
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 108:    ""
  ECHR 'G'
  ETWO 'E', 'T'
  ECHR ' '
@@ -1826,7 +1825,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ETOK 209
  EQUB VE
 
- ETWO 'S', 'O'          \ Token xxx:    "
+ ETWO 'S', 'O'          \ Token 109:    ""
  ECHR 'M'
  ECHR 'E'
  ECHR ' '
@@ -1845,13 +1844,13 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ETOK 209
  EQUB VE
 
- ECHR 'T'               \ Token xxx:    "
+ ECHR 'T'               \ Token 110:    ""
  ECHR 'R'
  ECHR 'Y'
  ETOK 209
  EQUB VE
 
- ECHR ' '               \ Token xxx:    "
+ ECHR ' '               \ Token 111:    ""
  ECHR 'C'
  ECHR 'U'
  ECHR 'D'
@@ -1860,14 +1859,14 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'Y'
  EQUB VE
 
- ECHR ' '               \ Token xxx:    "
+ ECHR ' '               \ Token 112:    ""
  ECHR 'C'
  ECHR 'U'
  ECHR 'T'
  ECHR 'E'
  EQUB VE
 
- ECHR ' '               \ Token xxx:    "
+ ECHR ' '               \ Token 113:    ""
  ECHR 'F'
  ECHR 'U'
  ECHR 'R'
@@ -1875,7 +1874,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'Y'
  EQUB VE
 
- ECHR ' '               \ Token xxx:    "
+ ECHR ' '               \ Token 114:    ""
  ECHR 'F'
  ECHR 'R'
  ECHR 'I'
@@ -1885,58 +1884,58 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'Y'
  EQUB VE
 
- ECHR 'W'               \ Token xxx:    "
+ ECHR 'W'               \ Token 115:    ""
  ECHR 'A'
  ECHR 'S'
  ECHR 'P'
  EQUB VE
 
- ECHR 'M'               \ Token xxx:    "
+ ECHR 'M'               \ Token 116:    ""
  ECHR 'O'
  ETWO 'T', 'H'
  EQUB VE
 
- ECHR 'G'               \ Token xxx:    "
+ ECHR 'G'               \ Token 117:    ""
  ECHR 'R'
  ECHR 'U'
  ECHR 'B'
  EQUB VE
 
- ETWO 'A', 'N'          \ Token xxx:    "
+ ETWO 'A', 'N'          \ Token 118:    ""
  ECHR 'T'
  EQUB VE
 
- EJMP 18                \ Token xxx:    "
+ EJMP 18                \ Token 119:    ""
  EQUB VE
 
- ECHR 'P'               \ Token xxx:    "
+ ECHR 'P'               \ Token 120:    ""
  ECHR 'O'
  ETWO 'E', 'T'
  EQUB VE
 
- ECHR 'H'               \ Token xxx:    "
+ ECHR 'H'               \ Token 121:    ""
  ECHR 'O'
  ECHR 'G'
  EQUB VE
 
- ECHR 'Y'               \ Token xxx:    "
+ ECHR 'Y'               \ Token 122:    ""
  ECHR 'A'
  ECHR 'K'
  EQUB VE
 
- ECHR 'S'               \ Token xxx:    "
+ ECHR 'S'               \ Token 123:    ""
  ECHR 'N'
  ECHR 'A'
  ETWO 'I', 'L'
  EQUB VE
 
- ECHR 'S'               \ Token xxx:    "
+ ECHR 'S'               \ Token 124:    ""
  ECHR 'L'
  ECHR 'U'
  ECHR 'G'
  EQUB VE
 
- ECHR 'T'               \ Token xxx:    "
+ ECHR 'T'               \ Token 125:    ""
  ECHR 'R'
  ECHR 'O'
  ECHR 'P'
@@ -1945,16 +1944,16 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ETWO 'A', 'L'
  EQUB VE
 
- ECHR 'D'               \ Token xxx:    "
+ ECHR 'D'               \ Token 126:    ""
  ETWO 'E', 'N'
  ETWO 'S', 'E'
  EQUB VE
 
- ETWO 'R', 'A'          \ Token xxx:    "
+ ETWO 'R', 'A'          \ Token 127:    ""
  ETWO 'I', 'N'
  EQUB VE
 
- ECHR 'I'               \ Token xxx:    "
+ ECHR 'I'               \ Token 128:    ""
  ECHR 'M'
  ECHR 'P'
  ETWO 'E', 'N'
@@ -1964,7 +1963,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ETWO 'L', 'E'
  EQUB VE
 
- ECHR 'E'               \ Token xxx:    "
+ ECHR 'E'               \ Token 129:    ""
  ECHR 'X'
  ECHR 'U'
  ECHR 'B'
@@ -1973,34 +1972,34 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'T'
  EQUB VE
 
- ECHR 'F'               \ Token xxx:    "
+ ECHR 'F'               \ Token 130:    ""
  ECHR 'U'
  ECHR 'N'
  ECHR 'N'
  ECHR 'Y'
  EQUB VE
 
- ECHR 'W'               \ Token xxx:    "
+ ECHR 'W'               \ Token 131:    ""
  ECHR 'E'
  ECHR 'I'
  ECHR 'R'
  ECHR 'D'
  EQUB VE
 
- ECHR 'U'               \ Token xxx:    "
+ ECHR 'U'               \ Token 132:    ""
  ETWO 'N', 'U'
  ECHR 'S'
  ECHR 'U'
  ETWO 'A', 'L'
  EQUB VE
 
- ETWO 'S', 'T'          \ Token xxx:    "
+ ETWO 'S', 'T'          \ Token 133:    ""
  ETWO 'R', 'A'
  ECHR 'N'
  ETWO 'G', 'E'
  EQUB VE
 
- ECHR 'P'               \ Token xxx:    "
+ ECHR 'P'               \ Token 134:    ""
  ECHR 'E'
  ECHR 'C'
  ECHR 'U'
@@ -2009,14 +2008,14 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ETWO 'A', 'R'
  EQUB VE
 
- ECHR 'F'               \ Token xxx:    "
+ ECHR 'F'               \ Token 135:    ""
  ETWO 'R', 'E'
  ETWO 'Q', 'U'
  ETWO 'E', 'N'
  ECHR 'T'
  EQUB VE
 
- ECHR 'O'               \ Token xxx:    "
+ ECHR 'O'               \ Token 136:    ""
  ECHR 'C'
  ECHR 'C'
  ECHR 'A'
@@ -2026,7 +2025,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ETWO 'A', 'L'
  EQUB VE
 
- ECHR 'U'               \ Token xxx:    "
+ ECHR 'U'               \ Token 137:    ""
  ECHR 'N'
  ECHR 'P'
  ETWO 'R', 'E'
@@ -2037,7 +2036,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ETWO 'L', 'E'
  EQUB VE
 
- ECHR 'D'               \ Token xxx:    "
+ ECHR 'D'               \ Token 138:    ""
  ETWO 'R', 'E'
  ECHR 'A'
  ECHR 'D'
@@ -2046,10 +2045,10 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'L'
  EQUB VE
 
- ETOK 171               \ Token xxx:    "
+ ETOK 171               \ Token 139:    ""
  EQUB VE
 
- ERND 1                 \ Token xxx:    "
+ ERND 1                 \ Token 140:    ""
  ECHR ' '
  ERND 0
  ECHR ' '
@@ -2059,12 +2058,12 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ERND 10
  EQUB VE
 
- ETOK 140               \ Token xxx:    "
+ ETOK 140               \ Token 141:    ""
  ETOK 178
  ERND 10
  EQUB VE
 
- ERND 11                \ Token xxx:    "
+ ERND 11                \ Token 142:    ""
  ECHR ' '
  ECHR 'B'
  ECHR 'Y'
@@ -2072,7 +2071,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ERND 12
  EQUB VE
 
- ETOK 140               \ Token xxx:    "
+ ETOK 140               \ Token 143:    ""
  ECHR ' '
  ECHR 'B'
  ECHR 'U'
@@ -2081,51 +2080,53 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ETOK 142
  EQUB VE
 
- ECHR ' '               \ Token xxx:    "
+ ECHR ' '               \ Token 144:    ""
  ECHR 'A'
  ERND 20
  ECHR ' '
  ERND 21
  EQUB VE
 
- ECHR 'P'               \ Token xxx:    "
+ ECHR 'P'               \ Token 145:    ""
  ETWO 'L', 'A'
  ECHR 'N'
  ETWO 'E', 'T'
  EQUB VE
 
- ECHR 'W'               \ Token xxx:    "
+ ECHR 'W'               \ Token 146:    ""
  ETWO 'O', 'R'
  ECHR 'L'
  ECHR 'D'
  EQUB VE
 
- ETWO 'T', 'H'          \ Token xxx:    "
+ ETWO 'T', 'H'          \ Token 147:    ""
  ECHR 'E'
  ECHR ' '
  EQUB VE
 
- ETWO 'T', 'H'          \ Token xxx:    "
+ ETWO 'T', 'H'          \ Token 148:    ""
  ECHR 'I'
  ECHR 'S'
  ECHR ' '
  EQUB VE
 
- EQUB VE                \ Token xxx:    "
- EJMP 9
+ EQUB VE                \ Token 149:    ""
+
+ EJMP 9                 \ Token 150:    ""
  EJMP 11
  EJMP 1
  EJMP 8
  EQUB VE
 
- EQUB VE                \ Token xxx:    "
- EQUB VE
+ EQUB VE                \ Token 151:    ""
 
- ECHR 'I'               \ Token xxx:    "
+ EQUB VE                \ Token 152:    ""
+
+ ECHR 'I'               \ Token 153:    ""
  ETWO 'A', 'N'
  EQUB VE
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 154:    ""
  ECHR 'C'
  ECHR 'O'
  ECHR 'M'
@@ -2135,10 +2136,10 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ETWO 'E', 'R'
  EQUB VE
 
- ERND 13                \ Token xxx:    "
+ ERND 13                \ Token 155:    ""
  EQUB VE
 
- ECHR 'M'               \ Token xxx:    "
+ ECHR 'M'               \ Token 156:    ""
  ETWO 'O', 'U'
  ECHR 'N'
  ECHR 'T'
@@ -2146,18 +2147,18 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ETWO 'I', 'N'
  EQUB VE
 
- ECHR 'E'               \ Token xxx:    "
+ ECHR 'E'               \ Token 157:    ""
  ETWO 'D', 'I'
  ECHR 'B'
  ETWO 'L', 'E'
  EQUB VE
 
- ECHR 'T'               \ Token xxx:    "
+ ECHR 'T'               \ Token 158:    ""
  ETWO 'R', 'E'
  ECHR 'E'
  EQUB VE
 
- ECHR 'S'               \ Token xxx:    "
+ ECHR 'S'               \ Token 159:    ""
  ECHR 'P'
  ECHR 'O'
  ECHR 'T'
@@ -2165,32 +2166,32 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ETWO 'E', 'D'
  EQUB VE
 
- ERND 29                \ Token xxx:    "
+ ERND 29                \ Token 160:    ""
  EQUB VE
 
- ERND 30                \ Token xxx:    "
+ ERND 30                \ Token 161:    ""
  EQUB VE
 
- ERND 6                 \ Token xxx:    "
+ ERND 6                 \ Token 162:    ""
  ECHR 'O'
  ECHR 'I'
  ECHR 'D'
  EQUB VE
 
- ERND 36                \ Token xxx:    "
+ ERND 36                \ Token 163:    ""
  EQUB VE
 
- ERND 35                \ Token xxx:    "
+ ERND 35                \ Token 164:    ""
  EQUB VE
 
- ETWO 'A', 'N'          \ Token xxx:    "
+ ETWO 'A', 'N'          \ Token 165:    ""
  ECHR 'C'
  ECHR 'I'
  ETWO 'E', 'N'
  ECHR 'T'
  EQUB VE
 
- ECHR 'E'               \ Token xxx:    "
+ ECHR 'E'               \ Token 166:    ""
  ECHR 'X'
  ETWO 'C', 'E'
  ECHR 'P'
@@ -2199,7 +2200,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ETWO 'A', 'L'
  EQUB VE
 
- ECHR 'E'               \ Token xxx:    "
+ ECHR 'E'               \ Token 167:    ""
  ECHR 'C'
  ETWO 'C', 'E'
  ECHR 'N'
@@ -2209,23 +2210,23 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'C'
  EQUB VE
 
- ETWO 'I', 'N'          \ Token xxx:    "
+ ETWO 'I', 'N'          \ Token 168:    ""
  ECHR 'G'
  ETWO 'R', 'A'
  ETWO 'I', 'N'
  ETWO 'E', 'D'
  EQUB VE
 
- ERND 23                \ Token xxx:    "
+ ERND 23                \ Token 169:    ""
  EQUB VE
 
- ECHR 'K'               \ Token xxx:    "
+ ECHR 'K'               \ Token 170:    ""
  ETWO 'I', 'L'
  ETWO 'L', 'E'
  ECHR 'R'
  EQUB VE
 
- ECHR 'D'               \ Token xxx:    "
+ ECHR 'D'               \ Token 171:    ""
  ECHR 'E'
  ECHR 'A'
  ECHR 'D'
@@ -2233,20 +2234,20 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'Y'
  EQUB VE
 
- ECHR 'W'               \ Token xxx:    "
+ ECHR 'W'               \ Token 172:    ""
  ECHR 'I'
  ECHR 'C'
  ECHR 'K'
  ETWO 'E', 'D'
  EQUB VE
 
- ECHR 'L'               \ Token xxx:    "
+ ECHR 'L'               \ Token 173:    ""
  ETWO 'E', 'T'
  ECHR 'H'
  ETWO 'A', 'L'
  EQUB VE
 
- ECHR 'V'               \ Token xxx:    "
+ ECHR 'V'               \ Token 174:    ""
  ECHR 'I'
  ECHR 'C'
  ECHR 'I'
@@ -2254,32 +2255,32 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'S'
  EQUB VE
 
- ETWO 'I', 'T'          \ Token xxx:    "
+ ETWO 'I', 'T'          \ Token 175:    ""
  ECHR 'S'
  ECHR ' '
  EQUB VE
 
- EJMP 13                \ Token xxx:    "
+ EJMP 13                \ Token 176:    ""
  EJMP 14
  EJMP 19
  EQUB VE
 
- ECHR '.'               \ Token xxx:    "
+ ECHR '.'               \ Token 177:    ""
  EJMP 12
  EJMP 15
  EQUB VE
 
- ECHR ' '               \ Token xxx:    "
+ ECHR ' '               \ Token 178:    ""
  ETWO 'A', 'N'
  ECHR 'D'
  ECHR ' '
  EQUB VE
 
- ECHR 'Y'               \ Token xxx:    "
+ ECHR 'Y'               \ Token 179:    ""
  ETWO 'O', 'U'
  EQUB VE
 
- ECHR 'P'               \ Token xxx:    "
+ ECHR 'P'               \ Token 180:    ""
  ETWO 'A', 'R'
  ECHR 'K'
  ETOK 195
@@ -2289,7 +2290,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'S'
  EQUB VE
 
- ECHR 'D'               \ Token xxx:    "
+ ECHR 'D'               \ Token 181:    ""
  ECHR 'U'
  ETWO 'S', 'T'
  ECHR ' '
@@ -2300,7 +2301,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'S'
  EQUB VE
 
- ECHR 'I'               \ Token xxx:    "
+ ECHR 'I'               \ Token 182:    ""
  ETWO 'C', 'E'
  ECHR ' '
  ECHR 'B'
@@ -2309,7 +2310,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'S'
  EQUB VE
 
- ECHR 'R'               \ Token xxx:    "
+ ECHR 'R'               \ Token 183:    ""
  ECHR 'O'
  ECHR 'C'
  ECHR 'K'
@@ -2322,7 +2323,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'S'
  EQUB VE
 
- ECHR 'V'               \ Token xxx:    "
+ ECHR 'V'               \ Token 184:    ""
  ECHR 'O'
  ECHR 'L'
  ECHR 'C'
@@ -2331,50 +2332,50 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ETWO 'E', 'S'
  EQUB VE
 
- ECHR 'P'               \ Token xxx:    "
+ ECHR 'P'               \ Token 185:    ""
  ETWO 'L', 'A'
  ECHR 'N'
  ECHR 'T'
  EQUB VE
 
- ECHR 'T'               \ Token xxx:    "
+ ECHR 'T'               \ Token 186:    ""
  ECHR 'U'
  ECHR 'L'
  ECHR 'I'
  ECHR 'P'
  EQUB VE
 
- ECHR 'B'               \ Token xxx:    "
+ ECHR 'B'               \ Token 187:    ""
  ETWO 'A', 'N'
  ETWO 'A', 'N'
  ECHR 'A'
  EQUB VE
 
- ECHR 'C'               \ Token xxx:    "
+ ECHR 'C'               \ Token 188:    ""
  ETWO 'O', 'R'
  ECHR 'N'
  EQUB VE
 
- EJMP 18                \ Token xxx:    "
+ EJMP 18                \ Token 189:    ""
  ECHR 'W'
  ECHR 'E'
  ETWO 'E', 'D'
  EQUB VE
 
- EJMP 18                \ Token xxx:    "
+ EJMP 18                \ Token 190:    ""
  EQUB VE
 
- EJMP 17                \ Token xxx:    "
+ EJMP 17                \ Token 191:    ""
  ECHR ' '
  EJMP 18
  EQUB VE
 
- EJMP 17                \ Token xxx:    "
+ EJMP 17                \ Token 192:    ""
  ECHR ' '
  ERND 13
  EQUB VE
 
- ETWO 'I', 'N'          \ Token xxx:    "
+ ETWO 'I', 'N'          \ Token 193:    ""
  ECHR 'H'
  ETWO 'A', 'B'
  ETWO 'I', 'T'
@@ -2382,19 +2383,19 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'T'
  EQUB VE
 
- ETOK 191               \ Token xxx:    "
+ ETOK 191               \ Token 194:    ""
  EQUB VE
 
- ETWO 'I', 'N'          \ Token xxx:    "
+ ETWO 'I', 'N'          \ Token 195:    ""
  ECHR 'G'
  ECHR ' '
  EQUB VE
 
- ETWO 'E', 'D'          \ Token xxx:    "
+ ETWO 'E', 'D'          \ Token 196:    ""
  ECHR ' '
  EQUB VE
 
- EJMP 26                \ Token xxx:    "
+ EJMP 26                \ Token 197:    ""
  ECHR 'D'
  ECHR '.'
  EJMP 19
@@ -2413,7 +2414,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'L'
  EQUB VE
 
- ECHR ' '               \ Token xxx:    "
+ ECHR ' '               \ Token 198:    ""
  ECHR 'L'
  ETWO 'I', 'T'
  ECHR 'T'
@@ -2427,7 +2428,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'Y'
  EQUB VE
 
- EJMP 25                \ Token xxx:    "
+ EJMP 25                \ Token 199:    ""
  EJMP 9
  EJMP 29
  EJMP 14
@@ -2635,7 +2636,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  EJMP 8
  EQUB VE
 
- EJMP 26                \ Token xxx:    "
+ EJMP 26                \ Token 200:    ""
  ECHR 'N'
  ECHR 'A'
  ECHR 'M'
@@ -2644,19 +2645,19 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR ' '
  EQUB VE
 
- ECHR ' '               \ Token xxx:    "
+ ECHR ' '               \ Token 201:    ""
  ECHR 'T'
  ECHR 'O'
  ECHR ' '
  EQUB VE
 
- ECHR ' '               \ Token xxx:    "
+ ECHR ' '               \ Token 202:    ""
  ECHR 'I'
  ECHR 'S'
  ECHR ' '
  EQUB VE
 
- ECHR 'W'               \ Token xxx:    "
+ ECHR 'W'               \ Token 203:    ""
  ECHR 'A'
  ECHR 'S'
  ECHR ' '
@@ -2671,14 +2672,14 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  EJMP 19
  EQUB VE
 
- ECHR '.'               \ Token xxx:    "
+ ECHR '.'               \ Token 204:    ""
  EJMP 12
  EJMP 12
  ECHR ' '
  EJMP 19
  EQUB VE
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 205:    ""
  ECHR 'D'
  ECHR 'O'
  ECHR 'C'
@@ -2686,33 +2687,34 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ETWO 'E', 'D'
  EQUB VE
 
- EQUB VE                \ Token xxx:    "
- ECHR 'S'
+ EQUB VE                \ Token 206:    ""
+
+ ECHR 'S'               \ Token 207:    ""
  ECHR 'H'
  ECHR 'I'
  ECHR 'P'
  EQUB VE
 
- ECHR ' '               \ Token xxx:    "
+ ECHR ' '               \ Token 208:    ""
  ECHR 'A'
  ECHR ' '
  EQUB VE
 
- EJMP 26                \ Token xxx:    "
+ EJMP 26                \ Token 209:    ""
  ETWO 'E', 'R'
  ECHR 'R'
  ECHR 'I'
  ETWO 'U', 'S'
  EQUB VE
 
- ECHR ' '               \ Token xxx:    "
+ ECHR ' '               \ Token 210:    ""
  ECHR 'N'
  ECHR 'E'
  ECHR 'W'
  ECHR ' '
  EQUB VE
 
- EJMP 26                \ Token xxx:    "
+ EJMP 26                \ Token 211:    ""
  ECHR 'H'
  ETWO 'E', 'R'
  EJMP 26
@@ -2735,7 +2737,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'Y'
  EQUB VE
 
- ETOK 177               \ Token xxx:    "
+ ETOK 177               \ Token 212:    ""
  EJMP 12
  EJMP 8
  EJMP 1
@@ -2752,7 +2754,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'S'
  EQUB VE
 
- ECHR ' '               \ Token xxx:    "
+ ECHR ' '               \ Token 213:    ""
  ETOK 154
  ECHR ' '
  EJMP 4
@@ -2778,8 +2780,9 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ETOK 211
  EQUB VE
 
- EQUB VE                \ Token xxx:    "
- EJMP 15
+ EQUB VE                \ Token 214:    ""
+
+ EJMP 15                \ Token 215:    ""
  ECHR ' '
  ECHR 'U'
  ECHR 'N'
@@ -2791,7 +2794,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ETOK 145
  EQUB VE
 
- EJMP 9                 \ Token xxx:    "
+ EJMP 9                 \ Token 216:    ""
  EJMP 8
  EJMP 23
  EJMP 1
@@ -2808,7 +2811,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ETWO 'G', 'E'
  EQUB VE
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 217:    ""
  ECHR 'C'
  ECHR 'U'
  ECHR 'R'
@@ -2819,7 +2822,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'S'
  EQUB VE
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 218:    ""
  ECHR 'F'
  ECHR 'O'
  ECHR 'S'
@@ -2835,7 +2838,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'E'
  EQUB VE
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 219:    ""
  ECHR 'F'
  ETWO 'O', 'R'
  ECHR 'T'
@@ -2844,7 +2847,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'E'
  EQUB VE
 
- ETOK 203               \ Token xxx:    "
+ ETOK 203               \ Token 220:    ""
  EJMP 19
  ETWO 'R', 'E'
  ETWO 'E', 'S'
@@ -2852,7 +2855,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ETWO 'C', 'E'
  EQUB VE
 
- ECHR 'I'               \ Token xxx:    "
+ ECHR 'I'               \ Token 221:    ""
  ECHR 'S'
  ECHR ' '
  ETWO 'B', 'E'
@@ -2882,7 +2885,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'Y'
  EQUB VE
 
- EJMP 25                \ Token xxx:    "
+ EJMP 25                \ Token 222:    ""
  EJMP 9
  EJMP 29
  EJMP 14
@@ -3344,7 +3347,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  EJMP 24
  EQUB VE
 
- EJMP 25                \ Token xxx:    "
+ EJMP 25                \ Token 223:    ""
  EJMP 9
  EJMP 29
  EJMP 8
@@ -3484,75 +3487,76 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  EJMP 24
  EQUB VE
 
- EQUB VE                \ Token xxx:    "
- ECHR 'S'
+ EQUB VE                \ Token 224:    ""
+
+ ECHR 'S'               \ Token 225:    ""
  ECHR 'H'
  ETWO 'R', 'E'
  ECHR 'W'
  EQUB VE
 
- ETWO 'B', 'E'          \ Token xxx:    "
+ ETWO 'B', 'E'          \ Token 226:    ""
  ECHR 'A'
  ETWO 'S', 'T'
  EQUB VE
 
- ECHR 'G'               \ Token xxx:    "
+ ECHR 'G'               \ Token 227:    ""
  ETWO 'N', 'U'
  EQUB VE
 
- ECHR 'S'               \ Token xxx:    "
+ ECHR 'S'               \ Token 228:    ""
  ECHR 'N'
  ECHR 'A'
  ECHR 'K'
  ECHR 'E'
  EQUB VE
 
- ECHR 'D'               \ Token xxx:    "
+ ECHR 'D'               \ Token 229:    ""
  ECHR 'O'
  ECHR 'G'
  EQUB VE
 
- ETWO 'L', 'E'          \ Token xxx:    "
+ ETWO 'L', 'E'          \ Token 230:    ""
  ECHR 'O'
  ECHR 'P'
  ETWO 'A', 'R'
  ECHR 'D'
  EQUB VE
 
- ECHR 'C'               \ Token xxx:    "
+ ECHR 'C'               \ Token 231:    ""
  ETWO 'A', 'T'
  EQUB VE
 
- ECHR 'M'               \ Token xxx:    "
+ ECHR 'M'               \ Token 232:    ""
  ETWO 'O', 'N'
  ECHR 'K'
  ECHR 'E'
  ECHR 'Y'
  EQUB VE
 
- ECHR 'G'               \ Token xxx:    "
+ ECHR 'G'               \ Token 233:    ""
  ECHR 'O'
  ETWO 'A', 'T'
  EQUB VE
 
- ECHR 'C'               \ Token xxx:    "
+ ECHR 'C'               \ Token 234:    ""
  ETWO 'A', 'R'
  ECHR 'P'
  EQUB VE
 
- ERND 15                \ Token xxx:    "
+ ERND 15                \ Token 235:    ""
  ECHR ' '
  ERND 14
  EQUB VE
 
- EJMP 17                \ Token xxx:    "
+ EJMP 17                \ Token 236:    ""
  ECHR ' '
  ERND 29
  ECHR ' '
  ERND 32
  EQUB VE
 
- ETOK 175               \ Token xxx:    "
+ ETOK 175               \ Token 237:    ""
  ERND 16
  ECHR ' '
  ERND 30
@@ -3560,35 +3564,35 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ERND 32
  EQUB VE
 
- ERND 33                \ Token xxx:    "
+ ERND 33                \ Token 238:    ""
  ECHR ' '
  ERND 34
  EQUB VE
 
- ERND 15                \ Token xxx:    "
+ ERND 15                \ Token 239:    ""
  ECHR ' '
  ERND 14
  EQUB VE
 
- ECHR 'M'               \ Token xxx:    "
+ ECHR 'M'               \ Token 240:    ""
  ECHR 'E'
  ETWO 'A', 'T'
  EQUB VE
 
- ECHR 'C'               \ Token xxx:    "
+ ECHR 'C'               \ Token 241:    ""
  ECHR 'U'
  ECHR 'T'
  ECHR 'L'
  ETWO 'E', 'T'
  EQUB VE
 
- ETWO 'S', 'T'          \ Token xxx:    "
+ ETWO 'S', 'T'          \ Token 242:    ""
  ECHR 'E'
  ECHR 'A'
  ECHR 'K'
  EQUB VE
 
- ECHR 'B'               \ Token xxx:    "
+ ECHR 'B'               \ Token 243:    ""
  ECHR 'U'
  ECHR 'R'
  ETWO 'G', 'E'
@@ -3596,21 +3600,21 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'S'
  EQUB VE
 
- ECHR 'S'               \ Token xxx:    "
+ ECHR 'S'               \ Token 244:    ""
  ETWO 'O', 'U'
  ECHR 'P'
  EQUB VE
 
- ECHR 'I'               \ Token xxx:    "
+ ECHR 'I'               \ Token 245:    ""
  ETWO 'C', 'E'
  EQUB VE
 
- ECHR 'M'               \ Token xxx:    "
+ ECHR 'M'               \ Token 246:    ""
  ECHR 'U'
  ECHR 'D'
  EQUB VE
 
- ECHR 'Z'               \ Token xxx:    "
+ ECHR 'Z'               \ Token 247:    ""
  ETWO 'E', 'R'
  ECHR 'O'
  ECHR '-'
@@ -3618,7 +3622,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'G'
  EQUB VE
 
- ECHR 'V'               \ Token xxx:    "
+ ECHR 'V'               \ Token 248:    ""
  ECHR 'A'
  ECHR 'C'
  ECHR 'U'
@@ -3626,7 +3630,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'M'
  EQUB VE
 
- EJMP 17                \ Token xxx:    "
+ EJMP 17                \ Token 249:    ""
  ECHR ' '
  ECHR 'U'
  ECHR 'L'
@@ -3634,7 +3638,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ETWO 'R', 'A'
  EQUB VE
 
- ECHR 'H'               \ Token xxx:    "
+ ECHR 'H'               \ Token 250:    ""
  ECHR 'O'
  ECHR 'C'
  ECHR 'K'
@@ -3642,7 +3646,7 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ECHR 'Y'
  EQUB VE
 
- ECHR 'C'               \ Token xxx:    "
+ ECHR 'C'               \ Token 251:    ""
  ECHR 'R'
  ECHR 'I'
  ECHR 'C'
@@ -3650,76 +3654,28 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
  ETWO 'E', 'T'
  EQUB VE
 
- ECHR 'K'               \ Token xxx:    "
+ ECHR 'K'               \ Token 252:    ""
  ETWO 'A', 'R'
  ETWO 'A', 'T'
  ECHR 'E'
  EQUB VE
 
- ECHR 'P'               \ Token xxx:    "
+ ECHR 'P'               \ Token 253:    ""
  ECHR 'O'
  ETWO 'L', 'O'
  EQUB VE
 
- ECHR 'T'               \ Token xxx:    "
+ ECHR 'T'               \ Token 254:    ""
  ETWO 'E', 'N'
  ECHR 'N'
  ECHR 'I'
  ECHR 'S'
  EQUB VE
- EQUB VE                \ Token xxx:    "
 
-.RUPLA
+ EQUB VE                \ Token 255:    ""
 
- ETOK 132
- ETOK 193
- ERND 24
- ECHR 'K'
- ETOK 170
- EJMP 24
- ERND 7
- ECHR '!'
- ERND 28
- EJMP 19
- ETWO 'A', '?'
- ETOK 139
- ECHR '='
- ECHR 'G'
- ETWO 'A', 'T'
- ECHR 'T'
- ECHR '<'
- ECHR 'M'
- ETOK 151
- ETWO 'M', 'A'
- ECHR 'R'
- ECHR '2'
- ETOK 150
-
-.RUGAL
-
- ETWO '-', '-'
- ECHR 'W'
- ECHR 'W'
- ECHR 'W'
- ECHR 'V'
- ECHR 'V'
- ECHR 'V'
- ECHR 'V'
- ECHR 'V'
- ECHR 'V'
- ECHR 'V'
- ECHR 'V'
- ECHR 'V'
- ECHR 'V'
- ECHR 'V'
- ECHR 'V'
- ECHR 'V'
- ECHR 'V'
- ECHR 'V'
- ECHR 'V'
- ECHR 'V'
- ECHR 'U'
- ECHR 'V'
+INCLUDE "library/enhanced/main/variable/rupla.asm"
+INCLUDE "library/enhanced/main/variable/rugal.asm"
 
 .RUTOK
 
@@ -4304,17 +4260,19 @@ INCLUDE "library/nes/main/macro/rtok.asm"
 
 .QQ18
 
- RTOK 111
+ RTOK 111               \ Token 0:      ""
  RTOK 131
  CONT 7
  EQUB 0
- CHAR ' '
+
+ CHAR ' '               \ Token 1:      ""
  CHAR 'C'
  CHAR 'H'
  TWOK 'A', 'R'
  CHAR 'T'
  EQUB 0
- CHAR 'G'
+
+ CHAR 'G'               \ Token 2:      ""
  CHAR 'O'
  CHAR 'V'
  TWOK 'E', 'R'
@@ -4323,13 +4281,15 @@ INCLUDE "library/nes/main/macro/rtok.asm"
  TWOK 'E', 'N'
  CHAR 'T'
  EQUB 0
- CHAR 'D'
+
+ CHAR 'D'               \ Token 3:      ""
  TWOK 'A', 'T'
  CHAR 'A'
  RTOK 131
  CONT 3
  EQUB 0
- TWOK 'I', 'N'
+
+ TWOK 'I', 'N'          \ Token 4:      ""
  CHAR 'V'
  TWOK 'E', 'N'
  CHAR 'T'
@@ -4337,17 +4297,20 @@ INCLUDE "library/nes/main/macro/rtok.asm"
  CHAR 'Y'
  CONT 12
  EQUB 0
- CHAR 'S'
+
+ CHAR 'S'               \ Token 5:      ""
  CHAR 'Y'
  CHAR 'S'
  TWOK 'T', 'E'
  CHAR 'M'
  EQUB 0
- CHAR 'P'
+
+ CHAR 'P'               \ Token 6:      ""
  TWOK 'R', 'I'
  TWOK 'C', 'E'
  EQUB 0
- CONT 2
+
+ CONT 2                 \ Token 7:      ""
  CHAR ' '
  CHAR 'M'
  TWOK 'A', 'R'
@@ -4358,7 +4321,8 @@ INCLUDE "library/nes/main/macro/rtok.asm"
  RTOK 6
  CHAR 'S'
  EQUB 0
- TWOK 'I', 'N'
+
+ TWOK 'I', 'N'          \ Token 8:      ""
  CHAR 'D'
  TWOK 'U', 'S'
  CHAR 'T'
@@ -4366,7 +4330,8 @@ INCLUDE "library/nes/main/macro/rtok.asm"
  CHAR 'A'
  CHAR 'L'
  EQUB 0
- CHAR 'A'
+
+ CHAR 'A'               \ Token 9:      ""
  CHAR 'G'
  TWOK 'R', 'I'
  CHAR 'C'
@@ -4377,49 +4342,59 @@ INCLUDE "library/nes/main/macro/rtok.asm"
  TWOK 'R', 'A'
  CHAR 'L'
  EQUB 0
- TWOK 'R', 'I'
+
+ TWOK 'R', 'I'          \ Token 10:     ""
  CHAR 'C'
  CHAR 'H'
  CHAR ' '
  EQUB 0
- RTOK 139
+
+ RTOK 139               \ Token 11:     ""
  CHAR ' '
  EQUB 0
- RTOK 138
+
+ RTOK 138               \ Token 12:     ""
  CHAR ' '
  EQUB 0
- TWOK 'M', 'A'
+
+ TWOK 'M', 'A'          \ Token 13:     ""
  TWOK 'I', 'N'
  CHAR 'L'
  CHAR 'Y'
  CHAR ' '
  EQUB 0
- CHAR 'U'
+
+ CHAR 'U'               \ Token 14:     ""
  CHAR 'N'
  CHAR 'I'
  CHAR 'T'
  EQUB 0
- CHAR 'V'
+
+ CHAR 'V'               \ Token 15:     ""
  CHAR 'I'
  CHAR 'E'
  CHAR 'W'
  CHAR ' '
  EQUB 0
- EQUB 0
- TWOK 'A', 'N'
+
+ EQUB 0                 \ Token 16:     ""
+
+ TWOK 'A', 'N'          \ Token 17:     ""
  TWOK 'A', 'R'
  CHAR 'C'
  CHAR 'H'
  CHAR 'Y'
  EQUB 0
- CHAR 'F'
+
+ CHAR 'F'               \ Token 18:     ""
  CHAR 'E'
  CHAR 'U'
  CHAR 'D'
  CHAR 'A'
  CHAR 'L'
  EQUB 0
- CHAR 'M'
+
+ CHAR 'M'               \ Token 19:     ""
  CHAR 'U'
  CHAR 'L'
  TWOK 'T', 'I'
@@ -4427,21 +4402,24 @@ INCLUDE "library/nes/main/macro/rtok.asm"
  CONT 6
  RTOK 2
  EQUB 0
- TWOK 'D', 'I'
+
+ TWOK 'D', 'I'          \ Token 20:     ""
  CHAR 'C'
  CHAR 'T'
  TWOK 'A', 'T'
  TWOK 'O', 'R'
  RTOK 25
  EQUB 0
- RTOK 91
+
+ RTOK 91                \ Token 21:     ""
  CHAR 'M'
  CHAR 'U'
  CHAR 'N'
  TWOK 'I', 'S'
  CHAR 'T'
  EQUB 0
- CHAR 'C'
+
+ CHAR 'C'               \ Token 22:     ""
  TWOK 'O', 'N'
  CHAR 'F'
  TWOK 'E', 'D'
@@ -4450,7 +4428,8 @@ INCLUDE "library/nes/main/macro/rtok.asm"
  CHAR 'C'
  CHAR 'Y'
  EQUB 0
- CHAR 'D'
+
+ CHAR 'D'               \ Token 23:     ""
  CHAR 'E'
  CHAR 'M'
  CHAR 'O'
@@ -4459,7 +4438,8 @@ INCLUDE "library/nes/main/macro/rtok.asm"
  CHAR 'C'
  CHAR 'Y'
  EQUB 0
- CHAR 'C'
+
+ CHAR 'C'               \ Token 24:     ""
  TWOK 'O', 'R'
  CHAR 'P'
  TWOK 'O', 'R'
@@ -4470,24 +4450,28 @@ INCLUDE "library/nes/main/macro/rtok.asm"
  TWOK 'A', 'T'
  CHAR 'E'
  EQUB 0
- CHAR 'S'
+
+ CHAR 'S'               \ Token 25:     ""
  CHAR 'H'
  CHAR 'I'
  CHAR 'P'
  EQUB 0
- CHAR 'P'
+
+ CHAR 'P'               \ Token 26:     ""
  RTOK 94
  CHAR 'D'
  CHAR 'U'
  CHAR 'C'
  CHAR 'T'
  EQUB 0
- CHAR ' '
+
+ CHAR ' '               \ Token 27:     ""
  TWOK 'L', 'A'
  CHAR 'S'
  TWOK 'E', 'R'
  EQUB 0
- CHAR 'H'
+
+ CHAR 'H'               \ Token 28:     ""
  CHAR 'U'
  TWOK 'M', 'A'
  CHAR 'N'
@@ -4501,7 +4485,8 @@ INCLUDE "library/nes/main/macro/rtok.asm"
  CHAR 'L'
  CHAR 'S'
  EQUB 0
- CHAR 'H'
+
+ CHAR 'H'               \ Token 29:     ""
  CHAR 'Y'
  CHAR 'P'
  TWOK 'E', 'R'
@@ -4511,7 +4496,8 @@ INCLUDE "library/nes/main/macro/rtok.asm"
  TWOK 'C', 'E'
  CHAR ' '
  EQUB 0
- CHAR 'S'
+
+ CHAR 'S'               \ Token 30:     ""
  CHAR 'H'
  TWOK 'O', 'R'
  CHAR 'T'
@@ -4519,12 +4505,14 @@ INCLUDE "library/nes/main/macro/rtok.asm"
  RTOK 42
  RTOK 1
  EQUB 0
- TWOK 'D', 'I'
+
+ TWOK 'D', 'I'          \ Token 31:     ""
  RTOK 43
  TWOK 'A', 'N'
  TWOK 'C', 'E'
  EQUB 0
- CHAR 'P'
+
+ CHAR 'P'               \ Token 32:     ""
  CHAR 'O'
  CHAR 'P'
  CHAR 'U'
@@ -4533,7 +4521,8 @@ INCLUDE "library/nes/main/macro/rtok.asm"
  CHAR 'I'
  TWOK 'O', 'N'
  EQUB 0
- CHAR 'T'
+
+ CHAR 'T'               \ Token 33:     ""
  CHAR 'U'
  CHAR 'R'
  CHAR 'N'
@@ -4541,14 +4530,16 @@ INCLUDE "library/nes/main/macro/rtok.asm"
  CHAR 'V'
  TWOK 'E', 'R'
  EQUB 0
- CHAR 'E'
+
+ CHAR 'E'               \ Token 34:     ""
  CHAR 'C'
  TWOK 'O', 'N'
  CHAR 'O'
  CHAR 'M'
  CHAR 'Y'
  EQUB 0
- CHAR ' '
+
+ CHAR ' '               \ Token 35:     ""
  CHAR 'L'
  CHAR 'I'
  CHAR 'G'
@@ -4560,7 +4551,8 @@ INCLUDE "library/nes/main/macro/rtok.asm"
  TWOK 'A', 'R'
  CHAR 'S'
  EQUB 0
- TWOK 'T', 'E'
+
+ TWOK 'T', 'E'          \ Token 36:     ""
  CHAR 'C'
  CHAR 'H'
  CHAR '.'
@@ -4568,23 +4560,27 @@ INCLUDE "library/nes/main/macro/rtok.asm"
  TWOK 'V', 'E'
  CHAR 'L'
  EQUB 0
- CHAR 'C'
+
+ CHAR 'C'               \ Token 37:     ""
  CHAR 'A'
  CHAR 'S'
  CHAR 'H'
  EQUB 0
- CHAR ' '
+
+ CHAR ' '               \ Token 38:     ""
  TWOK 'B', 'I'
  CHAR 'L'
  CHAR 'L'
  CHAR 'I'
  TWOK 'O', 'N'
  EQUB 0
- RTOK 122
+
+ RTOK 122               \ Token 39:     ""
  RTOK 1
  CONT 1
  EQUB 0
- CHAR 'T'
+
+ CHAR 'T'               \ Token 40:     ""
  TWOK 'A', 'R'
  TWOK 'G', 'E'
  CHAR 'T'
@@ -4593,7 +4589,8 @@ INCLUDE "library/nes/main/macro/rtok.asm"
  CHAR 'O'
  RTOK 43
  EQUB 0
- RTOK 106
+
+ RTOK 106               \ Token 41:     ""
  CHAR ' '
  CHAR 'J'
  CHAR 'A'
@@ -4601,45 +4598,54 @@ INCLUDE "library/nes/main/macro/rtok.asm"
  CHAR 'M'
  TWOK 'E', 'D'
  EQUB 0
- TWOK 'R', 'A'
+
+ TWOK 'R', 'A'          \ Token 42:     ""
  CHAR 'N'
  TWOK 'G', 'E'
  EQUB 0
- CHAR 'S'
+
+ CHAR 'S'               \ Token 43:     ""
  CHAR 'T'
  EQUB 0
- EQUB 0
- CHAR 'S'
+
+ EQUB 0                 \ Token 44:     ""
+
+ CHAR 'S'               \ Token 45:     ""
  CHAR 'E'
  CHAR 'L'
  CHAR 'L'
  EQUB 0
- CHAR ' '
+
+ CHAR ' '               \ Token 46:     ""
  CHAR 'C'
  TWOK 'A', 'R'
  CHAR 'G'
  CHAR 'O'
  CONT 6
  EQUB 0
- CHAR 'E'
+
+ CHAR 'E'               \ Token 47:     ""
  TWOK 'Q', 'U'
  CHAR 'I'
  CHAR 'P'
  CHAR ' '
  RTOK 25
  EQUB 0
- CHAR 'F'
+
+ CHAR 'F'               \ Token 48:     ""
  CHAR 'O'
  CHAR 'O'
  CHAR 'D'
  EQUB 0
- TWOK 'T', 'E'
+
+ TWOK 'T', 'E'          \ Token 49:     ""
  CHAR 'X'
  TWOK 'T', 'I'
  TWOK 'L', 'E'
  CHAR 'S'
  EQUB 0
- TWOK 'R', 'A'
+
+ TWOK 'R', 'A'          \ Token 50:     ""
  TWOK 'D', 'I'
  CHAR 'O'
  CHAR 'A'
@@ -4648,7 +4654,8 @@ INCLUDE "library/nes/main/macro/rtok.asm"
  CHAR 'V'
  TWOK 'E', 'S'
  EQUB 0
- RTOK 94
+
+ RTOK 94                \ Token 51:     ""
  CHAR 'B'
  CHAR 'O'
  CHAR 'T'
@@ -4658,21 +4665,24 @@ INCLUDE "library/nes/main/macro/rtok.asm"
  CHAR 'V'
  TWOK 'E', 'S'
  EQUB 0
- TWOK 'B', 'E'
+
+ TWOK 'B', 'E'          \ Token 52:     ""
  CHAR 'V'
  TWOK 'E', 'R'
  CHAR 'A'
  TWOK 'G', 'E'
  CHAR 'S'
  EQUB 0
- CHAR 'L'
+
+ CHAR 'L'               \ Token 53:     ""
  CHAR 'U'
  CHAR 'X'
  CHAR 'U'
  TWOK 'R', 'I'
  TWOK 'E', 'S'
  EQUB 0
- CHAR 'R'
+
+ CHAR 'R'               \ Token 54:     ""
  TWOK 'A', 'R'
  CHAR 'E'
  CHAR ' '
@@ -4683,63 +4693,73 @@ INCLUDE "library/nes/main/macro/rtok.asm"
  CHAR 'I'
  TWOK 'E', 'S'
  EQUB 0
- RTOK 91
+
+ RTOK 91                \ Token 55:     ""
  CHAR 'P'
  CHAR 'U'
  CHAR 'T'
  TWOK 'E', 'R'
  CHAR 'S'
  EQUB 0
- TWOK 'M', 'A'
+
+ TWOK 'M', 'A'          \ Token 56:     ""
  CHAR 'C'
  CHAR 'H'
  TWOK 'I', 'N'
  TWOK 'E', 'R'
  CHAR 'Y'
  EQUB 0
- RTOK 124
+
+ RTOK 124               \ Token 57:     ""
  CHAR 'O'
  CHAR 'Y'
  CHAR 'S'
  EQUB 0
- CHAR 'F'
+
+ CHAR 'F'               \ Token 58:     ""
  CHAR 'I'
  RTOK 97
  CHAR 'M'
  CHAR 'S'
  EQUB 0
- CHAR 'F'
+
+ CHAR 'F'               \ Token 59:     ""
  CHAR 'U'
  CHAR 'R'
  CHAR 'S'
  EQUB 0
- CHAR 'M'
+
+ CHAR 'M'               \ Token 60:     ""
  TWOK 'I', 'N'
  TWOK 'E', 'R'
  CHAR 'A'
  CHAR 'L'
  CHAR 'S'
  EQUB 0
- CHAR 'G'
+
+ CHAR 'G'               \ Token 61:     ""
  CHAR 'O'
  CHAR 'L'
  CHAR 'D'
  EQUB 0
- CHAR 'P'
+
+ CHAR 'P'               \ Token 62:     ""
  CHAR 'L'
  TWOK 'A', 'T'
  TWOK 'I', 'N'
  CHAR 'U'
  CHAR 'M'
  EQUB 0
- TWOK 'G', 'E'
+
+ TWOK 'G', 'E'          \ Token 63:     ""
  CHAR 'M'
  CHAR '-'
  RTOK 43
  TWOK 'O', 'N'
  TWOK 'E', 'S'
  EQUB 0
- CHAR 'A'
+
+ CHAR 'A'               \ Token 64:     ""
  CHAR 'L'
  CHAR 'I'
  TWOK 'E', 'N'
@@ -4747,47 +4767,60 @@ INCLUDE "library/nes/main/macro/rtok.asm"
  RTOK 127
  CHAR 'S'
  EQUB 0
- EQUB 0
- CHAR ' '
+
+ EQUB 0                 \ Token 65:     ""
+
+ CHAR ' '               \ Token 66:     ""
  CHAR 'C'
  CHAR 'R'
  EQUB 0
- EQUB 0
- EQUB 0
- EQUB 0
- CHAR 'G'
+
+ EQUB 0                 \ Token 67:     ""
+
+ EQUB 0                 \ Token 68:     ""
+
+ EQUB 0                 \ Token 69:     ""
+
+ CHAR 'G'               \ Token 70:     ""
  TWOK 'R', 'E'
  TWOK 'E', 'N'
  EQUB 0
- TWOK 'R', 'E'
+
+ TWOK 'R', 'E'          \ Token 71:     ""
  CHAR 'D'
  EQUB 0
- CHAR 'Y'
+
+ CHAR 'Y'               \ Token 72:     ""
  CHAR 'E'
  CHAR 'L'
  CHAR 'L'
  CHAR 'O'
  CHAR 'W'
  EQUB 0
- CHAR 'B'
+
+ CHAR 'B'               \ Token 73:     ""
  CHAR 'L'
  CHAR 'U'
  CHAR 'E'
  EQUB 0
- CHAR 'B'
+
+ CHAR 'B'               \ Token 74:     ""
  TWOK 'L', 'A'
  CHAR 'C'
  CHAR 'K'
  EQUB 0
- RTOK 136
+
+ RTOK 136               \ Token 75:     ""
  EQUB 0
- CHAR 'S'
+
+ CHAR 'S'               \ Token 76:     ""
  CHAR 'L'
  CHAR 'I'
  CHAR 'M'
  CHAR 'Y'
  EQUB 0
- CHAR 'B'
+
+ CHAR 'B'               \ Token 77:     ""
  CHAR 'U'
  CHAR 'G'
  CHAR '-'
@@ -4795,55 +4828,65 @@ INCLUDE "library/nes/main/macro/rtok.asm"
  CHAR 'Y'
  TWOK 'E', 'D'
  EQUB 0
- CHAR 'H'
+
+ CHAR 'H'               \ Token 78:     ""
  TWOK 'O', 'R'
  CHAR 'N'
  TWOK 'E', 'D'
  EQUB 0
- CHAR 'B'
+
+ CHAR 'B'               \ Token 79:     ""
  TWOK 'O', 'N'
  CHAR 'Y'
  EQUB 0
- CHAR 'F'
+
+ CHAR 'F'               \ Token 80:     ""
  TWOK 'A', 'T'
  EQUB 0
- CHAR 'F'
+
+ CHAR 'F'               \ Token 81:     ""
  CHAR 'U'
  CHAR 'R'
  CHAR 'R'
  CHAR 'Y'
  EQUB 0
- RTOK 94
+
+ RTOK 94                \ Token 82:     ""
  CHAR 'D'
  TWOK 'E', 'N'
  CHAR 'T'
  CHAR 'S'
  EQUB 0
- CHAR 'F'
+
+ CHAR 'F'               \ Token 83:     ""
  RTOK 94
  CHAR 'G'
  CHAR 'S'
  EQUB 0
- CHAR 'L'
+
+ CHAR 'L'               \ Token 84:     ""
  CHAR 'I'
  TWOK 'Z', 'A'
  CHAR 'R'
  CHAR 'D'
  CHAR 'S'
  EQUB 0
- CHAR 'L'
+
+ CHAR 'L'               \ Token 85:     ""
  CHAR 'O'
  CHAR 'B'
  RTOK 43
  TWOK 'E', 'R'
  CHAR 'S'
  EQUB 0
- TWOK 'B', 'I'
+
+ TWOK 'B', 'I'          \ Token 86:     ""
  CHAR 'R'
  CHAR 'D'
  CHAR 'S'
  EQUB 0
- CHAR 'H'
+
+ CHAR 'H'               \ Token 87:     ""
  CHAR 'U'
  TWOK 'M', 'A'
  CHAR 'N'
@@ -4852,34 +4895,40 @@ INCLUDE "library/nes/main/macro/rtok.asm"
  CHAR 'D'
  CHAR 'S'
  EQUB 0
- CHAR 'F'
+
+ CHAR 'F'               \ Token 88:     ""
  CHAR 'E'
  CHAR 'L'
  TWOK 'I', 'N'
  TWOK 'E', 'S'
  EQUB 0
- TWOK 'I', 'N'
+
+ TWOK 'I', 'N'          \ Token 89:     ""
  CHAR 'S'
  CHAR 'E'
  CHAR 'C'
  CHAR 'T'
  CHAR 'S'
  EQUB 0
- TWOK 'R', 'A'
+
+ TWOK 'R', 'A'          \ Token 90:     ""
  TWOK 'D', 'I'
  TWOK 'U', 'S'
  EQUB 0
- CHAR 'C'
+
+ CHAR 'C'               \ Token 91:     ""
  CHAR 'O'
  CHAR 'M'
  EQUB 0
- RTOK 91
+
+ RTOK 91                \ Token 92:     ""
  TWOK 'M', 'A'
  CHAR 'N'
  CHAR 'D'
  TWOK 'E', 'R'
  EQUB 0
- CHAR ' '
+
+ CHAR ' '               \ Token 93:     ""
  CHAR 'D'
  TWOK 'E', 'S'
  CHAR 'T'
@@ -4887,10 +4936,12 @@ INCLUDE "library/nes/main/macro/rtok.asm"
  CHAR 'Y'
  TWOK 'E', 'D'
  EQUB 0
- CHAR 'R'
+
+ CHAR 'R'               \ Token 94:     ""
  CHAR 'O'
  EQUB 0
- RTOK 26
+
+ RTOK 26                \ Token 95:     ""
  CHAR ' '
  CHAR ' '
  CHAR ' '
@@ -4904,64 +4955,76 @@ INCLUDE "library/nes/main/macro/rtok.asm"
  CHAR 'T'
  CHAR 'Y'
  EQUB 0
- CHAR 'F'
+
+ CHAR 'F'               \ Token 96:     ""
  CHAR 'R'
  TWOK 'O', 'N'
  CHAR 'T'
  EQUB 0
- TWOK 'R', 'E'
+
+ TWOK 'R', 'E'          \ Token 97:     ""
  TWOK 'A', 'R'
  EQUB 0
- TWOK 'L', 'E'
+
+ TWOK 'L', 'E'          \ Token 98:     ""
  CHAR 'F'
  CHAR 'T'
  EQUB 0
- TWOK 'R', 'I'
+
+ TWOK 'R', 'I'          \ Token 99:     ""
  CHAR 'G'
  CHAR 'H'
  CHAR 'T'
  EQUB 0
- RTOK 121
+
+ RTOK 121               \ Token 100:    ""
  CHAR 'L'
  CHAR 'O'
  CHAR 'W'
  CONT 7
  EQUB 0
- RTOK 99
+
+ RTOK 99                \ Token 101:    ""
  RTOK 131
  RTOK 92
  CHAR '!'
  EQUB 0
- CHAR 'E'
+
+ CHAR 'E'               \ Token 102:    ""
  CHAR 'X'
  CHAR 'T'
  TWOK 'R', 'A'
  CHAR ' '
  EQUB 0
- CHAR 'P'
+
+ CHAR 'P'               \ Token 103:    ""
  CHAR 'U'
  CHAR 'L'
  CHAR 'S'
  CHAR 'E'
  RTOK 27
  EQUB 0
- TWOK 'B', 'E'
+
+ TWOK 'B', 'E'          \ Token 104:    ""
  CHAR 'A'
  CHAR 'M'
  RTOK 27
  EQUB 0
- CHAR 'F'
+
+ CHAR 'F'               \ Token 105:    ""
  CHAR 'U'
  CHAR 'E'
  CHAR 'L'
  EQUB 0
- CHAR 'M'
+
+ CHAR 'M'               \ Token 106:    ""
  TWOK 'I', 'S'
  CHAR 'S'
  CHAR 'I'
  TWOK 'L', 'E'
  EQUB 0
- CHAR 'L'
+
+ CHAR 'L'               \ Token 107:    ""
  TWOK 'A', 'R'
  TWOK 'G', 'E'
  CHAR ' '
@@ -4974,7 +5037,8 @@ INCLUDE "library/nes/main/macro/rtok.asm"
  CHAR 'A'
  CHAR 'Y'
  EQUB 0
- CHAR 'E'
+
+ CHAR 'E'               \ Token 108:    ""
  CHAR '.'
  CHAR 'C'
  CHAR '.'
@@ -4982,15 +5046,18 @@ INCLUDE "library/nes/main/macro/rtok.asm"
  CHAR '.'
  RTOK 5
  EQUB 0
- RTOK 102
+
+ RTOK 102               \ Token 109:    ""
  RTOK 103
  CHAR 'S'
  EQUB 0
- RTOK 102
+
+ RTOK 102               \ Token 110:    ""
  RTOK 104
  CHAR 'S'
  EQUB 0
- RTOK 105
+
+ RTOK 105               \ Token 111:    ""
  CHAR ' '
  CHAR 'S'
  CHAR 'C'
@@ -4999,7 +5066,8 @@ INCLUDE "library/nes/main/macro/rtok.asm"
  CHAR 'P'
  CHAR 'S'
  EQUB 0
- TWOK 'E', 'S'
+
+ TWOK 'E', 'S'          \ Token 112:    ""
  CHAR 'C'
  CHAR 'A'
  CHAR 'P'
@@ -5012,16 +5080,19 @@ INCLUDE "library/nes/main/macro/rtok.asm"
  CHAR 'U'
  TWOK 'L', 'E'
  EQUB 0
- RTOK 121
+
+ RTOK 121               \ Token 113:    ""
  CHAR 'B'
  CHAR 'O'
  CHAR 'M'
  CHAR 'B'
  EQUB 0
- RTOK 121
+
+ RTOK 121               \ Token 114:    ""
  RTOK 14
  EQUB 0
- CHAR 'D'
+
+ CHAR 'D'               \ Token 115:    ""
  CHAR 'O'
  CHAR 'C'
  CHAR 'K'
@@ -5030,7 +5101,8 @@ INCLUDE "library/nes/main/macro/rtok.asm"
  CHAR ' '
  RTOK 55
  EQUB 0
- RTOK 122
+
+ RTOK 122               \ Token 116:    ""
  CHAR ' '
  CHAR 'H'
  CHAR 'Y'
@@ -5041,7 +5113,8 @@ INCLUDE "library/nes/main/macro/rtok.asm"
  CHAR 'A'
  TWOK 'C', 'E'
  EQUB 0
- CHAR 'M'
+
+ CHAR 'M'               \ Token 117:    ""
  CHAR 'I'
  CHAR 'L'
  CHAR 'I'
@@ -5050,44 +5123,52 @@ INCLUDE "library/nes/main/macro/rtok.asm"
  CHAR 'Y'
  RTOK 27
  EQUB 0
- CHAR 'M'
+
+ CHAR 'M'               \ Token 118:    ""
  TWOK 'I', 'N'
  TWOK 'I', 'N'
  CHAR 'G'
  RTOK 27
  EQUB 0
- RTOK 37
+
+ RTOK 37                \ Token 119:    ""
  CHAR ':'
  CONT 0
  EQUB 0
- TWOK 'I', 'N'
+
+ TWOK 'I', 'N'          \ Token 120:    ""
  RTOK 91
  TWOK 'I', 'N'
  CHAR 'G'
  CHAR ' '
  RTOK 106
  EQUB 0
- TWOK 'E', 'N'
+
+ TWOK 'E', 'N'          \ Token 121:    ""
  TWOK 'E', 'R'
  CHAR 'G'
  CHAR 'Y'
  CHAR ' '
  EQUB 0
- CHAR 'G'
+
+ CHAR 'G'               \ Token 122:    ""
  CHAR 'A'
  TWOK 'L', 'A'
  CHAR 'C'
  TWOK 'T', 'I'
  CHAR 'C'
  EQUB 0
- RTOK 115
+
+ RTOK 115               \ Token 123:    ""
  RTOK 131
  EQUB 0
- CHAR 'A'
+
+ CHAR 'A'               \ Token 124:    ""
  CHAR 'L'
  CHAR 'L'
  EQUB 0
- TWOK 'L', 'E'
+
+ TWOK 'L', 'E'          \ Token 125:    ""
  CHAR 'G'
  CHAR 'A'
  CHAR 'L'
@@ -5097,7 +5178,8 @@ INCLUDE "library/nes/main/macro/rtok.asm"
  TWOK 'U', 'S'
  CHAR ':'
  EQUB 0
- RTOK 92
+
+ RTOK 92                \ Token 126:    ""
  CHAR ' '
  CONT 4
  CONT 12
@@ -5127,24 +5209,30 @@ INCLUDE "library/nes/main/macro/rtok.asm"
  TWOK 'O', 'N'
  CONT 9
  EQUB 0
- CHAR 'I'
+
+ CHAR 'I'               \ Token 127:    ""
  TWOK 'T', 'E'
  CHAR 'M'
  EQUB 0
- EQUB 0
+
+ EQUB 0                 \ Token 128:    ""
+
+ CHAR 'L'               \ Token 129:    ""
  CHAR 'L'
- CHAR 'L'
  EQUB 0
- CHAR 'R'
+
+ CHAR 'R'               \ Token 130:    ""
  TWOK 'A', 'T'
  TWOK 'I', 'N'
  CHAR 'G'
  EQUB 0
- CHAR ' '
+
+ CHAR ' '               \ Token 131:    ""
  TWOK 'O', 'N'
  CHAR ' '
  EQUB 0
- CONT 12
+
+ CONT 12                \ Token 132:    ""
  CHAR 'E'
  TWOK 'Q', 'U'
  CHAR 'I'
@@ -5154,32 +5242,37 @@ INCLUDE "library/nes/main/macro/rtok.asm"
  CHAR 'T'
  CHAR ':'
  EQUB 0
- CHAR 'C'
+
+ CHAR 'C'               \ Token 133:    ""
  TWOK 'L', 'E'
  TWOK 'A', 'N'
  EQUB 0
- CHAR 'O'
+
+ CHAR 'O'               \ Token 134:    ""
  CHAR 'F'
  CHAR 'F'
  TWOK 'E', 'N'
  CHAR 'D'
  TWOK 'E', 'R'
  EQUB 0
- CHAR 'F'
+
+ CHAR 'F'               \ Token 135:    ""
  CHAR 'U'
  CHAR 'G'
  CHAR 'I'
  TWOK 'T', 'I'
  TWOK 'V', 'E'
  EQUB 0
- CHAR 'H'
+
+ CHAR 'H'               \ Token 136:    ""
  TWOK 'A', 'R'
  CHAR 'M'
  TWOK 'L', 'E'
  CHAR 'S'
  CHAR 'S'
  EQUB 0
- CHAR 'M'
+
+ CHAR 'M'               \ Token 137:    ""
  CHAR 'O'
  RTOK 43
  CHAR 'L'
@@ -5187,44 +5280,51 @@ INCLUDE "library/nes/main/macro/rtok.asm"
  CHAR ' '
  RTOK 136
  EQUB 0
- CHAR 'P'
+
+ CHAR 'P'               \ Token 138:    ""
  CHAR 'O'
  TWOK 'O', 'R'
  EQUB 0
- CHAR 'A'
+
+ CHAR 'A'               \ Token 139:    ""
  CHAR 'V'
  TWOK 'E', 'R'
  CHAR 'A'
  TWOK 'G', 'E'
  EQUB 0
- CHAR 'A'
+
+ CHAR 'A'               \ Token 140:    ""
  CHAR 'B'
  CHAR 'O'
  TWOK 'V', 'E'
  CHAR ' '
  RTOK 139
  EQUB 0
- RTOK 91
+
+ RTOK 91                \ Token 141:    ""
  CHAR 'P'
  CHAR 'E'
  CHAR 'T'
  TWOK 'E', 'N'
  CHAR 'T'
  EQUB 0
- CHAR 'D'
+
+ CHAR 'D'               \ Token 142:    ""
  TWOK 'A', 'N'
  TWOK 'G', 'E'
  RTOK 94
  TWOK 'U', 'S'
  EQUB 0
- CHAR 'D'
+
+ CHAR 'D'               \ Token 143:    ""
  CHAR 'E'
  CHAR 'A'
  CHAR 'D'
  CHAR 'L'
  CHAR 'Y'
  EQUB 0
- CHAR '-'
+
+ CHAR '-'               \ Token 144:    ""
  CHAR '-'
  CHAR '-'
  CHAR '-'
@@ -5244,13 +5344,15 @@ INCLUDE "library/nes/main/macro/rtok.asm"
  CHAR '-'
  CHAR '-'
  EQUB 0
- CHAR 'P'
+
+ CHAR 'P'               \ Token 145:    ""
  CHAR 'R'
  TWOK 'E', 'S'
  TWOK 'E', 'N'
  CHAR 'T'
  EQUB 0
- CONT 8
+
+ CONT 8                 \ Token 146:    ""
  CHAR 'G'
  CHAR 'A'
  CHAR 'M'
@@ -5260,7 +5362,8 @@ INCLUDE "library/nes/main/macro/rtok.asm"
  CHAR 'V'
  TWOK 'E', 'R'
  EQUB 0
- CHAR '6'
+
+ CHAR '6'               \ Token 147:    ""
  CHAR '0'
  CHAR ' '
  CHAR 'S'
@@ -5276,7 +5379,8 @@ INCLUDE "library/nes/main/macro/rtok.asm"
  CHAR 'T'
  CHAR 'Y'
  EQUB 0
- EQUB 0
+
+ EQUB 0                 \ Token 148:    ""
 
 INCLUDE "library/nes/main/variable/qq18_de.asm"
 INCLUDE "library/nes/main/variable/qq18_fr.asm"

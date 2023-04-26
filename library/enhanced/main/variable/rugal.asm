@@ -42,7 +42,9 @@
  EQUB &01               \ System  79, Galaxy 1, Mission 1      Inbibe = Token  6
  EQUB &01               \ System  53, Galaxy 1, Mission 1       Ausar = Token  7
  EQUB &01               \ System 118, Galaxy 1, Mission 1      Usleri = Token  8
+IF NOT(_NES_VERSION)
  EQUB &82               \ System 100, Galaxy 2                 Arredi = Token  9
+ENDIF
  EQUB &01               \ System  32, Galaxy 1, Mission 1      Bebege = Token 10
  EQUB &01               \ System  68, Galaxy 1, Mission 1      Cearso = Token 11
  EQUB &01               \ System 164, Galaxy 1, Mission 1      Dicela = Token 12
@@ -58,7 +60,9 @@
  EQUB &01               \ System   5, Galaxy 1, Mission 1      Veriar = Token 22
  EQUB &02               \ System 101, Galaxy 2, Mission 1      Xeveon = Token 23
  EQUB &01               \ System 193, Galaxy 1, Mission 1      Orarra = Token 24
+IF NOT(_NES_VERSION)
  EQUB &82               \ System  41, Galaxy 2                 Anreer = Token 25
+ENDIF
 IF _6502SP_VERSION \ Advanced: The source disc variant of the 6502SP version overrides the extended system description for Lave, and the Executive version overrides both Lave and Riedquat. The Master version also has an override for Lave, but this time it's only for Lave in galaxy 16 (i.e. the 17th galaxy)
 
 IF _SOURCE_DISC

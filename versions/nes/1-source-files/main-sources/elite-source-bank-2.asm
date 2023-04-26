@@ -304,10 +304,10 @@ QQ8_1             = &049C
 QQ9               = &049D
 QQ10              = &049E
 L049F             = &049F
-QQ18LO            = &04A4
-QQ18HI            = &04A5
-TOKENLO           = &04A6
-TOKENHI           = &04A7
+QQ18_LO            = &04A4
+QQ18_HI            = &04A5
+TKN1_LO           = &04A6
+TKN1_HI           = &04A7
 LANG              = &04A8
 L04B2             = &04B2
 L04B4             = &04B4
@@ -371,7 +371,7 @@ TIDY              = &EDEA
 PAS1              = &EF7A
 LL164             = &EFF7
 DETOK             = &F082
-DTS               = &F09D
+DTS_BANK7               = &F09D
 LF186             = &F186
 MVS5              = &F1A2
 HALL              = &F1BD
@@ -5384,220 +5384,12 @@ INCLUDE "library/nes/main/macro/rtok.asm"
 
 INCLUDE "library/nes/main/variable/qq18_de.asm"
 INCLUDE "library/nes/main/variable/qq18_fr.asm"
-
-.RUTOK_LO
-
- EQUB LO(RUTOK)
- EQUB LO(RUTOK_DE)
- EQUB LO(RUTOK_FR)
- EQUB &72
-
-.RUTOK_HI
-
- EQUB HI(RUTOK)
- EQUB HI(RUTOK_DE)
- EQUB HI(RUTOK_FR)
- EQUB &AB
-
-; ******************************************************************************
-.DETOK3
- PHA                                              ; B0D6: 48          H
- TAX                                              ; B0D7: AA          .
- TYA                                              ; B0D8: 98          .
- PHA                                              ; B0D9: 48          H
- LDA V                                            ; B0DA: A5 63       .c
- PHA                                              ; B0DC: 48          H
- LDA V_1                                          ; B0DD: A5 64       .d
- PHA                                              ; B0DF: 48          H
- LDY LANG                                         ; B0E0: AC A8 04    ...
- LDA RUTOK_LO,Y                                   ; B0E3: B9 CE B0    ...
- STA V                                            ; B0E6: 85 63       .c
- LDA RUTOK_HI,Y                                   ; B0E8: B9 D2 B0    ...
- STA V_1                                          ; B0EB: 85 64       .d
- BNE CB111                                        ; B0ED: D0 22       ."
-; ******************************************************************************
-.DETOK_BANK2
- TAX                                              ; B0EF: AA          .
- LDA L00E9                                        ; B0F0: A5 E9       ..
- BPL CB0FD                                        ; B0F2: 10 09       ..
- LDA PPUSTATUS                                    ; B0F4: AD 02 20    ..
- ASL A                                            ; B0F7: 0A          .
- BPL CB0FD                                        ; B0F8: 10 03       ..
- JSR NAMETABLE0                                   ; B0FA: 20 6D D0     m.
-.CB0FD
- TXA                                              ; B0FD: 8A          .
- PHA                                              ; B0FE: 48          H
- TYA                                              ; B0FF: 98          .
- PHA                                              ; B100: 48          H
- LDA V                                            ; B101: A5 63       .c
- PHA                                              ; B103: 48          H
- LDA V_1                                          ; B104: A5 64       .d
- PHA                                              ; B106: 48          H
- LDA TOKENLO                                      ; B107: AD A6 04    ...
- STA V                                            ; B10A: 85 63       .c
- LDA TOKENHI                                      ; B10C: AD A7 04    ...
- STA V_1                                          ; B10F: 85 64       .d
-.CB111
- LDY #0                                           ; B111: A0 00       ..
-.CB113
- LDA L00E9                                        ; B113: A5 E9       ..
- BPL CB120                                        ; B115: 10 09       ..
- LDA PPUSTATUS                                    ; B117: AD 02 20    ..
- ASL A                                            ; B11A: 0A          .
- BPL CB120                                        ; B11B: 10 03       ..
- JSR NAMETABLE0                                   ; B11D: 20 6D D0     m.
-.CB120
- LDA (V),Y                                        ; B120: B1 63       .c
- EOR #&57 ; 'W'                                   ; B122: 49 57       IW
- BNE CB129                                        ; B124: D0 03       ..
- DEX                                              ; B126: CA          .
- BEQ CB130                                        ; B127: F0 07       ..
-.CB129
- INY                                              ; B129: C8          .
- BNE CB113                                        ; B12A: D0 E7       ..
- INC V_1                                          ; B12C: E6 64       .d
- BNE CB113                                        ; B12E: D0 E3       ..
-.CB130
- INY                                              ; B130: C8          .
- BNE CB135                                        ; B131: D0 02       ..
- INC V_1                                          ; B133: E6 64       .d
-.CB135
- LDA (V),Y                                        ; B135: B1 63       .c
- EOR #&57 ; 'W'                                   ; B137: 49 57       IW
- BEQ CB141                                        ; B139: F0 06       ..
- JSR DETOK2                                       ; B13B: 20 4B B1     K.
- JMP CB130                                        ; B13E: 4C 30 B1    L0.
-
-.CB141
- PLA                                              ; B141: 68          h
- STA V_1                                          ; B142: 85 64       .d
- PLA                                              ; B144: 68          h
- STA V                                            ; B145: 85 63       .c
- PLA                                              ; B147: 68          h
- TAY                                              ; B148: A8          .
- PLA                                              ; B149: 68          h
- RTS                                              ; B14A: 60          `
-
-; ******************************************************************************
-.DETOK2
- CMP #&20 ; ' '                                   ; B14B: C9 20       .
- BCC DT3                                          ; B14D: 90 5A       .Z
- BIT DTW3                                         ; B14F: 2C F5 03    ,..
- BPL CB164                                        ; B152: 10 10       ..
- TAX                                              ; B154: AA          .
- TYA                                              ; B155: 98          .
- PHA                                              ; B156: 48          H
- LDA V                                            ; B157: A5 63       .c
- PHA                                              ; B159: 48          H
- LDA V_1                                          ; B15A: A5 64       .d
- PHA                                              ; B15C: 48          H
- TXA                                              ; B15D: 8A          .
- JSR TT27_BANK2                                   ; B15E: 20 4F B4     O.
- JMP CB1C4                                        ; B161: 4C C4 B1    L..
-
-.CB164
- CMP XX3m3                                        ; B164: C5 F9       ..
- BCC CB187                                        ; B166: 90 1F       ..
- CMP #&81                                         ; B168: C9 81       ..
- BCC CB1D0                                        ; B16A: 90 64       .d
- CMP #&D7                                         ; B16C: C9 D7       ..
- BCS CB173                                        ; B16E: B0 03       ..
- JMP DETOK_BANK2                                  ; B170: 4C EF B0    L..
-
-.CB173
- SBC #&D7                                         ; B173: E9 D7       ..
- ASL A                                            ; B175: 0A          .
- PHA                                              ; B176: 48          H
- TAX                                              ; B177: AA          .
- LDA TKN2,X                                       ; B178: BD 19 B3    ...
- JSR CB187                                        ; B17B: 20 87 B1     ..
- PLA                                              ; B17E: 68          h
- TAX                                              ; B17F: AA          .
- LDA TKN2_1,X                                     ; B180: BD 1A B3    ...
- CMP #&3F ; '?'                                   ; B183: C9 3F       .?
- BEQ CB1CC                                        ; B185: F0 45       .E
-.CB187
- BIT DTW1                                         ; B187: 2C F8 03    ,..
- BPL CB1A6                                        ; B18A: 10 1A       ..
- BIT DTW6                                         ; B18C: 2C F3 03    ,..
- BMI CB196                                        ; B18F: 30 05       0.
- BIT DTW2                                         ; B191: 2C F4 03    ,..
- BMI CB1A6                                        ; B194: 30 10       0.
-.CB196
- BIT DTW8                                         ; B196: 2C F9 03    ,..
- BPL CB1A6                                        ; B199: 10 0B       ..
- STX SC                                           ; B19B: 86 07       ..
- TAX                                              ; B19D: AA          .
- LDA LB8B4,X                                      ; B19E: BD B4 B8    ...
- LDX SC                                           ; B1A1: A6 07       ..
- AND DTW8                                         ; B1A3: 2D F9 03    -..
-.CB1A6
- JMP DASC_BANK2                                   ; B1A6: 4C F5 B4    L..
-
-.DT3
- TAX                                              ; B1A9: AA          .
- TYA                                              ; B1AA: 98          .
- PHA                                              ; B1AB: 48          H
- LDA V                                            ; B1AC: A5 63       .c
- PHA                                              ; B1AE: 48          H
- LDA V_1                                          ; B1AF: A5 64       .d
- PHA                                              ; B1B1: 48          H
- TXA                                              ; B1B2: 8A          .
- ASL A                                            ; B1B3: 0A          .
- TAX                                              ; B1B4: AA          .
- LDA JMTBm2,X                                     ; B1B5: BD 04 B2    ...
- STA V                                            ; B1B8: 85 63       .c
- LDA JMTBm1,X                                     ; B1BA: BD 05 B2    ...
- STA V_1                                          ; B1BD: 85 64       .d
- TXA                                              ; B1BF: 8A          .
- LSR A                                            ; B1C0: 4A          J
- JSR sub_CB1CD                                    ; B1C1: 20 CD B1     ..
-.CB1C4
- PLA                                              ; B1C4: 68          h
- STA V_1                                          ; B1C5: 85 64       .d
- PLA                                              ; B1C7: 68          h
- STA V                                            ; B1C8: 85 63       .c
- PLA                                              ; B1CA: 68          h
- TAY                                              ; B1CB: A8          .
-.CB1CC
- RTS                                              ; B1CC: 60          `
-
-.sub_CB1CD
- JMP (V)                                          ; B1CD: 6C 63 00    lc.
-
-.CB1D0
- STA SC                                           ; B1D0: 85 07       ..
- LDA L00E9                                        ; B1D2: A5 E9       ..
- BPL CB1DF                                        ; B1D4: 10 09       ..
- LDA PPUSTATUS                                    ; B1D6: AD 02 20    ..
- ASL A                                            ; B1D9: 0A          .
- BPL CB1DF                                        ; B1DA: 10 03       ..
- JSR NAMETABLE0                                   ; B1DC: 20 6D D0     m.
-.CB1DF
- TYA                                              ; B1DF: 98          .
- PHA                                              ; B1E0: 48          H
- LDA V                                            ; B1E1: A5 63       .c
- PHA                                              ; B1E3: 48          H
- LDA V_1                                          ; B1E4: A5 64       .d
- PHA                                              ; B1E6: 48          H
- JSR DORND                                        ; B1E7: 20 AD F4     ..
- TAX                                              ; B1EA: AA          .
-.CB1EB
- LDA #0                                           ; B1EB: A9 00       ..
- CPX #&33 ; '3'                                   ; B1ED: E0 33       .3
- ADC #0                                           ; B1EF: 69 00       i.
- CPX #&66 ; 'f'                                   ; B1F1: E0 66       .f
- ADC #0                                           ; B1F3: 69 00       i.
- CPX #&99                                         ; B1F5: E0 99       ..
- ADC #0                                           ; B1F7: 69 00       i.
- CPX #&CC                                         ; B1F9: E0 CC       ..
- LDX SC                                           ; B1FB: A6 07       ..
- ADC CB1EB,X                                      ; B1FD: 7D EB B1    }..
- JSR DETOK_BANK2                                  ; B200: 20 EF B0     ..
-.sub_CB203
-JMTBm2 = sub_CB203+1
-JMTBm1 = sub_CB203+2
- JMP CB1C4                                        ; B203: 4C C4 B1    L..
+INCLUDE "library/nes/main/variable/rutok_lo.asm"
+INCLUDE "library/nes/main/variable/rutok_hi.asm"
+INCLUDE "library/nes/main/macro/set_nametable_0.asm"
+INCLUDE "library/enhanced/main/subroutine/detok3.asm"
+INCLUDE "library/enhanced/main/subroutine/detok.asm"
+INCLUDE "library/enhanced/main/subroutine/detok2.asm"
 
 .JMTB
  EQUB &79, &B2, &7C, &B2, &4F, &B4, &4F, &B4, &A2 ; B206: 79 B2 7C... y.|
@@ -5719,11 +5511,11 @@ JMTBm1 = sub_CB203+2
  AND #&3E ; '>'                                   ; B2DF: 29 3E       )>
  TAX                                              ; B2E1: AA          .
  LDA TKN2_2,X                                     ; B2E2: BD 1B B3    ...
- JSR DTS                                          ; B2E5: 20 9D F0     ..
+ JSR DTS_BANK7                                          ; B2E5: 20 9D F0     ..
  LDA TKN2_3,X                                     ; B2E8: BD 1C B3    ...
  CMP #&3F ; '?'                                   ; B2EB: C9 3F       .?
  BEQ CB2F2                                        ; B2ED: F0 03       ..
- JSR DTS                                          ; B2EF: 20 9D F0     ..
+ JSR DTS_BANK7                                          ; B2EF: 20 9D F0     ..
 .CB2F2
  DEY                                              ; B2F2: 88          .
  BPL loop_CB2DC                                   ; B2F3: 10 E7       ..
@@ -5986,9 +5778,9 @@ JMTBm1 = sub_CB203+2
 ; ******************************************************************************
 .ex
  TAX                                              ; B4AA: AA          .
- LDA QQ18LO                                       ; B4AB: AD A4 04    ...
+ LDA QQ18_LO                                       ; B4AB: AD A4 04    ...
  STA V                                            ; B4AE: 85 63       .c
- LDA QQ18HI                                       ; B4B0: AD A5 04    ...
+ LDA QQ18_HI                                       ; B4B0: AD A5 04    ...
  STA V_1                                          ; B4B3: 85 64       .d
  LDY #0                                           ; B4B5: A0 00       ..
  TXA                                              ; B4B7: 8A          .

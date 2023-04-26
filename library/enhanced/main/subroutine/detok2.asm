@@ -59,7 +59,15 @@ ENDIF
 
  TXA                    \ Copy the token number from X back into A
 
+IF NOT(_NES_VERSION)
+
  JSR TT27               \ Call TT27 to print the text token
+
+ELIF _NES_VERSION
+
+ JSR TT27_BANK2         \ Call TT27 to print the text token
+
+ENDIF
 
  JMP DT7                \ Jump to DT7 to restore V(1 0) and Y from the stack and
                         \ return from the subroutine
@@ -69,19 +77,39 @@ ENDIF
                         \ If we get here then this is not a jump token and
                         \ extended tokens are enabled
 
+IF NOT(_NES_VERSION)
+
  CMP #'['               \ If A < ASCII "[" (i.e. A <= ASCII "Z", or 90) then
  BCC DTS                \ this is a printable ASCII character, so jump down to
                         \ DTS to print it
 
+ELIF _NES_VERSION
+
+ CMP &00F9              \ ???
+ BCC DTS
+
+ENDIF
+
  CMP #129               \ If A < 129, so A is in the range 91-128, jump down to
  BCC DT6                \ DT6 to print a randomised token from the MTIN table
+
+IF NOT(_NES_VERSION)
 
  CMP #215               \ If A < 215, so A is in the range 129-214, jump to
  BCC DETOK              \ DETOK as this is a recursive token, returning from the
                         \ subroutine using a tail call
 
+ELIF _NES_VERSION
+
+ CMP #215               \ If A < 215, so A is in the range 129-214, jump to
+ BCS P%+5               \ DETOK as this is a recursive token, returning from the
+ JMP DETOK_BANK2        \ subroutine using a tail call
+
+ENDIF
+
                         \ If we get here then A >= 215, so this is a two-letter
                         \ token from the extended TKN2/QQ16 table
+
 
 IF _ELITE_A_VERSION
 
@@ -111,10 +139,26 @@ ENDIF
                         \ TKN2, which is at TKN2 + X + 1, and fall through into
                         \ DTS to print it
 
+IF _NES_VERSION
+
+ CMP #&3F               \ ???
+ BEQ DTM-1
+
+ENDIF
+
 .DTS
+
+IF NOT(_NES_VERSION)
 
  CMP #'A'               \ If A < ASCII "A", jump to DT9 to print this as ASCII
  BCC DT9
+
+ELIF _NES_VERSION
+
+ BIT DTW1               \ ???
+ BPL DT5
+
+ENDIF
 
  BIT DTW6               \ If bit 7 of DTW6 is set, then lower case has been
  BMI DT10               \ enabled by jump token 13, {lower case}, so jump to
@@ -127,6 +171,8 @@ ENDIF
 
 .DT10
 
+IF NOT(_NES_VERSION)
+
  ORA DTW1               \ Convert the character to lower case if DTW1 is
                         \ %00100000 (i.e. if we are in {sentence case} mode)
 
@@ -135,10 +181,33 @@ ENDIF
  AND DTW8               \ Convert the character to upper case if DTW8 is
                         \ %11011111 (i.e. after a {single cap} token)
 
+ELIF _NES_VERSION
+
+ BIT DTW8                                         ; B196: 2C F9 03    ,..
+ BPL DT5                                        ; B199: 10 0B       ..
+ STX SC                                           ; B19B: 86 07       ..
+ TAX                                              ; B19D: AA          .
+ LDA &B8B4,X                                      ; B19E: BD B4 B8    ...
+ LDX SC                                           ; B1A1: A6 07       ..
+ AND DTW8                                         ; B1A3: 2D F9 03    -..
+
+.DT5
+
+ENDIF
+
 .DT9
+
+IF NOT(_NES_VERSION)
 
  JMP DASC               \ Jump to DASC to print the ASCII character in A,
                         \ returning from the routine using a tail call
+
+ELIF _NES_VERSION
+
+ JMP DASC_BANK2         \ Jump to DASC to print the ASCII character in A,
+                        \ returning from the routine using a tail call
+
+ENDIF
 
 .DT3
 
@@ -167,20 +236,40 @@ ENDIF
 
  TAX                    \ Copy the doubled token number from A into X
 
+IF NOT(_NES_VERSION)
+
  LDA JMTB-2,X           \ Set DTM(2 1) to the X-th address from the table at
  STA DTM+1              \ JTM-2, which modifies the JSR DASC instruction at
  LDA JMTB-1,X           \ label DTM below so that it calls the subroutine at the
  STA DTM+2              \ relevant address from the JMTB table
 
+ELIF _NES_VERSION
+
+ LDA JMTB-2,X           \ Set V(1 0) to the X-th address from the table at
+ STA V                  \ JTM-2, so the JMP (V) instruction at label DTM below
+ LDA JMTB-1,X           \ calls the subroutine at the relevant address from the
+ STA V+1                \ JMTB table
+
+ENDIF
+
  TXA                    \ Copy the doubled token number from X back into A
 
  LSR A                  \ Halve A to get the original token number
+
+IF NOT(_NES_VERSION)
 
 .DTM
 
  JSR DASC               \ Call the relevant JMTB subroutine, as this instruction
                         \ will have been modified by the above to point to the
                         \ relevant address
+
+ELIF _NES_VERSION
+
+ JSR DTM                \ Call DTM to call the relevant JMTB subroutine in
+                        \ V(1 0)
+
+ENDIF
 
 .DT7
 
@@ -194,6 +283,15 @@ ENDIF
 
  RTS                    \ Return from the subroutine
 
+IF _NES_VERSION
+
+.DTM
+
+ JMP (V)                \ Call the relevant JMTB subroutine, as V(1 0) points
+                        \ to the relevant address
+
+ENDIF
+
 .DT6
 
                         \ If we get here then the token number in A is in the
@@ -202,6 +300,12 @@ ENDIF
                         \ entry in the MTIN table
 
  STA SC                 \ Store the token number in SC
+
+IF _NES_VERSION
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ENDIF
 
  TYA                    \ Store Y on the stack
  PHA
@@ -235,7 +339,15 @@ ENDIF
  ADC MTIN-91,X          \ Set A = MTIN-91 + token number (91-128) + random (0-4)
                         \       = MTIN + token number (0-37) + random (0-4)
 
+IF NOT(_NES_VERSION)
+
  JSR DETOK              \ Call DETOK to print the extended recursive token in A
+
+ELIF _NES_VERSION
+
+ JSR DETOK_BANK2        \ Call DETOK to print the extended recursive token in A
+
+ENDIF
 
  JMP DT7                \ Jump to DT7 to restore V(1 0) and Y from the stack and
                         \ return from the subroutine using a tail call

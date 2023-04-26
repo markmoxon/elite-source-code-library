@@ -1,6 +1,10 @@
 \ ******************************************************************************
 \
+IF NOT(_NES_VERSION)
 \       Name: DETOK
+ELIF _NES_VERSION
+\       Name: DETOK_BANK2
+ENDIF
 \       Type: Subroutine
 \   Category: Text
 \    Summary: Print an extended recursive token from the TKN1 token table
@@ -37,11 +41,29 @@ ELIF _ELITE_A_ENCYCLOPEDIA
 ENDIF
 \ ******************************************************************************
 
+IF NOT(_NES_VERSION)
 .DETOK
+ELIF _NES_VERSION
+.DETOK_BANK2
+ENDIF
+
+IF NOT(_NES_VERSION)
 
  PHA                    \ Store A on the stack, so we can retrieve it later
 
  TAX                    \ Copy the token number from A into X
+
+ELIF _NES_VERSION
+
+ TAX                    \ Copy the token number from A into X
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ TXA                    \ Copy the token number from X into A
+
+ PHA                    \ Store A on the stack, so we can retrieve it later
+
+ENDIF
 
  TYA                    \ Store Y on the stack
  PHA
@@ -50,6 +72,8 @@ ENDIF
  PHA
  LDA V+1
  PHA
+
+IF NOT(_NES_VERSION)
 
  LDA #LO(TKN1)          \ Set V to the low byte of TKN1
  STA V
@@ -63,6 +87,17 @@ ENDIF
  STA V+1                \ Set the high byte of V(1 0) to A, so V(1 0) now points
                         \ to the start of the token table to use
 
+ELIF _NES_VERSION
+
+ LDA TKN1_LO            \ Set V(1 0) to the address of the TKN1 table for ths
+ STA V                  \ chosen language
+ LDA TKN1_HI
+ STA V+1
+
+.DTEN
+
+ENDIF
+
  LDY #0                 \ First, we need to work our way through the table until
                         \ we get to the token that we want to print. Tokens are
                         \ delimited by #VE, and VE EOR VE = 0, so we work our
@@ -71,7 +106,14 @@ ENDIF
                         \ down to DTL2 to do the actual printing. So first, we
                         \ set a counter Y to point to the character offset as we
                         \ scan through the table
+
 .DTL1
+
+IF _NES_VERSION
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ENDIF
 
  LDA (V),Y              \ Load the character at offset Y in the token table,
                         \ which is the next character from the token table

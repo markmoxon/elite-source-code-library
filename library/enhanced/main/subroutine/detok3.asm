@@ -37,10 +37,23 @@
  LDA V+1
  PHA
 
+IF NOT(_NES_VERSION)
+
  LDA #LO(RUTOK)         \ Set V to the low byte of RUTOK
  STA V
 
  LDA #HI(RUTOK)         \ Set A to the high byte of RUTOK
+
+ELIF _NES_VERSION
+
+ LDY LANG               \ Set Y to the chosen language
+
+ LDA RUTOK_LO,Y         \ Set V(1 0) to the address of the RUTOK table for ths
+ STA V                  \ chosen language
+ LDA RUTOK_HI,Y
+ STA V+1
+
+ENDIF
 
  BNE DTEN               \ Call DTEN to print token number X from the RUTOK
                         \ table and restore the values of A, Y and V(1 0) from

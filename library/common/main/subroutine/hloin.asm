@@ -11,6 +11,11 @@ ELIF _6502SP_VERSION
 ELIF _ELITE_A_6502SP_IO
 \    Summary: Implement the draw_hline command (draw a horizontal line
 ENDIF
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
+\  Deep dive: Drawing monochrome pixels in mode 4
+ELIF _MASTER_VERSION
+\  Deep dive: Drawing colour pixels in mode 5
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

@@ -59,15 +59,7 @@ ENDIF
 
  TXA                    \ Copy the token number from X back into A
 
-IF NOT(_NES_VERSION)
-
  JSR TT27               \ Call TT27 to print the text token
-
-ELIF _NES_VERSION
-
- JSR TT27_BANK2         \ Call TT27 to print the text token
-
-ENDIF
 
  JMP DT7                \ Jump to DT7 to restore V(1 0) and Y from the stack and
                         \ return from the subroutine

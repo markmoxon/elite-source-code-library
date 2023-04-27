@@ -370,13 +370,13 @@ LEC7D             = &EC7D
 TIDY              = &EDEA
 PAS1              = &EF7A
 LL164             = &EFF7
-DETOK_BANK7             = &F082
-DTS_BANK7               = &F09D
+DETOK_BANK7       = &F082
+DTS_BANK7         = &F09D
 LF186             = &F186
-MVS5              = &F1A2
+MVS5_BANK7        = &F1A2
 HALL              = &F1BD
 DASC              = &F1E6
-TT27              = &F201
+TT27_BANK7        = &F201
 TT27_control_codes = &F237
 TT66              = &F26E
 SCAN              = &F2A8
@@ -5490,7 +5490,7 @@ INCLUDE "library/enhanced/main/subroutine/detok2.asm"
  AND #&BF                                         ; B2B7: 29 BF       ).
  STA QQ17                                         ; B2B9: 85 3C       .<
  LDA #3                                           ; B2BB: A9 03       ..
- JSR TT27_BANK2                                   ; B2BD: 20 4F B4     O.
+ JSR TT27                                   ; B2BD: 20 4F B4     O.
  LDX DTW5                                         ; B2C0: AE F7 03    ...
  LDA BUFm1,X                                      ; B2C3: BD 06 05    ...
  JSR VOWEL                                        ; B2C6: 20 01 B3     ..
@@ -5714,7 +5714,7 @@ INCLUDE "library/enhanced/main/subroutine/detok2.asm"
  JMP TT27_control_codes                           ; B44C: 4C 37 F2    L7.
 
 ; ******************************************************************************
-.TT27_BANK2
+.TT27
  PHA                                              ; B44F: 48          H
  LDA L00E9                                        ; B450: A5 E9       ..
  BPL CB45D                                        ; B452: 10 09       ..
@@ -5767,10 +5767,10 @@ INCLUDE "library/enhanced/main/subroutine/detok2.asm"
  ASL A                                            ; B498: 0A          .
  TAY                                              ; B499: A8          .
  LDA QQ16,Y                                       ; B49A: B9 33 B3    .3.
- JSR TT27_BANK2                                   ; B49D: 20 4F B4     O.
+ JSR TT27                                   ; B49D: 20 4F B4     O.
  LDA QQ16_1,Y                                     ; B4A0: B9 34 B3    .4.
  CMP #&3F ; '?'                                   ; B4A3: C9 3F       .?
- BNE TT27_BANK2                                   ; B4A5: D0 A8       ..
+ BNE TT27                                   ; B4A5: D0 A8       ..
  RTS                                              ; B4A7: 60          `
 
 .CB4A8
@@ -5813,7 +5813,7 @@ INCLUDE "library/enhanced/main/subroutine/detok2.asm"
  PHA                                              ; B4DE: 48          H
  LDA (V),Y                                        ; B4DF: B1 63       .c
  EOR #&3E ; '>'                                   ; B4E1: 49 3E       I>
- JSR TT27_BANK2                                   ; B4E3: 20 4F B4     O.
+ JSR TT27                                   ; B4E3: 20 4F B4     O.
  PLA                                              ; B4E6: 68          h
  STA V_1                                          ; B4E7: 85 64       .d
  PLA                                              ; B4E9: 68          h

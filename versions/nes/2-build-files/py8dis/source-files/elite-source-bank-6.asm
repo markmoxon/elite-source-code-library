@@ -579,7 +579,7 @@ LEEC3             = &EEC3
 LEECB             = &EECB
 LEF04             = &EF04
 LEF20             = &EF20
-PAS1              = &EF7A
+PAS1_BANK7        = &EF7A
 LEFDC             = &EFDC
 LL164             = &EFF7
 LF021             = &F021
@@ -589,10 +589,10 @@ DTS               = &F09D
 LF0E1             = &F0E1
 LF171             = &F171
 LF186             = &F186
-MVS5              = &F1A2
+MVS5_BANK7        = &F1A2
 HALL              = &F1BD
 DASC              = &F1E6
-TT27              = &F201
+TT27_BANK7        = &F201
 TT27_control_codes = &F237
 LF245             = &F245
 TT66              = &F26E
@@ -4747,7 +4747,7 @@ L88BD = L88BC+1
 .loop_CB44E
  LDA (V),Y                                        ; B44E: B1 63       .c
  BEQ CB458                                        ; B450: F0 06       ..
- JSR TT27                                         ; B452: 20 01 F2     ..
+ JSR TT27_BANK7                                   ; B452: 20 01 F2     ..
  INY                                              ; B455: C8          .
  BNE loop_CB44E                                   ; B456: D0 F6       ..
 .CB458

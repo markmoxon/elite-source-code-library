@@ -3,7 +3,11 @@
 \       Name: MT26
 \       Type: Subroutine
 \   Category: Text
+IF NOT(_NES_VERSION)
 \    Summary: Fetch a line of text from the keyboard
+ELIF _NES_VERSION
+\    Summary: Print a space and capitalise the next letter
+ENDIF
 \  Deep dive: Extended text tokens
 \
 \ ------------------------------------------------------------------------------
@@ -13,17 +17,21 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \ returned.
 \
 ENDIF
+IF NOT(_NES_VERSION)
 \ Returns:
 \
 \   Y                   The size of the entered text, or 0 if none was entered
+ENDIF
 IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \                       or if ESCAPE was pressed
 ENDIF
+IF NOT(_NES_VERSION)
 \
 \   INWK+5              The entered text, terminated by a carriage return
 \
 \   C flag              Set if ESCAPE was pressed
 \
+ENDIF
 \ ******************************************************************************
 
 .MT26
@@ -260,5 +268,12 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: See group A
 
  JMP FEED               \ Jump to FEED to print a newline, returning from the
                         \ subroutine using a tail call
+
+ELIF _NES_VERSION
+
+ LDA #' '               \ Print a space
+ JSR DASC
+
+                        \ Fall through into MT19 to capitalise the next letter
 
 ENDIF

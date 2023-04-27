@@ -10,6 +10,8 @@
 
 .OTHERFILEPR
 
+IF NOT(_NES_VERSION)
+
  LDA #2                 \ Print extended token 2 - DISK, i.e. token 2 or 3 (as
  SEC                    \ DISK can be 0 or &FF). In other versions of the game,
  SBC DISK               \ such as the Commodore 64 version, token 2 is "disk"
@@ -17,4 +19,11 @@
                         \ non-selected media, but this system is unused in the
                         \ Master version and tokens 2 and 3 contain different
                         \ text
+
+ELIF _NES_VERSION
+
+ RTS                    \ Return from the subroutine, as OTHERFILEPR does
+                        \ nothing in the NES version
+
+ENDIF
 

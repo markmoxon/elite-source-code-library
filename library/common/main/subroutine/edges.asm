@@ -120,7 +120,7 @@ ENDIF
  LDA YY+1               \ And then subtracting the high bytes
  SBC #0
 
-IF NOT(_ELITE_A_FLIGHT) AND NOT(_NES_VERSION)
+IF NOT(_ELITE_A_FLIGHT OR _NES_VERSION)
 
  BNE ED3                \ If the high byte subtraction is non-zero, then skip
                         \ to ED3

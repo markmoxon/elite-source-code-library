@@ -18,7 +18,7 @@
 
 .MT9
 
-IF _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION \ Tube
+IF _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Tube
 
  LDA #1                 \ Move the text cursor to column 1
  STA XC
@@ -27,6 +27,12 @@ ELIF _6502SP_VERSION
 
  LDA #1                 \ Call DOXC to move the text cursor to column 1
  JSR DOXC
+
+ENDIF
+
+IF _NES_VERSION
+
+ LDA #&95               \ ???
 
 ENDIF
 

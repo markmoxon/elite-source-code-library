@@ -44,7 +44,7 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA)
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
 
  LDA QQ12               \ If QQ12 does not have bit 7 set, which means we are
  BPL PD1                \ not docked, jump to PD1 to show the standard "goat
@@ -52,7 +52,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF NOT(_ELITE_A_ENCYCLOPEDIA)
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
 
                         \ If we get here, then the current system is the same as
                         \ the selected system and we are docked, so now to check
@@ -88,6 +88,40 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA)
 
  BMI PD3                \ If bit 7 is set, jump to PD3 to print the extended
                         \ token in A from the second table in RUTOK
+
+ELIF _NES_VERSION
+
+ LDX LANG               \ ???
+ LDA RUPLA_LO,X
+ STA SC
+ LDA RUPLA_HI,X
+ STA SC_1
+ LDA RUGAL_LO,X
+ STA L00BA
+ LDA RUGAL_HI,X
+ STA L00BB
+
+ LDY NRU,X
+
+.PDL1
+
+ LDA (SC),Y
+ CMP L049F
+ BNE PD2
+ LDA (L00BA),Y
+
+ AND #%01111111         \ Extract bits 0-6 of A
+
+ CMP GCNT               \ If the result does not equal the current galaxy
+ BNE PD2                \ number, jump to PD2 to keep looping through the system
+                        \ numbers in RUPLA
+
+ LDA (L00BA),Y          \ ???
+ BMI PD3
+
+ENDIF
+
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
 
  LDA TP                 \ Fetch bit 0 of TP into the C flag, and skip to PD1 if
  LSR A                  \ it is clear (i.e. if mission 1 is not in progress) to

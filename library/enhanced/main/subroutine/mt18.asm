@@ -30,11 +30,28 @@
                         \ tables at TKN2+2 and QQ16 (we intentionally exclude
                         \ the first token in TKN2, which contains a newline)
 
+IF NOT(_NES_VERSION)
+
  LDA TKN2+2,X           \ Print the first letter of the token at TKN2+2 + X
  JSR DTS
 
  LDA TKN2+3,X           \ Print the second letter of the token at TKN2+2 + X
  JSR DTS
+
+ELIF _NES_VERSION
+
+ LDA TKN2+2,X           \ Print the first letter of the token at TKN2+2 + X
+ JSR DTS_BANK7
+
+ LDA TKN2+3,X           \ Fetch the second letter of the token from TKN2+2 + X
+
+ CMP #'?'               \ If the second letter is a question mark, skip the
+ BEQ P%+5               \ following instruction (as ? indicates a single-letter
+                        \ token)
+
+ JSR DTS_BANK7          \ Print the second letter of the token at TKN2+2 + X
+
+ENDIF
 
  DEY                    \ Decrement the loop counter
 

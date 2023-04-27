@@ -158,7 +158,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF NOT(_ELITE_A_6502SP_PARA) AND NOT(_NES_VERSION)
+IF NOT(_ELITE_A_6502SP_PARA OR _NES_VERSION)
 
                         \ Fall through into PIXEL to draw the stardust at the
                         \ screen coordinates in (X, A)

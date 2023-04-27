@@ -48,7 +48,11 @@ ELIF _ELITE_A_ENCYCLOPEDIA
  EQUW clr_vdustat       \ Token 24: Switch to standard tokens in lower case
  EQUW DASC              \ Token 25: Unused
 ENDIF
+IF NOT(_NES_VERSION)
  EQUW MT26              \ Token 26: Fetch line input from keyboard (filename)
+ELIF _NES_VERSION
+ EQUW MT26              \ Token 26: Print a space and capitalise the next letter
+ENDIF
  EQUW MT27              \ Token 27: Print mission captain's name (217-219)
  EQUW MT28              \ Token 28: Print mission 1 location hint (220-221)
  EQUW MT29              \ Token 29: Column 6, white text, lower case in words
@@ -56,12 +60,12 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION \ Advanced: The 6502SP version has an extend
  EQUW DASC              \ Token 30: Unused
 ELIF _6502SP_VERSION
  EQUW WHITETEXT         \ Token 30: White text
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR_NES_VERSION
  EQUW FILEPR            \ Token 30: Display currently selected media (disc/tape)
 ENDIF
 IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: The Master version has an extended jump token for displaying the non-selected file system, though this token isn't actually used as the file system can't be changed from disc
  EQUW DASC              \ Token 31: Unused
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR_NES_VERSION
  EQUW OTHERFILEPR       \ Token 31: Display the non-selected media (disc/tape)
 ENDIF
  EQUW DASC              \ Token 32: Unused

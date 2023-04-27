@@ -24,7 +24,7 @@ ENDIF
 
 .MT8
 
-IF _DISC_DOCKED OR _ELITE_A_VERSION \ Tube
+IF _DISC_DOCKED OR _ELITE_A_VERSION OR _NES_VERSION \ Tube
 
  LDA #6                 \ Move the text cursor to column 6
  STA XC

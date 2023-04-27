@@ -47,6 +47,15 @@
 
 .MT171
 
+IF NOT(_NES_VERSION)
+
  LDA #153               \ Print extended token 153 ("IAN"), returning from the
  JMP DETOK              \ subroutine using a tail call
+
+ELIF _NES_VERSION
+
+ LDA #153               \ Print extended token 153 ("IAN"), returning from the
+ JMP DETOK_BANK7        \ subroutine using a tail call
+
+ENDIF
 

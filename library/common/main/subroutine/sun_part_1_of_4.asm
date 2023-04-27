@@ -48,7 +48,7 @@ ENDIF
                         \ of the screen (so we don't need to draw its bottom
                         \ half)
 
-IF NOT(_ELITE_A_FLIGHT) AND NOT(_NES_VERSION)
+IF NOT(_ELITE_A_FLIGHT OR _NES_VERSION)
 
  TXA                    \ Negate X using two's complement, so X = ~X + 1
  EOR #%11111111         \

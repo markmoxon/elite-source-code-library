@@ -32,9 +32,17 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  BNE PAUSE2             \ If a key was already being held down when we entered
                         \ this routine, keep looping back up to PAUSE2, until
                         \ the key is released
+
+ELIF _NES_VERSION
+
+ JSR F186_BANK7         \ ???
+
+ENDIF
 
 IF _ELITE_A_ENCYCLOPEDIA
 
@@ -55,9 +63,20 @@ ELIF _MASTER_VERSION
                         \ ASCII code of the key pressed in X (or 0 for no key
                         \ press)
 
+ELIF _NES_VERSION
+
+.loop_CB3C4
+
+ JSR NAMETABLE0_BANK7   \ ???
+ LDA L04B2
+ ORA L04B4
+ AND #&C0
+ CMP #&40
+ BNE loop_CB3C4
+
 ENDIF
 
-IF NOT(_ELITE_A_ENCYCLOPEDIA)
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
 
  BEQ PAUSE2             \ Keep looping up to PAUSE2 until a key is pressed
 

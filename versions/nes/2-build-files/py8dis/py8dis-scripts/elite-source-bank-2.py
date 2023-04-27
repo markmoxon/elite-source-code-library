@@ -126,7 +126,7 @@ byte(0xB61E)
 entry(0xB61F)
 
 subroutine(0xB0D6, "DETOK3")
-subroutine(0xB0EF, "DETOK_BANK2")
+subroutine(0xB0EF, "DETOK")
 subroutine(0xB14B, "DETOK2")
 subroutine(0xB26C, "MT27")
 subroutine(0xB270, "MT28")

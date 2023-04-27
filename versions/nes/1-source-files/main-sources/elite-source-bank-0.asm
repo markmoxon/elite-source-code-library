@@ -593,7 +593,7 @@ LF03D             = &F03D
 LF04B             = &F04B
 LF059             = &F059
 LF074             = &F074
-DETOK             = &F082
+DETOK_BANK7       = &F082
 DTS               = &F09D
 LF0B8             = &F0B8
 LF0C6             = &F0C6
@@ -1800,7 +1800,7 @@ NORM              = &FAF8
 
 .C882C
  LDA #&CD                                         ; 882C: A9 CD       ..
- JSR DETOK                                        ; 882E: 20 82 F0     ..
+ JSR DETOK_BANK7                                  ; 882E: 20 82 F0     ..
  JSR TT67                                         ; 8831: 20 A6 96     ..
  JMP C885F                                        ; 8834: 4C 5F 88    L_.
 
@@ -2382,7 +2382,7 @@ NORM              = &FAF8
 .HME2
  JSR CLYNS                                        ; 8C2B: 20 DE F2     ..
  LDA #&0E                                         ; 8C2E: A9 0E       ..
- JSR DETOK                                        ; 8C30: 20 82 F0     ..
+ JSR DETOK_BANK7                                  ; 8C30: 20 82 F0     ..
  LDY #9                                           ; 8C33: A0 09       ..
  STY L0483                                        ; 8C35: 8C 83 04    ...
  LDA #&41 ; 'A'                                   ; 8C38: A9 41       .A
@@ -2430,7 +2430,7 @@ NORM              = &FAF8
  JSR TT111                                        ; 8C89: 20 6B 9D     k.
  JSR BOOP                                         ; 8C8C: 20 E5 EB     ..
  LDA #&D7                                         ; 8C8F: A9 D7       ..
- JSR DETOK                                        ; 8C91: 20 82 F0     ..
+ JSR DETOK_BANK7                                  ; 8C91: 20 82 F0     ..
  JMP C8980                                        ; 8C94: 4C 80 89    L..
 
 .C8C97
@@ -3552,13 +3552,13 @@ M32_1 = M32+1
  ORA #4                                           ; 9426: 09 04       ..
  STA TP                                           ; 9428: 8D 9E 03    ...
  LDA #&0B                                         ; 942B: A9 0B       ..
- JSR DETOK                                        ; 942D: 20 82 F0     ..
+ JSR DETOK_BANK7                                  ; 942D: 20 82 F0     ..
  JSR C8926                                        ; 9430: 20 26 89     &.
  JMP BAY                                          ; 9433: 4C 5E B3    L^.
 
 ; ******************************************************************************
 .BRP
- JSR DETOK                                        ; 9436: 20 82 F0     ..
+ JSR DETOK_BANK7                                  ; 9436: 20 82 F0     ..
  JSR LEDAB                                        ; 9439: 20 AB ED     ..
 .C943C
  JMP BAY                                          ; 943C: 4C 5E B3    L^.
@@ -3599,7 +3599,7 @@ M32_1 = M32+1
  ORA #&10                                         ; 947D: 09 10       ..
  STA TP                                           ; 947F: 8D 9E 03    ...
  LDA #&C7                                         ; 9482: A9 C7       ..
- JSR DETOK                                        ; 9484: 20 82 F0     ..
+ JSR DETOK_BANK7                                  ; 9484: 20 82 F0     ..
  JSR C8926                                        ; 9487: 20 26 89     &.
  JSR sub_CACE5                                    ; 948A: 20 E5 AC     ..
  CMP #1                                           ; 948D: C9 01       ..
@@ -3667,7 +3667,7 @@ M32_1 = M32+1
 
 .sub_C9509
  LDA #&D8                                         ; 9509: A9 D8       ..
- JSR DETOK                                        ; 950B: 20 82 F0     ..
+ JSR DETOK_BANK7                                  ; 950B: 20 82 F0     ..
  JSR LF2BD                                        ; 950E: 20 BD F2     ..
  LDY #&64 ; 'd'                                   ; 9511: A0 64       .d
  JMP DELAY                                        ; 9513: 4C A2 EB    L..
@@ -4401,7 +4401,7 @@ M32_1 = M32+1
  AND #3                                           ; 9A7B: 29 03       ).
  CLC                                              ; 9A7D: 18          .
  ADC #&6F ; 'o'                                   ; 9A7E: 69 6F       io
- JSR DETOK                                        ; 9A80: 20 82 F0     ..
+ JSR DETOK_BANK7                                  ; 9A80: 20 82 F0     ..
  LDA L04A9                                        ; 9A83: AD A9 04    ...
  AND #2                                           ; 9A86: 29 02       ).
  BEQ C9A99                                        ; 9A88: F0 0F       ..
@@ -4413,7 +4413,7 @@ M32_1 = M32+1
  JSR DASC                                         ; 9A96: 20 E6 F1     ..
 .C9A99
  LDA #&C6                                         ; 9A99: A9 C6       ..
- JSR DETOK                                        ; 9A9B: 20 82 F0     ..
+ JSR DETOK_BANK7                                  ; 9A9B: 20 82 F0     ..
  LDA ESCP                                         ; 9A9E: AD C6 03    ...
  BNE C9AA9                                        ; 9AA1: D0 06       ..
  LDX L03C5                                        ; 9AA3: AE C5 03    ...
@@ -4939,7 +4939,7 @@ M32_1 = M32+1
  LDA #&0F                                         ; 9E3F: A9 0F       ..
  STA XC                                           ; 9E41: 85 32       .2
  LDA #&CD                                         ; 9E43: A9 CD       ..
- JMP DETOK                                        ; 9E45: 4C 82 F0    L..
+ JMP DETOK_BANK7                                  ; 9E45: 4C 82 F0    L..
 
 .C9E48
  LDA QQ12                                         ; 9E48: A5 A5       ..
@@ -7039,7 +7039,7 @@ M32_1 = M32+1
  STA XC                                           ; ACF4: 85 32       .2
  PLA                                              ; ACF6: 68          h
  PHA                                              ; ACF7: 48          H
- JSR DETOK                                        ; ACF8: 20 82 F0     ..
+ JSR DETOK_BANK7                                  ; ACF8: 20 82 F0     ..
  JSR LD951                                        ; ACFB: 20 51 D9     Q.
  LDA L04B2                                        ; ACFE: AD B2 04    ...
  BMI CAD17                                        ; AD01: 30 14       0.

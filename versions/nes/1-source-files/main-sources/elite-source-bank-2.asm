@@ -370,7 +370,7 @@ LEC7D             = &EC7D
 TIDY              = &EDEA
 PAS1              = &EF7A
 LL164             = &EFF7
-DETOK             = &F082
+DETOK_BANK7             = &F082
 DTS_BANK7               = &F09D
 LF186             = &F186
 MVS5              = &F1A2
@@ -5419,7 +5419,7 @@ INCLUDE "library/enhanced/main/subroutine/detok2.asm"
 .CB272
  CLC                                              ; B272: 18          .
  ADC GCNT                                         ; B273: 6D A7 03    m..
- JMP DETOK                                        ; B276: 4C 82 F0    L..
+ JMP DETOK_BANK7                                        ; B276: 4C 82 F0    L..
 
 ; ******************************************************************************
 .MT1
@@ -5498,7 +5498,7 @@ INCLUDE "library/enhanced/main/subroutine/detok2.asm"
  DEC DTW5                                         ; B2CB: CE F7 03    ...
 .CB2CE
  LDA #&99                                         ; B2CE: A9 99       ..
- JMP DETOK                                        ; B2D0: 4C 82 F0    L..
+ JMP DETOK_BANK7                                        ; B2D0: 4C 82 F0    L..
 
 ; ******************************************************************************
 .MT18
@@ -5565,7 +5565,7 @@ INCLUDE "library/enhanced/main/subroutine/detok2.asm"
 ; ******************************************************************************
 .BRIS
  LDA #&D8                                         ; B373: A9 D8       ..
- JSR DETOK_BANK2                                  ; B375: 20 EF B0     ..
+ JSR DETOK                                        ; B375: 20 EF B0     ..
  JSR LF2BD                                        ; B378: 20 BD F2     ..
  LDY #&64 ; 'd'                                   ; B37B: A0 64       .d
  JMP DELAY                                        ; B37D: 4C A2 EB    L..
@@ -5708,7 +5708,7 @@ INCLUDE "library/enhanced/main/subroutine/detok2.asm"
  BPL loop_CB440                                   ; B445: 10 F9       ..
  LDA #5                                           ; B447: A9 05       ..
 .CB449
- JMP DETOK_BANK2                                  ; B449: 4C EF B0    L..
+ JMP DETOK                                  ; B449: 4C EF B0    L..
 
 .loop_CB44C
  JMP TT27_control_codes                           ; B44C: 4C 37 F2    L7.

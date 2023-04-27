@@ -576,7 +576,7 @@ LAE18      = &AE18
 LAF9D      = &AF9D
 LAFCD      = &AFCD
 LB0E1      = &B0E1
-DETOK_BANK2 = &B0EF
+DETOK      = &B0EF
 LB187      = &B187
 LB18E      = &B18E
 LB1BE      = &B1BE
@@ -6760,7 +6760,7 @@ LDFFF = sub_CDFFE+1
  JMP RESETBANK                                    ; F07F: 4C AD C0    L..
 
 ; ******************************************************************************
-.DETOK
+.DETOK_BANK7
  STA L00B7                                        ; F082: 85 B7       ..
  LDA BANK                                         ; F084: A5 F7       ..
  CMP #2                                           ; F086: C9 02       ..
@@ -6769,12 +6769,12 @@ LDFFF = sub_CDFFE+1
  LDA #2                                           ; F08B: A9 02       ..
  JSR SETBANK                                      ; F08D: 20 AE C0     ..
  LDA L00B7                                        ; F090: A5 B7       ..
- JSR DETOK_BANK2                                  ; F092: 20 EF B0     ..
+ JSR DETOK                                        ; F092: 20 EF B0     ..
  JMP RESETBANK                                    ; F095: 4C AD C0    L..
 
 .CF098
  LDA L00B7                                        ; F098: A5 B7       ..
- JMP DETOK_BANK2                                  ; F09A: 4C EF B0    L..
+ JMP DETOK                                        ; F09A: 4C EF B0    L..
 
 ; ******************************************************************************
 .DTS

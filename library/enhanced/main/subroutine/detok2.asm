@@ -103,7 +103,7 @@ ELIF _NES_VERSION
 
  CMP #215               \ If A < 215, so A is in the range 129-214, jump to
  BCS P%+5               \ DETOK as this is a recursive token, returning from the
- JMP DETOK_BANK2        \ subroutine using a tail call
+ JMP DETOK              \ subroutine using a tail call
 
 ENDIF
 
@@ -339,15 +339,7 @@ ENDIF
  ADC MTIN-91,X          \ Set A = MTIN-91 + token number (91-128) + random (0-4)
                         \       = MTIN + token number (0-37) + random (0-4)
 
-IF NOT(_NES_VERSION)
-
  JSR DETOK              \ Call DETOK to print the extended recursive token in A
-
-ELIF _NES_VERSION
-
- JSR DETOK_BANK2        \ Call DETOK to print the extended recursive token in A
-
-ENDIF
 
  JMP DT7                \ Jump to DT7 to restore V(1 0) and Y from the stack and
                         \ return from the subroutine using a tail call

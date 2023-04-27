@@ -189,7 +189,7 @@ label(0xB8F7, "PAS1_BANK0")
 label(0xB738, "HALL1_BANK1")
 label(0xB975, "F2A8_BANK1")
 
-label(0xB0EF, "DETOK_BANK2")
+label(0xB0EF, "DETOK")
 
 
 subroutine(0xC007, "Spercent")

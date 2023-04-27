@@ -1,10 +1,6 @@
 \ ******************************************************************************
 \
-IF NOT(_NES_VERSION)
 \       Name: DETOK
-ELIF _NES_VERSION
-\       Name: DETOK_BANK2
-ENDIF
 \       Type: Subroutine
 \   Category: Text
 \    Summary: Print an extended recursive token from the TKN1 token table
@@ -41,11 +37,7 @@ ELIF _ELITE_A_ENCYCLOPEDIA
 ENDIF
 \ ******************************************************************************
 
-IF NOT(_NES_VERSION)
 .DETOK
-ELIF _NES_VERSION
-.DETOK_BANK2
-ENDIF
 
 IF NOT(_NES_VERSION)
 

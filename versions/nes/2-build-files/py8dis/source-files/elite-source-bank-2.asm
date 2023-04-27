@@ -311,7 +311,7 @@ LEC7D             = &EC7D
 TIDY              = &EDEA
 PAS1              = &EF7A
 LL164             = &EFF7
-DETOK             = &F082
+DETOK_BANK7       = &F082
 DTS               = &F09D
 LF186             = &F186
 MVS5              = &F1A2
@@ -1800,7 +1800,7 @@ NORM              = &FAF8
  STA V_1                                          ; B0EB: 85 64       .d
  BNE CB111                                        ; B0ED: D0 22       ."
 ; ******************************************************************************
-.DETOK_BANK2
+.DETOK
  TAX                                              ; B0EF: AA          .
  LDA L00E9                                        ; B0F0: A5 E9       ..
  BPL CB0FD                                        ; B0F2: 10 09       ..
@@ -1886,7 +1886,7 @@ NORM              = &FAF8
  BCC CB1D0                                        ; B16A: 90 64       .d
  CMP #&D7                                         ; B16C: C9 D7       ..
  BCS CB173                                        ; B16E: B0 03       ..
- JMP DETOK_BANK2                                  ; B170: 4C EF B0    L..
+ JMP DETOK                                        ; B170: 4C EF B0    L..
 
 .CB173
  SBC #&D7                                         ; B173: E9 D7       ..
@@ -1977,7 +1977,7 @@ NORM              = &FAF8
  CPX #&CC                                         ; B1F9: E0 CC       ..
  LDX SC                                           ; B1FB: A6 07       ..
  ADC CB1EB,X                                      ; B1FD: 7D EB B1    }..
- JSR DETOK_BANK2                                  ; B200: 20 EF B0     ..
+ JSR DETOK                                        ; B200: 20 EF B0     ..
 .sub_CB203
 JMTBm2 = sub_CB203+1
 JMTBm1 = sub_CB203+2
@@ -2011,7 +2011,7 @@ JMTBm1 = sub_CB203+2
 .CB272
  CLC                                              ; B272: 18          .
  ADC GCNT                                         ; B273: 6D A7 03    m..
- JMP DETOK                                        ; B276: 4C 82 F0    L..
+ JMP DETOK_BANK7                                  ; B276: 4C 82 F0    L..
 
 ; ******************************************************************************
 .MT1
@@ -2090,7 +2090,7 @@ JMTBm1 = sub_CB203+2
  DEC DTW5                                         ; B2CB: CE F7 03    ...
 .CB2CE
  LDA #&99                                         ; B2CE: A9 99       ..
- JMP DETOK                                        ; B2D0: 4C 82 F0    L..
+ JMP DETOK_BANK7                                  ; B2D0: 4C 82 F0    L..
 
 ; ******************************************************************************
 .MT18
@@ -2157,7 +2157,7 @@ JMTBm1 = sub_CB203+2
 ; ******************************************************************************
 .BRIS
  LDA #&D8                                         ; B373: A9 D8       ..
- JSR DETOK_BANK2                                  ; B375: 20 EF B0     ..
+ JSR DETOK                                        ; B375: 20 EF B0     ..
  JSR LF2BD                                        ; B378: 20 BD F2     ..
  LDY #&64 ; 'd'                                   ; B37B: A0 64       .d
  JMP DELAY                                        ; B37D: 4C A2 EB    L..
@@ -2280,7 +2280,7 @@ JMTBm1 = sub_CB203+2
  BPL loop_CB440                                   ; B445: 10 F9       ..
  LDA #5                                           ; B447: A9 05       ..
 .CB449
- JMP DETOK_BANK2                                  ; B449: 4C EF B0    L..
+ JMP DETOK                                        ; B449: 4C EF B0    L..
 
 .loop_CB44C
  JMP TT27_control_codes                           ; B44C: 4C 37 F2    L7.

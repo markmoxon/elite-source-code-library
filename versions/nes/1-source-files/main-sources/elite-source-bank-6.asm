@@ -648,13 +648,13 @@ LF171             = &F171
 LF186             = &F186
 MVS5_BANK7        = &F1A2
 HALL              = &F1BD
-DASC              = &F1E6
+DASC_BANK7        = &F1E6
 TT27_BANK7        = &F201
 TT27_control_codes = &F237
 LF245             = &F245
 TT66              = &F26E
 LF280             = &F280
-SCAN              = &F2A8
+SCAN_BANK7        = &F2A8
 LF2C0             = &F2C0
 CLYNS             = &F2DE
 LF338             = &F338
@@ -5127,7 +5127,7 @@ L88BD = L88BC+1
  LDY #0                                           ; B68C: A0 00       ..
 .loop_CB68E
  LDA BUF,Y                                        ; B68E: B9 07 05    ...
- JSR DASC                                         ; B691: 20 E6 F1     ..
+ JSR DASC_BANK7                                   ; B691: 20 E6 F1     ..
  INY                                              ; B694: C8          .
  CPY #7                                           ; B695: C0 07       ..
  BCC loop_CB68E                                   ; B697: 90 F5       ..
@@ -5146,11 +5146,11 @@ L88BD = L88BC+1
  TXA                                              ; B6AC: 8A          .
  ADC #&30 ; '0'                                   ; B6AD: 69 30       i0
 .CB6AF
- JSR DASC                                         ; B6AF: 20 E6 F1     ..
+ JSR DASC_BANK7                                   ; B6AF: 20 E6 F1     ..
  TYA                                              ; B6B2: 98          .
  CLC                                              ; B6B3: 18          .
  ADC #&3A ; ':'                                   ; B6B4: 69 3A       i:
- JSR DASC                                         ; B6B6: 20 E6 F1     ..
+ JSR DASC_BANK7                                   ; B6B6: 20 E6 F1     ..
  PLA                                              ; B6B9: 68          h
  RTS                                              ; B6BA: 60          `
 

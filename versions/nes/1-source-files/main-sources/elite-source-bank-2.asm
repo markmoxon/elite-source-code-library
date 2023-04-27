@@ -375,11 +375,11 @@ DTS_BANK7         = &F09D
 LF186             = &F186
 MVS5_BANK7        = &F1A2
 HALL              = &F1BD
-DASC              = &F1E6
+DASC_BANK7        = &F1E6
 TT27_BANK7        = &F201
 TT27_control_codes = &F237
 TT66              = &F26E
-SCAN              = &F2A8
+SCAN_BANK7        = &F2A8
 LF2BD             = &F2BD
 CLYNS             = &F2DE
 Ze                = &F42E
@@ -5524,7 +5524,7 @@ INCLUDE "library/enhanced/main/subroutine/detok2.asm"
 ; ******************************************************************************
 .MT26
  LDA #&20 ; ' '                                   ; B2F6: A9 20       .
- JSR DASC_BANK2                                   ; B2F8: 20 F5 B4     ..
+ JSR DASC                                   ; B2F8: 20 F5 B4     ..
 ; ******************************************************************************
 .MT19
  LDA #0                                           ; B2FB: A9 00       ..
@@ -5744,12 +5744,12 @@ INCLUDE "library/enhanced/main/subroutine/detok2.asm"
  TAX                                              ; B47B: AA          .
  LDA LB8B4,X                                      ; B47C: BD B4 B8    ...
 .CB47F
- JMP DASC_BANK2                                   ; B47F: 4C F5 B4    L..
+ JMP DASC                                   ; B47F: 4C F5 B4    L..
 
 .CB482
  BIT QQ17                                         ; B482: 24 3C       $<
  BVS CB48D                                        ; B484: 70 07       p.
- JMP DASC_BANK2                                   ; B486: 4C F5 B4    L..
+ JMP DASC                                   ; B486: 4C F5 B4    L..
 
 .qw
  ADC #&72 ; 'r'                                   ; B489: 69 72       ir
@@ -5827,7 +5827,7 @@ INCLUDE "library/enhanced/main/subroutine/detok2.asm"
  RTS                                              ; B4F4: 60          `
 
 ; ******************************************************************************
-.DASC_BANK2
+.DASC
  STA SC_1                                         ; B4F5: 85 08       ..
  LDA L00E9                                        ; B4F7: A5 E9       ..
  BPL CB504                                        ; B4F9: 10 09       ..

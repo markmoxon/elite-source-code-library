@@ -189,17 +189,8 @@ ENDIF
 
 .DT9
 
-IF NOT(_NES_VERSION)
-
  JMP DASC               \ Jump to DASC to print the ASCII character in A,
                         \ returning from the routine using a tail call
-
-ELIF _NES_VERSION
-
- JMP DASC_BANK2         \ Jump to DASC to print the ASCII character in A,
-                        \ returning from the routine using a tail call
-
-ENDIF
 
 .DT3
 

@@ -608,7 +608,7 @@ LF194             = &F194
 MVS5_BANK7        = &F1A2
 HALL              = &F1BD
 LF1CB             = &F1CB
-DASC              = &F1E6
+DASC_BANK7        = &F1E6
 TT27_BANK7        = &F201
 LF21C             = &F21C
 TT27_control_codes = &F237
@@ -616,7 +616,7 @@ LF25A             = &F25A
 LF260             = &F260
 TT66              = &F26E
 LF293             = &F293
-SCAN              = &F2A8
+SCAN_BANK7        = &F2A8
 LF2BD             = &F2BD
 CLYNS             = &F2DE
 LF2E6             = &F2E6
@@ -2274,7 +2274,7 @@ NORM              = &FAF8
  CLC                                              ; 8B72: 18          .
  ADC #&30 ; '0'                                   ; 8B73: 69 30       i0
 .C8B75
- JSR DASC                                         ; 8B75: 20 E6 F1     ..
+ JSR DASC_BANK7                                   ; 8B75: 20 E6 F1     ..
 .C8B78
  DEC T                                            ; 8B78: C6 9A       ..
  BPL C8B7E                                        ; 8B7A: 10 02       ..
@@ -2286,7 +2286,7 @@ NORM              = &FAF8
  PLP                                              ; 8B84: 28          (
  BCC C8B8D                                        ; 8B85: 90 06       ..
  LDA L03FD                                        ; 8B87: AD FD 03    ...
- JSR DASC                                         ; 8B8A: 20 E6 F1     ..
+ JSR DASC_BANK7                                   ; 8B8A: 20 E6 F1     ..
 .C8B8D
  JMP C8AEB                                        ; 8B8D: 4C EB 8A    L..
 
@@ -4001,7 +4001,7 @@ M32_1 = M32+1
  LDA #0                                           ; 9775: A9 00       ..
  STA QQ17                                         ; 9777: 85 3C       .<
  LDA #&4D ; 'M'                                   ; 9779: A9 4D       .M
- JSR DASC                                         ; 977B: 20 E6 F1     ..
+ JSR DASC_BANK7                                   ; 977B: 20 E6 F1     ..
  LDA #&43 ; 'C'                                   ; 977E: A9 43       .C
  JSR TT27_BANK7                                   ; 9780: 20 01 F2     ..
  LDA #&52 ; 'R'                                   ; 9783: A9 52       .R
@@ -4025,9 +4025,9 @@ M32_1 = M32+1
  JSR TT11                                         ; 97A7: 20 C2 8A     ..
  JSR TT162                                        ; 97AA: 20 9C 9F     ..
  LDA #&6B ; 'k'                                   ; 97AD: A9 6B       .k
- JSR DASC                                         ; 97AF: 20 E6 F1     ..
+ JSR DASC_BANK7                                   ; 97AF: 20 E6 F1     ..
  LDA #&6D ; 'm'                                   ; 97B2: A9 6D       .m
- JSR DASC                                         ; 97B4: 20 E6 F1     ..
+ JSR DASC_BANK7                                   ; 97B4: 20 E6 F1     ..
  JSR TTX69                                        ; 97B7: 20 A0 96     ..
  LDA L04A9                                        ; 97BA: AD A9 04    ...
  AND #5                                           ; 97BD: 29 05       ).
@@ -4410,7 +4410,7 @@ M32_1 = M32+1
  ORA ESCP                                         ; 9A8F: 0D C6 03    ...
  BEQ C9A99                                        ; 9A92: F0 05       ..
  LDA #&65 ; 'e'                                   ; 9A94: A9 65       .e
- JSR DASC                                         ; 9A96: 20 E6 F1     ..
+ JSR DASC_BANK7                                   ; 9A96: 20 E6 F1     ..
 .C9A99
  LDA #&C6                                         ; 9A99: A9 C6       ..
  JSR DETOK_BANK7                                  ; 9A9B: 20 82 F0     ..
@@ -4421,7 +4421,7 @@ M32_1 = M32+1
  BEQ C9A62                                        ; 9AA7: F0 B9       ..
 .C9AA9
  LDA #&73 ; 's'                                   ; 9AA9: A9 73       .s
- JSR DASC                                         ; 9AAB: 20 E6 F1     ..
+ JSR DASC_BANK7                                   ; 9AAB: 20 E6 F1     ..
  JMP C9A62                                        ; 9AAE: 4C 62 9A    Lb.
 
 .C9AB1
@@ -4446,7 +4446,7 @@ M32_1 = M32+1
  JSR TT67                                         ; 9AD9: 20 A6 96     ..
  JMP C9A10                                        ; 9ADC: 4C 10 9A    L..
 
- JSR DASC                                         ; 9ADF: 20 E6 F1     ..
+ JSR DASC_BANK7                                   ; 9ADF: 20 E6 F1     ..
  SEC                                              ; 9AE2: 38          8
  RTS                                              ; 9AE3: 60          `
 
@@ -4781,7 +4781,7 @@ M32_1 = M32+1
  LDA #&80                                         ; 9D26: A9 80       ..
  STA QQ17                                         ; 9D28: 85 3C       .<
  LDA #&0C                                         ; 9D2A: A9 0C       ..
- JSR DASC                                         ; 9D2C: 20 E6 F1     ..
+ JSR DASC_BANK7                                   ; 9D2C: 20 E6 F1     ..
  JSR TT146                                        ; 9D2F: 20 7A 96     z.
  JSR LD951                                        ; 9D32: 20 51 D9     Q.
 .C9D35
@@ -5140,17 +5140,17 @@ M32_1 = M32+1
 ; ******************************************************************************
 .TT160
  LDA #&74 ; 't'                                   ; 9FA1: A9 74       .t
- JSR DASC                                         ; 9FA3: 20 E6 F1     ..
+ JSR DASC_BANK7                                   ; 9FA3: 20 E6 F1     ..
  JMP TT162                                        ; 9FA6: 4C 9C 9F    L..
 
 ; ******************************************************************************
 .TT161
  LDA #&6B ; 'k'                                   ; 9FA9: A9 6B       .k
- JSR DASC                                         ; 9FAB: 20 E6 F1     ..
+ JSR DASC_BANK7                                   ; 9FAB: 20 E6 F1     ..
 ; ******************************************************************************
 .TT16a
  LDA #&67 ; 'g'                                   ; 9FAE: A9 67       .g
- JMP DASC                                         ; 9FB0: 4C E6 F1    L..
+ JMP DASC_BANK7                                   ; 9FB0: 4C E6 F1    L..
 
 ; ******************************************************************************
 .TT163
@@ -6306,7 +6306,7 @@ M32_1 = M32+1
  LDA L0396,Y                                      ; A80F: B9 96 03    ...
  CMP #&20 ; ' '                                   ; A812: C9 20       .
  BEQ CA81E                                        ; A814: F0 08       ..
- JSR DASC                                         ; A816: 20 E6 F1     ..
+ JSR DASC_BANK7                                   ; A816: 20 E6 F1     ..
  INY                                              ; A819: C8          .
  CPY #7                                           ; A81A: C0 07       ..
  BNE loop_CA80F                                   ; A81C: D0 F1       ..
@@ -9036,7 +9036,7 @@ LAFB4 = sub_CAFB3+1
  LDA INWK_31                                      ; BB2F: A5 28       .(
  ORA #&10                                         ; BB31: 09 10       ..
  STA INWK_31                                      ; BB33: 85 28       .(
- JMP SCAN                                         ; BB35: 4C A8 F2    L..
+ JMP SCAN_BANK7                                   ; BB35: 4C A8 F2    L..
 
 ; ******************************************************************************
 .MVT1m2

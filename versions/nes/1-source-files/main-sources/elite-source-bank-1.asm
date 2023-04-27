@@ -424,10 +424,10 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
 .CB974
  RTS
 
-.F2A8_BANK1
+.SCAN
 
- LDA W                  \ B975, called via F2A8 in 7.asm
- BNE CB974              \ (e.g. called from bank 0)
+ LDA W
+ BNE CB974
  LDX TYPE
  BMI CB974
  LDA L002A

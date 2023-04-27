@@ -187,7 +187,7 @@ label(0xA8D9, "TT27")
 label(0xB8F7, "PAS1")
 
 label(0xB738, "HALL1")
-label(0xB975, "F2A8_BANK1")
+label(0xB975, "SCAN")
 
 label(0xB0EF, "DETOK")
 

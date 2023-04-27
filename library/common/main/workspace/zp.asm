@@ -102,7 +102,13 @@ ELIF _NES_VERSION
 INCLUDE "library/common/main/variable/p.asm"
 INCLUDE "library/common/main/variable/xc.asm"
 
- SKIP 8
+ SKIP 4
+
+.L0037
+
+ SKIP 1
+
+ SKIP 3
 
 INCLUDE "library/common/main/variable/yc.asm"
 INCLUDE "library/common/main/variable/qq17.asm"
@@ -346,18 +352,8 @@ INCLUDE "library/6502sp/main/variable/lbup.asm"
 
 ENDIF
 
-IF NOT(_NES_VERSION)
-
 INCLUDE "library/common/main/variable/qq12.asm"
 INCLUDE "library/common/main/variable/tgt.asm"
-
-ELIF _NES_VERSION
-
- SKIP 1
-
-INCLUDE "library/common/main/variable/tgt.asm"
-
-ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Platform
 
@@ -476,7 +472,11 @@ INCLUDE "library/master/main/variable/yx2m1.asm"
 
 INCLUDE "library/master/main/variable/newzp.asm"
 
- SKIP 2
+ SKIP 1
+
+.L00B8
+
+ SKIP 1
 
 .L00B9
 
@@ -490,6 +490,12 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
  SKIP 1
 
+ ORG &CC
+
+.L00CC
+
+ SKIP 1
+
  ORG &D2
 
 .L00D2
@@ -499,6 +505,10 @@ INCLUDE "library/master/main/variable/newzp.asm"
  ORG &D8
 
 .L00D8
+
+ SKIP 1
+
+.L00D9
 
  SKIP 1
 

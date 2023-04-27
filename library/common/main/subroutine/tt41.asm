@@ -47,6 +47,8 @@
                         \ set, so we are in Sentence Case and we need to print
                         \ the next letter in upper case
 
+IF NOT(_NES_VERSION)
+
  CMP #'A'               \ If A < ASCII "A", then this is punctuation, so jump
  BCC TT74               \ to TT26 (via TT44) to print the character as is, as
                         \ we don't care about the character's case
@@ -62,4 +64,10 @@
  BNE TT44               \ Jump to TT26 (via TT44) to print the character in A
                         \ (this BNE is effectively a JMP as A will never be
                         \ zero)
+
+ELIF _NES_VERSION
+
+ JMP DASC               \ Jump to DASC to print the character in A
+
+ENDIF
 

@@ -32,7 +32,7 @@
 
  TAX                    \ Copy the token number into X
 
-IF NOT(_ELITE_A_DOCKED OR _ELITE_A_FLIGHT)
+IF NOT(_ELITE_A_DOCKED OR _ELITE_A_FLIGHT OR _NES_VERSION)
 
  LDA #LO(QQ18)          \ Set V(1 0) to point to the recursive token table at
  STA V                  \ location QQ18
@@ -50,6 +50,16 @@ ELIF _ELITE_A_DOCKED OR _ELITE_A_FLIGHT
  STA V+1                \ also sets Y = 0, which we can now use as a counter to
                         \ point to the character offset as we scan through the
                         \ table
+
+ELIF _NES_VERSION
+
+ LDA QQ18_LO            \ Set V(1 0) to point to the recursive token table at
+ STA V                  \ location QQ18
+ LDA QQ18_HI
+ STA V+1
+
+ LDY #0                 \ Set a counter Y to point to the character offset
+                        \ as we scan through the table
 
 ENDIF
 
@@ -79,6 +89,12 @@ ENDIF
                         \ to the start of the new page
 
 .TT49
+
+IF _NES_VERSION
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ENDIF
 
  INY                    \ Increment the character pointer
 
@@ -117,9 +133,19 @@ ENDIF
                         \ which is the next character of this token that we
                         \ want to print
 
+IF NOT(_NES_VERSION)
+
  EOR #35                \ Tokens are stored in memory having been EOR'd with 35
                         \ (see variable QQ18 for details), so we repeat the
                         \ EOR to get the actual character to print
+
+ELIF _NES_VERSION
+
+ EOR #62                \ Tokens are stored in memory having been EOR'd with 62
+                        \ (see variable QQ18 for details), so we repeat the
+                        \ EOR to get the actual character to print
+
+ENDIF
 
  JSR TT27               \ Print the text token in A, which could be a letter,
                         \ number, control code, two-letter token or another

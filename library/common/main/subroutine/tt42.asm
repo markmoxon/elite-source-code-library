@@ -28,6 +28,9 @@
 
 .TT42
 
+IF NOT(_NES_VERSION)
+
+
  CMP #'A'               \ If A < ASCII "A", then this is punctuation, so jump
  BCC TT44               \ to TT26 (via TT44) to print the character as is, as
                         \ we don't care about the character's case
@@ -39,6 +42,13 @@
 
  ADC #32                \ Add 32 to the character, to convert it from upper to
                         \ to lower case
+
+ELIF _NES_VERSION
+
+ TAX                    \ ???
+ LDA CHARTABLE,X
+
+ENDIF
 
 .TT44
 

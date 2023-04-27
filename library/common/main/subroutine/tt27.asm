@@ -28,7 +28,23 @@ IF _ELITE_A_FLIGHT
 ENDIF
 \ ******************************************************************************
 
+IF _NES_VERSION
+
+ JMP TT27_control_codes
+
+ENDIF
+
 .TT27
+
+IF _NES_VERSION
+
+ PHA                    \ Store A on the stack, so we can retrieve it below
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ PLA                    \ Restore A from the stack
+
+ENDIF
 
  TAX                    \ Copy the token number from A to X. We can then keep
                         \ decrementing X and testing it against zero, while
@@ -36,12 +52,18 @@ ENDIF
                         \ effectively implements a switch statement on the
                         \ value of the token
 
+IF NOT(_NES_VERSION)
+
  BEQ csh                \ If token = 0, this is control code 0 (current amount
                         \ of cash and newline), so jump to csh
+
+ENDIF
 
  BMI TT43               \ If token > 127, this is either a two-letter token
                         \ (128-159) or a recursive token (160-255), so jump
                         \ to TT43 to process tokens
+
+IF NOT(_NES_VERSION)
 
  DEX                    \ If token = 1, this is control code 1 (current galaxy
  BEQ tal                \ number), so jump to tal
@@ -61,7 +83,9 @@ ENDIF
  DEX                    \ If token = 5, this is control code 5 (fuel, newline,
  BEQ fwl                \ cash, newline), so jump to fwl
 
-IF NOT(_ELITE_A_DOCKED OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA)
+ENDIF
+
+IF NOT(_ELITE_A_DOCKED OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _NES_VERSION)
 
  DEX                    \ If token > 6, skip the following three instructions
  BNE P%+7
@@ -137,8 +161,17 @@ ELIF _ELITE_A_FLIGHT
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  DEX                    \ If token = 9, this is control code 9 (tab to column
  BEQ crlf               \ 21 and print a colon), so jump to crlf
+
+ELIF _NES_VERSION
+
+ CMP #&0A
+ BCC TT27-3
+
+ENDIF
 
  CMP #96                \ By this point, token is either 7, or in 10-127.
  BCS ex                 \ Check token number in A and if token >= 96, then the
@@ -161,13 +194,25 @@ ENDIF
 
  LDX QQ17               \ Fetch QQ17, which controls letter case, into X
 
+IF NOT(_NES_VERSION)
+
  BEQ TT74               \ If QQ17 = 0, then ALL CAPS is set, so jump to TT74
                         \ to print this character as is (i.e. as a capital)
+
+ELIF _NES_VERSION
+
+ BEQ TT44               \ If QQ17 = 0, then ALL CAPS is set, so jump to TT44
+                        \ to print this character as is (i.e. as a capital)
+
+ENDIF
 
  BMI TT41               \ If QQ17 has bit 7 set, then we are using Sentence
                         \ Case, so jump to TT41, which will print the
                         \ character in upper or lower case, depending on
                         \ whether this is the first letter in a word
+
+IF NOT(_NES_VERSION)
+
 
  BIT QQ17               \ If we get here, QQ17 is not 0 and bit 7 is clear, so
  BVS TT46               \ either it is bit 6 that is set, or some other flag in
@@ -179,6 +224,22 @@ ENDIF
                         \ will print this character in upper case and clear bit
                         \ 6, so the flags are consistent with ALL CAPS going
                         \ forward
+
+ELIF _NES_VERSION
+
+
+ BIT QQ17               \ If we get here, QQ17 is not 0 and bit 7 is clear, so
+ BVS TT44               \ either it is bit 6 that is set, or some other flag in
+                        \ QQ17 is set (bits 0-5). So check whether bit 6 is set.
+                        \ If it is, then ALL CAPS has been set (as bit 7 is
+                        \ clear) but bit 6 is still indicating that the next
+                        \ character should be printed in lower case, so we need
+                        \ to fix this. We do this with a jump to TT44, which
+                        \ will print this character in upper case and clear bit
+                        \ 6, so the flags are consistent with ALL CAPS going
+                        \ forward ???
+
+ENDIF
 
                         \ If we get here, some other flag is set in QQ17 (one
                         \ of bits 0-5 is set), which shouldn't happen in this

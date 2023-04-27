@@ -41,6 +41,8 @@
 
  LDA QQ16+1,Y           \ Get the second letter of the token
 
+IF NOT(_NES_VERSION)
+
  CMP #'?'               \ If the second letter of the token is a question mark
  BEQ TT48               \ then this is a one-letter token, so just return from
                         \ the subroutine without printing (as TT48 contains an
@@ -48,6 +50,17 @@
 
  JMP TT27               \ Print the second letter and return from the
                         \ subroutine
+
+ELIF _NES_VERSION
+
+ CMP #'?'               \ If the second letter of the token is a question mark
+ BNE TT27               \ then this is a one-letter token, so if it isn't a
+                        \ question mark, jump to TT27 to print the second letter
+
+ RTS                    \ The second letter is a question mark, so return from
+                        \ the subroutine without printing it
+
+ENDIF
 
 .TT47
 

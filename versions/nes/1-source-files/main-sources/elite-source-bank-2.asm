@@ -56,195 +56,11 @@ CODE% = &8000
 LOAD% = &8000
 
 VE = &57
+LL = 29
 
-; Memory locations
-ZP                = &0000
-RAND              = &0002
-RAND_1            = &0002
-RAND_2            = &0003
-RAND_3            = &0004
-T1                = &0006
-SC                = &0007
-SC_1              = &0008
-INWK              = &0009
-XX1               = &0009
-INWK_1            = &000A
-INWK_2            = &000B
-INWK_3            = &000C
-INWK_4            = &000D
-INWK_5            = &000E
-INWK_6            = &000F
-INWK_7            = &0010
-INWK_8            = &0011
-INWK_9            = &0012
-INWK_10           = &0013
-INWK_11           = &0014
-INWK_12           = &0015
-INWK_13           = &0016
-INWK_14           = &0017
-INWK_15           = &0018
-INWK_16           = &0019
-INWK_17           = &001A
-INWK_18           = &001B
-INWK_19           = &001C
-INWK_20           = &001D
-INWK_21           = &001E
-INWK_22           = &001F
-INWK_23           = &0020
-INWK_24           = &0021
-INWK_25           = &0022
-INWK_26           = &0023
-INWK_27           = &0024
-INWK_28           = &0025
-INWK_29           = &0026
-INWK_30           = &0027
-INWK_31           = &0028
-INWK_32           = &0029
-INWK_33           = &002A
-INWK_34           = &002B
-INWK_35           = &002C
-NEWB              = &002D
-P                 = &002F
-P_1               = &0030
-P_2               = &0031
-XC                = &0032
-L0037             = &0037
-YC                = &003B
-QQ17              = &003C
-K3                = &003D
-XX2               = &003D
-XX2_1             = &003E
-XX2_2             = &003F
-XX2_3             = &0040
-XX2_4             = &0041
-XX2_5             = &0042
-XX2_6             = &0043
-XX2_7             = &0044
-XX2_8             = &0045
-XX2_9             = &0046
-XX2_10            = &0047
-XX2_11            = &0048
-XX2_12            = &0049
-XX2_13            = &004A
-K4                = &004B
-K4_1              = &004C
-XX16              = &004D
-XX16_1            = &004E
-XX16_2            = &004F
-XX16_3            = &0050
-XX16_4            = &0051
-XX16_5            = &0052
-XX16_6            = &0053
-XX16_7            = &0054
-XX16_8            = &0055
-XX16_9            = &0056
-XX16_10           = &0057
-XX16_11           = &0058
-XX16_12           = &0059
-XX16_13           = &005A
-XX16_14           = &005B
-XX16_15           = &005C
-XX16_16           = &005D
-XX16_17           = &005E
-XX0               = &005F
-XX0_1             = &0060
-INF               = &0061
-XX19              = &0061
-INF_1             = &0062
-V                 = &0063
-V_1               = &0064
-XX                = &0065
-XX_1              = &0066
-YY                = &0067
-YY_1              = &0068
-BETA              = &0069
-BET1              = &006A
-ECMA              = &006D
-ALP1              = &006E
-ALP2              = &006F
-ALP2_1            = &0070
-X1                = &0071
-XX15              = &0071
-Y1                = &0072
-X2                = &0073
-Y2                = &0074
-XX15_4            = &0075
-XX15_5            = &0076
-XX12              = &0077
-XX12_1            = &0078
-XX12_2            = &0079
-XX12_3            = &007A
-XX12_4            = &007B
-XX12_5            = &007C
-K                 = &007D
-K_1               = &007E
-K_2               = &007F
-K_3               = &0080
-QQ15              = &0082
-QQ15_1            = &0083
-QQ15_2            = &0084
-QQ15_3            = &0085
-QQ15_4            = &0086
-QQ15_5            = &0087
-K5                = &0088
-XX18              = &0088
-XX18_1            = &0089
-XX18_2            = &008A
-XX18_3            = &008B
-K6                = &008C
-K6_1              = &008D
-K6_2              = &008E
-K6_3              = &008F
-K6_4              = &0090
-BET2              = &0091
-BET2_1            = &0092
-DELTA             = &0093
-DELT4             = &0094
-DELT4_1           = &0095
-U                 = &0096
-Q                 = &0097
-R                 = &0098
-S                 = &0099
-T                 = &009A
-XSAV              = &009B
-YSAV              = &009C
-XX17              = &009D
-W                 = &009E
-QQ11              = &009F
-ZZ                = &00A0
-XX13              = &00A1
-MCNT              = &00A2
-TYPE              = &00A3
-ALPHA             = &00A4
-QQ12              = &00A5
-TGT               = &00A6
-FLAG              = &00A7
-CNT               = &00A8
-CNT2              = &00A9
-STP               = &00AA
-XX4               = &00AB
-XX20              = &00AC
-RAT               = &00AE
-RAT2              = &00AF
-widget            = &00B0
-Yx1M2             = &00B1
-Yx2M2             = &00B2
-Yx2M1             = &00B3
-newzp             = &00B6
-L00B8             = &00B8
-L00B9             = &00B9
-L00BA             = &00BA
-L00BB             = &00BB
-L00CC             = &00CC
-L00D2             = &00D2
-L00D8             = &00D8
-L00D9             = &00D9
-L00E6             = &00E6
-L00E9             = &00E9
-BANK              = &00F7
-XX3m3             = &00F9
-XX3               = &0100
-XX3_1             = &0101
+INCLUDE "library/common/main/workspace/zp.asm"
+INCLUDE "library/common/main/workspace/xx3.asm"
+
 FRIN              = &036A
 MJ                = &038A
 VIEW              = &038E
@@ -5424,304 +5240,15 @@ INCLUDE "library/nes/main/variable/rugal_lo.asm"
 INCLUDE "library/nes/main/variable/rugal_hi.asm"
 INCLUDE "library/nes/main/variable/nru.asm"
 INCLUDE "library/enhanced/main/subroutine/pdesc.asm"
-
-.loop_CB44C
- JMP TT27_control_codes                           ; B44C: 4C 37 F2    L7.
-
-; ******************************************************************************
-.TT27
- PHA                                              ; B44F: 48          H
- LDA L00E9                                        ; B450: A5 E9       ..
- BPL CB45D                                        ; B452: 10 09       ..
- LDA PPUSTATUS                                    ; B454: AD 02 20    ..
- ASL A                                            ; B457: 0A          .
- BPL CB45D                                        ; B458: 10 03       ..
- JSR NAMETABLE0                                   ; B45A: 20 6D D0     m.
-.CB45D
- PLA                                              ; B45D: 68          h
- TAX                                              ; B45E: AA          .
- BMI TT43                                         ; B45F: 30 31       01
- CMP #&0A                                         ; B461: C9 0A       ..
- BCC loop_CB44C                                   ; B463: 90 E7       ..
- CMP #&60 ; '`'                                   ; B465: C9 60       .`
- BCS ex                                           ; B467: B0 41       .A
- CMP #&0E                                         ; B469: C9 0E       ..
- BCC CB471                                        ; B46B: 90 04       ..
- CMP #&20 ; ' '                                   ; B46D: C9 20       .
- BCC qw                                           ; B46F: 90 18       ..
-.CB471
- LDX QQ17                                         ; B471: A6 3C       .<
- BEQ CB47F                                        ; B473: F0 0A       ..
- BMI CB482                                        ; B475: 30 0B       0.
- BIT QQ17                                         ; B477: 24 3C       $<
- BVS CB47F                                        ; B479: 70 04       p.
-.loop_CB47B
- TAX                                              ; B47B: AA          .
- LDA LB8B4,X                                      ; B47C: BD B4 B8    ...
-.CB47F
- JMP DASC                                   ; B47F: 4C F5 B4    L..
-
-.CB482
- BIT QQ17                                         ; B482: 24 3C       $<
- BVS CB48D                                        ; B484: 70 07       p.
- JMP DASC                                   ; B486: 4C F5 B4    L..
-
-.qw
- ADC #&72 ; 'r'                                   ; B489: 69 72       ir
- BNE ex                                           ; B48B: D0 1D       ..
-.CB48D
- CPX #&FF                                         ; B48D: E0 FF       ..
- BNE loop_CB47B                                   ; B48F: D0 EA       ..
- RTS                                              ; B491: 60          `
-
-; ******************************************************************************
-.TT43
- CMP #&A0                                         ; B492: C9 A0       ..
- BCS CB4A8                                        ; B494: B0 12       ..
- AND #&7F                                         ; B496: 29 7F       ).
- ASL A                                            ; B498: 0A          .
- TAY                                              ; B499: A8          .
- LDA QQ16,Y                                       ; B49A: B9 33 B3    .3.
- JSR TT27                                   ; B49D: 20 4F B4     O.
- LDA QQ16+1,Y                                     ; B4A0: B9 34 B3    .4.
- CMP #&3F ; '?'                                   ; B4A3: C9 3F       .?
- BNE TT27                                   ; B4A5: D0 A8       ..
- RTS                                              ; B4A7: 60          `
-
-.CB4A8
- SBC #&A0                                         ; B4A8: E9 A0       ..
-; ******************************************************************************
-.ex
- TAX                                              ; B4AA: AA          .
- LDA QQ18_LO                                       ; B4AB: AD A4 04    ...
- STA V                                            ; B4AE: 85 63       .c
- LDA QQ18_HI                                       ; B4B0: AD A5 04    ...
- STA V_1                                          ; B4B3: 85 64       .d
- LDY #0                                           ; B4B5: A0 00       ..
- TXA                                              ; B4B7: 8A          .
- BEQ CB4DA                                        ; B4B8: F0 20       .
-.CB4BA
- LDA (V),Y                                        ; B4BA: B1 63       .c
- BEQ CB4C5                                        ; B4BC: F0 07       ..
- INY                                              ; B4BE: C8          .
- BNE CB4BA                                        ; B4BF: D0 F9       ..
- INC V_1                                          ; B4C1: E6 64       .d
- BNE CB4BA                                        ; B4C3: D0 F5       ..
-.CB4C5
- LDA L00E9                                        ; B4C5: A5 E9       ..
- BPL CB4D2                                        ; B4C7: 10 09       ..
- LDA PPUSTATUS                                    ; B4C9: AD 02 20    ..
- ASL A                                            ; B4CC: 0A          .
- BPL CB4D2                                        ; B4CD: 10 03       ..
- JSR NAMETABLE0                                   ; B4CF: 20 6D D0     m.
-.CB4D2
- INY                                              ; B4D2: C8          .
- BNE CB4D7                                        ; B4D3: D0 02       ..
- INC V_1                                          ; B4D5: E6 64       .d
-.CB4D7
- DEX                                              ; B4D7: CA          .
- BNE CB4BA                                        ; B4D8: D0 E0       ..
-.CB4DA
- TYA                                              ; B4DA: 98          .
- PHA                                              ; B4DB: 48          H
- LDA V_1                                          ; B4DC: A5 64       .d
- PHA                                              ; B4DE: 48          H
- LDA (V),Y                                        ; B4DF: B1 63       .c
- EOR #&3E ; '>'                                   ; B4E1: 49 3E       I>
- JSR TT27                                   ; B4E3: 20 4F B4     O.
- PLA                                              ; B4E6: 68          h
- STA V_1                                          ; B4E7: 85 64       .d
- PLA                                              ; B4E9: 68          h
- TAY                                              ; B4EA: A8          .
- INY                                              ; B4EB: C8          .
- BNE CB4F0                                        ; B4EC: D0 02       ..
- INC V_1                                          ; B4EE: E6 64       .d
-.CB4F0
- LDA (V),Y                                        ; B4F0: B1 63       .c
- BNE CB4DA                                        ; B4F2: D0 E6       ..
- RTS                                              ; B4F4: 60          `
-
-; ******************************************************************************
-.DASC
- STA SC_1                                         ; B4F5: 85 08       ..
- LDA L00E9                                        ; B4F7: A5 E9       ..
- BPL CB504                                        ; B4F9: 10 09       ..
- LDA PPUSTATUS                                    ; B4FB: AD 02 20    ..
- ASL A                                            ; B4FE: 0A          .
- BPL CB504                                        ; B4FF: 10 03       ..
- JSR NAMETABLE0                                   ; B501: 20 6D D0     m.
-.CB504
- LDA SC_1                                         ; B504: A5 08       ..
- STX SC                                           ; B506: 86 07       ..
- LDX #&FF                                         ; B508: A2 FF       ..
- STX DTW8                                         ; B50A: 8E F9 03    ...
- CMP #&20 ; ' '                                   ; B50D: C9 20       .
- BEQ CB536                                        ; B50F: F0 25       .%
- CMP #&2E ; '.'                                   ; B511: C9 2E       ..
- BEQ CB536                                        ; B513: F0 21       .!
- CMP #&3A ; ':'                                   ; B515: C9 3A       .:
- BEQ CB536                                        ; B517: F0 1D       ..
- CMP #&27 ; '''                                   ; B519: C9 27       .'
- BEQ CB536                                        ; B51B: F0 19       ..
- CMP #&28 ; '('                                   ; B51D: C9 28       .(
- BEQ CB536                                        ; B51F: F0 15       ..
- CMP #&0A                                         ; B521: C9 0A       ..
- BEQ CB536                                        ; B523: F0 11       ..
- CMP #&0C                                         ; B525: C9 0C       ..
- BEQ CB536                                        ; B527: F0 0D       ..
- CMP #&2D ; '-'                                   ; B529: C9 2D       .-
- BEQ CB536                                        ; B52B: F0 09       ..
- LDA QQ17                                         ; B52D: A5 3C       .<
- ORA #&40 ; '@'                                   ; B52F: 09 40       .@
- STA QQ17                                         ; B531: 85 3C       .<
- INX                                              ; B533: E8          .
- BEQ CB53C                                        ; B534: F0 06       ..
-.CB536
- LDA QQ17                                         ; B536: A5 3C       .<
- AND #&BF                                         ; B538: 29 BF       ).
- STA QQ17                                         ; B53A: 85 3C       .<
-.CB53C
- STX DTW2                                         ; B53C: 8E F4 03    ...
- LDX SC                                           ; B53F: A6 07       ..
- LDA SC_1                                         ; B541: A5 08       ..
- BIT DTW4                                         ; B543: 2C F6 03    ,..
- BMI CB54B                                        ; B546: 30 03       0.
- JMP CHPR                                         ; B548: 4C 35 B6    L5.
-
-.CB54B
- BIT DTW4                                         ; B54B: 2C F6 03    ,..
- BVS CB554                                        ; B54E: 70 04       p.
- CMP #&0C                                         ; B550: C9 0C       ..
- BEQ DA1                                          ; B552: F0 20       .
-.CB554
- LDX DTW5                                         ; B554: AE F7 03    ...
- STA BUF,X                                        ; B557: 9D 07 05    ...
- LDX SC                                           ; B55A: A6 07       ..
- INC DTW5                                         ; B55C: EE F7 03    ...
- LDA L00E9                                        ; B55F: A5 E9       ..
- BPL CB56C                                        ; B561: 10 09       ..
- LDA PPUSTATUS                                    ; B563: AD 02 20    ..
- ASL A                                            ; B566: 0A          .
- BPL CB56C                                        ; B567: 10 03       ..
- JSR NAMETABLE0                                   ; B569: 20 6D D0     m.
-.CB56C
- CLC                                              ; B56C: 18          .
- RTS                                              ; B56D: 60          `
-
-.loop_CB56E
- JMP CB615                                        ; B56E: 4C 15 B6    L..
-
-.loop_CB571
- JMP CB612                                        ; B571: 4C 12 B6    L..
-
-.DA1
- TXA                                              ; B574: 8A          .
- PHA                                              ; B575: 48          H
- TYA                                              ; B576: 98          .
- PHA                                              ; B577: 48          H
-.CB578
- LDX DTW5                                         ; B578: AE F7 03    ...
- BEQ loop_CB56E                                   ; B57B: F0 F1       ..
- CPX #&1E                                         ; B57D: E0 1E       ..
- BCC loop_CB571                                   ; B57F: 90 F0       ..
- LSR SC_1                                         ; B581: 46 08       F.
-.CB583
- LDA SC_1                                         ; B583: A5 08       ..
- BMI CB58B                                        ; B585: 30 04       0.
- LDA #&40 ; '@'                                   ; B587: A9 40       .@
- STA SC_1                                         ; B589: 85 08       ..
-.CB58B
- LDY #&1C                                         ; B58B: A0 1C       ..
-.CB58D
- LDA L0524                                        ; B58D: AD 24 05    .$.
- CMP #&20 ; ' '                                   ; B590: C9 20       .
- BEQ CB5DD                                        ; B592: F0 49       .I
-.CB594
- LDA L00E9                                        ; B594: A5 E9       ..
- BPL CB5A1                                        ; B596: 10 09       ..
- LDA PPUSTATUS                                    ; B598: AD 02 20    ..
- ASL A                                            ; B59B: 0A          .
- BPL CB5A1                                        ; B59C: 10 03       ..
- JSR NAMETABLE0                                   ; B59E: 20 6D D0     m.
-.CB5A1
- DEY                                              ; B5A1: 88          .
- BMI CB583                                        ; B5A2: 30 DF       0.
- BEQ CB583                                        ; B5A4: F0 DD       ..
- LDA BUF,Y                                        ; B5A6: B9 07 05    ...
- CMP #&20 ; ' '                                   ; B5A9: C9 20       .
- BNE CB594                                        ; B5AB: D0 E7       ..
- ASL SC_1                                         ; B5AD: 06 08       ..
- BMI CB594                                        ; B5AF: 30 E3       0.
- STY SC                                           ; B5B1: 84 07       ..
- LDY DTW5                                         ; B5B3: AC F7 03    ...
-.loop_CB5B6
- LDA L00E9                                        ; B5B6: A5 E9       ..
- BPL CB5C3                                        ; B5B8: 10 09       ..
- LDA PPUSTATUS                                    ; B5BA: AD 02 20    ..
- ASL A                                            ; B5BD: 0A          .
- BPL CB5C3                                        ; B5BE: 10 03       ..
- JSR NAMETABLE0                                   ; B5C0: 20 6D D0     m.
-.CB5C3
- LDA BUF,Y                                        ; B5C3: B9 07 05    ...
- STA BUF_1,Y                                      ; B5C6: 99 08 05    ...
- DEY                                              ; B5C9: 88          .
- CPY SC                                           ; B5CA: C4 07       ..
- BCS loop_CB5B6                                   ; B5CC: B0 E8       ..
- INC DTW5                                         ; B5CE: EE F7 03    ...
- LDA #&20 ; ' '                                   ; B5D1: A9 20       .
-.loop_CB5D3
- CMP BUF,Y                                        ; B5D3: D9 07 05    ...
- BNE CB58D                                        ; B5D6: D0 B5       ..
- DEY                                              ; B5D8: 88          .
- BPL loop_CB5D3                                   ; B5D9: 10 F8       ..
- BMI CB583                                        ; B5DB: 30 A6       0.
-.CB5DD
- LDX #&1D                                         ; B5DD: A2 1D       ..
- JSR DAS1                                         ; B5DF: 20 05 B6     ..
- LDA #&0C                                         ; B5E2: A9 0C       ..
- JSR CHPR                                         ; B5E4: 20 35 B6     5.
- LDA DTW5                                         ; B5E7: AD F7 03    ...
- SBC #&1D                                         ; B5EA: E9 1D       ..
- STA DTW5                                         ; B5EC: 8D F7 03    ...
- TAX                                              ; B5EF: AA          .
- BEQ CB615                                        ; B5F0: F0 23       .#
- LDY #0                                           ; B5F2: A0 00       ..
- INX                                              ; B5F4: E8          .
- JSR NAMETABLE0_BANK7                                        ; B5F5: 20 7D EC     }.
-.loop_CB5F8
- LDA L0525,Y                                      ; B5F8: B9 25 05    .%.
- STA BUF,Y                                        ; B5FB: 99 07 05    ...
- INY                                              ; B5FE: C8          .
- DEX                                              ; B5FF: CA          .
- BNE loop_CB5F8                                   ; B600: D0 F6       ..
- JMP CB578                                        ; B602: 4C 78 B5    Lx.
-
-.DAS1
- LDY #0                                           ; B605: A0 00       ..
-.loop_CB607
- LDA BUF,Y                                        ; B607: B9 07 05    ...
- JSR CHPR                                         ; B60A: 20 35 B6     5.
- INY                                              ; B60D: C8          .
- DEX                                              ; B60E: CA          .
- BNE loop_CB607                                   ; B60F: D0 F6       ..
- RTS                                              ; B611: 60          `
-
-.CB612
- JSR DAS1                                         ; B612: 20 05 B6     ..
-.CB615
- STX DTW5                                         ; B615: 8E F7 03    ...
- PLA                                              ; B618: 68          h
- TAY                                              ; B619: A8          .
- PLA                                              ; B61A: 68          h
- TAX                                              ; B61B: AA          .
- LDA #&0C                                         ; B61C: A9 0C       ..
-; overlapping:  L07A9                             ; B61E: 2C A9 07    ,..
- EQUB &2C                                         ; B61E: 2C          ,
-
-; ******************************************************************************
-.BELL
- LDA #7                                           ; B61F: A9 07       ..
- JMP CHPR                                         ; B621: 4C 35 B6    L5.
+INCLUDE "library/common/main/subroutine/tt27.asm"
+INCLUDE "library/common/main/subroutine/tt42.asm"
+INCLUDE "library/common/main/subroutine/tt41.asm"
+INCLUDE "library/common/main/subroutine/qw.asm"
+INCLUDE "library/common/main/subroutine/tt45.asm"
+INCLUDE "library/common/main/subroutine/tt43.asm"
+INCLUDE "library/common/main/subroutine/ex.asm"
+INCLUDE "library/enhanced/main/subroutine/tt26.asm"
+INCLUDE "library/common/main/subroutine/bell.asm"
 
 .CB624
  JMP CB75B                                        ; B624: 4C 5B B7    L[.
@@ -5735,9 +5262,9 @@ INCLUDE "library/enhanced/main/subroutine/pdesc.asm"
 .CB630
  JMP CB75B                                        ; B630: 4C 5B B7    L[.
 
-; ******************************************************************************
-.TT67X
- LDA #&0C                                         ; B633: A9 0C       ..
+INCLUDE "library/advanced/main/subroutine/tt67-tt67x.asm"
+\INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
+
 ; ******************************************************************************
 .CHPR
  STA K3                                           ; B635: 85 3D       .=
@@ -5818,20 +5345,20 @@ INCLUDE "library/enhanced/main/subroutine/pdesc.asm"
  CLC                                              ; B6B3: 18          .
  ADC #&FD                                         ; B6B4: 69 FD       i.
  LDX #0                                           ; B6B6: A2 00       ..
- STX P_2                                          ; B6B8: 86 31       .1
+ STX P+2                                          ; B6B8: 86 31       .1
  ASL A                                            ; B6BA: 0A          .
- ROL P_2                                          ; B6BB: 26 31       &1
+ ROL P+2                                          ; B6BB: 26 31       &1
  ASL A                                            ; B6BD: 0A          .
- ROL P_2                                          ; B6BE: 26 31       &1
+ ROL P+2                                          ; B6BE: 26 31       &1
  ASL A                                            ; B6C0: 0A          .
- ROL P_2                                          ; B6C1: 26 31       &1
+ ROL P+2                                          ; B6C1: 26 31       &1
  ADC #0                                           ; B6C3: 69 00       i.
- STA P_1                                          ; B6C5: 85 30       .0
- LDA P_2                                          ; B6C7: A5 31       .1
+ STA P+1                                          ; B6C5: 85 30       .0
+ LDA P+2                                          ; B6C7: A5 31       .1
  ADC #&FC                                         ; B6C9: 69 FC       i.
- STA P_2                                          ; B6CB: 85 31       .1
+ STA P+2                                          ; B6CB: 85 31       .1
  LDA #0                                           ; B6CD: A9 00       ..
- STA SC_1                                         ; B6CF: 85 08       ..
+ STA SC+1                                         ; B6CF: 85 08       ..
  LDA YC                                           ; B6D1: A5 3B       .;
  BNE CB6D8                                        ; B6D3: D0 03       ..
  JMP CB8A6                                        ; B6D5: 4C A6 B8    L..
@@ -5875,44 +5402,44 @@ INCLUDE "library/enhanced/main/subroutine/pdesc.asm"
  STA L00BA                                        ; B710: 85 BA       ..
  TYA                                              ; B712: 98          .
  LDX #&0D                                         ; B713: A2 0D       ..
- STX SC_1                                         ; B715: 86 08       ..
+ STX SC+1                                         ; B715: 86 08       ..
  ASL A                                            ; B717: 0A          .
- ROL SC_1                                         ; B718: 26 08       &.
+ ROL SC+1                                         ; B718: 26 08       &.
  ASL A                                            ; B71A: 0A          .
- ROL SC_1                                         ; B71B: 26 08       &.
+ ROL SC+1                                         ; B71B: 26 08       &.
  ASL A                                            ; B71D: 0A          .
- ROL SC_1                                         ; B71E: 26 08       &.
+ ROL SC+1                                         ; B71E: 26 08       &.
  STA SC                                           ; B720: 85 07       ..
  LDY #0                                           ; B722: A0 00       ..
- LDA (P_1),Y                                      ; B724: B1 30       .0
+ LDA (P+1),Y                                      ; B724: B1 30       .0
  STA (SC),Y                                       ; B726: 91 07       ..
  STA (L00BA),Y                                    ; B728: 91 BA       ..
  INY                                              ; B72A: C8          .
- LDA (P_1),Y                                      ; B72B: B1 30       .0
+ LDA (P+1),Y                                      ; B72B: B1 30       .0
  STA (SC),Y                                       ; B72D: 91 07       ..
  STA (L00BA),Y                                    ; B72F: 91 BA       ..
  INY                                              ; B731: C8          .
- LDA (P_1),Y                                      ; B732: B1 30       .0
+ LDA (P+1),Y                                      ; B732: B1 30       .0
  STA (SC),Y                                       ; B734: 91 07       ..
  STA (L00BA),Y                                    ; B736: 91 BA       ..
  INY                                              ; B738: C8          .
- LDA (P_1),Y                                      ; B739: B1 30       .0
+ LDA (P+1),Y                                      ; B739: B1 30       .0
  STA (SC),Y                                       ; B73B: 91 07       ..
  STA (L00BA),Y                                    ; B73D: 91 BA       ..
  INY                                              ; B73F: C8          .
- LDA (P_1),Y                                      ; B740: B1 30       .0
+ LDA (P+1),Y                                      ; B740: B1 30       .0
  STA (SC),Y                                       ; B742: 91 07       ..
  STA (L00BA),Y                                    ; B744: 91 BA       ..
  INY                                              ; B746: C8          .
- LDA (P_1),Y                                      ; B747: B1 30       .0
+ LDA (P+1),Y                                      ; B747: B1 30       .0
  STA (SC),Y                                       ; B749: 91 07       ..
  STA (L00BA),Y                                    ; B74B: 91 BA       ..
  INY                                              ; B74D: C8          .
- LDA (P_1),Y                                      ; B74E: B1 30       .0
+ LDA (P+1),Y                                      ; B74E: B1 30       .0
  STA (SC),Y                                       ; B750: 91 07       ..
  STA (L00BA),Y                                    ; B752: 91 BA       ..
  INY                                              ; B754: C8          .
- LDA (P_1),Y                                      ; B755: B1 30       .0
+ LDA (P+1),Y                                      ; B755: B1 30       .0
  STA (L00BA),Y                                    ; B757: 91 BA       ..
  STA (SC),Y                                       ; B759: 91 07       ..
 .CB75B
@@ -5931,50 +5458,50 @@ INCLUDE "library/enhanced/main/subroutine/pdesc.asm"
 
 .CB772
  LDX #&0C                                         ; B772: A2 0C       ..
- STX SC_1                                         ; B774: 86 08       ..
+ STX SC+1                                         ; B774: 86 08       ..
  ASL A                                            ; B776: 0A          .
- ROL SC_1                                         ; B777: 26 08       &.
+ ROL SC+1                                         ; B777: 26 08       &.
  ASL A                                            ; B779: 0A          .
- ROL SC_1                                         ; B77A: 26 08       &.
+ ROL SC+1                                         ; B77A: 26 08       &.
  ASL A                                            ; B77C: 0A          .
- ROL SC_1                                         ; B77D: 26 08       &.
+ ROL SC+1                                         ; B77D: 26 08       &.
  STA SC                                           ; B77F: 85 07       ..
  JMP CB793                                        ; B781: 4C 93 B7    L..
 
 .CB784
  LDX #&0D                                         ; B784: A2 0D       ..
- STX SC_1                                         ; B786: 86 08       ..
+ STX SC+1                                         ; B786: 86 08       ..
  ASL A                                            ; B788: 0A          .
- ROL SC_1                                         ; B789: 26 08       &.
+ ROL SC+1                                         ; B789: 26 08       &.
  ASL A                                            ; B78B: 0A          .
- ROL SC_1                                         ; B78C: 26 08       &.
+ ROL SC+1                                         ; B78C: 26 08       &.
  ASL A                                            ; B78E: 0A          .
- ROL SC_1                                         ; B78F: 26 08       &.
+ ROL SC+1                                         ; B78F: 26 08       &.
  STA SC                                           ; B791: 85 07       ..
 .CB793
  LDY #0                                           ; B793: A0 00       ..
- LDA (P_1),Y                                      ; B795: B1 30       .0
+ LDA (P+1),Y                                      ; B795: B1 30       .0
  STA (SC),Y                                       ; B797: 91 07       ..
  INY                                              ; B799: C8          .
- LDA (P_1),Y                                      ; B79A: B1 30       .0
+ LDA (P+1),Y                                      ; B79A: B1 30       .0
  STA (SC),Y                                       ; B79C: 91 07       ..
  INY                                              ; B79E: C8          .
- LDA (P_1),Y                                      ; B79F: B1 30       .0
+ LDA (P+1),Y                                      ; B79F: B1 30       .0
  STA (SC),Y                                       ; B7A1: 91 07       ..
  INY                                              ; B7A3: C8          .
- LDA (P_1),Y                                      ; B7A4: B1 30       .0
+ LDA (P+1),Y                                      ; B7A4: B1 30       .0
  STA (SC),Y                                       ; B7A6: 91 07       ..
  INY                                              ; B7A8: C8          .
- LDA (P_1),Y                                      ; B7A9: B1 30       .0
+ LDA (P+1),Y                                      ; B7A9: B1 30       .0
  STA (SC),Y                                       ; B7AB: 91 07       ..
  INY                                              ; B7AD: C8          .
- LDA (P_1),Y                                      ; B7AE: B1 30       .0
+ LDA (P+1),Y                                      ; B7AE: B1 30       .0
  STA (SC),Y                                       ; B7B0: 91 07       ..
  INY                                              ; B7B2: C8          .
- LDA (P_1),Y                                      ; B7B3: B1 30       .0
+ LDA (P+1),Y                                      ; B7B3: B1 30       .0
  STA (SC),Y                                       ; B7B5: 91 07       ..
  INY                                              ; B7B7: C8          .
- LDA (P_1),Y                                      ; B7B8: B1 30       .0
+ LDA (P+1),Y                                      ; B7B8: B1 30       .0
  STA (SC),Y                                       ; B7BA: 91 07       ..
  JMP CB75B                                        ; B7BC: 4C 5B B7    L[.
 
@@ -6014,51 +5541,51 @@ INCLUDE "library/enhanced/main/subroutine/pdesc.asm"
  BEQ loop_CB7DB                                   ; B7F1: F0 E8       ..
 .CB7F3
  LDX L00B9                                        ; B7F3: A6 B9       ..
- STX SC_1                                         ; B7F5: 86 08       ..
+ STX SC+1                                         ; B7F5: 86 08       ..
  ASL A                                            ; B7F7: 0A          .
- ROL SC_1                                         ; B7F8: 26 08       &.
+ ROL SC+1                                         ; B7F8: 26 08       &.
  ASL A                                            ; B7FA: 0A          .
- ROL SC_1                                         ; B7FB: 26 08       &.
+ ROL SC+1                                         ; B7FB: 26 08       &.
  ASL A                                            ; B7FD: 0A          .
- ROL SC_1                                         ; B7FE: 26 08       &.
+ ROL SC+1                                         ; B7FE: 26 08       &.
  STA SC                                           ; B800: 85 07       ..
  LDY #0                                           ; B802: A0 00       ..
- LDA (P_1),Y                                      ; B804: B1 30       .0
+ LDA (P+1),Y                                      ; B804: B1 30       .0
  ORA (SC),Y                                       ; B806: 11 07       ..
  STA (SC),Y                                       ; B808: 91 07       ..
  INY                                              ; B80A: C8          .
- LDA (P_1),Y                                      ; B80B: B1 30       .0
+ LDA (P+1),Y                                      ; B80B: B1 30       .0
  ORA (SC),Y                                       ; B80D: 11 07       ..
  STA (SC),Y                                       ; B80F: 91 07       ..
  INY                                              ; B811: C8          .
- LDA (P_1),Y                                      ; B812: B1 30       .0
+ LDA (P+1),Y                                      ; B812: B1 30       .0
  ORA (SC),Y                                       ; B814: 11 07       ..
  STA (SC),Y                                       ; B816: 91 07       ..
  INY                                              ; B818: C8          .
- LDA (P_1),Y                                      ; B819: B1 30       .0
+ LDA (P+1),Y                                      ; B819: B1 30       .0
  ORA (SC),Y                                       ; B81B: 11 07       ..
  STA (SC),Y                                       ; B81D: 91 07       ..
  INY                                              ; B81F: C8          .
- LDA (P_1),Y                                      ; B820: B1 30       .0
+ LDA (P+1),Y                                      ; B820: B1 30       .0
  ORA (SC),Y                                       ; B822: 11 07       ..
  STA (SC),Y                                       ; B824: 91 07       ..
  INY                                              ; B826: C8          .
- LDA (P_1),Y                                      ; B827: B1 30       .0
+ LDA (P+1),Y                                      ; B827: B1 30       .0
  ORA (SC),Y                                       ; B829: 11 07       ..
  STA (SC),Y                                       ; B82B: 91 07       ..
  INY                                              ; B82D: C8          .
- LDA (P_1),Y                                      ; B82E: B1 30       .0
+ LDA (P+1),Y                                      ; B82E: B1 30       .0
  ORA (SC),Y                                       ; B830: 11 07       ..
  STA (SC),Y                                       ; B832: 91 07       ..
  INY                                              ; B834: C8          .
- LDA (P_1),Y                                      ; B835: B1 30       .0
+ LDA (P+1),Y                                      ; B835: B1 30       .0
  ORA (SC),Y                                       ; B837: 11 07       ..
  STA (SC),Y                                       ; B839: 91 07       ..
  JMP CB75B                                        ; B83B: 4C 5B B7    L[.
 
 .CB83E
  LDA #0                                           ; B83E: A9 00       ..
- STA SC_1                                         ; B840: 85 08       ..
+ STA SC+1                                         ; B840: 85 08       ..
  LDA YC                                           ; B842: A5 3B       .;
  BNE CB848                                        ; B844: D0 02       ..
  LDA #&FF                                         ; B846: A9 FF       ..
@@ -6069,14 +5596,14 @@ INCLUDE "library/enhanced/main/subroutine/pdesc.asm"
  ASL A                                            ; B84C: 0A          .
  ASL A                                            ; B84D: 0A          .
  ASL A                                            ; B84E: 0A          .
- ROL SC_1                                         ; B84F: 26 08       &.
+ ROL SC+1                                         ; B84F: 26 08       &.
  SEC                                              ; B851: 38          8
  ROL A                                            ; B852: 2A          *
  STA SC                                           ; B853: 85 07       ..
- LDA SC_1                                         ; B855: A5 08       ..
+ LDA SC+1                                         ; B855: A5 08       ..
  ROL A                                            ; B857: 2A          *
  ADC L00E6                                        ; B858: 65 E6       e.
- STA SC_1                                         ; B85A: 85 08       ..
+ STA SC+1                                         ; B85A: 85 08       ..
  LDY XC                                           ; B85C: A4 32       .2
  DEY                                              ; B85E: 88          .
  LDA (SC),Y                                       ; B85F: B1 07       ..
@@ -6086,37 +5613,37 @@ INCLUDE "library/enhanced/main/subroutine/pdesc.asm"
  STA (SC),Y                                       ; B867: 91 07       ..
  INC L00B8                                        ; B869: E6 B8       ..
  LDX L00B9                                        ; B86B: A6 B9       ..
- STX SC_1                                         ; B86D: 86 08       ..
+ STX SC+1                                         ; B86D: 86 08       ..
  ASL A                                            ; B86F: 0A          .
- ROL SC_1                                         ; B870: 26 08       &.
+ ROL SC+1                                         ; B870: 26 08       &.
  ASL A                                            ; B872: 0A          .
- ROL SC_1                                         ; B873: 26 08       &.
+ ROL SC+1                                         ; B873: 26 08       &.
  ASL A                                            ; B875: 0A          .
- ROL SC_1                                         ; B876: 26 08       &.
+ ROL SC+1                                         ; B876: 26 08       &.
  STA SC                                           ; B878: 85 07       ..
  LDY #0                                           ; B87A: A0 00       ..
- LDA (P_1),Y                                      ; B87C: B1 30       .0
+ LDA (P+1),Y                                      ; B87C: B1 30       .0
  STA (SC),Y                                       ; B87E: 91 07       ..
  INY                                              ; B880: C8          .
- LDA (P_1),Y                                      ; B881: B1 30       .0
+ LDA (P+1),Y                                      ; B881: B1 30       .0
  STA (SC),Y                                       ; B883: 91 07       ..
  INY                                              ; B885: C8          .
- LDA (P_1),Y                                      ; B886: B1 30       .0
+ LDA (P+1),Y                                      ; B886: B1 30       .0
  STA (SC),Y                                       ; B888: 91 07       ..
  INY                                              ; B88A: C8          .
- LDA (P_1),Y                                      ; B88B: B1 30       .0
+ LDA (P+1),Y                                      ; B88B: B1 30       .0
  STA (SC),Y                                       ; B88D: 91 07       ..
  INY                                              ; B88F: C8          .
- LDA (P_1),Y                                      ; B890: B1 30       .0
+ LDA (P+1),Y                                      ; B890: B1 30       .0
  STA (SC),Y                                       ; B892: 91 07       ..
  INY                                              ; B894: C8          .
- LDA (P_1),Y                                      ; B895: B1 30       .0
+ LDA (P+1),Y                                      ; B895: B1 30       .0
  STA (SC),Y                                       ; B897: 91 07       ..
  INY                                              ; B899: C8          .
- LDA (P_1),Y                                      ; B89A: B1 30       .0
+ LDA (P+1),Y                                      ; B89A: B1 30       .0
  STA (SC),Y                                       ; B89C: 91 07       ..
  INY                                              ; B89E: C8          .
- LDA (P_1),Y                                      ; B89F: B1 30       .0
+ LDA (P+1),Y                                      ; B89F: B1 30       .0
  STA (SC),Y                                       ; B8A1: 91 07       ..
 .CB8A3
  JMP CB75B                                        ; B8A3: 4C 5B B7    L[.
@@ -6125,12 +5652,13 @@ INCLUDE "library/enhanced/main/subroutine/pdesc.asm"
  LDA #&21 ; '!'                                   ; B8A6: A9 21       .!
  STA SC                                           ; B8A8: 85 07       ..
  LDA L00E6                                        ; B8AA: A5 E6       ..
- STA SC_1                                         ; B8AC: 85 08       ..
+ STA SC+1                                         ; B8AC: 85 08       ..
  LDY XC                                           ; B8AE: A4 32       .2
  DEY                                              ; B8B0: 88          .
  JMP CB6E9                                        ; B8B1: 4C E9 B6    L..
 
-.LB8B4
+.CHARTABLE
+
  EQUB   0,   1,   2,   3,   4,   5,   6,   7,   8 ; B8B4: 00 01 02... ...
  EQUB   9, &0A, &0B, &0C, &0D, &0E, &0F, &10, &11 ; B8BD: 09 0A 0B... ...
  EQUB &12, &13, &14, &15, &16, &17, &18, &19, &1A ; B8C6: 12 13 14... ...

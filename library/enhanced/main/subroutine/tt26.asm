@@ -35,10 +35,22 @@ ENDIF
 
 .TT26
 
+IF _NES_VERSION
+
+ STA SC+1               \ Store A in SC+1, so we can retrieve it later
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ LDA SC+1               \ Restore A from SC+1
+
+ENDIF
+
  STX SC                 \ Store X in SC, so we can retrieve it below
 
  LDX #%11111111         \ Set DTW8 = %11111111, to disable the effect of {19} if
  STX DTW8               \ it was set (as {19} capitalises one character only)
+
+IF NOT(_NES_VERSION)
 
  CMP #'.'               \ If the character in A is a word terminator:
  BEQ DA8                \
@@ -55,6 +67,43 @@ ENDIF
 
 .DA8
 
+ELIF _NES_VERSION
+
+ CMP #' '               \ If the character in A is one of the following:
+ BEQ DA8                \
+ CMP #'.'               \   * Space
+ BEQ DA8                \   * Full stop
+ CMP #':'               \   * Colon
+ BEQ DA8                \   * Apostrophe (ASCII 39)
+ CMP #39                \   * Open bracket
+ BEQ DA8                \   * Line feed
+ CMP #'('               \   * Carriage return
+ BEQ DA8                \   * Hyphen
+ CMP #10                \
+ BEQ DA8                \ then skip the following instructions
+ CMP #12
+ BEQ DA8
+ CMP #'-'
+ BEQ DA8
+
+ LDA QQ17               \ ???
+ ORA #&40
+ STA QQ17
+
+ INX                    \ Increment X to 0, so DTW2 gets set to %00000000 below
+
+ BEQ CB53C
+
+.DA8
+
+ LDA QQ17               \ ???
+ AND #&BF
+ STA QQ17
+
+.CB53C
+
+ENDIF
+
  STX DTW2               \ Store X in DTW2, so DTW2 is now:
                         \
                         \   * %00000000 if this character is a word terminator
@@ -65,6 +114,13 @@ ENDIF
                         \ printing a word
 
  LDX SC                 \ Retrieve the original value of X from SC
+
+IF _NES_VERSION
+
+ LDA SC+1               \ Retrieve the original value of A from SC+1 (i.e. the
+                        \ character to print)
+
+ENDIF
 
  BIT DTW4               \ If bit 7 of DTW4 is set then we are currently printing
  BMI P%+5               \ justified text, so skip the next instruction
@@ -82,7 +138,7 @@ IF _6502SP_VERSION \ Platform: The enhanced versions use this routine for in-fli
                         \ message and we should buffer the carriage return
                         \ character {12}, so skip the following two instructions
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _NES_VERSION
 
  BIT DTW4               \ If bit 6 of DTW4 is set, then this is an in-flight
  BVS P%+6               \ message and we should buffer the carriage return
@@ -108,9 +164,29 @@ ENDIF
  INC DTW5               \ Increment the size of the BUF buffer that is stored in
                         \ DTW5
 
+IF _NES_VERSION
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ENDIF
+
  CLC                    \ Clear the C flag
 
  RTS                    \ Return from the subroutine
+
+IF _NES_VERSION
+
+.DA63S
+
+ JMP DA6+3              \ Jump down to DA6+3 (this is used by the branch
+                        \ instruction below as it's too far to branch directly)
+
+.DA6S
+
+ JMP DA6                \ Jump down to DA6 (this is used by the branch
+                        \ instruction below as it's too far to branch directly)
+
+ENDIF
 
 .DA1
 
@@ -127,6 +203,8 @@ ENDIF
 
  LDX DTW5               \ Set X = DTW5, which contains the size of the buffer
 
+IF NOT(_NES_VERSION)
+
  BEQ DA6+3              \ If X = 0 then the buffer is empty, so jump down to
                         \ DA6+3 to print a newline
 
@@ -135,6 +213,19 @@ ENDIF
                         \ length, so jump down to DA6 to print the contents of
                         \ BUF followed by a newline, as we don't justify the
                         \ last line of the paragraph
+
+ELIF _NES_VERSION
+
+ BEQ DA63S              \ If X = 0 then the buffer is empty, so jump down to
+                        \ DA6+3 via DA63S to print a newline
+
+ CPX #(LL+1)            \ If X < LL+1, i.e. X <= LL, then the buffer contains
+ BCC DA6S               \ fewer than LL characters, which is less then a line
+                        \ length, so jump down to DA6 via DA6S to print the
+                        \ contents of BUF followed by a newline, as we don't
+                        \ justify the last line of the paragraph
+
+ENDIF
 
                         \ Otherwise X > LL, so the buffer does not fit into one
                         \ line, and we therefore need to justify the text, which
@@ -168,6 +259,12 @@ ENDIF
 
 .DAL2
 
+IF _NES_VERSION
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ENDIF
+
  DEY                    \ Decrement the loop counter in Y
 
  BMI DA11               \ If Y <= 0, loop back to DA11, as we have now looped
@@ -197,6 +294,12 @@ ENDIF
 
 .DAL6
 
+IF _NES_VERSION
+
+ SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+
+ENDIF
+
  LDA BUF,Y              \ Copy the Y-th character from BUF into the Y+1-th
  STA BUF+1,Y            \ position
 
@@ -216,6 +319,12 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
                         \ know contains a space, so we know A contains a space
                         \ character when the loop finishes
 
+ELIF _NES_VERSION
+
+ LDA #' '               \ ???
+
+ENDIF
+
                         \ We've now shifted the line to the right by 1 from
                         \ position SC onwards, so SC and SC+1 both contain
                         \ spaces, and Y is now SC-1 as we did a DEY just before
@@ -227,8 +336,6 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
                         \ next space in the line buffer, before looping back to
                         \ check whether we are done, and if not, insert another
                         \ space
-
-ENDIF
 
 .DAL3
 
@@ -263,7 +370,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
  SBC #LL                \ The CLC instruction is commented out in the original
  STA DTW5               \ source. It isn't needed as CHPR clears the C flag
 
-ELIF _DISC_VERSION OR _ELITE_A_VERSION
+ELIF _DISC_VERSION OR _ELITE_A_VERSION OR _NES_VERSION
 
  LDA DTW5               \ Subtract #LL from the end-of-buffer pointer in DTW5
  SBC #LL                \
@@ -287,6 +394,12 @@ ENDIF
                         \ pointer and is therefore equal to the number of
                         \ characters minus 1)
 
+IF _NES_VERSION
+
+ JSR NAMETABLE0_BANK7   \ ???
+
+ENDIF
+
 .DAL4
 
  LDA BUF+LL+1,Y         \ Copy the Y-th character from BUF+LL to BUF
@@ -299,8 +412,16 @@ ENDIF
  BNE DAL4               \ Loop back to copy the next character until we have
                         \ shuffled down the whole buffer
 
+IF NOT(_NES_VERSION)
+
  BEQ DA5                \ Jump back to DA5 (this BEQ is effectively a JMP as we
                         \ have already passed through the BNE above)
+
+ELIF _NES_VERSION
+
+ JMP DA5                \ Jump back to DA5
+
+ENDIF
 
 .DAS1
 

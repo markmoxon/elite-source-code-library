@@ -39,6 +39,8 @@
                         \ are in Sentence Case and we need to print the next
                         \ letter in lower case
 
+IF NOT(_NES_VERSION)
+
  CPX #255               \ If QQ17 = 255 then printing is disabled, so return
  BEQ TT48               \ from the subroutine (as TT48 contains an RTS)
 
@@ -50,3 +52,11 @@
                         \ through to TT46 to print the character and set QQ17
                         \ to ensure the next word starts with a capital letter
 
+ELIF _NES_VERSION
+
+ CPX #255               \ If QQ17 = 255 then printing is disabled, so if it
+ BNE TT42               \ isn't disabled, jump to TT42 to print the character
+
+ RTS                    \ Printing is disables, so return from the subroutine
+
+ENDIF

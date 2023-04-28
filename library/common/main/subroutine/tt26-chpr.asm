@@ -67,7 +67,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 \   C flag              The C flag is cleared
 \
 ENDIF
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Comment
 \ Other entry points:
 \
 ENDIF
@@ -79,17 +79,18 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR
 \   RREN                Prints the character definition pointed to by P(2 1) at
 \                       the screen address pointed to by (A SC). Used by the
 \                       BULB routine
+\
 ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Comment
-\
 \   rT9                 Contains an RTS
+\
 ENDIF
 IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ Other entry points:
 \
 \   RR4                 Restore the registers and return from the subroutine
-ENDIF
 \
+ENDIF
 \ ******************************************************************************
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Label

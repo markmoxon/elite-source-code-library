@@ -52,76 +52,6 @@
  _ELITE_A_6502SP_IO     = FALSE
  _ELITE_A_6502SP_PARA   = FALSE
 
-CODE% = &8000
-LOAD% = &8000
-
-Y = 72
-
-OIL = 5
-COPS = 16
-SH3 = 17
-KRA = 19
-
-NI% = 42
-
-\ NES PPU registers
-
-PPUCTRL             = &2000
-PPUMASK             = &2001
-PPUSTATUS           = &2002
-OAMADDR             = &2003
-OAMDATA             = &2004
-PPUSCROLL           = &2005
-PPUADDR             = &2006
-PPUDATA             = &2007
-OAMDMA              = &4014
-
-\ Shared code from 7.asm
-
-SNE                 = &C500
-ACT                 = &C520
-XX21                = &C540
-NAMETABLE0          = &D06D
-LD9F7               = &D9F7
-LDA18               = &DA18
-LDAF8               = &DAF8
-LOIN                = &DC0F
-LE04A               = &E04A
-LE0BA               = &E0BA
-PIXEL               = &E4F0
-MVS5_BANK7          = &F1A2
-TT66                = &F26E
-LF2CE               = &F2CE
-DORND2              = &F4AC
-DORND               = &F4AD
-PROJ                = &F4C1
-MLS2                = &F6BA
-MLS1                = &F6C2
-MULTS               = &F6C6
-SQUA2               = &F70E
-MLU1                = &F718
-MLU2                = &F71D
-MULTU               = &F721
-FMLTU2              = &F766
-FMLTU               = &F770
-MUT2                = &F7D2
-MUT1                = &F7D6
-MULT1               = &F7DA
-MULT12              = &F83C
-MAD                 = &F86F
-ADD                 = &F872
-TIS1                = &F8AE
-DV42                = &F8D1
-DV41                = &F8D4
-LF8D8               = &F8D8
-DVID3B2             = &F962
-LL5                 = &FA55
-LL28                = &FA91
-NORM                = &FAF8
-
-INCLUDE "library/common/main/workspace/zp.asm"
-INCLUDE "library/common/main/workspace/xx3.asm"
-
 \ Workspace &0200
 
 L0200               = &0200
@@ -208,46 +138,96 @@ L05EF               = &05EF
 L05F0               = &05F0
 L05F1               = &05F1
 
+\ NES PPU registers
+
+PPU_CTRL            = &2000
+PPU_MASK            = &2001
+PPU_STATUS          = &2002
+OAM_ADDR            = &2003
+OAM_DATA            = &2004
+PPU_SCROLL          = &2005
+PPU_ADDR            = &2006
+PPU_DATA            = &2007
+OAM_DMA             = &4014
+
+\ Shared code from 7.asm
+
+SNE                 = &C500
+ACT                 = &C520
+XX21                = &C540
+NAMETABLE0          = &D06D
+LD9F7               = &D9F7
+LDA18               = &DA18
+LDAF8               = &DAF8
+LOIN                = &DC0F
+LE04A               = &E04A
+LE0BA               = &E0BA
+PIXEL               = &E4F0
+MVS5_BANK7          = &F1A2
+TT66                = &F26E
+LF2CE               = &F2CE
+DORND2              = &F4AC
+DORND               = &F4AD
+PROJ                = &F4C1
+MLS2                = &F6BA
+MLS1                = &F6C2
+MULTS               = &F6C6
+SQUA2               = &F70E
+MLU1                = &F718
+MLU2                = &F71D
+MULTU               = &F721
+FMLTU2              = &F766
+FMLTU               = &F770
+MUT2                = &F7D2
+MUT1                = &F7D6
+MULT1               = &F7DA
+MULT12              = &F83C
+MAD                 = &F86F
+ADD                 = &F872
+TIS1                = &F8AE
+DV42                = &F8D1
+DV41                = &F8D4
+LF8D8               = &F8D8
+DVID3B2             = &F962
+LL5                 = &FA55
+LL28                = &FA91
+NORM                = &FAF8
+
+\ ******************************************************************************
+\
+\ Configuration variables
+\
+\ ******************************************************************************
+
+ Y = 72                 \ The centre y-coordinate of the space view
+
+ OIL = 5                \ Ship type for a cargo canister
+ COPS = 16              \ Ship type for a Viper
+ SH3 = 17               \ Ship type for a Sidewinder
+ KRA = 19               \ Ship type for a Krait
+
+ NI% = 42               \ The number of bytes in each ship's data block (as
+                        \ stored in INWK and K%)
+
+INCLUDE "library/common/main/workspace/zp.asm"
+INCLUDE "library/common/main/workspace/xx3.asm"
 INCLUDE "library/common/main/workspace/k_per_cent.asm"
 
- ORG CODE%
+\ ******************************************************************************
+\
+\ ELITE BANK 1
+\
+\ Produces the binary file bank2.bin.
+\
+\ ******************************************************************************
 
- SEI
- INC &C006
- JMP &C007
+CODE% = &8000
+LOAD% = &8000
 
- EQUS "@ 5.0"
-
+INCLUDE "library/nes/main/subroutine/reset.asm"
+INCLUDE "library/nes/main/variable/version_number.asm"
 INCLUDE "library/nes/main/macro/set_nametable_0.asm"
-
- EQUW SHIP_ASTEROID     \ AST  =  7 = Asteroid
- EQUW SHIP_SPLINTER     \ SPL  =  8 = Splinter
- EQUW SHIP_SHUTTLE      \ SHU  =  9 = Shuttle
- EQUW SHIP_TRANSPORTER  \        10 = Transporter
- EQUW SHIP_COBRA_MK_3   \ CYL  = 11 = Cobra Mk III
- EQUW SHIP_PYTHON       \        12 = Python
- EQUW SHIP_BOA          \        13 = Boa
- EQUW SHIP_ANACONDA     \ ANA  = 14 = Anaconda
- EQUW SHIP_ROCK_HERMIT  \ HER  = 15 = Rock hermit (asteroid)
- EQUW SHIP_VIPER        \ COPS = 16 = Viper
- EQUW SHIP_SIDEWINDER   \ SH3  = 17 = Sidewinder
- EQUW SHIP_MAMBA        \        18 = Mamba
- EQUW SHIP_KRAIT        \ KRA  = 19 = Krait
- EQUW SHIP_ADDER        \ ADA  = 20 = Adder
- EQUW SHIP_GECKO        \        21 = Gecko
- EQUW SHIP_COBRA_MK_1   \        22 = Cobra Mk I
- EQUW SHIP_WORM         \ WRM  = 23 = Worm
- EQUW SHIP_COBRA_MK_3_P \ CYL2 = 24 = Cobra Mk III (pirate)
- EQUW SHIP_ASP_MK_2     \ ASP  = 25 = Asp Mk II
- EQUW SHIP_PYTHON_P     \        26 = Python (pirate)
- EQUW SHIP_FER_DE_LANCE \        27 = Fer-de-lance
- EQUW SHIP_MORAY        \        28 = Moray
- EQUW SHIP_THARGOID     \ THG  = 29 = Thargoid
- EQUW SHIP_THARGON      \ TGL  = 30 = Thargon
- EQUW SHIP_CONSTRICTOR  \ CON  = 31 = Constrictor
- EQUW SHIP_COUGAR       \ COU  = 32 = Cougar
- EQUW SHIP_DODO         \ DOD  = 33 = Dodecahedron ("Dodo") space station
-
+INCLUDE "library/nes/main/variable/unused_copy_of_xx21.asm"
 INCLUDE "library/advanced/main/variable/e_per_cent.asm"
 INCLUDE "library/master/data/variable/kwl_per_cent.asm"
 INCLUDE "library/master/data/variable/kwh_per_cent.asm"
@@ -315,7 +295,6 @@ INCLUDE "library/common/main/subroutine/ll145_part_2_of_4.asm"
 INCLUDE "library/common/main/subroutine/ll145_part_3_of_4.asm"
 INCLUDE "library/common/main/subroutine/ll145_part_4_of_4.asm"
 INCLUDE "library/common/main/subroutine/ll9_part_11_of_12.asm"
-\INCLUDE "library/common/main/subroutine/ll9_part_12_of_12.asm"
 INCLUDE "library/common/main/subroutine/ll118.asm"
 INCLUDE "library/common/main/subroutine/ll120.asm"
 INCLUDE "library/common/main/subroutine/ll123.asm"
@@ -416,6 +395,8 @@ INCLUDE "library/common/main/subroutine/tidy.asm"
 INCLUDE "library/common/main/subroutine/tis3.asm"
 INCLUDE "library/common/main/subroutine/dvidt.asm"
 
+\ SCAN
+
 .CB969
  LDA #&F0
  STA L0200,Y
@@ -426,7 +407,7 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
 
 .SCAN
 
- LDA W
+ LDA W                  \ ???
  BNE CB974
  LDX TYPE
  BMI CB974
@@ -657,17 +638,26 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
 INCLUDE "library/nes/main/subroutine/ptcls2.asm"
 INCLUDE "library/common/main/subroutine/pixel2.asm"
 
+\ ******************************************************************************
+\
+\       Name: Vectors
+\       Type: Variable
+\   Category: Start and end
+\    Summary: Vectors at the end of the ROM bank
+\
+\ ******************************************************************************
+
  FOR I%, &BC51, &BFF9
 
-  EQUB &FF
+  EQUB &FF              \ Pad out the empty part at the end of the ROM with &FF
 
  NEXT
 
- EQUW &C007             \ NMI handler
+ EQUW &C007             \ Vector to NMI handler
 
- EQUW &C000             \ Reset handler
+ EQUW &C000             \ Vector to Reset handler
 
- EQUW &C007             \ IRQ/BRK handler
+ EQUW &C007             \ Vector to IRQ/BRK handler
 
 \ ******************************************************************************
 \

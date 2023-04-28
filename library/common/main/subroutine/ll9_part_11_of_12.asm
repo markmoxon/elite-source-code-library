@@ -156,7 +156,8 @@ ELIF _6502SP_VERSION
 
 ELIF _NES_VERSION
 
- RTS                    \ Return from the subroutine ???
+ RTS                    \ Return from the subroutine (parts 12 of LL9 is not
+                        \ included in the NES version)
 
 ENDIF
 

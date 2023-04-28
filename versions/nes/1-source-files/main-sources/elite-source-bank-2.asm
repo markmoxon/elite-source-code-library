@@ -263,6 +263,16 @@ INCLUDE "library/enhanced/main/macro/etwo.asm"
 INCLUDE "library/enhanced/main/macro/ernd.asm"
 INCLUDE "library/enhanced/main/macro/tokn.asm"
 
+\ ******************************************************************************
+\
+\       Name: TKN1
+\       Type: Variable
+\   Category: Text
+\    Summary: The first extended token table for recursive tokens 0-255 (DETOK)
+\  Deep dive: Extended text tokens
+\
+\ ******************************************************************************
+
 .TKN1
 
  EQUB VE                \ Token 0:      ""
@@ -4085,6 +4095,15 @@ INCLUDE "library/nes/main/macro/char.asm"
 INCLUDE "library/nes/main/macro/twok.asm"
 INCLUDE "library/nes/main/macro/cont.asm"
 INCLUDE "library/nes/main/macro/rtok.asm"
+
+\ ******************************************************************************
+\
+\       Name: QQ18
+\       Type: Variable
+\   Category: Text
+\    Summary: The recursive token table for tokens 0-148
+\
+\ ******************************************************************************
 
 .QQ18
 

@@ -315,7 +315,14 @@ INCLUDE "library/common/main/subroutine/circle.asm"
 INCLUDE "library/common/main/subroutine/circle2.asm"
 INCLUDE "library/common/main/subroutine/edges.asm"
 
-\ CB039 is called from sun part 2
+\ ******************************************************************************
+\
+\       Name: CB039
+\       Type: Subroutine
+\   Category: Drawing suns
+\    Summary: ??? called from sun part 2
+\
+\ ******************************************************************************
 
 .CB039
 
@@ -347,7 +354,14 @@ INCLUDE "library/common/main/subroutine/edges.asm"
  STA XX15
  JMP LE0BA
 
-\ CB05D is called from sun part 2
+\ ******************************************************************************
+\
+\       Name: CB05D
+\       Type: Subroutine
+\   Category: Drawing suns
+\    Summary: ??? called from sun part 2
+\
+\ ******************************************************************************
 
 .CB05D
 
@@ -368,7 +382,14 @@ INCLUDE "library/common/main/subroutine/edges.asm"
 INCLUDE "library/common/main/subroutine/chkon.asm"
 INCLUDE "library/common/main/subroutine/pl21.asm"
 
-\ This is normally in edges.asm, but is here instead
+\ ******************************************************************************
+\
+\       Name: PL44
+\       Type: Subroutine
+\   Category: Drawing lines
+\    Summary: ??? normally in edges.asm, but is here instead
+\
+\ ******************************************************************************
 
 .PL44
 
@@ -395,7 +416,14 @@ INCLUDE "library/common/main/subroutine/tidy.asm"
 INCLUDE "library/common/main/subroutine/tis3.asm"
 INCLUDE "library/common/main/subroutine/dvidt.asm"
 
-\ SCAN
+\ ******************************************************************************
+\
+\       Name: SCAN
+\   Category: Dashboard
+\   Category: Drawing lines
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .CB969
  LDA #&F0
@@ -605,7 +633,14 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  STA L0208,Y
  RTS
 
-\ Called from LL9 part 1
+\ ******************************************************************************
+\
+\       Name: sub_CBAED
+\   Category: Dashboard
+\   Category: Drawing ships
+\    Summary: ??? Called from LL9 part 1
+\
+\ ******************************************************************************
 
 .sub_CBAED
 

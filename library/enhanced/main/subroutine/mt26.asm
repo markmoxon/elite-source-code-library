@@ -10,8 +10,10 @@ ELIF _NES_VERSION
 ENDIF
 \  Deep dive: Extended text tokens
 \
+IF NOT(_NES_VERSION)
 \ ------------------------------------------------------------------------------
 \
+ENDIF
 IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \ If ESCAPE is pressed or a blank name is entered, then an empty string is
 \ returned.

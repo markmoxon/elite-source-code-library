@@ -38,17 +38,19 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 \ bytes of the K% workspace hold ship data on up to 12 ships, with 36 (NI%)
 \ bytes per ship, and the ship line heap grows downwards from WP at the end of
 \ the K% workspace.
+\
 ELIF _DISC_VERSION OR _ELITE_A_VERSION
 \ The blocks are pointed to by the lookup table at location UNIV. The first 444
 \ bytes of the K% workspace hold ship data on up to 12 ships, with 37 (NI%)
 \ bytes per ship, and the ship line heap grows downwards from WP at the end of
 \ the K% workspace.
+\
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 \ The blocks are pointed to by the lookup table at location UNIV. The first 720
 \ bytes of the K% workspace hold ship data on up to 20 ships, with 37 (NI%)
 \ bytes per ship.
-ENDIF
 \
+ENDIF
 \ See the deep dive on "Ship data blocks" for details on ship data blocks, and
 \ the deep dive on "The local bubble of universe" for details of how Elite
 \ stores the local universe in K%, FRIN and UNIV.

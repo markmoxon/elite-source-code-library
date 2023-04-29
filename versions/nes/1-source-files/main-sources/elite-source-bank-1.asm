@@ -209,6 +209,8 @@ NORM                = &FAF8
  NI% = 42               \ The number of bytes in each ship's data block (as
                         \ stored in INWK and K%)
 
+ S% = &C007             \ The game's main entry point in bank 7
+
 INCLUDE "library/common/main/workspace/zp.asm"
 INCLUDE "library/common/main/workspace/xx3.asm"
 INCLUDE "library/common/main/workspace/k_per_cent.asm"
@@ -217,14 +219,16 @@ INCLUDE "library/common/main/workspace/k_per_cent.asm"
 \
 \ ELITE BANK 1
 \
-\ Produces the binary file bank2.bin.
+\ Produces the binary file bank1.bin.
 \
 \ ******************************************************************************
 
 CODE% = &8000
 LOAD% = &8000
 
-INCLUDE "library/nes/main/subroutine/reset.asm"
+ORG CODE%
+
+INCLUDE "library/nes/main/subroutine/reset_mmc1.asm"
 INCLUDE "library/nes/main/variable/version_number.asm"
 INCLUDE "library/nes/main/macro/set_nametable_0.asm"
 INCLUDE "library/nes/main/variable/unused_copy_of_xx21.asm"
@@ -672,27 +676,7 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
 
 INCLUDE "library/nes/main/subroutine/ptcls2.asm"
 INCLUDE "library/common/main/subroutine/pixel2.asm"
-
-\ ******************************************************************************
-\
-\       Name: Vectors
-\       Type: Variable
-\   Category: Start and end
-\    Summary: Vectors at the end of the ROM bank
-\
-\ ******************************************************************************
-
- FOR I%, &BC51, &BFF9
-
-  EQUB &FF              \ Pad out the empty part at the end of the ROM with &FF
-
- NEXT
-
- EQUW &C007             \ Vector to NMI handler
-
- EQUW &C000             \ Vector to Reset handler
-
- EQUW &C007             \ Vector to IRQ/BRK handler
+INCLUDE "library/nes/main/variable/vectors.asm"
 
 \ ******************************************************************************
 \

@@ -63,17 +63,21 @@ INCLUDE "library/common/main/variable/inwk.asm"
 
 .L002A
 
- SKIP 1
+ SKIP 1                 \ ???
 
 .L002B
 
- SKIP 1
+ SKIP 1                 \ ???
 
- SKIP 1
+.L002C
+
+ SKIP 1                 \ ???
 
 INCLUDE "library/enhanced/main/variable/newb.asm"
 
- SKIP 1
+.L002E
+
+ SKIP 1                 \ ???
 
 ENDIF
 
@@ -102,13 +106,37 @@ ELIF _NES_VERSION
 INCLUDE "library/common/main/variable/p.asm"
 INCLUDE "library/common/main/variable/xc.asm"
 
- SKIP 4
+.L0033
+
+ SKIP 1                 \ ???
+
+.L0034
+
+ SKIP 1                 \ ???
+
+.L0035
+
+ SKIP 1                 \ ???
+
+.L0036
+
+ SKIP 1                 \ ???
 
 .L0037
 
- SKIP 1
+ SKIP 1                 \ ???
 
- SKIP 3
+.L0038
+
+ SKIP 1                 \ ???
+
+.L0039
+
+ SKIP 1                 \ ???
+
+.L003A
+
+ SKIP 1                 \ ???
 
 INCLUDE "library/common/main/variable/yc.asm"
 INCLUDE "library/common/main/variable/qq17.asm"
@@ -224,7 +252,9 @@ INCLUDE "library/common/main/variable/mstg.asm"
 
 ELIF _NES_VERSION
 
- SKIP 1
+.L0081
+
+ SKIP 1                 \ ???
 
 ENDIF
 
@@ -279,7 +309,7 @@ INCLUDE "library/common/main/variable/qq19.asm"
 
 ELIF _NES_VERSION
 
- SKIP 4
+ SKIP 4                 \ ???
 
 INCLUDE "library/common/main/variable/k6.asm"
 
@@ -460,75 +490,269 @@ INCLUDE "library/advanced/main/variable/widget.asm"
 
 .Yx1M2
 
- SKIP 1
+ SKIP 1                 \ ???
 
 .Yx2M2
 
- SKIP 1
+ SKIP 1                 \ ???
 
 INCLUDE "library/master/main/variable/yx2m1.asm"
 
- SKIP 2
+.L00B4
+
+ SKIP 1                 \ ???
+
+.L00B5
+
+ SKIP 1                 \ ???
 
 INCLUDE "library/master/main/variable/newzp.asm"
 
- SKIP 1
+.L00B7
+
+ SKIP 1                 \ ???
 
 .L00B8
 
- SKIP 1
+ SKIP 1                 \ ???
 
 .L00B9
 
- SKIP 1
+ SKIP 1                 \ ???
 
 .L00BA
 
- SKIP 1
+ SKIP 1                 \ ???
 
 .L00BB
 
- SKIP 1
+ SKIP 1                 \ ???
 
- ORG &CC
+.L00BC
+
+ SKIP 1                 \ ???
+
+.L00BD
+
+ SKIP 1                 \ ???
+
+.L00BE
+
+ SKIP 1                 \ ???
+
+.L00BF
+
+ SKIP 1                 \ ???
+
+.L00C0
+
+ SKIP 1                 \ ???
+
+.L00C1
+
+ SKIP 1                 \ ???
+
+.L00C2
+
+ SKIP 1                 \ ???
+
+.L00C3
+
+ SKIP 1                 \ ???
+
+.L00C4
+
+ SKIP 1                 \ ???
+
+.L00C5
+
+ SKIP 1                 \ ???
+
+.L00C6
+
+ SKIP 1                 \ ???
+
+.L00C7
+
+ SKIP 1                 \ ???
+
+.L00C8
+
+ SKIP 1                 \ ???
+
+.L00C9
+
+ SKIP 1                 \ ???
+
+.L00CA
+
+ SKIP 1                 \ ???
+
+.L00CB
+
+ SKIP 1                 \ ???
 
 .L00CC
 
- SKIP 1
+ SKIP 1                 \ ???
 
- ORG &D2
+.L00CD
+
+ SKIP 1                 \ ???
+
+.L00CE
+
+ SKIP 1                 \ ???
+
+.L00CF
+
+ SKIP 1                 \ ???
+
+.L00D0
+
+ SKIP 1                 \ ???
+
+.L00D1
+
+ SKIP 1                 \ ???
 
 .L00D2
 
- SKIP 1
+ SKIP 1                 \ ???
 
- ORG &D8
+.L00D3
+
+ SKIP 1                 \ ???
+
+.L00D4
+
+ SKIP 1                 \ ???
+
+.L00D5
+
+ SKIP 1                 \ ???
+
+.L00D6
+
+ SKIP 1                 \ ???
+
+.L00D7
+
+ SKIP 1                 \ ???
 
 .L00D8
 
- SKIP 1
+ SKIP 1                 \ ???
 
 .L00D9
 
- SKIP 1
+ SKIP 1                 \ ???
 
- ORG &E6
+.L00DA
+
+ SKIP 1                 \ ???
+
+.L00DB
+
+ SKIP 11                \ ???
 
 .L00E6
 
- SKIP 1
+ SKIP 1                 \ ???
 
  ORG &E9
 
 .L00E9
 
- SKIP 1
+ SKIP 1                 \ ???
 
- ORG &F7
+.L00EA
+
+ SKIP 1                 \ ???
+
+.L00EB
+
+ SKIP 1                 \ ???
+
+.L00EC
+
+ SKIP 1                 \ ???
+
+.L00ED
+
+ SKIP 1                 \ ???
+
+.L00EE
+
+ SKIP 1                 \ ???
+
+.L00EF
+
+ SKIP 1                 \ ???
+
+.L00F0
+
+ SKIP 1                 \ ???
+
+.L00F1
+
+ SKIP 1                 \ ???
+
+.L00F2
+
+ SKIP 1                 \ ???
+
+.L00F3
+
+ SKIP 1                 \ ???
+
+.L00F4
+
+ SKIP 1                 \ ???
+
+.L00F5
+
+ SKIP 1                 \ ???
+
+.L00F6
+
+ SKIP 1                 \ ???
 
 .BANK
 
- SKIP 1
+ SKIP 1                 \ ???
+
+.L00F8
+
+ SKIP 1                 \ ???
+
+.L00F9
+
+ SKIP 1                 \ ???
+
+.L00FA
+
+ SKIP 1                 \ ???
+
+.L00FB
+
+ SKIP 1                 \ ???
+
+.L00FC
+
+ SKIP 1                 \ ???
+
+.L00FD
+
+ SKIP 1                 \ ???
+
+.L00FE
+
+ SKIP 1                 \ ???
+
+.L00FF
+
+ SKIP 1                 \ ???
 
 ENDIF
 

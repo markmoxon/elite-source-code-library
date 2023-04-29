@@ -52,31 +52,15 @@
  _ELITE_A_6502SP_IO     = FALSE
  _ELITE_A_6502SP_PARA   = FALSE
 
+\ WP workspace
 
 FRIN              = &036A
-MJ                = &038A
 VIEW              = &038E
 EV                = &0392
 TP                = &039E
-QQ0               = &039F
 QQ1               = &03A0
-CASH              = &03A1
-QQ14              = &03A5
 GCNT              = &03A7
-CRGO              = &03AC
-QQ20              = &03AD
-BST               = &03BF
-BOMB              = &03C0
-GHYP              = &03C3
-ESCP              = &03C6
-NOMSL             = &03C8
-FIST              = &03C9
-AVL               = &03CA
-QQ26              = &03DB
 TALLY             = &03DC
-TALLY_1           = &03DD
-QQ21              = &03DF
-NOSTM             = &03E5
 DTW6              = &03F3
 DTW2              = &03F4
 DTW3              = &03F5
@@ -84,33 +68,12 @@ DTW4              = &03F6
 DTW5              = &03F7
 DTW1              = &03F8
 DTW8              = &03F9
-MSTG              = &0401
 QQ19              = &044D
-QQ19_1            = &044E
-QQ19_3            = &0450
-QQ19_4            = &0450
 K2                = &0459
-K2_1              = &045A
-K2_2              = &045B
-K2_3              = &045C
-QQ19_2            = &045F
-SWAP              = &047F
 XSAV2             = &0481
 YSAV2             = &0482
-QQ24              = &0487
-QQ25              = &0488
-QQ28              = &0489
-QQ29              = &048A
-gov               = &048C
-tek               = &048D
 QQ2               = &048E
-QQ3               = &0494
-QQ4               = &0495
-QQ5               = &0496
 QQ8               = &049B
-QQ8_1             = &049C
-QQ9               = &049D
-QQ10              = &049E
 L049F             = &049F
 QQ18_LO            = &04A4
 QQ18_HI            = &04A5
@@ -122,20 +85,11 @@ L04B4             = &04B4
 SX                = &04C8
 SY                = &04DD
 SZ                = &04F2
-BUFm1             = &0506
 BUF               = &0507
-BUF_1             = &0508
-L0524             = &0524
-L0525             = &0525
-HANGFLAG          = &0561
 MANY              = &0562
-SSPR              = &0564
-SXL               = &05A5
-SYL               = &05BA
-SZL               = &05CF
-safehouse         = &05E4
-Kpercent          = &0600
-L07A9             = &07A9
+
+\ NES PPU registers
+
 PPU_CTRL          = &2000
 PPU_MASK          = &2001
 PPU_STATUS        = &2002
@@ -145,10 +99,9 @@ PPU_SCROLL        = &2005
 PPU_ADDR          = &2006
 PPU_DATA          = &2007
 OAM_DMA           = &4014
-L80A9             = &80A9
-LB0A9             = &B0A9
-LC006             = &C006
-LC007             = &C007
+
+\ Shared code from 7.asm
+
 RESETBANK         = &C0AD
 SETBANK           = &C0AE
 log               = &C100
@@ -240,8 +193,11 @@ NORM              = &FAF8
  LL = 29                \ The length of lines (in characters) of justified text
                         \ in the extended tokens system
 
+ S% = &C007             \ The game's main entry point in bank 7
+
 INCLUDE "library/common/main/workspace/zp.asm"
 INCLUDE "library/common/main/workspace/xx3.asm"
+INCLUDE "library/common/main/workspace/k_per_cent.asm"
 
 \ ******************************************************************************
 \
@@ -254,7 +210,9 @@ INCLUDE "library/common/main/workspace/xx3.asm"
 CODE% = &8000
 LOAD% = &8000
 
-INCLUDE "library/nes/main/subroutine/reset.asm"
+ORG CODE%
+
+INCLUDE "library/nes/main/subroutine/reset_mmc1.asm"
 INCLUDE "library/nes/main/variable/version_number.asm"
 INCLUDE "library/enhanced/main/macro/ejmp.asm"
 INCLUDE "library/enhanced/main/macro/echr.asm"
@@ -5282,27 +5240,7 @@ INCLUDE "library/enhanced/main/subroutine/tt26.asm"
 INCLUDE "library/common/main/subroutine/bell.asm"
 INCLUDE "library/nes/main/subroutine/chpr.asm"
 INCLUDE "library/nes/main/variable/chartable.asm"
-
-\ ******************************************************************************
-\
-\       Name: Vectors
-\       Type: Variable
-\   Category: Text
-\    Summary: Vectors at the end of the ROM bank
-\
-\ ******************************************************************************
-
- FOR I%, &B934, &BFF9
-
-  EQUB &FF              \ Pad out the empty part at the end of the ROM with &FF
-
- NEXT
-
- EQUW &C007             \ Vector to NMI handler
-
- EQUW &C000             \ Vector to Reset handler
-
- EQUW &C007             \ Vector to IRQ/BRK handler
+INCLUDE "library/nes/main/variable/vectors.asm"
 
 \ ******************************************************************************
 \

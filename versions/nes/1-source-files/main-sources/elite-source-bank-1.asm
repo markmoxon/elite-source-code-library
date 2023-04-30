@@ -52,76 +52,6 @@
  _ELITE_A_6502SP_IO     = FALSE
  _ELITE_A_6502SP_PARA   = FALSE
 
-\ Workspace &0200
-
-SPR_Y    = &0200
-SPR_TILE = &0201
-SPR_ATTR = &0202
-SPR_X    = &0203
-
-\ WP workspace
-
-L0374               = &0374
-L037E               = &037E
-MJ                  = &038A
-VIEW                = &038E
-QQ0                 = &039F
-QQ1                 = &03A0
-CASH                = &03A1
-GCNT                = &03A7
-CRGO                = &03AC
-QQ20                = &03AD
-BST                 = &03BF
-GHYP                = &03C3
-FIST                = &03C9
-AVL                 = &03CA
-QQ26                = &03DB
-L03DD               = &03DD
-QQ21                = &03DF
-NOSTM               = &03E5
-L03E6               = &03E6
-L03F1               = &03F1
-DTW6                = &03F3
-DTW2                = &03F4
-DTW3                = &03F5
-DTW4                = &03F6
-DTW5                = &03F7
-DTW1                = &03F8
-DTW8                = &03F9
-L040A               = &040A
-QQ19                = &044D
-K2                  = &0459
-SWAP                = &047F
-QQ24                = &0487
-QQ25                = &0488
-QQ28                = &0489
-QQ29                = &048A
-QQ8                 = &049B
-QQ9                 = &049D
-QQ10                = &049E
-QQ18_LO              = &04A4
-QQ18_HI              = &04A5
-TKN1_LO             = &04A6
-TKN1_HI             = &04A7
-SX                  = &04C8
-SY                  = &04DD
-SZ                  = &04F2
-BUFm1               = &0506
-BUF                 = &0507
-HANGFLAG            = &0561
-SXL                 = &05A5
-SYL                 = &05BA
-SZL                 = &05CF
-safehouse           = &05E4
-L05EA               = &05EA
-L05EB               = &05EB
-L05EC               = &05EC
-L05ED               = &05ED
-L05EE               = &05EE
-L05EF               = &05EF
-L05F0               = &05F0
-L05F1               = &05F1
-
 \ ******************************************************************************
 \
 \ Configuration variables
@@ -193,6 +123,79 @@ L05F1               = &05F1
 
 INCLUDE "library/common/main/workspace/zp.asm"
 INCLUDE "library/common/main/workspace/xx3.asm"
+INCLUDE "library/nes/main/workspace/spr.asm"
+
+\ ******************************************************************************
+\
+\       Name: WP
+\       Type: Workspace
+\    Address: &0300 to &05FF
+\   Category: Workspaces
+\    Summary: Ship slots, variables
+\
+\ ******************************************************************************
+
+L0374               = &0374
+L037E               = &037E
+MJ                  = &038A
+VIEW                = &038E
+QQ0                 = &039F
+QQ1                 = &03A0
+CASH                = &03A1
+GCNT                = &03A7
+CRGO                = &03AC
+QQ20                = &03AD
+BST                 = &03BF
+GHYP                = &03C3
+FIST                = &03C9
+AVL                 = &03CA
+QQ26                = &03DB
+L03DD               = &03DD
+QQ21                = &03DF
+NOSTM               = &03E5
+L03E6               = &03E6
+L03F1               = &03F1
+DTW6                = &03F3
+DTW2                = &03F4
+DTW3                = &03F5
+DTW4                = &03F6
+DTW5                = &03F7
+DTW1                = &03F8
+DTW8                = &03F9
+L040A               = &040A
+QQ19                = &044D
+K2                  = &0459
+SWAP                = &047F
+QQ24                = &0487
+QQ25                = &0488
+QQ28                = &0489
+QQ29                = &048A
+QQ8                 = &049B
+QQ9                 = &049D
+QQ10                = &049E
+QQ18_LO              = &04A4
+QQ18_HI              = &04A5
+TKN1_LO             = &04A6
+TKN1_HI             = &04A7
+SX                  = &04C8
+SY                  = &04DD
+SZ                  = &04F2
+BUFm1               = &0506
+BUF                 = &0507
+HANGFLAG            = &0561
+SXL                 = &05A5
+SYL                 = &05BA
+SZL                 = &05CF
+safehouse           = &05E4
+L05EA               = &05EA
+L05EB               = &05EB
+L05EC               = &05EC
+L05ED               = &05ED
+L05EE               = &05EE
+L05EF               = &05EF
+L05F0               = &05F0
+L05F1               = &05F1
+
 INCLUDE "library/common/main/workspace/k_per_cent.asm"
 
 \ ******************************************************************************
@@ -412,9 +415,9 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
 
 .CB969
  LDA #&F0
- STA SPR_Y,Y
- STA SPR_Y+1*4,Y
- STA SPR_Y+2*4,Y
+ STA SPR_00_Y,Y
+ STA SPR_01_Y,Y
+ STA SPR_02_Y,Y
 .CB974
  RTS
 
@@ -434,7 +437,7 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  ADC #&2C
  TAY
  LDA L037E,X
- STA SPR_ATTR,Y
+ STA SPR_00_ATTR,Y
  LDA INWK+1
  CMP INWK+4
  BCS CB998
@@ -504,17 +507,17 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  CMP #&10
  BCC CBA24
  LDA L00BA
- STA SPR_X,Y
- STA SPR_X+1*4,Y
+ STA SPR_00_X,Y
+ STA SPR_01_X,Y
  LDA L00BB
- STA SPR_Y,Y
+ STA SPR_00_Y,Y
  SEC
  SBC #8
- STA SPR_Y+1*4,Y
- LDA SPR_ATTR,Y
+ STA SPR_01_Y,Y
+ LDA SPR_00_ATTR,Y
  AND #3
- STA SPR_ATTR,Y
- STA SPR_ATTR+1*4,Y
+ STA SPR_00_ATTR,Y
+ STA SPR_01_ATTR,Y
  LDA L00BB
  SBC #&10
  STA L00BB
@@ -523,35 +526,35 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  CMP #8
  BCC CBA47
  LDA #&F0
- STA SPR_Y,Y
+ STA SPR_00_Y,Y
  LDA L00BA
- STA SPR_X+1*4,Y
+ STA SPR_01_X,Y
  LDA L00BB
- STA SPR_Y+1*4,Y
- LDA SPR_ATTR,Y
+ STA SPR_01_Y,Y
+ LDA SPR_00_ATTR,Y
  AND #3
- STA SPR_ATTR+1*4,Y
+ STA SPR_01_ATTR,Y
  LDA L00BB
  SBC #8
  STA L00BB
  BNE CBA4F
 .CBA47
  LDA #&F0
- STA SPR_Y,Y
- STA SPR_Y+1*4,Y
+ STA SPR_00_Y,Y
+ STA SPR_01_Y,Y
 .CBA4F
  LDA Y1
  AND #7
  CLC
  ADC #&DB
- STA SPR_TILE+2*4,Y
- LDA SPR_ATTR,Y
+ STA SPR_02_TILE,Y
+ LDA SPR_00_ATTR,Y
  AND #3
- STA SPR_ATTR+2*4,Y
+ STA SPR_02_ATTR,Y
  LDA L00BA
- STA SPR_X+2*4,Y
+ STA SPR_02_X,Y
  LDA L00BB
- STA SPR_Y+2*4,Y
+ STA SPR_02_Y,Y
  RTS
 
 .CBA6C
@@ -567,17 +570,17 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  CMP #&10
  BCC CBAA5
  LDA L00BA
- STA SPR_X,Y
- STA SPR_X+1*4,Y
+ STA SPR_00_X,Y
+ STA SPR_01_X,Y
  LDA L00BB
- STA SPR_Y,Y
+ STA SPR_00_Y,Y
  CLC
  ADC #8
- STA SPR_Y+1*4,Y
- LDA SPR_ATTR,Y
+ STA SPR_01_Y,Y
+ LDA SPR_00_ATTR,Y
  ORA #&20
- STA SPR_ATTR,Y
- STA SPR_ATTR+1*4,Y
+ STA SPR_00_ATTR,Y
+ STA SPR_01_ATTR,Y
  LDA L00BB
  CLC
  ADC #&10
@@ -587,35 +590,35 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  CMP #8
  BCC CBAC8
  LDA #&F0
- STA SPR_Y,Y
+ STA SPR_00_Y,Y
  LDA L00BA
- STA SPR_X+1*4,Y
+ STA SPR_01_X,Y
  LDA L00BB
- STA SPR_Y+1*4,Y
- LDA SPR_ATTR,Y
+ STA SPR_01_Y,Y
+ LDA SPR_00_ATTR,Y
  ORA #&20
- STA SPR_ATTR+1*4,Y
+ STA SPR_01_ATTR,Y
  LDA L00BB
  ADC #7
  STA L00BB
  BNE CBAD0
 .CBAC8
  LDA #&F0
- STA SPR_Y,Y
- STA SPR_Y+1*4,Y
+ STA SPR_00_Y,Y
+ STA SPR_01_Y,Y
 .CBAD0
  LDA Y1
  AND #7
  CLC
  ADC #&DB
- STA SPR_TILE+2*4,Y
- LDA SPR_ATTR,Y
+ STA SPR_02_TILE,Y
+ LDA SPR_00_ATTR,Y
  ORA #&E0
- STA SPR_ATTR+2*4,Y
+ STA SPR_02_ATTR,Y
  LDA L00BA
- STA SPR_X+2*4,Y
+ STA SPR_02_X,Y
  LDA L00BB
- STA SPR_Y+2*4,Y
+ STA SPR_02_Y,Y
  RTS
 
 \ ******************************************************************************
@@ -646,9 +649,9 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  LDA W
  BNE CBB1F
  LDA #&F0
- STA SPR_Y+11*4,X
- STA SPR_Y+12*4,X
- STA SPR_Y+13*4,X
+ STA SPR_11_Y,X
+ STA SPR_12_Y,X
+ STA SPR_13_Y,X
 .CBB1F
  LDA #0
  STA L002A

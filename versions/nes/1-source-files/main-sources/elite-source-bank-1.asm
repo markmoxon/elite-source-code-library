@@ -54,26 +54,10 @@
 
 \ Workspace &0200
 
-L0200               = &0200
-L0202               = &0202
-L0203               = &0203
-L0204               = &0204
-L0206               = &0206
-L0207               = &0207
-L0208               = &0208
-L0209               = &0209
-L020A               = &020A
-L020B               = &020B
-L022C               = &022C
-L0230               = &0230
-L0234               = &0234
-L0294               = &0294
-L0295               = &0295
-L0297               = &0297
-L02E8               = &02E8
-L02E9               = &02E9
-L02EA               = &02EA
-L02EB               = &02EB
+SPR_Y    = &0200
+SPR_TILE = &0201
+SPR_ATTR = &0202
+SPR_X    = &0203
 
 \ WP workspace
 
@@ -428,9 +412,9 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
 
 .CB969
  LDA #&F0
- STA L0200,Y
- STA L0204,Y
- STA L0208,Y
+ STA SPR_Y,Y
+ STA SPR_Y+1*4,Y
+ STA SPR_Y+2*4,Y
 .CB974
  RTS
 
@@ -450,7 +434,7 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  ADC #&2C
  TAY
  LDA L037E,X
- STA L0202,Y
+ STA SPR_ATTR,Y
  LDA INWK+1
  CMP INWK+4
  BCS CB998
@@ -520,17 +504,17 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  CMP #&10
  BCC CBA24
  LDA L00BA
- STA L0203,Y
- STA L0207,Y
+ STA SPR_X,Y
+ STA SPR_X+1*4,Y
  LDA L00BB
- STA L0200,Y
+ STA SPR_Y,Y
  SEC
  SBC #8
- STA L0204,Y
- LDA L0202,Y
+ STA SPR_Y+1*4,Y
+ LDA SPR_ATTR,Y
  AND #3
- STA L0202,Y
- STA L0206,Y
+ STA SPR_ATTR,Y
+ STA SPR_ATTR+1*4,Y
  LDA L00BB
  SBC #&10
  STA L00BB
@@ -539,35 +523,35 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  CMP #8
  BCC CBA47
  LDA #&F0
- STA L0200,Y
+ STA SPR_Y,Y
  LDA L00BA
- STA L0207,Y
+ STA SPR_X+1*4,Y
  LDA L00BB
- STA L0204,Y
- LDA L0202,Y
+ STA SPR_Y+1*4,Y
+ LDA SPR_ATTR,Y
  AND #3
- STA L0206,Y
+ STA SPR_ATTR+1*4,Y
  LDA L00BB
  SBC #8
  STA L00BB
  BNE CBA4F
 .CBA47
  LDA #&F0
- STA L0200,Y
- STA L0204,Y
+ STA SPR_Y,Y
+ STA SPR_Y+1*4,Y
 .CBA4F
  LDA Y1
  AND #7
  CLC
  ADC #&DB
- STA L0209,Y
- LDA L0202,Y
+ STA SPR_TILE+2*4,Y
+ LDA SPR_ATTR,Y
  AND #3
- STA L020A,Y
+ STA SPR_ATTR+2*4,Y
  LDA L00BA
- STA L020B,Y
+ STA SPR_X+2*4,Y
  LDA L00BB
- STA L0208,Y
+ STA SPR_Y+2*4,Y
  RTS
 
 .CBA6C
@@ -583,17 +567,17 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  CMP #&10
  BCC CBAA5
  LDA L00BA
- STA L0203,Y
- STA L0207,Y
+ STA SPR_X,Y
+ STA SPR_X+1*4,Y
  LDA L00BB
- STA L0200,Y
+ STA SPR_Y,Y
  CLC
  ADC #8
- STA L0204,Y
- LDA L0202,Y
+ STA SPR_Y+1*4,Y
+ LDA SPR_ATTR,Y
  ORA #&20
- STA L0202,Y
- STA L0206,Y
+ STA SPR_ATTR,Y
+ STA SPR_ATTR+1*4,Y
  LDA L00BB
  CLC
  ADC #&10
@@ -603,35 +587,35 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  CMP #8
  BCC CBAC8
  LDA #&F0
- STA L0200,Y
+ STA SPR_Y,Y
  LDA L00BA
- STA L0207,Y
+ STA SPR_X+1*4,Y
  LDA L00BB
- STA L0204,Y
- LDA L0202,Y
+ STA SPR_Y+1*4,Y
+ LDA SPR_ATTR,Y
  ORA #&20
- STA L0206,Y
+ STA SPR_ATTR+1*4,Y
  LDA L00BB
  ADC #7
  STA L00BB
  BNE CBAD0
 .CBAC8
  LDA #&F0
- STA L0200,Y
- STA L0204,Y
+ STA SPR_Y,Y
+ STA SPR_Y+1*4,Y
 .CBAD0
  LDA Y1
  AND #7
  CLC
  ADC #&DB
- STA L0209,Y
- LDA L0202,Y
+ STA SPR_TILE+2*4,Y
+ LDA SPR_ATTR,Y
  ORA #&E0
- STA L020A,Y
+ STA SPR_ATTR+2*4,Y
  LDA L00BA
- STA L020B,Y
+ STA SPR_X+2*4,Y
  LDA L00BB
- STA L0208,Y
+ STA SPR_Y+2*4,Y
  RTS
 
 \ ******************************************************************************
@@ -662,9 +646,9 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  LDA W
  BNE CBB1F
  LDA #&F0
- STA L022C,X
- STA L0230,X
- STA L0234,X
+ STA SPR_Y+11*4,X
+ STA SPR_Y+12*4,X
+ STA SPR_Y+13*4,X
 .CBB1F
  LDA #0
  STA L002A

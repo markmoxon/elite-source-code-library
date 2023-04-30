@@ -145,8 +145,6 @@ INCLUDE "library/common/main/variable/xx2.asm"
 INCLUDE "library/common/main/variable/k4.asm"
 INCLUDE "library/common/main/variable/xx16.asm"
 
-SUNX = &003E
-
 ENDIF
 
 IF _6502SP_VERSION \ Platform
@@ -308,8 +306,6 @@ INCLUDE "library/common/main/variable/k6.asm"
 INCLUDE "library/common/main/variable/qq19.asm"
 
 ELIF _NES_VERSION
-
- SKIP 4                 \ ???
 
 INCLUDE "library/common/main/variable/k6.asm"
 
@@ -660,7 +656,13 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
  SKIP 1                 \ ???
 
- ORG &E9
+.L00E7
+
+ SKIP 1                 \ ???
+
+.L00E8
+
+ SKIP 1                 \ ???
 
 .L00E9
 

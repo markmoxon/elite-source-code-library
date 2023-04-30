@@ -108,8 +108,8 @@
                         \ down one row
 
  BNE RR4S               \ Jump to RR4 to restore the registers and return from
-                        \ the subroutine using a tail call (this BNE is effectively a JMP as Y
-                        \ will never be zero)
+                        \ the subroutine using a tail call (this BNE is
+                        \ effectively a JMP as Y will never be zero)
 
 .RR1
 

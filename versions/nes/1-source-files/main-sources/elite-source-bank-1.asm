@@ -138,61 +138,6 @@ L05EF               = &05EF
 L05F0               = &05F0
 L05F1               = &05F1
 
-\ NES PPU registers
-
-PPU_CTRL            = &2000
-PPU_MASK            = &2001
-PPU_STATUS          = &2002
-OAM_ADDR            = &2003
-OAM_DATA            = &2004
-PPU_SCROLL          = &2005
-PPU_ADDR            = &2006
-PPU_DATA            = &2007
-OAM_DMA             = &4014
-
-\ Shared code from 7.asm
-
-SNE                 = &C500
-ACT                 = &C520
-XX21                = &C540
-NAMETABLE0          = &D06D
-LD9F7               = &D9F7
-LDA18               = &DA18
-LDAF8               = &DAF8
-LOIN                = &DC0F
-LE04A               = &E04A
-LE0BA               = &E0BA
-PIXEL               = &E4F0
-MVS5_BANK7          = &F1A2
-TT66                = &F26E
-LF2CE               = &F2CE
-DORND2              = &F4AC
-DORND               = &F4AD
-PROJ                = &F4C1
-MLS2                = &F6BA
-MLS1                = &F6C2
-MULTS               = &F6C6
-SQUA2               = &F70E
-MLU1                = &F718
-MLU2                = &F71D
-MULTU               = &F721
-FMLTU2              = &F766
-FMLTU               = &F770
-MUT2                = &F7D2
-MUT1                = &F7D6
-MULT1               = &F7DA
-MULT12              = &F83C
-MAD                 = &F86F
-ADD                 = &F872
-TIS1                = &F8AE
-DV42                = &F8D1
-DV41                = &F8D4
-LF8D8               = &F8D8
-DVID3B2             = &F962
-LL5                 = &FA55
-LL28                = &FA91
-NORM                = &FAF8
-
 \ ******************************************************************************
 \
 \ Configuration variables
@@ -210,6 +155,57 @@ NORM                = &FAF8
                         \ stored in INWK and K%)
 
  S% = &C007             \ The game's main entry point in bank 7
+
+ PPU_CTRL   = &2000     \ NES PPU registers
+ PPU_MASK   = &2001
+ PPU_STATUS = &2002
+ OAM_ADDR   = &2003
+ OAM_DATA   = &2004
+ PPU_SCROLL = &2005
+ PPU_ADDR   = &2006
+ PPU_DATA   = &2007
+ OAM_DMA    = &4014
+ 
+ SNE        = &C500     \ Addresses of routines in bank 7
+ ACT        = &C520
+ XX21       = &C540
+ NAMETABLE0 = &D06D
+ LD9F7      = &D9F7
+ LDA18      = &DA18
+ LDAF8      = &DAF8
+ LOIN       = &DC0F
+ LE04A      = &E04A
+ LE0BA      = &E0BA
+ PIXEL      = &E4F0
+ MVS5_BANK7 = &F1A2
+ TT66       = &F26E
+ LF2CE      = &F2CE
+ DORND2     = &F4AC
+ DORND      = &F4AD
+ PROJ       = &F4C1
+ MLS2       = &F6BA
+ MLS1       = &F6C2
+ MULTS      = &F6C6
+ SQUA2      = &F70E
+ MLU1       = &F718
+ MLU2       = &F71D
+ MULTU      = &F721
+ FMLTU2     = &F766
+ FMLTU      = &F770
+ MUT2       = &F7D2
+ MUT1       = &F7D6
+ MULT1      = &F7DA
+ MULT12     = &F83C
+ MAD        = &F86F
+ ADD        = &F872
+ TIS1       = &F8AE
+ DV42       = &F8D1
+ DV41       = &F8D4
+ LF8D8      = &F8D8
+ DVID3B2    = &F962
+ LL5        = &FA55
+ LL28       = &FA91
+ NORM       = &FAF8
 
 INCLUDE "library/common/main/workspace/zp.asm"
 INCLUDE "library/common/main/workspace/xx3.asm"
@@ -229,6 +225,7 @@ LOAD% = &8000
 ORG CODE%
 
 INCLUDE "library/nes/main/subroutine/reset_mmc1.asm"
+INCLUDE "library/nes/main/subroutine/irq_mmc1.asm"
 INCLUDE "library/nes/main/variable/version_number.asm"
 INCLUDE "library/nes/main/macro/set_nametable_0.asm"
 INCLUDE "library/nes/main/variable/unused_copy_of_xx21.asm"

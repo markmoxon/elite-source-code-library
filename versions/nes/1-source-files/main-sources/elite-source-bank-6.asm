@@ -63,7 +63,7 @@ RAND_2            = &0003
 RAND_3            = &0004
 T1                = &0006
 SC                = &0007
-SC_1              = &0008
+SCH               = &0008
 INWK              = &0009
 XX1               = &0009
 INWK_1            = &000A
@@ -236,13 +236,21 @@ Yx2M2             = &00B2
 Yx2M1             = &00B3
 messXC            = &00B4
 newzp             = &00B6
-L00B8             = &00B8
-L00BA             = &00BA
-L00BB             = &00BB
+NEXT_TILE         = &00B8
+PATTERNS_HI       = &00B9
+T5                = &00BA
+T5_1              = &00BB
 L00C0             = &00C0
 L00CC             = &00CC
 L00D2             = &00D2
+ADDR1_LO          = &00D4
+ADDR1_HI          = &00D5
+NAMES_HI          = &00E6
 L00E9             = &00E9
+T6                = &00EB
+T6_1              = &00EC
+T7                = &00ED
+T7_1              = &00EE
 BANK              = &00F7
 L00FE             = &00FE
 L00FF             = &00FF
@@ -732,6 +740,8 @@ QQ19_2            = &045F
 L0464             = &0464
 L0465             = &0465
 L046C             = &046C
+BOXEDGE1          = &046E
+BOXEDGE2          = &046F
 CONT2_SCAN        = &0475
 L047E             = &047E
 SWAP              = &047F
@@ -834,7 +844,11 @@ OAM_DMA           = &4014
 APU_FLAGS         = &4015
 CONTROLLER_1      = &4016
 CONTROLLER_2      = &4017
+PATTERNS_0        = &6000
+PATTERNS_1        = &6800
+NAMES_0           = &7000
 L72C0             = &72C0
+NAMES_1           = &7400
 L7800             = &7800
 LC006             = &C006
 Spercent          = &C007
@@ -849,21 +863,35 @@ ACT               = &C520
 XX21m2            = &C53E
 XX21m1            = &C53F
 XX21              = &C540
+BOXEDGES          = &CD6F
 UNIV              = &CE7E
-UNIV_1            = &CE7E
+UNIV_1            = &CE7F
 GINF              = &CE90
 LCEA5             = &CEA5
+NAMES_LOOKUP      = &CED0
+PATTERNS_LOOKUP   = &CED2
 IRQ               = &CED4
 NMI               = &CED5
+SETPALETTE        = &CF2E
+RESETNAMES1       = &D02D
 NAMETABLE0        = &D06D
 CONTROLLERS       = &D0F8
 LD167             = &D167
+FILLMEMORY        = &D710
 LD8C5             = &D8C5
 LD8E1             = &D8E1
 LD975             = &D975
+SENDTOPPU         = &D986
+TWOS              = &D9F7
+TWOS2             = &DA01
+TWFL              = &DA09
+TWFR              = &DA10
+ylookupLO         = &DA18
+ylookupHI         = &DAF8
 LDBD8             = &DBD8
 LOIN              = &DC0F
 PIXEL             = &E4F0
+PIXELx2           = &E543
 ECBLB2            = &E596
 LEB86             = &EB86
 DELAY             = &EBA2
@@ -3345,11 +3373,11 @@ L9167 = L8D7A+1005
  LDY #8                                       ; A084: A0 08       ..
  STX K                                        ; A086: 86 7D       .}
  STY K_1                                      ; A088: 84 7E       .~
- LDA L00B8                                    ; A08A: A5 B8       ..
+ LDA NEXT_TILE                                ; A08A: A5 B8       ..
  STA L046C                                    ; A08C: 8D 6C 04    .l.
  CLC                                          ; A08F: 18          .
  ADC #&30 ; '0'                               ; A090: 69 30       i0
- STA L00B8                                    ; A092: 85 B8       ..
+ STA NEXT_TILE                                ; A092: 85 B8       ..
  LDX L046C                                    ; A094: AE 6C 04    .l.
  STX K_2                                      ; A097: 86 7F       ..
  JSR LEE54                                    ; A099: 20 54 EE     T.
@@ -3418,10 +3446,10 @@ L9167 = L8D7A+1005
  ASL A                                        ; A10D: 0A          .
  ASL A                                        ; A10E: 0A          .
  ADC #6                                       ; A10F: 69 06       i.
- STA SC_1                                     ; A111: 85 08       ..
+ STA SCH                                      ; A111: 85 08       ..
  TYA                                          ; A113: 98          .
- ADC SC_1                                     ; A114: 65 08       e.
- STA SC_1                                     ; A116: 85 08       ..
+ ADC SCH                                      ; A114: 65 08       e.
+ STA SCH                                      ; A116: 85 08       ..
  LDA K_3                                      ; A118: A5 80       ..
  ASL A                                        ; A11A: 0A          .
  ASL A                                        ; A11B: 0A          .
@@ -3438,19 +3466,19 @@ L9167 = L8D7A+1005
  JSR NAMETABLE0                               ; A12D: 20 6D D0     m.
 .CA130
  LDX SC                                       ; A130: A6 07       ..
- STX L00BA                                    ; A132: 86 BA       ..
+ STX T5                                       ; A132: 86 BA       ..
  LDX K                                        ; A134: A6 7D       .}
 .CA136
  LDA K_2                                      ; A136: A5 7F       ..
  STA SPR_00_TILE,Y                            ; A138: 99 01 02    ...
  LDA S                                        ; A13B: A5 99       ..
  STA SPR_00_ATTR,Y                            ; A13D: 99 02 02    ...
- LDA L00BA                                    ; A140: A5 BA       ..
+ LDA T5                                       ; A140: A5 BA       ..
  STA SPR_00_X,Y                               ; A142: 99 03 02    ...
  CLC                                          ; A145: 18          .
  ADC #8                                       ; A146: 69 08       i.
- STA L00BA                                    ; A148: 85 BA       ..
- LDA SC_1                                     ; A14A: A5 08       ..
+ STA T5                                       ; A148: 85 BA       ..
+ LDA SCH                                      ; A14A: A5 08       ..
  STA SPR_00_Y,Y                               ; A14C: 99 00 02    ...
  TYA                                          ; A14F: 98          .
  CLC                                          ; A150: 18          .
@@ -3460,9 +3488,9 @@ L9167 = L8D7A+1005
  INC K_2                                      ; A156: E6 7F       ..
  DEX                                          ; A158: CA          .
  BNE CA136                                    ; A159: D0 DB       ..
- LDA SC_1                                     ; A15B: A5 08       ..
+ LDA SCH                                      ; A15B: A5 08       ..
  ADC #8                                       ; A15D: 69 08       i.
- STA SC_1                                     ; A15F: 85 08       ..
+ STA SCH                                      ; A15F: 85 08       ..
  DEC T                                        ; A161: C6 9A       ..
  BNE CA123                                    ; A163: D0 BE       ..
 .CA165
@@ -3624,7 +3652,7 @@ L9167 = L8D7A+1005
  ADC #&20 ; ' '                               ; A25E: 69 20       i
  STA SC                                       ; A260: 85 07       ..
  BCC CA266                                    ; A262: 90 02       ..
- INC SC_1                                     ; A264: E6 08       ..
+ INC SCH                                      ; A264: E6 08       ..
 .CA266
  LDA L00E9                                    ; A266: A5 E9       ..
  BPL CA273                                    ; A268: 10 09       ..
@@ -3679,7 +3707,7 @@ L9167 = L8D7A+1005
  ADC #&20 ; ' '                               ; A2AD: 69 20       i
  STA SC                                       ; A2AF: 85 07       ..
  BCC CA2B5                                    ; A2B1: 90 02       ..
- INC SC_1                                     ; A2B3: E6 08       ..
+ INC SCH                                      ; A2B3: E6 08       ..
 .CA2B5
  LDA L00E9                                    ; A2B5: A5 E9       ..
  BPL CA2C2                                    ; A2B7: 10 09       ..
@@ -3693,7 +3721,7 @@ L9167 = L8D7A+1005
  LDA L00C0                                    ; A2C3: A5 C0       ..
  BNE CA331                                    ; A2C5: D0 6A       .j
  LDA #&72 ; 'r'                               ; A2C7: A9 72       .r
- STA SC_1                                     ; A2C9: 85 08       ..
+ STA SCH                                      ; A2C9: 85 08       ..
  LDA #&E2                                     ; A2CB: A9 E2       ..
  STA SC                                       ; A2CD: 85 07       ..
  LDA #0                                       ; A2CF: A9 00       ..
@@ -3721,7 +3749,7 @@ L9167 = L8D7A+1005
  LDA L0390                                    ; A305: AD 90 03    ...
  JSR sub_CA223                                ; A308: 20 23 A2     #.
  LDA #&73 ; 's'                               ; A30B: A9 73       .s
- STA SC_1                                     ; A30D: 85 08       ..
+ STA SCH                                      ; A30D: 85 08       ..
  LDA #&7C ; '|'                               ; A30F: A9 7C       .|
  STA SC                                       ; A311: 85 07       ..
  LDA #0                                       ; A313: A9 00       ..
@@ -4078,53 +4106,53 @@ LA3F8 = LA3F5+3
  STA SPR_08_Y                                 ; A630: 8D 20 02    . .
  STA SPR_09_Y                                 ; A633: 8D 24 02    .$.
  LDA #0                                       ; A636: A9 00       ..
- STA SC_1                                     ; A638: 85 08       ..
- LDA L00B8                                    ; A63A: A5 B8       ..
+ STA SCH                                      ; A638: 85 08       ..
+ LDA NEXT_TILE                                ; A63A: A5 B8       ..
  ASL A                                        ; A63C: 0A          .
- ROL SC_1                                     ; A63D: 26 08       &.
+ ROL SCH                                      ; A63D: 26 08       &.
  ASL A                                        ; A63F: 0A          .
- ROL SC_1                                     ; A640: 26 08       &.
+ ROL SCH                                      ; A640: 26 08       &.
  ASL A                                        ; A642: 0A          .
- ROL SC_1                                     ; A643: 26 08       &.
+ ROL SCH                                      ; A643: 26 08       &.
  STA SC                                       ; A645: 85 07       ..
- STA L00BA                                    ; A647: 85 BA       ..
- LDA SC_1                                     ; A649: A5 08       ..
+ STA T5                                       ; A647: 85 BA       ..
+ LDA SCH                                      ; A649: A5 08       ..
  ADC #&68 ; 'h'                               ; A64B: 69 68       ih
- STA L00BB                                    ; A64D: 85 BB       ..
- LDA SC_1                                     ; A64F: A5 08       ..
+ STA T5_1                                     ; A64D: 85 BB       ..
+ LDA SCH                                      ; A64F: A5 08       ..
  ADC #&60 ; '`'                               ; A651: 69 60       i`
- STA SC_1                                     ; A653: 85 08       ..
- LDX L00B8                                    ; A655: A6 B8       ..
+ STA SCH                                      ; A653: 85 08       ..
+ LDX NEXT_TILE                                ; A655: A6 B8       ..
  LDY #0                                       ; A657: A0 00       ..
 .CA659
  LDA #0                                       ; A659: A9 00       ..
  STA (SC),Y                                   ; A65B: 91 07       ..
- STA (L00BA),Y                                ; A65D: 91 BA       ..
+ STA (T5),Y                                   ; A65D: 91 BA       ..
  INY                                          ; A65F: C8          .
  STA (SC),Y                                   ; A660: 91 07       ..
- STA (L00BA),Y                                ; A662: 91 BA       ..
+ STA (T5),Y                                   ; A662: 91 BA       ..
  INY                                          ; A664: C8          .
  STA (SC),Y                                   ; A665: 91 07       ..
- STA (L00BA),Y                                ; A667: 91 BA       ..
+ STA (T5),Y                                   ; A667: 91 BA       ..
  INY                                          ; A669: C8          .
  STA (SC),Y                                   ; A66A: 91 07       ..
- STA (L00BA),Y                                ; A66C: 91 BA       ..
+ STA (T5),Y                                   ; A66C: 91 BA       ..
  INY                                          ; A66E: C8          .
  STA (SC),Y                                   ; A66F: 91 07       ..
- STA (L00BA),Y                                ; A671: 91 BA       ..
+ STA (T5),Y                                   ; A671: 91 BA       ..
  INY                                          ; A673: C8          .
  STA (SC),Y                                   ; A674: 91 07       ..
- STA (L00BA),Y                                ; A676: 91 BA       ..
+ STA (T5),Y                                   ; A676: 91 BA       ..
  INY                                          ; A678: C8          .
  STA (SC),Y                                   ; A679: 91 07       ..
- STA (L00BA),Y                                ; A67B: 91 BA       ..
+ STA (T5),Y                                   ; A67B: 91 BA       ..
  INY                                          ; A67D: C8          .
  STA (SC),Y                                   ; A67E: 91 07       ..
- STA (L00BA),Y                                ; A680: 91 BA       ..
+ STA (T5),Y                                   ; A680: 91 BA       ..
  INY                                          ; A682: C8          .
  BNE CA689                                    ; A683: D0 04       ..
- INC SC_1                                     ; A685: E6 08       ..
- INC L00BB                                    ; A687: E6 BB       ..
+ INC SCH                                      ; A685: E6 08       ..
+ INC T5_1                                     ; A687: E6 BB       ..
 .CA689
  LDA L00E9                                    ; A689: A5 E9       ..
  BPL CA696                                    ; A68B: 10 09       ..
@@ -4240,7 +4268,7 @@ LA3F8 = LA3F5+3
 .sub_CA761
  JSR LD8C5                                    ; A761: 20 C5 D8     ..
  LDA #&FE                                     ; A764: A9 FE       ..
- STA L00B8                                    ; A766: 85 B8       ..
+ STA NEXT_TILE                                ; A766: 85 B8       ..
  LDA #&C8                                     ; A768: A9 C8       ..
  STA L03EF                                    ; A76A: 8D EF 03    ...
  STA L03F0                                    ; A76D: 8D F0 03    ...
@@ -4267,7 +4295,7 @@ LA3F8 = LA3F5+3
  LDA (XX19),Y                                 ; A78E: B1 61       .a
  BPL CA795                                    ; A790: 10 03       ..
  TAX                                          ; A792: AA          .
- LDA SC_1,X                                   ; A793: B5 08       ..
+ LDA SCH,X                                    ; A793: B5 08       ..
 .CA795
  SEC                                          ; A795: 38          8
  SBC #&20 ; ' '                               ; A796: E9 20       .
@@ -5472,17 +5500,17 @@ LA3F8 = LA3F5+3
 .CB7A4
  LDA (Q),Y                                    ; B7A4: B1 97       ..
  EOR #&F0                                     ; B7A6: 49 F0       I.
- STA L00BB                                    ; B7A8: 85 BB       ..
+ STA T5_1                                     ; B7A8: 85 BB       ..
  LDA (S),Y                                    ; B7AA: B1 99       ..
  EOR #&0F                                     ; B7AC: 49 0F       I.
- STA L00BA                                    ; B7AE: 85 BA       ..
+ STA T5                                       ; B7AE: 85 BA       ..
  LDA (SC),Y                                   ; B7B0: B1 07       ..
- CMP L00BB                                    ; B7B2: C5 BB       ..
+ CMP T5_1                                     ; B7B2: C5 BB       ..
  BEQ CB7C0                                    ; B7B4: F0 0A       ..
- CMP L00BA                                    ; B7B6: C5 BA       ..
+ CMP T5                                       ; B7B6: C5 BA       ..
  BEQ CB7C0                                    ; B7B8: F0 06       ..
- LDA L00BB                                    ; B7BA: A5 BB       ..
- CMP L00BA                                    ; B7BC: C5 BA       ..
+ LDA T5_1                                     ; B7BA: A5 BB       ..
+ CMP T5                                       ; B7BC: C5 BA       ..
  BNE CB7FF                                    ; B7BE: D0 3F       .?
 .CB7C0
  STA BUF,Y                                    ; B7C0: 99 07 05    ...
@@ -5567,7 +5595,7 @@ LA3F8 = LA3F5+3
  LDA LB768,X                                  ; B83F: BD 68 B7    .h.
  STA S                                        ; B842: 85 99       ..
  LDA LB749,X                                  ; B844: BD 49 B7    .I.
- STA SC_1                                     ; B847: 85 08       ..
+ STA SCH                                      ; B847: 85 08       ..
  LDA LB759,X                                  ; B849: BD 59 B7    .Y.
  STA R                                        ; B84C: 85 98       ..
  LDA LB769,X                                  ; B84E: BD 69 B7    .i.

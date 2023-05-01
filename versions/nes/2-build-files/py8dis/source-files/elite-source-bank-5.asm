@@ -6,7 +6,7 @@ RAND_2            = &0003
 RAND_3            = &0004
 T1                = &0006
 SC                = &0007
-SC_1              = &0008
+SCH               = &0008
 INWK              = &0009
 XX1               = &0009
 INWK_1            = &000A
@@ -174,8 +174,17 @@ Yx2M2             = &00B2
 Yx2M1             = &00B3
 messXC            = &00B4
 newzp             = &00B6
-L00BA             = &00BA
-L00BB             = &00BB
+NEXT_TILE         = &00B8
+PATTERNS_HI       = &00B9
+T5                = &00BA
+T5_1              = &00BB
+ADDR1_LO          = &00D4
+ADDR1_HI          = &00D5
+NAMES_HI          = &00E6
+T6                = &00EB
+T6_1              = &00EC
+T7                = &00ED
+T7_1              = &00EE
 BANK              = &00F7
 L00FA             = &00FA
 L00FB             = &00FB
@@ -482,6 +491,8 @@ K2_2              = &045B
 K2_3              = &045C
 QQ19_2            = &045F
 L046C             = &046C
+BOXEDGE1          = &046E
+BOXEDGE2          = &046F
 CONT2_SCAN        = &0475
 SWAP              = &047F
 XSAV2             = &0481
@@ -564,6 +575,10 @@ OAM_DMA           = &4014
 APU_FLAGS         = &4015
 CONTROLLER_1      = &4016
 CONTROLLER_2      = &4017
+PATTERNS_0        = &6000
+PATTERNS_1        = &6800
+NAMES_0           = &7000
+NAMES_1           = &7400
 LC006             = &C006
 Spercent          = &C007
 RESETBANK         = &C0AD
@@ -577,15 +592,29 @@ ACT               = &C520
 XX21m2            = &C53E
 XX21m1            = &C53F
 XX21              = &C540
+BOXEDGES          = &CD6F
 UNIV              = &CE7E
-UNIV_1            = &CE7E
+UNIV_1            = &CE7F
 GINF              = &CE90
+NAMES_LOOKUP      = &CED0
+PATTERNS_LOOKUP   = &CED2
 IRQ               = &CED4
 NMI               = &CED5
+SETPALETTE        = &CF2E
+RESETNAMES1       = &D02D
 NAMETABLE0        = &D06D
 CONTROLLERS       = &D0F8
+FILLMEMORY        = &D710
+SENDTOPPU         = &D986
+TWOS              = &D9F7
+TWOS2             = &DA01
+TWFL              = &DA09
+TWFR              = &DA10
+ylookupLO         = &DA18
+ylookupHI         = &DAF8
 LOIN              = &DC0F
 PIXEL             = &E4F0
+PIXELx2           = &E543
 ECBLB2            = &E596
 LE909             = &E909
 DELAY             = &EBA2
@@ -2683,22 +2712,22 @@ L800F = L800C+3
 
 .sub_CBEEA
  LDA #0                                       ; BEEA: A9 00       ..
- STA SC_1                                     ; BEEC: 85 08       ..
+ STA SCH                                      ; BEEC: 85 08       ..
  LDA L046C                                    ; BEEE: AD 6C 04    .l.
  ASL A                                        ; BEF1: 0A          .
- ROL SC_1                                     ; BEF2: 26 08       &.
+ ROL SCH                                      ; BEF2: 26 08       &.
  ASL A                                        ; BEF4: 0A          .
- ROL SC_1                                     ; BEF5: 26 08       &.
+ ROL SCH                                      ; BEF5: 26 08       &.
  ASL A                                        ; BEF7: 0A          .
- ROL SC_1                                     ; BEF8: 26 08       &.
+ ROL SCH                                      ; BEF8: 26 08       &.
  STA SC                                       ; BEFA: 85 07       ..
- STA L00BA                                    ; BEFC: 85 BA       ..
- LDA SC_1                                     ; BEFE: A5 08       ..
+ STA T5                                       ; BEFC: 85 BA       ..
+ LDA SCH                                      ; BEFE: A5 08       ..
  ADC #&68 ; 'h'                               ; BF00: 69 68       ih
- STA L00BB                                    ; BF02: 85 BB       ..
- LDA SC_1                                     ; BF04: A5 08       ..
+ STA T5_1                                     ; BF02: 85 BB       ..
+ LDA SCH                                      ; BF04: A5 08       ..
  ADC #&60 ; '`'                               ; BF06: 69 60       i`
- STA SC_1                                     ; BF08: 85 08       ..
+ STA SCH                                      ; BF08: 85 08       ..
  LDA QQ15_1                                   ; BF0A: A5 83       ..
  EOR QQ15_4                                   ; BF0C: 45 86       E.
  EOR QQ15_3                                   ; BF0E: 45 85       E.
@@ -2722,10 +2751,10 @@ L800F = L800C+3
  ADC #&80                                     ; BF2F: 69 80       i.
  STA V_1                                      ; BF31: 85 64       .d
  JSR LF52D                                    ; BF33: 20 2D F5     -.
- LDA L00BA                                    ; BF36: A5 BA       ..
+ LDA T5                                       ; BF36: A5 BA       ..
  STA SC                                       ; BF38: 85 07       ..
- LDA L00BB                                    ; BF3A: A5 BB       ..
- STA SC_1                                     ; BF3C: 85 08       ..
+ LDA T5_1                                     ; BF3A: A5 BB       ..
+ STA SCH                                      ; BF3C: 85 08       ..
  JMP LF52D                                    ; BF3E: 4C 2D F5    L-.
 
  LDA #5                                       ; BF41: A9 05       ..

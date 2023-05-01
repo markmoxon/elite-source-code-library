@@ -41,7 +41,7 @@ IF NOT(_NES_VERSION)
 ELIF _NES_VERSION
 
  LDA TKN2+2,X           \ Print the first letter of the token at TKN2+2 + X
- JSR DTS_BANK7
+ JSR DTS_BANK2
 
  LDA TKN2+3,X           \ Fetch the second letter of the token from TKN2+2 + X
 
@@ -49,7 +49,7 @@ ELIF _NES_VERSION
  BEQ P%+5               \ following instruction (as ? indicates a single-letter
                         \ token)
 
- JSR DTS_BANK7          \ Print the second letter of the token at TKN2+2 + X
+ JSR DTS_BANK2          \ Print the second letter of the token at TKN2+2 + X
 
 ENDIF
 

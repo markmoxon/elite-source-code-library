@@ -412,22 +412,35 @@ subroutine(0xEBA2, "DELAY")
 subroutine(0xEBAD, "EXNO3")
 subroutine(0xEBE5, "BOOP")
 subroutine(0xEBF2, "NOISE")
+subroutine(0xEC7D, "SET_NAMETABLE_0_A")	    # SET_NAMETABLE_0 macro that preserves A
 subroutine(0xEC8D, "LDA_XX0_Y")
 subroutine(0xECA0, "LDA_EPC_Y")
-subroutine(0xEDEA, "TIDY")
-subroutine(0xEF7A, "PAS1_BANK7")
-subroutine(0xEFF7, "LL164")
-subroutine(0xF082, "DETOK_BANK7")
-subroutine(0xF09D, "DTS")
-subroutine(0xEC7D, "NAMETABLE0_BANK7")	# BANK7 version of SET_NAMETABLE_0
-subroutine(0xF186, "F186_BANK7")
-subroutine(0xF1A2, "MVS5_BANK7")
-subroutine(0xF1BD, "HALL")
-subroutine(0xF1E6, "DASC_BANK7")
-subroutine(0xF201, "TT27_BANK7")
-subroutine(0xF237, "TT27_control_codes")    # Mine, it's the control code part of TT27 in bank 0
-subroutine(0xF26E, "TT66")
-subroutine(0xF2A8, "SCAN_BANK7")
+subroutine(0xECAE, "INC_TALLY")     # Mine, adds KWL/KWH to TALLY
+
+subroutine(0xECE2, "CB1D4_BANK0")
+subroutine(0xECF9, "SETK_K3_XC_YC")     # Temporary name
+subroutine(0xED16, "C811E_BANK6")
+subroutine(0xED24, "C8021_BANK6")
+subroutine(0xED24, "C8021_BANK6")
+subroutine(0xED50, "C89D1_BANK6")
+subroutine(0xED6B, "C8012_BANK6")
+subroutine(0xED81, "CBF41_BANK5")
+
+
+subroutine(0xEDEA, "TIDY_BANK1")
+subroutine(0xEF7A, "PAS1_BANK0")
+subroutine(0xEFF7, "LL164_BANK6")
+subroutine(0xF082, "DETOK_BANK2")
+subroutine(0xF09D, "DTS_BANK2")
+subroutine(0xF186, "CF186_BANK6")
+subroutine(0xF1A2, "MVS5_BANK0")
+subroutine(0xF1BD, "HALL_BANK1")
+subroutine(0xF1E6, "DASC_BANK2")
+subroutine(0xF201, "TT27_BANK2")
+subroutine(0xF237, "TT27_BANK0")    # Mine, it's the control code part of TT27 in bank 0
+subroutine(0xF26E, "TT66_BANK0")
+subroutine(0xF2A8, "SCAN_BANK1")
+
 subroutine(0xF2DE, "CLYNS")
 subroutine(0xF42E, "Ze")
 subroutine(0xF473, "NLIN4")

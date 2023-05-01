@@ -30,7 +30,7 @@ ENDIF
 
 IF _NES_VERSION
 
- JMP TT27_control_codes
+ JMP TT27_BANK0
 
 ENDIF
 

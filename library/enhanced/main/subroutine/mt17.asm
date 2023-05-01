@@ -55,7 +55,7 @@ IF NOT(_NES_VERSION)
 ELIF _NES_VERSION
 
  LDA #153               \ Print extended token 153 ("IAN"), returning from the
- JMP DETOK_BANK7        \ subroutine using a tail call
+ JMP DETOK_BANK2        \ subroutine using a tail call
 
 ENDIF
 

@@ -980,7 +980,7 @@ LC006 = sub_CC004+2
  PHA                                          ; C0D2: 48          H
  TYA                                          ; C0D3: 98          .
  PHA                                          ; C0D4: 48          H
- JSR sub_CED16                                ; C0D5: 20 16 ED     ..
+ JSR C811E_BANK6                              ; C0D5: 20 16 ED     ..
  PLA                                          ; C0D8: 68          h
  TAY                                          ; C0D9: A8          .
  PLA                                          ; C0DA: 68          h
@@ -2289,7 +2289,7 @@ LC006 = sub_CC004+2
  STA L7600,Y                                  ; CD47: 99 00 76    ..v
  LDA L7300,Y                                  ; CD4A: B9 00 73    ..s
  STA L7700,Y                                  ; CD4D: 99 00 77    ..w
- JSR NAMETABLE0_BANK7                         ; CD50: 20 7D EC     }.
+ JSR SET_NAMETABLE_0_A                        ; CD50: 20 7D EC     }.
  DEX                                          ; CD53: CA          .
  BNE CCD58                                    ; CD54: D0 02       ..
  LDX #&10                                     ; CD56: A2 10       ..
@@ -2491,7 +2491,7 @@ LC006 = sub_CC004+2
  JSR sub_CCF18                                ; CEF8: 20 18 CF     ..
  LDA L00F8                                    ; CEFB: A5 F8       ..
  BNE CCF0C                                    ; CEFD: D0 0D       ..
- JSR sub_CED16                                ; CEFF: 20 16 ED     ..
+ JSR C811E_BANK6                              ; CEFF: 20 16 ED     ..
  LDA L0469                                    ; CF02: AD 69 04    .i.
  LDX L046A                                    ; CF05: AE 6A 04    .j.
  LDY L046B                                    ; CF08: AC 6B 04    .k.
@@ -4104,7 +4104,7 @@ LC006 = sub_CC004+2
  TXA                                          ; D946: 8A          .
  PHA                                          ; D947: 48          H
  JSR CD940                                    ; D948: 20 40 D9     @.
- JSR sub_CED16                                ; D94B: 20 16 ED     ..
+ JSR C811E_BANK6                              ; D94B: 20 16 ED     ..
  PLA                                          ; D94E: 68          h
  TAX                                          ; D94F: AA          .
  RTS                                          ; D950: 60          `
@@ -6431,7 +6431,7 @@ LDFFF = sub_CDFFE+1
 .CEC2A
  TYA                                          ; EC2A: 98          .
 .CEC2B
- JSR sub_CED50                                ; EC2B: 20 50 ED     P.
+ JSR C89D1_BANK6                              ; EC2B: 20 50 ED     P.
 .CEC2E
  LDA L00E9                                    ; EC2E: A5 E9       ..
  BPL CEC3B                                    ; EC30: 10 09       ..
@@ -6455,7 +6455,7 @@ LDFFF = sub_CDFFE+1
  EQUB &60                                     ; EC7C: 60          `
 
 ; ******************************************************************************
-.NAMETABLE0_BANK7
+.SET_NAMETABLE_0_A
  PHA                                          ; EC7D: 48          H
  LDA L00E9                                    ; EC7E: A5 E9       ..
  BPL CEC8B                                    ; EC80: 10 09       ..
@@ -6490,6 +6490,8 @@ LDFFF = sub_CDFFE+1
  LDA L8041,Y                                  ; ECA8: B9 41 80    .A.
  JMP loop_CEC97                               ; ECAB: 4C 97 EC    L..
 
+; ******************************************************************************
+.INC_TALLY
  LDA L00E9                                    ; ECAE: A5 E9       ..
  BPL CECBB                                    ; ECB0: 10 09       ..
  LDA PPU_STATUS                               ; ECB2: AD 02 20    ..
@@ -6521,6 +6523,8 @@ LDFFF = sub_CDFFE+1
 .CECE1
  RTS                                          ; ECE1: 60          `
 
+; ******************************************************************************
+.CB1D4_BANK0
  LDA L0465                                    ; ECE2: AD 65 04    .e.
  BEQ CECE1                                    ; ECE5: F0 FA       ..
  STA L00B7                                    ; ECE7: 85 B7       ..
@@ -6532,6 +6536,8 @@ LDFFF = sub_CDFFE+1
  JSR LB1D4                                    ; ECF3: 20 D4 B1     ..
  JMP loop_CECDB                               ; ECF6: 4C DB EC    L..
 
+; ******************************************************************************
+.SETK_K3_XC_YC
  LDA #2                                       ; ECF9: A9 02       ..
  STA K                                        ; ECFB: 85 7D       .}
  STA K_1                                      ; ECFD: 85 7E       .~
@@ -6547,7 +6553,8 @@ LDFFF = sub_CDFFE+1
  LDY #7                                       ; ED11: A0 07       ..
  JMP CEE99                                    ; ED13: 4C 99 EE    L..
 
-.sub_CED16
+; ******************************************************************************
+.C811E_BANK6
  LDA BANK                                     ; ED16: A5 F7       ..
  PHA                                          ; ED18: 48          H
  LDA #6                                       ; ED19: A9 06       ..
@@ -6555,7 +6562,8 @@ LDFFF = sub_CDFFE+1
  JSR L811E                                    ; ED1E: 20 1E 81     ..
  JMP RESETBANK                                ; ED21: 4C AD C0    L..
 
-.sub_CED24
+; ******************************************************************************
+.C8021_BANK6
  PHA                                          ; ED24: 48          H
  JSR sub_CD167                                ; ED25: 20 67 D1     g.
  PLA                                          ; ED28: 68          h
@@ -6579,7 +6587,8 @@ LDFFF = sub_CDFFE+1
  LDA L00B7                                    ; ED4B: A5 B7       ..
  JMP L8021                                    ; ED4D: 4C 21 80    L!.
 
-.sub_CED50
+; ******************************************************************************
+.C89D1_BANK6
  STA L00B7                                    ; ED50: 85 B7       ..
  LDA BANK                                     ; ED52: A5 F7       ..
  CMP #6                                       ; ED54: C9 06       ..
@@ -6595,7 +6604,8 @@ LDFFF = sub_CDFFE+1
  LDA L00B7                                    ; ED66: A5 B7       ..
  JMP L89D1                                    ; ED68: 4C D1 89    L..
 
-.sub_CED6B
+; ******************************************************************************
+.C8012_BANK6
  JSR sub_CD167                                ; ED6B: 20 67 D1     g.
 .sub_CED6E
  LDA #0                                       ; ED6E: A9 00       ..
@@ -6607,6 +6617,8 @@ LDFFF = sub_CDFFE+1
  JSR L8012                                    ; ED7B: 20 12 80     ..
  JMP RESETBANK                                ; ED7E: 4C AD C0    L..
 
+; ******************************************************************************
+.CBF41_BANK5
  LDA BANK                                     ; ED81: A5 F7       ..
  PHA                                          ; ED83: 48          H
  LDA #5                                       ; ED84: A9 05       ..
@@ -6666,7 +6678,7 @@ LDFFF = sub_CDFFE+1
  JMP RESETBANK                                ; EDE7: 4C AD C0    L..
 
 ; ******************************************************************************
-.TIDY
+.TIDY_BANK1
  LDA BANK                                     ; EDEA: A5 F7       ..
  CMP #1                                       ; EDEC: C9 01       ..
  BEQ CEDFC                                    ; EDEE: F0 0C       ..
@@ -6881,7 +6893,7 @@ LDFFF = sub_CDFFE+1
  JMP RESETBANK                                ; EF77: 4C AD C0    L..
 
 ; ******************************************************************************
-.PAS1_BANK7
+.PAS1_BANK0
  LDA BANK                                     ; EF7A: A5 F7       ..
  PHA                                          ; EF7C: 48          H
  LDA #0                                       ; EF7D: A9 00       ..
@@ -6947,7 +6959,7 @@ LDFFF = sub_CDFFE+1
  JMP LB39D                                    ; EFF4: 4C 9D B3    L..
 
 ; ******************************************************************************
-.LL164
+.LL164_BANK6
  LDA BANK                                     ; EFF7: A5 F7       ..
  PHA                                          ; EFF9: 48          H
  LDA #6                                       ; EFFA: A9 06       ..
@@ -7020,7 +7032,7 @@ LDFFF = sub_CDFFE+1
  JMP RESETBANK                                ; F07F: 4C AD C0    L..
 
 ; ******************************************************************************
-.DETOK_BANK7
+.DETOK_BANK2
  STA L00B7                                    ; F082: 85 B7       ..
  LDA BANK                                     ; F084: A5 F7       ..
  CMP #2                                       ; F086: C9 02       ..
@@ -7037,7 +7049,7 @@ LDFFF = sub_CDFFE+1
  JMP DETOK                                    ; F09A: 4C EF B0    L..
 
 ; ******************************************************************************
-.DTS
+.DTS_BANK2
  STA L00B7                                    ; F09D: 85 B7       ..
  LDA BANK                                     ; F09F: A5 F7       ..
  CMP #2                                       ; F0A1: C9 02       ..
@@ -7167,7 +7179,7 @@ LDFFF = sub_CDFFE+1
  JMP LAC5C                                    ; F183: 4C 5C AC    L\.
 
 ; ******************************************************************************
-.F186_BANK7
+.CF186_BANK6
  LDA BANK                                     ; F186: A5 F7       ..
  PHA                                          ; F188: 48          H
  LDA #0                                       ; F189: A9 00       ..
@@ -7183,7 +7195,7 @@ LDFFF = sub_CDFFE+1
  JMP RESETBANK                                ; F19F: 4C AD C0    L..
 
 ; ******************************************************************************
-.MVS5_BANK7
+.MVS5_BANK0
  STA L00B7                                    ; F1A2: 85 B7       ..
  LDA BANK                                     ; F1A4: A5 F7       ..
  CMP #0                                       ; F1A6: C9 00       ..
@@ -7200,7 +7212,7 @@ LDFFF = sub_CDFFE+1
  JMP MVS5                                     ; F1BA: 4C 14 8A    L..
 
 ; ******************************************************************************
-.HALL
+.HALL_BANK1
  LDA BANK                                     ; F1BD: A5 F7       ..
  PHA                                          ; F1BF: 48          H
  LDA #1                                       ; F1C0: A9 01       ..
@@ -7224,7 +7236,7 @@ LDFFF = sub_CDFFE+1
  JMP LB635                                    ; F1E3: 4C 35 B6    L5.
 
 ; ******************************************************************************
-.DASC_BANK7
+.DASC_BANK2
  STA L00B7                                    ; F1E6: 85 B7       ..
  LDA BANK                                     ; F1E8: A5 F7       ..
  CMP #2                                       ; F1EA: C9 02       ..
@@ -7241,7 +7253,7 @@ LDFFF = sub_CDFFE+1
  JMP LB4F5                                    ; F1FE: 4C F5 B4    L..
 
 ; ******************************************************************************
-.TT27_BANK7
+.TT27_BANK2
  STA L00B7                                    ; F201: 85 B7       ..
  LDA BANK                                     ; F203: A5 F7       ..
  CMP #2                                       ; F205: C9 02       ..
@@ -7273,7 +7285,7 @@ LDFFF = sub_CDFFE+1
  JMP LB4AA                                    ; F234: 4C AA B4    L..
 
 ; ******************************************************************************
-.TT27_control_codes
+.TT27_BANK0
  LDA BANK                                     ; F237: A5 F7       ..
  PHA                                          ; F239: 48          H
  LDA #0                                       ; F23A: A9 00       ..
@@ -7304,7 +7316,7 @@ LDFFF = sub_CDFFE+1
  JMP RESETBANK                                ; F26B: 4C AD C0    L..
 
 ; ******************************************************************************
-.TT66
+.TT66_BANK0
  STA L00B7                                    ; F26E: 85 B7       ..
  LDA BANK                                     ; F270: A5 F7       ..
  PHA                                          ; F272: 48          H
@@ -7337,7 +7349,7 @@ LDFFF = sub_CDFFE+1
  JMP LB341                                    ; F2A5: 4C 41 B3    LA.
 
 ; ******************************************************************************
-.SCAN_BANK7
+.SCAN_BANK1
  LDA BANK                                     ; F2A8: A5 F7       ..
  CMP #1                                       ; F2AA: C9 01       ..
  BEQ CF2BA                                    ; F2AC: F0 0C       ..
@@ -7393,7 +7405,7 @@ LDFFF = sub_CDFFE+1
  STA T5                                       ; F30D: 85 BA       ..
  LDX #2                                       ; F30F: A2 02       ..
 .loop_CF311
- JSR NAMETABLE0_BANK7                         ; F311: 20 7D EC     }.
+ JSR SET_NAMETABLE_0_A                        ; F311: 20 7D EC     }.
  LDY #2                                       ; F314: A0 02       ..
  LDA #0                                       ; F316: A9 00       ..
 .loop_CF318
@@ -7486,7 +7498,7 @@ LDFFF = sub_CDFFE+1
 
  JSR sub_CEDAB                                ; F3BC: 20 AB ED     ..
  LDA #0                                       ; F3BF: A9 00       ..
- JSR sub_CED24                                ; F3C1: 20 24 ED     $.
+ JSR C8021_BANK6                              ; F3C1: 20 24 ED     $.
  JSR CEB8F                                    ; F3C4: 20 8F EB     ..
  LDA #&FF                                     ; F3C7: A9 FF       ..
  STA QQ11                                     ; F3C9: 85 9F       ..
@@ -7515,7 +7527,7 @@ LDFFF = sub_CDFFE+1
  CMP #1                                       ; F3F6: C9 01       ..
  BCC loop_CF3DC                               ; F3F8: 90 E2       ..
  LSR CONT2_SCAN                               ; F3FA: 4E 75 04    Nu.
- JSR sub_CED6B                                ; F3FD: 20 6B ED     k.
+ JSR C8012_BANK6                              ; F3FD: 20 6B ED     k.
  JSR sub_CEDAB                                ; F400: 20 AB ED     ..
  LDA LANG                                     ; F403: AD A8 04    ...
  STA Kpercent                                 ; F406: 8D 00 06    ...
@@ -7524,7 +7536,7 @@ LDFFF = sub_CDFFE+1
  JMP CC035                                    ; F40E: 4C 35 C0    L5.
 
 .CF411
- JSR sub_CED6B                                ; F411: 20 6B ED     k.
+ JSR C8012_BANK6                              ; F411: 20 6B ED     k.
  RTS                                          ; F414: 60          `
 
 .LF415
@@ -7575,7 +7587,7 @@ LDFFF = sub_CDFFE+1
  LDA #0                                       ; F46B: A9 00       ..
  STA YC                                       ; F46D: 85 3B       .;
  PLA                                          ; F46F: 68          h
- JSR TT27_BANK7                               ; F470: 20 01 F2     ..
+ JSR TT27_BANK2                               ; F470: 20 01 F2     ..
 ; ******************************************************************************
 .NLIN4
  LDA #4                                       ; F473: A9 04       ..
@@ -7584,7 +7596,7 @@ LDFFF = sub_CDFFE+1
  STA YC                                       ; F479: 85 3B       .;
  LDA #4                                       ; F47B: A9 04       ..
 .CF47D
- JSR NAMETABLE0_BANK7                         ; F47D: 20 7D EC     }.
+ JSR SET_NAMETABLE_0_A                        ; F47D: 20 7D EC     }.
  LDY #1                                       ; F480: A0 01       ..
  LDA #3                                       ; F482: A9 03       ..
 .loop_CF484

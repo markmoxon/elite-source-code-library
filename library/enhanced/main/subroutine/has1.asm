@@ -91,15 +91,15 @@ ELIF _NES_VERSION
 
  LDX #21                \ Rotate (sidev_x, nosev_x) by a small angle (yaw)
  LDY #9
- JSR MVS5_BANK7
+ JSR MVS5_BANK0
 
  LDX #23                \ Rotate (sidev_y, nosev_y) by a small angle (yaw)
  LDY #11
- JSR MVS5_BANK7
+ JSR MVS5_BANK0
 
  LDX #25                \ Rotate (sidev_z, nosev_z) by a small angle (yaw)
  LDY #13
- JSR MVS5_BANK7
+ JSR MVS5_BANK0
 
 ENDIF
 

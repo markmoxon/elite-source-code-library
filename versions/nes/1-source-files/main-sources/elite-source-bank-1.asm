@@ -91,7 +91,7 @@
  LE04A      = &E04A
  LE0BA      = &E0BA
  PIXEL      = &E4F0
- MVS5_BANK7 = &F1A2
+ MVS5_BANK0 = &F1A2
  TT66       = &F26E
  LF2CE      = &F2CE
  DORND2     = &F4AC

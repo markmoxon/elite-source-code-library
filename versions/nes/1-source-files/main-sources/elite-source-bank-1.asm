@@ -83,7 +83,7 @@
  SNE        = &C500     \ Addresses of routines in bank 7
  ACT        = &C520
  XX21       = &C540
- NAMETABLE0 = &D06D
+ SWITCH_TO_TABLE_0 = &D06D
  LD9F7      = &D9F7
  LDA18      = &DA18
  LDAF8      = &DAF8
@@ -214,7 +214,7 @@ INCLUDE "library/common/main/workspace/k_per_cent.asm"
 INCLUDE "library/nes/main/subroutine/reset_mmc1.asm"
 INCLUDE "library/nes/main/subroutine/irq_mmc1.asm"
 INCLUDE "library/nes/main/variable/version_number.asm"
-INCLUDE "library/nes/main/macro/set_nametable_0.asm"
+INCLUDE "library/nes/main/macro/check_dashboard.asm"
 INCLUDE "library/nes/main/variable/unused_copy_of_xx21.asm"
 INCLUDE "library/advanced/main/variable/e_per_cent.asm"
 INCLUDE "library/master/data/variable/kwl_per_cent.asm"
@@ -635,7 +635,8 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  LDA #0
  LDY #&21
  STA (INF),Y
- SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+ CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
+                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
  LDX L002A
  BEQ CBB23
  LDA #0

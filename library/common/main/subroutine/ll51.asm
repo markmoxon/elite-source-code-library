@@ -74,7 +74,8 @@
 
 IF _NES_VERSION
 
- SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+ CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
+                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
 
 ENDIF
 
@@ -146,7 +147,8 @@ ELIF _NES_VERSION
  STA XX12,Y             \ Store the result in XX12+Y(1 0), starting with the low
                         \ byte
 
- SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+ CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
+                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
 
  LDA S                  \ And then the high byte
  STA XX12+1,Y

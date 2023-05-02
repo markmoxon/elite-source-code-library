@@ -15,7 +15,8 @@
  AND #7
  STA T
 .CB5D9
- SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+ CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
+                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
  LDX #0
  LDA (L00BA,X)
  BEQ CB615
@@ -77,7 +78,8 @@
  AND #7
  TAY
 .CB647
- SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+ CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
+                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
  LDX #0
  LDA (L00BA,X)
  BEQ CB699

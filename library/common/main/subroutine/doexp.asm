@@ -75,7 +75,8 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR 
 
 ELIF _NES_VERSION
 
- SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+ CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
+                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
 
  LDA INWK+6             \ Set T = z_lo
  STA T
@@ -172,7 +173,8 @@ ELIF _NES_VERSION
  STA L002B
  JSR LF8D8
 
- SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+ CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
+                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
 
  LDA P                  \ Set A = P, so we now have:
                         \
@@ -569,7 +571,8 @@ ENDIF
 
 IF _NES_VERSION
 
- SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+ CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
+                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
 
 ENDIF
 

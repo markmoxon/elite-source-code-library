@@ -138,7 +138,8 @@
 
 .EXL4
 
- SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+ CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
+                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
 
  JSR DORND2             \ Set ZZ to a random number, making sure the C flag
  STA ZZ                 \ doesn't affect the outcome

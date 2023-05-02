@@ -15,7 +15,8 @@
  AND #7
  TAY
 .CB6BA
- SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+ CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
+                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
  LDX #0
  LDA (L00BA,X)
  BEQ CB70B

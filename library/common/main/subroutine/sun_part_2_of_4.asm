@@ -292,7 +292,8 @@ ELIF _NES_VERSION
  JMP CAE9B
 
 .CAE29
- SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+ CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
+                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
  TYA
  CLC
  ADC #7
@@ -348,7 +349,8 @@ ELIF _NES_VERSION
  RTS
 
 .CAE9B
- SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+ CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
+                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
  LDX P
  BEQ CAE9A
  TYA
@@ -380,13 +382,8 @@ ELIF _NES_VERSION
  JMP CB039
 
 .sub_CAEE8
- LDA L00E9
- BPL CAEF5
- LDA PPU_STATUS
- ASL A
- BPL CAEF5
- JSR NAMETABLE0
-.CAEF5
+ CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
+                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
  LDX P+1
  STX XX15
  TYA
@@ -418,7 +415,8 @@ ELIF _NES_VERSION
  JMP CB05D
 
 .sub_CAF35
- SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+ CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
+                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
  STY Y1
 
 ENDIF

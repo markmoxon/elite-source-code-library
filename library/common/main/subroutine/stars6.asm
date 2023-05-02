@@ -51,7 +51,8 @@ ENDIF
 
 IF _NES_VERSION
 
- SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+ CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
+                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
 
 ENDIF
 
@@ -132,7 +133,8 @@ ELIF _NES_VERSION
 
  STA YY+1               \ First we store the high byte A in YY+1
 
- SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+ CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
+                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
 
  LDA SYL,Y              \ Then we do the low bytes with:
  SBC P                  \
@@ -286,7 +288,8 @@ ELIF _NES_VERSION
  LDA YY                 \ Set (S R) = YY(1 0) = y (low byte)
  STA R
 
- SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+ CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
+                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
 
  LDA YY+1               \ Set (S R) = YY(1 0) = y (high byte)
  STA S

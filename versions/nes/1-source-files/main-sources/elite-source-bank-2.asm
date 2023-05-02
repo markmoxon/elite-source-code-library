@@ -91,7 +91,7 @@
  UNIV_1              = &CE7E
  GINF                = &CE90
  NMI                 = &CED5
- NAMETABLE0          = &D06D
+ SWITCH_TO_TABLE_0   = &D06D
  LD8C5               = &D8C5
  LDBD8               = &DBD8
  LOIN                = &DC0F
@@ -101,7 +101,7 @@
  EXNO3               = &EBAD
  BOOP                = &EBE5
  NOISE               = &EBF2
- SET_NAMETABLE_0_A    = &EC7D
+ CHECK_DASHBOARD_A   = &EC7D
  TIDY                = &EDEA
  PAS1                = &EF7A
  LL164               = &EFF7
@@ -5194,7 +5194,7 @@ INCLUDE "library/nes/main/variable/qq18_de.asm"
 INCLUDE "library/nes/main/variable/qq18_fr.asm"
 INCLUDE "library/nes/main/variable/rutok_lo.asm"
 INCLUDE "library/nes/main/variable/rutok_hi.asm"
-INCLUDE "library/nes/main/macro/set_nametable_0.asm"
+INCLUDE "library/nes/main/macro/check_dashboard.asm"
 INCLUDE "library/enhanced/main/subroutine/detok3.asm"
 INCLUDE "library/enhanced/main/subroutine/detok.asm"
 INCLUDE "library/enhanced/main/subroutine/detok2.asm"

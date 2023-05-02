@@ -39,7 +39,8 @@ IF _NES_VERSION
 
  STA SC+1               \ Store A in SC+1, so we can retrieve it later
 
- SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+ CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
+                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
 
  LDA SC+1               \ Restore A from SC+1
 
@@ -166,7 +167,8 @@ ENDIF
 
 IF _NES_VERSION
 
- SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+ CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
+                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
 
 ENDIF
 
@@ -261,7 +263,8 @@ ENDIF
 
 IF _NES_VERSION
 
- SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+ CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
+                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
 
 ENDIF
 
@@ -296,7 +299,8 @@ ENDIF
 
 IF _NES_VERSION
 
- SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+ CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
+                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
 
 ENDIF
 
@@ -396,7 +400,7 @@ ENDIF
 
 IF _NES_VERSION
 
- JSR SET_NAMETABLE_0_A  \ ???
+ JSR CHECK_DASHBOARD_A  \ ???
 
 ENDIF
 

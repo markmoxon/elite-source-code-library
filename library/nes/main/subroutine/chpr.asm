@@ -63,7 +63,8 @@
 
  STA K3                 \ Store the A register in K3 so we can retrieve it below
 
- SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+ CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
+                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
 
  LDA K3                 \ Store the A, X and Y registers, so we can restore
  STY YSAV2              \ them at the end (so they don't get changed by this
@@ -279,14 +280,8 @@
 
  LDY YSAV2                                        ; B75B: AC 82 04    ...
  LDX XSAV2                                        ; B75E: AE 81 04    ...
- LDA L00E9                                        ; B761: A5 E9       ..
- BPL CB76E                                        ; B763: 10 09       ..
- LDA PPU_STATUS                                   ; B765: AD 02 20    ..
- ASL A                                            ; B768: 0A          .
- BPL CB76E                                        ; B769: 10 03       ..
- JSR NAMETABLE0                                   ; B76B: 20 6D D0     m.
-
-.CB76E
+ CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
+                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
 
  LDA K3                                           ; B76E: A5 3D       .=
  CLC                                              ; B770: 18          .

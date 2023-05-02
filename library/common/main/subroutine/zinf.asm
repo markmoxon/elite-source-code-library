@@ -26,7 +26,8 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+ CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
+                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
 
  LDY #NI%-4-1           \ There are NI% bytes in the INWK workspace, so set a
                         \ counter in Y so we can loop through them all except
@@ -61,7 +62,8 @@ ENDIF
 
 IF _NES_VERSION
 
- SET_NAMETABLE_0        \ Switch the base nametable address to nametable 0
+ CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
+                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
 
 ENDIF
 

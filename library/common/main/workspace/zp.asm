@@ -664,7 +664,7 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
  SKIP 1                 \ ???
 
-.L00E9
+.DASHBOARD_SWITCH
 
  SKIP 1                 \ ???
 

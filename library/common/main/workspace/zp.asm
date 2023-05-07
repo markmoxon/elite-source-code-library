@@ -620,11 +620,11 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
  SKIP 1                 \ ???
 
-.L00D4
+.ADDR1_LO
 
  SKIP 1                 \ ???
 
-.L00D5
+.ADDR1_HI
 
  SKIP 1                 \ ???
 
@@ -712,7 +712,7 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
  SKIP 1                 \ ???
 
-.L00F5
+.PPU_CTRL_COPY
 
  SKIP 1                 \ ???
 
@@ -732,11 +732,11 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
  SKIP 1                 \ ???
 
-.L00FA
+.ADDR2_LO
 
  SKIP 1                 \ ???
 
-.L00FB
+.ADDR2_HI
 
  SKIP 1                 \ ???
 

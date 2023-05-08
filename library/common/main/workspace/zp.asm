@@ -685,13 +685,9 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
  SKIP 1                 \ ???
 
-.L00F1
+.addr6
 
- SKIP 1                 \ ???
-
-.L00F2
-
- SKIP 1                 \ ???
+ SKIP 2                 \ ???
 
 .L00F3
 

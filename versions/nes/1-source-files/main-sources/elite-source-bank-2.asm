@@ -82,10 +82,10 @@
  DELAY              = &EBA2
  CheckDashboardA    = &EC7D
  PAS1               = &EF7A
- DETOK_BANK2        = &F082
- DTS_BANK2          = &F09D
- CF186_BANK6        = &F186
- TT27_BANK0         = &F237
+ DETOK_b2           = &F082
+ DTS_b2             = &F09D
+ C8980_b0           = &F186
+ TT27_b0            = &F237
  TT66               = &F26E
  LF2BD              = &F2BD
  CLYNS              = &F2DE

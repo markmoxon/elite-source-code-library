@@ -91,7 +91,7 @@
  LE04A              = &E04A
  LE0BA              = &E0BA
  PIXEL              = &E4F0
- MVS5_BANK0         = &F1A2
+ MVS5_b0            = &F1A2
  TT66               = &F26E
  LF2CE              = &F2CE
  DORND2             = &F4AC
@@ -644,7 +644,7 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
 \       Name: sub_CBAF3
 \   Category: Dashboard
 \   Category: Drawing ships
-\    Summary: ??? Called via CBAF3_BANK1
+\    Summary: ??? Called via CBAF3_B1
 \
 \ ******************************************************************************
 

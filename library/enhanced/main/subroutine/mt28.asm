@@ -38,7 +38,7 @@ IF NOT(_ELITE_A_VERSION OR _NES_VERSION)
 
 ELIF _NES_VERSION
 
- JMP DETOK_BANK2        \ Jump to DETOK to print extended token 220-221,
+ JMP DETOK_b2           \ Jump to DETOK to print extended token 220-221,
                         \ returning from the subroutine using a tail call (this
                         \ BNE is effectively a JMP as A is never zero)
 

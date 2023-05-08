@@ -67,7 +67,7 @@ ELIF _NES_VERSION
 
 .loop_CB3C4
 
- JSR CHECK_DASHBOARD_A  \ ???
+ JSR CheckDashboardA    \ ???
  LDA L04B2
  ORA L04B4
  AND #&C0

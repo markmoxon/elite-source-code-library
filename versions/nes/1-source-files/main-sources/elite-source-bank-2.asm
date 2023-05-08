@@ -76,81 +76,21 @@
  PPU_DATA   = &2007
  OAM_DMA    = &4014
 
- RESETBANK           = &C0AD    \ Addresses of routines in bank 7
- SETBANK             = &C0AE
- log                 = &C100
- logL                = &C200
- antilog             = &C300
- antilogODD          = &C400
- SNE                 = &C500
- ACT                 = &C520
- XX21m2              = &C53E
- XX21m1              = &C53F
- XX21                = &C540
- UNIV                = &CE7E
- UNIV_1              = &CE7E
- GINF                = &CE90
- NMI                 = &CED5
- SWITCH_TO_TABLE_0   = &D06D
- LD8C5               = &D8C5
- LDBD8               = &DBD8
- LOIN                = &DC0F
- PIXEL               = &E4F0
- ECBLB2              = &E596
- DELAY               = &EBA2
- EXNO3               = &EBAD
- BOOP                = &EBE5
- NOISE               = &EBF2
- CHECK_DASHBOARD_A   = &EC7D
- TIDY                = &EDEA
- PAS1                = &EF7A
- LL164               = &EFF7
- DETOK_BANK2         = &F082
- DTS_BANK2           = &F09D
- CF186_BANK6         = &F186
- MVS5_BANK0          = &F1A2
- HALL                = &F1BD
- TT27_BANK0          = &F237
- TT66                = &F26E
- LF2BD               = &F2BD
- CLYNS               = &F2DE
- Ze                  = &F42E
- NLIN4               = &F473
- DORND2              = &F4AC
- DORND               = &F4AD
- PROJ                = &F4C1
- MU5                 = &F65A
- MULT3               = &F664
- MLS2                = &F6BA
- MLS1                = &F6C2
- MULTSm2             = &F6C4
- MULTS               = &F6C6
- MU6                 = &F707
- SQUA                = &F70C
- SQUA2               = &F70E
- MU1                 = &F713
- MLU1                = &F718
- MLU2                = &F71D
- MULTU               = &F721
- MU11                = &F725
- FMLTU2              = &F766
- FMLTU               = &F770
- MLTU2m2             = &F7AB
- MLTU2               = &F7AD
- MUT2                = &F7D2
- MUT1                = &F7D6
- MULT1               = &F7DA
- MULT12              = &F83C
- TAS3                = &F853
- MAD                 = &F86F
- ADD                 = &F872
- TIS1                = &F8AE
- DV42                = &F8D1
- DV41                = &F8D4
- DVID3B2             = &F962
- LL5                 = &FA55
- LL28                = &FA91
- NORM                = &FAF8
+ SwitchTablesTo0    = &D06D
+ LD8C5              = &D8C5
+ LDBD8              = &DBD8
+ DELAY              = &EBA2
+ CheckDashboardA    = &EC7D
+ PAS1               = &EF7A
+ DETOK_BANK2        = &F082
+ DTS_BANK2          = &F09D
+ CF186_BANK6        = &F186
+ TT27_BANK0         = &F237
+ TT66               = &F26E
+ LF2BD              = &F2BD
+ CLYNS              = &F2DE
+ NLIN4              = &F473
+ DORND              = &F4AD
 
 INCLUDE "library/common/main/workspace/zp.asm"
 INCLUDE "library/common/main/workspace/xx3.asm"
@@ -186,10 +126,10 @@ INCLUDE "library/common/main/workspace/xx3.asm"
  QQ2               = &048E
  QQ8               = &049B
  L049F             = &049F
- QQ18_LO           = &04A4
- QQ18_HI           = &04A5
- TKN1_LO           = &04A6
- TKN1_HI           = &04A7
+ QQ18Lo            = &04A4
+ QQ18Hi            = &04A5
+ TKN1Lo            = &04A6
+ TKN1Hi            = &04A7
  LANG              = &04A8
  L04B2             = &04B2
  L04B4             = &04B4
@@ -214,8 +154,8 @@ INCLUDE "library/common/main/workspace/k_per_cent.asm"
 
  ORG CODE%
 
-INCLUDE "library/nes/main/subroutine/reset_mmc1.asm"
-INCLUDE "library/nes/main/subroutine/irq_mmc1.asm"
+INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
+INCLUDE "library/nes/main/subroutine/interrupts.asm"
 INCLUDE "library/nes/main/variable/version_number.asm"
 INCLUDE "library/enhanced/main/macro/ejmp.asm"
 INCLUDE "library/enhanced/main/macro/echr.asm"

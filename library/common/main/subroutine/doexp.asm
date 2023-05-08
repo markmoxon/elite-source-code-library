@@ -171,7 +171,7 @@ ELIF _NES_VERSION
                         \ the explosion flags and return from the subroutine
 
  STA L002B
- JSR LF8D8
+ JSR DVID4
 
  CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
                         \ to nametable 0 (&2000) and pattern table 0 (&0000)

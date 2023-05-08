@@ -1,13 +1,13 @@
 \ ******************************************************************************
 \
-\       Name: CHECK_DASHBOARD_A
+\       Name: CheckDashboardA
 \       Type: Subroutine
 \   Category: Screen mode
 \    Summary: Check the dashboard while preserving the value of A
 \
 \ ******************************************************************************
 
-.CHECK_DASHBOARD_A
+.CheckDashboardA
 
  PHA                    \ Store the value of A on the stack so we can restore
                         \ it after the macro

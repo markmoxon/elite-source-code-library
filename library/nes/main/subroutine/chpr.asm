@@ -207,13 +207,13 @@
 
 .CB6E9
 
- LDA L00B8                                        ; B6E9: A5 B8       ..
+ LDA tileNumber                                   ; B6E9: A5 B8       ..
  BEQ CB75B                                        ; B6EB: F0 6E       .n
  CMP #&FF                                         ; B6ED: C9 FF       ..
  BEQ CB75B                                        ; B6EF: F0 6A       .j
  STA (SC),Y                                       ; B6F1: 91 07       ..
- STA (L00BA),Y                                    ; B6F3: 91 BA       ..
- INC L00B8                                        ; B6F5: E6 B8       ..
+ STA (addr3),Y                                    ; B6F3: 91 BA       ..
+ INC tileNumber                                   ; B6F5: E6 B8       ..
  LDY L0037                                        ; B6F7: A4 37       .7
  DEY                                              ; B6F9: 88          .
  BEQ CB772                                        ; B6FA: F0 76       .v
@@ -225,14 +225,14 @@
 
  TAY                                              ; B702: A8          .
  LDX #&0C                                         ; B703: A2 0C       ..
- STX L00BB                                        ; B705: 86 BB       ..
+ STX addr3+1                                        ; B705: 86 BB       ..
  ASL A                                            ; B707: 0A          .
- ROL L00BB                                        ; B708: 26 BB       &.
+ ROL addr3+1                                        ; B708: 26 BB       &.
  ASL A                                            ; B70A: 0A          .
- ROL L00BB                                        ; B70B: 26 BB       &.
+ ROL addr3+1                                        ; B70B: 26 BB       &.
  ASL A                                            ; B70D: 0A          .
- ROL L00BB                                        ; B70E: 26 BB       &.
- STA L00BA                                        ; B710: 85 BA       ..
+ ROL addr3+1                                        ; B70E: 26 BB       &.
+ STA addr3                                        ; B710: 85 BA       ..
  TYA                                              ; B712: 98          .
  LDX #&0D                                         ; B713: A2 0D       ..
  STX SC+1                                         ; B715: 86 08       ..
@@ -246,34 +246,34 @@
  LDY #0                                           ; B722: A0 00       ..
  LDA (P+1),Y                                      ; B724: B1 30       .0
  STA (SC),Y                                       ; B726: 91 07       ..
- STA (L00BA),Y                                    ; B728: 91 BA       ..
+ STA (addr3),Y                                    ; B728: 91 BA       ..
  INY                                              ; B72A: C8          .
  LDA (P+1),Y                                      ; B72B: B1 30       .0
  STA (SC),Y                                       ; B72D: 91 07       ..
- STA (L00BA),Y                                    ; B72F: 91 BA       ..
+ STA (addr3),Y                                    ; B72F: 91 BA       ..
  INY                                              ; B731: C8          .
  LDA (P+1),Y                                      ; B732: B1 30       .0
  STA (SC),Y                                       ; B734: 91 07       ..
- STA (L00BA),Y                                    ; B736: 91 BA       ..
+ STA (addr3),Y                                    ; B736: 91 BA       ..
  INY                                              ; B738: C8          .
  LDA (P+1),Y                                      ; B739: B1 30       .0
  STA (SC),Y                                       ; B73B: 91 07       ..
- STA (L00BA),Y                                    ; B73D: 91 BA       ..
+ STA (addr3),Y                                    ; B73D: 91 BA       ..
  INY                                              ; B73F: C8          .
  LDA (P+1),Y                                      ; B740: B1 30       .0
  STA (SC),Y                                       ; B742: 91 07       ..
- STA (L00BA),Y                                    ; B744: 91 BA       ..
+ STA (addr3),Y                                    ; B744: 91 BA       ..
  INY                                              ; B746: C8          .
  LDA (P+1),Y                                      ; B747: B1 30       .0
  STA (SC),Y                                       ; B749: 91 07       ..
- STA (L00BA),Y                                    ; B74B: 91 BA       ..
+ STA (addr3),Y                                    ; B74B: 91 BA       ..
  INY                                              ; B74D: C8          .
  LDA (P+1),Y                                      ; B74E: B1 30       .0
  STA (SC),Y                                       ; B750: 91 07       ..
- STA (L00BA),Y                                    ; B752: 91 BA       ..
+ STA (addr3),Y                                    ; B752: 91 BA       ..
  INY                                              ; B754: C8          .
  LDA (P+1),Y                                      ; B755: B1 30       .0
- STA (L00BA),Y                                    ; B757: 91 BA       ..
+ STA (addr3),Y                                    ; B757: 91 BA       ..
  STA (SC),Y                                       ; B759: 91 07       ..
 
 .CB75B
@@ -347,7 +347,7 @@
  DEC XC                                           ; B7C4: C6 32       .2
  LDA #0                                           ; B7C6: A9 00       ..
  STA (SC),Y                                       ; B7C8: 91 07       ..
- STA (L00BA),Y                                    ; B7CA: 91 BA       ..
+ STA (addr3),Y                                    ; B7CA: 91 BA       ..
  JMP CB75B                                        ; B7CC: 4C 5B B7    L[.
 
 .CB7CF
@@ -368,7 +368,7 @@
  LDY XC                                           ; B7DB: A4 32       .2
  DEY                                              ; B7DD: 88          .
  STA (SC),Y                                       ; B7DE: 91 07       ..
- STA (L00BA),Y                                    ; B7E0: 91 BA       ..
+ STA (addr3),Y                                    ; B7E0: 91 BA       ..
  JMP CB75B                                        ; B7E2: 4C 5B B7    L[.
 
 .CB7E5
@@ -386,7 +386,7 @@
 
 .CB7F3
 
- LDX L00B9                                        ; B7F3: A6 B9       ..
+ LDX patternTableHi                                        ; B7F3: A6 B9       ..
  STX SC+1                                         ; B7F5: 86 08       ..
  ASL A                                            ; B7F7: 0A          .
  ROL SC+1                                         ; B7F8: 26 08       &.
@@ -451,17 +451,17 @@
  STA SC                                           ; B853: 85 07       ..
  LDA SC+1                                         ; B855: A5 08       ..
  ROL A                                            ; B857: 2A          *
- ADC L00E6                                        ; B858: 65 E6       e.
+ ADC nametableHi                                        ; B858: 65 E6       e.
  STA SC+1                                         ; B85A: 85 08       ..
  LDY XC                                           ; B85C: A4 32       .2
  DEY                                              ; B85E: 88          .
  LDA (SC),Y                                       ; B85F: B1 07       ..
  BNE CB7F3                                        ; B861: D0 90       ..
- LDA L00B8                                        ; B863: A5 B8       ..
+ LDA tileNumber                                   ; B863: A5 B8       ..
  BEQ CB8A3                                        ; B865: F0 3C       .<
  STA (SC),Y                                       ; B867: 91 07       ..
- INC L00B8                                        ; B869: E6 B8       ..
- LDX L00B9                                        ; B86B: A6 B9       ..
+ INC tileNumber                                   ; B869: E6 B8       ..
+ LDX patternTableHi                                        ; B86B: A6 B9       ..
  STX SC+1                                         ; B86D: 86 08       ..
  ASL A                                            ; B86F: 0A          .
  ROL SC+1                                         ; B870: 26 08       &.
@@ -503,7 +503,7 @@
 
  LDA #&21 ; '!'                                   ; B8A6: A9 21       .!
  STA SC                                           ; B8A8: 85 07       ..
- LDA L00E6                                        ; B8AA: A5 E6       ..
+ LDA nametableHi                                        ; B8AA: A5 E6       ..
  STA SC+1                                         ; B8AC: 85 08       ..
  LDY XC                                           ; B8AE: A4 32       .2
  DEY                                              ; B8B0: 88          .

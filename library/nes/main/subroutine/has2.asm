@@ -6,11 +6,11 @@
  LSR A
  LSR A
  CLC
- ADC LDA18,Y
- STA L00BA
- LDA L00E6
- ADC LDAF8,Y
- STA L00BB
+ ADC yLookupLo,Y
+ STA addr3
+ LDA nametableHi
+ ADC yLookupHi,Y
+ STA addr3+1
  LDA S
  AND #7
  STA T
@@ -18,9 +18,9 @@
  CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
                         \ to nametable 0 (&2000) and pattern table 0 (&0000)
  LDX #0
- LDA (L00BA,X)
+ LDA (addr3,X)
  BEQ CB615
- LDX L00B9
+ LDX patternTableHi
  STX SC+1
  ASL A
  ROL SC+1
@@ -33,10 +33,10 @@
  LDX T
 .loop_CB5FF
  LDA (SC),Y
- AND LD9F7,X
+ AND TWOS,X
  BNE CB62A
  LDA (SC),Y
- ORA LD9F7,X
+ ORA TWOS,X
  STA (SC),Y
  INY
  CPY #8
@@ -47,14 +47,14 @@
  LDA T
  CLC
  ADC #&34
- STA (L00BA,X)
+ STA (addr3,X)
 .CB61C
- LDA L00BA
+ LDA addr3
  CLC
  ADC #&20
- STA L00BA
+ STA addr3
  BCC CB5D9
- INC L00BB
+ INC addr3+1
  JMP CB5D9
 
 .CB62A
@@ -69,11 +69,11 @@
  LSR A
  LSR A
  CLC
- ADC LDA18,Y
- STA L00BA
- LDA L00E6
- ADC LDAF8,Y
- STA L00BB
+ ADC yLookupLo,Y
+ STA addr3
+ LDA nametableHi
+ ADC yLookupHi,Y
+ STA addr3+1
  TYA
  AND #7
  TAY
@@ -81,9 +81,9 @@
  CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
                         \ to nametable 0 (&2000) and pattern table 0 (&0000)
  LDX #0
- LDA (L00BA,X)
+ LDA (addr3,X)
  BEQ CB699
- LDX L00B9
+ LDX patternTableHi
  STX SC+1
  ASL A
  ROL SC+1
@@ -117,9 +117,9 @@
 .loop_CB689
  DEC R
  BEQ CB696
- INC L00BA
+ INC addr3
  BNE CB647
- INC L00BB
+ INC addr3+1
  JMP CB647
 
 .CB696
@@ -130,5 +130,5 @@
  TYA
  CLC
  ADC #&25
- STA (L00BA,X)
+ STA (addr3,X)
  JMP loop_CB689

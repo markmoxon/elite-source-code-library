@@ -1,17 +1,17 @@
 \ ******************************************************************************
 \
-\       Name: SWITCH_TO_TABLE_0
+\       Name: SwitchTablesTo0
 \       Type: Subroutine
 \   Category: Screen mode
 \    Summary: Switch the PPU to nametable 0 (&2000) and pattern table 0 (&0000)
 \
 \ ******************************************************************************
 
-.SWITCH_TO_TABLE_0
+.SwitchTablesTo0
 
- LDA #0                 \ Set DASHBOARD_SWITCH = 0 to stop the CHECK_DASHBOARD
- STA DASHBOARD_SWITCH   \ macro from calling this routine until both bit 7 of
-                        \ DASHBOARD_SWITCH and bit 6 of PPU_STATUS are set once
+ LDA #0                 \ Set dashboardSwitch = 0 to stop the CHECK_DASHBOARD
+ STA dashboardSwitch    \ macro from calling this routine until both bit 7 of
+                        \ dashboardSwitch and bit 6 of PPU_STATUS are set once
                         \ again
 
  LDA PPU_CTRL_COPY      \ Set A = PPU_CTRL_COPY with bits 0 and 4 cleared, so it

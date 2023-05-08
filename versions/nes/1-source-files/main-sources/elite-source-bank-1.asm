@@ -80,46 +80,46 @@
  PPU_DATA   = &2007
  OAM_DMA    = &4014
  
- SNE        = &C500     \ Addresses of routines in bank 7
- ACT        = &C520
- XX21       = &C540
- SWITCH_TO_TABLE_0 = &D06D
- LD9F7      = &D9F7
- LDA18      = &DA18
- LDAF8      = &DAF8
- LOIN       = &DC0F
- LE04A      = &E04A
- LE0BA      = &E0BA
- PIXEL      = &E4F0
- MVS5_BANK0 = &F1A2
- TT66       = &F26E
- LF2CE      = &F2CE
- DORND2     = &F4AC
- DORND      = &F4AD
- PROJ       = &F4C1
- MLS2       = &F6BA
- MLS1       = &F6C2
- MULTS      = &F6C6
- SQUA2      = &F70E
- MLU1       = &F718
- MLU2       = &F71D
- MULTU      = &F721
- FMLTU2     = &F766
- FMLTU      = &F770
- MUT2       = &F7D2
- MUT1       = &F7D6
- MULT1      = &F7DA
- MULT12     = &F83C
- MAD        = &F86F
- ADD        = &F872
- TIS1       = &F8AE
- DV42       = &F8D1
- DV41       = &F8D4
- LF8D8      = &F8D8
- DVID3B2    = &F962
- LL5        = &FA55
- LL28       = &FA91
- NORM       = &FAF8
+ SNE                = &C500
+ ACT                = &C520
+ XX21               = &C540
+ SwitchTablesTo0    = &D06D
+ TWOS               = &D9F7
+ yLookupLo          = &DA18
+ yLookupHi          = &DAF8
+ LOIN               = &DC0F
+ LE04A              = &E04A
+ LE0BA              = &E0BA
+ PIXEL              = &E4F0
+ MVS5_BANK0         = &F1A2
+ TT66               = &F26E
+ LF2CE              = &F2CE
+ DORND2             = &F4AC
+ DORND              = &F4AD
+ PROJ               = &F4C1
+ MLS2               = &F6BA
+ MLS1               = &F6C2
+ MULTS              = &F6C6
+ SQUA2              = &F70E
+ MLU1               = &F718
+ MLU2               = &F71D
+ MULTU              = &F721
+ FMLTU2             = &F766
+ FMLTU              = &F770
+ MUT2               = &F7D2
+ MUT1               = &F7D6
+ MULT1              = &F7DA
+ MULT12             = &F83C
+ MAD                = &F86F
+ ADD                = &F872
+ TIS1               = &F8AE
+ DV42               = &F8D1
+ DV41               = &F8D4
+ DVID4              = &F8D8
+ DVID3B2            = &F962
+ LL5                = &FA55
+ LL28               = &FA91
+ NORM               = &FAF8
 
 INCLUDE "library/common/main/workspace/zp.asm"
 INCLUDE "library/common/main/workspace/xx3.asm"
@@ -173,10 +173,10 @@ INCLUDE "library/nes/main/workspace/spr.asm"
  QQ8                 = &049B
  QQ9                 = &049D
  QQ10                = &049E
- QQ18_LO              = &04A4
- QQ18_HI              = &04A5
- TKN1_LO             = &04A6
- TKN1_HI             = &04A7
+ QQ18Lo              = &04A4
+ QQ18Hi              = &04A5
+ TKN1Lo              = &04A6
+ TKN1Hi              = &04A7
  SX                  = &04C8
  SY                  = &04DD
  SZ                  = &04F2
@@ -211,8 +211,8 @@ INCLUDE "library/common/main/workspace/k_per_cent.asm"
 
  ORG CODE%
 
-INCLUDE "library/nes/main/subroutine/reset_mmc1.asm"
-INCLUDE "library/nes/main/subroutine/irq_mmc1.asm"
+INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
+INCLUDE "library/nes/main/subroutine/interrupts.asm"
 INCLUDE "library/nes/main/variable/version_number.asm"
 INCLUDE "library/nes/main/macro/check_dashboard.asm"
 INCLUDE "library/nes/main/variable/unused_copy_of_xx21.asm"
@@ -449,20 +449,20 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
 .CB99E
  CMP #&40
  BCS CB969
- STA L00BA
+ STA addr3
  LDA INWK+1
  ADC INWK+4
  ADC INWK+7
  BCS CB969
  SEC
- SBC L00BA
+ SBC addr3
  LSR A
  LSR A
- STA L00BB
+ STA addr3+1
  LSR A
  LSR A
- ADC L00BB
- ADC L00BA
+ ADC addr3+1
+ ADC addr3
  CMP #&40
  BCS CB969
  LDA INWK+1
@@ -473,7 +473,7 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  ADC #1
 .CB9C8
  ADC #&7C
- STA L00BA
+ STA addr3
  LDA INWK+7
  LSR A
  LSR A
@@ -484,7 +484,7 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  SEC
 .CB9D8
  ADC #&C7
- STA L00BB
+ STA addr3+1
  LDA INWK+4
  CMP #&30
  BCC CB9E4
@@ -499,17 +499,17 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  JMP CBA6C
 
 .CB9F1
- LDA L00BB
+ LDA addr3+1
  SEC
  SBC #8
- STA L00BB
+ STA addr3+1
  LDA Y1
  CMP #&10
  BCC CBA24
- LDA L00BA
+ LDA addr3
  STA SPR_00_X,Y
  STA SPR_01_X,Y
- LDA L00BB
+ LDA addr3+1
  STA SPR_00_Y,Y
  SEC
  SBC #8
@@ -518,25 +518,25 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  AND #3
  STA SPR_00_ATTR,Y
  STA SPR_01_ATTR,Y
- LDA L00BB
+ LDA addr3+1
  SBC #&10
- STA L00BB
+ STA addr3+1
  BNE CBA4F
 .CBA24
  CMP #8
  BCC CBA47
  LDA #&F0
  STA SPR_00_Y,Y
- LDA L00BA
+ LDA addr3
  STA SPR_01_X,Y
- LDA L00BB
+ LDA addr3+1
  STA SPR_01_Y,Y
  LDA SPR_00_ATTR,Y
  AND #3
  STA SPR_01_ATTR,Y
- LDA L00BB
+ LDA addr3+1
  SBC #8
- STA L00BB
+ STA addr3+1
  BNE CBA4F
 .CBA47
  LDA #&F0
@@ -551,28 +551,28 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  LDA SPR_00_ATTR,Y
  AND #3
  STA SPR_02_ATTR,Y
- LDA L00BA
+ LDA addr3
  STA SPR_02_X,Y
- LDA L00BB
+ LDA addr3+1
  STA SPR_02_Y,Y
  RTS
 
 .CBA6C
  CLC
- ADC L00BB
+ ADC addr3+1
  CMP #&DC
  BCC CBA75
  LDA #&DC
 .CBA75
  SEC
- SBC L00BB
+ SBC addr3+1
  STA Y1
  CMP #&10
  BCC CBAA5
- LDA L00BA
+ LDA addr3
  STA SPR_00_X,Y
  STA SPR_01_X,Y
- LDA L00BB
+ LDA addr3+1
  STA SPR_00_Y,Y
  CLC
  ADC #8
@@ -581,26 +581,26 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  ORA #&20
  STA SPR_00_ATTR,Y
  STA SPR_01_ATTR,Y
- LDA L00BB
+ LDA addr3+1
  CLC
  ADC #&10
- STA L00BB
+ STA addr3+1
  BNE CBAD0
 .CBAA5
  CMP #8
  BCC CBAC8
  LDA #&F0
  STA SPR_00_Y,Y
- LDA L00BA
+ LDA addr3
  STA SPR_01_X,Y
- LDA L00BB
+ LDA addr3+1
  STA SPR_01_Y,Y
  LDA SPR_00_ATTR,Y
  ORA #&20
  STA SPR_01_ATTR,Y
- LDA L00BB
+ LDA addr3+1
  ADC #7
- STA L00BB
+ STA addr3+1
  BNE CBAD0
 .CBAC8
  LDA #&F0
@@ -615,9 +615,9 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  LDA SPR_00_ATTR,Y
  ORA #&E0
  STA SPR_02_ATTR,Y
- LDA L00BA
+ LDA addr3
  STA SPR_02_X,Y
- LDA L00BB
+ LDA addr3+1
  STA SPR_02_Y,Y
  RTS
 

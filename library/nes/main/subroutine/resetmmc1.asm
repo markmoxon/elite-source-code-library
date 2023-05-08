@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: RESET_MMC1
+\       Name: ResetMMC1
 \       Type: Variable
 \   Category: Start and end
 \    Summary: The MMC1 mapper reset routine at the start of the ROM bank
@@ -25,7 +25,7 @@
 \
 \ ******************************************************************************
 
-.RESET_MMC1
+.ResetMMC1
 
  SEI                    \ Disable interrupts
 

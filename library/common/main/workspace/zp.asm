@@ -493,10 +493,7 @@ INCLUDE "library/advanced/main/variable/widget.asm"
  SKIP 1                 \ ???
 
 INCLUDE "library/master/main/variable/yx2m1.asm"
-
-.L00B4
-
- SKIP 1                 \ ???
+INCLUDE "library/advanced/main/variable/messxc.asm"
 
 .L00B5
 
@@ -508,21 +505,17 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
  SKIP 1                 \ ???
 
-.L00B8
+.tileNumber
 
  SKIP 1                 \ ???
 
-.L00B9
+.patternTableHi
 
  SKIP 1                 \ ???
 
-.L00BA
+.addr3
 
- SKIP 1                 \ ???
-
-.L00BB
-
- SKIP 1                 \ ???
+ SKIP 2                 \ ???
 
 .L00BC
 
@@ -620,13 +613,9 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
  SKIP 1                 \ ???
 
-.ADDR1_LO
+.addr1
 
- SKIP 1                 \ ???
-
-.ADDR1_HI
-
- SKIP 1                 \ ???
+ SKIP 2                 \ ???
 
 .L00D6
 
@@ -652,7 +641,7 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
  SKIP 11                \ ???
 
-.L00E6
+.nametableHi
 
  SKIP 1                 \ ???
 
@@ -664,7 +653,7 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
  SKIP 1                 \ ???
 
-.DASHBOARD_SWITCH
+.dashboardSwitch
 
  SKIP 1                 \ ???
 
@@ -712,7 +701,7 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
  SKIP 1                 \ ???
 
-.PPU_CTRL_COPY
+.ppuCtrlCopy
 
  SKIP 1                 \ ???
 
@@ -720,7 +709,7 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
  SKIP 1                 \ ???
 
-.BANK
+.currentBank
 
  SKIP 1                 \ ???
 
@@ -732,13 +721,9 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
  SKIP 1                 \ ???
 
-.ADDR2_LO
+.addr2
 
- SKIP 1                 \ ???
-
-.ADDR2_HI
-
- SKIP 1                 \ ???
+ SKIP 2                 \ ???
 
 .L00FC
 

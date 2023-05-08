@@ -53,9 +53,9 @@ ELIF _ELITE_A_DOCKED OR _ELITE_A_FLIGHT
 
 ELIF _NES_VERSION
 
- LDA QQ18_LO            \ Set V(1 0) to point to the recursive token table at
+ LDA QQ18Lo             \ Set V(1 0) to point to the recursive token table at
  STA V                  \ location QQ18
- LDA QQ18_HI
+ LDA QQ18Hi
  STA V+1
 
  LDY #0                 \ Set a counter Y to point to the character offset

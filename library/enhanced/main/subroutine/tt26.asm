@@ -400,7 +400,7 @@ ENDIF
 
 IF _NES_VERSION
 
- JSR CHECK_DASHBOARD_A  \ ???
+ JSR CheckDashboardA    \ ???
 
 ENDIF
 

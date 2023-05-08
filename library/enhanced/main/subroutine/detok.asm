@@ -82,9 +82,9 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA TKN1_LO            \ Set V(1 0) to the address of the TKN1 table for ths
+ LDA TKN1Lo             \ Set V(1 0) to the address of the TKN1 table for ths
  STA V                  \ chosen language
- LDA TKN1_HI
+ LDA TKN1Hi
  STA V+1
 
 .DTEN

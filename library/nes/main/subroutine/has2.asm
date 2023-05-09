@@ -7,10 +7,10 @@
  LSR A
  CLC
  ADC yLookupLo,Y
- STA addr3
+ STA SC2
  LDA nametableHi
  ADC yLookupHi,Y
- STA addr3+1
+ STA SC2+1
  LDA S
  AND #7
  STA T
@@ -18,7 +18,7 @@
  CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
                         \ to nametable 0 (&2000) and pattern table 0 (&0000)
  LDX #0
- LDA (addr3,X)
+ LDA (SC2,X)
  BEQ CB615
  LDX patternTableHi
  STX SC+1
@@ -47,14 +47,14 @@
  LDA T
  CLC
  ADC #&34
- STA (addr3,X)
+ STA (SC2,X)
 .CB61C
- LDA addr3
+ LDA SC2
  CLC
  ADC #&20
- STA addr3
+ STA SC2
  BCC CB5D9
- INC addr3+1
+ INC SC2+1
  JMP CB5D9
 
 .CB62A
@@ -70,10 +70,10 @@
  LSR A
  CLC
  ADC yLookupLo,Y
- STA addr3
+ STA SC2
  LDA nametableHi
  ADC yLookupHi,Y
- STA addr3+1
+ STA SC2+1
  TYA
  AND #7
  TAY
@@ -81,7 +81,7 @@
  CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
                         \ to nametable 0 (&2000) and pattern table 0 (&0000)
  LDX #0
- LDA (addr3,X)
+ LDA (SC2,X)
  BEQ CB699
  LDX patternTableHi
  STX SC+1
@@ -117,9 +117,9 @@
 .loop_CB689
  DEC R
  BEQ CB696
- INC addr3
+ INC SC2
  BNE CB647
- INC addr3+1
+ INC SC2+1
  JMP CB647
 
 .CB696
@@ -130,5 +130,5 @@
  TYA
  CLC
  ADC #&25
- STA (addr3,X)
+ STA (SC2,X)
  JMP loop_CB689

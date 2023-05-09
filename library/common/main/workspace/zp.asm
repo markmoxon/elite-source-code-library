@@ -513,7 +513,7 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
  SKIP 1                 \ ???
 
-.addr3
+.SC2
 
  SKIP 2                 \ ???
 

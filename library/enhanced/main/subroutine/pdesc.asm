@@ -97,9 +97,9 @@ ELIF _NES_VERSION
  LDA RUPLA_HI,X
  STA SC+1
  LDA RUGAL_LO,X
- STA addr3
+ STA SC2
  LDA RUGAL_HI,X
- STA addr3+1
+ STA SC2+1
 
  LDY NRU,X
 
@@ -108,7 +108,7 @@ ELIF _NES_VERSION
  LDA (SC),Y
  CMP L049F
  BNE PD2
- LDA (addr3),Y
+ LDA (SC2),Y
 
  AND #%01111111         \ Extract bits 0-6 of A
 
@@ -116,7 +116,7 @@ ELIF _NES_VERSION
  BNE PD2                \ number, jump to PD2 to keep looping through the system
                         \ numbers in RUPLA
 
- LDA (addr3),Y          \ ???
+ LDA (SC2),Y          \ ???
  BMI PD3
 
 ENDIF

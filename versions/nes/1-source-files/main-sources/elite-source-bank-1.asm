@@ -449,20 +449,20 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
 .CB99E
  CMP #&40
  BCS CB969
- STA addr3
+ STA SC2
  LDA INWK+1
  ADC INWK+4
  ADC INWK+7
  BCS CB969
  SEC
- SBC addr3
+ SBC SC2
  LSR A
  LSR A
- STA addr3+1
+ STA SC2+1
  LSR A
  LSR A
- ADC addr3+1
- ADC addr3
+ ADC SC2+1
+ ADC SC2
  CMP #&40
  BCS CB969
  LDA INWK+1
@@ -473,7 +473,7 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  ADC #1
 .CB9C8
  ADC #&7C
- STA addr3
+ STA SC2
  LDA INWK+7
  LSR A
  LSR A
@@ -484,7 +484,7 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  SEC
 .CB9D8
  ADC #&C7
- STA addr3+1
+ STA SC2+1
  LDA INWK+4
  CMP #&30
  BCC CB9E4
@@ -499,17 +499,17 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  JMP CBA6C
 
 .CB9F1
- LDA addr3+1
+ LDA SC2+1
  SEC
  SBC #8
- STA addr3+1
+ STA SC2+1
  LDA Y1
  CMP #&10
  BCC CBA24
- LDA addr3
+ LDA SC2
  STA SPR_00_X,Y
  STA SPR_01_X,Y
- LDA addr3+1
+ LDA SC2+1
  STA SPR_00_Y,Y
  SEC
  SBC #8
@@ -518,25 +518,25 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  AND #3
  STA SPR_00_ATTR,Y
  STA SPR_01_ATTR,Y
- LDA addr3+1
+ LDA SC2+1
  SBC #&10
- STA addr3+1
+ STA SC2+1
  BNE CBA4F
 .CBA24
  CMP #8
  BCC CBA47
  LDA #&F0
  STA SPR_00_Y,Y
- LDA addr3
+ LDA SC2
  STA SPR_01_X,Y
- LDA addr3+1
+ LDA SC2+1
  STA SPR_01_Y,Y
  LDA SPR_00_ATTR,Y
  AND #3
  STA SPR_01_ATTR,Y
- LDA addr3+1
+ LDA SC2+1
  SBC #8
- STA addr3+1
+ STA SC2+1
  BNE CBA4F
 .CBA47
  LDA #&F0
@@ -551,28 +551,28 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  LDA SPR_00_ATTR,Y
  AND #3
  STA SPR_02_ATTR,Y
- LDA addr3
+ LDA SC2
  STA SPR_02_X,Y
- LDA addr3+1
+ LDA SC2+1
  STA SPR_02_Y,Y
  RTS
 
 .CBA6C
  CLC
- ADC addr3+1
+ ADC SC2+1
  CMP #&DC
  BCC CBA75
  LDA #&DC
 .CBA75
  SEC
- SBC addr3+1
+ SBC SC2+1
  STA Y1
  CMP #&10
  BCC CBAA5
- LDA addr3
+ LDA SC2
  STA SPR_00_X,Y
  STA SPR_01_X,Y
- LDA addr3+1
+ LDA SC2+1
  STA SPR_00_Y,Y
  CLC
  ADC #8
@@ -581,26 +581,26 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  ORA #&20
  STA SPR_00_ATTR,Y
  STA SPR_01_ATTR,Y
- LDA addr3+1
+ LDA SC2+1
  CLC
  ADC #&10
- STA addr3+1
+ STA SC2+1
  BNE CBAD0
 .CBAA5
  CMP #8
  BCC CBAC8
  LDA #&F0
  STA SPR_00_Y,Y
- LDA addr3
+ LDA SC2
  STA SPR_01_X,Y
- LDA addr3+1
+ LDA SC2+1
  STA SPR_01_Y,Y
  LDA SPR_00_ATTR,Y
  ORA #&20
  STA SPR_01_ATTR,Y
- LDA addr3+1
+ LDA SC2+1
  ADC #7
- STA addr3+1
+ STA SC2+1
  BNE CBAD0
 .CBAC8
  LDA #&F0
@@ -615,9 +615,9 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  LDA SPR_00_ATTR,Y
  ORA #&E0
  STA SPR_02_ATTR,Y
- LDA addr3
+ LDA SC2
  STA SPR_02_X,Y
- LDA addr3+1
+ LDA SC2+1
  STA SPR_02_Y,Y
  RTS
 

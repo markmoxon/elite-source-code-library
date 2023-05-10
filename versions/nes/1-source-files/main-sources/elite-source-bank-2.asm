@@ -94,6 +94,7 @@
 
 INCLUDE "library/common/main/workspace/zp.asm"
 INCLUDE "library/common/main/workspace/xx3.asm"
+INCLUDE "library/nes/main/workspace/spr.asm"
 
 \ ******************************************************************************
 \
@@ -157,6 +158,7 @@ INCLUDE "library/common/main/workspace/k_per_cent.asm"
 INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
 INCLUDE "library/nes/main/subroutine/interrupts.asm"
 INCLUDE "library/nes/main/variable/version_number.asm"
+INCLUDE "library/nes/main/macro/check_dashboard.asm"
 INCLUDE "library/enhanced/main/macro/ejmp.asm"
 INCLUDE "library/enhanced/main/macro/echr.asm"
 INCLUDE "library/enhanced/main/macro/etok.asm"
@@ -5134,7 +5136,6 @@ INCLUDE "library/nes/main/variable/qq18_de.asm"
 INCLUDE "library/nes/main/variable/qq18_fr.asm"
 INCLUDE "library/nes/main/variable/rutok_lo.asm"
 INCLUDE "library/nes/main/variable/rutok_hi.asm"
-INCLUDE "library/nes/main/macro/check_dashboard.asm"
 INCLUDE "library/enhanced/main/subroutine/detok3.asm"
 INCLUDE "library/enhanced/main/subroutine/detok.asm"
 INCLUDE "library/enhanced/main/subroutine/detok2.asm"

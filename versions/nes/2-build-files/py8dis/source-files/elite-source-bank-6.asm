@@ -922,7 +922,7 @@ TWFL              = &DA09
 TWFR              = &DA10
 yLookupLo         = &DA18
 yLookupHi         = &DAF8
-LDBD8             = &DBD8
+subm_DBD8         = &DBD8
 LOIN              = &DC0F
 subm_DEA5         = &DEA5
 subm_DF76         = &DF76
@@ -5554,7 +5554,7 @@ LA3F8 = LA3F5+3
  CLC                                          ; B6EE: 18          .
  ADC #6                                       ; B6EF: 69 06       i.
  STA YC                                       ; B6F1: 85 3B       .;
- JSR LDBD8                                    ; B6F3: 20 D8 DB     ..
+ JSR subm_DBD8                                ; B6F3: 20 D8 DB     ..
  LDA SC                                       ; B6F6: A5 07       ..
  CLC                                          ; B6F8: 18          .
  ADC XC                                       ; B6F9: 65 32       e2

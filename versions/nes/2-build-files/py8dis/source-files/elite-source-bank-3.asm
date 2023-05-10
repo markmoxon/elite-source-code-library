@@ -730,7 +730,7 @@ TWFL              = &DA09
 TWFR              = &DA10
 yLookupLo         = &DA18
 yLookupHi         = &DAF8
-LDBD8             = &DBD8
+subm_DBD8         = &DBD8
 LOIN              = &DC0F
 subm_DEA5         = &DEA5
 subm_DF76         = &DF76
@@ -9132,7 +9132,7 @@ SetupMMC1         = &FB89
 
 ; ******************************************************************************
 .subm_B2A9
- JSR LDBD8               ; B2A9: 20 D8 DB     ..
+ JSR subm_DBD8           ; B2A9: 20 D8 DB     ..
  LDA SC                  ; B2AC: A5 07       ..
  CLC                     ; B2AE: 18          .
  ADC XC                  ; B2AF: 65 32       e2
@@ -9182,7 +9182,7 @@ SetupMMC1         = &FB89
 
 ; ******************************************************************************
 .subm_B2FB
- JSR LDBD8               ; B2FB: 20 D8 DB     ..
+ JSR subm_DBD8           ; B2FB: 20 D8 DB     ..
  LDA SC                  ; B2FE: A5 07       ..
  CLC                     ; B300: 18          .
  ADC XC                  ; B301: 65 32       e2

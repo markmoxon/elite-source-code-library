@@ -482,6 +482,7 @@ subroutine(0xD164, "SetTable0UntilNMI2")
 subroutine(0xD167, "SetTable0UntilNMI")
 subroutine(0xD710, "FillMemory")    # Mine, something to do with memory filling?
 subroutine(0xD8C5, "subm_D8C5")
+subroutine(0xDBD8, "subm_DBD8")
 subroutine(0xD8E1, "subm_D8E1")
 subroutine(0xD8EC, "subm_D8EC")
 subroutine(0xD908, "subm_D908")

@@ -806,6 +806,7 @@ TWFL              = &DA09
 TWFR              = &DA10
 yLookupLo         = &DA18
 yLookupHi         = &DAF8
+subm_DBD8         = &DBD8
 LOIN              = &DC0F
 subm_DEA5         = &DEA5
 subm_DF76         = &DF76

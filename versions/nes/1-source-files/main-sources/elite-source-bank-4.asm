@@ -73,7 +73,7 @@
 subm_DBD8         = &DBD8
 UnpackToRAM       = &F52D
 UnpackToPPU       = &F5AF
-SwitchTablesTo0   = &D06D
+SetPPUTablesTo0   = &D06D
 pattBuffer0       = &6000
 pattBuffer1       = &6800
 
@@ -240,7 +240,7 @@ INCLUDE "library/common/main/workspace/k_per_cent.asm"
 INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
 INCLUDE "library/nes/main/subroutine/interrupts.asm"
 INCLUDE "library/nes/main/variable/version_number.asm"
-INCLUDE "library/nes/main/macro/check_dashboard.asm"
+INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
 \ ******************************************************************************
 \
@@ -2854,8 +2854,8 @@ INCLUDE "library/nes/main/macro/check_dashboard.asm"
 
 .CBA47
 
- CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
-                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
  LDA SC
  STA SC2

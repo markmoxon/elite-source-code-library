@@ -61,8 +61,8 @@ ENDIF
 
 IF _NES_VERSION
 
- CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
-                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
 ENDIF
 
@@ -160,8 +160,8 @@ ELIF _NES_VERSION
 
  STA XX+1               \ First we store the high byte A in XX+1
 
- CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
-                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
  LDA P                  \ Then we do the low bytes:
  ADC SXL,Y              \
@@ -231,8 +231,8 @@ ENDIF
 
 IF _NES_VERSION
 
- CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
-                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
 ENDIF
 
@@ -312,8 +312,8 @@ ENDIF
 
 IF _NES_VERSION
 
- CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
-                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
 ENDIF
 
@@ -436,8 +436,8 @@ ENDIF
 
 IF _NES_VERSION
 
- CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
-                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
 ENDIF
 

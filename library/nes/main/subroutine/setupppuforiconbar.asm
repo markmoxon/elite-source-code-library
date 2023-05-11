@@ -1,19 +1,20 @@
 \ ******************************************************************************
 \
-\       Name: CheckDashboardA
+\       Name: SetupPPUForIconBar
 \       Type: Subroutine
 \   Category: Screen mode
-\    Summary: Check the dashboard while preserving the value of A
+\    Summary: If the PPU has started drawing the icon bar, configure the PPU to
+\             use nametable 0 and pattern table 0 while preserving A
 \
 \ ******************************************************************************
 
-.CheckDashboardA
+.SetupPPUForIconBar
 
  PHA                    \ Store the value of A on the stack so we can restore
                         \ it after the macro
 
- CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
-                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
  PLA                    \ Restore the value of A so it is preserved
 

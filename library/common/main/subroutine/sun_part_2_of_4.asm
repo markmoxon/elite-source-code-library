@@ -292,8 +292,8 @@ ELIF _NES_VERSION
  JMP CAE9B
 
 .CAE29
- CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
-                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
  TYA
  CLC
  ADC #7
@@ -349,8 +349,8 @@ ELIF _NES_VERSION
  RTS
 
 .CAE9B
- CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
-                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
  LDX P
  BEQ CAE9A
  TYA
@@ -382,8 +382,8 @@ ELIF _NES_VERSION
  JMP CB039
 
 .sub_CAEE8
- CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
-                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
  LDX P+1
  STX XX15
  TYA
@@ -415,8 +415,8 @@ ELIF _NES_VERSION
  JMP CB05D
 
 .sub_CAF35
- CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
-                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
  STY Y1
 
 ENDIF

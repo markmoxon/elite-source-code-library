@@ -8,19 +8,19 @@
  CLC
  ADC yLookupLo,Y
  STA SC2
- LDA nametableHi
+ LDA nameBufferHi
  ADC yLookupHi,Y
  STA SC2+1
  LDA S
  AND #7
  STA T
 .CB5D9
- CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
-                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
  LDX #0
  LDA (SC2,X)
  BEQ CB615
- LDX patternTableHi
+ LDX pattBufferHi
  STX SC+1
  ASL A
  ROL SC+1
@@ -71,19 +71,19 @@
  CLC
  ADC yLookupLo,Y
  STA SC2
- LDA nametableHi
+ LDA nameBufferHi
  ADC yLookupHi,Y
  STA SC2+1
  TYA
  AND #7
  TAY
 .CB647
- CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
-                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
  LDX #0
  LDA (SC2,X)
  BEQ CB699
- LDX patternTableHi
+ LDX pattBufferHi
  STX SC+1
  ASL A
  ROL SC+1

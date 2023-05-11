@@ -67,7 +67,7 @@ ELIF _NES_VERSION
 
 .loop_CB3C4
 
- JSR CheckDashboardA    \ ???
+ JSR SetupPPUForIconBar \ ???
  LDA L04B2
  ORA L04B4
  AND #&C0

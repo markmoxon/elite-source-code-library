@@ -63,8 +63,8 @@
 
  STA K3                 \ Store the A register in K3 so we can retrieve it below
 
- CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
-                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
  LDA K3                 \ Store the A, X and Y registers, so we can restore
  STY YSAV2              \ them at the end (so they don't get changed by this
@@ -140,7 +140,7 @@
 .CB686
 
  INC XC                                           ; B686: E6 32       .2
- LDA W                                            ; B688: A5 9E       ..
+ LDA QQ11                                         ; B688: A5 9E       ..
  AND #&30 ; '0'                                   ; B68A: 29 30       )0
  BEQ CB6A9                                        ; B68C: F0 1B       ..
  LDY L0037                                        ; B68E: A4 37       .7
@@ -193,7 +193,7 @@
 
 .CB6D8
 
- LDA W                                            ; B6D8: A5 9E       ..
+ LDA QQ11                                         ; B6D8: A5 9E       ..
  BNE CB6DF                                        ; B6DA: D0 03       ..
  JMP CB83E                                        ; B6DC: 4C 3E B8    L>.
 
@@ -280,8 +280,8 @@
 
  LDY YSAV2                                        ; B75B: AC 82 04    ...
  LDX XSAV2                                        ; B75E: AE 81 04    ...
- CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
-                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
  LDA K3                                           ; B76E: A5 3D       .=
  CLC                                              ; B770: 18          .
@@ -373,7 +373,7 @@
 
 .CB7E5
 
- LDY W                                            ; B7E5: A4 9E       ..
+ LDY QQ11                                         ; B7E5: A4 9E       ..
  CPY #&9D                                         ; B7E7: C0 9D       ..
  BEQ CB7EF                                        ; B7E9: F0 04       ..
  CPY #&DF                                         ; B7EB: C0 DF       ..
@@ -386,7 +386,7 @@
 
 .CB7F3
 
- LDX patternTableHi                                        ; B7F3: A6 B9       ..
+ LDX pattBufferHi                                        ; B7F3: A6 B9       ..
  STX SC+1                                         ; B7F5: 86 08       ..
  ASL A                                            ; B7F7: 0A          .
  ROL SC+1                                         ; B7F8: 26 08       &.
@@ -451,7 +451,7 @@
  STA SC                                           ; B853: 85 07       ..
  LDA SC+1                                         ; B855: A5 08       ..
  ROL A                                            ; B857: 2A          *
- ADC nametableHi                                        ; B858: 65 E6       e.
+ ADC nameBufferHi                                        ; B858: 65 E6       e.
  STA SC+1                                         ; B85A: 85 08       ..
  LDY XC                                           ; B85C: A4 32       .2
  DEY                                              ; B85E: 88          .
@@ -461,7 +461,7 @@
  BEQ CB8A3                                        ; B865: F0 3C       .<
  STA (SC),Y                                       ; B867: 91 07       ..
  INC tileNumber                                   ; B869: E6 B8       ..
- LDX patternTableHi                                        ; B86B: A6 B9       ..
+ LDX pattBufferHi                                        ; B86B: A6 B9       ..
  STX SC+1                                         ; B86D: 86 08       ..
  ASL A                                            ; B86F: 0A          .
  ROL SC+1                                         ; B870: 26 08       &.
@@ -503,7 +503,7 @@
 
  LDA #&21 ; '!'                                   ; B8A6: A9 21       .!
  STA SC                                           ; B8A8: 85 07       ..
- LDA nametableHi                                        ; B8AA: A5 E6       ..
+ LDA nameBufferHi                                        ; B8AA: A5 E6       ..
  STA SC+1                                         ; B8AC: 85 08       ..
  LDY XC                                           ; B8AE: A4 32       .2
  DEY                                              ; B8B0: 88          .

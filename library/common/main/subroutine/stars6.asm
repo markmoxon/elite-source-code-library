@@ -51,8 +51,8 @@ ENDIF
 
 IF _NES_VERSION
 
- CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
-                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
 ENDIF
 
@@ -133,8 +133,8 @@ ELIF _NES_VERSION
 
  STA YY+1               \ First we store the high byte A in YY+1
 
- CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
-                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
  LDA SYL,Y              \ Then we do the low bytes with:
  SBC P                  \
@@ -288,8 +288,8 @@ ELIF _NES_VERSION
  LDA YY                 \ Set (S R) = YY(1 0) = y (low byte)
  STA R
 
- CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
-                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
  LDA YY+1               \ Set (S R) = YY(1 0) = y (high byte)
  STA S

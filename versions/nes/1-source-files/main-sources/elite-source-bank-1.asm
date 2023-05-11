@@ -83,7 +83,7 @@
  SNE                = &C500
  ACT                = &C520
  XX21               = &C540
- SwitchTablesTo0    = &D06D
+ SetPPUTablesTo0    = &D06D
  TWOS               = &D9F7
  yLookupLo          = &DA18
  yLookupHi          = &DAF8
@@ -214,7 +214,7 @@ INCLUDE "library/common/main/workspace/k_per_cent.asm"
 INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
 INCLUDE "library/nes/main/subroutine/interrupts.asm"
 INCLUDE "library/nes/main/variable/version_number.asm"
-INCLUDE "library/nes/main/macro/check_dashboard.asm"
+INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 INCLUDE "library/nes/main/variable/unused_copy_of_xx21.asm"
 INCLUDE "library/advanced/main/variable/e_per_cent.asm"
 INCLUDE "library/master/data/variable/kwl_per_cent.asm"
@@ -423,7 +423,7 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
 
 .SCAN
 
- LDA W                  \ ???
+ LDA QQ11               \ ???
  BNE CB974
  LDX TYPE
  BMI CB974
@@ -636,8 +636,8 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  LDY #&21
  STA (INF),Y
 
- CHECK_DASHBOARD        \ If the PPU has started drawing the dashboard, switch
-                        \ to nametable 0 (&2000) and pattern table 0 (&0000)
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
 \ ******************************************************************************
 \
@@ -660,7 +660,7 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  ASL A
  ASL A
  TAX
- LDA W
+ LDA QQ11
  BNE CBB1F
  LDA #&F0
  STA SPR_11_Y,X

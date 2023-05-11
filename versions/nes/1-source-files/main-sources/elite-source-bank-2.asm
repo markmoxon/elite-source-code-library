@@ -76,11 +76,11 @@
  PPU_DATA   = &2007
  OAM_DMA    = &4014
 
- SwitchTablesTo0    = &D06D
+ SetPPUTablesTo0    = &D06D
  LD8C5              = &D8C5
  LDBD8              = &DBD8
  DELAY              = &EBA2
- CheckDashboardA    = &EC7D
+ SetupPPUForIconBar = &EC7D
  PAS1               = &EF7A
  DETOK_b2           = &F082
  DTS_b2             = &F09D
@@ -158,7 +158,7 @@ INCLUDE "library/common/main/workspace/k_per_cent.asm"
 INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
 INCLUDE "library/nes/main/subroutine/interrupts.asm"
 INCLUDE "library/nes/main/variable/version_number.asm"
-INCLUDE "library/nes/main/macro/check_dashboard.asm"
+INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 INCLUDE "library/enhanced/main/macro/ejmp.asm"
 INCLUDE "library/enhanced/main/macro/echr.asm"
 INCLUDE "library/enhanced/main/macro/etok.asm"

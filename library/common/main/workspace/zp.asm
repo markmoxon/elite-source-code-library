@@ -106,19 +106,19 @@ ELIF _NES_VERSION
 INCLUDE "library/common/main/variable/p.asm"
 INCLUDE "library/common/main/variable/xc.asm"
 
-.L0033
+.hiddenColour
 
  SKIP 1                 \ ???
 
-.L0034
+.visibleColour
 
  SKIP 1                 \ ???
 
-.L0035
+.paletteColour1
 
  SKIP 1                 \ ???
 
-.L0036
+.paletteColour2
 
  SKIP 1                 \ ???
 
@@ -126,15 +126,15 @@ INCLUDE "library/common/main/variable/xc.asm"
 
  SKIP 1                 \ ???
 
-.L0038
+.nmiTimer
 
  SKIP 1                 \ ???
 
-.L0039
+.nmiTimerLo
 
  SKIP 1                 \ ???
 
-.L003A
+.nmiTimerHi
 
  SKIP 1                 \ ???
 
@@ -336,13 +336,22 @@ INCLUDE "library/common/main/variable/xsav.asm"
 INCLUDE "library/common/main/variable/ysav.asm"
 INCLUDE "library/common/main/variable/xx17.asm"
 
-IF _MASTER_VERSION OR _NES_VERSION \ Platform
+IF _MASTER_VERSION \ Platform
 
 INCLUDE "library/master/main/variable/w.asm"
 
 ENDIF
 
 INCLUDE "library/common/main/variable/qq11.asm"
+
+IF _NES_VERSION \ Platform
+
+.QQ11a
+
+ SKIP 1
+
+ENDIF
+
 INCLUDE "library/common/main/variable/zz.asm"
 INCLUDE "library/common/main/variable/xx13.asm"
 INCLUDE "library/common/main/variable/mcnt.asm"
@@ -509,7 +518,7 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
  SKIP 1                 \ ???
 
-.patternTableHi
+.pattBufferHi
 
  SKIP 1                 \ ???
 
@@ -533,41 +542,25 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
  SKIP 1                 \ ???
 
-.L00C0
+.drawingPhase
 
  SKIP 1                 \ ???
 
-.L00C1
+.tileNumber0
 
- SKIP 1                 \ ???
+ SKIP 2                 \ ???
 
-.L00C2
+.tileNumber1
 
- SKIP 1                 \ ???
+ SKIP 2                 \ ???
 
-.L00C3
+.tileNumber2
 
- SKIP 1                 \ ???
+ SKIP 2                 \ ???
 
-.L00C4
+.tileNumber3
 
- SKIP 1                 \ ???
-
-.L00C5
-
- SKIP 1                 \ ???
-
-.L00C6
-
- SKIP 1                 \ ???
-
-.L00C7
-
- SKIP 1                 \ ???
-
-.L00C8
-
- SKIP 1                 \ ???
+ SKIP 2                 \ ???
 
 .L00C9
 
@@ -597,13 +590,9 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
  SKIP 1                 \ ???
 
-.L00D0
+.tempVar
 
- SKIP 1                 \ ???
-
-.L00D1
-
- SKIP 1                 \ ???
+ SKIP 2                 \ ???
 
 .L00D2
 
@@ -641,7 +630,7 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
  SKIP 11                \ ???
 
-.nametableHi
+.nameBufferHi
 
  SKIP 1                 \ ???
 
@@ -653,29 +642,21 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
  SKIP 1                 \ ???
 
-.dashboardSwitch
+.setupPPUForIconBar
 
  SKIP 1                 \ ???
 
-.L00EA
+.showUserInterface
 
  SKIP 1                 \ ???
 
-.L00EB
+.addr4
 
- SKIP 1                 \ ???
+ SKIP 2                 \ ???
 
-.L00EC
+.addr5
 
- SKIP 1                 \ ???
-
-.L00ED
-
- SKIP 1                 \ ???
-
-.L00EE
-
- SKIP 1                 \ ???
+ SKIP 2                 \ ???
 
 .L00EF
 
@@ -689,11 +670,11 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
  SKIP 2                 \ ???
 
-.L00F3
+.palettePhase
 
  SKIP 1                 \ ???
 
-.L00F4
+.otherPhase
 
  SKIP 1                 \ ???
 
@@ -709,7 +690,7 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
  SKIP 1                 \ ???
 
-.L00F8
+.runningSetBank
 
  SKIP 1                 \ ???
 

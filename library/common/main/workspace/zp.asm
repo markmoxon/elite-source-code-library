@@ -343,7 +343,6 @@ INCLUDE "library/master/main/variable/w.asm"
 ENDIF
 
 INCLUDE "library/common/main/variable/qq11.asm"
-
 IF _NES_VERSION \ Platform
 
 .QQ11a
@@ -546,21 +545,37 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
  SKIP 1                 \ ???
 
-.tileNumber0
+.tile0Phase0
 
- SKIP 2                 \ ???
+ SKIP 1                 \ ???
 
-.tileNumber1
+.tile0Phase1
 
- SKIP 2                 \ ???
+ SKIP 1                 \ ???
 
-.tileNumber2
+.tile1Phase0
 
- SKIP 2                 \ ???
+ SKIP 1                 \ ???
 
-.tileNumber3
+.tile1Phase1
 
- SKIP 2                 \ ???
+ SKIP 1                 \ ???
+
+.tile2Phase0
+
+ SKIP 1                 \ ???
+
+.tile2Phase1
+
+ SKIP 1                 \ ???
+
+.tile3Phase0
+
+ SKIP 1                 \ ???
+
+.tile3Phase1
+
+ SKIP 1                 \ ???
 
 .L00C9
 
@@ -628,17 +643,49 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
 .L00DB
 
- SKIP 11                \ ???
+ SKIP 2                \ ???
+
+.L00DD
+
+ SKIP 2                 \ ???
+
+.L00DF
+
+ SKIP 1                 \ ???
+
+.L00E0
+
+ SKIP 1                 \ ???
+
+.patternBufferLo
+
+ SKIP 1                 \ ???
+
+.patternBufferHi
+
+ SKIP 1                 \ ???
+
+.ppuNametableLo
+
+ SKIP 1                 \ ???
+
+.ppuNametableHi
+
+ SKIP 1                 \ ???
+
+.drawingPhaseDebug
+
+ SKIP 1                 \ ???
 
 .nameBufferHi
 
  SKIP 1                 \ ???
 
-.L00E7
+.startupDebug
 
  SKIP 1                 \ ???
 
-.L00E8
+.temp1
 
  SKIP 1                 \ ???
 

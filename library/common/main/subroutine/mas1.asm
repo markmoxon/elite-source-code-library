@@ -36,8 +36,8 @@
 \
 \ Returns:
 \
-\   A                   The high byte of the result with the sign cleared (e.g.
-\                       |x_hi| if X = 0, etc.)
+\   A                   The highest byte of the result with the sign cleared
+\                       (e.g. |x_sign| when X = 0, etc.)
 \
 \ Other entry points:
 \
@@ -67,7 +67,8 @@
  LDY K+2
  STY INWK+1,X
 
- AND #%01111111         \ Set A to the sign byte with the sign cleared
+ AND #%01111111         \ Set A to the sign byte with the sign cleared,
+                        \ i.e. |x_sign| when X = 0
 
 .MA9
 

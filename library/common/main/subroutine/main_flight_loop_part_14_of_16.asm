@@ -7,6 +7,7 @@
 \  Deep dive: Program flow of the main game loop
 \             Scheduling tasks with the main loop counter
 \             Ship data blocks
+\             The space station safe zone
 \
 \ ------------------------------------------------------------------------------
 \

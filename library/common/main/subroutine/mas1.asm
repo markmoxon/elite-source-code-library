@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Maths (Geometry)
 \    Summary: Add an orientation vector coordinate to an INWK coordinate
+\  Deep dive: The space station safe zone
 \
 \ ------------------------------------------------------------------------------
 \

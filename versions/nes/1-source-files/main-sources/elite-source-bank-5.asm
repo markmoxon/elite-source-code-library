@@ -52,54 +52,7 @@
  _ELITE_A_6502SP_IO     = FALSE
  _ELITE_A_6502SP_PARA   = FALSE
 
-\ ******************************************************************************
-\
-\ Configuration variables
-\
-\ ******************************************************************************
-
- S% = &C007             \ The game's main entry point in bank 7
-
- PPU_CTRL   = &2000     \ NES PPU registers
- PPU_MASK   = &2001
- PPU_STATUS = &2002
- OAM_ADDR   = &2003
- OAM_DATA   = &2004
- PPU_SCROLL = &2005
- PPU_ADDR   = &2006
- PPU_DATA   = &2007
- OAM_DMA    = &4014
-
-INCLUDE "library/common/main/workspace/zp.asm"
-INCLUDE "library/common/main/workspace/xx3.asm"
-
-\ ******************************************************************************
-\
-\       Name: WP
-\       Type: Workspace
-\    Address: &0300 to &05FF
-\   Category: Workspaces
-\    Summary: Ship slots, variables
-\
-\ ******************************************************************************
-
-L03EE             = &03EE
-pictureTile       = &046C
-systemFlag        = &048B
-language          = &04A8
-L04BC             = &04BC
-L04BD             = &04BD
-pattBuffer0       = &6000
-pattBuffer1       = &6800
-LE5B0_EN          = &E5B0
-LE602_DE          = &E602
-LE653_FR          = &E653
-subm_E909         = &E909
-subm_F362         = &F362
-UnpackToRAM       = &F52D
-UnpackToPPU       = &F5AF
-
-INCLUDE "library/common/main/workspace/k_per_cent.asm"
+ INCLUDE "versions/nes/1-source-files/main-sources/elite-source-common.asm"
 
 \ ******************************************************************************
 \

@@ -46,7 +46,7 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDY LANG               \ Set Y to the chosen language
+ LDY language           \ Set Y to the chosen language
 
  LDA RUTOK_LO,Y         \ Set V(1 0) to the address of the RUTOK table for ths
  STA V                  \ chosen language

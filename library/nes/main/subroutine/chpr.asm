@@ -199,7 +199,7 @@
 
 .CB6DF
 
- JSR LDBD8                                        ; B6DF: 20 D8 DB     ..
+ JSR subm_DBD8                                        ; B6DF: 20 D8 DB     ..
  LDY XC                                           ; B6E2: A4 32       .2
  DEY                                              ; B6E4: 88          .
  LDA (SC),Y                                       ; B6E5: B1 07       ..
@@ -342,7 +342,7 @@
 
 .CB7BF
 
- JSR LDBD8                                        ; B7BF: 20 D8 DB     ..
+ JSR subm_DBD8                                        ; B7BF: 20 D8 DB     ..
  LDY XC                                           ; B7C2: A4 32       .2
  DEC XC                                           ; B7C4: C6 32       .2
  LDA #0                                           ; B7C6: A9 00       ..
@@ -353,7 +353,7 @@
 .CB7CF
 
  PHA                                              ; B7CF: 48          H
- JSR LDBD8                                        ; B7D0: 20 D8 DB     ..
+ JSR subm_DBD8                                        ; B7D0: 20 D8 DB     ..
  PLA                                              ; B7D3: 68          h
  CMP #&20 ; ' '                                   ; B7D4: C9 20       .
  BEQ CB7E5                                        ; B7D6: F0 0D       ..

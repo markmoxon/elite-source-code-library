@@ -91,7 +91,7 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDX LANG               \ ???
+ LDX language           \ ???
  LDA RUPLA_LO,X
  STA SC
  LDA RUPLA_HI,X

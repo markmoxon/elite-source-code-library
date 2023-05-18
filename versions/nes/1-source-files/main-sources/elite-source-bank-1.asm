@@ -123,7 +123,7 @@
 
 INCLUDE "library/common/main/workspace/zp.asm"
 INCLUDE "library/common/main/workspace/xx3.asm"
-INCLUDE "library/nes/main/workspace/spr.asm"
+INCLUDE "library/nes/main/workspace/sprite_buffer.asm"
 
 \ ******************************************************************************
 \
@@ -415,9 +415,9 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
 
 .CB969
  LDA #&F0
- STA SPR_00_Y,Y
- STA SPR_01_Y,Y
- STA SPR_02_Y,Y
+ STA ySprite0,Y
+ STA ySprite1,Y
+ STA ySprite2,Y
 .CB974
  RTS
 
@@ -437,7 +437,7 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  ADC #&2C
  TAY
  LDA L037E,X
- STA SPR_00_ATTR,Y
+ STA attrSprite0,Y
  LDA INWK+1
  CMP INWK+4
  BCS CB998
@@ -507,17 +507,17 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  CMP #&10
  BCC CBA24
  LDA SC2
- STA SPR_00_X,Y
- STA SPR_01_X,Y
+ STA xSprite0,Y
+ STA xSprite1,Y
  LDA SC2+1
- STA SPR_00_Y,Y
+ STA ySprite0,Y
  SEC
  SBC #8
- STA SPR_01_Y,Y
- LDA SPR_00_ATTR,Y
+ STA ySprite1,Y
+ LDA attrSprite0,Y
  AND #3
- STA SPR_00_ATTR,Y
- STA SPR_01_ATTR,Y
+ STA attrSprite0,Y
+ STA attrSprite1,Y
  LDA SC2+1
  SBC #&10
  STA SC2+1
@@ -526,35 +526,35 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  CMP #8
  BCC CBA47
  LDA #&F0
- STA SPR_00_Y,Y
+ STA ySprite0,Y
  LDA SC2
- STA SPR_01_X,Y
+ STA xSprite1,Y
  LDA SC2+1
- STA SPR_01_Y,Y
- LDA SPR_00_ATTR,Y
+ STA ySprite1,Y
+ LDA attrSprite0,Y
  AND #3
- STA SPR_01_ATTR,Y
+ STA attrSprite1,Y
  LDA SC2+1
  SBC #8
  STA SC2+1
  BNE CBA4F
 .CBA47
  LDA #&F0
- STA SPR_00_Y,Y
- STA SPR_01_Y,Y
+ STA ySprite0,Y
+ STA ySprite1,Y
 .CBA4F
  LDA Y1
  AND #7
  CLC
  ADC #&DB
- STA SPR_02_TILE,Y
- LDA SPR_00_ATTR,Y
+ STA tileSprite2,Y
+ LDA attrSprite0,Y
  AND #3
- STA SPR_02_ATTR,Y
+ STA attrSprite2,Y
  LDA SC2
- STA SPR_02_X,Y
+ STA xSprite2,Y
  LDA SC2+1
- STA SPR_02_Y,Y
+ STA ySprite2,Y
  RTS
 
 .CBA6C
@@ -570,17 +570,17 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  CMP #&10
  BCC CBAA5
  LDA SC2
- STA SPR_00_X,Y
- STA SPR_01_X,Y
+ STA xSprite0,Y
+ STA xSprite1,Y
  LDA SC2+1
- STA SPR_00_Y,Y
+ STA ySprite0,Y
  CLC
  ADC #8
- STA SPR_01_Y,Y
- LDA SPR_00_ATTR,Y
+ STA ySprite1,Y
+ LDA attrSprite0,Y
  ORA #&20
- STA SPR_00_ATTR,Y
- STA SPR_01_ATTR,Y
+ STA attrSprite0,Y
+ STA attrSprite1,Y
  LDA SC2+1
  CLC
  ADC #&10
@@ -590,35 +590,35 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  CMP #8
  BCC CBAC8
  LDA #&F0
- STA SPR_00_Y,Y
+ STA ySprite0,Y
  LDA SC2
- STA SPR_01_X,Y
+ STA xSprite1,Y
  LDA SC2+1
- STA SPR_01_Y,Y
- LDA SPR_00_ATTR,Y
+ STA ySprite1,Y
+ LDA attrSprite0,Y
  ORA #&20
- STA SPR_01_ATTR,Y
+ STA attrSprite1,Y
  LDA SC2+1
  ADC #7
  STA SC2+1
  BNE CBAD0
 .CBAC8
  LDA #&F0
- STA SPR_00_Y,Y
- STA SPR_01_Y,Y
+ STA ySprite0,Y
+ STA ySprite1,Y
 .CBAD0
  LDA Y1
  AND #7
  CLC
  ADC #&DB
- STA SPR_02_TILE,Y
- LDA SPR_00_ATTR,Y
+ STA tileSprite2,Y
+ LDA attrSprite0,Y
  ORA #&E0
- STA SPR_02_ATTR,Y
+ STA attrSprite2,Y
  LDA SC2
- STA SPR_02_X,Y
+ STA xSprite2,Y
  LDA SC2+1
- STA SPR_02_Y,Y
+ STA ySprite2,Y
  RTS
 
 \ ******************************************************************************
@@ -663,9 +663,9 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  LDA QQ11
  BNE CBB1F
  LDA #&F0
- STA SPR_11_Y,X
- STA SPR_12_Y,X
- STA SPR_13_Y,X
+ STA ySprite11,X
+ STA ySprite12,X
+ STA ySprite13,X
 .CBB1F
  LDA #0
  STA L002A

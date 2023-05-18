@@ -79,7 +79,7 @@ pattBuffer1       = &6800
 
 INCLUDE "library/common/main/workspace/zp.asm"
 INCLUDE "library/common/main/workspace/xx3.asm"
-INCLUDE "library/nes/main/workspace/spr.asm"
+INCLUDE "library/nes/main/workspace/sprite_buffer.asm"
 
 \ ******************************************************************************
 \
@@ -2880,16 +2880,16 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
  ADC K+2
 
- STA SPR_00_TILE,X
+ STA tileSprite0,X
 
  LDA S
- STA SPR_00_ATTR,X
+ STA attrSprite0,X
 
  LDA SC2
- STA SPR_00_X,X
+ STA xSprite0,X
 
  LDA SC+1
- STA SPR_00_Y,X
+ STA ySprite0,X
 
  TXA
  CLC

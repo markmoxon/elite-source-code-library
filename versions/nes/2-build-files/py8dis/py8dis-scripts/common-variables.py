@@ -301,10 +301,10 @@ label(0x0100, "XX3")
 label(0x0101, "XX3_1")
 
 for i in range(0, 64):
-    label(0x0200 + i * 4, "SPR_" + str(i).zfill(2) + "_Y")
-    label(0x0201 + i * 4, "SPR_" + str(i).zfill(2) + "_TILE")
-    label(0x0202 + i * 4, "SPR_" + str(i).zfill(2) + "_ATTR")
-    label(0x0203 + i * 4, "SPR_" + str(i).zfill(2) + "_X")
+    label(0x0200 + i * 4, "ySprite" + str(i))
+    label(0x0201 + i * 4, "tileSprite" + str(i))
+    label(0x0202 + i * 4, "attrSprite" + str(i))
+    label(0x0203 + i * 4, "xSprite" + str(i))
 
 label(0x036A, "FRIN")
 label(0x0373, "JUNK")

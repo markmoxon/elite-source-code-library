@@ -94,7 +94,7 @@
 
 INCLUDE "library/common/main/workspace/zp.asm"
 INCLUDE "library/common/main/workspace/xx3.asm"
-INCLUDE "library/nes/main/workspace/spr.asm"
+INCLUDE "library/nes/main/workspace/sprite_buffer.asm"
 
 \ ******************************************************************************
 \

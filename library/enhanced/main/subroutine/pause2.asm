@@ -68,8 +68,8 @@ ELIF _NES_VERSION
 .loop_CB3C4
 
  JSR SetupPPUForIconBar \ ???
- LDA L04B2
- ORA L04B4
+ LDA controller1A
+ ORA controller1B
  AND #&C0
  CMP #&40
  BNE loop_CB3C4

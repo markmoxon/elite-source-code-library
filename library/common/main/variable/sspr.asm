@@ -5,7 +5,7 @@
                         \   * Non-zero if we are inside the space station's safe
                         \     zone
                         \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
                         \   * 0 if we aren't (in which case we can show the sun)
 ELIF _ELECTRON_VERSION
                         \   * 0 if we aren't

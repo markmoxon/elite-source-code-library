@@ -583,15 +583,21 @@ L0366             = &0366
 L0368             = &0368
 FRIN              = &036A
 JUNK              = &0373
+L0374             = &0374
+L037E             = &037E
+auto              = &0388
 ECMP              = &0389
 MJ                = &038A
 CABTMP            = &038B
 LAS2              = &038C
-L038D             = &038D
+MSAR              = &038D
 VIEW              = &038E
 LASCT             = &038F
 GNTMP             = &0390
+HFX               = &0391
 EV                = &0392
+L0393             = &0393
+L0394             = &0394
 L0395             = &0395
 NAME              = &0396
 L039D             = &039D
@@ -611,6 +617,7 @@ L03AA             = &03AA
 L03AB             = &03AB
 CRGO              = &03AC
 QQ20              = &03AD
+ECM               = &03BE
 BST               = &03BF
 BOMB              = &03C0
 ENGY              = &03C1
@@ -619,6 +626,7 @@ GHYP              = &03C3
 ESCP              = &03C4
 TRIBBLE           = &03C5
 TRIBBLE_1         = &03C6
+TALLY_L           = &03C7
 NOMSL             = &03C8
 FIST              = &03C9
 AVL               = &03CA
@@ -764,8 +772,8 @@ QQ2               = &048E
 QQ3               = &0494
 QQ4               = &0495
 QQ5               = &0496
-L0497             = &0497
-L0499             = &0499
+QQ6               = &0497
+QQ7               = &0499
 L049A             = &049A
 QQ8               = &049B
 QQ8_1             = &049C
@@ -3982,7 +3990,7 @@ L8F7B = L8F7A+1
  BNE CA368                                    ; A34C: D0 1A       ..
  LDA MSTG                                     ; A34E: AD 01 04    ...
  BPL CA371                                    ; A351: 10 1E       ..
- LDA L038D                                    ; A353: AD 8D 03    ...
+ LDA MSAR                                     ; A353: AD 8D 03    ...
  BEQ CA368                                    ; A356: F0 10       ..
  LDX NOMSL                                    ; A358: AE C8 03    ...
  LDY #&6D ; 'm'                               ; A35B: A0 6D       .m
@@ -6657,7 +6665,7 @@ LA3F8 = LA3F5+3
  ADC QQ3                                      ; BE9A: 6D 94 04    m..
  ADC QQ4                                      ; BE9D: 6D 95 04    m..
  ADC #1                                       ; BEA0: 69 01       i.
- STA L0497                                    ; BEA2: 8D 97 04    ...
+ STA QQ6                                      ; BEA2: 8D 97 04    ...
  LDA QQ3                                      ; BEA5: AD 94 04    ...
  EOR #7                                       ; BEA8: 49 07       I.
  ADC #3                                       ; BEAA: 69 03       i.
@@ -6666,7 +6674,7 @@ LA3F8 = LA3F5+3
  ADC #4                                       ; BEB1: 69 04       i.
  STA Q                                        ; BEB3: 85 97       ..
  JSR MULTU                                    ; BEB5: 20 21 F7     !.
- LDA L0497                                    ; BEB8: AD 97 04    ...
+ LDA QQ6                                      ; BEB8: AD 97 04    ...
  STA Q                                        ; BEBB: 85 97       ..
  JSR MULTU                                    ; BEBD: 20 21 F7     !.
  ASL P                                        ; BEC0: 06 2F       ./
@@ -6677,7 +6685,7 @@ LA3F8 = LA3F5+3
  ROL A                                        ; BEC8: 2A          *
  STA L049A                                    ; BEC9: 8D 9A 04    ...
  LDA P                                        ; BECC: A5 2F       ./
- STA L0499                                    ; BECE: 8D 99 04    ...
+ STA QQ7                                      ; BECE: 8D 99 04    ...
  RTS                                          ; BED1: 60          `
 
 ; ******************************************************************************

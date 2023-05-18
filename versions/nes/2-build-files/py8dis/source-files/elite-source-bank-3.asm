@@ -503,14 +503,21 @@ xSprite63         = &02FF
 L0300             = &0300
 FRIN              = &036A
 JUNK              = &0373
+L0374             = &0374
+L037E             = &037E
+auto              = &0388
 ECMP              = &0389
 MJ                = &038A
 CABTMP            = &038B
 LAS2              = &038C
+MSAR              = &038D
 VIEW              = &038E
 LASCT             = &038F
 GNTMP             = &0390
+HFX               = &0391
 EV                = &0392
+L0393             = &0393
+L0394             = &0394
 L0395             = &0395
 NAME              = &0396
 TP                = &039E
@@ -523,7 +530,7 @@ GCNT              = &03A7
 LASER             = &03A8
 CRGO              = &03AC
 QQ20              = &03AD
-L03BE             = &03BE
+ECM               = &03BE
 BST               = &03BF
 BOMB              = &03C0
 ENGY              = &03C1
@@ -532,6 +539,7 @@ GHYP              = &03C3
 ESCP              = &03C4
 TRIBBLE           = &03C5
 TRIBBLE_1         = &03C6
+TALLY_L           = &03C7
 NOMSL             = &03C8
 FIST              = &03C9
 AVL               = &03CA
@@ -609,6 +617,8 @@ QQ2               = &048E
 QQ3               = &0494
 QQ4               = &0495
 QQ5               = &0496
+QQ6               = &0497
+QQ7               = &0499
 QQ8               = &049B
 QQ8_1             = &049C
 QQ9               = &049D
@@ -8488,7 +8498,7 @@ SetupMMC1         = &FB89
  LDY #2                  ; AE47: A0 02       ..
  JSR subm_AF2E           ; AE49: 20 2E AF     ..
 .CAE4C
- LDA L03BE               ; AE4C: AD BE 03    ...
+ LDA ECM                 ; AE4C: AD BE 03    ...
  BNE CAE56               ; AE4F: D0 05       ..
  LDY #&11                ; AE51: A0 11       ..
  JSR subm_AF2E           ; AE53: 20 2E AF     ..
@@ -8607,7 +8617,7 @@ SetupMMC1         = &FB89
  LDY #&16                ; AF1C: A0 16       ..
  JSR subm_AF2E           ; AF1E: 20 2E AF     ..
 .CAF21
- LDA L03BE               ; AF21: AD BE 03    ...
+ LDA ECM                 ; AF21: AD BE 03    ...
  BNE CAF2B               ; AF24: D0 05       ..
  LDY #&18                ; AF26: A0 18       ..
  JSR subm_AF5B           ; AF28: 20 5B AF     [.

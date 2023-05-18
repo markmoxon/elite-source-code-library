@@ -44,15 +44,15 @@ ELIF _NES_VERSION
 .loop_CB392
 
  JSR PAS1
- LDA L04B2
- ORA L04B4
+ LDA controller1A
+ ORA controller1B
  BPL loop_CB392
 
 .loop_CB39D
 
  JSR PAS1
- LDA L04B2
- ORA L04B4
+ LDA controller1A
+ ORA controller1B
  BMI loop_CB39D
 
 ENDIF

@@ -113,7 +113,7 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA L03F1              \ ???
+ LDA frameCounter       \ ???
  STA RAND
 
 ENDIF

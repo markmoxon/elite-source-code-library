@@ -506,15 +506,16 @@ L0370             = &0370
 JUNK              = &0373
 L0374             = &0374
 L037E             = &037E
-L0388             = &0388
+auto              = &0388
 ECMP              = &0389
 MJ                = &038A
 CABTMP            = &038B
 LAS2              = &038C
-L038D             = &038D
+MSAR              = &038D
 VIEW              = &038E
 LASCT             = &038F
 GNTMP             = &0390
+HFX               = &0391
 EV                = &0392
 L0393             = &0393
 L0394             = &0394
@@ -536,7 +537,7 @@ QQ20              = &03AD
 L03B0             = &03B0
 L03B3             = &03B3
 L03B7             = &03B7
-L03BE             = &03BE
+ECM               = &03BE
 BST               = &03BF
 BOMB              = &03C0
 ENGY              = &03C1
@@ -545,6 +546,7 @@ GHYP              = &03C3
 ESCP              = &03C4
 TRIBBLE           = &03C5
 TRIBBLE_1         = &03C6
+TALLY_L           = &03C7
 NOMSL             = &03C8
 FIST              = &03C9
 AVL               = &03CA
@@ -632,8 +634,8 @@ QQ2               = &048E
 QQ3               = &0494
 QQ4               = &0495
 QQ5               = &0496
-L0497             = &0497
-L0499             = &0499
+QQ6               = &0497
+QQ7               = &0499
 L049A             = &049A
 QQ8               = &049B
 QQ8_1             = &049C
@@ -1304,7 +1306,7 @@ SetupMMC1         = &FB89
  JMP DOENTRY                                  ; 81F8: 4C 23 80    L#.
 
 .MA62
- LDA L0388                                    ; 81FB: AD 88 03    ...
+ LDA auto                                     ; 81FB: AD 88 03    ...
  BNE GOIN                                     ; 81FE: D0 F5       ..
 .C8200
  LDA DELTA                                    ; 8200: A5 93       ..
@@ -1344,7 +1346,7 @@ SetupMMC1         = &FB89
  JSR PLUT                                     ; 8231: 20 25 BD     %.
  LDA LAS                                      ; 8234: AD 00 04    ...
  BNE C8243                                    ; 8237: D0 0A       ..
- LDA L038D                                    ; 8239: AD 8D 03    ...
+ LDA MSAR                                     ; 8239: AD 8D 03    ...
  BEQ C8248                                    ; 823C: F0 0A       ..
  LDA MSTG                                     ; 823E: AD 01 04    ...
  BPL C8248                                    ; 8241: 10 05       ..
@@ -1355,7 +1357,7 @@ SetupMMC1         = &FB89
  JMP MA8                                      ; 8248: 4C DA 82    L..
 
 .C824B
- LDA L038D                                    ; 824B: AD 8D 03    ...
+ LDA MSAR                                     ; 824B: AD 8D 03    ...
  BEQ C825F                                    ; 824E: F0 0F       ..
  LDA MSTG                                     ; 8250: AD 01 04    ...
  BPL C825F                                    ; 8253: 10 0A       ..
@@ -1647,7 +1649,7 @@ SetupMMC1         = &FB89
 .MA29
  CMP #&0F                                     ; 845C: C9 0F       ..
  BNE C8469                                    ; 845E: D0 09       ..
- LDA L0388                                    ; 8460: AD 88 03    ...
+ LDA auto                                     ; 8460: AD 88 03    ...
  BEQ MA23                                     ; 8463: F0 65       .e
  LDA #&7B ; '{'                               ; 8465: A9 7B       .{
  BNE C84C7                                    ; 8467: D0 5E       .^
@@ -1773,7 +1775,7 @@ SetupMMC1         = &FB89
  LDA Kpercent                                 ; 8547: AD 00 06    ...
  EOR nmiTimerLo                               ; 854A: 45 39       E9
  STA RAND                                     ; 854C: 85 02       ..
- LDA L0388                                    ; 854E: AD 88 03    ...
+ LDA auto                                     ; 854E: AD 88 03    ...
  BEQ C8556                                    ; 8551: F0 03       ..
  CLC                                          ; 8553: 18          .
  BCC C856E                                    ; 8554: 90 18       ..
@@ -1889,9 +1891,9 @@ SetupMMC1         = &FB89
  BNE C8642                                    ; 8618: D0 28       .(
  LDA NOMSL                                    ; 861A: AD C8 03    ...
  BEQ C8651                                    ; 861D: F0 32       .2
- LDA L038D                                    ; 861F: AD 8D 03    ...
+ LDA MSAR                                     ; 861F: AD 8D 03    ...
  EOR #&FF                                     ; 8622: 49 FF       I.
- STA L038D                                    ; 8624: 8D 8D 03    ...
+ STA MSAR                                     ; 8624: 8D 8D 03    ...
  BNE C8636                                    ; 8627: D0 0D       ..
  LDY #&6C ; 'l'                               ; 8629: A0 6C       .l
  JSR ABORT                                    ; 862B: 20 C1 AC     ..
@@ -1950,7 +1952,7 @@ SetupMMC1         = &FB89
 .C8690
  CMP #&17                                     ; 8690: C9 17       ..
  BNE MA68                                     ; 8692: D0 0F       ..
- LDA L03BE                                    ; 8694: AD BE 03    ...
+ LDA ECM                                      ; 8694: AD BE 03    ...
  BEQ MA68                                     ; 8697: F0 0A       ..
  LDA ECMA                                     ; 8699: A5 6D       .m
  BNE MA68                                     ; 869B: D0 06       ..
@@ -2227,7 +2229,7 @@ SetupMMC1         = &FB89
  LDA #&6F ; 'o'                               ; 8895: A9 6F       .o
  JSR PrintTokenCrTab                          ; 8897: 20 A5 89     ..
 .C889A
- LDA L03BE                                    ; 889A: AD BE 03    ...
+ LDA ECM                                      ; 889A: AD BE 03    ...
  BEQ C88A4                                    ; 889D: F0 05       ..
  LDA #&6C ; 'l'                               ; 889F: A9 6C       .l
  JSR PrintTokenCrTab                          ; 88A1: 20 A5 89     ..
@@ -2937,7 +2939,7 @@ M32_1 = M32+1
  AND #4                                       ; 8D61: 29 04       ).
  BNE C8D7B                                    ; 8D63: D0 16       ..
  LDA L056C                                    ; 8D65: AD 6C 05    .l.
- ORA L0388                                    ; 8D68: 0D 88 03    ...
+ ORA auto                                     ; 8D68: 0D 88 03    ...
  BNE C8D33                                    ; 8D6B: D0 C6       ..
  JSR DORND                                    ; 8D6D: 20 AD F4     ..
  CMP #&FD                                     ; 8D70: C9 FD       ..
@@ -4073,7 +4075,7 @@ M32_1 = M32+1
  STA CASH                                     ; 952D: 8D A1 03    ...
  STA L03A2                                    ; 9530: 8D A2 03    ...
  LDA #&FF                                     ; 9533: A9 FF       ..
- STA L03BE                                    ; 9535: 8D BE 03    ...
+ STA ECM                                      ; 9535: 8D BE 03    ...
  LDA #1                                       ; 9538: A9 01       ..
  STA ENGY                                     ; 953A: 8D C1 03    ...
  LDA #&8F                                     ; 953D: A9 8F       ..
@@ -4380,7 +4382,7 @@ M32_1 = M32+1
  JSR TTX69                                    ; 975E: 20 A0 96     ..
  LDA #&C1                                     ; 9761: A9 C1       ..
  JSR TT68                                     ; 9763: 20 CE A8     ..
- LDX L0499                                    ; 9766: AE 99 04    ...
+ LDX QQ7                                      ; 9766: AE 99 04    ...
  LDY L049A                                    ; 9769: AC 9A 04    ...
  CLC                                          ; 976C: 18          .
  LDA #6                                       ; 976D: A9 06       ..
@@ -4428,7 +4430,7 @@ M32_1 = M32+1
  LDA #&C0                                     ; 97C9: A9 C0       ..
  JSR TT68                                     ; 97CB: 20 CE A8     ..
 .C97CE
- LDA L0497                                    ; 97CE: AD 97 04    ...
+ LDA QQ6                                      ; 97CE: AD 97 04    ...
  LSR A                                        ; 97D1: 4A          J
  LSR A                                        ; 97D2: 4A          J
  LSR A                                        ; 97D3: 4A          J
@@ -6336,9 +6338,9 @@ M32_1 = M32+1
  CMP #3                                       ; A558: C9 03       ..
  BNE CA565                                    ; A55A: D0 09       ..
  INY                                          ; A55C: C8          .
- LDX L03BE                                    ; A55D: AE BE 03    ...
+ LDX ECM                                      ; A55D: AE BE 03    ...
  BNE CA58A                                    ; A560: D0 28       .(
- DEC L03BE                                    ; A562: CE BE 03    ...
+ DEC ECM                                      ; A562: CE BE 03    ...
 .CA565
  CMP #4                                       ; A565: C9 04       ..
  BNE CA573                                    ; A567: D0 0A       ..
@@ -7464,7 +7466,7 @@ M32_1 = M32+1
 ; ******************************************************************************
 .ABORT
  LDX #0                                       ; ACC1: A2 00       ..
- STX L038D                                    ; ACC3: 8E 8D 03    ...
+ STX MSAR                                     ; ACC3: 8E 8D 03    ...
  DEX                                          ; ACC6: CA          .
 ; ******************************************************************************
 .ABORT2
@@ -8063,7 +8065,7 @@ LAFB4 = sub_CAFB3+1
  BNE CB119                                    ; B0CE: D0 49       .I
  LDX QQ12                                     ; B0D0: A6 A5       ..
  BNE CB119                                    ; B0D2: D0 45       .E
- LDA L0388                                    ; B0D4: AD 88 03    ...
+ LDA auto                                     ; B0D4: AD 88 03    ...
  BNE CB106                                    ; B0D7: D0 2D       .-
  LDA SSPR                                     ; B0D9: AD 64 05    .d.
  BEQ CB119                                    ; B0DC: F0 3B       .;
@@ -8090,7 +8092,7 @@ LAFB4 = sub_CAFB3+1
  JSR ResetSound_b6                            ; B106: 20 6B ED     k.
  LDA #0                                       ; B109: A9 00       ..
 .CB10B
- STA L0388                                    ; B10B: 8D 88 03    ...
+ STA auto                                     ; B10B: 8D 88 03    ...
  LDA QQ11                                     ; B10E: A5 9E       ..
  BEQ CB118                                    ; B110: F0 06       ..
  JSR CLYNS                                    ; B112: 20 DE F2     ..
@@ -8786,7 +8788,7 @@ LAFB4 = sub_CAFB3+1
  JMP CB358                                    ; B5BC: 4C 58 B3    LX.
 
 .CB5BF
- LDA L0388                                    ; B5BF: AD 88 03    ...
+ LDA auto                                     ; B5BF: AD 88 03    ...
  AND SSPR                                     ; B5C2: 2D 64 05    -d.
  BEQ CB5CA                                    ; B5C5: F0 03       ..
  JMP GOIN                                     ; B5C7: 4C F5 81    L..
@@ -8930,7 +8932,7 @@ LAFB4 = sub_CAFB3+1
 ; ******************************************************************************
 .DOKEY
  JSR CBBDE_b6                                 ; B6A8: 20 21 F0     !.
- LDA L0388                                    ; B6AB: AD 88 03    ...
+ LDA auto                                     ; B6AB: AD 88 03    ...
  BNE CB6BA                                    ; B6AE: D0 0A       ..
 .CB6B0
  LDX L0081                                    ; B6B0: A6 81       ..
@@ -8944,7 +8946,7 @@ LAFB4 = sub_CAFB3+1
 .CB6BA
  LDA SSPR                                     ; B6BA: AD 64 05    .d.
  BNE CB6C8                                    ; B6BD: D0 09       ..
- STA L0388                                    ; B6BF: 8D 88 03    ...
+ STA auto                                     ; B6BF: 8D 88 03    ...
  JSR ResetSound_b6                            ; B6C2: 20 6B ED     k.
  JMP CB6B0                                    ; B6C5: 4C B0 B6    L..
 
@@ -9023,7 +9025,7 @@ LAFB4 = sub_CAFB3+1
  JSR BUMP2                                    ; B754: 20 33 FA     3.
 .CB757
  STX JSTY                                     ; B757: 8E 77 04    .w.
- LDA L0388                                    ; B75A: AD 88 03    ...
+ LDA auto                                     ; B75A: AD 88 03    ...
  BNE CB777                                    ; B75D: D0 18       ..
  LDX #&80                                     ; B75F: A2 80       ..
  LDA KY3                                      ; B761: AD 05 04    ...

@@ -66,13 +66,13 @@ ENDIF
 
 IF _NES_VERSION
 
- LDA L03F1              \ ???
+ LDA frameCounter       \ ???
  STA RAND+1
  LDA #&86
  STA RAND+3
  LDA QQ0
  STA RAND
- LDA L03DD
+ LDA TALLY+1
  STA RAND+2
 
 ENDIF

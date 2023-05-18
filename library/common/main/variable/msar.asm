@@ -2,7 +2,7 @@
 
  SKIP 1                 \ The targeting state of our leftmost missile
                         \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
                         \   * 0 = missile is not looking for a target, or it
                         \     already has a target lock (indicator is not
                         \     yellow/white)

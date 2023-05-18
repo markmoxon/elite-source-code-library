@@ -4,23 +4,48 @@
 \
 \ ******************************************************************************
 
- Y = 72                 \ The centre y-coordinate of the space view
+ NOST = 20              \ The number of stardust particles in normal space (this
+                        \ goes down to 3 in witchspace)
 
+ NOSH = 8               \ The maximum number of ships in our local bubble of
+                        \ universe
+
+ NTY = 33               \ The number of different ship types
+
+ MSL = 1                \ Ship type for a missile
+ SST = 2                \ Ship type for a Coriolis space station
+ ESC = 3                \ Ship type for an escape pod
+ PLT = 4                \ Ship type for an alloy plate
  OIL = 5                \ Ship type for a cargo canister
+ AST = 7                \ Ship type for an asteroid
+ SPL = 8                \ Ship type for a splinter
+ SHU = 9                \ Ship type for a Shuttle
+ CYL = 11               \ Ship type for a Cobra Mk III
+ ANA = 14               \ Ship type for an Anaconda
+ HER = 15               \ Ship type for a rock hermit (asteroid)
  COPS = 16              \ Ship type for a Viper
  SH3 = 17               \ Ship type for a Sidewinder
  KRA = 19               \ Ship type for a Krait
+ ADA = 20               \ Ship type for a Adder
+ WRM = 23               \ Ship type for a Worm
+ CYL2 = 24              \ Ship type for a Cobra Mk III (pirate)
+ ASP = 25               \ Ship type for an Asp Mk II
+ THG = 29               \ Ship type for a Thargoid
+ TGL = 30               \ Ship type for a Thargon
+ CON = 31               \ Ship type for a Constrictor
+ COU = 32               \ Ship type for a Cougar
+ DOD = 33               \ Ship type for a Dodecahedron ("Dodo") space station
 
  NI% = 42               \ The number of bytes in each ship's data block (as
                         \ stored in INWK and K%)
+
+ Y = 72                 \ The centre y-coordinate of the space view
 
  VE = &57               \ The obfuscation byte used to hide the extended tokens
                         \ table from crackers viewing the binary code
 
  LL = 29                \ The length of lines (in characters) of justified text
                         \ in the extended tokens system
-
- S% = &C007             \ The game's main entry point in bank 7
 
  PPU_CTRL   = &2000     \ NES PPU registers
  PPU_MASK   = &2001
@@ -32,6 +57,13 @@
  PPU_DATA   = &2007
  OAM_DMA    = &4014
 
+\ ******************************************************************************
+\
+\ Addresses in bank 7
+\
+\ ******************************************************************************
+
+ S%                 = &C007
  SNE                = &C500
  ACT                = &C520
  XX21               = &C540
@@ -95,95 +127,7 @@
 INCLUDE "library/common/main/workspace/zp.asm"
 INCLUDE "library/common/main/workspace/xx3.asm"
 INCLUDE "library/nes/main/workspace/sprite_buffer.asm"
-
-\ ******************************************************************************
-\
-\       Name: WP
-\       Type: Workspace
-\    Address: &0300 to &05FF
-\   Category: Workspaces
-\    Summary: Ship slots, variables
-\
-\ ******************************************************************************
-
- FRIN                = &036A
- L0374               = &0374
- L037E               = &037E
- MJ                  = &038A
- VIEW                = &038E
- EV                  = &0392
- TP                  = &039E
- QQ0                 = &039F
- QQ1                 = &03A0
- CASH                = &03A1
- GCNT                = &03A7
- CRGO                = &03AC
- QQ20                = &03AD
- BST                 = &03BF
- GHYP                = &03C3
- FIST                = &03C9
- AVL                 = &03CA
- QQ26                = &03DB
- TALLY               = &03DC
- L03DD               = &03DD
- QQ21                = &03DF
- NOSTM               = &03E5
- L03E6               = &03E6
- L03EE               = &03EE
- L03F1               = &03F1
- DTW6                = &03F3
- DTW2                = &03F4
- DTW3                = &03F5
- DTW4                = &03F6
- DTW5                = &03F7
- DTW1                = &03F8
- DTW8                = &03F9
- L040A               = &040A
- QQ19                = &044D
- K2                  = &0459
- pictureTile         = &046C
- SWAP                = &047F
- XSAV2               = &0481
- YSAV2               = &0482
- QQ24                = &0487
- QQ25                = &0488
- QQ28                = &0489
- QQ29                = &048A
- systemFlag          = &048B
- QQ2                 = &048E
- QQ8                 = &049B
- QQ9                 = &049D
- QQ10                = &049E
- L049F               = &049F
- QQ18Lo              = &04A4
- QQ18Hi              = &04A5
- TKN1Lo              = &04A6
- TKN1Hi              = &04A7
- language            = &04A8
- L04B2               = &04B2
- L04B4               = &04B4
- L04BC               = &04BC
- L04BD               = &04BD
- SX                  = &04C8
- SY                  = &04DD
- SZ                  = &04F2
- BUFm1               = &0506
- BUF                 = &0507
- HANGFLAG            = &0561
- MANY                = &0562
- SXL                 = &05A5
- SYL                 = &05BA
- SZL                 = &05CF
- safehouse           = &05E4
- L05EA               = &05EA
- L05EB               = &05EB
- L05EC               = &05EC
- L05ED               = &05ED
- L05EE               = &05EE
- L05EF               = &05EF
- L05F0               = &05F0
- L05F1               = &05F1
-
+INCLUDE "library/common/main/workspace/wp.asm"
 INCLUDE "library/common/main/workspace/k_per_cent.asm"
 
 \ ******************************************************************************
@@ -213,3 +157,4 @@ INCLUDE "library/common/main/workspace/k_per_cent.asm"
 .pattBuffer1
 
  SKIP 8 * 256           \ 256 patterns, 8 bytes per pattern (8x8 pixels)
+

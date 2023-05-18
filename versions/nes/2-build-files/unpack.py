@@ -59,41 +59,37 @@ def unpack(input_data, unpacked_data):
             read_file = False
 
 
-def png_pixel(colour):
-    if colour == 1:
-        return [255, 0, 0]
-    elif colour == 2:
-        return [0, 255, 0]
-    elif colour == 3:
-        return [0, 0, 255]
-    return [0, 0, 0]
+def png_pixel(colour, palette):
+    if colour == 0:
+        return [0, 0, 0]
+    return palettes[palette][colour - 1]
 
 
-def png_8_pixel_row(byte_0, byte_1):
+def png_8_pixel_row(byte_0, byte_1, palette):
     row = []
     for i in range(0, 8):
         pixel = ((byte_0 & (1 << i)) + ((byte_1 & (1 << i)) << 1)) >> i
-        row = png_pixel(pixel) + row
+        row = png_pixel(pixel, palette) + row
     return row
 
 
-def png_full_pixel_row_ram(y, pixel_width, data_0, data_1):
+def png_full_pixel_row_ram(y, pixel_width, data_0, data_1, palette):
     row = []
     start_byte = (y // 8) * pixel_width + (y % 8)
     for i in range(start_byte, start_byte + pixel_width, 8):
-        row = row + png_8_pixel_row(data_0[i], data_1[i])
+        row = row + png_8_pixel_row(data_0[i], data_1[i], palette)
     return row
 
 
-def png_full_pixel_row_ppu(y, pixel_width, data):
+def png_full_pixel_row_ppu(y, pixel_width, data, palette):
     row = []
     start_byte = (y // 8) * pixel_width * 2 + (y % 8)
     for i in range(start_byte, start_byte + (pixel_width * 2), 16):
-        row = row + png_8_pixel_row(data[i], data[i + 8])
+        row = row + png_8_pixel_row(data[i], data[i + 8], palette)
     return row
 
 
-def extract_image(input_data, sections, output_folder, input_file):
+def extract_image(input_data, sections, output_folder, input_file, palette):
     global index
 
     # image0
@@ -152,7 +148,7 @@ def extract_image(input_data, sections, output_folder, input_file):
 
         png_array = []
         for i in range(0, pixel_height):
-            pixel_row = png_full_pixel_row_ppu(i, pixel_width, unpacked_data_0)
+            pixel_row = png_full_pixel_row_ppu(i, pixel_width, unpacked_data_0, palette)
             png_array.append(pixel_row)
 
         png.from_array(png_array, 'RGB').save(output_path + "_ppu.png")
@@ -164,7 +160,11 @@ def extract_image(input_data, sections, output_folder, input_file):
 
         png_array = []
         for i in range(0, pixel_height):
-            pixel_row = png_full_pixel_row_ram(i, pixel_width, unpacked_data_0, unpacked_data_1)
+            if sections >= 4:
+                # For dual-image, RAM is always greyscale with palette 1 from palettes
+                pixel_row = png_full_pixel_row_ram(i, pixel_width, unpacked_data_0, unpacked_data_1, 1)
+            else:
+                pixel_row = png_full_pixel_row_ram(i, pixel_width, unpacked_data_0, unpacked_data_1, palette)
             png_array.append(pixel_row)
 
         png.from_array(png_array, 'RGB').save(output_path + "_ram.png")
@@ -178,13 +178,46 @@ def extract_image(input_data, sections, output_folder, input_file):
 
         png_array = []
         for i in range(0, pixel_height):
-            pixel_row = png_full_pixel_row_ppu(i, pixel_width, unpacked_data)
+            pixel_row = png_full_pixel_row_ppu(i, pixel_width, unpacked_data, palette)
             png_array.append(pixel_row)
 
         png.from_array(png_array, 'RGB').save(output_path + "_ppu.png")
 
 
 # Main loop
+
+palettes = [
+    [[255,   0,   0], [  0, 255,   0], [  0,   0, 255]],        # 0 RGB
+    [[173, 173, 173], [102, 102, 102], [255, 254, 255]],        # 1 Grey palette for system image backgrounds (RAM)
+    [[234, 158,  34], [188, 190,   0], [153,  78,   0]],        # 2 Palette for Leesti foreground sprite (PPU)
+    [[254, 196, 234], [181,  49,  32], [254, 110, 204]],        # 3 Palette for Diso foreground sprite (PPU)
+    [[ 92, 228,  48], [  0, 143,  50], [  0,  82,   0]],        # 4 Palette for Reorte foreground sprite (PPU)
+    [[254, 110, 204], [181,  49,  32], [183,  30, 123]],        # 5 Palette for Lave foreground sprite (PPU)
+    [[188, 190,   0], [173, 173, 173], [255, 254, 255]],        # 6 Palette for commander headshot background (RAM)
+    [[153,  78,   0], [234, 158,  34], [247, 216, 165]],        # 7 Palette for commander face foreground sprite (PPU)
+]
+
+# Palettes for colour foreground sprite in dual-image system pictures in bank 5
+
+bank5_palettes_sprite = [
+    1,
+    1,
+    1,
+    1,
+    5,      # 4 Lave
+    1,
+    1,
+    1,
+    3,      # 8 Diso
+    4,      # 9 Reorte
+    2,      # 10 Leesti
+    1,
+    1,
+    1,
+    1
+]
+
+# Offsets of faces in bank 4
 
 bank4_offsets_1 = [
     0x001E,
@@ -204,6 +237,8 @@ bank4_offsets_1 = [
     0x150E
 ]
 
+# Offsets of headshots in bank 4
+
 bank4_offsets_2 = [
     0x001E,
     0x0195,
@@ -221,6 +256,8 @@ bank4_offsets_2 = [
     0x13D6,
     0x1585
 ]
+
+# Offsets of dual-image system pictures in bank 5
 
 bank5_offsets = [
     0x0020,
@@ -249,7 +286,8 @@ bank_file.close()
 for i in range(0, 15):
     start = bank5_offsets[i] + 0x0C
     end = bank5_offsets[i + 1] + 0x0C
-    extract_image(bank_data[start: end], 4, "../1-source-files/images/systems/", "image" + str(i))
+    palette = bank5_palettes_sprite[i]
+    extract_image(bank_data[start: end], 4, "../1-source-files/images/systems/", "image" + str(i), palette)
 
 bank_data = bytearray()
 bank_file = open("../4-reference-binaries/ntsc/bank4.bin", "rb")
@@ -259,9 +297,11 @@ bank_file.close()
 for i in range(0, 14):
     start = bank4_offsets_1[i] + 0x0C
     end = bank4_offsets_1[i + 1] + 0x0C
-    extract_image(bank_data[start: end], 1, "../1-source-files/images/faces/", "image1_" + str(i))
+    palette = 7
+    extract_image(bank_data[start: end], 1, "../1-source-files/images/faces/", "image1_" + str(i), palette)
 
 for i in range(0, 14):
     start = bank4_offsets_2[i] + 0x151A
     end = bank4_offsets_2[i + 1] + 0x151A
-    extract_image(bank_data[start: end], 2, "../1-source-files/images/headshots/", "image2_" + str(i))
+    palette = 6
+    extract_image(bank_data[start: end], 2, "../1-source-files/images/headshots/", "image2_" + str(i), palette)

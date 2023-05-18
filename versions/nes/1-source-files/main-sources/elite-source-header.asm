@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\ NES ELITE GAME SOURCE (HEADER)
+\ NES ELITE GAME SOURCE (iNES HEADER)
 \
 \ NES Elite was written by Ian Bell and David Braben and is copyright D. Braben
 \ and I. Bell 1992
@@ -25,17 +25,72 @@
 \
 \ ******************************************************************************
 
-CODE% = $8000
-LOAD% = $8000
+ INCLUDE "versions/nes/1-source-files/main-sources/elite-build-options.asm"
 
-ORG CODE%
+ _CASSETTE_VERSION      = (_VERSION = 1)
+ _DISC_VERSION          = (_VERSION = 2)
+ _6502SP_VERSION        = (_VERSION = 3)
+ _MASTER_VERSION        = (_VERSION = 4)
+ _ELECTRON_VERSION      = (_VERSION = 5)
+ _ELITE_A_VERSION       = (_VERSION = 6)
+ _NES_VERSION           = (_VERSION = 7)
+ _C64_VERSION           = (_VERSION = 8)
+ _APPLE_VERSION         = (_VERSION = 9)
+ _NTSC                  = (_VARIANT = 1)
+ _PAL                   = (_VARIANT = 2)
+ _DISC_DOCKED           = FALSE
+ _DISC_FLIGHT           = FALSE
+ _ELITE_A_DOCKED        = FALSE
+ _ELITE_A_FLIGHT        = FALSE
+ _ELITE_A_SHIPS_R       = FALSE
+ _ELITE_A_SHIPS_S       = FALSE
+ _ELITE_A_SHIPS_T       = FALSE
+ _ELITE_A_SHIPS_U       = FALSE
+ _ELITE_A_SHIPS_V       = FALSE
+ _ELITE_A_SHIPS_W       = FALSE
+ _ELITE_A_ENCYCLOPEDIA  = FALSE
+ _ELITE_A_6502SP_IO     = FALSE
+ _ELITE_A_6502SP_PARA   = FALSE
 
-EQUS "NES"
-EQUB $1A
+\ ******************************************************************************
+\
+\ ELITE iNES HEADER
+\
+\ Produces the binary file header.bin.
+\
+\ ******************************************************************************
 
-EQUB $08, $00, $12, $00
-EQUD 0
-EQUD 0
+ CODE% = &8000
+ LOAD% = &8000
+
+ ORG CODE%
+
+\ ******************************************************************************
+\
+\       Name: iNES header
+\       Type: Variable
+\   Category: Start and end
+\    Summary: The iNES header for running in an emulator
+\
+\ ******************************************************************************
+
+ EQUS "NES"             \ Standard NES string at the start of the header
+ EQUB &1A
+
+ EQUB 8                 \ Byte #4 = 8 pages of 16K ROM = 128K
+
+ EQUB 0                 \ Byte #5 = 0 = board uses CHR RAM
+
+ EQUB %00010010         \ Byte #6 = mapper and WRAM configuration
+                        \
+                        \   * Bit 1 set = Cartridge contains battery-backed RAM
+                        \                 at &6000 to &7FFF
+                        \
+                        \   * Bits 4-7 = mapper number, %0001 = MMC1
+
+ EQUB 0                 \ Bytes #7 to #15 are zero and have no effect
+ EQUD 0
+ EQUD 0
 
 \ ******************************************************************************
 \

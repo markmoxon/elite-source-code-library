@@ -1,3 +1,4 @@
+IF NOT(_NES_VERSION)
 \ ******************************************************************************
 \
 \       Name: DTW1
@@ -34,4 +35,18 @@
 .DTW1
 
  EQUB %00100000
+
+ELIF _NES_VERSION
+
+.DTW1
+
+ SKIP 1                 \ A mask for applying the lower case part of Sentence
+                        \ Case to extended text tokens
+                        \
+                        \   * %00100000 = apply lower case to the second letter
+                        \                 of a word onwards
+                        \
+                        \   * %00000000 = do not change case to lower case
+
+ENDIF
 

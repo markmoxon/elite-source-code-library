@@ -1,3 +1,4 @@
+IF NOT(_NES_VERSION)
 \ ******************************************************************************
 \
 \       Name: DTW8
@@ -41,4 +42,17 @@
 .DTW8
 
  EQUB %11111111
+
+ELIF _NES_VERSION
+
+.DTW8
+
+ SKIP 1                 \ A mask for capitalising the next letter in an extended
+                        \ text token
+                        \
+                        \   * %11011111 = capitalise the next letter
+                        \
+                        \   * %11111111 = do not change case
+
+ENDIF
 

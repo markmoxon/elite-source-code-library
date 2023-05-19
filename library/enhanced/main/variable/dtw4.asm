@@ -1,3 +1,4 @@
+IF NOT(_NES_VERSION)
 \ ******************************************************************************
 \
 \       Name: DTW4
@@ -39,4 +40,23 @@
 .DTW4
 
  EQUB 0
+
+ELIF _NES_VERSION
+
+.DTW4
+
+ SKIP 1                 \ Flags that govern how justified extended text tokens
+                        \ are printed
+                        \
+                        \   * Bit 7: 1 = justify text
+                        \            0 = do not justify text
+                        \
+                        \   * Bit 6: 1 = buffer the entire token before
+                        \                printing, including carriage returns
+                        \                (used for in-flight messages only)
+                        \            0 = print the contents of the buffer
+                        \                whenever a carriage return appears
+                        \                in the token
+
+ENDIF
 

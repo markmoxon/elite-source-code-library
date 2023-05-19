@@ -9,8 +9,7 @@
 \ ------------------------------------------------------------------------------
 \
 \ Print a text token (i.e. a character, control code, two-letter token or
-\ recursive token). See variable QQ18 for a discussion of the token system
-\ used in Elite.
+\ recursive token).
 \
 \ Arguments:
 \

@@ -1,3 +1,4 @@
+IF NOT(_NES_VERSION)
 \ ******************************************************************************
 \
 \       Name: DTW2
@@ -31,4 +32,17 @@
 .DTW2
 
  EQUB %11111111
+
+ELIF _NES_VERSION
+
+.DTW2
+
+ SKIP 1                 \ A flag that indicates whether we are currently
+                        \ printing a word
+                        \
+                        \   * 0 = we are currently printing a word
+                        \
+                        \   * Non-zero = we are not currently printing a word
+
+ENDIF
 

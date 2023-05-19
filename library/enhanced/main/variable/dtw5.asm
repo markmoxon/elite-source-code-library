@@ -1,3 +1,4 @@
+IF NOT(_NES_VERSION)
 \ ******************************************************************************
 \
 \       Name: DTW5
@@ -19,4 +20,12 @@
 .DTW5
 
  EQUB 0
+
+ELIF _NES_VERSION
+
+.DTW5
+
+ SKIP 1                 \ The size of the justified text buffer at BUF
+
+ENDIF
 

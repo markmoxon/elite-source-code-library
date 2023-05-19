@@ -347,7 +347,7 @@ IF _NES_VERSION \ Platform
 
 .QQ11a
 
- SKIP 1
+ SKIP 1                 \ ???
 
 ENDIF
 
@@ -643,7 +643,7 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
 .L00DB
 
- SKIP 2                \ ???
+ SKIP 2                 \ ???
 
 .L00DD
 

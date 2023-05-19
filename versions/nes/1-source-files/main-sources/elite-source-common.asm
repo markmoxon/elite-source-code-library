@@ -1,5 +1,30 @@
 \ ******************************************************************************
 \
+\ NES ELITE GAME SOURCE (BANK CONFIGURATION)
+\
+\ NES Elite was written by Ian Bell and David Braben and is copyright D. Braben
+\ and I. Bell 1992
+\
+\ The code on this site has been reconstructed from a disassembly of the version
+\ released on Ian Bell's personal website at http://www.elitehomepage.org/
+\
+\ The commentary is copyright Mark Moxon, and any misunderstandings or mistakes
+\ in the documentation are entirely my fault
+\
+\ The terminology and notations used in this commentary are explained at
+\ https://www.bbcelite.com/about_site/terminology_used_in_this_commentary.html
+\
+\ The deep dive articles referred to in this commentary can be found at
+\ https://www.bbcelite.com/deep_dives
+\
+\ ------------------------------------------------------------------------------
+\
+\ This source file contains configuration that is common to all eight banks.
+\
+\ ******************************************************************************
+
+\ ******************************************************************************
+\
 \ Configuration variables
 \
 \ ******************************************************************************
@@ -47,7 +72,15 @@
  LL = 29                \ The length of lines (in characters) of justified text
                         \ in the extended tokens system
 
- PPU_CTRL   = &2000     \ NES PPU registers
+\ ******************************************************************************
+\
+\ NES PPU registers
+\
+\ See https://www.nesdev.org/wiki/PPU_registers
+\
+\ ******************************************************************************
+
+ PPU_CTRL   = &2000
  PPU_MASK   = &2001
  PPU_STATUS = &2002
  OAM_ADDR   = &2003
@@ -56,6 +89,37 @@
  PPU_ADDR   = &2006
  PPU_DATA   = &2007
  OAM_DMA    = &4014
+
+\ ******************************************************************************
+\
+\ NES 2A03 CPU registers (I/O and sound)
+\
+\ See https://www.nesdev.org/wiki/2A03
+\
+\ ******************************************************************************
+
+ SQ1_VOL    = &4000
+ SQ1_SWEEP  = &4001
+ SQ1_LO     = &4002
+ SQ1_HI     = &4003
+ SQ2_VOL    = &4004
+ SQ2_SWEEP  = &4005
+ SQ2_LO     = &4006
+ SQ2_HI     = &4007
+ TRI_LINEAR = &4008
+ TRI_LO     = &400A
+ TRI_HI     = &400B
+ NOISE_VOL  = &400C
+ L400D      = &400D
+ NOISE_LO   = &400E
+ NOISE_HI   = &400F
+ DMC_FREQ   = &4010
+ DMC_RAW    = &4011
+ DMC_START  = &4012
+ DMC_LEN    = &4013
+ SND_CHN    = &4015
+ JOY1       = &4016
+ JOY2       = &4017
 
 \ ******************************************************************************
 \
@@ -157,4 +221,34 @@ INCLUDE "library/common/main/workspace/k_per_cent.asm"
 .pattBuffer1
 
  SKIP 8 * 256           \ 256 patterns, 8 bytes per pattern (8x8 pixels)
+
+\ ******************************************************************************
+\
+\       Name: nameBuffer0
+\       Type: Variable
+\   Category: Drawing lines
+\    Summary: Buffer for nametable and attribute table 0
+\
+\ ******************************************************************************
+
+.nameBuffer0
+
+ SKIP 30 * 32           \ 30 rows of 32 tile numbers
+
+ SKIP 8 * 8             \ 8 rows of 8 attribute bytes (each is a 2x2 tile block)
+
+\ ******************************************************************************
+\
+\       Name: nameBuffer1
+\       Type: Variable
+\   Category: Drawing lines
+\    Summary: Buffer for nametable and attribute table 1
+\
+\ ******************************************************************************
+
+.nameBuffer1
+
+ SKIP 30 * 32           \ 30 rows of 32 tile numbers
+
+ SKIP 8 * 8             \ 8 rows of 8 attribute bytes (each is a 2x2 tile block)
 

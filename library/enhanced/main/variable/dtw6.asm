@@ -1,3 +1,4 @@
+IF NOT(_NES_VERSION)
 \ ******************************************************************************
 \
 \       Name: DTW6
@@ -22,7 +23,7 @@
 \ case}, which calls routine MT10 to change the value of DTW6.
 \
 \ The flag is set to %00000000 (lower case is not enabled) by jump token 1, {all
-\ caps}, and jump token 1, {sentence case}, which call routines MT1 and MT2 to
+\ caps}, and jump token 2, {sentence case}, which call routines MT1 and MT2 to
 \ change the value of DTW6.
 \
 \ ******************************************************************************
@@ -30,4 +31,17 @@
 .DTW6
 
  EQUB %00000000
+
+ELIF _NES_VERSION
+
+.DTW6
+
+ SKIP 1                 \ A flag to denote whether printing in lower case is enabled for
+                        \ enabled for extended text tokens
+                        \
+                        \   * %10000000 = lower case is enabled
+                        \
+                        \   * %00000000 = lower case is not enabled
+
+ENDIF
 

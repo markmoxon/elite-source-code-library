@@ -1,3 +1,4 @@
+IF NOT(_NES_VERSION)
 \ ******************************************************************************
 \
 \       Name: DTW3
@@ -29,4 +30,19 @@
 .DTW3
 
  EQUB %00000000
+
+ELIF _NES_VERSION
+
+.DTW3
+
+ SKIP 1                 \ A flag for switching between standard and extended
+                        \ text tokens
+                        \
+                        \   * %00000000 = print extended tokens (i.e. those in
+                        \                 TKN1 and RUTOK)
+                        \
+                        \   * %11111111 = print standard tokens (i.e. those in
+                        \                 QQ18)
+
+ENDIF
 

@@ -449,7 +449,7 @@ INCLUDE "library/common/main/variable/nostm.asm"
 
 .frameCounter
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Increments every VBlank ???
 
 .L03F2
 
@@ -567,19 +567,20 @@ INCLUDE "library/common/main/variable/dly.asm"
 
 .nmiStoreA
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Temporary storage for the A register during NMI
 
 .nmiStoreX
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Temporary storage for the X register during NMI
 
 .nmiStoreY
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Temporary storage for the Y register during NMI
 
 .pictureTile
 
- SKIP 1                 \ ???
+ SKIP 1                 \ The number of the first tile where system pictures
+                        \ are stored ???
 
 .L046D
 
@@ -587,11 +588,11 @@ INCLUDE "library/common/main/variable/dly.asm"
 
 .boxEdge1
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Bitmap for drawing box edge ???
 
 .boxEdge2
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Bitmap for drawing box edge ???
 
 .L0470
 
@@ -615,7 +616,7 @@ INCLUDE "library/common/main/variable/dly.asm"
 
 .scanController2
 
- SKIP 1                 \ ???
+ SKIP 1                 \ If non-zero, scan controller 2 ???
 
 INCLUDE "library/common/main/variable/jstx.asm"
 INCLUDE "library/common/main/variable/jsty.asm"
@@ -655,7 +656,10 @@ INCLUDE "library/common/main/variable/qq29.asm"
 
 .systemFlag
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Contains a new generated value for current system:
+                        \
+                        \   * Bits 0-3 contain system image number from bank 5
+                        \   * Bits 6 and 7 are set in bank 5 routine ???
 
 INCLUDE "library/common/main/variable/gov.asm"
 INCLUDE "library/common/main/variable/tek.asm"
@@ -687,23 +691,27 @@ INCLUDE "library/common/main/variable/qq10.asm"
 
 .QQ18Lo
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Gets set to the low byte of the address of the text
+                        \ token table used by the ex routine (QQ18)
 
 .QQ18Hi
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Gets set to the high byte of the address of the text
+                        \ token table used by the ex routine (QQ18)
 
 .TKN1Lo
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Gets set to the low byte of the address of the text
+                        \ token table used by the DETOK routine (TKN1)
 
 .TKN1Hi
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Gets set to the high byte of the address of the text
+                        \ token table used by the DETOK routine (TKN1)
 
 .language
 
- SKIP 1                 \ ???
+ SKIP 1                 \ The language chosen (English, German, French) ???
 
 .L04A9
 

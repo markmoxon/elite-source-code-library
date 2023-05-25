@@ -333,7 +333,427 @@ ELIF _NES_VERSION
 
 .L0300
 
- SKIP 106               \ ???
+ SKIP 1                 \ ???
+
+.L0301
+
+ SKIP 1                 \ ???
+
+.L0302
+
+ SKIP 1                 \ ???
+
+.L0303
+
+ SKIP 1                 \ ???
+
+.L0304
+
+ SKIP 1                 \ ???
+
+.L0305
+
+ SKIP 1                 \ ???
+
+.L0306
+
+ SKIP 1                 \ ???
+
+.L0307
+
+ SKIP 1                 \ ???
+
+.L0308
+
+ SKIP 1                 \ ???
+
+.L0309
+
+ SKIP 1                 \ ???
+
+.L030A
+
+ SKIP 1                 \ ???
+
+.L030B
+
+ SKIP 1                 \ ???
+
+.L030C
+
+ SKIP 1                 \ ???
+
+.L030D
+
+ SKIP 1                 \ ???
+
+.L030E
+
+ SKIP 1                 \ ???
+
+.L030F
+
+ SKIP 1                 \ ???
+
+.L0310
+
+ SKIP 1                 \ ???
+
+.L0311
+
+ SKIP 1                 \ ???
+
+.L0312
+
+ SKIP 1                 \ ???
+
+.L0313
+
+ SKIP 1                 \ ???
+
+.L0314
+
+ SKIP 1                 \ ???
+
+.L0315
+
+ SKIP 1                 \ ???
+
+.L0316
+
+ SKIP 1                 \ ???
+
+.L0317
+
+ SKIP 1                 \ ???
+
+.L0318
+
+ SKIP 1                 \ ???
+
+.L0319
+
+ SKIP 1                 \ ???
+
+.L031A
+
+ SKIP 1                 \ ???
+
+.L031B
+
+ SKIP 1                 \ ???
+
+.L031C
+
+ SKIP 1                 \ ???
+
+.L031D
+
+ SKIP 1                 \ ???
+
+.L031E
+
+ SKIP 1                 \ ???
+
+.L031F
+
+ SKIP 1                 \ ???
+
+.L0320
+
+ SKIP 1                 \ ???
+
+.L0321
+
+ SKIP 1                 \ ???
+
+.L0322
+
+ SKIP 1                 \ ???
+
+.L0323
+
+ SKIP 1                 \ ???
+
+.L0324
+
+ SKIP 1                 \ ???
+
+.L0325
+
+ SKIP 1                 \ ???
+
+.L0326
+
+ SKIP 1                 \ ???
+
+.L0327
+
+ SKIP 1                 \ ???
+
+.L0328
+
+ SKIP 1                 \ ???
+
+.L0329
+
+ SKIP 1                 \ ???
+
+.L032A
+
+ SKIP 1                 \ ???
+
+.L032B
+
+ SKIP 1                 \ ???
+
+.L032C
+
+ SKIP 1                 \ ???
+
+.L032D
+
+ SKIP 1                 \ ???
+
+.L032E
+
+ SKIP 1                 \ ???
+
+.L032F
+
+ SKIP 1                 \ ???
+
+.L0330
+
+ SKIP 1                 \ ???
+
+.L0331
+
+ SKIP 1                 \ ???
+
+.L0332
+
+ SKIP 1                 \ ???
+
+.L0333
+
+ SKIP 1                 \ ???
+
+.L0334
+
+ SKIP 1                 \ ???
+
+.L0335
+
+ SKIP 1                 \ ???
+
+.L0336
+
+ SKIP 1                 \ ???
+
+.L0337
+
+ SKIP 1                 \ ???
+
+.L0338
+
+ SKIP 1                 \ ???
+
+.L0339
+
+ SKIP 1                 \ ???
+
+.L033A
+
+ SKIP 1                 \ ???
+
+.L033B
+
+ SKIP 1                 \ ???
+
+.L033C
+
+ SKIP 1                 \ ???
+
+.L033D
+
+ SKIP 1                 \ ???
+
+.L033E
+
+ SKIP 1                 \ ???
+
+.L033F
+
+ SKIP 1                 \ ???
+
+.L0340
+
+ SKIP 1                 \ ???
+
+.L0341
+
+ SKIP 1                 \ ???
+
+.L0342
+
+ SKIP 1                 \ ???
+
+.L0343
+
+ SKIP 1                 \ ???
+
+.L0344
+
+ SKIP 1                 \ ???
+
+.L0345
+
+ SKIP 1                 \ ???
+
+.L0346
+
+ SKIP 1                 \ ???
+
+.L0347
+
+ SKIP 1                 \ ???
+
+.L0348
+
+ SKIP 1                 \ ???
+
+.L0349
+
+ SKIP 1                 \ ???
+
+.L034A
+
+ SKIP 1                 \ ???
+
+.L034B
+
+ SKIP 1                 \ ???
+
+.L034C
+
+ SKIP 1                 \ ???
+
+.L034D
+
+ SKIP 1                 \ ???
+
+.L034E
+
+ SKIP 1                 \ ???
+
+.L034F
+
+ SKIP 1                 \ ???
+
+.L0350
+
+ SKIP 1                 \ ???
+
+.L0351
+
+ SKIP 1                 \ ???
+
+.L0352
+
+ SKIP 1                 \ ???
+
+.L0353
+
+ SKIP 1                 \ ???
+
+.L0354
+
+ SKIP 1                 \ ???
+
+.L0355
+
+ SKIP 1                 \ ???
+
+.L0356
+
+ SKIP 1                 \ ???
+
+.L0357
+
+ SKIP 1                 \ ???
+
+.L0358
+
+ SKIP 1                 \ ???
+
+.L0359
+
+ SKIP 1                 \ ???
+
+.L035A
+
+ SKIP 1                 \ ???
+
+.L035B
+
+ SKIP 1                 \ ???
+
+.L035C
+
+ SKIP 1                 \ ???
+
+.L035D
+
+ SKIP 1                 \ ???
+
+.L035E
+
+ SKIP 1                 \ ???
+
+.L035F
+
+ SKIP 1                 \ ???
+
+.L0360
+
+ SKIP 1                 \ ???
+
+.L0361
+
+ SKIP 1                 \ ???
+
+.L0362
+
+ SKIP 1                 \ ???
+
+.L0363
+
+ SKIP 1                 \ ???
+
+.L0364
+
+ SKIP 1                 \ ???
+
+.L0365
+
+ SKIP 1                 \ ???
+
+.L0366
+
+ SKIP 1                 \ ???
+
+.L0367
+
+ SKIP 1                 \ ???
+
+.L0368
+
+ SKIP 1                 \ ???
+
+.L0369
+
+ SKIP 1                 \ ???
 
 INCLUDE "library/common/main/variable/frin.asm"
 INCLUDE "library/enhanced/main/variable/junk.asm"
@@ -510,7 +930,267 @@ INCLUDE "library/common/main/variable/ky7.asm"
 
 .L040B
 
- SKIP 66                \ ???
+ SKIP 1                 \ ???
+
+.L040C
+
+ SKIP 1                 \ ???
+
+.L040D
+
+ SKIP 1                 \ ???
+
+.L040E
+
+ SKIP 1                 \ ???
+
+.L040F
+
+ SKIP 1                 \ ???
+
+.L0410
+
+ SKIP 1                 \ ???
+
+.L0411
+
+ SKIP 1                 \ ???
+
+.L0412
+
+ SKIP 1                 \ ???
+
+.L0413
+
+ SKIP 1                 \ ???
+
+.L0414
+
+ SKIP 1                 \ ???
+
+.L0415
+
+ SKIP 1                 \ ???
+
+.L0416
+
+ SKIP 1                 \ ???
+
+.L0417
+
+ SKIP 1                 \ ???
+
+.L0418
+
+ SKIP 1                 \ ???
+
+.L0419
+
+ SKIP 1                 \ ???
+
+.L041A
+
+ SKIP 1                 \ ???
+
+.L041B
+
+ SKIP 1                 \ ???
+
+.L041C
+
+ SKIP 1                 \ ???
+
+.L041D
+
+ SKIP 1                 \ ???
+
+.L041E
+
+ SKIP 1                 \ ???
+
+.L041F
+
+ SKIP 1                 \ ???
+
+.L0420
+
+ SKIP 1                 \ ???
+
+.L0421
+
+ SKIP 1                 \ ???
+
+.L0422
+
+ SKIP 1                 \ ???
+
+.L0423
+
+ SKIP 1                 \ ???
+
+.L0424
+
+ SKIP 1                 \ ???
+
+.L0425
+
+ SKIP 1                 \ ???
+
+.L0426
+
+ SKIP 1                 \ ???
+
+.L0427
+
+ SKIP 1                 \ ???
+
+.L0428
+
+ SKIP 1                 \ ???
+
+.L0429
+
+ SKIP 1                 \ ???
+
+.L042A
+
+ SKIP 1                 \ ???
+
+.L042B
+
+ SKIP 1                 \ ???
+
+.L042C
+
+ SKIP 1                 \ ???
+
+.L042D
+
+ SKIP 1                 \ ???
+
+.L042E
+
+ SKIP 1                 \ ???
+
+.L042F
+
+ SKIP 1                 \ ???
+
+.L0430
+
+ SKIP 1                 \ ???
+
+.L0431
+
+ SKIP 1                 \ ???
+
+.L0432
+
+ SKIP 1                 \ ???
+
+.L0433
+
+ SKIP 1                 \ ???
+
+.L0434
+
+ SKIP 1                 \ ???
+
+.L0435
+
+ SKIP 1                 \ ???
+
+.L0436
+
+ SKIP 1                 \ ???
+
+.L0437
+
+ SKIP 1                 \ ???
+
+.L0438
+
+ SKIP 1                 \ ???
+
+.L0439
+
+ SKIP 1                 \ ???
+
+.L043A
+
+ SKIP 1                 \ ???
+
+.L043B
+
+ SKIP 1                 \ ???
+
+.L043C
+
+ SKIP 1                 \ ???
+
+.L043D
+
+ SKIP 1                 \ ???
+
+.L043E
+
+ SKIP 1                 \ ???
+
+.L043F
+
+ SKIP 1                 \ ???
+
+.L0440
+
+ SKIP 1                 \ ???
+
+.L0441
+
+ SKIP 1                 \ ???
+
+.L0442
+
+ SKIP 1                 \ ???
+
+.L0443
+
+ SKIP 1                 \ ???
+
+.L0444
+
+ SKIP 1                 \ ???
+
+.L0445
+
+ SKIP 1                 \ ???
+
+.L0446
+
+ SKIP 1                 \ ???
+
+.L0447
+
+ SKIP 1                 \ ???
+
+.L0448
+
+ SKIP 1                 \ ???
+
+.L0449
+
+ SKIP 1                 \ ???
+
+.L044A
+
+ SKIP 1                 \ ???
+
+.L044B
+
+ SKIP 1                 \ ???
+
+.L044C
+
+ SKIP 1                 \ ???
 
 INCLUDE "library/common/main/variable/qq19.asm"
 

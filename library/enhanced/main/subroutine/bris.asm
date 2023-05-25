@@ -16,7 +16,7 @@
 
 IF _NES_VERSION
 
- JSR LF2BD              \ ???
+ JSR C8926_b0           \ ???
 
 ENDIF
 

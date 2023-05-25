@@ -52,6 +52,8 @@
  _ELITE_A_6502SP_IO     = FALSE
  _ELITE_A_6502SP_PARA   = FALSE
 
+ _BANK = 5
+
  INCLUDE "versions/nes/1-source-files/main-sources/elite-source-common.asm"
 
 \ ******************************************************************************

@@ -33,7 +33,7 @@ IF NOT(_NES_VERSION)
 ELIF _NES_VERSION
 
  JSR C8980_b0            \ ???
- JSR LD8C5
+ JSR subm_D8C5
  LDA tileNumber
  STA L00D2
  LDA #&28
@@ -43,14 +43,14 @@ ELIF _NES_VERSION
 
 .loop_CB392
 
- JSR PAS1
+ JSR PAS1_b0
  LDA controller1A
  ORA controller1B
  BPL loop_CB392
 
 .loop_CB39D
 
- JSR PAS1
+ JSR PAS1_b0
  LDA controller1A
  ORA controller1B
  BMI loop_CB39D
@@ -74,7 +74,7 @@ IF NOT(_NES_VERSION)
 ELIF _NES_VERSION
 
  LDA #&93               \ Clear the top part of the screen, draw a white border,
- JSR TT66               \ and set the current view type in QQ11 to ???
+ JSR TT66_b0            \ and set the current view type in QQ11 to ???
 
                         \ Fall through into MT23 to move to row 10, switch to
                         \ white text, and switch to lower case when printing

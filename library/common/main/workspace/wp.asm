@@ -1315,14 +1315,14 @@ INCLUDE "library/common/main/variable/lasy.asm"
 INCLUDE "library/common/main/variable/altit.asm"
 INCLUDE "library/common/main/variable/swap.asm"
 
-.L4080
+.L0480
 
  SKIP 1                 \ ???
 
 INCLUDE "library/common/main/variable/xsav2.asm"
 INCLUDE "library/common/main/variable/ysav2.asm"
 
-.L4083
+.L0483
 
  SKIP 1                 \ ???
 
@@ -1485,7 +1485,13 @@ INCLUDE "library/common/main/variable/qq10.asm"
 
  SKIP 2                 \ ???
 
- SKIP 6                 \ ???
+.L04C2
+
+ SKIP 4                 \ ???
+
+.L04C6
+
+ SKIP 2                 \ ???
 
 INCLUDE "library/common/main/variable/sx.asm"
 INCLUDE "library/common/main/variable/sy.asm"

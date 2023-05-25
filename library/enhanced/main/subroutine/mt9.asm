@@ -30,13 +30,19 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _NES_VERSION
-
- LDA #&95               \ ???
-
-ENDIF
+IF NOT(_NES_VERSION)
 
  JMP TT66               \ Jump to TT66 to clear the screen and set the current
                         \ view type to 1, returning from the subroutine using a
                         \ tail call
+
+ELIF _NES_VERSION
+
+ LDA #&95               \ ???
+
+ JMP TT66_b0            \ Jump to TT66 to clear the screen and set the current
+                        \ view type to 1, returning from the subroutine using a
+                        \ tail call
+
+ENDIF
 

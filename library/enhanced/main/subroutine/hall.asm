@@ -60,11 +60,17 @@ ELIF _DISC_DOCKED OR _ELITE_A_VERSION
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  LDA #0                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 0 (space
                         \ view)
 
-IF _NES_VERSION
+ELIF _NES_VERSION
+
+ LDA #0                 \ Clear the top part of the screen, draw a white border,
+ JSR TT66_b0            \ and set the current view type in QQ11 to 0 (space
+                        \ view)
 
  LDA frameCounter       \ ???
  STA RAND+1
@@ -255,7 +261,7 @@ ELIF _NES_VERSION
  STA L00D2
  LDA #&50
  STA L00D8
- JMP LF2CE
+ JMP subm_F2CE
 
 ENDIF
 

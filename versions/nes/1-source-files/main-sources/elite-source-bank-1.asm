@@ -52,6 +52,8 @@
  _ELITE_A_6502SP_IO     = FALSE
  _ELITE_A_6502SP_PARA   = FALSE
 
+ _BANK = 1
+
  INCLUDE "versions/nes/1-source-files/main-sources/elite-source-common.asm"
 
 \ ******************************************************************************
@@ -190,13 +192,13 @@ INCLUDE "library/common/main/subroutine/edges.asm"
  LDA XX15
  CMP X2
  BCS CB04C
- JMP LE0BA
+ JMP subm_E0BA
 
 .CB056
 
  LDA #0
  STA XX15
- JMP LE0BA
+ JMP subm_E0BA
 
 \ ******************************************************************************
 \
@@ -221,7 +223,7 @@ INCLUDE "library/common/main/subroutine/edges.asm"
  CMP XX15
  BEQ CB04C
  BCC CB04C
- JMP LE0BA
+ JMP subm_E0BA
 
 INCLUDE "library/common/main/subroutine/chkon.asm"
 INCLUDE "library/common/main/subroutine/pl21.asm"

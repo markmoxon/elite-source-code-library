@@ -69,15 +69,10 @@
 
  ORG CODE%
 
-.pydis_start
- SEI                                          ; C000: 78          x
- INC LC006                                    ; C001: EE 06 C0    ...
-.sub_CC004
-LC006 = sub_CC004+2
- JMP Spercent                                 ; C004: 4C 07 C0    L..
+INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
 
 ; ******************************************************************************
-.Spercent
+.S%
  SEI                                          ; C007: 78          x
  CLD                                          ; C008: D8          .
  LDX #&FF                                     ; C009: A2 FF       ..
@@ -117,7 +112,7 @@ LC006 = sub_CC004+2
  STA setupPPUForIconBar                       ; C048: 85 E9       ..
  LDA #&40 ; '@'                               ; C04A: A9 40       .@
  STA JOY2                                     ; C04C: 8D 17 40    ..@
- INC LC006                                    ; C04F: EE 06 C0    ...
+ INC &C006                                    ; C04F: EE 06 C0    ...
  LDA PPU_STATUS                               ; C052: AD 02 20    ..
 .loop_CC055
  LDA PPU_STATUS                               ; C055: AD 02 20    ..
@@ -8431,12 +8426,22 @@ LDFFF = sub_CDFFE+1
  EQUB &20, &A9, &4C, &00, &C0, &45, &4C, &20  ; FFDB: 20 A9 4C...  .L
  EQUB &20, &20, &20, &20, &20, &20, &20, &20  ; FFE3: 20 20 20...
  EQUB &20, &20, &20, &20, &20, &00, &00, &00  ; FFEB: 20 20 20...
- EQUB &00, &38, &04, &01, &07, &9C, &2A, &D5  ; FFF3: 00 38 04... .8.
- EQUB &CE, &00, &C0, &D4                      ; FFFB: CE 00 C0... ...
-    EQUB &CE
-.pydis_end
+ EQUB &00, &38, &04, &01, &07, &9C, &2A
 
+\ ******************************************************************************
+\
+\       Name: Vectors
+\       Type: Variable
+\   Category: Text
+\    Summary: Vectors at the end of the ROM bank
+\
+\ ******************************************************************************
 
+ EQUW NMI               \ Vector to the NMI handler
+
+ EQUW ResetMMC1         \ Vector to the RESET handler
+
+ EQUW IRQ               \ Vector to the IRQ/BRK handler
 
 \ ******************************************************************************
 \

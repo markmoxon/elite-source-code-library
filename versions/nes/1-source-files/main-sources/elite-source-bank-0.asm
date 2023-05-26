@@ -802,7 +802,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  RTS                                          ; 8532: 60          `
 
 ; ******************************************************************************
-.Mpercent
+.M%
  LDA QQ11                                     ; 8533: A5 9E       ..
  BNE C853A                                    ; 8535: D0 03       ..
  JSR ChangeDrawingPhase                       ; 8537: 20 E1 D8     ..
@@ -6789,7 +6789,7 @@ M32_1 = M32+1
 
 ; ******************************************************************************
 .TT100
- JSR Mpercent                                 ; AE99: 20 33 85     3.
+ JSR M%                                 ; AE99: 20 33 85     3.
  DEC MCNT                                     ; AE9C: C6 A2       ..
  BEQ CAEA3                                    ; AE9E: F0 03       ..
 .loop_CAEA0
@@ -9235,11 +9235,7 @@ M32_1 = M32+1
  ORA #&60 ; '`'                               ; BFF0: 09 60       .`
  JMP TT27_b2                                  ; BFF2: 4C 01 F2    L..
 
- EQUB &FF, &FF, &FF, &FF, &FF,   7, &C0,   0  ; BFF5: FF FF FF... ...
- EQUB &C0,   7, &C0                           ; BFFD: C0 07 C0    ...
-.pydis_end
-
-
+INCLUDE "library/nes/main/variable/vectors.asm"
 
 \ ******************************************************************************
 \

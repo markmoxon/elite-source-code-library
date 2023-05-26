@@ -131,7 +131,9 @@ INCLUDE "library/disc/loader3/subroutine/prot1.asm"
 
  EQUB &AC               \ This byte appears to be unused
 
-INCLUDE "library/common/loader/subroutine/pll1.asm"
+INCLUDE "library/common/loader/subroutine/pll1_part_1_of_3.asm"
+INCLUDE "library/common/loader/subroutine/pll1_part_2_of_3.asm"
+INCLUDE "library/common/loader/subroutine/pll1_part_3_of_3.asm"
 INCLUDE "library/common/loader/subroutine/dornd.asm"
 INCLUDE "library/enhanced/loader/variable/rand.asm"
 INCLUDE "library/common/loader/subroutine/squa2.asm"

@@ -142,7 +142,6 @@ IF _BANK = 7
  MVS5               = &8A14
  DemoShips          = &9522
  tnpr               = &9620
- L9FFF              = &9FFF
  LL9                = &A070
  LA082              = &A082
  LA0F8              = &A0F8
@@ -220,7 +219,6 @@ IF _BANK = 7
  SetSystemImage1    = &BED7
  GetSystemImage1    = &BEEA
  LBF41              = &BF41
- LBFFF              = &BFFF
 
 ELSE
 

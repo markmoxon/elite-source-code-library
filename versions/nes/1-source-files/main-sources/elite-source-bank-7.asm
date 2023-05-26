@@ -25,6 +25,10 @@
 \
 \ ******************************************************************************
 
+ INCLUDE "versions/nes/1-source-files/main-sources/elite-bank-options.asm"
+
+IF _BANK = 7
+
  INCLUDE "versions/nes/1-source-files/main-sources/elite-build-options.asm"
 
  _CASSETTE_VERSION      = (_VERSION = 1)
@@ -52,9 +56,9 @@
  _ELITE_A_6502SP_IO     = FALSE
  _ELITE_A_6502SP_PARA   = FALSE
 
- _BANK = 7
-
  INCLUDE "versions/nes/1-source-files/main-sources/elite-source-common.asm"
+
+ENDIF
 
 \ ******************************************************************************
 \
@@ -64,13 +68,17 @@
 \
 \ ******************************************************************************
 
- CODE% = &C000
- LOAD% = &C000
+ CODE_BANK_7% = &C000
+ LOAD_BANK_7% = &C000
 
- ORG CODE%
+ ORG CODE_BANK_7%
 
-INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
+\INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
 
+.ResetMMC1_b7
+ SEI
+ INC &C006
+ JMP S%
 
 \ ******************************************************************************
 \
@@ -262,7 +270,10 @@ INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
 \ ******************************************************************************
 
 .LC0DF
- EQUB   6,   6,   7,   7, &0B,   9, &0D, &0A  ; C0DF: 06 06 07... ...
+ EQUB   6,   6,   7,   7
+
+.LC0E3
+ EQUB &0B,   9, &0D, &0A  ; C0DF: 06 06 07... ...
  EQUS "    "                                  ; C0E7: 20 20 20...
  EQUB &10,   0, &C4, &ED, &5E, &E5, &22, &E5  ; C0EB: 10 00 C4... ...
  EQUB &22,   0,   0, &ED, &5E, &E5, &22,   9  ; C0F3: 22 00 00... "..
@@ -2492,9 +2503,9 @@ INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
  PLA                                          ; D17D: 68          h
  RTS                                          ; D17E: 60          `
 
-.loop_CD17F
+.LD17F
  LDA setupPPUForIconBar                       ; D17F: A5 E9       ..
- BEQ loop_CD17F                               ; D181: F0 FC       ..
+ BEQ LD17F                               ; D181: F0 FC       ..
 .loop_CD183
  LDA setupPPUForIconBar                       ; D183: A5 E9       ..
  BPL CD190                                    ; D185: 10 09       ..
@@ -3770,6 +3781,8 @@ INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
  LDA #0                                       ; D8F7: A9 00       ..
  STA patternBufferLo                          ; D8F9: 85 E1       ..
  STA drawingPhaseDebug                        ; D8FB: 85 E5       ..
+
+.LD8FD
  LDA pattBufferAddr,X                         ; D8FD: BD D2 CE    ...
  STA patternBufferHi                          ; D900: 85 E2       ..
  LSR A                                        ; D902: 4A          J
@@ -3915,7 +3928,11 @@ INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
 
  JSR ChangeDrawingPhase                       ; D96F: 20 E1 D8     ..
  JSR LL9_b1                                   ; D972: 20 C7 ED     ..
+
+.LD975
  LDA #&C8                                     ; D975: A9 C8       ..
+
+.LD977
  PHA                                          ; D977: 48          H
  JSR DrawBoxEdges                             ; D978: 20 6F CD     o.
  LDX drawingPhase                             ; D97B: A6 C0       ..
@@ -6506,9 +6523,11 @@ INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
 
  LDA QQ11a                                    ; EB86: A5 9F       ..
  CMP QQ11                                     ; EB88: C5 9E       ..
- BEQ CEB8F                                    ; EB8A: F0 03       ..
+ BEQ LEB8F                                    ; EB8A: F0 03       ..
+
+.LEB8C
  JSR CB63D_b3                                 ; EB8C: 20 AB ED     ..
-.CEB8F
+.LEB8F
  LDA setupPPUForIconBar                       ; EB8F: A5 E9       ..
  BPL CEB9C                                    ; EB91: 10 09       ..
  LDA PPU_STATUS                               ; EB93: AD 02 20    ..
@@ -6617,8 +6636,12 @@ INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
 
  LDY #4                                       ; EBE5: A0 04       ..
  BNE NOISE                                    ; EBE7: D0 09       ..
+
+.LEBE9
  LDY #1                                       ; EBE9: A0 01       ..
  BNE NOISE                                    ; EBEB: D0 05       ..
+
+.LEBED
  JSR sub_CEBB1                                ; EBED: 20 B1 EB     ..
  LDY #&15                                     ; EBF0: A0 15       ..
 
@@ -6771,7 +6794,7 @@ INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
  PHA                                          ; ECA2: 48          H
  LDA #1                                       ; ECA3: A9 01       ..
  JSR SetBank                                  ; ECA5: 20 AE C0     ..
- LDA L8041,Y                                  ; ECA8: B9 41 80    .A.
+ LDA E%-1,Y                                   ; ECA8: B9 41 80    .A.
  JMP loop_CEC97                               ; ECAB: 4C 97 EC    L..
 
 
@@ -6797,10 +6820,10 @@ INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
  PHA                                          ; ECBD: 48          H
  LDA #1                                       ; ECBE: A9 01       ..
  JSR SetBank                                  ; ECC0: 20 AE C0     ..
- LDA L8062,X                                  ; ECC3: BD 62 80    .b.
+ LDA KWL%-1,X                                  ; ECC3: BD 62 80    .b.
  ASL A                                        ; ECC6: 0A          .
  PHA                                          ; ECC7: 48          H
- LDA L8083,X                                  ; ECC8: BD 83 80    ...
+ LDA KWH%-1,X                                  ; ECC8: BD 83 80    ...
  ROL A                                        ; ECCB: 2A          *
  TAY                                          ; ECCC: A8          .
  PLA                                          ; ECCD: 68          h
@@ -6831,13 +6854,15 @@ INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
 
  LDA L0465                                    ; ECE2: AD 65 04    .e.
  BEQ CECE1                                    ; ECE5: F0 FA       ..
+
+.LECE7
  STA L00B7                                    ; ECE7: 85 B7       ..
  LDA currentBank                              ; ECE9: A5 F7       ..
  PHA                                          ; ECEB: 48          H
  LDA #0                                       ; ECEC: A9 00       ..
  JSR SetBank                                  ; ECEE: 20 AE C0     ..
  LDA L00B7                                    ; ECF1: A5 B7       ..
- JSR LB1D4                                    ; ECF3: 20 D4 B1     ..
+ JSR subm_B1D4                                    ; ECF3: 20 D4 B1     ..
  JMP loop_CECDB                               ; ECF6: 4C DB EC    L..
 
 
@@ -6914,12 +6939,12 @@ INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
  LDA #6                                       ; ED3E: A9 06       ..
  JSR SetBank                                  ; ED40: 20 AE C0     ..
  LDA L00B7                                    ; ED43: A5 B7       ..
- JSR L8021                                    ; ED45: 20 21 80     !.
+ JSR subm_8021                                    ; ED45: 20 21 80     !.
  JMP ResetBank                                ; ED48: 4C AD C0    L..
 
 .CED4B
  LDA L00B7                                    ; ED4B: A5 B7       ..
- JMP L8021                                    ; ED4D: 4C 21 80    L!.
+ JMP subm_8021                                    ; ED4D: 4C 21 80    L!.
 
 
 \ ******************************************************************************
@@ -6975,11 +7000,14 @@ INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
 
  LDA #0                                       ; ED6E: A9 00       ..
  STA L045E                                    ; ED70: 8D 5E 04    .^.
+
+.LED73
+
  LDA currentBank                              ; ED73: A5 F7       ..
  PHA                                          ; ED75: 48          H
  LDA #6                                       ; ED76: A9 06       ..
  JSR SetBank                                  ; ED78: 20 AE C0     ..
- JSR L8012                                    ; ED7B: 20 12 80     ..
+ JSR ResetSound                               ; ED7B: 20 12 80     ..
  JMP ResetBank                                ; ED7E: 4C AD C0    L..
 
 
@@ -6998,7 +7026,7 @@ INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
  PHA                                          ; ED83: 48          H
  LDA #5                                       ; ED84: A9 05       ..
  JSR SetBank                                  ; ED86: 20 AE C0     ..
- JSR LBF41                                    ; ED89: 20 41 BF     A.
+ JSR subm_BF41                                ; ED89: 20 41 BF     A.
  JMP ResetBank                                ; ED8C: 4C AD C0    L..
 
 
@@ -7017,7 +7045,7 @@ INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
  PHA                                          ; ED91: 48          H
  LDA #4                                       ; ED92: A9 04       ..
  JSR SetBank                                  ; ED94: 20 AE C0     ..
- JSR LB9F9                                    ; ED97: 20 F9 B9     ..
+ JSR subm_B9F9                                    ; ED97: 20 F9 B9     ..
  JMP ResetBank                                ; ED9A: 4C AD C0    L..
 
 
@@ -7036,7 +7064,7 @@ INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
  PHA                                          ; ED9F: 48          H
  LDA #4                                       ; EDA0: A9 04       ..
  JSR SetBank                                  ; EDA2: 20 AE C0     ..
- JSR LB96B                                    ; EDA5: 20 6B B9     k.
+ JSR subm_B96B                                    ; EDA5: 20 6B B9     k.
  JMP ResetBank                                ; EDA8: 4C AD C0    L..
 
 
@@ -7203,17 +7231,27 @@ INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
 .CEE27
  JMP STARS                                    ; EE27: 4C BE B1    L..
 
+\ ******************************************************************************
+\
+\       Name: CIRCLE2_b1
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.CIRCLE2_b1
  LDA currentBank                              ; EE2A: A5 F7       ..
  CMP #1                                       ; EE2C: C9 01       ..
  BEQ CEE3C                                    ; EE2E: F0 0C       ..
  PHA                                          ; EE30: 48          H
  LDA #1                                       ; EE31: A9 01       ..
  JSR SetBank                                  ; EE33: 20 AE C0     ..
- JSR LAF9D                                    ; EE36: 20 9D AF     ..
+ JSR CIRCLE2                                    ; EE36: 20 9D AF     ..
  JMP ResetBank                                ; EE39: 4C AD C0    L..
 
 .CEE3C
- JMP LAF9D                                    ; EE3C: 4C 9D AF    L..
+ JMP CIRCLE2                                    ; EE3C: 4C 9D AF    L..
 
 
 \ ******************************************************************************
@@ -7296,11 +7334,22 @@ INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
  LDA L00B7                                    ; EE78: A5 B7       ..
  JMP LB219                                    ; EE7A: 4C 19 B2    L..
 
+\ ******************************************************************************
+\
+\       Name: LB9C1_b4
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+
+.LB9C1_b4
  LDA currentBank                              ; EE7D: A5 F7       ..
  PHA                                          ; EE7F: 48          H
  LDA #4                                       ; EE80: A9 04       ..
  JSR SetBank                                  ; EE82: 20 AE C0     ..
- JSR LB9C1                                    ; EE85: 20 C1 B9     ..
+ JSR subm_B9C1                                    ; EE85: 20 C1 B9     ..
  JMP ResetBank                                ; EE88: 4C AD C0    L..
 
 
@@ -7393,11 +7442,22 @@ INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
 
  LDA #0                                       ; EEC3: A9 00       ..
  JSR SetBank                                  ; EEC5: 20 AE C0     ..
- JMP LB2EF                                    ; EEC8: 4C EF B2    L..
+ JMP subm_B2EF                                    ; EEC8: 4C EF B2    L..
+
+\ ******************************************************************************
+\
+\       Name: CB358_b0
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.CB358_b0
 
  LDA #0                                       ; EECB: A9 00       ..
  JSR SetBank                                  ; EECD: 20 AE C0     ..
- JMP LB358                                    ; EED0: 4C 58 B3    LX.
+ JMP subm_B358                                    ; EED0: 4C 58 B3    LX.
 
 
 \ ******************************************************************************
@@ -7760,12 +7820,12 @@ INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
  LDA #0                                       ; EFE5: A9 00       ..
  JSR SetBank                                  ; EFE7: 20 AE C0     ..
  LDA L00B7                                    ; EFEA: A5 B7       ..
- JSR LB39D                                    ; EFEC: 20 9D B3     ..
+ JSR subm_B39D                                    ; EFEC: 20 9D B3     ..
  JMP ResetBank                                ; EFEF: 4C AD C0    L..
 
 .CEFF2
  LDA L00B7                                    ; EFF2: A5 B7       ..
- JMP LB39D                                    ; EFF4: 4C 9D B3    L..
+ JMP subm_B39D                                    ; EFF4: 4C 9D B3    L..
 
 
 \ ******************************************************************************
@@ -8155,6 +8215,8 @@ INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
 
  LDA L0473                                    ; F126: AD 73 04    .s.
  BPL CA9D1_b3                                 ; F129: 10 0E       ..
+
+.LF12B
  LDA currentBank                              ; F12B: A5 F7       ..
  PHA                                          ; F12D: 48          H
  LDA #3                                       ; F12E: A9 03       ..
@@ -8177,6 +8239,8 @@ INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
  LDA #&74 ; 't'                               ; F139: A9 74       .t
  STA L00CD                                    ; F13B: 85 CD       ..
  STA L00CE                                    ; F13D: 85 CE       ..
+
+.LF13F
  LDA #&C0                                     ; F13F: A9 C0       ..
  STA L00B7                                    ; F141: 85 B7       ..
  LDA currentBank                              ; F143: A5 F7       ..
@@ -8257,7 +8321,7 @@ INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
  PHA                                          ; F188: 48          H
  LDA #0                                       ; F189: A9 00       ..
  JSR SetBank                                  ; F18B: 20 AE C0     ..
- JSR L8980                                    ; F18E: 20 80 89     ..
+ JSR subm_8980                                ; F18E: 20 80 89     ..
  JMP ResetBank                                ; F191: 4C AD C0    L..
 
 
@@ -8491,6 +8555,8 @@ INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
  LDA #0                                       ; F25A: A9 00       ..
  LDY #&21 ; '!'                               ; F25C: A0 21       .!
  STA (XX19),Y                                 ; F25E: 91 61       .a
+
+.LF260
  LDA currentBank                              ; F260: A5 F7       ..
  PHA                                          ; F262: 48          H
  LDA #1                                       ; F263: A9 01       ..
@@ -8535,7 +8601,7 @@ INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
  PHA                                          ; F282: 48          H
  LDA #1                                       ; F283: A9 01       ..
  JSR SetBank                                  ; F285: 20 AE C0     ..
- JSR LA65D                                    ; F288: 20 5D A6     ].
+ JSR CLIP                                    ; F288: 20 5D A6     ].
  BCS CF290                                    ; F28B: B0 03       ..
  JSR LOIN                                     ; F28D: 20 0F DC     ..
 .CF290
@@ -8602,11 +8668,13 @@ INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
 .C8926_b0
 
  JSR subm_EB86                                ; F2BD: 20 86 EB     ..
+
+.LF2C0
  LDA currentBank                              ; F2C0: A5 F7       ..
  PHA                                          ; F2C2: 48          H
  LDA #0                                       ; F2C3: A9 00       ..
  JSR SetBank                                  ; F2C5: 20 AE C0     ..
- JSR L8926                                    ; F2C8: 20 26 89     &.
+ JSR subm_8926                                ; F2C8: 20 26 89     &.
  JMP ResetBank                                ; F2CB: 4C AD C0    L..
 
 
@@ -8644,6 +8712,8 @@ INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
  LDA #0                                       ; F2DE: A9 00       ..
  STA L0393                                    ; F2E0: 8D 93 03    ...
  STA L0394                                    ; F2E3: 8D 94 03    ...
+
+.LF2E6
  LDA #&FF                                     ; F2E6: A9 FF       ..
  STA DTW2                                     ; F2E8: 8D F4 03    ...
  LDA #&80                                     ; F2EB: A9 80       ..
@@ -8783,6 +8853,8 @@ INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
  LDA #0                                       ; F392: A9 00       ..
  STA K%+6                               ; F394: 8D 06 06    ...
  STA K%                                 ; F397: 8D 00 06    ...
+
+.LF39A
  LDA #&75 ; 'u'                               ; F39A: A9 75       .u
  STA RAND                                     ; F39C: 85 02       ..
  LDA #&0A                                     ; F39E: A9 0A       ..
@@ -8828,7 +8900,7 @@ INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
  JSR CB63D_b3                                 ; F3BC: 20 AB ED     ..
  LDA #0                                       ; F3BF: A9 00       ..
  JSR C8021_b6                                 ; F3C1: 20 24 ED     $.
- JSR CEB8F                                    ; F3C4: 20 8F EB     ..
+ JSR LEB8F                                    ; F3C4: 20 8F EB     ..
  LDA #&FF                                     ; F3C7: A9 FF       ..
  STA QQ11a                                    ; F3C9: 85 9F       ..
  LDA #1                                       ; F3CB: A9 01       ..
@@ -8848,7 +8920,7 @@ INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
  LDA LF422,Y                                  ; F3E5: B9 22 F4    .".
  TAY                                          ; F3E8: A8          .
  LDA #6                                       ; F3E9: A9 06       ..
- JSR LB3BC                                    ; F3EB: 20 BC B3     ..
+ JSR subm_B3BC                                    ; F3EB: 20 BC B3     ..
  BCS CF411                                    ; F3EE: B0 21       .!
  LDY L03FC                                    ; F3F0: AC FC 03    ...
  INY                                          ; F3F3: C8          .
@@ -8893,22 +8965,7 @@ INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
 
 .LF422
  EQUB &64, &0A, &0A, &1E, &B4, &0A, &28, &5A  ; F422: 64 0A 0A... d..
-
-
-\ ******************************************************************************
-\
-\       Name: subm_F42A
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.subm_F42A
-
- ASL A                                        ; F42A: 0A          .
- LSR INWK+31                                  ; F42B: 46 28       F(
- ASL A                                        ; F42D: 0A          .
+ EQUB &0A, &46, &28, &0A
 
 \ ******************************************************************************
 \
@@ -8921,7 +8978,7 @@ INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
 
 .Ze
 
- JSR LAE03                                    ; F42E: 20 03 AE     ..
+ JSR ZINF_0                                   ; F42E: 20 03 AE     ..
  JSR DORND                                    ; F431: 20 AD F4     ..
  STA T1                                       ; F434: 85 06       ..
  AND #&80                                     ; F436: 29 80       ).
@@ -8996,11 +9053,11 @@ INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
 .NLIN4
 
  LDA #4                                       ; F473: A9 04       ..
- BNE CF47D                                    ; F475: D0 06       ..
+ BNE LF47D                                    ; F475: D0 06       ..
  LDA #1                                       ; F477: A9 01       ..
  STA YC                                       ; F479: 85 3B       .;
  LDA #4                                       ; F47B: A9 04       ..
-.CF47D
+.LF47D
  JSR SetupPPUForIconBar                       ; F47D: 20 7D EC     }.
  LDY #1                                       ; F480: A0 01       ..
  LDA #3                                       ; F482: A9 03       ..
@@ -10902,7 +10959,7 @@ INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
 
  EQUW NMI               \ Vector to the NMI handler
 
- EQUW ResetMMC1         \ Vector to the RESET handler
+ EQUW ResetMMC1_b7      \ Vector to the RESET handler
 
  EQUW IRQ               \ Vector to the IRQ/BRK handler
 
@@ -10912,5 +10969,9 @@ INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
 \
 \ ******************************************************************************
 
- PRINT "S.bank7.bin ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
- SAVE "versions/nes/3-assembled-output/bank7.bin", CODE%, P%, LOAD%
+IF _BANK = 7
+
+ PRINT "S.bank7.bin ", ~CODE_BANK_7%, " ", ~P%, " ", ~LOAD_BANK_7%, " ", ~LOAD_BANK_7%
+ SAVE "versions/nes/3-assembled-output/bank7.bin", CODE_BANK_7%, P%, LOAD_BANK_7%
+
+ENDIF

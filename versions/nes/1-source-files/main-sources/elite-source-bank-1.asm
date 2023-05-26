@@ -51,10 +51,11 @@
  _ELITE_A_ENCYCLOPEDIA  = FALSE
  _ELITE_A_6502SP_IO     = FALSE
  _ELITE_A_6502SP_PARA   = FALSE
-
- _BANK = 1
+ _BANK                  = 1
 
  INCLUDE "versions/nes/1-source-files/main-sources/elite-source-common.asm"
+
+ INCLUDE "versions/nes/1-source-files/main-sources/elite-source-bank-7.asm"
 
 \ ******************************************************************************
 \
@@ -493,6 +494,8 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  LDA #0                 \ ???
  LDY #&21
  STA (INF),Y
+
+.LBAF3
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0

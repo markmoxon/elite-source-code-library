@@ -51,10 +51,11 @@
  _ELITE_A_ENCYCLOPEDIA  = FALSE
  _ELITE_A_6502SP_IO     = FALSE
  _ELITE_A_6502SP_PARA   = FALSE
-
- _BANK = 5
+ _BANK                  = 5
 
  INCLUDE "versions/nes/1-source-files/main-sources/elite-source-common.asm"
+
+ INCLUDE "versions/nes/1-source-files/main-sources/elite-source-bank-7.asm"
 
 \ ******************************************************************************
 \

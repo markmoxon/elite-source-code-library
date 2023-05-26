@@ -51,10 +51,11 @@
  _ELITE_A_ENCYCLOPEDIA  = FALSE
  _ELITE_A_6502SP_IO     = FALSE
  _ELITE_A_6502SP_PARA   = FALSE
-
- _BANK = 6
+ _BANK                  = 6
 
  INCLUDE "versions/nes/1-source-files/main-sources/elite-source-common.asm"
+
+ INCLUDE "versions/nes/1-source-files/main-sources/elite-source-bank-7.asm"
 
 \ ******************************************************************************
 \
@@ -3859,7 +3860,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 .CA726
  JSR subm_A917                                ; A726: 20 17 A9     ..
  JSR CB63D_b3                                 ; A729: 20 AB ED     ..
- JMP LEECB                                    ; A72C: 4C CB EE    L..
+ JMP CB358_b0                                 ; A72C: 4C CB EE    L..
 
 .CA72F
  LDX language                                 ; A72F: AE A8 04    ...
@@ -5721,14 +5722,14 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
 \ ******************************************************************************
 \
-\       Name: subm_B980
+\       Name: LL164
 \       Type: Subroutine
 \   Category: ???
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_B980
+.LL164
 
  JSR subm_D8C5                                ; B980: 20 C5 D8     ..
  JSR subm_EB67                                ; B983: 20 67 EB     g.

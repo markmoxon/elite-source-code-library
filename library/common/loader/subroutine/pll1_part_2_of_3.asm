@@ -64,7 +64,7 @@
 
  BNE PLL2               \ Loop back to PLL2 until CNT2+1 = 0
 
-IF _CASSETTE_VERSION \ Other: See group B
+IF _CASSETTE_VERSION \ Other: The cassette and Electron versions contain various bits of copy protection code injected into part 2 of the Saturn-drawing routine in the loader
 
  LDX MHCA               \ Set the low byte of BLPTR(1 0) to the contents of MHCA
  STX BLPTR              \ (which is &CA), so we now have BLPTR(1 0) = &03CA,

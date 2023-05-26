@@ -34,7 +34,7 @@ ENDIF
  STA ZP+1               \ Set ZP+1 = A
                         \          = r5^2 / 256
 
-IF _DISC_VERSION \ Other: See group A
+IF _DISC_VERSION \ Other: Group A: The disc version contains various bits of copy protection code injected into part 3 of the Saturn-drawing routine in the loader. In the original versions of Elite, the only self-modifying code is in the copy protection, though later versions do use this technique in the main game code
 
  LDA #HI(OSBmod)        \ As part of the copy protection, the JSR OSB
  STA OSBjsr+2           \ instruction at OSBjsr gets modified to point to OSBmod

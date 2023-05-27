@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\ NES ELITE GAME SOURCE (BANK CONFIGURATION)
+\ NES ELITE GAME SOURCE (COMMON VARIABLES)
 \
 \ NES Elite was written by Ian Bell and David Braben and is copyright D. Braben
 \ and I. Bell 1992
@@ -19,9 +19,13 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ This source file contains configuration that is common to all eight banks.
+\ This source file contains variables and addresses that are shared across all
+\ eight banks.
 \
 \ ******************************************************************************
+
+ _NTSC = (_VARIANT = 1)
+ _PAL  = (_VARIANT = 2)
 
 \ ******************************************************************************
 \
@@ -110,7 +114,6 @@
  TRI_LO     = &400A
  TRI_HI     = &400B
  NOISE_VOL  = &400C
- L400D      = &400D
  NOISE_LO   = &400E
  NOISE_HI   = &400F
  DMC_FREQ   = &4010
@@ -161,7 +164,7 @@ IF NOT(_BANK = 1)
  HALL               = &B738
  TIDY               = &B85C
  SCAN               = &B975
- LBAF3              = &BAF3
+ sub_CBAF3          = &BAF3
 
 ENDIF
 

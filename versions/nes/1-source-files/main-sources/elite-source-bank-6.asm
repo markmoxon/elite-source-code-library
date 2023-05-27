@@ -36,8 +36,6 @@
  _NES_VERSION           = (_VERSION = 7)
  _C64_VERSION           = (_VERSION = 8)
  _APPLE_VERSION         = (_VERSION = 9)
- _NTSC                  = (_VARIANT = 1)
- _PAL                   = (_VARIANT = 2)
  _DISC_DOCKED           = FALSE
  _DISC_FLIGHT           = FALSE
  _ELITE_A_DOCKED        = FALSE
@@ -51,7 +49,8 @@
  _ELITE_A_ENCYCLOPEDIA  = FALSE
  _ELITE_A_6502SP_IO     = FALSE
  _ELITE_A_6502SP_PARA   = FALSE
- _BANK                  = 6
+
+ _BANK = 6
 
  INCLUDE "versions/nes/1-source-files/main-sources/elite-source-common.asm"
 
@@ -1605,7 +1604,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  ORA L0439                                    ; 8AA9: 0D 39 04    .9.
  STA NOISE_VOL                                ; 8AAC: 8D 0C 40    ..@
  LDA #0                                       ; 8AAF: A9 00       ..
- STA L400D                                    ; 8AB1: 8D 0D 40    ..@
+ STA NOISE_VOL+1                              ; 8AB1: 8D 0D 40    ..@
  LDA L0435                                    ; 8AB4: AD 35 04    .5.
  AND #&0F                                     ; 8AB7: 29 0F       ).
  STA L0441                                    ; 8AB9: 8D 41 04    .A.

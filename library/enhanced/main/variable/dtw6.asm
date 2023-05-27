@@ -36,7 +36,7 @@ ELIF _NES_VERSION
 
 .DTW6
 
- SKIP 1                 \ A flag to denote whether printing in lower case is enabled for
+ SKIP 1                 \ A flag to denote whether printing in lower case is
                         \ enabled for extended text tokens
                         \
                         \   * %10000000 = lower case is enabled

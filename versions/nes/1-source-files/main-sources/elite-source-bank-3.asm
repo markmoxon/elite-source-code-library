@@ -36,8 +36,6 @@
  _NES_VERSION           = (_VERSION = 7)
  _C64_VERSION           = (_VERSION = 8)
  _APPLE_VERSION         = (_VERSION = 9)
- _NTSC                  = (_VARIANT = 1)
- _PAL                   = (_VARIANT = 2)
  _DISC_DOCKED           = FALSE
  _DISC_FLIGHT           = FALSE
  _ELITE_A_DOCKED        = FALSE
@@ -51,7 +49,8 @@
  _ELITE_A_ENCYCLOPEDIA  = FALSE
  _ELITE_A_6502SP_IO     = FALSE
  _ELITE_A_6502SP_PARA   = FALSE
- _BANK                  = 3
+
+ _BANK = 3
 
  INCLUDE "versions/nes/1-source-files/main-sources/elite-source-common.asm"
 

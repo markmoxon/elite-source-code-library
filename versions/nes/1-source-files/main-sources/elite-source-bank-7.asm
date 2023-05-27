@@ -40,8 +40,6 @@ IF _BANK = 7
  _NES_VERSION           = (_VERSION = 7)
  _C64_VERSION           = (_VERSION = 8)
  _APPLE_VERSION         = (_VERSION = 9)
- _NTSC                  = (_VARIANT = 1)
- _PAL                   = (_VARIANT = 2)
  _DISC_DOCKED           = FALSE
  _DISC_FLIGHT           = FALSE
  _ELITE_A_DOCKED        = FALSE
@@ -75,10 +73,65 @@ ENDIF
 
 \INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
 
+\ ******************************************************************************
+\
+\       Name: ResetMMC1_b7
+\       Type: Variable
+\   Category: Start and end
+\    Summary: The MMC1 mapper reset routine at the start of the ROM bank
+\
+\ ------------------------------------------------------------------------------
+\
+\ When the NES is switched on, it is hardwired to perform a JMP (&FFFC). At this
+\ point, there is no guarantee as to which ROM banks are mapped to &8000 and
+\ &C000, so to ensure that the game starts up correctly, we put the same code
+\ in each ROM at the following locations:
+\
+\   * We put &C000 in address &FFFC in every ROM bank, so the NES always jumps
+\     to &C000 when it starts up via the JMP (&FFFC), irrespective of which
+\     ROM bank is mapped to &C000.
+\
+\   * We put the same reset routine at the start of every ROM bank, so the same
+\     routine gets run, whichever ROM bank is mapped to &C000.
+\
+\ This reset routine is therefore called when the NES starts up, whatever the
+\ bank configuration ends up being. It then switches ROM bank 7 to &C000 and
+\ jumps into bank 7 at the game's entry point S%, which starts the game.
+\
+\ We need to give a different label to this version of the reset routine so we
+\ can assemble bank 7 at the same time as banks 0 to 6, to enable the lower
+\ banks to see the exported addresses for bank 7.
+\
+\ ******************************************************************************
+
 .ResetMMC1_b7
- SEI
- INC &C006
- JMP S%
+
+ SEI                    \ Disable interrupts
+
+ INC &C006              \ Reset the MMC1 mapper, which we can do by writing a
+                        \ value with bit 7 set into any address in ROM space
+                        \ (i.e. any address from &8000 to &FFFF)
+                        \
+                        \ The INC instruction does this in a more efficient
+                        \ manner than an LDA/STA pair, as it:
+                        \
+                        \   * Fetches the contents of address &C006, which
+                        \     contains the high byte of the JMP destination
+                        \     below, i.e. the high byte of S%, which is &C0
+                        \
+                        \   * Adds 1, to give &C1
+                        \
+                        \   * Writes the value &C1 back to address &C006
+                        \
+                        \ &C006 is in the ROM space and &C1 has bit 7 set, so
+                        \ the INC does all that is required to reset the mapper,
+                        \ in fewer cycles and bytes than an LDA/STA pair
+                        \
+                        \ Resetting MMC1 maps bank 7 to &C000 and enables the
+                        \ bank at &8000 to be switched, so this instruction
+                        \ ensures that bank 7 is present
+
+ JMP S%                 \ Jump to S% in bank 7 to start the game
 
 \ ******************************************************************************
 \
@@ -8561,7 +8614,7 @@ ENDIF
  PHA                                          ; F262: 48          H
  LDA #1                                       ; F263: A9 01       ..
  JSR SetBank                                  ; F265: 20 AE C0     ..
- JSR LBAF3                                    ; F268: 20 F3 BA     ..
+ JSR sub_CBAF3                                ; F268: 20 F3 BA     ..
  JMP ResetBank                                ; F26B: 4C AD C0    L..
 
 
@@ -9350,16 +9403,7 @@ ENDIF
 
  LDY #0                                       ; F5AF: A0 00       ..
 
-\ ******************************************************************************
-\
-\       Name: UnpackToPPU_2
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.UnpackToPPU_2
+.CF5B1
 
  LDA (V),Y                                    ; F5B1: B1 63       .c
  INY                                          ; F5B3: C8          .
@@ -9385,7 +9429,7 @@ ENDIF
  STA PPU_DATA                                 ; F5D3: 8D 07 20    ..
  DEX                                          ; F5D6: CA          .
  BNE CF5D3                                    ; F5D7: D0 FA       ..
- JMP UnpackToPPU_2                            ; F5D9: 4C B1 F5    L..
+ JMP CF5B1                            ; F5D9: 4C B1 F5    L..
 
 .CF5DC
  LDA #&FF                                     ; F5DC: A9 FF       ..
@@ -9413,13 +9457,13 @@ ENDIF
  STA PPU_DATA                                 ; F5FB: 8D 07 20    ..
  DEX                                          ; F5FE: CA          .
  BNE loop_CF5F4                               ; F5FF: D0 F3       ..
- JMP UnpackToPPU_2                            ; F601: 4C B1 F5    L..
+ JMP CF5B1                            ; F601: 4C B1 F5    L..
 
 .CF604
  TXA                                          ; F604: 8A          .
 .CF605
  STA PPU_DATA                                 ; F605: 8D 07 20    ..
- JMP UnpackToPPU_2                            ; F608: 4C B1 F5    L..
+ JMP CF5B1                            ; F608: 4C B1 F5    L..
 
 .CF60B
  RTS                                          ; F60B: 60          `
